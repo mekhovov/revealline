@@ -1,0 +1,8 @@
+{
+  "recordedAt": "2026-10-05T06:18:11.150Z",
+  "sourceCommit": "5a1f3a0c4",
+  "runtimeUnchangedAt": "cbd9d23d1",
+  "route": "reviewBuild=echo",
+  "automated": true,
+  "resultText": "\n        Sortie complete\n        Automated review · Echo build\n        Time05:42Cleared4702Salvage6948Your buildEcho Cascade 4 · Proximity pulse 3 · Slow field 3 · Recovery shield 1\n        Try another combination on the same battlefield.\n      "
+}

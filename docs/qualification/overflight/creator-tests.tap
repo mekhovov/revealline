@@ -1,0 +1,1053 @@
+TAP version 13
+# Subtest: animation edits cannot cross immutable collection ownership even when slot/revision names match
+ok 1 - animation edits cannot cross immutable collection ownership even when slot/revision names match
+  ---
+  duration_ms: 1.218875
+  ...
+# Subtest: Studio refresh and disposal release preview leases and refuse a stale Stage
+ok 2 - Studio refresh and disposal release preview leases and refuse a stale Stage
+  ---
+  duration_ms: 9.127833
+  ...
+# Subtest: closing a pending animation preview retires its reservation when decoding finishes
+ok 3 - closing a pending animation preview retires its reservation when decoding finishes
+  ---
+  duration_ms: 1.325833
+  ...
+# Subtest: animation preview backing storage is accounted, released on collapse and recreated on explicit preview
+ok 4 - animation preview backing storage is accounted, released on collapse and recreated on explicit preview
+  ---
+  duration_ms: 5.980625
+  ...
+# Subtest: narrow Studio panels wrap pooled specimens without shrinking labelled native actor sizes
+ok 5 - narrow Studio panels wrap pooled specimens without shrinking labelled native actor sizes
+  ---
+  duration_ms: 4.477292
+  ...
+# Subtest: a nearly full page refuses the animation canvas before decoding an atlas and recovers after offload
+ok 6 - a nearly full page refuses the animation canvas before decoding an atlas and recovers after offload
+  ---
+  duration_ms: 3.779375
+  ...
+# Subtest: rapid animation owner replacement waits for the old codec without losing the new preview
+ok 7 - rapid animation owner replacement waits for the old codec without losing the new preview
+  ---
+  duration_ms: 3.060666
+  ...
+# Subtest: a retired animation decoder failure cannot replace the new owner with an error
+ok 8 - a retired animation decoder failure cannot replace the new owner with an error
+  ---
+  duration_ms: 4.934959
+  ...
+# Subtest: paired animated context previews share the page atlas and release both owners exactly once
+ok 9 - paired animated context previews share the page atlas and release both owners exactly once
+  ---
+  duration_ms: 0.755041
+  ...
+# Subtest: closing a Studio crop rejects immediately but preserves the source until its codec settles
+ok 10 - closing a Studio crop rejects immediately but preserves the source until its codec settles
+  ---
+  duration_ms: 3.109583
+  ...
+# Subtest: one preview can close before a shared crop starts without rejecting the surviving preview
+ok 11 - one preview can close before a shared crop starts without rejecting the surviving preview
+  ---
+  duration_ms: 2.465917
+  ...
+# Subtest: Studio clip selection reaches the procedural sampler with stationary warning/recovery pose vocabulary
+ok 12 - Studio clip selection reaches the procedural sampler with stationary warning/recovery pose vocabulary
+  ---
+  duration_ms: 2.556292
+  ...
+# Subtest: Studio follows an explicit overhead review link while preserving its historical default
+ok 13 - Studio follows an explicit overhead review link while preserving its historical default
+  ---
+  duration_ms: 1.893625
+  ...
+# Subtest: Studio can scrub to the last frame of a maximum-duration admitted atlas clip
+ok 14 - Studio can scrub to the last frame of a maximum-duration admitted atlas clip
+  ---
+  duration_ms: 1.573375
+  ...
+# Subtest: Studio offers only admitted clips and replaces a removed optional selection with labelled Idle
+ok 15 - Studio offers only admitted clips and replaces a removed optional selection with labelled Idle
+  ---
+  duration_ms: 1.482042
+  ...
+# Subtest: live reduction pauses preview frames and resumes a retained Playing choice without a time jump
+ok 16 - live reduction pauses preview frames and resumes a retained Playing choice without a time jump
+  ---
+  duration_ms: 1.422292
+  ...
+# Subtest: Paused inspection remains paused through both cap transitions and redraws essential state
+ok 17 - Paused inspection remains paused through both cap transitions and redraws essential state
+  ---
+  duration_ms: 3.613333
+  ...
+# Subtest: local Reduced inspection keeps its own cap when shared reduction is released
+ok 18 - local Reduced inspection keeps its own cap when shared reduction is released
+  ---
+  duration_ms: 0.227125
+  ...
+# Subtest: text-only preference updates preserve the pending frame and animation clock
+ok 19 - text-only preference updates preserve the pending frame and animation clock
+  ---
+  duration_ms: 0.267
+  ...
+# Subtest: retiring a preview cancels its frame, removes its observer and fences an already queued callback
+ok 20 - retiring a preview cancels its frame, removes its observer and fences an already queued callback
+  ---
+  duration_ms: 0.083041
+  ...
+# Subtest: an already retired owner never subscribes or paints
+ok 21 - an already retired owner never subscribes or paints
+  ---
+  duration_ms: 0.074292
+  ...
+# Subtest: standalone callers observe live system reduction and release the media listener on cleanup
+ok 22 - standalone callers observe live system reduction and release the media listener on cleanup
+  ---
+  duration_ms: 0.13475
+  ...
+# Subtest: a synchronous initial draw can retire its owner without leaving the just-created subscription
+ok 23 - a synchronous initial draw can retire its owner without leaving the just-created subscription
+  ---
+  duration_ms: 0.073208
+  ...
+# Subtest: a cap change during drawing cannot queue an obsolete frame alongside its replacement
+ok 24 - a cap change during drawing cannot queue an obsolete frame alongside its replacement
+  ---
+  duration_ms: 0.179083
+  ...
+# Subtest: unavailable system-query capability retains local playback and its cleanup
+ok 25 - unavailable system-query capability retains local playback and its cleanup
+  ---
+  duration_ms: 0.179834
+  ...
+# Subtest: a queued callback from before a cap transition cannot replace or consume the resumed frame
+ok 26 - a queued callback from before a cap transition cannot replace or consume the resumed frame
+  ---
+  duration_ms: 0.136792
+  ...
+# Subtest: a preview starting under an effective cap never queues animation until that cap is released
+ok 27 - a preview starting under an effective cap never queues animation until that cap is released
+  ---
+  duration_ms: 0.071292
+  ...
+# Subtest: Studio links keep the exact release route under http://localhost/
+ok 28 - Studio links keep the exact release route under http://localhost/
+  ---
+  duration_ms: 2.954958
+  ...
+# Subtest: Studio links keep the exact release route under https://mekhovov.github.io/revealline/releases/v0.69.1/site/
+ok 29 - Studio links keep the exact release route under https://mekhovov.github.io/revealline/releases/v0.69.1/site/
+  ---
+  duration_ms: 0.186875
+  ...
+# Subtest: Studio links keep the exact release route under https://mekhovov.github.io/revealline-archive-36/releases/v0.68.2/site/
+ok 30 - Studio links keep the exact release route under https://mekhovov.github.io/revealline-archive-36/releases/v0.68.2/site/
+  ---
+  duration_ms: 0.206375
+  ...
+# Subtest: navigation hints cannot supply arbitrary destinations, launch commands or duplicate context
+ok 31 - navigation hints cannot supply arbitrary destinations, launch commands or duplicate context
+  ---
+  duration_ms: 0.379708
+  ...
+# Subtest: Studio round trips keep a single supported language and reject ambiguous locale hints
+ok 32 - Studio round trips keep a single supported language and reject ambiguous locale hints
+  ---
+  duration_ms: 0.204375
+  ...
+# Subtest: consuming the UI hint preserves history state and the Journey route, without storage
+ok 33 - consuming the UI hint preserves history state and the Journey route, without storage
+  ---
+  duration_ms: 0.167041
+  ...
+# Subtest: actual Solo boot returns to the Studio opener and Back restores Workshop on Home without starting
+ok 34 - actual Solo boot returns to the Studio opener and Back restores Workshop on Home without starting
+  ---
+  duration_ms: 1879.284583
+  ...
+# Subtest: actual Solo outgoing Studio link preserves its authored Journey route
+ok 35 - actual Solo outgoing Studio link preserves its authored Journey route
+  ---
+  duration_ms: 917.242834
+  ...
+# Subtest: Workshop restoration does not cover a newer dialog owner
+ok 36 - Workshop restoration does not cover a newer dialog owner
+  ---
+  duration_ms: 1239.551458
+  ...
+# Subtest: Workshop restoration does not cover a newer dispose owner
+ok 37 - Workshop restoration does not cover a newer dispose owner
+  ---
+  duration_ms: 1328.523875
+  ...
+# Subtest: Workshop restoration does not cover a newer hidden owner
+ok 38 - Workshop restoration does not cover a newer hidden owner
+  ---
+  duration_ms: 1312.648292
+  ...
+# Subtest: Workshop restoration does not cover a newer blurred owner
+ok 39 - Workshop restoration does not cover a newer blurred owner
+  ---
+  duration_ms: 1234.113083
+  ...
+# Subtest: Workshop restoration does not cover a newer focus owner
+ok 40 - Workshop restoration does not cover a newer focus owner
+  ---
+  duration_ms: 1289.159542
+  ...
+# Subtest: early Studio entry enables links only after assigning their complete fixed destinations
+ok 41 - early Studio entry enables links only after assigning their complete fixed destinations
+  ---
+  duration_ms: 0.467209
+  ...
+# Subtest: portable content cannot impersonate official recipes or introduce executable actor policies
+ok 42 - portable content cannot impersonate official recipes or introduce executable actor policies
+  ---
+  duration_ms: 25.584833
+  ...
+# Subtest: family dispatch preserves exact valid UTF-8 bytes and rejects unknown formats
+ok 43 - family dispatch preserves exact valid UTF-8 bytes and rejects unknown formats
+  ---
+  duration_ms: 11.668083
+  ...
+# Subtest: Classic community install, recovery removal, offload and reinstall retain exact recipe identity
+ok 44 - Classic community install, recovery removal, offload and reinstall retain exact recipe identity
+  ---
+  duration_ms: 69.140167
+  ...
+# Subtest: community Classic records persist under their owner and cannot enter official chapter records
+ok 45 - community Classic records persist under their owner and cannot enter official chapter records
+  ---
+  duration_ms: 132.12875
+  ...
+# Subtest: the default distribution includes Company Studio, transfer practice and their live local links
+ok 46 - the default distribution includes Company Studio, transfer practice and their live local links
+  ---
+  duration_ms: 1871.3945
+  ...
+# Subtest: Company Studio registered source and artwork choices are present in the default package
+ok 47 - Company Studio registered source and artwork choices are present in the default package
+  ---
+  duration_ms: 594.261542
+  ...
+# Subtest: graph edits survive refresh, explicitly synchronize Hunt quotas and Undo restores source
+ok 48 - graph edits survive refresh, explicitly synchronize Hunt quotas and Undo restores source
+  ---
+  duration_ms: 6.067125
+  ...
+# Subtest: invalid numeric nodes cannot replace accepted source; explicit discard recovers the editor
+ok 49 - invalid numeric nodes cannot replace accepted source; explicit discard recovers the editor
+  ---
+  duration_ms: 1.463417
+  ...
+# Subtest: external return to a legacy source removes an unrelated pending pursuit draft
+ok 50 - external return to a legacy source removes an unrelated pending pursuit draft
+  ---
+  duration_ms: 0.827667
+  ...
+# Subtest: existing v1 graphs upgrade only through an explicit, undoable action without discarding text edits
+ok 51 - existing v1 graphs upgrade only through an explicit, undoable action without discarding text edits
+  ---
+  duration_ms: 2.12625
+  ...
+# Subtest: the unarmed Hunt preset creates an immediately eligible native target without editing a weapon field
+ok 52 - the unarmed Hunt preset creates an immediately eligible native target without editing a weapon field
+  ---
+  duration_ms: 16.003459
+  ...
+# Subtest: Contact Hunt authoring admits ordered finite targets and native tail settings in both modes
+ok 53 - Contact Hunt authoring admits ordered finite targets and native tail settings in both modes
+  ---
+  duration_ms: 12.475459
+  ...
+# Subtest: Contact Hunt edits and objective movement preserve the other mode and binding positions
+ok 54 - Contact Hunt edits and objective movement preserve the other mode and binding positions
+  ---
+  duration_ms: 17.669125
+  ...
+# Subtest: Contact Hunt refuses conflicts, invalid tail bounds and duplicate-mode creation atomically
+ok 55 - Contact Hunt refuses conflicts, invalid tail bounds and duplicate-mode creation atomically
+  ---
+  duration_ms: 7.897667
+  ...
+# Subtest: deleting Hunt targets cleans both modes, preserves surviving order, and keeps last-objective fallback undoable
+ok 56 - deleting Hunt targets cleans both modes, preserves surviving order, and keeps last-objective fallback undoable
+  ---
+  duration_ms: 11.497875
+  ...
+# Subtest: changing a Hunt target to Rival removes only its catch references and cannot enable its weapon
+ok 57 - changing a Hunt target to Rival removes only its catch references and cannot enable its weapon
+  ---
+  duration_ms: 9.321125
+  ...
+# Subtest: a stale Contact Hunt panel cannot overwrite a newer objective and Ukrainian controls stay localized
+ok 58 - a stale Contact Hunt panel cannot overwrite a newer objective and Ukrainian controls stay localized
+  ---
+  duration_ms: 4.943583
+  ...
+# Subtest: adding an unarmed actor preserves a new Hunt draft without silently adding it to the quota
+ok 59 - adding an unarmed actor preserves a new Hunt draft without silently adding it to the quota
+  ---
+  duration_ms: 7.330542
+  ...
+# Subtest: mode-specific Hunt drafts survive actor addition and moving applies the draft atomically
+ok 60 - mode-specific Hunt drafts survive actor addition and moving applies the draft atomically
+  ---
+  duration_ms: 10.612375
+  ...
+# Subtest: unapplied Hunt target order participates in project challenge switching without marking untouched panels dirty
+ok 61 - unapplied Hunt target order participates in project challenge switching without marking untouched panels dirty
+  ---
+  duration_ms: 14.406667
+  ...
+# Subtest: applying one Hunt preserves another hidden pending draft until explicit discard resets both
+ok 62 - applying one Hunt preserves another hidden pending draft until explicit discard resets both
+  ---
+  duration_ms: 12.965333
+  ...
+# Subtest: new Hunt target drafts remain pending through actor addition and clear after native admission
+ok 63 - new Hunt target drafts remain pending through actor addition and clear after native admission
+  ---
+  duration_ms: 9.917416
+  ...
+# Subtest: obsolete hidden Hunt drafts cannot block a newer accepted objective after refresh
+ok 64 - obsolete hidden Hunt drafts cannot block a newer accepted objective after refresh
+  ---
+  duration_ms: 11.623375
+  ...
+# Subtest: retained pursuit graph edits remain pending after host refresh and explicit reset restores admitted source
+ok 65 - retained pursuit graph edits remain pending after host refresh and explicit reset restores admitted source
+  ---
+  duration_ms: 6.4455
+  ...
+# Subtest: Overflight effect inspection uploads exact shared pixels, preserves native study state and releases its canvases
+ok 66 - Overflight effect inspection uploads exact shared pixels, preserves native study state and releases its canvases
+  ---
+  duration_ms: 204.807916
+  ...
+# Subtest: Motion shared actor controls use the actual host with one playback owner and unchanged player sandbox state
+ok 67 - Motion shared actor controls use the actual host with one playback owner and unchanged player sandbox state
+  ---
+  duration_ms: 107.593958
+  ...
+# Subtest: Inspection responses change real wing paint without changing paired arena traces or recipe exports
+    # Subtest: follow
+    ok 1 - follow
+      ---
+      duration_ms: 71.879583
+      ...
+    # Subtest: idle
+    ok 2 - idle
+      ---
+      duration_ms: 78.281542
+      ...
+    # Subtest: cruise
+    ok 3 - cruise
+      ---
+      duration_ms: 68.362875
+      ...
+    # Subtest: boost
+    ok 4 - boost
+      ---
+      duration_ms: 66.513583
+      ...
+    # Subtest: slow
+    ok 5 - slow
+      ---
+      duration_ms: 65.809584
+      ...
+    1..5
+ok 68 - Inspection responses change real wing paint without changing paired arena traces or recipe exports
+  ---
+  duration_ms: 352.364792
+  ...
+# Subtest: Inspection response retains paused phase, drafts and lifetime ownership with reduced=false
+ok 69 - Inspection response retains paused phase, drafts and lifetime ownership with reduced=false
+  ---
+  duration_ms: 75.019667
+  ...
+# Subtest: Inspection response retains paused phase, drafts and lifetime ownership with reduced=true
+ok 70 - Inspection response retains paused phase, drafts and lifetime ownership with reduced=true
+  ---
+  duration_ms: 89.07575
+  ...
+# Subtest: Inspection exhaust responds to selected speed at a frozen time with reduced=false
+ok 71 - Inspection exhaust responds to selected speed at a frozen time with reduced=false
+  ---
+  duration_ms: 88.262
+  ...
+# Subtest: Inspection exhaust responds to selected speed at a frozen time with reduced=true
+ok 72 - Inspection exhaust responds to selected speed at a frozen time with reduced=true
+  ---
+  duration_ms: 65.882334
+  ...
+# Subtest: Inspection response native select retains EN/UK labels, focus and paused intent
+ok 73 - Inspection response native select retains EN/UK labels, focus and paused intent
+  ---
+  duration_ms: 120.864583
+  ...
+# Subtest: Motion attachments edit actual wing paint while retaining paused clocks and reduced=false
+ok 74 - Motion attachments edit actual wing paint while retaining paused clocks and reduced=false
+  ---
+  duration_ms: 76.848667
+  ...
+# Subtest: Motion attachments edit actual wing paint while retaining paused clocks and reduced=true
+ok 75 - Motion attachments edit actual wing paint while retaining paused clocks and reduced=true
+  ---
+  duration_ms: 76.907792
+  ...
+# Subtest: Motion attachment controls offer fractional keyboard steps and commit completed edits without advancing paused playback
+ok 76 - Motion attachment controls offer fractional keyboard steps and commit completed edits without advancing paused playback
+  ---
+  duration_ms: 66.739084
+  ...
+# Subtest: Motion attachment drafts are per character and live edits keep the existing single frame owner
+ok 77 - Motion attachment drafts are per character and live edits keep the existing single frame owner
+  ---
+  duration_ms: 66.517417
+  ...
+# Subtest: Motion HTML adopts reading policy before held app startup with one explicit size writer
+ok 78 - Motion HTML adopts reading policy before held app startup with one explicit size writer
+  ---
+  duration_ms: 41.158167
+  ...
+# Subtest: Motion failed app startup retains independent size controls and failed-save intent
+ok 79 - Motion failed app startup retains independent size controls and failed-save intent
+  ---
+  duration_ms: 15.206417
+  ...
+# Subtest: Motion saved and system reduction cap local choice without changing live run or authored values
+ok 80 - Motion saved and system reduction cap local choice without changing live run or authored values
+  ---
+  duration_ms: 82.576625
+  ...
+# Subtest: Motion local reduced choice survives shared caps and paused preference edits do not resume
+ok 81 - Motion local reduced choice survives shared caps and paused preference edits do not resume
+  ---
+  duration_ms: 45.895
+  ...
+# Subtest: Motion loaded body and local background survive reading changes and cached return
+ok 82 - Motion loaded body and local background survive reading changes and cached return
+  ---
+  duration_ms: 73.792583
+  ...
+# Subtest: Motion interruption before pending startup prevents automatic start and stale frames cannot return
+ok 83 - Motion interruption before pending startup prevents automatic start and stale frames cannot return
+  ---
+  duration_ms: 64.431125
+  ...
+# Subtest: Motion terminal departure fences held initialization and leaves no authority or app listeners
+ok 84 - Motion terminal departure fences held initialization and leaves no authority or app listeners
+  ---
+  duration_ms: 18.359708
+  ...
+# Subtest: Motion hidden and terminal loaded lifecycle cancels images, releases input and disconnects observer
+ok 85 - Motion hidden and terminal loaded lifecycle cancels images, releases input and disconnects observer
+  ---
+  duration_ms: 47.715959
+  ...
+# Subtest: Motion unavailable inspection image is described in ordinary DOM and storage denial remains session-only
+ok 86 - Motion unavailable inspection image is described in ordinary DOM and storage denial remains session-only
+  ---
+  duration_ms: 43.946416
+  ...
+# Subtest: Motion application graph completing after terminal departure cannot remount or fetch
+ok 87 - Motion application graph completing after terminal departure cannot remount or fetch
+  ---
+  duration_ms: 13.601292
+  ...
+# Subtest: Motion graph first arriving in an unfocused document starts paused until explicit Play
+ok 88 - Motion graph first arriving in an unfocused document starts paused until explicit Play
+  ---
+  duration_ms: 40.268708
+  ...
+# Subtest: Motion cached interruption before first application delivery cannot autoplay before or after return
+ok 89 - Motion cached interruption before first application delivery cannot autoplay before or after return
+  ---
+  duration_ms: 42.301292
+  ...
+# (node:98822) ExperimentalWarning: vm.USE_MAIN_CONTEXT_DEFAULT_LOADER is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: Motion real launcher retires Reload into independent reading controls while presets stay locked (anchor focus model)
+ok 90 - Motion real launcher retires Reload into independent reading controls while presets stay locked (anchor focus model)
+  ---
+  duration_ms: 58.333542
+  ...
+# Subtest: Motion real launcher retires Reload into independent reading controls while presets stay locked (body focus model)
+ok 91 - Motion real launcher retires Reload into independent reading controls while presets stay locked (body focus model)
+  ---
+  duration_ms: 59.02225
+  ...
+# Subtest: Motion real launcher graph failure retains locked study, Reload, navigation and the independent size writer
+ok 92 - Motion real launcher graph failure retains locked study, Reload, navigation and the independent size writer
+  ---
+  duration_ms: 32.33825
+  ...
+# Subtest: Motion network failure after actual delivery provides retry without taking current focus
+ok 93 - Motion network failure after actual delivery provides retry without taking current focus
+  ---
+  duration_ms: 26.006125
+  ...
+# Subtest: Motion validation failure after actual delivery provides retry without taking current focus
+ok 94 - Motion validation failure after actual delivery provides retry without taking current focus
+  ---
+  duration_ms: 24.52125
+  ...
+# Subtest: Motion terminal departure ignores a late failed preset read without exposing retry
+ok 95 - Motion terminal departure ignores a late failed preset read without exposing retry
+  ---
+  duration_ms: 26.16175
+  ...
+# Subtest: Motion real launcher does not take Reload focus in an hidden document or defer it until return
+ok 96 - Motion real launcher does not take Reload focus in an hidden document or defer it until return
+  ---
+  duration_ms: 50.379125
+  ...
+# Subtest: Motion real launcher does not take Reload focus in an unfocused document or defer it until return
+ok 97 - Motion real launcher does not take Reload focus in an unfocused document or defer it until return
+  ---
+  duration_ms: 50.365709
+  ...
+# Subtest: Motion actual Reload retirement preserves navigation focus acquired before attachment
+ok 98 - Motion actual Reload retirement preserves navigation focus acquired before attachment
+  ---
+  duration_ms: 45.447958
+  ...
+# Subtest: Motion actual Reload retirement preserves navigation focus acquired during attachment
+ok 99 - Motion actual Reload retirement preserves navigation focus acquired during attachment
+  ---
+  duration_ms: 47.71825
+  ...
+# Subtest: Motion successful startup gate preserves Clear, locked Equip and disabled ability ownership
+ok 100 - Motion successful startup gate preserves Clear, locked Equip and disabled ability ownership
+  ---
+  duration_ms: 56.215208
+  ...
+# Subtest: Motion real launcher late application delivery after terminal departure cannot unlock or focus the departed study
+ok 101 - Motion real launcher late application delivery after terminal departure cannot unlock or focus the departed study
+  ---
+  duration_ms: 28.522875
+  ...
+# Subtest: Motion full stage labels survive shortened canvas captions and reading changes without moving focus or replacing rows
+ok 102 - Motion full stage labels survive shortened canvas captions and reading changes without moving focus or replacing rows
+  ---
+  duration_ms: 47.983959
+  ...
+# Subtest: Motion real scan reveals and expires DOM note text on the rendering frame before the general readout refresh
+ok 103 - Motion real scan reveals and expires DOM note text on the rendering frame before the general readout refresh
+  ---
+  duration_ms: 52.674042
+  ...
+# Subtest: Motion APNG upload derives exact static PNG bytes while retaining the original File
+ok 104 - Motion APNG upload derives exact static PNG bytes while retaining the original File
+  ---
+  duration_ms: 45.70025
+  ...
+# Subtest: Motion GIF and WebP keep the original File source and native-image path
+ok 105 - Motion GIF and WebP keep the original File source and native-image path
+  ---
+  duration_ms: 39.820416
+  ...
+# Subtest: Motion superseded PNG byte read cannot allocate a URL or replace the newer preview
+ok 106 - Motion superseded PNG byte read cannot allocate a URL or replace the newer preview
+  ---
+  duration_ms: 44.280666
+  ...
+# Subtest: Motion rejected replacement retires pending byte read: unsupported type
+ok 107 - Motion rejected replacement retires pending byte read: unsupported type
+  ---
+  duration_ms: 48.368166
+  ...
+# Subtest: Motion rejected replacement retires pending byte read: oversized file
+ok 108 - Motion rejected replacement retires pending byte read: oversized file
+  ---
+  duration_ms: 54.472292
+  ...
+# Subtest: Motion rejected replacement retires pending native decode: unsupported type
+ok 109 - Motion rejected replacement retires pending native decode: unsupported type
+  ---
+  duration_ms: 55.164417
+  ...
+# Subtest: Motion rejected replacement retires pending native decode: oversized file
+ok 110 - Motion rejected replacement retires pending native decode: oversized file
+  ---
+  duration_ms: 48.380375
+  ...
+# Subtest: Motion cancelled file picker preserves the pending background intent
+ok 111 - Motion cancelled file picker preserves the pending background intent
+  ---
+  duration_ms: 48.571
+  ...
+# Subtest: Motion Clear while reading PNG bytes prevents late URL, image and status resurrection
+ok 112 - Motion Clear while reading PNG bytes prevents late URL, image and status resurrection
+  ---
+  duration_ms: 47.99675
+  ...
+# Subtest: Motion cached departure invalidates the pending PNG byte read
+ok 113 - Motion cached departure invalidates the pending PNG byte read
+  ---
+  duration_ms: 48.782083
+  ...
+# Subtest: Motion terminal departure invalidates the pending PNG byte read
+ok 114 - Motion terminal departure invalidates the pending PNG byte read
+  ---
+  duration_ms: 45.132334
+  ...
+# Subtest: Motion rejected or malformed PNG preparation retains accepted art, current focus and Clear
+ok 115 - Motion rejected or malformed PNG preparation retains accepted art, current focus and Clear
+  ---
+  duration_ms: 48.217458
+  ...
+# Subtest: Motion prepared replacement native decode failure preserves prior image and retires derivative URL
+ok 116 - Motion prepared replacement native decode failure preserves prior image and retires derivative URL
+  ---
+  duration_ms: 53.314708
+  ...
+# Subtest: Motion late PNG preparation rejection after a new image cannot overwrite current success
+ok 117 - Motion late PNG preparation rejection after a new image cannot overwrite current success
+  ---
+  duration_ms: 49.688458
+  ...
+# Subtest: Motion sliders keep stable visible labels while the actual study startup is held
+ok 118 - Motion sliders keep stable visible labels while the actual study startup is held
+  ---
+  duration_ms: 40.087292
+  ...
+# Subtest: Motion slider input updates current units without changing its name, focus or paused intent
+ok 119 - Motion slider input updates current units without changing its name, focus or paused intent
+  ---
+  duration_ms: 58.168834
+  ...
+# Subtest: Motion recipe replacement refreshes the rotor value text after a manual radius override
+ok 120 - Motion recipe replacement refreshes the rotor value text after a manual radius override
+  ---
+  duration_ms: 146.423958
+  ...
+# Subtest: Motion hub edits and JSON round trip preserve paused clocks and reduced=false
+ok 121 - Motion hub edits and JSON round trip preserve paused clocks and reduced=false
+  ---
+  duration_ms: 98.811375
+  ...
+# Subtest: Motion hub edits and JSON round trip preserve paused clocks and reduced=true
+ok 122 - Motion hub edits and JSON round trip preserve paused clocks and reduced=true
+  ---
+  duration_ms: 97.744625
+  ...
+# Subtest: Motion hub envelope edits preserve actual paint, guides, paused state and reduced=false
+ok 123 - Motion hub envelope edits preserve actual paint, guides, paused state and reduced=false
+  ---
+  duration_ms: 91.895667
+  ...
+# Subtest: Motion hub envelope edits preserve actual paint, guides, paused state and reduced=true
+ok 124 - Motion hub envelope edits preserve actual paint, guides, paused state and reduced=true
+  ---
+  duration_ms: 94.890375
+  ...
+# Subtest: Motion envelope validation and guide use the decoded non-square source aspect, not its body fit box
+ok 125 - Motion envelope validation and guide use the decoded non-square source aspect, not its body fit box
+  ---
+  duration_ms: 58.656916
+  ...
+# Subtest: Motion rotor editor preserves a running frame and per-character drafts while non-rotor recipes stay gated
+ok 126 - Motion rotor editor preserves a running frame and per-character drafts while non-rotor recipes stay gated
+  ---
+  duration_ms: 68.973166
+  ...
+# Subtest: Motion rotor labels resolve in EN and UK through the HTML-selected catalog/bootstrap and actual host
+ok 127 - Motion rotor labels resolve in EN and UK through the HTML-selected catalog/bootstrap and actual host
+  ---
+  duration_ms: 530.8075
+  ...
+# Subtest: Motion rotation reveals the currently focused rotor field without changing its paused study
+ok 128 - Motion rotation reveals the currently focused rotor field without changing its paused study
+  ---
+  duration_ms: 46.001375
+  ...
+# Subtest: Motion rotation accounts for the settings clip even while a focused slider is inside the viewport
+ok 129 - Motion rotation accounts for the settings clip even while a focused slider is inside the viewport
+  ---
+  duration_ms: 34.46075
+  ...
+# Subtest: Motion rotation reveals the rotor when its entire settings panel moves above the viewport
+ok 130 - Motion rotation reveals the rotor when its entire settings panel moves above the viewport
+  ---
+  duration_ms: 45.2185
+  ...
+# Subtest: Motion rotation cannot reveal an hidden current control
+ok 131 - Motion rotation cannot reveal an hidden current control
+  ---
+  duration_ms: 34.698166
+  ...
+# Subtest: Motion rotation cannot reveal an inert current control
+ok 132 - Motion rotation cannot reveal an inert current control
+  ---
+  duration_ms: 36.312292
+  ...
+# Subtest: Motion rotation cannot reveal an disabled current control
+ok 133 - Motion rotation cannot reveal an disabled current control
+  ---
+  duration_ms: 43.744084
+  ...
+# Subtest: Motion rotation cannot reveal an fieldset current control
+ok 134 - Motion rotation cannot reveal an fieldset current control
+  ---
+  duration_ms: 37.196917
+  ...
+# Subtest: Motion rotation cannot reveal an background current control
+ok 135 - Motion rotation cannot reveal an background current control
+  ---
+  duration_ms: 35.751625
+  ...
+# Subtest: Motion rotation cannot reveal an away current control
+ok 136 - Motion rotation cannot reveal an away current control
+  ---
+  duration_ms: 37.003417
+  ...
+# Subtest: Motion rotation cannot reveal an disposed current control
+ok 137 - Motion rotation cannot reveal an disposed current control
+  ---
+  duration_ms: 33.526208
+  ...
+# Subtest: Motion resize cannot scroll after measurement changes the focused owner or loses foreground
+ok 138 - Motion resize cannot scroll after measurement changes the focused owner or loses foreground
+  ---
+  duration_ms: 32.872708
+  ...
+# Subtest: Motion resize reveals the control when its labeled field is taller than the visible settings area
+ok 139 - Motion resize reveals the control when its labeled field is taller than the visible settings area
+  ---
+  duration_ms: 36.27325
+  ...
+# Subtest: Motion locale changes preserve paused movement, live controls and image ownership
+ok 140 - Motion locale changes preserve paused movement, live controls and image ownership
+  ---
+  duration_ms: 599.165333
+  ...
+# Subtest: Motion locked collection groups preserve authored alternatives and focused selection across locales
+ok 141 - Motion locked collection groups preserve authored alternatives and focused selection across locales
+  ---
+  duration_ms: 496.714417
+  ...
+# Subtest: Motion accepted collection notices translate without repeating mutations or saving game progress
+ok 142 - Motion accepted collection notices translate without repeating mutations or saving game progress
+  ---
+  duration_ms: 2394.237375
+  ...
+# Subtest: Motion menu arrow navigation and consumed keys never steer, act or pause the arena
+ok 143 - Motion menu arrow navigation and consumed keys never steer, act or pause the arena
+  ---
+  duration_ms: 52.73075
+  ...
+# Subtest: Motion native shortcuts require foreground arena focus, retain ability controls and release held modifiers outside it
+ok 144 - Motion native shortcuts require foreground arena focus, retain ability controls and release held modifiers outside it
+  ---
+  duration_ms: 54.276833
+  ...
+# Subtest: Motion four direction buttons accept real guarded controller activation and a paused click never resumes or latches
+ok 145 - Motion four direction buttons accept real guarded controller activation and a paused click never resumes or latches
+  ---
+  duration_ms: 132.78975
+  ...
+# Subtest: Motion native Clear returns its foreground focus before disabling itself
+ok 146 - Motion native Clear returns its foreground focus before disabling itself
+  ---
+  duration_ms: 49.016666
+  ...
+# Subtest: Motion controller Clear returns its foreground focus before disabling itself
+ok 147 - Motion controller Clear returns its foreground focus before disabling itself
+  ---
+  duration_ms: 56.244875
+  ...
+# Subtest: Motion Clear does not replace focus owned by another control
+ok 148 - Motion Clear does not replace focus owned by another control
+  ---
+  duration_ms: 53.911084
+  ...
+# Subtest: Motion Clear does not replace focus owned by hidden document
+ok 149 - Motion Clear does not replace focus owned by hidden document
+  ---
+  duration_ms: 49.828
+  ...
+# Subtest: Motion Clear does not replace focus owned by unfocused document
+ok 150 - Motion Clear does not replace focus owned by unfocused document
+  ---
+  duration_ms: 42.65675
+  ...
+# Subtest: shared drafts use admitted immutable descriptors and bounded edits retain their selected frame
+ok 151 - shared drafts use admitted immutable descriptors and bounded edits retain their selected frame
+  ---
+  duration_ms: 1.419208
+  ...
+# Subtest: unknown motion fields and every out-of-bounds value are rejected before replacing the accepted draft
+ok 152 - unknown motion fields and every out-of-bounds value are rejected before replacing the accepted draft
+  ---
+  duration_ms: 3.816417
+  ...
+# Subtest: clip occurrences, repeated frame references and non-looping end poses use the production sampler
+ok 153 - clip occurrences, repeated frame references and non-looping end poses use the production sampler
+  ---
+  duration_ms: 1.028584
+  ...
+# Subtest: exact descriptor import/export retains identity, immutable dependencies and frame bounds without a new pack format
+ok 154 - exact descriptor import/export retains identity, immutable dependencies and frame bounds without a new pack format
+  ---
+  duration_ms: 2.310791
+  ...
+# Subtest: explicit Courier accessory offsets affect only the satchel and retain native heading and historical bounce
+ok 155 - explicit Courier accessory offsets affect only the satchel and retain native heading and historical bounce
+  ---
+  duration_ms: 2.445333
+  ...
+# Subtest: the actual panel edits and exports valid frames, rejects invalid input and selects only admitted clips
+ok 156 - the actual panel edits and exports valid frames, rejects invalid input and selects only admitted clips
+  ---
+  duration_ms: 26.9495
+  ...
+# Subtest: the actual panel renders all headings at the same center, steps frames and freezes visible poses with Reduced effects
+ok 157 - the actual panel renders all headings at the same center, steps frames and freezes visible poses with Reduced effects
+  ---
+  duration_ms: 10.072791
+  ...
+# Subtest: playback pauses on blur, close and cached departure; return retains the draft without replay or leaked backing
+ok 158 - playback pauses on blur, close and cached departure; return retains the draft without replay or leaked backing
+  ---
+  duration_ms: 22.918875
+  ...
+# Subtest: close and terminal disposal during acquisition retire all leases and cannot resurrect a preview
+ok 159 - close and terminal disposal during acquisition retire all leases and cannot resurrect a preview
+  ---
+  duration_ms: 8.536834
+  ...
+# Subtest: EN/UK controls preserve valid drafts, and Asset Studio remains the existing staging destination
+ok 160 - EN/UK controls preserve valid drafts, and Asset Studio remains the existing staging destination
+  ---
+  duration_ms: 23.6515
+  ...
+# Subtest: production roster exposes non-Courier accessory edits in the actual Motion Lab panel
+ok 161 - production roster exposes non-Courier accessory edits in the actual Motion Lab panel
+  ---
+  duration_ms: 14.576292
+  ...
+# Subtest: late-mounted shared actor panel keeps its exact review in the fixed Asset Studio handoff
+ok 162 - late-mounted shared actor panel keeps its exact review in the fixed Asset Studio handoff
+  ---
+  duration_ms: 2.988667
+  ...
+# Subtest: new reusable source sprites keep exact optional Asset Studio contracts and generated bytes
+ok 163 - new reusable source sprites keep exact optional Asset Studio contracts and generated bytes
+  ---
+  duration_ms: 22.161041
+  ...
+# Subtest: older Studio workspaces admit only exact registered new slots without rewriting history
+ok 164 - older Studio workspaces admit only exact registered new slots without rewriting history
+  ---
+  duration_ms: 644.884833
+  ...
+# Subtest: reduced effects preserve full hostile warning visibility while simplifying cosmetics
+ok 165 - reduced effects preserve full hostile warning visibility while simplifying cosmetics
+  ---
+  duration_ms: 0.226125
+  ...
+# Subtest: native and Studio compilation are identical, immutable and isolated from draft edits
+ok 166 - native and Studio compilation are identical, immutable and isolated from draft edits
+  ---
+  duration_ms: 5.763875
+  ...
+# Subtest: three encounter sets cover every admitted soldier and machinery family
+ok 167 - three encounter sets cover every admitted soldier and machinery family
+  ---
+  duration_ms: 2.265833
+  ...
+# Subtest: reject ambiguous schedules, unsupported resources, malformed thresholds and executable data
+ok 168 - reject ambiguous schedules, unsupported resources, malformed thresholds and executable data
+  ---
+  duration_ms: 5.958708
+  ...
+# Subtest: export → fresh-profile import → native compile preserves exact content and dependency closure
+ok 169 - export → fresh-profile import → native compile preserves exact content and dependency closure
+  ---
+  duration_ms: 20.59625
+  ...
+# Subtest: native launch retains same-build scope and removes arbitrary caller state
+ok 170 - native launch retains same-build scope and removes arbitrary caller state
+  ---
+  duration_ms: 1.7695
+  ...
+# Subtest: one generated Overflight PNG is hash-pinned once and drawn through Solo runtime and Studio context
+ok 171 - one generated Overflight PNG is hash-pinned once and drawn through Solo runtime and Studio context
+  ---
+  duration_ms: 480.592375
+  ...
+# Subtest: cross-mode reuse still rejects a 16-pixel asset bound to an incompatible 24-pixel slot
+ok 172 - cross-mode reuse still rejects a 16-pixel asset bound to an incompatible 24-pixel slot
+  ---
+  duration_ms: 410.62225
+  ...
+# Subtest: Studio Play pins the exact portable package and selected mission before installation yields
+ok 173 - Studio Play pins the exact portable package and selected mission before installation yields
+  ---
+  duration_ms: 42.846083
+  ...
+# Subtest: invalid or retired selections never start a Studio installation
+ok 174 - invalid or retired selections never start a Studio installation
+  ---
+  duration_ms: 5.294792
+  ...
+# Subtest: newer Play or draft ownership retires earlier success and failure without undoing installation
+ok 175 - newer Play or draft ownership retires earlier success and failure without undoing installation
+  ---
+  duration_ms: 9.986458
+  ...
+# Subtest: the shared Studio foreground lease prevents late navigation after input, blur or pagehide
+ok 176 - the shared Studio foreground lease prevents late navigation after input, blur or pagehide
+  ---
+  duration_ms: 45.894708
+  ...
+# Subtest: Studio closes live database connections and reopens once after a cached Back or freeze
+ok 177 - Studio closes live database connections and reopens once after a cached Back or freeze
+  ---
+  duration_ms: 10.771166
+  ...
+# Subtest: an old installation cannot launch the restored Studio owner
+ok 178 - an old installation cannot launch the restored Studio owner
+  ---
+  duration_ms: 3.054625
+  ...
+# Subtest: freezing first-use library migration closes every primary and temporary owner
+ok 179 - freezing first-use library migration closes every primary and temporary owner
+  ---
+  duration_ms: 26.828916
+  ...
+# Subtest: preview native commands preserve the draft and match Solo, paired Versus and shared Team
+ok 180 - preview native commands preserve the draft and match Solo, paired Versus and shared Team
+  ---
+  duration_ms: 36.432875
+  ...
+# Subtest: stepping and cosmetic changes use actual prey movement, drone corners and wrap seams
+ok 181 - stepping and cosmetic changes use actual prey movement, drone corners and wrap seams
+  ---
+  duration_ms: 13.738291
+  ...
+# Subtest: paused and late preview frames cannot advance gameplay; reduced effects only freeze decoration
+ok 182 - paused and late preview frames cannot advance gameplay; reduced effects only freeze decoration
+  ---
+  duration_ms: 2.034667
+  ...
+# Subtest: invalid replacement retires the previous accepted board and restart retains the fixed seed
+ok 183 - invalid replacement retires the previous accepted board and restart retains the fixed seed
+  ---
+  duration_ms: 6.841917
+  ...
+# Subtest: Solo default databases preserve profile and asset data when profile opens first
+ok 184 - Solo default databases preserve profile and asset data when profile opens first
+  ---
+  duration_ms: 7.719875
+  ...
+# Subtest: Solo default databases preserve profile and asset data when assets opens first
+ok 185 - Solo default databases preserve profile and asset data when assets opens first
+  ---
+  duration_ms: 1.308916
+  ...
+# Subtest: Solo default names isolate schema upgrades and close every retained connection
+ok 186 - Solo default names isolate schema upgrades and close every retained connection
+  ---
+  duration_ms: 0.384625
+  ...
+# Subtest: Solo explicit database injection retains its routing and failure instrumentation
+ok 187 - Solo explicit database injection retains its routing and failure instrumentation
+  ---
+  duration_ms: 0.168625
+  ...
+# Subtest: route text accepts cell centres and rejects incomplete, executable or non-finite entries
+ok 188 - route text accepts cell centres and rejects incomplete, executable or non-finite entries
+  ---
+  duration_ms: 1.260875
+  ...
+# Subtest: Studio pursuit applies through the runtime compiler and preserves unrelated mission source
+ok 189 - Studio pursuit applies through the runtime compiler and preserves unrelated mission source
+  ---
+  duration_ms: 565.138416
+  ...
+# Subtest: Studio requires a compiler-admitted non-empty population and cannot apply a broken reciprocal pair
+ok 190 - Studio requires a compiler-admitted non-empty population and cannot apply a broken reciprocal pair
+  ---
+  duration_ms: 259.401917
+  ...
+# Subtest: pursuit editor creation does not read an unadopted Studio draft
+ok 191 - pursuit editor creation does not read an unadopted Studio draft
+  ---
+  duration_ms: 1.949708
+  ...
+# Subtest: Studio previews announced direction independently of the body without changing authored routes
+ok 192 - Studio previews announced direction independently of the body without changing authored routes
+  ---
+  duration_ms: 69.573875
+  ...
+# Subtest: the actual Solo preview admits the pilot pursuit envelope and retains the exact authored policy
+ok 193 - the actual Solo preview admits the pilot pursuit envelope and retains the exact authored policy
+  ---
+  duration_ms: 244.138375
+  ...
+# Subtest: Capture Snake and its authored pursuit successor preview preserve their separate transports
+ok 194 - Capture Snake and its authored pursuit successor preview preserve their separate transports
+  ---
+  duration_ms: 8585.153209
+  ...
+# Subtest: Team preview remains native and cannot be passed off as a playable Solo scenario
+ok 195 - Team preview remains native and cannot be passed off as a playable Solo scenario
+  ---
+  duration_ms: 343.97575
+  ...
+# Subtest: standalone scenario picture ownership never searches an unrelated installed campaign
+ok 196 - standalone scenario picture ownership never searches an unrelated installed campaign
+  ---
+  duration_ms: 114.722125
+  ...
+# Subtest: production Team import installs the exact creator edition while keeping Start deliberate
+ok 197 - production Team import installs the exact creator edition while keeping Start deliberate
+  ---
+  duration_ms: 3319.823625
+  ...
+# Subtest: a fresh Team host discovers and launches one exact installed edition
+ok 198 - a fresh Team host discovers and launches one exact installed edition
+  ---
+  duration_ms: 4122.563708
+  ...
+# Subtest: installed Team cards show historical clears without inventing a star grade
+ok 199 - installed Team cards show historical clears without inventing a star grade
+  ---
+  duration_ms: 2400.181041
+  ...
+# Subtest: a fresh Team host labels and resumes an exactly replayed installed checkpoint
+ok 200 - a fresh Team host labels and resumes an exactly replayed installed checkpoint
+  ---
+  duration_ms: 2863.5225
+  ...
+# Subtest: a fresh installed Hunt saves the released briefing state in both native journals
+ok 201 - a fresh installed Hunt saves the released briefing state in both native journals
+  ---
+  duration_ms: 2357.961292
+  ...
+# Subtest: an installed Hunt resumes through its paused briefing and retains replayable release journals
+ok 202 - an installed Hunt resumes through its paused briefing and retains replayable release journals
+  ---
+  duration_ms: 2235.68725
+  ...
+# Subtest: storage denial keeps a verified Team campaign playable for the current visit
+ok 203 - storage denial keeps a verified Team campaign playable for the current visit
+  ---
+  duration_ms: 2732.108584
+  ...
+1..203
+# tests 208
+# suites 0
+# pass 208
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 45163.325083

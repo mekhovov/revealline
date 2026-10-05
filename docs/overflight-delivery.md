@@ -22,13 +22,13 @@ that restrict downloads.
 
 Explicit developer/review routes:
 
-| URL query | Purpose |
-| --- | --- |
-| `?reviewBuild=fan` | Ordinary-input automated sweeping build with earned choices. |
-| `?reviewBuild=echo` | Ordinary-input automated lure-and-return build with earned choices. |
-| `?reviewBuild=systems` | Ordinary-input automated systems/priority build with earned choices. |
-| `?fixture=reference&diagnostics=1` | 1,500 simulated / 700 center-visible moving actors. |
-| `?fixture=stress&diagnostics=1` | 2,500 simulated / 1,200 center-visible moving actors. |
+| URL query                          | Purpose                                                              |
+| ---------------------------------- | -------------------------------------------------------------------- |
+| `?reviewBuild=fan`                 | Ordinary-input automated sweeping build with earned choices.         |
+| `?reviewBuild=echo`                | Ordinary-input automated lure-and-return build with earned choices.  |
+| `?reviewBuild=systems`             | Ordinary-input automated systems/priority build with earned choices. |
+| `?fixture=reference&diagnostics=1` | 1,500 simulated / 700 center-visible moving actors.                  |
+| `?fixture=stress&diagnostics=1`    | 2,500 simulated / 1,200 center-visible moving actors.                |
 
 Review playback is visibly marked and never silently activates in normal play.
 It waits 1.5 seconds on an earned card, applies it legally, and uses the same
@@ -104,13 +104,25 @@ The [qualification directory](qualification/overflight/README.md) distinguishes
 source correctness, synthetic capacity, ordinary automated runs, browser checks
 and external review. Browser evidence is specific to the local M4 Pro and
 in-app Chromium; it cannot approve the Iris Xe Windows target or M1 Air Safari.
-Physical gamepad testing, saved nonstandard controller mappings, five-player
+Two ordinary-input native automated builds completed, ten UI retries retained a single renderer, and current-source graphics recovery plus paged export passed. Physical gamepad testing, saved nonstandard controller mappings, five-player
 formative testing, complete interface recordings and target-device benchmarks
 remain required. Standard left-stick/RT flight is implemented; Capture's custom
 radio/remap configuration has not been silently recreated as another settings store.
 
-A static build-dependency audit covers all new entrypoints. A complete distribution
-build/offline installation has not been run because the disk remains nearly full.
+A complete [local distribution build](qualification/overflight/full-distribution-build.json)
+passed on `cbd9d23d1a2eff81e7059013024974e2d6e1ca41`: 3,092 manifest files and a
+1,004,092,578-byte ZIP. Independent checks verified 38 emitted files, including
+the Play and Studio entrypoints, Motion Lab integration and all thirteen shared
+library PNGs, plus the final ZIP checksum. The built site is available at
+`.cache/overflight/full-distribution`. Offline browser installation and offline
+play remain unverified; successful offline-metadata preparation does not qualify them.
+
+The integration cohort passed [128/128 checks](qualification/overflight/final-tests.tap),
+with [6/6 CI-registration checks](qualification/overflight/industrial-tests.tap).
+The exact [Creator CI cohort](qualification/overflight/creator-tests.tap) passed
+208/208 on `cbd9d23d1`, after a test-only Motion Lab canvas adapter correction.
+These cohorts overlap and are reported separately, without an aggregate test total.
+
 The existing presentation collection-size test also fails on unchanged main:
 its baseline JSON is 1,198,897 bytes against a 1 MiB assertion. Historical approvals
 and that unrelated threshold were not changed to make this branch appear green.
