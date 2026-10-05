@@ -363,6 +363,10 @@ export function prepareNativeMenus({
       : mode === 'versus'
         ? [
             [$('race-start'), $('race-retry')],
+            // Finished rounds keep their recording actions in the same
+            // vertical controller path. Hidden actions are skipped at Ready.
+            $('race-export-recording'),
+            $('race-verify-recording'),
             $('race-chapters'),
             $('race-options'),
             landingSound,

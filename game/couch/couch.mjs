@@ -2700,6 +2700,7 @@ try {
   });
   const controllerSession = createControllerSession({
     restoreKey: COUCH_RESTORE_KEY,
+    initialSlots: incomingContinuation?.slots,
     onLoss: () => {
       pendingPadLoss = true;
       pause();
@@ -3096,9 +3097,7 @@ try {
         briefingOnly: false,
       });
       const started =
-        accepted === true &&
-        roundRecipe.entry === entry &&
-        match.status === 'running';
+        accepted === true && roundRecipe.entry === entry && match.status === 'running';
       if (started) currentLibrarySelection = { match, id: context.libraryMissionId };
       return started;
     }
@@ -3388,10 +3387,7 @@ try {
       libraryStart: context.continuousNext ? null : context,
       briefingOnly: false,
     });
-    const started =
-      accepted === true &&
-      roundRecipe.entry === entry &&
-      match.status === 'running';
+    const started = accepted === true && roundRecipe.entry === entry && match.status === 'running';
     if (started) currentLibrarySelection = { match, id: context.libraryMissionId };
     return started;
   }
@@ -3513,9 +3509,7 @@ try {
                     briefingOnly: false,
                   });
                   const started =
-                    accepted === true &&
-                    roundRecipe.entry === entry &&
-                    match.status === 'running';
+                    accepted === true && roundRecipe.entry === entry && match.status === 'running';
                   if (started)
                     currentLibrarySelection = {
                       match,

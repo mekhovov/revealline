@@ -120,32 +120,6 @@ function releaseMissionCue(p, levelId) {
   assert.equal(p.tick(), 42);
 }
 
-async function openVersusLibrary(p) {
-  const opener = p.$('race-library-switch'),
-    listeners = opener.listeners.get('click'),
-    pending = [];
-  opener.listeners.set(
-    'click',
-    new Set(
-      [...listeners].map((listener) => (event) => {
-        const result = listener.call(opener, event);
-        if (result instanceof Promise) pending.push(result);
-        return result;
-      }),
-    ),
-  );
-  try {
-    opener.focus();
-    opener.click();
-  } finally {
-    opener.listeners.set('click', listeners);
-  }
-  assert.equal(pending.length, 1, 'The real Missions click owns one preparation.');
-  assert.match(p.$('race-message').textContent, /Preparing missions/);
-  await pending[0];
-  assert.equal(p.$('journey-chooser').open, true);
-}
-
 function showCurrentLifecycle(p) {
   const lifecycle = p.$('journey-lifecycle');
   assert.equal(lifecycle.value, 'archive');
@@ -283,7 +257,7 @@ test('same-ID modified Custom edition keeps its exact owner through Rematch and 
   );
   source.name = 'Player night shift';
   const p = await fixture(t, { installedSource: source });
-  await openVersusLibrary(p);
+  await openMissionLibrary(p, 'race-chapters');
   p.$('journey-collection').value = 'Custom';
   p.$('journey-collection').emit('change');
   const card = [...p.$('journey-cards').children].find(
