@@ -1,12 +1,5 @@
 import { compileContentProject, resolveMission } from './project.mjs';
-import {
-  FOUNDATION_SCENARIO_VERSION,
-  RELAY_SCENARIO_VERSION,
-  DIRECTIONAL_SCENARIO_VERSION,
-  SENTINEL_SCENARIO_VERSION,
-  HUNT_SCENARIO_VERSION,
-  validateScenario,
-} from '../content.mjs';
+import { scenarioFormatForLevel, validateScenario } from '../content.mjs';
 import { createRun } from '../core/index.mjs';
 import { inspectCaptureSnapshot } from '../core/capture-regions.mjs';
 import { verifiedPreviewBackground } from './assets.mjs';
@@ -44,16 +37,7 @@ export function prepareContentPreview(
     if (theme.id !== manifest.presentation.themeId)
       throw new Error('Preview theme must match the authored mission presentation.');
     scenario = {
-      format:
-        manifest.level.version === 'xonix-level.v9'
-          ? HUNT_SCENARIO_VERSION
-          : manifest.level.version === 'xonix-level.v8'
-            ? SENTINEL_SCENARIO_VERSION
-            : manifest.level.version === 'xonix-level.v7'
-              ? DIRECTIONAL_SCENARIO_VERSION
-              : manifest.level.version === 'xonix-level.v6'
-                ? RELAY_SCENARIO_VERSION
-                : FOUNDATION_SCENARIO_VERSION,
+      format: scenarioFormatForLevel(manifest.level.version),
       masteryDefinition: null,
       visualOverrides: manifest.background
         ? { background: verifiedPreviewBackground(manifest.background, artwork) }

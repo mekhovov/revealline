@@ -14,6 +14,10 @@ const controls = [
   'combat-study',
   'cultural-workshop',
   'pursuit-intercept',
+  'living-pilots',
+  'living-chapters',
+  'living-team-pilots',
+  'living-team-chapters',
   'whole-spatial',
   'whole-field',
   'whole-timed',
@@ -92,8 +96,8 @@ for (const initialLocale of ['en', 'uk'])
         assert.equal(
           $('candidate-count').textContent,
           locale === 'uk'
-            ? 'Показано 1 запис із 31. Деякі записи мають спільні елементи вибору версії.'
-            : '1 of 31 entries shown. Some entries share edition controls.',
+            ? `Показано 1 запис із ${entries.length}. Деякі записи мають спільні елементи вибору версії.`
+            : `1 of ${entries.length} entries shown. Some entries share edition controls.`,
         );
         assert.equal($('candidate-search').value, 'whole-spatial-v11');
         assert.equal($('source').value, '{"unapplied":"Україна"}');
@@ -112,6 +116,25 @@ for (const initialLocale of ['en', 'uk'])
     }
   });
 
+test('Living Routes pilot and chapter controls are discoverable without replacing source edits', () => {
+  const { $, search, visible } = setup();
+  $('source').value = '{"unapplied":"keep me"}';
+  $('apply').disabled = true;
+  search('crossing post');
+  assert.deepEqual(visible(), [
+    $('whole-variety').closest('[data-library-entry]'),
+    $('living-pilots').closest('[data-library-entry]'),
+  ]);
+  const pilot = $('living-pilots').closest('[data-library-entry]');
+  assert(pilot.querySelector('#living-chapters'));
+  search('pincer yard');
+  assert.equal(visible().length, 1);
+  assert(visible()[0].querySelector('#living-team-pilots'));
+  assert(visible()[0].querySelector('#living-team-chapters'));
+  assert.equal($('source').value, '{"unapplied":"keep me"}');
+  assert.equal($('apply').disabled, true);
+});
+
 test('translated inspection feedback retains authored names and cannot revive a cleared inspection', () => {
   const previous = getLocale();
   const { $, api } = setup();
@@ -124,7 +147,10 @@ test('translated inspection feedback retains authored names and cannot revive a 
       $('candidate-inspection-status').textContent,
       '<my draft>: перевірено 2 місії. Застосовану чернетку не змінено. Переглянь джерело перед застосуванням.',
     );
-    assert.equal($('candidate-inspection-status').children.length, 0);
+    assert.ok(
+      [...$('candidate-inspection-status').children].every((node) => node.nodeType === 3),
+      'The authored name remains inert text without inserted elements.',
+    );
     setLocale('en', { persist: false });
     assert.match($('candidate-inspection-status').textContent, /^<my draft>: 2 missions inspected/);
     api.clearInspection();
@@ -167,7 +193,7 @@ test('Ukrainian candidate and inspection counters use the correct plural forms',
 test('closed library preserves every static Inspect action, paired edition controls and workbench actions', () => {
   const { document, $, entries } = setup();
   assert.equal($('candidate-library').open, false);
-  assert.equal(entries.length, 31);
+  assert.equal(entries.length, 33);
   const actual = [...$('candidate-library').querySelectorAll('button')]
     .map((button) => button.id)
     .filter((id) => id !== 'candidate-reset');
@@ -347,11 +373,11 @@ function documentFromHelpLabel(markup) {
 test('each category retains its authored cohort and resetting never reorders entries', () => {
   const { $, entries, visible } = setup();
   for (const [category, count] of [
-    ['all', 31],
+    ['all', 33],
     ['journey', 6],
     ['chapters', 12],
-    ['mechanics', 8],
-    ['team', 4],
+    ['mechanics', 9],
+    ['team', 5],
     ['players', 1],
   ]) {
     $('candidate-category').value = category;
@@ -396,7 +422,7 @@ test('category and search intersect, empty groups disappear, reset restores orde
   assert.deepEqual(visible(), entries);
   assert.equal(document.activeElement, $('candidate-search'));
   assert.equal($('candidate-empty').hidden, true);
-  assert.match($('candidate-count').textContent, /^31 of 31 entries/);
+  assert.match($('candidate-count').textContent, /^33 of 33 entries/);
 });
 
 test('browsing never edits source, Apply, project/checkpoint, global status, or candidate handlers', () => {

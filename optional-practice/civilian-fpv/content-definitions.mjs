@@ -145,6 +145,7 @@ export function splitCourseDefinition(input, { layoutId, challengeId } = {}) {
     objectives,
     orders,
     actors: clone(c.actors),
+    ...(c.pursuit ? { pursuit: clone(c.pursuit) } : {}),
     bindings: {},
   };
   const challenge = {
@@ -206,7 +207,7 @@ export function compileChallengeDefinition({
     });
   }
   const course = {
-    format: 'FlightCourse.v2',
+    format: layout.pursuit ? 'FlightCourse.v3' : 'FlightCourse.v2',
     id: challenge.id,
     revision: challenge.revision,
     environment: world.environment,
@@ -217,6 +218,7 @@ export function compileChallengeDefinition({
     obstacles: world.obstacles,
     steps,
     actors: layout.actors ?? [],
+    ...(layout.pursuit ? { pursuit: layout.pursuit } : {}),
     rules: challenge.rules ?? {},
     conditions: challenge.conditions ?? { profile: 'clear', revision: 'r1' },
     ...(challenge.rulesetId ? { rulesetId: challenge.rulesetId } : {}),

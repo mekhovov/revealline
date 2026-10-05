@@ -1,6 +1,9 @@
+import { createPresentationHost } from '../presentation/host.mjs';
 import { installThemeHost } from '../presentation/theme-host.mjs';
 import { TOKEN_DEFAULTS } from '../presentation/model.mjs';
 import { loadAcceptedAppearance } from '../presentation/theme-system.mjs';
+import { actorArtReviewRevision } from '../hunt/preferences.mjs';
+import { INDUSTRIAL_BUILTIN_SPRITES } from '../presentation/industrial-arcade-builtins.mjs';
 import {
   selectedArcadeCollection,
   industrialTexturePixels,
@@ -76,34 +79,7 @@ export function classicAppearanceContext(win = globalThis.window) {
   };
 }
 
-async function readAsset(response, expected) {
-  if (!response.ok || !response.body?.getReader) throw new Error('Classic artwork unavailable.');
-  const reader = response.body.getReader(),
-    chunks = [];
-  let size = 0;
-  try {
-    while (true) {
-      const { done, value } = await reader.read();
-      if (done) break;
-      size += value.byteLength;
-      if (size > expected) throw new Error('Classic artwork exceeds its exact byte budget.');
-      chunks.push(value);
-    }
-  } finally {
-    await reader.cancel().catch(() => {});
-    reader.releaseLock();
-  }
-  if (size !== expected) throw new Error('Classic artwork byte count differs.');
-  const bytes = new Uint8Array(size);
-  let offset = 0;
-  for (const chunk of chunks) {
-    bytes.set(chunk, offset);
-    offset += chunk.byteLength;
-  }
-  return bytes;
-}
-
-/** Owns only shared interface appearance and two verified artwork bitmaps.
+/** Uses the same authenticated board-art provider as Capture and Team.
  * Gameplay/replay identity does not depend on resources arriving successfully. */
 export function createClassicPresentation({
   window: win = globalThis.window,
@@ -113,16 +89,31 @@ export function createClassicPresentation({
   onWarning = () => {},
 } = {}) {
   const controller = new AbortController(),
-    images = new Map(),
-    derived = new Map();
+    derived = new Map(),
+    artwork = createPresentationHost({
+      profile: 'board',
+      document: doc,
+      fetch: (...args) => win.fetch(...args),
+    });
   let disposed = false,
     themeSnapshot = null,
+    artRevision = actorArtReviewRevision(win?.location),
     current;
+  function clearDerived() {
+    for (const canvas of derived.values()) canvas.width = canvas.height = 0;
+    derived.clear();
+  }
   function imageFor(slot) {
     if (disposed) return null;
-    const image = images.get(slot) ?? null,
+    const frame = artwork.current()?.image(slot),
+      image = frame?.image ?? null,
       collection = selectedArcadeCollection(theme.effectivePreferences());
     if (!image || slot !== 'terrain.wall' || collection?.id !== 'military-field') return image;
+    if (
+      frame.asset?.id !== `${slot}.field-kit` ||
+      !INDUSTRIAL_BUILTIN_SPRITES[slot]?.includes(frame.asset?.file?.sha256)
+    )
+      return image;
     if (derived.has(slot)) return derived.get(slot);
     try {
       const canvas = doc.createElement('canvas');
@@ -137,6 +128,7 @@ export function createClassicPresentation({
           { width: canvas.width, height: canvas.height, rgba: pixels.data },
           slot,
           collection,
+          { reviewRevision: artRevision },
         ).rgba,
       );
       context.putImageData(pixels, 0, 0);
@@ -171,6 +163,8 @@ export function createClassicPresentation({
         danger: t.hazard,
       }),
       image: imageFor,
+      asset: (slot) => artwork.current()?.image(slot) ?? null,
+      actorArtBudget: () => artwork.current()?.actorArtBudget() ?? null,
     });
     queueMicrotask(() => {
       if (!disposed) onChange(current);
@@ -181,29 +175,17 @@ export function createClassicPresentation({
     update();
   });
   update();
-  const ready = Promise.allSettled(
-    CLASSIC_PRESENTATION.assets.map(async (asset) => {
-      const response = await win.fetch(asset.url, { signal: controller.signal }),
-        bytes = await readAsset(response, asset.bytes),
-        digest = new Uint8Array(await win.crypto.subtle.digest('SHA-256', bytes));
-      if ([...digest].map((v) => v.toString(16).padStart(2, '0')).join('') !== asset.sha256)
-        throw new Error('Classic artwork hash differs.');
-      // Hash admission occurs before image decoding; these exact originals have
-      // small, declared PNG dimensions. There is no arbitrary user-image decoder.
-      const bitmap = await win.createImageBitmap(new Blob([bytes], { type: 'image/png' }));
-      if (disposed || bitmap.width !== asset.size || bitmap.height !== asset.size) {
-        bitmap.close();
-        if (!disposed) throw new Error('Classic artwork dimensions differ.');
-        return;
-      }
-      images.set(asset.slot, bitmap);
+  const ready = artwork
+    .load({ signal: controller.signal })
+    .then(() => {
       update();
-    }),
-  ).then((results) => {
-    if (!disposed && results.some((row) => row.status === 'rejected'))
-      onWarning('Classic vector artwork is active; the verified sprite release is unavailable.');
-    return current;
-  });
+      return current;
+    })
+    .catch(() => {
+      if (!disposed)
+        onWarning('Classic vector artwork is active; the verified sprite release is unavailable.');
+      return current;
+    });
   theme.refresh();
   function dispose() {
     if (disposed) return;
@@ -211,15 +193,30 @@ export function createClassicPresentation({
     controller.abort();
     stop();
     theme.dispose();
-    for (const image of images.values()) image.close();
-    images.clear();
-    for (const canvas of derived.values()) canvas.width = canvas.height = 0;
-    derived.clear();
+    artwork.close();
+    clearDerived();
     win?.removeEventListener('pagehide', hide);
   }
   function hide(event) {
     if (!event.persisted) dispose();
   }
   win?.addEventListener('pagehide', hide);
-  return Object.freeze({ snapshot: () => current, ready, theme, dispose });
+  return Object.freeze({
+    snapshot: () => current,
+    ready,
+    theme,
+    async readAudio(slot, options) {
+      await ready;
+      const snapshot = artwork.current();
+      if (disposed || slot !== 'audio.pickup' || snapshot?.resolved.assets[slot]?.kind !== 'audio')
+        return null;
+      return artwork.readAudio(slot, { ...options, snapshot });
+    },
+    setArtRevision(revision) {
+      if (revision === artRevision) return;
+      artRevision = revision;
+      clearDerived();
+    },
+    dispose,
+  });
 }

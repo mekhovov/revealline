@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { soloPage, settle } from './helpers/solo-dom.mjs';
+import { activateHostAction } from './helpers/host-action.mjs';
 import { retryFixture } from './fixtures/retry-scenarios.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
 import { CELEBRATION_SECONDS } from '../ui/celebration.mjs';
@@ -67,8 +68,9 @@ async function win(t, { reduced = false, readPads, beforeFrame } = {}) {
     page.$('reduced-effects').checked = true;
     page.$('reduced-effects').emit('change');
   }
-  page.$('start-button').click();
-  await settle(() => page.doc.body.dataset.flightState === 'running');
+  assert.equal(page.$('game-overlay').hidden, false);
+  await activateHostAction(page.$('start-button'));
+  assert.equal(page.doc.body.dataset.flightState, 'running');
   page.key('ArrowDown');
   page.key('ArrowDown', false);
   for (let tick = 0; tick < 900 && page.rendered.run.status === 'running'; tick++) {

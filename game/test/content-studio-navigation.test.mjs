@@ -72,7 +72,13 @@ for (const prefix of [
             studio: `${prefix}game/studio/?journey=${journey}`,
           });
         }
-    assert.equal(WORKSHOP_TOOLS.length, 9, 'No duplicate or aliased Workshop opener.');
+    assert.equal(WORKSHOP_TOOLS.length, 10);
+    assert.equal(
+      new Set(WORKSHOP_TOOLS.map((tool) => tool.id)).size,
+      10,
+      'No duplicate Workshop opener.',
+    );
+    assert.ok(WORKSHOP_TOOLS.some((tool) => tool.id === 'controller-lab'));
     assert.equal(
       workshopToolHref(`${prefix}game/?journey=opening`, 'playground'),
       `${prefix}game/playground/?journey=opening`,
