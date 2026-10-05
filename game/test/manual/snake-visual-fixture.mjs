@@ -9,10 +9,24 @@ import { drawClassicBoard } from '../../snake/classic-view.mjs';
 import { classicSignalStrength } from '../../snake/classic-signal-view.mjs';
 import { resolveClassicBoardScene, classicSceneBackdrop } from '../../snake/classic-scenes.mjs';
 
-export function selectSnakeVisualProof(proofs, { mode = 'solo', signal = 'local' } = {}) {
+export function selectSnakeVisualProof(
+  proofs,
+  { mode = 'solo', signal = 'local', scenario = 'intro' } = {},
+) {
   const levelId =
-    signal === 'broadcast' ? 'classic-field-quiet-channel' : 'classic-field-quiet-return';
-  const pace = mode === 'team' && signal === 'broadcast' ? 'slow' : 'normal';
+    signal === 'broadcast'
+      ? 'classic-field-quiet-channel'
+      : scenario === 'tracking' && mode !== 'team'
+        ? 'classic-field-field-links'
+        : 'classic-field-quiet-return';
+  const pace =
+    scenario === 'tracking'
+      ? mode === 'team' || signal === 'local'
+        ? 'slow'
+        : 'normal'
+      : mode === 'team' && signal === 'broadcast'
+        ? 'slow'
+        : 'normal';
   const proof = proofs.find(
     (row) =>
       row.levelId === levelId &&
@@ -34,13 +48,20 @@ export function createSnakeVisualFixture(proof, mode = proof.mode) {
     seed: replay.seed,
     hazardSeed: replay.hazardSeed,
   });
-  let cursor = 0;
+  let cursor = 0,
+    manual = false;
   return {
     match,
+    takeControls() {
+      manual = true;
+    },
+    turn(direction, seat = 0) {
+      return manual && queueClassicSnakeMatchTurn(match, seat, direction);
+    },
     step() {
       if (match.status !== 'running') return false;
       const tick = match.runs[0].tick;
-      while (replay.turns[cursor]?.tick === tick) {
+      while (!manual && replay.turns[cursor]?.tick === tick) {
         const turn = replay.turns[cursor++];
         const seats = mode === 'versus' ? [0, 1] : [turn.playerId];
         for (const seat of seats)
@@ -60,31 +81,51 @@ export function createSnakeVisualFixture(proof, mode = proof.mode) {
   };
 }
 
+export function seekSnakeVisualScenario(
+  driver,
+  { mode = 'solo', signal = 'local', scenario = 'intro' } = {},
+) {
+  if (scenario !== 'tracking') return driver.seekBurst();
+  // Reviewed boundaries in exact verified journals; distant prey or cable
+  // is already present. Never edit simulation state to stage the comparison.
+  const tick = signal === 'broadcast' ? (mode === 'team' ? 28 : 56) : mode === 'team' ? 81 : 34;
+  while (driver.match.runs[0].tick < tick && driver.step()) {}
+  return driver.active();
+}
+
 async function mountFixture() {
   const { document, location, devicePixelRatio, requestAnimationFrame } = globalThis;
   const $ = (id) => document.getElementById(id);
   const query = new URLSearchParams(location.search);
-  for (const id of ['mode', 'signal', 'style', 'scene'])
+  for (const id of ['mode', 'signal', 'style', 'scene', 'treatment', 'scenario'])
     if (query.has(id)) $(id).value = query.get(id);
   if (query.get('reduced') === '1') $('reduced').checked = true;
   const { proofs } = await (await fetch('../fixtures/classic-snake-v4-proofs.json')).json();
   let driver,
     proof,
     playing = false,
+    manual = false,
     accumulated = 0,
     clock = 0,
     previous;
   const cards = [];
   function setPlaying(value) {
+    // Steering an already-running route must not grant extra reaction time.
+    if (playing !== value) accumulated = 0;
     playing = value;
-    accumulated = 0;
-    $('play').textContent = value ? 'Pause' : 'Play verified route';
+    $('play').textContent = value ? 'Pause' : manual ? 'Play your route' : 'Play verified route';
     $('play').setAttribute('aria-pressed', String(value));
   }
   function reset(seek = true) {
+    manual = false;
+    $('take-controls').setAttribute('aria-pressed', 'false');
     setPlaying(false);
     clock = 0;
-    proof = selectSnakeVisualProof(proofs, { mode: $('mode').value, signal: $('signal').value });
+    proof = selectSnakeVisualProof(proofs, {
+      mode: $('mode').value,
+      signal: $('signal').value,
+      scenario: $('scenario').value,
+    });
     driver = createSnakeVisualFixture(proof, $('mode').value);
     cards.length = 0;
     $('boards').replaceChildren();
@@ -101,9 +142,12 @@ async function mountFixture() {
       $('boards').append(card);
       cards.push({ card, canvas, status });
     }
-    if (seek) driver.seekBurst();
-    $('evidence').textContent =
-      `${proof.replay.level.name} · ${proof.mode} ${proof.pace} proof · level seed ${proof.seed} · hazard seed ${proof.replay.hazardSeed}. ${$('mode').value === 'versus' ? 'Both real match boards follow the same verified Solo journal.' : 'Production match engine follows the exact verified journal.'}`;
+    if (seek)
+      seekSnakeVisualScenario(driver, {
+        mode: $('mode').value,
+        signal: $('signal').value,
+        scenario: $('scenario').value,
+      });
     render();
   }
   function render() {
@@ -122,6 +166,7 @@ async function mountFixture() {
         boardScene: $('scene').value,
         chapterId: 'classic-snake-signal-tactics',
         reduced: $('reduced').checked,
+        signalTreatment: $('treatment').value,
         flight: { timeMs: clock },
         cssWidth: canvas.clientWidth || 672,
         pixelRatio: devicePixelRatio,
@@ -131,11 +176,15 @@ async function mountFixture() {
     });
     $('step').disabled = driver.match.status !== 'running';
     $('play').disabled = driver.match.status !== 'running';
+    $('steering').hidden = !manual;
+    $('evidence').textContent =
+      `${proof.replay.level.name} · ${proof.mode} ${proof.pace} proof · level seed ${proof.seed} · hazard seed ${proof.replay.hazardSeed}. ${manual ? 'Manual continuation from a verified recording; no save, record or award is produced.' : $('mode').value === 'versus' ? 'Both real match boards follow the same verified Solo journal.' : 'Production match engine follows the exact verified journal.'}`;
     $('state').textContent =
-      `${playing ? 'Playing' : 'Paused at an exact simulation boundary'} · ${driver.active() ? 'active interference' : 'clear reception'}`;
+      `${playing ? 'Playing' : 'Paused at an exact simulation boundary'} · ${driver.active() ? 'active interference' : 'clear reception'}${manual ? ' · You steer Player 1. Reset returns to the verified route.' : ''}`;
   }
-  for (const id of ['mode', 'signal']) $(id).addEventListener('change', () => reset());
-  for (const id of ['style', 'scene', 'reduced']) $(id).addEventListener('change', render);
+  for (const id of ['mode', 'signal', 'scenario']) $(id).addEventListener('change', () => reset());
+  for (const id of ['style', 'scene', 'reduced', 'treatment'])
+    $(id).addEventListener('change', render);
   $('seek').addEventListener('click', () => reset());
   $('reset').addEventListener('click', () => reset(false));
   $('step').addEventListener('click', () => {
@@ -145,6 +194,33 @@ async function mountFixture() {
     render();
   });
   $('play').addEventListener('click', () => setPlaying(!playing));
+  $('take-controls').addEventListener('click', () => {
+    manual = true;
+    driver.takeControls();
+    $('take-controls').setAttribute('aria-pressed', 'true');
+    setPlaying(false);
+    render();
+  });
+  for (const button of $('steering').querySelectorAll('button'))
+    button.addEventListener('click', () => {
+      if (driver.turn(button.dataset.direction)) setPlaying(true);
+    });
+  document.addEventListener('keydown', (event) => {
+    if (!manual || event.repeat || /^(INPUT|SELECT|TEXTAREA)$/.test(event.target?.tagName)) return;
+    const direction = {
+      ArrowUp: 'up',
+      ArrowRight: 'right',
+      ArrowDown: 'down',
+      ArrowLeft: 'left',
+      w: 'up',
+      d: 'right',
+      s: 'down',
+      a: 'left',
+    }[event.key];
+    if (!direction) return;
+    event.preventDefault();
+    if (driver.turn(direction)) setPlaying(true);
+  });
   document.addEventListener('visibilitychange', () => {
     if (document.hidden) setPlaying(false);
   });

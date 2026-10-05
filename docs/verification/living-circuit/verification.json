@@ -3,7 +3,7 @@
   "date": "2026-10-05",
   "baseMain": "2d447bc790bdf3951251c99041c8a918363ece0a",
   "branch": "codex/snake-continuous-play",
-  "scope": "Implementation revision 8b34e111fe7cf7e7fcaf538fe7c51cea4a6c1fa1; no published deployment or physical-controller certification",
+  "scope": "Living Circuit implementation and tracking-treatment follow-up; distribution source revision is recorded separately; no published deployment or physical-controller certification",
   "validation": {
     "repositoryValidate": true,
     "repositoryLint": true,
@@ -21,7 +21,9 @@
     "optionalPackageTests": 9,
     "ciFollowupTargetedTests": 131,
     "statisticsLifecycleTests": 23,
-    "studioPreviewIsolationTests": 4
+    "studioPreviewIsolationTests": 4,
+    "trackingFollowupTargetedTests": 81,
+    "trackingFixtureAcceptedScenarios": 12
   },
   "distribution": {
     "sourceRevision": "8b34e111fe7cf7e7fcaf538fe7c51cea4a6c1fa1",
@@ -89,5 +91,31 @@
   },
   "remainingVerification": [
     "Physical touch/controller sessions and human balance calibration across variable schedules remain separate from deterministic and browser tests."
-  ]
+  ],
+  "jammingComparison": {
+    "researchAndMeasurements": "jamming-comparison.md",
+    "treatments": ["baseline", "snow-only", "contrast-loss"],
+    "selected": "contrast-loss",
+    "retainedDistantActorContrast": {
+      "localEdge": 0.463,
+      "midRange": 0.406,
+      "broadcast": 0.35
+    },
+    "protectedNeighborhoodContrast": 1,
+    "measurementScope": "Paired synthetic actor/no-actor images over 12 noise frames; not human difficulty calibration",
+    "browser": [
+      "Broadcast Solo Quiet Channel move 56",
+      "Reduced-effects live movement through moves 57–59",
+      "Manual steering during broadcast burst",
+      "Local Field Links move 34 interference to move 37 recovery",
+      "Broadcast Team move 28 at 320×640; 290px board and no horizontal overflow"
+    ],
+    "screenshots": [
+      "jamming-original.jpg",
+      "jamming-snow-trial.jpg",
+      "jamming-contrast-loss.jpg",
+      "jamming-mobile-team.jpg"
+    ],
+    "independentReview": "Fixed repeated steering resetting fixture time and paused receiver refresh after asynchronous wall-art arrival; renderer regression passes."
+  }
 }

@@ -10,6 +10,8 @@ import {
 } from '../snake/classic-core.mjs';
 import { drawClassicBoard } from '../snake/classic-view.mjs';
 import {
+  captureClassicSignalTerrain,
+  classicSignalBlend,
   classicSignalStrength,
   classicSignalPixels,
   drawClassicSignalInterference,
@@ -260,21 +262,22 @@ test('receiver sampling cache refreshes the live board for changed ticks in redu
   advanceTo(run, 'jamming');
   const signal = classicSnakeSignalView(run);
   signal.sources[0].radius = null;
-  drawClassicSignalInterference({ drawImage() {} }, canvas, run, signal, { reduced: true });
+  const ctx = new Proxy({}, { get: (target, key) => target[key] ?? (() => {}) });
+  drawClassicSignalInterference(ctx, canvas, run, signal, { reduced: true });
   const first = output;
   current = 180;
   run.tick++;
-  drawClassicSignalInterference({ drawImage() {} }, canvas, run, signal, { reduced: true });
+  drawClassicSignalInterference(ctx, canvas, run, signal, { reduced: true });
   assert.equal(sampled, 2);
   assert.notDeepEqual(output, first);
   assert.ok(scratch.width <= 320 && scratch.height <= 320);
   const options = { reduced: true, visualKey: 'orchard/art-v1' };
-  drawClassicSignalInterference({ drawImage() {} }, canvas, run, signal, options);
+  drawClassicSignalInterference(ctx, canvas, run, signal, options);
   assert.equal(sampled, 3);
-  drawClassicSignalInterference({ drawImage() {} }, canvas, run, signal, options);
+  drawClassicSignalInterference(ctx, canvas, run, signal, options);
   assert.equal(sampled, 3, 'unchanged paused appearance reuses receiver sample');
   current = 75;
-  drawClassicSignalInterference({ drawImage() {} }, canvas, run, signal, {
+  drawClassicSignalInterference(ctx, canvas, run, signal, {
     ...options,
     visualKey: 'workshop/art-v2',
   });
@@ -308,7 +311,7 @@ test('danger destination outlines are painted at native resolution after receive
   run.projectiles = [{ x: 2, y: 6, heading: 'right' }];
   const { calls } = render(run);
   const receiver = calls.findLastIndex(
-    ([method, , , width, height]) => method === 'fillRect' && width === 24 * 28 && height === 1,
+    ([method, , , width, height]) => method === 'fillRect' && width === 14 && height === 7,
   );
   const destination = calls.findLastIndex(
     ([method, x, y, width, height]) =>
@@ -320,4 +323,245 @@ test('danger destination outlines are painted at native resolution after receive
   );
   assert.ok(receiver > 0, 'a real active receiver treatment is present');
   assert.ok(destination > receiver, 'danger outline is crisp above the processed feed');
+});
+
+function contrastGain({
+  treatment,
+  strength = 1,
+  reduced = false,
+  frame = 0,
+  protectedTarget = false,
+}) {
+  const width = 160,
+    height = 120;
+  const terrain = pixels(width, height, [100, 100, 100]);
+  const actor = new Uint8ClampedArray(terrain);
+  const left = protectedTarget ? 25 : 100,
+    top = protectedTarget ? 25 : 70;
+  for (let y = top; y < top + 20; y++)
+    for (let x = left; x < left + 20; x++) {
+      const at = (y * width + x) * 4;
+      actor[at] = actor[at + 1] = actor[at + 2] = 180;
+    }
+  const options = {
+    terrain,
+    treatment,
+    strength,
+    reduced,
+    frame,
+    seed: 93,
+    columns: 16,
+    rows: 12,
+    heads: [{ x: 3, y: 3 }],
+  };
+  const empty = classicSignalPixels(terrain, width, height, options);
+  const occupied = classicSignalPixels(actor, width, height, options);
+  let delta = 0;
+  for (let y = top; y < top + 20; y++)
+    for (let x = left; x < left + 20; x++) {
+      const at = (y * width + x) * 4;
+      delta += Math.abs(occupied[at] - empty[at]);
+    }
+  return delta / (20 * 20 * 80);
+}
+
+test('contrast loss removes duplicate distant actor information rather than merely adding snow', () => {
+  for (const reduced of [false, true])
+    for (const strength of [0.25, 0.625, 1])
+      for (const frame of [0, 3, 7, 11]) {
+        const options = { strength, reduced, frame };
+        const baseline = contrastGain({ ...options, treatment: 'baseline' });
+        const snow = contrastGain({ ...options, treatment: 'snow-only' });
+        const selected = contrastGain({ ...options, treatment: 'contrast-loss' });
+        const liveFraction = 1 - classicSignalBlend(strength);
+        assert.ok(
+          Math.abs(selected - liveFraction) < 0.0125,
+          `only live ${liveFraction} carries distant actor detail: ${selected}`,
+        );
+        assert.ok(selected < baseline - 0.3);
+        assert.ok(selected < snow - 0.2, 'snow alone leaves substantially more actor structure');
+        assert.equal(
+          contrastGain({ ...options, treatment: 'contrast-loss', protectedTarget: true }),
+          1,
+        );
+      }
+  assert.ok(classicSignalBlend(0.25) >= 0.5, 'the coverage edge already changes distant tracking');
+  assert.equal(classicSignalBlend(0), 0);
+  assert.equal(classicSignalBlend(1), 0.65);
+});
+
+test('selected reduced effects retains the same distant contrast limit with a stationary mask', () => {
+  const terrain = pixels(64, 48, [30, 70, 90]);
+  const live = pixels(64, 48, [180, 140, 80]);
+  const options = { terrain, seed: 27, columns: 16, rows: 12, reduced: true };
+  const first = classicSignalPixels(live, 64, 48, { ...options, frame: 1 });
+  assert.deepEqual(first, classicSignalPixels(live, 64, 48, { ...options, frame: 7 }));
+  assert.notDeepEqual(
+    first,
+    classicSignalPixels(terrain, 64, 48, options),
+    'the untouched live fraction still updates inside the stationary mask',
+  );
+});
+
+function canvasReceiver({ readFailure = false } = {}) {
+  let current = 30,
+    sampled = 0,
+    output;
+  const surface = {
+    width: 0,
+    height: 0,
+    getContext: () => ({
+      drawImage() {
+        sampled++;
+      },
+      getImageData: (x, y, width, height) => {
+        if (readFailure) throw new Error('Tainted custom skin');
+        return { data: pixels(width, height, [current, current, current]) };
+      },
+      putImageData(image) {
+        output = new Uint8ClampedArray(image.data);
+      },
+    }),
+  };
+  const canvas = { width: 2016, height: 1512, ownerDocument: { createElement: () => surface } };
+  const calls = [];
+  const ctx = new Proxy(
+    {},
+    {
+      get: (target, key) =>
+        target[key] ?? ((...args) => calls.push([key, ...args, target.globalAlpha])),
+    },
+  );
+  return {
+    canvas,
+    ctx,
+    calls,
+    current(value) {
+      current = value;
+    },
+    get sampled() {
+      return sampled;
+    },
+    get output() {
+      return output;
+    },
+  };
+}
+
+test('current terrain capture excludes actors and expires on tick, appearance, and run identity', () => {
+  const receiver = canvasReceiver();
+  const run = createClassicSnake(level, { hazardSeed: 17 });
+  advanceTo(run, 'jamming');
+  const signal = classicSnakeSignalView(run);
+  signal.sources[0].radius = null;
+  const options = { reduced: true, visualKey: 'workshop' };
+  receiver.current(30);
+  captureClassicSignalTerrain(receiver.canvas, run, options);
+  receiver.current(180);
+  drawClassicSignalInterference(receiver.ctx, receiver.canvas, run, signal, options);
+  const first = receiver.output;
+  assert.equal(receiver.sampled, 2);
+  captureClassicSignalTerrain(receiver.canvas, run, options);
+  drawClassicSignalInterference(receiver.ctx, receiver.canvas, run, signal, options);
+  assert.equal(receiver.sampled, 2, 'an unchanged accepted tick reuses the current terrain');
+  run.tick++;
+  drawClassicSignalInterference(receiver.ctx, receiver.canvas, run, signal, options);
+  assert.notDeepEqual(receiver.output, first, 'an expired terrain frame cannot be reused');
+  receiver.current(70);
+  captureClassicSignalTerrain(receiver.canvas, run, options);
+  receiver.current(180);
+  drawClassicSignalInterference(receiver.ctx, receiver.canvas, run, signal, options);
+  const changed = receiver.output;
+  assert.notDeepEqual(changed, first, 'terrain changes arrive in the next accepted tick');
+  drawClassicSignalInterference(receiver.ctx, receiver.canvas, run, signal, {
+    ...options,
+    visualKey: 'orchard',
+  });
+  assert.notDeepEqual(receiver.output, changed, 'appearance changes invalidate the old terrain');
+  const replacement = structuredClone(run);
+  drawClassicSignalInterference(receiver.ctx, receiver.canvas, replacement, signal, options);
+  assert.notDeepEqual(receiver.output, changed, 'a new run cannot inherit the old terrain');
+});
+
+test('native composition leaves overlapping Team neighbourhoods and wrap seams untouched', () => {
+  const receiver = canvasReceiver();
+  const run = createClassicSnake(level, { hazardSeed: 17 });
+  run.level = { ...run.level, wrap: true };
+  run.snakes = [
+    { alive: true, body: [{ x: 0, y: 0 }] },
+    { alive: true, body: [{ x: 1, y: 1 }] },
+  ];
+  const source = { x: 10, y: 8, phase: 'jamming', radius: null };
+  drawClassicSignalInterference(receiver.ctx, receiver.canvas, run, {
+    active: true,
+    sources: [source],
+  });
+  const rectangles = receiver.calls.filter(([method]) => method === 'rect');
+  const covered = (x, y) =>
+    rectangles.some(
+      ([, left, top, width, height]) =>
+        (x + 0.5) * 28 >= left &&
+        (x + 0.5) * 28 < left + width &&
+        (y + 0.5) * 28 >= top &&
+        (y + 0.5) * 28 < top + height,
+    );
+  for (const [x, y] of [
+    [0, 0],
+    [1, 1],
+    [3, 3],
+    [23, 17],
+    [22, 16],
+    [10, 8],
+  ])
+    assert.equal(covered(x, y), false, `native protected cell ${x},${y} stays sharp`);
+  assert.equal(covered(12, 12), true);
+  const draws = receiver.calls.filter(([method]) => method === 'drawImage');
+  assert.equal(draws.length, 1, 'only the processed layer is drawn over the native live field');
+  assert.equal(draws[0].at(-1), 0.65, 'the clean native feed retains its full 35% contribution');
+});
+
+test('readback failure uses equally bounded procedural interference without a weak stripe bypass', () => {
+  for (const preCapture of [false, true]) {
+    const receiver = canvasReceiver({ readFailure: true });
+    const run = createClassicSnake(level, { hazardSeed: 17 });
+    const signal = { active: true, sources: [{ x: 10, y: 8, phase: 'jamming', radius: null }] };
+    if (preCapture) captureClassicSignalTerrain(receiver.canvas, run);
+    assert.doesNotThrow(() =>
+      drawClassicSignalInterference(receiver.ctx, receiver.canvas, run, signal),
+    );
+    const fills = receiver.calls.filter(([method]) => method === 'fillRect');
+    assert.ok(fills.length > 0);
+    assert.ok(fills.every((call) => call.at(-1) === 0.65));
+    assert.equal(
+      fills.reduce((area, [, , , width, height]) => area + width * height, 0),
+      run.level.width * run.level.height * 28 * 28,
+      'receiver rectangles cover the board once, so opacity cannot compound below the live floor',
+    );
+    assert.ok(
+      receiver.calls.findIndex(([method]) => method === 'clip') <
+        receiver.calls.findIndex(([method]) => method === 'fillRect'),
+      'native safety clip applies to fallback',
+    );
+  }
+});
+
+test('paused receiver refreshes when asynchronous wall artwork becomes available', () => {
+  const run = createClassicSnake(level, { hazardSeed: 17 });
+  advanceTo(run, 'jamming');
+  const receiver = canvasReceiver();
+  receiver.canvas.getContext = () => receiver.ctx;
+  receiver.canvas.style = {};
+  let wall = null;
+  const presentation = { image: () => wall };
+  drawClassicBoard(receiver.canvas, run, { presentation, reduced: true });
+  const sampled = receiver.sampled;
+  drawClassicBoard(receiver.canvas, run, { presentation, reduced: true });
+  assert.equal(receiver.sampled, sampled, 'same paused image reuses its receiver');
+  wall = { width: 32, height: 32 };
+  drawClassicBoard(receiver.canvas, run, { presentation, reduced: true });
+  assert.equal(
+    receiver.sampled,
+    sampled + 2,
+    'asset arrival refreshes both terrain and live receiver',
+  );
 });
