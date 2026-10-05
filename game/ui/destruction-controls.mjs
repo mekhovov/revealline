@@ -38,7 +38,8 @@ export function attachDestructionControls({
     return control;
   };
   const brutal = input('brutal-destruction', 'brutal'),
-    blood = input('blood-body-parts', 'blood');
+    blood = input('blood-body-parts', 'blood'),
+    vocals = input('humanoid-reactions', 'humanoidReactions');
   const help = doc.createElement('p');
   help.className = 'micro-note';
   localizedText(help, () => huntText('brutalHelp'));
@@ -77,6 +78,8 @@ export function attachDestructionControls({
     brutal.checked = choice.brutal;
     blood.checked = choice.blood;
     blood.disabled = !choice.brutal;
+    vocals.checked = choice.vocals;
+    vocals.disabled = !choice.brutal;
     status.hidden = retry.hidden = choice.durable;
     localizedText(status, () => (choice.durable ? '' : huntText('saving')));
     stopPreview();
@@ -90,6 +93,7 @@ export function attachDestructionControls({
   const unsubscribe = preferences.subscribe(render);
   const chooseBrutal = () => preferences.set({ brutal: brutal.checked });
   const chooseBlood = () => preferences.set({ blood: blood.checked });
+  const chooseVocals = () => preferences.set({ vocals: vocals.checked });
   const save = () => preferences.retry();
   const animate = () => {
     stopPreview();
@@ -134,6 +138,7 @@ export function attachDestructionControls({
   };
   brutal.addEventListener('change', chooseBrutal);
   blood.addEventListener('change', chooseBlood);
+  vocals.addEventListener('change', chooseVocals);
   retry.addEventListener('click', save);
   preview.addEventListener('click', animate);
   win?.addEventListener?.('pagehide', stopPreview);
@@ -146,6 +151,7 @@ export function attachDestructionControls({
       preferences.dispose();
       brutal.removeEventListener('change', chooseBrutal);
       blood.removeEventListener('change', chooseBlood);
+      vocals.removeEventListener('change', chooseVocals);
       retry.removeEventListener('click', save);
       preview.removeEventListener('click', animate);
       win?.removeEventListener?.('pagehide', stopPreview);

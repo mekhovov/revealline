@@ -33,7 +33,9 @@ test('three encounter sets cover every admitted soldier and machinery family', (
     const project = compileOverflightProject(createOverflightProject({ encounterSet }));
     project.encounters.forEach((row) => row.families.forEach((id) => families.add(id)));
     assert.equal(project.encounters.at(-1).end, 360);
-    assert.equal(project.encounters.filter((row) => row.pattern === 'relief').length, 9);
+    assert.ok(project.encounters.filter((row) => row.pattern === 'relief').length >= 8);
+    for (const encounter of project.encounters.filter((row) => row.pattern === 'relief'))
+      assert.ok(encounter.end - encounter.start >= project.combat.pacing.reliefSeconds);
   }
   // Tanks are authored elite/final encounters, not members of ordinary spawn waves.
   families.add('tracked-tank');

@@ -1,3 +1,6 @@
+import { createHumanReactionPolicy } from '../../game/ui/human-reaction-policy.mjs';
+import { HUMAN_REACTION_BANK } from '../../game/audio/human-reactions/portable.mjs';
+import { destructionBufferGain } from '../../game/ui/destruction-level.mjs';
 import { DEFAULT_DIALOGUE_VOLUME, DIALOGUE_MIX_GAIN } from '../../game/audio/dialogue-mix.mjs';
 import {
   createGameAudioContext,
@@ -12,7 +15,7 @@ import { encounterSoundRecipe, actorPhaseSound } from '../../game/ui/encounter-a
 import { readMovementAudio, MOVEMENT_AUDIO_KEY } from '../../game/ui/movement-audio.mjs';
 import { dialogueChannel } from '../../game/ui/dialogue-channel.mjs';
 
-/** Optional presentation-only sound. No media requests or gameplay clocks. */
+/** Optional presentation-only sound. Embedded CC0 vocals decode on activation; no media requests or gameplay clocks. */
 const PREFERENCE = 'revealline.fpv.world-audio.v1';
 const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
 const AMBIENCES = {
@@ -52,6 +55,9 @@ export function createWorldAudio(options = {}) {
   let dialogue = { enabled: false, volume: DEFAULT_DIALOGUE_VOLUME };
   let dialogueVoice = null;
   const effects = new Set();
+  const humanReactions = createHumanReactionPolicy();
+  const humanBuffers = new Map();
+  let preparingHumans = false;
   const audioMaster = options.audioMaster ?? createAudioMaster();
   const preferences =
     options.audioPreferences ??
@@ -111,6 +117,77 @@ export function createWorldAudio(options = {}) {
     effects.clear();
   }
 
+  function prepareHumans() {
+    if (
+      preparingHumans ||
+      !context?.decodeAudioData ||
+      options.getDestruction?.()?.brutal !== true ||
+      options.getDestruction?.()?.vocals === false
+    )
+      return;
+    preparingHumans = true;
+    for (const [name, clip] of Object.entries(HUMAN_REACTION_BANK)) {
+      const bytes = Uint8Array.from(atob(clip.base64), (character) => character.charCodeAt(0));
+      void context
+        .decodeAudioData(bytes.buffer)
+        .then((buffer) => {
+          if (!disposed)
+            humanBuffers.set(name, { buffer, gain: destructionBufferGain(name, buffer) });
+        })
+        .catch(() => {});
+    }
+  }
+  function humanReaction(details) {
+    prepareHumans();
+    if (
+      !graph ||
+      !enabled ||
+      !wanted ||
+      masterState.volume === 0 ||
+      !levels.interface ||
+      context.state !== 'running' ||
+      dialogueVoice ||
+      dialogueChannel.active ||
+      [...effects].some((effect) => effect.priority >= 5) ||
+      effects.size >= 12
+    )
+      return;
+    const name = humanReactions.request(
+      context.currentTime,
+      details,
+      [...effects].filter((effect) => effect.humanReaction).length,
+    );
+    const clip = name && humanBuffers.get(name);
+    if (!clip) return;
+    const source = context.createBufferSource(),
+      volume = context.createGain(),
+      now = context.currentTime;
+    const duration = Math.min(0.7, clip.buffer.duration);
+    source.buffer = clip.buffer;
+    volume.gain.setValueAtTime(0.45 * clip.gain, now);
+    volume.gain.setValueAtTime(0.45 * clip.gain, now + Math.max(0, duration - 0.025));
+    volume.gain.linearRampToValueAtTime(0, now + duration);
+    source.connect(volume).connect(graph.buses.interface);
+    let stopped = false;
+    const voice = {
+      humanReaction: true,
+      priority: 2,
+      stop() {
+        if (stopped) return;
+        stopped = true;
+        try {
+          source.stop();
+        } catch {}
+        source.disconnect();
+        volume.disconnect();
+        effects.delete(voice);
+      },
+    };
+    effects.add(voice);
+    source.onended = voice.stop;
+    source.start(now);
+    source.stop(now + duration);
+  }
   function silence() {
     dialogueVoice?.stop();
     if (!graph || context.state === 'closed') return;
@@ -327,6 +404,8 @@ export function createWorldAudio(options = {}) {
         (actor?.speed > 0 ? 'patroller' : 'lookout'),
       machine,
       brutal: options.getDestruction?.()?.brutal === true,
+      vocals: options.getDestruction?.()?.vocals,
+      humanoid: actor?.type === 'humanoid' ? true : undefined,
     };
   }
 
@@ -348,11 +427,17 @@ export function createWorldAudio(options = {}) {
       drive: 'drive',
     }[type];
     if (!kind) return;
-    const recipe = encounterSoundRecipe(kind, actorSoundDetails(event));
+    const details = actorSoundDetails(event);
+    const recipe = encounterSoundRecipe(kind, details);
     const now = context?.currentTime ?? 0;
     const cueKey = kind === 'catch' ? `catch:${recipe.category}` : kind;
     if (now - (recentCues.get(cueKey) ?? -Infinity) < (recipe.cooldown ?? 0.12)) return;
     recentCues.set(cueKey, now);
+    if (recipe.priority >= 5 || (type === 'fire' && !player)) {
+      humanReactions.interrupt(now);
+      for (const effect of [...effects]) if (effect.humanReaction) effect.stop();
+    }
+    if (kind === 'catch') humanReaction(details);
     if (recipe.priority >= 5 || (type === 'fire' && !player)) dialogueChannel.interrupt();
     const voice = { ...recipe.tone, priority: recipe.priority, movementCue: recipe.movement };
     if (recipe.movement) voice.gain *= levels.interface;
@@ -375,6 +460,7 @@ export function createWorldAudio(options = {}) {
         if (context.state !== 'closed') await context.suspend();
         return false;
       }
+      prepareHumans();
       return epoch === transition && context.state === 'running';
     } catch {
       return false;
@@ -538,6 +624,7 @@ export function createWorldAudio(options = {}) {
       lastStep = null;
       lastContacts = null;
       recentCues.clear();
+      humanReactions.reset();
       actorPositions.clear();
       actorPhases.clear();
       actorFamilies = new Map(
@@ -684,6 +771,7 @@ export function createWorldAudio(options = {}) {
     dispose() {
       if (disposed) return;
       disposed = true;
+      humanBuffers.clear();
       pause();
       releaseMaster();
       host.removeEventListener?.('storage', changed);

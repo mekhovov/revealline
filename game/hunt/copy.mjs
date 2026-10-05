@@ -13,6 +13,7 @@ const copy = {
     unavailable: 'This variant is not available for this mission.',
     brutal: 'Brutal enemy destruction — blood, body parts and explosions',
     blood: 'Blood and body parts',
+    humanoidReactions: 'Humanoid reaction sounds',
     brutalHelp:
       'Optional graphic pixel destruction. Hunting also works with this off. Reduced effects limits motion.',
     preview: 'Preview destruction',
@@ -48,6 +49,7 @@ const copy = {
     unavailable: 'Цей варіант недоступний для цієї місії.',
     brutal: 'Жорстоке знищення ворогів — кров, частини тіл і вибухи',
     blood: 'Кров і частини тіл',
+    humanoidReactions: 'Звуки реакцій піхоти',
     brutalHelp:
       'Необов’язкові відверті піксельні ефекти. Полювання працює й без них. Зменшені ефекти обмежують рух.',
     preview: 'Переглянути знищення',

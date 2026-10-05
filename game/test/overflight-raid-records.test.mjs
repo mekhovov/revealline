@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import {
   createOverflightHuntRecords,
   OVERFLIGHT_HUNT_RECORDS_FORMAT,
+  OVERFLIGHT_HUNT_LEGACY_RECORDS_FORMAT,
 } from '../overflight/raid-records.mjs';
 import { overflightHuntLaunchURL } from '../fpv-entry.mjs';
 import { createOverflightAudio } from '../overflight/audio.mjs';
@@ -19,8 +20,8 @@ const run = (patch = {}) => ({
   stats: { kills: 70, damageTaken: 20 },
   ...patch,
 });
-function memory() {
-  let state = { format: OVERFLIGHT_HUNT_RECORDS_FORMAT, entries: {} };
+function memory(format = OVERFLIGHT_HUNT_LEGACY_RECORDS_FORMAT) {
+  let state = { format, entries: {} };
   return {
     fail: false,
     async read() {
@@ -168,4 +169,31 @@ test('Raid commentator never promises salvage on the ground and only announces f
     events.map((event) => event.type),
     ['overflight.hunt-cleared', 'overflight.hunt-rush'],
   );
+});
+
+test('V2 records write durably beside untouched legacy history and isolate difficulty', async () => {
+  const legacyBackend = memory(),
+    backend = memory(OVERFLIGHT_HUNT_RECORDS_FORMAT);
+  const records = createOverflightHuntRecords({ backend, legacyBackend });
+  await records.record(run());
+  const original = await legacyBackend.read();
+  const revised = run({
+    compiled: {
+      format: 'OverflightHuntCompiledV2',
+      projectIdentity: '1234567890abcdef',
+      difficulty: 'standard',
+    },
+    difficulty: 'standard',
+    time: 90,
+  });
+  assert.equal((await records.read(revised)).bestScore, null);
+  assert.equal((await records.record(revised)).durable, true);
+  assert.equal((await records.read(revised)).fastestClear.time, 90);
+  assert.equal((await records.read({ ...revised, difficulty: 'veteran' })).fastestClear, null);
+  assert.equal((await records.read(run())).fastestClear.time, 200);
+  assert.deepEqual(await legacyBackend.read(), original);
+  records.dispose();
+  const reopened = createOverflightHuntRecords({ backend, legacyBackend });
+  assert.equal((await reopened.read(revised)).fastestClear.time, 90);
+  assert.equal((await reopened.read(run())).fastestClear.time, 200);
 });

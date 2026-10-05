@@ -82,10 +82,12 @@ export function mountModeChoices({
   const overflight = modeActions.overflight ?? document.createElement('a');
   overflight.id ||= `${current}-overflight`;
   overflight.dataset.overflightEntry = 'true';
-  const overflightURL = () => overflightLaunchURL(
-    document.defaultView?.location?.href ?? globalThis.location?.href,
-    getLocale(), getAppearanceDefault(),
-  );
+  const overflightURL = () =>
+    overflightLaunchURL(
+      document.defaultView?.location?.href ?? globalThis.location?.href,
+      getLocale(),
+      getAppearanceDefault(),
+    );
   const enterOverflight = (event) => {
     const href = overflightURL();
     if (!href) return event.preventDefault();

@@ -45,8 +45,8 @@ function paintContext() {
   return { context, calls };
 }
 
-test('all eighteen Raid upgrades compare live rank parameters without changing the build', () => {
-  assert.equal(examples().length, 18);
+test('every Raid upgrade compare live rank parameters without changing the build', () => {
+  assert.equal(examples().length, HUNT_UPGRADE_IDS.length * 2);
   for (const { offer, build } of examples()) {
     const before = structuredClone(build),
       model = overflightHuntPreviewModel(offer);
