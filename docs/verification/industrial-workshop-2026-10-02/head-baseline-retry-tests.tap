@@ -1,4 +1,4 @@
-# Retained historical excerpt after an ownership migration. Exact original bytes are preserved separately. Original totals and verification statements describe the original scope; this excerpt is not a current qualification or a complete test result.
+# Retained historical excerpt after an ownership migration. Exact originals are preserved separately. This excerpt is not the original complete record or a release qualification.
 
 TAP version 13
 # Subtest: first-connection: explicit Retry recovers a failed release presentation without replacing selection or automatically starting
