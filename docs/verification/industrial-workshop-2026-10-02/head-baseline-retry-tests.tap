@@ -8,7 +8,7 @@ not ok 1 - first-connection: explicit Retry recovers a failed release presentati
   error: |-
     Retry acknowledges the new preparation immediately.
     + actual - expected
-    
+
     + 'error'
     - 'preparing'
   code: 'ERR_ASSERTION'
@@ -31,7 +31,7 @@ not ok 2 - relay-yard: explicit Retry recovers a failed release presentation wit
   error: |-
     Retry acknowledges the new preparation immediately.
     + actual - expected
-    
+
     + 'error'
     - 'preparing'
   code: 'ERR_ASSERTION'
@@ -54,7 +54,7 @@ not ok 3 - cancelling a held presentation Retry fences late readiness; a fresh R
   error: |-
     Retry acknowledges the new preparation immediately.
     + actual - expected
-    
+
     + 'error'
     - 'preparing'
   code: 'ERR_ASSERTION'
@@ -77,7 +77,7 @@ not ok 4 - another failed bootstrap Retry remains actionable and a later explici
   error: |-
     Retry acknowledges the new preparation immediately.
     + actual - expected
-    
+
     + 'error'
     - 'preparing'
   code: 'ERR_ASSERTION'
@@ -100,7 +100,7 @@ not ok 5 - recovered presentation leaves explicit Neon Arcade UI skin independen
   error: |-
     Retry acknowledges the new preparation immediately.
     + actual - expected
-    
+
     + 'error'
     - 'preparing'
   code: 'ERR_ASSERTION'
@@ -148,7 +148,7 @@ not ok 11 - controller skip cannot carry held Confirm into Retry
   error: |-
     Expected values to be strictly equal:
     + actual - expected
-    
+
     + 'ready'
     - 'lost'
   code: 'ERR_ASSERTION'
