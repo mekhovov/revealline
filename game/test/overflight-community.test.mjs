@@ -14,24 +14,30 @@ import { createMemoryCommunityStateStore } from '../community/state.mjs';
 import { createCommunityPublisher } from '../community/publisher.mjs';
 import { createCreatorStore } from '../creator/installed.mjs';
 import { creatorSHA256 } from '../creator/bytes.mjs';
-import { createRequire } from 'node:module';
-const requireAuthoring = createRequire(
-  new URL('../../authoring/fpv-worlds/package.json', import.meta.url),
-);
-const { IDBFactory } = requireAuthoring('fake-indexeddb');
+import { managedIndexedDB } from './helpers/managed-idb.mjs';
+import { JOURNEY_PROFILE_DATABASE } from '../profile-database.mjs';
 
 const pack = () => createOverflightPackage(createOverflightProject({ encounterSet: 'mixed' }));
 const blobOf = (value = pack(), indent = 2) =>
   new Blob([JSON.stringify(value, null, indent)], { type: 'application/json' });
 async function installedFixture(t) {
-  const indexedDB = new IDBFactory();
+  // The shared finite model owns one database. Keep the native profile and
+  // Creator databases independent, as browsers do, without an optional Studio
+  // dependency that is absent from the root Creator CI installation.
+  const databases = new Map();
+  const indexedDB = {
+    open(name, version) {
+      if (!databases.has(name)) databases.set(name, managedIndexedDB());
+      return databases.get(name).indexedDB.open(name, version);
+    },
+  };
   const local = createOverflightLibrary({ indexedDB });
   const nativeInstalled = createCommunityNativeInstalled({ indexedDB });
   t.after(() => {
     local.dispose();
     nativeInstalled.close();
   });
-  return { indexedDB, local, nativeInstalled };
+  return { indexedDB, local, nativeInstalled, databases };
 }
 const editionOf = async (blob) => {
   const hash = await creatorSHA256(await blob.arrayBuffer());
@@ -187,4 +193,28 @@ test('existing Studio v1 installations migrate as local owners without altering 
   await local.offloadEdition(await local.reviewEditionOffload(inspected.editionId));
   assert.deepEqual(await local.load(identity), source);
   assert.equal(state.generation, 2);
+});
+
+test('failed profile transactions roll back edition installation and offload without losing a local owner', async (t) => {
+  const { local, databases } = await installedFixture(t);
+  const inspected = await inspectCommunityPackage(blobOf());
+  await local.install(inspected.pack);
+  const profile = databases.get(JOURNEY_PROFILE_DATABASE);
+  profile.failAnyPutAt = 1;
+  await assert.rejects(() => local.installEdition(inspected), { name: 'QuotaExceededError' });
+  assert.equal(await local.editionStorage(inspected.editionId), null);
+  assert.equal((await local.list())[0].localOwned, true);
+  assert.equal((await local.list())[0].communityOwned, false);
+  profile.failAnyPutAt = null;
+  await local.installEdition(inspected);
+  const review = await local.reviewEditionOffload(inspected.editionId);
+  profile.failAnyPutAt = 1;
+  await assert.rejects(() => local.offloadEdition(review), { name: 'QuotaExceededError' });
+  assert.equal((await local.editionStorage(inspected.editionId)).installed, true);
+  assert.equal(await (await local.exportEdition(inspected.editionId)).text(), inspected.text);
+  assert.equal((await local.list())[0].localOwned, true);
+  profile.failAnyPutAt = null;
+  await local.offloadEdition(await local.reviewEditionOffload(inspected.editionId));
+  assert.equal((await local.list())[0].localOwned, true);
+  assert.equal((await local.editionStorage(inspected.editionId)).offloaded, true);
 });
