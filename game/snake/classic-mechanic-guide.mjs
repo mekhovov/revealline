@@ -7,16 +7,16 @@ const guides = {
     false,
     ['Signal jammer', 'Глушник сигналу'],
     [
-      'Briefly obscures distant prey and cable after a warning. Your head, nearby collisions and the antenna remain clear.',
-      'Після попередження ненадовго приховує далекі цілі й кабель. Голова, близькі перешкоди та антена залишаються чіткими.',
+      'After a warning, briefly hides every enemy, including nearby prey and the jammer itself. Your drone, cable, terrain, danger edges and an antenna beacon remain visible.',
+      'Після попередження ненадовго приховує всіх ворогів, навіть близькі цілі й сам глушник. Дрон, кабель, місцевість, небезпечні межі й маячок антени залишаються видимими.',
     ],
     [
       'An antenna and marked radius identify a local jammer. A double antenna broadcasts across the board. Transmission arcs warn before each burst.',
       'Антена й позначений радіус указують на локальний глушник. Подвійна антена впливає на все поле. Дуги передавання попереджають перед кожним спалахом.',
     ],
     [
-      'Plan your next interception while the picture is clear. During a burst, follow the nearby safe route, leave a local transmission zone, or hunt the visible antenna. Pulse restores reception. The closer you fly to a local jammer, the more distant detail is lost; steering keeps its normal timing.',
-      'Плануйте наступне перехоплення, поки зображення чітке. Під час спалаху тримайтеся близького безпечного маршруту, вийдіть із локальної зони або ловіть видиму антену. Імпульс відновлює прийом. Чим ближче до локального глушника, тим гірше видно далекі деталі; темп керування незмінний.',
+      'Remember the next interception before a burst: hidden enemies keep moving and can turn. Leave a local transmission zone, use Pulse, or catch the jammer at its antenna beacon to reveal them. Steering keeps its normal timing; reduced effects hides the same enemies without moving noise.',
+      'Запам’ятайте наступне перехоплення до сплеску: приховані вороги рухаються й можуть повертати. Вийдіть із локальної зони, увімкніть Імпульс або спіймайте глушник біля маячка антени, щоб побачити їх. Темп керування незмінний; зменшені ефекти приховують тих самих ворогів без рухомого шуму.',
     ],
   ],
   lane: [

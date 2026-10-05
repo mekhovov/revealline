@@ -25,6 +25,7 @@ sources.push(resolve(root, 'game/test/fixtures/classic-snake-v4-proofs.json'));
 // Preserve verified grades for the five exact retired fixed-schedule recipes.
 // This frozen evidence is reverified on regeneration rather than copying rows.
 sources.push(resolve(root, 'game/test/fixtures/classic-snake-v4-archive-proofs.json'));
+sources.push(resolve(root, 'game/test/fixtures/classic-snake-field-v3-proofs.json'));
 for (const path of sources.sort()) {
   const name = relative(root, path),
     bytes = await readFile(path),

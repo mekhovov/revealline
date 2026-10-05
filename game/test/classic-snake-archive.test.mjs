@@ -56,15 +56,18 @@ function verifiedMatch(replay) {
   return match;
 }
 
-test('archived admission is bounded to nine exact official recipes and prepared variants', () => {
-  assert.equal(CLASSIC_SNAKE_ARCHIVED_LEVELS.length, 9);
+test('archived admission accepts only exact retired official recipes and prepared variants', () => {
   assert.equal(
-    CLASSIC_SNAKE_ARCHIVED_LEVELS.filter((entry) => entry.level.revision === '1').length,
-    5,
+    CLASSIC_SNAKE_ARCHIVED_LEVELS.filter((entry) => entry.level.version.endsWith('v1')).length,
+    33,
+  );
+  const identities = new Set(
+    CLASSIC_SNAKE_ARCHIVED_LEVELS.map((entry) => JSON.stringify(entry.level)),
   );
   assert.equal(
-    CLASSIC_SNAKE_ARCHIVED_LEVELS.filter((entry) => entry.level.revision === '2').length,
-    4,
+    identities.size,
+    CLASSIC_SNAKE_ARCHIVED_LEVELS.length,
+    'archives contain no duplicate recipes',
   );
   for (const previous of CLASSIC_SNAKE_ARCHIVED_LEVELS) {
     const current = CLASSIC_SNAKE_LEVELS.find((entry) => entry.id === previous.id);
@@ -72,7 +75,7 @@ test('archived admission is bounded to nine exact official recipes and prepared 
     assert.equal(classicSnakeRecipeEntries(current).length, 1);
     assert.equal(
       classicSnakeRecipeEntries(current, { allowArchive: true }).length,
-      previous.id === 'classic-field-relay-airfield' ? 2 : 3,
+      1 + CLASSIC_SNAKE_ARCHIVED_LEVELS.filter((entry) => entry.id === previous.id).length,
     );
     for (const pace of ['slow', 'normal', 'fast']) {
       const setup = { pace, targetRules: 'authored', preset: 'classic' };

@@ -1434,7 +1434,8 @@ for (const profile of ['local-burst-v1', 'local-burst-v2'])
     state.frame(1);
     assert.equal(label.dataset.reception, 'signalJammed');
     assert.match(label.textContent, /Interference/);
-    assert.match(label.getAttribute('aria-label'), /Catch the antenna enemy or leave its range/);
+    assert.match(label.getAttribute('aria-label'), /Enemies keep moving unseen/);
+    assert.match(label.getAttribute('aria-label'), /antenna beacon, leave its range, or use Pulse/);
     receptionFixtureBoard(run, { phase: 'warning' });
     state.frame(2);
     assert.equal(

@@ -4,6 +4,7 @@ import {
   stepClassicSnake,
   exportClassicSnakeReplay,
   classicSnakeUsesVariableHazards,
+  CLASSIC_SNAKE_V4_CORE,
 } from '../../snake/classic-core.mjs';
 import {
   classicSnakeContactHazardV4,
@@ -14,6 +15,14 @@ const directions = { up: [0, -1], right: [1, 0], down: [0, 1], left: [-1, 0] };
 const opposite = { up: 'down', right: 'left', down: 'up', left: 'right' };
 const key = ({ x, y }) => `${x},${y}`;
 const same = (a, b) => a.x === b.x && a.y === b.y;
+const targetsOf = (run) => run.targets ?? (run.target ? [run.target] : []);
+function destination(level, at, dx, dy) {
+  const x = at.x + dx,
+    y = at.y + dy;
+  return level.wrap
+    ? { x: (x + level.width) % level.width, y: (y + level.height) % level.height }
+    : { x, y };
+}
 function inputs(run) {
   const choices = run.snakes.map((snake) =>
     Object.keys(directions).filter((dir) => dir !== opposite[snake.direction]),
@@ -34,15 +43,15 @@ function safelyContinues(run) {
 
 function distanceToObjectives(run, snake) {
   const walls = new Set(
-    run.level.walls.filter((at) => !run.removedWalls.some((cell) => same(cell, at))).map(key),
+    run.level.walls.filter((at) => !run.removedWalls?.some((cell) => same(cell, at))).map(key),
   );
   for (const actor of run.snakes) for (const at of actor.body.slice(1, -1)) walls.add(key(at));
-  for (const gate of run.shutters) if (gate.closed) for (const at of gate.cells) walls.add(key(at));
-  const objectives = run.targets.filter(
-    (target) => target.kind !== 'relay' || target.phase === 'open',
-  );
-  for (const relay of run.relays) if (!relay.collected) objectives.push(relay);
-  for (const target of run.targets)
+  for (const gate of run.shutters ?? [])
+    if (gate.closed) for (const at of gate.cells) walls.add(key(at));
+  const targets = targetsOf(run);
+  const objectives = targets.filter((target) => target.kind !== 'relay' || target.phase === 'open');
+  for (const relay of run.relays ?? []) if (!relay.collected) objectives.push(relay);
+  for (const target of targets)
     if (target.kind === 'relay' && target.phase !== 'open') walls.add(key(target));
   const goals = new Set(objectives.map(key)),
     start = snake.body[0];
@@ -53,7 +62,7 @@ function distanceToObjectives(run, snake) {
     const at = queue[i];
     if (goals.has(key(at))) nearest = Math.min(nearest, at.distance);
     for (const [dx, dy] of Object.values(directions)) {
-      const next = { x: at.x + dx, y: at.y + dy },
+      const next = destination(run.level, at, dx, dy),
         identity = key(next);
       if (
         next.x < 0 ||
@@ -62,38 +71,67 @@ function distanceToObjectives(run, snake) {
         next.y >= run.level.height ||
         walls.has(identity) ||
         visited.has(identity) ||
-        classicSnakeHazardAtV4(run, next, at)
+        (run.version === CLASSIC_SNAKE_V4_CORE && classicSnakeHazardAtV4(run, next, at))
       )
         continue;
-      const target = run.targets.find((actor) => same(actor, next));
+      const target = targets.find((actor) => same(actor, next));
       if (target && classicSnakeContactHazardV4(run.level, target, at)) continue;
       visited.add(identity);
       queue.push({ ...next, distance: at.distance + 1 });
     }
   }
   if (!objectives.length) {
-    const policy =
-      run.level.targets.required[run.spawnedRequired % run.level.targets.required.length];
-    nearest = policy.at
+    const policies = run.level.targets?.required;
+    const policy = policies?.[run.spawnedRequired % policies.length];
+    nearest = policy?.at
       ? Math.max(0, 6 - Math.abs(start.x - policy.at.x) - Math.abs(start.y - policy.at.y))
       : 0;
   }
   return { distance: Number.isFinite(nearest) ? nearest : 200, space: visited.size };
 }
 
-/** A deterministic qualification pilot: only submits ordinary player input.
+/** A deterministic qualification pilot for v1-v4: only submits ordinary player input.
  * It is deliberately not used by gameplay or by the rating runtime. */
 export function proveClassicSnakeV4(
   level,
-  { seed = 17, hazardSeed = 17, mode = 'solo', maxSteps = 2400 } = {},
+  { seed = 17, hazardSeed = 17, mode = 'solo', maxSteps = 2400, maxBacktracks = 512 } = {},
 ) {
-  const run = createClassicSnake(level, {
+  let run = createClassicSnake(level, {
     seed,
     mode,
     ...(classicSnakeUsesVariableHazards(level) ? { hazardSeed } : {}),
   });
-  const visited = new Map();
-  while (run.status === 'running' && run.tick < maxSteps) {
+  let visited = new Map();
+  const decisions = [];
+  let backtracks = 0;
+  const apply = (input) => {
+    input.forEach((dir, playerId) => queueClassicSnakeTurn(run, playerId, dir));
+    stepClassicSnake(run);
+    for (const snake of run.snakes) {
+      const identity = `${snake.id}:${key(snake.body[0])}:${run.catches}`;
+      visited.set(identity, (visited.get(identity) ?? 0) + 1);
+    }
+  };
+  const resumeAlternative = () => {
+    while (decisions.length && backtracks < maxBacktracks) {
+      const decision = decisions.at(-1);
+      const input = decision.remaining.shift();
+      if (!decision.remaining.length) decisions.pop();
+      backtracks++;
+      // Search resumes from a state reached by real input, never by placing
+      // actors or modifying clocks. Only the winning branch is exported.
+      run = structuredClone(decision.run);
+      visited = new Map(decision.visited);
+      apply(input);
+      if (run.status !== 'lost' && safelyContinues(run)) return true;
+    }
+    return false;
+  };
+  while (run.status === 'running') {
+    if (run.tick >= maxSteps) {
+      if (resumeAlternative()) continue;
+      break;
+    }
     const ranked = [];
     for (const input of inputs(run)) {
       const candidate = structuredClone(run);
@@ -113,15 +151,18 @@ export function proveClassicSnakeV4(
       ranked.push({ score: candidate.status === 'won' ? Infinity : score, input, candidate });
     }
     ranked.sort((a, b) => b.score - a.score);
-    const best = ranked.find(({ candidate }) => safelyContinues(candidate));
-    if (!best)
+    const bestIndex = ranked.findIndex(({ candidate }) => safelyContinues(candidate));
+    if (bestIndex < 0) {
+      if (resumeAlternative()) continue;
       throw new Error(`No safe qualification move: ${level.id}/${mode}/${seed}, tick ${run.tick}`);
-    best.input.forEach((dir, playerId) => queueClassicSnakeTurn(run, playerId, dir));
-    stepClassicSnake(run);
-    for (const snake of run.snakes) {
-      const identity = `${snake.id}:${key(snake.body[0])}:${run.catches}`;
-      visited.set(identity, (visited.get(identity) ?? 0) + 1);
     }
+    const remaining = ranked.slice(bestIndex + 1).map(({ input }) => input);
+    if (remaining.length) {
+      decisions.push({ run: structuredClone(run), visited: new Map(visited), remaining });
+      // Keep search memory bounded even for a long journal.
+      if (decisions.length > 48) decisions.shift();
+    }
+    apply(ranked[bestIndex].input);
   }
   if (run.status !== 'won')
     throw new Error(

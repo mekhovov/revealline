@@ -4,7 +4,7 @@ import { createClassicTargetFacing, drawClassicTarget } from './classic-target-a
 import { drawClassicDrone, drawClassicCable } from './classic-flight-art.mjs';
 export { drawClassicTarget } from './classic-target-art.mjs';
 import { CLASSIC_SNAKE_CHAPTERS } from './classic-catalogue.mjs';
-import { classicSnakeSignalView } from './classic-core.mjs';
+import { classicSnakeSignalView, classicSnakeContactHazardV4 } from './classic-core.mjs';
 import {
   resolveClassicBoardScene,
   classicScenePalette,
@@ -13,6 +13,7 @@ import {
 } from './classic-scenes.mjs';
 import {
   captureClassicSignalTerrain,
+  classicSignalStrength,
   drawClassicSignalInterference,
   drawClassicSignalSources,
 } from './classic-signal-view.mjs';
@@ -174,19 +175,55 @@ function drawPickup(ctx, pickup) {
   ctx.restore();
 }
 
-function drawFieldMechanics(ctx, run, palette) {
+function drawConcealedContactEdges(ctx, run, target, palette) {
+  // Contact hazards stay truthful without actor silhouettes or cosmetic
+  // tracking cues. Use the simulation's pre-step lethal approach predicate.
+  const x = target.x * UNIT,
+    y = target.y * UNIT,
+    edges = [
+      [0, -1, x + 2, y + 2, x + UNIT - 2, y + 2],
+      [1, 0, x + UNIT - 2, y + 2, x + UNIT - 2, y + UNIT - 2],
+      [0, 1, x + 2, y + UNIT - 2, x + UNIT - 2, y + UNIT - 2],
+      [-1, 0, x + 2, y + 2, x + 2, y + UNIT - 2],
+    ].filter(([dx, dy]) => {
+      const from = { x: target.x + dx, y: target.y + dy };
+      if (run.level.wrap) {
+        from.x = (from.x + run.level.width) % run.level.width;
+        from.y = (from.y + run.level.height) % run.level.height;
+      }
+      return classicSnakeContactHazardV4(run.level, target, from);
+    });
+  if (!edges.length) return;
+  ctx.save();
+  ctx.strokeStyle = palette.danger;
+  ctx.lineWidth = 3;
+  ctx.setLineDash([]);
+  ctx.beginPath();
+  for (const [, , left, top, right, bottom] of edges) {
+    ctx.moveTo(left, top);
+    ctx.lineTo(right, bottom);
+  }
+  ctx.stroke();
+  ctx.restore();
+}
+
+function drawFieldMechanics(ctx, run, palette, { concealEnemies = false } = {}) {
   if (!run.relays) return;
   for (const relay of run.relays) {
     const target = run.targets.find((actor) => actor.id === relay.ownerId);
     if (!target) continue;
     ctx.save();
     ctx.strokeStyle = relay.collected ? palette.safe : palette.accent;
-    ctx.globalAlpha = 0.35;
-    ctx.setLineDash([3, 7]);
-    ctx.beginPath();
-    ctx.moveTo((target.x + 0.5) * UNIT, (target.y + 0.5) * UNIT);
-    ctx.lineTo((relay.x + 0.5) * UNIT, (relay.y + 0.5) * UNIT);
-    ctx.stroke();
+    // Pads remain route landmarks, but their cosmetic link must not disclose
+    // an otherwise concealed relay owner's current position.
+    if (!concealEnemies) {
+      ctx.globalAlpha = 0.35;
+      ctx.setLineDash([3, 7]);
+      ctx.beginPath();
+      ctx.moveTo((target.x + 0.5) * UNIT, (target.y + 0.5) * UNIT);
+      ctx.lineTo((relay.x + 0.5) * UNIT, (relay.y + 0.5) * UNIT);
+      ctx.stroke();
+    }
     ctx.globalAlpha = 1;
     ctx.setLineDash([]);
     const x = (relay.x + 0.5) * UNIT,
@@ -210,6 +247,7 @@ function drawFieldMechanics(ctx, run, palette) {
     ctx.restore();
   }
   for (const target of run.targets) {
+    if (concealEnemies) drawConcealedContactEdges(ctx, run, target, palette);
     const policy = run.level.targets.required[target.policyIndex];
     const warning = target.phase === 'warning',
       active = target.phase === 'active';
@@ -300,6 +338,9 @@ export function drawClassicBoard(
     cssWidth,
     locale = 'en',
     signalTreatment = 'contrast-loss',
+    // Explicit visual-fixture comparison only; no gameplay preference or URL
+    // setting enables the original partially visible enemy treatment.
+    signalDiagnosticOriginal = false,
   } = {},
 ) {
   const { width, height, walls, wrap } = run.level,
@@ -312,7 +353,9 @@ export function drawClassicBoard(
         ? classicScenePalette(scene)
         : (presentation?.palette ?? FALLBACK_PALETTE);
   const logicalWidth = width * UNIT,
-    logicalHeight = height * UNIT;
+    logicalHeight = height * UNIT,
+    signal = classicSnakeSignalView(run),
+    concealEnemies = !signalDiagnosticOriginal && classicSignalStrength(run, signal) > 0;
   const resolution = Math.max(
     1,
     Math.min(
@@ -368,14 +411,14 @@ export function drawClassicBoard(
       if ((x * 7 + y * 11) % 5 === 0) ctx.fillRect(x * UNIT + 8, y * UNIT + 8, 1, 1);
     }
   ctx.globalAlpha = 1;
-  if (showRemains) {
+  if (showRemains && !concealEnemies) {
     ctx.save();
     ctx.scale(UNIT / 16, UNIT / 16);
     for (const mark of classicCatchMarks(run))
       drawHuntRemains(ctx, mark, { brutal, blood, artRevision });
     ctx.restore();
   }
-  if (effects) {
+  if (effects && !concealEnemies) {
     ctx.save();
     ctx.scale(UNIT / 16, UNIT / 16);
     effects.draw(ctx);
@@ -395,21 +438,21 @@ export function drawClassicBoard(
   ctx.setLineDash(wrap ? [7, 7] : []);
   ctx.strokeRect(1.5, 1.5, logicalWidth - 3, logicalHeight - 3);
   ctx.setLineDash([]);
-  const signal = classicSnakeSignalView(run),
-    signalVisualKey = JSON.stringify([
-      boardStyle,
-      scene,
-      style,
-      cast,
-      artRevision,
-      accent,
-      brutal,
-      blood,
-      showRemains,
-      palette,
-      // Artwork may finish loading while a burst is paused at the same tick.
-      signalTerrainVersion(canvas, retro || living ? null : presentation?.image?.('terrain.wall')),
-    ]);
+  const signalVisualKey = JSON.stringify([
+    boardStyle,
+    scene,
+    style,
+    cast,
+    artRevision,
+    accent,
+    brutal,
+    blood,
+    showRemains,
+    concealEnemies,
+    palette,
+    // Artwork may finish loading while a burst is paused at the same tick.
+    signalTerrainVersion(canvas, retro || living ? null : presentation?.image?.('terrain.wall')),
+  ]);
   // Keep current terrain separate from moving actors. During a receiver
   // dropout the degraded branch must not duplicate their full live contrast.
   if (signal.active && !signal.suppressed && signalTreatment === 'contrast-loss')
@@ -417,7 +460,10 @@ export function drawClassicBoard(
   const targets = run.targets ?? (run.target ? [run.target] : []);
   if (!targetFacings.has(canvas)) targetFacings.set(canvas, createClassicTargetFacing());
   const headings = targetFacings.get(canvas)(run, attemptKey);
-  for (const target of targets) {
+  // Omit actors before receiver sampling, not merely beneath the noise. This
+  // also hides nearby enemies inside the protected head regions and prevents
+  // shadows, labels, badges, and the clean-feed fraction leaking their motion.
+  for (const target of concealEnemies ? [] : targets) {
     drawClassicTarget(
       ctx,
       target.x * UNIT,
@@ -485,6 +531,6 @@ export function drawClassicBoard(
     visualKey: signalVisualKey,
   });
   // True hazard outlines stay crisp at native resolution after receiver processing.
-  drawFieldMechanics(ctx, run, palette);
+  drawFieldMechanics(ctx, run, palette, { concealEnemies });
   drawClassicSignalSources(ctx, run, signal, { unit: UNIT, palette, locale });
 }

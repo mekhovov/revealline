@@ -19,14 +19,9 @@ export function selectSnakeVisualProof(
       : scenario === 'tracking' && mode !== 'team'
         ? 'classic-field-field-links'
         : 'classic-field-quiet-return';
-  const pace =
-    scenario === 'tracking'
-      ? mode === 'team' || signal === 'local'
-        ? 'slow'
-        : 'normal'
-      : mode === 'team' && signal === 'broadcast'
-        ? 'slow'
-        : 'normal';
+  // Slow local proofs leave time to demonstrate interference before the
+  // source is caught. Fast interception is valid counterplay in normal play.
+  const pace = signal === 'local' || mode === 'team' ? 'slow' : 'normal';
   const proof = proofs.find(
     (row) =>
       row.levelId === levelId &&
@@ -81,16 +76,30 @@ export function createSnakeVisualFixture(proof, mode = proof.mode) {
   };
 }
 
-export function seekSnakeVisualScenario(
-  driver,
-  { mode = 'solo', signal = 'local', scenario = 'intro' } = {},
-) {
+export function seekSnakeVisualScenario(driver, { scenario = 'intro' } = {}) {
   if (scenario !== 'tracking') return driver.seekBurst();
-  // Reviewed boundaries in exact verified journals; distant prey or cable
-  // is already present. Never edit simulation state to stage the comparison.
-  const tick = signal === 'broadcast' ? (mode === 'team' ? 28 : 56) : mode === 'team' ? 81 : 34;
-  while (driver.match.runs[0].tick < tick && driver.step()) {}
-  return driver.active();
+  // Find a real burst with moving prey on the board. Recipe revisions change
+  // journal lengths, so a hard-coded historical tick cannot stage this safely.
+  const movingKinds = new Set([
+    'runner',
+    'patroller',
+    'sprinter',
+    'refuge',
+    'switchback',
+    'perimeter',
+    'contour',
+    'ricochet',
+    'courier',
+  ]);
+  while (driver.match.status === 'running') {
+    if (
+      driver.active() &&
+      driver.match.runs.some((run) => run.targets?.some((target) => movingKinds.has(target.kind)))
+    )
+      return true;
+    if (!driver.step()) break;
+  }
+  return false;
 }
 
 async function mountFixture() {
@@ -167,6 +176,7 @@ async function mountFixture() {
         chapterId: 'classic-snake-signal-tactics',
         reduced: $('reduced').checked,
         signalTreatment: $('treatment').value,
+        signalDiagnosticOriginal: $('treatment').value === 'baseline',
         flight: { timeMs: clock },
         cssWidth: canvas.clientWidth || 672,
         pixelRatio: devicePixelRatio,
