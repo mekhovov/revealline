@@ -34,8 +34,8 @@ P1 parent worker and the new worker against their respective fixed endpoints,
 immutable pack URLs, digest checks and request limits. These are Node checks with
 an in-memory worker scope and stubbed responses, not native Worker, HTTPS, UI,
 storage or offline observations. The parent admission does not admit the changed
-cohort endpoint. Full validation passes on frozen cohort `2c99a8250`; its
-all-three/two-build admission and native qualification remain pending.
+cohort endpoint. Full validation and the all-three/two-build admission now pass
+on frozen cohort `2c99a8250`; native qualification remains pending.
 
 The P1 source contract passes 57 checks, and the two existing offline lifecycle
 and native-control suites pass all 31 checks. Projection checks, scoped lint,
@@ -54,9 +54,18 @@ preflight refused to launch because shared free space fell below the agreed
 refusal, validation logs and bounded runner are retained losslessly in
 [the qualification archive](evidence/qualification-2c99/manifest.json).
 
+After the separately authorized cleanup restored storage, retry `r2` admitted
+all three packages with two byte-identical builds and verified committed inputs
+and ZIP members. Worlds has 105 inputs/112 members, Academy 69/76 and civilian
+flight 41/48. The run's minimum free space was 6,398,509,056 bytes. The original
+refusal remains preserved. The [admission archive](evidence/admission-2c99-r2/manifest.json)
+contains the exact descriptors, inventories, checksums and run receipts; generated
+ZIPs remain at the recorded output directory. No new native fixture was staged.
+
 This checkpoint excludes newer main audio/presentation changes discovered during
-validation. It is not current-main, release-ready or native qualification; source
-integration and the missing admission remain explicit follow-up gates.
+validation. It is not current-main, release-ready or native qualification; the
+incoming integration and its final native/offline gates remain explicit follow-up
+work. No source claim extends beyond the frozen `2c99a8250` composition.
 
 The earlier 40-check source receipt in `evidence/source-contract-r3.json` belongs
 to the pre-P1 95-input, 16 MiB policy and empty-feed candidate. Its initial JSON
