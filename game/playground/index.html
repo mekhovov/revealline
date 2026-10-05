@@ -773,19 +773,25 @@
             </p>
             <p id="music-readout" class="micro-note"></p>
           </details>
-          <details>
+          <details id="recording-verification">
             <summary data-i18n="tools:replayARecordedRun">Replay a recorded run</summary>
             <p data-i18n="tools:importAnExportedReplayToCheckItsFinalSimulationSummary">
-              Import an exported replay to check its final simulation summary. Playback is a
-              verification run and grants no campaign rewards.
+              Import a Solo replay or a local Capture Team/Versus recording to check its recorded
+              result. The report states whether the full state or declared terminal observations
+              match. Wins and losses can both match. Verification grants no progress or rewards and
+              does not prove mission completion.
             </p>
             <p>
               <a
                 data-workshop-tool="replay-theater"
                 href="../replay-theater/"
                 data-i18n="tools:openReplayTheaterToWatchPauseAndStepThroughA"
-                >Open Replay Theater to watch, pause and step through a recording ↗</a
+                >Watch a Solo recording in Replay Theater ↗</a
               >
+            </p>
+            <p data-i18n="tools:multiplayerRecordingVerificationOnly">
+              Team and Versus recordings are checked here with their native rules. Replay Theater
+              currently provides visual playback for Solo recordings only.
             </p>
 
             <label class="file-button button"

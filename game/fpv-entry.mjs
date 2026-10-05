@@ -1,5 +1,8 @@
 // Same-site navigation between the regular game and its bundled simulator.
 import { saveAppearanceContext, resolveStoredAppearance } from './presentation/theme-system.mjs';
+import { nativeArtReviewURL } from './ui/art-review-navigation.mjs';
+export { nativeArtReviewURL } from './ui/art-review-navigation.mjs';
+
 export function fpvLaunchURL(href, locale = 'en', appearanceDefault = null) {
   const game = new URL(href);
   if (!['http:', 'https:', 'file:', 'capacitor:'].includes(game.protocol)) return null;
@@ -7,7 +10,7 @@ export function fpvLaunchURL(href, locale = 'en', appearanceDefault = null) {
   const target = new URL('../optional-practice/civilian-fpv/index.html', game);
   target.searchParams.set('game-return', game.pathname + game.search);
   target.searchParams.set('lang', locale === 'uk' ? 'uk' : 'en');
-  return appearanceLaunchURL(target.href, appearanceDefault);
+  return nativeArtReviewURL(appearanceLaunchURL(target.href, appearanceDefault), game.href);
 }
 
 /** Cosmetic context only. A theme pin cannot select content, assets or audience. */
@@ -87,7 +90,7 @@ export function fpvWorldLaunchURL(href, locale = 'en', appearanceDefault = null)
   target.searchParams.set('game-return', game.pathname + game.search + game.hash);
   target.searchParams.set('lang', locale === 'uk' ? 'uk' : 'en');
   target.hash = 'learn';
-  return appearanceLaunchURL(target.href, appearanceDefault);
+  return nativeArtReviewURL(appearanceLaunchURL(target.href, appearanceDefault), game.href);
 }
 
 export function fpvReturnURL(href) {
@@ -115,7 +118,7 @@ export function fpvReturnURL(href) {
       ].some((name) => target.pathname === gameRoot.pathname + name)
     )
       return null;
-    return target.href;
+    return nativeArtReviewURL(target.href, current.href);
   } catch {
     return null;
   }
@@ -144,7 +147,7 @@ export function snakeLaunchURL(href, mode = 'solo', locale = 'en', appearanceDef
   const target = new URL(`${match[1]}game/snake/play.html`, current);
   target.searchParams.set('mode', mode);
   target.searchParams.set('lang', locale === 'uk' ? 'uk' : 'en');
-  return appearanceLaunchURL(target.href, appearanceDefault);
+  return nativeArtReviewURL(appearanceLaunchURL(target.href, appearanceDefault), current.href);
 }
 
 /** Standalone SIM visits also need an exit without relying on browser chrome. */
@@ -157,6 +160,8 @@ export function fpvWorldReturnURL(href) {
   if (!match) return null;
   // A separately published practice package does not ship an arcade of its own.
   const root = match[1].replace(/practice\/fpv-worlds\/releases\/v\d+\.\d+\.\d+\/site\/$/, '');
-  return new URL(root + (root.includes('/editions/') ? 'game/company.html' : 'game/'), current)
-    .href;
+  return nativeArtReviewURL(
+    new URL(root + (root.includes('/editions/') ? 'game/company.html' : 'game/'), current).href,
+    current.href,
+  );
 }

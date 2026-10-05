@@ -1,0 +1,27 @@
+{
+  "scope": "Clean committed-source full production build and archive; not public-release qualification",
+  "sourceRevision": "48a09f3bc7c2a18094f7d7e4cf5d9020ab505ef7",
+  "sourceTree": "50d44bb0ac9c99b9f029e749284141aa503be748",
+  "version": "v0.150.0",
+  "files": 2984,
+  "sha256": "b8730e0d68f5efa55429615a62f2594e701589ec6ad21f8a19b453b79e70c8de",
+  "zipBytes": 1000030935,
+  "coreFiles": 1350,
+  "coreBytes": 66923179,
+  "coreLimitBytes": 67108864,
+  "manifestSha256": "40894bae092e040c1ab8c0969a52e729f726adff42e2629a683f4d1eadd02b44",
+  "automatedSuites": "waived-not-run",
+  "coreHeadroomBytes": 185685,
+  "archiveInspection": {
+    "scope": "Production archive member inspection; no automated suites or public qualification",
+    "sourceRevision": "48a09f3bc7c2a18094f7d7e4cf5d9020ab505ef7",
+    "sourceTree": "50d44bb0ac9c99b9f029e749284141aa503be748",
+    "members": 2985,
+    "uncompressedBytes": 999523043,
+    "sha256": "b8730e0d68f5efa55429615a62f2594e701589ec6ad21f8a19b453b79e70c8de",
+    "exactMemberSet": true,
+    "allMemberBytesAndHashesMatch": true,
+    "crcChecksPassed": true,
+    "automatedSuites": "waived-not-run"
+  }
+}

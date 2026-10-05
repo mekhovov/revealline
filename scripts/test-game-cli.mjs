@@ -182,6 +182,7 @@ test('real Git snapshot runs an older frozen entry through an aliased temp root 
   for (const relative of [
     'scripts/pack-indexes.mjs',
     'scripts/brand-icons.mjs',
+    'scripts/build-entry-writer.mjs',
     'game/data-json.mjs',
     'game/content-launch.mjs',
   ])
@@ -754,7 +755,8 @@ test('packaged offline builds generate scoped metadata, generated brand icons, c
     new URL('../game/offline.mjs', import.meta.url),
     path.join(root, 'game/offline.mjs'),
   );
-  // This packaging fixture has no immutable-version updater context.
+  // This fixture exercises the core offline cache, not the separate installed
+  // app/update sentinel. Supply its bounded update-context dependency.
   await fs.writeFile(
     path.join(root, 'game/game-updates.mjs'),
     'export function readGameUpdateContext() { return null; }\n',
@@ -1002,10 +1004,15 @@ test('compact offline catalogue and inventory preserve reader results, source te
   );
   for (const [name, source] of Object.entries(sources)) {
     if (name.startsWith('game/offline/')) continue;
-    assert.equal(await fs.readFile(path.join(out, name), 'utf8'), source, name);
+    const emitted = await fs.readFile(path.join(out, name), 'utf8');
+    // Current builds project allowlisted runtime module whitespace. The empty
+    // module fixtures retain exactly the same export; authored JSON stays exact.
+    if (source === 'export {};') assert.match(emitted, /^export\s*\{\s*\};$/, name);
+    else assert.equal(emitted, source, name);
+    assert.equal(await fs.readFile(path.join(root, name), 'utf8'), source, name);
     const record = inventory.files.find((file) => file.path === name);
-    assert.equal(record?.bytes, Buffer.byteLength(source), name);
-    assert.equal(record?.sha256, hash(Buffer.from(source)), name);
+    assert.equal(record?.bytes, Buffer.byteLength(emitted), name);
+    assert.equal(record?.sha256, hash(Buffer.from(emitted)), name);
   }
 });
 
@@ -1213,9 +1220,9 @@ test('archived packs stay downloadable with exact bytes while both navigation ca
   await assert.rejects(buildProject({ root, out }));
   assert.deepEqual(await fs.readFile(path.join(out, 'manifest.json')), before);
 });
-test('declaring an optional pack does not relax the 72 MiB core cache budget', async (t) => {
+test('declaring an optional pack does not relax the 80 MiB core cache budget', async (t) => {
   const { root, out } = await optionalPackFixture(t);
-  await fs.writeFile(path.join(root, 'game/core-payload.bin'), Buffer.alloc(72 * 1024 * 1024));
-  await assert.rejects(buildProject({ root, out }), /72 MiB/);
+  await fs.writeFile(path.join(root, 'game/core-payload.bin'), Buffer.alloc(80 * 1024 * 1024));
+  await assert.rejects(buildProject({ root, out }), /80 MiB/);
   await assert.rejects(fs.access(out));
 });
