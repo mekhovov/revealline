@@ -63,6 +63,8 @@ import { CLASSIC_COPY } from '../snake/classic-copy.mjs';
 import { advanceClassicFlight } from '../snake/classic-flight-art.mjs';
 import { t } from '../i18n/index.mjs';
 import { mountEnemyAppearanceControls } from '../ui/enemy-appearance-controls.mjs';
+import { attachTouchSteering } from '../ui/touch-steering.mjs';
+import { createTouchPreferences, TOUCH_PREFERENCES_KEY } from '../touch-preferences.mjs';
 
 const appURL = new URL('../snake/classic-app.mjs', import.meta.url);
 const source = await readFile(appURL, 'utf8');
@@ -103,6 +105,7 @@ async function harness({
   cosmetics = null,
   savedRound = null,
   catalogue = CLASSIC_SNAKE_LEVELS,
+  touchControls = null,
 } = {}) {
   const document = new Document();
   document.hasFocus = () => focused;
@@ -139,7 +142,9 @@ async function harness({
   const storage = new Map();
   if (savedRound) storage.set('revealline.classic-snake.round.v2', JSON.stringify(savedRound));
   if (cosmetics) storage.set('revealline.classic-snake.presentation.v1', JSON.stringify(cosmetics));
+  if (touchControls) storage.set(TOUCH_PREFERENCES_KEY, JSON.stringify(touchControls));
   const created = [],
+    touchCommands = [],
     drawings = [],
     celebrations = [],
     scheduledFrames = [],
@@ -350,7 +355,22 @@ async function harness({
         for (const listener of displayListeners) listener(display);
       },
     }),
-    createTouchPreferences: () => preferences({ size: 'normal', opacity: 1, side: 'right' }),
+    attachTouchSteering: (options) => attachTouchSteering({ ...options, window }),
+    createTouchPreferences: (options) => {
+      const service = createTouchPreferences({
+        ...options,
+        storage: {
+          getItem: (key) => storage.get(key) ?? null,
+          setItem: (key, value) => storage.set(key, String(value)),
+        },
+        eventTarget: window,
+      });
+      return {
+        ...service,
+        // Production preferences and host share a realm; normalize the VM boundary only.
+        set: (value, settings) => service.set(structuredClone(value), settings),
+      };
+    },
     createClassicPresentation: () => ({
       snapshot: () => null,
       setArtRevision: (revision) => artworkSelections.push(revision),
@@ -404,6 +424,10 @@ async function harness({
     CLASSIC_COPY,
     ...core,
     ...matches,
+    queueClassicSnakeMatchTurn(match, player, direction) {
+      touchCommands.push({ player, direction });
+      return matches.queueClassicSnakeMatchTurn(match, player, direction);
+    },
     createClassicSnake(...args) {
       return core.createClassicSnake(...args.map((argument) => structuredClone(argument)));
     },
@@ -435,6 +459,7 @@ async function harness({
       focused = value;
     },
     created,
+    touchCommands,
     drawings,
     celebrations,
     artworkSelections,
@@ -586,6 +611,214 @@ test('Classic Snake accepts the physical WASD key with a Ukrainian keyboard layo
   assert.equal(event.defaultPrevented, true);
   assert.equal(created[0].history.length, 1);
   assert.equal(created[0].history[0].direction, 'up');
+});
+
+const pointer = (target, type, x, y, id = 11) =>
+  target.emit(type, {
+    pointerId: id,
+    pointerType: 'touch',
+    button: 0,
+    clientX: x,
+    clientY: y,
+  });
+const touchSettings = (mode = 'stick') => ({
+  mode,
+  side: 'right',
+  size: 'regular',
+  opacity: 0.55,
+});
+function touchSeat(state, player = 0) {
+  const seat = state.$('pads').querySelector(`[data-player="${player}"]`);
+  assert.ok(seat, `Player ${player + 1} has a separate touch seat.`);
+  return seat;
+}
+
+for (const mode of ['stick', 'swipe']) {
+  test(`Snake touch ${mode} turns during one captured gesture and release preserves its heading`, async () => {
+    const state = await harness({ touchControls: touchSettings(mode) });
+    const run = state.created[0],
+      arena = state.$('boards').querySelector('canvas');
+    state.frame(0);
+    pointer(arena, 'pointerdown', 80, 80);
+    pointer(arena, 'pointermove', 80, 40);
+    assert.equal(run.history.at(-1)?.direction, 'up', 'Turning does not wait for pointerup.');
+    pointer(arena, 'pointermove', 40, mode === 'swipe' ? 40 : 80);
+    assert.deepEqual(
+      run.history.map((turn) => turn.direction),
+      ['up', 'left'],
+    );
+    assert.equal(arena.hasPointerCapture(11), true);
+    pointer(arena, 'pointerup', 40, 80);
+    assert.equal(arena.hasPointerCapture(11), false);
+    state.frame(200);
+    state.frame(400);
+    const head = { ...run.snakes[0].body[0] };
+    state.frame(600);
+    assert.equal(run.snakes[0].direction, 'left');
+    assert.equal(run.snakes[0].body[0].x, head.x - 1, 'Release does not stop continuous Snake.');
+    assert.equal(state.touchCommands.length, 2, 'Release adds no additional turn.');
+  });
+}
+
+test('Snake touch D-pad turns on press and slide once, with a separate assistive click path', async () => {
+  const state = await harness({ touchControls: touchSettings('dpad') });
+  const run = state.created[0],
+    pad = touchSeat(state).querySelector('.direction-controls'),
+    up = pad.querySelector('[data-direction="up"]'),
+    left = pad.querySelector('[data-direction="left"]'),
+    down = pad.querySelector('[data-direction="down"]');
+  pad._rect = { x: 0, y: 0, width: 156, height: 156 };
+  state.frame(0);
+  pointer(up, 'pointerdown', 78, 10);
+  assert.deepEqual(state.touchCommands, [{ player: 0, direction: 'up' }]);
+  assert.equal(up.classList.contains('pressed'), true);
+  pointer(pad, 'pointermove', 10, 78);
+  assert.equal(up.classList.contains('pressed'), false);
+  assert.equal(left.classList.contains('pressed'), true);
+  pointer(pad, 'pointerup', 10, 78);
+  assert.equal(pad.querySelector('.pressed'), null, 'Released fingers leave no held-button state.');
+  left.emit('click', { detail: 1 });
+  assert.deepEqual(state.touchCommands, [
+    { player: 0, direction: 'up' },
+    { player: 0, direction: 'left' },
+  ]);
+  state.frame(200);
+  state.frame(400);
+  down.emit('click', { detail: 0 });
+  assert.equal(run.history.at(-1)?.direction, 'down');
+  assert.equal(state.touchCommands.length, 3, 'Click-only assistive activation still turns.');
+});
+
+for (const mode of ['team', 'versus']) {
+  test(`Snake touch ${mode} keeps simultaneous player gestures independent`, async () => {
+    const state = await harness({ mode });
+    const first = touchSeat(state, 0).querySelector('.touch-surface'),
+      second = touchSeat(state, 1).querySelector('.touch-surface');
+    pointer(first, 'pointerdown', 80, 80, 11);
+    pointer(second, 'pointerdown', 80, 80, 22);
+    pointer(first, 'pointermove', 80, 40, 11);
+    pointer(second, 'pointermove', 80, 120, 22);
+    pointer(first, 'pointerup', 80, 40, 11);
+    assert.equal(
+      second.hasPointerCapture(22),
+      true,
+      'Player one release cannot retire player two.',
+    );
+    pointer(second, 'pointermove', 120, 80, 22);
+    assert.deepEqual(state.touchCommands, [
+      { player: 0, direction: 'up' },
+      { player: 1, direction: 'down' },
+      { player: 1, direction: 'right' },
+    ]);
+    if (mode === 'team') {
+      assert.deepEqual(
+        state.created[0].history.map(({ playerId }) => playerId),
+        [0, 1, 1],
+      );
+      const board = state.$('boards').querySelector('canvas');
+      pointer(board, 'pointerdown', 80, 80, 33);
+      pointer(board, 'pointermove', 40, 80, 33);
+      assert.equal(
+        board.hasPointerCapture(33),
+        false,
+        'The shared Team board has no ambiguous seat.',
+      );
+      assert.equal(state.touchCommands.length, 3);
+    } else {
+      assert.deepEqual(
+        state.created.map((run) => run.history.length),
+        [1, 2],
+      );
+    }
+  });
+}
+
+test('Snake touch settings use shared mode preferences and preserve the exact chosen opacity', async () => {
+  const state = await harness();
+  state.shell.open('settings');
+  const mode = state.$('snake-global-touch-mode');
+  assert.equal(mode.value, 'stick');
+  assert.deepEqual(
+    mode.options.map((option) => option.value),
+    ['stick', 'swipe', 'dpad'],
+  );
+  mode.value = 'swipe';
+  mode.emit('change');
+  const opacity = state.$('snake-global-touch-opacity');
+  opacity.value = '0.25';
+  opacity.emit('change');
+  assert.deepEqual(JSON.parse(state.storage.get(TOUCH_PREFERENCES_KEY)), {
+    ...touchSettings('swipe'),
+    opacity: 0.25,
+  });
+  assert.equal(state.$('pads').style.getPropertyValue('--touch-opacity'), '0.25');
+  state.shell.back();
+  assert.equal(state.document.body.dataset.playing, 'false', 'Settings Back does not resume.');
+});
+
+for (const interruption of ['pause', 'resize', 'pointercancel']) {
+  test(`Snake touch ${interruption} retires capture and requires a new gesture after Resume`, async () => {
+    const state = await harness();
+    const surface = touchSeat(state).querySelector('.touch-surface');
+    pointer(surface, 'pointerdown', 80, 80);
+    pointer(surface, 'pointermove', 80, 40);
+    if (interruption === 'pause') state.shell.open('pause');
+    else if (interruption === 'resize') state.window.emit('resize');
+    else pointer(surface, 'pointercancel', 80, 40);
+    assert.equal(surface.hasPointerCapture(11), false);
+    assert.equal(state.document.body.dataset.playing, 'false');
+    state.start();
+    pointer(surface, 'pointermove', 40, 80);
+    pointer(surface, 'pointerup', 40, 80);
+    assert.equal(
+      state.touchCommands.length,
+      1,
+      'An old captured finger cannot steer the resumed run.',
+    );
+    pointer(surface, 'pointerdown', 80, 80, 22);
+    pointer(surface, 'pointermove', 40, 80, 22);
+    assert.equal(state.created[0].history.at(-1)?.direction, 'left');
+  });
+}
+
+test('Snake touch Retry retires old board listeners and the replacement accepts a fresh gesture', async () => {
+  const state = await harness();
+  const oldBoard = state.$('boards').querySelector('canvas');
+  pointer(oldBoard, 'pointerdown', 80, 80);
+  pointer(oldBoard, 'pointermove', 80, 40);
+  state.retry();
+  const replacement = state.created.at(-1);
+  assert.equal(oldBoard.hasPointerCapture(11), false);
+  pointer(oldBoard, 'pointermove', 40, 80);
+  pointer(oldBoard, 'pointerup', 40, 80);
+  pointer(oldBoard, 'pointerdown', 80, 80, 22);
+  pointer(oldBoard, 'pointermove', 80, 40, 22);
+  assert.equal(replacement.history.length, 0);
+  const currentBoard = state.$('boards').querySelector('canvas');
+  pointer(currentBoard, 'pointerdown', 80, 80, 33);
+  pointer(currentBoard, 'pointermove', 80, 40, 33);
+  assert.equal(replacement.history.at(-1)?.direction, 'up');
+});
+
+test('Snake touch can start a ready board only after preparation menus have closed', async () => {
+  const state = await harness({ focused: false });
+  state.setFocused(true);
+  const board = state.$('boards').querySelector('canvas');
+  for (const name of ['home', 'missions', 'settings']) {
+    state.shell.open(name);
+    pointer(board, 'pointerdown', 80, 80);
+    pointer(board, 'pointermove', 80, 40);
+    pointer(board, 'pointerup', 80, 40);
+    assert.equal(state.document.body.dataset.playing, 'false');
+    assert.equal(state.created[0].history.length, 0);
+    assert.equal(board.hasPointerCapture(11), false);
+    if (name === 'missions') state.$('journey-back').click();
+  }
+  state.shell.enterPlay();
+  pointer(board, 'pointerdown', 80, 80, 22);
+  pointer(board, 'pointermove', 80, 40, 22);
+  assert.equal(state.document.body.dataset.playing, 'true');
+  assert.equal(state.created[0].history.at(-1)?.direction, 'up');
 });
 
 test('Escape pauses Classic Snake even when a settings checkbox has focus', async () => {
