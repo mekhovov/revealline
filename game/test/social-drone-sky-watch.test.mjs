@@ -133,6 +133,7 @@ test('earned video requires a won run and its earned receipt, presents once, and
   const document = new Document();
   let started = 0,
     disposed = 0,
+    startOptions,
     options;
   const presentation = createEarnedVideo({
     document,
@@ -141,7 +142,8 @@ test('earned video requires a won run and its earned receipt, presents once, and
     mountMedia(value) {
       options = value;
       return {
-        start() {
+        start(value) {
+          startOptions = value;
           started++;
         },
         dispose() {
@@ -164,9 +166,13 @@ test('earned video requires a won run and its earned receipt, presents once, and
   assert.equal(presentation.present(run, []), false);
   assert.equal(presentation.present(run, receipts), true);
   assert.equal(started, 1);
+  assert.deepEqual(startOptions, { allowMutedFallback: true });
   assert.equal(options.cinematic, true);
   assert.equal(options.reducedMotion, true);
   assert.equal(presentation.present(run, receipts), false);
+  options.onEnded();
+  assert.equal(disposed, 1);
+  assert.equal(document.querySelector('dialog'), null);
   presentation.dispose();
   assert.equal(disposed, 1);
   assert.equal(document.querySelector('dialog'), null);
@@ -230,7 +236,17 @@ test('normal community mission library launches Sky Watch and holds the finished
   for (let i = 0; i < 60; i++) page.frame(100);
   const dialog = page.doc.querySelector('.earned-video-dialog');
   assert(dialog?.open, 'Public earned video opens after the celebration');
+  for (let i = 0; i < 50; i++) page.frame(100);
+  assert.equal(
+    page.$('game-overlay').hidden,
+    true,
+    'Automatic continuation waits while the earned video is open',
+  );
   dialog.querySelector('button').click();
   assert.equal(page.doc.querySelector('.earned-video-dialog'), null);
+  for (let i = 0; i < 15 && page.$('game-overlay').hidden; i++) page.frame(100);
+  assert.equal(page.$('game-overlay').dataset.kind, 'won');
+  assert.equal(page.$('game-overlay').hidden, false);
+  assert.equal(page.$('result-random-level').hidden, false);
   assert.deepEqual(page.errors, []);
 });
