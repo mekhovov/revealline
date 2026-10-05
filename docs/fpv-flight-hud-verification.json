@@ -1,7 +1,7 @@
 {
   "format": "FpvFlightHudFunctionalVerification.v1",
-  "createdAt": "2026-10-05T05:47:38.457Z",
-  "baseline": "29646092ff152d4807e44522ff6f1e67ba7b79d9",
+  "createdAt": "2026-10-05T11:58:22.859Z",
+  "baseline": "614adef75a6e1cc28ea1d04acf26fa69b507c551",
   "node": "v20.19.5",
   "command": "node docs/evidence/fpv-flight-hud-probe.mjs",
   "scope": "Observer-only typed HUD feedback and the existing 58 School plus24 Academy recommended-mode recordings. No browser, native/mobile hardware, novice acceptance, sustained FPS or new unit-suite coverage claimed.",
@@ -13,7 +13,7 @@
     "All predicates are read-only presentation; no physics, proof bytes or course definitions are changed."
   ],
   "sources": {
-    "optional-practice/civilian-fpv/sim-presentation.mjs": "8d0265c1f36d461ddd9191dcc42ea0c09e496abe4dd7f1e5233d4a6e9fb0199e",
+    "optional-practice/civilian-fpv/sim-presentation.mjs": "c8069450a534d49748e479f99ed3eb90dddd1b75b3d68072e054fbb5b8adef40",
     "optional-practice/civilian-fpv/world-catalogue.mjs": "54cbcaea1085548862dfbf3a64a99bac4f27dd8c7529786da3320b2e0248e611",
     "optional-practice/civilian-fpv/world-demonstrations.mjs": "c9f2d0ee5c571507ae1dce4f48898554cb2ad179218f1905cdc8013db2e2c114",
     "optional-practice/civilian-fpv/world-model.mjs": "95b4547019dcc44d2fb7dd426718fe01ee824ad714967a61edf7ccafb0f71ce2",
