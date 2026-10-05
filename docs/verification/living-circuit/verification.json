@@ -26,24 +26,24 @@
     "trackingFixtureAcceptedScenarios": 12
   },
   "distribution": {
-    "sourceRevision": "8b34e111fe7cf7e7fcaf538fe7c51cea4a6c1fa1",
+    "sourceRevision": "001cebbac8e611a9e28bdcd0b8b17e061b935a10",
     "method": "buildProject; every expanded and archived file verified against manifest",
     "expandedDistributionWritten": true,
     "zipWritten": true,
     "files": 3084,
-    "payloadBytesIncludingManifest": 1004022352,
+    "archiveEntries": 3085,
+    "payloadBytesIncludingManifest": 1004029760,
     "manifest": {
       "path": "manifest.json",
-      "bytes": 458631,
-      "sha256": "51d702f7fc864fbac2eba093042f3447d16760752646809f18425936226e2c52"
+      "bytes": 458632,
+      "sha256": "ec5448ff7f766fb44f74393c6ae0b6e8616bdfca05c6658f6511e48adace4ab0"
     },
     "zip": {
-      "bytes": 1004546546,
-      "sha256": "d2ac50530f266564e50c47f2d4669cec966a68824507563d4680078048d8431d",
+      "bytes": 1004553954,
+      "sha256": "0c605653ea172dfb4e53c2ad3089fa4308975a28af90afe33afd9436dcc4959b",
       "allMemberChecksumsMatch": true
     },
     "allExpandedFileChecksumsMatch": true,
-    "archiveEntries": 3085,
     "temporaryOutputRemovedAfterVerification": true
   },
   "browser": {
