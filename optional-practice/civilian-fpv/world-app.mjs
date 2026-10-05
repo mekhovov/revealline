@@ -4139,11 +4139,21 @@ export function mountWorldApp({
           mode: $('flight-mode').value,
         })
       : null;
-    const activeHud = state.status === 'active' && !beginnerCoach.blocksArm() && !playbackEnded;
+    const hudVisible =
+      !finished &&
+      !terminal(state) &&
+      !beginnerCoach.blocksArm() &&
+      !playShell?.blocksPlay() &&
+      !flightMenuOpen() &&
+      $('flight-dialog').dataset.optionsOpen !== 'true' &&
+      $('flight-dialog').dataset.immersiveControls !== 'true' &&
+      !doc.querySelector('dialog[open]:not(#flight-dialog)');
+    const activeHud = hudVisible && state.status === 'active';
     $('flight-dialog').dataset.simHudActive = String(activeHud);
     $('world-viewport').dataset.simHudActive = String(activeHud);
     $('world-viewport').dataset.simHudGuide = String(beginnerCoach.blocksArm());
     flightHud.update(guidance, {
+      visible: hudVisible,
       active: activeHud,
       paused: state.status !== 'active',
       replay: Boolean(replayProof),
