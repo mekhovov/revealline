@@ -79,7 +79,9 @@ function navigation(f, adapter, team = false) {
   };
   return {
     reach(id) {
+      const trace = [];
       for (let n = 0; n < 40 && f.doc.activeElement.id !== id; n++) {
+        trace.push(f.doc.activeElement.id);
         if (adapter === 'controller') {
           const current = f.doc.activeElement,
             target = f.$(id),
@@ -132,7 +134,11 @@ function navigation(f, adapter, team = false) {
           'Menu traversal never includes live-play actions.',
         );
       }
-      assert.equal(f.doc.activeElement.id, id, `${adapter} reaches visible ${id}.`);
+      assert.equal(
+        f.doc.activeElement.id,
+        id,
+        `${adapter} reaches visible ${id}: ${trace.join(' → ')}.`,
+      );
     },
     confirm: () => (adapter === 'controller' ? pulse(0) : key('Enter')),
     back: () => (adapter === 'controller' ? pulse(1) : key('Escape')),

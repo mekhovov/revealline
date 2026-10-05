@@ -357,9 +357,10 @@ test('Solo final Journey result retains the picture while Browse permits a delib
   const firstClassic = [...p.$('journey-cards').children].find((card) => card.dataset.missionId);
   assert.ok(firstClassic, 'The compatible Classic mission remains available in the same browser.');
   const firstClassicId = JSON.parse(firstClassic.dataset.missionId);
-  firstClassic.click();
-  await settle(
-    () => new URL(globalThis.location.href).searchParams.get('journey') === 'legacy',
+  await activateMissionCard(firstClassic);
+  assert.equal(
+    new URL(globalThis.location.href).searchParams.get('journey'),
+    'legacy',
     'The exact Legacy host receives this continuation.',
   );
   const selected = JSON.parse(
