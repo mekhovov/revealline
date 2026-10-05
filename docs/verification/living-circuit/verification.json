@@ -1,0 +1,84 @@
+{
+  "format": "living-circuit-verification.v1",
+  "date": "2026-10-05",
+  "baseMain": "2d447bc790bdf3951251c99041c8a918363ece0a",
+  "branch": "codex/snake-continuous-play",
+  "scope": "Merged working tree; no published deployment or physical-controller certification",
+  "validation": {
+    "repositoryValidate": true,
+    "repositoryLint": true,
+    "canonicalProjections": 6,
+    "snakeHostTests": 49,
+    "rendererFixtureSchedulerTests": 32,
+    "archiveTests": 3,
+    "archivedPreparedVariants": 360,
+    "currentMissionProofs": 144,
+    "calibratedSetups": 249,
+    "retainedHistoricalGradingSetups": 30,
+    "statsAndFlowTests": 28,
+    "otherCoreResultChecks": 21,
+    "winPictureHostTests": 5,
+    "optionalPackageTests": 9
+  },
+  "distribution": {
+    "method": "inspectBuildProject",
+    "expandedDistributionWritten": false,
+    "zipWritten": false,
+    "files": 3084,
+    "payloadBytesIncludingManifest": 1004021220,
+    "manifest": {
+      "path": "manifest.json",
+      "bytes": 458593,
+      "sha256": "9d856128d4e8b9ad418cbe5f9ef6259791feee0abda6220811c9dd7a36a59018"
+    },
+    "verifiedSnakeRuntimeFiles": 34,
+    "allProjectedSnakeRuntimeHashesMatch": true,
+    "projectionNote": "Two hosts use canonical AST-preserving indentation compaction. HTML receives generated offline markers and is covered by full build preparation."
+  },
+  "browser": {
+    "locales": ["en", "uk"],
+    "viewports": [
+      [320, 640],
+      [740, 360],
+      [1280, 900]
+    ],
+    "mainHost": [
+      "Solo English portrait and landscape",
+      "Team Ukrainian portrait",
+      "automatic result replay",
+      "one-activation Retry",
+      "scene selection while paused"
+    ],
+    "fixture": [
+      "orchard",
+      "workshop",
+      "relay",
+      "local burst",
+      "broadcast burst",
+      "Solo",
+      "Team",
+      "Versus",
+      "reduced-effects live steps"
+    ],
+    "mobileResults": {
+      "width": 320,
+      "height": 640,
+      "documentScrollWidth": 320,
+      "dialogHeight": 592.75,
+      "dialogTop": 23.625,
+      "retryAndHomeVisible": true
+    },
+    "consoleErrors": 0,
+    "screenshots": ["mobile-results.jpg", "broadcast-versus.jpg"]
+  },
+  "cleanup": {
+    "method": "Verified Git-backed disposable build copies and losslessly compressed inactive logs",
+    "sourceAndGitHistoryPreserved": true,
+    "unmatchedFilesAndArchivesPreserved": true,
+    "expandedDistributionOmittedForDiskPressure": true
+  },
+  "remainingVerification": [
+    "Fresh distribution ZIP and expanded output were not written because free disk space remained below 0.5 GiB.",
+    "Physical touch/controller sessions and human balance calibration across variable schedules remain separate from deterministic and browser tests."
+  ]
+}

@@ -33,12 +33,21 @@ const candidate = (built) => {
 
 // Shared theme logic is explicit; token and fullscreen sheets are embedded with SIM presentation.
 // Shared menus add two image assets and hash-bound locale inputs.
+// The approved industrial material, machinery and vehicle modules make runtime/source closures 79/81.
+// Keep those exact closures inside the separately reviewed 96-file envelope.
 const assertSharedRadioClosure = (built, source) => {
   for (const name of [
     'optional-practice/civilian-fpv/radio-controls.mjs',
     'game/fpv-entry.mjs',
     'game/hunt/actor-catalog.mjs',
     'game/hunt/preferences.mjs',
+    'game/presentation/industrial-materials.mjs',
+    'game/presentation/industrial-machinery.mjs',
+    'game/ui/art-review-navigation.mjs',
+    'game/ui/enemy-appearance-controls.mjs',
+    'game/hunt/industrial-soldier-kit.mjs',
+    'optional-practice/civilian-fpv/industrial-soldiers.mjs',
+    'optional-practice/civilian-fpv/industrial-vehicles.mjs',
   ]) {
     const runtime = built.entries.find((entry) => entry.name === name);
     assert.ok(runtime, name);
@@ -206,7 +215,8 @@ test('actual FPV application, native notebook and installation launcher close in
     admission = await validateOptionalPackageAdmission(f.envelope, f);
   assert.deepEqual(first.zip, second.zip);
   assert.equal(admission.publicEligible, false);
-  assert.equal(admission.packages[0].files, 72);
+  assert.equal(admission.packages[0].files, 79);
+  assert.equal(OPTIONAL_PACKAGE_POLICIES['civilian-fpv'].limits.files, 96);
   assert.ok(admission.packages[0].bytes <= 8 * 1024 * 1024);
   for (const name of ['notebook.mjs', 'studio.mjs', 'radio-setup.mjs', 'vendor/three.core.js'])
     assert.ok(
@@ -218,7 +228,7 @@ test('actual FPV application, native notebook and installation launcher close in
   assert.equal(manifest.icons.length, 2);
   assert.equal(manifest.id, '/revealline/practice/civilian-fpv/');
   const source = readEditionZip(f.files.get(f.package.sourceArchive.path));
-  assert.equal(source.size, 74);
+  assert.equal(source.size, 81);
   assertSharedRadioClosure(first, source);
   assert.ok(
     [...source.values()].reduce((total, bytes) => total + bytes.length, 0) <= 8 * 1024 * 1024,
@@ -232,13 +242,13 @@ test('explicit FPV package remains independently reproducible with complete pinn
   assert.deepEqual(first.zip, second.zip);
   assert.equal(first.manifest.id, 'civilian-fpv');
   assert.equal(first.manifest.installation.id, '/revealline/practice/civilian-fpv/');
-  assert.equal(first.entries.length, 72);
+  assert.equal(first.entries.length, 79);
   assert.ok(first.entries.reduce((sum, item) => sum + item.bytes.length, 0) < 8 * 1024 * 1024);
   assert.ok(first.entries.every(({ name }) => !name.includes('civilian-flight')));
   const f = candidate(first);
   const admitted = await validateOptionalPackageAdmission(f.envelope, f);
   assert.equal(admitted.publicEligible, false);
-  assert.equal(admitted.packages[0].files, 72);
+  assert.equal(admitted.packages[0].files, 79);
   const localeProjection = first.entries
     .find((entry) => entry.name === 'game/i18n/catalogs.mjs')
     .bytes.toString();
@@ -247,7 +257,7 @@ test('explicit FPV package remains independently reproducible with complete pinn
   const inventory = JSON.parse(f.files.get(f.package.sourceInventory.path));
   assert.equal(inventory.licenses.find((item) => item.dependency === 'three').version, '0.186.1');
   const source = readEditionZip(f.files.get(f.package.sourceArchive.path));
-  assert.equal(source.size, 74);
+  assert.equal(source.size, 81);
   for (const locale of ['en', 'uk'])
     assert.ok(inventory.inputs.some((row) => row.path === `game/locales/${locale}/common.json`));
   for (const asset of [
@@ -256,7 +266,8 @@ test('explicit FPV package remains independently reproducible with complete pinn
   ])
     assert.ok(source.has(asset), 'The shared menu artwork is also present offline.');
   assertSharedRadioClosure(first, source);
-  assert.ok(source.size <= OPTIONAL_PACKAGE_POLICIES['civilian-fpv'].limits.files);
+  assert.equal(fixture.policy.limits.files, 96);
+  assert.ok(source.size <= fixture.policy.limits.files);
   assert.ok([...source.values()].reduce((sum, bytes) => sum + bytes.length, 0) <= 8 * 1024 * 1024);
   assert.ok(source.has(fixture.policy.template));
   for (const pin of fixture.policy.vendorPins)

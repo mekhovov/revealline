@@ -8,6 +8,7 @@ import {
   drawCombatScrap,
 } from '../ui/combat-presentation.mjs';
 import { createHuntDestruction } from '../hunt/destruction.mjs';
+import { runtimeActorArtRevision } from '../hunt/preferences.mjs';
 import { drawSnakeBody, drawSnakeTargetOrder } from '../ui/snake-view.mjs';
 import { t } from '../i18n/index.mjs';
 import {
@@ -47,6 +48,7 @@ import {
   drawCoopCaptureFeedback,
   drawCoopWall,
   prepareCoopWall,
+  prepareCoopMaterialSample,
 } from './coop-terrain-trail.mjs';
 import { paintMaterialMarker } from '../content-design/material-markers.mjs';
 import { candidateTeamPictureFrame } from './candidate-team-pictures.mjs';
@@ -130,7 +132,8 @@ function prepareActorAppearance(snapshot) {
 /** Draw the authoritative board once. Rendering never advances game state. */
 export function createCoopPainter(canvas) {
   const arcadeAdapter = createArcadeAdapter(),
-    runCollections = new WeakMap();
+    runCollections = new WeakMap(),
+    runArtRevisions = new WeakMap();
   let interfaceProvider = () => null;
   let arcadeProvider = () => null,
     artSnapshot = null;
@@ -150,6 +153,7 @@ export function createCoopPainter(canvas) {
     cueLayoutCache = null,
     look = null,
     wall = null,
+    materialSample = Object.freeze({}),
     anchors = Object.freeze({}),
     coreFrames = Object.freeze({}),
     supportFrames = Object.freeze({}),
@@ -197,6 +201,7 @@ export function createCoopPainter(canvas) {
     // Keep the page lease's exact snapshot identity while capturing its display
     // values. The painter never changes or disposes shared presentation assets.
     const nextWall = prepareCoopWall(snapshot);
+    const nextMaterialSample = prepareCoopMaterialSample(snapshot);
     const nextAnchors = prepareTeamAnchors(snapshot);
     const nextCoreFrames = prepareTeamCores(snapshot);
     const nextSupportFrames = prepareTeamSupport(snapshot);
@@ -209,6 +214,7 @@ export function createCoopPainter(canvas) {
     artSnapshot = snapshot ?? null;
     look = next;
     wall = nextWall;
+    materialSample = nextMaterialSample;
     anchors = nextAnchors;
     coreFrames = nextCoreFrames;
     supportFrames = nextSupportFrames;
@@ -238,6 +244,11 @@ export function createCoopPainter(canvas) {
       feedbackComparison = null,
     } = {},
   ) {
+    // Historical/unregistered painters do not infer a new opted-in appearance.
+    const artRevision = runArtRevisions.has(run) ? runArtRevisions.get(run) : null;
+    arcadeAdapter.setReviewRevision(artRevision);
+    combatPresentation.setArtRevision(artRevision);
+    destruction.setArtRevision(artRevision);
     const selectedArt = arcadeAdapter.resolve(presentation, runCollections.get(run) ?? null);
     if (selectedArt !== artSnapshot) prepareArt(selectedArt);
     const cueScale = coopCueScale(canvas.clientWidth, run.width, textSize);
@@ -334,6 +345,7 @@ export function createCoopPainter(canvas) {
     const unit = canvas.width / run.width;
     const combat = coopCombatView(run),
       combatOptions = {
+        artRevision,
         screenScale: canvas.clientWidth / 1152,
         reduced,
         showScrap: showRemains,
@@ -473,6 +485,8 @@ export function createCoopPainter(canvas) {
             ctx.fillRect(x + 0.46, y + 0.46, 0.08, 0.08);
             const material = run.terrain?.[y * run.width + x];
             if (material === 1 || material === 2) {
+              // Cosmetic pixels remain beneath native active-material symbols.
+              drawCoopWall(ctx, materialSample[material], x, y);
               ctx.save();
               ctx.scale(1 / 16, 1 / 16);
               paintMaterialMarker(ctx, material, x * 16, y * 16, 16);
@@ -1115,7 +1129,14 @@ export function createCoopPainter(canvas) {
     setArcadeProvider(provider) {
       arcadeProvider = typeof provider === 'function' ? provider : () => null;
     },
-    captureArcadeCollection(run) {
+    acceptEnemyArtwork(run) {
+      if (run.status !== 'ready') return false;
+      runArtRevisions.set(run, runtimeActorArtRevision());
+      runCollections.set(run, selectedArcadeCollection(arcadeProvider()));
+      return true;
+    },
+    captureArcadeCollection(run, { artRevision = runtimeActorArtRevision() } = {}) {
+      if (!runArtRevisions.has(run)) runArtRevisions.set(run, artRevision);
       if (!runCollections.has(run))
         runCollections.set(run, selectedArcadeCollection(arcadeProvider()));
     },

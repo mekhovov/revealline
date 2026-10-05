@@ -3,8 +3,12 @@ import { randomBytes, createHash } from 'node:crypto';
 import { readFile, readdir } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { resolve, dirname, relative } from 'node:path';
-import { canonicalJSON, required } from '../../game/data-json.mjs';
+import { canonicalJSON, exactKeys, required } from '../../game/data-json.mjs';
+import { ROOM_CONTROL_PROTOCOL } from '../../game/online/room-client-lifecycle.mjs';
+import { validateRoomContent, validateRoomCatalogue } from '../../game/online/room-content.mjs';
+import { loadRoomContentRegistry } from './content-registry.mjs';
 import { CLASSIC_SNAKE_LEVELS } from '../../game/snake/classic-catalogue.mjs';
+import { classicSnakeUsesVariableHazards } from '../../game/snake/classic-core.mjs';
 import { prepareClassicSnakeLevel } from '../../game/snake/classic-setup.mjs';
 import { FIRST_CONNECTION } from '../../game/coop/first-connection.mjs';
 import { RELAY_YARD } from '../../game/coop/relay-yard.mjs';
@@ -20,6 +24,7 @@ import {
   readyAuthoritativeRoom,
   pauseAuthoritativeRoom,
   submitAuthoritativeInput,
+  expireAuthoritativeRoom,
   stepAuthoritativeRoom,
   rematchAuthoritativeRoom,
   snapshotAuthoritativeRoom,
@@ -28,7 +33,14 @@ import {
 } from '../../game/online/room-core.mjs';
 
 const token = () => randomBytes(32).toString('hex');
+const hazardOptions = (recipe) =>
+  recipe.family === 'snake' && classicSnakeUsesVariableHazards(recipe.level)
+    ? { hazardSeed: randomBytes(4).readUInt32LE() }
+    : {};
 const digest = (value) => createHash('sha256').update(canonicalJSON(value)).digest('hex');
+const fail = (code, status, message) => {
+  throw Object.assign(new TypeError(message), { code, status });
+};
 const root = fileURLToPath(new URL('../../', import.meta.url));
 export async function roomEngineIdentity() {
   const files = new Map(),
@@ -124,12 +136,54 @@ export async function createRoomService({
   maxRooms = 64,
   allowPublic = false,
   catalogue = null,
+  contentManifestPath = null,
 } = {}) {
-  const entries = catalogue ?? (await roomCatalogue());
+  const imported = await loadRoomContentRegistry(contentManifestPath);
+  const entries = [...(catalogue ?? (await roomCatalogue())), ...imported.entries].map((entry) => {
+    // Server-internal fixture/catalogue entries are copied before accepting any
+    // request. Only the local registry can supply imported source provenance.
+    const owned = structuredClone(entry);
+    owned.content = validateRoomContent(
+      owned.content ?? {
+        format: 'revealline-room-content.v1',
+        catalogueId: owned.id,
+        source: {
+          kind: 'builtin',
+          id: 'revealline',
+          revision: 'rooms-v1',
+          title: { en: 'RevealLine', uk: 'RevealLine' },
+        },
+        mission: { id: owned.level.id, revision: String(owned.level.revision), title: owned.title },
+        presentation: 'shared-runtime',
+      },
+    );
+    return owned;
+  });
+  required(
+    new Set(entries.map((entry) => entry.id)).size === entries.length,
+    'Duplicate room catalogue ID.',
+  );
+  const publicCatalogue = validateRoomCatalogue(entries, imported.unavailable);
   const engineVersion = await roomEngineIdentity();
   const rooms = new Map(),
     credentials = new Map(),
     invitations = new Map();
+  const activations = new WeakMap();
+  const syncActivation = (room, invalidate = false) => {
+    const prior = activations.get(room);
+    if (invalidate || prior?.status !== room.status || prior?.generation !== room.generation) {
+      room.controlProtocol = ROOM_CONTROL_PROTOCOL;
+      room.controlActivation = token();
+      activations.set(room, { status: room.status, generation: room.generation });
+    }
+  };
+  const admitRoomConnection = (room) => {
+    if (!room || rooms.get(room.id) !== room)
+      fail('ROOM_UNAVAILABLE', 410, 'This room expired. Request a new invitation.');
+    syncActivation(room, expireAuthoritativeRoom(room, now()));
+    if (room.status === 'abandoned')
+      fail('ROOM_UNAVAILABLE', 410, 'This room expired. Request a new invitation.');
+  };
   const allowed = new Set(origins);
   const read = async (request) => {
     let size = 0;
@@ -142,6 +196,7 @@ export async function createRoomService({
     return JSON.parse(Buffer.concat(chunks).toString('utf8') || '{}');
   };
   const admit = (selection) => {
+    exactKeys(selection, ['id', 'pace', 'targets', 'seed'], 'room recipe selection');
     const entry = entries.find((item) => item.id === selection.id);
     required(entry, 'Choose an available exact room recipe.');
     required(['normal', 'slow', 'fast'].includes(selection.pace ?? 'normal'), 'Invalid pace.');
@@ -167,7 +222,17 @@ export async function createRoomService({
                 style: selection.targets === 'varied' ? 'varied' : 'original',
               });
     const accepted = level.level ?? level;
-    return { family: entry.family, mode: entry.mode, level: accepted, seed: selection.seed ?? 17 };
+    const content = validateRoomContent({
+      ...entry.content,
+      mission: { ...entry.content.mission, id: accepted.id, revision: String(accepted.revision) },
+    });
+    return {
+      family: entry.family,
+      mode: entry.mode,
+      level: accepted,
+      seed: selection.seed ?? 17,
+      content,
+    };
   };
   const allocate = (selection, publicRoom = false) => {
     required(rooms.size < maxRooms, 'The room service is full. Try again later.');
@@ -178,9 +243,11 @@ export async function createRoomService({
       contentHash: digest(recipe),
       engineVersion,
       now: now(),
+      ...hazardOptions(recipe),
     });
     const bearer = token(),
       invite = token();
+    syncActivation(room);
     credentials.set(bearer, { id, seat: 0 });
     invitations.set(invite, id);
     room.public = publicRoom;
@@ -191,13 +258,14 @@ export async function createRoomService({
       invite,
       seat: 0,
       protocol: ROOM_PROTOCOL,
+      controlProtocol: ROOM_CONTROL_PROTOCOL,
       contentHash: room.contentHash,
       engineVersion,
     };
   };
   const join = (id) => {
     const room = rooms.get(id);
-    required(room, 'The room no longer exists.');
+    admitRoomConnection(room);
     joinAuthoritativeRoom(room, now());
     const bearer = token();
     credentials.set(bearer, { id, seat: 1 });
@@ -207,6 +275,7 @@ export async function createRoomService({
       token: bearer,
       seat: 1,
       protocol: ROOM_PROTOCOL,
+      controlProtocol: ROOM_CONTROL_PROTOCOL,
       contentHash: room.contentHash,
       engineVersion,
     };
@@ -223,7 +292,8 @@ export async function createRoomService({
       response.end(JSON.stringify(value));
     };
     try {
-      required(origin && allowed.has(origin), 'This game origin is not approved for rooms.');
+      if (!origin || !allowed.has(origin))
+        fail('ORIGIN_NOT_ALLOWED', 403, 'This game origin is not approved for rooms.');
       headers['Access-Control-Allow-Origin'] = origin;
       headers.Vary = 'Origin';
       if (request.method === 'OPTIONS') {
@@ -235,15 +305,24 @@ export async function createRoomService({
       if (request.method === 'GET' && url.pathname === '/catalogue')
         return send(200, {
           protocol: ROOM_PROTOCOL,
+          controlProtocol: ROOM_CONTROL_PROTOCOL,
           public: allowPublic,
-          entries: entries.map(({ level, ...entry }) => ({ ...entry, revision: level.revision })),
+          entries: publicCatalogue.entries,
+          unavailable: publicCatalogue.unavailable,
+          registry: {
+            enabled: imported.report.enabled,
+            packages: imported.report.packages,
+            admittedPackages: imported.report.admittedPackages,
+            unavailablePackages: imported.report.unavailablePackages,
+            entries: imported.report.entries,
+          },
         });
       if (request.method === 'POST' && url.pathname === '/rooms')
         return send(201, allocate(await read(request)));
       if (request.method === 'POST' && url.pathname === '/join') {
         const body = await read(request),
           id = invitations.get(body.invite);
-        required(id, 'This invitation is invalid or already used.');
+        if (!id) fail('INVITE_UNAVAILABLE', 410, 'This invitation is invalid or already used.');
         return send(200, join(id));
       }
       if (request.method === 'POST' && url.pathname === '/matchmaking') {
@@ -260,29 +339,61 @@ export async function createRoomService({
         return send(200, available ? join(available.id) : allocate(body, true));
       }
       const auth = credentials.get(request.headers.authorization?.replace(/^Bearer /, ''));
-      required(auth, 'A seat credential is required.');
+      if (!auth)
+        fail('SEAT_UNAVAILABLE', 401, 'This seat is unavailable. Request a new invitation.');
       const room = rooms.get(auth.id);
-      required(room, 'This room expired.');
+      // Check expiry before a returning heartbeat can refresh lastSeen. Timer
+      // callbacks can be delayed, and a stall deliberately advances no ticks.
+      admitRoomConnection(room);
       touchAuthoritativeRoom(room, auth.seat, now());
+      syncActivation(room);
       if (request.method === 'GET' && url.pathname === '/snapshot')
         return send(200, snapshotAuthoritativeRoom(room));
       if (request.method === 'GET' && url.pathname === '/result')
         return send(200, exportAuthoritativeRoomResult(room));
       required(request.method === 'POST', 'Unsupported room operation.');
       const body = await read(request);
+      // A slowly delivered body can outlive both its seat deadline and room
+      // retention. Never operate on the stale room object retained by this task.
+      admitRoomConnection(room);
+      // Body delivery can span a pause/resume or rematch. Check the current
+      // service activation after reading, before admitting any queued action.
+      if (
+        ['/ready', '/pause', '/input', '/rematch'].includes(url.pathname) &&
+        body.activation !== room.controlActivation
+      )
+        fail('STALE_ACTIVATION', 409, 'Refresh the room before sending new controls.');
       if (url.pathname === '/ready') readyAuthoritativeRoom(room, auth.seat, now());
-      else if (url.pathname === '/pause') pauseAuthoritativeRoom(room);
-      else if (url.pathname === '/input') submitAuthoritativeInput(room, auth.seat, body, now());
-      else if (url.pathname === '/rematch') rematchAuthoritativeRoom(room, auth.seat, now());
+      else if (url.pathname === '/pause') {
+        pauseAuthoritativeRoom(room);
+        // A reconnecting waiting/paused seat must not retain an earlier Ready.
+        if (['waiting', 'paused'].includes(room.status))
+          room.seats.forEach((seat) => {
+            seat.ready = false;
+          });
+        syncActivation(room, true);
+      } else if (url.pathname === '/input') submitAuthoritativeInput(room, auth.seat, body, now());
+      else if (url.pathname === '/rematch')
+        rematchAuthoritativeRoom(
+          room,
+          auth.seat,
+          now(),
+          room.seats[1 - auth.seat].rematch ? hazardOptions(room.recipe) : {},
+        );
       else if (url.pathname === '/leave') abandonAuthoritativeRoom(room, auth.seat, now());
       else throw new TypeError('Unsupported room operation.');
+      syncActivation(room);
       send(200, {
         acknowledged: room.seats[auth.seat].acknowledged,
         status: room.status,
         generation: room.generation,
+        controlActivation: room.controlActivation,
       });
     } catch (error) {
-      send(400, { error: String(error.message).slice(0, 240) });
+      send(error.status ?? 400, {
+        error: String(error.message).slice(0, 240),
+        code: error.code ?? 'INVALID_REQUEST',
+      });
     }
   });
   let lastTick = now(),
@@ -292,18 +403,23 @@ export async function createRoomService({
     const elapsed = time - lastTick;
     lastTick = time;
     if (elapsed > 250) {
-      for (const room of rooms.values()) pauseAuthoritativeRoom(room, 'service-stall');
+      for (const room of rooms.values()) {
+        pauseAuthoritativeRoom(room, 'service-stall');
+        syncActivation(room);
+      }
       remainder = 0;
     } else remainder += Math.max(0, elapsed);
     const steps = Math.floor((remainder + 1e-7) / (1000 / 120));
     remainder -= steps * (1000 / 120);
     for (const [id, room] of rooms) {
       try {
+        syncActivation(room, expireAuthoritativeRoom(room, time));
         for (let tick = 0; tick < steps; tick++) stepAuthoritativeRoom(room, time);
       } catch {
         room.status = 'abandoned';
         room.result = { outcome: 'abandoned', reason: 'service-error' };
       }
+      syncActivation(room);
       if (
         time - room.touchedAt > 120000 &&
         ['abandoned', 'finished', 'waiting'].includes(room.status)
@@ -316,15 +432,20 @@ export async function createRoomService({
   }, 4);
   timer.unref();
   server.on('close', () => clearInterval(timer));
+  // Operator diagnostics contain no package paths or payloads. They are not an
+  // HTTP admission endpoint and cannot be changed by a player request.
+  Object.defineProperty(server, 'contentRegistryReport', { value: imported.report });
   return server;
 }
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
   const server = await createRoomService({
     origins: (process.env.ROOM_ORIGINS ?? 'http://127.0.0.1:8779,http://localhost:8779').split(','),
     allowPublic: process.env.ROOM_PUBLIC === 'qualified',
+    contentManifestPath: process.env.ROOM_CONTENT_MANIFEST || null,
   });
   const port = Number(process.env.PORT ?? 8783);
-  server.listen(port, process.env.HOST ?? '127.0.0.1', () =>
-    console.log(`RevealLine rooms listening on ${port}; source ${root}`),
-  );
+  server.listen(port, process.env.HOST ?? '127.0.0.1', () => {
+    console.log(`RevealLine rooms listening on ${port}; source ${root}`);
+    console.log(`Room content registry: ${JSON.stringify(server.contentRegistryReport)}`);
+  });
 }

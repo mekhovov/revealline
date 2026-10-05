@@ -24,6 +24,11 @@ export const CLASSIC_SNAKE_V4_KINDS = Object.freeze([
 ]);
 const ROUTED_KINDS = ['patroller', 'courier', 'perimeter', 'contour'];
 const FIXED_KINDS = ['jammer', 'lane', 'relay', 'eroder', 'guard'];
+export const CLASSIC_SIGNAL_PROFILES = Object.freeze(['local-burst-v1', 'broadcast-burst-v1']);
+export const classicSnakeUsesVariableHazards = (level) =>
+  level?.targets?.required?.some(
+    (policy) => policy.kind === 'jammer' && CLASSIC_SIGNAL_PROFILES.includes(policy.signalProfile),
+  ) ?? false;
 const MAX_STEPS = 30000,
   MAX_TURNS = 16384;
 const DIRECTIONS = { up: [0, -1], right: [1, 0], down: [0, 1], left: [-1, 0] };
@@ -90,6 +95,11 @@ const levelFields = [
 ];
 
 function validateSpecialPolicy(level, policy, cell, walls, starts, first) {
+  if (Object.hasOwn(policy, 'signalProfile'))
+    required(
+      policy.kind === 'jammer' && CLASSIC_SIGNAL_PROFILES.includes(policy.signalProfile),
+      'Unknown Snake interference profile.',
+    );
   const isFixed = FIXED_KINDS.includes(policy.kind);
   if (isFixed) {
     cell(policy.at);
@@ -165,6 +175,11 @@ const effectiveWalls = (run) => {
 function initializeSpecial(run, target, policy) {
   if (policy.heading) target.heading = policy.heading;
   if (policy.kind === 'jammer') target.phaseTicks = 12;
+  if (policy.signalProfile) {
+    target.jamRandom =
+      (run.hazardSeed ^ Math.imul(run.spawnedRequired + 1, 0x9e3779b1) ^ 0x6a09e667) >>> 0 || 1;
+    setSignalPhase(run, target, 'rest', signalDuration(run, target, 2000, 4400));
+  }
   if (policy.kind === 'rover') target.phase = 'dormant';
   if (policy.kind === 'relay') {
     target.phase = 'locked';
@@ -178,6 +193,87 @@ function initializeSpecial(run, target, policy) {
       }),
     );
   }
+}
+// Draw only from a dedicated source stream. Spawn and actor-motion RNG never
+// depend on radio timing. Quantize inside the limits to simulation boundaries.
+function signalDuration(run, target, minimum, maximum) {
+  const step = classicSnakeStepMillisecondsV4(run);
+  const low = Math.ceil(minimum / step),
+    high = Math.max(low, Math.floor(maximum / step));
+  return (low + (random(target, 'jamRandom') % (high - low + 1))) * step;
+}
+function setSignalPhase(run, target, phase, duration) {
+  target.phase = phase;
+  target.signalStartedMs = run.elapsedMs;
+  target.signalUntilMs = run.elapsedMs + duration;
+  target.phaseTicks = Math.ceil(duration / classicSnakeStepMillisecondsV4(run));
+  if (phase === 'warning')
+    run.events.push({ type: 'target.warning', tick: run.tick, target: structuredClone(target) });
+}
+export function classicSnakeSignalView(run) {
+  const sources = (run.targets ?? [])
+    .filter((target) => target.kind === 'jammer')
+    .map((target) => {
+      const profile = run.level.targets.required[target.policyIndex]?.signalProfile ?? 'legacy';
+      return {
+        id: target.id,
+        x: target.x,
+        y: target.y,
+        profile,
+        phase: target.phase,
+        remainingMs: Math.max(
+          0,
+          target.signalUntilMs === undefined
+            ? target.phaseTicks * classicSnakeStepMillisecondsV4(run)
+            : target.signalUntilMs - run.elapsedMs,
+        ),
+        radius: profile === 'local-burst-v1' ? 6 : null,
+      };
+    });
+  const running = run.status === 'running',
+    suppressed = run.pulseTicks > 0;
+  return {
+    active: running && !suppressed && sources.some((source) => source.phase === 'jamming'),
+    warning: running && !suppressed && sources.some((source) => source.phase === 'warning'),
+    suppressed,
+    sources,
+  };
+}
+function advanceVariableJammer(run, target) {
+  const step = classicSnakeStepMillisecondsV4(run);
+  target.phaseTicks = Math.max(0, Math.ceil((target.signalUntilMs - run.elapsedMs) / step));
+  // A catch may shorten future moves after this phase chose its deadline.
+  // Retire at the last visible boundary before its hard maximum, rather than
+  // overshooting it on the next move. The minimum is always respected.
+  const bounds =
+    target.phase === 'jamming' ? [600, 1400] : target.phase === 'rest' ? [2000, 4400] : null;
+  const phaseMs = run.elapsedMs - target.signalStartedMs;
+  const lastBoundary = bounds && phaseMs >= bounds[0] && phaseMs + step > bounds[1];
+  if (target.phaseTicks > 0 && !lastBoundary) return;
+  if (lastBoundary) {
+    target.signalUntilMs = run.elapsedMs;
+    target.phaseTicks = 0;
+  }
+  if (target.phase === 'jamming') {
+    run.signalClearUntilMs = Math.max(run.signalClearUntilMs, run.elapsedMs + 1600);
+    setSignalPhase(run, target, 'rest', signalDuration(run, target, 2000, 4400));
+    return;
+  }
+  const blocked =
+    run.elapsedMs < run.signalClearUntilMs ||
+    run.projectiles.length ||
+    run.targets.some(
+      (other) =>
+        other !== target &&
+        ((other.kind === 'jammer' && other.phase === 'jamming') ||
+          (other.kind === 'lane' && other.phase === 'active')),
+    );
+  if (blocked) {
+    if (target.phase === 'warning') setSignalPhase(run, target, 'rest', 0);
+    return;
+  }
+  if (target.phase === 'rest') setSignalPhase(run, target, 'warning', 800);
+  else setSignalPhase(run, target, 'jamming', signalDuration(run, target, 600, 1400));
 }
 function syncSignal(run) {
   const active = run.targets.filter(
@@ -297,6 +393,11 @@ function advanceSpecials(run) {
   for (const target of specialists) {
     const policy = policyFor(run, target);
     if (!FIXED_KINDS.includes(target.kind) || target.kind === 'relay') continue;
+    if (policy.signalProfile) {
+      advanceVariableJammer(run, target);
+      syncSignal(run);
+      continue;
+    }
     if (target.phase === 'jamming' || target.phase === 'active') {
       if (--target.phaseTicks > 0) continue;
       target.phase = 'rest';
@@ -481,7 +582,18 @@ export function validateClassicSnakeLevelV4(source) {
   const policy = (p, bonus = false) => {
     exactKeys(
       p,
-      ['kind', 'every', 'path', 'goals', 'at', 'lane', 'relays', 'breaks', 'heading'],
+      [
+        'kind',
+        'every',
+        'path',
+        'goals',
+        'at',
+        'lane',
+        'relays',
+        'breaks',
+        'heading',
+        'signalProfile',
+      ],
       'Snake target policy',
     );
     required(
@@ -547,6 +659,11 @@ export function validateClassicSnakeLevelV4(source) {
     'Invalid target population.',
   );
   l.targets.required.forEach((p) => policy(p));
+  if (classicSnakeUsesVariableHazards(l))
+    required(
+      l.targets.required.every((p) => p.kind !== 'jammer' || p.signalProfile),
+      'Variable and legacy jammer schedules cannot share a recipe.',
+    );
   if (l.targets.required.some((p) => p.kind === 'pair'))
     required(
       l.targets.maxActive === 2 &&
@@ -1032,19 +1149,27 @@ function moveTargets(run) {
 
 export function createClassicSnakeV4(source, options = {}) {
   const settings = boundedJSON(options, { maxBytes: 1024, maxNodes: 10, maxDepth: 1 });
-  exactKeys(settings, ['mode', 'seed'], 'Classic Snake options');
+  exactKeys(settings, ['mode', 'seed', 'hazardSeed'], 'Classic Snake options');
   const { mode = 'solo', seed = 17 } = settings;
   required(
     ['solo', 'team'].includes(mode) && integer(seed, 0, 0xffffffff),
     'Invalid Snake mode or seed.',
   );
   const level = freeze(validateClassicSnakeLevelV4(source));
+  const variableHazards = classicSnakeUsesVariableHazards(level);
+  required(
+    variableHazards
+      ? integer(settings.hazardSeed, 0, 0xffffffff)
+      : !Object.hasOwn(settings, 'hazardSeed'),
+    'Variable Snake interference requires its accepted hazard seed.',
+  );
   const run = {
     version: CLASSIC_SNAKE_V4_CORE,
     level,
     levelIdentity: dataIdentity(level),
     mode,
     seed,
+    ...(variableHazards ? { hazardSeed: settings.hazardSeed, signalClearUntilMs: 0 } : {}),
     random: seed || 0x9e3779b9,
     bonusRandom: (seed ^ 0x51ed270b) >>> 0,
     tick: 0,
@@ -1157,7 +1282,8 @@ export function stepClassicSnakeV4(run) {
     for (const owner of plans)
       if ((owner.target ? owner.s.body : owner.s.body.slice(0, -1)).some((c) => same(c, p.next)))
         fail(p.s.id, owner.s.id === p.s.id ? 'body' : 'partner-body');
-  run.elapsedMs += classicSnakeStepMillisecondsV4(run);
+  const stepDuration = classicSnakeStepMillisecondsV4(run);
+  run.elapsedMs += stepDuration;
   run.tick++;
   for (const p of plans) {
     p.s.direction = p.direction;
@@ -1178,6 +1304,12 @@ export function stepClassicSnakeV4(run) {
     p.s.body.unshift(p.next);
     if (!p.target) p.s.body.pop();
     if (p.target) {
+      if (
+        p.target.kind === 'jammer' &&
+        p.target.phase === 'jamming' &&
+        Object.hasOwn(run, 'hazardSeed')
+      )
+        run.signalClearUntilMs = Math.max(run.signalClearUntilMs, run.elapsedMs + 1600);
       const bonus = p.target.role === 'bonus';
       if (bonus) {
         run.bonusCatches++;
@@ -1235,6 +1367,15 @@ export function stepClassicSnakeV4(run) {
     return run;
   }
   const pausedTargets = run.pulseTicks > 0;
+  if (pausedTargets && Object.hasOwn(run, 'hazardSeed')) {
+    for (const target of run.targets)
+      if (target.signalUntilMs !== undefined) {
+        target.signalStartedMs += stepDuration;
+        target.signalUntilMs += stepDuration;
+      }
+    if (run.signalClearUntilMs > run.elapsedMs - stepDuration)
+      run.signalClearUntilMs += stepDuration;
+  }
   moveTargets(run);
   if (!pausedTargets) advanceSpecials(run);
   syncShutters(run, true);
@@ -1249,6 +1390,7 @@ export function classicSnakeSummaryV4(run) {
     levelIdentity: run.levelIdentity,
     mode: run.mode,
     seed: run.seed,
+    ...(Object.hasOwn(run, 'hazardSeed') ? { hazardSeed: run.hazardSeed } : {}),
     tick: run.tick,
     elapsedMs: run.elapsedMs,
     status: run.status,
@@ -1284,6 +1426,7 @@ export function exportClassicSnakeReplayV4(run) {
     levelIdentity: run.levelIdentity,
     mode: run.mode,
     seed: run.seed,
+    ...(Object.hasOwn(run, 'hazardSeed') ? { hazardSeed: run.hazardSeed } : {}),
     steps: run.tick,
     turns: structuredClone(run.history),
     checkpoint: checkpoint(run),
@@ -1305,6 +1448,7 @@ export function restoreClassicSnakeReplayV4(source, { level: expected } = {}) {
       'levelIdentity',
       'mode',
       'seed',
+      'hazardSeed',
       'steps',
       'turns',
       'checkpoint',
@@ -1315,7 +1459,11 @@ export function restoreClassicSnakeReplayV4(source, { level: expected } = {}) {
     r.version === CLASSIC_SNAKE_V4_REPLAY && r.ruleset === CLASSIC_SNAKE_V4_CORE,
     'Unsupported Snake replay.',
   );
-  const run = createClassicSnakeV4(r.level, { mode: r.mode, seed: r.seed });
+  const run = createClassicSnakeV4(r.level, {
+    mode: r.mode,
+    seed: r.seed,
+    ...(Object.hasOwn(r, 'hazardSeed') ? { hazardSeed: r.hazardSeed } : {}),
+  });
   required(
     r.levelIdentity === run.levelIdentity &&
       (!expected ||

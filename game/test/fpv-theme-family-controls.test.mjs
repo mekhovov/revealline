@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { sharedEnemyArtwork } from '../hunt/preferences.mjs';
 import { Document, Events } from './helpers/couch-dom.mjs';
 import {
   installSimThemeHost,
@@ -219,4 +220,29 @@ test('SIM offers fixed Classic Field Kit separately from Authored without changi
     'Interface-only changes do not request a new world or release the armed appearance.',
   );
   controls.dispose();
+});
+
+test('SIM notifies pre-Arm artwork changes even when the world profile is unchanged and disposes that subscription', () => {
+  const f = fixture(),
+    artwork = sharedEnemyArtwork(),
+    original = artwork.snapshot().style,
+    received = [];
+  artwork.set({ style: 'authored' });
+  const controls = mountSimAppearanceControls({
+    ...f,
+    container: f.document.body,
+    onChange: (appearance) => received.push(appearance),
+  });
+  try {
+    const current = controls.resolve().appearance;
+    received.length = 0;
+    artwork.set({ style: 'military' });
+    assert.equal(received.length, 1);
+    assert.deepEqual(received[0], current);
+    controls.dispose();
+    artwork.set({ style: 'authored' });
+    assert.equal(received.length, 1, 'Disposed flight controls must not rebuild a scene.');
+  } finally {
+    artwork.set({ style: original });
+  }
 });

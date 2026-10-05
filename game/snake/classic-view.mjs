@@ -1,10 +1,21 @@
 import { drawHuntRemains } from '../hunt/destruction.mjs';
-import { drawClassicTarget } from './classic-target-art.mjs';
+import { runtimeActorArtRevision } from '../hunt/preferences.mjs';
+import { createClassicTargetFacing, drawClassicTarget } from './classic-target-art.mjs';
 import { drawClassicDrone, drawClassicCable } from './classic-flight-art.mjs';
 export { drawClassicTarget } from './classic-target-art.mjs';
 import { CLASSIC_SNAKE_CHAPTERS } from './classic-catalogue.mjs';
+import { classicSnakeSignalView } from './classic-core.mjs';
+import {
+  resolveClassicBoardScene,
+  classicScenePalette,
+  drawClassicLivingGround,
+  drawClassicLivingWall,
+} from './classic-scenes.mjs';
+import { drawClassicSignalInterference, drawClassicSignalSources } from './classic-signal-view.mjs';
+export { resolveClassicBoardScene, classicSceneBackdrop } from './classic-scenes.mjs';
 
 const UNIT = 28;
+const targetFacings = new WeakMap();
 const INKS = [
   { body: '#153d61', edge: '#65b6ff', band: '#ffe16b' },
   { body: '#4b285e', edge: '#e3b5ff', band: '#ffffff' },
@@ -254,64 +265,6 @@ function drawFieldMechanics(ctx, run, palette) {
   }
 }
 
-function drawSignalDropout(ctx, run, { reduced, locale }) {
-  const width = run.level.width * UNIT,
-    height = run.level.height * UNIT,
-    remaining = Math.max(1, Math.min(4, run.signal.remainingTicks));
-  // Do not paint the world underneath the loss screen. Its output must reveal
-  // neither changing actor positions nor cached silhouettes through a theme.
-  ctx.save();
-  ctx.globalAlpha = 1;
-  ctx.fillStyle = '#07111a';
-  ctx.fillRect(0, 0, width, height);
-  ctx.fillStyle = '#13212b';
-  for (let band = 0; band < 12; band++) {
-    const y = (band * 47 + (reduced ? 0 : run.tick * 3)) % height;
-    ctx.fillRect(3, y, width - 6, 2);
-  }
-  ctx.strokeStyle = '#edbd55';
-  ctx.lineWidth = 3;
-  ctx.setLineDash(run.level.wrap ? [7, 7] : []);
-  ctx.strokeRect(1.5, 1.5, width - 3, height - 3);
-  ctx.setLineDash([]);
-  const center = width / 2,
-    top = height / 2 - 75;
-  ctx.beginPath();
-  ctx.moveTo(center, top + 34);
-  ctx.lineTo(center, top + 8);
-  ctx.moveTo(center - 17, top + 8);
-  ctx.lineTo(center + 17, top + 8);
-  ctx.moveTo(center - 21, top - 1);
-  ctx.lineTo(center + 21, top + 41);
-  ctx.stroke();
-  ctx.fillStyle = '#f4f1dc';
-  ctx.textAlign = 'center';
-  ctx.textBaseline = 'middle';
-  ctx.font = 'bold 28px monospace';
-  ctx.fillText(locale === 'uk' ? 'СИГНАЛ ВТРАЧЕНО' : 'SIGNAL LOST', center, top + 76);
-  ctx.font = '21px sans-serif';
-  ctx.fillStyle = '#b8c5cf';
-  ctx.fillText(
-    locale === 'uk'
-      ? 'Керуйте з пам’яті · відновлення'
-      : 'Keep steering from memory · reconnecting',
-    center,
-    top + 114,
-  );
-  for (let index = 0; index < 4; index++) {
-    ctx.fillStyle = index < 4 - remaining ? '#edbd55' : '#34414b';
-    ctx.fillRect(center - 51 + index * 28, top + 143, 18, 7);
-  }
-  ctx.font = '20px monospace';
-  ctx.fillStyle = '#edbd55';
-  ctx.fillText(
-    locale === 'uk' ? `Ще ходів: ${remaining}` : `${remaining} moves remaining`,
-    center,
-    top + 183,
-  );
-  ctx.restore();
-}
-
 export function drawClassicBoard(
   canvas,
   run,
@@ -322,11 +275,15 @@ export function drawClassicBoard(
     showRemains = true,
     style = 'cable',
     boardStyle = 'theme',
+    boardScene = 'auto',
+    chapterId = '',
     cast = 'rivals',
+    artRevision = runtimeActorArtRevision(),
     presentation,
     accent = null,
     reduced = false,
     flight = {},
+    attemptKey = run,
     pixelRatio = 1,
     cssWidth,
     locale = 'en',
@@ -334,7 +291,13 @@ export function drawClassicBoard(
 ) {
   const { width, height, walls, wrap } = run.level,
     retro = boardStyle === 'retro',
-    palette = retro ? RETRO_FIELD_PALETTE : (presentation?.palette ?? FALLBACK_PALETTE);
+    living = boardStyle === 'living-circuit',
+    scene = resolveClassicBoardScene({ boardScene, chapterId, levelId: run.level.id }),
+    palette = retro
+      ? RETRO_FIELD_PALETTE
+      : living
+        ? classicScenePalette(scene)
+        : (presentation?.palette ?? FALLBACK_PALETTE);
   const logicalWidth = width * UNIT,
     logicalHeight = height * UNIT;
   const resolution = Math.max(
@@ -359,23 +322,20 @@ export function drawClassicBoard(
   if (!ctx) return;
   ctx.setTransform(bitmapWidth / logicalWidth, 0, 0, bitmapHeight / logicalHeight, 0, 0);
   ctx.imageSmoothingEnabled = false;
-  // Pulse freezes jammer phases and stabilizes the feed while it lasts. A
-  // terminal impact is revealed for the failure recording rather than hidden.
-  const signalLost = run.signal?.jammed && run.pulseTicks <= 0 && run.status === 'running';
-  if (signalLost) {
-    drawSignalDropout(ctx, run, { reduced, locale });
-    return;
-  }
   ctx.fillStyle = palette.field;
   ctx.fillRect(0, 0, logicalWidth, logicalHeight);
-  ctx.fillStyle = palette.alternate;
-  ctx.globalAlpha = 0.42;
-  for (let y = 0; y < height; y++)
-    for (let x = 0; x < width; x++)
-      if ((x + y) % 2 === 0) ctx.fillRect(x * UNIT, y * UNIT, UNIT, UNIT);
+  if (living)
+    drawClassicLivingGround(ctx, run.level, scene, { unit: UNIT, document: canvas.ownerDocument });
+  else {
+    ctx.fillStyle = palette.alternate;
+    ctx.globalAlpha = 0.42;
+    for (let y = 0; y < height; y++)
+      for (let x = 0; x < width; x++)
+        if ((x + y) % 2 === 0) ctx.fillRect(x * UNIT, y * UNIT, UNIT, UNIT);
+  }
   // Fine grid and sparse surface grain echo the main game's terrain without
   // competing with silhouettes or pretending to be additional obstacles.
-  ctx.globalAlpha = 0.17;
+  ctx.globalAlpha = living ? 0.65 : 0.17;
   ctx.strokeStyle = palette.grid;
   ctx.lineWidth = 0.5;
   ctx.beginPath();
@@ -398,7 +358,8 @@ export function drawClassicBoard(
   if (showRemains) {
     ctx.save();
     ctx.scale(UNIT / 16, UNIT / 16);
-    for (const mark of classicCatchMarks(run)) drawHuntRemains(ctx, mark, { brutal, blood });
+    for (const mark of classicCatchMarks(run))
+      drawHuntRemains(ctx, mark, { brutal, blood, artRevision });
     ctx.restore();
   }
   if (effects) {
@@ -409,18 +370,21 @@ export function drawClassicBoard(
   }
   for (const wall of walls)
     if (!run.removedWalls?.some((removed) => removed.x === wall.x && removed.y === wall.y)) {
-      drawWall(ctx, wall, presentation, palette, retro);
+      if (living)
+        drawClassicLivingWall(ctx, wall, scene, { unit: UNIT, document: canvas.ownerDocument });
+      else drawWall(ctx, wall, presentation, palette, retro);
     }
   ctx.globalAlpha = 1;
   drawShutters(ctx, run, palette);
   drawPickup(ctx, run.pickup);
-  drawFieldMechanics(ctx, run, palette);
   ctx.lineWidth = 3;
   ctx.strokeStyle = wrap ? palette.accent : palette.muted;
   ctx.setLineDash(wrap ? [7, 7] : []);
   ctx.strokeRect(1.5, 1.5, logicalWidth - 3, logicalHeight - 3);
   ctx.setLineDash([]);
   const targets = run.targets ?? (run.target ? [run.target] : []);
+  if (!targetFacings.has(canvas)) targetFacings.set(canvas, createClassicTargetFacing());
+  const headings = targetFacings.get(canvas)(run, attemptKey);
   for (const target of targets) {
     drawClassicTarget(
       ctx,
@@ -430,7 +394,10 @@ export function drawClassicBoard(
       reduced || target.kind === 'still' || run.pulseTicks > 0 ? 0 : run.tick % 3,
       {
         ...target,
+        heading: headings.get(target.id),
         cast,
+        boardStyle,
+        artRevision,
         direction:
           target.kind === 'still' || (target.kind === 'sprinter' && target.phase === 'rest')
             ? undefined
@@ -477,28 +444,26 @@ export function drawClassicBoard(
     ctx.lineTo(x + 8, y + 20);
     ctx.stroke();
   }
-  if (run.status === 'running') {
-    const warning = targets.some(
-      (target) => target.kind === 'jammer' && target.phase === 'warning',
-    );
-    const stabilized = run.signal?.jammed && run.pulseTicks > 0;
-    if (warning || stabilized) {
-      ctx.save();
-      ctx.strokeStyle = stabilized ? palette.safe : palette.accent;
-      ctx.lineWidth = 5;
-      ctx.setLineDash(stabilized ? [] : [12, 8]);
-      ctx.strokeRect(3, 3, logicalWidth - 6, logicalHeight - 6);
-      if (stabilized) {
-        ctx.font = 'bold 21px sans-serif';
-        ctx.textAlign = 'center';
-        ctx.fillStyle = palette.text;
-        ctx.fillText(
-          locale === 'uk' ? 'ІМПУЛЬС · ПРИЙОМ ВІДНОВЛЕНО' : 'PULSE · RECEPTION STABILIZED',
-          logicalWidth / 2,
-          23,
-        );
-      }
-      ctx.restore();
-    }
-  }
+  const signal = classicSnakeSignalView(run);
+  drawClassicSignalInterference(ctx, canvas, run, signal, {
+    unit: UNIT,
+    reduced,
+    timeMs: flight.timeMs,
+    palette,
+    visualKey: JSON.stringify([
+      boardStyle,
+      scene,
+      style,
+      cast,
+      artRevision,
+      accent,
+      brutal,
+      blood,
+      showRemains,
+      palette,
+    ]),
+  });
+  // True hazard outlines stay crisp at native resolution after receiver processing.
+  drawFieldMechanics(ctx, run, palette);
+  drawClassicSignalSources(ctx, run, signal, { unit: UNIT, palette, locale });
 }

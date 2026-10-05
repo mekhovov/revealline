@@ -4,12 +4,14 @@ import { resolve, relative } from 'node:path';
 import { createHash } from 'node:crypto';
 import { format as formatCode, resolveConfig } from 'prettier';
 import { CLASSIC_SNAKE_LEVELS } from '../game/snake/classic-catalogue.mjs';
+import { resolveClassicSnakeRecipeEntry } from '../game/snake/classic-catalogue-archive.mjs';
 import { CLASSIC_PACES, prepareClassicSnakeLevel } from '../game/snake/classic-setup.mjs';
 import {
   createClassicSnake,
   queueClassicSnakeTurn,
   stepClassicSnake,
   restoreClassicSnakeReplay,
+  classicSnakeUsesVariableHazards,
 } from '../game/snake/classic-core.mjs';
 import { canonicalJSON } from '../game/data-json.mjs';
 
@@ -20,6 +22,9 @@ const sources = (await readdir(evidence, { recursive: true }))
   .filter((name) => name.endsWith('.json'))
   .map((name) => resolve(evidence, name));
 sources.push(resolve(root, 'game/test/fixtures/classic-snake-v4-proofs.json'));
+// Preserve verified grades for the five exact retired fixed-schedule recipes.
+// This frozen evidence is reverified on regeneration rather than copying rows.
+sources.push(resolve(root, 'game/test/fixtures/classic-snake-v4-archive-proofs.json'));
 for (const path of sources.sort()) {
   const name = relative(root, path),
     bytes = await readFile(path),
@@ -35,9 +40,24 @@ for (const path of sources.sort()) {
       !['solo', 'team'].includes(proof.mode)
     )
       continue;
-    const entry = CLASSIC_SNAKE_LEVELS.find((candidate) => candidate.id === proof.level.id);
+    let entry = CLASSIC_SNAKE_LEVELS.find((candidate) => candidate.id === proof.level.id);
     if (!entry) continue;
     const sourcePace = document.proofs?.[proofIndex]?.pace ?? 'normal';
+    try {
+      entry = resolveClassicSnakeRecipeEntry(
+        entry,
+        proof.level,
+        {
+          pace: sourcePace,
+          format: 'campaign',
+          targetRules: 'authored',
+          preset: 'classic',
+        },
+        { allowArchive: true },
+      );
+    } catch {
+      continue;
+    }
     const expectedLevel = prepareClassicSnakeLevel(entry, {
       pace: sourcePace,
       format: 'campaign',
@@ -47,6 +67,9 @@ for (const path of sources.sort()) {
     if (canonicalJSON(expectedLevel) !== canonicalJSON(proof.level)) continue;
     const verified = restoreClassicSnakeReplay(proof, { level: expectedLevel });
     if (verified.status !== 'won') continue;
+    // A single schedule is completion evidence, never silver/gold calibration
+    // for missions whose accepted radio schedule changes on each new attempt.
+    if (classicSnakeUsesVariableHazards(expectedLevel)) continue;
     for (const pace of proof.version === 'classic-snake-replay.v4'
       ? [sourcePace]
       : Object.keys(CLASSIC_PACES)) {

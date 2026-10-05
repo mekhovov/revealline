@@ -1,0 +1,52 @@
+{
+  "format": "revealline-actor-atlas-sample.v1",
+  "quality": { "stage": "produced", "evidence": [] },
+  "method": "Original Field Kit source recipes and deterministic encodeSpritePNG pipeline; no reference images or downloaded pixels.",
+  "sources": [
+    {
+      "path": "game/presentation/pixel-art.mjs",
+      "sha256": "544c975f88686455607dbed2f4babb472dc1ad5d9992d878c8c91dc2b123e582"
+    },
+    {
+      "path": "scripts/produce-field-kit-sprites.mjs",
+      "sha256": "f268d930f82fd60bab8af46d913f2fabbf263924076ce6a83ec47c3959aabd59"
+    },
+    {
+      "path": "scripts/produce-actor-atlas-sample.mjs",
+      "sha256": "8cf05c5085f8e9288b33116dc13af53332c97472ba136052c77af38708ee6bb6"
+    },
+    {
+      "path": "game/presentation/compiled/studio.json",
+      "sha256": "c905cab9ce4519379d57bdecf3ef02146b44d5a2ad82430a3939b2d2fc00f617"
+    }
+  ],
+  "asset": { "id": "industrial-bouncer-atlas-sample", "revision": 1 },
+  "parent": { "id": "industrial-atlas-bouncer-source", "revision": 1 },
+  "frames": 12,
+  "decodedBytes": 49152,
+  "files": [
+    {
+      "path": "source.png",
+      "bytes": 290,
+      "sha256": "e35ca174c360d5a572c72e6be448666cf3da1438cf0d91f8ea7ff8c221b8eb5e"
+    },
+    {
+      "path": "atlas.png",
+      "bytes": 906,
+      "sha256": "44c148f5a811e2ab908db1f16b986e50382bbea7821a3774fe9dcdca45f49d97"
+    },
+    {
+      "path": "industrial-bouncer.rltheme",
+      "bytes": 990438,
+      "sha256": "096254a8876e2152a93d8a2abccebf753ba9387a5016c1ad2d956ec3f6c7bab2"
+    },
+    {
+      "path": "asset-v2.json",
+      "bytes": 4575,
+      "sha256": "75e17d726aafebada8ca876b064281d4af7fd34e8e3dda26b5d62f65f6d8ea93"
+    }
+  ],
+  "admission": "Native asset-v2 validation, SHA/header-verified .rltheme import, published Studio workspace adoption and byte-identical re-export. No browser decode or play qualification is claimed.",
+  "runtimeClips": ["idle", "move", "anticipation", "recovery", "blocked"],
+  "previewOnlyClips": ["notice", "caught"]
+}

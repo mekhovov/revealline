@@ -1,3 +1,4 @@
+import { DIALOGUE_MUSIC_GAIN } from '../audio/dialogue-mix.mjs';
 import { attachHuntFeedbackLayout } from './hunt-feedback-layout.mjs';
 import {
   journeyOwnsReactionCaption,
@@ -502,7 +503,7 @@ export function attachContextualReactions({
       });
       if (activeVoice) {
         try {
-          lease = acquireGain({ factor: 0.65 });
+          lease = acquireGain({ factor: DIALOGUE_MUSIC_GAIN });
         } catch {
           lease = null;
         }

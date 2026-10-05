@@ -3,6 +3,7 @@ import {
   queueClassicSnakeTurn,
   stepClassicSnake,
   exportClassicSnakeReplay,
+  classicSnakeUsesVariableHazards,
 } from '../../snake/classic-core.mjs';
 import {
   classicSnakeContactHazardV4,
@@ -82,8 +83,15 @@ function distanceToObjectives(run, snake) {
 
 /** A deterministic qualification pilot: only submits ordinary player input.
  * It is deliberately not used by gameplay or by the rating runtime. */
-export function proveClassicSnakeV4(level, { seed = 17, mode = 'solo', maxSteps = 2400 } = {}) {
-  const run = createClassicSnake(level, { seed, mode });
+export function proveClassicSnakeV4(
+  level,
+  { seed = 17, hazardSeed = 17, mode = 'solo', maxSteps = 2400 } = {},
+) {
+  const run = createClassicSnake(level, {
+    seed,
+    mode,
+    ...(classicSnakeUsesVariableHazards(level) ? { hazardSeed } : {}),
+  });
   const visited = new Map();
   while (run.status === 'running' && run.tick < maxSteps) {
     const ranked = [];

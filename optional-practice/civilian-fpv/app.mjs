@@ -115,7 +115,8 @@ export function mountFlightApp({
     /^https?:$/.test(new URL(win.location.href).protocol) &&
     win.isSecureContext !== false &&
     !!win.navigator?.serviceWorker;
-  let offlineBusy = false;
+  let offlineBusy = false,
+    offlineRequest;
   const refreshOfflineControls = () => {
     for (const id of ['install-offline', 'remove-offline'])
       $(id).disabled = !offlineAvailable || offlineBusy;
@@ -1655,6 +1656,8 @@ export function mountFlightApp({
       if (!offlineAvailable || offlineBusy || disposed || suspended) return;
       pause();
       offlineBusy = true;
+      const request = new AbortController();
+      offlineRequest = request;
       refreshOfflineControls();
       $('transfer-status').textContent =
         c()[id === 'install-offline' ? 'offlinePreparing' : 'offlineRemoving'];
@@ -1670,6 +1673,9 @@ export function mountFlightApp({
           location: win.location,
           caches: win.caches,
           storage,
+          document: doc,
+          progressParent: $(id).closest('dialog[open]') ?? doc.body,
+          signal: request.signal,
         });
         if (!disposed)
           $('transfer-status').textContent =
@@ -1677,6 +1683,7 @@ export function mountFlightApp({
       } catch (error) {
         if (!disposed) $('transfer-status').textContent = error.message;
       } finally {
+        if (offlineRequest === request) offlineRequest = null;
         offlineBusy = false;
         if (!disposed) refreshOfflineControls();
       }
@@ -1989,6 +1996,7 @@ export function mountFlightApp({
       disposed = true;
       epoch++;
       scenePreparation?.abort();
+      offlineRequest?.abort();
       if (frameId !== null) win.cancelAnimationFrame(frameId);
       setup?.dispose();
       void notebook?.dispose();

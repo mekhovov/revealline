@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import {
   createClassicSnake,
+  classicSnakeUsesVariableHazards,
   validateClassicSnakeLevel,
   stepClassicSnake,
   queueClassicSnakeTurn,
@@ -21,7 +22,12 @@ import { CLASSIC_SNAKE_LEVELS } from '../snake/classic-catalogue.mjs';
 import { CLASSIC_SNAKE_V4_KINDS } from '../snake/classic-core-v4.mjs';
 
 const entry = (slug) => CLASSIC_SNAKE_V4_LEVELS.find((row) => row.id === `classic-field-${slug}`);
-const make = (slug, options = {}) => createClassicSnake(entry(slug).level, options);
+// Retain coverage of the original, unprofiled v4 mechanic rules.
+const make = (slug, options = {}) => {
+  const level = structuredClone(entry(slug).level);
+  for (const policy of level.targets.required) delete policy.signalProfile;
+  return createClassicSnake(level, options);
+};
 function circulate(run, count) {
   for (let i = 0; i < count; i++) {
     const head = run.snakes[0].body[0];
@@ -45,14 +51,49 @@ const front = (run, target) => {
   target.y = run.snakes[0].body[0].y;
 };
 
-test('v4 first release admits eight teaching/mastery/combined recipes and exact replay', () => {
-  assert.equal(CLASSIC_SNAKE_V4_INITIAL_LEVELS.length, 8);
+test('v4 admits ten teaching/mastery/combined recipes and exact replay', () => {
+  assert.equal(CLASSIC_SNAKE_V4_INITIAL_LEVELS.length, 10);
   for (const row of CLASSIC_SNAKE_V4_INITIAL_LEVELS) {
     assert.deepEqual(validateClassicSnakeLevel(row.level), row.level);
-    const run = createClassicSnake(row.level, { seed: 91 });
+    const run = createClassicSnake(row.level, {
+      seed: 91,
+      ...(classicSnakeUsesVariableHazards(row.level) ? { hazardSeed: 17 } : {}),
+    });
     circulate(run, 10);
     assert.deepEqual(restoreClassicSnakeReplay(exportClassicSnakeReplay(run)), run);
   }
+});
+
+test('broadcast teaching precedes combined encounters and uses the approved names and scope', () => {
+  assert.deepEqual(
+    CLASSIC_SNAKE_V4_INITIAL_LEVELS.map((row) => row.id),
+    [
+      'classic-field-signal-check',
+      'classic-field-quiet-return',
+      'classic-field-lane-window',
+      'classic-field-two-returns',
+      'classic-field-relay-key',
+      'classic-field-linked-courts',
+      'classic-field-broadcast-check',
+      'classic-field-quiet-channel',
+      'classic-field-signal-crossing',
+      'classic-field-relay-airfield',
+    ],
+  );
+  assert.deepEqual(entry('quiet-channel').title, { en: 'Quiet Channel', uk: 'Тихий канал' });
+  assert.equal(entry('quiet-channel').level.name, 'Quiet Channel');
+  assert.equal(entry('quiet-channel').level.revision, '1');
+  assert.equal(entry('broadcast-check').level.revision, '1');
+  for (const slug of ['broadcast-check', 'quiet-channel', 'relay-airfield'])
+    assert.ok(
+      entry(slug)
+        .level.targets.required.filter((target) => target.kind === 'jammer')
+        .every((target) => target.signalProfile === 'broadcast-burst-v1'),
+    );
+  assert.equal(entry('signal-crossing').level.targets.required[0].signalProfile, 'local-burst-v1');
+  assert.equal(entry('relay-airfield').level.revision, '2');
+  assert.match(entry('relay-airfield').description.en, /whole feed/);
+  assert.match(entry('relay-airfield').description.uk, /усе поле/);
 });
 
 test('jamming has a visible warning, four moves of interference and no steering mutation', () => {
@@ -240,8 +281,8 @@ test('later prey never moves into a snake and eroders only open authored wall ce
   assert.deepEqual(restoreClassicSnakeReplay(exportClassicSnakeReplay(run)), run);
 });
 
-test('v4 appends 22 distinct authored layouts while historical versions retain 96 entries', () => {
-  assert.equal(CLASSIC_SNAKE_LEVELS.length, 118);
+test('v4 appends 24 distinct authored layouts while historical versions retain 96 entries', () => {
+  assert.equal(CLASSIC_SNAKE_LEVELS.length, 120);
   assert.equal(CLASSIC_SNAKE_LEVELS.filter((row) => !row.level.version.endsWith('v4')).length, 96);
   assert.deepEqual(
     CLASSIC_SNAKE_V4_LEVELS.map((row) => row.chapterId).reduce((counts, id) => {
@@ -249,14 +290,14 @@ test('v4 appends 22 distinct authored layouts while historical versions retain 9
       return counts;
     }, {}),
     {
-      'classic-snake-signal-tactics': 8,
+      'classic-snake-signal-tactics': 10,
       'classic-snake-patrol-frontiers': 6,
       'classic-snake-field-mastery': 8,
     },
   );
   assert.equal(
     new Set(CLASSIC_SNAKE_V4_LEVELS.map((row) => JSON.stringify(row.level.walls))).size,
-    22,
+    24,
   );
   for (const row of CLASSIC_SNAKE_V4_LEVELS)
     assert.deepEqual(validateClassicSnakeLevel(row.level), row.level);
@@ -266,7 +307,7 @@ test('every v4 campaign mission has a verified Solo and Team winning proof at ev
   const source = JSON.parse(
     await readFile(new URL('./fixtures/classic-snake-v4-proofs.json', import.meta.url), 'utf8'),
   );
-  assert.equal(source.proofs.length, 132);
+  assert.equal(source.proofs.length, 144);
   const keys = new Set();
   for (const proof of source.proofs) {
     const row = CLASSIC_SNAKE_V4_LEVELS.find((item) => item.id === proof.levelId);
@@ -277,7 +318,7 @@ test('every v4 campaign mission has a verified Solo and Team winning proof at ev
     assert.equal(run.mode, proof.mode);
     keys.add(`${proof.levelId}/${proof.mode}/${proof.pace}`);
   }
-  assert.equal(keys.size, 132);
+  assert.equal(keys.size, 144);
 });
 
 test('mechanic rendering is deterministic, supports reduced effects, and never changes replay authority', () => {
@@ -288,7 +329,10 @@ test('mechanic rendering is deterministic, supports reduced effects, and never c
   );
   const canvas = { width: 0, height: 0, style: {}, getContext: () => ctx };
   for (const row of CLASSIC_SNAKE_V4_LEVELS) {
-    const run = createClassicSnake(row.level);
+    const run = createClassicSnake(
+      row.level,
+      classicSnakeUsesVariableHazards(row.level) ? { hazardSeed: 17 } : {},
+    );
     circulate(run, 16);
     const before = JSON.stringify(run),
       replay = exportClassicSnakeReplay(run);

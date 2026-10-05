@@ -7,16 +7,16 @@ const guides = {
     false,
     ['Signal jammer', 'Глушник сигналу'],
     [
-      'Blacks out the whole playfield for four moves after a warning.',
-      'Після попередження приховує все поле на чотири ходи.',
+      'Disrupts the live camera feed with short, variable bursts after a warning.',
+      'Після попередження спотворює живе зображення короткими спалахами змінної тривалості.',
     ],
     [
-      'The antenna and dashed amber arena edge warn first. A recovery counter stays visible during signal loss.',
-      'Антена й жовтий пунктир краю поля попереджають завчасно. Під час втрати сигналу видно відлік відновлення.',
+      'An antenna and marked radius identify a local jammer. A double antenna broadcasts across the board. Transmission arcs warn before each burst.',
+      'Антена й позначений радіус указують на локальний глушник. Подвійна антена впливає на все поле. Дуги передавання попереджають перед кожним спалахом.',
     ],
     [
-      'Memorize your next four moves: enemies, walls and your cable disappear while steering continues. Catch the jammer to restore reception. Pulse shows the field while freezing the remaining blackout moves.',
-      'Запам’ятайте наступні чотири ходи: вороги, стіни й кабель зникнуть, але керування діє. Спіймайте глушник для відновлення прийому. Імпульс показує поле, заморожуючи решту ходів втрати сигналу.',
+      'Catch the antenna enemy to stop its signal, leave a local transmission zone, or use Pulse for temporary clear reception. Watch the nearby walls and tail; controls keep their normal timing. Bursts change each attempt.',
+      'Спіймайте ворога з антеною, вийдіть із локальної зони або застосуйте Імпульс для тимчасового чистого прийому. Стежте за близькими стінами й хвостом; темп керування незмінний. Спалахи змінюються щоразу.',
     ],
   ],
   lane: [

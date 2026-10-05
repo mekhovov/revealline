@@ -18,6 +18,7 @@ import {
 import { managedIndexedDB } from './helpers/managed-idb.mjs';
 import { waitFor } from './helpers/wait-for.mjs';
 import { openMissionLibrary, activateMissionCard } from './helpers/library-selection.mjs';
+import { activateHostAction } from './helpers/host-action.mjs';
 
 const entries = [
   {
@@ -111,7 +112,10 @@ async function setup(
       window.navigator = globals.navigator;
       window.caches = caches;
       window.localStorage = storage;
-      window.matchMedia = globals.matchMedia;
+      // The native menu observes MediaQueryList change events. A matches-only
+      // object aborts shell boot before the title's actions are attached.
+      globals.matchMedia = window.matchMedia = (query) =>
+        Object.assign(new EventTarget(), { media: query, matches: false, onchange: null });
     },
     fetchResponse: async (path) => {
       if (String(path).endsWith('/offline-content.json')) return Response.json(catalogue);
@@ -142,6 +146,29 @@ async function setup(
       }
     },
   });
+  // Published catalogue data can be ready before the title controls bind. The
+  // browser keeps those controls inert until this native boot boundary; waiting
+  // for it does not warm or install the optional chapter's pictures.
+  await waitFor(
+    () =>
+      page.$('boot-status').hidden &&
+      page.$('shell-home').open &&
+      [...page.doc.querySelectorAll('[data-boot-inert]')].every((node) => !node.inert) &&
+      typeof page.$('shell-play').onclick === 'function' &&
+      typeof page.$('shell-title-versus').onclick === 'function',
+    { message: 'The published title must finish native boot before accepting actions.' },
+  ).catch((error) => {
+    error.message += `\n${JSON.stringify({
+      bootHidden: page.$('boot-status').hidden,
+      titleOpen: page.$('shell-home').open,
+      inert: [...page.doc.querySelectorAll('[data-boot-inert]')].map((node) => node.inert),
+      missionsHandler: typeof page.$('shell-play').onclick,
+      versusHandler: typeof page.$('shell-title-versus').onclick,
+      errors: page.errors.map((value) => String(value?.stack ?? value)),
+    })}`;
+    throw error;
+  });
+  assert.deepEqual(page.errors, [], 'The complete published title boots without an error.');
   async function prepare(groupId) {
     const group = groups.find((item) => item.id === groupId);
     const cache = await caches.open(OFFICIAL_CACHE);
@@ -188,13 +215,30 @@ test('published Solo boots the starter and starts an unprepared chapter online w
   ]);
   const card = await selectedCard(h.page);
   assert(card, 'Unloaded current missions remain visible.');
-  assert.equal(h.$('journey-cards').children.length, 186);
+  assert.equal(h.$('journey-cards').children.length, 240);
   assert.equal(h.runtimeReads.length, 2, 'Browsing does not load every chapter.');
   await activateMissionCard(card);
   await waitFor(() => {
     h.frame(0);
-    return h.doc.body.dataset.flightState === 'running';
+    return (
+      h.page.rendered.run.levelId === mission.id && h.doc.body.dataset.flightState === 'running'
+    );
+  }).catch((error) => {
+    error.message += `\n${JSON.stringify({
+      status: h.$('journey-chooser-status').textContent,
+      runMessage: h.$('run-message').textContent,
+      overlay: h.$('game-overlay').dataset.kind,
+      runtimeReads: h.runtimeReads,
+      errors: h.errors.map((value) => String(value?.stack ?? value)),
+    })}`;
+    throw error;
   });
+  const accepted = h.page.rendered.run;
+  assert.equal(accepted.levelId, mission.id);
+  assert.equal(h.$('game-overlay').hidden, true);
+  assert.equal(h.page.rendered.paused, false);
+  assert.equal(h.doc.body.dataset.flightState, 'running');
+  assert.equal(h.page.rendered.run, accepted, 'The card activation starts the exact mission.');
   assert.equal(h.page.rendered.run.levelId, mission.id);
   assert.deepEqual(h.runtimeReads.slice(2), [chapter.path]);
   assert.equal(h.$('install-offline-dialog')?.open ?? false, false);
@@ -313,7 +357,7 @@ test('an exact saved campaign restores online and retains explicitly prepared of
 test('ordinary mode departure opens Versus without offline preparation', async (t) => {
   const h = await setup(t),
     before = globalThis.location.href;
-  h.$('shell-title-versus').click();
+  await activateHostAction(h.$('shell-title-versus'));
   await waitFor(() => globalThis.location.href !== before);
   assert.equal(new URL(globalThis.location.href).pathname, '/game/couch/');
   assert.equal(h.$('install-offline-dialog')?.open ?? false, false);

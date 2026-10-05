@@ -6,6 +6,7 @@ import { soloPage, settle, memoryStorage } from './helpers/solo-dom.mjs';
 import { waitFor } from './helpers/wait-for.mjs';
 import { retryFixture } from './fixtures/retry-scenarios.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
+import { activateHostAction } from './helpers/host-action.mjs';
 
 const classes = JSON.parse(readFileSync(new URL('../content/classes.json', import.meta.url)));
 const impactDemo = JSON.parse(
@@ -88,10 +89,10 @@ async function setup(t, { themeId = 'fpv', lives = 1, classic = false, reduced =
     });
   await settle(() => surface.frame.painter.image !== null);
   page.$('reduced-effects').checked = reduced;
-  page.$('start-button').click();
   // Start owns asynchronous picture preparation; steer only after the exact
   // attempt has replaced the ready briefing state.
-  await settle(() => page.doc.body.dataset.flightState === 'running');
+  await activateHostAction(page.$('start-button'));
+  assert.equal(page.doc.body.dataset.flightState, 'running');
   page.key('ArrowDown');
   for (let i = 0; i < (classic ? 292 : 30); i++) page.frame();
   page.key('ArrowDown', false);
@@ -186,23 +187,31 @@ test('controller skip cannot carry held Confirm into Retry', async (t) => {
       buttons: Array.from({ length: 17 }, () => ({ pressed: false, value: 0 })),
     };
   navigator.getGamepads = () => [pad];
-  // Neutral auto-join does not consume a Confirm press. The first press below
-  // skips the wreck, and its held state must not activate the focused Retry.
+  // Neutral auto-join does not consume Confirm. Activation belongs to the
+  // complete press/release gesture, so holding cannot skip or leak into Retry.
   page.frame(0);
   pad.buttons[0] = { pressed: true, value: 1 };
   page.frame(0);
-  assert.equal(page.$('game-overlay').dataset.kind, 'lost');
-  assert.equal(page.doc.activeElement.id, 'retry-button');
+  assert.equal(page.$('game-overlay').hidden, true);
+  assert.equal(page.doc.activeElement.id, 'skip-celebration');
   for (let i = 0; i < 4; i++) page.frame(0);
   assert.equal(page.rendered.run, run);
   assert.deepEqual(authoritativeCheckpoint(run), checkpoint);
   pad.buttons[0] = { pressed: false, value: 0 };
   page.frame(0);
+  assert.equal(page.$('game-overlay').dataset.kind, 'lost');
+  assert.equal(page.doc.activeElement.id, 'retry-button');
   // The Confirm lifecycle uses the real performance clock. Observe a full
   // neutral window before treating the next press as a deliberate Retry.
   await delay(130);
   page.frame(0);
   pad.buttons[0] = { pressed: true, value: 1 };
+  page.frame(0);
+  assert.equal(page.rendered.run, run, 'Holding Retry does not begin replacement.');
+  assert.equal(page.$('retry-button').disabled, false);
+  for (let i = 0; i < 4; i++) page.frame(0);
+  assert.deepEqual(authoritativeCheckpoint(run), checkpoint);
+  pad.buttons[0] = { pressed: false, value: 0 };
   page.frame(0);
   assert.equal(
     page.rendered.run,
@@ -211,7 +220,8 @@ test('controller skip cannot carry held Confirm into Retry', async (t) => {
   );
   assert.deepEqual(authoritativeCheckpoint(run), checkpoint);
   assert.equal(page.$('game-overlay').dataset.kind, 'lost');
-  assert.equal(page.$('retry-button').disabled, true);
+  // Resource/backup admission happens asynchronously before the button enters
+  // its busy state. The failed run must remain owned throughout that boundary.
   await waitFor(
     () => {
       page.frame(0);
@@ -228,7 +238,7 @@ test('controller skip cannot carry held Confirm into Retry', async (t) => {
   assert.equal(page.$('game-overlay').hidden, true);
   assert.equal(page.doc.activeElement.id, 'game-canvas');
   for (let i = 0; i < 4; i++) page.frame(0);
-  assert.equal(page.rendered.run, retried, 'Held Confirm cannot trigger another Retry.');
+  assert.equal(page.rendered.run, retried, 'The completed gesture cannot trigger another Retry.');
   assert.equal(retried.tick, 0);
   assert.deepEqual(page.errors, []);
 });

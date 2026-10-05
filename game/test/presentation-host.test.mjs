@@ -9,6 +9,7 @@ import { hashPresentationBytes } from '../presentation/bundle.mjs';
 import { CURRENT_PICTURES } from '../presentation/current-pictures.mjs';
 import { prepareStillAsset } from '../media-still.mjs';
 import { rasterFixtures } from './helpers/raster-fixtures.mjs';
+import { pageActorArtPool } from '../presentation/actor-art-pool.mjs';
 
 const baseURL = 'https://game.test/releases/v1/game/presentation/compiled/';
 const tick = () => new Promise((resolve) => setTimeout(resolve, 0));
@@ -236,6 +237,47 @@ test('loading is lazy, hash-pinned, and owns decoded assets until close without 
   await assert.rejects(e.host.load(), /closed/);
 });
 
+test('DOM-isolated actor owners share the actual page budget and independently offload and reinstall', async (t) => {
+  const prior = Object.getOwnPropertyDescriptor(globalThis, 'document'),
+    document = { defaultView: { navigator: { deviceMemory: 8 } } };
+  Object.defineProperty(globalThis, 'document', { configurable: true, value: document });
+  t.after(() => {
+    if (prior) Object.defineProperty(globalThis, 'document', prior);
+    else delete globalThis.document;
+  });
+  const f = await fixture(),
+    page = environment(f, { document }),
+    actor = environment(f, { profile: 'actors', document: null }),
+    pool = pageActorArtPool(document);
+  t.after(() => {
+    page.host.close();
+    actor.host.close();
+  });
+  const original = await page.host.load(),
+    isolated = await actor.host.load();
+  assert.strictEqual(
+    isolated.image('player.scout.compact').image,
+    original.image('player.scout.compact').image,
+  );
+  assert.equal(actor.decoded.length, 0, 'No second decoder for the same page-owned SHA.');
+  assert.equal(pool.stats().limit, 64 * 1024 * 1024);
+  assert.equal(pool.stats().reservedBytes, 4096);
+  assert.equal(pool.stats().leases, 2);
+  page.host.close();
+  assert.equal(page.decoded[0].closes, 0, 'The active actor owner survives page-theme offload.');
+  actor.host.close();
+  assert.equal(page.decoded[0].closes, 1);
+  assert.equal(pool.stats().reservedBytes, 0);
+  const reinstalled = environment(f, { profile: 'actors', document: null });
+  t.after(() => reinstalled.host.close());
+  await reinstalled.host.load();
+  assert.equal(reinstalled.decoded.length, 1, 'A later install cannot reuse a disposed image.');
+  assert.equal(pool.stats().reservedBytes, 4096);
+  reinstalled.host.close();
+  assert.equal(reinstalled.decoded[0].closes, 1);
+  assert.equal(pool.stats().reservedBytes, 0);
+});
+
 test('registered native origins retain the same closed hash-derived path boundary', async () => {
   const f = await fixture();
   for (const origin of ['revealline://app', 'capacitor://localhost']) {
@@ -387,9 +429,12 @@ test('superseded late image decoding is disposed and cannot release the newer ac
   while (!release) await tick();
   const rejected = assert.rejects(first, { name: 'AbortError' });
   const oldCount = oldStatus.length;
-  const second = await e.host.load({ onStatus: (status) => nextStatus.push(status) });
+  const replacement = e.host.load({ onStatus: (status) => nextStatus.push(status) });
+  await tick();
+  assert.equal(count, 1, 'A cancelled codec retains its reservation until it settles.');
   release(stale);
   await rejected;
+  const second = await replacement;
   assert.equal(oldStatus.length, oldCount);
   assert.equal(nextStatus.at(-1).status, 'ready');
   assert.equal(stale.closes, 1);
@@ -471,6 +516,136 @@ test('atlas frames are cropped once and the original and cropped bitmap have ind
   e.host.close();
   assert.equal(cropped.closes, 1);
   assert.equal(e.decoded[0].closes, 1);
+});
+
+test('a cancelled actor CSS export retains its accounted scratch pixels until encoding settles', async () => {
+  const f = await fixture(),
+    manifest = structuredClone(f.manifest),
+    files = new Map(f.files);
+  manifest.resolved.assets['player.scout.compact'].geometry.frame = {
+    x: 8,
+    y: 4,
+    width: 16,
+    height: 16,
+  };
+  files.set('runtime.json', new TextEncoder().encode(JSON.stringify(manifest)));
+  let finish,
+    cropClosed = 0;
+  const canvas = {
+      width: 0,
+      height: 0,
+      getContext: () => ({ drawImage() {} }),
+      toBlob: (callback) => {
+        finish = callback;
+      },
+    },
+    document = { createElement: () => canvas },
+    pool = pageActorArtPool(document),
+    e = environment(
+      { files },
+      {
+        document,
+        cropImage: async () => ({ width: 16, height: 16, close: () => cropClosed++ }),
+      },
+    ),
+    loading = e.host.load(),
+    rejected = assert.rejects(loading, { name: 'AbortError' });
+  while (!finish) await tick();
+  assert.equal(pool.stats().reservedBytes, 4096 + 1024 + 1024);
+  e.host.close();
+  assert.equal(e.decoded[0].closes, 1);
+  assert.equal(cropClosed, 1);
+  assert.equal(canvas.width, 16, 'The encoder still owns this backing store.');
+  assert.equal(pool.stats().reservedBytes, 1024);
+  finish(new Blob([f.bytes], { type: 'image/png' }));
+  await rejected;
+  assert.equal(canvas.width, 0);
+  assert.equal(canvas.height, 0);
+  assert.equal(pool.stats().reservedBytes, 0);
+  assert.equal(e.urls.length, 0, 'A cancelled export cannot create a CSS image URL.');
+});
+
+test('cancelling a host settles immediately but retains an asynchronous crop input until codec retirement', async () => {
+  const f = await fixture(),
+    manifest = structuredClone(f.manifest),
+    files = new Map(f.files),
+    document = {};
+  manifest.resolved.assets['player.scout.compact'].geometry.frame = {
+    x: 8,
+    y: 4,
+    width: 16,
+    height: 16,
+  };
+  files.set('runtime.json', new TextEncoder().encode(JSON.stringify(manifest)));
+  let finish,
+    cropClosed = 0;
+  const pool = pageActorArtPool(document),
+    e = environment(
+      { files },
+      {
+        document,
+        cropImage: () => new Promise((resolve) => (finish = resolve)),
+      },
+    ),
+    loading = e.host.load(),
+    rejected = assert.rejects(loading, { name: 'AbortError' });
+  while (!finish) await tick();
+  e.host.close();
+  await rejected;
+  assert.equal(e.decoded[0].closes, 0, 'The crop codec still owns its source pixels.');
+  assert.equal(pool.stats().reservedBytes, 4096 + 1024);
+  finish({ width: 16, height: 16, close: () => cropClosed++ });
+  await tick();
+  assert.equal(cropClosed, 1);
+  assert.equal(e.decoded[0].closes, 1);
+  assert.equal(pool.stats().reservedBytes, 0);
+  assert.equal(e.host.current(), null);
+  assert.equal(e.urls.length, 0);
+});
+
+test('actor CSS crop export refuses capacity before allocating a scratch canvas', async () => {
+  const f = await fixture(),
+    manifest = structuredClone(f.manifest),
+    files = new Map(f.files);
+  manifest.resolved.assets['player.scout.compact'].geometry.frame = {
+    x: 8,
+    y: 4,
+    width: 16,
+    height: 16,
+  };
+  files.set('runtime.json', new TextEncoder().encode(JSON.stringify(manifest)));
+  let canvases = 0,
+    cropsClosed = 0;
+  const document = {
+      createElement: () => {
+        canvases++;
+        return {};
+      },
+    },
+    pool = pageActorArtPool(document),
+    height = (pool.stats().limit - 5120) / 4,
+    otherActors = await pool.acquire({
+      key: 'other-live-actors',
+      width: 1,
+      height,
+      load: () => ({ width: 1, height }),
+    }),
+    e = environment(
+      { files },
+      {
+        document,
+        cropImage: async () => ({ width: 16, height: 16, close: () => cropsClosed++ }),
+      },
+    );
+  await assert.rejects(e.host.load(), /decoded byte budget/);
+  assert.equal(canvases, 0);
+  assert.equal(e.host.current(), null);
+  assert.equal(e.decoded[0].closes, 1);
+  assert.equal(cropsClosed, 1);
+  assert.equal(pool.stats().reservedBytes, pool.stats().limit - 5120);
+  e.host.close();
+  otherActors.release();
+  assert.equal(pool.stats().reservedBytes, 0);
 });
 
 test('font bytes are pinned and decoded before atomic registration, with owned CSS family and disposal', async () => {

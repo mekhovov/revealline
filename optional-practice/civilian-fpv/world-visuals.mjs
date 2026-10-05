@@ -8,6 +8,12 @@ resolveSimThemeProfile,
 }from'./world-themes.mjs';
 import{boundedJSON,exactKeys,required,stableId}from'../../game/data-json.mjs';
 import{contrastRatio}from'../../game/presentation/theme-system.mjs';
+import{runtimeActorArtRevision}from'../../game/hunt/preferences.mjs';
+import{
+INDUSTRIAL_MATERIAL_REVISION,
+INDUSTRIAL_ENVIRONMENT_REVISION,
+industrialMaterialPixels,
+}from'../../game/presentation/industrial-materials.mjs';
 
 const ADVENTURE_SURFACES=Object.freeze({
 coast:{floor:'sand',color:0xc2b38f,wall:'concrete'},
@@ -1218,6 +1224,7 @@ box,
 presentation,
 quality='balanced',
 maxAnisotropy=1,
+reviewRevision=runtimeActorArtRevision(),
 }){
 const profile=resolveSimThemeProfile(course,presentation),
 theme=profile.palette,
@@ -1226,7 +1233,7 @@ adventure=ADVENTURE_SURFACES[environment];
 const collectionId=simCollectionIdForProfile(profile),
 themed=Boolean(collectionId),
 kit=themed
-?createWorkshopMaterials({material,quality,maxAnisotropy,collectionId})
+?createWorkshopMaterials({material,quality,maxAnisotropy,collectionId,reviewRevision})
 :null;
 const min=Object.fromEntries(Object.entries(course.bounds.min).map(([k,v])=>[k,v/1000]));
 const max=Object.fromEntries(Object.entries(course.bounds.max).map(([k,v])=>[k,v/1000]));
@@ -2848,13 +2855,14 @@ profile=null,
 quality='balanced',
 maxAnisotropy=1,
 collectionId=simCollectionIdForProfile(profile),
+reviewRevision=runtimeActorArtRevision(),
 }){
 const pixel=kind==='pixel',
 utility=kind==='utility',
 detail=quality==='high'&& !pixel,
 rotors=[];
 const kit=collectionId
-?createWorkshopMaterials({material,quality,maxAnisotropy,collectionId})
+?createWorkshopMaterials({material,quality,maxAnisotropy,collectionId,reviewRevision})
 :null;
 parent.userData.modelRole=`drone-${kind}`;
 parent.userData.collectionId=collectionId??'authored';
@@ -3911,7 +3919,12 @@ return texture;
 
 export function createWorkshopTexture(
 role,
-{quality='balanced',maxAnisotropy=1,collectionId='industrial-workshop'}={},
+{
+quality='balanced',
+maxAnisotropy=1,
+collectionId='industrial-workshop',
+reviewRevision=runtimeActorArtRevision(),
+}={},
 ){
 const collection=getSimVisualCollection(collectionId),
 spec=collection.materials[role];
@@ -3950,11 +3963,23 @@ data[at+1]=Math.min(255,Math.round(pigment.g*255*shade));
 data[at+2]=Math.min(255,Math.round(pigment.b*255*shade));
 data[at+3]=255;
 }
+const sampleRole=
+collectionId==='military-field'&&
+[INDUSTRIAL_MATERIAL_REVISION,INDUSTRIAL_ENVIRONMENT_REVISION].includes(reviewRevision)
+?{concrete:'concrete',grass:'earth',steel:'metal'}[role]
+:null;
+if(sampleRole)
+data.set(
+industrialMaterialPixels({width:size,height:size},sampleRole,{
+revision:reviewRevision,
+}).rgba,
+);
 const texture=new THREE.DataTexture(data,size,size);
 texture.name=`${collection.descriptor?.materials[role]??`${collectionId}-${role}`}-${collection.revision}`;
 texture.colorSpace=THREE.SRGBColorSpace;
 texture.wrapS=texture.wrapT=THREE.RepeatWrapping;
 texture.userData={simSurface:true,materialRole:role,revision:'r1',collectionId};
+if(sampleRole)texture.userData.materialReviewRevision=reviewRevision;
 configureSimTextureSampling(texture,quality,maxAnisotropy);
 return texture;
 }
@@ -4001,13 +4026,17 @@ material,
 quality='balanced',
 maxAnisotropy=1,
 collectionId='industrial-workshop',
+reviewRevision=runtimeActorArtRevision(),
 }){
 const collection=getSimVisualCollection(collectionId);
 const maps=new Map(),
 paints=new Map();
 const texture=(role)=>{
 if(!maps.has(role))
-maps.set(role,createWorkshopTexture(role,{quality,maxAnisotropy,collectionId}));
+maps.set(
+role,
+createWorkshopTexture(role,{quality,maxAnisotropy,collectionId,reviewRevision}),
+);
 return maps.get(role);
 };
 const paint=(role)=>{
@@ -4094,6 +4123,7 @@ collectionId='authored',
 quality='balanced',
 maxAnisotropy=1,
 associations=null,
+reviewRevision=runtimeActorArtRevision(),
 material=(color,extras)=>new THREE.MeshStandardMaterial({color,...extras}),
 }={},
 ){
@@ -4132,7 +4162,13 @@ paint.transmission>0,
 diagnose(item,'transparency-protected');
 return;
 }
-kit??=createWorkshopMaterials({material,quality,maxAnisotropy,collectionId});
+kit??=createWorkshopMaterials({
+material,
+quality,
+maxAnisotropy,
+collectionId,
+reviewRevision,
+});
 const replacements=originals.map((paint)=>{
 retained.add(paint);
 const state={

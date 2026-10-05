@@ -31,7 +31,7 @@ export function classicSnakeRatingForRecord(row) {
       goldMoves: null,
       silverMoves: null,
     };
-  const thresholds = calibration.get(row.key ?? recordKey(row));
+  const thresholds = row.completionOnly ? null : calibration.get(row.key ?? recordKey(row));
   const moves = row.fewest?.value ?? row.fewestMoves;
   const stars =
     thresholds && Number.isSafeInteger(moves)

@@ -1072,6 +1072,7 @@ test('game return keeps scoped offline controls available and serializes prepara
   assert.equal(f.$('install-offline').hidden, false);
   assert.equal(f.$('install-offline').disabled, false);
   f.$('arm').click();
+  f.$('help-dialog').showModal();
   f.$('install-offline').click();
   assert.equal(f.view.snapshot().status, 'paused');
   assert.equal(f.$('install-offline').disabled, true);
@@ -1079,6 +1080,10 @@ test('game return keeps scoped offline controls available and serializes prepara
   f.$('install-offline').click();
   f.$('remove-offline').click();
   await waitFor(() => registrations.length === 1);
+  assert(
+    f.$('help-dialog').querySelector('[data-optional-offline-progress]'),
+    'The actual host passes its owning modal rather than attaching Cancel to the inert body',
+  );
   assert.deepEqual(registrations, [{ url: base + 'worker.js', scope: new URL(base).pathname }]);
   assert.equal(unregisters, 0);
   assert.deepEqual(removed, []);
@@ -1092,6 +1097,37 @@ test('game return keeps scoped offline controls available and serializes prepara
   assert.equal(unregisters, 1);
   assert.deepEqual(removed, [ownedCache]);
   assert.equal(f.$('remove-offline').disabled, false);
+});
+
+test('disposing Academy cancels an owned offline verification and releases its progress panel', async (t) => {
+  const base = 'https://example.test/optional-practice/civilian-fpv/',
+    ports = [],
+    messages = [];
+  const f = await fixture(t, {
+    url: base + 'index.html?lang=en',
+    notebookFactory: null,
+    studioFactory: null,
+    serviceWorker: {
+      getRegistration: async () => ({
+        scope: base,
+        active: {
+          scriptURL: base + 'worker.js',
+          postMessage(data, transferred) {
+            messages.push(data.type);
+            if (data.type === 'practice-status') ports.push(transferred[0]);
+          },
+        },
+      }),
+    },
+  });
+  f.$('help-dialog').showModal();
+  f.$('install-offline').click();
+  await waitFor(() => ports.length === 1);
+  assert(f.doc.querySelector('[data-optional-offline-progress]'));
+  f.view.dispose();
+  await waitFor(() => !f.doc.querySelector('[data-optional-offline-progress]'));
+  ports[0].postMessage({ type: 'practice-status', ready: true, scope: base });
+  assert(!messages.includes('practice-cancel'), 'Disposal cancels inspection, not active play');
 });
 
 test('unavailable offline capability stays explanatory and a failed prepare never reports ready', async (t) => {

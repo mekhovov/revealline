@@ -1,216 +1,63 @@
 # Continuous gameplay implementation
 
-Implementation and follow-up refinements, 2026-10-05. Branch: `codex/snake-continuous-play`.
+Working branch: `codex/snake-continuous-play`. Updated 2026-10-05. No public deployment is claimed by this document.
 
-Menu UX baseline is preserved in commit `261db930d`, copied from the current
-uncommitted `codex/unified-game-menus` checkout without modifying that checkout.
+## Shared flow
 
-## Required behavior
+Start, Continue, Next, Retry, Random, and Skip enter play directly. Optional mission information remains available through Choose mission. The existing compact Menu UX pause structure, settings-return behavior, focus graph, and generated optional-package sources remain the integration contract.
 
-- Shared Start/Continue/Next/Retry/Random/Skip enter play directly. Preserve Menu UX
-  compact pause, settings return, focus graph and optional-package projections.
-- Snake loss: 0.65s signal loss, final eight moves (nine compact visual snapshots,
-  240ms/move), ready cue and automatic retry. Immediate Retry and cancellation.
-- Victory: 5.2s core celebration then 5s cancellable auto-next; Next/Retry usable
-  throughout. Retain core picture rewards; Snake celebrates the completed board.
-- Host-owned cancellable transitions, fresh Confirm edges, no background or stale
-  timer launch. Respect Team shared board and competitive match outcome semantics.
-- Live per-step enemy totals, failed attempts included, no replay/import/demo
-  awards. Transactional lineage counters, max backup merge, resumable cursors.
-- Existing Collections gains global/per-game enemy cards; no Snake picture grants.
-- Completion stars for verified Snake mission clears; higher ratings only for
-  calibrated exact seed17 authored classic setups, with Solo/Team proof budgets.
-- Fresh Snake profiles start Open Loop, then Twin Islands; keep old saves/links.
-- New versioned mechanics: jammer, head-only lane attacks, latched relay shield,
-  eight missions. Follow with perimeter/contour/rover pairs and ricochet/eroder/
-  projectile guard pairs plus two finales. Preserve v1-v3 recipes/replays.
+Ordinary Snake loss runs a 650 ms impact effect, eight replay moves from nine compact snapshots at 240 ms/move, and a 400 ms ready cue before retrying. Immediate Retry skips the delay. Victory retains a 5,200 ms celebration and a separate cancellable 5,000 ms auto-next countdown. Next/Retry work throughout; a loss never starts victory confetti. Home, another action, backgrounding, and controller disconnection cancel pending progression. Engines still own simulation and persistence; the host-owned transition controller owns delayed launches.
 
-## Implemented phases
+Snake Results automatically loops its final-eight preview without advancing simulation, saving attempts, awarding progress, or rearming countdowns. Next, Retry/Rematch, Home, and continuation status remain in the action footer; the bounded preview and details scroll. More options holds secondary actions. Other modes place statistics and countdowns inside their actual result cards. Explicit View picture has a reachable continuation dock; accepted new attempts clear reward-only presentation before painting the new run.
 
-- Root: Snake host, per-step match observer, compact replay, integration, browser QA.
-- UX agent: shared shell/lifecycle/preferences and non-Snake hosts/projections.
-- Persistence agent: enemy statistics service/UI/backup and Snake ratings.
-- Mechanics agent: v4 simulation/content/rendering and compatibility tests.
+## Living Circuit and live interference
 
-1. **Continuous play.** Shared transition controller and preferences; direct
-   activation; native celebration, focused Next and cancellable countdown. Snake
-   captures nine compact boundaries per board, shows native signal loss and the
-   final eight moves, then retries the exact setup. Competitive outcomes keep
-   their own termination rules and Rematch. Open Loop is the fresh default.
-2. **Progress and Collections.** Transactional lineage counters observe actual
-   simulation steps, including failed attempts. Existing Collections owns its
-   pictures and gains totals, family portraits and game filters. Aggregate
-   backups carry the statistics sidecar; repeated imports merge by maximum.
-   Non-owning and restored-tab branches isolate future event cursors. Snake
-   records retain completion stars and 249 explicitly calibrated exact setups;
-   other seeds and ungraded modes keep honest completion/record presentation.
-3. **Signal Tactics.** Eight v4 missions introduce/master jammer, lane and relay
-   mechanics, then combine them. Live captions, optional field guides and sound
-   cues teach their counterplay without adding a start gate.
-4. **Expanded opponents.** Fourteen more v4 missions introduce/master perimeter,
-   contour, rover, ricochet, eroder and projectile guard behavior, with two
-   finales. The original 96 mission recipes and v1–v3 simulation remain intact.
-   Studio cloning/import/export preserves v4 mechanics.
+Living Circuit is a third board style alongside Theme and Retro. `classic-scenes.mjs` exports:
 
-All source changes remain on the isolated implementation branch. No public
-deployment has been performed.
+- `resolveClassicBoardScene({ boardScene, chapterId, levelId })`: explicit `orchard`, `workshop`, or `relay` wins; `auto` resolves by chapter, with a stable identity fallback.
+- `classicSceneBackdrop(scene, { document })`: cached procedural PNG data URL for the outer board-card background, or `null` when Canvas is unavailable.
 
-## Follow-up refinements, 2026-10-05
+The host passes `boardStyle: 'living-circuit'`, `boardScene`, and `chapterId` to `drawClassicBoard`. Scene choice is cosmetic: it consumes no simulation or hazard RNG and changes neither canvas dimensions nor playable coordinates. The quiet center uses the current `industrial-roster-v3` material generator; ornamental trees, workshops, crates, and native machinery live in the external frame. Only accepted wall cells receive raised wall materials. Shared actor art, accepted facing, footprint, and art-revision behavior remain authoritative.
 
-- **Readable signal loss with a real information cost.** The jammer warns with
-  an antenna cue and dashed amber arena edge, then replaces the whole playfield
-  with an opaque loss screen for its existing four interference moves. Actor
-  positions, snake movement, and internal geometry are hidden. A recovery count,
-  pips, and the arena boundary remain visible. Pulse temporarily stabilizes the
-  feed, reduced effects keeps the same information with static bands, and a
-  terminal collision reveals the board. Existing simulation and replay identities
-  remain unchanged.
-- **Longer victories, no defeat fireworks.** The shared celebration lasts
-  5,200 ms; the separate auto-next countdown remains 5,000 ms. The shared
-  celebration mount requires a winning outcome, and Snake also suppresses
-  confetti on loss. Immediate Next and Retry still skip the remaining delay.
-- **Automatic replay inside Snake results.** Opening Results starts a looping
-  preview of the existing final-eight-move snapshot buffer. It advances at
-  240 ms per move with a short hold on the final frame. Pause replay holds the
-  preview and cancels automatic progression without hiding the result menu.
-  Preview playback never advances simulation, saves an attempt, grants awards,
-  or rearms auto-next, and it stops advancing while the page is inactive.
-- **Mobile action priority.** Snake Results keeps Next, Retry/Rematch, and Home
-  in a fixed footer, with continuation status/countdown in that same footer.
-  The preview is bounded by viewport height; descriptive content scrolls.
-  Random, Choose mission, Collections, and the slower-pace offer sit in an
-  expandable More options section. Next remains the initial win focus.
-- **Statistics within their menus.** Pause/results use a compact disclosure
-  showing current-run and lifetime totals; enemy-family text rows expand in
-  place without stealing focus. Collections retains its portrait cards and
-  filters. Non-Snake totals mount inside the actual result card, and the compact
-  continuation control sits beside the primary action rather than outside the
-  card as a detached column.
-- **Reward pictures no longer own continuation.** Core victories show the
-  result card immediately. Explicit View picture retains a reachable Next,
-  Retry, Choose mission, and Results dock. Dock actions restore the result
-  surface before forwarding native actions. Accepting a new attempt clears
-  picture-only presentation, captions, celebration, and the owned arrival
-  animation before painting the new run.
+Jamming now processes the **live** board through the shared `applyAnalogSignalNoise` effect. It replaces the earlier opaque blackout. At most 65% of the feed is processed, horizontal tearing is bounded to 0.15 cell, and a two-cell neighborhood around every head plus source cells stays readable, including wrap seams. Reduced effects freezes noise and tearing while still refreshing live positions on simulation ticks. The renderer draws antenna/radius cues; each host-owned board status line carries reception text outside the playfield.
 
-## Review map
+New recipes opt into local six-cell or full-board broadcast profiles. A dedicated accepted `hazardSeed` varies their schedule independently of target/spawn randomness. New attempts and retries roll that schedule; Continue and recordings preserve it, while matched Versus boards share it. Pulse freezes the schedule and stabilizes reception; catching a source ends its interference. See [field mechanics](classic-snake-field-mechanics.md) for timing, counterplay, and compatibility.
 
-| Area                           | Main sources                                                                                                                     |
-| ------------------------------ | -------------------------------------------------------------------------------------------------------------------------------- |
-| Shared transition and settings | `game/ui/continuous-play.mjs`, `continuous-celebration.mjs`, `mode-play-shell.mjs`, `global-settings-view.mjs`                   |
-| Snake flow and recording       | `game/snake/classic-app.mjs`, `classic-match.mjs`, `classic-recent-replay.mjs`, `classic-audio.mjs`                              |
-| Other hosts                    | `game/app.mjs`, `game/couch/`, `optional-practice/civilian-flight/app.mjs`, `optional-practice/civilian-fpv/{app,world-app}.mjs` |
-| Totals and portability         | `game/enemy-stats.mjs`, `game/ui/enemy-stats*.mjs`, `game/backup.mjs`, `game/coop/enemy-stats-ownership.mjs`                     |
-| Grades                         | `game/snake/classic-ratings.mjs`, `classic-rating-calibrations.mjs`, `scripts/calibrate-snake-ratings.mjs`                       |
-| New mechanics and content      | `game/snake/classic-core-v4.mjs`, `classic-catalogue-v4.mjs`, `classic-mechanic-guide.mjs`, `classic-view.mjs`                   |
+## Progress and compatibility
 
-## Verification record
+Enemy totals count accepted live simulation events, including failed attempts and bonus targets, using resumable transactional lineage counters. Replays, previews, and imported history do not create awards. Backup merges use the maximum per lineage. Menu disclosures show run/lifetime totals compactly; the existing Collections page retains portrait cards, filters, and picture ownership. Snake grants no new pictures.
 
-### First-round baseline
+Verified finite Snake clears earn completion stars. There are 219 current calibrated exact setups and 30 retained historical calibrations. Variable-hazard recipes retain completion and personal records without implying equivalent silver/gold thresholds. The v4 catalogue has 24 missions, with Broadcast Check and Quiet Channel before the combined encounters. Relay Airfield then uses broadcast interference. Historical v1–v3 recipes and unprofiled v4 recordings retain their behavior. A bounded archive admits the five exact retired v4 recipes for Continue/import/Retry and preserves their higher grades; community entries cannot inherit archive authority.
 
-The checks below were completed for commit `241a388ab` and its implementation
-predecessors, before the follow-up refinements above. Their old 3.8-second timing
-and production artifact describe that baseline, not a rebuilt current checkout.
+## Main integration decision
 
-- Final combined Snake, statistics, ownership, transition and audio group:
-  **127 passing tests**, no failures (12.0 seconds locally).
-- Production-host regression: ordinary Snake loss resumes after 3,000 ms with
-  50 ms host frames (configured sequence 2,970 ms). Victory retains its full
-  3,800 ms celebration and then its separate 5,000 ms countdown. Next/Retry
-  remain direct throughout. See `verification/snake-continuous-play-measurements.json`.
-- A synthetic 30,000-step attempt retains nine boundaries and opens the replay
-  without reading input journals, replaying simulation, or cloning level recipes.
-- Final root UI/replay/audio group: 37 passing tests, including pause/settings,
-  controller cancellation, stale input, imported outcomes, and BFCache ownership.
-- Final mechanics/Studio group: 52 passing tests, including 132 exact winning
-  proofs for 22 missions × Solo/Team × three paces. These prove playability for
-  their setups, not optimal routes or human difficulty calibration.
-- Persistence tests cover duplicate events, failed attempts, bonus targets,
-  repeated imports, independent backup lineages, session-only branches, unknown
-  sidecars and ownership. Higher grades bind accepted setup, seed and revision.
-- Real browser: direct Snake launch, crash replay/retry and cancellation,
-  compact pause, settings return, EN/UK, muted audio, and layouts at 320×640 and
-  740×360. Relay instructions remain visible during live play. Browser error
-  logs were empty in these checks. Core Collections navigation reached the
-  existing password gate; its integration is covered by host tests rather than
-  a claim of a live authenticated walkthrough.
-- Physical controller/touch hardware and broad human balance sessions were not
-  available. Input paths are covered by deterministic host tests and browser UI
-  checks; the new missions remain subject to normal playtesting feedback.
+Integrated `origin/main` at `2d447bc790` into this feature branch. The original Menu UX baseline is preserved at `261db930d`; the completed earlier UX refinement is `d457f69bbe`. Shared-source conflicts retain the host/engine ownership above, main's target-facing observer, accepted `artRevision`, shared machinery/material generators, and optional-package generation. Open PRs #1095 and #1098 were inspected: their separate appearance/continuation ownership was not copied into this integration.
 
-- Shared/non-Snake focused group: 109 passing checks. All nine optional-package
-  runtime/source-admission/reproducibility checks pass. Four older Team menu
-  regressions were updated for actual localized text nodes, compact labels and
-  the new action order; their targeted rerun passes.
-- Actual aggregate backup export and Collection Import/Undo host regressions
-  pass, including the existing external-chapter snapshot boundary.
-- Full `npm run validate` passes: EN/UK localization (12,934 messages), content
-  validation, presentation inventory, and byte-identical reaction, audio, play
-  shell, presentation assets, optional worker and Worlds visual projections.
-- ESLint passes for every changed JavaScript module, and `git diff --check` is
-  clean.
-- Production build passes: 3,010 files, version 0.142.4, output
-  `/private/tmp/revealline-snake-continuous-play-build`. Distribution SHA-256:
-  `88a7bcd413ebc13096665c6a37dc9dd593870b61e9ec5727bab9c61dd0757cd6`.
-  Free disk space was checked before building (5.9 GiB) and afterward (4.7 GiB).
-  All 35 changed core runtime modules/styles match the final source, comparing
-  syntax trees for the five modules compacted by the existing build process.
+Key source boundaries:
 
-### Follow-up verification
+| Concern              | Sources                                                                                                  |
+| -------------------- | -------------------------------------------------------------------------------------------------------- |
+| Transition ownership | `game/ui/continuous-play.mjs`, `continuous-celebration.mjs`                                              |
+| Native hosts         | `game/app.mjs`, `game/couch/`, `game/snake/classic-app.mjs`, optional Academy/Gym/Worlds hosts           |
+| Visuals              | `game/snake/classic-view.mjs`, `classic-scenes.mjs`, `classic-signal-view.mjs`, `classic-target-art.mjs` |
+| Rules and replay     | `game/snake/classic-core-v4.mjs`, `classic-match.mjs`, `classic-recent-replay.mjs`                       |
+| Progress             | `game/enemy-stats.mjs`, `game/ui/enemy-stats.mjs`, `game/backup.mjs`, Snake records/ratings              |
 
-- Snake host/UI regressions: 28 passing tests, including automatic result-preview
-  playback, preview pause without gameplay/save mutation, footer action
-  placement/focus, no loss celebration, and the full 5,200 ms celebration followed
-  by a separate 5,000 ms countdown.
-- Signal rendering, v4, and presentation regressions: 24 passing tests, including
-  concealment during signal loss, Pulse stabilization, reduced effects, and the
-  132 retained winning proofs. This verifies compatibility, not human difficulty
-  calibration of the stronger blackout.
-- Compact statistics UI: five passing focused tests. Shared transition and result
-  work: 18 unit tests, six focused host checks, and nine optional-package checks
-  passed. The generated optional play-shell projection was refreshed from its
-  canonical shared sources.
-- Real-browser Snake Results checks at 320×640 and 740×360 found no horizontal
-  overflow and kept the action footer in view, including when More options was
-  expanded. The final-eight-move preview started automatically inside Results.
-- Combined Snake/shared/core group: **106 passing tests**. Optional SIM hosts:
-  **73 passing tests**, including five new stalled-frame/focus regressions.
-  Optional package admission, source closure, reproducibility and offline
-  checks: **9 passing tests**. Team's two retained result checks and new
-  stalled-result check pass.
-- The main-game browser walkthrough exposed a null controller frame after an
-  automatic Next dispatch. The update now rejects the obsolete sample after
-  input is cleared or the attempt changes. Its production-host regression
-  advances the full celebration/countdown and verifies the next simulation
-  continues; direct picture-view Next, cancellation and failed loading pass.
-  One ownership fixture timed out under concurrent test load and passed
-  unchanged in isolation; it was not treated as a production success until
-  that isolated verification.
-- Core results were checked at 320×640 and 740×360: no horizontal overflow,
-  a roughly 107px narrow action footer and 59px landscape action footer.
-  The final landscape layout keeps the picture, score, stars, totals and all
-  primary actions visible together; the narrow portrait layout does the same.
-  Saved views: [core portrait](verification/core-results-mobile-320.jpg),
-  [core landscape](verification/core-results-landscape-740.jpg), and
-  [Ukrainian Snake result](verification/snake-results-uk-320.jpg).
-  Picture-view Next and automatic Next entered playable missions with the
-  previous picture cleared. Snake's Ukrainian mobile result was also checked.
-- Full repository validation and scoped lint pass. The generated optional
-  play-shell remains byte-identical. The final production build passes:
-  3,010 files, version 0.142.4, distribution SHA-256
-  `16333648bfd1ea457551ed7c83720c4a706061b9ce9b2a0e64162bfe1e963282`.
-  Disk space was checked before building (2.8 GiB) and afterward (1.7 GiB).
-  The earlier interim build missed the final landscape CSS and was replaced
-  by this complete build from the frozen source. All 17 changed shipped runtime
-  files match: 15 byte-identical and two compacted apps with identical syntax
-  trees. Their manifest hashes/sizes and the distribution archive hash were
-  independently verified. Gym remains in its optional package; its package
-  admission and host checks are recorded above.
+## Verification scope
 
-## Acceptance
+The final renderer/scene/fixture/scheduler group has **32 passing tests**, covering unchanged geometry/replay identity, quiet materials, chapter selection without RNG, native target heading, live bounded noise, wrapping, readable danger outlines, double broadcast antennas, Pulse/terminal behavior, and reduced-effects/cache refresh. All **144 current recordings** for 24 missions × Solo/Team × three paces pass qualification. Calibration checks verify **249 exact setups**, including 30 historical gold records. These checks establish deterministic completion, not universal human difficulty calibration.
 
-At most one activation to play/continue/retry/advance; zero required activations
-after ordinary Snake loss. No stale launch or duplicate awards. Replay cost must
-not grow with attempt history. Preserve old recordings, setup-specific grades,
-and backup imports. Verify EN/UK, narrow/short viewports, keyboard/gamepad/touch,
-reduced effects, muted audio, offline closures and generated shared sources.
+Review found and corrected a mid-burst speedup edge: an accepted catch could change the next interval from 200 to 190 ms and overshoot the burst deadline. Profiled scheduling respects the hard duration bound at a visible simulation boundary, with start/deadline timestamps shifted together during Pulse. The regression exercises an accepted catch; legacy checkpoint compatibility still passes. The host suite passes **49 tests**, including fresh Retry seeds, exact Continue, historical recipe retention, and paused scene changes. Independent review exercised all 360 prepared archive variants and community-alias rejection.
+
+Browser checks cover the three scenes, local/broadcast interference, Solo/Team/Versus fixture playback, reduced effects, English/Ukrainian, 320×640 portrait, and 740×360 landscape. The real 320px results dialog is 592.75px high, with automatic replay and Retry/Home visible and no horizontal overflow. Screenshots and the final verification record are in `verification/living-circuit/`. The manual fixture at `game/test/manual/snake-visual-fixture.html` runs real verified journals without saving or awarding progress.
+
+Final repository validation and lint pass. All six canonical shared projections are byte-identical. `inspectBuildProject` validates preparation/references for 3,084 distribution files (1,004,021,220 bytes including the manifest); all 34 projected Snake runtime files match the inspected hashes. Its manifest SHA-256 is `9d856128d4e8b9ad418cbe5f9ef6259791feee0abda6220811c9dd7a36a59018`. A fresh expanded distribution and ZIP were not written because disk space remained below 0.5 GiB after safe cleanup. This is build-preparation verification, not publication admission.
+
+The main-game picture suite passes five checks covering the full/reduced celebration, immediate Next/Retry, explicit More → View picture, timer cancellation, and held Confirm ownership. The older fullscreen-gate assertions were replaced to reflect the approved accessible-action flow; the runtime required no additional change.
+
+Earlier verification belongs to its corresponding source, not automatically to the current merge:
+
+- Initial implementation `241a388ab`: 127 combined Snake/statistics/transition/audio tests, 109 shared/non-Snake checks, nine optional-package checks, full validation, and a 3,010-file build (`88a7bcd4…`). Its victory timing was 3.8 seconds.
+- UX refinement `d457f69bbe`: the retained measurement record reports 106 Snake/shared/core checks, 73 optional-host checks, nine package checks, full validation and a 3,010-file build (`16333648…`). Browser checks covered Snake and core at 320×640 and 740×360, live picture-view Next, automatic Next, and reachable actions without horizontal overflow.
+
+Detailed previous measurements remain in `verification/snake-continuous-play-measurements.json`. Those build hashes do not certify the new Living Circuit/variable-signal source. Physical controller/touch sessions and human difficulty calibration remain separate from deterministic tests.

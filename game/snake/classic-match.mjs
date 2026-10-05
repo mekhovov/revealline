@@ -6,6 +6,7 @@ import {
   classicSnakeSummary,
   exportClassicSnakeReplay,
   restoreClassicSnakeReplay,
+  classicSnakeUsesVariableHazards,
 } from './classic-core.mjs';
 
 export const CLASSIC_SNAKE_MATCH_VERSION = 'classic-snake-match.v1';
@@ -26,7 +27,7 @@ function optionsFor(level, input) {
   const value = boundedJSON(input, { maxBytes: 2048, maxNodes: 20, maxDepth: 1 });
   exactKeys(
     value,
-    ['mode', 'seed', 'policy', 'durationMs', 'catchDeadlineMs'],
+    ['mode', 'seed', 'hazardSeed', 'policy', 'durationMs', 'catchDeadlineMs'],
     'Snake match options',
   );
   const mode = value.mode ?? 'solo',
@@ -36,6 +37,12 @@ function optionsFor(level, input) {
     (level.objective === 'endless' ? (mode === 'versus' ? 'score' : 'endless') : 'mission');
   const durationMs = value.durationMs ?? 180000,
     catchDeadlineMs = value.catchDeadlineMs ?? 30000;
+  required(
+    classicSnakeUsesVariableHazards(level)
+      ? integer(value.hazardSeed, 0, 0xffffffff)
+      : !Object.hasOwn(value, 'hazardSeed'),
+    'Snake match interference seed differs from its recipe.',
+  );
   required(
     ['solo', 'versus', 'team'].includes(mode) && integer(seed, 0, 0xffffffff),
     'Invalid Snake match seats or seed.',
@@ -73,13 +80,21 @@ function optionsFor(level, input) {
         level.targets.bonus === null,
       'Survival duel uses the open, stationary-target field.',
     );
-  return freeze({ mode, seed, policy, durationMs, catchDeadlineMs });
+  return freeze({
+    mode,
+    seed,
+    ...(Object.hasOwn(value, 'hazardSeed') ? { hazardSeed: value.hazardSeed } : {}),
+    policy,
+    durationMs,
+    catchDeadlineMs,
+  });
 }
 
 export function createClassicSnakeMatch(level, options = {}) {
   const first = createClassicSnake(level, {
     mode: options.mode === 'team' ? 'team' : 'solo',
     seed: options.seed ?? 17,
+    ...(Object.hasOwn(options, 'hazardSeed') ? { hazardSeed: options.hazardSeed } : {}),
   });
   const recipe = optionsFor(first.level, options);
   return {
@@ -87,7 +102,14 @@ export function createClassicSnakeMatch(level, options = {}) {
     options: recipe,
     runs:
       recipe.mode === 'versus'
-        ? [first, createClassicSnake(first.level, { mode: 'solo', seed: recipe.seed })]
+        ? [
+            first,
+            createClassicSnake(first.level, {
+              mode: 'solo',
+              seed: recipe.seed,
+              ...(Object.hasOwn(recipe, 'hazardSeed') ? { hazardSeed: recipe.hazardSeed } : {}),
+            }),
+          ]
         : [first],
     elapsedMs: 0,
     status: 'running',
@@ -285,6 +307,7 @@ export function restoreClassicSnakeMatch(source, { level: expected, onStart, onS
         (r, i) =>
           r.levelIdentity === match.runs[i].levelIdentity &&
           r.seed === match.options.seed &&
+          r.hazardSeed === match.options.hazardSeed &&
           r.mode === match.runs[i].mode,
       ),
     'Snake boards do not share the accepted match recipe.',
@@ -335,9 +358,10 @@ export function restoreClassicSnakeLegacyMatch(source, { level, onStart, onStep 
     value.replays.every((r) => r.version === 'classic-snake-replay.v1'),
     'Only historical v1 Snake sessions use this migration.',
   );
-  const checked = value.replays.map((r) => restoreClassicSnakeReplay(r, { level }));
+  const checked = value.replays.map((r) => restoreClassicSnakeReplay(r, { level })),
+    seed = checked[0].seed;
   required(
-    checked.every((r) => r.seed === 17 && r.mode === (value.mode === 'team' ? 'team' : 'solo')),
+    checked.every((r) => r.seed === seed && r.mode === (value.mode === 'team' ? 'team' : 'solo')),
     'Historical Snake setup differs.',
   );
   const terminal = checked.filter((r) => r.status !== 'running'),
@@ -380,7 +404,7 @@ export function restoreClassicSnakeLegacyMatch(source, { level, onStart, onStep 
   commands.sort((a, b) => a.atMs - b.atMs || a.order - b.order);
   const match = createClassicSnakeMatch(checked[0].level, {
     mode: value.mode,
-    seed: 17,
+    seed,
     policy: 'mission',
   });
   onStart?.(match);

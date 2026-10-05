@@ -12,8 +12,8 @@ const check = process.argv.includes('--check');
 if (process.argv.slice(2).some((arg) => arg !== '--check')) throw new Error('Use [--check].');
 const read = (file) => readFile(path.join(root, file), 'utf8');
 // Project canonical preference/view modules into an existing optional package slot.
-// Module closures preserve private state; only the already admitted i18n/theme
-// contracts stay external. No duplicate storage or runtime owner is constructed.
+// Module closures preserve private state; shared i18n, themes and actor
+// preferences stay external so appearance controls and renderers share one owner.
 async function projectGlobalServices() {
   const entries = {
     'game/enemy-stats.mjs': { createEnemyStatsHost: 'createSimEnemyStatsHost' },
@@ -59,10 +59,15 @@ async function projectGlobalServices() {
     'game/profile-database.mjs',
     'game/hunt/actor-art.mjs',
     'game/hunt/actor-catalog.mjs',
+    'game/presentation/actor-animation.mjs',
+    'game/hunt/industrial-soldier-kit.mjs',
+    'game/ui/art-review-navigation.mjs',
+    'game/ui/enemy-appearance-controls.mjs',
   ]);
   const external = new Map([
     ['game/i18n/index.mjs', 'simGlobalI18n'],
     ['game/presentation/theme-system.mjs', 'simGlobalThemes'],
+    ['game/hunt/preferences.mjs', 'simGlobalActorPreferences'],
   ]);
   const modules = new Map(),
     visiting = new Set();

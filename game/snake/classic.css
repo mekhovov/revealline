@@ -744,6 +744,34 @@
   margin: 0;
   opacity: 0.85;
 }
+.snake-reception {
+  color: var(--fk-muted, #b9beb5);
+  font-size: 0.7rem;
+  line-height: 1.3;
+  align-self: center;
+  max-width: 10rem;
+}
+.snake-reception[data-reception='signalWarning'],
+.snake-reception[data-reception='signalJammed'] {
+  color: var(--gold, #edbd55);
+}
+.snake-reception[hidden],
+#board-scene-field[hidden] {
+  display: none;
+}
+body[data-board-style='living-circuit'] .board-wrap {
+  background-color: #27392f;
+  background-size: 100% 100%;
+  background-position: center;
+  image-rendering: pixelated;
+  border-color: #a7a378;
+}
+body[data-board-style='living-circuit'][data-board-scene='workshop'] .board-wrap {
+  border-color: #839eab;
+}
+body[data-board-style='living-circuit'][data-board-scene='relay'] .board-wrap {
+  border-color: #a2b3a4;
+}
 .snake-stars {
   color: var(--gold, #eabb59);
   font-size: 2rem;
@@ -772,5 +800,64 @@
   }
   .pad {
     --pad: 44px;
+  }
+}
+
+/* In a short viewport the pads flank the field, preserving its height. This
+   also covers windowed keyboards/hybrid devices with visible touch controls. */
+@media (max-height: 500px) and (orientation: landscape) and (max-width: 899px),
+  (max-height: 500px) and (orientation: landscape) and (pointer: coarse) {
+  .arena {
+    grid-template: auto minmax(0, 1fr) / auto minmax(0, 1fr) auto;
+  }
+  .level-strip {
+    grid-column: 1 / -1;
+  }
+  #boards {
+    grid-area: 2 / 2;
+  }
+  #pads {
+    display: contents;
+  }
+  #pads > div {
+    grid-row: 2;
+    align-self: center;
+    opacity: var(--snake-pad-opacity);
+  }
+  #pads > div:first-child {
+    grid-column: 1;
+  }
+  #pads > div:last-child {
+    grid-column: 3;
+  }
+  .pad,
+  body:not([data-mode='solo']) .pad {
+    --pad: 44px;
+  }
+  body[data-mode='solo'] .arena {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+  body[data-mode='solo'] #boards {
+    grid-column: 1;
+  }
+  body[data-mode='solo'] #pads > div {
+    grid-column: 2;
+  }
+  .board-stats {
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 700px), (max-height: 600px) {
+  .board-stats [data-stat='queued'] {
+    display: inline-flex;
+    margin-inline-start: auto;
+  }
+  .board-stats [data-stat='queued'] span {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
   }
 }

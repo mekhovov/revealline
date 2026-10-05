@@ -1,5 +1,9 @@
 import { CLASSIC_SNAKE_LEVELS } from '../snake/classic-catalogue.mjs';
-import { createClassicSnake, CLASSIC_SNAKE_V4_KINDS } from '../snake/classic-core.mjs';
+import {
+  createClassicSnake,
+  CLASSIC_SNAKE_V4_KINDS,
+  classicSnakeUsesVariableHazards,
+} from '../snake/classic-core.mjs';
 import { prepareClassicSnakeStudioLevel } from '../snake/classic-studio-recipe.mjs';
 import { drawClassicTarget } from '../snake/classic-target-art.mjs';
 import { ACTOR_CASTS } from '../hunt/actor-catalog.mjs';
@@ -10,6 +14,10 @@ import {
 import { createProfileRecordBackend } from '../profile-storage.mjs';
 import { boundedJSON, required } from '../data-json.mjs';
 import { contentStudioLinks } from '../ui/content-studio-navigation.mjs';
+import { mountSnakeStudioPreview } from './snake-preview-panel.mjs';
+import { captureStudioActionFocus } from './action-focus.mjs';
+import { prepareSnakeStudioPlay } from './snake-play-launch.mjs';
+import { createSnakeStudioStorageLifecycle } from './snake-storage-lifecycle.mjs';
 import {
   CLASSIC_PACKAGE_FORMAT,
   validateClassicSnakePackage,
@@ -59,10 +67,12 @@ const report = (text, error = false) => {
   status.dataset.error = String(error);
 };
 const guard = (fn) => async () => {
+  let operation;
   try {
-    await fn();
+    operation = storage.capture();
+    await fn(operation);
   } catch (error) {
-    report(error.message, true);
+    if (operation?.current()) report(error.message, true);
   }
 };
 const button = (text, fn) => {
@@ -96,26 +106,39 @@ let draft = {
 };
 let active = 0,
   cursor = { x: 0, y: 0 },
-  strokes = new Set();
-const library = createClassicSnakeCommunityLibrary();
-const drafts = createProfileRecordBackend({
-  key: 'classic-snake-studio-draft.v1',
-  empty: () => ({ draft: null }),
-  validate: (source) => {
-    const value = boundedJSON(source, {
-      maxBytes: 1536 * 1024,
-      maxNodes: 160000,
-      maxArray: 1536,
-      maxDepth: 14,
-    });
-    required(
-      Object.keys(value).length === 1 && Object.hasOwn(value, 'draft'),
-      'Invalid Snake Studio draft.',
-    );
-    if (value.draft !== null) validateClassicSnakePackage(value.draft);
-    return value;
-  },
-  operationTimeoutMs: 5000,
+  strokes = new Set(),
+  playRevision = 0,
+  playFocus = null;
+function retirePlay() {
+  playRevision++;
+  playFocus?.cancel();
+  playFocus = null;
+}
+const createDrafts = () =>
+  createProfileRecordBackend({
+    key: 'classic-snake-studio-draft.v1',
+    empty: () => ({ draft: null }),
+    validate: (source) => {
+      const value = boundedJSON(source, {
+        maxBytes: 1536 * 1024,
+        maxNodes: 160000,
+        maxArray: 1536,
+        maxDepth: 14,
+      });
+      required(
+        Object.keys(value).length === 1 && Object.hasOwn(value, 'draft'),
+        'Invalid Snake Studio draft.',
+      );
+      if (value.draft !== null) validateClassicSnakePackage(value.draft);
+      return value;
+    },
+    operationTimeoutMs: 5000,
+  });
+const storage = createSnakeStudioStorageLifecycle({
+  window,
+  document,
+  create: () => ({ library: createClassicSnakeCommunityLibrary(), drafts: createDrafts() }),
+  retire: retirePlay,
 });
 const top = el('div', null, { class: 'fields' });
 root.append(top);
@@ -232,8 +255,13 @@ const cast = field(
 );
 const phase = field(
   fields,
-  words('Preview phase', 'Фаза перегляду'),
-  select(['rest', 'warning', 'burst', 'turning'].map((value) => [value, value])),
+  words('Specimen phase', 'Фаза зразка'),
+  select([
+    ['rest', words('Rest', 'Відпочинок')],
+    ['warning', words('Warning', 'Попередження')],
+    ['burst', words('Burst', 'Ривок')],
+    ['turning', words('Turning', 'Поворот')],
+  ]),
 );
 const specimen = el('canvas', null, {
   width: '240',
@@ -247,6 +275,12 @@ const guide = el('section', null, {
   'aria-label': words('Prey goal, tell and counter', 'Мета, ознака та протидія здобичі'),
 });
 editor.append(guide);
+const playPreview = mountSnakeStudioPreview({
+  container: boardSection,
+  getLevel: () => current().level,
+  getCast: () => cast.value,
+  language,
+});
 const modes = el('div', null, { class: 'actions' });
 editor.append(modes);
 const sourceDetails = el('details'),
@@ -283,6 +317,7 @@ function editableLevel() {
   return entry.level;
 }
 function changed() {
+  retirePlay();
   current().level.revision = `studio-${sequence++}`;
   paint();
 }
@@ -297,6 +332,7 @@ function validate() {
   return pack;
 }
 function refresh() {
+  retirePlay();
   const entry = current(),
     level = entry.level;
   missionSelect.replaceChildren(
@@ -405,11 +441,15 @@ function paint() {
   });
   renderEnemyFieldGuide(guide, [kind.value], { locale: language, cast: cast.value });
   try {
-    createClassicSnake(level, { mode: 'team' });
+    createClassicSnake(level, {
+      mode: 'team',
+      ...(classicSnakeUsesVariableHazards(level) ? { hazardSeed: 17 } : {}),
+    });
     validate();
   } catch (error) {
     report(error.message, true);
   }
+  playPreview.refresh();
 }
 function paintCell(point) {
   const identity = `${point.x},${point.y}`;
@@ -576,9 +616,10 @@ actions.append(
     active = Math.min(active, draft.entries.length - 1);
     refresh();
   }),
-  button(words('Save valid draft', 'Зберегти правильну чернетку'), async () => {
+  button(words('Save valid draft', 'Зберегти правильну чернетку'), async ({ drafts, current }) => {
     const pack = validate();
     await drafts.update(() => ({ draft: pack }));
+    if (!current()) return;
     report(
       words(
         'Draft saved in the shared profile database.',
@@ -586,8 +627,9 @@ actions.append(
       ),
     );
   }),
-  button(words('Restore saved draft', 'Відновити чернетку'), async () => {
+  button(words('Restore saved draft', 'Відновити чернетку'), async ({ drafts, current }) => {
     const saved = await drafts.read();
+    if (!current()) return;
     required(saved.draft, 'No saved draft.');
     draft = structuredClone(saved.draft);
     active = 0;
@@ -613,34 +655,42 @@ const file = el('input', null, {
 field(actions, words('Import package', 'Імпорт пакунка'), file);
 file.addEventListener(
   'change',
-  guard(async () => {
+  guard(async ({ current }) => {
     if (!file.files[0]) return;
-    draft = structuredClone(await importClassicSnakePackage(file.files[0]));
+    const imported = await importClassicSnakePackage(file.files[0]);
+    if (!current()) return;
+    draft = structuredClone(imported);
     active = 0;
     refresh();
     file.value = '';
   }),
 );
-for (const mode of ['solo', 'versus', 'team'])
-  modes.append(
-    button(words(`Play ${mode}`, `Грати: ${mode}`), async () => {
-      const installed = await library.install(validate()),
-        url = new URL('../snake/play.html', location.href);
-      url.search = new URLSearchParams({
+for (const mode of ['solo', 'versus', 'team']) {
+  const play = button(words(`Play ${mode}`, `Грати: ${mode}`), async ({ library, current }) => {
+    retirePlay();
+    play.focus({ preventScroll: true });
+    const focus = captureStudioActionFocus(play),
+      revision = playRevision;
+    playFocus = focus;
+    try {
+      const url = await prepareSnakeStudioPlay({
+        source: validate(),
+        selectedIndex: active,
         mode,
-        community: installed.identity,
-        level: installed.entries[active].id,
-        lang: language,
-        studio: 'snake',
-      }).toString();
-      location.assign(url.href);
-    }),
-  );
+        locale: language,
+        baseURL: location.href,
+        install: (pack, options) => library.install(pack, options),
+        isCurrent: () => current() && revision === playRevision && focus.current(),
+      });
+      if (url && revision === playRevision && focus.current()) location.assign(url);
+    } finally {
+      focus.cancel();
+      if (playFocus === focus) playFocus = null;
+    }
+  });
+  modes.append(play);
+}
 sourceDetails.addEventListener('toggle', () => {
   if (sourceDetails.open) sourceArea.value = JSON.stringify(draft, null, 2);
-});
-window.addEventListener('pagehide', () => {
-  drafts.close();
-  library.close();
 });
 refresh();

@@ -29,7 +29,11 @@ import {
   DEFAULT_GAME_WORDMARK,
 } from '../../scripts/edition-runtime.mjs';
 import { MENU_SCENES, resolveMenuScene } from '../ui/menu-scene-catalog.mjs';
-import { CLASSIC_PRESENTATION } from '../snake/classic-presentation.mjs';
+import {
+  ACTOR_PRESENTATION_SLOTS,
+  createPresentationHost,
+  validateCompiledPresentation,
+} from '../presentation/host.mjs';
 import { selectOfflineCore } from '../../scripts/offline-core-closure.mjs';
 import { fileURLToPath } from 'node:url';
 
@@ -244,7 +248,7 @@ test('standalone and public offline menus retain every dynamically attached pane
       `Missing dynamically attached offline stylesheet: ${name}`,
     );
 });
-test('the shared Snake launcher delivers both pages, current match modules and exact original artwork offline', async () => {
+test('the shared Snake launcher delivers the complete shared board-art provider offline', async () => {
   const files = await collectEditionEngineFiles({
     root: fileURLToPath(new URL('../../', import.meta.url)),
     entries: ['game/ui/mode-choice.mjs'],
@@ -277,12 +281,52 @@ test('the shared Snake launcher delivers both pages, current match modules and e
     assert.ok(files.has(name), `Missing edition Snake resource: ${name}`);
     assert.ok(offline.retained.has(name), `Missing offline Snake resource: ${name}`);
   }
-  assert.equal(editionClassicPresentationResources().length, 2);
-  for (const asset of CLASSIC_PRESENTATION.assets) {
-    const name = `game/presentation/compiled/assets/${asset.sha256}.png`;
+  const manifestPath = 'game/presentation/compiled/runtime.json';
+  assert.deepEqual(
+    files.get(manifestPath),
+    await fs.readFile(new URL('../presentation/compiled/runtime.json', import.meta.url)),
+  );
+  const manifest = validateCompiledPresentation(files.get(manifestPath).toString());
+  const actors = new Set(ACTOR_PRESENTATION_SLOTS);
+  const slots = Object.entries(manifest.resolved.assets).filter(
+    ([slot, asset]) =>
+      asset.kind === 'image' && (actors.has(slot) || /^(terrain|pickup)\./.test(slot)),
+  );
+  const resources = editionClassicPresentationResources();
+  assert.equal(resources.length, 1 + new Set(slots.map(([, asset]) => asset.file.sha256)).size);
+  for (const [, asset] of slots) {
+    const name = `game/presentation/compiled/${manifest.urls[asset.file.sha256].slice(2)}`;
     const payload = files.get(name);
-    assert.equal(payload.length, asset.bytes);
-    assert.equal(createHash('sha256').update(payload).digest('hex'), asset.sha256);
+    assert.equal(payload.length, asset.file.bytes);
+    assert.equal(createHash('sha256').update(payload).digest('hex'), asset.file.sha256);
+  }
+  const fetched = new Set();
+  const host = createPresentationHost({
+    profile: 'board',
+    baseURL: 'https://edition.example/game/presentation/compiled/',
+    document: {},
+    fetch: async (url) => {
+      const name = new URL(url).pathname.slice(1);
+      fetched.add(name);
+      assert.ok(resources.includes(name), `Board host fetched undeclared payload ${name}`);
+      return new Response(files.get(name));
+    },
+    decodeImage: async (blob) => {
+      const bytes = new DataView(await blob.arrayBuffer());
+      return { width: bytes.getUint32(16), height: bytes.getUint32(20), close() {} };
+    },
+  });
+  try {
+    const view = await host.load();
+    assert.ok(view.image('player.scout.detailed'));
+    assert.ok(view.image('terrain.wall'));
+    assert.equal(view.image('screen.title.background'), null);
+    assert.deepEqual([...fetched].sort(), [...resources].sort());
+    assert.ok(view.actorArtBudget().decodedBytes > 0);
+    host.close();
+    assert.equal(view.actorArtBudget().reservedBytes, 0);
+  } finally {
+    host.close();
   }
 });
 

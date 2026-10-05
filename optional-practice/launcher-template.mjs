@@ -24,7 +24,7 @@ export function installOptionalLauncher(
       error: 'This version is unavailable. Previously prepared practice remains available.',
       offline: 'Ready offline',
       repair:
-        'Needs repair: a saved installation has missing files or no owning worker. Open online and download again.',
+        'Needs repair: a saved installation has missing files or no owning worker. Remove this offline copy, then download it again.',
       available: 'Available online. Choose Download for offline use to prepare this version.',
       update:
         'Update available. Your prepared version remains available; no running flight will reload.',
@@ -52,7 +52,7 @@ export function installOptionalLauncher(
       error: 'Ця версія недоступна. Раніше підготовлена практика залишається доступною.',
       offline: 'Готово офлайн',
       repair:
-        'Потрібне відновлення: у збереженій версії бракує файлів або власного воркера. Відкрийте онлайн і завантажте знову.',
+        'Потрібне відновлення: у збереженій версії бракує файлів або власного воркера. Видаліть цю офлайн-копію, потім завантажте її знову.',
       available:
         'Доступно онлайн. Виберіть «Завантажити для роботи офлайн» для підготовки цієї версії.',
       update:
@@ -245,7 +245,7 @@ export function installOptionalLauncher(
       $('prepare').href = entryURL(value);
       $('prepare').hidden = false;
       stateKey =
-        prepared && !launcherReady
+        repairReference || (prepared && !launcherReady)
           ? 'repair'
           : prepared
             ? prepared.version !== value.version
@@ -256,7 +256,13 @@ export function installOptionalLauncher(
       if (play) location.assign(entryURL(value));
     } catch {
       if (!hidden) {
-        stateKey = prepared ? (launcherReady ? 'offline' : 'repair') : 'error';
+        stateKey = repairReference
+          ? 'repair'
+          : prepared
+            ? launcherReady
+              ? 'offline'
+              : 'repair'
+            : 'error';
         render();
         if (play && prepared) location.assign(entryURL(prepared));
       }

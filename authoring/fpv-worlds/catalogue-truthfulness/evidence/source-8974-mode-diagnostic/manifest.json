@@ -1,0 +1,61 @@
+{
+  "format": "FPVCatalogueModeDiagnostic.v1",
+  "files": [
+    {
+      "path": "fpv-imported-catalogue-8974-mode-diagnostic.json.gz",
+      "bytes": 437004,
+      "sha256": "0455a3bde32f79e254061fbbb4e118272a421376ae2ba76b5d1821a572052cbb",
+      "storedBytes": 55914,
+      "storedSHA256": "1e3389a319b2240fe9d95540381e68280438d6d54d66d2d5953829d981b92149"
+    },
+    {
+      "path": "fpv-imported-catalogue-8974-mode-diagnostic.png",
+      "bytes": 11135,
+      "sha256": "ad7f685f1525212820dca67e4d4a9c8689bc0219c980f768cc5c99a999cd9378",
+      "storedBytes": 11135,
+      "storedSHA256": "ad7f685f1525212820dca67e4d4a9c8689bc0219c980f768cc5c99a999cd9378"
+    }
+  ],
+  "checksPassed": 423,
+  "modeObservation": {
+    "before": [
+      {
+        "title": "catalogue-mode-split",
+        "metadata": "Follow a subject",
+        "watch": false
+      },
+      {
+        "title": "catalogue-mixed",
+        "metadata": "Authored challenge",
+        "watch": false
+      },
+      {
+        "title": "catalogue-gate",
+        "metadata": "Authored challenge",
+        "watch": false
+      }
+    ],
+    "after": [
+      {
+        "title": "catalogue-mode-split",
+        "metadata": "Follow a subject",
+        "watch": false
+      },
+      {
+        "title": "catalogue-mixed",
+        "metadata": "Authored challenge",
+        "watch": false
+      },
+      {
+        "title": "catalogue-gate",
+        "metadata": "Authored challenge",
+        "watch": false
+      }
+    ],
+    "selectedMode": "acro",
+    "expected": "Observe a subject",
+    "actual": "Follow a subject",
+    "stale": true
+  },
+  "scope": "Native first-flight Acro demonstration changes selected mode. Missions reuses the stale Follow card until normal filter repaint. Complete423 diagnostic controls passed; stale-label defect is intentionally retained, not accepted behavior."
+}
