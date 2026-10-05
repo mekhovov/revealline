@@ -1,0 +1,231 @@
+{
+  "format": "OverflightBroaderBalanceAuditV1",
+  "command": "node docs/qualification/overflight/parallel-20261005/balance-audit.mjs --suite=peak --runtime-ref=2b0bf141a67f5d52b6791136a8a3d64efd7801b9 --output=docs/qualification/overflight/parallel-20261005/balance-peak-before.json",
+  "startedAt": "2026-10-05T11:37:42.760Z",
+  "completedAt": "2026-10-05T11:37:44.936Z",
+  "runtimeRef": "2b0bf141a67f5d52b6791136a8a3d64efd7801b9",
+  "policySource": "Working-tree qualification policies are reused against both runtimes; --runtime-ref changes only simulation/compiler/shared dependencies, not decision policies.",
+  "sourceBindings": [
+    {
+      "path": "package.json",
+      "sha256": "f53e728f3f044062709c9c9154e73811c56994642c9dba0a2cf5400c442ff55a",
+      "provenance": "git:2b0bf141a67f5d52b6791136a8a3d64efd7801b9"
+    },
+    {
+      "path": "game/i18n/index.mjs",
+      "sha256": "29f40a6d92826ced1eb53283ed32e342ac6e95920abbf8d549f2d78e65b48d07",
+      "provenance": "git:2b0bf141a67f5d52b6791136a8a3d64efd7801b9"
+    },
+    {
+      "path": "game/i18n/catalogs.mjs",
+      "sha256": "2e4f2232cd6f7d0b5869f20733aacbc17c5c5200b801cf51e54baae5570fbfea",
+      "provenance": "git:2b0bf141a67f5d52b6791136a8a3d64efd7801b9"
+    },
+    {
+      "path": "game/i18n/bootstrap.mjs",
+      "sha256": "242e4791b2202d2644b91df5aa76355019890525af774ee2e795c937988b0395",
+      "provenance": "git:2b0bf141a67f5d52b6791136a8a3d64efd7801b9"
+    },
+    {
+      "path": "game/vendor/i18next-26.4.2.min.js",
+      "sha256": "eb0dd6d72e8f756b90faf864853af2a17870fe97b54473b7c34494870c65901c",
+      "provenance": "git:2b0bf141a67f5d52b6791136a8a3d64efd7801b9"
+    },
+    {
+      "path": "game/data-json.mjs",
+      "sha256": "9ce33d6173f3cba8587ed7a7f1924c66e9d9c86ffa59b37a743764ea0b01f7bd",
+      "provenance": "git:2b0bf141a67f5d52b6791136a8a3d64efd7801b9"
+    },
+    {
+      "path": "game/overflight/core.mjs",
+      "sha256": "b8b8563073c0480a9ca613b90e6a93b309da5e585030e7c67477bb7792f3337e",
+      "provenance": "git:2b0bf141a67f5d52b6791136a8a3d64efd7801b9"
+    },
+    {
+      "path": "game/overflight/grid.mjs",
+      "sha256": "ef130a7f9594bff6af374fe252bb8aafdc7e86762bb8ef60107914654f21dd30",
+      "provenance": "git:2b0bf141a67f5d52b6791136a8a3d64efd7801b9"
+    },
+    {
+      "path": "game/overflight/project.mjs",
+      "sha256": "265d3b65111f54c0afc7ca6c0daa8d7a6ba018618de461a59b3003e934230c62",
+      "provenance": "git:2b0bf141a67f5d52b6791136a8a3d64efd7801b9"
+    },
+    {
+      "path": "game/overflight/upgrades.mjs",
+      "sha256": "064ac8894ef56734a96b690b0c6237e2c6e359b4dba475fb81e04b52b3d7d715",
+      "provenance": "git:2b0bf141a67f5d52b6791136a8a3d64efd7801b9"
+    },
+    {
+      "path": "game/overflight/review-pilot.mjs",
+      "sha256": "f925e46ae35c4af9463c869c2c2a0de1e9a518858ed0a27fce6edf6a2dffde19",
+      "provenance": "working-tree"
+    },
+    {
+      "path": "scripts/qualify-overflight.mjs",
+      "sha256": "dae766688f62b7d430617d7d27b44d18baf1fcba59dcf7bc4799eee61267bd4e",
+      "provenance": "working-tree"
+    }
+  ],
+  "driverSha256": "02eaceb47b55b0f20dfed57a76e5610d5062066709e6d2475740f5db7a9418b2",
+  "environment": {
+    "node": "v20.19.5",
+    "platform": "darwin",
+    "architecture": "arm64"
+  },
+  "protocol": {
+    "suite": "peak",
+    "directions": [
+      "fan"
+    ],
+    "seeds": [
+      42
+    ],
+    "encounterSets": [
+      "crossing"
+    ],
+    "airframes": [
+      3
+    ],
+    "routes": [
+      "tight"
+    ],
+    "limitSeconds": 480,
+    "simulationHz": 60,
+    "inputHz": 10,
+    "injectedBuilds": false,
+    "injectedXP": false,
+    "injectedHP": false,
+    "fixtures": false
+  },
+  "limits": [
+    "These are deterministic automated routes with full game-state access; outcomes do not establish human difficulty or enjoyment.",
+    "No browser, GPU, hardware, frame-time or memory performance qualification is performed.",
+    "A strict no-pulse draft with no legal preferred card after rerolls records draft-blocked; it never silently chooses pulse or a different support.",
+    "Movement probes earn two pulse ranks first, then use fixed input patterns while continuing legal upgrades. They do not inject positions, invulnerability or build state.",
+    "Wall-clock durations are observations of this Node process only. Completed deterministic result hashes exclude observedWallMilliseconds."
+  ],
+  "complete": true,
+  "results": [
+    {
+      "direction": "fan",
+      "route": "tight",
+      "seed": 42,
+      "projectIdentity": "d116ebecbc4f320e",
+      "encounterSet": "crossing",
+      "airframes": 3,
+      "qualification": "ordinary-inputs-earned-upgrades-no-fixture",
+      "controller": "deterministic-10hz-candidate-pilot-v1",
+      "outcome": "won",
+      "simulatedSeconds": 334.65,
+      "observedWallMilliseconds": 2169.9,
+      "firstDraftSeconds": 14.05,
+      "primaryEvolutionSeconds": 101.95,
+      "lastChoiceSeconds": 245,
+      "earnedChoices": 10,
+      "kills": 3348,
+      "collectedXP": 3988,
+      "groundXP": 530,
+      "peakAlive": 1667,
+      "peakVisible": 1048,
+      "densityPeaks": {
+        "opening": 60,
+        "developing": 110,
+        "late": 640,
+        "finale": 1048
+      },
+      "densityExposure": {
+        "above800Ticks": 713,
+        "longestAbove800Ticks": 668,
+        "peakAt": {
+          "time": 316.25,
+          "visible": 1048,
+          "alive": 1656,
+          "encounter": "relief-8",
+          "x": 487.52495265710394,
+          "y": 979.7447492266562,
+          "hull": 52
+        }
+      },
+      "damageTaken": 96,
+      "airframesRemaining": 3,
+      "finalRemainingHull": null,
+      "build": {
+        "primary": {
+          "rank": 4,
+          "branch": "wide",
+          "evolved": true
+        },
+        "combat": [
+          {
+            "id": "proximity-pulse",
+            "rank": 3
+          },
+          {
+            "id": "side-burst",
+            "rank": 3
+          }
+        ],
+        "support": {
+          "id": "scanner",
+          "rank": 1
+        },
+        "reinforcement": 0,
+        "repair": 0
+      },
+      "choices": [
+        {
+          "id": "primary:wide:2",
+          "time": 14.05,
+          "tick": 843
+        },
+        {
+          "id": "proximity-pulse:1",
+          "time": 20.183333333333334,
+          "tick": 1211
+        },
+        {
+          "id": "proximity-pulse:2",
+          "time": 32.28333333333333,
+          "tick": 1937
+        },
+        {
+          "id": "side-burst:1",
+          "time": 44.61666666666667,
+          "tick": 2677
+        },
+        {
+          "id": "primary:wide:3",
+          "time": 76.45,
+          "tick": 4587
+        },
+        {
+          "id": "primary:wide:4",
+          "time": 101.95,
+          "tick": 6117
+        },
+        {
+          "id": "side-burst:2",
+          "time": 130.18333333333334,
+          "tick": 7811
+        },
+        {
+          "id": "proximity-pulse:3",
+          "time": 170.83333333333334,
+          "tick": 10250
+        },
+        {
+          "id": "side-burst:3",
+          "time": 202.33333333333334,
+          "tick": 12140
+        },
+        {
+          "id": "scanner:1",
+          "time": 245,
+          "tick": 14700
+        }
+      ]
+    }
+  ],
+  "deterministicResultsSha256": "8c3ef06938bcf4910e9002a24e8597861845e4988a874a2822c001f1d6765307"
+}
