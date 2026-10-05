@@ -8,17 +8,19 @@ const names = {
   'side-burst': localized('Side burst', 'Бічний залп'),
   scanner: localized('Salvage scanner', 'Сканер трофеїв'),
   shield: localized('Recovery shield', 'Захисний екран'),
+  plating: localized('Reactive plating', 'Реактивна броня'),
 };
 const evolutions = {
   wide: localized('Saturation Fan', 'Насичене віяло'),
   double: localized('Echo Cascade', 'Каскад відлуння'),
 };
 const combatSystems = ['slow-field', 'proximity-pulse', 'side-burst'];
-const supportSystems = ['scanner', 'shield'];
+const supportSystems = ['scanner', 'shield', 'plating'];
 
 // Runtime attacks and upgrade previews share these values. Control modules buy
 // time to fly through a gap; they must not erase a full-health opening crowd.
 const moduleParameters = Object.freeze({
+  plating: [1, 2].map((rank) => Object.freeze({ damageReduction: rank * 0.1 })),
   'proximity-pulse': [1, 2, 3].map((rank) =>
     Object.freeze({
       radius: [62, 78, 84][rank - 1],
@@ -254,6 +256,16 @@ function moduleOffer(id, rank) {
         'Позначки запускають ланцюг між трьома близькими цілями',
       ),
     ],
+    plating: [
+      localized(
+        'Reduce hull damage by 10%; replaces shield or scanner',
+        'Зменшуйте шкоду корпусу на 10%; замінює екран або сканер',
+      ),
+      localized(
+        'Reduce hull damage by 20%; no recharge required',
+        'Зменшуйте шкоду корпусу на 20%; без перезаряджання',
+      ),
+    ],
     shield: [
       localized(
         'Absorb one hit; the shield recharges after ten seconds',
@@ -348,7 +360,7 @@ export function legalOverflightUpgrades(build, allowedModules) {
   for (const id of supportSystems) {
     if (!allowed.has(id)) continue;
     const rank = overflightModuleRank(build, id);
-    if (rank < 3 && (!build.support || build.support.id === id))
+    if (rank < (id === 'plating' ? 2 : 3) && (!build.support || build.support.id === id))
       candidates.push(moduleOffer(id, rank + 1));
   }
   return candidates;

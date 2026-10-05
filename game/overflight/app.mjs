@@ -1,4 +1,9 @@
-import { DESTRUCTION_CUES } from '../ui/destruction-audio.mjs';
+import { createMissionLibrary } from '../mission-library/library.mjs';
+import { attachMissionLibraryChooser } from '../ui/mission-library-chooser.mjs';
+import { createMissionLibrarySessionState } from '../mission-library/handoff.mjs';
+import { overflightMissionSource, paintOverflightMission } from './mission-library.mjs';
+import { createOverflightOperationCards, paintOverflightRole } from './operation-view.mjs';
+import { DESTRUCTION_CUES, HUMAN_REACTION_CUES } from '../ui/destruction-audio.mjs';
 import { mountModePlayShell } from '../ui/mode-play-shell.mjs';
 import { attachModalNavigation } from '../ui/modal-navigation.mjs';
 import { attachFullscreen } from '../ui/fullscreen.mjs';
@@ -147,11 +152,17 @@ const review = createOverflightReviewPlayback({
 });
 const studio = params.get('studio') === mode.id && win.parent !== win;
 const OPTION_KEY = `revealline.${mode.id}.options.v1`;
-let options = { airframes: 3, slowResume: true, characterId: DEFAULT_OVERFLIGHT_CHARACTER };
+let options = {
+  difficulty: 'standard',
+  airframes: 3,
+  slowResume: true,
+  characterId: DEFAULT_OVERFLIGHT_CHARACTER,
+};
 try {
   const saved = JSON.parse(win.localStorage.getItem(OPTION_KEY) ?? 'null');
   if (saved && [1, 3].includes(saved.airframes) && typeof saved.slowResume === 'boolean')
     options = {
+      difficulty: saved.difficulty === 'veteran' ? 'veteran' : 'standard',
       airframes: saved.airframes,
       slowResume: saved.slowResume,
       characterId: normalizeOverflightCharacterId(saved.characterId),
@@ -162,6 +173,7 @@ try {
 const persistOptions = () => {
   options = {
     ...options,
+    difficulty: $('difficulty').value,
     airframes: Number($('airframes').value),
     slowResume: $('slow-resume').checked,
   };
@@ -171,7 +183,7 @@ const persistOptions = () => {
     /* Session-only preference. */
   }
 };
-let project = mode.defaultProject;
+let project = mode.createProject({ difficulty: options.difficulty });
 let compiled = mode.compileProject(project);
 let seed = Number(params.get('seed'));
 if (!Number.isSafeInteger(seed) || seed < 1 || seed > 0xffffffff) seed = compiled.seed;
@@ -196,6 +208,13 @@ let lastHUD = 0,
   library = null,
   music = null,
   studioNavigation = null,
+  operationCards = null,
+  missionChooser = null,
+  missionRegistry = null,
+  selectedInstalled = false,
+  cacheHintKey = '',
+  progressEpoch = 0,
+  missionProgress = new Map(),
   commentator = null,
   musicFrame = 0,
   recoveryPending = false,
@@ -267,6 +286,7 @@ const audio = createOverflightAudio(sound, {
         'audio.victory',
         'audio.failure',
         ...DESTRUCTION_CUES.map((cue) => `audio.${cue}`),
+        ...HUMAN_REACTION_CUES.map((cue) => `audio.${cue}`),
       ].includes(slot)
         ? artwork.readAudio(slot, settings)
         : null;
@@ -287,7 +307,11 @@ function releaseInput() {
   navigator?.cancelConfirm();
 }
 function activeModal() {
-  return music?.root() ?? ($('upgrade-dialog').open ? $('upgrade-dialog') : shell?.topDialog());
+  return (
+    music?.root() ??
+    (missionChooser?.elements.dialog.open ? missionChooser.elements.dialog : null) ??
+    ($('upgrade-dialog').open ? $('upgrade-dialog') : shell?.topDialog())
+  );
 }
 function phaseForShell() {
   return run?.phase === 'playing'
@@ -319,13 +343,14 @@ function updateShell() {
     const unavailable = preparing || runtimeFailed || !renderer || contextGuard.blocked();
     for (const name of ['primary', 'start']) shell.elements.buttons[name].disabled = unavailable;
     if (unavailable) shell.elements.buttons.pause.disabled = true;
-    if (runtimeFailed) shell.elements.buttons['home-retry'].hidden = false;
+    if (runtimeFailed) shell.elements.buttons.primary.disabled = false;
   }
 }
 function pause({ menu = true } = {}) {
   if (!run || retired) return;
   mode.pause(run);
   releaseInput();
+  audio.flight?.(run, { active: false });
   sound.gameplayPaused = true;
   sound.pause();
   commentator?.suspend();
@@ -345,6 +370,7 @@ function start() {
     return;
   }
   if (run.phase === 'upgrade') return syncUpgrade();
+  const freshLaunch = run.phase === 'ready';
   if (run.phase === 'ready') {
     if (run.airframes !== options.airframes || run.slowResume !== options.slowResume) {
       run = mode.createRun(compiled, { seed, ...options, fixture });
@@ -366,6 +392,7 @@ function start() {
     if (owner !== run || run.phase !== 'playing' || retired) sound.pause();
     else {
       void audio.prepare();
+      if (freshLaunch) audio.start?.(run, { bodyId: preparationIdentity?.characterId });
       commentator?.prepare();
       audio.update(run);
     }
@@ -376,7 +403,7 @@ function formatTime(seconds) {
   return `${String(Math.floor(value / 60)).padStart(2, '0')}:${String(value % 60).padStart(2, '0')}`;
 }
 function moduleIcon(id) {
-  const slot = `pickup.module-${mode.moduleIcons?.[id] ?? id}`;
+  const slot = `pickup.module-${mode.moduleIcons?.[id] ?? (id === 'plating' ? 'shield' : id)}`;
   const canvas = doc.createElement('canvas');
   canvas.width = canvas.height = 16;
   canvas.className = 'overflight-module-icon';
@@ -452,6 +479,27 @@ function updateHUD() {
     `${text('spareAirframes')} ${Math.max(0, run.airframesRemaining - 1)}`;
   $('hud-kills').textContent =
     `${Number(run.stats.kills).toLocaleString(getLocale())} ${text('kills')}`;
+  $('hud-protection').textContent = [
+    run.player.armorReduction > 0
+      ? `${text('armorProtection')} −${Math.round(run.player.armorReduction * 100)}%`
+      : '',
+    run.player.shield > 0 ? `${text('shieldHits')} ${run.player.shield}` : '',
+  ]
+    .filter(Boolean)
+    .join(' · ');
+  const openCaches = (run.caches ?? [])
+    .filter((cache) => cache.state === 'open')
+    .map((cache) => cache.id)
+    .join('|');
+  if (cacheHintKey !== openCaches) {
+    cacheHintKey = openCaches;
+    $('hud-cache').hidden = !openCaches;
+    $('hud-cache').textContent = openCaches ? text('cacheReady') : '';
+    $('hud-cache').title = text('cacheHint').replace(
+      '30',
+      String(compiled.combat?.supplies.repairHull ?? 30),
+    );
+  }
   $('hud-level').textContent = `${text('level')} ${run.progression.choices + 1}`;
   const cooldown = Math.max(0, run.player.boostCooldown ?? 0);
   $('hud-boost').textContent =
@@ -664,7 +712,22 @@ function transition() {
     result();
   }
 }
-async function prepare({ nextProject = project, nextSeed = seed, launch = false } = {}) {
+function projectForSortie() {
+  if (
+    selectedInstalled ||
+    studio ||
+    project.format.endsWith('V1') ||
+    project.difficulty === options.difficulty
+  )
+    return project;
+  const encounterSet = mode.encounterSets.find(
+    (set) => mode.createProject({ encounterSet: set }).id === project.id,
+  );
+  return encounterSet
+    ? mode.createProject({ encounterSet, difficulty: options.difficulty })
+    : project;
+}
+async function prepare({ nextProject = projectForSortie(), nextSeed = seed, launch = false } = {}) {
   const nextCompiled = mode.compileProject(nextProject);
   if (!Number.isSafeInteger(nextSeed) || nextSeed < 1 || nextSeed > 0xffffffff)
     throw new TypeError('Invalid preview seed.');
@@ -795,6 +858,7 @@ async function prepare({ nextProject = project, nextSeed = seed, launch = false 
     updateHUD();
     updateShell();
     renderer.present(run);
+    refreshOperationView();
     if (launch) {
       shell.enterPlay();
       start();
@@ -959,6 +1023,10 @@ function onFrame(now) {
     });
     if (appearance) appearance.destruction = encounterDisplay.snapshot();
     renderer.present(run);
+    audio.flight?.(run, {
+      active: active && run.phase === 'playing',
+      bodyId: preparationIdentity?.characterId,
+    });
     if ($('upgrade-dialog').open)
       for (const card of $('upgrade-cards').children) card.paintPreview?.(now / 1000);
     if (benchmarkTrial && active && run.time >= nextResourceSample && !completedMeasurement) {
@@ -1063,6 +1131,7 @@ function refreshCopy() {
   updateHUD();
   refreshCharacters();
   renderMissions();
+  refreshOperationView();
   if (run?.phase === 'upgrade') syncUpgrade(true);
   if (['won', 'lost'].includes(run?.phase)) result();
 }
@@ -1103,6 +1172,12 @@ shell = mountModePlayShell({
   ),
   services: { attachModalNavigation, attachFullscreen, setMenuIcon },
   actions: {
+    open: (surface) => {
+      if (surface === 'missions') {
+        void openMissionLibrary();
+        return false;
+      }
+    },
     pause: () => pause({ menu: false }),
     start,
     resume: start,
@@ -1128,6 +1203,8 @@ shell = mountModePlayShell({
     if (name === 'missions') void refreshMissions();
   },
 });
+// Overflight exposes its operation settings directly; it has no separate expert screen.
+shell.elements.buttons.expert.hidden = true;
 music = attachCouchMusicHost({
   document: doc,
   root: $('overflight-music'),
@@ -1167,23 +1244,184 @@ commentator = createOverflightCommentator({
   acquireGain: (settings) => music?.player.acquireGain(settings),
 });
 if (mode.installActions) mode.installActions({ document: doc, prepare, getSeed: () => seed });
+if ($('survivor-same-seed')) {
+  listen($('survivor-same-seed'), 'click', () => {
+    void prepare({ launch: true }).catch(() => {});
+  });
+  listen($('survivor-new-sortie'), 'click', () => {
+    const bytes = new Uint32Array(1);
+    win.crypto.getRandomValues(bytes);
+    void prepare({ nextSeed: bytes[0] || 1, launch: true }).catch(() => {});
+  });
+}
+operationCards = createOverflightOperationCards({
+  document: doc,
+  current: mode.id,
+  text,
+  destination,
+  onSelect: () => {
+    void openMissionLibrary();
+  },
+  onLeave: () => pause({ menu: false }),
+});
+shell.elements.dialogs.home.querySelector('.mode-play-main-menu').before(operationCards.root);
+function refreshOperationView() {
+  const paint = renderer?.paintPreviewSprite;
+  operationCards?.refresh(paint);
+  for (const previews of doc.querySelectorAll('[data-role-previews]')) {
+    previews.replaceChildren();
+    for (const [role, key] of [
+      ['exposed', 'Exposed'],
+      ['shield', 'Shield'],
+      ['armor', 'Armor'],
+    ]) {
+      const card = el('div', '', 'overflight-role-card');
+      const canvas = doc.createElement('canvas');
+      canvas.width = 240;
+      canvas.height = 100;
+      canvas.setAttribute('aria-hidden', 'true');
+      const context = canvas.getContext('2d');
+      if (context) paintOverflightRole(context, role, paint);
+      card.append(canvas, el('strong', text(`role${key}`)), el('p', text(`role${key}Help`)));
+      previews.append(card);
+    }
+  }
+  for (const hint of doc.querySelectorAll('[data-copy="cacheHint"]')) {
+    hint.hidden = compiled.rulesVersion !== 2 || !compiled.combat?.supplies.enabled;
+    hint.textContent = text('cacheHint').replace(
+      '30',
+      String(compiled.combat?.supplies.repairHull ?? 30),
+    );
+  }
+  $('difficulty').disabled = selectedInstalled || studio || preparing;
+  $('difficulty-help').textContent = text(
+    selectedInstalled || studio ? 'authoredDifficulty' : 'difficultyHelp',
+  );
+}
+function refreshMissionSources() {
+  if (!missionRegistry) return;
+  for (const [id, entries, custom] of [
+    [
+      'official',
+      mode.encounterSets.map((encounterSet) => ({
+        project: mode.createProject({ encounterSet, difficulty: options.difficulty }),
+      })),
+      false,
+    ],
+    ['installed', installed, true],
+  ])
+    missionRegistry.register(
+      overflightMissionSource({
+        id: `${mode.id}:${id}`,
+        entries,
+        mode,
+        locale: getLocale,
+        installed: custom,
+        progress: (entry) =>
+          missionProgress.get(mode.compileProject(entry.project).projectIdentity),
+        launch: async (entry, context) => {
+          if (retired || context.isCurrent?.() === false) return false;
+          const accepted = await prepare({
+            nextProject: entry.project,
+            nextSeed: entry.project.seed,
+            launch: true,
+          });
+          if (accepted) {
+            selectedInstalled = custom;
+            refreshOperationView();
+          }
+          return accepted;
+        },
+      }),
+    );
+}
+async function openMissionLibrary() {
+  pause({ menu: false });
+  if (!missionRegistry) {
+    missionRegistry = createMissionLibrary();
+    refreshMissionSources();
+    const session = createMissionLibrarySessionState({
+      mode: 'solo',
+      storage: {
+        getItem: (key) => win.sessionStorage?.getItem(`${mode.id}:${key}`),
+        setItem: (key, value) => win.sessionStorage?.setItem(`${mode.id}:${key}`, value),
+      },
+    });
+    missionChooser = attachMissionLibraryChooser({
+      document: doc,
+      library: missionRegistry,
+      mode: 'solo',
+      supportedModes: ['solo'],
+      availableCollectionsOnly: true,
+      description: () => text('encounterBrowserHelp'),
+      readState: session.read,
+      writeState: session.write,
+      getCurrentId: () => missionRegistry.missions.find((row) => row.runtimeId === project.id)?.id,
+      onPause: () => pause({ menu: false }),
+      onReturn: (opener) => {
+        if (opener?.isConnected) opener.focus();
+      },
+      launchContext: () => {
+        const owner = run;
+        return { isCurrent: () => !retired && run === owner };
+      },
+      goalPreferenceOptions: { editionId: mode.id, getStorage: () => win.localStorage },
+      renderPreview: ({ container, diagram, document }) => {
+        const canvas = document.createElement('canvas');
+        canvas.width = 320;
+        canvas.height = 132;
+        canvas.className = 'journey-card-map';
+        canvas.setAttribute('aria-hidden', 'true');
+        container.append(canvas);
+        const context = canvas.getContext('2d');
+        if (context) paintOverflightMission(context, diagram, renderer?.paintPreviewSprite);
+      },
+    });
+    const tools = el('details', '', 'overflight-installed-tools');
+    const summary = el('summary', text('manageInstalled'));
+    summary.dataset.copy = 'manageInstalled';
+    tools.append(summary, $('overflight-installed-list'), $('installed-status'));
+    missionChooser.elements.footer.append(tools);
+  }
+  missionChooser.open(doc.activeElement);
+  await refreshMissions();
+  if (records) {
+    const ticket = ++progressEpoch;
+    const candidates = [
+      ...mode.encounterSets.map((encounterSet) =>
+        mode.createProject({ encounterSet, difficulty: options.difficulty }),
+      ),
+      ...installed.map((entry) => entry.project),
+    ];
+    const results = await Promise.all(
+      candidates.map(async (candidate) => {
+        const definition = mode.compileProject(candidate);
+        const saved = await records.read({
+          compiled: definition,
+          seed: definition.seed,
+          ...options,
+          difficulty: candidate.difficulty ?? 'standard',
+        });
+        return [
+          definition.projectIdentity,
+          saved.fastestClear
+            ? { state: 'completed', bestStars: null }
+            : { state: 'new', bestStars: null },
+        ];
+      }),
+    );
+    if (!retired && ticket === progressEpoch) {
+      missionProgress = new Map(results);
+      missionChooser.refresh();
+    }
+  }
+}
+
 function renderMissions() {
   const root = $('overflight-mission-list');
   if (!root) return;
   root.replaceChildren();
-  for (const encounterSet of mode.encounterSets) {
-    const candidate = mode.createProject({ encounterSet });
-    const button = el('button', local(candidate.title));
-    button.type = 'button';
-    button.addEventListener('click', () => {
-      void prepare({ nextProject: candidate, nextSeed: candidate.seed })
-        .then((accepted) => {
-          if (accepted) shell.open('briefing');
-        })
-        .catch(() => {});
-    });
-    root.append(button);
-  }
+  refreshMissionSources();
   const community = $('overflight-installed-list');
   community.replaceChildren();
   if (!installed.length) community.append(el('p', text('noInstalled')));
@@ -1193,7 +1431,12 @@ function renderMissions() {
     button.addEventListener('click', () => {
       void prepare({ nextProject: entry.project, nextSeed: entry.project.seed })
         .then((accepted) => {
-          if (accepted) shell.open('briefing');
+          if (accepted) {
+            selectedInstalled = true;
+            refreshOperationView();
+            missionChooser?.close();
+            shell.open('briefing');
+          }
         })
         .catch(() => {});
     });
@@ -1254,10 +1497,12 @@ navigator = attachControllerNavigation({
   getControlLabels: () => controller?.labels() ?? { confirm: '', back: '', directions: '' },
   onBack: () => {
     if (music?.root()) music.back();
+    else if (missionChooser?.elements.dialog.open) missionChooser.close();
     else if (!$('upgrade-dialog').open) shell.back();
   },
   onMenu: () => {
     if (music?.root()) music.back();
+    else if (missionChooser?.elements.dialog.open) missionChooser.close();
     else if (!$('upgrade-dialog').open) shell.back();
   },
 });
@@ -1293,8 +1538,26 @@ cleanup.push(
   }),
 );
 for (const [id, event, fn] of [
+  ['open-flight-deck', 'click', () => shell.open('briefing')],
   ['language', 'change', () => setLocale($('language').value)],
   ['airframes', 'change', persistOptions],
+  [
+    'difficulty',
+    'change',
+    () => {
+      persistOptions();
+      renderMissions();
+      if (run?.phase === 'ready' && !selectedInstalled && !studio) {
+        const encounterSet =
+          mode.encounterSets.find(
+            (set) => mode.createProject({ encounterSet: set }).id === project.id,
+          ) ?? mode.encounterSets[0];
+        void prepare({
+          nextProject: mode.createProject({ encounterSet, difficulty: options.difficulty }),
+        }).catch(() => {});
+      }
+    },
+  ],
   ['slow-resume', 'change', persistOptions],
   [
     'character-select',
@@ -1337,6 +1600,7 @@ for (const [id, event, fn] of [
   ],
 ])
   listen($(id), event, fn);
+$('difficulty').value = options.difficulty;
 $('airframes').value = String(options.airframes);
 $('slow-resume').checked = options.slowResume;
 listen($('upgrade-dialog'), 'cancel', (event) => event.preventDefault());
@@ -1512,6 +1776,8 @@ async function dispose() {
   if ($('upgrade-dialog').open) $('upgrade-dialog').close();
   navigator.destroy();
   controller?.destroy();
+  missionChooser?.destroy();
+  missionRegistry?.dispose();
   shell.dispose();
   themeControls.dispose();
   encounterDisplay.dispose();
@@ -1573,6 +1839,7 @@ try {
   if (params.has('community')) {
     const loaded = await library.load(params.get('community'));
     project = loaded.project ?? loaded;
+    selectedInstalled = true;
     compiled = mode.compileProject(project);
     seed = compiled.seed;
   }

@@ -1,3 +1,4 @@
+import { createHumanReactionPolicy } from './human-reaction-policy.mjs';
 import { DEFAULT_DIALOGUE_VOLUME, DIALOGUE_MIX_GAIN } from '../audio/dialogue-mix.mjs';
 import { encounterSoundRecipe } from './encounter-audio.mjs';
 import {
@@ -47,6 +48,7 @@ export class Soundscape {
     this.movementSettings = readMovementAudio();
     this.dialogueSettings = { enabled: false, volume: DEFAULT_DIALOGUE_VOLUME };
     this.feedbackDirector = new FeedbackDirector(this);
+    this.humanReactions = createHumanReactionPolicy();
     this.persistentMusic = persistentMusic;
     this.context = null;
     this.contextFactory = contextFactory;
@@ -714,6 +716,42 @@ export class Soundscape {
       ...options,
     });
   }
+  /** A nonverbal gore layer. Missing bytes keep the dry impact; never replay later. */
+  humanReaction(details = {}) {
+    const c = this.context;
+    if (
+      !this.enabled ||
+      this.paused ||
+      this.gameplayPaused ||
+      this.disposed ||
+      this.audioMaster.muted ||
+      this.audioMaster.volume === 0 ||
+      c?.state !== 'running' ||
+      !this.settings.master ||
+      !this.settings.sfx
+    )
+      return false;
+    const voices = [...this.voices];
+    if (voices.some((voice) => voice.radio || voice.dialogue || voice.priority >= 5)) return false;
+    const name = this.humanReactions.request(
+      c.currentTime,
+      details,
+      voices.filter((voice) => voice.humanReaction).length,
+    );
+    if (!name) return false;
+    const options = {
+      board: details.board ?? 'solo',
+      pan: details.pan ?? 0,
+      humanReaction: true,
+      priority: 2,
+      feedback: true,
+      maxDuration: 0.7,
+      gain: 0.45,
+    };
+    return (
+      this.publishedAudio?.play(name, options) || Boolean(this.feedbackDirector.play(name, options))
+    );
+  }
   /** Shared enemy, machinery and tactical cues, including an offline fallback. */
   encounter(type, details = {}) {
     const recipe = encounterSoundRecipe(type, details),
@@ -749,6 +787,11 @@ export class Soundscape {
     )
       return false;
     this.recentEvents.set(key, c.currentTime);
+    if (recipe.priority >= 5) {
+      this.humanReactions?.interrupt(c.currentTime);
+      for (const voice of [...this.voices]) if (voice.humanReaction) voice.retire();
+    }
+    if (type === 'catch') this.humanReaction?.(details);
     if (this.recentEvents.size > 64)
       this.recentEvents.delete(this.recentEvents.keys().next().value);
     // A warning arriving later in the same transaction owns the foreground.

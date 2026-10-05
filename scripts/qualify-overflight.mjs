@@ -32,6 +32,8 @@ const implementationBaseMainSha = '2d447bc790bdf3951251c99041c8a918363ece0a';
 const qualifiedSourcePaths = [
   'game/data-json.mjs',
   'game/overflight/core.mjs',
+  'game/overflight/tactics.mjs',
+  'game/overflight/combat-profile.mjs',
   'game/overflight/grid.mjs',
   'game/overflight/project.mjs',
   'game/overflight/review-pilot.mjs',
@@ -50,6 +52,8 @@ function sourceBindings() {
 
 export function qualifyOverflight({
   seed = 17031991,
+  difficulty = 'standard',
+  legacy = false,
   direction = 'fan',
   airframes = 1,
   route = 'tight',
@@ -65,7 +69,7 @@ export function qualifyOverflight({
     ? createOverflightAuditPilot(route)
     : null;
   const compiled = compileOverflightProject(
-    project ?? createOverflightProject({ seed, encounterSet }),
+    project ?? createOverflightProject({ seed, encounterSet, difficulty, legacy }),
   );
   const run = createOverflightRun(compiled, { airframes });
   startOverflight(run);
