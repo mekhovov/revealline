@@ -716,7 +716,8 @@ export class Soundscape {
       ...options,
     });
   }
-  /** A nonverbal gore layer. Missing bytes keep the dry impact; never replay later. */
+  /** Optional humanoid feedback, independent of visual gore. Missing bytes keep
+   * the classic impact; never replay later. */
   humanReaction(details = {}) {
     const c = this.context;
     if (
@@ -735,7 +736,7 @@ export class Soundscape {
     if (voices.some((voice) => voice.radio || voice.dialogue || voice.priority >= 5)) return false;
     const name = this.humanReactions.request(
       c.currentTime,
-      details,
+      { ...details, vocals: this.readDestruction?.()?.vocals ?? details.vocals },
       voices.filter((voice) => voice.humanReaction).length,
     );
     if (!name) return false;

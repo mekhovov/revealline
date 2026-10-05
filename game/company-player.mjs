@@ -14,6 +14,7 @@ import { claimProfileWriter } from './profile-writer.mjs';
 import { BoardPainter, boardPaintSizeForRun } from './ui/render.mjs';
 import { attachInput } from './ui/input.mjs';
 import { Soundscape } from './ui/audio.mjs';
+import { attachDefeatSoundControls } from './ui/defeat-sound-controls.mjs';
 import { createDisplayPreferences } from './display-preferences.mjs';
 import { createTouchPreferences } from './touch-preferences.mjs';
 import { createAudioMaster } from './ui/audio-master.mjs';
@@ -288,6 +289,13 @@ async function main() {
     },
   });
   const sound = new Soundscape({ audioMaster });
+  const defeatSounds = attachDefeatSoundControls({
+    document,
+    window,
+    container: $('settings-dialog'),
+    prefix: 'company-',
+  });
+  sound.setDestructionPreferences(() => defeatSounds.snapshot());
   const menuAudio = attachPublishedAudio({
     sound,
     ready: Promise.resolve(null),
@@ -1177,6 +1185,7 @@ async function main() {
     current?.picture?.release();
     host.preparer.dispose();
     menuAudio.close();
+    defeatSounds.dispose();
     sound.dispose?.();
     painter.dispose();
     themeHost.dispose();

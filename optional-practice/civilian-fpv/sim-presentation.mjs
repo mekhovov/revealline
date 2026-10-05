@@ -3363,11 +3363,11 @@ import * as academyAudioExternal0 from '../../game/i18n/index.mjs';
 export const createSimFlightAudio = (() => {
   const sourceHashes = Object.freeze({
     'optional-practice/civilian-fpv/world-audio.mjs':
-      'a8e1b5557bec601e989a3ee7744407022f757811ef0ae8010bc4585bba334ec2',
+      'cc05ffc5e1b54f500efc17dccf77c96c608a2fc535e8947b8787eccb2103565f',
     'game/ui/human-reaction-policy.mjs':
-      'e0730b9ba3a656028721fc3a557d1283164279085fd7e22c24b882a044b0a277',
+      'dd5992bca561093f9a8c31c4e2cd51ddb239e97719df8d2567f27e4330f7b731',
     'game/ui/destruction-audio.mjs':
-      'eeca42bc7007d65b6f2782e47789a6968716c162b68e21fcbc7d3a9d5509e608',
+      'b9a52dbf64e751536a171a0e0d26223bd01e3e8d3fee5c0dffb4556b8775d85b',
     'game/audio/human-reactions/portable.mjs':
       '2f2654e7c6d2bb83d9f1b9e4c139ba348f205a70350328816eb0b3f8161fa696',
     'game/ui/destruction-level.mjs':
@@ -3398,7 +3398,7 @@ export const createSimFlightAudio = (() => {
     ]);
     const DESTRUCTION_CUES = Object.freeze(DESTRUCTION_CATEGORIES.map((id) => `destroy-${id}`));
 
-    // Separate slots preserve the dry impact when gore is disabled. Human identity
+    // Separate slots preserve the dry impact when Classic sounds is selected. Human identity
     // is independent of armor/electronics material (for example a relay operator).
     const HUMAN_REACTION_CUES = Object.freeze(
       Array.from({ length: 8 }, (_, index) => `human-reaction-${index + 1}`),
@@ -3524,7 +3524,6 @@ export const createSimFlightAudio = (() => {
           lastTime = now;
           if (
             !Number.isFinite(now) ||
-            details.brutal !== true ||
             details.vocals === false ||
             !isHumanoidDestruction(details) ||
             details.audible === false ||
@@ -4365,7 +4364,6 @@ export const createSimFlightAudio = (() => {
         if (
           preparingHumans ||
           !context?.decodeAudioData ||
-          options.getDestruction?.()?.brutal !== true ||
           options.getDestruction?.()?.vocals === false
         )
           return;
@@ -4650,7 +4648,11 @@ export const createSimFlightAudio = (() => {
           machine,
           brutal: options.getDestruction?.()?.brutal === true,
           vocals: options.getDestruction?.()?.vocals,
-          humanoid: actor?.type === 'humanoid' ? true : undefined,
+          // Patrols and sentries use the humanoid painter. Drones, hazards and
+          // vehicles must never inherit a human voice from the family fallback.
+          humanoid:
+            event.humanoid ?? (actor ? ['patrol', 'sentry'].includes(actor.type) : undefined),
+          flesh: event.flesh,
         };
       }
 
