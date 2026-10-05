@@ -668,6 +668,39 @@ export function createFlightRenderer({
       parent.add(arrow);
       register(arrow);
     };
+    if (step.min && step.max && ['hold', 'land'].includes(step.type)) {
+      // Open corner brackets mark both altitude planes, even when the pilot is
+      // inside a wide zone and its centre marker is behind the FPV camera.
+      const corners = [],
+        arm = Math.min(1.4, size[0] / 4, size[2] / 4);
+      for (const x of [-1, 1])
+        for (const z of [-1, 1])
+          for (const y of [-1, 1]) {
+            const v = new THREE.Vector3((x * size[0]) / 2, (y * size[1]) / 2, (z * size[2]) / 2);
+            corners.push(
+              v,
+              v.clone().add(new THREE.Vector3(-x * arm, 0, 0)),
+              v,
+              v.clone().add(new THREE.Vector3(0, 0, -z * arm)),
+              v,
+              v.clone().add(new THREE.Vector3(0, -y * Math.min(0.5, size[1] / 3), 0)),
+            );
+          }
+      const shape = new THREE.BufferGeometry().setFromPoints(corners);
+      geometry.add(shape);
+      const brackets = new THREE.LineSegments(
+        shape,
+        new THREE.LineBasicMaterial({
+          color: effectPalette.goalActive,
+          toneMapped: false,
+          transparent: true,
+          opacity: 0.85,
+        }),
+      );
+      materials.add(brackets.material);
+      group.add(brackets);
+      row.zoneCue = brackets;
+    }
     if (step.type === 'path-v1') {
       const [a, b] = step.plane,
         radius = (step.radiusMin + step.radiusMax) / 2000;
@@ -2466,6 +2499,7 @@ export function createFlightRenderer({
         row.light.opacity = active ? 0.9 : 0.17;
         row.marker.visible = active;
         if (row.gateCue) row.gateCue.visible = active;
+        if (row.zoneCue) row.zoneCue.visible = active;
         if (row.badge) row.badge.material.opacity = active ? 1 : 0.35;
       }
     }
@@ -2496,6 +2530,7 @@ export function createFlightRenderer({
     // The authored/legacy path keeps its original texture, size and visibility.
     camera.updateMatrixWorld();
     for (const row of goalRows) {
+      if (row.badge) row.badge.visible = view === 'editor' || row.index === state.step;
       const baseSize = row.badge?.userData.objectiveLabelBaseSize;
       if (!baseSize) continue;
       row.badge.getWorldPosition(labelPosition).applyMatrix4(camera.matrixWorldInverse);
@@ -3144,6 +3179,57 @@ export function createFlightRenderer({
     attachTransform,
     createEditor,
     draw,
+    objectiveScreen(state) {
+      if (disposed || !course || ['complete', 'failed'].includes(state.status)) return null;
+      const step = course.steps[mode]?.[state.step];
+      if (!step || (!step.min && step.type !== 'gate')) return null;
+      const p = state.position,
+        target = new THREE.Vector3();
+      let inside = false,
+        vertical = 0;
+      if (step.min && step.max) {
+        inside = ['x', 'y', 'z'].every(
+          (axis) => p[axis] >= step.min[axis] && p[axis] <= step.max[axis],
+        );
+        for (const axis of ['x', 'y', 'z'])
+          target[axis] = Math.max(step.min[axis], Math.min(step.max[axis], p[axis])) / 1000;
+        vertical = target.y - p.y / 1000;
+      } else {
+        target.set(
+          step.axis === 'x' ? step.at / 1000 : (step.minSide + step.maxSide) / 2000,
+          (step.minY + step.maxY) / 2000,
+          step.axis === 'z' ? step.at / 1000 : (step.minSide + step.maxSide) / 2000,
+        );
+        if ((p[step.axis] - step.at) * step.direction > 0)
+          target[step.axis] -= step.direction * 1.5;
+      }
+      const distance = target.distanceTo(new THREE.Vector3(p.x / 1000, p.y / 1000, p.z / 1000));
+      const local = target.clone().applyMatrix4(camera.matrixWorldInverse);
+      target.project(camera);
+      let x = target.x,
+        y = -target.y;
+      if (local.z >= 0) {
+        x = -x;
+        y = -y;
+        if (Math.abs(x) < 0.01) x = 1;
+      }
+      if (!Number.isFinite(x) || !Number.isFinite(y)) {
+        x = 0;
+        y = vertical >= 0 ? -1 : 1;
+      }
+      const offscreen = local.z >= 0 || Math.abs(x) > 0.7 || Math.abs(y) > 0.64;
+      const scale = Math.max(1, Math.abs(x) / 0.7, Math.abs(y) / 0.64);
+      return {
+        type: step.type,
+        inside,
+        vertical,
+        distance,
+        offscreen,
+        x: (x / scale + 1) / 2,
+        y: (y / scale + 1) / 2,
+        arrow: Math.abs(x) > Math.abs(y) ? (x > 0 ? '→' : '←') : y > 0 ? '↓' : '↑',
+      };
+    },
     aimScreen() {
       if (disposed || !course) return null;
       const point = new THREE.Vector3(0, 0, -10)

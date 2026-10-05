@@ -828,6 +828,7 @@ export function mountWorldApp({
     learningPreferences = null,
     learningResponse = null,
     lessonReturn = null,
+    learningDemoReturn = null,
     modePractice = false;
   const sectors = createSectorTracker();
   let storage;
@@ -1569,6 +1570,21 @@ export function mountWorldApp({
         }).catch(reportError);
     },
   });
+  const returnToLesson = button(txt('Return to practice', 'Повернутися до практики'), () => {
+    const context = learningDemoReturn;
+    if (context)
+      return startFlight(context.entry, {
+        mode: context.mode,
+        recover: context.recover,
+        lessonCamera: context.camera,
+      });
+  });
+  returnToLesson.hidden = true;
+  $('world-replay-controls').append(returnToLesson);
+  const targetCue = el('div', undefined, 'flight-target-cue');
+  targetCue.hidden = true;
+  targetCue.setAttribute('aria-hidden', 'true');
+  $('world-viewport').append(targetCue);
   let practiceOwnsFullscreen = false;
   const beginnerCoach = mountBeginnerCoach({
     root: $('beginner-coach'),
@@ -1582,6 +1598,25 @@ export function mountWorldApp({
     onRetry: () => $('world-retry').click(),
     onNext: () => nextLearningFlight(),
     onExit: () => closeFlight(),
+    onWatchDemonstration: ({ mode, step }) => {
+      if (!current?.beginner) return;
+      const entry = demonstrationEntry(current),
+        proof = demonstrationFor(entry, mode);
+      if (!proof) return;
+      learningDemoReturn ??= {
+        entry: current,
+        mode: $('flight-mode').value,
+        camera: $('flight-camera').value,
+        recover:
+          !preview && !replayProof && recorder?.ticks() && !terminal(flight.snapshot())
+            ? recorder.export()
+            : undefined,
+      };
+      const options = Number.isInteger(step)
+        ? { checkpoint: { mode, index: step, proof, watch: true } }
+        : { preview: true, replayProof: proof, demonstration: true };
+      void startFlight(entry, { ...options, lessonDemo: true }).catch(reportError);
+    },
     onRadio: () => $('radio-setup-button').click(),
     readRadioPreview: () => ({ ...radio.preview(), index: radio.status().selected?.index }),
     createLessonPreview: (lesson, mode, proof) =>
@@ -1853,7 +1888,7 @@ export function mountWorldApp({
               (state?.lastInput?.[key] ?? 0) / 1000,
             ]),
           );
-    if (current?.beginner && !checkpointSession)
+    if (current?.beginner && (!checkpointSession || checkpointRequest?.watch))
       beginnerCoach.update({
         state,
         source,
@@ -4708,6 +4743,44 @@ export function mountWorldApp({
     audio.update(state, { active: !replayProof && state.status === 'active' });
     // Do not submit an intermediate scene while its assets or shaders are preparing.
     if (sceneReady) drawFlight(state);
+    const cue =
+      sceneReady && $('flight-camera').value === 'fpv' ? renderer?.objectiveScreen?.(state) : null;
+    targetCue.hidden =
+      !cue || cue.inside || Boolean(current?.freeFlight) || beginnerCoach.blocksArm();
+    if (!targetCue.hidden) {
+      const x = Math.max(0.3, Math.min(0.7, cue.x)),
+        y = Math.max(current?.beginner ? 0.4 : 0.18, Math.min(0.72, cue.y)),
+        dx = cue.x - x,
+        dy = cue.y - y,
+        displaced = Math.abs(dx) + Math.abs(dy) > 0.001;
+      targetCue.style.left = `${x * 100}%`;
+      targetCue.style.top = `${y * 100}%`;
+      targetCue.dataset.offscreen = String(cue.offscreen || displaced);
+      // A label moved away from the coach or screen edge is a pointer, never
+      // an on-target marker at a different position from the real objective.
+      const arrow = cue.offscreen
+        ? cue.arrow
+        : Math.abs(dx) > Math.abs(dy)
+          ? dx > 0
+            ? '→'
+            : '←'
+          : dy > 0
+            ? '↓'
+            : '↑';
+      const direction = cue.offscreen || displaced ? `${arrow} ` : '◇ ';
+      const name =
+        cue.type === 'gate'
+          ? txt('Next gate', 'Наступні ворота')
+          : txt('Practice zone', 'Зона вправи');
+      const detail =
+        cue.vertical > 0.15
+          ? `↑ ${cue.vertical.toFixed(1)} m`
+          : cue.vertical < -0.15
+            ? `↓ ${(-cue.vertical).toFixed(1)} m`
+            : `${cue.distance.toFixed(1)} m`;
+      const caption = `${direction}${name} · ${detail}`;
+      if (targetCue.textContent !== caption) targetCue.textContent = caption;
+    }
     const aim = renderer?.aimScreen?.();
     if (aim) {
       $('aim-reticle').style.left = `${aim.x * 100}%`;
@@ -4738,6 +4811,18 @@ export function mountWorldApp({
     // Keep its settings/menu and keyboard focus where the player left them.
     if (!options.preserveFocus) playShell?.enterPlay();
     if (playShell) $('flight-dialog').prepend(playShell.elements.header);
+    if (
+      learningDemoReturn &&
+      !options.lessonDemo &&
+      !options.replayProof &&
+      !options.checkpoint?.watch
+    ) {
+      if (options.mode === undefined) options = { ...options, mode: learningDemoReturn.mode };
+      learningDemoReturn = null;
+    }
+    returnToLesson.hidden = !learningDemoReturn;
+    $('flight-dialog').classList.toggle('learning-replay', Boolean(learningDemoReturn));
+    returnToLesson.textContent = txt('Return to practice', 'Повернутися до практики');
     const requestedMode =
       options.mode ??
       options.replayProof?.mode ??
@@ -4802,21 +4887,27 @@ export function mountWorldApp({
     refreshEnemyGuide();
     const needsAcro = !entry.legacy && worldCourseRequiresAcro(entry.course);
     modePractice = needsAcro && requestedMode === 'self-level';
-    const learning = !checkpointRequest && learningById.get(entry.beginner);
+    const learning =
+      (!checkpointRequest || checkpointRequest.watch) && learningById.get(entry.beginner);
     if (learning) {
       learningPreferences ??= {
         'flight-camera': $('flight-camera').value,
       };
       learningResponse ??= { ...response };
       response = { ...DEFAULT_RESPONSE };
-      $('flight-camera').value = requestedMode === 'acro' ? 'fpv' : learning.camera;
+      $('flight-camera').value =
+        options.lessonCamera ?? (requestedMode === 'acro' ? 'fpv' : learning.camera);
       beginnerCoach.open(learning, {
         mode: requestedMode,
         keyboardPreset: $('flight-keyboard-preset').value,
         modePractice,
         demonstration: demonstrationFor({ ...entry, course: learning.course }, requestedMode),
+        recommendedDemonstration: demonstrationFor(
+          { ...entry, course: learning.course },
+          learning.mode,
+        ),
         practice: Boolean(options.recover),
-        replay: Boolean(options.replayProof),
+        replay: Boolean(options.replayProof || checkpointRequest?.watch),
       });
     } else {
       beginnerCoach.close();
@@ -5165,6 +5256,11 @@ export function mountWorldApp({
     if (token !== flightToken || disposed) return;
     flight?.dispose?.();
     flight = null;
+    if (learningDemoReturn) $('flight-mode').value = learningDemoReturn.mode;
+    learningDemoReturn = null;
+    returnToLesson.hidden = true;
+    $('flight-dialog').classList.remove('learning-replay');
+    targetCue.hidden = true;
     const closedLesson = current?.beginner;
     current = null;
     refreshEnemyGuide();
@@ -5958,6 +6054,9 @@ export function mountWorldApp({
   });
   on($('flight-mode'), 'change', () => {
     const selectedMode = $('flight-mode').value;
+    // An explicit player choice ends the temporary demonstration-mode override.
+    // Never restore the previous mode over the choice they just made.
+    learningDemoReturn = null;
     renderCatalogue();
     if (checkpointRequest) {
       const hasSection = checkpointRequest.index < current.course.steps[selectedMode].length;
