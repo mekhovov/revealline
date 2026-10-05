@@ -3963,3 +3963,51 @@ recovery refs and explicit leases. Carry Festival forward only after its feed
 entry is published. Harbor integration, Canals completion and D6 remain next;
 physical hardware/novice acceptance is unclaimed and does not block independent
 feature work. No new public-live claim is made in this checkpoint.
+
+## 5 October — Random flight, native Hunt and protected performance merge
+
+Live native stack **#1106** is now **#1104 → #1105 → #1110 → #1115**, all Draft.
+Only the random-flight child was rebased and appended using the supported native
+stack operation. HUD parent #1110 remains exactly
+`b0f8555a45a41a829e2d81230a0608c72acb6c89`; its admitted runtime source remains
+`614adef75a6e1cc28ea1d04acf26fa69b507c551`.
+
+**#1115** is published as a focused Draft. Random selection uses the selected
+world's visible filters, preserves flight mode, avoids repeating a manually or
+randomly chosen flight when another match exists, and keeps deliberate arming.
+All 19 mounted World UI checks pass. Native EN verification covers empty/single
+matches and Enter preparing **Wide oval** unarmed at zero throttle and elapsed
+time; Menu retains its title and hides the HUD. The long UK world label and
+button fit the 1280×720 mission modal without horizontal overflow or browser
+warnings/errors. The receipt and screenshot are retained in
+`fpv-filtered-random-flight-native-review.json`. Fresh package admission, offline
+qualification and protected delivery remain outstanding for this child.
+
+Performance **#1099** merged through the protected exact-head path at
+**12:43:12 UTC**, from `823fd48afb771b49700bd18f29593f22a016664a` to main merge
+`e3e1e8b8d3b061a85c77f7bc82159db810dff688`, with `bypass_rules: false`.
+All 23 recorded checks were successful or explicitly skipped. The lossless
+[merge archive](evidence/fpv-performance-protected-merge-20261005/manifest.json)
+retains eligibility, merge request, merge result and publication observations.
+Pages run **37311488518** was queued after merge and was in progress at
+**12:44:53 UTC**, alongside Company run **37311488428**. At that observation both
+public markers still named `2d447bc790bdf3951251c99041c8a918363ece0a`.
+Actual public launch of the merged performance change is not yet verified.
+
+Hunt **#1114** runtime `1ba932e6f61b918a9571c4a193c30f554855e951` now has actual
+native playback verification on the isolated 8918 preview: the practice pack and
+both examples imported, **2/2 recordings verified**, and Self-level and Acro
+demonstrations each completed in **20.9 seconds**, **Caught 2/2**. Changing modes
+kept playback paused. The documentation follow-up is separate from that runtime
+identity; no future branch head is assumed. Package/device/public qualification
+remains pending.
+
+Festival **#1113** has passed its native pending-catalogue fixture flow and remains
+Draft pending release allocation and actual feed publication. Reservoir remains
+preserved; the fixture is not evidence that the Festival row is publicly served.
+
+Available disk space is about **2.6 GiB**, below the stable **3 GiB** floor for heavy
+qualification. No further cleanup is planned. Preserve existing admissions and
+evidence, and keep heavy qualification stopped until the stable floor is met.
+This checkpoint changes documentation only; current runtime and package input
+identities remain unchanged.
