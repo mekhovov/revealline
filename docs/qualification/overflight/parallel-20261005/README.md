@@ -3,6 +3,30 @@
 This follow-up is stacked above the native Overflight candidate. It does not
 accept the target-hardware, physical-gamepad or five-player review gates.
 
+Combined runtime source: `a4d9b96757a467b2771f686b5db614ce9ef51473`.
+Stack: [#1109 native mode](https://github.com/mekhovov/revealline/pull/1109)
+→ [#1111 gameplay and qualification](https://github.com/mekhovov/revealline/pull/1111)
+→ [#1112 Creator and Community](https://github.com/mekhovov/revealline/pull/1112).
+All remain draft review candidates, with no publication or merge performed here.
+
+## Delivery and review order
+
+| Priority       | Phase/work                         | Delivered in this stack                                                                                                                                                                      | Review still required                                                                                      |
+| -------------- | ---------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
+| P1             | A1/A5 capacity and resilience      | Complete horde renderer; three reference and three stress trials, 15-minute soak, context restoration and ten retries on the built local Mac candidate                                       | Iris Xe/Windows and M1 browser coverage; local Mac results cannot substitute                               |
+| P1             | A2/A3 balance and player decisions | Visual Now → Next upgrade cards, movement-charged pulse, strict no-pulse builds, evolved Fan correction and six-minute native completion                                                     | Single-airframe difficulty, short peaks above 800, human interpretation of diagrams and route changes      |
+| P1             | A0/A5 shared input                 | Existing controller router, saved remaps, admitted radio profiles and confirmation/reconnect neutral gates                                                                                   | Physical standard/remapped gamepad and radio checks                                                        |
+| P2             | A4 authoring and reuse             | EN/UK Creator round-trip, native discovery, actual shared asset reuse, Community exact-byte recovery/co-ownership, fresh-origin offline installation and native play with the server stopped | Authenticated Community ownership UI; public deployment is separate                                        |
+| P2             | A5 usability                       | Device protocol, five-player worksheet and native captures                                                                                                                                   | Five participants including two newcomers, two runs each, plus full-interface contrasting build recordings |
+| After A review | C1 / Рій                           | Accepted A components form the reuse path                                                                                                                                                    | Leader/two-escort/focus-command prototype after A gameplay and shared foundation review                    |
+
+The priority labels distinguish unresolved review work from missing code; they do
+not declare an entire A phase accepted. The local build's 3,097-file manifest,
+25 checked Overflight outputs and full ZIP checksum are in `candidate-build.json`.
+The 119/119 combined Overflight/registration/offline checks and 57/57 modal checks
+are retained in `final-tests.tap` and `modal-tests.tap`; other cohort totals below
+overlap and must not be added together.
+
 ## Balance
 
 The 27 previously successful routes all included pulse. The new matrix adds four
@@ -50,6 +74,18 @@ them. Reproduction commands emit the equivalent uncompressed JSON.
 The [device/player packet](device-review.md) gives the remaining hardware protocol,
 physical-input checks and five-player worksheet. A blank worksheet is not a playtest.
 
+The [built-browser qualification](browser-qualification.md) contains the completed
+local results: all six fresh reference/stress trials pass with full populations,
+the 15-minute soak retains bounded owned resources, and recovery/retry/offline
+checks pass. Raw compressed records and their reports are retained alongside it.
+These results use a 1280×720 local M4 Pro browser and fixed 960×540 backing; they
+do not certify the target laptop or 1080p physical-device configuration.
+
+The initial Creator CI portability failure is corrected in test-only commit
+`9e7c03240`. Its actual root-only Creator job passes 216/216; `creator-ci-fixed.json`
+binds the source and job. The original 119-test receipt predates that extra test
+case and remains correctly scoped to its captured run.
+
 ## Reuse and browser evidence
 
 The [reuse surface](reuse.html) and [browser capture](reuse-browser.png) show one
@@ -61,4 +97,5 @@ renderer demonstration, not an additional game mode or player trial.
 
 `trial-ui-smoke.json` verifies automatic stop/export on the local Mac during parallel
 work, before final source freeze. It is deliberately not clean performance evidence.
-Further build/browser receipts will identify their tested source and device.
+The later `candidate-build.json`, `candidate-source.json` and
+`browser-qualification.md` identify the frozen built source and completed trials.

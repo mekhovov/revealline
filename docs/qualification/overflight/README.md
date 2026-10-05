@@ -3,7 +3,14 @@
 Recorded 5 October 2026 against implementation base main
 `2d447bc790bdf3951251c99041c8a918363ece0a`. This is working-tree candidate
 qualification. No target-device, human-play or release gate is accepted by these automated receipts.
-Current upgrade visuals and balance evidence is in the
+The latest combined-source delivery is the
+[parallel follow-up](parallel-20261005/README.md), including strict no-pulse
+balance, shared controller mappings, Community ownership, fresh benchmark tools,
+EN/UK Creator round-trip, cross-mode browser reuse and rebuilt distribution.
+The route table and phase matrix below describe the earlier candidate; its
+remaining-work statements are superseded by the parallel packet.
+
+Upgrade visuals and the first pulse balance correction are in the
 [upgrade follow-up](upgrades-20261005/README.md). Older browser and distribution
 receipts identify their own earlier source and do not qualify the changed balance.
 
@@ -92,9 +99,16 @@ This passes local build preparation and output verification. Offline browser
 installation, service-worker behavior and actual offline play remain unverified.
 It is not a hosted publication, native installer qualification or release promotion.
 
-## Reproduce
+## Reproduce the earlier candidate
 
-Run from the repository root with the repository-supported Node version:
+The commands below validate the earlier receipts only on their recorded source.
+The current review pilot, upgrades and qualifier have changed; `--verify-evidence`
+must reject those old hashes on the parallel candidate. Do not overwrite historical
+receipts to conceal this distinction. Use the current
+[parallel replay driver](parallel-20261005/balance-audit.mjs) and
+[device protocol](parallel-20261005/device-review.md) for the new evidence.
+
+Run from the corresponding checkout with the repository-supported Node version:
 
 ```sh
 node --test game/test/overflight-core.test.mjs game/test/overflight-renderer.test.mjs

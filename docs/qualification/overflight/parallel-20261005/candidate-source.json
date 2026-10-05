@@ -1,0 +1,242 @@
+{
+  "recordedAt": "2026-10-05T11:53:10.254Z",
+  "head": "a4d9b96757a467b2771f686b5db614ce9ef51473",
+  "base": "2d447bc790bdf3951251c99041c8a918363ece0a",
+  "workingTree": "",
+  "environment": {
+    "host": "Local Mac",
+    "model": "Mac16,7",
+    "memoryBytes": 51539607552,
+    "os": "26.7.1",
+    "power": "AC power; battery charged at 100%",
+    "node": "v20.19.5"
+  },
+  "scope": "Browser trials on this Mac are provisional coverage, not acceptance of Iris Xe/Windows or M1/Safari.",
+  "files": [
+    {
+      "path": "game/community/README.md",
+      "bytes": 5996,
+      "sha256": "579945fc575b3a7a76faa45af28332db77d60d20fb02f309ca5103767589a2b7"
+    },
+    {
+      "path": "game/community/account.mjs",
+      "bytes": 5342,
+      "sha256": "cdb0429e7f9f688a697b9a4660e11a54535cce5ad0387cabc1537dc6efa86fc3"
+    },
+    {
+      "path": "game/community/classic-installed.mjs",
+      "bytes": 806,
+      "sha256": "9b8c72764a10b0379baaadd351b9a8bb3e5bfe7980509bda09cc87bfc5561a98"
+    },
+    {
+      "path": "game/community/client.mjs",
+      "bytes": 15623,
+      "sha256": "3a269def5b1f0a891d352448233c5817d5df884f1022b016b9e8558f9f186939"
+    },
+    {
+      "path": "game/community/community.css",
+      "bytes": 3643,
+      "sha256": "39e391aaa17fa95450412c95ba1a1070c8844ab25ade27acba41314344e1de32"
+    },
+    {
+      "path": "game/community/directory.css",
+      "bytes": 3222,
+      "sha256": "d12d90f8a6ebbe0c30db571d6a048e36f86c88988742d964ab8dbd76ddcac31d"
+    },
+    {
+      "path": "game/community/download-store.mjs",
+      "bytes": 1195,
+      "sha256": "1f5e691e9924c329e4a1fdc83ad3af996ed8bdca71a75085d4f2652a2527befb"
+    },
+    {
+      "path": "game/community/index.html",
+      "bytes": 1280,
+      "sha256": "039a7eec87e337418d4cc2dd1c186b61210659ca0a792e3561f5dd69696820cc"
+    },
+    {
+      "path": "game/community/library.mjs",
+      "bytes": 19842,
+      "sha256": "eecfe14a9115dae2556efa5308f21138d3895b5d53ee4513e5ce53a18919e43e"
+    },
+    {
+      "path": "game/community/moderation-page.mjs",
+      "bytes": 7528,
+      "sha256": "1457d0d4d04abdec83de99f146664dbeaa5b77cfc071a91aa00cac0e77f29666"
+    },
+    {
+      "path": "game/community/moderation.html",
+      "bytes": 4207,
+      "sha256": "fea9334e3d8126c487e55050a9e8a812add6de119730c74cac58b152c85b9606"
+    },
+    {
+      "path": "game/community/moderator.mjs",
+      "bytes": 3734,
+      "sha256": "a22d59d6ce8311bbd0f571aff39249b333f481be0d93b135f64fcf65b35e7123"
+    },
+    {
+      "path": "game/community/native-installed.mjs",
+      "bytes": 5550,
+      "sha256": "3f565858ebbcc42c76635bfc5003e0bb6e7b9b28c202ace03474c2edf801bc89"
+    },
+    {
+      "path": "game/community/package-family.mjs",
+      "bytes": 4945,
+      "sha256": "ea797c98e2bfa6f252a60416a4f0ad4dbaab57b58d77b3b8a7b666fde7c895be"
+    },
+    {
+      "path": "game/community/page.mjs",
+      "bytes": 19196,
+      "sha256": "ba8954a876c3899a3b00a9af5900757f116d723e936681d37d4a20316398a043"
+    },
+    {
+      "path": "game/community/publisher.mjs",
+      "bytes": 3169,
+      "sha256": "ad5ebf044a121620cbd82a590942027883a0f8998c59bbe498de1fc117754ab2"
+    },
+    {
+      "path": "game/community/redirect.mjs",
+      "bytes": 293,
+      "sha256": "92a3a28310702d2104a70c1b401f2aae291058badc4aa180c68876f042299789"
+    },
+    {
+      "path": "game/community/state.mjs",
+      "bytes": 3773,
+      "sha256": "599c9521b1ab2f98cca0af072855f885ec033f843087e606417eee588359ff27"
+    },
+    {
+      "path": "game/community/store.html",
+      "bytes": 8149,
+      "sha256": "fe7d31f3ca2b9cfce2524b6b48e22945b79f319379802953e6a527ff3cd53ced"
+    },
+    {
+      "path": "game/community/tus-upload.mjs",
+      "bytes": 5534,
+      "sha256": "8b2e82c667bdb981a9a582bda9f6f02c19fd27b3a767ad689a23202c032e65ab"
+    },
+    {
+      "path": "game/overflight/app.mjs",
+      "bytes": 44913,
+      "sha256": "f13dceb0ac0157522bf38a2c1e55c0c3c65261255a3ea6a17c798614625f4d43"
+    },
+    {
+      "path": "game/overflight/atlas.mjs",
+      "bytes": 10254,
+      "sha256": "81b73babe10e4dc55c91571a3dec7c75e5d96ee5699968d64791d21ee0b273ac"
+    },
+    {
+      "path": "game/overflight/audio.mjs",
+      "bytes": 2149,
+      "sha256": "f87fc9c7a0ef3057128e956225fa8846b8d667a1a5c1db351c35707f0565b787"
+    },
+    {
+      "path": "game/overflight/benchmark.mjs",
+      "bytes": 7633,
+      "sha256": "d1b95883888b79dffc853d795ec9f22d2a4eb85d23ad9af842ed551f8bd2c53b"
+    },
+    {
+      "path": "game/overflight/community.mjs",
+      "bytes": 11384,
+      "sha256": "cd614db12fab0d48091266c8c2a7372476d5e6f6b8987a486de9aee676226dfa"
+    },
+    {
+      "path": "game/overflight/controller.mjs",
+      "bytes": 7506,
+      "sha256": "bda1c454b870c811a34bde729a75c04dad5d886792ae8d6b6900dd33b596aa5c"
+    },
+    {
+      "path": "game/overflight/copy.mjs",
+      "bytes": 16109,
+      "sha256": "bb93602c982c4ac2833a69f9c720c1f848d5b0af3600173197ceb44d7f995f03"
+    },
+    {
+      "path": "game/overflight/core.mjs",
+      "bytes": 55848,
+      "sha256": "b8b8563073c0480a9ca613b90e6a93b309da5e585030e7c67477bb7792f3337e"
+    },
+    {
+      "path": "game/overflight/grid.mjs",
+      "bytes": 2552,
+      "sha256": "ef130a7f9594bff6af374fe252bb8aafdc7e86762bb8ef60107914654f21dd30"
+    },
+    {
+      "path": "game/overflight/host-loop.mjs",
+      "bytes": 8020,
+      "sha256": "9be5fd61350f8f8eb434e50476baf367cb4fa16ec9c34898fddcbe6114c3b613"
+    },
+    {
+      "path": "game/overflight/play.html",
+      "bytes": 6989,
+      "sha256": "78e9359293e4266f30e8cc9cc5d40e294d9689a8f293e093a79d25cc28031933"
+    },
+    {
+      "path": "game/overflight/project.mjs",
+      "bytes": 10115,
+      "sha256": "265d3b65111f54c0afc7ca6c0daa8d7a6ba018618de461a59b3003e934230c62"
+    },
+    {
+      "path": "game/overflight/renderer.mjs",
+      "bytes": 21435,
+      "sha256": "5dab3747e843db5e6a73979842f7539c011bc63745895b68bedeae9c17fb57e6"
+    },
+    {
+      "path": "game/overflight/review-pilot.mjs",
+      "bytes": 7023,
+      "sha256": "f925e46ae35c4af9463c869c2c2a0de1e9a518858ed0a27fce6edf6a2dffde19"
+    },
+    {
+      "path": "game/overflight/review-recorder.mjs",
+      "bytes": 4049,
+      "sha256": "dfc6a5d8b24fb4310ad2c300352815539483ac3a4f21eca36306e289f15bc48d"
+    },
+    {
+      "path": "game/overflight/style.css",
+      "bytes": 7621,
+      "sha256": "b219ad370db92b86ddfa715097d538118cbd8389b8372be4bd50b68cddcd0456"
+    },
+    {
+      "path": "game/overflight/trial-report.mjs",
+      "bytes": 4529,
+      "sha256": "f281a346beb8c58b949916ec127c011bc16da94fcb063826870b6acc55527bac"
+    },
+    {
+      "path": "game/overflight/upgrade-card.mjs",
+      "bytes": 2959,
+      "sha256": "779f5c8f2b8e56927c2d771fa0d9132eb6683eb95e40d373a7ae669a18ea6a72"
+    },
+    {
+      "path": "game/overflight/upgrade-preview.mjs",
+      "bytes": 17165,
+      "sha256": "120cb740c32c0fbb3ff8aa3cc88787aa3b03fc267abf68ac24ae3880252b70af"
+    },
+    {
+      "path": "game/overflight/upgrades.mjs",
+      "bytes": 15503,
+      "sha256": "b9e1ea61405573a97e489d967f78ff1c34d220f5e467f1f0217568de5701f097"
+    },
+    {
+      "path": "game/studio/overflight-labels.mjs",
+      "bytes": 2131,
+      "sha256": "148fb88b4c4ccddb3cf22f81b8f9521c2c17ae44c3a09ecd1db4ba1720baa404"
+    },
+    {
+      "path": "game/studio/overflight.css",
+      "bytes": 2448,
+      "sha256": "0d84728c6cdb29878b7549ca66e9226de98b5f6da2dbbd2d8cc89299e7c0c32d"
+    },
+    {
+      "path": "game/studio/overflight.html",
+      "bytes": 944,
+      "sha256": "2d266638a1f27d252f8c330329f206afb2c8c7ea79219eac50653bcff89701eb"
+    },
+    {
+      "path": "game/studio/overflight.mjs",
+      "bytes": 19026,
+      "sha256": "16deb20d68d68d02b4c16e862b26f5a077516bdad36d4352aeea10da317d7a75"
+    },
+    {
+      "path": "scripts/offline-core-closure.mjs",
+      "bytes": 9058,
+      "sha256": "73533cdec8b7b3b1aed82c72629535443cf16dca884ea7aebfd74998dff739e3"
+    }
+  ]
+}
