@@ -9,7 +9,8 @@ import { promisify } from 'node:util';
 import { fileURLToPath } from 'node:url';
 import { checkBackupSet } from './check-backup-set.mjs';
 import { prepareBackupSet } from '../game/backup-set.mjs';
-import { EXTERNAL_BACKUP_FORMAT } from '../game/backup.mjs';
+import { ACHIEVEMENT_BACKUP_FORMAT, EXTERNAL_BACKUP_FORMAT } from '../game/backup.mjs';
+import { ENEMY_STATS_BACKUP_FORMAT, emptyEnemyStats } from '../game/enemy-stats.mjs';
 import {
   backupSetFixture,
   catalogueBackupAudio,
@@ -309,4 +310,22 @@ test('CLI refuses a browser-renamed download and explains exact set filenames wi
       error.stdout === '',
   );
   assert.deepEqual(await fingerprints(set.directory), before);
+});
+
+test('offline backup verification accepts aggregate enemy statistics and rejects malformed counters', async (t) => {
+  const set = await savedSet(t);
+  const value = JSON.parse(await fs.readFile(set.file('game'), 'utf8'));
+  value.format = ACHIEVEMENT_BACKUP_FORMAT;
+  value.enemyStats = {
+    format: ENEMY_STATS_BACKUP_FORMAT,
+    statistics: {
+      ...emptyEnemyStats(),
+      lineages: { player: { 'snake/lookout': 9 } },
+    },
+  };
+  await replaceComponent(set, 'game', Buffer.from(JSON.stringify(value)));
+  assert.equal((await checkBackupSet({ reportPath: set.reportPath })).status, 'verified');
+  value.enemyStats.statistics.lineages.player['snake/lookout'] = -1;
+  await replaceComponent(set, 'game', Buffer.from(JSON.stringify(value)));
+  await assert.rejects(checkBackupSet({ reportPath: set.reportPath }), /Invalid enemy count/);
 });
