@@ -1665,6 +1665,34 @@ export const WORLD_CATALOGUE = Object.freeze([
     };
   }),
 ]);
+/** Explore always uses the complete world catalogue, never the current search,
+ * activity or difficulty results. Built-in hunt arenas are deliberately smaller
+ * than their world's authored scenery course. Imported projects choose a stable
+ * widest layout, then the richest collision layout, without mutating either. */
+export function canonicalFreeFlightEntry(catalogue, worldId) {
+  const entries = catalogue.filter((entry) => entry.world === worldId && !entry.archived);
+  const canonical = WORLD_CATALOGUE.find(
+    (entry) => entry.world === worldId && entry.activity !== 'hunt' && !entry.course.pursuit,
+  );
+  const builtin =
+    canonical &&
+    entries.find(
+      (entry) => entry.id === canonical.id && entry.packIdentity === canonical.packIdentity,
+    );
+  if (builtin) return builtin;
+  const area = ({ course: { bounds } }) =>
+    (bounds.max.x - bounds.min.x) * (bounds.max.z - bounds.min.z);
+  return (
+    entries.sort((a, b) => {
+      const difference = area(b) - area(a) || b.course.obstacles.length - a.course.obstacles.length;
+      if (difference) return difference;
+      const left = `${a.packIdentity}/${a.id}`,
+        right = `${b.packIdentity}/${b.id}`;
+      return left < right ? -1 : left > right ? 1 : 0;
+    })[0] ?? null
+  );
+}
+
 export const CURATED_PLAYLISTS = Object.freeze([
   ...SNAKE_HUNT_PLAYLISTS,
   NATIVE_PURSUIT_PLAYLIST,
