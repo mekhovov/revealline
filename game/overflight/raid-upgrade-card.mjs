@@ -20,6 +20,7 @@ const valueKey = {
   'heavy-exposure': 'heavyExposureBonus',
   'guard-interrupt': 'interruptRadius',
   'recovery-shield': 'shieldCapacity',
+  plating: 'armorReduction',
 };
 export function overflightHuntPreviewModel(offer) {
   if (
@@ -48,6 +49,8 @@ export function overflightHuntPreviewCaption(system, parameters, locale = 'en') 
       : uk
         ? 'Без зриву атаки'
         : 'No interruption';
+  if (system === 'plating')
+    return `${Math.round(value * 100)}% · ${uk ? 'менше шкоди' : 'less hull damage'}`;
   if (system === 'recovery-shield')
     return `${value} · ${uk ? 'захищених ударів' : 'hits absorbed'}`;
   const labels = {
@@ -168,6 +171,21 @@ export function paintOverflightHuntPreview(
         line(111, 38, 3, 7, palette.open);
         line(119, 38, 3, 7, palette.open);
       }
+    } else if (system === 'plating') {
+      native('drone', 80, 66, 48);
+      const damage = 20 * (1 - params.armorReduction);
+      if (params.armorReduction) {
+        line(64, 46, 3 + params.armorReduction * 10, 39, palette.gold);
+        line(94, 46, 3 + params.armorReduction * 10, 39, palette.gold);
+      }
+      line(22 + cycle * 50, 63, 5, 5, palette.danger);
+      if (cycle > 0.5 || still) {
+        context.fillStyle = palette.danger;
+        context.textAlign = 'center';
+        context.font = 'bold 12px system-ui';
+        context.fillText(`−${damage}`, 80, 95);
+      }
+      bar(cycle > 0.5 || still ? 1 - damage / 100 : 1);
     } else {
       native('drone', 80, 70, 48);
       const hit = cycle > 0.5;

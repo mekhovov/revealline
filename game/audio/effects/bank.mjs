@@ -428,4 +428,54 @@ export const EFFECT_BANK = {
     sha256: 'faf2c32947866105285d925723b9fbe02f4fd6391e5adb9a6a82586b9f61f5ce',
   },
   // END CC0 destruction bank
+  // BEGIN CC0 human reaction bank
+  'human-reaction-1': {
+    file: 'human-reaction-1.wav',
+    loop: false,
+    bytes: 67244,
+    sha256: '4fb0c8881f4ddee958b94e03b70339b291e90c6139adffe9326ffd6d1bf6209a',
+  },
+  'human-reaction-2': {
+    file: 'human-reaction-2.wav',
+    loop: false,
+    bytes: 48782,
+    sha256: '212de184cd976cc1aef23ad0c2a13af7353c1dbc3564264718e7dfb8f589dd1e',
+  },
+  'human-reaction-3': {
+    file: 'human-reaction-3.wav',
+    loop: false,
+    bytes: 30016,
+    sha256: 'ff99273589efd9db0fe0931d6bdfc2908b563e4fed9e2436f2df053b07688abe',
+  },
+  'human-reaction-4': {
+    file: 'human-reaction-4.wav',
+    loop: false,
+    bytes: 64882,
+    sha256: '0dfbe18eddc5a832af74a9413084329a7d2a33691fec12b2d489d5a11bb0201c',
+  },
+  'human-reaction-5': {
+    file: 'human-reaction-5.wav',
+    loop: false,
+    bytes: 37216,
+    sha256: '448601efaac9ed7cd7121a9a210ea75d434c91b1776b681e04493c096b3fdacf',
+  },
+  'human-reaction-6': {
+    file: 'human-reaction-6.wav',
+    loop: false,
+    bytes: 59670,
+    sha256: 'fce6fcfb558076547f18569542a364ccc677185568fed96f90d1e643906896c8',
+  },
+  'human-reaction-7': {
+    file: 'human-reaction-7.wav',
+    loop: false,
+    bytes: 63938,
+    sha256: 'c600f66cf99796d9981621a5fccc97430fa7b7c9c493f27dbc56b79986b49edd',
+  },
+  'human-reaction-8': {
+    file: 'human-reaction-8.wav',
+    loop: false,
+    bytes: 58082,
+    sha256: 'df6a067eec36f2a2ab8599e0541ea0ab04befaf7d268e8815d0f859fe8b0d542',
+  },
+  // END CC0 human reaction bank
 };

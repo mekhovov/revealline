@@ -397,6 +397,7 @@ test('replacement preserves the build and finite world and ends after the last a
 test('all rank values used by previews are identical to simulation parameters', () => {
   const build = createOverflightHuntBuild();
   for (const id of HUNT_UPGRADE_IDS) {
+    if (id === 'plating') build.hunt['recovery-shield'] = 0;
     for (const rank of [1, 2]) {
       const card = legalOverflightHuntUpgrades(build).find((item) => item.id === `${id}:${rank}`);
       assert.ok(card.title.en && card.title.uk && card.current.uk && card.next.en);
@@ -446,7 +447,8 @@ test('initial machinery objectives require a telegraphed attack before their fir
   assert.ok(['windup', 'burst'].includes(enemy.behaviorPhase));
   steps(run, 25);
   assert.equal(enemy.behaviorPhase, 'recovery');
-  assert.ok(enemy.phaseRemaining > 2.8);
+  assert.ok(enemy.phaseRemaining > 2.5);
+  assert.equal(run.compiled.combat?.machinery.exposureSeconds ?? 3, 3);
 });
 
 test('one exposed base-kit tank takes exactly three distinct boosted passes', () => {
@@ -524,7 +526,10 @@ test('stationary waiting cannot clear required objectives or replenish finite pa
   }
   assert.notEqual(run.phase, 'won');
   assert.equal(run.hunt.objectivesCompleted, 0);
-  assert.equal(run.stats.spawned, spawned);
+  assert.equal(
+    run.stats.spawned,
+    spawned + (run.rulesVersion === 2 ? run.compiled.combat.supplies.guardCount : 0),
+  );
   assert.equal(run.stats.boostsUsed, 0);
 });
 

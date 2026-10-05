@@ -1,4 +1,8 @@
-import { DESTRUCTION_CUES, destructionCategory } from '../ui/destruction-audio.mjs';
+import {
+  DESTRUCTION_CUES,
+  HUMAN_REACTION_CUES,
+  destructionCategory,
+} from '../ui/destruction-audio.mjs';
 import { screenPan } from '../ui/feedback-cues.mjs';
 
 /** Presentation adapter only. The shared mixer owns samples, priority, movement
@@ -85,6 +89,8 @@ export function createClassicAudio(sound, { getDestruction = () => ({}), present
             family,
             board,
             brutal: getDestruction().brutal,
+            vocals: getDestruction().vocals,
+            humanoid: true,
             pan: screenPan(caught?.x ?? run.level.width / 2, run.level.width, placement),
           });
         }
@@ -121,7 +127,7 @@ export function createClassicAudio(sound, { getDestruction = () => ({}), present
     prepare() {
       // Warm only the catch binding after explicit Start. Missing/late recordings
       // use the registered core recipe now, never replaying an earlier catch.
-      return sound.publishedAudio?.prepare(['pickup', ...DESTRUCTION_CUES]);
+      return sound.publishedAudio?.prepare(['pickup', ...DESTRUCTION_CUES, ...HUMAN_REACTION_CUES]);
     },
     reset() {
       states = new WeakMap();

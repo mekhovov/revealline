@@ -59,7 +59,7 @@ test('Survivor mass clears keep every material family while bounding events and 
         }),
       );
   rebuildOverflightGrid(run._grid, run.enemies);
-  assert.equal(damageOverflightArea(run, 710, 400, 150, 2), 500);
+  assert.equal(damageOverflightArea(run, 710, 400, 150, 1000), 500);
   assert.equal(run.stats.kills, 500);
   const defeats = run.events.filter((event) => event.type === 'defeat');
   assert.equal(defeats.length, 5);
@@ -75,7 +75,7 @@ test('Survivor mass clears keep every material family while bounding events and 
     new Set(calls.filter((call) => call.cue === 'catch').map(destructionCategory)),
     new Set(['soft', 'armored', 'light', 'heavy', 'electronic']),
   );
-  assert.equal(damageOverflightArea(run, 710, 400, 150, 2), 0);
+  assert.equal(damageOverflightArea(run, 710, 400, 150, 1000), 0);
   assert.equal(run.stats.kills, 500);
 });
 

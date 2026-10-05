@@ -24,14 +24,11 @@ import {
   overflightBuildItems,
   overflightModuleParameters,
 } from '../overflight/upgrades.mjs';
-import {
-  DEFAULT_OVERFLIGHT_PROJECT,
-  compileOverflightProject,
-  createOverflightProject,
-} from '../overflight/project.mjs';
+import { compileOverflightProject, createOverflightProject } from '../overflight/project.mjs';
 import { pilot } from '../overflight/review-pilot.mjs';
 
-const compiled = compileOverflightProject(DEFAULT_OVERFLIGHT_PROJECT);
+// These exact V1 accounting fixtures stay pinned; V2 contracts live in variety-core.
+const compiled = compileOverflightProject(createOverflightProject({ legacy: true }));
 const quiet = (options = {}) => {
   const source = structuredClone(compiled);
   source.encounters = [];
@@ -746,7 +743,7 @@ test('overlapping slow fields share one damage cadence and never multiply the sl
 // Public movement, earned XP and legal drafts reproduce the reported exploit;
 // no fixture, HP edits, free cards, spawn changes or paused-level suppression.
 function earnedPulseRoute(seed, parkAtRank) {
-  const run = playing(compileOverflightProject(createOverflightProject({ seed })));
+  const run = playing(compileOverflightProject(createOverflightProject({ seed, legacy: true })));
   let input = {},
     parked = null,
     firstHit = null;

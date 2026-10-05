@@ -9,6 +9,7 @@ const systems = new Set([
   'side-burst',
   'scanner',
   'shield',
+  'plating',
   'reinforce',
   'repair',
   'recovery',
@@ -38,7 +39,10 @@ export function overflightUpgradePreviewModel(offer, { build, player } = {}) {
     (!['wide', 'double'].includes(offer.branch) || rank < 2 || rank > 4)
   )
     throw new Error('An upgrade preview needs a valid primary branch and rank.');
-  if (!['primary', 'reinforce', 'repair', 'recovery'].includes(offer.system) && rank > 3)
+  if (
+    !['primary', 'reinforce', 'repair', 'recovery'].includes(offer.system) &&
+    rank > (offer.system === 'plating' ? 2 : 3)
+  )
     throw new Error('An upgrade preview needs a valid module rank.');
   let before, after;
   if (offer.system === 'primary') {
@@ -91,6 +95,11 @@ export function overflightUpgradePreviewModel(offer, { build, player } = {}) {
 
 function caption(system, state, locale) {
   const word = (en, uk) => choose(locale, en, uk);
+  if (system === 'plating')
+    return [
+      `${Math.round((state.damageReduction ?? 0) * 100)}% ${word('less damage', 'менше шкоди')}`,
+      word('Hull still takes damage', 'Корпус отримує шкоду'),
+    ];
   if (!state.rank && !['reinforce', 'repair', 'recovery'].includes(system))
     return [word('Empty slot', 'Вільне місце'), word('No effect yet', 'Ще без ефекту')];
   if (system === 'primary')
@@ -312,6 +321,13 @@ function scene(model, state, id, reducedEffects) {
           circle(43, 67, 16, '#f4d38e', 'stroke-dasharray="2 3"') +
           arrow(96, 67, 124, 67, '#eed898');
     }
+  } else if (system === 'plating') {
+    body += drone(80, 64) + soldier(30, 64);
+    const damage = 20 * (1 - (state.damageReduction ?? 0));
+    body += `<g ${animate('incoming', 1.6, '0%{transform:translateX(0px);opacity:1}45%{transform:translateX(25px);opacity:1}55%,100%{transform:translateX(25px);opacity:0}')}><rect x="40" y="62" width="7" height="4" fill="#f9a275"/></g>`;
+    if (state.rank)
+      body += `<path d="M68 51v26M92 51v26" stroke="#f4c765" stroke-width="${2 + state.rank}"/>`;
+    body += `<rect x="43" y="93" width="70" height="6" fill="#31483f"/><rect x="43" y="93" width="${number(70 * (1 - damage / 100))}" height="6" fill="#9ad5ac"/><text x="78" y="88" text-anchor="middle" font-size="12" fill="#f9a275">−${damage}</text>`;
   } else if (system === 'recovery') {
     body +=
       circle(72, 66, state.collectionRadius * 0.145, '#8fdcbd', 'stroke-dasharray="2 3"') +

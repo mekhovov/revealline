@@ -1,3 +1,5 @@
+import { overflightCombatEditor } from './overflight-combat-editor.mjs';
+import { upgradeOverflightProjectCopy } from '../overflight/project-upgrade.mjs';
 import {
   createOverflightHuntProject,
   validateOverflightHuntProject,
@@ -565,11 +567,13 @@ function render() {
     ['Heavy exposure', 'Вразливість техніки'],
     ['Guard interrupt', 'Зрив атаки охорони'],
     ['Recovery shield', 'Захисний щит'],
+    ['Reactive plating', 'Реактивна броня'],
   ];
   OVERFLIGHT_HUNT_UPGRADES.forEach((id, index) => {
     const input = element('input', '', { type: 'checkbox' });
     input.checked = draft.upgrades.modules.includes(id);
     field(upgradeFields, words(...names[index]), input);
+    input.disabled = id === 'plating' && !draft.combat;
     input.addEventListener('change', () => {
       draft.upgrades.modules = input.checked
         ? [...draft.upgrades.modules, id]
@@ -587,7 +591,20 @@ function render() {
     numeric(propFields, `${prop.id} · X`, prop, 'x', 40, draft.arena.width - 40, 1, map);
     numeric(propFields, `${prop.id} · Y`, prop, 'y', 40, draft.arena.height - 40, 1, map);
   });
-  editor.append(general, heading, workspace, upgrades, props);
+  editor.append(
+    general,
+    overflightCombatEditor({
+      document,
+      project: draft,
+      locale,
+      onChange: touch,
+      fieldsClass: 'raid-fields',
+    }),
+    heading,
+    workspace,
+    upgrades,
+    props,
+  );
 }
 async function refreshInstalled() {
   const rows = await library.list();
@@ -624,6 +641,14 @@ selectField(
   },
 );
 toolbar.append(
+  button(words('Make updated copy', 'Створити оновлену копію'), () =>
+    replaceProject(
+      upgradeOverflightProjectCopy(draft, {
+        hunt: true,
+        difficulty: draft.difficulty ?? 'standard',
+      }),
+    ),
+  ),
   button(words('New from preset', 'Новий зі зразка'), () =>
     replaceProject(createOverflightHuntProject({ encounterSet: preset })),
   ),
