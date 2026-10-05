@@ -907,6 +907,10 @@
     .field-kit.game-shell .game-overlay[data-kind='won'] .overlay-actions #next-button {
       grid-column: 1 / -1;
     }
+    .field-kit.game-shell .game-overlay[data-kind='won'] .overlay-actions .result-auto-next {
+      grid-column: 1 / -1;
+      margin: 0;
+    }
     .field-kit.game-shell .game-overlay[data-kind='won'] .reading-toolbar {
       grid-column: 2;
       grid-row: 2;

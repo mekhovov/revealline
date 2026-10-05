@@ -85,7 +85,7 @@ async function win(t, { reduced = false, readPads, beforeFrame } = {}) {
 }
 
 for (const reduced of [false, true])
-  test(`${reduced ? 'reduced' : 'full'} effects: a legal win keeps its full picture after the celebration finishes`, async (t) => {
+  test(`${reduced ? 'reduced' : 'full'} effects: a legal win holds its full picture, then opens results automatically`, async (t) => {
     const { page, surface } = await win(t, { reduced });
     assert.equal(
       page.doc.body.dataset.winPicture,
@@ -106,22 +106,32 @@ for (const reduced of [false, true])
       assert.equal(surface.frame.painter.celebrationStatus.active, true);
       assert.equal(page.doc.activeElement.id, 'skip-celebration');
     }
-    for (let i = 0; i < Math.ceil(CELEBRATION_SECONDS * 10) + 50; i++) page.frame(100);
+    for (
+      let i = 0;
+      i < Math.ceil(CELEBRATION_SECONDS * 10) + 30 && page.$('game-overlay').hidden;
+      i++
+    )
+      page.frame(100);
     assert.equal(surface.frame.painter.celebrationStatus.finished, true);
-    assert.equal(page.$('game-overlay').hidden, true, 'No timer opens the result menu.');
-    assert.equal(page.$('show-result').hidden, false);
-    assert.equal(page.doc.activeElement.id, 'show-result');
-    assert.equal(page.doc.body.dataset.flightState, 'picture');
+    assert.equal(page.$('game-overlay').hidden, false, 'The settled picture advances to results.');
+    assert.equal(page.$('game-overlay').dataset.kind, 'won');
+    assert.equal(page.$('show-result').hidden, true);
+    assert.equal(page.$('result-auto-next').hidden, false);
+    assert.match(page.$('result-auto-next').textContent, /starts automatically/);
+    assert.equal(page.doc.activeElement.id, 'next-button');
+    assert.equal(page.doc.body.dataset.flightState, 'result');
     assert.equal(page.rendered.fullReveal, true);
     assert.equal(page.rendered.run, run);
     assert.deepEqual(authoritativeCheckpoint(run), checkpoint);
     assert.equal(page.storage.getItem('revealline.library.dev.v1'), earned);
-    page.$('show-result').click();
-    assert.equal(page.$('game-overlay').hidden, false, 'Only an explicit action opens results.');
-    assert.equal(page.$('game-overlay').dataset.kind, 'won');
     page.$('view-picture').click();
     page.frame(100);
     assert.equal(page.$('game-overlay').hidden, true);
+    assert.equal(
+      page.$('result-auto-next').hidden,
+      true,
+      'Choosing another action stops auto-next.',
+    );
     assert.equal(
       surface.frame.painter.celebrationStatus.finished,
       true,
@@ -132,7 +142,7 @@ for (const reduced of [false, true])
     assert.deepEqual(page.errors, []);
   });
 
-test('skipping the win animation settles the picture without opening results', async (t) => {
+test('skipping the win animation still holds the settled picture before results', async (t) => {
   const { page, surface } = await win(t);
   const checkpoint = authoritativeCheckpoint(page.rendered.run);
   page.$('skip-celebration').click();
