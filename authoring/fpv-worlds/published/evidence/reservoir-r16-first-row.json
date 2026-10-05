@@ -1,0 +1,208 @@
+{
+  "format": "FPVReservoirFirstLibraryRow.v1",
+  "verifiedAt": "2026-10-04T21:43:59.456Z",
+  "baseMain": "21826c460e80fa4e7fa47ec8e6ba9f98f75beea4",
+  "contentMerge": "53620a6615210047385c770ef1c24f4eb0bdc461",
+  "compatibilityMerge": "21826c460e80fa4e7fa47ec8e6ba9f98f75beea4",
+  "index": {
+    "path": "authoring/fpv-worlds/published/surface-coating-v1/index.json",
+    "bytes": 498,
+    "sha256": "33c821d49c059a5deebc2578a620128b1e6fd852797033d750e4cba50c19431b"
+  },
+  "row": {
+    "id": "mountain-reservoir",
+    "title": ["Mountain Reservoir", "Гірське водосховище"],
+    "revision": "r16",
+    "commit": "ea57d2e321896ab873c2ca6ca06791a88362a674",
+    "path": "authoring/fpv-worlds/mountain-reservoir/distribution/r16/mountain-reservoir.r16.rlpack",
+    "sha256": "50ffbb0e5da7dec94862a8f2ca85cfeb60542d3fe9f86bd3c4e288dfa0a2e554",
+    "bytes": 1379988,
+    "courses": 8,
+    "url": "https://raw.githubusercontent.com/mekhovov/revealline/ea57d2e321896ab873c2ca6ca06791a88362a674/authoring/fpv-worlds/mountain-reservoir/distribution/r16/mountain-reservoir.r16.rlpack"
+  },
+  "checks": [
+    {
+      "name": "Actual exact-key parser accepts exactly one bounded row",
+      "passed": true
+    },
+    {
+      "name": "Original catalogue bytes unchanged and valid empty",
+      "passed": true
+    },
+    {
+      "name": "Row matches independently retrieved immutable HTTP identity",
+      "passed": true
+    },
+    {
+      "name": "Exact published pack size and full SHA-256 retained",
+      "passed": true
+    },
+    {
+      "name": "Actual importer retains project revision and eight distinct courses",
+      "passed": true
+    },
+    {
+      "name": "EN/UK row titles match pinned release manifest",
+      "passed": true
+    },
+    {
+      "name": "Pack export remains byte exact",
+      "passed": true
+    },
+    {
+      "name": "Required coating capability remains explicit",
+      "passed": true
+    },
+    {
+      "name": "Separate exact proof archive retains sixteen bound recordings",
+      "passed": true
+    },
+    {
+      "name": "All95 current-main runtime inputs identical to final admitted0b54",
+      "passed": true
+    },
+    {
+      "name": "Catalogue is outside the admitted source input closure",
+      "passed": true
+    }
+  ],
+  "admittedRuntime": {
+    "revision": "0b54fd0fdf8fe06dc900024a8b59713340b09bb3",
+    "inputs": 95,
+    "sourceBytes": 16741638,
+    "reserveBytes": 35578,
+    "indexSourceGrowth": 0
+  },
+  "remotePreparation": {
+    "format": "FPVReservoirFirstRowRemotePreparation.v1",
+    "inspectionRuntime": "cc3e173c3b9216a9431a0ff4e4fda8ef5aa62929",
+    "cataloguePublication": false,
+    "row": {
+      "id": "mountain-reservoir",
+      "title": ["Mountain Reservoir", "Гірське водосховище"],
+      "revision": "r16",
+      "commit": "ea57d2e321896ab873c2ca6ca06791a88362a674",
+      "path": "authoring/fpv-worlds/mountain-reservoir/distribution/r16/mountain-reservoir.r16.rlpack",
+      "sha256": "50ffbb0e5da7dec94862a8f2ca85cfeb60542d3fe9f86bd3c4e288dfa0a2e554",
+      "bytes": 1379988,
+      "courses": 8,
+      "url": "https://raw.githubusercontent.com/mekhovov/revealline/ea57d2e321896ab873c2ca6ca06791a88362a674/authoring/fpv-worlds/mountain-reservoir/distribution/r16/mountain-reservoir.r16.rlpack"
+    },
+    "requests": [
+      {
+        "url": "https://raw.githubusercontent.com/mekhovov/revealline/ea57d2e321896ab873c2ca6ca06791a88362a674/authoring/fpv-worlds/mountain-reservoir/distribution/r16/mountain-reservoir.r16.rlpack",
+        "started": "2026-10-04T21:05:50.145Z",
+        "completed": "2026-10-04T21:05:50.957Z",
+        "status": 200,
+        "finalURL": "https://raw.githubusercontent.com/mekhovov/revealline/ea57d2e321896ab873c2ca6ca06791a88362a674/authoring/fpv-worlds/mountain-reservoir/distribution/r16/mountain-reservoir.r16.rlpack",
+        "contentType": "application/octet-stream",
+        "etag": "W/\"acec44fb6d26f6dc676658481ff133acd673734fbb68b0b7dbf23e601e5aebae\"",
+        "bytes": 1379988,
+        "sha256": "50ffbb0e5da7dec94862a8f2ca85cfeb60542d3fe9f86bd3c4e288dfa0a2e554"
+      },
+      {
+        "url": "https://raw.githubusercontent.com/mekhovov/revealline/main/authoring/fpv-worlds/published/index.json",
+        "started": "2026-10-04T21:05:51.043Z",
+        "completed": "2026-10-04T21:05:51.294Z",
+        "status": 200,
+        "finalURL": "https://raw.githubusercontent.com/mekhovov/revealline/main/authoring/fpv-worlds/published/index.json",
+        "contentType": "text/plain; charset=utf-8",
+        "etag": "W/\"611a2dd54862e295ce9ec1b0aafc756ed4cb7f10a90c2d50c459b94240229395\"",
+        "bytes": 49,
+        "sha256": "427b1d6684f0367f7d785c7ea0f429c04d7cb3b5639424dd0cdf3dcd56f09617"
+      },
+      {
+        "url": "https://raw.githubusercontent.com/mekhovov/revealline/ea57d2e321896ab873c2ca6ca06791a88362a674/authoring/fpv-worlds/mountain-reservoir/distribution/r16/mountain-reservoir.r16.proofs.json",
+        "started": "2026-10-04T21:05:51.294Z",
+        "completed": "2026-10-04T21:05:51.586Z",
+        "status": 200,
+        "finalURL": "https://raw.githubusercontent.com/mekhovov/revealline/ea57d2e321896ab873c2ca6ca06791a88362a674/authoring/fpv-worlds/mountain-reservoir/distribution/r16/mountain-reservoir.r16.proofs.json",
+        "contentType": "text/plain; charset=utf-8",
+        "etag": "W/\"adfa2b0f06b546459db5c982a9f695d1153929b3045852cc8be54c8043c345b5\"",
+        "bytes": 908574,
+        "sha256": "073ee3e359764d35039f607d02d0815ac0768b892d046b1426c5c4a55f4cacfb"
+      }
+    ],
+    "checks": [
+      {
+        "name": "Actual immutable pack bytes and SHA match row",
+        "passed": true
+      },
+      {
+        "name": "Imported identity/count match exact row",
+        "passed": true
+      },
+      {
+        "name": "Exactly eight distinct course IDs",
+        "passed": true
+      },
+      {
+        "name": "Pack roundtrip remains byte exact",
+        "passed": true
+      },
+      {
+        "name": "Coating remains a required capability",
+        "passed": true
+      },
+      {
+        "name": "Actual original v1 endpoint remains valid and empty",
+        "passed": true
+      },
+      {
+        "name": "Separately linked published proof archive has exact identity",
+        "passed": true
+      }
+    ],
+    "courses": [
+      {
+        "id": "mountain-reservoir-01",
+        "revision": "r16"
+      },
+      {
+        "id": "mountain-reservoir-02",
+        "revision": "r16"
+      },
+      {
+        "id": "mountain-reservoir-03",
+        "revision": "r16"
+      },
+      {
+        "id": "mountain-reservoir-04",
+        "revision": "r16"
+      },
+      {
+        "id": "mountain-reservoir-05",
+        "revision": "r16"
+      },
+      {
+        "id": "mountain-reservoir-06",
+        "revision": "r16"
+      },
+      {
+        "id": "mountain-reservoir-07",
+        "revision": "r16"
+      },
+      {
+        "id": "mountain-reservoir-08",
+        "revision": "r16"
+      }
+    ],
+    "assets": [
+      {
+        "name": "models/mountain-reservoir.glb",
+        "bytes": 1233136
+      }
+    ],
+    "limitations": [
+      "Actual immutable pack and separate proof HTTP bytes only.",
+      "Compatibility PR1093 and production capability row are not yet merged; no Browse/download UI or offline claim.",
+      "Node importer inspection is not a native player journey."
+    ]
+  },
+  "limitations": [
+    "This is a data-only index publication candidate; actual public catalogue Browse/download awaits its protected merge.",
+    "The exact world pack and recording archive were retrieved independently by HTTP; Node parser/import roundtrip is not native download acceptance.",
+    "Proofs remain a separate ordinary Import recordings / examples action; no automatic proof installation.",
+    "The catalogue adds no bundled challenges or precached assets; no offline update or physical-device performance claim."
+  ]
+}
