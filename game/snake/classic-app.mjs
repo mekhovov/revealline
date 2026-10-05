@@ -71,6 +71,12 @@ import { attachContextualReactions } from '../ui/contextual-reactions.mjs';
 import { createEncounterDisplayPreferences } from '../encounter-display-preferences.mjs';
 import { createDisplayPreferences } from '../display-preferences.mjs';
 import { createTouchPreferences } from '../touch-preferences.mjs';
+import { nextInputModality, showScreenControls } from '../input-presentation.mjs';
+import { attachTouchSteering } from '../ui/touch-steering.mjs';
+import {
+  mountTouchControlsView,
+  mountTouchPresentationSettings,
+} from '../ui/touch-controls-view.mjs';
 import { createHuntDestruction } from '../hunt/destruction.mjs';
 import { createBoardFootprints } from '../couch/board-footprint.mjs';
 import { createAudioMaster } from '../ui/audio-master.mjs';
@@ -350,13 +356,44 @@ ratings = createClassicSnakeRatings({
   canWrite: () => sessionWriter.writable,
   onWarning: () => {},
 });
+let touchControllers = [],
+  touchViews = [],
+  touchModality =
+    globalThis.navigator.maxTouchPoints > 0 ||
+    globalThis.matchMedia?.('(any-pointer: coarse)').matches
+      ? 'touch'
+      : 'keyboard';
 const touch = createTouchPreferences({ onChange: () => applyTouch() });
+function clearTouch() {
+  for (const controller of touchControllers) controller.clear();
+}
+function disposeTouchControls() {
+  for (const controller of touchControllers) controller.destroy();
+  for (const view of touchViews) view.dispose();
+  touchControllers = [];
+  touchViews = [];
+}
+function applyTouchVisibility() {
+  const visible = showScreenControls({
+    modality: touchModality,
+    scope: 'flight',
+    running: !ready && !paused && !result(),
+  });
+  const pads = $('pads');
+  if (pads.hidden === !visible) return;
+  pads.hidden = !visible;
+  if (!visible) clearTouch();
+  footprint?.refresh();
+}
 function applyTouch() {
   const prefs = touch.snapshot();
   $('pads').style.setProperty('--snake-pad-size', prefs.size === 'large' ? '64px' : '56px');
-  $('pads').style.setProperty('--snake-pad-opacity', String(Math.max(0.75, prefs.opacity)));
+  clearTouch();
+  $('pads').style.setProperty('--snake-pad-opacity', String(prefs.opacity));
+  for (const view of touchViews) view.apply(prefs);
   $('pads').dataset.side = prefs.side;
   touchPresentationControls?.refresh();
+  applyTouchVisibility();
 }
 const campaignFor = (item) =>
   CLASSIC_SNAKE_CAMPAIGNS.find((campaign) =>
@@ -460,6 +497,7 @@ function remember() {
   }
 }
 function pause({ showMenu = true } = {}) {
+  clearTouch();
   transition.cancel('pause');
   if (result()) {
     if (showMenu && !playShell?.topDialog()) showResults();
@@ -859,6 +897,7 @@ function acceptEnemyArtwork() {
   });
 }
 function buildBoards() {
+  disposeTouchControls();
   boardLayoutObserver?.disconnect();
   footprint?.dispose();
   $('boards').replaceChildren();
@@ -895,27 +934,6 @@ function buildBoards() {
     if (mode === 'versus') card.prepend(el('p', text(index ? 'p2' : 'p1'), 'player-label'));
     $('boards').append(card);
     boards.push({ canvas, fields, message, title, detail, wrap, reception });
-    let pointer = null;
-    canvas.addEventListener('pointerdown', (event) => {
-      if (event.button !== 0 || pointer) return;
-      pointer = { id: event.pointerId, x: event.clientX, y: event.clientY };
-      canvas.setPointerCapture(event.pointerId);
-    });
-    canvas.addEventListener('pointerup', (event) => {
-      if (!pointer || pointer.id !== event.pointerId) return;
-      const dx = event.clientX - pointer.x,
-        dy = event.clientY - pointer.y;
-      pointer = null;
-      if (Math.max(Math.abs(dx), Math.abs(dy)) < 12 || mode === 'team') return;
-      turn(
-        mode === 'versus' ? index : 0,
-        Math.abs(dx) > Math.abs(dy) ? (dx > 0 ? 'right' : 'left') : dy > 0 ? 'down' : 'up',
-      );
-    });
-    for (const name of ['pointercancel', 'lostpointercapture'])
-      canvas.addEventListener(name, () => {
-        pointer = null;
-      });
   }
   buildPads();
   footprint = createBoardFootprints(boards.map((board) => board.canvas));
@@ -948,43 +966,65 @@ function buildBoards() {
   primeEffects();
 }
 function buildPads() {
+  disposeTouchControls();
   $('pads').replaceChildren();
+  $('pads').dataset.steering = steering;
   for (let player = 0; player < (mode === 'solo' ? 1 : 2); player++) {
     const group = el('div'),
-      label = el('p', text(player ? 'p2' : 'p1'), 'pad-label'),
-      pad = el('div', null, steering === 'turns' ? 'pad turn-pad' : 'pad');
-    pad.setAttribute('role', 'group');
-    pad.setAttribute('aria-label', label.textContent);
-    const controls =
-      steering === 'turns'
-        ? [
-            ['turnLeft', '↶'],
-            ['turnRight', '↷'],
-          ]
-        : [
-            ['up', '↑'],
-            ['left', '←'],
-            ['down', '↓'],
-            ['right', '→'],
-          ];
-    for (const [direction, symbol] of controls) {
-      const button = el('button', symbol);
-      button.dataset.direction = direction;
-      button.setAttribute('aria-label', `${label.textContent}: ${text(direction)}`);
-      button.addEventListener('click', () =>
-        steering === 'turns'
-          ? relative(player, direction === 'turnLeft' ? -1 : 1)
-          : turn(player, direction),
-      );
-      pad.append(button);
-    }
+      label = el('p', text(player ? 'p2' : 'p1'), 'pad-label');
+    group.dataset.player = String(player);
     if (mode !== 'solo') group.append(label);
-    group.append(pad);
     $('pads').append(group);
+    if (steering === 'turns') {
+      const pad = el('div', null, 'pad turn-pad');
+      pad.setAttribute('role', 'group');
+      pad.setAttribute('aria-label', label.textContent);
+      for (const [direction, symbol, offset] of [
+        ['turnLeft', '↶', -1],
+        ['turnRight', '↷', 1],
+      ]) {
+        const button = el('button', symbol);
+        button.type = 'button';
+        button.dataset.direction = direction;
+        button.setAttribute('aria-label', `${label.textContent}: ${text(direction)}`);
+        button.addEventListener('click', () => relative(player, offset));
+        pad.append(button);
+      }
+      group.append(pad);
+      continue;
+    }
+    const view = mountTouchControlsView({
+      document: doc,
+      mount: group,
+      idPrefix: `snake-touch-${player}`,
+    });
+    view.root.setAttribute('role', 'group');
+    view.root.setAttribute('aria-label', label.textContent);
+    touchViews.push(view);
+    touchControllers.push(
+      attachTouchSteering({
+        // Team pilots share one board, so each steers through their own thumb area.
+        arena: mode === 'team' ? null : boards[mode === 'versus' ? player : 0]?.canvas,
+        pad: view.pad,
+        surface: view.surface,
+        indicator: view.indicator,
+        window: globalThis,
+        getSettings: () => touch.snapshot(),
+        active: () => !pageDeparted && !result() && !playShell?.topDialog() && (ready || !paused),
+        onDirection: (direction) => turn(player, direction),
+        onCancel: () => pause(),
+      }),
+    );
+    for (const [direction, button] of Object.entries(view.directionButtons))
+      button.addEventListener('click', (event) => {
+        // Pointerdown already steers; keyboard/assistive activation has no pointer.
+        if (event.detail === 0) turn(player, direction);
+      });
   }
   applyTouch();
   footprint?.refresh();
 }
+
 function renderProgress() {
   const chapterEntries = CLASSIC_SNAKE_LEVELS.filter((item) => item.chapterId === entry.chapterId);
   syncLibraryMode();
@@ -1341,6 +1381,7 @@ function renderCopy() {
   snakeSettingsView?.refresh(locale);
   snakeGlobalSettings?.refresh(locale);
   touchPresentationControls?.refresh();
+  for (const view of touchViews) view.apply(touch.snapshot());
   renderModeLinks();
   $('campaign-link').textContent = text('campaigns');
   $('campaign-link').href = nativeArtReviewURL(`./?lang=${locale}`, globalThis.location.href);
@@ -1474,6 +1515,7 @@ function refresh() {
   }
   const outcome = result();
   doc.body.dataset.playing = String(!ready && !paused);
+  applyTouchVisibility();
   playShell?.update({
     phase: outcome ? 'results' : ready ? 'ready' : paused ? 'paused' : 'playing',
     transitionActive: !['idle', 'cancelled'].includes(transition.snapshot().phase),
@@ -2026,6 +2068,22 @@ $('import').addEventListener('change', async () => {
   }
   $('import').value = '';
 });
+doc.addEventListener(
+  'pointerdown',
+  (event) => {
+    if (!$('pads').contains(event.target)) touchModality = nextInputModality(touchModality, event);
+    applyTouchVisibility();
+  },
+  true,
+);
+doc.addEventListener(
+  'keydown',
+  (event) => {
+    if (!$('pads').contains(event.target)) touchModality = nextInputModality(touchModality, event);
+    applyTouchVisibility();
+  },
+  true,
+);
 doc.addEventListener('keydown', (event) => {
   if (event.defaultPrevented || playShell?.topDialog()) return;
   if (event.key === 'Escape' && !event.repeat) {
@@ -2100,6 +2158,10 @@ function pollGamepads() {
     const previous = gamepadState.get(pad.index);
     gamepadState.set(pad.index, buttons);
     if (!previous) continue;
+    if (buttons.some((pressed, i) => pressed && !previous[i])) {
+      touchModality = 'gamepad';
+      applyTouchVisibility();
+    }
     if (playShell?.topDialog()) {
       const directionIndex = buttons.slice(0, 4).findIndex((pressed, i) => pressed && !previous[i]);
       const command = {
@@ -2145,6 +2207,9 @@ doc.addEventListener('visibilitychange', () => {
   if (doc.hidden) pause();
 });
 globalThis.addEventListener('blur', pause);
+globalThis.addEventListener('resize', () => {
+  for (const controller of touchControllers) controller.cancel();
+});
 globalThis.addEventListener('focus', () => {
   void records.read().then(() => ratings.refresh());
 });
@@ -2171,6 +2236,9 @@ globalThis.addEventListener('pagehide', (event) => {
   classicAudio.reset();
   if (!event.persisted) {
     classicAudio.dispose();
+    disposeTouchControls();
+    touchPresentationControls?.dispose();
+    touch.destroy();
     snakeDefeatSoundControls.dispose();
     snakeOfflinePanel?.dispose();
   }
@@ -2504,60 +2572,12 @@ snakeGlobalSettings = mountGlobalSettings({
   },
 });
 const snakeTouchSettings = el('section');
-const touchFields = [];
-for (const [key, en, uk, choices] of [
-  [
-    'side',
-    'Steering hand',
-    'Рука керування',
-    [
-      ['right', 'Right', 'Права'],
-      ['left', 'Left', 'Ліва'],
-    ],
-  ],
-  [
-    'size',
-    'Touch control size',
-    'Розмір сенсорного керування',
-    [
-      ['regular', 'Regular', 'Звичайний'],
-      ['large', 'Large', 'Великий'],
-    ],
-  ],
-  ['opacity', 'Touch control opacity', 'Прозорість сенсорного керування'],
-]) {
-  const row = el('label'),
-    caption = el('span'),
-    input = el(choices ? 'select' : 'input');
-  input.id = `snake-global-touch-${key}`;
-  row.append(caption, input);
-  if (!choices) {
-    input.type = 'range';
-    input.min = '0.2';
-    input.max = '1';
-    input.step = '0.05';
-  }
-  input.addEventListener('change', () =>
-    touch.set({ ...touch.snapshot(), [key]: choices ? input.value : Number(input.value) }),
-  );
-  snakeTouchSettings.append(row);
-  touchFields.push({ key, en, uk, choices, caption, input });
-}
-touchPresentationControls = {
-  refresh() {
-    for (const field of touchFields) {
-      field.caption.textContent = locale === 'uk' ? field.uk : field.en;
-      if (field.choices)
-        options(
-          field.input,
-          field.choices.map(([key, en, uk]) => [key, locale === 'uk' ? uk : en]),
-          touch.snapshot()[field.key],
-        );
-      else field.input.value = String(touch.snapshot()[field.key]);
-    }
-  },
-};
-touchPresentationControls.refresh();
+touchPresentationControls = mountTouchPresentationSettings({
+  document: doc,
+  mount: snakeTouchSettings,
+  preferences: touch,
+  idPrefix: 'snake-global',
+});
 const snakeAudioCues = el('section');
 attachMenuAudioSettings(sound, doc, {
   target: snakeAudioCues,

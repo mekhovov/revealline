@@ -1,3 +1,10 @@
+import { nextInputModality, showScreenControls } from '../input-presentation.mjs';
+import { createTouchPreferences } from '../touch-preferences.mjs';
+import { attachTouchSteering } from '../ui/touch-steering.mjs';
+import {
+  mountTouchControlsView,
+  mountTouchPresentationSettings,
+} from '../ui/touch-controls-view.mjs';
 import { classicSnakeRatingForRecord } from '../snake/classic-ratings.mjs';
 import {
   createEnemyStats,
@@ -372,7 +379,20 @@ async function harness({
         for (const listener of displayListeners) listener(display);
       },
     }),
-    createTouchPreferences: () => preferences({ size: 'normal', opacity: 1, side: 'right' }),
+    nextInputModality,
+    showScreenControls,
+    attachTouchSteering,
+    mountTouchControlsView,
+    mountTouchPresentationSettings,
+    createTouchPreferences: (options) =>
+      createTouchPreferences({
+        ...options,
+        storage: {
+          getItem: (key) => storage.get(key) ?? null,
+          setItem: (key, value) => storage.set(key, value),
+        },
+        eventTarget: window,
+      }),
     createClassicPresentation: () => ({
       snapshot: () => null,
       setArtRevision: (revision) => artworkSelections.push(revision),
@@ -1713,4 +1733,178 @@ test('original unprofiled jammer remains broadcast in the host instead of receiv
   const [label] = receptionLabels(state);
   assert.equal(label.dataset.reception, 'signalJammed');
   assert.match(label.getAttribute('aria-label'), /double antenna/);
+});
+
+for (const mode of ['solo', 'team', 'versus']) {
+  test(`${mode} Snake uses shared touch settings and turns on pointermove before release`, async () => {
+    const state = await harness({ mode });
+    state.start();
+    const playerCount = mode === 'solo' ? 1 : 2;
+    for (let player = 0; player < playerCount; player++) {
+      const surface = state.$(`snake-touch-${player}-surface`);
+      surface.emit('pointerdown', {
+        pointerId: 10 + player,
+        pointerType: 'touch',
+        button: 0,
+        clientX: 80,
+        clientY: 100,
+      });
+      surface.emit('pointermove', {
+        pointerId: 10 + player,
+        pointerType: 'touch',
+        clientX: 80,
+        clientY: 65,
+      });
+      const run = state.created[mode === 'versus' ? player : 0];
+      assert.equal(run.history.at(-1).direction, 'up');
+      assert.equal(surface.hasPointerCapture(10 + player), true);
+      assert.equal(state.$(`snake-touch-${player}-indicator`).hidden, false);
+      surface.emit('pointerup', { pointerId: 10 + player });
+      assert.equal(state.$(`snake-touch-${player}-indicator`).hidden, true);
+    }
+    state.shell.open('settings');
+    for (const [field, value] of [
+      ['mode', 'dpad'],
+      ['side', 'left'],
+      ['size', 'large'],
+      ['opacity', '0.2'],
+    ]) {
+      const input = state.$(`snake-global-touch-${field}`);
+      input.value = value;
+      input.emit('change');
+    }
+    assert.deepEqual(JSON.parse(state.storage.get('revealline.touch.v1')), {
+      mode: 'dpad',
+      side: 'left',
+      size: 'large',
+      opacity: 0.2,
+    });
+    for (let player = 0; player < playerCount; player++) {
+      const root = state.$(`snake-touch-${player}-controls`);
+      assert.equal(root.dataset.touchMode, 'dpad');
+      assert.equal(root.dataset.touchSize, 'large');
+      assert.equal(root.style.getPropertyValue('--touch-opacity'), '0.2');
+      assert.equal(state.$(`snake-touch-${player}-surface`).hidden, true);
+      assert.equal(state.$(`snake-touch-${player}-pad`).hidden, false);
+    }
+  });
+}
+
+test('Snake releases gestures when paused, resized and rebuilt; retired surfaces cannot steer', async () => {
+  const state = await harness();
+  state.start();
+  const surface = state.$('snake-touch-0-surface');
+  const down = (id) =>
+    surface.emit('pointerdown', {
+      pointerId: id,
+      pointerType: 'touch',
+      button: 0,
+      clientX: 80,
+      clientY: 100,
+    });
+  down(4);
+  state.shell.open('settings');
+  assert.equal(surface.hasPointerCapture(4), false);
+  const count = state.created[0].history.length;
+  surface.emit('pointermove', { pointerId: 4, clientX: 80, clientY: 60 });
+  assert.equal(state.created[0].history.length, count);
+  state.start();
+  down(5);
+  state.window.emit('resize');
+  assert.equal(surface.hasPointerCapture(5), false);
+  assert.equal(state.document.body.dataset.playing, 'false');
+  state.retry();
+  assert.notEqual(state.$('snake-touch-0-surface'), surface);
+  down(6);
+  surface.emit('pointermove', { pointerId: 6, clientX: 80, clientY: 60 });
+  assert.equal(surface.hasPointerCapture(6), false);
+  assert.equal(state.created.at(-1).history.length, 0);
+});
+
+test('Snake board gestures obey stick/swipe preferences and Team preserves separate steering seats', async () => {
+  const state = await harness();
+  state.shell.open('settings');
+  const selector = state.$('snake-global-touch-mode');
+  selector.value = 'swipe';
+  selector.emit('change');
+  state.start();
+  const canvas = state.document.querySelector('canvas');
+  canvas.emit('pointerdown', {
+    pointerId: 4,
+    pointerType: 'touch',
+    button: 0,
+    clientX: 80,
+    clientY: 100,
+  });
+  canvas.emit('pointermove', { pointerId: 4, clientX: 80, clientY: 60 });
+  assert.equal(state.created[0].history.at(-1).direction, 'up');
+  canvas.emit('pointerup', { pointerId: 4 });
+  const team = await harness({ mode: 'team' });
+  team.start();
+  const teamCanvas = team.document.querySelector('canvas');
+  teamCanvas.emit('pointerdown', {
+    pointerId: 4,
+    pointerType: 'touch',
+    button: 0,
+    clientX: 80,
+    clientY: 100,
+  });
+  teamCanvas.emit('pointermove', { pointerId: 4, clientX: 80, clientY: 60 });
+  assert.equal(
+    team.created[0].history.length,
+    0,
+    'Shared team board does not guess which pilot touched it.',
+  );
+});
+
+test('Snake D-pad steers on press and slide without duplicating its compatibility click', async () => {
+  const state = await harness();
+  const selector = state.$('snake-global-touch-mode');
+  selector.value = 'dpad';
+  selector.emit('change');
+  state.start();
+  const pad = state.$('snake-touch-0-pad');
+  pad.emit('pointerdown', {
+    pointerId: 8,
+    pointerType: 'touch',
+    button: 0,
+    clientX: 50,
+    clientY: 0,
+  });
+  assert.equal(state.created[0].history.at(-1).direction, 'up');
+  pad.emit('pointermove', { pointerId: 8, clientX: 0, clientY: 22 });
+  assert.equal(state.created[0].history.at(-1).direction, 'left');
+  const count = state.created[0].history.length;
+  pad.emit('pointerup', { pointerId: 8 });
+  pad.querySelector('[data-direction="up"]').emit('click', { detail: 1 });
+  assert.equal(state.created[0].history.length, count);
+  assert.equal(state.$('snake-touch-0-indicator').hidden, true);
+});
+
+test('Snake reveals shared controls for real touch on hybrid devices and hides them for keyboard or pause', async () => {
+  const state = await harness();
+  state.start();
+  assert.equal(
+    state.$('pads').hidden,
+    true,
+    'A fine pointer does not force thumb controls on desktop.',
+  );
+  state.document.body.emit('pointerdown', { pointerId: 30, pointerType: 'touch', button: 0 });
+  assert.equal(
+    state.$('pads').hidden,
+    false,
+    'Actual touch is authoritative even without a coarse primary pointer.',
+  );
+  state.document.emit('keydown', { key: 'Shift', code: 'ShiftLeft' });
+  assert.equal(state.$('pads').hidden, false, 'Modifier keys do not change the steering modality.');
+  state.document.emit('keydown', { key: 'w', code: 'KeyW' });
+  assert.equal(state.$('pads').hidden, true);
+  state.document.body.emit('pointerdown', { pointerId: 31, pointerType: 'touch', button: 0 });
+  assert.equal(state.$('pads').hidden, false);
+  state.shell.open('settings');
+  assert.equal(
+    state.$('pads').hidden,
+    true,
+    'Paused gameplay never leaves live controls behind a menu.',
+  );
 });
