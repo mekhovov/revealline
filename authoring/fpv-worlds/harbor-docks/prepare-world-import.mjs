@@ -40,6 +40,22 @@ if (
   qualification.archives[0].records !== 16
 )
   throw Error('Eight courses/sixteen exact ordinary-flight proof gate');
+const recordedRuntime = [
+  'world-model.mjs',
+  'world-collision.mjs',
+  'world-records.mjs',
+  'vendor/rapier/rapier.mjs',
+];
+if (
+  qualification.groundMotion?.policy !== 'support-v1' ||
+  qualification.runtime?.length !== recordedRuntime.length ||
+  !recordedRuntime.every((name) => {
+    const file = qualification.runtime.find((entry) => entry.file === name);
+    const member = frozen.find((entry) => entry.path === 'optional-practice/civilian-fpv/' + name);
+    return file && member?.bytes === file.bytes && member.sha256 === file.sha256;
+  })
+)
+  throw Error('Admitted movement/recording runtime differs from the retained r4 proof runtime');
 // Authenticate the complete static module closure used by ordinary flight,
 // collision, content parsing and proof import against the newly admitted host.
 const proofRuntime = [],
@@ -48,7 +64,9 @@ const proofRuntime = [],
 async function projectedCatalog() {
   const sourceInputs = [];
   const read = (file) => {
-    const bytes = execFileSync('git', ['show', 'HEAD:' + file]);
+    const bytes = execFileSync('git', ['show', 'HEAD:' + file], {
+      env: { ...process.env, GIT_NO_LAZY_FETCH: '1' },
+    });
     sourceInputs.push({ path: file, bytes: bytes.length, sha256: sha(bytes) });
     return bytes;
   };
@@ -180,7 +198,7 @@ const base=new URL('./player/optional-practice/civilian-fpv/',location.href).hre
 const [{mountWorldApp},{createFlightRenderer},model,storage,records,collision,zip]=await Promise.all(['world-app.mjs','world-assets.mjs','world-model.mjs','world-store.mjs','world-records.mjs','world-collision.mjs','world-zip.mjs'].map(p=>import(base+p)));
 window.fixtureZIP=zip;
 window.fixtureModel=model;window.fixtureCollision=collision;window.fixtureWorldStore=await storage.openWorldStore({indexedDB:window.indexedDB});window.fixtureRecords=await records.openWorldRecords(window.indexedDB);
-window.fixtureRenderers=[];const rendererFactory=options=>{const renderer=createFlightRenderer(options),draw=renderer.draw,set=renderer.setCourse;window.fixtureRenderers.push(renderer);window.fixtureRenderer=renderer;renderer.setCourse=function(c,...args){window.fixtureDrawState=null;window.fixtureRenderedCourse=c.id;return set.call(this,c,...args)};renderer.draw=function(s,...args){const value=draw.call(this,s,...args);window.fixtureDrawState=s;return value};return renderer};
+window.fixtureRenderers=[];const rendererFactory=options=>{const renderer=createFlightRenderer(options),draw=renderer.draw,set=renderer.setCourse;window.fixtureRenderers.push(renderer);window.fixtureRenderer=renderer;renderer.setCourse=function(c,...args){window.fixtureDrawState=null;window.fixtureDrawAccepted=false;window.fixtureRenderedCourse=c.id;return set.call(this,c,...args)};renderer.draw=function(s,...args){const value=draw.call(this,s,...args);window.fixtureDrawAccepted=value===true;if(value===true)window.fixtureDrawState=s;return value};return renderer};
 window.fixtureApp=mountWorldApp({rendererFactory});
 `;
 let html = (await fs.readFile(path.join(source, admitted.entry))).toString();
@@ -222,7 +240,7 @@ const manifest = {
   })),
   packIdentity: qualification.pack.identity,
   scope:
-    'Eight-course world on the identified complete admitted host, no runtime overlay; complete proof module closure matches local qualifier, with the standard locale catalogue projection regenerated exactly from current source/policy. Real File import/native IDB, source reimport, editor mode ownership, collision queries and sixteen complete catalogue Watch replays; controlled RAF with unchanged performance clock and pause guards. Native-clock and actual offline qualification remain separate. No hardware/FPS claim.',
+    'Eight-course world on the identified complete admitted host, no runtime overlay; retained movement/recording hashes and complete local proof module closure match the admitted player, with the standard locale catalogue projection regenerated exactly from current source/policy. Real File/native-IDB storage, scripted legacy controls/source reimport/editor mode ownership, collision queries and sixteen complete Watch replays are packaged-module functional evidence; controlled RAF retains the performance clock and pause guards. This is not native-visible end-to-end evidence. Public direct-entry native-clock and actual offline qualification remain separate. No hardware/FPS claim.',
 };
 await fs.writeFile(path.join(output, 'manifest.json'), JSON.stringify(manifest, null, 2) + '\n', {
   flag: 'wx',
