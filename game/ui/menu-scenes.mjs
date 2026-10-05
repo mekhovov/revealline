@@ -122,6 +122,15 @@ export function attachMenuScene({
     if (disposed) return;
     const context = sceneContext();
     const profile = resolveMenuScene(context);
+    // The fallback hangar is application decoration. A campaign/edition's
+    // authored scene keeps its source identity when interface appearance changes.
+    const appearance = doc.documentElement?.dataset ?? {};
+    const interfaceBackdrop =
+      profile.id === 'fpv' &&
+      !context.editionId &&
+      appearance.themeStyled === 'true' &&
+      (appearance.interfaceTheme !== 'industrial-workshop' || appearance.themeContrast === 'high');
+    scene.dataset.backdrop = interfaceBackdrop ? 'interface' : 'authored';
     const selectedMode = menuSceneMode(context.mode ?? mode);
     const vertical = portrait?.matches ?? false;
     const key = `${profile.id}:${profile.composition ?? 'solo'}:${selectedMode}:${vertical}`;
@@ -155,7 +164,7 @@ export function attachMenuScene({
       doc.body?.dataset.effects === 'reduced' ||
       doc.body?.dataset.reducedEffects === 'true' ||
       doc.documentElement?.dataset.reducedMotion === 'true';
-    scene.dataset.motion = reduced || !enabled ? 'off' : 'on';
+    scene.dataset.motion = reduced || !enabled || interfaceBackdrop ? 'off' : 'on';
     scene.dataset.running = String(!manuallyPaused && context.active !== false && visible());
     syncMotion();
   }
@@ -268,6 +277,9 @@ export function attachMenuScene({
         'aria-hidden',
         'data-effects',
         'data-theme',
+        'data-interface-theme',
+        'data-theme-styled',
+        'data-theme-contrast',
         'data-menu-theme',
         'data-reduced-effects',
         'data-reduced-motion',

@@ -119,7 +119,7 @@ test('an installation pointer is recorded only after a verified worker activates
   assert.equal(callbacks.size, 0);
 });
 
-function launcher(fetcher) {
+function launcher(fetcher, query = '') {
   const elements = Object.fromEntries(
     ['locale', 'title', 'check', 'open', 'prepare', 'previous', 'status'].map((id) => [
       id,
@@ -132,7 +132,7 @@ function launcher(fetcher) {
     document: { documentElement: {}, getElementById: (id) => elements[id] },
     navigator: { language: 'en' },
     localStorage: memory(),
-    location: { href: 'https://example.test' + root + 'app/' },
+    location: { href: 'https://example.test' + root + 'app/' + query },
     fetch: fetcher,
     AbortController,
     TextDecoder,
@@ -157,6 +157,38 @@ function launcher(fetcher) {
   );
   return { elements, events, timers };
 }
+
+test('stable launcher forwards a bounded cosmetic pin without admitting navigation or storage context', async () => {
+  const current = {
+    id: packageId,
+    version: 'v1.2.3',
+    scope: '../releases/v1.2.3/site/',
+    entry: 'optional-practice/civilian-flight/index.html',
+  };
+  const fetcher = async () => new Response(JSON.stringify(current));
+  const valid = launcher(
+    fetcher,
+    '?appearanceFamily=tryzub&appearanceRevision=r1&edition=foreign&script=remote',
+  );
+  await valid.elements.check.onclick();
+  const target = new URL(valid.elements.prepare.href);
+  assert.deepEqual(
+    [...target.searchParams],
+    [
+      ['appearanceFamily', 'tryzub'],
+      ['appearanceRevision', 'r1'],
+    ],
+  );
+  for (const query of [
+    '?appearanceFamily=tryzub',
+    '?appearanceFamily=../private&appearanceRevision=r1',
+    '?appearanceFamily=tryzub&appearanceFamily=dos&appearanceRevision=r1',
+  ]) {
+    const invalid = launcher(fetcher, query);
+    await invalid.elements.check.onclick();
+    assert.equal(new URL(invalid.elements.prepare.href).search, '');
+  }
+});
 
 test('stable launcher reads only a bounded explicit pointer and cancels abandoned checks', async () => {
   const requests = [];

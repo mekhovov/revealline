@@ -1,6 +1,7 @@
 import { hasEditionToolRequest, editionToolPresentation } from '../ui/edition-tool-provider.mjs';
 import { mountPresentationPage } from './page.mjs';
 import { createOperationStatus } from '../ui/operation-status.mjs';
+import { installThemeHost } from './theme-host.mjs';
 
 const entries = new WeakMap();
 const statusStyles = new URL('../ui/operation-status.css', import.meta.url).href;
@@ -89,4 +90,7 @@ export function mountAuxiliaryPresentationPage({
 
 // Auxiliary document chrome only. Editor/source-preview canvases continue to
 // render their explicit authored inputs; embedded game pages own their host.
-if (globalThis.document?.documentElement) mountAuxiliaryPresentationPage();
+if (globalThis.document?.documentElement) {
+  installThemeHost({ studio: true });
+  mountAuxiliaryPresentationPage();
+}

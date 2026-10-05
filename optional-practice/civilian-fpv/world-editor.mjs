@@ -6,6 +6,8 @@ export function mountWorldEditor({
   canvas,
   course,
   mode = 'self-level',
+  getPresentation = () => ({}),
+  rendererFactory = createFlightRenderer,
   onSelect = () => {},
   onPreview = () => {},
   onChange = () => {},
@@ -13,7 +15,7 @@ export function mountWorldEditor({
   window: win = canvas.ownerDocument.defaultView,
 } = {}) {
   if (!canvas) throw new TypeError('A visible editor canvas is required');
-  const renderer = createFlightRenderer({
+  const renderer = rendererFactory({
     canvas,
     window: win,
     reducedMotion: true,
@@ -65,6 +67,7 @@ export function mountWorldEditor({
     sceneRequest++;
     source = value;
     selectedMode = nextMode;
+    renderer.setPresentation?.(getPresentation());
     renderer.setCourse(value, nextMode);
     select(selection);
     invalidate();
@@ -72,7 +75,7 @@ export function mountWorldEditor({
   const ready = (async () => {
     if (!renderer.available) throw new Error('WebGL is unavailable for the spatial editor');
     renderer.setQuality('low');
-    if (source) renderer.setCourse(source, selectedMode);
+    if (source) setCourse(source, selectedMode);
     controls = await renderer.createEditor({
       onSelect: (value) => {
         selection = value;

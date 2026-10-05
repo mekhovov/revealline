@@ -776,6 +776,10 @@ try {
   for (const c of registry)
     $('race-class').append(localizedOption(() => contentText(c, 'label'), c.id));
   const painters = [new BoardPainter(presets), new BoardPainter(presets)];
+  for (const painter of painters) {
+    painter.setArcadeProvider(() => menuStyle.themeHost.effectivePreferences());
+    painter.setInterfaceProvider(() => menuStyle.themeHost.snapshot());
+  }
   const foundationCaptions = new WeakMap();
   for (const painter of painters) presentationPage.bindPainter(painter);
   const sound = (pageSound = new Soundscape({
@@ -3909,6 +3913,23 @@ try {
     'race-journey-reactions-retry',
     'race-text-face',
     'race-text-size',
+    'race-theme-apply',
+    'race-theme-customize',
+    'race-theme-ornaments',
+    ...[
+      'industrial-workshop',
+      'vyshyvanka',
+      'dnipro-porcelain',
+      'tryzub',
+      'windows-classic',
+      'dos',
+      'orchard-workshop',
+      'neon-ruins',
+    ].map((id) => `race-theme-card-${id}`),
+    'race-theme-familyId',
+    'race-theme-arcadeArt',
+    'race-theme-highContrast',
+    'race-theme-opaqueHud',
     'race-menu-palette',
     'race-menu-ornaments',
     'race-audio',

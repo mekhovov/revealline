@@ -1,0 +1,41 @@
+{
+  "errors": [],
+  "step": "new-tab",
+  "filled": "River workshop browser proof",
+  "enteredName": "River workshop browser proof",
+  "studioStatus": "Local revision saved atomically. Player saves are untouched.",
+  "pending": "candidate-f1ad0cb5d60da1b5@r1",
+  "companyStatus": "Community appearance default applied. Compile and review a fresh preview before publication.",
+  "family": {
+    "arcade": {
+      "id": "dnipro-porcelain",
+      "revision": "r1"
+    },
+    "format": "ThemeFamily.v1",
+    "id": "candidate-f1ad0cb5d60da1b5",
+    "interface": {
+      "id": "candidate-f1ad0cb5d60da1b5",
+      "revision": "r1"
+    },
+    "name": "River workshop browser proof",
+    "revision": "r1",
+    "sim": {
+      "id": "dnipro-porcelain",
+      "revision": "r1"
+    }
+  },
+  "default": {
+    "familyId": "candidate-f1ad0cb5d60da1b5",
+    "revision": "r1"
+  },
+  "draft": {
+    "format": "revealline-edition-catalog.v3",
+    "customThemeCount": 1
+  },
+  "openerIsNull": true,
+  "sim": {
+    "family": "candidate-f1ad0cb5d60da1b5",
+    "panel": "#d9e9fb",
+    "label": "Follow game · River workshop browser proof · r1"
+  }
+}

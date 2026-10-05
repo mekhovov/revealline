@@ -236,6 +236,7 @@
             "--test",
             "publishing/focused-tests.test.mjs",
             "publishing/fastline-merge-controller.test.mjs",
+            "publishing/queue-throughput.test.mjs",
             "publishing/fastline-release-inputs.test.mjs",
             "publishing/fastline-release-objects.test.mjs",
             "publishing/fastline-release-publisher.test.mjs",

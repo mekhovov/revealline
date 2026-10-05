@@ -7,10 +7,17 @@ import { createHash } from 'node:crypto';
 import { buildProject, PUBLIC_SECURITY_HEADERS } from '../../scripts/game-cli.mjs';
 import { iosHTMLPolicy, IOS_CSP, stageNative, verifySite } from '../../scripts/native-cli.mjs';
 import { loadNativeSite } from '../../platforms/desktop/resources.mjs';
+import {
+  LAUNCHER_APPEARANCE_FILES,
+  LAUNCHER_NAVIGATION_FILES,
+} from '../../scripts/offline-launcher.mjs';
 
 const sourceRoot = new URL('../', import.meta.url);
 const digest = (bytes) => createHash('sha256').update(bytes).digest('hex');
 const playerPresentationFiles = [
+  'game/presentation/theme-bootstrap.mjs',
+  'game/presentation/theme-entry.mjs',
+  'game/presentation/industrial-workshop.css',
   'game/ui/handheld-play.css',
   'game/ui/field-kit-fonts.css',
   'game/ui/brand-identity.css',
@@ -35,6 +42,7 @@ const playerPresentationFiles = [
   'game/ui/fonts/field-kit/IBMPlexMono-OFL.txt',
   'game/ui/fonts/field-kit/provenance.json',
   'game/ui/fonts/departure-mono/DepartureMono-Regular.woff2',
+  'game/ui/fonts/departure-mono/LICENSE',
   'game/ui/fonts/Tiny5-Regular.ttf',
   'game/ui/fonts/OFL.txt',
   'game/ui/fonts/METADATA.pb',
@@ -61,13 +69,17 @@ test('the actual game has a static dark guard before resources and a single caug
   assert.ok(firstStyle > 0 && firstStyle < firstResource);
   assert.match(
     html.slice(firstStyle, html.indexOf('</style>', firstStyle)),
-    /body\s*>\s*:not\(#boot-screen\):not\(script\)[\s\S]*?display:\s*none\s*!important/,
+    /body\s*>\s*:not\(#boot-screen\):not\(#access-gate\):not\(script\)[\s\S]*?display:\s*none\s*!important/,
   );
   assert.match(html, /<section\b[^>]*id="boot-screen"/);
   assert.match(html, /<noscript\s*>[\s\S]*?JavaScript is disabled/);
   assert.match(html, /<script src="boot.mjs" defer><\/script>/);
   assert.match(html, /<script id="boot-phaser" src="vendor\/phaser-4.2.1.min.js" defer><\/script>/);
-  assert.doesNotMatch(html, /<link\b[^>]*\shref="[^\"]+\.css"/);
+  const earlyStyles = [...html.matchAll(/<link\b[^>]*\shref="([^"]+\.css)"/g)];
+  assert.deepEqual(
+    earlyStyles.map((match) => match[1]),
+    ['presentation/industrial-workshop.css', 'access-gate.css'],
+  );
   assert.match(html, /data-boot-href="ui\/operation-status.css"/);
   assert.match(html, /data-boot-href="ui\/handheld-play.css"/);
   assert.match(html, /data-boot-href="ui\/quick-music-controls.css"/);
@@ -84,7 +96,7 @@ test('native wrapper CSP precedes bootstrap and permits the existing external-sc
   const transformed = iosHTMLPolicy(original);
   const html = transformed.toString();
   assert.ok(html.indexOf('Content-Security-Policy') < html.indexOf('src="boot.mjs"'));
-  assert.match(IOS_CSP, /script-src 'self';/);
+  assert.match(IOS_CSP, /script-src 'self' 'wasm-unsafe-eval';/);
   assert.match(
     PUBLIC_SECURITY_HEADERS['Content-Security-Policy'],
     /style-src 'self' 'unsafe-inline';/,
@@ -127,11 +139,14 @@ test('build rewrites native root paths, preserves extras and includes boot bytes
   await copy('game/index.html');
   for (const name of [
     'game/boot.mjs',
+    'game/access-gate.mjs',
     'game/boot.css',
+    ...[...LAUNCHER_APPEARANCE_FILES, ...LAUNCHER_NAVIGATION_FILES].map((name) => `game/${name}`),
     ...playerPresentationFiles,
     ...ambientRuntimeFiles,
     'game/offline.mjs',
     'game/offline/app.html',
+    'game/offline/navigation.css',
     'game/offline/app-worker.template.js',
     'game/downloads.css',
     'game/installed-app.mjs',
@@ -145,6 +160,11 @@ test('build rewrites native root paths, preserves extras and includes boot bytes
     'game/locales/en/interface.json',
     'game/locales/uk/common.json',
     'game/locales/uk/interface.json',
+    ...['en', 'uk'].flatMap((language) =>
+      ['common', 'interface', 'gameplay', 'controllerEditor', 'errors'].map(
+        (namespace) => `game/locales/${language}/${namespace}.json`,
+      ),
+    ),
     'game/platform.mjs',
     'game/offline/service-worker.template.js',
     'site/index.html',

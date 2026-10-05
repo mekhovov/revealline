@@ -1,5 +1,9 @@
 # RevealLine: detailed delivery history
 
+> **Latest planning review:** [1 October completed work, remaining decisions and proposed priorities](plan-review-2026-10-01.md).
+> Use it for the current queue and user reprioritization; dated checkpoints below
+> retain their original evidence and do not describe the live release queue.
+
 > **Current whole-product status:** [completed and remaining delivery](delivery-status.md).
 > Use that dated rollup for current priorities, release status and acceptance limits.
 > The older checkpoints below retain their historical scope.

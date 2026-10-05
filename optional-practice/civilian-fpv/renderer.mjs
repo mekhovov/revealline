@@ -1,5 +1,19 @@
 import * as THREE from './vendor/three.module.js';
-import { buildWorldVisuals, buildDroneVisual, themeForCourse } from './world-visuals.mjs';
+import { buildWorldVisuals, buildDroneVisual } from './world-visuals.mjs';
+import {
+  normalizeSimPresentation,
+  resolveSimThemeProfile,
+  resolveSimEffects,
+} from './world-themes.mjs';
+import {
+  configureSimTextureSampling,
+  createWorkshopMaterials,
+  bindSimModelRole,
+  instanceSimDetails,
+  applySimMaterialBindings,
+  ownedSimMaterials,
+  simCollectionIdForProfile,
+} from './world-visuals.mjs';
 
 const QUALITIES = Object.freeze({
   low: { ratio: 1, shadows: false, shadowSize: 512 },
@@ -22,6 +36,7 @@ export function createFlightRenderer({
   reducedMotion = false,
   loadGLTF = null,
   loadTransformControls = null,
+  presentation: initialPresentation = {},
 }) {
   let renderer;
   try {
@@ -66,6 +81,7 @@ export function createFlightRenderer({
     tilt = 10,
     quality = 'balanced',
     droneKind = 'racer',
+    cosmeticColor = null,
     currentStep = -1,
     disposed = false,
     lastWidth = 0,
@@ -79,8 +95,13 @@ export function createFlightRenderer({
     importGeneration = 0,
     importedMixer = null,
     importedClips = [],
+    importedMaterialBindings = { applied: 0, diagnostics: [] },
     obstacleMap = null,
     themeProfile = null,
+    effectPalette = resolveSimEffects(null),
+    goalMaterialKit = null,
+    pendingPresentation = normalizeSimPresentation(initialPresentation),
+    activePresentation = pendingPresentation,
     sceneryFallback = null,
     editor = null,
     editorListener = null,
@@ -94,12 +115,16 @@ export function createFlightRenderer({
     geometry = new Set(),
     goalRows = [],
     actorRows = new Map(),
-    pulseRows = new Map();
+    pulseRows = new Map(),
+    pulseTransform = new THREE.Matrix4();
   const texturesOf = (paint) => Object.values(paint ?? {}).filter((value) => value?.isTexture);
   const register = (root) =>
     root.traverse((item) => {
       if (item.geometry) geometry.add(item.geometry);
-      for (const paint of Array.isArray(item.material) ? item.material : [item.material])
+      for (const paint of [
+        ...(Array.isArray(item.material) ? item.material : [item.material]),
+        ...ownedSimMaterials(item),
+      ])
         if (paint) materials.add(paint);
     });
   const material = (color, extras = {}) => {
@@ -110,6 +135,13 @@ export function createFlightRenderer({
   const mesh = (shape, paint, parent = world) => {
     geometry.add(shape);
     const value = new THREE.Mesh(shape, paint);
+    // Opaque procedural surfaces need only geometry in the depth pass. Three's
+    // shared depth-material map uniforms can otherwise re-upload a disposed
+    // previous-course texture when switching mapped/unmapped shadow casters.
+    value.onBeforeShadow = (_renderer, _object, _camera, _shadowCamera, _geometry, depth) => {
+      if (!paint.alphaMap && !paint.alphaTest && !paint.alphaToCoverage && !paint.displacementMap)
+        depth.map = null;
+    };
     parent.add(value);
     return value;
   };
@@ -122,26 +154,30 @@ export function createFlightRenderer({
     const shapes = new Set(),
       paints = new Set(),
       textures = new Set(),
+      instances = new Set(),
       skeletons = new Set();
     const roots = [group, ...(group.userData.auxiliaryRoots ?? [])];
     for (const root of roots)
       root.traverse((item) => {
         if (item.geometry) shapes.add(item.geometry);
+        if (item.isInstancedMesh) instances.add(item);
         if (item.skeleton) skeletons.add(item.skeleton);
         for (const paint of [
           ...(Array.isArray(item.material) ? item.material : [item.material]),
-          ...(item.userData?.ownedMaterials ?? []),
+          ...ownedSimMaterials(item),
         ])
           if (paint) {
             paints.add(paint);
             for (const texture of texturesOf(paint)) textures.add(texture);
           }
+        if (item.userData?.ownedMaterials) item.userData.ownedMaterials = [];
       });
     for (const value of textures) {
       value.source?.data?.close?.();
       value.dispose();
     }
     for (const value of skeletons) value.dispose();
+    for (const value of instances) value.dispose();
     for (const value of shapes) {
       value.dispose();
       geometry.delete(value);
@@ -161,6 +197,7 @@ export function createFlightRenderer({
       importedMixer = null;
     }
     importedClips = [];
+    importedMaterialBindings = { applied: 0, diagnostics: [] };
     releaseGroup(imported);
   }
   function releaseShadow() {
@@ -179,7 +216,9 @@ export function createFlightRenderer({
     surface.height = 128;
     const context = surface.getContext('2d');
     if (!context) return null;
-    context.fillStyle = '#132b39';
+    context.fillStyle = themeProfile
+      ? `#${themeProfile.palette.wall.toString(16).padStart(6, '0')}`
+      : '#132b39';
     context.beginPath();
     context.arc(64, 64, 59, 0, Math.PI * 2);
     context.fill();
@@ -217,6 +256,9 @@ export function createFlightRenderer({
       sunlight.shadow.mapSize.set(selected.shadowSize, selected.shadowSize);
     }
     renderer.shadowMap.needsUpdate = true;
+    for (const texture of new Set([...materials].flatMap(texturesOf)))
+      if (texture.userData?.simSurface)
+        configureSimTextureSampling(texture, quality, renderer.capabilities.getMaxAnisotropy());
     lastWidth = lastHeight = 0;
   }
   function setDrone(value) {
@@ -224,10 +266,29 @@ export function createFlightRenderer({
       throw new TypeError('Unknown drone appearance');
     droneKind = value;
     releaseGroup(aircraft);
-    droneVisual = buildDroneVisual({ parent: aircraft, mesh, material, box, kind: value });
+    droneVisual = buildDroneVisual({
+      parent: aircraft,
+      mesh,
+      material,
+      box,
+      kind: value,
+      profile: themeProfile ?? resolveSimThemeProfile({}, activePresentation),
+      quality,
+      maxAnisotropy: renderer.capabilities.getMaxAnisotropy(),
+    });
+    if (cosmeticColor) droneVisual.tint.color.set(cosmeticColor);
+  }
+  function setPresentation(value) {
+    // A prepared choice takes effect only when the owner installs a fresh course.
+    pendingPresentation = normalizeSimPresentation(value);
+    return pendingPresentation;
   }
   function lineVolume(step, index) {
     const group = new THREE.Group();
+    group.userData.modelRole = step.type === 'gate' ? 'gate' : 'marker';
+    group.userData.assetRole = themeProfile?.assets?.[step.type === 'gate' ? 'gate' : 'marker'];
+    if (goalMaterialKit)
+      bindSimModelRole(group, group.userData.modelRole, goalMaterialKit.collectionId);
     goals.add(group);
     let size, position;
     if (step.type === 'gate') {
@@ -247,7 +308,7 @@ export function createFlightRenderer({
     shape.dispose();
     geometry.add(edges);
     const paint = new THREE.LineBasicMaterial({
-      color: 0x8beafc,
+      color: effectPalette.goalOutline,
       transparent: true,
       opacity: 0.3,
       toneMapped: false,
@@ -255,8 +316,8 @@ export function createFlightRenderer({
     materials.add(paint);
     group.add(new THREE.LineSegments(edges, paint));
     group.position.set(...position);
-    const light = material(0xa8e9dd, {
-      emissive: 0x82e1d5,
+    const light = material(effectPalette.goalGlow, {
+      emissive: effectPalette.goalEmissive,
       emissiveIntensity: 0.75,
       transparent: true,
       opacity: 0.4,
@@ -279,11 +340,40 @@ export function createFlightRenderer({
         );
         lintel.position.y = (side * size[1]) / 2;
       }
+      if (goalMaterialKit) {
+        // Fastener plates occupy the existing 45 mm frame, never its clear opening.
+        const matrices = [];
+        for (const side of [-1, 1])
+          for (const top of [-1, 1])
+            matrices.push(
+              new THREE.Matrix4().makeTranslation(
+                horizontal ? (side * span) / 2 : 0,
+                (top * size[1]) / 2,
+                horizontal ? 0 : (side * span) / 2,
+              ),
+            );
+        instanceSimDetails({
+          shape: new THREE.BoxGeometry(0.034, 0.034, 0.034),
+          paint: goalMaterialKit.paint('steel'),
+          parent: group,
+          matrices,
+          mesh,
+        });
+      }
     }
-    const marker = mesh(new THREE.TorusGeometry(0.35, 0.045, 6, 24), light, group);
+    const marker = mesh(
+      new THREE.TorusGeometry(0.35, 0.045, 6, goalMaterialKit ? 8 : 24),
+      light,
+      group,
+    );
     marker.rotation.x = Math.PI / 2;
     marker.position.y = -position[1] + (step.type === 'land' ? step.min.y / 1000 : 0) + 0.05;
-    const badge = label(String(index + 1).padStart(2, '0'), '#a5e7d4', group, 0.72);
+    const badge = label(
+      String(index + 1).padStart(2, '0'),
+      `#${effectPalette.goalBadge.toString(16).padStart(6, '0')}`,
+      group,
+      0.72,
+    );
     if (badge) badge.position.set(0, size[1] / 2 + 0.5, 0);
     const row = { group, paint, light, marker, badge, index };
     goalRows.push(row);
@@ -297,7 +387,7 @@ export function createFlightRenderer({
         direction,
         new THREE.Vector3(0, -position[1] + 0.1, 0).addScaledVector(direction, -1.1),
         0.8,
-        0xe8eab0,
+        effectPalette.directionArrow,
         0.25,
         0.18,
       );
@@ -306,7 +396,7 @@ export function createFlightRenderer({
     }
   }
   function renderObstacle(obstacle, index) {
-    const theme = themeForCourse(course),
+    const theme = themeProfile.palette,
       paint = material(index % 3 ? 0xffffff : 0xffe3b9, {
         map: obstacleMap,
         bumpMap: obstacleMap,
@@ -346,6 +436,10 @@ export function createFlightRenderer({
     }
     value.name = obstacle.id;
     value.userData.collisionId = obstacle.id;
+    if (goalMaterialKit) bindSimModelRole(value, 'obstacle', goalMaterialKit.collectionId);
+    value.userData.materialRole = ['field', 'woodland'].includes(course.environment)
+      ? 'timber'
+      : 'steel';
     value.castShadow = value.receiveShadow = true;
     const edges = new THREE.EdgesGeometry(value.geometry, 30);
     geometry.add(edges);
@@ -357,8 +451,10 @@ export function createFlightRenderer({
     materials.add(edgePaint);
     value.add(new THREE.LineSegments(edges, edgePaint));
   }
-  function setCourse(value, selectedMode = 'self-level') {
+  function setCourse(value, selectedMode = 'self-level', options = {}) {
     if (disposed) return;
+    if (options.presentation) setPresentation(options.presentation);
+    activePresentation = pendingPresentation;
     sceneGeneration++;
     setGhost([]);
     editor?.detach();
@@ -370,9 +466,28 @@ export function createFlightRenderer({
     goalRows.length = 0;
     actorRows.clear();
     pulseRows.clear();
-    const surroundings = buildWorldVisuals({ course, world, mesh, material, box });
+    const surroundings = buildWorldVisuals({
+      course,
+      world,
+      mesh,
+      material,
+      box,
+      presentation: activePresentation,
+      quality,
+      maxAnisotropy: renderer.capabilities.getMaxAnisotropy(),
+    });
     const theme = surroundings.theme;
     themeProfile = surroundings.profile;
+    effectPalette = resolveSimEffects(themeProfile);
+    goalMaterialKit = simCollectionIdForProfile(themeProfile)
+      ? createWorkshopMaterials({
+          collectionId: simCollectionIdForProfile(themeProfile),
+          material,
+          quality,
+          maxAnisotropy: renderer.capabilities.getMaxAnisotropy(),
+        })
+      : null;
+    setDrone(droneKind);
     sceneryFallback = surroundings.backdrop;
     obstacleMap = surroundings.obstacleMap;
     scene.background = new THREE.Color(surroundings.indoor ? theme.wall : theme.sky);
@@ -409,21 +524,34 @@ export function createFlightRenderer({
       height = (actor.height ?? 1800) / 1000;
     const role = actor.type === 'hazard' ? 'hazard' : (actor.role ?? 'hostile');
     const friendly = role === 'rival' || role === 'civilian';
-    const armor = material(
-      friendly
-        ? 0x74bfc0
-        : themeProfile?.characters === 'arcade'
-          ? 0xa785cb
-          : themeProfile?.characters === 'civilian'
-            ? 0x839c9d
-            : 0x778b86,
-      { metalness: 0.4, roughness: 0.5 },
-    );
+    const kit = simCollectionIdForProfile(themeProfile)
+      ? createWorkshopMaterials({
+          collectionId: simCollectionIdForProfile(themeProfile),
+          material,
+          quality,
+          maxAnisotropy: renderer.capabilities.getMaxAnisotropy(),
+        })
+      : null;
+    group.userData.modelRole = actor.type === 'vehicle' ? 'vehicle' : 'enemy';
+    group.userData.assetRole = themeProfile?.assets?.[group.userData.modelRole];
+    if (kit) bindSimModelRole(group, group.userData.modelRole, kit.collectionId);
+    const armor = kit
+      ? kit.paint('steel')
+      : material(
+          friendly
+            ? 0x74bfc0
+            : themeProfile?.characters === 'arcade'
+              ? 0xa785cb
+              : themeProfile?.characters === 'civilian'
+                ? 0x839c9d
+                : 0x778b86,
+          { metalness: 0.4, roughness: 0.5 },
+        );
     const threat = material(friendly ? 0x77ebe0 : 0xf1ae75, {
       emissive: friendly ? 0x249eaa : 0xb86231,
       emissiveIntensity: 0.5,
     });
-    const dark = material(0x283e47, { roughness: 0.65 });
+    const dark = kit ? kit.paint('rubber') : material(0x283e47, { roughness: 0.65 });
     group.userData.ownedMaterials = [armor, threat, dark];
     const part = (shape, paint, at) => {
       const value = mesh(shape, paint, group);
@@ -442,9 +570,13 @@ export function createFlightRenderer({
         material,
         box,
         kind: role === 'rival' ? 'racer' : 'utility',
+        profile: themeProfile,
+        quality,
+        maxAnisotropy: renderer.capabilities.getMaxAnisotropy(),
       });
       visual.tint.color.setHex(friendly ? 0x77ebe0 : 0xe6a16b);
     } else if (actor.type === 'vehicle') {
+      const hubMatrices = [];
       part(new THREE.BoxGeometry(radius * 1.4, radius * 0.55, radius * 1.3), armor, [
         0,
         radius * 0.55,
@@ -463,7 +595,32 @@ export function createFlightRenderer({
             [x * radius, radius * 0.26, z * radius],
           );
           wheel.rotation.z = Math.PI / 2;
+          if (kit) {
+            hubMatrices.push(
+              new THREE.Matrix4()
+                .makeTranslation(Math.sign(x) * radius * 0.73, radius * 0.26, z * radius)
+                .multiply(new THREE.Matrix4().makeRotationZ(Math.PI / 2)),
+            );
+          }
         }
+      if (kit) {
+        instanceSimDetails({
+          shape: new THREE.CylinderGeometry(radius * 0.11, radius * 0.11, radius * 0.014, 8),
+          paint: kit.paint('copper'),
+          parent: group,
+          matrices: hubMatrices,
+          mesh,
+        });
+        instanceSimDetails({
+          shape: new THREE.BoxGeometry(radius * 0.012, radius * 0.17, radius * 0.7),
+          paint: kit.paint('enamel'),
+          parent: group,
+          matrices: [-1, 1].map((side) =>
+            new THREE.Matrix4().makeTranslation(side * radius * 0.69, radius * 0.62, 0),
+          ),
+          mesh,
+        });
+      }
       part(
         new THREE.BoxGeometry(
           radius * (friendly ? 0.8 : 0.18),
@@ -511,6 +668,22 @@ export function createFlightRenderer({
           height * 0.57,
           0,
         ]);
+      }
+      if (kit) {
+        const plate = part(
+          new THREE.BoxGeometry(radius * 0.65, height * 0.14, radius * 0.025),
+          kit.paint('enamel'),
+          [0, height * 0.59, -radius * 0.6],
+        );
+        plate.userData.cosmeticDetail = true;
+        plate.castShadow = false;
+        const vent = part(
+          new THREE.BoxGeometry(radius * 0.42, height * 0.025, radius * 0.03),
+          kit.paint('rubber'),
+          [0, height * 0.61, -radius * 0.62],
+        );
+        vent.userData.cosmeticDetail = true;
+        vent.castShadow = false;
       }
       if (!friendly)
         part(new THREE.BoxGeometry(radius * 0.35, height * 0.085, radius * 1.2), threat, [
@@ -571,29 +744,38 @@ export function createFlightRenderer({
         actors.remove(row.group);
         actorRows.delete(id);
       }
-    const pulseSeen = new Set();
+    // Two retained pools avoid geometry/material churn as short-lived pulses expire.
+    for (const batch of pulseRows.values()) batch.count = 0;
     for (const pulse of (state.projectiles ?? []).slice(0, 64)) {
       if (!pulse.position || pulse.id === undefined) continue;
-      pulseSeen.add(pulse.id);
-      let item = pulseRows.get(pulse.id);
-      if (!item) {
-        const color = pulse.owner === 'player' ? 0x8ce4e3 : 0xf7b071;
-        item = mesh(
+      const key = pulse.owner === 'player' ? 'player' : 'other';
+      let batch = pulseRows.get(key);
+      if (!batch) {
+        const color = key === 'player' ? effectPalette.playerPulse : effectPalette.hostilePulse;
+        batch = new THREE.InstancedMesh(
           new THREE.SphereGeometry(0.055, 6, 4),
           material(color, { emissive: color, emissiveIntensity: 1.4, roughness: 0.2 }),
-          projectiles,
+          64,
         );
-        pulseRows.set(pulse.id, item);
+        batch.name = `projectile-pool-${key}`;
+        batch.count = 0;
+        batch.frustumCulled = false;
+        batch.instanceMatrix.setUsage(THREE.DynamicDrawUsage);
+        projectiles.add(batch);
+        register(batch);
+        pulseRows.set(key, batch);
       }
-      item.position.set(pulse.position.x / 1000, pulse.position.y / 1000, pulse.position.z / 1000);
+      pulseTransform.makeTranslation(
+        pulse.position.x / 1000,
+        pulse.position.y / 1000,
+        pulse.position.z / 1000,
+      );
+      batch.setMatrixAt(batch.count++, pulseTransform);
     }
-    for (const [id, item] of pulseRows)
-      if (!pulseSeen.has(id)) {
-        const holder = new THREE.Group();
-        holder.add(item);
-        releaseGroup(holder);
-        pulseRows.delete(id);
-      }
+    for (const batch of pulseRows.values()) {
+      batch.visible = batch.count > 0;
+      batch.instanceMatrix.needsUpdate = true;
+    }
   }
   function draw(state, { cameraMode = view, cameraFov = fov, cameraTilt = tilt } = {}) {
     if (disposed || !course) return;
@@ -663,9 +845,15 @@ export function createFlightRenderer({
       for (const row of goalRows) {
         const active = row.index === state.step,
           complete = row.index < state.step;
-        row.paint.color.setHex(complete ? 0x95aa9e : active ? 0xe8f1a7 : 0x7fa9b4);
+        row.paint.color.setHex(
+          complete
+            ? effectPalette.goalComplete
+            : active
+              ? effectPalette.goalActive
+              : effectPalette.goalInactive,
+        );
         row.paint.opacity = active ? 1 : 0.18;
-        row.light.color.setHex(active ? 0xe8f1a7 : 0x89c9c5);
+        row.light.color.setHex(active ? effectPalette.goalActive : effectPalette.goalGlowInactive);
         row.light.opacity = active ? 0.9 : 0.17;
         row.marker.visible = active;
         if (row.badge) row.badge.material.opacity = active ? 1 : 0.35;
@@ -705,7 +893,7 @@ export function createFlightRenderer({
     );
     pathLine = new THREE.Line(
       new THREE.BufferGeometry().setFromPoints(points),
-      new THREE.LineBasicMaterial({ color: 0x95e9ef, transparent: true, opacity: 0.65 }),
+      new THREE.LineBasicMaterial({ color: effectPalette.trail, transparent: true, opacity: 0.65 }),
     );
     scene.add(pathLine);
   }
@@ -744,15 +932,20 @@ export function createFlightRenderer({
       mesh,
       box,
       material: () =>
-        material(0x95e9ef, {
-          emissive: 0x247880,
+        material(effectPalette.ghost, {
+          emissive: effectPalette.ghostEmissive,
           emissiveIntensity: 0.65,
           transparent: true,
           opacity: 0.48,
           depthWrite: false,
         }),
     });
-    const badge = label('PB', '#95e9ef', ghostAircraft, 0.48);
+    const badge = label(
+      'PB',
+      `#${effectPalette.ghost.toString(16).padStart(6, '0')}`,
+      ghostAircraft,
+      0.48,
+    );
     if (badge) badge.position.y = 0.4;
     ghostAircraft.traverse((item) => {
       item.castShadow = false;
@@ -920,6 +1113,13 @@ export function createFlightRenderer({
         throw new Error('World preview changed during loading');
       }
       clearImported();
+      importedMaterialBindings = applySimMaterialBindings(result.scene, {
+        collectionId: simCollectionIdForProfile(themeProfile) ?? 'authored',
+        quality,
+        maxAnisotropy: renderer.capabilities.getMaxAnisotropy(),
+        associations: result.parser?.associations,
+        material,
+      });
       imported.add(result.scene);
       if (
         json.asset?.extras?.fpvScenery === true &&
@@ -954,6 +1154,7 @@ export function createFlightRenderer({
         nodes: json.nodes?.length ?? 0,
         animations: result.animations.map((clip) => clip.name),
         objects,
+        materialBindings: structuredClone(importedMaterialBindings),
       };
     } finally {
       for (const url of urls.values()) URL.revokeObjectURL(url);
@@ -1169,6 +1370,7 @@ export function createFlightRenderer({
   return {
     available: true,
     setCourse,
+    setPresentation,
     setQuality,
     setDrone,
     setPath,
@@ -1199,7 +1401,10 @@ export function createFlightRenderer({
       importedMixer.clipAction(clip).play();
     },
     setCosmetic(recipe) {
-      if (/^#[a-fA-F0-9]{6}$/.test(recipe?.color)) droneVisual.tint.color.set(recipe.color);
+      if (/^#[a-fA-F0-9]{6}$/.test(recipe?.color)) {
+        cosmeticColor = recipe.color;
+        droneVisual.tint.color.set(cosmeticColor);
+      }
     },
     resources() {
       return {
@@ -1207,12 +1412,17 @@ export function createFlightRenderer({
         disposed,
         quality,
         drone: droneKind,
+        presentation: { ...activePresentation, profileId: themeProfile?.id ?? null },
+        effects: { ...effectPalette },
+        importedMaterialBindings: structuredClone(importedMaterialBindings),
         registered: {
           geometries: geometry.size + (pathLine ? 1 : 0),
           materials: materials.size + (pathLine ? 1 : 0),
           textures: new Set([...materials].flatMap(texturesOf)).size,
         },
         renderer: {
+          calls: renderer.info.render.calls,
+          triangles: renderer.info.render.triangles,
           geometries: renderer.info.memory.geometries,
           textures: renderer.info.memory.textures,
           programs: renderer.info.programs?.length ?? 0,

@@ -1078,7 +1078,11 @@ test('actual canonical and tool HTML brand first paint without replacing loader 
     'interface:playOnline',
   ])
     assert.ok(boot.includes(`data-i18n="${key}"`));
-  assert.ok(main.includes('html[data-edition-id] #boot-screen{background:var(--ink)'));
+  assert.ok(
+    main.includes(
+      'html[data-edition-id]:not([data-theme-styled="true"]) #boot-screen{background:var(--ink)',
+    ),
+  );
   for (const entry of entries.slice(2)) {
     const html = result.files.get(entry).toString();
     assert.match(

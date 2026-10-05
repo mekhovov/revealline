@@ -1,0 +1,340 @@
+TAP version 13
+# Subtest: appearance defaults are data-only immutable pins and preserve unavailable intent
+ok 1 - appearance defaults are data-only immutable pins and preserve unavailable intent
+  ---
+  duration_ms: 2.014375
+  ...
+# Subtest: each installed family travels through an ordinary community draft without changing source or legacy identity
+ok 2 - each installed family travels through an ordinary community draft without changing source or legacy identity
+  ---
+  duration_ms: 150.185
+  ...
+# Subtest: canonical provider resolves selected campaign appearance and retains its edition admission boundary
+ok 3 - canonical provider resolves selected campaign appearance and retains its edition admission boundary
+  ---
+  duration_ms: 88.49925
+  ...
+# Subtest: v1 documents remain exact and reject new appearance fields until explicitly upgraded
+ok 4 - v1 documents remain exact and reject new appearance fields until explicitly upgraded
+  ---
+  duration_ms: 11.701208
+  ...
+# Subtest: compiled entry hints use campaign over community and scope legacy brand styles away from themed chrome
+ok 5 - compiled entry hints use campaign over community and scope legacy brand styles away from themed chrome
+  ---
+  duration_ms: 43.8035
+  ...
+# Subtest: the same complete appearance is portable across unrelated community drafts without merging their content
+ok 6 - the same complete appearance is portable across unrelated community drafts without merging their content
+  ---
+  duration_ms: 17.50625
+  ...
+# Subtest: upgrading current defaults preserves exact v1 retained presentation bytes and identity
+ok 7 - upgrading current defaults preserves exact v1 retained presentation bytes and identity
+  ---
+  duration_ms: 156.895542
+  ...
+# Subtest: edition tools share family authority and keep high contrast and plain type above legacy branding
+ok 8 - edition tools share family authority and keep high contrast and plain type above legacy branding
+  ---
+  duration_ms: 48.879667
+  ...
+# Subtest: Company appearance translates live without changing staged choices, focus or catalog JSON
+ok 9 - Company appearance translates live without changing staged choices, focus or catalog JSON
+  ---
+  duration_ms: 180.328375
+  ...
+# Subtest: Company appearance validation remains translated while unapplied JSON stays untouched
+ok 10 - Company appearance validation remains translated while unapplied JSON stays untouched
+  ---
+  duration_ms: 79.670833
+  ...
+# Subtest: controller Confirm applies the selected Company appearance and retains the semantic action focus
+ok 11 - controller Confirm applies the selected Company appearance and retains the semantic action focus
+  ---
+  duration_ms: 177.36975
+  ...
+# Subtest: Studio candidate handoff is reviewed before registration and exports only after explicit Apply
+ok 12 - Studio candidate handoff is reviewed before registration and exports only after explicit Apply
+  ---
+  duration_ms: 248.716042
+  ...
+# Subtest: unavailable one-use Studio candidate leaves the source draft usable and reports a localized recovery
+ok 13 - unavailable one-use Studio candidate leaves the source draft usable and reports a localized recovery
+  ---
+  duration_ms: 69.355166
+  ...
+# Subtest: actual Company Studio exports a valid complete source packet and explicitly reopens it
+ok 14 - actual Company Studio exports a valid complete source packet and explicitly reopens it
+  ---
+  duration_ms: 84.353541
+  ...
+# Subtest: actual Company Studio rejects unapplied or invalid JSON without changing its applied draft
+ok 15 - actual Company Studio rejects unapplied or invalid JSON without changing its applied draft
+  ---
+  duration_ms: 53.442083
+  ...
+# Subtest: a delayed source export cannot claim or replace a newer unapplied edit
+ok 16 - a delayed source export cannot claim or replace a newer unapplied edit
+  ---
+  duration_ms: 47.814458
+  ...
+# Subtest: a delayed source import cannot erase JSON entered after the read started
+ok 17 - a delayed source import cannot erase JSON entered after the read started
+  ---
+  duration_ms: 51.022667
+  ...
+# Subtest: the newest source import wins when two file reads complete out of order
+ok 18 - the newest source import wins when two file reads complete out of order
+  ---
+  duration_ms: 73.774375
+  ...
+# Subtest: an older pending read cannot clear the newer replacement consent handler
+ok 19 - an older pending read cannot clear the newer replacement consent handler
+  ---
+  duration_ms: 74.163042
+  ...
+# Subtest: a rejected old import cannot replace status after a newer raw form edit
+ok 20 - a rejected old import cannot replace status after a newer raw form edit
+  ---
+  duration_ms: 33.833125
+  ...
+# Subtest: controller step selection owns a reachable control after neutral polling
+ok 21 - controller step selection owns a reachable control after neutral polling
+  ---
+  duration_ms: 108.262292
+  ...
+# Subtest: every Company setup step selects a reachable local control under the real controller owner
+ok 22 - every Company setup step selects a reachable local control under the real controller owner
+  ---
+  duration_ms: 378.91775
+  ...
+# Subtest: pending Company import cannot commit after blur
+ok 23 - pending Company import cannot commit after blur
+  ---
+  duration_ms: 45.984
+  ...
+# Subtest: pending Company import cannot commit after hidden
+ok 24 - pending Company import cannot commit after hidden
+  ---
+  duration_ms: 41.858084
+  ...
+# Subtest: pending Company import cannot commit after pagehide
+ok 25 - pending Company import cannot commit after pagehide
+  ---
+  duration_ms: 40.330084
+  ...
+# Subtest: pending Company import cannot commit after new focus
+ok 26 - pending Company import cannot commit after new focus
+  ---
+  duration_ms: 39.686708
+  ...
+# Subtest: pending Company import cannot commit after raw identity edit
+ok 27 - pending Company import cannot commit after raw identity edit
+  ---
+  duration_ms: 48.3055
+  ...
+# Subtest: native cancel cancels pending Company export and restores its owned opener
+ok 28 - native cancel cancels pending Company export and restores its owned opener
+  ---
+  duration_ms: 45.359667
+  ...
+# Subtest: controller Back cancels pending Company export and restores its owned opener
+ok 29 - controller Back cancels pending Company export and restores its owned opener
+  ---
+  duration_ms: 72.333958
+  ...
+# Subtest: controller Confirm cancels pending Company export and restores its owned opener
+ok 30 - controller Confirm cancels pending Company export and restores its owned opener
+  ---
+  duration_ms: 56.416958
+  ...
+# Subtest: reopening an exported Company packet is explicit, cancelable and byte-preserving
+ok 31 - reopening an exported Company packet is explicit, cancelable and byte-preserving
+  ---
+  duration_ms: 122.600334
+  ...
+# Subtest: prepared import consent expires when an underlying form changes
+ok 32 - prepared import consent expires when an underlying form changes
+  ---
+  duration_ms: 49.78775
+  ...
+# Subtest: failed Company collection settles its busy owner and permits a fresh valid export
+ok 33 - failed Company collection settles its busy owner and permits a fresh valid export
+  ---
+  duration_ms: 48.055167
+  ...
+# Subtest: invalid imported source retains the complete current applied and unapplied draft
+ok 34 - invalid imported source retains the complete current applied and unapplied draft
+  ---
+  duration_ms: 40.075875
+  ...
+# Subtest: oversized source imports are rejected before reading any file bytes
+ok 35 - oversized source imports are rejected before reading any file bytes
+  ---
+  duration_ms: 29.707709
+  ...
+# Subtest: a catalog-only import cannot partially replace the draft when a declared source fails
+ok 36 - a catalog-only import cannot partially replace the draft when a declared source fails
+  ---
+  duration_ms: 40.432292
+  ...
+# Subtest: delayed compiler report import cannot revive a report for an edited draft
+ok 37 - delayed compiler report import cannot revive a report for an edited draft
+  ---
+  duration_ms: 37.475625
+  ...
+# Subtest: Company compiler commands support explicit controller reading and exact Back return
+ok 38 - Company compiler commands support explicit controller reading and exact Back return
+  ---
+  duration_ms: 111.890792
+  ...
+# Subtest: leaving an active Company reading region does not steal newer focus
+ok 39 - leaving an active Company reading region does not steal newer focus
+  ---
+  duration_ms: 95.353625
+  ...
+# Subtest: actual transfer practice enters a readable brief and returns exactly after controller Back
+ok 40 - actual transfer practice enters a readable brief and returns exactly after controller Back
+  ---
+  duration_ms: 22.683459
+  ...
+# Subtest: incomplete practice commit leads to readable feedback and leaves a retryable handoff
+ok 41 - incomplete practice commit leads to readable feedback and leaves a retryable handoff
+  ---
+  duration_ms: 21.81325
+  ...
+# Subtest: completed transfer practice remains readable, exports task cards only and clears answers on restart
+ok 42 - completed transfer practice remains readable, exports task cards only and clears answers on restart
+  ---
+  duration_ms: 30.002625
+  ...
+# Subtest: leaving transfer practice removes its readers and clears in-memory answers
+ok 43 - leaving transfer practice removes its readers and clears in-memory answers
+  ---
+  duration_ms: 20.679708
+  ...
+# Subtest: completed practice controller navigation skips inherited disabled fields and reaches Restart
+ok 44 - completed practice controller navigation skips inherited disabled fields and reaches Restart
+  ---
+  duration_ms: 55.417208
+  ...
+# Subtest: actual Company cached-page return retains the same unstaged guided lesson fields
+ok 45 - actual Company cached-page return retains the same unstaged guided lesson fields
+  ---
+  duration_ms: 49.0345
+  ...
+# Subtest: Company cached departure fences late preview success
+ok 46 - Company cached departure fences late preview success
+  ---
+  duration_ms: 54.276375
+  ...
+# Subtest: Company cached departure fences late preview failure
+ok 47 - Company cached departure fences late preview failure
+  ---
+  duration_ms: 44.0575
+  ...
+# Subtest: Company terminal departure fences late preview success
+ok 48 - Company terminal departure fences late preview success
+  ---
+  duration_ms: 42.011916
+  ...
+# Subtest: Company terminal departure fences late preview failure
+ok 49 - Company terminal departure fences late preview failure
+  ---
+  duration_ms: 42.975375
+  ...
+# Subtest: locale resolution respects saved choices, ordered preferences and regional tags
+ok 50 - locale resolution respects saved choices, ordered preferences and regional tags
+  ---
+  duration_ms: 1596.809333
+  ...
+# Subtest: automatic detection is not persisted; explicit choice survives restart and storage failure
+ok 51 - automatic detection is not persisted; explicit choice survives restart and storage failure
+  ---
+  duration_ms: 442.944
+  ...
+# Subtest: production source diagnostics follow the active locale without changing source names
+ok 52 - production source diagnostics follow the active locale without changing source names
+  ---
+  duration_ms: 7.959959
+  ...
+# Subtest: cross-tab changes update language only and ignore game-save storage events
+ok 53 - cross-tab changes update language only and ignore game-save storage events
+  ---
+  duration_ms: 140.9495
+  ...
+# Subtest: Ukrainian plural rules include zero, teens, compound counts and decimals
+ok 54 - Ukrainian plural rules include zero, teens, compound counts and decimals
+  ---
+  duration_ms: 152.050083
+  ...
+# Subtest: website release and mission selectors use complete English and Ukrainian messages
+ok 55 - website release and mission selectors use complete English and Ukrainian messages
+  ---
+  duration_ms: 292.732875
+  ...
+# Subtest: Asset Studio dynamic labels and diagnostics are bilingual
+ok 56 - Asset Studio dynamic labels and diagnostics are bilingual
+  ---
+  duration_ms: 299.682458
+  ...
+# Subtest: Playground encounter and control measurements cover every Ukrainian plural category
+ok 57 - Playground encounter and control measurements cover every Ukrainian plural category
+  ---
+  duration_ms: 157.194208
+  ...
+# Subtest: Couch continuation cancellation interpolates its localized action
+ok 58 - Couch continuation cancellation interpolates its localized action
+  ---
+  duration_ms: 290.907833
+  ...
+# Subtest: Couch preparation failures have complete English and Ukrainian messages
+ok 59 - Couch preparation failures have complete English and Ukrainian messages
+  ---
+  duration_ms: 286.527
+  ...
+# Subtest: text and attribute bindings update in place without changing editor values
+ok 60 - text and attribute bindings update in place without changing editor values
+  ---
+  duration_ms: 158.642125
+  ...
+# Subtest: locale layout pins scroll without leaving authored scroll anchoring overridden
+ok 61 - locale layout pins scroll without leaving authored scroll anchoring overridden
+  ---
+  duration_ms: 295.421833
+  ...
+# Subtest: content uses exact identity and field; edited imports retain authored text and hashes
+ok 62 - content uses exact identity and field; edited imports retain authored text and hashes
+  ---
+  duration_ms: 9.758333
+  ...
+# Subtest: mission library validation errors follow the active locale without changing source identity
+ok 63 - mission library validation errors follow the active locale without changing source identity
+  ---
+  duration_ms: 1.367375
+  ...
+# Subtest: caption bindings preserve appended controls and accept a direct Text node
+ok 64 - caption bindings preserve appended controls and accept a direct Text node
+  ---
+  duration_ms: 138.3385
+  ...
+# Subtest: locale changes do not call retired detached control producers
+ok 65 - locale changes do not call retired detached control producers
+  ---
+  duration_ms: 149.0835
+  ...
+# Subtest: an accepted host caption retires the original rich slots across locale changes and remounts
+ok 66 - an accepted host caption retires the original rich slots across locale changes and remounts
+  ---
+  duration_ms: 144.47825
+  ...
+1..66
+# tests 66
+# suites 0
+# pass 66
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 4791.147042

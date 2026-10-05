@@ -3,6 +3,7 @@ import { hashPresentationBytes } from '../presentation/bundle.mjs';
 import { loadEditionBootstrap } from './bootstrap.mjs';
 import {
   createEditionRuntimeCatalog,
+  resolveEditionAppearanceThemes,
   freezeEdition,
   resolveEditionAssets,
   validateEditionRuntimeCatalog,
@@ -73,6 +74,13 @@ export async function captureEditionPresentation(bootstrap) {
     editions: [edition],
     campaigns: selection.campaigns,
     assets: resolveEditionAssets(bootstrap.catalog, { editionId: edition.id }),
+    ...(bootstrap.catalog.appearanceThemes
+      ? {
+          appearanceThemes: resolveEditionAppearanceThemes(bootstrap.catalog, {
+            editionIds: [edition.id],
+          }),
+        }
+      : {}),
   });
   const files = new Map();
   required(bootstrap.sources?.length === selection.campaigns.length, 'Snapshot sources missing.');

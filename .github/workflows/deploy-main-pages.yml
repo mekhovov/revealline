@@ -8,11 +8,12 @@ on:
 permissions:
   contents: read
 
-# Pages has one production environment. New protected-main commits supersede
-# unfinished older builds and never participate in pull-request required checks.
+# Pages has one production environment. Finish the active build, deployment and
+# public verification; coalesce pending snapshots without starving production.
+# This workflow never participates in pull-request required checks.
 concurrency:
   group: pages-production
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 env:
   # Keep enough headroom for GitHub Pages packaging while the repository grows.

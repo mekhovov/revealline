@@ -2,7 +2,22 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { selectOfflineCore } from '../../scripts/offline-core-closure.mjs';
-import { fpvLaunchURL, fpvReturnURL } from '../fpv-entry.mjs';
+import { fpvLaunchURL, fpvReturnURL, appearanceLaunchURL } from '../fpv-entry.mjs';
+
+test('SIM launch carries only a bounded cosmetic default without changing the return route', () => {
+  const source = 'https://example.test/game/?edition=sample&campaign=one';
+  const target = new URL(fpvLaunchURL(source, 'uk', { familyId: 'vyshyvanka', revision: 'r1' }));
+  assert.equal(target.searchParams.get('appearanceFamily'), 'vyshyvanka');
+  assert.equal(target.searchParams.get('appearanceRevision'), 'r1');
+  assert.equal(fpvReturnURL(target.href), source);
+  const invalid = new URL(
+    appearanceLaunchURL(target.href, { familyId: '../private', revision: 'r1' }),
+  );
+  assert.equal(invalid.searchParams.has('appearanceFamily'), false);
+  assert.equal(invalid.searchParams.has('appearanceRevision'), false);
+  assert.equal(invalid.pathname, target.pathname);
+  assert.equal(invalid.searchParams.get('game-return'), target.searchParams.get('game-return'));
+});
 import { OPTIONAL_PACKAGE_POLICIES } from '../../publishing/optional-package-policy.mjs';
 
 test('bundled FPV launches and returns to the exact game entry across source, hosted and native roots', () => {

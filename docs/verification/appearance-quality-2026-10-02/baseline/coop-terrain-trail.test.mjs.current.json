@@ -1,0 +1,29 @@
+{
+  "file": "game/test/coop-terrain-trail.test.mjs",
+  "kind": "current",
+  "command": [
+    "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+    "--test",
+    "--test-concurrency=1",
+    "game/test/coop-terrain-trail.test.mjs"
+  ],
+  "cwd": "/Users/oleksandr.mekhovov/work/my_projects/go_test",
+  "exitCode": 1,
+  "timedOut": false,
+  "seconds": 0.93,
+  "failures": [
+    {
+      "test": "a complete snapshot without a wall keeps flat backing and a missing reader fails closed",
+      "location": "game/test/coop-terrain-trail.test.mjs:366:1",
+      "detail": "\n  ---\n  duration_ms: 10.409834\n  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/coop-terrain-trail.test.mjs:366:1'\n  failureType: 'testCodeFailure'\n  error: 'Missing expected exception.'\n  code: 'ERR_ASSERTION'\n  name: 'AssertionError'\n  expected:\n  operator: 'throws'\n  stack: |-\n    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/coop-terrain-trail.test.mjs:391:10)\n    Test.runInAsyncScope (node:async_hooks:206:9)\n    Test.run (node:internal/test_runner/test:796:25)\n    Test.processPendingSubtests (node:internal/test_runner/test:526:18)\n    Test.postRun (node:internal/test_runner/test:889:19)\n    Test.run (node:internal/test_runner/test:835:12)\n    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)"
+    }
+  ],
+  "summary": [
+    "# tests 30",
+    "# pass 29",
+    "# fail 1",
+    "# cancelled 0",
+    "# skipped 0",
+    "# duration_ms 904.21225"
+  ]
+}

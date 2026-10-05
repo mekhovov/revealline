@@ -1045,3 +1045,38 @@ test('storage denial retains current-page preference and cross-tab updates are a
   assert.equal(f.scene.dataset.motion, 'on');
   f.api.dispose();
 });
+
+test('interface backdrops replace only fallback decoration and stop hidden artwork renderers', () => {
+  const f = fixture({ themeId: 'fpv' });
+  f.load();
+  const image = f.scene.querySelector('.menu-scene-art'),
+    source = image.src;
+  f.doc.documentElement.dataset.themeStyled = 'true';
+  f.doc.documentElement.dataset.interfaceTheme = 'dos';
+  f.mutate(f.doc.documentElement, 'data-interface-theme');
+  assert.equal(f.scene.dataset.backdrop, 'interface');
+  assert.equal(f.scene.dataset.motion, 'off');
+  assert.equal(f.renderer.runs.at(-1), false);
+  assert.equal(f.receiver.runs.at(-1), false);
+  assert.equal(image.src, source, 'Changing decoration does not replace leased source art');
+  f.doc.documentElement.dataset.interfaceTheme = 'industrial-workshop';
+  f.mutate(f.doc.documentElement, 'data-interface-theme');
+  assert.equal(f.scene.dataset.backdrop, 'authored');
+  assert.equal(f.renderer.runs.at(-1), true);
+  assert.equal(image.src, source);
+  f.doc.documentElement.dataset.interfaceTheme = 'windows-classic';
+  f.context.editionId = 'coupa-culture';
+  f.context.themeId = undefined;
+  f.api.update();
+  assert.equal(f.scene.dataset.backdrop, 'authored');
+  assert.match(image.src, /coupa-inside-village/);
+  f.context.editionId = undefined;
+  f.context.themeId = 'ukraine';
+  f.api.update();
+  assert.equal(
+    f.scene.dataset.backdrop,
+    'authored',
+    'An authored world scene is not application decoration',
+  );
+  f.api.dispose();
+});

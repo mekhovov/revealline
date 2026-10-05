@@ -67,6 +67,10 @@ function fixture(
     },
     cancelAnimationFrame: (key) => frames.delete(key),
     matchMedia: () => ({ matches: false }),
+    MutationObserver: class {
+      observe() {}
+      disconnect() {}
+    },
     setTimeout: (fn) => fn(),
     URL: { createObjectURL: () => 'blob:flight-test', revokeObjectURL() {} },
   });
@@ -146,6 +150,27 @@ function radioProfile(pad) {
     switches: { arm: null, pause: null, reset: null },
   };
 }
+
+test('SIM world selection freezes on first arm and applies queued preference only on reset', (t) => {
+  const h = fixture(t);
+  const select = h.$('sim-appearance-world');
+  select.value = 'industrial-workshop';
+  select.emit('change');
+  assert.equal(h.view.appearance().accepted.collectionId, 'industrial-workshop');
+  assert.equal(h.view.arm(), true);
+  h.view.pause();
+  select.value = 'authored';
+  select.emit('change');
+  assert.equal(h.view.appearance().accepted.collectionId, 'industrial-workshop');
+  assert.equal(h.view.appearance().pending, true);
+  assert.equal(h.view.appearance().appearance.collectionId, 'authored');
+  const saved = h.view.exportRecording();
+  assert.equal(saved.presentation.collectionId, 'industrial-workshop');
+  assert.deepEqual(saved.proof, h.view.exportAttempt());
+  h.view.reset();
+  assert.equal(h.view.appearance().accepted.collectionId, 'authored');
+  assert.equal(h.view.appearance().pending, false);
+});
 
 test('native optional shell lists twelve drills, uses exclusive keyboard input, and neutralizes blur/dialog/reset', (t) => {
   const f = fixture(t);

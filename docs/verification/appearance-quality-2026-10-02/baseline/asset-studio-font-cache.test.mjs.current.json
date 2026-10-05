@@ -1,0 +1,99 @@
+{
+  "file": "game/test/asset-studio-font-cache.test.mjs",
+  "kind": "current",
+  "command": [
+    "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+    "--test",
+    "--test-concurrency=1",
+    "game/test/asset-studio-font-cache.test.mjs"
+  ],
+  "cwd": "/Users/oleksandr.mekhovov/work/my_projects/go_test",
+  "exitCode": 1,
+  "timedOut": false,
+  "seconds": 5.15,
+  "failures": [
+    {
+      "test": "sequential same-file role expansion widens the one face while both previews remain current",
+      "location": "game/test/asset-studio-font-cache.test.mjs:442:1",
+      "detail": "\n  ---\n  duration_ms: 411.926042\n  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/asset-studio-font-cache.test.mjs:442:1'\n  failureType: 'testCodeFailure'\n  error: |-\n    The input did not match the regular expression /ready\\./. Input:\n    \n    'Saved font preview: Ready'\n    \n  code: 'ERR_ASSERTION'\n  name: 'AssertionError'\n  expected:\n  actual: 'Saved font preview: Ready'\n  operator: 'match'\n  stack: |-\n    assertReady (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/asset-studio-font-cache.test.mjs:401:10)\n    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/asset-studio-font-cache.test.mjs:448:5)\n    async Test.run (node:internal/test_runner/test:797:9)\n    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)"
+    },
+    {
+      "test": "same-file widening during pending bytes serves both current surfaces",
+      "location": "game/test/asset-studio-font-cache.test.mjs:459:3",
+      "detail": "\n  ---\n  duration_ms: 314.29175\n  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/asset-studio-font-cache.test.mjs:459:3'\n  failureType: 'testCodeFailure'\n  error: |-\n    The input did not match the regular expression /ready\\./. Input:\n    \n    'Saved font preview: Ready'\n    \n  code: 'ERR_ASSERTION'\n  name: 'AssertionError'\n  expected:\n  actual: 'Saved font preview: Ready'\n  operator: 'match'\n  stack: |-\n    assertReady (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/asset-studio-font-cache.test.mjs:401:10)\n    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/asset-studio-font-cache.test.mjs:467:7)\n    async Test.run (node:internal/test_runner/test:797:9)\n    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)"
+    },
+    {
+      "test": "same-file widening during pending load serves both current surfaces",
+      "location": "game/test/asset-studio-font-cache.test.mjs:459:3",
+      "detail": "\n  ---\n  duration_ms: 309.60325\n  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/asset-studio-font-cache.test.mjs:459:3'\n  failureType: 'testCodeFailure'\n  error: |-\n    The input did not match the regular expression /ready\\./. Input:\n    \n    'Saved font preview: Ready'\n    \n  code: 'ERR_ASSERTION'\n  name: 'AssertionError'\n  expected:\n  actual: 'Saved font preview: Ready'\n  operator: 'match'\n  stack: |-\n    assertReady (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/asset-studio-font-cache.test.mjs:401:10)\n    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/asset-studio-font-cache.test.mjs:467:7)\n    async Test.run (node:internal/test_runner/test:797:9)\n    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)"
+    },
+    {
+      "test": "a later narrow snapshot cannot shrink a face still serving a wider current surface",
+      "location": "game/test/asset-studio-font-cache.test.mjs:479:1",
+      "detail": "\n  ---\n  duration_ms: 395.251083\n  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/asset-studio-font-cache.test.mjs:479:1'\n  failureType: 'testCodeFailure'\n  error: |-\n    The input did not match the regular expression /ready\\./. Input:\n    \n    'Saved font preview: Ready'\n    \n  code: 'ERR_ASSERTION'\n  name: 'AssertionError'\n  expected:\n  actual: 'Saved font preview: Ready'\n  operator: 'match'\n  stack: |-\n    assertReady (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/asset-studio-font-cache.test.mjs:401:10)\n    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/asset-studio-font-cache.test.mjs:488:5)\n    async Test.run (node:internal/test_runner/test:797:9)\n    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)"
+    },
+    {
+      "test": "cancel narrow consumer during shared bytes; late success respects both owners",
+      "location": "game/test/asset-studio-font-cache.test.mjs:497:7",
+      "detail": "\n  ---\n  duration_ms: 307.701708\n  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/asset-studio-font-cache.test.mjs:497:7'\n  failureType: 'testCodeFailure'\n  error: |-\n    The input did not match the regular expression /ready\\./. Input:\n    \n    'Draft font preview: Ready'\n    \n  code: 'ERR_ASSERTION'\n  name: 'AssertionError'\n  expected:\n  actual: 'Draft font preview: Ready'\n  operator: 'match'\n  stack: |-\n    assertReady (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/asset-studio-font-cache.test.mjs:401:10)\n    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/asset-studio-font-cache.test.mjs:515:13)\n    async Test.run (node:internal/test_runner/test:797:9)\n    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)"
+    },
+    {
+      "test": "cancel narrow consumer during shared bytes; late failure respects both owners",
+      "location": "game/test/asset-studio-font-cache.test.mjs:497:7",
+      "detail": "\n  ---\n  duration_ms: 304.774417\n  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/asset-studio-font-cache.test.mjs:497:7'\n  failureType: 'testCodeFailure'\n  error: |-\n    The input did not match the regular expression /ready\\./. Input:\n    \n    'Draft font preview: Ready'\n    \n  code: 'ERR_ASSERTION'\n  name: 'AssertionError'\n  expected:\n  actual: 'Draft font preview: Ready'\n  operator: 'match'\n  stack: |-\n    assertReady (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/asset-studio-font-cache.test.mjs:401:10)\n    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/asset-studio-font-cache.test.mjs:525:13)\n    async Test.run (node:internal/test_runner/test:797:9)\n    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)"
+    },
+    {
+      "test": "cancel wide consumer during shared bytes; late success respects both owners",
+      "location": "game/test/asset-studio-font-cache.test.mjs:497:7",
+      "detail": "\n  ---\n  duration_ms: 306.55725\n  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/asset-studio-font-cache.test.mjs:497:7'\n  failureType: 'testCodeFailure'\n  error: |-\n    The input did not match the regular expression /ready\\./. Input:\n    \n    'Saved font preview: Ready'\n    \n  code: 'ERR_ASSERTION'\n  name: 'AssertionError'\n  expected:\n  actual: 'Saved font preview: Ready'\n  operator: 'match'\n  stack: |-\n    assertReady (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/asset-studio-font-cache.test.mjs:401:10)\n    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/asset-studio-font-cache.test.mjs:515:13)\n    async Test.run (node:internal/test_runner/test:797:9)\n    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)"
+    },
+    {
+      "test": "cancel wide consumer during shared bytes; late failure respects both owners",
+      "location": "game/test/asset-studio-font-cache.test.mjs:497:7",
+      "detail": "\n  ---\n  duration_ms: 319.898\n  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/asset-studio-font-cache.test.mjs:497:7'\n  failureType: 'testCodeFailure'\n  error: |-\n    The input did not match the regular expression /ready\\./. Input:\n    \n    'Saved font preview: Ready'\n    \n  code: 'ERR_ASSERTION'\n  name: 'AssertionError'\n  expected:\n  actual: 'Saved font preview: Ready'\n  operator: 'match'\n  stack: |-\n    assertReady (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/asset-studio-font-cache.test.mjs:401:10)\n    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/asset-studio-font-cache.test.mjs:525:13)\n    async Test.run (node:internal/test_runner/test:797:9)\n    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)"
+    },
+    {
+      "test": "cancel narrow consumer during shared load; late success respects both owners",
+      "location": "game/test/asset-studio-font-cache.test.mjs:497:7",
+      "detail": "\n  ---\n  duration_ms: 306.13475\n  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/asset-studio-font-cache.test.mjs:497:7'\n  failureType: 'testCodeFailure'\n  error: |-\n    The input did not match the regular expression /ready\\./. Input:\n    \n    'Draft font preview: Ready'\n    \n  code: 'ERR_ASSERTION'\n  name: 'AssertionError'\n  expected:\n  actual: 'Draft font preview: Ready'\n  operator: 'match'\n  stack: |-\n    assertReady (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/asset-studio-font-cache.test.mjs:401:10)\n    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/asset-studio-font-cache.test.mjs:515:13)\n    async Test.run (node:internal/test_runner/test:797:9)\n    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)"
+    },
+    {
+      "test": "cancel narrow consumer during shared load; late failure respects both owners",
+      "location": "game/test/asset-studio-font-cache.test.mjs:497:7",
+      "detail": "\n  ---\n  duration_ms: 306.103917\n  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/asset-studio-font-cache.test.mjs:497:7'\n  failureType: 'testCodeFailure'\n  error: |-\n    The input did not match the regular expression /ready\\./. Input:\n    \n    'Draft font preview: Ready'\n    \n  code: 'ERR_ASSERTION'\n  name: 'AssertionError'\n  expected:\n  actual: 'Draft font preview: Ready'\n  operator: 'match'\n  stack: |-\n    assertReady (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/asset-studio-font-cache.test.mjs:401:10)\n    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/asset-studio-font-cache.test.mjs:525:13)\n    async Test.run (node:internal/test_runner/test:797:9)\n    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)"
+    },
+    {
+      "test": "cancel wide consumer during shared load; late success respects both owners",
+      "location": "game/test/asset-studio-font-cache.test.mjs:497:7",
+      "detail": "\n  ---\n  duration_ms: 303.776583\n  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/asset-studio-font-cache.test.mjs:497:7'\n  failureType: 'testCodeFailure'\n  error: |-\n    The input did not match the regular expression /ready\\./. Input:\n    \n    'Saved font preview: Ready'\n    \n  code: 'ERR_ASSERTION'\n  name: 'AssertionError'\n  expected:\n  actual: 'Saved font preview: Ready'\n  operator: 'match'\n  stack: |-\n    assertReady (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/asset-studio-font-cache.test.mjs:401:10)\n    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/asset-studio-font-cache.test.mjs:515:13)\n    async Test.run (node:internal/test_runner/test:797:9)\n    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)"
+    },
+    {
+      "test": "cancel wide consumer during shared load; late failure respects both owners",
+      "location": "game/test/asset-studio-font-cache.test.mjs:497:7",
+      "detail": "\n  ---\n  duration_ms: 301.280583\n  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/asset-studio-font-cache.test.mjs:497:7'\n  failureType: 'testCodeFailure'\n  error: |-\n    The input did not match the regular expression /ready\\./. Input:\n    \n    'Saved font preview: Ready'\n    \n  code: 'ERR_ASSERTION'\n  name: 'AssertionError'\n  expected:\n  actual: 'Saved font preview: Ready'\n  operator: 'match'\n  stack: |-\n    assertReady (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/asset-studio-font-cache.test.mjs:401:10)\n    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/asset-studio-font-cache.test.mjs:525:13)\n    async Test.run (node:internal/test_runner/test:797:9)\n    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)"
+    },
+    {
+      "test": "a failed shared FontFace.load can retry without cache reset and register one successful face",
+      "location": "game/test/asset-studio-font-cache.test.mjs:540:1",
+      "detail": "\n  ---\n  duration_ms: 319.480834\n  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/asset-studio-font-cache.test.mjs:540:1'\n  failureType: 'testCodeFailure'\n  error: |-\n    The input did not match the regular expression /ready\\./. Input:\n    \n    'Draft font preview: Ready'\n    \n  code: 'ERR_ASSERTION'\n  name: 'AssertionError'\n  expected:\n  actual: 'Draft font preview: Ready'\n  operator: 'match'\n  stack: |-\n    assertReady (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/asset-studio-font-cache.test.mjs:401:10)\n    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/asset-studio-font-cache.test.mjs:555:5)\n    async Test.run (node:internal/test_runner/test:797:9)\n    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)"
+    },
+    {
+      "test": "a rejected weight setter preserves the loaded narrow face and permits a real widening Retry",
+      "location": "game/test/asset-studio-font-cache.test.mjs:565:1",
+      "detail": "\n  ---\n  duration_ms: 319.962\n  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/asset-studio-font-cache.test.mjs:565:1'\n  failureType: 'testCodeFailure'\n  error: |-\n    The input did not match the regular expression /ready\\./. Input:\n    \n    'Draft font preview: Ready'\n    \n  code: 'ERR_ASSERTION'\n  name: 'AssertionError'\n  expected:\n  actual: 'Draft font preview: Ready'\n  operator: 'match'\n  stack: |-\n    assertReady (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/asset-studio-font-cache.test.mjs:401:10)\n    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/asset-studio-font-cache.test.mjs:589:5)\n    async Test.run (node:internal/test_runner/test:797:9)\n    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)"
+    },
+    {
+      "test": "repeated equal and narrower role requests reuse the loaded face without another byte read or load",
+      "location": "game/test/asset-studio-font-cache.test.mjs:604:1",
+      "detail": "\n  ---\n  duration_ms: 431.789666\n  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/asset-studio-font-cache.test.mjs:604:1'\n  failureType: 'testCodeFailure'\n  error: |-\n    The input did not match the regular expression /ready\\./. Input:\n    \n    'Saved font preview: Ready'\n    \n  code: 'ERR_ASSERTION'\n  name: 'AssertionError'\n  expected:\n  actual: 'Saved font preview: Ready'\n  operator: 'match'\n  stack: |-\n    assertReady (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/asset-studio-font-cache.test.mjs:401:10)\n    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/asset-studio-font-cache.test.mjs:621:7)\n    async Test.run (node:internal/test_runner/test:797:9)\n    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)"
+    }
+  ],
+  "summary": [
+    "# tests 15",
+    "# pass 0",
+    "# fail 15",
+    "# cancelled 0",
+    "# skipped 0",
+    "# duration_ms 5124.299333"
+  ]
+}

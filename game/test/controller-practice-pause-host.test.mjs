@@ -149,6 +149,8 @@ test('repeated forced Pause keeps the chosen menu action after Settings closes',
   key(page, 'Tab');
   assert.equal(page.doc.activeElement, page.$('overlay-restart'));
   key(page, 'Tab');
+  assert.equal(page.doc.activeElement, page.$('journey-skip'));
+  key(page, 'Tab');
   assert.equal(page.doc.activeElement, page.$('overlay-missions'));
   // A repeated platform suspension can arrive while focus is still reported
   // inside this document. It may neutralize input, but cannot restart menu focus.

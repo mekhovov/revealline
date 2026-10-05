@@ -79,7 +79,7 @@ const pause = (f) => {
 
 test('Team Settings has all eight categories, original controls, and exact lobby return without preparing or saving', async (t) => {
   const f = await fixture(t);
-  const controls = ['coop-touch', 'coop-audio', 'coop-text-face', 'coop-menu-palette'].map(f.$);
+  const controls = ['coop-touch', 'coop-audio', 'coop-text-face', 'coop-theme-familyId'].map(f.$);
   const before = state(f);
   open(f);
   assert.equal(f.doc.activeElement, tab(f, 'display'));
@@ -389,12 +389,12 @@ test('a newer focus choice during native Settings opening wins over the default 
         show = dialog.showModal;
       dialog.showModal = () => {
         show();
-        $('coop-menu-palette').focus();
+        $('coop-theme-familyId').focus();
       };
     },
   });
   open(f);
-  assert.equal(f.doc.activeElement.id, 'coop-menu-palette');
+  assert.equal(f.doc.activeElement.id, 'coop-theme-familyId');
 });
 
 for (const change of ['reopen', 'background'])
