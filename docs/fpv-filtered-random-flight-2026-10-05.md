@@ -28,10 +28,21 @@ Source validation against HUD parent `614adef75a6e1cc28ea1d04acf26fa69b507c551`:
   scenarios also assert that random-next is absent.
 - Node 22 syntax, scoped ESLint, Prettier and whitespace checks pass.
 
-These are source functional checks, not native-browser, physical-controller,
-package-admission or offline qualification. No package member, dependency or
-limit was added. Native visual/click verification and the final parent-docs
-rebase remain separate before publishing the focused stack child.
+The [native source review](fpv-filtered-random-flight-native-review.json) separately
+records EN empty/single filtering and keyboard Enter choosing **Wide oval** in
+the ordinary Ready state, with zero throttle and elapsed time. Menu retained its
+exact title and suppressed the HUD. The UK world label **Сонячний дослідний парк**
+and random action fit and wrapped cleanly in the 1280×720 mission modal, with no
+horizontal overflow or browser warnings/errors. The retained screenshot is
+linked in that receipt. This does not claim a phone viewport or physical controller.
+
+Only this child delta was rebased onto final HUD documentation head
+`b0f8555a45a41a829e2d81230a0608c72acb6c89`. The host module and tests remain
+byte-exact to the native preview's frozen `a72ab6f3d` source; the preview reads
+every other player file directly from the admitted `614adef75` ZIP. The runtime
+delta is 3,379 bytes in one existing module. No package member, dependency or
+limit was added. Fresh package admission, offline qualification and protected
+stack delivery remain outstanding for this child.
 
 Reproduce with Node 22:
 
