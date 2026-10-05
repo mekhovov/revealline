@@ -3,7 +3,7 @@
   "date": "2026-10-05",
   "baseMain": "2d447bc790bdf3951251c99041c8a918363ece0a",
   "branch": "codex/snake-continuous-play",
-  "scope": "Living Circuit implementation and tracking-treatment follow-up; distribution source revision is recorded separately; no published deployment or physical-controller certification",
+  "scope": "Living Circuit, tracking treatment, local coverage and compact result follow-ups; exact runtime build revision recorded separately; no published deployment or physical-controller certification",
   "validation": {
     "repositoryValidate": true,
     "repositoryLint": true,
@@ -23,24 +23,26 @@
     "statisticsLifecycleTests": 23,
     "studioPreviewIsolationTests": 4,
     "trackingFollowupTargetedTests": 81,
-    "trackingFixtureAcceptedScenarios": 12
+    "trackingFixtureAcceptedScenarios": 12,
+    "coverageFollowupTargetedTests": 148,
+    "coverageFollowupOptionalPackageTests": 9
   },
   "distribution": {
-    "sourceRevision": "001cebbac8e611a9e28bdcd0b8b17e061b935a10",
+    "sourceRevision": "a1d9bfd86a7b27f6517dc92d8788c355a5d544f0",
     "method": "buildProject; every expanded and archived file verified against manifest",
     "expandedDistributionWritten": true,
     "zipWritten": true,
-    "files": 3084,
-    "archiveEntries": 3085,
-    "payloadBytesIncludingManifest": 1004029760,
+    "files": 3085,
+    "archiveEntries": 3086,
+    "payloadBytesIncludingManifest": 1004044075,
     "manifest": {
       "path": "manifest.json",
-      "bytes": 458632,
-      "sha256": "ec5448ff7f766fb44f74393c6ae0b6e8616bdfca05c6658f6511e48adace4ab0"
+      "bytes": 458784,
+      "sha256": "8687a89f6b890f1857e5b4f740be5dd78d9821195008d34b2aa8e25af5615ee6"
     },
     "zip": {
-      "bytes": 1004553954,
-      "sha256": "0c605653ea172dfb4e53c2ad3089fa4308975a28af90afe33afd9436dcc4959b",
+      "bytes": 1004568445,
+      "sha256": "b90f12d2f45ba523047b5b4ea3a999bfd5ab8eff74bcc6b1fbd37067432e81d5",
       "allMemberChecksumsMatch": true
     },
     "allExpandedFileChecksumsMatch": true,
@@ -105,10 +107,10 @@
     "measurementScope": "Paired synthetic actor/no-actor images over 12 noise frames; not human difficulty calibration",
     "browser": [
       "Broadcast Solo Quiet Channel move 56",
-      "Reduced-effects live movement through moves 57–59",
+      "Reduced-effects live movement through moves 57\u201359",
       "Manual steering during broadcast burst",
       "Local Field Links move 34 interference to move 37 recovery",
-      "Broadcast Team move 28 at 320×640; 290px board and no horizontal overflow"
+      "Broadcast Team move 28 at 320\u00d7640; 290px board and no horizontal overflow"
     ],
     "screenshots": [
       "jamming-original.jpg",
@@ -117,5 +119,67 @@
       "jamming-mobile-team.jpg"
     ],
     "independentReview": "Fixed repeated steering resetting fixture time and paused receiver refresh after asynchronous wall-art arrival; renderer regression passes."
+  },
+  "previousDistributions": [
+    {
+      "sourceRevision": "001cebbac8e611a9e28bdcd0b8b17e061b935a10",
+      "method": "buildProject; every expanded and archived file verified against manifest",
+      "expandedDistributionWritten": true,
+      "zipWritten": true,
+      "files": 3084,
+      "archiveEntries": 3085,
+      "payloadBytesIncludingManifest": 1004029760,
+      "manifest": {
+        "path": "manifest.json",
+        "bytes": 458632,
+        "sha256": "ec5448ff7f766fb44f74393c6ae0b6e8616bdfca05c6658f6511e48adace4ab0"
+      },
+      "zip": {
+        "bytes": 1004553954,
+        "sha256": "0c605653ea172dfb4e53c2ad3089fa4308975a28af90afe33afd9436dcc4959b",
+        "allMemberChecksumsMatch": true
+      },
+      "allExpandedFileChecksumsMatch": true,
+      "temporaryOutputRemovedAfterVerification": true
+    }
+  ],
+  "coverageFollowup": {
+    "sourceRevision": "a1d9bfd86a7b27f6517dc92d8788c355a5d544f0",
+    "details": "coverage-followup.md",
+    "measurements": "coverage-followup-measurements.json",
+    "currentLocalProfile": "local-burst-v2",
+    "localRecipeRevision": "3",
+    "retiredOfficialRecipes": 9,
+    "retainedLocalV1Proofs": 24,
+    "regeneratedCurrentProofs": 24,
+    "unchangedCurrentProofs": 120,
+    "browser": [
+      "Real-host Solo 320x640: visible five-second countdown, Stay here cancellation, More and statistics expanded without horizontal overflow",
+      "Real-host Team Ukrainian 320x640 and 740x360: victory, countdown cancellation and expanded details with reachable footer",
+      "Real-host Versus 320x640: accepted draw and one-activation Rematch",
+      "Real-engine local-v2 fixture at 320px: reduced-effects movement from boundary34 to35 remains live",
+      "Real-engine paired local-v2 fixture at1280x800: both boards rendered under interference; independent coverage is verified separately by tests"
+    ],
+    "screenshots": [
+      "mobile-victory-countdown.jpg",
+      "mobile-victory-expanded.jpg",
+      "mobile-team-victory-uk.jpg",
+      "landscape-team-results-uk.jpg",
+      "mobile-versus-result.jpg",
+      "mobile-local-v2-reduced.jpg",
+      "desktop-local-v2-versus.jpg"
+    ],
+    "limits": [
+      "Core fresh-origin browser check reached the password gate; no new core browser pass claimed.",
+      "SIM result lifecycle and layout integration verified by host regressions, not a new completed browser flight.",
+      "Physical touch/controller sessions and human difficulty calibration remain separate."
+    ],
+    "releaseAdmission": {
+      "milestone": 57,
+      "title": "v0.150.0 \u2014 Unified native experience",
+      "draft": true,
+      "autoMergeEnabled": false,
+      "freshHeadCI": "pending push"
+    }
   }
 }
