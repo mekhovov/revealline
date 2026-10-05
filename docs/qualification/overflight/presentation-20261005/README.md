@@ -17,7 +17,7 @@ Runtime candidate: `2a80117ee210cfe1fb85ae8fd65b4d260e7902a4`, stacked above the
 
 - `overflight-tests.tap`: 132/132 checks pass, including the full existing Overflight cohort and new character, remains and feedback coverage.
 - `shared-audio-tests.tap`: 127/127 affected audio/reaction checks pass. This overlaps the Overflight cohort; counts must not be added together.
-- `validation.log`: the complete `npm run validate` command passes, including localization, native content/metadata and all generated optional-runtime checks.
+- `validation.txt`: the complete `npm run validate` command passes, including localization, native content/metadata and all generated optional-runtime checks.
 - Targeted ESLint, canonical source Prettier checks and `git diff --check` pass. The generated optional reaction projection is verified byte-for-byte by its generator, rather than rewritten by the general formatter.
 
 Coverage includes identical complete seeded simulation state for all seven character IDs; custom image ownership across delayed renderer retirement; 700 accepted deaths through a bounded mailbox; exactly-once rewards; 700 visible living actors alongside the full residue budget; gore/reduced-effect toggles without gameplay mutation or runtime painting; context restoration and disposal; actual procedural result nodes on the menu bus; and prepared result dialogue that ducks music and cannot replay after a visibility interruption.
