@@ -3415,6 +3415,62 @@ it establishes no browser FPS or hardware-performance claim. Full regression and
 new unit coverage remain D6, with physical-device and novice qualification still
 unclaimed.
 
+## 2026-10-05 — Harbor r4 qualified on the explicit ground-motion prerequisite
+
+Harbor now has eight distinct EN/UK challenges and sixteen fresh ordinary-input
+proofs. Its accepted r2 scene remains exact: 7,900 triangles, ten imported material
+batches, two original maps and 38 solid records. The raised quay and service deck
+remain real collision supports; background water stays outside playable bounds.
+Only the civilian cart and inspector opt into `groundMotion: "support-v1"`.
+The final prerequisite is Draft [#1101](https://github.com/mekhovov/revealline/pull/1101),
+head `f9617ba8e0fdb0a526171f0fab944d06ad2d834e`, retaining qualified runtime
+`9b5c3d65e2877847126c87f263fbc7e9aca357fb`. The data branch was rebased
+linearly with a recovery ref and exact Harbor-tree/distribution comparison; it
+does not change runtime, Library feeds, ceilings or objective tolerances.
+
+Static qualification passes 407 checks; 540 ordinary-flight/replay/archive checks
+cover all sixteen complete examples. Across 6,700 civilian ticks, independent
+feet-to-solid gaps remain 12–13mm on the exact named supports, within the explicitly
+approved r4-only 14mm rounding envelope. Follow completes six continuous seconds
+and 4.2m target travel; Observe completes four seconds. The isolated fictional,
+stationary, nonfiring training drone records real 50→25→0 health and defeat in
+both modes. Historical r3 finite-platform failures and their 12mm observer remain
+preserved; no source or pose shortcut is presented as a fix.
+
+The exact 102-member admitted player at
+`ca28461faa9a5245f55532bb27fbb5d69f557e16` passes a separate controlled
+packaged-module matrix: 314 checks, sixteen complete Watch endpoints and
+eight-course editor/export/reimport/reopen, with no errors/warnings/dropped
+observations and correct created-renderer disposal. Scripted legacy controls
+and controlled RAF are explicit; this is not native-visible end-to-end or
+native-clock endurance evidence.
+
+Root then used the unmodified direct entry and visible file choosers to install
+the exact pack and verify all sixteen proofs. Two normal-RAF/public-1x examples
+completed at displayed 34.5s (cart) and 32.2s (inspector), followed by deliberate
+Arm and Pause/Continue for each. The moving subjects were directly observed;
+retained screenshots are accurately labeled later landing-phase views.
+Prepare offline completed, root stopped only the verified dedicated origin,
+curl refused with exit 7, and a real cached reload retained the eight-course pack.
+Offline cart launch reached a saved Flight active state at 17.5s and paused to
+Continue. The console was empty. These flights are bounded launch/pause checks,
+not manual course completions or hardware/FPS qualification.
+
+The pack is 879,213 bytes, SHA256
+`d5bf4b9bb6829c04dbe1bb398893e5243cefc1f9acf018bf153a2012c8cf49b6`;
+the sixteen-record archive is 1,018,615 bytes, SHA256
+`7341d203aa2d3a61199a0000cc87a31f50553588dad610d878a5238aab433102`.
+The [Harbor README](../authoring/fpv-worlds/harbor-docks/README.md) links the
+editable ZIP, originals, failed diagnostics and separate CPU/controlled/native
+evidence. Bundled 14-world/196-challenge counts remain unchanged; installing
+Harbor adds one optional world and eight challenges.
+
+The human #1083/P1 main-merge hold remains in force: prepare the qualified child
+as Draft in a native dependency stack, with no automatic merge. Compatible
+Library-cohort publication is separate and no Harbor row is added to an older
+feed. Bounded stylized scene acceptance does not imply commercial-realism,
+physical-device or novice acceptance. Canals remains the next world, then D6.
+
 ### 5 October — Ground prerequisite integrated with P1; new admission pending
 
 The Character owner explicitly released the former #1083/P1 main-merge hold
