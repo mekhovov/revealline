@@ -15,6 +15,7 @@ import {
   CLASSIC_SNAKE_V4_LEVELS,
   CLASSIC_SNAKE_V4_INITIAL_LEVELS,
 } from '../snake/classic-catalogue-v4.mjs';
+import { CLASSIC_SNAKE_FIELD_V3_ARCHIVED_LEVELS } from '../snake/classic-catalogue-field-v3-archive.mjs';
 import { prepareClassicSnakeLevel } from '../snake/classic-setup.mjs';
 import { drawClassicBoard } from '../snake/classic-view.mjs';
 import { classicMechanicGuide } from '../snake/classic-mechanic-guide.mjs';
@@ -24,7 +25,10 @@ import { CLASSIC_SNAKE_V4_KINDS } from '../snake/classic-core-v4.mjs';
 const entry = (slug) => CLASSIC_SNAKE_V4_LEVELS.find((row) => row.id === `classic-field-${slug}`);
 // Retain coverage of the original, unprofiled v4 mechanic rules.
 const make = (slug, options = {}) => {
-  const level = structuredClone(entry(slug).level);
+  const fixture =
+    CLASSIC_SNAKE_FIELD_V3_ARCHIVED_LEVELS.find((row) => row.id === `classic-field-${slug}`) ??
+    entry(slug);
+  const level = structuredClone(fixture.level);
   for (const policy of level.targets.required) delete policy.signalProfile;
   return createClassicSnake(level, options);
 };
@@ -82,8 +86,8 @@ test('broadcast teaching precedes combined encounters and uses the approved name
   );
   assert.deepEqual(entry('quiet-channel').title, { en: 'Quiet Channel', uk: 'Тихий канал' });
   assert.equal(entry('quiet-channel').level.name, 'Quiet Channel');
-  assert.equal(entry('quiet-channel').level.revision, '1');
-  assert.equal(entry('broadcast-check').level.revision, '1');
+  assert.equal(entry('quiet-channel').level.revision, '2');
+  assert.equal(entry('broadcast-check').level.revision, '2');
   for (const slug of ['broadcast-check', 'quiet-channel', 'relay-airfield'])
     assert.ok(
       entry(slug)
@@ -92,10 +96,10 @@ test('broadcast teaching precedes combined encounters and uses the approved name
     );
   assert.equal(entry('signal-crossing').level.targets.required[0].signalProfile, 'local-burst-v2');
   for (const slug of ['signal-check', 'quiet-return', 'signal-crossing', 'field-links'])
-    assert.equal(entry(slug).level.revision, '3');
-  assert.equal(entry('relay-airfield').level.revision, '2');
-  assert.match(entry('relay-airfield').description.en, /whole feed/);
-  assert.match(entry('relay-airfield').description.uk, /усе поле/);
+    assert.equal(entry(slug).level.revision, '4');
+  assert.equal(entry('relay-airfield').level.revision, '3');
+  assert.match(entry('relay-airfield').description.en, /broadcast beacon/);
+  assert.match(entry('relay-airfield').description.uk, /маячок трансляції/);
 });
 
 test('jamming has a visible warning, four moves of interference and no steering mutation', () => {
@@ -283,8 +287,8 @@ test('later prey never moves into a snake and eroders only open authored wall ce
   assert.deepEqual(restoreClassicSnakeReplay(exportClassicSnakeReplay(run)), run);
 });
 
-test('v4 appends 24 distinct authored layouts while historical versions retain 96 entries', () => {
-  assert.equal(CLASSIC_SNAKE_LEVELS.length, 120);
+test('v4 appends 48 distinct authored encounters while historical versions retain 96 entries', () => {
+  assert.equal(CLASSIC_SNAKE_LEVELS.length, 144);
   assert.equal(CLASSIC_SNAKE_LEVELS.filter((row) => !row.level.version.endsWith('v4')).length, 96);
   assert.deepEqual(
     CLASSIC_SNAKE_V4_LEVELS.map((row) => row.chapterId).reduce((counts, id) => {
@@ -295,11 +299,15 @@ test('v4 appends 24 distinct authored layouts while historical versions retain 9
       'classic-snake-signal-tactics': 10,
       'classic-snake-patrol-frontiers': 6,
       'classic-snake-field-mastery': 8,
+      'classic-snake-crossing-routes': 6,
+      'classic-snake-changing-shortcuts': 6,
+      'classic-snake-hidden-signals': 6,
+      'classic-snake-expedition-circuits': 6,
     },
   );
   assert.equal(
     new Set(CLASSIC_SNAKE_V4_LEVELS.map((row) => JSON.stringify(row.level.walls))).size,
-    24,
+    48,
   );
   for (const row of CLASSIC_SNAKE_V4_LEVELS)
     assert.deepEqual(validateClassicSnakeLevel(row.level), row.level);
@@ -309,7 +317,7 @@ test('every v4 campaign mission has a verified Solo and Team winning proof at ev
   const source = JSON.parse(
     await readFile(new URL('./fixtures/classic-snake-v4-proofs.json', import.meta.url), 'utf8'),
   );
-  assert.equal(source.proofs.length, 144);
+  assert.equal(source.proofs.length, 288);
   const keys = new Set();
   for (const proof of source.proofs) {
     const row = CLASSIC_SNAKE_V4_LEVELS.find((item) => item.id === proof.levelId);
@@ -320,10 +328,13 @@ test('every v4 campaign mission has a verified Solo and Team winning proof at ev
     assert.equal(run.mode, proof.mode);
     keys.add(`${proof.levelId}/${proof.mode}/${proof.pace}`);
   }
-  assert.equal(keys.size, 144);
+  assert.equal(keys.size, 288);
 });
 
-test('mechanic rendering is deterministic, supports reduced effects, and never changes replay authority', () => {
+test('mechanic rendering is deterministic, supports reduced effects, and never changes replay authority', async () => {
+  const { proofs } = JSON.parse(
+    await readFile(new URL('./fixtures/classic-snake-v4-proofs.json', import.meta.url), 'utf8'),
+  );
   const calls = [];
   const ctx = new Proxy(
     {},
@@ -331,11 +342,23 @@ test('mechanic rendering is deterministic, supports reduced effects, and never c
   );
   const canvas = { width: 0, height: 0, style: {}, getContext: () => ctx };
   for (const row of CLASSIC_SNAKE_V4_LEVELS) {
-    const run = createClassicSnake(
-      row.level,
-      classicSnakeUsesVariableHazards(row.level) ? { hazardSeed: 17 } : {},
-    );
-    circulate(run, 16);
+    const proof = proofs.find(
+      (item) => item.levelId === row.id && item.mode === 'solo' && item.pace === 'normal',
+    ).replay;
+    const run = createClassicSnake(proof.level, {
+      seed: proof.seed,
+      ...(proof.hazardSeed === undefined ? {} : { hazardSeed: proof.hazardSeed }),
+    });
+    // Different starts and routes require their own accepted inputs; an old
+    // perimeter loop is not a valid render probe for every authored board.
+    let cursor = 0;
+    for (let tick = 0; tick < Math.min(16, proof.steps); tick++) {
+      while (proof.turns[cursor]?.tick === tick) {
+        const turn = proof.turns[cursor++];
+        assert.ok(queueClassicSnakeTurn(run, turn.playerId, turn.direction));
+      }
+      stepClassicSnake(run);
+    }
     const before = JSON.stringify(run),
       replay = exportClassicSnakeReplay(run);
     for (const reduced of [false, true]) drawClassicBoard(canvas, run, { reduced, pixelRatio: 2 });

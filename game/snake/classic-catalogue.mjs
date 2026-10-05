@@ -725,18 +725,39 @@ const FOUNDATION_LEVELS = freeze(
     const id = 'classic-' + sourceId;
     const wrap =
       chapterIndex === 4 || (chapterIndex === 7 && (withinChapter === 2 || withinChapter === 4));
-    const moving = chapterIndex === 3 || (chapterIndex === 7 && withinChapter % 2 === 1);
+    const originallyMoving = chapterIndex === 3 || (chapterIndex === 7 && withinChapter % 2 === 1);
+    const revised = chapterIndex > 0 && !originallyMoving;
+    // Alternate interception with deliberate body-routing missions. The opening
+    // six remain a quiet introduction; later static catches no longer repeat
+    // long quotas without introducing a new decision.
+    const moving = originallyMoving || (revised && (withinChapter % 2 === 1 || chapterIndex === 7));
+    const originalGoal =
+      [8, 10, 12, 12, 14, 16, 16, 18][chapterIndex] + Math.floor(withinChapter / 2);
+    const goal = revised
+      ? moving
+        ? Math.min(14, originalGoal - 2)
+        : Math.max(8, originalGoal - 4)
+      : originalGoal;
     const stepMs = [200, 190, 180, 180, 175, 180, 180, 175][chapterIndex];
     const speedupEvery = chapterIndex >= 5 ? 4 : 0;
     return {
       id,
       chapterId: FOUNDATION_CHAPTERS[chapterIndex].id,
       title: bilingual(en, uk),
-      description: bilingual(descriptionEn, descriptionUk),
+      description: bilingual(
+        descriptionEn +
+          (revised && moving
+            ? ' The target changes direction as it flees: cut off its next exit instead of following its trail.'
+            : ''),
+        descriptionUk +
+          (revised && moving
+            ? ' Ціль змінює напрямок утечі: перекрийте наступний вихід, а не повторюйте її шлях.'
+            : ''),
+      ),
       level: {
         version: 'classic-snake-level.v1',
         id,
-        revision: '1',
+        revision: revised ? '2' : '1',
         name: en,
         width: WIDTH,
         height: HEIGHT,
@@ -745,13 +766,13 @@ const FOUNDATION_LEVELS = freeze(
           { x: 5, y: 2, direction: 'right' },
           { x: WIDTH - 6, y: HEIGHT - 3, direction: 'left' },
         ],
-        goal: [8, 10, 12, 12, 14, 16, 16, 18][chapterIndex] + Math.floor(withinChapter / 2),
+        goal,
         stepMs,
         speedupEvery,
         minStepMs: speedupEvery ? 135 : stepMs,
         wrap,
         targetMovement: moving ? 'flee' : 'still',
-        fleeEvery: moving ? (withinChapter < 3 ? 5 : 4) : 3,
+        fleeEvery: moving ? (revised && chapterIndex < 3 ? 6 : withinChapter < 3 ? 5 : 4) : 3,
       },
     };
   }),
@@ -815,12 +836,21 @@ export const CLASSIC_SNAKE_CAMPAIGNS = freeze([
     ),
     chapterIds: CLASSIC_SNAKE_V2_CHAPTERS.slice(4, 6).map((chapter) => chapter.id),
   },
-  ...CLASSIC_SNAKE_V4_CHAPTERS.map((chapter) => ({
+  ...CLASSIC_SNAKE_V4_CHAPTERS.slice(0, 3).map((chapter) => ({
     id: `${chapter.id}-v1`,
     title: chapter.title,
     description: chapter.description,
     chapterIds: [chapter.id],
   })),
+  {
+    id: 'classic-expeditions-v1',
+    title: bilingual('Uncharted Circuits', 'Незвідані кола'),
+    description: bilingual(
+      'Twenty-four encounters: intercept across edges, exploit changing shortcuts, track unseen prey and combine your route skills.',
+      'Двадцять чотири випробування: перехоплюйте через край, користуйтеся новими проходами, вистежуйте невидиму здобич і поєднуйте навички.',
+    ),
+    chapterIds: CLASSIC_SNAKE_V4_CHAPTERS.slice(3).map((chapter) => chapter.id),
+  },
 ]);
 export const CLASSIC_SNAKE_FEATURED = freeze(
   CLASSIC_SNAKE_CHAPTERS.map((chapter, index) => {

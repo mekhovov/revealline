@@ -6,9 +6,11 @@ import {
   stepClassicSnake,
   queueClassicSnakeTurn,
   exportClassicSnakeReplay,
+  restoreClassicSnakeReplay,
   classicSnakeSignalView,
 } from '../snake/classic-core.mjs';
 import { drawClassicBoard } from '../snake/classic-view.mjs';
+import { createClassicSnakeMatch } from '../snake/classic-match.mjs';
 import {
   captureClassicSignalTerrain,
   classicSignalBlend,
@@ -56,7 +58,7 @@ const pixels = (width, height, color) => {
   return image;
 };
 
-test('jammer uses the live world, clear source/radius cues, and never an opaque dropout screen', () => {
+test('jammer conceals enemy effects while retaining live players and source/radius cues', () => {
   const run = createClassicSnake(level, { hazardSeed: 17 });
   advanceTo(run, 'warning');
   const warning = render(run);
@@ -70,7 +72,7 @@ test('jammer uses the live world, clear source/radius cues, and never an opaque 
   const before = exportClassicSnakeReplay(run);
   for (const reduced of [false, true]) {
     const drawn = render(run, { reduced });
-    assert.equal(drawn.effectDraws, 1, 'accepted live world is drawn during jamming');
+    assert.equal(drawn.effectDraws, 0, 'enemy effects cannot leak through the receiver');
     assert.ok(drawn.calls.some(([method, , , radius]) => method === 'arc' && radius === 6 * 28));
     assert.ok(
       !drawn.calls.some(([method, text]) => method === 'fillText' && text === 'SIGNAL LOST'),
@@ -88,6 +90,194 @@ test('jammer uses the live world, clear source/radius cues, and never an opaque 
     before,
     'rendering does not advance RNG, deadlines, or inputs',
   );
+});
+
+function hiddenActors(run) {
+  const head = run.snakes[0].body[0];
+  // These are render-only fixtures: deliberately cover nearby, distant, and
+  // relay-linked actors without inventing a playable authored recipe.
+  run.targets.push(
+    { id: 900, kind: 'runner', x: head.x - 1, y: head.y, heading: 'left', policyIndex: 0 },
+    { id: 901, kind: 'runner', x: 19, y: 13, heading: 'right', policyIndex: 0 },
+    { id: 902, kind: 'relay', x: 9, y: 9, heading: 'up', policyIndex: 0, phase: 'open' },
+  );
+  run.relays.push({ ownerId: 902, x: 4, y: 10, collected: false });
+  run.recentCatches.push({ kind: 'runner', x: 17, y: 13, tick: run.tick });
+  return run;
+}
+
+test('every enemy, including nearby prey and the jammer body, disappears before receiver sampling', () => {
+  const run = createClassicSnake(level, { hazardSeed: 17 });
+  advanceTo(run, 'jamming');
+  hiddenActors(run);
+  assert.ok(classicSignalStrength(run, classicSnakeSignalView(run)) > 0);
+  const changed = structuredClone(run);
+  for (const target of changed.targets) {
+    target.heading = target.heading === 'left' ? 'down' : 'left';
+    if (target.kind !== 'jammer') {
+      target.x = (target.x + 3) % level.width;
+      target.y = (target.y + 5) % level.height;
+    }
+  }
+  changed.recentCatches[0].x--;
+  for (const boardStyle of ['theme', 'retro', 'living-circuit'])
+    for (const reduced of [false, true])
+      for (const signalTreatment of ['baseline', 'snow-only', 'contrast-loss']) {
+        const options = { boardStyle, reduced, signalTreatment };
+        assert.deepEqual(
+          render(run, options),
+          render(changed, options),
+          `${boardStyle}/${reduced}/${signalTreatment}: invisible positions, headings, remains and relay links leave no paint commands`,
+        );
+        const diagnostic = { ...options, signalDiagnosticOriginal: true };
+        assert.notDeepEqual(
+          render(run, diagnostic),
+          render(changed, diagnostic),
+          'the original actor comparison requires an explicit fixture flag',
+        );
+      }
+  const noPrey = structuredClone(run);
+  noPrey.targets = noPrey.targets.filter((target) => target.kind === 'jammer');
+  noPrey.relays = [];
+  run.relays = [];
+  assert.deepEqual(render(run), render(noPrey), 'all prey, badges and shadows are omitted');
+});
+
+test('the minimal source beacon survives concealment without exposing jammer sprite orientation', () => {
+  const run = createClassicSnake(level, { hazardSeed: 17 });
+  advanceTo(run, 'jamming');
+  const source = run.targets[0];
+  const drawn = render(run);
+  source.heading = source.heading === 'down' ? 'left' : 'down';
+  assert.deepEqual(drawn, render(run), 'jammer body/facing is not drawn');
+  const x = (source.x + 0.5) * 28,
+    y = (source.y + 0.5) * 28;
+  assert.ok(
+    drawn.calls.some(([method, cx, cy]) => method === 'lineTo' && cx === x && cy === y - 10),
+    'one small radio antenna identifies the source',
+  );
+  assert.ok(
+    !drawn.calls.some(
+      ([method, cx, cy]) => method === 'translate' && cx === source.x * 28 && cy === source.y * 28,
+    ),
+    'the source actor and badge painter is never entered',
+  );
+});
+
+test('Solo, Team, Versus, and restored replay use the same all-enemy concealment', () => {
+  const accepted = createClassicSnake(level, { hazardSeed: 17 });
+  advanceTo(accepted, 'jamming');
+  assert.deepEqual(
+    render(accepted),
+    render(restoreClassicSnakeReplay(exportClassicSnakeReplay(accepted))),
+  );
+  for (const mode of ['solo', 'team', 'versus']) {
+    const match = createClassicSnakeMatch(level, { mode, hazardSeed: 17 });
+    for (const run of match.runs) {
+      // Mode layouts exercise the shared painter. Engine replay equivalence is
+      // checked above on the accepted run, before any render-fixture changes.
+      run.targets = structuredClone(accepted.targets);
+      run.tick = accepted.tick;
+      run.elapsedMs = accepted.elapsedMs;
+      run.snakes[0].body = structuredClone(accepted.snakes[0].body);
+      const view = hiddenActors(structuredClone(run));
+      if (mode === 'team') {
+        const second = view.snakes[1].body[0];
+        view.targets.push({
+          id: 903,
+          kind: 'runner',
+          x: second.x + 1,
+          y: second.y,
+          policyIndex: 0,
+        });
+      }
+      const empty = structuredClone(view);
+      empty.targets = empty.targets.filter((target) => target.kind === 'jammer');
+      view.relays = empty.relays = [];
+      assert.deepEqual(render(view), render(empty), `${mode}: no near-head visibility exception`);
+    }
+  }
+});
+
+test('Pulse, radius exit, source capture and terminal outcomes immediately reveal actors', () => {
+  const run = createClassicSnake(level, { hazardSeed: 17 });
+  advanceTo(run, 'jamming');
+  assert.equal(render(run).effectDraws, 0);
+  const check = (label, change) => {
+    const view = hiddenActors(structuredClone(run));
+    change(view);
+    assert.equal(classicSignalStrength(view, classicSnakeSignalView(view)), 0, label);
+    assert.equal(render(view).effectDraws, 1, `${label}: enemy effects resume immediately`);
+    assert.deepEqual(
+      render(view),
+      render(view, { signalDiagnosticOriginal: true }),
+      `${label}: the full normal actor feed is restored`,
+    );
+    const moved = structuredClone(view);
+    moved.targets.find((target) => target.id === 900).x--;
+    assert.notDeepEqual(render(view), render(moved), `${label}: live target positions are visible`);
+  };
+  check('Pulse', (view) => (view.pulseTicks = 3));
+  check('outside local radius', (view) => (view.snakes[0].body[0] = { x: 0, y: 0 }));
+  check(
+    'source captured',
+    (view) => (view.targets = view.targets.filter((t) => t.kind !== 'jammer')),
+  );
+  check('burst ended', (view) => (view.targets[0].phase = 'rest'));
+  for (const status of ['lost', 'won']) check(status, (view) => (view.status = status));
+});
+
+test('concealed moving prey continues turning with identical simulation and replay state', () => {
+  const fixture = structuredClone(level);
+  fixture.targets.maxActive = 2;
+  fixture.targets.required = [
+    { ...fixture.targets.required[0], at: { x: 18, y: 8 }, signalProfile: 'broadcast-burst-v1' },
+    {
+      kind: 'patroller',
+      every: 4,
+      path: [
+        { x: 8, y: 10 },
+        { x: 9, y: 10 },
+        { x: 9, y: 11 },
+        { x: 8, y: 11 },
+      ],
+    },
+  ];
+  const run = createClassicSnake(fixture, { hazardSeed: 17 });
+  advanceTo(run, 'jamming');
+  const expected = restoreClassicSnakeReplay(exportClassicSnakeReplay(run));
+  const headings = new Set(),
+    positions = new Set();
+  for (let i = 0; i < 80; i++) {
+    if (classicSignalStrength(run, classicSnakeSignalView(run)) > 0) {
+      const prey = run.targets.find((target) => target.kind === 'patroller');
+      headings.add(prey.heading);
+      positions.add(`${prey.x},${prey.y}`);
+      const withoutPrey = structuredClone(run);
+      withoutPrey.targets = withoutPrey.targets.filter((target) => target.kind === 'jammer');
+      assert.deepEqual(
+        render(run),
+        render(withoutPrey),
+        'current moving prey leaves no visible trace',
+      );
+    }
+    const before = exportClassicSnakeReplay(run);
+    render(run, { reduced: true, flight: { timeMs: i * 100 } });
+    assert.deepEqual(exportClassicSnakeReplay(run), before);
+    for (const current of [run, expected]) {
+      const head = current.snakes[0].body[0];
+      if (head.x === 20 && head.y === 2) queueClassicSnakeTurn(current, 0, 'down');
+      if (head.x === 20 && head.y === 15) queueClassicSnakeTurn(current, 0, 'left');
+      if (head.x === 3 && head.y === 15) queueClassicSnakeTurn(current, 0, 'up');
+      if (head.x === 3 && head.y === 2) queueClassicSnakeTurn(current, 0, 'right');
+      stepClassicSnake(current);
+      assert.equal(current.status, 'running');
+    }
+    assert.deepEqual(run, expected, 'rendering never freezes, turns, or advances an enemy');
+  }
+  assert.ok(positions.size > 1, 'hidden prey moved');
+  assert.ok(headings.size > 1, 'hidden prey turned');
+  assert.deepEqual(restoreClassicSnakeReplay(exportClassicSnakeReplay(run)), run);
 });
 
 test('receiver strength follows local radius, broadcast scope, Pulse, and terminal outcomes', () => {
@@ -325,6 +515,55 @@ test('danger destination outlines are painted at native resolution after receive
   assert.ok(destination > receiver, 'danger outline is crisp above the processed feed');
 });
 
+test('concealed contact hazards retain only truthful lethal edges above interference', () => {
+  const run = createClassicSnake(level, { hazardSeed: 17 });
+  advanceTo(run, 'jamming');
+  const x = 8,
+    y = 11;
+  const cases = [
+    ['relay', 'locked', 'right', ['top', 'right', 'bottom', 'left']],
+    ['relay', 'open', 'right', []],
+    ['shield', 'moving', 'right', ['right']],
+    ['shield', 'moving', 'left', ['left']],
+    ['brace', 'warning', 'up', ['top', 'right', 'bottom', 'left']],
+    ['brace', 'burst', 'up', ['top', 'right', 'bottom', 'left']],
+    ['brace', 'rest', 'up', []],
+    ['guard', 'rest', 'up', []],
+    ['lane', 'rest', 'up', []],
+    ['runner', 'moving', 'up', []],
+  ];
+  const edges = {
+    top: [x * 28 + 2, y * 28 + 2, x * 28 + 26, y * 28 + 2],
+    right: [x * 28 + 26, y * 28 + 2, x * 28 + 26, y * 28 + 26],
+    bottom: [x * 28 + 2, y * 28 + 26, x * 28 + 26, y * 28 + 26],
+    left: [x * 28 + 2, y * 28 + 2, x * 28 + 2, y * 28 + 26],
+  };
+  for (const [kind, phase, heading, lethal] of cases) {
+    const view = structuredClone(run);
+    view.targets.push({ id: 999, kind, phase, heading, x, y, policyIndex: 0 });
+    const { calls } = render(view);
+    const receiver = calls.findLastIndex(
+      ([method, , , width, height]) => method === 'fillRect' && width === 14 && height === 7,
+    );
+    for (const [edge, [left, top, right, bottom]] of Object.entries(edges)) {
+      const index = calls.findIndex(
+        ([method, cx, cy], i) =>
+          method === 'moveTo' &&
+          cx === left &&
+          cy === top &&
+          calls[i + 1]?.[0] === 'lineTo' &&
+          calls[i + 1][1] === right &&
+          calls[i + 1][2] === bottom,
+      );
+      assert.equal(index > receiver, lethal.includes(edge), `${kind}/${phase}/${heading}: ${edge}`);
+    }
+    assert.ok(
+      !calls.some(([method, cx, cy]) => method === 'translate' && cx === x * 28 && cy === y * 28),
+      `${kind}: hazard information does not restore actor art`,
+    );
+  }
+});
+
 function contrastGain({
   treatment,
   strength = 1,
@@ -365,7 +604,7 @@ function contrastGain({
   return delta / (20 * 20 * 80);
 }
 
-test('contrast loss removes duplicate distant actor information rather than merely adding snow', () => {
+test('diagnostic original filter comparison bounds the live terrain/player contrast fraction', () => {
   for (const reduced of [false, true])
     for (const strength of [0.25, 0.625, 1])
       for (const frame of [0, 3, 7, 11]) {
@@ -390,7 +629,7 @@ test('contrast loss removes duplicate distant actor information rather than mere
   assert.equal(classicSignalBlend(1), 0.65);
 });
 
-test('selected reduced effects retains the same distant contrast limit with a stationary mask', () => {
+test('reduced effects retains the same terrain/player contrast limit with a stationary mask', () => {
   const terrain = pixels(64, 48, [30, 70, 90]);
   const live = pixels(64, 48, [180, 140, 80]);
   const options = { terrain, seed: 27, columns: 16, rows: 12, reduced: true };
@@ -564,4 +803,22 @@ test('paused receiver refreshes when asynchronous wall artwork becomes available
     sampled + 2,
     'asset arrival refreshes both terrain and live receiver',
   );
+});
+
+test('leaving an explicit original-comparison fixture cannot reuse its enemy-bearing receiver', () => {
+  const run = createClassicSnake(level, { hazardSeed: 17 });
+  advanceTo(run, 'jamming');
+  const receiver = canvasReceiver();
+  receiver.canvas.getContext = () => receiver.ctx;
+  receiver.canvas.style = {};
+  drawClassicBoard(receiver.canvas, run, { reduced: true, signalDiagnosticOriginal: true });
+  const originalSamples = receiver.sampled;
+  drawClassicBoard(receiver.canvas, run, { reduced: true });
+  assert.equal(
+    receiver.sampled,
+    originalSamples + 2,
+    'terrain and receiver both discard the original fixture',
+  );
+  drawClassicBoard(receiver.canvas, run, { reduced: true });
+  assert.equal(receiver.sampled, originalSamples + 2, 'unchanged concealed image is reusable');
 });

@@ -1,4 +1,8 @@
 /** Additive authored encounters. Historical level recipes remain byte-for-byte unchanged. */
+import {
+  CLASSIC_SNAKE_EXPEDITION_CHAPTERS,
+  CLASSIC_SNAKE_EXPEDITION_LEVELS,
+} from './classic-catalogue-expeditions.mjs';
 const bilingual = (en, uk) => ({ en, uk });
 const freeze = (value) => {
   if (value && typeof value === 'object') {
@@ -79,6 +83,7 @@ export const CLASSIC_SNAKE_V4_CHAPTERS = freeze([
       'Вісім місій поєднують відбиті маршрути, відкриття стін і попереджені постріли.',
     ),
   },
+  ...CLASSIC_SNAKE_EXPEDITION_CHAPTERS,
 ]);
 // Each introduction isolates its new idea. Mastery adds geometry before combining mechanics.
 const first = [
@@ -406,31 +411,249 @@ const mastery = [
     'Завершіть коло з чіткими попередженнями, постійними обходами й незмінно відкритим ретранслятором.',
   ],
 ];
+const refugeGoals = [
+  [3, 4],
+  [20, 4],
+  [20, 13],
+  [3, 13],
+].map(cell);
+const refuge = () => ({ kind: 'refuge', every: 3, goals: refugeGoals });
+const switchback = () => ({ kind: 'switchback', every: 3, goals: refugeGoals });
+const verticalLane = (at) => ({
+  kind: 'lane',
+  every: 3,
+  at: cell(at),
+  lane: { axis: 'y', from: 4, to: 13 },
+});
+const notch = (at, wall) => ({ kind: 'eroder', every: 3, at: cell(at), breaks: [cell(wall)] });
+// Distinct accepted stations replace catch-quota loops. Older exact recipes
+// live in the field archive; a current revision never reinterprets a recording.
+const revised = {
+  'signal-check': {
+    goal: 2,
+    description: bilingual(
+      'Two antennas teach local reception. Enemies disappear during a burst; skirt the circle or catch the source at its beacon.',
+      'Дві антени навчають локальному прийому. Під час перешкод вороги зникають; обходьте коло або ловіть джерело за маячком.',
+    ),
+  },
+  'quiet-return': {
+    maxActive: 2,
+    spawns: [
+      { x: 5, y: 2, direction: 'right' },
+      { x: 5, y: 15, direction: 'right' },
+    ],
+    targets: [
+      jammer(),
+      { kind: 'patroller', every: 4, path: rectanglePath(17, 12, 5, 4) },
+      runner(),
+      refuge(),
+      runner(),
+      switchback(),
+    ],
+    description: bilingual(
+      'Prey keeps arriving while the antenna survives. Read its route before the warning ends, leave coverage, or take the long approach to the beacon.',
+      'Поки антена працює, прибуває нова здобич. Читайте маршрут до кінця попередження, виходьте із зони або обирайте довший шлях до маячка.',
+    ),
+  },
+  'lane-window': {
+    goal: 3,
+    targets: [lane(), lane([18, 11]), verticalLane([6, 5])],
+    description: bilingual(
+      'Three different crossings teach horizontal and vertical warnings. Use the recovery window or a permanent end bypass.',
+      'Три різні переходи навчають горизонтальним і вертикальним попередженням. Проходьте під час відновлення або обходьте кінці.',
+    ),
+  },
+  'two-returns': {
+    goal: 4,
+    maxActive: 2,
+    targets: [lane(), runner(), verticalLane([18, 5]), refuge()],
+    description: bilingual(
+      'A moving target changes which lane return is useful. Cross during recovery; only the head is vulnerable.',
+      'Рухлива ціль змінює вигідний обхід смуги. Перетинайте під час відновлення; небезпека лише для голови.',
+    ),
+  },
+  'broadcast-check': {
+    goal: 3,
+    targets: [
+      jammer([19, 9], 'broadcast-burst-v1'),
+      jammer([4, 12], 'broadcast-burst-v1'),
+      jammer([17, 4], 'broadcast-burst-v1'),
+    ],
+    description: bilingual(
+      'Visit three different broadcast posts. Bursts hide enemy bodies across the board; each antenna beacon still marks a source you can catch.',
+      'Відвідайте три різні пости трансляції. Перешкоди приховують ворогів на всьому полі; маячок кожної антени позначає джерело, яке можна спіймати.',
+    ),
+  },
+  'quiet-channel': {
+    targets: [
+      jammer([20, 8], 'broadcast-burst-v1'),
+      runner(),
+      jammer([3, 10], 'broadcast-burst-v1'),
+      switchback(),
+      jammer([20, 4], 'broadcast-burst-v1'),
+      refuge(),
+    ],
+    description: bilingual(
+      'Prey keeps moving and can turn unseen during broadcast. Plan from the clear feed, follow a beacon, or intercept before the next warning.',
+      'Під час трансляції здобич рухається й може непомітно повернути. Плануйте за чистим зображенням, прямуйте до маячка або перехоплюйте до попередження.',
+    ),
+  },
+  'signal-crossing': {
+    targets: [jammer(), runner(), lane(), jammer([3, 12]), verticalLane([18, 5]), refuge()],
+    description: bilingual(
+      'Each source and lane has a different approach. Moving prey disappears during interference; new lane attacks wait for clear reception and a full warning.',
+      'Кожне джерело й смуга мають інший підхід. Здобич зникає під час перешкод; нові атаки чекають чистого прийому й повного попередження.',
+    ),
+  },
+  'relay-airfield': {
+    targets: [
+      jammer([20, 8], 'broadcast-burst-v1'),
+      runner(),
+      relay(
+        [12, 8],
+        [
+          [3, 5],
+          [20, 12],
+        ],
+      ),
+      lane(),
+      relay(
+        [18, 5],
+        [
+          [4, 12],
+          [20, 4],
+        ],
+      ),
+      refuge(),
+    ],
+    description: bilingual(
+      'Two cores use different relay pairs. Clear the broadcast beacon or plan the pad route before enemies disappear; openings stay available.',
+      'Два ядра мають різні пари ретрансляторів. Приберіть маячок трансляції або плануйте шлях до зникнення ворогів; ядра залишаться відкритими.',
+    ),
+  },
+  'open-seam': {
+    goal: 2,
+    rectangles: [[12, 6, 1, 5]],
+    description: bilingual(
+      'Let one eroder open the marked shortcut, then intercept the runner. The permanent outside route remains available.',
+      'Дайте руйнівнику відкрити позначений прохід, потім перехоплюйте бігуна. Постійний зовнішній обхід залишається доступним.',
+    ),
+  },
+  'seam-return': {
+    goal: 4,
+    maxActive: 2,
+    rectangles: [
+      [12, 5, 1, 8],
+      [5, 11, 3, 2],
+    ],
+    targets: [notch([11, 6], [12, 6]), ricochet(), notch([13, 10], [12, 10]), refuge()],
+    description: bilingual(
+      'Two different marked notches change the return route. Intercept moving prey through an opening or keep the longer bypass.',
+      'Два різні позначені проходи змінюють шлях назад. Перехоплюйте рухливу здобич через отвір або користуйтеся довшим обходом.',
+    ),
+  },
+  'guard-line': {
+    goal: 3,
+    targets: [guard(), guard([18, 8], 'left'), guard([4, 12], 'up')],
+    description: bilingual(
+      'Three guards face different approaches. Cross behind a departing shot and catch each post from the side.',
+      'Три охоронці дивляться в різні боки. Проходьте за снарядом і ловіть кожен пост збоку.',
+    ),
+  },
+  'guard-return': {
+    maxActive: 2,
+    targets: [guard(), rover(), guard([18, 8], 'left'), rover(), guard([4, 12], 'up'), runner()],
+    description: bilingual(
+      'Rovers share the approaches to three different guards. Choose a safe flank while keeping your next interception open.',
+      'Ровери ділять підходи з трьома різними охоронцями. Обирайте безпечний обхід, залишаючи наступне перехоплення відкритим.',
+    ),
+  },
+  'field-links': {
+    rectangles: [
+      [12, 6, 1, 5],
+      [6, 5, 2, 2],
+    ],
+    targets: [
+      jammer(),
+      { kind: 'patroller', every: 4, path: rectanglePath(17, 12, 5, 4) },
+      eroder(),
+      guard([6, 10], 'up'),
+      notch([13, 6], [12, 6]),
+      refuge(),
+    ],
+    description: bilingual(
+      'Open two different routes while moving prey shares local interference. The antenna beacon and attack warnings remain visible when enemies disappear.',
+      'Відкривайте два різні маршрути, поки рухлива здобич потрапляє під локальні перешкоди. Маячок антени й попередження видно навіть тоді, коли вороги зникають.',
+    ),
+  },
+  'field-finale': {
+    targets: [
+      lane(),
+      relay(
+        [12, 8],
+        [
+          [3, 5],
+          [20, 12],
+        ],
+      ),
+      guard(),
+      ricochet(),
+      verticalLane([18, 4]),
+      relay(
+        [4, 7],
+        [
+          [3, 12],
+          [20, 4],
+        ],
+      ),
+      guard([20, 13], 'up'),
+      runner(),
+    ],
+    pickups: [
+      {
+        at: 4,
+        kind: 'reel',
+        pads: [
+          [3, 4],
+          [20, 4],
+          [3, 14],
+          [20, 14],
+        ].map(cell),
+      },
+    ],
+    description: bilingual(
+      'Eight encounters use distinct posts, relay pairs and lane directions. Take Reel when the growing cable makes the short return harder.',
+      'Вісім зустрічей мають різні пости, пари ретрансляторів і напрямки смуг. Беріть котушку, коли кабель ускладнює короткий обхід.',
+    ),
+  },
+};
 function entries(rows, chapter) {
   return rows.map(([slug, en, uk, rectangles, targets, goal, enBrief, ukBrief]) => {
     const id = `classic-field-${slug}`;
+    const change = revised[slug];
+    const previousRevision = targets.some((target) => target.signalProfile === 'local-burst-v2')
+      ? 3
+      : slug === 'relay-airfield'
+        ? 2
+        : 1;
     return {
       id,
       chapterId: CLASSIC_SNAKE_V4_CHAPTERS[chapter].id,
       title: bilingual(en, uk),
-      description: bilingual(enBrief, ukBrief),
+      description: change?.description ?? bilingual(enBrief, ukBrief),
       level: {
         version: 'classic-snake-level.v4',
         id,
-        revision: targets.some((target) => target.signalProfile === 'local-burst-v2')
-          ? '3'
-          : slug === 'relay-airfield'
-            ? '2'
-            : '1',
+        revision: String(previousRevision + (change ? 1 : 0)),
         name: en,
         width: 24,
         height: 18,
-        walls: wallsFor(rectangles),
-        spawns: [
+        walls: wallsFor(change?.rectangles ?? rectangles),
+        spawns: change?.spawns ?? [
           { x: 5, y: 2, direction: 'right' },
           { x: 18, y: 15, direction: 'left' },
         ],
-        goal,
+        goal: change?.goal ?? goal,
         stepMs: 200,
         speedupEvery: 0,
         minStepMs: 200,
@@ -439,20 +662,22 @@ function entries(rows, chapter) {
         fleeEvery: 3,
         objective: 'mission',
         targets: {
-          maxActive: [
-            'signal-crossing',
-            'relay-airfield',
-            'field-links',
-            'field-finale',
-            'quiet-channel',
-          ].includes(slug)
-            ? 2
-            : 1,
-          required: targets,
+          maxActive:
+            change?.maxActive ??
+            ([
+              'signal-crossing',
+              'relay-airfield',
+              'field-links',
+              'field-finale',
+              'quiet-channel',
+            ].includes(slug)
+              ? 2
+              : 1),
+          required: change?.targets ?? targets,
           bonus: null,
         },
         shutters: [],
-        pickups: [],
+        pickups: change?.pickups ?? [],
       },
     };
   });
@@ -464,4 +689,5 @@ export const CLASSIC_SNAKE_V4_LEVELS = freeze([
   ...CLASSIC_SNAKE_V4_INITIAL_LEVELS,
   ...CLASSIC_SNAKE_V4_PATROL_LEVELS,
   ...CLASSIC_SNAKE_V4_MASTERY_LEVELS,
+  ...CLASSIC_SNAKE_EXPEDITION_LEVELS,
 ]);

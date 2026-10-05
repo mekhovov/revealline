@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { CLASSIC_SNAKE_V4_LEVELS } from '../snake/classic-catalogue-v4.mjs';
+import { CLASSIC_SNAKE_FIELD_V3_ARCHIVED_LEVELS } from '../snake/classic-catalogue-field-v3-archive.mjs';
 import { prepareClassicSnakeLevel } from '../snake/classic-setup.mjs';
 import {
   createClassicSnake,
@@ -25,8 +26,14 @@ import { CLASSIC_SNAKE_RATING_CALIBRATIONS } from '../snake/classic-rating-calib
 import { createClassicSnakeRecords } from '../snake/classic-records.mjs';
 
 const entry = (slug) => CLASSIC_SNAKE_V4_LEVELS.find((row) => row.id === `classic-field-${slug}`);
-const make = (slug = 'signal-check', hazardSeed = 17, pace = 'normal') =>
-  createClassicSnake(prepareClassicSnakeLevel(entry(slug), { pace }), { seed: 17, hazardSeed });
+// Engine timing probes use their exact reviewed route geometry. Campaign edits
+// deliberately change source positions and the first active target roster.
+const make = (slug = 'signal-check', hazardSeed = 17, pace = 'normal') => {
+  const fixture =
+    CLASSIC_SNAKE_FIELD_V3_ARCHIVED_LEVELS.find((row) => row.id === `classic-field-${slug}`) ??
+    entry(slug);
+  return createClassicSnake(prepareClassicSnakeLevel(fixture, { pace }), { seed: 17, hazardSeed });
+};
 function circle(run, beforeStep) {
   const { x, y } = run.snakes[0].body[0];
   const direction =

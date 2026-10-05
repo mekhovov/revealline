@@ -43,7 +43,8 @@ export function classicSignalBlend(strength, treatment = 'contrast-loss') {
   const reception = clamp(strength, 0, 1);
   if (!reception) return 0;
   // Entering an active radius must already affect distant tracking. Proximity
-  // increases the loss without ever removing the final 35% of fresh live feed.
+  // increases the loss without ever removing the final 35% of fresh terrain
+  // and player feed. The board painter omits enemies before either branch.
   return treatmentName(treatment) === 'baseline'
     ? CLASSIC_SIGNAL_MAX_BLEND * reception
     : 0.5 + (CLASSIC_SIGNAL_MAX_BLEND - 0.5) * reception;
@@ -83,9 +84,10 @@ function coarseTerrain(source, output, width, height, cellWidth, cellHeight) {
     }
 }
 
-/** The processed branch has no distant actors/cable when current terrain is
- * supplied. Compositing leaves at least 35% of the fresh live image, while head
- * neighbourhoods and source cells remain exact. receiverOnly is for native
+/** The processed branch has no cable when current terrain is supplied. The
+ * board painter excludes enemy actors from both branches during jamming.
+ * Compositing leaves at least 35% of the fresh terrain/player image, while head
+ * neighbourhoods and beacon cells remain exact. receiverOnly is for native
  * canvas composition: it avoids resampling the clean feed or protected cells. */
 export function classicSignalPixels(
   base,
@@ -368,7 +370,8 @@ export function drawClassicSignalSources(ctx, run, signal, { unit = 28, palette 
     } else if (active || warning) ctx.strokeRect(2, 2, width - 4, height - 4);
     ctx.globalAlpha = 1;
     ctx.setLineDash([]);
-    // Antenna stays recognizable even when distant actor detail is noisy.
+    // This minimal radio beacon is the sole source-location cue when the
+    // jammer's actor, shadow, and badges are concealed with all other enemies.
     ctx.fillStyle = '#162d30';
     const antennaOffsets = source.radius == null ? [-3, 3] : [0];
     ctx.fillRect(x - (source.radius == null ? 7 : 4), y - 9, source.radius == null ? 14 : 8, 17);

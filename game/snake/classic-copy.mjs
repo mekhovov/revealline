@@ -25,10 +25,12 @@ export const CLASSIC_COPY = {
     relay: 'Field Relay',
     signalClear: 'Clear reception',
     signalWarning: 'Signal warning · plan ahead',
-    signalJammed: 'Interference · look nearby',
+    signalJammed: 'Interference · enemies hidden',
     signalStable: 'Pulse · clear reception',
-    signalLocalHelp: 'Distant detail fades. Catch the antenna enemy or leave its range.',
-    signalBroadcastHelp: 'Distant detail fades. Catch the double antenna or use Pulse.',
+    signalLocalHelp:
+      'Enemies keep moving unseen. Catch the jammer at its antenna beacon, leave its range, or use Pulse.',
+    signalBroadcastHelp:
+      'Enemies keep moving unseen across the board. Catch the jammer at its double antenna beacon or use Pulse.',
     variableSignalRecord:
       '★ Verified completion · bursts change each attempt. Personal records use variable conditions.',
     theme: 'Game theme',
@@ -189,10 +191,12 @@ export const CLASSIC_COPY = {
     relay: 'Польовий ретранслятор',
     signalClear: 'Чистий прийом',
     signalWarning: 'Увага: сплануйте маршрут',
-    signalJammed: 'Перешкоди · дивіться поруч',
+    signalJammed: 'Перешкоди · вороги приховані',
     signalStable: 'Імпульс · чистий прийом',
-    signalLocalHelp: 'Далекі деталі тьмяніють. Ловіть ворога з антеною або вийдіть із його зони.',
-    signalBroadcastHelp: 'Далекі деталі тьмяніють. Ловіть подвійну антену або застосуйте Імпульс.',
+    signalLocalHelp:
+      'Невидимі вороги продовжують рух. Спіймайте глушник біля маячка антени, вийдіть із його зони або застосуйте Імпульс.',
+    signalBroadcastHelp:
+      'Невидимі вороги рухаються по всьому полю. Спіймайте глушник біля подвійного маячка антени або застосуйте Імпульс.',
     variableSignalRecord:
       '★ Перевірене завершення · спалахи змінюються щоразу. Особисті рекорди за змінних умов.',
     title: 'ЗМІЙКА',
