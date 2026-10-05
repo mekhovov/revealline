@@ -2,18 +2,7 @@ import { t, localizedMessage } from './i18n/index.mjs';
 import { CLASSES } from './core/registry.mjs';
 import { validateLevel } from './core/level.mjs';
 import { boundedJSON } from './data-json.mjs';
-import {
-  CLASSIC_SCENARIO_VERSION,
-  FOUNDATION_SCENARIO_VERSION,
-  RELAY_SCENARIO_VERSION,
-  DIRECTIONAL_SCENARIO_VERSION,
-  SENTINEL_SCENARIO_VERSION,
-  HUNT_SCENARIO_VERSION,
-  SNAKE_SCENARIO_VERSION,
-  PURSUIT_SCENARIO_VERSION,
-  SNAKE_PURSUIT_SCENARIO_VERSION,
-  validateScenario,
-} from './content.mjs';
+import { scenarioFormatForLevel, validateScenario } from './content.mjs';
 
 const lessons = Object.freeze({
   'optional-scout': Object.freeze({
@@ -101,19 +90,8 @@ export function createEncounterGuideScenario({ topic, level, theme, turnPolicy, 
   if (!availability.available)
     throw new TypeError(t(`interface:encounterGuide.${availability.reason}`));
   const options = boundedJSON(runOptions ?? { seed: 1, classId: 'scout', classRecipes: CLASSES });
-  const formats = {
-    'xonix-level.v4': CLASSIC_SCENARIO_VERSION,
-    'xonix-level.v5': FOUNDATION_SCENARIO_VERSION,
-    'xonix-level.v6': RELAY_SCENARIO_VERSION,
-    'xonix-level.v7': DIRECTIONAL_SCENARIO_VERSION,
-    'xonix-level.v8': SENTINEL_SCENARIO_VERSION,
-    'xonix-level.v9': HUNT_SCENARIO_VERSION,
-    'xonix-level.v11': SNAKE_SCENARIO_VERSION,
-    'xonix-level.v12': PURSUIT_SCENARIO_VERSION,
-    'xonix-level.v13': SNAKE_PURSUIT_SCENARIO_VERSION,
-  };
   const candidate = {
-    format: formats[level.version],
+    format: scenarioFormatForLevel(level.version),
     level,
     theme,
     classRecipes: options.classRecipes,

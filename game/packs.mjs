@@ -12,6 +12,8 @@ import {
   SNAKE_VERSIONS,
   PURSUIT_VERSIONS,
   SNAKE_PURSUIT_VERSIONS,
+  PURSUIT_V2_VERSIONS,
+  SNAKE_PURSUIT_V2_VERSIONS,
   versionsForCampaign,
 } from './core/versions.mjs';
 import {
@@ -34,6 +36,8 @@ import {
   SNAKE_SCENARIO_VERSION,
   PURSUIT_SCENARIO_VERSION,
   SNAKE_PURSUIT_SCENARIO_VERSION,
+  PURSUIT_V2_SCENARIO_VERSION,
+  SNAKE_PURSUIT_V2_SCENARIO_VERSION,
 } from './content.mjs';
 import { browserDecodeImage } from './imports.mjs';
 import {
@@ -61,6 +65,8 @@ export const HUNT_PACK_VERSION = 'xonix-pack.v10';
 export const SNAKE_PACK_VERSION = 'xonix-pack.v11';
 export const PURSUIT_PACK_VERSION = 'xonix-pack.v12';
 export const SNAKE_PURSUIT_PACK_VERSION = 'xonix-pack.v13';
+export const PURSUIT_V2_PACK_VERSION = 'xonix-pack.v14';
+export const SNAKE_PURSUIT_V2_PACK_VERSION = 'xonix-pack.v15';
 export const PACK_LIBRARY_VERSION = 'xonix-pack-library.v1';
 export const OFFICIAL_PACK_LIBRARY_VERSION = 'revealline-pack-references.v1';
 const officialReferences = new WeakMap();
@@ -143,8 +149,11 @@ const levelKeys = [
 ];
 function packChecks(candidate) {
   const pack = boundedPack(candidate);
-  const snakePursuit = pack.format === SNAKE_PURSUIT_PACK_VERSION;
-  const pursuit = pack.format === PURSUIT_PACK_VERSION || snakePursuit;
+  const successor = [PURSUIT_V2_PACK_VERSION, SNAKE_PURSUIT_V2_PACK_VERSION].includes(pack.format);
+  const snakePursuit = [SNAKE_PURSUIT_PACK_VERSION, SNAKE_PURSUIT_V2_PACK_VERSION].includes(
+    pack.format,
+  );
+  const pursuit = pack.format === PURSUIT_PACK_VERSION || successor || snakePursuit;
   const snake = pack.format === SNAKE_PACK_VERSION || snakePursuit;
   const hunt = pack.format === HUNT_PACK_VERSION || snake || pursuit;
   const sentinel = pack.format === SENTINEL_PACK_VERSION || hunt;
@@ -156,9 +165,13 @@ function packChecks(candidate) {
   const encounter = pack.format === ENCOUNTER_PACK_VERSION;
   const authoredMasteries = pack.format === MASTERY_PACK_VERSION || encounter || wide || classic;
   const versions = snakePursuit
-    ? SNAKE_PURSUIT_VERSIONS
+    ? successor
+      ? SNAKE_PURSUIT_V2_VERSIONS
+      : SNAKE_PURSUIT_VERSIONS
     : pursuit
-      ? PURSUIT_VERSIONS
+      ? successor
+        ? PURSUIT_V2_VERSIONS
+        : PURSUIT_VERSIONS
       : snake
         ? SNAKE_VERSIONS
         : hunt
@@ -214,6 +227,8 @@ function packChecks(candidate) {
       SNAKE_PACK_VERSION,
       PURSUIT_PACK_VERSION,
       SNAKE_PURSUIT_PACK_VERSION,
+      PURSUIT_V2_PACK_VERSION,
+      SNAKE_PURSUIT_V2_PACK_VERSION,
     ].includes(pack.format) &&
       stableId(pack.id) &&
       semver(pack.version),
@@ -380,9 +395,13 @@ function packChecks(candidate) {
       );
       const scenario = {
         format: snakePursuit
-          ? SNAKE_PURSUIT_SCENARIO_VERSION
+          ? successor
+            ? SNAKE_PURSUIT_V2_SCENARIO_VERSION
+            : SNAKE_PURSUIT_SCENARIO_VERSION
           : pursuit
-            ? PURSUIT_SCENARIO_VERSION
+            ? successor
+              ? PURSUIT_V2_SCENARIO_VERSION
+              : PURSUIT_SCENARIO_VERSION
             : snake
               ? SNAKE_SCENARIO_VERSION
               : hunt
@@ -490,6 +509,8 @@ function packChecks(candidate) {
             SNAKE_PACK_VERSION,
             PURSUIT_PACK_VERSION,
             SNAKE_PURSUIT_PACK_VERSION,
+            PURSUIT_V2_PACK_VERSION,
+            SNAKE_PURSUIT_V2_PACK_VERSION,
           ].includes(pack.format) &&
             CLASSIC_VISUAL_ROLES.includes(role)),
         packError('unknownVisualRole'),
@@ -816,31 +837,35 @@ export function scenarioFromPack(
   };
   const scenario = {
     format:
-      pack.format === SNAKE_PURSUIT_PACK_VERSION
-        ? SNAKE_PURSUIT_SCENARIO_VERSION
-        : pack.format === PURSUIT_PACK_VERSION
-          ? PURSUIT_SCENARIO_VERSION
-          : pack.format === SNAKE_PACK_VERSION
-            ? SNAKE_SCENARIO_VERSION
-            : pack.format === HUNT_PACK_VERSION
-              ? HUNT_SCENARIO_VERSION
-              : pack.format === SENTINEL_PACK_VERSION
-                ? SENTINEL_SCENARIO_VERSION
-                : pack.format === DIRECTIONAL_PACK_VERSION
-                  ? DIRECTIONAL_SCENARIO_VERSION
-                  : pack.format === RELAY_PACK_VERSION
-                    ? RELAY_SCENARIO_VERSION
-                    : pack.format === FOUNDATION_PACK_VERSION
-                      ? FOUNDATION_SCENARIO_VERSION
-                      : pack.format === CLASSIC_PACK_VERSION
-                        ? CLASSIC_SCENARIO_VERSION
-                        : pack.format === WIDE_PACK_VERSION
-                          ? WIDE_SCENARIO_VERSION
-                          : pack.format === ENCOUNTER_PACK_VERSION
-                            ? ENCOUNTER_SCENARIO_VERSION
-                            : pack.format === MASTERY_PACK_VERSION
-                              ? MASTERY_SCENARIO_VERSION
-                              : SCENARIO_VERSION,
+      pack.format === SNAKE_PURSUIT_V2_PACK_VERSION
+        ? SNAKE_PURSUIT_V2_SCENARIO_VERSION
+        : pack.format === PURSUIT_V2_PACK_VERSION
+          ? PURSUIT_V2_SCENARIO_VERSION
+          : pack.format === SNAKE_PURSUIT_PACK_VERSION
+            ? SNAKE_PURSUIT_SCENARIO_VERSION
+            : pack.format === PURSUIT_PACK_VERSION
+              ? PURSUIT_SCENARIO_VERSION
+              : pack.format === SNAKE_PACK_VERSION
+                ? SNAKE_SCENARIO_VERSION
+                : pack.format === HUNT_PACK_VERSION
+                  ? HUNT_SCENARIO_VERSION
+                  : pack.format === SENTINEL_PACK_VERSION
+                    ? SENTINEL_SCENARIO_VERSION
+                    : pack.format === DIRECTIONAL_PACK_VERSION
+                      ? DIRECTIONAL_SCENARIO_VERSION
+                      : pack.format === RELAY_PACK_VERSION
+                        ? RELAY_SCENARIO_VERSION
+                        : pack.format === FOUNDATION_PACK_VERSION
+                          ? FOUNDATION_SCENARIO_VERSION
+                          : pack.format === CLASSIC_PACK_VERSION
+                            ? CLASSIC_SCENARIO_VERSION
+                            : pack.format === WIDE_PACK_VERSION
+                              ? WIDE_SCENARIO_VERSION
+                              : pack.format === ENCOUNTER_PACK_VERSION
+                                ? ENCOUNTER_SCENARIO_VERSION
+                                : pack.format === MASTERY_PACK_VERSION
+                                  ? MASTERY_SCENARIO_VERSION
+                                  : SCENARIO_VERSION,
     level,
     theme,
     classRecipes: resolved.classRecipes,

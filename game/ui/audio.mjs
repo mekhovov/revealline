@@ -631,7 +631,8 @@ export class Soundscape {
       source.connect(filter);
       filter.connect(gain);
     } else source.connect(gain);
-    const destination = bus === 'music' ? this.musicBus : this.sfxBus,
+    const destination =
+        bus === 'music' ? this.musicBus : note.movement ? this.movementBus : this.sfxBus,
       drive = bus === 'music' ? this.musicDrive : this.sfxDrive;
     const output = note.voice === 'guitar' && drive ? drive : destination;
     if (Number.isFinite(note.pan) && c.createStereoPanner) {
@@ -651,6 +652,7 @@ export class Soundscape {
       bus,
       source,
       feedback: note.encounter === true,
+      movement: note.movement === true,
       name: note.cueName,
       cueFamily: note.cueName,
       board: note.board,
@@ -720,24 +722,41 @@ export class Soundscape {
       this.settings.sfx === 0
     )
       return false;
+    if (
+      recipe.gain === 0 ||
+      (recipe.movement &&
+        (!this.movementSettings.enabled ||
+          this.movementSettings.volume === 0 ||
+          [...this.voices].some((voice) => voice.feedback && voice.priority >= 4)))
+    )
+      return false;
     const board = details.board ?? 'solo',
       key = `encounter:${board}:${type}`;
     if (
       c.currentTime - (this.recentEvents.get(key) ?? -Infinity) <
-      (type === 'warning' ? 0.3 : ['notice', 'recover', 'blocked'].includes(type) ? 0.65 : 0.12)
+      (recipe.cooldown ??
+        (type === 'warning' ? 0.3 : ['notice', 'recover', 'blocked'].includes(type) ? 0.65 : 0.12))
     )
       return false;
     this.recentEvents.set(key, c.currentTime);
     if (this.recentEvents.size > 64)
       this.recentEvents.delete(this.recentEvents.keys().next().value);
+    // A warning arriving later in the same transaction owns the foreground.
+    // Only short movement accents are shed; continuous player rotors remain.
+    if (recipe.priority >= 4)
+      for (const voice of [...this.voices])
+        if (voice.feedback && voice.movement && !voice.source?.loop) voice.stop();
     if (this.feedbackDirector.play(recipe.name, { ...recipe, board, pan: details.pan ?? 0 }))
       return true;
+    if (recipe.movement && [...this.voices].filter((voice) => voice.feedback).length >= 16)
+      return false;
     if (recipe.priority >= 5) dialogueChannel.interrupt();
     // Missing optional samples remain audible now; loading never replays stale cues.
     return this.play(
       {
         kind: 'tone',
         encounter: true,
+        movement: recipe.movement,
         cueName: recipe.name,
         board,
         priority: recipe.priority,
@@ -762,15 +781,17 @@ export class Soundscape {
       !this.enabled ||
       this.paused ||
       this.audioMaster.muted ||
-      (this.persistentMusic && this.gameplayPaused) ||
+      this.audioMaster.volume === 0 ||
+      ((this.persistentMusic || event.feedback) && this.gameplayPaused) ||
       !this.context
     )
       return;
     const now = this.context.currentTime,
-      key =
+      eventKey =
         event.type === 'run.completed'
           ? `${event.type}:${event.levelId || ''}:${event.tick ?? ''}`
-          : event.type;
+          : event.type,
+      key = event.board === undefined ? eventKey : `${event.board}:${eventKey}`;
     if (
       this.recentEvents.has(key) &&
       now - this.recentEvents.get(key) < (event.type === 'run.completed' ? 5 : 0.09)
@@ -790,12 +811,29 @@ export class Soundscape {
             'pickup.collected': 'pickup',
             'powerup.collected': 'pickup',
           }[event.type];
-    if (publishedCue && this.publishedAudio?.play(publishedCue)) return;
+    const ownership = {
+      board: event.board ?? 'solo',
+      pan: event.pan ?? 0,
+      feedback: event.feedback === true,
+      priority: event.feedback === true ? 3 : 0,
+    };
+    if (publishedCue && this.publishedAudio?.play(publishedCue, ownership)) return;
     const base = clamp(this.track.root + 12, 48, 76),
       cue = (steps, voice = 'bell', spacing = 0.09, duration = 0.25) =>
         steps.forEach((n, i) =>
           this.play(
-            { kind: 'tone', frequency: midiFrequency(base + n), voice, volume: 0.08, duration },
+            {
+              kind: 'tone',
+              frequency: midiFrequency(base + n),
+              voice,
+              volume: 0.08,
+              duration,
+              pan: ownership.pan,
+              encounter: ownership.feedback,
+              board: ownership.board,
+              priority: ownership.priority,
+              cueName: publishedCue,
+            },
             now + 0.015 + i * spacing,
           ),
         );

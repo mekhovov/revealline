@@ -149,6 +149,21 @@ test('reading and failed imports pause the gym and cannot grant completions or r
   assert.equal(f.frames.size, 0);
 });
 
+test('final gym exit retires reparented controls before removing their shell', async (t) => {
+  const f = await fixture(t),
+    sound = f.doc.getElementById('sound'),
+    shell = f.doc.querySelector('[data-mode-play-shell="gym-shell"]');
+  assert.equal(shell.contains(sound), true);
+  assert.equal(typeof sound.onclick, 'function');
+  assert.doesNotThrow(() => f.win.emit('pagehide', { persisted: false }));
+  assert.equal(sound.onclick, null);
+  assert.equal(f.frames.size, 0);
+  assert.equal(f.win.listeners.get('pagehide')?.size ?? 0, 0);
+  assert.equal(f.win.listeners.get('orientationchange')?.size ?? 0, 0);
+  assert.equal(shell.isConnected, false);
+  assert.doesNotThrow(() => f.view.dispose(), 'Repeated teardown remains harmless.');
+});
+
 test('gym title and settings reuse the accepted drill without starting or resuming it', async (t) => {
   const f = await fixture(t),
     $ = (id) => f.doc.getElementById(id);

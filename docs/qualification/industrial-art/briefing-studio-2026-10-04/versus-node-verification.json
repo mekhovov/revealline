@@ -1,0 +1,147 @@
+{
+  "format": "pursuit-pilot-recording-receipt.v2",
+  "source": {
+    "commit": "e3b51cc88b77ba1c1ff8c2e6ae3f519e19bed5bf",
+    "dirty": true
+  },
+  "pilot": "crossing-post",
+  "mode": "versus",
+  "pace": "standard",
+  "seed": 1,
+  "recipe": {
+    "format": "xonix-level.v12",
+    "identity": "f51efe3e4de3dbca",
+    "sha256": "e67cd16f122c18df337bbeeaec45c8d00e61d31400e44f12cf22b455fed06bc6"
+  },
+  "recordingSha256": "0704a85104c69e18af8c918a441a592f485f0c76990e378042f8ef5ad5ae024e",
+  "verification": "native-terminal-observation-completion",
+  "outcome": {
+    "summary": {
+      "protocol": "xonix-duel.untimed.v1",
+      "ticks": 23276,
+      "status": "finished",
+      "winner": 0,
+      "reason": "First clear",
+      "boards": [
+        {
+          "ruleset": "xonix-core.v13",
+          "levelId": "crossing-post",
+          "revision": "gp4s-3ff00000000000003ff00000000000003ff0000000000000-9c05667e7a9aa05b",
+          "seed": 1,
+          "turnPolicy": "immediate",
+          "classId": "scout",
+          "activeClassId": "scout",
+          "rosterHash": "roster-v1-e159e435",
+          "classHistory": [
+            {
+              "classId": "scout",
+              "classRevision": "1",
+              "loadoutHash": "loadout-v1-aaa4aadd",
+              "tick": 0
+            }
+          ],
+          "switches": 0,
+          "failureCause": "enemy-trail",
+          "classRevision": "1",
+          "loadoutHash": "loadout-v1-aaa4aadd",
+          "status": "won",
+          "won": true,
+          "tick": 23276,
+          "time": 193.96579939666967,
+          "lives": 2,
+          "livesLost": 1,
+          "score": 16810,
+          "hunt": {
+            "version": "humanoid-hunt-state.v1",
+            "mode": "bonus",
+            "quota": 0,
+            "total": 2,
+            "remaining": 2,
+            "kills": 0,
+            "touchKills": 0,
+            "captureKills": 0,
+            "score": 0
+          },
+          "coverage": 0.7376042123738482,
+          "claimedCount": 1681,
+          "totalClaimable": 2279,
+          "medal": "bronze",
+          "objectives": {
+            "captured": 0,
+            "total": 0,
+            "required": 0
+          }
+        },
+        {
+          "ruleset": "xonix-core.v13",
+          "levelId": "crossing-post",
+          "revision": "gp4s-3ff00000000000003ff00000000000003ff0000000000000-9c05667e7a9aa05b",
+          "seed": 1,
+          "turnPolicy": "immediate",
+          "classId": "scout",
+          "activeClassId": "scout",
+          "rosterHash": "roster-v1-e159e435",
+          "classHistory": [
+            {
+              "classId": "scout",
+              "classRevision": "1",
+              "loadoutHash": "loadout-v1-aaa4aadd",
+              "tick": 0
+            }
+          ],
+          "switches": 0,
+          "failureCause": null,
+          "classRevision": "1",
+          "loadoutHash": "loadout-v1-aaa4aadd",
+          "status": "running",
+          "won": false,
+          "tick": 23276,
+          "time": 193.9666666666546,
+          "lives": 3,
+          "livesLost": 0,
+          "score": 0,
+          "hunt": {
+            "version": "humanoid-hunt-state.v1",
+            "mode": "bonus",
+            "quota": 0,
+            "total": 2,
+            "remaining": 2,
+            "kills": 0,
+            "touchKills": 0,
+            "captureKills": 0,
+            "score": 0
+          },
+          "coverage": 0,
+          "claimedCount": 0,
+          "totalClaimable": 2279,
+          "medal": null,
+          "objectives": {
+            "captured": 0,
+            "total": 0,
+            "required": 0
+          }
+        }
+      ]
+    },
+    "ticks": 23276,
+    "recordedBuild": "dev",
+    "completedBoards": [
+      1
+    ],
+    "recipeSha256": "5529bcee7acc11d09f6576ec5401942ed404d056a69e28ce92d233158e15a3d6",
+    "provenance": {
+      "sourceLevelId": "crossing-post",
+      "sourceRevision": "pursuit-2",
+      "sourceIdentity": "d29c55dfdd31caa7"
+    },
+    "authority": "local-terminal-observations-only",
+    "verificationScope": "revealline-capture-terminal-observations.v1",
+    "exactStateMatch": false,
+    "terminalObservationMatch": true,
+    "observationSha256": "1e2647071e5c39917f84c48d0c683e4e0a02d7f79a094925fb8218b074fe6214"
+  },
+  "humanPlay": "pending",
+  "deviceAndAccessibility": "pending",
+  "publicRelease": "not-qualified",
+  "scope": "Only declared terminal gameplay observations are required to match; exactStateMatch separately reports the raw state digest. This is not a resumable checkpoint or proof of cross-device deterministic simulation. Replay integrity is not an author signature, proof of human input, device qualification or release approval."
+}

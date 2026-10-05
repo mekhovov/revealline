@@ -224,7 +224,11 @@ test('replay speed is localized and cannot change practice or start a replay by 
     assert.equal(f.$('replay-rate').value, '1');
     assert.equal(f.$('replay-controls').hidden, true);
     assert.equal(f.app.snapshot().status, 'disarmed');
-    f.app.arm();
+    assert.equal(f.app.arm(), false, 'The main menu still requires an explicit Start.');
+    f.$('academy-shell-action-primary').click();
+    assert.equal(f.$('academy-shell-briefing-dialog').open, true);
+    f.$('academy-shell-action-start').click();
+    assert.equal(f.app.snapshot().status, 'active');
     f.tick(21);
     assert.equal(f.app.snapshot().ticks, 20);
     assert.deepEqual(f.admissions, []);
