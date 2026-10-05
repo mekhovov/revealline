@@ -3675,6 +3675,7 @@ Acro mode observation match. The focused change is qualified for a held Draft PR
 protected publication remains subject to the explicit human hold. No published
 Browse, whole replay completion, offline or performance claim is added. See the
 [focused scope](../authoring/fpv-worlds/catalogue-truthfulness/README.md).
+
 ## 4 October — Combined online journey and publication
 
 Reservoir r16 data #1090 merged normally as
@@ -3892,3 +3893,73 @@ The immutable 8972 admitted preview and historical package receipts still identi
 3bbdc8 and do not contain this follow-up. Do not mark the new source package-qualified
 or public live: the stable 3 GiB build floor is not currently met. Preserve #1110's
 Draft/native-stack position and repeat frozen package qualification before release.
+
+## 5 October — Parallel publication, Library and contact gameplay
+
+Native stack **#1106** was reconciled onto main
+`2d447bc790bdf3951251c99041c8a918363ece0a` as a coordinated linear cascade.
+Recovery refs retain all three former remote heads. All six patches compare
+identically in range-diff, and the three branches were pushed atomically with
+explicit per-branch remote-head leases. Live membership remains
+**#1104 → #1105 → #1110**; no PR was retargeted or protection changed.
+The new code heads are `55493cb94783`, `0e3cc79c89f6` and `614adef75a6e`.
+See `fpv-stack-1106-cascade-20261005.json`.
+
+The frozen HUD code at `614adef` passes all three package admissions, two identical
+builds per package, committed-input/member verification and full Node 22
+validation. Both parent exact-head CI package receipts are also retained.
+The refreshed functional run completes and independently replays all 58 School
+and 24 Academy demonstrations (102,365 ticks per path, 65,309 criterion comparisons,
+484 transitions). The exact admitted hosts reload with their dedicated origin
+stopped. Acro tilt reaches a clear result without HUD/stick/replay overlap;
+Academy Explain returns paused. No console warnings/errors were observed.
+See `fpv-flight-hud-package-qualification-614adef.json` and
+`fpv-flight-hud-overlay-admitted-review.json`.
+
+The current 53-case offline/package regression suite is **not run**: concurrent
+volume allocation dropped free space below the 3 GiB heavy-build floor after
+admission and validation. Prior passing results remain explicitly historical.
+Safe cache/invalid-temp-pack cleanup and lossless compression of inactive temporary
+receipts preserve source, commits, valid Git objects, worktrees and all evidence
+bytes. Stop expanding cleanup merely to chase ongoing allocation; retain the
+restoration manifests. Fresh responsive/device acceptance is not claimed: the
+current browser ignored the requested viewport override and remained 1280×720.
+
+Independent **#1113** (`codex/fpv-festival-library`) adds the merged Festival r5
+pack to the capable Library feed while preserving Reservoir and the original
+feed. Its 37 data checks pass. Native pending-catalogue integration verifies
+Browse, immutable HTTPS download/hash validation, all eight installed missions,
+scene preparation, deliberate arm/pause and retained identity after reload.
+Only the catalogue response is a local fixture; public feed publication remains
+pending. Its release-ready gate explicitly holds without an allocated release
+slot; do not invent a version or bypass the gate.
+
+Independent **#1114** (`codex/fpv-hunt-momentum-contact`) introduces opt-in
+`retain-momentum-v1` ordinary Hunt catches and preserves legacy identities and
+all other collision responses. A small editable/importable moving-runner practice
+pack and both-mode proof archive accompany 15,714 initial functional assertions.
+Native import verified the pack and both examples, then exposed an existing
+hard-coded world-model restriction hiding Hunt demonstrations. Correct that
+read-only model selection and verify actual example playback before calling the
+increment complete. Package/device/public qualification remains pending.
+
+Filtered random flight selection is developing independently on
+`codex/fpv-filtered-random-flight`, based on the frozen HUD code and intended as
+its next focused stack member. Keep it out of #1110. It reuses current catalogue
+filters within the explicitly selected world, avoids immediate repeats when
+possible, and keeps normal preparation and deliberate arming.
+
+Performance **#1099** retains exact head `823fd48afb77`; the failed candidate job
+was an upload-stage timeout after tests/build passed. Only that failed job was
+retried; attempt 2 remained in progress at the checkpoint. The human Ready and
+fastline-approved history is preserved. Do not claim publication before exact
+checks, protected merge and public deployment/launch verification.
+
+The Harbor-capable Library cohort retains a clean linear base on Harbor
+`c958e5e13d03`; probe-only preparation `bdbb7c96f` checks all inherited catalogue
+and policy members, including rejection of dropped/changed entries (60 checks).
+No parent branch changed. Coordinate #1101 → #1102 → cohort rebasing later with
+recovery refs and explicit leases. Carry Festival forward only after its feed
+entry is published. Harbor integration, Canals completion and D6 remain next;
+physical hardware/novice acceptance is unclaimed and does not block independent
+feature work. No new public-live claim is made in this checkpoint.
