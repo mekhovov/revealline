@@ -57,6 +57,7 @@ From the repository root with Node 20 or later:
 ```sh
 node authoring/fpv-worlds/momentum-contact/qualify.mjs --write
 node authoring/fpv-worlds/momentum-contact/proof-archive.mjs --write
+node authoring/fpv-worlds/momentum-contact/catalogue-probe.mjs --write
 ```
 
 This manually invoked functional probe uses production validation, pinned Rapier
@@ -84,6 +85,16 @@ The second command uses the native `FPVProofArchive.v2` producer and importer to
 create the player-facing `.proofs.json`. Its exact pack dependency, archive and
 file hashes, both replay outcomes and checksum rejection evidence are recorded
 in `evidence/proof-archive.json`.
+
+The third command uses the installed `parse5` and `fake-indexeddb` development
+dependencies to mount the production World app at a lightweight DOM boundary.
+It imports the pack and native archive through their existing controls and checks
+that both verified examples expose **Watch example**. Wrong-model imports and
+stale verified records with an incompatible model remain unavailable. The shared
+read-only identity resolver also matches actual flight identities for ordinary,
+old/new Hunt, mixed-mode Hunt and both supported pursuit contracts. The catalogue
+does not create physics worlds to decide whether an example is available.
+`evidence/catalogue.json` records this functional check and its source hashes.
 
 This is functional evidence outside the permanent unit suites. Additional unit
 coverage remains deferred under D6. The DOM boundary is not a browser layout or

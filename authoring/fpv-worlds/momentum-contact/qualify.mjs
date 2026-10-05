@@ -455,7 +455,12 @@ for (const [name, configure] of scenarios) {
   }
 }
 
-const runtimeFiles = ['world-model.mjs', 'snake-hunt.mjs', 'world-actor-editor.mjs'].map((name) => {
+const runtimeFiles = [
+  'world-model.mjs',
+  'snake-hunt.mjs',
+  'world-actor-editor.mjs',
+  'world-app.mjs',
+].map((name) => {
   const url = new URL(`../../../optional-practice/civilian-fpv/${name}`, import.meta.url);
   return {
     path: `optional-practice/civilian-fpv/${name}`,

@@ -7,8 +7,8 @@
   "runtimeFiles": [
     {
       "path": "optional-practice/civilian-fpv/world-model.mjs",
-      "bytes": 59526,
-      "sha256": "44f319be26fe1a4c33e27f72540750debfc554410e6b71b4db1461afa87681f2"
+      "bytes": 60167,
+      "sha256": "626563d18b6180f009aaac8ed5d599069e62b25a1a35af6a860a85a30b12b6d8"
     },
     {
       "path": "optional-practice/civilian-fpv/snake-hunt.mjs",
@@ -19,6 +19,11 @@
       "path": "optional-practice/civilian-fpv/world-actor-editor.mjs",
       "bytes": 66207,
       "sha256": "28471be1c8659b76072ce9ae21dd0c0547f480486d56e208339327b9718c785a"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-app.mjs",
+      "bytes": 268915,
+      "sha256": "6283394f54747669ee980c692e7a5bdf9ae56bc21b33e593f77e314571ba2022"
     }
   ],
   "rows": [
