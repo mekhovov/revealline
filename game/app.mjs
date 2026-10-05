@@ -20,6 +20,8 @@ import { attachContextualReactions } from './ui/contextual-reactions.mjs';
 import { soloReactionDanger } from './ui/reaction-danger.mjs';
 import {
   REWARD_BOARD_SECONDS,
+  REWARD_SETTLED_SECONDS,
+  RESULT_AUTO_ADVANCE_SECONDS,
   advanceRewardAge,
   animateRewardArrival,
 } from './ui/reward-arrival.mjs';
@@ -1131,6 +1133,12 @@ try {
     journeyPerformanceActive = true,
     celebrationActive = false,
     winRevealAge = 0,
+    settledPictureRun = null,
+    settledPictureRemaining = 0,
+    resultAutoAdvanceRun = null,
+    resultAutoAdvanceRemaining = 0,
+    resultAutoAdvanceSecond = null,
+    resultAutoAdvanceDismissedRun = null,
     defeatActive = false,
     defeatPaused = false,
     defeatRemaining = 0,
@@ -7802,7 +7810,59 @@ try {
     painter.skipCelebration?.();
     enjoyCompletedPicture();
   };
-  function enjoyCompletedPicture() {
+  function clearSettledPictureTransition() {
+    settledPictureRun = null;
+    settledPictureRemaining = 0;
+  }
+  function clearResultAutoAdvance({ dismiss = false } = {}) {
+    if (dismiss && run?.status === 'won') resultAutoAdvanceDismissedRun = run;
+    resultAutoAdvanceRun = null;
+    resultAutoAdvanceRemaining = 0;
+    resultAutoAdvanceSecond = null;
+    show('result-auto-next', false);
+  }
+  function automaticResultContinuationAvailable() {
+    if (
+      practice ||
+      scenario ||
+      courseSession ||
+      campaignOverview ||
+      completionWarning ||
+      recoverGameplayTuning(run?.level)?.adminOverride ||
+      run?.status !== 'won' ||
+      $('next-button').hidden
+    )
+      return false;
+    if (journeyEnabled && journeyMission() && !nextJourneyMission(journeyMission().id))
+      return false;
+    return true;
+  }
+  function refreshResultAutoAdvance() {
+    const active = resultAutoAdvanceRun === run && automaticResultContinuationAvailable();
+    show('result-auto-next', active);
+    if (!active) return;
+    const seconds = Math.max(1, Math.ceil(resultAutoAdvanceRemaining));
+    if (seconds === resultAutoAdvanceSecond) return;
+    resultAutoAdvanceSecond = seconds;
+    localizedText($('result-auto-next'), () =>
+      t('interface:nextMissionStartsAutomatically', { count: seconds }),
+    );
+  }
+  function armResultAutoAdvance() {
+    if (
+      resultAutoAdvanceDismissedRun === run ||
+      resultAutoAdvanceRun === run ||
+      !automaticResultContinuationAvailable()
+    ) {
+      refreshResultAutoAdvance();
+      return;
+    }
+    resultAutoAdvanceRun = run;
+    resultAutoAdvanceRemaining = RESULT_AUTO_ADVANCE_SECONDS;
+    resultAutoAdvanceSecond = null;
+    refreshResultAutoAdvance();
+  }
+  function enjoyCompletedPicture({ automatic = true } = {}) {
     if (run?.status !== 'won') return;
     const returnFocus =
       !dialogOpen() &&
@@ -7810,6 +7870,10 @@ try {
         document.activeElement === document.body ||
         document.activeElement === $('game-canvas'));
     celebrationActive = false;
+    if (automatic) {
+      settledPictureRun = run;
+      settledPictureRemaining = REWARD_SETTLED_SECONDS;
+    } else clearSettledPictureTransition();
     show('skip-celebration', false);
     show('game-overlay', false);
     show('show-result', true);
@@ -8547,6 +8611,14 @@ try {
       !flightPictures?.pins() ||
       !storyPinForTheme(flightPictures.pins(), theme.id);
     show('next-button', kind === 'won' || kind === 'campaign-complete');
+    show(
+      'result-random-level',
+      kind === 'won' &&
+        !practice &&
+        !scenario &&
+        !courseSession &&
+        !recoverGameplayTuning(run?.level)?.adminOverride,
+    );
     show('choose-mission', kind === 'campaign-complete');
     show('retry-button', kind === 'won' || kind === 'lost');
     show('start-button', kind === 'ready' || kind === 'pause');
@@ -8760,6 +8832,8 @@ try {
     controllerReading?.refresh();
     if (!preservePauseFocus && !document.hidden && document.hasFocus() && !controllerDialog())
       controllerFocus()?.focus({ preventScroll: true });
+    if (kind === 'won') armResultAutoAdvance();
+    else clearResultAutoAdvance();
   }
   function resultAttemptCurrent(ticket) {
     if (
@@ -9650,6 +9724,9 @@ try {
     appearanceRewardIds = [];
     journeyBestResult = null;
     celebrationActive = false;
+    clearSettledPictureTransition();
+    clearResultAutoAdvance();
+    resultAutoAdvanceDismissedRun = null;
     clearSkipConfirmation();
     defeatActive = false;
     defeatPaused = false;
@@ -11156,6 +11233,39 @@ try {
     ) {
       enjoyCompletedPicture();
     }
+    if (
+      settledPictureRun === run &&
+      run.status === 'won' &&
+      !celebrationActive &&
+      !$('show-result').hidden &&
+      !dialogOpen()
+    ) {
+      settledPictureRemaining = Math.max(
+        0,
+        settledPictureRemaining - Math.max(0, Math.min(elapsed, 0.1)),
+      );
+      if (settledPictureRemaining <= 1e-9) {
+        clearSettledPictureTransition();
+        $('show-result').click();
+      }
+    }
+    if (
+      resultAutoAdvanceRun === run &&
+      automaticResultContinuationAvailable() &&
+      !$('game-overlay').hidden &&
+      $('game-overlay').dataset.kind === 'won' &&
+      !dialogOpen()
+    ) {
+      resultAutoAdvanceRemaining = Math.max(
+        0,
+        resultAutoAdvanceRemaining - Math.max(0, Math.min(elapsed, 0.1)),
+      );
+      refreshResultAutoAdvance();
+      if (resultAutoAdvanceRemaining <= 1e-9) {
+        clearResultAutoAdvance();
+        $('next-button').click();
+      }
+    }
     sound.feedback(!paused && started, theme, run, {
       bodyId: flightActorLease?.pin().style === 'fpv' ? `fpv-${run.activeClassId}` : bodyId,
       actorStyle: flightActorLease?.pin().style,
@@ -11436,16 +11546,32 @@ try {
   $('view-picture').onclick = () => {
     if (run.status !== 'won') return;
     cancelResultAttempt();
-    enjoyCompletedPicture();
+    enjoyCompletedPicture({ automatic: false });
     $('show-result').focus({ preventScroll: true });
   };
   $('show-result').onclick = () => {
     if (run.status === 'won') {
+      clearSettledPictureTransition();
       const returningToResults = $('game-overlay').dataset.kind === 'won';
       overlay('won');
-      (returningToResults ? $('view-picture') : controllerFocus()).focus({ preventScroll: true });
+      const target = returningToResults ? $('view-picture') : controllerFocus();
+      if (document.activeElement !== target) target.focus({ preventScroll: true });
       refreshHUD();
     }
+  };
+  for (const eventName of ['click', 'focusin', 'pointerdown', 'keydown'])
+    $('game-overlay').addEventListener(
+      eventName,
+      () => {
+        if ($('game-overlay').dataset.kind === 'won' && resultAutoAdvanceRun === run)
+          clearResultAutoAdvance({ dismiss: true });
+      },
+      true,
+    );
+  $('result-random-level').onclick = () => {
+    if (practice || scenario || courseSession || run?.status !== 'won') return;
+    clearResultAutoAdvance({ dismiss: true });
+    return openUnifiedMissions($('result-random-level'), { random: true });
   };
   $('next-button').onclick = () => {
     if (courseBlocked()) return;
