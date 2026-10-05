@@ -35,7 +35,7 @@ const entry = () =>
     '<html data-fpv-worlds="true"><script src="../civilian-fpv/world-app.mjs"></script></html>',
   );
 
-function fixture(context, current, { getAppearanceDefault } = {}) {
+function fixture(context, current, { getAppearanceDefault, sourceHref } = {}) {
   const document = new Document(),
     root = document.createElement('nav'),
     local = memory(),
@@ -46,8 +46,9 @@ function fixture(context, current, { getAppearanceDefault } = {}) {
   document.body.append(root);
   document.documentElement.lang = 'uk';
   const href =
+    sourceHref ??
     'https://example.test/project/game/' +
-    (current === 'team' ? 'couch/relay-rescue.html' : current === 'versus' ? 'couch/' : '');
+      (current === 'team' ? 'couch/relay-rescue.html' : current === 'versus' ? 'couch/' : '');
   Object.assign(document.defaultView, {
     sessionStorage: session,
     localStorage: local,
@@ -243,3 +244,22 @@ for (const current of ['solo', 'versus', 'team'])
     state.controls.dispose();
     assert.equal(link.isConnected, false);
   });
+
+test('shared More modes guide links retain review on their real same-build paths before and after click', (t) => {
+  const source = new URL('../couch/?artReview=industrial-roster-v3', import.meta.url);
+  const f = fixture(t, 'versus', { sourceHref: source.href });
+  const links = f.root.querySelector('.game-mode-destinations').querySelectorAll('a');
+  assert.equal(links.length, 3);
+  for (const [index, name] of ['snake', 'hunt', 'online'].entries()) {
+    const before = new URL(links[index].href);
+    assert.equal(before.pathname, new URL(`../${name}/`, import.meta.url).pathname);
+    assert.equal(before.searchParams.get('artReview'), 'industrial-roster-v3');
+    links[index].click();
+    const after = new URL(links[index].href);
+    assert.equal(after.searchParams.get('artReview'), 'industrial-roster-v3');
+    assert.equal(after.pathname, before.pathname);
+    assert.ok(['en', 'uk'].includes(after.searchParams.get('lang')));
+  }
+  assert.equal(f.paused(), 3);
+  assert.deepEqual(f.visits, []);
+});

@@ -2,6 +2,32 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import fs from "node:fs/promises";
 
+// Only inspect inputs belonging to this setup step. YAML mapping order does not
+// change whether automatic package-manager caching was explicitly disabled.
+const explicitSetupCachePolicyCount = (workflow) =>
+  [
+    ...workflow.matchAll(
+      /uses:\s+actions\/setup-node@[^\n]+\n([ \t]+)with:\n((?:\1[ \t]+[^\n]*(?:\n|$))*)/gu,
+    ),
+  ].filter(([, , inputs]) =>
+    /^[ \t]+package-manager-cache:[ \t]+false[ \t]*(?:#.*)?$/mu.test(inputs),
+  ).length;
+
+test("setup caching policy is order-independent and cannot borrow another step's inputs", () => {
+  const prefix = "      - uses: actions/setup-node@revision\n        with:\n";
+  for (const inputs of [
+    "          package-manager-cache: false\n          node-version: 22\n",
+    "          node-version: 22\n          package-manager-cache: false # explicit\n",
+  ])
+    assert.equal(explicitSetupCachePolicyCount(prefix + inputs), 1);
+  for (const inputs of [
+    "          node-version: 22\n",
+    "          package-manager-cache: true\n",
+    "          node-version: 22\n      - uses: other/action@revision\n        with:\n          package-manager-cache: false\n",
+  ])
+    assert.equal(explicitSetupCachePolicyCount(prefix + inputs), 0);
+});
+
 test("active workflows pin reviewed Node 24 action runtimes without implicit npm caching", async () => {
   const directory = new URL("../../.github/workflows/", import.meta.url);
   const files = (await fs.readdir(directory)).filter((name) =>
@@ -30,13 +56,8 @@ test("active workflows pin reviewed Node 24 action runtimes without implicit npm
     const setupCount = (
       workflow.match(/uses:\s+actions\/setup-node@/gu) || []
     ).length;
-    const explicitCachePolicyCount = (
-      workflow.match(
-        /uses:\s+actions\/setup-node@[^\n]+\n\s+with:\n\s+package-manager-cache:\s+false/gu,
-      ) || []
-    ).length;
     assert.equal(
-      explicitCachePolicyCount,
+      explicitSetupCachePolicyCount(workflow),
       setupCount,
       `${file}: every setup-node step must refuse newly implicit caching`,
     );
@@ -99,7 +120,10 @@ test("source qualification retains mandatory guards while protected main owns pu
   assert.doesNotMatch(continuous, /  pull_request:/);
   assert.match(continuous, /group: pages-production/);
   assert.match(continuous, /cancel-in-progress: true/);
-  assert.match(continuous, /MAX_PUBLISHED_BYTES: 950000000/);
+  assert.match(continuous, /MAX_PUBLISHED_BYTES: 975000000/);
+  assert.match(continuous, /WARN_PUBLISHED_BYTES: 950000000/);
+  assert.match(continuous, /assert total <= maximum/);
+  assert.match(continuous, /if total > warning:/);
   assert.match(continuous, /run: npm ci --prefer-offline/);
   assert.match(continuous, /game_version=.*game\/build-config\.json/);
   assert.match(continuous, /--version "\$GAME_VERSION"/);

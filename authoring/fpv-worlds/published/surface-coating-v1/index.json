@@ -1,1 +1,15 @@
-{ "format": "FPVWorldLibrary.v1", "worlds": [] }
+{
+  "format": "FPVWorldLibrary.v1",
+  "worlds": [
+    {
+      "id": "mountain-reservoir",
+      "title": ["Mountain Reservoir", "Гірське водосховище"],
+      "revision": "r16",
+      "commit": "ea57d2e321896ab873c2ca6ca06791a88362a674",
+      "path": "authoring/fpv-worlds/mountain-reservoir/distribution/r16/mountain-reservoir.r16.rlpack",
+      "sha256": "50ffbb0e5da7dec94862a8f2ca85cfeb60542d3fe9f86bd3c4e288dfa0a2e554",
+      "bytes": 1379988,
+      "courses": 8
+    }
+  ]
+}

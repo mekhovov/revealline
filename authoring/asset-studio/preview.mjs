@@ -21,7 +21,9 @@ import { bindAudioMasterMedia } from '../../game/ui/audio-master.mjs';
 import { createCurrentArtPreview } from '../../game/presentation/current-art.mjs';
 import { pictureOwnerContext } from './picture-context.mjs';
 import { assetStudioErrorMessage, assetStudioErrorText } from './error-copy.mjs';
+import { isStudioActorSlot, studioActorCanvas } from './actor-resources.mjs';
 import {
+  croppedImage,
   playerRecipePreview,
   boardContextPreview,
   audioRecipePreview,
@@ -647,16 +649,27 @@ export async function drawAssetPreview(surface, slot, asset, resolved, blobs, se
     }
     if (asset.kind === 'image') {
       phase(() => t('tools:studio.preview.decodingImage'), 'decoding');
-      const bitmap = await createImageBitmap(blob);
+      const actor = isStudioActorSlot(slot.id),
+        actorOptions = { ...options, slotId: slot.id },
+        bitmap = actor
+          ? await croppedImage(asset, blobs, actorOptions, own)
+          : await createImageBitmap(blob);
       if (!isCurrent()) {
-        bitmap.close();
+        if (!actor) bitmap.close();
         return;
       }
       const frame = asset.geometry.frame,
-        canvas = document.createElement('canvas');
-      const contextual = mode === 'context';
-      canvas.width = contextual ? 320 : frame.width;
-      canvas.height = contextual ? 200 : frame.height;
+        contextual = mode === 'context',
+        width = contextual ? 320 : frame.width,
+        height = contextual ? 200 : frame.height,
+        canvas = actor
+          ? await studioActorCanvas(width, height, actorOptions, own)
+          : document.createElement('canvas');
+      if (!isCurrent()) return;
+      if (!actor) {
+        canvas.width = width;
+        canvas.height = height;
+      }
       localizedAttribute(canvas, 'aria-label', () =>
         t('tools:studio.preview.imageLabel', { slot: slot.label, mode }),
       );
@@ -668,8 +681,8 @@ export async function drawAssetPreview(surface, slot, asset, resolved, blobs, se
       if (contextual) field(ctx, palette);
       ctx.drawImage(
         bitmap,
-        frame.x,
-        frame.y,
+        actor && !asset.animation ? 0 : frame.x,
+        actor && !asset.animation ? 0 : frame.y,
         frame.width,
         frame.height,
         x,
@@ -677,7 +690,7 @@ export async function drawAssetPreview(surface, slot, asset, resolved, blobs, se
         frame.width * scale,
         frame.height * scale,
       );
-      bitmap.close();
+      if (!actor) bitmap.close();
       if (mode === 'alpha') {
         const pixels = ctx.getImageData(0, 0, canvas.width, canvas.height);
         for (let at = 0; at < pixels.data.length; at += 4) {
@@ -780,6 +793,7 @@ export async function drawAssetPreview(surface, slot, asset, resolved, blobs, se
         }),
       state: 'error',
     });
+    surface.previewCleanup(true);
     surface.replaceChildren(text('p', assetStudioErrorMessage(error), '', 'body'));
     if (cancelButton) {
       localizedText(cancelButton, () => t('common:preview.retry'));

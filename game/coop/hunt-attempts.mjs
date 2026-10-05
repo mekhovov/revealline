@@ -10,6 +10,7 @@ export const TEAM_HUNT_ATTEMPT_KEY = 'revealline.team-hunt-attempt.v1';
 export const TEAM_HUNT_ATTEMPT_FORMAT = 'revealline-team-hunt-attempt.v1';
 export const TEAM_RUNNING_ATTEMPT_FORMAT = 'revealline-team-hunt-attempt.v2';
 export const TEAM_PURSUIT_ATTEMPT_FORMAT = 'revealline-team-hunt-attempt.v3';
+export const TEAM_PURSUIT_V2_ATTEMPT_FORMAT = 'revealline-team-hunt-attempt.v4';
 export const TEAM_HUNT_ATTEMPT_MAX_BYTES = 1024 * 1024;
 const MAX_SEGMENTS = 8192;
 const MAX_TICKS = 240000;
@@ -47,6 +48,7 @@ export function validateTeamHuntAttempt(source) {
     value,
     [
       'format',
+      ...(value.format === TEAM_PURSUIT_V2_ATTEMPT_FORMAT ? ['pursuitGeneration'] : []),
       'attemptId',
       'levelId',
       'source',
@@ -60,17 +62,26 @@ export function validateTeamHuntAttempt(source) {
       'tuning',
       'segments',
       'checkpoint',
-      ...(value.format === TEAM_PURSUIT_ATTEMPT_FORMAT ? ['runningEnemyStyle'] : []),
-      ...([TEAM_RUNNING_ATTEMPT_FORMAT, TEAM_PURSUIT_ATTEMPT_FORMAT].includes(value.format)
+      ...([TEAM_PURSUIT_ATTEMPT_FORMAT, TEAM_PURSUIT_V2_ATTEMPT_FORMAT].includes(value.format)
+        ? ['runningEnemyStyle']
+        : []),
+      ...([
+        TEAM_RUNNING_ATTEMPT_FORMAT,
+        TEAM_PURSUIT_ATTEMPT_FORMAT,
+        TEAM_PURSUIT_V2_ATTEMPT_FORMAT,
+      ].includes(value.format)
         ? ['runningEnemies']
         : []),
     ],
     'Team Hunt attempt',
   );
   required(
-    [TEAM_HUNT_ATTEMPT_FORMAT, TEAM_RUNNING_ATTEMPT_FORMAT, TEAM_PURSUIT_ATTEMPT_FORMAT].includes(
-      value.format,
-    ),
+    [
+      TEAM_HUNT_ATTEMPT_FORMAT,
+      TEAM_RUNNING_ATTEMPT_FORMAT,
+      TEAM_PURSUIT_ATTEMPT_FORMAT,
+      TEAM_PURSUIT_V2_ATTEMPT_FORMAT,
+    ].includes(value.format),
     'Unsupported Team Hunt save version.',
   );
   required(
@@ -89,12 +100,23 @@ export function validateTeamHuntAttempt(source) {
       identity(value.encounterLevelIdentity),
     'Damaged Team Hunt recipe.',
   );
-  if (value.format === TEAM_PURSUIT_ATTEMPT_FORMAT)
+  if ([TEAM_PURSUIT_ATTEMPT_FORMAT, TEAM_PURSUIT_V2_ATTEMPT_FORMAT].includes(value.format))
     required(value.runningEnemyStyle === 'varied', 'Unsupported varied pursuit recipe.');
-  if ([TEAM_RUNNING_ATTEMPT_FORMAT, TEAM_PURSUIT_ATTEMPT_FORMAT].includes(value.format))
+  if (
+    [
+      TEAM_RUNNING_ATTEMPT_FORMAT,
+      TEAM_PURSUIT_ATTEMPT_FORMAT,
+      TEAM_PURSUIT_V2_ATTEMPT_FORMAT,
+    ].includes(value.format)
+  )
     required(
       value.runningEnemies === 'running-enemies.v1',
       'Unsupported Team running-enemy recipe.',
+    );
+  if (value.format === TEAM_PURSUIT_V2_ATTEMPT_FORMAT)
+    required(
+      value.pursuitGeneration === 'pursuit-goals.v2',
+      'Unsupported Team pursuit generation.',
     );
   exactKeys(value.source, ['pack', 'level'], 'Team Hunt source');
   required(
@@ -172,15 +194,25 @@ export function createTeamHuntRecorder({
     TEAM_HUNT_ATTEMPT_FORMAT,
     TEAM_RUNNING_ATTEMPT_FORMAT,
     TEAM_PURSUIT_ATTEMPT_FORMAT,
+    TEAM_PURSUIT_V2_ATTEMPT_FORMAT,
   ].includes(restored?.snapshot.format)
     ? structuredClone(restored.snapshot)
     : {
         format: runningEnemies
           ? run.level.pursuit
-            ? TEAM_PURSUIT_ATTEMPT_FORMAT
+            ? run.level.pursuit.version === 'pursuit-goals.v2'
+              ? TEAM_PURSUIT_V2_ATTEMPT_FORMAT
+              : TEAM_PURSUIT_ATTEMPT_FORMAT
             : TEAM_RUNNING_ATTEMPT_FORMAT
           : TEAM_HUNT_ATTEMPT_FORMAT,
-        ...(runningEnemies && run.level.pursuit ? { runningEnemyStyle: 'varied' } : {}),
+        ...(runningEnemies && run.level.pursuit
+          ? {
+              runningEnemyStyle: 'varied',
+              ...(run.level.pursuit.version === 'pursuit-goals.v2'
+                ? { pursuitGeneration: run.level.pursuit.version }
+                : {}),
+            }
+          : {}),
         ...(runningEnemies ? { runningEnemies: 'running-enemies.v1' } : {}),
         attemptId: restored?.snapshot.attemptId ?? attemptId,
         levelId: level.id,
@@ -196,6 +228,7 @@ export function createTeamHuntRecorder({
             level: runningEnemies
               ? prepareTeamRunningEnemies(applyGameplayTuning(encounterLevel, tuning), {
                   style: run.level.pursuit ? 'varied' : 'original',
+                  generation: run.level.pursuit?.version ?? 'pursuit-goals.v1',
                 })
               : applyGameplayTuning(encounterLevel, tuning),
           }),
@@ -255,7 +288,10 @@ export async function restoreTeamHuntAttempt(
   );
   const baseTuned = applyGameplayTuning(encounterLevel, snapshot.tuning);
   const tuned = snapshot.runningEnemies
-    ? prepareTeamRunningEnemies(baseTuned, { style: snapshot.runningEnemyStyle ?? 'original' })
+    ? prepareTeamRunningEnemies(baseTuned, {
+        style: snapshot.runningEnemyStyle ?? 'original',
+        generation: snapshot.pursuitGeneration ?? 'pursuit-goals.v1',
+      })
     : baseTuned;
   const run = startCoop(
     createCoop(tuned, { seed: snapshot.seed, difficulty: snapshot.difficulty, ...snapshot.config }),
@@ -347,6 +383,7 @@ export async function matchingTeamHuntMirror(
     previous.encounterVariant !== (snapshot.encounterVariant ?? 'authored') ||
     previous.runningEnemies !== snapshot.runningEnemies ||
     previous.runningEnemyStyle !== snapshot.runningEnemyStyle ||
+    previous.pursuitGeneration !== snapshot.pursuitGeneration ||
     dataIdentity(previous.tuning) !== dataIdentity(snapshot.tuning) ||
     dataIdentity(previous.config) !== dataIdentity(restored.run.config)
   )

@@ -1,3 +1,4 @@
+import { nativeArtReviewURL } from './art-review-navigation.mjs';
 import { t, localizedText, localizedAttribute, getLocale } from '../i18n/index.mjs';
 import { setMenuIcon } from './native-menu-icons.mjs';
 import { mountOptionalPracticePanel } from './optional-practice-panel.mjs';
@@ -123,12 +124,13 @@ export function mountModeChoices({
     ['../online/', 'Private rooms preview', 'Приватні кімнати'],
   ]) {
     const link = document.createElement('a');
-    link.href = new URL(path, import.meta.url).href;
+    const sourceHref = document.defaultView?.location?.href ?? globalThis.location?.href;
+    link.href = nativeArtReviewURL(new URL(path, import.meta.url).href, sourceHref);
     localizedText(link, () => (getLocale() === 'uk' ? uk : en));
     link.addEventListener('click', () => {
       const target = new URL(link.href);
       target.searchParams.set('lang', getLocale());
-      link.href = target.href;
+      link.href = nativeArtReviewURL(target.href, sourceHref);
       pause();
     });
     destinations.append(link);

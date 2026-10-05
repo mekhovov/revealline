@@ -9,13 +9,17 @@ const angle = (x, y) =>
  * this never needs a mutable last-frame cache or changes the simulation. */
 export function actorFacingRadians(actor, definition = null) {
   const state = actor.pursuit;
-  if (Object.hasOwn(headings, state?.heading)) return headings[state.heading];
+  if (['shield', 'brace'].includes(state?.behavior) && Object.hasOwn(headings, state.heading))
+    return headings[state.heading];
   if (actor.aim) {
     const facing = angle(actor.aim.x - actor.x, actor.aim.y - actor.y);
     if (facing !== null) return facing;
   }
   const motion = angle(actor.vx, actor.vy);
   if (motion !== null) return motion;
+  // Ordinary goal policies may walk diagonally or fall back to native fleeing.
+  // Their retained cardinal intent must not override actual movement direction.
+  if (Object.hasOwn(headings, state?.heading)) return headings[state.heading];
   if (state?.goal) {
     const goal = angle(state.goal.x - actor.x, state.goal.y - actor.y);
     if (goal !== null) return goal;
