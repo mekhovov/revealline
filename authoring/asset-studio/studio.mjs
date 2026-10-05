@@ -21,6 +21,10 @@ import {
   addTeamPresentationSlots,
   needsTeamPresentationSlots,
 } from '../../game/presentation/team-anchor-upgrade.mjs';
+import {
+  addDestructionAudioSlots,
+  needsDestructionAudioSlots,
+} from '../../game/presentation/destruction-audio-upgrade.mjs';
 globalThis.RevealLineToolLaunch?.attached();
 import { createDefaultThemeBundle } from '../../game/presentation/catalog.mjs';
 import {
@@ -63,12 +67,23 @@ import { mountInterfacePreferences } from './interface-preferences.mjs';
 import { mountStudioGuide } from './guide.mjs';
 import { attachStudioAuditionLifecycle } from './audition-lifecycle.mjs';
 import { createStudioViewMemory, resolveStudioView } from './view-memory.mjs';
+import { studioEntryView } from './entry-view.mjs';
 import { mountStudioRotorControls } from './rotor-controls.mjs';
 import { mountArtworkCollectionPanel } from './artwork-panel.mjs';
 import { mountThemeWorkbench } from './theme-workbench.mjs';
 import { getInterfaceTheme, getThemeFamily } from '../../game/presentation/theme-system.mjs';
 mountArtworkCollectionPanel({ document, window });
 const $ = (id) => document.getElementById(id);
+const destructionAdmissionCopy = (key) =>
+  ({
+    label: ['Add destruction sounds', 'Додати звуки знищення'],
+    preparing: ['Adding editable destruction sounds…', 'Додаємо звуки знищення для редагування…'],
+    complete: [
+      'Destruction sounds added to this draft. Existing assets are retained. Save a local revision or export to keep this change.',
+      'Звуки знищення додано до чернетки. Наявні ресурси збережено. Збережіть локальну версію або експортуйте зміни.',
+    ],
+  })[key][getLocale() === 'uk' ? 1 : 0];
+localizedText($('add-destruction-audio'), () => destructionAdmissionCopy('label'));
 localizedText($('industrial-art-review'), () =>
   getLocale() === 'uk' ? 'Огляд індустріальної графіки' : 'Industrial art review',
 );
@@ -109,9 +124,12 @@ function rememberView() {
   if (!initialWorkspaceLoad) viewMemory.write(selected, filters());
 }
 function restoreView() {
-  if (!initialWorkspaceLoad || !pendingViewRestore) return;
+  if (!initialWorkspaceLoad) return;
+  const requestedView =
+    pendingViewRestore ?? studioEntryView(window.location.href, working.document.slots);
+  if (!requestedView) return;
   const view = resolveStudioView(
-    pendingViewRestore,
+    requestedView,
     working.document.slots.map((slot) => slot.id),
     Object.fromEntries(
       ['screen', 'state', 'kind', 'quality'].map((key) => [
@@ -329,8 +347,11 @@ function updateCollectionCount() {
 }
 function refresh() {
   if (!working.document.slots.some((slot) => slot.id === selected))
-    selected = working.document.slots[0].id;
+    selected =
+      studioEntryView(window.location.href, working.document.slots)?.selected ??
+      working.document.slots[0].id;
   $('add-team-anchors').disabled = !needsTeamPresentationSlots(working.document);
+  $('add-destruction-audio').disabled = !needsDestructionAudioSlots(working.document);
   const view = resolved();
   const themes = [...new Map(working.document.themes.map((theme) => [theme.id, theme])).values()];
   $('filter-theme').replaceChildren(
@@ -1317,6 +1338,16 @@ $('add-team-anchors').onclick = () =>
       working.assets,
       t('tools:teamPresentationSlotsAddedToThisDraftChooseCouchTeam'),
     );
+  });
+$('add-destruction-audio').onclick = () =>
+  operation(destructionAdmissionCopy('preparing'), () => {
+    requireSettled();
+    const next = addDestructionAudioSlots(working.document);
+    selected = 'audio.destroy-soft';
+    $('filter-search').value = 'audio.';
+    for (const name of ['screen', 'state', 'kind', 'quality']) $(`filter-${name}`).value = '';
+    stage(next, working.assets, destructionAdmissionCopy('complete'));
+    rememberView();
   });
 $('undo-draft').onclick = () =>
   operation(t('tools:preparingWorkspaceChange'), () => {

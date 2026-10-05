@@ -591,6 +591,24 @@ for (const id of ['focus', 'confirm', 'cancel', 'capture', 'failure', 'victory',
       'Sound cannot be the only way to understand state.',
     ],
   });
+for (const [id, label] of [
+  ['soft', 'Infantry destruction'],
+  ['armored', 'Armored infantry destruction'],
+  ['light', 'Light machinery destruction'],
+  ['heavy', 'Heavy machinery destruction'],
+  ['electronic', 'Electronic equipment destruction'],
+])
+  slot(`audio.destroy-${id}`, label, 'audio', 'audio.ui.v1', null, all, {
+    kinds: ['audio', 'recipe'],
+    required: false,
+    prompt: `Create a short ${label.toLowerCase()} cue. Preserve a clear transient, restrained bass and a quick decay; no voices or musical pickup chimes. The shared default has three licensed CC0 variations. Export mono 48 kHz PCM16 WAV, at most one second, with complete license and source records.`,
+    requirements: [
+      'Optional shared destruction slot; older themes fall back to the registered enemy-specific bank.',
+      'Mono audio, at most one second. Runtime bounds tails, concurrent voices and event rate.',
+      'Follow master/SFX volume, mute, pause and user activation; never encode gameplay timing.',
+      'Retain original licensed bytes and provenance for Studio export and reuse.',
+    ],
+  });
 slot('audio.music', 'Theme music', 'audio', 'audio.music.v1', null, ['title', 'flight', 'couch'], {
   kinds: ['audio', 'recipe'],
 });
@@ -621,9 +639,11 @@ export function createDefaultThemeBundle() {
     id: `${entry.id}.default`,
     revision: 1,
     kind: 'recipe',
-    description: entry.id.startsWith('team.')
-      ? `${entry.label}: registered recipe; no new art.`
-      : `${entry.label}: registered baseline component; no new raster or audio production is claimed.`,
+    description: entry.id.startsWith('audio.destroy-')
+      ? `${entry.label}: shared Kenney CC0 recordings with three variations and a bounded offline rendition.`
+      : entry.id.startsWith('team.')
+        ? `${entry.label}: registered recipe; no new art.`
+        : `${entry.label}: registered baseline component; no new raster or audio production is claimed.`,
     provenance: {
       creator: 'Reveal Line',
       source: 'Existing runtime presentation and Field Kit specification',
