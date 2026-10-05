@@ -1,0 +1,42 @@
+{
+  "scope": "Manual local-browser review of working source; not suite, physical-device, completion-route or release qualification",
+  "observedAt": "2026-10-03T14:59:14.112223+00:00",
+  "studio": [
+    "Inspected Living Routes Crossing Post source, explicitly applied, observed checkpoint1.",
+    "Corrected preview started using the native Solo host; Start and Pause worked at four seconds with BonusHunt0/2.",
+    "Outer Close preview returned to the same saved draft. Inner Return to editor is documented as focus handoff, not teardown.",
+    "Separate Cable Cutoff Slow review reached wall failure through manual controls; no completion route established."
+  ],
+  "rooms": [
+    "Isolated loopback8784 with UI8785; existing user services unchanged.",
+    "Two seats selected the LOCAL REVIEW imported Cable Cutoff package at Slow/authored/seed17. Accepted mission and source shown before Ready.",
+    "Both Ready started paired boards; collision attempt reached terminal result. Rematch from both seats retained exact recipe SHA and seed and returned to waiting.",
+    "Ukrainian Pincer Yard imported Team lobby displayed native one-board presentation and package ownership.",
+    "Company Solo capability link explained unavailable multiplayer and disabled Create, with no fallback.",
+    "Expanded Ukrainian source details at320x740 had document/body width320; Ready44CSSpx high. Viewport reset."
+  ],
+  "registry": {
+    "packages": 4,
+    "admittedPackages": 2,
+    "playableEntries": 4,
+    "unavailablePackages": 2,
+    "reasons": ["COMPANY_SOLO_ONLY", "PIN_MISMATCH"],
+    "fixtureOwnership": "Clearly labelled local-review namespaces, not real published Community editions."
+  },
+  "proofImages": [
+    {
+      "path": "docs/verification/immutable-room-content/imported-room.png",
+      "sha256": "f8375e836f14ab29490cebe7191e58ce47692579e7a015317e861cab1ec14939"
+    },
+    {
+      "path": "docs/verification/immutable-room-content/studio-preview.png",
+      "sha256": "aa68c0bed0dda5648904540cd74acee7f04a5927d40f0d904698f258d7030710"
+    }
+  ],
+  "limitations": [
+    "Replay download requested but browser returned no observable download receipt.",
+    "No actual six-pilot human completion route, physical controls, full EN/UK/device matrix, audio listening, hosted network or native endpoints qualified.",
+    "Expanded preparation menu is scrollable; this observation does not establish active two-player phone fit."
+  ],
+  "cleanup": "Closed temporary60/61/62/63tabs; stopped own8784/8785services; preserved usertab24 and8779/8783services."
+}

@@ -1,4 +1,5 @@
 import { t } from '../i18n/index.mjs';
+import { nativeArtReviewURL } from './art-review-navigation.mjs';
 import { studioReturnLinks } from './asset-studio-return.mjs';
 import { workshopToolHref } from './workshop-return.mjs';
 
@@ -45,7 +46,7 @@ export function snakeStudioReturnHref(href) {
   const languages = page.searchParams.getAll('lang');
   if (languages.length === 1 && ['en', 'uk'].includes(languages[0]))
     target.searchParams.set('lang', languages[0]);
-  return target.href;
+  return nativeArtReviewURL(target.href, page.href);
 }
 
 /** Early navigation only. Editor loading, focus, drafts and storage have separate owners. */

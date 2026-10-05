@@ -10,13 +10,30 @@ export const TEAM_PURSUIT_PACK_VERSION = 'revealline-coop-pack.v11';
 export const TEAM_SNAKE_PURSUIT_LEVEL_VERSION = 'revealline-coop-level.v12';
 export const TEAM_SNAKE_PURSUIT_RULESET = 'revealline-coop.v14';
 export const TEAM_SNAKE_PURSUIT_PACK_VERSION = 'revealline-coop-pack.v12';
+export const TEAM_PURSUIT_V2_LEVEL_VERSION = 'revealline-coop-level.v13';
+export const TEAM_PURSUIT_V2_RULESET = 'revealline-coop.v15';
+export const TEAM_PURSUIT_V2_PACK_VERSION = 'revealline-coop-pack.v13';
+export const TEAM_SNAKE_PURSUIT_V2_LEVEL_VERSION = 'revealline-coop-level.v14';
+export const TEAM_SNAKE_PURSUIT_V2_RULESET = 'revealline-coop.v16';
+export const TEAM_SNAKE_PURSUIT_V2_PACK_VERSION = 'revealline-coop-pack.v14';
+export const isTeamPursuitV2Level = (level) =>
+  [TEAM_PURSUIT_V2_LEVEL_VERSION, TEAM_SNAKE_PURSUIT_V2_LEVEL_VERSION].includes(level?.version);
+export const isTeamSnakePursuitLevel = (level) =>
+  [TEAM_SNAKE_PURSUIT_LEVEL_VERSION, TEAM_SNAKE_PURSUIT_V2_LEVEL_VERSION].includes(level?.version);
 export const isTeamPursuitLevel = (level) =>
-  [TEAM_PURSUIT_LEVEL_VERSION, TEAM_SNAKE_PURSUIT_LEVEL_VERSION].includes(level?.version);
+  [
+    TEAM_PURSUIT_LEVEL_VERSION,
+    TEAM_SNAKE_PURSUIT_LEVEL_VERSION,
+    TEAM_PURSUIT_V2_LEVEL_VERSION,
+    TEAM_SNAKE_PURSUIT_V2_LEVEL_VERSION,
+  ].includes(level?.version);
 export const isTeamRunningLevel = (level) =>
   [
     TEAM_RUNNING_LEVEL_VERSION,
     TEAM_PURSUIT_LEVEL_VERSION,
     TEAM_SNAKE_PURSUIT_LEVEL_VERSION,
+    TEAM_PURSUIT_V2_LEVEL_VERSION,
+    TEAM_SNAKE_PURSUIT_V2_LEVEL_VERSION,
   ].includes(level?.version);
 export const inheritedTeamVersion = (level) =>
   level.version === 'revealline-coop-level.v10'
@@ -36,6 +53,12 @@ export function inheritedRunningTeamLevel(source) {
     maxArray: 8192,
   });
   const recipe = level.runningEnemies;
+  if (level.pursuit)
+    required(
+      level.pursuit.version ===
+        (isTeamPursuitV2Level(level) ? 'pursuit-goals.v2' : 'pursuit-goals.v1'),
+      'Team pursuit generation must match its native format.',
+    );
   const snake = recipe?.version === 'running-enemies.v3';
   const preservesHunt = ['running-enemies.v2', 'running-enemies.v3'].includes(recipe?.version);
   exactKeys(
@@ -52,7 +75,7 @@ export function inheritedRunningTeamLevel(source) {
     'Team running enemies',
   );
   required(
-    (level.version === TEAM_SNAKE_PURSUIT_LEVEL_VERSION) === snake,
+    isTeamSnakePursuitLevel(level) === snake,
     'Combined Team Snake pursuit requires its exact inherited Snake wrapper.',
   );
   required(
@@ -72,7 +95,14 @@ export function inheritedRunningTeamLevel(source) {
   );
   if (preservesHunt)
     required(
-      level.version === (snake ? TEAM_SNAKE_PURSUIT_LEVEL_VERSION : TEAM_PURSUIT_LEVEL_VERSION) &&
+      level.version ===
+        (isTeamPursuitV2Level(level)
+          ? snake
+            ? TEAM_SNAKE_PURSUIT_V2_LEVEL_VERSION
+            : TEAM_PURSUIT_V2_LEVEL_VERSION
+          : snake
+            ? TEAM_SNAKE_PURSUIT_LEVEL_VERSION
+            : TEAM_PURSUIT_LEVEL_VERSION) &&
         (!snake || canonicalJSON(level.snake) === canonicalJSON(recipe.inheritedSnake)) &&
         recipe.actorIds.length === 0 &&
         canonicalJSON(level.hunt) === canonicalJSON(recipe.inheritedHunt),
