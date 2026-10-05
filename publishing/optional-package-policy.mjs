@@ -32,7 +32,9 @@ const BASE_OPTIONAL_PACKAGE_POLICIES = Object.freeze({
   'civilian-flight': Object.freeze({
     root: 'optional-practice/civilian-flight/',
     entry: 'optional-practice/civilian-flight/index.html',
-    limits: Object.freeze({ files: 64, bytes: 8 * 1024 * 1024 }),
+    // Shared defeat audio and its settings add seven exact dependencies; the
+    // launcher/source closure stays bounded separately from its byte budget.
+    limits: Object.freeze({ files: 72, bytes: 8 * 1024 * 1024 }),
     localFiles: Object.freeze([
       'index.html',
       'app.mjs',
@@ -616,8 +618,14 @@ export const OPTIONAL_PACKAGE_POLICIES = Object.freeze(
             'game/ui/art/menu-scenes/fpv.webp',
             'game/ui/art-review-navigation.mjs',
             'game/hunt/preferences.mjs',
+            'game/hunt/copy.mjs',
             'game/hunt/actor-catalog.mjs',
             'game/ui/enemy-appearance-controls.mjs',
+            'game/ui/defeat-sound-controls.mjs',
+            'game/ui/destruction-audio.mjs',
+            'game/ui/destruction-level.mjs',
+            'game/ui/human-reaction-policy.mjs',
+            'game/audio/human-reactions/portable.mjs',
           ]),
         ]),
       }),

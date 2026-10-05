@@ -41,6 +41,8 @@ import {
 } from '../snake/classic-setup.mjs';
 import { ACTOR_CASTS, actorFieldGuide } from '../hunt/actor-catalog.mjs';
 import { mountModeSettings } from '../ui/mode-settings-view.mjs';
+import { attachDefeatSoundControls } from '../ui/defeat-sound-controls.mjs';
+import { createDestructionPreferences } from '../hunt/preferences.mjs';
 import {
   attachSettingsPanels,
   settingsPanelBack,
@@ -251,6 +253,7 @@ async function harness({
             dispose() {},
           }),
     attachMenuAudioSettings() {},
+    attachDefeatSoundControls,
     getMenuAnimation: () => true,
     setMenuAnimation() {},
     subscribeMenuAnimation: () => () => {},
@@ -336,7 +339,14 @@ async function harness({
     t,
     setLocale() {},
     onLocaleChange() {},
-    createDestructionPreferences: () => preferences({ brutal: false, blood: true }),
+    createDestructionPreferences: () =>
+      createDestructionPreferences({
+        window,
+        getStorage: () => ({
+          getItem: (key) => storage.get(key) ?? null,
+          setItem: (key, value) => storage.set(key, value),
+        }),
+      }),
     createEncounterDisplayPreferences: () => preferences({ showRemains: true }),
     createDisplayPreferences: () => ({
       snapshot: () => display,
@@ -463,6 +473,25 @@ async function harness({
 }
 
 for (const mode of ['solo', 'versus', 'team']) {
+  test(`${mode} Snake sound choice persists without enabling gore or advancing the paused round`, async () => {
+    const state = await harness({ mode });
+    state.shell.open('settings');
+    const selector = state.$('snake-defeat-sounds');
+    const ticks = state.created.map((run) => run.tick);
+    assert.equal(selector.value, 'reactions');
+    selector.value = 'classic';
+    selector.dispatchEvent({ type: 'change' });
+    assert.equal(JSON.parse(state.storage.get('revealline.destruction.v1')).vocals, false);
+    selector.value = 'reactions';
+    selector.dispatchEvent({ type: 'change' });
+    const preference = JSON.parse(state.storage.get('revealline.destruction.v1'));
+    assert.equal(preference.vocals, true);
+    assert.equal(preference.brutal, false);
+    assert.deepEqual(
+      state.created.map((run) => run.tick),
+      ticks,
+    );
+  });
   test(`${mode} accepts a changed military preset on the first Start without replacing the recipe`, async () => {
     const state = await harness({ mode });
     const before = state.created.map((run) => core.exportClassicSnakeReplay(run));

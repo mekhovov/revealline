@@ -125,6 +125,8 @@ export function createOverflightAudio(
             Math.hypot(event.x - run.player.x, (event.y ?? run.player.y) - run.player.y) <= 560,
           family: event.family,
           machine: event.machine,
+          humanoid: event.humanoid,
+          flesh: event.flesh,
           material: cue === 'catch' ? event.material : 'metal',
           count: event.count ?? 1,
         });

@@ -1,5 +1,6 @@
 import { mountModePlayShell } from '../../game/ui/mode-play-shell.mjs';
 import { setMenuIcon } from '../../game/ui/native-menu-icons.mjs';
+import { attachDefeatSoundControls } from '../../game/ui/defeat-sound-controls.mjs';
 import {
   createSimModeLinks,
   createSimContinuousPlayController,
@@ -767,6 +768,13 @@ export function mountCivilianPractice({ document: doc, window: win }) {
       extras: [playShell.elements.buttons.workshop, playShell.elements.buttons.help],
     },
   });
+  const defeatSounds = attachDefeatSoundControls({
+    document: doc,
+    window: win,
+    getStorage: () => win.localStorage,
+    container: modeSettings.panels.audio,
+    prefix: 'gym-',
+  });
   const appearance = attachSimThemeFamilyControls({
     document: doc,
     root: modeSettings.panels.display,
@@ -942,6 +950,7 @@ export function mountCivilianPractice({ document: doc, window: win }) {
     presentation.dispose();
     input.dispose();
     stopSound();
+    defeatSounds.dispose();
     audio.dispose();
     stopLocale();
     win.cancelAnimationFrame(frame);
