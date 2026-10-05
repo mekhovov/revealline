@@ -49,19 +49,38 @@ check(
 const module = await import(pathToFileURL(path.join(root, lib))),
   { installPracticeWorker } = await import(
     pathToFileURL(path.join(root, 'optional-practice/worker-template.mjs'))
+  ),
+  { installPracticeWorker: installParentWorker } = await import(
+    'data:text/javascript;base64,' + git('optional-practice/worker-template.mjs').toString('base64')
   );
 const feeds = [];
 for (const name of ['index.json', 'surface-coating-v1/index.json', 'ground-motion-v1/index.json']) {
   const file = 'authoring/fpv-worlds/published/' + name,
     bytes = await read(file);
   feeds.push({ path: file, bytes: bytes.length, sha256: hash(bytes) });
-  check('Strict v1 parser accepts empty ' + name, module.worldLibraryIndex(bytes).length === 0);
+  check(
+    'Strict v1 parser accepts expected rows in ' + name,
+    module.worldLibraryIndex(bytes).length === (name === 'index.json' ? 0 : 1),
+  );
   if (name !== 'ground-motion-v1/index.json')
     check('Older feed exact ' + name, bytes.equals(git(file)));
 }
 check(
-  'New feed is byte-exact same empty v1 shape',
-  feeds.every((f) => f.bytes === 49 && f.sha256 === feeds[0].sha256),
+  'New feed copies the complete eligible surface-coating catalogue byte-exact',
+  feeds[2].bytes === feeds[1].bytes && feeds[2].sha256 === feeds[1].sha256,
+);
+const cumulative = module.worldLibraryIndex(
+  await read('authoring/fpv-worlds/published/ground-motion-v1/index.json'),
+);
+check(
+  'Only the already-published Reservoir revision is eligible; no Harbor or Festival row',
+  cumulative.length === 1 &&
+    cumulative[0].id === 'mountain-reservoir' &&
+    cumulative[0].revision === 'r16' &&
+    cumulative[0].commit === 'ea57d2e321896ab873c2ca6ca06791a88362a674' &&
+    cumulative[0].sha256 === '50ffbb0e5da7dec94862a8f2ca85cfeb60542d3fe9f86bd3c4e288dfa0a2e554' &&
+    cumulative[0].bytes === 1379988 &&
+    cumulative[0].courses === 8,
 );
 const row = {
   id: 'cohort-diagnostic',
@@ -93,12 +112,12 @@ for (const [name, edit] of [
   }
   check('Closed schema rejects ' + name, rejected);
 }
-const empty = await read('authoring/fpv-worlds/published/ground-motion-v1/index.json'),
+const catalogue = await read('authoring/fpv-worlds/published/ground-motion-v1/index.json'),
   oldWorker = await fs.readFile(
     path.join(oldPlayer, 'optional-practice/fpv-worlds/worker.js'),
     'utf8',
   );
-async function request(kind, data, response = { body: empty, status: 200 }) {
+async function request(kind, data, response = { body: catalogue, status: 200 }) {
   const fetched = [],
     events = [];
   let receive, resolve, reject;
@@ -129,6 +148,7 @@ async function request(kind, data, response = { body: empty, status: 200 }) {
   try {
     if (kind === 'old')
       vm.runInNewContext(oldWorker, { self: scope, AbortController, Uint8Array, URL });
+    else if (kind === 'parent') installParentWorker(scope, [], 'manual-parent-source');
     else installPracticeWorker(scope, [], 'manual-source');
     receive({ data: { type: 'world-read', ...data } });
     const result = await done;
@@ -145,13 +165,16 @@ async function request(kind, data, response = { body: empty, status: 200 }) {
 const cases = [];
 for (const [kind, allowed, denied] of [
   ['old', oldURL, newURL],
+  ['parent', oldURL, newURL],
   ['new', newURL, oldURL],
 ]) {
   const yes = await request(kind, { url: allowed, bytes: 8192 });
   cases.push({ kind, name: 'own index', ...yes });
   check(
     kind + ' exact index accepted',
-    yes.type === 'world-done' && yes.fetched.length === 1 && Buffer.from(yes.bytes).equals(empty),
+    yes.type === 'world-done' &&
+      yes.fetched.length === 1 &&
+      Buffer.from(yes.bytes).equals(catalogue),
   );
   check(
     kind + ' index request policy exact',
@@ -198,7 +221,11 @@ for (const [kind, allowed, denied] of [
     kind + ' wrong pack hash refused',
     wrong.type === 'world-error' && wrong.fetched.length === 1,
   );
-  const failed = await request(kind, { url: allowed, bytes: 8192 }, { body: empty, status: 503 });
+  const failed = await request(
+    kind,
+    { url: allowed, bytes: 8192 },
+    { body: catalogue, status: 503 },
+  );
   check(
     kind + ' unavailable index refused',
     failed.type === 'world-error' && failed.fetched.length === 1,
@@ -207,14 +234,51 @@ for (const [kind, allowed, denied] of [
 const inventory = JSON.parse(await fs.readFile(inventoryPath)),
   inputs = [],
   changed = [];
-check('Parent admission input count remains95', inventory.inputs.length === 95);
+const policyPath = 'publishing/optional-package-policy.mjs',
+  policyBytes = await read(policyPath),
+  { OPTIONAL_PACKAGE_POLICIES, optionalRuntimePaths } = await import(
+    pathToFileURL(path.join(root, policyPath))
+  ),
+  policy = OPTIONAL_PACKAGE_POLICIES['fpv-worlds'],
+  expectedPaths = [
+    ...new Set([
+      ...policy.localFiles.map((p) => policy.root + p),
+      ...policy.sharedFiles.filter((p) => p !== 'game/i18n/catalogs.mjs'),
+      policy.template,
+      policy.launcherTemplate,
+      ...policy.localeInputs,
+    ]),
+  ].sort();
+check('Inherited current P1 policy remains byte-exact', policyBytes.equals(git(policyPath)));
+check(
+  'Current parent admission uses the exact105 input policy closure',
+  inventory.inputs.length === 105 &&
+    JSON.stringify(inventory.inputs.map((r) => r.path).sort()) === JSON.stringify(expectedPaths),
+);
+check(
+  'Current Worlds policy remains128 files and20MiB',
+  policy.limits.files === 128 && policy.limits.bytes === 20971520,
+);
+check(
+  'Unchanged runtime member paths remain112 including descriptor',
+  optionalRuntimePaths(policy, { launcher: true }).length + 1 === 112,
+);
+const parentInputs = [];
 for (const old of inventory.inputs) {
+  const original = git(old.path);
+  parentInputs.push({ path: old.path, bytes: original.length, sha256: hash(original) });
+  if (original.length !== old.bytes || hash(original) !== old.sha256)
+    throw Error('Parent admitted input differs from exact Git baseline: ' + old.path);
   const bytes = await read(old.path),
     next = { path: old.path, bytes: bytes.length, sha256: hash(bytes) };
   inputs.push(next);
   if (next.sha256 !== old.sha256)
     changed.push({ ...next, beforeBytes: old.bytes, beforeSHA256: old.sha256 });
 }
+check(
+  'All105 parent committed bytes match the named fresh admission inventory',
+  parentInputs.length === 105,
+);
 check(
   'Only two generated admitted inputs change',
   changed.length === 2 &&
@@ -226,24 +290,29 @@ check(
     ),
 );
 const total = inputs.reduce((n, r) => n + r.bytes, 0);
-check('Existing16MiB source ceiling preserved', total <= 16777216);
+check('Inherited20MiB source ceiling preserved', total <= policy.limits.bytes);
 await fs.writeFile(
   out,
   JSON.stringify(
     {
-      format: 'GroundMotionCohortSourceContract.v1',
+      format: 'GroundMotionCohortSourceContract.v2',
       baseline,
+      inventoryPath,
+      inventorySHA256: hash(await fs.readFile(inventoryPath)),
+      oldPlayer,
+      oldWorkerSHA256: hash(oldWorker),
+      policySHA256: hash(policyBytes),
       checks,
       feeds,
       cases,
       changedInputs: changed,
       inputCount: inputs.length,
       totalSourceBytes: total,
-      remainingSourceBytes: 16777216 - total,
+      remainingSourceBytes: policy.limits.bytes - total,
       limitations: [
         'Manual Node parser and serialized worker request contracts with an in-memory scope and stubbed Response only; not a native Worker, HTTPS, UI, storage, offline or publication qualification.',
         'Input sum is a source measurement, not fresh package admission. No runtime limits or file policy changed.',
-        'Both old feeds remain exact; all three feeds are empty. No held row is republished.',
+        'Both old feeds remain exact. The new cohort copies the eligible merged Reservoir row byte-exact; no Harbor or Festival row is added. This is not observation of the newly served feed.',
       ],
     },
     null,
@@ -258,6 +327,6 @@ console.log(
     pass: checks.every((c) => c.passed),
     changedInputs: changed,
     totalSourceBytes: total,
-    remainingSourceBytes: 16777216 - total,
+    remainingSourceBytes: policy.limits.bytes - total,
   }),
 );
