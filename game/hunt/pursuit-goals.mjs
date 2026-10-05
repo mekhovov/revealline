@@ -1,7 +1,9 @@
+import { updatePursuitHeadingV2 } from './pursuit-goals-v2.mjs';
 import { updatePursuitSpecialist } from './pursuit-specialists.mjs';
 import { boundedJSON, exactKeys, required, stableId } from '../data-json.mjs';
 
 export const PURSUIT_GOALS_VERSION = 'pursuit-goals.v1';
+export const PURSUIT_GOALS_V2 = 'pursuit-goals.v2';
 export const PURSUIT_BEHAVIORS = Object.freeze([
   'runner',
   'patroller',
@@ -32,7 +34,7 @@ export function validatePursuitGoals(source, actors, geometry) {
   const value = boundedJSON(source, { maxBytes: 8192, maxNodes: 700, maxDepth: 5, maxArray: 24 });
   exactKeys(value, ['version', 'actors'], 'Pursuit goals');
   required(
-    value.version === PURSUIT_GOALS_VERSION &&
+    [PURSUIT_GOALS_VERSION, PURSUIT_GOALS_V2].includes(value.version) &&
       Array.isArray(value.actors) &&
       value.actors.length > 0 &&
       value.actors.length <= 6,
@@ -46,14 +48,22 @@ export function validatePursuitGoals(source, actors, geometry) {
       'Pursuit actor',
     );
     required(
-      stableId(policy.id) && !ids.has(policy.id) && PURSUIT_BEHAVIORS.includes(policy.behavior),
+      stableId(policy.id) &&
+        !ids.has(policy.id) &&
+        (PURSUIT_BEHAVIORS.includes(policy.behavior) ||
+          (value.version === PURSUIT_GOALS_V2 && policy.behavior === 'sprinter')),
       'Pursuit identities and behaviors must be distinct and registered.',
     );
     const actor = actors.find((entry) => entry.id === policy.id);
     required(actor?.role === 'scout', 'Pursuit policies require an accepted touch-catch scout.');
     required(
       Array.isArray(policy.waypoints) &&
-        policy.waypoints.length >= (policy.behavior === 'runner' ? 0 : 2) &&
+        policy.waypoints.length >=
+          (['runner', ...(value.version === PURSUIT_GOALS_V2 ? ['sprinter'] : [])].includes(
+            policy.behavior,
+          )
+            ? 0
+            : 2) &&
         policy.waypoints.length <= 8,
       'Pursuit needs two to eight authored goal cells.',
     );
@@ -81,6 +91,15 @@ export function validatePursuitGoals(source, actors, geometry) {
           partner.partnerId === policy.id,
         'Rendezvous partners must reference each other.',
       );
+      if (value.version === PURSUIT_GOALS_V2)
+        required(
+          partner.waypoints.length === policy.waypoints.length &&
+            partner.waypoints.every(
+              (point, index) =>
+                point.x === policy.waypoints[index].x && point.y === policy.waypoints[index].y,
+            ),
+          'Successor rendezvous partners must share the same ordered meeting goals.',
+        );
     }
     ids.add(policy.id);
   }
@@ -127,7 +146,7 @@ export function pursuitPolicy(level, id) {
 
 /** Cosmetic consumers may read these phases, but never advance them. No random
  * numbers or queued player inputs are consumed. Motion remains in the native engine. */
-export function updatePursuitHeading({
+function updatePursuitHeadingV1({
   actor,
   policy,
   actors,
@@ -248,8 +267,14 @@ export function updatePursuitHeading({
   return true;
 }
 
+export function updatePursuitHeading(args) {
+  return args.version === PURSUIT_GOALS_V2
+    ? updatePursuitHeadingV2({ ...args, pathTo, field })
+    : updatePursuitHeadingV1(args);
+}
+
 /** Deterministically find nearby goal cells inside each actor's admitted region. */
-export function derivePursuitGoals(actors, geometry) {
+export function derivePursuitGoals(actors, geometry, version = PURSUIT_GOALS_VERSION) {
   const policies = actors.slice(0, 6).map((actor, index) => {
     const candidates = [];
     for (let y = 1; y < geometry.height - 1; y++)
@@ -278,15 +303,13 @@ export function derivePursuitGoals(actors, geometry) {
     if (points.length < 2) return { id: actor.id, behavior: 'runner', waypoints: [] };
     return {
       id: actor.id,
-      behavior: ['patroller', 'refuge', 'switchback'][index % 3],
+      behavior: (version === PURSUIT_GOALS_V2
+        ? ['patroller', 'refuge', 'switchback', 'sprinter']
+        : ['patroller', 'refuge', 'switchback'])[index % (version === PURSUIT_GOALS_V2 ? 4 : 3)],
       waypoints: points,
     };
   });
-  return validatePursuitGoals(
-    { version: PURSUIT_GOALS_VERSION, actors: policies },
-    actors,
-    geometry,
-  );
+  return validatePursuitGoals({ version, actors: policies }, actors, geometry);
 }
 
 export function pursuitPopulation(level) {

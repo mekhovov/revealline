@@ -1,0 +1,22 @@
+{
+  "format": "revealline-studio-art-review-receipt.v1",
+  "date": "2026-10-03",
+  "sourceBeforeTeamAtlasFix": "b7e40d456ee7f91001676a9055808b89665ff26a",
+  "export": {
+    "filename": "revealline-fpv-r106.rltheme",
+    "bytes": 8807071,
+    "sha256": "0352933c52f02695ed9af725eef662139ab577a35950265720c5d1f137d2e109"
+  },
+  "browserObservation": {
+    "import": "Verified collection staged atomically. Current and imported source files are retained. Save to persist.",
+    "actorId": "industrial-bouncer-atlas-sample",
+    "frames": 12,
+    "clips": ["anticipation", "blocked", "caught", "idle", "move", "notice", "recovery"],
+    "pivot": {
+      "x": 0.5,
+      "y": 0.5
+    },
+    "savedAndReloadedBeforeExport": true
+  },
+  "limitation": "Native Studio external file round trip; not all mode/pause/offline or artistic qualification."
+}

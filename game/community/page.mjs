@@ -145,6 +145,10 @@ function render() {
     if (edition.updateAvailable)
       flags.append(text('span', localizedMessage('interface:community.updateAvailable'), 'badge'));
     card.append(flags);
+    if (edition.localCopyRetained)
+      card.append(
+        text('p', localizedMessage('interface:community.localSnakeCopyRetained'), 'meta'),
+      );
     const preview = document.createElement('figure');
     preview.className = 'preview';
     if (edition.previewAvailable)
@@ -196,8 +200,14 @@ function render() {
             async () => {
               const review = await library.reviewInstalledOffload(edition);
               await library.offloadInstalled(edition, review);
-              status(localizedMessage('interface:community.installedMediaOffloaded'));
               await refresh({ reset: true });
+              status(
+                localizedMessage(
+                  review.localCopyRetained
+                    ? 'interface:community.snakeEditionOffloadedLocalKept'
+                    : 'interface:community.installedMediaOffloaded',
+                ),
+              );
             },
             'secondary',
           ),
@@ -501,6 +511,7 @@ $('account-sign-out').onclick = async () => {
 window.addEventListener('pagehide', () => {
   clearTimeout(submissionTimer);
   for (const url of previewURLs) URL.revokeObjectURL(url);
+  library.close();
   creatorStore.close();
 });
 renderAccount();

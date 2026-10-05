@@ -507,3 +507,12 @@ test('optional procedural music remains data-only and exact through scenario val
   rejected(unsafe, /ordinary JSON/);
   assert.equal(calls, 0);
 });
+
+test('scenario transport requires a string and never coerces array keys into a legacy format', () => {
+  assert.equal(validateScenario(scenario()).valid, true);
+  for (const format of [['xonix-playground.v1'], ['xonix-playground.v12'], {}, null, 1]) {
+    const value = scenario();
+    value.format = format;
+    assert.equal(validateScenario(value).valid, false);
+  }
+});

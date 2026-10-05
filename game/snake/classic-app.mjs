@@ -6,12 +6,17 @@ import { setMenuIcon } from '../ui/native-menu-icons.mjs';
 import { snakeStudioReturnHref } from '../ui/content-studio-navigation.mjs';
 import { mountOptionalPracticePanel } from '../ui/optional-practice-panel.mjs';
 import { contextualAppearance } from '../ui/mode-choice.mjs';
-import { fpvWorldLaunchURL, appearanceLaunchURL } from '../fpv-entry.mjs';
+import { fpvWorldLaunchURL, appearanceLaunchURL, nativeArtReviewURL } from '../fpv-entry.mjs';
 import { boardPlacement } from '../ui/feedback-cues.mjs';
 import { createClassicAudio } from './classic-audio.mjs';
-import { getLocale, setLocale, onLocaleChange } from '../i18n/index.mjs';
+import { mountEnemyAppearanceControls } from '../ui/enemy-appearance-controls.mjs';
+import { getLocale, setLocale, onLocaleChange, t } from '../i18n/index.mjs';
 import { boundedJSON, exactKeys, required } from '../data-json.mjs';
-import { createDestructionPreferences, sharedActorAppearance } from '../hunt/preferences.mjs';
+import {
+  createDestructionPreferences,
+  sharedActorAppearance,
+  runtimeActorArtRevision,
+} from '../hunt/preferences.mjs';
 import { ACTOR_CASTS, actorFieldGuide } from '../hunt/actor-catalog.mjs';
 import { renderEnemyFieldGuide } from '../ui/enemy-field-guide.mjs';
 import { attachContextualReactions } from '../ui/contextual-reactions.mjs';
@@ -70,7 +75,7 @@ if (contentLibrary) {
     $('boot-status').textContent =
       `${getLocale() === 'uk' ? 'Не вдалося відкрити пакет Snake.' : 'This Snake package could not be opened.'} ${error.message}`;
     const link = doc.createElement('a');
-    link.href = '../studio/snake.html';
+    link.href = nativeArtReviewURL('../studio/snake.html', globalThis.location.href);
     link.textContent = getLocale() === 'uk' ? ' Відкрити Snake Studio' : ' Open Snake Studio';
     $('boot-status').append(link);
     throw error;
@@ -165,14 +170,36 @@ let review = null,
 const gamepadState = new Map(),
   gamepadSeats = new Map();
 const effects = [createHuntDestruction(), createHuntDestruction()];
+let acceptedArtRevision = runtimeActorArtRevision();
 const destruction = createDestructionPreferences(),
   remains = createEncounterDisplayPreferences();
-const display = createDisplayPreferences();
+const display = createDisplayPreferences({
+  onWarning: (message, key) => {
+    $('snake-display-status').textContent = key ? t(key) : message;
+  },
+});
 const presentation = createClassicPresentation({ displayPreferences: display });
+const enemyAppearanceControls = mountEnemyAppearanceControls({
+  document: doc,
+  container: $('snake-enemy-appearance'),
+  locale: getLocale,
+  applyMilitary: async () => {
+    await presentation.theme.applyComplete('military-field');
+    renderCopy();
+  },
+  applyAuthored: async () => {
+    await presentation.theme.set({ arcadeArt: 'authored' });
+    renderCopy();
+  },
+});
+onLocaleChange(enemyAppearanceControls.refresh);
 const audioMaster = createAudioMaster(),
   audioPreferences = createAudioPreferences({ audioMaster });
 const sound = new Soundscape({ audioMaster });
-const classicAudio = createClassicAudio(sound, { getDestruction: () => destruction.snapshot() });
+const classicAudio = createClassicAudio(sound, {
+  getDestruction: () => destruction.snapshot(),
+  presentation,
+});
 sound.configure({
   master: 1,
   music: 0,
@@ -342,7 +369,10 @@ function pause({ showMenu = true } = {}) {
 function start() {
   if (result()) return;
   playShell?.enterPlay();
-  if (ready) void records.visit(entry.id);
+  if (ready) {
+    acceptEnemyArtwork();
+    void records.visit(entry.id);
+  }
   importEpoch++;
   review = null;
   ready = false;
@@ -350,18 +380,17 @@ function start() {
   previousFrame = null;
   sound.gameplayPaused = false;
   reactions.resume();
-  void sound
-    .enable()
-    .then(() =>
-      reactions.prepare(
-        runs.flatMap(
-          (run) =>
-            run.level.targets?.required?.map((target) => target.kind) ?? [
-              run.level.targetMovement === 'flee' ? 'runner' : 'lookout',
-            ],
-        ),
+  void sound.enable().then(() => {
+    classicAudio.prepare();
+    return reactions.prepare(
+      runs.flatMap(
+        (run) =>
+          run.level.targets?.required?.map((target) => target.kind) ?? [
+            run.level.targetMovement === 'flee' ? 'runner' : 'lookout',
+          ],
       ),
     );
+  });
   refresh();
   boards[0]?.canvas.focus({ preventScroll: true });
 }
@@ -407,7 +436,7 @@ function prepare({ launch = false } = {}) {
       targetRules = 'authored';
     } else duel = 'score';
   }
-  for (const fx of effects) fx.reset();
+  acceptEnemyArtwork();
   match = createClassicSnakeMatch(acceptedLevel(), {
     mode,
     seed,
@@ -425,6 +454,14 @@ function prepare({ launch = false } = {}) {
   renderCopy();
   refresh();
   if (launch) start();
+}
+function acceptEnemyArtwork() {
+  acceptedArtRevision = runtimeActorArtRevision();
+  presentation.setArtRevision(acceptedArtRevision);
+  effects.forEach((fx, index) => {
+    fx.reset();
+    effects[index] = createHuntDestruction({ artRevision: acceptedArtRevision });
+  });
 }
 function buildBoards() {
   boardLayoutObserver?.disconnect();
@@ -642,9 +679,10 @@ function renderModeLinks() {
     if (path) {
       const url = new URL(path, globalThis.location.href);
       url.searchParams.set('lang', locale);
-      node.href = appearanceLaunchURL(url.href, contextualAppearance(doc), { transfer: false });
+      const nativeHref = nativeArtReviewURL(url.href, globalThis.location.href);
+      node.href = appearanceLaunchURL(nativeHref, contextualAppearance(doc), { transfer: false });
       node.addEventListener('click', () => {
-        node.href = appearanceLaunchURL(url.href, contextualAppearance(doc));
+        node.href = appearanceLaunchURL(nativeHref, contextualAppearance(doc));
         pause();
       });
     } else {
@@ -686,6 +724,8 @@ function renderCopy() {
     doc.querySelector(selector)?.setAttribute('aria-label', text(label));
   for (const node of doc.querySelectorAll('[data-word]'))
     node.textContent = text(node.dataset.word);
+  for (const node of doc.querySelectorAll('#snake-display-reading [data-i18n]'))
+    node.textContent = t(node.dataset.i18n);
   $('language').value = locale;
   for (const button of doc.querySelectorAll('#mode-tabs [data-mode]')) {
     button.textContent = text(button.dataset.mode);
@@ -773,15 +813,18 @@ function renderCopy() {
   $('controls-help').textContent = text(mode === 'solo' ? 'controls' : 'twoControls');
   for (const id of ['next']) $(id).textContent = text(id);
   $('home-link').textContent = text('home');
-  $('home-link').href = `../?lang=${locale}`;
+  $('home-link').href = nativeArtReviewURL(`../?lang=${locale}`, globalThis.location.href);
   $('studio-link').href =
-    snakeStudioReturnHref(globalThis.location.href) ?? `../studio/snake.html?lang=${locale}`;
+    snakeStudioReturnHref(globalThis.location.href) ??
+    nativeArtReviewURL(`../studio/snake.html?lang=${locale}`, globalThis.location.href);
   playShell?.setLocale(locale);
   renderModeLinks();
   $('campaign-link').textContent = text('campaigns');
-  $('campaign-link').href = `./?lang=${locale}`;
-  $('remix-link').href =
-    `${mode === 'solo' ? '../' : mode === 'versus' ? '../couch/' : '../couch/relay-rescue.html'}?journey=snake-hunt-v1&snake-style=capture&lang=${locale}`;
+  $('campaign-link').href = nativeArtReviewURL(`./?lang=${locale}`, globalThis.location.href);
+  $('remix-link').href = nativeArtReviewURL(
+    `${mode === 'solo' ? '../' : mode === 'versus' ? '../couch/' : '../couch/relay-rescue.html'}?journey=snake-hunt-v1&snake-style=capture&lang=${locale}`,
+    globalThis.location.href,
+  );
   $('seed-label').textContent = text('seed', { seed });
   $('save-status').textContent = saveNotice ? text(saveNotice) : '';
   $('continue').hidden = !savedRound;
@@ -1054,7 +1097,7 @@ function restore(raw) {
     sound.gameplayPaused = true;
     reactions.reset(`classic:${++reactionAttempt}`);
     reactions.suspend();
-    for (const fx of effects) fx.reset();
+    acceptEnemyArtwork();
     buildBoards();
     updateURL();
     renderCopy();
@@ -1112,6 +1155,17 @@ function watchReview() {
 destruction.subscribe(primeEffects);
 remains.subscribe(primeEffects);
 display.subscribe(primeEffects);
+display.subscribe((choice) => {
+  doc.body.dataset.textFace = $('snake-text-face').value = choice.textFace;
+  doc.body.dataset.textSize = $('snake-text-size').value = choice.textSize;
+  footprint?.refresh();
+});
+$('snake-text-face').addEventListener('change', () =>
+  display.set({ textFace: $('snake-text-face').value }),
+);
+$('snake-text-size').addEventListener('change', () =>
+  display.set({ textSize: $('snake-text-size').value }),
+);
 $('brutal').addEventListener('change', () => destruction.set({ brutal: $('brutal').checked }));
 $('blood').addEventListener('change', () => destruction.set({ blood: $('blood').checked }));
 $('remains').addEventListener('change', () => remains.set($('remains').checked));
@@ -1397,12 +1451,13 @@ landscapeControls?.addEventListener('change', () => {
   pause();
   footprint?.refresh();
 });
-globalThis.addEventListener('pagehide', () => {
+globalThis.addEventListener('pagehide', (event) => {
   importEpoch++;
   snakeSimPanel?.close({ restoreFocus: false });
   pause();
   sound.suspend();
   classicAudio.reset();
+  if (!event.persisted) classicAudio.dispose();
   save();
 });
 globalThis.addEventListener('pageshow', () => footprint?.refresh());
@@ -1490,12 +1545,14 @@ function frame(now) {
       ? review.frames[i][Math.min(review.frames[i].length - 1, Math.floor(review.time / 240))]
       : run;
     drawClassicBoard(boards[i].canvas, shown, {
+      attemptKey: review ?? match,
       effects: review ? null : effects[i],
       ...choice,
       showRemains: remains.snapshot().showRemains,
       style,
       boardStyle,
       cast: currentCast(),
+      artRevision: acceptedArtRevision,
       presentation: presentation.snapshot(),
       accent,
       reduced: isReduced(),

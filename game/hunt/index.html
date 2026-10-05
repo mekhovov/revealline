@@ -4,8 +4,12 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <title>Living Routes · FPV / LINE</title>
-    <script src="../presentation/theme-bootstrap.mjs" data-theme-density="game"></script>
-    <link rel="stylesheet" href="../presentation/industrial-workshop.css" />
+    <script src="../presentation/theme-bootstrap.mjs" data-theme-density="player"></script>
+    <link
+      rel="stylesheet"
+      href="../presentation/industrial-workshop.css"
+      data-industrial-workshop
+    />
     <script type="module" src="../presentation/theme-entry.mjs"></script>
     <link rel="stylesheet" href="../ui/field-kit-fonts.css" />
     <link rel="stylesheet" href="hub.css" />
@@ -14,7 +18,9 @@
   <body>
     <main>
       <header>
-        <a href="../">FPV / LINE</a><a href="../snake/">Snake</a><a href="../studio/">Studio</a
+        <a href="../" data-native-review-link>FPV / LINE</a
+        ><a href="../snake/" data-native-review-link>Snake</a
+        ><a href="../studio/" data-native-review-link>Studio</a
         ><label
           >EN / UK<select id="language">
             <option value="en">English</option>
@@ -33,6 +39,11 @@
       <section aria-labelledby="military-title">
         <h2 id="military-title"></h2>
         <p id="military-help"></p>
+        <p>
+          <a id="military-directory" href="military-levels.html" data-native-review-link
+            >Find levels with soldiers and vehicles</a
+          >
+        </p>
         <div class="vehicle-strip" id="military-strip"></div>
         <nav class="launches" id="military-launches"></nav>
       </section>
@@ -48,9 +59,9 @@
         <div class="guide" id="guide"></div>
       </section>
       <footer>
-        <a href="../studio/snake.html">Snake Studio</a
+        <a href="../studio/snake.html" data-native-review-link>Snake Studio</a
         ><a href="../community/store.html" id="community-link"></a
-        ><a href="../online/" id="online-link"></a>
+        ><a href="../online/" id="online-link" data-native-review-link></a>
       </footer>
     </main>
   </body>

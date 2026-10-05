@@ -1,0 +1,114 @@
+{
+  "match": true,
+  "verificationScope": "revealline-capture-terminal-observations.v1",
+  "exactStateMatch": true,
+  "terminalObservationMatch": true,
+  "diagnostics": [],
+  "actual": {
+    "protocol": "xonix-duel.untimed.v1",
+    "ticks": 23276,
+    "status": "finished",
+    "winner": 0,
+    "reason": "First clear",
+    "boards": [
+      {
+        "ruleset": "xonix-core.v13",
+        "levelId": "crossing-post",
+        "revision": "gp4s-3ff00000000000003ff00000000000003ff0000000000000-9c05667e7a9aa05b",
+        "seed": 1,
+        "turnPolicy": "immediate",
+        "classId": "scout",
+        "activeClassId": "scout",
+        "rosterHash": "roster-v1-e159e435",
+        "classHistory": [
+          {
+            "classId": "scout",
+            "classRevision": "1",
+            "loadoutHash": "loadout-v1-aaa4aadd",
+            "tick": 0
+          }
+        ],
+        "switches": 0,
+        "failureCause": "enemy-trail",
+        "classRevision": "1",
+        "loadoutHash": "loadout-v1-aaa4aadd",
+        "status": "won",
+        "won": true,
+        "tick": 23276,
+        "time": 193.96579939666967,
+        "lives": 2,
+        "livesLost": 1,
+        "score": 16810,
+        "hunt": {
+          "version": "humanoid-hunt-state.v1",
+          "mode": "bonus",
+          "quota": 0,
+          "total": 2,
+          "remaining": 2,
+          "kills": 0,
+          "touchKills": 0,
+          "captureKills": 0,
+          "score": 0
+        },
+        "coverage": 0.7376042123738482,
+        "claimedCount": 1681,
+        "totalClaimable": 2279,
+        "medal": "bronze",
+        "objectives": {
+          "captured": 0,
+          "total": 0,
+          "required": 0
+        }
+      },
+      {
+        "ruleset": "xonix-core.v13",
+        "levelId": "crossing-post",
+        "revision": "gp4s-3ff00000000000003ff00000000000003ff0000000000000-9c05667e7a9aa05b",
+        "seed": 1,
+        "turnPolicy": "immediate",
+        "classId": "scout",
+        "activeClassId": "scout",
+        "rosterHash": "roster-v1-e159e435",
+        "classHistory": [
+          {
+            "classId": "scout",
+            "classRevision": "1",
+            "loadoutHash": "loadout-v1-aaa4aadd",
+            "tick": 0
+          }
+        ],
+        "switches": 0,
+        "failureCause": null,
+        "classRevision": "1",
+        "loadoutHash": "loadout-v1-aaa4aadd",
+        "status": "running",
+        "won": false,
+        "tick": 23276,
+        "time": 193.9666666666546,
+        "lives": 3,
+        "livesLost": 0,
+        "score": 0,
+        "hunt": {
+          "version": "humanoid-hunt-state.v1",
+          "mode": "bonus",
+          "quota": 0,
+          "total": 2,
+          "remaining": 2,
+          "kills": 0,
+          "touchKills": 0,
+          "captureKills": 0,
+          "score": 0
+        },
+        "coverage": 0,
+        "claimedCount": 0,
+        "totalClaimable": 2279,
+        "medal": null,
+        "objectives": {
+          "captured": 0,
+          "total": 0,
+          "required": 0
+        }
+      }
+    ]
+  }
+}

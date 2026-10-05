@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { setTimeout as delay } from 'node:timers/promises';
-import { demoPage } from './helpers/demo-host-fixture.mjs';
+import { demoPage, DEMO_HOST_READY_TIMEOUT_MS } from './helpers/demo-host-fixture.mjs';
 import { settle } from './helpers/solo-dom.mjs';
 import { waitFor } from './helpers/wait-for.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
@@ -246,16 +246,35 @@ test('withheld visible RAF recovers real replay completion and rotation while pr
     assert.equal(page.demoFrame.options.paused, true);
     page.$('demo-watch-pause').click();
 
-    // Model a visible/unfocused browser that runs timers but withholds every
-    // requested animation frame. The production clock owns all replay ticks.
-    for (let wakes = 0; page.$('demo-level').textContent === firstLevel; wakes++) {
-      assert.ok(
-        wakes < 34,
-        `The replay and recap must rotate: ${watched.status}, tick ${watched.tick}, errors ${JSON.stringify(page.errors)}`,
-      );
-      page.frame(2000, { dispatchAnimationFrames: false });
-      await delay(300);
-    }
+    // Model a visible/unfocused browser that withholds every requested RAF.
+    // Feed the next bounded interval only after the real watchdog has painted
+    // the prior wake. Elapsed sleep is not evidence that its catch-up ran, and
+    // a loading successor must not accumulate more synthetic host time.
+    let observedFrame = null;
+    await waitFor(
+      () => {
+        if (page.$('demo-level').textContent !== firstLevel) return true;
+        if (page.$('demo-dialog').dataset.scene !== 'loading' && page.demoFrame !== observedFrame) {
+          observedFrame = page.demoFrame;
+          page.frame(2000, { dispatchAnimationFrames: false });
+        }
+        return page.$('demo-level').textContent !== firstLevel;
+      },
+      {
+        timeoutMs: DEMO_HOST_READY_TIMEOUT_MS,
+        message: 'The native watchdog must complete replay, recap and scene rotation without RAF.',
+      },
+    ).catch((error) => {
+      error.message += JSON.stringify({
+        scene: page.$('demo-dialog').dataset.scene,
+        status: watched.status,
+        ticks: watched.tick,
+        paused: page.demoFrame.options.paused,
+        level: page.$('demo-level').textContent,
+        errors: page.errors.map((value) => String(value?.stack ?? value)),
+      });
+      throw error;
+    });
     assert.equal(watched.status, 'won');
     const recording = JSON.parse(
       await readFile(new URL('../demo-data/first-signal-left.replay.json', import.meta.url)),
@@ -268,9 +287,15 @@ test('withheld visible RAF recovers real replay completion and rotation while pr
     } finally {
       reference.dispose();
     }
-    await settle(() => !page.$('demo-fresh').disabled);
+    await waitFor(() => page.$('demo-dialog').open && !page.$('demo-fresh').disabled, {
+      timeoutMs: DEMO_HOST_READY_TIMEOUT_MS,
+      message: 'The automatically selected next scene must finish native preparation.',
+    });
     page.frame(250, { dispatchAnimationFrames: false });
-    await delay(300);
+    await waitFor(() => page.demoFrame.run !== watched && page.demoFrame.run.tick > 0, {
+      timeoutMs: DEMO_HOST_READY_TIMEOUT_MS,
+      message: 'The next demonstration must also advance under the watchdog without a RAF.',
+    });
     assert.notEqual(page.demoFrame.run, watched);
     assert.ok(page.demoFrame.run.tick > 0, 'The next demonstration also advances without a RAF.');
     assert.deepEqual(authoritativeCheckpoint(ordinary), original);

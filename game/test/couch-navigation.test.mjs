@@ -409,8 +409,13 @@ for (const adapter of ['keyboard', 'controller']) {
         }
       }
     };
-    visibleControl(f, 'race-menu-ornaments');
-    f.focus('race-menu-ornaments');
+    assert.equal(
+      f.$('race-menu-ornaments').getClientRects().length,
+      0,
+      'The shared appearance controls replace the retained legacy ornament selector',
+    );
+    visibleControl(f, 'race-enemy-remains');
+    f.focus('race-enemy-remains');
     next();
     assert.equal(f.doc.activeElement.id, 'race-journey-reactions-enabled');
     assert.equal(f.doc.activeElement.checked, true);
@@ -425,7 +430,7 @@ for (const adapter of ['keyboard', 'controller']) {
     assert.equal(writes.length, 2);
     assert.equal(JSON.parse(values.get(preferenceKey)).enabled, false);
     assert.equal(f.$('race-journey-reactions-retry').hidden, true);
-    f.focus('race-menu-ornaments');
+    f.focus('race-enemy-remains');
     next();
     next();
     assert.notEqual(
