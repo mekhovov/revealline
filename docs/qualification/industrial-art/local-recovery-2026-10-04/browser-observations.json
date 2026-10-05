@@ -1,0 +1,393 @@
+{
+  "landscapeBefore": {
+    "arrangement": "paired",
+    "boards": [
+      {
+        "height": 58.3125,
+        "width": 77.75,
+        "x": 143.125,
+        "y": 153.1875
+      },
+      {
+        "height": 58.3125,
+        "width": 77.75,
+        "x": 499.125,
+        "y": 153.1875
+      }
+    ],
+    "controls": [
+      {
+        "height": 56,
+        "label": "Player 1: Up",
+        "width": 56,
+        "x": 240,
+        "y": 238
+      },
+      {
+        "height": 56,
+        "label": "Player 1: Left",
+        "width": 56,
+        "x": 180,
+        "y": 298
+      },
+      {
+        "height": 56,
+        "label": "Player 1: Down",
+        "width": 56,
+        "x": 240,
+        "y": 298
+      },
+      {
+        "height": 56,
+        "label": "Player 1: Right",
+        "width": 56,
+        "x": 300,
+        "y": 298
+      },
+      {
+        "height": 56,
+        "label": "Player 2: Up",
+        "width": 56,
+        "x": 424,
+        "y": 238
+      },
+      {
+        "height": 56,
+        "label": "Player 2: Left",
+        "width": 56,
+        "x": 364,
+        "y": 298
+      },
+      {
+        "height": 56,
+        "label": "Player 2: Down",
+        "width": 56,
+        "x": 424,
+        "y": 298
+      },
+      {
+        "height": 56,
+        "label": "Player 2: Right",
+        "width": 56,
+        "x": 484,
+        "y": 298
+      }
+    ],
+    "scrollWidth": 720,
+    "viewport": {
+      "height": 360,
+      "width": 720
+    }
+  },
+  "landscapeAfter": {
+    "arrangement": "paired",
+    "boards": [
+      {
+        "height": 145.5,
+        "width": 194,
+        "x": 158,
+        "y": 187.0390625
+      },
+      {
+        "height": 145.5,
+        "width": 194,
+        "x": 368,
+        "y": 187.0390625
+      }
+    ],
+    "controls": [
+      {
+        "height": 44,
+        "label": "Player 1: Up",
+        "width": 44,
+        "x": 58,
+        "y": 188.84375
+      },
+      {
+        "height": 44,
+        "label": "Player 1: Left",
+        "width": 44,
+        "x": 10,
+        "y": 236.84375
+      },
+      {
+        "height": 44,
+        "label": "Player 1: Down",
+        "width": 44,
+        "x": 58,
+        "y": 236.84375
+      },
+      {
+        "height": 44,
+        "label": "Player 1: Right",
+        "width": 44,
+        "x": 106,
+        "y": 236.84375
+      },
+      {
+        "height": 44,
+        "label": "Player 2: Up",
+        "width": 44,
+        "x": 618,
+        "y": 188.84375
+      },
+      {
+        "height": 44,
+        "label": "Player 2: Left",
+        "width": 44,
+        "x": 570,
+        "y": 236.84375
+      },
+      {
+        "height": 44,
+        "label": "Player 2: Down",
+        "width": 44,
+        "x": 618,
+        "y": 236.84375
+      },
+      {
+        "height": 44,
+        "label": "Player 2: Right",
+        "width": 44,
+        "x": 666,
+        "y": 236.84375
+      }
+    ],
+    "scrollWidth": 720,
+    "viewport": {
+      "height": 360,
+      "width": 720
+    }
+  },
+  "compactLandscape": {
+    "arrangement": "paired",
+    "boards": [
+      {
+        "height": 88.5,
+        "width": 118,
+        "x": 158,
+        "y": 195.5390625
+      },
+      {
+        "height": 88.5,
+        "width": 118,
+        "x": 292,
+        "y": 195.5390625
+      }
+    ],
+    "controls": [
+      {
+        "height": 44,
+        "label": "Player 1: Up",
+        "width": 44,
+        "x": 58,
+        "y": 168.84375
+      },
+      {
+        "height": 44,
+        "label": "Player 1: Left",
+        "width": 44,
+        "x": 10,
+        "y": 216.84375
+      },
+      {
+        "height": 44,
+        "label": "Player 1: Down",
+        "width": 44,
+        "x": 58,
+        "y": 216.84375
+      },
+      {
+        "height": 44,
+        "label": "Player 1: Right",
+        "width": 44,
+        "x": 106,
+        "y": 216.84375
+      },
+      {
+        "height": 44,
+        "label": "Player 2: Up",
+        "width": 44,
+        "x": 466,
+        "y": 168.84375
+      },
+      {
+        "height": 44,
+        "label": "Player 2: Left",
+        "width": 44,
+        "x": 418,
+        "y": 216.84375
+      },
+      {
+        "height": 44,
+        "label": "Player 2: Down",
+        "width": 44,
+        "x": 466,
+        "y": 216.84375
+      },
+      {
+        "height": 44,
+        "label": "Player 2: Right",
+        "width": 44,
+        "x": 514,
+        "y": 216.84375
+      }
+    ],
+    "scrollWidth": 568,
+    "viewport": {
+      "height": 320,
+      "width": 568
+    }
+  },
+  "teamLandscape": {
+    "boards": [
+      {
+        "height": 181.8125,
+        "width": 242.4140625,
+        "x": 162.79296875,
+        "y": 130.1875
+      }
+    ],
+    "controls": [
+      {
+        "height": 44,
+        "label": "Player 1: Up",
+        "width": 44,
+        "x": 58,
+        "y": 168.84375
+      },
+      {
+        "height": 44,
+        "label": "Player 1: Left",
+        "width": 44,
+        "x": 10,
+        "y": 216.84375
+      },
+      {
+        "height": 44,
+        "label": "Player 1: Down",
+        "width": 44,
+        "x": 58,
+        "y": 216.84375
+      },
+      {
+        "height": 44,
+        "label": "Player 1: Right",
+        "width": 44,
+        "x": 106,
+        "y": 216.84375
+      },
+      {
+        "height": 44,
+        "label": "Player 2: Up",
+        "width": 44,
+        "x": 466,
+        "y": 168.84375
+      },
+      {
+        "height": 44,
+        "label": "Player 2: Left",
+        "width": 44,
+        "x": 418,
+        "y": 216.84375
+      },
+      {
+        "height": 44,
+        "label": "Player 2: Down",
+        "width": 44,
+        "x": 466,
+        "y": 216.84375
+      },
+      {
+        "height": 44,
+        "label": "Player 2: Right",
+        "width": 44,
+        "x": 514,
+        "y": 216.84375
+      }
+    ],
+    "mode": "team",
+    "scrollWidth": 568,
+    "viewport": {
+      "height": 320,
+      "width": 568
+    }
+  },
+  "portraitLarge": {
+    "boards": [
+      {
+        "height": 228,
+        "width": 304,
+        "x": 8,
+        "y": 204.015625
+      }
+    ],
+    "controls": [
+      {
+        "height": 45.328125,
+        "label": "\u0413\u0440\u0430\u0432\u0435\u0446\u044c 1: \u0423\u0433\u043e\u0440\u0443",
+        "width": 45.328125,
+        "x": 61.34375,
+        "y": 539.34375
+      },
+      {
+        "height": 45.328125,
+        "label": "\u0413\u0440\u0430\u0432\u0435\u0446\u044c 1: \u041b\u0456\u0432\u043e\u0440\u0443\u0447",
+        "width": 45.328125,
+        "x": 12.015625,
+        "y": 588.671875
+      },
+      {
+        "height": 45.328125,
+        "label": "\u0413\u0440\u0430\u0432\u0435\u0446\u044c 1: \u0423\u043d\u0438\u0437",
+        "width": 45.328125,
+        "x": 61.34375,
+        "y": 588.671875
+      },
+      {
+        "height": 45.328125,
+        "label": "\u0413\u0440\u0430\u0432\u0435\u0446\u044c 1: \u041f\u0440\u0430\u0432\u043e\u0440\u0443\u0447",
+        "width": 45.328125,
+        "x": 110.671875,
+        "y": 588.671875
+      },
+      {
+        "height": 45.328125,
+        "label": "\u0413\u0440\u0430\u0432\u0435\u0446\u044c 2: \u0423\u0433\u043e\u0440\u0443",
+        "width": 45.328125,
+        "x": 213.328125,
+        "y": 539.34375
+      },
+      {
+        "height": 45.328125,
+        "label": "\u0413\u0440\u0430\u0432\u0435\u0446\u044c 2: \u041b\u0456\u0432\u043e\u0440\u0443\u0447",
+        "width": 45.328125,
+        "x": 164,
+        "y": 588.671875
+      },
+      {
+        "height": 45.328125,
+        "label": "\u0413\u0440\u0430\u0432\u0435\u0446\u044c 2: \u0423\u043d\u0438\u0437",
+        "width": 45.328125,
+        "x": 213.328125,
+        "y": 588.671875
+      },
+      {
+        "height": 45.328125,
+        "label": "\u0413\u0440\u0430\u0432\u0435\u0446\u044c 2: \u041f\u0440\u0430\u0432\u043e\u0440\u0443\u0447",
+        "width": 45.328125,
+        "x": 262.65625,
+        "y": 588.671875
+      }
+    ],
+    "scrollWidth": 320,
+    "text": {
+      "face": "plain",
+      "size": "large"
+    },
+    "viewport": {
+      "height": 640,
+      "width": 320
+    }
+  }
+}

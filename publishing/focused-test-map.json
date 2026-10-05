@@ -215,6 +215,7 @@
             "--test",
             "game/test/couch-navigation.test.mjs",
             "game/test/couch-composite-menu-navigation.test.mjs",
+            "game/test/mission-library-controller-host.test.mjs",
             "game/test/content-team-navigation.test.mjs",
             "game/test/controller-navigation.test.mjs"
           ]

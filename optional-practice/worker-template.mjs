@@ -94,7 +94,8 @@ const ports=new Set();
 let controller,
 idleTimer,
 downloaded=0,
-phase='available';
+phase='available',
+cancelled=false;
 const announce=()=>{
 for(const port of ports){
 try{
@@ -120,8 +121,10 @@ if(
 event.source.url.startsWith(base)||
 (launcherRoot&&
 [launcherRoot+'app/',launcherRoot+'app/index.html'].includes(sourcePath))
-)
+){
+cancelled=true;
 controller?.abort();
+}
 return;
 }
 const port=event.ports?.[0];
@@ -135,11 +138,10 @@ if(event.data?.type!=='practice-status')return;
 const check=(async()=>{
 let ready=false;
 try{
-if((await scope.caches.keys()).includes(cacheName)){
-const cache=await scope.caches.open(cacheName);
+if(urls.size>0&&(await scope.caches.keys()).includes(cacheName)){
 ready=true;
 for(const[url,pin]of urls){
-const response=await cache.match(url);
+const response=await scope.caches.match(url,{cacheName});
 if(!response){
 ready=false;
 break;
@@ -163,13 +165,16 @@ event.waitUntil(
 (async()=>{
 const existed=(await scope.caches.keys()).includes(cacheName);
 controller=new AbortController();
+if(cancelled)controller.abort();
 const overall=setTimeout(()=>controller.abort(),300000);
 activity();
 phase='downloading';
 announce();
 try{
+if(controller.signal.aborted)throw new Error('Optional download cancelled');
 const cache=await scope.caches.open(cacheName);
 for(const[url,pin]of urls){
+if(controller.signal.aborted)throw new Error('Optional download cancelled');
 const{bytes,headers}=await read(url,pin.bytes,controller.signal,(count)=>{
 activity();
 downloaded+=count;
@@ -181,6 +186,7 @@ if(bytes.length!==pin.bytes||(await sha(bytes))!==pin.sha256)
 throw new Error('Optional package dependency mismatch');
 if(controller.signal.aborted)throw new Error('Optional download cancelled');
 await cache.put(url,new Response(bytes,{status:200,headers}));
+if(controller.signal.aborted)throw new Error('Optional download cancelled');
 activity();
 phase='downloading';
 }
@@ -227,8 +233,7 @@ if(url.href===base)url.pathname+='index.html';
 if(event.request.method==='GET'&&urls.has(url.href))
 event.respondWith(
 (async()=>
-(await(await scope.caches.open(cacheName)).match(url.href))||
-scope.fetch(event.request))(),
+(await scope.caches.match(url.href,{cacheName}))||scope.fetch(event.request))(),
 );
 });
 }

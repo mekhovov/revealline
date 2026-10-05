@@ -117,6 +117,12 @@ test('controller Team departure has its own neutral boundary and East returns to
 for (const reason of ['blur', 'hidden', 'pagehide', 'controller-loss']) {
   test(`${reason} invalidates pending Versus departure without resuming or choosing a destination`, async (t) => {
     const f = await couchPage(t, { pads: [pad()] });
+    if (reason === 'controller-loss') {
+      // Disconnect a controller that actually owns a seat. An unrelated device
+      // has no authority over an existing pointer departure.
+      f.join(0);
+      f.frames(151, 1000 / 120);
+    }
     f.$('race-start').click();
     f.frame();
     f.frames(4);
@@ -166,11 +172,18 @@ test('a real terminal draw keeps both destination links direct and does not star
 async function shellFixture(t, options = {}) {
   const doc = new Document();
   mountCouch(doc, await readFile(new URL('../couch/index.html', import.meta.url), 'utf8'));
+  // This unit fixture starts at the already-booted shell boundary. Model only
+  // finishBoot's input release; do not change individual control visibility.
+  for (const element of doc.querySelectorAll('[data-boot-inert]')) {
+    element.inert = false;
+    element.removeAttribute('aria-busy');
+  }
   const level = retryFixture('enemy-player').level;
   let match = createDuel(level),
     generation = 1;
   resumeDuel(match);
   pauseDuel(match);
+  assert.equal(match.status, 'paused');
   const shell = createCouchShell({
     document: doc,
     getDepartureState: () => ({ match, generation }),

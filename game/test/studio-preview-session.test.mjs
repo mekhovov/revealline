@@ -7,6 +7,19 @@ import { editionProviderFixture } from './helpers/edition-provider-fixture.mjs';
 import { createStudioReward } from '../../authoring/company-studio/reward-editor.mjs';
 import { compileContentProject, resolveMission } from '../content-design/project.mjs';
 import { soloPage, memoryStorage, settle } from './helpers/solo-dom.mjs';
+import { authoritativeCheckpoint } from '../replay.mjs';
+
+function openEarnedResult(page) {
+  const checkpoint = authoritativeCheckpoint(page.rendered.run);
+  assert.equal(page.$('game-overlay').hidden, true, 'The earned picture keeps its own screen.');
+  if (!page.$('skip-celebration').hidden) page.$('skip-celebration').click();
+  page.frame(0);
+  assert.equal(page.$('show-result').hidden, false);
+  page.$('show-result').click();
+  assert.equal(page.$('game-overlay').hidden, false);
+  assert.equal(page.$('game-overlay').dataset.kind, 'won');
+  assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
+}
 
 test('Studio preview storage starts fresh each visit and has no player writer lease', async () => {
   assert.equal(createStudioPreviewSession('http://localhost/game/'), null);
@@ -116,6 +129,7 @@ test('actual Studio game launch, accepted win, reward reveal and Retry never ope
     page.frame(0);
     return page.$('completion-reward-shelf').querySelector('article')?.dataset.earned === 'true';
   });
+  openEarnedResult(page);
   assert.match(page.$('overlay-copy').textContent, /Preview mission complete/);
   assert.match(page.$('overlay-copy').textContent, /Player progress is unchanged/);
   assert.equal(page.$('completion-reward-save-status').dataset.durable, 'false');
@@ -166,6 +180,7 @@ test('a normal edition win uses player-facing campaign copy instead of authored 
   page.key('ArrowDown', false);
   page.frame(0);
   assert.equal(page.rendered.run.status, 'won');
+  openEarnedResult(page);
   assert.match(
     page.$('overlay-copy').textContent,
     /Mission complete\. Keep exploring your campaign/,
