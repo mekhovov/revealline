@@ -95,7 +95,10 @@ export function mountModeChoices({
     pause();
   };
   if (current !== 'overflight') {
-    const href = overflightURL();
+    const href = overflightLaunchURL(
+      document.defaultView?.location?.href ?? globalThis.location?.href,
+      getLocale(),
+    );
     if (href) overflight.href = href;
     else if (!overflight.href) overflight.hidden = true;
     overflight.addEventListener('click', enterOverflight);
