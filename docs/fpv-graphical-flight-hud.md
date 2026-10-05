@@ -1,6 +1,6 @@
 # Graphical FPV flight guidance
 
-Status: 5 October 2026. H1 and H2 are implemented; H3 local functional, package, reproducibility and bounded browser/offline qualification passed. Published as [PR #1110](https://github.com/mekhovov/revealline/pull/1110), the third member of native stack #1106. Protected parent publication, exact-head CI/reviews and public deployment remain pending. No public live availability is claimed.
+Status: 5 October 2026. H1 and H2 are implemented. At frozen source `614adef75a6e1cc28ea1d04acf26fa69b507c551`, H3 functional checks, all three reproducible package admissions, full validation and bounded browser/offline review passed. The 53 existing package/offline cases remain **not run at this source head** because the disk preflight failed. Published as [PR #1110](https://github.com/mekhovov/revealline/pull/1110), the third member of native stack #1106. Protected parent publication, exact-head CI/reviews and public deployment remain pending. No public live availability is claimed.
 
 ## Problem and resulting experience
 
@@ -60,7 +60,7 @@ The legacy observer method adds presentation facts without putting them into rep
 
 Additional unit-test coverage remains deferred under the existing plan. The checks below are functional regression qualification and existing-proof replay, not a claim that the deferred test phase is complete.
 
-## H3 — Local qualification complete; protected publication pending
+## H3 — Current regression qualification and protected publication pending
 
 ### Reproducible functional evidence
 
@@ -108,17 +108,22 @@ These are short-run callback and forced-layout measurements, **not FPS or input-
 
 ### Package and offline qualification
 
-After recovering 2,935,750,656 bytes from ten abandoned, checksum-invalid Git temporary packs, each qualification phase stayed above the unchanged 3 GiB floor. No valid packs, refs, source, worktrees or unique evidence were removed.
+[Current package qualification](fpv-flight-hud-package-qualification-614adef.json) binds frozen source `614adef75a6e1cc28ea1d04acf26fa69b507c551` and tree `9b2883396f8044a297f884be091d2fb364b89625`. Civilian Flight, Academy and World Studio each passed two byte-identical builds, committed-input verification and original ZIP-member admission. Full Node 22 validation passed for 2,876 files and EN/UK localization, retaining seven nonfatal navigation warnings. The package envelope SHA-256 is `75c12cadea1134c2f1bfd364dca37629229c876bd861b3aa8d0d2a2355bc6cdf`.
 
-[Package qualification](fpv-flight-hud-package-qualification.json) passed at source `3bbdc8dda7e1613fe4c2b838c40ffbbe9493f852`: all three package admissions, two byte-identical builds per package, committed-input verification and ZIP-member hashes. Full Node 22 validation passed, retaining seven nonfatal navigation warnings. Sixty existing flight/model/UI/radio/replay checks and 53 existing package/offline checks passed. Additional unit coverage remains deferred.
+Admission, validation and browser staging each started above the unchanged 3 GiB free-space floor, following a stable 38-second preflight. Subsequent concurrent allocation reduced free space below that floor. The preflight stopped the existing 53-case package/offline suite before Node started; **it was not run at 614adef**. Audited disposable temporary files were removed, and 1,062 inactive raw receipt/log files were losslessly compressed with verified decompressed sizes/hashes and restoration manifests. Source, uncommitted work, valid Git packs, worktrees, active artifacts and unique evidence bytes were preserved. Further cleanup stopped when background allocation made the floor unstable.
 
-The exact admitted World Studio and Academy launchers both prepared their packages and displayed **Ready offline**. With their dedicated origin server stopped and HTTP connection refusal confirmed before and after the run, both reloaded successfully. Academy started its lesson and opened/closed exact Explain details while remaining paused. World Studio completed the full “Acro: the tilt stays” demonstration with the compact HUD. Neither host logged a warning or error. The original server was restored afterwards. This qualifies a bounded own-origin outage, not browser-wide offline, eviction, arbitrary old-cache update or physical-device behavior.
+The [historical package qualification](fpv-flight-hud-package-qualification.json) remains unchanged at source `3bbdc8dda7e1613fe4c2b838c40ffbbe9493f852`. That source passed all three admissions, reproducibility, full validation, 60 existing flight/model/UI/radio/replay checks and 53 existing package/offline checks. Those passes are historical evidence; they do not establish the current source's unrun suite. Additional unit coverage remains deferred.
+
+The [current admitted browser review](fpv-flight-hud-overlay-admitted-review.json) used exact package members from 614adef. World Studio and Academy both displayed **Ready offline**. With their dedicated origin stopped and HTTP connection refusal confirmed before and after, both reloaded successfully. Academy started its lesson and opened/closed Explain while remaining paused. World Studio completed the full “Acro: the tilt stays” recording; the terminal result hid the HUD, diagram, sticks and replay toolbar. Neither host logged a warning or error, and the server was restored. The measured viewport was 1280 × 720; the requested phone override did not apply, so this adds no refreshed mobile acceptance. This is a bounded own-origin outage, not browser-wide offline, eviction, arbitrary old-cache update or physical-device behavior.
+
+Parent #1104 (`55493cb94783d279142823cff94843d682cabc54`) and #1105 (`0e3cc79c89f604068542539391b0ab38dc6735c9`) each have successful exact-head CI admission for all three packages and two reproducible builds. Their immutable artifact digests and four original metadata receipts are retained in the current qualification evidence. Local inspection verified the downloaded CI archive digest and receipts; the successful CI jobs performed their nested member admission. Each parent keeps its own package identity and pending release gates.
 
 ### Remaining release work
 
-1. Publish the documentation/evidence checkpoint and retain the verified package input identity; satisfy fresh exact-head CI and protected review requirements.
-2. Coordinate parent #1104/#1105 qualification and native stack publication without retargeting or bypassing protections. #1110 remains Draft while that publication work is coordinated; its package/offline storage blocker is resolved.
-3. Verify the public deployment identity and launch the public SIM before calling this increment live.
+1. Complete the current source's existing 53-case package/offline suite after a stable 3 GiB preflight or retain equivalent qualified exact-head CI evidence. The historical pass does not close this item.
+2. Publish the documentation/evidence checkpoint, retain the frozen package input identity, and satisfy fresh exact-head CI and protected review requirements.
+3. Coordinate parent #1104/#1105 and native stack publication without retargeting or bypassing protections. #1110 remains Draft while publication work is coordinated.
+4. Verify the public deployment identity and launch the public SIM before calling this increment live.
 
 Physical-device performance, installed-app/native fullscreen, actual controller/radio reconnect and human beginner acceptance remain honestly outstanding. They do not block independent authorized development, and are not recorded as passed.
 
@@ -130,5 +135,7 @@ plain paused flight retains guidance and safe Explain. An immediate CSS guard
 covers results shown after the frame update and asynchronous proof verification.
 Idle sticks, drone diagrams and playback controls clear from terminal results and
 return for a fresh flight. See `fpv-flight-hud-overlay-verification.json` for
-38 browser checks and host verification. Previous package receipts remain tied
-to 3bbdc8; this follow-up requires fresh package admission before release.
+38 browser checks and host verification. Fresh 614adef package admission and the
+bounded admitted-browser review cover this correction. The historical 3bbdc8
+receipts remain intact; the current 53-case regression suite and protected
+publication are still pending as recorded above.
