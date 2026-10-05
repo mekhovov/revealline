@@ -151,6 +151,130 @@ function drawPickup(ctx, pickup) {
   ctx.restore();
 }
 
+function drawFieldMechanics(ctx, run, palette) {
+  if (!run.relays) return;
+  for (const relay of run.relays) {
+    const target = run.targets.find((actor) => actor.id === relay.ownerId);
+    if (!target) continue;
+    ctx.save();
+    ctx.strokeStyle = relay.collected ? palette.safe : palette.accent;
+    ctx.globalAlpha = 0.35;
+    ctx.setLineDash([3, 7]);
+    ctx.beginPath();
+    ctx.moveTo((target.x + 0.5) * UNIT, (target.y + 0.5) * UNIT);
+    ctx.lineTo((relay.x + 0.5) * UNIT, (relay.y + 0.5) * UNIT);
+    ctx.stroke();
+    ctx.globalAlpha = 1;
+    ctx.setLineDash([]);
+    const x = (relay.x + 0.5) * UNIT,
+      y = (relay.y + 0.5) * UNIT;
+    ctx.beginPath();
+    ctx.moveTo(x, y - 9);
+    ctx.lineTo(x + 9, y);
+    ctx.lineTo(x, y + 9);
+    ctx.lineTo(x - 9, y);
+    ctx.closePath();
+    ctx.fillStyle = palette.field;
+    ctx.fill();
+    ctx.stroke();
+    if (relay.collected) {
+      ctx.beginPath();
+      ctx.moveTo(x - 5, y);
+      ctx.lineTo(x - 1, y + 4);
+      ctx.lineTo(x + 5, y - 4);
+      ctx.stroke();
+    }
+    ctx.restore();
+  }
+  for (const target of run.targets) {
+    const policy = run.level.targets.required[target.policyIndex];
+    const warning = target.phase === 'warning',
+      active = target.phase === 'active';
+    if (target.kind === 'lane' && (warning || active)) {
+      const { axis, from, to } = policy.lane;
+      ctx.save();
+      ctx.strokeStyle = warning ? palette.accent : palette.danger;
+      ctx.fillStyle = palette.danger;
+      ctx.lineWidth = active ? 3 : 2;
+      ctx.setLineDash(warning ? [5, 4] : []);
+      for (let at = from; at <= to; at++) {
+        const x = (axis === 'x' ? at : target.x) * UNIT;
+        const y = (axis === 'y' ? at : target.y) * UNIT;
+        if (active) {
+          ctx.globalAlpha = 0.22;
+          ctx.fillRect(x, y, UNIT, UNIT);
+          ctx.globalAlpha = 1;
+        }
+        ctx.strokeRect(x + 3, y + 3, UNIT - 6, UNIT - 6);
+      }
+      ctx.restore();
+    }
+    if (target.kind === 'guard' && warning) {
+      const vector = { up: [0, -1], right: [1, 0], down: [0, 1], left: [-1, 0] }[target.heading];
+      ctx.save();
+      ctx.strokeStyle = palette.accent;
+      ctx.setLineDash([5, 4]);
+      ctx.beginPath();
+      ctx.moveTo((target.x + 0.5) * UNIT, (target.y + 0.5) * UNIT);
+      ctx.lineTo(
+        (target.x + 0.5 + vector[0] * 48) * UNIT,
+        (target.y + 0.5 + vector[1] * 48) * UNIT,
+      );
+      ctx.stroke();
+      ctx.restore();
+    }
+    if (target.kind === 'eroder') {
+      for (const cell of policy.breaks) {
+        if (run.removedWalls.some((removed) => removed.x === cell.x && removed.y === cell.y))
+          continue;
+        const x = cell.x * UNIT,
+          y = cell.y * UNIT;
+        ctx.save();
+        ctx.strokeStyle = warning ? palette.accent : palette.muted;
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(x + 9, y + 3);
+        ctx.lineTo(x + 16, y + 11);
+        ctx.lineTo(x + 10, y + 17);
+        ctx.lineTo(x + 18, y + 25);
+        ctx.stroke();
+        ctx.restore();
+      }
+    }
+  }
+  for (const shot of run.projectiles) {
+    const [dx, dy] = { up: [0, -1], right: [1, 0], down: [0, 1], left: [-1, 0] }[shot.heading];
+    ctx.save();
+    ctx.fillStyle = palette.danger;
+    ctx.strokeStyle = palette.accent;
+    ctx.fillRect(shot.x * UNIT + 9, shot.y * UNIT + 9, 10, 10);
+    ctx.setLineDash([3, 3]);
+    ctx.strokeRect((shot.x + dx) * UNIT + 4, (shot.y + dy) * UNIT + 4, UNIT - 8, UNIT - 8);
+    ctx.restore();
+  }
+}
+
+function drawInterference(ctx, run, palette, reduced) {
+  if (!run.signal?.jammed) return;
+  // Sparse low-contrast bands avoid flashing. Near-head geometry and all
+  // danger warnings/cables stay clear; distant ordinary detail is dimmed below.
+  ctx.save();
+  ctx.globalAlpha = reduced ? 0.32 : 0.38;
+  ctx.fillStyle = palette.field;
+  ctx.fillRect(0, 0, run.level.width * UNIT, run.level.height * UNIT);
+  ctx.globalAlpha = 0.12;
+  ctx.fillStyle = palette.muted;
+  for (let band = 0; band < 4; band++) {
+    const y = (band * 97 + (reduced ? 0 : run.tick * 7)) % (run.level.height * UNIT);
+    ctx.fillRect(0, y, run.level.width * UNIT, 3);
+  }
+  ctx.restore();
+}
+const nearHead = (run, cell) =>
+  run.snakes.some(
+    (snake) => Math.abs(snake.body[0].x - cell.x) + Math.abs(snake.body[0].y - cell.y) <= 4,
+  );
+
 export function drawClassicBoard(
   canvas,
   run,
@@ -238,16 +362,25 @@ export function drawClassicBoard(
     effects.draw(ctx);
     ctx.restore();
   }
-  for (const wall of walls) drawWall(ctx, wall, presentation, palette, retro);
+  drawInterference(ctx, run, palette, reduced);
+  for (const wall of walls)
+    if (!run.removedWalls?.some((removed) => removed.x === wall.x && removed.y === wall.y)) {
+      ctx.globalAlpha = run.signal?.jammed && !nearHead(run, wall) ? 0.25 : 1;
+      drawWall(ctx, wall, presentation, palette, retro);
+    }
+  ctx.globalAlpha = 1;
   drawShutters(ctx, run, palette);
   drawPickup(ctx, run.pickup);
+  drawFieldMechanics(ctx, run, palette);
   ctx.lineWidth = 3;
   ctx.strokeStyle = wrap ? palette.accent : palette.muted;
   ctx.setLineDash(wrap ? [7, 7] : []);
   ctx.strokeRect(1.5, 1.5, logicalWidth - 3, logicalHeight - 3);
   ctx.setLineDash([]);
   const targets = run.targets ?? (run.target ? [run.target] : []);
-  for (const target of targets)
+  for (const target of targets) {
+    const threat = ['jammer', 'lane', 'relay', 'guard', 'shield', 'brace'].includes(target.kind);
+    ctx.globalAlpha = run.signal?.jammed && !threat && !nearHead(run, target) ? 0.25 : 1;
     drawClassicTarget(
       ctx,
       target.x * UNIT,
@@ -267,6 +400,8 @@ export function drawClassicBoard(
         reducedEffects: reduced,
       },
     );
+  }
+  ctx.globalAlpha = 1;
   for (const snake of run.snakes) {
     const ink = retro ? RETRO_INKS[snake.id % 2] : pilotInk(snake.id, accent);
     drawClassicCable(ctx, snake, ink, run.level, {
