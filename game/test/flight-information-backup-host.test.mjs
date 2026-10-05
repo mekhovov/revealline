@@ -1,3 +1,4 @@
+import { activateHostAction } from './helpers/host-action.mjs';
 import { nativeCaptureSession as nativeSession } from '../capture-presentation-session.mjs';
 import { acceptGameDataReplacement } from './helpers/backup-preflight.mjs';
 import test from 'node:test';
@@ -38,9 +39,9 @@ async function closeDetails(page) {
   assert.equal(page.doc.activeElement, page.$('overlay-field-details'));
 }
 async function restoreFlight(page, original) {
-  closeLibrary(page);
-  page.$('continue-saved').click();
-  await settle(() => !page.$('continue-saved').disabled);
+  page.$('save-json').value = JSON.stringify(original);
+  await activateHostAction(page.$('import-save'));
+  assert.equal(page.$('library-dialog').open, false);
   page.frame(0);
   assert.equal(info(page).snapshot.paused, true);
   assert.deepEqual(

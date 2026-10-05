@@ -1,3 +1,4 @@
+import { activateHostAction } from './helpers/host-action.mjs';
 import { nativeCaptureSession as nativeSession } from '../capture-presentation-session.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
@@ -171,8 +172,11 @@ test('actual notices survive later empty fixed-step batches and same-ID restore 
   p.$('flight-details-back').click();
   await Promise.resolve();
   const owner = info(p).owner;
-  p.$('continue-saved').click();
-  await settle(() => !p.$('continue-saved').disabled);
+  const saved = p.storage.getItem('revealline.suspended.dev.v1');
+  p.$('library-button').click();
+  p.$('save-json').value = saved;
+  await activateHostAction(p.$('import-save'));
+  assert.equal(p.$('library-dialog').open, false);
   assert.equal(info(p).owner.attempt, owner.attempt);
   assert.ok(info(p).owner.generation > owner.generation);
   assert.deepEqual(
