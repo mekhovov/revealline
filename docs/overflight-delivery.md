@@ -38,6 +38,26 @@ upgrade cards require a normal screen recording. Recording runs cannot qualify
 performance. Fixtures are separately labeled synthetic workloads and recycle
 actors; they are not evidence of pacing, player success or enjoyment.
 
+## Upgrade visuals and balance follow-up
+
+The [5 October upgrade follow-up](qualification/overflight/upgrades-20261005/README.md)
+adds animated Now → Next diagrams to every upgrade, concise copy, readable
+highlighted titles, rank progress and equivalent static reduced-effects previews.
+The card diagrams and runtime attacks use the same module parameters.
+
+Proximity pulses now charge through 90 units of actual flight. The small module
+meter shows the next pulse's charge. Stationary pulses have less damage, reach,
+knockback and a longer interval; full flight charge restores stronger clearing.
+Rank one still cannot one-shot a full-health opening enemy. Slow fields now deal
+modest chip damage on a single per-enemy cadence rather than stacking overlapping
+damage. Movement, contact damage and encounter populations are unchanged.
+
+The reproduced earned-rank-two stationary route first took damage 11.45 seconds
+after parking, compared with 81.45 seconds before this change. Both rank-two and
+rank-three parked routes lost before the elite; the same moving policy retained
+100 hull at 240 seconds. All 27 active three-airframe qualification routes still
+complete. This is automated balance evidence, not a human difficulty guarantee.
+
 ## Delivered behavior
 
 The sortie uses the approved baseline flight and rear-drop charge: 100 hull,
@@ -59,7 +79,7 @@ telegraphed; at most two priority attacks commit simultaneously.
 The candidate's late waves use slower, tougher crowds. Across three encounter
 sets, three builds and three seeds, all 27 automated three-airframe routes won.
 First drafts occurred at 14.02–22.50 seconds; specialized evolution timing ranged
-from 47.13–117.48 seconds. The main seed evolved at 70.60–93.57 seconds depending
+from 52.13–114.13 seconds. The main seed evolved at 70.80–94.17 seconds depending
 on the encounter set. The broad timing range is a pacing review item, not a
 promise about human progression. One-airframe routes remain substantially harder.
 See the retained [route evidence](qualification/overflight/README.md).
@@ -109,13 +129,15 @@ formative testing, complete interface recordings and target-device benchmarks
 remain required. Standard left-stick/RT flight is implemented; Capture's custom
 radio/remap configuration has not been silently recreated as another settings store.
 
-A complete [local distribution build](qualification/overflight/full-distribution-build.json)
+The earlier candidate’s complete [local distribution build](qualification/overflight/full-distribution-build.json)
 passed on `cbd9d23d1a2eff81e7059013024974e2d6e1ca41`: 3,092 manifest files and a
 1,004,092,578-byte ZIP. Independent checks verified 38 emitted files, including
 the Play and Studio entrypoints, Motion Lab integration and all thirteen shared
 library PNGs, plus the final ZIP checksum. The built site is available at
 `.cache/overflight/full-distribution`. Offline browser installation and offline
 play remain unverified; successful offline-metadata preparation does not qualify them.
+That build predates the upgrade follow-up; the current follow-up has focused tests
+and native browser evidence, and requires a fresh distribution for release.
 
 The integration cohort passed [128/128 checks](qualification/overflight/final-tests.tap),
 with [6/6 CI-registration checks](qualification/overflight/industrial-tests.tap).

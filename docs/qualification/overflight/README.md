@@ -2,8 +2,10 @@
 
 Recorded 5 October 2026 against implementation base main
 `2d447bc790bdf3951251c99041c8a918363ece0a`. This is working-tree candidate
-qualification. No browser, target-device, human-play or release gate is accepted
-by these automated receipts.
+qualification. No target-device, human-play or release gate is accepted by these automated receipts.
+Current upgrade visuals and balance evidence is in the
+[upgrade follow-up](upgrades-20261005/README.md). Older browser and distribution
+receipts identify their own earlier source and do not qualify the changed balance.
 
 [Automated routes](automated-routes.json) retain six complete front-set runs with
 five-second samples: three build directions × one/three airframes, seed 17031991. [Encounter sets](encounter-sets.json) retain nine compact three-airframe
@@ -20,17 +22,17 @@ is used in route qualification.
 
 | Encounter set, default seed | Fan: win time / frames left | Echo: win time / frames left | Systems: win time / frames left | Peak-visible range |
 | --------------------------- | --------------------------- | ---------------------------- | ------------------------------- | ------------------ |
-| Breakthrough (`front`)      | 349.00s / 2                 | 342.77s / 3                  | 358.65s / 1                     | 475–560            |
-| Crosswinds (`crossing`)     | 329.65s / 3                 | 329.90s / 3                  | 336.37s / 3                     | 593–709            |
-| Convergence (`mixed`)       | 348.72s / 2                 | 341.47s / 3                  | 355.07s / 1                     | 537–592            |
+| Breakthrough (`front`)      | 339.08s / 2                 | 342.82s / 3                  | 353.18s / 2                     | 459–634            |
+| Crosswinds (`crossing`)     | 333.37s / 3                 | 342.37s / 3                  | 330.57s / 3                     | 571–778            |
+| Convergence (`mixed`)       | 340.13s / 3                 | 344.77s / 3                  | 337.70s / 1                     | 469–561            |
 
 All 27 unique three-airframe routes won. With one airframe on default-seed
-Breakthrough, Fan lost at 335.38s, Echo won at 342.77s, and Systems lost at 312.38s.
+Breakthrough, Fan lost at 303.68s, Echo won at 342.82s, and Systems lost at 320.25s.
 First drafts across the full matrix occurred at 14.02–22.50s. Default-seed
-specializations evolved at 70.60–93.57s across the three sets. Across all seeds,
-evolution varied from 47.13s to 117.48s: this wider spread remains a balance review
+specializations evolved at 70.80–94.17s across the three sets. Across all seeds,
+evolution varied from 52.13s to 114.13s: this wider spread remains a balance review
 item against the approximate 90s target, especially Crosswinds seed 20261005.
-Crowd peaks across all three-airframe runs ranged from 399 to 782 visible actors.
+Crowd peaks across all three-airframe runs ranged from 459 to 1,048 visible actors.
 These are observations of one deterministic
 pilot, not promises about human difficulty, exact upgrade timing, or a universal
 minimum crowd size. The primary remains unevolved in the stacked-systems route.
@@ -77,13 +79,14 @@ sources at the existing 10Hz decision cadence; movement and damage remain 60Hz.
 
 ## Full distribution build
 
-The [source-bound build receipt](full-distribution-build.json) records a successful
+The earlier candidate’s [source-bound build receipt](full-distribution-build.json) records a successful
 complete local distribution build on `cbd9d23d1a2eff81e7059013024974e2d6e1ca41`:
 3,092 manifest files, 1,003,106,207 payload bytes excluding the manifest, and a
 1,004,092,578-byte ZIP. Independent verification checked 38 emitted files against
 the manifest, including both Overflight entrypoints, Motion Lab integration and
 all thirteen shared library PNGs, and verified the final ZIP checksum.
-The built site is `.cache/overflight/full-distribution`.
+The built site is `.cache/overflight/full-distribution`. It predates the upgrade
+visuals/balance follow-up and must be rebuilt before qualifying that follow-up for release.
 
 This passes local build preparation and output verification. Offline browser
 installation, service-worker behavior and actual offline play remain unverified.

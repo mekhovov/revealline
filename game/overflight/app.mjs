@@ -30,6 +30,7 @@ import {
   exportOverflightPackage,
 } from './community.mjs';
 import { overflightBuildItems } from './upgrades.mjs';
+import { createOverflightUpgradeCard } from './upgrade-card.mjs';
 import { pilot, selectCard, QUALIFICATION_BUILDS } from './review-pilot.mjs';
 import { createOverflightReviewRecorder } from './review-recorder.mjs';
 import { overflightFieldKitArt } from '../presentation/overflight-field-kit-art.mjs';
@@ -110,6 +111,7 @@ let lastHUD = 0,
   lastFrame = null,
   offerKey = '',
   hudBuildKey = '',
+  hudPulseCharge = null,
   library = null,
   music = null,
   musicFrame = 0,
@@ -336,12 +338,29 @@ function updateHUD() {
   const label = buildLabel();
   if (label !== hudBuildKey) {
     hudBuildKey = label;
+    hudPulseCharge = null;
     $('hud-build').replaceChildren();
     for (const item of overflightBuildItems(run.build)) {
       const badge = el('span', '', 'overflight-build-item');
       badge.append(moduleIcon(item.id), el('span', `${local(item.title)} ${item.rank}`));
+      if (item.id === 'proximity-pulse') {
+        hudPulseCharge = el('span', '', 'overflight-pulse-charge');
+        hudPulseCharge.setAttribute('role', 'progressbar');
+        hudPulseCharge.setAttribute('aria-label', text('pulseCharge'));
+        hudPulseCharge.setAttribute('aria-valuemin', '0');
+        hudPulseCharge.setAttribute('aria-valuemax', '100');
+        hudPulseCharge.append(el('span', '', 'overflight-pulse-fill'));
+        badge.append(hudPulseCharge);
+      }
       $('hud-build').append(badge);
     }
+  }
+  if (hudPulseCharge) {
+    const charge = Math.round(Math.max(0, Math.min(1, run.player.pulseCharge ?? 0)) * 100);
+    hudPulseCharge.firstElementChild.style.width = `${charge}%`;
+    hudPulseCharge.setAttribute('aria-valuenow', String(charge));
+    hudPulseCharge.setAttribute('aria-valuetext', `${charge}% · ${text('flyToCharge')}`);
+    hudPulseCharge.dataset.ready = String(charge === 100);
   }
   const index = run.progression.choices;
   const thresholds = compiled.upgrades.thresholds;
@@ -385,30 +404,28 @@ function syncUpgrade(force = false) {
   if (run?.phase !== 'upgrade') return;
   const key = `${getLocale()}:${(run.offers ?? []).map((offer) => offer.id).join('|')}`;
   if (force || key !== offerKey) {
+    const focusedId = doc.activeElement?.dataset?.upgradeId;
     offerKey = key;
     $('upgrade-cards').replaceChildren();
-    for (const offer of run.offers ?? []) {
-      const button = el('button', '', 'overflight-upgrade-card');
-      button.type = 'button';
-      button.dataset.upgradeId = offer.id;
-      button.disabled = !!reviewBuild;
-      button.append(
-        moduleIcon(offer.system),
-        el('strong', local(offer.title)),
-        el('span', local(offer.description)),
+    for (const offer of run.offers ?? [])
+      $('upgrade-cards').append(
+        createOverflightUpgradeCard({
+          document: doc,
+          offer,
+          build: run.build,
+          player: run.player,
+          locale: getLocale(),
+          reducedEffects: display.snapshot().effectiveReducedEffects,
+          disabled: !!reviewBuild,
+          moduleIcon,
+          onChoose: choose,
+        }),
       );
-      for (const [name, value] of [
-        ['current', offer.current],
-        ['next', offer.next],
-      ])
-        if (value !== null && value !== undefined)
-          button.append(el('span', `${text(name)}: ${local(value)}`));
-      if (offer.evolution)
-        button.append(
-          el('span', `${text('evolution')}: ${local(offer.evolution)}`, 'upgrade-evolution'),
-        );
-      button.addEventListener('click', () => choose(offer.id));
-      $('upgrade-cards').append(button);
+    if (focusedId) {
+      const cards = [...$('upgrade-cards').children].filter((card) => !card.disabled);
+      (cards.find((card) => card.dataset.upgradeId === focusedId) ?? cards[0])?.focus({
+        preventScroll: true,
+      });
     }
     $('reroll-upgrades').textContent = text('reroll');
     const remaining = run.progression.rerolls;
@@ -960,6 +977,7 @@ cleanup.push(
     doc.body.dataset.textSize = value.textSize;
     doc.body.dataset.textFace = value.textFace;
     if (appearance) appearance.reducedEffects = value.effectiveReducedEffects;
+    if (run?.phase === 'upgrade') syncUpgrade(true);
   }),
 );
 cleanup.push(
