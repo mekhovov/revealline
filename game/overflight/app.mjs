@@ -12,6 +12,7 @@ import {
   selectedArcadeCollection,
 } from '../presentation/industrial-arcade.mjs';
 import { attachThemeFamilyControls } from '../ui/theme-family-controls.mjs';
+import { attachEncounterDisplayControls } from '../ui/encounter-display-controls.mjs';
 import { createDisplayPreferences } from '../display-preferences.mjs';
 import { sharedActorAppearance } from '../hunt/preferences.mjs';
 import { createAudioMaster } from '../ui/audio-master.mjs';
@@ -61,8 +62,17 @@ import {
   createOverflightJSONPages,
 } from './host-loop.mjs';
 import { createOverflightAudio, overflightMusicContext } from './audio.mjs';
+import { createOverflightCommentator } from './commentator.mjs';
 import { overflightText, localizedOverflight } from './copy.mjs';
 import { createOverflightController, loadOverflightControllerPreferences } from './controller.mjs';
+import {
+  DEFAULT_OVERFLIGHT_CHARACTER,
+  normalizeOverflightCharacterId,
+  overflightCharacterName,
+  prepareOverflightCharacters,
+  resolveOverflightCharacter,
+  paintOverflightCharacterPreview,
+} from './characters.mjs';
 
 const doc = globalThis.document;
 const win = globalThis.window;
@@ -96,16 +106,24 @@ const benchmarkProtocol = benchmarkTrial
 const review = createOverflightReviewPlayback({ build: reviewBuild, pilot, selectCard });
 const studio = params.get('studio') === 'overflight' && win.parent !== win;
 const OPTION_KEY = 'revealline.overflight.options.v1';
-let options = { airframes: 3, slowResume: true };
+let options = { airframes: 3, slowResume: true, characterId: DEFAULT_OVERFLIGHT_CHARACTER };
 try {
   const saved = JSON.parse(win.localStorage.getItem(OPTION_KEY) ?? 'null');
   if (saved && [1, 3].includes(saved.airframes) && typeof saved.slowResume === 'boolean')
-    options = { airframes: saved.airframes, slowResume: saved.slowResume };
+    options = {
+      airframes: saved.airframes,
+      slowResume: saved.slowResume,
+      characterId: normalizeOverflightCharacterId(saved.characterId),
+    };
 } catch {
   /* Storage is optional; local choices remain usable. */
 }
 const persistOptions = () => {
-  options = { airframes: Number($('airframes').value), slowResume: $('slow-resume').checked };
+  options = {
+    ...options,
+    airframes: Number($('airframes').value),
+    slowResume: $('slow-resume').checked,
+  };
   try {
     win.localStorage.setItem(OPTION_KEY, JSON.stringify(options));
   } catch {
@@ -136,6 +154,7 @@ let lastHUD = 0,
   hudPulseCharge = null,
   library = null,
   music = null,
+  commentator = null,
   musicFrame = 0,
   recoveryPending = false,
   recoveryUnsupported = false,
@@ -150,6 +169,9 @@ let frames = [],
 let completedMeasurement = null,
   resourceSamples = [],
   nextResourceSample = 0;
+let characterEntries = [],
+  rewardTimer = null,
+  resultRun = null;
 const clipRecorder = reviewBuild
   ? createOverflightReviewRecorder({ window: win, onState: updateClip })
   : null;
@@ -193,10 +215,13 @@ const audioPreferences = createAudioPreferences({ audioMaster, window: win });
 const sound = new Soundscape({ audioMaster, persistentMusic: true });
 sound.configure({ master: 1, sfx: 0.7 });
 const audio = createOverflightAudio(sound, {
+  getDestruction: () => encounterDisplay.snapshot(),
   presentation: {
     async readAudio(slot, settings) {
       await artReady;
-      return slot === 'audio.pickup' ? artwork.readAudio(slot, settings) : null;
+      return ['audio.pickup', 'audio.confirm', 'audio.victory', 'audio.failure'].includes(slot)
+        ? artwork.readAudio(slot, settings)
+        : null;
     },
   },
 });
@@ -255,6 +280,7 @@ function pause({ menu = true } = {}) {
   releaseInput();
   sound.gameplayPaused = true;
   sound.pause();
+  commentator?.suspend();
   updateShell();
   if (run.phase === 'paused' && $('upgrade-dialog').open) $('upgrade-dialog').close();
   if (run.phase === 'upgrade') {
@@ -266,6 +292,10 @@ function pause({ menu = true } = {}) {
 }
 function start() {
   if (!run || !renderer || preparing || runtimeFailed || contextGuard.blocked() || retired) return;
+  if (run.phase === 'ready' && preparationIdentity?.characterId !== options.characterId) {
+    void prepare({ launch: true }).catch(() => {});
+    return;
+  }
   if (run.phase === 'upgrade') return syncUpgrade();
   if (run.phase === 'ready') {
     if (run.airframes !== options.airframes || run.slowResume !== options.slowResume) {
@@ -282,9 +312,14 @@ function start() {
   void music?.start();
   const owner = run;
   sound.gameplayPaused = false;
+  commentator?.resume();
   void sound.enable().then(() => {
     if (owner !== run || run.phase !== 'playing' || retired) sound.pause();
-    else void audio.prepare();
+    else {
+      void audio.prepare();
+      commentator?.prepare();
+      audio.update(run);
+    }
   });
 }
 function formatTime(seconds) {
@@ -355,7 +390,18 @@ function updateHUD() {
   if (!run) return;
   $('hud-time').textContent = formatTime(run.time);
   $('hud-hull').textContent =
-    `${text('hull')} ${Math.ceil(run.player.hull)}/${run.player.maxHull} · ${text('airframes')} ${run.airframesRemaining}`;
+    `${text('hull')} ${Math.ceil(run.player.hull)} / ${run.player.maxHull}`;
+  const health = Math.max(0, Math.min(100, (run.player.hull / run.player.maxHull) * 100));
+  $('hud-health-fill').style.width = `${health}%`;
+  $('hud-health').dataset.critical = String(health <= 25);
+  $('hud-health').setAttribute('aria-label', text('hull'));
+  $('hud-health').setAttribute('aria-valuemin', '0');
+  $('hud-health').setAttribute('aria-valuemax', String(run.player.maxHull));
+  $('hud-health').setAttribute('aria-valuenow', String(Math.ceil(run.player.hull)));
+  $('hud-airframes').textContent =
+    `${text('spareAirframes')} ${Math.max(0, run.airframesRemaining - 1)}`;
+  $('hud-kills').textContent =
+    `${Number(run.stats.kills).toLocaleString(getLocale())} ${text('kills')}`;
   $('hud-level').textContent = `${text('level')} ${run.progression.choices + 1}`;
   const cooldown = Math.max(0, run.player.boostCooldown ?? 0);
   $('hud-boost').textContent =
@@ -396,22 +442,95 @@ function updateHUD() {
     next > previous ? Math.max(0, Math.min(1, (xp - previous) / (next - previous))) : 1;
   $('xp-fill').style.width = `${percent * 100}%`;
 }
+function refreshCharacters() {
+  const select = $('character-select');
+  select.replaceChildren();
+  for (const character of characterEntries) {
+    const option = el('option', overflightCharacterName(character.id));
+    option.value = character.id;
+    select.append(option);
+  }
+  const canSelect = !run || run.phase === 'ready';
+  const characterId = canSelect ? options.characterId : preparationIdentity?.characterId;
+  select.value = characterId ?? options.characterId;
+  select.disabled = preparing || !characterEntries.length || !canSelect;
+  $('character-hint').textContent = text(canSelect ? 'characterHint' : 'characterLocked');
+  const character = characterEntries.find((entry) => entry.id === select.value);
+  $('character-preview').replaceChildren();
+  if (character) {
+    const canvas = doc.createElement('canvas');
+    paintOverflightCharacterPreview(canvas, character, { size: 96 });
+    $('character-preview').append(canvas);
+  }
+}
+function rewardToast(offer) {
+  win.clearTimeout(rewardTimer);
+  const toast = $('hud-reward');
+  toast.replaceChildren(
+    moduleIcon(offer.system),
+    el('span', text(offer.kind === 'evolution' ? 'evolutionInstalled' : 'upgradeInstalled')),
+    el('strong', local(offer.title)),
+  );
+  toast.dataset.evolution = String(offer.kind === 'evolution');
+  toast.hidden = false;
+  rewardTimer = win.setTimeout(() => {
+    toast.hidden = true;
+    rewardTimer = null;
+  }, 2200);
+}
 function result() {
   const summary = overflightSummary(run);
-  $('result-title').textContent = text(run.phase === 'won' ? 'won' : 'lost');
+  const won = run.phase === 'won';
+  $('overflight-results').dataset.outcome = won ? 'won' : 'lost';
+  $('result-title').textContent = text(won ? 'won' : 'lost');
+  $('result-kicker').textContent = text(won ? 'victoryKicker' : 'lossKicker');
+  $('result-message').textContent = text(won ? 'victoryMessage' : 'lossMessage');
   $('result-stats').replaceChildren();
   for (const [key, value] of [
+    ['kills', summary.stats.kills],
     ['elapsed', formatTime(run.time)],
-    ['kills', summary.kills ?? run.stats?.kills ?? 0],
     ['salvage', summary.stats.xpCollected],
-    ['build', buildLabel()],
+    ['upgradesEarned', summary.stats.upgradesChosen],
+  ]) {
+    const stat = el('div', '', 'overflight-result-stat');
+    stat.append(
+      el('dt', text(key)),
+      el('dd', typeof value === 'number' ? value.toLocaleString(getLocale()) : value),
+    );
+    $('result-stats').append(stat);
+  }
+  $('result-milestones').replaceChildren();
+  for (const [achieved, label] of [
+    [summary.goals.eliteDefeated, 'eliteCleared'],
+    [summary.goals.finalDefeated, 'finalCleared'],
+    [summary.build.primary.rank >= 4, 'evolvedBuild'],
+    [won && summary.stats.airframesLost === 0, 'intactSortie'],
   ])
-    $('result-stats').append(el('dt', text(key)), el('dd', String(value)));
+    if (achieved) $('result-milestones').append(el('span', `✓ ${text(label)}`));
+  $('result-build').replaceChildren();
+  for (const item of overflightBuildItems(run.build)) {
+    const badge = el('div', '', 'overflight-result-module');
+    badge.append(
+      moduleIcon(item.id),
+      el('strong', local(item.title)),
+      el('span', `${text('level')} ${item.rank}`),
+    );
+    $('result-build').append(badge);
+  }
+  // Locale changes may refresh labels; only a newly completed run earns the reveal.
+  if (resultRun !== run) {
+    resultRun = run;
+    $('overflight-results').classList.remove('result-reveal');
+    win.requestAnimationFrame(() => {
+      if (!retired && resultRun === run) $('overflight-results').classList.add('result-reveal');
+    });
+  }
   updateShell();
   shell.open('results');
 }
 function choose(id) {
   if (!run || run.phase !== 'upgrade') return;
+  const offer = run.offers.find((entry) => entry.id === id);
   if (chooseOverflightUpgrade(run, id) === false) return;
   releaseInput();
   offerKey = '';
@@ -420,7 +539,10 @@ function choose(id) {
   if (run.slowResume) clock.slowResume(performance.now());
   sound.gameplayPaused = false;
   void sound.resume();
+  commentator?.resume();
   audio.update(run);
+  commentator?.update(run);
+  if (offer) rewardToast(offer);
   $('render-host').focus({ preventScroll: true });
   updateShell();
   updateHUD();
@@ -429,6 +551,10 @@ function syncUpgrade(force = false) {
   if (run?.phase !== 'upgrade') return;
   const key = `${getLocale()}:${(run.offers ?? []).map((offer) => offer.id).join('|')}`;
   if (force || key !== offerKey) {
+    $('upgrade-level').textContent = `${text('levelReached')} ${run.progression.choices + 2}`;
+    $('upgrade-dialog').dataset.evolution = String(
+      run.offers.some((offer) => offer.kind === 'evolution'),
+    );
     const focusedId = doc.activeElement?.dataset?.upgradeId;
     offerKey = key;
     $('upgrade-cards').replaceChildren();
@@ -460,6 +586,7 @@ function syncUpgrade(force = false) {
   if (!$('upgrade-dialog').open) {
     releaseInput();
     sound.pause();
+    commentator?.suspend();
     updateShell();
     $('upgrade-dialog').showModal();
     $('upgrade-cards').querySelector('button')?.focus({ preventScroll: true });
@@ -468,12 +595,11 @@ function syncUpgrade(force = false) {
 function transition() {
   if (!run || run.phase === lastPhase) return;
   lastPhase = run.phase;
+  refreshCharacters();
   updateShell();
   if (run.phase === 'upgrade') syncUpgrade();
   if (['won', 'lost'].includes(run.phase)) {
     releaseInput();
-    sound.encounter(run.phase === 'won' ? 'objective' : 'failure');
-    sound.pause();
     result();
   }
 }
@@ -485,11 +611,15 @@ async function prepare({ nextProject = project, nextSeed = seed, launch = false 
   clipRecorder?.cancel();
   if (runtimeFailed) rendererOwner.invalidate();
   preparing = true;
+  $('character-select').disabled = true;
+  win.clearTimeout(rewardTimer);
+  $('hud-reward').hidden = true;
   if (run) pauseOverflight(run);
   updateRecoveryControl();
   updateShell();
   releaseInput();
   sound.pause();
+  commentator?.suspend();
   if ($('upgrade-dialog').open) $('upgrade-dialog').close();
   showStatus(text('preparing'));
   try {
@@ -499,6 +629,7 @@ async function prepare({ nextProject = project, nextSeed = seed, launch = false 
     const resolvedTheme = theme.snapshot();
     const collection = selectedArcadeCollection(theme.effectivePreferences());
     const cast = castPreferences.snapshot().cast;
+    const selectedCharacter = resolveOverflightCharacter(base, options.characterId);
     const frozenIdentity = {
       manifestSha256: base.manifestSha256,
       presentation: base.source,
@@ -512,9 +643,8 @@ async function prepare({ nextProject = project, nextSeed = seed, launch = false 
       equipment: nextCompiled.resources.effects,
       materialStyle: resolvedTheme.materialStyle,
       materialVariant: resolvedTheme.materialVariant,
-      playerSlot: base.image('player.scout.detailed')
-        ? 'player.scout.detailed'
-        : 'player.scout.compact',
+      characterId: selectedCharacter.id,
+      playerSlot: selectedCharacter.playerSlot,
       cast,
     };
     const nextRenderer = await rendererOwner.acquire(JSON.stringify(frozenIdentity), async () => {
@@ -523,13 +653,19 @@ async function prepare({ nextProject = project, nextSeed = seed, launch = false 
       recoveryPending = false;
       recoveryUnsupported = false;
       arcade.clear();
+      characterEntries = [];
       arcade.setReviewRevision(nextCompiled.resources.actorArtRevision);
+      const snapshot = arcade.resolve(base, collection);
+      characterEntries = prepareOverflightCharacters(snapshot);
       appearance = {
-        snapshot: arcade.resolve(base, collection),
+        snapshot,
+        playerSlot: frozenIdentity.playerSlot,
+        characterId: frozenIdentity.characterId,
         theme: resolvedTheme,
         artRevision: frozenIdentity.actorArtRevision,
         cast: frozenIdentity.cast,
         reducedEffects: display.snapshot().effectiveReducedEffects,
+        destruction: encounterDisplay.snapshot(),
       };
       return createOverflightRenderer({
         parent: $('render-host'),
@@ -569,6 +705,7 @@ async function prepare({ nextProject = project, nextSeed = seed, launch = false 
     run.appearance = preparationIdentity;
     review.reset();
     audio.reset();
+    commentator?.reset(run);
     clock.reset();
     clock.clearMeasurements();
     renderer.resetMeasurements?.(benchmarkProtocol);
@@ -589,6 +726,7 @@ async function prepare({ nextProject = project, nextSeed = seed, launch = false 
     $('raw-metrics').hidden = true;
     $('raw-metrics-navigation').hidden = true;
     preparing = false;
+    refreshCharacters();
     runtimeFailed = false;
     showStatus();
     updateHUD();
@@ -605,6 +743,7 @@ async function prepare({ nextProject = project, nextSeed = seed, launch = false 
   } catch (error) {
     if (ticket !== epoch || retired) return false;
     preparing = false;
+    refreshCharacters();
     runtimeFailed = true;
     updateShell();
     showStatus(`${text('prepareFailed')} ${error.message}`);
@@ -681,6 +820,12 @@ function measurement({ raw = false } = {}) {
     projectIdentity: compiled.projectIdentity,
     seed,
     summary: sortieSummary(),
+    feedback: {
+      audioEnabled: sound.enabled,
+      contextState: sound.context?.state ?? 'unprepared',
+      masterMuted: audioMaster.snapshot().muted,
+      commentator: commentator?.diagnostics(),
+    },
     renderer: rendererStats,
     resourceSamples,
     trialValid:
@@ -725,10 +870,14 @@ function onFrame(now) {
       stepOverflight(run, review.input(run, input), dt);
       stepCPU += performance.now() - started;
       steps++;
+      // Retire combat voices before the shared result motif/dialogue starts.
+      if (run.phase === 'won' || run.phase === 'lost') sound.pause();
       audio.update(run);
+      commentator?.update(run);
       transition();
       return run.phase === 'playing';
     });
+    if (appearance) appearance.destruction = encounterDisplay.snapshot();
     renderer.present(run);
     if (benchmarkTrial && active && run.time >= nextResourceSample && !completedMeasurement) {
       resourceSamples.push({
@@ -827,6 +976,7 @@ function refreshCopy() {
   updateClip();
   updateShell();
   updateHUD();
+  refreshCharacters();
   renderMissions();
   if (run?.phase === 'upgrade') syncUpgrade(true);
   if (['won', 'lost'].includes(run?.phase)) result();
@@ -906,6 +1056,16 @@ music = attachCouchMusicHost({
   getScene: () => (!run || run.phase === 'ready' ? 'menu' : 'gameplay'),
   onOpen: () => pause({ menu: false }),
   onClose: releaseInput,
+});
+commentator = createOverflightCommentator({
+  sound,
+  container: $('overflight-commentator'),
+  resultContainer: $('overflight-result-commentator'),
+  settingsContainer: $('overflight-commentator-settings'),
+  document: doc,
+  window: win,
+  getReduced: () => display.snapshot().effectiveReducedEffects,
+  acquireGain: (settings) => music?.player.acquireGain(settings),
 });
 function renderMissions() {
   const root = $('overflight-mission-list');
@@ -1007,6 +1167,11 @@ const themeControls = attachThemeFamilyControls({
   host: theme,
   prefix: 'overflight-',
 });
+const encounterDisplay = attachEncounterDisplayControls({
+  document: doc,
+  window: win,
+  prefix: 'overflight-',
+});
 cleanup.push(onLocaleChange(refreshCopy));
 cleanup.push(
   display.subscribe((value) => {
@@ -1015,6 +1180,7 @@ cleanup.push(
     $('reduced-effects').checked = value.reducedEffects;
     doc.body.dataset.textSize = value.textSize;
     doc.body.dataset.textFace = value.textFace;
+    doc.body.dataset.effects = value.effectiveReducedEffects ? 'reduced' : 'full';
     if (appearance) appearance.reducedEffects = value.effectiveReducedEffects;
     if (run?.phase === 'upgrade') syncUpgrade(true);
   }),
@@ -1030,6 +1196,17 @@ for (const [id, event, fn] of [
   ['language', 'change', () => setLocale($('language').value)],
   ['airframes', 'change', persistOptions],
   ['slow-resume', 'change', persistOptions],
+  [
+    'character-select',
+    'change',
+    () => {
+      if (preparing || (run && run.phase !== 'ready')) return;
+      options.characterId = normalizeOverflightCharacterId($('character-select').value);
+      persistOptions();
+      refreshCharacters();
+      if (run?.phase === 'ready') void prepare().catch(() => {});
+    },
+  ],
   ['text-face', 'change', () => display.set({ textFace: $('text-face').value })],
   ['text-size', 'change', () => display.set({ textSize: $('text-size').value })],
   [
@@ -1051,6 +1228,7 @@ for (const [id, event, fn] of [
     'click',
     () => {
       if (run?.phase === 'upgrade' && rerollOverflightUpgrades(run)) {
+        audio.update(run);
         offerKey = '';
         syncUpgrade();
         $('upgrade-cards').querySelector('button')?.focus();
@@ -1227,6 +1405,7 @@ async function dispose() {
   retired = true;
   epoch++;
   clipRecorder?.dispose();
+  win.clearTimeout(rewardTimer);
   releaseInput();
   renderer = null;
   if ($('upgrade-dialog').open) $('upgrade-dialog').close();
@@ -1234,11 +1413,13 @@ async function dispose() {
   controller?.destroy();
   shell.dispose();
   themeControls.dispose();
+  encounterDisplay.dispose();
   cleanup
     .splice(0)
     .reverse()
     .forEach((fn) => fn());
   music?.dispose();
+  commentator?.dispose();
   audio.dispose();
   void sound.dispose();
   audioPreferences.dispose();

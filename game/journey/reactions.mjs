@@ -1,5 +1,6 @@
 import { campaignResultLine } from './campaign-feedback.mjs';
 import { ACTOR_REACTION_LINES, actorReactionLine } from '../hunt/actor-reactions.mjs';
+import { OVERFLIGHT_REACTION_LINES } from '../overflight/reactions.mjs';
 /** Original, non-blocking personality copy. No simulated facts, gameplay rules,
  * scores, requests to keep playing, or rewards are derived from these captions. */
 export const JOURNEY_REACTIONS = Object.freeze({
@@ -101,6 +102,7 @@ export const REACTION_LINES = Object.freeze([
     ),
   ]),
   ...ACTOR_REACTION_LINES,
+  ...OVERFLIGHT_REACTION_LINES,
 ]);
 const byId = new Map(REACTION_LINES.map((line) => [line.id, line]));
 export function reactionLine(id, locale = 'en') {
@@ -120,17 +122,24 @@ export function reactionLine(id, locale = 'en') {
 /** Host-owned result context only. Never infer ownership from titles or URLs.
  * A finished race without a successful board is not a completion reaction. */
 export function journeyResultReaction(context, locale = 'en') {
+  const overflight = context?.presentation === 'overflight' && context.mode === 'solo';
   if (
     !context ||
     context.owned !== true ||
     !['solo', 'versus', 'team'].includes(context.mode) ||
-    !['won', 'draw'].includes(context.outcome) ||
+    !['won', 'draw', ...(overflight ? ['lost'] : [])].includes(context.outcome) ||
     (context.outcome === 'draw' && context.mode !== 'versus') ||
     typeof context.missionId !== 'string' ||
     !context.missionId ||
     context.missionId.length > 512
   )
     return null;
+  if (overflight)
+    // This existing Engineer line and its exact recording fit a successful sortie.
+    return reactionLine(
+      context.outcome === 'won' ? 'journey-reaction.v1/engineer/0' : 'overflight-reaction.v1/lost',
+      locale,
+    );
   const authored = campaignResultLine(context, locale);
   if (authored) return Object.freeze(authored);
   const speaker =

@@ -402,3 +402,489 @@ button:disabled {
   max-height: 220px;
   margin: 12px 0;
 }
+
+/* Flight instruments stay at the edges; the battlefield owns the center. */
+.overflight-topline {
+  align-items: flex-start;
+  background: linear-gradient(#07110fef, #07110f99 78%, transparent);
+  padding: 12px 18px 18px;
+}
+.overflight-vitals,
+.overflight-tally,
+.overflight-clock {
+  display: grid;
+  gap: 5px;
+}
+.overflight-vitals {
+  max-width: 210px;
+}
+.overflight-tally {
+  justify-items: end;
+}
+.overflight-clock {
+  justify-items: center;
+}
+.overflight-eyebrow {
+  font: 600 11px var(--fk-font-mono, monospace);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--fk-accent, #e6b85c);
+  margin: 0;
+}
+#hud-time {
+  font-size: clamp(20px, 2vw, 29px);
+  line-height: 1;
+}
+#hud-hull {
+  font-weight: 700;
+}
+#hud-airframes {
+  font-size: 11px;
+  color: #c1cbbd;
+}
+#hud-kills {
+  color: #edc363;
+  font-size: 16px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+#hud-level {
+  font-size: 12px;
+  color: #9aebda;
+}
+.overflight-health-meter {
+  height: 6px;
+  border: 1px solid #a1b0a1;
+  background: #101710;
+  overflow: hidden;
+}
+#hud-health-fill {
+  display: block;
+  height: 100%;
+  background: #a5d88b;
+  transition: width 0.2s;
+}
+.overflight-health-meter[data-critical='true'] #hud-health-fill {
+  background: #f9a275;
+}
+.overflight-xp {
+  height: 5px;
+}
+#xp-fill {
+  background: #e6b85c;
+  box-shadow: 0 0 8px #e6b85c66;
+  transition: width 0.18s;
+}
+.overflight-hangar {
+  display: grid;
+  grid-template-columns: 130px minmax(0, 1fr);
+  gap: 24px;
+  align-items: center;
+  padding: 18px;
+  border: 1px solid var(--fk-control-line, #8f989c);
+  background: #111d1a;
+  margin-bottom: 20px;
+}
+.overflight-hangar label {
+  display: block;
+  margin: 10px 0 6px;
+  font-weight: 700;
+}
+.overflight-hangar select {
+  width: 100%;
+}
+.overflight-hangar .micro-note {
+  margin-bottom: 0;
+  font-size: 13px;
+  color: #bcc8bf;
+}
+.overflight-character-preview {
+  min-height: 130px;
+  display: grid;
+  place-items: center;
+  background:
+    repeating-linear-gradient(0deg, transparent 0 23px, #728b7922 23px 24px),
+    repeating-linear-gradient(90deg, #0b1713 0 23px, #728b7922 23px 24px);
+  border: 1px solid #546b5b;
+}
+.overflight-character-preview canvas {
+  width: 112px;
+  height: 112px;
+  image-rendering: pixelated;
+}
+#overflight-destruction,
+#overflight-commentator-settings {
+  margin-top: 24px;
+  border-top: 1px solid var(--fk-control-line, #8f989c);
+  padding-top: 12px;
+}
+#overflight-destruction label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 12px 0;
+}
+#overflight-destruction input {
+  width: 22px;
+  height: 22px;
+}
+#overflight-destruction button {
+  margin-right: 8px;
+}
+.overflight-upgrade .mode-play-dialog-head {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  position: relative;
+  overflow: hidden;
+  border-bottom: 2px solid var(--fk-accent, #e6b85c);
+  background: linear-gradient(110deg, #53432155, transparent 70%);
+}
+.overflight-upgrade .overflight-eyebrow {
+  margin: 0 0 6px;
+}
+.upgrade-celebration {
+  position: relative;
+  flex: 0 0 68px;
+  height: 68px;
+  display: grid;
+  place-items: center;
+}
+.upgrade-celebration > span {
+  font-size: 64px;
+  line-height: 1;
+  color: #edc363;
+  filter: drop-shadow(0 0 10px #edc36344);
+}
+.upgrade-celebration i {
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  left: 32px;
+  top: 32px;
+  background: #9aebda;
+  opacity: 0;
+  --x: -42px;
+  --y: -27px;
+}
+.upgrade-celebration i:nth-of-type(2) {
+  --x: 48px;
+  --y: -25px;
+}
+.upgrade-celebration i:nth-of-type(3) {
+  --x: 42px;
+  --y: 28px;
+}
+.upgrade-celebration i:nth-of-type(4) {
+  --x: -45px;
+  --y: 23px;
+}
+.upgrade-celebration i:nth-of-type(5) {
+  --x: 5px;
+  --y: -43px;
+}
+.upgrade-celebration i:nth-of-type(6) {
+  --x: -7px;
+  --y: 43px;
+}
+.overflight-upgrade[open] .upgrade-celebration > span {
+  animation: overflight-achievement 0.55s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.overflight-upgrade[open] .upgrade-celebration i {
+  animation: overflight-spark 0.8s ease-out both;
+}
+.overflight-upgrade[open] .overflight-upgrade-card {
+  animation: overflight-card-arrival 0.38s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.overflight-upgrade[open] .overflight-upgrade-card:nth-child(2) {
+  animation-delay: 55ms;
+}
+.overflight-upgrade[open] .overflight-upgrade-card:nth-child(3) {
+  animation-delay: 110ms;
+}
+.overflight-upgrade-card {
+  transition:
+    border-color 0.12s,
+    box-shadow 0.12s;
+}
+.overflight-upgrade-card:hover,
+.overflight-upgrade-card:focus-visible {
+  border-color: #9aebda;
+  box-shadow: inset 0 3px #9aebda;
+}
+.overflight-upgrade-card[data-evolution='true'] {
+  border-color: #9aebda;
+}
+.overflight-upgrade[data-evolution='true'] .upgrade-celebration > span {
+  color: #9aebda;
+}
+.overflight-reward-toast {
+  position: absolute;
+  top: 18%;
+  left: 50%;
+  transform: translateX(-50%);
+  display: grid;
+  grid-template-columns: 28px auto;
+  column-gap: 10px;
+  padding: 10px 20px;
+  min-width: 230px;
+  max-width: 70%;
+  background: #14211bef;
+  border-left: 3px solid #edc363;
+  box-shadow: 0 4px 12px #0006;
+  animation: overflight-toast 2.2s both;
+}
+.overflight-reward-toast canvas {
+  grid-row: span 2;
+  align-self: center;
+}
+.overflight-reward-toast span {
+  font-size: 10px;
+  text-transform: uppercase;
+  color: #edc363;
+  letter-spacing: 0.08em;
+}
+.overflight-reward-toast strong {
+  font-size: 16px;
+}
+.overflight-reward-toast[data-evolution='true'] {
+  border-color: #9aebda;
+}
+.overflight-commentator {
+  position: absolute;
+  bottom: 72px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(520px, 70%);
+}
+#overflight-results {
+  --result-accent: #e6b85c;
+}
+#overflight-results[data-outcome='lost'] {
+  --result-accent: #b3c3b5;
+}
+.overflight-result-hero {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  margin: 6px 0 24px;
+}
+.overflight-result-insignia {
+  flex: 0 0 80px;
+  height: 90px;
+  display: grid;
+  place-items: center;
+  border: 2px solid var(--result-accent);
+  background: #16251d;
+  clip-path: polygon(0 0, 100% 0, 100% 80%, 50% 100%, 0 80%);
+}
+.overflight-result-insignia span {
+  font-size: 64px;
+  color: var(--result-accent);
+}
+#result-title {
+  font: 36px var(--fk-font-display, inherit);
+  margin: 8px 0;
+}
+#result-message {
+  margin: 0;
+  color: #c3cbbf;
+  max-width: 48ch;
+}
+#result-stats {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+.overflight-result-stat {
+  border-top: 2px solid var(--result-accent);
+  background: #101a16;
+  padding: 12px;
+}
+.overflight-result-stat dt {
+  color: #b6c3b7;
+  font-size: 12px;
+}
+.overflight-result-stat dd {
+  color: #f3eddd;
+  font: 700 clamp(22px, 3vw, 36px) var(--fk-font-mono, monospace);
+  margin-top: 8px !important;
+}
+.overflight-result-milestones {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin: 18px 0;
+}
+.overflight-result-milestones span {
+  padding: 7px 10px;
+  border: 1px solid #667e68;
+  color: #b9e4a5;
+  background: #17251b;
+  font-size: 12px;
+}
+.overflight-result-build {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+.overflight-result-module {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px;
+  background: #1d2724;
+  border: 1px solid #63746a;
+}
+.overflight-result-module span {
+  margin-left: auto;
+  font-size: 12px;
+  white-space: nowrap;
+  color: #a7c9b7;
+}
+.result-reveal .overflight-result-insignia {
+  animation: overflight-achievement 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.result-reveal .overflight-result-stat {
+  animation: overflight-card-arrival 0.45s both;
+}
+.result-reveal .overflight-result-stat:nth-child(2) {
+  animation-delay: 0.06s;
+}
+.result-reveal .overflight-result-stat:nth-child(3) {
+  animation-delay: 0.12s;
+}
+.result-reveal .overflight-result-stat:nth-child(4) {
+  animation-delay: 0.18s;
+}
+@keyframes overflight-achievement {
+  from {
+    transform: scale(0.55) rotate(-16deg);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1) rotate(0);
+    opacity: 1;
+  }
+}
+@keyframes overflight-card-arrival {
+  from {
+    transform: translateY(16px);
+    opacity: 0.4;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+@keyframes overflight-spark {
+  0% {
+    opacity: 0;
+    transform: translate(0, 0);
+  }
+  15% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(var(--x), var(--y));
+  }
+}
+@keyframes overflight-toast {
+  0% {
+    opacity: 0;
+    translate: 0 8px;
+  }
+  12%,
+  80% {
+    opacity: 1;
+    translate: 0 0;
+  }
+  100% {
+    opacity: 0;
+    translate: 0 -5px;
+  }
+}
+[data-effects='reduced']
+  :is(
+    .upgrade-celebration > span,
+    .upgrade-celebration i,
+    .overflight-upgrade-card,
+    .overflight-reward-toast,
+    .overflight-result-insignia,
+    .overflight-result-stat
+  ) {
+  animation: none !important;
+}
+[data-effects='reduced'] :is(#xp-fill, #hud-health-fill) {
+  transition: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  :is(
+    .upgrade-celebration > span,
+    .upgrade-celebration i,
+    .overflight-upgrade-card,
+    .overflight-reward-toast,
+    .overflight-result-insignia,
+    .overflight-result-stat
+  ) {
+    animation: none !important;
+  }
+  :is(#xp-fill, #hud-health-fill) {
+    transition: none;
+  }
+}
+@media (max-width: 700px) {
+  .overflight-topline {
+    padding: 8px 10px 14px;
+    gap: 12px;
+  }
+  .overflight-vitals {
+    max-width: 160px;
+  }
+  #hud-hull,
+  #hud-kills {
+    font-size: 12px;
+  }
+  #hud-airframes,
+  #hud-level {
+    font-size: 10px;
+  }
+  .overflight-hangar {
+    grid-template-columns: 90px minmax(0, 1fr);
+    gap: 12px;
+    padding: 12px;
+  }
+  .overflight-character-preview {
+    min-height: 100px;
+  }
+  .overflight-character-preview canvas {
+    width: 90px;
+    height: 90px;
+  }
+  .upgrade-celebration {
+    flex-basis: 42px;
+  }
+  .upgrade-celebration > span {
+    font-size: 48px;
+  }
+  .overflight-upgrade .mode-play-dialog-head {
+    padding: 12px 16px;
+    gap: 12px;
+  }
+  #result-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .overflight-result-build {
+    grid-template-columns: 1fr;
+  }
+  .overflight-result-insignia {
+    flex-basis: 54px;
+    height: 64px;
+  }
+  .overflight-result-insignia span {
+    font-size: 44px;
+  }
+  #result-title {
+    font-size: 28px;
+  }
+}
