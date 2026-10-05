@@ -150,6 +150,30 @@ export function snakeLaunchURL(href, mode = 'solo', locale = 'en', appearanceDef
   return nativeArtReviewURL(appearanceLaunchURL(target.href, appearanceDefault), current.href);
 }
 
+/** Same-build survivor destination. Carry only the shared locale/artwork context. */
+export function overflightLaunchURL(href, locale = 'en', appearanceDefault = null) {
+  let current;
+  try {
+    current = new URL(href);
+  } catch {
+    return null;
+  }
+  if (
+    !['http:', 'https:', 'file:', 'capacitor:'].includes(current.protocol) ||
+    current.username ||
+    current.password
+  )
+    return null;
+  const match =
+    /^(.*\/)game\/(?:(?:index|company)\.html|couch\/(?:index\.html|relay-rescue\.html)?|snake\/(?:(?:index|play)\.html)?|overflight\/(?:(?:index|play)\.html)?|studio\/(?:index|overflight)\.html)?$/.exec(
+      current.pathname,
+    );
+  if (!match) return null;
+  const target = new URL(`${match[1]}game/overflight/play.html`, current);
+  target.searchParams.set('lang', locale === 'uk' ? 'uk' : 'en');
+  return nativeArtReviewURL(appearanceLaunchURL(target.href, appearanceDefault), current.href);
+}
+
 /** Standalone SIM visits also need an exit without relying on browser chrome. */
 export function fpvWorldReturnURL(href) {
   const retained = fpvReturnURL(href);
