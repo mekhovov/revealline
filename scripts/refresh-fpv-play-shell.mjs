@@ -16,6 +16,17 @@ const read = (file) => readFile(path.join(root, file), 'utf8');
 // contracts stay external. No duplicate storage or runtime owner is constructed.
 async function projectGlobalServices() {
   const entries = {
+    'game/enemy-stats.mjs': { createEnemyStatsHost: 'createSimEnemyStatsHost' },
+    'game/ui/enemy-stats.mjs': { mountEnemyStats: 'mountSimEnemyStats' },
+    'game/ui/continuous-celebration.mjs': {
+      mountContinuousCelebration: 'mountSimContinuousCelebration',
+    },
+    'game/ui/continuous-play.mjs': {
+      createContinuousPlayController: 'createSimContinuousPlayController',
+      continuousPlayPreferences: 'simContinuousPlayPreferences',
+      mountContinuousPlayControls: 'mountSimContinuousPlayControls',
+      continuousPlayBindings: 'simContinuousPlayBindings',
+    },
     'game/display-preferences.mjs': { createDisplayPreferences: 'createSimDisplayPreferences' },
     'game/ui/menu-animation-preferences.mjs': {
       getMenuAnimation: 'getSimMenuAnimation',
@@ -42,6 +53,12 @@ async function projectGlobalServices() {
     'game/ui/theme-material-preview.mjs',
     'game/ui/movement-audio.mjs',
     'game/ui/radio-audio.mjs',
+    'game/ui/celebration.mjs',
+    'game/data-json.mjs',
+    'game/profile-storage.mjs',
+    'game/profile-database.mjs',
+    'game/hunt/actor-art.mjs',
+    'game/hunt/actor-catalog.mjs',
   ]);
   const external = new Map([
     ['game/i18n/index.mjs', 'simGlobalI18n'],

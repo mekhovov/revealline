@@ -544,7 +544,7 @@ export const OPTIONAL_PACKAGE_POLICIES = Object.freeze(
           bytes: id === 'fpv-worlds' ? 17 * 1024 * 1024 : policy.limits.bytes,
           // Shared menus add the logo and background. Aggregate locale inputs
           // remain hash-bound inputs, not additional source archive files.
-          files: id === 'civilian-fpv' ? 74 : id === 'fpv-worlds' ? 106 : policy.limits.files,
+          files: id === 'civilian-fpv' ? 75 : id === 'fpv-worlds' ? 107 : policy.limits.files,
         }),
         localFiles: Object.freeze([
           ...policy.localFiles,
@@ -555,6 +555,7 @@ export const OPTIONAL_PACKAGE_POLICIES = Object.freeze(
         sharedFiles: Object.freeze([
           ...new Set([
             ...policy.sharedFiles,
+            'game/ui/menu-navigation-groups.mjs',
             'game/ui/art/identity/fpv-line/wordmark.png',
             'game/ui/art/menu-scenes/fpv.webp',
             'optional-practice/guide.mjs',

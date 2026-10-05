@@ -1,3 +1,11 @@
+import { createEnemyStatsHost } from '../enemy-stats.mjs';
+import { mountEnemyStats } from '../ui/enemy-stats.mjs';
+import { arcadeEnemyDefeats } from '../ui/enemy-stats-events.mjs';
+import {
+  createContinuousPlayController,
+  mountContinuousPlayControls,
+} from '../ui/continuous-play.mjs';
+import { mountContinuousCelebration } from '../ui/continuous-celebration.mjs';
 import { selectedArcadeCollection } from '../presentation/industrial-arcade.mjs';
 import {
   mountGlobalSettingsTools,
@@ -959,6 +967,50 @@ try {
     disposed = false,
     frameId = null,
     stopNative = () => {};
+  const statsSessionId = crypto.randomUUID();
+  const enemyStatistics = createEnemyStatsHost({ gameType: 'versus' });
+  void enemyStatistics.stats.read();
+  const enemyStatsViews = [];
+  enemyStatsViews.push(
+    mountEnemyStats({
+      container: $('race-message').parentElement,
+      stats: enemyStatistics.stats,
+      gameType: 'versus',
+      getAttempt: enemyStatistics.getAttempt,
+      locale: () => document.documentElement.lang,
+      variant: 'panel',
+    }),
+  );
+  enemyStatsViews.push(
+    mountEnemyStats({
+      container: $('race-clock').parentElement,
+      stats: enemyStatistics.stats,
+      gameType: 'versus',
+      getAttempt: enemyStatistics.getAttempt,
+      locale: () => document.documentElement.lang,
+      variant: 'hud',
+    }),
+  );
+  const continuousPlay = createContinuousPlayController({
+    isCurrent: (identity) => identity === match && !disposed && match?.status === 'finished',
+    isActive: () => !document.hidden && document.hasFocus(),
+    onNext: () => $('race-start').click(),
+    onRetry: () => $('race-start').click(),
+  });
+  const flowControls = mountContinuousPlayControls({
+    parent: $('race-message').parentElement,
+    controller: continuousPlay,
+    locale: () => document.documentElement.lang,
+  });
+  const flowCelebration = mountContinuousCelebration({
+    controller: continuousPlay,
+    reduced: () => displayPreferences.snapshot().effectiveReducedEffects,
+  });
+  const cancelContinuousPlay = () => continuousPlay.cancel('interaction');
+  document.addEventListener('pointerdown', cancelContinuousPlay, true);
+  document.addEventListener('keydown', cancelContinuousPlay, true);
+  window.addEventListener('blur', cancelContinuousPlay);
+  window.addEventListener('gamepaddisconnected', cancelContinuousPlay);
   function hideStartCue() {
     startCue = null;
     $('race-start-cue').hidden = true;
@@ -2163,6 +2215,7 @@ try {
   }
 
   $('race-start').onclick = () => {
+    continuousPlay.cancel('action');
     if (libraryContinuation) return;
     if (match.status === 'finished' && creatorVersusContinuation(roundRecipe.entry))
       return continueMission($('race-start'));
@@ -4313,6 +4366,12 @@ try {
     // Clear before sampling so that this frame cannot claim a new menu owner.
     if (assignmentsChanged || pendingPadLoss) menuRouter.clear();
     const result = menuRouter.sample({ scope, timeMs: now });
+    if (
+      result.disconnected ||
+      (result.confirmSnapshot?.eligible && result.confirmSnapshot.held) ||
+      Object.values(result.ui).some(Boolean)
+    )
+      continuousPlay.cancel('controller');
     // Joining consumes the controller edge as assignment, but Steam may still
     // mirror that same physical press as a delayed native Enter/click.
     controllerConfirmGuard.observe(result.confirmHeld || controllerSession.frame().confirmHeld);
@@ -4397,6 +4456,15 @@ try {
   const pagehide = (event) => {
     suspend();
     if (event.persisted) return;
+    continuousPlay.dispose();
+    flowControls.dispose();
+    flowCelebration.dispose();
+    enemyStatsViews.forEach((view) => view.dispose());
+    void enemyStatistics.stats.flush().finally(() => enemyStatistics.close());
+    document.removeEventListener('pointerdown', cancelContinuousPlay, true);
+    document.removeEventListener('keydown', cancelContinuousPlay, true);
+    window.removeEventListener('blur', cancelContinuousPlay);
+    window.removeEventListener('gamepaddisconnected', cancelContinuousPlay);
     shell.destroy();
     installOfflinePanel?.dispose();
     void globalTools.dispose();
@@ -4466,6 +4534,7 @@ try {
         );
       pendingPadLoss = false;
     }
+    continuousPlay.advance(dt * 1000);
     if (available && wasRunning && match.status === 'running' && !cueState.blocksPlay) {
       if (dt > 0.25) pause();
       else {
@@ -4506,6 +4575,16 @@ try {
           accumulator -= FIXED_DT;
           for (let i = 0; i < 2; i++)
             if (match.runs[i].tick !== before[i]) {
+              enemyStatistics.begin(`${statsSessionId}:${generation}`, {
+                provenance: roundRecipe.tuning.adminOverride ? 'preview' : 'live',
+              });
+              const enemyDefeats = arcadeEnemyDefeats(match.runs[i]);
+              if (enemyDefeats.length)
+                void enemyStatistics.observe({
+                  board: String(i),
+                  sequence: match.runs[i].tick,
+                  defeats: enemyDefeats,
+                });
               painters[i].effectsFor(match.runs[i].events, match.runs[i]);
               contextualReactions?.events(match.runs[i].events, {
                 attemptId: String(generation),
@@ -4568,6 +4647,8 @@ try {
         },
       );
       finished = true;
+      enemyStatistics.finish();
+      continuousPlay.begin({ identity: match, outcome: 'won', canAdvance: false });
       clear();
       if (match.winner !== null) won[match.winner]++;
       let journeyRewardFailure = null;

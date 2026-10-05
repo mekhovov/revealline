@@ -530,6 +530,7 @@ export function createFlightMenuNavigation({
   document: doc = globalThis.document,
   getContext = () => null,
   onBack = () => {},
+  onAction = () => {},
   onHint = () => {},
   locale = () => 'en',
   ownsKeyboardEvent = () => false,
@@ -634,6 +635,7 @@ export function createFlightMenuNavigation({
   }
   function command(action) {
     if (!sync()) return;
+    onAction(action);
     if (context.frameFocused) {
       context.handleFrameCommand?.({ back: action === 'back' });
       return;
@@ -761,6 +763,7 @@ export function createFlightMenuNavigation({
         return;
       }
       if (state.pending !== source.action) {
+        onAction(source.action);
         state.pending = source.action;
         state.since = now;
       }
@@ -882,7 +885,10 @@ export function createFlightMenuNavigation({
       });
     }
     const keys = new Set(sampled.map((source) => source.key));
-    if (joined && !keys.has(joined)) reset({ leaveDevice: true });
+    if (joined && !keys.has(joined)) {
+      onAction('disconnect');
+      reset({ leaveDevice: true });
+    }
     for (const key of sources.keys()) if (!keys.has(key)) sources.delete(key);
     for (const source of sampled) sample(source, now);
   }

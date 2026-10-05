@@ -140,9 +140,8 @@ test('explicit Start closes all preparation surfaces before the host starts its 
   const h = fixture({ actions: { start: () => calls.push(active.blocksPlay()) } });
   active = h.shell;
   active.elements.buttons.missions.click();
-  active.elements.buttons.review.click();
-  assert.equal(active.topDialog(), active.elements.dialogs.briefing);
-  active.elements.buttons.start.click();
+  active.elements.buttons['mission-start'].click();
+  assert.equal(active.elements.dialogs.briefing.open, false);
   assert.deepEqual(calls, [false]);
   assert.equal(
     active.elements.root.dataset.phase,
@@ -513,4 +512,22 @@ test('SIM pending boot reveals before initial modal focus', () => {
   const shell = mountModePlayShell({ document, actions: { start() {} } });
   assert.equal(document.activeElement, shell.elements.buttons.primary);
   shell.dispose();
+});
+
+test('results focus Next immediately and Pause cancels an active transition without dead Resume', () => {
+  const h = fixture();
+  const next = h.document.createElement('button');
+  next.className = 'button primary';
+  h.slots.results.append(next);
+  h.shell.update({ phase: 'results', transitionActive: true });
+  h.shell.open('results');
+  assert.equal(h.document.activeElement, next);
+  assert.equal(h.shell.elements.buttons.pause.disabled, false);
+  h.shell.elements.buttons.pause.click();
+  assert.equal(h.calls.at(-1), 'pause');
+  assert.equal(h.shell.elements.dialogs.pause.open, false);
+  assert.equal(h.document.activeElement, next);
+  next.hidden = true;
+  h.shell.open('results');
+  assert.equal(h.document.activeElement, h.shell.elements.buttons.retry);
 });

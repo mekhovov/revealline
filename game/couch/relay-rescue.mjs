@@ -1,3 +1,12 @@
+import { createEnemyStatsHost } from '../enemy-stats.mjs';
+import { createTeamEnemyStatsOwnership } from '../coop/enemy-stats-ownership.mjs';
+import { mountEnemyStats } from '../ui/enemy-stats.mjs';
+import { arcadeEnemyDefeats } from '../ui/enemy-stats-events.mjs';
+import {
+  createContinuousPlayController,
+  mountContinuousPlayControls,
+} from '../ui/continuous-play.mjs';
+import { mountContinuousCelebration } from '../ui/continuous-celebration.mjs';
 import { createPauseMenu, pauseMusicAction } from '../ui/pause-menu.mjs';
 import {
   mountGlobalSettingsTools,
@@ -571,6 +580,53 @@ export function bootCoop({
       (run ? gameplayPreferences.snapshot().difficulty : $('coop-difficulty').value),
   });
   let inactive = !foreground();
+  const teamStatsProvenance = new WeakMap();
+  const teamStatsOwnership = createTeamEnemyStatsOwnership();
+  const enemyStatistics = createEnemyStatsHost({ gameType: 'team' });
+  void enemyStatistics.stats.read();
+  const enemyStatsViews = [];
+  enemyStatsViews.push(
+    mountEnemyStats({
+      container: $('coop-overlay'),
+      stats: enemyStatistics.stats,
+      gameType: 'team',
+      getAttempt: enemyStatistics.getAttempt,
+      locale: () => document.documentElement.lang,
+      variant: 'panel',
+    }),
+  );
+  enemyStatsViews.push(
+    mountEnemyStats({
+      container: $('coop-stage').parentElement,
+      stats: enemyStatistics.stats,
+      gameType: 'team',
+      getAttempt: enemyStatistics.getAttempt,
+      locale: () => document.documentElement.lang,
+      variant: 'hud',
+    }),
+  );
+  const continuousPlay = createContinuousPlayController({
+    isCurrent: (identity) => identity === run && !disposed && ['won', 'lost'].includes(run?.status),
+    isActive: () =>
+      foreground() && !settingsDialog.open && !earnedDialog.open && !departure && !teamStoryOwner,
+    onNext: () => $('coop-next').click(),
+    onRetry: () => $('coop-retry').click(),
+  });
+  const flowControls = mountContinuousPlayControls({
+    parent: $('coop-overlay'),
+    controller: continuousPlay,
+    locale: () => document.documentElement.lang,
+  });
+  const flowCelebration = mountContinuousCelebration({
+    controller: continuousPlay,
+    reduced: () => displayPreferences.snapshot().effectiveReducedEffects,
+  });
+  const cancelContinuousPlay = () => continuousPlay.cancel('interaction');
+  document.addEventListener('pointerdown', cancelContinuousPlay, true);
+  document.addEventListener('keydown', cancelContinuousPlay, true);
+  window.addEventListener('blur', cancelContinuousPlay);
+  window.addEventListener('gamepaddisconnected', cancelContinuousPlay);
+
   let pack = COOP_STARTER_PACK;
   let packArtworkSource = null;
   let installedTeamStore = null,
@@ -3290,7 +3346,10 @@ export function bootCoop({
         operation.picture.lease?.dispose();
     }
   }
-  $('coop-next').onclick = () => void nextArena();
+  $('coop-next').onclick = () => {
+    continuousPlay.cancel('next');
+    void nextArena();
+  };
   $('coop-next-cancel').onclick = () => cancelNext({ restore: true });
 
   function cancelJourneySkip() {
@@ -5791,6 +5850,7 @@ export function bootCoop({
     { deferSave = false } = {},
   ) {
     const attemptId = teamPersistenceId(currentRun, restored);
+    teamStatsProvenance.set(currentRun, restored ? 'continue' : 'live');
     beginHuntAttempt(currentRun, picture, restored, { armed: !deferSave, attemptId });
     const editionId = picture?.installedEditionId,
       setup = installedPreset(currentRun),
@@ -5969,6 +6029,7 @@ export function bootCoop({
   function update(now) {
     if (disposed) return;
     if (inactive || !foreground()) {
+      continuousPlay.cancel('inactive');
       if (!inactive) suspend();
       frame = requestAnimationFrame(update);
       return;
@@ -5997,6 +6058,12 @@ export function bootCoop({
       input.poll();
       const routed = router.sample({ scope: scope(), timeMs: now });
       controllerConfirmGuard.observe(routed.confirmHeld || controllerSession.frame().confirmHeld);
+      if (
+        routed.disconnected ||
+        (routed.confirmSnapshot?.eligible && routed.confirmSnapshot.held) ||
+        Object.values(routed.ui).some(Boolean)
+      )
+        continuousPlay.cancel('controller');
       if (!running()) {
         if (routed.status.code === 'joined' || Object.values(routed.ui).some(Boolean))
           setReadingModality('controller');
@@ -6007,6 +6074,7 @@ export function bootCoop({
       }
       const elapsed = last === null ? 0 : (now - last) / 1000;
       last = now;
+      continuousPlay.advance(elapsed * 1000);
       if (running() && elapsed > 0.25) pause();
       if (running()) {
         accumulator += elapsed;
@@ -6015,6 +6083,15 @@ export function bootCoop({
           huntAttempts.get(run)?.recorder.append(commands);
           appendInstalledTeamCommands(run, commands);
           stepCoop(run, commands, FIXED_DT);
+          const statsSelection = teamStatsOwnership.select(run, teamPersistenceId(run), {
+            provenance: attemptTuning.get(run)?.adminOverride
+              ? 'preview'
+              : (teamStatsProvenance.get(run) ?? 'live'),
+          });
+          enemyStatistics.begin(statsSelection.identity, { provenance: statsSelection.provenance });
+          const enemyDefeats = arcadeEnemyDefeats(run);
+          if (enemyDefeats.length)
+            void enemyStatistics.observe({ sequence: run.tick, defeats: enemyDefeats });
           music?.sound.feedback(true, { family: acceptedPicture?.request.themeId ?? 'fpv' }, run, {
             mode: 'team',
             actorStyle: acceptedPicture?.actorAppearance?.style,
@@ -6024,6 +6101,7 @@ export function bootCoop({
           events();
           if (running()) persistInstalledTeamAttempt(run, acceptedPicture);
           if (!running()) {
+            enemyStatistics.finish();
             clearHuntAttempt(run);
             const finishedAttempt = run,
               epoch = generation;
@@ -6034,6 +6112,16 @@ export function bootCoop({
             if (disposed || run !== finishedAttempt || generation !== epoch) break;
             clear();
             overlay();
+            const next = run.status === 'won' ? teamDestination() : null;
+            continuousPlay.begin({
+              identity: run,
+              outcome: run.status,
+              canAdvance: !!next?.next && !next.crossesCampaign,
+              replayMs: 0,
+              readyMs: 400,
+            });
+            if (run.status === 'won' && !$('coop-next').hidden)
+              $('coop-next').focus({ preventScroll: true });
           }
         }
       }
@@ -6044,7 +6132,10 @@ export function bootCoop({
     frame = requestAnimationFrame(update);
   }
   $('coop-start').onclick = () => requestDeparture('retry', $('coop-start'));
-  $('coop-retry').onclick = () => requestDeparture('retry', $('coop-retry'));
+  $('coop-retry').onclick = () => {
+    continuousPlay.cancel('retry');
+    requestDeparture('retry', $('coop-retry'));
+  };
   $('coop-resume').onclick = resume;
   $('coop-pause').onclick = pause;
   $('coop-lobby').onclick = () => {
@@ -6676,6 +6767,19 @@ export function bootCoop({
     })
     .catch((error) => console.error(t('interface:nativeLifecycleUnavailable'), error));
   const dispose = () => {
+    if (disposed) return;
+    continuousPlay.dispose();
+    flowControls.dispose();
+    flowCelebration.dispose();
+    enemyStatsViews.forEach((view) => view.dispose());
+    void enemyStatistics.stats.flush().finally(() => {
+      enemyStatistics.close();
+      teamStatsOwnership.release();
+    });
+    document.removeEventListener('pointerdown', cancelContinuousPlay, true);
+    document.removeEventListener('keydown', cancelContinuousPlay, true);
+    window.removeEventListener('blur', cancelContinuousPlay);
+    window.removeEventListener('gamepaddisconnected', cancelContinuousPlay);
     if (disposed) return;
     // Invalidate cue/track readers before any owned host or page snapshot retires.
     // closeAudio() later repeats this idempotently with the remaining audio cleanup.

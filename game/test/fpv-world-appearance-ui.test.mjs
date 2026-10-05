@@ -192,7 +192,7 @@ test('World app prepares a pinned appearance and queues drone/theme changes afte
   assert.equal(h.app.snapshot().appearance.accepted.collectionId, 'authored');
   assert.equal(h.app.snapshot().appearance.accepted.drone, 'utility');
   assert.equal(h.app.snapshot().appearance.pending, false);
-  assert.equal(h.app.snapshot().state.status, 'disarmed');
+  assert.equal(h.app.snapshot().state.status, 'active');
 });
 
 test('World route thumbnails share selected palettes without modifying source geometry or authored scene references', (t) => {
@@ -258,7 +258,7 @@ test('World recovery retains its saved theme and drone while new appearance choi
   h.$('sim-appearance-world').emit('change');
   assert.equal(h.app.snapshot().appearance.accepted.drone, 'utility');
   assert.equal(h.app.snapshot().appearance.pending, true);
-  assert.equal(h.app.snapshot().state.status, 'paused');
+  assert.equal(h.app.snapshot().state.status, 'active');
   assert.equal(h.rendered.at(-1).course, prepared);
 });
 
@@ -330,7 +330,10 @@ for (const savedFallback of [false, true])
 test('World pre-arm appearance refresh keeps focus on the control the player is using', async (t) => {
   const h = fixture(t);
   await h.app.ready;
-  await h.app.startFlight(WORLD_CATALOGUE.find((item) => !item.legacy));
+  await h.app.startFlight(
+    WORLD_CATALOGUE.find((item) => !item.legacy),
+    { paused: true },
+  );
   const select = h.$('sim-appearance-world');
   select.focus();
   select.value = 'industrial-workshop';
@@ -725,4 +728,32 @@ test('World flight feedback and shared menu sound retain separate sliders and pr
     enabled: true,
     volume: 0.76,
   });
+});
+
+test('World result shortcuts are immediately available while the result is being verified', async (t) => {
+  const h = fixture(t);
+  await h.app.ready;
+  const source = WORLD_CATALOGUE.find((item) => !item.legacy);
+  const entry = {
+    ...source,
+    course: {
+      ...source.course,
+      actors: [],
+      steps: {
+        'self-level': [{ type: 'survive', ticks: 1 }],
+        acro: [{ type: 'survive', ticks: 1 }],
+      },
+    },
+  };
+  await h.app.startFlight(entry, { preview: true });
+  h.$('world-arm').click();
+  h.tick(3);
+  const choice = (text) =>
+    [...h.$('result-panel').querySelectorAll('button')].find((node) => node.textContent === text);
+  assert.ok(choice('Random level'));
+  assert.ok(choice('Choose mission'));
+  assert.ok(choice('Home'));
+  choice('Choose mission').click();
+  assert.equal(h.$('worlds-shell-missions-dialog').open, true);
+  assert.equal(h.app.snapshot().state.status, 'complete');
 });

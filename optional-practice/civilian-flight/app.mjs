@@ -2,6 +2,11 @@ import { mountModePlayShell } from '../../game/ui/mode-play-shell.mjs';
 import { setMenuIcon } from '../../game/ui/native-menu-icons.mjs';
 import {
   createSimModeLinks,
+  createSimContinuousPlayController,
+  createSimEnemyStatsHost,
+  mountSimEnemyStats,
+  mountSimContinuousPlayControls,
+  mountSimContinuousCelebration,
   createSimDisplayPreferences,
   getSimMenuAnimation,
   setSimMenuAnimation,
@@ -93,6 +98,85 @@ export function mountCivilianPractice({ document: doc, window: win }) {
   const stopAnimation = subscribeSimMenuAnimation((enabled) => {
     doc.documentElement.dataset.menuAnimation = enabled ? 'on' : 'off';
   }, win);
+  const enemyStatistics = createSimEnemyStatsHost({ gameType: 'gym' });
+  void enemyStatistics.stats.read();
+  const enemyStatsViews = [
+    mountSimEnemyStats({
+      document: doc,
+      container: $('discovery').parentElement,
+      stats: enemyStatistics.stats,
+      variant: 'hud',
+      locale: getLocale,
+      spritePortraits: false,
+    }),
+  ];
+  const continuousPlay = createSimContinuousPlayController({
+    isCurrent: (identity) =>
+      identity === model && !disposed && model.snapshot().status === 'complete',
+    isActive: () => !doc.hidden && (doc.hasFocus?.() ?? true) && !playShell?.topDialog(),
+    onNext: () => nextDrill(),
+    onRetry: () => {
+      reset();
+      $('start').click();
+    },
+  });
+  const resultActions = doc.createElement('div');
+  resultActions.className = 'button-row';
+  resultActions.hidden = true;
+  $('discovery').after(resultActions);
+  const labels = {
+    en: ['Next drill', 'Try again', 'Random drill', 'Choose mission', 'Home'],
+    uk: ['Наступна вправа', 'Спробувати знову', 'Випадкова вправа', 'Вибрати місію', 'Додому'],
+  };
+  const handlers = [
+    () => nextDrill(),
+    () => {
+      reset();
+      $('start').click();
+    },
+    () => {
+      const choices = catalogue.drills.filter((row) => row.id !== model.drill().id);
+      reset((choices[Math.floor(Math.random() * choices.length)] ?? catalogue.drills[0]).id);
+      $('start').click();
+    },
+    () => playShell.open('missions'),
+    () => playShell.openHome(),
+  ];
+  const resultButtons = handlers.map((handler, index) => {
+    const node = doc.createElement('button');
+    node.type = 'button';
+    node.className = `button ${index === 0 ? 'primary' : 'secondary'}`;
+    node.textContent = (labels[getLocale()] ?? labels.en)[index];
+    node.onclick = () => {
+      continuousPlay.cancel('action');
+      handler();
+    };
+    resultActions.append(node);
+    return node;
+  });
+  const flowControls = mountSimContinuousPlayControls({
+    document: doc,
+    parent: resultActions,
+    controller: continuousPlay,
+    locale: () => getLocale(),
+  });
+  const flowCelebration = mountSimContinuousCelebration({
+    document: doc,
+    controller: continuousPlay,
+    reduced: () => display.snapshot().effectiveReducedEffects,
+  });
+  function nextDrill() {
+    const index = catalogue.drills.findIndex((row) => row.id === model.drill().id);
+    const next = catalogue.drills[index + 1];
+    if (!next) return playShell.open('missions');
+    reset(next.id);
+    $('start').click();
+  }
+  const cancelFlow = () => continuousPlay.cancel('interaction');
+  doc.addEventListener('pointerdown', cancelFlow);
+  doc.addEventListener('keydown', cancelFlow);
+  win.addEventListener('blur', cancelFlow);
+  win.addEventListener('gamepaddisconnected', cancelFlow);
   const canvas = $('board');
   let context;
   try {
@@ -159,6 +243,7 @@ export function mountCivilianPractice({ document: doc, window: win }) {
           : state.status === 'complete'
             ? 'results'
             : state.status,
+      transitionActive: !['idle', 'cancelled'].includes(continuousPlay.snapshot().phase),
       missionName: copy.title,
       summary: copy.brief,
       canResume: !recordingFull && state.ticks > 0 && state.status !== 'complete',
@@ -242,6 +327,8 @@ export function mountCivilianPractice({ document: doc, window: win }) {
     render();
   }
   function reset(drillId = model.drill().id) {
+    continuousPlay.cancel('new-attempt');
+    resultActions.hidden = true;
     audio.reset();
     input.clear();
     model = createPractice(catalogue, drillId);
@@ -279,11 +366,19 @@ export function mountCivilianPractice({ document: doc, window: win }) {
       if (replayPractice(catalogue, trace()).status === 'complete')
         completed.add(`${model.identity}:${model.drill().id}`);
       options();
+      const hasNext =
+        catalogue.drills.findIndex((row) => row.id === model.drill().id) <
+        catalogue.drills.length - 1;
+      resultActions.hidden = false;
+      resultButtons[0].hidden = !hasNext;
+      (hasNext ? resultButtons[0] : resultButtons[1]).focus();
+      continuousPlay.begin({ identity: model, outcome: 'won', canAdvance: hasNext });
     }
   }
   function tick(now) {
     if (disposed) return;
     menuNavigation.poll({ now, gamepads: readGamepads() });
+    continuousPlay.advance(previous === null ? 0 : Math.max(0, now - previous));
     if (previous !== null && now - previous > 1000) pause();
     if (model.snapshot().status === 'active') {
       accumulator += previous === null ? 0 : Math.max(0, Math.min(250, now - previous));
@@ -500,6 +595,7 @@ export function mountCivilianPractice({ document: doc, window: win }) {
     setMenuIcon,
     attachPanels: simAttachSettingsPanels,
     groups: {
+      gameplay: [section('gym-gameplay')],
       controls: [$('connect'), $('pad-status'), $('instructions')],
       audio: [$('sound')],
       display: [language],
@@ -587,6 +683,16 @@ export function mountCivilianPractice({ document: doc, window: win }) {
     onControls: (controls) => globalSettings.update({ controls }),
   });
   settings.hidden = true;
+  enemyStatsViews.push(
+    mountSimEnemyStats({
+      document: doc,
+      container: playShell.elements.content.pause,
+      stats: enemyStatistics.stats,
+      variant: 'panel',
+      locale: getLocale,
+      spritePortraits: false,
+    }),
+  );
   playShell.elements.buttons.expert.hidden = true;
   const menuHint = doc.createElement('p');
   menuHint.className = 'gym-menu-hint';
@@ -610,6 +716,7 @@ export function mountCivilianPractice({ document: doc, window: win }) {
     };
   };
   const menuNavigation = createFlightMenuNavigation({
+    onAction: () => continuousPlay.cancel('controller'),
     document: doc,
     window: win,
     locale: getLocale,
@@ -647,6 +754,15 @@ export function mountCivilianPractice({ document: doc, window: win }) {
     appearance.dispose();
     stopAudioCues();
     modeSettings?.destroy();
+    enemyStatsViews.forEach((view) => view.dispose());
+    enemyStatistics.close();
+    continuousPlay.dispose();
+    flowControls.dispose();
+    flowCelebration.dispose();
+    doc.removeEventListener('pointerdown', cancelFlow);
+    doc.removeEventListener('keydown', cancelFlow);
+    win.removeEventListener('blur', cancelFlow);
+    win.removeEventListener('gamepaddisconnected', cancelFlow);
     playShell?.dispose();
     stopAnimation();
     themeHost.dispose();

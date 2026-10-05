@@ -164,8 +164,7 @@ test('gym title and settings reuse the accepted drill without starting or resumi
   assert.equal(f.view.snapshot().ticks, 0);
   $('gym-shell-action-settings-back').click();
   $('gym-shell-action-primary').click();
-  assert.equal($('gym-shell-briefing-dialog').open, true);
-  $('gym-shell-action-start').click();
+  assert.equal($('gym-shell-briefing-dialog').open, false);
   assert.equal(f.view.snapshot().status, 'active');
   f.tick(3);
   $('gym-shell-action-menu').click();
@@ -350,16 +349,16 @@ test('gym menu keyboard navigation owns arrows and returns from nested help with
   assert.equal(f.view.snapshot().ticks, 0);
 });
 
-test('gym Select Mission uses one Review mission action and briefs the selected drill', async (t) => {
+test('gym Select Mission starts the selected drill with one action', async (t) => {
   const f = await fixture(t),
     $ = (id) => f.doc.getElementById(id);
   $('gym-shell-action-missions').click();
   assert.equal(f.doc.querySelector('[data-copy="prepare"]'), null);
   $('drill').value = 'square';
   $('drill').emit('change');
-  $('gym-shell-action-review').click();
-  assert.equal($('gym-shell-briefing-dialog').open, true);
-  assert.equal(f.view.snapshot().status, 'ready');
+  $('gym-shell-action-mission-start').click();
+  assert.equal($('gym-shell-briefing-dialog').open, false);
+  assert.equal(f.view.snapshot().status, 'active');
   assert.equal(f.view.snapshot().ticks, 0);
   const drill = f.view.catalogue().drills.find((item) => item.id === 'square');
   assert.equal(
