@@ -3471,6 +3471,22 @@ Library-cohort publication is separate and no Harbor row is added to an older
 feed. Bounded stylized scene acceptance does not imply commercial-realism,
 physical-device or novice acceptance. Canals remains the next world, then D6.
 
+Publication checkpoint: the movement correction is attached Draft **#1101** and
+Harbor is attached Draft **#1102**. Native GitHub stack **#1103** was created
+through the stack API, rooted on main with the linear order `#1101 → #1102`.
+Initial exact remote heads are `f9617ba8e0fdb0a526171f0fab944d06ad2d834e`
+and `7bde8bfcb856638cba1fda6b7924986bed46290a`, respectively. Both retain
+milestone57; no auto-merge, fastline labels, manual retarget or protected merge
+was requested. This subsequent checkpoint changes documentation only. The
+coordinated main hold is still active; neither new PR is called publicly live.
+
+Next engineering increment is the separately qualified cumulative Library
+capability cohort for support-v1. Preserve both older feeds and do not bypass
+the held Reservoir row or advertise an unqualified Harbor revision. Subsequent
+approved compatible row publication must also populate the new cohort, so a newer
+player does not lose previously available worlds. Canals follows Harbor as the
+next eight-course art/content increment; D6 remains after those deliverables.
+
 ### 5 October — Ground prerequisite integrated with P1; new admission pending
 
 The Character owner explicitly released the former #1083/P1 main-merge hold
