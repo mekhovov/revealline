@@ -23,8 +23,9 @@ Their saved date is fixed fixture metadata so the archive is reproducible.
 
 Catch runner 01 before runner 02, then keep flying for half a second. Successful
 catch momentum continues on the next native tick. Wrong-order targets, hazards,
-world bounds, and solid objects retain their usual contact response. Both
-archives are under 3 KiB and contain no external model or downloaded asset.
+world bounds, and solid objects retain their usual contact response. The `.rlpack`
+and editable ZIP are each under 3 KiB and contain no external model or downloaded
+asset. The separate native proof archive is 41,774 bytes.
 
 Older runtimes reject the new policy field. Do not remove that field to make the
 same recording appear compatible: it selects different physics and identity.
@@ -96,7 +97,19 @@ old/new Hunt, mixed-mode Hunt and both supported pursuit contracts. The catalogu
 does not create physics worlds to decide whether an example is available.
 `evidence/catalogue.json` records this functional check and its source hashes.
 
+The [native browser receipt](evidence/native-browser.json) records a separate
+pass on immutable source `1ba932e6f61b918a9571c4a193c30f554855e951`: Library pack
+installation, 2/2 proof verification, visible **Watch example**, and complete
+Self-level and Acro replays at 20.9 seconds with 2/2 caught and no echo tail.
+Switching to Acro reset playback to paused at zero; explicit Resume completed
+the second example. Warning/error logs were empty. The completion captures are
+[Self-level](evidence/fpv-hunt-native-self-level-complete.png) and
+[Acro](evidence/fpv-hunt-native-acro-complete.png). The older main-branch HUD visible
+in those screenshots is handled separately by PR #1110.
+
 This is functional evidence outside the permanent unit suites. Additional unit
 coverage remains deferred under D6. The DOM boundary is not a browser layout or
-native UI acceptance claim. Package, deployment and physical-device qualification
-remain separate; no release version or publication authority changes here.
+native UI acceptance claim; the separate browser receipt covers only its listed
+journeys. Package, public deployment, offline, physical-device and human player
+acceptance gates remain open; no release version or publication authority changes
+here.
