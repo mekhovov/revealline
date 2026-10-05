@@ -224,7 +224,7 @@ export function createSimModeLinks({
   try {
     const accepted = new URL(gameReturn);
     const match =
-      /^(.*\/)game\/(?:index\.html|company\.html|couch\/(?:index\.html|relay-rescue\.html)?|snake\/(?:index\.html|play\.html)?)?$/.exec(
+      /^(.*\/)game\/(?:index\.html|company\.html|couch\/(?:index\.html|relay-rescue\.html)?|snake\/(?:index\.html|play\.html)?|overflight\/(?:play|raid)\.html)?$/.exec(
         accepted.pathname,
       );
     if (match && !accepted.username && !accepted.password)
@@ -240,6 +240,7 @@ export function createSimModeLinks({
     ['team', 'couch/relay-rescue.html'],
     ['versus', 'couch/'],
     ['snake', 'snake/play.html'],
+    ['overflight', 'overflight/play.html'],
   ]) {
     const element = doc.createElement('a');
     const target = new URL(root.base + path, root.accepted);
@@ -8188,7 +8189,7 @@ export const readSimRadioAudio=sharedGlobalSettings.readSimRadioAudio;
 export const SIM_RADIO_AUDIO_KEY=sharedGlobalSettings.SIM_RADIO_AUDIO_KEY;
 export const attachSimMenuAudioSettings=sharedGlobalSettings.attachSimMenuAudioSettings;
 export const readSimMenuAudio=sharedGlobalSettings.readSimMenuAudio;
-// Canonical source sha256: 67daaa251403bb6651cbf00e410a4c4554be5e3dc92d8302ee7b813e5af67e33
+// Canonical source sha256: b1495afc3c7be24458ccb75dcb83d49d00ce21e378b3e8df8409cde6f78b38e8
 const sharedModeShell=(()=>{
 // Dependency-free presentation shared with bundled simulator builds.
 const GAME_MODE_ORDER=Object.freeze([
@@ -8269,6 +8270,7 @@ return{id,element,label};
 },
 );
 root.classList.add('game-mode-choice');
+root.style.setProperty('--game-mode-count',String(rows.length));
 root.dataset.menuLayout='horizontal';
 root.dataset.menuScope='modes';
 root.replaceChildren(...rows.map(({element})=>element));

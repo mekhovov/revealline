@@ -95,7 +95,9 @@ export function selectOfflineCore(entries, excluded, { mode = 'solo' } = {}) {
       !isOptionalTeamImportManifest(name) &&
       // The native player links to its editor; navigation does not make the
       // optional authoring surface part of a player's startup package.
-      !['game/studio/overflight.html', 'game/studio/raid.html'].includes(name) &&
+      !['game/studio/overflight.html', 'game/studio/raid.html', 'game/studio/snake.html'].includes(
+        name,
+      ) &&
       !retained.has(name) &&
       !(mode === 'solo' && PUBLISHED_SOLO_BOUNDARIES.has(name))
     ) {

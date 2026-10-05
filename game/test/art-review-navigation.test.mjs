@@ -283,6 +283,30 @@ test('native SIM mode links retain the accepted return preview on display and ac
       );
       assert.equal(new URL(link.getAttribute('href')).searchParams.get('lang'), 'uk');
     }
-    assert.equal(nav.querySelectorAll('a').length, 4);
+    assert.equal(nav.querySelectorAll('a').length, 5);
+    const overflight = nav.querySelector('[data-game-mode="overflight"]');
+    assert.equal(
+      new URL(overflight.getAttribute('href')).pathname,
+      new URL(`${root}game/overflight/play.html`).pathname,
+    );
+  }
+});
+
+test('SIM mode navigation accepts validated Survivor and Raid return locations', () => {
+  for (const page of ['play', 'raid']) {
+    const doc = new Document();
+    const nav = createSimModeLinks({
+      document: doc,
+      gameReturn: `https://example.test/project/game/overflight/${page}.html?lang=uk`,
+      locale: () => 'uk',
+    });
+    assert.deepEqual(
+      nav.querySelectorAll('[data-game-mode]').map((node) => node.dataset.gameMode),
+      ['solo', 'team', 'versus', 'snake', 'overflight', 'simulator'],
+    );
+    assert.equal(
+      nav.querySelector('[data-game-mode="overflight"]').getAttribute('href'),
+      'https://example.test/project/game/overflight/play.html?lang=uk',
+    );
   }
 });
