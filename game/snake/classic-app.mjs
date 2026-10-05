@@ -69,6 +69,7 @@ import { attachContextualReactions } from '../ui/contextual-reactions.mjs';
 import { createEncounterDisplayPreferences } from '../encounter-display-preferences.mjs';
 import { createDisplayPreferences } from '../display-preferences.mjs';
 import { createTouchPreferences } from '../touch-preferences.mjs';
+import { attachTouchSteering } from '../ui/touch-steering.mjs';
 import { createHuntDestruction } from '../hunt/destruction.mjs';
 import { createBoardFootprints } from '../couch/board-footprint.mjs';
 import { createAudioMaster } from '../ui/audio-master.mjs';
@@ -344,13 +345,43 @@ ratings = createClassicSnakeRatings({
   canWrite: () => sessionWriter.writable,
   onWarning: () => {},
 });
+const touchInputs = [],
+  touchSeats = [];
 const touch = createTouchPreferences({ onChange: () => applyTouch() });
+function clearTouch() {
+  touchInputs.forEach((input) => input.clear());
+}
+function disposeTouch() {
+  touchInputs.splice(0).forEach((input) => input.destroy());
+  touchSeats.length = 0;
+}
+function touchActive() {
+  return (
+    pageActive() &&
+    !result() &&
+    !playShell?.topDialog() &&
+    !missionChooser?.elements.dialog.open &&
+    (!paused || ready)
+  );
+}
 function applyTouch() {
+  clearTouch();
   const prefs = touch.snapshot();
-  $('pads').style.setProperty('--snake-pad-size', prefs.size === 'large' ? '64px' : '56px');
-  $('pads').style.setProperty('--snake-pad-opacity', String(Math.max(0.75, prefs.opacity)));
+  $('pads').style.setProperty('--touch-opacity', String(prefs.opacity));
   $('pads').dataset.side = prefs.side;
+  for (const { group, pad, surface, turns, instruction } of touchSeats) {
+    group.dataset.touchMode = prefs.mode;
+    group.dataset.touchSize = prefs.size;
+    pad.hidden = prefs.mode !== 'dpad' || steering === 'turns';
+    turns.hidden = prefs.mode !== 'dpad' || steering !== 'turns';
+    surface.hidden = prefs.mode === 'dpad';
+    instruction.textContent = t(
+      prefs.mode === 'swipe' ? 'interface:swipeToSteer' : 'interface:dragToSteer',
+    );
+  }
+  if ($('steering')) $('steering').closest('label').hidden = prefs.mode !== 'dpad';
   touchPresentationControls?.refresh();
+  footprint?.refresh();
 }
 const campaignFor = (item) =>
   CLASSIC_SNAKE_CAMPAIGNS.find((campaign) =>
@@ -454,6 +485,7 @@ function remember() {
   }
 }
 function pause({ showMenu = true } = {}) {
+  clearTouch();
   transition.cancel('pause');
   if (result()) {
     if (showMenu && !playShell?.topDialog()) showResults();
@@ -500,6 +532,7 @@ function start() {
   boards[0]?.canvas.focus({ preventScroll: true });
 }
 function finish() {
+  clearTouch();
   sound.event?.({
     type: 'run.completed',
     levelId: entry.id,
@@ -853,6 +886,7 @@ function acceptEnemyArtwork() {
   });
 }
 function buildBoards() {
+  disposeTouch();
   boardLayoutObserver?.disconnect();
   footprint?.dispose();
   $('boards').replaceChildren();
@@ -889,27 +923,6 @@ function buildBoards() {
     if (mode === 'versus') card.prepend(el('p', text(index ? 'p2' : 'p1'), 'player-label'));
     $('boards').append(card);
     boards.push({ canvas, fields, message, title, detail, wrap, reception });
-    let pointer = null;
-    canvas.addEventListener('pointerdown', (event) => {
-      if (event.button !== 0 || pointer) return;
-      pointer = { id: event.pointerId, x: event.clientX, y: event.clientY };
-      canvas.setPointerCapture(event.pointerId);
-    });
-    canvas.addEventListener('pointerup', (event) => {
-      if (!pointer || pointer.id !== event.pointerId) return;
-      const dx = event.clientX - pointer.x,
-        dy = event.clientY - pointer.y;
-      pointer = null;
-      if (Math.max(Math.abs(dx), Math.abs(dy)) < 12 || mode === 'team') return;
-      turn(
-        mode === 'versus' ? index : 0,
-        Math.abs(dx) > Math.abs(dy) ? (dx > 0 ? 'right' : 'left') : dy > 0 ? 'down' : 'up',
-      );
-    });
-    for (const name of ['pointercancel', 'lostpointercapture'])
-      canvas.addEventListener(name, () => {
-        pointer = null;
-      });
   }
   buildPads();
   footprint = createBoardFootprints(boards.map((board) => board.canvas));
@@ -942,42 +955,94 @@ function buildBoards() {
   primeEffects();
 }
 function buildPads() {
+  disposeTouch();
   $('pads').replaceChildren();
   for (let player = 0; player < (mode === 'solo' ? 1 : 2); player++) {
-    const group = el('div'),
+    const group = el('div', null, 'snake-touch-seat'),
       label = el('p', text(player ? 'p2' : 'p1'), 'pad-label'),
-      pad = el('div', null, steering === 'turns' ? 'pad turn-pad' : 'pad');
-    pad.setAttribute('role', 'group');
-    pad.setAttribute('aria-label', label.textContent);
-    const controls =
-      steering === 'turns'
-        ? [
-            ['turnLeft', '↶'],
-            ['turnRight', '↷'],
-          ]
-        : [
-            ['up', '↑'],
-            ['left', '←'],
-            ['down', '↓'],
-            ['right', '→'],
-          ];
-    for (const [direction, symbol] of controls) {
+      pad = el('div', null, 'pad direction-controls'),
+      turns = el('div', null, 'pad turn-pad'),
+      surface = el('div', null, 'touch-surface'),
+      compass = el('span', '✥'),
+      instruction = el('span', null, 'touch-instruction'),
+      indicator = el('span', null, 'touch-indicator');
+    group.dataset.player = String(player);
+    for (const [control, description] of [
+      [pad, t('interface:directionControls')],
+      [turns, text('turns')],
+      [surface, t('interface:touchSteeringDragToFlyAndTurn')],
+    ]) {
+      control.setAttribute('role', 'group');
+      control.setAttribute('aria-label', `${label.textContent}: ${description}`);
+    }
+    compass.setAttribute('aria-hidden', 'true');
+    indicator.setAttribute('aria-hidden', 'true');
+    indicator.hidden = true;
+    indicator.append(el('i'));
+    surface.append(compass, instruction);
+    for (const [direction, symbol] of [
+      ['up', '↑'],
+      ['left', '←'],
+      ['down', '↓'],
+      ['right', '→'],
+    ]) {
       const button = el('button', symbol);
+      button.type = 'button';
       button.dataset.direction = direction;
       button.setAttribute('aria-label', `${label.textContent}: ${text(direction)}`);
-      button.addEventListener('click', () =>
-        steering === 'turns'
-          ? relative(player, direction === 'turnLeft' ? -1 : 1)
-          : turn(player, direction),
-      );
+      // Pointer presses and slides belong to the shared gesture engine. Keep
+      // keyboard/assistive activation without replaying the following click.
+      button.addEventListener('click', (event) => {
+        if (event.detail === 0 && !pad.hidden && touchActive()) turn(player, direction);
+      });
       pad.append(button);
     }
+    for (const [direction, symbol, offset] of [
+      ['turnLeft', '↶', -1],
+      ['turnRight', '↷', 1],
+    ]) {
+      const button = el('button', symbol);
+      button.type = 'button';
+      button.dataset.direction = direction;
+      button.setAttribute('aria-label', `${label.textContent}: ${text(direction)}`);
+      button.addEventListener('pointerdown', (event) => {
+        if (event.button !== 0 || turns.hidden || !touchActive()) return;
+        event.preventDefault();
+        relative(player, offset);
+      });
+      button.addEventListener('click', (event) => {
+        if (event.detail === 0 && !turns.hidden && touchActive()) relative(player, offset);
+      });
+      turns.append(button);
+    }
     if (mode !== 'solo') group.append(label);
-    group.append(pad);
+    group.append(pad, surface, turns, indicator);
     $('pads').append(group);
+    touchSeats.push({ group, pad, surface, turns, instruction });
+    touchInputs.push(
+      attachTouchSteering({
+        window: globalThis,
+        // A shared Team board cannot identify which player's thumb touched it.
+        // Each labelled seat remains independently steerable with two fingers.
+        arena: mode === 'team' ? null : boards[player]?.canvas,
+        pad,
+        surface,
+        indicator,
+        getSettings: () => touch.snapshot(),
+        active: () => touchActive() && !(touch.snapshot().mode === 'dpad' && steering === 'turns'),
+        onDirection: (direction) => {
+          for (const button of pad.children)
+            button.classList.toggle('pressed', button.dataset.direction === direction);
+          turn(player, direction);
+        },
+        onRelease: () => {
+          for (const button of pad.children) button.classList.remove('pressed');
+        },
+        onCancel: () => pause(),
+      }),
+    );
   }
   applyTouch();
-  footprint?.refresh();
 }
 function renderProgress() {
   const chapterEntries = CLASSIC_SNAKE_LEVELS.filter((item) => item.chapterId === entry.chapterId);
@@ -2136,6 +2201,9 @@ doc.addEventListener('visibilitychange', () => {
   if (doc.hidden) pause();
 });
 globalThis.addEventListener('blur', pause);
+globalThis.addEventListener('resize', () => {
+  touchInputs.forEach((input) => input.cancel());
+});
 globalThis.addEventListener('focus', () => {
   void records.read().then(() => ratings.refresh());
 });
@@ -2158,7 +2226,11 @@ globalThis.addEventListener('pagehide', (event) => {
   pause();
   sound.suspend();
   classicAudio.reset();
-  if (!event.persisted) classicAudio.dispose();
+  if (!event.persisted) {
+    classicAudio.dispose();
+    disposeTouch();
+    touch.destroy();
+  }
   save();
   const departingWriter = sessionWriter;
   writerRelease = enemyStats.flush().finally(() => departingWriter.release());
@@ -2483,6 +2555,16 @@ snakeGlobalSettings = mountGlobalSettings({
 const snakeTouchSettings = el('section');
 const touchFields = [];
 for (const [key, en, uk, choices] of [
+  [
+    'mode',
+    'Touch steering',
+    'Сенсорне керування',
+    [
+      ['stick', 'Floating stick', 'Плаваючий стік'],
+      ['swipe', 'Swipe', 'Свайп'],
+      ['dpad', 'Direction pad', 'Панель напрямків'],
+    ],
+  ],
   [
     'side',
     'Steering hand',

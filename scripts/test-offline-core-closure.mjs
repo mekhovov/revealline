@@ -27,6 +27,9 @@ test('actual native menu imports and styles remain in each mode offline closure'
     'game/ui/settings-panels.mjs',
     'game/ui/pause-menu.mjs',
     'game/ui/pause-menu.css',
+    'game/ui/device-controls.css',
+    'game/ui/handheld-play.css',
+    'game/ui/touch-steering.css',
     'game/ui/mode-boot.css',
     'game/couch/index.html',
     'game/couch/couch.mjs',
@@ -50,6 +53,7 @@ test('actual native menu imports and styles remain in each mode offline closure'
       'game/ui/native-menu-icons.mjs',
       'game/ui/pause-menu.mjs',
       'game/ui/pause-menu.css',
+      'game/ui/touch-steering.css',
     ])
       assert.ok(retained.has(name), `${mode}: ${name}`);
     if (mode !== 'solo')
