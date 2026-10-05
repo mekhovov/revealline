@@ -2,6 +2,7 @@ import { TEAM_ENEMY_SLOTS, teamEnemyInheritance } from '../couch/coop-enemy-slot
 import { TEAM_PILOT_STATES } from '../couch/coop-pilot-slots.mjs';
 import { FORMATS, TOKEN_DEFAULTS, freezePresentation, validateThemeBundle } from './model.mjs';
 import { CURRENT_PICTURES } from './current-pictures.mjs';
+import { OVERFLIGHT_FIELD_KIT_IDS } from './overflight-field-kit-art.mjs';
 
 export const SCREEN_IDS = Object.freeze([
   'boot',
@@ -392,6 +393,23 @@ for (const id of ['objective', 'supply', 'life', 'speed', 'slow', 'freeze'])
     'pickup.icon.v1',
     id === 'objective' || id === 'supply' ? [16, 16] : [24, 24],
     ['flight', 'guide'],
+  );
+for (const id of OVERFLIGHT_FIELD_KIT_IDS)
+  slot(
+    id,
+    id.slice(7).replaceAll('-', ' '),
+    'pickups',
+    'pickup.icon.v1',
+    [16, 16],
+    ['flight', 'studio', 'guide'],
+    {
+      required: false,
+      requirements: [
+        'Reusable Overflight Field Kit source asset; retain the exact slot and revision.',
+        'Crisp native pixel clusters with alpha. Never bake text or authoritative hit geometry.',
+        'Low supply cases are decorative; warning timing, damage and salvage value remain game-owned.',
+      ],
+    },
   );
 for (const state of ['available', 'captured'])
   slot(

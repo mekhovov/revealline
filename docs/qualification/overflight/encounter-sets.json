@@ -1,0 +1,1066 @@
+{
+  "format": "OverflightAutomatedRoutesEvidenceV1",
+  "startedAt": "2026-10-05T06:01:24.607Z",
+  "completedAt": "2026-10-05T06:01:43.048Z",
+  "implementationBaseMainSha": "2d447bc790bdf3951251c99041c8a918363ece0a",
+  "gitHeadAtRun": "2d447bc790bdf3951251c99041c8a918363ece0a",
+  "sourceKind": "working-tree-candidate",
+  "environment": {
+    "node": "v20.19.5",
+    "platform": "darwin",
+    "architecture": "arm64"
+  },
+  "sourceBindings": [
+    {
+      "path": "game/data-json.mjs",
+      "bytes": 5594,
+      "sha256": "9ce33d6173f3cba8587ed7a7f1924c66e9d9c86ffa59b37a743764ea0b01f7bd"
+    },
+    {
+      "path": "game/overflight/core.mjs",
+      "bytes": 52635,
+      "sha256": "6c754a7111b7bdeb3080de6bea9a2019b2e60dee97cb191bfcd2b781b51f7df8"
+    },
+    {
+      "path": "game/overflight/grid.mjs",
+      "bytes": 2552,
+      "sha256": "ef130a7f9594bff6af374fe252bb8aafdc7e86762bb8ef60107914654f21dd30"
+    },
+    {
+      "path": "game/overflight/project.mjs",
+      "bytes": 10115,
+      "sha256": "265d3b65111f54c0afc7ca6c0daa8d7a6ba018618de461a59b3003e934230c62"
+    },
+    {
+      "path": "game/overflight/review-pilot.mjs",
+      "bytes": 4408,
+      "sha256": "3391710682e438fb4353321097009fad91cb9ebbd8a15256bcae4f658bb4e263"
+    },
+    {
+      "path": "game/overflight/upgrades.mjs",
+      "bytes": 13183,
+      "sha256": "033bb6802dc52e77b3844b83d7f81cb2f841f5163275d52f0c6c924316d1dbe7"
+    },
+    {
+      "path": "scripts/qualify-overflight.mjs",
+      "bytes": 12841,
+      "sha256": "262c8234df23276e574e7e9a615fbe33bd6eb09ddd44e60468fc229fed6cb1ea"
+    }
+  ],
+  "sourceSetSha256": "b11f0cfca934b12bc4d2a3bf394e594cdcc920da6c217de4f18b2707441cbc10",
+  "projects": [
+    {
+      "seed": 17031991,
+      "encounterSet": "front",
+      "projectId": "overflight-front",
+      "projectIdentity": "8ab8476ceeb653ae",
+      "sourceSha256": "09edd80ff608cf0a02a1d7d812bc66fc7f60a990bc1597da9ac11f014679596e"
+    },
+    {
+      "seed": 17031991,
+      "encounterSet": "crossing",
+      "projectId": "overflight-crossing",
+      "projectIdentity": "792a410dbd770dd7",
+      "sourceSha256": "0b2373880ac70c1c86c843f3f86842a55ed932c2883cd15238d877cc3aaf4d02"
+    },
+    {
+      "seed": 17031991,
+      "encounterSet": "mixed",
+      "projectId": "overflight-mixed",
+      "projectIdentity": "d8a37f1309fa7be1",
+      "sourceSha256": "822aec4e5a907e70507e285fcf68e5950322202de2b62a0421000228f48bc44a"
+    }
+  ],
+  "protocol": {
+    "encounterSets": [
+      "front",
+      "crossing",
+      "mixed"
+    ],
+    "seeds": [
+      17031991
+    ],
+    "airframes": [
+      3
+    ],
+    "buildDirections": [
+      "fan",
+      "echo",
+      "systems"
+    ],
+    "route": "tight",
+    "simulationHz": 60,
+    "pilotHz": 10,
+    "maximumSimulatedSeconds": 480,
+    "regularSpawnEndsAtSeconds": 360,
+    "finalDefeatEndsImmediately": true,
+    "compact": true,
+    "sampleEverySeconds": null,
+    "modificationsDuringRun": "movement/boost inputs and legal earned-card choices/rerolls only"
+  },
+  "scopeLimits": [
+    "Deterministic headless candidate pilot with full game-state access; no fixture population, HP, damage or XP injection.",
+    "Only the listed encounter sets, seeds, builds and deterministic pilot inputs are exercised; these are not exhaustive difficulty or balance results.",
+    "A successful automated route establishes reachability for these inputs, not human difficulty, fun, accessibility or physical controller acceptance.",
+    "Wall time includes the Node pilot and is observational only; it is not browser FPS, GPU, frame-time, heap, thermal or target-hardware evidence.",
+    "Source hashes bind the listed simulation/compiler/driver files; this is not a complete repository, native package, Community or release acceptance receipt.",
+    "Timestamps and observed wall times change on replay; deterministic result hashes exclude only observedWallMilliseconds."
+  ],
+  "deterministicResultsSha256": "91cd55fabdb52bc68ec1e0cb8460dd9d0090f43558be33a82defc122080a85a3",
+  "results": [
+    {
+      "direction": "fan",
+      "route": "tight",
+      "seed": 17031991,
+      "projectIdentity": "8ab8476ceeb653ae",
+      "encounterSet": "front",
+      "airframes": 3,
+      "qualification": "ordinary-inputs-earned-upgrades-no-fixture",
+      "controller": "deterministic-10hz-candidate-pilot-v1",
+      "outcome": "won",
+      "simulatedSeconds": 349,
+      "observedWallMilliseconds": 1749,
+      "firstDraftSeconds": 19.17,
+      "primaryEvolutionSeconds": 93.57,
+      "lastChoiceSeconds": 236.5,
+      "earnedChoices": 10,
+      "kills": 4863,
+      "collectedXP": 7360,
+      "groundXP": 1112,
+      "peakAlive": 772,
+      "peakVisible": 520,
+      "densityPeaks": {
+        "opening": 50,
+        "developing": 90,
+        "late": 386,
+        "finale": 520
+      },
+      "damageTaken": 124,
+      "airframesRemaining": 2,
+      "finalRemainingHull": null,
+      "build": {
+        "primary": {
+          "rank": 4,
+          "branch": "wide",
+          "evolved": true
+        },
+        "combat": [
+          {
+            "id": "proximity-pulse",
+            "rank": 3
+          },
+          {
+            "id": "side-burst",
+            "rank": 3
+          }
+        ],
+        "support": {
+          "id": "scanner",
+          "rank": 1
+        },
+        "reinforcement": 0,
+        "repair": 0
+      },
+      "choices": [
+        {
+          "id": "primary:wide:2",
+          "time": 19.166666666666668,
+          "tick": 1150
+        },
+        {
+          "id": "proximity-pulse:1",
+          "time": 27.883333333333333,
+          "tick": 1673
+        },
+        {
+          "id": "side-burst:1",
+          "time": 45.416666666666664,
+          "tick": 2725
+        },
+        {
+          "id": "primary:wide:3",
+          "time": 67.96666666666667,
+          "tick": 4078
+        },
+        {
+          "id": "primary:wide:4",
+          "time": 93.56666666666666,
+          "tick": 5614
+        },
+        {
+          "id": "proximity-pulse:2",
+          "time": 116.48333333333333,
+          "tick": 6989
+        },
+        {
+          "id": "proximity-pulse:3",
+          "time": 136.1,
+          "tick": 8166
+        },
+        {
+          "id": "side-burst:2",
+          "time": 150.25,
+          "tick": 9015
+        },
+        {
+          "id": "side-burst:3",
+          "time": 174.2,
+          "tick": 10452
+        },
+        {
+          "id": "scanner:1",
+          "time": 236.5,
+          "tick": 14190
+        }
+      ]
+    },
+    {
+      "direction": "echo",
+      "route": "tight",
+      "seed": 17031991,
+      "projectIdentity": "8ab8476ceeb653ae",
+      "encounterSet": "front",
+      "airframes": 3,
+      "qualification": "ordinary-inputs-earned-upgrades-no-fixture",
+      "controller": "deterministic-10hz-candidate-pilot-v1",
+      "outcome": "won",
+      "simulatedSeconds": 342.77,
+      "observedWallMilliseconds": 1644.52,
+      "firstDraftSeconds": 19.17,
+      "primaryEvolutionSeconds": 91.57,
+      "lastChoiceSeconds": 229.61666666666667,
+      "earnedChoices": 10,
+      "kills": 4702,
+      "collectedXP": 6948,
+      "groundXP": 1370,
+      "peakAlive": 611,
+      "peakVisible": 475,
+      "densityPeaks": {
+        "opening": 56,
+        "developing": 84,
+        "late": 354,
+        "finale": 475
+      },
+      "damageTaken": 90,
+      "airframesRemaining": 3,
+      "finalRemainingHull": null,
+      "build": {
+        "primary": {
+          "rank": 4,
+          "branch": "double",
+          "evolved": true
+        },
+        "combat": [
+          {
+            "id": "proximity-pulse",
+            "rank": 3
+          },
+          {
+            "id": "slow-field",
+            "rank": 3
+          }
+        ],
+        "support": {
+          "id": "shield",
+          "rank": 1
+        },
+        "reinforcement": 0,
+        "repair": 0
+      },
+      "choices": [
+        {
+          "id": "primary:double:2",
+          "time": 19.166666666666668,
+          "tick": 1150
+        },
+        {
+          "id": "proximity-pulse:1",
+          "time": 28.15,
+          "tick": 1689
+        },
+        {
+          "id": "shield:1",
+          "time": 46.31666666666667,
+          "tick": 2779
+        },
+        {
+          "id": "primary:double:3",
+          "time": 67.33333333333333,
+          "tick": 4040
+        },
+        {
+          "id": "primary:double:4",
+          "time": 91.56666666666666,
+          "tick": 5494
+        },
+        {
+          "id": "slow-field:1",
+          "time": 117.56666666666666,
+          "tick": 7054
+        },
+        {
+          "id": "slow-field:2",
+          "time": 135.96666666666667,
+          "tick": 8158
+        },
+        {
+          "id": "slow-field:3",
+          "time": 149.5,
+          "tick": 8970
+        },
+        {
+          "id": "proximity-pulse:2",
+          "time": 173.86666666666667,
+          "tick": 10432
+        },
+        {
+          "id": "proximity-pulse:3",
+          "time": 229.61666666666667,
+          "tick": 13777
+        }
+      ]
+    },
+    {
+      "direction": "systems",
+      "route": "tight",
+      "seed": 17031991,
+      "projectIdentity": "8ab8476ceeb653ae",
+      "encounterSet": "front",
+      "airframes": 3,
+      "qualification": "ordinary-inputs-earned-upgrades-no-fixture",
+      "controller": "deterministic-10hz-candidate-pilot-v1",
+      "outcome": "won",
+      "simulatedSeconds": 358.65,
+      "observedWallMilliseconds": 2511.75,
+      "firstDraftSeconds": 19.17,
+      "primaryEvolutionSeconds": null,
+      "lastChoiceSeconds": 222.83333333333334,
+      "earnedChoices": 10,
+      "kills": 5207,
+      "collectedXP": 8478,
+      "groundXP": 360,
+      "peakAlive": 802,
+      "peakVisible": 560,
+      "densityPeaks": {
+        "opening": 51,
+        "developing": 94,
+        "late": 389,
+        "finale": 560
+      },
+      "damageTaken": 200,
+      "airframesRemaining": 1,
+      "finalRemainingHull": null,
+      "build": {
+        "primary": {
+          "rank": 2,
+          "branch": "double",
+          "evolved": false
+        },
+        "combat": [
+          {
+            "id": "proximity-pulse",
+            "rank": 3
+          },
+          {
+            "id": "side-burst",
+            "rank": 3
+          }
+        ],
+        "support": {
+          "id": "scanner",
+          "rank": 3
+        },
+        "reinforcement": 0,
+        "repair": 0
+      },
+      "choices": [
+        {
+          "id": "scanner:1",
+          "time": 19.166666666666668,
+          "tick": 1150
+        },
+        {
+          "id": "proximity-pulse:1",
+          "time": 30.683333333333334,
+          "tick": 1841
+        },
+        {
+          "id": "proximity-pulse:2",
+          "time": 46.9,
+          "tick": 2814
+        },
+        {
+          "id": "proximity-pulse:3",
+          "time": 68.38333333333334,
+          "tick": 4103
+        },
+        {
+          "id": "primary:double:2",
+          "time": 90.95,
+          "tick": 5457
+        },
+        {
+          "id": "side-burst:1",
+          "time": 113.65,
+          "tick": 6819
+        },
+        {
+          "id": "side-burst:2",
+          "time": 134.63333333333333,
+          "tick": 8078
+        },
+        {
+          "id": "side-burst:3",
+          "time": 146.53333333333333,
+          "tick": 8792
+        },
+        {
+          "id": "scanner:2",
+          "time": 168.65,
+          "tick": 10119
+        },
+        {
+          "id": "scanner:3",
+          "time": 222.83333333333334,
+          "tick": 13370
+        }
+      ]
+    },
+    {
+      "direction": "fan",
+      "route": "tight",
+      "seed": 17031991,
+      "projectIdentity": "792a410dbd770dd7",
+      "encounterSet": "crossing",
+      "airframes": 3,
+      "qualification": "ordinary-inputs-earned-upgrades-no-fixture",
+      "controller": "deterministic-10hz-candidate-pilot-v1",
+      "outcome": "won",
+      "simulatedSeconds": 329.65,
+      "observedWallMilliseconds": 2098.16,
+      "firstDraftSeconds": 14.02,
+      "primaryEvolutionSeconds": 74.48,
+      "lastChoiceSeconds": 257.15,
+      "earnedChoices": 10,
+      "kills": 3455,
+      "collectedXP": 4102,
+      "groundXP": 463,
+      "peakAlive": 1346,
+      "peakVisible": 690,
+      "densityPeaks": {
+        "opening": 56,
+        "developing": 122,
+        "late": 584,
+        "finale": 690
+      },
+      "damageTaken": 44,
+      "airframesRemaining": 3,
+      "finalRemainingHull": null,
+      "build": {
+        "primary": {
+          "rank": 4,
+          "branch": "wide",
+          "evolved": true
+        },
+        "combat": [
+          {
+            "id": "proximity-pulse",
+            "rank": 3
+          },
+          {
+            "id": "side-burst",
+            "rank": 3
+          }
+        ],
+        "support": {
+          "id": "scanner",
+          "rank": 1
+        },
+        "reinforcement": 0,
+        "repair": 0
+      },
+      "choices": [
+        {
+          "id": "primary:wide:2",
+          "time": 14.016666666666667,
+          "tick": 841
+        },
+        {
+          "id": "proximity-pulse:1",
+          "time": 19.516666666666666,
+          "tick": 1171
+        },
+        {
+          "id": "side-burst:1",
+          "time": 28.866666666666667,
+          "tick": 1732
+        },
+        {
+          "id": "primary:wide:3",
+          "time": 43.1,
+          "tick": 2586
+        },
+        {
+          "id": "primary:wide:4",
+          "time": 74.48333333333333,
+          "tick": 4469
+        },
+        {
+          "id": "proximity-pulse:2",
+          "time": 100.41666666666667,
+          "tick": 6025
+        },
+        {
+          "id": "proximity-pulse:3",
+          "time": 127,
+          "tick": 7620
+        },
+        {
+          "id": "side-burst:2",
+          "time": 168.4,
+          "tick": 10104
+        },
+        {
+          "id": "side-burst:3",
+          "time": 203.88333333333333,
+          "tick": 12233
+        },
+        {
+          "id": "scanner:1",
+          "time": 257.15,
+          "tick": 15429
+        }
+      ]
+    },
+    {
+      "direction": "echo",
+      "route": "tight",
+      "seed": 17031991,
+      "projectIdentity": "792a410dbd770dd7",
+      "encounterSet": "crossing",
+      "airframes": 3,
+      "qualification": "ordinary-inputs-earned-upgrades-no-fixture",
+      "controller": "deterministic-10hz-candidate-pilot-v1",
+      "outcome": "won",
+      "simulatedSeconds": 329.9,
+      "observedWallMilliseconds": 2108.27,
+      "firstDraftSeconds": 14.02,
+      "primaryEvolutionSeconds": 72.73,
+      "lastChoiceSeconds": 242.51666666666668,
+      "earnedChoices": 10,
+      "kills": 3431,
+      "collectedXP": 4139,
+      "groundXP": 498,
+      "peakAlive": 1371,
+      "peakVisible": 593,
+      "densityPeaks": {
+        "opening": 60,
+        "developing": 138,
+        "late": 587,
+        "finale": 593
+      },
+      "damageTaken": 0,
+      "airframesRemaining": 3,
+      "finalRemainingHull": null,
+      "build": {
+        "primary": {
+          "rank": 4,
+          "branch": "double",
+          "evolved": true
+        },
+        "combat": [
+          {
+            "id": "proximity-pulse",
+            "rank": 3
+          },
+          {
+            "id": "slow-field",
+            "rank": 3
+          }
+        ],
+        "support": {
+          "id": "shield",
+          "rank": 1
+        },
+        "reinforcement": 0,
+        "repair": 0
+      },
+      "choices": [
+        {
+          "id": "primary:double:2",
+          "time": 14.016666666666667,
+          "tick": 841
+        },
+        {
+          "id": "proximity-pulse:1",
+          "time": 19.233333333333334,
+          "tick": 1154
+        },
+        {
+          "id": "shield:1",
+          "time": 29.916666666666668,
+          "tick": 1795
+        },
+        {
+          "id": "primary:double:3",
+          "time": 42.71666666666667,
+          "tick": 2563
+        },
+        {
+          "id": "primary:double:4",
+          "time": 72.73333333333333,
+          "tick": 4364
+        },
+        {
+          "id": "slow-field:1",
+          "time": 101.63333333333334,
+          "tick": 6098
+        },
+        {
+          "id": "slow-field:2",
+          "time": 125.55,
+          "tick": 7533
+        },
+        {
+          "id": "slow-field:3",
+          "time": 164.83333333333334,
+          "tick": 9890
+        },
+        {
+          "id": "proximity-pulse:2",
+          "time": 195.11666666666667,
+          "tick": 11707
+        },
+        {
+          "id": "proximity-pulse:3",
+          "time": 242.51666666666668,
+          "tick": 14551
+        }
+      ]
+    },
+    {
+      "direction": "systems",
+      "route": "tight",
+      "seed": 17031991,
+      "projectIdentity": "792a410dbd770dd7",
+      "encounterSet": "crossing",
+      "airframes": 3,
+      "qualification": "ordinary-inputs-earned-upgrades-no-fixture",
+      "controller": "deterministic-10hz-candidate-pilot-v1",
+      "outcome": "won",
+      "simulatedSeconds": 336.37,
+      "observedWallMilliseconds": 2520.81,
+      "firstDraftSeconds": 14.02,
+      "primaryEvolutionSeconds": null,
+      "lastChoiceSeconds": 232.2,
+      "earnedChoices": 10,
+      "kills": 3802,
+      "collectedXP": 4839,
+      "groundXP": 221,
+      "peakAlive": 1303,
+      "peakVisible": 709,
+      "densityPeaks": {
+        "opening": 44,
+        "developing": 144,
+        "late": 683,
+        "finale": 709
+      },
+      "damageTaken": 24,
+      "airframesRemaining": 3,
+      "finalRemainingHull": null,
+      "build": {
+        "primary": {
+          "rank": 2,
+          "branch": "double",
+          "evolved": false
+        },
+        "combat": [
+          {
+            "id": "proximity-pulse",
+            "rank": 3
+          },
+          {
+            "id": "side-burst",
+            "rank": 3
+          }
+        ],
+        "support": {
+          "id": "scanner",
+          "rank": 3
+        },
+        "reinforcement": 0,
+        "repair": 0
+      },
+      "choices": [
+        {
+          "id": "scanner:1",
+          "time": 14.016666666666667,
+          "tick": 841
+        },
+        {
+          "id": "proximity-pulse:1",
+          "time": 19.883333333333333,
+          "tick": 1193
+        },
+        {
+          "id": "proximity-pulse:2",
+          "time": 30.683333333333334,
+          "tick": 1841
+        },
+        {
+          "id": "proximity-pulse:3",
+          "time": 43.31666666666667,
+          "tick": 2599
+        },
+        {
+          "id": "primary:double:2",
+          "time": 72.33333333333333,
+          "tick": 4340
+        },
+        {
+          "id": "side-burst:1",
+          "time": 101.13333333333334,
+          "tick": 6068
+        },
+        {
+          "id": "side-burst:2",
+          "time": 125.25,
+          "tick": 7515
+        },
+        {
+          "id": "side-burst:3",
+          "time": 163.81666666666666,
+          "tick": 9829
+        },
+        {
+          "id": "scanner:2",
+          "time": 193.93333333333334,
+          "tick": 11636
+        },
+        {
+          "id": "scanner:3",
+          "time": 232.2,
+          "tick": 13932
+        }
+      ]
+    },
+    {
+      "direction": "fan",
+      "route": "tight",
+      "seed": 17031991,
+      "projectIdentity": "d8a37f1309fa7be1",
+      "encounterSet": "mixed",
+      "airframes": 3,
+      "qualification": "ordinary-inputs-earned-upgrades-no-fixture",
+      "controller": "deterministic-10hz-candidate-pilot-v1",
+      "outcome": "won",
+      "simulatedSeconds": 348.72,
+      "observedWallMilliseconds": 1827.54,
+      "firstDraftSeconds": 19.98,
+      "primaryEvolutionSeconds": 72.95,
+      "lastChoiceSeconds": 236.63333333333333,
+      "earnedChoices": 10,
+      "kills": 4919,
+      "collectedXP": 5249,
+      "groundXP": 719,
+      "peakAlive": 734,
+      "peakVisible": 564,
+      "densityPeaks": {
+        "opening": 45,
+        "developing": 95,
+        "late": 410,
+        "finale": 564
+      },
+      "damageTaken": 124,
+      "airframesRemaining": 2,
+      "finalRemainingHull": null,
+      "build": {
+        "primary": {
+          "rank": 4,
+          "branch": "wide",
+          "evolved": true
+        },
+        "combat": [
+          {
+            "id": "proximity-pulse",
+            "rank": 3
+          },
+          {
+            "id": "side-burst",
+            "rank": 3
+          }
+        ],
+        "support": {
+          "id": "scanner",
+          "rank": 1
+        },
+        "reinforcement": 0,
+        "repair": 0
+      },
+      "choices": [
+        {
+          "id": "primary:wide:2",
+          "time": 19.983333333333334,
+          "tick": 1199
+        },
+        {
+          "id": "proximity-pulse:1",
+          "time": 28.716666666666665,
+          "tick": 1723
+        },
+        {
+          "id": "side-burst:1",
+          "time": 46.7,
+          "tick": 2802
+        },
+        {
+          "id": "primary:wide:3",
+          "time": 59.06666666666667,
+          "tick": 3544
+        },
+        {
+          "id": "primary:wide:4",
+          "time": 72.95,
+          "tick": 4377
+        },
+        {
+          "id": "proximity-pulse:2",
+          "time": 96.16666666666667,
+          "tick": 5770
+        },
+        {
+          "id": "proximity-pulse:3",
+          "time": 122.91666666666667,
+          "tick": 7375
+        },
+        {
+          "id": "side-burst:2",
+          "time": 158.08333333333334,
+          "tick": 9485
+        },
+        {
+          "id": "side-burst:3",
+          "time": 212.96666666666667,
+          "tick": 12778
+        },
+        {
+          "id": "scanner:1",
+          "time": 236.63333333333333,
+          "tick": 14198
+        }
+      ]
+    },
+    {
+      "direction": "echo",
+      "route": "tight",
+      "seed": 17031991,
+      "projectIdentity": "d8a37f1309fa7be1",
+      "encounterSet": "mixed",
+      "airframes": 3,
+      "qualification": "ordinary-inputs-earned-upgrades-no-fixture",
+      "controller": "deterministic-10hz-candidate-pilot-v1",
+      "outcome": "won",
+      "simulatedSeconds": 341.47,
+      "observedWallMilliseconds": 1821.88,
+      "firstDraftSeconds": 19.98,
+      "primaryEvolutionSeconds": 70.6,
+      "lastChoiceSeconds": 237.56666666666666,
+      "earnedChoices": 10,
+      "kills": 4642,
+      "collectedXP": 4503,
+      "groundXP": 1198,
+      "peakAlive": 625,
+      "peakVisible": 537,
+      "densityPeaks": {
+        "opening": 56,
+        "developing": 107,
+        "late": 449,
+        "finale": 537
+      },
+      "damageTaken": 45,
+      "airframesRemaining": 3,
+      "finalRemainingHull": null,
+      "build": {
+        "primary": {
+          "rank": 4,
+          "branch": "double",
+          "evolved": true
+        },
+        "combat": [
+          {
+            "id": "proximity-pulse",
+            "rank": 3
+          },
+          {
+            "id": "slow-field",
+            "rank": 3
+          }
+        ],
+        "support": {
+          "id": "shield",
+          "rank": 1
+        },
+        "reinforcement": 0,
+        "repair": 0
+      },
+      "choices": [
+        {
+          "id": "primary:double:2",
+          "time": 19.983333333333334,
+          "tick": 1199
+        },
+        {
+          "id": "proximity-pulse:1",
+          "time": 29.066666666666666,
+          "tick": 1744
+        },
+        {
+          "id": "shield:1",
+          "time": 47.06666666666667,
+          "tick": 2824
+        },
+        {
+          "id": "primary:double:3",
+          "time": 61.18333333333333,
+          "tick": 3671
+        },
+        {
+          "id": "primary:double:4",
+          "time": 70.6,
+          "tick": 4236
+        },
+        {
+          "id": "slow-field:1",
+          "time": 91.76666666666667,
+          "tick": 5506
+        },
+        {
+          "id": "slow-field:2",
+          "time": 120.36666666666666,
+          "tick": 7222
+        },
+        {
+          "id": "slow-field:3",
+          "time": 155.95,
+          "tick": 9357
+        },
+        {
+          "id": "proximity-pulse:2",
+          "time": 212.4,
+          "tick": 12744
+        },
+        {
+          "id": "proximity-pulse:3",
+          "time": 237.56666666666666,
+          "tick": 14254
+        }
+      ]
+    },
+    {
+      "direction": "systems",
+      "route": "tight",
+      "seed": 17031991,
+      "projectIdentity": "d8a37f1309fa7be1",
+      "encounterSet": "mixed",
+      "airframes": 3,
+      "qualification": "ordinary-inputs-earned-upgrades-no-fixture",
+      "controller": "deterministic-10hz-candidate-pilot-v1",
+      "outcome": "won",
+      "simulatedSeconds": 355.07,
+      "observedWallMilliseconds": 2146,
+      "firstDraftSeconds": 19.98,
+      "primaryEvolutionSeconds": null,
+      "lastChoiceSeconds": 230.06666666666666,
+      "earnedChoices": 10,
+      "kills": 5193,
+      "collectedXP": 6111,
+      "groundXP": 138,
+      "peakAlive": 743,
+      "peakVisible": 592,
+      "densityPeaks": {
+        "opening": 47,
+        "developing": 110,
+        "late": 592,
+        "finale": 592
+      },
+      "damageTaken": 248,
+      "airframesRemaining": 1,
+      "finalRemainingHull": null,
+      "build": {
+        "primary": {
+          "rank": 2,
+          "branch": "double",
+          "evolved": false
+        },
+        "combat": [
+          {
+            "id": "proximity-pulse",
+            "rank": 3
+          },
+          {
+            "id": "side-burst",
+            "rank": 3
+          }
+        ],
+        "support": {
+          "id": "scanner",
+          "rank": 3
+        },
+        "reinforcement": 0,
+        "repair": 0
+      },
+      "choices": [
+        {
+          "id": "scanner:1",
+          "time": 19.983333333333334,
+          "tick": 1199
+        },
+        {
+          "id": "proximity-pulse:1",
+          "time": 33.083333333333336,
+          "tick": 1985
+        },
+        {
+          "id": "proximity-pulse:2",
+          "time": 47.483333333333334,
+          "tick": 2849
+        },
+        {
+          "id": "proximity-pulse:3",
+          "time": 59.483333333333334,
+          "tick": 3569
+        },
+        {
+          "id": "primary:double:2",
+          "time": 71.16666666666667,
+          "tick": 4270
+        },
+        {
+          "id": "side-burst:1",
+          "time": 93.08333333333333,
+          "tick": 5585
+        },
+        {
+          "id": "side-burst:2",
+          "time": 119.91666666666667,
+          "tick": 7195
+        },
+        {
+          "id": "side-burst:3",
+          "time": 153.73333333333332,
+          "tick": 9224
+        },
+        {
+          "id": "scanner:2",
+          "time": 207.7,
+          "tick": 12462
+        },
+        {
+          "id": "scanner:3",
+          "time": 230.06666666666666,
+          "tick": 13804
+        }
+      ]
+    }
+  ]
+}

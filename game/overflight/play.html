@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#17191b" />
+    <title>Overflight · FPV / LINE</title>
+    <script
+      src="../presentation/theme-bootstrap.mjs"
+      data-theme-density="player"
+      data-theme-follow-context="true"
+    ></script>
+    <link
+      rel="stylesheet"
+      href="../presentation/industrial-workshop.css"
+      data-industrial-workshop
+    />
+    <link rel="stylesheet" href="../ui/mode-play-shell.css" />
+    <link rel="stylesheet" href="../ui/quick-music-controls.css" />
+    <link rel="stylesheet" href="../i18n/style.css" />
+    <link rel="stylesheet" href="style.css" />
+    <script type="module" src="app.mjs"></script>
+  </head>
+  <body class="field-kit overflight-player">
+    <p id="boot-status" role="status">Preparing Overflight…</p>
+    <main id="overflight-shell" hidden></main>
+    <div id="overflight-panels" hidden>
+      <nav id="overflight-mode-links"></nav>
+      <section id="overflight-missions">
+        <h2 data-copy="field"></h2>
+        <p data-copy="briefing"></p>
+        <div id="overflight-mission-list" class="overflight-mission-list"></div>
+        <h3 data-copy="installed"></h3>
+        <div id="overflight-installed-list" class="overflight-mission-list"></div>
+        <p id="installed-status" role="status"></p>
+      </section>
+      <section id="overflight-briefing">
+        <p data-copy="startHint"></p>
+        <p id="fixture-description" hidden></p>
+        <p id="review-description" hidden></p>
+        <p id="review-help" data-copy="reviewHelp" hidden></p>
+      </section>
+      <section id="overflight-help">
+        <p data-copy="help"></p>
+        <p data-copy="startHint"></p>
+      </section>
+      <section id="overflight-workshop">
+        <h2 data-copy="workshop"></h2>
+        <p data-copy="workshopHelp"></p>
+        <a id="studio-link" href="../studio/overflight.html" data-copy="workshop"></a>
+      </section>
+      <section id="overflight-settings">
+        <div class="overflight-settings-grid">
+          <label
+            ><span data-copy="language"></span
+            ><select id="language">
+              <option value="en">English</option>
+              <option value="uk">Українська</option>
+            </select></label
+          >
+          <label
+            ><span data-copy="airframes"></span
+            ><select id="airframes">
+              <option value="1" data-copy="oneAirframe"></option>
+              <option value="3" data-copy="threeAirframes" selected></option></select
+          ></label>
+          <label class="overflight-check"
+            ><input id="slow-resume" type="checkbox" /><span data-copy="slowResume"></span
+          ></label>
+          <label class="overflight-check"
+            ><input id="reduced-effects" type="checkbox" /><span data-copy="reduced"></span
+          ></label>
+          <label
+            ><span data-copy="textFace"></span
+            ><select id="text-face">
+              <option value="pixel" data-copy="themeText"></option>
+              <option value="plain" data-copy="plainText"></option></select
+          ></label>
+          <label
+            ><span data-copy="textSize"></span
+            ><select id="text-size">
+              <option value="standard" data-copy="standard"></option>
+              <option value="large" data-copy="large"></option></select
+          ></label>
+          <label class="overflight-check"
+            ><input id="muted" type="checkbox" /><span data-copy="muted"></span
+          ></label>
+          <label
+            ><span data-copy="volume"></span
+            ><input id="volume" type="range" min="0" max="1" step="0.05"
+          /></label>
+        </div>
+        <p data-copy="nextSortie"></p>
+        <div id="overflight-appearance"></div>
+        <div id="overflight-music"></div>
+      </section>
+      <section id="overflight-results">
+        <h2 id="result-title"></h2>
+        <p id="result-review" hidden></p>
+        <dl id="result-stats"></dl>
+        <p data-copy="resultHint"></p>
+      </section>
+      <section id="overflight-game" aria-label="Overflight battlefield">
+        <div id="render-host" tabindex="0"></div>
+        <aside id="overflight-music-now-playing" class="overflight-music-credit" hidden></aside>
+        <div id="overflight-hud" aria-live="off">
+          <div class="overflight-xp"><div id="xp-fill"></div></div>
+          <div class="overflight-topline">
+            <span id="hud-hull"></span><strong id="hud-time">00:00</strong
+            ><span id="hud-level"></span>
+          </div>
+          <p id="hud-review" hidden></p>
+          <div class="overflight-bottomline">
+            <span id="hud-build"></span><span id="hud-boost"></span>
+          </div>
+        </div>
+        <p id="play-status" role="status" hidden></p>
+        <details id="overflight-diagnostics" hidden>
+          <summary data-copy="diagnostics"></summary>
+          <p data-copy="measured"></p>
+          <pre id="diagnostic-values"></pre>
+          <button id="download-metrics" type="button" data-copy="download"></button>
+          <button id="inspect-raw-metrics" type="button" data-copy="inspectRaw"></button>
+          <div id="raw-metrics-navigation" hidden>
+            <label
+              ><span data-copy="rawPage"></span>
+              <select id="raw-metrics-page"></select
+            ></label>
+            <p data-copy="rawPageHelp"></p>
+          </div>
+          <textarea
+            id="raw-metrics"
+            readonly
+            wrap="off"
+            aria-label="Raw measurements JSON"
+            hidden
+          ></textarea>
+          <button
+            id="test-graphics-recovery"
+            type="button"
+            data-copy="testRecovery"
+            disabled
+          ></button>
+          <p id="diagnostic-status" role="status" hidden></p>
+          <section id="review-clip-controls" hidden>
+            <p data-copy="clipLimit"></p>
+            <button id="record-review-clip" type="button" data-copy="recordClip" disabled></button>
+            <p id="review-clip-status" role="status"></p>
+            <video id="review-clip-video" controls muted playsinline hidden></video>
+            <a id="download-review-clip" data-copy="downloadClip" hidden></a>
+          </section>
+        </details>
+      </section>
+    </div>
+    <dialog
+      id="upgrade-dialog"
+      class="mode-play-dialog overflight-upgrade"
+      aria-labelledby="upgrade-title"
+    >
+      <header class="mode-play-dialog-head">
+        <h1 id="upgrade-title" data-copy="upgrades"></h1>
+        <p data-copy="upgradeHint"></p>
+      </header>
+      <div id="upgrade-cards" class="overflight-upgrade-cards"></div>
+      <footer class="mode-play-actions">
+        <button id="reroll-upgrades" type="button"></button><span id="rerolls-left"></span>
+      </footer>
+    </dialog>
+  </body>
+</html>

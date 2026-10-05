@@ -2,7 +2,7 @@ import { nativeArtReviewURL } from './art-review-navigation.mjs';
 import { t, localizedText, localizedAttribute, getLocale } from '../i18n/index.mjs';
 import { setMenuIcon } from './native-menu-icons.mjs';
 import { mountOptionalPracticePanel } from './optional-practice-panel.mjs';
-import { fpvWorldLaunchURL, snakeLaunchURL } from '../fpv-entry.mjs';
+import { fpvWorldLaunchURL, snakeLaunchURL, overflightLaunchURL } from '../fpv-entry.mjs';
 import { loadAcceptedAppearance } from '../presentation/theme-system.mjs';
 const MODES = Object.freeze([['solo'], ['versus'], ['team']]);
 
@@ -98,7 +98,30 @@ export function mountModeChoices({
     pause();
   };
   snake.addEventListener('click', enterSnake);
-  root.replaceChildren(...choices, simulator, snake);
+  const overflight = document.createElement('a');
+  overflight.id = `${current}-overflight`;
+  overflight.dataset.overflightEntry = 'true';
+  const overflightLabel = document.createElement('strong');
+  localizedText(overflightLabel, () => (getLocale() === 'uk' ? 'Проліт' : 'Overflight'));
+  overflight.append(overflightLabel);
+  setMenuIcon(overflight, 'controls');
+  const overflightURL = () =>
+    overflightLaunchURL(
+      document.defaultView?.location?.href ?? globalThis.location?.href,
+      getLocale(),
+      getAppearanceDefault(),
+    );
+  const initialOverflightURL = overflightURL();
+  if (initialOverflightURL) overflight.href = initialOverflightURL;
+  else overflight.hidden = true;
+  const enterOverflight = (event) => {
+    const href = overflightURL();
+    if (!href) return event.preventDefault();
+    overflight.href = href;
+    pause();
+  };
+  overflight.addEventListener('click', enterOverflight);
+  root.replaceChildren(...choices, simulator, snake, overflight);
   const destinations = document.createElement('details');
   destinations.className = 'game-mode-destinations';
   const summary = document.createElement('summary');
@@ -169,6 +192,8 @@ export function mountModeChoices({
       destinations.remove();
       snake.removeEventListener('click', enterSnake);
       snake.remove();
+      overflight.removeEventListener('click', enterOverflight);
+      overflight.remove();
     },
   };
 }
