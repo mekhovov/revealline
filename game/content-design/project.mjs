@@ -192,7 +192,7 @@ export function compileContentProject(source) {
   const assets = (project.assets ?? []).map(compileAssetRevision);
   const maps = project.maps.map(compileMapDesign);
   for (const mission of project.missions) {
-    const pursuit = mission.format === 'MissionDesignV5';
+    const pursuit = ['MissionDesignV5', 'MissionDesignV6'].includes(mission.format);
     const authoredMap = maps.find((entry) => entry.source.id === mission.map?.id)?.source.format;
     const sentinel =
       mission.format === 'MissionDesignV4' || (pursuit && Object.hasOwn(mission, 'encounter'));
@@ -207,7 +207,7 @@ export function compileContentProject(source) {
     identity(
       mission,
       pursuit
-        ? 'MissionDesignV5'
+        ? mission.format
         : sentinel
           ? 'MissionDesignV4'
           : directional
@@ -241,7 +241,8 @@ export function compileContentProject(source) {
     if (pursuit) {
       exactKeys(mission.pursuit, ['version', 'actors'], 'Mission pursuit');
       required(
-        mission.pursuit.version === 'mission-pursuit.v1',
+        mission.pursuit.version ===
+          (mission.format === 'MissionDesignV6' ? 'mission-pursuit.v2' : 'mission-pursuit.v1'),
         'Pursuit missions require a versioned finite population.',
       );
       validatePursuitPopulation(mission.pursuit.actors);
@@ -426,7 +427,7 @@ export function resolveMission(project, id, { mode = 'solo', difficulty = 'stand
   const pressureActors = mission.actors
     .filter((actor) => project.actors.roles[actor.role]?.pressureRecipe)
     .sort((a, b) => (a.id < b.id ? -1 : 1));
-  const pursuit = mission.format === 'MissionDesignV5';
+  const pursuit = ['MissionDesignV5', 'MissionDesignV6'].includes(mission.format);
   const sentinel =
     mission.format === 'MissionDesignV4' || (pursuit && Object.hasOwn(mission, 'encounter'));
   const directional =
@@ -564,6 +565,8 @@ export function resolveMission(project, id, { mode = 'solo', difficulty = 'stand
     level = prepareRunningEnemyLevel(level, {
       style: 'varied',
       population: mission.pursuit.actors,
+      generation:
+        mission.pursuit.version === 'mission-pursuit.v2' ? 'pursuit-goals.v2' : 'pursuit-goals.v1',
     });
   const { name: _name, id: _id, revision: _revision, ...simulation } = level;
   const topology = inspectMissionTopology(level, map.geometry);

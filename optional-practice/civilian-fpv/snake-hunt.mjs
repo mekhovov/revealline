@@ -65,6 +65,7 @@ export function catchHuntTarget(state, criterion, actor) {
   state.hunt.caught.push(actor.id);
   state.hunt.catches.push({
     id: actor.id,
+    ...(actor.pursuit ? { family: actor.pursuit.family } : {}),
     tick: state.ticks,
     position: { ...actor.position },
     velocity: { ...state.velocity },

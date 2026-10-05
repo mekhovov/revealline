@@ -156,7 +156,7 @@ export class Element extends Events {
     Object.assign(this, options);
   }
   get lastElementChild() {
-    return this.children.at(-1) ?? null;
+    return this.children.findLast((child) => child.nodeType === 1) ?? null;
   }
   get firstChild() {
     return this.children[0] ?? null;
@@ -200,7 +200,8 @@ export class Element extends Events {
     throw new Error('Controller navigation must use safe DOM text.');
   }
   append(...nodes) {
-    for (const node of nodes) {
+    for (const value of nodes) {
+      const node = value?.nodeType ? value : this.ownerDocument.createTextNode(String(value));
       node.remove?.();
       this.children.push(node);
       node.parentNode = this;
@@ -211,7 +212,8 @@ export class Element extends Events {
     }
   }
   prepend(...nodes) {
-    for (const node of [...nodes].reverse()) {
+    for (const value of [...nodes].reverse()) {
+      const node = value?.nodeType ? value : this.ownerDocument.createTextNode(String(value));
       node.remove?.();
       this.children.unshift(node);
       node.parentNode = this;
@@ -242,9 +244,24 @@ export class Element extends Events {
     this.emit('lostpointercapture', { pointerId: id });
   }
   getContext() {
-    return { id: this.id };
+    // Native board rendering is modeled by the host fixtures, but shared field
+    // guides now paint real actor rigs during menu preparation as well.
+    return (this.canvasContext ??= {
+      id: this.id,
+      canvas: this,
+      globalAlpha: 1,
+      imageSmoothingEnabled: true,
+      clearRect() {},
+      fillRect() {},
+      save() {},
+      restore() {},
+      translate() {},
+      rotate() {},
+      scale() {},
+    });
   }
   appendChild(node) {
+    if (!node?.nodeType) throw new TypeError('appendChild requires a Node.');
     this.append(node);
     return node;
   }
@@ -275,11 +292,13 @@ export class Element extends Events {
   setAttribute(name, value) {
     this.attributes.set(name, String(value));
     if (name === 'id') this.id = String(value);
+    if (name === 'class') this.className = String(value);
     if (name === 'tabindex') this.tabIndex = Number(value);
     if (name.startsWith('data-')) this.dataset[datasetKey(name)] = String(value);
   }
   getAttribute(name) {
     if (name === 'id') return this.id || null;
+    if (name === 'class') return this.className || null;
     if (name === 'type') return this.type || null;
     if (name.startsWith('data-')) return this.dataset[datasetKey(name)] ?? null;
     return this.attributes.get(name) ?? null;
@@ -305,7 +324,12 @@ export class Element extends Events {
         if (split >= 0) {
           const ancestor = part.slice(0, split).trim(),
             descendant = part.slice(split + 1);
-          return this.matches(descendant) && !!this.parentElement?.closest(ancestor);
+          return (
+            this.matches(descendant) &&
+            (ancestor.endsWith('>')
+              ? !!this.parentElement?.matches(ancestor.slice(0, -1).trim())
+              : !!this.parentElement?.closest(ancestor))
+          );
         }
       }
       if (part === '.race-pad button')
@@ -354,19 +378,19 @@ export class Element extends Events {
   }
   querySelectorAll(selector) {
     if (selector.startsWith(':scope > '))
-      return this.children.filter((child) => child.matches(selector.slice(9)));
+      return this.children.filter((child) => child.matches?.(selector.slice(9)));
     return this.children.flatMap((child) => [
-      ...(child.matches(selector) ? [child] : []),
-      ...child.querySelectorAll(selector),
+      ...(child.matches?.(selector) ? [child] : []),
+      ...(child.querySelectorAll?.(selector) ?? []),
     ]);
   }
   querySelector(selector) {
     if (selector.startsWith(':scope > '))
-      return this.children.find((child) => child.matches(selector.slice(9))) ?? null;
+      return this.children.find((child) => child.matches?.(selector.slice(9))) ?? null;
     // Match native first-result traversal without allocating every later match.
     for (const child of this.children) {
-      if (child.matches(selector)) return child;
-      const descendant = child.querySelector(selector);
+      if (child.matches?.(selector)) return child;
+      const descendant = child.querySelector?.(selector);
       if (descendant) return descendant;
     }
     return null;
@@ -443,6 +467,23 @@ export class Element extends Events {
     }
   }
 }
+class TextNode extends Events {
+  constructor(document, text) {
+    super();
+    this.ownerDocument = document;
+    this.nodeType = 3;
+    this.nodeName = '#text';
+    this.textContent = String(text);
+    this.parentNode = null;
+  }
+  contains(node) {
+    return node === this;
+  }
+  remove() {
+    if (this.parentNode) this.parentNode.children.splice(this.parentNode.children.indexOf(this), 1);
+    this.parentNode = null;
+  }
+}
 export class Document extends Events {
   constructor() {
     super();
@@ -479,6 +520,9 @@ export class Document extends Events {
   }
   createElement(tag) {
     return new Element(this, tag);
+  }
+  createTextNode(text) {
+    return new TextNode(this, text);
   }
   contains(node) {
     return node === this || this.documentElement.contains(node);

@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import { prepareWorldTextureAcceptance } from './prepare-world-texture-acceptance.mjs';
+import { OPTIONAL_PACKAGE_POLICIES } from '../publishing/optional-package-policy.mjs';
 
 test('texture inspection closes over actual bounded optional-package bytes and the retained GLB', async () => {
   const result = await prepareWorldTextureAcceptance({ verifyOnly: true });
@@ -10,8 +11,10 @@ test('texture inspection closes over actual bounded optional-package bytes and t
   assert.equal(result.packageQualification, 'development-only');
   assert.ok(result.packageFiles <= result.limits.files);
   assert.ok(result.packageBytes <= result.limits.bytes);
-  assert.equal(result.limits.files, 104);
-  assert.equal(result.limits.bytes, 16 * 1024 * 1024);
+  assert.equal(result.limits.files, 128);
+  assert.equal(result.limits.bytes, 20 * 1024 * 1024);
+  assert.equal(result.limits.files, OPTIONAL_PACKAGE_POLICIES['fpv-worlds'].limits.files);
+  assert.equal(result.limits.bytes, OPTIONAL_PACKAGE_POLICIES['fpv-worlds'].limits.bytes);
   assert.equal(result.packageEntry, 'optional-practice/fpv-worlds/index.html');
   assert.ok(result.inspectionChromeFiles > 0 && result.inspectionChromeFiles <= 24);
   assert.ok(result.inspectionChromeBytes > 0 && result.inspectionChromeBytes <= 2 * 1024 * 1024);

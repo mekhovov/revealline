@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { readFile } from 'node:fs/promises';
+import { access, readFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import { parseTestPolicy, policyDecision } from '../publishing/test-policy.mjs';
 
@@ -15,7 +15,28 @@ const step = (name) =>
   workflow.split(/\n      - /).find((value) => value.startsWith(`name: ${name}\n`));
 const digest = (bytes) => createHash('sha256').update(bytes).digest('hex');
 
-test('appearance preview gates tests and test fixtures while retaining mandatory source and build checks', () => {
+test('appearance preview gates tests and test fixtures while retaining mandatory source and build checks', async () => {
+  const changedPaths = workflow.match(
+    /\n  pull_request:\n    paths:\n([\s\S]*?)(?=\n(?:  \S|\S)|$)/,
+  )?.[1];
+  assert.ok(changedPaths, 'The preview has an explicit pull-request path filter.');
+  for (const path of [
+    'game/editions/package-budget.mjs',
+    'game/build-config.json',
+    'scripts/game-cli.mjs',
+    'publishing/edition-admission.mjs',
+  ]) {
+    await access(new URL(`../${path}`, import.meta.url));
+    assert.ok(
+      changedPaths.includes(`      - '${path}'`),
+      `Packaging changes require an exact-head playable build: ${path}`,
+    );
+  }
+  assert.match(workflow, /permissions:\s+contents: read/);
+  assert.match(
+    step('Build the full game and separate Worlds playtest'),
+    /game-cli\.mjs build --out \S+ --revision "\$PREVIEW_HEAD_SHA"/,
+  );
   assert.match(
     step('Read explicit automated-suite policy'),
     /id: test_policy\s+run: node publishing\/test-policy\.mjs/,
@@ -44,7 +65,17 @@ test('appearance preview gates tests and test fixtures while retaining mandatory
 async function bindEvidence(mode, outcome) {
   const root = '.cache/appearance-preview/';
   const files = new Map([
-    ['publishing/test-policy.json', Buffer.from(JSON.stringify({ ...acceptedPolicy, mode }))],
+    [
+      'publishing/test-policy.json',
+      Buffer.from(
+        JSON.stringify({
+          ...acceptedPolicy,
+          mode,
+          authorization:
+            mode === 'waived' ? 'explicit-user-request-20260922' : acceptedPolicy.authorization,
+        }),
+      ),
+    ],
     [root + 'distribution.zip', Buffer.from('game archive')],
     [root + 'fpv-worlds-playtest.zip', Buffer.from('world archive')],
     [root + 'README.md', Buffer.from('manual review guide')],
@@ -122,6 +153,9 @@ test('waived preview receipts never read missing TAP or claim a passing test res
 
 test('required preview receipts require successful focused checks and bind their TAP', async () => {
   const { files, root, identity } = await bindEvidence('required', 'success');
+  assert.equal(identity.qualification, 'development-preview');
+  assert.equal(identity.deployed, false);
+  assert.equal(identity.releaseQualified, false);
   assert.equal(identity.focusedTests.result, 'passed');
   assert.equal(identity.focusedTests.executed, true);
   assert.match(files.get(root + 'SHA256SUMS').toString(), /focused-tests\.tap/);
