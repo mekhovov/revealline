@@ -1,11 +1,35 @@
+import { DEFAULT_OVERFLIGHT_HUNT_PROJECT } from './raid-project.mjs';
+
+// This workload activates all authored sectors. Derive its population from the
+// admitted default content instead of allowing a reported population to qualify
+// itself. Its camera partition is an explicit technical-fixture rule.
+const raidAlive = DEFAULT_OVERFLIGHT_HUNT_PROJECT.encounters.reduce(
+  (total, encounter) =>
+    total +
+    encounter.objectives.length +
+    encounter.packs.reduce((count, pack) => count + pack.count, 0),
+  0,
+);
+export const OVERFLIGHT_HUNT_BENCHMARK_TARGET = Object.freeze({
+  alive: raidAlive,
+  visible: Math.min(200, raidAlive),
+});
+
 export const OVERFLIGHT_BENCHMARK_TARGETS = Object.freeze({
   reference: Object.freeze({ alive: 1500, visible: 700 }),
   stress: Object.freeze({ alive: 2500, visible: 1200 }),
+  'raid-reference': OVERFLIGHT_HUNT_BENCHMARK_TARGET,
   cadenceP95Ms: 18,
   cadenceP99Ms: 33.3,
   minimumCadenceHz: 59,
   maximumSlowFraction: 0.01,
 });
+export function overflightBenchmarkTarget(fixture) {
+  return ['reference', 'stress', 'raid-reference'].includes(fixture)
+    ? OVERFLIGHT_BENCHMARK_TARGETS[fixture]
+    : null;
+}
+
 export const OVERFLIGHT_BENCHMARK_PROTOCOL = Object.freeze({
   warmupSeconds: 30,
   measurementSeconds: 120,

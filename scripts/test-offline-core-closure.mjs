@@ -34,6 +34,9 @@ test('native Overflight source stays in player core while its linked Studio rema
     'game/studio/overflight.html',
     'game/studio/overflight.mjs',
     'game/studio/overflight.css',
+    'game/studio/raid.html',
+    'game/studio/raid.mjs',
+    'game/studio/raid.css',
     'authoring/library/overflight-field-kit-v1/manifest.json',
     'authoring/library/overflight-field-kit-v1/pickup-salvage-small.png',
   ];
@@ -46,6 +49,10 @@ test('native Overflight source stays in player core while its linked Studio rema
   const core = selectOfflineCore(files, new Set());
   for (const name of [
     'game/overflight/play.html',
+    'game/overflight/raid.html',
+    'game/overflight/raid-mode.mjs',
+    'game/overflight/raid-core.mjs',
+    'game/overflight/raid-project.mjs',
     'game/overflight/app.mjs',
     'game/overflight/core.mjs',
     'game/overflight/renderer.mjs',
@@ -58,7 +65,11 @@ test('native Overflight source stays in player core while its linked Studio rema
     assert.equal(core.retained.has(name), false, name);
     assert.ok(core.optional.includes(name), name);
   }
-  assert.equal(core.references.get('game/overflight/app.mjs'), 'game/overflight/play.html');
+  assert.ok(
+    ['game/overflight/play.html', 'game/overflight/raid.html'].includes(
+      core.references.get('game/overflight/app.mjs'),
+    ),
+  );
   assert.equal(core.references.get('game/overflight/renderer.mjs'), 'game/overflight/app.mjs');
 });
 
