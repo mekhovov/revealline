@@ -40,6 +40,66 @@ session ownership at the actual successor commit. The PR check records and
 committed-source receipts identify that source; earlier results keep their
 original identity. P2 remains a review draft without merge or auto-merge.
 
+## Reconciled source and additional host findings
+
+Reconciliation head `355d152b653e60f093611c912faca2d29093c2e0` passed all eleven
+executed hosted checks. Industrial phases passed **1,211/1,211**, Appearance
+passed **491/491** with game/Worlds builds, and Company candidate, capacity,
+optional-package and Community hosted checks passed. Mandatory lint,
+root/native formatting and content/localization/generated-source validation
+also passed. Native Start/menu cohorts passed **65/65 on Node 20** and
+**24/24 on Node 22**; an appearance/session/Team cohort passed **88/88 on
+Node 20** and **32/32 on Node 22**. These overlapping executions are not a
+unique-test total.
+
+The clean committed-source main build at that head passed with **2,998 entries /
+900,327,548 bytes**, below the 950 MB operating threshold. Manifest SHA-256:
+`d87291f5a40b6913ccce86eda1d7f767a7077e7830bf71e000e869f8d93d426c`.
+This is a canonical in-memory build, not a P2 public deployment.
+
+An additional serial Node 20 run of 27 changed host files reached its unchanged
+30-minute command bound: **269 top-level passes and six failures** were emitted,
+without a final TAP summary. Twenty-five files completed; touchscreen input
+needs full retirement evidence and the Ukraine role file had not started.
+The failed/incomplete receipt is retained at
+`.cache/p2-355d-remaining-changed-tests/receipt.json`, with per-file coverage in
+`completion-coverage.json`. It is not a passing suite.
+
+Three failed restore/import checks clicked a native action without joining its
+completion. The Details check also used Load saved flight after that control
+was hidden. Diagnostic joins completed the original checkpoint, history and
+retained-picture assertions, but did not reproduce the earlier five-second
+expiry. The narrow follow-up uses visible Library import for the backup and
+Details restores, awaits the actual retained-picture import, and joins Featured
+preparation in the Restart-status fixture. The latter retains its running-state
+predicate and explicitly checks picture readiness. No global readiness
+deadline, gameplay assertion, runtime rule or source asset changes.
+
+Cache-only proposals passed the complete backup/Details files (**15/15**) and
+the corrected picture/Restart-status files (**24/24**). The first proposal's
+duplicate import and premature running assertion are retained as diagnostic
+failures; they were never applied to source. These proposal results are not
+committed-source verification. The successor commit requires its own complete
+affected-file runs, remaining input files, mandatory validation and build.
+
+Two other failures remain **unreproduced, with no demonstrated root-cause fix**:
+mission replacement waited for background picture readiness after confirmation,
+and Settings reload waited for initial picture readiness. Logging-only runs
+retained their original five-second predicates and passed. Replacement's
+current owner completed roughly 0.8 seconds after confirmation while paused at
+tick zero; the Settings reload owner became ready in roughly 3.1 seconds. No
+native rejection or stale owner was observed. Those tests and runtime paths
+remain unchanged. Their records are under
+`.cache/p2-355d-picture-lifecycle-diagnostic/`. Any recurrence requires diagnosis
+of the original owner, preparation stage and error; a later pass does not erase
+the failed observation or establish a fix. Keep these distinct from the earlier
+installed-pack picture finding below.
+
+P2 remains an unmerged review draft. The preceding hosted results were obtained
+against the stacked P1 branch; retargeting to main adds its applicable required
+checks. Physical devices, audible playback, broader play review and real HTTPS
+rooms remain separate qualification work.
+
 ## Applied implementation scope
 
 | Area                | Concrete coverage                                                                                                                                                                                                                         | Boundary                                                                                                                                                                               |

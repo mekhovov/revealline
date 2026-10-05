@@ -1,3 +1,4 @@
+import { activateHostAction } from './helpers/host-action.mjs';
 import { nativeCaptureSession as nativeSession } from '../capture-presentation-session.mjs';
 import { winCurrentOpening } from './helpers/solo-opening-win.mjs';
 import test from 'node:test';
@@ -9,9 +10,10 @@ import { ACTOR_SESSION_FORMAT } from '../sessions.mjs';
 const sessionKey = 'revealline.suspended.dev.v1';
 const readyMessage = 'Flight assets ready. Press Resume to continue.';
 async function restart(t) {
-  const h = await soloPage(t, { titleScreen: true });
-  h.$('shell-featured').click();
+  const h = await soloPage(t, { titleScreen: true, waitForPictures: false });
+  await activateHostAction(h.$('shell-featured'));
   await settle(() => h.doc.body.dataset.flightState === 'running');
+  assert.equal(h.doc.body.dataset.pictureState, 'ready');
   h.$('pause-button').click();
   const original = JSON.parse(h.storage.getItem(sessionKey));
   assert.equal(nativeSession(original).format, ACTOR_SESSION_FORMAT);

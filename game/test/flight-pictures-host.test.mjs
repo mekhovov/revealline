@@ -185,8 +185,8 @@ for (const policy of ['immediate', 'grid-center'])
     await f.replace();
     p.$('library-button').click();
     p.$('save-json').value = JSON.stringify(saved);
-    p.$('import-save').click();
-    await settle(() => !p.$('library-dialog').open);
+    await activateHostAction(p.$('import-save'));
+    assert.equal(p.$('library-dialog').open, false);
     p.frame(0);
     assert.equal(p.rendered.backdrop.pin.assetId, 'picture-a');
     assert.equal(p.doc.body.dataset.flightState, 'paused');
