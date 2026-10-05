@@ -74,8 +74,16 @@ the native 8979 fixture failure: it used the legacy archive parser for a genuine
 checksummed v2 export. Native 8980 uses the existing async checksum-aware parser;
 the product did not change.
 
-Full package admission, actual admitted entry acceptance and the separately
-controlled old cached/offline tail remain pending. Both existing Library feeds
-stay unchanged. A later Harbor listing requires its own compatible cohort and
+Root's separate [old cached runtime tail](evidence/old-cached/receipt.json) passed
+on the unmodified admitted 0b54 player: public offline preparation, stopped
+localhost origin, actual cached reload, visible retained active/restore
+revisions and explicit refusal of the unsupported actor field. An ordinary
+built-in flight still ran to 61.1 seconds and paused at 61.2 seconds. The console
+was empty. Backup reported one part, but download capture timed out; no backup
+byte or filesystem-save claim is made. This is bounded localhost cache evidence,
+not device-wide offline, eviction durability or candidate-package acceptance.
+
+Full candidate package admission and actual admitted entry acceptance remain
+pending. Both existing Library feeds stay unchanged. A later Harbor listing requires its own compatible cohort and
 qualified content; it cannot be added to an older surface-only feed. Publication
 must remain a Draft under the current human main-merge hold.
