@@ -1,0 +1,3241 @@
+{
+  "format": "FpvLearningClarityManualVerification.v1",
+  "createdAt": "2026-10-05T04:25:11.907Z",
+  "baseline": "cfa30a228eb25d2bc7e4dd6d76e417c0d76a6873",
+  "node": "v20.19.5",
+  "command": "node docs/evidence/fpv-learning-clarity-probe.mjs",
+  "scope": "Observer criteria and unchanged recommended-mode lesson recordings; no browser, hardware, novice acceptance or new unit coverage claimed.",
+  "sources": {
+    "optional-practice/civilian-fpv/beginner-coach.mjs": "71e7d6af38e7811d20816de4244ae24b9d82e2d64f8215ae504127f5a664191e",
+    "optional-practice/civilian-fpv/world-catalogue.mjs": "54cbcaea1085548862dfbf3a64a99bac4f27dd8c7529786da3320b2e0248e611",
+    "optional-practice/civilian-fpv/world-demonstrations.mjs": "c9f2d0ee5c571507ae1dce4f48898554cb2ad179218f1905cdc8013db2e2c114",
+    "optional-practice/civilian-fpv/world-model.mjs": "95b4547019dcc44d2fb7dd426718fe01ee824ad714967a61edf7ccafb0f71ce2",
+    "optional-practice/civilian-fpv/world-collision.mjs": "2899c7c84f9eae14b9a3434f585a8e873f4a1361e8f3ce4026ef27f44bdeef32",
+    "optional-practice/civilian-fpv/math.mjs": "555c8b6ea170b46992133507d2a3d867f06185bca060239cab7db9c9b87f9f98",
+    "optional-practice/civilian-fpv/radio-profile.mjs": "f588fd5cda96ed9627a483f49ca843ace8d99a68fae42b0a4239c2cd0ab81933",
+    "optional-practice/civilian-fpv/sim-presentation.mjs": "2f7624ed41d00faef362d08a0f68afe496de4075f40915d3cc9dbb551ea96cf3"
+  },
+  "probeSha256": "8cd0eebda3d0262ce6f89f63697e5d558497168ecc79ffc2d247c2bf646fe41d",
+  "checks": [
+    {
+      "name": "Unmodified runtime or proof bytes: optional-practice/civilian-fpv/world-demonstrations.mjs",
+      "passed": true
+    },
+    {
+      "name": "Unmodified runtime or proof bytes: optional-practice/civilian-fpv/world-model.mjs",
+      "passed": true
+    },
+    {
+      "name": "Unmodified runtime or proof bytes: optional-practice/civilian-fpv/world-collision.mjs",
+      "passed": true
+    },
+    {
+      "name": "Unmodified runtime or proof bytes: optional-practice/civilian-fpv/math.mjs",
+      "passed": true
+    },
+    {
+      "name": "Unmodified runtime or proof bytes: optional-practice/civilian-fpv/radio-profile.mjs",
+      "passed": true
+    },
+    {
+      "name": "Acro13 upright hovering explains missing tilt",
+      "passed": true
+    },
+    {
+      "name": "Acro13 objective displays tilt range and centred requirement",
+      "passed": true
+    },
+    {
+      "name": "Acro13 all predicates qualify at10degrees with rotation centred",
+      "passed": true
+    },
+    {
+      "name": "Acro13 centred input50 accepted",
+      "passed": true
+    },
+    {
+      "name": "Acro13 input51 explains centring",
+      "passed": true
+    },
+    {
+      "name": "Acro13 minimum6degrees accepted",
+      "passed": true
+    },
+    {
+      "name": "Acro13 tilt599 rejected",
+      "passed": true
+    },
+    {
+      "name": "Acro13 tilt1801 rejected",
+      "passed": true
+    },
+    {
+      "name": "Acro13 horizontal zone is inclusive",
+      "passed": true
+    },
+    {
+      "name": "Acro13 leaving horizontal zone gives position hint",
+      "passed": true
+    },
+    {
+      "name": "Speed includes vertical motion",
+      "passed": true
+    },
+    {
+      "name": "Self-level remains honest about retained tilt",
+      "passed": true
+    },
+    {
+      "name": "Dwell displays exact12tick duration",
+      "passed": true
+    },
+    {
+      "name": "No telemetry is fabricated before state arrives",
+      "passed": true
+    },
+    {
+      "name": "Missing target does not imply completion without runtime state",
+      "passed": true
+    },
+    {
+      "name": "Finished runtime route permits completion summary",
+      "passed": true
+    },
+    {
+      "name": "Gate height alone never fabricates completed crossing",
+      "passed": true
+    },
+    {
+      "name": "Passed gate plane without crossing requests return",
+      "passed": true
+    },
+    {
+      "name": "Gate missing state is unmeasured",
+      "passed": true
+    },
+    {
+      "name": "Gate lateral miss is explained",
+      "passed": true
+    },
+    {
+      "name": "Actor-track fixture exists",
+      "passed": true
+    },
+    {
+      "name": "Actor-track missing state is safe",
+      "passed": true
+    },
+    {
+      "name": "Actor-track stale step counters do not count",
+      "passed": true
+    },
+    {
+      "name": "Actor-track runtime occlusion reason is respected",
+      "passed": true
+    },
+    {
+      "name": "Actor-track duration alone cannot replace target travel",
+      "passed": true
+    },
+    {
+      "name": "Unordered contact does not invent target order",
+      "passed": true
+    },
+    {
+      "name": "Eliminate counts defeated actors only",
+      "passed": true
+    },
+    {
+      "name": "Survive uses runtime ticks only",
+      "passed": true
+    },
+    {
+      "name": "Every EN/UK lesson and mode has safe initial guidance",
+      "passed": true
+    },
+    {
+      "name": "All58 current School recommended examples complete and replay exactly",
+      "passed": true
+    }
+  ],
+  "summary": {
+    "checks": 35,
+    "localizedObjectives": 1496,
+    "lessonCount": 58,
+    "stepTypesAcrossBothModes": {
+      "hold": 352,
+      "land": 126,
+      "gate": 192,
+      "rotation-v1": 44,
+      "attitude-v1": 2,
+      "path-v1": 26,
+      "crossing-v1": 6
+    },
+    "recordedTicks": 87518,
+    "independentReplayTicks": 87518,
+    "holdPredicateComparisons": 56796,
+    "acceptedHoldComparisons": 239,
+    "predicateMismatches": 0
+  },
+  "lessons": [
+    {
+      "id": "beginner-01",
+      "title": "Meet your drone",
+      "mode": "self-level",
+      "sourceIdentity": "5b7652234b696e5a",
+      "proofSha256": "1dfa3d637133570494d1715767e0ac195944e3ab2626117a05df57fa6b427a4e",
+      "frames": 360,
+      "finalStateIdentity": "9c5c44ff0f549053",
+      "directStatus": "complete",
+      "independentStatus": "complete",
+      "holdPredicateFrames": 357,
+      "transitions": [
+        {
+          "index": 0,
+          "title": "Ready on the launch pad",
+          "criterion": "hold",
+          "tick": 40
+        },
+        {
+          "index": 1,
+          "title": "Lift gently",
+          "criterion": "hold",
+          "tick": 148
+        },
+        {
+          "index": 2,
+          "title": "Settle onto the pad",
+          "criterion": "land",
+          "tick": 360
+        }
+      ]
+    },
+    {
+      "id": "beginner-02",
+      "title": "Up, down, under control",
+      "mode": "self-level",
+      "sourceIdentity": "e50fcbdb6764bd0f",
+      "proofSha256": "1c142919c6b28210c6420ec914b9fc79f22b7c365458b46447460030b448e070",
+      "frames": 564,
+      "finalStateIdentity": "f79e1ebe9e9f5a3b",
+      "directStatus": "complete",
+      "independentStatus": "complete",
+      "holdPredicateFrames": 561,
+      "transitions": [
+        {
+          "index": 0,
+          "title": "Lift gently",
+          "criterion": "hold",
+          "tick": 126
+        },
+        {
+          "index": 1,
+          "title": "Climb to the upper ribbon",
+          "criterion": "hold",
+          "tick": 278
+        },
+        {
+          "index": 2,
+          "title": "Settle onto the pad",
+          "criterion": "land",
+          "tick": 564
+        }
+      ]
+    },
+    {
+      "id": "beginner-03",
+      "title": "Find your hover",
+      "mode": "self-level",
+      "sourceIdentity": "20c47db382d75bc5",
+      "proofSha256": "b91943fc4e9bb3a077f3aa6817db5722221b8953cb486dc7cafb67327eda3142",
+      "frames": 561,
+      "finalStateIdentity": "df7c0c7ddcbe98f8",
+      "directStatus": "complete",
+      "independentStatus": "complete",
+      "holdPredicateFrames": 558,
+      "transitions": [
+        {
+          "index": 0,
+          "title": "Lift gently",
+          "criterion": "hold",
+          "tick": 149
+        },
+        {
+          "index": 1,
+          "title": "Keep the hover calm",
+          "criterion": "hold",
+          "tick": 299
+        },
+        {
+          "index": 2,
+          "title": "Settle onto the pad",
+          "criterion": "land",
+          "tick": 561
+        }
+      ]
+    },
+    {
+      "id": "beginner-04",
+      "title": "Turn the nose: yaw",
+      "mode": "self-level",
+      "sourceIdentity": "bbce5a92237477b8",
+      "proofSha256": "378c4aba12ddb3f91d8e486336e41e2250faddb2d872afda96fa8e3bdab8338d",
+      "frames": 696,
+      "finalStateIdentity": "2b02d54e3f436aa4",
+      "directStatus": "complete",
+      "independentStatus": "complete",
+      "holdPredicateFrames": 691,
+      "transitions": [
+        {
+          "index": 0,
+          "title": "Lift gently",
+          "criterion": "hold",
+          "tick": 149
+        },
+        {
+          "index": 1,
+          "title": "Face right",
+          "criterion": "hold",
+          "tick": 237
+        },
+        {
+          "index": 2,
+          "title": "Face left",
+          "criterion": "hold",
+          "tick": 346
+        },
+        {
+          "index": 3,
+          "title": "Face forward",
+          "criterion": "hold",
+          "tick": 434
+        },
+        {
+          "index": 4,
+          "title": "Settle onto the pad",
+          "criterion": "land",
+          "tick": 696
+        }
+      ]
+    },
+    {
+      "id": "beginner-05",
+      "title": "Forward with pitch",
+      "mode": "self-level",
+      "sourceIdentity": "29eb33e8d0941bc0",
+      "proofSha256": "1e481713f52d6e8a1a665664be199299ab89fb14940d36841a1ee992443de66b",
+      "frames": 654,
+      "finalStateIdentity": "7b57e5174cee28c4",
+      "directStatus": "complete",
+      "independentStatus": "complete",
+      "holdPredicateFrames": 490,
+      "transitions": [
+        {
+          "index": 0,
+          "title": "Lift gently",
+          "criterion": "hold",
+          "tick": 149
+        },
+        {
+          "index": 1,
+          "title": "Nose forward, move forward",
+          "criterion": "gate",
+          "tick": 310
+        },
+        {
+          "index": 2,
+          "title": "Level, then slow the drift",
+          "criterion": "hold",
+          "tick": 393
+        },
+        {
+          "index": 3,
+          "title": "Settle onto the pad",
+          "criterion": "land",
+          "tick": 654
+        }
+      ]
+    },
+    {
+      "id": "beginner-06",
+      "title": "Slide with roll",
+      "mode": "self-level",
+      "sourceIdentity": "e1520c67b8bab038",
+      "proofSha256": "c87489d90a58b88119e74894e01185a98e1892f7205dc8de69986990f22f04c2",
+      "frames": 828,
+      "finalStateIdentity": "e2cdac9d77db8835",
+      "directStatus": "complete",
+      "independentStatus": "complete",
+      "holdPredicateFrames": 824,
+      "transitions": [
+        {
+          "index": 0,
+          "title": "Lift gently",
+          "criterion": "hold",
+          "tick": 149
+        },
+        {
+          "index": 1,
+          "title": "Slide right",
+          "criterion": "hold",
+          "tick": 311
+        },
+        {
+          "index": 2,
+          "title": "Slide left",
+          "criterion": "hold",
+          "tick": 566
+        },
+        {
+          "index": 3,
+          "title": "Settle onto the pad",
+          "criterion": "land",
+          "tick": 828
+        }
+      ]
+    },
+    {
+      "id": "beginner-07",
+      "title": "Brake, do not chase",
+      "mode": "self-level",
+      "sourceIdentity": "96b61727c33609cb",
+      "proofSha256": "d2cb0a446cc035ba9f8750679d61c363695ae73c9a68711c1be1f4388ad8d2de",
+      "frames": 948,
+      "finalStateIdentity": "52ca8f0f6d942fda",
+      "directStatus": "complete",
+      "independentStatus": "complete",
+      "holdPredicateFrames": 799,
+      "transitions": [
+        {
+          "index": 0,
+          "title": "Lift gently",
+          "criterion": "hold",
+          "tick": 149
+        },
+        {
+          "index": 1,
+          "title": "Build a little speed",
+          "criterion": "gate",
+          "tick": 294
+        },
+        {
+          "index": 2,
+          "title": "Brake into the box",
+          "criterion": "hold",
+          "tick": 478
+        },
+        {
+          "index": 3,
+          "title": "Reverse, then settle",
+          "criterion": "hold",
+          "tick": 686
+        },
+        {
+          "index": 4,
+          "title": "Settle onto the pad",
+          "criterion": "land",
+          "tick": 948
+        }
+      ]
+    },
+    {
+      "id": "beginner-08",
+      "title": "Keep height while moving",
+      "mode": "self-level",
+      "sourceIdentity": "df81ed3f34a3b642",
+      "proofSha256": "d538149fc6dc07c0fac7056265e9f54bff81eba299fef040184455c2de3b7edd",
+      "frames": 830,
+      "finalStateIdentity": "502bfd5fba0dd1fa",
+      "directStatus": "complete",
+      "independentStatus": "complete",
+      "holdPredicateFrames": 826,
+      "transitions": [
+        {
+          "index": 0,
+          "title": "Lift gently",
+          "criterion": "hold",
+          "tick": 161
+        },
+        {
+          "index": 1,
+          "title": "Travel and climb a little",
+          "criterion": "hold",
+          "tick": 362
+        },
+        {
+          "index": 2,
+          "title": "Travel into the lower box",
+          "criterion": "hold",
+          "tick": 579
+        },
+        {
+          "index": 3,
+          "title": "Settle onto the pad",
+          "criterion": "land",
+          "tick": 830
+        }
+      ]
+    },
+    {
+      "id": "beginner-09",
+      "title": "Your first corner",
+      "mode": "self-level",
+      "sourceIdentity": "a76f372299d61107",
+      "proofSha256": "c69de24456bd94b1277acca5450672f3d77171ec3b8a78c0bf607cdd0571ccf0",
+      "frames": 899,
+      "finalStateIdentity": "fd81a13164a8da78",
+      "directStatus": "complete",
+      "independentStatus": "complete",
+      "holdPredicateFrames": 706,
+      "transitions": [
+        {
+          "index": 0,
+          "title": "Lift gently",
+          "criterion": "hold",
+          "tick": 149
+        },
+        {
+          "index": 1,
+          "title": "Fly to the corner",
+          "criterion": "hold",
+          "tick": 351
+        },
+        {
+          "index": 2,
+          "title": "Turn the nose right",
+          "criterion": "hold",
+          "tick": 449
+        },
+        {
+          "index": 3,
+          "title": "Fly the new straight",
+          "criterion": "gate",
+          "tick": 638
+        },
+        {
+          "index": 4,
+          "title": "Settle onto the pad",
+          "criterion": "land",
+          "tick": 899
+        }
+      ]
+    },
+    {
+      "id": "beginner-10",
+      "title": "See through the goggles",
+      "mode": "self-level",
+      "sourceIdentity": "6c6745619ebc45cf",
+      "proofSha256": "49a3cb8765879d7e2bbf1910c32fbc5a3d93d8a99551bd2c38060f3cdce53991",
+      "frames": 732,
+      "finalStateIdentity": "573b969949ebedb6",
+      "directStatus": "complete",
+      "independentStatus": "complete",
+      "holdPredicateFrames": 728,
+      "transitions": [
+        {
+          "index": 0,
+          "title": "Lift gently",
+          "criterion": "hold",
+          "tick": 149
+        },
+        {
+          "index": 1,
+          "title": "Approach the front landmark",
+          "criterion": "hold",
+          "tick": 332
+        },
+        {
+          "index": 2,
+          "title": "Slide to the side landmark",
+          "criterion": "hold",
+          "tick": 470
+        },
+        {
+          "index": 3,
+          "title": "Settle onto the pad",
+          "criterion": "land",
+          "tick": 732
+        }
+      ]
+    },
+    {
+      "id": "beginner-11",
+      "title": "Three friendly gates",
+      "mode": "self-level",
+      "sourceIdentity": "6cdbd35333c04b69",
+      "proofSha256": "fd65e2b183fa8a7372b663b6f4c89c8685f2befbfe7104d1a146cf2f2f26269e",
+      "frames": 945,
+      "finalStateIdentity": "d22d2c0ed2f3769e",
+      "directStatus": "complete",
+      "independentStatus": "complete",
+      "holdPredicateFrames": 408,
+      "transitions": [
+        {
+          "index": 0,
+          "title": "Lift gently",
+          "criterion": "hold",
+          "tick": 149
+        },
+        {
+          "index": 1,
+          "title": "Pass gate 1",
+          "criterion": "gate",
+          "tick": 310
+        },
+        {
+          "index": 2,
+          "title": "Pass gate 2",
+          "criterion": "gate",
+          "tick": 471
+        },
+        {
+          "index": 3,
+          "title": "Pass gate 3",
+          "criterion": "gate",
+          "tick": 684
+        },
+        {
+          "index": 4,
+          "title": "Settle onto the pad",
+          "criterion": "land",
+          "tick": 945
+        }
+      ]
+    },
+    {
+      "id": "beginner-12",
+      "title": "Your first solo route",
+      "mode": "self-level",
+      "sourceIdentity": "43f761053d0d99c5",
+      "proofSha256": "1a5059c95014d600cc9f7283e26be9fde98475f57d98dbe682d6f4793d867b1e",
+      "frames": 1032,
+      "finalStateIdentity": "4d5e90cdbe3cccac",
+      "directStatus": "complete",
+      "independentStatus": "complete",
+      "holdPredicateFrames": 665,
+      "transitions": [
+        {
+          "index": 0,
+          "title": "Lift gently",
+          "criterion": "hold",
+          "tick": 149
+        },
+        {
+          "index": 1,
+          "title": "Begin your first straight",
+          "criterion": "gate",
+          "tick": 310
+        },
+        {
+          "index": 2,
+          "title": "Slow and face the turn",
+          "criterion": "hold",
+          "tick": 423
+        },
+        {
+          "index": 3,
+          "title": "Take the second straight",
+          "criterion": "gate",
+          "tick": 625
+        },
+        {
+          "index": 4,
+          "title": "Hover above home",
+          "criterion": "hold",
+          "tick": 782
+        },
+        {
+          "index": 5,
+          "title": "Settle onto the pad",
+          "criterion": "land",
+          "tick": 1032
+        }
+      ]
+    },
+    {
+      "id": "beginner-13",
+      "title": "Acro: the tilt stays",
+      "mode": "acro",
+      "sourceIdentity": "69bdf9a4ac73a31e",
+      "proofSha256": "876516643e3a31ec48301628be3354701d26ffabaa589f933ca7a6aaf9fd4440",
+      "frames": 654,
+      "finalStateIdentity": "11f9978ff8f10766",
+      "directStatus": "complete",
+      "independentStatus": "complete",
+      "holdPredicateFrames": 650,
+      "transitions": [
+        {
+          "index": 0,
+          "title": "Lift gently",
+          "criterion": "hold",
+          "tick": 182
+        },
+        {
+          "index": 1,
+          "title": "Tip, then centre",
+          "criterion": "hold",
+          "tick": 214
+        },
+        {
+          "index": 2,
+          "title": "Actively return to level",
+          "criterion": "hold",
+          "tick": 326
+        },
+        {
+          "index": 3,
+          "title": "Settle onto the pad",
+          "criterion": "land",
+          "tick": 654
+        }
+      ]
+    },
+    {
+      "id": "beginner-14",
+      "title": "Acro: your first line",
+      "mode": "acro",
+      "sourceIdentity": "cea3c2b2d9a5dc24",
+      "proofSha256": "f0db3202ff6d611e4f7512e96a49d25ca5b408c1ac0ac44708ee658c2d51b911",
+      "frames": 757,
+      "finalStateIdentity": "fe32539fa7036a87",
+      "directStatus": "complete",
+      "independentStatus": "complete",
+      "holdPredicateFrames": 578,
+      "transitions": [
+        {
+          "index": 0,
+          "title": "Lift gently",
+          "criterion": "hold",
+          "tick": 161
+        },
+        {
+          "index": 1,
+          "title": "Set a small forward tilt",
+          "criterion": "gate",
+          "tick": 337
+        },
+        {
+          "index": 2,
+          "title": "Counter-rotate and brake",
+          "criterion": "hold",
+          "tick": 483
+        },
+        {
+          "index": 3,
+          "title": "Settle onto the pad",
+          "criterion": "land",
+          "tick": 757
+        }
+      ]
+    },
+    {
+      "id": "beginner-15",
+      "title": "Your first Acro takeoff",
+      "mode": "acro",
+      "sourceIdentity": "451ad6d46ab40e85",
+      "proofSha256": "3ed59a7e4222388df0d53febaacf5025fdfec463e44b75272065dc182c8ae98b",
+      "frames": 360,
+      "finalStateIdentity": "a263ee9df3245fc6",
+      "directStatus": "complete",
+      "independentStatus": "complete",
+      "holdPredicateFrames": 357,
+      "transitions": [
+        {
+          "index": 0,
+          "title": "Ground check",
+          "criterion": "hold",
+          "tick": 40
+        },
+        {
+          "index": 1,
+          "title": "Lift gently",
+          "criterion": "hold",
+          "tick": 148
+        },
+        {
+          "index": 2,
+          "title": "Settle onto the pad",
+          "criterion": "land",
+          "tick": 360
+        }
+      ]
+    },
+    {
+      "id": "beginner-16",
+      "title": "Thrust, climb and descent",
+      "mode": "acro",
+      "sourceIdentity": "5f480be5552a4896",
+      "proofSha256": "8cd46017b3c075ec19e4ce4cd247d3e4525fe72a7c952819773edcabb30a7573",
+      "frames": 712,
+      "finalStateIdentity": "98a71c96624ef754",
+      "directStatus": "complete",
+      "independentStatus": "complete",
+      "holdPredicateFrames": 708,
+      "transitions": [
+        {
+          "index": 0,
+          "title": "Lift gently",
+          "criterion": "hold",
+          "tick": 126
+        },
+        {
+          "index": 1,
+          "title": "Climb, then ease off",
+          "criterion": "hold",
+          "tick": 296
+        },
+        {
+          "index": 2,
+          "title": "Catch the descent",
+          "criterion": "hold",
+          "tick": 459
+        },
+        {
+          "index": 3,
+          "title": "Settle onto the pad",
+          "criterion": "land",
+          "tick": 712
+        }
+      ]
+    },
+    {
+      "id": "beginner-17",
+      "title": "Level, then find your hover",
+      "mode": "acro",
+      "sourceIdentity": "1cefa1a39dc2964d",
+      "proofSha256": "5fd570aa5ac91314980efb96996251deea5d67c3cfa8dbfdee1d0fe959f235d4",
+      "frames": 608,
+      "finalStateIdentity": "e31f382df014b710",
+      "directStatus": "complete",
+      "independentStatus": "complete",
+      "holdPredicateFrames": 604,
+      "transitions": [
+        {
+          "index": 0,
+          "title": "Lift gently",
+          "criterion": "hold",
+          "tick": 182
+        },
+        {
+          "index": 1,
+          "title": "Set a small tilt and release",
+          "criterion": "hold",
+          "tick": 214
+        },
+        {
+          "index": 2,
+          "title": "Level and stop the drift",
+          "criterion": "hold",
+          "tick": 314
+        },
+        {
+          "index": 3,
+          "title": "Settle onto the pad",
+          "criterion": "land",
+          "tick": 608
+        }
+      ]
+    },
+    {
+      "id": "beginner-18",
+      "title": "Roll and lateral braking",
+      "mode": "acro",
+      "sourceIdentity": "01b84b1aaae8d520",
+      "proofSha256": "428cf745c8a65f522849f6a0dc47e477f8309a423a89f7021dc49f8d88cae2f1",
+      "frames": 961,
+      "finalStateIdentity": "c3cb25ef47210af2",
+      "directStatus": "complete",
+      "independentStatus": "complete",
+      "holdPredicateFrames": 957,
+      "transitions": [
+        {
+          "index": 0,
+          "title": "Lift gently",
+          "criterion": "hold",
+          "tick": 161
+        },
+        {
+          "index": 1,
+          "title": "Slide right and brake",
+          "criterion": "hold",
+          "tick": 379
+        },
+        {
+          "index": 2,
+          "title": "Slide left and brake",
+          "criterion": "hold",
+          "tick": 688
+        },
+        {
+          "index": 3,
+          "title": "Settle onto the pad",
+          "criterion": "land",
+          "tick": 961
+        }
+      ]
+    },
+    {
+      "id": "beginner-19",
+      "title": "Yaw: heading is not travel",
+      "mode": "acro",
+      "sourceIdentity": "80dc8d60a229d28f",
+      "proofSha256": "5dbcc4a561bbacc663f91bb1e3a3da34703b3fa406a073edd827abfd24394d4d",
+      "frames": 973,
+      "finalStateIdentity": "4278125617729278",
+      "directStatus": "complete",
+      "independentStatus": "complete",
+      "holdPredicateFrames": 967,
+      "transitions": [
+        {
+          "index": 0,
+          "title": "Lift gently",
+          "criterion": "hold",
+          "tick": 161
+        },
+        {
+          "index": 1,
+          "title": "Face east",
+          "criterion": "hold",
+          "tick": 264
+        },
+        {
+          "index": 2,
+          "title": "Face west",
+          "criterion": "hold",
+          "tick": 389
+        },
+        {
+          "index": 3,
+          "title": "Face north again",
+          "criterion": "hold",
+          "tick": 492
+        },
+        {
+          "index": 4,
+          "title": "Now travel north",
+          "criterion": "hold",
+          "tick": 699
+        },
+        {
+          "index": 5,
+          "title": "Settle onto the pad",
+          "criterion": "land",
+          "tick": 973
+        }
+      ]
+    },
+    {
+      "id": "beginner-20",
+      "title": "Keep height while tilted",
+      "mode": "acro",
+      "sourceIdentity": "1b0ad0ea2b94f32f",
+      "proofSha256": "aeabb623a470a0acf50255ffb5731f0c8aca2a3a9aa599d793c1a80c9d076c60",
+      "frames": 908,
+      "finalStateIdentity": "85322821714cc6d5",
+      "directStatus": "complete",
+      "independentStatus": "complete",
+      "holdPredicateFrames": 570,
+      "transitions": [
+        {
+          "index": 0,
+          "title": "Lift gently",
+          "criterion": "hold",
+          "tick": 161
+        },
+        {
+          "index": 1,
+          "title": "Climb while moving",
+          "criterion": "gate",
+          "tick": 336
+        },
+        {
+          "index": 2,
+          "title": "Descend while moving",
+          "criterion": "gate",
+          "tick": 496
+        },
+        {
+          "index": 3,
+          "title": "Settle after the gates",
+          "criterion": "hold",
+          "tick": 645
+        },
+        {
+          "index": 4,
+          "title": "Settle onto the pad",
+          "criterion": "land",
+          "tick": 908
+        }
+      ]
+    },
+    {
+      "id": "beginner-21",
+      "title": "Coordinated left and right turns",
+      "mode": "acro",
+      "sourceIdentity": "6e525e60ae7a9fd7",
+      "proofSha256": "624f193e9823260e21105a2ca901bc04b12f7d2663a9fe063959c0fbe0e85841",
+      "frames": 959,
+      "finalStateIdentity": "f68bc332fde2cd48",
+      "directStatus": "complete",
+      "independentStatus": "complete",
+      "holdPredicateFrames": 954,
+      "transitions": [
+        {
+          "index": 0,
+          "title": "Lift gently",
+          "criterion": "hold",
+          "tick": 161
+        },
+        {
+          "index": 1,
+          "title": "Approach the corner",
+          "criterion": "hold",
+          "tick": 328
+        },
+        {
+          "index": 2,
+          "title": "Enter the right turn",
+          "criterion": "hold",
+          "tick": 511
+        },
+        {
+          "index": 3,
+          "title": "Exit through a left turn",
+          "criterion": "hold",
+          "tick": 686
+        },
+        {
+          "index": 4,
+          "title": "Settle onto the pad",
+          "criterion": "land",
+          "tick": 959
+        }
+      ]
+    },
+    {
+      "id": "beginner-22",
+      "title": "A gentle figure eight",
+      "mode": "acro",
+      "sourceIdentity": "f2fee45d782060e4",
+      "proofSha256": "ea6c166f4a2b896094e8f4bcdd3734a80dbf7eea9e1ffd8a7816cc55297f0eaf",
+      "frames": 1763,
+      "finalStateIdentity": "1eed4ab679368ff7",
+      "directStatus": "complete",
+      "independentStatus": "complete",
+      "holdPredicateFrames": 1753,
+      "transitions": [
+        {
+          "index": 0,
+          "title": "Lift gently",
+          "criterion": "hold",
+          "tick": 171
+        },
+        {
+          "index": 1,
+          "title": "Loop marker 1 of 8",
+          "criterion": "hold",
+          "tick": 320
+        },
+        {
+          "index": 2,
+          "title": "Loop marker 2 of 8",
+          "criterion": "hold",
+          "tick": 489
+        },
+        {
+          "index": 3,
+          "title": "Loop marker 3 of 8",
+          "criterion": "hold",
+          "tick": 651
+        },
+        {
+          "index": 4,
+          "title": "Loop marker 4 of 8",
+          "criterion": "hold",
+          "tick": 814
+        },
+        {
+          "index": 5,
+          "title": "Loop marker 5 of 8",
+          "criterion": "hold",
+          "tick": 983
+        },
+        {
+          "index": 6,
+          "title": "Loop marker 6 of 8",
+          "criterion": "hold",
+          "tick": 1154
+        },
+        {
+          "index": 7,
+          "title": "Loop marker 7 of 8",
+          "criterion": "hold",
+          "tick": 1316
+        },
+        {
+          "index": 8,
+          "title": "Loop marker 8 of 8",
+          "criterion": "hold",
+          "tick": 1479
+        },
+        {
+          "index": 9,
+          "title": "Settle onto the pad",
+          "criterion": "land",
+          "tick": 1763
+        }
+      ]
+    },
+    {
+      "id": "beginner-23",
+      "title": "Read the FPV horizon",
+      "mode": "acro",
+      "sourceIdentity": "ed45d8e143324668",
+      "proofSha256": "69b9077a0eb337e58e2344e7d8cfd02aef48f5cffcef5cd45bd1653b99b67a20",
+      "frames": 1057,
+      "finalStateIdentity": "2845a2ff4aec8315",
+      "directStatus": "complete",
+      "independentStatus": "complete",
+      "holdPredicateFrames": 1052,
+      "transitions": [
+        {
+          "index": 0,
+          "title": "Lift gently",
+          "criterion": "hold",
+          "tick": 161
+        },
+        {
+          "index": 1,
+          "title": "Approach the northern marker",
+          "criterion": "hold",
+          "tick": 388
+        },
+        {
+          "index": 2,
+          "title": "Move sideways with the same view",
+          "criterion": "hold",
+          "tick": 585
+        },
+        {
+          "index": 3,
+          "title": "Keep the horizon calm",
+          "criterion": "hold",
+          "tick": 784
+        },
+        {
+          "index": 4,
+          "title": "Settle onto the pad",
+          "criterion": "land",
+          "tick": 1057
+        }
+      ]
+    },
+    {
+      "id": "beginner-24",
+      "title": "Three gates, one smooth line",
+      "mode": "acro",
+      "sourceIdentity": "89edd7ed96c134ec",
+      "proofSha256": "dff84c72c1440440a44e4055f35ff36992994ce9e3157d4ce856d9d512cb0e6b",
+      "frames": 1031,
+      "finalStateIdentity": "7524261f630f7a40",
+      "directStatus": "complete",
+      "independentStatus": "complete",
+      "holdPredicateFrames": 421,
+      "transitions": [
+        {
+          "index": 0,
+          "title": "Lift gently",
+          "criterion": "hold",
+          "tick": 161
+        },
+        {
+          "index": 1,
+          "title": "Gate 1: look through the opening",
+          "criterion": "gate",
+          "tick": 321
+        },
+        {
+          "index": 2,
+          "title": "Gate 2: look through the opening",
+          "criterion": "gate",
+          "tick": 523
+        },
+        {
+          "index": 3,
+          "title": "Gate 3: look through the opening",
+          "criterion": "gate",
+          "tick": 769
+        },
+        {
+          "index": 4,
+          "title": "Settle onto the pad",
+          "criterion": "land",
+          "tick": 1031
+        }
+      ]
+    },
+    {
+      "id": "beginner-25",
+      "title": "Recover and land precisely",
+      "mode": "acro",
+      "sourceIdentity": "5b7fdad9ec9b8949",
+      "proofSha256": "eb959e97d04a86b3e77ff4451a9a00b784ab23a09a3458a7f0487076e9a5c249",
+      "frames": 676,
+      "finalStateIdentity": "d8840ecf804778f1",
+      "directStatus": "complete",
+      "independentStatus": "complete",
+      "holdPredicateFrames": 672,
+      "transitions": [
+        {
+          "index": 0,
+          "title": "Lift gently",
+          "criterion": "hold",
+          "tick": 190
+        },
+        {
+          "index": 1,
+          "title": "Create a small, recoverable tilt",
+          "criterion": "hold",
+          "tick": 226
+        },
+        {
+          "index": 2,
+          "title": "Level, brake, return",
+          "criterion": "hold",
+          "tick": 400
+        },
+        {
+          "index": 3,
+          "title": "Settle onto the pad",
+          "criterion": "land",
+          "tick": 676
+        }
+      ]
+    },
+    {
+      "id": "beginner-26",
+      "title": "Your first solo Acro route",
+      "mode": "acro",
+      "sourceIdentity": "616326c6a2c3dcc6",
+      "proofSha256": "b40ecb8ca37caa6027dbec9d883e5d742c6a13a8d8c95acc0c1ef2026ab471a0",
+      "frames": 1407,
+      "finalStateIdentity": "e0364f091e3eb2a4",
+      "directStatus": "complete",
+      "independentStatus": "complete",
+      "holdPredicateFrames": 847,
+      "transitions": [
+        {
+          "index": 0,
+          "title": "Lift gently",
+          "criterion": "hold",
+          "tick": 161
+        },
+        {
+          "index": 1,
+          "title": "The opening straight",
+          "criterion": "gate",
+          "tick": 337
+        },
+        {
+          "index": 2,
+          "title": "Right toward the next gate",
+          "criterion": "hold",
+          "tick": 460
+        },
+        {
+          "index": 3,
+          "title": "Cross the eastern gate",
+          "criterion": "gate",
+          "tick": 649
+        },
+        {
+          "index": 4,
+          "title": "Left onto the final line",
+          "criterion": "hold",
+          "tick": 772
+        },
+        {
+          "index": 5,
+          "title": "The final gate",
+          "criterion": "gate",
+          "tick": 962
+        },
+        {
+          "index": 6,
+          "title": "Hold over home",
+          "criterion": "hold",
+          "tick": 1145
+        },
+        {
+          "index": 7,
+          "title": "Settle onto the pad",
+          "criterion": "land",
+          "tick": 1407
+        }
+      ]
+    },
+    {
+      "id": "beginner-27",
+      "title": "Braking marks",
+      "mode": "acro",
+      "sourceIdentity": "61cef0ae26829648",
+      "proofSha256": "4e6fd5ec883cd03ea838837177e5c3e7b11cc4a5e4d15766128291396be873ed",
+      "frames": 1379,
+      "finalStateIdentity": "a18a122f726dfe48",
+      "directStatus": "complete",
+      "independentStatus": "complete",
+      "holdPredicateFrames": 808,
+      "transitions": [
+        {
+          "index": 0,
+          "title": "Lift into clear space",
+          "criterion": "hold",
+          "tick": 161
+        },
+        {
+          "index": 1,
+          "title": "First approach",
+          "criterion": "gate",
+          "tick": 350
+        },
+        {
+          "index": 2,
+          "title": "Brake before the box",
+          "criterion": "hold",
+          "tick": 539
+        },
+        {
+          "index": 3,
+          "title": "Turn into the second approach",
+          "criterion": "gate",
+          "tick": 728
+        },
+        {
+          "index": 4,
+          "title": "Catch the second stop",
+          "criterion": "hold",
+          "tick": 917
+        },
+        {
+          "index": 5,
+          "title": "Return toward the pad",
+          "criterion": "gate",
+          "tick": 1106
+        },
+        {
+          "index": 6,
+          "title": "Finish with a soft landing",
+          "criterion": "land",
+          "tick": 1379
+        }
+      ]
+    },
+    {
+      "id": "beginner-28",
+      "title": "Altitude staircase",
+      "mode": "acro",
+      "sourceIdentity": "98ef9c7fc4ecf757",
+      "proofSha256": "9cc0b2320b256cbfb67aa041e1a29cc39a06c11ddf3df8e27aba10f50badb97b",
+      "frames": 1151,
+      "finalStateIdentity": "4126e0a2e80d49ae",
+      "directStatus": "complete",
+      "independentStatus": "complete",
+      "holdPredicateFrames": 1146,
+      "transitions": [
+        {
+          "index": 0,
+          "title": "Lift into clear space",
+          "criterion": "hold",
+          "tick": 161
+        },
+        {
+          "index": 1,
+          "title": "Rise to the second step",
+          "criterion": "hold",
+          "tick": 405
+        },
+        {
+          "index": 2,
+          "title": "Descend while crossing",
+          "criterion": "hold",
+          "tick": 653
+        },
+        {
+          "index": 3,
+          "title": "Low final step",
+          "criterion": "hold",
+          "tick": 901
+        },
+        {
+          "index": 4,
+          "title": "Finish with a soft landing",
+          "criterion": "land",
+          "tick": 1151
+        }
+      ]
+    },
+    {
+      "id": "beginner-29",
+      "title": "Compass cross",
+      "mode": "acro",
+      "sourceIdentity": "d6b2a77138cf3647",
+      "proofSha256": "33055fd094209a2ab16895b1d8d22697b5367bb67a07136b0b23152f40e88032",
+      "frames": 1597,
+      "finalStateIdentity": "cc775be8808698bd",
+      "directStatus": "complete",
+      "independentStatus": "complete",
+      "holdPredicateFrames": 1590,
+      "transitions": [
+        {
+          "index": 0,
+          "title": "Lift into clear space",
+          "criterion": "hold",
+          "tick": 161
+        },
+        {
+          "index": 1,
+          "title": "East station",
+          "criterion": "hold",
+          "tick": 417
+        },
+        {
+          "index": 2,
+          "title": "North station",
+          "criterion": "hold",
+          "tick": 674
+        },
+        {
+          "index": 3,
+          "title": "West station",
+          "criterion": "hold",
+          "tick": 938
+        },
+        {
+          "index": 4,
+          "title": "South station",
+          "criterion": "hold",
+          "tick": 1203
+        },
+        {
+          "index": 5,
+          "title": "Now turn the nose",
+          "criterion": "hold",
+          "tick": 1323
+        },
+        {
+          "index": 6,
+          "title": "Finish with a soft landing",
+          "criterion": "land",
+          "tick": 1597
+        }
+      ]
+    },
+    {
+      "id": "beginner-30",
+      "title": "Backward return",
+      "mode": "acro",
+      "sourceIdentity": "f64b398a00779157",
+      "proofSha256": "ff39a20f729a7a5ed45d636857a4ff6c5c551dc3b5f42eb25d8c6848b3b0c46f",
+      "frames": 1277,
+      "finalStateIdentity": "12ff1f943cd2eccf",
+      "directStatus": "complete",
+      "independentStatus": "complete",
+      "holdPredicateFrames": 1069,
+      "transitions": [
+        {
+          "index": 0,
+          "title": "Lift into clear space",
+          "criterion": "hold",
+          "tick": 161
+        },
+        {
+          "index": 1,
+          "title": "Outbound marker",
+          "criterion": "gate",
+          "tick": 364
+        },
+        {
+          "index": 2,
+          "title": "Stop facing outward",
+          "criterion": "hold",
+          "tick": 532
+        },
+        {
+          "index": 3,
+          "title": "Back and slightly right",
+          "criterion": "hold",
+          "tick": 755
+        },
+        {
+          "index": 4,
+          "title": "Backward home",
+          "criterion": "hold",
+          "tick": 1004
+        },
+        {
+          "index": 5,
+          "title": "Finish with a soft landing",
+          "criterion": "land",
+          "tick": 1277
+        }
+      ]
+    },
+    {
+      "id": "beginner-31",
+      "title": "S-turn handover",
+      "mode": "acro",
+      "sourceIdentity": "f1cdd1513c0ee9f3",
+      "proofSha256": "3a0fb5fec9f03125120b4848d7c2cdecd7f91bdc7f609b2b2dafc596be3061d1",
+      "frames": 1840,
+      "finalStateIdentity": "a9d39bddf15619d9",
+      "directStatus": "complete",
+      "independentStatus": "complete",
+      "holdPredicateFrames": 638,
+      "transitions": [
+        {
+          "index": 0,
+          "title": "Lift into clear space",
+          "criterion": "hold",
+          "tick": 161
+        },
+        {
+          "index": 1,
+          "title": "Enter the clearing",
+          "criterion": "gate",
+          "tick": 336
+        },
+        {
+          "index": 2,
+          "title": "Open the right bend",
+          "criterion": "gate",
+          "tick": 578
+        },
+        {
+          "index": 3,
+          "title": "Change to a left bend",
+          "criterion": "gate",
+          "tick": 797
+        },
+        {
+          "index": 4,
+          "title": "Return across the clearing",
+          "criterion": "gate",
+          "tick": 1040
+        },
+        {
+          "index": 5,
+          "title": "Southern exit",
+          "criterion": "gate",
+          "tick": 1360
+        },
+        {
+          "index": 6,
+          "title": "Calm exit",
+          "criterion": "hold",
+          "tick": 1566
+        },
+        {
+          "index": 7,
+          "title": "Finish with a soft landing",
+          "criterion": "land",
+          "tick": 1840
+        }
+      ]
+    },
+    {
+      "id": "beginner-32",
+      "title": "Wide corner, tight exit",
+      "mode": "acro",
+      "sourceIdentity": "9e197dcf42162e29",
+      "proofSha256": "6a6f30ef5c9cdf0dad7b4ff050319421b98ceec074c19b3cf455bcb934744a3d",
+      "frames": 1709,
+      "finalStateIdentity": "77c17e1155019e55",
+      "directStatus": "complete",
+      "independentStatus": "complete",
+      "holdPredicateFrames": 432,
+      "transitions": [
+        {
+          "index": 0,
+          "title": "Lift into clear space",
+          "criterion": "hold",
+          "tick": 161
+        },
+        {
+          "index": 1,
+          "title": "Approach the corner",
+          "criterion": "gate",
+          "tick": 350
+        },
+        {
+          "index": 2,
+          "title": "Broad right entry",
+          "criterion": "gate",
+          "tick": 639
+        },
+        {
+          "index": 3,
+          "title": "Finish the wide corner",
+          "criterion": "gate",
+          "tick": 842
+        },
+        {
+          "index": 4,
+          "title": "Short change of direction",
+          "criterion": "gate",
+          "tick": 1021
+        },
+        {
+          "index": 5,
+          "title": "Line up the exit",
+          "criterion": "gate",
+          "tick": 1280
+        },
+        {
+          "index": 6,
+          "title": "Narrow final gate",
+          "criterion": "gate",
+          "tick": 1436
+        },
+        {
+          "index": 7,
+          "title": "Finish with a soft landing",
+          "criterion": "land",
+          "tick": 1709
+        }
+      ]
+    },
+    {
+      "id": "beginner-33",
+      "title": "Three landing approaches",
+      "mode": "acro",
+      "sourceIdentity": "72d00097adedbf2a",
+      "proofSha256": "0b0111be50be8f6425cda65906984e6101d7f2b530e33651aadc4e81e2f69ac9",
+      "frames": 2091,
+      "finalStateIdentity": "88d6cc9efa4bbd1a",
+      "directStatus": "complete",
+      "independentStatus": "complete",
+      "holdPredicateFrames": 1908,
+      "transitions": [
+        {
+          "index": 0,
+          "title": "Lift into clear space",
+          "criterion": "hold",
+          "tick": 161
+        },
+        {
+          "index": 1,
+          "title": "Straight approach",
+          "criterion": "gate",
+          "tick": 336
+        },
+        {
+          "index": 2,
+          "title": "First touchdown",
+          "criterion": "land",
+          "tick": 610
+        },
+        {
+          "index": 3,
+          "title": "Lift for the side approach",
+          "criterion": "hold",
+          "tick": 771
+        },
+        {
+          "index": 4,
+          "title": "Side approach, same heading",
+          "criterion": "hold",
+          "tick": 1062
+        },
+        {
+          "index": 5,
+          "title": "Second touchdown",
+          "criterion": "land",
+          "tick": 1336
+        },
+        {
+          "index": 6,
+          "title": "Lift for the diagonal",
+          "criterion": "hold",
+          "tick": 1497
+        },
+        {
+          "index": 7,
+          "title": "Diagonal return",
+          "criterion": "hold",
+          "tick": 1818
+        },
+        {
+          "index": 8,
+          "title": "Finish with a soft landing",
+          "criterion": "land",
+          "tick": 2091
+        }
+      ]
+    },
+    {
+      "id": "beginner-34",
+      "title": "Landmark rally",
+      "mode": "acro",
+      "sourceIdentity": "ca13700fe66c2268",
+      "proofSha256": "a18fd00c2de31aecd494d30a6904f991e72bb03f030a70868acd4fa466188a70",
+      "frames": 2446,
+      "finalStateIdentity": "783d9ac33d8dd03f",
+      "directStatus": "complete",
+      "independentStatus": "complete",
+      "holdPredicateFrames": 921,
+      "transitions": [
+        {
+          "index": 0,
+          "title": "Lift into clear space",
+          "criterion": "hold",
+          "tick": 161
+        },
+        {
+          "index": 1,
+          "title": "Northern clearing",
+          "criterion": "gate",
+          "tick": 350
+        },
+        {
+          "index": 2,
+          "title": "Eastern link",
+          "criterion": "gate",
+          "tick": 642
+        },
+        {
+          "index": 3,
+          "title": "Look south before leaving",
+          "criterion": "hold",
+          "tick": 848
+        },
+        {
+          "index": 4,
+          "title": "Along the tree line",
+          "criterion": "gate",
+          "tick": 1076
+        },
+        {
+          "index": 5,
+          "title": "Western link",
+          "criterion": "gate",
+          "tick": 1414
+        },
+        {
+          "index": 6,
+          "title": "Find north again",
+          "criterion": "hold",
+          "tick": 1699
+        },
+        {
+          "index": 7,
+          "title": "Return toward home",
+          "criterion": "gate",
+          "tick": 1901
+        },
+        {
+          "index": 8,
+          "title": "Final crosswise line",
+          "criterion": "gate",
+          "tick": 2173
+        },
+        {
+          "index": 9,
+          "title": "Finish with a soft landing",
+          "criterion": "land",
+          "tick": 2446
+        }
+      ]
+    },
+    {
+      "id": "beginner-35",
+      "title": "Slalom rhythm",
+      "mode": "acro",
+      "sourceIdentity": "61eba51d4d1f67f9",
+      "proofSha256": "fd3ba62fbdce744998a18d4eeffc8c40cc86c88631269a336a431599be9f12ba",
+      "frames": 1902,
+      "finalStateIdentity": "8c29b29d69e761ab",
+      "directStatus": "complete",
+      "independentStatus": "complete",
+      "holdPredicateFrames": 548,
+      "transitions": [
+        {
+          "index": 0,
+          "title": "Lift into clear space",
+          "criterion": "hold",
+          "tick": 161
+        },
+        {
+          "index": 1,
+          "title": "Slalom gate 1",
+          "criterion": "gate",
+          "tick": 386
+        },
+        {
+          "index": 2,
+          "title": "Slalom gate 2",
+          "criterion": "gate",
+          "tick": 691
+        },
+        {
+          "index": 3,
+          "title": "Slalom gate 3",
+          "criterion": "gate",
+          "tick": 997
+        },
+        {
+          "index": 4,
+          "title": "Slalom gate 4",
+          "criterion": "gate",
+          "tick": 1303
+        },
+        {
+          "index": 5,
+          "title": "Slalom gate 5",
+          "criterion": "gate",
+          "tick": 1512
+        },
+        {
+          "index": 6,
+          "title": "Brake beyond the slalom",
+          "criterion": "hold",
+          "tick": 1628
+        },
+        {
+          "index": 7,
+          "title": "Finish with a soft landing",
+          "criterion": "land",
+          "tick": 1902
+        }
+      ]
+    },
+    {
+      "id": "beginner-36",
+      "title": "High–low ribbon",
+      "mode": "acro",
+      "sourceIdentity": "dc42d2fa3d3c4baa",
+      "proofSha256": "afe1505778ce0954d3b11e23af718c645b4c40e8da197e1865244ef6a9494449",
+      "frames": 1796,
+      "finalStateIdentity": "ad7aa5de2e99f9fe",
+      "directStatus": "complete",
+      "independentStatus": "complete",
+      "holdPredicateFrames": 615,
+      "transitions": [
+        {
+          "index": 0,
+          "title": "Lift into clear space",
+          "criterion": "hold",
+          "tick": 182
+        },
+        {
+          "index": 1,
+          "title": "Climb before the stack",
+          "criterion": "gate",
+          "tick": 374
+        },
+        {
+          "index": 2,
+          "title": "Clear the stack",
+          "criterion": "gate",
+          "tick": 517
+        },
+        {
+          "index": 3,
+          "title": "Prepare the low opening",
+          "criterion": "hold",
+          "tick": 678
+        },
+        {
+          "index": 4,
+          "title": "Under the beam",
+          "criterion": "gate",
+          "tick": 856
+        },
+        {
+          "index": 5,
+          "title": "Side exit",
+          "criterion": "gate",
+          "tick": 1075
+        },
+        {
+          "index": 6,
+          "title": "Rise on the return",
+          "criterion": "gate",
+          "tick": 1319
+        },
+        {
+          "index": 7,
+          "title": "Lower toward the finish",
+          "criterion": "gate",
+          "tick": 1521
+        },
+        {
+          "index": 8,
+          "title": "Finish with a soft landing",
+          "criterion": "land",
+          "tick": 1796
+        }
+      ]
+    },
+    {
+      "id": "beginner-37",
+      "title": "Platform approach",
+      "mode": "acro",
+      "sourceIdentity": "50a60434c3e9d920",
+      "proofSha256": "65d5efc21fb10f980d188137ddcffcdd875b0cbf24059031f3b7d457b2ebbcf0",
+      "frames": 2312,
+      "finalStateIdentity": "c4496bc85f21f7b4",
+      "directStatus": "complete",
+      "independentStatus": "complete",
+      "holdPredicateFrames": 2303,
+      "transitions": [
+        {
+          "index": 0,
+          "title": "Lift into clear space",
+          "criterion": "hold",
+          "tick": 198
+        },
+        {
+          "index": 1,
+          "title": "Settle above the low platform",
+          "criterion": "hold",
+          "tick": 490
+        },
+        {
+          "index": 2,
+          "title": "Land on the low platform",
+          "criterion": "land",
+          "tick": 739
+        },
+        {
+          "index": 3,
+          "title": "Climb clear of the edge",
+          "criterion": "hold",
+          "tick": 937
+        },
+        {
+          "index": 4,
+          "title": "Prepare the high platform",
+          "criterion": "hold",
+          "tick": 1257
+        },
+        {
+          "index": 5,
+          "title": "Land on the high platform",
+          "criterion": "land",
+          "tick": 1505
+        },
+        {
+          "index": 6,
+          "title": "Lift before returning",
+          "criterion": "hold",
+          "tick": 1666
+        },
+        {
+          "index": 7,
+          "title": "Ground approach",
+          "criterion": "hold",
+          "tick": 2038
+        },
+        {
+          "index": 8,
+          "title": "Finish with a soft landing",
+          "criterion": "land",
+          "tick": 2312
+        }
+      ]
+    },
+    {
+      "id": "beginner-38",
+      "title": "Corridor turnaround",
+      "mode": "acro",
+      "sourceIdentity": "3c13e4acdfc93df4",
+      "proofSha256": "28700265dfc336671f3372a9e186939bbcdb55b35f57ebab799bd73187395336",
+      "frames": 1769,
+      "finalStateIdentity": "cabf135da49422b0",
+      "directStatus": "complete",
+      "independentStatus": "complete",
+      "holdPredicateFrames": 753,
+      "transitions": [
+        {
+          "index": 0,
+          "title": "Lift into clear space",
+          "criterion": "hold",
+          "tick": 161
+        },
+        {
+          "index": 1,
+          "title": "Outbound aisle 1",
+          "criterion": "gate",
+          "tick": 336
+        },
+        {
+          "index": 2,
+          "title": "Outbound aisle 2",
+          "criterion": "gate",
+          "tick": 495
+        },
+        {
+          "index": 3,
+          "title": "Outbound aisle 3",
+          "criterion": "gate",
+          "tick": 668
+        },
+        {
+          "index": 4,
+          "title": "Turn in the open bay",
+          "criterion": "hold",
+          "tick": 990
+        },
+        {
+          "index": 5,
+          "title": "Return aisle 1",
+          "criterion": "gate",
+          "tick": 1163
+        },
+        {
+          "index": 6,
+          "title": "Return aisle 2",
+          "criterion": "gate",
+          "tick": 1336
+        },
+        {
+          "index": 7,
+          "title": "Return aisle 3",
+          "criterion": "gate",
+          "tick": 1496
+        },
+        {
+          "index": 8,
+          "title": "Finish with a soft landing",
+          "criterion": "land",
+          "tick": 1769
+        }
+      ]
+    },
+    {
+      "id": "beginner-39",
+      "title": "Over, around, under",
+      "mode": "acro",
+      "sourceIdentity": "e7465341f53c8e7c",
+      "proofSha256": "37d1e5d39e7575b87dcc9d784617223472a470b6d1afdbd57a8f2cf152a6fbbc",
+      "frames": 2028,
+      "finalStateIdentity": "c3c3eed9622e8f82",
+      "directStatus": "complete",
+      "independentStatus": "complete",
+      "holdPredicateFrames": 644,
+      "transitions": [
+        {
+          "index": 0,
+          "title": "Lift into clear space",
+          "criterion": "hold",
+          "tick": 206
+        },
+        {
+          "index": 1,
+          "title": "Approach above the wall",
+          "criterion": "gate",
+          "tick": 366
+        },
+        {
+          "index": 2,
+          "title": "Cross over",
+          "criterion": "gate",
+          "tick": 524
+        },
+        {
+          "index": 3,
+          "title": "Reach the open end",
+          "criterion": "gate",
+          "tick": 725
+        },
+        {
+          "index": 4,
+          "title": "Go around",
+          "criterion": "gate",
+          "tick": 953
+        },
+        {
+          "index": 5,
+          "title": "Return on the other side",
+          "criterion": "gate",
+          "tick": 1156
+        },
+        {
+          "index": 6,
+          "title": "Prepare to go under",
+          "criterion": "hold",
+          "tick": 1323
+        },
+        {
+          "index": 7,
+          "title": "Pass under the arch",
+          "criterion": "gate",
+          "tick": 1517
+        },
+        {
+          "index": 8,
+          "title": "Final return",
+          "criterion": "gate",
+          "tick": 1754
+        },
+        {
+          "index": 9,
+          "title": "Finish with a soft landing",
+          "criterion": "land",
+          "tick": 2028
+        }
+      ]
+    },
+    {
+      "id": "beginner-40",
+      "title": "Read the landmarks",
+      "mode": "acro",
+      "sourceIdentity": "f1542163caf3e49f",
+      "proofSha256": "bddf111392e0fa296136bbc4fb0a7aa6dfdbe41f63f672578c8dc952b959570c",
+      "frames": 2007,
+      "finalStateIdentity": "7c4a810a0a8ab6e0",
+      "directStatus": "complete",
+      "independentStatus": "complete",
+      "holdPredicateFrames": 754,
+      "transitions": [
+        {
+          "index": 0,
+          "title": "Lift into clear space",
+          "criterion": "hold",
+          "tick": 161
+        },
+        {
+          "index": 1,
+          "title": "Find the eastern clearing",
+          "criterion": "hold",
+          "tick": 259
+        },
+        {
+          "index": 2,
+          "title": "Eastern landmark",
+          "criterion": "gate",
+          "tick": 462
+        },
+        {
+          "index": 3,
+          "title": "Open northern lane",
+          "criterion": "gate",
+          "tick": 702
+        },
+        {
+          "index": 4,
+          "title": "Read the western opening",
+          "criterion": "hold",
+          "tick": 928
+        },
+        {
+          "index": 5,
+          "title": "Cross the open middle",
+          "criterion": "gate",
+          "tick": 1143
+        },
+        {
+          "index": 6,
+          "title": "Southern clearing",
+          "criterion": "gate",
+          "tick": 1448
+        },
+        {
+          "index": 7,
+          "title": "Recognize home",
+          "criterion": "gate",
+          "tick": 1734
+        },
+        {
+          "index": 8,
+          "title": "Finish with a soft landing",
+          "criterion": "land",
+          "tick": 2007
+        }
+      ]
+    },
+    {
+      "id": "beginner-41",
+      "title": "Between floors",
+      "mode": "acro",
+      "sourceIdentity": "3f038022f908f6c6",
+      "proofSha256": "cdc12c625b0bc25787177492a4bb3fcaa7702a4fd5cb208c5be2980dd452d76e",
+      "frames": 2510,
+      "finalStateIdentity": "3d33e5a01e58079c",
+      "directStatus": "complete",
+      "independentStatus": "complete",
+      "holdPredicateFrames": 1253,
+      "transitions": [
+        {
+          "index": 0,
+          "title": "Lift into clear space",
+          "criterion": "hold",
+          "tick": 161
+        },
+        {
+          "index": 1,
+          "title": "Go around the deck edge",
+          "criterion": "gate",
+          "tick": 405
+        },
+        {
+          "index": 2,
+          "title": "Climb outside the slab",
+          "criterion": "hold",
+          "tick": 622
+        },
+        {
+          "index": 3,
+          "title": "Enter the upper floor",
+          "criterion": "gate",
+          "tick": 905
+        },
+        {
+          "index": 4,
+          "title": "Land on the upper deck",
+          "criterion": "land",
+          "tick": 1153
+        },
+        {
+          "index": 5,
+          "title": "Lift above the upper floor",
+          "criterion": "hold",
+          "tick": 1314
+        },
+        {
+          "index": 6,
+          "title": "Leave through the other side",
+          "criterion": "gate",
+          "tick": 1531
+        },
+        {
+          "index": 7,
+          "title": "Descend beside the slab",
+          "criterion": "hold",
+          "tick": 1729
+        },
+        {
+          "index": 8,
+          "title": "Lower return lane",
+          "criterion": "gate",
+          "tick": 1931
+        },
+        {
+          "index": 9,
+          "title": "Finish across the open floor",
+          "criterion": "gate",
+          "tick": 2236
+        },
+        {
+          "index": 10,
+          "title": "Finish with a soft landing",
+          "criterion": "land",
+          "tick": 2510
+        }
+      ]
+    },
+    {
+      "id": "beginner-42",
+      "title": "Precision pilot route",
+      "mode": "acro",
+      "sourceIdentity": "54080d3efd75e5d8",
+      "proofSha256": "c11485f46dbb81b08d881557eb876f4882815a04aafacd770bfb8b1c6b591891",
+      "frames": 2784,
+      "finalStateIdentity": "52dc63ca74fabe94",
+      "directStatus": "complete",
+      "independentStatus": "complete",
+      "holdPredicateFrames": 835,
+      "transitions": [
+        {
+          "index": 0,
+          "title": "Lift into clear space",
+          "criterion": "hold",
+          "tick": 161
+        },
+        {
+          "index": 1,
+          "title": "First slalom opening",
+          "criterion": "gate",
+          "tick": 390
+        },
+        {
+          "index": 2,
+          "title": "Second slalom opening",
+          "criterion": "gate",
+          "tick": 699
+        },
+        {
+          "index": 3,
+          "title": "Third slalom opening",
+          "criterion": "gate",
+          "tick": 989
+        },
+        {
+          "index": 4,
+          "title": "Stop before the high section",
+          "criterion": "hold",
+          "tick": 1176
+        },
+        {
+          "index": 5,
+          "title": "High crossing",
+          "criterion": "gate",
+          "tick": 1401
+        },
+        {
+          "index": 6,
+          "title": "Controlled lowering",
+          "criterion": "gate",
+          "tick": 1603
+        },
+        {
+          "index": 7,
+          "title": "Southbound line",
+          "criterion": "gate",
+          "tick": 1841
+        },
+        {
+          "index": 8,
+          "title": "Straight return",
+          "criterion": "gate",
+          "tick": 2027
+        },
+        {
+          "index": 9,
+          "title": "Platform alignment",
+          "criterion": "gate",
+          "tick": 2293
+        },
+        {
+          "index": 10,
+          "title": "Settle over the finish",
+          "criterion": "hold",
+          "tick": 2536
+        },
+        {
+          "index": 11,
+          "title": "Finish with a soft landing",
+          "criterion": "land",
+          "tick": 2784
+        }
+      ]
+    },
+    {
+      "id": "beginner-43",
+      "title": "Roll and recover",
+      "mode": "acro",
+      "sourceIdentity": "5873933e67fe81af",
+      "proofSha256": "e861bed3f9f23653ab82719c523be7b53c96a48e834f2d37bdffac750dc45e48",
+      "frames": 1657,
+      "finalStateIdentity": "c272e62e0a9e6d02",
+      "directStatus": "complete",
+      "independentStatus": "complete",
+      "holdPredicateFrames": 1419,
+      "transitions": [
+        {
+          "index": 0,
+          "title": "Climb to the recovery height",
+          "criterion": "hold",
+          "tick": 415
+        },
+        {
+          "index": 1,
+          "title": "Full right roll",
+          "criterion": "rotation-v1",
+          "tick": 532
+        },
+        {
+          "index": 2,
+          "title": "Settle before the next movement",
+          "criterion": "hold",
+          "tick": 815
+        },
+        {
+          "index": 3,
+          "title": "Full left roll",
+          "criterion": "rotation-v1",
+          "tick": 932
+        },
+        {
+          "index": 4,
+          "title": "Settle before the next movement",
+          "criterion": "hold",
+          "tick": 1155
+        },
+        {
+          "index": 5,
+          "title": "Finish with a soft landing",
+          "criterion": "land",
+          "tick": 1657
+        }
+      ]
+    },
+    {
+      "id": "beginner-44",
+      "title": "Forward and backward flip",
+      "mode": "acro",
+      "sourceIdentity": "5f4e0c788f1171c3",
+      "proofSha256": "790ea96e4fb4b31ef808be39df4c0f8e539845d39e8dc09aba875071cd1b63ad",
+      "frames": 1657,
+      "finalStateIdentity": "774cd1ede8a1f63e",
+      "directStatus": "complete",
+      "independentStatus": "complete",
+      "holdPredicateFrames": 1419,
+      "transitions": [
+        {
+          "index": 0,
+          "title": "Climb to the recovery height",
+          "criterion": "hold",
+          "tick": 415
+        },
+        {
+          "index": 1,
+          "title": "Forward flip",
+          "criterion": "rotation-v1",
+          "tick": 532
+        },
+        {
+          "index": 2,
+          "title": "Settle before the next movement",
+          "criterion": "hold",
+          "tick": 815
+        },
+        {
+          "index": 3,
+          "title": "Backward flip",
+          "criterion": "rotation-v1",
+          "tick": 932
+        },
+        {
+          "index": 4,
+          "title": "Settle before the next movement",
+          "criterion": "hold",
+          "tick": 1155
+        },
+        {
+          "index": 5,
+          "title": "Finish with a soft landing",
+          "criterion": "land",
+          "tick": 1657
+        }
+      ]
+    },
+    {
+      "id": "beginner-45",
+      "title": "Yaw through 360 degrees",
+      "mode": "acro",
+      "sourceIdentity": "56713a5aa945fe30",
+      "proofSha256": "0310209b89f25f8ac34183c04ff89f13349a69db047ccc9fd6cb2ba006a48a30",
+      "frames": 1045,
+      "finalStateIdentity": "23393f68b2059498",
+      "directStatus": "complete",
+      "independentStatus": "complete",
+      "holdPredicateFrames": 807,
+      "transitions": [
+        {
+          "index": 0,
+          "title": "Climb to the recovery height",
+          "criterion": "hold",
+          "tick": 300
+        },
+        {
+          "index": 1,
+          "title": "Full right yaw",
+          "criterion": "rotation-v1",
+          "tick": 417
+        },
+        {
+          "index": 2,
+          "title": "Settle before the next movement",
+          "criterion": "hold",
+          "tick": 467
+        },
+        {
+          "index": 3,
+          "title": "Full left yaw",
+          "criterion": "rotation-v1",
+          "tick": 584
+        },
+        {
+          "index": 4,
+          "title": "Settle before the next movement",
+          "criterion": "hold",
+          "tick": 634
+        },
+        {
+          "index": 5,
+          "title": "Finish with a soft landing",
+          "criterion": "land",
+          "tick": 1045
+        }
+      ]
+    },
+    {
+      "id": "beginner-46",
+      "title": "Recognize inverted, recover",
+      "mode": "acro",
+      "sourceIdentity": "0c9d849f3be4be28",
+      "proofSha256": "bbe49aeaafd3454f04162498bfb9f54b70a8b1438dcbd64928159079dfe48475",
+      "frames": 1527,
+      "finalStateIdentity": "21110474859f0887",
+      "directStatus": "complete",
+      "independentStatus": "complete",
+      "holdPredicateFrames": 1358,
+      "transitions": [
+        {
+          "index": 0,
+          "title": "Climb to the recovery height",
+          "criterion": "hold",
+          "tick": 438
+        },
+        {
+          "index": 1,
+          "title": "Half-roll into inversion",
+          "criterion": "rotation-v1",
+          "tick": 517
+        },
+        {
+          "index": 2,
+          "title": "Recognize the inverted view",
+          "criterion": "attitude-v1",
+          "tick": 525
+        },
+        {
+          "index": 3,
+          "title": "Finish the right-side recovery",
+          "criterion": "rotation-v1",
+          "tick": 604
+        },
+        {
+          "index": 4,
+          "title": "Settle before the next movement",
+          "criterion": "hold",
+          "tick": 1025
+        },
+        {
+          "index": 5,
+          "title": "Finish with a soft landing",
+          "criterion": "land",
+          "tick": 1527
+        }
+      ]
+    },
+    {
+      "id": "beginner-47",
+      "title": "Split-S return",
+      "mode": "acro",
+      "sourceIdentity": "bc9b796f6f708d31",
+      "proofSha256": "ae2a22f828bd5e6df64d8bce8b02679d38b512ccff12f21b9196b977e1e9c624",
+      "frames": 1678,
+      "finalStateIdentity": "9c8306ffaf6dcc89",
+      "directStatus": "complete",
+      "independentStatus": "complete",
+      "holdPredicateFrames": 1115,
+      "transitions": [
+        {
+          "index": 0,
+          "title": "Climb to the recovery height",
+          "criterion": "hold",
+          "tick": 198
+        },
+        {
+          "index": 1,
+          "title": "Build forward and upward momentum",
+          "criterion": "gate",
+          "tick": 526
+        },
+        {
+          "index": 2,
+          "title": "Roll inverted first",
+          "criterion": "rotation-v1",
+          "tick": 605
+        },
+        {
+          "index": 3,
+          "title": "Pull through the descending half-loop",
+          "criterion": "path-v1",
+          "tick": 758
+        },
+        {
+          "index": 4,
+          "title": "Settle after the reverse exit",
+          "criterion": "hold",
+          "tick": 1178
+        },
+        {
+          "index": 5,
+          "title": "Finish with a soft landing",
+          "criterion": "land",
+          "tick": 1678
+        }
+      ]
+    },
+    {
+      "id": "beginner-48",
+      "title": "Immelmann climb-out",
+      "mode": "acro",
+      "sourceIdentity": "411698d0d162f643",
+      "proofSha256": "24c157a123366719811795245a29878175e9b77128c229d8c2de0b09c0e13604",
+      "frames": 1845,
+      "finalStateIdentity": "b58df5e614999bda",
+      "directStatus": "complete",
+      "independentStatus": "complete",
+      "holdPredicateFrames": 1282,
+      "transitions": [
+        {
+          "index": 0,
+          "title": "Climb to the recovery height",
+          "criterion": "hold",
+          "tick": 334
+        },
+        {
+          "index": 1,
+          "title": "Enter below the beam",
+          "criterion": "gate",
+          "tick": 576
+        },
+        {
+          "index": 2,
+          "title": "Climbing half-loop first",
+          "criterion": "path-v1",
+          "tick": 793
+        },
+        {
+          "index": 3,
+          "title": "Roll upright at the top",
+          "criterion": "rotation-v1",
+          "tick": 894
+        },
+        {
+          "index": 4,
+          "title": "Recover clear of the beam",
+          "criterion": "hold",
+          "tick": 1344
+        },
+        {
+          "index": 5,
+          "title": "Finish with a soft landing",
+          "criterion": "land",
+          "tick": 1845
+        }
+      ]
+    },
+    {
+      "id": "beginner-49",
+      "title": "Dive, judge, pull out",
+      "mode": "acro",
+      "sourceIdentity": "89c87f6188de63fa",
+      "proofSha256": "b8eb034f4a6a3901b6b769cbd10493127a49dbf98e26d983c9a7c478faf973cf",
+      "frames": 1752,
+      "finalStateIdentity": "ce1234ce0817c6b8",
+      "directStatus": "complete",
+      "independentStatus": "complete",
+      "holdPredicateFrames": 1584,
+      "transitions": [
+        {
+          "index": 0,
+          "title": "Climb to the recovery height",
+          "criterion": "hold",
+          "tick": 537
+        },
+        {
+          "index": 1,
+          "title": "Point the nose down",
+          "criterion": "rotation-v1",
+          "tick": 597
+        },
+        {
+          "index": 2,
+          "title": "Cross the dive marker",
+          "criterion": "crossing-v1",
+          "tick": 642
+        },
+        {
+          "index": 3,
+          "title": "Recover before the lower boundary",
+          "criterion": "rotation-v1",
+          "tick": 702
+        },
+        {
+          "index": 4,
+          "title": "Settle before the next movement",
+          "criterion": "hold",
+          "tick": 1251
+        },
+        {
+          "index": 5,
+          "title": "Finish with a soft landing",
+          "criterion": "land",
+          "tick": 1752
+        }
+      ]
+    },
+    {
+      "id": "beginner-50",
+      "title": "First power loop",
+      "mode": "acro",
+      "sourceIdentity": "dee283da2f49063b",
+      "proofSha256": "3846eb91d35ba9d08e62c985025fbfd30cfe3dce236de761af53c0fbcee76313",
+      "frames": 1846,
+      "finalStateIdentity": "5d1a9e28acad2504",
+      "directStatus": "complete",
+      "independentStatus": "complete",
+      "holdPredicateFrames": 1191,
+      "transitions": [
+        {
+          "index": 0,
+          "title": "Climb to the recovery height",
+          "criterion": "hold",
+          "tick": 334
+        },
+        {
+          "index": 1,
+          "title": "Build a clear entry line",
+          "criterion": "gate",
+          "tick": 576
+        },
+        {
+          "index": 2,
+          "title": "Loop around the beam",
+          "criterion": "path-v1",
+          "tick": 986
+        },
+        {
+          "index": 3,
+          "title": "Settle before the next movement",
+          "criterion": "hold",
+          "tick": 1401
+        },
+        {
+          "index": 4,
+          "title": "Finish with a soft landing",
+          "criterion": "land",
+          "tick": 1846
+        }
+      ]
+    },
+    {
+      "id": "beginner-51",
+      "title": "Barrel path",
+      "mode": "acro",
+      "sourceIdentity": "f2b8ec6f56c3353a",
+      "proofSha256": "1abc58b4ff073a81b19e66ba94aea9dea9133de5e287b6af610c8daf8eb414c0",
+      "frames": 2018,
+      "finalStateIdentity": "7a49fb39bcb506c3",
+      "directStatus": "complete",
+      "independentStatus": "complete",
+      "holdPredicateFrames": 1196,
+      "transitions": [
+        {
+          "index": 0,
+          "title": "Climb to the recovery height",
+          "criterion": "hold",
+          "tick": 334
+        },
+        {
+          "index": 1,
+          "title": "Diagonal moving entry",
+          "criterion": "gate",
+          "tick": 743
+        },
+        {
+          "index": 2,
+          "title": "Roll around the lane",
+          "criterion": "path-v1",
+          "tick": 1153
+        },
+        {
+          "index": 3,
+          "title": "Settle before the next movement",
+          "criterion": "hold",
+          "tick": 1573
+        },
+        {
+          "index": 4,
+          "title": "Finish with a soft landing",
+          "criterion": "land",
+          "tick": 2018
+        }
+      ]
+    },
+    {
+      "id": "beginner-52",
+      "title": "Orbit the landmark",
+      "mode": "acro",
+      "sourceIdentity": "65adb09bd2b16dde",
+      "proofSha256": "33d3fd330086017a742a0e4a728f788bcb587e34b5f3b96bb6721d6b67034d26",
+      "frames": 2793,
+      "finalStateIdentity": "83ec857c83cdb077",
+      "directStatus": "complete",
+      "independentStatus": "complete",
+      "holdPredicateFrames": 1314,
+      "transitions": [
+        {
+          "index": 0,
+          "title": "Climb to the recovery height",
+          "criterion": "hold",
+          "tick": 363
+        },
+        {
+          "index": 1,
+          "title": "Face the landmark",
+          "criterion": "hold",
+          "tick": 461
+        },
+        {
+          "index": 2,
+          "title": "Complete the first orbit",
+          "criterion": "path-v1",
+          "tick": 1198
+        },
+        {
+          "index": 3,
+          "title": "Settle before reversing",
+          "criterion": "hold",
+          "tick": 1386
+        },
+        {
+          "index": 4,
+          "title": "Orbit in the other direction",
+          "criterion": "path-v1",
+          "tick": 2123
+        },
+        {
+          "index": 5,
+          "title": "Settle before the next movement",
+          "criterion": "hold",
+          "tick": 2423
+        },
+        {
+          "index": 6,
+          "title": "Finish with a soft landing",
+          "criterion": "land",
+          "tick": 2793
+        }
+      ]
+    },
+    {
+      "id": "beginner-53",
+      "title": "Climbing corkscrew",
+      "mode": "acro",
+      "sourceIdentity": "3c6264a46bcd9d85",
+      "proofSha256": "650cf558612131922f61c96d0aeb42acc26cab09d571e2a0a7f9b7d8ac8ede33",
+      "frames": 2491,
+      "finalStateIdentity": "83168bd78a32adf5",
+      "directStatus": "complete",
+      "independentStatus": "complete",
+      "holdPredicateFrames": 1122,
+      "transitions": [
+        {
+          "index": 0,
+          "title": "Climb to the recovery height",
+          "criterion": "hold",
+          "tick": 334
+        },
+        {
+          "index": 1,
+          "title": "Face the tower",
+          "criterion": "hold",
+          "tick": 432
+        },
+        {
+          "index": 2,
+          "title": "Climb through two turns",
+          "criterion": "path-v1",
+          "tick": 1797
+        },
+        {
+          "index": 3,
+          "title": "Settle before the next movement",
+          "criterion": "hold",
+          "tick": 1990
+        },
+        {
+          "index": 4,
+          "title": "Finish with a soft landing",
+          "criterion": "land",
+          "tick": 2491
+        }
+      ]
+    },
+    {
+      "id": "beginner-54",
+      "title": "Inverted turn and exit",
+      "mode": "acro",
+      "sourceIdentity": "1acb62e68122fa51",
+      "proofSha256": "a6b2f96e1f6978054dbb721fe6981dcdcaa643b1182a88af01b496fa2b40ff20",
+      "frames": 1542,
+      "finalStateIdentity": "2f94f3b6491254c7",
+      "directStatus": "complete",
+      "independentStatus": "complete",
+      "holdPredicateFrames": 1152,
+      "transitions": [
+        {
+          "index": 0,
+          "title": "Climb to the recovery height",
+          "criterion": "hold",
+          "tick": 300
+        },
+        {
+          "index": 1,
+          "title": "Build the upward reserve",
+          "criterion": "crossing-v1",
+          "tick": 450
+        },
+        {
+          "index": 2,
+          "title": "First half-roll",
+          "criterion": "rotation-v1",
+          "tick": 529
+        },
+        {
+          "index": 3,
+          "title": "Yaw while inverted",
+          "criterion": "rotation-v1",
+          "tick": 608
+        },
+        {
+          "index": 4,
+          "title": "Recover through the final half-roll",
+          "criterion": "rotation-v1",
+          "tick": 687
+        },
+        {
+          "index": 5,
+          "title": "Finish facing the reverse heading",
+          "criterion": "hold",
+          "tick": 1097
+        },
+        {
+          "index": 6,
+          "title": "Finish with a soft landing",
+          "criterion": "land",
+          "tick": 1542
+        }
+      ]
+    },
+    {
+      "id": "beginner-55",
+      "title": "Loop into a roll",
+      "mode": "acro",
+      "sourceIdentity": "82f7b51474cc2fec",
+      "proofSha256": "9f4a51642e7a7a579f392d8a424fa37b2f7c9d07830c1e29a861fe03a0a8ed91",
+      "frames": 2075,
+      "finalStateIdentity": "ffe2815daa8a832f",
+      "directStatus": "complete",
+      "independentStatus": "complete",
+      "holdPredicateFrames": 1302,
+      "transitions": [
+        {
+          "index": 0,
+          "title": "Climb to the recovery height",
+          "criterion": "hold",
+          "tick": 334
+        },
+        {
+          "index": 1,
+          "title": "Build a clear entry line",
+          "criterion": "gate",
+          "tick": 576
+        },
+        {
+          "index": 2,
+          "title": "Loop around the beam",
+          "criterion": "path-v1",
+          "tick": 986
+        },
+        {
+          "index": 3,
+          "title": "Prepare the second manoeuvre",
+          "criterion": "hold",
+          "tick": 1305
+        },
+        {
+          "index": 4,
+          "title": "Roll through the exit zone",
+          "criterion": "rotation-v1",
+          "tick": 1422
+        },
+        {
+          "index": 5,
+          "title": "Settle before the next movement",
+          "criterion": "hold",
+          "tick": 1664
+        },
+        {
+          "index": 6,
+          "title": "Finish with a soft landing",
+          "criterion": "land",
+          "tick": 2075
+        }
+      ]
+    },
+    {
+      "id": "beginner-56",
+      "title": "Split-S into an orbit",
+      "mode": "acro",
+      "sourceIdentity": "999d17dd9a263cd2",
+      "proofSha256": "27e0520a68d1a6e3b584191405a233d4f1eed00205ad40414920a6ef3b218818",
+      "frames": 2622,
+      "finalStateIdentity": "863576bd05ea03e6",
+      "directStatus": "complete",
+      "independentStatus": "complete",
+      "holdPredicateFrames": 1321,
+      "transitions": [
+        {
+          "index": 0,
+          "title": "Climb to the recovery height",
+          "criterion": "hold",
+          "tick": 198
+        },
+        {
+          "index": 1,
+          "title": "Build forward and upward momentum",
+          "criterion": "gate",
+          "tick": 526
+        },
+        {
+          "index": 2,
+          "title": "Roll inverted first",
+          "criterion": "rotation-v1",
+          "tick": 605
+        },
+        {
+          "index": 3,
+          "title": "Pull through the descending half-loop",
+          "criterion": "path-v1",
+          "tick": 758
+        },
+        {
+          "index": 4,
+          "title": "Join the orbit entry",
+          "criterion": "hold",
+          "tick": 1178
+        },
+        {
+          "index": 5,
+          "title": "Continue around the landmark",
+          "criterion": "path-v1",
+          "tick": 1915
+        },
+        {
+          "index": 6,
+          "title": "Settle before the next movement",
+          "criterion": "hold",
+          "tick": 2252
+        },
+        {
+          "index": 7,
+          "title": "Finish with a soft landing",
+          "criterion": "land",
+          "tick": 2622
+        }
+      ]
+    },
+    {
+      "id": "beginner-57",
+      "title": "Race line with trick zones",
+      "mode": "acro",
+      "sourceIdentity": "472b0aa21b2fca36",
+      "proofSha256": "62f9a9334e346a773997e76f11f29cac8c3f7189f39f63ceea6df4fb86ed2e12",
+      "frames": 3212,
+      "finalStateIdentity": "def0ca53a5dcd820",
+      "directStatus": "complete",
+      "independentStatus": "complete",
+      "holdPredicateFrames": 1361,
+      "transitions": [
+        {
+          "index": 0,
+          "title": "Climb to the recovery height",
+          "criterion": "hold",
+          "tick": 415
+        },
+        {
+          "index": 1,
+          "title": "First race gate",
+          "criterion": "gate",
+          "tick": 643
+        },
+        {
+          "index": 2,
+          "title": "Second race gate",
+          "criterion": "gate",
+          "tick": 944
+        },
+        {
+          "index": 3,
+          "title": "Prepare the roll zone",
+          "criterion": "hold",
+          "tick": 1155
+        },
+        {
+          "index": 4,
+          "title": "Roll inside the marked zone",
+          "criterion": "rotation-v1",
+          "tick": 1272
+        },
+        {
+          "index": 5,
+          "title": "Climb to the recovery height",
+          "criterion": "hold",
+          "tick": 1735
+        },
+        {
+          "index": 6,
+          "title": "Point the nose down",
+          "criterion": "rotation-v1",
+          "tick": 1795
+        },
+        {
+          "index": 7,
+          "title": "Cross the dive marker",
+          "criterion": "crossing-v1",
+          "tick": 1840
+        },
+        {
+          "index": 8,
+          "title": "Recover before the lower boundary",
+          "criterion": "rotation-v1",
+          "tick": 1900
+        },
+        {
+          "index": 9,
+          "title": "Return toward the race line",
+          "criterion": "gate",
+          "tick": 2506
+        },
+        {
+          "index": 10,
+          "title": "Final descent and gate",
+          "criterion": "gate",
+          "tick": 2936
+        },
+        {
+          "index": 11,
+          "title": "Finish with a soft landing",
+          "criterion": "land",
+          "tick": 3212
+        }
+      ]
+    },
+    {
+      "id": "beginner-58",
+      "title": "Master flight",
+      "mode": "acro",
+      "sourceIdentity": "b11704875488ce3a",
+      "proofSha256": "74dee49a09835d801928c6dd4357c948017b47f687724ad3c60dec211e11f7c8",
+      "frames": 5285,
+      "finalStateIdentity": "19644e21a6648a57",
+      "directStatus": "complete",
+      "independentStatus": "complete",
+      "holdPredicateFrames": 2933,
+      "transitions": [
+        {
+          "index": 0,
+          "title": "Climb to the recovery height",
+          "criterion": "hold",
+          "tick": 334
+        },
+        {
+          "index": 1,
+          "title": "Climb-out entry",
+          "criterion": "gate",
+          "tick": 576
+        },
+        {
+          "index": 2,
+          "title": "Climb through the half-loop",
+          "criterion": "path-v1",
+          "tick": 793
+        },
+        {
+          "index": 3,
+          "title": "Recover upright at the top",
+          "criterion": "rotation-v1",
+          "tick": 894
+        },
+        {
+          "index": 4,
+          "title": "Prepare the high slalom",
+          "criterion": "hold",
+          "tick": 1403
+        },
+        {
+          "index": 5,
+          "title": "First high slalom gate",
+          "criterion": "gate",
+          "tick": 1645
+        },
+        {
+          "index": 6,
+          "title": "Second high slalom gate",
+          "criterion": "gate",
+          "tick": 1979
+        },
+        {
+          "index": 7,
+          "title": "Climb to the recovery height",
+          "criterion": "hold",
+          "tick": 2438
+        },
+        {
+          "index": 8,
+          "title": "Build forward and upward momentum",
+          "criterion": "gate",
+          "tick": 2765
+        },
+        {
+          "index": 9,
+          "title": "Roll inverted first",
+          "criterion": "rotation-v1",
+          "tick": 2844
+        },
+        {
+          "index": 10,
+          "title": "Pull through the descending half-loop",
+          "criterion": "path-v1",
+          "tick": 2997
+        },
+        {
+          "index": 11,
+          "title": "Reposition clear of the structures",
+          "criterion": "hold",
+          "tick": 3371
+        },
+        {
+          "index": 12,
+          "title": "Climb to the recovery height",
+          "criterion": "hold",
+          "tick": 3867
+        },
+        {
+          "index": 13,
+          "title": "Build a clear entry line",
+          "criterion": "gate",
+          "tick": 4107
+        },
+        {
+          "index": 14,
+          "title": "Loop around the beam",
+          "criterion": "path-v1",
+          "tick": 4517
+        },
+        {
+          "index": 15,
+          "title": "Prepare the raised finish",
+          "criterion": "hold",
+          "tick": 5036
+        },
+        {
+          "index": 16,
+          "title": "Finish with a soft landing",
+          "criterion": "land",
+          "tick": 5285
+        }
+      ]
+    }
+  ],
+  "browser": {
+    "status": "not-run-by-this-probe"
+  }
+}
