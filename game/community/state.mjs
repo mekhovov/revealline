@@ -51,12 +51,14 @@ const validate = (source) => {
       'Community library identity is invalid.',
     );
     required(
-      item.family === undefined || ['creator', 'classic', 'team', 'fpv'].includes(item.family),
+      item.family === undefined ||
+        ['creator', 'classic', 'team', 'fpv', 'overflight'].includes(item.family),
       'Unknown installed content family.',
     );
     required(
-      item.family !== 'classic' || /^[a-f0-9]{16}$/.test(item.runtimeIdentity),
-      'Classic content identity is invalid.',
+      !['classic', 'overflight'].includes(item.family) ||
+        /^[a-f0-9]{16}$/.test(item.runtimeIdentity),
+      'Native content identity is invalid.',
     );
     required(
       item.family !== 'team' || /^[a-f0-9]{64}$/.test(item.runtimeIdentity),
