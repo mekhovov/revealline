@@ -12,6 +12,7 @@ import {
   declaredJSONPaths,
   validateStudioDraft,
   validateStudioHistory,
+  withStudioAppearanceDefault,
 } from '../../authoring/company-studio/model.mjs';
 import { mountAuthoringInputHost } from '../ui/authoring-input-host.mjs';
 import { getLocale, setLocale, t as translate } from '../i18n/index.mjs';
@@ -334,13 +335,13 @@ test('Company appearance translates live without changing staged choices, focus 
     select = h.$('appearance-default-community'),
     caption = select.parentElement.querySelector('span'),
     original = h.$('catalog-json').value;
-  select.value = 'vyshyvanka@r1';
+  select.value = 'vyshyvanka@r2';
   select.focus();
   assert.equal(select.getAttribute('aria-labelledby'), caption.id);
   for (const locale of ['uk', 'en', 'uk']) {
     setLocale(locale, { persist: false });
     assert.equal(h.$('appearance-default-community'), select);
-    assert.equal(select.value, 'vyshyvanka@r1');
+    assert.equal(select.value, 'vyshyvanka@r2');
     assert.equal(h.doc.activeElement, select);
     assert.equal(h.$('catalog-json').value, original);
     assert.equal(
@@ -360,10 +361,10 @@ test('Company appearance translates live without changing staged choices, focus 
       translate('tools:studio.appearance.community.apply'),
     );
     assert.equal(
-      select.options.find((option) => option.value === 'vyshyvanka@r1').textContent,
+      select.options.find((option) => option.value === 'vyshyvanka@r2').textContent,
       translate('tools:studio.appearance.retained', {
         name: translate('interface:workshop.theme.vyshyvanka'),
-        revision: 'r1',
+        revision: 'r2',
       }),
     );
   }
@@ -372,11 +373,46 @@ test('Company appearance translates live without changing staged choices, focus 
   const applied = h.$('catalog-json').value;
   assert.deepEqual(JSON.parse(applied).brands[0].appearanceDefault, {
     familyId: 'vyshyvanka',
-    revision: 'r1',
+    revision: 'r2',
   });
   setLocale('en', { persist: false });
   assert.equal(h.$('catalog-json').value, applied);
   assert.equal(h.$('status').textContent, translate('tools:studio.appearance.community.applied'));
+});
+
+test('imported Company appearance retains its historical revision beside current choices', async (context) => {
+  const previousLocale = getLocale();
+  context.after(() => setLocale(previousLocale, { persist: false }));
+  const h = await fixture(context),
+    packet = structuredClone(h.packet),
+    pin = { familyId: 'vyshyvanka', revision: 'r1' };
+  packet.catalog = withStudioAppearanceDefault(packet.catalog, {
+    scope: 'community',
+    id: 'acme',
+    appearanceDefault: pin,
+  });
+  await h.importFile('import-draft', JSON.stringify(packet));
+  const select = h.$('appearance-default-community'),
+    original = h.$('catalog-json').value;
+  assert.deepEqual(JSON.parse(original).brands[0].appearanceDefault, pin);
+  assert.equal(select.value, 'vyshyvanka@r1');
+  assert.equal(select.options.filter((option) => option.value === 'vyshyvanka@r2').length, 1);
+  const retained = select.options.filter((option) => option.value === 'vyshyvanka@r1');
+  assert.equal(retained.length, 1);
+  for (const locale of ['uk', 'en']) {
+    setLocale(locale, { persist: false });
+    assert.equal(select.value, 'vyshyvanka@r1');
+    assert.equal(h.$('catalog-json').value, original);
+    assert.equal(
+      retained[0].textContent,
+      translate('tools:studio.appearance.retained', {
+        name: translate('interface:workshop.theme.vyshyvanka'),
+        revision: 'r1',
+      }),
+    );
+  }
+  await h.click('apply-appearance-community');
+  assert.deepEqual(JSON.parse(h.$('catalog-json').value).brands[0].appearanceDefault, pin);
 });
 
 test('Company appearance validation remains translated while unapplied JSON stays untouched', async (context) => {

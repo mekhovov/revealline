@@ -135,8 +135,10 @@ function environment({
       document: new Proxy(
         {},
         {
-          get() {
-            assert.fail('Actor profile must not read the live document.');
+          get(target, key) {
+            // Page memory capability is read without granting DOM authority.
+            if (key === 'defaultView') return undefined;
+            assert.fail('Actor profile must not read the live document DOM.');
           },
         },
       ),

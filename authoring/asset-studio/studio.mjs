@@ -1,5 +1,7 @@
+import { mountActorAnimationControls } from './animation-controls.mjs';
 import {
   t,
+  getLocale,
   localizedText,
   localizedAttribute,
   localizedMessage,
@@ -67,6 +69,14 @@ import { mountThemeWorkbench } from './theme-workbench.mjs';
 import { getInterfaceTheme, getThemeFamily } from '../../game/presentation/theme-system.mjs';
 mountArtworkCollectionPanel({ document, window });
 const $ = (id) => document.getElementById(id);
+localizedText($('industrial-art-review'), () =>
+  getLocale() === 'uk' ? 'Огляд індустріальної графіки' : 'Industrial art review',
+);
+localizedAttribute(
+  $('industrial-art-review'),
+  'href',
+  () => `../industrial-art-review/?lang=${getLocale()}`,
+);
 const node = (tag, value = '', className = '', hostRole = null) => {
   const el = document.createElement(tag);
   localizedText(el, typeof value === 'function' ? value : () => value);
@@ -83,7 +93,8 @@ let working = { document: createDefaultThemeBundle(), assets: new Map() },
 let workspaceLibrary = { entries: [] },
   activeWorkspaceId = null,
   themeWorkbench = null;
-let assetHandoffExport = null;
+let assetHandoffExport = null,
+  actorAnimationControls = null;
 let selected = working.document.slots[0].id,
   pending = null,
   undo = [],
@@ -356,6 +367,7 @@ function refresh() {
 }
 function refreshInspector() {
   assetHandoffExport?.reset();
+  actorAnimationControls?.refresh();
   const slot = currentSlot(),
     view = resolved(),
     asset = view.assets[slot.id];
@@ -1078,6 +1090,34 @@ editGeometry.onclick = () =>
       t('tools:editingMetadataExistingBytesRemainUnchanged'),
     );
   });
+actorAnimationControls = mountActorAnimationControls({
+  document,
+  after: editGeometry,
+  getContext: () => ({
+    document: working.document,
+    asset: resolved().assets[selected],
+    slot: currentSlot(),
+    blob: working.assets.get(resolved().assets[selected]?.file?.sha256),
+  }),
+  onError: report,
+  onApply: (animation, original) => {
+    requireSettled();
+    const asset = {
+      ...structuredClone(original),
+      ...nextAssetRevision(working.document, selected),
+      format: FORMATS.animatedAsset,
+      animation,
+      provenance: { ...original.provenance, parent: ref(original) },
+      quality: { stage: 'source', evidence: [] },
+    };
+    stage(
+      reviseStudioTheme(working.document, {
+        assets: [asset],
+        bindings: { [selected]: ref(asset) },
+      }),
+    );
+  },
+});
 const sprite = mountSpritePanel({
   onError: report,
   runOperation: operation,
@@ -1629,6 +1669,7 @@ $('load-release').onclick = () =>
 window.addEventListener('pagehide', (event) => {
   rememberView();
   assetHandoffExport?.reset();
+  actorAnimationControls?.suspend();
   copyRequest++;
   if (event.persisted) {
     operations.cancel();
@@ -1641,6 +1682,7 @@ window.addEventListener('pagehide', (event) => {
   for (const id of ['current-preview', 'draft-preview']) $(id).previewCleanup?.();
   if (!event.persisted) {
     assetHandoffExport?.dispose();
+    actorAnimationControls?.dispose();
     rotorControls.dispose();
     auditionLifecycle.dispose();
     studioGuide.dispose();

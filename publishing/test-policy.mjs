@@ -6,6 +6,7 @@ import { createHash } from 'node:crypto';
 
 export const TEST_POLICY_FORMAT = 'revealline-release-test-policy.v1';
 export const TEST_POLICY_AUTHORIZATION = 'explicit-user-request-20260922';
+export const TEST_RESTORATION_AUTHORIZATION = 'explicit-user-request-20261004';
 export const defaultTestPolicyPath = fileURLToPath(new URL('./test-policy.json', import.meta.url));
 
 export function parseTestPolicy(value) {
@@ -18,7 +19,10 @@ export function parseTestPolicy(value) {
     JSON.stringify(Object.keys(policy).sort()) !== JSON.stringify(fields) ||
     policy.format !== TEST_POLICY_FORMAT ||
     !['required', 'waived'].includes(policy.mode) ||
-    policy.authorization !== TEST_POLICY_AUTHORIZATION ||
+    !(
+      policy.authorization === TEST_POLICY_AUTHORIZATION ||
+      (policy.mode === 'required' && policy.authorization === TEST_RESTORATION_AUTHORIZATION)
+    ) ||
     policy.scope !== 'automated-test-suites' ||
     !['reason', 'restoration'].every(
       (key) =>

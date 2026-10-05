@@ -114,12 +114,15 @@ async function committedInspectorFixture(t) {
     'scripts/inspect-default-build.mjs',
     'scripts/game-cli.mjs',
     'scripts/brand-icons.mjs',
+    'scripts/build-entry-writer.mjs',
     'scripts/frozen-source.mjs',
     'scripts/check-edition-source.mjs',
     'scripts/pack-indexes.mjs',
+    'game/mission-library/included-bundled-pack.mjs',
     'publishing/edition-admission.mjs',
     'publishing/edition-zip.mjs',
     'game/data-json.mjs',
+    'game/presentation/theme-system.mjs',
     'game/content-launch.mjs',
     'game/edition-context.mjs',
     'game/editions/package-budget.mjs',
@@ -127,6 +130,12 @@ async function committedInspectorFixture(t) {
     await fs.mkdir(path.dirname(path.join(root, relative)), { recursive: true });
     await fs.copyFile(new URL(`../${relative}`, import.meta.url), path.join(root, relative));
   }
+  // No offline sentinel exists in this fixture, so optional media predicates
+  // cannot affect its inspection; retain a bounded historical implementation.
+  await fs.writeFile(
+    path.join(root, 'scripts/offline-core-closure.mjs'),
+    'export const isOptionalSpatialAudioBody = () => false;\nexport const isOptionalReactionVoiceBody = () => false;\n',
+  );
   // This tiny historical-style fixture has no localization/catalogue sentinel.
   // The production validation module must therefore never be invoked.
   await fs.writeFile(
