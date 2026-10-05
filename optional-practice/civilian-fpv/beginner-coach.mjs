@@ -1,5 +1,6 @@
 import { STICK_LAYOUTS, DEFAULT_RESPONSE, neutralFlightInput } from './radio-profile.mjs';
 import { createFlight, FLIGHT_HZ } from './model.mjs';
+import { Q, atan2, isqrt, roundDiv } from './math.mjs';
 import {
   createFlightGamepad,
   touchStickValues,
@@ -24,6 +25,362 @@ const AXES = ['throttle', 'yaw', 'pitch', 'roll'];
 const clamp = (n, a = -1, b = 1) => Math.max(a, Math.min(b, Number.isFinite(n) ? n : 0));
 const EXAMPLE_PACE = 0.2;
 const EXAMPLE_TICKS = 150;
+
+/** Observer-only explanations. Completion always comes from the runtime, never this HUD. */
+export function learningObjectiveFeedback(target, state, { locale = 'en', mode = 'acro' } = {}) {
+  const t = (en, uk) => (locale === 'uk' ? uk : en);
+  const metres = (value) => ((value ?? 0) / 1000).toFixed(1);
+  const seconds = (ticks) => ((ticks ?? 0) / FLIGHT_HZ).toFixed(2).replace(/0$/, '');
+  const skill = practiceSkillFeedback(target, state, locale);
+  if (skill) return { ...skill, checks: [] };
+  if (!target)
+    return {
+      objective:
+        state && state.step >= state.total
+          ? t('Route complete', 'Маршрут виконано')
+          : t('Waiting for the flight objective', 'Очікування цілі польоту'),
+      detail: '',
+      hint: '',
+      progress: state && state.step >= state.total ? 1 : 0,
+      checks: [],
+    };
+  const p = state?.position ?? { x: 0, y: 0, z: 0 };
+  if (target.type === 'gate') {
+    const remaining = (target.at - p[target.axis]) * target.direction;
+    const lateral = target.axis === 'x' ? 'z' : 'x';
+    const aligned = p[lateral] >= target.minSide && p[lateral] <= target.maxSide;
+    return {
+      objective: t(
+        `Cross the opening at ${metres(target.minY)}–${metres(target.maxY)} m, following its arrow.`,
+        `Перетніть отвір на висоті ${metres(target.minY)}–${metres(target.maxY)} м за стрілкою.`,
+      ),
+      detail: !state
+        ? t('Fly toward the marked opening', 'Летіть до позначеного отвору')
+        : remaining >= 0
+          ? t(`${metres(remaining)} m to gate`, `${metres(remaining)} м до воріт`)
+          : t('Return to the approach side', 'Поверніться на бік заходу'),
+      hint:
+        !aligned && state
+          ? t(
+              'Line up with the opening before crossing; passing beside it does not count.',
+              'Вирівняйтеся з отвором перед перетином: проліт збоку не зараховується.',
+            )
+          : t(
+              'Fly through from the marked approach side. Hovering in the opening does not complete this step.',
+              'Пролетіть із позначеного боку заходу. Зависання в отворі не завершує крок.',
+            ),
+      progress: 0,
+      checks: [
+        {
+          id: 'height',
+          label: t('Height', 'Висота'),
+          value: state ? `${metres(p.y)} m` : '—',
+          required: `${metres(target.minY)}–${metres(target.maxY)} m`,
+          met: Boolean(state) && p.y >= target.minY && p.y <= target.maxY,
+        },
+        {
+          id: 'position',
+          label: t('Opening', 'Отвір'),
+          value: state ? (aligned ? t('Aligned', 'У створі') : t('To the side', 'Збоку')) : '—',
+          required: t('Inside its width', 'У межах ширини'),
+          met: Boolean(state) && aligned,
+        },
+      ],
+    };
+  }
+  if (target.type === 'actor-track-v1') {
+    const track =
+      state?.actorTrack && state.actorTrack.index === state.step ? state.actorTrack : null;
+    const reasons = {
+      'acquire-subject': t(
+        'Find the marked subject and face it.',
+        'Знайдіть позначений об’єкт і спрямуйте на нього ніс.',
+      ),
+      'subject-unavailable': t(
+        'Subject unavailable. Restart this attempt.',
+        'Об’єкт недоступний. Почніть спробу знову.',
+      ),
+      'airborne-clearance': t(
+        'Lift off before following the subject.',
+        'Злетіть, перш ніж стежити за об’єктом.',
+      ),
+      'subject-range': t(
+        `Keep ${metres(target.minDistance)}–${metres(target.maxDistance)} m from the subject.`,
+        `Тримайте ${metres(target.minDistance)}–${metres(target.maxDistance)} м до об’єкта.`,
+      ),
+      'relative-speed': t(
+        'Match the subject’s speed; avoid rushing past.',
+        'Узгодьте швидкість з об’єктом, не пролітайте повз.',
+      ),
+      'airframe-tilt': t(
+        `Reduce tilt below ${target.maxTilt / 100}°.`,
+        `Зменште нахил до ${target.maxTilt / 100}°.`,
+      ),
+      'nose-alignment': t(
+        'Point the drone nose toward the subject. Camera tilt does not change this check.',
+        'Спрямуйте ніс дрона на об’єкт. Нахил камери не змінює цю умову.',
+      ),
+      'subject-occluded': t(
+        'Find a clear sight line around the obstacle.',
+        'Знайдіть пряму видимість, облетівши перешкоду.',
+      ),
+      'subject-travel': t(
+        'Stay with the subject until it has travelled the required distance.',
+        'Продовжуйте стеження, доки об’єкт не пройде потрібну відстань.',
+      ),
+    };
+    const time = track ? clamp((state.hold ?? 0) / target.ticks, 0, 1) : 0;
+    const travel = target.minTargetTravel
+      ? clamp((track?.travel ?? 0) / target.minTargetTravel, 0, 1)
+      : 1;
+    return {
+      objective: t(
+        `Follow the subject ${metres(target.minDistance)}–${metres(target.maxDistance)} m away for ${seconds(target.ticks)} s. Keep the nose on it and the sight line clear.`,
+        `Стежте за об’єктом із відстані ${metres(target.minDistance)}–${metres(target.maxDistance)} м протягом ${seconds(target.ticks)} с. Тримайте ніс на об’єкті та пряму видимість.`,
+      ),
+      detail: `${seconds(track ? state.hold : 0)} / ${seconds(target.ticks)} ${t('s', 'с')} · ${metres(track?.travel)} / ${metres(target.minTargetTravel)} ${t('m subject travel', 'м шляху об’єкта')}`,
+      hint:
+        reasons[track?.reason] ??
+        t(
+          'Keep following at a matched speed. Leaving a limit resets the continuous hold.',
+          'Продовжуйте стеження з узгодженою швидкістю. Вихід за будь-яку межу скидає безперервне утримання.',
+        ),
+      progress: Math.min(time, travel),
+      checks: [],
+    };
+  }
+  if (['eliminate', 'hunt-contact-v1', 'survive'].includes(target.type)) {
+    const contact = target.type === 'hunt-contact-v1';
+    const total = target.type === 'survive' ? target.ticks : target.targets.length;
+    const done =
+      target.type === 'survive'
+        ? (state?.hold ?? 0)
+        : target.targets.filter((id) =>
+            contact
+              ? state?.hunt?.caught?.includes(id)
+              : state?.actors?.some((actor) => actor.id === id && actor.status === 'defeated'),
+          ).length;
+    return {
+      objective:
+        target.type === 'survive'
+          ? t(`Keep flying for ${seconds(total)} s.`, `Продовжуйте політ ${seconds(total)} с.`)
+          : contact
+            ? target.ordered
+              ? t(
+                  'Contact the marked targets in the indicated order.',
+                  'Торкніться позначених цілей у вказаному порядку.',
+                )
+              : t('Contact each marked target.', 'Торкніться кожної позначеної цілі.')
+            : t('Defeat the marked hostile targets.', 'Знешкодьте позначені ворожі цілі.'),
+      detail:
+        target.type === 'survive'
+          ? `${seconds(done)} / ${seconds(total)} ${t('s', 'с')}`
+          : `${done} / ${total}`,
+      hint: contact
+        ? target.ordered
+          ? t(
+              'Follow the next-target marker. Other contacts do not complete that catch.',
+              'Стежте за маркером наступної цілі. Інші торкання не зараховують цей перехват.',
+            )
+          : t('Catch each marked target once.', 'Перехопіть кожну позначену ціль один раз.')
+        : '',
+      progress: clamp(done / total, 0, 1),
+      checks: [],
+    };
+  }
+  if (!['hold', 'land'].includes(target.type))
+    return {
+      objective: t('Follow the current objective', 'Виконайте поточну ціль'),
+      detail: '',
+      hint: '',
+      progress: 0,
+      checks: [],
+    };
+  const command = state?.lastInput ?? { pitch: 0, roll: 0, yaw: 0, throttle: 0 };
+  const velocity = state?.velocity ?? { x: 0, y: 0, z: 0 };
+  const speed = isqrt(velocity.x ** 2 + velocity.y ** 2 + velocity.z ** 2);
+  const tilt = Math.max(
+    Math.abs(state?.attitude?.roll ?? 0),
+    Math.abs(state?.attitude?.pitch ?? 0),
+  );
+  const checks = [];
+  const add = (id, label, value, required, met, hint) =>
+    checks.push({
+      id,
+      label,
+      value: state ? value : '—',
+      required,
+      met: Boolean(state) && met,
+      hint,
+    });
+  add(
+    'height',
+    t('Height', 'Висота'),
+    `${metres(p.y)} m`,
+    `${metres(target.min.y)}–${metres(target.max.y)} m`,
+    p.y >= target.min.y && p.y <= target.max.y,
+    p.y < target.min.y
+      ? t(
+          'Add a little thrust to reach the target height.',
+          'Трохи додайте тяги до потрібної висоти.',
+        )
+      : t(
+          'Ease thrust down to descend into the target height.',
+          'Плавно зменште тягу, щоб спуститися до потрібної висоти.',
+        ),
+  );
+  const zone = ['x', 'z'].every(
+    (axis) => p[axis] >= target.min[axis] && p[axis] <= target.max[axis],
+  );
+  const distance = Math.hypot(
+    ...['x', 'z'].map((axis) =>
+      Math.max(target.min[axis] - p[axis], 0, p[axis] - target.max[axis]),
+    ),
+  );
+  add(
+    'position',
+    t('Position', 'Позиція'),
+    zone ? t('Inside', 'У межах') : `${metres(distance)} m`,
+    t('Inside target', 'У межах цілі'),
+    zone,
+    t(
+      'Move toward the marked target; height alone is not enough.',
+      'Рухайтеся до позначеної цілі: самої висоти недостатньо.',
+    ),
+  );
+  let measuredTilt = tilt;
+  if (target.type === 'land' && state?.support && state.attitude?.up) {
+    const dot = clamp(
+      roundDiv(
+        ['x', 'y', 'z'].reduce(
+          (sum, axis) => sum + state.attitude.up[axis] * state.support.normal[axis],
+          0,
+        ),
+        Q,
+      ),
+      -Q,
+      Q,
+    );
+    measuredTilt = Math.abs(atan2(isqrt(Math.max(0, Q * Q - dot * dot)), dot));
+  }
+  add(
+    'tilt',
+    t('Tilt', 'Нахил'),
+    `${(measuredTilt / 100).toFixed(2)}°`,
+    target.minTilt
+      ? `${target.minTilt / 100}–${target.maxTilt / 100}°`
+      : `≤${target.maxTilt / 100}°`,
+    measuredTilt >= target.minTilt && measuredTilt <= target.maxTilt,
+    measuredTilt < target.minTilt
+      ? t(
+          'Tip a little, then centre the rotation sticks. Staying level will not pass this step.',
+          'Трохи нахиліть, потім центруйте стіки обертання. Горизонтальне положення не зараховується.',
+        )
+      : t(
+          'Gently counter-steer to reduce the tilt, then centre again.',
+          'Плавно рухайте стік у протилежний бік, щоб зменшити нахил, і центруйте знову.',
+        ),
+  );
+  if (target.centred) {
+    const deflection = Math.max(...['pitch', 'roll', 'yaw'].map((axis) => Math.abs(command[axis])));
+    add(
+      'centred',
+      t('Rotation sticks', 'Стіки обертання'),
+      `${(deflection / 10).toFixed(1)}%`,
+      t('Centre: ≤5%', 'Центр: ≤5%'),
+      deflection <= 50,
+      t(
+        'Release pitch, roll and yaw to centre. Keep managing throttle.',
+        'Поверніть тангаж, крен і рискання до центру. Продовжуйте керувати газом.',
+      ),
+    );
+  }
+  add(
+    'speed',
+    t('Speed', 'Швидкість'),
+    `${metres(speed)} m/s`,
+    `≤${metres(target.maxSpeed)} m/s`,
+    speed <= target.maxSpeed,
+    t(
+      'Brake gently against your travel. Centring the sticks does not stop drift.',
+      'Плавно гальмуйте проти руху. Центрування стіків не зупиняє дрейф.',
+    ),
+  );
+  if (target.heading !== null && target.heading !== undefined) {
+    const yaw = state?.attitude?.yaw ?? 0;
+    const difference = Math.abs(((yaw - target.heading + 54000) % 36000) - 18000);
+    add(
+      'heading',
+      t('Heading', 'Курс'),
+      `${((((yaw / 100) % 360) + 360) % 360).toFixed(0)}°`,
+      `${target.heading / 100}° ±15°`,
+      difference <= 1500,
+      t(
+        'Turn the nose toward the indicated heading, without banking.',
+        'Поверніть ніс на позначений курс без крену.',
+      ),
+    );
+  }
+  if (target.type === 'land') {
+    const supported = state?.grounded && (!target.surface || state.support?.id === target.surface);
+    const gentle =
+      (state?.landingSpeed ?? Infinity) <= target.maxSpeed &&
+      (state?.landingTilt ?? Infinity) <= target.maxTilt;
+    add(
+      'landing',
+      t('Touchdown', 'Торкання'),
+      supported && gentle ? t('Settled', 'Стабільно') : t('Not settled', 'Не стабільно'),
+      t('Softly on the pad', 'М’яко на майданчик'),
+      supported && gentle,
+      t(
+        'Land gently on the marked pad. If the landing was too fast, lift slightly and try a softer touchdown.',
+        'М’яко сядьте на позначений майданчик. Якщо посадка була надто швидкою, трохи підніміться й спробуйте м’якше.',
+      ),
+    );
+    add(
+      'throttle',
+      t('Throttle', 'Газ'),
+      `${(command.throttle / 10).toFixed(1)}%`,
+      '≤10%',
+      command.throttle <= 100,
+      t(
+        'After touching down, lower throttle fully and stay still.',
+        'Після торкання повністю опустіть газ і залишайтеся нерухомо.',
+      ),
+    );
+  }
+  const blocker = checks.find((check) => !check.met);
+  const progress = clamp((state?.hold ?? 0) / target.ticks, 0, 1);
+  const dwell = `${seconds(state?.hold)} / ${seconds(target.ticks)} ${t('s', 'с')}`;
+  const pose = target.minTilt
+    ? t(
+        `Keep ${target.minTilt / 100}–${target.maxTilt / 100}° tilt`,
+        `Тримайте нахил ${target.minTilt / 100}–${target.maxTilt / 100}°`,
+      )
+    : target.type === 'land'
+      ? t('Land softly', 'М’яко сядьте')
+      : t('Settle in the target', 'Стабілізуйтеся в цілі');
+  const objective = `${pose}${target.centred ? t(' with rotation sticks centred', ' із центрованими стіками обертання') : ''}. ${t(`Hold all checks for ${seconds(target.ticks)} s.`, `Утримуйте всі умови ${seconds(target.ticks)} с.`)}`;
+  return {
+    objective,
+    checks,
+    progress,
+    detail: `${t('Hold', 'Утримання')} ${dwell}`,
+    hint:
+      blocker?.hint ??
+      t(
+        'All conditions match. Keep steady while the timer fills; the next step starts automatically.',
+        'Усі умови виконано. Утримуйте їх, доки заповнюється таймер: наступний крок почнеться автоматично.',
+      ),
+    modeNote:
+      target.minTilt && target.centred && mode !== 'acro'
+        ? t(
+            'Self-level returns toward level when released. Watch the Acro example to see retained tilt; your selected mode stays available.',
+            'Самовирівнювання повертає до горизонту після відпускання. У прикладі Acro видно збереження нахилу; вибраний режим залишається доступним.',
+          )
+        : '',
+  };
+}
 
 /** Full travel is the real command, shown at one-fifth speed, never enlarged UI input. */
 export function beginnerExampleCommand(ticks, axis = 'throttle') {
@@ -376,6 +733,7 @@ export function mountBeginnerCoach({
   onNext = () => {},
   onExit = () => {},
   onRadio = () => {},
+  onWatchDemonstration = null,
   onFullscreen = () => {},
   onPracticeView = () => {},
   readRadioPreview = () => undefined,
@@ -392,7 +750,9 @@ export function mountBeginnerCoach({
     lastRender = '',
     nextAvailable = false,
     disposed = false,
-    lastPaint = 0;
+    lastPaint = 0,
+    completedFlightStep = -1,
+    stepAdvancedAt = 0;
   let refs = {};
   let labMode = 'example',
     labSource = 'keyboard',
@@ -418,6 +778,7 @@ export function mountBeginnerCoach({
     diagram = null,
     viewReleases = [];
   let lessonDemonstration = null,
+    recommendedDemonstration = null,
     lessonTimeline = null,
     labScope = 'step',
     labLesson = false,
@@ -506,6 +867,13 @@ export function mountBeginnerCoach({
     lessonDemonstration?.course === lesson?.id &&
     Array.isArray(lessonDemonstration?.frames) &&
     lessonDemonstration.frames.length > 0;
+  const watchProof = () => lessonDemonstration ?? recommendedDemonstration;
+  const canWatchFlight = () => typeof onWatchDemonstration === 'function' && Boolean(watchProof());
+  const watchLabel = (step = false) => {
+    const recordedMode =
+      watchProof()?.mode === 'acro' ? 'Acro' : t('Self-level', 'Самовирівнювання');
+    return `${step ? t('Watch this step', 'Переглянути цей крок') : t('Watch full flight', 'Переглянути весь політ')} · ${recordedMode}`;
+  };
   const isExploring = () =>
     stage === 'guide' &&
     labScope !== 'lesson' &&
@@ -1404,42 +1772,21 @@ export function mountBeginnerCoach({
     return figure;
   }
   function objectiveText(target) {
-    const skill = practiceSkillFeedback(target, null, lang());
-    if (skill) return skill.objective;
-    if (!target)
-      return t(
-        'Follow the highlighted objective in the world.',
-        'Виконайте підсвічену ціль у світі.',
-      );
-    if (target.type === 'gate')
-      return t(
-        `Fly through the opening at ${(target.minY / 1000).toFixed(1)}–${(target.maxY / 1000).toFixed(1)} m.`,
-        `Пролетіть крізь отвір на висоті ${(target.minY / 1000).toFixed(1)}–${(target.maxY / 1000).toFixed(1)} м.`,
-      );
-    const height = `${(target.min.y / 1000).toFixed(1)}–${(target.max.y / 1000).toFixed(1)}`;
-    const seconds = ((target.ticks ?? 0) / 50).toFixed(1);
-    return target.type === 'land'
-      ? t(
-          `Land inside the marked pad. Hold steady for ${seconds} s.`,
-          `Сядьте в межах позначеного майданчика. Утримуйте положення ${seconds} с.`,
-        )
-      : t(
-          `Stay in the highlighted zone at ${height} m for ${seconds} s.`,
-          `Залишайтеся в підсвіченій зоні на висоті ${height} м протягом ${seconds} с.`,
-        );
+    return learningObjectiveFeedback(target, null, { locale: lang(), mode: mode() }).objective;
   }
   function hint() {
-    const state = stage === 'guide' && labLesson ? labState : snapshot.state,
+    const state = stage === 'guide' ? labState : snapshot.state,
       step = currentStep(),
-      target = stage === 'guide' && labLesson ? labState.target : criterion();
+      target =
+        stage === 'guide' ? (labLesson ? labState?.target : criterion(viewedStep)) : criterion();
     if (stage === 'guide' && labLesson) {
       if (state.step >= lesson.steps.length)
         return t(
           'All practice objectives complete. Keep flying, or Watch lesson to repeat. No score was recorded.',
           'Усі цілі практики виконано. Літайте далі або повторіть урок. Бали не записано.',
         );
-      const skill = practiceSkillFeedback(target, state, lang());
-      if (skill && labMode !== 'example') return skill.hint;
+      const feedback = learningObjectiveFeedback(target, state, { locale: lang(), mode: mode() });
+      if (labMode !== 'example' && feedback.hint) return feedback.hint;
       return labMode === 'example'
         ? t(
             'Watch the recorded controls and the next target. Move a control to continue from this exact point.',
@@ -1482,8 +1829,8 @@ export function mountBeginnerCoach({
         'Every pilot retries. Open the guide, then try the small movement again.',
         'Кожен пілот пробує знову. Відкрийте пояснення й повторіть невеликий рух.',
       );
-    const skill = practiceSkillFeedback(target, state, lang());
-    if (skill) return skill.hint;
+    const feedback = learningObjectiveFeedback(target, state, { locale: lang(), mode: mode() });
+    if (feedback.hint) return feedback.hint;
     if (state.hold > 0)
       return t(
         'You are in the right place. Keep it gentle while the ring fills.',
@@ -1565,7 +1912,9 @@ export function mountBeginnerCoach({
       node(
         stage === 'guide' ? 'h2' : 'h3',
         '',
-        stage === 'guide' ? copy(lesson.title) : copy(step?.title),
+        stage === 'guide'
+          ? copy(lesson.title)
+          : `${t('Step', 'Крок')} ${index + 1}/${lesson.steps.length} · ${copy(step?.title)}`,
       ),
     );
     heading.append(headingText);
@@ -1582,6 +1931,12 @@ export function mountBeginnerCoach({
       );
     }
     card.append(heading);
+    if (stage === 'live') {
+      refs.stepAdvance = node('p', 'coach-step-advance');
+      refs.stepAdvance.setAttribute('role', 'status');
+      refs.stepAdvance.hidden = true;
+      card.append(refs.stepAdvance);
+    }
     if (stage === 'guide' && mode() !== lesson.mode)
       card.append(
         node(
@@ -1622,7 +1977,9 @@ export function mountBeginnerCoach({
     progress.setAttribute('aria-label', t('Lesson steps', 'Кроки уроку'));
     for (const [i, entry] of lesson.steps.entries()) {
       const item =
-        stage === 'guide' ? button(`step-${i}`, String(i + 1)) : node('span', '', String(i + 1));
+        stage === 'guide'
+          ? button(`step-${i}`, `${i + 1} · ${copy(entry.title)}`)
+          : node('span', '', `${i + 1} · ${copy(entry.title)}`);
       item.className = 'coach-step-dot';
       item.dataset.state = i < activeStep() ? 'done' : i === index ? 'current' : 'later';
       if (i === index) item.setAttribute('aria-current', 'step');
@@ -1633,6 +1990,35 @@ export function mountBeginnerCoach({
     }
     card.append(progress);
     if (stage === 'guide') {
+      card.append(
+        node(
+          'p',
+          'coach-step-navigation-help',
+          t(
+            'Lesson chapters: select a named step to inspect its example. During practice, completing every condition advances automatically; these buttons do not mark steps complete.',
+            'Розділи уроку: виберіть названий крок, щоб роздивитися приклад. Під час практики виконання всіх умов автоматично починає наступний крок; ці кнопки не зараховують кроки.',
+          ),
+        ),
+      );
+      if (canWatchFlight()) {
+        const watch = node('div', 'coach-demonstration-actions');
+        watch.append(
+          button('watch-flight', watchLabel(), 'primary'),
+          button('watch-step', watchLabel(true)),
+        );
+        card.append(watch);
+        if (watchProof().mode !== mode())
+          card.append(
+            node(
+              'p',
+              'coach-demonstration-note',
+              t(
+                'This demonstration uses the teaching mode shown on its button. Watching does not change your selected practice mode or earn completion.',
+                'Цей показ використовує навчальний режим, зазначений на кнопці. Перегляд не змінює вибраний режим практики й не зараховує проходження.',
+              ),
+            ),
+          );
+      }
       notes = node('details', 'coach-notes');
       notes.append(
         node(
@@ -1782,10 +2168,10 @@ export function mountBeginnerCoach({
           'coach-lab-help',
           t(
             hasLessonPreview()
-              ? 'Watch the complete lesson, then move a control to take over at this exact point. Real objectives advance the instructions automatically. Click a step number to replay from it. Watch lesson restarts the complete route. Practice is unscored; use Let’s fly for a recorded attempt. Your selected keyboard layout is shown below. Esc pauses.'
+              ? 'Watch the complete lesson, then move a control to take over at this exact point. Real objectives advance the instructions automatically. Select a named step to replay from its recorded entry. Watch lesson restarts the complete route. Practice is unscored; use Let’s fly for a recorded attempt. Your selected keyboard layout is shown below. Esc pauses.'
               : 'Focus the drone and use the selected keyboard layout below, or move a calibrated radio stick. Drag either gimbal or open Touch buttons. Shift is gentle; throttle stays set. Esc pauses for menu navigation. Replay example returns to this step’s control technique.',
             hasLessonPreview()
-              ? 'Перегляньте весь урок і рухайте керуванням, щоб продовжити саме з цієї позиції. Справжні цілі автоматично змінюють пояснення. Номер кроку починає показ із нього. «Переглянути урок» повторює весь маршрут. Практика без балів; для записаної спроби натисніть «Почнімо політ». Вибрана розкладка клавіатури показана нижче. Esc — пауза.'
+              ? 'Перегляньте весь урок і рухайте керуванням, щоб продовжити саме з цієї позиції. Справжні цілі автоматично змінюють пояснення. Назва кроку починає показ із його записаного входу. «Переглянути урок» повторює весь маршрут. Практика без балів; для записаної спроби натисніть «Почнімо політ». Вибрана розкладка клавіатури показана нижче. Esc — пауза.'
               : 'Виберіть схему дрона й користуйтеся розкладкою клавіатури нижче або рухайте каліброваним стіком пульта. Перетягніть джойстик або відкрийте сенсорні кнопки. Shift — плавно; газ зберігається. Esc — пауза для меню. «Повторити приклад» показує прийом цього кроку.',
           ),
         ),
@@ -1833,7 +2219,20 @@ export function mountBeginnerCoach({
     refs.hold = node('div', 'coach-hold-fill');
     hold.append(refs.hold);
     hold.setAttribute('aria-hidden', 'true');
-    (notes ?? card).append(target, refs.skillProgress, makeTelemetry(), hold, refs.hint);
+    refs.criteria = node('div', 'coach-criteria');
+    refs.criteria.setAttribute('aria-label', t('What completes this step', 'Що завершує цей крок'));
+    refs.criteria.setAttribute('aria-live', 'off');
+    refs.requirements = [];
+    refs.modeNote = node('p', 'coach-mode-note');
+    (notes ?? card).append(
+      target,
+      refs.criteria,
+      refs.modeNote,
+      refs.skillProgress,
+      makeTelemetry(),
+      hold,
+      refs.hint,
+    );
     if (notes) card.append(notes);
     if (stage === 'guide') {
       const actions = node('div', 'coach-actions');
@@ -1887,7 +2286,7 @@ export function mountBeginnerCoach({
                 'Скористайтеся клавіатурою, торкніться джойстика або рухайте каліброваним пультом, щоб керувати. Результати перегляду не зараховуються до уроку.',
               );
     if (stage !== 'guide') for (const stick of refs.sticks) paintStick(stick, input);
-    const state = stage === 'guide' && labLesson ? labState : snapshot.state,
+    const state = stage === 'guide' ? labState : snapshot.state,
       at = state?.attitude;
     const values = {
       height: `${((state?.position?.y ?? 0) / 1000).toFixed(1)} ${t('m', 'м')}`,
@@ -1901,15 +2300,62 @@ export function mountBeginnerCoach({
       const text = hint();
       if (refs.hint.textContent !== text) refs.hint.textContent = text;
     }
-    const target = stage === 'guide' && labLesson ? labState.target : criterion();
-    const skill = practiceSkillFeedback(target, state, lang());
-    if (refs.skillProgress) {
-      refs.skillProgress.hidden = !skill;
-      if (skill && refs.skillProgress.textContent !== skill.detail)
-        refs.skillProgress.textContent = skill.detail;
+    const target =
+      stage === 'guide' ? (labLesson ? labState?.target : criterion(viewedStep)) : criterion();
+    const feedback = learningObjectiveFeedback(target, state, { locale: lang(), mode: mode() });
+    if (refs.criteria) {
+      const signature = feedback.checks.map((check) => check.id).join('|');
+      if (refs.criteria.dataset.signature !== signature) {
+        refs.criteria.replaceChildren();
+        refs.requirements = feedback.checks.map((check) => {
+          const item = node('div', 'coach-criterion'),
+            label = node('span', 'coach-requirement-label', check.label),
+            value = node('strong', 'coach-requirement-value'),
+            required = node('span', 'coach-requirement-target');
+          item.dataset.criterion = check.id;
+          item.append(label, value, required);
+          refs.criteria.append(item);
+          return { item, label, value, required };
+        });
+        refs.criteria.dataset.signature = signature;
+      }
+      const focus =
+        feedback.checks.find((check) => !check.met) ??
+        feedback.checks.find((check) => check.id === 'height') ??
+        feedback.checks[0];
+      for (const [index, check] of feedback.checks.entries()) {
+        const row = refs.requirements[index];
+        row.item.dataset.met = String(check.met);
+        row.item.dataset.focus = String(check === focus);
+        if (row.value.textContent !== check.value) row.value.textContent = check.value;
+        const required = `${check.met ? '✓' : '○'} ${check.required}`;
+        if (row.required.textContent !== required) row.required.textContent = required;
+      }
     }
-    if (refs.hold)
-      refs.hold.style.width = `${(skill ? skill.progress : clamp((state?.hold ?? 0) / (target?.ticks || 1), 0, 1)) * 100}%`;
+    if (refs.modeNote) {
+      refs.modeNote.hidden = !feedback.modeNote;
+      if (refs.modeNote.textContent !== (feedback.modeNote ?? ''))
+        refs.modeNote.textContent = feedback.modeNote ?? '';
+    }
+    if (refs.skillProgress) {
+      refs.skillProgress.hidden = !feedback.detail;
+      if (refs.skillProgress.textContent !== feedback.detail)
+        refs.skillProgress.textContent = feedback.detail;
+    }
+    if (refs.hold) refs.hold.style.width = `${feedback.progress * 100}%`;
+    if (refs.stepAdvance) {
+      const recent =
+        completedFlightStep >= 0 &&
+        (win.performance?.now?.() ?? Date.now()) - stepAdvancedAt < 4000;
+      refs.stepAdvance.hidden = !recent;
+      if (recent) {
+        const message = t(
+          `✓ Step ${completedFlightStep + 1} complete. Now: ${copy(currentStep()?.title)}`,
+          `✓ Крок ${completedFlightStep + 1} виконано. Далі: ${copy(currentStep()?.title)}`,
+        );
+        if (refs.stepAdvance.textContent !== message) refs.stepAdvance.textContent = message;
+      }
+    }
   }
   function setPracticeView(enabled, { resume = true } = {}) {
     if (enabled && (!lesson || stage !== 'guide' || disposed)) return;
@@ -2028,6 +2474,13 @@ export function mountBeginnerCoach({
     } else if (action === 'fullscreen') {
       pausePreview();
       onFullscreen();
+    } else if ((action === 'watch-flight' || action === 'watch-step') && canWatchFlight()) {
+      pausePreview();
+      onPause();
+      onWatchDemonstration({
+        mode: watchProof().mode,
+        ...(action === 'watch-step' ? { step: viewedStep } : {}),
+      });
     } else if (action === 'guide') showGuide();
     else if (action === 'radio') {
       pausePreview();
@@ -2157,6 +2610,7 @@ export function mountBeginnerCoach({
         keyboardPreset: options.keyboardPreset,
       };
       lessonDemonstration = options.demonstration ?? null;
+      recommendedDemonstration = options.recommendedDemonstration ?? null;
       lessonTimeline = null;
       labScope = hasLessonPreview() ? 'lesson' : 'step';
       labMode = 'example';
@@ -2169,6 +2623,8 @@ export function mountBeginnerCoach({
       viewedStep = 0;
       lastRender = '';
       lastPaint = 0;
+      completedFlightStep = -1;
+      stepAdvancedAt = 0;
       stage = options.practice || replay ? 'live' : 'guide';
       resetPreview();
       if (stage === 'guide') onPause();
@@ -2181,7 +2637,16 @@ export function mountBeginnerCoach({
       const previousKeyboard = keyboardPreset().id;
       const wasPending = autoPreviewPending;
       const wasReduced = snapshot.reducedMotion;
+      const previousStep = snapshot.state?.step;
       snapshot = { ...snapshot, ...value };
+      if (
+        stage === 'live' &&
+        Number.isInteger(previousStep) &&
+        snapshot.state?.step > previousStep
+      ) {
+        completedFlightStep = previousStep;
+        stepAdvancedAt = win.performance?.now?.() ?? Date.now();
+      }
       if (keyboardPreset().id !== previousKeyboard) pausePreview();
       if (mode() !== previousMode) {
         lessonTimeline = null;
@@ -2248,7 +2713,7 @@ export function mountBeginnerCoach({
       releaseView();
       labFlight?.dispose?.();
       labFlight = labState = null;
-      lessonDemonstration = lessonTimeline = null;
+      lessonDemonstration = recommendedDemonstration = lessonTimeline = null;
       stage = 'closed';
       lesson = null;
       refs = {};
@@ -2261,7 +2726,7 @@ export function mountBeginnerCoach({
       releaseView();
       labFlight?.dispose?.();
       labFlight = labState = null;
-      lessonDemonstration = lessonTimeline = null;
+      lessonDemonstration = recommendedDemonstration = lessonTimeline = null;
       disposed = true;
       labController.dispose();
       win.removeEventListener('keydown', keyDown, true);
