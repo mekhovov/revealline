@@ -458,6 +458,25 @@ export function createWorldAudio(options = {}) {
       }
       return voice;
     },
+    get movementSettings() {
+      return movement;
+    },
+    set movementSettings(value) {
+      if (
+        typeof value?.enabled !== 'boolean' ||
+        !Number.isFinite(value.volume) ||
+        value.volume < 0 ||
+        value.volume > 1
+      )
+        throw new TypeError(
+          'Movement sound requires an enabled boolean and volume between zero and one.',
+        );
+      movement = { enabled: value.enabled, volume: value.volume };
+    },
+    applyVolumes: applyOutput,
+    masterSnapshot: () => audioMaster.snapshot(),
+    subscribeMaster: (listener) => audioMaster.subscribe(listener),
+    setMasterVolume: (value) => preferences.setVolume(value),
     enabled: () => enabled,
     volumes: () => ({ ...levels }),
     setVolumes(values = {}) {

@@ -318,7 +318,7 @@ test('unified appearance survives Solo, Team, Versus and Solo return without alt
       assert.deepEqual(page.geometry(), geometry);
       assert.deepEqual(page.fonts(), fonts);
       assert.equal(page.$('coop-clock').textContent, clock);
-      assert.equal(page.$('coop-overlay-title').textContent, 'Both players paused');
+      assert.equal(page.$('coop-overlay-title').textContent, 'PAUSED');
       assert.equal(page.doc.body.dataset.textFace, 'plain');
       assert.equal(page.doc.body.dataset.textSize, 'large');
       assert.equal(page.doc.body.dataset.effects, 'reduced');
@@ -337,6 +337,9 @@ test('unified appearance survives Solo, Team, Versus and Solo return without alt
       page.frames(8);
       page.$('race-pause').click();
       page.frame(0);
+      // Starting a distinct game creates its statistics session. Appearance
+      // edits below must preserve that session and every other unrelated record.
+      records = unrelated(store);
       const checkpoint = page.checkpoint(),
         pictures = page.drawOptions.map((options) => options.backdrop);
       page.$('race-options').focus();

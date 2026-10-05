@@ -800,6 +800,7 @@ export function attachGameShell({
     event.preventDefault();
   };
   doc.addEventListener('keydown', keydown);
+  surfaces.refreshGlobalSettings();
   if (initial) openHome({ focus: initialFocus });
   return {
     primary,

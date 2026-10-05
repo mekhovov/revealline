@@ -1,22 +1,18 @@
-import { t, localizedText, localizedAttribute } from '../i18n/index.mjs';
+import { t, localizedText, localizedAttribute, getLocale, onLocaleChange } from '../i18n/index.mjs';
 import { setMenuIcon } from './native-menu-icons.mjs';
 import { attachMenuScene, getMenuAnimation, setMenuAnimation } from './menu-scenes.mjs';
+import { subscribeMenuAnimation } from './menu-animation-preferences.mjs';
 import { attachFullscreen } from './fullscreen.mjs';
 import { mountLandingBrand, GAME_BRAND_NAME } from './brand-identity.mjs';
 import { attachMenuRetune } from './menu-retune.mjs';
 import { communityDirectoryURL } from '../community-routes.mjs';
 import { attachGameUpdates } from './game-updates.mjs';
+import { mountModeGuides } from './mode-choice.mjs';
+import { MODE_SETTINGS_CATEGORIES as NATIVE_MENU_CATEGORIES } from './mode-settings-view.mjs';
+import { mountGlobalSettings } from './global-settings-view.mjs';
+import { wireLandingMenuNavigation } from './mode-play-shell.mjs';
 
-export const NATIVE_MENU_CATEGORIES = Object.freeze([
-  ['gameplay', 'play'],
-  ['controls', 'controls'],
-  ['audio', 'sound'],
-  ['display', 'display'],
-  ['accessibility', 'accessibility'],
-  ['data', 'collection'],
-  ['content', 'content'],
-  ['extras', 'help'],
-]);
+export { NATIVE_MENU_CATEGORIES };
 const owners = new WeakMap();
 
 /** Move the real controls, preserving their state, IDs and host-owned handlers. */
@@ -115,6 +111,8 @@ export function prepareNativeMenus({
     panel.dataset.menuLayout = 'vertical';
     panels[id] = panel;
   }
+  const guides = mountModeGuides({ container: panels.extras, pause: () => {} });
+  listeners.push(() => guides.dispose());
   // Language has one predictable home, including controls mounted at boot.
   for (const node of [
     ...settings.querySelectorAll(':scope > [data-language-control]'),
@@ -147,6 +145,11 @@ export function prepareNativeMenus({
   const animationChange = () => setMenuAnimation(animation.checked, doc.defaultView);
   animation.addEventListener('change', animationChange);
   listeners.push(() => animation.removeEventListener('change', animationChange));
+  listeners.push(
+    subscribeMenuAnimation((enabled) => {
+      animation.checked = enabled;
+    }, doc.defaultView),
+  );
   let actions;
   if (mode === 'solo') {
     actions = root.querySelector('.home-actions');
@@ -195,6 +198,7 @@ export function prepareNativeMenus({
     copy($('race-chapters'), 'missions');
     if ($('race-optional-setup')) $('race-optional-setup').open = true;
     moveId('race-journey-pictures', panels.data);
+    moveId('race-journey-save', panels.data);
     moveId('race-music-menu-now-playing', panels.audio);
     const title = $('race-title');
     title?.removeAttribute('data-i18n-rich');
@@ -204,6 +208,7 @@ export function prepareNativeMenus({
     for (const id of ['coop-optional-setup']) moveId(id, panels.gameplay);
     for (const id of ['coop-offline-main', 'coop-offline-status']) moveId(id, panels.content);
     moveId('coop-journey-pictures', panels.data);
+    moveId('coop-hunt-save', panels.data);
     copy($('coop-discovery-open'), 'missions');
     if ($('coop-optional-setup')) $('coop-optional-setup').open = true;
     const title = $('coop-title');
@@ -298,7 +303,17 @@ export function prepareNativeMenus({
   }
   if (actions) actions.parentNode.insertBefore(utilities, actions.nextSibling);
   else root.append(utilities);
-  if (mode === 'solo') utilities.hidden = true;
+  const landingSound = $(
+    mode === 'solo' ? 'shell-sound' : mode === 'versus' ? 'race-quick-sound' : 'coop-quick-sound',
+  );
+  move(landingSound, utilities);
+  if (landingFullscreen) {
+    move(landingFullscreen, utilities);
+    utilities.append(landingFullscreen);
+    landingFullscreen.classList.add('native-menu-fullscreen');
+    landingFullscreen.setAttribute('data-fullscreen-label', '');
+    landingFullscreen.removeAttribute('data-i18n');
+  }
   const settingsFullscreen = mode === 'solo' ? null : make('button');
   if (settingsFullscreen) {
     if (!settingsFullscreen.id) settingsFullscreen.id = `${prefix}-fullscreen`;
@@ -325,17 +340,80 @@ export function prepareNativeMenus({
     parent.append(feedback);
     listeners.push(
       attachFullscreen(button, doc, {
-        allowInstallHelp: mode !== 'solo',
+        allowInstallHelp: true,
         escapeRoot: button === landingFullscreen ? root : null,
-        onState: ({ label, message, hidden }) => {
+        onState: ({ label, message }) => {
           if (!button.hasAttribute('data-fullscreen-label')) button.textContent = label;
           feedback.textContent = message;
           feedback.hidden = !message;
-          if (button === landingFullscreen && mode !== 'solo') utilities.hidden = hidden;
+          // The utility row still owns Sound when fullscreen is unavailable.
         },
       }),
     );
   }
+  const landingSteps =
+    mode === 'solo'
+      ? [
+          [$('shell-course-return'), $('shell-featured'), $('shell-continue')],
+          $('shell-play'),
+          $('shell-options'),
+          landingSound,
+          landingFullscreen,
+        ]
+      : mode === 'versus'
+        ? [
+            [$('race-start'), $('race-retry')],
+            // Finished rounds keep their recording actions in the same
+            // vertical controller path. Hidden actions are skipped at Ready.
+            $('race-export-recording'),
+            $('race-verify-recording'),
+            $('race-chapters'),
+            $('race-options'),
+            landingSound,
+            landingFullscreen,
+          ]
+        : [
+            $('coop-start'),
+            $('coop-discovery-open'),
+            $('coop-settings-open'),
+            landingSound,
+            landingFullscreen,
+          ];
+  let landingNavigation = null;
+  const refreshLandingNavigation = () => {
+    landingNavigation?.dispose();
+    const modesRoot = doc
+      .querySelector(`[data-menu-scope="modes"] [data-game-mode="${mode}"][aria-current="page"]`)
+      ?.closest('[data-menu-scope="modes"]');
+    landingNavigation = wireLandingMenuNavigation({
+      modesRoot,
+      scopeRoot: root,
+      steps: landingSteps,
+      links:
+        mode === 'versus'
+          ? [
+              {
+                nodes: [$('race-start'), $('race-retry')],
+                direction: 'right',
+                targets: [$('race-journey-next'), $('race-picture-cancel')],
+              },
+              {
+                nodes: [$('race-journey-next'), $('race-picture-cancel')],
+                direction: 'left',
+                targets: [$('race-start'), $('race-retry')],
+              },
+            ]
+          : [],
+    });
+    return landingNavigation;
+  };
+  const modeChoicesReady = () => refreshLandingNavigation();
+  doc.addEventListener('game-mode-choices-ready', modeChoicesReady);
+  refreshLandingNavigation();
+  listeners.push(() => {
+    doc.removeEventListener('game-mode-choices-ready', modeChoicesReady);
+    landingNavigation?.dispose();
+  });
   const icons =
     mode === 'solo'
       ? {
@@ -413,15 +491,122 @@ export function prepareNativeMenus({
       ...getSceneContext(),
     }),
   });
+  let globalSettings = null;
+  const extraGlobalControls = {};
+  // Providers mount at different points in the host lifecycle. Adopt their real
+  // rows after they are ready; subsequent calls register late tools in place.
+  const refreshGlobalSettings = ({ controls = {} } = {}) => {
+    Object.assign(extraGlobalControls, controls);
+    const row = (id) => {
+      const node = $(id);
+      if (!node || !settings.contains(node)) return null;
+      const wrapper = node.closest('label');
+      return wrapper ?? [settings.querySelector(`label[for="${id}"]`), node].filter(Boolean);
+    };
+    const node = (id) => {
+      const element = $(id);
+      return element && settings.contains(element) ? element : null;
+    };
+    const touchRows =
+      mode === 'solo'
+        ? [
+            ...['touch-mode', 'touch-side', 'touch-size', 'touch-opacity'].flatMap(
+              (id) => row(id) ?? [],
+            ),
+            node('screen-steering-status'),
+            node('screen-steering-help'),
+          ].filter(Boolean)
+        : settings.querySelector('[data-touch-setting]')?.closest('fieldset');
+    const adopted = {
+      language: [...settings.querySelectorAll('[data-language-control]')].find(
+        (element) => !element.hidden,
+      ),
+      appearance: settings.querySelector('.theme-family-controls'),
+      textFace: row(`${fieldPrefix}text-face`),
+      textSize: row(`${fieldPrefix}text-size`),
+      reducedEffects: row(mode === 'solo' ? 'settings-reduced-effects' : `${fieldPrefix}reduced`),
+      menuAnimation: animationLabel,
+      masterMuted: node(mode === 'solo' ? 'settings-master-mute' : `${fieldPrefix}audio`),
+      masterVolume: row(`${fieldPrefix}master-volume`),
+      audioCues: [
+        ...settings.querySelectorAll(
+          '[data-menu-audio], [data-radio-audio], [data-movement-audio]',
+        ),
+      ],
+      touchPresentation: touchRows,
+      musicLibrary:
+        mode === 'solo'
+          ? [node('soundtrack-open'), node('soundtrack-summary')].filter(Boolean)
+          : node(`${fieldPrefix}music-library`),
+      offlineTools: [
+        node(
+          mode === 'solo'
+            ? 'shell-offline'
+            : mode === 'team'
+              ? 'coop-offline-main'
+              : 'race-offline',
+        ),
+        node(mode === 'solo' ? 'shell-offline-status' : `${fieldPrefix}offline-status`),
+      ].filter(Boolean),
+      updates: node('game-check-updates')?.parentElement,
+    };
+    if (mode === 'solo') {
+      Object.assign(adopted, {
+        controllerTools: node('shell-controller-lab'),
+        profileRecovery: [
+          node('profile-recovery-open'),
+          node('profile-recovery-entry-status'),
+        ].filter(Boolean),
+        storageRetention: node('storage-retention-button')?.closest('section'),
+        creatorTools: node('shell-workshop'),
+        about: panels.extras.querySelector('a[href*="about.html"]'),
+      });
+    }
+    Object.assign(adopted, extraGlobalControls);
+    // Music/effects mix faders retain their host/session owner below the shared
+    // group. Only master sound and the existing library preference are global.
+    globalSettings = mountGlobalSettings({
+      document: doc,
+      root: settings,
+      panels,
+      prefix,
+      locale: getLocale(),
+      controls: adopted,
+      duplicates: {
+        masterMuted: [mode === 'solo' ? node('shell-music') : null],
+        offlineTools: [mode === 'team' ? node('coop-offline') : node('settings-offline')],
+      },
+    });
+    return globalSettings;
+  };
+  listeners.push(onLocaleChange(() => globalSettings?.refresh(getLocale())));
+  if (mode === 'team') {
+    const duplicate = $('coop-more-catalogue'),
+      canonical = $('coop-catalogue');
+    if (
+      duplicate &&
+      canonical &&
+      duplicate.getAttribute('href') === canonical.getAttribute('href')
+    ) {
+      const wasHidden = duplicate.hidden;
+      duplicate.hidden = true;
+      listeners.push(() => {
+        duplicate.hidden = wasHidden;
+      });
+    }
+  }
   const owner = {
     root,
     settings,
     panels,
     actions,
     refresh,
+    refreshLandingNavigation,
+    refreshGlobalSettings,
     showBrandTitle,
     hideBrandTitle,
     destroy() {
+      globalSettings?.destroy();
       retune.dispose();
       scene.dispose();
       observer?.disconnect();

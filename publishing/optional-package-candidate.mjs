@@ -40,7 +40,7 @@ export function createOptionalPackageCandidate({ built, version, sourceRevision,
     classification: 'public',
     kind: 'selected-inputs-and-projections',
     description:
-      'Selected application and shared code; generated offline worker and icons; selected validator messages only. Original aggregate locale bytes and build tooling are omitted. Original input hashes bind the committed build inputs, not additional published files.',
+      'Selected application and shared code; generated offline worker and icons; selected validator and settings messages. Original aggregate locale bytes and build tooling are omitted. Original input hashes bind the committed build inputs, not additional published files.',
     inputs: inventory(inputs),
     files: inventory(selectedSource),
     projections: [
