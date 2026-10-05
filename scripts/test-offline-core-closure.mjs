@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { readFile } from 'node:fs/promises';
 import { selectOfflineCore } from './offline-core-closure.mjs';
 import { COMMUNITY_ROUTES } from '../game/community-routes.mjs';
 
@@ -8,6 +9,54 @@ const entries = (values) =>
     name,
     bytes: Buffer.from(typeof value === 'string' ? value : JSON.stringify(value)),
   }));
+
+test('actual native menu imports and styles remain in each mode offline closure', async () => {
+  const names = [
+    'game/index.html',
+    'game/boot.mjs',
+    'game/app.mjs',
+    'game/ui/game-shell.mjs',
+    'game/ui/field-kit-surfaces.mjs',
+    'game/ui/mode-choice.mjs',
+    'game/ui/mode-choice-view.mjs',
+    'game/ui/native-menus.mjs',
+    'game/ui/native-menu.css',
+    'game/ui/native-menu-icons.mjs',
+    'game/ui/mode-settings-view.mjs',
+    'game/ui/mode-settings-view.css',
+    'game/ui/settings-panels.mjs',
+    'game/ui/pause-menu.mjs',
+    'game/ui/pause-menu.css',
+    'game/ui/mode-boot.css',
+    'game/couch/index.html',
+    'game/couch/couch.mjs',
+    'game/couch/couch-shell.mjs',
+    'game/couch/relay-rescue.html',
+    'game/couch/relay-rescue.mjs',
+    'game/snake/play.html',
+    'game/snake/classic-app.mjs',
+  ];
+  const files = await Promise.all(
+    names.map(async (name) => ({
+      name,
+      bytes: await readFile(new URL(`../${name}`, import.meta.url)),
+    })),
+  );
+  for (const mode of ['solo', 'team', 'versus']) {
+    const { retained } = selectOfflineCore(files, new Set(), { mode });
+    for (const name of [
+      'game/ui/mode-choice-view.mjs',
+      'game/ui/mode-settings-view.mjs',
+      'game/ui/native-menu-icons.mjs',
+      'game/ui/pause-menu.mjs',
+      'game/ui/pause-menu.css',
+    ])
+      assert.ok(retained.has(name), `${mode}: ${name}`);
+    if (mode !== 'solo')
+      assert.ok(retained.has('game/ui/mode-boot.css'), `${mode} boot stylesheet`);
+    else assert.ok(retained.has('game/ui/mode-settings-view.css'), 'Snake category stylesheet');
+  }
+});
 
 test('Solo startup graph retains boot styles and production assets while mode hosts stay separate', () => {
   const files = entries({

@@ -38,12 +38,13 @@ const entry = () =>
 function fixture(context, current, { getAppearanceDefault } = {}) {
   const document = new Document(),
     root = document.createElement('nav'),
+    extras = document.createElement('section'),
     local = memory(),
     session = memory(),
     requests = [],
     visits = [],
     deferred = [];
-  document.body.append(root);
+  document.body.append(root, extras);
   document.documentElement.lang = 'uk';
   const href =
     'https://example.test/project/game/' +
@@ -77,6 +78,7 @@ function fixture(context, current, { getAppearanceDefault } = {}) {
     root,
     current,
     actions,
+    guidesContainer: extras,
     pause: () => {
       pauses++;
     },
@@ -93,6 +95,7 @@ function fixture(context, current, { getAppearanceDefault } = {}) {
   return {
     document,
     root,
+    extras,
     controls,
     local,
     session,
@@ -128,7 +131,7 @@ for (const current of ['versus', 'team']) {
     assert.equal(target.searchParams.get('appearanceRevision'), 'r1');
     assert.equal(target.searchParams.get('game-return'), new URL(state.href).pathname);
     assert.equal(target.searchParams.get('lang'), 'uk');
-    assert.equal(target.hash, '#learn');
+    assert.equal(target.hash, '', 'A mode switch opens SIM Home rather than its mission chooser.');
     assert.deepEqual(
       [state.local.writes, state.session.writes],
       before,
@@ -179,9 +182,10 @@ test('the explicit Solo context getter remains primary over compiled and accepte
 });
 
 for (const current of ['solo', 'versus', 'team']) {
-  test(`${current} keeps primary mode entry direct and extra discovery collapsed`, (context) => {
+  test(`${current} keeps primary modes compact and puts discovery in Settings Extras`, (context) => {
     const state = fixture(context, current);
-    const disclosure = state.root.querySelector('.game-mode-destinations');
+    assert.equal(state.root.querySelector('.game-mode-destinations'), null);
+    const disclosure = state.extras.querySelector('.game-mode-destinations');
     assert.equal(disclosure.tagName, 'DETAILS');
     assert.notEqual(disclosure.open, true);
     assert.ok(disclosure.querySelector('summary'));

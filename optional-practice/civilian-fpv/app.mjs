@@ -21,10 +21,24 @@ import { mountRadioSetup } from './radio-setup.mjs';
 import {
   mountFlightFullscreen,
   mountSimPlayShell,
+  mountSimModeSettings,
+  mountSimGlobalSettings,
+  attachSimMenuAudioSettings,
+  readSimRadioAudio,
+  SIM_RADIO_AUDIO_KEY,
+  createSimDisplayPreferences,
+  attachSimThemeFamilyControls,
+  getSimMenuAnimation,
+  setSimMenuAnimation,
+  subscribeSimMenuAnimation,
+  simAttachSettingsPanels,
+  simSettingsPanelBack,
+  simSettingsTabOwnsKey,
   createSimModeLinks,
 } from './flight-fullscreen.mjs';
 import {
   mountSimPresentation,
+  mountSimGlobalTools,
   createSimFlightAudio,
   mountSimAppearanceControls,
   mountDroneResponse,
@@ -58,6 +72,7 @@ export function mountFlightApp({
   courses = FLIGHT_COURSES,
   demonstrations = FLIGHT_DEMONSTRATIONS,
   rendererFactory = createFlightRenderer,
+  globalToolsFactory = mountSimGlobalTools,
   notebookFactory = mountFlightNotebook,
   studioFactory = mountFlightStudio,
   reviewYieldControl,
@@ -107,6 +122,7 @@ export function mountFlightApp({
     selected = 0,
     mode = 'self-level',
     response = DEFAULT_RESPONSE;
+  setLocale(locale, { persist: false });
   try {
     response = createFlightProfileStore({ storage: win.localStorage }).snapshot().response;
   } catch {
@@ -138,7 +154,10 @@ export function mountFlightApp({
     epoch = 0,
     lastRadioDiscovery = -Infinity,
     message = null,
-    playShell = null;
+    playShell = null,
+    modeSettingsView = null,
+    globalSettingsView = null,
+    globalTools = null;
   const c = () => COPY[locale],
     messageText = (key) =>
       key === 'preparingGraphics'
@@ -253,7 +272,6 @@ export function mountFlightApp({
     locale: () => locale,
     onChange: (levels) => {
       audio.setVolumes(levels);
-      presentation.setVolume(levels.interface);
     },
   });
   updateSoundLabel(presentation.soundEnabled());
@@ -320,7 +338,7 @@ export function mountFlightApp({
   function setFlightMenu(open) {
     if (open && playShell) {
       pause();
-      playShell.openHome();
+      playShell.open('pause');
       return;
     }
     if (open) pause();
@@ -425,8 +443,25 @@ export function mountFlightApp({
       $('fallback').textContent = c().contextLost;
     },
   });
+  const displayPreferences = createSimDisplayPreferences({
+    window: win,
+    getStorage: () => win.localStorage,
+  });
+  listeners.push(
+    displayPreferences.subscribe((state) => {
+      doc.body.dataset.textFace = state.textFace;
+      doc.body.dataset.textSize = state.textSize;
+      doc.body.dataset.effects = state.effectiveReducedEffects ? 'reduced' : 'full';
+    }),
+  );
+  listeners.push(
+    subscribeSimMenuAnimation((enabled) => {
+      doc.documentElement.dataset.menuAnimation = enabled ? 'on' : 'off';
+    }, win),
+  );
   const appearanceSession = createSimAppearanceSession();
   const appearanceControls = mountSimAppearanceControls({
+    displayPreferences,
     document: doc,
     window: win,
     container: $('camera').closest('div'),
@@ -589,6 +624,7 @@ export function mountFlightApp({
     paint(true);
     return true;
   }
+  const dialogOpeners = new Map();
   function closeDialog(id) {
     cancelReview();
     if (id === 'course-dialog' && playShell) {
@@ -600,10 +636,15 @@ export function mountFlightApp({
       setup?.dispose();
       setup = null;
     }
-    (playShell?.topDialog()?.querySelector('h1') ?? $('viewport')).focus();
+    const opener = dialogOpeners.get(id);
+    (opener?.isConnected && !opener.closest('[hidden],[inert]')
+      ? opener
+      : (playShell?.topDialog()?.querySelector('h1') ?? $('viewport'))
+    ).focus();
   }
   function openDialog(id) {
     if (id === 'course-dialog' && playShell) return playShell.open('missions');
+    if (!$(id).open) dialogOpeners.set(id, doc.activeElement);
     pause('paused');
     for (const other of dialogIds) if (other !== id && $(other).open) closeDialog(other);
     if (id === 'setup-dialog') {
@@ -740,6 +781,9 @@ export function mountFlightApp({
     }
     presentation.refresh();
     playShell?.setLocale(locale);
+    modeSettingsView?.refresh(locale);
+    globalSettingsView?.refresh(locale);
+    globalTools?.refresh();
     modes.refresh?.();
     appearanceControls.refresh();
     updateSoundLabel(presentation.soundEnabled());
@@ -1088,7 +1132,13 @@ export function mountFlightApp({
     input.throttle(Number($('touch-throttle').value) / 100),
   );
   listen($('academy-flight-options'), 'toggle', () => {
-    if ($('academy-flight-options').open) pause();
+    if ($('academy-flight-options').open) {
+      pause();
+      if (playShell) {
+        $('academy-flight-options').open = false;
+        playShell.open('settings');
+      }
+    }
   });
   const closeOptionsOnEscape = (event) => {
     if (
@@ -1275,8 +1325,17 @@ export function mountFlightApp({
   });
   const menuHint = doc.createElement('p');
   menuHint.className = 'sim-menu-hint';
+  menuHint.id = 'academy-menu-hint';
   $('flight-app').append(menuHint);
   const menuContext = () => {
+    const globalToolRoot = globalTools?.root();
+    if (globalToolRoot)
+      return {
+        root: globalToolRoot,
+        key: `global-tools:${globalToolRoot.id}`,
+        frameFocused: globalTools.frameFocused(),
+        handleFrameCommand: globalTools.handleFrameCommand,
+      };
     const dialog = dialogIds.map($).find((node) => node.open);
     if (dialog)
       return {
@@ -1300,17 +1359,25 @@ export function mountFlightApp({
     window: win,
     locale: () => locale,
     getContext: menuContext,
+    ownsKeyboardEvent: (event) => simSettingsTabOwnsKey(event, menuContext()?.root),
     onHint(value) {
       const context = menuContext();
       // Suspending device input must not reflow an open shared menu beneath
       // the pointer. Its instructions remain valid while the page is blurred.
       if (!value && context?.root.dataset.modeSurface) return;
       menuHint.hidden = !context;
-      if (context && menuHint.parentElement !== context.root) context.root.append(menuHint);
+      const hintContainer =
+        context?.root === playShell?.elements.dialogs.settings
+          ? (modeSettingsView?.panels.extras ?? context.root)
+          : context?.root;
+      if (hintContainer && menuHint.parentElement !== hintContainer) hintContainer.append(menuHint);
+      if (context?.root.dataset.modeSurface)
+        context.root.setAttribute('aria-describedby', menuHint.id);
       if (menuHint.textContent !== value) menuHint.textContent = value;
     },
     onBack() {
       const dialog = dialogIds.find((id) => $(id).open);
+      if (globalTools?.back()) return;
       if (dialog) closeDialog(dialog);
       else if (playShell?.topDialog()) playShell.back();
       else if (flightMenuOpen()) setFlightMenu(false);
@@ -1512,6 +1579,10 @@ export function mountFlightApp({
     document: doc,
     gameReturn: arcadeReturn,
     locale: () => locale,
+    setMenuIcon(node, name) {
+      node.dataset.simIcon = name;
+      presentation.refresh(node);
+    },
   });
   const expert = menuSection('sim-shell-expert');
   for (const id of ['notebook-button', 'help']) expert.append($(id));
@@ -1524,9 +1595,11 @@ export function mountFlightApp({
     mount: doc.body,
     idPrefix: 'academy-shell',
     wordmarkURL,
+    artworkURL: wordmarkURL ? new URL('../../menu-scenes/fpv.webp', wordmarkURL).href : '',
     modeName: () => (locale === 'uk' ? 'FPV SIM · Академія' : 'FPV SIM · Academy'),
     locale,
     services: {
+      settingsPanelBack: simSettingsPanelBack,
       setMenuIcon(node, name) {
         node.dataset.simIcon = name;
         presentation.refresh(node);
@@ -1545,6 +1618,15 @@ export function mountFlightApp({
       start: startPrepared,
       resume: startPrepared,
       continue: startPrepared,
+      skip: () => {
+        reset((selected + 1) % courses.length, mode, null);
+        playShell.open('briefing');
+      },
+      random: () => {
+        const offset = 1 + Math.floor(Math.random() * Math.max(1, courses.length - 1));
+        reset((selected + offset) % courses.length, mode, null);
+        playShell.open('briefing');
+      },
       retry: () => {
         reset();
         playShell.open('briefing');
@@ -1558,6 +1640,7 @@ export function mountFlightApp({
       toggleSound: () => $('academy-sound').click(),
       fullscreen: () => void immersive.toggle(),
       open(surface) {
+        if (surface === 'settings') void globalTools?.ensure();
         if (flight?.snapshot().status === 'active') pause();
         if (surface === 'results') {
           // Reveal the retained native outcome; entering the scene never arms.
@@ -1577,7 +1660,162 @@ export function mountFlightApp({
     initial: 'home',
     focusPlay: () => $('viewport').focus(),
   });
+  const settingLabel = (id) => $(id)?.closest('label');
+  const languageLabel = doc.createElement('label');
+  languageLabel.textContent = 'Language / Мова';
+  languageLabel.append($('language'));
+  modeSettingsView = mountSimModeSettings({
+    root: playShell.elements.dialogs.settings,
+    content: playShell.elements.content.settings,
+    prefix: 'academy-settings',
+    locale,
+    attachPanels: simAttachSettingsPanels,
+    setMenuIcon(node, name) {
+      node.dataset.simIcon = name;
+      presentation.refresh(node);
+    },
+    groups: {
+      gameplay: [settingLabel('mode'), playShell.elements.buttons['home-retry']],
+      controls: [
+        settingLabel('input-source'),
+        $('setup'),
+        settingLabel('keyboard-preset'),
+        settingLabel('touch-response'),
+        controllerHint,
+      ],
+      audio: [
+        $('academy-audio-mix'),
+        $('academy-sound'),
+        shellSettings.querySelector('[data-sim-copy="audioMixHelp"]'),
+      ],
+      display: [
+        languageLabel,
+        settingLabel('camera'),
+        settingLabel('camera-fov'),
+        settingLabel('camera-tilt'),
+        shellSettings.querySelector('.sim-appearance-controls'),
+      ],
+      accessibility: [
+        settingLabel('academy-stick-display'),
+        settingLabel('academy-drone-guide'),
+        settingLabel('academy-guide-scale'),
+      ],
+      data: [$('notebook-button')],
+      content: [playShell.elements.buttons.workshop],
+      extras: [$('help'), shellSettings.querySelector('[data-sim-copy="optionsPause"]')],
+    },
+  });
+  const globalThemeControls = attachSimThemeFamilyControls({
+    document: doc,
+    root: modeSettingsView.panels.display,
+    host: appearanceControls.host,
+    prefix: 'academy-global-',
+  });
+  const displayBinding = (key) => ({
+    get: () => displayPreferences.snapshot()[key],
+    set: (value) => displayPreferences.set({ [key]: value }),
+    subscribe: (listener) => displayPreferences.subscribe(listener),
+  });
+  globalSettingsView = mountSimGlobalSettings({
+    document: doc,
+    root: playShell.elements.dialogs.settings,
+    panels: modeSettingsView.panels,
+    prefix: 'academy-global',
+    locale,
+    controls: {
+      language: languageLabel,
+      appearance: modeSettingsView.panels.display.querySelector('[data-theme-controls]'),
+    },
+    bindings: {
+      textFace: displayBinding('textFace'),
+      textSize: displayBinding('textSize'),
+      reducedEffects: displayBinding('reducedEffects'),
+      menuAnimation: {
+        get: () => getSimMenuAnimation(win),
+        set: (value) => setSimMenuAnimation(value, win),
+        subscribe: (listener) => subscribeSimMenuAnimation(listener, win),
+      },
+      masterMuted: {
+        get: () => audio.masterSnapshot().muted,
+        set: (value) => audio.setEnabled(!value),
+        subscribe: (listener) => audio.subscribeMaster(listener),
+      },
+      masterVolume: {
+        get: () => audio.masterSnapshot().volume,
+        set: (value) => audio.setMasterVolume(value),
+        subscribe: (listener) => audio.subscribeMaster(listener),
+      },
+    },
+    duplicates: { masterMuted: [$('academy-sound')] },
+  });
+  const sharedAudioCues = doc.createElement('section');
+  let radioCueStorage;
+  try {
+    radioCueStorage = win.localStorage;
+  } catch {
+    /* Preferences still work for this visit. */
+  }
+  let sharedRadioCues = readSimRadioAudio(radioCueStorage);
+  const restoreRadioCues = () => {
+    if (radioCueStorage) sharedRadioCues = readSimRadioAudio(radioCueStorage);
+  };
+  listen(win, 'pageshow', restoreRadioCues);
+  listen(win, 'storage', (event) => {
+    if (event.key === SIM_RADIO_AUDIO_KEY || event.key === null) restoreRadioCues();
+  });
+
+  const cueSettings = {
+    // This preference is global; the 3D engine has no separate radio bus.
+    // The canonical Soundscape consumes the same record in supported modes.
+    get radioSettings() {
+      return sharedRadioCues;
+    },
+    set radioSettings(value) {
+      sharedRadioCues = value;
+    },
+    get menuSettings() {
+      return presentation.menuSettings;
+    },
+    set menuSettings(value) {
+      presentation.menuSettings = value;
+    },
+    get movementSettings() {
+      return audio.movementSettings;
+    },
+    set movementSettings(value) {
+      audio.movementSettings = value;
+    },
+    applyVolumes() {
+      presentation.applyVolumes();
+      audio.applyVolumes();
+    },
+  };
+  listeners.push(
+    attachSimMenuAudioSettings(cueSettings, doc, {
+      target: sharedAudioCues,
+      window: win,
+      getStorage: () => win.localStorage,
+      idPrefix: 'sim-global',
+    }),
+  );
+  globalSettingsView.update({ controls: { audioCues: sharedAudioCues } });
+  globalTools = globalToolsFactory({
+    document: doc,
+    window: win,
+    gameReturn,
+    settingsRoot: playShell.elements.dialogs.settings,
+    panels: modeSettingsView.panels,
+    locale: () => locale,
+    onOpen: () => pause(),
+    onControls: (controls) => globalSettingsView.update({ controls }),
+  });
+  // These wrappers only held the controls now owned by the shared categories.
+  shellSettings.hidden = true;
+  playShell.elements.buttons.expert.hidden = true;
+  playShell.elements.buttons.help.hidden = true;
+  $('academy-close-options').dataset.settingsBack = '';
   listen($('academy-close-options'), 'click', () => playShell.back());
+
   // Existing renderer preparation remains asynchronous; Play enters its native
   // disarmed scene, where Arm becomes available as soon as assets are ready.
   reset();
@@ -1615,6 +1853,11 @@ export function mountFlightApp({
       setup?.dispose();
       void notebook?.dispose();
       studio?.dispose();
+      globalTools?.dispose();
+      globalSettingsView?.destroy();
+      globalThemeControls?.dispose();
+      displayPreferences.dispose();
+      modeSettingsView?.destroy();
       playShell?.dispose();
       menuNavigation.dispose();
       menuHint.remove();

@@ -1,4 +1,11 @@
 import { selectedArcadeCollection } from '../presentation/industrial-arcade.mjs';
+import {
+  mountGlobalSettingsTools,
+  globalSettingsToolsRoot,
+  globalSettingsToolFrameFocused,
+  closeGlobalSettingsTool,
+  guardGlobalSettingsToolBlur,
+} from '../ui/global-settings-tools.mjs';
 import { pursuitRoster } from '../hunt/pursuit-goals.mjs';
 import { missionBriefing } from '../mission-brief.mjs';
 import { createEncounterVariantPreferences } from '../hunt/preferences.mjs';
@@ -481,7 +488,10 @@ try {
     onOpen() {
       if (shell.scope() !== 'main') return;
       const target = $('race-journey-save').hidden ? $('race-start') : $('race-journey-save-retry');
-      if (!target.disabled && !target.hidden) target.focus();
+      if (!target.disabled && !target.hidden) {
+        if ($('race-journey-save').hidden) target.focus();
+        else shell.openSettings('data', target);
+      }
     },
   });
   let journeyThemeSources;
@@ -2600,6 +2610,7 @@ try {
     root: $('race-encounter-help'),
     getLevels: () => match?.runs?.map((run) => run.level) ?? [],
   });
+  let globalSettingsVisit = 0;
   shell = createCouchShell({
     controllerNeedsTouch: (seat) => slots[seat] !== null && !controllerSession.completeFlight(seat),
     getSceneContext: () => ({
@@ -2628,6 +2639,7 @@ try {
     getTeamJourneyRoute: () =>
       librarySourceReturn?.mode === 'team' ? librarySourceReturn.journey : null,
     onTransition: ({ to, back = false } = {}) => {
+      globalSettingsVisit++;
       ++libraryOpenEpoch;
       cancelLibraryDecision();
       clear();
@@ -3867,7 +3879,32 @@ try {
   });
   if ($('race-offline')) $('race-offline').onclick = () => installOfflinePanel.open();
 
+  const globalTools = mountGlobalSettingsTools({
+    document,
+    window,
+    prefix: 'race-global',
+    settingsRoot: $('race-options-panel'),
+    panels: Object.fromEntries(
+      ['controls', 'data', 'content', 'extras'].map((name) => [
+        name,
+        $(`race-settings-panel-${name}`),
+      ]),
+    ),
+    existing: {
+      offlineTools: [$('race-offline'), $('race-offline-status')].filter(Boolean),
+      about: $('race-more-about'),
+    },
+    getSettingsOpen: () => !disposed && shell.scope() === 'options',
+    getOwner: () => ({ attempt: catalogueAttempt(), visit: globalSettingsVisit }),
+    isOwnerCurrent: (owner) =>
+      owner?.visit === globalSettingsVisit && catalogueAttemptCurrent(owner.attempt),
+    onOpen: clear,
+    offlinePanel: installOfflinePanel,
+  });
+  shell.refreshGlobalSettings?.({ controls: globalTools.controls });
+
   function couchScope() {
+    if (globalSettingsToolsRoot(document)) return `couch:${globalSettingsToolsRoot(document).id}`;
     if (music?.root()) return 'couch-music-library';
     const modal = [...document.querySelectorAll('dialog[open]')].at(-1);
     if (modal) return `couch:${modal.id}`;
@@ -3945,7 +3982,7 @@ try {
     }
   }
   function updateMenu() {
-    if (!match || disposed) return;
+    if (bootFailed || !match || disposed) return;
     runningEnemyControls.forEach((control) => control.refresh());
     const completedBoards = match.runs.filter((run) => run.status === 'won').length;
     journeyReactions.present({
@@ -3985,7 +4022,13 @@ try {
       $('race-journey-skip').hidden = match.status === 'finished';
       $('race-journey-skip').disabled = contentBusy;
       localizedText($('race-journey-skip'), () =>
-        journeySkipArmed === match ? t('interface:confirmSkip') : t('interface:skipMission'),
+        journeySkipArmed === match
+          ? t('interface:confirmSkip')
+          : t(
+              match.status === 'paused'
+                ? 'interface:nativeMenu.pauseSkip'
+                : 'interface:skipMission',
+            ),
       );
       $('race-journey-find').disabled = contentBusy;
     }
@@ -4076,6 +4119,8 @@ try {
     'race-focus',
     'race-options',
     'race-quick-sound',
+    'race-pause-next-song',
+    'versus-landing-fullscreen',
     'race-settings-tab-controls',
     'race-settings-tab-audio',
     'race-settings-tab-display',
@@ -4138,32 +4183,36 @@ try {
     onTabBoundary: () => playgroundTabBoundary({ window, suspend }),
     getScope: couchScope,
     getRoot: () =>
-      installOfflinePanel?.frameFocused()
+      globalSettingsToolFrameFocused(document) || installOfflinePanel?.frameFocused()
         ? null
-        : music?.root() ||
+        : globalSettingsToolsRoot(document) ||
+          music?.root() ||
           [...document.querySelectorAll('dialog[open]')].at(-1) ||
           // Find/Next sit beside the main panel for Legacy and installed missions
           // too. The existing allowlist excludes all live-board controls.
           (shell.scope() === 'main' ? $('couch-app') : shell.root()),
     getDefaultFocus: () =>
-      installOfflinePanel?.isOpen()
-        ? $('install-offline-downloads')
-        : libraryDecision
-          ? $('race-library-stay')
-          : music?.root()
-            ? music.primary()
-            : journeyPictures?.root()
-              ? journeyPictures.primary()
-              : $('journey-backup')?.open
-                ? $('journey-backup-export')
-                : $('journey-chooser')?.open
-                  ? journeyChooser?.primary() || $('journey-search')
-                  : shell.primary(),
+      globalSettingsToolsRoot(document)
+        ? globalSettingsToolsRoot(document).querySelector('button:not([disabled])')
+        : installOfflinePanel?.isOpen()
+          ? $('install-offline-downloads')
+          : libraryDecision
+            ? $('race-library-stay')
+            : music?.root()
+              ? music.primary()
+              : journeyPictures?.root()
+                ? journeyPictures.primary()
+                : $('journey-backup')?.open
+                  ? $('journey-backup-export')
+                  : $('journey-chooser')?.open
+                    ? journeyChooser?.primary() || $('journey-search')
+                    : shell.primary(),
     keyboard: true,
     nativeReadingScroll: true,
     ownsKeyboardEvent: (event) =>
       !music?.root() && settingsTabOwnsKey(event, $('race-options-panel')),
     accept: (element) =>
+      !!globalSettingsToolsRoot(document)?.contains(element) ||
       !!element.closest('[data-menu-scope]') ||
       music?.contains(element) ||
       (element.tagName === 'A' &&
@@ -4184,33 +4233,37 @@ try {
     onNativeInput: (event) => setReadingModality(nextInputModality(readingModality, event)),
     activateControl: (element) => controllerConfirmGuard.activate(element),
     onBack: () =>
-      installOfflinePanel?.isOpen()
-        ? installOfflinePanel.close()
-        : libraryDecision
-          ? libraryDecision.finish(false)
-          : music?.root()
-            ? music.back()
-            : journeyPictures?.root()
-              ? journeyPictures.close()
-              : $('journey-backup')?.open
-                ? $('journey-backup-back').click()
-                : $('journey-chooser')?.open
-                  ? journeyChooser.close()
-                  : shell.back(),
+      closeGlobalSettingsTool(document)
+        ? undefined
+        : installOfflinePanel?.isOpen()
+          ? installOfflinePanel.close()
+          : libraryDecision
+            ? libraryDecision.finish(false)
+            : music?.root()
+              ? music.back()
+              : journeyPictures?.root()
+                ? journeyPictures.close()
+                : $('journey-backup')?.open
+                  ? $('journey-backup-back').click()
+                  : $('journey-chooser')?.open
+                    ? journeyChooser.close()
+                    : shell.back(),
     onMenu: () =>
-      installOfflinePanel?.isOpen()
-        ? installOfflinePanel.close()
-        : libraryDecision
-          ? libraryDecision.finish(false)
-          : music?.root()
-            ? music.back()
-            : journeyPictures?.root()
-              ? journeyPictures.close()
-              : $('journey-backup')?.open
-                ? $('journey-backup-back').click()
-                : $('journey-chooser')?.open
-                  ? journeyChooser.close()
-                  : shell.back(),
+      closeGlobalSettingsTool(document)
+        ? undefined
+        : installOfflinePanel?.isOpen()
+          ? installOfflinePanel.close()
+          : libraryDecision
+            ? libraryDecision.finish(false)
+            : music?.root()
+              ? music.back()
+              : journeyPictures?.root()
+                ? journeyPictures.close()
+                : $('journey-backup')?.open
+                  ? $('journey-backup-back').click()
+                  : $('journey-chooser')?.open
+                    ? journeyChooser.close()
+                    : shell.back(),
     onHint: (message, context) => {
       if (
         context?.kind === 'reading' &&
@@ -4289,6 +4342,10 @@ try {
       updateMenu();
       return;
     }
+    if (globalTools.handleFrameCommand(result.ui)) {
+      updateMenu();
+      return;
+    }
     if (menuOwner && result.status.code === 'joined') {
       menuScope = scope;
       focusPrimaryAction();
@@ -4340,7 +4397,9 @@ try {
   const pagehide = (event) => {
     suspend();
     if (event.persisted) return;
+    shell.destroy();
     installOfflinePanel?.dispose();
+    void globalTools.dispose();
     runningEnemyControls.forEach((control) => control.dispose());
     runningEnemyPreferences.dispose();
     contentController?.abort();
@@ -4366,7 +4425,6 @@ try {
     reading.destroy();
     encounterHelp.dispose();
     navigation.destroy();
-    shell.destroy();
     stopNative();
     cancelAnimationFrame(frameId);
     window.removeEventListener('blur', windowBlur);
@@ -4376,7 +4434,7 @@ try {
     document.removeEventListener('pointerdown', nativeMenuInput, true);
     document.removeEventListener('keydown', nativeMenuInput, true);
   };
-  const windowBlur = guardInstallOfflineBlur(suspend);
+  const windowBlur = guardGlobalSettingsToolBlur(guardInstallOfflineBlur(suspend));
   window.addEventListener('blur', windowBlur);
   window.addEventListener('gamepaddisconnected', disconnected);
   window.addEventListener('pagehide', pagehide);
@@ -4384,7 +4442,7 @@ try {
   document.addEventListener('pointerdown', nativeMenuInput, true);
   document.addEventListener('keydown', nativeMenuInput, true);
   function frame(now) {
-    if (disposed) return;
+    if (bootFailed || disposed) return;
     const available = !document.hidden && document.hasFocus();
     if (!available && !inactive) suspend();
     if (available && inactive) {
@@ -4884,15 +4942,24 @@ try {
 } catch (error) {
   document.documentElement.dataset.toolState = 'error';
   bootFailed = true;
-  bootDisplay.finish({
-    state: 'error',
-    message: localizedMessage('gameplay:theRaceCouldNotLoad', { value1: error.message }),
-  });
+  const message = localizedMessage('gameplay:theRaceCouldNotLoad', { value1: error.message });
+  // Ready clears the original status lease before picture/focus handoff ends.
+  // A later failure needs fresh feedback in the still-visible recovery shell.
+  bootStatus.begin({ message }).finish({ state: 'error', message });
+  const recovery = $('boot-return');
+  recovery.hidden = false;
   releaseArtwork({ persisted: false });
   $('race-start').disabled = true;
   localizedText($('race-message'), () =>
     t('gameplay:theRaceCouldNotLoad', { value1: error.message }),
   );
+  if (
+    bootFinished &&
+    !document.hidden &&
+    document.hasFocus?.() !== false &&
+    (unclaimedFocus(document.activeElement) || $('couch-app').contains(document.activeElement))
+  )
+    recovery.focus({ preventScroll: true });
 } finally {
   initialFocusPending = false;
   document.removeEventListener('focusin', initialFocusChoice, true);

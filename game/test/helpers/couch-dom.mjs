@@ -241,8 +241,60 @@ export class Element extends Events {
     this.captures.delete(id);
     this.emit('lostpointercapture', { pointerId: id });
   }
-  getContext() {
-    return { id: this.id };
+  getContext(kind = '2d') {
+    if (kind !== '2d') return null;
+    if (!this._context) {
+      // Canvas is a browser boundary here. Actual painting assertions install
+      // their own recording context; menu previews need the ordinary 2D API.
+      const canvas = this;
+      const noop = () => {};
+      this._context = {
+        canvas,
+        get id() {
+          return canvas.id;
+        },
+        globalAlpha: 1,
+        imageSmoothingEnabled: true,
+        measureText: (text) => ({ width: String(text).length * 8 }),
+        createLinearGradient: () => ({ addColorStop: noop }),
+        createRadialGradient: () => ({ addColorStop: noop }),
+        createPattern: () => null,
+      };
+      for (const method of [
+        'save',
+        'restore',
+        'clearRect',
+        'fillRect',
+        'strokeRect',
+        'beginPath',
+        'closePath',
+        'moveTo',
+        'lineTo',
+        'quadraticCurveTo',
+        'bezierCurveTo',
+        'arc',
+        'arcTo',
+        'ellipse',
+        'rect',
+        'roundRect',
+        'fill',
+        'stroke',
+        'clip',
+        'translate',
+        'rotate',
+        'scale',
+        'transform',
+        'setTransform',
+        'resetTransform',
+        'drawImage',
+        'fillText',
+        'strokeText',
+        'setLineDash',
+        'putImageData',
+      ])
+        this._context[method] = noop;
+    }
+    return this._context;
   }
   appendChild(node) {
     this.append(node);
@@ -479,6 +531,11 @@ export class Document extends Events {
   }
   createElement(tag) {
     return new Element(this, tag);
+  }
+  createTextNode(value) {
+    const node = new Element(this, 'span');
+    node.textContent = String(value);
+    return node;
   }
   contains(node) {
     return node === this || this.documentElement.contains(node);

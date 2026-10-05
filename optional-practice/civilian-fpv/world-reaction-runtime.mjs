@@ -2,7 +2,7 @@
 // Native flight logic remains in its existing cores. No simulation clock or record recipe changes.
 const sourceHashes={
 'optional-practice/civilian-fpv/world-audio.mjs':
-'104011e3e43091577ef2c740aaead7727fc45234fc2cbb2ce61fa3441dc63f8b',
+'39f528e521d2dfe2ff29f62485bd0014390df82689ae3a2deb522698e078a769',
 'game/ui/audio-output.mjs':'dc1b2776407d0b6649b0d15c5c721bd59384d7e38a2e61087961ff7a37bd86c1',
 'game/ui/audio-master.mjs':'6bf14bc5268c0eff8f38c21c819f398917712fdc2607c33977ac873111d1dca8',
 'game/audio-preferences.mjs':'9212831a3524c9e1ebe8c595783f9f53a112e02e3d51280d775ac103b94a9239',
@@ -1035,6 +1035,23 @@ return null;
 }
 return voice;
 },
+get movementSettings(){
+return movement;
+},
+set movementSettings(value){
+if(
+typeof value?.enabled!=='boolean'||
+!Number.isFinite(value.volume)||
+value.volume<0||
+value.volume>1
+)
+throw new TypeError('Movement sound requires an enabled boolean and volume between zero and one.');
+movement={enabled:value.enabled,volume:value.volume};
+},
+applyVolumes:applyOutput,
+masterSnapshot:()=>audioMaster.snapshot(),
+subscribeMaster:(listener)=>audioMaster.subscribe(listener),
+setMasterVolume:(value)=>preferences.setVolume(value),
 enabled:()=>enabled,
 volumes:()=>({...levels}),
 setVolumes(values={}){

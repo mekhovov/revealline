@@ -5,6 +5,8 @@ const COPY = {
   en: {
     home: 'Main menu',
     missions: 'Select Mission',
+    missionsGroup: 'Missions',
+    homeAction: 'Home',
     briefing: 'Mission briefing',
     settings: 'Settings',
     expert: 'Expert options',
@@ -18,6 +20,13 @@ const COPY = {
     back: 'Back',
     menu: 'Menu',
     pause: 'Pause',
+    restart: 'Restart',
+    skip: 'Skip',
+    random: 'Random',
+    choose: 'Choose',
+    audio: 'Sound',
+    config: 'Settings',
+    nextSong: 'Next song',
     resume: 'Resume',
     fullscreen: 'Full screen',
     sound: 'Sound',
@@ -28,6 +37,8 @@ const COPY = {
   uk: {
     home: 'Головне меню',
     missions: 'Вибрати місію',
+    missionsGroup: 'Місії',
+    homeAction: 'Головне меню',
     briefing: 'Перед польотом',
     settings: 'Налаштування',
     expert: 'Розширені налаштування',
@@ -41,6 +52,13 @@ const COPY = {
     back: 'Назад',
     menu: 'Меню',
     pause: 'Пауза',
+    restart: 'Заново',
+    skip: 'Далі',
+    random: 'Навмання',
+    choose: 'Обрати',
+    audio: 'Звук',
+    config: 'Налаштування',
+    nextSong: 'Наступна пісня',
     resume: 'Продовжити',
     fullscreen: 'На весь екран',
     sound: 'Звук',
@@ -51,6 +69,7 @@ const COPY = {
 };
 const SURFACES = [
   'home',
+  'pause',
   'missions',
   'briefing',
   'settings',
@@ -59,6 +78,84 @@ const SURFACES = [
   'workshop',
   'results',
 ];
+
+/** Give every landing page one deterministic vertical cycle. A step may contain
+ * several mutually exclusive controls (for example Start and Continue); the
+ * controller navigator selects the first currently visible target. */
+export function wireLandingMenuNavigation({
+  modesRoot = null,
+  current = null,
+  steps = [],
+  links = [],
+  scopeRoot = modesRoot?.closest?.('[id]') ?? null,
+} = {}) {
+  const groups = steps
+    .map((step) => (Array.isArray(step) ? step : [step]).filter((node) => node?.id))
+    .filter((group) => group.length);
+  const modes = [...(modesRoot?.querySelectorAll('[data-game-mode]') ?? [])].filter(
+    (node) => node.id,
+  );
+  const selected =
+    current ?? modes.find((node) => node.getAttribute('aria-current') === 'page') ?? null;
+  const originals = new Map();
+  const set = (nodes, direction, targets) => {
+    nodes = nodes.filter((node) => node?.id);
+    targets = targets.filter((node) => node?.id);
+    const value = targets
+      .map((node) => node?.id)
+      .filter(Boolean)
+      .join(' ');
+    for (const node of nodes) {
+      if (!originals.has(node))
+        originals.set(node, {
+          ...Object.fromEntries(
+            ['up', 'right', 'down', 'left'].map((name) => [
+              name,
+              node.getAttribute(`data-menu-${name}`),
+            ]),
+          ),
+          scope: node.getAttribute('data-menu-navigation-scope'),
+        });
+      if (scopeRoot?.id) node.setAttribute('data-menu-navigation-scope', scopeRoot.id);
+      if (value) node.setAttribute(`data-menu-${direction}`, value);
+      else node.removeAttribute(`data-menu-${direction}`);
+    }
+  };
+  if (groups.length) {
+    set(modes, 'down', groups.flat());
+    set(modes, 'up', groups.toReversed().flat());
+    groups.forEach((group, index) => {
+      set(group, 'up', [
+        ...groups.slice(0, index).toReversed().flat(),
+        ...(selected ? [selected] : []),
+      ]);
+      set(group, 'down', [...groups.slice(index + 1).flat(), ...(selected ? [selected] : [])]);
+    });
+    for (const { nodes, direction, targets } of links)
+      if (['up', 'right', 'down', 'left'].includes(direction))
+        set(
+          Array.isArray(nodes) ? nodes : [nodes],
+          direction,
+          Array.isArray(targets) ? targets : [targets],
+        );
+  }
+  return {
+    dispose() {
+      for (const [node, values] of originals)
+        for (const [direction, value] of Object.entries(values).filter(
+          ([direction]) => direction !== 'scope',
+        )) {
+          if (value === null) node.removeAttribute(`data-menu-${direction}`);
+          else node.setAttribute(`data-menu-${direction}`, value);
+        }
+      for (const [node, values] of originals) {
+        if (values.scope === null) node.removeAttribute('data-menu-navigation-scope');
+        else node.setAttribute('data-menu-navigation-scope', values.scope);
+      }
+      originals.clear();
+    },
+  };
+}
 
 /** Move live slots, preserving IDs/listeners. No close path starts or resumes play.
  * actions.open(surface) may return false to delegate to an existing host dialog.
@@ -75,6 +172,7 @@ export function mountModePlayShell({
   actions = {},
   services = {},
   wordmarkURL = '',
+  artworkURL = '',
   version = '',
   initial = 'home',
   focusPlay = () => {},
@@ -120,7 +218,12 @@ export function mountModePlayShell({
         review: 'missions',
         start: 'play',
         continue: 'play',
-        retry: 'play',
+        retry: 'restart',
+        resume: 'play',
+        choose: 'missions',
+        nextSong: 'next',
+        home: 'home',
+        homeAction: 'home',
         results: 'collection',
         menu: 'back',
         pause: 'pause',
@@ -155,7 +258,7 @@ export function mountModePlayShell({
       const phase = event.detail > 0 && pausePress ? pausePress.phase : state.phase;
       pausePress = null;
       if (!['playing', 'paused'].includes(state.phase)) return;
-      if (phase === 'playing') open('home');
+      if (phase === 'playing') open('pause');
       else if (phase === 'paused' && state.phase === 'paused') activate('resume');
     }),
   );
@@ -208,6 +311,18 @@ export function mountModePlayShell({
       onSurfaceChange(topDialog()?.dataset.modeSurface ?? 'play');
     });
   }
+  if (services.attachMenuScene) {
+    const scene = services.attachMenuScene({ root: dialogs.home, mode: 'solo' });
+    cleanups.push(() => scene.dispose());
+  } else if (artworkURL) {
+    const scene = el('div', 'mode-play-artwork');
+    scene.setAttribute('aria-hidden', 'true');
+    const image = el('img');
+    image.src = artworkURL;
+    image.alt = '';
+    scene.append(image);
+    dialogs.home.prepend(scene);
+  }
   const home = content.home;
   const title = dialogs.home.querySelector('h1');
   title.className = 'mode-play-wordmark';
@@ -230,7 +345,7 @@ export function mountModePlayShell({
   const modes = el('nav', 'mode-play-modes');
   move('modes', modes);
   const mission = el('p', 'mode-play-mission');
-  const menu = el('nav', 'mode-play-main-menu');
+  const menu = el('nav', 'mode-play-main-menu native-menu-actions');
   menu.dataset.menuScope = 'main';
   menu.append(
     button(
@@ -247,10 +362,57 @@ export function mountModePlayShell({
     button('results', () => open('results'), false, 'home-results'),
     button('missions', () => open('missions')),
     button('settings', () => open('settings')),
-    button('fullscreen', () => actions.fullscreen?.()),
-    button('sound', () => actions.toggleSound?.()),
   );
-  home.append(edition, modes, mission, menu);
+  const utilities = el('div', 'mode-play-utilities native-menu-utilities');
+  utilities.setAttribute('role', 'group');
+  utilities.append(
+    button('sound', () => actions.toggleSound?.()),
+    button('fullscreen', () => actions.fullscreen?.()),
+  );
+  home.append(edition, modes, mission, menu, utilities);
+  const landingNavigation = wireLandingMenuNavigation({
+    modesRoot: modes,
+    scopeRoot: dialogs.home,
+    steps: [buttons.primary, buttons.missions, buttons.settings, buttons.sound, buttons.fullscreen],
+  });
+  cleanups.push(() => landingNavigation.dispose());
+  const pauseMenu = content.pause;
+  pauseMenu.classList.add('shared-pause-menu');
+  const resume = button('resume', () => activate('resume'), true, 'pause-resume');
+  resume.classList.add('pause-command-primary');
+  pauseMenu.append(resume);
+  const pauseGroup = (name, key, controls) => {
+    const section = el('section', 'pause-command-section');
+    section.dataset.pauseGroup = name;
+    section.append(label(el('h3'), key));
+    const grid = el('div', 'pause-command-grid');
+    grid.append(...controls);
+    section.append(grid);
+    section.hidden = !controls.length;
+    pauseMenu.append(section);
+  };
+  pauseGroup('missions', 'missionsGroup', [
+    ...(actions.retry ? [button('restart', () => activate('retry'), false, 'pause-restart')] : []),
+    ...(actions.skip ? [button('skip', () => activate('skip'), false, 'pause-skip')] : []),
+    ...(actions.random ? [button('random', () => activate('random'), false, 'pause-random')] : []),
+    button('choose', () => open('missions'), false, 'pause-choose'),
+  ]);
+  pauseGroup('audio', 'audio', [
+    ...(actions.toggleSound
+      ? [button('sound', () => actions.toggleSound?.(), false, 'pause-sound')]
+      : []),
+    ...(actions.nextSong
+      ? [button('nextSong', () => actions.nextSong(), false, 'pause-next-song')]
+      : []),
+  ]);
+  pauseGroup('config', 'config', [
+    button('settings', () => open('settings'), false, 'pause-settings'),
+    button('fullscreen', () => actions.fullscreen?.(), false, 'pause-fullscreen'),
+  ]);
+  const homeButton = button('homeAction', () => open('home'), false, 'pause-home');
+  homeButton.classList.add('pause-command-home');
+  pauseMenu.append(homeButton);
+  dialogs.pause.querySelector('footer').hidden = true;
   if (version) {
     const build = el('p', 'mode-play-version');
     build.textContent = version;
@@ -274,17 +436,24 @@ export function mountModePlayShell({
   for (const name of ['expert', 'help', 'workshop']) {
     if (slots[name] || actions.open) content.settings.append(button(name, () => open(name)));
   }
+  buttons['settings-back'].dataset.settingsBack = '';
   const retryHome = button('retry', () => activate('retry'), false, 'home-retry');
-  content.home.append(retryHome);
+  content.settings.append(retryHome);
   const navigation = services.attachModalNavigation?.({
     document: doc,
     getFallbackFocus: () => buttons.menu,
   });
   if (navigation) cleanups.push(() => navigation.destroy());
-  if (services.attachFullscreen) {
-    buttons.fullscreen.setAttribute('data-fullscreen-label', '');
-    cleanups.push(services.attachFullscreen(buttons.fullscreen, doc, { escapeRoot: dialogs.home }));
-  } else buttons.fullscreen.hidden = !actions.fullscreen;
+  for (const [name, escapeRoot] of [
+    ['fullscreen', dialogs.home],
+    ['pause-fullscreen', dialogs.pause],
+  ]) {
+    const control = buttons[name];
+    if (services.attachFullscreen) {
+      control.setAttribute('data-fullscreen-label', '');
+      cleanups.push(services.attachFullscreen(control, doc, { escapeRoot }));
+    } else control.hidden = !actions.fullscreen;
+  }
   buttons.sound.hidden = !actions.toggleSound;
   function resumable() {
     return state.canResume ?? !!actions.canResume?.();
@@ -320,7 +489,7 @@ export function mountModePlayShell({
         value = COPY[language][state.phase === 'paused' ? 'resume' : 'start'];
       else if (node === buttons.pause)
         value = COPY[language][state.phase === 'paused' ? 'resume' : 'pause'];
-      else if (node === buttons.sound)
+      else if (node === buttons.sound || node === buttons['pause-sound'])
         value = `${COPY[language].sound}: ${COPY[language][state.muted ? 'off' : 'on']}`;
       else if (node === briefingTitle) value = text(state.missionName) || value;
       put(node, 'textContent', value);
@@ -328,14 +497,18 @@ export function mountModePlayShell({
     attribute(buttons.menu, 'aria-label', COPY[language].menu);
     put(modeLabel, 'textContent', text(modeName));
     put(edition, 'textContent', text(modeName));
+    edition.hidden = true;
     attribute(modes, 'aria-label', COPY[language].modes);
     attribute(menu, 'aria-label', COPY[language].home);
+    attribute(utilities, 'aria-label', COPY[language].settings);
     put(mission, 'textContent', text(state.missionName));
     put(mission, 'hidden', !mission.textContent);
     put(briefingSummary, 'textContent', text(state.summary) || text(state.missionName));
     put(briefingSummary, 'hidden', !briefingSummary.textContent);
     put(buttons.pause, 'disabled', !['playing', 'paused'].includes(state.phase));
     attribute(buttons.sound, 'aria-pressed', String(!state.muted));
+    if (buttons['pause-sound'])
+      attribute(buttons['pause-sound'], 'aria-pressed', String(!state.muted));
     put(retryHome, 'hidden', state.phase !== 'paused');
     put(buttons['home-results'], 'hidden', state.phase !== 'results');
   }
@@ -357,7 +530,7 @@ export function mountModePlayShell({
   }
   function open(name = 'home') {
     if (!alive) return false;
-    if (name === 'pause') name = 'home';
+
     const request = ++opening;
     if (name === 'play') {
       enterPlay();
@@ -380,7 +553,12 @@ export function mountModePlayShell({
     }
     if (dialog.open) {
       if (name === 'home') onSurfaceChange(name);
-      (name === 'home' ? buttons.primary : dialog.querySelector('h1')).focus({
+      (name === 'home'
+        ? buttons.primary
+        : name === 'pause'
+          ? resume
+          : dialog.querySelector('h1')
+      ).focus({
         preventScroll: true,
       });
       return true;
@@ -389,13 +567,19 @@ export function mountModePlayShell({
     removeFromStack(dialog);
     stack.push(dialog);
     onSurfaceChange(name);
-    (name === 'home' ? buttons.primary : dialog.querySelector('h1')).focus({ preventScroll: true });
+    (name === 'home'
+      ? buttons.primary
+      : name === 'pause'
+        ? resume
+        : dialog.querySelector('h1')
+    ).focus({ preventScroll: true });
     return true;
   }
   function back() {
     const dialog = topDialog();
     if (!dialog || !Object.values(dialogs).includes(dialog)) return false;
-    if (dialog === dialogs.home) {
+    if (services.settingsPanelBack?.(dialog)) return true;
+    if (dialog === dialogs.home || dialog === dialogs.pause) {
       if (state.phase === 'results') return open('results');
       if (!resumable()) return false;
       enterPlay();
@@ -416,12 +600,15 @@ export function mountModePlayShell({
     content,
     buttons,
     modes,
+    utilities,
   };
   function setLocale(next) {
     language = next === 'uk' ? 'uk' : 'en';
     update();
   }
   update();
+  // Reveal before focusing: hidden boot content cannot receive native focus.
+  delete doc.documentElement.dataset.modeShellPending;
   if (initial !== 'play') open(initial);
   return {
     open,

@@ -1,3 +1,11 @@
+import { createPauseMenu, pauseMusicAction } from '../ui/pause-menu.mjs';
+import {
+  mountGlobalSettingsTools,
+  globalSettingsToolsRoot,
+  globalSettingsToolFrameFocused,
+  closeGlobalSettingsTool,
+  guardGlobalSettingsToolBlur,
+} from '../ui/global-settings-tools.mjs';
 import { selectedArcadeCollection } from '../presentation/industrial-arcade.mjs';
 import { pursuitRoster } from '../hunt/pursuit-goals.mjs';
 import { prepareTeamRunningEnemies } from '../hunt/team-running-enemies.mjs';
@@ -797,6 +805,8 @@ export function bootCoop({
       loopStopped
     )
       return;
+    openSettings();
+    settingsPanels?.select('coop-settings-tab-extras', { drill: true });
     $('coop-help').open = true;
     updateCueOverflow();
     controllerConfirmGuard.requireNeutral();
@@ -820,7 +830,7 @@ export function bootCoop({
     container: $('coop-hunt-save'),
     liveStatus: $('coop-hunt-attempt-status'),
     store: huntAttemptStore,
-    canContinue: () => pictureSelection !== null && canOpenDiscovery(),
+    canContinue: () => pictureSelection !== null && canOpenDiscovery({ fromSettings: true }),
     findRow: (snapshot) =>
       currentDiscoveryRows().find((row) => {
         if (row.levelId !== snapshot.levelId) return false;
@@ -837,10 +847,13 @@ export function bootCoop({
         throw new DOMException('Team Hunt Continue is closed.', 'AbortError');
       if (inactive || !foreground())
         throw interrupted('foregroundLost', 'Team Hunt Continue needs the foreground game.');
-      if (!canOpenDiscovery())
+      if (!canOpenDiscovery({ fromSettings: true }))
         throw interrupted('continueInterrupted', 'Team Hunt Continue is unavailable.');
       const ownerRun = run,
-        ownerGeneration = generation;
+        ownerGeneration = generation,
+        ownerSettingsVisit = settingsVisit,
+        ownerSettings = settingsDialog.open ? settingsOwner : null,
+        ownerSettingsPanel = settingsPanels?.selected();
       const restored = await restoreTeamHuntAttempt(saved.snapshot, {
         pack: row.pack,
         level: row.level,
@@ -854,6 +867,20 @@ export function bootCoop({
         throw interrupted('saveChanged', 'Team Hunt checkpoint changed during verification.');
       if (run !== ownerRun || generation !== ownerGeneration)
         throw interrupted('continueInterrupted', 'Team Hunt attempt changed during verification.');
+      if (
+        settingsVisit !== ownerSettingsVisit ||
+        (ownerSettings &&
+          (settingsOwner !== ownerSettings || settingsPanels.selected() !== ownerSettingsPanel))
+      )
+        throw interrupted('continueInterrupted', 'Team Hunt settings changed during verification.');
+      const fromSettings = settingsDialog.open;
+      // Keep validation failures visible in Data. Only a verified checkpoint
+      // retires Settings before discovery takes ownership of the arena.
+      if (fromSettings) {
+        closeSettings({ restore: false });
+        settingsClosed();
+      }
+      const closedSettingsVisit = settingsVisit;
       restored.raw = saved.raw;
       try {
         const activated = await activateDiscovery(row, {
@@ -870,6 +897,22 @@ export function bootCoop({
           throw error;
         }
       } catch (error) {
+        if (
+          fromSettings &&
+          !disposed &&
+          !inactive &&
+          foreground() &&
+          run === ownerRun &&
+          generation === ownerGeneration &&
+          settingsVisit === closedSettingsVisit &&
+          !settingsDialog.open
+        ) {
+          openSettings();
+          if (settingsDialog.open) {
+            settingsPanels.select('coop-settings-tab-data', { drill: true });
+            opener.focus({ preventScroll: true });
+          }
+        }
         if (error.name !== 'AbortError' || signal.aborted) throw error;
         const reason = new Error(error.message);
         reason.code =
@@ -1035,32 +1078,31 @@ export function bootCoop({
     $('coop-controls').hidden = !visible;
     document.body.dataset.coopTouch = visible ? 'visible' : 'hidden';
   }
+  let pauseMenu = null;
   function placeTools(paused) {
+    const pausedAttempt = paused && run?.status === 'paused';
+    if (!pausedAttempt) pauseMenu?.setActive(false);
+    document.body.dataset.coopPaused = String(pausedAttempt);
     const modeDestination = $(paused ? 'coop-pause-modes' : 'coop-lobby-modes');
     if (modeChoices.parentNode !== modeDestination) modeDestination.append(modeChoices);
-    modeChoices.hidden = running();
+    modeChoices.hidden = running() || pausedAttempt;
     const destination = $(paused ? 'coop-pause-tools' : 'coop-lobby-tools');
     if (tools.parentNode !== destination) destination.append(tools);
     // A retained attempt cannot depart from inside Settings. Keep the journey
     // switch reachable on Pause/Results, then return it to native lobby Extras.
-    const catalogueDestination = paused
-      ? tools
-      : $('coop-menu').classList.contains('native-landing')
-        ? $('coop-settings-panel-extras')
-        : tools;
+    const catalogueDestination = $('coop-settings-panel-extras') ?? tools;
     if ($('coop-catalogue').parentNode !== catalogueDestination)
       catalogueDestination.append($('coop-catalogue'));
     const pauseCore = $('coop-pause-core'),
       help = $('coop-help'),
       settings = $('coop-settings-open'),
-      sound = $('coop-quick-sound'),
-      pausedAttempt = paused && run?.status === 'paused';
+      sound = $('coop-quick-sound');
     pauseCore.hidden = !pausedAttempt;
     if (pausedAttempt) {
-      pauseCore.append(help);
-      pauseCore.append(settings);
-      pauseCore.append(sound);
-      pauseCore.append($('coop-home-paused'));
+      $('coop-settings-panel-extras').append(help);
+      if (!pauseMenu) {
+        pauseCore.append(settings, sound, $('coop-home-paused'));
+      }
     } else if (paused) {
       // Results still own these tools. The landing page is hidden while the
       // completed attempt is retained, so it cannot host their only entry.
@@ -1069,7 +1111,8 @@ export function bootCoop({
       if ($('coop-menu').classList.contains('native-landing')) {
         $('coop-settings-panel-extras').append(help);
         const actions = $('coop-menu').querySelector('.native-menu-actions');
-        actions.append(settings, sound);
+        actions.append(settings);
+        $('coop-menu').querySelector('.native-menu-utilities').prepend(sound);
       } else {
         tools.append(help, settings, sound);
       }
@@ -1085,9 +1128,11 @@ export function bootCoop({
       $('coop-help').open = false;
     }
     if (tools.hidden || paused) $('coop-more').open = false;
+    pauseMenu?.setActive(pausedAttempt);
     showTouch();
   }
   function back() {
+    if (closeGlobalSettingsTool(document)) return;
     if (modeNavigation.simulatorRoot()) {
       modeNavigation.closeSimulator();
       return;
@@ -1181,63 +1226,67 @@ export function bootCoop({
   for (const id of ['coop-offline-main', 'coop-offline'])
     if ($(id)) $(id).onclick = () => installOfflinePanel?.open();
   const scope = () =>
-    modeNavigation.simulatorRoot()
-      ? 'coop-fpv-sim'
-      : installOfflinePanel?.isOpen()
-        ? 'coop-install-offline'
-        : music?.root()
-          ? 'coop-music-library'
-          : journeyPictures?.root()
-            ? 'coop-journey-pictures'
-            : settingsDialog.open
-              ? `coop-settings:${settingsPanels?.selected() || 'display'}`
-              : earnedDialog.open
-                ? 'coop-earned-picture'
-                : departure
-                  ? 'coop-discard'
-                  : discovery?.isOpen()
-                    ? 'coop-discovery'
-                    : running()
-                      ? 'flight'
-                      : run
-                        ? `coop-${run.status}`
-                        : 'coop-lobby';
+    globalSettingsToolsRoot(document)
+      ? `coop:${globalSettingsToolsRoot(document).id}`
+      : modeNavigation.simulatorRoot()
+        ? 'coop-fpv-sim'
+        : installOfflinePanel?.isOpen()
+          ? 'coop-install-offline'
+          : music?.root()
+            ? 'coop-music-library'
+            : journeyPictures?.root()
+              ? 'coop-journey-pictures'
+              : settingsDialog.open
+                ? `coop-settings:${settingsPanels?.selected() || 'display'}`
+                : earnedDialog.open
+                  ? 'coop-earned-picture'
+                  : departure
+                    ? 'coop-discard'
+                    : discovery?.isOpen()
+                      ? 'coop-discovery'
+                      : running()
+                        ? 'flight'
+                        : run
+                          ? `coop-${run.status}`
+                          : 'coop-lobby';
   const primary = () =>
-    modeNavigation.simulatorRoot()
-      ? modeNavigation.simulatorPrimary()
-      : installOfflinePanel?.isOpen()
-        ? $('install-offline-downloads')
-        : music?.root()
-          ? music.primary()
-          : journeyPictures?.root()
-            ? journeyPictures.primary()
-            : settingsDialog.open
-              ? settingsPanels?.primary() || $('coop-settings-close')
-              : earnedDialog.open
-                ? $('coop-picture-return')
-                : departure
-                  ? $('coop-discard-stay')
-                  : discovery?.isOpen()
-                    ? discovery.primary()
-                    : nextOperation
-                      ? $('coop-next-cancel')
-                      : importOperation
-                        ? $('coop-pack-cancel')
-                        : pictureOperation
-                          ? pictureOperation.passive
-                            ? $('coop-optional-setup-toggle')
-                            : $('coop-picture-cancel')
-                          : !run && pictureSelection?.state !== 'ready'
-                            ? $('coop-picture-retry')
-                            : !run
-                              ? $('coop-start')
-                              : run.status === 'paused' && !loopStopped
-                                ? $('coop-resume')
-                                : run.status === 'won' && !loopStopped
-                                  ? teamDestination()?.next
-                                    ? $('coop-next')
-                                    : $('coop-discovery-paused')
-                                  : $('coop-retry');
+    globalSettingsToolsRoot(document)
+      ? globalSettingsToolsRoot(document).querySelector('button:not([disabled])')
+      : modeNavigation.simulatorRoot()
+        ? modeNavigation.simulatorPrimary()
+        : installOfflinePanel?.isOpen()
+          ? $('install-offline-downloads')
+          : music?.root()
+            ? music.primary()
+            : journeyPictures?.root()
+              ? journeyPictures.primary()
+              : settingsDialog.open
+                ? settingsPanels?.primary() || $('coop-settings-close')
+                : earnedDialog.open
+                  ? $('coop-picture-return')
+                  : departure
+                    ? $('coop-discard-stay')
+                    : discovery?.isOpen()
+                      ? discovery.primary()
+                      : nextOperation
+                        ? $('coop-next-cancel')
+                        : importOperation
+                          ? $('coop-pack-cancel')
+                          : pictureOperation
+                            ? pictureOperation.passive
+                              ? $('coop-optional-setup-toggle')
+                              : $('coop-picture-cancel')
+                            : !run && pictureSelection?.state !== 'ready'
+                              ? $('coop-picture-retry')
+                              : !run
+                                ? $('coop-start')
+                                : run.status === 'paused' && !loopStopped
+                                  ? $('coop-resume')
+                                  : run.status === 'won' && !loopStopped
+                                    ? teamDestination()?.next
+                                      ? $('coop-next')
+                                      : $('coop-discovery-paused')
+                                    : $('coop-retry');
   // Preference updates can reflow a focused select beyond the Settings scroller
   // without a window resize. Keep only that current action visible, never focus
   // it again or resume. Initial display application runs before this owner exists.
@@ -1336,8 +1385,10 @@ export function bootCoop({
     onTabBoundary: () => playgroundTabBoundary({ window, suspend: () => suspend() }),
     getScope: scope,
     getRoot: () => {
-      if (installOfflinePanel?.frameFocused()) return null;
+      if (globalSettingsToolFrameFocused(document) || installOfflinePanel?.frameFocused())
+        return null;
       const modal =
+        globalSettingsToolsRoot(document) ||
         modeNavigation.simulatorRoot() ||
         installOfflinePanel?.root() ||
         music?.root() ||
@@ -1354,7 +1405,7 @@ export function bootCoop({
       // Pause/results restore the visible masthead alongside the overlay.
       // Keep their common root while excluding gameplay and hidden lobby UI.
       compositeMenu = !modal && !!run;
-      return modal || $('coop-app');
+      return modal || (run?.status === 'paused' ? $('coop-overlay') : $('coop-app'));
     },
     accept: (element) =>
       !element.closest('.race-pad') &&
@@ -1369,6 +1420,7 @@ export function bootCoop({
     onBack: back,
     onMenu: () => {
       if (
+        globalSettingsToolsRoot(document) ||
         modeNavigation.simulatorRoot() ||
         installOfflinePanel?.isOpen() ||
         music?.root() ||
@@ -1496,6 +1548,27 @@ export function bootCoop({
       active: !running(),
     }),
   });
+  pauseMenu = createPauseMenu({
+    document,
+    root: $('coop-resume').parentNode,
+    resume: $('coop-resume'),
+    missions: [
+      { element: $('coop-retry'), icon: 'restart', key: 'nativeMenu.pauseRestart' },
+      { element: $('coop-journey-skip-confirm'), icon: 'skip' },
+      { element: $('coop-random-level'), icon: 'random', key: 'nativeMenu.pauseRandom' },
+      { element: $('coop-discovery-paused'), icon: 'missions', key: 'nativeMenu.pauseChoose' },
+    ],
+    audio: [{ element: $('coop-quick-sound'), icon: 'sound' }, pauseMusicAction(document, 'coop')],
+    config: [
+      { element: $('coop-settings-open'), icon: 'settings' },
+      { element: $('team-landing-fullscreen'), icon: 'fullscreen' },
+    ],
+    home: $('coop-home-paused'),
+    notices: [
+      { element: $('coop-journey-save-options'), icon: 'info' },
+      { element: $('team-landing-fullscreen-status') },
+    ],
+  });
   settingsPanels = attachSettingsPanels({
     root: settingsDialog,
     document,
@@ -1508,6 +1581,27 @@ export function bootCoop({
     run === owner.run &&
     generation === owner.generation &&
     foreground();
+  const globalTools = mountGlobalSettingsTools({
+    document,
+    window,
+    prefix: 'coop-global',
+    settingsRoot: settingsDialog,
+    panels: Object.fromEntries(
+      ['controls', 'data', 'content', 'extras'].map((name) => [
+        name,
+        $(`coop-settings-panel-${name}`),
+      ]),
+    ),
+    existing: {
+      offlineTools: [$('coop-offline-main'), $('coop-offline-status')].filter(Boolean),
+      about: $('coop-more-about'),
+    },
+    getSettingsOpen: () => !disposed && settingsDialog.open,
+    getOwner: () => settingsOwner,
+    isOwnerCurrent: (owner) => !!owner && settingsCurrent(owner),
+    onOpen: clear,
+    offlinePanel: installOfflinePanel,
+  });
   music = attachCouchMusicHost({
     document,
     root: $('coop-settings-panel-audio'),
@@ -1548,6 +1642,7 @@ export function bootCoop({
     });
     musicPublished.setPlayer(music.player);
   }
+  nativeMenu?.refreshGlobalSettings?.({ controls: globalTools.controls });
   function prepareReactionAttempt() {
     if (run && reactionRun !== run) {
       reactionRun = run;
@@ -1612,6 +1707,7 @@ export function bootCoop({
     }
     runningEnemyControls.refresh();
     settingsDialog.showModal();
+    globalTools.refresh();
     const active = document.activeElement;
     if (
       settingsCurrent(owner) &&
@@ -1822,7 +1918,7 @@ export function bootCoop({
     localizedText($('coop-journey-skip-confirm'), () =>
       journeySkip?.run === run && journeySkip.generation === generation
         ? t('interface:confirmSkip')
-        : t('interface:skipMission'),
+        : t(run?.status === 'paused' ? 'interface:nativeMenu.pauseSkip' : 'interface:skipMission'),
     );
     discoveryControls();
     if (!show) return;
@@ -1882,7 +1978,7 @@ export function bootCoop({
         ? t('interface:youBroughtItHome')
         : lost
           ? t('interface:yourNextRouteStartsHere')
-          : t('interface:bothPlayersPaused'),
+          : t('interface:paused3'),
     );
     const completionCopy = destination?.libraryEnd
       ? t('interface:endOfTheTeamMissionLibraryBrowseTeamArenasOr')
@@ -3260,14 +3356,14 @@ export function bootCoop({
   $('coop-journey-skip').onclick = skipJourney;
   $('coop-journey-skip-confirm').onclick = skipJourney;
 
-  function canOpenDiscovery() {
+  function canOpenDiscovery({ fromSettings = false } = {}) {
     return (
       !disposed &&
       !inactive &&
       foreground() &&
       !running() &&
       !departure &&
-      !settingsDialog.open &&
+      (!settingsDialog.open || (fromSettings && settingsOwner && settingsCurrent(settingsOwner))) &&
       !earnedDialog.open &&
       !nextOperation &&
       !pictureOperation &&
@@ -5364,7 +5460,9 @@ export function bootCoop({
       }
       if (!unfinished()) return;
       event.preventDefault();
-      requestDeparture(kind, $(id));
+      const fromSettings = settingsDialog.open && settingsDialog.contains($(id));
+      if (fromSettings) closeSettings({ restore: false });
+      requestDeparture(kind, fromSettings ? $('coop-settings-open') : $(id));
     });
   const suspend = () => {
     if (disposed) return;
@@ -5400,7 +5498,7 @@ export function bootCoop({
     if (document.hidden) suspend();
     else returned();
   };
-  const windowBlur = guardInstallOfflineBlur(suspend);
+  const windowBlur = guardGlobalSettingsToolBlur(guardInstallOfflineBlur(suspend));
   window.addEventListener('blur', windowBlur);
   window.addEventListener('focus', returned);
   document.addEventListener('visibilitychange', hidden);
@@ -5902,8 +6000,10 @@ export function bootCoop({
       if (!running()) {
         if (routed.status.code === 'joined' || Object.values(routed.ui).some(Boolean))
           setReadingModality('controller');
-        if (routed.status.code === 'joined') navigation.engage();
-        navigation.handle(routed.ui);
+        if (!globalTools.handleFrameCommand(routed.ui)) {
+          if (routed.status.code === 'joined') navigation.engage();
+          navigation.handle(routed.ui);
+        }
       }
       const elapsed = last === null ? 0 : (now - last) / 1000;
       last = now;
@@ -6581,7 +6681,9 @@ export function bootCoop({
     // closeAudio() later repeats this idempotently with the remaining audio cleanup.
     musicPublished?.close();
     $('coop-field-details').onclick = null;
+    nativeMenu?.destroy();
     installOfflinePanel?.dispose();
+    void globalTools.dispose();
     modeNavigation.dispose();
     stopActorView();
     actorPreferences.dispose();
@@ -6618,7 +6720,6 @@ export function bootCoop({
     settingsDialog.removeEventListener('close', settingsClosed);
     settingsDialog.removeEventListener('keydown', settingsKeydown);
     settingsPanels.destroy();
-    nativeMenu?.destroy();
     if (settingsDialog.open) settingsDialog.close();
     // The shared page may already have retired its painter snapshot. Stop the
     // core without repainting during terminal cleanup. BFCache uses suspend.

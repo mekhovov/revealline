@@ -5581,6 +5581,10 @@
   "multiplayerControllers.actionGuideHelp": "Choose an action, record its released position, hold only your chosen switch/button, then capture its active position. Ability/Support activates equipment or helps your teammate; Supply refills; Boost increases speed; Pause freezes play. Use Next action to move on or skip. Shared-radio players must use separate channels. Verify and Save/apply when ready.",
   "multiplayerControllers.nextAction": "Next action / skip",
   "optionalPractice.fpvGameAction": "FPV flight simulator",
+  "nativeMenu.pauseRestart": "Restart",
+  "nativeMenu.pauseSkip": "Skip",
+  "nativeMenu.pauseRandom": "Random",
+  "nativeMenu.pauseChoose": "Choose",
   "nativeMenu.gameplay": "Gameplay",
   "nativeMenu.controls": "Controls",
   "nativeMenu.audio": "Audio",
@@ -5838,5 +5842,7 @@
   "workshop.materialPreview.detail": "Detail",
   "workshop.materialPreview.balanced": "Balanced",
   "workshop.materialPreview.detailed": "Detailed",
-  "workshop.materialPreview.telemetry": "Show telemetry"
+  "workshop.materialPreview.telemetry": "Show telemetry",
+  "globalSettings.openToolPage": "Open in new tab",
+  "globalSettings.effectsVolumeThisSession": "Effects volume · this session"
 }

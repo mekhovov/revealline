@@ -1,3 +1,5 @@
+import { createPauseMenu } from './ui/pause-menu.mjs';
+import { setMenuIcon } from './ui/native-menu-icons.mjs';
 import { selectedArcadeCollection } from './presentation/industrial-arcade.mjs';
 import { specialistFailureCopy } from './hunt/actor-catalog.mjs';
 import { getLocale } from './i18n/index.mjs';
@@ -3209,6 +3211,8 @@ try {
     persistenceReady = false;
     controllerPreview?.clear();
     if (!event.persisted) {
+      // Return adopted settings rows before their preference owners dispose.
+      gameShell?.destroy();
       demoHost?.destroy();
       demoLibrary.dispose();
       stopLocaleView();
@@ -3278,7 +3282,6 @@ try {
       controllerConfirmLifecycle.destroy();
       controllerConfirmGuard.destroy();
       controllerConfirmTrace.destroy();
-      gameShell?.destroy();
       missionPicker?.destroy();
       modalNavigation.destroy();
       input.destroy();
@@ -5763,7 +5766,7 @@ try {
   function clearSkipConfirmation(message = '') {
     journeySkipArmed = null;
     journeySkipDestination = null;
-    localizedText($('journey-skip'), () => t('interface:skipMission'));
+    localizedText($('journey-skip'), () => t('interface:nativeMenu.pauseSkip'));
     if (message) warning(message);
   }
   function cancelSkipForContentChange() {
@@ -8396,6 +8399,40 @@ try {
       }),
     );
   }
+  const pauseMenu = createPauseMenu({
+    document,
+    root: $('game-overlay').querySelector('.overlay-actions'),
+    resume: $('start-button'),
+    missions: [
+      { element: $('overlay-restart'), icon: 'restart', key: 'nativeMenu.pauseRestart' },
+      { element: $('journey-skip'), icon: 'skip' },
+      { element: $('overlay-random-level'), icon: 'random', key: 'nativeMenu.pauseRandom' },
+      { element: $('overlay-missions'), icon: 'missions', key: 'nativeMenu.pauseChoose' },
+    ],
+    audio: [
+      { element: $('overlay-sound'), icon: 'sound' },
+      { element: $('overlay-next-song'), icon: 'next' },
+    ],
+    config: [
+      { element: $('overlay-settings'), icon: 'settings' },
+      { element: $('overlay-fullscreen'), icon: 'fullscreen' },
+    ],
+    home: $('overlay-menu'),
+    notices: [{ element: $('journey-save-options'), icon: 'info' }],
+  });
+  const currentMissionActions = document.createElement('div');
+  currentMissionActions.className = 'mission-current-actions';
+  currentMissionActions.append(
+    $('copy-level-link'),
+    $('played-level-link'),
+    $('level-link-status'),
+    $('pause-mission-info'),
+  );
+  $('shell-mission-content').append(currentMissionActions);
+  setMenuIcon($('copy-level-link'), 'link');
+  setMenuIcon($('pause-mission-info-toggle'), 'info');
+  setMenuIcon($('overlay-field-details'), 'info');
+  setMenuIcon($('overlay-brief'), 'missions');
   const journeyBestLine = document.createElement('p');
   journeyBestLine.id = 'journey-best';
   journeyBestLine.className = 'micro-note';
@@ -8418,6 +8455,7 @@ try {
   }
   function overlay(kind, { preserveFocus = false } = {}) {
     if (practiceRenderFailure.failed) return;
+    pauseMenu?.setActive(kind === 'pause');
     // Repeated suspension may repaint Pause, but does not own a new focus
     // choice. An inactive child must not pull focus back from its parent.
     const repeatedPause =
@@ -12483,6 +12521,7 @@ try {
           $(id).closest('label').hidden = true;
         $('journey-chooser').querySelector('.journey-footer').append(setup);
       }
+      $('journey-chooser').querySelector('.journey-footer').append(currentMissionActions);
       unifiedLibrary = result;
       return result;
     })();

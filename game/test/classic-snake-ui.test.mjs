@@ -1,3 +1,6 @@
+import { mountGlobalSettingsTools } from '../ui/global-settings-tools.mjs';
+import { menuPad } from './helpers/global-tools-fixture.mjs';
+import { mountGlobalSettings } from '../ui/global-settings-view.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
@@ -20,6 +23,13 @@ import {
   CLASSIC_PACES,
 } from '../snake/classic-setup.mjs';
 import { ACTOR_CASTS, actorFieldGuide } from '../hunt/actor-catalog.mjs';
+import { mountModeSettings } from '../ui/mode-settings-view.mjs';
+import {
+  attachSettingsPanels,
+  settingsPanelBack,
+  settingsTabOwnsKey,
+} from '../ui/settings-panels.mjs';
+import { renderModeChoices } from '../ui/mode-choice-view.mjs';
 import { mountModePlayShell } from '../ui/mode-play-shell.mjs';
 import { attachModalNavigation } from '../ui/modal-navigation.mjs';
 import { attachControllerNavigation } from '../ui/controller-navigation.mjs';
@@ -56,6 +66,7 @@ async function harness({
   entry = CLASSIC_SNAKE_LEVELS[0],
   mode = 'solo',
   activity = 'campaign',
+  sharedTools = false,
 } = {}) {
   const document = new Document();
   document.createElement = (tag) => {
@@ -80,14 +91,22 @@ async function harness({
   };
   mount(parseHTML(html), document.body);
   const window = new Events();
+  const pads = [];
+  let tools;
   const storage = new Map();
   const created = [],
     drawings = [],
     scheduledFrames = [],
     optionalEntries = [];
-  const display = { reducedEffects: false, effectiveReducedEffects: false };
+  const display = {
+    textFace: 'pixel',
+    textSize: 'standard',
+    reducedEffects: false,
+    effectiveReducedEffects: false,
+  };
   const location = {
     href: `https://example.test/game/snake/play.html?mode=${mode}&level=${entry.id}&activity=${activity}`,
+    origin: 'https://example.test',
   };
   const preferences = (snapshot) => ({
     snapshot: () => snapshot,
@@ -105,6 +124,33 @@ async function harness({
       return shell;
     },
     attachModalNavigation,
+    mountGlobalSettings,
+    attachThemeFamilyControls({ root }) {
+      const group = document.createElement('section');
+      group.setAttribute('data-theme-controls', '');
+      root.append(group);
+      return { dispose() {} };
+    },
+    mountGlobalSettingsTools: (options) =>
+      (tools = sharedTools
+        ? mountGlobalSettingsTools(options)
+        : {
+            controls: {},
+            root: () => null,
+            frameFocused: () => false,
+            back: () => false,
+            handleFrameCommand: () => false,
+            dispose() {},
+          }),
+    attachMenuAudioSettings() {},
+    getMenuAnimation: () => true,
+    setMenuAnimation() {},
+    subscribeMenuAnimation: () => () => {},
+    mountModeSettings,
+    attachSettingsPanels,
+    settingsPanelBack,
+    settingsTabOwnsKey,
+    attachMenuScene: () => ({ dispose() {} }),
     attachFullscreen: () => () => {},
     attachControllerNavigation,
     setMenuIcon() {},
@@ -112,9 +158,14 @@ async function harness({
     fpvWorldLaunchURL,
     appearanceLaunchURL,
     contextualAppearance: () => null,
-    mountOptionalPracticePanel(options) {
-      optionalEntries.push(options);
-      return { open() {}, root: () => null, close() {}, dispose() {} };
+    mountModeChoices(options) {
+      renderModeChoices({ ...options, locale: 'en' });
+      optionalEntries.push({
+        packageId: 'fpv-worlds',
+        preferDirect: true,
+        bundledHref: fpvWorldLaunchURL(location.href, 'en'),
+      });
+      return { simulatorRoot: () => null, closeSimulator() {}, dispose() {} };
     },
     boardPlacement: () => ({ board: 'solo', pan: 0 }),
     createClassicAudio: () => ({ reset() {}, update() {} }),
@@ -145,11 +196,12 @@ async function harness({
     },
     matchMedia: () => Object.assign(new Events(), { matches: false }),
     addEventListener: window.addEventListener.bind(window),
+    removeEventListener: window.removeEventListener.bind(window),
     requestAnimationFrame(callback) {
       scheduledFrames.push(callback);
     },
     screen: { orientation: new Events() },
-    navigator: { getGamepads: () => [] },
+    navigator: { getGamepads: () => pads },
     setTimeout,
     getLocale: () => 'en',
     setLocale() {},
@@ -204,6 +256,14 @@ async function harness({
     CLASSIC_COPY,
     ...core,
     ...matches,
+    createClassicSnake(...args) {
+      return core.createClassicSnake(...args.map((argument) => structuredClone(argument)));
+    },
+    restoreClassicSnakeLegacyMatch(...args) {
+      return matches.restoreClassicSnakeLegacyMatch(
+        ...args.map((argument) => structuredClone(argument)),
+      );
+    },
     createClassicSnakeMatch(...args) {
       // The VM models a browser realm; normalize only this harness crossing so
       // strict plain-data admission sees the same realm it would in production.
@@ -227,6 +287,8 @@ async function harness({
     location,
     shell,
     optionalEntries,
+    pads,
+    disposeTools: () => tools.dispose(),
     start() {
       shell.open('briefing');
       shell.elements.buttons.start.click();
@@ -478,13 +540,14 @@ test('Next retires the completed result before the new mission briefing and Back
   assert.equal(new URL(sim.searchParams.get('game-return'), selected).href, selected.href);
 });
 
-test('legacy Continue and Retry preserve the verified replay seed', async () => {
+test('legacy migration rejects a changed historical seed and keeps the current round', async () => {
   const run = core.createClassicSnake(CLASSIC_SNAKE_LEVELS[0].level, { seed: 71 });
   const state = await harness();
   await importSession(state.$, savedSession(run));
-  assert.equal(new URL(state.location.href).searchParams.get('seed'), '71');
+  assert.equal(state.$('save-status').textContent, CLASSIC_COPY.en.invalid);
+  assert.equal(new URL(state.location.href).searchParams.get('seed'), '17');
   state.retry();
-  assert.equal(state.created.at(-1).seed, 71);
+  assert.equal(state.created.at(-1).seed, 17);
 });
 
 test('a scheduled terminal result cannot be restored with a later host clock', async () => {
@@ -635,5 +698,47 @@ test('a failed Versus score board freezes its flight clock while the surviving b
   assert.deepEqual(
     state.drawings.slice(-2).map((row) => row.options.flight),
     [nextFailed, nextSurviving],
+  );
+});
+
+test('Snake nested tools preserve iframe input and controller Back returns to the exact paused Settings owner', async (t) => {
+  const h = await harness({ sharedTools: true });
+  t.after(() => h.disposeTools());
+  h.start();
+  h.frame(0);
+  h.frame(100);
+  h.shell.elements.buttons.pause.click();
+  const paused = h.created.map((run) => core.exportClassicSnakeReplay(run));
+  h.shell.elements.buttons.settings.click();
+  h.$('snake-menu-settings-tab-controls').click();
+  const opener = h.$('snake-global-tools-controllerTools');
+  opener.focus();
+  opener.click();
+  const dialog = h.$('snake-global-tools-tool-dialog'),
+    frame = dialog.querySelector('iframe');
+  assert.equal(dialog.open, true);
+  frame.focus();
+  const pad = menuPad();
+  h.pads.push(pad);
+  h.frame(120);
+  pad.buttons[13] = { pressed: true, value: 1 };
+  h.frame(140);
+  pad.buttons[13] = { pressed: false, value: 0 };
+  h.frame(160);
+  assert.equal(h.document.activeElement, frame, 'D-pad input stays inside the tool frame.');
+  assert.deepEqual(
+    h.created.map((run) => core.exportClassicSnakeReplay(run)),
+    paused,
+  );
+  pad.buttons[1] = { pressed: true, value: 1 };
+  h.frame(180);
+  pad.buttons[1] = { pressed: false, value: 0 };
+  h.frame(200);
+  assert.equal(dialog.open, false);
+  assert.equal(h.shell.elements.dialogs.settings.open, true);
+  assert.equal(h.document.activeElement, opener);
+  assert.deepEqual(
+    h.created.map((run) => core.exportClassicSnakeReplay(run)),
+    paused,
   );
 });

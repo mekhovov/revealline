@@ -1,4 +1,7 @@
 import test from 'node:test';
+import { getLocale, setLocale } from '../i18n/index.mjs';
+import { sourceSimGlobalTools, menuPad } from './helpers/global-tools-fixture.mjs';
+import { waitFor } from './helpers/wait-for.mjs';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { createRequire } from 'node:module';
@@ -25,12 +28,19 @@ const html = parse(
   await readFile(new URL('../../optional-practice/fpv-worlds/index.html', import.meta.url), 'utf8'),
 );
 
-function fixture(t) {
+function fixture(
+  t,
+  {
+    storage = new Map(),
+    url = 'https://example.test/optional-practice/fpv-worlds/index.html',
+    ...factories
+  } = {},
+) {
   const doc = new Document(),
     win = new Events(),
-    storage = new Map(),
     frames = new Map(),
     rendered = [];
+  const pads = [];
   let frameId = 0,
     now = 0;
   const priorOption = globalThis.Option;
@@ -68,10 +78,14 @@ function fixture(t) {
     .find((node) => node.tagName === 'html')
     .childNodes.find((node) => node.tagName === 'body');
   for (const child of body.childNodes) copy(child, doc.body);
+  const originalSettingsControls = [
+    ...doc.getElementById('sim-settings').querySelectorAll('button,select,input'),
+    ...doc.getElementById('sim-flight-controls').querySelectorAll('button,select,input'),
+  ].filter((node) => node.id !== 'close-sim-settings');
   Object.assign(win, {
-    location: new URL('https://example.test/optional-practice/fpv-worlds/index.html'),
+    location: new URL(url),
     performance: { now: () => now },
-    navigator: { getGamepads: () => [] },
+    navigator: { getGamepads: () => pads },
     localStorage: {
       getItem: (key) => storage.get(key) ?? null,
       setItem: (key, value) => storage.set(key, value),
@@ -114,13 +128,20 @@ function fixture(t) {
     draw() {},
     dispose() {},
   };
-  const app = mountWorldApp({ document: doc, window: win, rendererFactory: () => renderer });
+  const app = mountWorldApp({
+    document: doc,
+    window: win,
+    rendererFactory: () => renderer,
+    ...factories,
+  });
   t.after(() => app.dispose());
   return {
     app,
     doc,
     win,
     rendered,
+    pads,
+    originalSettingsControls,
     $: (id) => doc.getElementById(id),
     tick(count = 1) {
       for (let i = 0; i < count; i++) {
@@ -363,12 +384,12 @@ test('World keyboard and native pause actions open the same shared menu without 
     h.$('world-arm').click();
     assert.equal(h.app.snapshot().state.status, 'active');
     pause();
-    assert.equal(h.$('worlds-shell-home-dialog').open, true);
+    assert.equal(h.$('worlds-shell-pause-dialog').open, true);
     assert.notEqual(h.$('flight-dialog').dataset.flightMenuOpen, 'true');
     assert.equal(h.app.snapshot().state.status, 'paused');
     const paused = h.app.snapshot().state;
-    h.$('worlds-shell-home-dialog').emit('cancel', { bubbles: false });
-    assert.equal(h.$('worlds-shell-home-dialog').open, false);
+    h.$('worlds-shell-pause-dialog').emit('cancel', { bubbles: false });
+    assert.equal(h.$('worlds-shell-pause-dialog').open, false);
     assert.equal(h.$('flight-dialog').open, true);
     assert.deepEqual(h.app.snapshot().state, paused);
   }
@@ -451,7 +472,10 @@ test('World menu Back dismisses the visible surface without closing its paused n
   h.$('lobby-settings').click = () => assert.fail('Settings must use its shared native action');
   h.$('worlds-shell-action-settings').click();
   assert.equal(h.$('sim-settings').open, true);
-  assert.equal(h.$('sim-flight-controls').parentElement, h.$('sim-settings-controls'));
+  assert.equal(
+    h.$('flight-source').closest('[role="tabpanel"]').id,
+    'worlds-settings-panel-controls',
+  );
   escape(h.$('sim-settings').querySelector('button'));
   assert.equal(h.$('sim-settings').open, false);
   assert.equal(h.$('worlds-shell-home-dialog').open, true);
@@ -524,3 +548,181 @@ for (const section of [false, true])
     assert.equal(h.doc.activeElement, nativeOutcome);
     assert.equal(shell.dataset.phase, 'results');
   });
+
+test('World categories retain every authored preference and restore Home and Pause openers', async (t) => {
+  const h = fixture(t);
+  await h.app.ready;
+  h.doc.defaultView.innerWidth = 390;
+  const homeSettings = h.$('worlds-shell-action-settings');
+  homeSettings.focus();
+  homeSettings.click();
+  for (const original of h.originalSettingsControls) {
+    const control = original.id === 'sim-motion' ? h.$('worlds-global-reducedEffects') : original;
+    const panel = control.closest('[role="tabpanel"]');
+    assert.ok(panel, `${control.id} belongs to a settings category`);
+    assert.equal(panel.closest('dialog'), h.$('sim-settings'));
+    h.$(panel.getAttribute('aria-labelledby')).click();
+    assert.equal(control.closest('[hidden],[inert]'), null, `${control.id} is reachable`);
+  }
+  h.$('worlds-settings-tab-controls').click();
+  h.$('close-sim-settings').click();
+  assert.equal(h.$('sim-settings').open, true);
+  assert.equal(h.$('sim-settings').dataset.settingsView, 'categories');
+  h.$('close-sim-settings').click();
+  assert.equal(h.$('sim-settings').open, false);
+  assert.equal(h.doc.activeElement, homeSettings);
+  await h.app.startFlight(WORLD_CATALOGUE.find((item) => !item.legacy));
+  h.$('world-arm').click();
+  h.$('world-flight-menu').click();
+  const pauseSettings = h.$('worlds-shell-action-pause-settings');
+  pauseSettings.focus();
+  pauseSettings.click();
+  h.$('close-sim-settings').click();
+  assert.equal(h.doc.activeElement, pauseSettings);
+  assert.equal(h.app.snapshot().state.status, 'paused');
+});
+
+test('Worlds uses shared display and master settings ahead of old SIM-local preferences', async (t) => {
+  const storage = new Map([
+    [
+      'revealline.display.v1',
+      JSON.stringify({ textFace: 'plain', textSize: 'large', reducedEffects: true }),
+    ],
+    ['revealline.audio-master.v1', JSON.stringify({ muted: true, volume: 0.25 })],
+    [
+      'revealline.appearance.v2',
+      JSON.stringify({
+        familyId: 'industrial-workshop',
+        arcadeArt: 'follow-game',
+        ornaments: 'theme',
+        highContrast: false,
+        opaqueHud: false,
+      }),
+    ],
+    [
+      'revealline.fpv.world-settings.v1',
+      JSON.stringify({ 'sim-text-face': 'pixel', 'sim-motion': 'system' }),
+    ],
+  ]);
+  const h = fixture(t, { storage });
+  await h.app.ready;
+  assert.equal(h.$('sim-text-face').value, 'plain');
+  assert.equal(h.$('worlds-global-textSize').value, 'large');
+  assert.equal(h.$('worlds-global-reducedEffects').checked, true);
+  assert.equal(h.$('worlds-global-masterVolume').value, '0.25');
+  assert.equal(h.doc.documentElement.dataset.themeFamily, 'industrial-workshop');
+  assert.equal(h.doc.body.dataset.effects, 'reduced');
+  const root = h.$('sim-settings');
+  for (const key of [
+    'language',
+    'appearance',
+    'textFace',
+    'textSize',
+    'reducedEffects',
+    'menuAnimation',
+    'masterMuted',
+    'masterVolume',
+  ])
+    assert.equal(root.querySelectorAll(`[data-global-setting="${key}"]`).length, 1, key);
+  h.$('worlds-global-textSize').value = 'standard';
+  h.$('worlds-global-textSize').emit('change');
+  assert.equal(JSON.parse(storage.get('revealline.display.v1')).textSize, 'standard');
+});
+
+test('World shared tools keep iframe focus through D-pad and return to paused Settings on controller Back', async (t) => {
+  const h = fixture(t, { globalToolsFactory: sourceSimGlobalTools });
+  await h.app.ready;
+  const entry = WORLD_CATALOGUE.find((item) => !item.legacy);
+  await h.app.startFlight(entry);
+  h.$('world-arm').click();
+  h.tick(3);
+  h.$('worlds-shell-action-pause').click();
+  const paused = h.app.snapshot().state;
+  h.$('worlds-shell-action-settings').click();
+  h.$('worlds-settings-tab-controls').click();
+  await waitFor(() => h.$('sim-global-tools-controllerTools'));
+  const opener = h.$('sim-global-tools-controllerTools');
+  opener.focus();
+  opener.click();
+  const dialog = h.$('sim-global-tools-tool-dialog'),
+    frame = dialog.querySelector('iframe');
+  assert.equal(dialog.open, true);
+  frame.focus();
+  const pad = menuPad();
+  h.pads.push(pad);
+  h.tick(2);
+  pad.buttons[13] = { pressed: true, value: 1 };
+  h.tick();
+  pad.buttons[13] = { pressed: false, value: 0 };
+  h.tick();
+  assert.equal(h.doc.activeElement, frame);
+  assert.deepEqual(h.app.snapshot().state, paused);
+  pad.buttons[1] = { pressed: true, value: 1 };
+  h.tick();
+  pad.buttons[1] = { pressed: false, value: 0 };
+  h.tick();
+  assert.equal(dialog.open, false);
+  assert.equal(h.$('sim-settings').open, true);
+  assert.equal(h.doc.activeElement, opener);
+  assert.deepEqual(h.app.snapshot().state, paused);
+  opener.click();
+  assert.equal(dialog.open, true);
+  frame.focus();
+  h.tick(2);
+  pad.buttons[9] = { pressed: true, value: 1 };
+  h.tick();
+  pad.buttons[9] = { pressed: false, value: 0 };
+  h.tick();
+  assert.equal(dialog.open, false, 'Start also exits the focused tool frame.');
+  assert.equal(h.$('sim-settings').open, true);
+  assert.equal(h.doc.activeElement, opener);
+  assert.deepEqual(h.app.snapshot().state, paused);
+});
+
+test('fresh Ukrainian World launch localizes shared Appearance and cue controls immediately', async (t) => {
+  const prior = getLocale();
+  t.after(() => setLocale(prior, { persist: false }));
+  setLocale('en', { persist: false });
+  const h = fixture(t, {
+    url: 'https://example.test/optional-practice/fpv-worlds/index.html?lang=uk',
+  });
+  await h.app.ready;
+  assert.equal(h.doc.querySelector('.theme-family-controls h3').textContent, 'Вигляд');
+  assert.equal(h.$('sim-global-menu-audio-enabled').closest('label').textContent, 'Звуки меню');
+});
+
+test('World flight feedback and shared menu sound retain separate sliders and preference records', async (t) => {
+  const storage = new Map([
+    [
+      'revealline.fpv.audio-mix.v1',
+      JSON.stringify({ format: 'SimAudioMix.v1', interface: 0.62, motor: 0.7, ambience: 0.8 }),
+    ],
+    ['revealline.menu-audio.v1', JSON.stringify({ enabled: true, volume: 0.35 })],
+  ]);
+  const h = fixture(t, { storage });
+  await h.app.ready;
+  const feedback = h.$('sim-audio-mix-interface'),
+    menu = h.$('sim-global-menu-audio-volume');
+  assert.equal(feedback.value, '62');
+  assert.equal(menu.value, '35');
+  const originalMenu = storage.get('revealline.menu-audio.v1');
+  feedback.value = '21';
+  feedback.emit('input');
+  assert.equal(menu.value, '35');
+  assert.equal(storage.get('revealline.menu-audio.v1'), originalMenu);
+  assert.deepEqual(JSON.parse(storage.get('revealline.fpv.audio-mix.v1')), {
+    format: 'SimAudioMix.v1',
+    interface: 0.21,
+    motor: 0.7,
+    ambience: 0.8,
+  });
+  const savedMix = storage.get('revealline.fpv.audio-mix.v1');
+  menu.value = '76';
+  menu.emit('input');
+  assert.equal(feedback.value, '21');
+  assert.equal(storage.get('revealline.fpv.audio-mix.v1'), savedMix);
+  assert.deepEqual(JSON.parse(storage.get('revealline.menu-audio.v1')), {
+    enabled: true,
+    volume: 0.76,
+  });
+});
