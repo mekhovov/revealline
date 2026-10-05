@@ -1,0 +1,521 @@
+{
+  "format": "FPVHarborR4CPUCheckpoint.v1",
+  "status": "passed CPU qualification; browser/native/offline pending",
+  "source": "1e599c2687c3e2578afcf58c207995b05e0a1ed0",
+  "runtimePrerequisite": "9b5c3d65e2877847126c87f263fbc7e9aca357fb",
+  "acceptedScene": "ca463bd1f2110305e553c8d5461f5e8ae0eebdca",
+  "checks": {
+    "revision": 25,
+    "static": 407,
+    "ordinaryAndReplay": 540
+  },
+  "resources": {
+    "bytes": 761036,
+    "sha256": "c7609e2bb9b2371124a311e4128c3a3e6c81aaadd3613806bb6405270821d246",
+    "triangles": 7900,
+    "materials": 10,
+    "nodes": 53,
+    "textures": 2,
+    "colliders": 38
+  },
+  "recording": {
+    "records": 16,
+    "uniquePairs": 16,
+    "totalTicks": 51615,
+    "tickHz": 50,
+    "inputOnlyFiveIntegerFrames": true,
+    "completeOrdinaryFlights": 16,
+    "independentFullReplays": 16,
+    "independentArchiveReplays": 16,
+    "syntheticCompletion": false,
+    "mechanism": "Only ordinary flight.step controls are recorded. No position/tick/completion assignment; original course JSON remains exact. Reimported archives are missing-dependency until independently replayed; imported verified labels do not establish verification."
+  },
+  "groundMotion": {
+    "policy": "support-v1",
+    "prerequisite": "9b5c3d65e2877847126c87f263fbc7e9aca357fb",
+    "maxFlatSupportGapMm": 14,
+    "equation": "Native controller10mm +1mm downward request +1mm integer clearance =12mm normal clearance. On these flat supports allow two further1mm native/support rounding steps, maximum14mm. Measure signed feetY minus authored solid.max.y independently, and retain native support-ray gap separately. No pose correction or objective tolerance change."
+  },
+  "actorFlights": [
+    {
+      "course": "harbor-docks-05",
+      "mode": "self-level",
+      "status": "complete",
+      "ticks": 1727,
+      "contacts": 0,
+      "shots": 0,
+      "hits": 0,
+      "actorTravel": {
+        "harbor-service-cart": 24182.51042660982
+      },
+      "actorHeightDeviation": {
+        "harbor-service-cart": 13
+      },
+      "supportTicks": {
+        "harbor-service-cart": {
+          "samples": 1727,
+          "failures": 0,
+          "minFlatGap": 12,
+          "maxFlatGap": 13,
+          "minRayGap": 12,
+          "maxRayGap": 13,
+          "firstFailures": []
+        }
+      },
+      "damage": [],
+      "tracking": [
+        {
+          "index": 1,
+          "tick": 820,
+          "criterion": {
+            "actorId": "harbor-service-cart",
+            "maxDistance": 7000,
+            "maxRelativeSpeed": 1600,
+            "maxTilt": 2500,
+            "minDistance": 4000,
+            "minTargetTravel": 4000,
+            "ticks": 300,
+            "type": "actor-track-v1",
+            "viewAngle": 3500
+          },
+          "continuousTicks": 300,
+          "result": {
+            "index": 1,
+            "status": "complete",
+            "reason": null,
+            "travel": 4200,
+            "distance": 5529,
+            "relativeSpeed": 27
+          },
+          "actor": {
+            "id": "harbor-service-cart",
+            "type": "vehicle",
+            "role": "civilian",
+            "position": {
+              "x": 4000,
+              "y": 2012,
+              "z": 11480
+            },
+            "radius": 800,
+            "height": 1200,
+            "health": 50,
+            "maxHealth": 50,
+            "status": "active",
+            "pathIndex": 1,
+            "cooldown": 0,
+            "blocked": false
+          }
+        }
+      ],
+      "finalStateIdentity": "1312bb3ef361d530"
+    },
+    {
+      "course": "harbor-docks-05",
+      "mode": "acro",
+      "status": "complete",
+      "ticks": 1733,
+      "contacts": 0,
+      "shots": 0,
+      "hits": 0,
+      "actorTravel": {
+        "harbor-service-cart": 24266.51042660982
+      },
+      "actorHeightDeviation": {
+        "harbor-service-cart": 13
+      },
+      "supportTicks": {
+        "harbor-service-cart": {
+          "samples": 1733,
+          "failures": 0,
+          "minFlatGap": 12,
+          "maxFlatGap": 13,
+          "minRayGap": 12,
+          "maxRayGap": 13,
+          "firstFailures": []
+        }
+      },
+      "damage": [],
+      "tracking": [
+        {
+          "index": 1,
+          "tick": 831,
+          "criterion": {
+            "actorId": "harbor-service-cart",
+            "maxDistance": 7000,
+            "maxRelativeSpeed": 1600,
+            "maxTilt": 2500,
+            "minDistance": 4000,
+            "minTargetTravel": 4000,
+            "ticks": 300,
+            "type": "actor-track-v1",
+            "viewAngle": 3500
+          },
+          "continuousTicks": 300,
+          "result": {
+            "index": 1,
+            "status": "complete",
+            "reason": null,
+            "travel": 4200,
+            "distance": 5509,
+            "relativeSpeed": 27
+          },
+          "actor": {
+            "id": "harbor-service-cart",
+            "type": "vehicle",
+            "role": "civilian",
+            "position": {
+              "x": 4000,
+              "y": 2012,
+              "z": 11634
+            },
+            "radius": 800,
+            "height": 1200,
+            "health": 50,
+            "maxHealth": 50,
+            "status": "active",
+            "pathIndex": 1,
+            "cooldown": 0,
+            "blocked": false
+          }
+        }
+      ],
+      "finalStateIdentity": "39470d61962b54c2"
+    },
+    {
+      "course": "harbor-docks-06",
+      "mode": "self-level",
+      "status": "complete",
+      "ticks": 1609,
+      "contacts": 0,
+      "shots": 0,
+      "hits": 0,
+      "actorTravel": {
+        "harbor-deck-inspector": 9662.400583593575
+      },
+      "actorHeightDeviation": {
+        "harbor-deck-inspector": 13
+      },
+      "supportTicks": {
+        "harbor-deck-inspector": {
+          "samples": 1609,
+          "failures": 0,
+          "minFlatGap": 12,
+          "maxFlatGap": 13,
+          "minRayGap": 11,
+          "maxRayGap": 12,
+          "firstFailures": []
+        }
+      },
+      "damage": [],
+      "tracking": [
+        {
+          "index": 1,
+          "tick": 508,
+          "criterion": {
+            "actorId": "harbor-deck-inspector",
+            "maxDistance": 8000,
+            "maxRelativeSpeed": 600,
+            "maxTilt": 1500,
+            "minDistance": 4000,
+            "minTargetTravel": 0,
+            "ticks": 200,
+            "type": "actor-track-v1",
+            "viewAngle": 2000
+          },
+          "continuousTicks": 200,
+          "result": {
+            "index": 1,
+            "status": "complete",
+            "reason": null,
+            "travel": 1200,
+            "distance": 6018,
+            "relativeSpeed": 23
+          },
+          "actor": {
+            "id": "harbor-deck-inspector",
+            "type": "patrol",
+            "role": "civilian",
+            "position": {
+              "x": -15500,
+              "y": 5512,
+              "z": 33048
+            },
+            "radius": 300,
+            "height": 1800,
+            "health": 50,
+            "maxHealth": 50,
+            "status": "active",
+            "pathIndex": 1,
+            "cooldown": 0,
+            "blocked": false
+          }
+        }
+      ],
+      "finalStateIdentity": "961ff17baeb7dd1a"
+    },
+    {
+      "course": "harbor-docks-06",
+      "mode": "acro",
+      "status": "complete",
+      "ticks": 1631,
+      "contacts": 0,
+      "shots": 0,
+      "hits": 0,
+      "actorTravel": {
+        "harbor-deck-inspector": 9794.400583593575
+      },
+      "actorHeightDeviation": {
+        "harbor-deck-inspector": 13
+      },
+      "supportTicks": {
+        "harbor-deck-inspector": {
+          "samples": 1631,
+          "failures": 0,
+          "minFlatGap": 12,
+          "maxFlatGap": 13,
+          "minRayGap": 11,
+          "maxRayGap": 12,
+          "firstFailures": []
+        }
+      },
+      "damage": [],
+      "tracking": [
+        {
+          "index": 1,
+          "tick": 514,
+          "criterion": {
+            "actorId": "harbor-deck-inspector",
+            "maxDistance": 8000,
+            "maxRelativeSpeed": 600,
+            "maxTilt": 1500,
+            "minDistance": 4000,
+            "minTargetTravel": 0,
+            "ticks": 200,
+            "type": "actor-track-v1",
+            "viewAngle": 2000
+          },
+          "continuousTicks": 200,
+          "result": {
+            "index": 1,
+            "status": "complete",
+            "reason": null,
+            "travel": 1200,
+            "distance": 6003,
+            "relativeSpeed": 21
+          },
+          "actor": {
+            "id": "harbor-deck-inspector",
+            "type": "patrol",
+            "role": "civilian",
+            "position": {
+              "x": -15500,
+              "y": 5512,
+              "z": 33084
+            },
+            "radius": 300,
+            "height": 1800,
+            "health": 50,
+            "maxHealth": 50,
+            "status": "active",
+            "pathIndex": 1,
+            "cooldown": 0,
+            "blocked": false
+          }
+        }
+      ],
+      "finalStateIdentity": "c0c050616033fa9a"
+    },
+    {
+      "course": "harbor-docks-07",
+      "mode": "self-level",
+      "status": "complete",
+      "ticks": 4026,
+      "contacts": 0,
+      "shots": 5,
+      "hits": 2,
+      "actorTravel": {
+        "harbor-training-drone": 0
+      },
+      "actorHeightDeviation": {
+        "harbor-training-drone": 0
+      },
+      "supportTicks": {},
+      "damage": [
+        {
+          "tick": 1588,
+          "actor": "harbor-training-drone",
+          "beforeHealth": 50,
+          "afterHealth": 25,
+          "beforeStatus": "active",
+          "afterStatus": "active",
+          "shots": 4,
+          "hits": 1,
+          "events": [
+            {
+              "type": "impact",
+              "actor": "harbor-training-drone"
+            }
+          ]
+        },
+        {
+          "tick": 1595,
+          "actor": "harbor-training-drone",
+          "beforeHealth": 25,
+          "afterHealth": 0,
+          "beforeStatus": "active",
+          "afterStatus": "defeated",
+          "shots": 5,
+          "hits": 2,
+          "events": [
+            {
+              "type": "fire",
+              "actor": "player"
+            },
+            {
+              "type": "defeat",
+              "actor": "harbor-training-drone"
+            },
+            {
+              "type": "impact",
+              "actor": "harbor-training-drone"
+            },
+            {
+              "type": "objective",
+              "index": 2
+            }
+          ]
+        }
+      ],
+      "tracking": [],
+      "finalStateIdentity": "6d4146e11b8a7f00"
+    },
+    {
+      "course": "harbor-docks-07",
+      "mode": "acro",
+      "status": "complete",
+      "ticks": 4074,
+      "contacts": 0,
+      "shots": 4,
+      "hits": 2,
+      "actorTravel": {
+        "harbor-training-drone": 0
+      },
+      "actorHeightDeviation": {
+        "harbor-training-drone": 0
+      },
+      "supportTicks": {},
+      "damage": [
+        {
+          "tick": 1630,
+          "actor": "harbor-training-drone",
+          "beforeHealth": 50,
+          "afterHealth": 25,
+          "beforeStatus": "active",
+          "afterStatus": "active",
+          "shots": 4,
+          "hits": 1,
+          "events": [
+            {
+              "type": "fire",
+              "actor": "player"
+            },
+            {
+              "type": "impact",
+              "actor": "harbor-training-drone"
+            }
+          ]
+        },
+        {
+          "tick": 1637,
+          "actor": "harbor-training-drone",
+          "beforeHealth": 25,
+          "afterHealth": 0,
+          "beforeStatus": "active",
+          "afterStatus": "defeated",
+          "shots": 4,
+          "hits": 2,
+          "events": [
+            {
+              "type": "defeat",
+              "actor": "harbor-training-drone"
+            },
+            {
+              "type": "impact",
+              "actor": "harbor-training-drone"
+            },
+            {
+              "type": "objective",
+              "index": 2
+            }
+          ]
+        }
+      ],
+      "tracking": [],
+      "finalStateIdentity": "1daddfd655457812"
+    }
+  ],
+  "runtime": [
+    {
+      "file": "world-model.mjs",
+      "bytes": 56086,
+      "sha256": "ea061f0a723659d2adb181968dbc311869ce1a57df78690d81946b3618171b06"
+    },
+    {
+      "file": "world-collision.mjs",
+      "bytes": 14101,
+      "sha256": "827088d5c8f65a4965944149631f74838bc2e8e930332be559e48c96d6b3922f"
+    },
+    {
+      "file": "world-records.mjs",
+      "bytes": 11475,
+      "sha256": "8fb720ec1a1a1e5cbc7ec5b253d14b6d76d680e6c03dc5f2c92b3e2e407d4c27"
+    },
+    {
+      "file": "vendor/rapier/rapier.mjs",
+      "bytes": 4340292,
+      "sha256": "02dc6a4e2fffc013bab08fbb44fa68f501d8303615e9afe4c7d89ad4eedda0d0"
+    }
+  ],
+  "files": [
+    {
+      "path": "evidence/r4-build.json",
+      "bytes": 2907,
+      "sha256": "8e51d00b70e06cf5c9b243a8c6c61bafda5b972246a47e3491ee8920d6e09210"
+    },
+    {
+      "path": "evidence/r4-revision-comparison.json",
+      "bytes": 2859,
+      "sha256": "66334d92e6343b64dbc89860695702a748a5acbe98ff11e7c284363e0d950ec7"
+    },
+    {
+      "path": "evidence/r4-static.json",
+      "bytes": 95636,
+      "sha256": "4a2e610cec3fae149b9fb2244879e79cddd52d82c8768ffe1b90d8350e351904"
+    },
+    {
+      "path": "evidence/r4-qualification.json",
+      "bytes": 611397,
+      "sha256": "03ff93441279e0f54dbc8bf16d7b8179570dda9f4ca86b3086efae7b01371dbb"
+    },
+    {
+      "path": "distribution/r4/harbor-docks.r4.rlpack",
+      "bytes": 879213,
+      "sha256": "d5bf4b9bb6829c04dbe1bb398893e5243cefc1f9acf018bf153a2012c8cf49b6"
+    },
+    {
+      "path": "distribution/r4/harbor-docks.r4.zip",
+      "bytes": 879269,
+      "sha256": "b68ff3f43965f33f44c60d4aea5d53aa74eacbaafaadfd24b88c5ae0201f097d"
+    },
+    {
+      "path": "distribution/r4/harbor-docks.r4.proofs.json",
+      "bytes": 1018615,
+      "sha256": "7341d203aa2d3a61199a0000cc87a31f50553588dad610d878a5238aab433102"
+    }
+  ],
+  "remaining": [
+    "Exact admitted capable-runtime full8 import/16 complete Watch/editor qualification",
+    "Native-clock visible cart/walker and fictional training review",
+    "Standalone prepared-offline stopped-origin reopen/ordinary launch"
+  ]
+}
