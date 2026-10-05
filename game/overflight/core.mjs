@@ -12,6 +12,7 @@ import {
   overflightModuleRank,
   overflightPayload,
 } from './upgrades.mjs';
+import { createOverflightDefeatFeed, recordOverflightDefeat } from './defeat-feed.mjs';
 
 export const OVERFLIGHT_STEP = 1 / 60;
 const TAU = Math.PI * 2;
@@ -42,12 +43,15 @@ function random(run, key = '_randomState') {
   return run[key] / 0x100000000;
 }
 
-function sound(run, type, value = 1) {
+function sound(run, type, value = 1, position = run.player) {
   const existing = run.events.find((event) => event.type === type);
   if (existing) {
     existing.count++;
     existing.value += value;
-  } else run.events.push({ type, count: 1, value });
+    // One centroid per semantic cue, not a voice or allocation per casualty.
+    existing.x += (position.x - existing.x) / existing.count;
+    existing.y += (position.y - existing.y) / existing.count;
+  } else run.events.push({ type, count: 1, value, x: position.x, y: position.y });
 }
 
 function camera(run) {
@@ -104,6 +108,7 @@ export function createOverflightRun(
     slowResume: !!slowResume,
     airframes,
     airframesRemaining: airframes,
+    defeats: createOverflightDefeatFeed(),
     player: {
       x: compiled.arena.width / 2,
       y: compiled.arena.height / 2,
@@ -532,6 +537,7 @@ function defeatEnemy(run, enemy) {
     return true;
   }
   if (!retireEnemy(run, enemy)) return false;
+  recordOverflightDefeat(run, enemy);
   run.stats.kills++;
   if (enemy.role === 'elite') {
     run.goals.eliteDefeated = true;
@@ -543,7 +549,7 @@ function defeatEnemy(run, enemy) {
   }
   dropOverflightSalvage(run, enemy.x, enemy.y, enemy.xp);
   effect(run, 'impact', enemy.x, enemy.y, enemy.radius + 6, 0.18);
-  sound(run, 'defeat');
+  sound(run, 'defeat', 1, enemy);
   if (enemy.role === 'final') {
     run.phase = 'won';
     run.resultReason = 'sortie-complete';
@@ -860,7 +866,7 @@ function spawnGoal(run, role) {
     run.goals.finalSpawned = true;
     run.goals.finalId = enemy.id;
   } else run.goals.eliteSpawned = true;
-  sound(run, 'arrival');
+  sound(run, 'arrival', 1, enemy);
   return true;
 }
 
@@ -1042,7 +1048,7 @@ function moveEnemies(run) {
           attackRadius: attack.radius,
           attackCooldown: enemy.role === 'final' ? 3.8 : 6.5,
         });
-        sound(run, 'warning');
+        sound(run, 'warning', 1, enemy);
       }
     }
   }
@@ -1406,7 +1412,7 @@ function collectPickup(run, pickup, index) {
   run.stats.xpOnGround -= pickup.value;
   run.stats.xpCollected += pickup.value;
   run.progression.xp += pickup.value;
-  sound(run, 'salvage', pickup.value);
+  sound(run, 'salvage', pickup.value, pickup);
   pickup.value = 0;
 }
 

@@ -110,13 +110,13 @@ export class Soundscape {
     this.readDestruction = read;
   }
   /** Ready buffers only: loading never replays an event after it has expired. */
-  playDialogue(buffer, { onended = () => {} } = {}) {
+  playDialogue(buffer, { onended = () => {}, ui = false } = {}) {
     const c = this.context;
     if (
       !buffer ||
       !this.enabled ||
       this.paused ||
-      this.gameplayPaused ||
+      (this.gameplayPaused && ui !== true) ||
       this.disposed ||
       this.audioMaster.muted ||
       this.audioMaster.volume === 0 ||
@@ -569,6 +569,8 @@ export class Soundscape {
     const c = this.context;
     if (!this.enabled || this.paused || this.disposed || !c || c.state !== 'running') return false;
     if (this.persistentMusic && this.gameplayPaused && bus === 'sfx') return false;
+    if (bus === 'menu' && (!this.menuSettings.enabled || this.menuSettings.volume === 0))
+      return false;
     if (this.voices.size >= voiceLimit) {
       const music = [...this.voices].find((v) => v.bus === 'music');
       if (music) music.stop();
@@ -632,8 +634,14 @@ export class Soundscape {
       filter.connect(gain);
     } else source.connect(gain);
     const destination =
-        bus === 'music' ? this.musicBus : note.movement ? this.movementBus : this.sfxBus,
-      drive = bus === 'music' ? this.musicDrive : this.sfxDrive;
+        bus === 'music'
+          ? this.musicBus
+          : bus === 'menu'
+            ? this.menuBus
+            : note.movement
+              ? this.movementBus
+              : this.sfxBus,
+      drive = bus === 'music' ? this.musicDrive : bus === 'menu' ? null : this.sfxDrive;
     const output = note.voice === 'guitar' && drive ? drive : destination;
     if (Number.isFinite(note.pan) && c.createStereoPanner) {
       const panner = c.createStereoPanner();
@@ -776,13 +784,17 @@ export class Soundscape {
   }
   event(value, details = {}, resultContext = null) {
     const event = typeof value === 'string' ? { ...details, type: value } : value;
+    // A host-owned result can finish after gameplay has paused. Other events
+    // cannot opt out of gameplay pause by passing an arbitrary UI flag.
+    const ui = event?.type === 'run.completed' && event.ui === true;
     if (
       !event ||
       !this.enabled ||
       this.paused ||
       this.audioMaster.muted ||
       this.audioMaster.volume === 0 ||
-      ((this.persistentMusic || event.feedback) && this.gameplayPaused) ||
+      ((this.persistentMusic || event.feedback) && this.gameplayPaused && !ui) ||
+      (ui && (!this.menuSettings.enabled || this.menuSettings.volume === 0)) ||
       !this.context
     )
       return;
@@ -812,6 +824,7 @@ export class Soundscape {
             'powerup.collected': 'pickup',
           }[event.type];
     const ownership = {
+      ui,
       board: event.board ?? 'solo',
       pan: event.pan ?? 0,
       feedback: event.feedback === true,
@@ -835,6 +848,7 @@ export class Soundscape {
               cueName: publishedCue,
             },
             now + 0.015 + i * spacing,
+            ui ? 'menu' : 'sfx',
           ),
         );
     if (event.type === 'run.completed') {
@@ -845,7 +859,7 @@ export class Soundscape {
       }
       if (event.won === false || event.status === 'lost') {
         cue([0, -3, -7, -12], 'lead', 0.16, 0.38);
-        this.play({ kind: 'snare', volume: 0.07, duration: 0.22 }, now + 0.02);
+        this.play({ kind: 'snare', volume: 0.07, duration: 0.22 }, now + 0.02, ui ? 'menu' : 'sfx');
       } else {
         const phrase =
           campaignVictoryMotif(resultContext) ??
@@ -873,6 +887,7 @@ export class Soundscape {
                 duration,
               },
               now + timing[index],
+              ui ? 'menu' : 'sfx',
             );
         });
         for (const n of [-12, 4, 7])
@@ -885,6 +900,7 @@ export class Soundscape {
               duration: 1.4,
             },
             now + 0.88,
+            ui ? 'menu' : 'sfx',
           );
       }
     } else if (event.type === 'player.failed') cue([0, -5, -12], 'lead', 0.065, 0.17);
