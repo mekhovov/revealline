@@ -10,6 +10,8 @@
     --mint: var(--fk-accent, #67aaff);
     --gold: var(--fk-amber, #ffd64a);
     --line: var(--fk-line, #647786);
+    --snake-pad-size: 56px;
+    --snake-pad-opacity: 1;
   }
   * {
     box-sizing: border-box;
@@ -344,36 +346,17 @@
   }
   #pads {
     display: flex;
-    justify-content: space-between;
-    align-items: end;
-    gap: 8px;
+    justify-content: center;
+    gap: 16px;
     padding-block: 4px;
   }
-  .snake-touch-seat {
-    min-width: 0;
-    flex: 0 0 auto;
-  }
-  body[data-mode='solo'] #pads {
-    justify-content: flex-end;
-  }
-  body[data-mode='solo'] #pads[data-side='left'] {
-    justify-content: flex-start;
-  }
-  .snake-touch-seat .touch-instruction {
-    padding-inline: 8px;
-    text-align: center;
-  }
-  .pad.turn-pad {
-    --pad: 56px;
+  .pad {
+    --pad: max(44px, var(--snake-pad-size));
     display: grid;
-    grid-template: var(--pad) / repeat(2, var(--pad));
+    grid-template: repeat(2, var(--pad)) / repeat(3, var(--pad));
     gap: 4px;
-    opacity: var(--touch-opacity, 0.55);
   }
-  .snake-touch-seat[data-touch-size='large'] .turn-pad {
-    --pad: 64px;
-  }
-  .pad.turn-pad button {
+  .pad button {
     padding: 0;
     min-width: 44px;
     min-height: 44px;
@@ -381,6 +364,22 @@
     touch-action: none;
     user-select: none;
     -webkit-user-select: none;
+  }
+  .pad.turn-pad {
+    opacity: var(--snake-pad-opacity);
+    grid-template: var(--pad) / repeat(2, var(--pad));
+  }
+  .pad button[data-direction='up'] {
+    grid-area: 1 / 2;
+  }
+  .pad button[data-direction='left'] {
+    grid-area: 2 / 1;
+  }
+  .pad button[data-direction='down'] {
+    grid-area: 2 / 2;
+  }
+  .pad button[data-direction='right'] {
+    grid-area: 2 / 3;
   }
   .pad-label {
     text-align: center;
@@ -498,16 +497,6 @@
   body[data-mode='versus'] #boards[data-arrangement='paired'] {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
-  @media (hover: hover) and (pointer: fine) and (min-width: 900px) {
-    #pads {
-      display: none;
-    }
-  }
-  @media (any-pointer: coarse) {
-    #pads {
-      display: flex;
-    }
-  }
   @media (max-width: 700px), (max-height: 600px) {
     .board-stats [data-stat='best'],
     .board-stats [data-stat='length'],
@@ -539,21 +528,26 @@
     #pads {
       gap: 8px;
     }
-  }
-  /* Both seats share the width on a narrow phone. At 320px, each pad is
-     150px wide: every directional target remains 50px, above the 44px floor. */
-  @media (max-width: 420px) and (orientation: portrait) {
-    body:not([data-mode='solo']) .snake-touch-seat {
-      --touch-size: min(
-        156px,
-        calc((100dvw - 20px - env(safe-area-inset-left) - env(safe-area-inset-right)) / 2)
-      );
+    body:not([data-mode='solo']) .pad {
+      --pad: clamp(44px, calc((100vw - 48px) / 6), var(--snake-pad-size));
     }
-    body:not([data-mode='solo']) .snake-touch-seat[data-touch-size='large'] {
-      --touch-size: min(
-        192px,
-        calc((100dvw - 20px - env(safe-area-inset-left) - env(safe-area-inset-right)) / 2)
-      );
+    body:not([data-mode='solo']) .turn-pad {
+      --pad: clamp(44px, calc((100vw - 32px) / 4), var(--snake-pad-size));
+    }
+  }
+  @media (max-height: 500px) and (orientation: landscape) and (pointer: coarse) {
+    .arena {
+      grid-template: auto minmax(0, 1fr) / minmax(0, 1fr) auto;
+    }
+    .level-strip {
+      grid-column: 1 / -1;
+    }
+    #pads {
+      flex-direction: column;
+      align-self: center;
+    }
+    .pad {
+      --pad: 44px;
     }
   }
   @media (prefers-reduced-motion: reduce) {
@@ -578,8 +572,7 @@
     color: var(--fk-on-accent);
   }
   .arena {
-    padding: 6px max(10px, env(safe-area-inset-right)) max(6px, env(safe-area-inset-bottom))
-      max(10px, env(safe-area-inset-left));
+    padding: 6px 10px max(6px, env(safe-area-inset-bottom));
   }
   .board-stats [data-stat='best'] {
     display: none;
@@ -593,7 +586,7 @@
   }
   @media (max-width: 480px) {
     .arena {
-      padding-inline: max(6px, env(safe-area-inset-left)) max(6px, env(safe-area-inset-right));
+      padding-inline: 6px;
     }
   }
 
@@ -789,54 +782,63 @@ body[data-board-style='living-circuit'][data-board-scene='relay'] .board-wrap {
   margin: 0.5rem 0 0;
 }
 
-/* Short viewports place independent seats beside the complete field. Solo
-   uses its chosen hand; shared and competitive boards keep left/right seats. */
-@layer legacy {
-  @media (max-height: 500px) and (orientation: landscape) and (max-width: 899px),
-    (max-height: 500px) and (orientation: landscape) and (any-pointer: coarse) {
-    .arena {
-      grid-template: auto minmax(0, 1fr) / auto minmax(0, 1fr) auto;
-    }
-    .level-strip {
-      grid-column: 1 / -1;
-    }
-    #boards {
-      grid-area: 2 / 2;
-    }
-    #pads {
-      display: contents;
-    }
-    #pads > .snake-touch-seat {
-      grid-row: 2;
-      align-self: center;
-    }
-    #pads > .snake-touch-seat:first-child {
-      grid-column: 1;
-    }
-    #pads > .snake-touch-seat:last-child {
-      grid-column: 3;
-    }
-    body[data-mode='solo'] .arena {
-      grid-template-columns: minmax(0, 1fr) auto;
-    }
-    body[data-mode='solo'] #boards {
-      grid-column: 1;
-    }
-    body[data-mode='solo'] #pads > .snake-touch-seat {
-      grid-column: 2;
-    }
-    body[data-mode='solo'] .arena:has(#pads[data-side='left']) {
-      grid-template-columns: auto minmax(0, 1fr);
-    }
-    body[data-mode='solo'] .arena:has(#pads[data-side='left']) #boards {
-      grid-column: 2;
-    }
-    body[data-mode='solo'] #pads[data-side='left'] > .snake-touch-seat {
-      grid-column: 1;
-    }
-    .board-stats {
-      flex-wrap: wrap;
-    }
+@media (max-height: 500px) and (orientation: landscape) {
+  .arena {
+    grid-template: auto minmax(0, 1fr) / minmax(0, 1fr) auto;
+  }
+  .level-strip {
+    grid-column: 1 / -1;
+  }
+  #pads {
+    flex-direction: column;
+    align-self: center;
+  }
+  .pad {
+    --pad: 44px;
+  }
+}
+
+/* In a short viewport the pads flank the field, preserving its height. This
+   also covers windowed keyboards/hybrid devices with visible touch controls. */
+@media (max-height: 500px) and (orientation: landscape) and (max-width: 899px),
+  (max-height: 500px) and (orientation: landscape) and (pointer: coarse) {
+  .arena {
+    grid-template: auto minmax(0, 1fr) / auto minmax(0, 1fr) auto;
+  }
+  .level-strip {
+    grid-column: 1 / -1;
+  }
+  #boards {
+    grid-area: 2 / 2;
+  }
+  #pads {
+    display: contents;
+  }
+  #pads > div {
+    grid-row: 2;
+    align-self: center;
+  }
+  #pads > div:first-child {
+    grid-column: 1;
+  }
+  #pads > div:last-child {
+    grid-column: 3;
+  }
+  .pad,
+  body:not([data-mode='solo']) .pad {
+    --pad: 44px;
+  }
+  body[data-mode='solo'] .arena {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+  body[data-mode='solo'] #boards {
+    grid-column: 1;
+  }
+  body[data-mode='solo'] #pads > div {
+    grid-column: 2;
+  }
+  .board-stats {
+    flex-wrap: wrap;
   }
 }
 
@@ -851,5 +853,35 @@ body[data-board-style='living-circuit'][data-board-scene='relay'] .board-wrap {
     height: 1px;
     overflow: hidden;
     clip-path: inset(50%);
+  }
+}
+
+/* The shared thumb controls keep their native size without applying opacity twice. */
+@layer legacy {
+  body[data-mode='solo'] #pads[data-side='left'] {
+    justify-content: flex-start;
+  }
+  body[data-mode='solo'] #pads[data-side='right'] {
+    justify-content: flex-end;
+  }
+  @media (orientation: portrait) and (max-width: 440px) {
+    body:not([data-mode='solo']) .shared-touch-controls {
+      --touch-size: min(156px, calc((100vw - 40px) / 2));
+    }
+    body:not([data-mode='solo']) .shared-touch-controls[data-touch-size='large'] {
+      --touch-size: min(192px, calc((100vw - 40px) / 2));
+    }
+  }
+}
+@media (max-height: 500px) and (orientation: landscape) and (max-width: 899px),
+  (max-height: 500px) and (orientation: landscape) and (pointer: coarse) {
+  body[data-mode='solo']:has(#pads[data-side='left']) .arena {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+  body[data-mode='solo'] #pads[data-side='left'] > div {
+    grid-column: 1;
+  }
+  body[data-mode='solo']:has(#pads[data-side='left']) #boards {
+    grid-column: 2;
   }
 }
