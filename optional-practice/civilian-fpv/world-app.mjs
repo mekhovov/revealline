@@ -1682,7 +1682,34 @@ export function mountWorldApp({
   const stickTraces = ['left', 'right'].map((side) =>
     mountStickTrace($(`world-${side}-stick`), { travel: 180 * 0.34 }),
   );
-  let stickTraceLayout = '';
+  const stickViews = ['left', 'right'].map((side) => ({
+    node: $(`world-${side}-stick`),
+    knob: $(`world-${side}-stick`).querySelector('i'),
+    radius: 0,
+    x: 0,
+    y: 0,
+  }));
+  const positionStick = (view) => {
+    view.knob.style.transform = `translate(${view.x * view.radius}px, ${-view.y * view.radius}px)`;
+  };
+  const measureSticks = () => {
+    // Preserve native padding-box rounding; batch reads before either knob writes.
+    const radii = stickViews.map((view) => view.node.clientWidth * 0.34);
+    stickViews.forEach((view, index) => (view.radius = radii[index]));
+  };
+  const resizeSticks = () => {
+    if (disposed) return;
+    measureSticks();
+    stickViews.forEach(positionStick);
+  };
+  const stickResize =
+    typeof win.ResizeObserver === 'function' ? new win.ResizeObserver(resizeSticks) : null;
+  if (stickResize) {
+    stickViews.forEach((view) => stickResize.observe(view.node));
+    listeners.push(() => stickResize.disconnect());
+  }
+  let stickTraceLayout = '',
+    stickSizeLayout = '';
   const paintText = (id, text) => {
     const node = $(id);
     if (node.textContent !== text) node.textContent = text;
@@ -1727,17 +1754,20 @@ export function mountWorldApp({
         yaw: txt('Yaw', 'Рискання'),
         throttle: txt('Throttle', 'Газ'),
       })[key];
-    // Read both current padding-box sizes before either stick writes its labels.
-    const radii = ['left', 'right'].map((side) => $(`world-${side}-stick`).clientWidth * 0.34);
+    const sizeLayout = `${display}:${touchActive}`;
+    if (!stickResize || stickSizeLayout !== sizeLayout) measureSticks();
+    stickSizeLayout = sizeLayout;
     for (const [index, side] of ['left', 'right'].entries()) {
-      const node = $(`world-${side}-stick`),
+      const view = stickViews[index],
+        node = view.node,
         horizontal = layout[index * 2],
         vertical = layout[index * 2 + 1],
         x = controls[horizontal],
-        y = vertical === 'throttle' ? controls[vertical] * 2 - 1 : controls[vertical],
-        radius = radii[index];
+        y = vertical === 'throttle' ? controls[vertical] * 2 - 1 : controls[vertical];
       paintStickDirections(node, { horizontal, vertical, locale });
-      node.querySelector('i').style.transform = `translate(${x * radius}px, ${-y * radius}px)`;
+      view.x = x;
+      view.y = y;
+      positionStick(view);
       stickTraces[index].update({
         x,
         y,
@@ -2155,6 +2185,26 @@ export function mountWorldApp({
       $('creator-template').append(new Option(label(entry), keyOf(entry)));
     if (template) $('creator-template').value = template;
   }
+  function catalogueActivity(entry) {
+    if (entry.activity) return entry.activity;
+    let activity = null;
+    for (const step of entry.course.steps[$('flight-mode').value]) {
+      if (step.type === 'hold' || step.type === 'land') continue;
+      if (step.type !== 'actor-track-v1') return null;
+      const kind = step.minTargetTravel > 0 ? 'follow' : 'observe';
+      if (activity && activity !== kind) return null;
+      activity = kind;
+    }
+    return activity;
+  }
+  function catalogueDetails(entry) {
+    const name =
+      localized(ACTIVITY_NAMES[catalogueActivity(entry)]) ||
+      txt('Authored challenge', 'Авторське завдання');
+    return entry.activity
+      ? `${name} · ${COPY_UK[entry.difficulty] && locale === 'uk' ? COPY_UK[entry.difficulty] : entry.difficulty} · ${entry.duration ?? 3} ${txt('min', 'хв')}`
+      : name;
+  }
   function renderCatalogue() {
     renderSchool();
     const complete = completedKeys(),
@@ -2166,7 +2216,7 @@ export function mountWorldApp({
       (e) =>
         !e.archived &&
         (theme === 'all' || e.theme === theme) &&
-        (activity === 'all' || e.activity === activity) &&
+        (activity === 'all' || catalogueActivity(e) === activity) &&
         (difficulty === 'all' || e.difficulty === difficulty) &&
         (progress === 'all' || complete.has(keyOf(e)) === (progress === 'complete')) &&
         `${label(e)} ${localized(FLIGHT_WORLDS.find((w) => w.id === e.world)?.title)} ${e.course.environment}`
@@ -2277,10 +2327,7 @@ export function mountWorldApp({
           info = el('div', undefined, 'challenge-info');
         info.append(
           el('strong', `${complete.has(keyOf(entry)) ? '✓ ' : ''}${label(entry)}`),
-          el(
-            'small',
-            `${localized(ACTIVITY_NAMES[entry.activity])} · ${COPY_UK[entry.difficulty] && locale === 'uk' ? COPY_UK[entry.difficulty] : entry.difficulty} · ${entry.duration ?? 3} ${txt('min', 'хв')}`,
-          ),
+          el('small', catalogueDetails(entry)),
         );
         if (demonstrationFor(entry, $('flight-mode').value)) {
           const watch = button(
@@ -2834,9 +2881,6 @@ export function mountWorldApp({
       course,
       world: course.world.id,
       theme: projectOwnsCourse(course) ? 'custom' : course.world.theme,
-      activity: 'exploration',
-      difficulty: 'intermediate',
-      duration: 4,
       packIdentity: 'authoring',
       legacy: false,
       projectId: projectOwnsCourse(course) ? editingProject.id : undefined,
@@ -6259,6 +6303,7 @@ export function mountWorldApp({
           return false;
         }
         if (surface === 'missions') {
+          renderCatalogue();
           showTab(shellTab, false);
           shellTab = 'explore';
         } else if (surface === 'workshop' || surface === 'help') {
