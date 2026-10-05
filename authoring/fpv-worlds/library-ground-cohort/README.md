@@ -34,8 +34,8 @@ P1 parent worker and the new worker against their respective fixed endpoints,
 immutable pack URLs, digest checks and request limits. These are Node checks with
 an in-memory worker scope and stubbed responses, not native Worker, HTTPS, UI,
 storage or offline observations. The parent admission does not admit the changed
-cohort endpoint. Fresh cohort full validation, all-three/two-build admission and
-native qualification remain pending.
+cohort endpoint. Full validation passes on frozen cohort `2c99a8250`; its
+all-three/two-build admission and native qualification remain pending.
 
 The P1 source contract passes 57 checks, and the two existing offline lifecycle
 and native-control suites pass all 31 checks. Projection checks, scoped lint,
@@ -44,6 +44,19 @@ formatting and diff checks pass. The candidate measures 16,981,607 bytes across
 reaction projection (−18 bytes) and worker projection (−2 bytes) differ from
 ground admission `328f4c537`; the policy still yields 112 Worlds members. This is
 a source measurement, not admission of the candidate.
+
+The final source freeze is `2c99a82508f23e508666d7354a1b473507514d48`,
+tree `9b8339c70f93c9405770038d806dd1c283710687`. All 6,006 selected validation
+source files matched committed Git without copying new source. Full Node 22
+validation completed successfully with a clean checkout. The following admission
+preflight refused to launch because shared free space fell below the agreed
+3 GiB floor: no builder process or admission directory was created. Its exact
+refusal, validation logs and bounded runner are retained losslessly in
+[the qualification archive](evidence/qualification-2c99/manifest.json).
+
+This checkpoint excludes newer main audio/presentation changes discovered during
+validation. It is not current-main, release-ready or native qualification; source
+integration and the missing admission remain explicit follow-up gates.
 
 The earlier 40-check source receipt in `evidence/source-contract-r3.json` belongs
 to the pre-P1 95-input, 16 MiB policy and empty-feed candidate. Its initial JSON
