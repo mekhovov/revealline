@@ -75,6 +75,7 @@ test('Rush instrument describes charge, stored activation and remaining time wit
 test('polite status announces milestones once rather than streaming score and countdown changes', () => {
   const { run, document, paint } = fixture(),
     status = document.getElementById('raid-event-status');
+  status.textContent = 'RUSH ACTIVE 5.0s'; // Reused document after Retry.
   paint();
   assert.equal(status.textContent, '');
   run.hunt.rushCharge = 20;
