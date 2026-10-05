@@ -1,3 +1,14 @@
+import { classicSnakeRatingForRecord } from '../snake/classic-ratings.mjs';
+import {
+  createEnemyStats,
+  validateEnemyStatsSession,
+  forkEnemyStatsSession,
+} from '../enemy-stats.mjs';
+import { mountEnemyStats } from '../ui/enemy-stats.mjs';
+import * as replayHelpers from '../snake/classic-recent-replay.mjs';
+import * as flowHelpers from '../ui/continuous-play.mjs';
+import * as celebrationHelpers from '../ui/celebration.mjs';
+import { createSignalReception } from '../ui/signal-reception.mjs';
 import { mountGlobalSettingsTools } from '../ui/global-settings-tools.mjs';
 import { menuPad } from './helpers/global-tools-fixture.mjs';
 import { mountGlobalSettings } from '../ui/global-settings-view.mjs';
@@ -67,11 +78,19 @@ async function harness({
   mode = 'solo',
   activity = 'campaign',
   sharedTools = false,
+  focused = true,
 } = {}) {
   const document = new Document();
+  document.hasFocus = () => focused;
+  const writerClaims = [];
   document.createElement = (tag) => {
     const node = new Element(document, tag);
-    if (tag === 'canvas') node.getContext = () => ({ clearRect() {} });
+    if (tag === 'canvas')
+      node.getContext = () =>
+        new Proxy(
+          { canvas: node, clearRect() {} },
+          { get: (object, key) => object[key] ?? (() => {}) },
+        );
     return node;
   };
   const mount = (node, parent) => {
@@ -119,6 +138,50 @@ async function harness({
   let shell;
   const context = createContext({
     __appURL: appURL.href,
+    claimProfileWriter: async () => {
+      let writable = true;
+      const lease = {
+        get writable() {
+          return writable;
+        },
+        release() {
+          writable = false;
+        },
+      };
+      writerClaims.push(lease);
+      return lease;
+    },
+    createEnemyStats: (options) => {
+      const service = createEnemyStats({
+        ...options,
+        indexedDB: null,
+        storage: {
+          getItem: (key) => storage.get(key),
+          setItem: (key, value) => storage.set(key, value),
+        },
+      });
+      return {
+        ...service,
+        observe: (attempt, event) => service.observe(attempt, structuredClone(event)),
+      };
+    },
+    validateEnemyStatsSession,
+    forkEnemyStatsSession,
+    mountEnemyStats,
+    createClassicSnakeRatings: () => ({ refresh: async () => {}, close() {} }),
+    classicSnakeRatingForRecord,
+    ...replayHelpers,
+    ...flowHelpers,
+    continuousPlayPreferences: () =>
+      flowHelpers.continuousPlayPreferences({
+        storage: {
+          getItem: (key) => storage.get(key),
+          setItem: (key, value) => storage.set(key, value),
+        },
+        window,
+      }),
+    ...celebrationHelpers,
+    createSignalReception,
     mountModePlayShell(options) {
       shell = mountModePlayShell(options);
       return shell;
@@ -179,6 +242,7 @@ async function harness({
       resume() {},
       prepare() {},
       events() {},
+      result() {},
     }),
     document,
     URL,
@@ -259,10 +323,11 @@ async function harness({
     createClassicSnake(...args) {
       return core.createClassicSnake(...args.map((argument) => structuredClone(argument)));
     },
-    restoreClassicSnakeLegacyMatch(...args) {
-      return matches.restoreClassicSnakeLegacyMatch(
-        ...args.map((argument) => structuredClone(argument)),
-      );
+    restoreClassicSnakeLegacyMatch(source, options) {
+      return matches.restoreClassicSnakeLegacyMatch(structuredClone(source), {
+        ...options,
+        level: structuredClone(options.level),
+      });
     },
     createClassicSnakeMatch(...args) {
       // The VM models a browser realm; normalize only this harness crossing so
@@ -279,6 +344,10 @@ async function harness({
   }).runInContext(context);
   return {
     document,
+    writerClaims,
+    setFocused: (value) => {
+      focused = value;
+    },
     created,
     drawings,
     display,
@@ -447,6 +516,158 @@ const clearedSession = () => ({
   replays: [structuredClone(clearedReplay)],
 });
 
+function flyVerifiedRoute(state) {
+  state.frame(0);
+  const run = state.created[0];
+  let cursor = 0,
+    now = 0;
+  for (let tick = 0; tick < clearedReplay.steps; tick++) {
+    while (clearedReplay.turns[cursor]?.tick === tick) {
+      const command = clearedReplay.turns[cursor++];
+      const key = { up: 'w', right: 'd', down: 's', left: 'a' }[command.direction];
+      state.document.emit('keydown', {
+        target: state.document.querySelector('canvas'),
+        key,
+        code: `Key${key.toUpperCase()}`,
+        repeat: false,
+      });
+    }
+    now += core.classicSnakeSummary(run).stepMs;
+    state.frame(now);
+  }
+  assert.equal(run.status, 'won', 'actual host keyboard input completes the verified route');
+  return now;
+}
+
+test('unfocused direct entry waits for the player and BFCache return reacquires saving ownership', async () => {
+  const state = await harness({ focused: false });
+  state.frame(0);
+  state.frame(400);
+  assert.equal(state.created[0].tick, 0);
+  assert.equal(state.document.body.dataset.playing, 'false');
+  state.setFocused(true);
+  state.start();
+  state.frame(450);
+  state.frame(650);
+  assert.equal(state.created[0].tick, 1);
+  const firstWriter = state.writerClaims[0];
+  state.window.emit('pagehide', { persisted: true });
+  await flush();
+  assert.equal(firstWriter.writable, false);
+  const savedBefore = JSON.parse(state.storage.get('revealline.classic-snake.round.v2'));
+  state.window.emit('pageshow', { persisted: true });
+  await flush();
+  assert.equal(state.writerClaims.length, 2);
+  assert.equal(state.writerClaims[1].writable, true);
+  const savedAfter = JSON.parse(state.storage.get('revealline.classic-snake.round.v2'));
+  assert.notEqual(savedAfter.statistics.attemptId, savedBefore.statistics.attemptId);
+  assert.deepEqual(savedAfter.statistics.counts, savedBefore.statistics.counts);
+  assert.deepEqual(savedAfter.match, savedBefore.match, 'ownership recovery preserves the board');
+  assert.equal(
+    state.document.body.dataset.playing,
+    'false',
+    'reacquiring saving does not resume play',
+  );
+});
+
+test('completed local Continue shows its verified grade while imported recordings never auto-advance', async () => {
+  const state = await harness();
+  flyVerifiedRoute(state);
+  await flush();
+  state.$('continue').click();
+  assert.equal(state.$('snake-stars').textContent, '★★★');
+  const imported = await harness();
+  await importSession(imported.$, clearedSession());
+  assert.match(imported.$('snake-stars').textContent, /no new awards/);
+  for (let now = 0; now <= 12000; now += 50) imported.frame(now);
+  assert.equal(imported.created.length, 1);
+  assert.equal(imported.shell.topDialog(), imported.shell.elements.dialogs.results);
+});
+
+test('Enter on celebration actions retains the focused button action', async () => {
+  const state = await harness();
+  flyVerifiedRoute(state);
+  const home = [...state.document.querySelector('.snake-continuation').children].find(
+    (node) => node.textContent === 'Home',
+  );
+  home.focus();
+  const press = home.emit('keydown', { key: 'Enter', code: 'Enter', repeat: false });
+  assert.equal(press.defaultPrevented, false);
+  assert.equal(state.created.length, 1, 'global Enter cannot turn Home into Next');
+  home.click();
+  assert.equal(state.shell.topDialog(), state.shell.elements.home);
+});
+
+test('direct entry needs no briefing and ordinary defeat replays then retries within three seconds', async (t) => {
+  const state = await harness();
+  assert.equal(state.shell.topDialog(), null);
+  assert.equal(state.document.body.dataset.playing, 'true');
+  state.frame(0);
+  let now = 0;
+  while (state.created[0].status === 'running') state.frame((now += 50));
+  const lostAt = now;
+  assert.equal(state.shell.elements.root.dataset.transitionPhase, 'loss-effect');
+  assert.equal(
+    state.shell.elements.buttons.pause.disabled,
+    false,
+    'Pause can stop automatic recovery',
+  );
+  while (state.created.length === 1 && now < lostAt + 3200) state.frame((now += 50));
+  assert.equal(state.created.length, 2);
+  assert.ok(now - lostAt >= 2850 && now - lostAt <= 3050);
+  t.diagnostic(
+    `Measured default defeat-to-retry: ${now - lostAt} ms, 0 activations (50 ms host frame).`,
+  );
+  assert.equal(state.created[1].seed, state.created[0].seed);
+  assert.deepEqual(state.created[1].level, state.created[0].level);
+  assert.equal(state.document.body.dataset.playing, 'true');
+});
+
+test('victory keeps full celebration then countdown; Next during celebration launches in one activation', async () => {
+  const state = await harness();
+  let now = flyVerifiedRoute(state);
+  assert.equal(state.shell.topDialog(), null);
+  for (let elapsed = 50; elapsed <= 3550; elapsed += 50) state.frame(now + elapsed);
+  assert.equal(state.shell.topDialog(), null, 'the full celebration remains visible');
+  state.document.querySelector('.snake-continuation .primary').click();
+  assert.equal(state.document.body.dataset.playing, 'true');
+  assert.equal(state.shell.topDialog(), null);
+  assert.equal(
+    new URL(state.location.href).searchParams.get('level'),
+    'classic-snake-two-landings',
+  );
+
+  const automatic = await harness();
+  now = flyVerifiedRoute(automatic);
+  for (let elapsed = 50; elapsed <= 3900; elapsed += 50) automatic.frame(now + elapsed);
+  assert.equal(automatic.shell.topDialog(), automatic.shell.elements.dialogs.results);
+  assert.equal(automatic.document.activeElement, automatic.$('next'));
+  for (let elapsed = 3950; elapsed <= 8500; elapsed += 50) automatic.frame(now + elapsed);
+  assert.equal(automatic.created.length, 1, 'countdown follows rather than overlaps celebration');
+  for (let elapsed = 8550; elapsed <= 8850; elapsed += 50) automatic.frame(now + elapsed);
+  assert.equal(automatic.document.body.dataset.playing, 'true');
+  assert.equal(
+    new URL(automatic.location.href).searchParams.get('level'),
+    'classic-snake-two-landings',
+  );
+});
+
+test('Home and backgrounding permanently cancel automatic progression for the completed attempt', async () => {
+  for (const action of ['home', 'background']) {
+    const state = await harness();
+    const now = flyVerifiedRoute(state);
+    if (action === 'home') state.shell.openHome();
+    else {
+      state.document.hidden = true;
+      state.document.emit('visibilitychange');
+      state.document.hidden = false;
+    }
+    for (let elapsed = 50; elapsed <= 12000; elapsed += 50) state.frame(now + elapsed);
+    assert.equal(state.created.length, 1, action);
+    assert.equal(state.document.body.dataset.playing, 'false');
+  }
+});
+
 test('selecting a new mission keeps its Start authoritative while retaining the older Workshop save', async () => {
   const state = await harness();
   state.start();
@@ -461,8 +682,8 @@ test('selecting a new mission keeps its Start authoritative while retaining the 
   state.shell.openHome();
   assert.equal(state.shell.elements.buttons.primary.textContent, 'Start');
   state.shell.elements.buttons.primary.click();
-  assert.equal(state.shell.topDialog(), state.shell.elements.dialogs.briefing);
-  assert.equal(state.document.body.dataset.playing, 'false');
+  assert.equal(state.shell.topDialog(), null);
+  assert.equal(state.document.body.dataset.playing, 'true');
   assert.equal(state.storage.get('revealline.classic-snake.round.v2'), priorSave);
   assert.equal(new URL(state.location.href).searchParams.get('level'), selected.id);
   state.shell.elements.buttons.start.click();
@@ -505,14 +726,20 @@ test('final-moves playback freezes behind a newer menu and only returns to Resul
   state.shell.open('settings');
   for (let now = 480; now <= 3120; now += 240) state.frame(now);
   assert.equal(state.shell.topDialog(), state.shell.elements.dialogs.settings);
-  assert.equal(state.drawings.at(-1).run.tick, visibleTick);
+  assert.ok(
+    state.drawings.at(-1).run.tick >= visibleTick,
+    'Leaving replay restores the completed board',
+  );
   state.shell.elements.buttons['settings-back'].click();
   assert.equal(state.shell.topDialog(), state.shell.elements.home);
   assert.equal(state.shell.elements.buttons['home-results'].hidden, false);
   state.shell.elements.buttons['home-results'].click();
   assert.equal(state.shell.topDialog(), state.shell.elements.dialogs.results);
   state.frame(3360);
-  assert.equal(state.drawings.at(-1).run.tick, visibleTick);
+  assert.ok(
+    state.drawings.at(-1).run.tick >= visibleTick,
+    'Leaving replay restores the completed board',
+  );
   assert.equal(state.document.body.dataset.playing, 'false');
   state.$('review').click();
   for (let now = 3600; now <= 6000; now += 240) state.frame(now);
@@ -520,20 +747,20 @@ test('final-moves playback freezes behind a newer menu and only returns to Resul
   assert.equal(state.document.body.dataset.playing, 'false');
 });
 
-test('Next retires the completed result before the new mission briefing and Back reaches selection', async () => {
+test('Next retires the completed result and directly launches the ordered next mission', async () => {
   const state = await harness();
   await importSession(state.$, clearedSession());
   assert.equal(state.$('next').hidden, false);
   state.$('next').click();
   assert.equal(state.shell.elements.dialogs.results.open, false);
-  assert.equal(state.shell.elements.root.dataset.phase, 'ready');
-  assert.equal(state.shell.topDialog(), state.shell.elements.dialogs.briefing);
+  assert.equal(state.shell.elements.root.dataset.phase, 'playing');
+  assert.equal(state.shell.topDialog(), null);
   assert.notEqual(
     new URL(state.location.href).searchParams.get('level'),
     CLASSIC_SNAKE_LEVELS[0].id,
   );
-  state.shell.back();
-  assert.equal(state.shell.topDialog(), state.shell.elements.dialogs.missions);
+  state.shell.open('pause');
+  assert.equal(state.shell.topDialog(), state.shell.elements.dialogs.pause);
   assert.equal(state.document.body.dataset.playing, 'false');
   const selected = new URL(state.location.href);
   const sim = new URL(state.optionalEntries.at(-1).bundledHref);
@@ -556,7 +783,7 @@ test('a scheduled terminal result cannot be restored with a later host clock', a
   const { $, shell } = await harness();
   await importSession($, savedSession(run, run.elapsedMs + 0.5));
   assert.equal($('save-status').textContent, CLASSIC_COPY.en.invalid);
-  assert.equal(shell.elements.root.dataset.phase, 'ready');
+  assert.equal(shell.elements.root.dataset.phase, 'paused');
 });
 
 test('an input-limit result may restore between its final two scheduled grid times', async () => {
@@ -583,7 +810,7 @@ test('an input-limit result may restore between its final two scheduled grid tim
   assert.equal($('announcement').textContent, CLASSIC_COPY.en.limit);
 });
 
-test('a V2 round saves its accepted timeline and continues paused without advancing it', async () => {
+test('a V2 round saves its accepted timeline and Continue launches directly', async () => {
   const entry = CLASSIC_SNAKE_LEVELS.find(
     (item) => item.level.version === 'classic-snake-level.v2',
   );
@@ -599,7 +826,7 @@ test('a V2 round saves its accepted timeline and continues paused without advanc
   state.frame(core.classicSnakeSummary(state.created[0]).stepMs);
   state.window.emit('blur');
   const saved = JSON.parse(state.storage.get('revealline.classic-snake.round.v2'));
-  assert.equal(saved.format, 'revealline-classic-snake-session.v2');
+  assert.equal(saved.format, 'revealline-classic-snake-session.v3');
   assert.equal(saved.match.turns.length, 1);
   assert.equal(saved.match.replays[0].steps, 1);
   assert.equal(saved.match.turns[0].direction, 'up');
@@ -610,12 +837,12 @@ test('a V2 round saves its accepted timeline and continues paused without advanc
   const resumed = await harness({ entry });
   await importSession(resumed.$, saved);
   assert.equal(resumed.$('save-status').textContent, CLASSIC_COPY.en.loaded);
-  assert.equal(resumed.shell.elements.root.dataset.phase, 'paused');
-  assert.equal(resumed.document.body.dataset.playing, 'false');
+  assert.equal(resumed.shell.elements.root.dataset.phase, 'playing');
+  assert.equal(resumed.document.body.dataset.playing, 'true');
   assert.equal(new URL(resumed.location.href).searchParams.get('level'), entry.id);
   resumed.frame(0);
   resumed.frame(500);
-  assert.equal(resumed.document.body.dataset.playing, 'false');
+  assert.equal(resumed.document.body.dataset.playing, 'true');
 });
 
 test('a valid match cannot be imported under a different host seat arrangement', async () => {
@@ -631,12 +858,13 @@ test('a valid match cannot be imported under a different host seat arrangement',
   await importSession(imported.$, saved);
   assert.equal(imported.$('save-status').textContent, CLASSIC_COPY.en.invalid);
   assert.equal(imported.document.body.dataset.mode, 'solo');
-  assert.equal(imported.shell.elements.root.dataset.phase, 'ready');
+  assert.equal(imported.shell.elements.root.dataset.phase, 'paused');
 });
 
 test('Classic flight animation follows play, pause and effective Reduced effects without stopping movement', async () => {
   const state = await harness();
   const latest = () => state.drawings.at(-1).options;
+  state.shell.open('home');
   state.frame(0);
   state.frame(500);
   assert.equal(latest().flight.timeMs, 0);

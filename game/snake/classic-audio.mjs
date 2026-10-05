@@ -4,6 +4,27 @@ import { screenPan } from '../ui/feedback-cues.mjs';
  * limits, master mute and pause. Replayed/imported history never emits old SFX. */
 export function createClassicAudio(sound, { getDestruction = () => ({}) } = {}) {
   let states = new WeakMap();
+  let eventSteps = new WeakMap();
+  function events(run, { active = true, board = 'snake-0', placement } = {}) {
+    if ((eventSteps.get(run) ?? -1) >= run.tick) return;
+    eventSteps.set(run, run.tick);
+    if (!active) return;
+    for (const event of run.events ?? []) {
+      if (event.tick !== run.tick) continue;
+      const cue = {
+        'target.warning': 'warning',
+        'relay.collected': 'supply',
+        'target.opened': 'objective',
+      }[event.type];
+      if (!cue) continue;
+      const source = event.target ?? event.relay;
+      sound.encounter(cue, {
+        family: source?.kind,
+        board,
+        pan: screenPan(source?.x ?? run.level.width / 2, run.level.width, placement),
+      });
+    }
+  }
   function update(run, { active = true, mode = 'solo', board = 'snake-0', placement } = {}) {
     let state = states.get(run);
     if (!state || run.tick < state.tick) {
@@ -77,9 +98,11 @@ export function createClassicAudio(sound, { getDestruction = () => ({}) } = {}) 
     state.shutters = new Map((run.shutters ?? []).map((item) => [item.id, { ...item }]));
   }
   return Object.freeze({
+    events,
     update,
     reset() {
       states = new WeakMap();
+      eventSteps = new WeakMap();
       sound.feedbackDirector.reset();
     },
   });
