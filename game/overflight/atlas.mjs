@@ -3,7 +3,12 @@ import {
   INDUSTRIAL_ROSTER_ART_REVISION,
   INDUSTRIAL_ROSTER_SAMPLES,
 } from '../hunt/actor-art.mjs';
-import { drawMachinerySpecimen } from '../presentation/industrial-machinery.mjs';
+import {
+  drawMachinerySpecimen,
+  drawMachineryDebris,
+} from '../presentation/industrial-machinery.mjs';
+import { drawHuntRemains, createHuntDestruction } from '../hunt/destruction.mjs';
+import { createDestructionBudget } from '../hunt/destruction-budget.mjs';
 import { industrialMaterialPixels } from '../presentation/industrial-materials.mjs';
 import {
   OVERFLIGHT_FIELD_KIT_IDS,
@@ -16,9 +21,32 @@ import { OVERFLIGHT_SOLDIERS, OVERFLIGHT_MACHINERY } from './project.mjs';
 
 export const OVERFLIGHT_ATLAS_BUDGET = 32 * 1024 * 1024;
 export const OVERFLIGHT_WARDROBES = Object.freeze(['tactical', 'rivals', 'arcade']);
+export const OVERFLIGHT_HERO_FRAMES = 12;
 const CELL = 68,
-  COLUMNS = 15;
-const geometryFrames = ['ring', 'disc', 'line', 'hero-ring', 'arrow', 'shadow', 'bar'];
+  COLUMNS = 30;
+const geometryFrames = ['ring', 'disc', 'line', 'arrow', 'shadow', 'bar'];
+
+/** Native frame and motor anchors stay intact. Larger prop sweeps leave a
+ * narrow battery/body between the motors, like the existing ten-inch FPV rig. */
+export function overflightHeroGeometry(geometry) {
+  const metrics = actorImagePaintMetrics(34, geometry);
+  const rotors = (geometry?.rotors ?? []).map((anchor) => {
+    const x = anchor.x * metrics.width,
+      y = anchor.y * metrics.height;
+    let radius = 0.16 * anchor.radiusScale * metrics.width * 1.75;
+    for (const other of geometry.rotors) {
+      if (other === anchor) continue;
+      radius = Math.min(
+        radius,
+        Math.hypot((other.x - anchor.x) * metrics.width, (other.y - anchor.y) * metrics.height) *
+          0.47,
+      );
+    }
+    radius = Math.max(0, Math.min(radius, 31 - Math.abs(x), 31 - Math.abs(y)));
+    return Object.freeze({ ...anchor, x, y, radius });
+  });
+  return Object.freeze({ ...metrics, rotors: Object.freeze(rotors), frameSize: 64 });
+}
 const soldierClips = Object.fromEntries(
   OVERFLIGHT_SOLDIERS.map((family) => {
     const descriptor = INDUSTRIAL_ROSTER_SAMPLES[family];
@@ -60,9 +88,24 @@ export function overflightAtlasInventory() {
   for (const family of OVERFLIGHT_MACHINERY)
     for (let pose = 0; pose < 6; pose++)
       add(`machine:${family}:${pose}`, 'machine', 64, { family, pose });
-  for (let pose = 0; pose < 4; pose++) add(`hero:${pose}`, 'hero', 48, { pose });
+  for (let pose = 0; pose < OVERFLIGHT_HERO_FRAMES; pose++)
+    add(`hero:${pose}`, 'hero', 64, { pose });
   for (const slot of OVERFLIGHT_FIELD_KIT_IDS) add(slot, 'equipment', 16, { slot });
   for (const id of geometryFrames) add(id, 'geometry', 48);
+  for (const family of OVERFLIGHT_SOLDIERS)
+    for (const wardrobe of OVERFLIGHT_WARDROBES)
+      for (const mode of ['clean', 'debris', 'blood']) {
+        const suffix = `soldier:${family}:${wardrobe}:${mode}`;
+        add(`remains:${suffix}`, 'remains', 48, { family, wardrobe, mode });
+        for (let pose = 0; pose < 4; pose++)
+          add(`defeat:${suffix}:${pose}`, 'defeat', 64, { family, wardrobe, mode, pose });
+      }
+  for (const family of OVERFLIGHT_MACHINERY)
+    for (const mode of ['clean', 'debris']) {
+      add(`remains:machine:${family}:${mode}`, 'scrap', 48, { family, mode });
+      for (let pose = 0; pose < 4; pose++)
+        add(`defeat:machine:${family}:${mode}:${pose}`, 'scrap-motion', 64, { family, mode, pose });
+    }
   for (let i = 0; i < entries.length; i++) {
     const frame = entries[i];
     frame.x = (i % COLUMNS) * CELL + 2;
@@ -82,8 +125,15 @@ export function overflightAtlasInventory() {
     retainedCanvasBytes: baseRGBABytes,
     soldierFrames: OVERFLIGHT_SOLDIERS.length * OVERFLIGHT_WARDROBES.length * 6,
     machineryFrames: OVERFLIGHT_MACHINERY.length * 6,
-    heroFrames: 4,
+    heroFrames: OVERFLIGHT_HERO_FRAMES,
     equipmentFrames: OVERFLIGHT_FIELD_KIT_IDS.length,
+    remainsFrames:
+      OVERFLIGHT_SOLDIERS.length * OVERFLIGHT_WARDROBES.length * 3 +
+      OVERFLIGHT_MACHINERY.length * 2,
+    defeatFrames:
+      (OVERFLIGHT_SOLDIERS.length * OVERFLIGHT_WARDROBES.length * 3 +
+        OVERFLIGHT_MACHINERY.length * 2) *
+      4,
   });
 }
 
@@ -125,22 +175,9 @@ function paintGeometry(ctx, id, size) {
     ctx.fill();
   } else {
     ctx.beginPath();
-    ctx.arc(center, center, id === 'hero-ring' ? 20 : 22, 0, Math.PI * 2);
-    if (id === 'hero-ring') {
-      ctx.strokeStyle = '#09120f';
-      ctx.lineWidth = 5;
-      ctx.stroke();
-      ctx.strokeStyle = '#ffffff';
-      ctx.lineWidth = 2;
-    }
+    ctx.arc(center, center, 22, 0, Math.PI * 2);
     if (id === 'disc') ctx.fill();
     else ctx.stroke();
-    if (id === 'hero-ring') {
-      ctx.fillRect(23, 0, 2, 5);
-      ctx.fillRect(23, 43, 2, 5);
-      ctx.fillRect(0, 23, 5, 2);
-      ctx.fillRect(43, 23, 5, 2);
-    }
   }
 }
 
@@ -150,12 +187,27 @@ export function bakeOverflightAtlas(appearance, document = globalThis.document) 
   const inventory = overflightAtlasInventory();
   const { canvas, ctx } = canvasFor(document, inventory.width, inventory.height);
   const temp = canvasFor(document, 64, 64);
+  const playerSlot = appearance?.playerSlot ?? 'player.scout.detailed';
+  if (
+    !/^player\.(scout|bomber|carrier|interceptor|fiber|impact|trapper)\.(detailed|compact)$/.test(
+      playerSlot,
+    )
+  )
+    throw new Error('Overflight requires an accepted native player slot.');
   const hero =
-    appearance?.snapshot?.image('player.scout.detailed') ??
-    appearance?.snapshot?.image('player.scout.compact');
-  if (!hero?.image) throw new Error('Overflight requires the accepted native Scout artwork.');
+    appearance?.snapshot?.image(playerSlot) ??
+    appearance?.snapshot?.image(playerSlot.replace(/\.detailed$/, '.compact'));
+  if (!hero?.image) throw new Error('Overflight requires the selected native player artwork.');
   const geometry = hero.geometry;
-  const heroMetrics = actorImagePaintMetrics(32, geometry);
+  const heroMetrics = overflightHeroGeometry(geometry);
+  // Bake the real shared defeat animation once with an isolated preparation
+  // budget. This never takes the live game's or a settings preview's FX lease.
+  const defeatBudget = createDestructionBudget({ now: () => 0 });
+  const defeat = createHuntDestruction({
+    budget: defeatBudget,
+    now: () => 0,
+    artRevision: appearance?.artRevision ?? INDUSTRIAL_ROSTER_ART_REVISION,
+  });
   for (const frame of inventory.frames) {
     ctx.save();
     ctx.translate(frame.x, frame.y);
@@ -179,7 +231,7 @@ export function bakeOverflightAtlas(appearance, document = globalThis.document) 
         frame: { travelPhase: frame.pose / 6, phase: frame.pose / 3, reduced: false },
       });
     } else if (frame.kind === 'hero') {
-      ctx.translate(24, 24);
+      ctx.translate(32, 32);
       const { width, height } = heroMetrics;
       ctx.drawImage(
         hero.image,
@@ -188,20 +240,58 @@ export function bakeOverflightAtlas(appearance, document = globalThis.document) 
         width,
         height,
       );
-      for (const anchor of geometry?.rotors ?? []) {
+      for (const anchor of heroMetrics.rotors) {
         ctx.save();
-        ctx.translate(anchor.x * width, anchor.y * height);
+        ctx.translate(anchor.x, anchor.y);
         paintRotor(ctx, {
-          radius: 0.16 * anchor.radiusScale * width,
+          radius: anchor.radius,
           phase:
-            ((frame.pose * Math.PI) / 12) * anchor.direction +
+            ((frame.pose * Math.PI * 2) / (OVERFLIGHT_HERO_FRAMES * anchor.bladeCount)) *
+              anchor.direction +
             ((anchor.phaseDegrees ?? 0) * Math.PI) / 180,
           direction: anchor.direction,
           bladeCount: anchor.bladeCount,
+          blurOpacity: 0.1,
           pixel: Math.max(width / 64, 0.1),
         });
         ctx.restore();
       }
+    } else if (frame.kind === 'remains' || frame.kind === 'defeat') {
+      ctx.translate(frame.width / 2, frame.height / 2);
+      const mark = {
+        id: frame.family,
+        family: frame.family,
+        cast: frame.wardrobe,
+        tick: 0,
+        x: 0,
+        y: 0,
+        cause: 'capture',
+      };
+      const settings = {
+        brutal: frame.mode !== 'clean',
+        blood: frame.mode === 'blood',
+        artRevision: appearance?.artRevision ?? INDUSTRIAL_ROSTER_ART_REVISION,
+      };
+      if (frame.kind === 'remains') drawHuntRemains(ctx, mark, { ...settings, unit: 1.35 });
+      else {
+        defeat.reset();
+        const key = {},
+          view = { valid: true, eliminations: [] };
+        defeat.advance(view, 0, { ...settings, key });
+        view.eliminations.push(mark);
+        defeat.advance(view, 0, { ...settings, key });
+        for (let step = 0; step < frame.pose; step++)
+          defeat.advance(view, 0.08, { ...settings, key });
+        defeat.draw(ctx, { unit: 1.35 });
+      }
+    } else if (frame.kind === 'scrap' || frame.kind === 'scrap-motion') {
+      drawMachineryDebris(ctx, frame.family, {
+        x: frame.width / 2,
+        y: frame.height / 2,
+        size: 36,
+        brutal: frame.mode !== 'clean',
+        progress: frame.kind === 'scrap' ? 1 : frame.pose / 3,
+      });
     } else if (frame.kind === 'equipment') {
       const override = appearance?.snapshot?.image(frame.slot);
       if (override?.image) ctx.drawImage(override.image, 0, 0, 16, 16);
@@ -214,6 +304,8 @@ export function bakeOverflightAtlas(appearance, document = globalThis.document) 
     } else paintGeometry(ctx, frame.id, frame.width);
     ctx.restore();
   }
+  defeat.reset();
+  defeatBudget.clear();
   const ground = canvasFor(document, 256, 256);
   paintPixels(temp.ctx, industrialMaterialPixels({ width: 64, height: 64 }, 'earth'));
   ground.ctx.fillStyle = '#172a22';
@@ -241,9 +333,12 @@ export function bakeOverflightAtlas(appearance, document = globalThis.document) 
     inventory,
     heroArtwork: Object.freeze({
       assetId: hero.asset?.id ?? null,
-      rotorCount: geometry?.rotors?.length ?? 0,
-      visibleDiameter: 32,
-      bakedFrameSize: 48,
+      playerSlot,
+      rotorCount: heroMetrics.rotors.length,
+      visibleDiameter: 34,
+      bakedFrameSize: 64,
+      rotorFrames: OVERFLIGHT_HERO_FRAMES,
+      rotorRadii: heroMetrics.rotors.map((rotor) => rotor.radius),
       paintedWidth: heroMetrics.width,
       paintedHeight: heroMetrics.height,
     }),

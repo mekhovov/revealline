@@ -254,6 +254,7 @@ test('an accepted evolution has one audio cue even when no simulation tick elaps
   const heard = [];
   const audio = createOverflightAudio({
     encounter: (type) => heard.push(type),
+    publishedCue: (type) => heard.push(type),
     feedbackDirector: { reset() {} },
   });
   const run = {
@@ -269,7 +270,7 @@ test('an accepted evolution has one audio cue even when no simulation tick elaps
   run.events = [{ type: 'upgrade' }, { type: 'evolution' }];
   audio.update(run);
   audio.update(run);
-  assert.deepEqual(heard, ['objective', 'objective']);
+  assert.deepEqual(heard, ['confirm', 'objective']);
 });
 
 test('a failed renderer is replaced on Retry while healthy retries retain their owner', async () => {
