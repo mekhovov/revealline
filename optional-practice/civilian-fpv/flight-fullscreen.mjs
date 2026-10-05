@@ -924,6 +924,7 @@ const notify=(kind='refresh')=>{
 for(const fn of listeners)fn({kind});
 };
 const warning=(error)=>{
+if(closed)return;
 durable=false;
 onWarning(error);
 notify();
@@ -934,15 +935,16 @@ queue=result.catch(()=>{});
 return result;
 };
 const flushNow=async()=>{
-required(!closed,'Enemy statistics are closed.');
-if(memoryOnly)return state;
+// A host can close between accepting a live event and this queued write.
+// Disposal retires that work without rejecting detached host callbacks.
+if(closed||memoryOnly)return state;
 if(!pending.size)return state;
 const batch=new Map(pending);
 try{
 const saved=await backend.update((base)=>
 [...batch.values()].reduce(applyObservation,base),
 );
-if(memoryOnly)return state;
+if(closed||memoryOnly)return state;
 for(const[key,event]of batch)if(pending.get(key)===event)pending.delete(key);
 state=[...pending.values()].reduce(applyObservation,saved);
 durable=true;
@@ -990,9 +992,11 @@ boardCounts:structuredClone(row.boardCounts),
 return{
 read:()=>
 enqueue(async()=>{
-if(memoryOnly)return structuredClone(state);
+if(closed||memoryOnly)return structuredClone(state);
 try{
-state=[...pending.values()].reduce(applyObservation,await backend.read());
+const saved=await backend.read();
+if(closed)return structuredClone(state);
+state=[...pending.values()].reduce(applyObservation,saved);
 durable= !pending.size;
 notify();
 }catch(error){
@@ -1154,11 +1158,15 @@ const incoming=inspectEnemyStatsBackup(source).statistics;
 const importing=coordinator.imports.then(()=>
 enqueue(async()=>{
 try{
+required(!closed,'Enemy statistics are closed.');
 // A backup can include an optimistic count from another paused host.
 // Persist its cursor first so that queued callbacks cannot add it again.
 // Call the drain directly: waiting on another service's import queue
 // would deadlock two simultaneous imports in the same document.
-for(const active of coordinator.members)await active.drain();
+for(const active of coordinator.members){
+await active.drain();
+required(!closed,'Enemy statistics are closed.');
+}
 required(ownsWrites(),'This tab does not own the saving lease.');
 const writer=randomId();
 required(id(writer),'A unique statistics writer is required.');
@@ -1168,7 +1176,9 @@ storage?.setItem(WRITER_KEY,writer);
 }catch{
 /* Same-document services still adopt the unique writer. */
 }
-state=await backend.update((base)=>mergeEnemyStats(base,incoming));
+const saved=await backend.update((base)=>mergeEnemyStats(base,incoming));
+required(!closed,'Enemy statistics are closed.');
+state=saved;
 for(const active of coordinator.members)active.adopt(state);
 return structuredClone(state);
 }catch(error){

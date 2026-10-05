@@ -1165,6 +1165,7 @@ try {
     flushingEnemyStats = false;
   const enemyStatistics = createEnemyStatsHost({
     gameType: 'solo',
+    ...(previewSession ? { indexedDB: null, storage: previewSession.storage } : {}),
     canWrite: () =>
       writer.writable &&
       (persistenceReady || importingEnemyStats || flushingEnemyStats) &&

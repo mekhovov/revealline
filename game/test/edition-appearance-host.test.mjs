@@ -104,10 +104,9 @@ for (const personal of [null, 'tryzub']) {
     }
     page.frame(0);
     assert.equal(page.rendered.run.levelId, 'porcelain-mission');
-    assert.equal(page.rendered.paused, true, 'Mission selection opens its briefing.');
-    assert.equal(page.rendered.run.tick, 0, 'The prepared mission does not autoplay.');
-    assert.equal(page.$('game-overlay').hidden, false);
-    page.$('start-button').click();
+    assert.equal(page.rendered.paused, false, 'One activation starts the accepted mission.');
+    assert.equal(page.rendered.run.tick, 0, 'The new mission starts at its initial boundary.');
+    assert.equal(page.$('game-overlay').hidden, true, 'No mandatory briefing blocks gameplay.');
     await settle(() => {
       page.frame(0);
       return (

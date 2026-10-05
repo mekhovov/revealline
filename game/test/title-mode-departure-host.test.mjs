@@ -173,7 +173,7 @@ for (const kind of ['versus', 'team']) {
       const modes = row.children.filter((element) => element.dataset.gameMode);
       assert.deepEqual(
         modes.map((e) => e.dataset.gameMode),
-        ['solo', 'versus', 'team'],
+        ['solo', 'team', 'versus', 'snake', 'simulator'],
       );
       assert.equal(modes[0].tagName, 'BUTTON');
       assert.equal(modes[0].getAttribute('aria-current'), 'page');
