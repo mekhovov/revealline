@@ -1,0 +1,137 @@
+{
+  "format": "FPVFestivalRevisionBridge.v1",
+  "from": "r4",
+  "to": "r5",
+  "change": "Revision and durable authoring status only; external evidence owns qualification/publication status",
+  "projectExceptRevisionAndAuthoringExact": true,
+  "checks": 616,
+  "allChecksPass": true,
+  "pack": {
+    "path": "/tmp/fpv-festival-world-r5-v1/prepared/festival-grounds.r5.rlpack",
+    "bytes": 1256875,
+    "sha256": "87baca276e174f31ba19c02f4f2359c97affa07eefd4a5f4912b4d8664450f51",
+    "identity": "fpv-pack:87baca276e174f31ba19c02f4f2359c97affa07eefd4a5f4912b4d8664450f51"
+  },
+  "archives": [
+    {
+      "path": "festival-grounds-r5-proof-part-1-of-1.json",
+      "bytes": 1098458,
+      "sha256": "277503e86f3cb0b9cd60bc405ec41562bed1533c3f8a779391141ac3985884b6",
+      "records": 16
+    }
+  ],
+  "rows": [
+    {
+      "id": "festival-grounds-01",
+      "mode": "self-level",
+      "ticks": 3464,
+      "sameTicks": true,
+      "sameControls": true
+    },
+    {
+      "id": "festival-grounds-01",
+      "mode": "acro",
+      "ticks": 3480,
+      "sameTicks": true,
+      "sameControls": true
+    },
+    {
+      "id": "festival-grounds-02",
+      "mode": "self-level",
+      "ticks": 2502,
+      "sameTicks": true,
+      "sameControls": true
+    },
+    {
+      "id": "festival-grounds-02",
+      "mode": "acro",
+      "ticks": 2520,
+      "sameTicks": true,
+      "sameControls": true
+    },
+    {
+      "id": "festival-grounds-03",
+      "mode": "self-level",
+      "ticks": 3727,
+      "sameTicks": true,
+      "sameControls": true
+    },
+    {
+      "id": "festival-grounds-03",
+      "mode": "acro",
+      "ticks": 3761,
+      "sameTicks": true,
+      "sameControls": true
+    },
+    {
+      "id": "festival-grounds-04",
+      "mode": "self-level",
+      "ticks": 4969,
+      "sameTicks": true,
+      "sameControls": true
+    },
+    {
+      "id": "festival-grounds-04",
+      "mode": "acro",
+      "ticks": 5010,
+      "sameTicks": true,
+      "sameControls": true
+    },
+    {
+      "id": "festival-grounds-05",
+      "mode": "self-level",
+      "ticks": 1415,
+      "sameTicks": true,
+      "sameControls": true
+    },
+    {
+      "id": "festival-grounds-05",
+      "mode": "acro",
+      "ticks": 1432,
+      "sameTicks": true,
+      "sameControls": true
+    },
+    {
+      "id": "festival-grounds-06",
+      "mode": "self-level",
+      "ticks": 2445,
+      "sameTicks": true,
+      "sameControls": true
+    },
+    {
+      "id": "festival-grounds-06",
+      "mode": "acro",
+      "ticks": 2467,
+      "sameTicks": true,
+      "sameControls": true
+    },
+    {
+      "id": "festival-grounds-07",
+      "mode": "self-level",
+      "ticks": 2063,
+      "sameTicks": true,
+      "sameControls": true
+    },
+    {
+      "id": "festival-grounds-07",
+      "mode": "acro",
+      "ticks": 2077,
+      "sameTicks": true,
+      "sameControls": true
+    },
+    {
+      "id": "festival-grounds-08",
+      "mode": "self-level",
+      "ticks": 7043,
+      "sameTicks": true,
+      "sameControls": true
+    },
+    {
+      "id": "festival-grounds-08",
+      "mode": "acro",
+      "ticks": 7070,
+      "sameTicks": true,
+      "sameControls": true
+    }
+  ]
+}

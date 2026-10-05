@@ -1,3 +1,4 @@
+import { createReactionOptions, REACTION_OPTIONS_KEY } from '../journey/reaction-options.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {
@@ -760,4 +761,73 @@ test('persistent scheduler remains bounded after a stall and only explicit music
   sound.update(false, {});
   assert.equal(sound.cursor.index, 1);
   await sound.dispose();
+});
+
+test('spoken reactions default off while captions and saved opt-in remain intact', () => {
+  for (const raw of [null, 'invalid']) {
+    const storage = {
+      getItem: () => raw,
+      setItem() {
+        throw new Error('read only');
+      },
+    };
+    const prefs = createReactionOptions({ getStorage: () => storage });
+    assert.equal(prefs.snapshot().volume, 0.25);
+    assert.equal(prefs.snapshot().speech, false);
+    assert.equal(prefs.snapshot().subtitles, true);
+    prefs.dispose();
+  }
+  const record = JSON.stringify({
+    format: 'ReactionPresentationV1',
+    sounds: true,
+    speech: true,
+    subtitles: true,
+    volume: 0.65,
+    scale: 1,
+    background: true,
+  });
+  const prefs = createReactionOptions({
+    getStorage: () => ({
+      getItem: (key) => (key === REACTION_OPTIONS_KEY ? record : null),
+      setItem() {
+        throw new Error('must not rewrite saved choice');
+      },
+    }),
+  });
+  assert.equal(prefs.snapshot().volume, 0.65);
+  assert.equal(prefs.snapshot().speech, true);
+  prefs.dispose();
+  const unavailable = createReactionOptions({
+    getStorage() {
+      throw new Error('denied');
+    },
+  });
+  assert.equal(unavailable.snapshot().volume, 0.25);
+  assert.equal(unavailable.snapshot().speech, false);
+  unavailable.choose({ volume: 0.15, speech: true });
+  assert.equal(unavailable.snapshot().speech, true);
+  assert.equal(unavailable.snapshot().volume, 0.15);
+  assert.equal(unavailable.snapshot().durable, false);
+  unavailable.dispose();
+});
+
+test('spoken reactions use a background mix for default and saved levels without lowering effects', async () => {
+  const { sound } = await setup();
+  const music = sound.musicBus.gain.value,
+    effects = sound.sfxBus.gain.value;
+  sound.configureDialogue({ enabled: true });
+  assert.equal(sound.dialogueSettings.volume, 0.25);
+  assert.equal(sound.dialogueBus.gain.value, 0.1);
+  sound.configureDialogue({ volume: 0.65 });
+  assert.equal(sound.dialogueBus.gain.value, 0.26);
+  sound.configureDialogue({ volume: 1 });
+  assert.equal(sound.dialogueBus.gain.value, 0.4);
+  const voice = sound.playDialogue({ duration: 1 });
+  assert.ok(voice);
+  sound.configureDialogue({ volume: 0 });
+  assert.equal(voice.ended, true);
+  assert.equal(sound.dialogueBus.gain.value, 0);
+  assert.equal(sound.musicBus.gain.value, music);
+  assert.equal(sound.sfxBus.gain.value, effects);
+  sound.dispose();
 });

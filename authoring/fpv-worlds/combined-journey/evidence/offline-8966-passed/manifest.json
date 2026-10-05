@@ -1,0 +1,58 @@
+{
+  "sourceRevision": "0b54fd0fdf8fe06dc900024a8b59713340b09bb3",
+  "origin": "http://127.0.0.1:8966/",
+  "nativeURL": "http://127.0.0.1:8966/player/optional-practice/fpv-worlds/index.html",
+  "mode": "exact admitted native entry; zero runtime overlays",
+  "passed": true,
+  "observations": [
+    "Public Library Prepare simulator offline reported completion.",
+    "Coordinator reloaded the native page while its dedicated origin server was stopped; curl refused before and after qualification.",
+    "Library retained edited revision d44a3936bff0 and the original rollback revision 50ffbb0e5da7.",
+    "Creator selected mountain-reservoir-02, Acro, first hold: X=-9.9m Y=5m Z=15m, preserving the bounded edit from original X=-10m.",
+    "Unchanged mountain-reservoir-01 Shoreline check-in loaded, native deliberate zero-throttle Arm reached Flight active at33.5s, then paused at33.9s with neutral controls.",
+    "The exact server root was restarted after the final refusal and returned HTTP200."
+  ],
+  "limitations": [
+    "Own localhost origin stopped; not browser-wide or device-wide network loss, eviction or storage permanence.",
+    "No offline published Browse/download claim; the world pack and proof archive were imported separately in the prior453-control online journey.",
+    "The offline evidence uses public rendered controls and text; it adds no private database inspection or second full durable-comparison run.",
+    "No console-clean, course-completion, hardware-FPS or new unit-coverage claim is inferred from these screenshots/text."
+  ],
+  "files": [
+    {
+      "file": "fpv-combined-8966-offline-prepared.txt",
+      "bytes": 2346,
+      "sha256": "05847aa5f6eeb4937daa11cc751f290f63b30d44f6d6f1f0a2576dd18055705d"
+    },
+    {
+      "file": "fpv-combined-8966-offline-reload.png",
+      "bytes": 85325,
+      "sha256": "9682254a3eae409dde249a51cccc2f81c8deeb9c791f22189acf8d3e1f8b2057"
+    },
+    {
+      "file": "fpv-combined-8966-offline-editor.txt",
+      "bytes": 12927,
+      "sha256": "620a02d3e847c6e42a12546acaed605a5024bc8d0047a05b85f4604f5c5238a4"
+    },
+    {
+      "file": "fpv-combined-8966-offline-active.txt",
+      "bytes": 581,
+      "sha256": "59e5e5989a65b274d5c4b3e8397fc76bcc532acb191dc591893cb97defb88f2c"
+    },
+    {
+      "file": "fpv-combined-8966-offline-active.png",
+      "bytes": 87078,
+      "sha256": "79302b54535559655c4d19a1a56bf5b3b3c3b766c1a9078af7c30ac4407390ec"
+    },
+    {
+      "file": "fpv-combined-8966-offline-paused.txt",
+      "bytes": 1700,
+      "sha256": "b59441c48fa6a83478d4c5900593a091d5705751f2cadda86410d1d6e863766e"
+    },
+    {
+      "file": "fpv-combined-8966-server-stop.json",
+      "bytes": 1257,
+      "sha256": "f93c04ffc9f8463c6993291d1a26c6392a5d372edd57adc5f60b4c6b8d6ac40c"
+    }
+  ]
+}

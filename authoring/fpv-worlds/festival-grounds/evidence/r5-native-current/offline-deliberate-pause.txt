@@ -1,0 +1,43 @@
+- link "Skip to flight selection":
+  - /url: "#explore"
+- dialog:
+  - banner:
+    - button "Menu"
+    - generic: FPV SIM · Worlds
+    - button "Resume"
+  - paragraph: Entry check-in
+  - button "Arm / resume"
+  - generic: +
+  - generic: 0.0 m · 0 m/s · 19.7 s · ♥ 100
+  - strong: 1/5 · Hold position
+  - status: Paused. Arm deliberately to continue.
+  - generic "Yaw 0%, Throttle 0%":
+  - generic "Roll 0%, Pitch 0%":
+  - complementary "Drone response. Paused · actual pose retained vertical speed near zero. 0.0 m · +0.0 m/s vertical · 0.0 m/s drift":
+    - button "Hide drone response": ×
+    - status: Drone upright
+- status: Preparing flight…
+- dialog "FPV / LINE":
+  - heading "FPV / LINE" [level=1]:
+    - img "FPV / LINE"
+  - paragraph: FPV SIM · Worlds
+  - navigation "Choose game mode":
+    - navigation:
+      - link "Solo":
+        - /url: http://127.0.0.1:58606/player/game/?lang=en
+      - link "Versus":
+        - /url: http://127.0.0.1:58606/player/game/couch/?lang=en
+      - link "Team":
+        - /url: http://127.0.0.1:58606/player/game/couch/relay-rescue.html?lang=en
+      - button "FPV SIM"
+      - link "Snake":
+        - /url: http://127.0.0.1:58606/player/game/snake/play.html?lang=en
+  - paragraph: Entry check-in
+  - navigation "Main menu":
+    - button "Continue" [active]
+    - button "Select Mission"
+    - button "Settings"
+    - button "Full screen"
+    - 'button "Sound: off"'
+  - button "Retry"
+  - paragraph: "Tab/arrows move; Enter selects; Esc goes back. Controller: release, then press/release A to connect. Calibrated radio: hold yaw right for 0.7 s, then centre to connect; roll/pitch move, hold yaw right/left then centre to confirm/go back."
