@@ -48,6 +48,8 @@ import { restoreVerifiedRadio } from './radio-session.mjs';
 import { mountRadioSetup } from './radio-setup.mjs';
 import {
   mountFlightFullscreen,
+  attachSimMissionLibraryChooser,
+  createSimMissionLibrary,
   createSimContinuousPlayController,
   createSimEnemyStatsHost,
   mountSimEnemyStats,
@@ -687,6 +689,7 @@ export function routeThumbnail(document, course, presentation = {}) {
   const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
   svg.setAttribute('viewBox', '0 0 320 190');
   svg.setAttribute('aria-hidden', 'true');
+  svg.setAttribute('data-flight-mode', presentation.flightMode ?? 'self-level');
   svg.setAttribute('data-sim-profile', profile.id);
   svg.setAttribute('data-sim-revision', profile.revision);
   svg.style.backgroundColor = color(palette.ground, 0.3);
@@ -704,40 +707,181 @@ export function routeThumbnail(document, course, presentation = {}) {
   const grid = { stroke: color(palette.fog), 'stroke-opacity': 0.12 };
   for (let x = 20; x < 320; x += 25) add('path', { d: `M ${x} 0 V 190`, ...grid });
   for (let z = 15; z < 190; z += 25) add('path', { d: `M 0 ${z} H 320`, ...grid });
-  for (const o of course.obstacles) {
-    const x = o.min?.x ?? Math.min(...o.vertices.filter((_, i) => i % 3 === 0)),
-      z = o.min?.z ?? Math.min(...o.vertices.filter((_, i) => i % 3 === 2));
-    const mx = o.max?.x ?? Math.max(...o.vertices.filter((_, i) => i % 3 === 0)),
-      mz = o.max?.z ?? Math.max(...o.vertices.filter((_, i) => i % 3 === 2));
-    add('rect', {
-      x: px(x),
-      y: pz(z),
-      width: Math.max(2, px(mx) - px(x)),
-      height: Math.max(2, pz(mz) - pz(z)),
-      fill: color(palette.wall, 0.65),
-      stroke: color(palette.fog),
-      'stroke-opacity': 0.3,
-      rx: 2,
+  // Schemes use accepted collision geometry and objective identities, never
+  // presentation scenery or a guessed safe path through an unordered hunt.
+  add('rect', {
+    x: 18,
+    y: 15,
+    width: 284,
+    height: 145,
+    fill: 'none',
+    stroke: '#9bbfc7',
+    'stroke-width': 1.5,
+    'data-preview-bounds': '',
+  });
+  const hull = (points) => {
+    const sorted = points.sort((a, b) => a.x - b.x || a.z - b.z);
+    const cross = (a, b, c) => (b.x - a.x) * (c.z - a.z) - (b.z - a.z) * (c.x - a.x);
+    const half = (values) => {
+      const result = [];
+      for (const point of values) {
+        while (result.length > 1 && cross(result.at(-2), result.at(-1), point) <= 0) result.pop();
+        result.push(point);
+      }
+      return result;
+    };
+    return [...half(sorted).slice(0, -1), ...half([...sorted].reverse()).slice(0, -1)];
+  };
+  for (const obstacle of course.obstacles) {
+    let paths;
+    if (obstacle.type === 'trimesh') {
+      paths = [];
+      for (let index = 0; index < obstacle.indices.length; index += 3)
+        paths.push(
+          obstacle.indices.slice(index, index + 3).map((vertex) => ({
+            x: obstacle.vertices[vertex * 3],
+            z: obstacle.vertices[vertex * 3 + 2],
+          })),
+        );
+    } else {
+      const centre = Object.fromEntries(
+        ['x', 'y', 'z'].map((axis) => [axis, (obstacle.min[axis] + obstacle.max[axis]) / 2]),
+      );
+      const [qx, qy, qz, qw] = obstacle.rotation ?? [0, 0, 0, 1];
+      const corners = [];
+      for (const x of [obstacle.min.x, obstacle.max.x])
+        for (const y of [obstacle.min.y, obstacle.max.y])
+          for (const z of [obstacle.min.z, obstacle.max.z]) {
+            const dx = x - centre.x,
+              dy = y - centre.y,
+              dz = z - centre.z;
+            const tx = 2 * (qy * dz - qz * dy),
+              ty = 2 * (qz * dx - qx * dz),
+              tz = 2 * (qx * dy - qy * dx);
+            corners.push({
+              x: centre.x + dx + qw * tx + qy * tz - qz * ty,
+              z: centre.z + dz + qw * tz + qx * ty - qy * tx,
+            });
+          }
+      paths = [hull(corners)];
+    }
+    add('path', {
+      d: paths
+        .map((points) => {
+          const area = points.reduce((sum, point, index) => {
+            const next = points[(index + 1) % points.length];
+            return sum + point.x * next.z - next.x * point.z;
+          }, 0);
+          return area < 0 ? [...points].reverse() : points;
+        })
+        .map(
+          (points) =>
+            points
+              .map((point, index) => `${index ? 'L' : 'M'} ${px(point.x)} ${pz(point.z)}`)
+              .join(' ') + ' Z',
+        )
+        .join(' '),
+      fill: color(palette.wall),
+      stroke: '#8ca2a8',
+      'stroke-width': 1,
+      'fill-opacity': 0.8,
+      'data-preview-obstacle': obstacle.id,
     });
   }
-  const points = [course.spawn, ...course.steps['self-level'].map(criterionCentre).filter(Boolean)];
+  const steps = course.steps[presentation.flightMode ?? 'self-level'];
+  const actors = new Map((course.actors ?? []).map((actor) => [actor.id, actor]));
+  const targetIds = new Set(
+    steps.flatMap((step) => step.targets ?? (step.actorId ? [step.actorId] : [])),
+  );
+  const points = [course.spawn];
+  for (const step of steps) {
+    const centre = criterionCentre(step);
+    if (centre) points.push(centre);
+    if (step.ordered)
+      for (const id of step.targets ?? []) if (actors.has(id)) points.push(actors.get(id).position);
+    if (step.type === 'gate') {
+      const a =
+        step.axis === 'x' ? { x: step.at, z: step.minSide } : { x: step.minSide, z: step.at };
+      const b =
+        step.axis === 'x' ? { x: step.at, z: step.maxSide } : { x: step.maxSide, z: step.at };
+      add('path', {
+        d: `M ${px(a.x)} ${pz(a.z)} L ${px(b.x)} ${pz(b.z)}`,
+        stroke: '#a9e5b1',
+        'stroke-width': 5,
+        'data-preview-gate': '',
+      });
+    }
+  }
   add('path', {
-    d: points.map((p, i) => `${i ? 'L' : 'M'} ${px(p.x)} ${pz(p.z)}`).join(' '),
+    d: points.map((point, index) => `${index ? 'L' : 'M'} ${px(point.x)} ${pz(point.z)}`).join(' '),
     stroke: accent,
     'stroke-width': 2.5,
     fill: 'none',
     'stroke-dasharray': '5 4',
+    'data-preview-route': '',
   });
-  points.forEach((p, i) =>
+  for (const actor of actors.values()) {
+    const position = actor.position;
+    const target = targetIds.has(actor.id);
+    if (actor.path?.length)
+      add('path', {
+        d: [position, ...actor.path]
+          .map((point, index) => `${index ? 'L' : 'M'} ${px(point.x)} ${pz(point.z)}`)
+          .join(' '),
+        fill: 'none',
+        stroke: target ? '#f59c83' : '#92a6b2',
+        'stroke-width': 2,
+        'stroke-dasharray': '3 3',
+        'data-preview-patrol': actor.id,
+      });
+    const x = px(position.x),
+      z = pz(position.z);
+    add('path', {
+      d: `M ${x} ${z - 5} L ${x + 5} ${z} L ${x} ${z + 5} L ${x - 5} ${z} Z`,
+      fill: target ? '#f77958' : '#8ca6b5',
+      stroke: '#fff4d8',
+      'stroke-width': 1.5,
+      'data-preview-actor': actor.id,
+      ...(target ? { 'data-preview-target': '' } : {}),
+    });
+    const order = steps
+      .find((step) => step.ordered && step.targets?.includes(actor.id))
+      ?.targets.indexOf(actor.id);
+    if (order !== undefined)
+      add('text', {
+        x: x + 7,
+        y: z - 5,
+        fill: '#fff4d8',
+        'font-size': 11,
+        'font-weight': 'bold',
+      }).textContent = String(order + 1);
+  }
+  points.forEach((point, index) =>
     add('circle', {
-      cx: px(p.x),
-      cy: pz(p.z),
-      r: i ? 3.5 : 5,
-      fill: color(i ? palette.accent : palette.warm),
-      stroke: color(palette.ground, 0.3),
+      cx: px(point.x),
+      cy: pz(point.z),
+      r: index ? 3.5 : 5.5,
+      fill: index ? accent : '#9ce5fa',
+      stroke: '#071820',
       'stroke-width': 2,
+      ...(!index ? { 'data-preview-spawn': '' } : {}),
     }),
   );
+  const copy = getLocale() === 'uk';
+  const count = targetIds.size;
+  const ordered = steps.some((step) => step.ordered);
+  const label = count
+    ? `${count} ${copy ? 'цілі' : 'targets'} · ${ordered ? (copy ? 'за порядком' : 'in order') : copy ? 'вибір маршруту' : 'choose your route'}`
+    : `${steps.length} ${copy ? 'цілі польоту' : 'flight objectives'}`;
+  add('text', {
+    x: 18,
+    y: 181,
+    fill: '#e7f2ef',
+    'font-size': 11,
+    'font-weight': 'bold',
+    'data-preview-legend': '',
+  }).textContent = label;
+
   return svg;
 }
 
@@ -780,7 +924,10 @@ export function mountWorldApp({
     playShell = null,
     modeSettingsView = null,
     globalSettingsView = null,
-    globalTools = null;
+    globalTools = null,
+    missionChooser = null,
+    missionLibrary = null,
+    missionLaunchGeneration = 0;
   let entries = [],
     playlistId = unique('playlist'),
     playlistDraft = null,
@@ -862,8 +1009,7 @@ export function mountWorldApp({
     return index < 0 ? null : learningEntries.get(sequence[index + 1]);
   };
   const sessionLearningComplete = new Map();
-  let selectedWorld = null,
-    learningPreferences = null,
+  let learningPreferences = null,
     learningResponse = null,
     lessonReturn = null,
     modePractice = false;
@@ -1143,6 +1289,15 @@ export function mountWorldApp({
   on(doc, 'keydown', cancelFlow);
   on(win, 'blur', cancelFlow);
   on(win, 'gamepaddisconnected', cancelFlow);
+  on(win, 'blur', () => {
+    missionLaunchGeneration++;
+  });
+  on(win, 'gamepaddisconnected', () => {
+    missionLaunchGeneration++;
+  });
+  on(doc, 'visibilitychange', () => {
+    if (doc.hidden) missionLaunchGeneration++;
+  });
   const button = (text, action, className) => {
     const b = el('button', text, className);
     b.type = 'button';
@@ -1450,6 +1605,10 @@ export function mountWorldApp({
   }
   function showTab(id, focus = true) {
     if (!['explore', 'learn', 'playlists', 'creator', 'packs'].includes(id)) return;
+    if (missionChooser && ['explore', 'learn'].includes(id) && focus) {
+      openMissionChooser(id);
+      return;
+    }
     for (const panel of doc.querySelectorAll('.tab-panel')) panel.hidden = panel.id !== id;
     for (const b of doc.querySelectorAll('[data-tab]')) {
       b.classList.toggle('selected', b.dataset.tab === id);
@@ -1467,6 +1626,16 @@ export function mountWorldApp({
   }
   function paintLanguage() {
     enemyStatsViews.forEach((view) => view.refresh());
+    const toolNames = {
+      learn: txt('Flight School', 'Льотна школа'),
+      playlists: txt('Playlists', 'Добірки'),
+      creator: txt('Workshop', 'Майстерня'),
+      packs: txt('World library', 'Бібліотека світів'),
+    };
+    for (const tool of doc.querySelectorAll('[data-sim-mission-tool]'))
+      tool.textContent = toolNames[tool.dataset.simMissionTool];
+    const toolsSummary = doc.querySelector('[data-sim-mission-tools] > summary');
+    if (toolsSummary) toolsSummary.textContent = txt('SIM tools', 'Інструменти SIM');
     playShell?.setLocale(locale);
     modeSettingsView?.refresh(locale);
     globalSettingsView?.refresh(locale);
@@ -2064,22 +2233,6 @@ export function mountWorldApp({
     }
     return complete;
   }
-  function completedLearningModes(entry) {
-    const modes = new Set(sessionLearningComplete.get(keyOf(entry)) ?? []);
-    for (const record of records)
-      if (
-        record.packIdentity === entry.packIdentity &&
-        record.course.id === entry.id &&
-        record.status === 'verified' &&
-        record.diagnostic === 'complete' &&
-        record.proof.session === 'practice'
-      )
-        modes.add(record.proof.mode);
-    return ['self-level', 'acro']
-      .filter((mode) => modes.has(mode))
-      .map((mode) => (mode === 'acro' ? 'Acro' : txt('Self-level', 'Самовирівнювання')))
-      .join(' · ');
-  }
   function renderSchool() {
     const complete = completedKeys();
     const done = primaryLearning.filter((entry) => complete.has(keyOf(entry)));
@@ -2107,168 +2260,7 @@ export function mountWorldApp({
         : done.length === primaryLearning.length
           ? txt('Fly the course again', 'Пройти курс знову')
           : txt(`Continue · ${label(next)}`, `Продовжити · ${label(next)}`);
-    const tierNames = {
-      all: txt('All lessons', 'Усі уроки'),
-      beginner: txt('Beginner', 'Початковий'),
-      experienced: txt('Experienced', 'Для досвідчених'),
-      advanced: txt('Advanced', 'Поглиблений'),
-      pro: txt('Pro', 'Pro · Профі'),
-      master: txt('Master', 'Master · Майстерність'),
-      'self-level': txt('Optional self-level', 'Додаткове самовирівнювання'),
-    };
-    const tierCounts = {
-      all: BEGINNER_LESSONS.length,
-      beginner: ACRO_LESSON_ORDER.length,
-      experienced: EXPERIENCED_LESSON_ORDER.length,
-      advanced: ADVANCED_LESSON_ORDER.length,
-      pro: PRO_LESSON_ORDER.length,
-      master: MASTER_LESSON_ORDER.length,
-      'self-level': SELF_LEVEL_LESSON_ORDER.length,
-    };
-    const selectedTier = $('school-tier').value;
-    const optionalExpanded =
-      $('school-lessons').querySelector('details[data-learning-tier="self-level"]')?.open ?? false;
-    for (const option of $('school-tier').options)
-      option.textContent = `${tierNames[option.value]} · ${tierCounts[option.value]}`;
     $('school-lessons').replaceChildren();
-    const groups = [
-      [
-        ACRO_LESSON_ORDER.slice(0, 4),
-        'Lift, understand tilt, find your hover.',
-        'Зліт, розуміння нахилу, зависання.',
-        'beginner',
-      ],
-      [
-        ACRO_LESSON_ORDER.slice(4, 8),
-        'Direct the drift. Control your height.',
-        'Керуйте дрейфом і висотою.',
-        'beginner',
-      ],
-      [
-        ACRO_LESSON_ORDER.slice(8, 11),
-        'Join the turns. Read the FPV view.',
-        'Поєднуйте повороти. Читайте вигляд FPV.',
-        'beginner',
-      ],
-      [
-        ACRO_LESSON_ORDER.slice(11),
-        'Gates, recovery and your solo route.',
-        'Ворота, відновлення та самостійний маршрут.',
-        'beginner',
-      ],
-      [
-        EXPERIENCED_LESSON_ORDER,
-        'Experienced · Make every movement deliberate.',
-        'Для досвідчених · Кожен рух має мету.',
-        'experienced',
-      ],
-      [
-        ADVANCED_LESSON_ORDER,
-        'Advanced · Find the line through complex spaces.',
-        'Поглиблений · Знайдіть маршрут у складному просторі.',
-        'advanced',
-      ],
-      [
-        PRO_LESSON_ORDER,
-        'Pro · Refine demanding flight techniques.',
-        'Pro · Удосконалюйте складні прийоми пілотування.',
-        'pro',
-      ],
-      [
-        MASTER_LESSON_ORDER,
-        'Master · Bring your skills together.',
-        'Master · Поєднуйте всі свої навички.',
-        'master',
-      ],
-      [
-        SELF_LEVEL_LESSON_ORDER,
-        'Optional: practise with self-level assistance',
-        'Додатково: практика із самовирівнюванням',
-        'self-level',
-      ],
-    ];
-    for (const [ids, en, uk, tier] of groups) {
-      if (selectedTier !== 'all' && selectedTier !== tier) continue;
-      const optional = tier === 'self-level';
-      const group = el(optional ? 'details' : 'section', undefined, 'school-chapter');
-      group.dataset.learningTrack = optional ? 'self-level' : 'acro';
-      group.dataset.learningTier = tier;
-      if (optional) group.open = selectedTier === 'self-level' || optionalExpanded;
-      const title = el(optional ? 'summary' : 'div', undefined, 'school-chapter-heading');
-      title.append(
-        el(
-          'span',
-          optional
-            ? String(SELF_LEVEL_LESSON_ORDER.length)
-            : `${String(PRIMARY_LESSON_ORDER.indexOf(ids[0]) + 1).padStart(2, '0')}—${String(PRIMARY_LESSON_ORDER.indexOf(ids.at(-1)) + 1).padStart(2, '0')}`,
-        ),
-        el('h2', txt(en, uk)),
-      );
-      if (optional)
-        title.append(
-          el(
-            'small',
-            txt(
-              `${optionalDone}/${SELF_LEVEL_LESSON_ORDER.length} complete · open lessons`,
-              `${optionalDone}/${SELF_LEVEL_LESSON_ORDER.length} виконано · відкрити уроки`,
-            ),
-          ),
-        );
-      group.append(title);
-      const grid = el('div', undefined, 'school-lesson-grid');
-      for (const id of ids) {
-        const entry = learningEntries.get(id);
-        const lesson = learningById.get(entry.id),
-          index = learningSequence(entry).indexOf(entry.id);
-        const card = el('article', undefined, 'school-lesson-card');
-        card.dataset.lesson = entry.id;
-        card.dataset.learningTier = tier;
-        card.classList.toggle('is-complete', complete.has(keyOf(entry)));
-        const head = el('div', undefined, 'school-card-head');
-        head.append(
-          el('span', String(index + 1).padStart(2, '0'), 'school-lesson-number'),
-          el(
-            'span',
-            complete.has(keyOf(entry))
-              ? `${txt('✓ Completed', '✓ Виконано')} · ${completedLearningModes(entry)}`
-              : lesson.mode === 'acro'
-                ? `ACRO · ${tierNames[tier]}`
-                : txt('SELF-LEVEL', 'САМОВИРІВНЮВАННЯ'),
-            'school-lesson-status',
-          ),
-        );
-        card.append(head, el('h3', localized(lesson.title)), el('p', localized(lesson.summary)));
-        const meta = el(
-          'small',
-          txt(
-            `${lesson.steps.length} guided steps · about ${lesson.duration} min`,
-            `${lesson.steps.length} кроків із підказками · близько ${lesson.duration} хв`,
-          ),
-        );
-        const start = button(
-          complete.has(keyOf(entry))
-            ? txt('Fly it again', 'Повторити урок')
-            : txt('Start lesson', 'Почати урок'),
-          () => startFlight(entry),
-          entry.id === next.id ? 'primary' : '',
-        );
-        start.dataset.simIcon = 'play';
-        start.setAttribute('aria-label', `${start.textContent}: ${localized(lesson.title)}`);
-        card.append(meta, start);
-        if (demonstrationFor(entry, $('flight-mode').value)) {
-          const watch = button(
-            `${txt('Watch demonstration', 'Переглянути демонстрацію')} · ${$('flight-mode').selectedOptions[0].textContent}`,
-            () => watchDemonstration(entry),
-          );
-          watch.dataset.simIcon = 'replay';
-          watch.setAttribute('aria-label', `${watch.textContent}: ${localized(lesson.title)}`);
-          card.append(watch);
-        }
-        grid.append(card);
-      }
-      group.append(grid);
-      $('school-lessons').append(group);
-    }
     presentation.refresh($('learn'));
   }
   function renderFilters() {
@@ -2321,213 +2313,117 @@ export function mountWorldApp({
       ? `${name} · ${COPY_UK[entry.difficulty] && locale === 'uk' ? COPY_UK[entry.difficulty] : entry.difficulty} · ${entry.duration ?? 3} ${txt('min', 'хв')}`
       : name;
   }
+  function missionCampaign(entry) {
+    const lesson = learningById.get(entry.id);
+    if (lesson) {
+      const tier = [
+        ['beginner', ACRO_LESSON_ORDER],
+        ['experienced', EXPERIENCED_LESSON_ORDER],
+        ['advanced', ADVANCED_LESSON_ORDER],
+        ['pro', PRO_LESSON_ORDER],
+        ['master', MASTER_LESSON_ORDER],
+        ['self-level', SELF_LEVEL_LESSON_ORDER],
+      ].find(([, ids]) => ids.includes(entry.id));
+      const names = {
+        beginner: txt('Beginner', 'Початковий'),
+        experienced: txt('Experienced', 'Для досвідчених'),
+        advanced: txt('Advanced', 'Поглиблений'),
+        pro: 'Pro',
+        master: 'Master',
+        'self-level': txt('Optional self-level', 'Додаткове самовирівнювання'),
+      };
+      return {
+        key: `school:${tier[0]}`,
+        title: `${txt('Flight School', 'Льотна школа')} · ${names[tier[0]]}`,
+      };
+    }
+    const world = FLIGHT_WORLDS.find((world) => world.id === entry.world);
+    return {
+      key: entry.world,
+      title: world
+        ? localized(world.title)
+        : (installed.find((pack) => pack.id === entry.projectId)?.project.title ?? entry.world),
+    };
+  }
   function renderCatalogue() {
     renderSchool();
-    const complete = completedKeys(),
-      search = $('search').value.trim().toLocaleLowerCase(),
-      activity = $('activity-filter').value,
-      difficulty = $('difficulty-filter').value,
-      progress = $('completion-filter').value;
-    const filtered = catalogue.filter(
-      (e) =>
-        !e.archived &&
-        (theme === 'all' || e.theme === theme) &&
-        (activity === 'all' || catalogueActivity(e) === activity) &&
-        (difficulty === 'all' || e.difficulty === difficulty) &&
-        (progress === 'all' || complete.has(keyOf(e)) === (progress === 'complete')) &&
-        `${label(e)} ${localized(FLIGHT_WORLDS.find((w) => w.id === e.world)?.title)} ${e.course.environment}`
-          .toLocaleLowerCase()
-          .includes(search),
-    );
     $('world-grid').replaceChildren();
-    $('level-count').textContent = catalogue.filter((e) => !e.archived).length;
-    const worldCount = doc.querySelectorAll('.catalogue-stats strong')[1];
-    if (worldCount)
-      worldCount.textContent = new Set(
-        catalogue.filter((e) => !e.archived).map((e) => e.world),
+    $('level-count').textContent = catalogue.filter((entry) => !entry.archived).length;
+    const count = doc.querySelectorAll('.catalogue-stats strong')[1];
+    if (count)
+      count.textContent = new Set(
+        catalogue.filter((entry) => !entry.archived).map((entry) => entry.world),
       ).size;
-    $('empty-library').hidden = filtered.length > 0;
+    if (!missionLibrary) return;
     const groups = new Map();
-    for (const entry of filtered) {
-      if (!groups.has(entry.world)) groups.set(entry.world, []);
-      groups.get(entry.world).push(entry);
+    for (const entry of catalogue.filter((entry) => !entry.archived)) {
+      const id = entry.projectId ? `worlds:${entry.packIdentity}` : 'worlds:builtin';
+      if (!groups.has(id)) groups.set(id, []);
+      groups.get(id).push(entry);
     }
-    const shelf = el('div', undefined, 'world-shelf');
-    shelf.setAttribute('aria-label', txt('Choose a world', 'Виберіть світ'));
-    if (!groups.has(selectedWorld)) selectedWorld = groups.keys().next().value ?? null;
-    for (const [id, group] of groups) {
-      const world = FLIGHT_WORLDS.find((w) => w.id === id);
-      const choice = button(
-        '',
-        () => {
-          selectedWorld = id;
-          renderCatalogue();
-          const restored = [...$('world-grid').querySelectorAll('[data-world]')].find(
-            (n) => n.dataset.world === id,
-          );
-          restored?.focus({ preventScroll: true });
-          if (win.innerWidth < 900)
-            $('world-grid').querySelector('.world-card')?.scrollIntoView({ block: 'start' });
-        },
-        'world-choice',
-      );
-      choice.dataset.world = id;
-      choice.setAttribute('aria-pressed', String(id === selectedWorld));
-      choice.setAttribute('aria-controls', 'selected-world-challenges');
-      const map = el('div', undefined, 'world-mini-map');
-      map.setAttribute('aria-hidden', 'true');
-      const thumbnail = routeThumbnail(
-        doc,
-        group[0].course,
-        appearanceControls.resolve().appearance,
-      );
-      map.style.background = thumbnail.style.backgroundColor;
-      map.append(thumbnail);
-      const copy = el('span', undefined, 'world-choice-copy');
-      copy.append(
-        el(
-          'strong',
-          world
-            ? localized(world.title)
-            : (installed.find((p) => p.id === group[0].projectId)?.project.title ?? id),
-        ),
-        el(
-          'small',
-          `${group.length} ${txt('flights', 'польотів')} · ${group.filter((e) => complete.has(keyOf(e))).length} ✓`,
-        ),
-      );
-      choice.append(map, copy);
-      shelf.append(choice);
-    }
-    $('world-grid').append(shelf);
-    for (const [id, group] of groups) {
-      if (id !== selectedWorld) continue;
-
-      const world = FLIGHT_WORLDS.find((w) => w.id === id),
-        card = el('article', undefined, 'world-card'),
-        cover = el('div', undefined, 'world-cover');
-      card.id = 'selected-world-challenges';
-      const thumbnail = routeThumbnail(
-        doc,
-        group[0].course,
-        appearanceControls.resolve().appearance,
-      );
-      cover.style.background = thumbnail.style.backgroundColor;
-      cover.append(thumbnail);
-      const title = el('div', undefined, 'cover-title');
-      title.append(
-        el(
-          'strong',
-          world
-            ? localized(world.title)
-            : (installed.find((p) => p.id === group[0].projectId)?.project.title ?? id),
-        ),
-        el(
-          'span',
-          world ? localized(world.subtitle) : txt('Your authored world', 'Ваш власний світ'),
-        ),
-      );
-      cover.append(
-        title,
-        el(
-          'span',
-          localized(WORLD_THEMES.find((t) => t.id === group[0].theme)?.title) ||
-            txt('Custom world', 'Власний світ'),
-          'world-tag',
-        ),
-      );
-      card.append(cover);
-      const rows = el('div', undefined, 'challenge-list');
-      group.forEach((entry, i) => {
-        const row = el('div', undefined, 'challenge-row'),
-          info = el('div', undefined, 'challenge-info');
-        info.append(
-          el('strong', `${complete.has(keyOf(entry)) ? '✓ ' : ''}${label(entry)}`),
-          el('small', catalogueDetails(entry)),
-        );
-        if (demonstrationFor(entry, $('flight-mode').value)) {
-          const watch = button(
-            txt('Watch example', 'Переглянути приклад'),
-            () => watchDemonstration(entry),
-            'watch-example',
-          );
-          watch.setAttribute(
-            'aria-label',
-            `${txt('Watch demonstration', 'Переглянути демонстрацію')}: ${label(entry)}`,
-          );
-          info.append(watch);
-        }
-        if (worldEnemyGuide(entry.course, { mode: $('flight-mode').value }).rows.length) {
-          const inspect = button(txt('Preview targets', 'Переглянути цілі'), (event) =>
-            enemyGuide.open(entry.course, {
-              mode: $('flight-mode').value,
-              trigger: event.currentTarget,
-            }),
-          );
-          inspect.dataset.enemyGuideCourse = entry.id;
-          inspect.setAttribute('aria-controls', enemyGuide.dialog.id);
-          inspect.setAttribute(
-            'aria-label',
-            `${txt('Preview targets', 'Переглянути цілі')}: ${label(entry)}`,
-          );
-          info.append(inspect);
-        }
-        const fly = button(txt('Fly', 'Летіти'), () => startFlight(entry));
-        fly.setAttribute('aria-label', `${txt('Fly', 'Летіти')}: ${label(entry)}`);
-        const add = button(
-          '+',
-          () => {
-            if (entries.length >= 128)
-              throw new Error(
-                txt('A playlist supports up to 128 entries.', 'Добірка підтримує до 128 завдань.'),
-              );
-            entries.push({ packIdentity: entry.packIdentity, levelId: entry.id });
-            renderPlaylist();
-            status(txt('Added to your playlist.', 'Додано до добірки.'));
-          },
-          'add-challenge',
-        );
-        add.setAttribute(
-          'aria-label',
-          `${txt('Add to playlist', 'Додати до добірки')}: ${label(entry)}`,
-        );
-        row.append(el('span', String(i + 1).padStart(2, '0'), 'challenge-no'), info, fly, add);
-        rows.append(row);
-      });
-      card.append(rows);
-      card.append(
-        button(txt('Free flight', 'Вільний політ'), () => {
-          const course = clone(group[0].course);
-          course.format = 'FlightCourse.v2';
-          delete course.pursuit;
-          course.id = unique('freeflight');
-          course.world ??= {
-            id: group[0].world,
-            theme: group[0].theme,
-            style: world?.style ?? 'hangar',
-          };
-          course.actors = [];
-          course.rules = { ...course.rules, maxTicks: 36000 };
-          course.conditions ??= { profile: 'clear', revision: 'r1' };
-          course.steps = {
-            'self-level': [{ type: 'survive', ticks: 36000 }],
-            acro: [{ type: 'survive', ticks: 36000 }],
-          };
-          return startFlight(
-            {
-              ...group[0],
-              id: course.id,
-              course: validateWorldCourse(course),
-              legacy: false,
-              beginner: undefined,
-            },
-            { preview: true },
-          );
+    for (const old of new Set(missionLibrary.missions.map((row) => row.ownerId)))
+      if (!groups.has(old)) missionLibrary.remove(old);
+    const complete = completedKeys();
+    for (const [id, missions] of groups) {
+      const positions = new Map(),
+        sizes = new Map();
+      for (const entry of missions) {
+        const key = missionCampaign(entry).key;
+        positions.set(entry, sizes.get(key) ?? 0);
+        sizes.set(key, (sizes.get(key) ?? 0) + 1);
+      }
+      missionLibrary.register({
+        id,
+        editionId: id,
+        edition: 'FPV SIM · Worlds',
+        collection: id === 'worlds:builtin' ? 'Classic' : 'Custom',
+        entries: missions,
+        describe: (entry) => ({
+          id: keyOf(entry),
+          revision: entry.course.revision ?? '',
+          campaignKey: missionCampaign(entry).key,
+          campaignTitle: missionCampaign(entry).title,
+          name: label(entry),
+          levelIndex: positions.get(entry),
+          ...(!entry.projectId
+            ? {
+                canonicalLevelKey: `sim-worlds:${keyOf(entry)}`,
+                globalLevelNumber:
+                  [...WORLD_CATALOGUE, ...BEGINNER_CATALOGUE].findIndex(
+                    (candidate) => keyOf(candidate) === keyOf(entry),
+                  ) + 1,
+              }
+            : {}),
+          campaignLevelCount: sizes.get(missionCampaign(entry).key),
+          modes: ['solo'],
+          tags: ['FPV', 'Practice'],
+          hook: entry.course.locales[locale]?.brief ?? entry.course.locales.en.brief,
+          rules: catalogueDetails(entry),
         }),
-      );
-      $('world-grid').append(card);
+        availability: () => ({ state: 'ready' }),
+        card: (entry) => entry.course,
+        progressState: (entry) => ({
+          state: complete.has(keyOf(entry)) ? 'completed' : 'new',
+          bestStars: null,
+        }),
+        launch: (entry, { isCurrent }) => startFlight(entry, { isCurrent }),
+      });
     }
+    missionChooser?.refresh();
     presentation.refresh();
+  }
+  function openMissionChooser(section = 'explore') {
+    if (!missionChooser) return;
+    missionLaunchGeneration++;
+    pauseFlight();
+    missionChooser.open();
+    if (section === 'learn') {
+      const complete = completedKeys();
+      const next =
+        primaryLearning.find((entry) => !complete.has(keyOf(entry))) ?? primaryLearning[0];
+      const row = missionLibrary.missions.find((row) => row.runtimeId === keyOf(next));
+      if (row) missionChooser.reveal(row.id);
+    }
   }
   function playlistValue() {
     const title = $('playlist-title').value.trim();
@@ -4956,7 +4852,10 @@ export function mountWorldApp({
     }
     // Refreshing the unarmed world's appearance is not a new navigation step.
     // Keep its settings/menu and keyboard focus where the player left them.
-    if (!options.preserveFocus) playShell?.enterPlay();
+    if (!options.preserveFocus) {
+      if (missionChooser?.elements.dialog.open) missionChooser.close();
+      playShell?.enterPlay();
+    }
     if (playShell) $('flight-dialog').prepend(playShell.elements.header);
     const requestedMode =
       options.mode ??
@@ -4971,13 +4870,20 @@ export function mountWorldApp({
     qualityPreparing = false;
     scenePreparationGeneration++;
     abortSectorLookup();
-    sceneReady = false;
     pauseFlight();
     radio.reset({ notify: false });
     const playbackPauseRevision = pauseRevision;
+    // After adoption, finish preparation while paused so Continue stays usable;
+    // only this launch lease may reopen the scene, focus it or arm it.
+    const ownsAttempt = () => !disposed && token === flightToken;
+    const ownsLaunch = () => ownsAttempt() && options.isCurrent?.() !== false;
     await saveRecovery();
     await ready;
-    if (disposed || token !== flightToken) return;
+    if (!ownsLaunch()) return;
+    // Admit the native runtime before replacing an accepted attempt. A later
+    // Home action keeps the old scene ready to Continue.
+    if (!entry.legacy) await initWorldRuntime();
+    if (!ownsLaunch()) return;
     const retained = Boolean(options.recover || options.replayProof || options.checkpoint?.proof);
     const sourceCourse = retained
       ? entry.course
@@ -5009,9 +4915,6 @@ export function mountWorldApp({
         appearanceCourse: entry.course,
       };
     if (entry.legacy) entry.presentation = acceptedAppearance;
-    // The guide creates its isolated lesson simulation before the flight view.
-    if (!entry.legacy) await initWorldRuntime();
-    if (disposed || token !== flightToken) return;
     flight?.dispose?.();
     flight = null;
     current = entry;
@@ -5108,7 +5011,7 @@ export function mountWorldApp({
       `${modePractice ? `${modePracticeNotice()} ` : ''}${entry.course.locales[locale].brief}`;
     $('flight-status').textContent = txt('Preparing scene…', 'Підготовка сцени…');
     paintLoadout();
-    if (!$('flight-dialog').open) $('flight-dialog').showModal();
+    if (ownsLaunch() && !$('flight-dialog').open) $('flight-dialog').showModal();
     paintLessonReturn();
     if (!renderer)
       renderer = rendererFactory({
@@ -5134,14 +5037,14 @@ export function mountWorldApp({
       throw new Error(
         txt('WebGL is unavailable in this browser.', 'WebGL недоступний у цьому браузері.'),
       );
-    if (token !== flightToken) return;
+    if (!ownsAttempt()) return;
     if (replayProof) {
       const proof = replayProof;
       $('flight-status').textContent = txt('Verifying recording…', 'Перевірка запису…');
       const checked = entry.legacy
         ? await replayFlightCooperatively(entry.course, proof)
         : await replayWorldFlight(entry.course, proof);
-      if (token !== flightToken) return;
+      if (!ownsAttempt()) return;
       if (
         replayKind === 'demonstration' &&
         (!demonstrationFor(entry, proof.mode) || checked.state.status !== 'complete')
@@ -5300,7 +5203,7 @@ export function mountWorldApp({
           : await worldStore?.get(entry.projectId, {
               sha256: entry.packIdentity.replace('fpv-pack:', ''),
             });
-      if (token !== flightToken) return;
+      if (!ownsAttempt()) return;
       if (!pack) throw new Error(txt('The world pack is missing.', 'Пакунок світу відсутній.'));
       model = pack.project.world.modelAsset ? pack.assets.get(pack.project.world.modelAsset) : null;
       if (pack.project.world.modelAsset && !model)
@@ -5313,7 +5216,7 @@ export function mountWorldApp({
     }
     model ??= builtinWorldScene(entry.course);
     if (model) await renderer.loadScene(model);
-    if (token !== flightToken) return;
+    if (!ownsAttempt()) return;
     if (sectorReferenceStatus === 'checking') {
       $('flight-status').textContent = txt('Checking saved best…', 'Перевірка найкращого запису…');
       await resolveSectorReference(
@@ -5323,12 +5226,12 @@ export function mountWorldApp({
         options.recover ? options.sectorReferenceId : undefined,
       );
     }
-    if (disposed || token !== flightToken) return;
+    if (!ownsAttempt()) return;
     // A preset can change while assets or shaders are loading. Prepare the latest
     // scene again when that renderer revision supersedes the pending compilation.
     for (let attempt = 0; attempt < 3; attempt++) {
       const prepared = await renderer.prepare?.();
-      if (disposed || token !== flightToken || !renderer.available) return;
+      if (!ownsAttempt() || !renderer.available) return;
       if (prepared !== false) break;
       if (attempt === 2)
         throw new Error(
@@ -5338,11 +5241,11 @@ export function mountWorldApp({
           ),
         );
     }
-    if (disposed || token !== flightToken) return;
+    if (!ownsAttempt()) return;
     if (ghostEnabled) await loadGhost();
-    if (token !== flightToken || disposed) return;
+    if (!ownsAttempt()) return;
     // Submit shadow programs and visible uploads before exposing readiness.
-    if (drawFlight(flight.snapshot()) === false || disposed || token !== flightToken) return;
+    if (drawFlight(flight.snapshot()) === false || !ownsAttempt()) return;
     sceneReady = true;
     if (options.returning === lessonReturn) {
       lessonReturn = null;
@@ -5367,11 +5270,11 @@ export function mountWorldApp({
     restoreRadio();
     paintInput(flight.snapshot());
     updateHUD(flight.snapshot());
-    if (!options.preserveFocus) {
+    if (!options.preserveFocus && ownsLaunch()) {
       if (beginnerCoach.blocksArm()) beginnerCoach.focusPreview();
       else $('world-viewport').focus();
     }
-    if (replayProof && !options.paused && pauseRevision === playbackPauseRevision) {
+    if (replayProof && !options.paused && ownsLaunch() && pauseRevision === playbackPauseRevision) {
       input.enable(false);
       flight.arm();
       $('flight-status').textContent = txt(
@@ -5385,6 +5288,7 @@ export function mountWorldApp({
     }
     if (
       !replayProof &&
+      ownsLaunch() &&
       !options.paused &&
       !options.preview &&
       pauseRevision === playbackPauseRevision &&
@@ -5567,7 +5471,6 @@ export function mountWorldApp({
   on($('school-radio'), 'click', () => $('radio-setup-button').click());
   on($('school-worlds'), 'click', () => {
     showTab('explore');
-    $('world-picker-title').scrollIntoView({ block: 'start' });
   });
   on($('school-continue'), 'click', () => {
     const complete = completedKeys();
@@ -5581,15 +5484,12 @@ export function mountWorldApp({
       catalogue.find((e) => e.legacy && !complete.has(keyOf(e))) ?? catalogue.find((e) => e.legacy);
     if (entry) return startFlight(entry);
   });
-  on($('hero-browse'), 'click', () => {
-    $('world-picker-title').focus({ preventScroll: true });
-    $('world-picker-title').scrollIntoView({ block: 'start' });
-  });
+  on($('hero-browse'), 'click', () => openMissionChooser());
   on(doc.querySelector('.wordmark'), 'click', (e) => {
     e.preventDefault();
     showTab('explore');
   });
-  on(win, 'hashchange', () => showTab(win.location.hash.slice(1), false));
+  on(win, 'hashchange', () => showTab(win.location.hash.slice(1)));
   on($('flight-options'), 'click', () => openSettings());
   let settingsReturnFocus = null;
   function openSettings() {
@@ -6022,6 +5922,8 @@ export function mountWorldApp({
         blockRadio: secondary.id === 'world-radio-dialog',
         blockDevices: secondary.id === 'world-radio-dialog' && Boolean(radioSetup?.captureActive()),
       };
+    if (missionChooser?.elements.dialog.open)
+      return { root: missionChooser.elements.dialog, key: 'worlds-mission-library' };
     if (playShell?.topDialog())
       return { root: playShell.topDialog(), key: playShell.topDialog().id };
     if ($('flight-dialog').open) {
@@ -6045,6 +5947,10 @@ export function mountWorldApp({
     ownsKeyboardEvent: (event) => simSettingsTabOwnsKey(event, menuContext()?.root),
     onHint(value) {
       const context = menuContext();
+      if (context?.root === missionChooser?.elements.dialog) {
+        menuHint.hidden = true;
+        return;
+      }
       // Blur suspends device ownership with an empty hint. Keep the current
       // shared menu's instructions in place: clearing and restoring them can
       // scroll the dialog between pointer press and release.
@@ -6073,6 +5979,7 @@ export function mountWorldApp({
         $('drone-hangar').querySelector('[data-close-hangar]').click();
       else if (globalTools?.back()) {
       } else if ($('sim-settings').open) closeSettings();
+      else if (missionChooser?.elements.dialog.open) missionChooser.close();
       else if (playShell?.topDialog()) playShell.back();
       else if ($('flight-dialog').open) {
         if (flightMenuOpen()) setFlightMenu(false);
@@ -6531,6 +6438,138 @@ export function mountWorldApp({
     shellTab = id;
     playShell.open('missions');
   };
+  missionLibrary = createSimMissionLibrary();
+  const missionTools = el('div', undefined, 'dialog-actions');
+  const selectedTools = el('div', undefined, 'dialog-actions');
+  for (const [tab, en, uk] of [
+    ['learn', 'Flight School', 'Льотна школа'],
+    ['playlists', 'Playlists', 'Добірки'],
+    ['creator', 'Workshop', 'Майстерня'],
+    ['packs', 'World library', 'Бібліотека світів'],
+  ]) {
+    const tool = button(txt(en, uk), () => {
+      missionChooser.close();
+      openCatalogueTab(tab);
+    });
+    tool.dataset.simMissionTool = tab;
+    missionTools.append(tool);
+  }
+  missionChooser = attachSimMissionLibraryChooser({
+    document: doc,
+    library: missionLibrary,
+    supportedModes: ['solo'],
+    description: () =>
+      txt(
+        'Every world and school lesson in one list. Choose a route; your flight settings and lesson coach stay with it.',
+        'Усі світи й уроки в одному списку. Виберіть маршрут — налаштування польоту та навчальні підказки збережуться.',
+      ),
+    availableCollectionsOnly: true,
+    launchContext: () => {
+      const generation = ++missionLaunchGeneration;
+      return {
+        isCurrent: () => !disposed && !doc.hidden && generation === missionLaunchGeneration,
+      };
+    },
+    goalPreferenceOptions: { editionId: 'sim-worlds', getStorage: () => storage },
+    onPause: pauseFlight,
+    getCurrentId: () =>
+      current && missionLibrary.missions.find((row) => row.runtimeId === keyOf(current))?.id,
+    readState: () => {
+      try {
+        return JSON.parse(storage?.getItem('revealline.sim.worlds.mission-browser.v1') ?? 'null');
+      } catch {
+        return null;
+      }
+    },
+    writeState: (state) => {
+      try {
+        storage?.setItem('revealline.sim.worlds.mission-browser.v1', JSON.stringify(state));
+      } catch {
+        /* Selection remains available for this session. */
+      }
+    },
+    renderPreview({ container, diagram: course, document }) {
+      const svg = routeThumbnail(document, course, {
+        ...appearanceControls.resolve().appearance,
+        flightMode: $('flight-mode').value,
+      });
+      svg.classList.add('journey-card-map');
+      container.append(svg);
+    },
+    onSelection(row) {
+      selectedTools.replaceChildren();
+      const entry = catalogue.find((entry) => keyOf(entry) === row?.runtimeId);
+      if (!entry) return;
+      const tool = (text, action) =>
+        button(text, (...args) => {
+          if (
+            !disposed &&
+            missionChooser.elements.dialog.open &&
+            missionLibrary.find(row.id) === row
+          )
+            return action(...args);
+        });
+      if (demonstrationFor(entry, $('flight-mode').value))
+        selectedTools.append(
+          tool(txt('Watch example', 'Переглянути приклад'), () => {
+            missionChooser.close();
+            return watchDemonstration(entry);
+          }),
+        );
+      if (worldEnemyGuide(entry.course, { mode: $('flight-mode').value }).rows.length) {
+        const inspect = tool(txt('Preview targets', 'Переглянути цілі'), (event) =>
+          enemyGuide.open(entry.course, {
+            mode: $('flight-mode').value,
+            trigger: event.currentTarget,
+          }),
+        );
+        inspect.dataset.enemyGuideCourse = entry.id;
+        selectedTools.append(inspect);
+      }
+      selectedTools.append(
+        tool(txt('Add to playlist', 'Додати до добірки'), () => {
+          if (entries.length >= 128)
+            throw new Error(
+              txt('A playlist supports up to 128 entries.', 'Добірка підтримує до 128 завдань.'),
+            );
+          entries.push({ packIdentity: entry.packIdentity, levelId: entry.id });
+          renderPlaylist();
+          status(txt('Added to your playlist.', 'Додано до добірки.'));
+        }),
+      );
+      selectedTools.append(
+        tool(txt('Free flight', 'Вільний політ'), () => {
+          const course = clone(entry.course);
+          course.format = 'FlightCourse.v2';
+          delete course.pursuit;
+          course.id = unique('freeflight');
+          course.world ??= {
+            id: entry.world,
+            theme: entry.theme,
+            style: FLIGHT_WORLDS.find((world) => world.id === entry.world)?.style ?? 'hangar',
+          };
+          course.actors = [];
+          course.rules = { ...course.rules, maxTicks: 36000 };
+          course.conditions ??= { profile: 'clear', revision: 'r1' };
+          course.steps = {
+            'self-level': [{ type: 'survive', ticks: 36000 }],
+            acro: [{ type: 'survive', ticks: 36000 }],
+          };
+          missionChooser.close();
+          return startFlight(
+            {
+              ...entry,
+              id: course.id,
+              course: validateWorldCourse(course),
+              legacy: false,
+              beginner: undefined,
+            },
+            { preview: true },
+          );
+        }),
+      );
+    },
+  });
   playShell = mountSimPlayShell({
     document: doc,
     mount: doc.body,
@@ -6590,9 +6629,11 @@ export function mountWorldApp({
       canResume: () =>
         Boolean(recovery && dependencyAvailable(recovery.packIdentity, recovery.course.id)),
       open(surface) {
+        missionLaunchGeneration++;
         paintLessonReturn(surface);
         if (flight?.snapshot().status === 'active') pauseFlight();
         if (flight) updateHUD(flight.snapshot());
+        if (surface !== 'missions') missionChooser.close();
         if (surface === 'results') {
           // Keep the native result actions and async verification in place.
           playShell.enterPlay();
@@ -6604,12 +6645,19 @@ export function mountWorldApp({
         }
         if (surface === 'missions') {
           renderCatalogue();
-          showTab(shellTab, false);
+          const tab = shellTab;
           shellTab = 'explore';
+          if (['explore', 'learn'].includes(tab)) {
+            openMissionChooser(tab);
+            return false;
+          }
+          showTab(tab, false);
         } else if (surface === 'workshop' || surface === 'help') {
+          missionChooser.close();
           openCatalogueTab(surface === 'workshop' ? 'creator' : 'learn');
           return false;
         } else if (surface === 'settings' || surface === 'expert') {
+          missionChooser.close();
           openSettings();
           return false;
         }
@@ -6618,6 +6666,16 @@ export function mountWorldApp({
     initial: 'home',
     focusPlay: () => $('world-viewport').focus(),
   });
+  const extraTools = el('details', undefined, 'mission-library-setup');
+  extraTools.dataset.simMissionTools = '';
+  extraTools.append(
+    el('summary', txt('SIM tools', 'Інструменти SIM')),
+    selectedTools,
+    missionTools,
+    $('school-progress').closest('.school-progress-bar'),
+    $('school-continue'),
+  );
+  missionChooser.elements.footer.append(extraTools);
   enemyStatsViews.push(
     mountSimEnemyStats({
       document: doc,
@@ -6938,6 +6996,8 @@ export function mountWorldApp({
       if (closing) return closing;
       disposed = true;
       closing = Promise.resolve().then(async () => {
+        missionChooser.destroy();
+        missionLibrary.dispose();
         runtimeOffline.dispose();
         worldLibrary.dispose();
         proofImport?.abort();

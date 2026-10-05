@@ -198,6 +198,9 @@ test('compact filter traversal and controller select preview stay open until foc
   assert.equal(p.doc.activeElement, p.$('journey-detailed-cards'));
   assert.equal(filters.open, true);
   navigation.handle({ direction: 'down' });
+  assert.equal(p.doc.activeElement.id, 'journey-goal-retry');
+  assert.equal(filters.open, true, 'optional goal tools share the compact filter panel');
+  navigation.handle({ direction: 'down' });
   assert.equal(p.doc.activeElement, p.$('journey-cards').children[0]);
   assert.equal(filters.open, false);
   assert.equal(p.launches, 0);
@@ -385,7 +388,7 @@ test('short landscape setup fields scroll above an unchanged reachable footer', 
   );
   assert.match(
     landscape,
-    /\.mission-library-setup\s+>\s+\.mission-picker-setup-fields \{[^}]*position: absolute;[^}]*bottom: calc\(100% \+ 0\.35rem\);[^}]*max-height: min\(24rem, calc\(100dvh - 8rem\)\);[^}]*overflow: auto;/s,
+    /\.mission-library-setup\s+>\s+\.mission-picker-setup-fields \{[^}]*position: absolute;[^}]*bottom: calc\(100% \+ 0\.35rem\);[^}]*max-height: min\(24rem, calc\(var\(--dialog-viewport-height, 100dvh\) - 8rem\)\);[^}]*overflow: auto;/s,
     'Opening settings must not grow the footer beyond the short viewport.',
   );
   assert.match(

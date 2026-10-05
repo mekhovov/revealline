@@ -35,6 +35,13 @@ import {
   settingsTabOwnsKey,
 } from '../ui/settings-panels.mjs';
 import { mountModePlayShell } from '../ui/mode-play-shell.mjs';
+import { attachMissionLibraryChooser } from '../ui/mission-library-chooser.mjs';
+import { createMissionLibrary } from '../mission-library/library.mjs';
+import { createMissionLibrarySessionState } from '../mission-library/handoff.mjs';
+import {
+  classicSnakeLibrarySource,
+  renderClassicSnakeLibraryPreview,
+} from './classic-mission-library.mjs';
 import { attachModalNavigation } from '../ui/modal-navigation.mjs';
 import { attachFullscreen } from '../ui/fullscreen.mjs';
 import { attachControllerNavigation } from '../ui/controller-navigation.mjs';
@@ -206,6 +213,11 @@ let entry =
   CLASSIC_SNAKE_LEVELS.find((item) => item.id === 'classic-snake-open-loop') ??
   CLASSIC_SNAKE_LEVELS[0];
 let playShell = null,
+  missionLibrary = null,
+  missionChooser = null,
+  libraryHostMode = null,
+  libraryInfo = null,
+  libraryToolsRefresh = null,
   snakeSettingsView = null,
   snakeGlobalSettings = null,
   touchPresentationControls = null,
@@ -344,10 +356,6 @@ const campaignFor = (item) =>
   CLASSIC_SNAKE_CAMPAIGNS.find((campaign) =>
     (campaign.chapterIds ?? campaign.chapters ?? []).includes(item.chapterId),
   ) ?? CLASSIC_SNAKE_CAMPAIGNS[0];
-const campaignChapters = (campaign) =>
-  CLASSIC_SNAKE_CHAPTERS.filter((chapter) =>
-    (campaign.chapterIds ?? campaign.chapters ?? []).includes(chapter.id),
-  );
 function storePresentation() {
   try {
     globalThis.localStorage.setItem(
@@ -465,6 +473,8 @@ function pause({ showMenu = true } = {}) {
 }
 function start() {
   if (result() || !pageActive()) return;
+  libraryInfo?.close();
+  if (missionChooser?.elements.dialog.open) missionChooser.close({ retune: false });
   $('game').querySelector('.arena').append($('snake-reaction-caption'));
   playShell?.enterPlay();
   if (ready || match.runs.every((run) => run.tick === 0)) acceptEnemyArtwork();
@@ -543,7 +553,7 @@ function nextMission() {
   const index = ordered.findIndex((item) => item.id === entry.id);
   return index < 0 ? null : (ordered[index + 1] ?? null);
 }
-function launchMission(destination) {
+function launchMission(destination, { nextMode = mode } = {}) {
   if (!destination) return false;
   let hazardSeed;
   // Validate before retiring the visible result. A rejected destination leaves
@@ -553,10 +563,10 @@ function launchMission(destination) {
     if (classicSnakeUsesVariableHazards(level))
       hazardSeed = nextClassicHazardSeed(match?.options.hazardSeed);
     createClassicSnakeMatch(level, {
-      mode,
+      mode: nextMode,
       seed,
       ...(hazardSeed === undefined ? {} : { hazardSeed }),
-      policy: format === 'campaign' ? 'mission' : mode === 'versus' ? duel : 'endless',
+      policy: format === 'campaign' ? 'mission' : nextMode === 'versus' ? duel : 'endless',
     });
   } catch {
     saveNotice = 'invalid';
@@ -564,6 +574,7 @@ function launchMission(destination) {
     return false;
   }
   save();
+  mode = nextMode;
   entry = destination;
   prepare({ launch: true, hazardSeed });
   return true;
@@ -970,29 +981,9 @@ function buildPads() {
 }
 function renderProgress() {
   const chapterEntries = CLASSIC_SNAKE_LEVELS.filter((item) => item.chapterId === entry.chapterId);
-  for (const [index, item] of chapterEntries.entries()) {
-    const option = $('mission').children[index];
-    if (option?.value === item.id)
-      option.textContent = `${records.cleared(item.id) ? '✓ ' : ''}${index + 1}. ${item.title[locale]}`;
-  }
-  const cards = $('mission-cards');
-  cards.setAttribute('aria-label', text('mission'));
-  cards.replaceChildren(
-    ...chapterEntries.map((item, index) => {
-      const card = el(
-        'button',
-        `${records.cleared(item.id) ? '✓ ' : ''}${String(index + 1).padStart(2, '0')} · ${item.title[locale]}`,
-      );
-      card.type = 'button';
-      card.setAttribute('aria-pressed', String(item.id === entry.id));
-      card.addEventListener('click', () => {
-        save();
-        entry = item;
-        prepare({ launch: true });
-      });
-      return card;
-    }),
-  );
+  syncLibraryMode();
+  missionChooser?.refresh();
+  libraryToolsRefresh?.();
   $('progress-summary').textContent = text('progress', {
     done: records.chapter(chapterEntries),
     chapterTotal: chapterEntries.length,
@@ -1043,6 +1034,176 @@ function nextUncleared() {
       (item) => item.chapterId === entry.chapterId && !records.cleared(item.id),
     ) ?? CLASSIC_SNAKE_LEVELS.find((item) => !records.cleared(item.id))
   );
+}
+function syncLibraryMode() {
+  if (!missionChooser || libraryHostMode === mode) return;
+  libraryHostMode = mode;
+  const filter = $('journey-mode');
+  filter.value = mode;
+  filter.dispatchEvent(new doc.defaultView.Event('change', { bubbles: true }));
+}
+function openMissionLibrary() {
+  if (!missionChooser) {
+    libraryHostMode = mode;
+    const namespace = `snake-${communityIdentity ?? 'official'}`;
+    const session = createMissionLibrarySessionState({
+      mode,
+      storage: {
+        getItem: (key) => globalThis.sessionStorage?.getItem(`${namespace}:${key}`),
+        setItem: (key, value) => globalThis.sessionStorage?.setItem(`${namespace}:${key}`, value),
+      },
+    });
+    missionLibrary = createMissionLibrary([
+      classicSnakeLibrarySource({
+        entries: CLASSIC_SNAKE_LEVELS,
+        chapters: CLASSIC_SNAKE_CHAPTERS,
+        campaigns: CLASSIC_SNAKE_CAMPAIGNS,
+        records,
+        locale: () => locale,
+        communityIdentity,
+        getSetup: settings,
+        getSeed: () => seed,
+        availability: (destination, selectedMode) =>
+          format === 'endless' &&
+          selectedMode === 'versus' &&
+          duel === 'survival' &&
+          destination !== survivalEntry
+            ? {
+                state: 'unavailable',
+                reason:
+                  locale === 'uk'
+                    ? 'Дуель на виживання використовує відкрите поле. Змініть правила, щоб грати інші місії.'
+                    : 'Survival duel uses the open field. Change rules to play other missions.',
+              }
+            : { state: 'ready' },
+        launch: (destination, context) =>
+          pageActive() &&
+          context.isCurrent?.() !== false &&
+          launchMission(destination, { nextMode: context.mode }),
+      }),
+    ]);
+    let selectedRow = null;
+    const currentRow = () => missionLibrary.missions.find((row) => row.runtimeId === entry.id);
+    const selectedEntry = () =>
+      CLASSIC_SNAKE_LEVELS.find((item) => item.id === selectedRow?.runtimeId) ?? entry;
+    missionChooser = attachMissionLibraryChooser({
+      document: doc,
+      library: missionLibrary,
+      mode,
+      availableCollectionsOnly: true,
+      getCurrentId: () => currentRow()?.id,
+      readState: session.read,
+      writeState: session.write,
+      goalPreferenceOptions: {
+        editionId: namespace,
+        getStorage: () => globalThis.localStorage,
+      },
+      description: () =>
+        locale === 'uk'
+          ? 'Усі місії Snake. Оберіть поле й починайте; розділи допоможуть знайти наступне випробування.'
+          : 'Every Snake mission. Choose a board to play; chapters help you find your next challenge.',
+      renderPreview: renderClassicSnakeLibraryPreview,
+      onPause: () => {
+        pause({ showMenu: false });
+        importEpoch++;
+        if (resultPlayback) resultPlayback.playing = false;
+      },
+      onReturn: (opener) => {
+        if (opener?.isConnected && pageActive()) opener.focus({ preventScroll: true });
+      },
+      launchContext: () => {
+        const owner = match;
+        return { isCurrent: () => match === owner && pageActive() };
+      },
+      onSelection: (row) => {
+        selectedRow = row;
+        libraryToolsRefresh?.();
+      },
+    });
+    const tools = el('details', null, 'mission-library-setup'),
+      summary = el('summary'),
+      fields = el('div', null, 'mission-picker-setup-fields'),
+      commands = el('div', null, 'sortie-actions'),
+      rules = el('button'),
+      information = el('button'),
+      copy = el('button'),
+      status = el('p', null, 'muted');
+    tools.id = 'snake-library-options';
+    rules.id = 'snake-library-rules';
+    information.id = 'snake-library-info';
+    copy.id = 'snake-library-copy';
+    status.id = 'snake-library-status';
+    status.setAttribute('role', 'status');
+    for (const button of [rules, information, copy]) button.type = 'button';
+    fields.append(commands, $('snake-missions'), status);
+    tools.append(summary, fields);
+    commands.append(rules, information, copy);
+    missionChooser.elements.footer.append(tools);
+    rules.addEventListener('click', () => playShell.open('expert'));
+    libraryInfo = el('dialog', null, 'mode-play-dialog');
+    libraryInfo.id = 'snake-library-info-dialog';
+    const infoHead = el('header', null, 'mode-play-dialog-head'),
+      infoTitle = el('h1'),
+      infoBody = el('div', null, 'mode-play-content'),
+      infoFooter = el('footer', null, 'mode-play-actions'),
+      infoBack = el('button');
+    infoTitle.id = 'snake-library-info-title';
+    libraryInfo.setAttribute('aria-labelledby', infoTitle.id);
+    infoHead.append(infoTitle);
+    infoFooter.append(infoBack);
+    libraryInfo.append(infoHead, infoBody, infoFooter);
+    doc.body.append(libraryInfo);
+    infoBack.addEventListener('click', () => libraryInfo.close());
+    information.addEventListener('click', () => {
+      const selected = selectedEntry(),
+        selectedMode = missionChooser.state().mode,
+        row = selectedRow ?? currentRow(),
+        diagram = row && missionLibrary.card(row, selectedMode);
+      infoTitle.textContent = selected.title[locale];
+      infoBody.replaceChildren(el('p', selected.description[locale]));
+      if (diagram) infoBody.append(el('p', ratingCriteriaText(diagram.run, selectedMode)));
+      libraryInfo.showModal();
+      infoBack.focus({ preventScroll: true });
+    });
+    copy.addEventListener('click', async () => {
+      const url = new URL(globalThis.location.href);
+      url.searchParams.set('level', selectedEntry().id);
+      url.searchParams.set('mode', missionChooser.state().mode);
+      try {
+        await globalThis.navigator.clipboard.writeText(url.href);
+        status.textContent = locale === 'uk' ? 'Посилання скопійовано.' : 'Level link copied.';
+      } catch {
+        status.textContent = url.href;
+      }
+    });
+    libraryToolsRefresh = () => {
+      summary.textContent = locale === 'uk' ? 'Правила й інформація' : 'Rules and information';
+      rules.textContent = locale === 'uk' ? 'Правила гри' : 'Game rules';
+      information.textContent = locale === 'uk' ? 'Інформація про місію' : 'Mission info';
+      copy.textContent = locale === 'uk' ? 'Копіювати посилання' : 'Copy level link';
+      infoBack.textContent = locale === 'uk' ? 'Назад' : 'Back';
+      information.title = selectedEntry().title[locale];
+    };
+  }
+  syncLibraryMode();
+  libraryToolsRefresh();
+  missionChooser.open(doc.activeElement, {
+    returnLabel: locale === 'uk' ? 'Назад' : 'Back',
+  });
+}
+function libraryBack() {
+  if (libraryInfo?.open) {
+    libraryInfo.close();
+    return true;
+  }
+  if (
+    missionChooser?.elements.dialog.open &&
+    playShell?.topDialog() === missionChooser.elements.dialog
+  ) {
+    missionChooser.close();
+    return true;
+  }
+  return false;
 }
 let snakeModeChoices = null;
 function renderModeLinks() {
@@ -1103,25 +1264,6 @@ function renderCopy() {
     button.textContent = text(button.dataset.mode);
     button.setAttribute('aria-pressed', String(button.dataset.mode === mode));
   }
-  const campaign = campaignFor(entry);
-  options(
-    $('campaign'),
-    CLASSIC_SNAKE_CAMPAIGNS.map((item) => [item.id, item.title[locale]]),
-    campaign.id,
-  );
-  options(
-    $('chapter'),
-    campaignChapters(campaign).map((chapter) => [chapter.id, chapter.title[locale]]),
-    entry.chapterId,
-  );
-  options(
-    $('mission'),
-    CLASSIC_SNAKE_LEVELS.filter((item) => item.chapterId === entry.chapterId).map((item, i) => [
-      item.id,
-      `${records.cleared(item.id) ? '✓ ' : ''}${i + 1}. ${item.title[locale]}`,
-    ]),
-    entry.id,
-  );
   for (const [id, value] of Object.entries({
     format,
     pace,
@@ -1153,8 +1295,7 @@ function renderCopy() {
   for (const option of $('duel').options)
     if (option.value === 'survival') option.disabled = !survivalEntry;
   const survival = format === 'endless' && mode === 'versus' && duel === 'survival';
-  for (const id of ['mission', 'chapter', 'campaign', 'target-rules', 'preset'])
-    $(id).disabled = survival;
+  for (const id of ['target-rules', 'preset']) $(id).disabled = survival;
   $('featured').hidden =
     format !== 'campaign' ||
     !CLASSIC_SNAKE_FEATURED.some((item) => item.chapterId === entry.chapterId);
@@ -1464,17 +1605,33 @@ function refresh() {
           : text('resume');
   });
 }
+function ratingCriteriaText(run, displayMode = mode) {
+  const eligible = format === 'campaign' && displayMode !== 'versus';
+  const criteria = classicSnakeRatingForRecord({
+    clear: eligible,
+    policy: 'mission',
+    mode: displayMode,
+    seed: run.seed,
+    levelIdentity: run.levelIdentity,
+    completionOnly: classicSnakeUsesVariableHazards(run.level),
+  });
+  return !eligible
+    ? locale === 'uk'
+      ? 'Рекорди цієї гри зберігаються без оцінки зірками.'
+      : 'This game keeps personal records without mission stars.'
+    : classicSnakeUsesVariableHazards(run.level)
+      ? text('variableSignalRecord')
+      : criteria.calibrated
+        ? locale === 'uk'
+          ? `★ Завершити · ★★ ≤ ${criteria.silverMoves} ходів · ★★★ ≤ ${criteria.goldMoves} ходів`
+          : `★ Complete · ★★ ≤ ${criteria.silverMoves} moves · ★★★ ≤ ${criteria.goldMoves} moves`
+        : locale === 'uk'
+          ? '★ За перевірене завершення. Вищі оцінки потребують калібрування цього набору.'
+          : '★ For a verified clear. Higher grades await calibration for this setup.';
+}
 function renderRatings() {
   if (!$('snake-stars')) return;
   const eligible = format === 'campaign' && mode !== 'versus';
-  const criteria = classicSnakeRatingForRecord({
-    clear: eligible,
-    policy: match.options.policy,
-    mode,
-    seed,
-    levelIdentity: runs[0].levelIdentity,
-    completionOnly: classicSnakeUsesVariableHazards(runs[0].level),
-  });
   const grade =
     eligible && verifiedOutcome === match
       ? classicSnakeRatingForRecord({
@@ -1502,19 +1659,7 @@ function renderRatings() {
     'aria-label',
     grade?.stars ? `${grade.stars} / 3` : $('snake-stars').textContent,
   );
-  $('snake-rating-criteria').textContent = !eligible
-    ? locale === 'uk'
-      ? 'Рекорди цієї гри зберігаються без оцінки зірками.'
-      : 'This game keeps personal records without mission stars.'
-    : classicSnakeUsesVariableHazards(runs[0].level)
-      ? text('variableSignalRecord')
-      : criteria.calibrated
-        ? locale === 'uk'
-          ? `★ Завершити · ★★ ≤ ${criteria.silverMoves} ходів · ★★★ ≤ ${criteria.goldMoves} ходів`
-          : `★ Complete · ★★ ≤ ${criteria.silverMoves} moves · ★★★ ≤ ${criteria.goldMoves} moves`
-        : locale === 'uk'
-          ? '★ За перевірене завершення. Вищі оцінки потребують калібрування цього набору.'
-          : '★ For a verified clear. Higher grades await calibration for this setup.';
+  $('snake-rating-criteria').textContent = ratingCriteriaText(runs[0]);
 }
 function restore(raw, { provenance = 'import' } = {}) {
   transition.cancel('restore');
@@ -1811,24 +1956,6 @@ for (const id of ['format', 'pace', 'target-rules', 'preset', 'duel'])
     duel = $('duel').value;
     prepare();
   });
-$('campaign').addEventListener('change', () => {
-  save();
-  const campaign = CLASSIC_SNAKE_CAMPAIGNS.find((item) => item.id === $('campaign').value);
-  entry = CLASSIC_SNAKE_LEVELS.find((item) =>
-    (campaign.chapterIds ?? campaign.chapters).includes(item.chapterId),
-  );
-  prepare();
-});
-$('chapter').addEventListener('change', () => {
-  save();
-  entry = CLASSIC_SNAKE_LEVELS.find((item) => item.chapterId === $('chapter').value);
-  prepare();
-});
-$('mission').addEventListener('change', () => {
-  save();
-  entry = CLASSIC_SNAKE_LEVELS.find((item) => item.id === $('mission').value);
-  prepare();
-});
 for (const id of ['recent-level', 'uncleared-level'])
   $(id).addEventListener('click', () => {
     const destination =
@@ -2248,6 +2375,16 @@ playShell = mountModePlayShell({
     settingsPanelBack,
   },
   actions: {
+    open: (surface) => {
+      if (surface === 'missions') {
+        openMissionLibrary();
+        return false;
+      }
+      if (surface === 'home') {
+        libraryInfo?.close();
+        if (missionChooser?.elements.dialog.open) missionChooser.close({ retune: false });
+      }
+    },
     resultFocus: () => (!$('next').hidden ? $('next') : playShell?.elements.buttons.retry),
     pause: () => pause({ showMenu: false }),
     start: () => (result() ? prepare({ launch: true }) : start()),
@@ -2437,9 +2574,11 @@ menuController = attachControllerNavigation({
     ),
   onBack: () =>
     snakeGlobalTools.back() ||
+    libraryBack() ||
     (snakeModeChoices?.simulatorRoot() ? snakeModeChoices.closeSimulator() : playShell.back()),
   onMenu: () =>
     snakeGlobalTools.back() ||
+    libraryBack() ||
     (snakeModeChoices?.simulatorRoot() ? snakeModeChoices.closeSimulator() : playShell.back()),
 });
 installTransitionControls();

@@ -48,6 +48,13 @@ import {
 } from '../ui/settings-panels.mjs';
 import { renderModeChoices } from '../ui/mode-choice-view.mjs';
 import { mountModePlayShell } from '../ui/mode-play-shell.mjs';
+import { attachMissionLibraryChooser } from '../ui/mission-library-chooser.mjs';
+import { createMissionLibrary } from '../mission-library/library.mjs';
+import { createMissionLibrarySessionState } from '../mission-library/handoff.mjs';
+import {
+  classicSnakeLibrarySource,
+  renderClassicSnakeLibraryPreview,
+} from '../snake/classic-mission-library.mjs';
 import { attachModalNavigation } from '../ui/modal-navigation.mjs';
 import { attachControllerNavigation } from '../ui/controller-navigation.mjs';
 import { snakeStudioReturnHref } from '../ui/content-studio-navigation.mjs';
@@ -68,6 +75,10 @@ const hostSource = imports.reduceRight(
   source,
 );
 const flush = () => new Promise((resolve) => setImmediate(resolve));
+const libraryCard = (state, id) =>
+  [...state.$('journey-cards').children].find(
+    (card) => JSON.parse(card.dataset.missionId)[3] === id,
+  );
 const clearedReplay = JSON.parse(
   await readFile(
     new URL(
@@ -211,6 +222,11 @@ async function harness({
       return celebrationHelpers.createCelebration(options);
     },
     createSignalReception,
+    attachMissionLibraryChooser,
+    createMissionLibrary,
+    createMissionLibrarySessionState,
+    classicSnakeLibrarySource,
+    renderClassicSnakeLibraryPreview,
     mountModePlayShell(options) {
       shell = mountModePlayShell(options);
       return shell;
@@ -755,13 +771,13 @@ test('Pause offers Skip and Random only when their current setup can launch anot
   }
 });
 
-test('Choose mission Start restarts the same completed mission directly', async () => {
+test('Choose mission card restarts the same completed mission directly', async () => {
   const state = await harness();
   await importSession(state.$, clearedSession());
   state.shell.open('missions');
   const previous = state.created.at(-1);
-  state.shell.elements.buttons['mission-start'].click();
-  assert.equal(state.created.length, 2);
+  libraryCard(state, previous.level.id).click();
+  await flush();
   assert.notEqual(state.created.at(-1), previous);
   assert.deepEqual(state.created.at(-1).level, previous.level);
   assert.equal(state.created.at(-1).seed, previous.seed);
@@ -769,7 +785,7 @@ test('Choose mission Start restarts the same completed mission directly', async 
   assert.equal(state.shell.topDialog(), null);
 });
 
-test('Choose mission Start after a jammer crash creates one fresh schedule for the same setup', async () => {
+test('Choose mission card after a jammer crash launches a fresh schedule for the same setup', async () => {
   const entry = CLASSIC_SNAKE_LEVELS.find((item) => item.id === 'classic-field-signal-check');
   const state = await harness({ entry });
   state.frame(0);
@@ -777,9 +793,9 @@ test('Choose mission Start after a jammer crash creates one fresh schedule for t
   for (let now = 50; now < 10000 && previous.status === 'running'; now += 50) state.frame(now);
   assert.equal(previous.status, 'lost');
   state.shell.open('missions');
-  state.shell.elements.buttons['mission-start'].click();
+  libraryCard(state, entry.id).click();
+  await flush();
   const next = state.created.at(-1);
-  assert.equal(state.created.length, 2);
   assert.notEqual(next.hazardSeed, previous.hazardSeed);
   assert.equal(next.seed, previous.seed);
   assert.deepEqual(next.level, previous.level);
@@ -921,7 +937,7 @@ test('Home and backgrounding permanently cancel automatic progression for the co
   }
 });
 
-test('selecting a new mission keeps its Start authoritative while retaining the older Workshop save', async () => {
+test('selecting a new library mission launches directly while retaining the older Workshop save', async () => {
   const state = await harness();
   state.start();
   state.frame(0);
@@ -930,11 +946,8 @@ test('selecting a new mission keeps its Start authoritative while retaining the 
   const priorSave = state.storage.get('revealline.classic-snake.round.v2');
   assert.equal(JSON.parse(priorSave).levelId, CLASSIC_SNAKE_LEVELS[0].id);
   const selected = CLASSIC_SNAKE_LEVELS[1];
-  state.$('mission').value = selected.id;
-  state.$('mission').emit('change');
-  state.shell.openHome();
-  assert.equal(state.shell.elements.buttons.primary.textContent, 'Start');
-  state.shell.elements.buttons.primary.click();
+  libraryCard(state, selected.id).click();
+  await flush();
   assert.equal(state.shell.topDialog(), null);
   assert.equal(state.document.body.dataset.playing, 'true');
   assert.equal(state.storage.get('revealline.classic-snake.round.v2'), priorSave);
@@ -965,6 +978,92 @@ test('the shared keyboard navigator moves menu focus without leaking directional
     before,
   );
   assert.equal(state.document.body.dataset.playing, 'false');
+});
+
+test('the Snake library shows all missions and filters without changing the paused attempt', async () => {
+  const state = await harness();
+  state.frame(0);
+  state.frame(200);
+  state.shell.open('missions');
+  const before = state.created.map((run) => core.exportClassicSnakeReplay(run));
+  assert.equal(state.$('journey-cards').children.length, 144);
+  assert.equal(state.$('journey-campaign-rail').children.length, 23);
+  const first = libraryCard(state, CLASSIC_SNAKE_LEVELS[0].id);
+  state.$('journey-search').value = 'Quiet Channel';
+  state.$('journey-search').emit('input');
+  assert.equal(state.$('journey-cards').children.length, 1);
+  state.$('journey-mode').value = 'team';
+  state.$('journey-mode').emit('change');
+  state.frame(1200);
+  assert.deepEqual(
+    state.created.map((run) => core.exportClassicSnakeReplay(run)),
+    before,
+  );
+  assert.equal(new URL(state.location.href).searchParams.get('mode'), 'solo');
+  state.$('journey-search').value = '';
+  state.$('journey-search').emit('input');
+  assert.equal(libraryCard(state, CLASSIC_SNAKE_LEVELS[0].id), first);
+  state.$('journey-back').click();
+  assert.equal(state.$('journey-chooser').open, false);
+  assert.equal(state.document.body.dataset.playing, 'false');
+  assert.deepEqual(
+    state.created.map((run) => core.exportClassicSnakeReplay(run)),
+    before,
+  );
+});
+
+test('Snake library mode selection launches the exact chosen Team mission with one activation', async () => {
+  const state = await harness();
+  state.shell.open('missions');
+  state.$('journey-mode').value = 'team';
+  state.$('journey-mode').emit('change');
+  const selected = CLASSIC_SNAKE_LEVELS.at(-1);
+  libraryCard(state, selected.id).click();
+  await flush();
+  assert.equal(state.created.at(-1).level.id, selected.id);
+  assert.equal(state.created.at(-1).snakes.length, 2);
+  assert.equal(new URL(state.location.href).searchParams.get('mode'), 'team');
+  assert.equal(state.$('journey-chooser').open, false);
+  assert.equal(state.shell.topDialog(), null);
+  assert.equal(state.document.body.dataset.playing, 'true');
+});
+
+test('a mode change in Snake rules remains selected when returning to the existing library', async () => {
+  const state = await harness();
+  state.shell.open('missions');
+  state.$('snake-library-rules').click();
+  state.$('mode-tabs').querySelector('[data-mode="team"]').click();
+  assert.equal(state.created.at(-1).snakes.length, 2);
+  state.shell.back();
+  assert.equal(state.$('journey-chooser').open, true);
+  assert.equal(state.$('journey-mode').value, 'team');
+  libraryCard(state, CLASSIC_SNAKE_LEVELS[1].id).click();
+  await flush();
+  assert.equal(state.created.at(-1).snakes.length, 2);
+  assert.equal(new URL(state.location.href).searchParams.get('mode'), 'team');
+  assert.equal(state.document.body.dataset.playing, 'true');
+});
+
+test('Snake mission information and copied links follow the browsed row without selecting an attempt', async () => {
+  const state = await harness();
+  state.shell.open('missions');
+  const before = state.created.map((run) => core.exportClassicSnakeReplay(run));
+  const selected = CLASSIC_SNAKE_LEVELS.at(-1);
+  libraryCard(state, selected.id).focus();
+  state.$('snake-library-info').click();
+  assert.equal(state.$('snake-library-info-title').textContent, selected.title.en);
+  state.$('snake-library-info-dialog').querySelector('button').click();
+  assert.equal(state.$('journey-chooser').open, true);
+  state.$('snake-library-copy').click();
+  await flush();
+  assert.equal(
+    new URL(state.$('snake-library-status').textContent).searchParams.get('level'),
+    selected.id,
+  );
+  assert.deepEqual(
+    state.created.map((run) => core.exportClassicSnakeReplay(run)),
+    before,
+  );
 });
 
 test('final-moves playback freezes behind a newer menu and only returns to Results while visible', async () => {

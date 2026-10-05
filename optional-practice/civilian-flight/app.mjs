@@ -18,6 +18,8 @@ import {
   simSettingsPanelBack,
   simSettingsTabOwnsKey,
   attachSimMenuAudioSettings,
+  attachSimMissionLibraryChooser,
+  createSimMissionLibrary,
 } from '../civilian-fpv/flight-fullscreen.mjs';
 import {
   installSimThemeHost,
@@ -40,6 +42,54 @@ import { attachPracticeInput } from './input.mjs';
 import { PRACTICE_COPY } from './copy.mjs';
 import { preparePracticeOffline, removePracticeOffline } from './offline.mjs';
 
+function renderDrillPreview({ container, diagram, document: doc }) {
+  const canvas = doc.createElement('canvas');
+  canvas.className = 'journey-card-map';
+  canvas.width = 288;
+  canvas.height = Math.round((288 * diagram.world.depth) / diagram.world.width);
+  canvas.setAttribute('aria-hidden', 'true');
+  container.append(canvas);
+  const ctx = canvas.getContext?.('2d');
+  if (!ctx) return;
+  const padding = 12,
+    sx = (canvas.width - padding * 2) / diagram.world.width,
+    sy = (canvas.height - padding * 2) / diagram.world.depth,
+    position = (point) => [padding + point.x * sx, padding + point.z * sy];
+  ctx.fillStyle = '#091814';
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  ctx.strokeStyle = '#567363';
+  ctx.lineWidth = 1;
+  ctx.strokeRect(padding, padding, canvas.width - padding * 2, canvas.height - padding * 2);
+  ctx.beginPath();
+  ctx.moveTo(...position(diagram.spawn));
+  for (const point of diagram.checkpoints) ctx.lineTo(...position(point));
+  ctx.stroke();
+  diagram.checkpoints.forEach((point, index) => {
+    const [x, y] = position(point);
+    ctx.strokeStyle = point.landed ? '#99d0ff' : '#f6c66f';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.arc(x, y, Math.max(4, point.radius * sx), 0, Math.PI * 2);
+    ctx.stroke();
+    ctx.fillStyle = '#eef5e8';
+    ctx.font = '12px system-ui';
+    ctx.fillText(String(index + 1), x + Math.max(4, point.radius * sx) + 2, y - 2);
+  });
+  const [x, y] = position(diagram.spawn);
+  ctx.save();
+  ctx.translate(x, y);
+  ctx.rotate((diagram.spawn.heading * Math.PI) / 180);
+  ctx.fillStyle = '#dcf59e';
+  ctx.beginPath();
+  ctx.moveTo(0, -7);
+  ctx.lineTo(5, 5);
+  ctx.lineTo(0, 2);
+  ctx.lineTo(-5, 5);
+  ctx.closePath();
+  ctx.fill();
+  ctx.restore();
+}
+
 export function mountCivilianPractice({ document: doc, window: win }) {
   const launchLocale = win.location?.href && new URL(win.location.href).searchParams.get('lang');
   if (launchLocale === 'en' || launchLocale === 'uk') setLocale(launchLocale);
@@ -59,6 +109,10 @@ export function mountCivilianPractice({ document: doc, window: win }) {
     modeSettings = null,
     globalSettings = null,
     globalTools = null,
+    missionLibrary = null,
+    missionChooser = null,
+    missionCatalogue = null,
+    customCatalogue = false,
     gamepads = [];
   const readGamepads = () => {
     try {
@@ -69,6 +123,92 @@ export function mountCivilianPractice({ document: doc, window: win }) {
     return gamepads;
   };
   const completed = new Set();
+  const drillCopy = (drill) => drill.locales[getLocale()] ?? drill.locales.en;
+  function syncMissionLibrary() {
+    if (!missionLibrary || missionCatalogue === catalogue) return;
+    const acceptedCatalogue = catalogue,
+      identity = model.identity;
+    missionCatalogue = acceptedCatalogue;
+    const catalogueCopy = () =>
+      acceptedCatalogue.locales[getLocale()] ?? acceptedCatalogue.locales.en;
+    missionLibrary.register({
+      id: 'gym-drills',
+      editionId: identity,
+      edition: catalogueCopy().title,
+      collection: customCatalogue ? 'Custom' : 'Classic',
+      entries: acceptedCatalogue.drills,
+      describe: (entry) => ({
+        id: entry.id,
+        revision: entry.revision,
+        name: drillCopy(entry).title,
+        campaignKey: acceptedCatalogue.id,
+        campaignTitle: catalogueCopy().title,
+        levelIndex: acceptedCatalogue.drills.indexOf(entry),
+        ...(!customCatalogue
+          ? {
+              canonicalLevelKey: `gym:${entry.id}`,
+              globalLevelNumber: acceptedCatalogue.drills.indexOf(entry) + 1,
+            }
+          : {}),
+        modes: ['solo'],
+        tags: ['Practice'],
+      }),
+      presentation: (entry) => ({
+        name: drillCopy(entry).title,
+        campaignTitle: catalogueCopy().title,
+        edition: catalogueCopy().title,
+      }),
+      details: (entry) => ({ challenge: drillCopy(entry).brief }),
+      availability: () => ({ state: 'ready' }),
+      progressState: (entry) => ({
+        state: completed.has(`${identity}:${entry.id}`) ? 'completed' : 'new',
+        bestStars: null,
+      }),
+      card: (entry) => ({
+        world: acceptedCatalogue.world,
+        spawn: entry.spawn,
+        checkpoints: entry.checkpoints,
+      }),
+      launch(entry) {
+        if (disposed || catalogue !== acceptedCatalogue) return false;
+        reset(entry.id);
+        $('start').click();
+        return model.snapshot().status === 'active';
+      },
+    });
+  }
+  function openMissionLibrary(opener) {
+    if (!missionLibrary) {
+      missionLibrary = createSimMissionLibrary();
+      syncMissionLibrary();
+      missionChooser = attachSimMissionLibraryChooser({
+        document: doc,
+        library: missionLibrary,
+        mode: 'solo',
+        supportedModes: ['solo'],
+        availableCollectionsOnly: true,
+        onPause: pause,
+        getCurrentId: () =>
+          missionLibrary.missions.find((row) => row.runtimeId === model.drill().id)?.id,
+        readState: () => {
+          try {
+            return JSON.parse(win.sessionStorage?.getItem('revealline.gym-library.v1') ?? 'null');
+          } catch {
+            return null;
+          }
+        },
+        writeState: (state) =>
+          win.sessionStorage?.setItem('revealline.gym-library.v1', JSON.stringify(state)),
+        goalPreferenceOptions: {
+          editionId: 'sim-flight-gym',
+          getStorage: () => win.localStorage,
+        },
+        description: () => (catalogue.locales[getLocale()] ?? catalogue.locales.en).description,
+        renderPreview: renderDrillPreview,
+      });
+    }
+    missionChooser.open(opener);
+  }
   const audio = createPracticeAudio({ window: win });
   const updateSound = () => {
     $('sound').textContent = tr(audio.enabled() ? 'soundOn' : 'soundOff');
@@ -221,6 +361,7 @@ export function mountCivilianPractice({ document: doc, window: win }) {
       }),
     );
     $('drill').value = model.drill().id;
+    missionChooser?.refresh();
   }
   function render() {
     if (disposed) return;
@@ -335,6 +476,7 @@ export function mountCivilianPractice({ document: doc, window: win }) {
     audio.reset();
     input.clear();
     model = createPractice(catalogue, drillId);
+    syncMissionLibrary();
     commands = [];
     recordingTicks = 0;
     recordingFull = false;
@@ -450,6 +592,7 @@ export function mountCivilianPractice({ document: doc, window: win }) {
     try {
       const checked = validatePracticeCatalogue($('catalogue').value);
       catalogue = checked;
+      customCatalogue = true;
       reset(checked.drills[0].id);
       $('author-status').textContent = tr('imported');
     } catch {
@@ -485,6 +628,7 @@ export function mountCivilianPractice({ document: doc, window: win }) {
   playSurface.classList.add('gym-play-surface');
   const missions = section('gym-missions');
   missions.append($('drill').closest('label'), $('brief'));
+  missions.hidden = true;
   const briefing = section('gym-briefing');
   const instructions = doc.createElement('p');
   instructions.dataset.copy = 'instructions';
@@ -578,6 +722,10 @@ export function mountCivilianPractice({ document: doc, window: win }) {
       open(surface) {
         if (surface === 'settings') void globalTools?.ensure();
         if (model.snapshot().status === 'active') pause();
+        if (surface === 'missions') {
+          openMissionLibrary(doc.activeElement);
+          return false;
+        }
         if (surface === 'results') {
           // The completed board and discovery remain the native result scene.
           playShell.enterPlay();
@@ -720,7 +868,11 @@ export function mountCivilianPractice({ document: doc, window: win }) {
         frameFocused: globalTools.frameFocused(),
         handleFrameCommand: globalTools.handleFrameCommand,
       };
-    const dialog = $('help-dialog').open ? $('help-dialog') : playShell.topDialog();
+    const dialog = missionChooser?.elements.dialog.open
+      ? missionChooser.elements.dialog
+      : $('help-dialog').open
+        ? $('help-dialog')
+        : playShell.topDialog();
     if (dialog) return { root: dialog, key: dialog.id, blockRadio: true };
     if (model.snapshot().status === 'active') return null;
     return {
@@ -743,13 +895,16 @@ export function mountCivilianPractice({ document: doc, window: win }) {
       const parent =
         context?.root === playShell.elements.dialogs.settings
           ? modeSettings.panels.extras
-          : context?.root;
+          : missionChooser && context?.root === missionChooser.elements.dialog
+            ? missionChooser.elements.filters.querySelector('.journey-filter-options')
+            : context?.root;
       if (parent && menuHint.parentNode !== parent) parent.append(menuHint);
       if (menuHint.textContent !== value) menuHint.textContent = value;
     },
     onBack() {
       if (globalTools?.back()) return;
-      if ($('help-dialog').open) $('close-help').click();
+      if (missionChooser?.elements.dialog.open) missionChooser.close();
+      else if ($('help-dialog').open) $('close-help').click();
       else if (playShell.topDialog()) playShell.back();
       else playShell.openHome();
     },
@@ -760,6 +915,8 @@ export function mountCivilianPractice({ document: doc, window: win }) {
   const dispose = () => {
     if (disposed) return;
     disposed = true;
+    missionChooser?.destroy();
+    missionLibrary?.dispose();
     $('sound').onclick = null;
     menuNavigation.dispose();
     menuHint.remove();

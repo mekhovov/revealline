@@ -7,8 +7,9 @@ import { replayPractice } from '../../optional-practice/civilian-flight/model.mj
 import { GLOBAL_SETTINGS } from '../ui/global-settings-view.mjs';
 import { getLocale, setLocale } from '../i18n/index.mjs';
 import { Document, Events } from './helpers/couch-dom.mjs';
+import { activateMissionCard } from './helpers/library-selection.mjs';
 
-async function fixture(t, { storage, search = '' } = {}) {
+async function fixture(t, { storage, search = '', previews = [] } = {}) {
   const doc = new Document(),
     win = new Events();
   const html = parse(
@@ -34,6 +35,25 @@ async function fixture(t, { storage, search = '' } = {}) {
   }
   for (const child of body.childNodes) copy(child, doc.body);
   doc.getElementById('board').getContext = () => null;
+  const createElement = doc.createElement.bind(doc);
+  doc.createElement = (tag) => {
+    const element = createElement(tag);
+    if (tag === 'canvas') {
+      const operations = [];
+      previews.push({ canvas: element, operations });
+      element.getContext = () =>
+        new Proxy(
+          {},
+          {
+            get:
+              (_target, key) =>
+              (...args) =>
+                operations.push([key, ...args]),
+          },
+        );
+    }
+    return element;
+  };
   const frames = new Map();
   let frameId = 0,
     now = 0;
@@ -368,21 +388,133 @@ test('gym menu keyboard navigation owns arrows and returns from nested help with
 });
 
 test('gym Select Mission starts the selected drill with one action', async (t) => {
-  const f = await fixture(t),
+  const previews = [],
+    f = await fixture(t, { previews }),
     $ = (id) => f.doc.getElementById(id);
+  const before = f.view.trace();
   $('gym-shell-action-missions').click();
   assert.equal(f.doc.querySelector('[data-copy="prepare"]'), null);
-  $('drill').value = 'square';
-  $('drill').emit('change');
-  $('gym-shell-action-mission-start').click();
+  assert.equal($('journey-chooser').open, true);
+  assert.equal($('gym-shell-missions-dialog').open, false);
+  assert.equal($('journey-cards').children.length, 12);
+  assert.equal(previews.filter(({ canvas }) => $('journey-cards').contains(canvas)).length, 12);
+  assert.deepEqual(f.view.trace(), before, 'Browsing does not alter the accepted recording.');
+  const card = [...$('journey-cards').children].find(
+    (row) => JSON.parse(row.dataset.missionId)[3] === 'square',
+  );
+  const drill = f.view.catalogue().drills.find((item) => item.id === 'square');
+  const preview = previews.find((item) => card.contains(item.canvas));
+  assert.deepEqual(
+    preview.operations
+      .filter(([kind]) => kind === 'arc')
+      .map(([, x, y]) => [Number(x.toFixed(4)), Number(y.toFixed(4))]),
+    drill.checkpoints.map(({ x, z }) => [12 + (x * 264) / 2000, 12 + (z * 264) / 2000]),
+    'The thumbnail renders this exact drill route inside the complete gym boundary.',
+  );
+  await activateMissionCard(card);
+  assert.equal($('journey-chooser').open, false);
   assert.equal($('gym-shell-briefing-dialog').open, false);
   assert.equal(f.view.snapshot().status, 'active');
   assert.equal(f.view.snapshot().ticks, 0);
-  const drill = f.view.catalogue().drills.find((item) => item.id === 'square');
+  assert.equal(f.view.trace().drillId, 'square');
   assert.equal(
     $('gym-shell-briefing-title').textContent,
     drill.locales[f.doc.documentElement.lang].title,
   );
+});
+
+test('gym shared selector keeps search and pause state, rejects filtered cards and supports controller Back', async (t) => {
+  const f = await fixture(t),
+    $ = (id) => f.doc.getElementById(id),
+    pad = controller(f);
+  f.doc.defaultView.matchMedia = () => ({
+    matches: true,
+    addEventListener() {},
+    removeEventListener() {},
+  });
+  $('start').click();
+  f.tick(3);
+  $('gym-shell-action-menu').click();
+  const opener = $('gym-shell-action-pause-choose') ?? $('gym-shell-action-missions');
+  opener.focus();
+  opener.click();
+  assert.equal($('journey-chooser').open, true);
+  f.tick();
+  const hint = f.doc.querySelector('.gym-menu-hint');
+  assert.equal(
+    hint.parentElement,
+    $('journey-filter-details').querySelector('.journey-filter-options'),
+  );
+  assert.equal(
+    $('journey-filter-details').open,
+    false,
+    'Mobile secondary controls start collapsed.',
+  );
+  assert.ok(
+    hint.textContent.length > 0,
+    'The controller instructions remain available in Filters.',
+  );
+  $('journey-filter-details').open = true;
+  assert.equal(hint.hidden, false);
+  $('journey-filter-details').open = false;
+  const paused = f.view.snapshot(),
+    trace = f.view.trace(),
+    stale = $('journey-cards').children[0],
+    selectedDrill = f.view.catalogue().drills.find((entry) => entry.id === 'square');
+  $('journey-search').value = selectedDrill.locales[f.doc.documentElement.lang].title;
+  $('journey-search').emit('input');
+  assert.equal($('journey-cards').children.length, 1);
+  await stale.onclick();
+  f.tick(3);
+  assert.deepEqual(f.view.snapshot(), paused);
+  assert.deepEqual(f.view.trace(), trace);
+  pad.pulse(0); // Connect the controller without activating the current card.
+  pad.pulse(1);
+  assert.equal($('journey-chooser').open, false);
+  assert.equal(f.doc.activeElement, opener);
+  opener.click();
+  assert.equal($('journey-cards').children.length, 1);
+  assert.equal(JSON.parse($('journey-cards').children[0].dataset.missionId)[3], 'square');
+  assert.deepEqual(f.view.trace(), trace);
+});
+
+test('gym imported catalogue replaces selector authority and exact route without inheriting completion', async (t) => {
+  const f = await fixture(t),
+    $ = (id) => f.doc.getElementById(id);
+  $('start').click();
+  f.key('KeyR');
+  f.tick(21);
+  f.key('KeyR', 'keyup');
+  f.tick(30);
+  f.key('KeyF');
+  f.tick(20);
+  f.key('KeyF', 'keyup');
+  f.tick(30);
+  assert.equal(f.view.snapshot().status, 'complete');
+  $('gym-shell-action-menu').click();
+  $('gym-shell-action-missions').click();
+  const retired = $('journey-cards').children[0],
+    imported = f.view.catalogue();
+  assert.equal(retired.dataset.completionState, 'completed');
+  imported.drills = [imported.drills[0]];
+  imported.drills[0].spawn.x = 900;
+  imported.drills[0].locales.en.title = 'Imported hover';
+  imported.drills[0].locales.uk.title = 'Імпортоване зависання';
+  $('catalogue').value = JSON.stringify(imported);
+  $('import').click();
+  assert.equal($('journey-cards').children.length, 1);
+  const current = $('journey-cards').children[0];
+  assert.notEqual(current.dataset.missionId, retired.dataset.missionId);
+  assert.equal(current.dataset.completionState, 'new');
+  const accepted = f.view.trace();
+  await retired.onclick();
+  assert.deepEqual(f.view.trace(), accepted);
+  assert.equal(f.view.snapshot().status, 'ready');
+  await activateMissionCard(current);
+  assert.equal(f.view.snapshot().status, 'active');
+  assert.equal(f.view.snapshot().x, 900);
+  assert.equal(f.view.trace().catalogueIdentity, accepted.catalogueIdentity);
+  assert.equal($('journey-chooser').open, false);
 });
 
 test('a flight arrow released inside a controller menu is usable on the first press after Resume', async (t) => {

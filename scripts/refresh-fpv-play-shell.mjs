@@ -16,6 +16,13 @@ const read = (file) => readFile(path.join(root, file), 'utf8');
 // preferences stay external so appearance controls and renderers share one owner.
 async function projectGlobalServices() {
   const entries = {
+    'game/mission-library/library.mjs': {
+      createMissionLibrary: 'createSimMissionLibrary',
+      libraryMissionId: 'simLibraryMissionId',
+    },
+    'game/ui/mission-library-browser.mjs': {
+      attachMissionLibraryBrowser: 'attachSimMissionLibraryChooser',
+    },
     'game/enemy-stats.mjs': { createEnemyStatsHost: 'createSimEnemyStatsHost' },
     'game/ui/enemy-stats.mjs': { mountEnemyStats: 'mountSimEnemyStats' },
     'game/ui/continuous-celebration.mjs': {
@@ -63,6 +70,11 @@ async function projectGlobalServices() {
     'game/hunt/industrial-soldier-kit.mjs',
     'game/ui/art-review-navigation.mjs',
     'game/ui/enemy-appearance-controls.mjs',
+    'game/ui/mission-library-goal.mjs',
+    'game/mission-library/goal-preferences.mjs',
+    'game/mission-library/opening-intent.mjs',
+    'game/edition-context.mjs',
+    'game/ui/level-card.mjs',
   ]);
   const external = new Map([
     ['game/i18n/index.mjs', 'simGlobalI18n'],
@@ -207,6 +219,7 @@ const css = [
   await read('game/ui/pause-menu.css'),
   await read('game/ui/mode-settings-view.css'),
   await read('game/ui/global-settings-view.css'),
+  await read('game/ui/journey.css'),
   (await read('game/ui/mode-choice.css')).replace(/^@import[^;]+;\s*/, ''),
 ].join('\n');
 if (/@import|url\(/.test(css)) throw new Error('Shared shell CSS must remain resource-free.');

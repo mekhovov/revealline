@@ -1,5 +1,33 @@
 /** Explicit opt-in package admission. New packages need a reviewed policy entry;
  * an uploaded archive cannot widen its own executable dependency allowance. */
+const SHARED_MISSION_BROWSER_LABELS = Object.freeze([
+  'all',
+  'allCampaigns',
+  'allMissionsOneLibraryJourneyClassicAndCustomKeepTheir',
+  'campaign',
+  'clearSearch',
+  'collection',
+  'current',
+  'detailedMissionCards',
+  'downloadCancelledYourCurrentGameIsKept',
+  'downloadPlay',
+  'filters',
+  'filtersActive',
+  'findYourNextLine',
+  'missionCampaignEditionOrTag',
+  'missionNotOpenedYourCurrentGameIsKept',
+  'mode',
+  'noReadyLevelsMatchTheseFilters',
+  'playRandomLevelFromVisibleResults',
+  'preparing',
+  'randomLevel',
+  'searchAllMissions',
+  'skippedTryAgain',
+  'solo2',
+  'team',
+  'unknownMissionLibraryMode',
+  'versus2',
+]);
 const BASE_OPTIONAL_PACKAGE_POLICIES = Object.freeze({
   'civilian-flight': Object.freeze({
     root: 'optional-practice/civilian-flight/',
@@ -517,6 +545,22 @@ export const OPTIONAL_PACKAGE_POLICIES = Object.freeze(
       id,
       Object.freeze({
         ...policy,
+        // The canonical browser is projected into an existing package module.
+        // Admit only its message families, including plural and dynamic keys.
+        localeKeyPrefixes: Object.freeze({
+          errors: Object.freeze(['missionLibrary.']),
+          interface: Object.freeze(['missionLibrary.', 'missionGoal.']),
+          common: Object.freeze(['counts.missions', 'collections.']),
+        }),
+        localeKeys: Object.freeze({
+          ...policy.localeKeys,
+          interface: Object.freeze([
+            ...new Set([...(policy.localeKeys?.interface ?? []), ...SHARED_MISSION_BROWSER_LABELS]),
+          ]),
+          common: Object.freeze([
+            ...new Set([...(policy.localeKeys?.common ?? []), 'navigation.backToGame']),
+          ]),
+        }),
         // These optional tools belong to the installed core game, not the SIM
         // archive. Only this literal lazy import may cross that boundary. The
         // SIM keeps its own preferences/backup tools and a visible fallback

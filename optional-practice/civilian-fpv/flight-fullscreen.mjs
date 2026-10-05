@@ -275,6 +275,458 @@ import*as simGlobalThemes from'../../game/presentation/theme-system.mjs';
 import*as simGlobalActorPreferences from'../../game/hunt/preferences.mjs';
 const sharedGlobalSettings=(()=>{
 const modules=Object.create(null);
+modules['game/mission-library/library.mjs']=(()=>{
+/** A browsing registry, never a gameplay catalogue or a progression sequence.
+     * Only exact registered rows can reach their original owner's adapters. */
+const t=simGlobalI18n['t'];
+
+const LIBRARY_COLLECTIONS=Object.freeze(['Journey','Classic','Custom']);
+const LIBRARY_MODES=Object.freeze(['solo','versus','team']);
+const LIBRARY_LIFECYCLES=Object.freeze(['current','archive']);
+const LIBRARY_TAGS=Object.freeze([
+...LIBRARY_COLLECTIONS,
+'Remix',
+'Ukrainian',
+'FPV',
+'Arcade',
+'Tactical',
+'Practice',
+]);
+
+function text(value,label,maximum=1024){
+if(typeof value!=='string'|| !value.trim()||value.length>maximum)
+throw new TypeError(
+t('errors:missionLibrary.needsField',{
+field:t(`errors:missionLibrary.field.${label}`),
+}),
+);
+return value;
+}
+
+// Length-delimited JSON components avoid collisions between arbitrary authored
+// IDs containing slashes, colons or strings that happen to match edition names.
+function libraryMissionId({owner,edition,campaign,mission,revision=''}){
+return JSON.stringify([
+text(owner,'owner'),
+text(edition,'edition'),
+text(campaign,'campaign'),
+text(mission,'mission'),
+typeof revision==='string'?revision:String(revision),
+]);
+}
+
+function readiness(value){
+if(!value|| !['ready','download','unavailable'].includes(value.state))
+throw new TypeError(t('errors:missionLibrary.availabilityRequired'));
+if(value.state==='download'&&(!Number.isSafeInteger(value.bytes)||value.bytes<=0))
+throw new TypeError(t('errors:missionLibrary.downloadBytes'));
+if(value.state==='unavailable')text(value.reason,'unavailableReason');
+return Object.freeze({
+state:value.state,
+...(value.state==='download'
+?{bytes:value.bytes,...(value.included===true?{included:true}:{})}
+:{}),
+...(value.state==='unavailable'
+?{reason:value.reason,retry:value.retry===true}
+:{}),
+});
+}
+
+/** Each source supplies already validated runtime references or trusted metadata
+     * plus adapters that resolve it through the existing host validator. A metadata
+     * row is NOT proof that a pack is installed, decoded, owned, or safe to launch. */
+function createMissionLibrary(sources=[]){
+const owners=new Map(),
+authority=new WeakMap(),
+pending=new Map(),
+failures=new Map();
+const listeners=new Set();
+const scoped=(store,row,mode)=>store.get(row)?.get(mode);
+const setScoped=(store,row,mode,value)=>{
+if(!store.has(row))store.set(row,new Map());
+store.get(row).set(mode,value);
+};
+const clearScoped=(store,row,mode)=>{
+store.get(row)?.delete(mode);
+if(store.get(row)?.size===0)store.delete(row);
+};
+let rows=Object.freeze([]),
+byId=new Map(),
+rowsByMode=new Map(LIBRARY_MODES.map((mode)=>[mode,Object.freeze([])])),
+disposed=false;
+const emit=()=>{
+for(const listener of listeners)listener();
+};
+function requireRow(row,mode){
+const binding=authority.get(row);
+if(disposed|| !binding||owners.get(binding.owner.id)!==binding.owner)
+throw new Error(t('errors:missionLibrary.staleSelection'));
+if(mode!==undefined&&(!LIBRARY_MODES.includes(mode)|| !row.modes.includes(mode)))
+throw new Error(t('errors:missionLibrary.unsupportedMode'));
+return binding;
+}
+function rebuild(){
+rows=Object.freeze(
+[...owners.values()]
+.flatMap((owner)=>owner.rows)
+.sort(
+(a,b)=>
+LIBRARY_COLLECTIONS.indexOf(a.collection)-
+LIBRARY_COLLECTIONS.indexOf(b.collection),
+),
+);
+const numbered=new Map();
+for(const row of rows){
+if(row.globalLevelNumber===null)continue;
+const previous=numbered.get(row.globalLevelNumber);
+if(previous&&previous!==row.canonicalLevelKey)
+throw new TypeError('Official level number belongs to more than one mission.');
+numbered.set(row.globalLevelNumber,row.canonicalLevelKey);
+}
+// The unified selector asks for exact identities repeatedly while it
+// reconciles focus, availability and lazy previews. Keep those lookups
+// linear in the number of rendered cards, not quadratic in the complete
+// installed catalogue. Rebuild the derived indexes only after the owner
+// replacement has been accepted so stale rows never become authoritative.
+byId=new Map(rows.map((row)=>[row.id,row]));
+rowsByMode=new Map(
+LIBRARY_MODES.map((mode)=>[
+mode,
+Object.freeze(rows.filter((row)=>row.modes.includes(mode))),
+]),
+);
+}
+function cancelOwner(owner){
+for(const row of owner.rows){
+for(const controller of pending.get(row)?.values()??[])controller.abort();
+failures.delete(row);
+}
+}
+function register(source){
+if(disposed)throw new Error(t('errors:missionLibrary.closed'));
+text(source.id,'sourceId');
+text(source.editionId,'editionId');
+text(source.edition,'editionName',160);
+if(source.lifecycle!==undefined&& !LIBRARY_LIFECYCLES.includes(source.lifecycle))
+throw new TypeError('Mission source needs a current or archive lifecycle.');
+if(
+source.automaticContinuation!==undefined&&
+typeof source.automaticContinuation!=='boolean'
+)
+throw new TypeError(t('errors:missionLibrary.automaticContinuationBoolean'));
+if(
+!LIBRARY_COLLECTIONS.includes(source.collection)||
+!Array.isArray(source.entries)||
+source.entries.length>4096||
+typeof source.describe!=='function'||
+typeof source.availability!=='function'||
+typeof source.launch!=='function'
+)
+throw new TypeError(t('errors:missionLibrary.sourceAdapters'));
+const owner={...source,rows:[]};
+const ids=new Set();
+const described=source.entries.map((entry)=>({entry,info:source.describe(entry)}));
+const campaignCounts=new Map(),
+campaignSizes=new Map();
+for(const{info}of described){
+text(info.campaignKey,'campaignIdentity');
+campaignCounts.set(info.campaignKey,(campaignCounts.get(info.campaignKey)??0)+1);
+if(Number.isInteger(info.levelIndex)&&info.levelIndex>=0)
+campaignSizes.set(
+info.campaignKey,
+Math.max(campaignSizes.get(info.campaignKey)??0,info.levelIndex+1),
+);
+}
+for(const{entry,info}of described){
+text(info.campaignKey,'campaignIdentity');
+const id=libraryMissionId({
+owner:source.id,
+edition:source.editionId,
+campaign:info.campaignKey,
+mission:info.id,
+revision:info.revision??'',
+});
+if(ids.has(id))throw new TypeError(t('errors:missionLibrary.duplicateIdentity'));
+ids.add(id);
+if(
+!Array.isArray(info.modes)||
+!info.modes.length||
+new Set(info.modes).size!==info.modes.length||
+info.modes.some((mode)=> !LIBRARY_MODES.includes(mode))
+)
+throw new TypeError(t('errors:missionLibrary.supportedModes'));
+const tags=[...new Set([source.collection,...(info.tags??[])])];
+if(
+tags.some(
+(tag)=>
+!LIBRARY_TAGS.includes(tag)||
+(LIBRARY_COLLECTIONS.includes(tag)&&tag!==source.collection),
+)
+)
+throw new TypeError(t('errors:missionLibrary.collectionTag'));
+if(!Number.isInteger(info.levelIndex)||info.levelIndex<0)
+throw new TypeError(t('errors:missionLibrary.authoredPosition'));
+const canonicalLevelKey=
+info.canonicalLevelKey===undefined
+?null
+:text(info.canonicalLevelKey,'missionIdentity',2048);
+const globalLevelNumber=info.globalLevelNumber??null;
+if(
+globalLevelNumber!==null&&
+(!Number.isSafeInteger(globalLevelNumber)||
+globalLevelNumber<1||
+!canonicalLevelKey)
+)
+throw new TypeError(
+'An official level number needs a positive number and canonical key.',
+);
+const campaignLevelCount=
+info.campaignLevelCount??
+Math.max(campaignCounts.get(info.campaignKey),campaignSizes.get(info.campaignKey));
+if(!Number.isSafeInteger(campaignLevelCount)||campaignLevelCount<=info.levelIndex)
+throw new TypeError('Mission campaign size must include its authored position.');
+const row=Object.freeze({
+id,
+runtimeId:info.id,
+ownerId:source.id,
+editionId:source.editionId,
+edition:source.edition,
+collection:source.collection,
+lifecycle:source.lifecycle??'current',
+automaticContinuation:source.automaticContinuation!==false,
+campaignKey:JSON.stringify([source.id,source.editionId,info.campaignKey]),
+campaignTitle:text(info.campaignTitle,'campaignTitle',160),
+name:text(info.name,'missionName',160),
+levelIndex:info.levelIndex,
+canonicalLevelKey,
+globalLevelNumber,
+campaignLevelNumber:info.levelIndex+1,
+campaignLevelCount,
+modes:Object.freeze([...info.modes]),
+tags:Object.freeze(tags),
+rules:typeof info.rules==='string'?info.rules.slice(0,2048):'',
+hook:typeof info.hook==='string'?info.hook.slice(0,2048):'',
+});
+owner.rows.push(row);
+authority.set(row,{owner,entry});
+}
+const count=[...owners.values()]
+.filter((item)=>item.id!==source.id)
+.reduce((sum,item)=>sum+item.rows.length,owner.rows.length);
+if(count>4096)throw new TypeError(t('errors:missionLibrary.tooManyMissions'));
+// Build the complete replacement before invalidating the accepted owner.
+const previous=owners.get(source.id);
+if(previous)cancelOwner(previous);
+owners.set(source.id,owner);
+rebuild();
+emit();
+return Object.freeze([...owner.rows]);
+}
+function availability(row,mode='solo'){
+const{owner,entry}=requireRow(row,mode);
+if(scoped(pending,row,mode))return Object.freeze({state:'preparing'});
+if(scoped(failures,row,mode))
+return Object.freeze({
+state:'unavailable',
+reason:scoped(failures,row,mode),
+retry:true,
+});
+return readiness(owner.availability(entry,mode));
+}
+function presentation(row){
+const{owner,entry}=requireRow(row);
+const value=owner.presentation?.(entry);
+const translated={};
+for(const field of['name','campaignTitle','edition','hook'])
+translated[field]=typeof value?.[field]==='string'?value[field]:row[field];
+return Object.freeze(translated);
+}
+for(const source of sources)register(source);
+return Object.freeze({
+get missions(){
+return rows;
+},
+register,
+remove(id){
+const owner=owners.get(id);
+if(!owner)return false;
+cancelOwner(owner);
+owners.delete(id);
+rebuild();
+emit();
+return true;
+},
+find(id){
+return byId.get(id)??null;
+},
+forMode(mode){
+if(!LIBRARY_MODES.includes(mode))
+throw new TypeError(t('errors:missionLibrary.unknownMode'));
+return rowsByMode.get(mode);
+},
+search(
+query='',
+{mode='solo',collection='',campaign='',tag='',lifecycle=''}={},
+){
+if(
+!LIBRARY_MODES.includes(mode)||
+(collection&& !LIBRARY_COLLECTIONS.includes(collection))||
+(lifecycle&& !LIBRARY_LIFECYCLES.includes(lifecycle))
+)
+throw new TypeError(t('errors:missionLibrary.unknownFilter'));
+const words=String(query)
+.normalize('NFKC')
+.toLocaleLowerCase()
+.trim()
+.split(/\s+/u)
+.filter(Boolean);
+return rowsByMode.get(mode).filter((row)=>{
+const display=words.length?presentation(row):row;
+return(
+row.modes.includes(mode)&&
+(!lifecycle||row.lifecycle===lifecycle)&&
+(!collection||row.collection===collection)&&
+(!campaign||row.campaignKey===campaign)&&
+(!tag||row.tags.includes(tag))&&
+words.every((word)=>
+`${display.name} ${display.campaignTitle} ${display.edition} ${display.hook} ${row.name} ${row.campaignTitle} ${row.edition} ${row.tags.join(' ')} ${row.rules} ${row.hook} ${row.globalLevelNumber===null?'':`#${row.globalLevelNumber} ${row.globalLevelNumber}`}`
+.normalize('NFKC')
+.toLocaleLowerCase()
+.includes(word),
+)
+);
+});
+},
+presentation,
+availability,
+progress(row,mode){
+const{owner,entry}=requireRow(row,mode);
+return owner.progress?.(entry,mode)??'';
+},
+progressState(row,mode){
+const{owner,entry}=requireRow(row,mode);
+const value=owner.progressState?.(entry,mode)??{state:'new',bestStars:null};
+if(
+!value||
+!['new','skipped','completed'].includes(value.state)||
+!(value.bestStars===null||[1,2,3].includes(value.bestStars))||
+(value.state!=='completed'&&value.bestStars!==null)
+)
+throw new TypeError('Mission progress state is invalid.');
+return Object.freeze({state:value.state,bestStars:value.bestStars});
+},
+completion(row,mode){
+const{owner,entry}=requireRow(row,mode);
+return owner.completion?.(entry,mode)??null;
+},
+card(row,mode){
+const{owner,entry}=requireRow(row,mode);
+return owner.card?.(entry,mode)??null;
+},
+details(row,mode){
+const{owner,entry}=requireRow(row,mode);
+const value=owner.details?.(entry,mode);
+const bounded=(value,fallback='')=>
+typeof value==='string'?value.slice(0,2048):fallback;
+return Object.freeze({
+challenge:bounded(value?.challenge,row.rules),
+route:bounded(value?.route,row.hook),
+mastery:bounded(value?.mastery),
+});
+},
+async prepare(row,{mode='solo',signal}={}){
+const{owner,entry}=requireRow(row,mode);
+const state=availability(row,mode);
+requireRow(row,mode);// Availability may reconcile an installed owner.
+if(state.state==='ready')return state;
+if(state.state==='preparing')
+throw new Error(t('errors:missionLibrary.alreadyPreparing'));
+if(
+typeof owner.prepare!=='function'||
+(state.state==='unavailable'&& !state.retry)
+)
+throw new Error(state.reason||t('errors:missionLibrary.cannotPrepare'));
+if(signal?.aborted)return{state:'cancelled'};
+const controller=new AbortController();
+const abort=()=>controller.abort();
+signal?.addEventListener('abort',abort,{once:true});
+clearScoped(failures,row,mode);
+setScoped(pending,row,mode,controller);
+emit();
+try{
+const cancelled=new Promise((resolve)=>
+controller.signal.addEventListener('abort',()=>resolve(false),{once:true}),
+);
+const completed=await Promise.race([
+Promise.resolve().then(()=>{
+if(controller.signal.aborted)return false;
+return Promise.resolve(
+owner.prepare(entry,{mode,signal:controller.signal}),
+).then(()=>true);
+}),
+cancelled,
+]);
+if(!completed||controller.signal.aborted||owners.get(owner.id)!==owner)
+return{state:'cancelled'};
+return readiness(owner.availability(entry,mode));
+}catch(error){
+if(controller.signal.aborted||owners.get(owner.id)!==owner)
+return{state:'cancelled'};
+setScoped(
+failures,
+row,
+mode,
+typeof error?.message==='string'
+?error.message
+:t('errors:missionLibrary.preparationFailed'),
+);
+throw error;
+}finally{
+signal?.removeEventListener('abort',abort);
+if(scoped(pending,row,mode)===controller)clearScoped(pending,row,mode);
+emit();
+}
+},
+cancel(row,{mode}={}){
+if(mode!==undefined)scoped(pending,row,mode)?.abort();
+else for(const controller of pending.get(row)?.values()??[])controller.abort();
+},
+launch(row,{mode='solo',...context}={}){
+const{owner,entry}=requireRow(row,mode);
+if(availability(row,mode).state!=='ready')
+throw new Error(t('errors:missionLibrary.prepareBeforePlay'));
+requireRow(row,mode);
+// The host still owns its runtime validation, departure guard and atomic
+// picture adoption. Never pass a lookup-by-name replacement for entry.
+return owner.launch(entry,{...context,mode,libraryMissionId:row.id});
+},
+subscribe(listener){
+if(typeof listener!=='function')
+throw new TypeError(t('errors:missionLibrary.listenerFunction'));
+listeners.add(listener);
+return()=>listeners.delete(listener);
+},
+dispose(){
+disposed=true;
+for(const owner of owners.values())cancelOwner(owner);
+owners.clear();
+rows=Object.freeze([]);
+byId=new Map();
+rowsByMode=new Map(LIBRARY_MODES.map((mode)=>[mode,Object.freeze([])]));
+listeners.clear();
+},
+});
+}
+
+return{
+LIBRARY_COLLECTIONS,
+LIBRARY_MODES,
+LIBRARY_LIFECYCLES,
+LIBRARY_TAGS,
+libraryMissionId,
+createMissionLibrary,
+};
+})();
 modules['game/data-json.mjs']=(()=>{
 const t=simGlobalI18n['t'];
 
@@ -416,6 +868,1961 @@ return hash.toString(16).padStart(16,'0');
 }
 
 return{plainObject,stableId,boundedJSON,exactKeys,required,canonicalJSON,dataIdentity};
+})();
+modules['game/edition-context.mjs']=(()=>{
+/** Distribution identity is independent of Journey's logical campaign progress. */
+const editionPattern= /^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$/;
+const versionPattern= /^v?(0|[1-9]\d{0,4})\.(0|[1-9]\d{0,4})\.(0|[1-9]\d{0,4})$/;
+
+// Public addresses may change; stored profiles, content pins and installed app
+// IDs keep the original edition identity. This is an alias, never a new edition.
+const publicSlugs=Object.freeze({'droneaid-nl-community':'droneaid'});
+
+function editionIdentityId(selector){
+validateEditionId(selector);
+return Object.keys(publicSlugs).find((id)=>publicSlugs[id]===selector)??selector;
+}
+
+function editionPublicSlug(editionId){
+validateEditionId(editionId);
+return publicSlugs[editionId]??editionId;
+}
+
+function validateEditionId(editionId){
+if(typeof editionId!=='string'||editionId.length>64|| !editionPattern.test(editionId))
+throw new TypeError('Invalid edition identity.');
+return editionId;
+}
+
+function editionIdFromLocation(locationRef=globalThis.location){
+if(!locationRef?.href)return undefined;
+const path=new URL(locationRef.href).pathname;
+const match= /\/editions\/([^/]+)\//.exec(path);
+return match?editionIdentityId(match[1]):undefined;
+}
+
+function resolveEditionContext({editionId,version}={}){
+if(typeof version!=='string'||(version!=='DEV'&& !versionPattern.test(version)))
+throw new TypeError('A stable release version or DEV is required.');
+const brand=editionId===undefined?'':`${validateEditionId(editionId)}.`;
+const channel=
+editionId===undefined
+?version==='DEV'
+?'dev'
+:`release-${version}`
+:`edition-${brand}${version==='DEV'?'dev':`release-${version}`}`;
+const profileKey=`revealline.library.${channel}.v1`;
+return Object.freeze({
+...(editionId===undefined?{}:{editionId}),
+version,
+channel,
+profileKey,
+packsKey:`revealline.packs.${channel}.v1`,
+sessionKey:`revealline.suspended.${channel}.v1`,
+writerKey:`${profileKey}.writer`,
+lockKey:`${profileKey}.backup-lock`,
+journalKey:`${profileKey}.backup-journal`,
+indexKey:`${profileKey}.external-chapter-index.v1`,
+externalJournalKey:`${profileKey}.external-chapter-journal.v1`,
+});
+}
+
+function parseEditionChannel(channel){
+if(typeof channel!=='string')return null;
+const match=
+/^edition-([a-z][a-z0-9]*(?:-[a-z0-9]+)*)\.(dev|release-(v?\d+\.\d+\.\d+))$/.exec(channel);
+if(!match)return null;
+try{
+return resolveEditionContext({
+editionId:match[1],
+version:match[2]==='dev'?'DEV':match[3],
+});
+}catch{
+return null;
+}
+}
+
+function installedStateKey(editionId){
+return editionId===undefined
+?'revealline.installed-app.v1'
+:`revealline.installed-app.edition-${validateEditionId(editionId)}.v1`;
+}
+
+/** Stable explicit manifest IDs avoid origin-wide './' identity collisions. */
+function editionAppIdentity({editionId,basePath='/'}={}){
+validateEditionId(editionId);
+if(typeof basePath!=='string'|| !/^\/(?:[A-Za-z0-9_-]+\/)*$/.test(basePath))
+throw new TypeError('Edition base path must be an absolute directory path.');
+const root=`${basePath}editions/${editionPublicSlug(editionId)}/`;
+return Object.freeze({
+id:`${basePath}editions/${editionId}/`,
+start_url:`${root}app/`,
+scope:root,
+});
+}
+
+/** A launcher may select only a retained immutable release of its own edition.
+     * Relative current.json pointers are resolved against the document, never a
+     * stored origin. This module also ships inside the stable launcher directory. */
+function validateCompanyInstallationReference(value,{editionId,baseURL,editionRoot}={}){
+validateEditionId(editionId);
+if(
+!value||
+typeof value!=='object'||
+Array.isArray(value)||
+value.editionId!==editionId||
+!versionPattern.test(value.version)||
+typeof value.version!=='string'||
+typeof value.scope!=='string'||
+value.scope.length>2048||
+value.entry!=='game/company.html'||
+(value.buildId!==undefined&& !/^[a-f0-9]{64}$/.test(value.buildId))
+)
+throw new TypeError('Edition installation identity differs.');
+const base=new URL(baseURL),
+scope=new URL(value.scope,base);
+const root=
+typeof editionRoot==='string'
+? /^(\/(?:[A-Za-z0-9_-]+\/)*)editions\/([^/]+)\/$/.exec(editionRoot)
+:null;
+const aliases=[editionId,editionPublicSlug(editionId)];
+if(
+!root||
+!aliases.includes(root[2])||
+!/^https?:$/.test(base.protocol)||
+scope.origin!==base.origin||
+scope.username||
+scope.password||
+scope.search||
+scope.hash||
+!aliases.some(
+(slug)=>
+scope.pathname===
+`${root[1]}editions/${slug}/releases/v${value.version.replace(/^v/,'')}/site/`,
+)
+)
+throw new TypeError('Install from the matching published edition address.');
+return Object.freeze({
+editionId,
+version:value.version,
+scope:scope.href,
+entry:value.entry,
+...(value.buildId===undefined?{}:{buildId:value.buildId}),
+});
+}
+
+/** Hash caches may share bytes; ownership and removal must remain separate. */
+function officialContentOwner({editionId,packId,revision}={}){
+if(
+typeof packId!=='string'||
+!editionPattern.test(packId)||
+packId.length>100||
+typeof revision!=='string'||
+!/^[A-Za-z0-9][A-Za-z0-9.-]{0,63}$/.test(revision)
+)
+throw new TypeError('Invalid official content ownership.');
+return`${editionId===undefined?'default':validateEditionId(editionId)}:${packId}:${revision}`;
+}
+
+return{
+editionIdentityId,
+editionPublicSlug,
+validateEditionId,
+editionIdFromLocation,
+resolveEditionContext,
+parseEditionChannel,
+installedStateKey,
+editionAppIdentity,
+validateCompanyInstallationReference,
+officialContentOwner,
+};
+})();
+modules['game/mission-library/goal-preferences.mjs']=(()=>{
+const boundedJSON=modules['game/data-json.mjs']['boundedJSON'];
+const exactKeys=modules['game/data-json.mjs']['exactKeys'];
+const required=modules['game/data-json.mjs']['required'];
+const validateEditionId=modules['game/edition-context.mjs']['validateEditionId'];
+const LIBRARY_MODES=modules['game/mission-library/library.mjs']['LIBRARY_MODES'];
+
+const MISSION_GOAL_FORMAT='revealline-mission-goal.v1';
+const MISSION_GOAL_KEY_PREFIX='revealline.mission-goal.v1';
+const missionId=(value)=>
+value===null||
+(typeof value==='string'&&
+value.trim().length>0&&
+value.length<=2048&&
+!/[\u0000-\u001f\u007f-\u009f]/u.test(value)&&
+!/[\ud800-\udfff]/u.test(value));
+function validateMissionGoal(input,{editionId,mode}){
+const value=boundedJSON(input,{
+maxBytes:16384,
+maxNodes:8,
+maxDepth:1,
+maxString:2048,
+});
+exactKeys(value,['format','editionId','mode','missionId'],'Pinned mission goal');
+required(
+value.format===MISSION_GOAL_FORMAT&&
+value.editionId===editionId&&
+value.mode===mode&&
+missionId(value.missionId),
+'Invalid exact edition/mode mission goal.',
+);
+return Object.freeze(value);
+}
+
+/** A convenience preference, never a clear, entitlement, route or download
+     * request. Loading does not write; corrupt/future bytes are left recoverable. */
+function createMissionGoalPreferences({
+editionId='default',
+mode='solo',
+getStorage=()=>globalThis.localStorage,
+window:eventTarget=globalThis,
+}={}){
+validateEditionId(editionId);
+required(LIBRARY_MODES.includes(mode),'Choose a supported mission-goal mode.');
+const key=`${MISSION_GOAL_KEY_PREFIX}.${editionId}.${mode}`,
+listeners=new Set();
+let selected=null,
+durable=true,
+pending=false,
+disposed=false;
+const snapshot=()=>Object.freeze({editionId,mode,missionId:selected,durable});
+const read=()=>{
+const storage=getStorage();
+required(storage,'Mission-goal storage is unavailable.');
+const raw=storage.getItem(key);
+return{
+storage,
+raw,
+value:raw===null?null:validateMissionGoal(raw,{editionId,mode}),
+};
+};
+const notify=()=>{
+for(const listener of[...listeners]){
+if(disposed|| !listeners.has(listener))continue;
+try{
+listener(snapshot());
+}catch{
+/* Preferences cannot stop play. */
+}
+}
+return snapshot();
+};
+try{
+selected=read().value?.missionId??null;
+}catch{
+durable=false;
+}
+function refresh(event){
+if(
+disposed||
+pending||
+(event.type==='storage'&&event.key!==key)||
+(event.type==='pageshow'&&event.persisted!==true)
+)
+return;
+try{
+const current=read();
+if(
+event.type==='storage'&&
+(event.storageArea!==current.storage||event.newValue!==current.raw)
+)
+return;
+selected=current.value?.missionId??null;
+durable=true;
+}catch{
+durable=false;
+}
+notify();
+}
+function save(){
+if(disposed)return snapshot();
+try{
+const{storage}=read();// Never replace an unreadable/future record.
+const raw=JSON.stringify({
+format:MISSION_GOAL_FORMAT,
+editionId,
+mode,
+missionId:selected,
+});
+storage.setItem(key,raw);
+required(storage.getItem(key)===raw,'Mission-goal readback failed.');
+pending=false;
+durable=true;
+}catch{
+durable=false;
+}
+return notify();
+}
+eventTarget?.addEventListener?.('storage',refresh);
+eventTarget?.addEventListener?.('pageshow',refresh);
+return Object.freeze({
+key,
+snapshot,
+choose(value){
+if(disposed)return snapshot();
+required(missionId(value),'Choose a bounded mission identity.');
+selected=value;
+pending=true;
+return save();
+},
+retry(){
+if(pending)return save();
+refresh({type:'pageshow',persisted:true});
+return snapshot();
+},
+subscribe(listener){
+required(
+!disposed&&typeof listener==='function',
+'Active mission-goal listener required.',
+);
+listeners.add(listener);
+try{
+listener(snapshot());
+}catch{
+/* Keep the choice usable. */
+}
+return()=>listeners.delete(listener);
+},
+dispose(){
+if(disposed)return;
+disposed=true;
+listeners.clear();
+eventTarget?.removeEventListener?.('storage',refresh);
+eventTarget?.removeEventListener?.('pageshow',refresh);
+},
+});
+}
+
+return{
+MISSION_GOAL_FORMAT,
+MISSION_GOAL_KEY_PREFIX,
+validateMissionGoal,
+createMissionGoalPreferences,
+};
+})();
+modules['game/ui/mission-library-goal.mjs']=(()=>{
+const localizedText=simGlobalI18n['localizedText'];
+const t=simGlobalI18n['t'];
+const createMissionGoalPreferences=
+modules['game/mission-library/goal-preferences.mjs']['createMissionGoalPreferences'];
+
+/** The host owns content and launch. This view can only remember or reveal an
+     * existing row; unavailable saved IDs never create a preparation request. */
+function attachMissionLibraryGoal({
+container,
+library,
+modes,
+getMode,
+getSelectedId,
+isActive,
+reveal,
+onIntent=()=>{},
+editionId='default',
+getStorage,
+window=globalThis,
+}){
+const doc=container.ownerDocument,
+node=(tag,id)=>{
+const item=doc.createElement(tag);
+if(id)item.id=id;
+return item;
+};
+const root=node('section','journey-goal'),
+status=node('p','journey-goal-status'),
+actionGroup=node('div');
+root.className='journey-goal';
+actionGroup.className='journey-goal-actions';
+status.setAttribute('role','status');
+status.setAttribute('aria-live','polite');
+const controls={},
+stores=new Map(),
+subscriptions=[];
+let disposed=false;
+const active=()=> !disposed&&isActive();
+const selected=()=>{
+const row=library.find(getSelectedId());
+return row?.modes.includes(getMode())?row:null;
+};
+root.append(status,actionGroup);
+for(const key of['pin','find','clear','retry']){
+const button=node('button',`journey-goal-${key}`);
+button.type='button';
+button.className='button secondary';
+localizedText(button,()=>t('interface:missionGoal.'+key));
+controls[key]=button;
+actionGroup.append(button);
+}
+container.append(root);
+const current=()=>stores.get(getMode());
+function refresh(){
+if(disposed)return;
+const state=current()?.snapshot(),
+row=state?.missionId&&library.find(state.missionId),
+available=row?.modes.includes(getMode());
+controls.pin.disabled= !selected();
+controls.find.disabled= !available;
+controls.clear.disabled= !state?.missionId;
+controls.retry.hidden=state?.durable!==false;
+localizedText(status,()=>{
+const name=available?(library.presentation?.(row)??row).name:'';
+return(
+(state?.missionId
+?available
+?t('interface:missionGoal.pinned',{name})
+:t('interface:missionGoal.unavailable')
+:t('interface:missionGoal.empty'))+
+(state?.durable===false?' '+t('interface:missionGoal.session'):'')
+);
+});
+}
+controls.pin.onclick=()=>{
+const row=selected();
+if(active()&&row){
+onIntent();
+current().choose(row.id);
+}
+};
+controls.find.onclick=()=>{
+if(!active())return;
+const id=current()?.snapshot().missionId,
+row=library.find(id);
+if(row?.modes.includes(getMode())){
+onIntent();
+reveal(id,getMode());
+}
+};
+controls.clear.onclick=()=>{
+if(active()){
+onIntent();
+current().choose(null);
+}
+};
+controls.retry.onclick=()=>{
+if(active()){
+onIntent();
+current().retry();
+}
+};
+for(const mode of modes){
+const store=createMissionGoalPreferences({editionId,mode,getStorage,window});
+stores.set(mode,store);
+subscriptions.push(store.subscribe(refresh));
+}
+refresh();
+return{
+element:root,
+refresh,
+dispose(){
+if(disposed)return;
+disposed=true;
+subscriptions.forEach((stop)=>stop());
+stores.forEach((store)=>store.dispose());
+Object.values(controls).forEach((button)=>(button.onclick=null));
+root.remove();
+},
+};
+}
+
+return{attachMissionLibraryGoal};
+})();
+modules['game/mission-library/opening-intent.mjs']=(()=>{
+/** A lazy menu request owns only the input turn that opened it. Arm after that
+     * event finishes so its own bubbling click/Enter is not mistaken for a newer
+     * action. Never consume input or prevent a newer screen from handling it. */
+function trackMissionLibraryOpening({document:doc=globalThis.document,onRetire}){
+const origin=doc.activeElement;
+let retired=false,
+disposed=false,
+armed=false,
+claimed=false;
+const inputs=['keydown','pointerdown','click'];
+function dispose(){
+disposed=true;
+if(!armed)return;
+doc.removeEventListener('focusin',focusChanged,true);
+for(const type of inputs)doc.removeEventListener(type,retire,true);
+armed=false;
+}
+function retire(){
+if(retired||disposed)return;
+retired=true;
+dispose();
+onRetire?.();
+}
+function focusChanged(){
+if(!claimed&&doc.activeElement!==origin)retire();
+}
+queueMicrotask(()=>{
+if(disposed)return;
+armed=true;
+if(!claimed)doc.addEventListener('focusin',focusChanged,true);
+for(const type of inputs)doc.addEventListener(type,retire,true);
+focusChanged();
+});
+const current=()=> !retired&&(claimed||doc.activeElement===origin);
+return{
+current,
+claim:()=>{
+if(!current())return false;
+claimed=true;
+if(armed)doc.removeEventListener('focusin',focusChanged,true);
+return true;
+},
+dispose,
+};
+}
+
+return{trackMissionLibraryOpening};
+})();
+modules['game/ui/level-card.mjs']=(()=>{
+const starCount=(value)=>(value===null||value===undefined?null:Number(value));
+
+const SLOT_TAGS=Object.freeze({
+campaignHeading:'span',
+meta:'span',
+number:'span',
+position:'span',
+title:'strong',
+campaign:'span',
+progressGroup:'span',
+progress:'span',
+stars:'span',
+status:'span',
+preview:'span',
+check:'span',
+});
+
+const classNames=(...values)=>values.filter(Boolean).join(' ');
+
+/**
+     * Creates the common semantic card skeleton used by the mission library and
+     * company journeys. Host class aliases keep their layouts brandable without
+     * allowing either host to drift into a different information hierarchy.
+     */
+function createLevelCardView({document,className='',classes={}}){
+if(!document?.createElement)throw new TypeError('A document is required for a level card.');
+const element=(slot)=>{
+const result=document.createElement(SLOT_TAGS[slot]);
+result.className=classNames(
+`level-card-${slot.replace(/[A-Z]/g,(c)=>`-${c.toLowerCase()}`)}`,
+classes[slot],
+);
+return result;
+};
+const button=document.createElement('button');
+button.type='button';
+button.className=classNames('level-card',className);
+const view=Object.fromEntries(Object.keys(SLOT_TAGS).map((slot)=>[slot,element(slot)]));
+view.campaignHeading.setAttribute('role','heading');
+view.campaignHeading.setAttribute('aria-level','3');
+view.preview.setAttribute('aria-hidden','true');
+view.check.setAttribute('aria-hidden','true');
+view.check.textContent='✓';
+view.meta.append(view.number,view.position);
+view.progressGroup.append(view.progress,view.stars);
+button.append(
+view.campaignHeading,
+view.meta,
+view.title,
+view.campaign,
+view.progressGroup,
+view.status,
+view.preview,
+view.check,
+);
+return Object.freeze({button,...view});
+}
+
+/** Shared, presentation-only level-card state for the core and company hosts. */
+function levelCardPresentation({
+globalLevelNumber=null,
+campaignLevelNumber,
+campaignLevelCount,
+collection='Journey',
+progressState={state:'new',bestStars:null},
+}){
+if(
+!(
+globalLevelNumber===null||
+(Number.isSafeInteger(globalLevelNumber)&&globalLevelNumber>0)
+)||
+!Number.isSafeInteger(campaignLevelNumber)||
+campaignLevelNumber<1||
+!Number.isSafeInteger(campaignLevelCount)||
+campaignLevelCount<campaignLevelNumber
+)
+throw new TypeError('Level-card numbering is invalid.');
+const bestStars=starCount(progressState.bestStars);
+if(
+!['new','skipped','completed'].includes(progressState.state)||
+!(bestStars===null||[1,2,3].includes(bestStars))
+)
+throw new TypeError('Level-card progress is invalid.');
+return Object.freeze({
+globalLevelNumber,
+globalLabel:globalLevelNumber===null?collection:`#${globalLevelNumber}`,
+campaignLabel:`${campaignLevelNumber}/${campaignLevelCount}`,
+completed:progressState.state==='completed',
+progressState:progressState.state,
+bestStars,
+stars:bestStars===null?'☆☆☆':`${'★'.repeat(bestStars)}${'☆'.repeat(3-bestStars)}`,
+});
+}
+
+/** Applies host-independent visual state without replacing the card node. */
+function applyLevelCardPresentation(view,presentation){
+if(!view?.button|| !view.stars)throw new TypeError('A level-card view is required.');
+view.button.dataset.completionState=presentation.progressState;
+view.button.dataset.bestStars=
+presentation.bestStars===null?'':String(presentation.bestStars);
+view.button.dataset.levelNumber=
+presentation.globalLevelNumber===null?'':String(presentation.globalLevelNumber);
+view.stars.textContent=presentation.stars;
+return view;
+}
+
+return{createLevelCardView,levelCardPresentation,applyLevelCardPresentation};
+})();
+modules['game/ui/mission-library-browser.mjs']=(()=>{
+const attachMissionLibraryGoal=
+modules['game/ui/mission-library-goal.mjs']['attachMissionLibraryGoal'];
+const t=simGlobalI18n['t'];
+const localizedText=simGlobalI18n['localizedText'];
+const localizedMessage=simGlobalI18n['localizedMessage'];
+const localizedAttribute=simGlobalI18n['localizedAttribute'];
+const formatNumber=simGlobalI18n['formatNumber'];
+const renderMessage=simGlobalI18n['render'];
+const LIBRARY_COLLECTIONS=modules['game/mission-library/library.mjs']['LIBRARY_COLLECTIONS'];
+const LIBRARY_MODES=modules['game/mission-library/library.mjs']['LIBRARY_MODES'];
+const LIBRARY_LIFECYCLES=modules['game/mission-library/library.mjs']['LIBRARY_LIFECYCLES'];
+const trackMissionLibraryOpening=
+modules['game/mission-library/opening-intent.mjs']['trackMissionLibraryOpening'];
+const applyLevelCardPresentation=
+modules['game/ui/level-card.mjs']['applyLevelCardPresentation'];
+const createLevelCardView=modules['game/ui/level-card.mjs']['createLevelCardView'];
+const levelCardPresentation=modules['game/ui/level-card.mjs']['levelCardPresentation'];
+
+const LIBRARY_TAG_KEYS=Object.freeze({
+Journey:'common:collections.journey',
+Classic:'common:collections.classic',
+Custom:'common:collections.custom',
+Remix:'interface:missionLibrary.tag.Remix',
+Ukrainian:'interface:missionLibrary.tag.Ukrainian',
+FPV:'interface:missionLibrary.tag.FPV',
+Arcade:'interface:missionLibrary.tag.Arcade',
+Tactical:'interface:missionLibrary.tag.Tactical',
+Practice:'interface:missionLibrary.tag.Practice',
+});
+
+const modeLabel=(mode)=>
+({solo:t('interface:solo2'),versus:t('interface:versus2'),team:t('interface:team')})[
+mode
+];
+const sizeLabel=(bytes)=>
+bytes<1024*1024
+?`${formatNumber(Math.ceil(bytes/1024))} KiB`
+:`${formatNumber(bytes/(1024*1024),{minimumFractionDigits:1,maximumFractionDigits:1})} MiB`;
+
+/** Same flat mission surface across hosts. Owner adapters, not this UI, validate
+     * launches, prepare pictures, award progress and decide the next mission. */
+function attachMissionLibraryBrowser({
+document:doc=globalThis.document,
+library,
+mode='solo',
+onPause,
+onReturn,
+readState=()=>null,
+writeState=()=>{},
+launchContext=()=>({}),
+getCurrentId=()=>null,
+supportedModes=LIBRARY_MODES,
+availableCollectionsOnly=false,
+goalPreferenceOptions={},
+description=localizedMessage(
+'interface:allMissionsOneLibraryJourneyClassicAndCustomKeepTheir',
+),
+random=Math.random,
+renderPreview=()=>null,
+createArtworkView=null,
+retune={},
+onSelection=()=>{},
+}){
+if(
+!Array.isArray(supportedModes)||
+!supportedModes.includes(mode)||
+supportedModes.some((value)=> !LIBRARY_MODES.includes(value))
+)
+throw new TypeError(t('interface:unknownMissionLibraryMode'));
+if(typeof random!=='function')throw new TypeError('A random number source is required.');
+const modes=[...new Set(supportedModes)];
+const menuRetuneOrigin=retune.origin??(()=>null);
+const commitMenuRetune=retune.commit??(()=>{});
+const collections=()=>
+availableCollectionsOnly
+?LIBRARY_COLLECTIONS.filter((value)=>
+library.missions.some(
+(row)=>row.collection===value&&row.modes.some((item)=>modes.includes(item)),
+),
+)
+:LIBRARY_COLLECTIONS;
+const node=(tag,id,text)=>{
+const result=doc.createElement(tag);
+if(id)result.id=id;
+if(text!==undefined)localizedText(result,()=>text);
+return result;
+};
+const dialog=node('dialog','journey-chooser');
+let retuneOrigin=null;
+dialog.className='journey-chooser mission-library-chooser';
+dialog.setAttribute('aria-labelledby','journey-chooser-title');
+const heading=node(
+'h2',
+'journey-chooser-title',
+localizedMessage('interface:findYourNextLine'),
+);
+const copy=node('p',null,description);
+copy.className='journey-library-copy';
+const filters=node('div');
+filters.className='journey-filters';
+function field(title,id,type='select',parent=filters){
+const label=node('label'),
+caption=node('span',null,title),
+control=node(type,id);
+caption.className='journey-filter-label';
+label.append(caption,control);
+parent.append(label);
+return control;
+}
+const search=field(
+localizedMessage('interface:searchAllMissions'),
+'journey-search',
+'input',
+);
+search.parentElement.className='journey-search-field';
+search.type='search';
+localizedAttribute(search,'placeholder',()=>t('interface:missionCampaignEditionOrTag'));
+const searchControls=node('div');
+searchControls.className='journey-search-controls';
+const clearSearch=node(
+'button',
+'journey-search-clear',
+localizedMessage('interface:clearSearch'),
+);
+clearSearch.type='button';
+clearSearch.className='button secondary';
+clearSearch.setAttribute('aria-controls','journey-cards');
+search.parentElement.after(searchControls);
+searchControls.append(search.parentElement,clearSearch);
+const filterDetails=node('details','journey-filter-details');
+filterDetails.className='journey-filter-details';
+const filterSummary=node(
+'summary',
+'journey-filter-summary',
+localizedMessage('interface:filters'),
+);
+const filterOptions=node('div');
+filterOptions.className='journey-filter-options';
+filterDetails.append(filterSummary,filterOptions);
+filters.append(filterDetails);
+const collection=field(
+localizedMessage('interface:collection'),
+'journey-collection',
+'select',
+filterOptions,
+);
+const lifecycle=field(
+localizedMessage('interface:missionLibrary.lifecycle.filter'),
+'journey-lifecycle',
+'select',
+filterOptions,
+);
+const campaign=field(
+localizedMessage('interface:campaign'),
+'journey-campaign',
+'select',
+filterOptions,
+);
+const modeFilter=field(
+localizedMessage('interface:mode'),
+'journey-mode',
+'select',
+filterOptions,
+);
+const detailLabel=node('label');
+detailLabel.className='journey-card-detail-control';
+const detailedCards=node('input','journey-detailed-cards');
+detailedCards.type='checkbox';
+detailLabel.append(
+detailedCards,
+node('span',null,localizedMessage('interface:detailedMissionCards')),
+);
+filterOptions.append(detailLabel);
+const view=doc.defaultView??globalThis;
+const media=view.matchMedia?.('(max-width: 600px), (max-height: 720px)');
+let compact=media?.matches===true;
+filterDetails.open= !compact;
+const option=(title,value)=>{
+const result=node('option',null,title);
+result.value=value;
+return result;
+};
+collection.append(
+option(localizedMessage('interface:all'),''),
+...collections().map((value)=>option(()=>t(LIBRARY_TAG_KEYS[value]),value)),
+);
+collection.value='';
+lifecycle.append(
+option(localizedMessage('interface:current'),'current'),
+option(localizedMessage('interface:missionLibrary.lifecycle.archive'),'archive'),
+option(localizedMessage('interface:missionLibrary.lifecycle.all'),''),
+);
+lifecycle.value='current';
+modeFilter.append(...modes.map((value)=>option(()=>modeLabel(value),value)));
+modeFilter.value=mode;
+modeFilter.parentElement.hidden=modes.length===1;
+const status=node('p','journey-chooser-status');
+status.setAttribute('role','status');
+const campaignRail=node('nav','journey-campaign-rail');
+campaignRail.className='journey-campaign-rail';
+localizedAttribute(campaignRail,'aria-label',()=>t('interface:campaign'));
+const list=node('div','journey-cards');
+list.className='journey-cards';
+const footer=node('div');
+footer.className='journey-footer';
+const randomLevel=node(
+'button',
+'journey-random-level',
+localizedMessage('interface:randomLevel'),
+);
+randomLevel.type='button';
+randomLevel.className='button primary';
+randomLevel.setAttribute('aria-controls','journey-cards');
+localizedAttribute(randomLevel,'title',()=>
+t('interface:playRandomLevelFromVisibleResults'),
+);
+const back=node('button','journey-back',localizedMessage('common:navigation.backToGame'));
+back.type='button';
+back.className='button secondary';
+footer.append(randomLevel,back);
+dialog.append(heading,copy,filters,status,campaignRail,list,footer);
+doc.body.append(dialog);
+const cards=new Map(),
+preparations=new Map();
+let opener=null,
+nativeReturnFocus=null,
+selectedId='',
+savedScroll=0,
+pendingCampaign='',
+pendingSelection=null,
+visit=0,
+destroyed=false,
+restoringCardFocus=false,
+resizeFrame=null,
+resizeAnchor=null,
+viewportAnchor=null,
+message='';
+let goal=null;
+let initialOpen=true;
+let saved=null;
+try{
+saved=readState();
+}catch{
+/* Session-only browsing still works. */
+}
+if(saved&&typeof saved==='object'){
+if(typeof saved.search==='string')search.value=saved.search.slice(0,512);
+if(collections().includes(saved.collection))collection.value=saved.collection;
+if(saved.lifecycle===''||LIBRARY_LIFECYCLES.includes(saved.lifecycle))
+lifecycle.value=saved.lifecycle;
+// The caller scopes state by hosting mode. Its browsing filter can point at
+// another mode and must survive a round trip back to this same host.
+if(modes.includes(saved.mode)){
+modeFilter.value=saved.mode;
+selectedId=typeof saved.selectedId==='string'?saved.selectedId:'';
+savedScroll=Number.isFinite(saved.scroll)?Math.max(0,saved.scroll):0;
+pendingCampaign=typeof saved.campaign==='string'?saved.campaign:'';
+}
+}
+function state(){
+return{
+search:search.value||'',
+collection:collection.value||'',
+lifecycle:lifecycle.value,
+campaign:campaign.value||pendingCampaign,
+mode:modeFilter.value,
+selectedId,
+scroll:dialog.open?list.scrollTop||0:savedScroll,
+};
+}
+function remember({captureFocus=true}={}){
+const focusedId=doc.activeElement?.closest('.journey-card')?.dataset.missionId;
+if(captureFocus&&focusedId&&list.contains(doc.activeElement))selectedId=focusedId;
+if(dialog.open)savedScroll=list.scrollTop||0;
+try{
+writeState(state());
+}catch{
+/* Do not block play on browser storage. */
+}
+}
+function retirePreparations({except=null}={}){
+for(const[id,preparation]of preparations)
+if(id!==except){
+preparation.controller.abort();
+preparations.delete(id);
+}
+}
+function rebuildCampaigns(requested=campaign.value||pendingCampaign){
+if(!modes.includes(modeFilter.value))modeFilter.value=mode;
+if(availableCollectionsOnly){
+const selected=collection.value,
+choices=collections();
+collection.replaceChildren(
+option(localizedMessage('interface:all'),''),
+...choices.map((value)=>option(()=>t(LIBRARY_TAG_KEYS[value]),value)),
+);
+collection.value=choices.includes(selected)?selected:'';
+}
+const choices=new Map();
+for(const row of library.forMode(modeFilter.value))
+if(
+(!collection.value||row.collection===collection.value)&&
+(!lifecycle.value||row.lifecycle===lifecycle.value)
+)
+choices.set(row.campaignKey,()=>{
+const display=library.presentation?.(row)??row;
+return`${display.campaignTitle} · ${display.edition}`;
+});
+campaign.replaceChildren(
+option(localizedMessage('interface:allCampaigns'),''),
+...[...choices].map(([key,title])=>option(title,key)),
+);
+campaign.value=choices.has(requested)?requested:'';
+// Remote metadata arrives only after the deliberate open. Keep a saved
+// campaign pending until that exact option exists, not as a hidden filter.
+if(campaign.value)pendingCampaign='';
+}
+rebuildCampaigns();
+function retirePendingSelection(){
+const pending=pendingSelection;
+pendingSelection=null;
+pending?.opening.dispose();
+}
+function currentSelectionButton(id){
+const card=cards.get(id);
+return card?.button.isConnected&&
+!card.button.disabled&&
+list.contains(card.button)&&
+library.find(id)===card.row
+?card.button
+:null;
+}
+function updateCampaignRailSelection(id=selectedId||getCurrentId()){
+const selected=library.find(id);
+onSelection(selected??null,{mode:modeFilter.value});
+const key=selected?.campaignKey??'';
+for(const shortcut of campaignRail.children)
+shortcut.setAttribute('aria-pressed',String(shortcut.dataset.campaignKey===key));
+}
+function primary(){
+const selected=currentSelectionButton(selectedId);
+if(selected)return selected;
+// A saved remote selection may arrive after the first render. Keep its
+// opening lease on Search instead of silently selecting another mission.
+if(selectedId&& !library.find(selectedId))return search;
+const current=
+!selectedId&&modeFilter.value===mode?currentSelectionButton(getCurrentId()):null;
+return(
+current??
+[...list.querySelectorAll('.journey-card')].find((button)=> !button.disabled)??
+search
+);
+}
+function restoreSelection(){
+const target=primary();
+target.focus({preventScroll:true});
+list.scrollTop=savedScroll;
+if(target!==search)target.scrollIntoView?.({block:'nearest'});
+if(selectedId&& !library.find(selectedId)&& !doc.hidden&&doc.hasFocus?.()!==false){
+const opening=trackMissionLibraryOpening({
+document:doc,
+onRetire(){
+if(pendingSelection?.opening===opening)pendingSelection=null;
+},
+});
+pendingSelection={
+opening,
+visit,
+id:selectedId,
+scroll:savedScroll,
+};
+}
+}
+function restorePendingSelection(){
+const pending=pendingSelection;
+if(!pending)return;
+if(
+pending.visit!==visit||
+!dialog.open||
+doc.hidden||
+doc.hasFocus?.()===false||
+!pending.opening.current()
+){
+retirePendingSelection();
+return;
+}
+const button=currentSelectionButton(pending.id);
+if(!button&& !library.find(pending.id))return;
+retirePendingSelection();
+const target=button??primary();
+target.focus({preventScroll:true});
+list.scrollTop=pending.scroll;
+if(target!==search)target.scrollIntoView?.({block:'nearest'});
+}
+function selectExact(id,{focus=false}={}){
+const row=library.find(id);
+if(!row|| !row.modes.includes(mode))return false;
+retirePendingSelection();
+// Exact incoming selections belong to this host, even when its last
+// browsing session was looking at a different mode.
+const modeChanged=modeFilter.value!==mode;
+modeFilter.value=mode;
+lifecycle.value=row.lifecycle;
+pendingCampaign='';
+if(modeChanged|| !list.contains(cards.get(id)?.button)){
+search.value='';
+collection.value='';
+campaign.value='';
+rebuildCampaigns();
+if(modeChanged)invalidateDiagrams();
+render();
+}
+selectedId=id;
+if(focus){
+cards.get(id)?.button.focus({preventScroll:true});
+cards.get(id)?.button.scrollIntoView?.({block:'nearest'});
+}
+remember();
+return true;
+}
+function selectionVisibilityChanged(){
+if(doc.hidden){
+retirePendingSelection();
+cancelResizeScroll();
+}
+}
+const displayName=(row)=>
+library.find(row.id)===row?library.presentation(row).name:row.name;
+doc.addEventListener('visibilitychange',selectionVisibilityChanged);
+view.addEventListener?.('blur',retirePendingSelection);
+view.addEventListener?.('blur',cancelResizeScroll);
+async function activate(row,button){
+// Detached cards retain their event handlers. A past view (or a closed
+// chooser) must not launch or prepare content after its intent has ended.
+if(
+destroyed||
+!dialog.open||
+doc.hidden||
+doc.hasFocus?.()===false||
+cards.get(row.id)?.button!==button||
+!list.contains(button)||
+library.find(row.id)!==row||
+!row.modes.includes(modeFilter.value)
+)
+return;
+if(preparations.has(row.id))return;
+retirePendingSelection();
+retirePreparations({except:row.id});
+selectedId=row.id;
+updateCampaignRailSelection(row.id);
+// Touch activation need not move keyboard focus off a different card.
+remember({captureFocus:false});
+const activeMode=modeFilter.value;
+let availability;
+try{
+availability=library.availability(row,activeMode);
+}catch(error){
+message=error.message;
+render();
+return;
+}
+if(availability.state==='preparing')return;
+if(availability.state==='download'||availability.retry){
+const ticket=visit;
+const controller=new AbortController();
+const preparation={controller,mode:activeMode,row,ticket};
+preparations.set(row.id,preparation);
+message='';
+try{
+const result=await library.prepare(row,{
+mode:activeMode,
+signal:controller.signal,
+});
+const current=
+preparations.get(row.id)===preparation&&
+ticket===visit&&
+dialog.open&&
+!destroyed&&
+!doc.hidden&&
+doc.hasFocus?.()!==false&&
+modeFilter.value===activeMode&&
+cards.get(row.id)?.button===button&&
+list.contains(button)&&
+library.find(row.id)?.id===row.id;
+if(current)
+message=
+result.state==='cancelled'
+?localizedMessage('interface:downloadCancelledYourCurrentGameIsKept')
+:result.state==='ready'
+?()=>t('interface:missionLibrary.prepared',{name:displayName(row)})
+:'';
+if(current&&result.state==='ready'){
+preparations.delete(row.id);
+render();
+const readyRow=library.find(row.id),
+readyButton=cards.get(row.id)?.button;
+if(readyRow&&readyButton)return activate(readyRow,readyButton);
+}
+}catch(error){
+if(ticket===visit)
+message=()=>
+t('interface:missionLibrary.prepareFailed',{
+name:displayName(row),
+error:error.message,
+});
+}finally{
+if(preparations.get(row.id)===preparation)preparations.delete(row.id);
+if(dialog.open&&ticket===visit)render();
+}
+return;
+}
+if(availability.state!=='ready')return;
+// Existing hosts must leave the picker before taking their atomic attempt
+// ticket. Keep filters/focus for an unsuccessful or cancelled handoff.
+const ticket= ++visit;
+remember({captureFocus:false});
+let context=null,
+closeRetired=false;
+// close() restores native focus and may run reentrant host listeners before
+// the owner's launch lease exists. Admit only this input turn and the
+// browser's expected return targets; a newer action must keep its focus.
+const closingFocus=new Set([
+doc.activeElement,
+nativeReturnFocus,
+doc.body,
+doc.documentElement,
+dialog,
+]);
+const retireClose=()=>{
+closeRetired=true;
+};
+const closingFocusChanged=()=>{
+if(!closingFocus.has(doc.activeElement))retireClose();
+};
+const closingInputs=['keydown','pointerdown','click'];
+const mayRestore=()=>
+!closeRetired&&
+ticket===visit&&
+!destroyed&&
+!doc.hidden&&
+doc.hasFocus?.()!==false&&
+context?.isCurrent?.()!==false;
+const mayLaunch=()=>
+mayRestore()&&
+closingFocus.has(doc.activeElement)&&
+modeFilter.value===activeMode&&
+cards.get(row.id)?.button===button&&
+list.contains(button)&&
+library.find(row.id)===row;
+try{
+doc.addEventListener('focusin',closingFocusChanged,true);
+for(const type of closingInputs)doc.addEventListener(type,retireClose,true);
+try{
+context=launchContext(row,{mode:activeMode});
+if(!mayLaunch()){
+context?.retire?.();
+return;
+}
+dialog.close();
+if(!mayLaunch()||dialog.open){
+context?.retire?.();
+return;
+}
+}finally{
+doc.removeEventListener('focusin',closingFocusChanged,true);
+for(const type of closingInputs)doc.removeEventListener(type,retireClose,true);
+}
+const accepted=await library.launch(row,{
+...context,
+mode:activeMode,
+});
+if(accepted===false&&mayRestore()){
+message=localizedMessage('interface:missionNotOpenedYourCurrentGameIsKept');
+open(opener,{returnLabel:back.textContent,retune:false});
+}
+}catch(error){
+if(mayRestore()){
+message=()=>
+t('interface:missionLibrary.launchFailed',{
+name:displayName(row),
+error:error.message,
+});
+open(opener,{returnLabel:back.textContent,retune:false});
+}
+}
+}
+function readyRandomRows(){
+return library
+.search(search.value||'',{
+mode:modeFilter.value,
+collection:collection.value,
+lifecycle:lifecycle.value,
+})
+.filter((row)=>library.availability(row,modeFilter.value).state==='ready');
+}
+function playRandom({resetFilters=false}={}){
+if(destroyed|| !dialog.open||doc.hidden||doc.hasFocus?.()===false)return false;
+retirePendingSelection();
+retirePreparations();
+if(resetFilters){
+++visit;
+message='';
+search.value='';
+collection.value='';
+lifecycle.value='current';
+modeFilter.value=mode;
+selectedId='';
+savedScroll=0;
+list.scrollTop=0;
+pendingCampaign='';
+rebuildCampaigns();
+invalidateDiagrams();
+render();
+remember({captureFocus:false});
+}
+const ready=readyRandomRows();
+const alternatives=ready.filter((row)=>row.id!==getCurrentId());
+const choices=alternatives.length?alternatives:ready;
+if(!choices.length){
+message=localizedMessage('interface:noReadyLevelsMatchTheseFilters');
+render();
+return false;
+}
+const draw=Number(random());
+const bounded=Number.isFinite(draw)?Math.min(Math.max(draw,0),1-Number.EPSILON):0;
+const row=choices[Math.floor(bounded*choices.length)];
+const button=cards.get(row.id)?.button;
+if(!button||button.disabled|| !list.contains(button)){
+message=localizedMessage('interface:noReadyLevelsMatchTheseFilters');
+render();
+return false;
+}
+selectedId=row.id;
+void activate(row,button);
+return true;
+}
+function makeCard(row){
+const view=createLevelCardView({
+document:doc,
+className:'journey-card journey-card-illustrated',
+classes:{
+campaignHeading:'journey-campaign-heading',
+meta:'journey-card-meta',
+number:'journey-card-number',
+position:'journey-card-position',
+title:'journey-card-title',
+campaign:'journey-card-campaign',
+progressGroup:'journey-card-progress-group',
+progress:'journey-card-progress',
+stars:'journey-card-stars',
+status:'journey-card-action',
+preview:'journey-card-preview',
+check:'journey-card-check',
+},
+});
+const{
+button,
+campaignHeading,
+number,
+position:campaignPosition,
+title:name,
+campaign:campaignName,
+progress,
+stars,
+status:action,
+preview,
+check,
+}=view;
+button.dataset.missionId=row.id;
+const display=()=>library.presentation?.(row)??row;
+localizedText(campaignHeading,()=>display().campaignTitle);
+localizedText(name,()=>display().name);
+localizedText(campaignName,()=>display().campaignTitle);
+localizedAttribute(button,'data-campaign-title',()=>display().campaignTitle);
+const edition=node('span',null,()=>display().edition);
+edition.className='journey-card-edition';
+const tags=node('span',null,()=>
+row.tags.map((tag)=>t(LIBRARY_TAG_KEYS[tag])).join(' · '),
+);
+tags.className='journey-card-tags';
+const rules=node('span',null,row.rules);
+rules.className='journey-card-challenge';
+rules.hidden= !row.rules;
+const route=node('span');
+route.className='journey-card-route';
+const mastery=node('span');
+mastery.className='journey-card-mastery';
+button.append(edition,tags,rules,route,mastery);
+button.onclick=()=>activate(row,button);
+button.addEventListener('focusin',()=>{
+selectedId=row.id;
+updateCampaignRailSelection(row.id);
+goal?.refresh();
+});
+return{
+row,
+button,
+campaignHeading,
+number,
+campaignPosition,
+progress,
+stars,
+rules,
+route,
+mastery,
+action,
+preview,
+check,
+diagram:null,
+artwork:null,
+completion:null,
+};
+}
+function render(){
+if(destroyed)return;
+clearSearch.hidden= !search.value;
+const focused=doc.activeElement;
+const focusedId=list.contains(focused)?focused?.dataset.missionId:null;
+const focusedCampaignKey=campaignRail.contains(focused)
+?focused?.dataset.campaignKey
+:null;
+const scroll=list.scrollTop||0;
+const campaignScroll=campaignRail.scrollLeft||0;
+const railRows=library.search(search.value||'',{
+mode:modeFilter.value,
+collection:collection.value,
+lifecycle:lifecycle.value,
+});
+// Campaigns are navigation anchors, never a hidden second filter. Every
+// matching campaign remains in this one scroll surface.
+const matches=railRows;
+randomLevel.disabled= !matches.some(
+(row)=>library.availability(row,modeFilter.value).state==='ready',
+);
+localizedText(
+status,
+()=>
+`${t('common:counts.missions',{count:matches.length})} · ${modeLabel(modeFilter.value)}${message?` · ${renderMessage(message)}`:''}`,
+);
+const filtersActive=
+!!collection.value||modeFilter.value!==mode||lifecycle.value!=='current';
+localizedText(filterSummary,()=>
+filtersActive?t('interface:filtersActive'):t('interface:filters'),
+);
+const campaignChoices=new Map();
+for(const row of railRows)
+if(!campaignChoices.has(row.campaignKey))
+campaignChoices.set(row.campaignKey,{
+row,
+count:0,
+});
+for(const row of railRows)campaignChoices.get(row.campaignKey).count++;
+const shortcuts=[...campaignChoices].map(([key,info])=>{
+const shortcut=node('button');
+localizedText(shortcut,()=>{
+const display=library.presentation?.(info.row)??info.row;
+return`${display.campaignTitle} · ${t('common:counts.missions',{count:info.count})}`;
+});
+shortcut.type='button';
+shortcut.className='journey-campaign-shortcut';
+shortcut.dataset.campaignKey=key;
+shortcut.setAttribute('aria-pressed','false');
+localizedAttribute(shortcut,'title',()=>{
+const display=library.presentation?.(info.row)??info.row;
+return display.edition;
+});
+shortcut.onclick=()=>{
+if(destroyed|| !dialog.open||doc.hidden||doc.hasFocus?.()===false)return;
+retirePendingSelection();
+retirePreparations();
+campaign.value=key;
+pendingCampaign='';
+const target=[...list.querySelectorAll('.journey-card')].find(
+(card)=>card.dataset.campaignKey===key,
+);
+if(!target||target.disabled)return;
+selectedId=target.dataset.missionId;
+target.focus({preventScroll:true});
+target.scrollIntoView?.({block:'start',inline:'nearest'});
+remember({captureFocus:false});
+};
+return shortcut;
+});
+campaignRail.replaceChildren(...shortcuts);
+campaignRail.hidden=shortcuts.length<2;
+let previousCampaign=null;
+const buttons=matches.map((row)=>{
+const display=()=>library.presentation?.(row)??row;
+let card=cards.get(row.id);
+if(card?.row!==row){
+if(card)hidePreview(card);
+card=makeCard(row);
+cards.set(row.id,card);
+}
+const availability=library.availability(row,modeFilter.value);
+const progressState=library.progressState(row,modeFilter.value);
+const cardPresentation=levelCardPresentation({...row,progressState});
+applyLevelCardPresentation(card,cardPresentation);
+localizedText(card.number,()=>
+row.globalLevelNumber===null
+?t('interface:missionLibrary.customLevel')
+:t('interface:missionLibrary.levelNumber',{number:row.globalLevelNumber}),
+);
+localizedText(card.campaignPosition,()=>
+t('interface:missionLibrary.campaignPosition',{
+position:row.campaignLevelNumber,
+total:row.campaignLevelCount,
+}),
+);
+localizedText(card.stars,()=>cardPresentation.stars);
+localizedAttribute(card.stars,'aria-label',()=>
+progressState.state==='completed'
+?progressState.bestStars===null
+?t('interface:missionLibrary.completedStarsUnknown')
+:t('interface:missionLibrary.completedStars',{stars:progressState.bestStars})
+:t('interface:missionLibrary.notCompleted'),
+);
+const details=library.details(row,modeFilter.value);
+localizedText(card.rules,()=>library.details(row,modeFilter.value).challenge);
+card.rules.hidden= !details.challenge;
+localizedText(card.route,()=>library.details(row,modeFilter.value).route);
+card.route.hidden= !details.route;
+localizedText(card.mastery,()=>{
+const mastery=library.details(row,modeFilter.value).mastery;
+return mastery
+?t('interface:missionLibrary.optionalChallenge',{challenge:mastery})
+:'';
+});
+card.mastery.hidden= !details.mastery;
+card.completion=library.completion(row,modeFilter.value);
+card.button.dataset.campaignKey=row.campaignKey;
+card.button.dataset.campaignStart=String(previousCampaign!==row.campaignKey);
+card.button.dataset.availabilityState=availability.included
+?'included'
+:availability.state;
+card.button.dataset.pictureState=card.completion?.state??'unfinished';
+card.button.dataset.current=String(row.id===getCurrentId());
+card.campaignHeading.hidden=previousCampaign===row.campaignKey;
+localizedText(card.progress,()=>
+card.completion?.state==='unavailable'
+?card.completion.reason
+:library.progress(row,modeFilter.value)||
+(progressState.state==='completed'&&progressState.bestStars===null
+?t('interface:missionLibrary.completedStarsUnknown')
+:''),
+);
+card.progress.hidden= !card.progress.textContent;
+localizedText(card.action,()=>
+availability.state==='ready'||availability.included
+?''
+:availability.state==='download'
+?`${t('interface:downloadPlay')} · ${sizeLabel(availability.bytes)}`
+:availability.state==='preparing'
+?`${t('interface:preparing')}…`
+:t(
+availability.retry
+?'interface:missionLibrary.unavailableRetry'
+:'interface:missionLibrary.unavailableReason',
+{reason:availability.reason},
+),
+);
+card.action.hidden=availability.state==='ready'||availability.included;
+localizedAttribute(card.button,'aria-label',()=>{
+const progressLabel=
+progressState.state==='completed'
+?progressState.bestStars===null
+?t('interface:missionLibrary.completedStarsUnknown')
+:t('interface:missionLibrary.completedStars',{stars:progressState.bestStars})
+:progressState.state==='skipped'
+?t('interface:skippedTryAgain')
+:t('interface:missionLibrary.notCompleted');
+const ownerProgress=
+progressState.state==='completed'&&progressState.bestStars===null
+?library.progress(row,modeFilter.value)
+:'';
+return`${card.number.textContent} · ${displayName(row)} · ${display().campaignTitle} · ${card.campaignPosition.textContent} · ${progressLabel}${ownerProgress?` · ${ownerProgress}`:''}`;
+});
+card.button.disabled=availability.state==='unavailable'&& !availability.retry;
+card.button.setAttribute('aria-busy',String(availability.state==='preparing'));
+previousCampaign=row.campaignKey;
+return card.button;
+});
+// Reuse buttons across status changes instead of throwing away keyboard focus.
+if(
+buttons.length!==list.children.length||
+buttons.some((button,index)=>list.children[index]!==button)
+)
+list.replaceChildren(...buttons);
+if(focusedCampaignKey&& !doc.hidden&&doc.hasFocus?.()!==false){
+const replacement=shortcuts.find(
+(shortcut)=>shortcut.dataset.campaignKey===focusedCampaignKey,
+);
+if(replacement?.isConnected&& !campaignRail.hidden){
+if(doc.activeElement!==replacement)replacement.focus({preventScroll:true});
+}else primary().focus({preventScroll:true});
+}
+campaignRail.scrollLeft=campaignScroll;
+if(focusedId&& !doc.hidden&&doc.hasFocus?.()!==false){
+const replacement=cards.get(focusedId)?.button;
+if(replacement?.isConnected&&list.contains(replacement)&& !replacement.disabled){
+if(doc.activeElement!==replacement){
+restoringCardFocus=true;
+try{
+replacement.focus({preventScroll:true});
+}finally{
+restoringCardFocus=false;
+}
+}
+}else primary().focus({preventScroll:true});
+}
+list.scrollTop=scroll;
+for(const[id,card]of cards)
+if(!library.find(id)){
+hidePreview(card);
+card.button.remove();
+cards.delete(id);
+}
+restorePendingSelection();
+updateCampaignRailSelection();
+goal?.refresh();
+observeDiagrams();
+}
+// Decode only near the viewport. An earned picture owns the same exact
+// descriptor as Collection; release its decoded bytes when it leaves view.
+function hidePreview(card){
+const changed=
+!!card.artwork||
+!!card.diagram||
+!!card.preview.querySelector('.journey-card-map')||
+!!card.preview.querySelector('.journey-card-picture-status');
+card.artwork?.release();
+card.previewLease?.release?.();
+card.previewLease=null;
+card.artwork=null;
+card.diagram=null;
+if(changed)card.preview.replaceChildren();
+}
+function showPreview(card){
+if(card.diagram|| !dialog.open|| !list.contains(card.button))return;
+card.diagram=true;
+try{
+if(card.completion?.state==='earned'&&createArtworkView){
+const canvas=node('canvas');
+canvas.className='journey-card-map';
+canvas.width=288;
+canvas.setAttribute('aria-hidden','true');
+const pictureStatus=node('span');
+pictureStatus.className='journey-card-picture-status';
+card.preview.append(canvas,pictureStatus);
+card.artwork=createArtworkView({canvas,status:pictureStatus});
+void card.artwork.show(card.completion.record);
+}else{
+const diagram=library.card(card.row,modeFilter.value);
+if(!diagram)return;
+card.previewLease=renderPreview({
+container:card.preview,
+diagram,
+row:card.row,
+mode:modeFilter.value,
+document:doc,
+});
+}
+}catch{
+/* Optional previews cannot prevent a mission launch. */
+}
+}
+const Observer=doc.defaultView?.IntersectionObserver??globalThis.IntersectionObserver;
+const observer=
+typeof Observer==='function'
+?new Observer(
+(entries)=>{
+for(const entry of entries){
+const card=cards.get(entry.target.dataset.missionId);
+if(!card||library.find(card.row.id)!==card.row)continue;
+if(entry.isIntersecting)showPreview(card);
+else hidePreview(card);
+}
+},
+{root:list,rootMargin:'120px'},
+)
+:null;
+function fallbackPreviews(){
+if(observer|| !dialog.open)return;
+const bounds=list.getBoundingClientRect();
+let shown=0;
+for(const button of list.querySelectorAll('.journey-card')){
+const card=cards.get(button.dataset.missionId),
+rect=button.getBoundingClientRect();
+const near=rect.bottom>=bounds.top-120&&rect.top<=bounds.bottom+120;
+// A bounded fallback also works in hosts without layout observation.
+if(near&&shown<12){
+showPreview(card);
+shown++;
+}else hidePreview(card);
+}
+}
+function observeDiagrams(){
+for(const card of cards.values())
+if(!list.contains(card.button)){
+observer?.unobserve?.(card.button);
+hidePreview(card);
+}
+for(const button of list.querySelectorAll('.journey-card'))observer?.observe?.(button);
+fallbackPreviews();
+}
+function captureViewportAnchor(){
+if(!dialog.open)return;
+const bounds=list.getBoundingClientRect();
+for(const button of list.querySelectorAll('.journey-card')){
+const rect=button.getBoundingClientRect();
+if(rect.bottom>=bounds.top){
+viewportAnchor={
+id:button.dataset.missionId,
+offset:rect.top-bounds.top,
+};
+return;
+}
+}
+}
+list.addEventListener('scroll',fallbackPreviews);
+list.addEventListener('scroll',captureViewportAnchor);
+function invalidateDiagrams(){
+observer?.disconnect();
+for(const card of cards.values())hidePreview(card);
+}
+function cancelResizeScroll({retainAnchor=false}={}){
+if(resizeFrame!==null)view.cancelAnimationFrame?.(resizeFrame);
+resizeFrame=null;
+if(!retainAnchor)resizeAnchor=null;
+}
+function resetViewportAnchor(){
+cancelResizeScroll();
+viewportAnchor=null;
+}
+function preserveViewportAnchor(){
+const eligible= !destroyed&&dialog.open&& !doc.hidden&&doc.hasFocus?.()!==false;
+cancelResizeScroll({retainAnchor:eligible});
+if(!eligible)return;
+if(!resizeAnchor){
+if(!viewportAnchor)captureViewportAnchor();
+resizeAnchor=viewportAnchor&&{...viewportAnchor};
+}
+const anchor=resizeAnchor&&{...resizeAnchor};
+if(!anchor)return;
+const ticket=visit;
+const restore=()=>{
+resizeFrame=null;
+if(
+destroyed||
+ticket!==visit||
+!dialog.open||
+doc.hidden||
+doc.hasFocus?.()===false
+){
+resizeAnchor=null;
+return;
+}
+const target=currentSelectionButton(anchor.id);
+if(!target){
+resizeAnchor=null;
+return;
+}
+const bounds=list.getBoundingClientRect();
+const delta=target.getBoundingClientRect().top-bounds.top-anchor.offset;
+if(Number.isFinite(delta)&&Math.abs(delta)>=1)list.scrollTop+=delta;
+viewportAnchor=anchor;
+resizeAnchor=null;
+};
+if(view.requestAnimationFrame)resizeFrame=view.requestAnimationFrame(restore);
+else restore();
+}
+view.addEventListener?.('resize',preserveViewportAnchor);
+function resizeFilters(event){
+compact=event.matches===true;
+layoutGoal();
+// Keep the exact focused control and selection across rotation. If a
+// compact transition catches focus inside the filter panel, leave that
+// panel open until the player moves onward instead of relocating focus.
+const focused=doc.activeElement;
+filterDetails.open= !compact||filterOptions.contains(focused);
+if(dialog.open)observeDiagrams();
+preserveViewportAnchor();
+}
+media?.addEventListener?.('change',resizeFilters);
+detailedCards.addEventListener('change',()=>{
+dialog.classList.toggle('mission-library-detailed',detailedCards.checked);
+if(dialog.open)observeDiagrams();
+});
+dialog.addEventListener('focusin',(event)=>{
+// A touch activation can deliberately leave keyboard focus on a different
+// control. Retire its preparation only after a later focus transition;
+// refocusing the preparing card keeps the owned one-action launch alive.
+if(!restoringCardFocus){
+const focusedCard=event.target.closest?.('.journey-card');
+retirePreparations({
+except:
+focusedCard&&list.contains(focusedCard)?focusedCard.dataset.missionId:null,
+});
+}
+// The compact filters float above cards. Once keyboard/controller focus
+// reaches an action below them, remove that cover without moving focus or
+// changing a filter. Focus and select previews inside the popover stay put.
+if(
+compact&&
+filterDetails.open&&
+(list.contains(event.target)||footer.contains(event.target))
+)
+filterDetails.open=false;
+});
+function close({retune=true}={}){
+retirePendingSelection();
+cancelResizeScroll();
+++visit;
+const wasOpen=dialog.open;
+// Play already saved the visible position before closing. Native hidden
+// layout reports zero; later disposal must not overwrite that position or
+// return focus away from the action that now owns this page.
+if(wasOpen)remember();
+retirePreparations();
+if(!wasOpen)return;
+dialog.close();
+if(onReturn)onReturn(opener);
+else if(opener?.isConnected)opener.focus({preventScroll:true});
+if(retune&& !dialog.open)commitMenuRetune(dialog,retuneOrigin);
+}
+function open(
+origin=doc.activeElement,
+{returnLabel=t('common:navigation.backToGame'),retune=true}={},
+){
+if(destroyed)return;
+const changed= !dialog.open;
+const landing=retune&&changed?menuRetuneOrigin(origin):null;
+retirePendingSelection();
+cancelResizeScroll();
+++visit;
+opener=origin;
+if(initialOpen&& !saved&&library.find(getCurrentId())?.lifecycle==='archive')
+lifecycle.value='archive';
+initialOpen=false;
+localizedText(back,()=>returnLabel);
+onPause?.();
+invalidateDiagrams();
+rebuildCampaigns();
+render();
+if(!dialog.open)nativeReturnFocus=doc.activeElement;
+dialog.showModal();
+observeDiagrams();
+restoreSelection();
+if(landing){
+retuneOrigin=landing;
+commitMenuRetune(landing,dialog);
+}else if(changed)retuneOrigin=null;
+}
+search.addEventListener('input',()=>{
+resetViewportAnchor();
+retirePendingSelection();
+retirePreparations();
+pendingCampaign='';
+++visit;// Late preparation feedback belongs to the view that requested it.
+message='';
+selectedId='';
+savedScroll=0;
+list.scrollTop=0;
+render();
+captureViewportAnchor();
+remember();
+});
+clearSearch.onclick=()=>{
+if(destroyed|| !dialog.open||doc.hidden||doc.hasFocus?.()===false|| !search.value)
+return;
+const ticket=visit,
+focused=doc.activeElement;
+search.value='';
+// Use the same bubbling input path as typing, including host-owned lazy
+// loading invalidation. Clearing never changes the other visible filters.
+const EventType=doc.defaultView?.Event||Event;
+search.dispatchEvent(new EventType('input',{bubbles:true}));
+if(
+destroyed||
+!dialog.open||
+doc.hidden||
+doc.hasFocus?.()===false||
+visit!==ticket+1||
+(doc.activeElement!==focused&&
+!(focused===clearSearch&&doc.activeElement===doc.body))
+)
+return;
+const first=[...list.querySelectorAll('.journey-card')].find(
+(button)=> !button.disabled,
+);
+(first??(compact?filterSummary:collection)).focus({
+preventScroll:true,
+});
+remember();
+};
+campaign.addEventListener('change',()=>{
+retirePendingSelection();
+retirePreparations();
+pendingCampaign='';
+const key=campaign.value;
+if(!key)return;
+const target=[...list.querySelectorAll('.journey-card')].find(
+(card)=>card.dataset.campaignKey===key&& !card.disabled,
+);
+if(!target)return;
+selectedId=target.dataset.missionId;
+target.focus({preventScroll:true});
+target.scrollIntoView?.({block:'start',inline:'nearest'});
+updateCampaignRailSelection(selectedId);
+remember({captureFocus:false});
+});
+for(const control of[collection,modeFilter,lifecycle])
+control.addEventListener('change',()=>{
+resetViewportAnchor();
+retirePendingSelection();
+retirePreparations();
+++visit;
+message='';
+selectedId='';
+savedScroll=0;
+list.scrollTop=0;
+pendingCampaign='';
+rebuildCampaigns();
+if(control===modeFilter)invalidateDiagrams();
+render();
+captureViewportAnchor();
+remember();
+});
+back.onclick=close;
+randomLevel.onclick=()=>playRandom();
+dialog.addEventListener('close',()=>{
+retirePendingSelection();
+invalidateDiagrams();
+});
+dialog.addEventListener('cancel',(event)=>{
+if(event.target===dialog){
+event.preventDefault();
+close();
+}
+});
+const unsubscribe=library.subscribe(()=>{
+if(dialog.open){
+rebuildCampaigns();
+render();
+}
+});
+function revealExisting(id,targetMode=mode,{focus=true}={}){
+const row=library.find(id);
+if(!row|| !modes.includes(targetMode)|| !row.modes.includes(targetMode))return false;
+retirePendingSelection();
+const modeChanged=modeFilter.value!==targetMode;
+modeFilter.value=targetMode;
+lifecycle.value=row.lifecycle;
+pendingCampaign='';
+if(modeChanged|| !list.contains(cards.get(id)?.button)){
+search.value='';
+collection.value='';
+campaign.value='';
+rebuildCampaigns();
+if(modeChanged)invalidateDiagrams();
+render();
+}
+selectedId=id;
+if(focus){
+cards.get(id)?.button.focus({preventScroll:true});
+cards.get(id)?.button.scrollIntoView?.({block:'nearest'});
+}
+goal?.refresh();
+remember();
+return true;
+}
+goal=attachMissionLibraryGoal({
+container:footer,
+library,
+modes,
+getMode:()=>modeFilter.value,
+getSelectedId:()=>(currentSelectionButton(selectedId)?selectedId:null),
+isActive:()=> !destroyed&&dialog.open&& !doc.hidden&&doc.hasFocus?.()!==false,
+reveal:revealExisting,
+onIntent(){
+retirePendingSelection();
+retirePreparations();
+++visit;
+},
+...goalPreferenceOptions,
+window:view,
+});
+function layoutGoal(){
+if(!goal)return;
+// Pinning is useful but secondary to seeing and choosing the next route.
+// The same live controls move into compact Filters without duplicating
+// their preferences, listeners or focused mission.
+const focused=doc.activeElement;
+(compact?filterOptions:footer).append(goal.element);
+if(compact&&goal.element.contains(focused))filterDetails.open=true;
+if(goal.element.contains(focused))focused.focus({preventScroll:true});
+}
+layoutGoal();
+return{
+elements:{dialog,list,footer,filters},
+open,
+primary,
+restore(){
+open(opener,{returnLabel:back.textContent,retune:false});
+},
+close,
+state,
+select(id){
+return revealExisting(id,mode,{focus:false});
+},
+playRandom,
+// Incoming launch intent keeps its existing host-mode ownership rule.
+reveal:(id)=>revealExisting(id,mode),
+refresh(){
+if(dialog.open){
+invalidateDiagrams();
+rebuildCampaigns();
+render();
+}
+},
+destroy(){
+close({retune:false});
+destroyed=true;
+goal.dispose();
+unsubscribe();
+observer?.disconnect();
+media?.removeEventListener?.('change',resizeFilters);
+doc.removeEventListener('visibilitychange',selectionVisibilityChanged);
+view.removeEventListener?.('blur',retirePendingSelection);
+view.removeEventListener?.('blur',cancelResizeScroll);
+view.removeEventListener?.('resize',preserveViewportAnchor);
+dialog.remove();
+},
+};
+}
+
+return{attachMissionLibraryBrowser};
 })();
 modules['game/profile-database.mjs']=(()=>{
 /** Stable existing database identity; importing it must not load Journey or media. */
@@ -5730,6 +8137,10 @@ group.remove();
 return{MENU_AUDIO_KEY,readMenuAudio,saveMenuAudio,attachMenuAudioSettings};
 })();
 return{
+createSimMissionLibrary:modules['game/mission-library/library.mjs']['createMissionLibrary'],
+simLibraryMissionId:modules['game/mission-library/library.mjs']['libraryMissionId'],
+attachSimMissionLibraryChooser:
+modules['game/ui/mission-library-browser.mjs']['attachMissionLibraryBrowser'],
 createSimEnemyStatsHost:modules['game/enemy-stats.mjs']['createEnemyStatsHost'],
 mountSimEnemyStats:modules['game/ui/enemy-stats.mjs']['mountEnemyStats'],
 mountSimContinuousCelebration:
@@ -5756,6 +8167,9 @@ attachSimMenuAudioSettings:modules['game/ui/menu-audio.mjs']['attachMenuAudioSet
 readSimMenuAudio:modules['game/ui/menu-audio.mjs']['readMenuAudio'],
 };
 })();
+export const createSimMissionLibrary=sharedGlobalSettings.createSimMissionLibrary;
+export const simLibraryMissionId=sharedGlobalSettings.simLibraryMissionId;
+export const attachSimMissionLibraryChooser=sharedGlobalSettings.attachSimMissionLibraryChooser;
 export const createSimEnemyStatsHost=sharedGlobalSettings.createSimEnemyStatsHost;
 export const mountSimEnemyStats=sharedGlobalSettings.mountSimEnemyStats;
 export const mountSimContinuousCelebration=sharedGlobalSettings.mountSimContinuousCelebration;

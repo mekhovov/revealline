@@ -21,6 +21,37 @@ const hash = (bytes) => createHash('sha256').update(bytes).digest('hex');
 const requireValid = (condition, message) => {
   if (!condition) throw new Error(message);
 };
+/** Select only policy-owned UI and validator messages for an offline package. */
+export function projectOptionalLocale(catalogues, policy) {
+  const projected = {
+    errors: Object.fromEntries(
+      Object.entries(catalogues.errors).filter(([key]) => key.startsWith('dataJson.')),
+    ),
+  };
+  const namespaces = new Set([
+    ...Object.keys(policy.localeKeys ?? {}),
+    ...Object.keys(policy.localeKeyPrefixes ?? {}),
+  ]);
+  for (const namespace of namespaces) {
+    const source = catalogues[namespace],
+      prefixes = policy.localeKeyPrefixes?.[namespace] ?? [];
+    const keys = [
+      ...new Set([
+        ...(policy.localeKeys?.[namespace] ?? []),
+        ...Object.keys(source).filter((key) => prefixes.some((prefix) => key.startsWith(prefix))),
+      ]),
+    ];
+    requireValid(
+      keys.every((key) => typeof source[key] === 'string'),
+      'Optional locale projection is incomplete',
+    );
+    projected[namespace] = {
+      ...projected[namespace],
+      ...Object.fromEntries(keys.map((key) => [key, source[key]])),
+    };
+  }
+  return projected;
+}
 async function ordinary(root, name, limits) {
   let target = root;
   for (const part of name.split('/')) {
@@ -247,20 +278,17 @@ export async function buildOptionalPractice(
     if (name === 'game/i18n/catalogs.mjs') {
       const locales = {};
       for (const locale of ['en', 'uk']) {
-        const errors = JSON.parse(await readInput(`game/locales/${locale}/errors.json`));
-        locales[locale] = {
-          errors: Object.fromEntries(
-            Object.entries(errors).filter(([key]) => key.startsWith('dataJson.')),
-          ),
-        };
-        for (const [namespace, keys] of Object.entries(policy.localeKeys ?? {})) {
-          const source = JSON.parse(await readInput(`game/locales/${locale}/${namespace}.json`));
-          requireValid(
-            keys.every((key) => typeof source[key] === 'string'),
-            'Optional locale projection is incomplete',
+        const namespaces = new Set([
+          'errors',
+          ...Object.keys(policy.localeKeys ?? {}),
+          ...Object.keys(policy.localeKeyPrefixes ?? {}),
+        ]);
+        const catalogues = {};
+        for (const namespace of namespaces)
+          catalogues[namespace] = JSON.parse(
+            await readInput(`game/locales/${locale}/${namespace}.json`),
           );
-          locales[locale][namespace] = Object.fromEntries(keys.map((key) => [key, source[key]]));
-        }
+        locales[locale] = projectOptionalLocale(catalogues, policy);
       }
       bytes = Buffer.from(
         `// Selected optional-practice validator and settings messages.\nglobalThis.RevealLineTranslations=${JSON.stringify(locales)};\n`,

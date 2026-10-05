@@ -457,6 +457,31 @@ test('coalesced resize signals retain the pre-reflow anchor through layout scrol
   f.chooser.destroy();
 });
 
+test('changing search retires the old scroll anchor before an immediate rotation', () => {
+  const f = resizeFixture(),
+    list = f.$('journey-cards'),
+    first = list.children[0],
+    second = list.children[1];
+  list._rect = { x: 0, y: 100, width: 320, height: 240 };
+  first._rect = { x: 0, y: -200, width: 150, height: 155 };
+  second._rect = { x: 0, y: 110, width: 150, height: 155 };
+  list.scrollTop = 310;
+  list.emit('scroll');
+  f.view.emit('resize');
+  first._rect.y = 100;
+  second._rect.y = 310;
+  f.$('journey-search').value = '';
+  f.$('journey-search').emit('input');
+  assert.equal(list.scrollTop, 0);
+  assert.equal(f.frames.size, 0, 'the previous layout operation is retired');
+  first._rect.y += 8;
+  second._rect.y += 8;
+  f.rotate(740, 360);
+  f.frame();
+  assert.equal(list.scrollTop, 8, 'rotation keeps the new first row, not the previous chapter');
+  f.chooser.destroy();
+});
+
 test('phone viewport and rotation matrix retains the exact top mission, offset and focus', () => {
   const f = resizeFixture(),
     list = f.$('journey-cards'),
