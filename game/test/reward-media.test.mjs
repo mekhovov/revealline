@@ -187,6 +187,7 @@ function harness(f, { facts = {}, playFailure = false } = {}) {
       this.videoHeight = facts.height ?? 360;
       this.paused = true;
       this.playCalls = 0;
+      this.rejectedAudible = 0;
       this.loads = 0;
     }
     load() {
@@ -199,7 +200,11 @@ function harness(f, { facts = {}, playFailure = false } = {}) {
     }
     play() {
       this.playCalls++;
-      if (playFailure) return Promise.reject(new Error('Gesture required'));
+      if (
+        playFailure === true ||
+        (playFailure === 'audible' && !this.muted && !this.rejectedAudible++)
+      )
+        return Promise.reject(new Error('Gesture required'));
       this.paused = false;
       this.emit('play');
       return Promise.resolve();
@@ -285,8 +290,13 @@ test('media roles share strict native headers and bounded plain UTF-8/WebVTT adm
 
 test('explicit native playback respects the real audio master, language, foreground lease and blur', async () => {
   const f = await fixture(),
-    h = harness(f),
-    viewer = mountRewardMedia({ ...h.options, locale: 'uk' });
+    h = harness(f);
+  let ended = 0;
+  const viewer = mountRewardMedia({
+    ...h.options,
+    locale: 'uk',
+    onEnded: () => ended++,
+  });
   await settles();
   assert.equal(h.videos.length, 0);
   assert.equal(
@@ -314,6 +324,9 @@ test('explicit native playback respects the real audio master, language, foregro
   h.window.emit('focus');
   await settles();
   assert.equal(media.playCalls, 1);
+  media.emit('ended');
+  assert.equal(ended, 1);
+  assert.equal(h.counts().gains, 0);
   viewer.dispose();
   assert.deepEqual(h.counts(), { gains: 0, subscribers: 0, urls: 0 });
   assert.equal(h.container.children.length, 0);
@@ -604,6 +617,26 @@ test('cinematic playback keeps the poster underneath and fades only when native 
   assert.equal(animations[0][1].duration, 650);
   viewer.dispose();
   assert.equal(h.urls.size, 0);
+});
+
+test('cinematic autoplay falls back to visible muted playback when iOS blocks automatic sound', async () => {
+  const f = await fixture(),
+    h = harness(f, { playFailure: 'audible' });
+  const viewer = mountRewardMedia({ ...h.options, cinematic: true });
+  await viewer.start({ allowMutedFallback: true });
+  const media = h.videos[0];
+  assert.equal(media.playCalls, 2);
+  assert.equal(media.paused, false);
+  assert.equal(media.hidden, false);
+  assert.equal(media.muted, true);
+  assert.equal(h.counts().gains, 0, 'Silent video keeps the game soundtrack available');
+  assert(h.container.textContent.includes('Press Play for sound'));
+  h.play();
+  await settles();
+  assert.equal(media.playCalls, 3);
+  assert.equal(media.muted, false);
+  assert.equal(h.counts().gains, 1);
+  viewer.dispose();
 });
 
 test('cinematic reduced motion and autoplay rejection preserve an explicit playback fallback', async () => {
