@@ -1,0 +1,18 @@
+- link "Skip to flight selection":
+  - /url: "#explore"
+- dialog:
+  - banner:
+    - button "Menu"
+    - generic: FPV SIM · Worlds
+    - button "Pause"
+  - paragraph: Festival guide
+  - generic: +
+  - generic: 1.0 m · 0 m/s · 15.2 s · ♥ 100
+  - strong: 2/4 · Observe the marked subject · 1.5/4.0 s
+  - status: Follow the route, turns and landing. Pause or slow playback to study the flight.
+  - generic "Yaw 1%, Throttle 50%":
+  - generic "Roll 0%, Pitch -2%":
+  - complementary "Drone response. vertical speed near zero. 1.0 m · -0.1 m/s vertical · 0.4 m/s drift":
+    - button "Hide drone response": ×
+    - status: Drone upright
+- status: Preparing flight…

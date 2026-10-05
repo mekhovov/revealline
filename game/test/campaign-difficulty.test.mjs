@@ -5,6 +5,8 @@ import { createHash } from 'node:crypto';
 import {
   DEFAULT_CAMPAIGN_DIFFICULTY,
   CAMPAIGN_DIFFICULTIES,
+  GENTLE_POLICY_VERSION,
+  CLASSIC_GENTLE_POLICY_VERSION,
   resolveCampaignDifficulty,
   createDifficultyContext,
   findDifficultyContext,
@@ -61,9 +63,25 @@ const single = () => ({
 test('Standard preserves every shipped campaign shape, key and frozen legacy board identity', () => {
   assert.equal(DEFAULT_CAMPAIGN_DIFFICULTY, 'standard');
   assert.deepEqual(CAMPAIGN_DIFFICULTIES, ['standard', 'gentle']);
-  assert.equal(
-    campaigns.reduce((n, c) => n + c.levels.length, 0),
-    47,
+  assert.deepEqual(
+    campaigns.map((campaign) => [campaign.id, campaign.levels.length]),
+    [
+      ['first-signal', 12],
+      ['fpv-pressure-lines', 3],
+      ['fpv-pressure-frontier', 3],
+      ['night-shift', 3],
+      ['living-threads', 3],
+      ['fieldcraft', 4],
+      ['homeward-skies', 3],
+      ['equipment-workshop', 3],
+      ['sentinel-relay', 1],
+      ['neon-reference', 16],
+      ['neon-mosaic', 38],
+      ['fpv-first-light-r4', 3],
+      ['fpv-first-light-r3', 3],
+      ['fpv-first-light-r2', 3],
+      ['fpv-first-light', 3],
+    ],
   );
   for (const campaign of campaigns) {
     const before = canonicalJSON(campaign),
@@ -120,6 +138,11 @@ test('all shipped Gentle maps retain topology, goals, equipment and supported si
   for (const campaign of campaigns) {
     const before = canonicalJSON(campaign),
       context = createDifficultyContext(campaign, 'gentle');
+    const classic = versionsForCampaign(campaign).ruleset === 'xonix-core.v5';
+    assert.equal(
+      context.policyVersion,
+      classic ? CLASSIC_GENTLE_POLICY_VERSION : GENTLE_POLICY_VERSION,
+    );
     assert.equal(context.campaignKey, campaignKey(context.campaign));
     assert.notEqual(context.campaignKey, campaignKey(campaign));
     assert.deepEqual(versionsForCampaign(context.campaign), versionsForCampaign(campaign));
@@ -131,10 +154,18 @@ test('all shipped Gentle maps retain topology, goals, equipment and supported si
       for (const [j, enemy] of level.enemies.entries()) {
         const prior = original.enemies[j];
         if (['bouncer', 'claimed-rover', 'eroder'].includes(enemy.type)) {
-          assert.equal(enemy.vx, prior.vx * 0.6, `${enemy.id}: Gentle horizontal velocity`);
-          assert.equal(enemy.vy, prior.vy * 0.6, `${enemy.id}: Gentle vertical velocity`);
+          // Retained gentle.v1 only retunes bouncers. The separately versioned
+          // core-v5 policy also retunes its native rovers and eroders.
+          const factor = enemy.type === 'bouncer' || classic ? 0.6 : 1;
+          assert.equal(enemy.vx, prior.vx * factor, `${enemy.id}: Gentle horizontal velocity`);
+          assert.equal(enemy.vy, prior.vy * factor, `${enemy.id}: Gentle vertical velocity`);
         } else if (['border-patrol', 'contour-patrol'].includes(enemy.type)) {
-          assert.equal(enemy.speed, (prior.speed ?? 4) * 0.6, `${enemy.id}: Gentle patrol speed`);
+          const changed = enemy.type === 'border-patrol' || classic;
+          assert.equal(
+            enemy.speed,
+            changed ? (prior.speed ?? 4) * 0.6 : prior.speed,
+            `${enemy.id}: Gentle patrol speed`,
+          );
         } else if (enemy.type === 'lane-boss') {
           assert.ok(enemy.warningSeconds >= (prior.warningSeconds ?? 1.5));
           assert.ok(

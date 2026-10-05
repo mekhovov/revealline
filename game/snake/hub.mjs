@@ -5,9 +5,11 @@ import {
   CLASSIC_SNAKE_LEVELS,
 } from './classic-catalogue.mjs';
 import { mountOptionalPracticePanel } from '../ui/optional-practice-panel.mjs';
-import { fpvWorldLaunchURL, appearanceLaunchURL } from '../fpv-entry.mjs';
+import { fpvWorldLaunchURL, appearanceLaunchURL, nativeArtReviewURL } from '../fpv-entry.mjs';
 import { installThemeHost } from '../presentation/theme-host.mjs';
 import { classicAppearanceContext } from './classic-presentation.mjs';
+for (const link of document.querySelectorAll('a[data-native-review-link]'))
+  link.href = nativeArtReviewURL(link.getAttribute('href'), globalThis.location.href);
 const linkedLocale = new URL(location.href).searchParams.get('lang');
 if (['en', 'uk'].includes(linkedLocale)) setLocale(linkedLocale, { persist: false });
 
@@ -115,7 +117,7 @@ let simCatalogue = null;
 let simUnavailable = false;
 const launch = (label, href) => {
   const link = node('a', label);
-  link.href = href;
+  link.href = nativeArtReviewURL(href, globalThis.location.href);
   if (new URL(link.href).pathname.endsWith('/snake/play.html')) {
     link.href = appearanceLaunchURL(link.href, appearancePin(), { transfer: false });
     link.addEventListener('click', () => {
@@ -172,7 +174,7 @@ function simLaunch(label, key, value) {
       const target = new URL(link.href);
       target.searchParams.set(key, value);
       target.searchParams.set('lang', getLocale());
-      link.href = target.href;
+      link.href = nativeArtReviewURL(target.href, globalThis.location.href);
     }
     simPanel.open?.();
   });

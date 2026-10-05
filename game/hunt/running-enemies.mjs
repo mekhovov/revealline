@@ -2,6 +2,7 @@ import {
   derivePursuitGoals,
   validatePursuitPopulation,
   PURSUIT_GOALS_VERSION,
+  PURSUIT_GOALS_V2,
 } from './pursuit-goals.mjs';
 import { dataIdentity, required } from '../data-json.mjs';
 import { normalizedLevel } from '../core/level.mjs';
@@ -10,6 +11,8 @@ import {
   RUNNING_ENEMY_VERSIONS,
   PURSUIT_VERSIONS,
   SNAKE_PURSUIT_VERSIONS,
+  PURSUIT_V2_VERSIONS,
+  SNAKE_PURSUIT_V2_VERSIONS,
   isRunningEnemyLevel,
 } from '../core/versions.mjs';
 import { placeRunningEnemies, runningEnemyReservedIds } from './running-enemy-placement.mjs';
@@ -33,9 +36,16 @@ const freeze = (value) => {
  * variants and authored Hunt objectives keep their existing accepted recipe. */
 export function prepareRunningEnemyLevel(
   source,
-  { classes = CLASSES, style = 'original', population } = {},
+  { classes = CLASSES, style = 'original', population, generation = PURSUIT_GOALS_VERSION } = {},
 ) {
   required(['original', 'varied'].includes(style), 'Choose original or varied running targets.');
+  required(
+    [PURSUIT_GOALS_VERSION, PURSUIT_GOALS_V2].includes(generation),
+    'Unsupported pursuit generation.',
+  );
+  const versions = generation === PURSUIT_GOALS_V2 ? PURSUIT_V2_VERSIONS : PURSUIT_VERSIONS;
+  const snakeVersions =
+    generation === PURSUIT_GOALS_V2 ? SNAKE_PURSUIT_V2_VERSIONS : SNAKE_PURSUIT_VERSIONS;
   source = runningEnemyCopy(source);
   if (source.pursuit && isRunningEnemyLevel(source)) return freeze(normalizedLevel(source));
   if (isRunningEnemyLevel(source)) source = normalizedLevel(source);
@@ -61,7 +71,7 @@ export function prepareRunningEnemyLevel(
     return freeze(
       normalizedLevel({
         ...base,
-        version: base.snake ? SNAKE_PURSUIT_VERSIONS.levelVersion : PURSUIT_VERSIONS.levelVersion,
+        version: base.snake ? snakeVersions.levelVersion : versions.levelVersion,
         runningEnemies: {
           version: base.snake ? 'running-enemies.v3' : 'running-enemies.v2',
           baseVersion: base.version,
@@ -71,10 +81,10 @@ export function prepareRunningEnemyLevel(
         },
         pursuit: authored
           ? {
-              version: PURSUIT_GOALS_VERSION,
+              version: generation,
               actors: authored.map(({ x: _x, y: _y, ...policy }) => policy),
             }
-          : derivePursuitGoals(runners, runningEnemyGeometry(base)),
+          : derivePursuitGoals(runners, runningEnemyGeometry(base), generation),
       }),
     );
   }
@@ -116,16 +126,15 @@ export function prepareRunningEnemyLevel(
   return freeze(
     normalizedLevel({
       ...base,
-      version:
-        style === 'varied' ? PURSUIT_VERSIONS.levelVersion : RUNNING_ENEMY_VERSIONS.levelVersion,
+      version: style === 'varied' ? versions.levelVersion : RUNNING_ENEMY_VERSIONS.levelVersion,
       ...(style === 'varied'
         ? {
             pursuit: authored
               ? {
-                  version: PURSUIT_GOALS_VERSION,
+                  version: generation,
                   actors: authored.map(({ x: _x, y: _y, ...policy }) => policy),
                 }
-              : derivePursuitGoals(actors, geometry),
+              : derivePursuitGoals(actors, geometry, generation),
           }
         : {}),
       runningEnemies: {
@@ -150,8 +159,12 @@ export function prepareRunningEnemyLevel(
 export function matchRunningEnemyLevel(source, recorded, options) {
   try {
     return (
-      dataIdentity(prepareRunningEnemyLevel(source, options)) ===
-      dataIdentity(normalizedLevel(recorded))
+      dataIdentity(
+        prepareRunningEnemyLevel(source, {
+          ...options,
+          generation: recorded.pursuit?.version ?? PURSUIT_GOALS_VERSION,
+        }),
+      ) === dataIdentity(normalizedLevel(recorded))
     );
   } catch {
     return false;

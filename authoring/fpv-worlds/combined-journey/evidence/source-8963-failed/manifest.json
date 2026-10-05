@@ -1,0 +1,39 @@
+{
+  "sourceRevision": "3032f722a5964f1cd0b2a7ce4412f294f546c793",
+  "fixtureOrigin": "http://127.0.0.1:8963/",
+  "outcome": "Failed fixture control selector: Results Retry targeted while Home is current; product unchanged.",
+  "checks": 366,
+  "passedChecks": 365,
+  "failedCheckNumber": 363,
+  "nativeFlight": {
+    "status": "paused",
+    "ticks": 17
+  },
+  "warnings": [],
+  "errors": [],
+  "ownedCleanup": "all registered resources zero",
+  "files": [
+    {
+      "file": "fpv-combined-journey-8963-failed.json.gz",
+      "rawBytes": 1315486,
+      "rawSHA256": "46aff16073243a3c465cc63ddbd6a93d23501054c29ebfe5d5d85bb3ce9f7328",
+      "storedBytes": 215687,
+      "storedSHA256": "fd711f1a594635722df34638d72aa0febca5a6fa1f3c6895d6d9f16c7415476a"
+    },
+    {
+      "file": "fpv-combined-journey-8963-failed.png",
+      "rawBytes": 30198,
+      "rawSHA256": "f1ff5102ac166b1a6e447b5c2c074329d985ce25730818d70f4523115df9c6eb",
+      "storedBytes": 30198,
+      "storedSHA256": "f1ff5102ac166b1a6e447b5c2c074329d985ce25730818d70f4523115df9c6eb"
+    },
+    {
+      "file": "fixture.json.gz",
+      "rawBytes": 47642,
+      "rawSHA256": "8e134d8b16b86c6910057919980dfe3452f066c491745d8f1bd44b0a3365e9ca",
+      "storedBytes": 9066,
+      "storedSHA256": "104058cff38f16a03b1dc571ba6516d3e85f5e5c7f7ace9c01e950bd0f129d66"
+    }
+  ],
+  "restore": "gzip -dc <file.json.gz> > <original-file.json>; compare rawBytes/rawSHA256"
+}

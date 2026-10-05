@@ -56,6 +56,20 @@ const running = (p, levelId) =>
     p.frame(0);
     return p.doc.body.dataset.flightState === 'running' && p.rendered.run.levelId === levelId;
   });
+async function startPrepared(p, levelId) {
+  await settle(() => {
+    p.frame(0);
+    return p.rendered.run.levelId === levelId && p.$('game-overlay').dataset.kind === 'ready';
+  });
+  const accepted = p.rendered.run,
+    checkpoint = authoritativeCheckpoint(accepted);
+  assert.equal(p.rendered.paused, true);
+  for (let i = 0; i < 12; i++) p.frame();
+  assert.deepEqual(authoritativeCheckpoint(accepted), checkpoint);
+  p.$('start-button').click();
+  await running(p, levelId);
+  assert.equal(p.rendered.run, accepted);
+}
 async function openMissions(p, opener = 'shell-play') {
   p.$(opener).click();
   await settle(() => p.$('journey-chooser')?.open && p.$('journey-collection'));
@@ -126,7 +140,7 @@ test('the final authored core mission resolves the next unified-library owner wi
   const { p, backend } = await setup(t);
   await openMissions(p);
   missionCard(p, 'opening', 'long-way-home').click();
-  await running(p, 'long-way-home');
+  await startPrepared(p, 'long-way-home');
   const original = p.rendered.run;
   assert.equal(p.$('journey-skip').hidden, false);
   assert.equal(p.$('journey-skip').textContent, 'Skip mission');
@@ -150,7 +164,7 @@ for (const [missionId, expected] of [
     const { p } = await setup(t);
     await openMissions(p);
     missionCard(p, 'opening', missionId).click();
-    await running(p, missionId);
+    await startPrepared(p, missionId);
     p.$('pause-button').click();
     p.rendered.run.status = 'won';
     p.$('show-result').click();
@@ -173,7 +187,7 @@ test('cross-pack Skip failure keeps Horizon intact, then retries into Border wit
   await openMissions(p);
   assert.equal(p.$('journey-cards').children.length, 17);
   missionCard(p, 'authored', 'long-way-home').click();
-  await running(p, 'long-way-home');
+  await startPrepared(p, 'long-way-home');
   const previous = p.rendered.run,
     picture = p.rendered.backdrop;
   refuseBorder = true;
@@ -203,7 +217,7 @@ test('cross-pack Skip failure keeps Horizon intact, then retries into Border wit
   assert.match(skipped.textContent, /Skipped/);
   assert.doesNotMatch(skipped.textContent, /Cleared/);
   skipped.click();
-  await running(p, 'long-way-home');
+  await startPrepared(p, 'long-way-home');
   assert.equal(p.rendered.run.coverage, 0);
   assert.deepEqual(p.errors, []);
 });
@@ -468,7 +482,7 @@ for (const row of optionalRoutes)
     const { p, backend } = await setup(t, { search: '?journey=authored' });
     await openMissions(p);
     missionCard(p, 'authored', row[0]).click();
-    await running(p, row[0]);
+    await startPrepared(p, row[0]);
     playRoute(p, row);
     if (!p.$('skip-celebration').hidden) p.$('skip-celebration').click();
     p.$('show-result').click();
