@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FPV HUD browser qualification</title>
+<link rel="stylesheet" href="../../optional-practice/civilian-fpv/world-style.css">
+<style>
+body{margin:0;padding:20px;background:#07111b;color:#eef3f6;font:15px/1.5 system-ui}main{max-width:1280px;margin:auto}h1{font-size:24px}button{min-height:44px;padding:8px 18px}#frames{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}#frames h2{font-size:16px}.sample{position:relative;height:420px;overflow:hidden;background:linear-gradient(#234257 52%,#52675d 52%);border:1px solid #66808d}.sample::before{content:'+';position:absolute;left:50%;top:50%;color:white}#old{position:absolute;inset:0}#settings{margin:14px 0}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#101e2c;padding:12px;font:12px/1.5 monospace}#checks{padding:12px;border:1px solid #557080}#status{min-height:24px}#frames .sample>div.beginner-coach{inset:auto;left:12px;top:12px}#frames h2,#frames p{margin:6px 0}@media(max-width:760px){#frames{grid-template-columns:1fr}.sample{height:350px}}
+</style>
+<main><h1>Shared flight HUD · browser qualification</h1>
+<p>Real recorded “Acro: the tilt stays” states, identical for both components. Preparation is excluded from timing. Native old-coach painting remains enabled; samples are spaced at least 90 ms apart. Alternating eight-sample batches reduce order bias. This measures DOM work, not FPS, renderer cost or input latency.</p>
+<button id="start" disabled>Loading modules…</button> <button id="probe" disabled>Run DOM probes</button>
+<p id="status" role="status">Loading source modules.</p><div id="checks"></div><div id="settings"></div>
+<div id="frames"><section><h2>New graphical HUD</h2><div class="sample" id="new"></div></section><section><h2>Previous numerical live coach</h2><div class="sample" id="old-frame"><div id="old"></div></div></section></div>
+<pre id="results">Press Start to prepare the existing recording and run a bounded comparison (about 12 seconds).</pre></main>
+<script type="module">
+import {mountFlightHud,flightGoalFeedback} from '../../optional-practice/civilian-fpv/sim-presentation.mjs';
+import {mountBeginnerCoach} from '../../optional-practice/civilian-fpv/beginner-coach.mjs';
+import {BEGINNER_LESSONS} from '../../optional-practice/civilian-fpv/world-catalogue.mjs';
+import {WORLD_DEMONSTRATIONS} from '../../optional-practice/civilian-fpv/world-demonstrations.mjs';
+import {initWorldRuntime,createWorldFlight} from '../../optional-practice/civilian-fpv/world-model.mjs';
+const $=id=>document.getElementById(id),start=$('start'),probe=$('probe'),status=$('status'),results=$('results');
+const memory=new Map(),storage={getItem:key=>memory.get(key)??null,setItem:(key,value)=>memory.set(key,value)};
+const hud=mountFlightHud({container:$('new'),storage,onExplain:()=>hud.openDetails()}),coach=mountBeginnerCoach({root:$('old')});
+hud.preferenceControls($('settings'));
+const lesson=BEGINNER_LESSONS.find(row=>row.id==='beginner-13');
+const demonstration=WORLD_DEMONSTRATIONS.find(row=>row.proof.course===lesson.id&&row.proof.mode===lesson.mode);
+const proof=demonstration.proof;let samples=null,busy=false;
+const pause=ms=>new Promise(resolve=>setTimeout(resolve,ms));
+const frame=()=>new Promise(resolve=>requestAnimationFrame(resolve));
+const part=name=>$('new').querySelector(`[data-hud-part="${name}"]`);
+const options={active:true,paused:false,lesson:true};
+function preference(name,value){const select=$('settings').querySelector(`[data-hud-preference="${name}"]`);select.value=value;select.dispatchEvent(new Event('change',{bubbles:true}));}
+function probes(){
+ const checks=[],check=(name,ok)=>checks.push({name,pass:Boolean(ok)});
+ const feedback={id:'probe',phase:'hold',action:'Hold this tilt',label:'Tilt',gauge:{kind:'tilt',value:9,min:6,max:18,valid:true,met:true,oneSided:null},earned:{kind:'hold',value:1,total:1,complete:false},checks:[{id:'height',label:'Height',valid:true,met:true},{id:'tilt',label:'Tilt',valid:true,met:true},{id:'speed',label:'Speed',valid:true,met:false},{id:'input',label:'Centre sticks',valid:false,met:false},{id:'zone',label:'Inside zone',valid:true,met:true}],detail:'Numbers belong in paused details.'};
+ preference('mode','guided');hud.update(feedback,options);
+ let track=part('gauge-track');check('Range target band is fixed middle third',track.querySelector('rect').getAttribute('x')==='42'&&track.querySelector('rect').getAttribute('width')==='36');
+ check('Full duration alone does not award completion',part('earned-label').textContent==='Hold');
+ check('Blocking check is visible, groups bounded at four',part('checks').children.length===4&&part('checks').children[0].textContent.includes('Speed'));
+ check('Guided value is nonnumeric',!/[0-9]/.test(part('value').textContent));
+ hud.update({...feedback,gauge:{kind:'throttle',value:5,min:0,max:10,valid:true,met:true,oneSided:'max'}},options);
+ check('One-sided target range is half of track',track.querySelector('rect').getAttribute('width')==='54');
+ hud.update({...feedback,gauge:{kind:'alignment',value:0,min:0,max:0,valid:true,met:true}},options);check('Zero-width range has safe binary marker',track.hidden&&!part('value').hidden);
+ hud.setWorldCue({x:.5,y:.4,visible:true,occluded:true,angle:1,label:'Target'});check('Occlusion gives direction only',part('brackets').hidden&&!part('cue-arrow').hidden);hud.setWorldCue(null);
+ preference('mode','detailed');preference('textSize','large');preference('highContrast','true');
+ check('All display preferences persist',JSON.parse(memory.get('revealline.sim-flight-hud.v1')).highContrast===true&&hud.preferences().textSize==='large'&&hud.preferences().mode==='detailed');
+ check('Detailed numbers occupy one bounded row',part('details').parentElement===part('card')&&getComputedStyle(part('checks')).display==='none');
+ hud.openDetails({title:'Probe details',body:'Exact requirements'});check('Paused explanation opens separately',hud.detailsRoot()?.open===true);hud.closeDetails();
+ preference('mode','guided');preference('textSize','standard');preference('highContrast','false');hud.update(feedback,options);
+ const r=part('card').getBoundingClientRect(),short=$('new').clientHeight<=480&&$('new').clientWidth>=500;
+ check('Default card obeys bounded dimensions',r.width<=(short?220:240)+1&&r.height<=(short?64:72)+1);
+ $('checks').textContent=checks.map(row=>`${row.pass?'PASS':'FAIL'} · ${row.name}`).join('\n');$('checks').style.whiteSpace='pre-line';window.hudDomChecks=checks;return checks;
+}
+async function prepare(){
+ await initWorldRuntime();const flight=createWorldFlight({course:lesson.course,mode:proof.mode,response:proof.response});flight.arm();
+ const rows=[],stride=Math.max(1,Math.ceil(proof.frames.length/96));let previous=-1;
+ try{for(let i=0;i<proof.frames.length;i++){const row=proof.frames[i],state=flight.step({roll:row[0],pitch:row[1],yaw:row[2],throttle:row[3],actions:row[4]},{quantized:true});
+  if(i%stride===0||state.step!==previous||i===proof.frames.length-1)rows.push(structuredClone(state));previous=state.step;if(i%250===0)await pause(0);
+ }}finally{flight.dispose();}return rows;
+}
+const summarize=values=>{const sorted=[...values].sort((a,b)=>a-b),round=x=>Math.round(x*1000)/1000;return{n:values.length,mean:round(values.reduce((a,b)=>a+b,0)/values.length),p50:round(sorted[Math.floor(sorted.length*.5)]),p95:round(sorted[Math.min(sorted.length-1,Math.floor(sorted.length*.95))]),max:round(sorted.at(-1))};};
+start.onclick=async()=>{
+ if(busy)return;busy=true;start.disabled=probe.disabled=true;let observers=[];
+ try{
+ status.textContent='Preparing real recorded states…';samples??=await prepare();const checks=probes();coach.open(lesson,{mode:proof.mode,practice:true});
+ const hosts={new:$('new'),old:$('old')},data={new:{callback:[],layout:[],mutations:0},old:{callback:[],layout:[],mutations:0}};
+ const observe=Object.fromEntries(Object.entries(hosts).map(([key,node])=>{const value=new MutationObserver(()=>{});value.observe(node,{subtree:true,attributes:true,childList:true,characterData:true});observers.push(value);return[key,value];}));
+ const apply=(key,state)=>key==='new'?hud.update(flightGoalFeedback({course:lesson.course,mode:proof.mode,state}),options):coach.update({state,mode:proof.mode,source:'keyboard',stickMode:2,radioAvailable:false,monitorAvailable:true,reducedMotion:false});
+ for(let i=0;i<8;i++){await pause(90);await frame();apply('new',samples[i%samples.length]);apply('old',samples[i%samples.length]);hosts.old.getBoundingClientRect();}
+ const begun=performance.now(),spacing=[];let last=begun;
+ for(let i=0;i<samples.length;i++){
+  await pause(90);await frame();if(document.visibilityState!=='visible')throw Error('Tab became hidden; discard partial timing and run again.');
+  const now=performance.now();spacing.push(now-last);last=now;status.textContent=`Comparing recorded state ${i+1}/${samples.length} · step ${samples[i].step+1}`;
+  document.body.getBoundingClientRect();const order=Math.floor(i/8)%2?['old','new']:['new','old'];
+  for(const key of order){observe[key].takeRecords();const t0=performance.now();apply(key,samples[i]);const t1=performance.now();hosts[key].getBoundingClientRect();const t2=performance.now();data[key].callback.push(t1-t0);data[key].layout.push(t2-t1);data[key].mutations+=observe[key].takeRecords().length;}
+ }
+ const output={course:lesson.id,mode:proof.mode,recordedTicks:proof.frames.length,samples:samples.length,steps:[...new Set(samples.map(s=>s.step))],userAgent:navigator.userAgent,viewport:[innerWidth,innerHeight],dpr:devicePixelRatio,timestamp:new Date().toISOString(),elapsedMs:Math.round(performance.now()-begun),sampleSpacingMs:summarize(spacing),domChecks:checks,results:Object.fromEntries(Object.entries(data).map(([key,value])=>[key,{callbackMs:summarize(value.callback),forcedLayoutMs:summarize(value.layout),mutations:value.mutations}])),limitations:['Same recorded snapshots, at >=90ms spacing; old 80ms throttle untouched.','New callback includes feedback adapter; old coach includes its own feedback calculation.','Forced layout charges style/layout flush, not paint/compositor/GPU.','No FPS, gameplay latency, hardware-radio, sustained memory or audible-sound claim.']};
+ window.hudVerification=output;results.textContent=JSON.stringify(output,null,2);status.textContent='Comparison complete. Results describe this browser session only.';
+ }catch(error){status.textContent='FAILED: '+error.message;results.textContent=error.stack;}
+ finally{observers.forEach(value=>value.disconnect());busy=false;start.disabled=probe.disabled=false;}
+};
+probe.onclick=()=>{try{probes();status.textContent='DOM probes finished.';}catch(error){status.textContent='Probe failed: '+error.message;}};
+start.disabled=probe.disabled=false;start.textContent='Start comparison';status.textContent='Ready. No browser timing has been recorded yet.';
+window.addEventListener('pagehide',()=>{coach.dispose();hud.destroy();},{once:true});
+</script></html>
