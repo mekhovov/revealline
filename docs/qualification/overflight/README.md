@@ -43,10 +43,10 @@ can precede 360s and a surviving final tank can extend play beyond it.
 | -------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | A0 — Native foundation and content contract              | Native mode and versioned project/compiler exist; route receipts bind the compiled project and simulation source.                                                                                                                                                                                  | Complete current-source native/content review is broader than these route checks.                                                                                                                                                                                                                                   |
 | A1 — Dense engine proof                                  | Exact 1500/700 and 2500/1200 alive/visible fixtures; all actors move; exact area damage; two priority-attack cap. Both fixtures preserve at least 45/60 occupied screen regions through 901 simulated seconds, with bounded region density and distinct positions.                                 | Iris Xe target-hardware gate remains open. The [preliminary M4 Pro browser record](browser-reference-preliminary.json) used three consecutive 120s windows, not fresh independent trials, and predates the final fixture/source. Its internal acceptance flag does not qualify the current source or target device. |
-| A2 — Flight and upgrade proof                            | Legal slots/drafts/evolutions, fixed-step movement, paused selections and branch/system effects have focused tests. Automated routes use genuinely earned builds.                                                                                                                                  | Native card and mid-sortie captures are retained in [browser review](browser-review.md). Two exported contrasting real-time build clips and human control/readability assessment remain open.                                                                                                                                                                                                                         |
+| A2 — Flight and upgrade proof                            | Legal slots/drafts/evolutions, fixed-step movement, paused selections and branch/system effects have focused tests. Automated routes use genuinely earned builds.                                                                                                                                  | Native card and mid-sortie captures are retained in [browser review](browser-review.md). Two exported contrasting real-time build clips and human control/readability assessment remain open.                                                                                                                       |
 | A3 — Complete six-minute A sortie                        | All three encounter sets complete with three build directions and three seeds using three airframes; default-front single-airframe successes/failures retained. Burst/rest, optional rewards, rally and non-stacking support roles have focused checks. No timeout victory or damage/XP shortcuts. | Complete human runs, role-cue readability and seed-dependent evolution timing need review. Automated routes do not establish human difficulty or enjoyment.                                                                                                                                                         |
-| A4 — Creator and reusable-content delivery               | Versioned local project/package and shared-content implementation exists.                                                                                                                                                                                                                          | Local browser author → preview → export → fresh-origin import → native play is recorded in [browser review](browser-review.md). Global Community admission and browser demonstration of another mode reusing the new content remain open.                                                                                                                                                                                                            |
-| A5 — Performance, usability and release-candidate review | Source-bound automated evidence and focused correctness checks only.                                                                                                                                                                                                                               | Physical gamepad, five human reviewers, target hardware, current-source browser/heap/context/restart trials, and full release-candidate review remain open.                                                                                                                                                         |
+| A4 — Creator and reusable-content delivery               | Versioned local project/package and shared-content implementation exists.                                                                                                                                                                                                                          | Local browser author → preview → export → fresh-origin import → native play is recorded in [browser review](browser-review.md). Global Community admission and browser demonstration of another mode reusing the new content remain open.                                                                           |
+| A5 — Performance, usability and release-candidate review | Full local distribution build; source-bound automated checks, two native automated completions, ten UI retries, real graphics recovery and a paged export check.                                                                                                                                   | Offline browser installation/play, physical gamepad, five human reviewers, target hardware, clean current-source performance/heap/soak trials and full release-candidate review remain open. Functional current-source context/retry checks passed.                                                                 |
 | C1 — Riy follow-on prototype                             | No C acceptance claim.                                                                                                                                                                                                                                                                             | Begin after A acceptance; swarm prototype and its qualification remain future work.                                                                                                                                                                                                                                 |
 
 ## Focused checks and fixture limits
@@ -75,6 +75,20 @@ a non-stacking 8% movement bonus within 140 units. Source death removes support.
 Relay and radar do not create aimed attacks. Steering checks at most eight
 sources at the existing 10Hz decision cadence; movement and damage remain 60Hz.
 
+## Full distribution build
+
+The [source-bound build receipt](full-distribution-build.json) records a successful
+complete local distribution build on `cbd9d23d1a2eff81e7059013024974e2d6e1ca41`:
+3,092 manifest files, 1,003,106,207 payload bytes excluding the manifest, and a
+1,004,092,578-byte ZIP. Independent verification checked 38 emitted files against
+the manifest, including both Overflight entrypoints, Motion Lab integration and
+all thirteen shared library PNGs, and verified the final ZIP checksum.
+The built site is `.cache/overflight/full-distribution`.
+
+This passes local build preparation and output verification. Offline browser
+installation, service-worker behavior and actual offline play remain unverified.
+It is not a hosted publication, native installer qualification or release promotion.
+
 ## Reproduce
 
 Run from the repository root with the repository-supported Node version:
@@ -83,7 +97,11 @@ Run from the repository root with the repository-supported Node version:
 node --test game/test/overflight-core.test.mjs game/test/overflight-renderer.test.mjs
 node scripts/qualify-overflight.mjs --verify-evidence
 node scripts/qualify-overflight.mjs --replay-evidence
+node scripts/game-cli.mjs build --out .cache/overflight/full-distribution --revision cbd9d23d1a2eff81e7059013024974e2d6e1ca41
 ```
+
+The build command records the candidate revision; use it only with that revision's
+build inputs. A changed candidate needs its own source-revision label.
 
 `--verify-evidence` checks all three route receipts against current source hashes,
 project identities and result hashes. `--replay-evidence` additionally reruns all
@@ -109,3 +127,9 @@ not an ordinary game-start action. Browser trials should run without concurrent
 Node soak/replay jobs, and must record their own current-source/device evidence.
 
 The final integration cohort passed [128/128 checks](final-tests.tap), with [6/6 CI-registration checks](industrial-tests.tap). ESLint, formatting and the generated-asset consistency check passed. Node durations are test execution costs, not rendered FPS.
+
+The exact [Creator CI cohort](creator-tests.tap) passed **208/208** on `cbd9d23d1`
+after extending the Motion Lab canvas test adapter with real-sized pixel buffers
+and an exact pixel/reduced-effects/lifecycle regression. Production behavior was
+unchanged by that correction. The focused, integration and Creator cohorts overlap;
+their counts are reported separately and must not be added into a single total.
