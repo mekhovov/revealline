@@ -5,12 +5,40 @@ This branch implements the approved dense FPV survivor direction on main
 not a completed A5 qualification or a published release. C / Рій remains gated
 on review of A.
 
+## Latest parallel delivery — 5 October
+
+The combined source is `a4d9b96757a467b2771f686b5db614ce9ef51473` in two draft
+PRs stacked above [#1109](https://github.com/mekhovov/revealline/pull/1109):
+[gameplay/qualification #1111](https://github.com/mekhovov/revealline/pull/1111),
+then [Creator/Community #1112](https://github.com/mekhovov/revealline/pull/1112).
+The [parallel qualification packet](qualification/overflight/parallel-20261005/README.md)
+supersedes older completion and remaining-work statements below.
+
+This follow-up qualifies strict builds without pulse, improves evolved Fan damage
+from 45 to 60, integrates shared saved controller/radio mappings, adds independent
+benchmark and resource-soak exports, and admits Overflight packages through the
+existing Community client/service and native library ownership flow. EN/UK Studio
+export/import/native play and actual cross-mode artwork reuse have browser receipts.
+The rebuilt local distribution contains 3,097 files; its
+[source and archive receipt](qualification/overflight/parallel-20261005/candidate-build.json)
+does not allocate or publish a new release version.
+
+Clean built-browser reference/stress trials, the 15-minute resource soak,
+graphics recovery, ten retries and fresh-origin offline launch now pass locally;
+see the [browser report](qualification/overflight/parallel-20261005/browser-qualification.md).
+Current priorities: target-device and physical-controller qualification, review
+of single-airframe difficulty and the remaining 912-visible surge, and five-player
+acceptance. C remains gated
+on A review. Earlier route counts, source hashes and browser checks below retain
+their historical scope and do not independently qualify this combined source.
+
 ## Play and review
 
 Serve the repository with its normal development server and open
 `game/overflight/play.html`. The main game's mode chooser also links to Overflight.
 Choose **Start**, read the native briefing, then **Start** again. WASD/arrows or
-left stick steer; Space/right trigger boosts. The review default offers three
+left stick steer; Space/right trigger boosts by default, with shared saved
+controller bindings taking precedence. The review default offers three
 airframes; the one-airframe preset is selectable in shared Settings.
 
 `game/studio/overflight.html` edits and previews the same compiled project.
@@ -19,6 +47,8 @@ controller menu navigation, localization, display settings, sound master and
 soundtrack library. Installed packages appear in the native mission selector,
 with Export and Remove controls. Studio Export also exposes copyable JSON for browsers
 that restrict downloads.
+Local removal is available only for locally owned missions; Community editions use
+the shared Community recovery and offload flow so another owner's copy survives.
 
 Explicit developer/review routes:
 
@@ -27,8 +57,15 @@ Explicit developer/review routes:
 | `?reviewBuild=fan`                 | Ordinary-input automated sweeping build with earned choices.         |
 | `?reviewBuild=echo`                | Ordinary-input automated lure-and-return build with earned choices.  |
 | `?reviewBuild=systems`             | Ordinary-input automated systems/priority build with earned choices. |
+| `?reviewBuild=fan-shield`          | Strict Fan/Slow Field/Side Burst/Shield build without pulse.         |
+| `?reviewBuild=echo-scanner`        | Strict Echo/Slow Field/Side Burst/Scanner build without pulse.       |
 | `?fixture=reference&diagnostics=1` | 1,500 simulated / 700 center-visible moving actors.                  |
 | `?fixture=stress&diagnostics=1`    | 2,500 simulated / 1,200 center-visible moving actors.                |
+
+For independent qualification append `&trial=1`, then repeat fresh page loads
+with `trial=2` and `trial=3`; each warms up for 30 seconds and measures 120 seconds.
+`trial=soak` measures 15 minutes after warm-up. The older unnumbered fixture's
+consecutive windows are not independent qualification trials.
 
 Review playback is visibly marked and never silently activates in normal play.
 It waits 1.5 seconds on an earned card, applies it legally, and uses the same
@@ -118,7 +155,7 @@ native silhouettes, stay visible with reduced effects, and add no new immunity.
   presentation compiler, shared board profile, Asset Studio adapter and existing
   Solo painter using one generated PNG and one decode, without source copying.
 
-## Verification and remaining gates
+## Earlier verification and remaining gates (before the parallel follow-up)
 
 The [qualification directory](qualification/overflight/README.md) distinguishes
 source correctness, synthetic capacity, ordinary automated runs, browser checks
