@@ -28,6 +28,7 @@ import { createBoardFootprints } from '../couch/board-footprint.mjs';
 import { createAudioMaster } from '../ui/audio-master.mjs';
 import { createAudioPreferences } from '../audio-preferences.mjs';
 import { Soundscape } from '../ui/audio.mjs';
+import { attachCouchMusicHost } from '../couch/couch-music-host.mjs';
 import {
   CLASSIC_SNAKE_CHAPTERS as OFFICIAL_CHAPTERS,
   CLASSIC_SNAKE_LEVELS as OFFICIAL_LEVELS,
@@ -151,7 +152,10 @@ let entry =
   CLASSIC_SNAKE_LEVELS[0];
 let playShell = null,
   menuController = null,
-  boardLayoutObserver = null;
+  boardLayoutObserver = null,
+  music = null,
+  audioInactive = false,
+  disposed = false;
 let match,
   runs = [],
   boards = [],
@@ -195,14 +199,13 @@ const enemyAppearanceControls = mountEnemyAppearanceControls({
 onLocaleChange(enemyAppearanceControls.refresh);
 const audioMaster = createAudioMaster(),
   audioPreferences = createAudioPreferences({ audioMaster });
-const sound = new Soundscape({ audioMaster });
+const sound = new Soundscape({ audioMaster, persistentMusic: true });
 const classicAudio = createClassicAudio(sound, {
   getDestruction: () => destruction.snapshot(),
   presentation,
 });
 sound.configure({
   master: 1,
-  music: 0,
   sfx: Number.isFinite(cosmetic.sfx) ? Math.max(0, Math.min(1, cosmetic.sfx)) : 0.7,
 });
 const isReduced = () => display.snapshot().effectiveReducedEffects;
@@ -211,6 +214,7 @@ const reactions = attachContextualReactions({
   container: $('snake-reaction-caption'),
   settingsContainer: $('snake-reaction-settings'),
   getReduced: isReduced,
+  acquireGain: ({ factor }) => music?.player.acquireGain({ factor }) ?? (() => {}),
 });
 let reactionAttempt = 0;
 const text = (key, values = {}) =>
@@ -391,6 +395,8 @@ function start() {
       ),
     );
   });
+  // Reuse the one page-owned Soundscape. An explicit music Pause survives Start/Retry.
+  void music?.start();
   refresh();
   boards[0]?.canvas.focus({ preventScroll: true });
 }
@@ -1330,7 +1336,7 @@ $('import').addEventListener('change', async () => {
   $('import').value = '';
 });
 doc.addEventListener('keydown', (event) => {
-  if (event.defaultPrevented || playShell?.topDialog()) return;
+  if (event.defaultPrevented || music?.root() || playShell?.topDialog()) return;
   if (event.key === 'Escape' && !event.repeat) {
     event.preventDefault();
     pause();
@@ -1398,7 +1404,7 @@ function pollGamepads() {
     const previous = gamepadState.get(pad.index);
     gamepadState.set(pad.index, buttons);
     if (!previous) continue;
-    if (playShell?.topDialog()) {
+    if (music?.root() || playShell?.topDialog()) {
       const directionIndex = buttons.slice(0, 4).findIndex((pressed, i) => pressed && !previous[i]);
       menuController?.handle({
         direction: directionIndex < 0 ? null : ['up', 'right', 'down', 'left'][directionIndex],
@@ -1432,10 +1438,17 @@ doc
       if (details.open) pause();
     }),
   );
+function suspendAudio() {
+  if (disposed || audioInactive) return;
+  audioInactive = true;
+  pause();
+  if (music) music.suspend();
+  else sound.suspend();
+}
 doc.addEventListener('visibilitychange', () => {
-  if (doc.hidden) pause();
+  if (doc.hidden) suspendAudio();
 });
-globalThis.addEventListener('blur', pause);
+globalThis.addEventListener('blur', suspendAudio);
 globalThis.addEventListener('focus', () => {
   void records.read();
 });
@@ -1454,14 +1467,29 @@ landscapeControls?.addEventListener('change', () => {
 globalThis.addEventListener('pagehide', (event) => {
   importEpoch++;
   snakeSimPanel?.close({ restoreFocus: false });
-  pause();
-  sound.suspend();
+  suspendAudio();
   classicAudio.reset();
-  if (!event.persisted) classicAudio.dispose();
   save();
+  if (!event.persisted) {
+    disposed = true;
+    music?.dispose();
+    classicAudio.dispose();
+    sound.dispose();
+    audioPreferences.dispose();
+    audioMaster.dispose();
+  }
 });
 globalThis.addEventListener('pageshow', () => footprint?.refresh());
 function frame(now) {
+  if (disposed) return;
+  const available = !doc.hidden && doc.hasFocus();
+  if (!available && !audioInactive) suspendAudio();
+  if (available && audioInactive) {
+    audioInactive = false;
+    previousFrame = null;
+    // Restore only existing listening intent; this never resumes the match.
+    void music?.resume();
+  }
   const elapsed = previousFrame === null ? 0 : Math.max(0, now - previousFrame);
   previousFrame = now;
   pollGamepads();
@@ -1518,6 +1546,14 @@ function frame(now) {
       playShell?.open('results');
     }
   }
+  if (available)
+    music?.update(
+      !ready && !paused && !result(),
+      { id: 'fpv', family: 'fpv' },
+      {
+        status: result() ? 'won' : paused || ready ? 'paused' : 'running',
+      },
+    );
   runs.forEach((run, i) => {
     const choice = destruction.snapshot();
     flightFrames[i] = advanceClassicFlight(
@@ -1605,14 +1641,39 @@ playShell = mountModePlayShell({
   initial: params.has('level') || communityIdentity ? 'briefing' : 'home',
   focusPlay: () => boards[0]?.canvas.focus({ preventScroll: true }),
 });
+music = attachCouchMusicHost({
+  document: doc,
+  root: $('snake-music-settings'),
+  prefix: 'snake',
+  audioMaster,
+  audioPreferences,
+  soundscape: sound,
+  canControl: () => !disposed && !audioInactive,
+  // Settings and Pause retain the current round's listening context.
+  getScene: () => (ready ? 'menu' : 'gameplay'),
+  canOpen: () =>
+    !disposed &&
+    !audioInactive &&
+    !doc.hidden &&
+    doc.hasFocus() &&
+    playShell?.topDialog()?.dataset.modeSurface === 'settings',
+  getOwner: () => playShell?.topDialog(),
+  onOpen: () => pause({ showMenu: false }),
+  onClose: () => refresh(),
+});
 menuController = attachControllerNavigation({
   document: doc,
   keyboard: true,
-  getScope: () => (playShell?.topDialog() ? 'ui' : 'flight'),
-  getRoot: () => playShell?.topDialog() ?? $('snake-shell'),
-  getDefaultFocus: () => playShell?.topDialog()?.querySelector('button:not(:disabled),a[href]'),
-  onBack: () => (snakeSimPanel?.root() ? snakeSimPanel.close() : playShell.back()),
-  onMenu: () => (snakeSimPanel?.root() ? snakeSimPanel.close() : playShell.back()),
+  getScope: () => (music?.root() || playShell?.topDialog() ? 'ui' : 'flight'),
+  getRoot: () => music?.root() ?? playShell?.topDialog() ?? $('snake-shell'),
+  getDefaultFocus: () =>
+    music?.root()
+      ? music.primary()
+      : playShell?.topDialog()?.querySelector('button:not(:disabled),a[href]'),
+  onBack: () =>
+    music?.root() ? music.back() : snakeSimPanel?.root() ? snakeSimPanel.close() : playShell.back(),
+  onMenu: () =>
+    music?.root() ? music.back() : snakeSimPanel?.root() ? snakeSimPanel.close() : playShell.back(),
 });
 refresh();
 footprint.refresh();
