@@ -86,7 +86,7 @@ async function setup(t, { holdIndex = null } = {}) {
     source.visualOverrides = {};
     packs.push((await preparePack(source)).pack);
   }
-  const assets = managedIndexedDB();
+  const assets = manaedIndexedDB();
   const db = await new Promise((resolve, reject) => {
     const request = assets.indexedDB.open('revealline-assets-v1', 1);
     request.onupgradeneeded = () => request.result.createObjectStore('assets');
@@ -123,7 +123,7 @@ async function setup(t, { holdIndex = null } = {}) {
   p.$('journey-collection').value = 'Custom';
   p.$('journey-collection').emit('change');
   const card = [...p.$('journey-cards').children].find(
-    (row) => JSON.parse(row.dataset.missionId)[3] === 'level-0-0',
+    (row) => JSON.parse(row.dataset.missionId)[5] === 'level-0-0',
   );
   assert.ok(card);
   await activateMissionCard(card);
@@ -147,7 +147,7 @@ async function running(p, id) {
 async function earnWin(p) {
   p.key('ArrowDown');
   p.key('ArrowDown', false);
-  for (let tick = 0; tick < 900 && p.rendered.run.status !== 'won'; tick++) p.frame();
+  for (let tick = 0; tick < 900 && p.rendered.run.status !== 'won'; tick+) p.frame();
   assert.equal(p.rendered.run.status, 'won');
 }
 async function win(p) {
@@ -165,17 +165,17 @@ test(
     const completed = p.rendered.run;
     assert.equal(p.$('game-overlay').hidden, true);
     assert.equal(p.doc.body.dataset.flightState, 'picture');
-    for (let tick = 0; tick < 80 && p.$('game-overlay').hidden; tick++) p.frame(100);
+    for (let tick = 0; tick < 80 && p.$('game-overlay').hidden; tick+) p.frame(100);
     assert.equal(p.$('game-overlay').dataset.kind, 'won');
     assert.equal(p.$('game-overlay').hidden, false);
     assert.equal(p.$('result-random-level').hidden, false);
     assert.equal(p.$('result-auto-next').hidden, false);
     assert.match(p.$('result-auto-next').textContent, /4s/);
-    for (let tick = 0; tick < 20; tick++) p.frame(100);
+    for (let tick = 0; tick < 20; tick+) p.frame(100);
     assert.equal(
       p.rendered.run,
       completed,
-      'The mission summary remains readable during its timer.',
+       'The mission summary remains readable during its timer.',
     );
     for (let tick = 0; tick < 25; tick++) p.frame(100);
     await running(p, 'level-0-1');
@@ -420,9 +420,12 @@ test('Solo final Journey result retains the picture while Browse permits a delib
   assert.ok(firstClassic, 'The compatible Classic mission remains available in the same browser.');
   const firstClassicId = JSON.parse(firstClassic.dataset.missionId);
   firstClassic.click();
-  await settle(
+  await waitFor(
     () => new URL(globalThis.location.href).searchParams.get('journey') === 'legacy',
-    'The exact Legacy host receives this continuation.',
+    {
+      message: 'The exact Legacy host receives this continuation.',
+      timeoutMs: 30000,
+    },
   );
   const selected = JSON.parse(
     new URL(globalThis.location.href).searchParams.get('library-mission'),
