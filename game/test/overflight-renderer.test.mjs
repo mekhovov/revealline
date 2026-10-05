@@ -199,6 +199,45 @@ test('120 Hz full protocol retains all three measured windows beyond 36000 sampl
   );
 });
 
+test('a paused or hidden trial cannot pass even when its retained cadence is fast', () => {
+  for (const reason of ['hidden', 'context-lost', 'pause']) {
+    const meter = createOverflightBenchmark({
+      warmupSeconds: 0,
+      measurementSeconds: 1,
+      repetitions: 1,
+    });
+    for (let i = 0; i <= 30; i++) meter.frame((i * 1000) / 60);
+    if (reason === 'pause') meter.frame(501, false);
+    else meter.exclude(reason);
+    for (let i = 0; i <= 61; i++) meter.frame(1000 + (i * 1000) / 60);
+    const report = meter.snapshot();
+    assert.equal(report.protocol.windows[0].passes, true);
+    assert.equal(report.valid, false);
+    assert.equal(report.protocol.acceptance, false);
+    assert.ok(report.invalidReasons.length > 0);
+  }
+});
+
+test('a completed independent trial freezes before inspection and ignores subsequent pauses', () => {
+  const meter = createOverflightBenchmark({
+    warmupSeconds: 0.5,
+    measurementSeconds: 1,
+    repetitions: 1,
+    stopAtEnd: true,
+  });
+  for (let i = 0; i <= 91; i++) meter.frame((i * 1000) / 60);
+  assert.equal(meter.complete(), true);
+  const before = meter.snapshot({ raw: true });
+  meter.exclude('hidden');
+  meter.frame(3000, false);
+  meter.frame(9000);
+  const after = meter.snapshot({ raw: true });
+  assert.deepEqual(after.rawIntervals, before.rawIntervals);
+  assert.equal(after.valid, true);
+  assert.equal(after.protocol.acceptance, true);
+  assert.equal(after.protocol.repetitions, 1);
+});
+
 function fakeEnvironment() {
   let paints = 0,
     textureUploads = 0,
