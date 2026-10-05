@@ -5,6 +5,7 @@ import path from 'node:path';
 import { createHash } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
 import { parse } from 'acorn';
+import { previewHTML, stagePreviewAppearance } from './preview-appearance.mjs';
 const [receiptArg, generatedArg, proofArg, outputArg] = process.argv.slice(2);
 if (!outputArg) throw Error('Use ADMITTED_RECEIPT GENERATED_SCENE PROOF_DIRECTORY NEW_OUTPUT');
 const sha = (b) => createHash('sha256').update(b).digest('hex'),
@@ -193,9 +194,10 @@ html = html
     '<head><base href="./player/optional-practice/fpv-worlds/"><script>' + setup + '</script>',
   )
   .replace('</body>', '<script type="module">' + boot + '</script></body>');
+const appearance = await stagePreviewAppearance(output);
 const artifacts = {
   'host.html': Buffer.from(html),
-  'index.html': await fs.readFile(new URL('./world-import-preview.html', import.meta.url)),
+  'index.html': await previewHTML(new URL('./world-import-preview.html', import.meta.url)),
   'world-import-harness.mjs': await fs.readFile(
     new URL('./world-import-harness.mjs', import.meta.url),
   ),
@@ -215,11 +217,14 @@ const manifest = {
     bytes: bytes.length,
     sha256: sha(bytes),
   })),
-  harness: Object.entries(artifacts).map(([name, bytes]) => ({
-    path: name,
-    bytes: bytes.length,
-    sha256: sha(bytes),
-  })),
+  harness: [
+    ...appearance,
+    ...Object.entries(artifacts).map(([name, bytes]) => ({
+      path: name,
+      bytes: bytes.length,
+      sha256: sha(bytes),
+    })),
+  ],
   packIdentity: qualification.pack.identity,
   scope:
     'Eight-course world on the identified complete admitted host, no runtime overlay; complete proof module closure matches local qualifier, with the standard locale catalogue projection regenerated exactly from current source/policy. Real File import/native IDB, source reimport, editor mode ownership, collision queries and sixteen complete catalogue Watch replays; controlled RAF with unchanged performance clock and pause guards. Native-clock and actual offline qualification remain separate. No hardware/FPS claim.',
