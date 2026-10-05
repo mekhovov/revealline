@@ -50,6 +50,7 @@ values are initial project tuning, not values prescribed by those sources.
 ## Delivered review candidate
 
 The source server runs on `http://127.0.0.1:8888/game/overflight/play.html`.
+Implementation and source-bound evidence commit: `1d391584ca150d498104668370a72adce6ea1965`.
 Survivor and Raid share the Overflight hub and mission browser. Settings expose
 Standard/Veteran, the seven cosmetic drones, and all existing Studios. An installed
 or authored project's difficulty is preserved rather than overwritten by the
