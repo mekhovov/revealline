@@ -862,10 +862,12 @@ export function mountFlightApp({
       legacyFacts: (replay?.flight ?? flight).objectiveFeedback?.(),
       locale,
     });
-    const hudActive = state.status === 'active' && !pausedReplay && !terminal && !modalOpen();
+    const hudVisible = !terminal && !modalOpen() && !flightMenuOpen();
+    const hudActive = hudVisible && state.status === 'active' && !pausedReplay;
     $('flight-app').dataset.simHudActive = String(hudActive);
     $('viewport').dataset.simHudActive = String(hudActive);
     flightHud.update(goal, {
+      visible: hudVisible,
       active: hudActive,
       paused: !hudActive,
       replay: Boolean(replay),
