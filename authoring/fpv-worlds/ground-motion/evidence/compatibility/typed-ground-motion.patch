@@ -1,0 +1,37 @@
+--- a/optional-practice/civilian-fpv/world-model.mjs
++++ b/optional-practice/civilian-fpv/world-model.mjs
+@@ -637,12 +637,17 @@
+       'Actors need a supported role; hazards do not use combat roles',
+     );
+     actorIds.add(value.id);
+-    required(
+-      value.groundMotion === undefined ||
+-        (value.groundMotion === 'support-v1' &&
+-          ['patrol', 'sentry', 'vehicle'].includes(value.type)),
+-      'Unsupported actor ground motion',
+-    );
++    if (value.groundMotion !== undefined) {
++      required(
++        ['patrol', 'sentry', 'vehicle'].includes(value.type) && stableId(value.groundMotion),
++        'Invalid actor ground motion',
++      );
++      if (value.groundMotion !== 'support-v1')
++        throw Object.assign(new TypeError(`Unsupported actor ground motion: ${value.groundMotion}.`), {
++          code: 'unsupported-ground-motion',
++          groundMotion: value.groundMotion,
++        });
++    }
+     vector(value.position);
+     required(within(value.position, c.bounds), 'Actor spawn outside bounds');
+     const radius =
+--- a/optional-practice/civilian-fpv/world-library.mjs
++++ b/optional-practice/civilian-fpv/world-library.mjs
+@@ -10,7 +10,7 @@
+ };
+ 
+ export function worldImportErrorCopy(error) {
+-  if (error?.code !== 'unsupported-world-extension') return null;
++  if (!['unsupported-world-extension', 'unsupported-ground-motion'].includes(error?.code)) return null;
+   return [
+     'This SIM version does not support a required world feature. Open Flight practice, choose Check available practice, then Play available version. If that version still cannot import it, use a compatible pack. Prepare offline saves the version you opened.',
+     'Ця версія SIM не підтримує потрібну можливість світу. Відкрийте «Практика польоту», виберіть «Перевірити доступну практику», а потім «Грати в доступну версію». Якщо імпорт усе ще неможливий, потрібен сумісний пакунок. Підготовка офлайн зберігає відкриту версію.',
