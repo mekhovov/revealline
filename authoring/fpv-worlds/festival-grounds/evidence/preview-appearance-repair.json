@@ -1,0 +1,680 @@
+{
+  "format": "FPVFestivalPreviewAppearanceRepair.v1",
+  "base": "532a71834f04073a30562f939d3dde4d1391df3b",
+  "sourcePins": [
+    {
+      "path": "preview.html",
+      "bytes": 9898,
+      "sha256": "a1216f1a498004eeb0df3f4d0c7e99c4608aeb6f19d690e4b52b8226f1230b0a"
+    },
+    {
+      "path": "world-import-preview.html",
+      "bytes": 2209,
+      "sha256": "a573efd863703f2276125c8e07490af55838c331ea0a07212a800eecc1c2cc0a"
+    },
+    {
+      "path": "prepare-preview.mjs",
+      "bytes": 7321,
+      "sha256": "8f0b9c273a3a2154975a1e318db38d42b001b841d0db446c8d6d418d73ef406e"
+    },
+    {
+      "path": "prepare-world-import.mjs",
+      "bytes": 12711,
+      "sha256": "ccb686313c6771f2968a810a2429251582e3a299cfe19ef59c44587388406ef8"
+    },
+    {
+      "path": "preview-appearance.mjs",
+      "bytes": 1880,
+      "sha256": "4018eb52eb4467647ea970fcb5bdbce45d9ff7f0c879c6cee0f3be29a333ecfb"
+    }
+  ],
+  "checks": [
+    {
+      "name": "/private/tmp/fpv-festival-preview-repair-20261005/authoring/fpv-worlds/festival-grounds/preview.html synchronous first bootstrap",
+      "passed": true
+    },
+    {
+      "name": "/private/tmp/fpv-festival-preview-repair-20261005/authoring/fpv-worlds/festival-grounds/preview.html seed precedes resources",
+      "passed": true
+    },
+    {
+      "name": "/private/tmp/fpv-festival-preview-repair-20261005/authoring/fpv-worlds/festival-grounds/preview.html shared stylesheet",
+      "passed": true
+    },
+    {
+      "name": "/private/tmp/fpv-festival-preview-repair-20261005/authoring/fpv-worlds/festival-grounds/preview.html resolves ../../../game/presentation/theme-bootstrap.mjs",
+      "passed": true
+    },
+    {
+      "name": "/private/tmp/fpv-festival-preview-repair-20261005/authoring/fpv-worlds/festival-grounds/preview.html resolves ../../../game/presentation/industrial-workshop.css",
+      "passed": true
+    },
+    {
+      "name": "/private/tmp/fpv-festival-preview-repair-20261005/authoring/fpv-worlds/festival-grounds/world-import-preview.html synchronous first bootstrap",
+      "passed": true
+    },
+    {
+      "name": "/private/tmp/fpv-festival-preview-repair-20261005/authoring/fpv-worlds/festival-grounds/world-import-preview.html seed precedes resources",
+      "passed": true
+    },
+    {
+      "name": "/private/tmp/fpv-festival-preview-repair-20261005/authoring/fpv-worlds/festival-grounds/world-import-preview.html shared stylesheet",
+      "passed": true
+    },
+    {
+      "name": "/private/tmp/fpv-festival-preview-repair-20261005/authoring/fpv-worlds/festival-grounds/world-import-preview.html resolves ../../../game/presentation/theme-bootstrap.mjs",
+      "passed": true
+    },
+    {
+      "name": "/private/tmp/fpv-festival-preview-repair-20261005/authoring/fpv-worlds/festival-grounds/world-import-preview.html resolves ./world-import-harness.mjs",
+      "passed": true
+    },
+    {
+      "name": "/private/tmp/fpv-festival-preview-repair-20261005/authoring/fpv-worlds/festival-grounds/world-import-preview.html resolves ../../../game/presentation/industrial-workshop.css",
+      "passed": true
+    },
+    {
+      "name": "/tmp/fpv-festival-preview-bootstrap-repair-v1/index.html synchronous first bootstrap",
+      "passed": true
+    },
+    {
+      "name": "/tmp/fpv-festival-preview-bootstrap-repair-v1/index.html seed precedes resources",
+      "passed": true
+    },
+    {
+      "name": "/tmp/fpv-festival-preview-bootstrap-repair-v1/index.html shared stylesheet",
+      "passed": true
+    },
+    {
+      "name": "/tmp/fpv-festival-preview-bootstrap-repair-v1/index.html resolves ./appearance/game/presentation/theme-bootstrap.mjs",
+      "passed": true
+    },
+    {
+      "name": "/tmp/fpv-festival-preview-bootstrap-repair-v1/index.html resolves ./appearance/game/presentation/industrial-workshop.css",
+      "passed": true
+    },
+    {
+      "name": "player/game/data-json.mjs exact bytes/hash",
+      "passed": true
+    },
+    {
+      "name": "player/game/encounter-display-preferences.mjs exact bytes/hash",
+      "passed": true
+    },
+    {
+      "name": "player/game/fpv-entry.mjs exact bytes/hash",
+      "passed": true
+    },
+    {
+      "name": "player/game/hunt/actor-art.mjs exact bytes/hash",
+      "passed": true
+    },
+    {
+      "name": "player/game/hunt/actor-catalog.mjs exact bytes/hash",
+      "passed": true
+    },
+    {
+      "name": "player/game/hunt/preferences.mjs exact bytes/hash",
+      "passed": true
+    },
+    {
+      "name": "player/game/hunt/presentation-catalog.mjs exact bytes/hash",
+      "passed": true
+    },
+    {
+      "name": "player/game/i18n/bootstrap.mjs exact bytes/hash",
+      "passed": true
+    },
+    {
+      "name": "player/game/i18n/catalogs.mjs exact bytes/hash",
+      "passed": true
+    },
+    {
+      "name": "player/game/i18n/index.mjs exact bytes/hash",
+      "passed": true
+    },
+    {
+      "name": "player/game/presentation/theme-system.mjs exact bytes/hash",
+      "passed": true
+    },
+    {
+      "name": "player/game/profile-database.mjs exact bytes/hash",
+      "passed": true
+    },
+    {
+      "name": "player/game/profile-storage.mjs exact bytes/hash",
+      "passed": true
+    },
+    {
+      "name": "player/game/rewards/audio-groups.mjs exact bytes/hash",
+      "passed": true
+    },
+    {
+      "name": "player/game/rewards/exploration.mjs exact bytes/hash",
+      "passed": true
+    },
+    {
+      "name": "player/game/rewards/learning-profiles.mjs exact bytes/hash",
+      "passed": true
+    },
+    {
+      "name": "player/game/rewards/model.mjs exact bytes/hash",
+      "passed": true
+    },
+    {
+      "name": "player/game/rewards/store.mjs exact bytes/hash",
+      "passed": true
+    },
+    {
+      "name": "player/game/ui/art/identity/fpv-line/wordmark.png exact bytes/hash",
+      "passed": true
+    },
+    {
+      "name": "player/game/ui/art/menu-scenes/fpv-portrait.webp exact bytes/hash",
+      "passed": true
+    },
+    {
+      "name": "player/game/ui/art/menu-scenes/fpv.webp exact bytes/hash",
+      "passed": true
+    },
+    {
+      "name": "player/game/ui/native-menu-icons.mjs exact bytes/hash",
+      "passed": true
+    },
+    {
+      "name": "player/game/ui/reward-knowledge.mjs exact bytes/hash",
+      "passed": true
+    },
+    {
+      "name": "player/game/vendor/i18next-26.4.2.min.js exact bytes/hash",
+      "passed": true
+    },
+    {
+      "name": "player/game/vendor/I18NEXT-LICENSE.txt exact bytes/hash",
+      "passed": true
+    },
+    {
+      "name": "player/launcher/app.mjs exact bytes/hash",
+      "passed": true
+    },
+    {
+      "name": "player/launcher/app.webmanifest exact bytes/hash",
+      "passed": true
+    },
+    {
+      "name": "player/launcher/context.mjs exact bytes/hash",
+      "passed": true
+    },
+    {
+      "name": "player/launcher/icons/icon-192.png exact bytes/hash",
+      "passed": true
+    },
+    {
+      "name": "player/launcher/icons/icon-512.png exact bytes/hash",
+      "passed": true
+    },
+    {
+      "name": "player/launcher/index.html exact bytes/hash",
+      "passed": true
+    },
+    {
+      "name": "player/launcher/navigation.mjs exact bytes/hash",
+      "passed": true
+    },
+    {
+      "name": "player/launcher/worker.js exact bytes/hash",
+      "passed": true
+    },
+    {
+      "name": "player/optional-practice/civilian-fpv/attempts.mjs exact bytes/hash",
+      "passed": true
+    },
+    {
+      "name": "player/optional-practice/civilian-fpv/beginner-coach.mjs exact bytes/hash",
+      "passed": true
+    },
+    {
+      "name": "player/optional-practice/civilian-fpv/catalogue.mjs exact bytes/hash",
+      "passed": true
+    },
+    {
+      "name": "player/optional-practice/civilian-fpv/content-definitions.mjs exact bytes/hash",
+      "passed": true
+    },
+    {
+      "name": "player/optional-practice/civilian-fpv/demonstrations.mjs exact bytes/hash",
+      "passed": true
+    },
+    {
+      "name": "player/optional-practice/civilian-fpv/expressive-hunt-courses.mjs exact bytes/hash",
+      "passed": true
+    },
+    {
+      "name": "player/optional-practice/civilian-fpv/flight-fullscreen.mjs exact bytes/hash",
+      "passed": true
+    },
+    {
+      "name": "player/optional-practice/civilian-fpv/flight-sectors.mjs exact bytes/hash",
+      "passed": true
+    },
+    {
+      "name": "player/optional-practice/civilian-fpv/input.mjs exact bytes/hash",
+      "passed": true
+    },
+    {
+      "name": "player/optional-practice/civilian-fpv/math.mjs exact bytes/hash",
+      "passed": true
+    },
+    {
+      "name": "player/optional-practice/civilian-fpv/model.mjs exact bytes/hash",
+      "passed": true
+    },
+    {
+      "name": "player/optional-practice/civilian-fpv/notebook.mjs exact bytes/hash",
+      "passed": true
+    },
+    {
+      "name": "player/optional-practice/civilian-fpv/offline.mjs exact bytes/hash",
+      "passed": true
+    },
+    {
+      "name": "player/optional-practice/civilian-fpv/playlists.mjs exact bytes/hash",
+      "passed": true
+    },
+    {
+      "name": "player/optional-practice/civilian-fpv/radio-controls.mjs exact bytes/hash",
+      "passed": true
+    },
+    {
+      "name": "player/optional-practice/civilian-fpv/radio-guide.mjs exact bytes/hash",
+      "passed": true
+    },
+    {
+      "name": "player/optional-practice/civilian-fpv/radio-profile.mjs exact bytes/hash",
+      "passed": true
+    },
+    {
+      "name": "player/optional-practice/civilian-fpv/radio-runtime.mjs exact bytes/hash",
+      "passed": true
+    },
+    {
+      "name": "player/optional-practice/civilian-fpv/radio-session.mjs exact bytes/hash",
+      "passed": true
+    },
+    {
+      "name": "player/optional-practice/civilian-fpv/radio-setup.mjs exact bytes/hash",
+      "passed": true
+    },
+    {
+      "name": "player/optional-practice/civilian-fpv/README.md exact bytes/hash",
+      "passed": true
+    },
+    {
+      "name": "player/optional-practice/civilian-fpv/renderer.mjs exact bytes/hash",
+      "passed": true
+    },
+    {
+      "name": "player/optional-practice/civilian-fpv/rotation-table.mjs exact bytes/hash",
+      "passed": true
+    },
+    {
+      "name": "player/optional-practice/civilian-fpv/sim-presentation.mjs exact bytes/hash",
+      "passed": true
+    },
+    {
+      "name": "player/optional-practice/civilian-fpv/snake-hunt-catalogue.mjs exact bytes/hash",
+      "passed": true
+    },
+    {
+      "name": "player/optional-practice/civilian-fpv/snake-hunt-presentation.mjs exact bytes/hash",
+      "passed": true
+    },
+    {
+      "name": "player/optional-practice/civilian-fpv/snake-hunt.mjs exact bytes/hash",
+      "passed": true
+    },
+    {
+      "name": "player/optional-practice/civilian-fpv/style.css exact bytes/hash",
+      "passed": true
+    },
+    {
+      "name": "player/optional-practice/civilian-fpv/vendor/addons/controls/TransformControls.js exact bytes/hash",
+      "passed": true
+    },
+    {
+      "name": "player/optional-practice/civilian-fpv/vendor/addons/loaders/GLTFLoader.js exact bytes/hash",
+      "passed": true
+    },
+    {
+      "name": "player/optional-practice/civilian-fpv/vendor/addons/provenance.json exact bytes/hash",
+      "passed": true
+    },
+    {
+      "name": "player/optional-practice/civilian-fpv/vendor/addons/utils/BufferGeometryUtils.js exact bytes/hash",
+      "passed": true
+    },
+    {
+      "name": "player/optional-practice/civilian-fpv/vendor/addons/utils/SkeletonUtils.js exact bytes/hash",
+      "passed": true
+    },
+    {
+      "name": "player/optional-practice/civilian-fpv/vendor/LICENSE.txt exact bytes/hash",
+      "passed": true
+    },
+    {
+      "name": "player/optional-practice/civilian-fpv/vendor/rapier/LICENSE exact bytes/hash",
+      "passed": true
+    },
+    {
+      "name": "player/optional-practice/civilian-fpv/vendor/rapier/provenance.json exact bytes/hash",
+      "passed": true
+    },
+    {
+      "name": "player/optional-practice/civilian-fpv/vendor/rapier/rapier.mjs exact bytes/hash",
+      "passed": true
+    },
+    {
+      "name": "player/optional-practice/civilian-fpv/vendor/three.core.js exact bytes/hash",
+      "passed": true
+    },
+    {
+      "name": "player/optional-practice/civilian-fpv/vendor/three.module.js exact bytes/hash",
+      "passed": true
+    },
+    {
+      "name": "player/optional-practice/civilian-fpv/world-app.mjs exact bytes/hash",
+      "passed": true
+    },
+    {
+      "name": "player/optional-practice/civilian-fpv/world-assets.mjs exact bytes/hash",
+      "passed": true
+    },
+    {
+      "name": "player/optional-practice/civilian-fpv/world-catalogue.mjs exact bytes/hash",
+      "passed": true
+    },
+    {
+      "name": "player/optional-practice/civilian-fpv/world-collision.mjs exact bytes/hash",
+      "passed": true
+    },
+    {
+      "name": "player/optional-practice/civilian-fpv/world-content.mjs exact bytes/hash",
+      "passed": true
+    },
+    {
+      "name": "player/optional-practice/civilian-fpv/world-demonstrations.mjs exact bytes/hash",
+      "passed": true
+    },
+    {
+      "name": "player/optional-practice/civilian-fpv/world-editor.mjs exact bytes/hash",
+      "passed": true
+    },
+    {
+      "name": "player/optional-practice/civilian-fpv/world-model.mjs exact bytes/hash",
+      "passed": true
+    },
+    {
+      "name": "player/optional-practice/civilian-fpv/world-reaction-runtime.mjs exact bytes/hash",
+      "passed": true
+    },
+    {
+      "name": "player/optional-practice/civilian-fpv/world-records.mjs exact bytes/hash",
+      "passed": true
+    },
+    {
+      "name": "player/optional-practice/civilian-fpv/world-store.mjs exact bytes/hash",
+      "passed": true
+    },
+    {
+      "name": "player/optional-practice/civilian-fpv/world-style.css exact bytes/hash",
+      "passed": true
+    },
+    {
+      "name": "player/optional-practice/civilian-fpv/world-themes.mjs exact bytes/hash",
+      "passed": true
+    },
+    {
+      "name": "player/optional-practice/civilian-fpv/world-visuals.mjs exact bytes/hash",
+      "passed": true
+    },
+    {
+      "name": "player/optional-practice/civilian-fpv/world-zip.mjs exact bytes/hash",
+      "passed": true
+    },
+    {
+      "name": "player/optional-practice/fpv-worlds/app.webmanifest exact bytes/hash",
+      "passed": true
+    },
+    {
+      "name": "player/optional-practice/fpv-worlds/guide.html exact bytes/hash",
+      "passed": true
+    },
+    {
+      "name": "player/optional-practice/fpv-worlds/icons/icon-192.png exact bytes/hash",
+      "passed": true
+    },
+    {
+      "name": "player/optional-practice/fpv-worlds/icons/icon-512.png exact bytes/hash",
+      "passed": true
+    },
+    {
+      "name": "player/optional-practice/fpv-worlds/index.html exact bytes/hash",
+      "passed": true
+    },
+    {
+      "name": "player/optional-practice/fpv-worlds/package-info.json exact bytes/hash",
+      "passed": true
+    },
+    {
+      "name": "player/optional-practice/fpv-worlds/preview.png exact bytes/hash",
+      "passed": true
+    },
+    {
+      "name": "player/optional-practice/fpv-worlds/README.md exact bytes/hash",
+      "passed": true
+    },
+    {
+      "name": "player/optional-practice/fpv-worlds/SCENERY-LICENSES.txt exact bytes/hash",
+      "passed": true
+    },
+    {
+      "name": "player/optional-practice/fpv-worlds/scenery-provenance.json exact bytes/hash",
+      "passed": true
+    },
+    {
+      "name": "player/optional-practice/fpv-worlds/worker.js exact bytes/hash",
+      "passed": true
+    },
+    {
+      "name": "player/optional-practice/guide.mjs exact bytes/hash",
+      "passed": true
+    },
+    {
+      "name": "player/optional-practice/install-context.mjs exact bytes/hash",
+      "passed": true
+    },
+    {
+      "name": "player/optional-practice/navigation.mjs exact bytes/hash",
+      "passed": true
+    },
+    {
+      "name": "player/optional-package.json exact bytes/hash",
+      "passed": true
+    },
+    {
+      "name": "appearance/game/presentation/theme-bootstrap.mjs exact bytes/hash",
+      "passed": true
+    },
+    {
+      "name": "appearance/game/presentation/theme-bootstrap.mjs source exact",
+      "passed": true
+    },
+    {
+      "name": "appearance/game/presentation/theme-bootstrap.mjs not linked to mutable source",
+      "passed": true
+    },
+    {
+      "name": "appearance/game/presentation/industrial-workshop.css exact bytes/hash",
+      "passed": true
+    },
+    {
+      "name": "appearance/game/presentation/industrial-workshop.css source exact",
+      "passed": true
+    },
+    {
+      "name": "appearance/game/presentation/industrial-workshop.css not linked to mutable source",
+      "passed": true
+    },
+    {
+      "name": "appearance/game/ui/field-kit-fonts.css exact bytes/hash",
+      "passed": true
+    },
+    {
+      "name": "appearance/game/ui/field-kit-fonts.css source exact",
+      "passed": true
+    },
+    {
+      "name": "appearance/game/ui/field-kit-fonts.css not linked to mutable source",
+      "passed": true
+    },
+    {
+      "name": "appearance/game/ui/brand-identity.css exact bytes/hash",
+      "passed": true
+    },
+    {
+      "name": "appearance/game/ui/brand-identity.css source exact",
+      "passed": true
+    },
+    {
+      "name": "appearance/game/ui/brand-identity.css not linked to mutable source",
+      "passed": true
+    },
+    {
+      "name": "appearance/game/ui/art/identity/fpv-line/icon-192.png exact bytes/hash",
+      "passed": true
+    },
+    {
+      "name": "appearance/game/ui/art/identity/fpv-line/icon-192.png source exact",
+      "passed": true
+    },
+    {
+      "name": "appearance/game/ui/art/identity/fpv-line/icon-192.png not linked to mutable source",
+      "passed": true
+    },
+    {
+      "name": "appearance/game/ui/fonts/departure-mono/DepartureMono-Regular.woff2 exact bytes/hash",
+      "passed": true
+    },
+    {
+      "name": "appearance/game/ui/fonts/departure-mono/DepartureMono-Regular.woff2 source exact",
+      "passed": true
+    },
+    {
+      "name": "appearance/game/ui/fonts/departure-mono/DepartureMono-Regular.woff2 not linked to mutable source",
+      "passed": true
+    },
+    {
+      "name": "appearance/game/ui/fonts/field-kit/handjet-display-600.woff2 exact bytes/hash",
+      "passed": true
+    },
+    {
+      "name": "appearance/game/ui/fonts/field-kit/handjet-display-600.woff2 source exact",
+      "passed": true
+    },
+    {
+      "name": "appearance/game/ui/fonts/field-kit/handjet-display-600.woff2 not linked to mutable source",
+      "passed": true
+    },
+    {
+      "name": "appearance/game/ui/fonts/field-kit/exo2-ui-400-600.woff2 exact bytes/hash",
+      "passed": true
+    },
+    {
+      "name": "appearance/game/ui/fonts/field-kit/exo2-ui-400-600.woff2 source exact",
+      "passed": true
+    },
+    {
+      "name": "appearance/game/ui/fonts/field-kit/exo2-ui-400-600.woff2 not linked to mutable source",
+      "passed": true
+    },
+    {
+      "name": "appearance/game/ui/fonts/field-kit/ibm-plex-mono-500.woff2 exact bytes/hash",
+      "passed": true
+    },
+    {
+      "name": "appearance/game/ui/fonts/field-kit/ibm-plex-mono-500.woff2 source exact",
+      "passed": true
+    },
+    {
+      "name": "appearance/game/ui/fonts/field-kit/ibm-plex-mono-500.woff2 not linked to mutable source",
+      "passed": true
+    },
+    {
+      "name": "content/project.json exact bytes/hash",
+      "passed": true
+    },
+    {
+      "name": "content/scene.glb exact bytes/hash",
+      "passed": true
+    },
+    {
+      "name": "content/before-project.json exact bytes/hash",
+      "passed": true
+    },
+    {
+      "name": "content/before-scene.glb exact bytes/hash",
+      "passed": true
+    }
+  ],
+  "passed": 149,
+  "appearanceFiles": [
+    {
+      "path": "appearance/game/presentation/theme-bootstrap.mjs",
+      "bytes": 93454,
+      "sha256": "a4e1ec4f2d9e5aff958ce0d3269ba18b3a9a71ce96a6082eb8f18ef37b932a85"
+    },
+    {
+      "path": "appearance/game/presentation/industrial-workshop.css",
+      "bytes": 101351,
+      "sha256": "8de9d6cd7f30e9cdabc210a434cb318c1e82d55280732cdfd8cec3695fc6f1aa"
+    },
+    {
+      "path": "appearance/game/ui/field-kit-fonts.css",
+      "bytes": 1045,
+      "sha256": "620b327398af390290dd5ce2ed1a1d6b9d26bf22bd0f2b1129daf15c0e49692c"
+    },
+    {
+      "path": "appearance/game/ui/brand-identity.css",
+      "bytes": 1757,
+      "sha256": "05d0882feefb59e6c0ea0bac8343ebd513bd3385bbd8e677bf7d49ccb94972ec"
+    },
+    {
+      "path": "appearance/game/ui/art/identity/fpv-line/icon-192.png",
+      "bytes": 33508,
+      "sha256": "5bc0f892cc5c13a7b1564cca9ef3ee0799a38b7b5fb63ccc9d7559dc2bf3a34d"
+    },
+    {
+      "path": "appearance/game/ui/fonts/departure-mono/DepartureMono-Regular.woff2",
+      "bytes": 22496,
+      "sha256": "5b4fed1daa90708aa9c6ee1190abca9dc22164a1c1def0020386e46b61038cfb"
+    },
+    {
+      "path": "appearance/game/ui/fonts/field-kit/handjet-display-600.woff2",
+      "bytes": 38120,
+      "sha256": "4797c11d5e17c3f5f9b5b3fa96efb4fd2aabb877fb4d625dfc8eb7465464e145"
+    },
+    {
+      "path": "appearance/game/ui/fonts/field-kit/exo2-ui-400-600.woff2",
+      "bytes": 76652,
+      "sha256": "fce2dc8f15375b66d336c1defbca23dfb2310301b62c822206a0a013d19601ef"
+    },
+    {
+      "path": "appearance/game/ui/fonts/field-kit/ibm-plex-mono-500.woff2",
+      "bytes": 40080,
+      "sha256": "0498bcb48294756b5ac9062290e1639e907b1ec69b5dc2e8cfdec3fab58e0bc8"
+    }
+  ],
+  "admittedPlayer": "364fb78c3dc7e268b84b0a13349af32864bca802",
+  "admittedFiles": 102,
+  "scope": "Source HTML and actual static preparer file/appearance closure only; source wrapper appearance copied separately, historical admitted player and content unchanged. No new browser or gameplay qualification."
+}
