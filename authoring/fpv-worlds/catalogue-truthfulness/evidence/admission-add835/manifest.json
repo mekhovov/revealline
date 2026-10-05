@@ -1,0 +1,150 @@
+{
+  "format": "FPVCatalogueAdmissionQualification.v1",
+  "sourceRevision": "add835c7b84a225ca1742760b8837e64bd2b518c",
+  "sourceTree": "8156530107de9b166f762e6360157e678f92de7b",
+  "fullValidation": {
+    "exitCode": 0,
+    "node": "22.22.2"
+  },
+  "existingUI": {
+    "passed": 12,
+    "failed": 0,
+    "initialAttempt": "Missing pinned fake-indexeddb dependency before tests ran; existing6.2.5 authoring node_modules reused through ignored symlink; source unchanged."
+  },
+  "reproducibleBuilds": 2,
+  "packages": ["civilian-flight", "civilian-fpv", "fpv-worlds"],
+  "sourceInputs": 95,
+  "sourceBytes": 16742258,
+  "sourceReserve": 34958,
+  "changedInputs": [
+    {
+      "path": "optional-practice/civilian-fpv/world-app.mjs",
+      "beforeBytes": 262294,
+      "beforeSHA256": "5ad2367174e653094c89e2cb84837ba81ac0c2aaefe318e3e33dbab4426aafe8",
+      "afterBytes": 262914,
+      "afterSHA256": "f1b2da5ba08792d316e3c71269d2c7dbcfaefce0b7bbc32e2177810c54edfdd2"
+    }
+  ],
+  "player": {
+    "files": 102,
+    "checksPassed": 223,
+    "zip": {
+      "bytes": 15552187,
+      "path": "distribution-optional-fpv-worlds.zip",
+      "sha256": "835158b8dd8697a6305a6ef927c52d69370c783e71906b92436a11cd79baacf8"
+    },
+    "immutableReuse": {
+      "root": "/private/tmp/fpv-combined-final-player-0b54fd0fd",
+      "linked": 99,
+      "writtenBytes": 301554
+    }
+  },
+  "files": [
+    {
+      "path": "manifest-optional-civilian-flight.json.gz",
+      "bytes": 8847,
+      "sha256": "9d110d8a3e68d910e32c61ddab7ae74968faf82640e08d9d06f398b93e30e9a5",
+      "storedBytes": 2856,
+      "storedSHA256": "e4a94f7efd780c45e757aa16315f0183b1bec8e6b5014d0f3747a991c7dc97b0"
+    },
+    {
+      "path": "manifest-optional-civilian-fpv.json.gz",
+      "bytes": 12570,
+      "sha256": "e38273dfcb81351725b39a9b698c435b09278be1a16e97d76e9bb2b68200a97e",
+      "storedBytes": 4011,
+      "storedSHA256": "6144352bee935dca417196d8c3ba544aaae9fbe0732f5b8bc72f4007fd87f9f2"
+    },
+    {
+      "path": "manifest-optional-fpv-worlds.json.gz",
+      "bytes": 18746,
+      "sha256": "bd676c9e46a3fd300d47cb74511b0faa4d3784401f2c312b77ac3eace766cbb5",
+      "storedBytes": 5868,
+      "storedSHA256": "0923383c3b3f31fe19e41b9dc491f64c91317587509fa8d0319760bdfad0aeb1"
+    },
+    {
+      "path": "optional-candidate-verification.json.gz",
+      "bytes": 1142,
+      "sha256": "808ff7985cdd632774a0554ad08799a4a4bbb98e69a40efac243b1401109aa54",
+      "storedBytes": 611,
+      "storedSHA256": "02a97eee59c40386d72f82f05ff59731b9031e2a9c0dd3606e123fc5fa930eb7"
+    },
+    {
+      "path": "optional-checksums.json.gz",
+      "bytes": 2136,
+      "sha256": "ed6a2728953f2aedbd0722859f833c9000977460dd02788e30c57faef5da9908",
+      "storedBytes": 919,
+      "storedSHA256": "adfc07332e475926b25b9e855f6988ce27e3e0d1ae7241c3eb616afe9151bca0"
+    },
+    {
+      "path": "optional-package-review.json.gz",
+      "bytes": 2838,
+      "sha256": "2f7348e3c18157c73e4fcf8794a7386df6695df4fa121f1e103abf9b36cd08fb",
+      "storedBytes": 458,
+      "storedSHA256": "322073d2aca1dbe25a9f427246b9c4394271ff44110bab3e4b48a19473cc90b7"
+    },
+    {
+      "path": "optional-packages.json.gz",
+      "bytes": 2633,
+      "sha256": "6c49b91bee338bbce8c75f99673b73347f31d213b9cda3e7ddcce2864ec20da2",
+      "storedBytes": 1077,
+      "storedSHA256": "4ebe7dd2d54765180adeef5af9d59cbd530069335c24f47e134733010a1a404b"
+    },
+    {
+      "path": "source-inventory-optional-civilian-flight.json.gz",
+      "bytes": 14052,
+      "sha256": "471391644a9eacd04a820ddc2aa1e33e5cd58590d9397461802c42eb7a879e09",
+      "storedBytes": 3450,
+      "storedSHA256": "a7db80cd6a61fa4a49ed59d2ff7c95c106e5aa27a97a0da2e52f9449445713a2"
+    },
+    {
+      "path": "source-inventory-optional-civilian-fpv.json.gz",
+      "bytes": 21034,
+      "sha256": "bad9dfee49dbfd5cee581e1677d986e7a1d2683080fd8b6be997dddc458a9b65",
+      "storedBytes": 4989,
+      "storedSHA256": "06b2488bab810b42bd239ec660333fa7713ec68e178ae83e1fdb7e5edb15a390"
+    },
+    {
+      "path": "source-inventory-optional-fpv-worlds.json.gz",
+      "bytes": 32166,
+      "sha256": "9842c849886a37d8b822cb9d63fc04fb4f4b39543cfb2a4156c2104056a8983e",
+      "storedBytes": 7144,
+      "storedSHA256": "3b4da90ecd26a58407e9e4970d449715a85a56933dbd465708bf315fa5f43bee"
+    },
+    {
+      "path": "fpv-imported-catalogue-player-add835c7b.json.gz",
+      "bytes": 42952,
+      "sha256": "52c8759994403568f667e9f79add8e04682d82f441adba315aa882fb0d28eacf",
+      "storedBytes": 7341,
+      "storedSHA256": "455115422bd2619d84f9d9efac339fe29e067ee8ec956f05ed55eaa6bd887554"
+    },
+    {
+      "path": "fpv-imported-catalogue-validate-add835c7b.log.gz",
+      "bytes": 3676,
+      "sha256": "31402988a94f83b18b55d31575a4fb00f8b7cf5191f6a0614effcf2070f8890f",
+      "storedBytes": 1535,
+      "storedSHA256": "aadb80cdef43e2ddd81befb7b4da33674d9af044edc81018fed178ce9d8d3f6d"
+    },
+    {
+      "path": "fpv-imported-catalogue-existing-ui-add835c7b.log.gz",
+      "bytes": 1733,
+      "sha256": "c29652b9331fb291461a00a72738f77c91c7c1504fa933936442369b6470c1a7",
+      "storedBytes": 703,
+      "storedSHA256": "24ad41ab9b2f88ef64e3b30c32390ad20d7ea28c4190ac2fe854c30f6761e50b"
+    },
+    {
+      "path": "fpv-imported-catalogue-existing-ui-add835c7b-resolved.log.gz",
+      "bytes": 3203,
+      "sha256": "90dce9a2e45d7c222fd0a5faf0f33006ae96a5ee7ebebab110e6eea74f4483d5",
+      "storedBytes": 851,
+      "storedSHA256": "b3d92b5347fc677487361e847e0cd95909822175e7b4796a374ba8cfe885d4ed"
+    },
+    {
+      "path": "fpv-imported-catalogue-admission-add835c7b.log.gz",
+      "bytes": 425,
+      "sha256": "239b91424fe4a6238044c0b9dfc06f2a8b13a7d77af60bb47df0801a7f53f7a5",
+      "storedBytes": 292,
+      "storedSHA256": "9ab20acf84953bd8f5d388e889c1407b3ae1c537934d2d66e92df06945d33e82"
+    }
+  ],
+  "scope": "One final committed-source all-three admission, two identical builds per package. Native admitted fixture remains separately reported; no offline/public/hardware claim."
+}

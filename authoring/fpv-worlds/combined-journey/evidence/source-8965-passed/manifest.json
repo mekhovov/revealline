@@ -1,0 +1,50 @@
+{
+  "sourceRevision": "6c341bef4347d98bae882fb1785eabf6a133537c",
+  "fixtureOrigin": "http://127.0.0.1:8965/",
+  "outcome": "453/453 native online controls passed; one accepted323B Creator overlay; not Browse/offline/admission.",
+  "completedWatchTicks": 1616,
+  "hosts": [
+    {
+      "name": "online original owner",
+      "rendererCreations": 1,
+      "registered": {
+        "geometries": 0,
+        "materials": 0,
+        "textures": 0
+      },
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "name": "online reopened owner",
+      "rendererCreations": 0,
+      "registered": null,
+      "errors": [],
+      "warnings": []
+    }
+  ],
+  "files": [
+    {
+      "file": "fpv-combined-journey-8965-passed.json.gz",
+      "rawBytes": 6456631,
+      "rawSHA256": "9a57afef2891c493e218670357852d1c198ba231c1bb51b63b9015fc8f571c73",
+      "storedBytes": 1027352,
+      "storedSHA256": "739a910a75b817566e1a1c1c6e7ec67419586c1f413d90d7c9b9a33cb1c125bb"
+    },
+    {
+      "file": "fpv-combined-journey-8965-passed.png",
+      "rawBytes": 25166,
+      "rawSHA256": "2ce676d51448fe5bf6dce33b82019441235161818de96e00ab74892537589d6b",
+      "storedBytes": 25166,
+      "storedSHA256": "2ce676d51448fe5bf6dce33b82019441235161818de96e00ab74892537589d6b"
+    },
+    {
+      "file": "fixture.json.gz",
+      "rawBytes": 47642,
+      "rawSHA256": "1e1795a56f38305e375a8d73f92e1b67b38e8988a8233a48ae9d2b0e43eaad5d",
+      "storedBytes": 9062,
+      "storedSHA256": "855f6de2f9af45bf11144968db76106ad609d35d2a61f2ccdc4e4252269580eb"
+    }
+  ],
+  "restore": "gzip -dc <file.json.gz> > <original-file.json>; compare rawBytes/rawSHA256"
+}
