@@ -14,5 +14,10 @@
       "delta": -2
     }
   ],
-  "generated": "Regenerate worker-template and world-reaction-runtime after applying readable source patch, then full exact identity/admission. No index file changes included."
+  "generated": "Regenerate worker-template and world-reaction-runtime after applying readable source patch, then full exact identity/admission. No index file changes included.",
+  "patchArchive": {
+    "path": "library-cohort-source-draft.patch.gz",
+    "rawSHA256": "cec4b1d60dfbfb8132c35b27af866b91bb1de8f9ac4a2d5c0ad7f21ebbce4d65",
+    "storedSHA256": "e9a81af9873b9d16a095f37c8053e5f34e31f6fd7a3bab2b71b51815d22ff06b"
+  }
 }
