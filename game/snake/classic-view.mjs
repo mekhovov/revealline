@@ -11,11 +11,23 @@ import {
   drawClassicLivingGround,
   drawClassicLivingWall,
 } from './classic-scenes.mjs';
-import { drawClassicSignalInterference, drawClassicSignalSources } from './classic-signal-view.mjs';
+import {
+  captureClassicSignalTerrain,
+  drawClassicSignalInterference,
+  drawClassicSignalSources,
+} from './classic-signal-view.mjs';
 export { resolveClassicBoardScene, classicSceneBackdrop } from './classic-scenes.mjs';
 
 const UNIT = 28;
 const targetFacings = new WeakMap();
+const signalTerrainVersions = new WeakMap();
+function signalTerrainVersion(canvas, image) {
+  const previous = signalTerrainVersions.get(canvas);
+  if (previous && previous.image === image) return previous.version;
+  const version = (previous?.version ?? 0) + 1;
+  signalTerrainVersions.set(canvas, { image, version });
+  return version;
+}
 const INKS = [
   { body: '#153d61', edge: '#65b6ff', band: '#ffe16b' },
   { body: '#4b285e', edge: '#e3b5ff', band: '#ffffff' },
@@ -287,6 +299,7 @@ export function drawClassicBoard(
     pixelRatio = 1,
     cssWidth,
     locale = 'en',
+    signalTreatment = 'contrast-loss',
   } = {},
 ) {
   const { width, height, walls, wrap } = run.level,
@@ -382,6 +395,25 @@ export function drawClassicBoard(
   ctx.setLineDash(wrap ? [7, 7] : []);
   ctx.strokeRect(1.5, 1.5, logicalWidth - 3, logicalHeight - 3);
   ctx.setLineDash([]);
+  const signal = classicSnakeSignalView(run),
+    signalVisualKey = JSON.stringify([
+      boardStyle,
+      scene,
+      style,
+      cast,
+      artRevision,
+      accent,
+      brutal,
+      blood,
+      showRemains,
+      palette,
+      // Artwork may finish loading while a burst is paused at the same tick.
+      signalTerrainVersion(canvas, retro || living ? null : presentation?.image?.('terrain.wall')),
+    ]);
+  // Keep current terrain separate from moving actors. During a receiver
+  // dropout the degraded branch must not duplicate their full live contrast.
+  if (signal.active && !signal.suppressed && signalTreatment === 'contrast-loss')
+    captureClassicSignalTerrain(canvas, run, { unit: UNIT, visualKey: signalVisualKey });
   const targets = run.targets ?? (run.target ? [run.target] : []);
   if (!targetFacings.has(canvas)) targetFacings.set(canvas, createClassicTargetFacing());
   const headings = targetFacings.get(canvas)(run, attemptKey);
@@ -444,24 +476,13 @@ export function drawClassicBoard(
     ctx.lineTo(x + 8, y + 20);
     ctx.stroke();
   }
-  const signal = classicSnakeSignalView(run);
   drawClassicSignalInterference(ctx, canvas, run, signal, {
     unit: UNIT,
     reduced,
     timeMs: flight.timeMs,
     palette,
-    visualKey: JSON.stringify([
-      boardStyle,
-      scene,
-      style,
-      cast,
-      artRevision,
-      accent,
-      brutal,
-      blood,
-      showRemains,
-      palette,
-    ]),
+    treatment: signalTreatment,
+    visualKey: signalVisualKey,
   });
   // True hazard outlines stay crisp at native resolution after receiver processing.
   drawFieldMechanics(ctx, run, palette);

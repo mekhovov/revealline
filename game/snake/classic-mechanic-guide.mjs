@@ -7,16 +7,16 @@ const guides = {
     false,
     ['Signal jammer', 'Глушник сигналу'],
     [
-      'Disrupts the live camera feed with short, variable bursts after a warning.',
-      'Після попередження спотворює живе зображення короткими спалахами змінної тривалості.',
+      'Briefly obscures distant prey and cable after a warning. Your head, nearby collisions and the antenna remain clear.',
+      'Після попередження ненадовго приховує далекі цілі й кабель. Голова, близькі перешкоди та антена залишаються чіткими.',
     ],
     [
       'An antenna and marked radius identify a local jammer. A double antenna broadcasts across the board. Transmission arcs warn before each burst.',
       'Антена й позначений радіус указують на локальний глушник. Подвійна антена впливає на все поле. Дуги передавання попереджають перед кожним спалахом.',
     ],
     [
-      'Catch the antenna enemy to stop its signal, leave a local transmission zone, or use Pulse for temporary clear reception. Watch the nearby walls and tail; controls keep their normal timing. Bursts change each attempt.',
-      'Спіймайте ворога з антеною, вийдіть із локальної зони або застосуйте Імпульс для тимчасового чистого прийому. Стежте за близькими стінами й хвостом; темп керування незмінний. Спалахи змінюються щоразу.',
+      'Plan your next interception while the picture is clear. During a burst, follow the nearby safe route, leave a local transmission zone, or hunt the visible antenna. Pulse restores reception. The closer you fly to a local jammer, the more distant detail is lost; steering keeps its normal timing.',
+      'Плануйте наступне перехоплення, поки зображення чітке. Під час спалаху тримайтеся близького безпечного маршруту, вийдіть із локальної зони або ловіть видиму антену. Імпульс відновлює прийом. Чим ближче до локального глушника, тим гірше видно далекі деталі; темп керування незмінний.',
     ],
   ],
   lane: [

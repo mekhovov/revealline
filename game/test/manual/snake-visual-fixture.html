@@ -13,6 +13,9 @@
     * {
       box-sizing: border-box;
     }
+    [hidden] {
+      display: none !important;
+    }
     body {
       margin: 0;
       padding: clamp(8px, 2vw, 24px);
@@ -164,6 +167,12 @@
         </select></label
       >
       <label
+        >Scenario<select id="scenario">
+          <option value="tracking">Moving prey / longer cable</option>
+          <option value="intro">First burst</option>
+        </select></label
+      >
+      <label
         >Board family<select id="style">
           <option value="living-circuit">Living Circuit</option>
           <option value="theme">Theme</option>
@@ -179,6 +188,13 @@
         </select></label
       >
       <label
+        >Receiver comparison<select id="treatment">
+          <option value="contrast-loss">Reception collapse · selected</option>
+          <option value="baseline">Original · reference</option>
+          <option value="snow-only">Stronger snow · trial</option>
+        </select></label
+      >
+      <label
         ><span>Effects</span
         ><span><input type="checkbox" id="reduced" /> Reduced effects</span></label
       >
@@ -187,6 +203,13 @@
       <button id="seek">Seek active burst</button><button id="step">Step one move</button>
       <button id="play" aria-pressed="false">Play verified route</button
       ><button id="reset">Reset to start</button>
+      <button id="take-controls" aria-pressed="false">Take controls · arrows / WASD</button>
+    </div>
+    <div class="controls" id="steering" aria-label="Manual steering" hidden>
+      <button data-direction="up" aria-label="Turn up">↑</button>
+      <button data-direction="left" aria-label="Turn left">←</button>
+      <button data-direction="down" aria-label="Turn down">↓</button>
+      <button data-direction="right" aria-label="Turn right">→</button>
     </div>
     <p id="state" role="status">Verifying authored recording…</p>
     <section id="boards" aria-label="Actual simulation boards"></section>
