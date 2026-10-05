@@ -46,6 +46,57 @@ function probes(){
  check('Detailed numbers occupy one bounded row',part('details').parentElement===part('card')&&getComputedStyle(part('checks')).display==='none');
  hud.openDetails({title:'Probe details',body:'Exact requirements'});check('Paused explanation opens separately',hud.detailsRoot()?.open===true);hud.closeDetails();
  preference('mode','guided');preference('textSize','standard');preference('highContrast','false');hud.update(feedback,options);
+ const host=$('new'),root=host.querySelector('[data-sim-hud="flight"]'),shown=()=>!root.hidden&&getComputedStyle(root).display!=='none';
+ for(const [name,state] of [['active',{active:true,paused:false,replay:false}],['paused',{active:false,paused:true,replay:false}],['replay',{active:false,paused:false,replay:true}]]){
+  hud.update(feedback,{...options,...state,visible:false});
+  check(`Explicit suppression hides ${name} HUD`,root.hidden&&getComputedStyle(root).display==='none');
+  hud.update(feedback,{...options,...state,visible:true});
+  check(`Visibility returns for ${name} HUD`,shown());
+ }
+ // Isolate the real component stylesheet from the screen's global [hidden]
+ // rules, so those cannot conceal a missing rule for the component root.
+ const isolated=document.createElement('div');document.body.append(isolated);
+ try{
+  const shadow=isolated.attachShadow({mode:'open'}),sheet=document.createElement('style'),sample=document.createElement('div');
+  sheet.textContent=document.querySelector('style[data-sim-hud-styles]').textContent;
+  sample.dataset.simHud='flight';sample.dataset.hudComponent='true';sample.hidden=true;sample.style.display='block';shadow.append(sheet,sample);
+  check('Component stylesheet enforces hidden on the HUD root',getComputedStyle(sample).display==='none');
+ }finally{isolated.remove();}
+ hud.update(feedback,options);
+ // Keep the HUD model unchanged while native result DOM opens, is replaced
+ // during recording verification, and closes for the next flight.
+ const originalHostId=host.id,originalHudHost=host.getAttribute('data-sim-hud-host');
+ try{
+  for(const [name,hostId,resultId,shellId,controlIds] of [['World','world-viewport','result-panel','flight-dialog',['world-touch','flight-drone-response','world-replay-controls']],['Academy','viewport','complete','flight-app',['touch-controls','academy-drone-response','replay-controls']]]){
+   host.id=hostId;host.dataset.simHudHost=name==='World'?'worlds':'academy';
+   const shell=document.createElement(name==='World'?'dialog':'main');shell.id=shellId;
+   if(name==='World')shell.open=true;
+   host.before(shell);shell.append(host);
+   const controls=controlIds.map((id,index)=>{
+    const node=document.createElement(index===1?'aside':'div');node.id=id;node.textContent=['Sticks','Drone diagram','Replay toolbar'][index];
+    node.className=index===1?'sim-drone-response':index===2?'replay-controls':name==='World'?'world-touch':'';
+    node.style.display='flex';
+    if(index===2)shell.insertBefore(node,host);else host.append(node);
+    return node;
+   }),controlShown=node=>!node.hidden&&getComputedStyle(node).display!=='none';
+   const result=document.createElement('section');result.id=resultId;result.hidden=true;host.append(result);
+   try{
+    check(`${name} hidden result preserves flight HUD and controls`,shown()&&controls.every(controlShown));
+    result.hidden=false;
+    check(`${name} result immediately suppresses HUD without another update`,!root.hidden&&getComputedStyle(root).display==='none');
+    for(const node of controls)check(`${name} result suppresses ${node.textContent.toLowerCase()}`,!node.hidden&&getComputedStyle(node).display==='none');
+    result.replaceChildren(document.createTextNode('Checking recording…'));
+    check(`${name} result replacement keeps HUD and controls suppressed`,!root.hidden&&getComputedStyle(root).display==='none'&&controls.every(node=>getComputedStyle(node).display==='none'));
+    result.hidden=true;
+    check(`${name} result closing restores unchanged flight HUD`,shown());
+    for(const node of controls)check(`${name} result closing restores ${node.textContent.toLowerCase()}`,controlShown(node));
+   }finally{result.remove();controls.forEach(node=>node.remove());shell.before(host);shell.remove();}
+  }
+ }finally{
+  host.id=originalHostId;
+  if(originalHudHost===null)host.removeAttribute('data-sim-hud-host');else host.setAttribute('data-sim-hud-host',originalHudHost);
+  hud.update(feedback,options);
+ }
  const r=part('card').getBoundingClientRect(),short=$('new').clientHeight<=480&&$('new').clientWidth>=500;
  check('Default card obeys bounded dimensions',r.width<=(short?220:240)+1&&r.height<=(short?64:72)+1);
  $('checks').textContent=checks.map(row=>`${row.pass?'PASS':'FAIL'} · ${row.name}`).join('\n');$('checks').style.whiteSpace='pre-line';window.hudDomChecks=checks;return checks;

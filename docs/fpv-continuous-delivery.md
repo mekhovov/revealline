@@ -3869,3 +3869,26 @@ and remote-head leases where needed, then protected publication and actual publi
 SIM launch. Additional unit coverage remains D6; physical-device/controller/novice
 acceptance and installed-app fullscreen are unclaimed. No scenery/physics/mission
 expansion was included in this HUD increment.
+
+## 5 October — HUD/results overlap correction
+
+Follow-up to #1110 fixes the reported compact HUD painting above the lesson
+completion menu. Both hosts now give covering menus and terminal results explicit
+HUD visibility ownership, separate from paused/replay state. Ordinary paused
+practice retains accessible Explain. Canonical CSS immediately suppresses the HUD
+when a result appears after the frame update, including the asynchronous recording
+verification interval. Completed results also hide idle sticks, the drone diagram
+and replay transport so they cannot overlap the restored menu header.
+
+Native browser verification passed 38 functional DOM checks covering both hosts,
+active/paused/replay suppression, result replacement, controls and restoration.
+The real Acro tilt demonstration ends with a clear result; World and Academy
+Pause/Continue and Explain/Close restore guidance safely. All 60 existing flight,
+UI, radio and replay regressions pass; scoped lint/syntax and shared style
+projection checks pass. Evidence: `fpv-flight-hud-overlay-verification.json`.
+
+Fresh development preview: http://127.0.0.1:8981/optional-practice/fpv-worlds/index.html?lang=en#learn.
+The immutable 8972 admitted preview and historical package receipts still identify
+3bbdc8 and do not contain this follow-up. Do not mark the new source package-qualified
+or public live: the stable 3 GiB build floor is not currently met. Preserve #1110's
+Draft/native-stack position and repeat frozen package qualification before release.

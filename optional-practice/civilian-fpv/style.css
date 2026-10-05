@@ -3507,6 +3507,26 @@ html body #world-viewport[data-sim-hud-host] .beginner-coach[data-stage='live'] 
 html body :is(#world-viewport, #viewport)[data-sim-hud-guide='true'] [data-sim-hud] {
   display: none !important;
 }
+/* Results can open after the frame's HUD update. Suppress immediately, including
+   while recording verification is still replacing the result content. */
+html
+  body
+  :is(#world-viewport, #viewport):has(:is(#result-panel, #complete):not([hidden]))
+  [data-sim-hud='flight'],
+html body:has(dialog[open]:not(#flight-dialog)) [data-sim-hud='flight'] {
+  display: none !important;
+}
+
+html
+  body
+  #flight-dialog:has(#result-panel:not([hidden]))
+  :is(#world-touch, #flight-drone-response, #world-replay-controls),
+html
+  body
+  #flight-app:has(#complete:not([hidden]))
+  :is(#touch-controls, #academy-drone-response, #replay-controls) {
+  display: none !important;
+}
 html body .mode-play-shell:has([data-sim-hud-active='true']) {
   grid-template-rows: minmax(0, 1fr) !important;
 }
