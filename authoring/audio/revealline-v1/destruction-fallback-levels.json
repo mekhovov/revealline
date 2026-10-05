@@ -1,0 +1,75 @@
+{
+  "method": "Numerical 48 kHz model: actual base WAV with director gain/fades, exponential-frequency sine/triangle plus deterministic noise through standard 1600 Hz Q 0.7 bandpass and Soundscape envelopes. Excludes master bus, browser oscillator bandlimiting, music and hardware. A regression bound, not native playback or listening qualification.",
+  "rows": [
+    {
+      "category": "soft",
+      "brutal": false,
+      "sampleMax50msDbfs": -35.68023043277045,
+      "fallbackMax50msDbfs": -37.425514605127034,
+      "differenceDb": -1.745284172356584
+    },
+    {
+      "category": "soft",
+      "brutal": true,
+      "sampleMax50msDbfs": -34.69586997936682,
+      "fallbackMax50msDbfs": -36.446527161949724,
+      "differenceDb": -1.7506571825829056
+    },
+    {
+      "category": "armored",
+      "brutal": false,
+      "sampleMax50msDbfs": -35.919802646136375,
+      "fallbackMax50msDbfs": -37.874625177260285,
+      "differenceDb": -1.9548225311239094
+    },
+    {
+      "category": "armored",
+      "brutal": true,
+      "sampleMax50msDbfs": -34.93544219273274,
+      "fallbackMax50msDbfs": -36.88147925537989,
+      "differenceDb": -1.9460370626471502
+    },
+    {
+      "category": "light",
+      "brutal": false,
+      "sampleMax50msDbfs": -33.979991691834364,
+      "fallbackMax50msDbfs": -36.14869728472296,
+      "differenceDb": -2.1687055928885925
+    },
+    {
+      "category": "light",
+      "brutal": true,
+      "sampleMax50msDbfs": -33.979991691834364,
+      "fallbackMax50msDbfs": -36.14869728472296,
+      "differenceDb": -2.1687055928885925
+    },
+    {
+      "category": "heavy",
+      "brutal": false,
+      "sampleMax50msDbfs": -31.87664207228365,
+      "fallbackMax50msDbfs": -32.487876723082294,
+      "differenceDb": -0.611234650798643
+    },
+    {
+      "category": "heavy",
+      "brutal": true,
+      "sampleMax50msDbfs": -31.87664207228365,
+      "fallbackMax50msDbfs": -32.487876723082294,
+      "differenceDb": -0.611234650798643
+    },
+    {
+      "category": "electronic",
+      "brutal": false,
+      "sampleMax50msDbfs": -37.37550397230035,
+      "fallbackMax50msDbfs": -38.772732176561775,
+      "differenceDb": -1.397228204261424
+    },
+    {
+      "category": "electronic",
+      "brutal": true,
+      "sampleMax50msDbfs": -37.37550397230035,
+      "fallbackMax50msDbfs": -38.772732176561775,
+      "differenceDb": -1.397228204261424
+    }
+  ]
+}

@@ -1,0 +1,429 @@
+- navigation "Editor navigation":
+  - button "Sections"
+  - paragraph: "D-pad: move · A: choose/edit · B: back · Menu: editor navigation"
+- generic: Language
+- combobox "Language":
+  - option "English" [selected]
+  - option "Українська"
+- status
+- link "Skip inventory":
+  - /url: "#inspector"
+- paragraph:
+  - status: Destruction sounds added to this draft. Existing assets are retained. Save a local revision or export to keep this change.
+- banner:
+  - link "Return to Workshop":
+    - /url: http://localhost:8887/game/?lang=en&workshop=asset-studio
+  - heading "Asset Studio" [level=1]
+  - link "Open Theme Studio":
+    - /url: http://localhost:8887/authoring/asset-studio/?lang=en&studio=themes
+  - button "Save local revision"
+  - button "Export .rltheme"
+  - generic: Import collection
+  - button "Import collection Choose a source"
+  - button "Choose a source"
+  - generic "Interface"
+  - option "Theme" [selected]
+  - option "Plain"
+  - option "Standard" [selected]
+  - option "Large"
+  - generic "Studio guide"
+- generic "Theme library & inspection"
+- option "FPV Field Kit" [selected]
+- option "New workspace · preserve identity" [selected]
+- option "Duplicate with a new identity"
+- option "Replace matching workspace · keep recovery copy"
+- option "Signal Blue (r3)"
+- option "Flight Deck (r3)" [selected]
+- option "Military Field (r1)"
+- option "Ember Foundry (r1)"
+- option "Polar Relay (r1)"
+- option "Vyshyvanka (r2)"
+- option "Dnipro Porcelain (r1)"
+- option "Tryzub (r1)"
+- option "Desktop 98 (r2)"
+- option "DOS Navigator (r2)"
+- option "Orchard Workshop (r1)"
+- option "Neon Ruins (r1)"
+- option "Pocket LCD (r1)"
+- option "Copper Observatory (r1)"
+- option "Sakura Station (r1)"
+- option "Obsidian Reliquary (r1)"
+- option "Deep Space (r1)"
+- option "Moonlit Grove (r1)"
+- option "Follow campaign / community" [selected]
+- option "Signal Blue"
+- option "Flight Deck"
+- option "Military Field"
+- option "Ember Foundry"
+- option "Polar Relay"
+- option "Vyshyvanka"
+- option "Dnipro Porcelain"
+- option "Tryzub"
+- option "Desktop 98"
+- option "DOS Navigator"
+- option "Orchard Workshop"
+- option "Neon Ruins"
+- option "Pocket LCD"
+- option "Copper Observatory"
+- option "Sakura Station"
+- option "Obsidian Reliquary"
+- option "Deep Space"
+- option "Moonlit Grove"
+- option "Current workspace candidate" [selected]
+- option "Signal Blue"
+- option "Flight Deck"
+- option "Military Field"
+- option "Ember Foundry"
+- option "Polar Relay"
+- option "Vyshyvanka"
+- option "Dnipro Porcelain"
+- option "Tryzub"
+- option "Desktop 98"
+- option "DOS Navigator"
+- option "Orchard Workshop"
+- option "Neon Ruins"
+- option "Pocket LCD"
+- option "Copper Observatory"
+- option "Sakura Station"
+- option "Obsidian Reliquary"
+- option "Deep Space"
+- option "Moonlit Grove"
+- option "Balanced" [selected]
+- option "Detailed"
+- option "panel" [selected]
+- option "dialog"
+- option "toolbar"
+- option "button"
+- option "input"
+- option "tab"
+- option "slot"
+- option "tooltip"
+- option "progress"
+- option "hud"
+- option "table"
+- option "inspector"
+- option "checkbox"
+- option "radio"
+- option "slider"
+- option "scrollbar"
+- option "notification"
+- option "primary"
+- option "danger"
+- option "Default" [selected]
+- option "Hover"
+- option "Focus"
+- option "Pressed"
+- option "✓ Selected"
+- option "— Unavailable"
+- option "… Loading"
+- option "× Error"
+- generic "Artwork collections · source candidates"
+- option "Pixel art" [selected]
+- option "Photographic reveals"
+- option "1152 × 576 · 2:1" [selected]
+- option "768 × 576 · 4:3"
+- option "Fit whole picture" [selected]
+- option "Centre crop"
+- option "Fit whole image" [selected]
+- option "Native pixels · scroll"
+- group "Shared sound settings":
+  - button "Mute sound"
+  - generic: Master sound volume
+  - slider "Master sound volume": "0.65"
+  - status
+- paragraph: Theme FPV Field Kit · document r105 · local save 1 · unsaved changes
+- button "Undo draft"
+- button "Redo draft" [disabled]
+- button "Reset to saved"
+- button "Reload saved"
+- button "Load release collection"
+- button "Add Team presentation slots" [disabled]
+- button "Add destruction sounds" [disabled]
+- main:
+  - complementary "Asset inventory":
+    - heading "Asset inventory" [level=2]
+    - generic: 13 / 340
+    - generic: Search
+    - searchbox "Search": audio.
+    - generic: Theme
+    - combobox "Theme":
+      - option "Field Kit"
+      - option "FPV Field Kit" [selected]
+    - generic: Screen
+    - combobox "Screen":
+      - option "All screens" [selected]
+      - option "about"
+      - option "archive"
+      - option "boot"
+      - option "briefing"
+      - option "collection"
+      - option "controller-practice"
+      - option "couch"
+      - option "credits"
+      - option "first-flight"
+      - option "flight"
+      - option "guide"
+      - option "hangar"
+      - option "library"
+      - option "missions"
+      - option "pause"
+      - option "picture"
+      - option "privacy"
+      - option "recovery"
+      - option "replay"
+      - option "results"
+      - option "settings"
+      - option "soundtrack"
+      - option "story"
+      - option "studio"
+      - option "title"
+      - option "worlds"
+    - generic: State
+    - combobox "State":
+      - option "All states" [selected]
+      - option "default"
+      - option "disabled"
+      - option "error"
+      - option "focus"
+      - option "hover"
+      - option "loading"
+      - option "pressed"
+      - option "selected"
+    - generic: Kind
+    - combobox "Kind":
+      - option "All kinds" [selected]
+      - option "image"
+      - option "recipe"
+      - option "font"
+      - option "audio"
+    - generic: Readiness
+    - combobox "Readiness":
+      - option "Every stage" [selected]
+      - option "Needs production or review"
+      - option "Missing binding"
+      - option "Source recipe"
+      - option "Produced"
+      - option "Reviewed"
+    - paragraph: "Missing: 0 · source: 104 · produced: 0 · reviewed: 236. Readiness is evidence based."
+    - list "Presentation slots":
+      - checkbox "Include focus audio cue in collection"
+      - button "focus audio cue audio.focus · reviewed":
+        - strong: focus audio cue
+        - generic: audio.focus · reviewed
+      - checkbox "Include confirm audio cue in collection"
+      - button "confirm audio cue audio.confirm · reviewed":
+        - strong: confirm audio cue
+        - generic: audio.confirm · reviewed
+      - checkbox "Include cancel audio cue in collection"
+      - button "cancel audio cue audio.cancel · reviewed":
+        - strong: cancel audio cue
+        - generic: audio.cancel · reviewed
+      - checkbox "Include capture audio cue in collection"
+      - button "capture audio cue audio.capture · reviewed":
+        - strong: capture audio cue
+        - generic: audio.capture · reviewed
+      - checkbox "Include failure audio cue in collection"
+      - button "failure audio cue audio.failure · reviewed":
+        - strong: failure audio cue
+        - generic: audio.failure · reviewed
+      - checkbox "Include victory audio cue in collection"
+      - button "victory audio cue audio.victory · reviewed":
+        - strong: victory audio cue
+        - generic: audio.victory · reviewed
+      - checkbox "Include pickup audio cue in collection"
+      - button "pickup audio cue audio.pickup · reviewed":
+        - strong: pickup audio cue
+        - generic: audio.pickup · reviewed
+      - checkbox "Include Theme music in collection"
+      - button "Theme music audio.music · reviewed":
+        - strong: Theme music
+        - generic: audio.music · reviewed
+      - checkbox "Include Infantry destruction in collection"
+      - button "Infantry destruction audio.destroy-soft · source" [pressed]:
+        - strong: Infantry destruction
+        - generic: audio.destroy-soft · source
+      - checkbox "Include Armored infantry destruction in collection"
+      - button "Armored infantry destruction audio.destroy-armored · source":
+        - strong: Armored infantry destruction
+        - generic: audio.destroy-armored · source
+      - checkbox "Include Light machinery destruction in collection"
+      - button "Light machinery destruction audio.destroy-light · source":
+        - strong: Light machinery destruction
+        - generic: audio.destroy-light · source
+      - checkbox "Include Heavy machinery destruction in collection"
+      - button "Heavy machinery destruction audio.destroy-heavy · source":
+        - strong: Heavy machinery destruction
+        - generic: audio.destroy-heavy · source
+      - checkbox "Include Electronic equipment destruction in collection"
+      - button "Electronic equipment destruction audio.destroy-electronic · source":
+        - strong: Electronic equipment destruction
+        - generic: audio.destroy-electronic · source
+    - generic "Build a coordinated collection"
+  - region "Infantry destruction":
+    - paragraph: audio.destroy-soft
+    - heading "Infantry destruction" [level=2]
+    - generic: source
+    - paragraph: "Infantry destruction: registered baseline component; no new raster or audio production is claimed."
+    - generic: Preview
+    - combobox "Preview":
+      - option "Pixel enlarged" [selected]
+      - option "Native size"
+      - option "Transparency"
+      - option "Field context"
+    - generic: Game mode
+    - combobox "Game mode" [disabled]:
+      - option "Solo" [selected]
+      - option "Couch Versus"
+      - option "Couch Team"
+    - generic: Team arena
+    - combobox "Team arena" [disabled]:
+      - option "First Connection" [selected]
+      - option "Relay Yard"
+    - generic: Team scene
+    - combobox "Team scene" [disabled]:
+      - option "Initial field" [selected]
+      - option "Active cuts"
+      - option "Hunter warning"
+      - option "Hunter charge"
+      - option "Hunter recovery"
+      - option "Joint capture"
+      - option "Team reserve recovery"
+      - option "Support pulse"
+      - option "Emitter warning" [disabled]
+      - option "Travelling spark" [disabled]
+      - option "Anchors captured" [disabled]
+      - option "Relay core exposed" [disabled]
+      - option "Secured core · two-relay specimen" [disabled]
+      - option "Completed field"
+      - option "Player 1 downed" [disabled]
+      - option "Player 1 crawling" [disabled]
+      - option "Rescuing Player 1" [disabled]
+      - option "Player 1 recovered" [disabled]
+      - option "Player 2 downed" [disabled]
+      - option "Player 2 crawling" [disabled]
+      - option "Rescuing Player 2" [disabled]
+      - option "Player 2 recovered" [disabled]
+    - generic: Backdrop
+    - combobox "Backdrop":
+      - option "Checkerboard" [selected]
+      - option "Dark"
+      - option "Light"
+    - generic: State
+    - combobox "State":
+      - option "default" [selected]
+    - generic: Motion
+    - combobox "Motion":
+      - option "Paused" [selected]
+      - option "Play preview"
+      - option "Reduced effects"
+    - checkbox "Geometry overlay" [checked]
+    - generic: Geometry overlay
+    - figure "Saved / current":
+      - generic: Saved / current
+      - paragraph:
+        - status: "Saved preview: no asset bound."
+      - paragraph: No binding. Upload a candidate for this slot.
+    - figure "Working draft":
+      - generic: Working draft
+      - paragraph:
+        - status: "Draft preview: Ready"
+      - heading "Infantry destruction" [level=3]
+      - button "Audition cue"
+      - button "Stop"
+      - paragraph:
+        - status: "Sound starts only from this button. Local audition volume: 35%."
+    - paragraph: Bounded asset preview. It does not simulate a complete game or establish production readiness.
+    - term: Frame
+    - definition: Scalable / media
+    - term: Accepted
+    - definition: audio, recipe
+    - term: Budget
+    - definition: 4096 KiB
+    - term: Alpha
+    - definition: either
+    - term: Sampling
+    - definition: nearest
+    - term: Required
+    - definition: Optional theme owner
+    - generic "Usage and exact requirements"
+    - generic: boot
+    - generic: title
+    - generic: missions
+    - generic: briefing
+    - generic: hangar
+    - generic: flight
+    - generic: pause
+    - generic: results
+    - generic: collection
+    - generic: picture
+    - generic: story
+    - generic: settings
+    - generic: soundtrack
+    - generic: library
+    - generic: recovery
+    - generic: worlds
+    - generic: guide
+    - generic: first-flight
+    - generic: couch
+    - generic: replay
+    - generic: controller-practice
+    - generic: studio
+    - generic: about
+    - generic: credits
+    - generic: privacy
+    - generic: archive
+    - generic: :default
+    - list:
+      - listitem: Optional shared destruction slot; older themes fall back to the registered enemy-specific bank.
+      - listitem: Mono audio, at most one second. Runtime bounds tails, concurrent voices and event rate.
+      - listitem: Follow master/SFX volume, mute, pause and user activation; never encode gameplay timing.
+      - listitem: Retain original licensed bytes and provenance for Studio export and reuse.
+    - generic: "{ \"format\": \"revealline-asset-slot.v1\", \"id\": \"audio.destroy-soft\", \"revision\": 1, \"label\": \"Infantry destruction\", \"group\": \"audio\", \"screens\": [ \"boot\", \"title\", \"missions\", \"briefing\", \"hangar\", \"flight\", \"pause\", \"results\", \"collection\", \"picture\", \"story\", \"settings\", \"soundtrack\", \"library\", \"recovery\", \"worlds\", \"guide\", \"first-flight\", \"couch\", \"replay\", \"controller-practice\", \"studio\", \"about\", \"credits\", \"privacy\", \"archive\" ], \"kinds\": [ \"audio\", \"recipe\" ], \"recipes\": [ \"audio.ui.v1\" ], \"required\": false, \"dimensions\": null, \"alpha\": \"either\", \"sampling\": \"nearest\", \"states\": [ \"default\" ], \"requirements\": [ \"Optional shared destruction slot; older themes fall back to the registered enemy-specific bank.\", \"Mono audio, at most one second. Runtime bounds tails, concurrent voices and event rate.\", \"Follow master/SFX volume, mute, pause and user activation; never encode gameplay timing.\", \"Retain original licensed bytes and provenance for Studio export and reuse.\" ], \"prompt\": \"Create a short infantry destruction cue. Preserve a clear transient, restrained bass and a quick decay; no voices or musical pickup chimes. The shared default has three licensed CC0 variations. Export mono 48 kHz PCM16 WAV, at most one second, with complete license and source records.\", \"budget\": { \"maxBytes\": 4194304 }, \"palette\": [ \"#070b12\", \"#101923\", \"#f3f0db\", \"#78dce8\", \"#f4bf62\", \"#f07879\", \"#9dbb7a\", \"#a5b2bb\" ], \"geometry\": null, \"dependencies\": [], \"owner\": null, \"currentAsset\": \"audio.destroy-soft.default@1\" }"
+    - generic "Upload, crop and geometry"
+    - paragraph: Original file bytes are retained. For images, cropping creates a separate PNG derivative at the slot’s frame size. Fonts and audio keep their file formats; pixel cropping does not apply. Check the selected slot’s accepted formats and requirements before choosing a replacement.
+    - generic: Choose replacement file
+    - button "Choose replacement file Choose a source"
+    - button "Choose a source"
+    - button "Edit current raster metadata" [disabled]
+    - generic "Actor animation · advanced"
+    - option "idle" [selected]
+    - option "notice"
+    - option "anticipation"
+    - option "move"
+    - option "blocked"
+    - option "recovery"
+    - option "caught"
+    - option "aim"
+    - option "fire"
+    - option "North" [selected]
+    - option "East"
+    - option "South"
+    - option "West"
+    - paragraph: No replacement selected.
+    - generic: Description
+    - textbox "Description": Infantry destruction
+    - generic: Creator
+    - textbox "Creator":
+      - /placeholder: Your name or creator
+    - generic: Source
+    - textbox "Source":
+      - /placeholder: Original file / source reference
+    - generic: License / rights
+    - textbox "License / rights":
+      - /placeholder: Your actual rights statement
+    - generic: Effective generation/edit prompt
+    - textbox "Effective generation/edit prompt"
+    - button "Validate and stage replacement" [disabled]
+    - button "Discard slot draft" [disabled]
+    - generic "Pixel editor · single layer, up to 128 × 128"
+    - generic "Theme tokens"
+    - generic "AI prompts"
+    - generic "Asset revision history"
+- contentinfo:
+  - link "Design atlas":
+    - /url: http://localhost:8887/authoring/design-atlas/?lang=en
+  - link "Industrial art review":
+    - /url: ../industrial-art-review/?lang=en
+  - link "Return to game":
+    - /url: http://localhost:8887/game/?lang=en
+  - generic: Local authoring workspace · player saves stay separate
