@@ -1,0 +1,55 @@
+name: Industrial feature verification
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/industrial-feature-tests.yml'
+      - 'publishing/**'
+      - 'scripts/**'
+      - 'game/**'
+      - 'services/rooms/**'
+      - 'optional-practice/**'
+      - 'authoring/**'
+      - 'package.json'
+      - 'package-lock.json'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: industrial-features-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  feature:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      max-parallel: 3
+      matrix:
+        phase: [gameplay, creator, presentation, recordings, rooms, local-ux]
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          persist-credentials: false
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
+        with:
+          package-manager-cache: false
+          node-version: '22.22.2'
+          cache: npm
+      - run: npm ci --ignore-scripts
+      - name: Verify the phase runner and restored policy
+        run: node --test scripts/test-industrial-verifier.mjs publishing/test-policy.test.mjs
+      - name: Execute the feature phase on the exact PR head
+        run: node scripts/verify-industrial-features.mjs --phase ${{ matrix.phase }}
+      - name: Retain TAP and source-bound receipts
+        if: always()
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
+        with:
+          name: industrial-${{ matrix.phase }}-${{ github.event.pull_request.head.sha }}
+          path: .cache/industrial-verification/
+          include-hidden-files: true
+          if-no-files-found: warn
+          retention-days: 14

@@ -308,14 +308,6 @@ test(
       browserSetup({ document }) {
         // The compiled entry pins this audience on its html element.
         document.documentElement.dataset.editionId = f.edition.id;
-        for (const canvas of document.querySelectorAll('canvas'))
-          canvas.getContext = () => ({ drawImage() {} });
-        const create = document.createElement.bind(document);
-        document.createElement = (tag) => {
-          const node = create(tag);
-          if (tag === 'canvas') node.getContext = () => ({ drawImage() {} });
-          return node;
-        };
       },
     });
     const backend = createRewardBackend({ editionId: f.edition.id, indexedDB: disk.indexedDB });
@@ -616,14 +608,6 @@ test(
       fetchResponse: f.fetcher,
       browserSetup({ document }) {
         document.documentElement.dataset.editionId = f.editionId;
-        for (const canvas of document.querySelectorAll('canvas'))
-          canvas.getContext = () => ({ drawImage() {} });
-        const create = document.createElement.bind(document);
-        document.createElement = (tag) => {
-          const node = create(tag);
-          if (tag === 'canvas') node.getContext = () => ({ drawImage() {} });
-          return node;
-        };
       },
     });
     const backend = createRewardBackend({ editionId: f.editionId, indexedDB: disk.indexedDB });
@@ -699,6 +683,12 @@ test(
       'Two actual wins cannot grant a six-win finale or application bonus.',
     );
     assert.ok(f.requests.includes(`game/${f.art.path}`));
+    // Reward persistence can finish during the celebration. Follow the native
+    // result action before asking for the activity attached to the earned art.
+    if (!page.$('skip-celebration').hidden) page.$('skip-celebration').click();
+    page.$('show-result').click();
+    assert.equal(page.$('game-overlay').dataset.kind, 'won');
+    assert.equal(page.$('result-picture').hidden, false);
     const lessonOpen = page.$('edition-lesson-open');
     assert.equal(
       lessonOpen.hidden,

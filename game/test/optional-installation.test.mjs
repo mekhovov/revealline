@@ -138,7 +138,7 @@ test('an installation pointer is recorded only after a verified worker activates
 
 function launcher(fetcher, query = '', { storage = memory(), offlineReady = false } = {}) {
   const elements = Object.fromEntries(
-    ['locale', 'title', 'check', 'open', 'prepare', 'previous', 'status'].map((id) => [
+    ['locale', 'title', 'check', 'open', 'prepare', 'previous', 'status', 'remove'].map((id) => [
       id,
       { hidden: true, textContent: '', disabled: false },
     ]),
@@ -212,6 +212,36 @@ test('stable launcher forwards a bounded cosmetic pin without admitting navigati
     await invalid.ready;
     await invalid.elements.check.onclick();
     assert.equal(new URL(invalid.elements.prepare.href).search, '?lang=en');
+  }
+});
+
+test('launcher keeps missing-file repair and removal visible after checking an available release', async () => {
+  for (const [locale, instructions] of [
+    ['en', /Remove this offline copy, then download it again/],
+    ['uk', /Видаліть цю офлайн-копію, потім завантажте її знову/],
+  ]) {
+    const storage = memory();
+    recordOptionalInstallation({ packageId, storage, location: locationFor('v1.2.3') });
+    const current = {
+      id: packageId,
+      version: 'v1.2.3',
+      scope: '../releases/v1.2.3/site/',
+      entry: 'optional-practice/civilian-flight/index.html',
+    };
+    for (const available of [true, false]) {
+      const f = launcher(
+        async () => {
+          if (!available) throw new Error('Offline');
+          return new Response(JSON.stringify(current));
+        },
+        '?lang=' + locale,
+        { storage, offlineReady: false },
+      );
+      await f.ready;
+      assert.match(f.elements.status.textContent, instructions);
+      assert.equal(f.elements.remove.hidden, false);
+      assert.equal(f.elements.open.hidden, true);
+    }
   }
 });
 
