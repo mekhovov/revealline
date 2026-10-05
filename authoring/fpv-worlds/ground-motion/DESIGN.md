@@ -67,6 +67,22 @@ ordinary neutral input; no actor pose is assigned after construction.
 
 ## Compatibility and publication
 
+After integrating P1's FlightCourse.v3 pursuit runtime, the same optional actor
+field remains inside the exact course identity. P1's conditional vehicleModel
+schema, pursuit state, controllers, recording versions and definition data are
+preserved. Native pursuit graph admission already shares checks for equal body
+shapes; the integrated key additionally includes groundMotion only when present.
+Real query observation showed mixed policies otherwise skipped the second
+policy entirely. This changes admission coverage, not pursuit decisions or
+movement. The absent-policy key and its deduplication remain exact.
+
+The bounded integration includes both policy orders, native thin-ceiling refusal,
+and eight synthetic mixed-policy V3 partial-practice recordings with independent
+replay and rejection after removing the flag. It does not claim every authored
+mixed-policy graph is traversable, or that these partial recordings complete a
+pursuit course. See evidence/integration-p1 for unchanged retained V3 completions
+and full Festival/Harbor recording comparisons.
+
 Malformed groundMotion values and ineligible actor types remain invalid data.
 A well-formed future value on an eligible type receives the narrowly typed
 unsupported-ground-motion error and existing truthful EN/UK update guidance.
