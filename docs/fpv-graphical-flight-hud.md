@@ -121,3 +121,14 @@ The exact admitted World Studio and Academy launchers both prepared their packag
 3. Verify the public deployment identity and launch the public SIM before calling this increment live.
 
 Physical-device performance, installed-app/native fullscreen, actual controller/radio reconnect and human beginner acceptance remain honestly outstanding. They do not block independent authorized development, and are not recorded as passed.
+
+### Results and menu visibility correction
+
+The host now passes explicit HUD visibility independently of active/paused/replay
+state. Results, preparation, options and modal menus suppress the flight HUD; a
+plain paused flight retains guidance and safe Explain. An immediate CSS guard
+covers results shown after the frame update and asynchronous proof verification.
+Idle sticks, drone diagrams and playback controls clear from terminal results and
+return for a fresh flight. See `fpv-flight-hud-overlay-verification.json` for
+38 browser checks and host verification. Previous package receipts remain tied
+to 3bbdc8; this follow-up requires fresh package admission before release.

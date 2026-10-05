@@ -4595,6 +4595,7 @@ const FLIGHT_HUD_STYLE = `
   text-shadow: none;
   letter-spacing: normal;
 }
+[data-sim-hud][data-hud-component][hidden],
 [data-sim-hud][data-hud-component] [hidden] { display: none !important; }
 [data-sim-hud='flight'][data-hud-component] {
   position: absolute;
@@ -5013,7 +5014,12 @@ export function mountFlightHud({
     if (disposed) return;
     feedback = next;
     context = options;
-    root.hidden = !feedback || (options.active === false && !options.paused && !options.replay);
+    // Paused practice can retain guidance, but a covering menu or result owns
+    // the screen regardless of the simulation/playback state underneath it.
+    root.hidden =
+      options.visible === false ||
+      !feedback ||
+      (options.active === false && !options.paused && !options.replay);
     if (!feedback) return;
     telemetry.hidden = !options.telemetry;
     setText(telemetry, options.telemetry ?? '');
