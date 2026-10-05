@@ -598,3 +598,110 @@
   @media (max-width: 480px) {
   }
 }
+
+.snake-continuation {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.6rem;
+}
+.snake-continuation[hidden] {
+  display: none;
+}
+.snake-continuation .continuous-play-controls {
+  flex-basis: 100%;
+  text-align: center;
+}
+.snake-result-board {
+  display: block;
+  width: min(100%, 360px);
+  height: auto;
+  margin: 0 auto 1rem;
+  border: 2px solid var(--line, #747a78);
+}
+#snake-results .run-controls {
+  flex-wrap: wrap;
+}
+#snake-results .run-controls > * {
+  flex: 1 1 10rem;
+}
+@media (max-height: 600px) and (min-width: 600px) {
+  .snake-result-board {
+    float: left;
+    width: 32%;
+    margin: 0 1rem 0.5rem 0;
+  }
+  .snake-continuation {
+    padding: 0.25rem;
+  }
+}
+
+.snake-continuation {
+  position: absolute;
+  bottom: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(95%, 680px);
+  z-index: 3;
+  background: var(--fk-panel, #202729);
+  border: 1px solid var(--line);
+}
+.level-strip {
+  flex-wrap: wrap;
+}
+.snake-onboarding {
+  flex-basis: 100%;
+  font-size: 0.8rem;
+  margin: 0;
+  opacity: 0.85;
+}
+.snake-stars {
+  color: var(--gold, #eabb59);
+  font-size: 2rem;
+  letter-spacing: 0.16em;
+}
+#snake-results #snake-reaction-caption {
+  position: static;
+  margin-block: 1rem;
+  text-align: start;
+}
+#snake-pause-dialog .enemy-stats {
+  padding: 0.5rem 0.75rem;
+  margin: 0.5rem 0 0;
+}
+#snake-pause-dialog .enemy-stats-header,
+#snake-pause-dialog .enemy-stats > .enemy-stats-caption {
+  display: none;
+}
+#snake-pause-dialog .enemy-stats-summary {
+  margin: 0;
+}
+#snake-pause-dialog .enemy-stats-total {
+  font-size: 1.2rem;
+}
+#snake-pause-dialog .enemy-stats-grid {
+  max-height: 7rem;
+  overflow-y: auto;
+  margin: 0.5rem 0 0;
+}
+#snake-pause-dialog .enemy-stats-grid:empty {
+  display: none;
+}
+
+@media (max-height: 500px) and (orientation: landscape) {
+  .arena {
+    grid-template: auto minmax(0, 1fr) / minmax(0, 1fr) auto;
+  }
+  .level-strip {
+    grid-column: 1 / -1;
+  }
+  #pads {
+    flex-direction: column;
+    align-self: center;
+  }
+  .pad {
+    --pad: 44px;
+  }
+}

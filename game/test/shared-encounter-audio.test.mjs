@@ -147,6 +147,32 @@ test('Snake shares rotor/prey feedback and deduplicates catches, supplies and sh
   assert.equal(cues.at(-1)[0], 'pulse');
 });
 
+test('Snake observes mechanic cues at each simulation step without replaying duplicate events', () => {
+  const cues = [];
+  const audio = createClassicAudio({ encounter: (...cue) => cues.push(cue) });
+  const run = snake();
+  run.tick = 1;
+  run.events = [{ type: 'target.warning', tick: 1, target: { kind: 'jammer', x: 4 } }];
+  audio.events(run, { board: 'snake-1' });
+  audio.events(run, { board: 'snake-1' });
+  run.tick = 2;
+  run.events = [
+    { type: 'relay.collected', tick: 2, relay: { x: 5 } },
+    { type: 'target.opened', tick: 2, target: { kind: 'relay', x: 7 } },
+  ];
+  audio.events(run);
+  run.tick = 3;
+  run.events = [{ type: 'target.warning', tick: 3, target: { kind: 'lane', x: 4 } }];
+  audio.events(run, { active: false });
+  audio.events(run);
+  assert.deepEqual(
+    cues.map(([cue]) => cue),
+    ['warning', 'supply', 'objective'],
+  );
+  assert.equal(cues[0][1].board, 'snake-1');
+  assert.equal(cues[0][1].family, 'jammer');
+});
+
 test('flight shares master mute, creates one context and sounds the terminal catch once', async () => {
   const { context, made } = contextHarness();
   let creations = 0;

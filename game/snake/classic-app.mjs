@@ -1,3 +1,24 @@
+import { claimProfileWriter } from '../profile-writer.mjs';
+import {
+  createEnemyStats,
+  validateEnemyStatsSession,
+  forkEnemyStatsSession,
+} from '../enemy-stats.mjs';
+import { mountEnemyStats } from '../ui/enemy-stats.mjs';
+import { createClassicRecentReplay } from './classic-recent-replay.mjs';
+import {
+  createContinuousPlayController,
+  continuousPlayPreferences,
+  continuousPlayBindings,
+  mountContinuousPlayControls,
+} from '../ui/continuous-play.mjs';
+import {
+  createCelebration,
+  advanceCelebration,
+  celebrationFrame,
+  drawCelebration,
+} from '../ui/celebration.mjs';
+import { createSignalReception } from '../ui/signal-reception.mjs';
 import { mountGlobalSettingsTools } from '../ui/global-settings-tools.mjs';
 import { attachMenuAudioSettings } from '../ui/menu-audio.mjs';
 import { mountGlobalSettings } from '../ui/global-settings-view.mjs';
@@ -27,8 +48,11 @@ import { createClassicAudio } from './classic-audio.mjs';
 import { getLocale, setLocale, onLocaleChange } from '../i18n/index.mjs';
 import { boundedJSON, exactKeys, required } from '../data-json.mjs';
 import { createDestructionPreferences, sharedActorAppearance } from '../hunt/preferences.mjs';
-import { ACTOR_CASTS, actorFieldGuide } from '../hunt/actor-catalog.mjs';
-import { renderEnemyFieldGuide } from '../ui/enemy-field-guide.mjs';
+import { ACTOR_CASTS } from '../hunt/actor-catalog.mjs';
+import {
+  classicMechanicGuide as actorFieldGuide,
+  renderClassicEnemyFieldGuide as renderEnemyFieldGuide,
+} from './classic-mechanic-guide.mjs';
 import { attachContextualReactions } from '../ui/contextual-reactions.mjs';
 import { createEncounterDisplayPreferences } from '../encounter-display-preferences.mjs';
 import { createDisplayPreferences } from '../display-preferences.mjs';
@@ -46,13 +70,7 @@ import {
 } from './classic-catalogue.mjs';
 import { createClassicSnakeCommunityLibrary } from './classic-community.mjs';
 import { CLASSIC_COPY } from './classic-copy.mjs';
-import {
-  createClassicSnake,
-  queueClassicSnakeTurn,
-  stepClassicSnake,
-  classicSnakeSummary,
-  exportClassicSnakeReplay,
-} from './classic-core.mjs';
+import { classicSnakeSummary } from './classic-core.mjs';
 import {
   createClassicSnakeMatch,
   queueClassicSnakeMatchTurn,
@@ -66,6 +84,7 @@ import {
   CLASSIC_PACES,
   classicSnakeSurvivalEntry,
 } from './classic-setup.mjs';
+import { createClassicSnakeRatings, classicSnakeRatingForRecord } from './classic-ratings.mjs';
 import { createClassicSnakeRecords } from './classic-records.mjs';
 import { createClassicPresentation } from './classic-presentation.mjs';
 import { classicCatchMarks, drawClassicBoard, drawClassicTarget } from './classic-view.mjs';
@@ -112,7 +131,16 @@ const SAVE_KEY = `revealline.classic-snake.round.v2${communityIdentity ? `.${com
   OLD_SAVE_KEY = communityIdentity ? SAVE_KEY : 'revealline.classic-snake.round.v1';
 const PREF_KEY = 'revealline.classic-snake.presentation.v1',
   SETUP_KEY = 'revealline.classic-snake.setup.v2';
-const SESSION_FORMAT = 'revealline-classic-snake-session.v2';
+const SESSION_FORMAT = 'revealline-classic-snake-session.v3';
+let sessionWriter = await claimProfileWriter(globalThis.navigator.locks, `${SAVE_KEY}:writer`);
+let writerRelease = Promise.resolve(),
+  writerEpoch = 0;
+const pageActive = () => !doc.hidden && (typeof doc.hasFocus !== 'function' || doc.hasFocus());
+const enemyStats = createEnemyStats({ canWrite: () => sessionWriter.writable });
+let statsAttempt = null,
+  liveProvenance = 'live';
+const statsViews = [];
+void enemyStats.read();
 const readLocal = (key) => {
   try {
     return globalThis.localStorage.getItem(key);
@@ -157,7 +185,7 @@ let entry =
   CLASSIC_SNAKE_LEVELS.find(
     (item) => item.id === requested || item.id === `classic-${requested}`,
   ) ??
-  CLASSIC_SNAKE_LEVELS[48] ??
+  CLASSIC_SNAKE_LEVELS.find((item) => item.id === 'classic-snake-open-loop') ??
   CLASSIC_SNAKE_LEVELS[0];
 let playShell = null,
   snakeSettingsView = null,
@@ -179,7 +207,22 @@ let savedRound = readLocal(SAVE_KEY) ?? readLocal(OLD_SAVE_KEY),
   earlyFailures = 0;
 let review = null,
   recordedMatch = null,
+  verifiedOutcome = null,
   flightFrames = [];
+let celebration = null,
+  transitionControls = null,
+  resultPreview = null,
+  transitionJustStarted = false;
+const recentReplay = createClassicRecentReplay();
+const continuousPreferences = continuousPlayPreferences();
+const signalReception = [createSignalReception(), createSignalReception()];
+const transition = createContinuousPlayController({
+  preferences: continuousPreferences,
+  isCurrent: (identity) => identity === match,
+  isActive: pageActive,
+  onNext: () => launchNext(),
+  onRetry: () => prepare({ launch: true }),
+});
 const gamepadState = new Map(),
   gamepadSeats = new Map();
 const effects = [createHuntDestruction(), createHuntDestruction()];
@@ -228,12 +271,14 @@ const options = (select, rows, value) => {
 const settings = () => ({ pace, format, targetRules, preset });
 const acceptedLevel = () => prepareClassicSnakeLevel(entry, settings());
 const result = () => match?.result ?? null;
+let ratings = null;
 const records = createClassicSnakeRecords({
   ...(installedContent ? { contentPack: installedContent.pack } : {}),
   onChange: () => {
     if (match) {
       renderProgress();
       refresh();
+      void ratings?.refresh();
     }
   },
   onWarning: (error) => {
@@ -241,6 +286,11 @@ const records = createClassicSnakeRecords({
     saveNotice = 'storage';
     $('save-status').textContent = text('storage');
   },
+});
+ratings = createClassicSnakeRatings({
+  records,
+  canWrite: () => sessionWriter.writable,
+  onWarning: () => {},
 });
 const touch = createTouchPreferences({ onChange: () => applyTouch() });
 function applyTouch() {
@@ -306,16 +356,19 @@ function session() {
     seed,
     style,
     match: exportClassicSnakeMatch(match),
+    statistics: enemyStats.session(statsAttempt),
+    provenance: liveProvenance,
   };
 }
 function save() {
   if (ready) return;
   try {
     const raw = JSON.stringify(session());
-    globalThis.localStorage.setItem(SAVE_KEY, raw);
+    if (sessionWriter.writable) globalThis.localStorage.setItem(SAVE_KEY, raw);
+    else saveNotice = 'storage';
     savedRound = raw;
     offerSavedContinue = true;
-    saveNotice = 'saved';
+    saveNotice = sessionWriter.writable ? 'saved' : 'storage';
   } catch {
     saveNotice = 'storage';
   }
@@ -323,13 +376,12 @@ function save() {
   $('continue').hidden = !savedRound;
 }
 function remember() {
-  if (!match || recordedMatch === match) return;
+  if (!match || recordedMatch === match || liveProvenance === 'import') return;
   if (result()) recordedMatch = match;
   try {
-    const accepted = restoreClassicSnakeMatch(exportClassicSnakeMatch(match), {
-      level: acceptedLevel(),
-    });
-    for (const run of accepted.runs)
+    const owner = match,
+      accepted = exportClassicSnakeMatch(match);
+    for (const run of match.runs)
       void records
         .remember(run, {
           mode,
@@ -337,7 +389,13 @@ function remember() {
           level: acceptedLevel(),
           allowClear: format === 'campaign',
           policy: accepted.options.policy,
-          match: exportClassicSnakeMatch(accepted),
+          match: accepted,
+        })
+        .then(() => {
+          if (match === owner && result() === 'won') {
+            verifiedOutcome = owner;
+            refresh();
+          }
         })
         .catch(() => {
           saveNotice = 'storage';
@@ -347,7 +405,13 @@ function remember() {
   }
 }
 function pause({ showMenu = true } = {}) {
-  if (ready || paused || result()) return;
+  transition.cancel('pause');
+  if (result()) {
+    review = null;
+    if (showMenu && !playShell?.topDialog()) showResults();
+    return;
+  }
+  if (ready || paused) return;
   paused = true;
   sound.gameplayPaused = true;
   sound.pause();
@@ -359,7 +423,8 @@ function pause({ showMenu = true } = {}) {
   if (showMenu && !playShell?.topDialog()) playShell?.open('pause');
 }
 function start() {
-  if (result()) return;
+  if (result() || !pageActive()) return;
+  $('game').querySelector('.arena').append($('snake-reaction-caption'));
   playShell?.enterPlay();
   if (ready) void records.visit(entry.id);
   importEpoch++;
@@ -385,6 +450,13 @@ function start() {
   boards[0]?.canvas.focus({ preventScroll: true });
 }
 function finish() {
+  sound.event?.({
+    type: 'run.completed',
+    levelId: entry.id,
+    tick: Math.max(...runs.map((run) => run.tick)),
+    won: result() !== 'lost',
+    status: result() === 'lost' ? 'lost' : 'won',
+  });
   paused = true;
   sound.gameplayPaused = true;
   for (const voice of [...sound.voices]) if (voice.feedback && voice.source.loop) voice.stop();
@@ -392,7 +464,196 @@ function finish() {
   remember();
   save();
   refresh();
+  runs.forEach((run, board) => recentReplay.capture(run, board));
+  const competitive = mode === 'versus';
+  const won = competitive || result() === 'won';
+  celebration = won
+    ? createCelebration({ levelId: entry.id, seed, theme: { family: 'fpv' }, reduced: isReduced() })
+    : null;
+  transitionJustStarted = true;
+  transition.begin({
+    identity: match,
+    outcome: won ? 'won' : 'lost',
+    canAdvance: !competitive && result() === 'won' && !!nextMission(),
+    canRetry: !competitive,
+    replayMs: recentReplay.durationMs(),
+    readyMs: 400,
+  });
+  reactions.result({
+    owned: true,
+    mode,
+    outcome: competitive
+      ? result() === 'draw'
+        ? 'draw'
+        : 'won'
+      : result() === 'won'
+        ? 'won'
+        : 'lost',
+    missionId: entry.id,
+    stars: 1,
+  });
+  refresh();
+}
+function nextMission() {
+  if (format !== 'campaign' || mode === 'versus') return null;
+  const chapters = campaignFor(entry)?.chapterIds ?? campaignFor(entry)?.chapters ?? [];
+  const ordered = chapters.flatMap((id) =>
+    CLASSIC_SNAKE_LEVELS.filter((item) => item.chapterId === id),
+  );
+  const index = ordered.findIndex((item) => item.id === entry.id);
+  return index < 0 ? null : (ordered[index + 1] ?? null);
+}
+function launchMission(destination) {
+  if (!destination) return false;
+  // Validate before retiring the visible result. A rejected destination leaves
+  // its current board and actions usable.
+  try {
+    createClassicSnakeMatch(prepareClassicSnakeLevel(destination, settings()), {
+      mode,
+      seed,
+      policy: format === 'campaign' ? 'mission' : mode === 'versus' ? duel : 'endless',
+    });
+  } catch {
+    saveNotice = 'invalid';
+    refresh();
+    return false;
+  }
+  save();
+  entry = destination;
+  prepare({ launch: true });
+  return true;
+}
+function launchNext() {
+  return launchMission(nextMission());
+}
+function launchRandom() {
+  const chapters = campaignFor(entry)?.chapterIds ?? campaignFor(entry)?.chapters ?? [];
+  const choices = CLASSIC_SNAKE_LEVELS.filter(
+    (item) => item.id !== entry.id && chapters.includes(item.chapterId),
+  );
+  return launchMission(choices[Math.floor(Math.random() * choices.length)]);
+}
+function showResults() {
+  review = null;
   playShell?.open('results');
+  $('snake-results').append($('snake-reaction-caption'));
+  const retry = playShell?.elements.dialogs.results.querySelector('footer button.primary');
+  if (mode === 'versus' && retry) retry.textContent = locale === 'uk' ? 'Реванш' : 'Rematch';
+  const focus = !$('next').hidden ? $('next') : retry;
+  focus?.focus({ preventScroll: true });
+}
+function observeStep(event) {
+  recentReplay.observe(event);
+  classicAudio.events?.(event.run, {
+    board: `snake-${event.board}`,
+    placement: boardPlacement(boards[event.board]?.canvas),
+  });
+  const defeats = event.run.events
+    .filter((item) => item.type === 'target.caught')
+    .map((item) => ({
+      family:
+        item.target.kind ?? (event.run.level.targetMovement === 'flee' ? 'runner' : 'lookout'),
+      playerId: item.playerId,
+    }));
+  if (defeats.length && statsAttempt)
+    void enemyStats.observe(statsAttempt, {
+      board: String(event.board),
+      sequence: event.run.tick,
+      defeats,
+    });
+}
+function installTransitionControls() {
+  const stage = el('section', null, 'snake-continuation');
+  stage.setAttribute('aria-label', locale === 'uk' ? 'Продовжити гру' : 'Continue playing');
+  const next = el('button', null, 'primary'),
+    retry = el('button'),
+    home = el('button');
+  next.addEventListener('click', launchNext);
+  retry.addEventListener('click', () => prepare({ launch: true }));
+  home.addEventListener('click', () => playShell.open('home'));
+  stage.append(next, retry, home);
+  $('game').querySelector('.arena').append(stage);
+  mountContinuousPlayControls({
+    document: doc,
+    parent: stage,
+    controller: transition,
+    locale: () => locale,
+    preferences: continuousPreferences,
+  });
+  mountContinuousPlayControls({
+    document: doc,
+    parent: $('snake-results'),
+    controller: transition,
+    locale: () => locale,
+    preferences: continuousPreferences,
+  });
+  const resultActions = el('div', null, 'run-controls');
+  for (const [en, uk, action] of [
+    ['Random level', 'Випадковий рівень', launchRandom],
+    ['Choose mission', 'Обрати місію', () => playShell.open('missions')],
+    [
+      'Collections',
+      'Колекції',
+      () => {
+        globalThis.location.href = new URL('../?panel=collection', globalThis.location.href).href;
+      },
+    ],
+    ['Home', 'Головна', () => playShell.open('home')],
+  ]) {
+    const button = el('button', locale === 'uk' ? uk : en);
+    button.addEventListener('click', () => {
+      transition.cancel('result-action');
+      action();
+    });
+    resultActions.append(button);
+    button.dataset.en = en;
+    button.dataset.uk = uk;
+  }
+  $('snake-results').append(resultActions);
+  resultPreview = el('canvas', null, 'snake-result-board');
+  resultPreview.setAttribute(
+    'aria-label',
+    locale === 'uk' ? 'Завершене поле Snake' : 'Completed Snake board',
+  );
+  $('snake-results').prepend(resultPreview);
+  for (const [container, variant] of [
+    [$('game').querySelector('.level-strip'), 'hud'],
+    [playShell.elements.content.pause, 'panel'],
+    [$('snake-results'), 'panel'],
+  ]) {
+    if (container)
+      statsViews.push(
+        mountEnemyStats({
+          document: doc,
+          container,
+          stats: enemyStats,
+          gameType: 'snake',
+          getAttempt: () => statsAttempt,
+          locale: () => locale,
+          variant,
+        }),
+      );
+  }
+  $('game').querySelector('.level-strip').append($('snake-onboarding'));
+  transitionControls = {
+    refresh() {
+      stage.hidden = !result() || !!playShell.topDialog();
+      next.hidden = !nextMission() || result() !== 'won';
+      next.textContent = nextMission()
+        ? `${locale === 'uk' ? 'Далі' : 'Next'}: ${nextMission().title[locale]}`
+        : text('next');
+      retry.textContent =
+        mode === 'versus'
+          ? locale === 'uk'
+            ? 'Реванш'
+            : 'Rematch'
+          : locale === 'uk'
+            ? 'Спробувати ще'
+            : 'Try again';
+      home.textContent = locale === 'uk' ? 'Головна' : 'Home';
+      for (const button of resultActions.children) button.textContent = button.dataset[locale];
+    },
+  };
 }
 function turn(player, direction) {
   if (result() || review || playShell?.topDialog()) return;
@@ -411,6 +672,13 @@ function relative(player, offset) {
   turn(player, directions[(directions.indexOf(heading) + offset + 4) % 4]);
 }
 function prepare({ launch = false } = {}) {
+  transition.cancel('new-attempt');
+  if (statsAttempt) enemyStats.finishAttempt(statsAttempt);
+  liveProvenance = 'live';
+  statsAttempt = enemyStats.beginAttempt({ gameType: 'snake' });
+  celebration = null;
+  signalReception.forEach((signal) => signal.reset());
+  $('game').querySelector('.arena').append($('snake-reaction-caption'));
   // An explicit selection owns the next Start; an older save remains available
   // only through Workshop, never as a silent replacement for the selected level.
   if (match) offerSavedContinue = false;
@@ -419,6 +687,7 @@ function prepare({ launch = false } = {}) {
   reactions.reset(`classic:${++reactionAttempt}`);
   review = null;
   recordedMatch = null;
+  verifiedOutcome = null;
   if (format === 'endless' && mode === 'versus' && duel === 'survival') {
     if (survivalEntry) {
       entry = survivalEntry;
@@ -435,6 +704,7 @@ function prepare({ launch = false } = {}) {
     catchDeadlineMs: 30000,
   });
   runs = match.runs;
+  recentReplay.reset(runs);
   flightFrames = [];
   ready = true;
   paused = true;
@@ -443,6 +713,7 @@ function prepare({ launch = false } = {}) {
   updateURL();
   renderCopy();
   refresh();
+  statsViews.forEach((view) => view.refresh());
   if (launch) start();
 }
 function buildBoards() {
@@ -587,14 +858,14 @@ function renderProgress() {
       card.addEventListener('click', () => {
         save();
         entry = item;
-        prepare();
-        playShell?.open('briefing');
+        prepare({ launch: true });
       });
       return card;
     }),
   );
   $('progress-summary').textContent = text('progress', {
     done: records.chapter(chapterEntries),
+    chapterTotal: chapterEntries.length,
     all: CLASSIC_SNAKE_LEVELS.filter((item) => records.cleared(item.id)).length,
     total: CLASSIC_SNAKE_LEVELS.length,
   });
@@ -611,7 +882,7 @@ function renderProgress() {
     : CLASSIC_SNAKE_CHAPTERS.filter(
         (chapter) =>
           records.chapter(CLASSIC_SNAKE_LEVELS.filter((item) => item.chapterId === chapter.id)) ===
-          6,
+          CLASSIC_SNAKE_LEVELS.filter((item) => item.chapterId === chapter.id).length,
       );
   if (accent !== 'default' && !unlocked.some((chapter) => chapter.id === accent))
     accent = 'default';
@@ -826,8 +1097,22 @@ function failureText(run, boardResult) {
     'shield-front': 'shieldCrash',
     brace: 'armorCrash',
   }[cause];
-  if (!key) return '';
-  const detail = text(key);
+  const hazard = {
+    lane:
+      locale === 'uk'
+        ? 'Голова потрапила під атаку смуги. Дочекайтеся відновлення або облетіть збоку.'
+        : 'The head entered an active lane. Wait for recovery or use the permanent bypass.',
+    projectile:
+      locale === 'uk'
+        ? 'Постріл влучив у голову. Стежте за прицілом і позначкою наступної клітини.'
+        : 'A shot hit the head. Watch the aim line and marked next cell.',
+    relay:
+      locale === 'uk'
+        ? 'Щит ще закритий. Торкніться обох зв’язаних перемикачів.'
+        : 'The shield is still closed. Touch both linked switches first.',
+  }[cause];
+  if (!key && !hazard) return '';
+  const detail = hazard ?? text(key);
   if (mode !== 'team' || !run.failure?.players?.length) return detail;
   return run.failure.players
     .map(
@@ -837,6 +1122,7 @@ function failureText(run, boardResult) {
     .join(' ');
 }
 function readyInstruction() {
+  if (runs[0]?.level.version === 'classic-snake-level.v4') return entry.description[locale];
   return text(
     runs[0]?.level.targets?.required.some((policy) => ['shield', 'brace'].includes(policy.kind))
       ? 'specialistHelp'
@@ -887,12 +1173,18 @@ function refresh() {
   doc.body.dataset.playing = String(!ready && !paused);
   playShell?.update({
     phase: outcome ? 'results' : ready ? 'ready' : paused ? 'paused' : 'playing',
+    transitionActive: !['idle', 'cancelled'].includes(transition.snapshot().phase),
     missionName: entry.title[locale],
     summary: readyInstruction(),
     canResume: !outcome && (!ready || (offerSavedContinue && !!savedRound)),
     muted: audioMaster.snapshot().muted,
   });
-  $('next').hidden = format !== 'campaign' || !runs.some((run) => run.status === 'won');
+  $('next').hidden = !nextMission() || outcome !== 'won';
+  $('next').classList.add('primary');
+  $('next').textContent = nextMission()
+    ? `${locale === 'uk' ? 'Далі' : 'Next'}: ${nextMission().title[locale]}`
+    : text('next');
+  transitionControls?.refresh();
   $('review').hidden = !outcome || !runs.some((run) => run.tick > 0);
   $('slow-offer').hidden = !outcome || earlyFailures < 3 || pace === 'slow';
   $('speed-note').textContent = text('step', {
@@ -913,8 +1205,41 @@ function refresh() {
           : paused
             ? text('paused')
             : '';
-  $('result-detail').textContent = $('announcement').textContent;
+  $('result-detail').textContent =
+    $('announcement').textContent +
+    (!nextMission() && outcome === 'won' && mode !== 'versus'
+      ? locale === 'uk'
+        ? ' Кампанію завершено!'
+        : ' Campaign complete!'
+      : '');
+  const resultRetry = playShell?.elements.dialogs.results.querySelector('footer button.primary');
+  if (mode === 'versus' && resultRetry)
+    resultRetry.textContent = locale === 'uk' ? 'Реванш' : 'Rematch';
   $('result-record').textContent = $('record-summary').textContent;
+  renderRatings();
+  const onboarding = $('snake-onboarding');
+  if (onboarding) {
+    const fieldMission = runs[0].level.version === 'classic-snake-level.v4';
+    const relayPending = runs.some((run) => run.relays?.some((relay) => !relay.collected));
+    onboarding.hidden =
+      (!fieldMission &&
+        !['classic-snake-open-loop', 'classic-snake-two-landings'].includes(entry.id)) ||
+      result() ||
+      (runs[0].tick > (fieldMission ? 40 : 36) && !(fieldMission && relayPending));
+    onboarding.textContent = fieldMission
+      ? entry.description[locale]
+      : entry.id === 'classic-snake-two-landings'
+        ? locale === 'uk'
+          ? 'Облітайте острови. Залишайте місце для хвоста.'
+          : 'Turn around the islands. Leave room for your tail.'
+        : runs[0].catches > 0
+          ? locale === 'uk'
+            ? 'Кожен ворог подовжує хвіст. Плануйте наступний поворот.'
+            : 'Every catch grows your tail. Plan your next turn.'
+          : locale === 'uk'
+            ? 'Стрілки / WASD: повертайте до краю поля. Ловіть ворогів.'
+            : 'Arrows / WASD: turn before the edge. Catch the enemies.';
+  }
   boards.forEach((board, i) => {
     const run = runs[i],
       summary = classicSnakeSummary(run),
@@ -944,7 +1269,10 @@ function refresh() {
             .join('') || '·',
       )
       .join(' / ');
-    board.message.hidden = !!review || (!ready && !paused && !outcome && !boardResult);
+    board.message.hidden =
+      !!review ||
+      ['loss-effect', 'replay', 'ready', 'celebration'].includes(transition.snapshot().phase) ||
+      (!ready && !paused && !outcome && !boardResult);
     board.title.textContent = boardResult?.status === 'lost' && !outcome ? text('lost') : title;
     const reason = failureText(run, boardResult);
     board.detail.textContent = reason
@@ -958,8 +1286,62 @@ function refresh() {
           : text('resume');
   });
 }
-function restore(raw) {
+function renderRatings() {
+  if (!$('snake-stars')) return;
+  const eligible = format === 'campaign' && mode !== 'versus';
+  const criteria = classicSnakeRatingForRecord({
+    clear: eligible,
+    policy: match.options.policy,
+    mode,
+    seed,
+    levelIdentity: runs[0].levelIdentity,
+  });
+  const grade =
+    eligible && verifiedOutcome === match
+      ? classicSnakeRatingForRecord({
+          clear: true,
+          policy: match.options.policy,
+          mode,
+          seed,
+          levelIdentity: runs[0].levelIdentity,
+          fewestMoves: runs[0].tick,
+        })
+      : null;
+  $('snake-stars').hidden = !eligible || result() !== 'won';
+  $('snake-stars').textContent =
+    liveProvenance === 'import'
+      ? locale === 'uk'
+        ? 'Запис · без нових нагород'
+        : 'Recording · no new awards'
+      : grade?.stars
+        ? '★'.repeat(grade.stars) + '☆'.repeat(3 - grade.stars)
+        : locale === 'uk'
+          ? 'Перевірка результату…'
+          : 'Verifying completion…';
+  $('snake-stars').setAttribute(
+    'aria-label',
+    grade?.stars ? `${grade.stars} / 3` : $('snake-stars').textContent,
+  );
+  $('snake-rating-criteria').textContent = !eligible
+    ? locale === 'uk'
+      ? 'Рекорди цієї гри зберігаються без оцінки зірками.'
+      : 'This game keeps personal records without mission stars.'
+    : criteria.calibrated
+      ? locale === 'uk'
+        ? `★ Завершити · ★★ ≤ ${criteria.silverMoves} ходів · ★★★ ≤ ${criteria.goldMoves} ходів`
+        : `★ Complete · ★★ ≤ ${criteria.silverMoves} moves · ★★★ ≤ ${criteria.goldMoves} moves`
+      : locale === 'uk'
+        ? '★ За перевірене завершення. Вищі оцінки потребують калібрування цього набору.'
+        : '★ For a verified clear. Higher grades await calibration for this setup.';
+}
+function restore(raw, { provenance = 'import' } = {}) {
+  transition.cancel('restore');
   importEpoch++;
+  const restoredReplay = createClassicRecentReplay();
+  const observation = {
+    onStart: (value) => restoredReplay.reset(value.runs),
+    onStep: (event) => restoredReplay.observe(event),
+  };
   try {
     const source = boundedJSON(raw, {
       maxBytes: 8 * 1024 * 1024,
@@ -990,7 +1372,7 @@ function restore(raw) {
       };
       restored = restoreClassicSnakeLegacyMatch(
         { replays: source.replays, elapsedMs: source.elapsedMs, mode: source.mode },
-        { level: prepareClassicSnakeLevel(item, next) },
+        { level: prepareClassicSnakeLevel(item, next), ...observation },
       );
       next.seed = restored.options.seed;
     } else {
@@ -1008,11 +1390,13 @@ function restore(raw) {
           'seed',
           'style',
           'match',
+          ...(source.format === SESSION_FORMAT ? ['statistics', 'provenance'] : []),
         ],
         'Classic Snake session',
       );
       required(
-        source.format === SESSION_FORMAT && ['campaign', 'endless'].includes(source.activity),
+        [SESSION_FORMAT, 'revealline-classic-snake-session.v2'].includes(source.format) &&
+          ['campaign', 'endless'].includes(source.activity),
         'Unsupported session.',
       );
       next = {
@@ -1036,6 +1420,7 @@ function restore(raw) {
       );
       restored = restoreClassicSnakeMatch(source.match, {
         level: prepareClassicSnakeLevel(item, next),
+        ...observation,
       });
       const policy =
         next.format === 'campaign' ? 'mission' : source.mode === 'versus' ? next.duel : 'endless';
@@ -1046,18 +1431,54 @@ function restore(raw) {
         'Round ownership mismatch.',
       );
     }
+    const statistics =
+      source.format === SESSION_FORMAT ? validateEnemyStatsSession(source.statistics) : null;
+    if (source.format === SESSION_FORMAT) {
+      required(
+        ['live', 'continue', 'import'].includes(source.provenance),
+        'Invalid session provenance.',
+      );
+      required(
+        statistics.gameType === 'snake' &&
+          Object.entries(statistics.sequences).every(
+            ([board, tick]) =>
+              /^(0|1)$/.test(board) &&
+              restored.runs[Number(board)] &&
+              tick <= restored.runs[Number(board)].tick,
+          ),
+        'Statistics cursor differs from the accepted attempt.',
+      );
+    }
+    const nextProvenance =
+      provenance === 'continue' && source.provenance !== 'import' ? 'continue' : 'import';
+    const nextAttempt = enemyStats.beginAttempt({
+      gameType: 'snake',
+      provenance: nextProvenance,
+      saved:
+        statistics && nextProvenance === 'continue' && !sessionWriter.writable
+          ? forkEnemyStatsSession(statistics)
+          : statistics,
+    });
+    if (statsAttempt) enemyStats.finishAttempt(statsAttempt);
+    liveProvenance = nextProvenance;
+    statsAttempt = nextAttempt;
     entry = item;
     mode = source.mode;
     ({ pace, format, targetRules, preset, duel, seed, style } = next);
     classicAudio.reset();
     match = restored;
     runs = match.runs;
+    recentReplay.reset();
+    restoredReplay
+      .frames()
+      .forEach((frames, board) => frames.forEach((frame) => recentReplay.capture(frame, board)));
     flightFrames = [];
     ready = false;
     paused = true;
     previousFrame = null;
     review = null;
     recordedMatch = null;
+    verifiedOutcome = null;
     sound.gameplayPaused = true;
     reactions.reset(`classic:${++reactionAttempt}`);
     reactions.suspend();
@@ -1066,10 +1487,14 @@ function restore(raw) {
     updateURL();
     renderCopy();
     refresh();
+    statsViews.forEach((view) => view.refresh());
     saveNotice = result() ? 'loadedComplete' : 'loaded';
     $('save-status').textContent = text(saveNotice);
-    if (result()) remember();
-    playShell?.open(result() ? 'results' : 'briefing');
+    if (result()) {
+      if (liveProvenance !== 'import' && result() === 'won') verifiedOutcome = match;
+      refresh();
+      showResults();
+    } else start();
     return true;
   } catch {
     saveNotice = 'invalid';
@@ -1096,23 +1521,9 @@ function primeEffects() {
   });
 }
 function watchReview() {
+  transition.cancel('replay-viewing');
   playShell?.enterPlay();
-  const frames = runs.map((run) => {
-    const replay = exportClassicSnakeReplay(run),
-      copy = createClassicSnake(replay.level, { mode: replay.mode, seed: replay.seed });
-    const snapshots = [];
-    let cursor = 0;
-    for (let tick = 0; tick <= replay.steps; tick++) {
-      while (replay.turns[cursor]?.tick === tick) {
-        const command = replay.turns[cursor++];
-        queueClassicSnakeTurn(copy, command.playerId, command.direction);
-      }
-      if (tick >= Math.max(0, replay.steps - 8)) snapshots.push(structuredClone(copy));
-      if (tick < replay.steps) stepClassicSnake(copy);
-    }
-    return snapshots;
-  });
-  review = { frames, time: 0 };
+  review = { frames: recentReplay.frames(), time: 0, duration: recentReplay.durationMs() + 300 };
   refresh();
 }
 
@@ -1223,17 +1634,9 @@ for (const id of ['recent-level', 'uncleared-level'])
     save();
     entry = destination;
     format = 'campaign';
-    prepare();
+    prepare({ launch: true });
   });
-$('next').addEventListener('click', () => {
-  playShell?.enterPlay();
-  const same = CLASSIC_SNAKE_LEVELS.filter((item) => item.chapterId === entry.chapterId);
-  entry =
-    same.find((item) => !records.cleared(item.id) && item.id !== entry.id) ??
-    CLASSIC_SNAKE_LEVELS[(CLASSIC_SNAKE_LEVELS.indexOf(entry) + 1) % CLASSIC_SNAKE_LEVELS.length];
-  prepare();
-  playShell?.open('briefing');
-});
+$('next').addEventListener('click', launchNext);
 $('featured').addEventListener('click', () => {
   save();
   const sortie = CLASSIC_SNAKE_FEATURED.find((item) => item.chapterId === entry.chapterId);
@@ -1254,7 +1657,7 @@ $('slow-offer').addEventListener('click', () => {
 });
 $('review').addEventListener('click', watchReview);
 $('continue').addEventListener('click', () => {
-  if (savedRound) restore(savedRound);
+  if (savedRound) restore(savedRound, { provenance: 'continue' });
 });
 $('export').addEventListener('click', () => {
   pause();
@@ -1300,12 +1703,17 @@ doc.addEventListener('keydown', (event) => {
   const key =
     { KeyW: 'w', KeyA: 'a', KeyS: 's', KeyD: 'd', KeyP: 'p', KeyR: 'r' }[event.code] ??
     event.key.toLowerCase();
-  if ([' ', 'p', 'r'].includes(key)) {
-    if (key === ' ' && event.target.tagName === 'BUTTON') return;
+  if (result() && ['arrowup', 'arrowdown', 'arrowleft', 'arrowright', 'tab'].includes(key))
+    transition.cancel('navigation');
+  if ([' ', 'p', 'r', 'enter'].includes(key)) {
+    if ([' ', 'enter'].includes(key) && event.target.tagName === 'BUTTON') return;
     event.preventDefault();
     if (event.repeat) return;
-    if (key === 'r' && result()) prepare({ launch: true });
-    else if (key !== 'r') {
+    if (result()) {
+      if (key === 'p') pause();
+      else if (key !== 'r' && result() === 'won' && nextMission()) launchNext();
+      else prepare({ launch: true });
+    } else if (key !== 'r') {
       if (ready || paused) start();
       else pause();
     }
@@ -1359,12 +1767,18 @@ function pollGamepads() {
         back: !!buttons[6] && !previous[6],
         menu: !!buttons[4] && !previous[4],
       };
+      if (command.direction || command.back || command.menu)
+        transition.cancel('controller-navigation');
       if (!snakeGlobalTools.handleFrameCommand(command)) menuController?.handle(command);
       continue;
     }
     if (buttons[4] && !previous[4]) {
       if (ready || paused) start();
       else pause();
+    }
+    if (result() && buttons[5] && !previous[5]) {
+      if (result() === 'won' && nextMission()) launchNext();
+      else prepare({ launch: true });
     }
     for (let i = 0; i < 4; i++)
       if (buttons[i] && !previous[i]) {
@@ -1391,7 +1805,7 @@ doc.addEventListener('visibilitychange', () => {
 });
 globalThis.addEventListener('blur', pause);
 globalThis.addEventListener('focus', () => {
-  void records.read();
+  void records.read().then(() => ratings.refresh());
 });
 globalThis.screen.orientation?.addEventListener('change', () => {
   pause();
@@ -1407,19 +1821,48 @@ landscapeControls?.addEventListener('change', () => {
 });
 globalThis.addEventListener('pagehide', () => {
   importEpoch++;
+  writerEpoch++;
   snakeModeChoices?.closeSimulator();
   pause();
   sound.suspend();
   classicAudio.reset();
   save();
+  const departingWriter = sessionWriter;
+  writerRelease = enemyStats.flush().finally(() => departingWriter.release());
 });
-globalThis.addEventListener('pageshow', () => footprint?.refresh());
+globalThis.addEventListener('pageshow', async (event) => {
+  footprint?.refresh();
+  if (!event.persisted) return;
+  const ticket = ++writerEpoch;
+  await writerRelease;
+  const recovered = await claimProfileWriter(globalThis.navigator.locks, `${SAVE_KEY}:writer`);
+  if (ticket !== writerEpoch) {
+    recovered.release();
+    return;
+  }
+  sessionWriter = recovered;
+  // A different tab may have advanced the saved attempt while this document
+  // was frozen. Retain this board's counts, but isolate its future live events.
+  if (statsAttempt) {
+    const saved = forkEnemyStatsSession(enemyStats.session(statsAttempt));
+    enemyStats.finishAttempt(statsAttempt);
+    statsAttempt = enemyStats.beginAttempt({
+      gameType: 'snake',
+      provenance: liveProvenance === 'import' ? 'import' : 'continue',
+      saved,
+    });
+    save();
+    refresh();
+  }
+  void enemyStats.flush();
+  void ratings?.refresh();
+});
 function frame(now) {
   const elapsed = previousFrame === null ? 0 : Math.max(0, now - previousFrame);
   previousFrame = now;
   pollGamepads();
   if (!ready && !paused && !result()) {
-    if (elapsed > 1000 || doc.hidden) pause();
+    if (elapsed > 1000 || !pageActive()) pause();
     else {
       const before = runs.map((run) => run.catches + (run.bonusCatches ?? 0));
       // Seed the presentation projection before movement, so the first catch and
@@ -1432,7 +1875,9 @@ function frame(now) {
           placement: boardPlacement(boards[i]?.canvas),
         }),
       );
-      advanceClassicSnakeMatchTo(match, match.elapsedMs + Math.min(250, elapsed));
+      advanceClassicSnakeMatchTo(match, match.elapsedMs + Math.min(250, elapsed), {
+        onStep: observeStep,
+      });
       runs.forEach((run, i) =>
         classicAudio.update(run, {
           active: true,
@@ -1457,7 +1902,6 @@ function frame(now) {
         }
       });
       if (result()) {
-        sound.encounter(runs.some((run) => run.status === 'lost') ? 'failure' : 'objective');
         finish();
       }
       refresh();
@@ -1465,12 +1909,33 @@ function frame(now) {
   }
   if (review && !playShell?.topDialog()) {
     review.time += Math.min(elapsed, 250);
-    if (review.time > 2200) {
+    if (review.time > review.duration) {
       review = null;
       refresh();
-      playShell?.open('results');
+      showResults();
     }
   }
+  const transitionElapsed = transitionJustStarted ? 0 : elapsed;
+  transitionJustStarted = false;
+  transition.advance(transitionElapsed);
+  const flow = transition.snapshot();
+  if (playShell && playShell.elements.root.dataset.transitionPhase !== flow.phase) {
+    playShell.elements.root.dataset.transitionPhase = flow.phase;
+    refresh();
+  }
+  if (
+    result() &&
+    !review &&
+    ['countdown', 'cancelled'].includes(flow.phase) &&
+    !playShell?.topDialog()
+  )
+    showResults();
+  if (celebration)
+    celebration = advanceCelebration(celebration, Math.min(transitionElapsed, 250) / 1000, {
+      reduced: isReduced(),
+      paused: flow.phase !== 'celebration',
+    });
+  transitionControls?.refresh();
   runs.forEach((run, i) => {
     const choice = destruction.snapshot();
     flightFrames[i] = advanceClassicFlight(
@@ -1496,9 +1961,11 @@ function frame(now) {
     );
     const shown = review
       ? review.frames[i][Math.min(review.frames[i].length - 1, Math.floor(review.time / 240))]
-      : run;
+      : flow.phase === 'replay'
+        ? (recentReplay.frame(i, flow.replayMs - flow.remainingMs) ?? run)
+        : run;
     drawClassicBoard(boards[i].canvas, shown, {
-      effects: review ? null : effects[i],
+      effects: review || flow.phase === 'replay' ? null : effects[i],
       ...choice,
       showRemains: remains.snapshot().showRemains,
       style,
@@ -1511,11 +1978,43 @@ function frame(now) {
       cssWidth: footprint?.width(i),
       pixelRatio: globalThis.devicePixelRatio ?? 1,
     });
+    const canvas = boards[i].canvas,
+      ctx = canvas.getContext('2d');
+    if (ctx?.save && ctx?.setTransform) {
+      ctx.save();
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
+      if (flow.phase === 'loss-effect') {
+        const signal = signalReception[i].advance(run, Math.min(elapsed, 250) / 1000, {
+          mode: 'lost',
+          reduced: isReduced(),
+        });
+        signalReception[i].draw(ctx, canvas.width, canvas.height, signal);
+      }
+      if (flow.phase === 'celebration')
+        drawCelebration(
+          ctx,
+          celebrationFrame(celebration),
+          { accent: '#edbd55', safe: '#a8cf8d', paper: '#f4f1dc', danger: '#e17874' },
+          canvas.width,
+          canvas.height,
+        );
+      ctx.restore();
+    }
   });
+  if (resultPreview && playShell?.topDialog()?.dataset.modeSurface === 'results')
+    drawClassicBoard(resultPreview, runs[0], {
+      presentation: presentation.snapshot(),
+      style,
+      boardStyle,
+      cast: currentCast(),
+      reduced: true,
+      cssWidth: 360,
+      pixelRatio: globalThis.devicePixelRatio ?? 1,
+    });
   globalThis.requestAnimationFrame(frame);
 }
 prepare();
-void records.read();
+void records.read().then(() => ratings.refresh());
 $('boot-status').hidden = true;
 $('snake-shell').hidden = false;
 playShell = mountModePlayShell({
@@ -1546,19 +2045,17 @@ playShell = mountModePlayShell({
     resume: start,
     retry: () => prepare({ launch: true }),
     skip: () => $('next').click(),
-    random: () => {
-      save();
-      const choices = CLASSIC_SNAKE_LEVELS.filter((item) => item.id !== entry.id);
-      entry = choices[Math.floor(Math.random() * choices.length)] ?? entry;
-      prepare();
-      playShell.open('briefing');
-    },
+    random: launchRandom,
     canResume: () => !result() && (!ready || (offerSavedContinue && !!savedRound)),
     continue: () => {
       if (!ready && !result()) start();
-      else if (offerSavedContinue && savedRound && restore(savedRound)) {
+      else if (
+        offerSavedContinue &&
+        savedRound &&
+        restore(savedRound, { provenance: 'continue' })
+      ) {
         if (!result()) start();
-      } else playShell.open('briefing');
+      } else start();
     },
     toggleSound: () => {
       const muted = !audioMaster.snapshot().muted;
@@ -1567,7 +2064,14 @@ playShell = mountModePlayShell({
       refresh();
     },
   },
-  initial: params.has('level') || communityIdentity ? 'briefing' : 'home',
+  initial: params.has('level') || communityIdentity ? 'play' : 'home',
+  onSurfaceChange: (surface) => {
+    if (!['play', 'results'].includes(surface)) {
+      transition.cancel(surface);
+      importEpoch++;
+      review = null;
+    }
+  },
   focusPlay: () => boards[0]?.canvas.focus({ preventScroll: true }),
 });
 const snakeSettingsSections = [...$('snake-settings').children].filter(
@@ -1619,6 +2123,7 @@ snakeGlobalSettings = mountGlobalSettings({
     masterVolume: $('volume').closest('label'),
   },
   bindings: {
+    ...continuousPlayBindings(continuousPreferences),
     textFace: displayBinding('textFace'),
     textSize: displayBinding('textSize'),
     menuAnimation: {
@@ -1727,7 +2232,9 @@ menuController = attachControllerNavigation({
     snakeGlobalTools.back() ||
     (snakeModeChoices?.simulatorRoot() ? snakeModeChoices.closeSimulator() : playShell.back()),
 });
+installTransitionControls();
 refresh();
 footprint.refresh();
+if (params.has('level') || communityIdentity) start();
 globalThis.RevealLineToolLaunch?.attached?.();
 globalThis.requestAnimationFrame(frame);
