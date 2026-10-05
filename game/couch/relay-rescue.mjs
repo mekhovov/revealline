@@ -1,4 +1,8 @@
+import { nativeArtReviewURL } from '../ui/art-review-navigation.mjs';
 import { selectedArcadeCollection } from '../presentation/industrial-arcade.mjs';
+import { createLocalMatchRecorder, localMatchProvenance } from '../multiplayer-recording.mjs';
+import { recordingVerificationHref } from '../ui/recording-verification.mjs';
+import { attachTerminalRecordingExport } from '../ui/terminal-recording-export.mjs';
 import { pursuitRoster } from '../hunt/pursuit-goals.mjs';
 import { prepareTeamRunningEnemies } from '../hunt/team-running-enemies.mjs';
 import { createRunningEnemyPreferences } from '../hunt/running-enemy-preferences.mjs';
@@ -25,6 +29,7 @@ import { mountControllerSetup } from './controller-setup.mjs';
 import { gameplayTuningDescription } from '../ui/gameplay-copy.mjs';
 import {
   t,
+  getLocale,
   localizedText,
   localizedAttribute,
   localizedMessage,
@@ -273,11 +278,11 @@ export function bootCoop({
   if (returns.length === 1 && ['solo', 'versus'].includes(returns[0]))
     catalogueParams.set('return', returns[0]);
   const catalogueHref = `relay-rescue.html${catalogueParams.size ? `?${catalogueParams}` : ''}`;
-  $('coop-catalogue').setAttribute('href', catalogueHref);
+  $('coop-catalogue').setAttribute('href', nativeArtReviewURL(catalogueHref, location.href));
   localizedText($('coop-catalogue'), () =>
     candidateJourney ? t('interface:legacyArenas') : t('interface:newJourney2'),
   );
-  $('coop-more-catalogue').setAttribute('href', catalogueHref);
+  $('coop-more-catalogue').setAttribute('href', nativeArtReviewURL(catalogueHref, location.href));
   localizedText($('coop-more-catalogue'), () =>
     candidateJourney ? t('interface:legacyArenas') : t('interface:newJourney2'),
   );
@@ -307,13 +312,16 @@ export function bootCoop({
       ? `${destination}?journey=legacy`
       : destination;
   };
-  $('coop-home').setAttribute('href', homeHref);
-  $('coop-versus').setAttribute('href', versusHref);
-  $('coop-race').setAttribute('href', returnHref());
+  $('coop-home').setAttribute('href', nativeArtReviewURL(homeHref, location.href));
+  $('coop-versus').setAttribute('href', nativeArtReviewURL(versusHref, location.href));
+  $('coop-race').setAttribute('href', nativeArtReviewURL(returnHref(), location.href));
   localizedText($('coop-race'), () =>
     fromSolo ? t('interface:backToSolo') : t('interface:raceMode'),
   );
-  $('coop-solo').setAttribute('href', fromSolo ? returnHref() : homeHref);
+  $('coop-solo').setAttribute(
+    'href',
+    nativeArtReviewURL(fromSolo ? returnHref() : homeHref, location.href),
+  );
   const arenaPreference = createTeamArenaPreference({
     pack: COOP_STARTER_PACK,
     getStorage: () => localStorage,
@@ -600,6 +608,17 @@ export function bootCoop({
   const installedTeamProgress = new Map();
   const installedTeamAttempts = new WeakMap();
   const huntAttempts = new WeakMap();
+  const localRecordings = new WeakMap();
+  const recordingExport = attachTerminalRecordingExport({
+    document,
+    container: $('coop-recording-copy'),
+    status: $('coop-recording-status'),
+    getOwner: () => run,
+    isTerminal: (owner) => ['won', 'lost'].includes(owner?.status),
+  });
+  const recordingBuild = document.documentElement.dataset.buildVersion;
+  const buildVersion =
+    recordingBuild && recordingBuild !== '__REVEALLINE_VERSION__' ? recordingBuild : 'dev';
   const huntRetryOwners = new WeakMap();
   const huntAttemptStore = createTeamHuntAttemptStore();
   let huntSaveControls = null;
@@ -939,6 +958,7 @@ export function bootCoop({
           requestDeparture('retry', primary(), {
             runningEnemies: runningEnemyPreferences.snapshot().enabled,
             runningEnemyStyle: runningEnemyPreferences.snapshot().style,
+            pursuitGeneration: 'pursuit-goals.v2',
           });
         },
         getAvailability: () => {
@@ -949,6 +969,7 @@ export function bootCoop({
             );
             prepareTeamRunningEnemies(applyGameplayTuning(source, tuning), {
               style: runningEnemyPreferences.snapshot().style,
+              generation: 'pursuit-goals.v2',
             });
             return { available: true, reason: '' };
           } catch (error) {
@@ -1231,7 +1252,7 @@ export function bootCoop({
                             ? $('coop-picture-retry')
                             : !run
                               ? $('coop-start')
-                              : run.status === 'paused' && !loopStopped
+                              : ['ready', 'paused'].includes(run.status) && !loopStopped
                                 ? $('coop-resume')
                                 : run.status === 'won' && !loopStopped
                                   ? teamDestination()?.next
@@ -1813,6 +1834,10 @@ export function bootCoop({
     const show = run && !running();
     $('coop-overlay').hidden = !show;
     placeTools(Boolean(show));
+    $('coop-export-recording').hidden = !['won', 'lost'].includes(run?.status);
+    $('coop-recording-status').hidden = !['won', 'lost'].includes(run?.status);
+    $('coop-recording-help').hidden = !['won', 'lost'].includes(run?.status);
+    recordingExport.refresh();
     $('coop-pause').disabled = !running();
     difficultyControls();
     const skipDestination = journeyNavigation();
@@ -1826,7 +1851,8 @@ export function bootCoop({
     );
     discoveryControls();
     if (!show) return;
-    const won = run.status === 'won',
+    const ready = run.status === 'ready',
+      won = run.status === 'won',
       lost = run.status === 'lost';
     const destination = won && !loopStopped ? teamDestination() : null;
     $('coop-next').hidden = !destination?.next && !destination?.error;
@@ -1845,6 +1871,9 @@ export function bootCoop({
       lost ? t('interface:changeDifficulty') : t('interface:changeSetup'),
     );
     $('coop-resume').hidden = won || lost;
+    localizedText($('coop-resume'), () =>
+      ready ? t('interface:startTogether') : t('interface:resumeTogether'),
+    );
     $('coop-view-picture').hidden = !won || loopStopped || !acceptedPicture?.binding?.image;
     let story = null;
     try {
@@ -1871,18 +1900,22 @@ export function bootCoop({
       }
     }
     localizedText($('coop-overlay-kicker'), () =>
-      won
-        ? t('interface:aWorldYouRevealedTogether')
-        : lost
-          ? t('interface:oneMoreSharedPlan')
-          : t('interface:paused3'),
+      ready
+        ? t('interface:ready2')
+        : won
+          ? t('interface:aWorldYouRevealedTogether')
+          : lost
+            ? t('interface:oneMoreSharedPlan')
+            : t('interface:paused3'),
     );
     localizedText($('coop-overlay-title'), () =>
-      won
-        ? t('interface:youBroughtItHome')
-        : lost
-          ? t('interface:yourNextRouteStartsHere')
-          : t('interface:bothPlayersPaused'),
+      ready
+        ? contentText(attemptLevel || run.level, 'name')
+        : won
+          ? t('interface:youBroughtItHome')
+          : lost
+            ? t('interface:yourNextRouteStartsHere')
+            : t('interface:bothPlayersPaused'),
     );
     const completionCopy = destination?.libraryEnd
       ? t('interface:endOfTheTeamMissionLibraryBrowseTeamArenasOr')
@@ -1890,33 +1923,35 @@ export function bootCoop({
         ? t('interface:endOfTheTeamJourneyTestRouteBrowseAMission')
         : t('interface:endOfThisPackBrowseTeamArenasToChooseYour');
     localizedText($('coop-overlay-copy'), () =>
-      won
-        ? [
-            t('interface:team.resultCoverage', {
-              coverage: formatNumber(run.coverage * 100, {
-                minimumFractionDigits: 1,
-                maximumFractionDigits: 1,
+      ready
+        ? `${coopGoalLabel(run.level)}. ${coopArenaGuidance(run.level, run.config).startMessage}`
+        : won
+          ? [
+              t('interface:team.resultCoverage', {
+                coverage: formatNumber(run.coverage * 100, {
+                  minimumFractionDigits: 1,
+                  maximumFractionDigits: 1,
+                }),
+                time: clock(run.time),
               }),
-              time: clock(run.time),
-            }),
-            t('interface:team.resultJointCuts', { count: formatNumber(run.team.jointCuts) }),
-            t('interface:team.resultRescues', { count: formatNumber(run.team.rescues) }),
-            t('interface:team.resultInterceptions', {
-              count: formatNumber(run.team.interceptions),
-            }),
-            destination?.next
-              ? t('interface:team.nextArenaResult', {
-                  mission: contentText(destination.next, 'name'),
-                })
-              : destination?.error
-                ? t('interface:theNextMissionIsUnavailableYourResultAndPictureAre')
-                : destination?.final
-                  ? completionCopy
-                  : t('interface:browseTeamArenasOrRetryThisChallenge'),
-          ].join(' ')
-        : lost
-          ? coopRetryFeedback(run, knockdowns.filter(Boolean))
-          : t('interface:releaseYourControlsThenChooseResumeTogether'),
+              t('interface:team.resultJointCuts', { count: formatNumber(run.team.jointCuts) }),
+              t('interface:team.resultRescues', { count: formatNumber(run.team.rescues) }),
+              t('interface:team.resultInterceptions', {
+                count: formatNumber(run.team.interceptions),
+              }),
+              destination?.next
+                ? t('interface:team.nextArenaResult', {
+                    mission: contentText(destination.next, 'name'),
+                  })
+                : destination?.error
+                  ? t('interface:theNextMissionIsUnavailableYourResultAndPictureAre')
+                  : destination?.final
+                    ? completionCopy
+                    : t('interface:browseTeamArenasOrRetryThisChallenge'),
+            ].join(' ')
+          : lost
+            ? coopRetryFeedback(run, knockdowns.filter(Boolean))
+            : t('interface:releaseYourControlsThenChooseResumeTogether'),
     );
     if (focus) primary().focus({ preventScroll: true });
   }
@@ -2555,6 +2590,9 @@ export function bootCoop({
     return selection;
   }
   const retainedTeamSelections = new WeakSet();
+  // A library card admits an immutable candidate and its picture, but owns no
+  // simulation activation or progress write. Start/Resume consumes this once.
+  const discoveryBriefings = new WeakMap();
   async function ensureTeamPicturePackage(
     selection,
     { signal, prompt = true, retain = false } = {},
@@ -3437,7 +3475,15 @@ export function bootCoop({
   }
   async function activateDiscovery(
     row,
-    { signal, isCurrent, onStatus, opener, restored = null, teamMedia = null },
+    {
+      signal,
+      isCurrent,
+      onStatus,
+      opener,
+      restored = null,
+      teamMedia = null,
+      briefingOnly = false,
+    },
   ) {
     if (!canOpenDiscovery() || !currentDiscoveryRows().includes(row))
       throw new DOMException(t('interface:arenaSelectionIsNoLongerCurrent'), 'AbortError');
@@ -3459,6 +3505,7 @@ export function bootCoop({
             encounterVariant: restored.snapshot.encounterVariant ?? 'authored',
             runningEnemies: Boolean(restored.snapshot.runningEnemies),
             runningEnemyStyle: restored.snapshot.runningEnemyStyle ?? 'original',
+            pursuitGeneration: restored.snapshot.pursuitGeneration ?? 'pursuit-goals.v1',
             tuning: restored.snapshot.tuning,
           }
         : null,
@@ -3592,7 +3639,7 @@ export function bootCoop({
       !departure &&
       pack === row.pack &&
       packArtworkSource === row.artworkSource &&
-      running();
+      (briefingOnly ? ['ready', 'paused'].includes(candidate.status) : running());
     const rollback = () => {
       if (!ownsPublished()) return;
       run = previous.run;
@@ -3662,12 +3709,28 @@ export function bootCoop({
         if (restored.snapshot.levelId !== row.levelId)
           throw new Error('Saved Team attempt belongs to another installed mission.');
         candidate = restored.run;
+        localRecordings.set(
+          candidate,
+          createLocalMatchRecorder({
+            build: buildVersion,
+            mode: 'team',
+            level: preparedRuntimeLevel(recipe),
+            options: {
+              seed: candidate.seed,
+              difficulty: candidate.difficulty,
+              ...candidate.config,
+            },
+            provenance: localMatchProvenance(recipe.level),
+            segments: restored.snapshot.segments,
+          }),
+        );
         attemptTuning.set(candidate, {
           pictureLevel: recipe.level,
           encounterLevel: recipe.encounterLevel,
           encounterVariant: recipe.encounterVariant,
           runningEnemies: recipe.runningEnemies,
           runningEnemyStyle: recipe.runningEnemyStyle,
+          pursuitGeneration: recipe.pursuitGeneration,
           runtimeLevel: preparedRuntimeLevel(recipe),
           encounterPack: recipe.encounterPack,
           adminOverride: restored.snapshot.tuning.adminOverride,
@@ -3675,7 +3738,14 @@ export function bootCoop({
           tuning: restored.snapshot.tuning,
         });
       } else candidate = createTunedCoop(recipe);
-      startCoop(candidate);
+      if (briefingOnly) {
+        if (candidate.status === 'running') {
+          // A restored checkpoint can still contain held controls or a rescue.
+          // Preparing its briefing performs the same journalled release as Pause.
+          recordTeamInputRelease(candidate);
+          pauseCoop(candidate);
+        }
+      } else startCoop(candidate);
       check();
       if (previous.run?.status === 'paused') {
         const replace = await new Promise((resolve) => {
@@ -3702,7 +3772,9 @@ export function bootCoop({
                   },
                 ),
           );
-          localizedText($('coop-discard-confirm'), () => t('interface:replacePlay'));
+          localizedText($('coop-discard-confirm'), () =>
+            t(briefingOnly ? 'interface:replaceAndPrepare' : 'interface:replacePlay'),
+          );
           try {
             departureDialog.showModal();
             $('coop-discard-stay').focus({ preventScroll: true });
@@ -3754,7 +3826,8 @@ export function bootCoop({
       accumulator = 0;
       // Collect any release caused by publication callbacks, but keep both
       // stores inert until every rollback-capable acceptance check passes.
-      beginInstalledTeamAttempt(candidate, selection, restored, { deferSave: true });
+      if (!briefingOnly)
+        beginInstalledTeamAttempt(candidate, selection, restored, { deferSave: true });
       if (row.pack === COOP_STARTER_PACK) lastBuiltInArena = row.levelId;
       try {
         $('coop-difficulty').value = candidate.difficulty;
@@ -3775,19 +3848,27 @@ export function bootCoop({
           candidate.level.hunt?.mode !== 'hunt' && candidate.level.goal.coverage
             ? candidate.level.goal.coverage * 100
             : 100;
-        pictureUI(localizedMessage('interface:teamPictureReady'));
+        pictureUI(
+          localizedMessage(
+            briefingOnly
+              ? 'interface:teamPictureReadyStartRemainsASeparateAction'
+              : 'interface:teamPictureReady',
+          ),
+        );
         overlay({ focus: false });
         render();
         if (!accepted())
           throw new DOMException(t('interface:arenaActivationChanged'), 'AbortError');
         setupNote({ level: attemptLevel, experiment: candidate.config });
         message(() =>
-          t(
-            restored
-              ? 'interface:team.arenaRestoredDirections'
-              : 'interface:team.arenaReadyDirections',
-            { mission: contentText(row.level, 'name') },
-          ),
+          briefingOnly
+            ? t('interface:teamPictureReadyStartRemainsASeparateAction')
+            : t(
+                restored
+                  ? 'interface:team.arenaRestoredDirections'
+                  : 'interface:team.arenaReadyDirections',
+                { mission: contentText(row.level, 'name') },
+              ),
         );
         if (!accepted())
           throw new DOMException(t('interface:arenaActivationChanged'), 'AbortError');
@@ -3798,11 +3879,15 @@ export function bootCoop({
       completed = true;
       discoveryOperation = null;
       operation.detach();
-      const huntRecord = huntAttempts.get(candidate);
-      if (huntRecord) huntRecord.armed = true;
-      const installedRecord = installedTeamAttempts.get(candidate);
-      if (installedRecord) installedRecord.armed = true;
-      persistInstalledTeamAttempt(candidate, selection, { force: true });
+      if (briefingOnly)
+        discoveryBriefings.set(candidate, { restored, sourcePack: row.pack, levelId: row.levelId });
+      else {
+        const huntRecord = huntAttempts.get(candidate);
+        if (huntRecord) huntRecord.armed = true;
+        const installedRecord = installedTeamAttempts.get(candidate);
+        if (installedRecord) installedRecord.armed = true;
+        persistInstalledTeamAttempt(candidate, selection, { force: true });
+      }
       discoveryStarted = {
         run: candidate,
         generation: publishedGeneration,
@@ -3825,7 +3910,12 @@ export function bootCoop({
             picture: earnedTeamPicture(selection, selection.binding),
           },
         );
-      return run === candidate && running() && foreground() && !disposed;
+      return (
+        run === candidate &&
+        (briefingOnly ? ['ready', 'paused'].includes(candidate.status) : running()) &&
+        foreground() &&
+        !disposed
+      );
     } finally {
       if (discoveryOperation === operation) discoveryOperation = null;
       operation.detach();
@@ -3936,6 +4026,7 @@ export function bootCoop({
                   encounterVariant: promoted.snapshot.encounterVariant,
                   runningEnemies: Boolean(promoted.snapshot.runningEnemies),
                   runningEnemyStyle: promoted.snapshot.runningEnemyStyle ?? 'original',
+                  pursuitGeneration: promoted.snapshot.pursuitGeneration ?? 'pursuit-goals.v1',
                   encounterLevelIdentity: promoted.snapshot.encounterLevelIdentity,
                 }),
               }
@@ -4048,6 +4139,25 @@ export function bootCoop({
       !settingsDialog.open &&
       !earnedDialog.open &&
       !departure;
+    if (
+      started &&
+      discoveryBriefings.has(started.run) &&
+      run === started.run &&
+      generation === started.generation &&
+      acceptedPicture === started.picture &&
+      !disposed &&
+      foreground() &&
+      !inactive &&
+      !discovery.isOpen() &&
+      !settingsDialog.open &&
+      !earnedDialog.open &&
+      !departure
+    ) {
+      controllerConfirmGuard.requireNeutral();
+      overlay();
+      discoveryControls();
+      return;
+    }
     const focus = document.activeElement;
     if (
       current() &&
@@ -4124,22 +4234,13 @@ export function bootCoop({
       return false;
     }
     try {
-      const accepted = await activateDiscovery(row, context);
+      const accepted = await activateDiscovery(row, { ...context, briefingOnly: true });
       if (accepted && libraryLaunch === owner && context.isCurrent()) {
         const started = discoveryStarted;
         owner.detach();
         libraryLaunch = null;
         cancel.hidden = true;
-        libraryStatus(
-          () =>
-            t(
-              context.restored
-                ? 'interface:team.arenaRestoredPlayingTogether'
-                : 'interface:team.arenaPlayingTogether',
-              { mission: contentText(row.level, 'name') },
-            ),
-          'ready',
-        );
+        libraryStatus(() => t('interface:teamPictureReadyStartRemainsASeparateAction'), 'ready');
         finishLibraryStart(started);
       } else if (libraryLaunch === owner && context.isCurrent())
         libraryStatus(t('interface:yourTeamAttemptIsKeptChoosePlayWhenReady'));
@@ -4230,7 +4331,7 @@ export function bootCoop({
         runtimeOnly: row.collection === 'Custom',
       });
     if (!current() || missionLibrary.find(context.libraryMissionId) !== row) return false;
-    location.assign(href);
+    location.assign(nativeArtReviewURL(href, location.href));
     return true;
   }
   function getTeamLibrary() {
@@ -4708,6 +4809,11 @@ export function bootCoop({
       runningEnemyStyle: accepted
         ? (accepted.runningEnemyStyle ?? 'original')
         : runningEnemyPreferences.snapshot().style,
+      pursuitGeneration: accepted
+        ? (accepted.pursuitGeneration ??
+          accepted.runtimeLevel?.pursuit?.version ??
+          'pursuit-goals.v1')
+        : 'pursuit-goals.v2',
       encounterPack,
       tuning:
         accepted?.tuning ?? gameplayTuning.snapshot(level.journeyDifficulty ?? options.difficulty),
@@ -4728,12 +4834,25 @@ export function bootCoop({
   function preparedRuntimeLevel(recipe) {
     const tuned = applyGameplayTuning(recipe.encounterLevel ?? recipe.level, recipe.tuning);
     return recipe.runningEnemies
-      ? prepareTeamRunningEnemies(tuned, { style: recipe.runningEnemyStyle })
+      ? prepareTeamRunningEnemies(tuned, {
+          style: recipe.runningEnemyStyle,
+          generation: recipe.pursuitGeneration ?? 'pursuit-goals.v2',
+        })
       : tuned;
   }
   function createTunedCoop(recipe) {
     const level = preparedRuntimeLevel(recipe);
     const next = createCoop(level, recipe.options);
+    localRecordings.set(
+      next,
+      createLocalMatchRecorder({
+        build: buildVersion,
+        mode: 'team',
+        level,
+        options: { seed: next.seed, difficulty: next.difficulty, ...next.config },
+        provenance: localMatchProvenance(recipe.level),
+      }),
+    );
     painter.captureArcadeCollection(next);
     attemptTuning.set(next, {
       pictureLevel: recipe.level,
@@ -4741,6 +4860,7 @@ export function bootCoop({
       encounterVariant: recipe.encounterVariant ?? 'authored',
       runningEnemies: recipe.runningEnemies ?? false,
       runningEnemyStyle: recipe.runningEnemyStyle ?? 'original',
+      pursuitGeneration: level.pursuit?.version ?? recipe.pursuitGeneration,
       runtimeLevel: level,
       encounterPack: recipe.encounterPack ?? null,
       adminOverride: recipe.tuning.adminOverride,
@@ -4863,9 +4983,12 @@ export function bootCoop({
     // Keep the validated starting level separately for an exact fresh Retry.
     const startingLevel = structuredClone(recipe.level);
     const next = prepared || createTunedCoop(recipe);
+    const briefing = discoveryBriefings.get(next);
     const previousRun = run;
     const rememberVisibleArena =
-      !run && pack === COOP_STARTER_PACK && arenaPreference.current() !== startingLevel.id;
+      (!run || briefing) &&
+      pack === COOP_STARTER_PACK &&
+      arenaPreference.current() !== startingLevel.id;
     cancelImport({ forget: true });
     $('coop-pack-file').value = '';
     clear();
@@ -4886,8 +5009,14 @@ export function bootCoop({
         : t('interface:proceduralTeamArenaIsReadyForThisAttempt'),
     );
     generation++;
+    painter.acceptEnemyArtwork(run);
     startCoop(run);
-    beginInstalledTeamAttempt(run, selection);
+    beginInstalledTeamAttempt(run, selection, briefing?.restored, {
+      // Starting an already prepared core clears its held controls before its
+      // save owners exist. Retain that same release in their initial journals.
+      releasedBeforeBinding: previousRun === next,
+    });
+    discoveryBriefings.delete(next);
     if (previousRun?.level.hunt && !run.level.hunt) clearHuntAttempt(previousRun);
     runningEnemyControls.refresh();
     document.body.classList.add('playing');
@@ -4915,6 +5044,9 @@ export function bootCoop({
       stopArena(error);
       return;
     }
+    // Persistence and progress callbacks may make a newer focus choice after
+    // this Start has already published its native running state.
+    const startFocus = document.activeElement;
     if (rememberVisibleArena && !disposed && run === next && running() && foreground())
       arenaPreference.choose(startingLevel.id);
     if (!disposed && run === next && running() && foreground())
@@ -4929,7 +5061,7 @@ export function bootCoop({
         picture: earnedTeamPicture(selection, binding),
       });
     if (disposed || run !== next || !running() || !foreground()) return;
-    input.focus();
+    if (document.activeElement === startFocus) input.focus();
     if (loopStopped) {
       loopStopped = false;
       last = null;
@@ -4997,12 +5129,35 @@ export function bootCoop({
       return;
     cancelPicture({ restore: false });
     clear();
-    recordTeamInputRelease(run);
+    const briefing = discoveryBriefings.get(run);
+    // Hunt persistence accepts running cores only. Resume the exact prepared
+    // core before binding its stores, without advancing simulation time.
     resumeCoop(run);
+    if (briefing) {
+      beginInstalledTeamAttempt(run, acceptedPicture, briefing.restored);
+      discoveryBriefings.delete(run);
+    }
+    // Newly attached stores also need the briefing/resume release after their
+    // restored journal. Save stores coalesce these; terminal recordings retain
+    // each ordered release for their native reconstruction.
+    recordTeamInputRelease(run);
     contextualReactions?.resume();
     if (music) void music.start();
     last = null;
     overlay();
+    if (briefing)
+      candidateProgress?.[briefing.restored?.huntAttempt ? 'resumed' : 'started'](
+        acceptedPicture.journeyRow,
+        run,
+        {
+          ...attemptTuning.get(run),
+          attemptId: teamPersistenceId(run),
+          adminOverride:
+            attemptTuning.get(run).adminOverride ||
+            attemptTuning.get(run).encounterVariant !== 'authored',
+          picture: earnedTeamPicture(acceptedPicture, acceptedPicture.binding),
+        },
+      );
     input.focus();
     const downed = run.players.find((player) => player.status === 'downed');
     message(
@@ -5300,7 +5455,7 @@ export function bootCoop({
       closeDeparture(ticket, { restore: false });
       if (ticket.kind === 'setup') lobby();
       else if (ticket.kind === 'retry') start(ticket.recipe, prepared);
-      else location.assign(destination);
+      else location.assign(nativeArtReviewURL(destination, location.href));
     } catch (error) {
       if (error.name === 'AbortError') return;
       message(t('interface:team.replaceFailed', { error: error.message }));
@@ -5350,13 +5505,16 @@ export function bootCoop({
       cancelNext();
       $(id).setAttribute(
         'href',
-        kind === 'return'
-          ? returnHref()
-          : kind === 'versus'
-            ? versusHref
-            : kind === 'catalogue'
-              ? catalogueHref
-              : homeHref,
+        nativeArtReviewURL(
+          kind === 'return'
+            ? returnHref()
+            : kind === 'versus'
+              ? versusHref
+              : kind === 'catalogue'
+                ? catalogueHref
+                : homeHref,
+          location.href,
+        ),
       );
       if (departure || pictureOperation) {
         event.preventDefault();
@@ -5637,6 +5795,7 @@ export function bootCoop({
     huntSaveControls.refresh();
   }
   function recordTeamInputRelease(currentRun) {
+    localRecordings.get(currentRun)?.release();
     if (!['running', 'paused'].includes(currentRun.status)) return;
     huntAttempts.get(currentRun)?.recorder.release();
     const installed = installedTeamAttempts.get(currentRun);
@@ -5690,10 +5849,15 @@ export function bootCoop({
     currentRun,
     picture,
     restored = null,
-    { deferSave = false } = {},
+    { deferSave = false, releasedBeforeBinding = false } = {},
   ) {
+    localRecordings.get(currentRun)?.bindSource({
+      ...(picture?.installedEditionId ? { editionId: picture.installedEditionId } : {}),
+      ...(picture?.pack ? { packageIdentity: dataIdentity(picture.pack) } : {}),
+    });
     const attemptId = teamPersistenceId(currentRun, restored);
     beginHuntAttempt(currentRun, picture, restored, { armed: !deferSave, attemptId });
+    if (releasedBeforeBinding) huntAttempts.get(currentRun)?.recorder.release();
     const editionId = picture?.installedEditionId,
       setup = installedPreset(currentRun),
       tuning = attemptTuning.get(currentRun);
@@ -5725,6 +5889,8 @@ export function bootCoop({
         durable: Boolean(restored && !restored.huntAttempt),
         armed: !deferSave,
       };
+    if (releasedBeforeBinding && !record.segments.at(-1)?.release)
+      record.segments.push({ release: true });
     installedTeamAttempts.set(currentRun, record);
     if (!restored && !deferSave) persistInstalledTeamAttempt(currentRun, picture, { force: true });
   }
@@ -5914,6 +6080,7 @@ export function bootCoop({
           const commands = batch.consume(input.consume());
           huntAttempts.get(run)?.recorder.append(commands);
           appendInstalledTeamCommands(run, commands);
+          localRecordings.get(run)?.append(commands);
           stepCoop(run, commands, FIXED_DT);
           music?.sound.feedback(true, { family: acceptedPicture?.request.themeId ?? 'fpv' }, run, {
             mode: 'team',
@@ -5944,8 +6111,30 @@ export function bootCoop({
     frame = requestAnimationFrame(update);
   }
   $('coop-start').onclick = () => requestDeparture('retry', $('coop-start'));
+  localizedText($('coop-export-recording'), () => t('interface:recording.exportTeam'));
+  // A retained locale binding belongs to this recording's original build.
+  const recordingPageHref =
+    globalThis.location?.href ??
+    document.baseURI ??
+    'http://localhost/game/couch/relay-rescue.html';
+  localizedAttribute($('coop-verify-recording'), 'href', () =>
+    recordingVerificationHref(recordingPageHref, getLocale()),
+  );
+  $('coop-export-recording').onclick = async () => {
+    const owner = run;
+    if (!['won', 'lost'].includes(owner?.status)) return;
+    try {
+      const recorder = localRecordings.get(owner);
+      if (!recorder) throw new Error('Recording is unavailable for this attempt.');
+      await recordingExport.request(owner, recorder, `revealline-team-${owner.level.id}.json`);
+    } catch (error) {
+      if (!disposed && run === owner)
+        localizedText($('coop-recording-status'), () => error.message);
+    }
+  };
   $('coop-retry').onclick = () => requestDeparture('retry', $('coop-retry'));
-  $('coop-resume').onclick = resume;
+  $('coop-resume').onclick = () =>
+    run?.status === 'ready' ? start(currentRecipe(), run) : resume();
   $('coop-pause').onclick = pause;
   $('coop-lobby').onclick = () => {
     const changeDifficulty = run?.status === 'lost';
@@ -6661,6 +6850,7 @@ export function bootCoop({
     candidatePreferenceRestoration?.dispose();
     importRequest++;
     disposed = true;
+    recordingExport.dispose();
     packStatus.dispose();
     packPicker.removeEventListener('toggle', pickerToggled);
     cancelAnimationFrame(frame);

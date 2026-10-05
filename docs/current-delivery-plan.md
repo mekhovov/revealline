@@ -1,5 +1,7 @@
 # RevealLine: detailed delivery history
 
+> **3 October implementation update:** [Unified gameplay and industrial art](unified-industrial-plan.md) records the newly approved priorities, bounded budget increases, implemented scope and remaining art/device gates.
+
 > **Current whole-product status:** [completed and remaining delivery](delivery-status.md).
 > Use that dated rollup for current priorities, release status and acceptance limits.
 > The older checkpoints below retain their historical scope.

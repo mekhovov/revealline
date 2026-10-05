@@ -59,6 +59,14 @@ export class SoloElement extends Element {
   focus() {
     if (!this.disabled) super.focus();
   }
+  getContext() {
+    // Guides and sprite admission need a usable inert Canvas boundary. Drawing
+    // assertions install their explicit observable context in soloPage below.
+    return (this._canvasContext ??= new Proxy(
+      { canvas: this, id: this.id },
+      { get: (target, key) => (Object.hasOwn(target, key) ? target[key] : () => {}) },
+    ));
+  }
 }
 class SoloDocument extends Document {
   constructor() {
@@ -71,10 +79,7 @@ class SoloDocument extends Document {
     this.activeElement = this.body;
   }
   createElement(tag) {
-    const element = new SoloElement(this, tag);
-    if (tag.toLowerCase() === 'canvas')
-      element.getContext = () => new Proxy({}, { get: () => () => {} });
-    return element;
+    return new SoloElement(this, tag);
   }
   createTextNode(value) {
     const node = new SoloElement(this, 'span');
@@ -132,8 +137,9 @@ export function memoryStorage(entries = {}) {
     },
   };
 }
-function assetDatabase(indexedDB = memoryIndexedDB().indexedDB) {
-  const connections = new Set();
+export function soloDatabase(indexedDB) {
+  const connections = new Set(),
+    databases = new Map();
   return {
     close() {
       for (const db of connections) {
@@ -141,8 +147,13 @@ function assetDatabase(indexedDB = memoryIndexedDB().indexedDB) {
         db.close();
       }
     },
-    open(...args) {
-      const request = indexedDB.open(...args);
+    open(name, ...args) {
+      // The finite model represents one database. Browser names must not share
+      // schema/version state, but explicit test routers keep their own policy.
+      if (indexedDB === undefined && !databases.has(name))
+        databases.set(name, memoryIndexedDB().indexedDB);
+      const backend = indexedDB === undefined ? databases.get(name) : indexedDB;
+      const request = backend.open(name, ...args);
       let success;
       Object.defineProperty(request, 'onsuccess', {
         get: () => success,
@@ -197,7 +208,7 @@ export async function soloPage(
   );
   const doc = new SoloDocument(),
     win = new Events(),
-    db = assetDatabase(assetIndexedDB);
+    db = soloDatabase(assetIndexedDB);
   const mediaDB = soundtrackIndexedDB ?? memoryIndexedDB().indexedDB;
   const audioElements = [];
   if (audio?.filePlayback !== false && audio) {
@@ -456,6 +467,8 @@ export async function soloPage(
       return audio.context;
     };
   win.location = globals.location;
+  // Window and global URL share the same page-owned object URL registry.
+  win.URL = globals.URL;
   // Real browser Window and global sessionStorage refer to the same tab store.
   win.sessionStorage = previewStorage;
   browserSetup?.({ document: doc, window: win, globals });

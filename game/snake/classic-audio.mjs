@@ -2,8 +2,11 @@ import { screenPan } from '../ui/feedback-cues.mjs';
 
 /** Presentation adapter only. The shared mixer owns samples, priority, movement
  * limits, master mute and pause. Replayed/imported history never emits old SFX. */
-export function createClassicAudio(sound, { getDestruction = () => ({}) } = {}) {
+export function createClassicAudio(sound, { getDestruction = () => ({}), presentation } = {}) {
   let states = new WeakMap();
+  // The same immutable Sound Studio release owns collection cues in every
+  // native host. Installing a reader neither activates audio nor plays a cue.
+  if (presentation?.readAudio) sound.setPublishedAudio(presentation.readAudio);
   function update(run, { active = true, mode = 'solo', board = 'snake-0', placement } = {}) {
     let state = states.get(run);
     if (!state || run.tick < state.tick) {
@@ -43,11 +46,13 @@ export function createClassicAudio(sound, { getDestruction = () => ({}) } = {}) 
       const catchCount = run.catches + (run.bonusCatches ?? 0);
       if (catchCount > state.catches) {
         const latest = run.recentCatches?.at(-1);
+        const pan = screenPan(latest?.x ?? run.level.width / 2, run.level.width, placement);
+        sound.event?.({ type: 'pickup.collected', board, pan, feedback: true, tick: run.tick });
         sound.encounter('catch', {
           family: latest?.kind,
           board,
           brutal: getDestruction().brutal,
-          pan: screenPan(latest?.x ?? run.level.width / 2, run.level.width, placement),
+          pan,
         });
       }
       if ((run.pickupsUsed ?? 0) > state.pickups) {
@@ -78,9 +83,19 @@ export function createClassicAudio(sound, { getDestruction = () => ({}) } = {}) 
   }
   return Object.freeze({
     update,
+    prepare() {
+      // Warm only the catch binding after explicit Start. Missing/late recordings
+      // use the registered core recipe now, never replaying an earlier catch.
+      return sound.publishedAudio?.prepare(['pickup']);
+    },
     reset() {
       states = new WeakMap();
       sound.feedbackDirector.reset();
+    },
+    dispose() {
+      states = new WeakMap();
+      sound.feedbackDirector.reset();
+      if (presentation?.readAudio) sound.setPublishedAudio(null);
     },
   });
 }

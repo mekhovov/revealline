@@ -1,5 +1,6 @@
 import { canvasInterfaceFonts } from '../presentation/theme-system.mjs';
 import { createHuntDestruction } from '../hunt/destruction.mjs';
+import { runtimeActorArtRevision } from '../hunt/preferences.mjs';
 import { preparedRotorRecipe } from './rotor-presentation.mjs';
 import {
   createArcadeAdapter,
@@ -159,7 +160,8 @@ export class BoardPainter {
     this._winState = null;
     this._celebrationPrepared = false;
     this.presentation = null;
-    this.arcadeAdapter = createArcadeAdapter();
+    this.artRevision = runtimeActorArtRevision();
+    this.arcadeAdapter = createArcadeAdapter({ reviewRevision: this.artRevision });
     this.arcadeProvider = () => null;
     this.interfaceProvider = () => null;
     this.arcadeCollection = null;
@@ -296,12 +298,23 @@ export class BoardPainter {
   makeArt(theme, level = this.levelInfo, seed = this.artSeed) {
     return createSceneArt(theme, level, seed, () => makeCanvas(384, 288));
   }
-  setLevel(level = {}, { seed = 0, arcadeCollection = undefined } = {}) {
-    // Capture only at a new attempt boundary; changes during flight wait.
+  // Only the host's first activation or new-attempt preparation calls this.
+  // Resume never rereads the menu choices for an already accepted attempt.
+  acceptEnemyArtwork({ artRevision = runtimeActorArtRevision(), arcadeCollection } = {}) {
+    this.artRevision = artRevision;
+    this.arcadeAdapter.setReviewRevision(artRevision);
+    this.combatPresentation.setArtRevision(artRevision);
+    this.huntDestruction.setArtRevision(artRevision);
     this.arcadeCollection =
       arcadeCollection === undefined
         ? selectedArcadeCollection(this.arcadeProvider())
         : arcadeCollection;
+  }
+  setLevel(
+    level = {},
+    { seed = 0, arcadeCollection = undefined, artRevision = runtimeActorArtRevision() } = {},
+  ) {
+    this.acceptEnemyArtwork({ artRevision, arcadeCollection });
     this.pictureFilter.clear();
     this.jammerPictureFilter.clear();
     this.levelInfo = { id: level.id || 'gallery', revision: level.revision || '1' };
@@ -485,6 +498,7 @@ export class BoardPainter {
           ? ctx.canvas.clientWidth
           : W;
     const combatOptions = {
+      artRevision: this.artRevision,
       reduced,
       screenScale: canvasCSSWidth / W,
       canvasCSSWidth,
