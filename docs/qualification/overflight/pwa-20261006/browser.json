@@ -1,0 +1,56 @@
+{
+  "sourceCommit": "4fd4df8dc0c6821e23cc3a50e55da27ec8384f1e",
+  "origin": "http://127.0.0.1:8894",
+  "surface": "Codex in-app browser",
+  "preparedProfile": "main-pages",
+  "downloadSelection": ["starter", "extras:overflight", "extras:snake"],
+  "downloadTotalDisplayedMiB": 93.9,
+  "network": "Dedicated HTTP listener closed; curl exit 7 before and after browser checks. Self-only CSP; HTTP Cache-Control no-store.",
+  "firstModeVisitsOffline": true,
+  "prewarmedModePages": false,
+  "survivor": {
+    "launched": true,
+    "combatSeconds": 21,
+    "destroyedEnemies": 30,
+    "earnedUpgrade": "Wide Fan",
+    "level": 2,
+    "pause": true,
+    "restart": true,
+    "consoleErrors": []
+  },
+  "raid": {
+    "launched": true,
+    "combatSeconds": 12,
+    "destroyedEnemies": 6,
+    "score": 1600,
+    "pause": true,
+    "restart": true,
+    "queryReload": true,
+    "settingsOfflinePanel": true,
+    "consoleErrors": []
+  },
+  "snake": {
+    "launched": true,
+    "playedToResults": true,
+    "retry": true,
+    "pause": true,
+    "resume": true,
+    "queryReload": true,
+    "settingsOfflinePanel": true,
+    "consoleErrors": []
+  },
+  "navigation": {
+    "overflightHomeSixModes": true,
+    "survivorRaidGrouped": true,
+    "survivorToRaid": true,
+    "raidToSnake": true,
+    "mainHome": "Existing password gate; user input requested, browser menu check pending."
+  },
+  "notClaimed": [
+    "OS app-icon installation",
+    "physical device performance",
+    "full-run balance",
+    "offline authoring without optional tools",
+    "recorded soundtrack albums not selected"
+  ]
+}
