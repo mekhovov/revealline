@@ -123,7 +123,7 @@ async function setup(t, { holdIndex = null } = {}) {
   p.$('journey-collection').value = 'Custom';
   p.$('journey-collection').emit('change');
   const card = [...p.$('journey-cards').children].find(
-    (row) => JSON.parse(row.dataset.missionId)[5] === 'level-0-0',
+    (row) => JSON.parse(row.dataset.missionId)[3] === 'level-0-0',
   );
   assert.ok(card);
   await activateMissionCard(card);
