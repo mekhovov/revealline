@@ -134,13 +134,43 @@
         >
         <details>
           <summary data-word="displaySettings"></summary>
+          <div id="snake-enemy-appearance"></div>
+          <div id="snake-display-reading">
+            <label
+              ><span data-i18n="interface:textStyle">Text style</span
+              ><select id="snake-text-face">
+                <option value="pixel" data-i18n="interface:themeFont">Theme font</option>
+                <option value="plain" data-i18n="common:text.plain">Plain</option>
+              </select></label
+            >
+            <label
+              ><span data-i18n="interface:textSize">Text size</span
+              ><select id="snake-text-size">
+                <option value="standard" data-i18n="interface:display.textSize.standard">
+                  Standard
+                </option>
+                <option value="large" data-i18n="interface:large">Large</option>
+              </select></label
+            >
+            <p id="snake-display-status" class="micro-note" role="status"></p>
+          </div>
           <label
             ><span data-word="boardAppearance"></span
             ><select id="board-style">
               <option value="theme">Game theme</option>
               <option value="retro">Retro Field</option>
+              <option value="living-circuit">Living Circuit</option>
             </select></label
           >
+          <label id="board-scene-field" hidden>
+            <span data-word="boardScene"></span>
+            <select id="board-scene">
+              <option value="auto">Auto · by chapter</option>
+              <option value="orchard">Orchard Workshop</option>
+              <option value="workshop">Workshop</option>
+              <option value="relay">Field Relay</option>
+            </select>
+          </label>
           <label
             ><span data-word="castLabel"></span
             ><select id="actor-cast">

@@ -21,6 +21,12 @@ import { parse as parseHTML } from 'parse5';
 import { Document, Element, Events } from './helpers/couch-dom.mjs';
 import { boundedJSON, exactKeys, required } from '../data-json.mjs';
 import * as core from '../snake/classic-core.mjs';
+import { nextClassicHazardSeed } from '../snake/classic-attempt-seed.mjs';
+import {
+  CLASSIC_SNAKE_ARCHIVED_LEVELS,
+  resolveClassicSnakeRecipeEntry,
+} from '../snake/classic-catalogue-archive.mjs';
+import { resolveClassicBoardScene, classicSceneBackdrop } from '../snake/classic-scenes.mjs';
 import {
   CLASSIC_SNAKE_CHAPTERS,
   CLASSIC_SNAKE_LEVELS,
@@ -45,9 +51,11 @@ import { mountModePlayShell } from '../ui/mode-play-shell.mjs';
 import { attachModalNavigation } from '../ui/modal-navigation.mjs';
 import { attachControllerNavigation } from '../ui/controller-navigation.mjs';
 import { snakeStudioReturnHref } from '../ui/content-studio-navigation.mjs';
-import { fpvWorldLaunchURL, appearanceLaunchURL } from '../fpv-entry.mjs';
+import { fpvWorldLaunchURL, appearanceLaunchURL, nativeArtReviewURL } from '../fpv-entry.mjs';
 import { CLASSIC_COPY } from '../snake/classic-copy.mjs';
 import { advanceClassicFlight } from '../snake/classic-flight-art.mjs';
+import { t } from '../i18n/index.mjs';
+import { mountEnemyAppearanceControls } from '../ui/enemy-appearance-controls.mjs';
 
 const appURL = new URL('../snake/classic-app.mjs', import.meta.url);
 const source = await readFile(appURL, 'utf8');
@@ -79,6 +87,10 @@ async function harness({
   activity = 'campaign',
   sharedTools = false,
   focused = true,
+  artReview = null,
+  query = '',
+  cosmetics = null,
+  savedRound = null,
 } = {}) {
   const document = new Document();
   document.hasFocus = () => focused;
@@ -113,6 +125,8 @@ async function harness({
   const pads = [];
   let tools;
   const storage = new Map();
+  if (savedRound) storage.set('revealline.classic-snake.round.v2', JSON.stringify(savedRound));
+  if (cosmetics) storage.set('revealline.classic-snake.presentation.v1', JSON.stringify(cosmetics));
   const created = [],
     drawings = [],
     celebrations = [],
@@ -124,8 +138,9 @@ async function harness({
     reducedEffects: false,
     effectiveReducedEffects: false,
   };
+  const displayListeners = new Set();
   const location = {
-    href: `https://example.test/game/snake/play.html?mode=${mode}&level=${entry.id}&activity=${activity}`,
+    href: `https://example.test/game/snake/play.html?mode=${mode}&level=${entry.id}&activity=${activity}${artReview ? `&artReview=${encodeURIComponent(artReview)}` : ''}${query}`,
     origin: 'https://example.test',
   };
   const preferences = (snapshot) => ({
@@ -137,7 +152,15 @@ async function harness({
     set() {},
   });
   let shell;
+  let enemyStyle = 'authored';
+  const enemyListeners = new Set(),
+    artworkSelections = [],
+    appearanceActions = [];
   const context = createContext({
+    resolveClassicBoardScene,
+    classicSceneBackdrop,
+    nextClassicHazardSeed,
+    resolveClassicSnakeRecipeEntry,
     __appURL: appURL.href,
     claimProfileWriter: async () => {
       let writable = true;
@@ -225,6 +248,7 @@ async function harness({
     snakeStudioReturnHref,
     fpvWorldLaunchURL,
     appearanceLaunchURL,
+    nativeArtReviewURL,
     contextualAppearance: () => null,
     mountModeChoices(options) {
       renderModeChoices({ ...options, locale: 'en' });
@@ -236,7 +260,26 @@ async function harness({
       return { simulatorRoot: () => null, closeSimulator() {}, dispose() {} };
     },
     boardPlacement: () => ({ board: 'solo', pan: 0 }),
-    createClassicAudio: () => ({ reset() {}, update() {} }),
+    createClassicAudio: () => ({ reset() {}, update() {}, prepare() {}, dispose() {} }),
+    runtimeActorArtRevision: () =>
+      artReview ?? (enemyStyle === 'military' ? 'industrial-roster-v3' : null),
+    mountEnemyAppearanceControls(options) {
+      return mountEnemyAppearanceControls({
+        ...options,
+        preferences: {
+          snapshot: () => ({ style: enemyStyle, durable: true }),
+          set({ style }) {
+            enemyStyle = style;
+            for (const listener of enemyListeners) listener();
+          },
+          subscribe(listener) {
+            enemyListeners.add(listener);
+            listener();
+            return () => enemyListeners.delete(listener);
+          },
+        },
+      });
+    },
     sharedActorAppearance: () => preferences({ cast: 'authored' }),
     ACTOR_CASTS,
     actorFieldGuide,
@@ -273,13 +316,32 @@ async function harness({
     navigator: { getGamepads: () => pads },
     setTimeout,
     getLocale: () => 'en',
+    t,
     setLocale() {},
     onLocaleChange() {},
     createDestructionPreferences: () => preferences({ brutal: false, blood: true }),
     createEncounterDisplayPreferences: () => preferences({ showRemains: true }),
-    createDisplayPreferences: () => preferences(display),
+    createDisplayPreferences: () => ({
+      snapshot: () => display,
+      subscribe(listener) {
+        displayListeners.add(listener);
+        listener(display);
+        return () => displayListeners.delete(listener);
+      },
+      set(patch) {
+        Object.assign(display, patch);
+        for (const listener of displayListeners) listener(display);
+      },
+    }),
     createTouchPreferences: () => preferences({ size: 'normal', opacity: 1, side: 'right' }),
-    createClassicPresentation: () => ({ snapshot: () => null }),
+    createClassicPresentation: () => ({
+      snapshot: () => null,
+      setArtRevision: (revision) => artworkSelections.push(revision),
+      theme: {
+        applyComplete: (family) => appearanceActions.push(family),
+        set: (value) => appearanceActions.push(value),
+      },
+    }),
     createBoardFootprints: () => ({ refresh() {}, dispose() {}, width: () => 336 }),
     devicePixelRatio: 2,
     createAudioMaster: () => preferences({ muted: false, volume: 1 }),
@@ -329,6 +391,8 @@ async function harness({
       return core.createClassicSnake(...args.map((argument) => structuredClone(argument)));
     },
     restoreClassicSnakeLegacyMatch(source, options) {
+      // The legacy wrapper is assembled in the browser VM. Its production
+      // validator shares that realm; normalize only the harness boundary here.
       return matches.restoreClassicSnakeLegacyMatch(structuredClone(source), {
         ...options,
         level: structuredClone(options.level),
@@ -356,6 +420,8 @@ async function harness({
     created,
     drawings,
     celebrations,
+    artworkSelections,
+    appearanceActions,
     display,
     window,
     storage,
@@ -380,6 +446,52 @@ async function harness({
 }
 
 for (const mode of ['solo', 'versus', 'team']) {
+  test(`${mode} accepts a changed military preset on the first Start without replacing the recipe`, async () => {
+    const state = await harness({ mode });
+    const before = state.created.map((run) => core.exportClassicSnakeReplay(run));
+    state.shell.open('settings');
+    const selector = state.document.querySelector('[data-enemy-appearance]');
+    selector.value = 'military';
+    selector.dispatchEvent({ type: 'change' });
+    await flush();
+    state.start();
+    state.frame(0);
+    assert.equal(state.artworkSelections.at(-1), 'industrial-roster-v3');
+    assert.equal(state.drawings.at(-1).options.artRevision, 'industrial-roster-v3');
+    assert.deepEqual(
+      state.created.map((run) => core.exportClassicSnakeReplay(run)),
+      before,
+    );
+  });
+
+  test(`${mode} military preset is available on an ordinary level and takes effect on Retry without changing its recipe`, async () => {
+    const state = await harness({ mode });
+    state.start();
+    state.frame(0);
+    state.shell.open('settings');
+    const before = state.created.map((run) => core.exportClassicSnakeReplay(run));
+    const selector = state.document.querySelector('[data-enemy-appearance]');
+    selector.value = 'military';
+    selector.dispatchEvent({ type: 'change' });
+    await flush();
+    state.frame(50);
+    assert.deepEqual(state.appearanceActions, ['military-field']);
+    assert.equal(state.artworkSelections.at(-1), null, 'The current attempt retains its art.');
+    assert.equal(state.drawings.at(-1).options.artRevision, null);
+    assert.deepEqual(
+      state.created.map((run) => core.exportClassicSnakeReplay(run)),
+      before,
+    );
+    state.retry();
+    state.frame(100);
+    assert.equal(state.artworkSelections.at(-1), 'industrial-roster-v3');
+    assert.equal(state.drawings.at(-1).options.artRevision, 'industrial-roster-v3');
+    assert.deepEqual(
+      state.created.slice(before.length).map((run) => core.exportClassicSnakeReplay(run)),
+      before,
+    );
+  });
+
   test(`${mode} mission and settings menus cannot start or steer the prepared Snake boards`, async () => {
     const state = await harness({ mode });
     const before = state.created.map((run) => core.exportClassicSnakeReplay(run));
@@ -544,6 +656,134 @@ function flyVerifiedRoute(state) {
   assert.equal(run.status, 'won', 'actual host keyboard input completes the verified route');
   return now;
 }
+
+test('Living Circuit links override cosmetics and changing paused scenes preserves the attempt', async () => {
+  const state = await harness({
+    query: '&board=living-circuit&scene=relay',
+    cosmetics: { boardStyle: 'retro', boardScene: 'workshop' },
+  });
+  assert.equal(state.document.body.dataset.boardStyle, 'living-circuit');
+  assert.equal(state.$('board-scene').value, 'relay');
+  assert.equal(state.$('board-scene-field').hidden, false);
+  const before = core.exportClassicSnakeReplay(state.created[0]);
+  state.shell.open('settings');
+  state.$('board-scene').value = 'orchard';
+  state.$('board-scene').emit('change');
+  state.frame(0);
+  state.frame(500);
+  assert.equal(state.created.length, 1);
+  assert.deepEqual(core.exportClassicSnakeReplay(state.created[0]), before);
+  assert.equal(state.drawings.at(-1).options.boardScene, 'orchard');
+  assert.equal(new URL(state.location.href).searchParams.get('scene'), 'orchard');
+  assert.equal(
+    JSON.parse(state.storage.get('revealline.classic-snake.presentation.v1')).boardScene,
+    'orchard',
+  );
+  assert.equal(state.document.body.dataset.playing, 'false');
+});
+
+test('saved Living Circuit cosmetics apply when no explicit scene is linked', async () => {
+  const state = await harness({
+    cosmetics: { boardStyle: 'living-circuit', boardScene: 'workshop' },
+  });
+  assert.equal(state.document.body.dataset.boardStyle, 'living-circuit');
+  assert.equal(state.$('board-scene').value, 'workshop');
+  state.frame(0);
+  assert.equal(state.drawings.at(-1).options.boardScene, 'workshop');
+});
+
+for (const mode of ['solo', 'team', 'versus']) {
+  test(`${mode} retries change only hazard timing while Continue preserves its accepted seed`, async () => {
+    const entry = CLASSIC_SNAKE_LEVELS.find((item) => item.id === 'classic-field-signal-check');
+    const state = await harness({ entry, mode });
+    const initial = state.created[0];
+    const seed = initial.hazardSeed;
+    assert.equal(Number.isInteger(seed), true);
+    if (mode === 'versus') assert.equal(state.created[1].hazardSeed, seed);
+    state.shell.open('pause');
+    state.$('continue').click();
+    state.frame(0);
+    assert.equal(state.drawings.at(-1).run.hazardSeed, seed);
+    state.retry();
+    const next = state.created.at(-1);
+    assert.notEqual(next.hazardSeed, seed);
+    assert.equal(next.seed, initial.seed);
+    assert.deepEqual(next.level, initial.level);
+    if (mode === 'versus') assert.equal(state.created.at(-2).hazardSeed, next.hazardSeed);
+  });
+}
+
+test('new attempt seed remains fresh even if a random source repeats', () => {
+  const random = {
+    getRandomValues(bytes) {
+      bytes[0] = 19;
+    },
+  };
+  assert.equal(nextClassicHazardSeed(undefined, random), 19);
+  assert.notEqual(nextClassicHazardSeed(19, random), 19);
+});
+
+test('Pause offers Skip and Random only when their current setup can launch another mission', async () => {
+  for (const setup of [
+    { mode: 'solo', activity: 'campaign', skip: true, random: true },
+    { mode: 'team', activity: 'campaign', skip: true, random: true },
+    { mode: 'versus', activity: 'campaign', skip: false, random: true },
+    { mode: 'solo', activity: 'endless', skip: false, random: true },
+    { mode: 'versus', activity: 'endless', query: '&duel=score', skip: false, random: true },
+    { mode: 'versus', activity: 'endless', query: '&duel=survival', skip: false, random: false },
+    {
+      entry: CLASSIC_SNAKE_LEVELS.find((item) => item.id === 'classic-field-field-finale'),
+      skip: false,
+      random: true,
+    },
+  ]) {
+    const state = await harness(setup);
+    state.shell.open('pause');
+    assert.equal(state.shell.elements.buttons['pause-skip'].hidden, !setup.skip);
+    assert.equal(state.shell.elements.buttons['pause-random'].hidden, !setup.random);
+    const before = state.created[0];
+    if (setup.random) {
+      state.shell.elements.buttons['pause-random'].click();
+      const next = state.created.at(-1);
+      assert.notEqual(next.level.id, before.level.id);
+      assert.equal(next.seed, before.seed);
+      assert.equal(next.level.objective ?? 'mission', before.level.objective ?? 'mission');
+      assert.equal(state.document.body.dataset.playing, 'true');
+      assert.equal(state.shell.topDialog(), null);
+    }
+  }
+});
+
+test('Choose mission Start restarts the same completed mission directly', async () => {
+  const state = await harness();
+  await importSession(state.$, clearedSession());
+  state.shell.open('missions');
+  const previous = state.created.at(-1);
+  state.shell.elements.buttons['mission-start'].click();
+  assert.equal(state.created.length, 2);
+  assert.notEqual(state.created.at(-1), previous);
+  assert.deepEqual(state.created.at(-1).level, previous.level);
+  assert.equal(state.created.at(-1).seed, previous.seed);
+  assert.equal(state.document.body.dataset.playing, 'true');
+  assert.equal(state.shell.topDialog(), null);
+});
+
+test('Choose mission Start after a jammer crash creates one fresh schedule for the same setup', async () => {
+  const entry = CLASSIC_SNAKE_LEVELS.find((item) => item.id === 'classic-field-signal-check');
+  const state = await harness({ entry });
+  state.frame(0);
+  const previous = state.created[0];
+  for (let now = 50; now < 10000 && previous.status === 'running'; now += 50) state.frame(now);
+  assert.equal(previous.status, 'lost');
+  state.shell.open('missions');
+  state.shell.elements.buttons['mission-start'].click();
+  const next = state.created.at(-1);
+  assert.equal(state.created.length, 2);
+  assert.notEqual(next.hazardSeed, previous.hazardSeed);
+  assert.equal(next.seed, previous.seed);
+  assert.deepEqual(next.level, previous.level);
+  assert.equal(state.document.body.dataset.playing, 'true');
+});
 
 test('unfocused direct entry waits for the player and BFCache return reacquires saving ownership', async () => {
   const state = await harness({ focused: false });
@@ -810,10 +1050,72 @@ test('Next retires the completed result and directly launches the ordered next m
   assert.equal(new URL(sim.searchParams.get('game-return'), selected).href, selected.href);
 });
 
-test('legacy migration rejects a changed historical seed and keeps the current round', async () => {
+test('legacy migration preserves a verified historical seed', async () => {
   const run = core.createClassicSnake(CLASSIC_SNAKE_LEVELS[0].level, { seed: 71 });
   const state = await harness();
   await importSession(state.$, savedSession(run));
+  assert.equal(state.$('save-status').textContent, CLASSIC_COPY.en.loaded);
+  assert.equal(new URL(state.location.href).searchParams.get('seed'), '71');
+  state.retry();
+  assert.equal(state.created.at(-1).seed, 71);
+});
+
+function archivedSession({ tamper = false } = {}) {
+  const entry = CLASSIC_SNAKE_ARCHIVED_LEVELS[0];
+  const level = prepareClassicSnakeLevel(entry, { pace: 'slow' });
+  if (tamper) level.goal--;
+  const match = matches.createClassicSnakeMatch(level, { seed: 71 });
+  matches.advanceClassicSnakeMatchTo(match, level.stepMs * 2);
+  return {
+    format: 'revealline-classic-snake-session.v2',
+    activity: 'campaign',
+    levelId: entry.id,
+    mode: 'solo',
+    pace: 'slow',
+    targetRules: 'authored',
+    preset: 'classic',
+    duel: 'score',
+    seed: 71,
+    style: 'cable',
+    match: matches.exportClassicSnakeMatch(match),
+  };
+}
+
+for (const action of ['Continue', 'Import']) {
+  test(`${action} admits exact archived jammer recipes and Retry preserves their fixed schedule`, async () => {
+    const session = archivedSession();
+    const state = await harness({ savedRound: action === 'Continue' ? session : null });
+    if (action === 'Continue') state.$('continue').click();
+    else await importSession(state.$, session);
+    assert.equal(state.$('save-status').textContent, CLASSIC_COPY.en.loaded);
+    assert.equal(state.document.body.dataset.playing, 'true');
+    state.frame(0);
+    const restored = state.drawings.at(-1).run;
+    assert.equal(restored.tick, 2);
+    assert.equal(restored.seed, 71);
+    assert.deepEqual(core.exportClassicSnakeReplay(restored), session.match.replays[0]);
+    state.retry();
+    const retry = state.created.at(-1);
+    assert.deepEqual(retry.level, restored.level);
+    assert.equal(retry.hazardSeed, undefined);
+    assert.equal(retry.seed, 71);
+    assert.equal(retry.tick, 0);
+  });
+}
+
+test('a self-consistent same-ID old recipe cannot bypass exact archived admission', async () => {
+  const state = await harness();
+  await importSession(state.$, archivedSession({ tamper: true }));
+  assert.equal(state.$('save-status').textContent, CLASSIC_COPY.en.invalid);
+  state.retry();
+  assert.equal(state.created.at(-1).level.id, CLASSIC_SNAKE_LEVELS[0].id);
+});
+
+test('legacy migration rejects a tampered historical seed and keeps the current round', async () => {
+  const session = clearedSession();
+  session.replays[0].seed = 71;
+  const state = await harness();
+  await importSession(state.$, session);
   assert.equal(state.$('save-status').textContent, CLASSIC_COPY.en.invalid);
   assert.equal(new URL(state.location.href).searchParams.get('seed'), '17');
   state.retry();
@@ -1012,4 +1314,58 @@ test('Snake nested tools preserve iframe input and controller Back returns to th
     h.created.map((run) => core.exportClassicSnakeReplay(run)),
     paused,
   );
+});
+
+test('Snake reading controls update the shared display owner without replacing or advancing an attempt', async () => {
+  const state = await harness({ mode: 'team' });
+  const before = state.created.map((run) => core.exportClassicSnakeReplay(run));
+  state.shell.open('settings');
+  state.$('snake-text-size').value = 'large';
+  state.$('snake-text-size').emit('change');
+  state.$('snake-text-face').value = 'plain';
+  state.$('snake-text-face').emit('change');
+  assert.equal(state.display.textSize, 'large');
+  assert.equal(state.display.textFace, 'plain');
+  assert.equal(state.document.body.dataset.textSize, 'large');
+  assert.equal(state.document.body.dataset.textFace, 'plain');
+  assert.deepEqual(
+    state.created.map((run) => core.exportClassicSnakeReplay(run)),
+    before,
+  );
+  assert.equal(state.shell.blocksPlay(), true);
+});
+
+test('actual Snake links and optional SIM launch retain an explicit native review without changing recipes', async () => {
+  for (const mode of ['solo', 'versus', 'team']) {
+    const state = await harness({ mode, artReview: 'industrial-roster-v3' });
+    const before = state.created.map((run) => core.exportClassicSnakeReplay(run));
+    for (const id of ['home-link', 'campaign-link', 'remix-link', 'studio-link']) {
+      const url = new URL(state.$(id).href, state.location.href);
+      assert.equal(url.searchParams.get('artReview'), 'industrial-roster-v3', id);
+    }
+    const links = state.$('snake-mode-links').querySelectorAll('a');
+    assert.equal(links.length, 3);
+    for (const link of links) {
+      assert.equal(new URL(link.href).searchParams.get('artReview'), 'industrial-roster-v3');
+      link.click();
+      assert.equal(new URL(link.href).searchParams.get('artReview'), 'industrial-roster-v3');
+    }
+    const sim = new URL(state.optionalEntries.at(-1).bundledHref);
+    assert.equal(sim.searchParams.get('artReview'), 'industrial-roster-v3');
+    const back = new URL(sim.searchParams.get('game-return'), sim);
+    assert.equal(
+      back.searchParams.get('level'),
+      new URL(state.location.href).searchParams.get('level'),
+    );
+    assert.equal(back.searchParams.get('artReview'), 'industrial-roster-v3');
+    assert.deepEqual(
+      state.created.map((run) => core.exportClassicSnakeReplay(run)),
+      before,
+    );
+    const normal = await harness({ mode });
+    assert.equal(
+      new URL(normal.$('campaign-link').href, normal.location.href).searchParams.has('artReview'),
+      false,
+    );
+  }
 });

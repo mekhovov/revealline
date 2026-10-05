@@ -1,3 +1,5 @@
+import { nativeArtReviewURL } from '../../game/ui/art-review-navigation.mjs';
+
 /** Presentation-only fullscreen. The document root includes every modal dialog. */
 export function mountFlightFullscreen({
   document: doc = globalThis.document,
@@ -246,7 +248,7 @@ export function createSimModeLinks({
       for (const key of ['appearanceFamily', 'appearanceRevision'])
         if (root.accepted.searchParams.has(key))
           target.searchParams.set(key, root.accepted.searchParams.get(key));
-      element.setAttribute('href', target.href);
+      element.setAttribute('href', nativeArtReviewURL(target.href, root.accepted.href));
     };
     synchronize();
     element.addEventListener('click', synchronize);
@@ -270,6 +272,7 @@ export function createSimModeLinks({
 // BEGIN GENERATED SHARED MODE SHELL
 import*as simGlobalI18n from'../../game/i18n/index.mjs';
 import*as simGlobalThemes from'../../game/presentation/theme-system.mjs';
+import*as simGlobalActorPreferences from'../../game/hunt/preferences.mjs';
 const sharedGlobalSettings=(()=>{
 const modules=Object.create(null);
 modules['game/data-json.mjs']=(()=>{
@@ -1290,12 +1293,390 @@ createEnemyStats,
 createEnemyStatsHost,
 };
 })();
+modules['game/presentation/actor-animation.mjs']=(()=>{
+const boundedJSON=modules['game/data-json.mjs']['boundedJSON'];
+const exactKeys=modules['game/data-json.mjs']['exactKeys'];
+const required=modules['game/data-json.mjs']['required'];
+const stableId=modules['game/data-json.mjs']['stableId'];
+
+const ACTOR_ANIMATION_FORMAT='revealline-actor-animation.v1';
+const ACTOR_CLIPS=Object.freeze([
+'idle',
+'notice',
+'anticipation',
+'move',
+'blocked',
+'recovery',
+'caught',
+'aim',
+'fire',
+]);
+const ACTOR_PARTS=Object.freeze([
+'helmet',
+'cap',
+'hood',
+'torso',
+'arms',
+'boots',
+'pack',
+'satchel',
+'radio',
+'shield',
+'armor',
+'weapon',
+'scarf',
+'binoculars',
+]);
+const accepted=new WeakSet();
+function freeze(value){
+if(value&&typeof value==='object'){
+Object.values(value).forEach(freeze);
+Object.freeze(value);
+}
+return value;
+}
+function fields(value,names,label){
+const keys=names.split(' ');
+exactKeys(value,keys,label);
+required(
+keys.every((key)=>Object.hasOwn(value,key)),
+`${label} is missing fields.`,
+);
+}
+const integer=(n,min,max)=>Number.isSafeInteger(n)&&n>=min&&n<=max;
+
+/** Imported animation describes decoration only. No URLs, scripts, sounds,
+     * collision shapes, AI transitions or vulnerability timings are accepted. */
+function validateActorAnimation(source,{width=null,height=null}={}){
+const value=boundedJSON(source,{maxBytes:32768,maxNodes:2500,maxArray:128});
+fields(
+value,
+'format id revision rig material parts anchors frames clips fallback',
+'actor animation',
+);
+required(
+value.format===ACTOR_ANIMATION_FORMAT&&
+stableId(value.id)&&
+integer(value.revision,1,1000000),
+'Invalid animation identity.',
+);
+required(['overhead-soldier.v1','sprite.v1'].includes(value.rig),'Unsupported actor rig.');
+required(
+['cloth','armor','machine'].includes(value.material),
+'Unsupported actor material.',
+);
+required(
+Array.isArray(value.parts)&&
+value.parts.length<=ACTOR_PARTS.length&&
+new Set(value.parts).size===value.parts.length&&
+value.parts.every((p)=>ACTOR_PARTS.includes(p)),
+'Invalid actor parts.',
+);
+fields(value.anchors,'pivot equipment','actor anchors');
+for(const anchor of Object.values(value.anchors)){
+fields(anchor,'x y','actor anchor');
+required(
+[anchor.x,anchor.y].every((n)=>Number.isFinite(n)&&n>=0&&n<=1),
+'Invalid actor anchor.',
+);
+}
+required(
+Array.isArray(value.frames)&&value.frames.length>0&&value.frames.length<=64,
+'Invalid animation frames.',
+);
+const ids=new Set();
+for(const frame of value.frames){
+fields(frame,'id durationMs stride breath accessory region','actor frame');
+required(stableId(frame.id)&& !ids.has(frame.id),'Duplicate actor frame.');
+ids.add(frame.id);
+required(
+integer(frame.durationMs,16,2000)&&
+integer(frame.stride,-3,3)&&
+integer(frame.breath,0,2)&&
+integer(frame.accessory,-2,2),
+'Unbounded actor motion.',
+);
+if(value.rig==='sprite.v1'){
+fields(frame.region,'x y width height','atlas region');
+const r=frame.region;
+required(
+integer(width,1,1920)&&
+integer(height,1,1920)&&
+integer(r.x,0,width-1)&&
+integer(r.y,0,height-1)&&
+integer(r.width,1,width)&&
+integer(r.height,1,height)&&
+r.x+r.width<=width&&
+r.y+r.height<=height,
+'Actor atlas frame escaped its image.',
+);
+}else required(frame.region===null,'Procedural parts cannot load image regions.');
+}
+exactKeys(value.clips,ACTOR_CLIPS,'actor clips');
+required(
+ACTOR_CLIPS.slice(0,7).every((key)=>Object.hasOwn(value.clips,key)),
+'Missing required actor clip.',
+);
+for(const clip of Object.values(value.clips)){
+fields(clip,'frames loop','actor clip');
+required(
+typeof clip.loop==='boolean'&&
+Array.isArray(clip.frames)&&
+clip.frames.length>0&&
+clip.frames.length<=32&&
+clip.frames.every((id)=>ids.has(id)),
+'Invalid actor clip frames.',
+);
+}
+required(value.fallback==='compact-overhead.v1','Missing registered compact fallback.');
+freeze(value);
+accepted.add(value);
+return value;
+}
+
+/** Host supplies elapsed presentation time within the authoritative state. This
+     * function cannot advance that state, turn armor or emit gameplay/audio events. */
+function sampleActorAnimation(
+descriptor,
+{clip='idle',timeMs=0,reducedEffects=false}={},
+){
+required(accepted.has(descriptor),'Use an admitted actor animation.');
+const sequence=descriptor.clips[clip]??descriptor.clips.idle;
+const frames=sequence.frames.map((id)=>descriptor.frames.find((f)=>f.id===id));
+const duration=frames.reduce((sum,frame)=>sum+frame.durationMs,0);
+let t=reducedEffects|| !Number.isFinite(timeMs)?0:Math.max(0,timeMs);
+t=sequence.loop?t%duration:Math.min(t,duration-1);
+for(const frame of frames){
+if(t<frame.durationMs)return frame;
+t-=frame.durationMs;
+}
+return frames[0];
+}
+
+function createSoldierAnimation(id,parts,material='cloth'){
+const frames=[0,1,2,0,-1,-2].map((stride,i)=>({
+id:`stride-${i}`,
+durationMs:100,
+stride,
+breath:0,
+accessory:i%2,
+region:null,
+}));
+frames.push(
+{id:'rest',durationMs:300,stride:0,breath:0,accessory:0,region:null},
+{id:'breath',durationMs:300,stride:0,breath:1,accessory:0,region:null},
+);
+const clips=Object.fromEntries(
+ACTOR_CLIPS.map((name)=>[
+name,
+{
+frames:
+name==='move'
+?frames.slice(0,6).map((f)=>f.id)
+:['idle','recovery'].includes(name)
+?['rest','breath']
+:['rest'],
+loop:!['caught','notice','fire'].includes(name),
+},
+]),
+);
+return validateActorAnimation({
+format:ACTOR_ANIMATION_FORMAT,
+id,
+revision:1,
+rig:'overhead-soldier.v1',
+material,
+parts,
+anchors:{pivot:{x:0.5,y:0.5},equipment:{x:0.75,y:0.625}},
+frames,
+clips,
+fallback:'compact-overhead.v1',
+});
+}
+
+return{
+ACTOR_ANIMATION_FORMAT,
+ACTOR_CLIPS,
+ACTOR_PARTS,
+validateActorAnimation,
+sampleActorAnimation,
+createSoldierAnimation,
+};
+})();
+modules['game/hunt/industrial-soldier-kit.mjs']=(()=>{
+/** Exact original v3 live accessory geometry. Data only: positions are artwork
+     * pixels, never collider dimensions, capability declarations or simulation state.
+     * Both live renderers and defeat presentation resolve color roles from the same
+     * accepted actor palette. Historical art continues using its original recipes. */
+const INDUSTRIAL_SOLDIER_KIT_REVISION='industrial-roster-v3';
+const freeze=(value)=>{
+if(value&&typeof value==='object'){
+for(const child of Object.values(value))freeze(child);
+Object.freeze(value);
+}
+return value;
+};
+const INDUSTRIAL_SOLDIER_KITS=freeze({
+lookout:{
+id:'binoculars',
+material:'optics',
+anchor:[9,8],
+size:[14,4],
+rectangles:[
+['#192820',0,0,6,4],
+['#192820',8,0,6,4],
+['#81b1ac',1,0,3,2],
+['#b7d9cf',9,0,3,2],
+],
+},
+patroller:{
+id:'bedroll',
+material:'cloth',
+anchor:[9,21],
+size:[14,5],
+rectangles:[
+['#192820',0,0,14,5],
+['coat',1,1,12,3],
+['trim',2,1,2,3],
+['trim',10,1,2,3],
+],
+},
+runner:{
+id:'harness',
+material:'cloth',
+anchor:[11,19],
+size:[10,6],
+rectangles:[
+['#192820',0,0,3,6],
+['#192820',7,0,3,6],
+['trim',1,1,1,4],
+['trim',8,1,1,4],
+['dark',2,1,6,2],
+],
+},
+sprinter:{
+id:'headset',
+material:'electronics',
+anchor:[8,12],
+size:[16,5],
+rectangles:[
+['#192820',0,0,3,5],
+['#192820',13,0,3,5],
+['trim',1,0,1,4],
+['trim',14,0,1,4],
+],
+},
+courier:{
+id:'satchel',
+material:'canvas',
+anchor:[22,17],
+size:[7,7],
+rectangles:[
+['#192820',0,0,7,7],
+['#795e3f',1,1,5,5],
+['#be9b65',1,1,5,2],
+['#d9c296',3,1,1,5],
+],
+},
+guard:{
+id:'pouches',
+material:'cloth',
+anchor:[10,20],
+size:[14,4],
+rectangles:[
+['#192820',0,0,4,4],
+['trim',1,1,2,2],
+['#192820',5,0,4,4],
+['trim',6,1,2,2],
+['#192820',10,0,4,4],
+['trim',11,1,2,2],
+],
+},
+'refuge-seeker':{
+id:'shelter-roll',
+material:'cloth',
+anchor:[9,20],
+size:[14,7],
+rectangles:[
+['#192820',0,0,14,7],
+['dark',1,1,12,5],
+['light',1,1,12,2],
+['trim',4,1,2,5],
+['trim',10,1,2,5],
+],
+},
+switchback:{
+id:'scarf',
+material:'cloth',
+anchor:[23,20],
+size:[5,4],
+rectangles:[
+['#192820',0,0,5,4],
+['trim',0,0,4,2],
+['patch',1,2,2,2],
+],
+},
+'rendezvous-pair':{
+id:'radio',
+material:'electronics',
+anchor:[11,20],
+size:[11,6],
+rectangles:[
+['#192820',0,0,11,6],
+['dark',1,1,9,4],
+['trim',1,1,9,2],
+],
+},
+'shield-bearer':{
+id:'front-plate',
+material:'armor',
+anchor:[5,5],
+size:[22,5],
+rectangles:[
+['#192820',0,0,22,5],
+['#84928a',1,0,20,3],
+['#c8d0bd',2,0,18,1],
+['#384c46',6,1,10,2],
+['dark',2,3,4,2],
+['dark',16,3,4,2],
+],
+},
+'brace-trooper':{
+id:'brace-pack',
+material:'armor',
+anchor:[11,21],
+size:[10,5],
+rectangles:[
+['#192820',0,0,10,5],
+['dark',1,1,8,3],
+],
+},
+'relay-warden':{
+id:'command-pack',
+material:'electronics',
+anchor:[10,19],
+size:[13,8],
+rectangles:[
+['#192820',0,0,13,8],
+['dark',1,1,11,6],
+['trim',2,1,9,2],
+['light',2,4,3,1],
+],
+},
+});
+
+return{INDUSTRIAL_SOLDIER_KIT_REVISION,INDUSTRIAL_SOLDIER_KITS};
+})();
 modules['game/hunt/actor-catalog.mjs']=(()=>{
 /** Shared identities, not a grant of gameplay capability. Native engines must
      * accept a versioned policy before an actor can enter an attempt. */
 const ACTOR_CATALOG_VERSION='humanoid-actors.v1';
 const ACTOR_ART_REVISION='overhead-field-kit.v2';
-const ACTOR_ART_BUDGET=Object.freeze({decodedBytes:32*1024*1024,sharedBoards:2});
+const ACTOR_ART_BUDGET=Object.freeze({
+decodedBytes:64*1024*1024,
+compactDecodedBytes:32*1024*1024,
+sharedBoards:2,
+});
 const freeze=(value)=>{
 if(value&&typeof value==='object'){
 for(const child of Object.values(value))freeze(child);
@@ -1794,6 +2175,15 @@ specialistFailureCopy,
 };
 })();
 modules['game/hunt/actor-art.mjs']=(()=>{
+const createSoldierAnimation=
+modules['game/presentation/actor-animation.mjs']['createSoldierAnimation'];
+const sampleActorAnimation=
+modules['game/presentation/actor-animation.mjs']['sampleActorAnimation'];
+const validateActorAnimation=
+modules['game/presentation/actor-animation.mjs']['validateActorAnimation'];
+const runtimeActorArtRevision=simGlobalActorPreferences['runtimeActorArtRevision'];
+const INDUSTRIAL_SOLDIER_KITS=
+modules['game/hunt/industrial-soldier-kit.mjs']['INDUSTRIAL_SOLDIER_KITS'];
 const actorVisual=modules['game/hunt/actor-catalog.mjs']['actorVisual'];
 const resolveActorFamily=modules['game/hunt/actor-catalog.mjs']['resolveActorFamily'];
 /** Original overhead pixel rigs. The host owns time, facing and vulnerability;
@@ -1804,6 +2194,134 @@ const STRIDE=[0,1,2,0,-1,-2];
 const BREATH=[0,0,1,0];
 const INK='#192820';
 const BOOT='#26302c';
+
+const INDUSTRIAL_ACTOR_SAMPLES=Object.freeze({
+runner:createSoldierAnimation('industrial-runner',['helmet','torso','arms','boots']),
+courier:createSoldierAnimation('industrial-courier',[
+'cap',
+'torso',
+'arms',
+'boots',
+'satchel',
+]),
+guard:createSoldierAnimation(
+'industrial-guard',
+['helmet','torso','arms','boots','armor','weapon'],
+'armor',
+),
+'shield-bearer':createSoldierAnimation(
+'industrial-shield',
+['helmet','torso','arms','boots','shield'],
+'armor',
+),
+});
+
+const OVERHEAD_ACTOR_ART_REVISION='industrial-overhead-v2';
+const OVERHEAD_ACTOR_SAMPLES=Object.freeze(
+Object.fromEntries(
+[
+['lookout',['cap','torso','arms','boots']],
+['patroller',['cap','torso','arms','boots']],
+['runner',['helmet','torso','arms','boots']],
+['sprinter',['helmet','torso','arms','boots']],
+['courier',['cap','torso','arms','boots','satchel']],
+['guard',['helmet','torso','arms','boots','armor','weapon']],
+['refuge-seeker',['helmet','torso','arms','boots','satchel']],
+['switchback',['helmet','torso','arms','boots']],
+['rendezvous-pair',['helmet','torso','arms','boots','satchel']],
+['shield-bearer',['helmet','torso','arms','boots','shield']],
+['brace-trooper',['helmet','torso','arms','boots','armor']],
+['relay-warden',['helmet','torso','arms','boots','armor']],
+].map(([family,parts])=>[
+family,
+createSoldierAnimation(
+`overhead-${family}`,
+parts,
+['guard','shield-bearer','brace-trooper','relay-warden'].includes(family)
+?'armor'
+:'cloth',
+),
+]),
+),
+);
+
+/** Successor artwork only: the accepted overhead perspective stays intact while
+     * family equipment, stride and non-gameplay gestures gain their own vocabulary.
+     * Previous descriptors and every saved/default art revision remain unchanged. */
+const INDUSTRIAL_ROSTER_ART_REVISION='industrial-roster-v3';
+const rosterTraits=Object.freeze({
+lookout:[18,1,160,390,['binoculars']],
+patroller:[20,1,145,340,['pack']],
+runner:[14,2,90,260,[]],
+sprinter:[16,3,75,190,[]],
+courier:[16,2,115,310,['satchel']],
+guard:[20,1,155,360,['armor','weapon']],
+'refuge-seeker':[20,1,135,350,['hood','pack']],
+switchback:[16,2,105,280,['scarf']],
+'rendezvous-pair':[18,1,125,300,['radio','pack']],
+'shield-bearer':[18,1,170,420,['shield']],
+'brace-trooper':[20,2,120,230,['armor']],
+'relay-warden':[22,1,180,460,['radio','pack','armor']],
+});
+const INDUSTRIAL_ROSTER_SAMPLES=Object.freeze(
+Object.fromEntries(
+Object.entries(OVERHEAD_ACTOR_SAMPLES).map(([family,original],index)=>{
+const[,amplitude,cadence,rest,equipment]=rosterTraits[family];
+const value=structuredClone(original);
+value.id=`industrial-roster-${family}`;
+value.revision=3;
+value.parts=[...new Set([...value.parts,...equipment])];
+// The crown/pivot remain fixed. Only limb stride, breathing and equipment
+// offsets vary; this data cannot introduce movement or vulnerability timing.
+value.frames=[
+0,
+amplitude,
+Math.max(1,amplitude-1),
+0,
+-amplitude,
+-Math.max(1,amplitude-1),
+].map((stride,i)=>({
+id:`move-${i}`,
+durationMs:cadence+(i%3===0?15:0),
+stride,
+breath:0,
+accessory:[0,1,0,0,-1,0][i],
+region:null,
+}));
+for(const[id,durationMs,breath,accessory]of[
+['idle-0',rest,0,0],
+['idle-1',rest,1,index%2],
+['notice-0',95+index*3,0,-1],
+['notice-1',150+index*4,1,2],
+['prepare-0',170,1,-1],
+['prepare-1',230,2,0],
+['blocked-0',210,0,-1],
+['blocked-1',210,1,1],
+['recover-0',rest,2,1],
+['recover-1',rest,0,0],
+['caught-0',80,0,2],
+['caught-1',150,1,-2],
+['caught-2',260,0,0],
+['aim',300,0,-1],
+['fire-0',70,0,2],
+['fire-1',160,0,0],
+])
+value.frames.push({id,durationMs,stride:0,breath,accessory,region:null});
+value.clips={
+idle:{frames:['idle-0','idle-1'],loop:true},
+notice:{frames:['notice-0','notice-1','idle-0'],loop:false},
+anticipation:{frames:['prepare-0','prepare-1'],loop:true},
+move:{frames:value.frames.slice(0,6).map((frame)=>frame.id),loop:true},
+blocked:{frames:['blocked-0','blocked-1'],loop:true},
+recovery:{frames:['recover-0','recover-1'],loop:true},
+caught:{frames:['caught-0','caught-1','caught-2'],loop:false},
+aim:{frames:['aim'],loop:true},
+fire:{frames:['fire-0','fire-1'],loop:false},
+};
+return[family,validateActorAnimation(value)];
+}),
+),
+);
 
 function pixel(ctx,color,x,y,width,height){
 ctx.fillStyle=color;
@@ -1841,6 +2359,7 @@ return{
 stride:still?0:STRIDE[((frame%STRIDE.length)+STRIDE.length)%STRIDE.length],
 breath:frozen?0:BREATH[Math.floor(time/300)%BREATH.length],
 running,
+moving:!still,
 idling:family==='lookout'||options.state==='idle',
 notice:options.state==='notice',
 recovery:options.state==='recover'||['rest','recovering'].includes(options.phase),
@@ -1907,7 +2426,8 @@ pixel(ctx,'#965c55',6,shoulderY+3,2,1);
 if(family==='refuge-seeker')pack(ctx,role,11,17,11,10);
 else if(family==='rendezvous-pair'||family==='relay-warden')
 pack(ctx,role,12,17,family==='relay-warden'?11:9,9,true);
-else if(family==='patroller'||cast==='tactical')pack(ctx,role,12,18,8,7);
+else if(family==='patroller'||(cast==='tactical'&& !options.industrialSample))
+pack(ctx,role,12,18,8,7);
 else{
 pixel(ctx,INK,10,21,4,4);
 pixel(ctx,role.trim,11,22,2,2);
@@ -2099,7 +2619,472 @@ if(!closed)pixel(ctx,'#aec3a0',7,9,2,2);
 ctx.restore();
 }
 
+/** Plan view, looking vertically down. The crown overlaps the shoulder plane;
+     * there is no visible face or upright chest. Limbs swing around that plane and
+     * remain mostly occluded beneath it. Helmet position never bobs off the centre. */
+function overheadDetailed(ctx,role,family,gait,options,cast){
+const stride=gait.stride,
+breath=gait.idling||gait.recovery?gait.breath:0,
+wide=['guard','brace-trooper','relay-warden'].includes(family),
+breadth=options.roster?rosterTraits[family][0]:wide?20:18,
+inset=(32-breadth)/2,
+hood=family==='refuge-seeker',
+cap=['lookout','patroller','courier'].includes(family),
+closed=options.phase==='warning'||options.phase==='burst';
+
+// Short soles and trouser tops are glimpsed beyond the rear/lateral silhouette.
+// They are drawn first so the shoulders, helmet and kit occlude the upper legs.
+for(const[x,offset]of[
+[10,stride],
+[18,-stride],
+]){
+pixel(ctx,role.edge,x-1,18+offset,6,6);
+pixel(ctx,BOOT,x,19+offset,4,5);
+pixel(ctx,role.pants,x,18+offset,4,3);
+pixel(ctx,role.light,x,18+offset,1,2);
+pixel(ctx,INK,x+1,23+offset,3,1);
+}
+// Bent elbows, then forearms reaching ahead; never long hanging portrait arms.
+for(const[x,offset]of[
+[5,-stride],
+[22,stride],
+]){
+const raised=gait.notice&&x===22? -2:0,
+y=13+offset+raised;
+pixel(ctx,role.edge,x-1,y,7,6);
+pixel(ctx,INK,x,y,5,5);
+pixel(ctx,role.coat,x,y+1,4,3);
+pixel(ctx,role.light,x,y+1,3,1);
+pixel(ctx,INK,x+(x===5?1:0),y-3,4,4);
+pixel(ctx,role.glove,x+(x===5?2:1),y-2,2,3);
+}
+// A broad, shallow shoulder/upper-back footprint under the central crown.
+pixel(ctx,role.edge,inset,12,breadth,10);
+const inner=options.roster?inset+1:8,
+innerWidth=options.roster?breadth-2:16;
+pixel(ctx,INK,inner,11,innerWidth,12);
+pixel(ctx,role.coat,inner,12,innerWidth,9);
+pixel(ctx,role.light,8,12,4,2+breath);
+pixel(ctx,role.light,20,12,4,2+breath);
+pixel(ctx,role.camo,8,17,4,3);
+pixel(ctx,role.camo,21,15,3,3);
+pixel(ctx,role.dark,11,19,10,4);
+pixel(ctx,role.trim,12,21,8,1);
+if(cast==='rivals'){
+pixel(ctx,role.patch,8,14,3,2);
+pixel(ctx,role.patch,21,19,2,2);
+}else if(cast==='arcade'){
+pixel(ctx,role.edge,8,12,3,6);
+pixel(ctx,role.camo,22,13,2,5);
+}
+
+// Top planes of the kit project behind or beside the crown, not down a chest.
+if(['refuge-seeker','patroller','rendezvous-pair','relay-warden'].includes(family)){
+const width=hood?12:10,
+x=hood?10:11;
+pixel(ctx,INK,x,19,width,hood?7:6);
+pixel(ctx,role.dark,x+1,20,width-2,hood?5:4);
+pixel(ctx,role.trim,x+1,20,width-2,2);
+pixel(ctx,role.coat,x+3,20,2,hood?5:4);
+if(family==='rendezvous-pair'||family==='relay-warden'){
+pixel(ctx,INK,x+width-1,14,1,8);
+pixel(ctx,role.edge,x+width-1,14,1,1);
+pixel(ctx,'#a8c9bb',x+2,21,2,1);
+}
+}else{
+for(const x of[9,20]){
+pixel(ctx,INK,x,19,3,4);
+pixel(ctx,role.trim,x,19,3,2);
+}
+}
+if(family==='guard'){
+pixel(ctx,role.dark,7,12,5,8);
+pixel(ctx,role.dark,20,12,5,8);
+pixel(ctx,'#99a58e',8,12,3,2);
+pixel(ctx,'#99a58e',21,12,3,2);
+}
+
+// Crown lies INSIDE the shoulders and obscures the spine/neck. The tiny front
+// brim plus rear strap communicates heading without eyes, mouth or face skin.
+pixel(ctx,role.edge,11,10,10,11);
+pixel(ctx,role.edge,10,12,12,7);
+pixel(ctx,INK,11,11,10,9);
+pixel(ctx,INK,12,10,8,11);
+pixel(ctx,hood?role.dark:role.coat,12,11,8,8);
+pixel(ctx,role.light,12,11,5,2);
+pixel(ctx,role.light,12,13,2,3);
+pixel(ctx,role.camo,16,13,4,2);
+pixel(ctx,role.camo,13,17,3,2);
+pixel(ctx,role.dark,14,19,4,2);
+pixel(ctx,role.trim,cap?11:13,9,cap?10:6,2);
+if(hood){
+pixel(ctx,role.coat,10,11,2,7);
+pixel(ctx,role.coat,20,11,2,7);
+}else if(!cap)pixel(ctx,role.trim,15,11,1,6);
+
+if(family==='lookout'){
+const y=gait.notice||gait.breath?6:8;
+pixel(ctx,INK,10,y,5,4);
+pixel(ctx,INK,17,y,5,4);
+pixel(ctx,role.dark,14,y+1,4,2);
+pixel(ctx,'#a9c5bf',11,y,3,1);
+pixel(ctx,'#a9c5bf',18,y,3,1);
+}else if(family==='patroller'){
+pixel(ctx,role.trim,8,15,2,2);
+pixel(ctx,INK,24,17,2,6);
+pixel(ctx,role.coat,24,18,1,3);
+}else if(family==='runner'){
+pixel(ctx,role.trim,11,20,2,4);
+pixel(ctx,role.trim,19,20,2,4);
+if(gait.notice||gait.recovery)pixel(ctx,role.glove,8,11,3,2);
+}else if(family==='sprinter'){
+pixel(ctx,INK,9,12,2,5);
+pixel(ctx,INK,21,12,2,5);
+pixel(ctx,role.trim,11,10,10,1);
+pixel(ctx,role.edge,22,11,1,2);
+if(options.phase==='warning'){
+pixel(ctx,role.glove,7,10,3,3);
+pixel(ctx,role.glove,22,10,3,3);
+}
+}else if(family==='courier'){
+const y=18+(gait.accessory?? -(Math.abs(stride)===2?1:0));
+pixel(ctx,INK,23,y,6,6);
+pixel(ctx,'#795e3f',24,y+1,4,4);
+pixel(ctx,'#be9b65',24,y+1,4,2);
+pixel(ctx,'#d9c296',26,y+1,1,4);
+pixel(ctx,role.trim,21,16,4,1);
+if(gait.notice||gait.idling)pixel(ctx,'#e5debd',25,y,3,2);
+}else if(family==='guard'&&options.armed===true){
+pixel(ctx,INK,24,5,2,14);
+pixel(ctx,'#718277',24,9,1,7);
+pixel(ctx,'#735c40',23,18,3,4);
+pixel(ctx,role.glove,22,12,3,2);
+}else if(family==='switchback'){
+pixel(ctx,role.patch,10,20,13,2);
+pixel(ctx,role.trim,22,20,5,2);
+pixel(ctx,role.patch,25,21,3,3);
+pixel(ctx,INK,26,24,2,1);
+}else if(family==='rendezvous-pair'){
+const partner=String(options.partnerId??''),
+alternate=(partner.charCodeAt(partner.length-1)||0)%2;
+pixel(ctx,alternate?'#dac295':'#9cbdbe',8,14,3,2);
+pixel(ctx,alternate?'#9cbdbe':'#dac295',21,14,3,2);
+}else if(family==='shield-bearer'){
+pixel(ctx,INK,5,5,22,4);
+pixel(ctx,'#84928a',6,5,20,2);
+pixel(ctx,'#c8d0bd',7,5,18,1);
+pixel(ctx,'#384c46',12,6,8,2);
+pixel(ctx,role.glove,8,9,3,3);
+pixel(ctx,role.glove,21,9,3,3);
+}else if(family==='brace-trooper'){
+for(const x of closed?[7,20]:[3,25]){
+pixel(ctx,INK,x,closed?8:14,closed?5:4,7);
+pixel(ctx,role.trim,x+1,closed?9:15,closed?3:2,5);
+pixel(ctx,role.light,x+1,closed?9:15,closed?3:2,1);
+}
+if(!closed)pixel(ctx,'#aec3a0',14,21,4,2);
+}else if(family==='relay-warden'){
+pixel(ctx,role.trim,6,12,5,2);
+pixel(ctx,role.trim,21,12,5,2);
+pixel(ctx,INK,9,17,1,9);
+pixel(ctx,role.edge,9,17,1,1);
+pixel(ctx,INK,9,12,2,5);
+pixel(ctx,INK,21,12,2,5);
+}
+}
+
+function overheadCompact(ctx,role,family,gait,options,cast){
+ctx.save();
+ctx.scale(2,2);
+const step=Math.sign(gait.stride),
+breath=gait.idling||gait.recovery?gait.breath:0,
+closed=options.phase==='warning'||options.phase==='burst';
+for(const[x,offset]of[
+[5,step],
+[9,-step],
+]){
+pixel(ctx,role.edge,x-1,9+offset,4,3);
+pixel(ctx,BOOT,x,9+offset,2,3);
+pixel(ctx,role.pants,x,9+offset,2,1);
+}
+for(const[x,offset]of[
+[2,-step],
+[11,step],
+]){
+pixel(ctx,role.edge,x,6+offset,3,3);
+pixel(ctx,role.coat,x,7+offset,3,1);
+pixel(ctx,role.glove,x+1,5+offset,2,2);
+}
+pixel(ctx,role.edge,3,6,10,5);
+pixel(ctx,INK,4,5,8,7);
+pixel(ctx,role.coat,4,6,8,5);
+pixel(ctx,role.light,4,6,2,1+breath);
+pixel(ctx,role.light,10,6,2,1+breath);
+pixel(ctx,role.camo,4,9,2,2);
+pixel(ctx,role.dark,6,10,4,2);
+if(cast==='rivals')pixel(ctx,role.patch,4,7,1,1);
+if(cast==='arcade')pixel(ctx,role.edge,11,7,1,3);
+if(['patroller','refuge-seeker','rendezvous-pair','relay-warden'].includes(family)){
+pixel(ctx,INK,5,10,6,3);
+pixel(ctx,role.trim,6,10,4,2);
+pixel(ctx,role.coat,7,10,1,3);
+}
+// The compact crown occupies the middle of the shoulder block, not its top.
+pixel(ctx,role.edge,5,5,6,5);
+pixel(ctx,INK,5,6,6,4);
+pixel(ctx,role.coat,6,5,4,4);
+pixel(ctx,role.light,6,5,3,1);
+pixel(ctx,role.camo,8,7,2,1);
+pixel(ctx,role.dark,7,9,2,1);
+pixel(ctx,role.trim,6,4,4,1);
+if(family==='lookout'){
+const y=gait.notice||gait.breath?3:4;
+pixel(ctx,INK,4,y,3,2);
+pixel(ctx,INK,9,y,3,2);
+pixel(ctx,'#a9c5bf',4,y,2,1);
+pixel(ctx,'#a9c5bf',10,y,2,1);
+}else if(family==='patroller'){
+pixel(ctx,role.trim,5,4,6,1);
+pixel(ctx,INK,12,9,1,3);
+}else if(family==='runner'){
+pixel(ctx,role.trim,5,10,1,2);
+pixel(ctx,role.trim,10,10,1,2);
+}else if(family==='sprinter'){
+pixel(ctx,INK,4,6,1,3);
+pixel(ctx,INK,11,6,1,3);
+pixel(ctx,role.trim,5,5,6,1);
+}else if(family==='courier'){
+const y=8+(gait.accessory==null? -Math.abs(step):Math.round(gait.accessory/2));
+pixel(ctx,INK,12,y,3,3);
+pixel(ctx,'#be9b65',12,y,3,1);
+pixel(ctx,'#795e3f',13,y+1,2,2);
+pixel(ctx,'#d9c296',13,y,1,3);
+}else if(family==='guard'){
+pixel(ctx,role.dark,3,6,2,4);
+pixel(ctx,role.dark,11,6,2,4);
+pixel(ctx,'#99a58e',3,6,2,1);
+pixel(ctx,'#99a58e',11,6,2,1);
+if(options.armed===true){
+pixel(ctx,INK,12,2,1,7);
+pixel(ctx,'#735c40',12,9,2,2);
+}
+}else if(family==='refuge-seeker'){
+pixel(ctx,role.dark,5,5,1,5);
+pixel(ctx,role.dark,10,5,1,5);
+pixel(ctx,role.trim,5,10,6,3);
+pixel(ctx,role.coat,7,10,1,3);
+}else if(family==='switchback'){
+pixel(ctx,role.patch,5,10,7,1);
+pixel(ctx,role.trim,11,11,3,1);
+pixel(ctx,role.patch,13,12,1,1);
+}else if(family==='rendezvous-pair'){
+pixel(ctx,INK,10,7,1,4);
+pixel(ctx,'#dac295',4,7,1,1);
+pixel(ctx,'#9cbdbe',11,7,1,1);
+pixel(ctx,'#a8c9bb',6,10,1,1);
+}else if(family==='shield-bearer'){
+pixel(ctx,INK,2,3,12,2);
+pixel(ctx,'#c8d0bd',3,3,10,1);
+pixel(ctx,'#384c46',6,4,4,1);
+}else if(family==='brace-trooper'){
+pixel(ctx,role.light,closed?3:1,closed?4:7,2,3);
+pixel(ctx,role.trim,closed?11:13,closed?4:7,2,3);
+if(!closed)pixel(ctx,'#aec3a0',7,10,2,1);
+}else if(family==='relay-warden'){
+pixel(ctx,INK,4,8,1,5);
+pixel(ctx,INK,10,7,1,5);
+pixel(ctx,role.trim,3,6,2,1);
+pixel(ctx,role.trim,11,6,2,1);
+pixel(ctx,'#a8c9bb',6,10,1,1);
+}
+ctx.restore();
+}
+
+/** Accessories are top planes attached to the approved rig. Compact silhouettes
+     * use whole two-pixel cells; detailed parts remain inside the rotating 32px body.
+     * Kit differences change geometry, not just colors or a gameplay-facing badge. */
+function rosterEquipment(ctx,role,family,gait,options,cast,compactArt){
+const unit=compactArt?2:1;
+const p=(color,x,y,w,h)=>{
+const snap=(n)=>Math.round(n/unit)*unit;
+pixel(
+ctx,
+color,
+snap(x),
+snap(y),
+Math.max(unit,Math.floor(w/unit)*unit),
+Math.max(unit,Math.floor(h/unit)*unit),
+);
+};
+const kit=(id,x=null,y=null)=>{
+const part=INDUSTRIAL_SOLDIER_KITS[id];
+for(const[color,xx,yy,width,height]of part.rectangles)
+p(
+role[color]??color,
+(x??part.anchor[0])+xx,
+(y??part.anchor[1])+yy,
+width,
+height,
+);
+};
+const accessory=gait.accessory??0,
+swing=Math.sign(accessory)*unit,
+recovering=gait.recovery,
+warning=options.phase==='warning'||options.phase==='turning',
+caught=gait.caught,
+closed=options.phase==='warning'||options.phase==='burst';
+// Three different manufactured kits: strapped helmet, repaired asymmetrical
+// shoulder pad, or insulated collar/boot gaiters. No cast grants protection.
+if(cast==='tactical'){
+p(role.dark,12,12,1,6);
+p(role.trim,12,13,1,3);
+p(role.dark,17,20,4,2);
+p(role.light,18,20,2,1);
+}else if(cast==='rivals'){
+p(INK,6,15,4,7);
+p(role.coat,7,16,3,4);
+p(role.patch,7,17,2,2);
+p(role.trim,21,20,3,2);
+p(role.dark,14,12,4,2);
+}else{
+p(role.dark,9,12,2,9);
+p(role.edge,9,13,2,6);
+p(role.dark,21,12,2,9);
+p(role.edge,21,13,2,6);
+p(role.light,11,21,3,2);
+p(role.light,18,21,3,2);
+}
+if(family==='lookout'){
+const y=gait.notice||gait.breath||warning?6:8;
+kit(family,null,y);
+p(role.glove,8,y+3,3,3);
+p(role.glove,21,y+3,3,3);
+p(INK,13,21,6,4);
+p(role.trim,14,22,4,2);
+}else if(family==='patroller'){
+// Transverse bedroll and a baton make the slow measured patrol recognizable.
+kit(family);
+p(INK,24,14+swing,2,8);
+p(role.light,24,15+swing,1,3);
+if(gait.notice)p(role.glove,22,9,3,3);
+}else if(family==='runner'){
+// A light rear harness leaves shoulders/crown readable; no large rucksack.
+kit(family);
+if(gait.notice||recovering)p(role.glove,7,10+swing,3,3);
+}else if(family==='sprinter'){
+kit(family);
+p(role.dark,13,20,6,4);
+p(role.light,14,20,4,2);
+if(warning){
+p(role.glove,7,10,3,4);
+p(role.glove,22,10,3,4);
+}else if(recovering){
+p(role.glove,8,19+(gait.breath?unit:0),3,3);
+p(role.glove,21,19+(gait.breath?unit:0),3,3);
+}
+}else if(family==='courier'){
+const y=17+swing;
+kit(family,null,y);
+p(role.trim,20,15,5,2);
+if(gait.idling||gait.notice){
+p('#e5debd',22,y-2,4,3);
+p('#795e3f',23,y-1,2,1);
+}
+}else if(family==='guard'){
+p(INK,6,12,5,9);
+p(INK,21,12,5,9);
+for(const x of[7,22]){
+p(role.dark,x,13,3,6);
+p(role.light,x,13,3,2);
+}
+kit(family);
+if(options.armed===true){
+const recoil=
+options.state==='fire'||options.animationClip==='fire'?Math.max(0,swing):0;
+p(INK,24,5+recoil,2,14-recoil);
+p('#718277',24,8+recoil,1,7);
+p('#735c40',23,18,3,4);
+}
+}else if(family==='refuge-seeker'){
+// Hood plus wide rolled shelter kit: a different outline from patrol/radio.
+p(role.dark,9,10,3,9);
+p(role.dark,20,10,3,9);
+p(role.coat,9,11,2,6);
+p(role.coat,21,11,2,6);
+kit(family);
+if(warning||gait.notice)p(role.glove,23,8+swing,3,6);
+}else if(family==='switchback'){
+p(role.dark,10,20,13,3);
+p(role.patch,11,20,11,2);
+kit(family,null,20+swing);
+if(warning)p(role.glove,23,9+swing,3,4);
+}else if(family==='rendezvous-pair'){
+const alternate=(String(options.partnerId??'').charCodeAt(0)||0)%2;
+const antenna=alternate?10:21;
+kit(family);
+p(INK,antenna,10,1,12);
+p('#a8c9bb',antenna,10,1,2);
+p('#9cbdbe',13,22,2,1);
+p('#dac295',18,22,2,1);
+if(gait.notice||recovering)p(role.glove,alternate?5:24,10+swing,3,4);
+}else if(family==='shield-bearer'){
+// Plates never open on a cosmetic frame. Heading and protection stay native.
+kit(family);
+p(role.trim,13,21,6,4);
+}else if(family==='brace-trooper'){
+for(const x of closed?[6,21]:[3,25]){
+p(INK,x,closed?9:14,4,8);
+p(role.trim,x+1,closed?10:15,2,6);
+p(role.light,x+1,closed?10:15,2,2);
+}
+kit(family);
+if(!closed)p('#aec3a0',14,21,4,3);
+}else if(family==='relay-warden'){
+kit(family);
+for(const[x,y]of[
+[9,8],
+[22,10],
+]){
+p(INK,x,y,1,14);
+p('#a8c9bb',x,y,1,2);
+}
+p('#8fab82',16,23,4,2);
+if(accessory>0)p('#d5dcc1',18,23,2,1);
+}
+if(caught){
+// A brief open-hand/stumble pose, not a hitbox displacement or an automatic
+// gore effect. Actual clean/brutal breakup remains the shared defeat owner.
+p(role.glove,5,13+swing,3,3);
+p(role.glove,24,13-swing,3,3);
+}else if(options.state==='blocked'){
+p(role.glove,8,10+swing,3,3);
+p(role.glove,21,10-swing,3,3);
+}
+}
+
 function markers(ctx,family,options,angle){
+if(
+['refuge-seeker','switchback','sprinter'].includes(family)&&
+options.phase==='warning'&&
+Object.hasOwn(ANGLES,options.nextHeading)
+){
+// Show only an accepted upcoming heading, never a guessed vector to a goal
+// behind a wall. Cached north-facing hosts supply the relative paint angle;
+// direct board callers keep the native world heading. This stays visible
+// during Reduced effects/Pulse without rotating the current body.
+ctx.save();
+ctx.translate(16,16);
+ctx.rotate(
+Number.isFinite(options.intentFacingRadians)
+?options.intentFacingRadians
+:ANGLES[options.nextHeading],
+);
+pixel(ctx,INK,-2,-11,4,4);
+pixel(ctx,'#fff0cc',-1,-11,2,1);
+pixel(ctx,'#fff0cc',-2,-10,1,2);
+pixel(ctx,'#fff0cc',1,-10,1,2);
+ctx.restore();
+}
 if(family==='shield-bearer'){
 ctx.save();
 ctx.translate(16,16);
@@ -2163,7 +3148,88 @@ resolveActorFamily(options.family??options.kind??options.profile)??'runner';
 const visual=
 actorVisual(options.visualId)??actorVisual(family,options.cast)??actorVisual(family);
 const angle=facing(options);
-const gait=motion(pose,options,visual.family);
+const revision=Object.hasOwn(options,'artRevision')
+?options.artRevision
+:runtimeActorArtRevision(),
+candidate=revision==='industrial-pilot-v1',
+roster=revision===INDUSTRIAL_ROSTER_ART_REVISION,
+overhead=roster||revision===OVERHEAD_ACTOR_ART_REVISION;
+const descriptor=
+options.animation??
+(roster
+?INDUSTRIAL_ROSTER_SAMPLES[visual.family]
+:overhead
+?OVERHEAD_ACTOR_SAMPLES[visual.family]
+:candidate
+?INDUSTRIAL_ACTOR_SAMPLES[visual.family]
+:null);
+const artOptions=overhead
+?{
+...options,
+state:options.state==='recovery'?'recover':options.state,
+phase:
+options.state==='anticipation'&&options.phase==null?'warning':options.phase,
+}
+:options;
+const gait=motion(pose,artOptions,visual.family);
+if(
+(overhead&&['aim','fire'].includes(options.state))||
+['aim','fire'].includes(options.animationClip)
+)
+gait.stride=0;
+if(descriptor){
+const clip=Object.hasOwn(descriptor.clips,options.animationClip)
+?options.animationClip
+:overhead&&Object.hasOwn(descriptor.clips,options.state)
+?options.state
+:gait.caught
+?'caught'
+:gait.recovery
+?'recovery'
+:options.phase==='warning'||options.phase==='turning'
+?'anticipation'
+:options.state==='blocked'
+?'blocked'
+:gait.notice
+?'notice'
+:gait.idling
+?'idle'
+:'move';
+// Locomotion phase is owned by the native host. Sampling its whole cycle
+// avoids aliasing a six-frame walk against an unrelated idle/breath clock.
+const moveDuration=
+overhead&&clip==='move'&&Number.isFinite(options.locomotionPhase)
+?descriptor.clips.move.frames.reduce(
+(sum,id)=>sum+descriptor.frames.find((frame)=>frame.id===id).durationMs,
+0,
+)
+:null;
+const sample=sampleActorAnimation(descriptor,{
+clip,
+timeMs:
+moveDuration===null
+?(options.timeMs??pose*100)
+:options.locomotionPhase*moveDuration,
+reducedEffects:options.reducedEffects||options.frozen||options.paused,
+});
+if(overhead||options.animationClip!=null){
+// Eligibility comes from the native state (or an explicit Studio Move
+// preview), never from a zero crossing of the legacy 130/85ms gait.
+const moving=
+clip==='move'&&
+(gait.moving||options.animationClip==='move')&&
+!options.reducedEffects&&
+!options.frozen&&
+!options.paused;
+gait.stride=moving?sample.stride:0;
+}else if(gait.stride!==0)gait.stride=sample.stride;
+gait.breath=sample.breath;
+// Explicit admitted drafts can animate the courier's approved satchel.
+// Historical/default procedural art retains its stride-derived bounce;
+// body position, facing and specialist protection never use this offset.
+if(roster||(overhead&&options.animation&&descriptor.parts.includes('satchel')))
+gait.accessory=sample.accessory;
+}
 ctx.save();
 ctx.translate(x,y);
 ctx.scale(size/UNIT,size/UNIT);
@@ -2176,25 +3242,89 @@ ctx.translate(-16,-16);
 if(options.shadow!==false){
 const alpha=ctx.globalAlpha;
 ctx.globalAlpha*=0.18;
-pixel(ctx,'#101b17',6,14,20,11);
+if(overhead){
+pixel(ctx,'#101b17',8,12,16,11);
+pixel(ctx,'#101b17',6,14,20,6);
+}else pixel(ctx,'#101b17',6,14,20,11);
 ctx.globalAlpha=alpha;
 }
 const useCompact=
 options.detail==='compact'||(options.detail!=='detailed'&&size<24);
-(useCompact?compact:detailed)(
+(overhead
+?useCompact
+?overheadCompact
+:overheadDetailed
+:useCompact
+?compact
+:detailed)(
 ctx,
 visual.palette,
 visual.family,
 gait,
-options,
+{...artOptions,industrialSample:candidate,roster},
 visual.cast,
 );
+if(roster)
+rosterEquipment(
+ctx,
+visual.palette,
+visual.family,
+gait,
+artOptions,
+visual.cast,
+useCompact,
+);
+if(candidate&&INDUSTRIAL_ACTOR_SAMPLES[visual.family]){
+const p=visual.palette;
+// Family-sized equipment changes the silhouette, not the occupied cell.
+if(visual.family==='runner'){
+pixel(ctx,p.dark,11,16,10,7);
+pixel(ctx,p.coat,12,16,8,6);
+pixel(ctx,p.trim,12,17,2,4);
+pixel(ctx,'#bdbda0',19,17,1,3);
+pixel(ctx,INK,12,23,3,2);
+pixel(ctx,INK,18,23,3,2);
+}else if(visual.family==='courier'){
+const bounce=gait.stride?Math.sign(gait.stride):0;
+pixel(ctx,INK,23,17+bounce,8,10);
+pixel(ctx,'#795e3f',24,18+bounce,6,8);
+pixel(ctx,'#be9b65',24,18+bounce,6,2);
+pixel(ctx,'#d9c296',26,20+bounce,2,4);
+pixel(ctx,'#402f24',24,25+bounce,6,1);
+pixel(ctx,p.trim,11,15,2,9);
+}else if(visual.family==='guard'){
+pixel(ctx,INK,7,14,18,5);
+pixel(ctx,'#667366',8,14,16,4);
+pixel(ctx,'#9fa68b',8,14,15,1);
+pixel(ctx,p.dark,10,19,12,5);
+for(const x of[10,15,20]){
+pixel(ctx,'#283b33',x,19,3,5);
+pixel(ctx,'#87957c',x,19,3,1);
+}
+}else{
+pixel(ctx,INK,5,2,22,8);
+pixel(ctx,'#465953',6,2,20,7);
+pixel(ctx,'#afb8a0',6,2,20,1);
+pixel(ctx,'#85958a',6,3,2,5);
+pixel(ctx,'#263a37',23,3,3,6);
+pixel(ctx,'#152723',10,4,12,2);
+pixel(ctx,'#c2d6c8',11,4,10,1);
+pixel(ctx,'#a59762',15,7,2,2);
+}
+}
 ctx.restore();
 markers(ctx,visual.family,options,angle);
 ctx.restore();
 }
 
-return{drawHuntActor};
+return{
+INDUSTRIAL_ACTOR_SAMPLES,
+OVERHEAD_ACTOR_ART_REVISION,
+OVERHEAD_ACTOR_SAMPLES,
+INDUSTRIAL_ROSTER_ART_REVISION,
+INDUSTRIAL_ROSTER_SAMPLES,
+drawHuntActor,
+};
 })();
 modules['game/ui/enemy-stats.mjs']=(()=>{
 const canonicalEnemyFamily=modules['game/enemy-stats.mjs']['canonicalEnemyFamily'];
@@ -3581,14 +4711,256 @@ panel.remove();
 
 return{mountThemeMaterialPreview};
 })();
+modules['game/ui/art-review-navigation.mjs']=(()=>{
+/** Explicit, session-only art review pin; never changes a saved appearance or a
+     * gameplay recipe. Unrecognized revisions use the released artwork. */
+function actorArtReviewRevision(location=globalThis.location){
+try{
+const params=new URL(location.href).searchParams;
+return params.getAll('artReview').length===1&&
+['industrial-pilot-v1','industrial-overhead-v2','industrial-roster-v3'].includes(
+params.get('artReview'),
+)
+?params.get('artReview')
+:null;
+}catch{
+return null;
+}
+}
+
+// These are routes owned by this build, not a general-purpose URL allowlist.
+// Do not transfer preview choices to community/provider links or another edition.
+const ART_REVIEW_NATIVE_PAGE=
+/^(.*\/)(?:game\/(?:(?:index|company)\.html|couch\/(?:index\.html|relay-rescue\.html)?|snake\/(?:(?:index|play)\.html)?|studio\/(?:(?:index|snake)\.html)?|(?:hunt\/military-levels\.html|(?:playground|hunt|online|replay-theater|controller-lab)\/(?:index\.html)?))?|authoring\/(?:asset-studio|motion-lab|enemy-catalog|still-media|video-poster|design-atlas|industrial-art-review)\/(?:index\.html)?|optional-practice\/(?:civilian-fpv|fpv-worlds)\/(?:index\.html)?)$/;
+
+/** Inherit an explicit review-only art pin along a caller-owned native link.
+     * Does not validate arbitrary navigation, persist preferences, transfer content,
+     * or change an explicit destination choice. Missing/ambiguous pins stay absent.
+     */
+function nativeArtReviewURL(href,sourceHref){
+let source,target;
+try{
+source=new URL(sourceHref);
+target=new URL(href,source);
+}catch{
+return href;
+}
+const revision=actorArtReviewRevision(source),
+sourceRoot=ART_REVIEW_NATIVE_PAGE.exec(source.pathname)?.[1],
+targetRoot=ART_REVIEW_NATIVE_PAGE.exec(target.pathname)?.[1];
+if(
+revision&&
+['http:','https:','file:','capacitor:'].includes(source.protocol)&&
+source.protocol===target.protocol&&
+source.origin===target.origin&&
+source.host===target.host&&
+!source.username&&
+!source.password&&
+!target.username&&
+!target.password&&
+sourceRoot&&
+sourceRoot===targetRoot&&
+!target.searchParams.has('artReview')
+){
+target.searchParams.set('artReview',revision);
+return target.href;
+}
+return href;
+}
+
+return{actorArtReviewRevision,nativeArtReviewURL};
+})();
+modules['game/ui/enemy-appearance-controls.mjs']=(()=>{
+const sharedEnemyArtwork=simGlobalActorPreferences['sharedEnemyArtwork'];
+const sharedActorAppearance=simGlobalActorPreferences['sharedActorAppearance'];
+const ACTOR_CASTS=modules['game/hunt/actor-catalog.mjs']['ACTOR_CASTS'];
+const actorArtReviewRevision=
+modules['game/ui/art-review-navigation.mjs']['actorArtReviewRevision'];
+const nativeArtReviewURL=modules['game/ui/art-review-navigation.mjs']['nativeArtReviewURL'];
+
+const COPY={
+en:{
+label:'Enemy appearance preset',
+authored:'Original level artwork',
+military:'Military Field · soldiers and vehicles',
+uniform:'Soldier uniform',
+castAuthored:'As designed',
+about:'What changes?',
+help:'Military Field applies the matching game appearance and detailed military artwork. Choose a uniform under Character appearance. It uses the level’s existing enemies; Running enemies adds optional humanoids. Snake targets stay humanoid.',
+next:'Applies on Start or Restart. Creator-owned custom artwork is retained.',
+preview:'Preview artwork is active. Choosing a preset ends this preview.',
+saving:'This choice applies here, but could not be saved for another page.',
+failure:'The appearance could not be prepared. Select it again to retry.',
+},
+uk:{
+label:'Набір оформлення ворогів',
+authored:'Початкове оформлення рівня',
+military:'Військове поле · солдати й техніка',
+uniform:'Форма солдатів',
+castAuthored:'За задумом',
+about:'Що змінюється?',
+help:'Військове поле застосовує відповідне оформлення гри та детальні військові образи. Форму можна вибрати в розділі «Вигляд персонажів». Використовуються наявні вороги рівня; «Рухливі вороги» додають необов’язкових гуманоїдів. Цілі Snake залишаються гуманоїдами.',
+next:'Діє після початку або перезапуску. Власні авторські зображення зберігаються.',
+preview:'Активний попередній перегляд зображень. Вибір набору завершує цей перегляд.',
+saving:'Вибір діє тут, але його не вдалося зберегти для іншої сторінки.',
+failure:'Не вдалося підготувати оформлення. Виберіть його знову, щоб повторити.',
+},
+};
+let sequence=0;
+
+function clearExplicitReviewPin(location,history){
+if(!actorArtReviewRevision(location))return;
+const source=new URL(location.href),
+target=new URL(source);
+target.searchParams.delete('artReview');
+// Use the same fixed native-route contract as review-link propagation. An
+// unrelated URL, unsupported protocol or ambiguous pin is never rewritten.
+if(nativeArtReviewURL(target.href,source.href)===target.href)return;
+if(typeof history?.replaceState!=='function')
+throw new Error('The current review appearance cannot be replaced.');
+history.replaceState(history.state,'',target.href);
+}
+
+/** Shared explicit preset, not a gameplay/population switch. Each native host
+     * retains ownership of the current attempt and its next preparation boundary. */
+function mountEnemyAppearanceControls({
+document:doc=globalThis.document,
+location=doc.defaultView?.location??globalThis.location,
+history=doc.defaultView?.history??globalThis.history,
+container,
+preferences=sharedEnemyArtwork(),
+locale=()=>doc.documentElement?.lang??'en',
+includeUniform=false,
+applyMilitary,
+applyAuthored,
+}={}){
+if(!container||typeof applyMilitary!=='function'||typeof applyAuthored!=='function')
+throw new TypeError('Enemy appearance controls require native appearance actions.');
+const root=doc.createElement('div'),
+label=doc.createElement('label'),
+title=doc.createElement('span'),
+select=doc.createElement('select'),
+details=doc.createElement('details'),
+summary=doc.createElement('summary'),
+help=doc.createElement('p'),
+status=doc.createElement('p');
+root.className='enemy-appearance-controls';
+root.dataset.enemyAppearanceControls='true';
+label.className='settings-row';
+select.id=`enemy-appearance-${++sequence}`;
+select.name='enemy-appearance';
+select.dataset.enemyAppearance='true';
+help.id=`${select.id}-help`;
+help.className=status.className='micro-note';
+status.setAttribute('role','status');
+select.setAttribute('aria-describedby',help.id);
+for(const value of['authored','military']){
+const option=doc.createElement('option');
+option.value=value;
+select.append(option);
+}
+label.append(title,select);
+details.append(summary,help);
+root.append(label,status,details);
+const cast=includeUniform?sharedActorAppearance():null;
+let uniform;
+if(cast){
+const uniformLabel=doc.createElement('label');
+uniform={title:doc.createElement('span'),select:doc.createElement('select')};
+uniformLabel.className='settings-row';
+uniform.select.name='soldier-uniform';
+for(const value of['authored',...ACTOR_CASTS.map((entry)=>entry.id)]){
+const option=doc.createElement('option');
+option.value=value;
+uniform.select.append(option);
+}
+uniformLabel.append(uniform.title,uniform.select);
+root.insertBefore(uniformLabel,status);
+}
+container.append(root);
+let disposed=false,
+failed=false,
+generation=0;
+function refresh(){
+if(disposed)return;
+const words=COPY[locale()]??COPY.en,
+state=preferences.snapshot(),
+reviewing=actorArtReviewRevision(location)!==null;
+title.textContent=words.label;
+for(const option of select.options)option.textContent=words[option.value];
+select.value=reviewing?'military':state.style;
+help.textContent=words.help;
+summary.textContent=words.about;
+if(uniform){
+uniform.title.textContent=words.uniform;
+uniform.select.value=cast.snapshot().cast;
+for(const option of uniform.select.options)
+option.textContent=
+ACTOR_CASTS.find((entry)=>entry.id===option.value)?.name[
+locale()==='uk'?'uk':'en'
+]??words.castAuthored;
+}
+status.textContent=failed
+?words.failure
+:reviewing
+?words.preview
+:state.durable===false
+?words.saving
+:words.next;
+}
+const change=async()=>{
+const ticket= ++generation,
+style=select.value;
+if(!['authored','military'].includes(style))return;
+failed=false;
+try{
+// An explicit preset supersedes only this page's supported cosmetic review
+// pin. Do this before notifying preferences so native subscribers observe
+// the new intent; visiting settings or receiving another tab's choice
+// must preserve the current review link.
+clearExplicitReviewPin(location,history);
+preferences.set({style});
+await(style==='military'?applyMilitary():applyAuthored());
+}catch{
+if(!disposed&&generation===ticket)failed=true;
+}
+if(!disposed&&generation===ticket)refresh();
+};
+select.addEventListener('change',change);
+const changeUniform=()=>cast.set({cast:uniform.select.value});
+uniform?.select.addEventListener('change',changeUniform);
+const unsubscribe=preferences.subscribe(refresh);
+const unsubscribeCast=cast?.subscribe(refresh);
+return Object.freeze({
+element:root,
+refresh,
+dispose(){
+if(disposed)return;
+disposed=true;
+generation++;
+unsubscribe();
+unsubscribeCast?.();
+select.removeEventListener('change',change);
+uniform?.select.removeEventListener('change',changeUniform);
+root.remove();
+},
+});
+}
+
+return{clearExplicitReviewPin,mountEnemyAppearanceControls};
+})();
 modules['game/ui/theme-family-controls.mjs']=(()=>{
 const t=simGlobalI18n['t'];
 const localizedText=simGlobalI18n['localizedText'];
 const localizedAttribute=simGlobalI18n['localizedAttribute'];
+const getLocale=simGlobalI18n['getLocale'];
+const onLocaleChange=simGlobalI18n['onLocaleChange'];
 const BUILTIN_THEME_FAMILIES=simGlobalThemes['BUILTIN_THEME_FAMILIES'];
 const resolvePresentation=simGlobalThemes['resolvePresentation'];
 const mountThemeMaterialPreview=
 modules['game/ui/theme-material-preview.mjs']['mountThemeMaterialPreview'];
+const mountEnemyAppearanceControls=
+modules['game/ui/enemy-appearance-controls.mjs']['mountEnemyAppearanceControls'];
 
 /** One immediate appearance choice; the host owns atomic loads and flight boundaries. */
 function attachThemeFamilyControls({
@@ -3611,6 +4983,14 @@ const text=(node,key)=>localizedText(node,()=>t(`interface:workshop.${key}`));
 const heading=doc.createElement('h3');
 text(heading,'appearance');
 group.append(heading);
+const enemyAppearance=mountEnemyAppearanceControls({
+document:doc,
+container:group,
+locale:getLocale,
+applyMilitary:()=>host.applyComplete('military-field'),
+applyAuthored:()=>host.set({arcadeArt:'authored'}),
+});
+release.push(enemyAppearance.dispose,onLocaleChange(enemyAppearance.refresh));
 const row=(key,parent=group)=>{
 const label=doc.createElement('label'),
 title=doc.createElement('span');

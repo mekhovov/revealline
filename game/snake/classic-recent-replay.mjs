@@ -8,6 +8,7 @@ const VISUAL_FIELDS = [
   'levelIdentity',
   'mode',
   'seed',
+  'hazardSeed',
   'tick',
   'elapsedMs',
   'status',

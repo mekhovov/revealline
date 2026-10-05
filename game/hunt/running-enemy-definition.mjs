@@ -2,7 +2,7 @@ import { boundedJSON, dataIdentity, exactKeys, required } from '../data-json.mjs
 import { CELL } from '../core/registry.mjs';
 import { foundationGeometry } from '../core/foundations.mjs';
 import { validateCombatPatrols } from '../core/combat-definition.mjs';
-import { isRunningEnemyLevel } from '../core/versions.mjs';
+import { isRunningEnemyLevel, isSnakePursuitLevel, isPursuitV2Level } from '../core/versions.mjs';
 import { validateHuntDefinition, validateHuntReachability } from './rules.mjs';
 import { runningEnemyReservedIds } from './running-enemy-placement.mjs';
 
@@ -55,19 +55,31 @@ export function runningEnemyGeometry(base) {
  * an independently bounded population; it never upgrades historical game rules. */
 export function validateRunningEnemyDefinition(level, base) {
   const value = level.runningEnemies;
+  if (level.pursuit)
+    required(
+      level.pursuit.version === (isPursuitV2Level(level) ? 'pursuit-goals.v2' : 'pursuit-goals.v1'),
+      'Pursuit generation must match its native level format.',
+    );
   exactKeys(
     value,
     ['version', 'baseVersion', 'baseIdentity', 'combatPatrols', 'hunt'],
     'Running enemies',
   );
   required(
-    (level.version === 'xonix-level.v13') === (value.version === 'running-enemies.v3'),
+    isSnakePursuitLevel(level) === (value.version === 'running-enemies.v3'),
     'Combined Snake pursuit requires its exact inherited Snake wrapper.',
   );
   if (['running-enemies.v2', 'running-enemies.v3'].includes(value.version)) {
     const snake = value.version === 'running-enemies.v3';
     required(
-      level.version === (snake ? 'xonix-level.v13' : 'xonix-level.v12') &&
+      level.version ===
+        (isPursuitV2Level(level)
+          ? snake
+            ? 'xonix-level.v15'
+            : 'xonix-level.v14'
+          : snake
+            ? 'xonix-level.v13'
+            : 'xonix-level.v12') &&
         value.baseVersion === (snake ? 'xonix-level.v11' : 'xonix-level.v9') &&
         (!snake || base.snake) &&
         base.classic?.hunt,

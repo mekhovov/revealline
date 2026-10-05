@@ -307,10 +307,25 @@ export function attachGameShell({
       doc.hasFocus?.() === false
     )
       return false;
+    // Controller Lab belongs to Settings → Controls after native-menu layout.
+    // Retain the fixed tool-return protocol while restoring its actual owner.
+    const entryOpener = entry ? $(entry.opener) : null;
+    const settings = $('settings-dialog');
+    if (entry?.id === 'controller-lab' && settings?.contains(entryOpener)) {
+      if (!settings.open) {
+        $('shell-options').focus();
+        $('settings-button').click();
+      }
+      if (destroyed || !settings.open || topDialog() !== settings) return false;
+      $('settings-tab-controls')?.click();
+      if (destroyed || topDialog() !== settings || !availableReturn(entryOpener, settings))
+        return false;
+      entryOpener.focus();
+      return doc.activeElement === entryOpener;
+    }
     $('shell-workshop').focus();
     workshop.showModal();
     if (destroyed || !workshop.open || topDialog() !== workshop) return false;
-    const entryOpener = entry ? $(entry.opener) : null;
     const entrySection = entryOpener?.closest('details');
     if (entrySection) entrySection.open = true;
     const target =

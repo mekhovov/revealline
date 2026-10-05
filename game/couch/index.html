@@ -419,6 +419,10 @@
               <p id="race-result-1" hidden></p>
             </article>
           </div>
+          <section id="race-briefing" aria-labelledby="race-briefing-title" hidden>
+            <h2 id="race-briefing-title"></h2>
+            <p id="race-briefing-copy"></p>
+          </section>
           <div class="race-menu-actions">
             <a
               id="race-coop"
@@ -438,6 +442,25 @@
             <button id="race-retry" type="button" hidden data-i18n="interface:couch.retryRace">
               Retry race
             </button>
+            <button id="race-export-recording" type="button" hidden>
+              Export recording of this round
+            </button>
+            <p id="race-recording-status" role="status" hidden></p>
+            <div id="race-recording-copy" class="recording-copy" hidden></div>
+            <p id="race-recording-help" class="recording-help" hidden>
+              <a
+                id="race-verify-recording"
+                href="../playground/#recording-verification"
+                target="_blank"
+                rel="noopener"
+                data-i18n="interface:recording.verifyExported"
+                >Verify exported recording ↗</a
+              >
+              <span data-i18n="interface:recording.exportHelp"
+                >Choose your exported file in the new tab. Wins and losses can be verified; this
+                grants no progress or rewards.</span
+              >
+            </p>
             <button
               id="race-journey-save-options"
               type="button"

@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Military Field levels · FPV / LINE</title>
+    <script src="../presentation/theme-bootstrap.mjs" data-theme-density="player"></script>
+    <link
+      rel="stylesheet"
+      href="../presentation/industrial-workshop.css"
+      data-industrial-workshop
+    />
+    <script type="module" src="../presentation/theme-entry.mjs"></script>
+    <link rel="stylesheet" href="../ui/field-kit-fonts.css" />
+    <link rel="stylesheet" href="military-levels.css" />
+    <script type="module" src="military-levels.mjs"></script>
+  </head>
+  <body>
+    <main id="military-directory">
+      <header>
+        <nav>
+          <a href="../" data-native-review-link>FPV / LINE</a
+          ><a href="./" id="back" data-native-review-link>Living Routes</a>
+        </nav>
+        <label
+          ><span id="language-label">Language</span
+          ><select id="language">
+            <option value="en">English</option>
+            <option value="uk">Українська</option>
+          </select></label
+        >
+      </header>
+      <h1 id="title">Find soldiers and vehicles</h1>
+      <p id="intro"></p>
+      <button type="button" id="apply">Apply Military Field</button>
+      <p id="apply-status" role="status"></p>
+      <p id="population-help"></p>
+      <p id="ownership-help" class="secondary"></p>
+      <form id="filters" role="search">
+        <label class="search"
+          ><span id="search-label">Find a level</span
+          ><input type="search" id="search" maxlength="160"
+        /></label>
+        <label
+          ><span id="mode-label">Mode</span
+          ><select id="mode">
+            <option value="all">All modes</option>
+            <option value="solo">Solo</option>
+            <option value="versus">Versus</option>
+            <option value="team">Team</option>
+            <option value="sim">FPV SIM</option>
+          </select></label
+        >
+        <label
+          ><span id="vehicles-label">Vehicles</span
+          ><select id="vehicles">
+            <option value="all">Any</option>
+            <option value="yes">With vehicles</option>
+            <option value="no">Without vehicles</option>
+          </select></label
+        >
+        <label class="featured"
+          ><input type="checkbox" id="featured" checked /><span id="featured-label"
+            >Start here</span
+          ></label
+        >
+      </form>
+      <p id="results-count" role="status" aria-live="polite"></p>
+      <p id="flight-status" class="secondary"></p>
+      <div id="levels" class="levels"></div>
+      <button type="button" id="more" hidden>Show more</button>
+      <p id="scope" class="secondary"></p>
+      <footer>
+        <a href="../snake/#sim-title" id="flight-help" data-native-review-link
+          >FPV SIM installation and playlists</a
+        >
+      </footer>
+    </main>
+  </body>
+</html>

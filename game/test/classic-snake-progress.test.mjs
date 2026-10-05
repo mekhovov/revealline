@@ -6,6 +6,7 @@ import { managedIndexedDB } from './helpers/managed-idb.mjs';
 import { JOURNEY_PROFILE_DATABASE } from '../profile-database.mjs';
 import { CLASSIC_SNAKE_LEVELS } from '../snake/classic-catalogue.mjs';
 import { prepareClassicSnakeLevel } from '../snake/classic-setup.mjs';
+import { classicSnakeUsesVariableHazards } from '../snake/classic-core.mjs';
 import {
   createClassicSnakeMatch,
   exportClassicSnakeMatch,
@@ -176,7 +177,10 @@ test('a full catalogue profile stays verified across reads and updates, and disc
   const model = managedIndexedDB(),
     source = recordsFor(t, model);
   for (const entry of CLASSIC_SNAKE_LEVELS) {
-    const match = createClassicSnakeMatch(entry.level, { mode: 'solo' });
+    const match = createClassicSnakeMatch(entry.level, {
+      mode: 'solo',
+      ...(classicSnakeUsesVariableHazards(entry.level) ? { hazardSeed: 17 } : {}),
+    });
     await source.remember(match.runs[0], context(match, entry));
   }
   const notifications = [],

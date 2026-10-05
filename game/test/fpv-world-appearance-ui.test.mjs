@@ -42,7 +42,19 @@ function fixture(
     rendered = [];
   const pads = [];
   let frameId = 0,
-    now = 0;
+    now = 0,
+    rendererDisposals = 0;
+  const createElement = doc.createElement.bind(doc);
+  doc.createElement = (tag) => {
+    const element = createElement(tag);
+    Object.defineProperty(element, 'previousElementSibling', {
+      get() {
+        const siblings = this.parentElement?.children.filter((child) => child.nodeType === 1);
+        return siblings?.[siblings.indexOf(this) - 1] ?? null;
+      },
+    });
+    return element;
+  };
   const priorOption = globalThis.Option;
   globalThis.Option = function (text, value) {
     const option = doc.createElement('option');
@@ -126,7 +138,9 @@ function fixture(
     setPath() {},
     async loadScene() {},
     draw() {},
-    dispose() {},
+    dispose() {
+      rendererDisposals++;
+    },
   };
   const app = mountWorldApp({
     document: doc,
@@ -142,6 +156,8 @@ function fixture(
     rendered,
     pads,
     originalSettingsControls,
+    pendingFrames: () => frames.size,
+    rendererDisposals: () => rendererDisposals,
     $: (id) => doc.getElementById(id),
     tick(count = 1) {
       for (let i = 0; i < count; i++) {
@@ -153,6 +169,56 @@ function fixture(
     },
   };
 }
+
+test('World disposal retires menu and renderer owners before their reparented controls disappear', async (t) => {
+  const h = fixture(t);
+  await h.app.ready;
+  await h.app.startFlight(WORLD_CATALOGUE.find((item) => !item.legacy));
+  h.$('worlds-shell-action-menu').click();
+  assert.ok(h.$('sim-menu-hint'));
+  await h.app.dispose();
+  assert.equal(h.pendingFrames(), 0);
+  assert.equal(h.rendererDisposals(), 1);
+  assert.equal(h.$('sim-menu-hint'), null);
+  await h.app.dispose();
+  h.win.emit('blur');
+  assert.equal(h.pendingFrames(), 0);
+  assert.equal(h.rendererDisposals(), 1);
+});
+
+test('World Reset unapplied fields discards Hunt and pursuit drafts without changing the accepted course', async (t) => {
+  const h = fixture(t);
+  await h.app.ready;
+  const entry = WORLD_CATALOGUE.find((item) => item.id === 'native-pursuit-armor-windows');
+  h.$('creator-template').value = `${entry.packIdentity}:${entry.id}`;
+  h.$('clone-challenge').click();
+  await new Promise((resolve) => setImmediate(resolve));
+  assert.ok(h.$('creator-json').value, h.$('studio-status').textContent);
+  h.$('criterion-list').value = '0';
+  h.$('criterion-list').emit('change');
+  const source = JSON.parse(h.$('creator-json').value),
+    targets = source.steps['self-level'][0].targets,
+    shownTargets = () =>
+      h.doc.querySelectorAll('[data-hunt-target-id]').map((node) => node.dataset.huntTargetId),
+    graph = () => h.doc.querySelector('[data-pursuit-editor] textarea');
+  assert.equal(targets.length, 2);
+  assert.deepEqual(shownTargets(), targets);
+  const originalGraph = graph().value;
+  h.doc.querySelector('[data-hunt-target-action="remove"]').click();
+  graph().value = '{"unapplied":true}';
+  graph().emit('input');
+  h.$('criterion-list').emit('change');
+  assert.deepEqual(shownTargets(), targets.slice(1), 'ordinary refresh preserves target drafts');
+  assert.equal(graph().value, '{"unapplied":true}', 'ordinary refresh preserves graph drafts');
+  h.$('creator-title').value = 'Unapplied title';
+  h.$('editor-reset-fields').click();
+  assert.deepEqual(shownTargets(), targets);
+  assert.equal(graph().value, originalGraph);
+  assert.equal(h.$('creator-title').value, source.locales.en.title);
+  assert.deepEqual(JSON.parse(h.$('creator-json').value), source);
+  assert.equal(h.$('undo-edit').disabled, true, 'reset does not create an applied edit');
+  assert.equal(h.app.snapshot().state, undefined, 'reset does not launch a flight');
+});
 
 test('World app prepares a pinned appearance and queues drone/theme changes after arming', async (t) => {
   const h = fixture(t);
@@ -334,6 +400,8 @@ test('World pre-arm appearance refresh keeps focus on the control the player is 
     WORLD_CATALOGUE.find((item) => !item.legacy),
     { paused: true },
   );
+  h.$('world-flight-menu').click();
+  h.$('worlds-shell-action-settings').click();
   const select = h.$('sim-appearance-world');
   select.focus();
   select.value = 'industrial-workshop';
@@ -348,7 +416,13 @@ test('World pre-arm appearance refresh keeps focus on the control the player is 
   }
   assert.equal(h.rendered.at(-1).profile.id, 'industrial-workshop');
   assert.match(h.$('flight-status').textContent, /^Ready/);
-  assert.equal(h.doc.activeElement, select);
+  assert.equal(h.$('sim-settings').open, true);
+  assert.equal(h.$('worlds-shell-pause-dialog').open, true);
+  assert.equal(
+    h.doc.activeElement === select,
+    true,
+    `Appearance control lost focus to ${h.doc.activeElement?.id || h.doc.activeElement?.tagName}`,
+  );
 });
 
 test('World title retains connected catalogue nodes and transfers the common bar into native flight', async (t) => {
@@ -396,6 +470,48 @@ test('World keyboard and native pause actions open the same shared menu without 
     assert.equal(h.$('flight-dialog').open, true);
     assert.deepEqual(h.app.snapshot().state, paused);
   }
+});
+
+test('World language refresh preserves native mission ownership and menu phase without another animation frame', async (t) => {
+  const h = fixture(t);
+  await h.app.ready;
+  const entry = WORLD_CATALOGUE.find((item) => item.id === 'native-pursuit-runner-court');
+  await h.app.startFlight(entry);
+  const shell = h.doc.querySelector('[data-mode-play-shell]');
+  const assertMissionOwner = () => {
+    const title = h.$('flight-title').textContent;
+    // This regression checks ownership; the native host owns title localization.
+    assert.ok(Object.values(entry.course.locales).some((copy) => copy.title === title));
+    assert.equal(shell.querySelector('.mode-play-mission').textContent, title);
+  };
+  h.$('world-arm').click();
+  h.tick(2);
+  const active = h.app.snapshot().state;
+  assert.equal(active.status, 'active');
+  assert.equal(shell.dataset.phase, 'playing');
+
+  h.$('world-language').value = 'uk';
+  h.$('world-language').emit('change');
+  assert.deepEqual(h.app.snapshot().state, active);
+  assert.equal(shell.dataset.phase, 'playing');
+  assert.equal(h.doc.documentElement.lang, 'uk');
+  assert.equal(h.$('worlds-shell-action-settings').textContent, 'Налаштування');
+  assertMissionOwner();
+
+  h.$('worlds-shell-action-menu').click();
+  const paused = h.app.snapshot().state;
+  assert.equal(paused.status, 'paused');
+  assert.equal(shell.dataset.phase, 'paused');
+  assert.equal(h.$('worlds-shell-action-primary').textContent, 'Продовжити');
+  h.$('world-language').value = 'en';
+  h.$('world-language').emit('change');
+  assert.deepEqual(h.app.snapshot().state, paused);
+  assert.equal(shell.dataset.phase, 'paused');
+  assert.equal(h.doc.documentElement.lang, 'en');
+  assertMissionOwner();
+  assert.equal(h.$('worlds-shell-action-primary').textContent, 'Continue');
+  h.$('worlds-shell-home-dialog').emit('cancel', { bubbles: false });
+  assert.deepEqual(h.app.snapshot().state, paused);
 });
 
 test('World terminal preview offers Retry and prepares a fresh disarmed attempt', async (t) => {
@@ -493,6 +609,37 @@ test('World menu Back dismisses the visible surface without closing its paused n
   assert.equal(h.$('worlds-shell-home-dialog').open, false);
   assert.equal(h.$('flight-dialog').open, true);
   assert.deepEqual(h.app.snapshot().state, paused);
+});
+
+test('World native Hunt guide remains reachable from the shared pause menu without consuming controls or changing the flight', async (t) => {
+  const h = fixture(t);
+  await h.app.ready;
+  await h.app.startFlight(
+    WORLD_CATALOGUE.find((entry) => entry.id === 'native-pursuit-armor-windows'),
+  );
+  assert.equal(h.$('world-flight-enemy-guide').hidden, false);
+  h.$('world-arm').click();
+  h.$('worlds-shell-action-menu').click();
+  const paused = h.app.snapshot();
+  h.$('world-menu-enemy-guide').click();
+  assert.equal(h.$('world-enemy-guide').open, true);
+  assert.match(h.$('world-enemy-guide').textContent, /25 hull damage/);
+  h.doc.emit('keydown', { key: ' ', code: 'Space' });
+  h.doc.emit('keyup', { key: ' ', code: 'Space' });
+  h.tick(5);
+  assert.deepEqual(h.app.snapshot().state, paused.state);
+  assert.deepEqual(h.app.snapshot().records, paused.records);
+  h.$('world-enemy-guide').querySelector('button').click();
+  assert.equal(h.$('world-enemy-guide').open, false);
+  assert.equal(h.$('worlds-shell-home-dialog').open, true);
+  assert.equal(h.$('flight-dialog').open, true);
+  assert.deepEqual(h.app.snapshot().state, paused.state);
+  // Choosing an ordinary course cannot leave a stale specialist guide button.
+  await h.app.startFlight(
+    WORLD_CATALOGUE.find((entry) => !entry.legacy && entry.activity !== 'hunt'),
+  );
+  assert.equal(h.$('world-menu-enemy-guide').hidden, true);
+  assert.equal(h.$('world-flight-enemy-guide').hidden, true);
 });
 
 for (const section of [false, true])

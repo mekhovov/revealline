@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { prepareClassicSnakeStudioLevel } from '../snake/classic-studio-recipe.mjs';
 import { CLASSIC_SNAKE_V4_LEVELS } from '../snake/classic-catalogue-v4.mjs';
 import { CLASSIC_SNAKE_LEVELS } from '../snake/classic-catalogue.mjs';
-import { createClassicSnake } from '../snake/classic-core.mjs';
+import { createClassicSnake, classicSnakeUsesVariableHazards } from '../snake/classic-core.mjs';
 import {
   CLASSIC_PACKAGE_FORMAT,
   exportClassicSnakePackage,
@@ -30,7 +30,10 @@ test('Studio clones every v4 template without losing its version or authored pol
     assert.deepEqual(imported.entries[0].level.walls, source.level.walls);
     const installed = classicSnakePackageEntries(imported)[0];
     assert.equal(
-      createClassicSnake(installed.level, { mode: 'team' }).version,
+      createClassicSnake(installed.level, {
+        mode: 'team',
+        ...(classicSnakeUsesVariableHazards(installed.level) ? { hazardSeed: 17 } : {}),
+      }).version,
       'classic-snake-core.v4',
     );
     assert.deepEqual(source.level, before);

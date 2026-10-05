@@ -272,7 +272,9 @@ export function createCoopActorPresentation({
           mode: enemy.rover?.mode,
           frozen: enemiesFrozen || enemy.rover?.mode !== 'active',
         });
-      } else if (enemiesFrozen) frozen.push({ id, frozen: true });
+      } else if (enemy.type === 'hunter')
+        frozen.push({ id, frozen: enemiesFrozen, phase: enemy.phase });
+      else if (enemiesFrozen) frozen.push({ id, frozen: true });
       actors.push({
         id,
         type: enemy.type,

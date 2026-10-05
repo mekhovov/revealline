@@ -188,6 +188,12 @@ for (const adapter of ['keyboard', 'controller']) {
     assert.equal(f.state(), 'finished');
     assert.equal(f.$('race-journey-next').hidden, false);
     const terminal = f.checkpoint();
+    assert.equal(f.$('race-recording-help').hidden, false);
+    nav.reach('race-verify-recording');
+    assert.equal(f.$('race-verify-recording').getAttribute('target'), '_blank');
+    assert.equal(f.$('race-verify-recording').getAttribute('rel'), 'noopener');
+    assert.match(f.$('race-verify-recording').getAttribute('href'), /#recording-verification$/);
+    assert.deepEqual(f.checkpoint(), terminal, 'Finding verification keeps the terminal boards.');
     nav.reach('race-journey-next');
     const next = f.$('race-journey-next'),
       handler = next.onclick;
@@ -242,6 +248,14 @@ for (const adapter of ['keyboard', 'controller']) {
       const nav = navigation(f, adapter, true),
         held = { hud: teamHud(f), paint: f.lastPaint };
       nav.adopt();
+      assert.equal(f.$('coop-recording-help').hidden, state === 'paused');
+      if (state !== 'paused') {
+        nav.reach('coop-verify-recording');
+        assert.equal(f.$('coop-verify-recording').getAttribute('target'), '_blank');
+        assert.equal(f.$('coop-verify-recording').getAttribute('rel'), 'noopener');
+        assert.match(f.$('coop-verify-recording').getAttribute('href'), /#recording-verification$/);
+        assert.deepEqual({ hud: teamHud(f), paint: f.lastPaint }, held);
+      }
       nav.reach('coop-settings-open');
       nav.confirm();
       assert.equal(f.$('coop-options').open, true);

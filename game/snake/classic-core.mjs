@@ -18,6 +18,8 @@ export {
   classicSnakeContactHazardV4,
   classicSnakeHazardAtV4,
   CLASSIC_SNAKE_V4_KINDS,
+  classicSnakeUsesVariableHazards,
+  classicSnakeSignalView,
 } from './classic-core-v4.mjs';
 import {
   CLASSIC_SNAKE_V3_LEVEL,

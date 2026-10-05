@@ -80,21 +80,55 @@ export const SNAKE_PURSUIT_VERSIONS = Object.freeze({
   replayVersion: 'xonix-replay.v15',
   checkpointAlgorithm: 'fnv1a64-state-v14',
 });
+export const PURSUIT_V2_VERSIONS = Object.freeze({
+  levelVersion: 'xonix-level.v14',
+  ruleset: 'xonix-core.v15',
+  replayVersion: 'xonix-replay.v16',
+  checkpointAlgorithm: 'fnv1a64-state-v15',
+});
+export const SNAKE_PURSUIT_V2_VERSIONS = Object.freeze({
+  levelVersion: 'xonix-level.v15',
+  ruleset: 'xonix-core.v16',
+  replayVersion: 'xonix-replay.v17',
+  checkpointAlgorithm: 'fnv1a64-state-v16',
+});
+export const isPursuitV2Level = (level) =>
+  [PURSUIT_V2_VERSIONS.levelVersion, SNAKE_PURSUIT_V2_VERSIONS.levelVersion].includes(
+    level?.version,
+  );
+export const isSnakePursuitLevel = (level) =>
+  [SNAKE_PURSUIT_VERSIONS.levelVersion, SNAKE_PURSUIT_V2_VERSIONS.levelVersion].includes(
+    level?.version,
+  );
 export const isPursuitLevel = (level) =>
-  [PURSUIT_VERSIONS.levelVersion, SNAKE_PURSUIT_VERSIONS.levelVersion].includes(level?.version);
+  [
+    PURSUIT_VERSIONS.levelVersion,
+    SNAKE_PURSUIT_VERSIONS.levelVersion,
+    PURSUIT_V2_VERSIONS.levelVersion,
+    SNAKE_PURSUIT_V2_VERSIONS.levelVersion,
+  ].includes(level?.version);
 export const isPursuitRuleset = (ruleset) =>
-  [PURSUIT_VERSIONS.ruleset, SNAKE_PURSUIT_VERSIONS.ruleset].includes(ruleset);
+  [
+    PURSUIT_VERSIONS.ruleset,
+    SNAKE_PURSUIT_VERSIONS.ruleset,
+    PURSUIT_V2_VERSIONS.ruleset,
+    SNAKE_PURSUIT_V2_VERSIONS.ruleset,
+  ].includes(ruleset);
 export const isRunningEnemyLevel = (level) =>
   [
     RUNNING_ENEMY_VERSIONS.levelVersion,
     PURSUIT_VERSIONS.levelVersion,
     SNAKE_PURSUIT_VERSIONS.levelVersion,
+    PURSUIT_V2_VERSIONS.levelVersion,
+    SNAKE_PURSUIT_V2_VERSIONS.levelVersion,
   ].includes(level?.version);
 export const isRunningEnemyRuleset = (ruleset) =>
   [
     RUNNING_ENEMY_VERSIONS.ruleset,
     PURSUIT_VERSIONS.ruleset,
     SNAKE_PURSUIT_VERSIONS.ruleset,
+    PURSUIT_V2_VERSIONS.ruleset,
+    SNAKE_PURSUIT_V2_VERSIONS.ruleset,
   ].includes(ruleset);
 export const baseLevelVersion = (level) =>
   level?.version === SNAKE_VERSIONS.levelVersion
@@ -161,6 +195,8 @@ export function resolveVersions(value = {}) {
     SNAKE_VERSIONS,
     PURSUIT_VERSIONS,
     SNAKE_PURSUIT_VERSIONS,
+    PURSUIT_V2_VERSIONS,
+    SNAKE_PURSUIT_V2_VERSIONS,
   ].find((pair) => keys.every((key) => request[key] === pair[key]));
   if (!match) throw new TypeError('unsupported or mismatched simulation versions');
   return { ...match };

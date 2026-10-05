@@ -1,3 +1,23 @@
+import {
+  INDUSTRIAL_MATERIAL_REVISION,
+  INDUSTRIAL_TERRAIN_MATERIALS,
+  industrialMaterialPixels,
+} from './industrial-materials.mjs';
+import {
+  INDUSTRIAL_MACHINERY_REVISION,
+  INDUSTRIAL_TEAM_HARDWARE_SLOTS,
+  drawMachinerySpecimen,
+  machineryHardwarePixels,
+  machineryPixels,
+} from './industrial-machinery.mjs';
+
+export function militaryVehicleRole(slot) {
+  if (slot === 'team.enemy.drifter') return 'utility-car';
+  if (/^team\.enemy\.hunter\.(patrol|warning|charge|recovery)$/.test(slot))
+    return 'armored-carrier';
+  return slot.startsWith('enemy.') ? (MILITARY_FIELD_ROLES[slot] ?? null) : null;
+}
+
 /** Original overhead pixel silhouettes. These replace only verified built-in
  * presentation slots; their names are not new combat or collision policies. */
 export const MILITARY_FIELD_ROLES = Object.freeze({
@@ -33,7 +53,13 @@ const rgb = (hex) => [1, 3, 5].map((at) => Number.parseInt(hex.slice(at, at + 2)
 
 /** Wheel/tread glints follow the shared actor sampler, including its pause and
  * reduced-effects policy. No independently advancing presentation clock. */
-export function drawMilitaryVehicleMotion(ctx, frame, role, diameter) {
+export function drawMilitaryVehicleMotion(ctx, frame, role, diameter, revision = null) {
+  if (revision === INDUSTRIAL_MACHINERY_REVISION) {
+    // The same sampled clocks drive the complete rigid body and accessory pose.
+    // No rotor decoration is added to ground machinery.
+    drawMachinerySpecimen(ctx, role, { size: diameter, frame });
+    return;
+  }
   if (frame.reduced || !Number.isFinite(frame.travelPhase) || frame.speed <= 0) return;
   const step = Math.floor(frame.travelPhase * 6) % 2;
   const tracked = role === 'tracked-tank';
@@ -47,9 +73,22 @@ export function drawMilitaryVehicleMotion(ctx, frame, role, diameter) {
 
 /** No clocks, randomness, physics or DOM access. Keep the original sprite frame
  * and pivot while using transparent air around every vehicle silhouette. */
-export function militaryFieldPixels({ width, height }, slot) {
+export function militaryFieldPixels({ width, height }, slot, { revision = null } = {}) {
+  if (revision === INDUSTRIAL_MACHINERY_REVISION) {
+    const vehicle = militaryVehicleRole(slot);
+    if (vehicle) return machineryPixels({ width, height }, vehicle);
+    if (INDUSTRIAL_TEAM_HARDWARE_SLOTS.includes(slot))
+      return machineryHardwarePixels({ width, height }, slot);
+    if (INDUSTRIAL_TERRAIN_MATERIALS[slot])
+      return industrialMaterialPixels({ width, height }, INDUSTRIAL_TERRAIN_MATERIALS[slot], {
+        revision,
+      });
+  }
+  if (revision === 'industrial-overhead-v2') revision = INDUSTRIAL_MATERIAL_REVISION;
   const role = MILITARY_FIELD_ROLES[slot];
   if (!role) return null;
+  if (revision === INDUSTRIAL_MATERIAL_REVISION && INDUSTRIAL_TERRAIN_MATERIALS[slot])
+    return industrialMaterialPixels({ width, height }, INDUSTRIAL_TERRAIN_MATERIALS[slot]);
   if (
     !Number.isInteger(width) ||
     !Number.isInteger(height) ||
@@ -196,6 +235,29 @@ export function militaryFieldPixels({ width, height }, slot) {
       rect(13, 17, 4, 4, 'sand');
     }
     markings(14, 18);
+  }
+  if (revision === 'industrial-pilot-v1' && ['utility-car', 'tracked-tank'].includes(role)) {
+    // Candidate surface treatment retains the original silhouette and all rules.
+    for (const y of [9, 12, 22]) {
+      rect(10, y, 1, 1, 'metal');
+      rect(21, y, 1, 1, 'metal');
+    }
+    if (role === 'tracked-tank') {
+      rect(11, 22, 10, 5, 'ink');
+      for (const x of [12, 14, 16, 18, 20]) rect(x, 23, 1, 3, 'tread');
+      rect(11, 27, 10, 1, 'light');
+      rect(17, 12, 5, 5, 'camo');
+      rect(18, 12, 3, 1, 'metal');
+      rect(9, 17, 1, 5, 'sand');
+    } else {
+      rect(11, 7, 10, 3, 'ink');
+      for (const x of [12, 14, 16, 18, 20]) rect(x, 7, 1, 2, 'tread');
+      rect(10, 12, 1, 6, 'metal');
+      rect(21, 12, 1, 6, 'camo');
+      rect(12, 16, 8, 1, 'sand');
+      rect(12, 22, 8, 1, 'camo');
+      rect(13, 24, 6, 1, 'metal');
+    }
   }
   return { width, height, rgba };
 }

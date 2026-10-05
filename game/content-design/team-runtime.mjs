@@ -200,6 +200,8 @@ export function resolveTeamMission(project, mission, map, difficulty) {
     level = prepareTeamRunningEnemies(level, {
       style: 'varied',
       population: mission.pursuit.actors,
+      generation:
+        mission.pursuit.version === 'mission-pursuit.v2' ? 'pursuit-goals.v2' : 'pursuit-goals.v1',
     });
   const result = validateCoopLevel(level);
   required(result.valid, result.errors.join(' '));

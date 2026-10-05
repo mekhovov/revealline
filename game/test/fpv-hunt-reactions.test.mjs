@@ -112,6 +112,7 @@ class AudioNode {
   gain = new Parameter();
   frequency = new Parameter();
   connect(next) {
+    this.target = next;
     return next;
   }
   disconnect() {}
@@ -135,7 +136,8 @@ class AudioContext {
     return new AudioNode();
   }
   createBufferSource() {
-    return new AudioNode();
+    this.lastSource = new AudioNode();
+    return this.lastSource;
   }
   createBuffer() {
     return { getChannelData: () => new Float32Array(16) };
@@ -183,6 +185,26 @@ test('native dialogue obeys one-line arbitration, master mute, pause, volume and
   const muted = sound.playDialogue(clip);
   await sound.setEnabled(false);
   assert.equal(muted.ended, true);
+  assert.equal(dialogueChannel.active, null);
+  sound.dispose();
+});
+
+test('flight dialogue matches the quieter background mix before and after audio activation', async () => {
+  const sound = createWorldAudio({
+    window: { AudioContext },
+    storage: { getItem: () => null, setItem() {} },
+  });
+  sound.configureDialogue({ enabled: true });
+  await sound.setEnabled(true);
+  sound.playDialogue({ duration: 1 });
+  const bus = sound.context.lastSource.target;
+  assert.equal(bus.gain.value, 0.1);
+  sound.configureDialogue({ volume: 0.65 });
+  assert.equal(bus.gain.value, 0.26);
+  sound.configureDialogue({ volume: 1 });
+  assert.equal(bus.gain.value, 0.4);
+  sound.configureDialogue({ volume: 0 });
+  assert.equal(bus.gain.value, 0);
   assert.equal(dialogueChannel.active, null);
   sound.dispose();
 });

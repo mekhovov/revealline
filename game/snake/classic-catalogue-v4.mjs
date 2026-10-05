@@ -23,7 +23,12 @@ function wallsFor(rectangles) {
       for (let dx = 0; dx < w; dx++) cells.set(`${x + dx},${y + dy}`, { x: x + dx, y: y + dy });
   return [...cells.values()].sort((a, b) => a.y - b.y || a.x - b.x);
 }
-const jammer = (at = [20, 8]) => ({ kind: 'jammer', every: 3, at: cell(at) });
+const jammer = (at = [20, 8], signalProfile = 'local-burst-v1') => ({
+  kind: 'jammer',
+  every: 3,
+  at: cell(at),
+  signalProfile,
+});
 const lane = (at = [5, 8]) => ({
   kind: 'lane',
   every: 3,
@@ -54,8 +59,8 @@ export const CLASSIC_SNAKE_V4_CHAPTERS = freeze([
     id: 'classic-snake-signal-tactics',
     title: bilingual('Signal Tactics', 'Тактика сигналу'),
     description: bilingual(
-      'Eight missions teach interference, warned lanes and linked relays.',
-      'Вісім місій навчають перешкодам, попередженим смугам і пов’язаним ретрансляторам.',
+      'Ten missions teach local and broadcast interference, warned lanes and linked relays.',
+      'Десять місій навчають локальним і загальним перешкодам, попередженим смугам і пов’язаним ретрансляторам.',
     ),
   },
   {
@@ -84,8 +89,8 @@ const first = [
     [[10, 5, 3, 3]],
     [jammer(), jammer([3, 10])],
     4,
-    'The antenna warns before four moves of signal loss. Memorize your route: the whole field disappears, but steering continues. Catch the jammer to restore reception.',
-    'Антена попереджає перед чотирма ходами втрати сигналу. Запам’ятайте маршрут: усе поле зникне, але керування діє. Спіймайте глушник для відновлення прийому.',
+    'The antenna warns before a short burst distorts its six-cell zone. Skirt the zone or catch the visible jammer to clear it. Each retry has a fresh signal rhythm.',
+    'Антена попереджає перед коротким спотворенням у зоні шести клітин. Обходьте зону або ловіть видимий глушник. Кожна нова спроба має інший ритм перешкод.',
   ],
   [
     'quiet-return',
@@ -97,8 +102,8 @@ const first = [
     ],
     [jammer(), runner(), jammer([3, 10])],
     6,
-    'Plan your return while reception is clear. During signal loss, steer from memory for four moves; enemies, walls and your cable are hidden.',
-    'Плануйте повернення за чистого прийому. Під час втрати сигналу керуйте з пам’яті чотири ходи: вороги, стіни й кабель приховані.',
+    'Use the clear ground outside the jammer zone, then approach during recovery. The antenna stays visible through interference.',
+    'Користуйтеся чистою ділянкою поза зоною глушника й наближайтеся під час відновлення. Антена залишається видимою крізь перешкоди.',
   ],
   [
     'lane-window',
@@ -159,6 +164,29 @@ const first = [
     'Відвідайте обидва двори перед наближенням до замкненого ядра. Залиште вільний шлях до центру.',
   ],
   [
+    'broadcast-check',
+    'Broadcast Check',
+    'Перевірка трансляції',
+    [[7, 6, 3, 4]],
+    [jammer([19, 9], 'broadcast-burst-v1')],
+    4,
+    'This antenna disrupts the whole live feed. Follow its visible source through each short burst, then catch it to restore reception.',
+    'Ця антена спотворює все поле наживо. Стежте за видимим джерелом під час коротких сплесків і ловіть його для відновлення прийому.',
+  ],
+  [
+    'quiet-channel',
+    'Quiet Channel',
+    'Тихий канал',
+    [
+      [6, 4, 3, 3],
+      [15, 10, 3, 4],
+    ],
+    [jammer([20, 8], 'broadcast-burst-v1'), jammer([3, 10], 'broadcast-burst-v1'), runner()],
+    6,
+    'Two antennas share one feed. Only one transmits at a time, with a guaranteed clear interval. Plan the next approach while the picture is clean.',
+    'Дві антени ділять один ефір. Одночасно передає лише одна, а між сплесками є чистий інтервал. Плануйте наближення, поки зображення чітке.',
+  ],
+  [
     'signal-crossing',
     'Signal Crossing',
     'Сигнальний перехід',
@@ -168,8 +196,8 @@ const first = [
     ],
     [jammer(), lane()],
     6,
-    'Memorize a safe crossing before the four-move blackout. The lane waits for reception to return, then gives a full new warning.',
-    'Запам’ятайте безпечний перехід перед втратою сигналу на чотири ходи. Смуга чекає відновлення прийому й дає повне нове попередження.',
+    'Route around the local interference. The lane waits for the burst to end, then gives a full new warning before attacking.',
+    'Обходьте локальні перешкоди. Смуга чекає завершення сплеску й дає повне нове попередження перед атакою.',
   ],
   [
     'relay-airfield',
@@ -180,7 +208,7 @@ const first = [
       [14, 11, 3, 3],
     ],
     [
-      jammer(),
+      jammer([20, 8], 'broadcast-burst-v1'),
       lane(),
       relay(
         [12, 8],
@@ -191,8 +219,8 @@ const first = [
       ),
     ],
     6,
-    'Remember the relay positions before signal loss, then time the crossing and unlock the sentinel. No lane starts an attack during the blackout.',
-    'Запам’ятайте ретранслятори перед втратою сигналу, потім оберіть момент переходу й відкрийте вартового. Під час втрати сигналу смуга не починає атаку.',
+    'Broadcast bursts briefly distort the whole feed. Catch the visible antenna, then use clear intervals to reach both relays. No lane starts an attack during interference.',
+    'Сплески трансляції ненадовго спотворюють усе поле. Спіймайте видиму антену й використовуйте чисті інтервали, щоб дістатися обох ретрансляторів. Під час перешкод смуга не починає атаку.',
   ],
 ];
 const patrols = [
@@ -349,8 +377,8 @@ const mastery = [
     ],
     [eroder(), jammer(), guard()],
     6,
-    'Remember the marked wall and your next four turns before signal loss. New shots wait for the feed to return and a full warning.',
-    'Запам’ятайте позначену стіну й наступні чотири повороти перед втратою сигналу. Нові постріли чекають відновлення прийому та повного попередження.',
+    'Keep the marked wall in view and skirt the interference zone. New shots wait until reception recovers and a full warning is shown.',
+    'Тримайте позначену стіну в полі зору й обходьте зону перешкод. Нові постріли чекають відновлення прийому й повного попередження.',
   ],
   [
     'field-finale',
@@ -389,7 +417,15 @@ function entries(rows, chapter) {
       level: {
         version: 'classic-snake-level.v4',
         id,
-        revision: '1',
+        revision: [
+          'signal-check',
+          'quiet-return',
+          'signal-crossing',
+          'relay-airfield',
+          'field-links',
+        ].includes(slug)
+          ? '2'
+          : '1',
         name: en,
         width: 24,
         height: 18,
@@ -407,9 +443,13 @@ function entries(rows, chapter) {
         fleeEvery: 3,
         objective: 'mission',
         targets: {
-          maxActive: ['signal-crossing', 'relay-airfield', 'field-links', 'field-finale'].includes(
-            slug,
-          )
+          maxActive: [
+            'signal-crossing',
+            'relay-airfield',
+            'field-links',
+            'field-finale',
+            'quiet-channel',
+          ].includes(slug)
             ? 2
             : 1,
           required: targets,

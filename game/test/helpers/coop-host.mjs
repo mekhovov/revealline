@@ -60,6 +60,25 @@ export async function page(
 ) {
   const doc = new Document(),
     win = new Events();
+  const createElement = doc.createElement.bind(doc);
+  doc.createElement = (tag) => {
+    const element = createElement(tag);
+    // Native field-guide and combat sprite painters need an inert 2D boundary.
+    // Gameplay and briefing canvases receive observable contexts below; this
+    // does not claim browser rasterization or artistic qualification.
+    if (tag.toLowerCase() === 'canvas') {
+      const context = new Proxy(
+        { canvas: element },
+        {
+          get(target, key) {
+            return Object.hasOwn(target, key) ? target[key] : () => {};
+          },
+        },
+      );
+      element.getContext = () => context;
+    }
+    return element;
+  };
   doc.parentNode = win;
   mountCouch(doc, html);
   const $ = (id) => doc.getElementById(id);
@@ -239,6 +258,9 @@ export async function page(
   t.after(() => {
     win.emit('pagehide');
     frames.clear();
+    // A retired fixture must not remain a connected document in the shared
+    // localization registry after its browser globals have been restored.
+    doc.documentElement.remove();
     for (const [key, original] of originals)
       if (original) Object.defineProperty(globalThis, key, original);
       else delete globalThis[key];

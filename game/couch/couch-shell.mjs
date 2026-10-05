@@ -1,4 +1,5 @@
 import { createPauseMenu, pauseMusicAction } from '../ui/pause-menu.mjs';
+import { nativeArtReviewURL } from '../ui/art-review-navigation.mjs';
 import { gameplayStatsLabel } from '../ui/gameplay-copy.mjs';
 import { contentText } from '../i18n/content.mjs';
 import { t, localizedText } from '../i18n/index.mjs';
@@ -91,14 +92,29 @@ export function createCouchShell({
   const isJourney = isAuthoredJourneyRouteId(authoredRoute);
   const libraryHref = isJourney ? '?journey=legacy' : `?journey=${DEFAULT_JOURNEY_ROUTES.versus}`;
   const libraryLabel = () => (isJourney ? t('interface:legacyLibrary') : t('interface:newJourney'));
-  $('race-library-switch').setAttribute('href', libraryHref);
+  $('race-library-switch').setAttribute(
+    'href',
+    nativeArtReviewURL(libraryHref, view?.location?.href ?? globalThis.location?.href),
+  );
   localizedText($('race-library-switch'), () =>
     onMissions ? t('interface:allMissions') : libraryLabel(),
   );
   doc.body.classList.toggle('unified-missions', Boolean(onMissions));
   if (authoredDestinations) {
-    $('race-solo-return').setAttribute('href', authoredDestinations.solo);
-    $('race-coop').setAttribute('href', authoredDestinations.team);
+    $('race-solo-return').setAttribute(
+      'href',
+      nativeArtReviewURL(
+        authoredDestinations.solo,
+        view?.location?.href ?? globalThis.location?.href,
+      ),
+    );
+    $('race-coop').setAttribute(
+      'href',
+      nativeArtReviewURL(
+        authoredDestinations.team,
+        view?.location?.href ?? globalThis.location?.href,
+      ),
+    );
   }
   const modeChoices = mountModeChoices({
     root: $('race-mode-choices'),
@@ -133,6 +149,7 @@ export function createCouchShell({
     status = null,
     opener = null,
     departure = null,
+    briefingOwner = null,
     destroyed = false,
     revealingResize = false,
     equipment = [];
@@ -374,17 +391,20 @@ export function createCouchShell({
     }
   }
   const destinationHref = (kind, token, routeId, teamRouteId = teamJourneyRoute()) =>
-    (kind === 'library' && libraryHref) ||
-    (kind === 'solo' && token && `../?mode-return-v2=${token}`) ||
-    (kind === 'solo' && routeId === 'legacy' && '../?journey=legacy') ||
-    (kind === 'solo' && authoredJourneyModeHref(routeId, 'solo')) ||
-    (kind === 'team' &&
-      teamRouteId &&
-      `relay-rescue.html?journey=${teamRouteId}&return=versus${teamRouteId === 'snake-hunt-v1' ? '&snake-style=capture' : ''}`) ||
-    secondaryDestinations[kind] ||
-    (isJourney && authoredDestinations?.[kind]) ||
-    authoredDestinations?.[kind] ||
-    DESTINATIONS[kind];
+    nativeArtReviewURL(
+      (kind === 'library' && libraryHref) ||
+        (kind === 'solo' && token && `../?mode-return-v2=${token}`) ||
+        (kind === 'solo' && routeId === 'legacy' && '../?journey=legacy') ||
+        (kind === 'solo' && authoredJourneyModeHref(routeId, 'solo')) ||
+        (kind === 'team' &&
+          teamRouteId &&
+          `relay-rescue.html?journey=${teamRouteId}&return=versus${teamRouteId === 'snake-hunt-v1' ? '&snake-style=capture' : ''}`) ||
+        secondaryDestinations[kind] ||
+        (isJourney && authoredDestinations?.[kind]) ||
+        authoredDestinations?.[kind] ||
+        DESTINATIONS[kind],
+      view?.location?.href ?? globalThis.location?.href,
+    );
   function departureCurrent(ticket) {
     const current = getDepartureState();
     return (
@@ -598,6 +618,7 @@ export function createCouchShell({
       $('race-solo-return').setAttribute('href', soloHref);
     const previous = status;
     status = match.status;
+    $('race-briefing').hidden = status !== 'ready' || contentBusy || match !== briefingOwner;
     doc.body.dataset.couchStatus = status;
     if (departure && !departureCurrent(departure)) cancelDeparture();
     equipment = match.runs.map(couchEquipment);
@@ -704,6 +725,13 @@ export function createCouchShell({
     update,
     back,
     setup,
+    briefing(owner, { title, description }) {
+      briefingOwner = owner;
+      setText('race-briefing-title', title);
+      setText('race-briefing-copy', description);
+      $('race-briefing').hidden = status !== 'ready';
+      show('main');
+    },
     observe,
     root,
     primary,
