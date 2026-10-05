@@ -62,6 +62,42 @@ test('actual native menu imports and styles remain in each mode offline closure'
   }
 });
 
+test('main home keeps the static encounter-host dependency needed before any mode can mount', async () => {
+  const names = [
+    'game/index.html',
+    'game/boot.mjs',
+    'game/app.mjs',
+    'game/content-design/solo-route-host.mjs',
+    'game/content-design/encounter-host.mjs',
+    'game/content-design/versus-host.mjs',
+    'game/couch/index.html',
+    'game/couch/couch.mjs',
+    'game/mission-library/remote-team.mjs',
+    'game/mission-library/spatial-next-editions.mjs',
+  ];
+  const files = await Promise.all(
+    names.map(async (name) => ({
+      name,
+      bytes: await readFile(new URL(`../${name}`, import.meta.url)),
+    })),
+  );
+  const core = selectOfflineCore(files, new Set());
+  for (const name of names.slice(0, 6))
+    assert.ok(core.retained.has(name), `${name} is required by the main home module graph`);
+  assert.equal(
+    core.references.get('game/content-design/encounter-host.mjs'),
+    'game/content-design/solo-route-host.mjs',
+  );
+  // The generic literal walker may also encounter app's optional Versus import.
+  // The actual static edge is why this shared factory cannot be excluded.
+  assert.match(
+    files.find(({ name }) => name === 'game/content-design/encounter-host.mjs').bytes.toString(),
+    /import\s*\{\s*createCandidateVersusHost\s*\}\s*from\s*['"]\.\/versus-host\.mjs['"]/,
+  );
+  for (const name of names.slice(6))
+    assert.ok(!core.retained.has(name), `${name} remains an optional mode destination`);
+});
+
 test('native Overflight source stays in player core while its linked Studio remains optional', async () => {
   const player = (await readdir(new URL('../game/overflight/', import.meta.url)))
     .filter((name) => /\.(?:mjs|css|html)$/.test(name))
