@@ -1,5 +1,8 @@
+import { WORLD_VEHICLE_MODELS } from './world-pursuit.mjs';
+import { renderPursuitEditor, removePursuitActor } from './world-pursuit-editor.mjs';
+import { worldEnemyGuide } from './world-enemy-guide.mjs';
 import { boundedJSON, exactKeys } from '../../game/data-json.mjs';
-import { ACTOR_CASTS, actorFieldGuide } from '../../game/hunt/actor-catalog.mjs';
+import { ACTOR_CASTS } from '../../game/hunt/actor-catalog.mjs';
 import { drawHuntActor } from '../../game/hunt/actor-art.mjs';
 import { sharedActorAppearance } from '../../game/hunt/preferences.mjs';
 
@@ -21,8 +24,8 @@ const LABELS = {
   rival: ['Rival · no weapons or damage', 'Суперник · без зброї та шкоди'],
   civilian: ['Civilian · background movement', 'Цивільний · фоновий рух'],
   roleHelp: [
-    'Rivals and civilians cannot be damaged. Changing role removes incompatible defeat objectives.',
-    'Суперники та цивільні не отримують шкоди. Зміна ролі видаляє несумісні завдання знешкодження.',
+    'Rivals and civilians cannot be damaged or caught. Changing role removes this actor from defeat and Contact Hunt objectives. An emptied objective is removed; if no objectives remain, a short survival objective is added.',
+    'Суперників і цивільних не можна пошкодити чи спіймати. Зміна ролі вилучає персонажа із завдань знешкодження й контактного полювання. Порожнє завдання видаляється; якщо завдань не лишилось, додається коротке виживання.',
   ],
   add: ['Add actor', 'Додати персонажа'],
   remove: ['Remove actor', 'Видалити персонажа'],
@@ -162,6 +165,70 @@ const LABELS = {
     'Enter a value within the displayed limits and increments.',
     'Введіть значення у вказаних межах і з указаним кроком.',
   ],
+  hunt: ['Contact Hunt', 'Контактне полювання'],
+  huntNewActor: ['Add unarmed Hunt target', 'Додати ціль полювання без зброї'],
+  huntActorAdded: [
+    'Unarmed target added. Position it clear of walls, add waypoints below if it should move, then add it to a Hunt objective.',
+    'Ціль без зброї додано. Розмістіть її подалі від стін, додайте точки маршруту нижче для руху, а потім додайте до завдання полювання.',
+  ],
+  huntObjective: ['Hunt objective', 'Завдання полювання'],
+  newHunt: ['New Contact Hunt objective', 'Нове завдання контактного полювання'],
+  huntHelp: [
+    'Catch these finite, unarmed ground targets by touching their bodies. Paths keep their native flight behavior. Each mode can have one Hunt objective; a target cannot also be a defeat or tracking objective in that mode.',
+    'Спіймайте цих наземних цілей без зброї дотиком до тулуба. Кількість цілей обмежена; маршрути зберігають льотну поведінку. У режимі може бути одне завдання полювання; його ціль не може одночасно бути ціллю знешкодження чи спостереження.',
+  ],
+  huntEligible: [
+    'Use Add unarmed Hunt target, or choose an existing hostile ground patrol or sentry with fire interval 0. Hunt targets keep weapons disabled until removed from every Hunt objective.',
+    'Додайте ціль полювання без зброї або виберіть наявний ворожий наземний патруль чи вартового з інтервалом пострілів 0. Зброя цілі полювання вимкнена, доки її не вилучено з усіх завдань полювання.',
+  ],
+  huntTargets: ['Targets · catch order', 'Цілі · порядок ловлі'],
+  huntTarget: ['Add a target', 'Додати ціль'],
+  huntAddTarget: ['Add selected target', 'Додати вибрану ціль'],
+  huntRemoveTarget: ['Remove target', 'Вилучити ціль'],
+  huntEarlier: ['Catch earlier', 'Ловити раніше'],
+  huntLater: ['Catch later', 'Ловити пізніше'],
+  huntOrdered: ['Require the listed catch order', 'Ловити у вказаному порядку'],
+  huntTail: ['Grow a solid echo tail after catches', 'Збільшувати твердий хвіст після ловлі'],
+  linksPerCatch: ['Tail links per catch', 'Ланок хвоста за ціль'],
+  maxLinks: ['Maximum tail links', 'Максимум ланок хвоста'],
+  neckDistance: ['Clear distance behind drone · m', 'Вільна відстань позаду дрона · м'],
+  tailRadius: ['Tail collision radius · m', 'Радіус зіткнення хвоста · м'],
+  huntTailHelp: [
+    'The echo tail is a collision hazard. With it off, catching never adds a tail. Editing one mode leaves the other mode unchanged. Moving an objective applies its current settings.',
+    'Твердий хвіст небезпечний при зіткненні. Коли він вимкнений, ловля не додає хвоста. Зміни одного режиму не змінюють інший. Переміщення завдання застосовує його поточні налаштування.',
+  ],
+  addHunt: ['Add Contact Hunt', 'Додати контактне полювання'],
+  applyHunt: ['Apply Hunt settings', 'Застосувати налаштування полювання'],
+  removeHunt: ['Remove Hunt objective', 'Видалити завдання полювання'],
+  huntAdded: [
+    'Contact Hunt added to the selected flight modes.',
+    'Контактне полювання додано до вибраних режимів польоту.',
+  ],
+  huntUpdated: ['Hunt settings updated.', 'Налаштування полювання оновлено.'],
+  huntRemoved: [
+    'Hunt objective removed from the selected mode.',
+    'Завдання полювання видалено з вибраного режиму.',
+  ],
+  huntMoved: [
+    'Hunt objective moved in the selected mode.',
+    'Завдання полювання переміщено у вибраному режимі.',
+  ],
+  huntMissing: [
+    'Choose between one and twelve distinct, eligible targets.',
+    'Виберіть від однієї до дванадцяти різних придатних цілей.',
+  ],
+  huntExists: [
+    'This mode already has a Hunt objective. Select it above to edit.',
+    'Цей режим уже має завдання полювання. Виберіть його вище для редагування.',
+  ],
+  huntConflict: [
+    'Each target needs a single objective type in this mode. Remove its conflicting Hunt, defeat or tracking objective first.',
+    'Кожній цілі потрібен один тип завдання в цьому режимі. Спочатку видаліть несумісне завдання полювання, знешкодження чи спостереження.',
+  ],
+  huntStale: [
+    'The Hunt objective changed. Select it again before editing.',
+    'Завдання полювання змінилося. Виберіть його знову перед редагуванням.',
+  ],
 };
 
 /** A small numeric authoring surface; the host owns validation and undo history. */
@@ -175,10 +242,24 @@ export function mountActorEditor({ container, getCourse, onChange, locale = 'en'
   let trackingSelection = null;
   let trackingAddMode = 'both';
   let trackingKind = 'observe';
+  let huntSelection = null;
+  let huntAddMode = 'both';
+  let huntDraftOwner = null;
+  const huntDrafts = new Map();
+  const pursuitDraft = {};
   let message = '';
   let error = false;
   let disposed = false;
   let busy = false;
+  let cleanFields = '';
+  const fieldValues = () =>
+    JSON.stringify(
+      [
+        ...container.querySelectorAll(
+          'input, textarea, [data-tracking-subject], [data-tracking-kind], [data-actor-role]',
+        ),
+      ].map((node) => [node.value, node.checked]),
+    );
   const text = (key) =>
     LABELS[key][(typeof locale === 'function' ? locale() : locale) === 'uk' ? 1 : 0];
   const element = (tag, content, className) => {
@@ -237,10 +318,21 @@ export function mountActorEditor({ container, getCourse, onChange, locale = 'en'
       node.setAttribute('role', error ? 'alert' : 'status');
     }
   }
-  async function change(mutator, success = 'updated', committed = () => {}) {
+  async function change(
+    mutator,
+    success = 'updated',
+    committed = () => {},
+    { pursuit = false } = {},
+  ) {
     if (disposed || busy) return;
     busy = true;
     try {
+      if (!pursuit && pursuitDraft.base !== undefined && pursuitDraft.value !== pursuitDraft.base)
+        throw new TypeError(
+          (typeof locale === 'function' ? locale() : locale) === 'uk'
+            ? 'Застосуйте або скасуйте зміни графа переслідування.'
+            : 'Apply or discard pursuit graph edits first.',
+        );
       await onChange(mutator);
       committed();
       message = text(success);
@@ -248,6 +340,7 @@ export function mountActorEditor({ container, getCourse, onChange, locale = 'en'
       busy = false;
       refresh();
       if (success.startsWith('tracking')) focusTracking();
+      if (success.startsWith('hunt')) focusHunt();
     } catch (cause) {
       message = cause.message;
       error = true;
@@ -291,21 +384,21 @@ export function mountActorEditor({ container, getCourse, onChange, locale = 'en'
     course.steps[mode] = next;
     if (bindings?.[mode]) bindings[mode] = refs;
   }
-  function addActor() {
+  function addActor({ type = newType, unarmed = false, keepHuntSelection = false } = {}) {
     let addedId;
     return change(
       (course) => {
         if (
-          course.actors.filter((actor) => (actor.type === 'hazard') === (newType === 'hazard'))
-            .length >= (newType === 'hazard' ? 8 : 12)
+          course.actors.filter((actor) => (actor.type === 'hazard') === (type === 'hazard'))
+            .length >= (type === 'hazard' ? 8 : 12)
         )
           throw new TypeError(text('budget'));
         let n = 1;
         const ids = new Set([...course.actors, ...course.obstacles].map((item) => item.id));
-        while (ids.has(`${newType}-${n}`)) n++;
-        const id = `${newType}-${n}`;
-        const grounded = ['patrol', 'sentry', 'vehicle'].includes(newType);
-        const radius = newType === 'vehicle' ? 900 : newType === 'hazard' ? 500 : 300;
+        while (ids.has(`${type}-${n}`)) n++;
+        const id = `${type}-${n}`;
+        const grounded = ['patrol', 'sentry', 'vehicle'].includes(type);
+        const radius = type === 'vehicle' ? 900 : type === 'hazard' ? 500 : 300;
         const position = {
           x: Math.max(
             course.bounds.min.x + radius,
@@ -324,24 +417,25 @@ export function mountActorEditor({ container, getCourse, onChange, locale = 'en'
         };
         course.actors.push({
           id,
-          type: newType,
+          type,
           position,
           path: [],
-          speed: newType === 'sentry' ? 0 : 1500,
+          speed: type === 'sentry' ? 0 : 1500,
           radius,
-          height: ['patrol', 'sentry'].includes(newType) ? 1800 : 2 * radius,
+          height: ['patrol', 'sentry'].includes(type) ? 1800 : 2 * radius,
           health: 50,
-          fireEveryTicks: newType === 'hazard' ? 0 : 100,
+          fireEveryTicks: unarmed || type === 'hazard' ? 0 : 100,
           damage: 10,
           projectileSpeed: 8000,
           range: 20000,
         });
         addedId = id;
       },
-      'added',
+      unarmed ? 'huntActorAdded' : 'added',
       () => {
         selected = addedId;
         trackingSelection = null;
+        if (!keepHuntSelection) huntSelection = null;
       },
     );
   }
@@ -361,10 +455,11 @@ export function mountActorEditor({ container, getCourse, onChange, locale = 'en'
     );
   }
   function removeTargetReferences(course, bindings, id, { removeTracking = false } = {}) {
+    removePursuitActor(course, id);
     for (const mode of MODES)
       alterSteps(course, bindings, mode, (step) => {
         if (removeTracking && step.type === 'actor-track-v1' && step.actorId === id) return null;
-        if (step.type !== 'eliminate') return step;
+        if (!['eliminate', 'hunt-contact-v1'].includes(step.type)) return step;
         const targets = step.targets.filter((target) => target !== id);
         return targets.length ? { ...step, targets } : null;
       });
@@ -376,6 +471,12 @@ export function mountActorEditor({ container, getCourse, onChange, locale = 'en'
       if (actor.type === 'hazard' || (actor.role ?? 'hostile') !== 'hostile')
         throw new TypeError(text('objectiveHelp'));
       for (const mode of objectiveMode === 'both' ? MODES : [objectiveMode]) {
+        if (
+          course.steps[mode].some(
+            (step) => step.type === 'hunt-contact-v1' && step.targets.includes(id),
+          )
+        )
+          throw new TypeError(text('huntConflict'));
         if (
           course.steps[mode].some((step) => step.type === 'eliminate' && step.targets.includes(id))
         )
@@ -637,7 +738,372 @@ export function mountActorEditor({ container, getCourse, onChange, locale = 'en'
     panel.append(actions);
     return panel;
   }
+  const huntEligible = (actor) =>
+    ['patrol', 'sentry'].includes(actor.type) &&
+    (actor.role ?? 'hostile') === 'hostile' &&
+    actor.fireEveryTicks === 0;
+  function focusHunt() {
+    const selector = container.querySelector('[data-hunt-objective]');
+    selector?.focus({ preventScroll: true });
+    selector?.scrollIntoView?.({ block: 'nearest' });
+  }
+  function renderHunt(course) {
+    const owner = `${course.world.id}/${course.id}`;
+    if (huntDraftOwner !== owner) {
+      huntDraftOwner = owner;
+      huntDrafts.clear();
+    }
+    const rows = MODES.flatMap((mode) =>
+      course.steps[mode].flatMap((step, index) =>
+        step.type === 'hunt-contact-v1' ? [{ mode, index, step }] : [],
+      ),
+    );
+    // Retained hidden drafts still belong to their exact accepted objective.
+    // External edits/Undo must not leave an obsolete draft blocking navigation.
+    for (const [key, draft] of huntDrafts)
+      if (
+        key !== 'new' &&
+        !rows.some(
+          (row) =>
+            `${row.mode}:${row.index}` === key && JSON.stringify(row.step) === draft.original,
+        )
+      )
+        huntDrafts.delete(key);
+    const current = rows.find(
+      (row) => row.mode === huntSelection?.mode && row.index === huntSelection.index,
+    );
+    if (!current) huntSelection = null;
+    const panel = element('section');
+    panel.dataset.huntEditor = '';
+    panel.append(element('h4', text('hunt')), element('p', text('huntHelp'), 'hint'));
+    const key = (row) => `${row.mode}:${row.index}`;
+    const draftKey = current ? key(current) : 'new';
+    const original = current ? JSON.stringify(current.step) : null;
+    const draft = huntDrafts.get(draftKey)?.original === original ? huntDrafts.get(draftKey) : null;
+    if (!draft) huntDrafts.delete(draftKey);
+    let captureDraft = () => {};
+    const picker = choose(
+      [
+        ['', text('newHunt')],
+        ...rows.map((row) => [
+          key(row),
+          `${text(row.mode === 'acro' ? 'acro' : 'level')} · ${row.index + 1}. ${row.step.targets.length} ${text('hunt')}`,
+        ]),
+      ],
+      current ? key(current) : '',
+      text('huntObjective'),
+    );
+    picker.dataset.huntObjective = '';
+    picker.addEventListener('change', () => {
+      captureDraft();
+      const row = rows.find((value) => key(value) === picker.value);
+      huntSelection = row ? { mode: row.mode, index: row.index } : null;
+      trackingSelection = null;
+      refresh();
+      focusHunt();
+    });
+    panel.append(label(text('huntObjective'), picker));
+    const addActorButton = button(
+      text('huntNewActor'),
+      () => {
+        captureDraft();
+        return addActor({ type: 'patrol', unarmed: true, keepHuntSelection: true });
+      },
+      course.actors.filter((actor) => actor.type !== 'hazard').length >= 12,
+    );
+    addActorButton.dataset.huntAction = 'add-actor';
+    panel.append(addActorButton);
+    const subjects = course.actors.filter(huntEligible);
+    if (!subjects.length && !current) {
+      panel.append(element('p', text('huntEligible'), 'hint'));
+      return panel;
+    }
+    const modes = choose(
+      [
+        ['both', text('both')],
+        ['self-level', text('level')],
+        ['acro', text('acro')],
+      ],
+      huntAddMode,
+      text('mode'),
+    );
+    modes.dataset.huntModes = '';
+    modes.addEventListener('change', () => {
+      huntAddMode = modes.value;
+    });
+    if (!current) panel.append(label(text('mode'), modes));
+    const targets = [
+      ...(draft?.targets ??
+        current?.step.targets ??
+        [subjects.find((actor) => actor.id === selected)?.id ?? subjects[0]?.id].filter(Boolean)),
+    ];
+    const targetPicker = choose(
+      subjects.map((actor) => [actor.id, `${text(actor.type)} · ${actor.id}`]),
+      subjects[0]?.id ?? '',
+      text('huntTarget'),
+    );
+    targetPicker.dataset.huntTarget = '';
+    const list = element('ol');
+    list.dataset.huntTargets = '';
+    const addTarget = button(text('huntAddTarget'), () => {
+      if (targets.length >= 12 || targets.includes(targetPicker.value)) return;
+      targets.push(targetPicker.value);
+      paintTargets();
+    });
+    addTarget.dataset.huntAction = 'add-target';
+    function paintTargets() {
+      list.replaceChildren();
+      targets.forEach((id, index) => {
+        const row = element('li');
+        row.dataset.huntTargetId = id;
+        row.append(element('span', id));
+        const actions = element('div', undefined, 'button-row');
+        for (const [delta, name, title] of [
+          [-1, 'up', 'huntEarlier'],
+          [1, 'down', 'huntLater'],
+        ]) {
+          const move = button(
+            `${text(title)} · ${id}`,
+            () => {
+              const other = index + delta;
+              if (other < 0 || other >= targets.length) return;
+              [targets[index], targets[other]] = [targets[other], targets[index]];
+              paintTargets();
+              list
+                .querySelector(`[data-hunt-target-id="${id}"]`)
+                ?.querySelector(`[data-hunt-target-action="${name}"]`)
+                ?.focus();
+            },
+            index + delta < 0 || index + delta >= targets.length,
+          );
+          move.dataset.huntTargetAction = name;
+          actions.append(move);
+        }
+        const remove = button(`${text('huntRemoveTarget')} · ${id}`, () => {
+          targets.splice(index, 1);
+          paintTargets();
+          targetPicker.focus();
+        });
+        remove.dataset.huntTargetAction = 'remove';
+        actions.append(remove);
+        row.append(actions);
+        list.append(row);
+      });
+      const available = subjects.filter((actor) => !targets.includes(actor.id));
+      for (const option of targetPicker.options) option.disabled = targets.includes(option.value);
+      if (targets.includes(targetPicker.value)) targetPicker.value = available[0]?.id ?? '';
+      targetPicker.disabled = !available.length || targets.length >= 12;
+      addTarget.disabled = targetPicker.disabled;
+      captureDraft();
+    }
+    panel.append(
+      element('h5', text('huntTargets')),
+      list,
+      label(text('huntTarget'), targetPicker),
+      addTarget,
+    );
+    paintTargets();
+    const ordered = element('input');
+    ordered.type = 'checkbox';
+    ordered.checked = draft?.ordered ?? current?.step.ordered ?? false;
+    ordered.dataset.huntOrdered = '';
+    const tail = element('input');
+    tail.type = 'checkbox';
+    tail.checked = draft?.tail ?? (current?.step.tail.linksPerCatch ?? 0) > 0;
+    tail.dataset.huntTail = '';
+    panel.append(label(text('huntOrdered'), ordered), label(text('huntTail'), tail));
+    const grid = element('div', undefined, 'numeric-grid');
+    const fields = {};
+    const specs = [
+      ['linksPerCatch', 'linksPerCatch', 1, 1, 8, 1],
+      ['maxLinks', 'maxLinks', 1, 1, 64, 12],
+      ['neckDistance', 'neckDistance', 1000, 2.5, 12, 5],
+      ['radius', 'tailRadius', 1000, 0.15, 0.45, 0.25],
+    ];
+    for (const [name, title, scale, min, max, fallback] of specs) {
+      fields[name] = number((current?.step.tail[name] || fallback * scale) / scale, text(title), {
+        min,
+        max,
+        step: 1 / scale,
+      });
+      fields[name].dataset.huntField = name;
+      if (draft?.fields[name] !== undefined) fields[name].value = draft.fields[name];
+      grid.append(label(text(title), fields[name]));
+    }
+    const showTail = () => {
+      grid.hidden = !tail.checked;
+      for (const field of Object.values(fields)) field.disabled = !tail.checked;
+      captureDraft();
+    };
+    tail.addEventListener('change', showTail);
+    showTail();
+    panel.append(grid, element('p', text('huntTailHelp'), 'hint'));
+    const readDraft = () => ({
+      targets: [...targets],
+      ordered: ordered.checked,
+      tail: tail.checked,
+      fields: Object.fromEntries(
+        Object.entries(fields).map(([name, field]) => [name, field.value]),
+      ),
+    });
+    const baseline = draft?.baseline ?? JSON.stringify(readDraft());
+    captureDraft = () => huntDrafts.set(draftKey, { original, ...readDraft(), baseline });
+    ordered.addEventListener('change', captureDraft);
+    for (const field of Object.values(fields)) field.addEventListener('input', captureDraft);
+    const locate = (next) => {
+      if (!current || JSON.stringify(next.steps[current.mode]?.[current.index]) !== original)
+        throw new Error(text('huntStale'));
+      return next.steps[current.mode];
+    };
+    const read = (next, mode) => {
+      if (
+        !targets.length ||
+        targets.length > 12 ||
+        new Set(targets).size !== targets.length ||
+        targets.some((id) => !next.actors.some((actor) => actor.id === id && huntEligible(actor)))
+      )
+        throw new TypeError(text('huntMissing'));
+      if (
+        next.steps[mode].some(
+          (step) =>
+            (step.type === 'eliminate' && step.targets.some((id) => targets.includes(id))) ||
+            (step.type === 'actor-track-v1' && targets.includes(step.actorId)),
+        )
+      )
+        throw new TypeError(text('huntConflict'));
+      const values = {
+        type: 'hunt-contact-v1',
+        targets: [...targets],
+        ordered: ordered.checked,
+        tail: {
+          ...(current?.step.tail ?? {
+            linksPerCatch: 0,
+            maxLinks: 0,
+            neckDistance: 5000,
+            radius: 250,
+          }),
+        },
+      };
+      if (!tail.checked) {
+        values.tail.linksPerCatch = values.tail.maxLinks = 0;
+        return values;
+      }
+      for (const [name, title, scale, min, max] of specs) {
+        const value = fields[name].valueAsNumber;
+        if (
+          !Number.isFinite(value) ||
+          value < min ||
+          value > max ||
+          Math.abs(value * scale - Math.round(value * scale)) > 0.000001
+        ) {
+          fields[name].setAttribute('aria-invalid', 'true');
+          fields[name].focus();
+          throw new TypeError(`${text(title)}: ${text('trackingInvalid')} ${min}–${max}.`);
+        }
+        fields[name].removeAttribute('aria-invalid');
+        values.tail[name] = Math.round(value * scale);
+      }
+      return values;
+    };
+    const actions = element('div', undefined, 'button-row');
+    const action = (name, title, perform, disabled = false) => {
+      const node = button(text(title), perform, disabled);
+      node.dataset.huntAction = name;
+      actions.append(node);
+    };
+    if (!current)
+      action('add', 'addHunt', () => {
+        let added;
+        return change(
+          (next, bindings) => {
+            const destinations = modes.value === 'both' ? MODES : [modes.value];
+            if (!destinations.every((mode) => MODES.includes(mode)))
+              throw new TypeError(text('trackingInvalid'));
+            for (const mode of destinations) {
+              if (next.steps[mode].some((step) => step.type === 'hunt-contact-v1'))
+                throw new TypeError(text('huntExists'));
+              if (next.steps[mode].length >= 64) throw new TypeError(text('trackingBudget'));
+              const values = read(next, mode),
+                steps = next.steps[mode],
+                index = steps.at(-1)?.type === 'land' ? steps.length - 1 : steps.length;
+              steps.splice(index, 0, values);
+              bindings?.[mode]?.splice(index, 0, null);
+              added ??= { mode, index };
+            }
+          },
+          'huntAdded',
+          () => {
+            huntDrafts.delete(draftKey);
+            huntSelection = added;
+          },
+        );
+      });
+    else {
+      action('apply', 'applyHunt', () =>
+        change(
+          (next) => {
+            const steps = locate(next);
+            steps[current.index] = read(next, current.mode);
+          },
+          'huntUpdated',
+          () => huntDrafts.delete(draftKey),
+        ),
+      );
+      action(
+        'remove',
+        'removeHunt',
+        () =>
+          change(
+            (next, bindings) => {
+              const steps = locate(next);
+              if (steps.length === 1) throw new TypeError(text('trackingLast'));
+              steps.splice(current.index, 1);
+              bindings?.[current.mode]?.splice(current.index, 1);
+            },
+            'huntRemoved',
+            () => {
+              huntDrafts.delete(draftKey);
+              huntSelection = null;
+            },
+          ),
+        course.steps[current.mode].length === 1,
+      );
+      for (const [delta, name, title] of [
+        [-1, 'up', 'trackingEarlier'],
+        [1, 'down', 'trackingLater'],
+      ])
+        action(
+          name,
+          title,
+          () =>
+            change(
+              (next, bindings) => {
+                const steps = locate(next),
+                  other = current.index + delta;
+                if (other < 0 || other >= steps.length) throw new Error(text('huntStale'));
+                steps[current.index] = read(next, current.mode);
+                [steps[current.index], steps[other]] = [steps[other], steps[current.index]];
+                const refs = bindings?.[current.mode];
+                if (refs) [refs[current.index], refs[other]] = [refs[other], refs[current.index]];
+              },
+              'huntMoved',
+              () => {
+                huntDrafts.delete(draftKey);
+                huntDrafts.delete(`${current.mode}:${current.index + delta}`);
+                huntSelection = { mode: current.mode, index: current.index + delta };
+              },
+            ),
+          current.index + delta < 0 || current.index + delta >= course.steps[current.mode].length,
+        );
+    }
+    panel.append(actions);
+    return panel;
+  }
   function refresh() {
+    paint();
+    cleanFields = fieldValues();
+  }
+  function paint() {
     if (disposed) return;
     const course = getCourse();
     container.replaceChildren(element('h3', text('heading')));
@@ -664,6 +1130,7 @@ export function mountActorEditor({ container, getCourse, onChange, locale = 'en'
     selector.addEventListener('change', () => {
       selected = selector.value;
       trackingSelection = null;
+      huntSelection = null;
       refresh();
     });
     container.append(label(text('actor'), selector));
@@ -678,11 +1145,23 @@ export function mountActorEditor({ container, getCourse, onChange, locale = 'en'
     const toolbar = element('div', undefined, 'button-row');
     toolbar.append(
       label(text('kind'), kind),
-      button(text('add'), addActor),
+      button(text('add'), () => addActor()),
       button(text('remove'), removeActor, !selected),
     );
     container.append(toolbar, element('p', text('budget'), 'hint'));
-    container.append(renderTracking(course));
+    container.append(
+      renderHunt(course),
+      renderTracking(course),
+      renderPursuitEditor({
+        document,
+        course,
+        selected,
+        draft: pursuitDraft,
+        locale: typeof locale === 'function' ? locale() : locale,
+        change: (mutator) => change(mutator, 'updated', () => {}, { pursuit: true }),
+        busy,
+      }),
+    );
     if (!selected) {
       container.append(announcement);
       return;
@@ -693,12 +1172,17 @@ export function mountActorEditor({ container, getCourse, onChange, locale = 'en'
         (step) => step.type === 'hunt-contact-v1' && step.targets.includes(actor.id),
       ),
     );
-    if (contactTarget) {
-      const language = (typeof locale === 'function' ? locale() : locale) === 'uk' ? 'uk' : 'en';
-      const family = actor.speed > 0 ? 'patroller' : 'lookout';
-      const guide = actorFieldGuide(family, language);
+    const language = (typeof locale === 'function' ? locale() : locale) === 'uk' ? 'uk' : 'en',
+      nativeGuides = MODES.map((mode) => ({
+        mode,
+        guide: worldEnemyGuide(course, { mode, locale: language, actorId: actor.id }).rows[0],
+      })).filter(({ guide }) => guide),
+      guide = nativeGuides[0]?.guide;
+    if (guide) {
+      const family = guide.family;
       const section = element('fieldset'),
         legend = element('legend', language === 'uk' ? 'Довідник цілей' : 'Target field guide');
+      section.dataset.actorFieldGuide = actor.id;
       const preview = element('canvas');
       preview.width = preview.height = 112;
       preview.style.cssText = 'display:block;width:5rem;height:5rem;image-rendering:pixelated;';
@@ -726,6 +1210,16 @@ export function mountActorEditor({ container, getCourse, onChange, locale = 'en'
         legend,
         preview,
         element('strong', guide.name),
+        element(
+          'p',
+          guide.optional
+            ? language === 'uk'
+              ? 'Необов’язкове перехоплення · не зараховується до квоти.'
+              : 'Optional catch · no quota credit.'
+            : `${language === 'uk' ? 'Обов’язкова ціль у режимах' : 'Required target in'}: ${nativeGuides
+                .map(({ mode }) => text(mode === 'self-level' ? 'level' : 'acro'))
+                .join(', ')}.`,
+        ),
         element('p', `${guide.goal} ${guide.tell} ${guide.counter}`),
         label(language === 'uk' ? 'Спільний вигляд персонажів' : 'Shared character cast', cast),
       );
@@ -733,12 +1227,17 @@ export function mountActorEditor({ container, getCourse, onChange, locale = 'en'
         element(
           'p',
           language === 'uk'
-            ? 'Вигляд спільний із грою. Цей льотний персонаж використовує справжній наземний маршрут; клітинкові щити й ривки не підмінюють його фізику.'
-            : 'Appearance is shared with the game. This flight actor uses a native ground route; grid shields and bursts do not replace its physics.',
+            ? course.pursuit
+              ? 'Нативна фізика польоту, прийнятий граф, напрямок і фаза визначають рух та вразливість.'
+              : 'Вигляд спільний із грою. Цей льотний персонаж використовує справжній наземний маршрут; клітинкові щити й ривки не підмінюють його фізику.'
+            : course.pursuit
+              ? 'Native flight physics and the accepted graph, heading and phase control movement and vulnerability.'
+              : 'Appearance is shared with the game. This flight actor uses a native ground route; grid shields and bursts do not replace its physics.',
           'hint',
         ),
       );
       container.append(section);
+      if (!guide.optional) container.append(element('p', text('huntEligible'), 'hint'));
       paint();
     }
     const role = choose(
@@ -746,8 +1245,44 @@ export function mountActorEditor({ container, getCourse, onChange, locale = 'en'
       actor.role ?? 'hostile',
       text('role'),
     );
+    role.dataset.actorRole = '';
     if (actor.type !== 'hazard')
       container.append(label(text('role'), role), element('p', text('roleHelp'), 'hint'));
+    if (course.pursuit && actor.type === 'vehicle') {
+      const names = {
+        'field-utility': ['Field utility car', 'Польовий автомобіль'],
+        'cargo-truck': ['Cargo truck', 'Вантажівка'],
+        'armored-carrier': ['Armored carrier', 'Бронетранспортер'],
+        'field-tank': ['Tracked tank', 'Гусеничний танк'],
+        'relay-truck': ['Relay truck', 'Машина зв’язку'],
+      };
+      const uk = (typeof locale === 'function' ? locale() : locale) === 'uk';
+      const model = choose(
+        [
+          ['', uk ? 'Звичайний вигляд' : 'Original appearance'],
+          ...WORLD_VEHICLE_MODELS.map((id) => [id, names[id][uk ? 1 : 0]]),
+        ],
+        actor.vehicleModel ?? '',
+        uk ? 'Модель техніки' : 'Vehicle model',
+      );
+      model.addEventListener('change', () =>
+        change((next) => {
+          const target = actorIn(next);
+          if (model.value) target.vehicleModel = model.value;
+          else delete target.vehicleModel;
+        }),
+      );
+      container.append(
+        label(uk ? 'Модель техніки' : 'Vehicle model', model),
+        element(
+          'p',
+          uk
+            ? 'Лише вигляд. Колізії, маршрути та зброя використовують наявні правила техніки.'
+            : 'Appearance only. Collision, paths and weapons retain native vehicle rules.',
+          'hint',
+        ),
+      );
+    }
     const position = positionFields(actor.position, course.bounds, text('position'));
     container.append(element('h4', text('position')), position.group);
     const numericGroup = element('div', undefined, 'numeric-grid');
@@ -779,6 +1314,7 @@ export function mountActorEditor({ container, getCourse, onChange, locale = 'en'
     const updateWeaponFields = () => {
       for (const key of ['fireEveryTicks', 'projectileSpeed', 'range'])
         fields[key].disabled = actor.type === 'hazard' || role.value !== 'hostile';
+      if (contactTarget) fields.fireEveryTicks.disabled = true;
       fields.damage.disabled = actor.type !== 'hazard' && role.value !== 'hostile';
     };
     role.addEventListener('change', updateWeaponFields);
@@ -790,6 +1326,11 @@ export function mountActorEditor({ container, getCourse, onChange, locale = 'en'
         change((next, bindings) => {
           const target = actorIn(next);
           target.position = position.read();
+          const policy = next.pursuit?.actors.find((item) => item.id === target.id);
+          if (policy)
+            next.pursuit.nodes.find((node) => node.id === policy.start).position = {
+              ...target.position,
+            };
           for (const [key, , scale] of [...basic, ...extra])
             target[key] = numeric(fields[key], scale);
           if (target.type !== 'hazard') {
@@ -861,6 +1402,18 @@ export function mountActorEditor({ container, getCourse, onChange, locale = 'en'
         !actor.path.length,
       ),
     );
+    if (course.pursuit?.actors.some((policy) => policy.id === actor.id)) {
+      for (const control of routeActions.querySelectorAll('button')) control.disabled = true;
+      container.append(
+        element(
+          'p',
+          (typeof locale === 'function' ? locale() : locale) === 'uk'
+            ? 'Рухом керує граф переслідування. Змінюйте вузли та цілі в його редакторі.'
+            : 'The pursuit graph owns movement. Edit its nodes and goals in the graph editor.',
+          'hint',
+        ),
+      );
+    }
     container.append(routeActions);
     const jsonDetails = element('details');
     const json = element('textarea');
@@ -923,14 +1476,35 @@ export function mountActorEditor({ container, getCourse, onChange, locale = 'en'
   refresh();
   return {
     refresh,
+    hasPendingChanges: () =>
+      fieldValues() !== cleanFields ||
+      (pursuitDraft.base !== undefined && pursuitDraft.value !== pursuitDraft.base) ||
+      [...huntDrafts.values()].some(
+        ({ original: _original, baseline, ...value }) => JSON.stringify(value) !== baseline,
+      ),
+    discardPendingChanges() {
+      huntDrafts.clear();
+      if (pursuitDraft.base !== undefined) pursuitDraft.value = pursuitDraft.base;
+      refresh();
+    },
     select(id) {
       selected = id;
       trackingSelection = null;
+      huntSelection = null;
       refresh();
     },
     selectObjective(mode, index, { focus = false } = {}) {
       const step = getCourse()?.steps[mode]?.[index];
+      if (MODES.includes(mode) && step?.type === 'hunt-contact-v1') {
+        huntSelection = { mode, index };
+        trackingSelection = null;
+        selected = step.targets[0];
+        refresh();
+        if (focus) focusHunt();
+        return true;
+      }
       if (!MODES.includes(mode) || step?.type !== 'actor-track-v1') return false;
+      huntSelection = null;
       trackingSelection = { mode, index };
       selected = step.actorId;
       refresh();
@@ -940,6 +1514,7 @@ export function mountActorEditor({ container, getCourse, onChange, locale = 'en'
     selected: () => selected,
     dispose() {
       disposed = true;
+      huntDrafts.clear();
       container.replaceChildren();
     },
   };

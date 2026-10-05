@@ -128,7 +128,13 @@ test('Military Field reaches retro campaign terrain and separately leased FPV en
     run = createRun(level()),
     before = authoritativeCheckpoint(run),
     sprites = new Map();
-  for (const slot of ['terrain.slow', 'terrain.lethal', 'enemy.bouncer']) {
+  for (const slot of [
+    'terrain.slow',
+    'terrain.lethal',
+    'enemy.bouncer',
+    `player.${run.classId}.compact`,
+    `player.${run.classId}.detailed`,
+  ]) {
     const asset = manifest.resolved.assets[slot];
     sprites.set(slot, {
       image: { slot, width: asset.file.width, height: asset.file.height },
@@ -144,7 +150,8 @@ test('Military Field reaches retro campaign terrain and separately leased FPV en
   // Actor-only leases intentionally lack world/canvas properties.
   const actors = {
     resolved: manifest.resolved,
-    image: (slot) => (slot.startsWith('enemy.') ? sprites.get(slot) : null),
+    image: (slot) =>
+      slot.startsWith('enemy.') || slot.startsWith('player.') ? sprites.get(slot) : null,
   };
   p.arcadeAdapter = createArcadeAdapter({
     canvasFactory: () => {

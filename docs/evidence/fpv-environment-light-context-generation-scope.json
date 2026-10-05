@@ -1,0 +1,46 @@
+{
+  "format": "fpv-environment-light-context-generation-scope.v1",
+  "before": "a64afef4593a0d97121c9e86844d0ac1d3501367",
+  "rendererSha256": "4e9e632510f32455a32325809522b48fe64c51de7f272364b2b1810fc565c9bc",
+  "rendererBytes": 105805,
+  "byteDelta": 56,
+  "originalInputs": 95,
+  "originalInputBytes": 16758095,
+  "sourceHeadroomBytes": 19121,
+  "checks": [
+    {
+      "name": "dedicated loss epoch initialization",
+      "pass": true
+    },
+    {
+      "name": "capture dedicated loss epoch",
+      "pass": true
+    },
+    {
+      "name": "compare dedicated loss epoch",
+      "pass": true
+    },
+    {
+      "name": "advance epoch only in actual loss handler",
+      "pass": true
+    },
+    {
+      "name": "Whole renderer byte-identical to a64 after only the four enumerated context-epoch substitutions",
+      "pass": true
+    }
+  ],
+  "manualChecks": 63,
+  "existingChecks": 30,
+  "lint": "passed",
+  "formatting": "passed",
+  "fullValidate": {
+    "source": "a64afef4593a0d97121c9e86844d0ac1d3501367",
+    "result": "passed before this correction"
+  },
+  "pending": [
+    "Current-source all-three admission",
+    "Actual admitted editor smoke",
+    "Independent guard review"
+  ],
+  "qualification": "A normal setCourse while controls load must not invalidate editor initialization. Actual graphics loss still invalidates a pending editor, including after restoration. Prior exact browser receipts retain their original source identities."
+}

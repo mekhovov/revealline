@@ -1,0 +1,758 @@
+{
+  "format": "FPVEditorModesSourceOverlayQualification.v1",
+  "startedAt": "2026-10-04T05:19:28.942Z",
+  "status": "failed",
+  "checks": [
+    {
+      "name": "Baseline admitted checksum: game/data-json.mjs",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: game/encounter-display-preferences.mjs",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: game/fpv-entry.mjs",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: game/hunt/actor-art.mjs",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: game/hunt/actor-catalog.mjs",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: game/hunt/preferences.mjs",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: game/hunt/presentation-catalog.mjs",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: game/i18n/bootstrap.mjs",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: game/i18n/catalogs.mjs",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: game/i18n/index.mjs",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: game/presentation/theme-system.mjs",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: game/profile-database.mjs",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: game/profile-storage.mjs",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: game/rewards/audio-groups.mjs",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: game/rewards/exploration.mjs",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: game/rewards/learning-profiles.mjs",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: game/rewards/model.mjs",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: game/rewards/store.mjs",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: game/ui/art/identity/fpv-line/wordmark.png",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: game/ui/art/menu-scenes/fpv-portrait.webp",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: game/ui/art/menu-scenes/fpv.webp",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: game/ui/native-menu-icons.mjs",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: game/ui/reward-knowledge.mjs",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: game/vendor/i18next-26.4.2.min.js",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: game/vendor/I18NEXT-LICENSE.txt",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: launcher/app.mjs",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: launcher/app.webmanifest",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: launcher/context.mjs",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: launcher/icons/icon-192.png",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: launcher/icons/icon-512.png",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: launcher/index.html",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: launcher/navigation.mjs",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: launcher/worker.js",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-practice/civilian-fpv/attempts.mjs",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-practice/civilian-fpv/beginner-coach.mjs",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-practice/civilian-fpv/catalogue.mjs",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-practice/civilian-fpv/content-definitions.mjs",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-practice/civilian-fpv/demonstrations.mjs",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-practice/civilian-fpv/expressive-hunt-courses.mjs",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-practice/civilian-fpv/flight-fullscreen.mjs",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-practice/civilian-fpv/flight-sectors.mjs",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-practice/civilian-fpv/input.mjs",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-practice/civilian-fpv/math.mjs",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-practice/civilian-fpv/model.mjs",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-practice/civilian-fpv/notebook.mjs",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-practice/civilian-fpv/offline.mjs",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-practice/civilian-fpv/playlists.mjs",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-practice/civilian-fpv/radio-controls.mjs",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-practice/civilian-fpv/radio-guide.mjs",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-practice/civilian-fpv/radio-profile.mjs",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-practice/civilian-fpv/radio-runtime.mjs",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-practice/civilian-fpv/radio-session.mjs",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-practice/civilian-fpv/radio-setup.mjs",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-practice/civilian-fpv/README.md",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-practice/civilian-fpv/renderer.mjs",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-practice/civilian-fpv/rotation-table.mjs",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-practice/civilian-fpv/sim-presentation.mjs",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-practice/civilian-fpv/snake-hunt-catalogue.mjs",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-practice/civilian-fpv/snake-hunt-presentation.mjs",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-practice/civilian-fpv/snake-hunt.mjs",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-practice/civilian-fpv/style.css",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-practice/civilian-fpv/vendor/addons/controls/TransformControls.js",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-practice/civilian-fpv/vendor/addons/loaders/GLTFLoader.js",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-practice/civilian-fpv/vendor/addons/provenance.json",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-practice/civilian-fpv/vendor/addons/utils/BufferGeometryUtils.js",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-practice/civilian-fpv/vendor/addons/utils/SkeletonUtils.js",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-practice/civilian-fpv/vendor/LICENSE.txt",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-practice/civilian-fpv/vendor/rapier/LICENSE",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-practice/civilian-fpv/vendor/rapier/provenance.json",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-practice/civilian-fpv/vendor/rapier/rapier.mjs",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-practice/civilian-fpv/vendor/three.core.js",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-practice/civilian-fpv/vendor/three.module.js",
+      "passed": true
+    },
+    {
+      "name": "Source overlay checksum: optional-practice/civilian-fpv/world-app.mjs",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-practice/civilian-fpv/world-assets.mjs",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-practice/civilian-fpv/world-catalogue.mjs",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-practice/civilian-fpv/world-collision.mjs",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-practice/civilian-fpv/world-content.mjs",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-practice/civilian-fpv/world-demonstrations.mjs",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-practice/civilian-fpv/world-editor.mjs",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-practice/civilian-fpv/world-model.mjs",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-practice/civilian-fpv/world-records.mjs",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-practice/civilian-fpv/world-store.mjs",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-practice/civilian-fpv/world-style.css",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-practice/civilian-fpv/world-themes.mjs",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-practice/civilian-fpv/world-visuals.mjs",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-practice/civilian-fpv/world-zip.mjs",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-practice/fpv-worlds/app.webmanifest",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-practice/fpv-worlds/guide.html",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-practice/fpv-worlds/icons/icon-192.png",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-practice/fpv-worlds/icons/icon-512.png",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-practice/fpv-worlds/index.html",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-practice/fpv-worlds/package-info.json",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-practice/fpv-worlds/preview.png",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-practice/fpv-worlds/README.md",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-practice/fpv-worlds/SCENERY-LICENSES.txt",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-practice/fpv-worlds/scenery-provenance.json",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-practice/fpv-worlds/worker.js",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-practice/guide.mjs",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-practice/install-context.mjs",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-practice/navigation.mjs",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-package.json",
+      "passed": true
+    },
+    {
+      "name": "Instrumented HTML checksum",
+      "passed": true
+    },
+    {
+      "name": "Harness checksum: index.html",
+      "passed": true
+    },
+    {
+      "name": "Harness checksum: browser-harness.mjs",
+      "passed": true
+    },
+    {
+      "name": "Public input checksum: inputs/divergent.zip",
+      "passed": true
+    },
+    {
+      "name": "Public input checksum: inputs/mode-bindings-shared.zip",
+      "passed": true
+    },
+    {
+      "name": "Public input checksum: inputs/mode-bindings-shared.project.json",
+      "passed": true
+    },
+    {
+      "name": "Public input checksum: inputs/mode-bindings-differ.zip",
+      "passed": true
+    },
+    {
+      "name": "Public input checksum: inputs/mode-bindings-differ.project.json",
+      "passed": true
+    },
+    {
+      "name": "Public input checksum: inputs/source-updated.glb",
+      "passed": true
+    },
+    {
+      "name": "Unmodified automatic mount guard",
+      "passed": true
+    },
+    {
+      "name": "Divergent starter imported exactly",
+      "passed": true
+    },
+    {
+      "name": "Divergent routes default to Self-level and disable Both",
+      "passed": true
+    },
+    {
+      "name": "Public JSON accepted independently ordered, unequal-length routes",
+      "passed": true
+    },
+    {
+      "name": "Criterion list follows shorter Acro route",
+      "passed": true
+    },
+    {
+      "name": "Numeric move changes only selected Acro criterion",
+      "passed": true
+    },
+    {
+      "name": "Undo restores exact pre-Acro-edit course",
+      "passed": true
+    },
+    {
+      "name": "Undo restores captured Acro mode and selection",
+      "passed": true
+    },
+    {
+      "name": "Redo restores exact edited course",
+      "passed": true
+    },
+    {
+      "name": "Redo restores context captured by Undo",
+      "passed": true
+    },
+    {
+      "name": "Reorder changes only Acro despite differing Self-level order",
+      "passed": true
+    },
+    {
+      "name": "Reorder selects moved Acro objective",
+      "passed": true
+    },
+    {
+      "name": "Reorder Undo exact",
+      "passed": true
+    },
+    {
+      "name": "Reorder Redo exact",
+      "passed": true
+    },
+    {
+      "name": "Duplicate adds exactly one selected Acro criterion",
+      "passed": true
+    },
+    {
+      "name": "Duplicate selects new Acro criterion",
+      "passed": true
+    },
+    {
+      "name": "Duplicate Undo exact",
+      "passed": true
+    },
+    {
+      "name": "Duplicate Redo exact",
+      "passed": true
+    },
+    {
+      "name": "Delete removes only selected Acro criterion",
+      "passed": true
+    },
+    {
+      "name": "Delete Undo exact",
+      "passed": true
+    },
+    {
+      "name": "Delete Redo exact",
+      "passed": true
+    },
+    {
+      "name": "Acro order/edit ZIP: one editable course",
+      "passed": true
+    },
+    {
+      "name": "Acro order/edit ZIP: both mode arrays and exact course identity",
+      "passed": true
+    },
+    {
+      "name": "Acro order/edit ZIP: id retained",
+      "passed": true
+    },
+    {
+      "name": "Acro order/edit ZIP: revision retained",
+      "passed": true
+    },
+    {
+      "name": "Acro order/edit ZIP: authoring retained",
+      "passed": true
+    },
+    {
+      "name": "Acro order/edit ZIP: source retained",
+      "passed": true
+    },
+    {
+      "name": "Acro order/edit ZIP: provenance retained",
+      "passed": true
+    },
+    {
+      "name": "Acro order/edit ZIP: edited definitions compile exactly",
+      "passed": true
+    },
+    {
+      "name": "Acro order/edit install: pack export exact course",
+      "passed": true
+    },
+    {
+      "name": "Acro order/edit install: edited revision active",
+      "passed": true
+    },
+    {
+      "name": "Acro order/edit install: original revision retained",
+      "passed": true
+    },
+    {
+      "name": "Acro order/edit install: retained original course unchanged",
+      "passed": true
+    },
+    {
+      "name": "preview-challenge: explicit Acro overrides previous flight setting",
+      "passed": true
+    },
+    {
+      "name": "preview-challenge: preview starts disarmed",
+      "passed": true
+    },
+    {
+      "name": "preview-challenge: actual shell Home menu opens",
+      "passed": true
+    },
+    {
+      "name": "preview-challenge: menu pauses without arming",
+      "passed": true
+    },
+    {
+      "name": "preview-challenge: public pause guidance is shown",
+      "passed": true
+    },
+    {
+      "name": "preview-challenge: native Home cancel returns to preview",
+      "passed": true
+    },
+    {
+      "name": "preview-challenge: dismissing Home does not resume or arm",
+      "passed": true
+    },
+    {
+      "name": "preview-challenge: selected editor mode retained",
+      "passed": true
+    },
+    {
+      "name": "preview-world: explicit Acro overrides previous flight setting",
+      "passed": true
+    },
+    {
+      "name": "preview-world: preview starts disarmed",
+      "passed": true
+    },
+    {
+      "name": "preview-world: actual shell Home menu opens",
+      "passed": true
+    },
+    {
+      "name": "preview-world: menu pauses without arming",
+      "passed": true
+    },
+    {
+      "name": "preview-world: public pause guidance is shown",
+      "passed": true
+    },
+    {
+      "name": "preview-world: native Home cancel returns to preview",
+      "passed": true
+    },
+    {
+      "name": "preview-world: dismissing Home does not resume or arm",
+      "passed": true
+    },
+    {
+      "name": "preview-world: selected editor mode retained",
+      "passed": true
+    },
+    {
+      "name": "Ukrainian route-mode label",
+      "passed": true
+    },
+    {
+      "name": "Ukrainian mode choices",
+      "passed": true
+    },
+    {
+      "name": "Ukrainian Acro-only ownership guidance",
+      "passed": true
+    },
+    {
+      "name": "Mode selector fits 390px viewport",
+      "passed": true
+    },
+    {
+      "name": "Mobile Library menu works",
+      "passed": true
+    },
+    {
+      "name": "Mobile Workshop return retains mode",
+      "passed": true
+    },
+    {
+      "name": "English route-mode label restored",
+      "passed": true
+    },
+    {
+      "name": "mode-bindings-shared: matching routes expose Both",
+      "passed": true
+    },
+    {
+      "name": "mode-bindings-shared: Both translates each mode exactly once",
+      "passed": false
+    }
+  ],
+  "exports": [
+    {
+      "label": "Acro order/edit ZIP",
+      "filename": "creator-industrial-split-level.zip",
+      "bytes": 16736,
+      "sha256": "69d135be81c32760d2c71936fe4a82a9aada3e501782f98f4d808f7f3fccf924"
+    }
+  ],
+  "packRevisions": [
+    {
+      "label": "Acro order/edit install",
+      "id": "creator-industrial-split-level",
+      "original": "311b04890037f6b5681dd1fd0067f72292a888bfd2e8cb5b605e8de707aa8711",
+      "edited": "a0c001c08789324115cefeb1841d17aa35b9b38984c57b2ac7857298c76c8957",
+      "retained": 2
+    }
+  ],
+  "limitations": [
+    "Source overlay over the full admitted closure; not package admission.",
+    "Trusted pointer drag required for spatial acceptance.",
+    "Online native-IDB reopening only; no offline, controller, novice or performance acceptance."
+  ],
+  "message": "FAIL: mode-bindings-shared: Both translates each mode exactly once. Preserve this receipt and fixture.",
+  "fixtureSha256": "fe74e07008c0b7351e479d906a4c70d74bf1fe63dedf5d8ef3f7b21aa31dbe87",
+  "baseline": {
+    "source": "d9ad2561ee1d7685ef97961478b7de30278c1e48",
+    "host": "6bd30bcd11caa83ccdb36d9bb7c826a9735b5d4549bb49008494921a6a0ba4cc",
+    "packageRevision": "b866d9b4145da43a01e9699e0383ef2fb29143bdf9723bb09d3c381967030bd4"
+  },
+  "overlay": {
+    "path": "optional-practice/civilian-fpv/world-app.mjs",
+    "bytes": 250540,
+    "sha256": "bd2449768d465ecf6dd3415263dac00b7ab6086b5355c35418a67562acdfa394",
+    "sourceCommit": "c8df0af001ab8eae21f983ed15e439e445d03006"
+  },
+  "storagePrefix": "fpv-editor-modes-05b3f7cc-c3b0-47af-a706-254f0becb8cd:",
+  "error": "Error: mode-bindings-shared: Both translates each mode exactly once\n    at must (http://127.0.0.1:8887/browser-harness.mjs:26:18)\n    at eq (http://127.0.0.1:8887/browser-harness.mjs:28:28)\n    at stageOne (http://127.0.0.1:8887/browser-harness.mjs:603:5)",
+  "failureDOM": {
+    "url": "http://127.0.0.1:8887/player/optional-practice/fpv-worlds/#creator",
+    "routeMode": "both",
+    "selectedCriterion": "0",
+    "flightStatus": "Paused. Arm deliberately to continue.",
+    "openDialogs": [
+      {
+        "id": "worlds-shell-missions-dialog",
+        "text": "Select Mission\n      \n        \n        FLIGHT SIMULATOR\n      \n      \n        Fly\n        Learn to fly\n        My playlists\n        Workshop\n        Library\n      \n      \n        Back to FPV / LINE\n        Sound off\n        Settings\n        \n          EN\n          УК\n        \n      Fullscreen\n    \n      \n        \n          \n            THE WORLD IS YOUR FLIGHT LINE\n            Find your line.\n            From your first hover to your next perfect lap. Pick a world and make it yours.\n            \n              Start flying\n              Choose a world\n            \n            Set up your radio\n          \n          \n            FPV / LINESIMULATOR EDITION\n          \n          \n            198challenges16worldsAll open. Your pace.\n          \n        \n        \n          \n            YOUR FIRST FLIGHT\n            Never flown before? Start right here.\n            Start with 14 beginner Acro lessons and clear live control diagrams. Continue into precision, navigation and raised landings when you are ready. Every lesson is open.\n            104 recorded examples cover all 52 Academy, Woodland Park, Ukrainian Courtyard, Warehouse, Racing Stadium and Container Yard challenges in both modes. Parking Garage examples are still in production.\n          \n          \n            Start Flight School\n            \n              Self-level\n              Acro\n            \n            Watch first flight\n            Try first flight\n          \n        \n        \n          \n            FLIGHT DESTINATIONS\n            Choose a world\n          \n          Explore, race or test your precision.\n        \n        All worldsSnake HuntFlight AcademyUkrainian HorizonsPixel CircuitField OperationsMy worlds\n        \n          Search & filters\n          \n            All activitiesCatch humanoidsOrientationExplorePrecisionEvasionRaceCombatMixed challengeAcademy drillFollow a subjectObserve a subject\n              All difficulties\n              Beginner\n              Intermediate\n              Advanced\n              All progress\n              Completed\n              Not completed\n            \n          \n        \n        Circuit stadium27 flights · 0 ✓Pixel warehouse29 flights · 0 ✓Parking garage18 flights · 0 ✓Container yard15 flights · 0 ✓Coastal airfield5 flights · 0 ✓Amber quarry5 flights · 0 ✓Skyline campus5 flights · 0 ✓Harvest orchard5 flights · 0 ✓Solar research park5 flights · 0 ✓Railworks5 flights · 0 ✓Training hangar12 flights · 0 ✓Open meadow43 flights · 0 ✓Woodland park11 flights · 0 ✓Ukrainian courtyard11 flights · 0 ✓Industrial starter · Split level1 flights · 0 ✓mode-bindings-shared1 flights · 0 ✓Circuit stadiumFind a faster lineSnake Hunt01First threeCatch humanoids · beginner · 4 minFly+02Clockwise catchCatch humanoids · beginner · 4 minFly+03Wide figure eightCatch humanoids · intermediate · 4 minFly+04Choose your loopCatch humanoids · intermediate · 4 minFly+05Spiral inwardCatch humanoids · intermediate · 4 minFly+06Double circuitCatch humanoids · advanced · 4 minFly+07Loop interceptCatch humanoids · beginner · 4 minFly+08Crossing patrolsCatch humanoids · intermediate · 4 minFly+09Courtyard approachesCatch humanoids · beginner · 4 minFly+10Cross-route choiceCatch humanoids · intermediate · 4 minFly+11Crossing ArrivalsCatch humanoids · intermediate · 4 minFly+12Forked DepotCatch humanoids · advanced · 4 minFly+13Return SlotCatch humanoids · intermediate · 4 minFly+14Three-yard FinaleCatch humanoids · advanced · 4 minFly+15Starting gridOrientation · beginner · 3 minWatch exampleFly+16Wide ovalRace · intermediate · 3 minWatch exampleFly+17Neon chicaneRace · intermediate · 3 minWatch exampleFly+18Altitude ladderRace · intermediate · 3 minWatch exampleFly+19Double hairpinRace · intermediate · 3 minWatch exampleFly+20Podium approachPrecision · intermediate · 3 minWatch exampleFly+21Crossing lightsEvasion · intermediate · 3 minWatch exampleFly+22Stadium finalMixed challenge · advanced · 3 minWatch exampleFly+23Wide corner, tight exitAcademy drill · intermediate · 6 minWatch exampleFly+24Slalom rhythmAcademy drill · advanced · 6 minWatch exampleFly+25Precision pilot routeAcademy drill · advanced · 9 minWatch exampleFly+26Yaw through 360 degreesAcademy drill · advanced · 7 minWatch exampleFly+27Race line with trick zonesAcademy drill · advanced · 11 minWatch exampleFly+Free flight\n        No challenges match these filters.\n      \n      \n        \n          \n            ACRO FLIGHT SCHOOL · BUILD YOUR MASTERY\n            Every pilot starts here.\n            Build your skills through 46 guided Acro lessons across Beginner, Experienced, Advanced, Pro and Master tiers. Watch the complete route, take control and practise each real objective. 12 optional self-level lessons are also open.\n            \n              Begin lesson 01\n              Set up your radio\n            \n            Choose Self-level or Acro. Your mode choice is kept; your usual camera and response settings return when you leave. All lessons are open.\n          \n          \n            \n              \n                \n                  \n                \n              \n              \n              \n              \n                \n                \n                \n                \n              \n              \n                \n                \n                  \n                  \n                  \n                  \n                  \n                \n                \n              \n            \n            \n              01 · Lift02 · Control03 · Explore\n            \n          \n        \n        \n          \n            0 of 46 Acro lessons complete\n            Acro is your main course · 0/12 optional self-level lessons complete\n          \n          \n        \n        \n          01See the control02Watch the response03Fly it yourself\n        \n        \n          \n            Choose a learning tier\n            \n              All lessons · 58\n              Beginner · 14\n              Experienced · 8\n              Advanced · 8\n              Pro · 8\n              Master · 8\n              Optional self-level · 12\n            \n          \n        \n        01—04Lift, understand tilt, find your hover.01ACRO · BeginnerYour first Acro takeoffMeet all four controls, arm deliberately and make a small lift.3 guided steps · about 4 minStart lessonWatch demonstration · Acro02ACRO · BeginnerThrust, climb and descentVisit a low target, climb to the high target and descend under control.4 guided steps · about 5 minStart lessonWatch demonstration · Acro03ACRO · BeginnerAcro: the tilt staysTry the key Acro difference: tip a little, centre the stick, then actively level again.4 guided steps · about 5 minStart lessonWatch demonstration · Acro04ACRO · BeginnerLevel, then find your hoverPractise an intentional tilt, active levelling and a calm hover.4 guided steps · about 5 minStart lessonWatch demonstration · Acro05—08Direct the drift. Control your height.05ACRO · BeginnerAcro: your first lineUse small Acro rotations to fly one wide gate, settle, and land.4 guided steps · about 6 minStart lessonWatch demonstration · Acro06ACRO · BeginnerRoll and lateral brakingMove right, brake, then cross left without turning the nose.4 guided steps · about 5 minStart lessonWatch demonstration · Acro07ACRO · BeginnerYaw: heading is not travelTurn on the spot, then travel toward the new heading.6 guided steps · about 5 minStart lessonWatch demonstration · Acro08ACRO · BeginnerKeep height while tiltedCross two gates at different heights and settle on the far pad.5 guided steps · about 5 minStart lessonWatch demonstration · Acro09—11Join the turns. Read the FPV view.09ACRO · BeginnerCoordinated left and right turnsFly a wide right corner and a wide left corner with the nose following your path.5 guided steps · about 6 minStart lessonWatch demonstration · Acro10ACRO · BeginnerA gentle figure eightJoin two wide loops, changing turn direction through the centre.10 guided steps · about 7 minStart lessonWatch demonstration · Acro11ACRO · BeginnerRead the FPV horizonUse the horizon, compass and two landmarks to judge attitude and movement.5 guided steps · about 5 minStart lessonWatch demonstration · Acro12—14Gates, recovery and your solo route.12ACRO · BeginnerThree gates, one smooth lineFly ordered gates with small lateral and height corrections.5 guided steps · about 6 minStart lessonWatch demonstration · Acro13ACRO · BeginnerRecover and land preciselyPractise a small upset, recover your horizon and settle onto a smaller target.4 guided steps · about 6 minStart lessonWatch demonstration · Acro14ACRO · BeginnerYour first solo Acro routeCombine takeoff, gates, both turning directions, braking and a soft landing.8 guided steps · about 8 minStart lessonWatch demonstration · Acro15—22Experienced · Make every movement deliberate.15ACRO · ExperiencedBraking marksChoose where to brake on northbound and eastbound approaches, then land.7 guided steps · about 6 minStart lessonWatch demonstration · Acro16ACRO · ExperiencedAltitude staircaseVisit four offset height stations while controlling climb and descent.5 guided steps · about 6 minStart lessonWatch demonstration · Acro17ACRO · ExperiencedCompass crossVisit four stations while pointing north, then turn south and land.7 guided steps · about 6 minStart lessonWatch demonstration · Acro18ACRO · ExperiencedBackward returnFly out, stop, then return backward with the nose still facing outward.6 guided steps · about 6 minStart lessonWatch demonstration · Acro19ACRO · ExperiencedS-turn handoverLink bends of different spacing through a woodland clearing.8 guided steps · about 6 minStart lessonWatch demonstration · Acro20ACRO · ExperiencedWide corner, tight exitUse a broad first corner to line up a narrow second exit.8 guided steps · about 6 minStart lessonWatch demonstration · Acro21ACRO · ExperiencedThree landing approachesLand at three pads using a straight, sideways and diagonal approach.9 guided steps · about 6 minStart lessonWatch demonstration · Acro22ACRO · ExperiencedLandmark rallyFly a complete clearing route with two deliberate heading checks.10 guided steps · about 8 minStart lessonWatch demonstration · Acro23—30Advanced · Find the line through complex spaces.23ACRO · AdvancedSlalom rhythmWeave through five openings with uneven spacing, then stop in the braking bay.8 guided steps · about 6 minStart lessonWatch demonstration · Acro24ACRO · AdvancedHigh–low ribbonClimb over a stack, descend under a beam and leave through a side opening.9 guided steps · about 6 minStart lessonWatch demonstration · Acro25ACRO · AdvancedPlatform approachLand on two physical platforms, then return to the ground.9 guided steps · about 6 minStart lessonWatch demonstration · Acro26ACRO · AdvancedCorridor turnaroundFly an outbound aisle, turn in the wider bay and return through a neighbouring aisle.9 guided steps · about 6 minStart lessonWatch demonstration · Acro27ACRO · AdvancedOver, around, underCross a low wall, round its end and return beneath a broad arch.10 guided steps · about 6 minStart lessonWatch demonstration · Acro28ACRO · AdvancedRead the landmarksUse distinct tree groups and open spaces to choose each next route leg.9 guided steps · about 6 minStart lessonWatch demonstration · Acro29ACRO · AdvancedBetween floorsUse a clear opening to reach a deck, land on it, then return through another route.11 guided steps · about 8 minStart lessonWatch demonstration · Acro30ACRO · AdvancedPrecision pilot routeLink a slalom, changing heights, a stop box and a raised landing in one flight.12 guided steps · about 9 minStart lessonWatch demonstration · Acro31—38Pro · Refine demanding flight techniques.31ACRO · ProRoll and recoverComplete a full roll each way and recover between them.6 guided steps · about 7 minStart lessonWatch demonstration · Acro32ACRO · ProForward and backward flipLearn full pitch rotations in both directions, with a calm recovery.6 guided steps · about 7 minStart lessonWatch demonstration · Acro33ACRO · ProYaw through 360 degreesTurn the heading around each way while keeping a restrained position.6 guided steps · about 7 minStart lessonWatch demonstration · Acro34ACRO · ProRecognize inverted, recoverPause the rotation upside down briefly, then recover through the instructed side.6 guided steps · about 7 minStart lessonWatch demonstration · Acro35ACRO · ProSplit-S returnRoll inverted, descend through a half-loop and leave in the opposite direction.6 guided steps · about 9 minStart lessonWatch demonstration · Acro36ACRO · ProImmelmann climb-outClimb through a half-loop, then roll upright into the reversed exit.6 guided steps · about 8 minStart lessonWatch demonstration · Acro37ACRO · ProDive, judge, pull outUse a clear dive marker, then recover with height still available.6 guided steps · about 8 minStart lessonWatch demonstration · Acro38ACRO · ProFirst power loopComplete a real loop around a broad beam and recover below it.5 guided steps · about 8 minStart lessonWatch demonstration · Acro39—46Master · Bring your skills together.39ACRO · MasterBarrel pathCombine a full roll with a spatial spiral and continuing forward travel.5 guided steps · about 9 minStart lessonWatch demonstration · Acro40ACRO · MasterOrbit the landmarkCircle a landmark in both directions while keeping the nose generally toward it.7 guided steps · about 9 minStart lessonWatch demonstration · Acro41ACRO · MasterClimbing corkscrewMake two full circuits around the training tower while steadily gaining height.5 guided steps · about 9 minStart lessonWatch demonstration · Acro42ACRO · MasterInverted turn and exitUse upward momentum, then link a half-roll, inverted yaw and controlled recovery.7 guided steps · about 9 minStart lessonWatch demonstration · Acro43ACRO · MasterLoop into a rollJoin a power loop to a separate roll zone without resetting the flight.7 guided steps · about 10 minStart lessonWatch demonstration · Acro44ACRO · MasterSplit-S into an orbitUse the descending reverse exit to prepare a full landmark orbit.8 guided steps · about 11 minStart lessonWatch demonstration · Acro45ACRO · MasterRace line with trick zonesFly a slalom, a marked roll zone and a controlled dive before the return gates.12 guided steps · about 11 minStart lessonWatch demonstration · Acro46ACRO · MasterMaster flightCombine an Immelmann, high slalom, Split-S, power loop and physical platform landing.17 guided steps · about 12 minStart lessonWatch demonstration · Acro12Optional: practise with self-level assistance0/12 complete · open lessons01SELF-LEVELMeet your droneMeet the four controls, prepare on the pad, and make a tiny first hop.3 guided steps · about 3 minStart lesson02SELF-LEVELUp, down, under controlUse throttle to visit two heights, then return softly to the pad.3 guided steps · about 3 minStart lesson03SELF-LEVELFind your hoverRise to the practice box and hold a calm hover for three seconds.3 guided steps · about 4 minStart lesson04SELF-LEVELTurn the nose: yawHover, face right, face left, then face the front again.5 guided steps · about 4 minStart lesson05SELF-LEVELForward with pitchTilt the nose forward, pass a wide marker, then level and slow down.4 guided steps · about 4 minStart lesson06SELF-LEVELSlide with rollSlide right and left while keeping the nose facing forward.4 guided steps · about 4 minStart lesson07SELF-LEVELBrake, do not chaseBuild speed, stop in a roomy box, reverse gently, and stop again.5 guided steps · about 5 minStart lesson08SELF-LEVELKeep height while movingFly forward to a higher box, then descend into a lower box while moving.4 guided steps · about 4 minStart lesson09SELF-LEVELYour first cornerFly a short straight, turn the nose right, and start a new straight.5 guided steps · about 5 minStart lesson10SELF-LEVELSee through the gogglesFly from the drone camera, read the horizon, and approach two landmarks calmly.4 guided steps · about 4 minStart lesson11SELF-LEVELThree friendly gatesFollow three wide, gentle openings in order and land beyond the last one.5 guided steps · about 5 minStart lesson12SELF-LEVELYour first solo routePut it together: lift, travel, turn, pass a gate, hover and land.6 guided steps · about 6 minStart lesson\n        \n          \n            Your next adventure is waiting.\n            Use what you learned in Academy drills, open exploration and your first races.\n          \n          Choose a world\n        \n      \n      \n        YOUR FLIGHT SEQUENCE\n        My playlists\n        Mix worlds and activities. Repeat a challenge as often as you like.\n        \n          \n            Collections & saved playlists\n            Snake Hunt · Open loops6 challenges · r1OpenSnake Hunt · Weave and return6 challenges · r1OpenSnake Hunt · Height changes6 challenges · r1OpenSnake Hunt · Moving quarry6 challenges · r1OpenSnake Hunt · Patrol interception6 challenges · r1OpenSnake Hunt · Flight route choices6 challenges · r1OpenSnake Hunt · Ground Routes6 challenges · r1OpenSnake Hunt · Approach Windows6 challenges · r1OpenSnake Hunt48 challenges · r1OpenFlight Academy12 challenges · r1OpenUkrainian Horizons16 challenges · r1OpenPixel Circuit16 challenges · r1OpenField Operations16 challenges · r1OpenCoastal airfield5 challenges · r1OpenAmber quarry5 challenges · r1OpenSkyline campus5 challenges · r1OpenHarvest orchard5 challenges · r1OpenSolar research park5 challenges · r1OpenRailworks5 challenges · r1Open\n            Import playlist\n          \n          \n            Playlist title\n            \n            Use + on any challenge to add it here.\n            \n              Fly playlistSaveExportClear\n            \n          \n        \n      \n      \n        BUILD YOUR LINE\n        From an idea to a flight.\n        Start with a challenge, change its route, then test your own version. Import a GLB world\n          to go further.\n        \n          \n            Authored theme\n                Flight Academy\n                Ukrainian Horizons\n                Pixel Circuit\n                Field Operations\n              Snap\n                0.25 m\n                1 m\n                Free\n              Reset viewSelect a route marker, drag its arrows; drag empty space to orbit, scroll to zoom.\n          \n          Preview appearance: Flight Academy.\n        \n        \n          \n            Challenge editor\n            Starting challengeFirst threeClockwise catchWide figure eightChoose your loopSpiral inwardDouble circuitThree aislesAlternating doorsOutside the pillarsLong switchbackDiagonal threadingExit the coilLow, high, lowAscending arcRoof islandsOver your echoDescending staircaseStacked figure eightMeet the walkersCrossing patrolsChase the cornersMoving slalomOne-way collectionThe long huntLoop interceptTwo return lanesCorner approachCrossing patrolsIsland bypassStaggered interceptionWarehouse returnCourtyard approachesPlatform perimeterBoundary cutbackCross-route choiceAirfield circuitLow Pass DepotSplit Yard ReturnCrossing ArrivalsShelter ArcFreight SlalomForked DepotLow Roof WindowRoofline ExchangeReturn SlotStaggered RoofsWindow ChainThree-yard FinaleLighthouse approachUnder the harbour bridgeCoastal courierHarbour observerThree pier landingsRead the rock bowlConveyor crossingsHaul-rover escortQuarry pulse arenaSpire and ledgeCampus skylinesOver and underRooftop courier trailRoof-to-roof landingsSkybridge trafficMeet the orchard guideBetween the rowsWatch the harvest cartA walk through the orchardBarn beacon and garden padRead the solar lanesPanel-edge precisionRover inspectionService-lane timingSolar pulse trialSignals and platformsGantry expressInspection runDepot crossing windowsDepot drone duelLift and landHold a volumeForward and brakeSideways and brakeTurn and travelFly a squareTilt, centre and driftApproach a gateLinked turnsSlalomFigure eightFinal circuitClearing check-inThree clearingsTrail beaconsQuiet hoverCanopy windowsCrossing trailLow branch lineWoodland surveyCourtyard welcomeGarden markersRoofline surveyWell-side landingWindow alignmentDelivery crossingLaneway trafficCourtyard collectionLoading bayCentral aislePallet switchbackBeam circuitHigh-low sprintShelf clearanceMoving freightWarehouse circuitStarting gridWide ovalNeon chicaneAltitude ladderDouble hairpinPodium approachCrossing lightsStadium finalYard check-inContainer surveyCrossing craneTarget lanePatrol interruptionDrone interceptionConvoy challengeYard extractionParking approachUpper deck surveyBarrier timingSentry aisleGround patrolGarage interceptVehicle watchGarage extractionMeet your droneUp, down, under controlFind your hoverTurn the nose: yawForward with pitchSlide with rollBrake, do not chaseKeep height while movingYour first cornerSee through the gogglesThree friendly gatesYour first solo routeAcro: the tilt staysAcro: your first lineYour first Acro takeoffThrust, climb and descentLevel, then find your hoverRoll and lateral brakingYaw: heading is not travelKeep height while tiltedCoordinated left and right turnsA gentle figure eightRead the FPV horizonThree gates, one smooth lineRecover and land preciselyYour first solo Acro routeBraking marksAltitude staircaseCompass crossBackward returnS-turn handoverWide corner, tight exitThree landing approachesLandmark rallySlalom rhythmHigh–low ribbonPlatform approachCorridor turnaroundOver, around, underRead the landmarksBetween floorsPrecision pilot routeRoll and recoverForward and backward flipYaw through 360 degreesRecognize inverted, recoverSplit-S returnImmelmann climb-outDive, judge, pull outFirst power loopBarrel pathOrbit the landmarkClimbing corkscrewInverted turn and exitLoop into a rollSplit-S into an orbitRace line with trick zonesMaster flightIndustrial starter · Split levelmode-bindings-shared\n            \n              Create a copyUndoRedo\n            \n            Challenge titleRoute modeBoth matching modesSelf-levelAcroRoute & objectives1. Cross gate2. LandRoute edits: both matching modes\n            \n              X · mY · mZ · m\n            \n            \n              Apply positionDuplicateRemove↑↓\n            \n            Actors & encountersSelected actorNo actors yetNew actor typeDroneGround patrolGround sentryPatrol vehicleMoving hazardAdd actorRemove actorMaximum: 12 actors and 8 hazards.Follow & observeTracking objectiveNew tracking objectiveChoose a non-hazard subject first.\n              Advanced\n              Challenge JSONValidate & apply JSON\n            \n            \n              Test flightExport challenge\n            \n          \n          \n            Import a world\n            Choose a GLB, or a glTF and all its local textures/buffers. Blender and Crocotile\n              export these formats.\n            Choose scene filesChoose scene folderStart a new worldAsset authorSource URL / original workLicense\n                CC0\n                CC BY 4.0\n                Original work\n              \n            \n            \n              Preview worldExport editable projectExport world packInstall pack\n            \n            Keep source IDs when re-exporting. Existing objective overrides are preserved and\n              conflicts are reported.\n          \n        \n      \n      \n        TAKE IT WITH YOU\n        Library\n        Install portable worlds and back up your recorded flights.\n        \n          Import .rlpack / editable projectBack up flight recordsImport recordings / examplesPrepare simulator offlineRequest persistent storage\n        \n        Worlds and recordings are saved on this device. Export backups before clearing browser data.\n        Installed worlds\n        Industrial starter · Split level1 challenges · a0c001c08789EditExport packRemoveRestore revision 311b04890037mode-bindings-shared1 challenges · 665350265993EditExport packRemove\n        \n          Recorded flights & recovery\n          \n        \n      \n      World pack is ready to fly.\n    BackReview missionExpert optionsTab/arrows move; Enter selects; Esc goes back. Controller: release, then press/release A to connect. Calibrated radio: hold yaw right for 0.7 s, then centre to connect; roll/pitch move, hold yaw right/left then centre to confirm/go back."
+      }
+    ],
+    "creatorHidden": false,
+    "packsHidden": true,
+    "studioStatus": "World pack is ready to fly.",
+    "storageStatus": "Worlds and recordings are saved on this device. Export backups before clearing browser data.",
+    "importReport": "",
+    "creatorJSON": "{\n  \"format\": \"FlightCourse.v2\",\n  \"id\": \"mode-bindings-shared-route\",\n  \"revision\": \"r1\",\n  \"environment\": \"mode-bindings-shared\",\n  \"world\": {\n    \"id\": \"mode-bindings-shared\",\n    \"theme\": \"academy\",\n    \"style\": \"warehouse\",\n    \"themeProfile\": {\n      \"format\": \"ThemeProfile.v1\",\n      \"id\": \"academy\",\n      \"revision\": \"r1\",\n      \"title\": {\n        \"en\": \"Flight Academy\",\n        \"uk\": \"Льотна академія\"\n      },\n      \"palette\": {\n        \"sky\": 11916770,\n        \"fog\": 12965849,\n        \"ground\": 5400931,\n        \"wall\": 3625316,\n        \"accent\": 11135933,\n        \"warm\": 15054977\n      },\n      \"textureFilter\": \"linear\",\n      \"drone\": \"racer\",\n      \"characters\": \"civilian\",\n      \"assets\": {\n        \"gate\": \"builtin:gate\",\n        \"marker\": \"builtin:beacon\",\n        \"enemy\": \"builtin:sentry\",\n        \"vehicle\": \"builtin:vehicle\"\n      },\n      \"audio\": {\n        \"ambience\": \"hangar\",\n        \"motor\": \"quad\",\n        \"gate\": \"chime\"\n      },\n      \"ui\": {\n        \"accent\": \"#a2dfcf\",\n        \"font\": \"system-ui\",\n        \"borderRadius\": 12\n      }\n    }\n  },\n  \"locales\": {\n    \"en\": {\n      \"brief\": \"Fly the authored markers, then land at the final pad.\",\n      \"lesson\": \"Imported scene. Only authored collider markers create collisions.\",\n      \"title\": \"mode-bindings-shared\"\n    },\n    \"uk\": {\n      \"brief\": \"Пролетіть через маркери та сядьте на останній майданчик.\",\n      \"lesson\": \"Імпортована сцена. Зіткнення створюють лише маркери колайдерів.\",\n      \"title\": \"mode-bindings-shared\"\n    }\n  },\n  \"spawn\": {\n    \"x\": 0,\n    \"y\": 0,\n    \"z\": 12000\n  },\n  \"bounds\": {\n    \"max\": {\n      \"x\": 90000,\n      \"y\": 90000,\n      \"z\": 90000\n    },\n    \"min\": {\n      \"x\": -90000,\n      \"y\": 0,\n      \"z\": -90000\n    }\n  },\n  \"obstacles\": [],\n  \"steps\": {\n    \"self-level\": [\n      {\n        \"at\": 0,\n        \"axis\": \"z\",\n        \"direction\": 1,\n        \"maxSide\": 3250,\n        \"maxY\": 6000,\n        \"minSide\": -2750,\n        \"minY\": 2000,\n        \"type\": \"gate\"\n      },\n      {\n        \"centred\": false,\n        \"heading\": null,\n        \"max\": {\n          \"x\": 1500,\n          \"y\": 750,\n          \"z\": -10500\n        },\n        \"maxSpeed\": 1300,\n        \"maxTilt\": 4000,\n        \"min\": {\n          \"x\": -1500,\n          \"y\": 0,\n          \"z\": -13500\n        },\n        \"minTilt\": 0,\n        \"ticks\": 30,\n        \"type\": \"land\"\n      }\n    ],\n    \"acro\": [\n      {\n        \"at\": 0,\n        \"axis\": \"z\",\n        \"direction\": 1,\n        \"maxSide\": 3250,\n        \"maxY\": 6000,\n        \"minSide\": -2750,\n        \"minY\": 2000,\n        \"type\": \"gate\"\n      },\n      {\n        \"centred\": false,\n        \"heading\": null,\n        \"max\": {\n          \"x\": 1500,\n          \"y\": 750,\n          \"z\": -10500\n        },\n        \"maxSpeed\": 1300,\n        \"maxTilt\": 4000,\n        \"min\": {\n          \"x\": -1500,\n          \"y\": 0,\n          \"z\": -13500\n        },\n        \"minTilt\": 0,\n        \"ticks\": 30,\n        \"type\": \"land\"\n      }\n    ]\n  },\n  \"actors\": [],\n  \"rules\": {\n    \"seed\": 1,\n    \"maxTicks\": 36000,\n    \"droneRadius\": 220,\n    \"playerHealth\": 100,\n    \"collisionDamage\": 0,\n    \"playerDamage\": 25,\n    \"fireCooldown\": 8,\n    \"projectileSpeed\": 20000,\n    \"projectileTicks\": 150\n  },\n  \"conditions\": {\n    \"profile\": \"clear\",\n    \"revision\": \"r1\"\n  }\n}",
+    "creatorIdentity": {
+      "id": "mode-bindings-shared-route",
+      "revision": "r1",
+      "world": "mode-bindings-shared",
+      "selfLevelSteps": 2,
+      "acroSteps": 2
+    },
+    "uncaughtErrors": [],
+    "rows": [
+      {
+        "id": "creator-industrial-split-level",
+        "connected": true,
+        "text": "Industrial starter · Split level1 challenges · a0c001c08789EditExport packRemoveRestore revision 311b04890037"
+      },
+      {
+        "id": "mode-bindings-shared",
+        "connected": true,
+        "text": "mode-bindings-shared1 challenges · 665350265993EditExport packRemove"
+      }
+    ]
+  }
+}

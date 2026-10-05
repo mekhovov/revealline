@@ -1,0 +1,24 @@
+{
+  "format": "FPVCoastLighthouseIntegration.v1",
+  "main": "cd2e6bc5dc0e8af7d1d30705632697cc97562dc1",
+  "source": "252960572",
+  "integrated": "26f098361ac21ff471d3a280b7950065cd093ec1",
+  "runtimeSha256": "23663ba5c6027611d147fd6e01c3a7c11cbdf4575a61c2554424901c5c463715",
+  "sourceGrowthBytes": 4041,
+  "checks": [
+    {
+      "name": "Incoming main AST exact after removing Coast-only hook and helper",
+      "passed": true
+    },
+    {
+      "name": "buildCoastLighthouseGeometry preserves exact premerge source",
+      "passed": true,
+      "sha256": "95bb6a67dc2b73aeb589741fba52bdd4afa016296d640447e4b9c88e06e32e23"
+    },
+    {
+      "name": "buildCourtyardFacadeGeometry preserves exact premerge source",
+      "passed": true,
+      "sha256": "0a0784274f0e5392455cf1980824ea4dc894311757b14429a699995f9110a2df"
+    }
+  ]
+}

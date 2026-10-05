@@ -1,0 +1,66 @@
+{
+  "source": "a2c0c006e11b304296492a2110ec1647e6497f7c",
+  "scope": "Root actual renderer eleven static views plus disposal; accepted bounded gathering/surface/wayfinding checkpoint, not full world or photoreal acceptance.",
+  "files": [
+    {
+      "path": "static-review.json",
+      "bytes": 23363,
+      "sha256": "36d9bdd40ffcf288ffd9a6b3b20b5e27fe5d684960a828d1701b8066ef223b2e"
+    },
+    {
+      "path": "entry.png",
+      "bytes": 141079,
+      "sha256": "0c50268c2ac0af146618ec6dffc78a886b984568ee32f2c2553274b14f3d8493"
+    },
+    {
+      "path": "picnic-before.png",
+      "bytes": 145224,
+      "sha256": "481d1ccb2664362a269df86620fbe7259abee35002b7ed4fd000015662f57915"
+    },
+    {
+      "path": "picnic-after.png",
+      "bytes": 157475,
+      "sha256": "b2c510bf5d5c4e963370beae03e047657ee0458ecb3f3aefd3c58c487c3bc2cf"
+    },
+    {
+      "path": "table-clearance.png",
+      "bytes": 151617,
+      "sha256": "80e5123c66b47aa0550d4035fa7d85ef7a61e185b1ce166a88fe58bd0e1435ab"
+    },
+    {
+      "path": "market-before.png",
+      "bytes": 125418,
+      "sha256": "040c1f0562c8501c340e522bdb5a3bf1a8d33f86a70e9f5e5c797799a2a90b11"
+    },
+    {
+      "path": "market-after.png",
+      "bytes": 131046,
+      "sha256": "28810355f0ef8c21e17b3ce49cd90a474e18bf11b0544654defe87f0d6a70d3d"
+    },
+    {
+      "path": "wide-high.png",
+      "bytes": 127864,
+      "sha256": "c2a2f146f94463b4137c80163018cddb60d8066ba8413b7d2a751e3e80f6a3c8"
+    },
+    {
+      "path": "wide-low.png",
+      "bytes": 128732,
+      "sha256": "36bd384b544d1c16c503a7fbbed3c9937df0548db1719d80f4b6dd1e58e05108"
+    },
+    {
+      "path": "pixel-low.png",
+      "bytes": 148822,
+      "sha256": "b4094053ffaaa8803c1862be6db5cdd903aca74e5c5b2995c32a356923ce2d5b"
+    },
+    {
+      "path": "industrial-balanced.png",
+      "bytes": 159831,
+      "sha256": "b286a0033c4cfb281542b15429c0e91e629228b1dc4f3b86f6ab6b9379c5fdb6"
+    },
+    {
+      "path": "stage-low.png",
+      "bytes": 162114,
+      "sha256": "8c8152d8d8b813ddb8b20cfbfbc95e36c58921d88cc12c64a6d65ab187fa8330"
+    }
+  ]
+}

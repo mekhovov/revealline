@@ -1,12 +1,28 @@
 import * as THREE from './vendor/three.module.js';
 import { actorVisual } from '../../game/hunt/actor-catalog.mjs';
-import { sharedActorAppearance } from '../../game/hunt/preferences.mjs';
+import { sharedActorAppearance, runtimeActorArtRevision } from '../../game/hunt/preferences.mjs';
+import {
+  INDUSTRIAL_VEHICLE_REVISION,
+  buildIndustrialVehicle,
+  resolveIndustrialVehicleModel,
+} from './industrial-vehicles.mjs';
+import {
+  INDUSTRIAL_SOLDIER_REVISION,
+  industrialSoldierPaintKeys,
+  resolveIndustrialSoldierFamily,
+  buildIndustrialSoldier,
+  applyIndustrialSoldierPose,
+} from './industrial-soldiers.mjs';
 import {
   buildWorldVisuals,
   buildDroneVisual,
   buildContainerVisualGeometry,
+  buildGarageSurfaceGeometry,
+  buildStadiumStructureGeometry,
 } from './world-visuals.mjs';
 import {
+  WORLD_SURFACE_COATING_EXTENSION,
+  validateWorldSurfaceCoatings,
   normalizeSimPresentation,
   resolveSimThemeProfile,
   resolveSimEffects,
@@ -17,6 +33,7 @@ import {
   bindSimModelRole,
   instanceSimDetails,
   applySimMaterialBindings,
+  applySimSurfaceCoatings,
   ownedSimMaterials,
   simCollectionIdForProfile,
   setSurfaceQuality,
@@ -69,24 +86,38 @@ const safePath = (value) =>
  * ImageBitmapLoader fetches blob URLs and instead requires connect-src blob:.
  * Keep the pinned GLTF parser, sampler/color-space rules and resource manager. */
 export function configureWorldGLTFLoader(loader, { onImageError = () => {} } = {}) {
-  return loader.register((parser) => ({
-    name: 'REVEALLINE_WORLD_IMAGE_ELEMENT',
-    beforeRoot() {
-      const images = new THREE.TextureLoader(parser.options.manager)
-        .setCrossOrigin(parser.options.crossOrigin)
-        .setRequestHeader(parser.options.requestHeader);
-      const load = images.load.bind(images);
-      images.load = (url, onLoad, onProgress, onError) =>
-        load(url, onLoad, onProgress, (error) => {
-          // GLTFLoader revokes embedded blob URLs on success, but not on error.
-          // Provided sidecar URLs belong to loadScene's existing finally block.
-          if (url.startsWith('blob:')) URL.revokeObjectURL(url);
-          onImageError(error);
-          onError?.(error);
-        });
-      parser.textureLoader = images;
-    },
-  }));
+  return loader
+    .register((parser) => ({
+      name: 'REVEALLINE_WORLD_IMAGE_ELEMENT',
+      beforeRoot() {
+        const images = new THREE.TextureLoader(parser.options.manager)
+          .setCrossOrigin(parser.options.crossOrigin)
+          .setRequestHeader(parser.options.requestHeader);
+        const load = images.load.bind(images);
+        images.load = (url, onLoad, onProgress, onError) =>
+          load(url, onLoad, onProgress, (error) => {
+            // GLTFLoader revokes embedded blob URLs on success, but not on error.
+            // Provided sidecar URLs belong to loadScene's existing finally block.
+            if (url.startsWith('blob:')) URL.revokeObjectURL(url);
+            onImageError(error);
+            onError?.(error);
+          });
+        parser.textureLoader = images;
+      },
+    }))
+    .register((parser) => {
+      let marked;
+      return {
+        name: WORLD_SURFACE_COATING_EXTENSION,
+        beforeRoot() {
+          marked = validateWorldSurfaceCoatings(parser.json);
+        },
+        afterRoot(result) {
+          for (const scene of result.scenes)
+            applySimSurfaceCoatings(scene, parser.associations, marked);
+        },
+      };
+    });
 }
 
 /** Presentation only. All world/actor positions are canonical millimetres.
@@ -101,6 +132,7 @@ export function createFlightRenderer({
   presentation: initialPresentation = {},
   createHuntPresentation = null,
 }) {
+  let machineryRevision = runtimeActorArtRevision(win?.location);
   let renderer;
   try {
     renderer = new THREE.WebGLRenderer({
@@ -128,7 +160,7 @@ export function createFlightRenderer({
     editHandles = new THREE.Group();
   editHandles.visible = false;
   scene.add(world, goals, aircraft, ghostAircraft, actors, projectiles, imported, editHandles);
-  const huntPresentation = createHuntPresentation?.({ THREE, scene }) ?? null;
+  let huntPresentation = createHuntPresentation?.({ THREE, scene }) ?? null;
   const hemisphere = new THREE.HemisphereLight(0xe5f3ff, 0x3d504a, 2.1);
   const sunlight = new THREE.DirectionalLight(0xffefd8, 3.1);
   const fillLight = new THREE.DirectionalLight(0x9cc7e8, 0.24);
@@ -168,6 +200,7 @@ export function createFlightRenderer({
     ghostSamples = [],
     ghostPose = null,
     sceneGeneration = 0,
+    contextGeneration = 0,
     presentationGeneration = 0,
     rotorTick = null,
     rotorPhase = 0,
@@ -178,13 +211,16 @@ export function createFlightRenderer({
     obstacleMaps = null,
     obstacleSurface = null,
     obstacleFittingsMaterial = null,
+    garageDetailMaterial = null,
     environmentSurfaceKind = null,
     lastActorState = null,
     importedAnimationTick = null,
     environmentLight = null,
+    environmentLightInputs = null,
     themeProfile = null,
     effectPalette = resolveSimEffects(null),
     goalMaterialKit = null,
+    stadiumMaterial = null,
     gateCueFactory = null,
     pendingPresentation = normalizeSimPresentation(initialPresentation),
     activePresentation = pendingPresentation,
@@ -206,6 +242,8 @@ export function createFlightRenderer({
     huntTargets = new Map(),
     seenActors = new Set(),
     pulseRows = new Map(),
+    garageDetailMaterials = new Map(),
+    stadiumDetailMaterials = new Map(),
     qualityDetails = [];
   const framePosition = new THREE.Vector3(),
     frameRotation = new THREE.Quaternion(),
@@ -424,6 +462,7 @@ export function createFlightRenderer({
       profile: themeProfile ?? resolveSimThemeProfile({}, activePresentation),
       quality,
       maxAnisotropy: renderer.capabilities.getMaxAnisotropy(),
+      reviewRevision: machineryRevision,
     });
     if (cosmeticColor) droneVisual.tint.color.set(cosmeticColor);
     if ((themeProfile?.id ?? activePresentation?.collectionId) === 'military-field') {
@@ -751,6 +790,66 @@ export function createFlightRenderer({
     }
     shape.setAttribute('uv', new THREE.BufferAttribute(uv, 2));
   }
+  function solarPanelUV(shape, size) {
+    const p = shape.getAttribute('position'),
+      n = shape.getAttribute('normal'),
+      uv = shape.getAttribute('uv');
+    for (let i = 0; i < p.count; i++) {
+      // Only the local upper face is photovoltaic. Keep the closed back and
+      // thickness in the atlas's quiet strip; the authored tilt stays intact.
+      const top = n.getY(i) > 0.5,
+        across = Math.abs(n.getX(i)) > 0.5 ? p.getZ(i) / size[2] : p.getX(i) / size[0],
+        along = Math.abs(n.getY(i)) > 0.5 ? p.getZ(i) / size[2] : p.getY(i) / size[1];
+      uv.setXY(
+        i,
+        0.015 + (across + 0.5) * 0.97,
+        (top ? 0.17 : 0.02) + (along + 0.5) * (top ? 0.81 : 0.1),
+      );
+    }
+  }
+  function garageStructureUV(shape, obstacle) {
+    const positions = shape.getAttribute('position'),
+      normals = shape.getAttribute('normal'),
+      offset = ['x', 'y', 'z'].map((axis) =>
+        obstacle.type === 'trimesh' ? 0 : (obstacle.max[axis] + obstacle.min[axis]) / 2000,
+      ),
+      uv = new Float32Array(positions.count * 2);
+    for (let index = 0; index < positions.count; index++) {
+      const x = positions.getX(index) + offset[0],
+        y = positions.getY(index) + offset[1],
+        z = positions.getZ(index) + offset[2],
+        nx = Math.abs(normals.getX(index)),
+        ny = Math.abs(normals.getY(index)),
+        nz = Math.abs(normals.getZ(index));
+      // World-aligned six-metre pours cross the ramp/deck crest continuously.
+      // Positions, winding, and all physical triangles remain untouched.
+      uv[index * 2] = (nx > ny && nx > nz ? z : x) / 6;
+      uv[index * 2 + 1] = (ny >= nx && ny >= nz ? z : y) / 6;
+    }
+    shape.setAttribute('uv', new THREE.BufferAttribute(uv, 2));
+  }
+  function addGarageSurfaceDetails(parent, obstacle) {
+    for (const { role, layer, geometry: shape } of buildGarageSurfaceGeometry(obstacle)) {
+      const key = `${role}:${layer}`;
+      if (!garageDetailMaterials.has(key)) {
+        const paint = garageDetailMaterial(role).clone();
+        paint.side = THREE.DoubleSide;
+        paint.polygonOffset = true;
+        paint.polygonOffsetFactor = -layer;
+        paint.polygonOffsetUnits = -layer;
+        materials.add(paint);
+        garageDetailMaterials.set(key, paint);
+      }
+      const detail = mesh(shape, garageDetailMaterials.get(key), parent);
+      detail.name = `garage-surface-${role}`;
+      detail.userData.role = 'garage-surface-detail';
+      detail.userData.obstacleId = obstacle.id;
+      detail.userData.materialRole = role;
+      detail.userData.cosmeticDetail = true;
+      detail.castShadow = false;
+      detail.receiveShadow = true;
+    }
+  }
   function woodlandTrunkUV(shape, size) {
     const positions = shape.getAttribute('position'),
       normals = shape.getAttribute('normal'),
@@ -803,6 +902,58 @@ export function createFlightRenderer({
           ? 0.012 + (positions.getZ(i) / depth + 0.5) * 0.025
           : 0.06 + (positions.getY(i) / height + 0.5) * 0.88,
       );
+    }
+  }
+  function stadiumStructureUV(shape, kind) {
+    const positions = shape.getAttribute('position'),
+      normals = shape.getAttribute('normal'),
+      uv = shape.getAttribute('uv');
+    for (let i = 0; i < positions.count; i++) {
+      const side = Math.abs(normals.getX(i)) > 0.5,
+        cap = Math.abs(normals.getY(i)) > 0.5;
+      uv.setXY(
+        i,
+        (side ? positions.getZ(i) : positions.getX(i)) / 6,
+        (cap ? positions.getZ(i) : positions.getY(i)) / (kind === 'stadium-concrete' ? 2 : 3),
+      );
+    }
+  }
+  function stadiumStructureDetail(parent, size) {
+    for (const { role, layer, geometry: shape } of buildStadiumStructureGeometry(
+      parent.name,
+      size,
+    )) {
+      const key = `${role}:${layer}`;
+      if (!stadiumDetailMaterials.has(key)) {
+        const source = stadiumMaterial?.(role),
+          palette = themeProfile.palette,
+          color =
+            role === 'rubber'
+              ? new THREE.Color(palette.wall).multiplyScalar(0.18)
+              : role === 'enamel'
+                ? new THREE.Color(palette.accent).lerp(new THREE.Color(0xe0e1d8), 0.55)
+                : new THREE.Color(palette.wall).lerp(new THREE.Color(palette.warm), 0.12),
+          paint = source
+            ? source.clone()
+            : material(color, { roughness: role === 'rubber' ? 0.96 : 0.7 });
+        materials.add(paint);
+        paint.name = `stadium-${role}`;
+        paint.polygonOffset = true;
+        paint.polygonOffsetFactor = -layer;
+        paint.polygonOffsetUnits = -layer;
+        paint.userData = { ...paint.userData, materialRole: role };
+        stadiumDetailMaterials.set(key, paint);
+      }
+      const detail = mesh(shape, stadiumDetailMaterials.get(key), parent);
+      detail.name = 'stadium-structure-detail';
+      detail.userData = {
+        role: 'stadium-structure-detail',
+        obstacleId: parent.name,
+        materialRole: role,
+        cosmeticDetail: true,
+      };
+      detail.castShadow = false;
+      detail.receiveShadow = true;
     }
   }
   function addFlushPanels(parent, panels, color, minimumQuality = 'balanced', bayLabel = null) {
@@ -886,18 +1037,20 @@ export function createFlightRenderer({
         ),
         roughness: yardContainer
           ? 0.82
-          : kind === 'solar'
-            ? 0.3
-            : kind === 'metal'
-              ? 0.66
-              : kind === 'storage-steel'
-                ? 0.74
-                : 0.9,
+          : kind === 'solar-array'
+            ? 0.8
+            : kind === 'solar'
+              ? 0.3
+              : kind === 'metal' || kind === 'stadium-steel'
+                ? 0.66
+                : kind === 'storage-steel'
+                  ? 0.74
+                  : 0.9,
         metalness: yardContainer
           ? 0.12
-          : kind === 'solar'
+          : kind === 'solar' || kind === 'solar-array'
             ? 0.35
-            : kind === 'metal'
+            : kind === 'metal' || kind === 'stadium-steel'
               ? 0.28
               : kind === 'storage-steel'
                 ? 0.18
@@ -921,7 +1074,8 @@ export function createFlightRenderer({
       shape.dispose();
       shape = flat;
       shape.computeVertexNormals();
-      if (obstacleSurface) worldScaleUV(shape);
+      if (kind === 'garage-concrete') garageStructureUV(shape, obstacle);
+      else if (obstacleSurface) worldScaleUV(shape);
       paint.side = THREE.DoubleSide;
       value = mesh(shape, paint);
     } else if (obstacle.min && obstacle.max) {
@@ -929,9 +1083,16 @@ export function createFlightRenderer({
       const container = yardContainer ? buildContainerVisualGeometry(size) : null,
         shape = container?.shell ?? new THREE.BoxGeometry(...size);
       containerHardware = container?.hardware;
-      if (kind === 'storage-steel')
+      if (kind === 'solar-array') solarPanelUV(shape, size);
+      else if (kind === 'storage-steel')
         storageModuleUV(shape, size, !/^rack-[01]-[0-2]$/.test(obstacle.id));
+      else if (kind === 'stadium-concrete' || kind === 'stadium-steel')
+        stadiumStructureUV(shape, kind);
       else if (kind === 'bark') woodlandTrunkUV(shape, size);
+      else if (kind === 'garage-concrete') garageStructureUV(shape, obstacle);
+      // Reuse the same world-metre projection so mineral beds share height
+      // across the six canonical Quarry masses; only their UVs are replaced.
+      else if (kind === 'quarry-stone') garageStructureUV(shape, obstacle);
       else if (obstacleSurface) worldScaleUV(shape);
       value = mesh(shape, paint);
       value.position.set(
@@ -952,7 +1113,14 @@ export function createFlightRenderer({
     value.userData.surfaceKind = kind;
     if (kind === 'storage-steel') value.userData.materialRole = 'steel';
     if (kind === 'bark') value.userData.materialRole = 'timber';
+    if (kind === 'garage-concrete') value.userData.materialRole = 'concrete';
+    if (kind === 'stadium-concrete') value.userData.materialRole = 'concrete';
+    if (kind === 'quarry-stone') value.userData.materialRole = 'concrete';
     value.castShadow = value.receiveShadow = true;
+    if (kind === 'garage-concrete' && garageDetailMaterial)
+      addGarageSurfaceDetails(value, obstacle);
+    if (size && (kind === 'stadium-concrete' || kind === 'stadium-steel'))
+      stadiumStructureDetail(value, size);
     if (containerHardware) {
       worldScaleUV(containerHardware);
       // Brushed fittings must read against painted doors without emissive
@@ -968,23 +1136,105 @@ export function createFlightRenderer({
     if (size && size[1] > 0.5) {
       const panels = [],
         accents = [],
-        [width, height, depth] = size;
+        [width, height, depth] = size,
+        railWagon =
+          course.environment === 'rail-depot' &&
+          kind === 'metal' &&
+          /^rail-car-[01]-[0-3]$/.test(obstacle.id ?? '') &&
+          themeProfile.id === 'operations' &&
+          themeProfile.textureFilter === 'linear' &&
+          !goalMaterialKit &&
+          obstacle.type === undefined &&
+          obstacle.rotation === undefined &&
+          ['x', 'y', 'z'].every(
+            (axis, i) =>
+              Number.isFinite(obstacle.min?.[axis]) &&
+              Number.isFinite(obstacle.max?.[axis]) &&
+              obstacle.max[axis] - obstacle.min[axis] === [5000, 4000, 13000][i],
+          ),
+        campusSize = {
+          'building-west-low': [18000, 9000, 20000],
+          'building-east-mid': [18000, 14000, 20000],
+          'building-west-high': [18000, 19000, 22000],
+          'building-east-high': [18000, 23000, 22000],
+        }[obstacle.id],
+        campusStories =
+          course.environment === 'rooftops' &&
+          kind === 'plaster' &&
+          themeProfile.id === 'pixel' &&
+          themeProfile.textureFilter === 'nearest' &&
+          !goalMaterialKit &&
+          obstacle.type === undefined &&
+          obstacle.rotation === undefined &&
+          campusSize &&
+          ['x', 'y', 'z'].every(
+            (axis, i) =>
+              Number.isFinite(obstacle.min[axis]) &&
+              Number.isFinite(obstacle.max[axis]) &&
+              obstacle.max[axis] - obstacle.min[axis] === campusSize[i],
+          )
+            ? Math.floor(height / 3)
+            : 0,
+        campusBridge = campusStories
+          ? course.obstacles.find(
+              (item) =>
+                item.id === 'roof-deck-skybridge' &&
+                item.type === undefined &&
+                item.rotation === undefined &&
+                ['x', 'y', 'z'].every(
+                  (axis, i) =>
+                    Number.isFinite(item.min?.[axis]) &&
+                    Number.isFinite(item.max?.[axis]) &&
+                    item.max[axis] - item.min[axis] === [50000, 1200, 6000][i],
+                ),
+            )
+          : null;
       for (let side = 0; side < 4; side++) {
         const span = side < 2 ? width : depth,
           half = (side < 2 ? depth : width) / 2;
         if (kind === 'plaster' && span > 2 && height > 2) {
-          const count = Math.max(1, Math.min(5, Math.floor(span / 2.4)));
+          const count = Math.max(1, Math.min(5, Math.floor(span / 2.4))),
+            floors = campusStories || Math.min(3, Math.floor(height / 2.2)),
+            storeyHeight = campusStories ? height / floors : 2.2;
           for (let i = 0; i < count; i++)
-            for (let floor = 0; floor < Math.min(3, Math.floor(height / 2.2)); floor++)
-              panels.push([
-                side,
-                -span / 2 + ((i + 0.5) * span) / count,
-                -height / 2 + 1.4 + floor * 2.2,
-                Math.min(1.1, (span / count) * 0.55),
-                1.05,
-                half,
-              ]);
+            for (let floor = 0; floor < floors; floor++) {
+              const along = -span / 2 + ((i + 0.5) * span) / count,
+                elevation =
+                  -height / 2 + (campusStories ? storeyHeight / 2 : 1.4) + floor * storeyHeight,
+                paneWidth = Math.min(campusStories ? 2 : 1.1, (span / count) * 0.55),
+                paneHeight = campusStories ? Math.min(1.5, storeyHeight * 0.5) : 1.05;
+              if (campusBridge) {
+                const faceAxis = side < 2 ? 'z' : 'x',
+                  alongAxis = side < 2 ? 'x' : 'z',
+                  face = (side === 0 || side === 2 ? obstacle.max : obstacle.min)[faceAxis],
+                  u =
+                    (obstacle.min[alongAxis] + obstacle.max[alongAxis]) / 2 +
+                    (side === 1 || side === 2 ? -along : along) * 1000,
+                  y = (obstacle.min.y + obstacle.max.y) / 2 + elevation * 1000;
+                // Keep solid bridge attachments as closed painted bays rather
+                // than clipping a pane through the existing collision volume.
+                if (
+                  face >= campusBridge.min[faceAxis] &&
+                  face <= campusBridge.max[faceAxis] &&
+                  u + paneWidth * 500 > campusBridge.min[alongAxis] &&
+                  u - paneWidth * 500 < campusBridge.max[alongAxis] &&
+                  y + paneHeight * 500 > campusBridge.min.y &&
+                  y - paneHeight * 500 < campusBridge.max.y
+                )
+                  continue;
+              }
+              panels.push([side, along, elevation, paneWidth, paneHeight, half]);
+            }
           accents.push([side, 0, -height / 2 + 0.25, span, 0.24, half]);
+          if (campusStories) {
+            // Painted storeys and corner piers share the existing two flush
+            // batches. Every opaque pane stays on the original closed wall.
+            for (let floor = 1; floor < floors; floor++)
+              accents.push([side, 0, -height / 2 + floor * storeyHeight, span - 0.48, 0.18, half]);
+            for (const edge of [-1, 1])
+              accents.push([side, edge * (span / 2 - 0.12), 0.05, 0.24, height - 0.7, half]);
+            accents.push([side, 0, height / 2 - 0.15, span, 0.3, half]);
+          }
         } else if ((kind === 'metal' || kind === 'storage-steel') && span > 1) {
           if (!yardContainer)
             accents.push([
@@ -1004,6 +1254,16 @@ export function createFlightRenderer({
               Math.min(0.3, height * 0.18),
               half,
             ]);
+          if (railWagon) {
+            // Framing stays on the existing closed corrugated wall. Strips
+            // meet edge-to-edge and share the wagon's existing accent batch.
+            const jamb = side < 2 ? 2.15 : 1.6;
+            for (const direction of [-1, 1]) {
+              accents.push([side, direction * jamb, 0.2, 0.12, 2.6, half]);
+              accents.push([side, 0, 0.2 + direction * 1.24, jamb * 2 - 0.12, 0.12, half]);
+              if (side >= 2) accents.push([side, direction * 5.2, 0.2, 0.12, 2.9, half]);
+            }
+          }
         } else if (/column/.test(obstacle.id) && span > 0.2) {
           accents.push([
             side,
@@ -1023,7 +1283,12 @@ export function createFlightRenderer({
         'balanced',
         bay ? { map: maps.map, index: Number(bay[1]) * 3 + Number(bay[2]) } : null,
       );
-      addFlushPanels(value, accents, kind === 'plaster' ? 0x8c7863 : theme.warm, 'high');
+      addFlushPanels(
+        value,
+        accents,
+        railWagon ? 0x34464b : kind === 'plaster' ? 0x8c7863 : theme.warm,
+        railWagon ? 'balanced' : 'high',
+      );
     }
     // Only the outer shipping-frame edges are outlined, not every corrugation.
     const outline = yardContainer ? new THREE.BoxGeometry(...size) : value.geometry,
@@ -1038,8 +1303,42 @@ export function createFlightRenderer({
     materials.add(edgePaint);
     value.add(new THREE.LineSegments(edges, edgePaint));
   }
+  function releaseEnvironmentLight() {
+    scene.environment = null;
+    const previous = environmentLight;
+    environmentLight = null;
+    environmentLightInputs = null;
+    previous?.dispose();
+  }
+  function setEnvironmentLight({ sky, ground, indoor }) {
+    if (renderer.getContext().isContextLost()) {
+      releaseEnvironmentLight();
+      return;
+    }
+    const inputs = {
+      sky: new THREE.Color(sky),
+      ground: new THREE.Color(ground),
+      indoor: Boolean(indoor),
+    };
+    // One renderer owns one probe. Compare linear channels without hex rounding:
+    // the resolved floor color can contain a full-precision theme blend.
+    if (
+      environmentLight &&
+      environmentLightInputs?.sky.equals(inputs.sky) &&
+      environmentLightInputs.ground.equals(inputs.ground) &&
+      environmentLightInputs.indoor === inputs.indoor
+    )
+      return;
+    releaseEnvironmentLight();
+    environmentLight = createEnvironmentLight(renderer, inputs);
+    environmentLightInputs = inputs;
+  }
   function setCourse(value, selectedMode = 'self-level', options = {}) {
-    if (disposed) return;
+    if (disposed || renderer.getContext().isContextLost()) return;
+    huntPresentation ??= createHuntPresentation?.({ THREE, scene }) ?? null;
+    machineryRevision = Object.hasOwn(options, 'artRevision')
+      ? options.artRevision
+      : runtimeActorArtRevision(win?.location);
     if (options.presentation) setPresentation(options.presentation);
     activePresentation = pendingPresentation;
     sceneGeneration++;
@@ -1055,12 +1354,14 @@ export function createFlightRenderer({
     for (const step of course.steps[mode])
       if (step.type === 'hunt-contact-v1')
         step.targets.forEach((id, index) => huntTargets.set(id, index + 1));
+    for (const policy of course.pursuit?.actors ?? [])
+      if (policy.family === 'courier') huntTargets.set(policy.id, 0);
     currentStep = -1;
     clearImported();
     scene.environment = null;
-    environmentLight?.dispose();
-    environmentLight = null;
     for (const group of [world, goals, actors, projectiles]) releaseGroup(group);
+    garageDetailMaterials.clear();
+    stadiumDetailMaterials.clear();
     goalRows.length = 0;
     actorRows.clear();
     actorDefinitions.clear();
@@ -1076,6 +1377,7 @@ export function createFlightRenderer({
       presentation: activePresentation,
       quality,
       maxAnisotropy: renderer.capabilities.getMaxAnisotropy(),
+      reviewRevision: machineryRevision,
     });
     register(world);
     const theme = surroundings.theme;
@@ -1088,6 +1390,7 @@ export function createFlightRenderer({
           material,
           quality,
           maxAnisotropy: renderer.capabilities.getMaxAnisotropy(),
+          reviewRevision: machineryRevision,
         })
       : null;
     setDrone(droneKind);
@@ -1095,6 +1398,8 @@ export function createFlightRenderer({
     obstacleMaps = surroundings.obstacleMaps;
     obstacleSurface = surroundings.obstacleSurface ?? null;
     obstacleFittingsMaterial = surroundings.obstacleFittingsMaterial ?? null;
+    garageDetailMaterial = surroundings.garageDetailMaterial ?? null;
+    stadiumMaterial = surroundings.stadiumDetailMaterial ?? null;
     environmentSurfaceKind = surroundings.obstacleSurfaceKind ?? null;
     scene.background = new THREE.Color(surroundings.indoor ? theme.wall : theme.sky);
     // Visibility is a course property, identical across graphics presets.
@@ -1105,7 +1410,7 @@ export function createFlightRenderer({
     hemisphere.groundColor
       .copy(surroundings.groundColor ?? new THREE.Color(theme.ground))
       .multiplyScalar(0.4);
-    environmentLight = createEnvironmentLight(renderer, {
+    setEnvironmentLight({
       sky: surroundings.indoor ? theme.wall : theme.sky,
       ground: surroundings.groundColor ?? theme.ground,
       indoor: surroundings.indoor,
@@ -1156,7 +1461,14 @@ export function createFlightRenderer({
   }
   function createActor(actor) {
     const group = new THREE.Group();
-    const animated = { rotors: [], wheels: [], limbs: [], body: null };
+    const animated = {
+      rotors: [],
+      wheels: [],
+      limbs: [],
+      body: null,
+      armorTell: null,
+      intent: null,
+    };
     actors.add(group);
     const radius = (actor.radius ?? 300) / 1000,
       height = (actor.height ?? 1800) / 1000,
@@ -1170,7 +1482,18 @@ export function createFlightRenderer({
       civilian = !huntTarget && (themeProfile?.characters === 'civilian' || role === 'civilian');
     const preferredCast = sharedActorAppearance().snapshot().cast;
     const huntFamily =
-      (actorDefinitions.get(actor.id)?.speed ?? actor.speed ?? 0) > 0 ? 'patroller' : 'lookout';
+      actor.pursuit?.family ??
+      course.pursuit?.actors.find((policy) => policy.id === actor.id)?.family ??
+      ((actorDefinitions.get(actor.id)?.speed ?? actor.speed ?? 0) > 0 ? 'patroller' : 'lookout');
+    const nativeSoldierFamily = resolveIndustrialSoldierFamily({
+      revision: machineryRevision,
+      actor: actorDefinitions.get(actor.id) ?? actor,
+      family: huntFamily,
+      huntTarget,
+      collectionId: simCollectionIdForProfile(themeProfile),
+      collectionRevision: themeProfile?.revision,
+      assetRole: slot,
+    });
     const huntAppearance = huntTarget
       ? actorVisual(huntFamily, preferredCast === 'authored' ? 'rivals' : preferredCast)
       : null;
@@ -1184,6 +1507,7 @@ export function createFlightRenderer({
           material,
           quality,
           maxAnisotropy: renderer.capabilities.getMaxAnisotropy(),
+          reviewRevision: machineryRevision,
         })
       : null;
     group.userData.modelRole = actor.type === 'vehicle' ? 'vehicle' : 'enemy';
@@ -1237,9 +1561,152 @@ export function createFlightRenderer({
         quality: quality === 'high' ? 'balanced' : 'low',
         profile: themeProfile,
         maxAnisotropy: renderer.capabilities.getMaxAnisotropy(),
+        reviewRevision: machineryRevision,
       });
       visual.tint.color.setHex(friendly ? 0x77ebe0 : 0xe6a16b);
       animated.rotors = visual.rotors;
+    } else if (
+      machineryRevision === INDUSTRIAL_VEHICLE_REVISION &&
+      resolveIndustrialVehicleModel({
+        actor: actorDefinitions.get(actor.id) ?? actor,
+        courseFormat: course.format,
+        collectionId: simCollectionIdForProfile(themeProfile),
+        collectionRevision: themeProfile?.revision,
+        assetRole: slot,
+      })
+    ) {
+      const model = resolveIndustrialVehicleModel({
+        actor: actorDefinitions.get(actor.id) ?? actor,
+        courseFormat: course.format,
+        collectionId: simCollectionIdForProfile(themeProfile),
+        collectionRevision: themeProfile?.revision,
+        assetRole: slot,
+      });
+      const visual = buildIndustrialVehicle({
+        THREE,
+        parent: group,
+        part,
+        model,
+        radius,
+        quality,
+        paints: { armor, dark, metal, glass, threat },
+      });
+      animated.wheels = visual.wheels;
+      animated.radar = visual.radar;
+      group.userData.nativeVehicleModel = model;
+      group.userData.machineryRevision = machineryRevision;
+    } else if (actor.type === 'vehicle' && actorDefinitions.get(actor.id)?.vehicleModel) {
+      const model = actorDefinitions.get(actor.id).vehicleModel;
+      const tracked = model === 'field-tank';
+      const carrier = model === 'armored-carrier';
+      const cargo = model === 'cargo-truck' || model === 'relay-truck';
+      // Original compact field machines share the native vehicle proxy and route.
+      // Distinct silhouettes add no new weapons, armor or damage rules.
+      part(new THREE.BoxGeometry(radius * 1.25, radius * 0.35, radius * 1.55), armor, [
+        0,
+        radius * 0.47,
+        0,
+      ]);
+      if (tracked) {
+        for (const side of [-1, 1]) {
+          part(new THREE.BoxGeometry(radius * 0.3, radius * 0.38, radius * 1.68), dark, [
+            side * radius * 0.61,
+            radius * 0.27,
+            0,
+          ]);
+          if (quality !== 'low')
+            for (let t = -3; t <= 3; t++)
+              part(new THREE.BoxGeometry(radius * 0.32, radius * 0.055, radius * 0.06), metal, [
+                side * radius * 0.61,
+                radius * 0.47,
+                t * radius * 0.23,
+              ]);
+        }
+        part(new THREE.CylinderGeometry(radius * 0.43, radius * 0.48, radius * 0.3, 8), armor, [
+          0,
+          radius * 0.81,
+          0,
+        ]);
+        part(new THREE.BoxGeometry(radius * 0.12, radius * 0.13, radius * 0.83), dark, [
+          0,
+          radius * 0.85,
+          -radius * 0.45,
+        ]);
+      } else {
+        part(
+          new THREE.BoxGeometry(
+            radius * (carrier ? 1.12 : 0.98),
+            radius * (carrier ? 0.36 : 0.43),
+            radius * (carrier ? 1.16 : 0.55),
+          ),
+          armor,
+          [0, radius * 0.85, cargo ? -radius * 0.4 : 0],
+        );
+        if (cargo)
+          part(new THREE.BoxGeometry(radius * 1.1, radius * 0.6, radius * 0.8), armor, [
+            0,
+            radius * 0.94,
+            radius * 0.31,
+          ]);
+        for (const side of [-1, 1])
+          for (const at of carrier || cargo ? [-0.6, 0, 0.6] : [-0.53, 0.53]) {
+            const axle = new THREE.Group();
+            axle.position.set(side * radius * 0.62, radius * 0.25, radius * at);
+            group.add(axle);
+            const wheel = part(
+              new THREE.CylinderGeometry(
+                radius * 0.23,
+                radius * 0.23,
+                radius * 0.22,
+                quality === 'low' ? 6 : 10,
+              ),
+              dark,
+              [0, 0, 0],
+              axle,
+            );
+            wheel.rotation.z = Math.PI / 2;
+            animated.wheels.push(axle);
+          }
+        part(new THREE.BoxGeometry(radius * 0.78, radius * 0.2, radius * 0.03), glass, [
+          0,
+          radius * 0.9,
+          -radius * (cargo ? 0.69 : carrier ? 0.6 : 0.3),
+        ]);
+      }
+      if (model === 'relay-truck') {
+        part(new THREE.CylinderGeometry(radius * 0.025, radius * 0.035, radius * 0.42, 6), dark, [
+          0,
+          radius * 1.41,
+          radius * 0.25,
+        ]);
+        const dish = part(
+          new THREE.CylinderGeometry(radius * 0.4, radius * 0.3, radius * 0.07, 10),
+          metal,
+          [0, radius * 1.58, radius * 0.25],
+        );
+        dish.rotation.x = 0.5;
+        animated.radar = dish;
+      }
+      if (model === 'field-utility') {
+        part(new THREE.BoxGeometry(radius * 0.72, radius * 0.08, radius * 0.48), dark, [
+          0,
+          radius * 1.11,
+          0,
+        ]);
+        const spare = part(
+          new THREE.CylinderGeometry(radius * 0.24, radius * 0.24, radius * 0.16, 10),
+          dark,
+          [0, radius * 0.7, radius * 0.83],
+        );
+        spare.rotation.x = Math.PI / 2;
+      }
+      for (const side of [-1, 1])
+        part(new THREE.BoxGeometry(radius * 0.14, radius * 0.11, radius * 0.04), threat, [
+          side * radius * 0.44,
+          radius * 0.55,
+          -radius * 0.79,
+        ]);
+      group.userData.nativeVehicleModel = model;
     } else if (actor.type === 'vehicle') {
       const van = /van/.test(slot ?? ''),
         truck = /truck/.test(slot ?? '');
@@ -1379,6 +1846,55 @@ export function createFlightRenderer({
         [0, radius, 0],
       );
       ring.rotation.x = Math.PI / 2;
+    } else if (nativeSoldierFamily) {
+      const paints = Object.fromEntries(
+        industrialSoldierPaintKeys(nativeSoldierFamily).map((key) => [
+          key,
+          key === 'coat'
+            ? armor
+            : key === 'pants'
+              ? trousers
+              : material(huntAppearance.palette[key] ?? key, { roughness: 0.87 }),
+        ]),
+      );
+      group.userData.ownedMaterials.push(...Object.values(paints));
+      animated.soldier = buildIndustrialSoldier({
+        THREE,
+        parent: group,
+        part,
+        family: nativeSoldierFamily,
+        cast: huntAppearance.cast,
+        radius,
+        height,
+        quality,
+        paints,
+      });
+      group.userData.soldierRevision = INDUSTRIAL_SOLDIER_REVISION;
+      group.userData.soldierFamily = nativeSoldierFamily;
+      group.userData.soldierKit = animated.soldier.kitId;
+      if (['shield-bearer', 'brace-trooper'].includes(nativeSoldierFamily)) {
+        animated.armorTell = part(
+          new THREE.RingGeometry(
+            radius * 1.04,
+            radius * 1.13,
+            20,
+            1,
+            0,
+            nativeSoldierFamily === 'shield-bearer' ? Math.PI : Math.PI * 2,
+          ),
+          threat,
+          [0, 0.04, 0],
+        );
+        animated.armorTell.rotation.x = -Math.PI / 2;
+      }
+      if (course.pursuit?.actors.some((policy) => policy.id === actor.id)) {
+        animated.intent = part(
+          new THREE.ConeGeometry(radius * 0.23, radius * 0.65, 3),
+          paints.trim,
+          [0, 0.07, -radius * 1.25],
+        );
+        animated.intent.rotation.x = -Math.PI / 2;
+      }
     } else {
       part(
         pixel
@@ -1429,6 +1945,45 @@ export function createFlightRenderer({
           height * 0.56,
           0,
         ]);
+        if (['courier', 'refuge-seeker', 'rendezvous-pair', 'switchback'].includes(huntFamily)) {
+          const parcel = part(
+            new THREE.BoxGeometry(radius * 0.68, height * 0.22, radius * 0.5),
+            trim,
+            [radius * 0.8, height * 0.53, radius * 0.15],
+          );
+          if (huntFamily === 'refuge-seeker') parcel.position.set(0, height * 0.7, radius * 0.67);
+          if (huntFamily === 'rendezvous-pair') parcel.scale.set(0.4, 0.25, 0.4);
+        }
+        if (['shield-bearer', 'brace-trooper'].includes(huntFamily)) {
+          const plate = part(
+            new THREE.BoxGeometry(radius * 1.85, height * 0.48, radius * 0.22),
+            armor,
+            [0, height * 0.55, -radius * 0.84],
+          );
+          animated.armorTell = part(
+            new THREE.RingGeometry(
+              radius * 1.04,
+              radius * 1.13,
+              20,
+              1,
+              0,
+              huntFamily === 'shield-bearer' ? Math.PI : Math.PI * 2,
+            ),
+            threat,
+            [0, 0.04, 0],
+          );
+          animated.armorTell.rotation.x = -Math.PI / 2;
+          // The semicircle's endpoints expose the exact side/rear boundary.
+          if (huntFamily === 'brace-trooper') animated.shield = plate;
+        }
+        if (course.pursuit?.actors.some((policy) => policy.id === actor.id)) {
+          animated.intent = part(new THREE.ConeGeometry(radius * 0.23, radius * 0.65, 3), trim, [
+            0,
+            0.07,
+            -radius * 1.25,
+          ]);
+          animated.intent.rotation.x = -Math.PI / 2;
+        }
         if (huntFamily === 'lookout') {
           for (const side of [-1, 1])
             part(new THREE.BoxGeometry(radius * 0.22, radius * 0.26, radius * 0.28), dark, [
@@ -1572,7 +2127,9 @@ export function createFlightRenderer({
     }
     const marker = label(
       huntTarget
-        ? String(huntTargets.get(actor.id)).padStart(2, '0')
+        ? huntFamily === 'courier'
+          ? '+'
+          : String(huntTargets.get(actor.id)).padStart(2, '0')
         : friendly
           ? role === 'rival'
             ? 'RACE'
@@ -1606,6 +2163,7 @@ export function createFlightRenderer({
       quality,
       health: actor.maxHealth ?? actor.health ?? 1,
       cast: preferredCast,
+      family: huntFamily,
     };
   }
   function projectileBatch(owner) {
@@ -1639,7 +2197,8 @@ export function createFlightRenderer({
       if (
         row &&
         huntTargets.has(actor.id) &&
-        row.cast !== sharedActorAppearance().snapshot().cast
+        (row.cast !== sharedActorAppearance().snapshot().cast ||
+          (actor.pursuit && row.family !== actor.pursuit.family))
       ) {
         releaseGroup(row.group);
         actors.remove(row.group);
@@ -1656,7 +2215,37 @@ export function createFlightRenderer({
       row.group.position.set(p.x / 1000, p.y / 1000, p.z / 1000);
       if (row.lastTick !== state.ticks) {
         let moving = false;
-        if (target && definition.speed > 0) {
+        if (actor.pursuit) {
+          const intent = actor.pursuit;
+          row.group.rotation.y = Math.atan2(-intent.heading.x, -intent.heading.z);
+          moving =
+            Boolean(intent.next) &&
+            !actor.blocked &&
+            actor.status === 'active' &&
+            ['committed', 'flee', 'burst'].includes(intent.phase);
+          if (row.animated.armorTell)
+            row.animated.armorTell.visible =
+              intent.family === 'shield-bearer' || ['warning', 'burst'].includes(intent.phase);
+          if (row.animated.shield)
+            row.animated.shield.rotation.x = intent.phase === 'recovering' ? Math.PI / 3 : 0;
+          if (row.animated.intent) {
+            const next = intent.nextHeading ?? intent.heading;
+            const turn = Math.atan2(-next.x, -next.z) - row.group.rotation.y;
+            row.animated.intent.rotation.set(-Math.PI / 2, turn, 0, 'YXZ');
+            row.animated.intent.position.set(
+              -Math.sin(turn) * row.radius * 1.25,
+              0.07,
+              -Math.cos(turn) * row.radius * 1.25,
+            );
+            row.animated.intent.visible = [
+              'warning',
+              'turning',
+              'committed',
+              'flee',
+              'burst',
+            ].includes(intent.phase);
+          }
+        } else if (target && definition.speed > 0) {
           let dx = target.x - p.x,
             dz = target.z - p.z;
           const approaching = Math.hypot(dx, dz) > 30;
@@ -1681,7 +2270,11 @@ export function createFlightRenderer({
         }
         row.moving = moving;
         const seconds = state.ticks / 50,
-          speed = Math.max(0.35, (definition?.speed ?? 1000) / 1000),
+          speed = actor.pursuit
+            ? actor.pursuit.phase === 'burst'
+              ? 3
+              : 1.5
+            : Math.max(0.35, (definition?.speed ?? 1000) / 1000),
           phase = seconds * speed * 7;
         // Pose is a pure function of simulation time/current route direction.
         // Repeated draws, pause, view changes and replay seeks cannot add motion.
@@ -1689,6 +2282,7 @@ export function createFlightRenderer({
           rotor.rotation.y = reducedMotion
             ? 0
             : ((state.ticks * 0.64) % (Math.PI * 2)) * (index === 0 || index === 3 ? -1 : 1);
+        if (row.animated.radar) row.animated.radar.rotation.y = reducedMotion ? 0 : seconds * 0.7;
         for (const wheel of row.animated.wheels)
           wheel.rotation.x =
             !reducedMotion && moving ? -(seconds * speed) / Math.max(0.02, row.radius * 0.25) : 0;
@@ -1700,6 +2294,15 @@ export function createFlightRenderer({
           row.animated.body.rotation.z =
             !reducedMotion && moving ? Math.sin(seconds * 2.3) * 0.018 : 0;
         }
+        if (row.animated.soldier)
+          applyIndustrialSoldierPose(row.animated.soldier, {
+            ticks: state.ticks,
+            phase: actor.pursuit?.phase ?? 'idle',
+            moving,
+            blocked: actor.blocked,
+            active: actor.status === 'active',
+            reducedMotion,
+          });
         row.lastTick = state.ticks;
       }
       row.lastPosition.set(p.x, p.y, p.z);
@@ -1739,13 +2342,30 @@ export function createFlightRenderer({
       batch.instanceMatrix.needsUpdate = true;
     }
   }
+  function machineryPresentationOptions() {
+    return {
+      actorDefinitions: course?.actors ?? [],
+      machineryRevision,
+      soldierRevision:
+        machineryRevision === INDUSTRIAL_SOLDIER_REVISION ? INDUSTRIAL_SOLDIER_REVISION : null,
+      soldierActorIds: [...actorRows]
+        .filter(([, row]) => row.group.userData.soldierRevision === INDUSTRIAL_SOLDIER_REVISION)
+        .map(([id]) => id),
+      machineryActorIds: [...actorRows]
+        .filter(([, row]) => row.group.userData.machineryRevision === INDUSTRIAL_VEHICLE_REVISION)
+        .map(([id]) => id),
+    };
+  }
+  function observePresentation(state) {
+    if (!disposed && course) huntPresentation?.observe?.(state, machineryPresentationOptions());
+  }
   function draw(state, { cameraMode = view, cameraFov = fov, cameraTilt = tilt } = {}) {
-    if (disposed || !course) return;
+    if (disposed || !course || renderer.getContext().isContextLost()) return false;
     const hunt = course.steps[mode].find((step) => step.type === 'hunt-contact-v1');
     huntPresentation?.update(state, {
       reducedMotion,
       tailRadius: hunt?.tail.radius ?? 350,
-      actorDefinitions: course.actors,
+      ...machineryPresentationOptions(),
     });
     view = cameraMode;
     fov = cameraFov;
@@ -1908,6 +2528,7 @@ export function createFlightRenderer({
     updateGhost(state.ticks);
     if (pathLine) pathLine.visible = view !== 'fpv' && view !== 'editor';
     renderer.render(scene, camera);
+    return !renderer.getContext().isContextLost();
   }
   function setPath(samples) {
     if (pathLine) {
@@ -2046,6 +2667,8 @@ export function createFlightRenderer({
       ? { data: input }
       : input;
     if (disposed) throw new Error('Flight renderer is disposed');
+    if (renderer.getContext().isContextLost())
+      throw new Error('World preview is unavailable while graphics are lost.');
     const generation = sceneGeneration,
       request = ++importGeneration;
     signal?.throwIfAborted();
@@ -2142,6 +2765,7 @@ export function createFlightRenderer({
       if (
         imageFailed ||
         disposed ||
+        renderer.getContext().isContextLost() ||
         generation !== sceneGeneration ||
         request !== importGeneration ||
         signal?.aborted
@@ -2159,13 +2783,14 @@ export function createFlightRenderer({
         collectionId: simCollectionIdForProfile(themeProfile) ?? 'authored',
         quality,
         maxAnisotropy: renderer.capabilities.getMaxAnisotropy(),
+        reviewRevision: machineryRevision,
         associations: result.parser?.associations,
         material,
       });
       imported.add(result.scene);
       if (
         json.asset?.extras?.fpvScenery === true &&
-        ['woodland', 'courtyard', 'container-yard'].includes(course.environment)
+        ['woodland', 'courtyard', 'container-yard'].includes(course?.environment)
       )
         sceneryFallback.visible = false;
       imported.userData.auxiliaryRoots = result.scenes.filter((item) => item !== result.scene);
@@ -2288,10 +2913,15 @@ export function createFlightRenderer({
     selectEditor(editorSelection, false);
   }
   async function createEditor(callbacks = {}) {
+    const generation = contextGeneration;
+    if (renderer.getContext().isContextLost())
+      throw new Error('World editor is unavailable while graphics are lost.');
     if (!loadTransformControls)
       throw new Error('World editing requires the World Studio renderer.');
     const { TransformControls } = await loadTransformControls();
     if (disposed) throw new Error('Editor was disposed while loading');
+    if (generation !== contextGeneration || renderer.getContext().isContextLost())
+      throw new Error('World preview changed while the editor was loading');
     editorCallbacks = callbacks;
     if (!editor) {
       editor = new TransformControls(camera, canvas);
@@ -2322,6 +2952,7 @@ export function createFlightRenderer({
     return {
       select: selectEditor,
       pick(clientX, clientY) {
+        if (!editor) return false;
         if (editor.dragging || editor.axis) return true;
         const rect = canvas.getBoundingClientRect();
         raycaster.setFromCamera(
@@ -2342,7 +2973,7 @@ export function createFlightRenderer({
       isDragging: () => !!editor?.dragging,
       setSnap(value) {
         if (![0, 0.1, 0.25, 0.5, 1].includes(value)) throw new TypeError('Invalid editor snap');
-        editor.setTranslationSnap(value || null);
+        editor?.setTranslationSnap(value || null);
       },
       orbit(dx, dy) {
         editorCamera.yaw -= dx * 0.007;
@@ -2350,6 +2981,7 @@ export function createFlightRenderer({
         callbacks.onRedraw?.();
       },
       zoom(delta) {
+        if (!course) return;
         const extent =
           Math.max(
             course.bounds.max.x - course.bounds.min.x,
@@ -2410,8 +3042,58 @@ export function createFlightRenderer({
     editor.attach(object);
     return { detach: () => editor?.detach() };
   }
+  function clearSceneResources() {
+    huntPresentation?.dispose();
+    huntPresentation = null;
+    if (editor) {
+      scene.remove(editor.getHelper());
+      editor.dispose();
+      editor = null;
+    }
+    setPath([]);
+    releaseEnvironmentLight();
+    setGhost([]);
+    clearImported();
+    for (const group of [world, goals, aircraft, actors, projectiles, editHandles])
+      releaseGroup(group);
+    releaseShadow();
+    for (const value of materials) {
+      for (const texture of texturesOf(value)) texture.dispose();
+      value.dispose();
+    }
+    for (const value of geometry) value.dispose();
+    materials.clear();
+    garageDetailMaterials.clear();
+    geometry.clear();
+    goalRows.length = 0;
+    actorRows.clear();
+    actorDefinitions.clear();
+    seenActors.clear();
+    qualityDetails.length = 0;
+    lastActorState = null;
+    pulseRows.clear();
+    stadiumDetailMaterials.clear();
+    droneVisual = null;
+    obstacleMaps = null;
+    obstacleSurface = null;
+    obstacleFittingsMaterial = null;
+    garageDetailMaterial = null;
+    environmentSurfaceKind = null;
+    stadiumMaterial = null;
+    sceneryFallback = null;
+    themeProfile = null;
+    course = null;
+    editRows.length = 0;
+  }
   const lost = (event) => {
     event.preventDefault();
+    // Retry rebuilds the scene on this renderer. Release old GPU ownership while
+    // the context is lost, before Three restores its resource caches.
+    sceneGeneration++;
+    contextGeneration++;
+    presentationGeneration++;
+    importGeneration++;
+    clearSceneResources();
     onContextLost();
   };
   canvas.addEventListener('webglcontextlost', lost);
@@ -2419,6 +3101,7 @@ export function createFlightRenderer({
   setDrone(droneKind);
   return {
     available: true,
+    observePresentation,
     setCourse,
     setPresentation,
     setQuality,
@@ -2480,7 +3163,7 @@ export function createFlightRenderer({
     setCosmetic(recipe) {
       if (/^#[a-fA-F0-9]{6}$/.test(recipe?.color)) {
         cosmeticColor = recipe.color;
-        droneVisual.tint.color.set(cosmeticColor);
+        droneVisual?.tint.color.set(cosmeticColor);
       }
     },
     resources() {
@@ -2543,44 +3226,9 @@ export function createFlightRenderer({
     dispose() {
       if (disposed) return;
       disposed = true;
-      huntPresentation?.dispose();
       sceneGeneration++;
       canvas.removeEventListener('webglcontextlost', lost);
-      if (editor) {
-        scene.remove(editor.getHelper());
-        editor.dispose();
-        editor = null;
-      }
-      setPath([]);
-      scene.environment = null;
-      environmentLight?.dispose();
-      environmentLight = null;
-      setGhost([]);
-      clearImported();
-      for (const group of [world, goals, aircraft, actors, projectiles, editHandles])
-        releaseGroup(group);
-      releaseShadow();
-      for (const value of materials) {
-        for (const texture of texturesOf(value)) texture.dispose();
-        value.dispose();
-      }
-      for (const value of geometry) value.dispose();
-      materials.clear();
-      geometry.clear();
-      goalRows.length = 0;
-      actorRows.clear();
-      actorDefinitions.clear();
-      seenActors.clear();
-      qualityDetails.length = 0;
-      lastActorState = null;
-      pulseRows.clear();
-      droneVisual = null;
-      obstacleMaps = null;
-      obstacleSurface = null;
-      obstacleFittingsMaterial = null;
-      sceneryFallback = null;
-      themeProfile = null;
-      course = null;
+      clearSceneResources();
       renderer.dispose();
       renderer.forceContextLoss();
     },

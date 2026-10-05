@@ -1,0 +1,25 @@
+{
+  "scope": "Manual native browser journey, server stopped before offline reload; no physical device or performance claim",
+  "url": "http://127.0.0.1:8899/player/optional-practice/fpv-worlds/index.html#creator",
+  "pack": "e76fd8aa7c2d1ae1b24daacc98a06cc8e78c137204aca68464de0415f158c0fa",
+  "steps": [
+    "Native Library exactpack import:8challenges",
+    "Native recordings import:16/16verified",
+    "Offline runtime preparation completed",
+    "Online reload",
+    "Server69360 stopped and connection refused independently",
+    "Offline reload:Library retains8challenges",
+    "Offline Catalogue:8courses with Watch",
+    "Dryspillway Fly+Arm:Flightactive0.3s rendered",
+    "Pause to mainmenu",
+    "Library Edit offline",
+    "Projectcourse08 / Acro",
+    "CriterionX -15→-14.5 apply",
+    "Undo -15",
+    "Redo -14.5",
+    "Undo restores -15"
+  ],
+  "finalX": "-15",
+  "state": "Browser tab: 230, Title: \"FPV / LINE · Simulator\", URL: \"http://127.0.0.1:8899/player/optional-practice/fpv-worlds/index.html#creator\".\nThe following is a diff from the previous accessibility tree with ~ and + representing changed and added elements, respectively. Removed elements are summarized by ID range.\nRemoved element IDs: 66, 282, 285-292, 298, 301-303, 307-311, 327-353\n+\t\t\t\t383 text Preview appearance: Flight Deck.\n~\t\t\t\t279 button Redo, ID: redo-edit\n+\t\t\t\t\t\t384 text Project challenge\n~\t\t\t\t\t\t283 pop up button (collapsed, settable) Project challenge, Value: Maintenance roof landing · mountain-reservoir-08, ID: editor-project-course, Secondary Actions: Expand\n+\t\t\t\t\t\t\t\t385 Shoreline check-in · mountain-reservoir-01\n+\t\t\t\t\t\t\t\t386 Western dam crest · mountain-reservoir-02\n+\t\t\t\t\t\t\t\t387 Intake controls · mountain-reservoir-03\n+\t\t\t\t\t\t\t\t388 Dry spillway descent · mountain-reservoir-04\n+\t\t\t\t\t\t\t\t389 Exterior service passage · mountain-reservoir-05\n+\t\t\t\t\t\t\t\t390 Rock terrace climb · mountain-reservoir-06\n+\t\t\t\t\t\t\t\t391 Shoreline circuit · mountain-reservoir-07\n+\t\t\t\t\t\t\t\t392 (selected) Maintenance roof landing · mountain-reservoir-08\n~\t\t\t\t\t296 text field (settable) Challenge title, Value: Maintenance roof landing, ID: creator-title\n+\t\t\t\t\t393 text Route mode\n~\t\t\t\t\t299 pop up button (collapsed, settable) Route mode, Value: Acro, ID: editor-route-mode, Secondary Actions: Expand\n+\t\t\t\t\t\t\t394 (disabled) Both matching modes\n+\t\t\t\t\t\t\t395 Self-level\n+\t\t\t\t\t\t\t396 (selected) Acro\n+\t\t\t\t\t\t397 (selected) 1. Hold position\n+\t\t\t\t\t\t398 2. Cross gate\n+\t\t\t\t\t\t399 3. Hold position\n+\t\t\t\t\t\t400 4. Cross gate\n+\t\t\t\t\t\t401 5. Land\n+\t\t\t\t402 text Route edits: Acro only. Shared source anchors stay unchanged.\n~\t\t\t\t\t314 stepper (settable, integer) X · m, Value: -15, ID: criterion-x\n~\t\t\t\t\t317 stepper (settable, integer) Y · m, Value: 7, ID: criterion-y\n~\t\t\t\t\t320 stepper (settable, integer) Z · m, Value: 9, ID: criterion-z\n+\t\t\t\t\t403 heading Actors & encounters, Value: 3\n+\t\t\t\t\t\t404 text Actors & encounters\n+\t\t\t\t\t405 container\n+\t\t\t\t\t\t406 text Selected actor\n+\t\t\t\t\t\t407 pop up button (disabled, collapsed, settable) Description: Selected actor, Value: No actors yet, Secondary Actions: Expand\n+\t\t\t\t\t\t\t408 menu\n+\t\t\t\t\t\t\t\t409 (disabled) No actors yet\n+\t\t\t\t\t410 container\n+\t\t\t\t\t\t411 text New actor type\n+\t\t\t\t\t\t412 pop up button (collapsed, settable) Description: New actor type, Value: Drone, Secondary Actions: Expand\n+\t\t\t\t\t\t\t413 menu\n+\t\t\t\t\t\t\t\t414 (selected) Drone\n+\t\t\t\t\t\t\t\t415 Ground patrol\n+\t\t\t\t\t\t\t\t416 Ground sentry\n+\t\t\t\t\t\t\t\t417 Patrol vehicle\n+\t\t\t\t\t\t\t\t418 Moving hazard\n+\t\t\t\t\t419 button Add actor\n+\t\t\t\t\t420 button (disabled) Remove actor\n+\t\t\t\t\t421 text Maximum: 12 actors and 8 hazards.\n+\t\t\t\t\t422 container\n+\t\t\t\t\t\t423 heading Follow & observe, Value: 4\n+\t\t\t\t\t\t\t424 text Follow & observe\n+\t\t\t\t\t\t425 text Tracking objective\n+\t\t\t\t\t\t426 pop up button (collapsed, settable) Description: Tracking objective, Value: New tracking objective, Secondary Actions: Expand\n+\t\t\t\t\t\t\t427 menu\n+\t\t\t\t\t\t\t\t428 (selected) New tracking objective\n+\t\t\t\t\t\t429 text Choose a non-hazard subject first.\n+\t\t\t430 text Applied edits are kept. Switching challenge starts a new Undo history.\nThe focused UI element is 1 AXWebArea FPV / LINE · Simulator, URL: 127.0.0.1:8899/player/optional-practice/fpv-worlds/index.html#creator",
+  "logs": []
+}

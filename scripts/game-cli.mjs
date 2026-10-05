@@ -753,7 +753,7 @@ export async function addOfflineEntries(
     // Demo recordings and the large landing photograph remain published for
     // online playback, but they are optional bodies rather than core offline boot.
     // Excluding only their bodies preserves URLs, provenance and on-demand tests
-    // while keeping the shared 72 MiB service-worker cache bound.
+    // while keeping the 80 MiB service-worker cache bound.
     ...entries
       .filter(
         (entry) =>
@@ -772,7 +772,7 @@ export async function addOfflineEntries(
       )
       .map((entry) => entry.name),
     // Recorded spatial effects stay hosted for online play and exact optional
-    // download, but are not charged to every installation's 72 MiB core.
+    // download, but are not charged to every installation's 80 MiB core.
     ...entries.filter((entry) => isOptionalSpatialAudioBody(entry.name)).map((entry) => entry.name),
     // The review gallery duplicates paintings already embedded in playable
     // content. Host its source copies without charging the offline game twice.
@@ -901,9 +901,9 @@ export async function addOfflineEntries(
     .sort((a, b) => (a.name < b.name ? -1 : a.name > b.name ? 1 : 0))
     .map((e) => ({ path: e.name, bytes: e.bytes.length, sha256: sha256(e.bytes) }));
   const totalBytes = files.reduce((n, f) => n + f.bytes, 0);
-  if (files.length > 2000 || totalBytes > 72 * 1024 * 1024)
+  if (files.length > 2000 || totalBytes > 80 * 1024 * 1024)
     fail(
-      `Offline distribution exceeds 2000 files or 72 MiB (${files.length} files / ${totalBytes} bytes); split optional content into packs`,
+      `Offline distribution exceeds 2000 files or 80 MiB (${files.length} files / ${totalBytes} bytes); split optional content into packs`,
     );
   const config = {
     format: 'revealline-offline.v1',

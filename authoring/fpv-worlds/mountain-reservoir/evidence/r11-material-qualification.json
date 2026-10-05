@@ -1,0 +1,614 @@
+{
+  "format": "FPVReservoirGroundMaterialQualification.v1",
+  "status": "passed",
+  "checks": [
+    {
+      "name": "Exact qualified r9 source",
+      "passed": true
+    },
+    {
+      "name": "Unchanged complete source budget",
+      "passed": true
+    },
+    {
+      "name": "nodes exact",
+      "passed": true
+    },
+    {
+      "name": "scenes exact",
+      "passed": true
+    },
+    {
+      "name": "samplers exact",
+      "passed": true
+    },
+    {
+      "name": "No new material or mesh batch",
+      "passed": true
+    },
+    {
+      "name": "closed-window mesh/primitive/index ownership exact",
+      "passed": true
+    },
+    {
+      "name": "Tightly packed original attribute",
+      "passed": true
+    },
+    {
+      "name": "Tightly packed original attribute",
+      "passed": true
+    },
+    {
+      "name": "closed-window/NORMAL exact bytes",
+      "passed": true
+    },
+    {
+      "name": "Tightly packed original attribute",
+      "passed": true
+    },
+    {
+      "name": "Tightly packed original attribute",
+      "passed": true
+    },
+    {
+      "name": "closed-window/POSITION exact bytes",
+      "passed": true
+    },
+    {
+      "name": "closed-window only declared texture binding changes",
+      "passed": true
+    },
+    {
+      "name": "chalk-enamel mesh/primitive/index ownership exact",
+      "passed": true
+    },
+    {
+      "name": "Tightly packed original attribute",
+      "passed": true
+    },
+    {
+      "name": "Tightly packed original attribute",
+      "passed": true
+    },
+    {
+      "name": "chalk-enamel/NORMAL exact bytes",
+      "passed": true
+    },
+    {
+      "name": "Tightly packed original attribute",
+      "passed": true
+    },
+    {
+      "name": "Tightly packed original attribute",
+      "passed": true
+    },
+    {
+      "name": "chalk-enamel/POSITION exact bytes",
+      "passed": true
+    },
+    {
+      "name": "chalk-enamel only declared texture binding changes",
+      "passed": true
+    },
+    {
+      "name": "blue-enamel mesh/primitive/index ownership exact",
+      "passed": true
+    },
+    {
+      "name": "Tightly packed original attribute",
+      "passed": true
+    },
+    {
+      "name": "Tightly packed original attribute",
+      "passed": true
+    },
+    {
+      "name": "blue-enamel/NORMAL exact bytes",
+      "passed": true
+    },
+    {
+      "name": "Tightly packed original attribute",
+      "passed": true
+    },
+    {
+      "name": "Tightly packed original attribute",
+      "passed": true
+    },
+    {
+      "name": "blue-enamel/POSITION exact bytes",
+      "passed": true
+    },
+    {
+      "name": "blue-enamel only declared texture binding changes",
+      "passed": true
+    },
+    {
+      "name": "safety-yellow mesh/primitive/index ownership exact",
+      "passed": true
+    },
+    {
+      "name": "Tightly packed original attribute",
+      "passed": true
+    },
+    {
+      "name": "Tightly packed original attribute",
+      "passed": true
+    },
+    {
+      "name": "safety-yellow/NORMAL exact bytes",
+      "passed": true
+    },
+    {
+      "name": "Tightly packed original attribute",
+      "passed": true
+    },
+    {
+      "name": "Tightly packed original attribute",
+      "passed": true
+    },
+    {
+      "name": "safety-yellow/POSITION exact bytes",
+      "passed": true
+    },
+    {
+      "name": "safety-yellow only declared texture binding changes",
+      "passed": true
+    },
+    {
+      "name": "oxidized-roof mesh/primitive/index ownership exact",
+      "passed": true
+    },
+    {
+      "name": "Tightly packed original attribute",
+      "passed": true
+    },
+    {
+      "name": "Tightly packed original attribute",
+      "passed": true
+    },
+    {
+      "name": "oxidized-roof/NORMAL exact bytes",
+      "passed": true
+    },
+    {
+      "name": "Tightly packed original attribute",
+      "passed": true
+    },
+    {
+      "name": "Tightly packed original attribute",
+      "passed": true
+    },
+    {
+      "name": "oxidized-roof/POSITION exact bytes",
+      "passed": true
+    },
+    {
+      "name": "oxidized-roof only declared texture binding changes",
+      "passed": true
+    },
+    {
+      "name": "shore-meadow mesh/primitive/index ownership exact",
+      "passed": true
+    },
+    {
+      "name": "Tightly packed original attribute",
+      "passed": true
+    },
+    {
+      "name": "Tightly packed original attribute",
+      "passed": true
+    },
+    {
+      "name": "shore-meadow/COLOR_0 exact bytes",
+      "passed": true
+    },
+    {
+      "name": "Tightly packed original attribute",
+      "passed": true
+    },
+    {
+      "name": "Tightly packed original attribute",
+      "passed": true
+    },
+    {
+      "name": "shore-meadow/NORMAL exact bytes",
+      "passed": true
+    },
+    {
+      "name": "Tightly packed original attribute",
+      "passed": true
+    },
+    {
+      "name": "Tightly packed original attribute",
+      "passed": true
+    },
+    {
+      "name": "shore-meadow/POSITION exact bytes",
+      "passed": true
+    },
+    {
+      "name": "Tightly packed original attribute",
+      "passed": true
+    },
+    {
+      "name": "Tightly packed original attribute",
+      "passed": true
+    },
+    {
+      "name": "shore-meadow/TEXCOORD_0 exact metre scale",
+      "passed": true
+    },
+    {
+      "name": "shore-meadow only declared texture binding changes",
+      "passed": true
+    },
+    {
+      "name": "warm-gravel mesh/primitive/index ownership exact",
+      "passed": true
+    },
+    {
+      "name": "Tightly packed original attribute",
+      "passed": true
+    },
+    {
+      "name": "Tightly packed original attribute",
+      "passed": true
+    },
+    {
+      "name": "warm-gravel/COLOR_0 exact bytes",
+      "passed": true
+    },
+    {
+      "name": "Tightly packed original attribute",
+      "passed": true
+    },
+    {
+      "name": "Tightly packed original attribute",
+      "passed": true
+    },
+    {
+      "name": "warm-gravel/NORMAL exact bytes",
+      "passed": true
+    },
+    {
+      "name": "Tightly packed original attribute",
+      "passed": true
+    },
+    {
+      "name": "Tightly packed original attribute",
+      "passed": true
+    },
+    {
+      "name": "warm-gravel/POSITION exact bytes",
+      "passed": true
+    },
+    {
+      "name": "Tightly packed original attribute",
+      "passed": true
+    },
+    {
+      "name": "Tightly packed original attribute",
+      "passed": true
+    },
+    {
+      "name": "warm-gravel/TEXCOORD_0 exact metre scale",
+      "passed": true
+    },
+    {
+      "name": "warm-gravel only declared texture binding changes",
+      "passed": true
+    },
+    {
+      "name": "mineral-ridge mesh/primitive/index ownership exact",
+      "passed": true
+    },
+    {
+      "name": "Tightly packed original attribute",
+      "passed": true
+    },
+    {
+      "name": "Tightly packed original attribute",
+      "passed": true
+    },
+    {
+      "name": "mineral-ridge/COLOR_0 exact bytes",
+      "passed": true
+    },
+    {
+      "name": "Tightly packed original attribute",
+      "passed": true
+    },
+    {
+      "name": "Tightly packed original attribute",
+      "passed": true
+    },
+    {
+      "name": "mineral-ridge/NORMAL exact bytes",
+      "passed": true
+    },
+    {
+      "name": "Tightly packed original attribute",
+      "passed": true
+    },
+    {
+      "name": "Tightly packed original attribute",
+      "passed": true
+    },
+    {
+      "name": "mineral-ridge/POSITION exact bytes",
+      "passed": true
+    },
+    {
+      "name": "Tightly packed original attribute",
+      "passed": true
+    },
+    {
+      "name": "Tightly packed original attribute",
+      "passed": true
+    },
+    {
+      "name": "mineral-ridge/TEXCOORD_0 exact bytes",
+      "passed": true
+    },
+    {
+      "name": "mineral-ridge only declared texture binding changes",
+      "passed": true
+    },
+    {
+      "name": "reservoir-water mesh/primitive/index ownership exact",
+      "passed": true
+    },
+    {
+      "name": "Tightly packed original attribute",
+      "passed": true
+    },
+    {
+      "name": "Tightly packed original attribute",
+      "passed": true
+    },
+    {
+      "name": "reservoir-water/COLOR_0 exact bytes",
+      "passed": true
+    },
+    {
+      "name": "Tightly packed original attribute",
+      "passed": true
+    },
+    {
+      "name": "Tightly packed original attribute",
+      "passed": true
+    },
+    {
+      "name": "reservoir-water/NORMAL exact bytes",
+      "passed": true
+    },
+    {
+      "name": "Tightly packed original attribute",
+      "passed": true
+    },
+    {
+      "name": "Tightly packed original attribute",
+      "passed": true
+    },
+    {
+      "name": "reservoir-water/POSITION exact bytes",
+      "passed": true
+    },
+    {
+      "name": "reservoir-water only declared texture binding changes",
+      "passed": true
+    },
+    {
+      "name": "water-current mesh/primitive/index ownership exact",
+      "passed": true
+    },
+    {
+      "name": "Tightly packed original attribute",
+      "passed": true
+    },
+    {
+      "name": "Tightly packed original attribute",
+      "passed": true
+    },
+    {
+      "name": "water-current/NORMAL exact bytes",
+      "passed": true
+    },
+    {
+      "name": "Tightly packed original attribute",
+      "passed": true
+    },
+    {
+      "name": "Tightly packed original attribute",
+      "passed": true
+    },
+    {
+      "name": "water-current/POSITION exact bytes",
+      "passed": true
+    },
+    {
+      "name": "water-current only declared texture binding changes",
+      "passed": true
+    },
+    {
+      "name": "tree-bark mesh/primitive/index ownership exact",
+      "passed": true
+    },
+    {
+      "name": "Tightly packed original attribute",
+      "passed": true
+    },
+    {
+      "name": "Tightly packed original attribute",
+      "passed": true
+    },
+    {
+      "name": "tree-bark/NORMAL exact bytes",
+      "passed": true
+    },
+    {
+      "name": "Tightly packed original attribute",
+      "passed": true
+    },
+    {
+      "name": "Tightly packed original attribute",
+      "passed": true
+    },
+    {
+      "name": "tree-bark/POSITION exact bytes",
+      "passed": true
+    },
+    {
+      "name": "tree-bark only declared texture binding changes",
+      "passed": true
+    },
+    {
+      "name": "fir-light mesh/primitive/index ownership exact",
+      "passed": true
+    },
+    {
+      "name": "Tightly packed original attribute",
+      "passed": true
+    },
+    {
+      "name": "Tightly packed original attribute",
+      "passed": true
+    },
+    {
+      "name": "fir-light/NORMAL exact bytes",
+      "passed": true
+    },
+    {
+      "name": "Tightly packed original attribute",
+      "passed": true
+    },
+    {
+      "name": "Tightly packed original attribute",
+      "passed": true
+    },
+    {
+      "name": "fir-light/POSITION exact bytes",
+      "passed": true
+    },
+    {
+      "name": "fir-light only declared texture binding changes",
+      "passed": true
+    },
+    {
+      "name": "fir-dark mesh/primitive/index ownership exact",
+      "passed": true
+    },
+    {
+      "name": "Tightly packed original attribute",
+      "passed": true
+    },
+    {
+      "name": "Tightly packed original attribute",
+      "passed": true
+    },
+    {
+      "name": "fir-dark/NORMAL exact bytes",
+      "passed": true
+    },
+    {
+      "name": "Tightly packed original attribute",
+      "passed": true
+    },
+    {
+      "name": "Tightly packed original attribute",
+      "passed": true
+    },
+    {
+      "name": "fir-dark/POSITION exact bytes",
+      "passed": true
+    },
+    {
+      "name": "fir-dark only declared texture binding changes",
+      "passed": true
+    },
+    {
+      "name": "Exactly two additional texture owners",
+      "passed": true
+    },
+    {
+      "name": "Rock image exact",
+      "passed": true
+    },
+    {
+      "name": "Encoded new-image budget",
+      "passed": true
+    },
+    {
+      "name": "Original map 0 reproducible",
+      "passed": true
+    },
+    {
+      "name": "New map bounded128px",
+      "passed": true
+    },
+    {
+      "name": "New map uses unchanged sampler",
+      "passed": true
+    },
+    {
+      "name": "Original map 1 reproducible",
+      "passed": true
+    },
+    {
+      "name": "New map bounded128px",
+      "passed": true
+    },
+    {
+      "name": "New map uses unchanged sampler",
+      "passed": true
+    },
+    {
+      "name": "Distinct candidate revision",
+      "passed": true
+    },
+    {
+      "name": "Eight courses/collision/routes exact except revision",
+      "passed": true
+    },
+    {
+      "name": "spawnBindings exact",
+      "passed": true
+    },
+    {
+      "name": "routeBindings exact",
+      "passed": true
+    },
+    {
+      "name": "overrides exact",
+      "passed": true
+    },
+    {
+      "name": "themes exact",
+      "passed": true
+    },
+    {
+      "name": "campaigns exact",
+      "passed": true
+    },
+    {
+      "name": "playlists exact",
+      "passed": true
+    }
+  ],
+  "before": {
+    "bytes": 1171468,
+    "sha256": "ca838e9e028838a5a17f74831d4ef8206a14addd2baa510da78f28dd25bd9aac"
+  },
+  "after": {
+    "bytes": 1210776,
+    "sha256": "503c49b5e29a3cb486272ca2d328b4d50b69fda82ba90d45bd76c37d2b29343a"
+  },
+  "extraImageBytes": 39007,
+  "addedMaterials": 0,
+  "addedMeshes": 0,
+  "addedTriangles": 0,
+  "addedTextures": 2,
+  "collisionChanges": 0,
+  "routeChanges": 0,
+  "limits": "Static contracts only; no visual/flight/hardware claim."
+}

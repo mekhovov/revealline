@@ -102,6 +102,12 @@ for (const personal of [null, 'tryzub']) {
     } finally {
       BoardPainter.prototype.setLevel = setLevel;
     }
+    page.frame(0);
+    assert.equal(page.rendered.run.levelId, 'porcelain-mission');
+    assert.equal(page.rendered.paused, true, 'Mission selection opens its briefing.');
+    assert.equal(page.rendered.run.tick, 0, 'The prepared mission does not autoplay.');
+    assert.equal(page.$('game-overlay').hidden, false);
+    page.$('start-button').click();
     await settle(() => {
       page.frame(0);
       return (
