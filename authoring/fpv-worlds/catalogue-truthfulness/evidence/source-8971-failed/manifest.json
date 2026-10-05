@@ -1,0 +1,23 @@
+{
+  "format": "FPVCatalogueFailureArchive.v1",
+  "files": [
+    {
+      "path": "fpv-imported-catalogue-8971-failed.json.gz",
+      "bytes": 1024527,
+      "sha256": "7a694b142b05f62d1a467667d4f80058220ca61762cefe6a68f79be296f0dec6",
+      "storedBytes": 187226,
+      "storedSHA256": "6f610a8cd9b760b5553288526755b10efbf79e54718e674fd9564e9dac0c26e1"
+    },
+    {
+      "path": "fpv-imported-catalogue-8971-failed.png",
+      "bytes": 31800,
+      "sha256": "bfd3ba376e3ef32116c656b59e485568d877692f3ae770f09981223e87b1fdd6",
+      "storedBytes": 31800,
+      "storedSHA256": "bfd3ba376e3ef32116c656b59e485568d877692f3ae770f09981223e87b1fdd6"
+    }
+  ],
+  "checksPassed": 364,
+  "failedAssertions": 0,
+  "cause": "Fixture waited for Flight/Playback active wording, but native Watch retains its guidance message. At timeout the exact1616-frame demonstration was complete. Original receipt retained; no runtime change.",
+  "scope": "Twelve native catalogue samples and preceding controls passed. The complete run failed; no overall pass claim."
+}
