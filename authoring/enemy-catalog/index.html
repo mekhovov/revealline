@@ -2,6 +2,12 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
+    <script src="../../game/presentation/theme-bootstrap.mjs" data-theme-density="studio"></script>
+    <link
+      rel="stylesheet"
+      href="../../game/presentation/industrial-workshop.css"
+      data-industrial-workshop
+    />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title data-i18n="tools:reveallineEnemyWorkshop">FPV / LINE — enemy workshop</title>
@@ -14,29 +20,31 @@
     <script type="module" src="../../game/presentation/page-entry.mjs"></script>
     <link rel="stylesheet" href="../../game/ui/operation-status.css" />
     <style>
-      .catalog-host-actions {
-        display: flex;
-        flex-wrap: wrap;
-        align-items: center;
-        gap: 16px;
-      }
-      .catalog-host-actions > :is(button, a) {
-        box-sizing: border-box;
-        display: inline-flex;
-        align-items: center;
-        min-block-size: 44px;
-        min-inline-size: 44px;
-        max-inline-size: 100%;
-        white-space: normal;
-        overflow-wrap: anywhere;
-      }
-      #catalog-host-status + .button {
-        box-sizing: border-box;
-        padding-block: 0;
-      }
-      @media (max-height: 480px) {
-        body > p {
-          margin-block: 8px;
+      @layer legacy {
+        .catalog-host-actions {
+          display: flex;
+          flex-wrap: wrap;
+          align-items: center;
+          gap: 16px;
+        }
+        .catalog-host-actions > :is(button, a) {
+          box-sizing: border-box;
+          display: inline-flex;
+          align-items: center;
+          min-block-size: 44px;
+          min-inline-size: 44px;
+          max-inline-size: 100%;
+          white-space: normal;
+          overflow-wrap: anywhere;
+        }
+        #catalog-host-status + .button {
+          box-sizing: border-box;
+          padding-block: 0;
+        }
+        @media (max-height: 480px) {
+          body > p {
+            margin-block: 8px;
+          }
         }
       }
     </style>

@@ -1,0 +1,29 @@
+{
+  "file": "game/test/coop-import-next.test.mjs",
+  "kind": "head",
+  "command": [
+    "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+    "--test",
+    "--test-concurrency=1",
+    "game/test/coop-import-next.test.mjs"
+  ],
+  "cwd": "/tmp/appearance-head-f4545d6-8ng8t16s",
+  "exitCode": 1,
+  "timedOut": false,
+  "seconds": 99.51,
+  "failures": [
+    {
+      "test": "imported Next hidden retains earned Results until another deliberate action",
+      "location": "/privategame/test/coop-import-next.test.mjs:135:3",
+      "detail": "\n  ---\n  duration_ms: 14902.41825\n  location: '/private/tmp/appearance-head-f4545d6-8ng8t16s/game/test/coop-import-next.test.mjs:135:3'\n  failureType: 'testCodeFailure'\n  error: 'Observable Team condition did not settle. Next arena cancelled. Your result and picture are still here.'\n  code: 'ERR_ASSERTION'\n  name: 'AssertionError'\n  expected: true\n  actual: false\n  operator: '=='\n  stack: |-\n    waitFor (file:///private/tmp/appearance-head-f4545d6-8ng8t16s/game/test/helpers/wait-for.mjs:15:12)\n    async waitFor (file:///private/tmp/appearance-head-f4545d6-8ng8t16s/game/test/helpers/coop-presentation-fixture.mjs:42:5)\n    async launchNext (file:///private/tmp/appearance-head-f4545d6-8ng8t16s/game/test/coop-import-next.test.mjs:127:3)\n    async TestContext.<anonymous> (file:///private/tmp/appearance-head-f4545d6-8ng8t16s/game/test/coop-import-next.test.mjs:152:5)\n    async Test.run (node:internal/test_runner/test:797:9)\n    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)"
+    }
+  ],
+  "summary": [
+    "# tests 9",
+    "# pass 8",
+    "# fail 1",
+    "# cancelled 0",
+    "# skipped 0",
+    "# duration_ms 99486.422625"
+  ]
+}

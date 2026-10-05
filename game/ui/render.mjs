@@ -1,4 +1,9 @@
+import { canvasInterfaceFonts } from '../presentation/theme-system.mjs';
 import { preparedRotorRecipe } from './rotor-presentation.mjs';
+import {
+  createArcadeAdapter,
+  selectedArcadeCollection,
+} from '../presentation/industrial-arcade.mjs';
 import { contactCueUnderstroke } from './contact-cue.mjs';
 import { t } from '../i18n/index.mjs';
 import { canvasTextFonts } from '../text-face.mjs';
@@ -151,11 +156,16 @@ export class BoardPainter {
     this._winState = null;
     this._celebrationPrepared = false;
     this.presentation = null;
+    this.arcadeAdapter = createArcadeAdapter();
+    this.arcadeProvider = () => null;
+    this.interfaceProvider = () => null;
+    this.arcadeCollection = null;
     this.pictureFilter = createDemoPictureFilter({ canvasFactory: pictureCanvasFactory });
     this.jammerPictureFilter = createJammerPictureFilter({ canvasFactory: jammerCanvasFactory });
     this.signalReception = createSignalReception({ canvasFactory: signalCanvasFactory });
   }
   dispose() {
+    this.arcadeAdapter.clear();
     // Retired scenes cannot adopt a late decode or retain shared enemy leases.
     ++this.loadToken;
     this.enemyBodies.clear();
@@ -176,7 +186,17 @@ export class BoardPainter {
   // A read-only compiled release snapshot is cosmetic. It never replaces the
   // source theme, picture, body preset or any simulation-owned reference.
   setPresentation(snapshot = null) {
+    if (snapshot !== this.presentation) this.arcadeAdapter.clear();
     this.presentation = snapshot;
+  }
+  setInterfaceProvider(provider) {
+    this.interfaceProvider = typeof provider === 'function' ? provider : () => null;
+  }
+  setArcadeProvider(provider) {
+    this.arcadeProvider = typeof provider === 'function' ? provider : () => null;
+  }
+  get artSnapshot() {
+    return this.arcadeAdapter.resolve(this.presentation, this.arcadeCollection);
   }
   async setLook(theme, bodyId, overrides = {}) {
     this.pictureFilter.clear();
@@ -270,7 +290,12 @@ export class BoardPainter {
   makeArt(theme, level = this.levelInfo, seed = this.artSeed) {
     return createSceneArt(theme, level, seed, () => makeCanvas(384, 288));
   }
-  setLevel(level = {}, { seed = 0 } = {}) {
+  setLevel(level = {}, { seed = 0, arcadeCollection = undefined } = {}) {
+    // Capture only at a new attempt boundary; changes during flight wait.
+    this.arcadeCollection =
+      arcadeCollection === undefined
+        ? selectedArcadeCollection(this.arcadeProvider())
+        : arcadeCollection;
     this.pictureFilter.clear();
     this.jammerPictureFilter.clear();
     this.levelInfo = { id: level.id || 'gallery', revision: level.revision || '1' };
@@ -390,7 +415,7 @@ export class BoardPainter {
     const captureAccent = feedbackComparison?.captureAccent !== false,
       eventAccents = feedbackComparison?.eventAccents !== false;
     const presentation =
-      this.theme.id === 'fpv' || this.theme.family === 'fpv' ? this.presentation : null;
+      this.theme.id === 'fpv' || this.theme.family === 'fpv' ? this.artSnapshot : null;
     if (
       actorAppearance !== null &&
       (!['fpv', 'campaign'].includes(actorAppearance?.style) ||
@@ -403,7 +428,10 @@ export class BoardPainter {
     // theme are deliberately ignored: changing actors must not change a world.
     const fpvActors = actorAppearance?.style === 'fpv';
     const actorPresentation = fpvActors ? actorAppearance.snapshot : presentation;
-    const fonts = canvasTextFonts(textFace, presentation?.fonts);
+    const interfaceFonts = canvasInterfaceFonts(this.interfaceProvider());
+    const fonts = canvasTextFonts(textFace, interfaceFonts ?? presentation?.fonts, {
+      useThemeFont: !!interfaceFonts || !!presentation?.appearance,
+    });
     reduced = reduced || presentation?.canvas.motionScale === 0;
     const motionDt = dt * (presentation?.canvas.motionScale ?? 1);
     const { width: columns, height: rows } = geometryForRun(state);

@@ -1,4 +1,9 @@
+import { canvasInterfaceFonts } from '../presentation/theme-system.mjs';
 import { t } from '../i18n/index.mjs';
+import {
+  createArcadeAdapter,
+  selectedArcadeCollection,
+} from '../presentation/industrial-arcade.mjs';
 import {
   createTeamOutcomeFeedback,
   prepareTeamOutcomes,
@@ -114,6 +119,11 @@ function prepareActorAppearance(snapshot) {
 
 /** Draw the authoritative board once. Rendering never advances game state. */
 export function createCoopPainter(canvas) {
+  const arcadeAdapter = createArcadeAdapter(),
+    runCollections = new WeakMap();
+  let interfaceProvider = () => null;
+  let arcadeProvider = () => null,
+    artSnapshot = null;
   const ctx = canvas.getContext('2d');
   if (!ctx) throw new Error(t('interface:relayRescueNeedsABrowserWithCanvas2dSupport'));
   let actors = createCoopActorPresentation(),
@@ -133,6 +143,11 @@ export function createCoopPainter(canvas) {
     rescueFrames = Object.freeze({}),
     outcomeFrames = Object.freeze({});
   function setPresentation(snapshot) {
+    prepareArt(snapshot);
+    if (snapshot !== presentation) arcadeAdapter.clear();
+    presentation = snapshot ?? null;
+  }
+  function prepareArt(snapshot) {
     let next = null;
     if (snapshot != null) {
       const palette = {};
@@ -163,7 +178,7 @@ export function createCoopPainter(canvas) {
           throw new TypeError(t('interface:teamPresentationNeedsItsPreparedFontRoles'));
         fonts[key] = value;
       }
-      next = { palette, motionScale, fonts };
+      next = { palette, motionScale, fonts, useThemeFont: !!snapshot.appearance };
     }
     // Keep the page lease's exact snapshot identity while capturing its display
     // values. The painter never changes or disposes shared presentation assets.
@@ -177,7 +192,7 @@ export function createCoopPainter(canvas) {
     actors.setPresentation(snapshot ?? null);
     actorPresentation = snapshot ?? null;
     actorAppearanceStyle = null;
-    presentation = snapshot ?? null;
+    artSnapshot = snapshot ?? null;
     look = next;
     wall = nextWall;
     anchors = nextAnchors;
@@ -204,11 +219,13 @@ export function createCoopPainter(canvas) {
       feedbackComparison = null,
     } = {},
   ) {
+    const selectedArt = arcadeAdapter.resolve(presentation, runCollections.get(run) ?? null);
+    if (selectedArt !== artSnapshot) prepareArt(selectedArt);
     const cueScale = coopCueScale(canvas.clientWidth, run.width, textSize);
     if (actorAppearance !== null && !['fpv', 'campaign'].includes(actorAppearance?.style))
       throw new TypeError(t('interface:teamActorAppearanceNeedsASupportedStyle'));
     const selectedActors =
-      actorAppearance?.style === 'fpv' ? actorAppearance.snapshot : presentation;
+      actorAppearance?.style === 'fpv' ? actorAppearance.snapshot : artSnapshot;
     let nextActors = actors;
     if (
       actorAppearance?.style === 'fpv' &&
@@ -268,7 +285,10 @@ export function createCoopPainter(canvas) {
     actorAppearanceStyle = actorAppearance?.style ?? null;
     const recentOutcomes = feedback ?? outcomes.observe(run),
       recentCaptures = captures.observe(run);
-    const fonts = canvasTextFonts(textFace, look?.fonts ?? THEME_FONTS);
+    const interfaceFonts = canvasInterfaceFonts(interfaceProvider());
+    const fonts = canvasTextFonts(textFace, interfaceFonts ?? look?.fonts ?? THEME_FONTS, {
+      useThemeFont: !!interfaceFonts || look?.useThemeFont,
+    });
     const bonuses = coopBonusView(run),
       // Pickups scale motion separately from Support's stored velocity. Both
       // own the same visible state; neither the painter nor pause extends it.
@@ -1021,6 +1041,22 @@ export function createCoopPainter(canvas) {
       captures.observe(run);
     },
     setPresentation,
+    setInterfaceProvider(provider) {
+      interfaceProvider = typeof provider === 'function' ? provider : () => null;
+    },
+    setArcadeProvider(provider) {
+      arcadeProvider = typeof provider === 'function' ? provider : () => null;
+    },
+    captureArcadeCollection(run) {
+      if (!runCollections.has(run))
+        runCollections.set(run, selectedArcadeCollection(arcadeProvider()));
+    },
+    dispose() {
+      arcadeAdapter.clear();
+    },
+    get artSnapshot() {
+      return artSnapshot;
+    },
     actorFrame: (kind, id) => actors.frame(kind, id),
     get presentation() {
       return presentation;

@@ -1,96 +1,99 @@
-.optional-practice-dialog {
-  box-sizing: border-box;
-  width: min(46rem, calc(100vw - 2rem));
-  max-height: calc(100dvh - 2rem);
-  padding: 0;
-  border: 1px solid var(--line, #345365);
-  border-radius: 1rem;
-  color: var(--text, #f4f8fc);
-  background: var(--panel, #10202d);
-  overflow: hidden;
-}
-.optional-practice-dialog[open] {
-  display: grid;
-  grid-template-rows: auto minmax(0, 1fr) auto;
-}
-.optional-practice-dialog::backdrop {
-  background: #040a12c9;
-}
-.optional-practice-dialog > header,
-.optional-practice-dialog > footer {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  padding: 1rem;
-}
-.optional-practice-dialog > header {
-  border-bottom: 1px solid var(--line, #345365);
-}
-.optional-practice-dialog > footer {
-  border-top: 1px solid var(--line, #345365);
-}
-.optional-practice-dialog h2,
-.optional-practice-dialog h3 {
-  margin: 0;
-}
-.optional-practice-dialog h2 {
-  font-size: 1.25rem;
-}
-.optional-practice-dialog button {
-  min-height: 44px;
-  flex-shrink: 0;
-}
-.optional-practice-content {
-  overflow: auto;
-  overscroll-behavior: contain;
-  padding: 0 1rem 1rem;
-}
-.optional-practice-content p {
-  line-height: 1.5;
-}
-.optional-practice-packages {
-  display: grid;
-  gap: 0.6rem;
-  list-style: none;
-  padding: 0;
-  margin: 1rem 0 0;
-}
-.optional-practice-packages li {
-  border: 1px solid var(--line, #345365);
-  border-radius: 0.6rem;
-  overflow-wrap: anywhere;
-}
-.optional-practice-packages a {
-  display: flex;
-  align-items: center;
-  min-height: 44px;
-  padding: 0.5rem 0.75rem;
-  box-sizing: border-box;
-  color: var(--accent, #79daf1);
-  font-weight: 700;
-}
-.optional-practice-packages small {
-  display: block;
-  padding: 0 0.75rem 0.6rem;
-}
-.optional-practice-source-previews {
-  padding-top: 1rem;
-  margin-top: 1.5rem;
-  border-top: 1px dashed var(--line, #345365);
-}
-.optional-practice-dialog :is(a, button):focus-visible {
-  outline: 3px solid var(--accent, #79daf1);
-  outline-offset: -3px;
-}
-@media (max-width: 420px), (max-height: 480px) {
+/* Legacy layout and paint share one cascade layer. Theme recipes own opt-in appearance. */
+@layer legacy {
   .optional-practice-dialog {
-    width: calc(100vw - 1rem);
-    max-height: calc(100dvh - 1rem);
+    box-sizing: border-box;
+    width: min(46rem, calc(100vw - 2rem));
+    max-height: calc(100dvh - 2rem);
+    padding: 0;
+    border: 1px solid var(--line, #345365);
+    border-radius: 1rem;
+    color: var(--text, #f4f8fc);
+    background: var(--panel, #10202d);
+    overflow: hidden;
+  }
+  .optional-practice-dialog[open] {
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr) auto;
+  }
+  .optional-practice-dialog::backdrop {
+    background: #040a12c9;
   }
   .optional-practice-dialog > header,
   .optional-practice-dialog > footer {
-    gap: 0.5rem;
-    padding: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1rem;
+  }
+  .optional-practice-dialog > header {
+    border-bottom: 1px solid var(--line, #345365);
+  }
+  .optional-practice-dialog > footer {
+    border-top: 1px solid var(--line, #345365);
+  }
+  .optional-practice-dialog h2,
+  .optional-practice-dialog h3 {
+    margin: 0;
+  }
+  .optional-practice-dialog h2 {
+    font-size: 1.25rem;
+  }
+  .optional-practice-dialog button {
+    min-height: 44px;
+    flex-shrink: 0;
+  }
+  .optional-practice-content {
+    overflow: auto;
+    overscroll-behavior: contain;
+    padding: 0 1rem 1rem;
+  }
+  .optional-practice-content p {
+    line-height: 1.5;
+  }
+  .optional-practice-packages {
+    display: grid;
+    gap: 0.6rem;
+    list-style: none;
+    padding: 0;
+    margin: 1rem 0 0;
+  }
+  .optional-practice-packages li {
+    border: 1px solid var(--line, #345365);
+    border-radius: 0.6rem;
+    overflow-wrap: anywhere;
+  }
+  .optional-practice-packages a {
+    display: flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 0.5rem 0.75rem;
+    box-sizing: border-box;
+    color: var(--accent, #79daf1);
+    font-weight: 700;
+  }
+  .optional-practice-packages small {
+    display: block;
+    padding: 0 0.75rem 0.6rem;
+  }
+  .optional-practice-source-previews {
+    padding-top: 1rem;
+    margin-top: 1.5rem;
+    border-top: 1px dashed var(--line, #345365);
+  }
+  .optional-practice-dialog :is(a, button):focus-visible {
+    outline: 3px solid var(--accent, #79daf1);
+    outline-offset: -3px;
+  }
+  @media (max-width: 420px), (max-height: 480px) {
+    .optional-practice-dialog {
+      width: calc(100vw - 1rem);
+      max-height: calc(100dvh - 1rem);
+    }
+    .optional-practice-dialog > header,
+    .optional-practice-dialog > footer {
+      gap: 0.5rem;
+      padding: 0.5rem;
+    }
   }
 }

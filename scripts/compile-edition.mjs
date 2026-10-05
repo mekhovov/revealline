@@ -5,6 +5,7 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import { createHash } from 'node:crypto';
 import { pathToFileURL } from 'node:url';
+import { createThemeBootstrapSeed } from './refresh-theme-bootstrap.mjs';
 import { parse } from 'acorn';
 import { canonicalJSON, boundedJSON, required } from '../game/data-json.mjs';
 import { compileContentProject } from '../game/content-design/project.mjs';
@@ -22,6 +23,8 @@ import {
   validateEditionAsset,
   resolveEditionAssets,
   resolveEditionSelection,
+  resolveEditionAppearanceDefault,
+  resolveEditionAppearanceThemes,
 } from '../game/editions/model.mjs';
 import { mergeEditionProjects } from '../game/editions/bootstrap.mjs';
 import { validateCompletionRewards } from '../game/rewards/model.mjs';
@@ -133,6 +136,9 @@ export function selectEditionClosure(source, editionIds) {
     editions,
     campaigns,
     assets: catalog.assets.filter((asset) => selectedIds.has(asset.id)),
+    ...(catalog.appearanceThemes
+      ? { appearanceThemes: resolveEditionAppearanceThemes(catalog, { editionIds }) }
+      : {}),
   });
 }
 
@@ -618,6 +624,23 @@ export async function compileEdition({
         (item) => item.id === runtimeCatalog.defaultEditionId,
       );
       const brand = runtimeCatalog.brands.find((item) => item.id === edition.brandId);
+      const appearanceDefault = resolveEditionAppearanceDefault(
+        resolveEditionSelection(runtimeCatalog, { editionId: edition.id }),
+      );
+      if (appearanceDefault)
+        html = html.replace(
+          /<html\b/,
+          `<html data-appearance-family="${appearanceDefault.familyId}" data-appearance-revision="${appearanceDefault.revision}"`,
+        );
+      const candidate = runtimeCatalog.appearanceThemes?.find(
+        (row) =>
+          row.family.id === appearanceDefault?.familyId &&
+          row.family.revision === appearanceDefault.revision,
+      );
+      if (candidate) {
+        const hint = encodeURIComponent(JSON.stringify(createThemeBootstrapSeed(candidate)));
+        html = html.replace(/<html\b/, `<html data-appearance-seed="${hint}"`);
+      }
       const font = runtimeCatalog.assets.find((asset) => asset.id === brand.fontAssetId);
       const rootPrefix = '../'.repeat(entry.split('/').length - 1);
       if (font) {
@@ -710,13 +733,13 @@ export async function compileEdition({
         html = html.replace(
           '</head>',
           `<style>:root{${palette.map(([key, color]) => `--${key}:${color}`).join(';')};--panel:${safe.grid ?? '#193866'}}
-html[data-edition-id] body{--fk-bg:var(--ink);--fk-panel:var(--field,var(--ink));--fk-text:var(--paper);--fk-muted:var(--muted,var(--paper));--fk-cyan:var(--accent);--fk-line:var(--grid);--fk-font-ui:var(--brand-font,system-ui,sans-serif);--fk-font-display:var(--brand-font,system-ui,sans-serif)}
-html[data-edition-id][data-boot-state]:not([data-boot-state="ready"]),html[data-edition-id][data-boot-state]:not([data-boot-state="ready"]) body{background:var(--ink);color:var(--paper)}
-html[data-edition-id] #boot-screen{background:var(--ink);color:var(--paper);font-family:var(--brand-font,system-ui,sans-serif)}
-html[data-edition-id] #boot-screen .launch-card{background:var(--field,var(--ink));border-color:var(--grid)}
-html[data-edition-id] #boot-screen h1{color:var(--paper);font-family:var(--brand-font,system-ui,sans-serif)}
-html[data-edition-id] #boot-screen .launch-kicker,html[data-edition-id] #boot-screen a{color:var(--accent)}
-html[data-edition-id] #boot-screen .launch-signal i{background:var(--accent)}
+html[data-edition-id]:not([data-theme-styled="true"]) body{--fk-bg:var(--ink);--fk-panel:var(--field,var(--ink));--fk-text:var(--paper);--fk-muted:var(--muted,var(--paper));--fk-cyan:var(--accent);--fk-line:var(--grid);--fk-font-ui:var(--brand-font,system-ui,sans-serif);--fk-font-display:var(--brand-font,system-ui,sans-serif)}
+html[data-edition-id]:not([data-theme-styled="true"])[data-boot-state]:not([data-boot-state="ready"]),html[data-edition-id]:not([data-theme-styled="true"])[data-boot-state]:not([data-boot-state="ready"]) body{background:var(--ink);color:var(--paper)}
+html[data-edition-id]:not([data-theme-styled="true"]) #boot-screen{background:var(--ink);color:var(--paper);font-family:var(--brand-font,system-ui,sans-serif)}
+html[data-edition-id]:not([data-theme-styled="true"]) #boot-screen .launch-card{background:var(--field,var(--ink));border-color:var(--grid)}
+html[data-edition-id]:not([data-theme-styled="true"]) #boot-screen h1{color:var(--paper);font-family:var(--brand-font,system-ui,sans-serif)}
+html[data-edition-id]:not([data-theme-styled="true"]) #boot-screen .launch-kicker,html[data-edition-id]:not([data-theme-styled="true"]) #boot-screen a{color:var(--accent)}
+html[data-edition-id]:not([data-theme-styled="true"]) #boot-screen .launch-signal i{background:var(--accent)}
 html[data-edition-id] .edition-boot-logo{display:inline-block;width:auto;height:3rem;max-width:9rem;object-fit:contain;vertical-align:middle}
 </style></head>`,
         );

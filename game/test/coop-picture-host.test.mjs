@@ -403,7 +403,8 @@ test('paused menu/display edits retain HUD continuity and the accepted picture w
   pause(f);
   const before = hud(f),
     image = acceptedFrameImage(f),
-    reads = f.artwork.calls.reads.length;
+    reads = f.artwork.calls.reads.length,
+    writesBeforeSettings = writes.length;
   f.$('coop-settings-open').click();
   f.choose('coop-text-face', 'plain');
   f.choose('coop-text-size', 'large');
@@ -427,16 +428,22 @@ test('paused menu/display edits retain HUD continuity and the accepted picture w
   assert.equal(values.get(reactionKey), savedReaction);
   assert.deepEqual([...new Set(storageReads)].sort(), [
     'revealline.actor-style.v1',
+    'revealline.appearance.v2',
     'revealline.audio-master.v1',
+    'revealline.couch-radio-setup.v1',
     'revealline.display.v1',
+    'revealline.encounter-display.v1',
     'revealline.gameplay-tuning.v1',
+    'revealline.installed-app.v1',
     'revealline.journey-preferences.v1',
     reactionKey,
     'revealline.menu-style.v1',
     'revealline.team-arena.v1',
+    'revealline.team-contextual-teaching.v1',
+    'revealline.theme-family.v1',
     'revealline.touch.v1',
   ]);
-  assert.deepEqual([...new Set(writes)].sort(), [
+  assert.deepEqual([...new Set(writes.slice(writesBeforeSettings))].sort(), [
     'revealline.display.v1',
     'revealline.menu-style.v1',
   ]);

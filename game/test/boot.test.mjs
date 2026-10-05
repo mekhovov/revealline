@@ -76,8 +76,9 @@ function boundary({
       context,
     );
   }
-  function mount() {
+  async function mount() {
     document.emit('DOMContentLoaded');
+    await Promise.resolve();
   }
   function frame() {
     const callbacks = [...frames.values()];
@@ -152,10 +153,10 @@ async function settle() {
   for (let i = 0; i < 8; i++) await new Promise((resolve) => setImmediate(resolve));
 }
 
-test('downloaded file shows usable native launch options without importing or redirecting', () => {
+test('downloaded file shows usable native launch options without importing or redirecting', async () => {
   const page = boundary({ href: 'file:///tmp/RevealLine/game/index.html' });
   page.run();
-  page.mount();
+  await page.mount();
   assert.equal(page.document.documentElement.dataset.bootState, 'file');
   assert.equal(page.game.inert, true);
   assert.equal(page.screen.hidden, false);
@@ -171,13 +172,13 @@ test('downloaded file shows usable native launch options without importing or re
   );
 });
 
-test('early renderer or stylesheet errors retain inert controls and close partially opened dialogs', () => {
+test('early renderer or stylesheet errors retain inert controls and close partially opened dialogs', async () => {
   for (const target of [{ id: 'boot-phaser' }, { tagName: 'LINK', rel: 'stylesheet' }]) {
     const page = boundary();
     page.run();
     page.events.emit('error', { target });
     page.dialog.open = true;
-    page.mount();
+    await page.mount();
     assert.equal(page.document.documentElement.dataset.bootState, 'failed');
     assert.equal(page.game.inert, true);
     assert.equal(page.dialog.open, false);
@@ -187,10 +188,10 @@ test('early renderer or stylesheet errors retain inert controls and close partia
   }
 });
 
-test('missing renderer does not expose legacy controls or request an app startup', () => {
+test('missing renderer does not expose legacy controls or request an app startup', async () => {
   const page = boundary({ renderer: false });
   page.run();
-  page.mount();
+  await page.mount();
   assert.equal(page.document.documentElement.dataset.bootState, 'failed');
   assert.match(page.document.getElementById('boot-detail').textContent, /renderer is unavailable/);
   assert.equal(page.game.inert, true);
@@ -199,7 +200,7 @@ test('missing renderer does not expose legacy controls or request an app startup
 test('app import rejection has an actual caught promise path and stays concealed', async () => {
   const page = boundary();
   page.run();
-  page.mount();
+  await page.mount();
   // This VM deliberately has no dynamic-import adapter. Its actual rejected
   // import exercises the production catch; this is not a network outage test.
   for (let i = 0; i < 5; i++) await new Promise((resolve) => setImmediate(resolve));
@@ -215,7 +216,7 @@ test('delayed required styles keep the static launch active and report an action
   style.setAttribute('data-boot-href', 'ui/game-shell.css');
   style.dataset.bootHref = 'ui/game-shell.css';
   page.run();
-  page.mount();
+  await page.mount();
   await settle();
   assert.equal(style.href, 'ui/game-shell.css');
   assert.equal(style.media, 'print', 'Pending styles cannot prevent the static loading paint');
@@ -244,7 +245,7 @@ test('cached and delayed styles both finish before app initialization is admitte
     return link;
   });
   page.run();
-  page.mount();
+  await page.mount();
   styles[0].emit('load');
   await settle();
   assert.equal(imported, false);
@@ -270,7 +271,7 @@ test(
       oldPage.dialog.open = true;
     });
     page.run();
-    page.mount();
+    await page.mount();
     await page.appSettled;
     await settle();
     assert.equal(imported, true);
@@ -290,7 +291,7 @@ test(
     const html = await readFile(new URL('../index.html', import.meta.url), 'utf8');
     assert.match(
       html,
-      /html:not\(\[data-boot-state='ready'\]\) body > :not\(#boot-screen\):not\(script\)\s*\{\s*display: none !important;/,
+      /html:not\(\[data-boot-state='ready'\]\)\s+body\s*>\s*:not\(#boot-screen\):not\(#access-gate\):not\(script\)\s*\{\s*display: none !important;/,
       'the actual inline guard conceals failed gameplay even if an older app removed inert',
     );
   },
@@ -311,7 +312,7 @@ test(
       initialized = currentPage.context.RevealLineBoot.ready();
     });
     page.run();
-    page.mount();
+    await page.mount();
     await page.appStarted;
     await settle();
     assert.equal(page.document.documentElement.dataset.bootState, 'loading');
@@ -342,7 +343,7 @@ test(
       throw new Error('Owned module initialization rejected');
     });
     page.run();
-    page.mount();
+    await page.mount();
     await page.appSettled;
     await settle();
     assert.equal(page.document.documentElement.dataset.bootState, 'failed');
@@ -372,10 +373,10 @@ test('only successful ready reveals the game and shuts down boot scheduling/list
   assert.equal(page.context.RevealLineBoot.fail(new Error('late unrelated error')), false);
 });
 
-test('boot keyboard and controller navigation requires fresh input and yields after pointer use', () => {
+test('boot keyboard and controller navigation requires fresh input and yields after pointer use', async () => {
   const page = boundary({ renderer: false });
   page.run();
-  page.mount();
+  await page.mount();
   let clicks = 0;
   page.online.addEventListener('click', () => clicks++);
   page.control({ button: 0 });
@@ -402,7 +403,7 @@ test('boot keyboard and controller navigation requires fresh input and yields af
   assert.equal(clicks, 1, 'returning focus with a held control remains neutral-gated');
 });
 
-test('public root enters the native game within source, Pages and frozen prefixes with exact queries', () => {
+test('public root enters the native game within source, Pages and frozen prefixes with exact queries', async () => {
   for (const [href, script, expected] of [
     [
       'http://localhost:8768/site/',
@@ -423,13 +424,34 @@ test('public root enters the native game within source, Pages and frozen prefixe
     const page = boundary({ href });
     page.make('a', 'launch-game', page.screen);
     page.document.currentScript.src = script;
-    new Script(landing).runInContext(page.context);
+    const launched = new Script(landing).runInContext(page.context);
+    page.document.currentScript = null; // Browsers clear this when classic execution yields.
+    await launched;
     assert.deepEqual(page.locations, [expected]);
     assert.equal(page.document.getElementById('launch-game').href, expected);
   }
 });
 
-test('file launch and a cross-origin script never automatically leave the current document', () => {
+test('public launcher retains its own script URL while access remains pending', async () => {
+  const page = boundary({ href: 'https://example.test/project/?lang=uk#settings' });
+  page.make('a', 'launch-game', page.screen);
+  page.document.currentScript.src = 'https://example.test/project/site/launch.mjs';
+  let allow;
+  page.context.RevealLineAccess = {
+    ready: new Promise((resolve) => {
+      allow = resolve;
+    }),
+  };
+  const launched = new Script(landing).runInContext(page.context);
+  page.document.currentScript = null;
+  await Promise.resolve();
+  assert.deepEqual(page.locations, [], 'access owns launch until admitted');
+  allow();
+  await launched;
+  assert.deepEqual(page.locations, ['https://example.test/project/game/?lang=uk#settings']);
+});
+
+test('file launch and a cross-origin script never automatically leave the current document', async () => {
   for (const [href, script] of [
     ['file:///tmp/RevealLine/index.html', 'file:///tmp/RevealLine/site/launch.mjs'],
     ['https://example.test/game/', 'https://other.test/site/launch.mjs'],
@@ -437,7 +459,9 @@ test('file launch and a cross-origin script never automatically leave the curren
     const page = boundary({ href });
     const game = page.make('a', 'launch-game', page.screen);
     page.document.currentScript.src = script;
-    new Script(landing).runInContext(page.context);
+    const launched = new Script(landing).runInContext(page.context);
+    page.document.currentScript = null; // Browsers clear this when classic execution yields.
+    await launched;
     assert.deepEqual(page.locations, []);
     if (href.startsWith('file:')) {
       assert.equal(game.hidden, true);

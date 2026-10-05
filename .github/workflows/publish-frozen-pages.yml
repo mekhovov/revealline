@@ -13,6 +13,13 @@ on:
       - "publishing/edition-admission.mjs"
       - "publishing/edition-zip.mjs"
       - "game/edition-context.mjs"
+      - "game/data-json.mjs"
+      - "game/presentation/theme-system.mjs"
+      - "game/i18n/index.mjs"
+      - "game/i18n/catalogs.mjs"
+      - "game/i18n/bootstrap.mjs"
+      - "game/vendor/i18next-26.4.2.min.js"
+      - "package.json"
 
 permissions:
   contents: read
@@ -45,6 +52,13 @@ jobs:
             /publishing/edition-admission.mjs
             /publishing/edition-zip.mjs
             /game/edition-context.mjs
+            /game/data-json.mjs
+            /game/presentation/theme-system.mjs
+            /game/i18n/index.mjs
+            /game/i18n/catalogs.mjs
+            /game/i18n/bootstrap.mjs
+            /game/vendor/i18next-26.4.2.min.js
+            /package.json
             /publishing/test-policy.json
             /publishing/test-policy.mjs
             /publishing/test-policy.test.mjs

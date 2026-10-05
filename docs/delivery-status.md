@@ -1,5 +1,10 @@
 # RevealLine — completed and remaining delivery
 
+> **Current review — 1 October:** [plain-language remaining work and proposed priorities](plan-review-2026-10-01.md).
+> It updates the live/main/release distinction, current PR queue and delivery blockers,
+> and explains the benefit, deferral impact and effort of each remaining outcome.
+> The September 30 snapshot below is retained historical evidence.
+
 Updated **30 September 2026, 20:51 CEST (Europe/Berlin)**.
 Source review: `09a43d83351af276f184293ed3c72261575ed8bc`, with the subsequent
 landing merge `60407a7ce4b4592372e66ef1961f3aa85562cefd` checked separately.

@@ -1,3 +1,4 @@
+import { resolvePresentation as resolveInterface } from '../presentation/theme-system.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
@@ -660,4 +661,26 @@ test('cosmetic look status starts before image completion and an obsolete look c
   await superseded;
   assert.equal(statuses.length, proceduralCount, 'obsolete pixels cannot revive their status');
   assert.equal(painter.image, null);
+});
+
+test('interface font switching keeps the authored sprite and presentation lease', () => {
+  const { painter, run, sprites } = fixture(),
+    canvas = surface();
+  run.player.queuedDirection = 'right';
+  const source = painter.presentation,
+    before = authoritativeCheckpoint(run);
+  const interfaceTheme = resolveInterface({ familyId: 'industrial-workshop' });
+  painter.setInterfaceProvider(() => interfaceTheme);
+  painter.draw(canvas.ctx, run);
+  assert.equal(painter.presentation, source);
+  assert.equal(painter.artSnapshot, source);
+  assert.ok(
+    canvas.calls.some((call) => call.op === 'fillText' && /Field Kit (UI|Mono)/.test(call.font)),
+  );
+  assert.ok(
+    draws(canvas.calls, sprites['player.scout.compact'].image).length > 0 ||
+      draws(canvas.calls, sprites['player.scout.detailed'].image).length > 0,
+  );
+  assert.deepEqual(authoritativeCheckpoint(run), before);
+  painter.dispose();
 });

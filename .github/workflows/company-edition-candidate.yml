@@ -104,9 +104,9 @@ jobs:
           echo 'Archive integrity was checked. Automated route/replay tests follow the explicit test policy; waived suites are skipped, not passed. This is not publication, physical radio evidence or real flight proficiency.' >> "$GITHUB_STEP_SUMMARY"
   candidate:
     runs-on: ubuntu-latest
-    # All 18 editions compile twice. A slower runner completed checks and upload
-    # in 21m12s; retain those checks with a bounded finalization margin.
-    timeout-minutes: 30
+    # Run 37264245407 reached immutable upload at the former 30-minute deadline.
+    # Retain every qualification step and allow bounded archive finalization.
+    timeout-minutes: 45
     steps:
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
         with:
@@ -134,7 +134,7 @@ jobs:
       - name: Verify both source release formats and edition admission
         if: steps.test_policy.outputs.runTests == 'true'
         run: |
-          node --test publishing/fastline-release-publisher.test.mjs publishing/fastline-release-inputs.test.mjs publishing/pages-controller/metadata.test.mjs publishing/pages-controller/workflow.test.mjs scripts/source-manifest-snapshot.test.mjs
+          node --test publishing/queue-throughput.test.mjs publishing/fastline-release-publisher.test.mjs publishing/fastline-release-inputs.test.mjs publishing/pages-controller/metadata.test.mjs publishing/pages-controller/workflow.test.mjs scripts/source-manifest-snapshot.test.mjs
           cd publishing/utility
           python3 -m unittest test_source_manifest test_release_artifact test_upload_source test_assemble_waived_qualification
       - name: Compile twice and inspect original candidate ZIP members
@@ -158,6 +158,8 @@ jobs:
         with:
           name: company-candidate-${{ github.event.pull_request.head.sha || github.sha }}
           path: .cache/company-candidate/
+          # Payload includes already-compressed ZIPs and media.
+          compression-level: 0
           if-no-files-found: error
           retention-days: 14
       - name: Report qualification boundary

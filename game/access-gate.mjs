@@ -74,6 +74,7 @@
   label.append(input);
   const button = doc.createElement('button');
   button.type = 'submit';
+  button.dataset.uiAction = 'primary';
   button.textContent = 'Unlock';
   const status = doc.createElement('p');
   status.className = 'access-gate-status';

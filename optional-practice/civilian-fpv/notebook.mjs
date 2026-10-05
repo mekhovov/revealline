@@ -257,6 +257,7 @@ export function createFlightNotebook({
       rewardStorage: rewards.status(),
     }),
     proof: (hash) => attempts.proof(hash),
+    recording: (hash) => attempts.recording(hash),
     close() {
       if (closing) return closing;
       closed = true;
@@ -422,7 +423,7 @@ export function mountFlightNotebook({
         const attempt = matching.at(-1),
           review = make('button', copy.replay, article);
         review.type = 'button';
-        review.onclick = () => onReview(book.proof(attempt.hash));
+        review.onclick = () => onReview(book.recording(attempt.hash));
         make(
           'p',
           `${(attempt.ticks / 50).toFixed(1)} s · ${attempt.mode} · ${attempt.contacts} ${copy.contacts}`,
@@ -450,7 +451,7 @@ export function mountFlightNotebook({
     });
   return {
     ready,
-    accept: (proof) => safe(() => book.accept(proof)),
+    accept: (proof, options) => safe(() => book.accept(proof, options)),
     snapshot: book.snapshot,
     setLocale(nextLocale) {
       if (disposed) return;

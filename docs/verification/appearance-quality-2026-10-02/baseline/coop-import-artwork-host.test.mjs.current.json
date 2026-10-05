@@ -1,0 +1,29 @@
+{
+  "file": "game/test/coop-import-artwork-host.test.mjs",
+  "kind": "current",
+  "command": [
+    "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+    "--test",
+    "--test-concurrency=1",
+    "game/test/coop-import-artwork-host.test.mjs"
+  ],
+  "cwd": "/Users/oleksandr.mekhovov/work/my_projects/go_test",
+  "exitCode": 1,
+  "timedOut": false,
+  "seconds": 21.06,
+  "failures": [
+    {
+      "test": "hidden while an imported image loads retires its authority",
+      "location": "game/test/coop-import-artwork-host.test.mjs:130:3",
+      "detail": "\n  ---\n  duration_ms: 108.99725\n  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/coop-import-artwork-host.test.mjs:130:3'\n  failureType: 'testCodeFailure'\n  error: |-\n    the retained/chosen arena is playable\n    \n    false !== true\n    \n  code: 'ERR_ASSERTION'\n  name: 'AssertionError'\n  expected: true\n  actual: false\n  operator: 'strictEqual'\n  stack: |-\n    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/coop-import-artwork-host.test.mjs:155:12)\n    async Test.run (node:internal/test_runner/test:797:9)\n    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)"
+    }
+  ],
+  "summary": [
+    "# tests 14",
+    "# pass 13",
+    "# fail 1",
+    "# cancelled 0",
+    "# skipped 0",
+    "# duration_ms 21035.828292"
+  ]
+}
