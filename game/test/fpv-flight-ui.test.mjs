@@ -1,4 +1,6 @@
 import test from 'node:test';
+import { getLocale, setLocale } from '../i18n/index.mjs';
+import { sourceSimGlobalTools, menuPad } from './helpers/global-tools-fixture.mjs';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { parse } from 'parse5';
@@ -50,6 +52,7 @@ async function fixture(
     for (const attribute of source.attrs ?? []) {
       element.setAttribute(attribute.name, attribute.value);
       if (attribute.name === 'hidden') element.hidden = true;
+      if (attribute.name === 'class') element.className = attribute.value;
       if (attribute.name === 'value') element.value = attribute.value;
     }
     parent.append(element);
@@ -57,6 +60,11 @@ async function fixture(
     if (source.tagName === 'select') element.value = element.children[0]?.value ?? '';
   }
   for (const child of body.childNodes) copy(child, doc.body);
+  const originalSettingsControls = [
+    ...doc.querySelector('.academy-input-controls').querySelectorAll('button,select,input'),
+    ...doc.querySelector('.academy-options-panel').querySelectorAll('button,select,input'),
+    doc.getElementById('language'),
+  ].filter((node) => node.id !== 'academy-close-options');
   let id = 0,
     now = 0,
     lost,
@@ -132,6 +140,7 @@ async function fixture(
     win,
     view,
     deliveries,
+    originalSettingsControls,
     renders,
     frames,
     contextLoss: () => lost(),
@@ -524,7 +533,8 @@ test('Studio preview runs the actual course as authoring and never reaches the n
   assert.equal(f.$('studio-dialog').open, false);
   assert.equal(f.view.exportAttempt().session, 'authoring');
   assert.equal(f.$('try').hidden, false);
-  assert.equal(f.view.arm(), true);
+  f.$('academy-shell-action-start').click();
+  assert.equal(f.view.snapshot().status, 'active');
   f.tick();
   const example = FLIGHT_DEMONSTRATIONS.find(
     (item) => item.course === course.id && item.mode === 'self-level',
@@ -650,8 +660,8 @@ test('Academy shared menu resumes paused playback without restarting or granting
 
   f.$('academy-flight-menu').click();
   const pausedAgain = f.renders.at(-1);
-  f.$('academy-shell-home-dialog').emit('cancel');
-  assert.equal(f.$('academy-shell-home-dialog').open, false);
+  f.$('academy-shell-pause-dialog').emit('cancel');
+  assert.equal(f.$('academy-shell-pause-dialog').open, false);
   f.tick(4);
   assert.deepEqual(f.renders.at(-1), pausedAgain, 'Back never resumes the recording');
   assert.equal(f.$('academy-shell-action-pause').textContent, 'Resume');
@@ -1319,12 +1329,12 @@ test('Academy shell keeps menu input out of native flight and requires explicit 
   f.$('academy-shell-action-start').click();
   assert.equal(f.view.snapshot().status, 'active');
   f.$('academy-flight-menu').click();
-  assert.equal(f.$('academy-shell-home-dialog').open, true);
+  assert.equal(f.$('academy-shell-pause-dialog').open, true);
   assert.equal(f.view.snapshot().status, 'paused');
   const paused = f.view.snapshot();
   f.tick(4);
   assert.deepEqual(f.view.snapshot(), paused);
-  const hint = f.$('academy-shell-home-dialog').querySelector('.sim-menu-hint');
+  const hint = f.$('academy-shell-pause-dialog').querySelector('.sim-menu-hint');
   const instructions = hint.textContent;
   assert.ok(instructions.length > 0);
   f.win.emit('blur');
@@ -1333,4 +1343,190 @@ test('Academy shell keeps menu input out of native flight and requires explicit 
   f.win.emit('focus');
   f.tick(2);
   assert.equal(hint.textContent, instructions);
+});
+
+test('Academy categories retain every authored preference control and restore nested dialog focus', async (t) => {
+  const f = await fixture(t, { home: true });
+  f.doc.defaultView.innerWidth = 390;
+  f.$('academy-shell-action-settings').click();
+  for (const original of f.originalSettingsControls) {
+    const control = original.id === 'academy-sound' ? f.$('academy-global-masterMuted') : original;
+    const panel = control.closest('[role="tabpanel"]');
+    assert.ok(panel, `${control.id} belongs to a settings category`);
+    assert.equal(panel.closest('dialog'), f.$('academy-shell-settings-dialog'));
+    f.$(panel.getAttribute('aria-labelledby')).click();
+    assert.equal(control.closest('[hidden],[inert]'), null, `${control.id} is reachable`);
+  }
+  const controls = f.$('academy-settings-tab-extras');
+  controls.click();
+  f.$('help').focus();
+  f.$('help').click();
+  assert.equal(f.$('help-dialog').open, true);
+  f.$('help-dialog').querySelector('[data-close="help-dialog"]').click();
+  assert.equal(f.doc.activeElement, f.$('help'));
+  assert.equal(f.$('academy-shell-settings-dialog').dataset.settingsView, 'panel');
+  f.$('academy-shell-action-settings-back').click();
+  assert.equal(f.$('academy-shell-settings-dialog').open, true);
+  assert.equal(f.$('academy-shell-settings-dialog').dataset.settingsView, 'categories');
+  f.$('academy-shell-action-settings-back').click();
+  assert.equal(f.$('academy-shell-settings-dialog').open, false);
+});
+
+test('Academy global settings bind canonical records without startup writes or duplicate fields', async (t) => {
+  const records = new Map(),
+    writes = [];
+  const storage = {
+    getItem: (key) => records.get(key) ?? null,
+    setItem(key, value) {
+      writes.push(key);
+      records.set(key, value);
+    },
+  };
+  const f = await fixture(t, { home: true, storage });
+  const canonicalKeys = [
+    'revealline.display.v1',
+    'revealline.appearance.v2',
+    'revealline.audio-master.v1',
+  ];
+  assert.equal(writes.filter((key) => canonicalKeys.includes(key)).length, 0);
+  const root = f.$('academy-shell-settings-dialog');
+  for (const key of [
+    'language',
+    'appearance',
+    'textFace',
+    'textSize',
+    'reducedEffects',
+    'menuAnimation',
+    'masterMuted',
+    'masterVolume',
+  ])
+    assert.equal(root.querySelectorAll(`[data-global-setting="${key}"]`).length, 1, key);
+  f.$('academy-global-textFace').value = 'plain';
+  f.$('academy-global-textFace').emit('change');
+  f.$('academy-global-textSize').value = 'large';
+  f.$('academy-global-textSize').emit('change');
+  f.$('academy-global-reducedEffects').checked = true;
+  f.$('academy-global-reducedEffects').emit('change');
+  assert.deepEqual(JSON.parse(records.get('revealline.display.v1')), {
+    textFace: 'plain',
+    textSize: 'large',
+    reducedEffects: true,
+  });
+  assert.equal(f.doc.body.dataset.textSize, 'large');
+  assert.equal(f.doc.body.dataset.effects, 'reduced');
+  f.$('academy-global-masterVolume').value = '0.25';
+  f.$('academy-global-masterVolume').emit('change');
+  assert.equal(JSON.parse(records.get('revealline.audio-master.v1')).volume, 0.25);
+  root.querySelector('[data-theme-preview="industrial-workshop"]').click();
+  assert.equal(JSON.parse(records.get('revealline.appearance.v2')).familyId, 'industrial-workshop');
+  assert.equal(f.$('sim-appearance-interface').value, 'follow-game');
+  assert.equal(f.$('sim-appearance-world').value, 'follow-game');
+  f.view.dispose();
+  const count = writes.length;
+  const next = await fixture(t, { home: true, storage });
+  assert.equal(next.$('academy-global-textFace').value, 'plain');
+  assert.equal(next.$('academy-global-textSize').value, 'large');
+  assert.equal(next.$('academy-global-masterVolume').value, '0.25');
+  assert.equal(writes.slice(count).filter((key) => canonicalKeys.includes(key)).length, 0);
+});
+
+test('Academy shared tool iframe retains D-pad focus and controller Back restores paused Settings', async (t) => {
+  const h = await fixture(t, { home: true, globalToolsFactory: sourceSimGlobalTools });
+  h.$('academy-shell-action-primary').click();
+  h.$('academy-shell-action-start').click();
+  h.tick(3);
+  h.$('academy-flight-menu').click();
+  const paused = h.view.snapshot();
+  h.$('academy-shell-action-settings').click();
+  h.$('academy-settings-tab-controls').click();
+  await waitFor(() => h.$('sim-global-tools-controllerTools'));
+  const opener = h.$('sim-global-tools-controllerTools');
+  opener.focus();
+  opener.click();
+  const dialog = h.$('sim-global-tools-tool-dialog'),
+    frame = dialog.querySelector('iframe');
+  assert.equal(dialog.open, true);
+  frame.focus();
+  const pad = menuPad();
+  h.setPads([pad]);
+  h.tick(2);
+  pad.buttons[13] = { pressed: true, value: 1 };
+  h.tick();
+  pad.buttons[13] = { pressed: false, value: 0 };
+  h.tick();
+  assert.equal(h.doc.activeElement, frame);
+  assert.deepEqual(h.view.snapshot(), paused);
+  pad.buttons[1] = { pressed: true, value: 1 };
+  h.tick();
+  pad.buttons[1] = { pressed: false, value: 0 };
+  h.tick();
+  assert.equal(dialog.open, false);
+  assert.equal(h.$('academy-shell-settings-dialog').open, true);
+  assert.equal(h.doc.activeElement, opener);
+  assert.deepEqual(h.view.snapshot(), paused);
+  opener.click();
+  assert.equal(dialog.open, true);
+  frame.focus();
+  h.tick(2);
+  pad.buttons[9] = { pressed: true, value: 1 };
+  h.tick();
+  pad.buttons[9] = { pressed: false, value: 0 };
+  h.tick();
+  assert.equal(dialog.open, false, 'Start also exits the focused tool frame.');
+  assert.equal(h.$('academy-shell-settings-dialog').open, true);
+  assert.equal(h.doc.activeElement, opener);
+  assert.deepEqual(h.view.snapshot(), paused);
+});
+
+test('fresh Ukrainian Academy launch localizes shared Appearance and cue controls before any language change', async (t) => {
+  const prior = getLocale();
+  t.after(() => setLocale(prior, { persist: false }));
+  setLocale('en', { persist: false });
+  const h = await fixture(t, {
+    home: true,
+    url: 'https://example.test/optional-practice/civilian-fpv/?lang=uk',
+  });
+  assert.equal(h.doc.querySelector('.theme-family-controls h3').textContent, 'Вигляд');
+  assert.equal(h.$('sim-global-menu-audio-enabled').closest('label').textContent, 'Звуки меню');
+});
+
+test('Academy flight feedback and shared menu sound retain separate sliders and preference records', async (t) => {
+  const records = new Map([
+    [
+      'revealline.fpv.audio-mix.v1',
+      JSON.stringify({ format: 'SimAudioMix.v1', interface: 0.62, motor: 0.7, ambience: 0.8 }),
+    ],
+    ['revealline.menu-audio.v1', JSON.stringify({ enabled: true, volume: 0.35 })],
+  ]);
+  const h = await fixture(t, {
+    home: true,
+    storage: {
+      getItem: (key) => records.get(key) ?? null,
+      setItem: (key, value) => records.set(key, value),
+    },
+  });
+  const feedback = h.$('academy-audio-mix-interface'),
+    menu = h.$('sim-global-menu-audio-volume');
+  assert.equal(feedback.value, '62');
+  assert.equal(menu.value, '35');
+  const originalMenu = records.get('revealline.menu-audio.v1');
+  feedback.value = '21';
+  feedback.emit('input');
+  assert.equal(menu.value, '35');
+  assert.equal(records.get('revealline.menu-audio.v1'), originalMenu);
+  assert.deepEqual(JSON.parse(records.get('revealline.fpv.audio-mix.v1')), {
+    format: 'SimAudioMix.v1',
+    interface: 0.21,
+    motor: 0.7,
+    ambience: 0.8,
+  });
+  const savedMix = records.get('revealline.fpv.audio-mix.v1');
+  menu.value = '76';
+  menu.emit('input');
+  assert.equal(feedback.value, '21');
+  assert.equal(records.get('revealline.fpv.audio-mix.v1'), savedMix);
+  assert.deepEqual(JSON.parse(records.get('revealline.menu-audio.v1')), {
+    enabled: true,
+    volume: 0.76,
+  });
 });

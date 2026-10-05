@@ -1,3 +1,4 @@
+import { getLocale, setLocale } from '../../game/i18n/index.mjs';
 import {
   WORLD_CATALOGUE,
   BEGINNER_LESSONS,
@@ -48,6 +49,19 @@ import { mountRadioSetup } from './radio-setup.mjs';
 import {
   mountFlightFullscreen,
   mountSimPlayShell,
+  mountSimModeSettings,
+  mountSimGlobalSettings,
+  attachSimMenuAudioSettings,
+  readSimRadioAudio,
+  SIM_RADIO_AUDIO_KEY,
+  createSimDisplayPreferences,
+  attachSimThemeFamilyControls,
+  getSimMenuAnimation,
+  setSimMenuAnimation,
+  subscribeSimMenuAnimation,
+  simAttachSettingsPanels,
+  simSettingsPanelBack,
+  simSettingsTabOwnsKey,
   createSimModeLinks,
 } from './flight-fullscreen.mjs';
 import {
@@ -94,6 +108,7 @@ import {
 import { mountWorldEditor } from './world-editor.mjs';
 import {
   mountSimPresentation,
+  mountSimGlobalTools,
   mountSimAppearanceControls,
   mountDroneResponse,
   mountSimAudioControls,
@@ -718,6 +733,7 @@ export function mountWorldApp({
   window: win = globalThis.window,
   document: doc = globalThis.document,
   rendererFactory = createFlightRenderer,
+  globalToolsFactory = mountSimGlobalTools,
 } = {}) {
   const $ = (id) => doc.getElementById(id),
     listeners = [],
@@ -736,7 +752,7 @@ export function mountWorldApp({
     // them with unresolved translation keys.
     n.removeAttribute('data-i18n');
   });
-  let locale = 'en',
+  let locale = getLocale() === 'uk' ? 'uk' : 'en',
     theme = 'all',
     catalogue = [...WORLD_CATALOGUE, ...BEGINNER_CATALOGUE],
     installed = [],
@@ -749,7 +765,10 @@ export function mountWorldApp({
     restorePackIdentity = null,
     disposed = false,
     closing = null,
-    playShell = null;
+    playShell = null,
+    modeSettingsView = null,
+    globalSettingsView = null,
+    globalTools = null;
   let entries = [],
     playlistId = unique('playlist'),
     playlistDraft = null,
@@ -868,7 +887,7 @@ export function mountWorldApp({
     $('flight-keyboard-preset').value = keyboardFlightPreset(
       storage?.getItem(KEYBOARD_PRESET_KEY),
     ).id;
-    locale = $('world-language').value;
+    $('world-language').value = locale;
   } catch {
     /* Invalid preferences use the visible defaults. */
   }
@@ -881,13 +900,16 @@ export function mountWorldApp({
   } catch {
     /* Embedded previews without a normal URL retain their saved locale. */
   }
+  setLocale(locale, { persist: false });
   const savePreferences = () => {
     try {
       storage?.setItem(
         'revealline.fpv.world-settings.v1',
         JSON.stringify(
           Object.fromEntries(
-            preferenceIds.map((id) => [id, learningPreferences?.[id] ?? $(id).value]),
+            preferenceIds
+              .filter((id) => !['world-language', 'sim-text-face', 'sim-motion'].includes(id))
+              .map((id) => [id, learningPreferences?.[id] ?? $(id).value]),
           ),
         ),
       );
@@ -1085,9 +1107,11 @@ export function mountWorldApp({
       return;
     }
     lessonReturnButton.textContent = `${txt('Return to', 'Повернутися до')} ${localized(lessonReturn.title)}`;
-    if (playShell && surface !== 'missions')
-      playShell.elements.content.home.append(lessonReturnButton);
-    else $('school-lessons').before(lessonReturnButton);
+    if (playShell && surface !== 'missions') {
+      if (modeSettingsView?.panels.extras)
+        modeSettingsView.panels.extras.append(lessonReturnButton);
+      else $('sim-settings-controls').before(lessonReturnButton);
+    } else $('school-lessons').before(lessonReturnButton);
     lessonReturnButton.after(lessonReturnError);
   }
   async function lessonOrigin(context) {
@@ -1158,9 +1182,33 @@ export function mountWorldApp({
     enabled: audio.enabled(),
     audioHost: audio,
   });
+  const displayPreferences = createSimDisplayPreferences({
+    window: win,
+    getStorage: () => win.localStorage,
+    legacyPreferences: {
+      textFace: $('sim-text-face').value,
+      textSize: 'standard',
+      reducedEffects: $('sim-motion').value === 'reduced',
+    },
+  });
+  listeners.push(
+    displayPreferences.subscribe((state) => {
+      doc.body.dataset.textFace = state.textFace;
+      doc.body.dataset.textSize = state.textSize;
+      doc.body.dataset.effects = state.effectiveReducedEffects ? 'reduced' : 'full';
+      $('sim-text-face').value = state.textFace;
+      $('sim-motion').value = state.reducedEffects ? 'reduced' : 'system';
+    }),
+  );
+  listeners.push(
+    subscribeSimMenuAnimation((enabled) => {
+      doc.documentElement.dataset.menuAnimation = enabled ? 'on' : 'off';
+    }, win),
+  );
   const appearanceSession = createSimAppearanceSession();
   let appearanceReady = false;
   const appearanceControls = mountSimAppearanceControls({
+    displayPreferences,
     document: doc,
     window: win,
     container: $('sim-flight-controls'),
@@ -1190,7 +1238,6 @@ export function mountWorldApp({
     locale: () => locale,
     onChange(levels) {
       audio.setVolumes(levels);
-      presentation.setVolume(levels.interface);
     },
   });
   const huntPresentationControls = mountSnakeHuntPresentationControls({
@@ -1313,6 +1360,9 @@ export function mountWorldApp({
   }
   function paintLanguage() {
     playShell?.setLocale(locale);
+    modeSettingsView?.refresh(locale);
+    globalSettingsView?.refresh(locale);
+    globalTools?.refresh();
     shellModes.refresh?.();
     appearanceControls.refresh();
     doc.documentElement.lang = locale;
@@ -1322,6 +1372,7 @@ export function mountWorldApp({
           ? keyboardFlightHelp($('flight-keyboard-preset').value, locale, { combat: true })
           : ((locale === 'uk' ? COPY_UK[key] : COPY_EN[key]) ?? COPY_EN[key] ?? fallback);
     $('world-radio-title').textContent = txt('Radio setup', 'Налаштування пульта');
+    $('close-sim-settings').textContent = txt('Back', 'Назад');
     immersive.refresh();
     updateSoundLabel();
     audioControls.refresh();
@@ -1436,7 +1487,7 @@ export function mountWorldApp({
     if (open && playShell) {
       pauseFlight();
       if (flight) updateHUD(flight.snapshot());
-      playShell.openHome();
+      playShell.open('pause');
       return;
     }
     if (open) pauseFlight();
@@ -1667,7 +1718,7 @@ export function mountWorldApp({
       layout = STICK_LAYOUTS[source === 'radio' ? (radioPreview?.stickMode ?? 2) : 2],
       traceLayout = `${flightToken}:${source}:${layout.join(':')}`,
       reducedMotion =
-        $('sim-motion').value === 'reduced' ||
+        displayPreferences.snapshot().effectiveReducedEffects ||
         Boolean(win.matchMedia?.('(prefers-reduced-motion: reduce)').matches),
       traceTime = win.performance.now();
     if (stickTraceLayout !== traceLayout) stickTraces.forEach((trace) => trace.reset());
@@ -1795,7 +1846,7 @@ export function mountWorldApp({
         keyboardPreset: $('flight-keyboard-preset').value,
         modePractice,
         reducedMotion:
-          $('sim-motion').value === 'reduced' ||
+          displayPreferences.snapshot().effectiveReducedEffects ||
           Boolean(win.matchMedia?.('(prefers-reduced-motion: reduce)').matches),
       });
   }
@@ -1811,7 +1862,7 @@ export function mountWorldApp({
       mode: $('flight-mode').value,
       guideOpen: beginnerCoach.blocksArm(),
       reducedMotion:
-        $('sim-motion').value === 'reduced' ||
+        displayPreferences.snapshot().effectiveReducedEffects ||
         Boolean(win.matchMedia?.('(prefers-reduced-motion: reduce)').matches),
     });
   }
@@ -5157,13 +5208,12 @@ export function mountWorldApp({
   }
 
   const flightControls = $('sim-flight-controls');
-  const applyAppearance = () => {
-    doc.body.dataset.textFace = $('sim-text-face').value;
-    doc.body.dataset.effects = $('sim-motion').value === 'reduced' ? 'reduced' : 'full';
-  };
-  applyAppearance();
-  on($('sim-text-face'), 'change', applyAppearance);
-  on($('sim-motion'), 'change', applyAppearance);
+  on($('sim-text-face'), 'change', () =>
+    displayPreferences.set({ textFace: $('sim-text-face').value }),
+  );
+  on($('sim-motion'), 'change', () =>
+    displayPreferences.set({ reducedEffects: $('sim-motion').value === 'reduced' }),
+  );
   on($('lobby-sound'), 'click', () => soundButton.click());
   on($('lobby-radio'), 'click', () => $('radio-setup-button').click());
   on($('begin-learning'), 'click', () => showTab('learn'));
@@ -5195,26 +5245,29 @@ export function mountWorldApp({
     showTab('explore');
   });
   on(win, 'hashchange', () => showTab(win.location.hash.slice(1), false));
-  on($('flight-options'), 'click', () => {
-    pauseFlight();
-    const open = $('flight-dialog').dataset.optionsOpen !== 'true';
-    $('flight-dialog').dataset.optionsOpen = String(open);
-    $('flight-options').setAttribute('aria-expanded', String(open));
-  });
+  on($('flight-options'), 'click', () => openSettings());
+  let settingsReturnFocus = null;
   function openSettings() {
+    void globalTools?.ensure();
+    if (!$('sim-settings').open) settingsReturnFocus = doc.activeElement;
     pauseFlight();
-    $('sim-settings-controls').append(flightControls);
     if (!$('sim-settings').open) $('sim-settings').showModal();
+    modeSettingsView?.navigation.focusCategories();
   }
   on($('lobby-settings'), 'click', openSettings);
-  function closeSettings() {
-    $('world-replay-controls').before(flightControls);
+  function closeSettings({ force = false } = {}) {
+    if (!force && modeSettingsView?.navigation.back()) return;
     $('sim-settings').close();
     pauseFlight();
-    (playShell?.topDialog()?.querySelector('h1') ?? $('lobby-settings')).focus();
+    (settingsReturnFocus?.isConnected && !settingsReturnFocus.closest('[hidden],[inert]')
+      ? settingsReturnFocus
+      : (playShell?.topDialog()?.querySelector('h1') ?? $('lobby-settings'))
+    ).focus();
   }
+  $('close-sim-settings').dataset.settingsBack = '';
   on($('close-sim-settings'), 'click', closeSettings);
   on($('sim-settings'), 'cancel', (e) => {
+    if (e.defaultPrevented) return;
     e.preventDefault();
     closeSettings();
   });
@@ -5227,6 +5280,7 @@ export function mountWorldApp({
   on($('world-language'), 'change', () => {
     const previousLocale = locale;
     locale = $('world-language').value;
+    setLocale(locale);
     try {
       const location = new URL(win.location.href);
       if (location.searchParams.has('lang')) {
@@ -5582,6 +5636,14 @@ export function mountWorldApp({
   menuHint.id = 'sim-menu-hint';
   doc.querySelector('main').append(menuHint);
   function menuContext() {
+    const globalToolRoot = globalTools?.root();
+    if (globalToolRoot)
+      return {
+        root: globalToolRoot,
+        key: `global-tools:${globalToolRoot.id}`,
+        frameFocused: globalTools.frameFocused(),
+        handleFrameCommand: globalTools.handleFrameCommand,
+      };
     if (packRemovalReview?.dialog.open)
       return { root: packRemovalReview.dialog, key: 'pack-removal-review' };
     const secondary = ['world-radio-dialog', 'drone-hangar', 'sim-settings']
@@ -5613,6 +5675,7 @@ export function mountWorldApp({
     window: win,
     locale: () => locale,
     getContext: menuContext,
+    ownsKeyboardEvent: (event) => simSettingsTabOwnsKey(event, menuContext()?.root),
     onHint(value) {
       const context = menuContext();
       // Blur suspends device ownership with an empty hint. Keep the current
@@ -5623,8 +5686,15 @@ export function mountWorldApp({
         menuHint.hidden = true;
         return;
       }
-      const container = context.root === doc.body ? doc.querySelector('main') : context.root;
+      const container =
+        context.root === $('sim-settings')
+          ? (modeSettingsView?.panels.extras ?? context.root)
+          : context.root === doc.body
+            ? doc.querySelector('main')
+            : context.root;
       if (menuHint.parentElement !== container) container.append(menuHint);
+      if (context.root.dataset.modeSurface)
+        context.root.setAttribute('aria-describedby', menuHint.id);
       menuHint.hidden = false;
       if (menuHint.textContent !== value) menuHint.textContent = value;
     },
@@ -5633,7 +5703,8 @@ export function mountWorldApp({
       else if ($('world-radio-dialog').open) closeRadio();
       else if ($('drone-hangar').open)
         $('drone-hangar').querySelector('[data-close-hangar]').click();
-      else if ($('sim-settings').open) closeSettings();
+      else if (globalTools?.back()) {
+      } else if ($('sim-settings').open) closeSettings();
       else if (playShell?.topDialog()) playShell.back();
       else if ($('flight-dialog').open) {
         if (flightMenuOpen()) setFlightMenu(false);
@@ -6061,7 +6132,15 @@ export function mountWorldApp({
   const lobbyHeader = doc.querySelector('.studio-header');
   const lobbyMain = doc.querySelector('main');
   shellMissions.append(lobbyHeader, lobbyMain);
-  const shellModes = createSimModeLinks({ document: doc, gameReturn, locale: () => locale });
+  const shellModes = createSimModeLinks({
+    document: doc,
+    gameReturn,
+    locale: () => locale,
+    setMenuIcon(node, name) {
+      node.dataset.simIcon = name;
+      presentation.refresh(node);
+    },
+  });
   const shellStage = el('p', txt('Preparing flight…', 'Підготовка польоту…'), 'sim-shell-loading');
   shellStage.setAttribute('role', 'status');
   const shellBriefing = el('section');
@@ -6086,9 +6165,13 @@ export function mountWorldApp({
       lobbyHeader.querySelector('.wordmark img').getAttribute('src'),
       win.location.href,
     ).href,
+    artworkURL: gameReturn
+      ? new URL(gameReturn.replace(/(\/game\/).*$/, '$1') + 'ui/art/menu-scenes/fpv.webp').href
+      : '',
     modeName: () => (locale === 'uk' ? 'FPV SIM · Світи' : 'FPV SIM · Worlds'),
     locale,
     services: {
+      settingsPanelBack: simSettingsPanelBack,
       setMenuIcon(node, name) {
         node.dataset.simIcon = name;
         presentation.refresh(node);
@@ -6118,6 +6201,16 @@ export function mountWorldApp({
           ? $('world-arm').click()
           : void resumeInterruptedFlight().catch(reportError),
       retry: () => (current ? void retryFlight().catch(reportError) : $('hero-fly').click()),
+      skip: () => {
+        const index = Math.max(0, catalogue.indexOf(current));
+        const entry = catalogue[(index + 1) % catalogue.length];
+        if (entry) void startFlight(entry).catch(reportError);
+      },
+      random: () => {
+        const choices = catalogue.filter((entry) => entry !== current);
+        const entry = choices[Math.floor(Math.random() * choices.length)] ?? current;
+        if (entry) void startFlight(entry).catch(reportError);
+      },
       fullscreen: () => void immersive.toggle(),
       toggleSound: () => soundButton.click(),
       canResume: () =>
@@ -6150,6 +6243,193 @@ export function mountWorldApp({
     initial: 'home',
     focusPlay: () => $('world-viewport').focus(),
   });
+  const settingsDestinations = el('nav', undefined, 'sim-settings-destinations');
+  settingsDestinations.setAttribute(
+    'aria-label',
+    txt('Guides and tools', 'Посібники та інструменти'),
+  );
+  for (const tab of ['learn', 'creator', 'packs']) {
+    const destination = doc.querySelector(`[data-tab="${tab}"]`);
+    if (!destination) continue;
+    settingsDestinations.append(destination);
+    on(destination, 'click', () => {
+      closeSettings({ force: true });
+      openCatalogueTab(tab);
+    });
+  }
+  $('sim-settings-controls').after(settingsDestinations);
+  const settingLabel = (id) => $(id)?.closest('label');
+  const settingsContent = el('div');
+  for (const child of [...$('sim-settings').children])
+    if (child.tagName !== 'HEADER') settingsContent.append(child);
+  $('sim-settings').append(settingsContent);
+  modeSettingsView = mountSimModeSettings({
+    root: $('sim-settings'),
+    content: settingsContent,
+    prefix: 'worlds-settings',
+    locale,
+    attachPanels: simAttachSettingsPanels,
+    setMenuIcon(node, name) {
+      node.dataset.simIcon = name;
+      presentation.refresh(node);
+    },
+    groups: {
+      gameplay: [settingLabel('flight-mode')],
+      controls: [
+        settingLabel('flight-source'),
+        $('radio-setup-button'),
+        settingLabel('flight-touch-response'),
+        settingLabel('flight-keyboard-preset'),
+      ],
+      audio: [$('sim-audio-mix'), settingsContent.querySelector('[data-i18n="audioMixHelp"]')],
+      display: [
+        settingLabel('world-language'),
+        $('sim-settings').querySelector('.sim-screen-fullscreen'),
+        settingLabel('flight-camera'),
+        settingLabel('drone-look'),
+        $('inspect-drone'),
+        settingLabel('flight-quality'),
+        settingLabel('world-fov'),
+        settingLabel('world-tilt'),
+        flightControls.querySelector('.sim-appearance-controls'),
+      ],
+      accessibility: [
+        settingLabel('sim-text-face'),
+        settingLabel('sim-motion'),
+        settingLabel('flight-stick-display'),
+        settingLabel('flight-drone-guide'),
+        settingLabel('flight-guide-scale'),
+      ],
+      data: [
+        $('backup-proofs'),
+        settingLabel('import-proofs'),
+        $('storage-status'),
+        $('proof-records').closest('details'),
+      ],
+      content: [
+        doc.querySelector('[data-tab="creator"]'),
+        doc.querySelector('[data-tab="packs"]'),
+        $('prepare-runtime'),
+        $('persistent-storage'),
+      ],
+      extras: [
+        doc.querySelector('[data-tab="learn"]'),
+        lessonReturnButton,
+        lessonReturnError,
+        settingsContent.querySelector('[data-i18n="settingsHelp"]'),
+        settingsContent.querySelector('[data-i18n="settingsPaused"]'),
+      ],
+    },
+  });
+  const globalThemeControls = attachSimThemeFamilyControls({
+    document: doc,
+    root: modeSettingsView.panels.display,
+    host: appearanceControls.host,
+    prefix: 'worlds-global-',
+  });
+  const displayBinding = (key) => ({
+    get: () => displayPreferences.snapshot()[key],
+    set: (value) => displayPreferences.set({ [key]: value }),
+    subscribe: (listener) => displayPreferences.subscribe(listener),
+  });
+  globalSettingsView = mountSimGlobalSettings({
+    document: doc,
+    root: $('sim-settings'),
+    panels: modeSettingsView.panels,
+    prefix: 'worlds-global',
+    locale,
+    controls: {
+      language: settingLabel('world-language'),
+      appearance: modeSettingsView.panels.display.querySelector('[data-theme-controls]'),
+      textFace: settingLabel('sim-text-face'),
+    },
+    bindings: {
+      textFace: displayBinding('textFace'),
+      textSize: displayBinding('textSize'),
+      reducedEffects: displayBinding('reducedEffects'),
+      menuAnimation: {
+        get: () => getSimMenuAnimation(win),
+        set: (value) => setSimMenuAnimation(value, win),
+        subscribe: (listener) => subscribeSimMenuAnimation(listener, win),
+      },
+      masterMuted: {
+        get: () => audio.masterSnapshot().muted,
+        set: (value) => audio.setEnabled(!value),
+        subscribe: (listener) => audio.subscribeMaster(listener),
+      },
+      masterVolume: {
+        get: () => audio.masterSnapshot().volume,
+        set: (value) => audio.setMasterVolume(value),
+        subscribe: (listener) => audio.subscribeMaster(listener),
+      },
+    },
+    duplicates: { reducedEffects: [settingLabel('sim-motion')] },
+  });
+  const sharedAudioCues = doc.createElement('section');
+  let radioCueStorage;
+  try {
+    radioCueStorage = win.localStorage;
+  } catch {
+    /* Preferences still work for this visit. */
+  }
+  let sharedRadioCues = readSimRadioAudio(radioCueStorage);
+  const restoreRadioCues = () => {
+    if (radioCueStorage) sharedRadioCues = readSimRadioAudio(radioCueStorage);
+  };
+  on(win, 'pageshow', restoreRadioCues);
+  on(win, 'storage', (event) => {
+    if (event.key === SIM_RADIO_AUDIO_KEY || event.key === null) restoreRadioCues();
+  });
+
+  const cueSettings = {
+    // This preference is global; the 3D engine has no separate radio bus.
+    // The canonical Soundscape consumes the same record in supported modes.
+    get radioSettings() {
+      return sharedRadioCues;
+    },
+    set radioSettings(value) {
+      sharedRadioCues = value;
+    },
+    get menuSettings() {
+      return presentation.menuSettings;
+    },
+    set menuSettings(value) {
+      presentation.menuSettings = value;
+    },
+    get movementSettings() {
+      return audio.movementSettings;
+    },
+    set movementSettings(value) {
+      audio.movementSettings = value;
+    },
+    applyVolumes() {
+      presentation.applyVolumes();
+      audio.applyVolumes();
+    },
+  };
+  listeners.push(
+    attachSimMenuAudioSettings(cueSettings, doc, {
+      target: sharedAudioCues,
+      window: win,
+      getStorage: () => win.localStorage,
+      idPrefix: 'sim-global',
+    }),
+  );
+  globalSettingsView.update({ controls: { audioCues: sharedAudioCues } });
+  globalTools = globalToolsFactory({
+    document: doc,
+    window: win,
+    gameReturn: gameReturn,
+    settingsRoot: $('sim-settings'),
+    panels: modeSettingsView.panels,
+    locale: () => locale,
+    onOpen: () => pauseFlight(),
+    onControls: (controls) => globalSettingsView.update({ controls }),
+  });
+  // Keep the old wrappers as inert restoration homes for the real controls.
+  for (const child of [...settingsContent.children])
+    if (!child.classList.contains('mode-settings-layout')) child.hidden = true;
+
   on(doc.querySelector('.wordmark'), 'click', () => playShell.openHome());
   for (const id of ['lobby-sound', 'world-sound'])
     if ($(id)) on($(id), 'click', () => playShell.update({ muted: !audio.enabled() }));
@@ -6296,6 +6576,11 @@ export function mountWorldApp({
           for (const remove of listeners) remove();
           if (playShell) playShell.elements.root.prepend(playShell.elements.header);
           menuNavigation.dispose();
+          globalTools?.dispose();
+          globalSettingsView?.destroy();
+          globalThemeControls?.dispose();
+          displayPreferences.dispose();
+          modeSettingsView?.destroy();
           playShell?.dispose();
           menuHint.remove();
           input.dispose();

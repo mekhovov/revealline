@@ -4,9 +4,11 @@ import { readFile } from 'node:fs/promises';
 import { parse } from 'parse5';
 import { mountCivilianPractice } from '../../optional-practice/civilian-flight/app.mjs';
 import { replayPractice } from '../../optional-practice/civilian-flight/model.mjs';
+import { GLOBAL_SETTINGS } from '../ui/global-settings-view.mjs';
+import { getLocale, setLocale } from '../i18n/index.mjs';
 import { Document, Events } from './helpers/couch-dom.mjs';
 
-async function fixture(t) {
+async function fixture(t, { storage, search = '' } = {}) {
   const doc = new Document(),
     win = new Events();
   const html = parse(
@@ -42,10 +44,12 @@ async function fixture(t) {
   win.cancelAnimationFrame = (id) => frames.delete(id);
   win.getComputedStyle = doc.defaultView.getComputedStyle;
   win.Event = Event;
+  win.CustomEvent = CustomEvent;
   win.navigator = { getGamepads: () => [] };
-  win.location = new URL('https://example.test/optional-practice/civilian-flight/');
+  win.location = new URL('https://example.test/optional-practice/civilian-flight/' + search);
   Object.defineProperty(win, 'localStorage', {
     get() {
+      if (storage) return storage;
       throw new Error('Practice cannot use player storage');
     },
   });
@@ -184,7 +188,7 @@ test('a gym Pause pointer keeps its intent when moving focus first pauses flight
   button.focus();
   assert.equal(f.view.snapshot().status, 'paused');
   button.emit('click', { detail: 1 });
-  assert.equal($('gym-shell-home-dialog').open, true);
+  assert.equal($('gym-shell-pause-dialog').open, true);
   const paused = f.view.snapshot();
   f.tick(4);
   assert.deepEqual(f.view.snapshot(), paused);
@@ -224,7 +228,7 @@ function controller(f) {
 }
 
 test('gym reuses neutral controller menu navigation without arming on device join', async (t) => {
-  const f = await fixture(t),
+  const f = await fixture(t, { search: '?game-return=https://example.test/game/' }),
     $ = (id) => f.doc.getElementById(id),
     pad = controller(f);
   pad.set(0, true);
@@ -241,6 +245,27 @@ test('gym reuses neutral controller menu navigation without arming on device joi
   assert.equal(f.doc.activeElement, $('gym-shell-action-primary'));
   pad.pulse(13);
   assert.equal(f.doc.activeElement, $('gym-shell-action-missions'));
+  pad.pulse(13);
+  assert.equal(f.doc.activeElement, $('gym-shell-action-settings'));
+  pad.pulse(13);
+  assert.equal(f.doc.activeElement, $('gym-shell-action-sound'));
+  pad.pulse(13);
+  assert.equal(f.doc.activeElement, $('gym-shell-action-fullscreen'));
+  pad.pulse(13);
+  assert.equal(f.doc.activeElement, $('game-mode-simulator'));
+  for (const id of [
+    'game-mode-solo',
+    'game-mode-team',
+    'game-mode-versus',
+    'game-mode-snake',
+    'game-mode-simulator',
+  ]) {
+    pad.pulse(15);
+    assert.equal(f.doc.activeElement, $(id));
+  }
+  pad.pulse(13);
+  assert.equal(f.doc.activeElement, $('gym-shell-action-primary'));
+  pad.pulse(13);
   pad.pulse(13);
   assert.equal(f.doc.activeElement, $('gym-shell-action-settings'));
   pad.pulse(0);
@@ -282,14 +307,35 @@ test('gym controller Pause requires a fresh explicit Continue and samples hardwa
 });
 
 test('gym menu keyboard navigation owns arrows and returns from nested help without flight input', async (t) => {
-  const f = await fixture(t),
+  const f = await fixture(t, { search: '?game-return=https://example.test/game/' }),
     $ = (id) => f.doc.getElementById(id);
-  const arrow = () => {
-    f.doc.emit('keydown', { key: 'ArrowDown', code: 'ArrowDown', target: f.doc.activeElement });
-    f.doc.emit('keyup', { key: 'ArrowDown', code: 'ArrowDown', target: f.doc.activeElement });
+  const arrow = (key = 'ArrowDown') => {
+    f.doc.emit('keydown', { key, code: key, target: f.doc.activeElement });
+    f.doc.emit('keyup', { key, code: key, target: f.doc.activeElement });
   };
   arrow();
   assert.equal(f.doc.activeElement, $('gym-shell-action-missions'));
+  arrow();
+  assert.equal(f.doc.activeElement, $('gym-shell-action-settings'));
+  arrow();
+  assert.equal(f.doc.activeElement, $('gym-shell-action-sound'));
+  arrow();
+  assert.equal(f.doc.activeElement, $('gym-shell-action-fullscreen'));
+  arrow();
+  assert.equal(f.doc.activeElement, $('game-mode-simulator'));
+  for (const id of [
+    'game-mode-solo',
+    'game-mode-team',
+    'game-mode-versus',
+    'game-mode-snake',
+    'game-mode-simulator',
+  ]) {
+    arrow('ArrowRight');
+    assert.equal(f.doc.activeElement, $(id));
+  }
+  arrow();
+  assert.equal(f.doc.activeElement, $('gym-shell-action-primary'));
+  arrow();
   arrow();
   assert.equal(f.doc.activeElement, $('gym-shell-action-settings'));
   $('gym-shell-action-settings').click();
@@ -340,4 +386,108 @@ test('a flight arrow released inside a controller menu is usable on the first pr
   f.tick(3);
   assert.notEqual(f.view.snapshot().z, before, 'Menu keyup cannot leave the physical key latched.');
   key($('arena'), 'keyup', 'ArrowUp');
+});
+
+test('gym adopts the complete common preference inventory and keeps practice tools reachable without changing the drill', async (t) => {
+  const values = new Map(),
+    storage = {
+      getItem: (key) => values.get(key) ?? null,
+      setItem: (key, value) => values.set(key, String(value)),
+      removeItem: (key) => values.delete(key),
+    };
+  const f = await fixture(t, { storage }),
+    $ = (id) => f.doc.getElementById(id);
+  const root = $('gym-shell-settings-dialog');
+  for (const { key } of GLOBAL_SETTINGS.filter(({ required }) => required))
+    assert.equal(root.querySelectorAll(`[data-global-setting="${key}"]`).length, 1, key);
+  assert.equal(
+    $('gym-shell-action-workshop').closest('[role="tabpanel"]').id,
+    'gym-settings-panel-extras',
+    'Secondary launchers belong inside categories instead of becoming extra layout columns.',
+  );
+  assert.equal(
+    $('sound').hidden,
+    true,
+    'The original mute alias remains callable but is not duplicated in Settings.',
+  );
+  assert.equal($('language').closest('[data-global-setting]').dataset.globalSetting, 'language');
+  assert.equal($('connect').closest('[role="tabpanel"]').id, 'gym-settings-panel-controls');
+  assert.equal($('offline').closest('[role="tabpanel"]').id, 'gym-settings-panel-content');
+  assert.equal($('export-trace').closest('[role="tabpanel"]').id, 'gym-settings-panel-data');
+  const snapshot = f.view.snapshot(),
+    trace = f.view.trace();
+  $('gym-shell-action-settings').click();
+  for (const [key, value] of [
+    ['textFace', 'plain'],
+    ['textSize', 'large'],
+  ]) {
+    $(`gym-global-${key}`).value = value;
+    $(`gym-global-${key}`).emit('change');
+  }
+  $('gym-global-reducedEffects').click();
+  $('gym-global-menuAnimation').click();
+  $('gym-global-masterVolume').value = '0.37';
+  $('gym-global-masterVolume').emit('change');
+  assert.deepEqual(JSON.parse(values.get('revealline.display.v1')), {
+    textFace: 'plain',
+    textSize: 'large',
+    reducedEffects: true,
+  });
+  assert.equal(values.get('revealline.menu-animation.v1'), 'off');
+  assert.equal(JSON.parse(values.get('revealline.audio-master.v1')).volume, 0.37);
+  assert.equal(f.doc.body.dataset.textFace, 'plain');
+  assert.equal(f.doc.body.dataset.effects, 'reduced');
+  assert.deepEqual(f.view.snapshot(), snapshot);
+  assert.deepEqual(f.view.trace(), trace);
+  assert.ok(
+    [...values.keys()].every((key) =>
+      [
+        'revealline.display.v1',
+        'revealline.menu-animation.v1',
+        'revealline.audio-master.v1',
+      ].includes(key),
+    ),
+    'Shared presentation changes never write a game save.',
+  );
+});
+
+test('gym shares five ordered Ukrainian mode choices and mobile category keyboard/controller Back without restarting practice', async (t) => {
+  const originalLocale = getLocale();
+  const f = await fixture(t, { search: '?game-return=/game/&lang=uk' });
+  t.after(() => setLocale(originalLocale));
+  const $ = (id) => f.doc.getElementById(id);
+  const modes = f.doc.querySelector('.game-mode-choice');
+  assert.deepEqual(
+    modes.children.map((node) => node.dataset.gameMode),
+    ['solo', 'team', 'versus', 'snake', 'simulator'],
+  );
+  assert.equal(modes.querySelectorAll('[aria-current="page"]').length, 1);
+  assert.equal(modes.querySelector('[aria-current="page"]').dataset.gameMode, 'simulator');
+  assert.equal(modes.children[4].querySelector('.game-mode-badge').textContent, 'beta');
+  assert.equal(modes.children[3].dataset.menuIcon, 'snake');
+  const root = $('gym-shell-settings-dialog');
+  f.doc.defaultView.innerWidth = 320;
+  $('gym-shell-action-settings').click();
+  const controls = $('gym-settings-tab-controls'),
+    audio = $('gym-settings-tab-audio');
+  controls.focus();
+  controls.emit('keydown', { key: 'ArrowDown' });
+  assert.equal(f.doc.activeElement, audio);
+  audio.click();
+  assert.equal(root.dataset.settingsView, 'panel');
+  $('gym-shell-action-settings-back').click();
+  assert.equal(root.open, true);
+  assert.equal(root.dataset.settingsView, 'categories');
+  assert.equal(f.doc.activeElement, audio);
+  const pad = controller(f);
+  pad.pulse(0);
+  pad.pulse(0);
+  assert.equal(root.dataset.settingsView, 'panel');
+  pad.pulse(1);
+  assert.equal(root.dataset.settingsView, 'categories');
+  pad.pulse(1);
+  assert.equal(root.open, false);
+  assert.equal($('gym-shell-home-dialog').open, true);
+  assert.equal(f.view.snapshot().status, 'ready');
+  assert.equal(f.view.snapshot().ticks, 0);
 });

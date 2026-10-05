@@ -64,7 +64,7 @@ function resourceReferences(name, bytes) {
       return path.posix.normalize(path.posix.join(path.posix.dirname(name), reference));
     });
 }
-function staticImports(name, bytes, verifiedVendor = false) {
+export function optionalModuleDependencies(name, bytes, policy, verifiedVendor = false) {
   if (!/\.(mjs|js)$/.test(name)) return [];
   const result = [];
   const visit = (node) => {
@@ -90,6 +90,16 @@ function staticImports(name, bytes, verifiedVendor = false) {
         typeof node.source.value === 'string' && /^\.\.?\//.test(node.source.value),
         'Optional practice permits only explicit relative module dependencies',
       );
+      // The exact reviewed core tool is an optional host capability. It is not
+      // promised by the archive's offline manifest; its host handles failure.
+      // Eager imports and every other source remain part of the strict closure.
+      if (
+        node.type === 'ImportExpression' &&
+        policy?.coreOnlyImports?.some(
+          (entry) => entry.from === name && entry.source === node.source.value,
+        )
+      )
+        return;
       result.push(
         path.posix.normalize(path.posix.join(path.posix.dirname(name), node.source.value)),
       );
@@ -153,7 +163,10 @@ export function buildBundledOptionalPractice(entries, { packageId = 'civilian-fp
       `Optional vendor bytes differ from the reviewed dependency: ${name}`,
     );
     selected.set(name, bytes);
-    pending.push(...staticImports(name, bytes, !!vendor), ...resourceReferences(name, bytes));
+    pending.push(
+      ...optionalModuleDependencies(name, bytes, policy, !!vendor),
+      ...resourceReferences(name, bytes),
+    );
   }
   const files = [...selected]
       .sort(([a], [b]) => a.localeCompare(b))
@@ -250,7 +263,7 @@ export async function buildOptionalPractice(
         }
       }
       bytes = Buffer.from(
-        `// Selected optional-practice validator messages only.\nglobalThis.RevealLineTranslations=${JSON.stringify(locales)};\n`,
+        `// Selected optional-practice validator and settings messages.\nglobalThis.RevealLineTranslations=${JSON.stringify(locales)};\n`,
       );
     } else bytes = generatedIcons.get(name) ?? (await readInput(name));
     const vendor = vendorPins.get(name);
@@ -259,7 +272,7 @@ export async function buildOptionalPractice(
       `Optional vendor bytes differ from the reviewed dependency: ${name}`,
     );
     entries.set(name, bytes);
-    pending.push(...staticImports(name, bytes, !!vendor));
+    pending.push(...optionalModuleDependencies(name, bytes, policy, !!vendor));
     pending.push(...resourceReferences(name, bytes));
   }
   let installation;

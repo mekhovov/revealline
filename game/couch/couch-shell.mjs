@@ -1,3 +1,4 @@
+import { createPauseMenu, pauseMusicAction } from '../ui/pause-menu.mjs';
 import { gameplayStatsLabel } from '../ui/gameplay-copy.mjs';
 import { contentText } from '../i18n/content.mjs';
 import { t, localizedText } from '../i18n/index.mjs';
@@ -105,6 +106,28 @@ export function createCouchShell({
     current: 'versus',
     separateTeam: isJourney,
     actions: { solo: $('race-solo-return'), team: $('race-coop') },
+  });
+  nativeMenu?.refreshLandingNavigation();
+  const pauseMenu = createPauseMenu({
+    document: doc,
+    root: $('race-main').querySelector('.race-menu-actions'),
+    resume: $('race-start'),
+    missions: [
+      { element: $('race-retry'), icon: 'restart', key: 'nativeMenu.pauseRestart' },
+      { element: $('race-journey-skip'), icon: 'skip' },
+      { element: $('race-journey-random'), icon: 'random', key: 'nativeMenu.pauseRandom' },
+      { element: $('race-chapters'), icon: 'missions' },
+    ],
+    audio: [{ element: $('race-quick-sound'), icon: 'sound' }, pauseMusicAction(doc, 'race')],
+    config: [
+      { element: $('race-options'), icon: 'settings' },
+      { element: $('versus-landing-fullscreen'), icon: 'fullscreen' },
+    ],
+    home: $('race-home'),
+    notices: [
+      { element: $('race-journey-save-options'), icon: 'info' },
+      { element: $('versus-landing-fullscreen-status') },
+    ],
   });
   let screen = 'main',
     status = null,
@@ -600,7 +623,7 @@ export function createCouchShell({
         contentBusy
           ? t('interface:loadingTheSharedPicture')
           : status === 'paused'
-            ? t('interface:bothBoardsPaused')
+            ? t('interface:paused3')
             : status === 'finished'
               ? !series
                 ? t('interface:raceComplete')
@@ -616,7 +639,10 @@ export function createCouchShell({
     $('race-retry').disabled = !paused || contentBusy;
     $('race-home').hidden = !paused;
     $('race-optional-setup').hidden = paused;
-    setText('race-chapters', () => t('interface:nativeMenu.missions'));
+    setText('race-chapters', () =>
+      t(paused ? 'interface:nativeMenu.pauseChoose' : 'interface:nativeMenu.missions'),
+    );
+    pauseMenu?.setActive(paused);
     $('race-pause').disabled = status !== 'running' && screen !== 'review';
     // Do not replace the native click target's content on every flight frame.
     setText('race-pause', () =>
@@ -672,6 +698,7 @@ export function createCouchShell({
       focus();
   }
   renderScreens();
+  nativeMenu?.refreshGlobalSettings();
   if (view?.addEventListener) listen(view, 'resize', revealResizedAction);
   return {
     update,
@@ -682,6 +709,12 @@ export function createCouchShell({
     primary,
     focus,
     scope: () => screen,
+    refreshGlobalSettings: (options) => nativeMenu?.refreshGlobalSettings(options),
+    openSettings(category = 'data', focusTarget = null) {
+      show('options', { remember: doc.activeElement });
+      settings.select(`race-settings-tab-${category}`, { drill: true });
+      if (focusTarget && !focusTarget.closest('[hidden],[inert]')) focusTarget.focus();
+    },
     controllerHint: () => $('race-controller-help').textContent,
     cancelDeparture,
     destroy() {
@@ -689,6 +722,7 @@ export function createCouchShell({
       destroyed = true;
       settings.destroy();
       modeChoices.dispose();
+      pauseMenu?.destroy();
       nativeMenu?.destroy();
       for (const remove of removers) remove();
     },

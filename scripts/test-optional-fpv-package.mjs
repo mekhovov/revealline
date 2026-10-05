@@ -32,7 +32,7 @@ const candidate = (built) => {
 };
 
 // Shared theme logic is explicit; token and fullscreen sheets are embedded with SIM presentation.
-// Keep the integrated 69/71 closures and exact bytes inside the unchanged 72-file cap.
+// Shared menus add two image assets and hash-bound locale inputs.
 const assertSharedRadioClosure = (built, source) => {
   for (const name of [
     'optional-practice/civilian-fpv/radio-controls.mjs',
@@ -196,7 +196,7 @@ test('bundled FPV rejects missing, unadmitted, changed-vendor and oversized depe
   );
 });
 
-test('actual FPV application, native notebook and installation launcher close inside unchanged runtime/source budgets', async () => {
+test('actual FPV application, native notebook and installation launcher close inside admitted runtime/source budgets', async () => {
   // Synthetic commit binding exercises archive admission only; the clean frozen
   // CLI independently binds real committed inputs before candidate publication.
   const root = fileURLToPath(new URL('../', import.meta.url)),
@@ -206,7 +206,7 @@ test('actual FPV application, native notebook and installation launcher close in
     admission = await validateOptionalPackageAdmission(f.envelope, f);
   assert.deepEqual(first.zip, second.zip);
   assert.equal(admission.publicEligible, false);
-  assert.equal(admission.packages[0].files, 69);
+  assert.equal(admission.packages[0].files, 71);
   assert.ok(admission.packages[0].bytes <= 8 * 1024 * 1024);
   for (const name of ['notebook.mjs', 'studio.mjs', 'radio-setup.mjs', 'vendor/three.core.js'])
     assert.ok(
@@ -218,7 +218,7 @@ test('actual FPV application, native notebook and installation launcher close in
   assert.equal(manifest.icons.length, 2);
   assert.equal(manifest.id, '/revealline/practice/civilian-fpv/');
   const source = readEditionZip(f.files.get(f.package.sourceArchive.path));
-  assert.equal(source.size, 71);
+  assert.equal(source.size, 73);
   assertSharedRadioClosure(first, source);
   assert.ok(
     [...source.values()].reduce((total, bytes) => total + bytes.length, 0) <= 8 * 1024 * 1024,
@@ -232,13 +232,13 @@ test('explicit FPV package remains independently reproducible with complete pinn
   assert.deepEqual(first.zip, second.zip);
   assert.equal(first.manifest.id, 'civilian-fpv');
   assert.equal(first.manifest.installation.id, '/revealline/practice/civilian-fpv/');
-  assert.equal(first.entries.length, 69);
+  assert.equal(first.entries.length, 71);
   assert.ok(first.entries.reduce((sum, item) => sum + item.bytes.length, 0) < 8 * 1024 * 1024);
   assert.ok(first.entries.every(({ name }) => !name.includes('civilian-flight')));
   const f = candidate(first);
   const admitted = await validateOptionalPackageAdmission(f.envelope, f);
   assert.equal(admitted.publicEligible, false);
-  assert.equal(admitted.packages[0].files, 69);
+  assert.equal(admitted.packages[0].files, 71);
   const localeProjection = first.entries
     .find((entry) => entry.name === 'game/i18n/catalogs.mjs')
     .bytes.toString();
@@ -247,9 +247,16 @@ test('explicit FPV package remains independently reproducible with complete pinn
   const inventory = JSON.parse(f.files.get(f.package.sourceInventory.path));
   assert.equal(inventory.licenses.find((item) => item.dependency === 'three').version, '0.186.1');
   const source = readEditionZip(f.files.get(f.package.sourceArchive.path));
-  assert.equal(source.size, 71);
+  assert.equal(source.size, 73);
+  for (const locale of ['en', 'uk'])
+    assert.ok(inventory.inputs.some((row) => row.path === `game/locales/${locale}/common.json`));
+  for (const asset of [
+    'game/ui/art/identity/fpv-line/wordmark.png',
+    'game/ui/art/menu-scenes/fpv.webp',
+  ])
+    assert.ok(source.has(asset), 'The shared menu artwork is also present offline.');
   assertSharedRadioClosure(first, source);
-  assert.ok(source.size <= 72);
+  assert.ok(source.size <= OPTIONAL_PACKAGE_POLICIES['civilian-fpv'].limits.files);
   assert.ok([...source.values()].reduce((sum, bytes) => sum + bytes.length, 0) <= 8 * 1024 * 1024);
   assert.ok(source.has(fixture.policy.template));
   for (const pin of fixture.policy.vendorPins)

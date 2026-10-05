@@ -1,12 +1,27 @@
+import { mountGlobalSettingsTools } from '../ui/global-settings-tools.mjs';
+import { attachMenuAudioSettings } from '../ui/menu-audio.mjs';
+import { mountGlobalSettings } from '../ui/global-settings-view.mjs';
+import { attachThemeFamilyControls } from '../ui/theme-family-controls.mjs';
+import {
+  getMenuAnimation,
+  setMenuAnimation,
+  subscribeMenuAnimation,
+} from '../ui/menu-animation-preferences.mjs';
+import { mountModeSettings } from '../ui/mode-settings-view.mjs';
+import {
+  attachSettingsPanels,
+  settingsPanelBack,
+  settingsTabOwnsKey,
+} from '../ui/settings-panels.mjs';
 import { mountModePlayShell } from '../ui/mode-play-shell.mjs';
 import { attachModalNavigation } from '../ui/modal-navigation.mjs';
 import { attachFullscreen } from '../ui/fullscreen.mjs';
 import { attachControllerNavigation } from '../ui/controller-navigation.mjs';
+import { attachMenuScene } from '../ui/menu-scenes.mjs';
 import { setMenuIcon } from '../ui/native-menu-icons.mjs';
 import { snakeStudioReturnHref } from '../ui/content-studio-navigation.mjs';
-import { mountOptionalPracticePanel } from '../ui/optional-practice-panel.mjs';
-import { contextualAppearance } from '../ui/mode-choice.mjs';
-import { fpvWorldLaunchURL, appearanceLaunchURL } from '../fpv-entry.mjs';
+import { contextualAppearance, mountModeChoices } from '../ui/mode-choice.mjs';
+import { appearanceLaunchURL } from '../fpv-entry.mjs';
 import { boardPlacement } from '../ui/feedback-cues.mjs';
 import { createClassicAudio } from './classic-audio.mjs';
 import { getLocale, setLocale, onLocaleChange } from '../i18n/index.mjs';
@@ -145,6 +160,9 @@ let entry =
   CLASSIC_SNAKE_LEVELS[48] ??
   CLASSIC_SNAKE_LEVELS[0];
 let playShell = null,
+  snakeSettingsView = null,
+  snakeGlobalSettings = null,
+  touchPresentationControls = null,
   menuController = null,
   boardLayoutObserver = null;
 let match,
@@ -230,6 +248,7 @@ function applyTouch() {
   $('pads').style.setProperty('--snake-pad-size', prefs.size === 'large' ? '64px' : '56px');
   $('pads').style.setProperty('--snake-pad-opacity', String(Math.max(0.75, prefs.opacity)));
   $('pads').dataset.side = prefs.side;
+  touchPresentationControls?.refresh();
 }
 const campaignFor = (item) =>
   CLASSIC_SNAKE_CAMPAIGNS.find((campaign) =>
@@ -624,52 +643,37 @@ function nextUncleared() {
     ) ?? CLASSIC_SNAKE_LEVELS.find((item) => !records.cleared(item.id))
   );
 }
-let snakeSimPanel = null;
+let snakeModeChoices = null;
 function renderModeLinks() {
   const links = $('snake-mode-links');
   if (!links) return;
-  snakeSimPanel?.dispose();
-  snakeSimPanel = null;
-  links.replaceChildren();
-  for (const [key, path, label] of [
-    ['solo', '../', text('solo')],
-    ['versus', '../couch/', text('versus')],
-    ['team', '../couch/relay-rescue.html', text('team')],
-    ['simulator', null, 'FPV SIM'],
-    ['controls', null, text('title')],
+  snakeModeChoices?.dispose();
+  const actions = {};
+  for (const [key, path] of [
+    ['solo', '../'],
+    ['team', '../couch/relay-rescue.html'],
+    ['versus', '../couch/'],
   ]) {
-    const node = el(path ? 'a' : 'button', label);
-    if (path) {
-      const url = new URL(path, globalThis.location.href);
-      url.searchParams.set('lang', locale);
-      node.href = appearanceLaunchURL(url.href, contextualAppearance(doc), { transfer: false });
-      node.addEventListener('click', () => {
-        node.href = appearanceLaunchURL(url.href, contextualAppearance(doc));
-        pause();
-      });
-    } else {
-      node.type = 'button';
-      if (key === 'controls') node.setAttribute('aria-current', 'page');
-    }
-    setMenuIcon(node, key);
-    links.append(node);
-    if (key === 'simulator') {
-      snakeSimPanel = mountOptionalPracticePanel({
-        document: doc,
-        container: links,
-        opener: node,
-        pause,
-        href: globalThis.location.href,
-        getAppearanceDefault: () => contextualAppearance(doc),
-        bundledHref: fpvWorldLaunchURL(globalThis.location.href, locale),
-        packageId: 'fpv-worlds',
-        idPrefix: 'snake-fpv-sim',
-        preferDirect: true,
-        timeoutMs: 4000,
-      });
-      node.disabled = !snakeSimPanel.open;
-    }
+    const node = el('a');
+    const target = new URL(path, globalThis.location.href);
+    const refreshDestination = (transfer = false) => {
+      target.searchParams.set('lang', locale);
+      node.href = appearanceLaunchURL(target.href, contextualAppearance(doc), { transfer });
+    };
+    refreshDestination();
+    node.addEventListener('click', () => {
+      refreshDestination(true);
+      pause();
+    });
+    actions[key] = node;
   }
+  snakeModeChoices = mountModeChoices({
+    root: links,
+    current: 'snake',
+    actions,
+    pause,
+    guidesContainer: snakeSettingsView?.panels.extras ?? $('snake-workshop'),
+  });
 }
 function renderCopy() {
   doc.documentElement.lang = locale;
@@ -777,6 +781,9 @@ function renderCopy() {
   $('studio-link').href =
     snakeStudioReturnHref(globalThis.location.href) ?? `../studio/snake.html?lang=${locale}`;
   playShell?.setLocale(locale);
+  snakeSettingsView?.refresh(locale);
+  snakeGlobalSettings?.refresh(locale);
+  touchPresentationControls?.refresh();
   renderModeLinks();
   $('campaign-link').textContent = text('campaigns');
   $('campaign-link').href = `./?lang=${locale}`;
@@ -1346,12 +1353,13 @@ function pollGamepads() {
     if (!previous) continue;
     if (playShell?.topDialog()) {
       const directionIndex = buttons.slice(0, 4).findIndex((pressed, i) => pressed && !previous[i]);
-      menuController?.handle({
+      const command = {
         direction: directionIndex < 0 ? null : ['up', 'right', 'down', 'left'][directionIndex],
         confirm: !!buttons[5] && !previous[5],
         back: !!buttons[6] && !previous[6],
         menu: !!buttons[4] && !previous[4],
-      });
+      };
+      if (!snakeGlobalTools.handleFrameCommand(command)) menuController?.handle(command);
       continue;
     }
     if (buttons[4] && !previous[4]) {
@@ -1399,7 +1407,7 @@ landscapeControls?.addEventListener('change', () => {
 });
 globalThis.addEventListener('pagehide', () => {
   importEpoch++;
-  snakeSimPanel?.close({ restoreFocus: false });
+  snakeModeChoices?.closeSimulator();
   pause();
   sound.suspend();
   classicAudio.reset();
@@ -1525,12 +1533,26 @@ playShell = mountModePlayShell({
         ['modes', $('snake-mode-links')],
       ]),
   ),
-  services: { attachModalNavigation, attachFullscreen, setMenuIcon },
+  services: {
+    attachModalNavigation,
+    attachFullscreen,
+    setMenuIcon,
+    attachMenuScene,
+    settingsPanelBack,
+  },
   actions: {
     pause: () => pause({ showMenu: false }),
     start,
     resume: start,
     retry: () => prepare({ launch: true }),
+    skip: () => $('next').click(),
+    random: () => {
+      save();
+      const choices = CLASSIC_SNAKE_LEVELS.filter((item) => item.id !== entry.id);
+      entry = choices[Math.floor(Math.random() * choices.length)] ?? entry;
+      prepare();
+      playShell.open('briefing');
+    },
     canResume: () => !result() && (!ready || (offerSavedContinue && !!savedRound)),
     continue: () => {
       if (!ready && !result()) start();
@@ -1548,14 +1570,162 @@ playShell = mountModePlayShell({
   initial: params.has('level') || communityIdentity ? 'briefing' : 'home',
   focusPlay: () => boards[0]?.canvas.focus({ preventScroll: true }),
 });
+const snakeSettingsSections = [...$('snake-settings').children].filter(
+  (node) => node.tagName === 'DETAILS',
+);
+snakeSettingsView = mountModeSettings({
+  root: playShell.elements.dialogs.settings,
+  content: playShell.elements.content.settings,
+  prefix: 'snake-menu-settings',
+  locale,
+  setMenuIcon,
+  attachPanels: attachSettingsPanels,
+  groups: {
+    gameplay: [playShell.elements.buttons.expert, playShell.elements.buttons['home-retry']],
+    controls: [$('steering').closest('label')],
+    audio: [snakeSettingsSections[1]],
+    display: [$('language').closest('label'), snakeSettingsSections[0]],
+    accessibility: [snakeSettingsSections[2]],
+    data: [$('snake-workshop').querySelector('details')],
+    content: [playShell.elements.buttons.workshop],
+    extras: [
+      playShell.elements.buttons.help,
+      $('snake-workshop').querySelector('.game-mode-destinations'),
+    ],
+  },
+});
+attachThemeFamilyControls({
+  document: doc,
+  root: snakeSettingsView.panels.display,
+  host: presentation.theme,
+  prefix: 'snake-',
+});
+const displayBinding = (key) => ({
+  get: () => display.snapshot()[key],
+  set: (value) => display.set({ [key]: value }),
+  subscribe: (listener) => display.subscribe(listener),
+});
+snakeGlobalSettings = mountGlobalSettings({
+  document: doc,
+  root: playShell.elements.dialogs.settings,
+  panels: snakeSettingsView.panels,
+  prefix: 'snake-global',
+  locale,
+  controls: {
+    language: $('language').closest('label'),
+    appearance: snakeSettingsView.panels.display.querySelector('[data-theme-controls]'),
+    reducedEffects: $('reduced').closest('label'),
+    masterMuted: $('muted').closest('label'),
+    masterVolume: $('volume').closest('label'),
+  },
+  bindings: {
+    textFace: displayBinding('textFace'),
+    textSize: displayBinding('textSize'),
+    menuAnimation: {
+      get: () => getMenuAnimation(globalThis),
+      set: (value) => setMenuAnimation(value, globalThis),
+      subscribe: (listener) => subscribeMenuAnimation(listener, globalThis),
+    },
+  },
+});
+const snakeTouchSettings = el('section');
+const touchFields = [];
+for (const [key, en, uk, choices] of [
+  [
+    'side',
+    'Steering hand',
+    'Рука керування',
+    [
+      ['right', 'Right', 'Права'],
+      ['left', 'Left', 'Ліва'],
+    ],
+  ],
+  [
+    'size',
+    'Touch control size',
+    'Розмір сенсорного керування',
+    [
+      ['regular', 'Regular', 'Звичайний'],
+      ['large', 'Large', 'Великий'],
+    ],
+  ],
+  ['opacity', 'Touch control opacity', 'Прозорість сенсорного керування'],
+]) {
+  const row = el('label'),
+    caption = el('span'),
+    input = el(choices ? 'select' : 'input');
+  input.id = `snake-global-touch-${key}`;
+  row.append(caption, input);
+  if (!choices) {
+    input.type = 'range';
+    input.min = '0.2';
+    input.max = '1';
+    input.step = '0.05';
+  }
+  input.addEventListener('change', () =>
+    touch.set({ ...touch.snapshot(), [key]: choices ? input.value : Number(input.value) }),
+  );
+  snakeTouchSettings.append(row);
+  touchFields.push({ key, en, uk, choices, caption, input });
+}
+touchPresentationControls = {
+  refresh() {
+    for (const field of touchFields) {
+      field.caption.textContent = locale === 'uk' ? field.uk : field.en;
+      if (field.choices)
+        options(
+          field.input,
+          field.choices.map(([key, en, uk]) => [key, locale === 'uk' ? uk : en]),
+          touch.snapshot()[field.key],
+        );
+      else field.input.value = String(touch.snapshot()[field.key]);
+    }
+  },
+};
+touchPresentationControls.refresh();
+const snakeAudioCues = el('section');
+attachMenuAudioSettings(sound, doc, {
+  target: snakeAudioCues,
+  window: globalThis,
+  getStorage: () => globalThis.localStorage,
+  idPrefix: 'snake-global',
+});
+const snakeGlobalTools = mountGlobalSettingsTools({
+  document: doc,
+  window: globalThis,
+  settingsRoot: playShell.elements.dialogs.settings,
+  panels: snakeSettingsView.panels,
+  prefix: 'snake-global-tools',
+  onOpen: pause,
+  coreURL: new URL('../', globalThis.location.href),
+});
+snakeGlobalSettings.update({
+  controls: {
+    audioCues: snakeAudioCues,
+    touchPresentation: snakeTouchSettings,
+    ...snakeGlobalTools.controls,
+  },
+});
+$('snake-settings').hidden = true;
 menuController = attachControllerNavigation({
   document: doc,
   keyboard: true,
-  getScope: () => (playShell?.topDialog() ? 'ui' : 'flight'),
-  getRoot: () => playShell?.topDialog() ?? $('snake-shell'),
-  getDefaultFocus: () => playShell?.topDialog()?.querySelector('button:not(:disabled),a[href]'),
-  onBack: () => (snakeSimPanel?.root() ? snakeSimPanel.close() : playShell.back()),
-  onMenu: () => (snakeSimPanel?.root() ? snakeSimPanel.close() : playShell.back()),
+  ownsKeyboardEvent: (event) => settingsTabOwnsKey(event, playShell?.topDialog()),
+  getScope: () => (snakeGlobalTools.root() || playShell?.topDialog() ? 'ui' : 'flight'),
+  getRoot: () =>
+    snakeGlobalTools.frameFocused()
+      ? null
+      : (snakeGlobalTools.root() ?? playShell?.topDialog() ?? $('snake-shell')),
+  getDefaultFocus: () =>
+    (snakeGlobalTools.root() ?? playShell?.topDialog())?.querySelector(
+      'button:not(:disabled),a[href]',
+    ),
+  onBack: () =>
+    snakeGlobalTools.back() ||
+    (snakeModeChoices?.simulatorRoot() ? snakeModeChoices.closeSimulator() : playShell.back()),
+  onMenu: () =>
+    snakeGlobalTools.back() ||
+    (snakeModeChoices?.simulatorRoot() ? snakeModeChoices.closeSimulator() : playShell.back()),
 });
 refresh();
 footprint.refresh();
