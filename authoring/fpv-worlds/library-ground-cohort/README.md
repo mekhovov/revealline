@@ -1,5 +1,32 @@
 # Library cohort for supported ground movement
 
+## Draft publication checkpoint — 5 October 2026
+
+[Draft #1116](https://github.com/mekhovov/revealline/pull/1116) publishes the
+existing six-commit cohort at `bdbb7c96fbf83841508794dc1ee750075099d171`
+directly above Harbor `c958e5e13d0357e46b9a2c489802708adcdc05d8`.
+The supported `gh stack link 1103 1116` command appended it to native stack
+**#1103: #1101 → #1102 → #1116**. Both parent heads remain unchanged and all
+three PRs remain Draft. The following documentation checkpoint changes no
+runtime input. [Publication receipt](evidence/draft-publication-1116.json).
+
+The current bounded source contract passes 60 checks; both generated projections,
+syntax and diff checks pass. All 138 distinct inputs across the three packages
+match frozen `2c99a8250` byte-for-byte. This establishes runtime input equivalence
+only; the historical admission remains bound to 2c99. Current-main integration,
+fresh final admission, native old/new player and populated-storage/offline checks,
+protected review, publication and actual public launch remain pending. No heavy
+build was run during this Draft publication step.
+
+Festival row [#1113](https://github.com/mekhovov/revealline/pull/1113) is still
+unpublished at this checkpoint. Once it is eligible and inherited, its exact row
+must also enter this cumulative feed before final qualification. If the cohort
+lands first, subsequent compatible row publication must update the new feed too.
+Do not add the unpublished Festival row early or silently drop it during later
+integration. Harbor's catalogue row remains a separate publication gate.
+
+## Cohort contract and historical qualification
+
 Players with actor `groundMotion: 'support-v1'` and surface-coating support
 request `published/ground-motion-v1/index.json`. The readable Library endpoint
 and dedicated worker accept the same fixed first-party URL. Their checked
