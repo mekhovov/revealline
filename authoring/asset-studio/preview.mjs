@@ -255,6 +255,10 @@ export async function drawAssetPreview(surface, slot, asset, resolved, blobs, se
     if (asset.file && !blob) {
       throw new Error(t('tools:fileBytesAreUnavailableReImportTheCompleteBundle'));
     }
+    if (asset.kind === 'audio' && slot.id.startsWith('audio.destroy-')) {
+      audioRecipePreview(surface, slot, own, { audioMaster, readAudio: async () => ({ blob }) });
+      return;
+    }
     if (asset.kind === 'audio') {
       phase(() => t('tools:studio.preview.loadingAudioMetadata'), 'decoding');
       const audio = document.createElement('audio');

@@ -1,3 +1,4 @@
+import { DESTRUCTION_CUES } from '../ui/destruction-audio.mjs';
 import { mountModePlayShell } from '../ui/mode-play-shell.mjs';
 import { attachModalNavigation } from '../ui/modal-navigation.mjs';
 import { attachFullscreen } from '../ui/fullscreen.mjs';
@@ -63,6 +64,7 @@ import {
 } from './host-loop.mjs';
 import { createOverflightAudio, overflightMusicContext } from './audio.mjs';
 import { createOverflightCommentator } from './commentator.mjs';
+import { attachOverflightStudioLinks } from './studio-links.mjs';
 import { overflightText, localizedOverflight } from './copy.mjs';
 import { createOverflightController, loadOverflightControllerPreferences } from './controller.mjs';
 import {
@@ -193,6 +195,7 @@ let lastHUD = 0,
   hudPulseCharge = null,
   library = null,
   music = null,
+  studioNavigation = null,
   commentator = null,
   musicFrame = 0,
   recoveryPending = false,
@@ -258,7 +261,13 @@ const audio = createOverflightAudio(sound, {
   presentation: {
     async readAudio(slot, settings) {
       await artReady;
-      return ['audio.pickup', 'audio.confirm', 'audio.victory', 'audio.failure'].includes(slot)
+      return [
+        'audio.pickup',
+        'audio.confirm',
+        'audio.victory',
+        'audio.failure',
+        ...DESTRUCTION_CUES.map((cue) => `audio.${cue}`),
+      ].includes(slot)
         ? artwork.readAudio(slot, settings)
         : null;
     },
@@ -940,9 +949,10 @@ function onFrame(now) {
       );
       stepCPU += performance.now() - started;
       steps++;
-      // Retire combat voices before the shared result motif/dialogue starts.
-      if (run.phase === 'won' || run.phase === 'lost') sound.pause();
+      // Accept the final strike before pausing. Only its bounded destruction
+      // tail survives the result transition; retry and explicit pause still stop it.
       audio.update(run);
+      if (run.phase === 'won' || run.phase === 'lost') sound.pause({ preserveDestruction: true });
       commentator?.update(run);
       transition();
       return run.phase === 'playing';
@@ -1035,6 +1045,7 @@ function refreshCopy() {
     node.textContent = text(node.dataset.copy);
   $('language').value = getLocale();
   $('studio-link').href = destination(mode.studioPath);
+  studioNavigation?.refresh();
   $('raw-metrics').setAttribute('aria-label', text('rawMeasurements'));
   shell?.setLocale(getLocale());
   $('fixture-description').textContent = fixture
@@ -1131,6 +1142,20 @@ music = attachCouchMusicHost({
   onOpen: () => pause({ menu: false }),
   onClose: releaseInput,
 });
+studioNavigation = attachOverflightStudioLinks({
+  document: doc,
+  root: $('overflight-studios'),
+  getLocale,
+  getCreator: () => ({
+    path: mode.studioPath,
+    title: text('workshop'),
+    description: text('workshopHelp'),
+  }),
+  destination,
+  onOpen: () => pause({ menu: false }),
+  onMusic: () => music.open(),
+});
+cleanup.push(() => studioNavigation.dispose());
 commentator = createOverflightCommentator({
   sound,
   container: $('overflight-commentator'),

@@ -1,3 +1,4 @@
+import { DESTRUCTION_CUES, destructionCategory } from '../ui/destruction-audio.mjs';
 import { screenPan } from '../ui/feedback-cues.mjs';
 
 /** Presentation adapter only. The shared mixer owns samples, priority, movement
@@ -48,12 +49,24 @@ export function createClassicAudio(sound, { getDestruction = () => ({}), present
         const latest = run.recentCatches?.at(-1);
         const pan = screenPan(latest?.x ?? run.level.width / 2, run.level.width, placement);
         sound.event?.({ type: 'pickup.collected', board, pan, feedback: true, tick: run.tick });
-        sound.encounter('catch', {
-          family: latest?.kind,
-          board,
-          brutal: getDestruction().brutal,
-          pan,
-        });
+        const categories = new Set();
+        // Several co-op catches may land in one step. Retain each material, not
+        // just the final casualty; the shared mixer bounds overlapping voices.
+        const recent = run.recentCatches?.slice(-Math.max(1, catchCount - state.catches)) ?? [
+          latest,
+        ];
+        for (const caught of recent.length ? recent : [latest]) {
+          const family = caught?.kind;
+          const category = destructionCategory({ family });
+          if (categories.has(category)) continue;
+          categories.add(category);
+          sound.encounter('catch', {
+            family,
+            board,
+            brutal: getDestruction().brutal,
+            pan: screenPan(caught?.x ?? run.level.width / 2, run.level.width, placement),
+          });
+        }
       }
       if ((run.pickupsUsed ?? 0) > state.pickups) {
         const pickup =
@@ -86,7 +99,7 @@ export function createClassicAudio(sound, { getDestruction = () => ({}), present
     prepare() {
       // Warm only the catch binding after explicit Start. Missing/late recordings
       // use the registered core recipe now, never replaying an earlier catch.
-      return sound.publishedAudio?.prepare(['pickup']);
+      return sound.publishedAudio?.prepare(['pickup', ...DESTRUCTION_CUES]);
     },
     reset() {
       states = new WeakMap();

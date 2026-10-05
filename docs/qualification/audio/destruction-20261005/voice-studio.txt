@@ -1,0 +1,470 @@
+- navigation "Editor navigation":
+  - button "Sections"
+  - paragraph: "D-pad: move · A: choose/edit · B: back · Menu: editor navigation"
+- generic: Language
+- combobox "Language":
+  - option "English" [selected]
+  - option "Українська"
+- status
+- banner:
+  - link "FPV / LINE":
+    - /url: http://localhost:8887/game/?lang=en
+    - img "FPV / LINE"
+  - generic: CONTENT STUDIO / LOCAL DRAFTS
+  - link "Back to Playground ↗":
+    - /url: http://localhost:8887/game/playground/?lang=en
+- main:
+  - paragraph: 01 / AUTHORING WORKBENCH
+  - heading "Shape the next challenge." [level=1]
+  - paragraph:
+    - text: LOCAL CONTENT STUDIO
+    - text: Drafts, not published editions
+  - status: Saved locally · checkpoint 1. This is a candidate, not published content.
+  - paragraph:
+    - link "Create a level from text or a symbol image →":
+      - /url: ../playground/#symbol-generator
+  - paragraph:
+    - link "Create a playable campaign from a picture →":
+      - /url: ../creator/
+  - paragraph:
+    - link "Snake Studio · routes, prey, shutters and supplies / маршрути, цілі, заслінки та припаси →":
+      - /url: snake.html
+  - paragraph:
+    - link "Overflight Studio · encounters, upgrades and arena / хвилі, вдосконалення й арена →":
+      - /url: overflight.html
+  - paragraph:
+    - link "Raid Studio · hunting routes, formations and objectives / Наліт · маршрути, групи й цілі →":
+      - /url: raid.html
+  - generic "Create a community game · step-by-step guide"
+  - generic "Draft actions":
+    - button "Undo" [disabled]
+    - button "Redo" [disabled]
+    - button "Save checkpoint / retry"
+    - button "Export backup"
+    - text: Inspect import
+    - button "Inspect import Choose a source"
+    - button "Choose a source"
+    - link "Jump to map ↓":
+      - /url: "#map-workbench"
+  - generic "Browse bundled candidates Whole Journey, chapters, mechanics and Team"
+  - option "All categories" [selected]
+  - option "Whole Journey editions"
+  - option "Chapters"
+  - option "Mechanics and spatial studies"
+  - option "Team studies"
+  - option "Early Journey test players"
+  - option "Snake Hunt · eight chapters"
+  - option "Team Snake Hunt · eight chapters"
+  - option "Ornament and workshop · v4"
+  - option "Contested sorting lanes · v5"
+  - option "Travelling trail impacts · v6"
+  - option "Readable pressure arcs · v7"
+  - option "Ukrainian + FPV pressure · v8"
+  - option "Erosion counterplay · v9"
+  - option "Ukrainian cultural spatial triptych · v10"
+  - option "Horizon cultural joins · v11"
+  - option "Border cultural routes · v12"
+  - option "Border and Signal cultural routes · v13"
+  - option "Early Ukrainian cultural routes · v14"
+  - option "Signal Ukrainian cultural routes · v15"
+  - option "Neon Ukrainian cultural routes · v16"
+  - option "Neon Ukrainian cultural routes finale · v17"
+  - option "Rover Ukrainian cultural routes · v18"
+  - option "Fractured Grid Ukrainian cultural routes · v19"
+  - option "Phaseworks Ukrainian cultural routes · v20"
+  - option "Livewire Ukrainian cultural routes · v21"
+  - option "Relay Ukrainian cultural routes · v22"
+  - option "Crosswind Ukrainian cultural routes · v23"
+  - option "Sentinel Ukrainian cultural routes · v24"
+  - option "Apex Ukrainian cultural routes · v25" [selected]
+  - option "Ukrainian ornament spatial study · opt-in"
+  - option "Ukrainian ornament atlas · twelve studies · opt-in"
+  - option "whole-spatial-v26"
+  - option "whole-spatial-v27"
+  - option "whole-spatial-v28"
+  - option "whole-spatial-v29"
+  - option "whole-spatial-v30"
+  - option "whole-spatial-v31"
+  - option "whole-spatial-v32"
+  - option "whole-spatial-v33"
+  - option "whole-spatial-v34"
+  - option "whole-spatial-v35"
+  - option "whole-spatial-v36"
+  - option "whole-spatial-v37"
+  - option "whole-spatial-v38"
+  - option "First-capture teaching" [selected]
+  - option "Contested sorting lanes · pressure-v2"
+  - option "Original greyboxes" [selected]
+  - option "Spatial revision 2 — pacing study"
+  - option "Original receiver galleries" [selected]
+  - option "Inner receiver approach · balance pending"
+  - option "Original placements" [selected]
+  - option "Contested outer pockets · pressure-v2"
+  - option "Contested pockets + depot lanes · pressure-v2"
+  - option "Current Ukrainian spatial specialists II · original pictures" [selected]
+  - option "Previous Ukrainian spatial specialists · original pictures"
+  - option "Previous specialists + travelling impacts · original pictures"
+  - option "Original pictures · historical difficulty"
+  - option "Pressure presets · original pictures"
+  - option "Changing returns + pressure · original pictures"
+  - generic "Change this draft's difficulty edition"
+  - complementary "Project and missions":
+    - heading "PROJECT" [level=2]
+    - text: Local project ID
+    - textbox "Local project ID": my-journey
+    - text: Checkpoint
+    - spinbutton "Checkpoint"
+    - button "Inspect saved"
+    - button "New project"
+    - paragraph: Inspect any saved checkpoint before applying it. Restoring creates a new checkpoint; newer history stays available.
+    - paragraph: My Journey
+    - text: Mission
+    - combobox "Mission":
+      - option "Nearby shore" [selected]
+    - paragraph: "Packs: 1 / campaigns: 1 / missions: 1. Horizon School: 1"
+    - text: Difficulty
+    - combobox "Difficulty":
+      - option "Gentle · 5 lives · enemy speed ×0.85"
+      - option "Standard · 3 lives · enemy speed ×1" [selected]
+      - option "Expert · 2 lives · enemy speed ×1.1"
+    - paragraph: Enemy speed is relative to each moving actor's authored tier. The selected rules below describe attack rests and countdowns. Player handling and warning lengths stay unchanged. These are the authored Studio preview values. The separate current gameplay projection below includes fresh-attempt tuning and this browser’s admin settings.
+    - paragraph: Return to the island or continue to the far boundary?
+    - paragraph: "Authored preview: 3 lives · 10 cells/s · 60% earned coverage · No countdown · journey-difficulty-v1: Three lives and the authored enemy tier. Player handling and attack warning lengths are unchanged between presets."
+    - paragraph: "Current gameplay · fresh attempt: craft 8.84 cells/s; enemies: 1 (added keepers: 0). keeper: 11.05 cells/s, unclaimed field. Normal global settings. Fresh-attempt values before temporary bonuses, terrain and actor activation. This is not a playtest or a prediction of capture outcomes. Studio Play retains its authored preview rules."
+    - generic "Tune mission challenge"
+    - generic "Authored preview and current gameplay rules"
+  - region "Map workbench":
+    - heading "Nearby shore" [level=2]
+    - generic: 72 × 36
+    - img "Map geometry; the same information is listed below. Click to choose edit coordinates."
+    - paragraph:
+      - generic: ■ Reclaimed foundation
+      - generic: ▧ Wall
+      - generic: ● Field keeper
+      - generic: ◇ Perimeter patrol
+      - generic: ▲ Frontier patrol
+      - generic: "Tracked square: reclaimed-ground roamer"
+      - generic: "Toothed blade: territory eroder"
+      - generic: "Bolt: trail-impact carrier"
+      - generic: "Twin posts: stationary lane emitter"
+      - generic: "Crown: shield-relay Sentinel"
+      - generic: ✚ Spawn
+      - generic: "Framed pickups: + Life · > Speed · v Slow · * Freeze"
+      - generic: "Capture markers: ! Required · o Optional · ? Hidden"
+      - generic: Relay numbers match triggers to connectors, not a required order.
+      - generic: "Slow field: paired dashes · Lethal field: framed ×"
+      - generic: "Arrow field: faster with, slower against, unchanged across; never forced drift."
+      - generic: Capturing field neutralizes its terrain; walls never close cuts.
+    - paragraph: "Humanoid figures: huntable runners and guards. Touch or enclosure removes them; their bodies never retain territory. Guards carry a weapon; their shots remain dangerous."
+    - paragraph: "25 interior foundation cells excluded from score and coverage. 2,355 earnable cells; 2 reclaimed components. Spawn 1 (32.5, 0.5). keeper: bouncer at (60.5, 18.5). Contact bonuses: none. Timed optional pickups: none. Capture objectives: none. Authored terrain: none. Terrain is active only on unclaimed field."
+    - checkbox "Show frozen capture overlay" [checked]
+    - generic: Show frozen capture overlay
+    - paragraph:
+      - generic: · Retained field
+      - generic: ╱ Would fill
+      - generic: □ Hypothetical trail
+      - generic: ◎ Field anchor
+      - generic: ▣ Affected objective
+    - status: "Frozen snapshot: 1 retained regions, 0 would-fill regions, 0 would-fill cells and 0 hypothetical trail cells. Field anchors: keeper. Affected objectives: none. Snapshot only. A legal closure must be verified; moving enemies may change the outcome."
+    - group "Add geometry · makes a new map revision":
+      - generic: Add geometry · makes a new map revision
+      - text: Surface
+      - combobox "Surface":
+        - option "Foundation" [selected]
+        - option "Wall"
+        - option "Slow field"
+        - option "Lethal field"
+        - option "Move mission spawn / Team seat 1"
+        - option "Move Team seat 2"
+      - text: X
+      - spinbutton "X": "20"
+      - text: "Y"
+      - spinbutton "Y": "12"
+      - text: Width
+      - spinbutton "Width": "5"
+      - text: Height
+      - spinbutton "Height": "5"
+      - button "Validate & apply geometry"
+    - generic "Reshape existing geometry"
+    - option "Foundation 1 · (30, 15) 5×5" [selected]
+    - generic "Place enemies"
+    - option "+ New actor" [selected]
+    - option "Field keeper · keeper"
+    - option "Field keeper" [selected]
+    - option "Outer-perimeter patrol"
+    - option "Moving-frontier patrol"
+    - option "measured · 2.4 cells/s" [selected]
+    - option "standard · 3.2 cells/s"
+    - option "brisk · 4 cells/s"
+    - option "Up"
+    - option "Up-right"
+    - option "Right"
+    - option "Down-right" [selected]
+    - option "Down"
+    - option "Down-left"
+    - option "Left"
+    - option "Up-left"
+    - generic "Author hunting for this mission"
+    - option "No optional encounters"
+    - option "Patrol encounters"
+    - option "Bonus hunt" [selected]
+    - option "Capture + hunt"
+    - option "Hunt only"
+    - option "Runner" [selected]
+    - option "Guard"
+    - option "Contact" [selected]
+    - option "Enclosure"
+    - option "Group enclosure"
+    - option "Field kit"
+    - option "Worn field kit" [selected]
+    - option "Winter kit"
+    - option "Running"
+    - option "Recovery / exposed armor" [selected]
+    - option "Warning / closed armor"
+    - option "Committed action"
+    - option "Shield turn warning"
+    - option "Up"
+    - option "Right" [selected]
+    - option "Down"
+    - option "Left"
+    - option "Up"
+    - option "Right"
+    - option "Down" [selected]
+    - option "Left"
+    - generic "Place optional bonuses"
+    - option "+ New bonus" [selected]
+    - option "Extra life" [selected]
+    - option "Player speed"
+    - option "Enemy slow"
+    - option "Enemy freeze"
+    - generic "Schedule optional timed bonuses"
+    - option "+ New timed schedule" [selected]
+    - option "Extra life"
+    - option "Player speed"
+    - option "Enemy slow" [selected]
+    - option "Enemy freeze"
+    - generic "Place capture objectives"
+    - option "+ New objective" [selected]
+    - generic "Link permanent relay gates"
+    - option "+ New gate" [disabled] [selected]
+    - generic "Mark directional speed fields"
+    - option "+ New field" [disabled] [selected]
+    - option "Right →" [disabled] [selected]
+    - option "Down ↓" [disabled]
+    - option "Left ←" [disabled]
+    - option "Up ↑" [disabled]
+    - generic "Stage a Sentinel encounter"
+    - option "Choose core objective" [selected]
+    - option "Choose first shield" [selected]
+    - option "No additional shield" [selected]
+    - option "No additional shield" [selected]
+    - option "No additional shield" [selected]
+    - generic "Build from a reference picture"
+    - generic "Frozen capture inspection"
+    - button "Play exact Solo preview ↗"
+    - generic: Practice only · no awards · candidate presentation
+  - region "Project source and validation":
+    - generic "Review campaign progression"
+    - option "Solo" [selected]
+    - option "Versus"
+    - option "Team"
+    - option "Horizon School · horizon-school"
+    - generic "Review mission acceptance evidence"
+    - option "Solo" [selected]
+    - option "Versus"
+    - generic "Discoveries, pacing and campaign exhibits"
+    - option "Horizon School" [selected]
+    - option "Not assigned" [selected]
+    - option "Discover"
+    - option "Choose"
+    - option "Combine"
+    - option "Breathe"
+    - option "Express mastery"
+    - option "Resolve"
+    - option "Not assigned" [selected]
+    - option "Not assigned" [selected]
+    - option "Expedition route"
+    - option "Gallery"
+    - option "Mosaic"
+    - option "Not assigned" [selected]
+    - option "English" [selected]
+    - option "Українська"
+    - option "New resource…" [disabled] [selected]
+    - option "Schools & families" [disabled]
+    - option "New to the subject" [disabled] [selected]
+    - option "Explore further" [disabled]
+    - option "Separate teaser picture" [selected]
+    - option "Earned reveal picture"
+    - option "Registered cosmetic character"
+    - option "New playlist" [disabled] [selected]
+    - option "Bright return" [selected]
+    - option "Open horizon"
+    - option "Shared spark"
+    - generic "Character voice recordings"
+    - group "Character voice recordings":
+      - generic: Character voice recordings
+      - paragraph: Replace a line with a recording of the exact transcript. Originals and earlier revisions are retained. Changes are local; export a voice bundle to move them to another browser.
+      - generic: Line
+      - combobox "Line":
+        - option "Guide · A new piece of the world, brought into view." [selected]
+        - option "Guide · That picture was waiting for a line like yours."
+        - option "Guide · A little more of the picture."
+        - option "Guide · That route opened a new view."
+        - option "Guide · Another piece comes into focus."
+        - option "Guide · There is room to breathe now."
+        - option "Guide · One patrol has gone quiet."
+        - option "Guide · That path has one less obstacle."
+        - option "Guide · A clear line past that patrol."
+        - option "Guide · The signal has faded."
+        - option "Guide · Back at the edge. Take your time."
+        - option "Guide · A fresh route is waiting."
+        - option "Guide · There is another way through."
+        - option "Guide · Ready for the next line."
+        - option "Guide · Together again."
+        - option "Guide · A helping hand makes a difference."
+        - option "Guide · The team is back on its feet."
+        - option "Guide · That rescue opened another chance."
+        - option "Engineer · A fine route through a complicated place."
+        - option "Engineer · I like what you built between those edges."
+        - option "Engineer · A little more of the picture."
+        - option "Engineer · That route opened a new view."
+        - option "Engineer · Another piece comes into focus."
+        - option "Engineer · There is room to breathe now."
+        - option "Engineer · One patrol has gone quiet."
+        - option "Engineer · That path has one less obstacle."
+        - option "Engineer · A clear line past that patrol."
+        - option "Engineer · The signal has faded."
+        - option "Engineer · Back at the edge. Take your time."
+        - option "Engineer · A fresh route is waiting."
+        - option "Engineer · There is another way through."
+        - option "Engineer · Ready for the next line."
+        - option "Engineer · Together again."
+        - option "Engineer · A helping hand makes a difference."
+        - option "Engineer · The team is back on its feet."
+        - option "Engineer · That rescue opened another chance."
+        - option "Rival · Two boards. Two ways to find a line."
+        - option "Rival · Different routes, one shared view."
+        - option "Rival · A little more of the picture."
+        - option "Rival · That route opened a new view."
+        - option "Rival · Another piece comes into focus."
+        - option "Rival · There is room to breathe now."
+        - option "Rival · One patrol has gone quiet."
+        - option "Rival · That path has one less obstacle."
+        - option "Rival · A clear line past that patrol."
+        - option "Rival · The signal has faded."
+        - option "Rival · Back at the edge. Take your time."
+        - option "Rival · A fresh route is waiting."
+        - option "Rival · There is another way through."
+        - option "Rival · Ready for the next line."
+        - option "Rival · Together again."
+        - option "Rival · A helping hand makes a difference."
+        - option "Rival · The team is back on its feet."
+        - option "Rival · That rescue opened another chance."
+        - option "Sentinel · The last signal is yours."
+        - option "Sentinel · Beyond the crown, the picture remains."
+        - option "Sentinel · A little more of the picture."
+        - option "Sentinel · That route opened a new view."
+        - option "Sentinel · Another piece comes into focus."
+        - option "Sentinel · There is room to breathe now."
+        - option "Sentinel · One patrol has gone quiet."
+        - option "Sentinel · That path has one less obstacle."
+        - option "Sentinel · A clear line past that patrol."
+        - option "Sentinel · The signal has faded."
+        - option "Sentinel · Back at the edge. Take your time."
+        - option "Sentinel · A fresh route is waiting."
+        - option "Sentinel · There is another way through."
+        - option "Sentinel · Ready for the next line."
+        - option "Sentinel · Together again."
+        - option "Sentinel · A helping hand makes a difference."
+        - option "Sentinel · The team is back on its feet."
+        - option "Sentinel · That rescue opened another chance."
+        - option "Lookout · Something on the horizon."
+        - option "Lookout · A little too close!"
+        - option "Patroller · One more round."
+        - option "Patroller · Off the beaten path!"
+        - option "Runner · Room for one more turn."
+        - option "Runner · You found the shortcut!"
+        - option "Sprinter · Deep breath. Ready."
+        - option "Sprinter · Out of breath!"
+        - option "Courier · A parcel with a destination."
+        - option "Courier · Delivery interrupted!"
+        - option "Guard · Keeping an eye on the crossing."
+        - option "Guard · A gap in the watch!"
+        - option "Refuge seeker · That corner looks promising."
+        - option "Refuge seeker · The long way was shorter!"
+        - option "Switchback · A different way around."
+        - option "Switchback · A turn ahead of me!"
+        - option "Rendezvous pair · Meet you at the crossing."
+        - option "Rendezvous pair · A change of meeting place!"
+        - option "Shield bearer · Facing the next crossing."
+        - option "Shield bearer · Caught from another angle!"
+        - option "Brace trooper · Brace. Breathe. Go."
+        - option "Brace trooper · You read the rhythm!"
+        - option "Relay warden · Listening for the next signal."
+        - option "Relay warden · The signal has changed hands."
+        - option "Engineer · Clean pass. Choose your next target."
+        - option "Engineer · Rush ready. Your next boost starts it."
+        - option "Engineer · New pattern. Try it on your next pass."
+        - option "Engineer · The pattern has evolved. Make room for a wider pass."
+        - option "Engineer · A group cleared. Salvage is on the ground."
+        - option "Engineer · Replacement airborne. Your modules are still with you."
+        - option "Engineer · No airframes remain. The sortie is over."
+      - generic: Recording language
+      - combobox "Recording language":
+        - option "English" [selected]
+        - option "Українська"
+      - generic: Exact transcript
+      - textbox "Exact transcript": A new piece of the world, brought into view.
+      - generic: Replacement mono/stereo PCM WAV or AAC-LC M4A, up to 15 seconds / 2 MiB
+      - button "Replacement mono/stereo PCM WAV or AAC-LC M4A, up to 15 seconds / 2 MiB Choose a source"
+      - button "Choose a source"
+      - generic: Recording source
+      - combobox "Recording source":
+        - option "Human performance" [selected]
+        - option "Generated speech"
+      - generic: Performer or generator and source notes
+      - textbox "Performer or generator and source notes"
+      - generic: Retained revision
+      - combobox "Retained revision":
+        - option "Original recording" [selected]
+      - button "Play selected recording"
+      - button "Stop"
+      - button "Save replacement"
+      - button "Restore original"
+      - button "Use selected revision"
+      - button "Export voice bundle"
+      - button "Choose File"
+      - button "Import voice bundle"
+      - paragraph: macos-say · Samantha · 58f961f54b52d0dbb58f53f000ca85bba166236126e135dc1f5e89f8f9a94210
+      - status
+    - generic "Organize missions, campaigns & packs"
+    - option "Mission" [selected]
+    - option "Campaign"
+    - option "Pack"
+    - option "Create" [selected]
+    - option "Duplicate item & contents"
+    - option "Rename"
+    - option "Change campaign band"
+    - option "Add to parent"
+    - option "Remove from parent"
+    - option "Move earlier in parent"
+    - option "Move later in parent"
+    - option "Delete unreferenced item"
+    - option "Archive item"
+    - option "Restore archived item"
+    - option "Solo / Versus · island" [selected]
+    - option "Team · twin islands (greybox)"
+    - option "Team · material-ready islands (greybox)"
+    - option "Unassigned" [selected]
+    - option "Horizon School · horizon-school"
+    - heading "SOURCE / ALL MAPS & CAMPAIGNS" [level=2]
+    - paragraph: Edit names, order, actors and design notes here. Inspect first; applying is explicit. Published editions are never overwritten.
+    - generic: Project JSON
+    - textbox "Project JSON": "{ \"format\": \"ContentProjectV1\", \"id\": \"my-journey\", \"revision\": \"draft-1\", \"name\": \"My Journey\", \"policyId\": \"journey-arcade-v2\", \"actorCatalogId\": \"journey-actors-v1\", \"difficultyCatalogId\": \"journey-difficulty-v1\", \"maps\": [ { \"format\": \"MapDesignV1\", \"id\": \"island-map\", \"revision\": \"1\", \"name\": \"An island within reach\", \"width\": 72, \"height\": 36, \"walls\": [], \"foundations\": [ { \"x\": 30, \"y\": 15, \"w\": 5, \"h\": 5 } ], \"terrain\": [], \"spawns\": [ { \"id\": \"home\", \"x\": 32.5, \"y\": 0.5 } ] } ], \"missions\": [ { \"format\": \"MissionDesignV1\", \"id\": \"nearby-shore\", \"revision\": \"1\", \"name\": \"Nearby shore\", \"map\": { \"id\": \"island-map\", \"revision\": \"1\" }, \"spawnId\": \"home\", \"modes\": [ \"solo\", \"versus\" ], \"actors\": [ { \"id\": \"keeper\", \"role\": \"field-keeper\", \"tier\": \"measured\", \"x\": 60.5, \"y\": 18.5, \"heading\": [ 1, 1 ] } ], \"objectives\": [], \"bonuses\": [], \"coverage\": 0.6, \"timeLimitSeconds\": 0, \"design\": { \"routeDecision\": \"Return to the island or continue to the far boundary?\", \"lesson\": \"A foundation can close a cut inside the board.\", \"counterplay\": \"Watch the keeper before choosing a route.\", \"captureConsequence\": \"Connecting the island creates a shorter return route, but may secure only the line.\", \"introduces\": [ \"foundations\" ], \"practices\": [ \"closure\" ], \"combines\": [], \"memorableMoment\": \"The first return lands inside the board.\", \"mastery\": \"Connect the island in one cut.\", \"durationSeconds\": [ 45, 90 ], \"difficulty\": { \"band\": 1, \"planning\": 1, \"execution\": 1, \"threatDensity\": 1, \"timePressure\": 0, \"mechanicLoad\": 1, \"coordination\": 0 } }, \"presentation\": { \"themeId\": \"horizon\", \"backgroundAssetId\": null } } ], \"campaigns\": [ { \"format\": \"CampaignDesignV1\", \"id\": \"horizon-school\", \"revision\": \"1\", \"name\": \"Horizon School\", \"band\": 1, \"missionIds\": [ \"nearby-shore\" ] } ], \"packs\": [ { \"format\": \"PackDesignV1\", \"id\": \"opening\", \"revision\": \"1\", \"name\": \"Opening\", \"campaignIds\": [ \"horizon-school\" ] } ] }"
+    - button "Inspect source"
+    - button "Apply inspected source" [disabled]
+    - status: "Current draft: 1 map revisions, 1 missions. Source edits require a new inspection before applying."
+    - list:
+      - listitem: "Warning: Disconnected foundations. (disconnected-foundations)"
+      - listitem: "Warning: Greybox background; artwork is not assigned. (greybox-background)"
+  - generic: Local-first drafts · immutable checkpoints · shared compiler · human playtesting still required
