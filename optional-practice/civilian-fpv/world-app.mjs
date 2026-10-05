@@ -48,6 +48,11 @@ import { restoreVerifiedRadio } from './radio-session.mjs';
 import { mountRadioSetup } from './radio-setup.mjs';
 import {
   mountFlightFullscreen,
+  createSimContinuousPlayController,
+  createSimEnemyStatsHost,
+  mountSimEnemyStats,
+  mountSimContinuousPlayControls,
+  mountSimContinuousCelebration,
   mountSimPlayShell,
   mountSimModeSettings,
   mountSimGlobalSettings,
@@ -825,6 +830,20 @@ export function mountWorldApp({
     sectorReferenceStatus = 'none',
     sectorLookup = null,
     lastRadioDiscovery = -Infinity;
+  const continuousPlay = createSimContinuousPlayController({
+    isCurrent: (identity) => identity === flight && !disposed && finished && !replayProof,
+    isActive: () =>
+      !doc.hidden &&
+      (doc.hasFocus?.() ?? true) &&
+      $('flight-dialog').open &&
+      !doc.querySelector('dialog[open]:not(#flight-dialog)'),
+    onNext: () => (current?.beginner ? nextLearningFlight() : $('world-next').click()),
+    onRetry: () => {
+      void retryFlight().catch(reportError);
+    },
+  });
+  let flowControls = null,
+    flowCelebration = null;
   const learningById = new Map(BEGINNER_LESSONS.map((lesson) => [lesson.id, lesson]));
   const learningEntries = new Map(BEGINNER_CATALOGUE.map((entry) => [entry.id, entry]));
   const primaryLearning = PRIMARY_LESSON_ORDER.map((id) => learningEntries.get(id));
@@ -848,6 +867,34 @@ export function mountWorldApp({
   } catch {
     /* Browser can deny local preference access. */
   }
+  const enemyStatistics = createSimEnemyStatsHost({ gameType: 'worlds', storage });
+  void enemyStatistics.stats.read();
+  const enemyStatsViews = [
+    mountSimEnemyStats({
+      document: doc,
+      container: $('flight-instruments').parentElement,
+      stats: enemyStatistics.stats,
+      gameType: 'worlds',
+      getAttempt: enemyStatistics.getAttempt,
+      variant: 'hud',
+      locale: () => locale,
+      spritePortraits: false,
+    }),
+  ];
+  enemyStatsViews.push(
+    mountSimEnemyStats({
+      document: doc,
+      container: $('playlists'),
+      stats: enemyStatistics.stats,
+      gameType: 'worlds',
+      getAttempt: enemyStatistics.getAttempt,
+      variant: 'collection',
+      locale: () => locale,
+      spritePortraits: false,
+    }),
+  );
+  const statsRecoveryKey = 'revealline.world-enemy-stats-recovery.v1';
+  let enemyStatsRunId = null;
   const playlistStore = createPlaylistStore(storage);
   const profileStore = createFlightProfileStore({ storage });
   response = profileStore.snapshot().response;
@@ -1073,6 +1120,11 @@ export function mountWorldApp({
     node?.addEventListener(event, fn, options);
     listeners.push(() => node?.removeEventListener(event, fn, options));
   };
+  const cancelFlow = () => continuousPlay.cancel('interaction');
+  on(doc, 'pointerdown', cancelFlow);
+  on(doc, 'keydown', cancelFlow);
+  on(win, 'blur', cancelFlow);
+  on(win, 'gamepaddisconnected', cancelFlow);
   const button = (text, action, className) => {
     const b = el('button', text, className);
     b.type = 'button';
@@ -1228,6 +1280,7 @@ export function mountWorldApp({
         playlist: playingPlaylist,
         index: playlistIndex,
         preserveFocus: true,
+        paused: true,
       }).catch(reportError);
     },
   });
@@ -3352,6 +3405,7 @@ export function mountWorldApp({
           recovery && dependencyAvailable(recovery.packIdentity, recovery.course.id),
         ),
         muted: !audio.enabled(),
+        transitionActive: !['idle', 'cancelled'].includes(continuousPlay.snapshot().phase),
         missionName: titleCourse?.locales?.[locale]?.title ?? '',
         summary: titleCourse?.locales?.[locale]?.brief ?? '',
         phase: 'ready',
@@ -3688,6 +3742,8 @@ export function mountWorldApp({
       terminal(flight.snapshot())
     )
       return;
+    const savedStatsRun = enemyStatsRunId,
+      savedFlightToken = flightToken;
     const saved = {
       course: current.course,
       proof: recorder.export(),
@@ -3698,9 +3754,18 @@ export function mountWorldApp({
       ...(current.legacy ? { presentation: appearanceSession.current() } : {}),
     };
     await recordStore.saveSession(saved);
-    recovery = saved;
+    try {
+      storage?.setItem(
+        statsRecoveryKey,
+        JSON.stringify({ proof: dataIdentity(saved.proof), run: savedStatsRun }),
+      );
+    } catch {
+      /* Session counters remain available. */
+    }
+    if (savedFlightToken === flightToken) recovery = saved;
   }
   function pauseFlight(freezeRadio = true) {
+    continuousPlay.cancel('paused');
     if (pausing) return;
     pauseRevision++;
     pausing = true;
@@ -4059,6 +4124,7 @@ export function mountWorldApp({
       return;
     }
     finished = true;
+    enemyStatistics.finish();
     input.enable(false);
     fire = false;
     radio.freeze('finished');
@@ -4148,6 +4214,89 @@ export function mountWorldApp({
       ),
       el('p', txt('Checking recording…', 'Перевірка запису…')),
     );
+    const resultActions = el('div', undefined, 'button-row');
+    resultActions.append(
+      button(txt('Fly again', 'Летіти ще раз'), () => $('world-retry').click(), 'primary'),
+    );
+    if (!$('world-next').disabled)
+      resultActions.append(
+        button(txt('Next flight', 'Наступний політ'), () => $('world-next').click(), 'primary'),
+      );
+    if (entry.beginner && state.status === 'complete' && !isPreview)
+      resultActions.append(
+        button(
+          !nextLearningEntry(entry)
+            ? txt('Return to your course', 'Повернутися до курсу')
+            : txt('Next lesson', 'Наступний урок'),
+          () => nextLearningFlight(),
+          'primary',
+        ),
+      );
+    if (entry.beginner && state.status === 'complete' && !nextLearningEntry(entry))
+      resultActions.append(
+        button(
+          txt('Explore more worlds', 'Досліджувати інші світи'),
+          async () => {
+            await closeFlight();
+            showTab('explore');
+          },
+          'primary',
+        ),
+      );
+    resultActions.append(
+      button(
+        entry.beginner
+          ? txt('Back to Flight School', 'До льотної школи')
+          : txt('Back to lobby', 'До меню'),
+        async () => {
+          await closeFlight();
+          if (entry.beginner) showTab('learn');
+        },
+      ),
+    );
+    resultActions.append(
+      button(txt('Random level', 'Випадковий рівень'), () => playShell.activate('random')),
+      button(txt('Choose mission', 'Вибрати місію'), () => {
+        continuousPlay.cancel('mission-choice');
+        openCatalogueTab('explore');
+      }),
+      button(txt('Home', 'Додому'), async () => {
+        continuousPlay.cancel('home');
+        await closeFlight();
+        playShell.openHome();
+      }),
+    );
+    $('result-panel').append(resultActions);
+    flowControls?.dispose();
+    flowCelebration?.dispose();
+    flowControls = mountSimContinuousPlayControls({
+      document: doc,
+      parent: $('result-panel'),
+      controller: continuousPlay,
+      locale: () => locale,
+    });
+    flowCelebration = mountSimContinuousCelebration({
+      document: doc,
+      controller: continuousPlay,
+      reduced: () => displayPreferences.snapshot().effectiveReducedEffects,
+    });
+    if (!isPreview)
+      continuousPlay.begin({
+        identity: flight,
+        outcome: state.status === 'complete' ? 'won' : 'lost',
+        canAdvance:
+          state.status === 'complete' &&
+          (entry.beginner ? !!nextLearningEntry(entry) : !$('world-next').disabled),
+        replayMs: 0,
+        readyMs: 400,
+      });
+    const nextAction = [...resultActions.querySelectorAll('button')].find(
+      (node) =>
+        node.textContent === txt('Next flight', 'Наступний політ') ||
+        node.textContent === txt('Next lesson', 'Наступний урок'),
+    );
+    nextAction?.focus();
+
     try {
       const verified = entry.legacy
         ? await replayFlightCooperatively(entry.course, proof)
@@ -4220,6 +4369,16 @@ export function mountWorldApp({
           `${(state.ticks / 50).toFixed(2)} s · ${state.contacts ?? 0} ${txt('contacts', 'контактів')}`,
         ),
       );
+      if (
+        !isPreview &&
+        state.status === 'complete' &&
+        ['gold', 'silver', 'bronze'].includes(resultSummary.medal)
+      ) {
+        const stars = { gold: 3, silver: 2, bronze: 1 }[resultSummary.medal];
+        const rating = el('p', '★'.repeat(stars), 'result-stars');
+        rating.setAttribute('aria-label', txt(`${stars} of 3 stars`, `${stars} з 3 зірок`));
+        $('result-panel').append(rating);
+      }
       if (!entry.beginner)
         $('result-panel').append(
           el(
@@ -4321,47 +4480,7 @@ export function mountWorldApp({
               }),
           ),
         );
-      const resultActions = el('div', undefined, 'button-row');
-      resultActions.append(
-        button(txt('Fly again', 'Летіти ще раз'), () => $('world-retry').click(), 'primary'),
-      );
-      if (!$('world-next').disabled)
-        resultActions.append(
-          button(txt('Next flight', 'Наступний політ'), () => $('world-next').click(), 'primary'),
-        );
-      if (entry.beginner && state.status === 'complete' && !isPreview)
-        resultActions.append(
-          button(
-            !nextLearningEntry(entry)
-              ? txt('Return to your course', 'Повернутися до курсу')
-              : txt('Next lesson', 'Наступний урок'),
-            () => nextLearningFlight(),
-            'primary',
-          ),
-        );
-      if (entry.beginner && state.status === 'complete' && !nextLearningEntry(entry))
-        resultActions.append(
-          button(
-            txt('Explore more worlds', 'Досліджувати інші світи'),
-            async () => {
-              await closeFlight();
-              showTab('explore');
-            },
-            'primary',
-          ),
-        );
-      resultActions.append(
-        button(
-          entry.beginner
-            ? txt('Back to Flight School', 'До льотної школи')
-            : txt('Back to lobby', 'До меню'),
-          async () => {
-            await closeFlight();
-            if (entry.beginner) showTab('learn');
-          },
-        ),
-      );
-      $('result-panel').append(resultActions);
+      $('result-panel').append(resultActions, flowControls.root);
       presentation.resume();
       $('result-panel').append(
         button(txt('Watch verified flight', 'Переглянути перевірений політ'), () =>
@@ -4506,6 +4625,7 @@ export function mountWorldApp({
       restoreRadio();
     }
     const elapsed = lastTime === null ? 0 : now - lastTime;
+    continuousPlay.advance(elapsed);
     lastTime = now;
     if (elapsed > 250) {
       pauseFlight();
@@ -4592,7 +4712,31 @@ export function mountWorldApp({
           audio.update(flight.snapshot(), {
             active: !replayProof && flight.snapshot().status === 'active',
           });
-          if (!replayProof && !current.legacy) huntReactions.consume(flight.snapshot());
+          if (!replayProof && !current.legacy) {
+            const snapshot = flight.snapshot();
+            huntReactions.consume(snapshot);
+            const defeats = snapshot.events
+              .filter((event) => ['catch', 'defeat'].includes(event.type))
+              .map((event) => {
+                const actor = current.course.actors?.find((row) => row.id === event.actor);
+                return {
+                  family:
+                    event.type === 'catch'
+                      ? actor?.speed > 0
+                        ? 'patroller'
+                        : 'lookout'
+                      : ({
+                          sentry: 'guard',
+                          patrol: 'patroller',
+                          drone: 'drone',
+                          vehicle: 'vehicle',
+                        }[actor?.type] ??
+                        actor?.type ??
+                        'lookout'),
+                };
+              });
+            if (defeats.length) void enemyStatistics.observe({ sequence: snapshot.ticks, defeats });
+          }
           if (recorder) {
             if (current.legacy) recorder.record(controls);
             else recorder.record();
@@ -4942,6 +5086,28 @@ export function mountWorldApp({
                 : 'practice',
           });
     }
+    enemyStatsRunId = win.crypto?.randomUUID?.() ?? globalThis.crypto.randomUUID();
+    if (options.recover) {
+      try {
+        const savedStats = JSON.parse(storage?.getItem(statsRecoveryKey) ?? 'null');
+        if (
+          savedStats?.proof === dataIdentity(options.recover) &&
+          typeof savedStats.run === 'string'
+        )
+          enemyStatsRunId = savedStats.run;
+      } catch {
+        /* A missing counter cursor never blocks recovery. */
+      }
+    }
+    enemyStatistics.begin(enemyStatsRunId, {
+      provenance: replayProof
+        ? 'replay'
+        : preview || checkpointSession || modePractice || entry.legacy
+          ? 'preview'
+          : options.recover
+            ? 'continue'
+            : 'live',
+    });
     renderer.setPresentation?.(playableAppearance.appearance);
     renderer.setCourse(entry.course, $('flight-mode').value);
     paintLoadout();
@@ -5050,6 +5216,15 @@ export function mountWorldApp({
           : 'Відтворення перевіреного запису · без нагород.',
       );
     }
+    if (
+      !replayProof &&
+      !options.paused &&
+      !options.preview &&
+      pauseRevision === playbackPauseRevision &&
+      !doc.hidden &&
+      (doc.hasFocus?.() ?? true)
+    )
+      $('world-arm').click();
     if (playableAppearance.fallbackReason)
       $('flight-status').textContent += ` ${txt(
         entry.course.world?.themeProfile?.authoredFallback
@@ -5061,6 +5236,7 @@ export function mountWorldApp({
       )}`;
   }
   async function closeFlight() {
+    continuousPlay.cancel('closed');
     const token = ++flightToken;
     checkpointPreparation?.abort();
     checkpointPreparation = null;
@@ -5671,6 +5847,7 @@ export function mountWorldApp({
     return { root: doc.body, key: `lobby:${win.location.hash}` };
   }
   const menuNavigation = createFlightMenuNavigation({
+    onAction: () => continuousPlay.cancel('controller'),
     document: doc,
     window: win,
     locale: () => locale,
@@ -5771,6 +5948,7 @@ export function mountWorldApp({
   });
   on($('world-pause'), 'click', () => pauseFlight());
   function retryFlight({ paused = false } = {}) {
+    continuousPlay.cancel('retry');
     return startFlight(current, {
       preview,
       playlist: playingPlaylist,
@@ -5881,12 +6059,15 @@ export function mountWorldApp({
       const proof = replayKind === 'demonstration' ? demonstrationFor(current, selectedMode) : null;
       return startFlight(
         proof ? demonstrationEntry(current) : current,
-        proof ? { preview: true, replayProof: proof, demonstration: true, paused: true } : {},
+        proof
+          ? { preview: true, replayProof: proof, demonstration: true, paused: true }
+          : { paused: true },
       );
     }
     if (current && $('flight-dialog').open)
       return startFlight(current, {
         preview: preview && !modePractice,
+        paused: true,
         playlist: playingPlaylist,
         index: playlistIndex,
       });
@@ -6071,6 +6252,7 @@ export function mountWorldApp({
             playlist: playingPlaylist,
             index: playlistIndex,
             checkpoint: checkpointRequest,
+            paused: true,
           }).catch(reportError);
       },
     });
@@ -6243,6 +6425,18 @@ export function mountWorldApp({
     initial: 'home',
     focusPlay: () => $('world-viewport').focus(),
   });
+  enemyStatsViews.push(
+    mountSimEnemyStats({
+      document: doc,
+      container: playShell.elements.content.pause,
+      stats: enemyStatistics.stats,
+      gameType: 'worlds',
+      getAttempt: enemyStatistics.getAttempt,
+      variant: 'panel',
+      locale: () => locale,
+      spritePortraits: false,
+    }),
+  );
   const settingsDestinations = el('nav', undefined, 'sim-settings-destinations');
   settingsDestinations.setAttribute(
     'aria-label',
@@ -6599,6 +6793,12 @@ export function mountWorldApp({
           audioControls.dispose();
           huntPresentationControls.dispose();
           huntReactions.dispose();
+          enemyStatsViews.forEach((view) => view.dispose());
+          await enemyStatistics.stats.flush();
+          enemyStatistics.close();
+          flowControls?.dispose();
+          flowCelebration?.dispose();
+          continuousPlay.dispose();
           audio.dispose();
           presentation.dispose();
           droneResponse.dispose();

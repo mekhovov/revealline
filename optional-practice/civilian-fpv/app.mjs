@@ -20,6 +20,11 @@ import { restoreVerifiedRadio } from './radio-session.mjs';
 import { mountRadioSetup } from './radio-setup.mjs';
 import {
   mountFlightFullscreen,
+  createSimContinuousPlayController,
+  createSimEnemyStatsHost,
+  mountSimEnemyStats,
+  mountSimContinuousPlayControls,
+  mountSimContinuousCelebration,
   mountSimPlayShell,
   mountSimModeSettings,
   mountSimGlobalSettings,
@@ -511,7 +516,90 @@ export function mountFlightApp({
     })();
     return pendingScene;
   }
+  const enemyStatistics = createSimEnemyStatsHost({ gameType: 'academy' });
+  void enemyStatistics.stats.read();
+  const enemyStatsViews = [
+    mountSimEnemyStats({
+      document: doc,
+      container: $('flight-app'),
+      stats: enemyStatistics.stats,
+      variant: 'hud',
+      locale: () => locale,
+      spritePortraits: false,
+    }),
+  ];
+  let launchIntent = null;
+  const continuousPlay = createSimContinuousPlayController({
+    isCurrent: (identity) => identity === flight && !disposed && !replay,
+    isActive: () => !doc.hidden && (doc.hasFocus?.() ?? true) && !suspended && !modalOpen(),
+    onNext: () => $('next').click(),
+    onRetry: () => $('retry').click(),
+  });
+  const resultMissionActions = doc.createElement('div');
+  resultMissionActions.className = 'button-row';
+  const resultChoices = [
+    ['random', ['Random level', 'Випадковий рівень']],
+    ['missions', ['Choose mission', 'Вибрати місію']],
+    ['home', ['Home', 'Додому']],
+  ];
+  for (const [action, labels] of resultChoices) {
+    const node = doc.createElement('button');
+    node.id = `academy-result-${action}`;
+    node.type = 'button';
+    node.className = 'button secondary';
+    node.textContent = labels[locale === 'uk' ? 1 : 0];
+    node.onclick = () => {
+      continuousPlay.cancel('result-action');
+      if (action === 'random') playShell.activate('random');
+      else playShell.open(action);
+    };
+    resultMissionActions.append(node);
+  }
+  $('complete').append(resultMissionActions);
+  const flowControls = mountSimContinuousPlayControls({
+    document: doc,
+    parent: $('complete'),
+    controller: continuousPlay,
+    locale: () => locale,
+  });
+  const flowCelebration = mountSimContinuousCelebration({
+    document: doc,
+    controller: continuousPlay,
+    reduced: () => displayPreferences.snapshot().effectiveReducedEffects,
+  });
+  const cancelFlow = () => {
+    continuousPlay.cancel('interaction');
+    launchIntent = null;
+  };
+  listen(doc, 'pointerdown', cancelFlow);
+  listen(doc, 'keydown', cancelFlow);
+  listen(win, 'blur', cancelFlow);
+  listen(win, 'gamepaddisconnected', cancelFlow);
+  async function startPrepared() {
+    playShell?.enterPlay();
+    const intent = { epoch, pauseGeneration };
+    launchIntent = intent;
+    if (sceneReady && arm()) {
+      launchIntent = null;
+      return true;
+    }
+    await pendingScene;
+    if (
+      launchIntent !== intent ||
+      epoch !== intent.epoch ||
+      pauseGeneration !== intent.pauseGeneration ||
+      disposed
+    )
+      return false;
+    if (arm()) {
+      launchIntent = null;
+      return true;
+    }
+    return false;
+  }
   function reset(index = selected, nextMode = mode, previewCourse = authoringCourse) {
+    continuousPlay.cancel('new-attempt');
+    launchIntent = null;
     const nextFlight = createFlight({
       course: previewCourse ?? courses[index],
       mode: nextMode,
@@ -551,6 +639,8 @@ export function mountFlightApp({
     paint(true);
   }
   function pause(reason = 'paused') {
+    continuousPlay.cancel('paused');
+    launchIntent = null;
     if (disposed) return;
     pauseGeneration++;
     gamepad.reset();
@@ -842,6 +932,11 @@ export function mountFlightApp({
     // pauses. The shared menu must follow that clock, not the live-flight model.
     const pausedReplay =
       !!replay && replay.paused && replay.at < replay.proof.frames.length && !terminal;
+    for (const [action, labels] of resultChoices) {
+      const node = $(`academy-result-${action}`),
+        value = labels[locale === 'uk' ? 1 : 0];
+      if (node.textContent !== value) node.textContent = value;
+    }
     $('flight-app').dataset.flightState = state.status;
     playShell?.update({
       phase: terminal
@@ -851,6 +946,7 @@ export function mountFlightApp({
           : state.status === 'active'
             ? 'playing'
             : state.status,
+      transitionActive: !['idle', 'cancelled'].includes(continuousPlay.snapshot().phase),
       missionName: currentCourse().locales[locale].title,
       summary: currentCourse().locales[locale].brief,
       canResume: replay
@@ -1005,13 +1101,27 @@ export function mountFlightApp({
     message = null;
     lastProof = recorder.export();
     lastPresentation = appearanceSession.current();
-    if (state.status !== 'complete') return;
+    if (state.status !== 'complete') {
+      $('complete').hidden = false;
+      $('complete-title').textContent = locale === 'uk' ? 'Політ завершено' : 'Flight ended';
+      $('lesson').textContent =
+        locale === 'uk'
+          ? 'Новий маршрут починається з наступної спроби.'
+          : 'Your next route starts with another try.';
+      $('next').hidden = $('review').hidden = true;
+      $('retry').focus();
+      if (!authoringCourse)
+        continuousPlay.begin({ identity: flight, outcome: 'lost', replayMs: 0, readyMs: 400 });
+      return;
+    }
     $('complete-title').textContent = currentCourse().locales[locale].title;
     $('lesson').textContent = currentCourse().locales[locale].lesson;
     $('complete').hidden = false;
     $('next').hidden = !!authoringCourse || selected === courses.length - 1;
     $('review').hidden = !!authoringCourse;
-    $('retry').focus();
+    (!$('next').hidden ? $('next') : $('retry')).focus();
+    if (!authoringCourse)
+      continuousPlay.begin({ identity: flight, outcome: 'won', canAdvance: !$('next').hidden });
     if (lastProof.session !== 'practice') return;
     const owner = epoch,
       delivery = { course: courses[selected], attempt: lastProof },
@@ -1043,11 +1153,20 @@ export function mountFlightApp({
     if (disposed || suspended) return;
     pollGamepad(now);
     pollMenu(now);
+    if (
+      launchIntent &&
+      launchIntent.epoch === epoch &&
+      launchIntent.pauseGeneration === pauseGeneration &&
+      sceneReady &&
+      arm()
+    )
+      launchIntent = null;
     const delta = lastTime === null ? 0 : now - lastTime,
       executedAt = win.performance?.now?.() ?? now,
       executionDelta = lastExecutionTime === null ? 0 : executedAt - lastExecutionTime;
     lastTime = now;
     lastExecutionTime = executedAt;
+    continuousPlay.advance(delta);
     // A queued rAF can carry a pre-stall timestamp. Check the actual callback
     // gap too, before accepting another input or advancing the fixed-step model.
     if (delta > 250 || executionDelta > 250) pause('focusLost');
@@ -1262,9 +1381,15 @@ export function mountFlightApp({
     paint(true);
   });
   listen($('reset'), 'click', () => reset());
-  listen($('retry'), 'click', () => reset(selected, mode, null));
+  listen($('retry'), 'click', () => {
+    reset(selected, mode, null);
+    void startPrepared();
+  });
   listen($('try'), 'click', () => reset(selected, mode, null));
-  listen($('next'), 'click', () => reset(Math.min(courses.length - 1, selected + 1), mode, null));
+  listen($('next'), 'click', () => {
+    reset(Math.min(courses.length - 1, selected + 1), mode, null);
+    void startPrepared();
+  });
   listen($('mode'), 'change', () => reset(selected, $('mode').value));
   listen($('input-source'), 'change', () => {
     input.select($('input-source').value);
@@ -1355,6 +1480,7 @@ export function mountFlightApp({
     };
   };
   const menuNavigation = createFlightMenuNavigation({
+    onAction: () => continuousPlay.cancel('controller'),
     document: doc,
     window: win,
     locale: () => locale,
@@ -1586,10 +1712,6 @@ export function mountFlightApp({
   });
   const expert = menuSection('sim-shell-expert');
   for (const id of ['notebook-button', 'help']) expert.append($(id));
-  const startPrepared = () => {
-    playShell.enterPlay();
-    arm();
-  };
   playShell = mountSimPlayShell({
     document: doc,
     mount: doc.body,
@@ -1620,16 +1742,16 @@ export function mountFlightApp({
       continue: startPrepared,
       skip: () => {
         reset((selected + 1) % courses.length, mode, null);
-        playShell.open('briefing');
+        void startPrepared();
       },
       random: () => {
         const offset = 1 + Math.floor(Math.random() * Math.max(1, courses.length - 1));
         reset((selected + offset) % courses.length, mode, null);
-        playShell.open('briefing');
+        void startPrepared();
       },
       retry: () => {
         reset();
-        playShell.open('briefing');
+        void startPrepared();
       },
       canResume: () =>
         Boolean(
@@ -1811,6 +1933,16 @@ export function mountFlightApp({
   });
   // These wrappers only held the controls now owned by the shared categories.
   shellSettings.hidden = true;
+  enemyStatsViews.push(
+    mountSimEnemyStats({
+      document: doc,
+      container: playShell.elements.content.pause,
+      stats: enemyStatistics.stats,
+      variant: 'panel',
+      locale: () => locale,
+      spritePortraits: false,
+    }),
+  );
   playShell.elements.buttons.expert.hidden = true;
   playShell.elements.buttons.help.hidden = true;
   $('academy-close-options').dataset.settingsBack = '';
@@ -1858,6 +1990,11 @@ export function mountFlightApp({
       globalThemeControls?.dispose();
       displayPreferences.dispose();
       modeSettingsView?.destroy();
+      enemyStatsViews.forEach((view) => view.dispose());
+      enemyStatistics.close();
+      continuousPlay.dispose();
+      flowControls.dispose();
+      flowCelebration.dispose();
       playShell?.dispose();
       menuNavigation.dispose();
       menuHint.remove();

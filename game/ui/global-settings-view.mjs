@@ -1,7 +1,11 @@
-// One logical settings inventory. Hosts supply their existing preference owners;
-// this view never opens storage, starts audio, or owns a game/profile lifecycle.
+import { continuousPlayBindings } from './continuous-play.mjs';
+// One logical settings inventory. Shared flow preferences have one lightweight
+// owner; hosts retain audio, simulation and profile lifecycle ownership.
 export const GLOBAL_SETTINGS = Object.freeze(
   [
+    { key: 'autoNext', category: 'gameplay', type: 'checkbox', required: true },
+    { key: 'autoRetry', category: 'gameplay', type: 'checkbox', required: true },
+    { key: 'autoReplay', category: 'gameplay', type: 'checkbox', required: true },
     { key: 'language', category: 'display', type: 'select', required: true },
     { key: 'appearance', category: 'display', required: true },
     { key: 'textFace', category: 'accessibility', type: 'select', required: true },
@@ -28,6 +32,9 @@ export const GLOBAL_SETTINGS = Object.freeze(
 const GLOBAL_SETTINGS_COPY = {
   en: {
     shared: 'All games',
+    autoNext: 'Play next level automatically',
+    autoRetry: 'Retry automatically after defeat',
+    autoReplay: 'Snake: show failure replay automatically',
     language: 'Language / Мова',
     textFace: 'Text style',
     textSize: 'Text size',
@@ -55,6 +62,9 @@ const GLOBAL_SETTINGS_COPY = {
   },
   uk: {
     shared: 'Для всіх ігор',
+    autoNext: 'Починати наступний рівень автоматично',
+    autoRetry: 'Автоматично повторювати після поразки',
+    autoReplay: 'Змійка: автоматично показувати повтор поразки',
     language: 'Language / Мова',
     textFace: 'Стиль тексту',
     textSize: 'Розмір тексту',
@@ -98,6 +108,7 @@ export function mountGlobalSettings({
   duplicates = {},
 } = {}) {
   if (!root || !panels || !doc) return null;
+  bindings = { ...continuousPlayBindings(), ...bindings };
   const previous = globalSettingsOwners.get(root);
   if (previous) return previous.update({ controls, bindings, duplicates, locale });
   const rows = new Map(),

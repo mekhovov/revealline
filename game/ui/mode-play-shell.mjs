@@ -159,8 +159,9 @@ export function wireLandingMenuNavigation({
 
 /** Move live slots, preserving IDs/listeners. No close path starts or resumes play.
  * actions.open(surface) may return false to delegate to an existing host dialog.
- * start/resume/continue/retry run only after an explicit activation, after closing
- * owned dialogs. Hosts call update({phase}) after accepting the action.
+ * start/resume/continue/retry run through activate(), after closing owned dialogs.
+ * Hosts may activate an already-authorized continuous-play transition; ordinary
+ * menu close/back/focus paths never start gameplay. Hosts update accepted phase.
  */
 export function mountModePlayShell({
   document: doc = globalThis.document,
@@ -257,6 +258,11 @@ export function mountModePlayShell({
       // that was visible at press, never turn that same Pause press into Resume.
       const phase = event.detail > 0 && pausePress ? pausePress.phase : state.phase;
       pausePress = null;
+      if (state.phase === 'results' && state.transitionActive) {
+        actions.pause?.();
+        open('results');
+        return;
+      }
       if (!['playing', 'paused'].includes(state.phase)) return;
       if (phase === 'playing') open('pause');
       else if (phase === 'paused' && state.phase === 'paused') activate('resume');
@@ -355,7 +361,7 @@ export function mountModePlayShell({
           ? activate('retry')
           : resumable()
             ? activate(state.phase === 'paused' ? 'resume' : 'continue')
-            : open('briefing'),
+            : activate('start'),
       true,
       'primary',
     ),
@@ -420,7 +426,9 @@ export function mountModePlayShell({
   }
   const briefingSummary = el('p', 'mode-play-summary');
   content.briefing.prepend(briefingSummary);
-  dialogs.missions.querySelector('footer').append(button('review', () => open('briefing'), true));
+  dialogs.missions
+    .querySelector('footer')
+    .append(button('start', () => activate('start'), true, 'mission-start'));
   if (slots.expert || actions.open)
     dialogs.missions
       .querySelector('footer')
@@ -505,7 +513,12 @@ export function mountModePlayShell({
     put(mission, 'hidden', !mission.textContent);
     put(briefingSummary, 'textContent', text(state.summary) || text(state.missionName));
     put(briefingSummary, 'hidden', !briefingSummary.textContent);
-    put(buttons.pause, 'disabled', !['playing', 'paused'].includes(state.phase));
+    put(
+      buttons.pause,
+      'disabled',
+      !['playing', 'paused'].includes(state.phase) &&
+        !(state.phase === 'results' && state.transitionActive),
+    );
     attribute(buttons.sound, 'aria-pressed', String(!state.muted));
     if (buttons['pause-sound'])
       attribute(buttons['pause-sound'], 'aria-pressed', String(!state.muted));
@@ -524,9 +537,24 @@ export function mountModePlayShell({
     focusPlay();
   }
   function activate(action) {
+    if (typeof actions[action] !== 'function' && !(action === 'continue' && actions.resume))
+      return false;
     enterPlay();
     if (!alive) return;
-    (actions[action] ?? (action === 'continue' ? actions.resume : null))?.();
+    return (actions[action] ?? (action === 'continue' ? actions.resume : null))?.();
+  }
+  function initialFocus(name, dialog) {
+    if (name === 'home') return buttons.primary;
+    if (name === 'pause') return resume;
+    if (name === 'results') {
+      const preferred = actions.resultFocus?.();
+      const usable = (node) =>
+        node && !node.disabled && !node.closest('[hidden],[inert],[aria-hidden="true"]');
+      if (usable(preferred)) return preferred;
+      const primary = [...content.results.querySelectorAll('button.primary')].find(usable);
+      return primary ?? buttons.retry;
+    }
+    return dialog.querySelector('h1');
   }
   function open(name = 'home') {
     if (!alive) return false;
@@ -553,12 +581,7 @@ export function mountModePlayShell({
     }
     if (dialog.open) {
       if (name === 'home') onSurfaceChange(name);
-      (name === 'home'
-        ? buttons.primary
-        : name === 'pause'
-          ? resume
-          : dialog.querySelector('h1')
-      ).focus({
+      initialFocus(name, dialog).focus({
         preventScroll: true,
       });
       return true;
@@ -567,12 +590,7 @@ export function mountModePlayShell({
     removeFromStack(dialog);
     stack.push(dialog);
     onSurfaceChange(name);
-    (name === 'home'
-      ? buttons.primary
-      : name === 'pause'
-        ? resume
-        : dialog.querySelector('h1')
-    ).focus({ preventScroll: true });
+    initialFocus(name, dialog).focus({ preventScroll: true });
     return true;
   }
   function back() {
@@ -614,6 +632,7 @@ export function mountModePlayShell({
     open,
     openHome: () => open('home'),
     enterPlay,
+    activate,
     back,
     update,
     topDialog,

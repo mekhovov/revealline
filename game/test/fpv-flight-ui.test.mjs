@@ -336,7 +336,11 @@ test('synthetic USB samples drive the real shell/model to one verified practice 
   assert.equal(f.view.snapshot().status, 'complete');
   assert.equal(f.doc.querySelector('[data-mode-play-shell]').dataset.phase, 'results');
   assert.equal(f.$('academy-shell-action-primary').textContent, 'Retry');
-  assert.equal(f.$('academy-shell-action-pause').disabled, true);
+  assert.equal(
+    f.$('academy-shell-action-pause').disabled,
+    false,
+    'Pause can cancel the victory transition',
+  );
   assert.equal(f.deliveries.length, 1, f.$('status').textContent);
   assert.equal(f.deliveries[0].attempt.session, 'practice');
   assert.equal(f.deliveries[0].verification.proof.session, 'practice');
@@ -480,7 +484,7 @@ test('immediate Retry preserves the completed proof while notebook verification 
   assert(f.deliveries[0].verification.summary.ticks > 0);
   assert.equal(book.snapshot().rewards.receipts.length, 1);
   assert.equal(book.snapshot().rewards.receipts[0].definition.id, 'flight-01-discovery');
-  assert.equal(f.view.snapshot().status, 'disarmed');
+  assert.equal(f.view.snapshot().status, 'active');
   assert.equal(f.view.exportAttempt().frames.length, 0);
 });
 
@@ -710,8 +714,9 @@ test('Academy exhausted unfinished playback offers Results instead of a nonfunct
   assert.equal(f.$('academy-shell-home-dialog').open, false);
   f.$('academy-shell-action-menu').click();
   f.$('academy-shell-action-primary').click();
-  assert.equal(f.$('academy-shell-briefing-dialog').open, true);
-  assert.equal(f.view.snapshot().status, 'disarmed');
+  assert.equal(f.$('academy-shell-briefing-dialog').open, false);
+  await new Promise((resolve) => setTimeout(resolve, 0));
+  assert.equal(f.view.snapshot().status, 'active');
   assert.equal(f.view.snapshot().ticks, 0);
 });
 
@@ -1325,8 +1330,7 @@ test('Academy shell keeps menu input out of native flight and requires explicit 
   assert.equal(f.view.snapshot().ticks, 0);
   f.$('academy-shell-action-settings-back').click();
   f.$('academy-shell-action-primary').click();
-  assert.equal(f.$('academy-shell-briefing-dialog').open, true);
-  f.$('academy-shell-action-start').click();
+  assert.equal(f.$('academy-shell-briefing-dialog').open, false);
   assert.equal(f.view.snapshot().status, 'active');
   f.$('academy-flight-menu').click();
   assert.equal(f.$('academy-shell-pause-dialog').open, true);
@@ -1529,4 +1533,19 @@ test('Academy flight feedback and shared menu sound retain separate sliders and 
     enabled: true,
     volume: 0.76,
   });
+});
+
+test('Academy result shortcuts choose once and launch a random prepared lesson directly', async (t) => {
+  const f = await fixture(t);
+  f.$('academy-result-missions').click();
+  assert.equal(f.$('academy-shell-missions-dialog').open, true);
+  assert.equal(f.view.snapshot().status, 'disarmed');
+  f.$('academy-result-home').click();
+  assert.equal(f.$('academy-shell-home-dialog').open, true);
+  f.$('academy-result-random').click();
+  await f.view.settled();
+  assert.equal(f.$('academy-shell-home-dialog').open, false);
+  assert.equal(f.$('academy-shell-briefing-dialog').open, false);
+  assert.equal(f.view.snapshot().status, 'active');
+  assert.equal(f.view.snapshot().ticks, 0);
 });

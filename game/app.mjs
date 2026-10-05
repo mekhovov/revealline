@@ -1,3 +1,11 @@
+import { createEnemyStatsHost } from './enemy-stats.mjs';
+import { mountEnemyStats } from './ui/enemy-stats.mjs';
+import { arcadeEnemyDefeats } from './ui/enemy-stats-events.mjs';
+import {
+  createContinuousPlayController,
+  continuousPlayPreferences,
+  mountContinuousPlayControls,
+} from './ui/continuous-play.mjs';
 import { createPauseMenu } from './ui/pause-menu.mjs';
 import { setMenuIcon } from './ui/native-menu-icons.mjs';
 import { selectedArcadeCollection } from './presentation/industrial-arcade.mjs';
@@ -1146,6 +1154,109 @@ try {
     contentSwitchBusy = false,
     backupBusy = false,
     flightDetails = null;
+  let importingEnemyStats = false,
+    flushingEnemyStats = false;
+  const enemyStatistics = createEnemyStatsHost({
+    gameType: 'solo',
+    canWrite: () =>
+      writer.writable &&
+      (persistenceReady || importingEnemyStats || flushingEnemyStats) &&
+      (!backupBusy || importingEnemyStats),
+  });
+  const restoredEnemyStatsProvenance = new WeakMap();
+  const enemyStatsReady = enemyStatistics.stats.read();
+  const enemyStatsViews = [
+    mountEnemyStats({
+      container: $('score').parentElement,
+      stats: enemyStatistics.stats,
+      gameType: 'solo',
+      getAttempt: enemyStatistics.getAttempt,
+      locale: () => getLocale(),
+      variant: 'hud',
+    }),
+    mountEnemyStats({
+      container: $('game-overlay'),
+      stats: enemyStatistics.stats,
+      gameType: 'solo',
+      getAttempt: enemyStatistics.getAttempt,
+      locale: () => getLocale(),
+      variant: 'panel',
+    }),
+  ];
+  const flowPreferences = continuousPlayPreferences();
+  const continuousPlay = createContinuousPlayController({
+    preferences: flowPreferences,
+    isCurrent: (identity) => identity === run && ['won', 'lost'].includes(run?.status),
+    isActive: () => !document.hidden && document.hasFocus() && !dialogOpen() && !defeatPaused,
+    onNext: () => $('next-button').click(),
+    onRetry: () => $('retry-button').click(),
+    onChange: (state) => {
+      if (state.phase === 'countdown' && celebrationActive) {
+        painter.skipCelebration?.();
+        enjoyCompletedPicture({ showMenu: true });
+      }
+    },
+  });
+  const flowControls = mountContinuousPlayControls({
+    parent: $('game-overlay'),
+    controller: continuousPlay,
+    locale: () => getLocale(),
+    preferences: flowPreferences,
+  });
+  const celebrationActions = document.createElement('div');
+  celebrationActions.className = 'button-row continuous-play-quick-actions';
+  celebrationActions.hidden = true;
+  for (const [target, label] of [
+    ['next-button', ['Next level', 'Наступний рівень']],
+    ['retry-button', ['Try again', 'Спробувати знову']],
+  ]) {
+    const action = document.createElement('button');
+    action.type = 'button';
+    action.className = 'button secondary';
+    localizedText(action, () => label[getLocale() === 'uk' ? 1 : 0]);
+    action.onclick = () => {
+      continuousPlay.cancel('action');
+      $(target).click();
+    };
+    celebrationActions.append(action);
+  }
+  $('skip-celebration').after(celebrationActions);
+  const resultMissionActions = document.createElement('div');
+  resultMissionActions.className = 'button-row';
+  resultMissionActions.hidden = true;
+  for (const [id, label, random] of [
+    ['result-random-level', 'interface:randomLevel', true],
+    ['result-choose-mission', 'interface:chooseMission', false],
+  ]) {
+    const button = document.createElement('button');
+    button.id = id;
+    button.type = 'button';
+    button.className = 'button secondary';
+    localizedText(button, () => t(label));
+    button.onclick = () => {
+      continuousPlay.cancel('mission-choice');
+      void openUnifiedMissions(button, { random });
+    };
+    resultMissionActions.append(button);
+  }
+  $('retry-button').after(resultMissionActions);
+
+  const cancelContinuousPlay = () => continuousPlay.cancel('interaction');
+  document.addEventListener('pointerdown', cancelContinuousPlay, true);
+  document.addEventListener('keydown', cancelContinuousPlay, true);
+  window.addEventListener('blur', cancelContinuousPlay);
+  window.addEventListener('gamepaddisconnected', cancelContinuousPlay);
+  window.addEventListener('pagehide', (event) => {
+    continuousPlay.cancel('inactive');
+    if (event.persisted) return;
+    continuousPlay.dispose();
+    flowControls.dispose();
+    enemyStatsViews.forEach((view) => view.dispose());
+    document.removeEventListener('pointerdown', cancelContinuousPlay, true);
+    document.removeEventListener('keydown', cancelContinuousPlay, true);
+    window.removeEventListener('blur', cancelContinuousPlay);
+    window.removeEventListener('gamepaddisconnected', cancelContinuousPlay);
+  });
   const worldPlayIntents = new WeakMap();
   const resultReactions = attachJourneyReactions();
   const journeyReactions = {
@@ -3205,7 +3316,14 @@ try {
     if (replayDownload) replayDownload.observed = false;
     replayFeedback?.clear();
     suspendAudio();
-    writer.release();
+    flushingEnemyStats = true;
+    void enemyStatsReady
+      .then(() => enemyStatistics.stats.flush())
+      .finally(() => {
+        flushingEnemyStats = false;
+        if (!event.persisted) enemyStatistics.close();
+        writer.release();
+      });
     flightDetails.suspend();
     flightInformation.suspend();
     persistenceReady = false;
@@ -6633,7 +6751,9 @@ try {
       ? snapshotAttempt(savedAt)
       : savedAttempt();
   }
-  function snapshotCurrentBackup(savedAt = new Date().toISOString()) {
+  async function snapshotCurrentBackup(savedAt = new Date().toISOString()) {
+    await enemyStatsReady;
+    await enemyStatistics.stats.flush();
     return externalBackup.snapshot(() => {
       if (contentSwitchBusy || sessionBusy || backupBusy)
         throw new Error(t('interface:finishThePendingContentOrSaveOperationBeforeExporting'));
@@ -6641,7 +6761,12 @@ try {
         throw new Error(t('interface:pauseTheCurrentFlightBeforePreparingGameData'));
       // Capture time belongs to this export, while all actual host contents are
       // read again after waits so resumed/replaced state cannot pass as unchanged.
-      return { library, packs, session: currentBackupSession(savedAt) };
+      return {
+        library,
+        packs,
+        session: currentBackupSession(savedAt),
+        enemyStats: enemyStatistics.stats.exportBackup(),
+      };
     });
   }
   function attemptReadbackMatches(raw, session) {
@@ -6696,7 +6821,10 @@ try {
     }
     return entry;
   }
-  async function restoreAttempt(candidate, { beforeAdopt, onAdopted, onStatus, signal } = {}) {
+  async function restoreAttempt(
+    candidate,
+    { beforeAdopt, onAdopted, onStatus, signal, statisticsProvenance = 'import' } = {},
+  ) {
     if (courseSession || courseEntry)
       throw new Error(t('interface:endFirstFlightBeforeLoadingACampaignFlight'));
     if (sessionBusy) throw new Error(t('interface:aFlightIsAlreadyBeingVerified'));
@@ -6821,6 +6949,7 @@ try {
       flightPictures = stagedPictures;
       stagedPictures = null;
       run = restored.run;
+      restoredEnemyStatsProvenance.set(run, statisticsProvenance);
       clearPlayedLevelLink();
       restoredSignalRuns.add(run);
       recorder = restored.recorder;
@@ -7008,6 +7137,7 @@ try {
           throw new Error(t('interface:theSavedFlightNeedsRecoveryOpenLibrarySavesItsBytes'));
         }
         expected = await restoreAttempt(candidate, {
+          statisticsProvenance: 'continue',
           beforeAdopt: assertCurrent,
           onAdopted: () => {
             titleFlightHold = true;
@@ -7250,12 +7380,21 @@ try {
               session: currentBackupSession('2000-01-01T00:00:00.000Z'),
               runId,
               backupMarker: profileStorage().getItem(`${libraryKey}.backup-lock`),
+              enemyStats: enemyStatistics.stats.exportBackup(),
             });
           },
-          readContents: ({ savedAt }) =>
-            externalBackup
+          readContents: async ({ savedAt }) => {
+            await enemyStatsReady;
+            await enemyStatistics.stats.flush();
+            return externalBackup
               ? snapshotCurrentBackup(savedAt)
-              : { library, packs, session: currentBackupSession(savedAt) },
+              : {
+                  library,
+                  packs,
+                  session: currentBackupSession(savedAt),
+                  enemyStats: enemyStatistics.stats.exportBackup(),
+                };
+          },
           readMetadata: async (options) => (await pictureManager.usage(options)).generations,
           readStill: (options) => pictureStore.read(options),
           readStory: (options) => storyStore.exportInventory(options),
@@ -7318,6 +7457,11 @@ try {
       return attemptFiles.prepare(options);
     },
     currentSession: () => currentBackupSession(),
+    enemyStats: async () => {
+      await enemyStatsReady;
+      await enemyStatistics.stats.flush();
+      return enemyStatistics.stats.exportBackup();
+    },
     canSnapshotBackup: () => storedStateAdopted,
     profileReplacementIdentity: () =>
       canonicalJSON({
@@ -7401,6 +7545,23 @@ try {
             throw new Error(result.warning);
           }
           committed = true;
+          if (prepared.enemyStats) {
+            importingEnemyStats = true;
+            try {
+              await enemyStatistics.stats.importBackup(prepared.enemyStats);
+            } catch (error) {
+              result.warning = [
+                result.warning,
+                getLocale() === 'uk'
+                  ? `Поступ гри відновлено; статистику ворогів не відновлено: ${error.message}`
+                  : `Game progress restored; enemy statistics could not be restored: ${error.message}`,
+              ]
+                .filter(Boolean)
+                .join(' ');
+            } finally {
+              importingEnemyStats = false;
+            }
+          }
           masteryAwards.cancelAll();
           const checked = await checkedChapters();
           for (const descriptor of checked.index?.chapters ?? [])
@@ -7703,9 +7864,9 @@ try {
     }
     winRevealAge = REWARD_BOARD_SECONDS;
     painter.skipCelebration?.();
-    enjoyCompletedPicture();
+    enjoyCompletedPicture({ showMenu: true });
   };
-  function enjoyCompletedPicture() {
+  function enjoyCompletedPicture({ showMenu = false } = {}) {
     if (run?.status !== 'won') return;
     const returnFocus =
       !dialogOpen() &&
@@ -7713,7 +7874,14 @@ try {
         document.activeElement === document.body ||
         document.activeElement === $('game-canvas'));
     celebrationActive = false;
+    celebrationActions.hidden = true;
     show('skip-celebration', false);
+    if (showMenu) {
+      overlay('won');
+      $('next-button').focus({ preventScroll: true });
+      refreshHUD();
+      return;
+    }
     show('game-overlay', false);
     show('show-result', true);
     refreshHUD();
@@ -8454,6 +8622,8 @@ try {
     );
   }
   function overlay(kind, { preserveFocus = false } = {}) {
+    resultMissionActions.hidden =
+      !['won', 'lost'].includes(kind) || !!practiceSession || !!courseSession;
     if (practiceRenderFailure.failed) return;
     pauseMenu?.setActive(kind === 'pause');
     // Repeated suspension may repaint Pause, but does not own a new focus
@@ -9965,8 +10135,6 @@ try {
     show('skip-celebration', false);
     overlay('lost');
     warning(localizedMessage('interface:flightEndedReadTheDetailsOrTryAgain'));
-    if (journeyEnabled && journeyMission() && !practice && !scenario)
-      void prepareResultAttempt('retry');
   }
   function defeatEffectsRunning() {
     return (
@@ -10518,6 +10686,7 @@ try {
       !demoHost?.active && started && !paused && run.status === 'running' && !document.hidden,
     );
     if (document.hidden || !document.hasFocus()) {
+      continuousPlay.cancel('inactive');
       if (!controllerInactive) {
         controllerInactive = true;
         clearInput();
@@ -10549,6 +10718,13 @@ try {
     soloRadioSetup.refresh();
     refreshControllerBoostCue();
     const { status, assigned, disconnected } = controllerFrame;
+    if (
+      disconnected ||
+      (controllerFrame.confirmSnapshot?.eligible && controllerFrame.confirmSnapshot.held) ||
+      Object.values(controllerFrame.ui).some(Boolean)
+    )
+      continuousPlay.cancel('controller');
+    continuousPlay.advance(elapsed * 1000);
     if (demoHost?.active) {
       const sampledFrame = controllerFrame,
         menuRoot = controllerMenuRoot(),
@@ -10707,6 +10883,14 @@ try {
             stopCourseGuidance();
           }
         stepRun(run, command, FIXED_DT);
+        const statsProvenance =
+          practice || scenario || demo || recoverGameplayTuning(run.level)?.adminOverride
+            ? 'preview'
+            : (restoredEnemyStatsProvenance.get(run) ?? 'live');
+        enemyStatistics.begin(runId, { provenance: statsProvenance });
+        const enemyDefeats = arcadeEnemyDefeats(run);
+        if (enemyDefeats.length)
+          void enemyStatistics.observe({ sequence: run.tick, defeats: enemyDefeats });
         sound.feedback(true, theme, run, {
           bodyId: flightActorLease?.pin().style === 'fpv' ? `fpv-${run.activeClassId}` : bodyId,
           actorStyle: flightActorLease?.pin().style,
@@ -10777,6 +10961,7 @@ try {
       if (!handled && ['won', 'lost'].includes(run.status)) {
         let journeyRewardFailure = null;
         handled = true;
+        enemyStatistics.finish();
         paused = true;
         clearInput();
         refreshCourse();
@@ -11007,10 +11192,23 @@ try {
           });
           winRevealAge = 0;
           celebrationActive = true;
+          celebrationActions.hidden = false;
+          const completedMission = journeyEnabled && !practice && !scenario && journeyMission();
+          const nextMission = completedMission && nextJourneyMission(completedMission.id);
+          const canAdvance =
+            !practice &&
+            !scenario &&
+            !courseSession &&
+            (completedMission
+              ? !!nextMission &&
+                nextMission.packId === completedMission.packId &&
+                nextMission.campaignId === completedMission.campaignId
+              : !authoredMissionSuccessor(activeEntry, levelIndex).atEnd);
+          continuousPlay.begin({ identity: run, outcome: 'won', canAdvance });
           show('game-overlay', false);
           show('skip-celebration', true);
           show('show-result', false);
-          $('skip-celebration').focus({ preventScroll: true });
+          celebrationActions.querySelector('button').focus({ preventScroll: true });
           warning(
             journeyRewardFailure ||
               localizedMessage('interface:pictureUnlockedAWholeWorldFromOneBraveLine'),
@@ -11021,6 +11219,13 @@ try {
           defeatActive = true;
           defeatPaused = false;
           defeatRemaining = 0.65;
+          continuousPlay.begin({
+            identity: run,
+            outcome: 'lost',
+            canRetry: !practice && !scenario && !courseSession,
+            replayMs: 0,
+            readyMs: 400,
+          });
           show('game-overlay', false);
           show('show-result', false);
           localizedText($('skip-celebration'), () => t('interface:showDefeatMenu'));
@@ -11048,7 +11253,7 @@ try {
       winRevealAge >= REWARD_BOARD_SECONDS &&
       !painter.celebrationStatus?.active
     ) {
-      enjoyCompletedPicture();
+      enjoyCompletedPicture({ showMenu: true });
     }
     sound.feedback(!paused && started, theme, run, {
       bodyId: flightActorLease?.pin().style === 'fpv' ? `fpv-${run.activeClassId}` : bodyId,
@@ -11179,7 +11384,7 @@ try {
   $('continue-saved').onclick = async () => {
     const notify = flightInformation.captureWarning('host.restore', { allowTerminal: true });
     try {
-      await restoreAttempt(savedAttempt());
+      await restoreAttempt(savedAttempt(), { statisticsProvenance: 'continue' });
       $('start-button').focus({ preventScroll: true });
     } catch (error) {
       if (error.name === 'AbortError') return;
@@ -11314,6 +11519,8 @@ try {
     }
   };
   $('retry-button').onclick = () => {
+    continuousPlay.cancel('retry');
+    celebrationActions.hidden = true;
     if (defeatActive || courseBlocked()) return;
     if (!practice && !scenario && !courseSession && ['won', 'lost'].includes(run?.status)) {
       void prepareResultAttempt('retry');
@@ -11328,6 +11535,7 @@ try {
     }
   };
   $('view-picture').onclick = () => {
+    continuousPlay.cancel('picture');
     if (run.status !== 'won') return;
     cancelResultAttempt();
     enjoyCompletedPicture();
@@ -11342,6 +11550,8 @@ try {
     }
   };
   $('next-button').onclick = () => {
+    continuousPlay.cancel('next');
+    celebrationActions.hidden = true;
     if (courseBlocked()) return;
     if (courseSession) {
       nextCourseLesson();
@@ -11474,6 +11684,21 @@ try {
     collectionContextKey = $('collection-context').value;
     paintCollectionProgress(entry);
   };
+  const statsCollectionHost = document.createElement('div');
+  $('collection-dialog').insertBefore(
+    statsCollectionHost,
+    $('collection-dialog').children[1] ?? null,
+  );
+  enemyStatsViews.push(
+    mountEnemyStats({
+      container: statsCollectionHost,
+      stats: enemyStatistics.stats,
+      gameType: 'solo',
+      getAttempt: enemyStatistics.getAttempt,
+      locale: () => getLocale(),
+      variant: 'collection',
+    }),
+  );
   const journeyCollection = attachJourneyCollection({
     document,
     onPictureReady: (record) => editionUI?.pictureReady(record),
@@ -11483,6 +11708,9 @@ try {
     },
   });
   $('collection-button').onclick = () => {
+    continuousPlay.cancel('collection');
+    void enemyStatistics.stats.read();
+    enemyStatsViews.forEach((view) => view.refresh());
     if (courseSession || courseEntry) return;
     const opener = document.activeElement;
     storyDialog.close();
@@ -13508,6 +13736,13 @@ try {
     const target = controllerFocus();
     if (availableFocusTarget(target)) target.focus({ preventScroll: true });
   }
+  if (
+    params.get('panel') === 'collection' &&
+    !practiceSession &&
+    !courseSession &&
+    !document.hidden
+  )
+    $('collection-button').click();
   startupEditionWriter = null;
 } catch (error) {
   stopStartupEditionLocalization();
