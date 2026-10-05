@@ -1,0 +1,22 @@
+{
+  "date": "2026-10-05",
+  "url": "http://localhost:8887/game/studio/raid.html",
+  "projectIdentity": "b026c392dbae153f",
+  "packageIdentity": "239d7354b9981cf9",
+  "title": "Raid \u00b7 Creator review",
+  "firstLeaderRouteX": 415,
+  "verified": [
+    "Edited the title and moved a route point with the keyboard: X=405 to X=415.",
+    "Saved the draft and loaded it after reloading the page.",
+    "Native preview accepted the authored title and started with the Raid HUD, 100 hull and seven objectives.",
+    "Installed the package and launched raid.html?community=239d7354b9981cf9; native Start reached gameplay.",
+    "Prepared an export with a persistent download link.",
+    "Replaced the draft with a preset, imported an equivalent local package using the browser file chooser, restored the title and route X=415, and received native preview acceptance.",
+    "Canonical exporter/importer package identity exactly matches the browser installation identity."
+  ],
+  "limitations": [
+    "The in-app browser download event and link.downloadMedia each timed out after five seconds; the actual downloaded file is unverified. The import fixture was built from the observed project source and exact resource closure, not claimed as browser-downloaded bytes.",
+    "Browser console output contains a MutationObserver.observe target-not-Node error without a source URL; its origin was not identified. This receipt does not claim zero console errors.",
+    "These are functional smoke results, not human usability or hardware performance qualification."
+  ]
+}
