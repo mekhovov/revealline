@@ -30,9 +30,8 @@ import {
   recoverWorldFlight,
   validateWorldCourse,
   worldCourseRequiresAcro,
-  WORLD_FLIGHT_MODEL,
+  worldFlightIdentity,
 } from './world-model.mjs';
-import { WORLD_COLLISION_BACKEND } from './world-collision.mjs';
 import { mountBeginnerCoach } from './beginner-coach.mjs';
 import {
   createFlightInput,
@@ -933,7 +932,23 @@ export function mountWorldApp({
       cacheKey = `${entry.projectId ?? ''}:${entry.packIdentity}:${mode}`;
     if (cache.has(cacheKey)) return cache.get(cacheKey);
     if (!entry.legacy) {
-      const sourceIdentity = dataIdentity(validateWorldCourse(entry.course));
+      const source = validateWorldCourse(entry.course),
+        sourceIdentity = dataIdentity(source);
+      const matchesRuntime = (proof) => {
+        try {
+          return (
+            proof?.format ===
+              (source.format === 'FlightCourse.v3' ? 'FlightAttempt.v3' : 'FlightAttempt.v2') &&
+            proof.session === 'demonstration' &&
+            proof.responseIdentity === responseIdentity(proof.response) &&
+            Object.entries(
+              worldFlightIdentity({ course: source, mode, response: proof.response }),
+            ).every(([key, value]) => proof[key] === value)
+          );
+        } catch {
+          return false;
+        }
+      };
       let candidate =
         !entry.projectId &&
         WORLD_DEMONSTRATIONS.find(
@@ -956,10 +971,7 @@ export function mountWorldApp({
           try {
             return (
               dataIdentity(validateWorldCourse(r.course)) === sourceIdentity &&
-              r.proof.format === 'FlightAttempt.v2' &&
-              r.proof.model === WORLD_FLIGHT_MODEL &&
-              r.proof.backend === WORLD_COLLISION_BACKEND &&
-              r.proof.responseIdentity === responseIdentity(r.proof.response)
+              matchesRuntime(r.proof)
             );
           } catch {
             return false;
@@ -970,16 +982,10 @@ export function mountWorldApp({
       const proof = candidate?.proof;
       // Catalogue availability must not initialize a physics world. The full
       // normalized source fingerprint binds this data to the exact revision;
-      // replayWorldFlight checks every v2 identity and final state before play.
+      // the shared resolver checks the exact runtime contract without physics;
+      // replayWorldFlight verifies the final state before play.
       const match =
-        ['FlightAttempt.v2', 'FlightAttempt.v3'].includes(proof?.format) &&
-        proof.session === 'demonstration' &&
-        proof.model === WORLD_FLIGHT_MODEL &&
-        proof.backend === WORLD_COLLISION_BACKEND &&
-        proof.responseIdentity === responseIdentity(proof.response) &&
-        candidate.sourceIdentity === sourceIdentity
-          ? proof
-          : null;
+        matchesRuntime(proof) && candidate.sourceIdentity === sourceIdentity ? proof : null;
       cache.set(cacheKey, match);
       demonstrationCache.set(entry.course, cache);
       return match;
