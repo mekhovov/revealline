@@ -1,5 +1,21 @@
 # Optional ground movement correction
 
+The current integrated runtime is `c888632ecefe7b3846ef19d16a693eb060a91fc3`,
+based on P1 main `e03fdbb5cd73176a01df49347fbe9eab722f1882`. It retains P1's
+V3 pursuit, appearance, offline lifecycle and package policy. The only additional
+integration change makes pursuit admission cache its native clearance checks by
+movement policy as well as body shape. Absent-policy keys stay unchanged.
+
+The [P1 integration receipt](evidence/integration-p1/README.md) records the source
+merge, preserved identities and recordings, and bounded mixed-policy checks.
+This source is **not yet covered by fresh package or native browser admission**.
+The P1 policy has 105 Worlds source inputs and allows 128 files / 20 MiB; the
+source-only integrated inventory is 16,981,627 bytes, leaving 3,989,893 bytes.
+No package policy was edited by this feature. Earlier receipts below retain
+their original revision, 95-input inventory and 102-member player identities.
+
+## Historical pre-P1 admission
+
 Runtime `9b5c3d65e2877847126c87f263fbc7e9aca357fb` adds explicit
 `groundMotion: "support-v1"` for patrol, sentry and vehicle actors. Existing
 courses retain the absent field, original movement branch, identities and
@@ -21,7 +37,7 @@ inventories, checksums, successful logs and earlier sparse-prerequisite failures
 Those failures were corrected by restoring verified Git blobs/APFS clones; no
 runtime, validation or package guard changed.
 
-## Current evidence
+## Original qualification receipts
 
 | Evidence                       | Result and limit                                                                                                                                                                                                                                                                                                                                                                                                                       |
 | ------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -102,4 +118,6 @@ offline journey remains separate from the old-cache result above.
 
 Both existing Library feeds stay unchanged. A later Harbor listing requires its own compatible cohort and
 qualified content; it cannot be added to an older surface-only feed. Publication
-must remain a Draft under the current human main-merge hold.
+remains a Draft until the integrated prerequisite qualifies. The earlier human
+main-merge hold has been explicitly released; that does not qualify the changed
+P1 runtime or replace the pending integrated package/browser checks.

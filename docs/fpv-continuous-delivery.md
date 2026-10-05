@@ -3414,3 +3414,51 @@ guarantee. The bounded 12-actor CPU observation records the added correction cos
 it establishes no browser FPS or hardware-performance claim. Full regression and
 new unit coverage remain D6, with physical-device and novice qualification still
 unclaimed.
+
+### 5 October — Ground prerequisite integrated with P1; new admission pending
+
+The Character owner explicitly released the former #1083/P1 main-merge hold
+after public e03 verification. Reservoir's first Library row #1094 subsequently
+merged as `00770c96eb8eab8d0aedda433d115f86188d5a75`; that follow-up is data-only.
+Ground #1101 and its Harbor native stack #1103 remain Draft while the changed
+P1 runtime is integrated and qualified. Historical held-state checkpoints above
+are preserved as records, not current publication instructions. Integrated
+reliability #1096 was already complete before this new prerequisite.
+
+The ground branch preserves published f961 in recovery ref
+`codex/fpv-ground-motion-before-p1-e03` and rebases its focused changes onto
+`e03fdbb5cd73176a01df49347fbe9eab722f1882`. Frozen integrated runtime
+`c888632ecefe7b3846ef19d16a693eb060a91fc3` retains P1's V3 pursuit, appearance,
+offline lifecycle and package policy. A real native-query observation found
+that pursuit admission's body-shape cache skipped a second, distinct movement
+policy. The only integration-specific adjustment appends an optional policy
+suffix; absent-policy keys, decisions and movement remain unchanged.
+
+Thirty-five existing native pursuit/editor/successor/completion checks pass.
+The bounded manual comparison passes 1,074 controls: 192 V2/V3 normalized,
+exported and compiled courses, 22 paired 150-tick flights, all 16 retained
+Festival r5 recordings and all 16 Harbor r4 recordings with exact completed
+identities. The other 12 catalogue entries are FlightCourse.v1 and outside
+the World-validator loop. The established ten retained legacy recordings also
+pass, overlapping four Festival records. Eight synthetic mixed-policy V3
+partial-practice recordings replay exactly and reject policy removal. The
+initial manual error-message expectation failure is retained; production did
+not change for that fixture correction. See the
+[P1 integration archive](../authoring/fpv-worlds/ground-motion/evidence/integration-p1/README.md).
+
+P1 changed the actual dependency closure and existing policy. The new committed
+source inventory has 105 Worlds inputs, 16,981,627 raw bytes and 3,989,893 bytes
+of reserve under its inherited 128-file / 20 MiB ceiling; this feature does not
+edit those limits. Historical ca284 admission and native 8981 remain precisely
+95-input / 102-member evidence. Fresh integrated validation, package admission,
+native browser and populated-storage/offline qualification remain pending and
+must use the new actual manifests. Source integration may be published as a
+Draft while storage recovery blocks those gates; no admission or readiness
+claim is inferred from the source checks.
+
+Root will cascade the preserved Harbor data/evidence onto this parent and
+coordinate explicit branch leases. No push, merge, admission or new unit suite
+was performed by this integration handoff. Harbor's recorded content checks
+remain separate from the upcoming compatible Library cohort. Canals proceeds
+through its first scene checkpoint before complete routes; broader regression,
+physical-device and novice gates remain D6.
