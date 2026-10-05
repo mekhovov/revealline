@@ -1,0 +1,226 @@
+{
+  "format": "FPVLosslessManualEvidence.v1",
+  "archive": {
+    "file": "retained-artifacts.zip",
+    "bytes": 624044,
+    "sha256": "d52fbd8664841b47287cb0aedcb4a1ceb68b8ede1572f2a54b021536b8e8559e"
+  },
+  "files": [
+    {
+      "path": "receipts/fpv-stick-geometry-8968-r1-failed.json",
+      "bytes": 220657,
+      "sha256": "ee36e94fd1f6b5f63b6ff9accacc69d26bbaa59cd9421427548be5d1d9b27a89"
+    },
+    {
+      "path": "receipts/fpv-stick-geometry-8968-r1-failed.png",
+      "bytes": 22852,
+      "sha256": "5056c2454808fd7ab336f70c93295c810f5f3bcc70b24ed6ff364b67c2418e2d"
+    },
+    {
+      "path": "receipts/fpv-stick-geometry-8969-r2-failed.json",
+      "bytes": 419304,
+      "sha256": "0894451d335416c3d61bb7218f8f7ca38e4dd8e01d7db760439483a136008b82"
+    },
+    {
+      "path": "receipts/fpv-stick-geometry-8969-r2-failed.png",
+      "bytes": 109113,
+      "sha256": "338c81f632d570abbf3795bc68b970fed906bf65102a9a4c6b2db8f233b215b9"
+    },
+    {
+      "path": "receipts/fpv-stick-geometry-8970-r3-failed-summary.json",
+      "bytes": 7350,
+      "sha256": "32f76932f2de3691f8a4b0023755068205cc6084eaeca85f5caee14a92435567"
+    },
+    {
+      "path": "receipts/fpv-stick-geometry-8970-r3-failed.json",
+      "bytes": 439673,
+      "sha256": "f347f4a43be38efc4106b02b3b05f362afd79109ba60c004b1bac6a6a8d5e9f7"
+    },
+    {
+      "path": "receipts/fpv-stick-geometry-8970-r3-failed.png",
+      "bytes": 24358,
+      "sha256": "922569625bc72e93175f7b58b58cff9cb21c7969bea47b77cea3462fe9b7a3f0"
+    },
+    {
+      "path": "receipts/fpv-stick-geometry-8975-r4-fullscreen.png",
+      "bytes": 60779,
+      "sha256": "989a3cacf696f3695609086808a5f577265dcb949a12868b1a4f246d464e4e1a"
+    },
+    {
+      "path": "receipts/fpv-stick-geometry-8975-r4-passed.json",
+      "bytes": 686570,
+      "sha256": "c0c3dbcc90e1f5692c77d1f2506613ed502f85c621149dd91577e33c1d3feb9d"
+    },
+    {
+      "path": "receipts/fpv-stick-geometry-8975-r4-passed.png",
+      "bytes": 9189,
+      "sha256": "03c883d1dc50268eb3b7b5406ba55233381a4198c78dcbbe7f98daee4fb26f95"
+    },
+    {
+      "path": "receipts/fpv-stick-geometry-8975-r4-summary.json",
+      "bytes": 11252,
+      "sha256": "37a9ed8bc9824eaeaa594a901bd97e1e94e322279a04c009cb4109d2ccd9078a"
+    },
+    {
+      "path": "receipts/fpv-stick-timing-8970-failed-summary.json",
+      "bytes": 14818,
+      "sha256": "e0b068f0a7fef039304c1892d5072d520ed76a89283b429be5f17abe445f02cb"
+    },
+    {
+      "path": "receipts/fpv-stick-timing-8970-failed.json",
+      "bytes": 181274,
+      "sha256": "d9cb3d728d3b96be573b66d1548c27ac788fa58c110eb5c9d4945214f316506b"
+    },
+    {
+      "path": "receipts/fpv-stick-timing-8970-failed.png",
+      "bytes": 183407,
+      "sha256": "f34a6e355bd07c344182dc25b480b8ab7f31471ad77811a419bcce0d399607ce"
+    },
+    {
+      "path": "receipts/fpv-stick-timing-8975-r4-passed.json",
+      "bytes": 254559,
+      "sha256": "7eb21ee2c593e685e7914cb9ea0a8ba52fd2ccba076c7f7f63e3d63acba6eca0"
+    },
+    {
+      "path": "receipts/fpv-stick-timing-8975-r4-passed.png",
+      "bytes": 9958,
+      "sha256": "9e4e504796ec50679ac4360eb51dc25ba2f157c992cf292d7623b6fc2b22d330"
+    },
+    {
+      "path": "receipts/fpv-stick-timing-8975-r4-summary.json",
+      "bytes": 26575,
+      "sha256": "e5b33007995b4aa896ffc055db55c520a66ad56f452d7c73b1318b073d05527f"
+    },
+    {
+      "path": "receipts/fpv-stick-geometry-functions-34dd-r1.json",
+      "bytes": 251560,
+      "sha256": "d970173efb152e098b5cdd4780704c0f726a422b99d2b3a084fdedeea64a5ab9"
+    },
+    {
+      "path": "receipts/fpv-stick-fullscreen-r3-assertion-audit.json",
+      "bytes": 1036,
+      "sha256": "f46e66e34d247ecce350430c95ca98f6705d731a27d654cc994d37fc4d9d631e"
+    },
+    {
+      "path": "fixtures/r1/fixture.json",
+      "bytes": 98655,
+      "sha256": "b0c7e6944354de15a12175c871b70d041c237b85215ec398c0a05f532d11629b"
+    },
+    {
+      "path": "fixtures/r1/functional.mjs",
+      "bytes": 17289,
+      "sha256": "548e04819fe726e5cf8ec6866e9928a21dd0bc3b0da8935a016af147405087bf"
+    },
+    {
+      "path": "fixtures/r1/timing.mjs",
+      "bytes": 16718,
+      "sha256": "2f083cb0f86fd50aab281804e8c8ac4748ec0d10f66689afc35e9d1d7b0b44c0"
+    },
+    {
+      "path": "fixtures/r1/baseline/probe-host.mjs",
+      "bytes": 16639,
+      "sha256": "f8f08c013ba59072904d3968f3ef8212840fbfa22b7b870dac390929182d6248"
+    },
+    {
+      "path": "fixtures/r1/index.html",
+      "bytes": 957,
+      "sha256": "1de4ab78f27f4a457f3d06eff4d853c5684d8ec1f1daf28c0024c549c76d5432"
+    },
+    {
+      "path": "fixtures/r1/timing.html",
+      "bytes": 952,
+      "sha256": "cfd3727ff9814f7e419589722777c0fa910feb97a9ec19300c08b3f7943e9eaf"
+    },
+    {
+      "path": "fixtures/r2/fixture.json",
+      "bytes": 98655,
+      "sha256": "dc6ef0f05e1fa00dabe68a7f9fbec6f36b5f6da9b911f66b042d8efbcbd6d077"
+    },
+    {
+      "path": "fixtures/r2/functional.mjs",
+      "bytes": 17289,
+      "sha256": "548e04819fe726e5cf8ec6866e9928a21dd0bc3b0da8935a016af147405087bf"
+    },
+    {
+      "path": "fixtures/r2/timing.mjs",
+      "bytes": 16718,
+      "sha256": "2f083cb0f86fd50aab281804e8c8ac4748ec0d10f66689afc35e9d1d7b0b44c0"
+    },
+    {
+      "path": "fixtures/r2/baseline/probe-host.mjs",
+      "bytes": 16686,
+      "sha256": "5449339ccce953df4a8c352384293d585854860435ad8f8f854ea37c7ac8ca6e"
+    },
+    {
+      "path": "fixtures/r2/index.html",
+      "bytes": 957,
+      "sha256": "1de4ab78f27f4a457f3d06eff4d853c5684d8ec1f1daf28c0024c549c76d5432"
+    },
+    {
+      "path": "fixtures/r2/timing.html",
+      "bytes": 952,
+      "sha256": "cfd3727ff9814f7e419589722777c0fa910feb97a9ec19300c08b3f7943e9eaf"
+    },
+    {
+      "path": "fixtures/r3/fixture.json",
+      "bytes": 98655,
+      "sha256": "d72286c2d0ba9249bc0dc8239ff057b1290a2117195130decf77a83b166c7b9d"
+    },
+    {
+      "path": "fixtures/r3/functional.mjs",
+      "bytes": 18868,
+      "sha256": "0fb0a663859f3914eda695728231797cea8da60a0dbcd0c92e8d6dea47999958"
+    },
+    {
+      "path": "fixtures/r3/timing.mjs",
+      "bytes": 16718,
+      "sha256": "2f083cb0f86fd50aab281804e8c8ac4748ec0d10f66689afc35e9d1d7b0b44c0"
+    },
+    {
+      "path": "fixtures/r3/baseline/probe-host.mjs",
+      "bytes": 17831,
+      "sha256": "d0272881b008836af8bc65c9edb0ea4a5c62f9b54f18f6c7249be86cb2819136"
+    },
+    {
+      "path": "fixtures/r3/index.html",
+      "bytes": 957,
+      "sha256": "1de4ab78f27f4a457f3d06eff4d853c5684d8ec1f1daf28c0024c549c76d5432"
+    },
+    {
+      "path": "fixtures/r3/timing.html",
+      "bytes": 952,
+      "sha256": "cfd3727ff9814f7e419589722777c0fa910feb97a9ec19300c08b3f7943e9eaf"
+    },
+    {
+      "path": "fixtures/r4/fixture.json",
+      "bytes": 98655,
+      "sha256": "373878bafd9bf69d80195229c2e384b39f81bcb0f9ad73457129ed359f42a0ef"
+    },
+    {
+      "path": "fixtures/r4/functional.mjs",
+      "bytes": 18927,
+      "sha256": "86c834ec29b8b0086d8dfe22b136d3e30eaa54a859ab57f1e7c3d5f5f5b5062c"
+    },
+    {
+      "path": "fixtures/r4/timing.mjs",
+      "bytes": 16854,
+      "sha256": "6243e3067bef8a0397ef91807bd8e63ecec089121195fbba2a2b318853b52838"
+    },
+    {
+      "path": "fixtures/r4/baseline/probe-host.mjs",
+      "bytes": 19083,
+      "sha256": "dc66c784f05f6b54e8003267bca57895c10ee4ba1bc228c7be0f5594cfec1341"
+    },
+    {
+      "path": "fixtures/r4/index.html",
+      "bytes": 957,
+      "sha256": "1de4ab78f27f4a457f3d06eff4d853c5684d8ec1f1daf28c0024c549c76d5432"
+    },
+    {
+      "path": "fixtures/r4/timing.html",
+      "bytes": 952,
+      "sha256": "cfd3727ff9814f7e419589722777c0fa910feb97a9ec19300c08b3f7943e9eaf"
+    }
+  ],
+  "roundtripVerified": true
+}
