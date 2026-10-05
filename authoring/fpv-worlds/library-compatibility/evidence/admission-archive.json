@@ -1,0 +1,152 @@
+{
+  "format": "FPVLibraryCompatibilityAdmissionArchive.v1",
+  "sourceRevision": "4eeb7bc4480acc1f82f07d436401283ea80cfd04",
+  "files": [
+    {
+      "path": "admission.json.gz",
+      "originalPath": "/private/tmp/fpv-library-compat-admission-4eeb7bc44/optional-candidate-verification.json",
+      "originalBytes": 1142,
+      "originalSha256": "31097f67a8e38061d67dbe822e9cf7bfa4f84aebc54734ab308a5c5bd657e00b",
+      "archiveBytes": 611,
+      "archiveSha256": "98698a6028107172a5e00eaa61c4f8549f042de38d83301a36c68239598b8f0e"
+    },
+    {
+      "path": "admission-review.json.gz",
+      "originalPath": "/private/tmp/fpv-library-compat-admission-4eeb7bc44/optional-package-review.json",
+      "originalBytes": 2838,
+      "originalSha256": "5e565945843966d2ee444490bd8eace9f2d391993b1f66123e987945ec489764",
+      "archiveBytes": 459,
+      "archiveSha256": "7f191e897b302946ea875255d9b23d0cff94612220e921f895babcfcca318858"
+    },
+    {
+      "path": "admission-envelope.json.gz",
+      "originalPath": "/private/tmp/fpv-library-compat-admission-4eeb7bc44/optional-packages.json",
+      "originalBytes": 2633,
+      "originalSha256": "f31be7d5c6ff73384f105816bd00dbac61ce70330c23ca7d488c7c8614b7a3af",
+      "archiveBytes": 1076,
+      "archiveSha256": "456772a1c14d1f52267b94cdb586e9634ecc7360618b70d01b4f8190e90028b0"
+    },
+    {
+      "path": "admission-checksums.json.gz",
+      "originalPath": "/private/tmp/fpv-library-compat-admission-4eeb7bc44/optional-checksums.json",
+      "originalBytes": 2136,
+      "originalSha256": "d2a98db745cf86706999a20cfac507f119abf1cf63880095e22f32f9a5835c58",
+      "archiveBytes": 920,
+      "archiveSha256": "88ba24965598f5a589cbbf2ca2d169e15e8baceef6d8a94a1129787ae248508d"
+    },
+    {
+      "path": "admitted-player.json.gz",
+      "originalPath": "/private/tmp/fpv-library-compat-admitted-player-4eeb7bc44.json",
+      "originalBytes": 43125,
+      "originalSha256": "1ba3823d4911e565cdb859e166f9b4d36181abe3bf46499da5987f3b2cebd1e5",
+      "archiveBytes": 7441,
+      "archiveSha256": "a276853bd3501e3a2b217004c3a470a6d9da1cd7d561755e8fe63f0d0951a6ac"
+    },
+    {
+      "path": "worlds-input-inventory.json.gz",
+      "originalPath": "/private/tmp/fpv-library-compat-admission-4eeb7bc44/source-inventory-optional-fpv-worlds.json",
+      "originalBytes": 32166,
+      "originalSha256": "d59fe1af46dcd5ea66a5e8ce2656978d4e2f3b977ac9c886c5dcf3332e5c0dc2",
+      "archiveBytes": 7144,
+      "archiveSha256": "f78b39db2bd9b04631b74e7bd4744c4b8cc135cb276ba14b3233233356aa8333"
+    },
+    {
+      "path": "validation.log.gz",
+      "originalPath": "/tmp/fpv-library-compat-validate-4ee-r2.log",
+      "originalBytes": 3676,
+      "originalSha256": "31402988a94f83b18b55d31575a4fb00f8b7cf5191f6a0614effcf2070f8890f",
+      "archiveBytes": 1535,
+      "archiveSha256": "aadb80cdef43e2ddd81befb7b4da33674d9af044edc81018fed178ce9d8d3f6d"
+    },
+    {
+      "path": "existing-checks.log.gz",
+      "originalPath": "/tmp/fpv-library-compat-existing-4ee-r2.log",
+      "originalBytes": 6022,
+      "originalSha256": "bbfe5060cb685d33ecefe113e45fa1e4a88196ab31db78273cb245b565e54fa8",
+      "archiveBytes": 1556,
+      "archiveSha256": "8888bfd3bee6b838d5d8726d8d09ea168244256b90d2805b9cf7e4ff5563d4ae"
+    },
+    {
+      "path": "admission.log.gz",
+      "originalPath": "/tmp/fpv-library-compat-admission-4ee-r2.log",
+      "originalBytes": 421,
+      "originalSha256": "f345f986a4a5513273db38efde2ee243944a0d272a4d417c05201c895f5f9476",
+      "archiveBytes": 287,
+      "archiveSha256": "ad048da54eb004e49f9b1630eb604e458bfb86748a0c704edf39c6d00f394091"
+    },
+    {
+      "path": "initial-sparse-validation-failure.log.gz",
+      "originalPath": "/tmp/fpv-library-compat-validate-4ee.log",
+      "originalBytes": 1311,
+      "originalSha256": "f68cad8d615c2a9cdeef083036e3ba0db895b83f4414fd403dc37d2310d55379",
+      "archiveBytes": 568,
+      "archiveSha256": "3203ceab52dd52791a1a150318f41601084827be59e70c00ae570dd81bc10275"
+    },
+    {
+      "path": "initial-missing-authoring-dependency.log.gz",
+      "originalPath": "/tmp/fpv-library-compat-existing-4ee.log",
+      "originalBytes": 3096,
+      "originalSha256": "6b12854b9ae730fd54667e5d4f112e298b6db6575629ec39a2cbf8f8c8bed360",
+      "archiveBytes": 740,
+      "archiveSha256": "c0ca0ff2b04cb8f59ffd89859958e811b168b76df0d5fb36fe024ba5305bfb4e"
+    },
+    {
+      "path": "initial-sparse-admission-failure.log.gz",
+      "originalPath": "/tmp/fpv-library-compat-admission-4ee.log",
+      "originalBytes": 987,
+      "originalSha256": "3736b3d65595e92466551667f9a85902f1bd37edd7257a1f2ba18f77bd7e696d",
+      "archiveBytes": 399,
+      "archiveSha256": "a644050e0ef2f2eaa272a3239268aa9d486fce7f8eb96dc89c63eb5c79dba06e"
+    },
+    {
+      "path": "validation-materialization-r1.json.gz",
+      "originalPath": "/tmp/fpv-library-compat-materialization-4ee.json",
+      "originalBytes": 324,
+      "originalSha256": "a1590619402b17ffb5398c23783405c93925e0a58528a600e05c849270c8cafc",
+      "archiveBytes": 239,
+      "archiveSha256": "0e1e7943252d13486e6c1a36bc2f8f76598ff972f704d2d200b219d7606d9c47"
+    },
+    {
+      "path": "validation-materialization-r2.json.gz",
+      "originalPath": "/tmp/fpv-library-compat-materialization-4ee-r2.json",
+      "originalBytes": 325,
+      "originalSha256": "366464813488fd536d7d7bb97bfa2115042de54a5a673165d5b00ef180ec9053",
+      "archiveBytes": 241,
+      "archiveSha256": "28f4c6c0ea886817f41c9db6e054beb79c3b1ad61ce8f249feeb451fb643da12"
+    },
+    {
+      "path": "validation-materialization-r3.json.gz",
+      "originalPath": "/tmp/fpv-library-compat-materialization-4ee-r3.json",
+      "originalBytes": 321,
+      "originalSha256": "7f405457d291a29d1b6706fc9c309ba6bed505685406aab89de3cd53ea5fe5e4",
+      "archiveBytes": 236,
+      "archiveSha256": "ffd7d272142629ff9c15de0c76c1d882fcd2f1443a14facf07a9fa914bbf7fef"
+    },
+    {
+      "path": "immutable-stager.mjs.gz",
+      "originalPath": "/tmp/stage-fpv-library-compat-admitted-4ee.mjs",
+      "originalBytes": 4820,
+      "originalSha256": "1f9730dec8e517fab16cd76eebdf4e1f83d9015c24ee36769b1f62a21f5911f2",
+      "archiveBytes": 1841,
+      "archiveSha256": "ca06fde84efc6bd25845f5493d6378b802ce0fefb843f188a5edf8f2df4ddb4f"
+    },
+    {
+      "path": "validation-materializer.mjs.gz",
+      "originalPath": "/tmp/fpv-library-compat-materialize-r3.mjs",
+      "originalBytes": 3513,
+      "originalSha256": "e7ed366a49fcead1e2d3d36a24d625aef088c8501f3bb83e78c5fd77c6899c19",
+      "archiveBytes": 1651,
+      "archiveSha256": "f5117f03f91d16ea0080499529df7889729e735dc4553bb79008c4dad51ce9db"
+    }
+  ],
+  "checks": {
+    "fullValidate": "PASS",
+    "existingTests": 24,
+    "scopedESLint": "PASS",
+    "diffCheck": "PASS",
+    "allThreePackages": "PASS",
+    "identicalBuilds": 2,
+    "stagedMemberChecks": 223
+  },
+  "initialFailures": "Sparse helper and authoring dependency prerequisites only; originals retained. No failed runtime assertion or weakened check."
+}

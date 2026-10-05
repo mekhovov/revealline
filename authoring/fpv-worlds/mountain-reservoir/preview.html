@@ -2,6 +2,16 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Mountain Reservoir · scene review</title>
+<script
+  src="../../../game/presentation/theme-bootstrap.mjs"
+  data-theme-density="studio"
+  data-theme-follow-context="true"
+></script>
+<link
+  rel="stylesheet"
+  href="../../../game/presentation/industrial-workshop.css"
+  data-industrial-workshop
+/>
 <style>
   body {
     background: #142128;
@@ -51,6 +61,25 @@
 <label
   >View
   <select id="pose">
+    <option value="hutfront">Maintenance hut · front stencil and closed door</option>
+    <option value="huteast">Maintenance hut · aligned closed panes</option>
+    <option value="hutgrazing">Maintenance hut · grazing east face</option>
+    <option value="hutroof">Maintenance hut · roof landing approach</option>
+    <option value="rootclose">Tree 6 foot · steep bank close FPV</option>
+    <option value="rootcluster">Eastern trees · cluster chase</option>
+    <option value="terraceclose">Cut-rock face · 3m FPV</option>
+    <option value="terracegrazing">Cut-rock face · grazing</option>
+    <option value="terraceapproach">Terrace composition · approach</option>
+    <option value="terracelanding">Upper terrace · landing approach</option>
+    <option value="terracechase">Terraces · racer chase</option>
+    <option value="northface">North shoulder · close view</option>
+    <option value="grassclose">Grass · close FPV</option>
+    <option value="gravelclose">Gravel/grass boundary · close FPV</option>
+    <option value="groundapproach">Ground and hut · approach</option>
+    <option value="groundchase">Ground scale · racer chase</option>
+    <option value="westjoin">Western terrace join · low FPV</option>
+    <option value="northjoin">Northern terrace join · low FPV</option>
+    <option value="westgrazing">Western join · grazing angle</option>
     <option value="shore">Shore approach · 5m height</option>
     <option value="hut">Closed hut · 4m distance</option>
     <option value="rock">Terrace material · 5m distance</option>
@@ -89,7 +118,15 @@
     <option value="industrial-workshop">Shared industrial</option>
   </select></label
 >
+<label id="variant-label" hidden
+  >Scene
+  <select id="variant">
+    <option value="after">After · new candidate</option>
+    <option value="before">Before · published r8</option>
+  </select></label
+>
 <button id="render" disabled>Render selected view</button>
+<button id="dispose" disabled>Verify resource disposal</button>
 <p id="status" role="status">Checking immutable inputs…</p>
 <canvas id="view"></canvas>
 <small
@@ -113,8 +150,88 @@
     if (!r.ok) throw Error('HTTP ' + r.status + ' ' + url);
     return r.arrayBuffer();
   };
-  let renderer, project, sceneBytes, manifest;
+  let renderer,
+    project,
+    sceneBytes,
+    manifest,
+    disposal = null;
   const poses = {
+    hutfront: [
+      [-22, 2.4, -5.5],
+      [-22, 2.15, -10.95],
+    ],
+    huteast: [
+      [-12.4, 2.3, -15],
+      [-17.95, 2.1, -15],
+    ],
+    hutgrazing: [
+      [-16.9, 2.1, -7.8],
+      [-17.95, 1.7, -16.9],
+    ],
+    hutroof: [
+      [-15, 7, -7],
+      [-22, 4.45, -15],
+    ],
+    rootclose: [
+      [57.2, 18.1, 16.05],
+      [59.931, 18.05, 14.857],
+    ],
+    rootcluster: [
+      [52, 24, 25],
+      [58, 17, 16],
+    ],
+    terraceclose: [
+      [-28.132, 1.6, 2.382],
+      [-31, 1.35, 1.5],
+    ],
+    terracegrazing: [
+      [-31.55, 1.6, 6],
+      [-30.7, 1.4, 0.5],
+    ],
+    terraceapproach: [
+      [-25.5, 7.5, 8],
+      [-37, 4.5, -8],
+    ],
+    terracelanding: [
+      [-33, 11.5, -7],
+      [-41, 8.5, -10],
+    ],
+    terracechase: [
+      [-30, 9.5, -3],
+      [-40, 5.8, -9],
+    ],
+    northface: [
+      [-16.5, 2.2, -21.5],
+      [-17.5, 2, -24.05],
+    ],
+    grassclose: [
+      [-13, 1.7, 16],
+      [-11.5, 0.01, 14],
+    ],
+    gravelclose: [
+      [0.1, 1.8, 19],
+      [2.8, 0.01, 18],
+    ],
+    groundapproach: [
+      [-17, 7, 10],
+      [-21, 1, -7],
+    ],
+    groundchase: [
+      [-16, 3, 12],
+      [-22, 0, -8],
+    ],
+    westjoin: [
+      [-30, 1.4, 24],
+      [-41, 6, -11],
+    ],
+    northjoin: [
+      [-7, 2.5, -19],
+      [-20, 7, -34],
+    ],
+    westgrazing: [
+      [-42, 3.5, 12],
+      [-44, 5.5, 5],
+    ],
     shore: [
       [-24, 5, 26],
       [14, 5, -20],
@@ -168,7 +285,8 @@
       renderer.setCourse(c, $('mode').value);
       renderer.setQuality($('quality').value);
       renderer.setDrone('racer');
-      await renderer.loadScene(sceneBytes);
+      const variant = $('variant').value;
+      await renderer.loadScene(sceneBytes[variant]);
       if ((await renderer.prepare()) === false) throw Error('Shader preparation superseded');
       const THREE = await import(base + 'vendor/three.module.js');
       const [position, target] = poses[$('pose').value],
@@ -193,7 +311,12 @@
         lastInput: { throttle: 0 },
       };
       renderer.draw(state, {
-        cameraMode: $('pose').value === 'overview' ? 'overview' : 'fpv',
+        cameraMode:
+          $('pose').value === 'overview'
+            ? 'overview'
+            : ['groundchase', 'terracechase', 'rootcluster'].includes($('pose').value)
+              ? 'chase'
+              : 'fpv',
         cameraFov: 72,
         cameraTilt: 0,
       });
@@ -215,6 +338,8 @@
         mode: $('mode').value,
         quality: $('quality').value,
         appearance,
+        variant,
+        modelSHA256: await hash(sceneBytes[variant]),
         positionMetres: position,
         targetMetres: target,
         pixelSHA256: await hash(rgba),
@@ -227,6 +352,7 @@
           fixture: await hash(new TextEncoder().encode(JSON.stringify(manifest))),
           observations,
           errors,
+          disposal,
         },
         null,
         2,
@@ -251,7 +377,10 @@
     manifest = JSON.parse(new TextDecoder().decode(await get('./fixture.json')));
     for (const file of [
       ...manifest.content,
-      ...manifest.admittedFiles.map((f) => ({ ...f, path: 'player/' + f.path })),
+      ...(manifest.effectiveFiles ?? manifest.admittedFiles).map((f) => ({
+        ...f,
+        path: 'player/' + f.path,
+      })),
     ]) {
       const bytes = await get('./' + file.path);
       if (bytes.byteLength !== file.bytes || (await hash(bytes)) !== file.sha256)
@@ -266,7 +395,12 @@
       option.textContent = course.locales.en.title;
       $('course').append(option);
     }
-    sceneBytes = await get('./content/scene.glb');
+    sceneBytes = { after: await get('./content/scene.glb') };
+    if (manifest.content.some((f) => f.path === 'content/before-scene.glb')) {
+      sceneBytes.before = await get('./content/before-scene.glb');
+      $('variant-label').hidden = false;
+      $('variant').options[1].textContent = 'Before · ' + manifest.beforeRevision;
+    }
     const { createFlightRenderer } = await import(base + 'world-assets.mjs');
     renderer = createFlightRenderer({
       canvas: $('view'),
@@ -277,6 +411,33 @@
     if (!renderer.available) throw Error('Renderer unavailable');
     $('render').onclick = render;
     await render();
+    $('dispose').disabled = false;
+    $('dispose').onclick = async () => {
+      const before = renderer.resources();
+      renderer.dispose();
+      const after = renderer.resources();
+      disposal = {
+        before,
+        after,
+        passed: after.disposed && Object.values(after.registered).every((n) => n === 0),
+      };
+      $('render').disabled = true;
+      $('dispose').disabled = true;
+      $('receipt').value = JSON.stringify(
+        {
+          format: 'FPVMountainReservoirStaticViews.v1',
+          fixture: await hash(new TextEncoder().encode(JSON.stringify(manifest))),
+          observations,
+          errors,
+          disposal,
+        },
+        null,
+        2,
+      );
+      $('status').textContent = disposal.passed
+        ? 'Disposal PASS. Reload before rendering again.'
+        : 'FAILED: resources retained after disposal';
+    };
   } catch (error) {
     $('status').textContent = 'FAILED: ' + error.message;
     errors.push(error.stack);

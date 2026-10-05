@@ -4,6 +4,7 @@ import {
   isRunningEnemyRuleset,
   SNAKE_VERSIONS,
   SNAKE_PURSUIT_VERSIONS,
+  SNAKE_PURSUIT_V2_VERSIONS,
   isPursuitRuleset,
   baseLevelVersion,
   ENCOUNTER_VERSIONS,
@@ -67,7 +68,11 @@ const sectionNames = (versions) =>
           'directionalFields',
           'runningEnemies',
           ...(isPursuitRuleset(versions.ruleset) ? ['pursuit'] : []),
-          ...(versions.ruleset === SNAKE_PURSUIT_VERSIONS.ruleset ? ['snake'] : []),
+          ...([SNAKE_PURSUIT_VERSIONS.ruleset, SNAKE_PURSUIT_V2_VERSIONS.ruleset].includes(
+            versions.ruleset,
+          )
+            ? ['snake']
+            : []),
         ]
       : isRelayRuleset(versions.ruleset)
         ? [

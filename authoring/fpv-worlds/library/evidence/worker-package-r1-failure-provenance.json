@@ -1,0 +1,19 @@
+{
+  "format": "FPVWorldLibraryFailureEvidence.v1",
+  "sourceRevision": "01fc6ad206f6ea7e6dd78921f799e2ed1a773915",
+  "file": "worker-package-r1-failure.json.gz",
+  "rawBytes": 38514,
+  "rawSHA256": "21320f76cbc31ea773f92587671da02005d43d43fa8f8b05223eeb9cf7d02bb3",
+  "gzipBytes": 8105,
+  "gzipSHA256": "d3e58dce65853e54ed8e640c4e367c85c3bbfac718cc92e0124a0422f3ae2490",
+  "passedChecks": 119,
+  "failedAssertions": [],
+  "error": {
+    "message": "Timeout: ordinary selected course ready",
+    "stack": "Error: Timeout: ordinary selected course ready\n    at until (http://127.0.0.1:8932/fixture/browser-harness.mjs:46:50)\n    at async execute (http://127.0.0.1:8932/fixture/browser-harness.mjs:267:3)"
+  },
+  "errors": [],
+  "followupObservation": "Coordinator read the same frame showing Clearing check-in, tick0, Paused / Arm deliberately to continue, Arm enabled, Pause disabled. No graphics console errors. No focus trace was retained; focus-pause cause is a hypothesis, not established.",
+  "scopeComparison": "Runtime host/renderer/assets and every browser helper match the accepted208 source fixture byte-exactly. Differences are launcher worker, generated worker pins and optional-package descriptor. No assertion, runtime, timeout or frozen fixture was changed.",
+  "next": "Repeat the same immutable fixture with exclusive visible focus; if it repeats, add bounded status/focus diagnostics before changing assumptions."
+}

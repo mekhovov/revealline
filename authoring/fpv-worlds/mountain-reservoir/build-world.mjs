@@ -3,7 +3,17 @@
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { createHash } from 'node:crypto';
-import { createScene, includeLandEngineering, obstacles, bounds, spawn } from './source/scene.mjs';
+import {
+  createScene,
+  includeLandEngineering,
+  includeTerrainStitching,
+  includeRetainingFaces,
+  includeRootedVegetation,
+  includeMaintenanceInlays,
+  obstacles,
+  bounds,
+  spawn,
+} from './source/scene.mjs';
 import { landRouteCandidates } from './source/land-routes.mjs';
 import { engineeringRouteCandidates } from './source/engineering-routes.mjs';
 import { prepareWorldFile } from '../../../scripts/fpv-content.mjs';
@@ -22,9 +32,22 @@ import {
   exportEditableZip,
   importEditableZip,
 } from '../../../optional-practice/civilian-fpv/world-zip.mjs';
-const [baselineArg, outputArg] = process.argv.slice(2);
+const [baselineArg, outputArg, variant] = process.argv.slice(2);
 if (!baselineArg || !outputArg)
   throw Error('Use ACCEPTED_R4_PREPARED_DIRECTORY NEW_OUTPUT_DIRECTORY');
+if (
+  variant &&
+  ![
+    '--terrain-stitching',
+    '--material-scale',
+    '--retaining-faces',
+    '--surface-coatings',
+    '--required-coating',
+    '--rooted-vegetation',
+    '--maintenance-inlays',
+  ].includes(variant)
+)
+  throw Error('Unknown scene variant');
 const hash = (b) => createHash('sha256').update(b).digest('hex');
 const check = (ok, label) => {
   if (!ok) throw Error(label);
@@ -37,7 +60,41 @@ check(
   'Exact accepted first-course baseline',
 );
 includeLandEngineering();
-const scene = createScene();
+if (variant) includeTerrainStitching();
+if (
+  [
+    '--retaining-faces',
+    '--surface-coatings',
+    '--required-coating',
+    '--rooted-vegetation',
+    '--maintenance-inlays',
+  ].includes(variant)
+)
+  includeRetainingFaces({
+    coating: [
+      '--surface-coatings',
+      '--required-coating',
+      '--rooted-vegetation',
+      '--maintenance-inlays',
+    ].includes(variant),
+    required: ['--required-coating', '--rooted-vegetation', '--maintenance-inlays'].includes(
+      variant,
+    ),
+  });
+const rootContact = ['--rooted-vegetation', '--maintenance-inlays'].includes(variant)
+    ? includeRootedVegetation()
+    : null,
+  maintenance = variant === '--maintenance-inlays' ? includeMaintenanceInlays() : null;
+const scene = createScene({
+  groundMaterials: [
+    '--material-scale',
+    '--retaining-faces',
+    '--surface-coatings',
+    '--required-coating',
+    '--rooted-vegetation',
+    '--maintenance-inlays',
+  ].includes(variant),
+});
 check(
   scene.bytes.length < 1.2 * 1024 * 1024 && scene.statistics.triangles < 15000,
   'Original artwork target exceeded',
@@ -56,7 +113,22 @@ const prepared = await prepareWorldFile({
     title: 'Mountain Reservoir · land-side world',
   }),
   project = prepared.project,
-  revision = 'r8',
+  revision =
+    variant === '--maintenance-inlays'
+      ? 'r16'
+      : variant === '--rooted-vegetation'
+        ? 'r15'
+        : variant === '--required-coating'
+          ? 'r14'
+          : variant === '--surface-coatings'
+            ? 'r13'
+            : variant === '--retaining-faces'
+              ? 'r12'
+              : variant === '--material-scale'
+                ? 'r11'
+                : variant
+                  ? 'r9'
+                  : 'r8',
   first = validateWorldCourse({
     ...structuredClone(baseline.courses[0]),
     revision,
@@ -117,8 +189,11 @@ project.provenance = [
       source: 'Original deterministic authoring/fpv-worlds/mountain-reservoir/source/',
     },
     sourceSHA256: hash(scene.bytes),
-    changes:
-      'Existing pinned prepare pipeline; original land-side engineering over accepted r4 composition. No renderer or physics changes.',
+    changes: ['--required-coating', '--maintenance-inlays'].includes(variant)
+      ? 'Existing pinned prepare pipeline with registered REVEALLINE_surface_coating v1 preservation. One canonical opaque-finish extension is required; older hosts reject it. No physics changes.'
+      : variant === '--surface-coatings'
+        ? 'Existing pinned prepare pipeline; original land-side engineering over accepted r4 composition. No physics changes. The mineral material declares the fixed SimSurfaceCoating.v1 opaque-finish hint; this candidate requires the qualified coating-capable renderer.'
+        : 'Existing pinned prepare pipeline; original land-side engineering over accepted r4 composition. No renderer or physics changes.',
   },
 ];
 synchronizeDefinitions(project);
@@ -160,6 +235,10 @@ for (const file of [
   'land-routes.mjs',
   'engineering-routes.mjs',
   'mineral.mjs',
+  'ground-maps.mjs',
+  'retaining.mjs',
+  'rooting.mjs',
+  'maintenance.mjs',
 ]) {
   const bytes = await readFile(new URL('./source/' + file, import.meta.url));
   sourcePins.push({ path: file, bytes: bytes.length, sha256: hash(bytes) });
@@ -168,6 +247,8 @@ const receipt = {
   format: 'FPVReservoirWorldBuild.v1',
   stage: 'Eight-route land-side candidate; actual art/collision/flight acceptance pending',
   sourcePins,
+  ...(rootContact ? { rootContact } : {}),
+  ...(maintenance ? { maintenance } : {}),
   source: { bytes: scene.bytes.length, sha256: hash(scene.bytes), ...scene.statistics },
   prepared: {
     bytes: model.length,
@@ -188,7 +269,23 @@ const receipt = {
   bounds,
   worldCount: 1,
   layoutCount: 8,
-  runtimeChanges: 0,
+  runtimeChanges: variant === '--required-coating' ? 4 : variant === '--surface-coatings' ? 2 : 0,
+  ...([
+    '--surface-coatings',
+    '--required-coating',
+    '--rooted-vegetation',
+    '--maintenance-inlays',
+  ].includes(variant)
+    ? {
+        rendererPrerequisite: [
+          '--required-coating',
+          '--rooted-vegetation',
+          '--maintenance-inlays',
+        ].includes(variant)
+          ? 'REVEALLINE_surface_coating v1 support in renderer.mjs/world-visuals.mjs/world-content.mjs/world-themes.mjs; required capability rejects older hosts. This asset generation is not package admission.'
+          : 'SimSurfaceCoating.v1 opaque-finish support in renderer.mjs/world-visuals.mjs; historical admitted renderers lack this feature. This asset generation is not package admission.',
+      }
+    : {}),
   textures: scene.statistics.textures,
   limitsUnchanged: true,
 };

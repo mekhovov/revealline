@@ -265,3 +265,64 @@ test('procedural encounter voices belong to the same Pause/Retry cleanup as samp
   assert.equal(sound.voices.size, 0);
   assert.equal(voice.ended, true);
 });
+
+test('native flight movement accents use accepted vehicle material and prime restored observations', async () => {
+  const { context, made } = contextHarness(),
+    audioMaster = createAudioMaster({ muted: false, volume: 0.4 }),
+    storage = { getItem: () => null, setItem() {} },
+    host = {
+      AudioContext: function () {
+        return context;
+      },
+      addEventListener() {},
+      removeEventListener() {},
+    },
+    audio = createWorldAudio({ window: host, storage, audioMaster });
+  const course = { actors: [{ id: 'tank', type: 'vehicle', vehicleModel: 'field-tank' }] };
+  audio.setCourse(course);
+  await audio.resume();
+  const state = {
+    ticks: 0,
+    step: 0,
+    status: 'active',
+    events: [],
+    contacts: 0,
+    velocity: {},
+    position: { x: 0, y: 0, z: 0 },
+    actors: [{ id: 'tank', type: 'vehicle', status: 'active', position: { x: 1000, y: 0, z: 0 } }],
+  };
+  const initial = made.filter((node) => node.started).length;
+  audio.update(state);
+  assert.equal(made.filter((node) => node.started).length, initial);
+  context.currentTime = 1;
+  state.ticks++;
+  state.actors[0].position.x += 100;
+  const original = structuredClone(state);
+  audio.update(state);
+  assert.deepEqual(state, original);
+  const newSources = made.filter((node) => node.started).slice(initial);
+  assert.equal(newSources.length, 1);
+  assert.equal(
+    newSources[0].frequency.value,
+    encounterSoundRecipe('drive', { machine: 'tracked', family: 'lookout' }).tone.from,
+  );
+  audio.update(state);
+  assert.equal(made.filter((node) => node.started).length, initial + 1);
+  context.currentTime = 2.3;
+  state.ticks++;
+  state.actors[0].position.x += 100;
+  audio.update(state);
+  assert.equal(
+    made.filter((node) => node.started).length,
+    initial + 1,
+    'continuous drive does not retrigger an onset',
+  );
+  audio.setCourse(course);
+  audio.update(state);
+  assert.equal(
+    made.filter((node) => node.started).length,
+    initial + 1,
+    'restored positions are only observed',
+  );
+  audio.dispose();
+});

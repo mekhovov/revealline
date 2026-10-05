@@ -1,0 +1,42 @@
+{
+  "reportedBy": "parent agent actual native browser",
+  "publicRevision": "1a1a82d5e6617a53239218642eda3aa70e817fe3",
+  "scope": "Both public markers matched; native Start, briefing Start, Ready, deliberate Arm, active flight and Pause. Does not qualify newer ghost or language deployments.",
+  "files": [
+    {
+      "path": "fpv-public-latest-deployment-20261004.json.gz",
+      "bytes": 308,
+      "sha256": "39fcd1ecdeb3e3d94f4081c7af7f5549a1c87382cf1c7a315069d4d98b390eaf",
+      "storedBytes": 225,
+      "storedSha256": "ff6d45774e431d9162b0f3818a05579f06967af5cdc2af5a5c30b44ea5787584"
+    },
+    {
+      "path": "fpv-public-latest-build-20261004.json.gz",
+      "bytes": 143,
+      "sha256": "be99ee7f32620a1aac974ebd6393f19fc5640172b083ad743c2c92952522cf50",
+      "storedBytes": 133,
+      "storedSha256": "6286f7b17691e1840373d93ba44df42b2c9d11fcfed9eda7a590b46e6d8b38e6"
+    },
+    {
+      "path": "fpv-public-warm-1a1a-flight.txt.gz",
+      "bytes": 661,
+      "sha256": "4a7e4baa4e481558239c2373cd64bd2162e455a59a853dc02054d395c6632735",
+      "storedBytes": 374,
+      "storedSha256": "0cf133b47eee2402341bcbd2fc1330da317b9c1026aea2a187da87793179cada"
+    },
+    {
+      "path": "fpv-public-warm-1a1a-flight.png",
+      "bytes": 86170,
+      "sha256": "e4fcc9e0ccd47f69658f05a2758c1db92005ab39db72fafab243cfc696b1ada7",
+      "storedBytes": 86170,
+      "storedSha256": "e4fcc9e0ccd47f69658f05a2758c1db92005ab39db72fafab243cfc696b1ada7"
+    },
+    {
+      "path": "fpv-public-warm-1a1a-paused.txt.gz",
+      "bytes": 1798,
+      "sha256": "8c952f58660e3d6d413b0e72df0c79392a40586566d257965ec80f57ec0f6e73",
+      "storedBytes": 768,
+      "storedSha256": "7c715987448f18b9ae1d269b24537793686e0c6031aad8f9d28f14528b2f7fda"
+    }
+  ]
+}

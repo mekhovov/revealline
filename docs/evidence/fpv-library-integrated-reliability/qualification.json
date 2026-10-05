@@ -1,0 +1,355 @@
+{
+  "format": "FPVLibraryIntegratedQualification.v1",
+  "sourceRevision": "216b36ce15df84f5148d9d16e92c5defdee0da09",
+  "sourceTree": "2eec5052796e3f7417a6493817a8c19214e5fdc0",
+  "inputCount": 95,
+  "inputBytes": 16776664,
+  "reserveBytes": 552,
+  "components": {
+    "main": "7e76112411f96ae72979cebee0a62ccdd66577d6",
+    "menu": "64a47acc43c1b6324024429fe8a4e99167b57cb5",
+    "focus": "e7a19b09cd37c1afc0bc2c13a0fa9f3252d28307",
+    "library": "7dfddab433b6e849e4bb959edabcb7645f217225",
+    "existingDOMHelperRepair": "216b36ce15df84f5148d9d16e92c5defdee0da09"
+  },
+  "validation": {
+    "exitCode": 0,
+    "source": "49172b65cc506c52e02c3b03550b03a79f109790",
+    "runtimeInputsExactToAdmittedSource": true,
+    "node": "22.22.2",
+    "warnings": "Seven inherited navigation warnings retained in complete log."
+  },
+  "existingChecks": {
+    "passed": 23,
+    "failed": 0,
+    "newTests": 0,
+    "missingDependencyAndDOMPropertyFailuresRetainedInLibraryEvidence": true
+  },
+  "admission": {
+    "exitCode": 0,
+    "packages": [
+      "civilian-flight",
+      "civilian-fpv",
+      "fpv-worlds"
+    ],
+    "identicalBuilds": 2,
+    "committedInputs": true,
+    "zipMembers": true
+  },
+  "staged": {
+    "worldsMembers": 102,
+    "academyMembers": 69,
+    "overlays": [],
+    "newPlayerBytes": 645783,
+    "fixtureSHA256": "0c3ff8ee10f103b996b74b62953bf7ec352bc0597e4ccf2d835c03066452e128",
+    "port": 8939,
+    "serverPID": 60333,
+    "session": 30606
+  },
+  "browser": {
+    "sourceRevision": "216b36ce15df84f5148d9d16e92c5defdee0da09",
+    "library": {
+      "passed": 208,
+      "failed": 0,
+      "nativeWorkers": 45,
+      "eachTerminatedOnce": true,
+      "workerRequests": 37,
+      "successfulRealPinnedHTTPSResponses": 3,
+      "pageRequests": 0,
+      "scope": [
+        "Actual native host/IndexedDB/Worker and unchanged production clock. Only named worker-fetch fault responses, observation wrappers and isolated storage names are injected.",
+        "Successful pack download uses the actual immutable first-party HTTPS URL. The production catalogue remains empty.",
+        "Timeout callback is explicitly injected, not a claim of two-minute wall-clock endurance. No offline, finished-world, flight-completion or FPS claim."
+      ]
+    },
+    "focus": {
+      "passed": 145,
+      "failed": 0,
+      "trustedTabAndShiftTab": true,
+      "warnings": [],
+      "errors": [],
+      "scope": "Native appearance focus, deferred post-arm selection and ordinary Retry; retained original snapshots and trusted key events."
+    },
+    "responsive": {
+      "observations": 7,
+      "nativeIframeSizes": [
+        [
+          320,
+          740
+        ],
+        [
+          390,
+          844
+        ],
+        [
+          844,
+          390
+        ],
+        [
+          1280,
+          800
+        ]
+      ],
+      "noHorizontalPageOverflowInRecordedSamples": true,
+      "languageControlWidthAt320": 260.796875,
+      "languagePersistedAfterNativeReload": "Coordinator observed English retained at 1280 after native language change and reload."
+    },
+    "offline": {
+      "status": "passed",
+      "sourceRevision": "216b36ce15df84f5148d9d16e92c5defdee0da09",
+      "origin": "http://127.0.0.1:8939",
+      "preparation": "Native Worlds Library preparation and Academy Settings \u2192 Expert \u2192 Flight guide \u2192 Workshop & offline completed.",
+      "interactionMethod": "Some first clicks focused the disclosure/install control; trusted Enter activated both preparation paths. This records the actual method, not an unambiguous pointer-only pass or a newly diagnosed pointer bug.",
+      "serverStoppedPID": 60333,
+      "curlBeforeReload": {
+        "exitCode": 7,
+        "connection": "refused"
+      },
+      "worlds": "Native reload \u2192 Back \u2192 Continue recovered Yard \u2192 Ready \u2192 zero-throttle Arm \u2192 Flight active \u2192 Pause.",
+      "academy": "Native reload \u2192 Start \u2192 briefing Start \u2192 Practice in progress \u2192 Pause.",
+      "curlAfterReloadsAndLaunches": {
+        "exitCode": 7,
+        "connection": "refused"
+      },
+      "restoredExactServerSession": 52015,
+      "evidence": "Original native receipt and two active screenshots are losslessly retained; coordinator also reported both failed connection probes and final pauses.",
+      "limits": [
+        "Only the known localhost origin was stopped. No device-wide or browser-wide outage, storage eviction/permanence, offline catalogue download, hardware FPS or sustained performance claim.",
+        "This check reused a retained Worlds Yard session; it is not called a fresh initial flight.",
+        "Observed public-control activation includes trusted Enter where initial clicks focused controls."
+      ]
+    },
+    "limits": [
+      "Historical 216b36ce1 combined candidate, not a claim about later main or public deployment.",
+      "No hardware FPS, physical-device, full flight completion or whole-browser zero-console claim.",
+      "The production world catalogue remains empty; the one downloadable starter is an explicit verification fixture."
+    ]
+  },
+  "publication": "Historical local combined216 accepted; focus merged b98205d76 and menu merged e7d06f3c6. Published Library2cfc24050 has all95 original input bytes exact216 and awaits fresh protected checks. This evidence does not establish public deployment.",
+  "excluded": [
+    "Unfinished pre-Ready shadow-frame prototype",
+    "Any source/file limit change",
+    "Any new unit coverage",
+    "A production catalogue row"
+  ],
+  "archives": [
+    {
+      "file": "validation.log.gz",
+      "rawBytes": 3399,
+      "rawSHA256": "05bebaba8dac541ee3805fd865e92b6c7e7fbb2c9392fbaada915e79f41527e5",
+      "gzipBytes": 1460,
+      "gzipSHA256": "5c5d4a061aa75bf7bae88cb02f5380e144b1d5636492c3c3e24663d91f06d83c"
+    },
+    {
+      "file": "existing-controls.tap.gz",
+      "rawBytes": 5566,
+      "rawSHA256": "4011b40e04f4ebb36a334d8ea27f8d141fcdbd4330e95698278db821338c454d",
+      "gzipBytes": 1409,
+      "gzipSHA256": "1a525e55c6d6605dad0330f2df668f31baf7fddc3e46be8b85f9ca32f51c61a1"
+    },
+    {
+      "file": "worker-control.tap.gz",
+      "rawBytes": 320,
+      "rawSHA256": "25e4a4800bf0897614ef658c777ebb8defd25039161e7323d4aad9a2811ab795",
+      "gzipBytes": 205,
+      "gzipSHA256": "51ce38652c8d8027f3c5ebd95d8dc27dfad03c597134f0f55d9dd2cb66fac0d9"
+    },
+    {
+      "file": "admission.log.gz",
+      "rawBytes": 425,
+      "rawSHA256": "0a28f2efa4fb134d208385b74085e99dc4704c8e03b7bfe316a1a7d8c37312cc",
+      "gzipBytes": 291,
+      "gzipSHA256": "4eb9c1f98ee0f4275b7321bf7b7ba50ed9d35c6f0709e8c8fcac95c4de7b2be3"
+    },
+    {
+      "file": "staging.log.gz",
+      "rawBytes": 1760,
+      "rawSHA256": "29f411d49eada90a1e9cd48ba3b4a21dd9765365d450dd446d211eaf4f26a403",
+      "gzipBytes": 804,
+      "gzipSHA256": "fee0e3ba62ed58c01cfb473da41dc326db19a9b61eeca08d53f2089477c1bbd1"
+    },
+    {
+      "file": "prepare-fixture.mjs.gz",
+      "rawBytes": 3870,
+      "rawSHA256": "723697c42c8f69900737dafe86106a4b7be92918af0fd4ae9e95abf9c8929d71",
+      "gzipBytes": 1598,
+      "gzipSHA256": "a437afd4344a41e6db3d5c18fd96c724456f29fb909c91247810fee49708d9e0"
+    },
+    {
+      "file": "publication-snapshot.json.gz",
+      "rawBytes": 3300,
+      "rawSHA256": "fe979fab3a1b4bf3688e2257b0a1a2afa98f274c26fb611649cd366b3ef4a6c9",
+      "gzipBytes": 1375,
+      "gzipSHA256": "388e09e8ad57173e46985a40ad870ed49381ee386ca9c9d15e34d244285d57c2"
+    },
+    {
+      "file": "optional-candidate-verification.json.gz",
+      "rawBytes": 1142,
+      "rawSHA256": "5a59157fade4f3d3e9ec32bd9f27980743482b7b4b9160b60c823b0d3122cb2a",
+      "gzipBytes": 612,
+      "gzipSHA256": "2bdbaa2e7ef2de0ebade1f710e86f784897eabc2fe273c300794c4a57c24873c"
+    },
+    {
+      "file": "optional-checksums.json.gz",
+      "rawBytes": 2136,
+      "rawSHA256": "63a89a06bb234226dd39c53691612e1b38157c22a060ea3fec0a5cf9bb76ec0d",
+      "gzipBytes": 923,
+      "gzipSHA256": "976f55a754d88d995ee6cf56d7c53de7acea5a6e3f8a4f22f3376570ca4fac7c"
+    },
+    {
+      "file": "optional-packages.json.gz",
+      "rawBytes": 2633,
+      "rawSHA256": "b9361c5a35971b1d58c1c3d8fc5e96ebe8c5242300d09e10223e02680d00ef94",
+      "gzipBytes": 1075,
+      "gzipSHA256": "3ad564b25d253145982116adf731300122d33ef5a685bb132018507096d62eb2"
+    },
+    {
+      "file": "source-inventory-optional-fpv-worlds.json.gz",
+      "rawBytes": 32166,
+      "rawSHA256": "c46812caa7c21ac7543e18903d319b08808d6845c5a0bda4a46e2c2531e301dd",
+      "gzipBytes": 7141,
+      "gzipSHA256": "321afad13369724fca4ade647e433562ccae9873d68141ef642feefda9e8f934"
+    },
+    {
+      "file": "fixture.json.gz",
+      "rawBytes": 83219,
+      "rawSHA256": "0c3ff8ee10f103b996b74b62953bf7ec352bc0597e4ccf2d835c03066452e128",
+      "gzipBytes": 12519,
+      "gzipSHA256": "1b68c2571ba979585069efb12a95f20b0b7c5ed30845f63c121ef25c614b5c96"
+    },
+    {
+      "file": "worlds.json.gz",
+      "rawBytes": 42968,
+      "rawSHA256": "176141ae903a6968492bcb5d6e5dd2e062ff1aeaa5364a837262e9d56954f2bf",
+      "gzipBytes": 7349,
+      "gzipSHA256": "3a503752e0f0f19bfdd12c82397fba9a76d4494987c9b8fc11226f8a727cde24"
+    },
+    {
+      "file": "academy.json.gz",
+      "rawBytes": 28951,
+      "rawSHA256": "17223c8e65aaebef4c68bb697b8c2b6243db88f1de3c305028078b307fe895c2",
+      "gzipBytes": 5134,
+      "gzipSHA256": "f0d51fc0cd0ca08440a9a1e0ca6467b13e51a3879373e813f3cb907e07242a00"
+    },
+    {
+      "file": "index.html.gz",
+      "rawBytes": 1825,
+      "rawSHA256": "38662fd58aa2b6ff97ae2c2420dd373ea08268ca627d8246e5f56738dbbddca7",
+      "gzipBytes": 1000,
+      "gzipSHA256": "b5c03dc69ba73df931418c60606c04595558f3151acbf3b4943cd8c023108402"
+    },
+    {
+      "file": "preview.mjs.gz",
+      "rawBytes": 2633,
+      "rawSHA256": "6b1d013a2e7ccd4c0a0428018535abaeb7934ff02627cfca91859571217cb5f1",
+      "gzipBytes": 1210,
+      "gzipSHA256": "ac222ebd2f07b7fdfcb637cc9a1f6c81344bf3c2291ed69936041e166cd226dc"
+    },
+    {
+      "file": "library-fixture.json.gz",
+      "rawBytes": 20101,
+      "rawSHA256": "7909a24b7c082c268bcfb6d2d3a605cedd1d8e7ec4ed795119abbe0f21561361",
+      "gzipBytes": 6566,
+      "gzipSHA256": "7343633a4f68c91895e5959edd77e7664e7b4ff44a74bac43fdd21e212a34ed9"
+    },
+    {
+      "file": "focus-fixture.json.gz",
+      "rawBytes": 25190,
+      "rawSHA256": "707022ce1566ccd614a6f92fc2563eea22a65fd47b4fa08022d481b9ef6cedba",
+      "gzipBytes": 6171,
+      "gzipSHA256": "93ee3eb73b97e01ea707759415a78388f10486b0dc35e1d214b2d8664eb26461"
+    },
+    {
+      "file": "library-native.json.gz",
+      "rawBytes": 104273,
+      "rawSHA256": "572bca2b1256485eba298b8eeef0ad0323dc4c8db77f01642e569597186ecf74",
+      "gzipBytes": 10987,
+      "gzipSHA256": "d837a7b54a3cbce2dbb4e6e2edcf488c6afacbd43031f30b0e18c5a203d61df7"
+    },
+    {
+      "file": "focus-native.json.gz",
+      "rawBytes": 63550,
+      "rawSHA256": "8f3d68052e1eb5ad8c7f290b65780206128ca784c84c7bb1789047494aa947ee",
+      "gzipBytes": 9593,
+      "gzipSHA256": "ec594cbe55bbf5435d6246569ada1806a20ca30062bc8d85b1bfa166ad3d0194"
+    },
+    {
+      "file": "responsive-layouts.json.gz",
+      "rawBytes": 14695,
+      "rawSHA256": "ac7e7069ad23794e42c2e713caaf5bd40ef5ac0e313665e96c3c1aa0808319c5",
+      "gzipBytes": 1470,
+      "gzipSHA256": "3cf8490c5bb9435ebe8f0d643a6a05c20f79402e7f71400fd80d0759a41b1d3c"
+    },
+    {
+      "file": "library-native.png.gz",
+      "rawBytes": 56442,
+      "rawSHA256": "81e34d30f60409ecde13fa99aef32742081eb34f19b03bc90cfa7c57910b875d",
+      "gzipBytes": 44697,
+      "gzipSHA256": "0e6bbff540fb82e606580b6a2c6be308220a357b2175658c1f8061a2b9786635"
+    },
+    {
+      "file": "focus-native.png.gz",
+      "rawBytes": 24696,
+      "rawSHA256": "72fc3c7984651fdcfdf8a825b2de44e4876903874dfbad93fe2a4fccea9609b9",
+      "gzipBytes": 12890,
+      "gzipSHA256": "2cd742fbf7f82e2531c375ebaca85226ad8b1a88c5c5312b60c4d64203f73149"
+    },
+    {
+      "file": "settings320.png.gz",
+      "rawBytes": 65746,
+      "rawSHA256": "3a5979798a149b1b13ce21f98867f4713f0848d1af9b89c05278268b886f5e61",
+      "gzipBytes": 55378,
+      "gzipSHA256": "9a3f3fc79653c1028e4be5ce2407e42e06e5f5e97547125634729b5fcdcfccff"
+    },
+    {
+      "file": "library390.png.gz",
+      "rawBytes": 67091,
+      "rawSHA256": "aabbb09e0035c4352f29838ddf03087180846398ab3a8616fd8ffc598cdeb4a7",
+      "gzipBytes": 56424,
+      "gzipSHA256": "0b53c759f72c1c2ea3b19b3edd77d33f9dcba0ba963fca5e11aa2eb25b2c4f48"
+    },
+    {
+      "file": "academy320.png.gz",
+      "rawBytes": 74305,
+      "rawSHA256": "35c136bea6789049791d8f9b5aa196fa8296a94f308b571ebb6ca536673a63cf",
+      "gzipBytes": 62729,
+      "gzipSHA256": "b5ae6b387b42363f3064a6bee400a698976745553c771d0fc22963f15e31f651"
+    },
+    {
+      "file": "offline-native.json.gz",
+      "rawBytes": 1796,
+      "rawSHA256": "f30812fced47e0653cb12f68ff14bb8cc8aaffeba108188d16ddc337e6bd585e",
+      "gzipBytes": 875,
+      "gzipSHA256": "a9a92680179c90a741250497970abda1b41b1df19316d9bba01d971e2f50db08"
+    },
+    {
+      "file": "worlds-offline.png.gz",
+      "rawBytes": 59455,
+      "rawSHA256": "33df77d16d437ebcc071205b8b73eaf8fb4944eae26d2949cad6cd6c295e7377",
+      "gzipBytes": 51948,
+      "gzipSHA256": "5290b5c74fcca1e94e6596cb091cd69505883557265a87970624857e6f88c31d"
+    },
+    {
+      "file": "academy-offline.png.gz",
+      "rawBytes": 61704,
+      "rawSHA256": "60bd321d96112910594bef275665ee12f58c66166b4e964b233ca8f1b0c8c18e",
+      "gzipBytes": 56809,
+      "gzipSHA256": "43ca8c9630051c27e6a2605813328df294ca35d58a808d0432100e5131427ca2"
+    },
+    {
+      "file": "publication-at-offline.json.gz",
+      "rawBytes": 17486,
+      "rawSHA256": "d8d44bf400cff1be237a760fb3ab0cb1ba3de25b2772654ff5ea1deb883b359e",
+      "gzipBytes": 2058,
+      "gzipSHA256": "54b030033dff86bb989c194ae7831a24fd2a4d37708b9065e3f3f4775282daaa"
+    }
+  ],
+  "evidenceInputBridge": {
+    "admittedSource": "216b36ce15df84f5148d9d16e92c5defdee0da09",
+    "auditedParentHead": "d43dcb73bf349554aea67b38d4a190570038f288",
+    "inputCount": 95,
+    "inputBytes": 16776664,
+    "mismatches": [],
+    "changesInThisCheckpoint": "Evidence and delivery documentation only."
+  }
+}

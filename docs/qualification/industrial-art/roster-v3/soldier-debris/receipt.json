@@ -1,0 +1,1264 @@
+{
+  "format": "revealline-soldier-debris-specimens.v1",
+  "artRevision": "industrial-roster-v3",
+  "families": 12,
+  "casts": 3,
+  "treatments": [
+    "clean",
+    "brutal-without-blood",
+    "brutal-with-blood"
+  ],
+  "samples": [
+    {
+      "family": "lookout",
+      "cast": "tactical",
+      "treatment": "clean",
+      "rectangle": [
+        0,
+        0,
+        192,
+        64
+      ]
+    },
+    {
+      "family": "lookout",
+      "cast": "tactical",
+      "treatment": "brutal-without-blood",
+      "rectangle": [
+        192,
+        0,
+        192,
+        64
+      ]
+    },
+    {
+      "family": "lookout",
+      "cast": "tactical",
+      "treatment": "brutal-with-blood",
+      "rectangle": [
+        384,
+        0,
+        192,
+        64
+      ]
+    },
+    {
+      "family": "patroller",
+      "cast": "tactical",
+      "treatment": "clean",
+      "rectangle": [
+        0,
+        64,
+        192,
+        64
+      ]
+    },
+    {
+      "family": "patroller",
+      "cast": "tactical",
+      "treatment": "brutal-without-blood",
+      "rectangle": [
+        192,
+        64,
+        192,
+        64
+      ]
+    },
+    {
+      "family": "patroller",
+      "cast": "tactical",
+      "treatment": "brutal-with-blood",
+      "rectangle": [
+        384,
+        64,
+        192,
+        64
+      ]
+    },
+    {
+      "family": "runner",
+      "cast": "tactical",
+      "treatment": "clean",
+      "rectangle": [
+        0,
+        128,
+        192,
+        64
+      ]
+    },
+    {
+      "family": "runner",
+      "cast": "tactical",
+      "treatment": "brutal-without-blood",
+      "rectangle": [
+        192,
+        128,
+        192,
+        64
+      ]
+    },
+    {
+      "family": "runner",
+      "cast": "tactical",
+      "treatment": "brutal-with-blood",
+      "rectangle": [
+        384,
+        128,
+        192,
+        64
+      ]
+    },
+    {
+      "family": "sprinter",
+      "cast": "tactical",
+      "treatment": "clean",
+      "rectangle": [
+        0,
+        192,
+        192,
+        64
+      ]
+    },
+    {
+      "family": "sprinter",
+      "cast": "tactical",
+      "treatment": "brutal-without-blood",
+      "rectangle": [
+        192,
+        192,
+        192,
+        64
+      ]
+    },
+    {
+      "family": "sprinter",
+      "cast": "tactical",
+      "treatment": "brutal-with-blood",
+      "rectangle": [
+        384,
+        192,
+        192,
+        64
+      ]
+    },
+    {
+      "family": "courier",
+      "cast": "tactical",
+      "treatment": "clean",
+      "rectangle": [
+        0,
+        256,
+        192,
+        64
+      ]
+    },
+    {
+      "family": "courier",
+      "cast": "tactical",
+      "treatment": "brutal-without-blood",
+      "rectangle": [
+        192,
+        256,
+        192,
+        64
+      ]
+    },
+    {
+      "family": "courier",
+      "cast": "tactical",
+      "treatment": "brutal-with-blood",
+      "rectangle": [
+        384,
+        256,
+        192,
+        64
+      ]
+    },
+    {
+      "family": "guard",
+      "cast": "tactical",
+      "treatment": "clean",
+      "rectangle": [
+        0,
+        320,
+        192,
+        64
+      ]
+    },
+    {
+      "family": "guard",
+      "cast": "tactical",
+      "treatment": "brutal-without-blood",
+      "rectangle": [
+        192,
+        320,
+        192,
+        64
+      ]
+    },
+    {
+      "family": "guard",
+      "cast": "tactical",
+      "treatment": "brutal-with-blood",
+      "rectangle": [
+        384,
+        320,
+        192,
+        64
+      ]
+    },
+    {
+      "family": "refuge-seeker",
+      "cast": "tactical",
+      "treatment": "clean",
+      "rectangle": [
+        0,
+        384,
+        192,
+        64
+      ]
+    },
+    {
+      "family": "refuge-seeker",
+      "cast": "tactical",
+      "treatment": "brutal-without-blood",
+      "rectangle": [
+        192,
+        384,
+        192,
+        64
+      ]
+    },
+    {
+      "family": "refuge-seeker",
+      "cast": "tactical",
+      "treatment": "brutal-with-blood",
+      "rectangle": [
+        384,
+        384,
+        192,
+        64
+      ]
+    },
+    {
+      "family": "switchback",
+      "cast": "tactical",
+      "treatment": "clean",
+      "rectangle": [
+        0,
+        448,
+        192,
+        64
+      ]
+    },
+    {
+      "family": "switchback",
+      "cast": "tactical",
+      "treatment": "brutal-without-blood",
+      "rectangle": [
+        192,
+        448,
+        192,
+        64
+      ]
+    },
+    {
+      "family": "switchback",
+      "cast": "tactical",
+      "treatment": "brutal-with-blood",
+      "rectangle": [
+        384,
+        448,
+        192,
+        64
+      ]
+    },
+    {
+      "family": "rendezvous-pair",
+      "cast": "tactical",
+      "treatment": "clean",
+      "rectangle": [
+        0,
+        512,
+        192,
+        64
+      ]
+    },
+    {
+      "family": "rendezvous-pair",
+      "cast": "tactical",
+      "treatment": "brutal-without-blood",
+      "rectangle": [
+        192,
+        512,
+        192,
+        64
+      ]
+    },
+    {
+      "family": "rendezvous-pair",
+      "cast": "tactical",
+      "treatment": "brutal-with-blood",
+      "rectangle": [
+        384,
+        512,
+        192,
+        64
+      ]
+    },
+    {
+      "family": "shield-bearer",
+      "cast": "tactical",
+      "treatment": "clean",
+      "rectangle": [
+        0,
+        576,
+        192,
+        64
+      ]
+    },
+    {
+      "family": "shield-bearer",
+      "cast": "tactical",
+      "treatment": "brutal-without-blood",
+      "rectangle": [
+        192,
+        576,
+        192,
+        64
+      ]
+    },
+    {
+      "family": "shield-bearer",
+      "cast": "tactical",
+      "treatment": "brutal-with-blood",
+      "rectangle": [
+        384,
+        576,
+        192,
+        64
+      ]
+    },
+    {
+      "family": "brace-trooper",
+      "cast": "tactical",
+      "treatment": "clean",
+      "rectangle": [
+        0,
+        640,
+        192,
+        64
+      ]
+    },
+    {
+      "family": "brace-trooper",
+      "cast": "tactical",
+      "treatment": "brutal-without-blood",
+      "rectangle": [
+        192,
+        640,
+        192,
+        64
+      ]
+    },
+    {
+      "family": "brace-trooper",
+      "cast": "tactical",
+      "treatment": "brutal-with-blood",
+      "rectangle": [
+        384,
+        640,
+        192,
+        64
+      ]
+    },
+    {
+      "family": "relay-warden",
+      "cast": "tactical",
+      "treatment": "clean",
+      "rectangle": [
+        0,
+        704,
+        192,
+        64
+      ]
+    },
+    {
+      "family": "relay-warden",
+      "cast": "tactical",
+      "treatment": "brutal-without-blood",
+      "rectangle": [
+        192,
+        704,
+        192,
+        64
+      ]
+    },
+    {
+      "family": "relay-warden",
+      "cast": "tactical",
+      "treatment": "brutal-with-blood",
+      "rectangle": [
+        384,
+        704,
+        192,
+        64
+      ]
+    },
+    {
+      "family": "lookout",
+      "cast": "rivals",
+      "treatment": "clean",
+      "rectangle": [
+        0,
+        0,
+        192,
+        64
+      ]
+    },
+    {
+      "family": "lookout",
+      "cast": "rivals",
+      "treatment": "brutal-without-blood",
+      "rectangle": [
+        192,
+        0,
+        192,
+        64
+      ]
+    },
+    {
+      "family": "lookout",
+      "cast": "rivals",
+      "treatment": "brutal-with-blood",
+      "rectangle": [
+        384,
+        0,
+        192,
+        64
+      ]
+    },
+    {
+      "family": "patroller",
+      "cast": "rivals",
+      "treatment": "clean",
+      "rectangle": [
+        0,
+        64,
+        192,
+        64
+      ]
+    },
+    {
+      "family": "patroller",
+      "cast": "rivals",
+      "treatment": "brutal-without-blood",
+      "rectangle": [
+        192,
+        64,
+        192,
+        64
+      ]
+    },
+    {
+      "family": "patroller",
+      "cast": "rivals",
+      "treatment": "brutal-with-blood",
+      "rectangle": [
+        384,
+        64,
+        192,
+        64
+      ]
+    },
+    {
+      "family": "runner",
+      "cast": "rivals",
+      "treatment": "clean",
+      "rectangle": [
+        0,
+        128,
+        192,
+        64
+      ]
+    },
+    {
+      "family": "runner",
+      "cast": "rivals",
+      "treatment": "brutal-without-blood",
+      "rectangle": [
+        192,
+        128,
+        192,
+        64
+      ]
+    },
+    {
+      "family": "runner",
+      "cast": "rivals",
+      "treatment": "brutal-with-blood",
+      "rectangle": [
+        384,
+        128,
+        192,
+        64
+      ]
+    },
+    {
+      "family": "sprinter",
+      "cast": "rivals",
+      "treatment": "clean",
+      "rectangle": [
+        0,
+        192,
+        192,
+        64
+      ]
+    },
+    {
+      "family": "sprinter",
+      "cast": "rivals",
+      "treatment": "brutal-without-blood",
+      "rectangle": [
+        192,
+        192,
+        192,
+        64
+      ]
+    },
+    {
+      "family": "sprinter",
+      "cast": "rivals",
+      "treatment": "brutal-with-blood",
+      "rectangle": [
+        384,
+        192,
+        192,
+        64
+      ]
+    },
+    {
+      "family": "courier",
+      "cast": "rivals",
+      "treatment": "clean",
+      "rectangle": [
+        0,
+        256,
+        192,
+        64
+      ]
+    },
+    {
+      "family": "courier",
+      "cast": "rivals",
+      "treatment": "brutal-without-blood",
+      "rectangle": [
+        192,
+        256,
+        192,
+        64
+      ]
+    },
+    {
+      "family": "courier",
+      "cast": "rivals",
+      "treatment": "brutal-with-blood",
+      "rectangle": [
+        384,
+        256,
+        192,
+        64
+      ]
+    },
+    {
+      "family": "guard",
+      "cast": "rivals",
+      "treatment": "clean",
+      "rectangle": [
+        0,
+        320,
+        192,
+        64
+      ]
+    },
+    {
+      "family": "guard",
+      "cast": "rivals",
+      "treatment": "brutal-without-blood",
+      "rectangle": [
+        192,
+        320,
+        192,
+        64
+      ]
+    },
+    {
+      "family": "guard",
+      "cast": "rivals",
+      "treatment": "brutal-with-blood",
+      "rectangle": [
+        384,
+        320,
+        192,
+        64
+      ]
+    },
+    {
+      "family": "refuge-seeker",
+      "cast": "rivals",
+      "treatment": "clean",
+      "rectangle": [
+        0,
+        384,
+        192,
+        64
+      ]
+    },
+    {
+      "family": "refuge-seeker",
+      "cast": "rivals",
+      "treatment": "brutal-without-blood",
+      "rectangle": [
+        192,
+        384,
+        192,
+        64
+      ]
+    },
+    {
+      "family": "refuge-seeker",
+      "cast": "rivals",
+      "treatment": "brutal-with-blood",
+      "rectangle": [
+        384,
+        384,
+        192,
+        64
+      ]
+    },
+    {
+      "family": "switchback",
+      "cast": "rivals",
+      "treatment": "clean",
+      "rectangle": [
+        0,
+        448,
+        192,
+        64
+      ]
+    },
+    {
+      "family": "switchback",
+      "cast": "rivals",
+      "treatment": "brutal-without-blood",
+      "rectangle": [
+        192,
+        448,
+        192,
+        64
+      ]
+    },
+    {
+      "family": "switchback",
+      "cast": "rivals",
+      "treatment": "brutal-with-blood",
+      "rectangle": [
+        384,
+        448,
+        192,
+        64
+      ]
+    },
+    {
+      "family": "rendezvous-pair",
+      "cast": "rivals",
+      "treatment": "clean",
+      "rectangle": [
+        0,
+        512,
+        192,
+        64
+      ]
+    },
+    {
+      "family": "rendezvous-pair",
+      "cast": "rivals",
+      "treatment": "brutal-without-blood",
+      "rectangle": [
+        192,
+        512,
+        192,
+        64
+      ]
+    },
+    {
+      "family": "rendezvous-pair",
+      "cast": "rivals",
+      "treatment": "brutal-with-blood",
+      "rectangle": [
+        384,
+        512,
+        192,
+        64
+      ]
+    },
+    {
+      "family": "shield-bearer",
+      "cast": "rivals",
+      "treatment": "clean",
+      "rectangle": [
+        0,
+        576,
+        192,
+        64
+      ]
+    },
+    {
+      "family": "shield-bearer",
+      "cast": "rivals",
+      "treatment": "brutal-without-blood",
+      "rectangle": [
+        192,
+        576,
+        192,
+        64
+      ]
+    },
+    {
+      "family": "shield-bearer",
+      "cast": "rivals",
+      "treatment": "brutal-with-blood",
+      "rectangle": [
+        384,
+        576,
+        192,
+        64
+      ]
+    },
+    {
+      "family": "brace-trooper",
+      "cast": "rivals",
+      "treatment": "clean",
+      "rectangle": [
+        0,
+        640,
+        192,
+        64
+      ]
+    },
+    {
+      "family": "brace-trooper",
+      "cast": "rivals",
+      "treatment": "brutal-without-blood",
+      "rectangle": [
+        192,
+        640,
+        192,
+        64
+      ]
+    },
+    {
+      "family": "brace-trooper",
+      "cast": "rivals",
+      "treatment": "brutal-with-blood",
+      "rectangle": [
+        384,
+        640,
+        192,
+        64
+      ]
+    },
+    {
+      "family": "relay-warden",
+      "cast": "rivals",
+      "treatment": "clean",
+      "rectangle": [
+        0,
+        704,
+        192,
+        64
+      ]
+    },
+    {
+      "family": "relay-warden",
+      "cast": "rivals",
+      "treatment": "brutal-without-blood",
+      "rectangle": [
+        192,
+        704,
+        192,
+        64
+      ]
+    },
+    {
+      "family": "relay-warden",
+      "cast": "rivals",
+      "treatment": "brutal-with-blood",
+      "rectangle": [
+        384,
+        704,
+        192,
+        64
+      ]
+    },
+    {
+      "family": "lookout",
+      "cast": "arcade",
+      "treatment": "clean",
+      "rectangle": [
+        0,
+        0,
+        192,
+        64
+      ]
+    },
+    {
+      "family": "lookout",
+      "cast": "arcade",
+      "treatment": "brutal-without-blood",
+      "rectangle": [
+        192,
+        0,
+        192,
+        64
+      ]
+    },
+    {
+      "family": "lookout",
+      "cast": "arcade",
+      "treatment": "brutal-with-blood",
+      "rectangle": [
+        384,
+        0,
+        192,
+        64
+      ]
+    },
+    {
+      "family": "patroller",
+      "cast": "arcade",
+      "treatment": "clean",
+      "rectangle": [
+        0,
+        64,
+        192,
+        64
+      ]
+    },
+    {
+      "family": "patroller",
+      "cast": "arcade",
+      "treatment": "brutal-without-blood",
+      "rectangle": [
+        192,
+        64,
+        192,
+        64
+      ]
+    },
+    {
+      "family": "patroller",
+      "cast": "arcade",
+      "treatment": "brutal-with-blood",
+      "rectangle": [
+        384,
+        64,
+        192,
+        64
+      ]
+    },
+    {
+      "family": "runner",
+      "cast": "arcade",
+      "treatment": "clean",
+      "rectangle": [
+        0,
+        128,
+        192,
+        64
+      ]
+    },
+    {
+      "family": "runner",
+      "cast": "arcade",
+      "treatment": "brutal-without-blood",
+      "rectangle": [
+        192,
+        128,
+        192,
+        64
+      ]
+    },
+    {
+      "family": "runner",
+      "cast": "arcade",
+      "treatment": "brutal-with-blood",
+      "rectangle": [
+        384,
+        128,
+        192,
+        64
+      ]
+    },
+    {
+      "family": "sprinter",
+      "cast": "arcade",
+      "treatment": "clean",
+      "rectangle": [
+        0,
+        192,
+        192,
+        64
+      ]
+    },
+    {
+      "family": "sprinter",
+      "cast": "arcade",
+      "treatment": "brutal-without-blood",
+      "rectangle": [
+        192,
+        192,
+        192,
+        64
+      ]
+    },
+    {
+      "family": "sprinter",
+      "cast": "arcade",
+      "treatment": "brutal-with-blood",
+      "rectangle": [
+        384,
+        192,
+        192,
+        64
+      ]
+    },
+    {
+      "family": "courier",
+      "cast": "arcade",
+      "treatment": "clean",
+      "rectangle": [
+        0,
+        256,
+        192,
+        64
+      ]
+    },
+    {
+      "family": "courier",
+      "cast": "arcade",
+      "treatment": "brutal-without-blood",
+      "rectangle": [
+        192,
+        256,
+        192,
+        64
+      ]
+    },
+    {
+      "family": "courier",
+      "cast": "arcade",
+      "treatment": "brutal-with-blood",
+      "rectangle": [
+        384,
+        256,
+        192,
+        64
+      ]
+    },
+    {
+      "family": "guard",
+      "cast": "arcade",
+      "treatment": "clean",
+      "rectangle": [
+        0,
+        320,
+        192,
+        64
+      ]
+    },
+    {
+      "family": "guard",
+      "cast": "arcade",
+      "treatment": "brutal-without-blood",
+      "rectangle": [
+        192,
+        320,
+        192,
+        64
+      ]
+    },
+    {
+      "family": "guard",
+      "cast": "arcade",
+      "treatment": "brutal-with-blood",
+      "rectangle": [
+        384,
+        320,
+        192,
+        64
+      ]
+    },
+    {
+      "family": "refuge-seeker",
+      "cast": "arcade",
+      "treatment": "clean",
+      "rectangle": [
+        0,
+        384,
+        192,
+        64
+      ]
+    },
+    {
+      "family": "refuge-seeker",
+      "cast": "arcade",
+      "treatment": "brutal-without-blood",
+      "rectangle": [
+        192,
+        384,
+        192,
+        64
+      ]
+    },
+    {
+      "family": "refuge-seeker",
+      "cast": "arcade",
+      "treatment": "brutal-with-blood",
+      "rectangle": [
+        384,
+        384,
+        192,
+        64
+      ]
+    },
+    {
+      "family": "switchback",
+      "cast": "arcade",
+      "treatment": "clean",
+      "rectangle": [
+        0,
+        448,
+        192,
+        64
+      ]
+    },
+    {
+      "family": "switchback",
+      "cast": "arcade",
+      "treatment": "brutal-without-blood",
+      "rectangle": [
+        192,
+        448,
+        192,
+        64
+      ]
+    },
+    {
+      "family": "switchback",
+      "cast": "arcade",
+      "treatment": "brutal-with-blood",
+      "rectangle": [
+        384,
+        448,
+        192,
+        64
+      ]
+    },
+    {
+      "family": "rendezvous-pair",
+      "cast": "arcade",
+      "treatment": "clean",
+      "rectangle": [
+        0,
+        512,
+        192,
+        64
+      ]
+    },
+    {
+      "family": "rendezvous-pair",
+      "cast": "arcade",
+      "treatment": "brutal-without-blood",
+      "rectangle": [
+        192,
+        512,
+        192,
+        64
+      ]
+    },
+    {
+      "family": "rendezvous-pair",
+      "cast": "arcade",
+      "treatment": "brutal-with-blood",
+      "rectangle": [
+        384,
+        512,
+        192,
+        64
+      ]
+    },
+    {
+      "family": "shield-bearer",
+      "cast": "arcade",
+      "treatment": "clean",
+      "rectangle": [
+        0,
+        576,
+        192,
+        64
+      ]
+    },
+    {
+      "family": "shield-bearer",
+      "cast": "arcade",
+      "treatment": "brutal-without-blood",
+      "rectangle": [
+        192,
+        576,
+        192,
+        64
+      ]
+    },
+    {
+      "family": "shield-bearer",
+      "cast": "arcade",
+      "treatment": "brutal-with-blood",
+      "rectangle": [
+        384,
+        576,
+        192,
+        64
+      ]
+    },
+    {
+      "family": "brace-trooper",
+      "cast": "arcade",
+      "treatment": "clean",
+      "rectangle": [
+        0,
+        640,
+        192,
+        64
+      ]
+    },
+    {
+      "family": "brace-trooper",
+      "cast": "arcade",
+      "treatment": "brutal-without-blood",
+      "rectangle": [
+        192,
+        640,
+        192,
+        64
+      ]
+    },
+    {
+      "family": "brace-trooper",
+      "cast": "arcade",
+      "treatment": "brutal-with-blood",
+      "rectangle": [
+        384,
+        640,
+        192,
+        64
+      ]
+    },
+    {
+      "family": "relay-warden",
+      "cast": "arcade",
+      "treatment": "clean",
+      "rectangle": [
+        0,
+        704,
+        192,
+        64
+      ]
+    },
+    {
+      "family": "relay-warden",
+      "cast": "arcade",
+      "treatment": "brutal-without-blood",
+      "rectangle": [
+        192,
+        704,
+        192,
+        64
+      ]
+    },
+    {
+      "family": "relay-warden",
+      "cast": "arcade",
+      "treatment": "brutal-with-blood",
+      "rectangle": [
+        384,
+        704,
+        192,
+        64
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "path": "game/hunt/actor-art.mjs",
+      "sha256": "aa0bf59c6ebacce4bf3c72d5c7e383e49dde9f07890467b645c39b2321925b0a"
+    },
+    {
+      "path": "game/hunt/actor-catalog.mjs",
+      "sha256": "c9acd0eea22d93cb210667797b8de81fc8995bdbfef2ae13e8d56c14b9972f8d"
+    },
+    {
+      "path": "game/hunt/industrial-soldier-kit.mjs",
+      "sha256": "e3b42bc53333fd659499112df90f0e4c53899eb31d80b065c534b4e337ca9524"
+    },
+    {
+      "path": "game/hunt/destruction.mjs",
+      "sha256": "f0a5c19ecc95c6d63830e3ee661b3b91a70cd6973c40fef2ea2ccf3106a68b3c"
+    },
+    {
+      "path": "game/hunt/destruction-budget.mjs",
+      "sha256": "08840fd89c9607d6830f253c4368adc60ee4997b85a9ae2d151c8be5d9e4c920"
+    },
+    {
+      "path": "game/hunt/presentation-catalog.mjs",
+      "sha256": "cf39bc033b1f3263f21481f04c7595bac7a06a4613759b90594855834d067796"
+    },
+    {
+      "path": "scripts/produce-soldier-roster.mjs",
+      "sha256": "fe128da52924dff890545bc2024912eebc030cf0b5e93f60915dad68d6a2e82b"
+    },
+    {
+      "path": "scripts/produce-soldier-debris.mjs",
+      "sha256": "aa266d2ab6cc7d1507c380faca76004ca32ec8e3a14ea7ab77f3a624ed343948"
+    },
+    {
+      "path": "scripts/produce-field-kit-sprites.mjs",
+      "sha256": "f268d930f82fd60bab8af46d913f2fabbf263924076ce6a83ec47c3959aabd59"
+    }
+  ],
+  "assets": [
+    {
+      "path": "soldier-debris-v3-tactical.png",
+      "bytes": 13912,
+      "sha256": "a2bcfe5c1dce61064fd4f99072a222daadcc197a1a80c0c199dd36db67c93538",
+      "width": 576,
+      "height": 768
+    },
+    {
+      "path": "soldier-debris-v3-rivals.png",
+      "bytes": 13968,
+      "sha256": "e5b8f309e60d644b01a48246a4214282e392ad7b9d55b3480f3899faee7771b1",
+      "width": 576,
+      "height": 768
+    },
+    {
+      "path": "soldier-debris-v3-arcade.png",
+      "bytes": 13798,
+      "sha256": "ced1640ff86d7467f641529ce278b151cb33ef5641c8243666fd6e2bb93791bc",
+      "width": 576,
+      "height": 768
+    }
+  ],
+  "runtimeDecodedAtlasBytes": 0,
+  "scope": "Real overhead renderers sampled offline. Native 3D runtime, motion and human/device acceptance require separate review."
+}

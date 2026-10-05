@@ -3,7 +3,11 @@
 import * as THREE from '../../../../optional-practice/civilian-fpv/vendor/three.module.js';
 import { encodeWorldGLB } from '../../../../optional-practice/civilian-fpv/world-content.mjs';
 import { mineralPNG, noise } from './mineral.mjs';
+import { grassPNG, gravelPNG } from './ground-maps.mjs';
 import { addReservoirEngineering } from './engineering.mjs';
+import { rootTrunks } from './rooting.mjs';
+import { retainingFaces } from './retaining.mjs';
+import { maintenanceInlays } from './maintenance.mjs';
 
 const xyz = (a) => Object.fromEntries(['x', 'y', 'z'].map((k, i) => [k, Math.round(a[i] * 1000)]));
 export const bounds = { min: xyz([-44, 0, -34]), max: xyz([6, 28, 38]) };
@@ -189,12 +193,25 @@ for (const [i, x, z] of [
   solid(`platform-pad-bollard-${i}`, [x - 0.2, 0, z - 0.2], [x + 0.2, 0.8, z + 0.2]);
 
 // Thin opaque paint is attached outside canonical closed faces. It never suggests an opening.
+const oldWindowRanges = Object.fromEntries(
+  ['closed-window', 'chalk-enamel'].map((role) => [
+    role,
+    Object.fromEntries(
+      ['positions', 'normals', 'uvs', 'colors'].map((key) => [
+        key,
+        { start: batches.get(role)?.[key].length ?? 0 },
+      ]),
+    ),
+  ]),
+);
 for (const z of [-16.8, -13.4]) {
   detailBox('closed-window', [0.025, 1.3, 1.8], [-17.98, 2.75, z]);
   for (const dz of [-0.98, 0.98])
     detailBox('chalk-enamel', [0.05, 1.55, 0.12], [-17.955, 2.75, z + dz]);
   for (const y of [2, 3.5]) detailBox('chalk-enamel', [0.05, 0.12, 2.08], [-17.95, y, z]);
 }
+for (const [role, attributes] of Object.entries(oldWindowRanges))
+  for (const [key, range] of Object.entries(attributes)) range.end = batches.get(role)[key].length;
 detailBox('blue-enamel', [1.65, 2.45, 0.035], [-22, 1.225, -10.98]);
 detailBox('safety-yellow', [1.75, 0.1, 0.045], [-22, 2.5, -10.96]);
 detailBox('oxidized-roof', [8.68, 0.07, 8.68], [-22, 4.49, -15]);
@@ -293,6 +310,75 @@ terrain.setAttribute('position', new THREE.Float32BufferAttribute(terrainPositio
 terrain.setIndex(terrainIndices);
 terrain.computeVertexNormals();
 add(terrain, 'mineral-ridge');
+let terrainStitched = false;
+export function includeTerrainStitching() {
+  if (terrainStitched) throw Error('Terrain boundary already stitched');
+  const positions = [];
+  const skirt = (a, b, north) => {
+    const bottomA = [a[0], 0, a[2]],
+      bottomB = [b[0], 0, b[2]];
+    // The decorative heightfield interpolates between discrete terrace levels,
+    // exposing its open underside. Close that edge on the existing unreachable
+    // world boundary. Playable geometry and every original top triangle stay exact.
+    if (a[1] > 0) positions.push(...a, ...(north ? bottomA : b), ...(north ? b : bottomA));
+    if (b[1] > 0)
+      positions.push(...b, ...(north ? bottomA : bottomB), ...(north ? bottomB : bottomA));
+  };
+  for (let i = 0; i < zs.length - 1; i++) {
+    if (zs[i] < -34 || zs[i + 1] > 38) continue;
+    skirt(
+      [-44, groundHeight(-44, zs[i]), zs[i]],
+      [-44, groundHeight(-44, zs[i + 1]), zs[i + 1]],
+      false,
+    );
+  }
+  for (let i = 0; i < xs.length - 1; i++) {
+    if (xs[i] < -44 || xs[i + 1] > 6) continue;
+    skirt(
+      [xs[i], groundHeight(xs[i], -34), -34],
+      [xs[i + 1], groundHeight(xs[i + 1], -34), -34],
+      true,
+    );
+  }
+  const closure = new THREE.BufferGeometry();
+  closure.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
+  add(closure, 'mineral-ridge');
+  terrainStitched = true;
+  return { triangles: positions.length / 9, positions };
+}
+let retainingAdded = false,
+  retainingCoating = false,
+  requiredCoating = false;
+export function includeRetainingFaces({ coating = false, required = false } = {}) {
+  if (retainingAdded) throw Error('Retaining finish already included');
+  if (required && !coating) throw Error('Required coating needs the finish');
+  const finish = retainingFaces(terrains),
+    shape = new THREE.BufferGeometry(),
+    first = batches.get('mineral-ridge').colors.length;
+  shape.setAttribute('position', new THREE.Float32BufferAttribute(finish.positions, 3));
+  add(shape, 'mineral-ridge');
+  const colors = batches.get('mineral-ridge').colors;
+  for (let i = first; i < colors.length; i++)
+    colors[i] *= finish.shades[Math.floor((i - first) / 3)];
+  if (coating) {
+    const batch = batches.get('mineral-ridge'),
+      firstUV = (first / 3) * 2;
+    // Compress the existing mineral pattern vertically on the new cut faces.
+    // The metre projection stays continuous across each face's four bands;
+    // no new map or UV change to the retained ridge/top surfaces is introduced.
+    for (let i = 0; i < finish.faces.length; i++) {
+      if (finish.faces[i].kind !== 'side') continue;
+      for (let vertex = 0; vertex < 3; vertex++) {
+        const uv = firstUV + (i * 3 + vertex) * 2;
+        batch.uvs[uv + 1] *= 4;
+      }
+    }
+  }
+  retainingAdded = true;
+  retainingCoating = coating;
+  requiredCoating = required;
+  return finish;
+}
 function surfaceHeight(x, z) {
   const ix = xs.findIndex((v, i) => x >= v && x <= xs[i + 1]),
     iz = zs.findIndex((v, i) => z >= v && z <= zs[i + 1]),
@@ -363,6 +449,26 @@ for (let i = 0; i < 56; i++) {
     }
   }
 }
+let treesRooted = false;
+export function includeRootedVegetation() {
+  if (treesRooted) throw Error('Tree feet already rooted');
+  const contact = rootTrunks(
+    batches.get('tree-bark'),
+    batches.get('mineral-ridge').positions.slice(0, terrainIndices.length * 3),
+  );
+  treesRooted = true;
+  return contact;
+}
+let maintenanceAdded = false;
+export function includeMaintenanceInlays() {
+  if (maintenanceAdded) throw Error('Maintenance inlays already included');
+  for (const [role, attributes] of Object.entries(oldWindowRanges))
+    for (const [key, { start, end }] of Object.entries(attributes))
+      batches.get(role)[key].splice(start, end - start);
+  const result = maintenanceInlays(add);
+  maintenanceAdded = true;
+  return { ...result, removedTriangles: 120, removedRanges: oldWindowRanges };
+}
 // Irregular low outcrops break the smooth bank into geological shelves.
 // These are embedded scenery, all east of the marked course boundary.
 for (let i = 0; i < 10; i++) {
@@ -420,14 +526,37 @@ export const anchors = [
   { id: 'shore-return', kind: 'landing', position: [-30, 0.45, 26], order: 3 },
 ];
 
-export function createScene() {
+export function createScene({ groundMaterials = false } = {}) {
   const document = {
     asset: {
       version: '2.0',
       generator:
-        'RevealLine original Mountain Reservoir source ' + (engineeringAdded ? 'r7' : 'r4'),
+        'RevealLine original Mountain Reservoir source ' +
+        (groundMaterials
+          ? retainingAdded
+            ? retainingCoating
+              ? requiredCoating
+                ? treesRooted
+                  ? maintenanceAdded
+                    ? 'r16-maintenance-inlays-candidate'
+                    : 'r15-rooted-vegetation-candidate'
+                  : 'r14-required-surface-coating-candidate'
+                : 'r13-opaque-retaining-coating-candidate'
+              : 'r12-retaining-finish-candidate'
+            : 'r11-ground-material-candidate'
+          : terrainStitched
+            ? 'r9-terrain-stitching-candidate'
+            : engineeringAdded
+              ? 'r7'
+              : 'r4'),
     },
     scene: 0,
+    ...(requiredCoating
+      ? {
+          extensionsUsed: ['REVEALLINE_surface_coating'],
+          extensionsRequired: ['REVEALLINE_surface_coating'],
+        }
+      : {}),
     scenes: [{ nodes: [] }],
     nodes: [],
     meshes: [],
@@ -475,11 +604,32 @@ export function createScene() {
     const material =
       document.materials.push({
         name: role,
+        ...(retainingCoating && role === 'mineral-ridge'
+          ? requiredCoating
+            ? { extensions: { REVEALLINE_surface_coating: { version: 1, kind: 'opaque-finish' } } }
+            : {
+                extras: {
+                  reveallineSurface: { format: 'SimSurfaceCoating.v1', kind: 'opaque-finish' },
+                },
+              }
+          : {}),
         pbrMetallicRoughness: {
           baseColorFactor: [color.r, color.g, color.b, 1],
           metallicFactor: role === 'reservoir-water' ? 0.15 : 0,
           roughnessFactor: definition[2],
-          ...(textured ? { baseColorTexture: { index: 0 } } : {}),
+          ...(textured
+            ? {
+                baseColorTexture: {
+                  index: groundMaterials
+                    ? role === 'shore-meadow'
+                      ? 1
+                      : role === 'warm-gravel'
+                        ? 2
+                        : 0
+                    : 0,
+                },
+              }
+            : {}),
         },
       }) - 1;
     const mesh =
@@ -490,7 +640,18 @@ export function createScene() {
             attributes: {
               POSITION: attribute(batch.positions, 'VEC3'),
               NORMAL: attribute(batch.normals, 'VEC3'),
-              ...(textured ? { TEXCOORD_0: attribute(batch.uvs, 'VEC2') } : {}),
+              ...(textured
+                ? {
+                    TEXCOORD_0: attribute(
+                      groundMaterials && role === 'shore-meadow'
+                        ? batch.uvs.map((v) => (v * 4) / 1.5)
+                        : groundMaterials && role === 'warm-gravel'
+                          ? batch.uvs.map((v) => (v * 4) / 0.75)
+                          : batch.uvs,
+                      'VEC2',
+                    ),
+                  }
+                : {}),
               ...(colored
                 ? {
                     COLOR_0: attribute(
@@ -528,16 +689,26 @@ export function createScene() {
       }) - 1,
     );
   }
-  const texture = mineralPNG(),
-    imageView =
+  document.images = [];
+  const images = [['original-mineral-grain-256', mineralPNG()]];
+  if (groundMaterials)
+    images.push(['original-short-grass-128', grassPNG()], ['original-gravel-128', gravelPNG()]);
+  if (groundMaterials && images[1][1].length + images[2][1].length > 48 * 1024)
+    throw Error('Ground image authoring budget exceeded');
+  for (const [name, texture] of images) {
+    const padding = (4 - (offset % 4)) % 4;
+    if (padding) {
+      pieces.push(new Uint8Array(padding));
+      offset += padding;
+    }
+    const imageView =
       document.bufferViews.push({ buffer: 0, byteOffset: offset, byteLength: texture.length }) - 1;
-  pieces.push(texture);
-  offset += texture.length;
-  document.images = [
-    { name: 'original-mineral-grain-256', mimeType: 'image/png', bufferView: imageView },
-  ];
+    pieces.push(texture);
+    offset += texture.length;
+    document.images.push({ name, mimeType: 'image/png', bufferView: imageView });
+  }
   document.samplers = [{ magFilter: 9729, minFilter: 9987, wrapS: 10497, wrapT: 10497 }];
-  document.textures = [{ sampler: 0, source: 0 }];
+  document.textures = document.images.map((_, source) => ({ sampler: 0, source }));
   document.buffers[0].byteLength = offset;
   const binary = new Uint8Array(offset);
   let position = 0;
@@ -551,7 +722,7 @@ export function createScene() {
       triangles,
       materials: document.materials.length,
       nodes: document.nodes.length,
-      textures: 1,
+      textures: document.textures.length,
       colliders: obstacles.length,
       collisionTriangles: terrains.reduce((n, o) => n + o.indices.length / 3, 0),
     },
