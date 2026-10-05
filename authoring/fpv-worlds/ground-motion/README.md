@@ -8,9 +8,16 @@ movement policy as well as body shape. Absent-policy keys stay unchanged.
 
 The [P1 integration receipt](evidence/integration-p1/README.md) records the source
 merge, preserved identities and recordings, and bounded mixed-policy checks.
-This source is **not yet covered by fresh package or native browser admission**.
-The P1 policy has 105 Worlds source inputs and allows 128 files / 20 MiB; the
-source-only integrated inventory is 16,981,627 bytes, leaving 3,989,893 bytes.
+The subsequent data-only rebase onto main
+`00770c96eb8eab8d0aedda433d115f86188d5a75` produces qualification source
+`328f4c5373a89342aca2063134c0bc2823ecbb07`. All 105 inputs remain byte-identical
+to c888. Fresh full Node 22 validation and all-three-package admission with two
+byte-identical builds now pass. The exact Worlds package has 112 members and
+16,981,627 raw input bytes, leaving 3,989,893 bytes under P1's inherited
+128-file / 20 MiB policy. See the
+[integrated admission archive](evidence/integration-p1-admission/README.md).
+
+**Fresh native browser and populated-storage/offline qualification remain pending.**
 No package policy was edited by this feature. Earlier receipts below retain
 their original revision, 95-input inventory and 102-member player identities.
 
@@ -120,4 +127,4 @@ Both existing Library feeds stay unchanged. A later Harbor listing requires its 
 qualified content; it cannot be added to an older surface-only feed. Publication
 remains a Draft until the integrated prerequisite qualifies. The earlier human
 main-merge hold has been explicitly released; that does not qualify the changed
-P1 runtime or replace the pending integrated package/browser checks.
+P1 runtime or replace the pending integrated browser/offline checks.

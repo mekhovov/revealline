@@ -3462,3 +3462,29 @@ was performed by this integration handoff. Harbor's recorded content checks
 remain separate from the upcoming compatible Library cohort. Canals proceeds
 through its first scene checkpoint before complete routes; broader regression,
 physical-device and novice gates remain D6.
+
+### 5 October — P1 ground package admission complete; native integration next
+
+After safe storage recovery, the ground parent rebased cleanly onto data-only
+main `00770c96eb8eab8d0aedda433d115f86188d5a75`. Qualification source
+`328f4c5373a89342aca2063134c0bc2823ecbb07` retains all 105 runtime inputs
+byte-identically to c888. Recovery ref
+`codex/fpv-ground-motion-before-row-007` preserves pre-rebase 68c9611.
+
+Fresh full Node 22 validation and all three optional-package admissions pass,
+with two byte-identical builds per package and every committed source input
+verified. Worlds now has the actual P1 closure: 105 inputs, 112 full members,
+16,981,627 source bytes and 3,989,893 bytes of reserve under the inherited
+20 MiB / 128-member policy. Academy has 76 members. The exact no-overlay Worlds
+stage passes 243 hash/ownership checks. The small
+[integrated admission archive](../authoring/fpv-worlds/ground-motion/evidence/integration-p1-admission/README.md)
+retains successful logs and the earlier bounded sparse-materialization failure.
+
+This closes validation and package admission for the integrated parent.
+Fresh native browser and populated-storage/offline acceptance remain pending;
+old ca284/8981 results are not relabeled. Root will cascade Harbor onto the
+docs-complete parent and coordinate explicit branch leases before updating the
+Draft native stack. The separate Library cohort must preserve older feeds and
+carry eligible published rows forward. No push, merge or new unit coverage was
+performed by this admission handoff. Canals remains at its first-scene stage;
+broader regression, novice and physical-device qualification remain D6.
