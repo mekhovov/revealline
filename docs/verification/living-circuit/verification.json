@@ -3,7 +3,7 @@
   "date": "2026-10-05",
   "baseMain": "2d447bc790bdf3951251c99041c8a918363ece0a",
   "branch": "codex/snake-continuous-play",
-  "scope": "Merged working tree; no published deployment or physical-controller certification",
+  "scope": "Implementation revision 8b34e111fe7cf7e7fcaf538fe7c51cea4a6c1fa1; no published deployment or physical-controller certification",
   "validation": {
     "repositoryValidate": true,
     "repositoryLint": true,
@@ -18,22 +18,31 @@
     "statsAndFlowTests": 28,
     "otherCoreResultChecks": 21,
     "winPictureHostTests": 5,
-    "optionalPackageTests": 9
+    "optionalPackageTests": 9,
+    "ciFollowupTargetedTests": 131,
+    "statisticsLifecycleTests": 23,
+    "studioPreviewIsolationTests": 4
   },
   "distribution": {
-    "method": "inspectBuildProject",
-    "expandedDistributionWritten": false,
-    "zipWritten": false,
+    "sourceRevision": "8b34e111fe7cf7e7fcaf538fe7c51cea4a6c1fa1",
+    "method": "buildProject; every expanded and archived file verified against manifest",
+    "expandedDistributionWritten": true,
+    "zipWritten": true,
     "files": 3084,
-    "payloadBytesIncludingManifest": 1004021220,
+    "payloadBytesIncludingManifest": 1004022352,
     "manifest": {
       "path": "manifest.json",
-      "bytes": 458593,
-      "sha256": "9d856128d4e8b9ad418cbe5f9ef6259791feee0abda6220811c9dd7a36a59018"
+      "bytes": 458631,
+      "sha256": "51d702f7fc864fbac2eba093042f3447d16760752646809f18425936226e2c52"
     },
-    "verifiedSnakeRuntimeFiles": 34,
-    "allProjectedSnakeRuntimeHashesMatch": true,
-    "projectionNote": "Two hosts use canonical AST-preserving indentation compaction. HTML receives generated offline markers and is covered by full build preparation."
+    "zip": {
+      "bytes": 1004546546,
+      "sha256": "d2ac50530f266564e50c47f2d4669cec966a68824507563d4680078048d8431d",
+      "allMemberChecksumsMatch": true
+    },
+    "allExpandedFileChecksumsMatch": true,
+    "archiveEntries": 3085,
+    "temporaryOutputRemovedAfterVerification": true
   },
   "browser": {
     "locales": ["en", "uk"],
@@ -75,10 +84,10 @@
     "method": "Verified Git-backed disposable build copies and losslessly compressed inactive logs",
     "sourceAndGitHistoryPreserved": true,
     "unmatchedFilesAndArchivesPreserved": true,
-    "expandedDistributionOmittedForDiskPressure": true
+    "expandedDistributionOmittedForDiskPressure": false,
+    "temporaryDistributionRemovedAfterChecksumVerification": true
   },
   "remainingVerification": [
-    "Fresh distribution ZIP and expanded output were not written because free disk space remained below 0.5 GiB.",
     "Physical touch/controller sessions and human balance calibration across variable schedules remain separate from deterministic and browser tests."
   ]
 }
