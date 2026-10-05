@@ -33,6 +33,8 @@ import { validateThemeProfile } from './world-themes.mjs';
 import {
   HUNT_CONTACT_CRITERION,
   HUNT_FLIGHT_MODEL,
+  HUNT_MOMENTUM_MODEL,
+  HUNT_MOMENTUM_CONTACT,
   HUNT_TAIL_LIMITS,
   validateHuntContact,
   huntContact,
@@ -889,6 +891,7 @@ export function createWorldFlight({
   );
   const rules = source.rules;
   const contactHunt = huntContact(source, mode);
+  const momentumCatch = contactHunt?.contactPolicy === HUNT_MOMENTUM_CONTACT;
   const contactTargets = new Set(contactHunt?.targets ?? []);
   const pursuit =
     source.format === PURSUIT_COURSE
@@ -906,7 +909,9 @@ export function createWorldFlight({
     model: pursuit
       ? pursuitModel(source.pursuit)
       : contactHunt
-        ? HUNT_FLIGHT_MODEL
+        ? momentumCatch
+          ? HUNT_MOMENTUM_MODEL
+          : HUNT_FLIGHT_MODEL
         : WORLD_FLIGHT_MODEL,
     backend: WORLD_COLLISION_BACKEND,
     course: source.id,
@@ -1362,9 +1367,13 @@ export function createWorldFlight({
         AXES.reduce((n, k) => n + state.velocity[k] * hit.normal[k], 0),
         Q,
       );
-      if (hit.moving) state.velocity = { x: 0, y: 0, z: 0 };
-      else if (into < 0)
-        for (const k of AXES) state.velocity[k] -= roundDiv(hit.normal[k] * into, Q);
+      // Only an accepted opt-in catch retains its incoming momentum. Keep the
+      // swept contact position and all other hull/support responses unchanged.
+      if (!momentumCatch || !caught) {
+        if (hit.moving) state.velocity = { x: 0, y: 0, z: 0 };
+        else if (into < 0)
+          for (const k of AXES) state.velocity[k] -= roundDiv(hit.normal[k] * into, Q);
+      }
       const hard = hit.moving || hit.normal.y < 866025 || impactSpeed > 1500;
       if (hard) {
         if (caught) continue;

@@ -3,12 +3,23 @@ import { isqrt } from './math.mjs';
 
 export const HUNT_CONTACT_CRITERION = 'hunt-contact-v1';
 export const HUNT_FLIGHT_MODEL = 'civilian-world-hunt.v1';
+export const HUNT_MOMENTUM_MODEL = 'civilian-world-hunt.v2';
+export const HUNT_MOMENTUM_CONTACT = 'retain-momentum-v1';
 export const HUNT_TAIL_LIMITS = Object.freeze({ links: 64, path: 256, sampleDistance: 250 });
 const integer = (n, min, max) => Number.isSafeInteger(n) && n >= min && n <= max;
 const distance = (a, b) => isqrt((a.x - b.x) ** 2 + (a.y - b.y) ** 2 + (a.z - b.z) ** 2);
 
 export function validateHuntContact(step, course) {
-  exactKeys(step, ['type', 'targets', 'ordered', 'tail'], 'Hunt contact criterion');
+  exactKeys(
+    step,
+    ['type', 'targets', 'ordered', 'tail', 'contactPolicy'],
+    'Hunt contact criterion',
+  );
+  required(
+    step.contactPolicy === undefined ||
+      (step.contactPolicy === HUNT_MOMENTUM_CONTACT && course.format === 'FlightCourse.v2'),
+    'Unsupported Hunt contact policy; momentum catches require an ordinary FlightCourse.v2',
+  );
   required(
     step.type === HUNT_CONTACT_CRITERION &&
       typeof step.ordered === 'boolean' &&
