@@ -156,6 +156,9 @@ async function fixture(
         now += elapsed;
       }
     },
+    jump(milliseconds) {
+      now += milliseconds;
+    },
     key(code, type = 'keydown') {
       win.emit(type, { code, target: doc.activeElement, repeat: false });
     },
@@ -1549,3 +1552,33 @@ test('Academy result shortcuts choose once and launch a random prepared lesson d
   assert.equal(f.view.snapshot().status, 'active');
   assert.equal(f.view.snapshot().ticks, 0);
 });
+
+for (const clock of ['animation timestamp', 'callback execution']) {
+  test(`Academy cancels an imminent auto-next before a stalled ${clock}`, async (t) => {
+    const course = structuredClone(FLIGHT_COURSES[0]);
+    const landing = { ...course.steps['self-level'].at(-1), ticks: 1 };
+    course.steps = { 'self-level': [landing], acro: [landing] };
+    const f = await fixture(t, { courses: [course, FLIGHT_COURSES[1]], demonstrations: [] });
+    let executionTime = 0;
+    f.win.performance = { now: () => executionTime };
+    assert.equal(f.view.arm(), true);
+    f.tick(3);
+    assert.equal(f.view.snapshot().status, 'complete');
+    const flow = f.doc.querySelector('[data-continuous-play]');
+    for (let i = 0; i < 550 && !flow.textContent.includes('Next level in 1s'); i++) f.tick();
+    assert.match(flow.textContent, /Next level in 1s/);
+    f.tick(39);
+    const completed = f.view.snapshot(),
+      proof = f.view.exportAttempt();
+    if (clock === 'animation timestamp') f.jump(1200);
+    else executionTime = 1200;
+    f.tick(4);
+    assert.deepEqual(
+      f.view.snapshot(),
+      completed,
+      'A stalled frame must not load the next lesson.',
+    );
+    assert.deepEqual(f.view.exportAttempt(), proof);
+    assert.equal(flow.hidden, true, 'The cancelled timer cannot silently rearm.');
+  });
+}

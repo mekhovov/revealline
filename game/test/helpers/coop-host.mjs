@@ -364,11 +364,11 @@ export async function page(
     press(key);
     doc.activeElement.emit('keyup', { key, code: key });
   };
-  const tick = (count = 1) => {
+  const tick = (count = 1, elapsed = FIXED_DT * 1000) => {
     for (let index = 0; index < count; index++) {
       const [id, callback] = frames.entries().next().value;
       frames.delete(id);
-      callback((now += FIXED_DT * 1000));
+      callback((now += elapsed));
     }
   };
   return {

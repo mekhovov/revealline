@@ -587,7 +587,7 @@ export function bootCoop({
   const enemyStatsViews = [];
   enemyStatsViews.push(
     mountEnemyStats({
-      container: $('coop-overlay'),
+      container: $('coop-overlay').querySelector('.overlay-card'),
       stats: enemyStatistics.stats,
       gameType: 'team',
       getAttempt: enemyStatistics.getAttempt,
@@ -613,7 +613,8 @@ export function bootCoop({
     onRetry: () => $('coop-retry').click(),
   });
   const flowControls = mountContinuousPlayControls({
-    parent: $('coop-overlay'),
+    parent: $('coop-next').parentElement,
+    primaryAction: $('coop-next'),
     controller: continuousPlay,
     locale: () => document.documentElement.lang,
   });
@@ -1951,6 +1952,10 @@ export function bootCoop({
       });
   }
   function overlay({ focus = true } = {}) {
+    $('coop-next').parentElement.classList.toggle(
+      'continuous-result-actions',
+      ['won', 'lost'].includes(run?.status),
+    );
     const reactionRow = acceptedPicture?.journeyRow;
     prepareReactionAttempt();
     const reactionContext = {
@@ -6074,8 +6079,12 @@ export function bootCoop({
       }
       const elapsed = last === null ? 0 : (now - last) / 1000;
       last = now;
-      continuousPlay.advance(elapsed * 1000);
-      if (running() && elapsed > 0.25) pause();
+      // Results still own an automatic launch. Cancel that timer before a long
+      // callback can replace the result with a new (then immediately paused) run.
+      if (elapsed > 0.25) {
+        continuousPlay.cancel('stalled');
+        pause();
+      } else continuousPlay.advance(elapsed * 1000);
       if (running()) {
         accumulator += elapsed;
         while (accumulator + 1e-9 >= FIXED_DT && running()) {

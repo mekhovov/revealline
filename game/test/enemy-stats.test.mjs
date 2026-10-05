@@ -340,7 +340,13 @@ test('Worlds drone and vehicle victories use localized distinct canvas portraits
   await catchAt(stats, attempt, 2, 'vehicle');
   const doc = new Document(),
     container = doc.createElement('div');
-  const panel = mountEnemyStats({ container, stats, document: doc, locale: 'uk' });
+  const panel = mountEnemyStats({
+    container,
+    stats,
+    document: doc,
+    locale: 'uk',
+    variant: 'collection',
+  });
   assert.match(panel.root.textContent, /Дрон/);
   assert.match(panel.root.textContent, /Бронемашина/);
   assert.equal(panel.root.querySelectorAll('canvas').length, 2);
@@ -391,4 +397,68 @@ test('milestones acknowledge live progress without replaying import history or t
   assert.equal(badge.hidden, false);
   assert.match(badge.textContent, /10 victories/);
   assert.equal(doc.activeElement, focused);
+});
+
+test('compact menu stats keep enemy rows behind a native disclosure and retain focus/open state during updates', async (t) => {
+  const stats = make(t).stats,
+    attempt = stats.beginAttempt({ gameType: 'snake' });
+  await catchAt(stats, attempt, 1, 'patroller');
+  const doc = new Document(),
+    card = doc.createElement('div'),
+    action = doc.createElement('button');
+  card.append(action);
+  doc.body.append(card);
+  action.focus();
+  const panel = mountEnemyStats({
+    container: card,
+    stats,
+    getAttempt: () => attempt,
+    document: doc,
+  });
+  t.after(() => panel.dispose());
+  const details = panel.root.querySelector('details'),
+    summary = details.querySelector('summary');
+  assert.ok(details);
+  assert.equal(Boolean(details.open), false);
+  assert.equal(panel.root.querySelectorAll('.enemy-stats-card').length, 0);
+  assert.equal(panel.root.querySelectorAll('.enemy-stats-row').length, 0);
+  assert.equal(panel.root.querySelectorAll('img,canvas').length, 0);
+  assert.match(summary.textContent, /This run1Lifetime1Enemy details/);
+  assert.equal(card.children[0], action);
+  assert.equal(doc.activeElement, action);
+  details.open = true;
+  details.emit('toggle');
+  summary.focus();
+  assert.equal(panel.root.querySelectorAll('.enemy-stats-row').length, 1);
+  await catchAt(stats, attempt, 2, 'courier');
+  assert.equal(details.open, true);
+  assert.equal(doc.activeElement, summary);
+  assert.equal(panel.root.querySelectorAll('.enemy-stats-row').length, 2);
+  assert.equal(panel.root.querySelectorAll('.enemy-stats-card').length, 0);
+  details.open = false;
+  details.emit('toggle');
+  assert.equal(panel.root.querySelectorAll('.enemy-stats-row').length, 0);
+});
+
+test('compact HUD puts current-run defeats before lifetime and has no disclosure or family gallery', async (t) => {
+  const stats = make(t).stats,
+    previous = stats.beginAttempt({ gameType: 'snake' });
+  await catchAt(stats, previous, 1, 'patroller');
+  const attempt = stats.beginAttempt({ gameType: 'snake' });
+  await catchAt(stats, attempt, 1, 'courier');
+  const doc = new Document(),
+    container = doc.createElement('div');
+  const hud = mountEnemyStats({
+    container,
+    stats,
+    getAttempt: () => attempt,
+    document: doc,
+    variant: 'hud',
+    locale: 'uk',
+  });
+  t.after(() => hud.dispose());
+  const summary = hud.root.querySelector('.enemy-stats-summary');
+  assert.match(summary.textContent, /ВорогиЦя спроба1За весь час2/);
+  assert.equal(hud.root.querySelectorAll('details,ul,img,canvas').length, 0);
+  assert.equal(hud.root.getAttribute('aria-label'), 'Переможені вороги');
 });

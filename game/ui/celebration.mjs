@@ -9,7 +9,7 @@ function hashText(value) {
 const clamp = (v, a, b) => Math.min(b, Math.max(a, v)),
   TAU = Math.PI * 2;
 const ease = (v) => 1 - (1 - clamp(v, 0, 1)) ** 3;
-export const CELEBRATION_SECONDS = 3.8;
+export const CELEBRATION_SECONDS = 5.2;
 const PAPER_COUNT = 104;
 const GLINT_COUNT = 16;
 // Keep the family IDs stable for existing presentation consumers. Each now

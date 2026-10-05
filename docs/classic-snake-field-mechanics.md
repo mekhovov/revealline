@@ -8,7 +8,7 @@ The catalogue appends 22 missions without changing any of the 96 v1–v3 recipes
 
 | Kind        | Behavior                                                                            | Counterplay                                                                                                       |
 | ----------- | ----------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
-| `jammer`    | Twelve recovery moves, a warning, then four interference moves.                     | Plan the route while reception is clear; catching the jammer immediately restores reception.                      |
+| `jammer`    | Twelve recovery moves, a warning, then four moves of full signal loss.              | Memorize an open route before the blackout; Pulse temporarily restores the feed, and catching the jammer ends it. |
 | `lane`      | Warns before activating its authored lane for two moves, then rests for eight.      | Cross during recovery or use a permanent connected bypass. Only the head is vulnerable.                           |
 | `relay`     | Contact is protected until both linked diamond pads are collected.                  | Visit both pads without growing the cable, then catch the core. The opening stays available.                      |
 | `perimeter` | Follows an adjacent-cell circuit around the outer field.                            | Intercept across the interior; a blocked patrol waits.                                                            |
@@ -26,7 +26,11 @@ New attacks are head-only. Projectile birth yields while any snake segment occup
 
 V4 adds `signal`, `projectiles`, `relays`, and `removedWalls` to the replay checkpoint. `target.caught` remains the enemy-statistics event. `relay.collected`, `target.opened`, and `wall.opened` are separate events. A win clears interference and remaining projectiles before the victory presentation.
 
-The renderer reads those fields without advancing gameplay or consuming RNG. During interference, distant wall/prey detail is dimmed; nearby geometry, every snake segment, specialist silhouettes, and attack warnings remain clear. Reduced effects keeps the same information with stationary low-contrast bands. Relays show links and collected checkmarks; projectiles mark the next cell; lane warning and active states use different line styles as well as color. `classic-mechanic-guide.mjs` supplies English and Ukrainian names, tells, and counterplay through the shared guide component.
+The renderer reads those fields without advancing gameplay or consuming RNG. The jammer warning includes a dashed amber arena edge. During the four interference moves, an opaque signal-loss screen replaces the entire playfield: enemies, snake movement, walls, relays, remains, and other world effects are not drawn underneath it. The arena boundary, cut-antenna symbol, English/Ukrainian instructions, recovery pips, and remaining-move count stay visible. Players must plan an open route before reception drops and keep steering from memory.
+
+Pulse temporarily stabilizes the feed while freezing the existing jammer phase; its remaining interference resumes when Pulse ends. A terminal collision reveals the board for failure review. Reduced effects uses stationary bands with exactly the same concealed information, rather than granting extra visibility. This presentation refinement changes neither the v4 simulation timing nor recipe/replay identities.
+
+Relays show links and collected checkmarks; projectiles mark the next cell; lane warning and active states use different line styles as well as color. `classic-mechanic-guide.mjs` supplies English and Ukrainian names, tells, and counterplay through the shared guide component.
 
 ## Qualification
 
@@ -37,5 +41,5 @@ The qualification pilot in `game/test/helpers/classic-snake-v4-playthrough.mjs` 
 Run the focused regression group with:
 
 ```sh
-node --test game/test/classic-snake-core.test.mjs game/test/classic-snake-v2.test.mjs game/test/classic-snake-v3.test.mjs game/test/classic-snake-v4.test.mjs game/test/classic-snake-presentation.test.mjs
+node --test game/test/classic-snake-core.test.mjs game/test/classic-snake-v2.test.mjs game/test/classic-snake-v3.test.mjs game/test/classic-snake-v4.test.mjs game/test/classic-snake-presentation.test.mjs game/test/classic-snake-signal-rendering.test.mjs
 ```

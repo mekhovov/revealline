@@ -536,7 +536,8 @@ export function mountFlightApp({
     onRetry: () => $('retry').click(),
   });
   const resultMissionActions = doc.createElement('div');
-  resultMissionActions.className = 'button-row';
+  resultMissionActions.className = 'button-row continuous-result-actions';
+  resultMissionActions.append($('next'), $('retry'), $('review'));
   const resultChoices = [
     ['random', ['Random level', 'Випадковий рівень']],
     ['missions', ['Choose mission', 'Вибрати місію']],
@@ -558,7 +559,8 @@ export function mountFlightApp({
   $('complete').append(resultMissionActions);
   const flowControls = mountSimContinuousPlayControls({
     document: doc,
-    parent: $('complete'),
+    parent: resultMissionActions,
+    primaryAction: $('next'),
     controller: continuousPlay,
     locale: () => locale,
   });
@@ -1151,6 +1153,18 @@ export function mountFlightApp({
   }
   function frame(now) {
     if (disposed || suspended) return;
+    const delta = lastTime === null ? 0 : now - lastTime,
+      executedAt = win.performance?.now?.() ?? now,
+      executionDelta = lastExecutionTime === null ? 0 : executedAt - lastExecutionTime;
+    lastTime = now;
+    lastExecutionTime = executedAt;
+    // Freeze before polling actions or advancing a countdown. A queued rAF can
+    // retain its pre-stall timestamp, so also check the callback execution gap.
+    if (delta > 250 || executionDelta > 250) {
+      pause('focusLost');
+      frameId = win.requestAnimationFrame(frame);
+      return;
+    }
     pollGamepad(now);
     pollMenu(now);
     if (
@@ -1161,15 +1175,9 @@ export function mountFlightApp({
       arm()
     )
       launchIntent = null;
-    const delta = lastTime === null ? 0 : now - lastTime,
-      executedAt = win.performance?.now?.() ?? now,
-      executionDelta = lastExecutionTime === null ? 0 : executedAt - lastExecutionTime;
-    lastTime = now;
-    lastExecutionTime = executedAt;
-    continuousPlay.advance(delta);
-    // A queued rAF can carry a pre-stall timestamp. Check the actual callback
-    // gap too, before accepting another input or advancing the fixed-step model.
-    if (delta > 250 || executionDelta > 250) pause('focusLost');
+    // A manual launch/reset above starts a fresh clock for the accepted flight.
+    const elapsed = lastTime === null ? 0 : delta;
+    continuousPlay.advance(elapsed);
     if (
       !reviewAbort &&
       inputAvailable() &&
@@ -1202,7 +1210,7 @@ export function mountFlightApp({
         : flight.snapshot().status === 'active';
       // Slow replay changes wall-clock scheduling, not the input order or model step.
       // Every recorded command still advances the fixed-step model exactly once.
-      if (active && delta <= 250) accumulator += Math.max(0, delta) * (replay ? replayRate : 1);
+      if (active) accumulator += Math.max(0, elapsed) * (replay ? replayRate : 1);
       while (active && accumulator >= 1000 / FLIGHT_HZ) {
         accumulator -= 1000 / FLIGHT_HZ;
         if (replay) {

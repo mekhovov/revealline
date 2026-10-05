@@ -51,6 +51,7 @@ export function mountCivilianPractice({ document: doc, window: win }) {
     recordingTicks = 0,
     recordingFull = false,
     previous = null,
+    previousExecution = null,
     accumulator = 0,
     frame = null,
     disposed = false,
@@ -121,7 +122,7 @@ export function mountCivilianPractice({ document: doc, window: win }) {
     },
   });
   const resultActions = doc.createElement('div');
-  resultActions.className = 'button-row';
+  resultActions.className = 'button-row continuous-result-actions';
   resultActions.hidden = true;
   $('discovery').after(resultActions);
   const labels = {
@@ -157,6 +158,7 @@ export function mountCivilianPractice({ document: doc, window: win }) {
   const flowControls = mountSimContinuousPlayControls({
     document: doc,
     parent: resultActions,
+    primaryAction: resultButtons[0],
     controller: continuousPlay,
     locale: () => getLocale(),
   });
@@ -186,6 +188,7 @@ export function mountCivilianPractice({ document: doc, window: win }) {
   }
   $('fallback').hidden = !!context;
   const pause = () => {
+    continuousPlay.cancel('paused');
     model.pause();
     audio.pause();
     input?.clear();
@@ -377,9 +380,19 @@ export function mountCivilianPractice({ document: doc, window: win }) {
   }
   function tick(now) {
     if (disposed) return;
+    const executedAt = win.performance?.now?.() ?? now,
+      elapsed = previous === null ? 0 : Math.max(0, now - previous),
+      executionDelta = previousExecution === null ? 0 : executedAt - previousExecution;
+    previousExecution = executedAt;
+    // Cancel the transition before a stalled callback can launch its destination.
+    if (elapsed > 1000 || executionDelta > 1000) {
+      pause();
+      previous = now;
+      frame = win.requestAnimationFrame(tick);
+      return;
+    }
     menuNavigation.poll({ now, gamepads: readGamepads() });
-    continuousPlay.advance(previous === null ? 0 : Math.max(0, now - previous));
-    if (previous !== null && now - previous > 1000) pause();
+    continuousPlay.advance(elapsed);
     if (model.snapshot().status === 'active') {
       accumulator += previous === null ? 0 : Math.max(0, Math.min(250, now - previous));
       while (accumulator >= 1000 / PRACTICE_HZ && model.snapshot().status === 'active') {
@@ -397,6 +410,7 @@ export function mountCivilianPractice({ document: doc, window: win }) {
     model.start();
     void audio.resume();
     previous = null;
+    previousExecution = null;
     accumulator = 0;
     $('arena').focus();
     render();
