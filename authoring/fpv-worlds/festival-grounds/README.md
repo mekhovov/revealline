@@ -102,3 +102,13 @@ decorative motion. Imported catalogue cards currently retain the host defaults
 Explore/intermediate/4min; activity allocation describes the authored criteria,
 not distinct runtime card metadata. Do not advertise this world in the production
 Library catalogue before qualification and publication finish.
+
+The preview wrappers now seed shared appearance synchronously before styles or
+other scripts. Both preparers copy the bootstrap, shared stylesheet and its local
+font/image dependencies into a separately hashed `appearance/` directory; these
+wrapper files are not part of the unchanged historical admitted player. Source
+URLs are rewritten for the staged fixture, and no mutable source is hardlinked.
+The focused repair passes the existing entry-bootstrap and presentation checks
+plus [149 source/staged file checks](evidence/preview-appearance-repair.json).
+Previously frozen previews, world/proof identities and their browser receipts
+remain unchanged; this repair does not claim a new gameplay qualification.

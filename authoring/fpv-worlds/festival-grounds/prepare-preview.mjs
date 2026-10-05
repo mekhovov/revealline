@@ -5,6 +5,7 @@ import path from 'node:path';
 import { createHash } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
 import { parse } from 'acorn';
+import { previewHTML, stagePreviewAppearance } from './preview-appearance.mjs';
 const [playerArg, generatedArg, outArg, beforeArg] = process.argv.slice(2);
 if (!playerArg || !generatedArg || !outArg || !beforeArg)
   throw Error('Use PLAYER_DIRECTORY GENERATED_DIRECTORY NEW_PREVIEW_DIRECTORY FROZEN_BEFORE');
@@ -113,7 +114,8 @@ await fs.link(
   path.join(output, 'content/before-project.json'),
 );
 await fs.link(beforeModelPath, path.join(output, 'content/before-scene.glb'));
-const html = await fs.readFile(new URL('./preview.html', import.meta.url));
+const appearance = await stagePreviewAppearance(output),
+  html = await previewHTML(new URL('./preview.html', import.meta.url));
 await fs.writeFile(path.join(output, 'index.html'), html, { flag: 'wx' });
 const record = {
   format: 'FPVFestivalGroundsStaticPreview.v2',
@@ -125,6 +127,7 @@ const record = {
   unchangedSourceModules: codePins,
   packageProjections,
   content: [
+    ...appearance,
     { path: 'content/project.json', bytes: projectBytes.length, sha256: sha(projectBytes) },
     { path: 'content/scene.glb', bytes: modelBytes.length, sha256: sha(modelBytes) },
     {
