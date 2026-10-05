@@ -1,0 +1,19 @@
+- link "Skip to flight selection":
+  - /url: "#explore"
+- dialog:
+  - banner:
+    - button "Menu"
+    - generic: FPV SIM · Worlds
+    - button "Resume"
+  - paragraph: Entry check-in
+  - button "Arm / resume"
+  - generic: +
+  - generic: 0.0 m · 0 m/s · 17.4 s · ♥ 100
+  - strong: 1/5 · Hold position
+  - status: Paused. Arm deliberately to continue.
+  - generic "Yaw 0%, Throttle 0%":
+  - generic "Roll 0%, Pitch 0%":
+  - complementary "Drone response. Paused · actual pose retained vertical speed near zero. 0.0 m · +0.0 m/s vertical · 0.0 m/s drift":
+    - button "Hide drone response": ×
+    - status: Paused · actual pose retained · Drone upright
+- status: Preparing flight…
