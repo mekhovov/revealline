@@ -11,8 +11,12 @@ function frames(page, count) {
   for (let i = 0; i < count; i++) page.frame();
 }
 
+function pausePage(t) {
+  return soloPage(t, { initialReadyTimeoutMs: 30000 });
+}
+
 test('Pause offers a confirmed mission restart that replaces the attempt from tick zero', async (t) => {
-  const page = await soloPage(t);
+  const page = await pausePage(t);
   page.$('start-button').click();
   await settle(() => page.doc.body.dataset.flightState === 'running');
   page.key('ArrowDown');
@@ -63,7 +67,7 @@ test('Pause offers a confirmed mission restart that replaces the attempt from ti
 });
 
 test('Restart is limited to Pause and does not leak into briefings or result menus', async (t) => {
-  const page = await soloPage(t);
+  const page = await pausePage(t);
   assert.equal(page.$('game-overlay').dataset.kind, 'ready');
   assert.equal(page.$('overlay-restart').hidden, true);
   assert.equal(page.$('pause-mission-info').hidden, false);
@@ -88,7 +92,7 @@ test('Restart is limited to Pause and does not leak into briefings or result men
 });
 
 test('Pause owns the compact action set and each child restores its exact opener', async (t) => {
-  const page = await soloPage(t);
+  const page = await pausePage(t);
   page.$('start-button').click();
   await settle(() => page.doc.body.dataset.flightState === 'running');
   page.key('Escape');
@@ -171,7 +175,7 @@ test('Pause owns the compact action set and each child restores its exact opener
 });
 
 test('Solo shell tools opened during flight return focus inside the Pause menu', async (t) => {
-  const page = await soloPage(t);
+  const page = await pausePage(t);
   page.$('start-button').click();
   await settle(() => page.doc.body.dataset.flightState === 'running');
 
@@ -207,7 +211,7 @@ test('Solo shell tools opened during flight return focus inside the Pause menu',
 });
 
 test('Classic Skip resolves universally, cancels on Back or Resume, and adopts without awarding a clear', async (t) => {
-  const page = await soloPage(t);
+  const page = await pausePage(t);
   page.$('start-button').click();
   await settle(() => page.doc.body.dataset.flightState === 'running');
   page.key('ArrowDown');

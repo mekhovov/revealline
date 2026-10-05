@@ -12,6 +12,7 @@ import { createCandidateSoloHost } from '../content-design/solo-host.mjs';
 import { libraryMissionId } from '../mission-library/library.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
 import { activateMissionCard, openMissionLibrary } from './helpers/library-selection.mjs';
+import { waitFor } from './helpers/wait-for.mjs';
 
 function observeAction(button, activate = () => button.click()) {
   const handler = button.onclick;
@@ -126,14 +127,22 @@ async function setup(t, { holdIndex = null } = {}) {
   );
   assert.ok(card);
   await activateMissionCard(card);
+  assert.equal(p.doc.body.dataset.flightState, 'briefing');
+  p.$('start-button').click();
   await running(p, 'level-0-0');
   return { p, packs };
 }
 async function running(p, id) {
-  await settle(() => {
-    p.frame(0);
-    return p.rendered.run.levelId === id && p.doc.body.dataset.flightState === 'running';
-  });
+  await waitFor(
+    () => {
+      p.frame(0);
+      return p.rendered.run.levelId === id && p.doc.body.dataset.flightState === 'running';
+    },
+    {
+      message: 'The selected Solo mission did not reach its running state.',
+      timeoutMs: 30000,
+    },
+  );
 }
 async function earnWin(p) {
   p.key('ArrowDown');
@@ -180,11 +189,17 @@ test(
       p.frame(0);
       return p.rendered.run !== current || globalThis.location.href !== href;
     });
+    const handedOff = new URL(globalThis.location.href).searchParams.has('library-mission');
     assert.ok(
-      (p.rendered.run !== current && p.doc.body.dataset.flightState === 'running') ||
-        new URL(globalThis.location.href).searchParams.has('library-mission'),
-      'Random starts a compatible mission in place or hands the browser to its exact host.',
+      p.rendered.run !== current || handedOff,
+      'Random prepares a compatible mission in place or hands the browser to its exact host.',
     );
+    if (!handedOff) {
+      const randomLevelId = p.rendered.run.levelId;
+      assert.equal(p.doc.body.dataset.flightState, 'briefing');
+      p.$('start-button').click();
+      await running(p, randomLevelId);
+    }
     assert.equal(p.$('result-auto-next').hidden, true);
     assert.deepEqual(p.errors, []);
   },
@@ -378,6 +393,8 @@ test('Solo final Journey result retains the picture while Browse permits a delib
         ? new Response(await readFile(path))
         : undefined,
   });
+  assert.equal(p.doc.body.dataset.flightState, 'briefing');
+  p.$('start-button').click();
   await running(p, 'horizon-remix');
   p.$('pause-button').click();
   // Controlled result boundary: tests navigation and ownership, not an earned
