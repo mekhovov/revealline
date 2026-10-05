@@ -43,11 +43,33 @@ function random(run, key = '_randomState') {
   return run[key] / 0x100000000;
 }
 function sound(run, type, position = run.player, value = 1) {
-  const previous = run.events.find((event) => event.type === type);
+  const family = ['defeat', 'hunt-kill', 'armor-break'].includes(type)
+    ? position.family
+    : undefined;
+  const previous = run.events.find((event) => event.type === type && event.family === family);
   if (previous) {
     previous.count++;
     previous.value += value;
-  } else run.events.push({ type, count: 1, value, x: position.x, y: position.y });
+    previous.x += (position.x - previous.x) / previous.count;
+    previous.y += (position.y - previous.y) / previous.count;
+  } else
+    run.events.push({
+      type,
+      count: 1,
+      value,
+      x: position.x,
+      y: position.y,
+      ...(family
+        ? {
+            family,
+            machine: machinery.has(family)
+              ? family === 'tracked-tank'
+                ? 'tracked'
+                : 'wheeled'
+              : false,
+          }
+        : {}),
+    });
 }
 function effect(run, kind, x, y, radius, life = 0.24) {
   const slot = run._effectFree.pop();
