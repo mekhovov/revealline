@@ -138,7 +138,7 @@ test('exact recipe authority and checkpoint validation reject altered saves', ()
       restoreClassicSnakeReplay({ ...saved, turns: [{ tick: 0, playerId: 0, direction: 'left' }] }),
     /rejected turn/,
   );
-  assert.throws(() => validateClassicSnakeLevel({ ...source, snake: {} }), /unsupported/i);
+  assert.throws(() => validateClassicSnakeLevel({ ...source, snake: {} }), /not supported/i);
 });
 
 test('wrap is explicit and stationary targets do not wander between contacts', () => {

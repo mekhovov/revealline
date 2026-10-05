@@ -9,6 +9,7 @@ import {
   classicSnakePackageIdentity,
 } from './classic-community.mjs';
 import { CLASSIC_PACES, prepareClassicSnakeLevel } from './classic-setup.mjs';
+import { classicSnakeRatingForRecord } from './classic-ratings.mjs';
 
 // Distinct from the earlier unreleased, metric-only candidate. Its bytes are kept.
 const FORMAT = 'classic-snake-progress.proof.v2';
@@ -106,7 +107,9 @@ function proofVerifier(catalogue, recipes) {
       teamwork: clear && mode === 'team' && run.snakes.every((snake) => snake.catches >= 2),
       noSupplies:
         clear &&
-        ['classic-snake-level.v2', 'classic-snake-level.v3'].includes(level.version) &&
+        ['classic-snake-level.v2', 'classic-snake-level.v3', 'classic-snake-level.v4'].includes(
+          level.version,
+        ) &&
         level.pickups.length > 0 &&
         run.pickupsUsed === 0,
       identity: dataIdentity(witness),
@@ -319,10 +322,18 @@ function mergeProgress(base, pending) {
 /** Validating the entire stored merge preserves unknown/corrupt bytes on failure.
  * Database transactions merge independent tab writes; the local queue also keeps
  * stale reads and failed-write fallbacks from replacing newer in-memory progress. */
+function availableDatabase() {
+  try {
+    return globalThis.indexedDB;
+  } catch {
+    return null;
+  }
+}
+
 export function createClassicSnakeRecords({
   onChange = () => {},
   onWarning = () => {},
-  indexedDB = globalThis.indexedDB,
+  indexedDB = availableDatabase(),
   contentPack = null,
 } = {}) {
   const pack = contentPack === null ? null : validateClassicSnakePackage(contentPack);
@@ -413,6 +424,7 @@ export function createClassicSnakeRecords({
       }
     });
   return {
+    ratingScope: backend.key,
     read: () =>
       enqueue(async () => {
         if (closed) return structuredClone(state);
@@ -425,6 +437,16 @@ export function createClassicSnakeRecords({
         return structuredClone(state);
       }),
     snapshot: () => structuredClone(state),
+    ratingEvidence: () =>
+      Object.entries(state.rows).map(([key, row]) => ({
+        key,
+        mode: row.mode,
+        policy: row.policy,
+        seed: row.seed,
+        levelIdentity: row.levelIdentity,
+        clear: row.clear,
+        fewestMoves: row.fewest?.value ?? null,
+      })),
     diagnostics: () => verifier.diagnostics(),
     recent: () => structuredClone(state.lastPlayed),
     get: (run, mode, policy = 'mission') => {
@@ -443,6 +465,7 @@ export function createClassicSnakeRecords({
         fewest: row.fewest ? { value: row.fewest.value } : null,
         teamwork: row.teamwork,
         noSupplies: row.noSupplies,
+        rating: classicSnakeRatingForRecord(row),
       };
     },
     async remember(run, { mode, chapterId, level, match, policy = 'mission', allowClear = true }) {

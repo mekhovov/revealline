@@ -51,8 +51,9 @@ function optionsFor(level, input) {
   required(
     policy === 'mission'
       ? level.objective !== 'endless'
-      : ['classic-snake-level.v2', 'classic-snake-level.v3'].includes(level.version) &&
-          level.objective === 'endless',
+      : ['classic-snake-level.v2', 'classic-snake-level.v3', 'classic-snake-level.v4'].includes(
+          level.version,
+        ) && level.objective === 'endless',
     'Snake objective and match policy differ.',
   );
   required(
@@ -173,7 +174,7 @@ export function queueClassicSnakeMatchTurn(match, seat, direction) {
 }
 
 /** Moves at one timestamp resolve on every due board before expiry or victory. */
-export function advanceClassicSnakeMatchTo(match, time) {
+export function advanceClassicSnakeMatchTo(match, time, { onStep } = {}) {
   required(finiteTime(time) && time >= match.elapsedMs, 'Invalid monotonic Snake match time.');
   if (match.status !== 'running') return match;
   let next = nextClassicSnakeMatchEventAt(match);
@@ -185,6 +186,7 @@ export function advanceClassicSnakeMatchTo(match, time) {
       if (match.boardResults[i] || run.elapsedMs + classicSnakeSummary(run).stepMs !== next)
         continue;
       stepClassicSnake(run);
+      onStep?.({ match, run, board: i, elapsedMs: next });
       if (run.events.some((event) => event.type === 'target.caught')) match.lastCatchAt[i] = next;
     }
     // A legal catch on the deadline refreshes it. Fatal movement still owns its
@@ -252,7 +254,7 @@ export function exportClassicSnakeMatch(match) {
     checkpoint: checkpoint(match),
   };
 }
-export function restoreClassicSnakeMatch(source, { level: expected } = {}) {
+export function restoreClassicSnakeMatch(source, { level: expected, onStart, onStep } = {}) {
   const value = boundedJSON(source, {
     maxBytes: 6 * 1024 * 1024,
     maxNodes: 500000,
@@ -287,6 +289,7 @@ export function restoreClassicSnakeMatch(source, { level: expected } = {}) {
       ),
     'Snake boards do not share the accepted match recipe.',
   );
+  onStart?.(match);
   let prior = 0;
   for (const turn of value.turns) {
     exactKeys(turn, ['atMs', 'seat', 'direction'], 'Snake match input');
@@ -295,13 +298,13 @@ export function restoreClassicSnakeMatch(source, { level: expected } = {}) {
       'Invalid Snake match input time.',
     );
     prior = turn.atMs;
-    advanceClassicSnakeMatchTo(match, turn.atMs);
+    advanceClassicSnakeMatchTo(match, turn.atMs, { onStep });
     required(
       match.elapsedMs === turn.atMs && queueClassicSnakeMatchTurn(match, turn.seat, turn.direction),
       'Snake match contains a late or rejected input.',
     );
   }
-  advanceClassicSnakeMatchTo(match, value.elapsedMs);
+  advanceClassicSnakeMatchTo(match, value.elapsedMs, { onStep });
   required(
     match.elapsedMs === value.elapsedMs &&
       canonicalJSON(match.runs.map(exportClassicSnakeReplay)) === canonicalJSON(value.replays) &&
@@ -313,7 +316,7 @@ export function restoreClassicSnakeMatch(source, { level: expected } = {}) {
 
 /** Historical wrappers had board journals only. Recover earliest legal input
  * times; the sole input-limit result retains its accepted fractional end time. */
-export function restoreClassicSnakeLegacyMatch(source, { level } = {}) {
+export function restoreClassicSnakeLegacyMatch(source, { level, onStart, onStep } = {}) {
   const value = boundedJSON(source, {
     maxBytes: 4 * 1024 * 1024,
     maxNodes: 200000,
@@ -380,14 +383,15 @@ export function restoreClassicSnakeLegacyMatch(source, { level } = {}) {
     seed: 17,
     policy: 'mission',
   });
+  onStart?.(match);
   for (const { atMs, seat, direction } of commands) {
-    advanceClassicSnakeMatchTo(match, atMs);
+    advanceClassicSnakeMatchTo(match, atMs, { onStep });
     required(
       match.elapsedMs === atMs && queueClassicSnakeMatchTurn(match, seat, direction),
       'Historical Snake boards disagree.',
     );
   }
-  advanceClassicSnakeMatchTo(match, value.elapsedMs);
+  advanceClassicSnakeMatchTo(match, value.elapsedMs, { onStep });
   required(
     match.elapsedMs === value.elapsedMs &&
       canonicalJSON(match.runs.map(exportClassicSnakeReplay)) === canonicalJSON(value.replays),

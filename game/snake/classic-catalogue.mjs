@@ -1,3 +1,4 @@
+import { CLASSIC_SNAKE_V4_CHAPTERS, CLASSIC_SNAKE_V4_LEVELS } from './classic-catalogue-v4.mjs';
 import { CLASSIC_SNAKE_V3_CHAPTERS, CLASSIC_SNAKE_V3_LEVELS } from './classic-catalogue-v3.mjs';
 import { CLASSIC_SNAKE_V2_CHAPTERS, CLASSIC_SNAKE_V2_LEVELS } from './classic-catalogue-v2.mjs';
 
@@ -760,11 +761,13 @@ export const CLASSIC_SNAKE_CHAPTERS = freeze([
   ...FOUNDATION_CHAPTERS,
   ...CLASSIC_SNAKE_V2_CHAPTERS,
   ...CLASSIC_SNAKE_V3_CHAPTERS,
+  ...CLASSIC_SNAKE_V4_CHAPTERS,
 ]);
 export const CLASSIC_SNAKE_LEVELS = freeze([
   ...FOUNDATION_LEVELS,
   ...CLASSIC_SNAKE_V2_LEVELS,
   ...CLASSIC_SNAKE_V3_LEVELS,
+  ...CLASSIC_SNAKE_V4_LEVELS,
 ]);
 export const CLASSIC_SNAKE_CAMPAIGNS = freeze([
   {
@@ -812,6 +815,12 @@ export const CLASSIC_SNAKE_CAMPAIGNS = freeze([
     ),
     chapterIds: CLASSIC_SNAKE_V2_CHAPTERS.slice(4, 6).map((chapter) => chapter.id),
   },
+  ...CLASSIC_SNAKE_V4_CHAPTERS.map((chapter) => ({
+    id: `${chapter.id}-v1`,
+    title: chapter.title,
+    description: chapter.description,
+    chapterIds: [chapter.id],
+  })),
 ]);
 export const CLASSIC_SNAKE_FEATURED = freeze(
   CLASSIC_SNAKE_CHAPTERS.map((chapter, index) => {

@@ -28,16 +28,13 @@ function front(run, target, kind) {
 }
 
 test('v3 adds twelve distinct layouts without changing the 84 historical recipes', () => {
-  assert.equal(CLASSIC_SNAKE_LEVELS.length, 96);
-  const previous = CLASSIC_SNAKE_LEVELS.filter(
-    (row) => row.level.version !== 'classic-snake-level.v3',
-  );
+  const historical = CLASSIC_SNAKE_LEVELS.filter((row) => !row.level.version.endsWith('v4'));
+  assert.equal(historical.length, 96);
+  const previous = historical.filter((row) => row.level.version !== 'classic-snake-level.v3');
   assert.equal(previous.length, 84);
-  const geometries = new Set(
-    CLASSIC_SNAKE_LEVELS.slice(-12).map((row) => JSON.stringify(row.level.walls)),
-  );
+  const geometries = new Set(historical.slice(-12).map((row) => JSON.stringify(row.level.walls)));
   assert.equal(geometries.size, 12);
-  for (const row of CLASSIC_SNAKE_LEVELS) {
+  for (const row of historical) {
     const before = structuredClone(row.level);
     validateClassicSnakeLevel(row.level);
     const remix = makeClassicSnakeV3(row.level, { varied: true });

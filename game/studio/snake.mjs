@@ -1,8 +1,12 @@
 import { CLASSIC_SNAKE_LEVELS } from '../snake/classic-catalogue.mjs';
-import { makeClassicSnakeV3, createClassicSnake } from '../snake/classic-core.mjs';
+import { createClassicSnake, CLASSIC_SNAKE_V4_KINDS } from '../snake/classic-core.mjs';
+import { prepareClassicSnakeStudioLevel } from '../snake/classic-studio-recipe.mjs';
 import { drawClassicTarget } from '../snake/classic-target-art.mjs';
-import { actorFieldGuide, ACTOR_CASTS } from '../hunt/actor-catalog.mjs';
-import { renderEnemyFieldGuide } from '../ui/enemy-field-guide.mjs';
+import { ACTOR_CASTS } from '../hunt/actor-catalog.mjs';
+import {
+  classicMechanicGuide as actorFieldGuide,
+  renderClassicEnemyFieldGuide as renderEnemyFieldGuide,
+} from '../snake/classic-mechanic-guide.mjs';
 import { createProfileRecordBackend } from '../profile-storage.mjs';
 import { boundedJSON, required } from '../data-json.mjs';
 import { contentStudioLinks } from '../ui/content-studio-navigation.mjs';
@@ -188,12 +192,18 @@ const kinds = [
   'pair',
   'shield',
   'brace',
+  ...CLASSIC_SNAKE_V4_KINDS,
 ];
 const kind = field(
   fields,
   words('Prey policy', 'Поведінка здобичі'),
   select(kinds.map((value) => [value, actorFieldGuide(value, language)?.name ?? value])),
 );
+// Advanced posts, linked pads and lanes are authored together. Their accepted
+// policy is inspectable here and editable in package JSON, not replaced by a
+// guessed generic policy when a template is opened.
+for (const option of kind.options)
+  if (CLASSIC_SNAKE_V4_KINDS.includes(option.value)) option.disabled = true;
 const population = field(
   fields,
   words('Active prey', 'Активні цілі'),
@@ -265,9 +275,9 @@ const current = () => draft.entries[active];
 const upgradedEntries = new WeakMap();
 function editableLevel() {
   const entry = current();
-  if (entry.level.version !== 'classic-snake-level.v3') {
+  if (!['classic-snake-level.v3', 'classic-snake-level.v4'].includes(entry.level.version)) {
     const previous = entry.level.version;
-    entry.level = structuredClone(makeClassicSnakeV3(entry.level));
+    entry.level = prepareClassicSnakeStudioLevel(entry.level);
     upgradedEntries.set(entry, previous);
   }
   return entry.level;
@@ -313,13 +323,18 @@ function paint() {
     context = board.getContext('2d'),
     cell = board.width / level.width;
   const previous = upgradedEntries.get(current());
-  formatNotice.hidden = !previous;
+  formatNotice.hidden = !previous && level.version !== 'classic-snake-level.v4';
   formatNotice.textContent = previous
     ? words(
         `This draft mission was upgraded from ${previous} to Snake v3 for your gameplay edits.`,
         `Цю чернетку місії оновлено з ${previous} до Snake v3 для редагування ігрових правил.`,
       )
-    : '';
+    : level.version === 'classic-snake-level.v4'
+      ? words(
+          'This mission keeps its authored field mechanics. Posts, lanes, relay pads and erosion marks remain editable in Advanced recipe JSON.',
+          'Місія зберігає задані польові механіки. Пости, смуги, ретранслятори й позначки руйнування можна змінити в розширеному JSON рецепта.',
+        )
+      : '';
   board.height = Math.round(cell * level.height);
   context.imageSmoothingEnabled = false;
   context.fillStyle = '#1a2b2a';
@@ -345,6 +360,17 @@ function paint() {
   level.targets?.required.forEach((policy) => {
     policy.goals?.forEach((point) => square(point, '#c5e18b', cell * 0.3));
     policy.path?.forEach((point) => square(point, '#6fc7da', cell * 0.4));
+    if (policy.at) square(policy.at, '#e7b759', cell * 0.2);
+    policy.relays?.forEach((point) => square(point, '#bce992', cell * 0.3));
+    policy.breaks?.forEach((point) => square(point, '#f2aa85', cell * 0.4));
+    if (policy.lane) {
+      for (let at = policy.lane.from; at <= policy.lane.to; at++)
+        square(
+          policy.lane.axis === 'x' ? { x: at, y: policy.at.y } : { x: policy.at.x, y: at },
+          '#d59494',
+          cell * 0.44,
+        );
+    }
   });
   level.pickups?.forEach((pickup) =>
     pickup.pads.forEach((point) =>
@@ -414,7 +440,8 @@ function paintCell(point) {
       if (['refuge', 'switchback', 'pair'].includes(policy.kind)) append(policy.goals);
   } else if (tool.value === 'path') {
     for (const policy of level.targets.required)
-      if (['patroller', 'courier'].includes(policy.kind)) append(policy.path);
+      if (['patroller', 'courier', 'perimeter', 'contour'].includes(policy.kind))
+        append(policy.path);
   } else if (tool.value.startsWith('shutter')) {
     const id = tool.value;
     let gate = level.shutters.find((entry) => entry.id === id);
@@ -513,6 +540,7 @@ population.addEventListener('change', () => {
 kind.addEventListener('change', () => {
   const level = editableLevel(),
     selected = kind.value;
+  if (CLASSIC_SNAKE_V4_KINDS.includes(selected)) return;
   const policy = { kind: selected, every: selected === 'patroller' ? 4 : 3 };
   if (['refuge', 'switchback', 'pair'].includes(selected))
     policy.goals = [
@@ -532,7 +560,7 @@ actions.append(
   button(words('Add copied mission', 'Додати копію місії'), () => {
     required(draft.entries.length < 12, 'A package supports at most twelve missions.');
     const source = CLASSIC_SNAKE_LEVELS.find((entry) => entry.id === template.value),
-      level = structuredClone(makeClassicSnakeV3(source.level));
+      level = prepareClassicSnakeStudioLevel(source.level);
     level.id = `studio-mission-${Date.now()}-${draft.entries.length + 1}`;
     draft.entries.push({
       title: structuredClone(source.title),
