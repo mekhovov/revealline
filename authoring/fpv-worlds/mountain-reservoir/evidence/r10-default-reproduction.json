@@ -1,0 +1,1280 @@
+{
+  "format": "FPVReservoirTerrainStitching.v1",
+  "status": "passed",
+  "checks": [
+    {
+      "name": "GLB2 header",
+      "passed": true
+    },
+    {
+      "name": "GLB2 header",
+      "passed": true
+    },
+    {
+      "name": "Exact published r8 source model",
+      "passed": true
+    },
+    {
+      "name": "Default generator still reproduces r8 exactly",
+      "passed": true
+    },
+    {
+      "name": "Current stitched source reproduces candidate exactly",
+      "passed": true
+    },
+    {
+      "name": "nodes exact",
+      "passed": true
+    },
+    {
+      "name": "scenes exact",
+      "passed": true
+    },
+    {
+      "name": "materials exact",
+      "passed": true
+    },
+    {
+      "name": "textures exact",
+      "passed": true
+    },
+    {
+      "name": "samplers exact",
+      "passed": true
+    },
+    {
+      "name": "No additional draw batch",
+      "passed": true
+    },
+    {
+      "name": "closed-window identity",
+      "passed": true
+    },
+    {
+      "name": "closed-window material ownership",
+      "passed": true
+    },
+    {
+      "name": "Expected original tightly packed attribute",
+      "passed": true
+    },
+    {
+      "name": "Expected original tightly packed attribute",
+      "passed": true
+    },
+    {
+      "name": "closed-window/NORMAL original bytes exact",
+      "passed": true
+    },
+    {
+      "name": "closed-window/NORMAL no additions",
+      "passed": true
+    },
+    {
+      "name": "Expected original tightly packed attribute",
+      "passed": true
+    },
+    {
+      "name": "Expected original tightly packed attribute",
+      "passed": true
+    },
+    {
+      "name": "closed-window/POSITION original bytes exact",
+      "passed": true
+    },
+    {
+      "name": "closed-window/POSITION no additions",
+      "passed": true
+    },
+    {
+      "name": "chalk-enamel identity",
+      "passed": true
+    },
+    {
+      "name": "chalk-enamel material ownership",
+      "passed": true
+    },
+    {
+      "name": "Expected original tightly packed attribute",
+      "passed": true
+    },
+    {
+      "name": "Expected original tightly packed attribute",
+      "passed": true
+    },
+    {
+      "name": "chalk-enamel/NORMAL original bytes exact",
+      "passed": true
+    },
+    {
+      "name": "chalk-enamel/NORMAL no additions",
+      "passed": true
+    },
+    {
+      "name": "Expected original tightly packed attribute",
+      "passed": true
+    },
+    {
+      "name": "Expected original tightly packed attribute",
+      "passed": true
+    },
+    {
+      "name": "chalk-enamel/POSITION original bytes exact",
+      "passed": true
+    },
+    {
+      "name": "chalk-enamel/POSITION no additions",
+      "passed": true
+    },
+    {
+      "name": "blue-enamel identity",
+      "passed": true
+    },
+    {
+      "name": "blue-enamel material ownership",
+      "passed": true
+    },
+    {
+      "name": "Expected original tightly packed attribute",
+      "passed": true
+    },
+    {
+      "name": "Expected original tightly packed attribute",
+      "passed": true
+    },
+    {
+      "name": "blue-enamel/NORMAL original bytes exact",
+      "passed": true
+    },
+    {
+      "name": "blue-enamel/NORMAL no additions",
+      "passed": true
+    },
+    {
+      "name": "Expected original tightly packed attribute",
+      "passed": true
+    },
+    {
+      "name": "Expected original tightly packed attribute",
+      "passed": true
+    },
+    {
+      "name": "blue-enamel/POSITION original bytes exact",
+      "passed": true
+    },
+    {
+      "name": "blue-enamel/POSITION no additions",
+      "passed": true
+    },
+    {
+      "name": "safety-yellow identity",
+      "passed": true
+    },
+    {
+      "name": "safety-yellow material ownership",
+      "passed": true
+    },
+    {
+      "name": "Expected original tightly packed attribute",
+      "passed": true
+    },
+    {
+      "name": "Expected original tightly packed attribute",
+      "passed": true
+    },
+    {
+      "name": "safety-yellow/NORMAL original bytes exact",
+      "passed": true
+    },
+    {
+      "name": "safety-yellow/NORMAL no additions",
+      "passed": true
+    },
+    {
+      "name": "Expected original tightly packed attribute",
+      "passed": true
+    },
+    {
+      "name": "Expected original tightly packed attribute",
+      "passed": true
+    },
+    {
+      "name": "safety-yellow/POSITION original bytes exact",
+      "passed": true
+    },
+    {
+      "name": "safety-yellow/POSITION no additions",
+      "passed": true
+    },
+    {
+      "name": "oxidized-roof identity",
+      "passed": true
+    },
+    {
+      "name": "oxidized-roof material ownership",
+      "passed": true
+    },
+    {
+      "name": "Expected original tightly packed attribute",
+      "passed": true
+    },
+    {
+      "name": "Expected original tightly packed attribute",
+      "passed": true
+    },
+    {
+      "name": "oxidized-roof/NORMAL original bytes exact",
+      "passed": true
+    },
+    {
+      "name": "oxidized-roof/NORMAL no additions",
+      "passed": true
+    },
+    {
+      "name": "Expected original tightly packed attribute",
+      "passed": true
+    },
+    {
+      "name": "Expected original tightly packed attribute",
+      "passed": true
+    },
+    {
+      "name": "oxidized-roof/POSITION original bytes exact",
+      "passed": true
+    },
+    {
+      "name": "oxidized-roof/POSITION no additions",
+      "passed": true
+    },
+    {
+      "name": "shore-meadow identity",
+      "passed": true
+    },
+    {
+      "name": "shore-meadow material ownership",
+      "passed": true
+    },
+    {
+      "name": "Expected original tightly packed attribute",
+      "passed": true
+    },
+    {
+      "name": "Expected original tightly packed attribute",
+      "passed": true
+    },
+    {
+      "name": "shore-meadow/COLOR_0 original bytes exact",
+      "passed": true
+    },
+    {
+      "name": "shore-meadow/COLOR_0 no additions",
+      "passed": true
+    },
+    {
+      "name": "Expected original tightly packed attribute",
+      "passed": true
+    },
+    {
+      "name": "Expected original tightly packed attribute",
+      "passed": true
+    },
+    {
+      "name": "shore-meadow/NORMAL original bytes exact",
+      "passed": true
+    },
+    {
+      "name": "shore-meadow/NORMAL no additions",
+      "passed": true
+    },
+    {
+      "name": "Expected original tightly packed attribute",
+      "passed": true
+    },
+    {
+      "name": "Expected original tightly packed attribute",
+      "passed": true
+    },
+    {
+      "name": "shore-meadow/POSITION original bytes exact",
+      "passed": true
+    },
+    {
+      "name": "shore-meadow/POSITION no additions",
+      "passed": true
+    },
+    {
+      "name": "Expected original tightly packed attribute",
+      "passed": true
+    },
+    {
+      "name": "Expected original tightly packed attribute",
+      "passed": true
+    },
+    {
+      "name": "shore-meadow/TEXCOORD_0 original bytes exact",
+      "passed": true
+    },
+    {
+      "name": "shore-meadow/TEXCOORD_0 no additions",
+      "passed": true
+    },
+    {
+      "name": "warm-gravel identity",
+      "passed": true
+    },
+    {
+      "name": "warm-gravel material ownership",
+      "passed": true
+    },
+    {
+      "name": "Expected original tightly packed attribute",
+      "passed": true
+    },
+    {
+      "name": "Expected original tightly packed attribute",
+      "passed": true
+    },
+    {
+      "name": "warm-gravel/COLOR_0 original bytes exact",
+      "passed": true
+    },
+    {
+      "name": "warm-gravel/COLOR_0 no additions",
+      "passed": true
+    },
+    {
+      "name": "Expected original tightly packed attribute",
+      "passed": true
+    },
+    {
+      "name": "Expected original tightly packed attribute",
+      "passed": true
+    },
+    {
+      "name": "warm-gravel/NORMAL original bytes exact",
+      "passed": true
+    },
+    {
+      "name": "warm-gravel/NORMAL no additions",
+      "passed": true
+    },
+    {
+      "name": "Expected original tightly packed attribute",
+      "passed": true
+    },
+    {
+      "name": "Expected original tightly packed attribute",
+      "passed": true
+    },
+    {
+      "name": "warm-gravel/POSITION original bytes exact",
+      "passed": true
+    },
+    {
+      "name": "warm-gravel/POSITION no additions",
+      "passed": true
+    },
+    {
+      "name": "Expected original tightly packed attribute",
+      "passed": true
+    },
+    {
+      "name": "Expected original tightly packed attribute",
+      "passed": true
+    },
+    {
+      "name": "warm-gravel/TEXCOORD_0 original bytes exact",
+      "passed": true
+    },
+    {
+      "name": "warm-gravel/TEXCOORD_0 no additions",
+      "passed": true
+    },
+    {
+      "name": "mineral-ridge identity",
+      "passed": true
+    },
+    {
+      "name": "mineral-ridge material ownership",
+      "passed": true
+    },
+    {
+      "name": "Expected original tightly packed attribute",
+      "passed": true
+    },
+    {
+      "name": "Expected original tightly packed attribute",
+      "passed": true
+    },
+    {
+      "name": "mineral-ridge/COLOR_0 original bytes exact",
+      "passed": true
+    },
+    {
+      "name": "COLOR_0 exactly 34 closure triangles",
+      "passed": true
+    },
+    {
+      "name": "Expected original tightly packed attribute",
+      "passed": true
+    },
+    {
+      "name": "Expected original tightly packed attribute",
+      "passed": true
+    },
+    {
+      "name": "mineral-ridge/NORMAL original bytes exact",
+      "passed": true
+    },
+    {
+      "name": "NORMAL exactly 34 closure triangles",
+      "passed": true
+    },
+    {
+      "name": "Expected original tightly packed attribute",
+      "passed": true
+    },
+    {
+      "name": "Expected original tightly packed attribute",
+      "passed": true
+    },
+    {
+      "name": "mineral-ridge/POSITION original bytes exact",
+      "passed": true
+    },
+    {
+      "name": "POSITION exactly 34 closure triangles",
+      "passed": true
+    },
+    {
+      "name": "Expected original tightly packed attribute",
+      "passed": true
+    },
+    {
+      "name": "Expected original tightly packed attribute",
+      "passed": true
+    },
+    {
+      "name": "mineral-ridge/TEXCOORD_0 original bytes exact",
+      "passed": true
+    },
+    {
+      "name": "TEXCOORD_0 exactly 34 closure triangles",
+      "passed": true
+    },
+    {
+      "name": "reservoir-water identity",
+      "passed": true
+    },
+    {
+      "name": "reservoir-water material ownership",
+      "passed": true
+    },
+    {
+      "name": "Expected original tightly packed attribute",
+      "passed": true
+    },
+    {
+      "name": "Expected original tightly packed attribute",
+      "passed": true
+    },
+    {
+      "name": "reservoir-water/COLOR_0 original bytes exact",
+      "passed": true
+    },
+    {
+      "name": "reservoir-water/COLOR_0 no additions",
+      "passed": true
+    },
+    {
+      "name": "Expected original tightly packed attribute",
+      "passed": true
+    },
+    {
+      "name": "Expected original tightly packed attribute",
+      "passed": true
+    },
+    {
+      "name": "reservoir-water/NORMAL original bytes exact",
+      "passed": true
+    },
+    {
+      "name": "reservoir-water/NORMAL no additions",
+      "passed": true
+    },
+    {
+      "name": "Expected original tightly packed attribute",
+      "passed": true
+    },
+    {
+      "name": "Expected original tightly packed attribute",
+      "passed": true
+    },
+    {
+      "name": "reservoir-water/POSITION original bytes exact",
+      "passed": true
+    },
+    {
+      "name": "reservoir-water/POSITION no additions",
+      "passed": true
+    },
+    {
+      "name": "water-current identity",
+      "passed": true
+    },
+    {
+      "name": "water-current material ownership",
+      "passed": true
+    },
+    {
+      "name": "Expected original tightly packed attribute",
+      "passed": true
+    },
+    {
+      "name": "Expected original tightly packed attribute",
+      "passed": true
+    },
+    {
+      "name": "water-current/NORMAL original bytes exact",
+      "passed": true
+    },
+    {
+      "name": "water-current/NORMAL no additions",
+      "passed": true
+    },
+    {
+      "name": "Expected original tightly packed attribute",
+      "passed": true
+    },
+    {
+      "name": "Expected original tightly packed attribute",
+      "passed": true
+    },
+    {
+      "name": "water-current/POSITION original bytes exact",
+      "passed": true
+    },
+    {
+      "name": "water-current/POSITION no additions",
+      "passed": true
+    },
+    {
+      "name": "tree-bark identity",
+      "passed": true
+    },
+    {
+      "name": "tree-bark material ownership",
+      "passed": true
+    },
+    {
+      "name": "Expected original tightly packed attribute",
+      "passed": true
+    },
+    {
+      "name": "Expected original tightly packed attribute",
+      "passed": true
+    },
+    {
+      "name": "tree-bark/NORMAL original bytes exact",
+      "passed": true
+    },
+    {
+      "name": "tree-bark/NORMAL no additions",
+      "passed": true
+    },
+    {
+      "name": "Expected original tightly packed attribute",
+      "passed": true
+    },
+    {
+      "name": "Expected original tightly packed attribute",
+      "passed": true
+    },
+    {
+      "name": "tree-bark/POSITION original bytes exact",
+      "passed": true
+    },
+    {
+      "name": "tree-bark/POSITION no additions",
+      "passed": true
+    },
+    {
+      "name": "fir-light identity",
+      "passed": true
+    },
+    {
+      "name": "fir-light material ownership",
+      "passed": true
+    },
+    {
+      "name": "Expected original tightly packed attribute",
+      "passed": true
+    },
+    {
+      "name": "Expected original tightly packed attribute",
+      "passed": true
+    },
+    {
+      "name": "fir-light/NORMAL original bytes exact",
+      "passed": true
+    },
+    {
+      "name": "fir-light/NORMAL no additions",
+      "passed": true
+    },
+    {
+      "name": "Expected original tightly packed attribute",
+      "passed": true
+    },
+    {
+      "name": "Expected original tightly packed attribute",
+      "passed": true
+    },
+    {
+      "name": "fir-light/POSITION original bytes exact",
+      "passed": true
+    },
+    {
+      "name": "fir-light/POSITION no additions",
+      "passed": true
+    },
+    {
+      "name": "fir-dark identity",
+      "passed": true
+    },
+    {
+      "name": "fir-dark material ownership",
+      "passed": true
+    },
+    {
+      "name": "Expected original tightly packed attribute",
+      "passed": true
+    },
+    {
+      "name": "Expected original tightly packed attribute",
+      "passed": true
+    },
+    {
+      "name": "fir-dark/NORMAL original bytes exact",
+      "passed": true
+    },
+    {
+      "name": "fir-dark/NORMAL no additions",
+      "passed": true
+    },
+    {
+      "name": "Expected original tightly packed attribute",
+      "passed": true
+    },
+    {
+      "name": "Expected original tightly packed attribute",
+      "passed": true
+    },
+    {
+      "name": "fir-dark/POSITION original bytes exact",
+      "passed": true
+    },
+    {
+      "name": "fir-dark/POSITION no additions",
+      "passed": true
+    },
+    {
+      "name": "Original texture bytes exact",
+      "passed": true
+    },
+    {
+      "name": "Closure confined to one existing outer boundary",
+      "passed": true
+    },
+    {
+      "name": "Closure stays within fixed boundary extents",
+      "passed": true
+    },
+    {
+      "name": "Every raised closure vertex is an exact original heightfield vertex",
+      "passed": true
+    },
+    {
+      "name": "Nondegenerate inward-facing closure",
+      "passed": true
+    },
+    {
+      "name": "Closure confined to one existing outer boundary",
+      "passed": true
+    },
+    {
+      "name": "Closure stays within fixed boundary extents",
+      "passed": true
+    },
+    {
+      "name": "Every raised closure vertex is an exact original heightfield vertex",
+      "passed": true
+    },
+    {
+      "name": "Nondegenerate inward-facing closure",
+      "passed": true
+    },
+    {
+      "name": "Closure confined to one existing outer boundary",
+      "passed": true
+    },
+    {
+      "name": "Closure stays within fixed boundary extents",
+      "passed": true
+    },
+    {
+      "name": "Every raised closure vertex is an exact original heightfield vertex",
+      "passed": true
+    },
+    {
+      "name": "Nondegenerate inward-facing closure",
+      "passed": true
+    },
+    {
+      "name": "Closure confined to one existing outer boundary",
+      "passed": true
+    },
+    {
+      "name": "Closure stays within fixed boundary extents",
+      "passed": true
+    },
+    {
+      "name": "Every raised closure vertex is an exact original heightfield vertex",
+      "passed": true
+    },
+    {
+      "name": "Nondegenerate inward-facing closure",
+      "passed": true
+    },
+    {
+      "name": "Closure confined to one existing outer boundary",
+      "passed": true
+    },
+    {
+      "name": "Closure stays within fixed boundary extents",
+      "passed": true
+    },
+    {
+      "name": "Every raised closure vertex is an exact original heightfield vertex",
+      "passed": true
+    },
+    {
+      "name": "Nondegenerate inward-facing closure",
+      "passed": true
+    },
+    {
+      "name": "Closure confined to one existing outer boundary",
+      "passed": true
+    },
+    {
+      "name": "Closure stays within fixed boundary extents",
+      "passed": true
+    },
+    {
+      "name": "Every raised closure vertex is an exact original heightfield vertex",
+      "passed": true
+    },
+    {
+      "name": "Nondegenerate inward-facing closure",
+      "passed": true
+    },
+    {
+      "name": "Closure confined to one existing outer boundary",
+      "passed": true
+    },
+    {
+      "name": "Closure stays within fixed boundary extents",
+      "passed": true
+    },
+    {
+      "name": "Every raised closure vertex is an exact original heightfield vertex",
+      "passed": true
+    },
+    {
+      "name": "Nondegenerate inward-facing closure",
+      "passed": true
+    },
+    {
+      "name": "Closure confined to one existing outer boundary",
+      "passed": true
+    },
+    {
+      "name": "Closure stays within fixed boundary extents",
+      "passed": true
+    },
+    {
+      "name": "Every raised closure vertex is an exact original heightfield vertex",
+      "passed": true
+    },
+    {
+      "name": "Nondegenerate inward-facing closure",
+      "passed": true
+    },
+    {
+      "name": "Closure confined to one existing outer boundary",
+      "passed": true
+    },
+    {
+      "name": "Closure stays within fixed boundary extents",
+      "passed": true
+    },
+    {
+      "name": "Every raised closure vertex is an exact original heightfield vertex",
+      "passed": true
+    },
+    {
+      "name": "Nondegenerate inward-facing closure",
+      "passed": true
+    },
+    {
+      "name": "Closure confined to one existing outer boundary",
+      "passed": true
+    },
+    {
+      "name": "Closure stays within fixed boundary extents",
+      "passed": true
+    },
+    {
+      "name": "Every raised closure vertex is an exact original heightfield vertex",
+      "passed": true
+    },
+    {
+      "name": "Nondegenerate inward-facing closure",
+      "passed": true
+    },
+    {
+      "name": "Closure confined to one existing outer boundary",
+      "passed": true
+    },
+    {
+      "name": "Closure stays within fixed boundary extents",
+      "passed": true
+    },
+    {
+      "name": "Every raised closure vertex is an exact original heightfield vertex",
+      "passed": true
+    },
+    {
+      "name": "Nondegenerate inward-facing closure",
+      "passed": true
+    },
+    {
+      "name": "Closure confined to one existing outer boundary",
+      "passed": true
+    },
+    {
+      "name": "Closure stays within fixed boundary extents",
+      "passed": true
+    },
+    {
+      "name": "Every raised closure vertex is an exact original heightfield vertex",
+      "passed": true
+    },
+    {
+      "name": "Nondegenerate inward-facing closure",
+      "passed": true
+    },
+    {
+      "name": "Closure confined to one existing outer boundary",
+      "passed": true
+    },
+    {
+      "name": "Closure stays within fixed boundary extents",
+      "passed": true
+    },
+    {
+      "name": "Every raised closure vertex is an exact original heightfield vertex",
+      "passed": true
+    },
+    {
+      "name": "Nondegenerate inward-facing closure",
+      "passed": true
+    },
+    {
+      "name": "Closure confined to one existing outer boundary",
+      "passed": true
+    },
+    {
+      "name": "Closure stays within fixed boundary extents",
+      "passed": true
+    },
+    {
+      "name": "Every raised closure vertex is an exact original heightfield vertex",
+      "passed": true
+    },
+    {
+      "name": "Nondegenerate inward-facing closure",
+      "passed": true
+    },
+    {
+      "name": "Closure confined to one existing outer boundary",
+      "passed": true
+    },
+    {
+      "name": "Closure stays within fixed boundary extents",
+      "passed": true
+    },
+    {
+      "name": "Every raised closure vertex is an exact original heightfield vertex",
+      "passed": true
+    },
+    {
+      "name": "Nondegenerate inward-facing closure",
+      "passed": true
+    },
+    {
+      "name": "Closure confined to one existing outer boundary",
+      "passed": true
+    },
+    {
+      "name": "Closure stays within fixed boundary extents",
+      "passed": true
+    },
+    {
+      "name": "Every raised closure vertex is an exact original heightfield vertex",
+      "passed": true
+    },
+    {
+      "name": "Nondegenerate inward-facing closure",
+      "passed": true
+    },
+    {
+      "name": "Closure confined to one existing outer boundary",
+      "passed": true
+    },
+    {
+      "name": "Closure stays within fixed boundary extents",
+      "passed": true
+    },
+    {
+      "name": "Every raised closure vertex is an exact original heightfield vertex",
+      "passed": true
+    },
+    {
+      "name": "Nondegenerate inward-facing closure",
+      "passed": true
+    },
+    {
+      "name": "Closure confined to one existing outer boundary",
+      "passed": true
+    },
+    {
+      "name": "Closure stays within fixed boundary extents",
+      "passed": true
+    },
+    {
+      "name": "Every raised closure vertex is an exact original heightfield vertex",
+      "passed": true
+    },
+    {
+      "name": "Nondegenerate inward-facing closure",
+      "passed": true
+    },
+    {
+      "name": "Closure confined to one existing outer boundary",
+      "passed": true
+    },
+    {
+      "name": "Closure stays within fixed boundary extents",
+      "passed": true
+    },
+    {
+      "name": "Every raised closure vertex is an exact original heightfield vertex",
+      "passed": true
+    },
+    {
+      "name": "Nondegenerate inward-facing closure",
+      "passed": true
+    },
+    {
+      "name": "Closure confined to one existing outer boundary",
+      "passed": true
+    },
+    {
+      "name": "Closure stays within fixed boundary extents",
+      "passed": true
+    },
+    {
+      "name": "Every raised closure vertex is an exact original heightfield vertex",
+      "passed": true
+    },
+    {
+      "name": "Nondegenerate inward-facing closure",
+      "passed": true
+    },
+    {
+      "name": "Closure confined to one existing outer boundary",
+      "passed": true
+    },
+    {
+      "name": "Closure stays within fixed boundary extents",
+      "passed": true
+    },
+    {
+      "name": "Every raised closure vertex is an exact original heightfield vertex",
+      "passed": true
+    },
+    {
+      "name": "Nondegenerate inward-facing closure",
+      "passed": true
+    },
+    {
+      "name": "Closure confined to one existing outer boundary",
+      "passed": true
+    },
+    {
+      "name": "Closure stays within fixed boundary extents",
+      "passed": true
+    },
+    {
+      "name": "Every raised closure vertex is an exact original heightfield vertex",
+      "passed": true
+    },
+    {
+      "name": "Nondegenerate inward-facing closure",
+      "passed": true
+    },
+    {
+      "name": "Closure confined to one existing outer boundary",
+      "passed": true
+    },
+    {
+      "name": "Closure stays within fixed boundary extents",
+      "passed": true
+    },
+    {
+      "name": "Every raised closure vertex is an exact original heightfield vertex",
+      "passed": true
+    },
+    {
+      "name": "Nondegenerate inward-facing closure",
+      "passed": true
+    },
+    {
+      "name": "Closure confined to one existing outer boundary",
+      "passed": true
+    },
+    {
+      "name": "Closure stays within fixed boundary extents",
+      "passed": true
+    },
+    {
+      "name": "Every raised closure vertex is an exact original heightfield vertex",
+      "passed": true
+    },
+    {
+      "name": "Nondegenerate inward-facing closure",
+      "passed": true
+    },
+    {
+      "name": "Closure confined to one existing outer boundary",
+      "passed": true
+    },
+    {
+      "name": "Closure stays within fixed boundary extents",
+      "passed": true
+    },
+    {
+      "name": "Every raised closure vertex is an exact original heightfield vertex",
+      "passed": true
+    },
+    {
+      "name": "Nondegenerate inward-facing closure",
+      "passed": true
+    },
+    {
+      "name": "Closure confined to one existing outer boundary",
+      "passed": true
+    },
+    {
+      "name": "Closure stays within fixed boundary extents",
+      "passed": true
+    },
+    {
+      "name": "Every raised closure vertex is an exact original heightfield vertex",
+      "passed": true
+    },
+    {
+      "name": "Nondegenerate inward-facing closure",
+      "passed": true
+    },
+    {
+      "name": "Closure confined to one existing outer boundary",
+      "passed": true
+    },
+    {
+      "name": "Closure stays within fixed boundary extents",
+      "passed": true
+    },
+    {
+      "name": "Every raised closure vertex is an exact original heightfield vertex",
+      "passed": true
+    },
+    {
+      "name": "Nondegenerate inward-facing closure",
+      "passed": true
+    },
+    {
+      "name": "Closure confined to one existing outer boundary",
+      "passed": true
+    },
+    {
+      "name": "Closure stays within fixed boundary extents",
+      "passed": true
+    },
+    {
+      "name": "Every raised closure vertex is an exact original heightfield vertex",
+      "passed": true
+    },
+    {
+      "name": "Nondegenerate inward-facing closure",
+      "passed": true
+    },
+    {
+      "name": "Closure confined to one existing outer boundary",
+      "passed": true
+    },
+    {
+      "name": "Closure stays within fixed boundary extents",
+      "passed": true
+    },
+    {
+      "name": "Every raised closure vertex is an exact original heightfield vertex",
+      "passed": true
+    },
+    {
+      "name": "Nondegenerate inward-facing closure",
+      "passed": true
+    },
+    {
+      "name": "Closure confined to one existing outer boundary",
+      "passed": true
+    },
+    {
+      "name": "Closure stays within fixed boundary extents",
+      "passed": true
+    },
+    {
+      "name": "Every raised closure vertex is an exact original heightfield vertex",
+      "passed": true
+    },
+    {
+      "name": "Nondegenerate inward-facing closure",
+      "passed": true
+    },
+    {
+      "name": "Closure confined to one existing outer boundary",
+      "passed": true
+    },
+    {
+      "name": "Closure stays within fixed boundary extents",
+      "passed": true
+    },
+    {
+      "name": "Every raised closure vertex is an exact original heightfield vertex",
+      "passed": true
+    },
+    {
+      "name": "Nondegenerate inward-facing closure",
+      "passed": true
+    },
+    {
+      "name": "Closure confined to one existing outer boundary",
+      "passed": true
+    },
+    {
+      "name": "Closure stays within fixed boundary extents",
+      "passed": true
+    },
+    {
+      "name": "Every raised closure vertex is an exact original heightfield vertex",
+      "passed": true
+    },
+    {
+      "name": "Nondegenerate inward-facing closure",
+      "passed": true
+    },
+    {
+      "name": "Closure confined to one existing outer boundary",
+      "passed": true
+    },
+    {
+      "name": "Closure stays within fixed boundary extents",
+      "passed": true
+    },
+    {
+      "name": "Every raised closure vertex is an exact original heightfield vertex",
+      "passed": true
+    },
+    {
+      "name": "Nondegenerate inward-facing closure",
+      "passed": true
+    },
+    {
+      "name": "Closure confined to one existing outer boundary",
+      "passed": true
+    },
+    {
+      "name": "Closure stays within fixed boundary extents",
+      "passed": true
+    },
+    {
+      "name": "Every raised closure vertex is an exact original heightfield vertex",
+      "passed": true
+    },
+    {
+      "name": "Nondegenerate inward-facing closure",
+      "passed": true
+    },
+    {
+      "name": "Exact west/north closure count",
+      "passed": true
+    },
+    {
+      "name": "Separate new revision",
+      "passed": true
+    },
+    {
+      "name": "All eight courses exact except revision",
+      "passed": true
+    },
+    {
+      "name": "spawnBindings exact",
+      "passed": true
+    },
+    {
+      "name": "routeBindings exact",
+      "passed": true
+    },
+    {
+      "name": "overrides exact",
+      "passed": true
+    },
+    {
+      "name": "themes exact",
+      "passed": true
+    },
+    {
+      "name": "campaigns exact",
+      "passed": true
+    },
+    {
+      "name": "playlists exact",
+      "passed": true
+    }
+  ],
+  "before": {
+    "bytes": 1167804,
+    "sha256": "158e736b1584944455d56d8075eba8cbd88f44176531cc50ea4c42b02fdbbb2a"
+  },
+  "after": {
+    "bytes": 1171468,
+    "sha256": "ca838e9e028838a5a17f74831d4ef8206a14addd2baa510da78f28dd25bd9aac"
+  },
+  "addedTriangles": 34,
+  "collisionChanges": 0,
+  "routeChanges": 0,
+  "limitations": [
+    "Static asset contracts only; actual old/new render review and exact new-pack demonstration qualification remain separate."
+  ]
+}

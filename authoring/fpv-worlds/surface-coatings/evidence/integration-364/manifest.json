@@ -1,0 +1,172 @@
+{
+  "format": "FPVCoatingIntegratedQualification.v1",
+  "sourceRevision": "364fb78c3dc7e268b84b0a13349af32864bca802",
+  "sourceTree": "2ba5edf01a0c4be1c98da66e60b0e0615391f18b",
+  "main": "5bd8f36d7767dcd9dda740865b4d8f19ddbe7c28",
+  "historicalBrowserSource": "b51e17a83f2d3aad99f7076c3e0ae84f1122aeda",
+  "qualification": {
+    "manualContract": 87,
+    "existingChecks": 33,
+    "allThreeAdmissions": true,
+    "identicalBuilds": 2,
+    "originalInputs": 95,
+    "exactHistoricalInputs": 93,
+    "onlyIncomingRuntimePaths": ["renderer.mjs", "world-app.mjs"],
+    "incomingSourceBytes": 316,
+    "originalInputBytes": 16739353,
+    "remainingBytes": 37863,
+    "additionalFullValidation": false,
+    "additionalBrowserRun": false,
+    "scopedCheckFiles": [
+      "game/test/fpv-workshop-visuals.test.mjs",
+      "game/test/fpv-world-content.test.mjs",
+      "game/test/fpv-world-textures.test.mjs"
+    ],
+    "additionalAppearanceChecks": 8,
+    "checkReceiptNote": "The first current-main invocation selected fpv-appearance rather than workshop-visuals and passed24. The intended original workshop/content/texture selection then passed33; both logs are retained, and the eight additional appearance cases are not counted twice."
+  },
+  "sparseStartupFailures": "Initial build startup required lz-string JS, its license, then icon-master.png, absent after sparse branch switch. No candidate package was written. Exact Git-hash/APFS materialization restored declared sources, then the unchanged-source build passed; license/icon errors retained. Initial JS ENOENT was observed in tool output before admission started.",
+  "scope": "Main contributes only already-qualified paused first draw/context guard and ghost Settings visibility. Loader/validator/coating/Theme bytes or added renderer lines remain exact. Historical full validation and nine actual admitted views/native import remain bound to b51; integrated source/ZIP admission is separately bound to364.",
+  "files": [
+    {
+      "path": "fpv-coating-current-main-364-bridge.json.gz",
+      "bytes": 7274,
+      "sha256": "188fec95eeb3613026579364d7c7f5d16f1b438ceca321258b7a471dc719bc3c",
+      "originalBytes": 42399,
+      "originalSHA256": "9115e67ff459b502d46a9dadad5975ca1124fdb759528e8325038c5313c4197a"
+    },
+    {
+      "path": "qualification.json.gz",
+      "bytes": 1705,
+      "sha256": "08bd0706ed8b799c4bd4a9dcf520c10f3d9f7a6fffc48b0dbb51564d64143091",
+      "originalBytes": 10397,
+      "originalSHA256": "80dc47e833f449736ebec8cd7119b514e70198a8cd1481643d3521cd3c6ecce6"
+    },
+    {
+      "path": "fpv-required-coating-existing-364.tap.gz",
+      "bytes": 1636,
+      "sha256": "babd440ee11192f55a1bddf1c29d13041867f3620f3964280219a82ba7772b6a",
+      "originalBytes": 6223,
+      "originalSHA256": "1ce636d3dc0c39a1e4ce439d1c35bb628715c3ddb229910a3d30968b8210daed"
+    },
+    {
+      "path": "fpv-coating-materialize-current-364.json.gz",
+      "bytes": 231,
+      "sha256": "2b1e38f09d681b9ccf69c1a3eb22ca4368a3681b3310813571ccacd139e0610a",
+      "originalBytes": 310,
+      "originalSHA256": "bc768e6fbd8259527aae3dd37a4be5b00b8d3a37ebc369caea11e1418e4eeac3"
+    },
+    {
+      "path": "fpv-coating-materialize-buildtools-364.json.gz",
+      "bytes": 231,
+      "sha256": "3e99efe0a5a5fd8b5da29e6ec69fed90302e3d7b872acf897bf8b1bdbfd307f5",
+      "originalBytes": 312,
+      "originalSHA256": "7eea80b864f24f37ce671d86d314e6f39f584aacf28ac8ab81be80e12a8ae3e8"
+    },
+    {
+      "path": "fpv-coating-materialize-validation-364.json.gz",
+      "bytes": 232,
+      "sha256": "3922ebcccebce09a4c805c4b821c82c5ae1114a7dffb5484347196a2bf98af9b",
+      "originalBytes": 313,
+      "originalSHA256": "3988bc8d950da6c6c5845d2401e6a9d6ce817272b542a81f76339790cab28709"
+    },
+    {
+      "path": "fpv-required-coating-admission-364.log.gz",
+      "bytes": 284,
+      "sha256": "3c019348ca1e022a0133bd1671e5a68f2fdac3ffc3fb3c6dac4b8b38c1ae33aa",
+      "originalBytes": 409,
+      "originalSHA256": "ff772eaed14e8c292cd998e79caaa462018a7ed512c34bbaeab5132e16a79f22"
+    },
+    {
+      "path": "fpv-required-coating-admission-364.stderr.gz",
+      "bytes": 423,
+      "sha256": "0b9b91cce017d0a9048c3fe690b8ce78c3129f969a718c27486a6c5b8627dc2c",
+      "originalBytes": 756,
+      "originalSHA256": "27d1bb6ed2f5e9d38720269e73efb2641ac8a2d23ff0570bda835252d475d735"
+    },
+    {
+      "path": "fpv-required-coating-admission-364-final.stderr.gz",
+      "bytes": 134,
+      "sha256": "e36e8e3f71ef1ffd90abd78e7fb8e3cdd636f28b24d6679c894e973b1e651358",
+      "originalBytes": 133,
+      "originalSHA256": "8ace9dbf077569f841b8136941fa7348c8d5a5520652ca09fe8703471c473e2b"
+    },
+    {
+      "path": "manifest-optional-civilian-flight.json.gz",
+      "bytes": 2854,
+      "sha256": "2d3e7e4f485d8ae5d3debd6673058e1053d7148683d7feea4efae066b71b2d3c",
+      "originalBytes": 8847,
+      "originalSHA256": "ca783163b2e8583492bfafb7cd3053fde48ea1246187ac208feadd8ede642df0"
+    },
+    {
+      "path": "manifest-optional-civilian-fpv.json.gz",
+      "bytes": 4013,
+      "sha256": "8da608cd9b76aa6a9a27c9c53ee6fe8ccb20b2c3c69c91fc41f9f9a056939f4a",
+      "originalBytes": 12570,
+      "originalSHA256": "c7082e407d39f0e76d508f1ce197260dbc747be4415b9fb34901cda788ac165d"
+    },
+    {
+      "path": "manifest-optional-fpv-worlds.json.gz",
+      "bytes": 5871,
+      "sha256": "2abcbd8225b6f7bee7c4ff879e1abc5e26a8e0261a94ca582bc343ad578edf0b",
+      "originalBytes": 18746,
+      "originalSHA256": "09712d1e54806e9582fb873500c3c31a359c147f021355bd88f8aa771990113b"
+    },
+    {
+      "path": "optional-candidate-verification.json.gz",
+      "bytes": 611,
+      "sha256": "156c468fd635d44c70888b2506a90574596b3c1a871d157a1ac872c5001a8b15",
+      "originalBytes": 1142,
+      "originalSHA256": "a8341e3d43d6cd7eb495f8562bc7dba6c4e2e6f52439b8ebcc41ec70c9bfc158"
+    },
+    {
+      "path": "optional-checksums.json.gz",
+      "bytes": 921,
+      "sha256": "32f00621766c0fab414ed2121a50aab45cec0a409a79eb3e7370b7e263e40ffc",
+      "originalBytes": 2136,
+      "originalSHA256": "7a21a4ab31626ece8dde7c840b72fdedfaeccf15ffa82b54223a934c580b8511"
+    },
+    {
+      "path": "optional-package-review.json.gz",
+      "bytes": 460,
+      "sha256": "b364b68544e544a9115b46ce1f9da0f4ead0e0e30e5cd7cf0c951fec9a3b2216",
+      "originalBytes": 2838,
+      "originalSHA256": "a2b12c9b809a4604db730ba33fafc347f40a40fe57712e3e2f8127c21af7f715"
+    },
+    {
+      "path": "optional-packages.json.gz",
+      "bytes": 1075,
+      "sha256": "74385b8e59f99945b9013d1e6a8c00f8058c5438a164eb4c6fe4ea4309733254",
+      "originalBytes": 2633,
+      "originalSHA256": "35ddb612340612c4c4049a0088f2935e043660a90904609834b4f41a4ce355fd"
+    },
+    {
+      "path": "source-inventory-optional-civilian-flight.json.gz",
+      "bytes": 3449,
+      "sha256": "eae6b1e0e4440a7047034c105a4a944b6490994d815bf9c5e0fd5cd3024e8633",
+      "originalBytes": 14052,
+      "originalSHA256": "04ee84d4074b0e5b64c8147b92fdd66e02b5736afe6e6c9d0bd9d79c6867ac39"
+    },
+    {
+      "path": "source-inventory-optional-civilian-fpv.json.gz",
+      "bytes": 4998,
+      "sha256": "35282b46d910dac334aa1e8de1168a04b311460043914facf022b85085b4e189",
+      "originalBytes": 21034,
+      "originalSHA256": "c4475f83eda388310e310add2ec0a3435127a7a7a61b2d0091a050aadd76bc2b"
+    },
+    {
+      "path": "source-inventory-optional-fpv-worlds.json.gz",
+      "bytes": 7144,
+      "sha256": "9de804f6faee2c2042f8ac98df34efc5def535b80f89bdf83cdf2792e87ea234",
+      "originalBytes": 32166,
+      "originalSHA256": "005f2df65b71632416bab6dc7ded650c80b63fb89b5a3327866728a6069af34a"
+    },
+    {
+      "path": "fpv-required-coating-scoped-364.tap.gz",
+      "bytes": 2071,
+      "sha256": "10bf02675a04a53ab60898c81cc95eface664eb535fbccfd5ec7719e7b2b5300",
+      "originalBytes": 8161,
+      "originalSHA256": "988931056ce8fb490542c63947d2b06f735a5178d1ea0256cae1fe425535d718"
+    }
+  ]
+}

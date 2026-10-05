@@ -1,0 +1,427 @@
+{
+  "format": "FPVLongerNativeSessionAudit.v1",
+  "receiptSHA256": "03876d437b456228986ca2fff8ab659d1145b8948fd6ecd723b3e028fbafd9da",
+  "completed": true,
+  "checks": 306,
+  "totalWallSeconds": 167.196,
+  "startedAt": "2026-10-04T22:02:42.808Z",
+  "finishedAt": "2026-10-04T22:05:30.004Z",
+  "environment": {
+    "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36",
+    "dpr": 2,
+    "hardwareConcurrency": 14,
+    "platform": "MacIntel",
+    "language": "en-US",
+    "physicalDevice": "Unverified; browser-reported fields are not hardware qualification",
+    "screen": {
+      "width": 2056,
+      "height": 1329
+    },
+    "viewport": {
+      "width": 1280,
+      "height": 662
+    }
+  },
+  "observerSupport": {
+    "observerTypes": [
+      "element",
+      "event",
+      "first-input",
+      "interaction-contentful-paint",
+      "largest-contentful-paint",
+      "layout-shift",
+      "long-animation-frame",
+      "longtask",
+      "mark",
+      "measure",
+      "navigation",
+      "paint",
+      "resource",
+      "soft-navigation",
+      "visibility-state"
+    ],
+    "textContent": true,
+    "clientWidth": true
+  },
+  "windows": [
+    {
+      "order": 1,
+      "scene": "yard",
+      "phase": "fixed-pose-ready",
+      "actualMs": 20000.80000001192,
+      "hostCallbacks": 2400,
+      "hostCPUmsPerCallback": 1.4423749976356823,
+      "drawCPUmsPerSubmission": 0.604125000735124,
+      "leftWidthReadMsPerCall": 0.38541666621963183,
+      "leftWidthReadFractionOfHostCPU": 0.2672097525618515,
+      "rightWidthReadMsPerCall": 0.0008750000099341075,
+      "cloneCPUmsPerHostCallback": 0.11262499891221524,
+      "observedDOMCalls": 9600,
+      "unchangedObservedDOMCalls": 9600,
+      "observerLowerBoundMsPerHostCallback": 0.023999999836087228,
+      "maxRAFGAPms": 16.300000000000182,
+      "coverage": {
+        "expectedStatusAtStart": true,
+        "expectedStatusAtEnd": true,
+        "nativeTickDelta": 0,
+        "observedStatuses": ["disarmed"],
+        "remainedFocused": true,
+        "remainedVisible": true,
+        "timerWithin22Seconds": true
+      },
+      "beforeTicks": 0,
+      "afterTicks": 0,
+      "profile": "operations"
+    },
+    {
+      "order": 2,
+      "scene": "yard",
+      "phase": "verified-native-playback",
+      "actualMs": 20000.80000001192,
+      "hostCallbacks": 2401,
+      "hostCPUmsPerCallback": 1.7336109968484912,
+      "drawCPUmsPerSubmission": 0.6836734699587284,
+      "leftWidthReadMsPerCall": 0.47796751347148186,
+      "leftWidthReadFractionOfHostCPU": 0.2757063230103943,
+      "rightWidthReadMsPerCall": 0.0017909205789021878,
+      "cloneCPUmsPerHostCallback": 0.11566014180129788,
+      "observedDOMCalls": 10121,
+      "unchangedObservedDOMCalls": 8594,
+      "observerLowerBoundMsPerHostCallback": 0.024448146352366775,
+      "maxRAFGAPms": 9.5,
+      "coverage": {
+        "expectedStatusAtStart": true,
+        "expectedStatusAtEnd": true,
+        "nativeTickDelta": 1001,
+        "observedStatuses": ["active"],
+        "remainedFocused": true,
+        "remainedVisible": true,
+        "timerWithin22Seconds": true
+      },
+      "beforeTicks": 4,
+      "afterTicks": 1005,
+      "profile": "operations"
+    },
+    {
+      "order": 3,
+      "scene": "reservoir",
+      "phase": "fixed-pose-ready",
+      "actualMs": 20000.599999964237,
+      "hostCallbacks": 2398,
+      "hostCPUmsPerCallback": 1.8497497915127956,
+      "drawCPUmsPerSubmission": 0.8560467059658009,
+      "leftWidthReadMsPerCall": 0.49791492856075803,
+      "leftWidthReadFractionOfHostCPU": 0.2691796105858968,
+      "rightWidthReadMsPerCall": 0.001626355286137674,
+      "cloneCPUmsPerHostCallback": 0.09286905913376828,
+      "observedDOMCalls": 9592,
+      "unchangedObservedDOMCalls": 9592,
+      "observerLowerBoundMsPerHostCallback": 0.024937448002478796,
+      "maxRAFGAPms": 33.400000000001455,
+      "coverage": {
+        "expectedStatusAtStart": true,
+        "expectedStatusAtEnd": true,
+        "nativeTickDelta": 0,
+        "observedStatuses": ["disarmed"],
+        "remainedFocused": true,
+        "remainedVisible": true,
+        "timerWithin22Seconds": true
+      },
+      "beforeTicks": 0,
+      "afterTicks": 0,
+      "profile": "ukrainian"
+    },
+    {
+      "order": 4,
+      "scene": "reservoir",
+      "phase": "verified-native-playback",
+      "actualMs": 20001,
+      "hostCallbacks": 2401,
+      "hostCPUmsPerCallback": 1.8009162864452697,
+      "drawCPUmsPerSubmission": 0.8186588930070823,
+      "leftWidthReadMsPerCall": 0.4811328615510727,
+      "leftWidthReadFractionOfHostCPU": 0.2671600369058545,
+      "rightWidthReadMsPerCall": 0.0016243232880369517,
+      "cloneCPUmsPerHostCallback": 0.08304873139894987,
+      "observedDOMCalls": 9971,
+      "unchangedObservedDOMCalls": 9106,
+      "observerLowerBoundMsPerHostCallback": 0.025531028767815732,
+      "maxRAFGAPms": 9.5,
+      "coverage": {
+        "expectedStatusAtStart": true,
+        "expectedStatusAtEnd": true,
+        "nativeTickDelta": 1001,
+        "observedStatuses": ["active"],
+        "remainedFocused": true,
+        "remainedVisible": true,
+        "timerWithin22Seconds": true
+      },
+      "beforeTicks": 2,
+      "afterTicks": 1003,
+      "profile": "ukrainian"
+    },
+    {
+      "order": 5,
+      "scene": "yard",
+      "phase": "fixed-pose-ready",
+      "actualMs": 20000.19999998808,
+      "hostCallbacks": 2401,
+      "hostCPUmsPerCallback": 1.7565181201966988,
+      "drawCPUmsPerSubmission": 0.8309870883356973,
+      "leftWidthReadMsPerCall": 0.43990004228979585,
+      "leftWidthReadFractionOfHostCPU": 0.25043865886253136,
+      "rightWidthReadMsPerCall": 0.001665972486628636,
+      "cloneCPUmsPerHostCallback": 0.1111203665189175,
+      "observedDOMCalls": 9604,
+      "unchangedObservedDOMCalls": 9604,
+      "observerLowerBoundMsPerHostCallback": 0.022823822691955948,
+      "maxRAFGAPms": 9.39999999999418,
+      "coverage": {
+        "expectedStatusAtStart": true,
+        "expectedStatusAtEnd": true,
+        "nativeTickDelta": 0,
+        "observedStatuses": ["disarmed"],
+        "remainedFocused": true,
+        "remainedVisible": true,
+        "timerWithin22Seconds": true
+      },
+      "beforeTicks": 0,
+      "afterTicks": 0,
+      "profile": "operations"
+    },
+    {
+      "order": 6,
+      "scene": "yard",
+      "phase": "verified-native-playback",
+      "actualMs": 20001.5,
+      "hostCallbacks": 2401,
+      "hostCPUmsPerCallback": 1.7082882131551118,
+      "drawCPUmsPerSubmission": 0.6884214917305657,
+      "leftWidthReadMsPerCall": 0.4704289877727497,
+      "leftWidthReadFractionOfHostCPU": 0.2753803393069686,
+      "rightWidthReadMsPerCall": 0.0012494794084150958,
+      "cloneCPUmsPerHostCallback": 0.11399416871887105,
+      "observedDOMCalls": 10124,
+      "unchangedObservedDOMCalls": 8588,
+      "observerLowerBoundMsPerHostCallback": 0.024531445891496688,
+      "maxRAFGAPms": 9.5,
+      "coverage": {
+        "expectedStatusAtStart": true,
+        "expectedStatusAtEnd": true,
+        "nativeTickDelta": 1001,
+        "observedStatuses": ["active"],
+        "remainedFocused": true,
+        "remainedVisible": true,
+        "timerWithin22Seconds": true
+      },
+      "beforeTicks": 2,
+      "afterTicks": 1003,
+      "profile": "operations"
+    },
+    {
+      "order": 7,
+      "scene": "reservoir",
+      "phase": "fixed-pose-ready",
+      "actualMs": 20000.80000001192,
+      "hostCallbacks": 2401,
+      "hostCPUmsPerCallback": 1.6274052497646503,
+      "drawCPUmsPerSubmission": 0.7348604734765147,
+      "leftWidthReadMsPerCall": 0.4320283218852086,
+      "leftWidthReadFractionOfHostCPU": 0.26547064534029685,
+      "rightWidthReadMsPerCall": 0.001457725873047091,
+      "cloneCPUmsPerHostCallback": 0.09100374786717749,
+      "observedDOMCalls": 9604,
+      "unchangedObservedDOMCalls": 9604,
+      "observerLowerBoundMsPerHostCallback": 0.02390670508257998,
+      "maxRAFGAPms": 9.400000000008731,
+      "coverage": {
+        "expectedStatusAtStart": true,
+        "expectedStatusAtEnd": true,
+        "nativeTickDelta": 0,
+        "observedStatuses": ["disarmed"],
+        "remainedFocused": true,
+        "remainedVisible": true,
+        "timerWithin22Seconds": true
+      },
+      "beforeTicks": 0,
+      "afterTicks": 0,
+      "profile": "ukrainian"
+    },
+    {
+      "order": 8,
+      "scene": "reservoir",
+      "phase": "verified-native-playback",
+      "actualMs": 20000.69999998808,
+      "hostCallbacks": 2398,
+      "hostCPUmsPerCallback": 1.7975396168937874,
+      "drawCPUmsPerSubmission": 0.7789824860259033,
+      "leftWidthReadMsPerCall": 0.5301084232340265,
+      "leftWidthReadFractionOfHostCPU": 0.2949077829784207,
+      "rightWidthReadMsPerCall": 0.0012510426845820971,
+      "cloneCPUmsPerHostCallback": 0.08440366807433344,
+      "observedDOMCalls": 9959,
+      "unchangedObservedDOMCalls": 9094,
+      "observerLowerBoundMsPerHostCallback": 0.02418682277451166,
+      "maxRAFGAPms": 34.30000000001746,
+      "coverage": {
+        "expectedStatusAtStart": true,
+        "expectedStatusAtEnd": true,
+        "nativeTickDelta": 1001,
+        "observedStatuses": ["active"],
+        "remainedFocused": true,
+        "remainedVisible": true,
+        "timerWithin22Seconds": true
+      },
+      "beforeTicks": 2,
+      "afterTicks": 1003,
+      "profile": "ukrainian"
+    }
+  ],
+  "resourceTrends": [
+    {
+      "key": "yard",
+      "registered": [
+        {
+          "geometries": 206,
+          "materials": 150,
+          "textures": 27
+        },
+        {
+          "geometries": 206,
+          "materials": 150,
+          "textures": 27
+        },
+        {
+          "geometries": 206,
+          "materials": 150,
+          "textures": 27
+        }
+      ],
+      "rendererInfo": [
+        {
+          "geometries": 106,
+          "textures": 24,
+          "programs": 20
+        },
+        {
+          "geometries": 106,
+          "textures": 24,
+          "programs": 20
+        },
+        {
+          "geometries": 106,
+          "textures": 24,
+          "programs": 20
+        }
+      ],
+      "monotonicGrowth": {
+        "geometries": false,
+        "textures": false,
+        "programs": false
+      },
+      "tailPlateau": true,
+      "interpretation": "Internal caches may warm once and remain; observed growth or plateau is diagnostic, not browser memory accounting."
+    },
+    {
+      "key": "reservoir",
+      "registered": [
+        {
+          "geometries": 191,
+          "materials": 285,
+          "textures": 33
+        },
+        {
+          "geometries": 191,
+          "materials": 285,
+          "textures": 33
+        },
+        {
+          "geometries": 191,
+          "materials": 285,
+          "textures": 33
+        }
+      ],
+      "rendererInfo": [
+        {
+          "geometries": 136,
+          "textures": 30,
+          "programs": 17
+        },
+        {
+          "geometries": 136,
+          "textures": 30,
+          "programs": 17
+        },
+        {
+          "geometries": 136,
+          "textures": 30,
+          "programs": 17
+        }
+      ],
+      "monotonicGrowth": {
+        "geometries": false,
+        "textures": false,
+        "programs": false
+      },
+      "tailPlateau": true,
+      "interpretation": "Internal caches may warm once and remain; observed growth or plateau is diagnostic, not browser memory accounting."
+    }
+  ],
+  "disposal": [
+    {
+      "owner": "measured owner",
+      "registered": {
+        "geometries": 0,
+        "materials": 0,
+        "textures": 0
+      },
+      "renderer": {
+        "calls": 192,
+        "triangles": 27476,
+        "geometries": 0,
+        "textures": 1,
+        "programs": 0,
+        "contextLost": true
+      },
+      "errors": [],
+      "warnings": [],
+      "dropped": {}
+    },
+    {
+      "owner": "reopened owner",
+      "registered": {
+        "geometries": 0,
+        "materials": 0,
+        "textures": 0
+      },
+      "renderer": {
+        "calls": 192,
+        "triangles": 27476,
+        "geometries": 0,
+        "textures": 1,
+        "programs": 0,
+        "contextLost": true
+      },
+      "errors": [],
+      "warnings": [],
+      "dropped": {}
+    }
+  ],
+  "limitations": [
+    "One exact integrated admitted 102-member/95-input runtime; no runtime overlays. This is bounded observation, not a hardware or FPS claim.",
+    "Eight predeclared 20-second native-clock windows. Timer delay can extend windows; actual duration and visibility/focus coverage are retained.",
+    "Only aggregates inside measured windows. Full state/resources and identity snapshots occur outside windows. Native method results and Promise/RAF contracts are retained.",
+    "Renderer duration is CPU command submission, not GPU elapsed; nested durations cannot be added as independent costs.",
+    "Observer wrappers and clock/classification work add overhead. observerCPUms is a lower bound, excluding some asynchronous observer work.",
+    "LoAF/longtask support is feature detected. Entries starting inside the window are counted; earlier-starting overlap is excluded. No entries means no qualifying entry observed, not no jank.",
+    "Physical device and browser-wide contention are unverified. Browser-reported identity, DPR, viewport and focus are retained; other tabs/processes may exist.",
+    "Registered resources are application-owned counts; renderer.info includes internal Three caches that may remain. Same-course growth observations do not claim all browser memory is freed. ImageBitmap.close calls are not observed by this scaffold.",
+    "Pack and proofs are explicitly separate public file imports. No Browse, editor/fault, proof-completion or offline qualification is duplicated here.",
+    "An unexpected native pause, hidden window or stall is retained and stops this run. No forced clock, automatic resumption or hidden flight-state write.",
+    "Other chats shared the browser service; their exact tab/process activity was not measured. This is not an exclusive-machine benchmark.",
+    "The timed run is one current candidate, not a before/after optimization comparison. Draw CPU is command submission, not GPU timing.",
+    "Both LoAF and longtask APIs were supported but no qualifying entries began within these eight windows. Gaps up to34.3ms were observed; absence of50ms entries is not absence of jank.",
+    "Every native playback window advanced1001ticks but interrupted the longer demonstration. Their first moving ticks differ; no exact moving-pose pair or completion claim.",
+    "ImageBitmap.close, heap retained-size, device thermal endurance and all browser resources remain unqualified."
+  ]
+}

@@ -1,7 +1,7 @@
 /** Deterministic, checked source projection for the unchanged 104-file FPV pack.
  * Shared services keep their canonical source; this generated module merely
  * co-locates their isolated module scopes, as SIM already does for shared art. */
-import { readFile, writeFile } from 'node:fs/promises';
+import { readFile, writeFile, rename, rm } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -21,6 +21,8 @@ const entries = [
   'world-actor-editor.mjs',
   'world-progress.mjs',
   'world-hunt-reactions.mjs',
+  'world-enemy-guide.mjs',
+  'world-library.mjs',
 ].map((file) => native + file);
 const policy = OPTIONAL_PACKAGE_POLICIES['fpv-worlds'];
 const external = new Set(policy.sharedFiles.filter((file) => file !== target));
@@ -182,7 +184,17 @@ if (check) {
     throw new Error(
       'FPV reaction projection is stale; run scripts/refresh-fpv-reaction-runtime.mjs.',
     );
-} else await writeFile(path.join(root, target), generated);
+} else {
+  // Preserve the last complete projection if storage fills during generation.
+  const destination = path.join(root, target),
+    temporary = `${destination}.${process.pid}.tmp`;
+  try {
+    await writeFile(temporary, generated, { flag: 'wx' });
+    await rename(temporary, destination);
+  } finally {
+    await rm(temporary, { force: true });
+  }
+}
 console.log(
   JSON.stringify({
     status: check ? 'verified-byte-identical' : 'refreshed',

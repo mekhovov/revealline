@@ -13,6 +13,7 @@ import { DISPLAY_PREFERENCES_KEY } from '../display-preferences.mjs';
 import { authoritativeCheckpoint, verifyReplay } from '../replay.mjs';
 import { emptyLibrary, updatePreferences, saveLibrary } from '../library.mjs';
 import { soloPage, memoryStorage, settle } from './helpers/solo-dom.mjs';
+import { activateHostAction } from './helpers/host-action.mjs';
 import { couchPage, mountCouch } from './helpers/couch-host.mjs';
 import { Document, Events } from './helpers/couch-dom.mjs';
 import { FIXED_DT } from '../coop/core.mjs';
@@ -186,14 +187,15 @@ for (const turnPolicy of ['immediate', 'grid-center']) {
       profileKey,
       updatePreferences(emptyLibrary(), { turnPolicy, textSize: 'large' }),
     );
-    const page = await soloPage(t, { campaign, storage: store });
+    const page = await soloPage(t, { campaign, storage: store, waitForPictures: false });
     assert.equal(
       store.getItem(THEME_PREFERENCES_KEY),
       null,
       'Opening a host does not create appearance preferences.',
     );
-    page.$('start-button').click();
-    await settle(() => page.doc.body.dataset.flightState === 'running');
+    assert.equal(page.$('game-overlay').hidden, false);
+    await activateHostAction(page.$('start-button'));
+    assert.equal(page.doc.body.dataset.flightState, 'running');
     page.key('ArrowDown');
     page.key('ArrowDown', false);
     for (let n = 0; n < 13; n++) page.frame();
@@ -261,7 +263,13 @@ test('unified appearance survives Solo, Team, Versus and Solo return without alt
     JSON.stringify({ textFace: 'plain', textSize: 'large', reducedEffects: true }),
   );
   await t.test('Solo immediately applies its complete family from real Settings', async (t) => {
-    const page = await soloPage(t, { campaign, storage: store, titleScreen: true });
+    // Title Settings are usable while optional flight pictures are preparing.
+    const page = await soloPage(t, {
+      campaign,
+      storage: store,
+      titleScreen: true,
+      waitForPictures: false,
+    });
     page.$('shell-options').click();
     page.$('settings-tab-display').click();
     const records = unrelated(store),
@@ -364,8 +372,14 @@ test('unified appearance survives Solo, Team, Versus and Solo return without alt
     },
   );
   await t.test('fresh Solo adopts without an implicit save or start', async (t) => {
+    // This adoption stays on Home and must not depend on board-image readiness.
     const before = store.writes.length,
-      page = await soloPage(t, { campaign, storage: store, titleScreen: true });
+      page = await soloPage(t, {
+        campaign,
+        storage: store,
+        titleScreen: true,
+        waitForPictures: false,
+      });
     reflects(page, '', 'tryzub', 'subtle');
     assert.equal(store.writes.length, before);
     assert.deepEqual(unrelated(store), records);
@@ -437,7 +451,7 @@ test('denied appearance saving leaves Team local choice usable without replacing
   customize(page, 'coop-');
   change(page, 'coop-theme-ornaments', 'off');
   reflects(page, 'coop-', 'vyshyvanka', 'off');
-  const status = page.doc.querySelector('[data-theme-controls] [role="status"]');
+  const status = page.doc.querySelector('[data-theme-controls] > [role="status"]');
   assert.match(status.textContent, /session|save/i);
   assert.deepEqual(store.map, before);
   page.win.emit('storage', {

@@ -242,7 +242,7 @@ body.mode-play-page {
   width: 100%;
   min-width: 0;
 }
-.sim-shell-missions .studio-header {
+.sim-worlds .sim-shell-missions .studio-header {
   position: static;
   padding: 8px 0;
   border: 0;
@@ -260,6 +260,13 @@ body.mode-play-page {
 }
 .sim-shell-missions .first-flight-card {
   margin-top: 12px;
+}
+@media (max-width: 480px) {
+  .field-kit .mode-play-actions > .button {
+    flex: 1 1 140px;
+    min-width: 0;
+    white-space: normal;
+  }
 }
 .sim-shell-modes {
   display: flex;

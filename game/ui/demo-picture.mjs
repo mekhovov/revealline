@@ -29,7 +29,12 @@ export async function resolveDemoPicture({
   acquire,
 } = {}) {
   let backdrop = null;
-  const result = (pictureVisibility = 'blurred', artSeed = null, previewAvailable = false, storyPin = null) => {
+  const result = (
+    pictureVisibility = 'blurred',
+    artSeed = null,
+    previewAvailable = false,
+    storyPin = null,
+  ) => {
     let disposed = false;
     return Object.freeze({
       pictureVisibility,

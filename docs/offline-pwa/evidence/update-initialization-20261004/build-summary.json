@@ -1,0 +1,72 @@
+{
+  "format": "revealline-default-build-inspection.v1",
+  "version": "0.142.4",
+  "sourceRevision": null,
+  "publicationProfile": null,
+  "publicEligible": false,
+  "promotable": false,
+  "completeHostedOutput": false,
+  "publicationAssessment": "not-performed",
+  "payloadBytesIncludingManifest": 1000488762,
+  "manifestDescriptor": {
+    "path": "manifest.json",
+    "bytes": 444571,
+    "sha256": "e4d59fbd9b538299e2cb9f72610508857e3b7e2de789c6ffe62c55b64f0945db"
+  },
+  "missingComponents": [
+    "Pages root routes and publication metadata",
+    "Hosted edition versions, stable launchers and company hub",
+    "Hosted optional packages, launchers and any other generated files"
+  ],
+  "manifestFileCount": 2987,
+  "changedRuntimeAssets": [
+    {
+      "path": "game/download-initialization.mjs",
+      "bytes": 2048,
+      "sha256": "54bf8619598ae1beecf06f60b280b0091a8a15eeee26f402e65dc891381082bf"
+    },
+    {
+      "path": "game/downloads.html",
+      "bytes": 16533,
+      "sha256": "aa0b413c2723f368e55dd978760aff42d99e78410a8072e51b426a78e2213705"
+    },
+    {
+      "path": "game/downloads.mjs",
+      "bytes": 32411,
+      "sha256": "832fde486da80d51189ee0c88c8fc87458ee04899c6c150c970ce655030a2ba3"
+    },
+    {
+      "path": "game/i18n/catalogs.mjs",
+      "bytes": 1194239,
+      "sha256": "033c87d83ad4d7a7749848f3fe0797111b46e39e4b714ce2f2c126cd9fbbaf72"
+    },
+    {
+      "path": "game/offline.mjs",
+      "bytes": 17547,
+      "sha256": "5b59e14d78c29a92f259b1e4b95a4687789b872fdb0aec917e2c251f433877b5"
+    }
+  ],
+  "sourceFiles": [
+    {
+      "path": "game/offline.mjs",
+      "sha256": "0e522b848534421dc6a66a9e8170562fb9c7a052d18f50e0657239c6cf5f5fee"
+    },
+    {
+      "path": "game/downloads.mjs",
+      "sha256": "b7f66ea99ef2c192718c1ddf9e625acb1e44ced6b6f34e62665f722dbfb568c9"
+    },
+    {
+      "path": "game/downloads.html",
+      "sha256": "54bcbddbff75741536b0151dce53921f96a7bd2aecb3d2b26fdb118168250e5e"
+    },
+    {
+      "path": "game/download-initialization.mjs",
+      "sha256": "54bf8619598ae1beecf06f60b280b0091a8a15eeee26f402e65dc891381082bf"
+    },
+    {
+      "path": "game/i18n/catalogs.mjs",
+      "sha256": "033c87d83ad4d7a7749848f3fe0797111b46e39e4b714ce2f2c126cd9fbbaf72"
+    }
+  ],
+  "note": "Build applies the repository runtime compactor and injects offline HTML markers; generated identities differ from authored bytes."
+}

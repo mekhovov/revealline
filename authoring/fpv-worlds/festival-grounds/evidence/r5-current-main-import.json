@@ -1,0 +1,84 @@
+{
+  "format": "FPVFestivalCurrentMainImport.v1",
+  "main": "21826c460e80fa4e7fa47ec8e6ba9f98f75beea4",
+  "packIdentity": "fpv-pack:87baca276e174f31ba19c02f4f2359c97affa07eefd4a5f4912b4d8664450f51",
+  "checks": [
+    {
+      "name": "Current main imports exact unchanged r5 pack project",
+      "passed": true
+    },
+    {
+      "name": "Current main imports exact unchanged editable project",
+      "passed": true
+    },
+    {
+      "name": "All sixteen proof pairs survive current bounded import",
+      "passed": true
+    },
+    {
+      "name": "festival-grounds-01/self-level exact dependency and course",
+      "passed": true
+    },
+    {
+      "name": "festival-grounds-01/acro exact dependency and course",
+      "passed": true
+    },
+    {
+      "name": "festival-grounds-02/self-level exact dependency and course",
+      "passed": true
+    },
+    {
+      "name": "festival-grounds-02/acro exact dependency and course",
+      "passed": true
+    },
+    {
+      "name": "festival-grounds-03/self-level exact dependency and course",
+      "passed": true
+    },
+    {
+      "name": "festival-grounds-03/acro exact dependency and course",
+      "passed": true
+    },
+    {
+      "name": "festival-grounds-04/self-level exact dependency and course",
+      "passed": true
+    },
+    {
+      "name": "festival-grounds-04/acro exact dependency and course",
+      "passed": true
+    },
+    {
+      "name": "festival-grounds-05/self-level exact dependency and course",
+      "passed": true
+    },
+    {
+      "name": "festival-grounds-05/acro exact dependency and course",
+      "passed": true
+    },
+    {
+      "name": "festival-grounds-06/self-level exact dependency and course",
+      "passed": true
+    },
+    {
+      "name": "festival-grounds-06/acro exact dependency and course",
+      "passed": true
+    },
+    {
+      "name": "festival-grounds-07/self-level exact dependency and course",
+      "passed": true
+    },
+    {
+      "name": "festival-grounds-07/acro exact dependency and course",
+      "passed": true
+    },
+    {
+      "name": "festival-grounds-08/self-level exact dependency and course",
+      "passed": true
+    },
+    {
+      "name": "festival-grounds-08/acro exact dependency and course",
+      "passed": true
+    }
+  ],
+  "scope": "Current-main parser/transport bridge only. Physical/replay modules remain byte-identical to the historical364 qualifier/browser closure; no new flight, native, browser or offline claim."
+}

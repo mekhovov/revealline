@@ -1,0 +1,147 @@
+{
+  "format": "revealline-asset-revision.v2",
+  "id": "industrial-bouncer-atlas-sample",
+  "revision": 1,
+  "kind": "image",
+  "description": "Twelve original 32px poses: sensor scan, anticipation bracing, rolling treads, stopped and cooling machinery. Review only.",
+  "provenance": {
+    "creator": "RevealLine original pixel-art recipes, authored with Codex",
+    "source": "scripts/produce-actor-atlas-sample.mjs; canonical Field Kit source retained in this bundle.",
+    "license": "Original project artwork; no external image pixels.",
+    "prompt": "Articulate treads, sensor shutter and vents within the original silhouette. Preserve transparent margins, north-facing pivot and all gameplay cues. No borrowed Broforce or Factorio pixels.",
+    "parent": { "id": "industrial-atlas-bouncer-source", "revision": 1 }
+  },
+  "file": {
+    "sha256": "44c148f5a811e2ab908db1f16b986e50382bbea7821a3774fe9dcdca45f49d97",
+    "bytes": 906,
+    "mime": "image/png",
+    "width": 128,
+    "height": 96
+  },
+  "recipe": null,
+  "geometry": {
+    "frame": { "x": 0, "y": 0, "width": 32, "height": 32 },
+    "pivot": { "x": 0.5, "y": 0.5 },
+    "occupiedBounds": { "x": 0.15625, "y": 0.09375, "width": 0.6875, "height": 0.78125 },
+    "rotorAnchors": [],
+    "nineSlice": null
+  },
+  "quality": { "stage": "produced", "evidence": [] },
+  "animation": {
+    "format": "revealline-actor-animation.v1",
+    "id": "industrial-bouncer-atlas-sample",
+    "revision": 1,
+    "rig": "sprite.v1",
+    "material": "machine",
+    "parts": ["armor"],
+    "anchors": { "pivot": { "x": 0.5, "y": 0.5 }, "equipment": { "x": 0.5, "y": 0.25 } },
+    "frames": [
+      {
+        "id": "idle",
+        "durationMs": 300,
+        "stride": 0,
+        "breath": 0,
+        "accessory": 0,
+        "region": { "x": 0, "y": 0, "width": 32, "height": 32 }
+      },
+      {
+        "id": "scan",
+        "durationMs": 300,
+        "stride": 0,
+        "breath": 0,
+        "accessory": 0,
+        "region": { "x": 32, "y": 0, "width": 32, "height": 32 }
+      },
+      {
+        "id": "notice",
+        "durationMs": 160,
+        "stride": 0,
+        "breath": 0,
+        "accessory": 0,
+        "region": { "x": 64, "y": 0, "width": 32, "height": 32 }
+      },
+      {
+        "id": "brace",
+        "durationMs": 160,
+        "stride": 0,
+        "breath": 0,
+        "accessory": 0,
+        "region": { "x": 96, "y": 0, "width": 32, "height": 32 }
+      },
+      {
+        "id": "brace-set",
+        "durationMs": 160,
+        "stride": 0,
+        "breath": 0,
+        "accessory": 0,
+        "region": { "x": 0, "y": 32, "width": 32, "height": 32 }
+      },
+      {
+        "id": "tread-a",
+        "durationMs": 100,
+        "stride": 0,
+        "breath": 0,
+        "accessory": 0,
+        "region": { "x": 32, "y": 32, "width": 32, "height": 32 }
+      },
+      {
+        "id": "tread-b",
+        "durationMs": 100,
+        "stride": 0,
+        "breath": 0,
+        "accessory": 0,
+        "region": { "x": 64, "y": 32, "width": 32, "height": 32 }
+      },
+      {
+        "id": "tread-c",
+        "durationMs": 100,
+        "stride": 0,
+        "breath": 0,
+        "accessory": 0,
+        "region": { "x": 96, "y": 32, "width": 32, "height": 32 }
+      },
+      {
+        "id": "blocked",
+        "durationMs": 300,
+        "stride": 0,
+        "breath": 0,
+        "accessory": 0,
+        "region": { "x": 0, "y": 64, "width": 32, "height": 32 }
+      },
+      {
+        "id": "cooling-a",
+        "durationMs": 220,
+        "stride": 0,
+        "breath": 0,
+        "accessory": 0,
+        "region": { "x": 32, "y": 64, "width": 32, "height": 32 }
+      },
+      {
+        "id": "cooling-b",
+        "durationMs": 220,
+        "stride": 0,
+        "breath": 0,
+        "accessory": 0,
+        "region": { "x": 64, "y": 64, "width": 32, "height": 32 }
+      },
+      {
+        "id": "caught",
+        "durationMs": 200,
+        "stride": 0,
+        "breath": 0,
+        "accessory": 0,
+        "region": { "x": 96, "y": 64, "width": 32, "height": 32 }
+      }
+    ],
+    "clips": {
+      "idle": { "frames": ["idle", "scan"], "loop": true },
+      "notice": { "frames": ["notice", "idle"], "loop": false },
+      "anticipation": { "frames": ["brace", "brace-set"], "loop": true },
+      "move": { "frames": ["tread-a", "tread-b", "tread-c"], "loop": true },
+      "blocked": { "frames": ["blocked"], "loop": true },
+      "recovery": { "frames": ["cooling-a", "cooling-b"], "loop": true },
+      "caught": { "frames": ["caught"], "loop": false }
+    },
+    "fallback": "compact-overhead.v1"
+  }
+}

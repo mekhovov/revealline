@@ -1,4 +1,87 @@
 /* Legacy layout and paint share one cascade layer. Theme recipes own opt-in appearance. */
+/* This accessibility floor must outlive the shared theme's compact Studio
+   density. Paint still belongs to the theme; only this new editor is scoped. */
+body[data-field-kit-page='motion-lab']
+  .shared-actor-study
+  :is(button, select, input[type='number'], textarea, summary, label.check) {
+  min-height: 44px;
+}
+body[data-field-kit-page='motion-lab'] .shared-actor-study label.check {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 44px;
+  cursor: pointer;
+}
+@layer legacy {
+  .shared-actor-study {
+    min-width: 0;
+    margin-block: 2rem;
+    padding: 1rem;
+    border: 1px solid var(--line);
+    border-radius: 0.4rem;
+    font: 400 var(--fk-text-body, 1rem) / var(--fk-leading-body, 1.5) var(--fk-font-ui, sans-serif);
+    overflow-wrap: anywhere;
+  }
+  .shared-actor-study summary {
+    min-height: 44px;
+    padding-block: 0.5rem;
+    cursor: pointer;
+    font-weight: 600;
+  }
+  .shared-actor-controls {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr));
+    gap: 1rem;
+  }
+  .shared-actor-study .field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    min-width: 0;
+    margin-block: 0.5rem;
+  }
+  .shared-actor-actions,
+  .shared-actor-specimens {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem;
+    margin-block: 1rem;
+  }
+  .shared-actor-study :is(button, select, input[type='number'], textarea) {
+    min-width: 0;
+    max-width: 100%;
+    min-height: 44px;
+    padding: 0.5rem;
+    font: inherit;
+    color: var(--ink);
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 0.2rem;
+  }
+  .shared-actor-study textarea {
+    width: 100%;
+    resize: vertical;
+    font-family: var(--fk-font-mono, monospace);
+  }
+  .shared-actor-study :is(summary, textarea):focus-visible {
+    outline: 3px solid var(--fk-accent, #4b849d);
+    outline-offset: 4px;
+  }
+  .shared-actor-study figure {
+    margin: 0;
+    flex: 0 0 auto;
+  }
+  .shared-actor-study canvas {
+    display: block;
+    max-width: none;
+    image-rendering: pixelated;
+  }
+  .shared-actor-study figcaption {
+    margin-block-start: 0.5rem;
+  }
+}
 @layer legacy {
   :root {
     color-scheme: light;

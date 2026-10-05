@@ -1,0 +1,36 @@
+{
+  "format": "FPVCoatingSourceDelta.v2",
+  "baseline": "7fa5b934d09baeb07c22a70bc8794c17c2565783",
+  "files": [
+    {
+      "path": "optional-practice/civilian-fpv/renderer.mjs",
+      "bytes": 111909,
+      "sha256": "6e256ed4ebe5301529384bfea703cc7b8e9b7d38595623776901d91a04f3e21b",
+      "baselineBytes": 111399,
+      "delta": 510
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-visuals.mjs",
+      "bytes": 120985,
+      "sha256": "082bdb6e6e078632f3ee55adec7ab0c07155170e149994e37fecb71c0d024a79",
+      "baselineBytes": 120145,
+      "delta": 840
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-content.mjs",
+      "bytes": 49574,
+      "sha256": "e9ec95c30121fbd4ec76d4344e7769418e5647344085904c9d1526b5571ef653",
+      "baselineBytes": 49402,
+      "delta": 172
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-themes.mjs",
+      "bytes": 22851,
+      "sha256": "afba6fd6914167398e1d3f27ac547ada118b088a9dff9f65b9dc78cbd03a9a1a",
+      "baselineBytes": 20974,
+      "delta": 1877
+    }
+  ],
+  "totalDelta": 3399,
+  "scope": "Admitted runtime paths only; canonical authored visuals are not an additional package input. Full admission remains pending."
+}

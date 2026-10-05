@@ -2,6 +2,7 @@ import {
   derivePursuitGoals,
   validatePursuitPopulation,
   PURSUIT_GOALS_VERSION,
+  PURSUIT_GOALS_V2,
 } from './pursuit-goals.mjs';
 import { dataIdentity, required } from '../data-json.mjs';
 import { createCoop, validateCoopLevel } from '../coop/core.mjs';
@@ -9,6 +10,8 @@ import {
   TEAM_RUNNING_LEVEL_VERSION,
   TEAM_PURSUIT_LEVEL_VERSION,
   TEAM_SNAKE_PURSUIT_LEVEL_VERSION,
+  TEAM_PURSUIT_V2_LEVEL_VERSION,
+  TEAM_SNAKE_PURSUIT_V2_LEVEL_VERSION,
   isTeamRunningLevel,
   TEAM_RUNNING_RECIPE,
   inheritedRunningTeamLevel,
@@ -21,8 +24,21 @@ export function teamRunningEnemyBaseLevel(level) {
 }
 
 /** Apply after accepted gameplay tuning. Existing Hunt objectives remain authored. */
-export function prepareTeamRunningEnemies(source, { style = 'original', population } = {}) {
+export function prepareTeamRunningEnemies(
+  source,
+  { style = 'original', population, generation = PURSUIT_GOALS_VERSION } = {},
+) {
   required(['original', 'varied'].includes(style), 'Choose original or varied Team targets.');
+  required(
+    [PURSUIT_GOALS_VERSION, PURSUIT_GOALS_V2].includes(generation),
+    'Unsupported Team pursuit generation.',
+  );
+  const version =
+    generation === PURSUIT_GOALS_V2 ? TEAM_PURSUIT_V2_LEVEL_VERSION : TEAM_PURSUIT_LEVEL_VERSION;
+  const snakeVersion =
+    generation === PURSUIT_GOALS_V2
+      ? TEAM_SNAKE_PURSUIT_V2_LEVEL_VERSION
+      : TEAM_SNAKE_PURSUIT_LEVEL_VERSION;
   if (source.pursuit && isTeamRunningLevel(source)) {
     const checked = validateCoopLevel(source);
     required(checked.valid, checked.errors.join(' '));
@@ -46,7 +62,7 @@ export function prepareTeamRunningEnemies(source, { style = 'original', populati
       'Authored Team pursuit goals must match existing target positions.',
     );
     const level = structuredClone(source);
-    level.version = source.snake ? TEAM_SNAKE_PURSUIT_LEVEL_VERSION : TEAM_PURSUIT_LEVEL_VERSION;
+    level.version = source.snake ? snakeVersion : version;
     level.runningEnemies = {
       version: source.snake ? 'running-enemies.v3' : 'running-enemies.v2',
       ...(source.snake ? { inheritedSnake: structuredClone(source.snake) } : {}),
@@ -58,10 +74,10 @@ export function prepareTeamRunningEnemies(source, { style = 'original', populati
     };
     level.pursuit = authored
       ? {
-          version: PURSUIT_GOALS_VERSION,
+          version: generation,
           actors: authored.map(({ x: _x, y: _y, ...policy }) => policy),
         }
-      : derivePursuitGoals(runners, createCoop(source, { seed: 1 }));
+      : derivePursuitGoals(runners, createCoop(source, { seed: 1 }), generation);
     const checked = validateCoopLevel(level);
     required(checked.valid, checked.errors.join(' '));
     return freezeDesign(level);
@@ -105,7 +121,7 @@ export function prepareTeamRunningEnemies(source, { style = 'original', populati
     turnTicks: 60,
   }));
   const level = structuredClone(source);
-  level.version = style === 'varied' ? TEAM_PURSUIT_LEVEL_VERSION : TEAM_RUNNING_LEVEL_VERSION;
+  level.version = style === 'varied' ? version : TEAM_RUNNING_LEVEL_VERSION;
   level.runningEnemies = {
     version: TEAM_RUNNING_RECIPE,
     baseVersion: source.version,
@@ -127,10 +143,10 @@ export function prepareTeamRunningEnemies(source, { style = 'original', populati
   if (style === 'varied')
     level.pursuit = authored
       ? {
-          version: PURSUIT_GOALS_VERSION,
+          version: generation,
           actors: authored.map(({ x: _x, y: _y, ...policy }) => policy),
         }
-      : derivePursuitGoals(actors, run);
+      : derivePursuitGoals(actors, run, generation);
   const checked = validateCoopLevel(level);
   required(checked.valid, checked.errors.join(' '));
   return freezeDesign(level);
@@ -138,7 +154,14 @@ export function prepareTeamRunningEnemies(source, { style = 'original', populati
 
 export function matchTeamRunningEnemyLevel(source, recorded, options) {
   try {
-    return dataIdentity(prepareTeamRunningEnemies(source, options)) === dataIdentity(recorded);
+    return (
+      dataIdentity(
+        prepareTeamRunningEnemies(source, {
+          ...options,
+          generation: recorded.pursuit?.version ?? PURSUIT_GOALS_VERSION,
+        }),
+      ) === dataIdentity(recorded)
+    );
   } catch {
     return false;
   }

@@ -488,8 +488,10 @@ export async function fieldKitRecipeSources(read) {
   );
 }
 
-export async function createFieldKitProduction({ projectRoot = root } = {}) {
-  const read = async (relative) => fs.readFile(path.join(projectRoot, relative));
+export async function createFieldKitProduction({
+  projectRoot = root,
+  read = async (relative) => fs.readFile(path.join(projectRoot, relative)),
+} = {}) {
   const json = async (relative) => JSON.parse(await read(relative));
   if (
     !verifyFieldKitNativeMenuContinuationReview(
@@ -1098,8 +1100,17 @@ async function generate(args) {
   );
 }
 async function main(args) {
+  if (args.length === 2 && ['--candidate', '--check-candidate'].includes(args[0])) {
+    const { runFieldKitCandidate } = await import('./field-kit-production-candidate.mjs');
+    return runFieldKitCandidate({
+      destination: args[1],
+      check: args[0] === '--check-candidate',
+    });
+  }
   if (args.length !== 1 || !['--write', '--check'].includes(args[0]))
-    throw new Error('Use --write to adopt production assets or --check for reproducibility.');
+    throw new Error(
+      'Use --candidate NEW_DIRECTORY or --check-candidate DIRECTORY for isolated review; --write/--check target published production.',
+    );
   if (args[0] === '--check') return generate(args);
   const lockPath = path.join(root, 'authoring/library/fpv-field-kit/production.rltheme.lock');
   let lock;

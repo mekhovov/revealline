@@ -15,49 +15,60 @@ export function createPublishedCues({ sound, readAudio }) {
     pending.clear();
     for (const [key, value] of cache) if (value === 'loading') cache.delete(key);
   };
+  const available = (ui = false) =>
+    !closed &&
+    sound.enabled &&
+    !sound.paused &&
+    !sound.disposed &&
+    !sound.audioMaster?.muted &&
+    sound.audioMaster?.volume !== 0 &&
+    sound.context?.state === 'running' &&
+    sound.settings.master &&
+    (ui ? sound.menuSettings?.enabled !== false : sound.settings.sfx) &&
+    (ui || !sound.persistentMusic || !sound.gameplayPaused);
+  function load(name) {
+    if (
+      !cueNames.has(name) ||
+      cache.has(name) ||
+      typeof sound.context?.decodeAudioData !== 'function'
+    )
+      return;
+    const controller = new AbortController();
+    pending.add(controller);
+    cache.set(name, 'loading');
+    return Promise.resolve()
+      .then(() => readAudio(`audio.${name}`, { signal: controller.signal }))
+      .then(async (result) => {
+        if (!result || controller.signal.aborted || closed || !sound.enabled) return null;
+        const decoded = await sound.context.decodeAudioData(await result.blob.arrayBuffer());
+        if (closed || controller.signal.aborted || !sound.enabled) return null;
+        if (
+          !Number.isFinite(decoded.duration) ||
+          decoded.duration <= 0 ||
+          decoded.duration > 15 ||
+          decoded.length * decoded.numberOfChannels > 4 * 1024 * 1024
+        )
+          throw new Error(t('interface:publishedCueExceedsItsDecodedBudget'));
+        return decoded;
+      })
+      .then((decoded) => {
+        if (!closed && !controller.signal.aborted) cache.set(name, decoded ?? false);
+      })
+      .catch(() => {
+        if (!closed && !controller.signal.aborted) cache.set(name, false);
+      })
+      .finally(() => pending.delete(controller));
+  }
   return Object.freeze({
-    play(name, { ui = false } = {}) {
-      if (
-        closed ||
-        !cueNames.has(name) ||
-        !sound.enabled ||
-        sound.paused ||
-        sound.disposed ||
-        !sound.context ||
-        sound.context.state !== 'running' ||
-        !sound.settings.master ||
-        (!ui && !sound.settings.sfx) ||
-        (ui && sound.menuSettings?.enabled === false) ||
-        (!ui && sound.persistentMusic && sound.gameplayPaused)
-      )
-        return false;
+    prepare(names) {
+      if (!available()) return Promise.resolve();
+      return Promise.all(names.filter((name) => cueNames.has(name)).map(load));
+    },
+    play(name, { ui = false, board = 'solo', pan = 0, feedback = false, priority = 2 } = {}) {
+      if (!cueNames.has(name) || !available(ui)) return false;
       const buffer = cache.get(name);
-      if (buffer === undefined && typeof sound.context.decodeAudioData === 'function') {
-        const controller = new AbortController();
-        pending.add(controller);
-        cache.set(name, 'loading');
-        void Promise.resolve()
-          .then(() => readAudio(`audio.${name}`, { signal: controller.signal }))
-          .then(async (result) => {
-            if (!result || controller.signal.aborted || closed || !sound.enabled) return null;
-            const decoded = await sound.context.decodeAudioData(await result.blob.arrayBuffer());
-            if (closed || controller.signal.aborted || !sound.enabled) return null;
-            if (
-              !Number.isFinite(decoded.duration) ||
-              decoded.duration <= 0 ||
-              decoded.duration > 15 ||
-              decoded.length * decoded.numberOfChannels > 4 * 1024 * 1024
-            )
-              throw new Error(t('interface:publishedCueExceedsItsDecodedBudget'));
-            return decoded;
-          })
-          .then((decoded) => {
-            if (!closed && !controller.signal.aborted) cache.set(name, decoded ?? false);
-          })
-          .catch(() => {
-            if (!closed && !controller.signal.aborted) cache.set(name, false);
-          })
-          .finally(() => pending.delete(controller));
+      if (buffer === undefined) {
+        void load(name);
         return false;
       }
       if (!buffer || buffer === 'loading') return false;
@@ -65,12 +76,23 @@ export function createPublishedCues({ sound, readAudio }) {
       if (ui && now - (recent.get(name) ?? -Infinity) < 0.08) return true;
       if (sound.voices.size >= 64) return false;
       recent.set(name, now);
-      const source = sound.context.createBufferSource();
+      const source = sound.context.createBufferSource(),
+        panner = pan ? sound.context.createStereoPanner?.() : null;
       source.buffer = buffer;
-      source.connect(ui ? (sound.menuBus ?? sound.sfxBus) : sound.sfxBus);
+      const bus = ui ? (sound.menuBus ?? sound.sfxBus) : sound.sfxBus;
+      if (panner) {
+        source.connect(panner);
+        panner.pan.setValueAtTime(Math.max(-1, Math.min(1, pan)), now);
+        panner.connect(bus);
+      } else source.connect(bus);
       let stopped = false;
       const voice = {
         bus: ui ? 'menu' : 'sfx',
+        name,
+        board,
+        feedback,
+        priority,
+        source,
         stop() {
           if (stopped) return;
           stopped = true;
@@ -78,6 +100,7 @@ export function createPublishedCues({ sound, readAudio }) {
             source.stop();
           } catch {}
           source.disconnect();
+          panner?.disconnect();
           voices.delete(voice);
           sound.voices.delete(voice);
         },
