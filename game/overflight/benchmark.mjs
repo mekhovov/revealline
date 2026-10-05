@@ -33,6 +33,7 @@ export function createOverflightBenchmark({
   warmupSeconds = 30,
   measurementSeconds = 120,
   repetitions = 3,
+  stopAtEnd = false,
 } = {}) {
   if (!Number.isInteger(capacity) || capacity < 2) throw new RangeError('Invalid sample capacity.');
   if (
@@ -62,9 +63,14 @@ export function createOverflightBenchmark({
     cpuTotal = 0;
   const exclusions = {},
     highWater = { alive: 0, visible: 0, rendered: 0, effects: 0, pickups: 0 };
+  const invalidReasons = new Set();
+  const complete = () => elapsed / 1000 >= warmupSeconds + measurementSeconds * repetitions;
   return {
+    complete,
     frame(nowMs, active = true) {
       if (!Number.isFinite(nowMs)) return;
+      if (stopAtEnd && complete()) return;
+      if (!active && enabled && count > 0 && !complete()) invalidReasons.add('interrupted');
       if (enabled && active && previous !== null && nowMs > previous) {
         const delta = nowMs - previous;
         const at = count % capacity;
@@ -85,6 +91,7 @@ export function createOverflightBenchmark({
     },
     exclude(reason) {
       exclusions[reason] = (exclusions[reason] ?? 0) + 1;
+      if (count > 0 && !complete()) invalidReasons.add(reason);
       previous = null;
       enabled = false;
     },
@@ -127,6 +134,11 @@ export function createOverflightBenchmark({
         };
       });
       const result = {
+        valid: invalidReasons.size === 0 && count <= capacity && cpuCount <= capacity,
+        invalidReasons: [
+          ...invalidReasons,
+          ...(count > capacity || cpuCount > capacity ? ['sample-capacity-exceeded'] : []),
+        ],
         cadenceMs: distribution(cadence.subarray(0, Math.min(count, capacity))),
         submissionMs: distribution(submission.subarray(0, Math.min(cpuCount, capacity))),
         cadenceHz: elapsed > 0 ? (total * 1000) / elapsed : null,
@@ -142,13 +154,18 @@ export function createOverflightBenchmark({
         highWater: { ...highWater },
         protocol: {
           arrangement:
-            'One warm-up followed by consecutive windows of the same fixture; not separate restarted trials.',
+            repetitions === 1
+              ? 'One fresh trial with its own warm-up. Three separately restarted trials are required for qualification.'
+              : 'One warm-up followed by consecutive windows of the same fixture; not separate restarted trials.',
           warmupSeconds,
           measurementSeconds,
           repetitions,
           windows: reports,
           acceptance: reports.every((report) => report.complete)
-            ? reports.every((report) => report.passes)
+            ? invalidReasons.size === 0 &&
+              count <= capacity &&
+              cpuCount <= capacity &&
+              reports.every((report) => report.passes)
             : null,
           scope: 'This browser run only; target hardware acceptance requires recorded device runs.',
         },

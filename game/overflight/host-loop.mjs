@@ -226,7 +226,8 @@ export function createOverflightReviewPlayback({ build, pilot, selectCard }) {
         // selectCard may use one ordinary reroll. The resulting offers are
         // rendered before the visible review delay begins.
         const selected = selectCard(run, build);
-        if (!selected || !run.offers.some((offer) => offer.id === selected.id)) return null;
+        if (!selected) return { blocked: true, selectedId: null, choiceId: null };
+        if (!run.offers.some((offer) => offer.id === selected.id)) return null;
         pending = { identity: offerIdentity(run), id: selected.id, elapsed: 0, last: now };
       } else {
         if (pending.last !== null) pending.elapsed += Math.max(0, now - pending.last);
