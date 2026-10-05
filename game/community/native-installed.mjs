@@ -4,18 +4,24 @@ import { createInstalledTeamCampaignStore } from '../creator/team-installed.mjs'
 import { exportCreatorTeamCampaign } from '../creator/team.mjs';
 import { exportCreatorTeamMediaCampaign } from '../creator/team-media.mjs';
 import { createOverflightLibrary } from '../overflight/community.mjs';
+import { createOverflightHuntLibrary } from '../overflight/raid-community.mjs';
 
 /** Native modes keep their existing stores, ownership and exact edition keys. */
 export function createCommunityNativeInstalled({ indexedDB = globalThis.indexedDB } = {}) {
   const team = createInstalledTeamCampaignStore({ indexedDB });
-  const overflight = createOverflightLibrary({ indexedDB });
+  const projects = {
+    overflight: createOverflightLibrary({ indexedDB }),
+    'overflight-hunt': createOverflightHuntLibrary({ indexedDB }),
+  };
+  const projectLibrary = (family) => (Object.hasOwn(projects, family) ? projects[family] : null);
   let flight = null;
   const world = () =>
     (flight ??= import('../../optional-practice/civilian-fpv/world-store.mjs').then((module) =>
       module.openWorldStore({ indexedDB }),
     ));
   async function storage(linked) {
-    if (linked.family === 'overflight') return overflight.editionStorage(linked.creatorEditionId);
+    if (projectLibrary(linked.family))
+      return projectLibrary(linked.family).editionStorage(linked.creatorEditionId);
     if (linked.family === 'team') {
       const inventory = await team.inventory();
       const edition = inventory.editions.find(
@@ -30,8 +36,8 @@ export function createCommunityNativeInstalled({ indexedDB = globalThis.indexedD
   }
   async function exported(linked) {
     let blob;
-    if (linked.family === 'overflight')
-      blob = await overflight.exportEdition(linked.creatorEditionId);
+    if (projectLibrary(linked.family))
+      blob = await projectLibrary(linked.family).exportEdition(linked.creatorEditionId);
     else if (linked.family === 'team') {
       const loaded = await team.load(linked.creatorEditionId);
       blob = loaded.media
@@ -57,9 +63,9 @@ export function createCommunityNativeInstalled({ indexedDB = globalThis.indexedD
   return Object.freeze({
     storage,
     async install(inspected) {
-      if (inspected.family === 'overflight') {
-        await overflight.installEdition(inspected);
-        return { family: 'overflight', missions: 1, assets: 0 };
+      if (projectLibrary(inspected.family)) {
+        await projectLibrary(inspected.family).installEdition(inspected);
+        return { family: inspected.family, missions: 1, assets: 0 };
       } else if (inspected.family === 'team') {
         const review = await team.reviewInstall(inspected.prepared);
         required(review.enoughManagedSpace, 'The Team media library has insufficient space.');
@@ -85,15 +91,21 @@ export function createCommunityNativeInstalled({ indexedDB = globalThis.indexedD
         ? await (await world()).list({ includeRevisions: true })
         : [];
       return [
-        ...(families.includes('overflight') ? await overflight.editions() : []),
+        ...(
+          await Promise.all(
+            families
+              .filter((family) => projectLibrary(family))
+              .map((family) => projectLibrary(family).editions()),
+          )
+        ).flat(),
         ...editions.map((entry) => entry.editionId),
         ...revisions.map((revision) => revision.sha256),
       ];
     },
     export: exported,
     async reviewOffload(linked) {
-      if (linked.family === 'overflight')
-        return overflight.reviewEditionOffload(linked.creatorEditionId);
+      if (projectLibrary(linked.family))
+        return projectLibrary(linked.family).reviewEditionOffload(linked.creatorEditionId);
       const blob = await exported(linked);
       let generation;
       if (linked.family === 'team') generation = (await team.inventory()).generation;
@@ -108,7 +120,7 @@ export function createCommunityNativeInstalled({ indexedDB = globalThis.indexedD
       };
     },
     async offload(review) {
-      if (review.family === 'overflight') await overflight.offloadEdition(review);
+      if (projectLibrary(review.family)) await projectLibrary(review.family).offloadEdition(review);
       else if (review.family === 'team')
         await team.offloadEdition(review.editionId, { expectedGeneration: review.generation });
       else {
@@ -122,7 +134,7 @@ export function createCommunityNativeInstalled({ indexedDB = globalThis.indexedD
     },
     close() {
       team.close();
-      overflight.dispose();
+      Object.values(projects).forEach((store) => store.dispose());
       if (flight) void flight.then((store) => store.close());
     },
   });

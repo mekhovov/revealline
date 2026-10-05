@@ -62,3 +62,129 @@ test('duplicates, changed seeds, interruptions and missing actors cannot qualify
     assert.equal(summarizeOverflightTrials(records).passes, false);
   }
 });
+
+function raidTrial(id, fixture) {
+  const record = trial(id);
+  record.format = 'OverflightHuntMeasurementsV1';
+  record.fixture = 'raid-reference';
+  record.seed = fixture.seed;
+  record.projectIdentity = fixture.compiled.projectIdentity;
+  record.summary = overflightHuntSummary(fixture);
+  record.resourceSamples = Array.from({ length: 10 }, () => ({
+    alive: OVERFLIGHT_HUNT_BENCHMARK_TARGET.alive,
+    visible: OVERFLIGHT_HUNT_BENCHMARK_TARGET.visible,
+    canvasCount: 1,
+  }));
+  return record;
+}
+
+import {
+  OVERFLIGHT_HUNT_BENCHMARK_TARGET,
+  overflightBenchmarkTarget,
+} from '../overflight/benchmark.mjs';
+import {
+  createOverflightHuntProject,
+  compileOverflightHuntProject,
+} from '../overflight/raid-project.mjs';
+import { createOverflightHuntRun, overflightHuntSummary } from '../overflight/raid-core.mjs';
+
+const raidFixture = () =>
+  createOverflightHuntRun(compileOverflightHuntProject(createOverflightHuntProject()), {
+    fixture: 'raid-reference',
+  });
+
+test('Raid qualification binds exact default-content population and technical-workload metadata', () => {
+  const run = raidFixture();
+  assert.deepEqual(OVERFLIGHT_HUNT_BENCHMARK_TARGET, { alive: 537, visible: 200 });
+  assert.equal(
+    run.enemies.filter((enemy) => enemy.active).length,
+    OVERFLIGHT_HUNT_BENCHMARK_TARGET.alive,
+  );
+  assert.equal(run.stats.enemiesVisible, OVERFLIGHT_HUNT_BENCHMARK_TARGET.visible);
+  const report = summarizeOverflightTrials([1, 2, 3].map((id) => raidTrial(id, run)));
+  assert.equal(report.valid, true);
+  assert.equal(report.passes, true);
+  assert.deepEqual(report.workload, OVERFLIGHT_HUNT_BENCHMARK_TARGET);
+  assert.match(report.scope, /Normal sorties do not recycle actors/);
+  assert.match(report.scope, /does not establish normal-run pacing/);
+});
+
+test('Raid rejects mixed formats, altered populations and claims of ordinary gameplay qualification', () => {
+  const fixture = raidFixture();
+  for (const mutate of [
+    (record) => {
+      record.format = 'OverflightMeasurementsV1';
+    },
+    (record) => {
+      record.summary.outcome = 'won';
+    },
+    (record) => {
+      record.summary.fixtureWorkload.gameplayResult = true;
+    },
+    (record) => {
+      record.summary.fixtureWorkload.alive--;
+    },
+    (record) => {
+      record.summary.fixtureWorkload.visible--;
+    },
+    (record) => {
+      record.summary.fixtureWorkload.progressionPolicy = 'ordinary';
+    },
+    (record) => {
+      record.summary.fixtureWorkload.partitionWrapping = false;
+    },
+    (record) => {
+      record.summary.fixtureWorkload.movingContactCollisions = false;
+    },
+    (record) => {
+      record.summary.fixtureWorkload.independentProjectiles = false;
+    },
+    (record) => {
+      record.resourceSamples[4].alive--;
+    },
+    (record) => {
+      record.resourceSamples[5].visible--;
+    },
+    (record) => {
+      record.resourceSamples[2].canvasCount = 2;
+    },
+    (record) => {
+      record.trialValid = false;
+    },
+    (record) => {
+      record.summary = null;
+    },
+  ]) {
+    const records = [1, 2, 3].map((id) => raidTrial(id, fixture));
+    mutate(records[1]);
+    const report = summarizeOverflightTrials(records);
+    assert.equal(report.valid, false);
+    assert.equal(report.passes, false);
+  }
+});
+
+test('unknown fixture names cannot resolve through tuning constants or object prototypes', () => {
+  for (const fixture of ['raid', 'cadenceP95Ms', '__proto__', 'constructor', undefined]) {
+    assert.equal(overflightBenchmarkTarget(fixture), null);
+    const records = [trial(1), trial(2), trial(3)];
+    records[0].fixture = fixture;
+    const report = summarizeOverflightTrials(records);
+    assert.equal(report.valid, false);
+    assert.ok(report.trials[0].reasons.includes('Unknown fixture.'));
+  }
+});
+
+test('short ordinary Raid runs cannot masquerade as completed fixture trials', () => {
+  const records = [1, 2, 3].map((id) => raidTrial(id, raidFixture()));
+  const short = createOverflightBenchmark({
+    warmupSeconds: 30,
+    measurementSeconds: 120,
+    repetitions: 1,
+  });
+  for (let frame = 0; frame < 3600; frame++) short.frame((frame * 1000) / 60);
+  records[0].renderer = short.snapshot({ raw: true });
+  const report = summarizeOverflightTrials(records);
+  assert.equal(report.valid, false);
+  assert.equal(report.passes, false);
+  assert.ok(report.trials[0].reasons.includes('Incomplete measurement.'));
+});

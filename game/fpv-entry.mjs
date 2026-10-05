@@ -165,13 +165,22 @@ export function overflightLaunchURL(href, locale = 'en', appearanceDefault = nul
   )
     return null;
   const match =
-    /^(.*\/)game\/(?:(?:index|company)\.html|couch\/(?:index\.html|relay-rescue\.html)?|snake\/(?:(?:index|play)\.html)?|overflight\/(?:(?:index|play)\.html)?|studio\/(?:index|overflight)\.html)?$/.exec(
+    /^(.*\/)game\/(?:(?:index|company)\.html|couch\/(?:index\.html|relay-rescue\.html)?|snake\/(?:(?:index|play)\.html)?|overflight\/(?:(?:index|play|raid)\.html)?|studio\/(?:index|overflight|raid)\.html)?$/.exec(
       current.pathname,
     );
   if (!match) return null;
   const target = new URL(`${match[1]}game/overflight/play.html`, current);
   target.searchParams.set('lang', locale === 'uk' ? 'uk' : 'en');
   return nativeArtReviewURL(appearanceLaunchURL(target.href, appearanceDefault), current.href);
+}
+
+/** Raid shares the same native artwork/locale context, with its own rules identity. */
+export function overflightHuntLaunchURL(href, locale = 'en', appearanceDefault = null) {
+  const shared = overflightLaunchURL(href, locale, appearanceDefault);
+  if (!shared) return null;
+  const target = new URL(shared);
+  target.pathname = target.pathname.replace(/\/overflight\/play\.html$/, '/overflight/raid.html');
+  return target.href;
 }
 
 /** Standalone SIM visits also need an exit without relying on browser chrome. */

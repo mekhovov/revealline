@@ -1,4 +1,7 @@
-import { OVERFLIGHT_BENCHMARK_TARGETS as targets } from './benchmark.mjs';
+import {
+  OVERFLIGHT_BENCHMARK_TARGETS as targets,
+  overflightBenchmarkTarget,
+} from './benchmark.mjs';
 
 /** A set is three fresh trials, never three windows copied from one run. */
 export function summarizeOverflightTrials(records) {
@@ -11,7 +14,9 @@ export function summarizeOverflightTrials(records) {
     const reasons = [];
     const meter = record.renderer;
     const protocol = meter?.protocol;
-    if (record.format !== 'OverflightMeasurementsV1') reasons.push('Unknown measurement format.');
+    const raid = record.fixture === 'raid-reference';
+    const expectedFormat = raid ? 'OverflightHuntMeasurementsV1' : 'OverflightMeasurementsV1';
+    if (record.format !== expectedFormat) reasons.push('Unknown measurement format for fixture.');
     if (!['1', '2', '3'].includes(record.benchmarkTrial))
       reasons.push('Missing numbered independent trial.');
     if (identities.has(record.benchmarkTrial) || captured.has(record.capturedAt))
@@ -61,8 +66,32 @@ export function summarizeOverflightTrials(records) {
       samples.length !== protocol?.windows?.[0]?.cadenceMs?.samples
     )
       reasons.push('Raw intervals do not cover the reported measurement.');
-    const population = targets[record.fixture];
+    const population = overflightBenchmarkTarget(record.fixture);
     if (!population) reasons.push('Unknown fixture.');
+    if (raid) {
+      const summary = record.summary,
+        workload = summary?.fixtureWorkload;
+      if (
+        summary?.format !== 'OverflightHuntRunSummaryV1' ||
+        summary.fixture !== 'raid-reference' ||
+        summary.projectIdentity !== record.projectIdentity ||
+        summary.seed !== record.seed ||
+        summary.outcome !== 'technical-fixture' ||
+        workload?.kind !== 'raid-reference' ||
+        workload.gameplayResult !== false ||
+        workload.alive !== population.alive ||
+        workload.visible !== population.visible ||
+        workload.fullBuild !== true ||
+        workload.movingContactCollisions !== true ||
+        workload.independentProjectiles !== true ||
+        workload.partitionWrapping !== true ||
+        workload.poolPolicy !== 'same-owned-pools' ||
+        workload.progressionPolicy !== 'disabled-for-controlled-fixture'
+      )
+        reasons.push(
+          'Raid evidence must identify the controlled contact workload, not a gameplay result.',
+        );
+    }
     const resources = record.resourceSamples ?? [];
     if (
       resources.length < 9 ||
@@ -97,11 +126,14 @@ export function summarizeOverflightTrials(records) {
   return {
     format: 'OverflightIndependentTrialsV1',
     fixture: records[0]?.fixture ?? null,
+    workload: overflightBenchmarkTarget(records[0]?.fixture),
     valid: errors.length === 0 && trials.every((trial) => trial.valid),
     errors,
     trials,
     passes: errors.length === 0 && trials.every((trial) => trial.passes),
     scope:
-      'Recorded browser runs only. Hardware identity, power mode and source binding require the accompanying receipt. This does not establish player enjoyment or target-device acceptance.',
+      records[0]?.fixture === 'raid-reference'
+        ? 'Controlled Raid workload with automatic movement, full upgrades, recycled actors and fixed camera partitions. Normal sorties do not recycle actors. Recorded browser runs only; hardware identity, power mode and source binding require the receipt. This does not establish normal-run pacing, player enjoyment or target-device acceptance.'
+        : 'Recorded browser runs only. Hardware identity, power mode and source binding require the accompanying receipt. This does not establish player enjoyment or target-device acceptance.',
   };
 }
