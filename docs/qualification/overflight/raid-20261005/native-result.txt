@@ -7,20 +7,21 @@
     - progressbar "Hull"
     - generic: Spare airframes 2
     - generic: Sortie
-    - strong: 01:09
+    - strong: 01:02
     - generic: Level 9
-    - generic: 218 Cleared
+    - generic: 214 Cleared
     - paragraph: Sector 3 · Finish the hunt · Targets 7/7
-    - generic: Chain 2 · ×1 · 4.0s
-    - generic: Score 70,450
+    - generic: Chain 7 · ×2 · 4.0s
+    - generic: Score 71,900
     - paragraph: Automated review · Sweeper build
     - generic: Broad pass 2
     - generic: Slowing wake 2
     - generic: Sweep momentum 2
     - generic: Quick recharge 2
-    - generic: Boost 1.0s
-    - generic: RUSH ACTIVE 3.5s
+    - generic: Boost 0.6s
+    - generic: RUSH ACTIVE 0.4s
     - progressbar "Rush"
+    - status: RUSH ACTIVE 5.0s
     - generic "Diagnostics"
   - text: ✓ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄
   - dialog "Results":
@@ -31,19 +32,19 @@
     - paragraph: Command target destroyed. Refine your route, chase a longer chain, or try another build.
     - paragraph: Automated review · Sweeper build
     - term: Time
-    - definition: 01:09
+    - definition: 01:02
     - term: Score
-    - definition: 70,450
+    - definition: 71,900
     - term: Cleared
-    - definition: "218"
+    - definition: "214"
     - term: Best chain
-    - definition: "74"
+    - definition: "67"
     - term: Hull lost
     - definition: "80"
     - term: Couriers caught
-    - definition: "15"
+    - definition: "5"
     - term: Couriers escaped
-    - definition: "41"
+    - definition: "48"
     - term: Armor breaks
     - definition: "7"
     - generic: ✓ Command tank destroyed
