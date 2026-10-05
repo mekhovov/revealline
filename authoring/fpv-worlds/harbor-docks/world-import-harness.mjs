@@ -394,6 +394,7 @@ async function play(record) {
   check(
     record.course.id + '/' + record.proof.mode + ' actual rendered completion is exact',
     final.replay?.finished &&
+      w.fixtureDrawAccepted === true &&
       final.state.status === 'complete' &&
       final.state.ticks === record.proof.frames.length &&
       identity(final.state) === record.proof.finalStateIdentity &&
@@ -442,6 +443,7 @@ async function play(record) {
     mode: record.proof.mode,
     ticks: final.state.ticks,
     finalStateIdentity: identity(final.state),
+    acceptedFinalDraw: w.fixtureDrawAccepted === true,
     landingSpeed: final.state.landingSpeed,
     contacts: final.state.contacts,
     shots: final.state.shots,
@@ -468,8 +470,8 @@ $('run').onclick = async () => {
     owners: [],
     limitations: [
       'Eight courses/sixteen proofs on the identified admitted host; no default catalogue addition.',
-      'Complete identified admitted0b54 runtime; no source overlay. The qualifier proof closure matches exact admitted modules. No current-main whole-host, hardware/offline/FPS claim.',
-      'Controlled RAF delivers200ms per pulse to actual1x Watch; real performance clock, visibility and pause guards remain unchanged. No state/tick/completion assignment. Native-clock launch and unmodified standalone entry are distinct manual steps.',
+      'Complete identified admitted runtime; no source overlay. The qualifier proof closure matches exact admitted modules. No current-main whole-host, hardware/offline/FPS claim.',
+      'Scripted legacy controls and real File/native-IDB storage provide packaged-module functional evidence, not native-visible end-to-end coverage. Controlled RAF delivers200ms per pulse to actual1x Watch; real performance clock, visibility and pause guards remain unchanged. No state/tick/completion assignment. Native-clock launch and unmodified standalone entry are distinct manual steps.',
     ],
   };
   try {
