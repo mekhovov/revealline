@@ -114,6 +114,7 @@ const BASE_OPTIONAL_PACKAGE_POLICIES = Object.freeze({
       'game/hunt/preferences.mjs',
       'game/presentation/theme-system.mjs',
       'game/ui/native-menu-icons.mjs',
+      'game/ui/destruction-audio.mjs',
       'game/key-bindings.mjs',
       'game/i18n/index.mjs',
       'game/i18n/bootstrap.mjs',
