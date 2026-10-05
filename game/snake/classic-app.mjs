@@ -20,6 +20,7 @@ import {
 } from '../ui/celebration.mjs';
 import { createSignalReception } from '../ui/signal-reception.mjs';
 import { mountGlobalSettingsTools } from '../ui/global-settings-tools.mjs';
+import { attachInstallOfflinePanel } from '../ui/install-offline-panel.mjs';
 import { attachMenuAudioSettings } from '../ui/menu-audio.mjs';
 import { attachDefeatSoundControls } from '../ui/defeat-sound-controls.mjs';
 import { mountGlobalSettings } from '../ui/global-settings-view.mjs';
@@ -221,6 +222,7 @@ let playShell = null,
   libraryToolsRefresh = null,
   snakeSettingsView = null,
   snakeGlobalSettings = null,
+  snakeOfflinePanel = null,
   touchPresentationControls = null,
   menuController = null,
   boardLayoutObserver = null;
@@ -231,7 +233,9 @@ let match,
   ready = true,
   paused = true,
   previousFrame = null,
-  importEpoch = 0;
+  importEpoch = 0,
+  pendingImports = 0,
+  pageDeparted = false;
 let offerSavedContinue = !params.has('level');
 let savedRound = readLocal(SAVE_KEY) ?? readLocal(OLD_SAVE_KEY),
   saveNotice = '',
@@ -2010,12 +2014,15 @@ $('import').addEventListener('change', async () => {
   pause();
   const file = $('import').files[0],
     ticket = ++importEpoch;
+  pendingImports++;
   try {
     if (!file || file.size > 8 * 1024 * 1024) throw new Error('Size');
     const raw = await file.text();
     if (ticket === importEpoch) restore(raw);
   } catch {
     if (ticket === importEpoch) $('save-status').textContent = text('invalid');
+  } finally {
+    pendingImports--;
   }
   $('import').value = '';
 });
@@ -2154,15 +2161,18 @@ landscapeControls?.addEventListener('change', () => {
   footprint?.refresh();
 });
 globalThis.addEventListener('pagehide', (event) => {
+  pageDeparted = true;
   importEpoch++;
   writerEpoch++;
   snakeModeChoices?.closeSimulator();
+  snakeOfflinePanel?.close();
   pause();
   sound.suspend();
   classicAudio.reset();
   if (!event.persisted) {
     classicAudio.dispose();
     snakeDefeatSoundControls.dispose();
+    snakeOfflinePanel?.dispose();
   }
   save();
   const departingWriter = sessionWriter;
@@ -2179,6 +2189,7 @@ globalThis.addEventListener('pageshow', async (event) => {
     return;
   }
   sessionWriter = recovered;
+  pageDeparted = false;
   // A different tab may have advanced the saved attempt while this document
   // was frozen. Retain this board's counts, but isolate its future live events.
   if (statsAttempt) {
@@ -2554,6 +2565,20 @@ attachMenuAudioSettings(sound, doc, {
   getStorage: () => globalThis.localStorage,
   idPrefix: 'snake-global',
 });
+snakeOfflinePanel = attachInstallOfflinePanel({
+  document: doc,
+  window: globalThis,
+  downloadsURL: new URL('../downloads.html', import.meta.url),
+  // Snake owns a separate round lease. The shared panel still acquires and
+  // validates the main edition's profile locks before activating an install.
+  canActivate: () =>
+    !pageDeparted &&
+    pageActive() &&
+    sessionWriter.writable &&
+    !pendingImports &&
+    (ready || !!result()),
+  onOpen: () => pause({ showMenu: false }),
+});
 const snakeGlobalTools = mountGlobalSettingsTools({
   document: doc,
   window: globalThis,
@@ -2561,6 +2586,7 @@ const snakeGlobalTools = mountGlobalSettingsTools({
   panels: snakeSettingsView.panels,
   prefix: 'snake-global-tools',
   onOpen: pause,
+  offlinePanel: snakeOfflinePanel,
   coreURL: new URL('../', globalThis.location.href),
 });
 snakeGlobalSettings.update({
