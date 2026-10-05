@@ -24,7 +24,11 @@ export const CLASSIC_SNAKE_V4_KINDS = Object.freeze([
 ]);
 const ROUTED_KINDS = ['patroller', 'courier', 'perimeter', 'contour'];
 const FIXED_KINDS = ['jammer', 'lane', 'relay', 'eroder', 'guard'];
-export const CLASSIC_SIGNAL_PROFILES = Object.freeze(['local-burst-v1', 'broadcast-burst-v1']);
+export const CLASSIC_SIGNAL_PROFILES = Object.freeze([
+  'local-burst-v1',
+  'local-burst-v2',
+  'broadcast-burst-v1',
+]);
 export const classicSnakeUsesVariableHazards = (level) =>
   level?.targets?.required?.some(
     (policy) => policy.kind === 'jammer' && CLASSIC_SIGNAL_PROFILES.includes(policy.signalProfile),
@@ -210,11 +214,28 @@ function setSignalPhase(run, target, phase, duration) {
   if (phase === 'warning')
     run.events.push({ type: 'target.warning', tick: run.tick, target: structuredClone(target) });
 }
+/** Coverage is based on living heads, not trailing cable or traversable paths.
+ * Keep this projection pure so historical recordings retain their checkpoints. */
+export function classicSnakeSignalCoverage(run, source, radius = 6) {
+  const distance = (a, b, size) => {
+    const delta = Math.abs(a - b);
+    return run.level.wrap ? Math.min(delta, size - delta) : delta;
+  };
+  return run.snakes.some(
+    (snake) =>
+      snake.alive &&
+      Math.hypot(
+        distance(snake.body[0].x, source.x, run.level.width),
+        distance(snake.body[0].y, source.y, run.level.height),
+      ) <= radius,
+  );
+}
 export function classicSnakeSignalView(run) {
   const sources = (run.targets ?? [])
     .filter((target) => target.kind === 'jammer')
     .map((target) => {
       const profile = run.level.targets.required[target.policyIndex]?.signalProfile ?? 'legacy';
+      const radius = ['local-burst-v1', 'local-burst-v2'].includes(profile) ? 6 : null;
       return {
         id: target.id,
         x: target.x,
@@ -227,21 +248,44 @@ export function classicSnakeSignalView(run) {
             ? target.phaseTicks * classicSnakeStepMillisecondsV4(run)
             : target.signalUntilMs - run.elapsedMs,
         ),
-        radius: profile === 'local-burst-v1' ? 6 : null,
+        radius,
+        exposed: radius === null || classicSnakeSignalCoverage(run, target, radius),
       };
     });
   const running = run.status === 'running',
     suppressed = run.pulseTicks > 0;
   return {
-    active: running && !suppressed && sources.some((source) => source.phase === 'jamming'),
-    warning: running && !suppressed && sources.some((source) => source.phase === 'warning'),
+    active:
+      running &&
+      !suppressed &&
+      sources.some((source) => source.exposed && source.phase === 'jamming'),
+    warning:
+      running &&
+      !suppressed &&
+      sources.some((source) => source.exposed && source.phase === 'warning'),
     suppressed,
     sources,
   };
 }
+function retireLocalSignalOutsideCoverage(run, target) {
+  if (classicSnakeSignalCoverage(run, target)) return false;
+  if (target.phase === 'jamming') {
+    run.signalClearUntilMs = Math.max(run.signalClearUntilMs, run.elapsedMs + 1600);
+    setSignalPhase(run, target, 'rest', signalDuration(run, target, 2000, 4400));
+  } else if (target.phase === 'warning') {
+    // Re-entry starts a whole warning, never the unfinished part of this one.
+    setSignalPhase(run, target, 'rest', 0);
+  }
+  return true;
+}
 function advanceVariableJammer(run, target) {
   const step = classicSnakeStepMillisecondsV4(run);
   target.phaseTicks = Math.max(0, Math.ceil((target.signalUntilMs - run.elapsedMs) / step));
+  if (
+    policyFor(run, target).signalProfile === 'local-burst-v2' &&
+    retireLocalSignalOutsideCoverage(run, target)
+  )
+    return;
   // A catch may shorten future moves after this phase chose its deadline.
   // Retire at the last visible boundary before its hard maximum, rather than
   // overshooting it on the next move. The minimum is always respected.
@@ -375,8 +419,7 @@ function moveNewTarget(run, target, policy, distances) {
   target.heading = OPPOSITE[target.heading];
   return null;
 }
-function advanceSpecials(run) {
-  const jammedOnEntry = run.signal.jammed;
+function advanceSpecials(run, jammedOnEntry = run.signal.jammed) {
   const walls = effectiveWalls(run);
   run.projectiles = run.projectiles
     .map((shot) => ({ ...shot, ...shotDestination(run, shot) }))
@@ -1252,6 +1295,12 @@ export function stepClassicSnakeV4(run) {
     finish(run, 'lost', 'step-limit');
     return run;
   }
+  const localSignalOnEntry = run.targets.some(
+    (target) =>
+      policyFor(run, target).signalProfile === 'local-burst-v2' &&
+      target.phase === 'jamming' &&
+      classicSnakeSignalCoverage(run, target),
+  );
   syncShutters(run);
   const walls = effectiveWalls(run);
   for (const s of run.shutters) if (s.closed) s.cells.forEach((c) => walls.add(key(c)));
@@ -1376,8 +1425,14 @@ export function stepClassicSnakeV4(run) {
     if (run.signalClearUntilMs > run.elapsedMs - stepDuration)
       run.signalClearUntilMs += stepDuration;
   }
+  // Heads still move during Pulse. Retire an exposed local phase at the same
+  // accepted boundary as their exit, even while source clocks are frozen.
+  for (const target of run.targets)
+    if (policyFor(run, target).signalProfile === 'local-burst-v2')
+      retireLocalSignalOutsideCoverage(run, target);
+  syncSignal(run);
   moveTargets(run);
-  if (!pausedTargets) advanceSpecials(run);
+  if (!pausedTargets) advanceSpecials(run, run.signal.jammed || localSignalOnEntry);
   syncShutters(run, true);
   refill(run);
   if (run.status === 'running' && run.tick === MAX_STEPS) finish(run, 'lost', 'step-limit');

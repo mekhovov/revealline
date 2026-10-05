@@ -10,6 +10,8 @@ Ordinary Snake loss runs a 650 ms impact effect, eight replay moves from nine co
 
 Snake Results automatically loops its final-eight preview without advancing simulation, saving attempts, awarding progress, or rearming countdowns. Next, Retry/Rematch, Home, and continuation status remain in the action footer; the bounded preview and details scroll. More options holds secondary actions. Other modes place statistics and countdowns inside their actual result cards. Explicit View picture has a reachable continuation dock; accepted new attempts clear reward-only presentation before painting the new run.
 
+SIM Worlds now owns one compact statistics view inside its result card. Run/lifetime totals remain visible, the enemy-family breakdown starts collapsed, and verification updates preserve the same action row and focus. Reopening results reuses the subscription; language changes refresh it and disposal retires it. Authoring previews do not add awards.
+
 ## Living Circuit and live interference
 
 Living Circuit is a third board style alongside Theme and Retro. `classic-scenes.mjs` exports:
@@ -25,11 +27,13 @@ The follow-up tracking treatment separates current terrain from actors and cable
 
 New recipes opt into local six-cell or full-board broadcast profiles. A dedicated accepted `hazardSeed` varies their schedule independently of target/spawn randomness. New attempts and retries roll that schedule; Continue and recordings preserve it, while matched Versus boards share it. Pulse freezes the schedule and stabilizes reception; catching a source ends its interference. See [field mechanics](classic-snake-field-mechanics.md) for timing, counterplay, and compatibility.
 
+Current local missions use `local-burst-v2` and recipe revision 3. Only a living head in the six-cell Euclidean radius can start a warning; Team counts either head and wrap seams use wrapped distance. Leaving cancels the warning or ends the burst, with recovery before a fresh full warning. Pulse freezes source clocks while accepted head movement can still leave coverage. The pure `source.exposed` projection keeps reception status truthful for both current and historical local recordings. Broadcast recipes are unchanged.
+
 ## Progress and compatibility
 
 Enemy totals count accepted live simulation events, including failed attempts and bonus targets, using resumable transactional lineage counters. Replays, previews, and imported history do not create awards. Backup merges use the maximum per lineage. Menu disclosures show run/lifetime totals compactly; the existing Collections page retains portrait cards, filters, and picture ownership. Snake grants no new pictures.
 
-Verified finite Snake clears earn completion stars. There are 219 current calibrated exact setups and 30 retained historical calibrations. Variable-hazard recipes retain completion and personal records without implying equivalent silver/gold thresholds. The v4 catalogue has 24 missions, with Broadcast Check and Quiet Channel before the combined encounters. Relay Airfield then uses broadcast interference. Historical v1–v3 recipes and unprofiled v4 recordings retain their behavior. A bounded archive admits the five exact retired v4 recipes for Continue/import/Retry and preserves their higher grades; community entries cannot inherit archive authority.
+Verified finite Snake clears earn completion stars. There are 219 current calibrated exact setups and 30 retained historical calibrations. Variable-hazard recipes retain completion and personal records without implying equivalent silver/gold thresholds. The v4 catalogue has 24 missions, with Broadcast Check and Quiet Channel before the combined encounters. Relay Airfield then uses broadcast interference. Historical v1–v3 recipes, unprofiled v4 recordings, and local-v1 recordings retain their simulation. A bounded archive admits nine exact retired v4 recipes for Continue/import/Retry: five fixed-schedule definitions with their higher grades and four local-v1 definitions with completion-only records. Community entries cannot inherit archive authority.
 
 ## Main integration decision
 
@@ -47,7 +51,9 @@ Key source boundaries:
 
 ## Verification scope
 
-The final renderer/scene/fixture/scheduler group has **32 passing tests**, covering unchanged geometry/replay identity, quiet materials, chapter selection without RNG, native target heading, live bounded noise, wrapping, readable danger outlines, double broadcast antennas, Pulse/terminal behavior, and reduced-effects/cache refresh. All **144 current recordings** for 24 missions × Solo/Team × three paces pass qualification. Calibration checks verify **249 exact setups**, including 30 historical gold records. These checks establish deterministic completion, not universal human difficulty calibration.
+The current coverage/results follow-up passes **148 targeted checks**, repository validation and lint. All **144 current recordings** qualify; exactly 24 local-v2 proofs were regenerated and the other 120 remain unchanged. All 24 retained local-v1 recordings verify exactly, and the 249 calibration rows retain their setup keys and budgets; only their source-proof hashes changed. Current mobile result observations, simulation measurements and remaining limits are recorded in [coverage follow-up](verification/living-circuit/coverage-followup.md). No new full distribution build or public deployment is claimed for this follow-up.
+
+The following results belong to the earlier source revisions. The renderer/scene/fixture/scheduler group had **32 passing tests**, covering unchanged geometry/replay identity, quiet materials, chapter selection without RNG, native target heading, live bounded noise, wrapping, readable danger outlines, double broadcast antennas, Pulse/terminal behavior, and reduced-effects/cache refresh. Its **144 recordings** passed qualification and calibration checks verified **249 exact setups**, including 30 historical gold records. These checks establish deterministic completion, not universal human difficulty calibration.
 
 Review found and corrected a mid-burst speedup edge: an accepted catch could change the next interval from 200 to 190 ms and overshoot the burst deadline. Profiled scheduling respects the hard duration bound at a visible simulation boundary, with start/deadline timestamps shifted together during Pulse. The regression exercises an accepted catch; legacy checkpoint compatibility still passes. The host suite passes **49 tests**, including fresh Retry seeds, exact Continue, historical recipe retention, and paused scene changes. Independent review exercised all 360 prepared archive variants and community-alias rejection.
 

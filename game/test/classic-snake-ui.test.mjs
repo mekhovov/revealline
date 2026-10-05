@@ -91,6 +91,7 @@ async function harness({
   query = '',
   cosmetics = null,
   savedRound = null,
+  catalogue = CLASSIC_SNAKE_LEVELS,
 } = {}) {
   const document = new Document();
   document.hasFocus = () => focused;
@@ -383,7 +384,7 @@ async function harness({
     OFFICIAL_CAMPAIGNS: CLASSIC_SNAKE_CAMPAIGNS,
     OFFICIAL_FEATURED: CLASSIC_SNAKE_FEATURED,
     OFFICIAL_CHAPTERS: CLASSIC_SNAKE_CHAPTERS,
-    OFFICIAL_LEVELS: CLASSIC_SNAKE_LEVELS,
+    OFFICIAL_LEVELS: catalogue,
     CLASSIC_COPY,
     ...core,
     ...matches,
@@ -1060,11 +1061,18 @@ test('legacy migration preserves a verified historical seed', async () => {
   assert.equal(state.created.at(-1).seed, 71);
 });
 
-function archivedSession({ tamper = false } = {}) {
-  const entry = CLASSIC_SNAKE_ARCHIVED_LEVELS[0];
+function archivedSession({ tamper = false, profiled = false } = {}) {
+  const entry = profiled
+    ? CLASSIC_SNAKE_ARCHIVED_LEVELS.find((row) =>
+        row.level.targets.required.some((target) => target.signalProfile === 'local-burst-v1'),
+      )
+    : CLASSIC_SNAKE_ARCHIVED_LEVELS[0];
   const level = prepareClassicSnakeLevel(entry, { pace: 'slow' });
   if (tamper) level.goal--;
-  const match = matches.createClassicSnakeMatch(level, { seed: 71 });
+  const match = matches.createClassicSnakeMatch(level, {
+    seed: 71,
+    ...(profiled ? { hazardSeed: 17 } : {}),
+  });
   matches.advanceClassicSnakeMatchTo(match, level.stepMs * 2);
   return {
     format: 'revealline-classic-snake-session.v2',
@@ -1081,27 +1089,34 @@ function archivedSession({ tamper = false } = {}) {
   };
 }
 
-for (const action of ['Continue', 'Import']) {
-  test(`${action} admits exact archived jammer recipes and Retry preserves their fixed schedule`, async () => {
-    const session = archivedSession();
-    const state = await harness({ savedRound: action === 'Continue' ? session : null });
-    if (action === 'Continue') state.$('continue').click();
-    else await importSession(state.$, session);
-    assert.equal(state.$('save-status').textContent, CLASSIC_COPY.en.loaded);
-    assert.equal(state.document.body.dataset.playing, 'true');
-    state.frame(0);
-    const restored = state.drawings.at(-1).run;
-    assert.equal(restored.tick, 2);
-    assert.equal(restored.seed, 71);
-    assert.deepEqual(core.exportClassicSnakeReplay(restored), session.match.replays[0]);
-    state.retry();
-    const retry = state.created.at(-1);
-    assert.deepEqual(retry.level, restored.level);
-    assert.equal(retry.hazardSeed, undefined);
-    assert.equal(retry.seed, 71);
-    assert.equal(retry.tick, 0);
-  });
-}
+for (const action of ['Continue', 'Import'])
+  for (const profiled of [false, true]) {
+    test(`${action} admits exact archived ${profiled ? 'local-v1' : 'unprofiled'} jammer recipes and Retry preserves their setup`, async () => {
+      const session = archivedSession({ profiled });
+      const state = await harness({ savedRound: action === 'Continue' ? session : null });
+      if (action === 'Continue') state.$('continue').click();
+      else await importSession(state.$, session);
+      assert.equal(state.$('save-status').textContent, CLASSIC_COPY.en.loaded);
+      assert.equal(state.document.body.dataset.playing, 'true');
+      state.frame(0);
+      const restored = state.drawings.at(-1).run;
+      assert.equal(restored.tick, 2);
+      assert.equal(restored.seed, 71);
+      assert.deepEqual(core.exportClassicSnakeReplay(restored), session.match.replays[0]);
+      state.retry();
+      const retry = state.created.at(-1);
+      assert.deepEqual(retry.level, restored.level);
+      if (profiled) {
+        assert.equal(restored.hazardSeed, 17);
+        assert.ok(Number.isSafeInteger(retry.hazardSeed));
+        assert.ok(
+          retry.level.targets.required.some((target) => target.signalProfile === 'local-burst-v1'),
+        );
+      } else assert.equal(retry.hazardSeed, undefined);
+      assert.equal(retry.seed, 71);
+      assert.equal(retry.tick, 0);
+    });
+  }
 
 test('a self-consistent same-ID old recipe cannot bypass exact archived admission', async () => {
   const state = await harness();
@@ -1368,4 +1383,115 @@ test('actual Snake links and optional SIM launch retain an explicit native revie
       false,
     );
   }
+});
+
+// These are host projection fixtures, not simulated playthroughs. Set accepted
+// board positions/phase at an observation boundary and render without stepping;
+// core coverage, scheduling and replay tests separately own those transitions.
+function receptionFixtureBoard(run, { inside = false, phase = 'jamming', player = 0 } = {}) {
+  const source = run.targets.find((target) => target.kind === 'jammer');
+  assert.ok(source);
+  source.phase = phase;
+  for (const snake of run.snakes) snake.body[0] = { x: 3, y: 2 };
+  if (inside) run.snakes[player].body[0] = { x: source.x - 1, y: source.y };
+  return source;
+}
+function receptionEntry(profile) {
+  return [...CLASSIC_SNAKE_LEVELS, ...CLASSIC_SNAKE_ARCHIVED_LEVELS].find(
+    (item) =>
+      item.id === 'classic-field-signal-check' &&
+      item.level.targets.required.find((target) => target.kind === 'jammer')?.signalProfile ===
+        profile,
+  );
+}
+async function receptionHarness(profile, mode = 'solo') {
+  const entry = receptionEntry(profile);
+  assert.ok(entry, `${profile ?? 'unprofiled'} official recipe must remain available`);
+  return harness({
+    entry,
+    mode,
+    catalogue: CLASSIC_SNAKE_LEVELS.map((row) => (row.id === entry.id ? entry : row)),
+  });
+}
+const receptionLabels = (state) => [...state.document.querySelectorAll('.snake-reception')];
+
+for (const profile of ['local-burst-v1', 'local-burst-v2'])
+  test(`${profile} host reception reflects actual coverage instead of a distant transmitter phase`, async () => {
+    const state = await receptionHarness(profile);
+    const run = state.created[0];
+    receptionFixtureBoard(run);
+    state.frame(0);
+    const [label] = receptionLabels(state);
+    assert.equal(label.hidden, false, 'the source remains discoverable outside its range');
+    assert.equal(label.dataset.reception, 'signalClear');
+    assert.match(label.textContent, /Clear reception/);
+    assert.equal(
+      run.targets[0].phase,
+      'jamming',
+      'host presentation does not edit historical phase',
+    );
+    receptionFixtureBoard(run, { inside: true });
+    state.frame(1);
+    assert.equal(label.dataset.reception, 'signalJammed');
+    assert.match(label.textContent, /Interference/);
+    assert.match(label.getAttribute('aria-label'), /Catch the antenna enemy or leave its range/);
+    receptionFixtureBoard(run, { phase: 'warning' });
+    state.frame(2);
+    assert.equal(
+      label.dataset.reception,
+      'signalClear',
+      'a warning beyond the radius is not a local warning',
+    );
+    receptionFixtureBoard(run, { inside: true, phase: 'warning' });
+    state.frame(3);
+    assert.equal(label.dataset.reception, 'signalWarning');
+    run.pulseTicks = 3;
+    state.frame(4);
+    assert.equal(label.dataset.reception, 'signalStable');
+    assert.equal(run.tick, 0, 'these host checks do not advance the fixture simulation');
+  });
+
+test('Versus reception belongs to each board rather than the most exposed opponent', async () => {
+  const state = await receptionHarness('local-burst-v2', 'versus');
+  const [left, right] = state.created;
+  receptionFixtureBoard(left, { inside: true });
+  receptionFixtureBoard(right);
+  state.frame(0);
+  assert.deepEqual(
+    receptionLabels(state).map((label) => label.dataset.reception),
+    ['signalJammed', 'signalClear'],
+  );
+  receptionFixtureBoard(left);
+  receptionFixtureBoard(right, { inside: true, phase: 'warning' });
+  state.frame(1);
+  assert.deepEqual(
+    receptionLabels(state).map((label) => label.dataset.reception),
+    ['signalClear', 'signalWarning'],
+  );
+});
+
+test('Team exposes one shared reception status when either living head enters local coverage', async () => {
+  const state = await receptionHarness('local-burst-v2', 'team');
+  const run = state.created[0];
+  assert.equal(run.snakes.length, 2);
+  receptionFixtureBoard(run);
+  state.frame(0);
+  const labels = receptionLabels(state);
+  assert.equal(labels.length, 1);
+  assert.equal(labels[0].dataset.reception, 'signalClear');
+  receptionFixtureBoard(run, { inside: true, player: 1 });
+  state.frame(1);
+  assert.equal(labels[0].dataset.reception, 'signalJammed');
+  receptionFixtureBoard(run);
+  state.frame(2);
+  assert.equal(labels[0].dataset.reception, 'signalClear');
+});
+
+test('original unprofiled jammer remains broadcast in the host instead of receiving invented range rules', async () => {
+  const state = await receptionHarness(undefined);
+  receptionFixtureBoard(state.created[0]);
+  state.frame(0);
+  const [label] = receptionLabels(state);
+  assert.equal(label.dataset.reception, 'signalJammed');
+  assert.match(label.getAttribute('aria-label'), /double antenna/);
 });

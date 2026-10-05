@@ -23,7 +23,7 @@ function wallsFor(rectangles) {
       for (let dx = 0; dx < w; dx++) cells.set(`${x + dx},${y + dy}`, { x: x + dx, y: y + dy });
   return [...cells.values()].sort((a, b) => a.y - b.y || a.x - b.x);
 }
-const jammer = (at = [20, 8], signalProfile = 'local-burst-v1') => ({
+const jammer = (at = [20, 8], signalProfile = 'local-burst-v2') => ({
   kind: 'jammer',
   every: 3,
   at: cell(at),
@@ -417,15 +417,11 @@ function entries(rows, chapter) {
       level: {
         version: 'classic-snake-level.v4',
         id,
-        revision: [
-          'signal-check',
-          'quiet-return',
-          'signal-crossing',
-          'relay-airfield',
-          'field-links',
-        ].includes(slug)
-          ? '2'
-          : '1',
+        revision: targets.some((target) => target.signalProfile === 'local-burst-v2')
+          ? '3'
+          : slug === 'relay-airfield'
+            ? '2'
+            : '1',
         name: en,
         width: 24,
         height: 18,

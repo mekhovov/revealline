@@ -12,7 +12,7 @@
         "level": {
           "version": "classic-snake-level.v4",
           "id": "classic-field-signal-check",
-          "revision": "2",
+          "revision": "3",
           "name": "Signal Check",
           "width": 24,
           "height": 18,
@@ -84,7 +84,7 @@
                   "x": 20,
                   "y": 8
                 },
-                "signalProfile": "local-burst-v1"
+                "signalProfile": "local-burst-v2"
               },
               {
                 "kind": "jammer",
@@ -93,7 +93,7 @@
                   "x": 3,
                   "y": 10
                 },
-                "signalProfile": "local-burst-v1"
+                "signalProfile": "local-burst-v2"
               }
             ],
             "bonus": null
@@ -101,7 +101,7 @@
           "shutters": [],
           "pickups": []
         },
-        "levelIdentity": "093ed01406c7f845",
+        "levelIdentity": "e6c13e2f67aaaad6",
         "mode": "solo",
         "seed": 17,
         "hazardSeed": 17,
@@ -138,7 +138,7 @@
             "direction": "left"
           }
         ],
-        "checkpoint": "b8b1e8dd3e7829b0"
+        "checkpoint": "0ae218f9b42c24dc"
       }
     },
     {
@@ -152,7 +152,7 @@
         "level": {
           "version": "classic-snake-level.v4",
           "id": "classic-field-signal-check",
-          "revision": "2",
+          "revision": "3",
           "name": "Signal Check",
           "width": 24,
           "height": 18,
@@ -224,7 +224,7 @@
                   "x": 20,
                   "y": 8
                 },
-                "signalProfile": "local-burst-v1"
+                "signalProfile": "local-burst-v2"
               },
               {
                 "kind": "jammer",
@@ -233,7 +233,7 @@
                   "x": 3,
                   "y": 10
                 },
-                "signalProfile": "local-burst-v1"
+                "signalProfile": "local-burst-v2"
               }
             ],
             "bonus": null
@@ -241,7 +241,7 @@
           "shutters": [],
           "pickups": []
         },
-        "levelIdentity": "e38157cb46c2b515",
+        "levelIdentity": "840f4f28ff0ab9f6",
         "mode": "solo",
         "seed": 17,
         "hazardSeed": 17,
@@ -278,7 +278,7 @@
             "direction": "left"
           }
         ],
-        "checkpoint": "81e552bdd724f702"
+        "checkpoint": "234a14582086498c"
       }
     },
     {
@@ -292,7 +292,7 @@
         "level": {
           "version": "classic-snake-level.v4",
           "id": "classic-field-signal-check",
-          "revision": "2",
+          "revision": "3",
           "name": "Signal Check",
           "width": 24,
           "height": 18,
@@ -364,7 +364,7 @@
                   "x": 20,
                   "y": 8
                 },
-                "signalProfile": "local-burst-v1"
+                "signalProfile": "local-burst-v2"
               },
               {
                 "kind": "jammer",
@@ -373,7 +373,7 @@
                   "x": 3,
                   "y": 10
                 },
-                "signalProfile": "local-burst-v1"
+                "signalProfile": "local-burst-v2"
               }
             ],
             "bonus": null
@@ -381,7 +381,7 @@
           "shutters": [],
           "pickups": []
         },
-        "levelIdentity": "93c366314b341f75",
+        "levelIdentity": "3f328d103626b7f6",
         "mode": "solo",
         "seed": 17,
         "hazardSeed": 17,
@@ -418,7 +418,7 @@
             "direction": "left"
           }
         ],
-        "checkpoint": "5c04fe8ab9c45667"
+        "checkpoint": "3b7e1b4694f9744c"
       }
     },
     {
@@ -432,7 +432,7 @@
         "level": {
           "version": "classic-snake-level.v4",
           "id": "classic-field-signal-check",
-          "revision": "2",
+          "revision": "3",
           "name": "Signal Check",
           "width": 24,
           "height": 18,
@@ -504,7 +504,7 @@
                   "x": 20,
                   "y": 8
                 },
-                "signalProfile": "local-burst-v1"
+                "signalProfile": "local-burst-v2"
               },
               {
                 "kind": "jammer",
@@ -513,7 +513,7 @@
                   "x": 3,
                   "y": 10
                 },
-                "signalProfile": "local-burst-v1"
+                "signalProfile": "local-burst-v2"
               }
             ],
             "bonus": null
@@ -521,7 +521,7 @@
           "shutters": [],
           "pickups": []
         },
-        "levelIdentity": "093ed01406c7f845",
+        "levelIdentity": "e6c13e2f67aaaad6",
         "mode": "team",
         "seed": 17,
         "hazardSeed": 17,
@@ -613,7 +613,7 @@
             "direction": "up"
           }
         ],
-        "checkpoint": "824907a69eb9cd9d"
+        "checkpoint": "e83e5edfb33b4a80"
       }
     },
     {
@@ -627,7 +627,7 @@
         "level": {
           "version": "classic-snake-level.v4",
           "id": "classic-field-signal-check",
-          "revision": "2",
+          "revision": "3",
           "name": "Signal Check",
           "width": 24,
           "height": 18,
@@ -699,7 +699,7 @@
                   "x": 20,
                   "y": 8
                 },
-                "signalProfile": "local-burst-v1"
+                "signalProfile": "local-burst-v2"
               },
               {
                 "kind": "jammer",
@@ -708,7 +708,7 @@
                   "x": 3,
                   "y": 10
                 },
-                "signalProfile": "local-burst-v1"
+                "signalProfile": "local-burst-v2"
               }
             ],
             "bonus": null
@@ -716,7 +716,7 @@
           "shutters": [],
           "pickups": []
         },
-        "levelIdentity": "e38157cb46c2b515",
+        "levelIdentity": "840f4f28ff0ab9f6",
         "mode": "team",
         "seed": 17,
         "hazardSeed": 17,
@@ -808,7 +808,7 @@
             "direction": "up"
           }
         ],
-        "checkpoint": "bcd824be6934575a"
+        "checkpoint": "38092ded0428b798"
       }
     },
     {
@@ -822,7 +822,7 @@
         "level": {
           "version": "classic-snake-level.v4",
           "id": "classic-field-signal-check",
-          "revision": "2",
+          "revision": "3",
           "name": "Signal Check",
           "width": 24,
           "height": 18,
@@ -894,7 +894,7 @@
                   "x": 20,
                   "y": 8
                 },
-                "signalProfile": "local-burst-v1"
+                "signalProfile": "local-burst-v2"
               },
               {
                 "kind": "jammer",
@@ -903,7 +903,7 @@
                   "x": 3,
                   "y": 10
                 },
-                "signalProfile": "local-burst-v1"
+                "signalProfile": "local-burst-v2"
               }
             ],
             "bonus": null
@@ -911,7 +911,7 @@
           "shutters": [],
           "pickups": []
         },
-        "levelIdentity": "93c366314b341f75",
+        "levelIdentity": "3f328d103626b7f6",
         "mode": "team",
         "seed": 17,
         "hazardSeed": 17,
@@ -1003,7 +1003,7 @@
             "direction": "up"
           }
         ],
-        "checkpoint": "89b3ba5dcb614d26"
+        "checkpoint": "67204adcd7a3b359"
       }
     },
     {
@@ -1017,7 +1017,7 @@
         "level": {
           "version": "classic-snake-level.v4",
           "id": "classic-field-quiet-return",
-          "revision": "2",
+          "revision": "3",
           "name": "Quiet Return",
           "width": 24,
           "height": 18,
@@ -1129,7 +1129,7 @@
                   "x": 20,
                   "y": 8
                 },
-                "signalProfile": "local-burst-v1"
+                "signalProfile": "local-burst-v2"
               },
               {
                 "kind": "runner",
@@ -1142,7 +1142,7 @@
                   "x": 3,
                   "y": 10
                 },
-                "signalProfile": "local-burst-v1"
+                "signalProfile": "local-burst-v2"
               }
             ],
             "bonus": null
@@ -1150,7 +1150,7 @@
           "shutters": [],
           "pickups": []
         },
-        "levelIdentity": "5c938afdf67302a8",
+        "levelIdentity": "9026d5d042ce5305",
         "mode": "solo",
         "seed": 17,
         "hazardSeed": 17,
@@ -1212,7 +1212,7 @@
             "direction": "down"
           }
         ],
-        "checkpoint": "9801c6fb126fad16"
+        "checkpoint": "c6ebb13a9ec345ca"
       }
     },
     {
@@ -1226,7 +1226,7 @@
         "level": {
           "version": "classic-snake-level.v4",
           "id": "classic-field-quiet-return",
-          "revision": "2",
+          "revision": "3",
           "name": "Quiet Return",
           "width": 24,
           "height": 18,
@@ -1338,7 +1338,7 @@
                   "x": 20,
                   "y": 8
                 },
-                "signalProfile": "local-burst-v1"
+                "signalProfile": "local-burst-v2"
               },
               {
                 "kind": "runner",
@@ -1351,7 +1351,7 @@
                   "x": 3,
                   "y": 10
                 },
-                "signalProfile": "local-burst-v1"
+                "signalProfile": "local-burst-v2"
               }
             ],
             "bonus": null
@@ -1359,7 +1359,7 @@
           "shutters": [],
           "pickups": []
         },
-        "levelIdentity": "3c1f96aabd0c1928",
+        "levelIdentity": "ec0e70e3f5425915",
         "mode": "solo",
         "seed": 17,
         "hazardSeed": 17,
@@ -1421,7 +1421,7 @@
             "direction": "down"
           }
         ],
-        "checkpoint": "3a44e65b344cddfa"
+        "checkpoint": "70d32d5c2c1160db"
       }
     },
     {
@@ -1435,7 +1435,7 @@
         "level": {
           "version": "classic-snake-level.v4",
           "id": "classic-field-quiet-return",
-          "revision": "2",
+          "revision": "3",
           "name": "Quiet Return",
           "width": 24,
           "height": 18,
@@ -1547,7 +1547,7 @@
                   "x": 20,
                   "y": 8
                 },
-                "signalProfile": "local-burst-v1"
+                "signalProfile": "local-burst-v2"
               },
               {
                 "kind": "runner",
@@ -1560,7 +1560,7 @@
                   "x": 3,
                   "y": 10
                 },
-                "signalProfile": "local-burst-v1"
+                "signalProfile": "local-burst-v2"
               }
             ],
             "bonus": null
@@ -1568,7 +1568,7 @@
           "shutters": [],
           "pickups": []
         },
-        "levelIdentity": "95e2bf01364021e4",
+        "levelIdentity": "36db3167fd8c8761",
         "mode": "solo",
         "seed": 17,
         "hazardSeed": 17,
@@ -1630,7 +1630,7 @@
             "direction": "down"
           }
         ],
-        "checkpoint": "c0f306240f6e76b2"
+        "checkpoint": "3272643a0f69e19d"
       }
     },
     {
@@ -1644,7 +1644,7 @@
         "level": {
           "version": "classic-snake-level.v4",
           "id": "classic-field-quiet-return",
-          "revision": "2",
+          "revision": "3",
           "name": "Quiet Return",
           "width": 24,
           "height": 18,
@@ -1756,7 +1756,7 @@
                   "x": 20,
                   "y": 8
                 },
-                "signalProfile": "local-burst-v1"
+                "signalProfile": "local-burst-v2"
               },
               {
                 "kind": "runner",
@@ -1769,7 +1769,7 @@
                   "x": 3,
                   "y": 10
                 },
-                "signalProfile": "local-burst-v1"
+                "signalProfile": "local-burst-v2"
               }
             ],
             "bonus": null
@@ -1777,7 +1777,7 @@
           "shutters": [],
           "pickups": []
         },
-        "levelIdentity": "5c938afdf67302a8",
+        "levelIdentity": "9026d5d042ce5305",
         "mode": "team",
         "seed": 17,
         "hazardSeed": 17,
@@ -1919,7 +1919,7 @@
             "direction": "up"
           }
         ],
-        "checkpoint": "d8b913c10a6e30bd"
+        "checkpoint": "c143657bbf1da062"
       }
     },
     {
@@ -1933,7 +1933,7 @@
         "level": {
           "version": "classic-snake-level.v4",
           "id": "classic-field-quiet-return",
-          "revision": "2",
+          "revision": "3",
           "name": "Quiet Return",
           "width": 24,
           "height": 18,
@@ -2045,7 +2045,7 @@
                   "x": 20,
                   "y": 8
                 },
-                "signalProfile": "local-burst-v1"
+                "signalProfile": "local-burst-v2"
               },
               {
                 "kind": "runner",
@@ -2058,7 +2058,7 @@
                   "x": 3,
                   "y": 10
                 },
-                "signalProfile": "local-burst-v1"
+                "signalProfile": "local-burst-v2"
               }
             ],
             "bonus": null
@@ -2066,7 +2066,7 @@
           "shutters": [],
           "pickups": []
         },
-        "levelIdentity": "3c1f96aabd0c1928",
+        "levelIdentity": "ec0e70e3f5425915",
         "mode": "team",
         "seed": 17,
         "hazardSeed": 17,
@@ -2208,7 +2208,7 @@
             "direction": "up"
           }
         ],
-        "checkpoint": "39e8d88623105140"
+        "checkpoint": "2e26011bdc10337b"
       }
     },
     {
@@ -2222,7 +2222,7 @@
         "level": {
           "version": "classic-snake-level.v4",
           "id": "classic-field-quiet-return",
-          "revision": "2",
+          "revision": "3",
           "name": "Quiet Return",
           "width": 24,
           "height": 18,
@@ -2334,7 +2334,7 @@
                   "x": 20,
                   "y": 8
                 },
-                "signalProfile": "local-burst-v1"
+                "signalProfile": "local-burst-v2"
               },
               {
                 "kind": "runner",
@@ -2347,7 +2347,7 @@
                   "x": 3,
                   "y": 10
                 },
-                "signalProfile": "local-burst-v1"
+                "signalProfile": "local-burst-v2"
               }
             ],
             "bonus": null
@@ -2355,7 +2355,7 @@
           "shutters": [],
           "pickups": []
         },
-        "levelIdentity": "95e2bf01364021e4",
+        "levelIdentity": "36db3167fd8c8761",
         "mode": "team",
         "seed": 17,
         "hazardSeed": 17,
@@ -2497,7 +2497,7 @@
             "direction": "up"
           }
         ],
-        "checkpoint": "ccced74578295053"
+        "checkpoint": "9fdb203dfc28031b"
       }
     },
     {
@@ -9674,7 +9674,7 @@
         "level": {
           "version": "classic-snake-level.v4",
           "id": "classic-field-signal-crossing",
-          "revision": "2",
+          "revision": "3",
           "name": "Signal Crossing",
           "width": 24,
           "height": 18,
@@ -9782,7 +9782,7 @@
                   "x": 20,
                   "y": 8
                 },
-                "signalProfile": "local-burst-v1"
+                "signalProfile": "local-burst-v2"
               },
               {
                 "kind": "lane",
@@ -9803,7 +9803,7 @@
           "shutters": [],
           "pickups": []
         },
-        "levelIdentity": "1ecfc68f04e6fee4",
+        "levelIdentity": "f8e023e7cd8e2c90",
         "mode": "solo",
         "seed": 17,
         "hazardSeed": 17,
@@ -9890,7 +9890,7 @@
             "direction": "left"
           }
         ],
-        "checkpoint": "039f11e068fb097a"
+        "checkpoint": "137302e2dafb8d55"
       }
     },
     {
@@ -9904,7 +9904,7 @@
         "level": {
           "version": "classic-snake-level.v4",
           "id": "classic-field-signal-crossing",
-          "revision": "2",
+          "revision": "3",
           "name": "Signal Crossing",
           "width": 24,
           "height": 18,
@@ -10012,7 +10012,7 @@
                   "x": 20,
                   "y": 8
                 },
-                "signalProfile": "local-burst-v1"
+                "signalProfile": "local-burst-v2"
               },
               {
                 "kind": "lane",
@@ -10033,7 +10033,7 @@
           "shutters": [],
           "pickups": []
         },
-        "levelIdentity": "edb4dec863416cf4",
+        "levelIdentity": "033adc8106625f50",
         "mode": "solo",
         "seed": 17,
         "hazardSeed": 17,
@@ -10120,7 +10120,7 @@
             "direction": "left"
           }
         ],
-        "checkpoint": "15442e8b3789aff3"
+        "checkpoint": "a35a9a9265f119be"
       }
     },
     {
@@ -10134,7 +10134,7 @@
         "level": {
           "version": "classic-snake-level.v4",
           "id": "classic-field-signal-crossing",
-          "revision": "2",
+          "revision": "3",
           "name": "Signal Crossing",
           "width": 24,
           "height": 18,
@@ -10242,7 +10242,7 @@
                   "x": 20,
                   "y": 8
                 },
-                "signalProfile": "local-burst-v1"
+                "signalProfile": "local-burst-v2"
               },
               {
                 "kind": "lane",
@@ -10263,7 +10263,7 @@
           "shutters": [],
           "pickups": []
         },
-        "levelIdentity": "700576bb2464e044",
+        "levelIdentity": "fea5c6a7f6ebaee0",
         "mode": "solo",
         "seed": 17,
         "hazardSeed": 17,
@@ -10350,7 +10350,7 @@
             "direction": "left"
           }
         ],
-        "checkpoint": "7afee4e767ef6d53"
+        "checkpoint": "7dc5da5db55e3225"
       }
     },
     {
@@ -10364,7 +10364,7 @@
         "level": {
           "version": "classic-snake-level.v4",
           "id": "classic-field-signal-crossing",
-          "revision": "2",
+          "revision": "3",
           "name": "Signal Crossing",
           "width": 24,
           "height": 18,
@@ -10472,7 +10472,7 @@
                   "x": 20,
                   "y": 8
                 },
-                "signalProfile": "local-burst-v1"
+                "signalProfile": "local-burst-v2"
               },
               {
                 "kind": "lane",
@@ -10493,7 +10493,7 @@
           "shutters": [],
           "pickups": []
         },
-        "levelIdentity": "1ecfc68f04e6fee4",
+        "levelIdentity": "f8e023e7cd8e2c90",
         "mode": "team",
         "seed": 17,
         "hazardSeed": 17,
@@ -10740,7 +10740,7 @@
             "direction": "left"
           }
         ],
-        "checkpoint": "5425c880a69b51a9"
+        "checkpoint": "18912aa68cbe09e8"
       }
     },
     {
@@ -10754,7 +10754,7 @@
         "level": {
           "version": "classic-snake-level.v4",
           "id": "classic-field-signal-crossing",
-          "revision": "2",
+          "revision": "3",
           "name": "Signal Crossing",
           "width": 24,
           "height": 18,
@@ -10862,7 +10862,7 @@
                   "x": 20,
                   "y": 8
                 },
-                "signalProfile": "local-burst-v1"
+                "signalProfile": "local-burst-v2"
               },
               {
                 "kind": "lane",
@@ -10883,7 +10883,7 @@
           "shutters": [],
           "pickups": []
         },
-        "levelIdentity": "edb4dec863416cf4",
+        "levelIdentity": "033adc8106625f50",
         "mode": "team",
         "seed": 17,
         "hazardSeed": 17,
@@ -11130,7 +11130,7 @@
             "direction": "left"
           }
         ],
-        "checkpoint": "9bff1e0dcc8d1f79"
+        "checkpoint": "848f1ddd2998e37c"
       }
     },
     {
@@ -11144,7 +11144,7 @@
         "level": {
           "version": "classic-snake-level.v4",
           "id": "classic-field-signal-crossing",
-          "revision": "2",
+          "revision": "3",
           "name": "Signal Crossing",
           "width": 24,
           "height": 18,
@@ -11252,7 +11252,7 @@
                   "x": 20,
                   "y": 8
                 },
-                "signalProfile": "local-burst-v1"
+                "signalProfile": "local-burst-v2"
               },
               {
                 "kind": "lane",
@@ -11273,7 +11273,7 @@
           "shutters": [],
           "pickups": []
         },
-        "levelIdentity": "700576bb2464e044",
+        "levelIdentity": "fea5c6a7f6ebaee0",
         "mode": "team",
         "seed": 17,
         "hazardSeed": 17,
@@ -11585,7 +11585,7 @@
             "direction": "up"
           }
         ],
-        "checkpoint": "68aae3fb63b2e990"
+        "checkpoint": "b04e6827ee8177c2"
       }
     },
     {
@@ -39655,7 +39655,7 @@
         "level": {
           "version": "classic-snake-level.v4",
           "id": "classic-field-field-links",
-          "revision": "2",
+          "revision": "3",
           "name": "Field Links",
           "width": 24,
           "height": 18,
@@ -39761,7 +39761,7 @@
                   "x": 20,
                   "y": 8
                 },
-                "signalProfile": "local-burst-v1"
+                "signalProfile": "local-burst-v2"
               },
               {
                 "kind": "guard",
@@ -39778,7 +39778,7 @@
           "shutters": [],
           "pickups": []
         },
-        "levelIdentity": "557a3df43229c1eb",
+        "levelIdentity": "ec8905e5a88ef917",
         "mode": "solo",
         "seed": 17,
         "hazardSeed": 17,
@@ -39860,7 +39860,7 @@
             "direction": "down"
           }
         ],
-        "checkpoint": "741f68d0a9b5fc6a"
+        "checkpoint": "318feadc533254cb"
       }
     },
     {
@@ -39874,7 +39874,7 @@
         "level": {
           "version": "classic-snake-level.v4",
           "id": "classic-field-field-links",
-          "revision": "2",
+          "revision": "3",
           "name": "Field Links",
           "width": 24,
           "height": 18,
@@ -39980,7 +39980,7 @@
                   "x": 20,
                   "y": 8
                 },
-                "signalProfile": "local-burst-v1"
+                "signalProfile": "local-burst-v2"
               },
               {
                 "kind": "guard",
@@ -39997,7 +39997,7 @@
           "shutters": [],
           "pickups": []
         },
-        "levelIdentity": "3e42c8987bcdbf1b",
+        "levelIdentity": "4af5de770cb4f477",
         "mode": "solo",
         "seed": 17,
         "hazardSeed": 17,
@@ -40079,7 +40079,7 @@
             "direction": "down"
           }
         ],
-        "checkpoint": "bd22a14560ba7caf"
+        "checkpoint": "b9e54ce596bed125"
       }
     },
     {
@@ -40093,7 +40093,7 @@
         "level": {
           "version": "classic-snake-level.v4",
           "id": "classic-field-field-links",
-          "revision": "2",
+          "revision": "3",
           "name": "Field Links",
           "width": 24,
           "height": 18,
@@ -40199,7 +40199,7 @@
                   "x": 20,
                   "y": 8
                 },
-                "signalProfile": "local-burst-v1"
+                "signalProfile": "local-burst-v2"
               },
               {
                 "kind": "guard",
@@ -40216,7 +40216,7 @@
           "shutters": [],
           "pickups": []
         },
-        "levelIdentity": "eec07e57f709d6e3",
+        "levelIdentity": "59c81a32e32b229f",
         "mode": "solo",
         "seed": 17,
         "hazardSeed": 17,
@@ -40293,7 +40293,7 @@
             "direction": "left"
           }
         ],
-        "checkpoint": "480d9d1eecfd68f6"
+        "checkpoint": "ff8ae26e25af0043"
       }
     },
     {
@@ -40307,7 +40307,7 @@
         "level": {
           "version": "classic-snake-level.v4",
           "id": "classic-field-field-links",
-          "revision": "2",
+          "revision": "3",
           "name": "Field Links",
           "width": 24,
           "height": 18,
@@ -40413,7 +40413,7 @@
                   "x": 20,
                   "y": 8
                 },
-                "signalProfile": "local-burst-v1"
+                "signalProfile": "local-burst-v2"
               },
               {
                 "kind": "guard",
@@ -40430,7 +40430,7 @@
           "shutters": [],
           "pickups": []
         },
-        "levelIdentity": "557a3df43229c1eb",
+        "levelIdentity": "ec8905e5a88ef917",
         "mode": "team",
         "seed": 17,
         "hazardSeed": 17,
@@ -40537,7 +40537,7 @@
             "direction": "up"
           }
         ],
-        "checkpoint": "a7869d143ffe95d4"
+        "checkpoint": "ee948a23987a6eaf"
       }
     },
     {
@@ -40551,7 +40551,7 @@
         "level": {
           "version": "classic-snake-level.v4",
           "id": "classic-field-field-links",
-          "revision": "2",
+          "revision": "3",
           "name": "Field Links",
           "width": 24,
           "height": 18,
@@ -40657,7 +40657,7 @@
                   "x": 20,
                   "y": 8
                 },
-                "signalProfile": "local-burst-v1"
+                "signalProfile": "local-burst-v2"
               },
               {
                 "kind": "guard",
@@ -40674,7 +40674,7 @@
           "shutters": [],
           "pickups": []
         },
-        "levelIdentity": "3e42c8987bcdbf1b",
+        "levelIdentity": "4af5de770cb4f477",
         "mode": "team",
         "seed": 17,
         "hazardSeed": 17,
@@ -40781,7 +40781,7 @@
             "direction": "up"
           }
         ],
-        "checkpoint": "54938bbba31a28cf"
+        "checkpoint": "5bc81361a4efec23"
       }
     },
     {
@@ -40795,7 +40795,7 @@
         "level": {
           "version": "classic-snake-level.v4",
           "id": "classic-field-field-links",
-          "revision": "2",
+          "revision": "3",
           "name": "Field Links",
           "width": 24,
           "height": 18,
@@ -40901,7 +40901,7 @@
                   "x": 20,
                   "y": 8
                 },
-                "signalProfile": "local-burst-v1"
+                "signalProfile": "local-burst-v2"
               },
               {
                 "kind": "guard",
@@ -40918,7 +40918,7 @@
           "shutters": [],
           "pickups": []
         },
-        "levelIdentity": "eec07e57f709d6e3",
+        "levelIdentity": "59c81a32e32b229f",
         "mode": "team",
         "seed": 17,
         "hazardSeed": 17,
@@ -41025,7 +41025,7 @@
             "direction": "up"
           }
         ],
-        "checkpoint": "36971ac7cc7c1aa1"
+        "checkpoint": "325201db90ca5e17"
       }
     },
     {

@@ -900,6 +900,17 @@ export function mountWorldApp({
       spritePortraits: false,
     }),
   );
+  const resultEnemyStatsView = mountSimEnemyStats({
+    document: doc,
+    container: $('result-panel'),
+    stats: enemyStatistics.stats,
+    gameType: 'worlds',
+    getAttempt: enemyStatistics.getAttempt,
+    variant: 'panel',
+    locale: () => locale,
+    spritePortraits: false,
+  });
+  enemyStatsViews.push(resultEnemyStatsView);
   const statsRecoveryKey = 'revealline.world-enemy-stats-recovery.v1';
   let enemyStatsRunId = null;
   const playlistStore = createPlaylistStore(storage);
@@ -1455,6 +1466,7 @@ export function mountWorldApp({
     if (id === 'creator') ensureSpatialEditor();
   }
   function paintLanguage() {
+    enemyStatsViews.forEach((view) => view.refresh());
     playShell?.setLocale(locale);
     modeSettingsView?.refresh(locale);
     globalSettingsView?.refresh(locale);
@@ -4307,7 +4319,11 @@ export function mountWorldApp({
       });
     $('result-panel').hidden = false;
     const resultDetails = el('div');
-    $('result-panel').replaceChildren(resultDetails);
+    // One host-owned view keeps live totals and the optional family breakdown
+    // inside the result card without replacing or expanding its primary actions.
+    resultEnemyStatsView.root.querySelector('details').open = false;
+    resultEnemyStatsView.refresh();
+    $('result-panel').replaceChildren(resultDetails, resultEnemyStatsView.root);
     resultDetails.replaceChildren(
       el(
         'h2',

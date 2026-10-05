@@ -1,8 +1,4 @@
-// Frozen official recipes. IDs alone never admit a recording.
-import { CLASSIC_SNAKE_LOCAL_V1_ARCHIVED_LEVELS } from './classic-catalogue-signal-v1-archive.mjs';
-import { canonicalJSON, required } from '../data-json.mjs';
-import { validateClassicSnakeLevel } from './classic-core.mjs';
-import { prepareClassicSnakeLevel } from './classic-setup.mjs';
+// Frozen official local-burst-v1 recipes. Exact data, not ID aliases, owns old recordings.
 const freeze = (value) => {
   if (value && typeof value === 'object') {
     Object.values(value).forEach(freeze);
@@ -10,7 +6,7 @@ const freeze = (value) => {
   }
   return value;
 };
-export const CLASSIC_SNAKE_ARCHIVED_LEVELS = freeze([
+export const CLASSIC_SNAKE_LOCAL_V1_ARCHIVED_LEVELS = freeze([
   {
     id: 'classic-field-signal-check',
     chapterId: 'classic-snake-signal-tactics',
@@ -19,13 +15,13 @@ export const CLASSIC_SNAKE_ARCHIVED_LEVELS = freeze([
       uk: 'Перевірка сигналу',
     },
     description: {
-      en: 'The antenna warns before four moves of signal loss. Memorize your route: the whole field disappears, but steering continues. Catch the jammer to restore reception.',
-      uk: 'Антена попереджає перед чотирма ходами втрати сигналу. Запам’ятайте маршрут: усе поле зникне, але керування діє. Спіймайте глушник для відновлення прийому.',
+      en: 'The antenna warns before a short burst distorts its six-cell zone. Skirt the zone or catch the visible jammer to clear it. Each retry has a fresh signal rhythm.',
+      uk: 'Антена попереджає перед коротким спотворенням у зоні шести клітин. Обходьте зону або ловіть видимий глушник. Кожна нова спроба має інший ритм перешкод.',
     },
     level: {
       version: 'classic-snake-level.v4',
       id: 'classic-field-signal-check',
-      revision: '1',
+      revision: '2',
       name: 'Signal Check',
       width: 24,
       height: 18,
@@ -97,6 +93,7 @@ export const CLASSIC_SNAKE_ARCHIVED_LEVELS = freeze([
               x: 20,
               y: 8,
             },
+            signalProfile: 'local-burst-v1',
           },
           {
             kind: 'jammer',
@@ -105,6 +102,7 @@ export const CLASSIC_SNAKE_ARCHIVED_LEVELS = freeze([
               x: 3,
               y: 10,
             },
+            signalProfile: 'local-burst-v1',
           },
         ],
         bonus: null,
@@ -121,13 +119,13 @@ export const CLASSIC_SNAKE_ARCHIVED_LEVELS = freeze([
       uk: 'Тихе повернення',
     },
     description: {
-      en: 'Plan your return while reception is clear. During signal loss, steer from memory for four moves; enemies, walls and your cable are hidden.',
-      uk: 'Плануйте повернення за чистого прийому. Під час втрати сигналу керуйте з пам’яті чотири ходи: вороги, стіни й кабель приховані.',
+      en: 'Use the clear ground outside the jammer zone, then approach during recovery. The antenna stays visible through interference.',
+      uk: 'Користуйтеся чистою ділянкою поза зоною глушника й наближайтеся під час відновлення. Антена залишається видимою крізь перешкоди.',
     },
     level: {
       version: 'classic-snake-level.v4',
       id: 'classic-field-quiet-return',
-      revision: '1',
+      revision: '2',
       name: 'Quiet Return',
       width: 24,
       height: 18,
@@ -239,6 +237,7 @@ export const CLASSIC_SNAKE_ARCHIVED_LEVELS = freeze([
               x: 20,
               y: 8,
             },
+            signalProfile: 'local-burst-v1',
           },
           {
             kind: 'runner',
@@ -251,6 +250,7 @@ export const CLASSIC_SNAKE_ARCHIVED_LEVELS = freeze([
               x: 3,
               y: 10,
             },
+            signalProfile: 'local-burst-v1',
           },
         ],
         bonus: null,
@@ -267,13 +267,13 @@ export const CLASSIC_SNAKE_ARCHIVED_LEVELS = freeze([
       uk: 'Сигнальний перехід',
     },
     description: {
-      en: 'Memorize a safe crossing before the four-move blackout. The lane waits for reception to return, then gives a full new warning.',
-      uk: 'Запам’ятайте безпечний перехід перед втратою сигналу на чотири ходи. Смуга чекає відновлення прийому й дає повне нове попередження.',
+      en: 'Route around the local interference. The lane waits for the burst to end, then gives a full new warning before attacking.',
+      uk: 'Обходьте локальні перешкоди. Смуга чекає завершення сплеску й дає повне нове попередження перед атакою.',
     },
     level: {
       version: 'classic-snake-level.v4',
       id: 'classic-field-signal-crossing',
-      revision: '1',
+      revision: '2',
       name: 'Signal Crossing',
       width: 24,
       height: 18,
@@ -381,6 +381,7 @@ export const CLASSIC_SNAKE_ARCHIVED_LEVELS = freeze([
               x: 20,
               y: 8,
             },
+            signalProfile: 'local-burst-v1',
           },
           {
             kind: 'lane',
@@ -394,155 +395,6 @@ export const CLASSIC_SNAKE_ARCHIVED_LEVELS = freeze([
               from: 5,
               to: 18,
             },
-          },
-        ],
-        bonus: null,
-      },
-      shutters: [],
-      pickups: [],
-    },
-  },
-  {
-    id: 'classic-field-relay-airfield',
-    chapterId: 'classic-snake-signal-tactics',
-    title: {
-      en: 'Relay Airfield',
-      uk: 'Аеродром ретрансляторів',
-    },
-    description: {
-      en: 'Remember the relay positions before signal loss, then time the crossing and unlock the sentinel. No lane starts an attack during the blackout.',
-      uk: 'Запам’ятайте ретранслятори перед втратою сигналу, потім оберіть момент переходу й відкрийте вартового. Під час втрати сигналу смуга не починає атаку.',
-    },
-    level: {
-      version: 'classic-snake-level.v4',
-      id: 'classic-field-relay-airfield',
-      revision: '1',
-      name: 'Relay Airfield',
-      width: 24,
-      height: 18,
-      walls: [
-        {
-          x: 8,
-          y: 4,
-        },
-        {
-          x: 9,
-          y: 4,
-        },
-        {
-          x: 8,
-          y: 5,
-        },
-        {
-          x: 9,
-          y: 5,
-        },
-        {
-          x: 8,
-          y: 6,
-        },
-        {
-          x: 9,
-          y: 6,
-        },
-        {
-          x: 14,
-          y: 11,
-        },
-        {
-          x: 15,
-          y: 11,
-        },
-        {
-          x: 16,
-          y: 11,
-        },
-        {
-          x: 14,
-          y: 12,
-        },
-        {
-          x: 15,
-          y: 12,
-        },
-        {
-          x: 16,
-          y: 12,
-        },
-        {
-          x: 14,
-          y: 13,
-        },
-        {
-          x: 15,
-          y: 13,
-        },
-        {
-          x: 16,
-          y: 13,
-        },
-      ],
-      spawns: [
-        {
-          x: 5,
-          y: 2,
-          direction: 'right',
-        },
-        {
-          x: 18,
-          y: 15,
-          direction: 'left',
-        },
-      ],
-      goal: 6,
-      stepMs: 200,
-      speedupEvery: 0,
-      minStepMs: 200,
-      wrap: false,
-      targetMovement: 'still',
-      fleeEvery: 3,
-      objective: 'mission',
-      targets: {
-        maxActive: 2,
-        required: [
-          {
-            kind: 'jammer',
-            every: 3,
-            at: {
-              x: 20,
-              y: 8,
-            },
-          },
-          {
-            kind: 'lane',
-            every: 3,
-            at: {
-              x: 5,
-              y: 8,
-            },
-            lane: {
-              axis: 'x',
-              from: 5,
-              to: 18,
-            },
-          },
-          {
-            kind: 'relay',
-            every: 3,
-            at: {
-              x: 12,
-              y: 8,
-            },
-            relays: [
-              {
-                x: 3,
-                y: 5,
-              },
-              {
-                x: 20,
-                y: 12,
-              },
-            ],
           },
         ],
         bonus: null,
@@ -559,13 +411,13 @@ export const CLASSIC_SNAKE_ARCHIVED_LEVELS = freeze([
       uk: 'Польові зв’язки',
     },
     description: {
-      en: 'Remember the marked wall and your next four turns before signal loss. New shots wait for the feed to return and a full warning.',
-      uk: 'Запам’ятайте позначену стіну й наступні чотири повороти перед втратою сигналу. Нові постріли чекають відновлення прийому та повного попередження.',
+      en: 'Keep the marked wall in view and skirt the interference zone. New shots wait until reception recovers and a full warning is shown.',
+      uk: 'Тримайте позначену стіну в полі зору й обходьте зону перешкод. Нові постріли чекають відновлення прийому й повного попередження.',
     },
     level: {
       version: 'classic-snake-level.v4',
       id: 'classic-field-field-links',
-      revision: '1',
+      revision: '2',
       name: 'Field Links',
       width: 24,
       height: 18,
@@ -671,6 +523,7 @@ export const CLASSIC_SNAKE_ARCHIVED_LEVELS = freeze([
               x: 20,
               y: 8,
             },
+            signalProfile: 'local-burst-v1',
           },
           {
             kind: 'guard',
@@ -688,26 +541,4 @@ export const CLASSIC_SNAKE_ARCHIVED_LEVELS = freeze([
       pickups: [],
     },
   },
-  ...CLASSIC_SNAKE_LOCAL_V1_ARCHIVED_LEVELS,
 ]);
-
-/** Archive authority belongs only to the built-in catalogue, never an installed pack. */
-export function classicSnakeRecipeEntries(entry, { allowArchive = false } = {}) {
-  return [
-    entry,
-    ...(allowArchive
-      ? CLASSIC_SNAKE_ARCHIVED_LEVELS.filter((candidate) => candidate.id === entry.id)
-      : []),
-  ];
-}
-
-export function resolveClassicSnakeRecipeEntry(entry, recipe, setup, options) {
-  const expected = canonicalJSON(validateClassicSnakeLevel(recipe));
-  const accepted = classicSnakeRecipeEntries(entry, options).find(
-    (candidate) =>
-      canonicalJSON(validateClassicSnakeLevel(prepareClassicSnakeLevel(candidate, setup))) ===
-      expected,
-  );
-  required(accepted, 'Snake recording recipe differs from its catalogue definition.');
-  return accepted;
-}
