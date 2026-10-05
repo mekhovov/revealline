@@ -1,6 +1,6 @@
 # Graphical FPV flight guidance
 
-Status: 5 October 2026. H1 and H2 are implemented in the local candidate. H3 is partly qualified; full package and offline qualification remain blocked while local free space is below the 3 GiB build allowance. This document does not identify a PR or claim public deployment of this increment.
+Status: 5 October 2026. H1 and H2 are implemented; H3 local functional, package, reproducibility and bounded browser/offline qualification passed. Published as [PR #1110](https://github.com/mekhovov/revealline/pull/1110), the third member of native stack #1106. Protected parent publication, exact-head CI/reviews and public deployment remain pending. No public live availability is claimed.
 
 ## Problem and resulting experience
 
@@ -60,7 +60,7 @@ The legacy observer method adds presentation facts without putting them into rep
 
 Additional unit-test coverage remains deferred under the existing plan. The checks below are functional regression qualification and existing-proof replay, not a claim that the deferred test phase is complete.
 
-## H3 — Qualification and publication: partly complete
+## H3 — Local qualification complete; protected publication pending
 
 ### Reproducible functional evidence
 
@@ -73,17 +73,17 @@ node docs/evidence/fpv-flight-hud-projection-probe.mjs
 
 The first command atomically writes [the verification receipt](fpv-flight-hud-verification.json). It records source and proof hashes, per-demonstration outcomes and limitations. The projection probe prints its receipt to stdout.
 
-| Qualification | Observed result |
-|---|---:|
-| Existing School recommended-mode demonstrations | 58 complete, original final identities preserved |
-| Original Academy demonstrations | 24 complete, independent replay states equal |
-| Directly stepped recorded ticks | 102,365 |
-| Independently replayed recorded ticks | 102,365 |
-| Same-objective hold/landing eligibility comparisons | 65,309 matching |
-| Observed runtime objective transitions | 484 |
-| EN/UK initial feedback calls across catalogue and School modes | 3,336 valid |
-| Functional receipt checks | 18 passed |
-| Production projection / legacy observer checks | 74 passed |
+| Qualification                                                  |                                  Observed result |
+| -------------------------------------------------------------- | -----------------------------------------------: |
+| Existing School recommended-mode demonstrations                | 58 complete, original final identities preserved |
+| Original Academy demonstrations                                |     24 complete, independent replay states equal |
+| Directly stepped recorded ticks                                |                                          102,365 |
+| Independently replayed recorded ticks                          |                                          102,365 |
+| Same-objective hold/landing eligibility comparisons            |                                  65,309 matching |
+| Observed runtime objective transitions                         |                                              484 |
+| EN/UK initial feedback calls across catalogue and School modes |                                      3,336 valid |
+| Functional receipt checks                                      |                                        18 passed |
+| Production projection / legacy observer checks                 |                                        74 passed |
 
 The focused cases include tilt followed by centring, stale and missing legacy facts, hard touchdown despite zero current velocity, throttle after soft landing, wrong-side gate approach, stale tracking, runtime occlusion reasons, contact versus combat credit, grounded survival timing and terminal completion. Synthetic adapter inputs are identified separately from accepted flight recordings.
 
@@ -91,25 +91,33 @@ The projection probe executes the actual extracted renderer method with bundled 
 
 ### Browser review performed so far
 
-Source-host review covers World Studio at **390 × 844** and **844 × 390**, and Academy with Ukrainian text and touch controls at **844 × 390**. Explain pauses, and HUD preferences are shared between hosts. These are browser viewport checks on the development Mac, not physical iPhone, Steam Deck, installed-app or radio acceptance. Further host coverage is still in progress.
+Source-host review covers World Studio at **390 × 844**, **844 × 390** and **1280 × 800**, and Academy with Ukrainian text and touch controls at **844 × 390**. Explain pauses, closing leaves the flight paused, and HUD preferences are shared between hosts. Twenty interface options keep the bounded HUD free of menu textures and bevels. No horizontal overflow or touch/replay overlap was observed. [Browser review evidence](fpv-flight-hud-browser-review.json) records the exact scope. These are browser viewport checks on the development Mac, not physical iPhone, Steam Deck, installed-app or radio acceptance.
 
 ### Measured presentation cost
 
-The retained local observation `/tmp/fpv-flight-hud-browser-cost.json` compares the new HUD and old coach on the same Mac browser: **Chromium 154**, reported user agent `Macintosh; Intel Mac OS X 10_15_7`, **1280 × 720**, DPR **2**. The run sampled 98 snapshots from the existing Acro `beginner-13` recording across all five steps, with samples at least 90 ms apart. The old coach's 80 ms throttle was retained; the new callback includes its feedback adapter.
+The [retained browser observation](fpv-flight-hud-browser-cost.json) compares the new HUD and old coach on the same Mac browser: **Chromium 154**, reported user agent `Macintosh; Intel Mac OS X 10_15_7`, **1280 × 720**, DPR **2**. The run sampled 98 snapshots from the existing Acro `beginner-13` recording across all five steps, with samples at least 90 ms apart. The old coach's 80 ms throttle was retained; the new callback includes its feedback adapter.
 
-| Measured work | Old mean | Old p95 | New mean | New p95 |
-|---|---:|---:|---:|---:|
-| Presentation callback | 0.108 ms | 0.200 ms | 0.089 ms | 0.200 ms |
+| Measured work             | Old mean |  Old p95 | New mean |  New p95 |
+| ------------------------- | -------: | -------: | -------: | -------: |
+| Presentation callback     | 0.108 ms | 0.200 ms | 0.089 ms | 0.200 ms |
 | Forced style/layout flush | 0.154 ms | 0.300 ms | 0.093 ms | 0.200 ms |
 
 The harness observed 1,787 DOM mutations for the old coach and 913 for the new HUD. Eleven DOM checks passed, including bounded card size, fixed target bands, unknown readings, a separate paused explanation, persistent preferences and no completion awarded solely for a full duration ring.
 
 These are short-run callback and forced-layout measurements, **not FPS or input-to-display latency**. They exclude paint, compositor, GPU, full-scene loading and sustained memory. They do not establish the desktop 60 fps or mobile 30 fps targets, audible-sound behavior or physical-radio latency.
 
+### Package and offline qualification
+
+After recovering 2,935,750,656 bytes from ten abandoned, checksum-invalid Git temporary packs, each qualification phase stayed above the unchanged 3 GiB floor. No valid packs, refs, source, worktrees or unique evidence were removed.
+
+[Package qualification](fpv-flight-hud-package-qualification.json) passed at source `3bbdc8dda7e1613fe4c2b838c40ffbbe9493f852`: all three package admissions, two byte-identical builds per package, committed-input verification and ZIP-member hashes. Full Node 22 validation passed, retaining seven nonfatal navigation warnings. Sixty existing flight/model/UI/radio/replay checks and 53 existing package/offline checks passed. Additional unit coverage remains deferred.
+
+The exact admitted World Studio and Academy launchers both prepared their packages and displayed **Ready offline**. With their dedicated origin server stopped and HTTP connection refusal confirmed before and after the run, both reloaded successfully. Academy started its lesson and opened/closed exact Explain details while remaining paused. World Studio completed the full “Acro: the tilt stays” demonstration with the compact HUD. Neither host logged a warning or error. The original server was restored afterwards. This qualifies a bounded own-origin outage, not browser-wide offline, eviction, arbitrary old-cache update or physical-device behavior.
+
 ### Remaining release work
 
-1. Finish the final host/layout/lifecycle review and freeze the candidate; rerun the reproducible probes after any relevant source changes.
-2. Restore at least 3 GiB of safe build space, then run the complete package admission and applicable offline installation/update/recovery qualification. Space pressure is an environment blocker, not a waiver of these checks.
-3. Publish the focused PR with its exact-head evidence. Follow required reviews, checks and protected publication; verify the public deployment identity and launch the public SIM before calling this increment live.
+1. Publish the documentation/evidence checkpoint and retain the verified package input identity; satisfy fresh exact-head CI and protected review requirements.
+2. Coordinate parent #1104/#1105 qualification and native stack publication without retargeting or bypassing protections. #1110 remains Draft while that publication work is coordinated; its package/offline storage blocker is resolved.
+3. Verify the public deployment identity and launch the public SIM before calling this increment live.
 
-Physical-device performance and human beginner acceptance remain honestly outstanding. They do not block independent authorized development, and are not recorded as passed.
+Physical-device performance, installed-app/native fullscreen, actual controller/radio reconnect and human beginner acceptance remain honestly outstanding. They do not block independent authorized development, and are not recorded as passed.
