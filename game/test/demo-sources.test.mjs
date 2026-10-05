@@ -46,10 +46,10 @@ test('actual installed Standard/Gentle catalogue exposes reviewed, qualified and
       return assetFetch(url);
     },
   });
-  assert.equal(sources.filter((source) => source.kind === 'replay').length, 16);
+  assert.equal(sources.filter((source) => source.kind === 'replay').length, 10);
   assert.equal(sources.filter((source) => source.kind === 'bot').length, 6);
-  assert.equal(sources.filter((source) => source.kind === 'improv').length, 1);
-  assert.equal(new Set(sources.map((source) => source.id)).size, 23);
+  assert.equal(sources.filter((source) => source.kind === 'improv').length, 5);
+  assert.equal(new Set(sources.map((source) => source.id)).size, 21);
   assert.equal(requests.length, 1, 'Only the bundled catalogue loads before a scene is chosen.');
   assert.ok(requests[0].endsWith('/game/demo-data/catalog.json'));
   assert.equal(sources.filter((source) => source.approachable).length, 1);
@@ -123,12 +123,16 @@ test('current main Journey host adds every installed Journey level without prete
       .flatMap((entry) =>
         entry.campaign.levels.map((level) => `${entry.executionKey}/${level.id}`),
       );
-  assert.equal(reviewed.length, 16);
+  assert.equal(reviewed.length, 10);
   assert.ok(reviewed.every((source) => source.campaignId === base.campaign.id));
   assert.ok(reviewed.every((source) => !host.owns(source.entry)));
-  assert.equal(improvised.length, journeyLevels.length);
-  assert.deepEqual(new Set(improvised.map((source) => source.levelKey)), new Set(journeyLevels));
-  assert.ok(improvised.every((source) => host.owns(source.entry)));
+  const journeyImprovised = improvised.filter((source) => host.owns(source.entry));
+  assert.equal(journeyImprovised.length, journeyLevels.length);
+  assert.deepEqual(
+    new Set(journeyImprovised.map((source) => source.levelKey)),
+    new Set(journeyLevels),
+  );
+  assert.equal(improvised.length, journeyLevels.length + 4);
 });
 
 test('actual public company editions expose only their own isolated installed levels', async () => {
@@ -192,7 +196,7 @@ test('missing Worker and uninstalled content filter sources without downloading 
   assert.equal(
     (await loadDemoSources({ entries, library: emptyLibrary, fetch: fetcher, WorkerClass: null }))
       .length,
-    19,
+    17,
   );
   assert.deepEqual(
     await loadDemoSources({
@@ -231,7 +235,7 @@ test('manually kept local recordings join the catalogue without enabling automat
   await library.keep(source, { entry: base, practice: false, manual: true });
   const sources = await loadDemoSources({ entries, library, fetch: assetFetch, WorkerClass: null });
   assert.equal(library.enabled, false);
-  assert.equal(sources.length, 20);
+  assert.equal(sources.length, 18);
   const local = sources.find((candidate) => candidate.source === 'local');
   assert.ok(local);
   assert.equal(
@@ -264,7 +268,7 @@ test('uncached optional bundled replays fall back to a retained recording or sta
     try {
       if (retained) await library.keep(recording, { entry: base, practice: false, manual: true });
       const storedBefore = structuredClone(stored);
-      const sources = await loadDemoSources({
+      const allSources = await loadDemoSources({
         entries: installedEntries,
         library,
         WorkerClass: LazyWorker,
@@ -275,6 +279,8 @@ test('uncached optional bundled replays fall back to a retained recording or sta
           throw new TypeError('Failed to fetch: optional recording is not cached offline.');
         },
       });
+      assert.equal(allSources.filter((source) => source.kind === 'improv').length, 4);
+      const sources = allSources.filter((source) => source.kind === 'replay');
       const bundled = sources.filter((source) => source.source !== 'local');
       assert.equal(bundled.length, catalog.clips.length);
       assert.ok(sources.every((source) => source.kind === 'replay'));
@@ -511,9 +517,9 @@ test('a personal cache that never settles times out without discarding bundled s
   assert.ok(librarySignal);
   clock.advance(15000);
   const sources = await pending;
-  assert.equal(sources.length, 19);
-  assert.equal(sources.filter((source) => source.kind === 'replay').length, 16);
-  assert.equal(sources.filter((source) => source.kind === 'improv').length, 3);
+  assert.equal(sources.length, 17);
+  assert.equal(sources.filter((source) => source.kind === 'replay').length, 10);
+  assert.equal(sources.filter((source) => source.kind === 'improv').length, 7);
   assert.equal(librarySignal.aborted, true);
   assert.equal(clock.pending, 0);
 });

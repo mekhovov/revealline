@@ -1,0 +1,15 @@
+{
+  "format": "FPVD1AdmittedPlayerStaging.v1",
+  "sourceRevision": "e572026ba357f3194bf47e7137a0817cacb1a640",
+  "distribution": {
+    "bytes": 15547680,
+    "path": "distribution-optional-fpv-worlds.zip",
+    "sha256": "906a1e319a2ef17d8852fe18fe1c16a1bf620ecaeabe64e52fb12d3706744370"
+  },
+  "entries": 102,
+  "uncompressedBytes": 15531574,
+  "allMembersVerified": true,
+  "output": "/tmp/fpv-d1-production-package-e572026ba/player",
+  "entryURL": "http://127.0.0.1:8852/player/optional-practice/fpv-worlds/index.html",
+  "publicEligible": false
+}

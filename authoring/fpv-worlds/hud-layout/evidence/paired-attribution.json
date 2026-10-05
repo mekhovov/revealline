@@ -1,0 +1,582 @@
+{
+  "format": "FPVHUDLayoutPairedAttribution.v1",
+  "baseline": "5cde6dbc97c3067b6023d2bf7fd97fe251805347",
+  "candidate": "3f88812a8d3bf47577443184d555c43c0fb526f8",
+  "checks": [
+    190,
+    190
+  ],
+  "passed": true,
+  "pairs": [
+    {
+      "course": "container-yard-08",
+      "window": "ready-paused",
+      "baseline": {
+        "frames": 597,
+        "draws": 597,
+        "elapsedMs": 5000.9000000059605,
+        "hostCPUmsPerCallback": 2.035175879796346,
+        "drawCPUmsPerCallback": 0.7567839187193955,
+        "cloneMsPerCallback": 0.11273031832784464,
+        "layoutReadMsPerCallback": 0.758626466170827,
+        "observerLowerBoundMsPerCallback": 0.03902847583170113,
+        "DOMCalls": 8358,
+        "unchangedDOMCalls": 8358,
+        "maximumRAFGapMs": 31.800000000000182,
+        "coverage": {
+          "expectedStatusAtStart": true,
+          "expectedStatusAtEnd": true,
+          "observedStatuses": [
+            "disarmed"
+          ],
+          "nativeTickDelta": 0,
+          "remainedFocused": true,
+          "remainedVisible": true,
+          "timerWithin5500ms": true
+        },
+        "longEntries": {},
+        "canvas": {
+          "width": 1914,
+          "height": 861
+        },
+        "profile": "industrial-workshop",
+        "quality": "balanced",
+        "mode": "self-level"
+      },
+      "candidate": {
+        "frames": 600,
+        "draws": 600,
+        "elapsedMs": 5001.699999988079,
+        "hostCPUmsPerCallback": 1.4861666676402092,
+        "drawCPUmsPerCallback": 0.6780000000695388,
+        "cloneMsPerCallback": 0.10366666709383329,
+        "layoutReadMsPerCallback": 0.35149999961256984,
+        "observerLowerBoundMsPerCallback": 0.02483333314458529,
+        "DOMCalls": 2400,
+        "unchangedDOMCalls": 2400,
+        "maximumRAFGapMs": 10.400000000000546,
+        "coverage": {
+          "expectedStatusAtStart": true,
+          "expectedStatusAtEnd": true,
+          "observedStatuses": [
+            "disarmed"
+          ],
+          "nativeTickDelta": 0,
+          "remainedFocused": true,
+          "remainedVisible": true,
+          "timerWithin5500ms": true
+        },
+        "longEntries": {},
+        "canvas": {
+          "width": 1914,
+          "height": 861
+        },
+        "profile": "industrial-workshop",
+        "quality": "balanced",
+        "mode": "self-level"
+      },
+      "savedHostCPUmsPerCallback": 0.549009212156137,
+      "savedLayoutReadMsPerCallback": 0.4071264665582571
+    },
+    {
+      "course": "container-yard-08",
+      "window": "verified-demonstration",
+      "baseline": {
+        "frames": 600,
+        "draws": 600,
+        "elapsedMs": 5001.199999988079,
+        "hostCPUmsPerCallback": 1.947000000476837,
+        "drawCPUmsPerCallback": 0.6576666662096977,
+        "cloneMsPerCallback": 0.10166666686534881,
+        "layoutReadMsPerCallback": 0.7188333335518837,
+        "observerLowerBoundMsPerCallback": 0.03883333335320155,
+        "DOMCalls": 8400,
+        "unchangedDOMCalls": 7986,
+        "maximumRAFGapMs": 10.399999999999636,
+        "coverage": {
+          "expectedStatusAtStart": true,
+          "expectedStatusAtEnd": true,
+          "observedStatuses": [
+            "active"
+          ],
+          "nativeTickDelta": 250,
+          "remainedFocused": true,
+          "remainedVisible": true,
+          "timerWithin5500ms": true
+        },
+        "longEntries": {},
+        "canvas": {
+          "width": 1914,
+          "height": 861
+        },
+        "profile": "operations",
+        "quality": "balanced",
+        "mode": "self-level"
+      },
+      "candidate": {
+        "frames": 600,
+        "draws": 600,
+        "elapsedMs": 5000.699999988079,
+        "hostCPUmsPerCallback": 1.6340000001092752,
+        "drawCPUmsPerCallback": 0.6644999991357327,
+        "cloneMsPerCallback": 0.10416666621963183,
+        "layoutReadMsPerCallback": 0.42783333296577136,
+        "observerLowerBoundMsPerCallback": 0.027999999970197677,
+        "DOMCalls": 2531,
+        "unchangedDOMCalls": 2117,
+        "maximumRAFGapMs": 10.400000000000546,
+        "coverage": {
+          "expectedStatusAtStart": true,
+          "expectedStatusAtEnd": true,
+          "observedStatuses": [
+            "active"
+          ],
+          "nativeTickDelta": 250,
+          "remainedFocused": true,
+          "remainedVisible": true,
+          "timerWithin5500ms": true
+        },
+        "longEntries": {},
+        "canvas": {
+          "width": 1914,
+          "height": 861
+        },
+        "profile": "operations",
+        "quality": "balanced",
+        "mode": "self-level"
+      },
+      "savedHostCPUmsPerCallback": 0.3130000003675619,
+      "savedLayoutReadMsPerCallback": 0.29100000058611236
+    },
+    {
+      "course": "container-yard-08",
+      "window": "ordinary-grounded-practice",
+      "baseline": {
+        "frames": 600,
+        "draws": 600,
+        "elapsedMs": 5001.0999999940395,
+        "hostCPUmsPerCallback": 1.928833333402872,
+        "drawCPUmsPerCallback": 0.7223333330949148,
+        "cloneMsPerCallback": 0.11000000024835269,
+        "layoutReadMsPerCallback": 0.6715000000099342,
+        "observerLowerBoundMsPerCallback": 0.03599999964237213,
+        "DOMCalls": 8400,
+        "unchangedDOMCalls": 8350,
+        "maximumRAFGapMs": 10.399999999999636,
+        "coverage": {
+          "expectedStatusAtStart": true,
+          "expectedStatusAtEnd": true,
+          "observedStatuses": [
+            "active"
+          ],
+          "nativeTickDelta": 250,
+          "remainedFocused": true,
+          "remainedVisible": true,
+          "timerWithin5500ms": true
+        },
+        "longEntries": {},
+        "canvas": {
+          "width": 1914,
+          "height": 861
+        },
+        "profile": "industrial-workshop",
+        "quality": "balanced",
+        "mode": "self-level"
+      },
+      "candidate": {
+        "frames": 600,
+        "draws": 600,
+        "elapsedMs": 5000.5,
+        "hostCPUmsPerCallback": 1.5428333336114883,
+        "drawCPUmsPerCallback": 0.6905000004172325,
+        "cloneMsPerCallback": 0.10583333278695742,
+        "layoutReadMsPerCallback": 0.36300000036756197,
+        "observerLowerBoundMsPerCallback": 0.019999999950329462,
+        "DOMCalls": 2450,
+        "unchangedDOMCalls": 2400,
+        "maximumRAFGapMs": 11,
+        "coverage": {
+          "expectedStatusAtStart": true,
+          "expectedStatusAtEnd": true,
+          "observedStatuses": [
+            "active"
+          ],
+          "nativeTickDelta": 251,
+          "remainedFocused": true,
+          "remainedVisible": true,
+          "timerWithin5500ms": true
+        },
+        "longEntries": {},
+        "canvas": {
+          "width": 1914,
+          "height": 861
+        },
+        "profile": "industrial-workshop",
+        "quality": "balanced",
+        "mode": "self-level"
+      },
+      "savedHostCPUmsPerCallback": 0.38599999979138366,
+      "savedLayoutReadMsPerCallback": 0.3084999996423722
+    },
+    {
+      "course": "container-yard-08",
+      "window": "paused-settings",
+      "baseline": {
+        "frames": 600,
+        "draws": 600,
+        "elapsedMs": 5001.299999982119,
+        "hostCPUmsPerCallback": 2.1551666666567324,
+        "drawCPUmsPerCallback": 0.7753333329657713,
+        "cloneMsPerCallback": 0.04833333397905032,
+        "layoutReadMsPerCallback": 1.0379999995231628,
+        "observerLowerBoundMsPerCallback": 0.03000000014901161,
+        "DOMCalls": 8400,
+        "unchangedDOMCalls": 8400,
+        "maximumRAFGapMs": 10.399999999999636,
+        "coverage": {
+          "expectedStatusAtStart": true,
+          "expectedStatusAtEnd": true,
+          "observedStatuses": [
+            "paused"
+          ],
+          "nativeTickDelta": 0,
+          "remainedFocused": true,
+          "remainedVisible": true,
+          "timerWithin5500ms": true
+        },
+        "longEntries": {},
+        "canvas": {
+          "width": 1914,
+          "height": 861
+        },
+        "profile": "industrial-workshop",
+        "quality": "balanced",
+        "mode": "self-level"
+      },
+      "candidate": {
+        "frames": 599,
+        "draws": 599,
+        "elapsedMs": 5002.0999999940395,
+        "hostCPUmsPerCallback": 1.6929883144932716,
+        "drawCPUmsPerCallback": 0.7260434065816398,
+        "cloneMsPerCallback": 0.05008347160828133,
+        "layoutReadMsPerCallback": 0.6534223705281399,
+        "observerLowerBoundMsPerCallback": 0.015358931532686262,
+        "DOMCalls": 2396,
+        "unchangedDOMCalls": 2396,
+        "maximumRAFGapMs": 14,
+        "coverage": {
+          "expectedStatusAtStart": true,
+          "expectedStatusAtEnd": true,
+          "observedStatuses": [
+            "paused"
+          ],
+          "nativeTickDelta": 0,
+          "remainedFocused": true,
+          "remainedVisible": true,
+          "timerWithin5500ms": true
+        },
+        "longEntries": {},
+        "canvas": {
+          "width": 1914,
+          "height": 861
+        },
+        "profile": "industrial-workshop",
+        "quality": "balanced",
+        "mode": "self-level"
+      },
+      "savedHostCPUmsPerCallback": 0.4621783521634608,
+      "savedLayoutReadMsPerCallback": 0.3845776289950229
+    },
+    {
+      "course": "woodland-01",
+      "window": "ready-paused",
+      "baseline": {
+        "frames": 600,
+        "draws": 600,
+        "elapsedMs": 5000.9000000059605,
+        "hostCPUmsPerCallback": 1.71116666679581,
+        "drawCPUmsPerCallback": 0.536666666517655,
+        "cloneMsPerCallback": 0.11066666632890701,
+        "layoutReadMsPerCallback": 0.6806666667759419,
+        "observerLowerBoundMsPerCallback": 0.03916666676600774,
+        "DOMCalls": 8400,
+        "unchangedDOMCalls": 8400,
+        "maximumRAFGapMs": 10.400000000000091,
+        "coverage": {
+          "expectedStatusAtStart": true,
+          "expectedStatusAtEnd": true,
+          "observedStatuses": [
+            "disarmed"
+          ],
+          "nativeTickDelta": 0,
+          "remainedFocused": true,
+          "remainedVisible": true,
+          "timerWithin5500ms": true
+        },
+        "longEntries": {},
+        "canvas": {
+          "width": 1914,
+          "height": 861
+        },
+        "profile": "industrial-workshop",
+        "quality": "balanced",
+        "mode": "self-level"
+      },
+      "candidate": {
+        "frames": 600,
+        "draws": 600,
+        "elapsedMs": 5001.0999999940395,
+        "hostCPUmsPerCallback": 1.3978333340088527,
+        "drawCPUmsPerCallback": 0.5543333338201046,
+        "cloneMsPerCallback": 0.10166666607062022,
+        "layoutReadMsPerCallback": 0.37799999937415124,
+        "observerLowerBoundMsPerCallback": 0.024833333243926368,
+        "DOMCalls": 2400,
+        "unchangedDOMCalls": 2400,
+        "maximumRAFGapMs": 10.400000000000546,
+        "coverage": {
+          "expectedStatusAtStart": true,
+          "expectedStatusAtEnd": true,
+          "observedStatuses": [
+            "disarmed"
+          ],
+          "nativeTickDelta": 0,
+          "remainedFocused": true,
+          "remainedVisible": true,
+          "timerWithin5500ms": true
+        },
+        "longEntries": {},
+        "canvas": {
+          "width": 1914,
+          "height": 861
+        },
+        "profile": "industrial-workshop",
+        "quality": "balanced",
+        "mode": "self-level"
+      },
+      "savedHostCPUmsPerCallback": 0.3133333327869574,
+      "savedLayoutReadMsPerCallback": 0.30266666740179066
+    },
+    {
+      "course": "woodland-01",
+      "window": "verified-demonstration",
+      "baseline": {
+        "frames": 600,
+        "draws": 600,
+        "elapsedMs": 5001.200000017881,
+        "hostCPUmsPerCallback": 1.7784999993443489,
+        "drawCPUmsPerCallback": 0.5815000001589458,
+        "cloneMsPerCallback": 0.08450000007947286,
+        "layoutReadMsPerCallback": 0.6778333337108294,
+        "observerLowerBoundMsPerCallback": 0.038166666428248085,
+        "DOMCalls": 8400,
+        "unchangedDOMCalls": 7931,
+        "maximumRAFGapMs": 10.300000000000182,
+        "coverage": {
+          "expectedStatusAtStart": true,
+          "expectedStatusAtEnd": true,
+          "observedStatuses": [
+            "active"
+          ],
+          "nativeTickDelta": 250,
+          "remainedFocused": true,
+          "remainedVisible": true,
+          "timerWithin5500ms": true
+        },
+        "longEntries": {},
+        "canvas": {
+          "width": 1914,
+          "height": 861
+        },
+        "profile": "ukrainian",
+        "quality": "balanced",
+        "mode": "self-level"
+      },
+      "candidate": {
+        "frames": 599,
+        "draws": 599,
+        "elapsedMs": 5000.4000000059605,
+        "hostCPUmsPerCallback": 1.4839732896704507,
+        "drawCPUmsPerCallback": 0.5325542571946655,
+        "cloneMsPerCallback": 0.08931552547843309,
+        "layoutReadMsPerCallback": 0.4300500834127499,
+        "observerLowerBoundMsPerCallback": 0.024207011288115896,
+        "DOMCalls": 2560,
+        "unchangedDOMCalls": 2092,
+        "maximumRAFGapMs": 12.400000000000546,
+        "coverage": {
+          "expectedStatusAtStart": true,
+          "expectedStatusAtEnd": true,
+          "observedStatuses": [
+            "active"
+          ],
+          "nativeTickDelta": 250,
+          "remainedFocused": true,
+          "remainedVisible": true,
+          "timerWithin5500ms": true
+        },
+        "longEntries": {},
+        "canvas": {
+          "width": 1914,
+          "height": 861
+        },
+        "profile": "ukrainian",
+        "quality": "balanced",
+        "mode": "self-level"
+      },
+      "savedHostCPUmsPerCallback": 0.29452670967389816,
+      "savedLayoutReadMsPerCallback": 0.24778325029807952
+    },
+    {
+      "course": "woodland-01",
+      "window": "ordinary-grounded-practice",
+      "baseline": {
+        "frames": 600,
+        "draws": 600,
+        "elapsedMs": 5001.5,
+        "hostCPUmsPerCallback": 1.645666666974624,
+        "drawCPUmsPerCallback": 0.49966666763027506,
+        "cloneMsPerCallback": 0.11150000000993411,
+        "layoutReadMsPerCallback": 0.6438333334028721,
+        "observerLowerBoundMsPerCallback": 0.03916666661699613,
+        "DOMCalls": 8400,
+        "unchangedDOMCalls": 8350,
+        "maximumRAFGapMs": 10.399999999999636,
+        "coverage": {
+          "expectedStatusAtStart": true,
+          "expectedStatusAtEnd": true,
+          "observedStatuses": [
+            "active"
+          ],
+          "nativeTickDelta": 250,
+          "remainedFocused": true,
+          "remainedVisible": true,
+          "timerWithin5500ms": true
+        },
+        "longEntries": {},
+        "canvas": {
+          "width": 1914,
+          "height": 861
+        },
+        "profile": "industrial-workshop",
+        "quality": "balanced",
+        "mode": "self-level"
+      },
+      "candidate": {
+        "frames": 600,
+        "draws": 600,
+        "elapsedMs": 5000.5,
+        "hostCPUmsPerCallback": 1.407833333214124,
+        "drawCPUmsPerCallback": 0.5126666666567326,
+        "cloneMsPerCallback": 0.1025000007947286,
+        "layoutReadMsPerCallback": 0.38916666656732557,
+        "observerLowerBoundMsPerCallback": 0.022999999870856602,
+        "DOMCalls": 2450,
+        "unchangedDOMCalls": 2400,
+        "maximumRAFGapMs": 10.400000000001455,
+        "coverage": {
+          "expectedStatusAtStart": true,
+          "expectedStatusAtEnd": true,
+          "observedStatuses": [
+            "active"
+          ],
+          "nativeTickDelta": 250,
+          "remainedFocused": true,
+          "remainedVisible": true,
+          "timerWithin5500ms": true
+        },
+        "longEntries": {},
+        "canvas": {
+          "width": 1914,
+          "height": 861
+        },
+        "profile": "industrial-workshop",
+        "quality": "balanced",
+        "mode": "self-level"
+      },
+      "savedHostCPUmsPerCallback": 0.2378333337605001,
+      "savedLayoutReadMsPerCallback": 0.2546666668355465
+    },
+    {
+      "course": "woodland-01",
+      "window": "paused-settings",
+      "baseline": {
+        "frames": 600,
+        "draws": 600,
+        "elapsedMs": 5001.5999999940395,
+        "hostCPUmsPerCallback": 1.830833332737287,
+        "drawCPUmsPerCallback": 0.49599999979138376,
+        "cloneMsPerCallback": 0.048833333949248,
+        "layoutReadMsPerCallback": 0.9859999993940195,
+        "observerLowerBoundMsPerCallback": 0.03616666709383329,
+        "DOMCalls": 8400,
+        "unchangedDOMCalls": 8400,
+        "maximumRAFGapMs": 10.400000000001455,
+        "coverage": {
+          "expectedStatusAtStart": true,
+          "expectedStatusAtEnd": true,
+          "observedStatuses": [
+            "paused"
+          ],
+          "nativeTickDelta": 0,
+          "remainedFocused": true,
+          "remainedVisible": true,
+          "timerWithin5500ms": true
+        },
+        "longEntries": {},
+        "canvas": {
+          "width": 1914,
+          "height": 861
+        },
+        "profile": "industrial-workshop",
+        "quality": "balanced",
+        "mode": "self-level"
+      },
+      "candidate": {
+        "frames": 600,
+        "draws": 600,
+        "elapsedMs": 5001.699999988079,
+        "hostCPUmsPerCallback": 1.5796666673819224,
+        "drawCPUmsPerCallback": 0.5396666666368644,
+        "cloneMsPerCallback": 0.04700000057617823,
+        "layoutReadMsPerCallback": 0.6983333331346512,
+        "observerLowerBoundMsPerCallback": 0.020666666676600776,
+        "DOMCalls": 2400,
+        "unchangedDOMCalls": 2400,
+        "maximumRAFGapMs": 10.30000000000291,
+        "coverage": {
+          "expectedStatusAtStart": true,
+          "expectedStatusAtEnd": true,
+          "observedStatuses": [
+            "paused"
+          ],
+          "nativeTickDelta": 0,
+          "remainedFocused": true,
+          "remainedVisible": true,
+          "timerWithin5500ms": true
+        },
+        "longEntries": {},
+        "canvas": {
+          "width": 1914,
+          "height": 861
+        },
+        "profile": "industrial-workshop",
+        "quality": "balanced",
+        "mode": "self-level"
+      },
+      "savedHostCPUmsPerCallback": 0.2511666653553646,
+      "savedLayoutReadMsPerCallback": 0.2876666662593683
+    }
+  ],
+  "environmentEqual": true,
+  "allWindowsFocusedVisibleExpected": true,
+  "limits": [
+    "One sequential matched native run; unknown external CPU/GPU contention and observer overhead prevent hardware/FPS claims.",
+    "All16 paired windows retained. Earlier discovery8950 final Woodland Settings had130callbacks/max1008ms RAF gap; retained separately, not used in this pair.",
+    "Both records use sameUA/dpr2/hardwareConcurrency14 and matching per-window profile/mode/quality/canvas. Ordinary profiles industrial-workshop; demonstrations preserve operations/ukrainian.",
+    "Long Animation Frame/longtask APIs supported but no entries starting inside matched windows; this is not proof of no jank.",
+    "Native practice tick counts may differ by one due free-running clock boundaries; this is not an exact physics-replay comparison.",
+    "Nested method timings are not additive. Observer lower bound decreases because fewer original DOM writes invoke its wrapper; native width getter reduction remains separately recorded."
+  ]
+}

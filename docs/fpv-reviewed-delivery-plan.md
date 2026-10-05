@@ -1,5 +1,9 @@
 # FPV implementation continuation — approved 1 October 2026
 
+> Current execution order and researched parallel acceptance gates: [4 October continuation](fpv-parallel-delivery-2026-10-04.md). Earlier checkpoints below are historical where superseded.
+
+Current status and next priorities: [4 October delivery review](fpv-delivery-review-2026-10-04.md).
+
 This plan supersedes the original remaining-work estimate in
 `fpv-worlds-implementation.md`. Keep the completed native UI, radio calibration,
 fullscreen and existing simulation/content contracts. Direction: grounded
@@ -21,7 +25,6 @@ Stop only when the approved backlog is complete, the owner requests a pause, or 
 safe useful work remains without essential user input. Do not expand scope beyond
 the approved plan to keep work running.
 
-
 The owner approved implementation with **world quality first**, polishing all
 14 existing worlds before the main learning/usability phase, followed by creator
 tools and four distinct new worlds. This ordering supersedes the older delivery
@@ -30,20 +33,20 @@ browser, replay, import/export and offline checks remain part of each increment.
 Physical-device and novice feedback do not block development and are not claimed
 as completed.
 
-| Phase | Working estimate | Reviewable result |
-| --- | --- | --- |
-| D0 | 1 week | Publish verified controls/art PRs #986/#987 through protected checks; repair shared offline capacity; establish rendering baseline and complete Snake outcome verification |
-| D1 | 3–5 weeks | Finished Container Yard and Woodland Park; reusable industrial/natural assets and measured quality tiers |
-| D2 | 5–7 weeks | Remaining 12 worlds in six pairs: Stadium/Garage, Hangar/Meadow, Courtyard/Warehouse, Airfield/Quarry, Campus/Railworks, Orchard/Solar Park |
-| D3 | 2–3 weeks | 60 optional Adventure demonstrations, 28 eligible alternate School demonstrations, evidence-based coaching, continuous practice and touch/controller polish |
-| D4 | 1–2 weeks | Editable sweeper/hairpin/chicane/climb/split-level templates, clearance guidance, divergent-mode routes and industrial/natural starter projects |
-| D5 | 6–8 weeks | Mountain Reservoir, Harbor Docks, Old Town Canals and Festival Grounds; eight distinct challenges and 16 mode-specific demonstrations per world |
-| D6 | 1–2 weeks | Deferred unit coverage, full regression and recorded qualification limits |
+| Phase | Working estimate | Reviewable result                                                                                                                                                          |
+| ----- | ---------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| D0    | 1 week           | Publish verified controls/art PRs #986/#987 through protected checks; repair shared offline capacity; establish rendering baseline and complete Snake outcome verification |
+| D1    | 3–5 weeks        | Finished Container Yard and Woodland Park; reusable industrial/natural assets and measured quality tiers                                                                   |
+| D2    | 5–7 weeks        | Remaining 12 worlds in six pairs: Stadium/Garage, Hangar/Meadow, Courtyard/Warehouse, Airfield/Quarry, Campus/Railworks, Orchard/Solar Park                                |
+| D3    | 2–3 weeks        | 60 optional Adventure demonstrations, 28 eligible alternate School demonstrations, evidence-based coaching, continuous practice and touch/controller polish                |
+| D4    | 1–2 weeks        | Editable sweeper/hairpin/chicane/climb/split-level templates, clearance guidance, divergent-mode routes and industrial/natural starter projects                            |
+| D5    | 6–8 weeks        | Mountain Reservoir, Harbor Docks, Old Town Canals and Festival Grounds; eight distinct challenges and 16 mode-specific demonstrations per world                            |
+| D6    | 1–2 weeks        | Deferred unit coverage, full regression and recorded qualification limits                                                                                                  |
 
 Estimate: 19–28 working weeks plus three contingency weeks, assuming two developers
 and an environment artist. Each complete increment receives a focused PR;
 independent work continues while CI runs. Use native stacks only for dependencies.
-D5 targets 18 worlds and 216 authored challenges; authored counts are not player
+D5 targets 18 worlds and 228 authored challenges (196 current plus 32 planned); authored counts are not player
 acceptance or measured performance claims.
 
 Preserve Three.js, existing physics/replays, world identities, asset licenses and
@@ -51,6 +54,246 @@ retained dependencies. Gameplay geometry changes need explicit content revisions
 Quality presets must preserve collision, relevant sight lines and objective actors.
 Measure frame times, loading and resource disposal before claiming performance.
 No multiplayer, online publishing or universal commercial-map conversion is added.
+
+### D4 starter-project checkpoint — 4 October 2026
+
+The first D4 increment supplies [ten editable industrial/natural starter projects](../authoring/fpv-worlds/starters/README.md):
+sweeper, hairpin, chicane, climb and split level, with one course per project,
+independent Self-level/Acro routes, EN/UK guidance and bounded nominal clearance.
+Twenty ordinary-control flights and independent replays complete in 55,804 ticks
+with zero hard contacts. The unchanged 102-member admitted player passes 237
+browser checks covering all ten ZIP identities, two numeric editor workflows,
+four original replays, a trusted spatial drag, Undo/Redo, export/reimport and
+native IndexedDB reopening. See the [exact receipts and limits](../authoring/fpv-worlds/starters/evidence/README.md).
+
+This authoring-only increment adds zero runtime source bytes and no catalogue
+entries; counts remain 196 challenges / 14 worlds and package limits stay exact.
+Complete D4 next with explicit spatial route-mode selection across edits,
+ordering, history and source overrides. Separate actual localhost offline
+qualification passes cached reload, keyboard editing, Undo/Redo, installation,
+reopening and original/edited revision restoration with the serving origin down.
+Device-wide offline, browser restart and storage-eviction qualification remain open.
+Edited copies do not inherit the original routes' flight/clearance evidence.
+D5's four new worlds and D6's additional unit coverage remain subsequent work;
+physical-device, unfamiliar-player and sustained-performance acceptance stay open.
+
+### Optional Adventure examples checkpoint — 4 October 2026
+
+The D3 data-only Adventure increment converts all 60 retained authoring proofs
+into an optional Library-import JSON: both modes for each of 30 challenges,
+with the original 178 bundled examples and all core download inputs unchanged.
+The converter passes 992 checks and 120 exact original/transport replays; the
+actual admitted host passes 395 checks covering all 60 imports/lookups and
+persistence plus 12 complete rendered replays across both modes and six worlds.
+All original zero-contact and six reduced-health duel outcomes are retained.
+See [evidence and limits](fpv-adventure-optional-examples.md). Public availability
+requires protected merge and a working download link; it is not implied by local
+qualification. Historical failed fixture runs remain visible.
+
+The observed explicit World-host disposal ordering defect is the next narrow
+independent fix: shell teardown removes the menu hint target before menu
+navigation cleanup. It is not fixed by the data change. Then continue the
+separate 28 alternate School examples, audit one evidence-based optional lesson
+recommendation, and improve optional-example discoverability in Library without
+automatic download or core precaching. Existing section-watch, longest-section
+practice, live height/speed/tilt hints and touch/controller flows remain delivered
+features to preserve, not duplicate. Broader D3 work and D4–D6 remain open.
+
+### Optional alternate School checkpoint — 4 October 2026
+
+The 28 remaining eligible alternate School examples are qualified as explicit
+optional imports: original Self-level lessons 01–12 in Acro, and non-skill
+intermediate/advanced lessons 27–42 in Self-level. The 14 foundation alternates
+already exist; the 16 Acro-skill lessons retain only unscored Self-level practice.
+All 28 new recordings complete, independently replay, and import/replay again
+with zero contacts and full health. The actual retained admitted player passes
+393 checks and 30 playbacks, including two recorded sections, with unchanged
+progress and no errors. The 178 built-in recordings and all production code stay
+unchanged. See [School archive qualification](fpv-school-alternate-examples.md).
+
+Orchard #1021 is merged and has an actual public Authored/Touch render, arm and
+pause observation at descendant main `a087facd9`, with no warning/error logs.
+Solar #1022 was superseded by replacement #1025; its integration review and
+protected CI/deployment remain separate. These are bounded surface improvements,
+not complete-world artistic or hardware acceptance.
+
+Continue D3 with the independent optional Adventure examples, lifecycle repair
+and one evidence-based gate-section lesson recommendation with deliberate return
+to the prior challenge. Preserve timing provenance, exact dependencies, selected
+controls and playlist bookmarks. Broader art/performance and coaching remain
+open; D4 creator, D5 four worlds, and deferred D6 unit coverage follow. Counts stay
+**196 challenges / 14 worlds / 58 School lessons / 374 School steps**; D5 targets
+**228 challenges / 18 worlds**.
+
+### Campus facade checkpoint — 4 October 2026
+
+Quarry #1016 is merged at `47d2019dced85d80671b2d780da662f50ea11c20`.
+Campus now has a qualified bounded facade increment on that main baseline:
+full-height solid Pixel panes and quiet storey/corner articulation on the four
+existing closed buildings, preserving roofs, bridge, collision and shared Theme
+ownership. Source and admitted-package browser checks each pass **136 checks /
+56 identical image pairs**. CPU qualification passes **780 checks / 138 scenes**
+both before and after integration, and ten authenticated recordings replay
+through **53,982 ticks**. All three admissions pass two identical builds; the
+complete 102-file admitted player renders the facades and passes
+arm/pause/continue with empty warning/error logs. See [Campus qualification](fpv-campus-facade-levels.md).
+Publish through protected exact-head checks; local acceptance is not public or
+hardware qualification and does not certify the complete world's art.
+
+Continue D2 with the independently audited Railworks wagon framing increment,
+then Orchard/Solar Park. No Railworks runtime is included here. Keep D1
+performance work separate, followed by D3 examples/coaching, D4 creator, D5 four
+worlds and D6 deferred additional unit coverage. Counts remain **196 challenges,
+14 worlds, 58 School lessons and 374 steps**; D5 targets **228 challenges / 18
+worlds**. These art increments add no challenges or installed demonstrations.
+
+### Quarry continuation checkpoint — 4 October 2026
+
+Courtyard #1012 and Warehouse #1014 are merged and now have actual public-player
+render/arm/pause observations at marker `0aeb0c2b4342715ba9a19b976114d7d905fed7bd`,
+with empty warning/error logs. Coastal lighthouse #1015 has merged normally at
+`287eec95c81687fb8a6d176f750f7c65a60e1fe3`: source/package browser
+qualification with 97 checks and 56 image pairs, ten fresh retained-proof replays / 41,868 ticks, three package
+admissions and the complete 102-file local admitted player are documented there.
+The public marker now matches that merge; actual Lighthouse approach render,
+arm through 0.2 seconds and pause-to-menu passed with empty warning/error logs.
+
+Quarry's qualified bounded increment improves the six existing rock solids with
+world-aligned authored strata and fine fractures. It changes no collision volume,
+route or geometry, and creates no additional texture set. Pixel, shared Themes
+and unsupported creator layouts retain their prior finish. The accepted revision
+retains fine grain and broken seams; source/package browser qualification each
+passes 116 checks / 56 image pairs, ten fresh retained-proof replays cover 41,643
+ticks, all three package admissions pass two identical builds, and the complete
+102-file admitted player renders/arms/pauses. The unrelated imported Courtyard
+control uses disclosed equal GLTF material construction order; original 176/27-pixel
+failures remain in the [qualification record](fpv-quarry-strata.md). Publish this
+focused increment through protected checks; no finished-world or hardware claim
+follows from surface detail alone. Continue the remaining D2 worlds before
+D3 examples/coaching, D4 creator, D5's four worlds and D6 additional unit coverage.
+The catalogue remains 196 unique challenges / 14 worlds: 60 original, 30 Adventure,
+48 Snake Hunt and 58 School, with 374 authored steps. D5 still targets 228 / 18.
+
+### Coastal lighthouse qualification — 4 October 2026
+
+Courtyard #1012 and Warehouse #1014 are merged; current integration includes main
+`0aeb0c2b4342715ba9a19b976114d7d905fed7bd`. The bounded Coastal airfield lighthouse
+finish now has accepted harbour/lantern views, 97 source and 97 packaged browser
+checks with 56 identical image pairs, ten fresh retained-proof replays through
+41,868 ticks, all three source-bound package admissions and an actual complete
+102-file admitted-player render/arm/pause. See [qualification](fpv-coast-lighthouse.md).
+Publish this focused increment through protected checks, then continue Quarry on
+a separate branch. The count remains 196 challenges / 14 worlds; this art pass
+adds neither a world nor an installed demonstration. D5 still targets 228 / 18.
+Physical-device observations and broader finished-world claims remain separate.
+
+### Latest delivery priority — 3 October 2026, evening
+
+This checkpoint supersedes the dated pending statuses below; older evidence remains historical.
+
+**World quality remains first.** Source-budget repair **#1011** and Woodland grove
+composition **#996** are merged. The public marker at `e40809f25ea8` and an actual
+Clearing check-in render/arm/pause verify the grove increment live. Hangar, Garage,
+Stadium and Yard also have actual public launch evidence. Meadow **#1010** is
+live at public marker `e98df020d`, with Turn and travel render/arm/pause verified.
+Woodland material correction **#1001** is merged at `25700b699`; its public
+acceptance remains separate from that earlier marker.
+
+1. Complete protected publication of **#1012** Courtyard closed façades and
+   **#1014** Warehouse exterior composition, preserving exact-head admission.
+   Keep ready patches focused while independent work continues. Source repair
+   recovered 42,301 bytes without changing generated syntax trees or 24 packed
+   recordings; no package limit was raised.
+2. Continue the next **Airfield/Quarry** art pair after the qualified Warehouse
+   increment. Warehouse #1014 retains 29 courses/four bounds, 18 installed
+   recordings, 57 licensed placements, indoor routes and closed collision bounds.
+3. Finish the remaining **D2 world pairs**, then D3 examples/coaching, D4 creator
+   tools, D5 four new worlds, and D6 deferred unit/regression qualification.
+4. Keep **D1 performance tuning** active alongside art: production source and
+   package qualification pass functional/resource checks, but preparation/load
+   and frame-interval outliers remain unresolved. Do not claim sustained FPS.
+
+Current authored content remains **196 challenges, 14 worlds, 58 school lessons
+and 374 school steps**. Art increments add no levels. D5 targets 228 challenges
+and 18 worlds. The original 120 and recommended-mode School 58 recordings remain
+installed; optional Adventure/alternate-mode examples belong to D3.
+
+| Area                    | Verified increment                                                                                                                                                                                  | Remaining                                                                                                    |
+| ----------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------ |
+| D0                      | Core 72 MiB/Company 80 MiB capacity and lossless optional-source repair #1011                                                                                                                       | Existing canonical audio-warning arbitration failure remains recorded separately                             |
+| D1                      | Field materials #999, tree forms #1006, Yard frontage #998, Woodland groves #996 and material correction #1001 are merged; historical source/package production and cached-player evidence retained | Material public acceptance; unresolved long-stall investigation; broader art and actual-device qualification |
+| D2: Stadium/Garage      | Stadium #1004 and Garage #1009 public render/arm/pause verified                                                                                                                                     | Broader art/performance acceptance, without blocking next work                                               |
+| D2: Hangar/Meadow       | Hangar #1008 and Meadow #1010 public render/arm/pause verified                                                                                                                                      | Broader art/performance acceptance remains separate                                                          |
+| D2: Courtyard/Warehouse | Courtyard #1012 and Warehouse #1014 are ready with scoped source/package and actual-player evidence                                                                                                 | Exact-head protected publication, public deployment and broader world polish                                 |
+| D2: later pairs         | Existing reusable surfaces and landmarks retained                                                                                                                                                   | Airfield/Quarry, Campus/Railworks and Orchard/Solar cohesive art passes                                      |
+| D3–D6                   | Existing teaching, creator/import, replay and recovery features retained                                                                                                                            | Optional examples/coaching; creator templates; four new worlds; deferred unit coverage and final regression  |
+
+**D1 evidence:** historical combined candidate `e572026ba` passes 90 configurations
+across three rounds (270 views), 60 Pixel/shared-Theme controls and 14 lifecycle
+and resource gates in both source and admitted package. Comparison finds zero
+semantic discrepancies across 72,680 leaves. Local server-unavailable reload,
+Woodland/Yard selection, arm and pause pass. This is functional browser evidence,
+not physical-radio, airplane-mode, novice or sustained hardware-performance proof.
+
+The bounded [D1 transition profile](fpv-d1-transition-profile.md) completed 36
+preparations and six imports on the same historical e572 source. It did not
+reproduce the earlier 15–17 second waits (maxima 77.4/11.2 ms). Measurable course
+setup/quality/probe costs and all long tasks are retained; the original stalls
+remain unresolved and no production optimization or FPS claim follows.
+
+**Courtyard evidence:** the first visual review rejected overlapping window marks
+although its numerical matrix passed. The corrected final source and package each
+pass 261 checks/163 pairs with matching records. These matrices use the production
+renderer with procedural fallback scenery; the separate normal player launch
+covers imported scenery, backed by the GLB integration audit. Preserve the rejected
+revision and the distinction between these checks.
+
+**Warehouse evidence:** ready #1014 at `b5a7a3b5a` retains 437 checks/221 image
+pairs and the actual admitted-player launch on frozen `102fcd`; integrated
+`860ad` admission leaves 35,925 original-input bytes of headroom. These scoped
+receipts do not replace fresh exact-head CI or public deployment verification.
+
+Player feedback, actual iPhone/TX15/Steam Deck sessions and human art acceptance
+remain pending and nonblocking. No guard, replay identity or gameplay geometry
+changes are implied by these art increments. The local combined-art branch stays
+verification-only. Use the delivery log for exact current PR heads and status.
+
+See [the complete D1 qualification](fpv-d1-production-qualification.md) for exact candidate, package, archive and timing records.
+
+### Verified continuation checkpoint — 3 October 2026
+
+The 72 MiB shared-core change #989 and controls #986/#991 are merged. D1 art is
+published in focused PRs #992, #993, #996, #998, #999 and #1001; publication and
+public deployment are separate from local evidence. The combined Woodland/Yard
+candidate was functionally reviewed across 15 arena/preset cases, with identical
+collision data and stable resources through 15 cleanup cycles. A resolved-theme
+bug in #1001 was corrected so all five supported Pixel profile forms retain the
+existing unlit imported material. This evidence does not finish D1 art acceptance
+or establish sustained frame times on named devices.
+
+The next independent D2 increment adds readable closed stand facades and a static
+scoreboard to Stadium's three canonical solids. Its implementation preserves all
+21 associated recorded demonstrations and the 14 Snake Stadium layouts; source
+and package qualification is recorded in `fpv-stadium-structures.md`. Garage is
+the next bounded environment task. Continue D1 publication repairs in parallel,
+then the remaining D2 world pairs before D3–D6. No new dependency stack is needed
+for the Stadium increment, which starts from current main.
+
+### Qualified art delivery checkpoint — 3 October 2026
+
+The catalogue remains **196 challenges / 14 worlds**. D5 targets **228 challenges
+in 18 worlds** (196 current plus 32 planned), superseding historical 216-count
+estimates. Stadium and Container Yard have verified public deployment identities
+and actual-player launches. Hangar #1008 is merged with public acceptance pending;
+Garage #1009 is merged with public acceptance pending. This focused Meadow PR carries
+qualified source/package rendering and actual-player evidence; these bounded art
+increments do not claim that the larger world-quality phase is finished.
+
+Continue the remaining D1 groves #996 and material response #1001 publication,
+then the rest of D2 world pairs. Follow with D3 optional examples/coaching,
+D4 creator tools, D5 four new worlds, and D6 deferred unit coverage and full
+regression. Keep independent implementation moving while protected CI/publication
+runs. Human, physical-device and final artist acceptance remain explicitly open.
 
 ### Approved capacity change
 
@@ -75,23 +318,24 @@ controls, school, section practice, ghosts, reimport and original demonstrations
 The Follow/Observe editor #975, shared-theme texture quality #974, WebAssembly
 CSP repair #976 and pack-removal recovery #977 are now merged. Public deployment
 remains distinct from local functional verification.
-The current catalogue is **184 challenges / 14 worlds / 58 school lessons / 374
+The current catalogue is **196 challenges / 14 worlds / 58 school lessons / 374
 school steps**. Installed demonstrations total **178**: all 120 original
 mode-specific recordings plus 58 recommended-mode school examples. The 60
 Adventure authoring proofs are separate; they are not installed demonstrations.
-Main Snake content #973/#978 adds 36 challenges within the same 14 worlds. Fourteen
+Main Snake content now adds 48 challenges within the same 14 worlds, including
+12 tasks added after the earlier 184-challenge checkpoint. Fourteen
 optional matching Self-level foundation examples are merged as PR #979; they do
 not add challenges or increase the default installed-example count.
 
-| Order | Reviewable increment | Working estimate | Required functional evidence |
-| --- | --- | --- | --- |
-| Complete / merged #972 | Watch a recorded section, then practise from its exact entry | Delivered | Verified prefix and end boundary, accurate labels, pause/reconnect and no rewards from playback/practice |
-| Complete / merged #975 | Visual Follow/Observe objective inspector | Delivered | Author, move subject, edit criteria, export/reopen and reimport without losing settings |
-| Merged and live #977 | Pack-removal impact and recovery guidance | Source/package verified; public launch verified | 90 browser checks in each build, exact restore and preserved recording/session/playlist evidence |
-| Parallel | Stadium, then yard/garage art using shared Themes materials | 3–5 days per bounded batch | Readability, collision/visibility parity, resource disposal and source/packaged rendering |
-| Merged #979 | 14 optional Self-level foundation examples; Adventure next | 117 browser checks per build | Correct mode/revision, complete replay and bounded optional delivery |
-| 5 | Further distinct practice worlds and moving-subject challenges | 3–5 days per pair | Authored routes/objectives, both-mode access and verified demonstrations |
-| Last | H/R7 deferred unit coverage and broad qualification | 5–10 days, excluding external sessions | Required regression, replay/storage failures, named-device performance and separately recorded human acceptance |
+| Order                  | Reviewable increment                                           | Working estimate                                | Required functional evidence                                                                                    |
+| ---------------------- | -------------------------------------------------------------- | ----------------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
+| Complete / merged #972 | Watch a recorded section, then practise from its exact entry   | Delivered                                       | Verified prefix and end boundary, accurate labels, pause/reconnect and no rewards from playback/practice        |
+| Complete / merged #975 | Visual Follow/Observe objective inspector                      | Delivered                                       | Author, move subject, edit criteria, export/reopen and reimport without losing settings                         |
+| Merged and live #977   | Pack-removal impact and recovery guidance                      | Source/package verified; public launch verified | 90 browser checks in each build, exact restore and preserved recording/session/playlist evidence                |
+| Parallel               | Stadium, then yard/garage art using shared Themes materials    | 3–5 days per bounded batch                      | Readability, collision/visibility parity, resource disposal and source/packaged rendering                       |
+| Merged #979            | 14 optional Self-level foundation examples; Adventure next     | 117 browser checks per build                    | Correct mode/revision, complete replay and bounded optional delivery                                            |
+| 5                      | Further distinct practice worlds and moving-subject challenges | 3–5 days per pair                               | Authored routes/objectives, both-mode access and verified demonstrations                                        |
+| Last                   | H/R7 deferred unit coverage and broad qualification            | 5–10 days, excluding external sessions          | Required regression, replay/storage failures, named-device performance and separately recorded human acceptance |
 
 These are planning estimates, not elapsed-work promises. Hardware and player
 sessions remain an acceptance backlog and can inform later revisions, but no
@@ -359,7 +603,6 @@ The catalogue remains 14 worlds / 148 challenges. This branch installs
 are separate. Main/public counts remain at 104 originals until this increment merges.
 Additional unit coverage stays in H/R7, with functional checks on every increment.
 
-
 ### Approved A–H continuation checkpoint — 2 October
 
 A's checkpoint practice (#951) and B's lifecycle/keyboard-pause repair (#952)
@@ -394,6 +637,7 @@ separate branch. Keep #959 and the completed C2 PR isolated while publication
 runs. D's novice sessions, B's real TX15/iPhone/Steam Deck acceptance, F's creator
 and device-offline qualification, feedback-led G map growth, and H's deferred
 unit coverage remain open. Authored counts remain 148 challenges and 14 worlds.
+
 ### C3 courtyard continuation — 2 October 2026
 
 Touch #959 is merged and its actual public launch is now verified. Meadow C2 is
@@ -432,7 +676,6 @@ focused Warehouse storage-surface/UV increment followed by Stadium display and
 stand surfaces, keeping solid collision and Pixel readability. See the latest
 delivery-log checkpoint for exact candidates, capacity #963 and open human/device
 qualification. Keep unfinished C5 separate from the ready woodland PR.
-
 
 ### C5 Warehouse continuation — 3 October 2026
 
@@ -500,3 +743,115 @@ requires deployment identity and a real player launch. They do not replace the
 larger remaining art work with an unsupported same-quality claim. Reuse existing
 licensed resources and original geometry; this inspection does not establish
 redistribution permission for FlightDivision's proprietary models or textures.
+
+### D1 graphics ownership checkpoint — 4 October 2026
+
+The bounded environment-light reuse and graphics-loss recovery increment is
+locally qualified at `06d154e76` on published main `47d2019d`. Full validation,
+63 manual checks, 30 existing checks, three reproducible source-bound admissions
+and the actual 102-file editor loss/restoration smoke pass. The final editor
+preserves its existing reload requirement; flight Retry has separate actual-host
+evidence. See [the qualification](fpv-environment-light-reuse.md) for exact
+candidate bridges and the retained v5 imported-image discrepancy.
+
+Proceed with protected publication, then follow deployment identity and an
+actual public launch. The earlier 15–17 second pauses remain unreproduced; this
+increment does not close sustained named-device performance, broad image
+determinism, remaining art acceptance or deferred D6 unit coverage.
+
+### D2 Railworks checkpoint — 4 October 2026
+
+Campus #1018 is merged at `96ef08777` and its public player was observed rendering
+the authored facades, arming and pausing. D1 environment-light ownership and
+graphics recovery #1019 is merged at `a46aded0b`; that source merge is distinct
+from public deployment qualification. The independent Railworks increment is
+qualified on that main: eight existing closed wagons gain subdued flush framing
+and stiffeners, reusing their accent batches. It preserves collision, original
+maps, Pixel/shared themes and retained recordings. The wagons remain box-like;
+this is bounded visible progress, not comprehensive realistic world completion.
+See [Railworks qualification](fpv-railworks-wagon-frames.md) for exact candidates
+and the source/package evidence.
+
+The catalogue remains **196 challenges / 14 worlds / 58 school lessons / 374
+school steps**. Continue the remaining D2 art work with the independent Orchard
+and Solar increments and broader world polish, then D3 examples/coaching, D4
+creator, D5's **228 challenges / 18 worlds** target and deferred D6 unit coverage.
+Functional qualification continues at each increment. Browser checks do not
+close named-device timing, physical controls or complete-world artistic goals.
+
+### Solar and optional School examples checkpoint — 4 October 2026
+
+Railworks #1020 is merged at `bf167a4fd`. The independent Solar increment is locally
+qualified on that main: photovoltaic cells and aluminum-colored framing belong
+only on the existing banks' upper faces; sides and backs stay solid and quiet.
+The final canonical-profile guard preserves same-ID theme edits. Geometry,
+collision, resource counts, Pixel/shared themes and retained recordings remain
+unchanged. See [Solar qualification](fpv-solar-panel-frames.md) for original-source
+and final-package attribution, actual browser/player evidence and limits. These
+bounded increments do not close broader world-model realism or artistic polish.
+
+The next independent D3 School batch is **28 optional alternate examples**:
+`beginner-01`–`12` in Acro and `beginner-27`–`42` in Self-level. Eligibility follows
+actual step types and `worldCourseRequiresAcro`, not a nonexistent `step.skill`
+property. Exclude the fourteen already optional foundation Self-level examples
+and sixteen Acro-skill lessons that allow only unscored Self-level practice.
+Preserve the **178 bundled examples** and distribute new proofs through the
+existing optional archive importer. The sixty Adventure examples are separate
+work. Functional replay and actual import/playback qualification precede claims
+of completion; this checkpoint does not say the new batch has been generated.
+
+Content remains **196 challenges / 14 worlds**. Continue the approved D3 examples
+and coaching work, D4 creator, D5's **228 challenges / 18 worlds** target and D6
+unit coverage, while retaining broader art, named-device performance and physical
+control acceptance as separate unfinished goals.
+
+### Measured coaching and creator checkpoint — 4 October 2026
+
+The catalogue remains **196 challenges / 14 worlds / 58 School lessons**, with
+**178 bundled demonstrations**. The bounded Orchard and Solar increments are
+verified live; Solar's public marker and actual authored launch identify merged
+`72d6661b`. These passes do not close broader world-art or hardware acceptance.
+Optional Adventure **#1027** (60 examples) and alternate School **#1031** (28)
+are merged after actual import, persistence and playback qualification.
+
+The next D3 increment offers one existing gate-sequence lesson from verified
+section timing and preserves the exact original route, controls and playlist
+bookmark on return. Its source browser passes 194 checks; the final local
+candidate includes the reviewed explicit-disposal **#1040** repair, passes
+all-three package admission with two identical builds, and passes 208 packaged
+browser checks including owned-control disposal. The rendered recommendation is
+accepted. Disposal #1040 merged at `5931ef126`; normal coaching integration
+preserves all 95 admitted inputs exactly and is ready for protected publication.
+The separate source-capacity **#1047** repair preserves the existing cap and recordings.
+See [coaching qualification](fpv-gate-section-coaching.md) for exact provenance.
+
+D4's ten independent editable starter projects have twenty replay proofs and
+237 actual-editor checks covering numeric/spatial edits, Undo/Redo, retained
+revisions and native IndexedDB reopening. Starter **#1050** is published, and its
+separate offline exercise passed. Carry explicit Acro/Self-level route selection through future
+editor work; do not claim the present Self-level spatial editor already does so.
+Reuse the existing continuous-practice, touch and controller contracts during D3
+integration. Continue D4 creator work, D5's **228 challenges / 18 worlds** target,
+then D6's deferred unit/regression work. Physical controls, sustained device
+timings and novice feedback remain honestly unqualified.
+
+### Mountain Reservoir qualification — 4 October 2026
+
+Measured coaching, explicit route-mode editing, multi-course selection and exact
+imported-example lookup are now merged. The first D5 optional world, Mountain
+Reservoir r8, has eight distinct bilingual land-side routes and sixteen new
+ordinary-control demonstrations, all freshly qualified against its final shared
+world. It passes 575 CPU checks and 304 actual admitted-player/editor checks,
+including every Watch replay. A separate stopped-server native reload retained
+the world, flew Dry spillway descent and edited course 08 in Acro with Undo/Redo.
+Offline install/rollback was not part of that bounded run; earlier framework
+evidence remains separate. See the [world and exact evidence](../authoring/fpv-worlds/mountain-reservoir/README.md).
+
+This is **one of four D5 worlds** locally qualified, with protected publication
+and public entry tracked separately. The bundled catalogue stays **196 / 14**;
+installing this optional world produces **204 authored challenges / 15 installed
+worlds**. Festival Grounds is next, followed by Harbor Docks and Old Town Canals,
+toward **228 / 18**. Generic imported-card activity/difficulty/duration metadata
+is an existing host follow-up. Continue current-player performance, Library
+discovery and integration work in parallel; broader artistic acceptance,
+physical controls, named-device timings and deferred D6 unit coverage remain open.

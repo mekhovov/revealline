@@ -1,0 +1,86 @@
+{
+  "sourceRevision": "06d154e765c8332e5778bc51945799ee115353ac",
+  "originalInputCount": 95,
+  "originalInputBytes": 16758095,
+  "headroom": 19121,
+  "allHashesVerified": true,
+  "onlyDiffersFromMain": ["optional-practice/civilian-fpv/renderer.mjs"],
+  "verification": {
+    "admission": {
+      "format": "revealline-optional-package-admission.v1",
+      "packages": [
+        {
+          "bytes": 679266,
+          "files": 48,
+          "id": "civilian-flight",
+          "revision": "e10eb32b4f21ea1bac71e6972a88554772862925bee6326726af442433577ec7"
+        },
+        {
+          "bytes": 4396858,
+          "files": 69,
+          "id": "civilian-fpv",
+          "revision": "cde4dc27c39c6b4f37dc75908640bbe111f99761c4bd5843c00ac72a663dfae6"
+        },
+        {
+          "bytes": 15551933,
+          "files": 102,
+          "id": "fpv-worlds",
+          "revision": "e2b09526b5e35faccafab62e3376f1a457cca975a3cd8add66f0e2c136d00d6f"
+        }
+      ],
+      "publicEligible": false,
+      "sourceRevision": "06d154e765c8332e5778bc51945799ee115353ac",
+      "sourceTree": "dff518e38fc9f3184c572b4822d191c8310ce996",
+      "version": "v0.142.4",
+      "zipMembersVerified": true
+    },
+    "committedInputsVerified": true,
+    "envelopeSha256": "915dd5c46aa11b67ff8d1e9390f74a3743c4ab8c65d89315e364305230f7c6d3",
+    "format": "revealline-optional-package-candidate-verification.v1",
+    "note": "Artifact admission does not qualify installed identity, device behavior or human learning. Review gates remain pending.",
+    "publicEligible": false,
+    "reproducibleBuilds": 2,
+    "sourceRevision": "06d154e765c8332e5778bc51945799ee115353ac",
+    "sourceTree": "dff518e38fc9f3184c572b4822d191c8310ce996",
+    "version": "v0.142.4"
+  },
+  "fixture": {
+    "format": "fpv-environment-light-editor-fixture.v1",
+    "sourceRevision": "06d154e765c8332e5778bc51945799ee115353ac",
+    "distributionSha256": "0881a1045570bc8abebd561e3f792634641d9010c83b32047d0457f3307b1625",
+    "files": 102,
+    "hardlinkedFiles": 98,
+    "hardlinkedBytes": 15252611,
+    "writtenFiles": 4,
+    "writtenBytes": 299322,
+    "bindingSha256": "c79a6dc769d05ab59eb52afa85c546885794d4ca1b3db24fd44b6081e8aed096",
+    "helperSha256": "478a6e0f5d6e345ac2c94083eec0484c74cd669fbb5dd0a42cf48e511711136f",
+    "admission": "/tmp/fpv-environment-light-admission-06d154e76",
+    "previous": "/tmp/fpv-environment-light-player-4f3643143/player",
+    "out": "/tmp/fpv-environment-light-player-06d154e76",
+    "immutable": true
+  },
+  "validate": {
+    "sourceRevision": "06d154e765c8332e5778bc51945799ee115353ac",
+    "command": "npm --logs-max=0 run validate",
+    "exitCode": 0,
+    "capture": "Tool stdout, session 27216",
+    "localization": {
+      "messages": 12928,
+      "references": 8991
+    },
+    "literalReferencesValid": true,
+    "files": 2806,
+    "generatedModules": "All reaction/audio/play-shell/presentation byte-identity checks passed"
+  },
+  "editorBrowser": {
+    "sourceRevision": "06d154e765c8332e5778bc51945799ee115353ac",
+    "checks": 11,
+    "verifiedFiles": 102,
+    "pass": true,
+    "receipt": "fpv-environment-light-editor-final-browser.json.gz"
+  },
+  "manualChecks": 63,
+  "existingChecks": 30,
+  "independentGuardReview": "No actionable issue after dedicated contextGeneration correction"
+}

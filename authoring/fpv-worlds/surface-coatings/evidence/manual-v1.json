@@ -1,0 +1,395 @@
+{
+  "format": "FPVRequiredSurfaceCoatingManualQualification.v2",
+  "status": "passed",
+  "checks": [
+    {
+      "name": "unknown version rejected before offline transformation",
+      "passed": true
+    },
+    {
+      "name": "unknown version creates no downgraded prepared output",
+      "passed": true
+    },
+    {
+      "name": "unknown version rejected by shared validator",
+      "passed": true
+    },
+    {
+      "name": "unknown version rejected by real loader before scene construction",
+      "passed": true
+    },
+    {
+      "name": "unknown kind rejected before offline transformation",
+      "passed": true
+    },
+    {
+      "name": "unknown kind creates no downgraded prepared output",
+      "passed": true
+    },
+    {
+      "name": "unknown kind rejected by shared validator",
+      "passed": true
+    },
+    {
+      "name": "unknown kind rejected by real loader before scene construction",
+      "passed": true
+    },
+    {
+      "name": "extra numeric state rejected before offline transformation",
+      "passed": true
+    },
+    {
+      "name": "extra numeric state creates no downgraded prepared output",
+      "passed": true
+    },
+    {
+      "name": "extra numeric state rejected by shared validator",
+      "passed": true
+    },
+    {
+      "name": "extra numeric state rejected by real loader before scene construction",
+      "passed": true
+    },
+    {
+      "name": "blend rejected before offline transformation",
+      "passed": true
+    },
+    {
+      "name": "blend creates no downgraded prepared output",
+      "passed": true
+    },
+    {
+      "name": "blend rejected by shared validator",
+      "passed": true
+    },
+    {
+      "name": "blend rejected by real loader before scene construction",
+      "passed": true
+    },
+    {
+      "name": "alpha mask rejected before offline transformation",
+      "passed": true
+    },
+    {
+      "name": "alpha mask creates no downgraded prepared output",
+      "passed": true
+    },
+    {
+      "name": "alpha mask rejected by shared validator",
+      "passed": true
+    },
+    {
+      "name": "alpha mask rejected by real loader before scene construction",
+      "passed": true
+    },
+    {
+      "name": "partial opacity rejected before offline transformation",
+      "passed": true
+    },
+    {
+      "name": "partial opacity creates no downgraded prepared output",
+      "passed": true
+    },
+    {
+      "name": "partial opacity rejected by shared validator",
+      "passed": true
+    },
+    {
+      "name": "partial opacity rejected by real loader before scene construction",
+      "passed": true
+    },
+    {
+      "name": "transmission rejected before offline transformation",
+      "passed": true
+    },
+    {
+      "name": "transmission creates no downgraded prepared output",
+      "passed": true
+    },
+    {
+      "name": "transmission rejected by shared validator",
+      "passed": true
+    },
+    {
+      "name": "transmission rejected by real loader before scene construction",
+      "passed": true
+    },
+    {
+      "name": "missing required marker rejected before offline transformation",
+      "passed": true
+    },
+    {
+      "name": "missing required marker creates no downgraded prepared output",
+      "passed": true
+    },
+    {
+      "name": "missing required marker rejected by shared validator",
+      "passed": true
+    },
+    {
+      "name": "missing required marker rejected by real loader before scene construction",
+      "passed": true
+    },
+    {
+      "name": "missing used marker rejected before offline transformation",
+      "passed": true
+    },
+    {
+      "name": "missing used marker creates no downgraded prepared output",
+      "passed": true
+    },
+    {
+      "name": "missing used marker rejected by shared validator",
+      "passed": true
+    },
+    {
+      "name": "missing used marker rejected by real loader before scene construction",
+      "passed": true
+    },
+    {
+      "name": "duplicate marker rejected before offline transformation",
+      "passed": true
+    },
+    {
+      "name": "duplicate marker creates no downgraded prepared output",
+      "passed": true
+    },
+    {
+      "name": "duplicate marker rejected by shared validator",
+      "passed": true
+    },
+    {
+      "name": "duplicate marker rejected by real loader before scene construction",
+      "passed": true
+    },
+    {
+      "name": "lines rejected before offline transformation",
+      "passed": true
+    },
+    {
+      "name": "lines creates no downgraded prepared output",
+      "passed": true
+    },
+    {
+      "name": "lines rejected by shared validator",
+      "passed": true
+    },
+    {
+      "name": "lines rejected by real loader before scene construction",
+      "passed": true
+    },
+    {
+      "name": "marker without payload rejected before offline transformation",
+      "passed": true
+    },
+    {
+      "name": "marker without payload creates no downgraded prepared output",
+      "passed": true
+    },
+    {
+      "name": "marker without payload rejected by shared validator",
+      "passed": true
+    },
+    {
+      "name": "marker without payload rejected by real loader before scene construction",
+      "passed": true
+    },
+    {
+      "name": "Actual PBR material has fixed bias",
+      "passed": true
+    },
+    {
+      "name": "Opaque GLTF state retained",
+      "passed": true
+    },
+    {
+      "name": "Loader flat-normal clone association is preserved",
+      "passed": true
+    },
+    {
+      "name": "Loader vertex-color material variant remains enabled",
+      "passed": true
+    },
+    {
+      "name": "Shared real loader material remains shared",
+      "passed": true
+    },
+    {
+      "name": "Unmarked real loader material unchanged",
+      "passed": true
+    },
+    {
+      "name": "Canonical payload not duplicated in extras",
+      "passed": true
+    },
+    {
+      "name": "Actual parsed Theme bindings all apply",
+      "passed": true
+    },
+    {
+      "name": "Theme preserves coating and shared owner",
+      "passed": true
+    },
+    {
+      "name": "Theme cache keeps plain and coated distinct",
+      "passed": true
+    },
+    {
+      "name": "Actual parsed/theme material owners disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "Actual unlit material has fixed bias",
+      "passed": true
+    },
+    {
+      "name": "Opaque GLTF state retained",
+      "passed": true
+    },
+    {
+      "name": "Loader flat-normal clone association is preserved",
+      "passed": true
+    },
+    {
+      "name": "Loader vertex-color material variant remains enabled",
+      "passed": true
+    },
+    {
+      "name": "Shared real loader material remains shared",
+      "passed": true
+    },
+    {
+      "name": "Unmarked real loader material unchanged",
+      "passed": true
+    },
+    {
+      "name": "Canonical payload not duplicated in extras",
+      "passed": true
+    },
+    {
+      "name": "Actual parsed Theme bindings all apply",
+      "passed": true
+    },
+    {
+      "name": "Theme preserves coating and shared owner",
+      "passed": true
+    },
+    {
+      "name": "Theme cache keeps plain and coated distinct",
+      "passed": true
+    },
+    {
+      "name": "Actual parsed/theme material owners disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "Actual offline preparation has no validator errors",
+      "passed": true
+    },
+    {
+      "name": "source retains canonical required capability",
+      "passed": true
+    },
+    {
+      "name": "Legacy host refuses source",
+      "passed": true
+    },
+    {
+      "name": "source actual parser applies retained coating",
+      "passed": true
+    },
+    {
+      "name": "prepared retains canonical required capability",
+      "passed": true
+    },
+    {
+      "name": "Legacy host refuses prepared",
+      "passed": true
+    },
+    {
+      "name": "prepared actual parser applies retained coating",
+      "passed": true
+    },
+    {
+      "name": "Legacy host refuses required pack",
+      "passed": true
+    },
+    {
+      "name": "Legacy host refuses required editable ZIP",
+      "passed": true
+    },
+    {
+      "name": "pack preserves exact prepared GLB",
+      "passed": true
+    },
+    {
+      "name": "pack preserves complete project",
+      "passed": true
+    },
+    {
+      "name": "ZIP preserves exact prepared GLB",
+      "passed": true
+    },
+    {
+      "name": "ZIP preserves complete project",
+      "passed": true
+    },
+    {
+      "name": "reexport/reimport preserves exact prepared GLB",
+      "passed": true
+    },
+    {
+      "name": "reexport/reimport preserves complete project",
+      "passed": true
+    },
+    {
+      "name": "Unmarked imported bytes remain legacy-exact",
+      "passed": true
+    },
+    {
+      "name": "Unmarked actual loader keeps default offset",
+      "passed": true
+    }
+  ],
+  "runtime": [
+    {
+      "path": "optional-practice/civilian-fpv/renderer.mjs",
+      "bytes": 111909,
+      "sha256": "6e256ed4ebe5301529384bfea703cc7b8e9b7d38595623776901d91a04f3e21b"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-visuals-source.mjs",
+      "bytes": 162225,
+      "sha256": "0584df63294646ae76b41d5fec813a0a8b6bcb66edb4bceeb4bd1d5e1a99b449"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-visuals.mjs",
+      "bytes": 120985,
+      "sha256": "082bdb6e6e078632f3ee55adec7ab0c07155170e149994e37fecb71c0d024a79"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-content.mjs",
+      "bytes": 49574,
+      "sha256": "e9ec95c30121fbd4ec76d4344e7769418e5647344085904c9d1526b5571ef653"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-themes.mjs",
+      "bytes": 22851,
+      "sha256": "afba6fd6914167398e1d3f27ac547ada118b088a9dff9f65b9dc78cbd03a9a1a"
+    }
+  ],
+  "source": {
+    "bytes": 892,
+    "sha256": "5a023e749096c3a2b2d8894882b3b8c2bdd78664a596352f361d4439b048dce9"
+  },
+  "prepared": {
+    "bytes": 1012,
+    "sha256": "008d46ea48c7385599c6ec2f7c407d78ad39932e51fb30034e3e978152a0e4c4"
+  },
+  "pack": {
+    "bytes": 1655,
+    "sha256": "87868709f39dfa022d9ff6d0989a42f1dd18965a93b521f5866b9f09ba6fe7c1"
+  },
+  "legacyPlayer": "/tmp/fpv-reservoir-retaining-preview-r12-v1/player",
+  "scope": "Bounded manual real-loader, native offline preparation, pack/ZIP, Theme ownership and compatibility checks. No WebGL, flight, art, hardware or package admission claim."
+}

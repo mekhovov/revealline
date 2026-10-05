@@ -1,0 +1,55 @@
+{
+  "format": "FPVPostFocusPublication.v1",
+  "focus": {
+    "pr": 1076,
+    "head": "b57a81df65c0f4755b229e117f08467235a64f48",
+    "mergeCommit": "b98205d7642eb6c97e16f3aa811083ef28b0be81",
+    "mergedAt": "2026-10-04T17:33:05Z",
+    "method": "Ordinary protected gh pr merge --auto --merge with exact --match-head-commit; no administrator bypass",
+    "publicLaunch": "Pending marker and actual coordinator launch"
+  },
+  "updates": [
+    {
+      "pr": 1080,
+      "previousHead": "0c7476845103ab563dbf47df3cabf7f0f73b0445",
+      "updatedHead": "844bb8c4fe0ce24435f4a398ad791ee4a293542d",
+      "method": "Ordinary GitHub update-branch with explicit expected head",
+      "changedFiles": 91,
+      "inputCount": 95,
+      "unchangedInputCount": 94,
+      "changedInputs": [
+        {
+          "path": "optional-practice/civilian-fpv/world-app.mjs",
+          "bytes": 261425,
+          "sha256": "82a355a874b6e9d89072f3f351cd42f0fef25f1f2736a108f157d35d083c7748",
+          "change": "Exact already-qualified +28B preserveFocus guard",
+          "expectedInventory": "combined216"
+        }
+      ],
+      "otherFiles": "Documentation, authoring data and existing test/evidence changes outside the admitted original-input set",
+      "freshProtectedChecks": "Pending after the head update; no earlier success is relabeled."
+    },
+    {
+      "pr": 1079,
+      "previousHead": "8c9c1d9bf7d665f033fb6ff7d6cbb1400f28d7ce",
+      "updatedHead": "f35fc0d0ba142382e40ef43e8930c54bf929bf7f",
+      "method": "Ordinary GitHub update-branch with explicit expected head",
+      "changedFiles": 30,
+      "inputCount": 95,
+      "unchangedInputCount": 94,
+      "changedInputs": [
+        {
+          "path": "optional-practice/civilian-fpv/world-app.mjs",
+          "bytes": 260715,
+          "sha256": "5b636afefad57c27a917cb0901aa9725f106e86586222d4270179b7fd892b2f0",
+          "change": "Exact already-qualified +28B preserveFocus guard",
+          "expectedInventory": "focused8cb"
+        }
+      ],
+      "otherFiles": "Documentation, authoring data and existing test/evidence changes outside the admitted original-input set",
+      "freshProtectedChecks": "Pending after the head update; no earlier success is relabeled."
+    }
+  ],
+  "menuAutoMerge": "Enabled on prior8c9 before its ordinary update; the new f35 head snapshot reports null while fresh checks run. No repeated rearming against the controller.",
+  "combinedQualification": "216 remains historical and exact; no runtime edits to it."
+}

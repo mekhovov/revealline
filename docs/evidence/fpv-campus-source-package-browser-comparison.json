@@ -1,0 +1,68 @@
+{
+  "format": "FPVCampusSourcePackageBrowserComparison.v1",
+  "source": {
+    "bytes": 50698,
+    "sha256": "2c22e77d80fa7ce6b412a26842ce6c23eb357d298cbe9cd4c0a16944720169b1",
+    "baseline": "287eec95c81687fb8a6d176f750f7c65a60e1fe3",
+    "candidate": "."
+  },
+  "package": {
+    "bytes": 50745,
+    "sha256": "8823baa82bdc7ad7bdf153ea0139da952086466a63cc1ba0b7698aa9dabeb662",
+    "baseline": "47d2019dced85d80671b2d780da662f50ea11c20",
+    "candidate": "dist/fpv-campus-facade-admitted-player-cce1ab741"
+  },
+  "checks": 136,
+  "imagePairs": 56,
+  "comparisons": [
+    {
+      "field": "checks",
+      "exact": true,
+      "sourceSha256": "eb07892bfb356479a653129e5fba840dd25536068dedb9eb0e7aa0870a8f1d2b",
+      "packageSha256": "eb07892bfb356479a653129e5fba840dd25536068dedb9eb0e7aa0870a8f1d2b"
+    },
+    {
+      "field": "samples",
+      "exact": true,
+      "sourceSha256": "7b3188d04caa6c58ebf91c220ea0453bb1a8879b6a40524e538f8806c0f92158",
+      "packageSha256": "7b3188d04caa6c58ebf91c220ea0453bb1a8879b6a40524e538f8806c0f92158"
+    },
+    {
+      "field": "resourceCycles",
+      "exact": true,
+      "sourceSha256": "6dd97ab01a6011dbabc58370c1821b605963506ba2681610a52e3c5075038939",
+      "packageSha256": "6dd97ab01a6011dbabc58370c1821b605963506ba2681610a52e3c5075038939"
+    },
+    {
+      "field": "finalResources",
+      "exact": true,
+      "sourceSha256": "cb8c135340c4ba223b0efce4edc1912927a69c5ee995d40e2d871461bdb604d7",
+      "packageSha256": "cb8c135340c4ba223b0efce4edc1912927a69c5ee995d40e2d871461bdb604d7"
+    },
+    {
+      "field": "controlDiagnostics",
+      "exact": true,
+      "sourceSha256": "e00ad03ab450995dbb1be2e8a853008734a0c300c82326b7201afec3523a2e95",
+      "packageSha256": "e00ad03ab450995dbb1be2e8a853008734a0c300c82326b7201afec3523a2e95"
+    },
+    {
+      "field": "contextLosses",
+      "exact": true,
+      "sourceSha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "packageSha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    {
+      "field": "limitations",
+      "exact": true,
+      "sourceSha256": "45442a6612825d581edffc116a5ddf4d1c212b0a0ca3ded97602402ee76ee123",
+      "packageSha256": "45442a6612825d581edffc116a5ddf4d1c212b0a0ca3ded97602402ee76ee123"
+    }
+  ],
+  "metadataOnlyDifferences": [
+    "createdAt",
+    "baseline",
+    "candidate",
+    "sourceFiles"
+  ],
+  "explanation": "New timestamp and admitted-player path, incoming Quarry baseline/runtime hashes, and normal packaged localization catalogue pruning. All observed checks, raster hashes/counts, draws/triangles, semantic controls, resource cycles and final disposal records are JSON.stringify-identical."
+}

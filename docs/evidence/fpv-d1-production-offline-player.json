@@ -1,0 +1,90 @@
+{
+  "format": "FPVD1AdmittedPlayerOfflineObservation.v1",
+  "observedDate": "2026-10-03",
+  "evidenceKind": "Structured record of root browser operator observations; screenshots retained separately. Not an automated browser trace.",
+  "candidate": "e572026ba357f3194bf47e7137a0817cacb1a640",
+  "tree": "6a90e48f99151041d899b4b8d6b2de5fcffd8b2f",
+  "distribution": {
+    "bytes": 15547680,
+    "sha256": "906a1e319a2ef17d8852fe18fe1c16a1bf620ecaeabe64e52fb12d3706744370",
+    "entries": 102,
+    "uncompressedBytes": 15531574
+  },
+  "entryURL": "http://127.0.0.1:8852/player/optional-practice/fpv-worlds/index.html",
+  "scope": "Actual admitted player with its own localhost origin unavailable. No airplane-mode or device-wide network isolation was performed.",
+  "preparation": {
+    "action": "Prepare simulator offline",
+    "reportedUI": "Offline runtime preparation completed"
+  },
+  "originOutage": {
+    "stoppedFixturePID": 91096,
+    "firstProbe": {
+      "tool": "curl",
+      "port": 8852,
+      "exitCode": 7,
+      "result": "Connection refused"
+    },
+    "reloadedWithOriginStopped": true,
+    "catalogueAndUIPreserved": true,
+    "secondProbeBeforeRestart": {
+      "tool": "curl",
+      "port": 8852,
+      "exitCode": 7,
+      "result": "Connection refused"
+    }
+  },
+  "playerObservations": [
+    {
+      "world": "Woodland",
+      "challengeLabel": "Clearing check-in",
+      "rendered": true,
+      "deliberatelyArmed": true,
+      "initialObservedSeconds": 0.3,
+      "laterObservedSeconds": 18.9,
+      "explicitlyPaused": true,
+      "originUnavailable": true,
+      "screenshotHUDSeconds": 18.8
+    },
+    {
+      "world": "Container Yard",
+      "challengeLabel": "Yard check-in",
+      "selectedWhileOriginUnavailable": true,
+      "rendered": true,
+      "deliberatelyArmed": true,
+      "observedSeconds": 0.2,
+      "explicitlyPaused": true,
+      "originUnavailable": true,
+      "screenshotHUDSeconds": 0.3
+    }
+  ],
+  "console": {
+    "capturedErrors": [],
+    "capturedWarnings": [],
+    "source": "Browser operator report"
+  },
+  "restoration": {
+    "sameRootRestarted": true,
+    "root": "/tmp/fpv-d1-production-package-e572026ba",
+    "port": 8852,
+    "execSession": 16019
+  },
+  "screenshots": [
+    {
+      "file": "fpv-d1-production-offline-woodland-player.png",
+      "bytes": 60376,
+      "sha256": "d053bbf0a71e8141d7b753e9c2509b63f25fa2946c8126ff4918eaf76a814bdd"
+    },
+    {
+      "file": "fpv-d1-production-offline-yard-player.png",
+      "bytes": 58560,
+      "sha256": "008cfb656a191cf097c39190ecf6f4ec6639795c737b0b27b9d0875bc91988cc"
+    }
+  ],
+  "passed": true,
+  "limits": [
+    "Reported duration checkpoints and screenshot HUDs were captured at different moments; screenshots show 18.8s and 0.3s.",
+    "This exercises cached catalogue reload and two rendered, armed, paused player sessions, not challenge completion.",
+    "Local-origin failure is not airplane-mode, physical-device, sustained-FPS, general connectivity or public-deployment qualification.",
+    "The historical candidate is explicit; later main/runtime changes are not qualified by this receipt."
+  ]
+}

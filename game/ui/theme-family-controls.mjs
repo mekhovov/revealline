@@ -1,6 +1,7 @@
-import { t, localizedText, localizedAttribute } from '../i18n/index.mjs';
+import { t, localizedText, localizedAttribute, getLocale, onLocaleChange } from '../i18n/index.mjs';
 import { BUILTIN_THEME_FAMILIES, resolvePresentation } from '../presentation/theme-system.mjs';
 import { mountThemeMaterialPreview } from './theme-material-preview.mjs';
+import { mountEnemyAppearanceControls } from './enemy-appearance-controls.mjs';
 
 /** One immediate appearance choice; the host owns atomic loads and flight boundaries. */
 export function attachThemeFamilyControls({
@@ -23,6 +24,14 @@ export function attachThemeFamilyControls({
   const heading = doc.createElement('h3');
   text(heading, 'appearance');
   group.append(heading);
+  const enemyAppearance = mountEnemyAppearanceControls({
+    document: doc,
+    container: group,
+    locale: getLocale,
+    applyMilitary: () => host.applyComplete('military-field'),
+    applyAuthored: () => host.set({ arcadeArt: 'authored' }),
+  });
+  release.push(enemyAppearance.dispose, onLocaleChange(enemyAppearance.refresh));
   const row = (key, parent = group) => {
     const label = doc.createElement('label'),
       title = doc.createElement('span');

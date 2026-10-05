@@ -4,15 +4,20 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <title>Private rooms · FPV / LINE</title>
-    <script src="../presentation/theme-bootstrap.mjs" data-theme-density="game"></script>
-    <link rel="stylesheet" href="../presentation/industrial-workshop.css" />
+    <script src="../presentation/theme-bootstrap.mjs" data-theme-density="player"></script>
+    <link
+      rel="stylesheet"
+      href="../presentation/industrial-workshop.css"
+      data-industrial-workshop
+    />
     <link rel="stylesheet" href="../ui/field-kit-fonts.css" />
+    <link rel="stylesheet" href="../ui/mode-play-shell.css" />
     <link rel="stylesheet" href="rooms.css" />
     <script type="module" src="rooms.mjs"></script>
   </head>
   <body>
-    <main>
-      <header>
+    <main id="room-source">
+      <header id="legacy-header">
         <a href="../">FPV / LINE</a>
         <h1 id="title">Private rooms</h1>
         <a href="../snake/">Snake</a>
@@ -43,6 +48,10 @@
             <option value="fast">Fast</option>
           </select></label
         >
+        <p id="selection-source" class="selection-source" role="status"></p>
+        <label id="share-selection" hidden
+          ><span id="share-label">Share this mission selection</span><input id="share" readonly
+        /></label>
         <button id="create" disabled>Create private room</button
         ><button id="public" hidden>Find an unranked player</button>
       </section>
@@ -51,7 +60,19 @@
           ><span id="invite-label">Invite your friend</span><input id="invite" readonly
         /></label>
         <p id="seats"></p>
-        <p id="identity" class="identity"></p>
+        <div class="accepted-content">
+          <h2 id="accepted-title">Accepted mission</h2>
+          <p id="accepted-mission"></p>
+          <p id="accepted-source"></p>
+          <details>
+            <summary id="identity-label">Exact recipe and source</summary>
+            <pre id="identity" class="identity"></pre>
+          </details>
+          <p id="result-scope">
+            Room results and replay exports are separate from local records and official chapter
+            rewards.
+          </p>
+        </div>
         <div class="actions">
           <button id="ready">Ready / Resume</button><button id="pause">Pause both</button
           ><button id="rematch" hidden>Rematch</button
@@ -59,19 +80,99 @@
           ><button id="leave">Leave room</button>
         </div>
       </section>
-      <div id="boards"></div>
-      <p id="result" role="status"></p>
-      <div id="controls" hidden>
-        <button data-direction="up" aria-label="Up">↑</button
-        ><button data-direction="left" aria-label="Left">←</button
-        ><button data-direction="down" aria-label="Down">↓</button
-        ><button data-direction="right" aria-label="Right">→</button
-        ><button id="support">Support / Boost</button>
-      </div>
-      <p id="keys">
-        Arrow keys or WASD steer your own drone. Space pauses both boards. A lost connection pauses
-        play; reconnect within 60 seconds, then both choose Ready.
-      </p>
+      <section id="room-play">
+        <p id="room-live-status" role="status"></p>
+        <div id="boards"></div>
+        <div id="room-reaction-caption"></div>
+        <p id="result" role="status"></p>
+        <div id="controls" hidden>
+          <div class="direction-controls">
+            <button data-move="up" aria-label="Up">↑</button
+            ><button data-move="left" aria-label="Left">←</button
+            ><button data-move="down" aria-label="Down">↓</button
+            ><button data-move="right" aria-label="Right">→</button>
+          </div>
+          <div class="room-equipment">
+            <button id="boost-button">Boost</button><button id="support">Support</button
+            ><button id="action-button">Ability</button><button id="pickup-button">Supply</button>
+          </div>
+        </div>
+      </section>
+      <section id="room-help">
+        <p id="keys">
+          Arrow keys or WASD steer your own drone. Space pauses both boards. A lost connection
+          pauses play; reconnect within 60 seconds, then both choose Ready.
+        </p>
+      </section>
+      <section id="room-settings">
+        <h2 id="room-sound-title">Sound</h2>
+        <label
+          ><span id="master-label">Master volume</span
+          ><input id="room-master" type="range" min="0" max="1" step="0.05"
+        /></label>
+        <label
+          ><span id="effects-label">Effects volume</span
+          ><input id="room-effects" type="range" min="0" max="1" step="0.05" value="0.7"
+        /></label>
+        <div id="room-reaction-settings"></div>
+        <section id="room-display">
+          <label
+            ><input id="room-reduced" type="checkbox" /><span id="reduced-label"
+              >Reduced effects</span
+            ></label
+          >
+          <label
+            ><input id="room-enemy-remains" type="checkbox" /><span id="remains-label"
+              >Show enemy remains</span
+            ></label
+          >
+          <label
+            ><span id="text-face-label">Text style</span
+            ><select data-tool-text-face>
+              <option value="pixel">Theme font</option>
+              <option value="plain">Plain</option>
+            </select></label
+          >
+          <label
+            ><span id="text-size-label">Text size</span
+            ><select data-tool-text-size>
+              <option value="standard">Standard</option>
+              <option value="large">Large</option>
+            </select></label
+          >
+          <label
+            ><span id="room-board-label">Snake board</span
+            ><select id="room-board">
+              <option value="modern">Modern</option>
+              <option value="retro">Retro Field</option>
+            </select></label
+          >
+          <label
+            ><span id="room-tail-label">Snake trail</span
+            ><select id="room-tail">
+              <option value="cable">Cable</option>
+              <option value="signal">Signal</option>
+            </select></label
+          >
+          <label
+            ><span id="room-palette-label">Palette</span
+            ><select id="room-menu-palette">
+              <option value="auto">Auto</option>
+              <option value="ukrainian">Ukrainian</option>
+            </select></label
+          >
+          <label
+            ><span id="room-ornaments-label">Ornaments</span
+            ><select id="room-menu-ornaments">
+              <option value="off">Off</option>
+              <option value="subtle">Subtle</option>
+              <option value="rich">Rich</option>
+            </select></label
+          >
+          <p id="room-menu-style-status"></p>
+        </section>
+      </section>
+      <section id="room-results"></section>
       <p id="qualification">
         Private rooms preview · server outcomes stay separate from local chapter rewards. Public
         matchmaking requires a qualified service.

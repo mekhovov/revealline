@@ -1,0 +1,50 @@
+{
+  "sourceRevision": "4f364314378400b22792074d7d0bb6aa292eb044",
+  "runtimeRevision": "e76c07374",
+  "runtimeSha256": "3e2d55d51f4267c7e89c9007296f23211f38ec0f481b8eca289878d34deab28b",
+  "verification": {
+    "admission": {
+      "format": "revealline-optional-package-admission.v1",
+      "packages": [
+        {
+          "bytes": 679266,
+          "files": 48,
+          "id": "civilian-flight",
+          "revision": "3eb33c839f8e8f37908e6ed060ee9d0ef817610e4820004ee1739c1ff0aa1768"
+        },
+        {
+          "bytes": 4388288,
+          "files": 69,
+          "id": "civilian-fpv",
+          "revision": "b213754e271255c14b50a2406c56d9c6fa577cdbfaee8c975f9e0d95a0727b00"
+        },
+        {
+          "bytes": 15543363,
+          "files": 102,
+          "id": "fpv-worlds",
+          "revision": "6db23d2dac382cf7f1ec125fefa9f5c424eaea7eb73dcb286595cc72817a5c76"
+        }
+      ],
+      "publicEligible": false,
+      "sourceRevision": "4f364314378400b22792074d7d0bb6aa292eb044",
+      "sourceTree": "1225546726fc886e3bd3996fc9b156ed9316e8e7",
+      "version": "v0.142.4",
+      "zipMembersVerified": true
+    },
+    "committedInputsVerified": true,
+    "envelopeSha256": "5bc57ae24e7123a4f48b0e67e33c96b363746edbe7f51cdbddbcb833e670761a",
+    "format": "revealline-optional-package-candidate-verification.v1",
+    "note": "Artifact admission does not qualify installed identity, device behavior or human learning. Review gates remain pending.",
+    "publicEligible": false,
+    "reproducibleBuilds": 2,
+    "sourceRevision": "4f364314378400b22792074d7d0bb6aa292eb044",
+    "sourceTree": "1225546726fc886e3bd3996fc9b156ed9316e8e7",
+    "version": "v0.142.4"
+  },
+  "originalInputCount": 95,
+  "originalInputBytes": 16749525,
+  "sourceHeadroom": 27691,
+  "fullValidate": "passed",
+  "manualChecks": 48,
+  "existingChecks": 30
+}

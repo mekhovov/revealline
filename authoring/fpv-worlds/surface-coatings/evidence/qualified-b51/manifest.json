@@ -1,0 +1,267 @@
+{
+  "format": "FPVCoatingQualificationEvidence.v1",
+  "sourceRevision": "b51e17a83f2d3aad99f7076c3e0ae84f1122aeda",
+  "sourceTree": "278db2d37d58d3c1c7d64c332aabc91518162cab",
+  "parent": "63fbe26be3ecde48a13e9c0ef8f3c7fff2fa8956",
+  "files": [
+    {
+      "path": "optional-packages.json.gz",
+      "bytes": 1078,
+      "sha256": "68c58e3fffb4a046b39252bbe2c26cdd5be6df02eb482b2a3b2a905c70c77b8a",
+      "uncompressedBytes": 2633,
+      "uncompressedSHA256": "84493d8136e5d6e175f6d07f2687917073260e6ea0521cd52cd79d1d7830d2a7"
+    },
+    {
+      "path": "optional-package-review.json.gz",
+      "bytes": 458,
+      "sha256": "33bc7814f7bc4c9aab9b46303dc6d081bb5ecd09060ddd05c1defae36197b650",
+      "uncompressedBytes": 2838,
+      "uncompressedSHA256": "d1ae7251b7895e6526b51ab2f1ca01c98a09067d3a7fb96a08f9fcb77ea0d323"
+    },
+    {
+      "path": "optional-candidate-verification.json.gz",
+      "bytes": 610,
+      "sha256": "c20cd18a0345577afaace0a508577d137a73e111408202bc1777e736cf6deedb",
+      "uncompressedBytes": 1142,
+      "uncompressedSHA256": "c7c32eb5a8ca7aca22c8bb2cb4112dbfb0727889fa3ef944bb758f21d0165756"
+    },
+    {
+      "path": "optional-checksums.json.gz",
+      "bytes": 919,
+      "sha256": "8225481b1910063f992b909d017b388ccbae26464f67179b104051420ac7c873",
+      "uncompressedBytes": 2136,
+      "uncompressedSHA256": "4be7620b41f571d058fd8164a2b1911c18c3438dcd092129dd69b40f8f776d1d"
+    },
+    {
+      "path": "manifest-optional-civilian-flight.json.gz",
+      "bytes": 2859,
+      "sha256": "9b8a636317ce3c9d89e7b787c12a12ba0bb95c10fc5eb90e9a5939a8cf8d68fe",
+      "uncompressedBytes": 8847,
+      "uncompressedSHA256": "0773c7b165cc51a3244047d5d05a5ed7a63a09236e1281484b65cc99608c9812"
+    },
+    {
+      "path": "source-inventory-optional-civilian-flight.json.gz",
+      "bytes": 3451,
+      "sha256": "2e98b6437b4accbc5b14df19382735d81bfa07c3f9466c5c9ef9b4ce680d4748",
+      "uncompressedBytes": 14052,
+      "uncompressedSHA256": "7d9d6db8e58b562089b3ed6df90d59c4a0445f4442cbff57afca782038843203"
+    },
+    {
+      "path": "manifest-optional-civilian-fpv.json.gz",
+      "bytes": 4013,
+      "sha256": "b0147f762c3d8c19b8499ddfdb6431fd9ad80eb97bceee2ece8d58dce861024c",
+      "uncompressedBytes": 12570,
+      "uncompressedSHA256": "bff67c067022bb4cac5cd1f83a6536e0f6d6caef62f3b29a512fb340faa4474e"
+    },
+    {
+      "path": "source-inventory-optional-civilian-fpv.json.gz",
+      "bytes": 4998,
+      "sha256": "c21dca2d90221e9e86329b0d3203d863273937cc2b8c5abd1bc3f716a8b3a500",
+      "uncompressedBytes": 21034,
+      "uncompressedSHA256": "d86522bf794bc9c1814585476b2d50dd254c34f7972797d4b737d7ef6be97343"
+    },
+    {
+      "path": "manifest-optional-fpv-worlds.json.gz",
+      "bytes": 5871,
+      "sha256": "de3f529739e8341faafba179bb9e47ec97cb81639d35ddb5a7beab7a7b340d64",
+      "uncompressedBytes": 18746,
+      "uncompressedSHA256": "d76bd74a48740042108b918bb4023c2de960b9cbdf0805f821e8068049d0a03d"
+    },
+    {
+      "path": "source-inventory-optional-fpv-worlds.json.gz",
+      "bytes": 7147,
+      "sha256": "77a0b7fddaf289a7e489f8b8ee130ebe95419f75dc9e789f1b73dadf28fee092",
+      "uncompressedBytes": 32166,
+      "uncompressedSHA256": "ddb9c88e3447c82d54881a1e5ad9e686223e20971acf1e7133627f8a68ea19b6"
+    },
+    {
+      "path": "validate.log.gz",
+      "bytes": 1535,
+      "sha256": "f35b7feebbbf5d9e3fbebf4c9746e903e7c96f9e5708c72adf6c5b4409ee9735",
+      "uncompressedBytes": 3676,
+      "uncompressedSHA256": "6420ef5e003c05e612f41b0e93ba658818b083b88795f50ad5b2494333c4e498"
+    },
+    {
+      "path": "admission.log.gz",
+      "bytes": 284,
+      "sha256": "368e152c7f5b4ed44895926e021df60eb4d5f557918e6e885b6070d7eeea7006",
+      "uncompressedBytes": 409,
+      "uncompressedSHA256": "20cb932a550d550dae3e99d9f456acf24260d08127e5a88912b864bdbf1f4848"
+    },
+    {
+      "path": "existing-checks-initial.log.gz",
+      "bytes": 2195,
+      "sha256": "35f94b6178ff87a10ff673d0fe0b9850214798ee3fbfb105c34602a2c8a94ff2",
+      "uncompressedBytes": 8049,
+      "uncompressedSHA256": "934ddaaf609faaad7784b6a8bcb6ec506a55e7dc77e1dbb5e22eabb6f92380e5"
+    },
+    {
+      "path": "texture-checks-retry.log.gz",
+      "bytes": 474,
+      "sha256": "4d0d9aa8c198f8d589d934450cbbb3b516c53b074d0d58990bf8df38c3596509",
+      "uncompressedBytes": 1279,
+      "uncompressedSHA256": "d8d2ce09b1c2ca84da079bfa06a9117faa9f7d50806ad93c662ef765d22002b1"
+    },
+    {
+      "path": "fixture-materialization.json.gz",
+      "bytes": 265,
+      "sha256": "0139fff252b79f1425a8d8822e60c5b6a734b26332324cdce288a382c5ae0306",
+      "uncompressedBytes": 608,
+      "uncompressedSHA256": "d980033b8ccd607b3212b85d721941dded71a47dede6f70926de954ae4f288c8"
+    },
+    {
+      "path": "validation-materialization.json.gz",
+      "bytes": 237,
+      "sha256": "40d8e16155a0d4a3d36243a3ac8cce37f4889349f79d55b7c49b75fcbad98e17",
+      "uncompressedBytes": 318,
+      "uncompressedSHA256": "de01ff1bcf32037068aba4ad2f4f5010cd0fb19baed37800567d2ed9e81e8343"
+    },
+    {
+      "path": "optional-materialization.json.gz",
+      "bytes": 225,
+      "sha256": "f4434aa579520e49d4dbe9d8d1f81b71df3f487d9324c827eeee5ab2652e389f",
+      "uncompressedBytes": 302,
+      "uncompressedSHA256": "2d16c09d574d626e0bfae8eb635f7287306e48861c197295a118761dea830ec1"
+    },
+    {
+      "path": "import-closure.json.gz",
+      "bytes": 1127,
+      "sha256": "bdc643f1d8aad8cc88caa27cc69bdf242c8d106a5e0c5ff41f9693b64274e3fc",
+      "uncompressedBytes": 7893,
+      "uncompressedSHA256": "429aa90c11bfff36368173656febe15c2b23ea8e3b8ccbabb38bb3c7229ef3ff"
+    },
+    {
+      "path": "admitted-player.json.gz",
+      "bytes": 7352,
+      "sha256": "e220bfe9824015f121f36c9d8a0b416243d2a8bc98ca2257bd10c050f8a625f9",
+      "uncompressedBytes": 42956,
+      "uncompressedSHA256": "605481e2dc53ba50d1de65ba0c67ab826364238f8be1282457ecc52a10afe75d"
+    },
+    {
+      "path": "native-static-fixture.json.gz",
+      "bytes": 7891,
+      "sha256": "7d33dc18247f3d840bbbda6ecf436a9f9ecbdea05a634ee606faf13072c8f7aa",
+      "uncompressedBytes": 34548,
+      "uncompressedSHA256": "6da99a8ec25fe9e2abc02ae53922ee9efd5beeef6991b41ad4e102d76c9bf89d"
+    },
+    {
+      "path": "independent-review.md.gz",
+      "bytes": 2761,
+      "sha256": "d3e21ad3f7cd150d06252aa158289de703678f2c2e388a910c96bea2d2d15fa9",
+      "uncompressedBytes": 5843,
+      "uncompressedSHA256": "2ba0afe39b7e8ee45ffe931efda60c36f4f7d6c1a81fa1c7a3bc260559005c64"
+    },
+    {
+      "path": "admitted-static.json.gz",
+      "bytes": 1993,
+      "sha256": "4cce74fa9bcd01bb10efc474db3c6f045f32abde1d51887f201910b691d55f29",
+      "uncompressedBytes": 20241,
+      "uncompressedSHA256": "0572dd5e6877a3bf16019e5f4a165d242b45c7d6525cf2f3b2ca89a9a60270b9"
+    },
+    {
+      "path": "appearance-comparison.json.gz",
+      "bytes": 601,
+      "sha256": "914e436c174cd0cdbada1b90d8a6ca1ca9ec38229db06b6872821e7b8fe3390f",
+      "uncompressedBytes": 1361,
+      "uncompressedSHA256": "0cbb4a03cd871200043e586bc4fbe21a6a04551b95da7b01ea55397ee21d6305"
+    },
+    {
+      "path": "admitted-overview.png",
+      "bytes": 99467,
+      "sha256": "6d27964f659f59d3b6c03c0b3aa9f3d28706a05dbc14b968e799814693c9dde5"
+    },
+    {
+      "path": "admitted-grazing.png",
+      "bytes": 87552,
+      "sha256": "0c9ed59d0ea6790f4251f7c70e7f833478589545e3cc2c955bcf1bf06e65bf95"
+    },
+    {
+      "path": "admitted-low.png",
+      "bytes": 88590,
+      "sha256": "ce428cc372fdc94d0340220a6d68b5e3722cbd956a78f84e4570191344ac98a3"
+    },
+    {
+      "path": "admitted-high.png",
+      "bytes": 102379,
+      "sha256": "16e4d5faf4b97b8b5d7cc123303d9437c1f75863f6eed5b24de76930f885c862"
+    },
+    {
+      "path": "admitted-landing.png",
+      "bytes": 128955,
+      "sha256": "c084d3dac7298dd53d7514d727c315e448d2300705a8a473073cc3f8b7820a41"
+    },
+    {
+      "path": "native-installed.txt.gz",
+      "bytes": 980,
+      "sha256": "bc0eb79467254c3fae7b372a62dccf792b1399fcb5df3a4b14784d0cf2b9329b",
+      "uncompressedBytes": 2365,
+      "uncompressedSHA256": "8c55d20e83a07a643585d6d214995157bf3d0023ee4902686d225bcb7328ef40"
+    },
+    {
+      "path": "native-installed.png",
+      "bytes": 105335,
+      "sha256": "5a7d60139f38b7a560b438158ff18a197734ad56323e5e7e943ac13ffaf37fe3"
+    },
+    {
+      "path": "native-flight.txt.gz",
+      "bytes": 756,
+      "sha256": "95bfecd098c7f4fc8bd0a14644341efb2bb9bc28a98f5597d43b99af6f1ba3ca",
+      "uncompressedBytes": 1704,
+      "uncompressedSHA256": "38b79eac70219f20df9838be73235804cdb5768398bb7aa8dd16553d4c6a0eb0"
+    },
+    {
+      "path": "native-flight.png",
+      "bytes": 62606,
+      "sha256": "786a5f520e3812562e2ab38cd5927a91faf5c38eed692f27fa40c10f2795a8b3"
+    },
+    {
+      "path": "native-ready-scene.png",
+      "bytes": 73756,
+      "sha256": "8c30f9129cffebdf7624c541a1e0b8cb7a7a4d867a35fdf6bd1789807f919211"
+    },
+    {
+      "path": "native-resume-pause.txt.gz",
+      "bytes": 756,
+      "sha256": "79285b2e07d6eb8a14f2d5e6e8adb1f02b35499f152f689fbf6fdfc6615175e6",
+      "uncompressedBytes": 1704,
+      "uncompressedSHA256": "dc0213ac9a6078ad51a37b9571c15064671b3ac9f6b26d8f65c62fa5554da240"
+    }
+  ],
+  "verification": {
+    "fullNode22Validation": "passed",
+    "manualCPUChecks": 87,
+    "existingContentAndThemeChecks": 29,
+    "existingTextureChecks": 4,
+    "initialTextureFailure": "Missing two sparse authoring fixture files; exact Git-hash APFS copies restored, then affected file alone passed. Both logs retained.",
+    "packages": 3,
+    "identicalBuilds": 2,
+    "worldsMembers": 102,
+    "worldsOriginalInputs": 95,
+    "worldsOriginalInputBytes": 16739037,
+    "worldsSourceReserve": 38179,
+    "actualAdmittedStaticObservations": 9,
+    "staticErrors": [],
+    "resourceDisposal": true,
+    "matchedHistoricalAppearancePixels": {
+      "views": 2,
+      "exact": 2
+    },
+    "normalNativePlayer": {
+      "packIdentity": "98dc5237b8e809029a0c08f414f36689c7a58313f911a84971d3ed0429477714",
+      "installedCourses": 8,
+      "course": "Rock terrace climb",
+      "observed": [
+        "Library import accepted",
+        "Fly / Ready",
+        "deliberate Arm / Flight active / Pause",
+        "Continue / Flight active / Pause"
+      ],
+      "completionClaim": false,
+      "fileChooserNote": "Initial hidden-input targeting timed out; visible native chooser succeeded. This was tool interaction, not an application failure."
+    }
+  },
+  "pending": [
+    "protected publication"
+  ],
+  "scope": "Runtime capability only; Reservoir assets/proofs and complete-world art are separate."
+}

@@ -1,0 +1,565 @@
+{
+  "format": "FPVSolarSourcePackageParity.v1",
+  "candidate": "6141a599a0864ee43c223bca53fdc29f35b5d981",
+  "baseline": "bf167a4fdfc81d7327fd94518da65ac82d64eb7e",
+  "exactFields": [
+    "checks",
+    "samples",
+    "resourceCycles",
+    "contextLosses",
+    "limitations",
+    "controlDiagnostics",
+    "finalResources"
+  ],
+  "changedFiles": {
+    "before": [
+      "optional-practice/civilian-fpv/renderer.mjs"
+    ],
+    "after": [
+      "optional-practice/civilian-fpv/world-visuals.mjs",
+      "game/i18n/catalogs.mjs",
+      "optional-practice/civilian-fpv/renderer.mjs"
+    ]
+  },
+  "inputs": {
+    "fpv-solar-source-browser-v2.json": {
+      "bytes": 49067,
+      "sha256": "193a453b6815e6806b3c8e98e07b98878ca2671d918e1dce790857e1d75b337f"
+    },
+    "fpv-solar-package-browser.json": {
+      "bytes": 49112,
+      "sha256": "f982021d06f9141f4f7cb55546486d10a58bb2ef483bbb6776642e624fae9574"
+    },
+    "fpv-solar-panel-source-fixture.json": {
+      "bytes": 8332,
+      "sha256": "a61fe8671e16302c48e38515ed768e2386f9da58bddf5425304522a430c50e1d"
+    },
+    "fpv-solar-package-fixture.json": {
+      "bytes": 8377,
+      "sha256": "7553a8b5cc108f4495faeebac5c0a9c9457615bb379579380fdaa1fd6a4b4265"
+    },
+    "fpv-solar-admitted-stage.json": {
+      "bytes": 46383,
+      "sha256": "d5fea895e5e8cb91a38bb504d7ba7584b34180599a3abcd4c420ece973084216"
+    }
+  },
+  "checks": [
+    {
+      "name": "checks: all JSON records exact",
+      "passed": true
+    },
+    {
+      "name": "samples: all JSON records exact",
+      "passed": true
+    },
+    {
+      "name": "resourceCycles: all JSON records exact",
+      "passed": true
+    },
+    {
+      "name": "contextLosses: all JSON records exact",
+      "passed": true
+    },
+    {
+      "name": "limitations: all JSON records exact",
+      "passed": true
+    },
+    {
+      "name": "controlDiagnostics: all JSON records exact",
+      "passed": true
+    },
+    {
+      "name": "finalResources: all JSON records exact",
+      "passed": true
+    },
+    {
+      "name": "both matrices complete136checks56pairs3cycles",
+      "passed": true
+    },
+    {
+      "name": "receipts bind their actual frozen module inventories",
+      "passed": true
+    },
+    {
+      "name": "original and final harness hashes match their manifests",
+      "passed": true
+    },
+    {
+      "name": "harness change is only the inaccurate distant preview label",
+      "passed": true
+    },
+    {
+      "name": "adventure-solar-farm-01/low: complete canonical CPU snapshot including atlas remains exact",
+      "passed": true
+    },
+    {
+      "name": "adventure-solar-farm-01/balanced: complete canonical CPU snapshot including atlas remains exact",
+      "passed": true
+    },
+    {
+      "name": "adventure-solar-farm-01/high: complete canonical CPU snapshot including atlas remains exact",
+      "passed": true
+    },
+    {
+      "name": "adventure-solar-farm-02/low: complete canonical CPU snapshot including atlas remains exact",
+      "passed": true
+    },
+    {
+      "name": "adventure-solar-farm-02/balanced: complete canonical CPU snapshot including atlas remains exact",
+      "passed": true
+    },
+    {
+      "name": "adventure-solar-farm-02/high: complete canonical CPU snapshot including atlas remains exact",
+      "passed": true
+    },
+    {
+      "name": "adventure-solar-farm-03/low: complete canonical CPU snapshot including atlas remains exact",
+      "passed": true
+    },
+    {
+      "name": "adventure-solar-farm-03/balanced: complete canonical CPU snapshot including atlas remains exact",
+      "passed": true
+    },
+    {
+      "name": "adventure-solar-farm-03/high: complete canonical CPU snapshot including atlas remains exact",
+      "passed": true
+    },
+    {
+      "name": "adventure-solar-farm-04/low: complete canonical CPU snapshot including atlas remains exact",
+      "passed": true
+    },
+    {
+      "name": "adventure-solar-farm-04/balanced: complete canonical CPU snapshot including atlas remains exact",
+      "passed": true
+    },
+    {
+      "name": "adventure-solar-farm-04/high: complete canonical CPU snapshot including atlas remains exact",
+      "passed": true
+    },
+    {
+      "name": "adventure-solar-farm-05/low: complete canonical CPU snapshot including atlas remains exact",
+      "passed": true
+    },
+    {
+      "name": "adventure-solar-farm-05/balanced: complete canonical CPU snapshot including atlas remains exact",
+      "passed": true
+    },
+    {
+      "name": "adventure-solar-farm-05/high: complete canonical CPU snapshot including atlas remains exact",
+      "passed": true
+    },
+    {
+      "name": "final CPU includes negative full-profile guard checks",
+      "passed": true
+    },
+    {
+      "name": "after fixture exact admitted member: optional-practice/civilian-fpv/world-visuals.mjs",
+      "passed": true
+    },
+    {
+      "name": "after fixture exact admitted member: optional-practice/civilian-fpv/vendor/three.module.js",
+      "passed": true
+    },
+    {
+      "name": "after fixture exact admitted member: optional-practice/civilian-fpv/vendor/three.core.js",
+      "passed": true
+    },
+    {
+      "name": "after fixture exact admitted member: optional-practice/civilian-fpv/world-themes.mjs",
+      "passed": true
+    },
+    {
+      "name": "after fixture exact admitted member: game/data-json.mjs",
+      "passed": true
+    },
+    {
+      "name": "after fixture exact admitted member: game/i18n/index.mjs",
+      "passed": true
+    },
+    {
+      "name": "after fixture exact admitted member: game/vendor/i18next-26.4.2.min.js",
+      "passed": true
+    },
+    {
+      "name": "after fixture exact admitted member: game/i18n/catalogs.mjs",
+      "passed": true
+    },
+    {
+      "name": "after fixture exact admitted member: game/i18n/bootstrap.mjs",
+      "passed": true
+    },
+    {
+      "name": "after fixture exact admitted member: game/presentation/theme-system.mjs",
+      "passed": true
+    },
+    {
+      "name": "after fixture exact admitted member: optional-practice/civilian-fpv/world-model.mjs",
+      "passed": true
+    },
+    {
+      "name": "after fixture exact admitted member: optional-practice/civilian-fpv/radio-profile.mjs",
+      "passed": true
+    },
+    {
+      "name": "after fixture exact admitted member: optional-practice/civilian-fpv/math.mjs",
+      "passed": true
+    },
+    {
+      "name": "after fixture exact admitted member: optional-practice/civilian-fpv/rotation-table.mjs",
+      "passed": true
+    },
+    {
+      "name": "after fixture exact admitted member: optional-practice/civilian-fpv/model.mjs",
+      "passed": true
+    },
+    {
+      "name": "after fixture exact admitted member: optional-practice/civilian-fpv/flight-sectors.mjs",
+      "passed": true
+    },
+    {
+      "name": "after fixture exact admitted member: optional-practice/civilian-fpv/snake-hunt.mjs",
+      "passed": true
+    },
+    {
+      "name": "after fixture exact admitted member: optional-practice/civilian-fpv/world-collision.mjs",
+      "passed": true
+    },
+    {
+      "name": "after fixture exact admitted member: optional-practice/civilian-fpv/vendor/rapier/rapier.mjs",
+      "passed": true
+    },
+    {
+      "name": "after fixture exact admitted member: optional-practice/civilian-fpv/world-catalogue.mjs",
+      "passed": true
+    },
+    {
+      "name": "after fixture exact admitted member: optional-practice/civilian-fpv/catalogue.mjs",
+      "passed": true
+    },
+    {
+      "name": "after fixture exact admitted member: optional-practice/civilian-fpv/snake-hunt-catalogue.mjs",
+      "passed": true
+    },
+    {
+      "name": "after fixture exact admitted member: optional-practice/civilian-fpv/expressive-hunt-courses.mjs",
+      "passed": true
+    },
+    {
+      "name": "after fixture exact admitted member: optional-practice/civilian-fpv/world-assets.mjs",
+      "passed": true
+    },
+    {
+      "name": "after fixture exact admitted member: optional-practice/civilian-fpv/renderer.mjs",
+      "passed": true
+    },
+    {
+      "name": "after fixture exact admitted member: game/hunt/actor-catalog.mjs",
+      "passed": true
+    },
+    {
+      "name": "after fixture exact admitted member: game/hunt/preferences.mjs",
+      "passed": true
+    },
+    {
+      "name": "after fixture exact admitted member: optional-practice/civilian-fpv/vendor/addons/loaders/GLTFLoader.js",
+      "passed": true
+    },
+    {
+      "name": "after fixture exact admitted member: optional-practice/civilian-fpv/vendor/addons/utils/BufferGeometryUtils.js",
+      "passed": true
+    },
+    {
+      "name": "after fixture exact admitted member: optional-practice/civilian-fpv/vendor/addons/utils/SkeletonUtils.js",
+      "passed": true
+    },
+    {
+      "name": "after fixture exact admitted member: optional-practice/civilian-fpv/vendor/addons/controls/TransformControls.js",
+      "passed": true
+    },
+    {
+      "name": "replayed input exact after guard/main integration: optional-practice/civilian-fpv/README.md",
+      "passed": true
+    },
+    {
+      "name": "replayed input exact after guard/main integration: optional-practice/civilian-fpv/app.mjs",
+      "passed": true
+    },
+    {
+      "name": "replayed input exact after guard/main integration: optional-practice/civilian-fpv/app.webmanifest",
+      "passed": true
+    },
+    {
+      "name": "replayed input exact after guard/main integration: optional-practice/civilian-fpv/attempts.mjs",
+      "passed": true
+    },
+    {
+      "name": "replayed input exact after guard/main integration: optional-practice/civilian-fpv/beginner-coach.mjs",
+      "passed": true
+    },
+    {
+      "name": "replayed input exact after guard/main integration: optional-practice/civilian-fpv/catalogue.mjs",
+      "passed": true
+    },
+    {
+      "name": "replayed input exact after guard/main integration: optional-practice/civilian-fpv/content-definitions.mjs",
+      "passed": true
+    },
+    {
+      "name": "replayed input exact after guard/main integration: optional-practice/civilian-fpv/copy.mjs",
+      "passed": true
+    },
+    {
+      "name": "replayed input exact after guard/main integration: optional-practice/civilian-fpv/demonstrations.mjs",
+      "passed": true
+    },
+    {
+      "name": "replayed input exact after guard/main integration: optional-practice/civilian-fpv/expressive-hunt-courses.mjs",
+      "passed": true
+    },
+    {
+      "name": "replayed input exact after guard/main integration: optional-practice/civilian-fpv/flight-fullscreen.css",
+      "passed": true
+    },
+    {
+      "name": "replayed input exact after guard/main integration: optional-practice/civilian-fpv/flight-fullscreen.mjs",
+      "passed": true
+    },
+    {
+      "name": "replayed input exact after guard/main integration: optional-practice/civilian-fpv/flight-sectors.mjs",
+      "passed": true
+    },
+    {
+      "name": "replayed input exact after guard/main integration: optional-practice/civilian-fpv/guide.html",
+      "passed": true
+    },
+    {
+      "name": "replayed input exact after guard/main integration: optional-practice/civilian-fpv/index.html",
+      "passed": true
+    },
+    {
+      "name": "replayed input exact after guard/main integration: optional-practice/civilian-fpv/input.mjs",
+      "passed": true
+    },
+    {
+      "name": "replayed input exact after guard/main integration: optional-practice/civilian-fpv/math.mjs",
+      "passed": true
+    },
+    {
+      "name": "replayed input exact after guard/main integration: optional-practice/civilian-fpv/model.mjs",
+      "passed": true
+    },
+    {
+      "name": "replayed input exact after guard/main integration: optional-practice/civilian-fpv/notebook.mjs",
+      "passed": true
+    },
+    {
+      "name": "replayed input exact after guard/main integration: optional-practice/civilian-fpv/offline.mjs",
+      "passed": true
+    },
+    {
+      "name": "replayed input exact after guard/main integration: optional-practice/civilian-fpv/package-info.json",
+      "passed": true
+    },
+    {
+      "name": "replayed input exact after guard/main integration: optional-practice/civilian-fpv/playlists.mjs",
+      "passed": true
+    },
+    {
+      "name": "replayed input exact after guard/main integration: optional-practice/civilian-fpv/preview.png",
+      "passed": true
+    },
+    {
+      "name": "replayed input exact after guard/main integration: optional-practice/civilian-fpv/radio-controls.mjs",
+      "passed": true
+    },
+    {
+      "name": "replayed input exact after guard/main integration: optional-practice/civilian-fpv/radio-guide.mjs",
+      "passed": true
+    },
+    {
+      "name": "replayed input exact after guard/main integration: optional-practice/civilian-fpv/radio-profile.mjs",
+      "passed": true
+    },
+    {
+      "name": "replayed input exact after guard/main integration: optional-practice/civilian-fpv/radio-runtime.mjs",
+      "passed": true
+    },
+    {
+      "name": "replayed input exact after guard/main integration: optional-practice/civilian-fpv/radio-session.mjs",
+      "passed": true
+    },
+    {
+      "name": "replayed input exact after guard/main integration: optional-practice/civilian-fpv/radio-setup.mjs",
+      "passed": true
+    },
+    {
+      "name": "replayed input exact after guard/main integration: optional-practice/civilian-fpv/rotation-table.mjs",
+      "passed": true
+    },
+    {
+      "name": "replayed input exact after guard/main integration: optional-practice/civilian-fpv/sim-presentation.mjs",
+      "passed": true
+    },
+    {
+      "name": "replayed input exact after guard/main integration: optional-practice/civilian-fpv/snake-hunt-catalogue.mjs",
+      "passed": true
+    },
+    {
+      "name": "replayed input exact after guard/main integration: optional-practice/civilian-fpv/snake-hunt-presentation.mjs",
+      "passed": true
+    },
+    {
+      "name": "replayed input exact after guard/main integration: optional-practice/civilian-fpv/snake-hunt.mjs",
+      "passed": true
+    },
+    {
+      "name": "replayed input exact after guard/main integration: optional-practice/civilian-fpv/studio.mjs",
+      "passed": true
+    },
+    {
+      "name": "replayed input exact after guard/main integration: optional-practice/civilian-fpv/style.css",
+      "passed": true
+    },
+    {
+      "name": "replayed input exact after guard/main integration: optional-practice/civilian-fpv/vendor/LICENSE.txt",
+      "passed": true
+    },
+    {
+      "name": "replayed input exact after guard/main integration: optional-practice/civilian-fpv/vendor/addons/controls/TransformControls.js",
+      "passed": true
+    },
+    {
+      "name": "replayed input exact after guard/main integration: optional-practice/civilian-fpv/vendor/addons/loaders/GLTFLoader.js",
+      "passed": true
+    },
+    {
+      "name": "replayed input exact after guard/main integration: optional-practice/civilian-fpv/vendor/addons/provenance.json",
+      "passed": true
+    },
+    {
+      "name": "replayed input exact after guard/main integration: optional-practice/civilian-fpv/vendor/addons/utils/BufferGeometryUtils.js",
+      "passed": true
+    },
+    {
+      "name": "replayed input exact after guard/main integration: optional-practice/civilian-fpv/vendor/addons/utils/SkeletonUtils.js",
+      "passed": true
+    },
+    {
+      "name": "replayed input exact after guard/main integration: optional-practice/civilian-fpv/vendor/rapier/LICENSE",
+      "passed": true
+    },
+    {
+      "name": "replayed input exact after guard/main integration: optional-practice/civilian-fpv/vendor/rapier/provenance.json",
+      "passed": true
+    },
+    {
+      "name": "replayed input exact after guard/main integration: optional-practice/civilian-fpv/vendor/rapier/rapier.mjs",
+      "passed": true
+    },
+    {
+      "name": "replayed input exact after guard/main integration: optional-practice/civilian-fpv/vendor/three.core.js",
+      "passed": true
+    },
+    {
+      "name": "replayed input exact after guard/main integration: optional-practice/civilian-fpv/vendor/three.module.js",
+      "passed": true
+    },
+    {
+      "name": "replayed input exact after guard/main integration: optional-practice/civilian-fpv/world-actor-editor.mjs",
+      "passed": true
+    },
+    {
+      "name": "replayed input exact after guard/main integration: optional-practice/civilian-fpv/world-app.mjs",
+      "passed": true
+    },
+    {
+      "name": "replayed input exact after guard/main integration: optional-practice/civilian-fpv/world-assets.mjs",
+      "passed": true
+    },
+    {
+      "name": "replayed input exact after guard/main integration: optional-practice/civilian-fpv/world-audio.mjs",
+      "passed": true
+    },
+    {
+      "name": "replayed input exact after guard/main integration: optional-practice/civilian-fpv/world-catalogue.mjs",
+      "passed": true
+    },
+    {
+      "name": "replayed input exact after guard/main integration: optional-practice/civilian-fpv/world-collision.mjs",
+      "passed": true
+    },
+    {
+      "name": "replayed input exact after guard/main integration: optional-practice/civilian-fpv/world-content.mjs",
+      "passed": true
+    },
+    {
+      "name": "replayed input exact after guard/main integration: optional-practice/civilian-fpv/world-demonstrations.mjs",
+      "passed": true
+    },
+    {
+      "name": "replayed input exact after guard/main integration: optional-practice/civilian-fpv/world-editor.mjs",
+      "passed": true
+    },
+    {
+      "name": "replayed input exact after guard/main integration: optional-practice/civilian-fpv/world-hangar.mjs",
+      "passed": true
+    },
+    {
+      "name": "replayed input exact after guard/main integration: optional-practice/civilian-fpv/world-hunt-reactions.mjs",
+      "passed": true
+    },
+    {
+      "name": "replayed input exact after guard/main integration: optional-practice/civilian-fpv/world-model.mjs",
+      "passed": true
+    },
+    {
+      "name": "replayed input exact after guard/main integration: optional-practice/civilian-fpv/world-progress.mjs",
+      "passed": true
+    },
+    {
+      "name": "replayed input exact after guard/main integration: optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+      "passed": true
+    },
+    {
+      "name": "replayed input exact after guard/main integration: optional-practice/civilian-fpv/world-records.mjs",
+      "passed": true
+    },
+    {
+      "name": "replayed input exact after guard/main integration: optional-practice/civilian-fpv/world-store.mjs",
+      "passed": true
+    },
+    {
+      "name": "replayed input exact after guard/main integration: optional-practice/civilian-fpv/world-style.css",
+      "passed": true
+    },
+    {
+      "name": "replayed input exact after guard/main integration: optional-practice/civilian-fpv/world-themes.mjs",
+      "passed": true
+    },
+    {
+      "name": "replayed input exact after guard/main integration: optional-practice/civilian-fpv/world-zip.mjs",
+      "passed": true
+    },
+    {
+      "name": "replayed input exact after guard/main integration: game/data-json.mjs",
+      "passed": true
+    },
+    {
+      "name": "replayed input exact after guard/main integration: game/presentation/theme-system.mjs",
+      "passed": true
+    },
+    {
+      "name": "only incoming Railworks renderer changes baseline closure",
+      "passed": true
+    },
+    {
+      "name": "final after closure changes only scoped render/art files and normal packagedcatalog pruning",
+      "passed": true
+    }
+  ],
+  "passed": true,
+  "limitations": [
+    "Original v2source remains tied to pre-profileguard source; final package contains canonical-profileguard and incoming Railworks. CanonicalCPUandactualbrowser equality are proven separately.",
+    "No physical hardware, sustained named-device timing, installed/offline, unconstrained GLTF ordering or public Solar qualification."
+  ]
+}

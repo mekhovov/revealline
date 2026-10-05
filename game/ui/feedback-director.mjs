@@ -75,6 +75,7 @@ export class FeedbackDirector {
       delay = 0,
       radio = false,
       movement = false,
+      maxDuration = null,
     } = {},
   ) {
     const cueFamily = name.replace(/-[12]$/, '');
@@ -119,6 +120,9 @@ export class FeedbackDirector {
       return null;
     if (priority >= 5)
       for (const voice of [...s.voices]) if (voice.radio || voice.dialogue) voice.stop();
+    if (priority >= 4)
+      for (const voice of [...s.voices])
+        if (voice.feedback && voice.movement && !voice.source?.loop) voice.stop();
     const buffer = this.buffers.get(name);
     if (!buffer) {
       this.load(name);
@@ -151,7 +155,18 @@ export class FeedbackDirector {
     source.buffer = buffer;
     source.loop = loop;
     source.playbackRate?.setValueAtTime(rate, c.currentTime);
-    volume.gain.setValueAtTime(loop ? 0 : gain, c.currentTime);
+    const excerpt = !loop && Number.isFinite(maxDuration) && maxDuration > 0,
+      duration = Math.min(buffer.duration / rate, excerpt ? maxDuration : Infinity),
+      start = c.currentTime + delay;
+    volume.gain.setValueAtTime(loop || excerpt ? 0 : gain, c.currentTime);
+    if (excerpt) {
+      // Original periodic textures can be several seconds long. A short attack
+      // and release make bounded material accents rather than stacked loops.
+      volume.gain.setValueAtTime(0, start);
+      volume.gain.linearRampToValueAtTime?.(gain, start + Math.min(0.006, duration / 4));
+      volume.gain.setValueAtTime(gain, start + duration - Math.min(0.025, duration / 3));
+      volume.gain.linearRampToValueAtTime?.(0, start + duration);
+    }
     source.connect(volume);
     if (panner) {
       volume.connect(panner);
@@ -212,7 +227,7 @@ export class FeedbackDirector {
     // Re-enter a periodic texture at its global phase, without an attack restart.
     try {
       source.start(c.currentTime + delay, loop ? (c.currentTime * rate) % buffer.duration : 0);
-      if (!loop) source.stop(c.currentTime + delay + buffer.duration / rate + 0.01);
+      if (!loop) source.stop(start + duration + 0.01);
     } catch {
       voice.stop();
       return null;
@@ -391,7 +406,8 @@ export class FeedbackDirector {
     );
     const distance = (actor) =>
       Math.min(...players.map((p) => Math.hypot(p.x - actor.x, p.y - actor.y)));
-    const candidates = [];
+    const candidates = [],
+      incidental = [];
     const details = new Map((run.classic?.enemies ?? []).map((actor) => [actor.id, actor]));
     for (const [i, actor] of [
       ...(run.enemies ?? []),
@@ -409,14 +425,26 @@ export class FeedbackDirector {
       const phase = actor.pursuit?.phase ?? actor.phase;
       const family =
         actor.pursuit?.behavior ?? actor.family ?? (actor.role === 'sentry' ? 'guard' : 'runner');
-      const phaseCue = humanoid && newTick && actorPhaseSound(previous?.phase, phase);
+      const phaseCue =
+        options.phaseEvents !== false &&
+        humanoid &&
+        newTick &&
+        actorPhaseSound(previous?.phase, phase);
       // Native Guard locked/fired events already own their audible warning.
-      if (phaseCue && actor.role !== 'sentry')
+      if (phaseCue && actor.role !== 'sentry') {
         this.sound.encounter?.(phaseCue, {
           family,
           board,
           pan: screenPan(actor.x, run.width, options.placement),
         });
+        if (phaseCue !== 'warning')
+          this.sound.encounter?.('equipment', {
+            family,
+            board,
+            gainScale: distanceGain(distance(actor), Math.min(run.width, run.height)),
+            pan: screenPan(actor.x, run.width, options.placement),
+          });
+      }
       const moved = newTick
         ? previous && Math.hypot(actor.x - previous.x, actor.y - previous.y) > 0.0001
         : previous?.moving;
@@ -437,6 +465,18 @@ export class FeedbackDirector {
         continue;
       const d = distance(actor) / Math.min(run.width, run.height);
       if (d >= (state.loops.has(key) ? 0.8 : 0.74)) continue;
+      const gainScale = distanceGain(distance(actor), Math.min(run.width, run.height)),
+        machine = ['eroder', 'lane-boss'].includes(actor.type) ? 'tracked' : 'wheeled';
+      if (newTick && (humanoid || (options.collectionId === 'military-field' && !previous?.moving)))
+        incidental.push({
+          type: humanoid ? 'step' : 'drive',
+          family,
+          machine: humanoid ? false : machine,
+          gainScale,
+          pan: screenPan(actor.x, run.width, options.placement),
+        });
+      // Actual moving footsteps replace the old undifferentiated grain loop.
+      if (humanoid) continue;
       candidates.push({
         key,
         movement: true,
@@ -456,6 +496,12 @@ export class FeedbackDirector {
         gain: distanceGain(distance(actor), Math.min(run.width, run.height)) * 0.3,
         pan: screenPan(actor.x, run.width, options.placement),
       });
+    }
+    for (const type of ['step', 'drive']) {
+      const nearest = incidental
+        .filter((cue) => cue.type === type)
+        .sort((a, b) => b.gainScale - a.gainScale)[0];
+      if (nearest) this.sound.encounter?.(type, { ...nearest, board });
     }
     // Player movement follows the selected body, independently of ability class.
     for (const [i, player] of players.entries()) {

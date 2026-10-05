@@ -107,6 +107,8 @@
     "authoring/motion-lab/assets",
     "authoring/motion-lab/index.html",
     "authoring/motion-lab/app.js",
+    "authoring/motion-lab/shared-actor-panel.mjs",
+    "authoring/motion-lab/shared-actor-study.mjs",
     "authoring/motion-lab/preview-loop.mjs",
     "authoring/motion-lab/display-entry.mjs",
     "authoring/motion-lab/display.mjs",
@@ -184,6 +186,8 @@
     "optional-practice/civilian-fpv/index.html",
     "optional-practice/civilian-fpv/app.mjs",
     "optional-practice/civilian-fpv/renderer.mjs",
+    "optional-practice/civilian-fpv/industrial-vehicles.mjs",
+    "optional-practice/civilian-fpv/industrial-soldiers.mjs",
     "optional-practice/civilian-fpv/input.mjs",
     "optional-practice/civilian-fpv/copy.mjs",
     "optional-practice/civilian-fpv/style.css",
@@ -278,6 +282,7 @@
     "optional-practice/civilian-fpv/world-editor.mjs",
     "optional-practice/civilian-fpv/world-audio.mjs",
     "optional-practice/civilian-fpv/world-hunt-reactions.mjs",
+    "optional-practice/civilian-fpv/world-enemy-guide.mjs",
     "optional-practice/civilian-fpv/world-reaction-runtime.mjs",
     "optional-practice/civilian-fpv/world-progress.mjs",
     "optional-practice/civilian-fpv/content-definitions.mjs",
@@ -289,7 +294,11 @@
     "optional-practice/civilian-fpv/snake-hunt.mjs",
     "optional-practice/civilian-fpv/snake-hunt-catalogue.mjs",
     "optional-practice/civilian-fpv/expressive-hunt-courses.mjs",
-    "optional-practice/civilian-fpv/snake-hunt-presentation.mjs"
+    "optional-practice/civilian-fpv/snake-hunt-presentation.mjs",
+    "authoring/industrial-art-review",
+    "optional-practice/civilian-fpv/world-pursuit.mjs",
+    "optional-practice/civilian-fpv/world-pursuit-editor.mjs",
+    "optional-practice/civilian-fpv/native-pursuit-courses.mjs"
   ],
   "optionalOffline": [
     "game/content/packs/neon-reference-pack.json",

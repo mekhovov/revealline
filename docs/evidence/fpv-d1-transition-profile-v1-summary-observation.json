@@ -1,0 +1,27 @@
+{
+  "format": "FPVD1TransitionProfileOperatorSummary.v1",
+  "candidate": "e572026ba357f3194bf47e7137a0817cacb1a640",
+  "harnessVersion": 1,
+  "harnessSha256": "1ec25db46accd0c0096970a81e7df72b117baf7d44b9962cfe659ec301dfceea",
+  "evidenceKind": "Parent browser operator report of visible summary; complete original receipt was not recovered.",
+  "reported": {
+    "completed": true,
+    "observations": 36,
+    "visible": true,
+    "focused": true,
+    "visibilityChanges": 0,
+    "maximumPrepareMs": 65.5,
+    "maximumLoadMs": 10.8
+  },
+  "originalLongStallsReproduced": false,
+  "fullReceiptRetained": false,
+  "downloadAttempt": {
+    "waitSeconds": 30,
+    "outcome": "CUA download wait timed out/reset; no file found in Downloads"
+  },
+  "limits": [
+    "Only the reported visible summary is retained; individual spans/samples and exact durations are unavailable.",
+    "The original >15-second production qualification stalls were not reproduced in this bounded run. Their cause remains unresolved.",
+    "A fresh v2 run will have its own complete receipt and must not be represented as the lost v1 original."
+  ]
+}

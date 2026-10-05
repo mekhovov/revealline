@@ -466,6 +466,25 @@
   dialog::backdrop {
     background: #030b11d9;
   }
+  .world-enemy-guide article {
+    border-top: 1px solid var(--line);
+    padding-block: 0.75rem;
+    overflow-wrap: anywhere;
+  }
+  .world-enemy-guide h3 {
+    margin-block: 0.5rem;
+  }
+  @media (max-width: 480px) {
+    .world-enemy-guide > header {
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .world-enemy-guide > header h2 {
+      flex: 1 0 100%;
+      margin-block: 0.25rem;
+      overflow-wrap: anywhere;
+    }
+  }
   dialog header {
     display: flex;
     justify-content: space-between;
@@ -475,6 +494,9 @@
   }
   dialog header strong {
     display: block;
+  }
+  .sim-settings > header {
+    flex-wrap: wrap;
   }
   dialog header small {
     display: block;
@@ -945,7 +967,7 @@
   }
   .sim-worlds #world-language {
     font-size: 12px;
-    width: 60px;
+    width: 100%;
     min-height: 40px;
     padding: 5px;
     border-color: #344858;
@@ -2077,7 +2099,7 @@
     }
     .sim-worlds .studio-header nav {
       display: grid;
-      grid-template-columns: repeat(5, minmax(0, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
       gap: 2px;
     }
     .sim-worlds .studio-header nav button {

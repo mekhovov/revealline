@@ -1,0 +1,445 @@
+<!doctype html>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Mountain Reservoir · scene review</title>
+<script
+  src="../../../game/presentation/theme-bootstrap.mjs"
+  data-theme-density="studio"
+  data-theme-follow-context="true"
+></script>
+<link
+  rel="stylesheet"
+  href="../../../game/presentation/industrial-workshop.css"
+  data-industrial-workshop
+/>
+<style>
+  body {
+    background: #142128;
+    color: #e6ecea;
+    font: 16px system-ui;
+    margin: 20px;
+  }
+  h1 {
+    font-size: 24px;
+  }
+  p {
+    max-width: 95ch;
+  }
+  label {
+    margin-right: 18px;
+  }
+  select,
+  button {
+    font: inherit;
+    padding: 7px;
+  }
+  canvas {
+    display: block;
+    width: 1120px;
+    max-width: 100%;
+    height: 630px;
+    background: #263d48;
+    margin: 16px 0;
+  }
+  textarea {
+    width: 100%;
+    height: 120px;
+  }
+  #status {
+    font-weight: 600;
+  }
+  small {
+    color: #b3c5c1;
+  }
+</style>
+<h1>Mountain Reservoir · scene review</h1>
+<p>
+  Original shared scene and authored route candidates for review. No final sixteen-proof release is
+  claimed. The yellow inspection rail marks the land-side boundary at x=6m; the visible reservoir
+  starts at x=8m, outside every flight area. Water has no new physics.
+</p>
+<label
+  >View
+  <select id="pose">
+    <option value="hutfront">Maintenance hut · front stencil and closed door</option>
+    <option value="huteast">Maintenance hut · aligned closed panes</option>
+    <option value="hutgrazing">Maintenance hut · grazing east face</option>
+    <option value="hutroof">Maintenance hut · roof landing approach</option>
+    <option value="rootclose">Tree 6 foot · steep bank close FPV</option>
+    <option value="rootcluster">Eastern trees · cluster chase</option>
+    <option value="terraceclose">Cut-rock face · 3m FPV</option>
+    <option value="terracegrazing">Cut-rock face · grazing</option>
+    <option value="terraceapproach">Terrace composition · approach</option>
+    <option value="terracelanding">Upper terrace · landing approach</option>
+    <option value="terracechase">Terraces · racer chase</option>
+    <option value="northface">North shoulder · close view</option>
+    <option value="grassclose">Grass · close FPV</option>
+    <option value="gravelclose">Gravel/grass boundary · close FPV</option>
+    <option value="groundapproach">Ground and hut · approach</option>
+    <option value="groundchase">Ground scale · racer chase</option>
+    <option value="westjoin">Western terrace join · low FPV</option>
+    <option value="northjoin">Northern terrace join · low FPV</option>
+    <option value="westgrazing">Western join · grazing angle</option>
+    <option value="shore">Shore approach · 5m height</option>
+    <option value="hut">Closed hut · 4m distance</option>
+    <option value="rock">Terrace material · 5m distance</option>
+    <option value="dam">Dam approach · 15m distance</option>
+    <option value="intake">Intake-control gallery · close view</option>
+    <option value="spillway">Dry spillway · side composition</option>
+    <option value="descent">Dry spillway · upper approach</option>
+    <option value="wide">Reservoir composition</option>
+    <option value="overview">Course overview</option>
+  </select></label
+>
+<label
+  >Course
+  <select id="course"></select
+></label>
+<label
+  >Mode
+  <select id="mode">
+    <option value="self-level">Self-level</option>
+    <option value="acro">Acro</option>
+  </select></label
+>
+<label
+  >Quality
+  <select id="quality">
+    <option>low</option>
+    <option selected>balanced</option>
+    <option>high</option>
+  </select></label
+>
+<label
+  >Appearance
+  <select id="appearance">
+    <option value="authored">Authored</option>
+    <option value="pixel">Pixel</option>
+    <option value="industrial-workshop">Shared industrial</option>
+  </select></label
+>
+<label id="variant-label" hidden
+  >Scene
+  <select id="variant">
+    <option value="after">After · new candidate</option>
+    <option value="before">Before · published r8</option>
+  </select></label
+>
+<button id="render" disabled>Render selected view</button>
+<button id="dispose" disabled>Verify resource disposal</button>
+<p id="status" role="status">Checking immutable inputs…</p>
+<canvas id="view"></canvas>
+<small
+  >Static actual renderer observations only. No simulated completion, imported-example lookup,
+  full-world artistic acceptance, offline or hardware claim.</small
+>
+<textarea id="receipt" readonly aria-label="Static visual observation receipt"></textarea>
+<script type="module">
+  const $ = (id) => document.getElementById(id),
+    base = './player/optional-practice/civilian-fpv/';
+  const errors = [],
+    observations = [];
+  addEventListener('error', (e) => errors.push(e.message));
+  addEventListener('unhandledrejection', (e) => errors.push(String(e.reason)));
+  const hash = async (bytes) =>
+    [...new Uint8Array(await crypto.subtle.digest('SHA-256', bytes))]
+      .map((v) => v.toString(16).padStart(2, '0'))
+      .join('');
+  const get = async (url) => {
+    const r = await fetch(url, { cache: 'no-store' });
+    if (!r.ok) throw Error('HTTP ' + r.status + ' ' + url);
+    return r.arrayBuffer();
+  };
+  let renderer,
+    project,
+    sceneBytes,
+    manifest,
+    disposal = null;
+  const poses = {
+    hutfront: [
+      [-22, 2.4, -5.5],
+      [-22, 2.15, -10.95],
+    ],
+    huteast: [
+      [-12.4, 2.3, -15],
+      [-17.95, 2.1, -15],
+    ],
+    hutgrazing: [
+      [-16.9, 2.1, -7.8],
+      [-17.95, 1.7, -16.9],
+    ],
+    hutroof: [
+      [-15, 7, -7],
+      [-22, 4.45, -15],
+    ],
+    rootclose: [
+      [57.2, 18.1, 16.05],
+      [59.931, 18.05, 14.857],
+    ],
+    rootcluster: [
+      [52, 24, 25],
+      [58, 17, 16],
+    ],
+    terraceclose: [
+      [-28.132, 1.6, 2.382],
+      [-31, 1.35, 1.5],
+    ],
+    terracegrazing: [
+      [-31.55, 1.6, 6],
+      [-30.7, 1.4, 0.5],
+    ],
+    terraceapproach: [
+      [-25.5, 7.5, 8],
+      [-37, 4.5, -8],
+    ],
+    terracelanding: [
+      [-33, 11.5, -7],
+      [-41, 8.5, -10],
+    ],
+    terracechase: [
+      [-30, 9.5, -3],
+      [-40, 5.8, -9],
+    ],
+    northface: [
+      [-16.5, 2.2, -21.5],
+      [-17.5, 2, -24.05],
+    ],
+    grassclose: [
+      [-13, 1.7, 16],
+      [-11.5, 0.01, 14],
+    ],
+    gravelclose: [
+      [0.1, 1.8, 19],
+      [2.8, 0.01, 18],
+    ],
+    groundapproach: [
+      [-17, 7, 10],
+      [-21, 1, -7],
+    ],
+    groundchase: [
+      [-16, 3, 12],
+      [-22, 0, -8],
+    ],
+    westjoin: [
+      [-30, 1.4, 24],
+      [-41, 6, -11],
+    ],
+    northjoin: [
+      [-7, 2.5, -19],
+      [-20, 7, -34],
+    ],
+    westgrazing: [
+      [-42, 3.5, 12],
+      [-44, 5.5, 5],
+    ],
+    shore: [
+      [-24, 5, 26],
+      [14, 5, -20],
+    ],
+    hut: [
+      [-14, 2.5, -8],
+      [-22, 2.5, -15],
+    ],
+    rock: [
+      [-28, 3, -3],
+      [-35, 4, -5],
+    ],
+    dam: [
+      [-3, 7, -10],
+      [13, 8, -27],
+    ],
+    intake: [
+      [2, 7, -16],
+      [-1, 5, -24],
+    ],
+    spillway: [
+      [-18, 8, -3],
+      [-11, 7, -19],
+    ],
+    descent: [
+      [-11, 12.2, -29],
+      [-11, 1, -2],
+    ],
+    wide: [
+      [-39, 19, 35],
+      [14, 5, -18],
+    ],
+    overview: [
+      [-10, 12, 14],
+      [0, 3, -18],
+    ],
+  };
+  async function render() {
+    $('render').disabled = true;
+    try {
+      const c = structuredClone(project.courses.find((c) => c.id === $('course').value)),
+        appearance = $('appearance').value;
+      if (appearance === 'pixel') {
+        c.world.theme = 'pixel';
+        delete c.world.themeProfile;
+      }
+      renderer.setPresentation({
+        collectionId: appearance === 'pixel' ? 'authored' : appearance,
+        revision: 'r1',
+      });
+      renderer.setCourse(c, $('mode').value);
+      renderer.setQuality($('quality').value);
+      renderer.setDrone('racer');
+      const variant = $('variant').value;
+      await renderer.loadScene(sceneBytes[variant]);
+      if ((await renderer.prepare()) === false) throw Error('Shader preparation superseded');
+      const THREE = await import(base + 'vendor/three.module.js');
+      const [position, target] = poses[$('pose').value],
+        dx = target[0] - position[0],
+        dz = target[2] - position[2];
+      const rotation = new THREE.Quaternion().setFromEuler(
+        new THREE.Euler(
+          Math.atan2(target[1] - position[1], Math.hypot(dx, dz)),
+          -Math.atan2(dx, -dz),
+          0,
+          'YXZ',
+        ),
+      );
+      const state = {
+        position: Object.fromEntries(['x', 'y', 'z'].map((k, i) => [k, position[i] * 1000])),
+        orientation: rotation.toArray().map((v) => Math.round(v * 1e6)),
+        step: 0,
+        ticks: 0,
+        status: 'disarmed',
+        actors: [],
+        projectiles: [],
+        lastInput: { throttle: 0 },
+      };
+      renderer.draw(state, {
+        cameraMode:
+          $('pose').value === 'overview'
+            ? 'overview'
+            : ['groundchase', 'terracechase', 'rootcluster'].includes($('pose').value)
+              ? 'chase'
+              : 'fpv',
+        cameraFov: 72,
+        cameraTilt: 0,
+      });
+      const canvas = $('view'),
+        gl = canvas.getContext('webgl2'),
+        rgba = new Uint8Array(gl.drawingBufferWidth * gl.drawingBufferHeight * 4);
+      gl.readPixels(
+        0,
+        0,
+        gl.drawingBufferWidth,
+        gl.drawingBufferHeight,
+        gl.RGBA,
+        gl.UNSIGNED_BYTE,
+        rgba,
+      );
+      const observation = {
+        pose: $('pose').value,
+        course: c.id,
+        mode: $('mode').value,
+        quality: $('quality').value,
+        appearance,
+        variant,
+        modelSHA256: await hash(sceneBytes[variant]),
+        positionMetres: position,
+        targetMetres: target,
+        pixelSHA256: await hash(rgba),
+        resources: renderer.resources(),
+      };
+      observations.push(observation);
+      $('receipt').value = JSON.stringify(
+        {
+          format: 'FPVMountainReservoirStaticViews.v1',
+          fixture: await hash(new TextEncoder().encode(JSON.stringify(manifest))),
+          observations,
+          errors,
+          disposal,
+        },
+        null,
+        2,
+      );
+      $('status').textContent =
+        'Rendered ' +
+        observation.pose +
+        ' / ' +
+        observation.quality +
+        ' / ' +
+        appearance +
+        '. Visual acceptance pending.';
+    } catch (error) {
+      errors.push(error.stack);
+      $('status').textContent = 'FAILED: ' + error.message;
+      throw error;
+    } finally {
+      $('render').disabled = false;
+    }
+  }
+  try {
+    manifest = JSON.parse(new TextDecoder().decode(await get('./fixture.json')));
+    for (const file of [
+      ...manifest.content,
+      ...(manifest.effectiveFiles ?? manifest.admittedFiles).map((f) => ({
+        ...f,
+        path: 'player/' + f.path,
+      })),
+    ]) {
+      const bytes = await get('./' + file.path);
+      if (bytes.byteLength !== file.bytes || (await hash(bytes)) !== file.sha256)
+        throw Error('Immutable input mismatch ' + file.path);
+    }
+    if ((await hash(await get('./index.html'))) !== manifest.harnessSHA256)
+      throw Error('Harness mismatch');
+    project = JSON.parse(new TextDecoder().decode(await get('./content/project.json')));
+    for (const course of project.courses) {
+      const option = document.createElement('option');
+      option.value = course.id;
+      option.textContent = course.locales.en.title;
+      $('course').append(option);
+    }
+    sceneBytes = { after: await get('./content/scene.glb') };
+    if (manifest.content.some((f) => f.path === 'content/before-scene.glb')) {
+      sceneBytes.before = await get('./content/before-scene.glb');
+      $('variant-label').hidden = false;
+      $('variant').options[1].textContent = 'Before · ' + manifest.beforeRevision;
+    }
+    const { createFlightRenderer } = await import(base + 'world-assets.mjs');
+    renderer = createFlightRenderer({
+      canvas: $('view'),
+      window,
+      reducedMotion: true,
+      onContextLost: () => errors.push('WebGL context lost'),
+    });
+    if (!renderer.available) throw Error('Renderer unavailable');
+    $('render').onclick = render;
+    await render();
+    $('dispose').disabled = false;
+    $('dispose').onclick = async () => {
+      const before = renderer.resources();
+      renderer.dispose();
+      const after = renderer.resources();
+      disposal = {
+        before,
+        after,
+        passed: after.disposed && Object.values(after.registered).every((n) => n === 0),
+      };
+      $('render').disabled = true;
+      $('dispose').disabled = true;
+      $('receipt').value = JSON.stringify(
+        {
+          format: 'FPVMountainReservoirStaticViews.v1',
+          fixture: await hash(new TextEncoder().encode(JSON.stringify(manifest))),
+          observations,
+          errors,
+          disposal,
+        },
+        null,
+        2,
+      );
+      $('status').textContent = disposal.passed
+        ? 'Disposal PASS. Reload before rendering again.'
+        : 'FAILED: resources retained after disposal';
+    };
+  } catch (error) {
+    $('status').textContent = 'FAILED: ' + error.message;
+    errors.push(error.stack);
+  }
+</script>

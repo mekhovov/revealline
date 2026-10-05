@@ -1,0 +1,387 @@
+{
+  "format": "ContentProjectV1",
+  "id": "pursuit-team-pilots-project",
+  "revision": "pursuit-pilots-2",
+  "name": "Pursuit partners · prototypes",
+  "policyId": "journey-arcade-v2",
+  "actorCatalogId": "journey-actors-v1",
+  "difficultyCatalogId": "journey-difficulty-v1",
+  "maps": [
+    {
+      "format": "MapDesignV1",
+      "id": "pincer-yard-map",
+      "revision": "1",
+      "name": "Pincer Yard",
+      "width": 72,
+      "height": 36,
+      "walls": [
+        {
+          "x": 34,
+          "y": 11,
+          "w": 3,
+          "h": 14
+        }
+      ],
+      "foundations": [
+        {
+          "x": 16,
+          "y": 15,
+          "w": 5,
+          "h": 5
+        },
+        {
+          "x": 50,
+          "y": 15,
+          "w": 5,
+          "h": 5
+        }
+      ],
+      "terrain": [],
+      "spawns": [
+        {
+          "id": "home",
+          "x": 0.5,
+          "y": 17.5
+        },
+        {
+          "id": "partner",
+          "x": 71.5,
+          "y": 17.5
+        }
+      ]
+    },
+    {
+      "format": "MapDesignV1",
+      "id": "relay-rendezvous-map",
+      "revision": "1",
+      "name": "Relay Rendezvous",
+      "width": 72,
+      "height": 36,
+      "walls": [
+        {
+          "x": 28,
+          "y": 8,
+          "w": 2,
+          "h": 8
+        },
+        {
+          "x": 42,
+          "y": 20,
+          "w": 2,
+          "h": 8
+        }
+      ],
+      "foundations": [
+        {
+          "x": 16,
+          "y": 8,
+          "w": 5,
+          "h": 5
+        },
+        {
+          "x": 50,
+          "y": 23,
+          "w": 5,
+          "h": 5
+        }
+      ],
+      "terrain": [],
+      "spawns": [
+        {
+          "id": "home",
+          "x": 24.5,
+          "y": 0.5
+        },
+        {
+          "id": "partner",
+          "x": 47.5,
+          "y": 35.5
+        }
+      ]
+    }
+  ],
+  "missions": [
+    {
+      "format": "MissionDesignV5",
+      "id": "pincer-yard",
+      "revision": "pursuit-2",
+      "name": "Pincer Yard",
+      "map": {
+        "id": "pincer-yard-map",
+        "revision": "1"
+      },
+      "spawnId": "home",
+      "modes": [
+        "team"
+      ],
+      "actors": [
+        {
+          "id": "keeper",
+          "role": "field-keeper",
+          "tier": "measured",
+          "x": 60.5,
+          "y": 29.5,
+          "heading": [
+            -1,
+            1
+          ]
+        }
+      ],
+      "objectives": [],
+      "bonuses": [],
+      "coverage": 0.55,
+      "timeLimitSeconds": 0,
+      "design": {
+        "routeDecision": "Approach from opposite rails. One pilot closes an escape around the divider while the partner intercepts; trade sides through the permanent upper and lower bypasses.",
+        "lesson": "Both pilots share Hunt points. Refuge seekers choose a distant goal; switchbacks commit to their next route. Neither body damages a pilot.",
+        "counterplay": "Choose a short return before pursuing. The round keeper still threatens the pilot and exposed line.",
+        "captureConsequence": "Capturing a target removes it once for 50 Hunt points; contact earns 100. Neither changes the territory objective.",
+        "introduces": [
+          "humanoid-contact"
+        ],
+        "practices": [
+          "enemy-seeded-closure"
+        ],
+        "combines": [
+          "complementary-routes"
+        ],
+        "memorableMoment": "Each pilot contributes a contact catch and a safe territory closure.",
+        "mastery": "Each pilot contributes a contact catch and a safe territory closure.",
+        "durationSeconds": [
+          30,
+          150
+        ],
+        "difficulty": {
+          "band": 2,
+          "planning": 2,
+          "execution": 2,
+          "threatDensity": 2,
+          "timePressure": 0,
+          "mechanicLoad": 2,
+          "coordination": 2
+        }
+      },
+      "presentation": {
+        "themeId": "horizon",
+        "backgroundAssetId": null
+      },
+      "team": {
+        "format": "TeamMissionV1",
+        "spawnIds": [
+          "home",
+          "partner"
+        ]
+      },
+      "pursuit": {
+        "version": "mission-pursuit.v1",
+        "actors": [
+          {
+            "id": "west-refuge",
+            "behavior": "refuge",
+            "x": 23.5,
+            "y": 8.5,
+            "waypoints": [
+              {
+                "x": 23.5,
+                "y": 8.5
+              },
+              {
+                "x": 26.5,
+                "y": 26.5
+              },
+              {
+                "x": 9.5,
+                "y": 24.5
+              }
+            ]
+          },
+          {
+            "id": "east-switchback",
+            "behavior": "switchback",
+            "x": 44.5,
+            "y": 25.5,
+            "waypoints": [
+              {
+                "x": 43.5,
+                "y": 8.5
+              },
+              {
+                "x": 54.5,
+                "y": 25.5
+              },
+              {
+                "x": 30.5,
+                "y": 28.5
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "format": "MissionDesignV5",
+      "id": "relay-rendezvous",
+      "revision": "pursuit-2",
+      "name": "Relay Rendezvous",
+      "map": {
+        "id": "relay-rendezvous-map",
+        "revision": "1"
+      },
+      "spawnId": "home",
+      "modes": [
+        "team"
+      ],
+      "actors": [
+        {
+          "id": "keeper",
+          "role": "field-keeper",
+          "tier": "measured",
+          "x": 60.5,
+          "y": 29.5,
+          "heading": [
+            -1,
+            1
+          ]
+        }
+      ],
+      "objectives": [],
+      "bonuses": [],
+      "coverage": 0.55,
+      "timeLimitSeconds": 0,
+      "design": {
+        "routeDecision": "Capture the two marked anchors from opposite island approaches, then enclose the exposed core. Intercept the optional pair at their meeting corridor.",
+        "lesson": "The matching pennants identify a rendezvous pair. The survivor flees after its partner is caught. Capture both anchors to lower the core shield, then capture the exposed core.",
+        "counterplay": "Choose a short return before pursuing. The round keeper still threatens the pilot and exposed line.",
+        "captureConsequence": "Both anchors and the exposed core are required. Humanoid catches remain optional and do not replace the objectives.",
+        "introduces": [
+          "humanoid-contact"
+        ],
+        "practices": [
+          "enemy-seeded-closure"
+        ],
+        "combines": [
+          "complementary-routes"
+        ],
+        "memorableMoment": "Capture one anchor each, then split the two contact catches and capture the core without a knockdown.",
+        "mastery": "Capture one anchor each, then split the two contact catches and capture the core without a knockdown.",
+        "durationSeconds": [
+          30,
+          150
+        ],
+        "difficulty": {
+          "band": 2,
+          "planning": 2,
+          "execution": 2,
+          "threatDensity": 2,
+          "timePressure": 0,
+          "mechanicLoad": 2,
+          "coordination": 2
+        }
+      },
+      "presentation": {
+        "themeId": "horizon",
+        "backgroundAssetId": null
+      },
+      "team": {
+        "format": "TeamMissionV9",
+        "spawnIds": [
+          "home",
+          "partner"
+        ],
+        "strongholds": [
+          {
+            "id": "workshop-core",
+            "core": {
+              "x": 25.5,
+              "y": 17.5
+            },
+            "anchors": [
+              {
+                "x": 11.5,
+                "y": 7.5
+              },
+              {
+                "x": 59.5,
+                "y": 27.5
+              }
+            ]
+          }
+        ],
+        "requiredCores": [
+          "workshop-core"
+        ]
+      },
+      "pursuit": {
+        "version": "mission-pursuit.v1",
+        "actors": [
+          {
+            "id": "rendezvous-west",
+            "behavior": "pair",
+            "x": 24.5,
+            "y": 17.5,
+            "waypoints": [
+              {
+                "x": 32.5,
+                "y": 17.5
+              },
+              {
+                "x": 42.5,
+                "y": 12.5
+              },
+              {
+                "x": 24.5,
+                "y": 17.5
+              }
+            ],
+            "partnerId": "rendezvous-east"
+          },
+          {
+            "id": "rendezvous-east",
+            "behavior": "pair",
+            "x": 48.5,
+            "y": 17.5,
+            "waypoints": [
+              {
+                "x": 34.5,
+                "y": 17.5
+              },
+              {
+                "x": 44.5,
+                "y": 12.5
+              },
+              {
+                "x": 48.5,
+                "y": 17.5
+              }
+            ],
+            "partnerId": "rendezvous-west"
+          }
+        ]
+      }
+    }
+  ],
+  "campaigns": [
+    {
+      "format": "CampaignDesignV1",
+      "id": "pursuit-team-pilots",
+      "revision": "1",
+      "name": "Pursuit partners · prototypes",
+      "band": 2,
+      "missionIds": [
+        "pincer-yard",
+        "relay-rendezvous"
+      ]
+    }
+  ],
+  "packs": [
+    {
+      "format": "PackDesignV1",
+      "id": "journey-pursuit-team",
+      "revision": "1",
+      "name": "Pursuit partners · prototypes",
+      "campaignIds": [
+        "pursuit-team-pilots"
+      ]
+    }
+  ]
+}

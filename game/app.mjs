@@ -1,4 +1,5 @@
 import { loadBaseArtwork } from './base-artwork.mjs';
+import { nativeArtReviewURL } from './ui/art-review-navigation.mjs';
 import { selectedArcadeCollection } from './presentation/industrial-arcade.mjs';
 import { specialistFailureCopy } from './hunt/actor-catalog.mjs';
 import { getLocale } from './i18n/index.mjs';
@@ -617,7 +618,10 @@ try {
     classes = classRegistry,
     enabled = runningEnemyPreferences.snapshot().enabled,
     style = runningEnemyPreferences.snapshot().style,
-  ) => (enabled ? prepareRunningEnemyLevel(level, { classes, style }) : level);
+  ) =>
+    enabled
+      ? prepareRunningEnemyLevel(level, { classes, style, generation: 'pursuit-goals.v2' })
+      : level;
   const refreshRunningEnemies = () => runningEnemyControls.forEach((control) => control.refresh());
   let encounterVariantControls = null,
     contextualReactions = null,
@@ -1650,6 +1654,8 @@ try {
     return pictureEntry;
   }
   function pictureLevelForRun(nextRun, entry, pictureEntry = pictureExecutionForEntry(entry)) {
+    // A standalone Studio/Playground scenario has no installed campaign picture owner.
+    if (practice && scenario) return nextRun.level;
     if (
       !entry.classicRulesSourceCampaignKey &&
       !recoverGameplayTuning(nextRun.level) &&
@@ -3662,7 +3668,7 @@ try {
   });
   for (const kind of ['versus', 'team'])
     for (const id of [`shell-title-${kind}`, `shell-${kind}`])
-      $(id)?.setAttribute('href', modeDestinations[kind]);
+      $(id)?.setAttribute('href', nativeArtReviewURL(modeDestinations[kind], location.href));
   if (authoredRoute) {
     localizedText($('shell-team'), () =>
       authoredRoute.id === DEFAULT_JOURNEY_ROUTES.solo
@@ -3712,7 +3718,8 @@ try {
       (librarySourceReturn?.mode === 'versus' && librarySourceDestination) ||
       authoredJourneyModeHref(currentAuthoredModeRoute(), 'versus') ||
       modeDestinations.versus;
-    for (const id of ['shell-versus', 'shell-title-versus']) $(id).setAttribute('href', href);
+    for (const id of ['shell-versus', 'shell-title-versus'])
+      $(id).setAttribute('href', nativeArtReviewURL(href, location.href));
   }
   function prepareModeHint(ticket) {
     if (ticket.kind === 'library') {
@@ -4079,7 +4086,10 @@ try {
     if (origin === 'solo-title' && !ticket.unfinished) {
       try {
         modeDepartureCurrent(ticket);
-        location.href = new URL(modeDestination(ticket), gameDocumentURL(location.href)).href;
+        location.href = nativeArtReviewURL(
+          new URL(modeDestination(ticket), gameDocumentURL(location.href)).href,
+          location.href,
+        );
       } catch (error) {
         cancelModeDeparture({ restore: true });
         warning(
@@ -4097,7 +4107,7 @@ try {
         prepared = prepareModeHint(ticket);
         ticket.token = prepared.token;
         modeDepartureCurrent(ticket);
-        location.href = prepared.href;
+        location.href = nativeArtReviewURL(prepared.href, location.href);
         return;
       } catch {
         if (prepared) clearModeHint(ticket);
@@ -4208,7 +4218,7 @@ try {
         if (profileStorage().getItem(sessionKey) !== ticket.savedRaw)
           throw new Error(t('interface:savedFlightChanged'));
       }
-      location.href = destination;
+      location.href = nativeArtReviewURL(destination, location.href);
     } catch (error) {
       clearModeHint(ticket);
       if (modeDeparture === ticket && error.name !== 'AbortError')
@@ -4374,6 +4384,7 @@ try {
       levelRevision,
       rulesEdition,
       prepareOnly = false,
+      briefingOnly = false,
     },
   ) {
     assertWorldPlay(launch);
@@ -4392,6 +4403,7 @@ try {
       onStatus,
       rulesEdition,
       prepareOnly,
+      briefingOnly,
       ...(levelId !== undefined ? { levelId } : {}),
       ...(levelRevision !== undefined ? { levelRevision } : {}),
     };
@@ -4407,7 +4419,11 @@ try {
       else if (missionReplacement?.launch === launch)
         preparationStatus(
           onStatus,
-          t('interface:reviewReplacePlayStayKeepsYourCurrentFlightPaused'),
+          t(
+            briefingOnly
+              ? 'interface:reviewTheChapterChoiceStayKeepsYourCurrentFlightPaused'
+              : 'interface:reviewReplacePlayStayKeepsYourCurrentFlightPaused',
+          ),
           'ready',
           launch.isCurrent,
         );
@@ -4687,7 +4703,7 @@ try {
     // The accepted attempt owns its decoded pictures before closing aborts the
     // panel's operation signal. Closing alone never authorizes a newer attempt.
     request.launch.onStarted();
-    if (request.prepareOnly) {
+    if (request.prepareOnly || request.briefingOnly) {
       if (current()) request.launch.onSelected();
       return current();
     }
@@ -4944,7 +4960,10 @@ try {
     return true;
   }
   function missionReplacementMessage(ticket) {
-    const play = ticket.request.kind === 'world-play' && !ticket.request.prepareOnly;
+    const play =
+      ticket.request.kind === 'world-play' &&
+      !ticket.request.prepareOnly &&
+      !ticket.request.briefingOnly;
     const setup = isSetupRequest(ticket.request);
     const action = () =>
       isSetupRequest(ticket.request)
@@ -5081,7 +5100,7 @@ try {
         ? courseSession
           ? t('interface:prepareFreshLesson')
           : t('interface:prepareFreshAttempt')
-        : request.kind === 'world-play' && !request.prepareOnly
+        : request.kind === 'world-play' && !request.prepareOnly && !request.briefingOnly
           ? t('interface:replacePlay')
           : t('interface:replace'),
     );
@@ -5994,7 +6013,10 @@ try {
       }
     }
   }
-  async function launchJourneyMission(mission, { kind = 'choose', skipped = null } = {}) {
+  async function launchJourneyMission(
+    mission,
+    { kind = 'choose', skipped = null, briefingOnly = kind === 'choose' } = {},
+  ) {
     if (
       !journeyEnabled ||
       !mission ||
@@ -6007,7 +6029,9 @@ try {
     pause(true);
     clearInput();
     if (candidateHost) {
-      const adopted = await prepareResultAttempt(kind, mission.levelIndex, null, mission);
+      const adopted = await prepareResultAttempt(kind, mission.levelIndex, null, mission, {
+        briefingOnly,
+      });
       if (adopted && skipped)
         journeyProfile.record({ type: 'skip', mode: 'solo', missionId: skipped.id });
       return adopted;
@@ -6067,7 +6091,7 @@ try {
       // navigation or lifecycle work must not revive the preceding pack owner.
       owner.cancel = null;
       if (journeyLaunch === owner) journeyLaunch = null;
-      const adopted = await prepareResultAttempt(kind, index, entry);
+      const adopted = await prepareResultAttempt(kind, index, entry, null, { briefingOnly });
       if (adopted && skipped)
         journeyProfile.record({ type: 'skip', mode: 'solo', missionId: skipped.id });
       return adopted;
@@ -6847,7 +6871,7 @@ try {
       adoptFlightActors(stagedActors);
       stagedActors = null;
       setTheme();
-      painter.setLevel?.(run.level, { seed: run.seed, arcadeCollection: null });
+      painter.setLevel?.(run.level, { seed: run.seed, arcadeCollection: null, artRevision: null });
       updateLoadout();
       overlay('pause');
       refreshHUD();
@@ -8500,12 +8524,6 @@ try {
       );
       localizedText($('overlay-copy'), () => brief.copy);
       localizedText($('start-button'), () => t('interface:startMission2'));
-      if (
-        !practice &&
-        !Object.hasOwn(progress.clears, run.levelId) &&
-        Object.keys(progress.clears).length
-      )
-        localizedText($('start-button'), () => t('interface:continueCampaign'));
       refreshKeyPrompts();
     }
     if (kind === 'campaign-complete') {
@@ -9038,6 +9056,7 @@ try {
     destinationIndex = levelIndex,
     destinationEntry = null,
     destinationMission = null,
+    { briefingOnly = kind === 'choose' } = {},
   ) {
     if (resultAttempt?.kind === kind) return;
     const previousEpoch = resultAttemptEpoch,
@@ -9324,6 +9343,14 @@ try {
         document.hasFocus() &&
         !dialogOpen()
       ) {
+        // Choosing an exact mission prepares its accepted rules and artwork.
+        // Only a fresh Start activation may leave this briefing; Retry/Next
+        // retain their existing single-action continuation contract.
+        if (briefingOnly) {
+          clearInput();
+          focusMission();
+          return !started && paused && run === nextRun;
+        }
         resume();
         return started && !paused;
       }
@@ -9898,7 +9925,10 @@ try {
     modeDepartureHold = false;
     titleFlightHold = false;
     courseEntryMessage = '';
-    if (!started) rememberSelection();
+    if (!started) {
+      painter.acceptEnemyArtwork?.();
+      rememberSelection();
+    }
     started = true;
     paused = false;
     void updatePlayedLevelLink();
@@ -10150,6 +10180,8 @@ try {
                           'xonix-core.v12',
                           'xonix-core.v13',
                           'xonix-core.v14',
+                          'xonix-core.v15',
+                          'xonix-core.v16',
                         ].includes(run.ruleset)
                       ? t('interface:reclaimedGround')
                       : t('interface:safeGround'),
@@ -10332,6 +10364,8 @@ try {
                   'xonix-core.v12',
                   'xonix-core.v13',
                   'xonix-core.v14',
+                  'xonix-core.v15',
+                  'xonix-core.v16',
                 ].includes(run.ruleset)
                   ? 'gameplay:liveLineExposedReachReclaimedGroundToSecureIt'
                   : 'gameplay:liveLineExposedReachSafeGroundToSecureIt',
@@ -10370,6 +10404,8 @@ try {
                   'xonix-core.v12',
                   'xonix-core.v13',
                   'xonix-core.v14',
+                  'xonix-core.v15',
+                  'xonix-core.v16',
                 ].includes(run.ruleset)
                   ? 'gameplay:lineStruckReachReclaimedGroundBeforeTheTravellingSparkCatches'
                   : 'interface:lineStruckReachSafeGroundBeforeTheTravellingSparkCatches',
@@ -11969,7 +12005,7 @@ try {
         unifiedChooser?.close();
       },
       onSelected: () => {
-        if (context.prepareOnly && !$('demo-dialog')?.open) focusMission();
+        if (!$('demo-dialog')?.open) focusMission();
       },
       onCancelled: () => {
         if (!launch.isCurrent() || document.hasFocus?.() === false) return false;
@@ -11988,13 +12024,16 @@ try {
       launch,
       ...selection,
       prepareOnly: context.prepareOnly === true,
+      // Demo preparation has its own eligibility checks. Ordinary selection
+      // keeps the library's all-missions admission, but never starts the clock.
+      briefingOnly: context.prepareOnly !== true,
       onStatus: (status) => {
         if (launch.isCurrent())
           contentStatus(status.message, false, { busy: status.stage !== 'ready' });
       },
     });
     // An unfinished-flight replacement owns the pending action. Do not reopen
-    // the library on top of its explicit Stay / Replace & play confirmation.
+    // the library on top of its explicit Stay / Replace confirmation.
     return selected || missionReplacement?.launch === launch;
   }
   async function prepareDemoFresh(source, isCurrent) {
@@ -12945,7 +12984,7 @@ try {
       if (destination && !started && $('continue-saved').hidden) {
         if (!options.isCurrent()) return;
         options.leave();
-        return launchJourneyMission(destination);
+        return launchJourneyMission(destination, { briefingOnly: false });
       }
       return launchTitleFlight('start', options);
     },
@@ -12958,7 +12997,7 @@ try {
       ) {
         if (!options.isCurrent()) return;
         options.leave();
-        return launchJourneyMission(destination);
+        return launchJourneyMission(destination, { briefingOnly: false });
       }
       return launchTitleFlight('continue', options);
     },
