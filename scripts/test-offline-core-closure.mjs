@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { readFile, readdir } from 'node:fs/promises';
 import { selectOfflineCore } from './offline-core-closure.mjs';
 import { COMMUNITY_ROUTES } from '../game/community-routes.mjs';
 
@@ -8,6 +9,58 @@ const entries = (values) =>
     name,
     bytes: Buffer.from(typeof value === 'string' ? value : JSON.stringify(value)),
   }));
+
+test('native Overflight source stays in player core while its linked Studio remains optional', async () => {
+  const player = (await readdir(new URL('../game/overflight/', import.meta.url)))
+    .filter((name) => /\.(?:mjs|css|html)$/.test(name))
+    .map((name) => `game/overflight/${name}`);
+  const shared = [
+    'game/ui/mode-play-shell.mjs',
+    'game/ui/mode-play-shell.css',
+    'game/ui/controller-navigation.mjs',
+    'game/ui/audio.mjs',
+    'game/ui/audio-master.mjs',
+    'game/couch/couch-music-host.mjs',
+    'game/presentation/theme-host.mjs',
+    'game/presentation/theme-bootstrap.mjs',
+    'game/presentation/host.mjs',
+    'game/presentation/industrial-machinery.mjs',
+    'game/presentation/overflight-field-kit-art.mjs',
+    'game/presentation/overflight-motion.mjs',
+    'game/hunt/actor-art.mjs',
+    'game/vendor/phaser-4.2.1.min.js',
+  ];
+  const optional = [
+    'game/studio/overflight.html',
+    'game/studio/overflight.mjs',
+    'game/studio/overflight.css',
+    'authoring/library/overflight-field-kit-v1/manifest.json',
+    'authoring/library/overflight-field-kit-v1/pickup-salvage-small.png',
+  ];
+  const files = await Promise.all(
+    [...player, ...shared, ...optional].map(async (name) => ({
+      name,
+      bytes: await readFile(new URL(`../${name}`, import.meta.url)),
+    })),
+  );
+  const core = selectOfflineCore(files, new Set());
+  for (const name of [
+    'game/overflight/play.html',
+    'game/overflight/app.mjs',
+    'game/overflight/core.mjs',
+    'game/overflight/renderer.mjs',
+    'game/overflight/atlas.mjs',
+    'game/overflight/style.css',
+    ...shared,
+  ])
+    assert.ok(core.retained.has(name), `${name} must not be hidden in tooling`);
+  for (const name of optional) {
+    assert.equal(core.retained.has(name), false, name);
+    assert.ok(core.optional.includes(name), name);
+  }
+  assert.equal(core.references.get('game/overflight/app.mjs'), 'game/overflight/play.html');
+  assert.equal(core.references.get('game/overflight/renderer.mjs'), 'game/overflight/app.mjs');
+});
 
 test('Solo startup graph retains boot styles and production assets while mode hosts stay separate', () => {
   const files = entries({
