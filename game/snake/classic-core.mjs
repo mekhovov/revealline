@@ -20,6 +20,7 @@ export {
   CLASSIC_SNAKE_V4_KINDS,
   classicSnakeUsesVariableHazards,
   classicSnakeSignalView,
+  classicSnakeSignalCoverage,
 } from './classic-core-v4.mjs';
 import {
   CLASSIC_SNAKE_V3_LEVEL,

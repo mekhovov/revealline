@@ -90,7 +90,9 @@ test('broadcast teaching precedes combined encounters and uses the approved name
         .level.targets.required.filter((target) => target.kind === 'jammer')
         .every((target) => target.signalProfile === 'broadcast-burst-v1'),
     );
-  assert.equal(entry('signal-crossing').level.targets.required[0].signalProfile, 'local-burst-v1');
+  assert.equal(entry('signal-crossing').level.targets.required[0].signalProfile, 'local-burst-v2');
+  for (const slug of ['signal-check', 'quiet-return', 'signal-crossing', 'field-links'])
+    assert.equal(entry(slug).level.revision, '3');
   assert.equal(entry('relay-airfield').level.revision, '2');
   assert.match(entry('relay-airfield').description.en, /whole feed/);
   assert.match(entry('relay-airfield').description.uk, /усе поле/);

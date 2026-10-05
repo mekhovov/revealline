@@ -8,7 +8,11 @@ import {
   resolveClassicSnakeRecipeEntry,
 } from '../snake/classic-catalogue-archive.mjs';
 import { prepareClassicSnakeLevel } from '../snake/classic-setup.mjs';
-import { classicSnakeSummary, exportClassicSnakeReplay } from '../snake/classic-core.mjs';
+import {
+  classicSnakeSummary,
+  exportClassicSnakeReplay,
+  restoreClassicSnakeReplay,
+} from '../snake/classic-core.mjs';
 import {
   createClassicSnakeMatch,
   advanceClassicSnakeMatchTo,
@@ -26,9 +30,16 @@ const archive = JSON.parse(
     'utf8',
   ),
 );
+const localV1 = JSON.parse(
+  await readFile(new URL('./fixtures/classic-snake-local-v1-proofs.json', import.meta.url), 'utf8'),
+);
 
 function verifiedMatch(replay) {
-  const match = createClassicSnakeMatch(replay.level, { seed: replay.seed, mode: replay.mode });
+  const match = createClassicSnakeMatch(replay.level, {
+    seed: replay.seed,
+    mode: replay.mode,
+    ...(replay.hazardSeed === undefined ? {} : { hazardSeed: replay.hazardSeed }),
+  });
   let cursor = 0;
   for (let tick = 0; tick <= replay.steps; tick++) {
     while (replay.turns[cursor]?.tick === tick) {
@@ -45,14 +56,24 @@ function verifiedMatch(replay) {
   return match;
 }
 
-test('archived admission is bounded to five exact official recipes and prepared variants', () => {
-  assert.equal(CLASSIC_SNAKE_ARCHIVED_LEVELS.length, 5);
+test('archived admission is bounded to nine exact official recipes and prepared variants', () => {
+  assert.equal(CLASSIC_SNAKE_ARCHIVED_LEVELS.length, 9);
+  assert.equal(
+    CLASSIC_SNAKE_ARCHIVED_LEVELS.filter((entry) => entry.level.revision === '1').length,
+    5,
+  );
+  assert.equal(
+    CLASSIC_SNAKE_ARCHIVED_LEVELS.filter((entry) => entry.level.revision === '2').length,
+    4,
+  );
   for (const previous of CLASSIC_SNAKE_ARCHIVED_LEVELS) {
     const current = CLASSIC_SNAKE_LEVELS.find((entry) => entry.id === previous.id);
-    assert.equal(previous.level.revision, '1');
-    assert.equal(current.level.revision, '2');
+    assert.ok(Number(current.level.revision) > Number(previous.level.revision));
     assert.equal(classicSnakeRecipeEntries(current).length, 1);
-    assert.equal(classicSnakeRecipeEntries(current, { allowArchive: true }).length, 2);
+    assert.equal(
+      classicSnakeRecipeEntries(current, { allowArchive: true }).length,
+      previous.id === 'classic-field-relay-airfield' ? 2 : 3,
+    );
     for (const pace of ['slow', 'normal', 'fast']) {
       const setup = { pace, targetRules: 'authored', preset: 'classic' };
       const level = prepareClassicSnakeLevel(previous, setup);
@@ -71,6 +92,56 @@ test('archived admission is bounded to five exact official recipes and prepared 
       );
     }
   }
+});
+
+test('all 24 retired local-v1 routes preserve exact checkpoints and completion-only records', async (t) => {
+  const model = managedIndexedDB();
+  const records = createClassicSnakeRecords({ indexedDB: model.indexedDB });
+  const replayed = [];
+  assert.equal(localV1.proofs.length, 24);
+  for (const { replay, pace } of localV1.proofs) {
+    assert.ok(
+      replay.level.targets.required.some((target) => target.signalProfile === 'local-burst-v1'),
+    );
+    const restored = restoreClassicSnakeReplay(replay);
+    assert.equal(restored.status, 'won');
+    assert.deepEqual(exportClassicSnakeReplay(restored), replay);
+    const current = CLASSIC_SNAKE_LEVELS.find((entry) => entry.id === replay.level.id);
+    const archived = resolveClassicSnakeRecipeEntry(
+      current,
+      replay.level,
+      { pace },
+      { allowArchive: true },
+    );
+    assert.equal(archived.level.revision, '2');
+    assert.throws(
+      () => resolveClassicSnakeRecipeEntry(current, replay.level, { pace }),
+      /catalogue definition/,
+    );
+    const match = verifiedMatch(replay);
+    await records.remember(match.runs[0], {
+      mode: replay.mode,
+      chapterId: archived.chapterId,
+      level: replay.level,
+      match: exportClassicSnakeMatch(match),
+    });
+    assert.equal(records.get(match.runs[0], replay.mode).rating.stars, 1);
+    assert.equal(records.get(match.runs[0], replay.mode).rating.calibrated, false);
+    replayed.push(match);
+  }
+  const before = records.snapshot();
+  records.close();
+  const reloaded = createClassicSnakeRecords({ indexedDB: model.indexedDB });
+  const ratings = createClassicSnakeRatings({ records: reloaded, indexedDB: model.indexedDB });
+  t.after(() => {
+    reloaded.close();
+    ratings.close();
+  });
+  await reloaded.read();
+  await ratings.refresh();
+  assert.deepEqual(reloaded.snapshot(), before);
+  for (const match of replayed)
+    assert.equal(ratings.get(match.runs[0], match.options.mode).stars, 1);
 });
 
 test('all thirty historical fixed-schedule grades remain verified after reload', async (t) => {

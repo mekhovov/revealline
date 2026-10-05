@@ -53,7 +53,7 @@ export const CLASSIC_SNAKE_RATING_CALIBRATIONS = Object.freeze([
     referenceMoves: 156,
     proof: 'game/test/fixtures/classic-snake-v4-proofs.json',
     proofIndex: 91,
-    proofSha256: 'bc83fa8be7c80f8ce4ea3e9499615983e4d1473667653d9f66bdbfb7376e94ec',
+    proofSha256: '4dbe59a33a5358710541d0229e63c434ab9ee7226bf6513cf5b6f30c4943c862',
   },
   {
     key: 'solo/mission/0853798ce29da114/17',
@@ -80,7 +80,7 @@ export const CLASSIC_SNAKE_RATING_CALIBRATIONS = Object.freeze([
     referenceMoves: 139,
     proof: 'game/test/fixtures/classic-snake-v4-proofs.json',
     proofIndex: 79,
-    proofSha256: 'bc83fa8be7c80f8ce4ea3e9499615983e4d1473667653d9f66bdbfb7376e94ec',
+    proofSha256: '4dbe59a33a5358710541d0229e63c434ab9ee7226bf6513cf5b6f30c4943c862',
   },
   {
     key: 'solo/mission/0a84f738e45c3a77/17',
@@ -94,7 +94,7 @@ export const CLASSIC_SNAKE_RATING_CALIBRATIONS = Object.freeze([
     referenceMoves: 71,
     proof: 'game/test/fixtures/classic-snake-v4-proofs.json',
     proofIndex: 114,
-    proofSha256: 'bc83fa8be7c80f8ce4ea3e9499615983e4d1473667653d9f66bdbfb7376e94ec',
+    proofSha256: '4dbe59a33a5358710541d0229e63c434ab9ee7226bf6513cf5b6f30c4943c862',
   },
   {
     key: 'solo/mission/0a964b237bc1abc7/17',
@@ -135,7 +135,7 @@ export const CLASSIC_SNAKE_RATING_CALIBRATIONS = Object.freeze([
     referenceMoves: 156,
     proof: 'game/test/fixtures/classic-snake-v4-proofs.json',
     proofIndex: 90,
-    proofSha256: 'bc83fa8be7c80f8ce4ea3e9499615983e4d1473667653d9f66bdbfb7376e94ec',
+    proofSha256: '4dbe59a33a5358710541d0229e63c434ab9ee7226bf6513cf5b6f30c4943c862',
   },
   {
     key: 'solo/mission/0e46985a9c61fb2f/17',
@@ -163,7 +163,7 @@ export const CLASSIC_SNAKE_RATING_CALIBRATIONS = Object.freeze([
     referenceMoves: 35,
     proof: 'game/test/fixtures/classic-snake-v4-proofs.json',
     proofIndex: 110,
-    proofSha256: 'bc83fa8be7c80f8ce4ea3e9499615983e4d1473667653d9f66bdbfb7376e94ec',
+    proofSha256: '4dbe59a33a5358710541d0229e63c434ab9ee7226bf6513cf5b6f30c4943c862',
   },
   {
     key: 'solo/mission/0f1f3b41341975c4/17',
@@ -268,7 +268,7 @@ export const CLASSIC_SNAKE_RATING_CALIBRATIONS = Object.freeze([
     referenceMoves: 156,
     proof: 'game/test/fixtures/classic-snake-v4-proofs.json',
     proofIndex: 66,
-    proofSha256: 'bc83fa8be7c80f8ce4ea3e9499615983e4d1473667653d9f66bdbfb7376e94ec',
+    proofSha256: '4dbe59a33a5358710541d0229e63c434ab9ee7226bf6513cf5b6f30c4943c862',
   },
   {
     key: 'solo/mission/1dcabb626a76dd8b/17',
@@ -295,7 +295,7 @@ export const CLASSIC_SNAKE_RATING_CALIBRATIONS = Object.freeze([
     referenceMoves: 131,
     proof: 'game/test/fixtures/classic-snake-v4-proofs.json',
     proofIndex: 103,
-    proofSha256: 'bc83fa8be7c80f8ce4ea3e9499615983e4d1473667653d9f66bdbfb7376e94ec',
+    proofSha256: '4dbe59a33a5358710541d0229e63c434ab9ee7226bf6513cf5b6f30c4943c862',
   },
   {
     key: 'solo/mission/1ee70727f116437c/17',
@@ -361,7 +361,7 @@ export const CLASSIC_SNAKE_RATING_CALIBRATIONS = Object.freeze([
     referenceMoves: 83,
     proof: 'game/test/fixtures/classic-snake-v4-proofs.json',
     proofIndex: 86,
-    proofSha256: 'bc83fa8be7c80f8ce4ea3e9499615983e4d1473667653d9f66bdbfb7376e94ec',
+    proofSha256: '4dbe59a33a5358710541d0229e63c434ab9ee7226bf6513cf5b6f30c4943c862',
   },
   {
     key: 'solo/mission/278e9e32e7ad04c7/17',
@@ -375,7 +375,7 @@ export const CLASSIC_SNAKE_RATING_CALIBRATIONS = Object.freeze([
     referenceMoves: 66,
     proof: 'game/test/fixtures/classic-snake-v4-proofs.json',
     proofIndex: 74,
-    proofSha256: 'bc83fa8be7c80f8ce4ea3e9499615983e4d1473667653d9f66bdbfb7376e94ec',
+    proofSha256: '4dbe59a33a5358710541d0229e63c434ab9ee7226bf6513cf5b6f30c4943c862',
   },
   {
     key: 'solo/mission/27c336bce6054f89/17',
@@ -416,7 +416,7 @@ export const CLASSIC_SNAKE_RATING_CALIBRATIONS = Object.freeze([
     referenceMoves: 131,
     proof: 'game/test/fixtures/classic-snake-v4-proofs.json',
     proofIndex: 102,
-    proofSha256: 'bc83fa8be7c80f8ce4ea3e9499615983e4d1473667653d9f66bdbfb7376e94ec',
+    proofSha256: '4dbe59a33a5358710541d0229e63c434ab9ee7226bf6513cf5b6f30c4943c862',
   },
   {
     key: 'solo/mission/2a05358a4440d5d0/17',
@@ -443,7 +443,7 @@ export const CLASSIC_SNAKE_RATING_CALIBRATIONS = Object.freeze([
     referenceMoves: 27,
     proof: 'game/test/fixtures/classic-snake-v4-proofs.json',
     proofIndex: 24,
-    proofSha256: 'bc83fa8be7c80f8ce4ea3e9499615983e4d1473667653d9f66bdbfb7376e94ec',
+    proofSha256: '4dbe59a33a5358710541d0229e63c434ab9ee7226bf6513cf5b6f30c4943c862',
   },
   {
     key: 'solo/mission/2bb2a9f8207186aa/17',
@@ -563,7 +563,7 @@ export const CLASSIC_SNAKE_RATING_CALIBRATIONS = Object.freeze([
     referenceMoves: 57,
     proof: 'game/test/fixtures/classic-snake-v4-proofs.json',
     proofIndex: 128,
-    proofSha256: 'bc83fa8be7c80f8ce4ea3e9499615983e4d1473667653d9f66bdbfb7376e94ec',
+    proofSha256: '4dbe59a33a5358710541d0229e63c434ab9ee7226bf6513cf5b6f30c4943c862',
   },
   {
     key: 'solo/mission/349b087d7745d45f/17',
@@ -670,7 +670,7 @@ export const CLASSIC_SNAKE_RATING_CALIBRATIONS = Object.freeze([
     referenceMoves: 27,
     proof: 'game/test/fixtures/classic-snake-v4-proofs.json',
     proofIndex: 25,
-    proofSha256: 'bc83fa8be7c80f8ce4ea3e9499615983e4d1473667653d9f66bdbfb7376e94ec',
+    proofSha256: '4dbe59a33a5358710541d0229e63c434ab9ee7226bf6513cf5b6f30c4943c862',
   },
   {
     key: 'solo/mission/43e2b807c293d2ed/17',
@@ -684,7 +684,7 @@ export const CLASSIC_SNAKE_RATING_CALIBRATIONS = Object.freeze([
     referenceMoves: 57,
     proof: 'game/test/fixtures/classic-snake-v4-proofs.json',
     proofIndex: 126,
-    proofSha256: 'bc83fa8be7c80f8ce4ea3e9499615983e4d1473667653d9f66bdbfb7376e94ec',
+    proofSha256: '4dbe59a33a5358710541d0229e63c434ab9ee7226bf6513cf5b6f30c4943c862',
   },
   {
     key: 'solo/mission/4458b0e8efc34faf/17',
@@ -698,7 +698,7 @@ export const CLASSIC_SNAKE_RATING_CALIBRATIONS = Object.freeze([
     referenceMoves: 66,
     proof: 'game/test/fixtures/classic-snake-v4-proofs.json',
     proofIndex: 72,
-    proofSha256: 'bc83fa8be7c80f8ce4ea3e9499615983e4d1473667653d9f66bdbfb7376e94ec',
+    proofSha256: '4dbe59a33a5358710541d0229e63c434ab9ee7226bf6513cf5b6f30c4943c862',
   },
   {
     key: 'solo/mission/476524ae3187f261/17',
@@ -725,7 +725,7 @@ export const CLASSIC_SNAKE_RATING_CALIBRATIONS = Object.freeze([
     referenceMoves: 139,
     proof: 'game/test/fixtures/classic-snake-v4-proofs.json',
     proofIndex: 78,
-    proofSha256: 'bc83fa8be7c80f8ce4ea3e9499615983e4d1473667653d9f66bdbfb7376e94ec',
+    proofSha256: '4dbe59a33a5358710541d0229e63c434ab9ee7226bf6513cf5b6f30c4943c862',
   },
   {
     key: 'solo/mission/4976f90b54fa2beb/17',
@@ -752,7 +752,7 @@ export const CLASSIC_SNAKE_RATING_CALIBRATIONS = Object.freeze([
     referenceMoves: 71,
     proof: 'game/test/fixtures/classic-snake-v4-proofs.json',
     proofIndex: 115,
-    proofSha256: 'bc83fa8be7c80f8ce4ea3e9499615983e4d1473667653d9f66bdbfb7376e94ec',
+    proofSha256: '4dbe59a33a5358710541d0229e63c434ab9ee7226bf6513cf5b6f30c4943c862',
   },
   {
     key: 'solo/mission/4cd1bd63cdb49893/17',
@@ -806,7 +806,7 @@ export const CLASSIC_SNAKE_RATING_CALIBRATIONS = Object.freeze([
     referenceMoves: 156,
     proof: 'game/test/fixtures/classic-snake-v4-proofs.json',
     proofIndex: 67,
-    proofSha256: 'bc83fa8be7c80f8ce4ea3e9499615983e4d1473667653d9f66bdbfb7376e94ec',
+    proofSha256: '4dbe59a33a5358710541d0229e63c434ab9ee7226bf6513cf5b6f30c4943c862',
   },
   {
     key: 'solo/mission/508f12c87456dd1a/17',
@@ -833,7 +833,7 @@ export const CLASSIC_SNAKE_RATING_CALIBRATIONS = Object.freeze([
     referenceMoves: 45,
     proof: 'game/test/fixtures/classic-snake-v4-proofs.json',
     proofIndex: 121,
-    proofSha256: 'bc83fa8be7c80f8ce4ea3e9499615983e4d1473667653d9f66bdbfb7376e94ec',
+    proofSha256: '4dbe59a33a5358710541d0229e63c434ab9ee7226bf6513cf5b6f30c4943c862',
   },
   {
     key: 'solo/mission/52230f9bc32830fb/17',
@@ -873,7 +873,7 @@ export const CLASSIC_SNAKE_RATING_CALIBRATIONS = Object.freeze([
     referenceMoves: 45,
     proof: 'game/test/fixtures/classic-snake-v4-proofs.json',
     proofIndex: 120,
-    proofSha256: 'bc83fa8be7c80f8ce4ea3e9499615983e4d1473667653d9f66bdbfb7376e94ec',
+    proofSha256: '4dbe59a33a5358710541d0229e63c434ab9ee7226bf6513cf5b6f30c4943c862',
   },
   {
     key: 'solo/mission/5608d243a5d0d68a/17',
@@ -926,7 +926,7 @@ export const CLASSIC_SNAKE_RATING_CALIBRATIONS = Object.freeze([
     referenceMoves: 83,
     proof: 'game/test/fixtures/classic-snake-v4-proofs.json',
     proofIndex: 85,
-    proofSha256: 'bc83fa8be7c80f8ce4ea3e9499615983e4d1473667653d9f66bdbfb7376e94ec',
+    proofSha256: '4dbe59a33a5358710541d0229e63c434ab9ee7226bf6513cf5b6f30c4943c862',
   },
   {
     key: 'solo/mission/59b59c26d1bfd82d/17',
@@ -940,7 +940,7 @@ export const CLASSIC_SNAKE_RATING_CALIBRATIONS = Object.freeze([
     referenceMoves: 27,
     proof: 'game/test/fixtures/classic-snake-v4-proofs.json',
     proofIndex: 26,
-    proofSha256: 'bc83fa8be7c80f8ce4ea3e9499615983e4d1473667653d9f66bdbfb7376e94ec',
+    proofSha256: '4dbe59a33a5358710541d0229e63c434ab9ee7226bf6513cf5b6f30c4943c862',
   },
   {
     key: 'solo/mission/5f286bbd6eb04450/17',
@@ -1006,7 +1006,7 @@ export const CLASSIC_SNAKE_RATING_CALIBRATIONS = Object.freeze([
     referenceMoves: 139,
     proof: 'game/test/fixtures/classic-snake-v4-proofs.json',
     proofIndex: 80,
-    proofSha256: 'bc83fa8be7c80f8ce4ea3e9499615983e4d1473667653d9f66bdbfb7376e94ec',
+    proofSha256: '4dbe59a33a5358710541d0229e63c434ab9ee7226bf6513cf5b6f30c4943c862',
   },
   {
     key: 'solo/mission/6510251813acc01d/17',
@@ -1047,7 +1047,7 @@ export const CLASSIC_SNAKE_RATING_CALIBRATIONS = Object.freeze([
     referenceMoves: 51,
     proof: 'game/test/fixtures/classic-snake-v4-proofs.json',
     proofIndex: 12,
-    proofSha256: 'bc83fa8be7c80f8ce4ea3e9499615983e4d1473667653d9f66bdbfb7376e94ec',
+    proofSha256: '4dbe59a33a5358710541d0229e63c434ab9ee7226bf6513cf5b6f30c4943c862',
   },
   {
     key: 'solo/mission/6c41732eb656a1e9/17',
@@ -1113,7 +1113,7 @@ export const CLASSIC_SNAKE_RATING_CALIBRATIONS = Object.freeze([
     referenceMoves: 156,
     proof: 'game/test/fixtures/classic-snake-v4-proofs.json',
     proofIndex: 92,
-    proofSha256: 'bc83fa8be7c80f8ce4ea3e9499615983e4d1473667653d9f66bdbfb7376e94ec',
+    proofSha256: '4dbe59a33a5358710541d0229e63c434ab9ee7226bf6513cf5b6f30c4943c862',
   },
   {
     key: 'solo/mission/731e547f5567b243/17',
@@ -1127,7 +1127,7 @@ export const CLASSIC_SNAKE_RATING_CALIBRATIONS = Object.freeze([
     referenceMoves: 35,
     proof: 'game/test/fixtures/classic-snake-v4-proofs.json',
     proofIndex: 109,
-    proofSha256: 'bc83fa8be7c80f8ce4ea3e9499615983e4d1473667653d9f66bdbfb7376e94ec',
+    proofSha256: '4dbe59a33a5358710541d0229e63c434ab9ee7226bf6513cf5b6f30c4943c862',
   },
   {
     key: 'solo/mission/7375140620b53e66/17',
@@ -1208,7 +1208,7 @@ export const CLASSIC_SNAKE_RATING_CALIBRATIONS = Object.freeze([
     referenceMoves: 65,
     proof: 'game/test/fixtures/classic-snake-v4-proofs.json',
     proofIndex: 19,
-    proofSha256: 'bc83fa8be7c80f8ce4ea3e9499615983e4d1473667653d9f66bdbfb7376e94ec',
+    proofSha256: '4dbe59a33a5358710541d0229e63c434ab9ee7226bf6513cf5b6f30c4943c862',
   },
   {
     key: 'solo/mission/78542cbd5579a1a6/17',
@@ -1222,7 +1222,7 @@ export const CLASSIC_SNAKE_RATING_CALIBRATIONS = Object.freeze([
     referenceMoves: 83,
     proof: 'game/test/fixtures/classic-snake-v4-proofs.json',
     proofIndex: 97,
-    proofSha256: 'bc83fa8be7c80f8ce4ea3e9499615983e4d1473667653d9f66bdbfb7376e94ec',
+    proofSha256: '4dbe59a33a5358710541d0229e63c434ab9ee7226bf6513cf5b6f30c4943c862',
   },
   {
     key: 'solo/mission/7bc8c50d2d2d8f48/17',
@@ -1250,7 +1250,7 @@ export const CLASSIC_SNAKE_RATING_CALIBRATIONS = Object.freeze([
     referenceMoves: 131,
     proof: 'game/test/fixtures/classic-snake-v4-proofs.json',
     proofIndex: 104,
-    proofSha256: 'bc83fa8be7c80f8ce4ea3e9499615983e4d1473667653d9f66bdbfb7376e94ec',
+    proofSha256: '4dbe59a33a5358710541d0229e63c434ab9ee7226bf6513cf5b6f30c4943c862',
   },
   {
     key: 'solo/mission/7ce3f02237a51c53/17',
@@ -1317,7 +1317,7 @@ export const CLASSIC_SNAKE_RATING_CALIBRATIONS = Object.freeze([
     referenceMoves: 83,
     proof: 'game/test/fixtures/classic-snake-v4-proofs.json',
     proofIndex: 84,
-    proofSha256: 'bc83fa8be7c80f8ce4ea3e9499615983e4d1473667653d9f66bdbfb7376e94ec',
+    proofSha256: '4dbe59a33a5358710541d0229e63c434ab9ee7226bf6513cf5b6f30c4943c862',
   },
   {
     key: 'solo/mission/85a47e17cd4743fd/17',
@@ -1357,7 +1357,7 @@ export const CLASSIC_SNAKE_RATING_CALIBRATIONS = Object.freeze([
     referenceMoves: 51,
     proof: 'game/test/fixtures/classic-snake-v4-proofs.json',
     proofIndex: 13,
-    proofSha256: 'bc83fa8be7c80f8ce4ea3e9499615983e4d1473667653d9f66bdbfb7376e94ec',
+    proofSha256: '4dbe59a33a5358710541d0229e63c434ab9ee7226bf6513cf5b6f30c4943c862',
   },
   {
     key: 'solo/mission/8a265cfe0b43f913/17',
@@ -1371,7 +1371,7 @@ export const CLASSIC_SNAKE_RATING_CALIBRATIONS = Object.freeze([
     referenceMoves: 119,
     proof: 'game/test/fixtures/classic-snake-v4-proofs.json',
     proofIndex: 140,
-    proofSha256: 'bc83fa8be7c80f8ce4ea3e9499615983e4d1473667653d9f66bdbfb7376e94ec',
+    proofSha256: '4dbe59a33a5358710541d0229e63c434ab9ee7226bf6513cf5b6f30c4943c862',
   },
   {
     key: 'solo/mission/8e16963fd7d1b10b/17',
@@ -1398,7 +1398,7 @@ export const CLASSIC_SNAKE_RATING_CALIBRATIONS = Object.freeze([
     referenceMoves: 65,
     proof: 'game/test/fixtures/classic-snake-v4-proofs.json',
     proofIndex: 18,
-    proofSha256: 'bc83fa8be7c80f8ce4ea3e9499615983e4d1473667653d9f66bdbfb7376e94ec',
+    proofSha256: '4dbe59a33a5358710541d0229e63c434ab9ee7226bf6513cf5b6f30c4943c862',
   },
   {
     key: 'solo/mission/9511e747b43242e5/17',
@@ -1438,7 +1438,7 @@ export const CLASSIC_SNAKE_RATING_CALIBRATIONS = Object.freeze([
     referenceMoves: 104,
     proof: 'game/test/fixtures/classic-snake-v4-proofs.json',
     proofIndex: 62,
-    proofSha256: 'bc83fa8be7c80f8ce4ea3e9499615983e4d1473667653d9f66bdbfb7376e94ec',
+    proofSha256: '4dbe59a33a5358710541d0229e63c434ab9ee7226bf6513cf5b6f30c4943c862',
   },
   {
     key: 'solo/mission/967e723a355279df/17',
@@ -1452,7 +1452,7 @@ export const CLASSIC_SNAKE_RATING_CALIBRATIONS = Object.freeze([
     referenceMoves: 119,
     proof: 'game/test/fixtures/classic-snake-v4-proofs.json',
     proofIndex: 139,
-    proofSha256: 'bc83fa8be7c80f8ce4ea3e9499615983e4d1473667653d9f66bdbfb7376e94ec',
+    proofSha256: '4dbe59a33a5358710541d0229e63c434ab9ee7226bf6513cf5b6f30c4943c862',
   },
   {
     key: 'solo/mission/9724dbaf2ce672b7/17',
@@ -1493,7 +1493,7 @@ export const CLASSIC_SNAKE_RATING_CALIBRATIONS = Object.freeze([
     referenceMoves: 39,
     proof: 'game/test/fixtures/classic-snake-v4-proofs.json',
     proofIndex: 31,
-    proofSha256: 'bc83fa8be7c80f8ce4ea3e9499615983e4d1473667653d9f66bdbfb7376e94ec',
+    proofSha256: '4dbe59a33a5358710541d0229e63c434ab9ee7226bf6513cf5b6f30c4943c862',
   },
   {
     key: 'solo/mission/9973b3f0aec06f5a/17',
@@ -1520,7 +1520,7 @@ export const CLASSIC_SNAKE_RATING_CALIBRATIONS = Object.freeze([
     referenceMoves: 156,
     proof: 'game/test/fixtures/classic-snake-v4-proofs.json',
     proofIndex: 68,
-    proofSha256: 'bc83fa8be7c80f8ce4ea3e9499615983e4d1473667653d9f66bdbfb7376e94ec',
+    proofSha256: '4dbe59a33a5358710541d0229e63c434ab9ee7226bf6513cf5b6f30c4943c862',
   },
   {
     key: 'solo/mission/9df3e2ace89e277d/17',
@@ -1534,7 +1534,7 @@ export const CLASSIC_SNAKE_RATING_CALIBRATIONS = Object.freeze([
     referenceMoves: 57,
     proof: 'game/test/fixtures/classic-snake-v4-proofs.json',
     proofIndex: 127,
-    proofSha256: 'bc83fa8be7c80f8ce4ea3e9499615983e4d1473667653d9f66bdbfb7376e94ec',
+    proofSha256: '4dbe59a33a5358710541d0229e63c434ab9ee7226bf6513cf5b6f30c4943c862',
   },
   {
     key: 'solo/mission/9f17772071113cc9/17',
@@ -1613,7 +1613,7 @@ export const CLASSIC_SNAKE_RATING_CALIBRATIONS = Object.freeze([
     referenceMoves: 71,
     proof: 'game/test/fixtures/classic-snake-v4-proofs.json',
     proofIndex: 116,
-    proofSha256: 'bc83fa8be7c80f8ce4ea3e9499615983e4d1473667653d9f66bdbfb7376e94ec',
+    proofSha256: '4dbe59a33a5358710541d0229e63c434ab9ee7226bf6513cf5b6f30c4943c862',
   },
   {
     key: 'solo/mission/aa3cb36b87e7898e/17',
@@ -1731,7 +1731,7 @@ export const CLASSIC_SNAKE_RATING_CALIBRATIONS = Object.freeze([
     referenceMoves: 104,
     proof: 'game/test/fixtures/classic-snake-v4-proofs.json',
     proofIndex: 61,
-    proofSha256: 'bc83fa8be7c80f8ce4ea3e9499615983e4d1473667653d9f66bdbfb7376e94ec',
+    proofSha256: '4dbe59a33a5358710541d0229e63c434ab9ee7226bf6513cf5b6f30c4943c862',
   },
   {
     key: 'solo/mission/b6c6a030f17ed8f4/17',
@@ -1745,7 +1745,7 @@ export const CLASSIC_SNAKE_RATING_CALIBRATIONS = Object.freeze([
     referenceMoves: 104,
     proof: 'game/test/fixtures/classic-snake-v4-proofs.json',
     proofIndex: 60,
-    proofSha256: 'bc83fa8be7c80f8ce4ea3e9499615983e4d1473667653d9f66bdbfb7376e94ec',
+    proofSha256: '4dbe59a33a5358710541d0229e63c434ab9ee7226bf6513cf5b6f30c4943c862',
   },
   {
     key: 'solo/mission/b8e9458beb49b2ef/17',
@@ -1863,7 +1863,7 @@ export const CLASSIC_SNAKE_RATING_CALIBRATIONS = Object.freeze([
     referenceMoves: 66,
     proof: 'game/test/fixtures/classic-snake-v4-proofs.json',
     proofIndex: 73,
-    proofSha256: 'bc83fa8be7c80f8ce4ea3e9499615983e4d1473667653d9f66bdbfb7376e94ec',
+    proofSha256: '4dbe59a33a5358710541d0229e63c434ab9ee7226bf6513cf5b6f30c4943c862',
   },
   {
     key: 'solo/mission/c33db3cf0b61bde6/17',
@@ -1877,7 +1877,7 @@ export const CLASSIC_SNAKE_RATING_CALIBRATIONS = Object.freeze([
     referenceMoves: 83,
     proof: 'game/test/fixtures/classic-snake-v4-proofs.json',
     proofIndex: 96,
-    proofSha256: 'bc83fa8be7c80f8ce4ea3e9499615983e4d1473667653d9f66bdbfb7376e94ec',
+    proofSha256: '4dbe59a33a5358710541d0229e63c434ab9ee7226bf6513cf5b6f30c4943c862',
   },
   {
     key: 'solo/mission/c34a7b94829cd05a/17',
@@ -1918,7 +1918,7 @@ export const CLASSIC_SNAKE_RATING_CALIBRATIONS = Object.freeze([
     referenceMoves: 39,
     proof: 'game/test/fixtures/classic-snake-v4-proofs.json',
     proofIndex: 32,
-    proofSha256: 'bc83fa8be7c80f8ce4ea3e9499615983e4d1473667653d9f66bdbfb7376e94ec',
+    proofSha256: '4dbe59a33a5358710541d0229e63c434ab9ee7226bf6513cf5b6f30c4943c862',
   },
   {
     key: 'solo/mission/c3f1157fcff995d6/17',
@@ -1945,7 +1945,7 @@ export const CLASSIC_SNAKE_RATING_CALIBRATIONS = Object.freeze([
     referenceMoves: 83,
     proof: 'game/test/fixtures/classic-snake-v4-proofs.json',
     proofIndex: 98,
-    proofSha256: 'bc83fa8be7c80f8ce4ea3e9499615983e4d1473667653d9f66bdbfb7376e94ec',
+    proofSha256: '4dbe59a33a5358710541d0229e63c434ab9ee7226bf6513cf5b6f30c4943c862',
   },
   {
     key: 'solo/mission/c8383910433e73c5/17',
@@ -1959,7 +1959,7 @@ export const CLASSIC_SNAKE_RATING_CALIBRATIONS = Object.freeze([
     referenceMoves: 49,
     proof: 'game/test/fixtures/classic-snake-v4-proofs.json',
     proofIndex: 14,
-    proofSha256: 'bc83fa8be7c80f8ce4ea3e9499615983e4d1473667653d9f66bdbfb7376e94ec',
+    proofSha256: '4dbe59a33a5358710541d0229e63c434ab9ee7226bf6513cf5b6f30c4943c862',
   },
   {
     key: 'solo/mission/c94bb938088ac858/17',
@@ -2129,7 +2129,7 @@ export const CLASSIC_SNAKE_RATING_CALIBRATIONS = Object.freeze([
     referenceMoves: 45,
     proof: 'game/test/fixtures/classic-snake-v4-proofs.json',
     proofIndex: 122,
-    proofSha256: 'bc83fa8be7c80f8ce4ea3e9499615983e4d1473667653d9f66bdbfb7376e94ec',
+    proofSha256: '4dbe59a33a5358710541d0229e63c434ab9ee7226bf6513cf5b6f30c4943c862',
   },
   {
     key: 'solo/mission/dc2da72fbbbfbe50/17',
@@ -2169,7 +2169,7 @@ export const CLASSIC_SNAKE_RATING_CALIBRATIONS = Object.freeze([
     referenceMoves: 39,
     proof: 'game/test/fixtures/classic-snake-v4-proofs.json',
     proofIndex: 30,
-    proofSha256: 'bc83fa8be7c80f8ce4ea3e9499615983e4d1473667653d9f66bdbfb7376e94ec',
+    proofSha256: '4dbe59a33a5358710541d0229e63c434ab9ee7226bf6513cf5b6f30c4943c862',
   },
   {
     key: 'solo/mission/e1c3057d445fda43/17',
@@ -2183,7 +2183,7 @@ export const CLASSIC_SNAKE_RATING_CALIBRATIONS = Object.freeze([
     referenceMoves: 35,
     proof: 'game/test/fixtures/classic-snake-v4-proofs.json',
     proofIndex: 108,
-    proofSha256: 'bc83fa8be7c80f8ce4ea3e9499615983e4d1473667653d9f66bdbfb7376e94ec',
+    proofSha256: '4dbe59a33a5358710541d0229e63c434ab9ee7226bf6513cf5b6f30c4943c862',
   },
   {
     key: 'solo/mission/e4b19059d1c9a949/17',
@@ -2224,7 +2224,7 @@ export const CLASSIC_SNAKE_RATING_CALIBRATIONS = Object.freeze([
     referenceMoves: 119,
     proof: 'game/test/fixtures/classic-snake-v4-proofs.json',
     proofIndex: 138,
-    proofSha256: 'bc83fa8be7c80f8ce4ea3e9499615983e4d1473667653d9f66bdbfb7376e94ec',
+    proofSha256: '4dbe59a33a5358710541d0229e63c434ab9ee7226bf6513cf5b6f30c4943c862',
   },
   {
     key: 'solo/mission/ec62e8e04884dc87/17',
@@ -2238,7 +2238,7 @@ export const CLASSIC_SNAKE_RATING_CALIBRATIONS = Object.freeze([
     referenceMoves: 65,
     proof: 'game/test/fixtures/classic-snake-v4-proofs.json',
     proofIndex: 20,
-    proofSha256: 'bc83fa8be7c80f8ce4ea3e9499615983e4d1473667653d9f66bdbfb7376e94ec',
+    proofSha256: '4dbe59a33a5358710541d0229e63c434ab9ee7226bf6513cf5b6f30c4943c862',
   },
   {
     key: 'solo/mission/ecbbd2a7d0cbecc8/17',
@@ -2397,7 +2397,7 @@ export const CLASSIC_SNAKE_RATING_CALIBRATIONS = Object.freeze([
     referenceMoves: 128,
     proof: 'game/test/fixtures/classic-snake-v4-proofs.json',
     proofIndex: 94,
-    proofSha256: 'bc83fa8be7c80f8ce4ea3e9499615983e4d1473667653d9f66bdbfb7376e94ec',
+    proofSha256: '4dbe59a33a5358710541d0229e63c434ab9ee7226bf6513cf5b6f30c4943c862',
   },
   {
     key: 'team/mission/09470716cb317f45/17',
@@ -2411,7 +2411,7 @@ export const CLASSIC_SNAKE_RATING_CALIBRATIONS = Object.freeze([
     referenceMoves: 109,
     proof: 'game/test/fixtures/classic-snake-v4-proofs.json',
     proofIndex: 82,
-    proofSha256: 'bc83fa8be7c80f8ce4ea3e9499615983e4d1473667653d9f66bdbfb7376e94ec',
+    proofSha256: '4dbe59a33a5358710541d0229e63c434ab9ee7226bf6513cf5b6f30c4943c862',
   },
   {
     key: 'team/mission/0a84f738e45c3a77/17',
@@ -2425,7 +2425,7 @@ export const CLASSIC_SNAKE_RATING_CALIBRATIONS = Object.freeze([
     referenceMoves: 61,
     proof: 'game/test/fixtures/classic-snake-v4-proofs.json',
     proofIndex: 117,
-    proofSha256: 'bc83fa8be7c80f8ce4ea3e9499615983e4d1473667653d9f66bdbfb7376e94ec',
+    proofSha256: '4dbe59a33a5358710541d0229e63c434ab9ee7226bf6513cf5b6f30c4943c862',
   },
   {
     key: 'team/mission/0b92da5b4155a6e0/17',
@@ -2453,7 +2453,7 @@ export const CLASSIC_SNAKE_RATING_CALIBRATIONS = Object.freeze([
     referenceMoves: 128,
     proof: 'game/test/fixtures/classic-snake-v4-proofs.json',
     proofIndex: 93,
-    proofSha256: 'bc83fa8be7c80f8ce4ea3e9499615983e4d1473667653d9f66bdbfb7376e94ec',
+    proofSha256: '4dbe59a33a5358710541d0229e63c434ab9ee7226bf6513cf5b6f30c4943c862',
   },
   {
     key: 'team/mission/0e46985a9c61fb2f/17',
@@ -2481,7 +2481,7 @@ export const CLASSIC_SNAKE_RATING_CALIBRATIONS = Object.freeze([
     referenceMoves: 41,
     proof: 'game/test/fixtures/classic-snake-v4-proofs.json',
     proofIndex: 113,
-    proofSha256: 'bc83fa8be7c80f8ce4ea3e9499615983e4d1473667653d9f66bdbfb7376e94ec',
+    proofSha256: '4dbe59a33a5358710541d0229e63c434ab9ee7226bf6513cf5b6f30c4943c862',
   },
   {
     key: 'team/mission/15e3642b25b2d7dc/17',
@@ -2495,7 +2495,7 @@ export const CLASSIC_SNAKE_RATING_CALIBRATIONS = Object.freeze([
     referenceMoves: 129,
     proof: 'game/test/fixtures/classic-snake-v4-proofs.json',
     proofIndex: 69,
-    proofSha256: 'bc83fa8be7c80f8ce4ea3e9499615983e4d1473667653d9f66bdbfb7376e94ec',
+    proofSha256: '4dbe59a33a5358710541d0229e63c434ab9ee7226bf6513cf5b6f30c4943c862',
   },
   {
     key: 'team/mission/1ece1dc4f9aaab47/17',
@@ -2509,7 +2509,7 @@ export const CLASSIC_SNAKE_RATING_CALIBRATIONS = Object.freeze([
     referenceMoves: 83,
     proof: 'game/test/fixtures/classic-snake-v4-proofs.json',
     proofIndex: 106,
-    proofSha256: 'bc83fa8be7c80f8ce4ea3e9499615983e4d1473667653d9f66bdbfb7376e94ec',
+    proofSha256: '4dbe59a33a5358710541d0229e63c434ab9ee7226bf6513cf5b6f30c4943c862',
   },
   {
     key: 'team/mission/24da6ca2b3fcb219/17',
@@ -2523,7 +2523,7 @@ export const CLASSIC_SNAKE_RATING_CALIBRATIONS = Object.freeze([
     referenceMoves: 63,
     proof: 'game/test/fixtures/classic-snake-v4-proofs.json',
     proofIndex: 89,
-    proofSha256: 'bc83fa8be7c80f8ce4ea3e9499615983e4d1473667653d9f66bdbfb7376e94ec',
+    proofSha256: '4dbe59a33a5358710541d0229e63c434ab9ee7226bf6513cf5b6f30c4943c862',
   },
   {
     key: 'team/mission/278e9e32e7ad04c7/17',
@@ -2537,7 +2537,7 @@ export const CLASSIC_SNAKE_RATING_CALIBRATIONS = Object.freeze([
     referenceMoves: 43,
     proof: 'game/test/fixtures/classic-snake-v4-proofs.json',
     proofIndex: 77,
-    proofSha256: 'bc83fa8be7c80f8ce4ea3e9499615983e4d1473667653d9f66bdbfb7376e94ec',
+    proofSha256: '4dbe59a33a5358710541d0229e63c434ab9ee7226bf6513cf5b6f30c4943c862',
   },
   {
     key: 'team/mission/27c336bce6054f89/17',
@@ -2565,7 +2565,7 @@ export const CLASSIC_SNAKE_RATING_CALIBRATIONS = Object.freeze([
     referenceMoves: 83,
     proof: 'game/test/fixtures/classic-snake-v4-proofs.json',
     proofIndex: 105,
-    proofSha256: 'bc83fa8be7c80f8ce4ea3e9499615983e4d1473667653d9f66bdbfb7376e94ec',
+    proofSha256: '4dbe59a33a5358710541d0229e63c434ab9ee7226bf6513cf5b6f30c4943c862',
   },
   {
     key: 'team/mission/2b66d7f9fb40d121/17',
@@ -2579,7 +2579,7 @@ export const CLASSIC_SNAKE_RATING_CALIBRATIONS = Object.freeze([
     referenceMoves: 13,
     proof: 'game/test/fixtures/classic-snake-v4-proofs.json',
     proofIndex: 27,
-    proofSha256: 'bc83fa8be7c80f8ce4ea3e9499615983e4d1473667653d9f66bdbfb7376e94ec',
+    proofSha256: '4dbe59a33a5358710541d0229e63c434ab9ee7226bf6513cf5b6f30c4943c862',
   },
   {
     key: 'team/mission/2bb6e2ad168ca240/17',
@@ -2621,7 +2621,7 @@ export const CLASSIC_SNAKE_RATING_CALIBRATIONS = Object.freeze([
     referenceMoves: 61,
     proof: 'game/test/fixtures/classic-snake-v4-proofs.json',
     proofIndex: 131,
-    proofSha256: 'bc83fa8be7c80f8ce4ea3e9499615983e4d1473667653d9f66bdbfb7376e94ec',
+    proofSha256: '4dbe59a33a5358710541d0229e63c434ab9ee7226bf6513cf5b6f30c4943c862',
   },
   {
     key: 'team/mission/349b087d7745d45f/17',
@@ -2649,7 +2649,7 @@ export const CLASSIC_SNAKE_RATING_CALIBRATIONS = Object.freeze([
     referenceMoves: 13,
     proof: 'game/test/fixtures/classic-snake-v4-proofs.json',
     proofIndex: 28,
-    proofSha256: 'bc83fa8be7c80f8ce4ea3e9499615983e4d1473667653d9f66bdbfb7376e94ec',
+    proofSha256: '4dbe59a33a5358710541d0229e63c434ab9ee7226bf6513cf5b6f30c4943c862',
   },
   {
     key: 'team/mission/43e2b807c293d2ed/17',
@@ -2663,7 +2663,7 @@ export const CLASSIC_SNAKE_RATING_CALIBRATIONS = Object.freeze([
     referenceMoves: 61,
     proof: 'game/test/fixtures/classic-snake-v4-proofs.json',
     proofIndex: 129,
-    proofSha256: 'bc83fa8be7c80f8ce4ea3e9499615983e4d1473667653d9f66bdbfb7376e94ec',
+    proofSha256: '4dbe59a33a5358710541d0229e63c434ab9ee7226bf6513cf5b6f30c4943c862',
   },
   {
     key: 'team/mission/4458b0e8efc34faf/17',
@@ -2677,7 +2677,7 @@ export const CLASSIC_SNAKE_RATING_CALIBRATIONS = Object.freeze([
     referenceMoves: 43,
     proof: 'game/test/fixtures/classic-snake-v4-proofs.json',
     proofIndex: 75,
-    proofSha256: 'bc83fa8be7c80f8ce4ea3e9499615983e4d1473667653d9f66bdbfb7376e94ec',
+    proofSha256: '4dbe59a33a5358710541d0229e63c434ab9ee7226bf6513cf5b6f30c4943c862',
   },
   {
     key: 'team/mission/483c9447615a16b5/17',
@@ -2691,7 +2691,7 @@ export const CLASSIC_SNAKE_RATING_CALIBRATIONS = Object.freeze([
     referenceMoves: 109,
     proof: 'game/test/fixtures/classic-snake-v4-proofs.json',
     proofIndex: 81,
-    proofSha256: 'bc83fa8be7c80f8ce4ea3e9499615983e4d1473667653d9f66bdbfb7376e94ec',
+    proofSha256: '4dbe59a33a5358710541d0229e63c434ab9ee7226bf6513cf5b6f30c4943c862',
   },
   {
     key: 'team/mission/4a69b955614fc417/17',
@@ -2705,7 +2705,7 @@ export const CLASSIC_SNAKE_RATING_CALIBRATIONS = Object.freeze([
     referenceMoves: 61,
     proof: 'game/test/fixtures/classic-snake-v4-proofs.json',
     proofIndex: 118,
-    proofSha256: 'bc83fa8be7c80f8ce4ea3e9499615983e4d1473667653d9f66bdbfb7376e94ec',
+    proofSha256: '4dbe59a33a5358710541d0229e63c434ab9ee7226bf6513cf5b6f30c4943c862',
   },
   {
     key: 'team/mission/4cd1bd63cdb49893/17',
@@ -2733,7 +2733,7 @@ export const CLASSIC_SNAKE_RATING_CALIBRATIONS = Object.freeze([
     referenceMoves: 129,
     proof: 'game/test/fixtures/classic-snake-v4-proofs.json',
     proofIndex: 70,
-    proofSha256: 'bc83fa8be7c80f8ce4ea3e9499615983e4d1473667653d9f66bdbfb7376e94ec',
+    proofSha256: '4dbe59a33a5358710541d0229e63c434ab9ee7226bf6513cf5b6f30c4943c862',
   },
   {
     key: 'team/mission/51f77ba41de2117a/17',
@@ -2747,7 +2747,7 @@ export const CLASSIC_SNAKE_RATING_CALIBRATIONS = Object.freeze([
     referenceMoves: 43,
     proof: 'game/test/fixtures/classic-snake-v4-proofs.json',
     proofIndex: 124,
-    proofSha256: 'bc83fa8be7c80f8ce4ea3e9499615983e4d1473667653d9f66bdbfb7376e94ec',
+    proofSha256: '4dbe59a33a5358710541d0229e63c434ab9ee7226bf6513cf5b6f30c4943c862',
   },
   {
     key: 'team/mission/5475ee21900964ea/17',
@@ -2761,7 +2761,7 @@ export const CLASSIC_SNAKE_RATING_CALIBRATIONS = Object.freeze([
     referenceMoves: 43,
     proof: 'game/test/fixtures/classic-snake-v4-proofs.json',
     proofIndex: 123,
-    proofSha256: 'bc83fa8be7c80f8ce4ea3e9499615983e4d1473667653d9f66bdbfb7376e94ec',
+    proofSha256: '4dbe59a33a5358710541d0229e63c434ab9ee7226bf6513cf5b6f30c4943c862',
   },
   {
     key: 'team/mission/5608d243a5d0d68a/17',
@@ -2801,7 +2801,7 @@ export const CLASSIC_SNAKE_RATING_CALIBRATIONS = Object.freeze([
     referenceMoves: 63,
     proof: 'game/test/fixtures/classic-snake-v4-proofs.json',
     proofIndex: 88,
-    proofSha256: 'bc83fa8be7c80f8ce4ea3e9499615983e4d1473667653d9f66bdbfb7376e94ec',
+    proofSha256: '4dbe59a33a5358710541d0229e63c434ab9ee7226bf6513cf5b6f30c4943c862',
   },
   {
     key: 'team/mission/59b59c26d1bfd82d/17',
@@ -2815,7 +2815,7 @@ export const CLASSIC_SNAKE_RATING_CALIBRATIONS = Object.freeze([
     referenceMoves: 13,
     proof: 'game/test/fixtures/classic-snake-v4-proofs.json',
     proofIndex: 29,
-    proofSha256: 'bc83fa8be7c80f8ce4ea3e9499615983e4d1473667653d9f66bdbfb7376e94ec',
+    proofSha256: '4dbe59a33a5358710541d0229e63c434ab9ee7226bf6513cf5b6f30c4943c862',
   },
   {
     key: 'team/mission/6483a93e2d517fe5/17',
@@ -2829,7 +2829,7 @@ export const CLASSIC_SNAKE_RATING_CALIBRATIONS = Object.freeze([
     referenceMoves: 109,
     proof: 'game/test/fixtures/classic-snake-v4-proofs.json',
     proofIndex: 83,
-    proofSha256: 'bc83fa8be7c80f8ce4ea3e9499615983e4d1473667653d9f66bdbfb7376e94ec',
+    proofSha256: '4dbe59a33a5358710541d0229e63c434ab9ee7226bf6513cf5b6f30c4943c862',
   },
   {
     key: 'team/mission/6510251813acc01d/17',
@@ -2857,7 +2857,7 @@ export const CLASSIC_SNAKE_RATING_CALIBRATIONS = Object.freeze([
     referenceMoves: 37,
     proof: 'game/test/fixtures/classic-snake-v4-proofs.json',
     proofIndex: 15,
-    proofSha256: 'bc83fa8be7c80f8ce4ea3e9499615983e4d1473667653d9f66bdbfb7376e94ec',
+    proofSha256: '4dbe59a33a5358710541d0229e63c434ab9ee7226bf6513cf5b6f30c4943c862',
   },
   {
     key: 'team/mission/729850a39400636d/17',
@@ -2871,7 +2871,7 @@ export const CLASSIC_SNAKE_RATING_CALIBRATIONS = Object.freeze([
     referenceMoves: 128,
     proof: 'game/test/fixtures/classic-snake-v4-proofs.json',
     proofIndex: 95,
-    proofSha256: 'bc83fa8be7c80f8ce4ea3e9499615983e4d1473667653d9f66bdbfb7376e94ec',
+    proofSha256: '4dbe59a33a5358710541d0229e63c434ab9ee7226bf6513cf5b6f30c4943c862',
   },
   {
     key: 'team/mission/731e547f5567b243/17',
@@ -2885,7 +2885,7 @@ export const CLASSIC_SNAKE_RATING_CALIBRATIONS = Object.freeze([
     referenceMoves: 41,
     proof: 'game/test/fixtures/classic-snake-v4-proofs.json',
     proofIndex: 112,
-    proofSha256: 'bc83fa8be7c80f8ce4ea3e9499615983e4d1473667653d9f66bdbfb7376e94ec',
+    proofSha256: '4dbe59a33a5358710541d0229e63c434ab9ee7226bf6513cf5b6f30c4943c862',
   },
   {
     key: 'team/mission/77053967cffef50c/17',
@@ -2913,7 +2913,7 @@ export const CLASSIC_SNAKE_RATING_CALIBRATIONS = Object.freeze([
     referenceMoves: 63,
     proof: 'game/test/fixtures/classic-snake-v4-proofs.json',
     proofIndex: 22,
-    proofSha256: 'bc83fa8be7c80f8ce4ea3e9499615983e4d1473667653d9f66bdbfb7376e94ec',
+    proofSha256: '4dbe59a33a5358710541d0229e63c434ab9ee7226bf6513cf5b6f30c4943c862',
   },
   {
     key: 'team/mission/78542cbd5579a1a6/17',
@@ -2927,7 +2927,7 @@ export const CLASSIC_SNAKE_RATING_CALIBRATIONS = Object.freeze([
     referenceMoves: 63,
     proof: 'game/test/fixtures/classic-snake-v4-proofs.json',
     proofIndex: 100,
-    proofSha256: 'bc83fa8be7c80f8ce4ea3e9499615983e4d1473667653d9f66bdbfb7376e94ec',
+    proofSha256: '4dbe59a33a5358710541d0229e63c434ab9ee7226bf6513cf5b6f30c4943c862',
   },
   {
     key: 'team/mission/7bc8c50d2d2d8f48/17',
@@ -2955,7 +2955,7 @@ export const CLASSIC_SNAKE_RATING_CALIBRATIONS = Object.freeze([
     referenceMoves: 83,
     proof: 'game/test/fixtures/classic-snake-v4-proofs.json',
     proofIndex: 107,
-    proofSha256: 'bc83fa8be7c80f8ce4ea3e9499615983e4d1473667653d9f66bdbfb7376e94ec',
+    proofSha256: '4dbe59a33a5358710541d0229e63c434ab9ee7226bf6513cf5b6f30c4943c862',
   },
   {
     key: 'team/mission/7ebb0607e6d835ec/17',
@@ -2983,7 +2983,7 @@ export const CLASSIC_SNAKE_RATING_CALIBRATIONS = Object.freeze([
     referenceMoves: 63,
     proof: 'game/test/fixtures/classic-snake-v4-proofs.json',
     proofIndex: 87,
-    proofSha256: 'bc83fa8be7c80f8ce4ea3e9499615983e4d1473667653d9f66bdbfb7376e94ec',
+    proofSha256: '4dbe59a33a5358710541d0229e63c434ab9ee7226bf6513cf5b6f30c4943c862',
   },
   {
     key: 'team/mission/896866af216f1add/17',
@@ -2997,7 +2997,7 @@ export const CLASSIC_SNAKE_RATING_CALIBRATIONS = Object.freeze([
     referenceMoves: 37,
     proof: 'game/test/fixtures/classic-snake-v4-proofs.json',
     proofIndex: 16,
-    proofSha256: 'bc83fa8be7c80f8ce4ea3e9499615983e4d1473667653d9f66bdbfb7376e94ec',
+    proofSha256: '4dbe59a33a5358710541d0229e63c434ab9ee7226bf6513cf5b6f30c4943c862',
   },
   {
     key: 'team/mission/8a265cfe0b43f913/17',
@@ -3011,7 +3011,7 @@ export const CLASSIC_SNAKE_RATING_CALIBRATIONS = Object.freeze([
     referenceMoves: 61,
     proof: 'game/test/fixtures/classic-snake-v4-proofs.json',
     proofIndex: 143,
-    proofSha256: 'bc83fa8be7c80f8ce4ea3e9499615983e4d1473667653d9f66bdbfb7376e94ec',
+    proofSha256: '4dbe59a33a5358710541d0229e63c434ab9ee7226bf6513cf5b6f30c4943c862',
   },
   {
     key: 'team/mission/944528aab009ebcb/17',
@@ -3025,7 +3025,7 @@ export const CLASSIC_SNAKE_RATING_CALIBRATIONS = Object.freeze([
     referenceMoves: 63,
     proof: 'game/test/fixtures/classic-snake-v4-proofs.json',
     proofIndex: 21,
-    proofSha256: 'bc83fa8be7c80f8ce4ea3e9499615983e4d1473667653d9f66bdbfb7376e94ec',
+    proofSha256: '4dbe59a33a5358710541d0229e63c434ab9ee7226bf6513cf5b6f30c4943c862',
   },
   {
     key: 'team/mission/9608816b845f7e14/17',
@@ -3039,7 +3039,7 @@ export const CLASSIC_SNAKE_RATING_CALIBRATIONS = Object.freeze([
     referenceMoves: 92,
     proof: 'game/test/fixtures/classic-snake-v4-proofs.json',
     proofIndex: 65,
-    proofSha256: 'bc83fa8be7c80f8ce4ea3e9499615983e4d1473667653d9f66bdbfb7376e94ec',
+    proofSha256: '4dbe59a33a5358710541d0229e63c434ab9ee7226bf6513cf5b6f30c4943c862',
   },
   {
     key: 'team/mission/967e723a355279df/17',
@@ -3053,7 +3053,7 @@ export const CLASSIC_SNAKE_RATING_CALIBRATIONS = Object.freeze([
     referenceMoves: 61,
     proof: 'game/test/fixtures/classic-snake-v4-proofs.json',
     proofIndex: 142,
-    proofSha256: 'bc83fa8be7c80f8ce4ea3e9499615983e4d1473667653d9f66bdbfb7376e94ec',
+    proofSha256: '4dbe59a33a5358710541d0229e63c434ab9ee7226bf6513cf5b6f30c4943c862',
   },
   {
     key: 'team/mission/9724dbaf2ce672b7/17',
@@ -3081,7 +3081,7 @@ export const CLASSIC_SNAKE_RATING_CALIBRATIONS = Object.freeze([
     referenceMoves: 15,
     proof: 'game/test/fixtures/classic-snake-v4-proofs.json',
     proofIndex: 34,
-    proofSha256: 'bc83fa8be7c80f8ce4ea3e9499615983e4d1473667653d9f66bdbfb7376e94ec',
+    proofSha256: '4dbe59a33a5358710541d0229e63c434ab9ee7226bf6513cf5b6f30c4943c862',
   },
   {
     key: 'team/mission/9973b3f0aec06f5a/17',
@@ -3108,7 +3108,7 @@ export const CLASSIC_SNAKE_RATING_CALIBRATIONS = Object.freeze([
     referenceMoves: 129,
     proof: 'game/test/fixtures/classic-snake-v4-proofs.json',
     proofIndex: 71,
-    proofSha256: 'bc83fa8be7c80f8ce4ea3e9499615983e4d1473667653d9f66bdbfb7376e94ec',
+    proofSha256: '4dbe59a33a5358710541d0229e63c434ab9ee7226bf6513cf5b6f30c4943c862',
   },
   {
     key: 'team/mission/9df3e2ace89e277d/17',
@@ -3122,7 +3122,7 @@ export const CLASSIC_SNAKE_RATING_CALIBRATIONS = Object.freeze([
     referenceMoves: 61,
     proof: 'game/test/fixtures/classic-snake-v4-proofs.json',
     proofIndex: 130,
-    proofSha256: 'bc83fa8be7c80f8ce4ea3e9499615983e4d1473667653d9f66bdbfb7376e94ec',
+    proofSha256: '4dbe59a33a5358710541d0229e63c434ab9ee7226bf6513cf5b6f30c4943c862',
   },
   {
     key: 'team/mission/aa24f50368d5bc53/17',
@@ -3136,7 +3136,7 @@ export const CLASSIC_SNAKE_RATING_CALIBRATIONS = Object.freeze([
     referenceMoves: 61,
     proof: 'game/test/fixtures/classic-snake-v4-proofs.json',
     proofIndex: 119,
-    proofSha256: 'bc83fa8be7c80f8ce4ea3e9499615983e4d1473667653d9f66bdbfb7376e94ec',
+    proofSha256: '4dbe59a33a5358710541d0229e63c434ab9ee7226bf6513cf5b6f30c4943c862',
   },
   {
     key: 'team/mission/b557ca21ef82f644/17',
@@ -3150,7 +3150,7 @@ export const CLASSIC_SNAKE_RATING_CALIBRATIONS = Object.freeze([
     referenceMoves: 92,
     proof: 'game/test/fixtures/classic-snake-v4-proofs.json',
     proofIndex: 64,
-    proofSha256: 'bc83fa8be7c80f8ce4ea3e9499615983e4d1473667653d9f66bdbfb7376e94ec',
+    proofSha256: '4dbe59a33a5358710541d0229e63c434ab9ee7226bf6513cf5b6f30c4943c862',
   },
   {
     key: 'team/mission/b6c6a030f17ed8f4/17',
@@ -3164,7 +3164,7 @@ export const CLASSIC_SNAKE_RATING_CALIBRATIONS = Object.freeze([
     referenceMoves: 92,
     proof: 'game/test/fixtures/classic-snake-v4-proofs.json',
     proofIndex: 63,
-    proofSha256: 'bc83fa8be7c80f8ce4ea3e9499615983e4d1473667653d9f66bdbfb7376e94ec',
+    proofSha256: '4dbe59a33a5358710541d0229e63c434ab9ee7226bf6513cf5b6f30c4943c862',
   },
   {
     key: 'team/mission/c225468bcde30d0f/17',
@@ -3178,7 +3178,7 @@ export const CLASSIC_SNAKE_RATING_CALIBRATIONS = Object.freeze([
     referenceMoves: 43,
     proof: 'game/test/fixtures/classic-snake-v4-proofs.json',
     proofIndex: 76,
-    proofSha256: 'bc83fa8be7c80f8ce4ea3e9499615983e4d1473667653d9f66bdbfb7376e94ec',
+    proofSha256: '4dbe59a33a5358710541d0229e63c434ab9ee7226bf6513cf5b6f30c4943c862',
   },
   {
     key: 'team/mission/c33db3cf0b61bde6/17',
@@ -3192,7 +3192,7 @@ export const CLASSIC_SNAKE_RATING_CALIBRATIONS = Object.freeze([
     referenceMoves: 63,
     proof: 'game/test/fixtures/classic-snake-v4-proofs.json',
     proofIndex: 99,
-    proofSha256: 'bc83fa8be7c80f8ce4ea3e9499615983e4d1473667653d9f66bdbfb7376e94ec',
+    proofSha256: '4dbe59a33a5358710541d0229e63c434ab9ee7226bf6513cf5b6f30c4943c862',
   },
   {
     key: 'team/mission/c34e10769101f8ec/17',
@@ -3220,7 +3220,7 @@ export const CLASSIC_SNAKE_RATING_CALIBRATIONS = Object.freeze([
     referenceMoves: 15,
     proof: 'game/test/fixtures/classic-snake-v4-proofs.json',
     proofIndex: 35,
-    proofSha256: 'bc83fa8be7c80f8ce4ea3e9499615983e4d1473667653d9f66bdbfb7376e94ec',
+    proofSha256: '4dbe59a33a5358710541d0229e63c434ab9ee7226bf6513cf5b6f30c4943c862',
   },
   {
     key: 'team/mission/c739639010dd61ca/17',
@@ -3234,7 +3234,7 @@ export const CLASSIC_SNAKE_RATING_CALIBRATIONS = Object.freeze([
     referenceMoves: 63,
     proof: 'game/test/fixtures/classic-snake-v4-proofs.json',
     proofIndex: 101,
-    proofSha256: 'bc83fa8be7c80f8ce4ea3e9499615983e4d1473667653d9f66bdbfb7376e94ec',
+    proofSha256: '4dbe59a33a5358710541d0229e63c434ab9ee7226bf6513cf5b6f30c4943c862',
   },
   {
     key: 'team/mission/c8383910433e73c5/17',
@@ -3248,7 +3248,7 @@ export const CLASSIC_SNAKE_RATING_CALIBRATIONS = Object.freeze([
     referenceMoves: 37,
     proof: 'game/test/fixtures/classic-snake-v4-proofs.json',
     proofIndex: 17,
-    proofSha256: 'bc83fa8be7c80f8ce4ea3e9499615983e4d1473667653d9f66bdbfb7376e94ec',
+    proofSha256: '4dbe59a33a5358710541d0229e63c434ab9ee7226bf6513cf5b6f30c4943c862',
   },
   {
     key: 'team/mission/c94bb938088ac858/17',
@@ -3275,7 +3275,7 @@ export const CLASSIC_SNAKE_RATING_CALIBRATIONS = Object.freeze([
     referenceMoves: 43,
     proof: 'game/test/fixtures/classic-snake-v4-proofs.json',
     proofIndex: 125,
-    proofSha256: 'bc83fa8be7c80f8ce4ea3e9499615983e4d1473667653d9f66bdbfb7376e94ec',
+    proofSha256: '4dbe59a33a5358710541d0229e63c434ab9ee7226bf6513cf5b6f30c4943c862',
   },
   {
     key: 'team/mission/dc2da72fbbbfbe50/17',
@@ -3302,7 +3302,7 @@ export const CLASSIC_SNAKE_RATING_CALIBRATIONS = Object.freeze([
     referenceMoves: 15,
     proof: 'game/test/fixtures/classic-snake-v4-proofs.json',
     proofIndex: 33,
-    proofSha256: 'bc83fa8be7c80f8ce4ea3e9499615983e4d1473667653d9f66bdbfb7376e94ec',
+    proofSha256: '4dbe59a33a5358710541d0229e63c434ab9ee7226bf6513cf5b6f30c4943c862',
   },
   {
     key: 'team/mission/e1c3057d445fda43/17',
@@ -3316,7 +3316,7 @@ export const CLASSIC_SNAKE_RATING_CALIBRATIONS = Object.freeze([
     referenceMoves: 41,
     proof: 'game/test/fixtures/classic-snake-v4-proofs.json',
     proofIndex: 111,
-    proofSha256: 'bc83fa8be7c80f8ce4ea3e9499615983e4d1473667653d9f66bdbfb7376e94ec',
+    proofSha256: '4dbe59a33a5358710541d0229e63c434ab9ee7226bf6513cf5b6f30c4943c862',
   },
   {
     key: 'team/mission/e4b19059d1c9a949/17',
@@ -3344,7 +3344,7 @@ export const CLASSIC_SNAKE_RATING_CALIBRATIONS = Object.freeze([
     referenceMoves: 61,
     proof: 'game/test/fixtures/classic-snake-v4-proofs.json',
     proofIndex: 141,
-    proofSha256: 'bc83fa8be7c80f8ce4ea3e9499615983e4d1473667653d9f66bdbfb7376e94ec',
+    proofSha256: '4dbe59a33a5358710541d0229e63c434ab9ee7226bf6513cf5b6f30c4943c862',
   },
   {
     key: 'team/mission/ec62e8e04884dc87/17',
@@ -3358,7 +3358,7 @@ export const CLASSIC_SNAKE_RATING_CALIBRATIONS = Object.freeze([
     referenceMoves: 63,
     proof: 'game/test/fixtures/classic-snake-v4-proofs.json',
     proofIndex: 23,
-    proofSha256: 'bc83fa8be7c80f8ce4ea3e9499615983e4d1473667653d9f66bdbfb7376e94ec',
+    proofSha256: '4dbe59a33a5358710541d0229e63c434ab9ee7226bf6513cf5b6f30c4943c862',
   },
   {
     key: 'team/mission/f3bb742fc25a0a43/17',

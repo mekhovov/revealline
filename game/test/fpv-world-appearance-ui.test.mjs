@@ -1,4 +1,5 @@
 import test from 'node:test';
+import { createEnemyStats } from '../enemy-stats.mjs';
 import { getLocale, setLocale } from '../i18n/index.mjs';
 import { sourceSimGlobalTools, menuPad } from './helpers/global-tools-fixture.mjs';
 import { waitFor } from './helpers/wait-for.mjs';
@@ -947,4 +948,107 @@ test('World defeat focuses Retry and verification preserves the connected action
     'Verification must not override deliberate navigation.',
   );
   assert.equal(panel.querySelector('.continuous-result-actions'), actionRow);
+});
+
+test('World results embed one compact live statistics disclosure without replacing verified actions', async (t) => {
+  const priorDatabase = Object.getOwnPropertyDescriptor(globalThis, 'indexedDB');
+  const database = new IDBFactory();
+  Object.defineProperty(globalThis, 'indexedDB', { configurable: true, value: database });
+  t.after(() =>
+    priorDatabase
+      ? Object.defineProperty(globalThis, 'indexedDB', priorDatabase)
+      : delete globalThis.indexedDB,
+  );
+  const values = new Map();
+  const storage = {
+    getItem: (key) => values.get(key) ?? null,
+    setItem: (key, value) => values.set(key, value),
+  };
+  const prior = createEnemyStats({ indexedDB: database, storage });
+  const attempt = prior.beginAttempt({ gameType: 'worlds' });
+  await prior.observe(attempt, {
+    sequence: 1,
+    defeats: [
+      { family: 'drone' },
+      { family: 'drone' },
+      { family: 'drone' },
+      { family: 'drone' },
+      { family: 'runner' },
+      { family: 'runner' },
+    ],
+  });
+  await prior.flush();
+  prior.close();
+  const h = fixture(t, { storage: values });
+  await h.app.ready;
+  const source = WORLD_CATALOGUE.find((item) => !item.legacy);
+  const entry = {
+    ...source,
+    course: {
+      ...source.course,
+      actors: [],
+      steps: {
+        'self-level': [{ type: 'survive', ticks: 1 }],
+        acro: [{ type: 'survive', ticks: 1 }],
+      },
+    },
+  };
+  let firstStats;
+  for (let pass = 0; pass < 2; pass++) {
+    await h.app.startFlight(entry, { preview: true });
+    h.$('world-arm').click();
+    h.tick(3);
+    assert.equal(h.app.snapshot().state.status, 'complete');
+    const panel = h.$('result-panel');
+    const stats = panel.querySelector('.enemy-stats');
+    assert.ok(stats, 'statistics belong inside the earned result card');
+    assert.equal(stats.dataset.variant, 'panel');
+    assert.equal(panel.querySelectorAll('.enemy-stats').length, 1);
+    if (firstStats) assert.equal(stats, firstStats, 'Retry reuses the same owned subscription');
+    firstStats = stats;
+    const disclosure = stats.querySelector('details');
+    assert.equal(disclosure.open, false, 'new results start with compact totals');
+    await waitFor(() => stats.querySelector('.enemy-stats-total').textContent === '6');
+    assert.equal(
+      stats.querySelector('.enemy-stats-run strong').textContent,
+      '0',
+      'an authoring preview cannot award another run total',
+    );
+    const actions = panel.querySelector('.continuous-result-actions');
+    assert.equal(stats.parentElement, panel);
+    assert.ok(panel.children.indexOf(stats) < panel.children.indexOf(actions));
+    assert.equal(
+      stats.contains(actions),
+      false,
+      'essential actions are never inside optional details',
+    );
+    const choose = [...actions.querySelectorAll('button')].find(
+      (node) => node.textContent === 'Choose mission',
+    );
+    choose.focus();
+    disclosure.querySelector('summary').click();
+    assert.equal(disclosure.open, true);
+    assert.equal(disclosure.querySelectorAll('.enemy-stats-row').length, 2);
+    await waitFor(() =>
+      panel.textContent.includes('Authoring preview · no rewards or completion earned.'),
+    );
+    assert.equal(h.doc.activeElement, choose);
+    assert.equal(panel.querySelector('.continuous-result-actions'), actions);
+    assert.equal(panel.querySelector('.enemy-stats'), stats);
+    assert.equal(disclosure.open, true, 'verification cannot collapse deliberate disclosure');
+  }
+  h.$('world-language').value = 'uk';
+  h.$('world-language').emit('change');
+  assert.equal(firstStats.getAttribute('aria-label'), 'Переможені вороги');
+  assert.match(firstStats.querySelector('.enemy-stats-summary').textContent, /За весь час/);
+  await h.app.dispose();
+  assert.equal(firstStats.isConnected, false, 'host disposal retires the result statistics view');
+  const after = createEnemyStats({ indexedDB: database, storage });
+  await after.read();
+  assert.equal(
+    after.totals({ gameType: 'worlds' }).total,
+    6,
+    'viewing, verification, reopening, and disposal do not create enemy awards',
+  );
+  after.close();
 });
