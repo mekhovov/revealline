@@ -15,13 +15,29 @@ courses, examples, presentation and installation are
 qualified. A compatible world may appear in both catalogues; a coating-dependent
 world must never enter the original one.
 
+`ground-motion-v1/index.json` is the cumulative catalogue for players that also
+support actor `groundMotion: 'support-v1'`. It retains the same closed row schema
+and immutable pack checks. Only this capable player's dedicated worker accepts
+the new index URL; older cached players retain their existing endpoints. Packs
+requiring ground motion must never enter either older catalogue.
+
+All three catalogues are currently empty. The new endpoint is a delivery adapter,
+not publication of a world or its demonstrations. Mountain Reservoir's first row
+is still held in Draft #1094; Festival and Harbor have separate content publication
+gates. Once the Reservoir row is approved for publication, copy the exact reviewed
+row into both the surface-coating and ground-motion catalogues. Publishing it only
+to the former would leave newer players unable to discover it. Preserve the original
+catalogue and every existing compatible row; do not bypass a held row by adding it
+to another feed. Optional demonstrations still require their separate proof archive.
+
 Catalogue versions select an existing, fixed capability contract. They do not
 negotiate arbitrary imported features or permit executable content. Future
 required features need another compatibility decision before publication.
 
-An older cached player still rejects a directly imported coating-dependent pack.
-New players distinguish a well-formed but unsupported required extension from
-malformed extension declarations. EN/UK guidance explains that the current SIM
+An older cached player still rejects a directly imported pack whose required
+coating or ground-motion feature it does not support. New players distinguish a
+well-formed but unsupported required extension or ground-motion version from
+malformed declarations. EN/UK guidance explains that the current SIM
 cannot import the feature and directs the player to the existing Flight practice
 launcher: **Check available practice → Play available version**. If that version
 still lacks the feature, a compatible pack is required. **Prepare offline** caches
