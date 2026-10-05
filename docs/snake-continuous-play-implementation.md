@@ -1,6 +1,6 @@
 # Continuous gameplay implementation
 
-Approved implementation, 2026-10-05. Branch: `codex/snake-continuous-play`.
+Implementation and follow-up refinements, 2026-10-05. Branch: `codex/snake-continuous-play`.
 
 Menu UX baseline is preserved in commit `261db930d`, copied from the current
 uncommitted `codex/unified-game-menus` checkout without modifying that checkout.
@@ -11,7 +11,7 @@ uncommitted `codex/unified-game-menus` checkout without modifying that checkout.
   compact pause, settings return, focus graph and optional-package projections.
 - Snake loss: 0.65s signal loss, final eight moves (nine compact visual snapshots,
   240ms/move), ready cue and automatic retry. Immediate Retry and cancellation.
-- Victory: 3.8s core celebration then 5s cancellable auto-next; Next/Retry usable
+- Victory: 5.2s core celebration then 5s cancellable auto-next; Next/Retry usable
   throughout. Retain core picture rewards; Snake celebrates the completed board.
 - Host-owned cancellable transitions, fresh Confirm edges, no background or stale
   timer launch. Respect Team shared board and competitive match outcome semantics.
@@ -55,6 +55,44 @@ uncommitted `codex/unified-game-menus` checkout without modifying that checkout.
 All source changes remain on the isolated implementation branch. No public
 deployment has been performed.
 
+## Follow-up refinements, 2026-10-05
+
+- **Readable signal loss with a real information cost.** The jammer warns with
+  an antenna cue and dashed amber arena edge, then replaces the whole playfield
+  with an opaque loss screen for its existing four interference moves. Actor
+  positions, snake movement, and internal geometry are hidden. A recovery count,
+  pips, and the arena boundary remain visible. Pulse temporarily stabilizes the
+  feed, reduced effects keeps the same information with static bands, and a
+  terminal collision reveals the board. Existing simulation and replay identities
+  remain unchanged.
+- **Longer victories, no defeat fireworks.** The shared celebration lasts
+  5,200 ms; the separate auto-next countdown remains 5,000 ms. The shared
+  celebration mount requires a winning outcome, and Snake also suppresses
+  confetti on loss. Immediate Next and Retry still skip the remaining delay.
+- **Automatic replay inside Snake results.** Opening Results starts a looping
+  preview of the existing final-eight-move snapshot buffer. It advances at
+  240 ms per move with a short hold on the final frame. Pause replay holds the
+  preview and cancels automatic progression without hiding the result menu.
+  Preview playback never advances simulation, saves an attempt, grants awards,
+  or rearms auto-next, and it stops advancing while the page is inactive.
+- **Mobile action priority.** Snake Results keeps Next, Retry/Rematch, and Home
+  in a fixed footer, with continuation status/countdown in that same footer.
+  The preview is bounded by viewport height; descriptive content scrolls.
+  Random, Choose mission, Collections, and the slower-pace offer sit in an
+  expandable More options section. Next remains the initial win focus.
+- **Statistics within their menus.** Pause/results use a compact disclosure
+  showing current-run and lifetime totals; enemy-family text rows expand in
+  place without stealing focus. Collections retains its portrait cards and
+  filters. Non-Snake totals mount inside the actual result card, and the compact
+  continuation control sits beside the primary action rather than outside the
+  card as a detached column.
+- **Reward pictures no longer own continuation.** Core victories show the
+  result card immediately. Explicit View picture retains a reachable Next,
+  Retry, Choose mission, and Results dock. Dock actions restore the result
+  surface before forwarding native actions. Accepting a new attempt clears
+  picture-only presentation, captions, celebration, and the owned arrival
+  animation before painting the new run.
+
 ## Review map
 
 | Area                           | Main sources                                                                                                                     |
@@ -67,6 +105,12 @@ deployment has been performed.
 | New mechanics and content      | `game/snake/classic-core-v4.mjs`, `classic-catalogue-v4.mjs`, `classic-mechanic-guide.mjs`, `classic-view.mjs`                   |
 
 ## Verification record
+
+### First-round baseline
+
+The checks below were completed for commit `241a388ab` and its implementation
+predecessors, before the follow-up refinements above. Their old 3.8-second timing
+and production artifact describe that baseline, not a rebuilt current checkout.
 
 - Final combined Snake, statistics, ownership, transition and audio group:
   **127 passing tests**, no failures (12.0 seconds locally).
@@ -111,6 +155,57 @@ deployment has been performed.
   Free disk space was checked before building (5.9 GiB) and afterward (4.7 GiB).
   All 35 changed core runtime modules/styles match the final source, comparing
   syntax trees for the five modules compacted by the existing build process.
+
+### Follow-up verification
+
+- Snake host/UI regressions: 28 passing tests, including automatic result-preview
+  playback, preview pause without gameplay/save mutation, footer action
+  placement/focus, no loss celebration, and the full 5,200 ms celebration followed
+  by a separate 5,000 ms countdown.
+- Signal rendering, v4, and presentation regressions: 24 passing tests, including
+  concealment during signal loss, Pulse stabilization, reduced effects, and the
+  132 retained winning proofs. This verifies compatibility, not human difficulty
+  calibration of the stronger blackout.
+- Compact statistics UI: five passing focused tests. Shared transition and result
+  work: 18 unit tests, six focused host checks, and nine optional-package checks
+  passed. The generated optional play-shell projection was refreshed from its
+  canonical shared sources.
+- Real-browser Snake Results checks at 320×640 and 740×360 found no horizontal
+  overflow and kept the action footer in view, including when More options was
+  expanded. The final-eight-move preview started automatically inside Results.
+- Combined Snake/shared/core group: **106 passing tests**. Optional SIM hosts:
+  **73 passing tests**, including five new stalled-frame/focus regressions.
+  Optional package admission, source closure, reproducibility and offline
+  checks: **9 passing tests**. Team's two retained result checks and new
+  stalled-result check pass.
+- The main-game browser walkthrough exposed a null controller frame after an
+  automatic Next dispatch. The update now rejects the obsolete sample after
+  input is cleared or the attempt changes. Its production-host regression
+  advances the full celebration/countdown and verifies the next simulation
+  continues; direct picture-view Next, cancellation and failed loading pass.
+  One ownership fixture timed out under concurrent test load and passed
+  unchanged in isolation; it was not treated as a production success until
+  that isolated verification.
+- Core results were checked at 320×640 and 740×360: no horizontal overflow,
+  a roughly 107px narrow action footer and 59px landscape action footer.
+  The final landscape layout keeps the picture, score, stars, totals and all
+  primary actions visible together; the narrow portrait layout does the same.
+  Saved views: [core portrait](verification/core-results-mobile-320.jpg),
+  [core landscape](verification/core-results-landscape-740.jpg), and
+  [Ukrainian Snake result](verification/snake-results-uk-320.jpg).
+  Picture-view Next and automatic Next entered playable missions with the
+  previous picture cleared. Snake's Ukrainian mobile result was also checked.
+- Full repository validation and scoped lint pass. The generated optional
+  play-shell remains byte-identical. The final production build passes:
+  3,010 files, version 0.142.4, distribution SHA-256
+  `16333648bfd1ea457551ed7c83720c4a706061b9ce9b2a0e64162bfe1e963282`.
+  Disk space was checked before building (2.8 GiB) and afterward (1.7 GiB).
+  The earlier interim build missed the final landscape CSS and was replaced
+  by this complete build from the frozen source. All 17 changed shipped runtime
+  files match: 15 byte-identical and two compacted apps with identical syntax
+  trees. Their manifest hashes/sizes and the distribution archive hash were
+  independently verified. Gym remains in its optional package; its package
+  admission and host checks are recorded above.
 
 ## Acceptance
 

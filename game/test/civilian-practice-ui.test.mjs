@@ -69,6 +69,9 @@ async function fixture(t, { storage, search = '' } = {}) {
     view,
     frames,
     tick,
+    jump(milliseconds) {
+      now += milliseconds;
+    },
     key(code, type = 'keydown', repeat = false) {
       win.emit(type, {
         code,
@@ -490,3 +493,34 @@ test('gym shares five ordered Ukrainian mode choices and mobile category keyboar
   assert.equal(f.view.snapshot().status, 'ready');
   assert.equal(f.view.snapshot().ticks, 0);
 });
+
+for (const clock of ['animation timestamp', 'callback execution']) {
+  test(`gym cancels an imminent auto-next before a stalled ${clock}`, async (t) => {
+    const f = await fixture(t),
+      $ = (id) => f.doc.getElementById(id);
+    let executionTime = 0;
+    f.win.performance = { now: () => executionTime };
+    $('start').click();
+    f.key('KeyR');
+    f.tick(21);
+    f.key('KeyR', 'keyup');
+    f.tick(30);
+    f.key('KeyF');
+    f.tick(20);
+    f.key('KeyF', 'keyup');
+    f.tick(30);
+    assert.equal(f.view.snapshot().status, 'complete');
+    const flow = f.doc.querySelector('[data-continuous-play]');
+    for (let i = 0; i < 220 && !flow.textContent.includes('Next level in 1s'); i++) f.tick();
+    assert.match(flow.textContent, /Next level in 1s/);
+    f.tick(15);
+    const completed = f.view.snapshot(),
+      trace = f.view.trace();
+    if (clock === 'animation timestamp') f.jump(1500);
+    else executionTime = 1500;
+    f.tick(4);
+    assert.deepEqual(f.view.snapshot(), completed, 'A stalled frame must not change drills.');
+    assert.deepEqual(f.view.trace(), trace);
+    assert.equal(flow.hidden, true, 'The cancelled timer cannot silently rearm.');
+  });
+}

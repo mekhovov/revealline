@@ -6,6 +6,8 @@ import {
   continuousPlayPreferences,
   mountContinuousPlayControls,
 } from './ui/continuous-play.mjs';
+import { mountContinuousCelebration } from './ui/continuous-celebration.mjs';
+import { createEarnedResultLayout } from './ui/earned-result-layout.mjs';
 import { createPauseMenu } from './ui/pause-menu.mjs';
 import { setMenuIcon } from './ui/native-menu-icons.mjs';
 import { selectedArcadeCollection } from './presentation/industrial-arcade.mjs';
@@ -1124,6 +1126,7 @@ try {
     journeyPerformanceActive = true,
     celebrationActive = false,
     winRevealAge = 0,
+    rewardArrivalAnimation = null,
     defeatActive = false,
     defeatPaused = false,
     defeatRemaining = 0,
@@ -1175,7 +1178,7 @@ try {
       variant: 'hud',
     }),
     mountEnemyStats({
-      container: $('game-overlay'),
+      container: $('overlay-reading-unit'),
       stats: enemyStatistics.stats,
       gameType: 'solo',
       getAttempt: enemyStatistics.getAttempt,
@@ -1183,6 +1186,7 @@ try {
       variant: 'panel',
     }),
   ];
+  $('next-button').parentElement.before(enemyStatsViews[1].root);
   const flowPreferences = continuousPlayPreferences();
   const continuousPlay = createContinuousPlayController({
     preferences: flowPreferences,
@@ -1198,30 +1202,46 @@ try {
     },
   });
   const flowControls = mountContinuousPlayControls({
-    parent: $('game-overlay'),
+    parent: $('next-button').parentElement,
+    primaryAction: $('next-button'),
     controller: continuousPlay,
     locale: () => getLocale(),
     preferences: flowPreferences,
   });
+  flowControls.root.id = 'result-flow-controls';
+  const flowCelebration = mountContinuousCelebration({
+    controller: continuousPlay,
+    reduced: () => displayPreferences.snapshot().effectiveReducedEffects,
+    theme: () => theme,
+    seed: () => seed,
+  });
   const celebrationActions = document.createElement('div');
   celebrationActions.className = 'button-row continuous-play-quick-actions';
+  localizedAttribute(celebrationActions, 'aria-label', () =>
+    getLocale() === 'uk' ? 'Дії з картиною' : 'Picture actions',
+  );
   celebrationActions.hidden = true;
   for (const [target, label] of [
     ['next-button', ['Next level', 'Наступний рівень']],
     ['retry-button', ['Try again', 'Спробувати знову']],
+    ['result-choose-mission', ['Choose mission', 'Вибрати місію']],
+    ['show-result', ['Results', 'Результати']],
   ]) {
     const action = document.createElement('button');
     action.type = 'button';
+    action.dataset.resultTarget = target;
     action.className = 'button secondary';
     localizedText(action, () => label[getLocale() === 'uk' ? 1 : 0]);
     action.onclick = () => {
       continuousPlay.cancel('action');
+      if (target !== 'show-result' && $('game-overlay').hidden) $('show-result').click();
       $(target).click();
     };
     celebrationActions.append(action);
   }
   $('skip-celebration').after(celebrationActions);
   const resultMissionActions = document.createElement('div');
+  resultMissionActions.id = 'result-mission-actions';
   resultMissionActions.className = 'button-row';
   resultMissionActions.hidden = true;
   for (const [id, label, random] of [
@@ -1240,6 +1260,13 @@ try {
     resultMissionActions.append(button);
   }
   $('retry-button').after(resultMissionActions);
+  const nativeResultLayout = runtimeContent
+    ? null
+    : createEarnedResultLayout({
+        document,
+        reading: $('overlay-reading'),
+        result: $('overlay-reading-unit'),
+      });
 
   const cancelContinuousPlay = () => continuousPlay.cancel('interaction');
   document.addEventListener('pointerdown', cancelContinuousPlay, true);
@@ -1251,6 +1278,8 @@ try {
     if (event.persisted) return;
     continuousPlay.dispose();
     flowControls.dispose();
+    flowCelebration.dispose();
+    nativeResultLayout?.dispose();
     enemyStatsViews.forEach((view) => view.dispose());
     document.removeEventListener('pointerdown', cancelContinuousPlay, true);
     document.removeEventListener('keydown', cancelContinuousPlay, true);
@@ -1672,7 +1701,6 @@ try {
   localizedText(victoryStoryButton, () => t('interface:victoryStory'));
   victoryStoryButton.hidden = true;
   document.querySelector('.overlay-actions').append(victoryStoryButton);
-  let presentedVictoryRun = null;
   victoryStoryButton.onclick = () => openVictoryStory();
   function openVictoryStory({ autoplay = false } = {}) {
     if (practice || run.status !== 'won' || completionWarning) return;
@@ -2848,7 +2876,7 @@ try {
     const dialog = controllerDialog();
     if (dialog) return `modal:${dialog.id}`;
     if (courseBlocked()) return `course:${coursePhase}`;
-    if (celebrationActive) return 'celebration';
+    if (celebrationActive && $('game-overlay').hidden) return 'celebration';
     if (defeatActive) return 'defeat-presentation';
     if (run?.status === 'won') return $('show-result').hidden ? 'won' : 'picture';
     if (run?.status === 'lost') return 'lost';
@@ -2991,7 +3019,7 @@ try {
       $('start-button').focus({ preventScroll: true });
       return;
     }
-    if (editionUI?.closeResultDetails?.()) return;
+    if (nativeResultLayout?.close() || editionUI?.closeResultDetails?.()) return;
     if (scope === 'paused') resume();
     else if (scope === 'celebration' || scope === 'defeat-presentation')
       $('skip-celebration').click();
@@ -7874,31 +7902,21 @@ try {
         document.activeElement === document.body ||
         document.activeElement === $('game-canvas'));
     celebrationActive = false;
-    celebrationActions.hidden = true;
+    celebrationActions.hidden = showMenu;
     show('skip-celebration', false);
     if (showMenu) {
-      overlay('won');
-      $('next-button').focus({ preventScroll: true });
+      const alreadyVisible = !$('game-overlay').hidden;
+      overlay('won', { preserveFocus: alreadyVisible });
+      if (!alreadyVisible) controllerFocus()?.focus({ preventScroll: true });
       refreshHUD();
       return;
     }
     show('game-overlay', false);
     show('show-result', true);
+    for (const action of celebrationActions.querySelectorAll('button'))
+      action.hidden = $(action.dataset.resultTarget).hidden;
     refreshHUD();
     if (returnFocus) $('show-result').focus({ preventScroll: true });
-    if (
-      presentedVictoryRun !== run &&
-      !practice &&
-      !completionWarning &&
-      !dialogOpen() &&
-      flightPictures?.pins() &&
-      storyPinForTheme(flightPictures.pins(), theme.id)
-    ) {
-      presentedVictoryRun = run;
-      openVictoryStory({ autoplay: true });
-    } else if (!practice && !completionWarning && !dialogOpen()) {
-      editionUI?.presentVictoryVideo?.(run, $('show-result'));
-    }
   }
   function focusPauseToolReturn(id) {
     const target = $(id);
@@ -8622,6 +8640,10 @@ try {
     );
   }
   function overlay(kind, { preserveFocus = false } = {}) {
+    $('next-button').parentElement.classList.toggle(
+      'continuous-result-actions',
+      ['won', 'lost', 'campaign-complete'].includes(kind),
+    );
     resultMissionActions.hidden =
       !['won', 'lost'].includes(kind) || !!practiceSession || !!courseSession;
     if (practiceRenderFailure.failed) return;
@@ -8871,6 +8893,7 @@ try {
     refreshMastery();
     refreshCourse();
     refreshDifficulty();
+    nativeResultLayout?.sync(['won', 'lost'].includes(kind), run);
     controllerReading?.refresh();
     if (!preservePauseFocus && !document.hidden && document.hasFocus() && !controllerDialog())
       controllerFocus()?.focus({ preventScroll: true });
@@ -9745,6 +9768,15 @@ try {
     appearanceRewardIds = [];
     journeyBestResult = null;
     celebrationActive = false;
+    continuousPlay.cancel('new-attempt');
+    celebrationActions.hidden = true;
+    winRevealAge = 0;
+    rewardArrivalAnimation?.cancel();
+    rewardArrivalAnimation = null;
+    document.body.dataset.winPicture = 'off';
+    document.body.dataset.flightState = 'briefing';
+    show('show-result', false);
+    show('win-picture-caption', false);
     clearSkipConfirmation();
     defeatActive = false;
     defeatPaused = false;
@@ -10248,15 +10280,19 @@ try {
         ? $('game-canvas').getBoundingClientRect()
         : null;
     document.body.dataset.winPicture = phase;
-    if (arrival)
-      animateRewardArrival(
+    if (arrival) {
+      rewardArrivalAnimation?.cancel();
+      rewardArrivalAnimation = animateRewardArrival(
         $('game-canvas'),
         arrival,
         displayPreferences.snapshot().effectiveReducedEffects,
       );
+    }
     show('win-picture-caption', enjoyingPicture && phase !== 'revealing');
     document.body.dataset.flightState =
-      defeatActive || celebrationActive || (run.status === 'won' && !$('show-result').hidden)
+      defeatActive ||
+      (celebrationActive && $('game-overlay').hidden) ||
+      (run.status === 'won' && !$('show-result').hidden)
         ? 'picture'
         : campaignOverview || ['won', 'lost'].includes(run.status)
           ? 'result'
@@ -10724,7 +10760,13 @@ try {
       Object.values(controllerFrame.ui).some(Boolean)
     )
       continuousPlay.cancel('controller');
+    const continuationFrame = controllerFrame,
+      continuationRun = run;
     continuousPlay.advance(elapsed * 1000);
+    // Countdown dispatch uses the same native launch actions as a click. Those
+    // actions may clear input or adopt another attempt synchronously; the old
+    // sample must never steer that attempt or dereference the cleared frame.
+    if (controllerFrame !== continuationFrame || run !== continuationRun) return;
     if (demoHost?.active) {
       const sampledFrame = controllerFrame,
         menuRoot = controllerMenuRoot(),
@@ -10887,7 +10929,10 @@ try {
           practice || scenario || demo || recoverGameplayTuning(run.level)?.adminOverride
             ? 'preview'
             : (restoredEnemyStatsProvenance.get(run) ?? 'live');
+        const priorStatsAttempt = enemyStatistics.getAttempt();
         enemyStatistics.begin(runId, { provenance: statsProvenance });
+        if (enemyStatistics.getAttempt() !== priorStatsAttempt)
+          enemyStatsViews.forEach((view) => view.refresh());
         const enemyDefeats = arcadeEnemyDefeats(run);
         if (enemyDefeats.length)
           void enemyStatistics.observe({ sequence: run.tick, defeats: enemyDefeats });
@@ -11192,7 +11237,7 @@ try {
           });
           winRevealAge = 0;
           celebrationActive = true;
-          celebrationActions.hidden = false;
+          celebrationActions.hidden = true;
           const completedMission = journeyEnabled && !practice && !scenario && journeyMission();
           const nextMission = completedMission && nextJourneyMission(completedMission.id);
           const canAdvance =
@@ -11205,10 +11250,10 @@ try {
                 nextMission.campaignId === completedMission.campaignId
               : !authoredMissionSuccessor(activeEntry, levelIndex).atEnd);
           continuousPlay.begin({ identity: run, outcome: 'won', canAdvance });
-          show('game-overlay', false);
-          show('skip-celebration', true);
+          overlay('won');
+          show('skip-celebration', false);
           show('show-result', false);
-          celebrationActions.querySelector('button').focus({ preventScroll: true });
+          controllerFocus()?.focus({ preventScroll: true });
           warning(
             journeyRewardFailure ||
               localizedMessage('interface:pictureUnlockedAWholeWorldFromOneBraveLine'),
@@ -11538,11 +11583,13 @@ try {
     continuousPlay.cancel('picture');
     if (run.status !== 'won') return;
     cancelResultAttempt();
+    painter.skipCelebration?.();
     enjoyCompletedPicture();
     $('show-result').focus({ preventScroll: true });
   };
   $('show-result').onclick = () => {
     if (run.status === 'won') {
+      celebrationActions.hidden = true;
       const returningToResults = $('game-overlay').dataset.kind === 'won';
       overlay('won');
       (returningToResults ? $('view-picture') : controllerFocus()).focus({ preventScroll: true });

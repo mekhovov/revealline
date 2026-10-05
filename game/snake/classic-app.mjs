@@ -205,13 +205,13 @@ let offerSavedContinue = !params.has('level');
 let savedRound = readLocal(SAVE_KEY) ?? readLocal(OLD_SAVE_KEY),
   saveNotice = '',
   earlyFailures = 0;
-let review = null,
-  recordedMatch = null,
+let recordedMatch = null,
   verifiedOutcome = null,
   flightFrames = [];
 let celebration = null,
   transitionControls = null,
   resultPreview = null,
+  resultPlayback = null,
   transitionJustStarted = false;
 const recentReplay = createClassicRecentReplay();
 const continuousPreferences = continuousPlayPreferences();
@@ -407,8 +407,8 @@ function remember() {
 function pause({ showMenu = true } = {}) {
   transition.cancel('pause');
   if (result()) {
-    review = null;
     if (showMenu && !playShell?.topDialog()) showResults();
+    refreshReplayControl();
     return;
   }
   if (ready || paused) return;
@@ -428,7 +428,6 @@ function start() {
   playShell?.enterPlay();
   if (ready) void records.visit(entry.id);
   importEpoch++;
-  review = null;
   ready = false;
   paused = false;
   previousFrame = null;
@@ -534,13 +533,35 @@ function launchRandom() {
   return launchMission(choices[Math.floor(Math.random() * choices.length)]);
 }
 function showResults() {
-  review = null;
   playShell?.open('results');
   $('snake-results').append($('snake-reaction-caption'));
-  const retry = playShell?.elements.dialogs.results.querySelector('footer button.primary');
+  const retry = playShell?.elements.buttons.retry;
   if (mode === 'versus' && retry) retry.textContent = locale === 'uk' ? 'Реванш' : 'Rematch';
   const focus = !$('next').hidden ? $('next') : retry;
   focus?.focus({ preventScroll: true });
+}
+function beginResultPlayback() {
+  resultPlayback = {
+    owner: match,
+    frames: recentReplay.frames(),
+    time: 0,
+    duration: recentReplay.durationMs(),
+    playing: true,
+  };
+  refreshReplayControl();
+}
+function refreshReplayControl() {
+  const button = $('review');
+  if (!button) return;
+  const playing = !!resultPlayback?.playing;
+  button.textContent = playing
+    ? locale === 'uk'
+      ? 'Зупинити повтор'
+      : 'Pause replay'
+    : locale === 'uk'
+      ? 'Повторити останні 8 ходів'
+      : 'Replay last 8 moves';
+  button.setAttribute('aria-pressed', String(playing));
 }
 function observeStep(event) {
   recentReplay.observe(event);
@@ -580,13 +601,25 @@ function installTransitionControls() {
     locale: () => locale,
     preferences: continuousPreferences,
   });
+  const footer = playShell.elements.dialogs.results.querySelector('footer');
+  footer.classList.add('snake-result-actions', 'continuous-result-actions');
+  playShell.elements.buttons['results-back'].hidden = true;
+  const primary = el('div', null, 'snake-result-primary');
+  primary.append($('next'), playShell.elements.buttons.retry);
+  const resultHome = el('button');
+  resultHome.addEventListener('click', () => playShell.open('home'));
+  primary.append(resultHome);
+  footer.append(primary);
   mountContinuousPlayControls({
     document: doc,
-    parent: $('snake-results'),
+    parent: footer,
     controller: transition,
     locale: () => locale,
     preferences: continuousPreferences,
   });
+  const more = el('details', null, 'snake-result-more');
+  const moreLabel = el('summary');
+  more.append(moreLabel);
   const resultActions = el('div', null, 'run-controls');
   for (const [en, uk, action] of [
     ['Random level', 'Випадковий рівень', launchRandom],
@@ -598,7 +631,6 @@ function installTransitionControls() {
         globalThis.location.href = new URL('../?panel=collection', globalThis.location.href).href;
       },
     ],
-    ['Home', 'Головна', () => playShell.open('home')],
   ]) {
     const button = el('button', locale === 'uk' ? uk : en);
     button.addEventListener('click', () => {
@@ -609,13 +641,22 @@ function installTransitionControls() {
     button.dataset.en = en;
     button.dataset.uk = uk;
   }
-  $('snake-results').append(resultActions);
+  more.append(resultActions, $('slow-offer'));
+  $('snake-results').append(more);
+  const media = el('figure', null, 'snake-result-media');
   resultPreview = el('canvas', null, 'snake-result-board');
   resultPreview.setAttribute(
     'aria-label',
-    locale === 'uk' ? 'Завершене поле Snake' : 'Completed Snake board',
+    locale === 'uk' ? 'Повтор останніх 8 ходів Snake' : 'Snake final 8 moves replay',
   );
-  $('snake-results').prepend(resultPreview);
+  const replayControls = el('figcaption', null, 'snake-replay-controls');
+  replayControls.append($('review'));
+  media.append(resultPreview, replayControls);
+  const overview = el('div', null, 'snake-result-overview');
+  const summary = el('div', null, 'snake-result-summary');
+  summary.append($('result-detail'), $('snake-stars'), $('result-record'));
+  overview.append(media, summary);
+  $('snake-results').prepend(overview);
   for (const [container, variant] of [
     [$('game').querySelector('.level-strip'), 'hud'],
     [playShell.elements.content.pause, 'panel'],
@@ -651,12 +692,16 @@ function installTransitionControls() {
             ? 'Спробувати ще'
             : 'Try again';
       home.textContent = locale === 'uk' ? 'Головна' : 'Home';
+      resultHome.textContent = home.textContent;
+      moreLabel.textContent = locale === 'uk' ? 'Інші дії' : 'More options';
+      playShell.elements.buttons.retry.classList.toggle('primary', $('next').hidden);
+      refreshReplayControl();
       for (const button of resultActions.children) button.textContent = button.dataset[locale];
     },
   };
 }
 function turn(player, direction) {
-  if (result() || review || playShell?.topDialog()) return;
+  if (result() || playShell?.topDialog()) return;
   if (ready) start();
   if (paused) return;
   queueClassicSnakeMatchTurn(match, player, direction);
@@ -685,7 +730,7 @@ function prepare({ launch = false } = {}) {
   classicAudio.reset();
   importEpoch++;
   reactions.reset(`classic:${++reactionAttempt}`);
-  review = null;
+  resultPlayback = null;
   recordedMatch = null;
   verifiedOutcome = null;
   if (format === 'endless' && mode === 'versus' && duel === 'survival') {
@@ -1194,9 +1239,8 @@ function refresh() {
     outcome === 'p1' || outcome === 'p2'
       ? text('winner', { player: outcome === 'p1' ? 1 : 2 })
       : text(outcome ?? (ready ? 'ready' : 'paused'));
-  $('announcement').textContent = review
-    ? text('reviewPlaying')
-    : outcome === 'lost'
+  $('announcement').textContent =
+    outcome === 'lost'
       ? failureText(runs[0], match.boardResults[0]) || title
       : outcome
         ? title
@@ -1212,7 +1256,7 @@ function refresh() {
         ? ' Кампанію завершено!'
         : ' Campaign complete!'
       : '');
-  const resultRetry = playShell?.elements.dialogs.results.querySelector('footer button.primary');
+  const resultRetry = playShell?.elements.buttons.retry;
   if (mode === 'versus' && resultRetry)
     resultRetry.textContent = locale === 'uk' ? 'Реванш' : 'Rematch';
   $('result-record').textContent = $('record-summary').textContent;
@@ -1270,7 +1314,6 @@ function refresh() {
       )
       .join(' / ');
     board.message.hidden =
-      !!review ||
       ['loss-effect', 'replay', 'ready', 'celebration'].includes(transition.snapshot().phase) ||
       (!ready && !paused && !outcome && !boardResult);
     board.title.textContent = boardResult?.status === 'lost' && !outcome ? text('lost') : title;
@@ -1476,7 +1519,6 @@ function restore(raw, { provenance = 'import' } = {}) {
     ready = false;
     paused = true;
     previousFrame = null;
-    review = null;
     recordedMatch = null;
     verifiedOutcome = null;
     sound.gameplayPaused = true;
@@ -1522,8 +1564,11 @@ function primeEffects() {
 }
 function watchReview() {
   transition.cancel('replay-viewing');
-  playShell?.enterPlay();
-  review = { frames: recentReplay.frames(), time: 0, duration: recentReplay.durationMs() + 300 };
+  if (!resultPlayback || resultPlayback.owner !== match) beginResultPlayback();
+  else {
+    resultPlayback.playing = !resultPlayback.playing;
+    if (resultPlayback.playing) resultPlayback.time = 0;
+  }
   refresh();
 }
 
@@ -1907,14 +1952,6 @@ function frame(now) {
       refresh();
     }
   }
-  if (review && !playShell?.topDialog()) {
-    review.time += Math.min(elapsed, 250);
-    if (review.time > review.duration) {
-      review = null;
-      refresh();
-      showResults();
-    }
-  }
   const transitionElapsed = transitionJustStarted ? 0 : elapsed;
   transitionJustStarted = false;
   transition.advance(transitionElapsed);
@@ -1923,12 +1960,7 @@ function frame(now) {
     playShell.elements.root.dataset.transitionPhase = flow.phase;
     refresh();
   }
-  if (
-    result() &&
-    !review &&
-    ['countdown', 'cancelled'].includes(flow.phase) &&
-    !playShell?.topDialog()
-  )
+  if (result() && ['countdown', 'cancelled'].includes(flow.phase) && !playShell?.topDialog())
     showResults();
   if (celebration)
     celebration = advanceCelebration(celebration, Math.min(transitionElapsed, 250) / 1000, {
@@ -1959,13 +1991,13 @@ function frame(now) {
         })),
       },
     );
-    const shown = review
-      ? review.frames[i][Math.min(review.frames[i].length - 1, Math.floor(review.time / 240))]
-      : flow.phase === 'replay'
+    const shown =
+      flow.phase === 'replay'
         ? (recentReplay.frame(i, flow.replayMs - flow.remainingMs) ?? run)
         : run;
     drawClassicBoard(boards[i].canvas, shown, {
-      effects: review || flow.phase === 'replay' ? null : effects[i],
+      locale,
+      effects: flow.phase === 'replay' ? null : effects[i],
       ...choice,
       showRemains: remains.snapshot().showRemains,
       style,
@@ -1990,7 +2022,7 @@ function frame(now) {
         });
         signalReception[i].draw(ctx, canvas.width, canvas.height, signal);
       }
-      if (flow.phase === 'celebration')
+      if (flow.phase === 'celebration' && celebration && result() !== 'lost')
         drawCelebration(
           ctx,
           celebrationFrame(celebration),
@@ -2001,8 +2033,14 @@ function frame(now) {
       ctx.restore();
     }
   });
-  if (resultPreview && playShell?.topDialog()?.dataset.modeSurface === 'results')
-    drawClassicBoard(resultPreview, runs[0], {
+  if (resultPreview && playShell?.topDialog()?.dataset.modeSurface === 'results') {
+    const playback = resultPlayback?.owner === match ? resultPlayback : null;
+    if (playback?.playing && pageActive())
+      playback.time = (playback.time + Math.min(elapsed, 250)) % (playback.duration + 720);
+    const frames = playback?.frames[0];
+    const shown = frames?.[Math.min(frames.length - 1, Math.floor(playback.time / 240))] ?? runs[0];
+    drawClassicBoard(resultPreview, shown, {
+      locale,
       presentation: presentation.snapshot(),
       style,
       boardStyle,
@@ -2011,6 +2049,7 @@ function frame(now) {
       cssWidth: 360,
       pixelRatio: globalThis.devicePixelRatio ?? 1,
     });
+  }
   globalThis.requestAnimationFrame(frame);
 }
 prepare();
@@ -2040,6 +2079,7 @@ playShell = mountModePlayShell({
     settingsPanelBack,
   },
   actions: {
+    resultFocus: () => (!$('next').hidden ? $('next') : playShell?.elements.buttons.retry),
     pause: () => pause({ showMenu: false }),
     start,
     resume: start,
@@ -2066,10 +2106,11 @@ playShell = mountModePlayShell({
   },
   initial: params.has('level') || communityIdentity ? 'play' : 'home',
   onSurfaceChange: (surface) => {
+    if (surface === 'results' && result()) beginResultPlayback();
     if (!['play', 'results'].includes(surface)) {
       transition.cancel(surface);
       importEpoch++;
-      review = null;
+      if (resultPlayback) resultPlayback.playing = false;
     }
   },
   focusPlay: () => boards[0]?.canvas.focus({ preventScroll: true }),

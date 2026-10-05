@@ -9,7 +9,7 @@
   "recipeShared": true,
   "lossRecoveryHostFrameMs": 50,
   "lossRecoveryExpectedMs": 2970,
-  "victoryCelebrationMs": 3800,
+  "victoryCelebrationMs": 5200,
   "autoNextAfterCelebrationMs": 5000,
   "menuActivations": {
     "directEntry": 0,
@@ -23,7 +23,7 @@
   "lossRecoveryMeasuredMs": 3000,
   "duplicateAwardsInCoveredRegressions": 0,
   "coveredExactGradingSetups": 249,
-  "verification": {
+  "baselineVerification": {
     "snakeStatsTransitionAudioTestsPassed": 127,
     "sharedAndOtherModeChecksPassed": 109,
     "optionalPackageChecksPassed": 9,
@@ -31,5 +31,41 @@
     "changedModuleLintPassed": true,
     "productionBuildFiles": 3010,
     "productionBuildSha256": "88a7bcd413ebc13096665c6a37dc9dd593870b61e9ec5727bab9c61dd0757cd6"
+  },
+  "verification": {
+    "snakeSharedCoreFocusedTestsPassed": 106,
+    "optionalModeHostTestsPassed": 73,
+    "optionalPackageChecksPassed": 9,
+    "teamStalledResultRegressionPassed": true,
+    "coreAutomaticNextRegressionPassed": true,
+    "corePictureViewNextRegressionPassed": true,
+    "fullRepositoryValidationPassed": true,
+    "changedModuleLintPassed": true,
+    "buildStatus": "passed",
+    "browser": {
+      "snakeViewportSizes": [
+        [320, 640],
+        [740, 360]
+      ],
+      "snakeLocales": ["en", "uk"],
+      "coreViewportSizes": [
+        [320, 640],
+        [740, 360]
+      ],
+      "coreNarrowFooterHeightPx": 107.39,
+      "coreLandscapeFooterHeightPx": 58.99,
+      "horizontalOverflow": false,
+      "pictureViewNextLaunchedLiveMission": true,
+      "coreAutomaticNextLaunchedLiveMission": true,
+      "coreLandscapePrimaryContentVisible": true
+    },
+    "productionBuildFiles": 3010,
+    "productionBuildSha256": "16333648bfd1ea457551ed7c83720c4a706061b9ce9b2a0e64162bfe1e963282",
+    "freeDiskGiBBeforeFinalBuild": 2.8,
+    "freeDiskGiBAfterFinalBuild": 1.7,
+    "shippedRuntimeFilesMatched": 17,
+    "byteIdenticalRuntimeFiles": 15,
+    "astIdenticalCompactedRuntimeFiles": 2,
+    "distributionArchiveHashVerified": true
   }
 }

@@ -19,6 +19,7 @@ import { prepareStillAsset } from '../media-still.mjs';
 import { createExecutionCatalog } from '../campaign-contexts.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
 import { campaignKey, loadLibrary } from '../library.mjs';
+import { AUTO_NEXT_MS, VICTORY_CELEBRATION_MS } from '../ui/continuous-play.mjs';
 
 const classes = JSON.parse(readFileSync(new URL('../content/classes.json', import.meta.url)));
 const themes = JSON.parse(readFileSync(new URL('../content/themes.json', import.meta.url))).themes;
@@ -155,6 +156,16 @@ async function win(p) {
   p.key('ArrowDown', false);
   for (let i = 0; i < 900 && p.rendered.run.status !== 'won'; i++) p.frame();
   assert.equal(p.rendered.run.status, 'won');
+  assert.equal(
+    p.$('game-overlay').hidden,
+    false,
+    'The earned result is usable during celebration.',
+  );
+  assert.equal(
+    p.$('skip-celebration').hidden,
+    true,
+    'No picture gate precedes the actual result actions.',
+  );
   if (!p.$('skip-celebration').hidden) p.$('skip-celebration').click();
   if (!p.$('show-result').hidden) p.$('show-result').click();
   p.frame(0);
@@ -243,12 +254,66 @@ for (const policy of ['immediate', 'grid-center'])
     assert.equal(p.rendered.run.tick, 0);
     assert.equal(p.rendered.paused, false);
     assert.equal(p.$('game-overlay').hidden, true);
+    assert.equal(p.doc.body.dataset.winPicture, 'off');
+    assert.equal(p.$('show-result').hidden, true);
     assert.equal(p.doc.activeElement.id, 'game-canvas');
     const stored = loadLibrary(p.storage, profileKey, { campaigns: [campaign] });
     assert.ok(Array.isArray(stored.library.pictureReceipts));
     assert.equal(stored.library.pictureReceipts.length, 1);
     assert.deepEqual(p.errors, []);
   });
+
+test('picture view keeps a direct Next action and clears the old full-screen reward before the next flight paints', async (t) => {
+  const { p } = await setup(t);
+  await win(p);
+  assert.equal(p.$('result-flow-controls').parentElement, p.$('next-button').parentElement);
+  assert.equal(p.$('overlay-reading-unit').querySelector('.enemy-stats').dataset.variant, 'panel');
+  const more = p.$('earned-result-more');
+  assert.equal(more.open, false);
+  for (const id of ['view-picture', 'result-random-level', 'result-choose-mission'])
+    assert.equal(p.$(id).closest('details'), more);
+  for (const id of ['next-button', 'retry-button', 'overlay-menu', 'result-flow-controls'])
+    assert.equal(p.$(id).closest('details'), null);
+  more.querySelector('summary').click();
+  p.$('view-picture').click();
+  assert.equal(p.doc.body.dataset.winPicture, 'settled');
+  const dock = p.doc.querySelector('.continuous-play-quick-actions');
+  assert.equal(dock.hidden, false);
+  dock.querySelector('[data-result-target="next-button"]').click();
+  await running(p, 'next-cut');
+  assert.equal(p.doc.body.dataset.winPicture, 'off');
+  assert.equal(p.$('show-result').hidden, true);
+  assert.equal(dock.hidden, true);
+  assert.deepEqual(p.errors, []);
+});
+
+test('automatic Next survives launch clearing the sampled controller frame and the new flight keeps advancing', async (t) => {
+  const { p } = await setup(t);
+  await win(p);
+  const completed = p.rendered.run;
+  for (let elapsed = 0; elapsed < VICTORY_CELEBRATION_MS + AUTO_NEXT_MS; elapsed += 100)
+    p.frame(100);
+  await running(p, 'next-cut');
+  assert.notEqual(p.rendered.run, completed);
+  assert.equal(p.doc.body.dataset.winPicture, 'off');
+  assert.equal(p.$('game-overlay').hidden, true);
+  assert.equal(p.$('show-result').hidden, true);
+  assert.deepEqual(
+    p.errors,
+    [],
+    'The countdown launch must not dereference a cleared input sample.',
+  );
+  const beforeTick = p.rendered.run.tick;
+  ticks(p, 4);
+  assert.ok(
+    p.rendered.run.tick > beforeTick,
+    'The new board continues simulating after auto-next.',
+  );
+  const runTotal = p.$('score').parentElement.querySelector('.enemy-stats-run');
+  assert.equal(runTotal.hidden, false, 'The current run is visible even before its first defeat.');
+  assert.equal(runTotal.querySelector('strong').textContent, '0');
+  assert.deepEqual(p.errors, []);
+});
 
 for (const outcome of [
   'cancel',

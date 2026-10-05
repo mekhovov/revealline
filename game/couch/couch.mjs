@@ -998,7 +998,8 @@ try {
     onRetry: () => $('race-start').click(),
   });
   const flowControls = mountContinuousPlayControls({
-    parent: $('race-message').parentElement,
+    parent: $('race-start').parentElement,
+    primaryAction: $('race-start'),
     controller: continuousPlay,
     locale: () => document.documentElement.lang,
   });
@@ -4036,6 +4037,10 @@ try {
   }
   function updateMenu() {
     if (bootFailed || !match || disposed) return;
+    $('race-start').parentElement.classList.toggle(
+      'continuous-result-actions',
+      match.status === 'finished',
+    );
     runningEnemyControls.forEach((control) => control.refresh());
     const completedBoards = match.runs.filter((run) => run.status === 'won').length;
     journeyReactions.present({
@@ -4623,12 +4628,13 @@ try {
       }
     }
     if (match.status === 'finished' && !finished) {
+      const victory = match.winner !== null || match.runs.some((run) => run.status === 'won');
       sound.events(
         [
           {
             type: 'run.completed',
             tick: Math.max(...match.runs.map((run) => run.tick)),
-            status: 'won',
+            status: victory ? 'won' : 'lost',
           },
         ],
         match,
@@ -4639,7 +4645,11 @@ try {
             ? {
                 owned: true,
                 mode: 'versus',
-                outcome: match.runs.filter((r) => r.status === 'won').length === 2 ? 'draw' : 'won',
+                outcome: victory
+                  ? match.runs.filter((r) => r.status === 'won').length === 2
+                    ? 'draw'
+                    : 'won'
+                  : 'lost',
                 missionId: roundRecipe.entry.mission.id,
                 feedback: roundRecipe.entry.campaignFeedback,
               }
@@ -4648,7 +4658,13 @@ try {
       );
       finished = true;
       enemyStatistics.finish();
-      continuousPlay.begin({ identity: match, outcome: 'won', canAdvance: false });
+      continuousPlay.begin({
+        identity: match,
+        outcome: victory ? 'won' : 'lost',
+        canAdvance: false,
+        canRetry: false,
+        replayMs: 0,
+      });
       clear();
       if (match.winner !== null) won[match.winner]++;
       let journeyRewardFailure = null;

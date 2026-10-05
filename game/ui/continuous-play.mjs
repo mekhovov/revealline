@@ -4,7 +4,7 @@ export const CONTINUOUS_PLAY_DEFAULTS = Object.freeze({
   autoRetry: true,
   autoReplay: true,
 });
-export const VICTORY_CELEBRATION_MS = 3800;
+export const VICTORY_CELEBRATION_MS = 5200;
 export const AUTO_NEXT_MS = 5000;
 
 let sharedPreferences;
@@ -232,10 +232,26 @@ export function continuousPlayBindings(preferences = continuousPlayPreferences()
 export function mountContinuousPlayControls({
   document: doc = globalThis.document,
   parent,
+  primaryAction = null,
   controller,
   locale = 'en',
   preferences = continuousPlayPreferences(),
 } = {}) {
+  if (!doc.getElementById('continuous-play-style')) {
+    const style = doc.createElement('style');
+    style.id = 'continuous-play-style';
+    style.textContent = `
+.continuous-play-controls {display:flex;align-items:center;flex-wrap:wrap;gap:.35rem .65rem;min-width:0;max-width:100%;margin:0;font-size:.85rem;}
+.continuous-play-controls[hidden] {display:none!important;}
+.continuous-play-controls p {margin:0;overflow-wrap:anywhere;}
+.continuous-play-controls .button {min-height:44px;padding:.35rem .65rem;font-size:inherit;}
+.continuous-result-actions {position:sticky;bottom:0;z-index:3;display:flex;flex-wrap:wrap;align-items:center;gap:.5rem;min-width:0;padding-block:.55rem;background:var(--fk-surface,#24292b);}
+.continuous-result-actions[hidden] {display:none!important;}
+.continuous-result-actions > * {min-width:0;max-width:100%;}
+@media(max-width:600px),(max-height:500px) {.continuous-result-actions {scroll-margin-block:1rem;} .continuous-result-actions > .continuous-play-controls {flex:1 1 100%;} .continuous-result-actions > button {min-height:44px;flex:1 1 8rem;}}
+`;
+    (doc.head || doc.body).append(style);
+  }
   const root = doc.createElement('div'),
     status = doc.createElement('p'),
     cancel = doc.createElement('button');
@@ -247,7 +263,9 @@ export function mountContinuousPlayControls({
   cancel.className = 'button secondary';
   cancel.addEventListener('click', () => controller.cancel('player'));
   root.append(status, cancel);
-  parent.append(root);
+  const action = typeof primaryAction === 'function' ? primaryAction() : primaryAction;
+  if (action?.parentElement === parent) action.after(root);
+  else parent.append(root);
   let language = locale;
   const render = (state) => {
     const copy =

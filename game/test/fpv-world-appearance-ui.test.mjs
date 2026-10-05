@@ -757,3 +757,47 @@ test('World result shortcuts are immediately available while the result is being
   assert.equal(h.$('worlds-shell-missions-dialog').open, true);
   assert.equal(h.app.snapshot().state.status, 'complete');
 });
+
+test('World defeat focuses Retry and verification preserves the connected action row and chosen focus', async (t) => {
+  const h = fixture(t);
+  await h.app.ready;
+  const source = WORLD_CATALOGUE.find((item) => !item.legacy);
+  const entry = {
+    ...source,
+    course: {
+      ...source.course,
+      rules: { ...source.course.rules, maxTicks: 1 },
+    },
+  };
+  await h.app.startFlight(entry, { preview: true });
+  h.$('world-arm').click();
+  h.tick(3);
+  assert.equal(h.app.snapshot().state.status, 'expired');
+  const panel = h.$('result-panel'),
+    actionRow = panel.querySelector('.continuous-result-actions'),
+    retry = [...actionRow.querySelectorAll('button')].find(
+      (node) => node.textContent === 'Fly again',
+    ),
+    choose = [...actionRow.querySelectorAll('button')].find(
+      (node) => node.textContent === 'Choose mission',
+    );
+  assert.equal(h.doc.activeElement, retry, 'Defeat must prepare Retry, never Next.');
+  choose.focus();
+  let removals = 0;
+  const remove = actionRow.remove.bind(actionRow);
+  actionRow.remove = () => {
+    removals++;
+    return remove();
+  };
+  await waitFor(() =>
+    panel.textContent.includes('Authoring preview · no rewards or completion earned.'),
+  );
+  assert.equal(removals, 0, 'Verification must not detach and blur the action subtree.');
+  assert.equal(actionRow.isConnected, true);
+  assert.equal(
+    h.doc.activeElement,
+    choose,
+    'Verification must not override deliberate navigation.',
+  );
+  assert.equal(panel.querySelector('.continuous-result-actions'), actionRow);
+});

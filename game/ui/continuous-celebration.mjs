@@ -29,7 +29,7 @@ export function mountContinuousCelebration({
   }
   let identity, state;
   const stop = controller.subscribe((value) => {
-    canvas.hidden = value.phase !== 'celebration' || reduced();
+    canvas.hidden = value.outcome !== 'won' || value.phase !== 'celebration' || reduced();
     if (canvas.hidden || !context) return;
     if (identity !== value.identity) {
       identity = value.identity;

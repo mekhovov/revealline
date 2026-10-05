@@ -115,6 +115,7 @@ async function harness({
   const storage = new Map();
   const created = [],
     drawings = [],
+    celebrations = [],
     scheduledFrames = [],
     optionalEntries = [];
   const display = {
@@ -181,6 +182,10 @@ async function harness({
         window,
       }),
     ...celebrationHelpers,
+    createCelebration: (options) => {
+      celebrations.push(options);
+      return celebrationHelpers.createCelebration(options);
+    },
     createSignalReception,
     mountModePlayShell(options) {
       shell = mountModePlayShell(options);
@@ -350,6 +355,7 @@ async function harness({
     },
     created,
     drawings,
+    celebrations,
     display,
     window,
     storage,
@@ -605,6 +611,7 @@ test('direct entry needs no briefing and ordinary defeat replays then retries wi
   state.frame(0);
   let now = 0;
   while (state.created[0].status === 'running') state.frame((now += 50));
+  assert.equal(state.celebrations.length, 0, 'a loss never creates fireworks');
   const lostAt = now;
   assert.equal(state.shell.elements.root.dataset.transitionPhase, 'loss-effect');
   assert.equal(
@@ -624,10 +631,12 @@ test('direct entry needs no briefing and ordinary defeat replays then retries wi
 });
 
 test('victory keeps full celebration then countdown; Next during celebration launches in one activation', async () => {
+  const celebrationMs = flowHelpers.VICTORY_CELEBRATION_MS;
   const state = await harness();
   let now = flyVerifiedRoute(state);
+  assert.equal(state.celebrations.length, 1);
   assert.equal(state.shell.topDialog(), null);
-  for (let elapsed = 50; elapsed <= 3550; elapsed += 50) state.frame(now + elapsed);
+  for (let elapsed = 50; elapsed < celebrationMs; elapsed += 50) state.frame(now + elapsed);
   assert.equal(state.shell.topDialog(), null, 'the full celebration remains visible');
   state.document.querySelector('.snake-continuation .primary').click();
   assert.equal(state.document.body.dataset.playing, 'true');
@@ -639,12 +648,15 @@ test('victory keeps full celebration then countdown; Next during celebration lau
 
   const automatic = await harness();
   now = flyVerifiedRoute(automatic);
-  for (let elapsed = 50; elapsed <= 3900; elapsed += 50) automatic.frame(now + elapsed);
+  for (let elapsed = 50; elapsed <= celebrationMs + 100; elapsed += 50)
+    automatic.frame(now + elapsed);
   assert.equal(automatic.shell.topDialog(), automatic.shell.elements.dialogs.results);
   assert.equal(automatic.document.activeElement, automatic.$('next'));
-  for (let elapsed = 3950; elapsed <= 8500; elapsed += 50) automatic.frame(now + elapsed);
+  for (let elapsed = celebrationMs + 150; elapsed <= celebrationMs + 4900; elapsed += 50)
+    automatic.frame(now + elapsed);
   assert.equal(automatic.created.length, 1, 'countdown follows rather than overlaps celebration');
-  for (let elapsed = 8550; elapsed <= 8850; elapsed += 50) automatic.frame(now + elapsed);
+  for (let elapsed = celebrationMs + 4950; elapsed <= celebrationMs + 5050; elapsed += 50)
+    automatic.frame(now + elapsed);
   assert.equal(automatic.document.body.dataset.playing, 'true');
   assert.equal(
     new URL(automatic.location.href).searchParams.get('level'),
@@ -745,6 +757,37 @@ test('final-moves playback freezes behind a newer menu and only returns to Resul
   for (let now = 3600; now <= 6000; now += 240) state.frame(now);
   assert.equal(state.shell.topDialog(), state.shell.elements.dialogs.results);
   assert.equal(state.document.body.dataset.playing, 'false');
+});
+
+test('results replay the last eight moves automatically without hiding actions or changing the saved attempt', async () => {
+  const state = await harness();
+  await importSession(state.$, clearedSession());
+  const footer = state.shell.elements.dialogs.results.querySelector('footer');
+  assert.ok(footer.contains(state.$('next')));
+  assert.ok(footer.contains(state.shell.elements.buttons.retry));
+  assert.equal(state.$('review').getAttribute('aria-pressed'), 'true');
+  const saved = state.storage.get('revealline.classic-snake.round.v2');
+  const replay = () =>
+    state.drawings.filter((item) => item.canvas.classList.contains('snake-result-board')).at(-1);
+  state.frame(0);
+  const firstTick = replay().run.tick;
+  state.frame(240);
+  assert.equal(replay().run.tick, firstTick + 1);
+  assert.equal(state.shell.topDialog(), state.shell.elements.dialogs.results);
+  state.$('review').click();
+  state.frame(480);
+  const pausedTick = replay().run.tick;
+  state.frame(720);
+  assert.equal(replay().run.tick, pausedTick, 'Pause replay freezes only the preview');
+  assert.equal(state.document.body.dataset.playing, 'false');
+  assert.equal(state.storage.get('revealline.classic-snake.round.v2'), saved);
+  state.shell.openHome();
+  state.shell.elements.buttons['home-results'].click();
+  assert.equal(
+    state.document.activeElement,
+    state.$('next'),
+    'Next is preferred even in the fixed footer',
+  );
 });
 
 test('Next retires the completed result and directly launches the ordered next mission', async () => {

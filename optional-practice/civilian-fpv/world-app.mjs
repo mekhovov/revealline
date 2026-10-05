@@ -4203,7 +4203,9 @@ export function mountWorldApp({
         sectors: sectors.snapshot(),
       });
     $('result-panel').hidden = false;
-    $('result-panel').replaceChildren(
+    const resultDetails = el('div');
+    $('result-panel').replaceChildren(resultDetails);
+    resultDetails.replaceChildren(
       el(
         'h2',
         state.status === 'complete'
@@ -4214,10 +4216,13 @@ export function mountWorldApp({
       ),
       el('p', txt('Checking recording…', 'Перевірка запису…')),
     );
-    const resultActions = el('div', undefined, 'button-row');
-    resultActions.append(
-      button(txt('Fly again', 'Летіти ще раз'), () => $('world-retry').click(), 'primary'),
+    const resultActions = el('div', undefined, 'button-row continuous-result-actions');
+    const retryAction = button(
+      txt('Fly again', 'Летіти ще раз'),
+      () => $('world-retry').click(),
+      'primary',
     );
+    resultActions.append(retryAction);
     if (!$('world-next').disabled)
       resultActions.append(
         button(txt('Next flight', 'Наступний політ'), () => $('world-next').click(), 'primary'),
@@ -4269,9 +4274,17 @@ export function mountWorldApp({
     $('result-panel').append(resultActions);
     flowControls?.dispose();
     flowCelebration?.dispose();
+    const nextAction = [...resultActions.querySelectorAll('button')].find(
+      (node) =>
+        node.textContent === txt('Next flight', 'Наступний політ') ||
+        node.textContent === txt('Next lesson', 'Наступний урок'),
+    );
+    const primaryResultAction =
+      state.status === 'complete' ? (nextAction ?? retryAction) : retryAction;
     flowControls = mountSimContinuousPlayControls({
       document: doc,
-      parent: $('result-panel'),
+      parent: resultActions,
+      primaryAction: primaryResultAction,
       controller: continuousPlay,
       locale: () => locale,
     });
@@ -4290,12 +4303,7 @@ export function mountWorldApp({
         replayMs: 0,
         readyMs: 400,
       });
-    const nextAction = [...resultActions.querySelectorAll('button')].find(
-      (node) =>
-        node.textContent === txt('Next flight', 'Наступний політ') ||
-        node.textContent === txt('Next lesson', 'Наступний урок'),
-    );
-    nextAction?.focus();
+    primaryResultAction.focus();
 
     try {
       const verified = entry.legacy
@@ -4346,7 +4354,9 @@ export function mountWorldApp({
           verified: !isPreview && state.status === 'complete',
           nextAvailable: Boolean(nextLearningEntry(entry)),
         });
-      $('result-panel').replaceChildren(
+      // Keep the action row connected while asynchronous verification updates
+      // only its sibling details; keyboard/controller focus must stay usable.
+      resultDetails.replaceChildren(
         el(
           'h2',
           state.status === 'complete'
@@ -4377,17 +4387,17 @@ export function mountWorldApp({
         const stars = { gold: 3, silver: 2, bronze: 1 }[resultSummary.medal];
         const rating = el('p', '★'.repeat(stars), 'result-stars');
         rating.setAttribute('aria-label', txt(`${stars} of 3 stars`, `${stars} з 3 зірок`));
-        $('result-panel').append(rating);
+        resultDetails.append(rating);
       }
       if (!entry.beginner)
-        $('result-panel').append(
+        resultDetails.append(
           el(
             'p',
             `${resultSummary.medal ? `${txt('Medal', 'Медаль')}: ${resultSummary.medal} · ` : ''}${txt('Score', 'Бали')}: ${resultSummary.score}${resultSummary.accuracy === null ? '' : ` · ${Math.round(resultSummary.accuracy * 100)}%`}`,
           ),
         );
       if (resultSummary.sectors.length)
-        $('result-panel').append(splitSummary(resultSummary.sectors, completedReference));
+        resultDetails.append(splitSummary(resultSummary.sectors, completedReference));
       const lostSector = completedReference
         ? resultSummary.sectors
             .map((sector) => ({
@@ -4452,10 +4462,10 @@ export function mountWorldApp({
             },
           ),
         );
-        $('result-panel').append(suggestion);
+        resultDetails.append(suggestion);
       }
       if (!entry.legacy)
-        $('result-panel').append(
+        resultDetails.append(
           button(txt('Watch this section', 'Переглянути цю ділянку'), () =>
             startFlight(entry, {
               checkpoint: {
@@ -4480,9 +4490,8 @@ export function mountWorldApp({
               }),
           ),
         );
-      $('result-panel').append(resultActions, flowControls.root);
       presentation.resume();
-      $('result-panel').append(
+      resultDetails.append(
         button(txt('Watch verified flight', 'Переглянути перевірений політ'), () =>
           startFlight(entry, { preview: true, replayProof: proof }),
         ),

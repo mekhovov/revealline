@@ -254,26 +254,63 @@ function drawFieldMechanics(ctx, run, palette) {
   }
 }
 
-function drawInterference(ctx, run, palette, reduced) {
-  if (!run.signal?.jammed) return;
-  // Sparse low-contrast bands avoid flashing. Near-head geometry and all
-  // danger warnings/cables stay clear; distant ordinary detail is dimmed below.
+function drawSignalDropout(ctx, run, { reduced, locale }) {
+  const width = run.level.width * UNIT,
+    height = run.level.height * UNIT,
+    remaining = Math.max(1, Math.min(4, run.signal.remainingTicks));
+  // Do not paint the world underneath the loss screen. Its output must reveal
+  // neither changing actor positions nor cached silhouettes through a theme.
   ctx.save();
-  ctx.globalAlpha = reduced ? 0.32 : 0.38;
-  ctx.fillStyle = palette.field;
-  ctx.fillRect(0, 0, run.level.width * UNIT, run.level.height * UNIT);
-  ctx.globalAlpha = 0.12;
-  ctx.fillStyle = palette.muted;
-  for (let band = 0; band < 4; band++) {
-    const y = (band * 97 + (reduced ? 0 : run.tick * 7)) % (run.level.height * UNIT);
-    ctx.fillRect(0, y, run.level.width * UNIT, 3);
+  ctx.globalAlpha = 1;
+  ctx.fillStyle = '#07111a';
+  ctx.fillRect(0, 0, width, height);
+  ctx.fillStyle = '#13212b';
+  for (let band = 0; band < 12; band++) {
+    const y = (band * 47 + (reduced ? 0 : run.tick * 3)) % height;
+    ctx.fillRect(3, y, width - 6, 2);
   }
+  ctx.strokeStyle = '#edbd55';
+  ctx.lineWidth = 3;
+  ctx.setLineDash(run.level.wrap ? [7, 7] : []);
+  ctx.strokeRect(1.5, 1.5, width - 3, height - 3);
+  ctx.setLineDash([]);
+  const center = width / 2,
+    top = height / 2 - 75;
+  ctx.beginPath();
+  ctx.moveTo(center, top + 34);
+  ctx.lineTo(center, top + 8);
+  ctx.moveTo(center - 17, top + 8);
+  ctx.lineTo(center + 17, top + 8);
+  ctx.moveTo(center - 21, top - 1);
+  ctx.lineTo(center + 21, top + 41);
+  ctx.stroke();
+  ctx.fillStyle = '#f4f1dc';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.font = 'bold 28px monospace';
+  ctx.fillText(locale === 'uk' ? 'СИГНАЛ ВТРАЧЕНО' : 'SIGNAL LOST', center, top + 76);
+  ctx.font = '21px sans-serif';
+  ctx.fillStyle = '#b8c5cf';
+  ctx.fillText(
+    locale === 'uk'
+      ? 'Керуйте з пам’яті · відновлення'
+      : 'Keep steering from memory · reconnecting',
+    center,
+    top + 114,
+  );
+  for (let index = 0; index < 4; index++) {
+    ctx.fillStyle = index < 4 - remaining ? '#edbd55' : '#34414b';
+    ctx.fillRect(center - 51 + index * 28, top + 143, 18, 7);
+  }
+  ctx.font = '20px monospace';
+  ctx.fillStyle = '#edbd55';
+  ctx.fillText(
+    locale === 'uk' ? `Ще ходів: ${remaining}` : `${remaining} moves remaining`,
+    center,
+    top + 183,
+  );
   ctx.restore();
 }
-const nearHead = (run, cell) =>
-  run.snakes.some(
-    (snake) => Math.abs(snake.body[0].x - cell.x) + Math.abs(snake.body[0].y - cell.y) <= 4,
-  );
 
 export function drawClassicBoard(
   canvas,
@@ -292,6 +329,7 @@ export function drawClassicBoard(
     flight = {},
     pixelRatio = 1,
     cssWidth,
+    locale = 'en',
   } = {},
 ) {
   const { width, height, walls, wrap } = run.level,
@@ -321,6 +359,13 @@ export function drawClassicBoard(
   if (!ctx) return;
   ctx.setTransform(bitmapWidth / logicalWidth, 0, 0, bitmapHeight / logicalHeight, 0, 0);
   ctx.imageSmoothingEnabled = false;
+  // Pulse freezes jammer phases and stabilizes the feed while it lasts. A
+  // terminal impact is revealed for the failure recording rather than hidden.
+  const signalLost = run.signal?.jammed && run.pulseTicks <= 0 && run.status === 'running';
+  if (signalLost) {
+    drawSignalDropout(ctx, run, { reduced, locale });
+    return;
+  }
   ctx.fillStyle = palette.field;
   ctx.fillRect(0, 0, logicalWidth, logicalHeight);
   ctx.fillStyle = palette.alternate;
@@ -362,10 +407,8 @@ export function drawClassicBoard(
     effects.draw(ctx);
     ctx.restore();
   }
-  drawInterference(ctx, run, palette, reduced);
   for (const wall of walls)
     if (!run.removedWalls?.some((removed) => removed.x === wall.x && removed.y === wall.y)) {
-      ctx.globalAlpha = run.signal?.jammed && !nearHead(run, wall) ? 0.25 : 1;
       drawWall(ctx, wall, presentation, palette, retro);
     }
   ctx.globalAlpha = 1;
@@ -379,8 +422,6 @@ export function drawClassicBoard(
   ctx.setLineDash([]);
   const targets = run.targets ?? (run.target ? [run.target] : []);
   for (const target of targets) {
-    const threat = ['jammer', 'lane', 'relay', 'guard', 'shield', 'brace'].includes(target.kind);
-    ctx.globalAlpha = run.signal?.jammed && !threat && !nearHead(run, target) ? 0.25 : 1;
     drawClassicTarget(
       ctx,
       target.x * UNIT,
@@ -435,5 +476,29 @@ export function drawClassicBoard(
     ctx.moveTo(x + 20, y + 8);
     ctx.lineTo(x + 8, y + 20);
     ctx.stroke();
+  }
+  if (run.status === 'running') {
+    const warning = targets.some(
+      (target) => target.kind === 'jammer' && target.phase === 'warning',
+    );
+    const stabilized = run.signal?.jammed && run.pulseTicks > 0;
+    if (warning || stabilized) {
+      ctx.save();
+      ctx.strokeStyle = stabilized ? palette.safe : palette.accent;
+      ctx.lineWidth = 5;
+      ctx.setLineDash(stabilized ? [] : [12, 8]);
+      ctx.strokeRect(3, 3, logicalWidth - 6, logicalHeight - 6);
+      if (stabilized) {
+        ctx.font = 'bold 21px sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillStyle = palette.text;
+        ctx.fillText(
+          locale === 'uk' ? 'ІМПУЛЬС · ПРИЙОМ ВІДНОВЛЕНО' : 'PULSE · RECEPTION STABILIZED',
+          logicalWidth / 2,
+          23,
+        );
+      }
+      ctx.restore();
+    }
   }
 }

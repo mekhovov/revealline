@@ -7,16 +7,16 @@ const guides = {
     false,
     ['Signal jammer', 'Глушник сигналу'],
     [
-      'Interrupts reception in short, announced bursts.',
-      'Створює короткі перешкоди після попередження.',
+      'Blacks out the whole playfield for four moves after a warning.',
+      'Після попередження приховує все поле на чотири ходи.',
     ],
     [
-      'An antenna badge and amber warning precede four moves of interference.',
-      'Антена й жовте попередження передують чотирьом ходам перешкод.',
+      'The antenna and dashed amber arena edge warn first. A recovery counter stays visible during signal loss.',
+      'Антена й жовтий пунктир краю поля попереджають завчасно. Під час втрати сигналу видно відлік відновлення.',
     ],
     [
-      'Plan your route before the burst; catching the jammer immediately clears it.',
-      'Плануйте маршрут до спалаху; ловля глушника одразу прибирає перешкоди.',
+      'Memorize your next four moves: enemies, walls and your cable disappear while steering continues. Catch the jammer to restore reception. Pulse shows the field while freezing the remaining blackout moves.',
+      'Запам’ятайте наступні чотири ходи: вороги, стіни й кабель зникнуть, але керування діє. Спіймайте глушник для відновлення прийому. Імпульс показує поле, заморожуючи решту ходів втрати сигналу.',
     ],
   ],
   lane: [

@@ -84,8 +84,8 @@ const first = [
     [[10, 5, 3, 3]],
     [jammer(), jammer([3, 10])],
     4,
-    'The antenna warns before interference. Keep your cable clear and catch the jammer to restore reception.',
-    'Антена попереджає про перешкоди. Бережіть кабель і ловіть глушник, щоб відновити прийом.',
+    'The antenna warns before four moves of signal loss. Memorize your route: the whole field disappears, but steering continues. Catch the jammer to restore reception.',
+    'Антена попереджає перед чотирма ходами втрати сигналу. Запам’ятайте маршрут: усе поле зникне, але керування діє. Спіймайте глушник для відновлення прийому.',
   ],
   [
     'quiet-return',
@@ -97,8 +97,8 @@ const first = [
     ],
     [jammer(), runner(), jammer([3, 10])],
     6,
-    'Plan your return while reception is clear. Interference never changes steering or hides your cable.',
-    'Плануйте повернення за чистого прийому. Перешкоди не змінюють керування й не приховують кабель.',
+    'Plan your return while reception is clear. During signal loss, steer from memory for four moves; enemies, walls and your cable are hidden.',
+    'Плануйте повернення за чистого прийому. Під час втрати сигналу керуйте з пам’яті чотири ходи: вороги, стіни й кабель приховані.',
   ],
   [
     'lane-window',
@@ -168,8 +168,8 @@ const first = [
     ],
     [jammer(), lane()],
     6,
-    'Read the antenna and lane separately. A lane waits for clear reception before beginning a fresh warning.',
-    'Читайте антену й смугу окремо. Смуга чекає чистого прийому перед новим попередженням.',
+    'Memorize a safe crossing before the four-move blackout. The lane waits for reception to return, then gives a full new warning.',
+    'Запам’ятайте безпечний перехід перед втратою сигналу на чотири ходи. Смуга чекає відновлення прийому й дає повне нове попередження.',
   ],
   [
     'relay-airfield',
@@ -191,8 +191,8 @@ const first = [
       ),
     ],
     6,
-    'Restore reception, time the crossing and unlock the sentinel. Each mechanic keeps the same visible rules.',
-    'Відновіть прийом, оберіть момент переходу й відкрийте вартового. Правила кожної механіки залишаються видимими.',
+    'Remember the relay positions before signal loss, then time the crossing and unlock the sentinel. No lane starts an attack during the blackout.',
+    'Запам’ятайте ретранслятори перед втратою сигналу, потім оберіть момент переходу й відкрийте вартового. Під час втрати сигналу смуга не починає атаку.',
   ],
 ];
 const patrols = [
@@ -349,8 +349,8 @@ const mastery = [
     ],
     [eroder(), jammer(), guard()],
     6,
-    'Read the marked wall, antenna and locked aim. New shots wait through interference.',
-    'Читайте позначену стіну, антену та приціл. Нові постріли чекають завершення перешкод.',
+    'Remember the marked wall and your next four turns before signal loss. New shots wait for the feed to return and a full warning.',
+    'Запам’ятайте позначену стіну й наступні чотири повороти перед втратою сигналу. Нові постріли чекають відновлення прийому та повного попередження.',
   ],
   [
     'field-finale',
