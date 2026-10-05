@@ -1,9 +1,9 @@
 {
   "format": "OverflightAutomatedRoutesEvidenceV1",
-  "startedAt": "2026-10-05T06:00:51.480Z",
-  "completedAt": "2026-10-05T06:01:24.583Z",
+  "startedAt": "2026-10-05T10:56:39.466Z",
+  "completedAt": "2026-10-05T10:57:16.546Z",
   "implementationBaseMainSha": "2d447bc790bdf3951251c99041c8a918363ece0a",
-  "gitHeadAtRun": "2d447bc790bdf3951251c99041c8a918363ece0a",
+  "gitHeadAtRun": "13241b30a2e9da7656f0278f7ffd4f3a6c78e432",
   "sourceKind": "working-tree-candidate",
   "environment": {
     "node": "v20.19.5",
@@ -18,8 +18,8 @@
     },
     {
       "path": "game/overflight/core.mjs",
-      "bytes": 52635,
-      "sha256": "6c754a7111b7bdeb3080de6bea9a2019b2e60dee97cb191bfcd2b781b51f7df8"
+      "bytes": 55848,
+      "sha256": "b8b8563073c0480a9ca613b90e6a93b309da5e585030e7c67477bb7792f3337e"
     },
     {
       "path": "game/overflight/grid.mjs",
@@ -38,8 +38,8 @@
     },
     {
       "path": "game/overflight/upgrades.mjs",
-      "bytes": 13183,
-      "sha256": "033bb6802dc52e77b3844b83d7f81cb2f841f5163275d52f0c6c924316d1dbe7"
+      "bytes": 15350,
+      "sha256": "064ac8894ef56734a96b690b0c6237e2c6e359b4dba475fb81e04b52b3d7d715"
     },
     {
       "path": "scripts/qualify-overflight.mjs",
@@ -47,7 +47,7 @@
       "sha256": "262c8234df23276e574e7e9a615fbe33bd6eb09ddd44e60468fc229fed6cb1ea"
     }
   ],
-  "sourceSetSha256": "b11f0cfca934b12bc4d2a3bf394e594cdcc920da6c217de4f18b2707441cbc10",
+  "sourceSetSha256": "8fa4bccdb806159a21110826e9db74574d0f31662b2f5eab92f470f1624af351",
   "projects": [
     {
       "seed": 42,
@@ -128,7 +128,7 @@
     "Source hashes bind the listed simulation/compiler/driver files; this is not a complete repository, native package, Community or release acceptance receipt.",
     "Timestamps and observed wall times change on replay; deterministic result hashes exclude only observedWallMilliseconds."
   ],
-  "deterministicResultsSha256": "0a6132711997c52a1ef4f40e4e9497b51d02423c31a6cb6055310dd7380827c8",
+  "deterministicResultsSha256": "ce4d22e9231848918c4b87628f676c031b3ce2405b4083e3979c61c7652a30cd",
   "results": [
     {
       "direction": "fan",
@@ -140,24 +140,24 @@
       "qualification": "ordinary-inputs-earned-upgrades-no-fixture",
       "controller": "deterministic-10hz-candidate-pilot-v1",
       "outcome": "won",
-      "simulatedSeconds": 342.1,
-      "observedWallMilliseconds": 1567.17,
+      "simulatedSeconds": 348.03,
+      "observedWallMilliseconds": 1760.97,
       "firstDraftSeconds": 15.08,
-      "primaryEvolutionSeconds": 117.48,
-      "lastChoiceSeconds": 229.8,
+      "primaryEvolutionSeconds": 114.13,
+      "lastChoiceSeconds": 227.43333333333334,
       "earnedChoices": 10,
-      "kills": 4774,
-      "collectedXP": 7155,
-      "groundXP": 1264,
-      "peakAlive": 535,
-      "peakVisible": 399,
+      "kills": 4954,
+      "collectedXP": 7430,
+      "groundXP": 1157,
+      "peakAlive": 582,
+      "peakVisible": 491,
       "densityPeaks": {
-        "opening": 52,
-        "developing": 104,
-        "late": 379,
-        "finale": 399
+        "opening": 60,
+        "developing": 92,
+        "late": 411,
+        "finale": 491
       },
-      "damageTaken": 139,
+      "damageTaken": 187,
       "airframesRemaining": 2,
       "finalRemainingHull": null,
       "build": {
@@ -196,43 +196,43 @@
         },
         {
           "id": "proximity-pulse:2",
-          "time": 45.21666666666667,
-          "tick": 2713
+          "time": 46.28333333333333,
+          "tick": 2777
         },
         {
           "id": "side-burst:1",
-          "time": 67.23333333333333,
-          "tick": 4034
+          "time": 67.8,
+          "tick": 4068
         },
         {
           "id": "primary:wide:3",
-          "time": 92.31666666666666,
-          "tick": 5539
+          "time": 92.5,
+          "tick": 5550
         },
         {
           "id": "primary:wide:4",
-          "time": 117.48333333333333,
-          "tick": 7049
+          "time": 114.13333333333334,
+          "tick": 6848
         },
         {
           "id": "side-burst:2",
-          "time": 137.15,
-          "tick": 8229
+          "time": 135.91666666666666,
+          "tick": 8155
         },
         {
           "id": "proximity-pulse:3",
-          "time": 151.01666666666668,
-          "tick": 9061
+          "time": 150.66666666666666,
+          "tick": 9040
         },
         {
           "id": "side-burst:3",
-          "time": 177.9,
-          "tick": 10674
+          "time": 172.25,
+          "tick": 10335
         },
         {
           "id": "scanner:1",
-          "time": 229.8,
-          "tick": 13788
+          "time": 227.43333333333334,
+          "tick": 13646
         }
       ]
     },
@@ -246,24 +246,24 @@
       "qualification": "ordinary-inputs-earned-upgrades-no-fixture",
       "controller": "deterministic-10hz-candidate-pilot-v1",
       "outcome": "won",
-      "simulatedSeconds": 342.07,
-      "observedWallMilliseconds": 1664.28,
+      "simulatedSeconds": 344.27,
+      "observedWallMilliseconds": 1808.71,
       "firstDraftSeconds": 15.08,
-      "primaryEvolutionSeconds": 115.42,
-      "lastChoiceSeconds": 226.8,
+      "primaryEvolutionSeconds": 113.78,
+      "lastChoiceSeconds": 231.55,
       "earnedChoices": 10,
-      "kills": 4729,
-      "collectedXP": 6390,
-      "groundXP": 1946,
-      "peakAlive": 569,
-      "peakVisible": 476,
+      "kills": 4831,
+      "collectedXP": 5852,
+      "groundXP": 2604,
+      "peakAlive": 585,
+      "peakVisible": 514,
       "densityPeaks": {
-        "opening": 53,
-        "developing": 83,
-        "late": 451,
-        "finale": 476
+        "opening": 62,
+        "developing": 105,
+        "late": 447,
+        "finale": 514
       },
-      "damageTaken": 90,
+      "damageTaken": 65,
       "airframesRemaining": 3,
       "finalRemainingHull": null,
       "build": {
@@ -302,43 +302,43 @@
         },
         {
           "id": "slow-field:1",
-          "time": 45.53333333333333,
-          "tick": 2732
+          "time": 46.61666666666667,
+          "tick": 2797
         },
         {
           "id": "slow-field:2",
-          "time": 67.53333333333333,
-          "tick": 4052
+          "time": 67.26666666666667,
+          "tick": 4036
         },
         {
           "id": "primary:double:3",
-          "time": 91,
-          "tick": 5460
+          "time": 92.98333333333333,
+          "tick": 5579
         },
         {
           "id": "primary:double:4",
-          "time": 115.41666666666667,
-          "tick": 6925
+          "time": 113.78333333333333,
+          "tick": 6827
         },
         {
           "id": "proximity-pulse:2",
-          "time": 135,
-          "tick": 8100
+          "time": 136,
+          "tick": 8160
         },
         {
           "id": "slow-field:3",
-          "time": 151.06666666666666,
-          "tick": 9064
+          "time": 152.41666666666666,
+          "tick": 9145
         },
         {
           "id": "proximity-pulse:3",
-          "time": 174.5,
-          "tick": 10470
+          "time": 181.46666666666667,
+          "tick": 10888
         },
         {
           "id": "shield:1",
-          "time": 226.8,
-          "tick": 13608
+          "time": 231.55,
+          "tick": 13893
         }
       ]
     },
@@ -352,25 +352,25 @@
       "qualification": "ordinary-inputs-earned-upgrades-no-fixture",
       "controller": "deterministic-10hz-candidate-pilot-v1",
       "outcome": "won",
-      "simulatedSeconds": 348.55,
-      "observedWallMilliseconds": 1836.89,
+      "simulatedSeconds": 353.23,
+      "observedWallMilliseconds": 1988.05,
       "firstDraftSeconds": 15.08,
       "primaryEvolutionSeconds": null,
-      "lastChoiceSeconds": 224.5,
+      "lastChoiceSeconds": 223.5,
       "earnedChoices": 10,
-      "kills": 4933,
-      "collectedXP": 8269,
-      "groundXP": 299,
-      "peakAlive": 648,
-      "peakVisible": 559,
+      "kills": 5115,
+      "collectedXP": 8399,
+      "groundXP": 355,
+      "peakAlive": 720,
+      "peakVisible": 585,
       "densityPeaks": {
-        "opening": 58,
-        "developing": 96,
-        "late": 388,
-        "finale": 559
+        "opening": 59,
+        "developing": 110,
+        "late": 406,
+        "finale": 585
       },
-      "damageTaken": 269,
-      "airframesRemaining": 1,
+      "damageTaken": 124,
+      "airframesRemaining": 2,
       "finalRemainingHull": null,
       "build": {
         "primary": {
@@ -408,43 +408,43 @@
         },
         {
           "id": "proximity-pulse:2",
-          "time": 45.53333333333333,
-          "tick": 2732
+          "time": 46.61666666666667,
+          "tick": 2797
         },
         {
           "id": "side-burst:1",
-          "time": 67.1,
-          "tick": 4026
+          "time": 67.13333333333334,
+          "tick": 4028
         },
         {
           "id": "side-burst:2",
-          "time": 91.75,
-          "tick": 5505
+          "time": 92.3,
+          "tick": 5538
         },
         {
           "id": "proximity-pulse:3",
-          "time": 114.81666666666666,
-          "tick": 6889
+          "time": 113.71666666666667,
+          "tick": 6823
         },
         {
           "id": "side-burst:3",
-          "time": 135.9,
-          "tick": 8154
+          "time": 136.68333333333334,
+          "tick": 8201
         },
         {
           "id": "scanner:1",
-          "time": 149.15,
-          "tick": 8949
+          "time": 149.08333333333334,
+          "tick": 8945
         },
         {
           "id": "scanner:2",
-          "time": 172.81666666666666,
-          "tick": 10369
+          "time": 176.21666666666667,
+          "tick": 10573
         },
         {
           "id": "scanner:3",
-          "time": 224.5,
-          "tick": 13470
+          "time": 223.5,
+          "tick": 13410
         }
       ]
     },
@@ -458,24 +458,24 @@
       "qualification": "ordinary-inputs-earned-upgrades-no-fixture",
       "controller": "deterministic-10hz-candidate-pilot-v1",
       "outcome": "won",
-      "simulatedSeconds": 338.27,
-      "observedWallMilliseconds": 1624,
+      "simulatedSeconds": 346.58,
+      "observedWallMilliseconds": 1681.96,
       "firstDraftSeconds": 18.68,
-      "primaryEvolutionSeconds": 67.32,
-      "lastChoiceSeconds": 233.53333333333333,
+      "primaryEvolutionSeconds": 67.03,
+      "lastChoiceSeconds": 232.18333333333334,
       "earnedChoices": 10,
-      "kills": 4608,
-      "collectedXP": 6993,
-      "groundXP": 1226,
-      "peakAlive": 535,
-      "peakVisible": 419,
+      "kills": 4787,
+      "collectedXP": 7562,
+      "groundXP": 860,
+      "peakAlive": 691,
+      "peakVisible": 536,
       "densityPeaks": {
-        "opening": 55,
-        "developing": 88,
-        "late": 413,
-        "finale": 419
+        "opening": 61,
+        "developing": 117,
+        "late": 383,
+        "finale": 536
       },
-      "damageTaken": 100,
+      "damageTaken": 124,
       "airframesRemaining": 2,
       "finalRemainingHull": null,
       "build": {
@@ -514,43 +514,43 @@
         },
         {
           "id": "primary:wide:3",
-          "time": 45.55,
-          "tick": 2733
+          "time": 46.03333333333333,
+          "tick": 2762
         },
         {
           "id": "primary:wide:4",
-          "time": 67.31666666666666,
-          "tick": 4039
+          "time": 67.03333333333333,
+          "tick": 4022
         },
         {
           "id": "side-burst:1",
-          "time": 93.65,
-          "tick": 5619
+          "time": 92.8,
+          "tick": 5568
         },
         {
           "id": "proximity-pulse:2",
-          "time": 116.05,
-          "tick": 6963
+          "time": 116.26666666666667,
+          "tick": 6976
         },
         {
           "id": "proximity-pulse:3",
-          "time": 138.43333333333334,
-          "tick": 8306
+          "time": 137.16666666666666,
+          "tick": 8230
         },
         {
           "id": "side-burst:2",
-          "time": 150.35,
-          "tick": 9021
+          "time": 152.43333333333334,
+          "tick": 9146
         },
         {
           "id": "side-burst:3",
-          "time": 176,
-          "tick": 10560
+          "time": 179.5,
+          "tick": 10770
         },
         {
           "id": "scanner:1",
-          "time": 233.53333333333333,
-          "tick": 14012
+          "time": 232.18333333333334,
+          "tick": 13931
         }
       ]
     },
@@ -564,24 +564,24 @@
       "qualification": "ordinary-inputs-earned-upgrades-no-fixture",
       "controller": "deterministic-10hz-candidate-pilot-v1",
       "outcome": "won",
-      "simulatedSeconds": 335.47,
-      "observedWallMilliseconds": 1599.55,
+      "simulatedSeconds": 347.57,
+      "observedWallMilliseconds": 1734.39,
       "firstDraftSeconds": 18.68,
-      "primaryEvolutionSeconds": 67.15,
-      "lastChoiceSeconds": 227.1,
+      "primaryEvolutionSeconds": 67.03,
+      "lastChoiceSeconds": 229.16666666666666,
       "earnedChoices": 10,
-      "kills": 4527,
-      "collectedXP": 6093,
-      "groundXP": 2050,
-      "peakAlive": 657,
-      "peakVisible": 597,
+      "kills": 4946,
+      "collectedXP": 5604,
+      "groundXP": 2990,
+      "peakAlive": 574,
+      "peakVisible": 522,
       "densityPeaks": {
-        "opening": 55,
-        "developing": 98,
-        "late": 424,
-        "finale": 597
+        "opening": 59,
+        "developing": 108,
+        "late": 421,
+        "finale": 522
       },
-      "damageTaken": 75,
+      "damageTaken": 84,
       "airframesRemaining": 3,
       "finalRemainingHull": null,
       "build": {
@@ -620,43 +620,43 @@
         },
         {
           "id": "primary:double:3",
-          "time": 47.31666666666667,
-          "tick": 2839
+          "time": 47.18333333333333,
+          "tick": 2831
         },
         {
           "id": "primary:double:4",
-          "time": 67.15,
-          "tick": 4029
+          "time": 67.03333333333333,
+          "tick": 4022
         },
         {
           "id": "slow-field:2",
-          "time": 88.48333333333333,
-          "tick": 5309
+          "time": 92.36666666666666,
+          "tick": 5542
         },
         {
           "id": "slow-field:3",
-          "time": 113.75,
-          "tick": 6825
+          "time": 114.85,
+          "tick": 6891
         },
         {
           "id": "proximity-pulse:1",
-          "time": 134.55,
-          "tick": 8073
+          "time": 134.93333333333334,
+          "tick": 8096
         },
         {
           "id": "proximity-pulse:2",
-          "time": 149.15,
-          "tick": 8949
+          "time": 149.68333333333334,
+          "tick": 8981
         },
         {
           "id": "proximity-pulse:3",
-          "time": 175.78333333333333,
-          "tick": 10547
+          "time": 174.86666666666667,
+          "tick": 10492
         },
         {
           "id": "shield:1",
-          "time": 227.1,
-          "tick": 13626
+          "time": 229.16666666666666,
+          "tick": 13750
         }
       ]
     },
@@ -670,24 +670,24 @@
       "qualification": "ordinary-inputs-earned-upgrades-no-fixture",
       "controller": "deterministic-10hz-candidate-pilot-v1",
       "outcome": "won",
-      "simulatedSeconds": 358.45,
-      "observedWallMilliseconds": 2028.22,
+      "simulatedSeconds": 360.53,
+      "observedWallMilliseconds": 2441.38,
       "firstDraftSeconds": 18.68,
       "primaryEvolutionSeconds": null,
-      "lastChoiceSeconds": 224.7,
+      "lastChoiceSeconds": 223.63333333333333,
       "earnedChoices": 10,
-      "kills": 5336,
-      "collectedXP": 8625,
-      "groundXP": 306,
-      "peakAlive": 778,
-      "peakVisible": 648,
+      "kills": 5475,
+      "collectedXP": 8785,
+      "groundXP": 304,
+      "peakAlive": 716,
+      "peakVisible": 606,
       "densityPeaks": {
-        "opening": 54,
-        "developing": 87,
-        "late": 397,
-        "finale": 648
+        "opening": 62,
+        "developing": 88,
+        "late": 418,
+        "finale": 606
       },
-      "damageTaken": 163,
+      "damageTaken": 139,
       "airframesRemaining": 2,
       "finalRemainingHull": null,
       "build": {
@@ -726,43 +726,43 @@
         },
         {
           "id": "proximity-pulse:2",
-          "time": 46.5,
-          "tick": 2790
+          "time": 47.416666666666664,
+          "tick": 2845
         },
         {
           "id": "side-burst:1",
-          "time": 67.98333333333333,
-          "tick": 4079
+          "time": 66.96666666666667,
+          "tick": 4018
         },
         {
           "id": "scanner:1",
-          "time": 92.25,
-          "tick": 5535
+          "time": 92.71666666666667,
+          "tick": 5563
         },
         {
           "id": "proximity-pulse:3",
-          "time": 117.38333333333334,
-          "tick": 7043
+          "time": 114.23333333333333,
+          "tick": 6854
         },
         {
           "id": "side-burst:2",
-          "time": 135.53333333333333,
-          "tick": 8132
+          "time": 134.16666666666666,
+          "tick": 8050
         },
         {
           "id": "side-burst:3",
-          "time": 148.03333333333333,
-          "tick": 8882
+          "time": 146.41666666666666,
+          "tick": 8785
         },
         {
           "id": "scanner:2",
-          "time": 174.4,
-          "tick": 10464
+          "time": 174.25,
+          "tick": 10455
         },
         {
           "id": "scanner:3",
-          "time": 224.7,
-          "tick": 13482
+          "time": 223.63333333333333,
+          "tick": 13418
         }
       ]
     },
@@ -776,24 +776,24 @@
       "qualification": "ordinary-inputs-earned-upgrades-no-fixture",
       "controller": "deterministic-10hz-candidate-pilot-v1",
       "outcome": "won",
-      "simulatedSeconds": 331.05,
-      "observedWallMilliseconds": 1977.43,
+      "simulatedSeconds": 334.65,
+      "observedWallMilliseconds": 2936.53,
       "firstDraftSeconds": 14.05,
-      "primaryEvolutionSeconds": 103.63,
-      "lastChoiceSeconds": 247.06666666666666,
+      "primaryEvolutionSeconds": 101.95,
+      "lastChoiceSeconds": 245,
       "earnedChoices": 10,
-      "kills": 3705,
-      "collectedXP": 4361,
-      "groundXP": 498,
-      "peakAlive": 1157,
-      "peakVisible": 628,
+      "kills": 3348,
+      "collectedXP": 3988,
+      "groundXP": 530,
+      "peakAlive": 1667,
+      "peakVisible": 1048,
       "densityPeaks": {
-        "opening": 59,
-        "developing": 134,
-        "late": 589,
-        "finale": 628
+        "opening": 60,
+        "developing": 110,
+        "late": 640,
+        "finale": 1048
       },
-      "damageTaken": 72,
+      "damageTaken": 96,
       "airframesRemaining": 3,
       "finalRemainingHull": null,
       "build": {
@@ -832,43 +832,43 @@
         },
         {
           "id": "proximity-pulse:2",
-          "time": 29.533333333333335,
-          "tick": 1772
+          "time": 32.28333333333333,
+          "tick": 1937
         },
         {
           "id": "side-burst:1",
-          "time": 43.733333333333334,
-          "tick": 2624
+          "time": 44.61666666666667,
+          "tick": 2677
         },
         {
           "id": "primary:wide:3",
-          "time": 75.51666666666667,
-          "tick": 4531
+          "time": 76.45,
+          "tick": 4587
         },
         {
           "id": "primary:wide:4",
-          "time": 103.63333333333334,
-          "tick": 6218
+          "time": 101.95,
+          "tick": 6117
         },
         {
           "id": "side-burst:2",
-          "time": 126.81666666666666,
-          "tick": 7609
+          "time": 130.18333333333334,
+          "tick": 7811
         },
         {
           "id": "proximity-pulse:3",
-          "time": 169.93333333333334,
-          "tick": 10196
+          "time": 170.83333333333334,
+          "tick": 10250
         },
         {
           "id": "side-burst:3",
-          "time": 197.26666666666668,
-          "tick": 11836
+          "time": 202.33333333333334,
+          "tick": 12140
         },
         {
           "id": "scanner:1",
-          "time": 247.06666666666666,
-          "tick": 14824
+          "time": 245,
+          "tick": 14700
         }
       ]
     },
@@ -882,24 +882,24 @@
       "qualification": "ordinary-inputs-earned-upgrades-no-fixture",
       "controller": "deterministic-10hz-candidate-pilot-v1",
       "outcome": "won",
-      "simulatedSeconds": 330.97,
-      "observedWallMilliseconds": 1919.39,
+      "simulatedSeconds": 335.57,
+      "observedWallMilliseconds": 2257.8,
       "firstDraftSeconds": 14.05,
-      "primaryEvolutionSeconds": 100.97,
-      "lastChoiceSeconds": 242.4,
+      "primaryEvolutionSeconds": 101.32,
+      "lastChoiceSeconds": 240.93333333333334,
       "earnedChoices": 10,
-      "kills": 3508,
-      "collectedXP": 4013,
-      "groundXP": 678,
-      "peakAlive": 1329,
-      "peakVisible": 776,
+      "kills": 3753,
+      "collectedXP": 4220,
+      "groundXP": 832,
+      "peakAlive": 1275,
+      "peakVisible": 685,
       "densityPeaks": {
-        "opening": 58,
-        "developing": 147,
-        "late": 534,
-        "finale": 776
+        "opening": 57,
+        "developing": 132,
+        "late": 500,
+        "finale": 685
       },
-      "damageTaken": 0,
+      "damageTaken": 15,
       "airframesRemaining": 3,
       "finalRemainingHull": null,
       "build": {
@@ -938,43 +938,43 @@
         },
         {
           "id": "slow-field:1",
-          "time": 30.3,
-          "tick": 1818
+          "time": 32.333333333333336,
+          "tick": 1940
         },
         {
           "id": "slow-field:2",
-          "time": 44.25,
-          "tick": 2655
+          "time": 46.416666666666664,
+          "tick": 2785
         },
         {
           "id": "primary:double:3",
-          "time": 74.13333333333334,
-          "tick": 4448
+          "time": 73.88333333333334,
+          "tick": 4433
         },
         {
           "id": "primary:double:4",
-          "time": 100.96666666666667,
-          "tick": 6058
+          "time": 101.31666666666666,
+          "tick": 6079
         },
         {
           "id": "proximity-pulse:2",
-          "time": 127.46666666666667,
-          "tick": 7648
+          "time": 128.05,
+          "tick": 7683
         },
         {
           "id": "slow-field:3",
-          "time": 164.11666666666667,
-          "tick": 9847
+          "time": 168.48333333333332,
+          "tick": 10109
         },
         {
           "id": "proximity-pulse:3",
-          "time": 195.6,
-          "tick": 11736
+          "time": 195.41666666666666,
+          "tick": 11725
         },
         {
           "id": "shield:1",
-          "time": 242.4,
-          "tick": 14544
+          "time": 240.93333333333334,
+          "tick": 14456
         }
       ]
     },
@@ -988,24 +988,24 @@
       "qualification": "ordinary-inputs-earned-upgrades-no-fixture",
       "controller": "deterministic-10hz-candidate-pilot-v1",
       "outcome": "won",
-      "simulatedSeconds": 335.28,
-      "observedWallMilliseconds": 2288.8,
+      "simulatedSeconds": 334.8,
+      "observedWallMilliseconds": 2259.94,
       "firstDraftSeconds": 14.05,
       "primaryEvolutionSeconds": null,
-      "lastChoiceSeconds": 240.43333333333334,
+      "lastChoiceSeconds": 236.68333333333334,
       "earnedChoices": 10,
-      "kills": 3473,
-      "collectedXP": 4499,
-      "groundXP": 156,
-      "peakAlive": 1565,
-      "peakVisible": 771,
+      "kills": 3540,
+      "collectedXP": 4649,
+      "groundXP": 108,
+      "peakAlive": 1452,
+      "peakVisible": 745,
       "densityPeaks": {
-        "opening": 59,
-        "developing": 137,
-        "late": 609,
-        "finale": 771
+        "opening": 61,
+        "developing": 133,
+        "late": 681,
+        "finale": 745
       },
-      "damageTaken": 20,
+      "damageTaken": 68,
       "airframesRemaining": 3,
       "finalRemainingHull": null,
       "build": {
@@ -1044,43 +1044,43 @@
         },
         {
           "id": "proximity-pulse:2",
-          "time": 30.3,
-          "tick": 1818
+          "time": 32.333333333333336,
+          "tick": 1940
         },
         {
           "id": "side-burst:1",
-          "time": 42.833333333333336,
-          "tick": 2570
+          "time": 45.166666666666664,
+          "tick": 2710
         },
         {
           "id": "side-burst:2",
-          "time": 75.25,
-          "tick": 4515
+          "time": 74.01666666666667,
+          "tick": 4441
         },
         {
           "id": "proximity-pulse:3",
-          "time": 103.35,
-          "tick": 6201
+          "time": 101.56666666666666,
+          "tick": 6094
         },
         {
           "id": "side-burst:3",
-          "time": 129.41666666666666,
-          "tick": 7765
+          "time": 125.38333333333334,
+          "tick": 7523
         },
         {
           "id": "scanner:1",
-          "time": 172.36666666666667,
-          "tick": 10342
+          "time": 167.1,
+          "tick": 10026
         },
         {
           "id": "scanner:2",
-          "time": 199.86666666666667,
-          "tick": 11992
+          "time": 198.13333333333333,
+          "tick": 11888
         },
         {
           "id": "scanner:3",
-          "time": 240.43333333333334,
-          "tick": 14426
+          "time": 236.68333333333334,
+          "tick": 14201
         }
       ]
     },
@@ -1094,24 +1094,24 @@
       "qualification": "ordinary-inputs-earned-upgrades-no-fixture",
       "controller": "deterministic-10hz-candidate-pilot-v1",
       "outcome": "won",
-      "simulatedSeconds": 328.92,
-      "observedWallMilliseconds": 1898.71,
+      "simulatedSeconds": 329.12,
+      "observedWallMilliseconds": 2289.64,
       "firstDraftSeconds": 14.12,
-      "primaryEvolutionSeconds": 47.13,
-      "lastChoiceSeconds": 256.96666666666664,
+      "primaryEvolutionSeconds": 52.13,
+      "lastChoiceSeconds": 254.41666666666666,
       "earnedChoices": 10,
-      "kills": 3877,
-      "collectedXP": 4369,
-      "groundXP": 679,
-      "peakAlive": 950,
-      "peakVisible": 634,
+      "kills": 3489,
+      "collectedXP": 4036,
+      "groundXP": 569,
+      "peakAlive": 1284,
+      "peakVisible": 668,
       "densityPeaks": {
-        "opening": 63,
-        "developing": 135,
-        "late": 591,
-        "finale": 634
+        "opening": 56,
+        "developing": 127,
+        "late": 598,
+        "finale": 668
       },
-      "damageTaken": 0,
+      "damageTaken": 40,
       "airframesRemaining": 3,
       "finalRemainingHull": null,
       "build": {
@@ -1150,43 +1150,43 @@
         },
         {
           "id": "primary:wide:3",
-          "time": 30.083333333333332,
-          "tick": 1805
+          "time": 32.93333333333333,
+          "tick": 1976
         },
         {
           "id": "primary:wide:4",
-          "time": 47.13333333333333,
-          "tick": 2828
+          "time": 52.13333333333333,
+          "tick": 3128
         },
         {
           "id": "side-burst:1",
-          "time": 77.36666666666666,
-          "tick": 4642
+          "time": 77.58333333333333,
+          "tick": 4655
         },
         {
           "id": "proximity-pulse:2",
-          "time": 102.76666666666667,
-          "tick": 6166
+          "time": 102.51666666666667,
+          "tick": 6151
         },
         {
           "id": "proximity-pulse:3",
-          "time": 125.51666666666667,
-          "tick": 7531
+          "time": 133.68333333333334,
+          "tick": 8021
         },
         {
           "id": "side-burst:2",
-          "time": 167.83333333333334,
-          "tick": 10070
+          "time": 168.38333333333333,
+          "tick": 10103
         },
         {
           "id": "side-burst:3",
-          "time": 220.16666666666666,
-          "tick": 13210
+          "time": 206.35,
+          "tick": 12381
         },
         {
           "id": "scanner:1",
-          "time": 256.96666666666664,
-          "tick": 15418
+          "time": 254.41666666666666,
+          "tick": 15265
         }
       ]
     },
@@ -1200,24 +1200,24 @@
       "qualification": "ordinary-inputs-earned-upgrades-no-fixture",
       "controller": "deterministic-10hz-candidate-pilot-v1",
       "outcome": "won",
-      "simulatedSeconds": 337.47,
-      "observedWallMilliseconds": 2066.11,
+      "simulatedSeconds": 341.57,
+      "observedWallMilliseconds": 2372.51,
       "firstDraftSeconds": 14.12,
-      "primaryEvolutionSeconds": 48.9,
-      "lastChoiceSeconds": 236.65,
+      "primaryEvolutionSeconds": 53.08,
+      "lastChoiceSeconds": 242.13333333333333,
       "earnedChoices": 10,
-      "kills": 3826,
-      "collectedXP": 4295,
-      "groundXP": 882,
-      "peakAlive": 1271,
-      "peakVisible": 782,
+      "kills": 3968,
+      "collectedXP": 4445,
+      "groundXP": 994,
+      "peakAlive": 1310,
+      "peakVisible": 737,
       "densityPeaks": {
-        "opening": 57,
-        "developing": 127,
-        "late": 536,
-        "finale": 782
+        "opening": 61,
+        "developing": 130,
+        "late": 535,
+        "finale": 737
       },
-      "damageTaken": 15,
+      "damageTaken": 0,
       "airframesRemaining": 3,
       "finalRemainingHull": null,
       "build": {
@@ -1256,43 +1256,43 @@
         },
         {
           "id": "primary:double:3",
-          "time": 33.8,
-          "tick": 2028
+          "time": 36,
+          "tick": 2160
         },
         {
           "id": "primary:double:4",
-          "time": 48.9,
-          "tick": 2934
+          "time": 53.083333333333336,
+          "tick": 3185
         },
         {
           "id": "slow-field:2",
-          "time": 75.9,
-          "tick": 4554
+          "time": 77.25,
+          "tick": 4635
         },
         {
           "id": "slow-field:3",
-          "time": 101.3,
-          "tick": 6078
+          "time": 102.41666666666667,
+          "tick": 6145
         },
         {
           "id": "proximity-pulse:1",
-          "time": 128.13333333333333,
-          "tick": 7688
+          "time": 128.33333333333334,
+          "tick": 7700
         },
         {
           "id": "proximity-pulse:2",
-          "time": 168.6,
-          "tick": 10116
+          "time": 168.43333333333334,
+          "tick": 10106
         },
         {
           "id": "proximity-pulse:3",
-          "time": 194.63333333333333,
-          "tick": 11678
+          "time": 195.46666666666667,
+          "tick": 11728
         },
         {
           "id": "shield:1",
-          "time": 236.65,
-          "tick": 14199
+          "time": 242.13333333333333,
+          "tick": 14528
         }
       ]
     },
@@ -1306,24 +1306,24 @@
       "qualification": "ordinary-inputs-earned-upgrades-no-fixture",
       "controller": "deterministic-10hz-candidate-pilot-v1",
       "outcome": "won",
-      "simulatedSeconds": 339.37,
-      "observedWallMilliseconds": 2109.96,
+      "simulatedSeconds": 335.63,
+      "observedWallMilliseconds": 2186.62,
       "firstDraftSeconds": 14.12,
       "primaryEvolutionSeconds": null,
-      "lastChoiceSeconds": 234.2,
+      "lastChoiceSeconds": 234.96666666666667,
       "earnedChoices": 10,
-      "kills": 4076,
-      "collectedXP": 5324,
-      "groundXP": 181,
-      "peakAlive": 1106,
-      "peakVisible": 648,
+      "kills": 3610,
+      "collectedXP": 4733,
+      "groundXP": 119,
+      "peakAlive": 1436,
+      "peakVisible": 693,
       "densityPeaks": {
         "opening": 57,
-        "developing": 133,
-        "late": 539,
-        "finale": 648
+        "developing": 132,
+        "late": 524,
+        "finale": 693
       },
-      "damageTaken": 68,
+      "damageTaken": 24,
       "airframesRemaining": 3,
       "finalRemainingHull": null,
       "build": {
@@ -1362,43 +1362,43 @@
         },
         {
           "id": "proximity-pulse:2",
-          "time": 31.3,
-          "tick": 1878
+          "time": 32.516666666666666,
+          "tick": 1951
         },
         {
           "id": "side-burst:1",
-          "time": 49.25,
-          "tick": 2955
+          "time": 53.333333333333336,
+          "tick": 3200
         },
         {
           "id": "scanner:1",
-          "time": 77.56666666666666,
-          "tick": 4654
+          "time": 77.93333333333334,
+          "tick": 4676
         },
         {
           "id": "proximity-pulse:3",
-          "time": 102.36666666666666,
-          "tick": 6142
+          "time": 101.7,
+          "tick": 6102
         },
         {
           "id": "side-burst:2",
-          "time": 123.01666666666667,
-          "tick": 7381
+          "time": 126.11666666666666,
+          "tick": 7567
         },
         {
           "id": "side-burst:3",
-          "time": 162.13333333333333,
-          "tick": 9728
+          "time": 167.53333333333333,
+          "tick": 10052
         },
         {
           "id": "scanner:2",
-          "time": 195.61666666666667,
-          "tick": 11737
+          "time": 199.93333333333334,
+          "tick": 11996
         },
         {
           "id": "scanner:3",
-          "time": 234.2,
-          "tick": 14052
+          "time": 234.96666666666667,
+          "tick": 14098
         }
       ]
     },
@@ -1412,24 +1412,24 @@
       "qualification": "ordinary-inputs-earned-upgrades-no-fixture",
       "controller": "deterministic-10hz-candidate-pilot-v1",
       "outcome": "won",
-      "simulatedSeconds": 336.67,
-      "observedWallMilliseconds": 1619.24,
+      "simulatedSeconds": 335.5,
+      "observedWallMilliseconds": 1802.83,
       "firstDraftSeconds": 16.28,
-      "primaryEvolutionSeconds": 92.2,
-      "lastChoiceSeconds": 238.38333333333333,
+      "primaryEvolutionSeconds": 93.85,
+      "lastChoiceSeconds": 238.5,
       "earnedChoices": 10,
-      "kills": 4541,
-      "collectedXP": 5075,
-      "groundXP": 577,
-      "peakAlive": 647,
-      "peakVisible": 570,
+      "kills": 4451,
+      "collectedXP": 4474,
+      "groundXP": 1071,
+      "peakAlive": 618,
+      "peakVisible": 502,
       "densityPeaks": {
-        "opening": 47,
-        "developing": 116,
-        "late": 387,
-        "finale": 570
+        "opening": 50,
+        "developing": 98,
+        "late": 437,
+        "finale": 502
       },
-      "damageTaken": 124,
+      "damageTaken": 115,
       "airframesRemaining": 2,
       "finalRemainingHull": null,
       "build": {
@@ -1468,43 +1468,43 @@
         },
         {
           "id": "proximity-pulse:2",
-          "time": 45.96666666666667,
-          "tick": 2758
+          "time": 47.483333333333334,
+          "tick": 2849
         },
         {
           "id": "side-burst:1",
-          "time": 56.81666666666667,
-          "tick": 3409
+          "time": 57.4,
+          "tick": 3444
         },
         {
           "id": "primary:wide:3",
-          "time": 69.48333333333333,
-          "tick": 4169
+          "time": 70.11666666666666,
+          "tick": 4207
         },
         {
           "id": "primary:wide:4",
-          "time": 92.2,
-          "tick": 5532
+          "time": 93.85,
+          "tick": 5631
         },
         {
           "id": "side-burst:2",
-          "time": 121.88333333333334,
-          "tick": 7313
+          "time": 119.86666666666666,
+          "tick": 7192
         },
         {
           "id": "proximity-pulse:3",
-          "time": 156.13333333333333,
-          "tick": 9368
+          "time": 155.5,
+          "tick": 9330
         },
         {
           "id": "side-burst:3",
-          "time": 209.36666666666667,
-          "tick": 12562
+          "time": 213.66666666666666,
+          "tick": 12820
         },
         {
           "id": "scanner:1",
-          "time": 238.38333333333333,
-          "tick": 14303
+          "time": 238.5,
+          "tick": 14310
         }
       ]
     },
@@ -1518,24 +1518,24 @@
       "qualification": "ordinary-inputs-earned-upgrades-no-fixture",
       "controller": "deterministic-10hz-candidate-pilot-v1",
       "outcome": "won",
-      "simulatedSeconds": 336.65,
-      "observedWallMilliseconds": 1705.35,
+      "simulatedSeconds": 341.87,
+      "observedWallMilliseconds": 2035.05,
       "firstDraftSeconds": 16.28,
-      "primaryEvolutionSeconds": 92,
-      "lastChoiceSeconds": 237.46666666666667,
+      "primaryEvolutionSeconds": 92.67,
+      "lastChoiceSeconds": 235.23333333333332,
       "earnedChoices": 10,
-      "kills": 4522,
-      "collectedXP": 4610,
-      "groundXP": 1010,
-      "peakAlive": 665,
-      "peakVisible": 589,
+      "kills": 4641,
+      "collectedXP": 4853,
+      "groundXP": 861,
+      "peakAlive": 653,
+      "peakVisible": 579,
       "densityPeaks": {
-        "opening": 51,
-        "developing": 101,
-        "late": 418,
-        "finale": 589
+        "opening": 61,
+        "developing": 98,
+        "late": 476,
+        "finale": 579
       },
-      "damageTaken": 45,
+      "damageTaken": 75,
       "airframesRemaining": 3,
       "finalRemainingHull": null,
       "build": {
@@ -1574,43 +1574,43 @@
         },
         {
           "id": "slow-field:1",
-          "time": 46.266666666666666,
-          "tick": 2776
+          "time": 47.03333333333333,
+          "tick": 2822
         },
         {
           "id": "slow-field:2",
-          "time": 57.63333333333333,
-          "tick": 3458
+          "time": 57.43333333333333,
+          "tick": 3446
         },
         {
           "id": "primary:double:3",
-          "time": 69.88333333333334,
-          "tick": 4193
+          "time": 69.3,
+          "tick": 4158
         },
         {
           "id": "primary:double:4",
-          "time": 92,
-          "tick": 5520
+          "time": 92.66666666666667,
+          "tick": 5560
         },
         {
           "id": "proximity-pulse:2",
-          "time": 119.93333333333334,
-          "tick": 7196
+          "time": 120.15,
+          "tick": 7209
         },
         {
           "id": "slow-field:3",
-          "time": 154.58333333333334,
-          "tick": 9275
+          "time": 155.06666666666666,
+          "tick": 9304
         },
         {
           "id": "proximity-pulse:3",
-          "time": 208.93333333333334,
-          "tick": 12536
+          "time": 208.76666666666668,
+          "tick": 12526
         },
         {
           "id": "shield:1",
-          "time": 237.46666666666667,
-          "tick": 14248
+          "time": 235.23333333333332,
+          "tick": 14114
         }
       ]
     },
@@ -1624,24 +1624,24 @@
       "qualification": "ordinary-inputs-earned-upgrades-no-fixture",
       "controller": "deterministic-10hz-candidate-pilot-v1",
       "outcome": "won",
-      "simulatedSeconds": 339.22,
-      "observedWallMilliseconds": 1801.13,
+      "simulatedSeconds": 344.88,
+      "observedWallMilliseconds": 1905.82,
       "firstDraftSeconds": 16.28,
       "primaryEvolutionSeconds": null,
-      "lastChoiceSeconds": 233.11666666666667,
+      "lastChoiceSeconds": 231.45,
       "earnedChoices": 10,
-      "kills": 4588,
-      "collectedXP": 5474,
-      "groundXP": 144,
-      "peakAlive": 765,
-      "peakVisible": 709,
+      "kills": 4713,
+      "collectedXP": 5626,
+      "groundXP": 184,
+      "peakAlive": 696,
+      "peakVisible": 596,
       "densityPeaks": {
-        "opening": 55,
-        "developing": 142,
-        "late": 482,
-        "finale": 709
+        "opening": 51,
+        "developing": 95,
+        "late": 472,
+        "finale": 596
       },
-      "damageTaken": 196,
+      "damageTaken": 154,
       "airframesRemaining": 2,
       "finalRemainingHull": null,
       "build": {
@@ -1680,43 +1680,43 @@
         },
         {
           "id": "proximity-pulse:2",
-          "time": 46.266666666666666,
-          "tick": 2776
+          "time": 47.03333333333333,
+          "tick": 2822
         },
         {
           "id": "side-burst:1",
-          "time": 57.1,
-          "tick": 3426
+          "time": 57.9,
+          "tick": 3474
         },
         {
           "id": "side-burst:2",
-          "time": 69.11666666666666,
-          "tick": 4147
+          "time": 70.96666666666667,
+          "tick": 4258
         },
         {
           "id": "proximity-pulse:3",
-          "time": 92.85,
-          "tick": 5571
+          "time": 91.86666666666666,
+          "tick": 5512
         },
         {
           "id": "side-burst:3",
-          "time": 120.9,
-          "tick": 7254
+          "time": 121.21666666666667,
+          "tick": 7273
         },
         {
           "id": "scanner:1",
-          "time": 159.11666666666667,
-          "tick": 9547
+          "time": 156.35,
+          "tick": 9381
         },
         {
           "id": "scanner:2",
-          "time": 212.58333333333334,
-          "tick": 12755
+          "time": 209.95,
+          "tick": 12597
         },
         {
           "id": "scanner:3",
-          "time": 233.11666666666667,
-          "tick": 13987
+          "time": 231.45,
+          "tick": 13887
         }
       ]
     },
@@ -1730,24 +1730,24 @@
       "qualification": "ordinary-inputs-earned-upgrades-no-fixture",
       "controller": "deterministic-10hz-candidate-pilot-v1",
       "outcome": "won",
-      "simulatedSeconds": 351.93,
-      "observedWallMilliseconds": 1833.57,
+      "simulatedSeconds": 351.07,
+      "observedWallMilliseconds": 1955.92,
       "firstDraftSeconds": 22.5,
-      "primaryEvolutionSeconds": 60.83,
-      "lastChoiceSeconds": 235.78333333333333,
+      "primaryEvolutionSeconds": 58.63,
+      "lastChoiceSeconds": 239.08333333333334,
       "earnedChoices": 10,
-      "kills": 5082,
-      "collectedXP": 5361,
-      "groundXP": 758,
-      "peakAlive": 760,
-      "peakVisible": 624,
+      "kills": 4987,
+      "collectedXP": 5111,
+      "groundXP": 937,
+      "peakAlive": 743,
+      "peakVisible": 641,
       "densityPeaks": {
-        "opening": 55,
-        "developing": 83,
-        "late": 432,
-        "finale": 624
+        "opening": 56,
+        "developing": 111,
+        "late": 431,
+        "finale": 641
       },
-      "damageTaken": 168,
+      "damageTaken": 100,
       "airframesRemaining": 2,
       "finalRemainingHull": null,
       "build": {
@@ -1786,149 +1786,149 @@
         },
         {
           "id": "primary:wide:3",
+          "time": 48.483333333333334,
+          "tick": 2909
+        },
+        {
+          "id": "primary:wide:4",
+          "time": 58.63333333333333,
+          "tick": 3518
+        },
+        {
+          "id": "side-burst:1",
+          "time": 73.1,
+          "tick": 4386
+        },
+        {
+          "id": "proximity-pulse:2",
+          "time": 96.48333333333333,
+          "tick": 5789
+        },
+        {
+          "id": "proximity-pulse:3",
+          "time": 124.96666666666667,
+          "tick": 7498
+        },
+        {
+          "id": "side-burst:2",
+          "time": 156.85,
+          "tick": 9411
+        },
+        {
+          "id": "side-burst:3",
+          "time": 213.33333333333334,
+          "tick": 12800
+        },
+        {
+          "id": "scanner:1",
+          "time": 239.08333333333334,
+          "tick": 14345
+        }
+      ]
+    },
+    {
+      "direction": "echo",
+      "route": "tight",
+      "seed": 20261005,
+      "projectIdentity": "77a2e6a778a1a712",
+      "encounterSet": "mixed",
+      "airframes": 3,
+      "qualification": "ordinary-inputs-earned-upgrades-no-fixture",
+      "controller": "deterministic-10hz-candidate-pilot-v1",
+      "outcome": "won",
+      "simulatedSeconds": 340.58,
+      "observedWallMilliseconds": 1739.71,
+      "firstDraftSeconds": 22.5,
+      "primaryEvolutionSeconds": 59.88,
+      "lastChoiceSeconds": 238.28333333333333,
+      "earnedChoices": 10,
+      "kills": 4620,
+      "collectedXP": 4639,
+      "groundXP": 1050,
+      "peakAlive": 601,
+      "peakVisible": 548,
+      "densityPeaks": {
+        "opening": 57,
+        "developing": 113,
+        "late": 449,
+        "finale": 548
+      },
+      "damageTaken": 100,
+      "airframesRemaining": 2,
+      "finalRemainingHull": null,
+      "build": {
+        "primary": {
+          "rank": 4,
+          "branch": "double",
+          "evolved": true
+        },
+        "combat": [
+          {
+            "id": "slow-field",
+            "rank": 3
+          },
+          {
+            "id": "proximity-pulse",
+            "rank": 3
+          }
+        ],
+        "support": {
+          "id": "shield",
+          "rank": 1
+        },
+        "reinforcement": 0,
+        "repair": 0
+      },
+      "choices": [
+        {
+          "id": "primary:double:2",
+          "time": 22.5,
+          "tick": 1350
+        },
+        {
+          "id": "slow-field:1",
+          "time": 28.866666666666667,
+          "tick": 1732
+        },
+        {
+          "id": "primary:double:3",
           "time": 47.06666666666667,
           "tick": 2824
         },
         {
-          "id": "primary:wide:4",
-          "time": 60.833333333333336,
-          "tick": 3650
-        },
-        {
-          "id": "side-burst:1",
-          "time": 71.98333333333333,
-          "tick": 4319
-        },
-        {
-          "id": "proximity-pulse:2",
-          "time": 93.75,
-          "tick": 5625
-        },
-        {
-          "id": "proximity-pulse:3",
-          "time": 119.8,
-          "tick": 7188
-        },
-        {
-          "id": "side-burst:2",
-          "time": 158.31666666666666,
-          "tick": 9499
-        },
-        {
-          "id": "side-burst:3",
-          "time": 210.51666666666668,
-          "tick": 12631
-        },
-        {
-          "id": "scanner:1",
-          "time": 235.78333333333333,
-          "tick": 14147
-        }
-      ]
-    },
-    {
-      "direction": "echo",
-      "route": "tight",
-      "seed": 20261005,
-      "projectIdentity": "77a2e6a778a1a712",
-      "encounterSet": "mixed",
-      "airframes": 3,
-      "qualification": "ordinary-inputs-earned-upgrades-no-fixture",
-      "controller": "deterministic-10hz-candidate-pilot-v1",
-      "outcome": "won",
-      "simulatedSeconds": 339.32,
-      "observedWallMilliseconds": 1724.14,
-      "firstDraftSeconds": 22.5,
-      "primaryEvolutionSeconds": 59.23,
-      "lastChoiceSeconds": 237.86666666666667,
-      "earnedChoices": 10,
-      "kills": 4592,
-      "collectedXP": 4271,
-      "groundXP": 1410,
-      "peakAlive": 709,
-      "peakVisible": 625,
-      "densityPeaks": {
-        "opening": 56,
-        "developing": 97,
-        "late": 386,
-        "finale": 625
-      },
-      "damageTaken": 45,
-      "airframesRemaining": 3,
-      "finalRemainingHull": null,
-      "build": {
-        "primary": {
-          "rank": 4,
-          "branch": "double",
-          "evolved": true
-        },
-        "combat": [
-          {
-            "id": "slow-field",
-            "rank": 3
-          },
-          {
-            "id": "proximity-pulse",
-            "rank": 3
-          }
-        ],
-        "support": {
-          "id": "shield",
-          "rank": 1
-        },
-        "reinforcement": 0,
-        "repair": 0
-      },
-      "choices": [
-        {
-          "id": "primary:double:2",
-          "time": 22.5,
-          "tick": 1350
-        },
-        {
-          "id": "slow-field:1",
-          "time": 28.866666666666667,
-          "tick": 1732
-        },
-        {
-          "id": "primary:double:3",
-          "time": 47.266666666666666,
-          "tick": 2836
-        },
-        {
           "id": "primary:double:4",
-          "time": 59.233333333333334,
-          "tick": 3554
+          "time": 59.88333333333333,
+          "tick": 3593
         },
         {
           "id": "slow-field:2",
-          "time": 71.48333333333333,
-          "tick": 4289
+          "time": 72.06666666666666,
+          "tick": 4324
         },
         {
           "id": "slow-field:3",
-          "time": 93.7,
-          "tick": 5622
+          "time": 95.76666666666667,
+          "tick": 5746
         },
         {
           "id": "proximity-pulse:1",
-          "time": 120.18333333333334,
-          "tick": 7211
+          "time": 123,
+          "tick": 7380
         },
         {
           "id": "proximity-pulse:2",
-          "time": 157.83333333333334,
-          "tick": 9470
+          "time": 157.06666666666666,
+          "tick": 9424
         },
         {
           "id": "proximity-pulse:3",
-          "time": 209.66666666666666,
-          "tick": 12580
+          "time": 210.65,
+          "tick": 12639
         },
         {
           "id": "shield:1",
-          "time": 237.86666666666667,
-          "tick": 14272
+          "time": 238.28333333333333,
+          "tick": 14297
         }
       ]
     },
@@ -1942,24 +1942,24 @@
       "qualification": "ordinary-inputs-earned-upgrades-no-fixture",
       "controller": "deterministic-10hz-candidate-pilot-v1",
       "outcome": "won",
-      "simulatedSeconds": 336.97,
-      "observedWallMilliseconds": 1812.54,
+      "simulatedSeconds": 338.82,
+      "observedWallMilliseconds": 1888.17,
       "firstDraftSeconds": 22.5,
       "primaryEvolutionSeconds": null,
-      "lastChoiceSeconds": 230.15,
+      "lastChoiceSeconds": 231.45,
       "earnedChoices": 10,
-      "kills": 4535,
-      "collectedXP": 5455,
-      "groundXP": 129,
-      "peakAlive": 768,
-      "peakVisible": 580,
+      "kills": 4552,
+      "collectedXP": 5461,
+      "groundXP": 134,
+      "peakAlive": 773,
+      "peakVisible": 591,
       "densityPeaks": {
-        "opening": 50,
-        "developing": 109,
-        "late": 521,
-        "finale": 580
+        "opening": 57,
+        "developing": 101,
+        "late": 591,
+        "finale": 523
       },
-      "damageTaken": 199,
+      "damageTaken": 174,
       "airframesRemaining": 2,
       "finalRemainingHull": null,
       "build": {
@@ -1998,43 +1998,43 @@
         },
         {
           "id": "proximity-pulse:2",
-          "time": 47.233333333333334,
-          "tick": 2834
+          "time": 47.31666666666667,
+          "tick": 2839
         },
         {
           "id": "side-burst:1",
-          "time": 59.45,
-          "tick": 3567
+          "time": 59.666666666666664,
+          "tick": 3580
         },
         {
           "id": "scanner:1",
-          "time": 71.6,
-          "tick": 4296
+          "time": 71.4,
+          "tick": 4284
         },
         {
           "id": "proximity-pulse:3",
-          "time": 94.3,
-          "tick": 5658
+          "time": 94.65,
+          "tick": 5679
         },
         {
           "id": "side-burst:2",
-          "time": 119.4,
-          "tick": 7164
+          "time": 121.15,
+          "tick": 7269
         },
         {
           "id": "side-burst:3",
-          "time": 153.13333333333333,
-          "tick": 9188
+          "time": 155.78333333333333,
+          "tick": 9347
         },
         {
           "id": "scanner:2",
-          "time": 207.3,
-          "tick": 12438
+          "time": 209.5,
+          "tick": 12570
         },
         {
           "id": "scanner:3",
-          "time": 230.15,
-          "tick": 13809
+          "time": 231.45,
+          "tick": 13887
         }
       ]
     }

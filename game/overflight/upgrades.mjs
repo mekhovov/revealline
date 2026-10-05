@@ -16,6 +16,75 @@ const evolutions = {
 const combatSystems = ['slow-field', 'proximity-pulse', 'side-burst'];
 const supportSystems = ['scanner', 'shield'];
 
+// Runtime attacks and upgrade previews share these values. Control modules buy
+// time to fly through a gap; they must not erase a full-health opening crowd.
+const moduleParameters = Object.freeze({
+  'proximity-pulse': [1, 2, 3].map((rank) =>
+    Object.freeze({
+      radius: [62, 78, 84][rank - 1],
+      damage: [14, 18, 18][rank - 1],
+      cooldown: [3, 2.8, 2.8][rank - 1],
+      chargedCooldown: [2.4, 2.1, 1.6][rank - 1],
+      chargeDistance: 90,
+      chargedRadius: [76, 98, 120][rank - 1],
+      chargedDamage: [26, 36, 52][rank - 1],
+      chargedPush: [17, 22, 27][rank - 1],
+      chargedReturnDamage: rank === 3 ? 38 : 0,
+      chargedReturnPush: 22,
+      delay: 0.3,
+      push: [12, 14, 14][rank - 1],
+      returnDamage: rank === 3 ? 6 : 0,
+      returnDelay: 0.9,
+      returnPush: 6,
+    }),
+  ),
+  'slow-field': [1, 2, 3].map((rank) =>
+    Object.freeze({
+      radius: [58, 74, 90][rank - 1],
+      duration: [1.6, 2, 2.4][rank - 1],
+      cooldown: 3.2,
+      tickInterval: 0.5,
+      damage: rank + 1,
+      slowDuration: 0.55,
+      slowMultiplier: 0.55,
+    }),
+  ),
+  'side-burst': [1, 2, 3].map((rank) =>
+    Object.freeze({
+      speed: 340,
+      radius: 7 + rank * 2,
+      duration: 0.9,
+      damage: 22 + rank * 12,
+      piercing: rank === 3,
+      cooldown: 1.45 - rank * 0.15,
+    }),
+  ),
+  scanner: [1, 2, 3].map((rank) =>
+    Object.freeze({
+      targetRadius: 280,
+      markDuration: rank === 1 ? 2 : 3,
+      damageMultiplier: 1.3,
+      chainTargets: rank === 3 ? 3 : 0,
+      chainRadius: 120,
+      chainDamage: 24,
+      cooldown: rank === 3 ? 1.6 : 2.2,
+      collectionRadius: 62 + rank * 23,
+    }),
+  ),
+  shield: [1, 2, 3].map((rank) =>
+    Object.freeze({
+      recharge: [10, 7, 5][rank - 1],
+      pulseRadius: rank === 3 ? 100 : 0,
+      pulseDamage: rank === 3 ? 30 : 0,
+      pulsePush: rank === 3 ? 35 : 0,
+    }),
+  ),
+});
+
+export function overflightModuleParameters(id, rank) {
+  return moduleParameters[id]?.[rank - 1] ?? null;
+}
+
 export function createOverflightBuild() {
   return {
     primary: { rank: 1, branch: null, evolved: false },
@@ -140,22 +209,22 @@ function moduleOffer(id, rank) {
         'Поле діє довше й охоплює більшу площу',
       ),
       localized(
-        'Wide fields overlap to make a return route',
-        'Широкі поля перекриваються й відкривають зворотний шлях',
+        'A longer, wider field slows pursuit for a return pass',
+        'Довше й ширше поле стримує переслідувачів для зворотного прольоту',
       ),
     ],
     'proximity-pulse': [
       localized(
-        'A delayed circular pulse pushes nearby threats away',
-        'Відкладений круговий імпульс відштовхує близькі загрози',
+        'Fly to charge a stronger pulse; an idle pulse only buys a brief opening',
+        'Летіть, щоб посилити імпульс; без руху він лише ненадовго відкриває прохід',
       ),
       localized(
-        'Pulses reach farther and trigger more often',
-        'Імпульси дістають далі й виникають частіше',
+        'Charged pulses reach farther; keep flying to refill each pulse',
+        'Заряджені імпульси дістають далі; продовжуйте політ для нового заряду',
       ),
       localized(
-        'A return pulse follows the first pulse and clears more space',
-        'Зворотний імпульс після першого звільняє більше простору',
+        'Flight also charges a return pulse at the original release point',
+        'Політ також заряджає зворотний імпульс у початковій точці випуску',
       ),
     ],
     'side-burst': [

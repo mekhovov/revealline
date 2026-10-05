@@ -155,7 +155,7 @@ button:disabled {
   pointer-events: none;
 }
 .overflight-upgrade {
-  width: min(1000px, calc(100vw - 24px));
+  width: min(1100px, calc(100vw - 24px));
 }
 .overflight-upgrade header {
   padding: 16px 24px;
@@ -177,19 +177,49 @@ button:disabled {
 }
 .overflight-upgrade-card {
   text-align: left;
-  padding: 20px;
+  padding: 14px;
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 12px;
   min-height: 230px;
   border-color: var(--fk-accent, #e6b85c);
 }
-.overflight-upgrade-card strong {
-  font-size: 22px;
-  color: var(--fk-accent, #e6b85c);
+.overflight-upgrade-card .upgrade-title {
+  font-size: 21px;
+  line-height: 1.15;
+  color: inherit;
 }
 .overflight-upgrade-card span {
   display: block;
+}
+.overflight-upgrade-card .upgrade-heading {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 64px;
+}
+.overflight-upgrade-card .upgrade-names {
+  min-width: 0;
+}
+.upgrade-kind {
+  font-size: 12px;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+.upgrade-preview {
+  width: 100%;
+  border: 1px solid #64756d;
+  background: #0c1718;
+}
+.upgrade-preview svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.upgrade-description {
+  font-size: 15px;
+  line-height: 1.4;
+  font-weight: 500;
 }
 .overflight-upgrade-card[data-review-selected] {
   opacity: 1;
@@ -200,7 +230,32 @@ button:disabled {
 }
 .overflight-upgrade-card .upgrade-evolution {
   margin-top: auto;
-  color: var(--fk-cyan, #78dce8);
+  color: inherit;
+  font-size: 12px;
+  font-weight: 500;
+}
+.overflight-upgrade-card .upgrade-ranks {
+  display: flex;
+  gap: 5px;
+  margin-bottom: 6px;
+}
+.upgrade-rank {
+  width: 22px;
+  height: 5px;
+  border: 1px solid currentColor;
+}
+.upgrade-rank[data-filled='true'] {
+  background: currentColor;
+}
+.upgrade-rank[data-next='true'] {
+  background: currentColor;
+  opacity: 0.6;
+}
+[data-text-size='large'] .upgrade-description {
+  font-size: 18px;
+}
+[data-text-size='large'] :is(.upgrade-kind, .upgrade-evolution) {
+  font-size: 15px;
 }
 #result-stats {
   display: grid;
@@ -280,13 +335,29 @@ button:disabled {
   align-items: center;
   gap: 4px;
 }
+.overflight-pulse-charge {
+  display: inline-block;
+  width: 32px;
+  height: 7px;
+  border: 1px solid #8ce1d3;
+  background: #0c1718;
+  flex-shrink: 0;
+}
+.overflight-pulse-fill {
+  display: block;
+  height: 100%;
+  background: #8ce1d3;
+}
+.overflight-pulse-charge[data-ready='true'] .overflight-pulse-fill {
+  background: #edc363;
+}
 .overflight-module-icon {
   width: 20px;
   height: 20px;
   image-rendering: pixelated;
   flex-shrink: 0;
 }
-.overflight-upgrade-card > .overflight-module-icon {
+.overflight-upgrade-card .overflight-module-icon {
   width: 32px;
   height: 32px;
 }
