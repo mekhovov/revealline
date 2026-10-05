@@ -21,14 +21,14 @@ and immutable pack checks. Only this capable player's dedicated worker accepts
 the new index URL; older cached players retain their existing endpoints. Packs
 requiring ground motion must never enter either older catalogue.
 
-All three catalogues are currently empty. The new endpoint is a delivery adapter,
-not publication of a world or its demonstrations. Mountain Reservoir's first row
-is still held in Draft #1094; Festival and Harbor have separate content publication
-gates. Once the Reservoir row is approved for publication, copy the exact reviewed
-row into both the surface-coating and ground-motion catalogues. Publishing it only
-to the former would leave newer players unable to discover it. Preserve the original
-catalogue and every existing compatible row; do not bypass a held row by adding it
-to another feed. Optional demonstrations still require their separate proof archive.
+The ground-motion catalogue copies the complete eligible surface-coating feed
+byte-for-byte, including Mountain Reservoir r16 published through #1094. The
+original catalogue remains empty. This preserves discovery for newer players;
+the endpoint change does not update cached players or deliver demonstrations.
+Festival and Harbor still have separate catalogue publication gates, and neither
+has a row here. Preserve every existing compatible row when adding a later
+cohort; do not bypass an unpublished row by adding it to another feed. Optional
+demonstrations still require their separate proof archive.
 
 Catalogue versions select an existing, fixed capability contract. They do not
 negotiate arbitrary imported features or permit executable content. Future
