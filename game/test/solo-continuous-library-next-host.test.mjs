@@ -86,7 +86,7 @@ async function setup(t, { holdIndex = null } = {}) {
     source.visualOverrides = {};
     packs.push((await preparePack(source)).pack);
   }
-  const assets = ;
+  const assets = managedIndexedDB();
   const db = await new Promise((resolve, reject) => {
     const request = assets.indexedDB.open('revealline-assets-v1', 1);
     request.onupgradeneeded = () => request.result.createObjectStore('assets');
@@ -147,7 +147,7 @@ async function running(p, id) {
 async function earnWin(p) {
   p.key('ArrowDown');
   p.key('ArrowDown', false);
-  for (let tick = 0; tick < 900 && p.rendered.run.status !== 'won'; tick+) p.frame();
+  for (let tick = 0; tick < 900 && p.rendered.run.status !== 'won'; tick++) p.frame();
   assert.equal(p.rendered.run.status, 'won');
 }
 async function win(p) {
@@ -165,13 +165,13 @@ test(
     const completed = p.rendered.run;
     assert.equal(p.$('game-overlay').hidden, true);
     assert.equal(p.doc.body.dataset.flightState, 'picture');
-    for (let tick = 0; tick < 80 && p.$('game-overlay').hidden; tick+) p.frame(100);
+    for (let tick = 0; tick < 80 && p.$('game-overlay').hidden; tick++) p.frame(100);
     assert.equal(p.$('game-overlay').dataset.kind, 'won');
     assert.equal(p.$('game-overlay').hidden, false);
     assert.equal(p.$('result-random-level').hidden, false);
     assert.equal(p.$('result-auto-next').hidden, false);
     assert.match(p.$('result-auto-next').textContent, /4s/);
-    for (let tick = 0; tick < 20; tick+) p.frame(100);
+    for (let tick = 0; tick < 20; tick++) p.frame(100);
     assert.equal(
       p.rendered.run,
       completed,
