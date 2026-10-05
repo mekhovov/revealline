@@ -9,7 +9,10 @@ import { createRequire } from 'node:module';
 import { parse } from 'parse5';
 import { Document, Events } from './helpers/couch-dom.mjs';
 import { mountWorldApp, routeThumbnail } from '../../optional-practice/civilian-fpv/world-app.mjs';
-import { WORLD_CATALOGUE } from '../../optional-practice/civilian-fpv/world-catalogue.mjs';
+import {
+  WORLD_CATALOGUE,
+  BEGINNER_CATALOGUE,
+} from '../../optional-practice/civilian-fpv/world-catalogue.mjs';
 import {
   createWorldFlight,
   createWorldRecorder,
@@ -228,12 +231,14 @@ test('World app prepares a pinned appearance and queues drone/theme changes afte
   const theme = h.$('sim-appearance-world');
   theme.value = 'industrial-workshop';
   theme.emit('change');
-  await h.app.startFlight(entry);
-  assert.equal(h.rendered.at(-1).course.world.themeProfile.id, 'industrial-workshop');
+  h.$('worlds-shell-action-missions').click();
+  assert.equal(h.$('journey-chooser').open, true);
   assert.equal(
-    h.doc.querySelector('.world-mini-map svg').getAttribute('data-sim-profile'),
+    h.doc.querySelector('svg[data-sim-profile]').getAttribute('data-sim-profile'),
     'industrial-workshop',
   );
+  await h.app.startFlight(entry);
+  assert.equal(h.rendered.at(-1).course.world.themeProfile.id, 'industrial-workshop');
   h.$('world-arm').click();
   assert.equal(h.app.snapshot().state.status, 'active');
   h.app.pause();
@@ -241,8 +246,9 @@ test('World app prepares a pinned appearance and queues drone/theme changes afte
   const renderCount = h.rendered.length;
   theme.value = 'authored';
   theme.emit('change');
+  h.$('worlds-shell-action-missions').click();
   assert.notEqual(
-    h.doc.querySelector('.world-mini-map svg').getAttribute('data-sim-profile'),
+    h.doc.querySelector('svg[data-sim-profile]').getAttribute('data-sim-profile'),
     'industrial-workshop',
   );
   assert.equal(h.rendered.length, renderCount);
@@ -435,12 +441,12 @@ test('World title retains connected catalogue nodes and transfers the common bar
   assert.ok(h.doc.querySelector('#worlds-shell-home-dialog img'));
   assert.ok(h.$('theme-tabs').isConnected);
   h.$('worlds-shell-action-missions').click();
-  assert.equal(h.$('worlds-shell-missions-dialog').open, true);
+  assert.equal(h.$('journey-chooser').open, true);
   assert.ok(h.$('world-grid').isConnected);
   const entry = WORLD_CATALOGUE.find((item) => !item.legacy);
   await h.app.startFlight(entry);
   assert.equal(h.$('worlds-shell-home-dialog').open, false);
-  assert.equal(h.$('worlds-shell-missions-dialog').open, false);
+  assert.equal(h.$('journey-chooser').open, false);
   assert.equal(h.$('worlds-shell-action-menu').closest('dialog'), h.$('flight-dialog'));
   h.$('world-arm').click();
   assert.equal(h.app.snapshot().state.status, 'active');
@@ -902,7 +908,7 @@ test('World result shortcuts are immediately available while the result is being
   assert.ok(choice('Choose mission'));
   assert.ok(choice('Home'));
   choice('Choose mission').click();
-  assert.equal(h.$('worlds-shell-missions-dialog').open, true);
+  assert.equal(h.$('journey-chooser').open, true);
   assert.equal(h.app.snapshot().state.status, 'complete');
 });
 
@@ -1051,4 +1057,204 @@ test('World results embed one compact live statistics disclosure without replaci
     'viewing, verification, reopening, and disposal do not create enemy awards',
   );
   after.close();
+});
+
+test('Worlds and School share one complete scrollable library with direct native launches', async (t) => {
+  const h = fixture(t);
+  await h.app.ready;
+  h.$('worlds-shell-action-missions').click();
+  const cards = h.doc.querySelectorAll('.journey-card');
+  assert.equal(cards.length, WORLD_CATALOGUE.length + BEGINNER_CATALOGUE.length);
+  assert.equal(h.$('world-grid').children.length, 0);
+  assert.equal(h.$('school-lessons').children.length, 0);
+  assert.equal(new Set(cards.map((card) => card.dataset.missionId)).size, cards.length);
+  const entry = BEGINNER_CATALOGUE.at(-1);
+  const card = cards.find(
+    (node) => JSON.parse(node.dataset.missionId)[3] === `${entry.packIdentity}:${entry.id}`,
+  );
+  assert.ok(card);
+  assert.equal(card.querySelectorAll('button').length, 0);
+  card.focus();
+  card.click();
+  await waitFor(() => h.app.snapshot().course === entry.id && h.$('flight-dialog').open);
+  assert.equal(h.$('journey-chooser').open, false);
+  assert.equal(h.$('worlds-shell-briefing-dialog').open, false);
+  assert.equal(h.$('flight-dialog').open, true);
+  assert.ok(['active', 'disarmed'].includes(h.app.snapshot().state.status));
+  h.$('world-flight-menu').click();
+  h.$('worlds-shell-action-missions').click();
+  h.doc.querySelector('[data-sim-mission-tool="learn"]').click();
+  assert.equal(h.doc.querySelectorAll('.journey-card').length, cards.length);
+  assert.equal(h.$('journey-chooser').open, true);
+  assert.ok(h.doc.querySelector('[data-sim-mission-tools]').contains(h.$('school-continue')));
+});
+
+test('World route preview uses the selected Acro route and changes no course geometry', async (t) => {
+  const h = fixture(t);
+  await h.app.ready;
+  const course = structuredClone(WORLD_CATALOGUE[0].course);
+  course.steps.acro = [
+    { type: 'hold', min: { x: 1000, y: 0, z: 2000 }, max: { x: 2000, y: 1000, z: 3000 } },
+  ];
+  const before = structuredClone(course);
+  const selfLevel = routeThumbnail(h.doc, course, { flightMode: 'self-level' });
+  const acro = routeThumbnail(h.doc, course, { flightMode: 'acro' });
+  assert.equal(acro.getAttribute('data-flight-mode'), 'acro');
+  assert.notEqual(
+    selfLevel.querySelector('path[stroke-dasharray]').getAttribute('d'),
+    acro.querySelector('path[stroke-dasharray]').getAttribute('d'),
+  );
+  assert.deepEqual(course, before);
+});
+
+test('World mission library owns controller navigation and isolated pinned goals', async (t) => {
+  const storage = new Map();
+  const h = fixture(t, { storage });
+  await h.app.ready;
+  h.$('worlds-shell-action-missions').click();
+  const chooser = h.$('journey-chooser');
+  const pad = menuPad();
+  h.pads.push(pad);
+  h.tick(2);
+  pad.buttons[0] = { pressed: true, value: 1 };
+  h.tick();
+  pad.buttons[0] = { pressed: false, value: 0 };
+  h.tick();
+  pad.buttons[13] = { pressed: true, value: 1 };
+  h.tick();
+  pad.buttons[13] = { pressed: false, value: 0 };
+  h.tick();
+  assert.ok(chooser.contains(h.doc.activeElement));
+  h.doc.querySelector('.journey-card').focus();
+  h.$('journey-goal-pin').click();
+  assert.ok(storage.has('revealline.mission-goal.v1.sim-worlds.solo'));
+  assert.equal(storage.has('revealline.mission-goal.v1.default.solo'), false);
+  pad.buttons[1] = { pressed: true, value: 1 };
+  h.tick();
+  pad.buttons[1] = { pressed: false, value: 0 };
+  h.tick();
+  assert.equal(chooser.open, false);
+  assert.equal(h.$('worlds-shell-home-dialog').open, true);
+  assert.equal(h.app.snapshot().state, undefined);
+});
+
+test('World mission launch cannot steal Home focus after deferred scene preparation', async (t) => {
+  let releaseScene;
+  const h = fixture(t, {
+    rendererFactory: () => ({
+      available: true,
+      setPresentation() {},
+      setCourse() {},
+      setQuality() {},
+      setDrone() {},
+      setGhost() {},
+      setPath() {},
+      draw() {},
+      dispose() {},
+      loadScene() {
+        return new Promise((resolve) => {
+          releaseScene = resolve;
+        });
+      },
+    }),
+  });
+  await h.app.ready;
+  h.$('worlds-shell-action-missions').click();
+  const entry = WORLD_CATALOGUE.find((item) => !item.legacy && !item.beginner);
+  const card = h.doc
+    .querySelectorAll('.journey-card')
+    .find((node) => JSON.parse(node.dataset.missionId)[3] === `${entry.packIdentity}:${entry.id}`);
+  card.focus();
+  card.click();
+  await waitFor(() => releaseScene);
+  h.$('worlds-shell-action-menu').click();
+  const home = h.$('worlds-shell-home-dialog');
+  assert.equal(home.open, true);
+  const focus = h.doc.activeElement;
+  releaseScene();
+  await new Promise((resolve) => setTimeout(resolve, 50));
+  assert.equal(home.open, true);
+  assert.equal(h.doc.activeElement === focus, true);
+  assert.notEqual(h.app.snapshot().state.status, 'active');
+  assert.equal(
+    h.$('world-arm').disabled,
+    false,
+    'The prepared attempt remains available to Continue.',
+  );
+  h.$('worlds-shell-action-primary').click();
+  assert.equal(h.app.snapshot().state.status, 'active');
+});
+
+test('World Hunt schemes expose actual targets, patrols and collision footprints without inventing an unordered route', (t) => {
+  const h = fixture(t);
+  const hunts = WORLD_CATALOGUE.slice(0, 6);
+  const diagrams = hunts.map((entry) => routeThumbnail(h.doc, entry.course));
+  for (const [index, diagram] of diagrams.entries()) {
+    const course = hunts[index].course,
+      step = course.steps['self-level'][0];
+    assert.equal(diagram.querySelectorAll('[data-preview-target]').length, step.targets.length);
+    assert.equal(diagram.querySelectorAll('[data-preview-spawn]').length, 1);
+    if (!step.ordered)
+      assert.equal(
+        diagram.querySelector('[data-preview-route]').getAttribute('d').includes('L'),
+        false,
+      );
+  }
+  assert.equal(
+    new Set(
+      diagrams.map((diagram) =>
+        diagram
+          .querySelectorAll('[data-preview-target]')
+          .map((node) => node.getAttribute('d'))
+          .join('|'),
+      ),
+    ).size,
+    6,
+  );
+  const course = structuredClone(
+    WORLD_CATALOGUE.find((entry) => entry.course.obstacles.some((obstacle) => obstacle.rotation))
+      .course,
+  );
+  course.actors[0] ??= { id: 'schematic-test', position: course.spawn, path: [] };
+  course.actors[0].path = [{ ...course.spawn, x: course.spawn.x + 1000 }];
+  const before = structuredClone(course),
+    diagram = routeThumbnail(h.doc, course);
+  assert.equal(diagram.querySelectorAll('[data-preview-obstacle]').length, course.obstacles.length);
+  assert.ok(diagram.querySelector('[data-preview-patrol]'));
+  assert.deepEqual(course, before);
+});
+
+test('World shared chooser remains usable when native scene loading fails', async (t) => {
+  const h = fixture(t, {
+    rendererFactory: () => ({
+      available: true,
+      setPresentation() {},
+      setCourse() {},
+      setQuality() {},
+      setDrone() {},
+      setGhost() {},
+      setPath() {},
+      draw() {},
+      dispose() {},
+      async loadScene() {
+        throw new Error('Scene fixture unavailable');
+      },
+    }),
+  });
+  await h.app.ready;
+  h.$('worlds-shell-action-missions').click();
+  const card = h.doc.querySelector('.journey-card');
+  card.focus();
+  card.click();
+  await waitFor(
+    () =>
+      h.$('journey-chooser').open &&
+      h.$('journey-chooser').textContent.includes('Scene fixture unavailable'),
+  );
+  assert.equal(
+    h.doc.querySelectorAll('.journey-card').length,
+    WORLD_CATALOGUE.length + BEGINNER_CATALOGUE.length,
+  );
+  assert.ok(h.doc.querySelectorAll('.journey-card').every((item) => !item.disabled));
+  assert.notEqual(h.app.snapshot().state.status, 'active');
 });

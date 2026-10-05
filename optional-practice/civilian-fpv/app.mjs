@@ -20,6 +20,8 @@ import { restoreVerifiedRadio } from './radio-session.mjs';
 import { mountRadioSetup } from './radio-setup.mjs';
 import {
   mountFlightFullscreen,
+  attachSimMissionLibraryChooser,
+  createSimMissionLibrary,
   createSimContinuousPlayController,
   createSimEnemyStatsHost,
   mountSimEnemyStats,
@@ -163,7 +165,8 @@ export function mountFlightApp({
     playShell = null,
     modeSettingsView = null,
     globalSettingsView = null,
-    globalTools = null;
+    globalTools = null,
+    missionChooser = null;
   const c = () => COPY[locale],
     messageText = (key) =>
       key === 'preparingGraphics'
@@ -182,8 +185,7 @@ export function mountFlightApp({
     studio = null,
     pendingAttempt = Promise.resolve(),
     pendingReview = Promise.resolve(),
-    reviewAbort = null,
-    courseButtons = [];
+    reviewAbort = null;
   const cancelReview = () => {
     reviewAbort?.abort();
     reviewAbort = null;
@@ -199,6 +201,7 @@ export function mountFlightApp({
   const modalOpen = () =>
     dialogIds.some((id) => $(id).open) ||
     Boolean($('academy-flight-options')?.open) ||
+    Boolean(missionChooser?.elements.dialog.open) ||
     Boolean(playShell?.blocksPlay());
   const shellCopy = {
     academyBrand: ['SIM · ACADEMY', 'SIM · АКАДЕМІЯ'],
@@ -579,6 +582,7 @@ export function mountFlightApp({
   listen(win, 'blur', cancelFlow);
   listen(win, 'gamepaddisconnected', cancelFlow);
   async function startPrepared() {
+    if (missionChooser?.elements.dialog.open) missionChooser.close();
     playShell?.enterPlay();
     const intent = { epoch, pauseGeneration };
     launchIntent = intent;
@@ -891,23 +895,7 @@ export function mountFlightApp({
       'aria-label',
       locale === 'uk' ? 'Розділи симулятора' : 'Simulator navigation',
     );
-    for (const button of courseButtons) button.onclick = null;
-    courseButtons = courses.map((course, index) => {
-      const button = doc.createElement('button'),
-        title = doc.createElement('strong'),
-        brief = doc.createElement('span');
-      title.textContent = `${String(index + 1).padStart(2, '0')} · ${course.locales[locale].title}`;
-      brief.textContent = course.locales[locale].brief;
-      button.type = 'button';
-      button.setAttribute('data-course', course.id);
-      button.append(title, brief);
-      button.onclick = () => {
-        reset(index, mode, null);
-        closeDialog('course-dialog');
-      };
-      return button;
-    });
-    $('course-list').replaceChildren(...courseButtons);
+    missionChooser?.refresh();
     $('fallback').textContent = c()[graphicsLost ? 'contextLost' : 'fallback'];
     $('viewport').setAttribute('aria-label', c().title);
     $('sticks').setAttribute('aria-label', c().inputLabel);
@@ -1399,7 +1387,10 @@ export function mountFlightApp({
     reset(Math.min(courses.length - 1, selected + 1), mode, null);
     void startPrepared();
   });
-  listen($('mode'), 'change', () => reset(selected, $('mode').value));
+  listen($('mode'), 'change', () => {
+    reset(selected, $('mode').value);
+    missionChooser.refresh();
+  });
   listen($('input-source'), 'change', () => {
     input.select($('input-source').value);
     restoreRadio();
@@ -1478,6 +1469,12 @@ export function mountFlightApp({
         blockRadio: dialog.id === 'setup-dialog',
         blockDevices: dialog.id === 'setup-dialog' && Boolean(setup?.captureActive()),
       };
+    if (missionChooser?.elements.dialog.open)
+      return {
+        root: missionChooser.elements.dialog,
+        key: 'academy-mission-library',
+        blockDevices: false,
+      };
     if (playShell?.topDialog())
       return { root: playShell.topDialog(), key: playShell.topDialog().id, blockDevices: false };
     // Initial title focus can blur the page before reset installs a flight.
@@ -1497,6 +1494,10 @@ export function mountFlightApp({
     ownsKeyboardEvent: (event) => simSettingsTabOwnsKey(event, menuContext()?.root),
     onHint(value) {
       const context = menuContext();
+      if (context?.root === missionChooser?.elements.dialog) {
+        menuHint.hidden = true;
+        return;
+      }
       // Suspending device input must not reflow an open shared menu beneath
       // the pointer. Its instructions remain valid while the page is blurred.
       if (!value && context?.root.dataset.modeSurface) return;
@@ -1514,6 +1515,7 @@ export function mountFlightApp({
       const dialog = dialogIds.find((id) => $(id).open);
       if (globalTools?.back()) return;
       if (dialog) closeDialog(dialog);
+      else if (missionChooser?.elements.dialog.open) missionChooser.close();
       else if (playShell?.topDialog()) playShell.back();
       else if (flightMenuOpen()) setFlightMenu(false);
       else if ($('academy-flight-options').open) $('academy-flight-options').open = false;
@@ -1727,6 +1729,157 @@ export function mountFlightApp({
   });
   const expert = menuSection('sim-shell-expert');
   for (const id of ['notebook-button', 'help']) expert.append($(id));
+  const missionLibrary = createSimMissionLibrary([
+    {
+      id: 'sim-academy',
+      editionId: 'academy',
+      edition: 'FPV SIM · Academy',
+      collection: 'Classic',
+      entries: courses,
+      describe: (course) => ({
+        id: course.id,
+        revision: course.revision ?? '',
+        campaignKey: 'academy',
+        campaignTitle: locale === 'uk' ? 'Академія польотів' : 'Flight Academy',
+        name: course.locales[locale].title,
+        levelIndex: courses.indexOf(course),
+        canonicalLevelKey: `sim-academy:${course.id}:${course.revision ?? ''}`,
+        globalLevelNumber: courses.indexOf(course) + 1,
+        modes: ['solo'],
+        tags: ['FPV', 'Practice'],
+        hook: course.locales[locale].brief,
+      }),
+      presentation: (course) => ({
+        name: course.locales[locale].title,
+        campaignTitle: locale === 'uk' ? 'Академія польотів' : 'Flight Academy',
+        hook: course.locales[locale].brief,
+      }),
+      availability: () => ({ state: 'ready' }),
+      card: (course) => course,
+      progressState: (course) => ({
+        state: notebook?.snapshot?.().attempts.some((attempt) => attempt.course === course.id)
+          ? 'completed'
+          : 'new',
+        bestStars: null,
+      }),
+      launch: (course) => {
+        reset(courses.indexOf(course), mode, null);
+        return startPrepared();
+      },
+    },
+  ]);
+  const missionTools = doc.createElement('div');
+  missionTools.className = 'dialog-actions';
+  const watchMission = doc.createElement('button');
+  watchMission.type = 'button';
+  missionTools.append(watchMission);
+  missionChooser = attachSimMissionLibraryChooser({
+    document: doc,
+    library: missionLibrary,
+    supportedModes: ['solo'],
+    description: () =>
+      locale === 'uk'
+        ? 'Усі вправи Академії в одному списку. Виберіть маршрут і почніть політ.'
+        : 'Every Academy drill in one list. Choose a route and start flying.',
+    availableCollectionsOnly: true,
+    goalPreferenceOptions: { editionId: 'sim-academy', getStorage: () => win.localStorage },
+    onPause: pause,
+    getCurrentId: () =>
+      missionLibrary.missions.find((row) => row.runtimeId === courses[selected].id)?.id,
+    readState: () => {
+      try {
+        return JSON.parse(win.localStorage.getItem('revealline.sim.academy.mission-browser.v1'));
+      } catch {
+        return null;
+      }
+    },
+    writeState: (state) => {
+      try {
+        win.localStorage.setItem(
+          'revealline.sim.academy.mission-browser.v1',
+          JSON.stringify(state),
+        );
+      } catch {
+        /* Selection remains available for this session. */
+      }
+    },
+    renderPreview({ container, diagram: course, document }) {
+      const svg =
+        document.createElementNS?.('http://www.w3.org/2000/svg', 'svg') ??
+        document.createElement('svg');
+      svg.setAttribute('viewBox', '0 0 320 190');
+      svg.setAttribute('aria-hidden', 'true');
+      svg.setAttribute('data-flight-mode', mode);
+      svg.classList.add('journey-card-map');
+      const add = (tag, attrs) => {
+        const node =
+          document.createElementNS?.('http://www.w3.org/2000/svg', tag) ??
+          document.createElement(tag);
+        for (const [key, value] of Object.entries(attrs)) node.setAttribute(key, String(value));
+        svg.append(node);
+      };
+      const px = (x) =>
+        16 + (288 * (x - course.bounds.min.x)) / (course.bounds.max.x - course.bounds.min.x);
+      const pz = (z) =>
+        16 + (158 * (z - course.bounds.min.z)) / (course.bounds.max.z - course.bounds.min.z);
+      add('rect', { width: 320, height: 190, fill: '#102227' });
+      for (const obstacle of course.obstacles)
+        if (obstacle.min && obstacle.max)
+          add('rect', {
+            x: px(obstacle.min.x),
+            y: pz(obstacle.min.z),
+            width: Math.max(2, px(obstacle.max.x) - px(obstacle.min.x)),
+            height: Math.max(2, pz(obstacle.max.z) - pz(obstacle.min.z)),
+            fill: '#537175',
+          });
+      const points = [
+        course.spawn,
+        ...course.steps[mode]
+          .map((step) =>
+            step.type === 'gate'
+              ? {
+                  x: step.axis === 'x' ? step.at : (step.minSide + step.maxSide) / 2,
+                  z: step.axis === 'z' ? step.at : (step.minSide + step.maxSide) / 2,
+                }
+              : step.min && step.max
+                ? { x: (step.min.x + step.max.x) / 2, z: (step.min.z + step.max.z) / 2 }
+                : null,
+          )
+          .filter(Boolean),
+      ];
+      add('path', {
+        d: points
+          .map((point, index) => `${index ? 'L' : 'M'} ${px(point.x)} ${pz(point.z)}`)
+          .join(' '),
+        fill: 'none',
+        stroke: '#e8bd62',
+        'stroke-width': 3,
+      });
+      points.forEach((point, index) =>
+        add('circle', {
+          cx: px(point.x),
+          cy: pz(point.z),
+          r: index ? 4 : 6,
+          fill: index ? '#e8bd62' : '#a4dcf4',
+        }),
+      );
+      container.append(svg);
+    },
+    onSelection(row) {
+      const proof = demonstrations.find(
+        (item) => item.course === row?.runtimeId && item.mode === mode,
+      );
+      watchMission.hidden = !proof;
+      watchMission.textContent = locale === 'uk' ? 'Переглянути приклад' : 'Watch example';
+      watchMission.onclick = proof
+        ? () => {
+            missionChooser.close();
+            void review(proof, 'demonstration').catch(() => {});
+          }
+        : null;
+    },
+  });
+  missionChooser.elements.footer.append(missionTools);
   playShell = mountSimPlayShell({
     document: doc,
     mount: doc.body,
@@ -1777,6 +1930,11 @@ export function mountFlightApp({
       toggleSound: () => $('academy-sound').click(),
       fullscreen: () => void immersive.toggle(),
       open(surface) {
+        if (surface === 'missions') {
+          missionChooser.open();
+          return false;
+        }
+        missionChooser.close();
         if (surface === 'settings') void globalTools?.ensure();
         if (flight?.snapshot().status === 'active') pause();
         if (surface === 'results') {
@@ -2011,6 +2169,9 @@ export function mountFlightApp({
       continuousPlay.dispose();
       flowControls.dispose();
       flowCelebration.dispose();
+      missionChooser.destroy();
+      missionLibrary.dispose();
+      watchMission.onclick = null;
       playShell?.dispose();
       menuNavigation.dispose();
       menuHint.remove();
@@ -2025,11 +2186,6 @@ export function mountFlightApp({
       droneResponse.dispose();
       [...stickTraces, ...touchTraces].forEach((trace) => trace.dispose());
       for (const remove of listeners) remove();
-      for (const button of courseButtons) {
-        button.onclick = null;
-        button.remove();
-      }
-      courseButtons = [];
     },
   };
   listen(win, 'pagehide', (event) => {

@@ -51,6 +51,16 @@ Key source boundaries:
 
 ## Verification scope
 
+The mission-selector follow-up extracts the main game's browser into
+`game/ui/mission-library-browser.mjs` and uses it across main Solo/Team/Versus,
+Snake, Academy, Worlds/School and Gym. All current missions are scrollable with
+complete native board or route schemes; engine adapters retain launch, progress
+and preview ownership. The optional SIM packages project this same source into
+their existing shell slots. Compact layouts put secondary controls in disclosures
+and preserve visible launch/Back actions. Source checks, mobile measurements,
+screenshots and verification limits are recorded in
+[shared mission selectors](verification/shared-mission-library/README.md).
+
 Current hidden-prey and catalogue verification is recorded in [encounter expansion](verification/living-circuit/encounter-expansion.md). The following coverage/results receipts describe preceding source revisions.
 
 The preceding coverage/results follow-up passed **148 targeted checks**, repository validation and lint. All **144 current recordings** qualify; exactly 24 local-v2 proofs were regenerated and the other 120 remain unchanged. All 24 retained local-v1 recordings verify exactly, and the 249 calibration rows retain their setup keys and budgets; only their source-proof hashes changed. Current mobile result observations, simulation measurements and remaining limits are recorded in [coverage follow-up](verification/living-circuit/coverage-followup.md). A full distribution build of runtime `a1d9bfd86a7b27f6517dc92d8788c355a5d544f0` passes expanded-file and ZIP checksum verification; see the follow-up receipt. No public deployment is claimed.

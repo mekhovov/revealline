@@ -265,7 +265,10 @@ test('unavailable recorded appearance remains visible after graphics preparation
 
 test('native optional shell lists twelve drills, uses exclusive keyboard input, and neutralizes blur/dialog/reset', async (t) => {
   const f = await fixture(t);
-  assert.equal(f.$('course-list').children.length, 12);
+  f.$('academy-shell-action-missions').click();
+  assert.equal(f.$('journey-chooser').open, true);
+  assert.equal(f.doc.querySelectorAll('.journey-card').length, 12);
+  f.$('journey-chooser').close();
   assert.equal(f.$('fallback').hidden, true);
   f.$('arm').click();
   assert.equal(f.doc.activeElement, f.$('viewport'));
@@ -861,14 +864,17 @@ test('actual renderer detects unavailable WebGL without allocating a running fal
 
 test('disposing releases generated course callbacks; retained old buttons are inert and unrelated host content remains', async (t) => {
   const f = await fixture(t),
-    old = f.$('course-list').children[1];
+    old = (() => {
+      f.$('academy-shell-action-missions').click();
+      return f.doc.querySelectorAll('.journey-card')[1];
+    })();
   let hostClicks = 0;
   const host = f.doc.createElement('button');
   host.onclick = () => hostClicks++;
   f.$('course-list').append(host);
   const before = f.view.exportAttempt();
   f.view.dispose();
-  assert.equal(old.onclick, null);
+  assert.equal(old.isConnected, false);
   old.click();
   assert.deepEqual(f.view.exportAttempt(), before);
   assert.equal(f.$('course-list').children.length, 1);
@@ -1577,7 +1583,7 @@ test('Academy flight feedback and shared menu sound retain separate sliders and 
 test('Academy result shortcuts choose once and launch a random prepared lesson directly', async (t) => {
   const f = await fixture(t);
   f.$('academy-result-missions').click();
-  assert.equal(f.$('academy-shell-missions-dialog').open, true);
+  assert.equal(f.$('journey-chooser').open, true);
   assert.equal(f.view.snapshot().status, 'disarmed');
   f.$('academy-result-home').click();
   assert.equal(f.$('academy-shell-home-dialog').open, true);
@@ -1618,3 +1624,60 @@ for (const clock of ['animation timestamp', 'callback execution']) {
     assert.equal(flow.hidden, true, 'The cancelled timer cannot silently rearm.');
   });
 }
+
+test('Academy shared library shows every course, previews the selected flight mode, and launches once', async (t) => {
+  const h = await fixture(t);
+  h.$('mode').value = 'acro';
+  h.$('mode').emit('change');
+  await h.view.settled();
+  h.$('academy-shell-action-missions').click();
+  const cards = h.doc.querySelectorAll('.journey-card');
+  assert.equal(cards.length, FLIGHT_COURSES.length);
+  assert.equal(h.$('course-list').children.length, 0);
+  assert.equal(h.doc.querySelector('[data-flight-mode]').getAttribute('data-flight-mode'), 'acro');
+  assert.equal(cards.at(-1).querySelectorAll('button').length, 0);
+  cards.at(-1).click();
+  await h.view.settled();
+  assert.equal(h.view.exportAttempt().course, FLIGHT_COURSES.at(-1).id);
+  assert.equal(h.view.exportAttempt().mode, 'acro');
+  assert.equal(h.view.snapshot().status, 'active');
+  assert.equal(h.$('journey-chooser').open, false);
+  assert.equal(h.$('academy-shell-briefing-dialog').open, false);
+});
+
+test('Academy mission library owns controller navigation and isolated pinned goals', async (t) => {
+  const records = new Map();
+  const h = await fixture(t, {
+    home: true,
+    storage: {
+      getItem: (key) => records.get(key) ?? null,
+      setItem: (key, value) => records.set(key, value),
+    },
+  });
+  h.win.getComputedStyle = h.doc.defaultView.getComputedStyle;
+  h.$('academy-shell-action-missions').click();
+  const chooser = h.$('journey-chooser');
+  const pad = menuPad();
+  h.setPads([pad]);
+  h.tick(2);
+  pad.buttons[0] = { pressed: true, value: 1 };
+  h.tick();
+  pad.buttons[0] = { pressed: false, value: 0 };
+  h.tick();
+  pad.buttons[13] = { pressed: true, value: 1 };
+  h.tick();
+  pad.buttons[13] = { pressed: false, value: 0 };
+  h.tick();
+  assert.ok(chooser.contains(h.doc.activeElement));
+  h.doc.querySelector('.journey-card').focus();
+  h.$('journey-goal-pin').click();
+  assert.ok(records.has('revealline.mission-goal.v1.sim-academy.solo'));
+  assert.equal(records.has('revealline.mission-goal.v1.default.solo'), false);
+  pad.buttons[1] = { pressed: true, value: 1 };
+  h.tick();
+  pad.buttons[1] = { pressed: false, value: 0 };
+  h.tick();
+  assert.equal(chooser.open, false);
+  assert.equal(h.$('academy-shell-home-dialog').open, true);
+  assert.equal(h.view.snapshot().status, 'disarmed');
+});
