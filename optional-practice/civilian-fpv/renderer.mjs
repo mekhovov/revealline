@@ -232,7 +232,10 @@ export function createFlightRenderer({
     editorDragListener = null;
   const editorCamera = { yaw: 0.65, pitch: 0.72, distance: null };
   const editRows = [],
-    raycaster = new THREE.Raycaster();
+    raycaster = new THREE.Raycaster(),
+    objectiveRaycaster = new THREE.Raycaster();
+  let objectiveVisibility = null;
+  const objectivePadPoints = new Map();
   const materials = new Set(),
     geometry = new Set(),
     shadowMaterials = new WeakMap(),
@@ -1382,6 +1385,8 @@ export function createFlightRenderer({
     editor?.detach();
     course = value;
     mode = selectedMode;
+    objectiveVisibility = null;
+    objectivePadPoints.clear();
     huntPresentation?.reset();
     huntTargets.clear();
     for (const step of course.steps[mode])
@@ -3180,35 +3185,213 @@ export function createFlightRenderer({
     createEditor,
     draw,
     objectiveScreen(state) {
-      if (disposed || !course || ['complete', 'failed'].includes(state.status)) return null;
+      if (disposed || !course || ['complete', 'failed', 'expired'].includes(state.status))
+        return null;
       const step = course.steps[mode]?.[state.step];
-      if (!step || (!step.min && step.type !== 'gate')) return null;
+      if (!step) return null;
       const p = state.position,
         target = new THREE.Vector3();
       let inside = false,
-        vertical = 0;
-      if (step.min && step.max) {
+        heightOnly = false,
+        approach = false,
+        targetId = `objective-${state.step}`,
+        subject = null,
+        interaction = step.type;
+      if (['actor-track-v1', 'hunt-contact-v1', 'eliminate'].includes(step.type)) {
+        let ids;
+        if (step.type === 'actor-track-v1') {
+          ids = [step.actorId];
+          interaction = step.minTargetTravel > 0 ? 'follow' : 'observe';
+        } else {
+          ids = step.targets;
+          interaction = step.type === 'eliminate' ? 'pulse' : 'touch';
+          if (step.ordered) ids = [ids[state.hunt?.caught.length ?? 0]];
+        }
+        subject = (state.actors ?? [])
+          .filter((actor) => ids.includes(actor.id) && actor.status === 'active')
+          .sort((a, b) => {
+            const distance = (actor) =>
+              ['x', 'y', 'z'].reduce((sum, axis) => sum + (actor.position[axis] - p[axis]) ** 2, 0);
+            return distance(a) - distance(b) || a.id.localeCompare(b.id);
+          })[0];
+        if (!subject) return null;
+        targetId = subject.id;
+        const definition = actorDefinitions.get(subject.id),
+          lift = ['patrol', 'sentry'].includes(subject.type)
+            ? (subject.height ?? definition?.height ?? 1800) / 2
+            : (subject.radius ?? definition?.radius ?? 300);
+        target.set(
+          subject.position.x / 1000,
+          (subject.position.y + lift) / 1000,
+          subject.position.z / 1000,
+        );
+      } else if (step.type === 'gate' || step.type === 'crossing-v1') {
+        interaction = 'cross';
+        if (step.type === 'gate') {
+          target.set(
+            step.axis === 'x' ? step.at / 1000 : (step.minSide + step.maxSide) / 2000,
+            (step.minY + step.maxY) / 2000,
+            step.axis === 'z' ? step.at / 1000 : (step.minSide + step.maxSide) / 2000,
+          );
+        } else {
+          const others = ['x', 'y', 'z'].filter((axis) => axis !== step.axis);
+          target[step.axis] = step.at / 1000;
+          target[others[0]] = (step.minA + step.maxA) / 2000;
+          target[others[1]] = (step.minB + step.maxB) / 2000;
+        }
+        approach = (p[step.axis] - step.at) * step.direction >= 0;
+        if (approach) target[step.axis] -= step.direction * 1.5;
+      } else if (step.min && step.max) {
         inside = ['x', 'y', 'z'].every(
           (axis) => p[axis] >= step.min[axis] && p[axis] <= step.max[axis],
         );
-        for (const axis of ['x', 'y', 'z'])
-          target[axis] = Math.max(step.min[axis], Math.min(step.max[axis], p[axis])) / 1000;
-        vertical = target.y - p.y / 1000;
-      } else {
-        target.set(
-          step.axis === 'x' ? step.at / 1000 : (step.minSide + step.maxSide) / 2000,
-          (step.minY + step.maxY) / 2000,
-          step.axis === 'z' ? step.at / 1000 : (step.minSide + step.maxSide) / 2000,
-        );
-        if ((p[step.axis] - step.at) * step.direction > 0)
-          target[step.axis] -= step.direction * 1.5;
+        if (step.type === 'land') {
+          if (!objectivePadPoints.has(state.step)) {
+            const pad = new THREE.Vector3(
+                (step.min.x + step.max.x) / 2000,
+                step.max.y / 1000 + 1,
+                (step.min.z + step.max.z) / 2000,
+              ),
+              surfaces = [];
+            world.updateMatrixWorld(true);
+            world.traverse((object) => {
+              if (
+                object.isMesh &&
+                object.userData.collisionId &&
+                (!step.surface || object.userData.collisionId === step.surface)
+              )
+                surfaces.push(object);
+            });
+            objectiveRaycaster.set(pad, new THREE.Vector3(0, -1, 0));
+            objectiveRaycaster.near = 0;
+            objectiveRaycaster.far = (step.max.y - step.min.y) / 1000 + 1.01;
+            const support = objectiveRaycaster.intersectObjects(surfaces, false).find((hit) => {
+              const normal = hit.face?.normal.clone().transformDirection(hit.object.matrixWorld);
+              return (
+                normal?.y >= 0.8660254 &&
+                hit.point.y >= step.min.y / 1000 - 0.01 &&
+                hit.point.y <= step.max.y / 1000 + 0.01
+              );
+            });
+            const floor = (course.bounds?.min.y ?? 0) / 1000;
+            if (support) pad.y = support.point.y;
+            else if (
+              (!step.surface || step.surface === '$floor') &&
+              floor >= step.min.y / 1000 &&
+              floor <= step.max.y / 1000
+            )
+              pad.y = floor;
+            else pad.y = NaN;
+            objectivePadPoints.set(state.step, pad);
+          }
+          target.copy(objectivePadPoints.get(state.step));
+          if (!Number.isFinite(target.y)) return null;
+        } else {
+          for (const axis of ['x', 'y', 'z'])
+            target[axis] = Math.max(step.min[axis], Math.min(step.max[axis], p[axis])) / 1000;
+          heightOnly =
+            !inside &&
+            ['x', 'z'].every((axis) => p[axis] >= step.min[axis] && p[axis] <= step.max[axis]);
+        }
+        if (['rotation-v1', 'attitude-v1', 'path-v1'].includes(step.type))
+          interaction = 'manoeuvre';
+      } else return null; // A survival timer has no authored location to reveal.
+      const vertical = target.y - p.y / 1000,
+        distance = target.distanceTo(new THREE.Vector3(p.x / 1000, p.y / 1000, p.z / 1000));
+      const onPad =
+        step.type === 'land' &&
+        (state.grounded ?? p.y === (course.bounds?.min.y ?? 0)) &&
+        (!step.surface || (state.support?.id ?? '$floor') === step.surface);
+      // Once inside a zone there is no meaningful direction to its nearest
+      // point (the drone itself). Keep condition gauges, suppress that marker.
+      if (inside && (step.type !== 'land' || onPad))
+        return {
+          visible: false,
+          type: step.type,
+          index: state.step,
+          targetId,
+          interaction,
+          inside,
+          vertical,
+          distance,
+          offscreen: false,
+          behind: false,
+          occluded: false,
+          directionOnly: false,
+          angle: 0,
+          x: 0.5,
+          y: 0.5,
+        };
+      if (heightOnly)
+        return {
+          visible: true,
+          type: step.type,
+          index: state.step,
+          targetId,
+          interaction,
+          inside,
+          vertical,
+          distance,
+          heightOnly: true,
+          offscreen: true,
+          behind: false,
+          occluded: false,
+          directionOnly: true,
+          angle: vertical > 0 ? -Math.PI / 2 : Math.PI / 2,
+          x: 0.5,
+          y: vertical > 0 ? 0.18 : 0.82,
+          arrow: vertical > 0 ? '↑' : '↓',
+        };
+      camera.updateMatrixWorld();
+      // Visibility is presentation-only. Bound mesh queries to one per five
+      // accepted ticks; paused camera moves still invalidate the cached origin.
+      const visibilityKey = `${sceneGeneration}:${state.step}:${targetId}:${approach}:${Math.floor(state.ticks / 5)}:${view}`,
+        cameraMoved =
+          objectiveVisibility &&
+          objectiveVisibility.tick === state.ticks &&
+          objectiveVisibility.origin.distanceToSquared(camera.position) > 0.01;
+      if (!objectiveVisibility || objectiveVisibility.key !== visibilityKey || cameraMoved) {
+        const direction = target.clone().sub(camera.position),
+          rayLength = direction.length();
+        let occluded = false;
+        if (!inside && rayLength > 0.15) {
+          objectiveRaycaster.set(camera.position, direction.normalize());
+          objectiveRaycaster.camera = camera;
+          objectiveRaycaster.near = 0.035;
+          objectiveRaycaster.far = Math.max(0.035, rayLength - 0.1);
+          // Filter before raycasting: sprite labels require camera-facing
+          // intersection and must never become walls or log during flight.
+          const occluders = [];
+          for (const root of [world, imported, actors])
+            root.traverseVisible((object) => {
+              if (!object.isMesh) return;
+              if (subject) {
+                for (let parent = object; parent; parent = parent.parent)
+                  if (parent.name === `actor-${targetId}`) return;
+              }
+              occluders.push(object);
+            });
+          occluded = objectiveRaycaster.intersectObjects(occluders, false).some((hit) => {
+            const paints = Array.isArray(hit.object.material)
+              ? hit.object.material
+              : [hit.object.material];
+            return paints.some((paint) => paint && (!paint.transparent || paint.opacity >= 0.9));
+          });
+        }
+        objectiveVisibility = {
+          key: visibilityKey,
+          tick: state.ticks,
+          origin: camera.position.clone(),
+          occluded,
+        };
       }
-      const distance = target.distanceTo(new THREE.Vector3(p.x / 1000, p.y / 1000, p.z / 1000));
+      const occluded = objectiveVisibility.occluded;
       const local = target.clone().applyMatrix4(camera.matrixWorldInverse);
       target.project(camera);
       let x = target.x,
         y = -target.y;
-      if (local.z >= 0) {
+      const behind = local.z >= 0;
+      if (behind) {
         x = -x;
         y = -y;
         if (Math.abs(x) < 0.01) x = 1;
@@ -3217,14 +3400,25 @@ export function createFlightRenderer({
         x = 0;
         y = vertical >= 0 ? -1 : 1;
       }
-      const offscreen = local.z >= 0 || Math.abs(x) > 0.7 || Math.abs(y) > 0.64;
-      const scale = Math.max(1, Math.abs(x) / 0.7, Math.abs(y) / 0.64);
+      const directionOnly = behind || occluded,
+        offscreen = directionOnly || Math.abs(x) > 0.7 || Math.abs(y) > 0.64;
+      if (directionOnly && Math.abs(x) + Math.abs(y) < 0.001) y = -1;
+      const scale = Math.max(directionOnly ? 0.001 : 1, Math.abs(x) / 0.7, Math.abs(y) / 0.64);
       return {
+        visible: true,
         type: step.type,
+        index: state.step,
+        targetId,
+        interaction,
+        approach,
         inside,
         vertical,
         distance,
         offscreen,
+        behind,
+        occluded,
+        directionOnly,
+        angle: Math.atan2(y, x),
         x: (x / scale + 1) / 2,
         y: (y / scale + 1) / 2,
         arrow: Math.abs(x) > Math.abs(y) ? (x > 0 ? '→' : '←') : y > 0 ? '↓' : '↑',
