@@ -39,6 +39,117 @@ function make(t, options = {}) {
 const catchAt = (stats, attempt, sequence, family = 'humanoid', board = '0') =>
   stats.observe(attempt, { sequence, board, defeats: [{ family }] });
 
+test('closing a host retires queued statistics work without late writes or rejected callbacks', async () => {
+  const model = managedIndexedDB(),
+    warnings = [],
+    notifications = [];
+  const stats = createEnemyStats({
+    indexedDB: model.indexedDB,
+    storage: storage(),
+    onWarning: (error) => warnings.push(error),
+  });
+  stats.subscribe((event) => notifications.push(event));
+  const attempt = stats.beginAttempt({ gameType: 'solo' });
+  const observed = catchAt(stats, attempt, 1);
+  const reading = stats.read();
+  const flushing = stats.flush();
+  const accepted = stats.snapshot();
+  stats.close();
+  assert.equal(await observed, true, 'The event was accepted before disposal.');
+  assert.deepEqual(await reading, accepted);
+  assert.deepEqual(await flushing, accepted);
+  assert.equal(await catchAt(stats, attempt, 2), false);
+  assert.deepEqual(await stats.read(), accepted);
+  assert.deepEqual(await stats.flush(), accepted);
+  assert.equal(model.openCount, 0);
+  assert.equal(model.allPuts.length, 0);
+  assert.deepEqual(warnings, []);
+  assert.deepEqual(
+    notifications.map((event) => event.kind),
+    ['defeat'],
+  );
+});
+
+test('closing during a pending database open settles accepted observations without disposal warnings', async () => {
+  const opens = [],
+    warnings = [],
+    notifications = [];
+  const stats = createEnemyStats({
+    indexedDB: {
+      open() {
+        const request = {};
+        opens.push(request);
+        return request;
+      },
+    },
+    storage: storage(),
+    onWarning: (error) => warnings.push(error),
+  });
+  stats.subscribe((event) => notifications.push(event));
+  const attempt = stats.beginAttempt({ gameType: 'solo' });
+  const observed = catchAt(stats, attempt, 1);
+  await new Promise((resolve) => setImmediate(resolve));
+  assert.equal(opens.length, 1, 'Storage is in flight before the host closes.');
+  stats.close();
+  assert.equal(await observed, true);
+  assert.equal(stats.totals().total, 1);
+  assert.deepEqual(warnings, []);
+  assert.deepEqual(
+    notifications.map((event) => event.kind),
+    ['defeat'],
+  );
+});
+
+test('a queued backup import cancelled by close cannot rotate the writer or mutate storage', async () => {
+  const local = storage(),
+    model = managedIndexedDB(),
+    warnings = [],
+    writes = [];
+  const setItem = local.setItem;
+  local.setItem = (key, value) => {
+    writes.push([key, value]);
+    setItem(key, value);
+  };
+  const stats = createEnemyStats({
+    indexedDB: model.indexedDB,
+    storage: local,
+    onWarning: (error) => warnings.push(error),
+  });
+  const before = stats.snapshot();
+  const importing = stats.importBackup(stats.exportBackup());
+  writes.length = 0;
+  stats.close();
+  await assert.rejects(importing, /statistics are closed/);
+  assert.deepEqual(writes, []);
+  assert.equal(model.openCount, 0);
+  assert.deepEqual(stats.snapshot(), before);
+  assert.deepEqual(warnings, []);
+});
+
+test('ordinary departure drains an unawaited observation before closing and restores its cursor once', async (t) => {
+  const model = managedIndexedDB(),
+    local = storage();
+  const stats = createEnemyStats({ indexedDB: model.indexedDB, storage: local });
+  const attempt = stats.beginAttempt({ gameType: 'solo' });
+  const observing = catchAt(stats, attempt, 1);
+  const cursor = stats.session(attempt);
+  await stats.flush().finally(() => stats.close());
+  assert.equal(await observing, true);
+  const reopened = createEnemyStats({ indexedDB: model.indexedDB, storage: local });
+  t.after(() => reopened.close());
+  await reopened.read();
+  assert.equal(reopened.totals().total, 1);
+  const continued = reopened.beginAttempt({
+    gameType: 'solo',
+    provenance: 'continue',
+    saved: cursor,
+  });
+  assert.equal(await catchAt(reopened, continued, 1), false);
+  assert.equal(reopened.totals().total, 1);
+  await catchAt(reopened, continued, 2);
+  assert.equal(reopened.totals().total, 2);
+});
+
 test('live catch batches count once, include bonus enemies, and do not write on empty ticks', async (t) => {
   const { stats, model } = make(t),
     attempt = stats.beginAttempt({ gameType: 'snake' });

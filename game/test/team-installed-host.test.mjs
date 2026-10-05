@@ -42,10 +42,22 @@ async function campaign(id, seed) {
   return prepareCreatorTeamCampaign(generated.pack, generated.provenance);
 }
 
+function browserIndexedDB(memory) {
+  // The finite model represents one database. Profile/statistics schemas must
+  // not share the installed-campaign database's version and object stores.
+  const databases = new Map([[CREATOR_TEAM_DATABASE, memory.indexedDB]]);
+  return {
+    open(name, ...args) {
+      if (!databases.has(name)) databases.set(name, managedIndexedDB().indexedDB);
+      return databases.get(name).open(name, ...args);
+    },
+  };
+}
+
 function browserFixture(memory) {
   return ({ install }) => {
     install('crypto', { value: webcrypto });
-    install('indexedDB', { value: memory.indexedDB });
+    install('indexedDB', { value: browserIndexedDB(memory) });
     install('localStorage', { value: storage() });
   };
 }
@@ -133,11 +145,11 @@ test('a fresh Team host discovers and launches one exact installed edition', asy
   await activateMissionCard(installed[0]);
   assert.equal(f.$('journey-chooser').open, false);
   assert.equal(f.$('coop-menu').hidden, true);
-  assert.equal(f.$('coop-overlay').hidden, false);
-  f.tick(); // Sample released controls before a separate deliberate Start.
-  f.$('coop-resume').focus();
-  f.$('coop-resume').click();
-  assert.equal(f.$('coop-overlay').hidden, true);
+  assert.equal(
+    f.$('coop-overlay').hidden,
+    true,
+    'One mission activation starts the accepted arena.',
+  );
   assert.equal(f.$('coop-stage').textContent, prepared.pack.levels[0].name.toUpperCase());
   assert.equal(f.$('coop-level').value, prepared.pack.levels[0].id);
   assert.deepEqual(f.visits, []);
@@ -267,12 +279,18 @@ test('a fresh Team host labels and resumes an exactly replayed installed checkpo
   assert(card);
   assert.match(card.textContent, /Resume saved attempt/);
   await activateMissionCard(card);
-  assert.equal(f.$('coop-overlay').hidden, false);
+  assert.equal(
+    f.$('coop-overlay').hidden,
+    true,
+    'Continue restores the accepted attempt directly.',
+  );
   const clock = f.$('coop-clock').textContent;
-  f.tick(120);
-  assert.equal(f.$('coop-clock').textContent, clock);
-  f.$('coop-resume').focus();
-  f.$('coop-resume').click();
+  f.tick(240);
+  assert.notEqual(
+    f.$('coop-clock').textContent,
+    clock,
+    'The restored simulation advances without another Start.',
+  );
   assert.equal(f.$('coop-overlay').hidden, true);
   assert.equal(f.$('coop-level').value, level.id);
   assert.equal(f.$('coop-difficulty').value, 'gentle');
@@ -282,8 +300,8 @@ test('a fresh Team host labels and resumes an exactly replayed installed checkpo
 for (const restoring of [false, true])
   test(
     restoring
-      ? 'an installed Hunt resumes through its paused briefing and retains replayable release journals'
-      : 'a fresh installed Hunt saves the released briefing state in both native journals',
+      ? 'an installed Hunt resumes directly and retains replayable release journals'
+      : 'a fresh installed Hunt starts directly and saves the released state in both native journals',
     async (t) => {
       const memory = managedIndexedDB(),
         local = storage(),
@@ -321,7 +339,7 @@ for (const restoring of [false, true])
         nativeVisibility: true,
         beforeImport({ install }) {
           install('crypto', { value: webcrypto });
-          install('indexedDB', { value: memory.indexedDB });
+          install('indexedDB', { value: browserIndexedDB(memory) });
           install('localStorage', { value: local });
         },
         presentation: {
@@ -339,30 +357,21 @@ for (const restoring of [false, true])
       });
       assert.ok(card);
       await activateMissionCard(card);
-      assert.equal(f.$('coop-overlay').hidden, false, f.$('journey-chooser-status').textContent);
-      assert.match(
-        f.$('coop-resume').textContent,
-        restoring ? /Resume together/ : /Start together/,
-      );
-      assert.equal(
-        local.getItem(TEAM_HUNT_ATTEMPT_KEY),
-        null,
-        'Preparation does not overwrite a save.',
-      );
-      f.tick(); // The admission gesture cannot also count as Resume.
-      f.$('coop-resume').focus();
-      f.$('coop-resume').click();
       assert.equal(
         f.$('coop-overlay').hidden,
         true,
-        'Resume binds Hunt stores only after the core resumes.',
+        'One mission activation resumes the core and binds its Hunt stores.',
       );
       if (!restoring) {
         const initial = JSON.parse(local.getItem(TEAM_HUNT_ATTEMPT_KEY));
-        assert.deepEqual(initial.segments, [{ release: true }]);
+        assert.deepEqual(
+          initial.segments,
+          [],
+          'A fresh direct launch has no prior held core inputs.',
+        );
         const verified = await restoreTeamHuntAttempt(initial, { pack: prepared.pack, level });
         assert.equal(verified.run.tick, 0);
-        assert.deepEqual(verified.run.needsNeutral, [true, true]);
+        assert.deepEqual(verified.run.needsNeutral, [false, false]);
       }
       f.$('coop-pause').click();
       const saved = JSON.parse(local.getItem(TEAM_HUNT_ATTEMPT_KEY));
@@ -390,9 +399,7 @@ for (const restoring of [false, true])
         }
         await delay(5);
       }
-      assert.fail(
-        'The installed journal must retain the same briefing release as the Hunt mirror.',
-      );
+      assert.fail('The installed journal must retain the same input release as the Hunt mirror.');
     },
   );
 
