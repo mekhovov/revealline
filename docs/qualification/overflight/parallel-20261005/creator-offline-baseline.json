@@ -1,0 +1,34 @@
+{
+  "baseline": "2d447bc790bdf3951251c99041c8a918363ece0a",
+  "method": "Loaded the full exact-main route-ID module from git show via a data URL; loaded the exact AST-extracted pure buildNavigationBootstraps export from git show, independently repeated with working candidate sources. Used the existing test currentRouteId whole-spatial-v11. This is an exact-source byte calculation, not a claim that the entire main destination suite was run.",
+  "sources": {
+    "game/content-design/mode-href.mjs": {
+      "identicalToCandidate": true,
+      "mainGitBlob": "1b52b187495b1c59c53e2e2828c17a4fe771b173"
+    },
+    "scripts/offline-destinations.mjs": {
+      "identicalToCandidate": true,
+      "mainGitBlob": "f1b95b4f4eb38f1dc7db5acea95e5c8be1c8d73d"
+    },
+    "scripts/test-offline-destinations.mjs": {
+      "identicalToCandidate": true,
+      "mainGitBlob": "1e1dbc1b658c83d663da5c6ee8d412c92d4ab359"
+    }
+  },
+  "exactMain": {
+    "routes": 50,
+    "rows": 99,
+    "utf8Bytes": 12065,
+    "characters": 12065,
+    "testCeiling": 12000,
+    "passes": false
+  },
+  "workingCandidate": {
+    "routes": 50,
+    "rows": 99,
+    "utf8Bytes": 12065,
+    "characters": 12065,
+    "testCeiling": 12000,
+    "passes": false
+  }
+}

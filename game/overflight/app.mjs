@@ -31,7 +31,12 @@ import {
 } from './community.mjs';
 import { overflightBuildItems } from './upgrades.mjs';
 import { createOverflightUpgradeCard } from './upgrade-card.mjs';
-import { pilot, selectCard, QUALIFICATION_BUILDS } from './review-pilot.mjs';
+import {
+  pilot,
+  selectCard,
+  QUALIFICATION_BUILDS,
+  NO_PULSE_QUALIFICATION_BUILDS,
+} from './review-pilot.mjs';
 import { createOverflightReviewRecorder } from './review-recorder.mjs';
 import { overflightFieldKitArt } from '../presentation/overflight-field-kit-art.mjs';
 import {
@@ -57,6 +62,7 @@ import {
 } from './host-loop.mjs';
 import { createOverflightAudio, overflightMusicContext } from './audio.mjs';
 import { overflightText, localizedOverflight } from './copy.mjs';
+import { createOverflightController, loadOverflightControllerPreferences } from './controller.mjs';
 
 const doc = globalThis.document;
 const win = globalThis.window;
@@ -69,10 +75,24 @@ const fixture = ['reference', 'stress'].includes(params.get('fixture'))
   ? params.get('fixture')
   : null;
 const reviewBuild =
-  !fixture && Object.hasOwn(QUALIFICATION_BUILDS, params.get('reviewBuild'))
+  !fixture &&
+  Object.hasOwn(
+    { ...QUALIFICATION_BUILDS, ...NO_PULSE_QUALIFICATION_BUILDS },
+    params.get('reviewBuild'),
+  )
     ? params.get('reviewBuild')
     : null;
 const diagnostics = params.get('diagnostics') === '1' || !!fixture || !!reviewBuild;
+const benchmarkTrial =
+  fixture && ['1', '2', '3', 'soak'].includes(params.get('trial')) ? params.get('trial') : null;
+const benchmarkProtocol = benchmarkTrial
+  ? {
+      warmupSeconds: 30,
+      measurementSeconds: benchmarkTrial === 'soak' ? 900 : 120,
+      repetitions: 1,
+      stopAtEnd: true,
+    }
+  : {};
 const review = createOverflightReviewPlayback({ build: reviewBuild, pilot, selectCard });
 const studio = params.get('studio') === 'overflight' && win.parent !== win;
 const OPTION_KEY = 'revealline.overflight.options.v1';
@@ -100,6 +120,8 @@ let run = null,
   renderer = null,
   shell = null,
   navigator = null,
+  controller = null,
+  controllerStatus = null,
   appearance = null;
 let preparing = false,
   retired = false,
@@ -125,6 +147,9 @@ let frames = [],
   clipCaptureUsed = false,
   rawPages = null,
   preparationIdentity = null;
+let completedMeasurement = null,
+  resourceSamples = [],
+  nextResourceSample = 0;
 const clipRecorder = reviewBuild
   ? createOverflightReviewRecorder({ window: win, onState: updateClip })
   : null;
@@ -134,7 +159,6 @@ const cleanup = [];
 const clock = createOverflightClock();
 const inputGate = createOverflightInputGate();
 const held = createOverflightKeyboardState();
-const padHistory = new Map();
 let input = { x: 0, y: 0, boost: false };
 const listen = (target, type, fn, settings) => {
   target.addEventListener(type, fn, settings);
@@ -185,6 +209,7 @@ function showStatus(message = '') {
 function releaseInput() {
   input = { x: 0, y: 0, boost: false };
   inputGate.release();
+  controller?.clear();
   clock.reset();
   navigator?.cancelConfirm();
 }
@@ -546,7 +571,10 @@ async function prepare({ nextProject = project, nextSeed = seed, launch = false 
     audio.reset();
     clock.reset();
     clock.clearMeasurements();
-    renderer.resetMeasurements?.();
+    renderer.resetMeasurements?.(benchmarkProtocol);
+    completedMeasurement = null;
+    resourceSamples = [];
+    nextResourceSample = 0;
     lastPhase = null;
     offerKey = '';
     hudBuildKey = '';
@@ -595,53 +623,18 @@ const gameplayKeys = new Set([
   'Space',
 ]);
 function readInput() {
-  const pads = Array.from(win.navigator.getGamepads?.() ?? []).filter(
-    (pad) => pad?.connected !== false && pad,
-  );
-  const present = new Set(pads.map((pad) => pad.index));
-  for (const id of padHistory.keys())
-    if (!present.has(id)) {
-      padHistory.delete(id);
-      pause();
-    }
-  let axes = { x: 0, y: 0, boost: false },
-    allNeutral = true;
-  for (const pad of pads.slice(0, 1)) {
-    const x = Math.abs(pad.axes[0] ?? 0) > 0.2 ? pad.axes[0] : 0;
-    const y = Math.abs(pad.axes[1] ?? 0) > 0.2 ? pad.axes[1] : 0;
-    const pressed = pad.buttons.map((button) => button.pressed);
-    const direction =
-      pressed[12] || y < -0.55
-        ? 'up'
-        : pressed[13] || y > 0.55
-          ? 'down'
-          : pressed[14] || x < -0.55
-            ? 'left'
-            : pressed[15] || x > 0.55
-              ? 'right'
-              : null;
-    const prior = padHistory.get(pad.index);
-    padHistory.set(pad.index, { pressed, direction });
-    allNeutral = x === 0 && y === 0 && !pressed.some(Boolean);
-    if (!prior) {
-      inputGate.release();
-      continue;
-    }
-    if (activeModal()) {
-      navigator?.handle({
-        direction: direction !== prior.direction ? direction : null,
-        confirmStart: !!pressed[0] && !prior.pressed[0],
-        confirmCommit: !pressed[0] && !!prior.pressed[0],
-        back: !!pressed[1] && !prior.pressed[1],
-        menu: !!pressed[9] && !prior.pressed[9],
-      });
-    } else if (pressed[9] && !prior.pressed[9]) pause();
-    axes = {
-      x: x || Number(!!pressed[15]) - Number(!!pressed[14]),
-      y: y || Number(!!pressed[13]) - Number(!!pressed[12]),
-      boost: !!pressed[7],
-    };
+  const modal = activeModal();
+  const axes = controller?.sample({
+    scope:
+      !modal && run?.phase === 'playing' ? 'flight' : `menu:${modal?.id || run?.phase || 'start'}`,
+    timeMs: win.performance.now(),
+  }) ?? { x: 0, y: 0, boost: false, neutral: true };
+  if (axes.status?.code !== controllerStatus) {
+    controllerStatus = axes.status?.code;
+    if (['unsupported', 'unavailable'].includes(controllerStatus)) showStatus(axes.status.message);
   }
+  if (axes.disconnected || axes.pause) pause();
+  else if (modal) navigator?.handle(axes.ui);
   const editing = ['INPUT', 'TEXTAREA', 'SELECT', 'BUTTON'].includes(doc.activeElement?.tagName);
   const keyX = editing
     ? 0
@@ -656,7 +649,7 @@ function readInput() {
     x: keyX || axes.x,
     y: keyY || axes.y,
     boost,
-    neutral: !held.size && allNeutral,
+    neutral: !held.size && axes.neutral,
   });
 }
 function reviewIdentity() {
@@ -670,10 +663,12 @@ function sortieSummary() {
     : null;
 }
 function measurement({ raw = false } = {}) {
+  const rendererStats = renderer?.stats({ raw }) ?? null;
   return {
     format: 'OverflightMeasurementsV1',
     capturedAt: new Date().toISOString(),
     fixture,
+    benchmarkTrial,
     review: reviewIdentity(),
     clipCaptureUsed,
     viewport: {
@@ -686,15 +681,21 @@ function measurement({ raw = false } = {}) {
     projectIdentity: compiled.projectIdentity,
     seed,
     summary: sortieSummary(),
-    renderer: renderer?.stats({ raw }) ?? null,
+    renderer: rendererStats,
+    resourceSamples,
     trialValid:
-      !clipCaptureUsed && !runtimeFailed && clock.stats().droppedSeconds === 0 && rawOverflow === 0,
+      !clipCaptureUsed &&
+      !runtimeFailed &&
+      clock.stats().droppedSeconds === 0 &&
+      rawOverflow === 0 &&
+      rendererStats?.valid !== false,
     rawOverflow,
     invalidReasons: [
       ...(clipCaptureUsed ? ['review-clip-recording-overhead'] : []),
       ...(runtimeFailed ? ['runtime-failure'] : []),
       ...(clock.stats().droppedSeconds > 0 ? ['dropped-catch-up-time'] : []),
       ...(rawOverflow > 0 ? ['raw-sample-capacity-exceeded'] : []),
+      ...(rendererStats?.invalidReasons ?? []),
     ],
     simulationSamples: simulation.length,
     ...(raw ? { simulation: [...simulation] } : {}),
@@ -707,6 +708,13 @@ function measurement({ raw = false } = {}) {
 function onFrame(now) {
   if (retired || preparing || runtimeFailed || !run || !renderer) return;
   try {
+    if (benchmarkTrial && !completedMeasurement && renderer.measurementComplete()) {
+      completedMeasurement = measurement({ raw: true });
+      pause({ menu: false });
+      $('overflight-diagnostics').open = true;
+      showStatus(text('trialComplete'));
+      exposeMeasurements(completedMeasurement);
+    }
     input = readInput();
     const active =
       run.phase === 'playing' && !activeModal() && !contextGuard.blocked() && !doc.hidden;
@@ -722,6 +730,21 @@ function onFrame(now) {
       return run.phase === 'playing';
     });
     renderer.present(run);
+    if (benchmarkTrial && active && run.time >= nextResourceSample && !completedMeasurement) {
+      resourceSamples.push({
+        time: run.time,
+        ...renderer.resourceStats(),
+        heapUsedBytes: performance.memory?.usedJSHeapSize ?? null,
+        heapTotalBytes: performance.memory?.totalJSHeapSize ?? null,
+        canvasCount: $('render-host').querySelectorAll('canvas').length,
+        pools: {
+          enemies: run.enemies.length,
+          pickups: run.pickups.length,
+          effects: run.effects.length,
+        },
+      });
+      nextResourceSample = run.time + 15;
+    }
     transition();
     const reviewChoice = review.upgrade(
       run,
@@ -730,6 +753,10 @@ function onFrame(now) {
     );
     if (reviewChoice) {
       syncUpgrade();
+      if (reviewChoice.blocked) {
+        $('upgrade-dialog').querySelector('[data-copy="upgradeHint"]').textContent =
+          text('reviewDraftBlocked');
+      }
       for (const card of $('upgrade-cards').children)
         card.dataset.reviewSelected = String(card.dataset.upgradeId === reviewChoice.selectedId);
       if (reviewChoice.choiceId) choose(reviewChoice.choiceId);
@@ -789,7 +816,7 @@ function refreshCopy() {
   $('raw-metrics').setAttribute('aria-label', text('rawMeasurements'));
   shell?.setLocale(getLocale());
   $('fixture-description').textContent = fixture
-    ? `${text('fixture')}: ${fixture}. ${text('fixtureHelp')}`
+    ? `${text('fixture')}: ${fixture}. ${text('fixtureHelp')}${benchmarkTrial ? ` ${text('trialHelp')} (${benchmarkTrial})` : ''}`
     : '';
   $('fixture-description').hidden = !fixture;
   for (const id of ['review-description', 'hud-review', 'result-review']) {
@@ -953,6 +980,7 @@ navigator = attachControllerNavigation({
   getScope: () => (activeModal() ? 'ui' : 'flight'),
   getRoot: () => activeModal() ?? $('overflight-shell'),
   getDefaultFocus: () => activeModal()?.querySelector('button:not(:disabled),a[href]'),
+  getControlLabels: () => controller?.labels() ?? { confirm: '', back: '', directions: '' },
   onBack: () => {
     if (music?.root()) music.back();
     else if (!$('upgrade-dialog').open) shell.back();
@@ -1086,10 +1114,7 @@ function downloadBlob(blob, filename) {
   link.click();
   win.setTimeout(() => URL.revokeObjectURL(url), 1000);
 }
-listen($('inspect-raw-metrics'), 'click', () => {
-  if (!diagnostics) return;
-  pause({ menu: false });
-  const snapshot = measurement({ raw: true });
+function exposeMeasurements(snapshot) {
   // Keep the visible/accessibility tree compact. Only the selector's current
   // chunk enters the textarea; the complete immutable record remains downloadable.
   rawPages = createOverflightJSONPages(snapshot);
@@ -1119,6 +1144,12 @@ listen($('inspect-raw-metrics'), 'click', () => {
   $('raw-metrics').value = rawPages.page(0);
   $('raw-metrics').hidden = false;
   $('raw-metrics-navigation').hidden = false;
+}
+listen($('inspect-raw-metrics'), 'click', () => {
+  if (!diagnostics) return;
+  const snapshot = completedMeasurement ?? measurement({ raw: true });
+  pause({ menu: false });
+  exposeMeasurements(snapshot);
 });
 listen($('raw-metrics-page'), 'change', () => {
   if (rawPages) $('raw-metrics').value = rawPages.page(Number($('raw-metrics-page').value));
@@ -1141,9 +1172,12 @@ listen($('record-review-clip'), 'click', () => {
 listen($('download-metrics'), 'click', () => {
   pause({ menu: false });
   downloadBlob(
-    new Blob([rawPages?.json ?? JSON.stringify(measurement({ raw: true }))], {
-      type: 'application/json',
-    }),
+    new Blob(
+      [rawPages?.json ?? JSON.stringify(completedMeasurement ?? measurement({ raw: true }))],
+      {
+        type: 'application/json',
+      },
+    ),
     `overflight-${fixture ?? 'sortie'}-${seed}.json`,
   );
 });
@@ -1186,6 +1220,7 @@ async function dispose() {
   renderer = null;
   if ($('upgrade-dialog').open) $('upgrade-dialog').close();
   navigator.destroy();
+  controller?.destroy();
   shell.dispose();
   themeControls.dispose();
   cleanup
@@ -1225,6 +1260,20 @@ $('review-clip-controls').hidden = !reviewBuild;
 $('overflight-shell').hidden = false;
 refreshCopy();
 try {
+  const controllerPreferences = await loadOverflightControllerPreferences({ window: win });
+  controller = createOverflightController({ window: win, ...controllerPreferences });
+  if (controllerPreferences.warning) showStatus(controllerPreferences.warning);
+  listen(win, 'storage', async (event) => {
+    if (event.key !== null && event.key !== controllerPreferences.profileKey) return;
+    const next = await loadOverflightControllerPreferences({
+      window: win,
+      version: controllerPreferences.version,
+    });
+    if (retired) return;
+    controller.setPreferences(next);
+    releaseInput();
+    if (next.warning) showStatus(next.warning);
+  });
   library = createOverflightLibrary();
   await refreshMissions();
   if (params.has('community')) {
