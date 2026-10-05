@@ -8,6 +8,7 @@ import { parse } from 'acorn';
 import {
   nativeArtReviewURL,
   snakeLaunchURL,
+  overflightLaunchURL,
   fpvLaunchURL,
   fpvWorldLaunchURL,
   fpvReturnURL,
@@ -47,6 +48,8 @@ test('an explicit art review crosses fixed native pages only inside the same bui
         'game/snake/index.html',
         'game/snake/play.html',
         'game/studio/snake.html',
+        'game/studio/overflight.html',
+        'game/overflight/play.html',
         'game/playground/',
         'game/hunt/',
         'game/online/',
@@ -121,6 +124,7 @@ test('native launch/return functions preserve preview without replacing appearan
     const source = `${root}game/?edition=sample&journey=opening&artReview=industrial-roster-v3`;
     for (const target of [
       snakeLaunchURL(source, 'team', 'uk', pin),
+      overflightLaunchURL(source, 'uk', pin),
       fpvLaunchURL(source, 'uk', pin),
       fpvWorldLaunchURL(source, 'uk', pin),
     ]) {

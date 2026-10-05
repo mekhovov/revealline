@@ -1,0 +1,12 @@
+{
+  "date": "2026-10-05",
+  "observedElapsedSeconds": 905,
+  "fixture": "reference",
+  "alive": 1500,
+  "visible": 700,
+  "sourceReceipt": "browser-reference-before-family-roles.source.json",
+  "receiptSaved": false,
+  "failure": "Opening the unbounded pretty-printed raw JSON textarea stalled browser control; no final raw receipt recovered.",
+  "resolutionInSource": "Inspection pauses and displays bounded compact JSON pages; a fresh tab remains usable.",
+  "acceptance": "Not a completed performance or soak qualification. The observed timer alone does not establish resource stability."
+}
