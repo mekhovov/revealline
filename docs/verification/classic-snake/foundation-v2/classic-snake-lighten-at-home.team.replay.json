@@ -1,0 +1,297 @@
+{
+  "version": "classic-snake-replay.v1",
+  "ruleset": "classic-snake-core.v1",
+  "level": {
+    "version": "classic-snake-level.v1",
+    "id": "classic-snake-lighten-at-home",
+    "revision": "2",
+    "name": "Two Shores",
+    "width": 24,
+    "height": 18,
+    "walls": [
+      {
+        "x": 11,
+        "y": 5
+      },
+      {
+        "x": 16,
+        "y": 5
+      },
+      {
+        "x": 17,
+        "y": 5
+      },
+      {
+        "x": 11,
+        "y": 6
+      },
+      {
+        "x": 11,
+        "y": 7
+      },
+      {
+        "x": 11,
+        "y": 8
+      },
+      {
+        "x": 6,
+        "y": 9
+      },
+      {
+        "x": 7,
+        "y": 9
+      },
+      {
+        "x": 11,
+        "y": 9
+      },
+      {
+        "x": 6,
+        "y": 10
+      },
+      {
+        "x": 7,
+        "y": 10
+      },
+      {
+        "x": 11,
+        "y": 10
+      },
+      {
+        "x": 11,
+        "y": 11
+      }
+    ],
+    "spawns": [
+      {
+        "x": 5,
+        "y": 2,
+        "direction": "right"
+      },
+      {
+        "x": 18,
+        "y": 15,
+        "direction": "left"
+      }
+    ],
+    "goal": 12,
+    "stepMs": 175,
+    "speedupEvery": 0,
+    "minStepMs": 175,
+    "wrap": true,
+    "targetMovement": "flee",
+    "fleeEvery": 5
+  },
+  "levelIdentity": "b117cb5700ab8a7d",
+  "mode": "team",
+  "seed": 17,
+  "steps": 133,
+  "turns": [
+    {
+      "tick": 0,
+      "playerId": 0,
+      "direction": "down"
+    },
+    {
+      "tick": 0,
+      "playerId": 1,
+      "direction": "up"
+    },
+    {
+      "tick": 6,
+      "playerId": 0,
+      "direction": "left"
+    },
+    {
+      "tick": 7,
+      "playerId": 1,
+      "direction": "right"
+    },
+    {
+      "tick": 11,
+      "playerId": 0,
+      "direction": "up"
+    },
+    {
+      "tick": 12,
+      "playerId": 1,
+      "direction": "up"
+    },
+    {
+      "tick": 20,
+      "playerId": 0,
+      "direction": "left"
+    },
+    {
+      "tick": 20,
+      "playerId": 1,
+      "direction": "left"
+    },
+    {
+      "tick": 33,
+      "playerId": 1,
+      "direction": "down"
+    },
+    {
+      "tick": 34,
+      "playerId": 1,
+      "direction": "right"
+    },
+    {
+      "tick": 35,
+      "playerId": 0,
+      "direction": "down"
+    },
+    {
+      "tick": 39,
+      "playerId": 1,
+      "direction": "down"
+    },
+    {
+      "tick": 40,
+      "playerId": 0,
+      "direction": "right"
+    },
+    {
+      "tick": 44,
+      "playerId": 1,
+      "direction": "left"
+    },
+    {
+      "tick": 45,
+      "playerId": 0,
+      "direction": "up"
+    },
+    {
+      "tick": 45,
+      "playerId": 1,
+      "direction": "down"
+    },
+    {
+      "tick": 52,
+      "playerId": 1,
+      "direction": "right"
+    },
+    {
+      "tick": 53,
+      "playerId": 0,
+      "direction": "right"
+    },
+    {
+      "tick": 60,
+      "playerId": 0,
+      "direction": "down"
+    },
+    {
+      "tick": 60,
+      "playerId": 1,
+      "direction": "down"
+    },
+    {
+      "tick": 73,
+      "playerId": 0,
+      "direction": "left"
+    },
+    {
+      "tick": 75,
+      "playerId": 1,
+      "direction": "left"
+    },
+    {
+      "tick": 79,
+      "playerId": 0,
+      "direction": "up"
+    },
+    {
+      "tick": 81,
+      "playerId": 1,
+      "direction": "down"
+    },
+    {
+      "tick": 88,
+      "playerId": 0,
+      "direction": "right"
+    },
+    {
+      "tick": 88,
+      "playerId": 1,
+      "direction": "right"
+    },
+    {
+      "tick": 94,
+      "playerId": 0,
+      "direction": "down"
+    },
+    {
+      "tick": 94,
+      "playerId": 1,
+      "direction": "up"
+    },
+    {
+      "tick": 102,
+      "playerId": 1,
+      "direction": "right"
+    },
+    {
+      "tick": 106,
+      "playerId": 1,
+      "direction": "down"
+    },
+    {
+      "tick": 110,
+      "playerId": 0,
+      "direction": "right"
+    },
+    {
+      "tick": 113,
+      "playerId": 1,
+      "direction": "right"
+    },
+    {
+      "tick": 114,
+      "playerId": 0,
+      "direction": "up"
+    },
+    {
+      "tick": 118,
+      "playerId": 1,
+      "direction": "up"
+    },
+    {
+      "tick": 119,
+      "playerId": 0,
+      "direction": "right"
+    },
+    {
+      "tick": 123,
+      "playerId": 0,
+      "direction": "down"
+    },
+    {
+      "tick": 123,
+      "playerId": 1,
+      "direction": "right"
+    },
+    {
+      "tick": 125,
+      "playerId": 1,
+      "direction": "down"
+    },
+    {
+      "tick": 130,
+      "playerId": 0,
+      "direction": "right"
+    },
+    {
+      "tick": 132,
+      "playerId": 0,
+      "direction": "up"
+    },
+    {
+      "tick": 132,
+      "playerId": 1,
+      "direction": "left"
+    }
+  ],
+  "checkpoint": "d604b0a46e93702d"
+}

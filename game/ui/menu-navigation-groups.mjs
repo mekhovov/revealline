@@ -6,8 +6,24 @@ const step = (direction) => (direction === 'down' || direction === 'right' ? 1 :
  * Targets come only from the host's visible, accepted controls, never arbitrary DOM IDs.
  */
 export function menuGroupNeighbor(items, current, direction) {
-  const override = current.getAttribute(`data-menu-${direction}`);
-  if (override) return items.find((item) => item.id === override) || current;
+  const overrideScope = current.getAttribute('data-menu-navigation-scope');
+  const overrideOwner = overrideScope ? current.ownerDocument?.getElementById(overrideScope) : null;
+  const overrideOwnerActive =
+    !overrideScope ||
+    (overrideOwner &&
+      !overrideOwner.hidden &&
+      !overrideOwner.closest('[hidden],[inert],[aria-hidden="true"]') &&
+      (overrideOwner.tagName !== 'DIALOG' || overrideOwner.open) &&
+      !current.closest('.shared-pause-menu'));
+  const override = overrideOwnerActive && current.getAttribute(`data-menu-${direction}`);
+  if (override)
+    return (
+      override
+        .trim()
+        .split(/\s+/)
+        .map((id) => items.find((item) => item.id === id))
+        .find(Boolean) || current
+    );
   const group = current.closest('[data-menu-layout]');
   if (!group) return null;
   const layout = group.getAttribute('data-menu-layout');

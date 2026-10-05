@@ -17,6 +17,22 @@ export const CLASSIC_COPY = {
     remixDescription:
       'This board uses the selected target remix. The accepted roster and objective are shown above; the field guide explains each target.',
     boardAppearance: 'Board appearance',
+    'living-circuit': 'Living Circuit',
+    boardScene: 'Living Circuit scene',
+    auto: 'Auto · by chapter',
+    orchard: 'Orchard Workshop',
+    workshop: 'Workshop',
+    relay: 'Field Relay',
+    signalClear: 'Clear reception',
+    signalWarning: 'Signal warning · plan ahead',
+    signalJammed: 'Interference · enemies hidden',
+    signalStable: 'Pulse · clear reception',
+    signalLocalHelp:
+      'Enemies keep moving unseen. Catch the jammer at its antenna beacon, leave its range, or use Pulse.',
+    signalBroadcastHelp:
+      'Enemies keep moving unseen across the board. Catch the jammer at its double antenna beacon or use Pulse.',
+    variableSignalRecord:
+      '★ Verified completion · bursts change each attempt. Personal records use variable conditions.',
     theme: 'Game theme',
     retro: 'Retro Field',
     castLabel: 'Character cast',
@@ -61,7 +77,7 @@ export const CLASSIC_COPY = {
     effectsVolume: 'Effects volume',
     clock: 'TIME',
     queued: 'NEXT TURN',
-    progress: '{done} / 6 cleared · {all} / {total} total',
+    progress: '{done} / {chapterTotal} cleared · {all} / {total} total',
     lastPlayed: 'Last played: {name}',
     nextUncleared: 'Next uncleared: {name}',
     recordDetail: 'Best score {score} · Fastest {time} · Fewest moves {moves}',
@@ -167,6 +183,22 @@ export const CLASSIC_COPY = {
     error: 'Snake could not load. Reload, or return to the main game.',
   },
   uk: {
+    'living-circuit': 'Живий контур',
+    boardScene: 'Сцена «Живого контуру»',
+    auto: 'Авто · за розділом',
+    orchard: 'Майстерня в саду',
+    workshop: 'Майстерня',
+    relay: 'Польовий ретранслятор',
+    signalClear: 'Чистий прийом',
+    signalWarning: 'Увага: сплануйте маршрут',
+    signalJammed: 'Перешкоди · вороги приховані',
+    signalStable: 'Імпульс · чистий прийом',
+    signalLocalHelp:
+      'Невидимі вороги продовжують рух. Спіймайте глушник біля маячка антени, вийдіть із його зони або застосуйте Імпульс.',
+    signalBroadcastHelp:
+      'Невидимі вороги рухаються по всьому полю. Спіймайте глушник біля подвійного маячка антени або застосуйте Імпульс.',
+    variableSignalRecord:
+      '★ Перевірене завершення · спалахи змінюються щоразу. Особисті рекорди за змінних умов.',
     title: 'ЗМІЙКА',
     displaySettings: 'Екран і вигляд',
     soundSettings: 'Звук і реакції',
@@ -228,7 +260,7 @@ export const CLASSIC_COPY = {
     effectsVolume: 'Гучність ефектів',
     clock: 'ЧАС',
     queued: 'НАСТУПНИЙ ПОВОРОТ',
-    progress: '{done} / 6 пройдено · {all} / {total} загалом',
+    progress: '{done} / {chapterTotal} пройдено · {all} / {total} загалом',
     lastPlayed: 'Остання гра: {name}',
     nextUncleared: 'Наступний непройдений: {name}',
     recordDetail: 'Рекорд {score} · Найшвидше {time} · Найменше кроків {moves}',

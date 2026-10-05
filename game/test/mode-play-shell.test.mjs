@@ -3,6 +3,8 @@ import assert from 'node:assert/strict';
 import { Document } from './helpers/couch-dom.mjs';
 import { mountModePlayShell } from '../ui/mode-play-shell.mjs';
 import { attachModalNavigation } from '../ui/modal-navigation.mjs';
+import { attachControllerNavigation } from '../ui/controller-navigation.mjs';
+import { renderModeChoices } from '../ui/mode-choice-view.mjs';
 
 function fixture(options = {}) {
   const document = new Document();
@@ -19,11 +21,21 @@ function fixture(options = {}) {
     'help',
     'workshop',
     'results',
+    'modes',
   ]) {
     const slot = document.createElement('section');
     slot.id = `${options.idPrefix ?? 'original'}-${name}`;
     source.append(slot);
     slots[name] = slot;
+  }
+  if (options.withModes) {
+    const actions = Object.fromEntries(
+      ['solo', 'team', 'versus', 'snake', 'simulator'].map((name) => [
+        name,
+        document.createElement('button'),
+      ]),
+    );
+    renderModeChoices({ root: slots.modes, current: options.currentMode ?? 'snake', actions });
   }
   const calls = [];
   const actions = Object.fromEntries(
@@ -41,6 +53,41 @@ function fixture(options = {}) {
   });
   return { document, source, slots, calls, shell };
 }
+
+test('keyboard and controller directions share the exact landing cycle and mode row', () => {
+  const h = fixture({ withModes: true, currentMode: 'snake', actions: { fullscreen() {} } });
+  const home = h.shell.elements.home;
+  const navigation = attachControllerNavigation({
+    document: h.document,
+    keyboard: true,
+    getScope: () => 'home',
+    getRoot: () => home,
+    getDefaultFocus: () => home.querySelector('[aria-current="page"]'),
+  });
+  const selected = home.querySelector('[aria-current="page"]');
+  selected.focus();
+  for (const expected of [
+    h.shell.elements.buttons.primary,
+    h.shell.elements.buttons.missions,
+    h.shell.elements.buttons.settings,
+    h.shell.elements.buttons.sound,
+    h.shell.elements.buttons.fullscreen,
+    selected,
+  ]) {
+    navigation.handle({ direction: 'down' });
+    assert.equal(h.document.activeElement, expected);
+  }
+  navigation.handle({ direction: 'right' });
+  assert.equal(h.document.activeElement.dataset.gameMode, 'simulator');
+  navigation.handle({ direction: 'right' });
+  assert.equal(h.document.activeElement.dataset.gameMode, 'solo');
+  h.shell.elements.buttons.fullscreen.hidden = true;
+  h.shell.elements.buttons.sound.focus();
+  navigation.handle({ direction: 'down' });
+  assert.equal(h.document.activeElement, selected, 'Unavailable utilities are skipped.');
+  navigation.destroy();
+  h.shell.dispose();
+});
 
 test('menus move the existing live controls and disposal restores their original identity and order', () => {
   const h = fixture();
@@ -93,9 +140,8 @@ test('explicit Start closes all preparation surfaces before the host starts its 
   const h = fixture({ actions: { start: () => calls.push(active.blocksPlay()) } });
   active = h.shell;
   active.elements.buttons.missions.click();
-  active.elements.buttons.review.click();
-  assert.equal(active.topDialog(), active.elements.dialogs.briefing);
-  active.elements.buttons.start.click();
+  active.elements.buttons['mission-start'].click();
+  assert.equal(active.elements.dialogs.briefing.open, false);
   assert.deepEqual(calls, [false]);
   assert.equal(
     active.elements.root.dataset.phase,
@@ -141,7 +187,7 @@ test('a host pause callback can reopen the shared pause surface without recursio
   shell.update({ phase: 'playing' });
   shell.openHome();
   assert.equal(pauses, 1);
-  assert.equal(shell.topDialog(), shell.elements.home);
+  assert.equal(shell.topDialog(), shell.elements.dialogs.pause);
   shell.back();
   assert.equal(shell.blocksPlay(), false);
   assert.equal(pauses, 1);
@@ -289,7 +335,7 @@ test('a Pause pointer press stays paused when focus loss updates host phase befo
   h.shell.update({ phase: 'paused' });
   assert.equal(pauseButton.textContent, 'Resume');
   pauseButton.emit('click', { detail: 1, pointerId: 1 });
-  assert.equal(h.shell.topDialog(), h.shell.elements.home);
+  assert.equal(h.shell.topDialog(), h.shell.elements.dialogs.pause);
   assert.deepEqual(h.calls, [], 'The same Pause activation must never resume.');
   h.shell.back();
   pauseButton.emit('pointerdown', { pointerId: 2, button: 0, isPrimary: true });
@@ -405,4 +451,83 @@ test('frequent HUD refreshes preserve pressed menu Text nodes and pointer activa
   h.shell.setLocale('uk');
   assert.equal(watched[0].current, translated);
   h.shell.dispose();
+});
+
+test('pause exposes one compact action set, preserves settings, and requires an explicit resume', () => {
+  const changes = [];
+  const h = fixture({
+    initial: 'play',
+    actions: {
+      canResume: () => true,
+      skip: () => changes.push('skip'),
+      random: () => changes.push('random'),
+    },
+  });
+  h.shell.update({ phase: 'playing' });
+  h.shell.open('pause');
+  assert.equal(h.shell.topDialog().dataset.modeSurface, 'pause');
+  assert.equal(h.shell.elements.modes.parentElement, h.shell.elements.content.home);
+  h.shell.elements.buttons['pause-settings'].click();
+  assert.equal(h.shell.topDialog().dataset.modeSurface, 'settings');
+  h.shell.back();
+  assert.equal(h.shell.topDialog().dataset.modeSurface, 'pause');
+  assert.deepEqual(h.calls, ['pause']);
+  h.shell.setLocale('uk');
+  assert.equal(h.shell.elements.buttons['pause-restart'].textContent, 'Заново');
+  h.shell.elements.buttons['pause-skip'].click();
+  assert.deepEqual(changes, ['skip']);
+  assert.equal(h.shell.blocksPlay(), false);
+  h.shell.open('pause');
+  h.shell.elements.buttons['pause-random'].click();
+  assert.deepEqual(changes, ['skip', 'random']);
+  h.shell.dispose();
+});
+
+test('title device controls stay outside play choices while muted state updates both menus', () => {
+  const h = fixture({ actions: { fullscreen() {} } });
+  const { buttons, utilities, content } = h.shell.elements;
+  assert.equal(buttons.sound.parentElement, utilities);
+  assert.equal(buttons.fullscreen.parentElement, utilities);
+  assert.equal(buttons.settings.parentElement.classList.contains('native-menu-actions'), true);
+  assert.equal(buttons['home-retry'].parentElement, content.settings);
+  h.shell.update({ muted: true });
+  assert.equal(buttons.sound.textContent, 'Sound: off');
+  assert.equal(buttons['pause-sound'].textContent, 'Sound: off');
+  h.shell.dispose();
+});
+
+test('SIM pending boot reveals before initial modal focus', () => {
+  const document = new Document();
+  document.documentElement.dataset.modeShellPending = 'true';
+  const createElement = document.createElement.bind(document);
+  document.createElement = (tag) => {
+    const element = createElement(tag);
+    const focus = element.focus.bind(element);
+    element.focus = (...args) => {
+      assert.equal(document.documentElement.dataset.modeShellPending, undefined);
+      focus(...args);
+    };
+    return element;
+  };
+  const shell = mountModePlayShell({ document, actions: { start() {} } });
+  assert.equal(document.activeElement, shell.elements.buttons.primary);
+  shell.dispose();
+});
+
+test('results focus Next immediately and Pause cancels an active transition without dead Resume', () => {
+  const h = fixture();
+  const next = h.document.createElement('button');
+  next.className = 'button primary';
+  h.slots.results.append(next);
+  h.shell.update({ phase: 'results', transitionActive: true });
+  h.shell.open('results');
+  assert.equal(h.document.activeElement, next);
+  assert.equal(h.shell.elements.buttons.pause.disabled, false);
+  h.shell.elements.buttons.pause.click();
+  assert.equal(h.calls.at(-1), 'pause');
+  assert.equal(h.shell.elements.dialogs.pause.open, false);
+  assert.equal(h.document.activeElement, next);
+  next.hidden = true;
+  h.shell.open('results');
+  assert.equal(h.document.activeElement, h.shell.elements.buttons.retry);
 });

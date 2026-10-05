@@ -8,6 +8,7 @@ import {
 import { drawClassicBoard, classicCatchMarks } from '../snake/classic-view.mjs';
 import { advanceClassicFlight } from '../snake/classic-flight-art.mjs';
 import { createHuntDestruction } from '../hunt/destruction.mjs';
+import { classicSnakeUsesVariableHazards } from '../snake/classic-core.mjs';
 
 /** A disposable, unsaved native match. Only engine commands advance it; neither
  * the draft nor a presentation choice can rewrite an accepted actor or body. */
@@ -54,7 +55,11 @@ export function createSnakeStudioPreview({ draw = drawClassicBoard } = {}) {
       if (disposed) throw new Error('Snake preview is disposed.');
       // Invalid edits retire the old preview rather than showing stale geometry.
       clear();
-      match = createClassicSnakeMatch(level, { mode, seed: 17 });
+      match = createClassicSnakeMatch(level, {
+        mode,
+        seed: 17,
+        ...(classicSnakeUsesVariableHazards(level) ? { hazardSeed: 17 } : {}),
+      });
       effects = match.runs.map(() => createHuntDestruction({ preview: true }));
       visuals(0, false);
       return snapshot();

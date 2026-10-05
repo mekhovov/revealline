@@ -1,0 +1,215 @@
+{
+  "version": "classic-snake-replay.v1",
+  "ruleset": "classic-snake-core.v1",
+  "level": {
+    "version": "classic-snake-level.v1",
+    "id": "classic-snake-split-islands",
+    "revision": "2",
+    "name": "Split Islands",
+    "width": 24,
+    "height": 18,
+    "walls": [
+      {
+        "x": 7,
+        "y": 5
+      },
+      {
+        "x": 8,
+        "y": 5
+      },
+      {
+        "x": 7,
+        "y": 6
+      },
+      {
+        "x": 8,
+        "y": 6
+      },
+      {
+        "x": 7,
+        "y": 7
+      },
+      {
+        "x": 8,
+        "y": 7
+      },
+      {
+        "x": 12,
+        "y": 8
+      },
+      {
+        "x": 12,
+        "y": 9
+      },
+      {
+        "x": 12,
+        "y": 10
+      },
+      {
+        "x": 15,
+        "y": 12
+      },
+      {
+        "x": 16,
+        "y": 12
+      },
+      {
+        "x": 17,
+        "y": 12
+      },
+      {
+        "x": 15,
+        "y": 13
+      },
+      {
+        "x": 16,
+        "y": 13
+      },
+      {
+        "x": 17,
+        "y": 13
+      }
+    ],
+    "spawns": [
+      {
+        "x": 5,
+        "y": 2,
+        "direction": "right"
+      },
+      {
+        "x": 18,
+        "y": 15,
+        "direction": "left"
+      }
+    ],
+    "goal": 10,
+    "stepMs": 180,
+    "speedupEvery": 0,
+    "minStepMs": 180,
+    "wrap": false,
+    "targetMovement": "flee",
+    "fleeEvery": 6
+  },
+  "levelIdentity": "19f887b8e41225cd",
+  "mode": "solo",
+  "seed": 17,
+  "steps": 198,
+  "turns": [
+    {
+      "tick": 13,
+      "playerId": 0,
+      "direction": "down"
+    },
+    {
+      "tick": 15,
+      "playerId": 0,
+      "direction": "left"
+    },
+    {
+      "tick": 32,
+      "playerId": 0,
+      "direction": "down"
+    },
+    {
+      "tick": 37,
+      "playerId": 0,
+      "direction": "right"
+    },
+    {
+      "tick": 39,
+      "playerId": 0,
+      "direction": "down"
+    },
+    {
+      "tick": 47,
+      "playerId": 0,
+      "direction": "right"
+    },
+    {
+      "tick": 64,
+      "playerId": 0,
+      "direction": "up"
+    },
+    {
+      "tick": 80,
+      "playerId": 0,
+      "direction": "right"
+    },
+    {
+      "tick": 82,
+      "playerId": 0,
+      "direction": "down"
+    },
+    {
+      "tick": 87,
+      "playerId": 0,
+      "direction": "left"
+    },
+    {
+      "tick": 100,
+      "playerId": 0,
+      "direction": "up"
+    },
+    {
+      "tick": 105,
+      "playerId": 0,
+      "direction": "left"
+    },
+    {
+      "tick": 114,
+      "playerId": 0,
+      "direction": "up"
+    },
+    {
+      "tick": 115,
+      "playerId": 0,
+      "direction": "right"
+    },
+    {
+      "tick": 119,
+      "playerId": 0,
+      "direction": "down"
+    },
+    {
+      "tick": 129,
+      "playerId": 0,
+      "direction": "left"
+    },
+    {
+      "tick": 131,
+      "playerId": 0,
+      "direction": "up"
+    },
+    {
+      "tick": 141,
+      "playerId": 0,
+      "direction": "right"
+    },
+    {
+      "tick": 158,
+      "playerId": 0,
+      "direction": "down"
+    },
+    {
+      "tick": 171,
+      "playerId": 0,
+      "direction": "left"
+    },
+    {
+      "tick": 172,
+      "playerId": 0,
+      "direction": "up"
+    },
+    {
+      "tick": 184,
+      "playerId": 0,
+      "direction": "left"
+    },
+    {
+      "tick": 197,
+      "playerId": 0,
+      "direction": "up"
+    }
+  ],
+  "checkpoint": "744d1e2f81caa5ab"
+}

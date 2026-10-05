@@ -1,4 +1,4 @@
-import { makeClassicSnakeV2, makeClassicSnakeV3 } from './classic-core.mjs';
+import { makeClassicSnakeV2, makeClassicSnakeV3, makeClassicSnakeV4 } from './classic-core.mjs';
 
 export const CLASSIC_PACES = Object.freeze({ slow: 1.4, normal: 1, fast: 0.75 });
 
@@ -32,9 +32,11 @@ export function prepareClassicSnakeLevel(
   let level = structuredClone(entry.level);
   if (targetRules === 'moving' || targetRules === 'varied' || format === 'endless')
     level = structuredClone(
-      (targetRules === 'varied' || level.version.endsWith('v3')
-        ? makeClassicSnakeV3
-        : makeClassicSnakeV2)(level, {
+      (level.version.endsWith('v4')
+        ? makeClassicSnakeV4
+        : targetRules === 'varied' || level.version.endsWith('v3')
+          ? makeClassicSnakeV3
+          : makeClassicSnakeV2)(level, {
         ...(targetRules === 'varied' ? { varied: true } : {}),
         targetRemix: targetRules === 'moving',
         endless: format === 'endless',

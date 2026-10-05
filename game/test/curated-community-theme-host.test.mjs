@@ -168,10 +168,9 @@ for (const personal of [null, 'tryzub']) {
     }
     page.frame(0);
     assert.equal(page.rendered.run.levelId, 'custom-theme-mission');
-    assert.equal(page.rendered.paused, true, 'The accepted custom mission opens its briefing.');
-    assert.equal(page.rendered.run.tick, 0, 'Selecting a custom mission does not autoplay.');
-    assert.equal(page.$('game-overlay').hidden, false);
-    page.$('start-button').click();
+    assert.equal(page.rendered.paused, false, 'One activation starts the accepted custom mission.');
+    assert.equal(page.rendered.run.tick, 0, 'The new mission starts at its initial boundary.');
+    assert.equal(page.$('game-overlay').hidden, true, 'No mandatory briefing blocks gameplay.');
     await settle(() => {
       page.frame(0);
       return (

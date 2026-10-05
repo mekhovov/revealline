@@ -1,0 +1,266 @@
+{
+  "version": "classic-snake-replay.v1",
+  "ruleset": "classic-snake-core.v1",
+  "level": {
+    "version": "classic-snake-level.v1",
+    "id": "classic-snake-guarded-returns",
+    "revision": "2",
+    "name": "Twin Chicanes",
+    "width": 24,
+    "height": 18,
+    "walls": [
+      {
+        "x": 10,
+        "y": 4
+      },
+      {
+        "x": 10,
+        "y": 5
+      },
+      {
+        "x": 10,
+        "y": 6
+      },
+      {
+        "x": 10,
+        "y": 7
+      },
+      {
+        "x": 5,
+        "y": 8
+      },
+      {
+        "x": 6,
+        "y": 8
+      },
+      {
+        "x": 7,
+        "y": 8
+      },
+      {
+        "x": 10,
+        "y": 8
+      },
+      {
+        "x": 17,
+        "y": 8
+      },
+      {
+        "x": 18,
+        "y": 8
+      },
+      {
+        "x": 5,
+        "y": 9
+      },
+      {
+        "x": 6,
+        "y": 9
+      },
+      {
+        "x": 7,
+        "y": 9
+      },
+      {
+        "x": 17,
+        "y": 9
+      },
+      {
+        "x": 18,
+        "y": 9
+      },
+      {
+        "x": 13,
+        "y": 11
+      },
+      {
+        "x": 13,
+        "y": 12
+      },
+      {
+        "x": 13,
+        "y": 13
+      },
+      {
+        "x": 13,
+        "y": 14
+      }
+    ],
+    "spawns": [
+      {
+        "x": 5,
+        "y": 2,
+        "direction": "right"
+      },
+      {
+        "x": 18,
+        "y": 15,
+        "direction": "left"
+      }
+    ],
+    "goal": 14,
+    "stepMs": 180,
+    "speedupEvery": 4,
+    "minStepMs": 135,
+    "wrap": false,
+    "targetMovement": "still",
+    "fleeEvery": 3
+  },
+  "levelIdentity": "b2d7e3e38a0a0272",
+  "mode": "solo",
+  "seed": 17,
+  "steps": 236,
+  "turns": [
+    {
+      "tick": 6,
+      "playerId": 0,
+      "direction": "down"
+    },
+    {
+      "tick": 20,
+      "playerId": 0,
+      "direction": "right"
+    },
+    {
+      "tick": 24,
+      "playerId": 0,
+      "direction": "up"
+    },
+    {
+      "tick": 40,
+      "playerId": 0,
+      "direction": "left"
+    },
+    {
+      "tick": 48,
+      "playerId": 0,
+      "direction": "down"
+    },
+    {
+      "tick": 55,
+      "playerId": 0,
+      "direction": "right"
+    },
+    {
+      "tick": 56,
+      "playerId": 0,
+      "direction": "down"
+    },
+    {
+      "tick": 63,
+      "playerId": 0,
+      "direction": "left"
+    },
+    {
+      "tick": 65,
+      "playerId": 0,
+      "direction": "up"
+    },
+    {
+      "tick": 69,
+      "playerId": 0,
+      "direction": "right"
+    },
+    {
+      "tick": 86,
+      "playerId": 0,
+      "direction": "up"
+    },
+    {
+      "tick": 95,
+      "playerId": 0,
+      "direction": "left"
+    },
+    {
+      "tick": 107,
+      "playerId": 0,
+      "direction": "down"
+    },
+    {
+      "tick": 116,
+      "playerId": 0,
+      "direction": "right"
+    },
+    {
+      "tick": 127,
+      "playerId": 0,
+      "direction": "up"
+    },
+    {
+      "tick": 135,
+      "playerId": 0,
+      "direction": "left"
+    },
+    {
+      "tick": 148,
+      "playerId": 0,
+      "direction": "down"
+    },
+    {
+      "tick": 161,
+      "playerId": 0,
+      "direction": "left"
+    },
+    {
+      "tick": 167,
+      "playerId": 0,
+      "direction": "up"
+    },
+    {
+      "tick": 180,
+      "playerId": 0,
+      "direction": "left"
+    },
+    {
+      "tick": 182,
+      "playerId": 0,
+      "direction": "up"
+    },
+    {
+      "tick": 183,
+      "playerId": 0,
+      "direction": "right"
+    },
+    {
+      "tick": 194,
+      "playerId": 0,
+      "direction": "down"
+    },
+    {
+      "tick": 203,
+      "playerId": 0,
+      "direction": "left"
+    },
+    {
+      "tick": 211,
+      "playerId": 0,
+      "direction": "up"
+    },
+    {
+      "tick": 214,
+      "playerId": 0,
+      "direction": "right"
+    },
+    {
+      "tick": 219,
+      "playerId": 0,
+      "direction": "down"
+    },
+    {
+      "tick": 221,
+      "playerId": 0,
+      "direction": "right"
+    },
+    {
+      "tick": 228,
+      "playerId": 0,
+      "direction": "down"
+    },
+    {
+      "tick": 229,
+      "playerId": 0,
+      "direction": "right"
+    }
+  ],
+  "checkpoint": "b8cfad34e9e8d847"
+}

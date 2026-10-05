@@ -114,7 +114,23 @@ test('Couch main Back reveals the same already-focused action without activating
 });
 
 test('lobby, setup and children use reachable native controls and Back restores the actual opener', async (t) => {
-  const f = await couchPage(t);
+  const f = await couchPage(t, {
+    beforeImport({ document }) {
+      // Native anchors reflect href assignments into the attribute queried by
+      // keyboard navigation. The finite DOM does not model that IDL property.
+      const create = document.createElement.bind(document);
+      t.mock.method(document, 'createElement', (tag) => {
+        const element = create(tag);
+        if (tag.toLowerCase() === 'a')
+          Object.defineProperty(element, 'href', {
+            get: () => element.getAttribute('href') ?? '',
+            set: (value) => element.setAttribute('href', value),
+            configurable: true,
+          });
+        return element;
+      });
+    },
+  });
   assert.equal(f.doc.documentElement.dataset.toolState, 'ready');
   assert.equal(f.$('race-main').hidden, false);
   assert.equal(f.$('race-boards').hidden, true);
@@ -122,7 +138,7 @@ test('lobby, setup and children use reachable native controls and Back restores 
   const modes = f.$('race-mode-choices');
   assert.deepEqual(
     modes.children.map((element) => element.dataset.gameMode ?? element.id),
-    ['solo', 'versus', 'team', 'versus-fpv-sim', 'versus-snake'],
+    ['solo', 'team', 'versus', 'snake', 'simulator'],
   );
   const currentMode = modes.querySelector('[aria-current="page"]');
   assert.equal(currentMode.tagName, 'BUTTON');
@@ -131,10 +147,10 @@ test('lobby, setup and children use reachable native controls and Back restores 
   assert.equal(f.doc.activeElement.id, 'race-start');
   // The arcade seats, simulator and Snake stay reachable from the lobby.
   for (const node of [
-    f.$('versus-snake'),
     f.$('versus-fpv-sim'),
-    f.$('race-coop'),
+    f.$('versus-snake'),
     currentMode,
+    f.$('race-coop'),
     f.$('race-solo-return'),
   ]) {
     press(f, 'Tab', f.doc.activeElement, { shiftKey: true });
@@ -142,17 +158,17 @@ test('lobby, setup and children use reachable native controls and Back restores 
   }
   assert.equal(f.doc.activeElement.getAttribute('href'), '../?journey=legacy');
   press(f, 'Tab');
-  assert.equal(f.doc.activeElement, currentMode);
-  press(f, 'Tab');
   assert.equal(f.doc.activeElement.id, 'race-coop');
   assert.equal(
     f.doc.activeElement.getAttribute('href'),
     'relay-rescue.html?journey=legacy&return=versus',
   );
   press(f, 'Tab');
-  assert.equal(f.doc.activeElement.id, 'versus-fpv-sim');
+  assert.equal(f.doc.activeElement, currentMode);
   press(f, 'Tab');
   assert.equal(f.doc.activeElement.id, 'versus-snake');
+  press(f, 'Tab');
+  assert.equal(f.doc.activeElement.id, 'versus-fpv-sim');
   press(f, 'Tab');
   assert.equal(f.doc.activeElement.id, 'race-start');
   press(f, 'Tab');
@@ -252,13 +268,31 @@ test('Versus Extras keeps secondary destinations reachable by keyboard and contr
 
   more.open = true;
   const destinations = more.querySelector('.race-more-destinations');
-  for (const id of ['race-more-home', 'race-more-about', 'race-release-explorer']) {
+  for (const id of ['race-more-home', 'race-release-explorer']) {
     assert.equal(f.$(id).parentNode, destinations, `${id} has the exact More navigation parent.`);
     assert.equal(f.$(id).closest('#race-more'), more, `${id} stays in the same utility shell.`);
   }
+  const about = f.$('race-more-about'),
+    checkpoint = f.checkpoint();
+  assert.equal(about.closest('[data-global-setting]').dataset.globalSetting, 'about');
+  assert.equal(about.closest('[role="tabpanel"]').id, 'race-settings-panel-extras');
+  assert.equal(about.closest('details'), null, 'Shared About is available without expanding More.');
+  more.open = false;
+  f.$('race-help').focus();
+  for (let i = 0; i < 40 && f.doc.activeElement !== about; i++) press(f, 'Tab');
+  assert.equal(f.doc.activeElement, about, 'Keyboard reaches the shared About action.');
+  f.$('race-help').focus();
+  for (let i = 0; i < 40 && f.doc.activeElement !== about; i++) f.pulse(0, 12);
+  assert.equal(f.doc.activeElement, about, 'Controller reaches the shared About action.');
+  assert.match(about.getAttribute('href'), /site\/about\.html#versions$/);
+  assert.deepEqual(
+    f.checkpoint(),
+    checkpoint,
+    'Browsing secondary destinations does not start play.',
+  );
 });
 
-test('Versus More exposes native touch targets without changing Start focus', async (t) => {
+test('Versus Extras exposes shared About and More touch targets without stealing focus', async (t) => {
   const f = await couchPage(t, { nativeKeyboard: true }),
     more = f.$('race-more'),
     toggle = f.$('race-more-toggle');
@@ -270,11 +304,26 @@ test('Versus More exposes native touch targets without changing Start focus', as
   toggle.click();
   assert.equal(more.open, true);
   assert.equal(f.doc.activeElement, beforeFocus, 'Touch does not steal keyboard focus.');
-  for (const id of ['race-more-home', 'race-more-about', 'race-release-explorer'])
+  for (const id of ['race-more-home', 'race-release-explorer'])
     assert.equal(f.$(id).closest('#race-more'), more);
+  const about = f.$('race-more-about');
+  more.open = false;
+  assert.equal(about.closest('[data-global-setting]').dataset.globalSetting, 'about');
+  assert.equal(
+    about.closest('[hidden],[inert]'),
+    null,
+    'Shared About remains a visible touch target.',
+  );
+  const before = f.checkpoint();
+  about.emit('pointerdown', { pointerType: 'touch', pointerId: 42, button: 0 });
+  about.emit('pointerup', { pointerType: 'touch', pointerId: 42, button: 0 });
+  const event = about.emit('click', { button: 0 });
+  assert.equal(event.defaultPrevented, false, 'Ready About keeps its native link activation.');
+  assert.equal(f.doc.activeElement, beforeFocus, 'About touch does not steal keyboard focus.');
+  assert.deepEqual(f.checkpoint(), before);
 });
 
-test('Versus More departures retain the paused match until a separate decision', async (t) => {
+test('Versus Extras departures retain the paused match until a separate decision', async (t) => {
   const f = await couchPage(t, { nativeKeyboard: true }),
     more = f.$('race-more');
   f.$('race-start').click();
@@ -305,7 +354,10 @@ test('Versus More departures retain the paused match until a separate decision',
     );
     f.$('race-leave-back').click();
     assert.equal(f.doc.activeElement, destination, 'Stay restores the exact destination opener.');
-    assert.equal(destination.parentNode, more.querySelector('.race-more-destinations'));
+    assert.equal(destination.closest('[role="tabpanel"]').id, 'race-settings-panel-extras');
+    if (id === 'race-more-about')
+      assert.equal(destination.closest('[data-global-setting]').dataset.globalSetting, 'about');
+    else assert.equal(destination.parentNode, more.querySelector('.race-more-destinations'));
     assert.deepEqual(f.checkpoint(), paused);
   }
 });

@@ -11,8 +11,8 @@ import {
   OPTIONAL_PRACTICE_LIMITS,
 } from './build-optional-practice.mjs';
 import { ICON_MASTER } from './brand-icons.mjs';
-import { readBuildConfig } from './game-cli.mjs';
 import { OPTIONAL_PACKAGE_POLICIES } from '../publishing/optional-package-policy.mjs';
+import { readBuildConfig } from './game-cli.mjs';
 import { installPracticeWorker } from '../optional-practice/civilian-flight/worker-template.mjs';
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const hash = (bytes) => createHash('sha256').update(bytes).digest('hex');
@@ -25,6 +25,10 @@ test('optional practice archives are reproducible, admitted completely and absen
   assert.equal(first.manifest.core, false);
   assert.equal(first.manifest.qualification, 'development-only');
   const entries = new Map(first.entries.map((entry) => [entry.name, entry.bytes]));
+  assert.ok(
+    entries.has('game/ui/pause-menu.css'),
+    'The shared shell keeps its pause layout offline.',
+  );
   assert.equal(first.manifest.files.length, entries.size - 1);
   for (const file of first.manifest.files) {
     assert.equal(entries.get(file.path).length, file.bytes);
