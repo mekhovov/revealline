@@ -10,6 +10,7 @@ import * as flowHelpers from '../ui/continuous-play.mjs';
 import * as celebrationHelpers from '../ui/celebration.mjs';
 import { createSignalReception } from '../ui/signal-reception.mjs';
 import { mountGlobalSettingsTools } from '../ui/global-settings-tools.mjs';
+import { attachInstallOfflinePanel } from '../ui/install-offline-panel.mjs';
 import { menuPad } from './helpers/global-tools-fixture.mjs';
 import { mountGlobalSettings } from '../ui/global-settings-view.mjs';
 import test from 'node:test';
@@ -99,6 +100,7 @@ async function harness({
   mode = 'solo',
   activity = 'campaign',
   sharedTools = false,
+  directEntry = true,
   focused = true,
   artReview = null,
   query = '',
@@ -137,7 +139,7 @@ async function harness({
   mount(parseHTML(html), document.body);
   const window = new Events();
   const pads = [];
-  let tools;
+  let tools, offlinePanel, offlineOptions;
   const storage = new Map();
   if (savedRound) storage.set('revealline.classic-snake.round.v2', JSON.stringify(savedRound));
   if (cosmetics) storage.set('revealline.classic-snake.presentation.v1', JSON.stringify(cosmetics));
@@ -154,7 +156,7 @@ async function harness({
   };
   const displayListeners = new Set();
   const location = {
-    href: `https://example.test/game/snake/play.html?mode=${mode}&level=${entry.id}&activity=${activity}${artReview ? `&artReview=${encodeURIComponent(artReview)}` : ''}${query}`,
+    href: `https://example.test/game/snake/play.html?mode=${mode}${directEntry ? `&level=${entry.id}` : ''}&activity=${activity}${artReview ? `&artReview=${encodeURIComponent(artReview)}` : ''}${query}`,
     origin: 'https://example.test',
   };
   const preferences = (snapshot) => ({
@@ -252,6 +254,16 @@ async function harness({
             handleFrameCommand: () => false,
             dispose() {},
           }),
+    attachInstallOfflinePanel: (options) => {
+      offlineOptions = options;
+      offlinePanel = attachInstallOfflinePanel({
+        ...options,
+        // The source module executes from a file URL in this harness; the
+        // browser serves it beneath this same-origin game directory.
+        downloadsURL: new URL('../downloads.html', location.href),
+      });
+      return offlinePanel;
+    },
     attachMenuAudioSettings() {},
     attachDefeatSoundControls,
     getMenuAnimation: () => true,
@@ -456,7 +468,12 @@ async function harness({
     shell,
     optionalEntries,
     pads,
-    disposeTools: () => tools.dispose(),
+    offlinePanel,
+    canActivateOffline: () => offlineOptions.canActivate(),
+    disposeTools: () => {
+      tools.dispose();
+      offlinePanel.dispose();
+    },
     start() {
       shell.open('briefing');
       shell.elements.buttons.start.click();
@@ -473,6 +490,39 @@ async function harness({
 }
 
 for (const mode of ['solo', 'versus', 'team']) {
+  test(`${mode} Snake can finish offline setup from Ready but defers during a paused flight`, async (t) => {
+    const state = await harness({ mode, sharedTools: true, directEntry: false });
+    t.after(() => state.disposeTools());
+    assert.equal(state.canActivateOffline(), true);
+    state.shell.open('settings');
+    state.$('snake-menu-settings-tab-content').click();
+    const opener = state.$('snake-global-tools-offlineTools');
+    opener.focus();
+    opener.click();
+    assert.equal(state.offlinePanel.isOpen(), true);
+    assert.equal(state.canActivateOffline(), true);
+    assert.equal(
+      state.offlinePanel.root().querySelector('iframe').src,
+      'https://example.test/game/downloads.html?embedded=1',
+    );
+    state.offlinePanel.close();
+    assert.equal(state.document.activeElement, opener);
+    assert.equal(state.document.body.dataset.playing, 'false');
+    state.start();
+    state.frame(0);
+    state.frame(100);
+    state.shell.open('settings');
+    assert.equal(state.canActivateOffline(), false);
+    const paused = state.created.map((run) => core.exportClassicSnakeReplay(run));
+    state.offlinePanel.open();
+    state.offlinePanel.close();
+    state.frame(800);
+    assert.deepEqual(
+      state.created.map((run) => core.exportClassicSnakeReplay(run)),
+      paused,
+    );
+    assert.equal(state.document.body.dataset.playing, 'false');
+  });
   test(`${mode} Snake sound choice persists without enabling gore or advancing the paused round`, async () => {
     const state = await harness({ mode });
     state.shell.open('settings');
@@ -702,6 +752,46 @@ function flyVerifiedRoute(state) {
   assert.equal(run.status, 'won', 'actual host keyboard input completes the verified route');
   return now;
 }
+
+test('Snake offline activation accepts completed runs and refuses imports, lost ownership and departures', async (t) => {
+  const state = await harness({ directEntry: false });
+  t.after(() => state.disposeTools());
+  assert.equal(state.canActivateOffline(), true);
+  let finishImport;
+  state.$('import').files = [
+    {
+      size: 2,
+      text: () =>
+        new Promise((resolve) => {
+          finishImport = resolve;
+        }),
+    },
+  ];
+  state.$('import').emit('change');
+  assert.equal(state.canActivateOffline(), false, 'unresolved session import owns the board');
+  finishImport('{}');
+  await flush();
+  assert.equal(state.canActivateOffline(), true, 'rejected import releases its operation');
+  state.setFocused(false);
+  assert.equal(state.canActivateOffline(), false);
+  state.setFocused(true);
+  state.start();
+  flyVerifiedRoute(state);
+  assert.equal(state.canActivateOffline(), true, 'finished run may select a verified installation');
+  state.offlinePanel.open();
+  state.window.emit('pagehide', { persisted: true });
+  assert.equal(state.offlinePanel.isOpen(), false);
+  assert.equal(state.canActivateOffline(), false);
+  await flush();
+  state.window.emit('pageshow', { persisted: true });
+  assert.equal(state.canActivateOffline(), false, 'restoration waits for its saving lease');
+  await flush();
+  assert.equal(state.canActivateOffline(), true);
+  state.writerClaims.at(-1).release();
+  assert.equal(state.canActivateOffline(), false, 'read-only round cannot activate a new edition');
+  state.window.emit('pagehide', { persisted: false });
+  assert.equal(state.document.getElementById('install-offline-dialog'), null);
+});
 
 test('Living Circuit links override cosmetics and changing paused scenes preserves the attempt', async () => {
   const state = await harness({
