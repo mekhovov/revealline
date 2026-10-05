@@ -90,11 +90,12 @@ test('detached observation can reconcile an actual save, but cannot overwrite a 
 test('measured progress is accessible without repeating the live phase announcement', () => {
   const { presenter, target, label } = boundary();
   let announcements = 0;
-  let text = '';
+  const textProperty = Object.getOwnPropertyDescriptor(Object.getPrototypeOf(label), 'textContent');
   Object.defineProperty(label, 'textContent', {
-    get: () => text,
+    get: () => textProperty.get.call(label),
     set: (value) => {
-      text = value;
+      // Preserve native Text children: localization owns one caption node.
+      textProperty.set.call(label, value);
       announcements++;
     },
   });

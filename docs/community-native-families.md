@@ -47,6 +47,34 @@ publication is implied by these local paths.
 An exact content identity is not an author signature, moderation decision,
 official score, or play-qualification certificate.
 
+## Transactional installation and local ownership
+
+The Community association journal now uses the existing transactional profile
+store. Install completion and offload rollback update only their exact edition;
+concurrent changes to other editions remain intact. The old localStorage journal
+is validated and migrated once. Its original bytes stay untouched for recovery.
+Invalid legacy data fails closed rather than resetting the library.
+
+Classic Snake stores its native recipes, exact-byte Community receipts, local
+Studio owners and storage generation together in one v2 record. Installing a
+Community edition commits its recipe and receipt atomically. Offloading checks
+the reviewed generation and releases only that edition's owner; a recipe stays
+installed while another exact edition or Studio still owns it. Studio removal
+likewise cannot detach a Community-owned recipe. Progress keys and replay proofs
+are unchanged.
+
+The previous split Classic records are validated during a one-time migration;
+retained receipt bytes are SHA-256 checked before import. Both historical records
+remain untouched for recovery. Historical packages did not identify whether a
+Studio import also owned them, so migration conservatively retains a local owner.
+The library explains when offloading an edition will keep such a local copy.
+Keeping historical recovery records means migration and later offload do not
+promise to reclaim all previously occupied storage. Current pages use the new
+record; refresh older open game or Studio tabs before editing installed content.
+
+Concurrency, stale-review, migration, exact-byte recovery and Studio ownership
+regressions are authored but remain unrun under the explicit test waiver.
+
 ## Local validation performed
 
 Production compiler, constructor, export/import and package-admission checks

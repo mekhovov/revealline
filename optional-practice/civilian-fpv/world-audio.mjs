@@ -6,7 +6,7 @@ import {
 } from '../../game/ui/audio-output.mjs';
 import { createAudioMaster } from '../../game/ui/audio-master.mjs';
 import { createAudioPreferences } from '../../game/audio-preferences.mjs';
-import { encounterSoundRecipe } from '../../game/ui/encounter-audio.mjs';
+import { encounterSoundRecipe, actorPhaseSound } from '../../game/ui/encounter-audio.mjs';
 import { readMovementAudio, MOVEMENT_AUDIO_KEY } from '../../game/ui/movement-audio.mjs';
 import { dialogueChannel } from '../../game/ui/dialogue-channel.mjs';
 
@@ -90,6 +90,8 @@ export function createWorldAudio(options = {}) {
   const recentCues = new Map();
   let actorDefinitions = new Map();
   let actorPositions = new Map();
+  let actorPhases = new Map();
+  let actorFamilies = new Map();
   let lastFootstep = -Infinity;
 
   const volume = (value) =>
@@ -218,18 +220,26 @@ export function createWorldAudio(options = {}) {
     delay = 0,
     type = 'sine',
     movementCue = false,
+    priority = 2,
   }) {
     if (
       !graph ||
       !enabled ||
       masterState.volume === 0 ||
       !levels.interface ||
-      effects.size >= 12 ||
       !wanted ||
       context.state !== 'running'
     )
       return;
-    if (movementCue && (!movement.enabled || movement.volume === 0)) return;
+    if (
+      movementCue &&
+      (!movement.enabled ||
+        movement.volume === 0 ||
+        [...effects].some((effect) => effect.priority >= 4))
+    )
+      return;
+    if (priority >= 4) for (const effect of [...effects]) if (effect.movementCue) effect.stop();
+    if (effects.size >= 12) return;
     const oscillator = context.createOscillator();
     const envelope = context.createGain();
     const start = context.currentTime + delay;
@@ -245,6 +255,8 @@ export function createWorldAudio(options = {}) {
       .connect(movementCue ? graph.output.movementBus : graph.buses.interface);
     let stopped = false;
     const effect = {
+      priority,
+      movementCue,
       stop() {
         if (stopped) return;
         stopped = true;
@@ -272,19 +284,37 @@ export function createWorldAudio(options = {}) {
       fire: 'fire',
       impact: 'impact',
       defeat: 'catch',
+      'protected-contact': 'impact',
+      warning: 'warning',
+      notice: 'notice',
+      burst: 'burst',
+      recover: 'recover',
+      blocked: 'blocked',
+      equipment: 'equipment',
+      drive: 'drive',
     }[type];
     if (!kind) return;
-    const now = context?.currentTime ?? 0;
-    if (now - (recentCues.get(kind) ?? -Infinity) < 0.12) return;
-    recentCues.set(kind, now);
     const actor = actorDefinitions.get(event.actor);
-    const machine = actor?.type === 'vehicle';
+    const machine =
+      event.machine ??
+      (actor?.type === 'vehicle'
+        ? actor.vehicleModel === 'field-tank'
+          ? 'tracked'
+          : 'wheeled'
+        : false);
     const recipe = encounterSoundRecipe(kind, {
-      family: actor?.speed > 0 ? 'patroller' : 'lookout',
+      family:
+        event.family ??
+        actorFamilies.get(event.actor) ??
+        (actor?.speed > 0 ? 'patroller' : 'lookout'),
       machine,
     });
+    const now = context?.currentTime ?? 0;
+    if (now - (recentCues.get(kind) ?? -Infinity) < (recipe.cooldown ?? 0.12)) return;
+    recentCues.set(kind, now);
     if (recipe.priority >= 5 || (type === 'fire' && !player)) dialogueChannel.interrupt();
-    const voice = { ...recipe.tone };
+    const voice = { ...recipe.tone, priority: recipe.priority, movementCue: recipe.movement };
+    if (recipe.movement) voice.gain *= levels.interface;
     if (type === 'fire' && !player) voice.gain *= 0.65;
     if (type === 'objective' && gateStyle === 'digital') voice.type = 'triangle';
     tone(voice);
@@ -446,6 +476,10 @@ export function createWorldAudio(options = {}) {
       lastContacts = null;
       recentCues.clear();
       actorPositions.clear();
+      actorPhases.clear();
+      actorFamilies = new Map(
+        (course.pursuit?.actors ?? []).map((policy) => [policy.id, policy.family]),
+      );
       lastFootstep = -Infinity;
       actorDefinitions = new Map((course.actors ?? []).map((actor) => [actor.id, actor]));
       stopEffects();
@@ -480,7 +514,9 @@ export function createWorldAudio(options = {}) {
         ramp(graph.humGain.gain, ambience.humGain);
         if (fresh) {
           let nearestVehicle = Infinity,
-            nearestFoot = Infinity;
+            nearestFoot = Infinity,
+            footActor = null,
+            startingVehicle = null;
           for (const actor of snapshot.actors ?? []) {
             const previous = actorPositions.get(actor.id),
               position = actor.position;
@@ -493,23 +529,46 @@ export function createWorldAudio(options = {}) {
                 position.y - snapshot.position.y,
                 position.z - snapshot.position.z,
               );
-              if (actor.type === 'vehicle') nearestVehicle = Math.min(nearestVehicle, d);
-              else if (['patrol', 'sentry'].includes(actor.type))
-                nearestFoot = Math.min(nearestFoot, d);
+              if (actor.type === 'vehicle') {
+                nearestVehicle = Math.min(nearestVehicle, d);
+                if (
+                  !previous.moving &&
+                  d < 16000 &&
+                  (!startingVehicle || d < startingVehicle.distance)
+                )
+                  startingVehicle = { actor: actor.id, distance: d };
+              } else if (['patrol', 'sentry'].includes(actor.type) && d < nearestFoot) {
+                nearestFoot = d;
+                footActor = actor;
+              }
             }
           }
           ramp(
             graph.vehicleGain.gain,
             flying && nearestVehicle < 16000 ? 0.012 * (1 - nearestVehicle / 16000) : 0,
           );
-          if (flying && nearestFoot < 6000 && context.currentTime - lastFootstep >= 0.34) {
+          if (flying && startingVehicle) cue('drive', false, { actor: startingVehicle.actor });
+          const step = encounterSoundRecipe('step', {
+            family: footActor?.pursuit?.family ?? actorFamilies.get(footActor?.id),
+          });
+          if (flying && nearestFoot < 6000 && context.currentTime - lastFootstep >= step.cooldown) {
             lastFootstep = context.currentTime;
-            const step = encounterSoundRecipe('step');
             tone({
               ...step.tone,
               gain: step.tone.gain * (1 - nearestFoot / 6000) * levels.interface,
               movementCue: true,
+              priority: 0,
             });
+          }
+          for (const actor of snapshot.actors ?? []) {
+            if (!actor.pursuit || actor.status !== 'active') continue;
+            const phase = actor.blocked ? 'blocked' : actor.pursuit.phase;
+            const sound = actorPhaseSound(actorPhases.get(actor.id), phase);
+            if (sound) {
+              cue(sound, false, { actor: actor.id, family: actor.pursuit.family });
+              if (sound !== 'warning')
+                cue('equipment', false, { actor: actor.id, family: actor.pursuit.family });
+            }
           }
           const events = snapshot.events ?? [];
           const types = new Set();
@@ -530,7 +589,24 @@ export function createWorldAudio(options = {}) {
         ramp(graph.humGain.gain, 0);
       }
       actorPositions = new Map(
-        (snapshot.actors ?? []).map((actor) => [actor.id, { ...actor.position }]),
+        (snapshot.actors ?? []).map((actor) => {
+          const previous = actorPositions.get(actor.id);
+          return [
+            actor.id,
+            {
+              ...actor.position,
+              moving:
+                fresh && previous && actor.position
+                  ? Math.hypot(actor.position.x - previous.x, actor.position.z - previous.z) > 0
+                  : previous?.moving,
+            },
+          ];
+        }),
+      );
+      actorPhases = new Map(
+        (snapshot.actors ?? [])
+          .filter((actor) => actor.pursuit)
+          .map((actor) => [actor.id, actor.blocked ? 'blocked' : actor.pursuit.phase]),
       );
       lastTick = tick;
       lastStep = step;

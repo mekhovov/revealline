@@ -38,6 +38,7 @@ export const CREATOR_TEAM_VARIANT_ATTEMPT_FORMAT = 'revealline-installed-team-at
 export const CREATOR_TEAM_RELEASE_ATTEMPT_FORMAT = 'revealline-installed-team-attempt.v3';
 export const CREATOR_TEAM_RUNNING_ATTEMPT_FORMAT = 'revealline-installed-team-attempt.v4';
 export const CREATOR_TEAM_PURSUIT_ATTEMPT_FORMAT = 'revealline-installed-team-attempt.v5';
+export const CREATOR_TEAM_PURSUIT_V2_ATTEMPT_FORMAT = 'revealline-installed-team-attempt.v6';
 const DATABASE_VERSION = 1;
 const STORES = Object.freeze(['editions', 'progress', 'metadata']);
 const STATE_KEY = 'state';
@@ -152,6 +153,7 @@ export function validateInstalledTeamAttempt(source, editionId, levelId) {
     attempt,
     [
       'format',
+      ...(attempt.format === CREATOR_TEAM_PURSUIT_V2_ATTEMPT_FORMAT ? ['pursuitGeneration'] : []),
       'editionId',
       'levelId',
       'attemptId',
@@ -161,10 +163,16 @@ export function validateInstalledTeamAttempt(source, editionId, levelId) {
       'tuning',
       'segments',
       'checkpoint',
-      ...(attempt.format === CREATOR_TEAM_PURSUIT_ATTEMPT_FORMAT ? ['runningEnemyStyle'] : []),
-      ...([CREATOR_TEAM_RUNNING_ATTEMPT_FORMAT, CREATOR_TEAM_PURSUIT_ATTEMPT_FORMAT].includes(
+      ...([CREATOR_TEAM_PURSUIT_ATTEMPT_FORMAT, CREATOR_TEAM_PURSUIT_V2_ATTEMPT_FORMAT].includes(
         attempt.format,
       )
+        ? ['runningEnemyStyle']
+        : []),
+      ...([
+        CREATOR_TEAM_RUNNING_ATTEMPT_FORMAT,
+        CREATOR_TEAM_PURSUIT_ATTEMPT_FORMAT,
+        CREATOR_TEAM_PURSUIT_V2_ATTEMPT_FORMAT,
+      ].includes(attempt.format)
         ? ['runningEnemies']
         : []),
       ...([
@@ -172,22 +180,34 @@ export function validateInstalledTeamAttempt(source, editionId, levelId) {
         CREATOR_TEAM_RELEASE_ATTEMPT_FORMAT,
         CREATOR_TEAM_RUNNING_ATTEMPT_FORMAT,
         CREATOR_TEAM_PURSUIT_ATTEMPT_FORMAT,
+        CREATOR_TEAM_PURSUIT_V2_ATTEMPT_FORMAT,
       ].includes(attempt.format)
         ? ['encounterVariant', 'encounterLevelIdentity']
         : []),
     ],
     'installed Team attempt',
   );
-  if (attempt.format === CREATOR_TEAM_PURSUIT_ATTEMPT_FORMAT)
-    required(attempt.runningEnemyStyle === 'varied', 'Unsupported varied pursuit recipe.');
   if (
-    [CREATOR_TEAM_RUNNING_ATTEMPT_FORMAT, CREATOR_TEAM_PURSUIT_ATTEMPT_FORMAT].includes(
+    [CREATOR_TEAM_PURSUIT_ATTEMPT_FORMAT, CREATOR_TEAM_PURSUIT_V2_ATTEMPT_FORMAT].includes(
       attempt.format,
     )
+  )
+    required(attempt.runningEnemyStyle === 'varied', 'Unsupported varied pursuit recipe.');
+  if (
+    [
+      CREATOR_TEAM_RUNNING_ATTEMPT_FORMAT,
+      CREATOR_TEAM_PURSUIT_ATTEMPT_FORMAT,
+      CREATOR_TEAM_PURSUIT_V2_ATTEMPT_FORMAT,
+    ].includes(attempt.format)
   )
     required(
       attempt.runningEnemies === 'running-enemies.v1',
       'Unsupported Team running-enemy recipe.',
+    );
+  if (attempt.format === CREATOR_TEAM_PURSUIT_V2_ATTEMPT_FORMAT)
+    required(
+      attempt.pursuitGeneration === 'pursuit-goals.v2',
+      'Unsupported installed Team pursuit generation.',
     );
   const tuning = validateGameplayTuning(attempt.tuning);
   required(
@@ -197,6 +217,7 @@ export function validateInstalledTeamAttempt(source, editionId, levelId) {
       CREATOR_TEAM_RELEASE_ATTEMPT_FORMAT,
       CREATOR_TEAM_RUNNING_ATTEMPT_FORMAT,
       CREATOR_TEAM_PURSUIT_ATTEMPT_FORMAT,
+      CREATOR_TEAM_PURSUIT_V2_ATTEMPT_FORMAT,
     ].includes(attempt.format) &&
       attempt.editionId === editionId &&
       attempt.levelId === levelId &&
@@ -216,6 +237,7 @@ export function validateInstalledTeamAttempt(source, editionId, levelId) {
       CREATOR_TEAM_RELEASE_ATTEMPT_FORMAT,
       CREATOR_TEAM_RUNNING_ATTEMPT_FORMAT,
       CREATOR_TEAM_PURSUIT_ATTEMPT_FORMAT,
+      CREATOR_TEAM_PURSUIT_V2_ATTEMPT_FORMAT,
     ].includes(attempt.format)
   )
     required(
@@ -224,6 +246,7 @@ export function validateInstalledTeamAttempt(source, editionId, levelId) {
           CREATOR_TEAM_RELEASE_ATTEMPT_FORMAT,
           CREATOR_TEAM_RUNNING_ATTEMPT_FORMAT,
           CREATOR_TEAM_PURSUIT_ATTEMPT_FORMAT,
+          CREATOR_TEAM_PURSUIT_V2_ATTEMPT_FORMAT,
         ].includes(attempt.format) ||
           attempt.encounterVariant !== 'authored') &&
         typeof attempt.encounterLevelIdentity === 'string' &&
@@ -237,6 +260,7 @@ export function validateInstalledTeamAttempt(source, editionId, levelId) {
         CREATOR_TEAM_RELEASE_ATTEMPT_FORMAT,
         CREATOR_TEAM_RUNNING_ATTEMPT_FORMAT,
         CREATOR_TEAM_PURSUIT_ATTEMPT_FORMAT,
+        CREATOR_TEAM_PURSUIT_V2_ATTEMPT_FORMAT,
       ].includes(attempt.format) &&
       segment.release === true
     ) {
@@ -277,6 +301,7 @@ function replayAttempt(pack, source, editionId, levelId, { terminal = false } = 
       attempt.encounterVariant ?? 'authored',
       Boolean(attempt.runningEnemies),
       attempt.runningEnemyStyle ?? 'original',
+      attempt.pursuitGeneration ?? 'pursuit-goals.v1',
     ),
     run = configured.run;
   required(
@@ -299,6 +324,7 @@ function replayAttempt(pack, source, editionId, levelId, { terminal = false } = 
       CREATOR_TEAM_RELEASE_ATTEMPT_FORMAT,
       CREATOR_TEAM_RUNNING_ATTEMPT_FORMAT,
       CREATOR_TEAM_PURSUIT_ATTEMPT_FORMAT,
+      CREATOR_TEAM_PURSUIT_V2_ATTEMPT_FORMAT,
     ].includes(attempt.format)
   )
     required(
@@ -338,6 +364,7 @@ function installedTeamConfiguration(
   encounterVariant = 'authored',
   runningEnemies = false,
   runningEnemyStyle = 'original',
+  pursuitGeneration = 'pursuit-goals.v1',
 ) {
   const base = createCreatorTeamAttempt(pack, levelId, difficulty, presetId),
     checkedTuning = validateGameplayTuning(tuning),
@@ -346,7 +373,10 @@ function installedTeamConfiguration(
   required(encounterLevel, 'Saved Team encounter variant is unavailable for this mission.');
   const baseTuned = applyGameplayTuning(encounterLevel, checkedTuning);
   const level = runningEnemies
-    ? prepareTeamRunningEnemies(baseTuned, { style: runningEnemyStyle })
+    ? prepareTeamRunningEnemies(baseTuned, {
+        style: runningEnemyStyle,
+        generation: pursuitGeneration,
+      })
     : baseTuned;
   required(
     checkedTuning.difficulty === difficulty && checkedTuning.adminOverride === false,
@@ -391,7 +421,9 @@ export function createInstalledTeamAttemptSnapshot({
   const source = {
     format: runningEnemies
       ? run.level.pursuit
-        ? CREATOR_TEAM_PURSUIT_ATTEMPT_FORMAT
+        ? run.level.pursuit.version === 'pursuit-goals.v2'
+          ? CREATOR_TEAM_PURSUIT_V2_ATTEMPT_FORMAT
+          : CREATOR_TEAM_PURSUIT_ATTEMPT_FORMAT
         : CREATOR_TEAM_RUNNING_ATTEMPT_FORMAT
       : releases
         ? CREATOR_TEAM_RELEASE_ATTEMPT_FORMAT
@@ -399,7 +431,14 @@ export function createInstalledTeamAttemptSnapshot({
           ? CREATOR_TEAM_VARIANT_ATTEMPT_FORMAT
           : CREATOR_TEAM_ATTEMPT_FORMAT,
     ...(runningEnemies ? { runningEnemies: 'running-enemies.v1' } : {}),
-    ...(runningEnemies && run.level.pursuit ? { runningEnemyStyle: 'varied' } : {}),
+    ...(runningEnemies && run.level.pursuit
+      ? {
+          runningEnemyStyle: 'varied',
+          ...(run.level.pursuit.version === 'pursuit-goals.v2'
+            ? { pursuitGeneration: run.level.pursuit.version }
+            : {}),
+        }
+      : {}),
     ...(variant || releases || runningEnemies ? { encounterVariant, encounterLevelIdentity } : {}),
     editionId,
     levelId: run?.level?.id,
