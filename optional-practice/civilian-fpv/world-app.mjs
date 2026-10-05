@@ -34,7 +34,7 @@ import {
   WORLD_FLIGHT_MODEL,
 } from './world-model.mjs';
 import { WORLD_COLLISION_BACKEND } from './world-collision.mjs';
-import { mountBeginnerCoach } from './beginner-coach.mjs';
+import { mountBeginnerCoach, learningObjectiveFeedback } from './beginner-coach.mjs';
 import {
   createFlightInput,
   createFlightMenuNavigation,
@@ -100,6 +100,8 @@ import {
   mountSimAudioControls,
   paintStickDirections,
   mountStickTrace,
+  mountFlightHud,
+  flightGoalFeedback,
 } from './sim-presentation.mjs';
 import { createWorldAudio } from './world-reaction-runtime.mjs';
 import { mountWorldHuntReactions } from './world-reaction-runtime.mjs';
@@ -1370,6 +1372,7 @@ export function mountWorldApp({
     immersive.refresh();
     updateSoundLabel();
     audioControls.refresh();
+    hudPreferences.refresh?.();
     huntPresentationControls.refresh();
     huntReactions.refresh();
     refreshEnemyGuide();
@@ -1582,13 +1585,30 @@ export function mountWorldApp({
   });
   returnToLesson.hidden = true;
   $('world-replay-controls').append(returnToLesson);
-  const targetCue = el('div', undefined, 'flight-target-cue');
-  targetCue.hidden = true;
-  targetCue.setAttribute('aria-hidden', 'true');
-  $('world-viewport').append(targetCue);
+  $('world-viewport').dataset.simHudHost = 'worlds';
+  const flightHud = mountFlightHud({
+    container: $('world-viewport'),
+    storage,
+    locale: () => locale,
+    onExplain() {
+      pauseFlight();
+      flightHud.openDetails();
+      if (flight) updateHUD(flight.snapshot());
+    },
+    onLesson() {
+      if (current?.beginner) beginnerCoach.showGuide();
+    },
+    onPreferencesChange() {
+      if (flight) updateHUD(flight.snapshot());
+    },
+  });
+  const hudPreferences = flightHud.preferenceControls($('sim-flight-controls'));
+  const huntCaption = doc.querySelector('#world-viewport .reaction-live-caption');
+  if (huntCaption) $('world-viewport').append(huntCaption);
   let practiceOwnsFullscreen = false;
   const beginnerCoach = mountBeginnerCoach({
     root: $('beginner-coach'),
+    liveDisplay: false,
     window: win,
     locale: () => locale,
     onStart: () => {
@@ -1878,6 +1898,9 @@ export function mountWorldApp({
     );
   }
   function paintCoach(state, radioPreview = radio.preview()) {
+    const guide = beginnerCoach.blocksArm();
+    $('world-viewport').dataset.simHudGuide = String(guide);
+    if (guide) $('flight-dialog').dataset.simHudActive = 'false';
     const source = replayProof ? 'recording' : $('flight-source').value;
     const unavailable = source === 'radio' && !radioPreview?.controls;
     const controls =
@@ -4101,6 +4124,56 @@ export function mountWorldApp({
     updateSectorHUD();
     updateGhostHUD();
     const target = current.course.steps[$('flight-mode').value][state.step];
+    const guidance = flightGoalFeedback({
+      course: current.course,
+      mode: $('flight-mode').value,
+      state,
+      legacy: Boolean(current.legacy),
+      legacyFacts: current.legacy ? flight.objectiveFeedback?.() : null,
+      locale,
+      freeFlight: Boolean(current.freeFlight),
+    });
+    const numeric = flightHud.detailsRoot()?.open
+      ? learningObjectiveFeedback(target, current.legacy ? null : state, {
+          locale,
+          mode: $('flight-mode').value,
+        })
+      : null;
+    const activeHud = state.status === 'active' && !beginnerCoach.blocksArm() && !playbackEnded;
+    $('flight-dialog').dataset.simHudActive = String(activeHud);
+    $('world-viewport').dataset.simHudActive = String(activeHud);
+    $('world-viewport').dataset.simHudGuide = String(beginnerCoach.blocksArm());
+    flightHud.update(guidance, {
+      active: activeHud,
+      paused: state.status !== 'active',
+      replay: Boolean(replayProof),
+      lesson: Boolean(current.beginner),
+      telemetry:
+        current.beginner || current.freeFlight
+          ? state.health < 100
+            ? `♥ ${state.health}`
+            : ''
+          : [
+              Number.isFinite(state.health) ? `♥ ${state.health}` : '',
+              `${((state.ticks - (checkpointSession?.startTick ?? 0)) / 50).toFixed(1)} s`,
+            ]
+              .filter(Boolean)
+              .join(' · '),
+      notice: activeHud ? '' : $('flight-status').textContent,
+      details: !numeric
+        ? undefined
+        : [
+            numeric.objective,
+            ...numeric.checks.map(
+              (check) =>
+                `${check.label}: ${current.legacy ? '' : `${check.value} · `}${check.required}`,
+            ),
+            numeric.detail,
+            numeric.hint,
+          ]
+            .filter(Boolean)
+            .join('\n'),
+    });
     paintText(
       'flight-instruments',
       `${(state.position.y / 1000).toFixed(1)} m · ${(Math.hypot(state.velocity.x, state.velocity.y, state.velocity.z) / 1000) | 0} m/s · ${((state.ticks - (checkpointSession?.startTick ?? 0)) / 50).toFixed(1)} s${state.health !== undefined ? ` · ♥ ${state.health}` : ''}`,
@@ -4757,43 +4830,34 @@ export function mountWorldApp({
     if (sceneReady) drawFlight(state);
     const cue =
       sceneReady && $('flight-camera').value === 'fpv' ? renderer?.objectiveScreen?.(state) : null;
-    targetCue.hidden =
-      !cue || cue.inside || Boolean(current?.freeFlight) || beginnerCoach.blocksArm();
-    if (!targetCue.hidden) {
-      const x = Math.max(0.3, Math.min(0.7, cue.x)),
-        y = Math.max(current?.beginner ? 0.4 : 0.18, Math.min(0.72, cue.y)),
-        dx = cue.x - x,
-        dy = cue.y - y,
-        displaced = Math.abs(dx) + Math.abs(dy) > 0.001;
-      targetCue.style.left = `${x * 100}%`;
-      targetCue.style.top = `${y * 100}%`;
-      targetCue.dataset.offscreen = String(cue.offscreen || displaced);
-      // A label moved away from the coach or screen edge is a pointer, never
-      // an on-target marker at a different position from the real objective.
-      const arrow = cue.offscreen
-        ? cue.arrow
-        : Math.abs(dx) > Math.abs(dy)
-          ? dx > 0
-            ? '→'
-            : '←'
-          : dy > 0
-            ? '↓'
-            : '↑';
-      const direction = cue.offscreen || displaced ? `${arrow} ` : '◇ ';
-      const name =
-        cue.type === 'gate'
-          ? txt('Next gate', 'Наступні ворота')
-          : txt('Practice zone', 'Зона вправи');
-      const detail =
-        cue.vertical > 0.15
-          ? `↑ ${cue.vertical.toFixed(1)} m`
-          : cue.vertical < -0.15
-            ? `↓ ${(-cue.vertical).toFixed(1)} m`
-            : `${cue.distance.toFixed(1)} m`;
-      const caption = `${direction}${name} · ${detail}`;
-      if (targetCue.textContent !== caption) targetCue.textContent = caption;
-    }
+    flightHud.setWorldCue(
+      !cue || current?.freeFlight || beginnerCoach.blocksArm()
+        ? null
+        : {
+            ...cue,
+            label: cue.approach
+              ? txt('Return to approach', 'Поверніться на захід')
+              : cue.heightOnly
+                ? cue.vertical > 0
+                  ? txt('Climb gently', 'Плавно вгору')
+                  : txt('Descend gently', 'Плавно вниз')
+                : cue.occluded
+                  ? txt('Find a clear view', 'Знайдіть пряму видимість')
+                  : cue.type === 'gate' || cue.type === 'crossing-v1'
+                    ? txt('Through here', 'Пролетіть тут')
+                    : cue.type === 'land'
+                      ? txt('Landing pad', 'Майданчик')
+                      : cue.type === 'hunt-contact-v1'
+                        ? txt('Touch', 'Торкніться')
+                        : cue.type === 'eliminate'
+                          ? txt('Fire', 'Вогонь')
+                          : cue.type === 'actor-track-v1'
+                            ? txt('Follow / observe', 'Стежте')
+                            : txt('Target zone', 'Цільова зона'),
+          },
+    );
     const aim = renderer?.aimScreen?.();
+    flightHud.setAim(aim);
     if (aim) {
       $('aim-reticle').style.left = `${aim.x * 100}%`;
       $('aim-reticle').style.top = `${aim.y * 100}%`;
@@ -5269,6 +5333,7 @@ export function mountWorldApp({
       )}`;
   }
   async function closeFlight() {
+    flightHud.closeDetails();
     enemyGuide.close();
     const token = ++flightToken;
     checkpointPreparation?.abort();
@@ -5286,7 +5351,8 @@ export function mountWorldApp({
     learningDemoReturn = null;
     returnToLesson.hidden = true;
     $('flight-dialog').classList.remove('learning-replay');
-    targetCue.hidden = true;
+    flightHud.setWorldCue(null);
+    $('flight-dialog').dataset.simHudActive = 'false';
     const closedLesson = current?.beginner;
     current = null;
     refreshEnemyGuide();
@@ -5876,7 +5942,12 @@ export function mountWorldApp({
     if (enemyGuide.dialog.open) return { root: enemyGuide.dialog, key: enemyGuide.dialog.id };
     if (packRemovalReview?.dialog.open)
       return { root: packRemovalReview.dialog, key: 'pack-removal-review' };
-    const secondary = ['world-radio-dialog', 'drone-hangar', 'sim-settings']
+    const secondary = [
+      'world-radio-dialog',
+      'drone-hangar',
+      'sim-settings',
+      'sim-flight-hud-details',
+    ]
       .map($)
       .find((node) => node.open);
     if (secondary)
@@ -5921,7 +5992,8 @@ export function mountWorldApp({
       if (menuHint.textContent !== value) menuHint.textContent = value;
     },
     onBack() {
-      if (enemyGuide.dialog.open) enemyGuide.close();
+      if ($('sim-flight-hud-details')?.open) flightHud.closeDetails();
+      else if (enemyGuide.dialog.open) enemyGuide.close();
       else if (packRemovalReview?.dialog.open) $('pack-removal-cancel').click();
       else if ($('world-radio-dialog').open) closeRadio();
       else if ($('drone-hangar').open)
@@ -6619,6 +6691,7 @@ export function mountWorldApp({
           droneResponse.dispose();
           stickTraces.forEach((trace) => trace.dispose());
           beginnerCoach.dispose();
+          flightHud.destroy();
           spatialEditor?.dispose();
           // Keep reparented controls available until their input, hints,
           // audio and editor owners have all retired.
