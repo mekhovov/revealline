@@ -67,3 +67,12 @@ with Node 22 to reproduce the bounded data qualification. This command refuses
 to replace a receipt and does not build packages or generate flight proofs.
 Any future cumulative feed must retain both eligible published rows; Harbor may
 enter only its separately qualified ground-motion-capable cohort.
+
+[Native Library review](evidence/festival-r5-library-native.json) additionally
+verifies the pending two-row catalogue in the admitted `614adef` player: native
+download and save, all eight Festival missions, scene preparation, explicit arm,
+pause and retained installation after reload. The fixture replaces only the
+pending catalogue response; immutable HTTPS pack download, hash validation and
+atomic installation remain unchanged. No console warnings/errors were observed.
+This is local integration evidence, not public catalogue publication, another
+full-flight qualification, or a hardware/offline performance claim.
