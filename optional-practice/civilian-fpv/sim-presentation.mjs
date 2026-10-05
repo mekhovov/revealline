@@ -2575,7 +2575,9 @@ import * as academyAudioExternal0 from '../../game/i18n/index.mjs';
 export const createSimFlightAudio = (() => {
   const sourceHashes = Object.freeze({
     'optional-practice/civilian-fpv/world-audio.mjs':
-      'c8ec1535a969018e3b5eaa4e2ae575e4dc464ab5983af65471183e7dd76f3723',
+      '753913b5070fec47a140236f5f820107254969b122dcf420bf139421546c3fbb',
+    'game/audio/dialogue-mix.mjs':
+      '43ffa5b261e585e59b515fab19d1b6d0ccf636152ca6107602dbdb9143ddb00a',
     'game/ui/audio-output.mjs': 'dc1b2776407d0b6649b0d15c5c721bd59384d7e38a2e61087961ff7a37bd86c1',
     'game/ui/audio-master.mjs': '6bf14bc5268c0eff8f38c21c819f398917712fdc2607c33977ac873111d1dca8',
     'game/audio-preferences.mjs':
@@ -2588,6 +2590,19 @@ export const createSimFlightAudio = (() => {
       'f4839f3a1634189a03eed6a3096dc595dfc88ee6437277ee82d78de05c300142',
   });
   const modules = Object.create(null);
+  modules['game/audio/dialogue-mix.mjs'] = (() => {
+    /** Decorative spoken reactions sit behind music and gameplay warnings.
+     * The mix trim also applies to saved slider choices without rewriting preferences. */
+    const DEFAULT_DIALOGUE_VOLUME = 0.25;
+    const DIALOGUE_MIX_GAIN = 0.4;
+    const DIALOGUE_MUSIC_GAIN = 0.9;
+
+    return {
+      DEFAULT_DIALOGUE_VOLUME: DEFAULT_DIALOGUE_VOLUME,
+      DIALOGUE_MIX_GAIN: DIALOGUE_MIX_GAIN,
+      DIALOGUE_MUSIC_GAIN: DIALOGUE_MUSIC_GAIN,
+    };
+  })();
   modules['game/ui/audio-output.mjs'] = (() => {
     /** Shared output topology for Capture, Snake and native flight presentation.
      * A page owns one context. Construction is called only from its gesture owner. */
@@ -3186,6 +3201,9 @@ export const createSimFlightAudio = (() => {
     return { dialogueChannel: dialogueChannel };
   })();
   modules['optional-practice/civilian-fpv/world-audio.mjs'] = (() => {
+    const DEFAULT_DIALOGUE_VOLUME =
+      modules['game/audio/dialogue-mix.mjs']['DEFAULT_DIALOGUE_VOLUME'];
+    const DIALOGUE_MIX_GAIN = modules['game/audio/dialogue-mix.mjs']['DIALOGUE_MIX_GAIN'];
     const createGameAudioContext = modules['game/ui/audio-output.mjs']['createGameAudioContext'];
     const createGameAudioOutput = modules['game/ui/audio-output.mjs']['createGameAudioOutput'];
     const requestPlaybackAudioSession =
@@ -3237,7 +3255,7 @@ export const createSimFlightAudio = (() => {
       let ambience = AMBIENCES.hangar;
       let motorStyle = 'quad';
       let gateStyle = 'chime';
-      let dialogue = { enabled: false, volume: 0.8 };
+      let dialogue = { enabled: false, volume: DEFAULT_DIALOGUE_VOLUME };
       let dialogueVoice = null;
       const effects = new Set();
       const audioMaster = options.audioMaster ?? createAudioMaster();
@@ -3328,7 +3346,7 @@ export const createSimFlightAudio = (() => {
             }),
           );
           const dialogueBus = output.dialogueBus;
-          dialogueBus.gain.value = dialogue.enabled ? dialogue.volume : 0;
+          dialogueBus.gain.value = dialogue.enabled ? dialogue.volume * DIALOGUE_MIX_GAIN : 0;
           const motor = candidate.createGain();
           motor.gain.value = 0;
           const motorFilter = candidate.createBiquadFilter();
@@ -3554,7 +3572,7 @@ export const createSimFlightAudio = (() => {
           dialogue = { enabled, volume: value };
           if (!enabled || !value) dialogueVoice?.stop();
           if (graph && context.state !== 'closed')
-            ramp(graph.dialogueBus.gain, enabled ? value : 0);
+            ramp(graph.dialogueBus.gain, enabled ? value * DIALOGUE_MIX_GAIN : 0);
         },
         /** Uses the existing flight context and the shared one-line dialogue arbiter. */
         playDialogue(buffer, { onended = () => {} } = {}) {
