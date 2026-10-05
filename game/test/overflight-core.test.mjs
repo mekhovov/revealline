@@ -22,8 +22,14 @@ import {
   draftOverflightUpgrades,
   applyOverflightUpgrade,
   overflightBuildItems,
+  overflightModuleParameters,
 } from '../overflight/upgrades.mjs';
-import { DEFAULT_OVERFLIGHT_PROJECT, compileOverflightProject } from '../overflight/project.mjs';
+import {
+  DEFAULT_OVERFLIGHT_PROJECT,
+  compileOverflightProject,
+  createOverflightProject,
+} from '../overflight/project.mjs';
+import { pilot } from '../overflight/review-pilot.mjs';
 
 const compiled = compileOverflightProject(DEFAULT_OVERFLIGHT_PROJECT);
 const quiet = (options = {}) => {
@@ -432,6 +438,11 @@ test('relay and radar within attack range never create aimed threats', () => {
 test('three-airframe replacement preserves build, world, XP and cooldown with safe protection', () => {
   const run = playing(quiet(), { airframes: 3 });
   apply(run.build, 'primary:double:2');
+  apply(run.build, 'proximity-pulse:1');
+  run._cooldowns['proximity-pulse'] = 100;
+  steps(run, 10, { x: 1 });
+  const chargeBeforeReplacement = run.player.pulseCharge;
+  assert.ok(chargeBeforeReplacement > 0 && chargeBeforeReplacement < 1);
   const enemy = spawn(run, { x: run.player.x, y: run.player.y, hp: 1000 });
   dropOverflightSalvage(run, 20, 20, 15);
   run.player.hull = 20;
@@ -442,6 +453,7 @@ test('three-airframe replacement preserves build, world, XP and cooldown with sa
   assert.equal(run.player.invulnerable, 1.5);
   assert.equal(run.player.boostCooldown, 2 - OVERFLIGHT_STEP);
   assert.equal(run.build.primary.branch, 'double');
+  assert.equal(run.player.pulseCharge, chargeBeforeReplacement);
   assert.equal(run.stats.xpOnGround, 15);
   assert.equal(enemy.active, true);
   assert.ok(Math.hypot(run.player.x - enemy.x, run.player.y - enemy.y) >= 80);
@@ -616,7 +628,7 @@ test('stationary slow fields persist at departure and reduce ordinary travel', (
   const field = run.fields.find((record) => record.active);
   const origin = [field.x, field.y];
   const startX = target.x;
-  assert.equal(field.radius, 118);
+  assert.equal(field.radius, overflightModuleParameters('slow-field', 3).radius);
   assert.ok(target.slowUntil > run.tick);
   steps(run, 12, { x: -1 });
   assert.deepEqual([field.x, field.y], origin);
@@ -632,8 +644,170 @@ test('return pulse is a delayed second opportunity at the first pulse location',
   const target = spawn(run, { x: run.player.x + 90, y: run.player.y, hp: 1000, warning: 0.5 });
   steps(run, 24);
   assert.equal(target.hp, 1000); // Arrival immune to the first delayed pulse.
-  steps(run, 25);
-  assert.equal(target.hp, 962);
+  steps(run, 31);
+  assert.equal(target.hp, 1000 - overflightModuleParameters('proximity-pulse', 3).returnDamage);
+});
+
+test('pulse charge comes from admitted flight, is consumed, and cannot refill against arena bounds or on upgrade', () => {
+  const run = playing();
+  run._cooldowns.primary = 100;
+  apply(run.build, 'proximity-pulse:1');
+  run._cooldowns['proximity-pulse'] = 100;
+  const pulse = overflightModuleParameters('proximity-pulse', 1);
+  const initialX = run.player.x;
+  steps(run, 15, { x: 1 });
+  assert.ok(
+    Math.abs(run.player.pulseCharge - (run.player.x - initialX) / pulse.chargeDistance) < 1e-10,
+  );
+  const partialCharge = run.player.pulseCharge;
+  run._cooldowns['proximity-pulse'] = 0;
+  stepOverflight(run);
+  assert.equal(run.player.pulseCharge, 0);
+  assert.equal(
+    run._pulses.find((record) => record.active).damage,
+    pulse.damage + (pulse.chargedDamage - pulse.damage) * partialCharge,
+  );
+  assert.equal(
+    run._cooldowns['proximity-pulse'],
+    pulse.cooldown + (pulse.chargedCooldown - pulse.cooldown) * partialCharge,
+  );
+  run._cooldowns['proximity-pulse'] = 100;
+  steps(run, 40, { x: 1 });
+  assert.equal(run.player.pulseCharge, 1);
+  run._cooldowns['proximity-pulse'] = 0;
+  stepOverflight(run);
+  assert.equal(run.player.pulseCharge, 0);
+  const pending = run._pulses.find((record) => record.active);
+  assert.equal(pending.damage, pulse.chargedDamage);
+  assert.equal(pending.radius, pulse.chargedRadius);
+  assert.equal(run._cooldowns['proximity-pulse'], pulse.chargedCooldown);
+  run._cooldowns['proximity-pulse'] = 100;
+  run.player.x = run.compiled.arena.width - run.player.radius;
+  run.player.vx = 0;
+  steps(run, 60, { x: 1 });
+  assert.equal(run.player.pulseCharge, 0);
+  run.offers = [offer(run.build, 'proximity-pulse:2')];
+  run.phase = 'upgrade';
+  assert.equal(chooseOverflightUpgrade(run, 'proximity-pulse:2'), true);
+  assert.equal(run.player.pulseCharge, 0);
+  steps(run, 30, { x: -1 });
+  assert.ok(run.player.pulseCharge > 0.8);
+  pauseOverflight(run);
+  const pausedCharge = run.player.pulseCharge;
+  steps(run, 120, { x: -1 });
+  assert.equal(run.player.pulseCharge, pausedCharge);
+  assert.equal(createOverflightRun(compiled).player.pulseCharge, 0);
+});
+
+test('first pulse remains chip damage even at full flight charge, and every nearby enemy is affected', () => {
+  for (const moving of [false, true]) {
+    const run = playing();
+    run._cooldowns.primary = 100;
+    apply(run.build, 'proximity-pulse:1');
+    run._cooldowns['proximity-pulse'] = 100;
+    if (moving) steps(run, 60, { x: 1 });
+    const origin = { x: run.player.x, y: run.player.y };
+    const enemies = Array.from({ length: 30 }, (_, index) => {
+      const angle = (index / 30) * Math.PI * 2;
+      return spawn(run, {
+        x: origin.x + Math.cos(angle) * 40,
+        y: origin.y + Math.sin(angle) * 40,
+        hp: 30,
+      });
+    });
+    run._cooldowns['proximity-pulse'] = 0;
+    steps(run, 20);
+    const expected = moving ? 4 : 16;
+    for (const enemy of enemies) assert.equal(enemy.hp, expected);
+    assert.equal(run.stats.kills, 0);
+    assert.equal(run.player.pulseCharge, 0);
+  }
+});
+
+test('overlapping slow fields share one damage cadence and never multiply the slow', () => {
+  const run = playing();
+  run._cooldowns.primary = 100;
+  apply(run.build, 'slow-field:1');
+  const target = spawn(run, { x: run.player.x + 40, y: run.player.y, hp: 100, speed: 0 });
+  stepOverflight(run);
+  const first = run.fields.find((field) => field.active);
+  Object.assign(
+    run.fields.find((field) => !field.active),
+    first,
+    { clock: 0.1 },
+  );
+  const settings = overflightModuleParameters('slow-field', 1);
+  steps(run, 59);
+  assert.equal(100 - target.hp, settings.damage * 2);
+  assert.equal(target.slowMultiplier, settings.slowMultiplier);
+  assert.ok(target.slowUntil > run.tick);
+});
+
+// Public movement, earned XP and legal drafts reproduce the reported exploit;
+// no fixture, HP edits, free cards, spawn changes or paused-level suppression.
+function earnedPulseRoute(seed, parkAtRank) {
+  const run = playing(compileOverflightProject(createOverflightProject({ seed })));
+  let input = {},
+    parked = null,
+    firstHit = null;
+  const score = (card) =>
+    card.system === 'proximity-pulse'
+      ? -100
+      : card.system === 'primary' && card.branch === 'double'
+        ? 0
+        : card.system === 'slow-field'
+          ? 10
+          : card.system === 'shield'
+            ? 20
+            : card.system === 'repair'
+              ? 30
+              : 40;
+  while (run.phase !== 'lost' && run.phase !== 'won' && run.time < 120) {
+    while (run.phase === 'upgrade') {
+      let cards = [...run.offers].sort((a, b) => score(a) - score(b));
+      if (
+        !run.build.combat.some(
+          (module) => module.id === 'proximity-pulse' && module.rank >= parkAtRank,
+        ) &&
+        cards[0].system !== 'proximity-pulse' &&
+        run.progression.rerolls
+      ) {
+        rerollOverflightUpgrades(run);
+        cards = [...run.offers].sort((a, b) => score(a) - score(b));
+      }
+      assert.equal(chooseOverflightUpgrade(run, cards[0].id), true);
+      if (
+        parked === null &&
+        run.build.combat.some(
+          (module) => module.id === 'proximity-pulse' && module.rank >= parkAtRank,
+        )
+      )
+        parked = run.time;
+    }
+    if (run.tick % 6 === 0) input = parked === null ? pilot(run) : {};
+    stepOverflight(run, input);
+    if (parked !== null && firstHit === null && run.stats.damageTaken) firstHit = run.time;
+  }
+  return { run, parked, firstHit };
+}
+
+test('earning two or three pulse ranks cannot sustain stationary survival through the opening encounters', () => {
+  for (const rank of [2, 3]) {
+    const { run, parked, firstHit } = earnedPulseRoute(17031991, rank);
+    assert.ok(parked > 20 && parked < 80, 'the pulse build must be earned in ordinary early play');
+    assert.ok(
+      firstHit - parked < 20,
+      'stationary pulse must leave a reachable opening before the elite',
+    );
+    assert.equal(run.phase, 'lost', 'a stationary drone must not survive the complete opening');
+    assert.ok(run.time < 120, 'pressure must come from ordinary enemies, not the first elite');
+  }
+  const active = earnedPulseRoute(17031991, 99).run;
+  assert.equal(active.time, 120);
+  assert.equal(active.phase, 'playing');
+  assert.equal(active.airframesRemaining, 1);
+  assert.ok(active.progression.choices >= 5, 'flying must still earn a developed build');
+  assert.ok(active.stats.kills > 400, 'the control build must retain useful moving damage');
 });
 
 test('scanner prioritizes machinery, increases marked damage and caps chain to three targets', () => {

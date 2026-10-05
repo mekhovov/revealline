@@ -137,7 +137,9 @@
         "game/test/fpv-theme-family-controls.test.mjs",
         "game/test/download-initialization.test.mjs",
         "game/test/offline.test.mjs",
-        "game/test/overflight-host.test.mjs"
+        "game/test/overflight-host.test.mjs",
+        "game/test/overflight-upgrade-preview.test.mjs",
+        "game/test/overflight-upgrade-card.test.mjs"
       ]
     }
   ]

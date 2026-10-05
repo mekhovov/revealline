@@ -8,6 +8,7 @@ import {
   applyOverflightUpgrade,
   createOverflightBuild,
   draftOverflightUpgrades,
+  overflightModuleParameters,
   overflightModuleRank,
   overflightPayload,
 } from './upgrades.mjs';
@@ -116,6 +117,7 @@ export function createOverflightRun(
       boostCooldown: 0,
       invulnerable: 0,
       shield: 0,
+      pulseCharge: 0,
       shieldCooldown: 0,
     },
     camera: {
@@ -145,6 +147,8 @@ export function createOverflightRun(
       vx: 0,
       vy: 0,
       slowUntil: 0,
+      slowMultiplier: 1,
+      fieldDamageUntil: 0,
       attackWarning: 0,
       attackX: 0,
       attackY: 0,
@@ -192,6 +196,9 @@ export function createOverflightRun(
       remaining: 0,
       clock: 0,
       damage: 0,
+      tickInterval: 0.5,
+      slowDuration: 0.55,
+      slowMultiplier: 0.55,
     })),
     priorityAttacks: makePool(compiled.population.priorityAttacks, () => ({
       active: false,
@@ -430,6 +437,8 @@ export function spawnOverflightEnemy(run, options = {}) {
     pushX: 0,
     pushY: 0,
     slowUntil: 0,
+    slowMultiplier: 1,
+    fieldDamageUntil: 0,
     markUntil: 0,
     attackWarning: 0,
     attackX: x,
@@ -546,7 +555,14 @@ function defeatEnemy(run, enemy) {
 }
 
 /** Exact area damage: grid pruning only, no per-cell or per-attack target cap. */
-export function damageOverflightArea(run, x, y, radius, damage, { push = 0, slow = 0 } = {}) {
+export function damageOverflightArea(
+  run,
+  x,
+  y,
+  radius,
+  damage,
+  { push = 0, slow = 0, slowMultiplier = 0.55, fieldDamageInterval = 0 } = {},
+) {
   if (![x, y, radius, damage].every(Number.isFinite) || radius < 0 || damage < 0)
     throw new RangeError('Invalid area attack.');
   let hit = 0;
@@ -556,13 +572,21 @@ export function damageOverflightArea(run, x, y, radius, damage, { push = 0, slow
       dy = enemy.y - y;
     if (dx * dx + dy * dy > (radius + enemy.radius) ** 2) return;
     hit++;
-    if (slow) enemy.slowUntil = Math.max(enemy.slowUntil, run.tick + Math.ceil(slow * 60));
+    if (slow) {
+      enemy.slowUntil = Math.max(enemy.slowUntil, run.tick + Math.ceil(slow * 60));
+      enemy.slowMultiplier = slowMultiplier;
+    }
     // Store impulse for next movement update so later attacks query the same grid.
     if (push) {
       const length = Math.hypot(dx, dy) || 1;
       enemy.pushX = (enemy.pushX ?? 0) + (dx / length) * push;
       enemy.pushY = (enemy.pushY ?? 0) + (dy / length) * push;
     }
+    // Overlapping fields refresh one slow and one damage cadence per enemy.
+    // They never multiply damage when an upgrade changes a field's lifetime.
+    if (fieldDamageInterval && enemy.fieldDamageUntil > run.tick) return;
+    if (fieldDamageInterval)
+      enemy.fieldDamageUntil = run.tick + Math.ceil(fieldDamageInterval * 60);
     damageEnemy(run, enemy, damage);
   });
   run.stats.collisionCandidates += candidates;
@@ -578,7 +602,12 @@ function damageEnemy(run, enemy, damage) {
     (run.fixture && enemy._fixtureRecycle)
   )
     return false;
-  const actual = Math.min(enemy.hp, damage * (enemy.markUntil > run.tick ? 1.3 : 1));
+  const markMultiplier =
+    enemy.markUntil > run.tick
+      ? (overflightModuleParameters('scanner', overflightModuleRank(run.build, 'scanner'))
+          ?.damageMultiplier ?? 1)
+      : 1;
+  const actual = Math.min(enemy.hp, damage * markMultiplier);
   enemy.hp -= actual;
   run.stats.damageDealt += actual;
   run.stats.hits++;
@@ -629,7 +658,7 @@ function damagePlayer(run, amount) {
   if (player.shield > 0) {
     player.shield = 0;
     const rank = overflightModuleRank(run.build, 'shield');
-    player.shieldCooldown = [0, 10, 7, 5][rank];
+    player.shieldCooldown = overflightModuleParameters('shield', rank).recharge;
     player.invulnerable = 0.75;
     effect(run, 'shield', player.x, player.y, 30, 0.3);
     sound(run, 'shield');
@@ -660,6 +689,8 @@ function damagePlayer(run, amount) {
 
 function movePlayer(run, input) {
   const player = run.player;
+  const beforeX = player.x,
+    beforeY = player.y;
   player.boostRemaining = Math.max(0, player.boostRemaining - OVERFLIGHT_STEP);
   player.boostCooldown = Math.max(0, player.boostCooldown - OVERFLIGHT_STEP);
   player.invulnerable = Math.max(0, player.invulnerable - OVERFLIGHT_STEP);
@@ -680,7 +711,17 @@ function movePlayer(run, input) {
     player.boostCooldown = 2.5;
     if (overflightModuleRank(run.build, 'shield') === 3) {
       // Resolve after the movement/grid pass, at the departure position.
-      queuePulse(run, player.x, player.y, 100, 30, 0, 35, 'shield');
+      const shield = overflightModuleParameters('shield', 3);
+      queuePulse(
+        run,
+        player.x,
+        player.y,
+        shield.pulseRadius,
+        shield.pulseDamage,
+        0,
+        shield.pulsePush,
+        'shield',
+      );
     }
     run.stats.boostsUsed++;
     sound(run, 'boost');
@@ -704,6 +745,19 @@ function movePlayer(run, input) {
       player.y + player.vy * OVERFLIGHT_STEP,
       player.radius,
       run.compiled.arena.height - player.radius,
+    );
+  }
+  const pulse = overflightModuleParameters(
+    'proximity-pulse',
+    overflightModuleRank(run.build, 'proximity-pulse'),
+  );
+  if (pulse && (magnitude > 0.05 || player.boostRemaining > 0)) {
+    // Only movement admitted by arena bounds charges the next release. A held
+    // direction into a wall, replacement placement and fixture wraps cannot.
+    player.pulseCharge = Math.min(
+      1,
+      player.pulseCharge +
+        Math.hypot(player.x - beforeX, player.y - beforeY) / pulse.chargeDistance,
     );
   }
   if (player.boostRemaining > 0 && run.tick % 3 === 0)
@@ -948,7 +1002,7 @@ function moveEnemies(run) {
       enemy.speed *
       behaviorSpeed *
       (supported ? 1.08 : 1) *
-      (enemy.slowUntil > run.tick ? 0.45 : 1);
+      (enemy.slowUntil > run.tick ? enemy.slowMultiplier : 1);
     enemy.x = clamp(
       enemy.x + dx * speed * OVERFLIGHT_STEP + (enemy.pushX ?? 0),
       enemy.radius,
@@ -1068,6 +1122,7 @@ function queuePulse(run, x, y, radius, damage, remaining, push = 0, kind = 'prox
 }
 
 function launchSideBurst(run, rank) {
+  const settings = overflightModuleParameters('side-burst', rank);
   // The full launch is deferred if the finite pool cannot admit both shots.
   // No projectile or its eventual damage is silently discarded.
   if (run._projectileFree.length < 2) {
@@ -1081,12 +1136,12 @@ function launchSideBurst(run, rank) {
       active: true,
       x: run.player.x,
       y: run.player.y,
-      vx: Math.cos(angle) * 340,
-      vy: Math.sin(angle) * 340,
-      radius: 7 + rank * 2,
-      remaining: 0.9,
-      damage: 22 + rank * 12,
-      piercing: rank === 3,
+      vx: Math.cos(angle) * settings.speed,
+      vy: Math.sin(angle) * settings.speed,
+      radius: settings.radius,
+      remaining: settings.duration,
+      damage: settings.damage,
+      piercing: settings.piercing,
     });
     projectile.hits.clear();
   }
@@ -1186,10 +1241,12 @@ function advanceProjectiles(run) {
 function scanner(run) {
   const rank = overflightModuleRank(run.build, 'scanner');
   if (!rank || run._cooldowns.scanner > 0) return;
+  const settings = overflightModuleParameters('scanner', rank);
   let target = null,
     score = -Infinity;
-  visitOverflightGrid(run._grid, run.player.x, run.player.y, 280, (enemy) => {
-    if (enemy.warning > 0 || distanceSquared(enemy, run.player) > 280 ** 2) return;
+  visitOverflightGrid(run._grid, run.player.x, run.player.y, settings.targetRadius, (enemy) => {
+    if (enemy.warning > 0 || distanceSquared(enemy, run.player) > settings.targetRadius ** 2)
+      return;
     const candidate =
       (enemy.role !== 'common' ? 100000 : enemy.heavy || enemy.specialist ? 50000 : 0) +
       enemy.hp -
@@ -1200,23 +1257,23 @@ function scanner(run) {
     }
   });
   if (target) {
-    target.markUntil = run.tick + (rank === 1 ? 120 : 180);
+    target.markUntil = run.tick + Math.ceil(settings.markDuration * 60);
     effect(run, 'scanner', target.x, target.y, target.radius + 14, 0.4);
-    if (rank === 3) {
+    if (settings.chainTargets) {
       const hit = new Set();
       let origin = target;
-      for (let hop = 0; hop < 3; hop++) {
+      for (let hop = 0; hop < settings.chainTargets; hop++) {
         const fromX = origin.x,
           fromY = origin.y;
         let next = hop === 0 ? target : null,
           best = Infinity;
         if (hop)
-          visitOverflightGrid(run._grid, fromX, fromY, 120, (enemy) => {
+          visitOverflightGrid(run._grid, fromX, fromY, settings.chainRadius, (enemy) => {
             const distance = (enemy.x - fromX) ** 2 + (enemy.y - fromY) ** 2;
             if (
               enemy.warning <= 0 &&
               !hit.has(enemy.id) &&
-              distance <= 120 ** 2 &&
+              distance <= settings.chainRadius ** 2 &&
               distance < best
             ) {
               next = enemy;
@@ -1225,26 +1282,49 @@ function scanner(run) {
           });
         if (!next) break;
         hit.add(next.id);
-        damageEnemy(run, next, 24);
+        damageEnemy(run, next, settings.chainDamage);
         effect(run, 'chain', fromX, fromY, 7, 0.2, { x2: next.x, y2: next.y });
         origin = next;
       }
     }
   }
-  run._cooldowns.scanner = rank === 3 ? 1.6 : 2.2;
+  run._cooldowns.scanner = settings.cooldown;
 }
 
 function automaticSystems(run) {
   for (const module of run.build.combat) {
     if (run._cooldowns[module.id] > 0) continue;
     const { id, rank } = module;
+    const settings = overflightModuleParameters(id, rank);
     const player = run.player;
     if (id === 'proximity-pulse') {
-      const radius = 54 + rank * 22;
-      queuePulse(run, player.x, player.y, radius, 22 + rank * 10, 0.3, 12 + rank * 5);
-      effect(run, 'pulse-warning', player.x, player.y, radius, 0.3);
-      if (rank === 3) queuePulse(run, player.x, player.y, radius, 38, 0.72, 22, 'return-pulse');
-      run._cooldowns[id] = 2 - rank * 0.25;
+      // The technical fixture exercises full effects continuously while its
+      // camera/player are fixed. Ordinary play earns every charge by flying.
+      const charge = run.fixture ? 1 : player.pulseCharge;
+      const charged = (key) =>
+        settings[key] +
+        (settings[`charged${key[0].toUpperCase()}${key.slice(1)}`] - settings[key]) * charge;
+      const radius = charged('radius'),
+        damage = charged('damage'),
+        push = charged('push'),
+        returnDamage = charged('returnDamage'),
+        returnPush = charged('returnPush');
+      const { delay, returnDelay } = settings;
+      player.pulseCharge = 0;
+      queuePulse(run, player.x, player.y, radius, damage, delay, push);
+      effect(run, 'pulse-warning', player.x, player.y, radius, delay);
+      if (returnDamage)
+        queuePulse(
+          run,
+          player.x,
+          player.y,
+          radius,
+          returnDamage,
+          returnDelay,
+          returnPush,
+          'return-pulse',
+        );
+      run._cooldowns[id] = charged('cooldown');
     } else if (id === 'slow-field') {
       const field = run.fields.find((record) => !record.active);
       if (!field) throw new Error('Slow field pool is too small for its lifetime.');
@@ -1252,15 +1332,18 @@ function automaticSystems(run) {
         active: true,
         x: player.x,
         y: player.y,
-        radius: 58 + rank * 20,
-        remaining: 1.2 + rank * 0.6,
+        radius: settings.radius,
+        remaining: settings.duration,
         clock: 0,
-        damage: 4 + rank * 3,
+        damage: settings.damage,
+        tickInterval: settings.tickInterval,
+        slowDuration: settings.slowDuration,
+        slowMultiplier: settings.slowMultiplier,
       });
       effect(run, 'slow-field', field.x, field.y, field.radius, field.remaining);
-      run._cooldowns[id] = 2.4;
+      run._cooldowns[id] = settings.cooldown;
     } else if (id === 'side-burst') {
-      if (launchSideBurst(run, rank)) run._cooldowns[id] = 1.45 - rank * 0.15;
+      if (launchSideBurst(run, rank)) run._cooldowns[id] = settings.cooldown;
     }
     sound(run, 'system');
   }
@@ -1303,8 +1386,12 @@ function weapons(run) {
     field.remaining -= OVERFLIGHT_STEP;
     field.clock -= OVERFLIGHT_STEP;
     if (field.clock <= 0) {
-      damageOverflightArea(run, field.x, field.y, field.radius, field.damage, { slow: 0.5 });
-      field.clock = 0.35;
+      damageOverflightArea(run, field.x, field.y, field.radius, field.damage, {
+        slow: field.slowDuration,
+        slowMultiplier: field.slowMultiplier,
+        fieldDamageInterval: field.tickInterval,
+      });
+      field.clock = field.tickInterval;
       if (run.phase !== 'playing') return;
     }
     if (field.remaining <= 0) field.active = false;
@@ -1326,7 +1413,8 @@ function collectPickup(run, pickup, index) {
 function collectSalvage(run, forcedRadius = 0) {
   if (run.fixture) return;
   const rank = overflightModuleRank(run.build, 'scanner');
-  const radius = forcedRadius || 62 + rank * 23;
+  const radius =
+    forcedRadius || overflightModuleParameters('scanner', rank)?.collectionRadius || 62;
   for (let index = 0; index < run.pickups.length; index++) {
     const pickup = run.pickups[index];
     if (!pickup.active) continue;
@@ -1446,6 +1534,7 @@ function initializeFixture(run) {
       'Benchmark fixtures require capacity for four heavies and eight specialists.',
     );
   run.fixtureWorkload = {
+    pulseChargePolicy: 'controlled-full-charge-release',
     alive,
     visible: shown,
     heavies: 4,
@@ -1553,6 +1642,8 @@ function recycleFixtureEnemy(run, enemy) {
   enemy.pushX = 0;
   enemy.pushY = 0;
   enemy.slowUntil = 0;
+  enemy.slowMultiplier = 1;
+  enemy.fieldDamageUntil = 0;
   enemy.markUntil = 0;
   enemy.hp = enemy.maxHp;
   enemy._fixtureAge = 0;

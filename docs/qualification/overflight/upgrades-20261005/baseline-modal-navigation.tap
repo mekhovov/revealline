@@ -1,0 +1,315 @@
+TAP version 13
+# (node:91209) ExperimentalWarning: `--experimental-loader` may be removed in the future; instead use `register()`:
+# --import 'data:text/javascript,import { register } from "node:module"; import { pathToFileURL } from "node:url"; register("./baseline-loader.mjs", pathToFileURL("./"));'
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: modal restoration uses an explicit visible fallback when its opener becomes display
+ok 1 - modal restoration uses an explicit visible fallback when its opener becomes display # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.45075
+  ...
+# Subtest: modal restoration uses an explicit visible fallback when its opener becomes visibility
+ok 2 - modal restoration uses an explicit visible fallback when its opener becomes visibility # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.100959
+  ...
+# Subtest: modal restoration uses an explicit visible fallback when its opener becomes disabled
+ok 3 - modal restoration uses an explicit visible fallback when its opener becomes disabled # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.135583
+  ...
+# Subtest: modal restoration uses an explicit visible fallback when its opener becomes detached
+ok 4 - modal restoration uses an explicit visible fallback when its opener becomes detached # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.084375
+  ...
+# Subtest: modal fallback cannot steal deliberate replacement focus or escape a remaining dialog
+ok 5 - modal fallback cannot steal deliberate replacement focus or escape a remaining dialog # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.034667
+  ...
+# Subtest: fallback failure, hidden targets and reentrant modal opening never steal focus
+ok 6 - fallback failure, hidden targets and reentrant modal opening never steal focus # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.028
+  ...
+# Subtest: opening order owns controller scope across reversed DOM order, Back and fresh reopen
+ok 7 - opening order owns controller scope across reversed DOM order, Back and fresh reopen # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.025167
+  ...
+# Subtest: ordered mutation records cover older engines and same-task close/reopen without guessing DOM order
+ok 8 - ordered mutation records cover older engines and same-task close/reopen without guessing DOM order # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.027875
+  ...
+# Subtest: modal close keeps stack cleanup but does not restore focus hidden/at-close
+ok 9 - modal close keeps stack cleanup but does not restore focus hidden/at-close # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.075833
+  ...
+# Subtest: modal close keeps stack cleanup but does not restore focus hidden/after-close
+ok 10 - modal close keeps stack cleanup but does not restore focus hidden/after-close # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.08725
+  ...
+# Subtest: modal close keeps stack cleanup but does not restore focus blur/at-close
+ok 11 - modal close keeps stack cleanup but does not restore focus blur/at-close # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.032125
+  ...
+# Subtest: modal close keeps stack cleanup but does not restore focus blur/after-close
+ok 12 - modal close keeps stack cleanup but does not restore focus blur/after-close # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.02825
+  ...
+# Subtest: Collection keyboard disclosure activation toggles exactly once and preserves the paused attempt
+ok 13 - Collection keyboard disclosure activation toggles exactly once and preserves the paused attempt # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.028666
+  ...
+# Subtest: Collection touch disclosure activation toggles exactly once and preserves the paused attempt
+ok 14 - Collection touch disclosure activation toggles exactly once and preserves the paused attempt # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.07325
+  ...
+# Subtest: actual title → Missions → Progress backup controller Back closes only the front dialog and never starts flight
+ok 15 - actual title → Missions → Progress backup controller Back closes only the front dialog and never starts flight # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.266167
+  ...
+# Subtest: actual native keyboard/pointer handoff retains controller owner but suppresses its held menu repeat until neutral
+ok 16 - actual native keyboard/pointer handoff retains controller owner but suppresses its held menu repeat until neutral # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.029875
+  ...
+# Subtest: actual help-dialog reader reaches the bottom; first Back/Escape leaves reading without closing or starting
+ok 17 - actual help-dialog reader reaches the bottom; first Back/Escape leaves reading without closing or starting # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.025417
+  ...
+# Subtest: actual collection-dialog reader reaches the bottom; first Back/Escape leaves reading without closing or starting
+ok 18 - actual collection-dialog reader reaches the bottom; first Back/Escape leaves reading without closing or starting # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.127292
+  ...
+# Subtest: Collection disclosure collapse preserves reading, focus and the paused attempt
+ok 19 - Collection disclosure collapse preserves reading, focus and the paused attempt # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.034
+  ...
+# Subtest: actual Settings → Studio listbox/range edits preview, cancel and apply through native handlers before Back returns
+ok 20 - actual Settings → Studio listbox/range edits preview, cancel and apply through native handlers before Back returns # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.025625
+  ...
+# Subtest: actual Solo Settings restores Game menu when responsive layout hides its toolbar opener
+ok 21 - actual Solo Settings restores Game menu when responsive layout hides its toolbar opener # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.059833
+  ...
+# Subtest: title Settings returns to its title opener after controller Back or native Escape
+ok 22 - title Settings returns to its title opener after controller Back or native Escape # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.021792
+  ...
+# Subtest: opening Settings during a flight keeps its paused-flight return instead of opening the title
+ok 23 - opening Settings during a flight keeps its paused-flight return instead of opening the title # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.019625
+  ...
+# Subtest: title Workshop Field Guide returns through its visible openers after Back, Escape and isolated practice
+ok 24 - title Workshop Field Guide returns through its visible openers after Back, Escape and isolated practice # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.018792
+  ...
+# Subtest: Main menu Workshop Field Guide returns through both menus over an unchanged paused-flight checkpoint
+ok 25 - Main menu Workshop Field Guide returns through both menus over an unchanged paused-flight checkpoint # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.019667
+  ...
+# Subtest: title picture controller returns through Collection and Settings to its exact opener
+not ok 26 - title picture controller returns through Collection and Settings to its exact opener
+  ---
+  duration_ms: 347.650209
+  location: '/private/tmp/overflight-modal-baseline-te2vqq7l/game/test/modal-navigation.test.mjs:980:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    The game could not load.: ctx.clearRect is not a function
+    TypeError: ctx.clearRect is not a function
+        at paint (file:///private/tmp/overflight-modal-baseline-te2vqq7l/game/ui/enemy-field-guide.mjs:86:11)
+        at renderEnemyFieldGuide (file:///private/tmp/overflight-modal-baseline-te2vqq7l/game/ui/enemy-field-guide.mjs:106:5)
+        at refresh (file:///private/tmp/overflight-modal-baseline-te2vqq7l/game/ui/running-enemy-controls.mjs:195:5)
+        at Object.subscribe (file:///private/tmp/overflight-modal-baseline-te2vqq7l/game/hunt/running-enemy-preferences.mjs:151:7)
+        at mountRunningEnemyControls (file:///private/tmp/overflight-modal-baseline-te2vqq7l/game/ui/running-enemy-controls.mjs:236:35)
+        at file:///private/tmp/overflight-modal-baseline-te2vqq7l/game/app.mjs?difficultyHost=1:7622:7
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    paint (file:///private/tmp/overflight-modal-baseline-te2vqq7l/game/ui/enemy-field-guide.mjs:86:11)
+    renderEnemyFieldGuide (file:///private/tmp/overflight-modal-baseline-te2vqq7l/game/ui/enemy-field-guide.mjs:106:5)
+    refresh (file:///private/tmp/overflight-modal-baseline-te2vqq7l/game/ui/running-enemy-controls.mjs:195:5)
+    Object.subscribe (file:///private/tmp/overflight-modal-baseline-te2vqq7l/game/hunt/running-enemy-preferences.mjs:151:7)
+    mountRunningEnemyControls (file:///private/tmp/overflight-modal-baseline-te2vqq7l/game/ui/running-enemy-controls.mjs:236:35)
+    file:///private/tmp/overflight-modal-baseline-te2vqq7l/game/app.mjs?difficultyHost=1:7622:7
+    soloPage (file:///private/tmp/overflight-modal-baseline-te2vqq7l/game/test/helpers/solo-dom.mjs:519:10)
+    async earnedTitleCollection (file:///private/tmp/overflight-modal-baseline-te2vqq7l/game/test/modal-navigation.test.mjs:885:16)
+    async TestContext.<anonymous> (file:///private/tmp/overflight-modal-baseline-te2vqq7l/game/test/modal-navigation.test.mjs:981:25)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: title picture escape returns through Collection and Settings to its exact opener
+ok 27 - title picture escape returns through Collection and Settings to its exact opener # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.365667
+  ...
+# Subtest: title picture close button returns through Collection and Settings to its exact opener
+ok 28 - title picture close button returns through Collection and Settings to its exact opener # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.029458
+  ...
+# Subtest: picture Replay deliberately leaves title and Collection for the selected ready briefing
+ok 29 - picture Replay deliberately leaves title and Collection for the selected ready briefing # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.024166
+  ...
+# Subtest: Collection Choose appearance opens Missions setup over retained Settings and title
+ok 30 - Collection Choose appearance opens Missions setup over retained Settings and title # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.018791
+  ...
+# Subtest: Collection resets its return label from Settings to a direct paused-flight visit
+ok 31 - Collection resets its return label from Settings to a direct paused-flight visit # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.021
+  ...
+# Subtest: programmatic Collection after a real win does not refocus a hidden opener
+ok 32 - programmatic Collection after a real win does not refocus a hidden opener # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.0185
+  ...
+# Subtest: title Workshop Library returns through actual openers for button, Escape and controller Back
+ok 33 - title Workshop Library returns through actual openers for button, Escape and controller Back # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.116042
+  ...
+# Subtest: paused flight Workshop Library returns through actual openers for button, Escape and controller Back
+ok 34 - paused flight Workshop Library returns through actual openers for button, Escape and controller Back # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.020625
+  ...
+# Subtest: title Settings How to play returns through its exact retained openers
+ok 35 - title Settings How to play returns through its exact retained openers # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.015917
+  ...
+# Subtest: paused flight Settings How to play returns through its exact retained openers
+ok 36 - paused flight Settings How to play returns through its exact retained openers # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.01475
+  ...
+# Subtest: Workshop Library explicit challenge selection leaves retained parents from title
+ok 37 - Workshop Library explicit challenge selection leaves retained parents from title # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.017042
+  ...
+# Subtest: Workshop Library explicit challenge selection leaves retained parents from paused flight
+ok 38 - Workshop Library explicit challenge selection leaves retained parents from paused flight # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.018209
+  ...
+# Subtest: Workshop Library resume-save returns a verified saved cut to its paused field
+ok 39 - Workshop Library resume-save returns a verified saved cut to its paused field # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.021625
+  ...
+# Subtest: Workshop Library import-save returns a verified saved cut to its paused field
+ok 40 - Workshop Library import-save returns a verified saved cut to its paused field # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.015208
+  ...
+# Subtest: Team departure button stays at the actual Missions opener without resuming the saved cut
+ok 41 - Team departure button stays at the actual Missions opener without resuming the saved cut # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.016667
+  ...
+# Subtest: Team departure escape stays at the actual Missions opener without resuming the saved cut
+ok 42 - Team departure escape stays at the actual Missions opener without resuming the saved cut # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.017916
+  ...
+# Subtest: Team departure controller stays at the actual Missions opener without resuming the saved cut
+ok 43 - Team departure controller stays at the actual Missions opener without resuming the saved cut # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.014
+  ...
+# Subtest: actual nested Collection picture Tab wraps only its current modal and close restores the earned card
+ok 44 - actual nested Collection picture Tab wraps only its current modal and close restores the earned card # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.0145
+  ...
+# Subtest: Missions preserves its Home opener after Collection appearance setup
+ok 45 - Missions preserves its Home opener after Collection appearance setup # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.016958
+  ...
+# Subtest: Missions preserves its field opener after Collection appearance setup
+ok 46 - Missions preserves its field opener after Collection appearance setup # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.015791
+  ...
+# Subtest: legacy Missions Back uses an available Home fallback when its opener is disabled
+ok 47 - legacy Missions Back uses an available Home fallback when its opener is disabled # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.01575
+  ...
+# Subtest: legacy Missions Back uses an available Home fallback when its opener is hidden
+ok 48 - legacy Missions Back uses an available Home fallback when its opener is hidden # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.01475
+  ...
+# Subtest: legacy Missions Back uses an available Home fallback when its opener is detached
+ok 49 - legacy Missions Back uses an available Home fallback when its opener is detached # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.017208
+  ...
+# Subtest: legacy Missions close callback retains newer dialog ownership before reopening Home
+ok 50 - legacy Missions close callback retains newer dialog ownership before reopening Home # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.01475
+  ...
+# Subtest: legacy Missions close callback retains newer focus ownership before reopening Home
+ok 51 - legacy Missions close callback retains newer focus ownership before reopening Home # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.015041
+  ...
+# Subtest: legacy Missions close callback retains newer background ownership before reopening Home
+ok 52 - legacy Missions close callback retains newer background ownership before reopening Home # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.015167
+  ...
+# Subtest: Missions return cannot cover a newer dialog established by its Home pause callback
+ok 53 - Missions return cannot cover a newer dialog established by its Home pause callback # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.014083
+  ...
+# Subtest: direct Mission brief stops before moving its view after a dispose pause callback
+ok 54 - direct Mission brief stops before moving its view after a dispose pause callback # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.014375
+  ...
+# Subtest: direct Mission brief stops before moving its view after a home pause callback
+ok 55 - direct Mission brief stops before moving its view after a home pause callback # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.01325
+  ...
+1..55
+# tests 55
+# suites 0
+# pass 0
+# fail 1
+# cancelled 0
+# skipped 54
+# todo 0
+# duration_ms 8741.164333
