@@ -8,12 +8,18 @@ separate from the built-in catalogue; no existing mission is replaced.
 ## Open the practice
 
 Use a simulator built from this branch or a later version containing this policy.
-In **FPV World Studio → Workshop**, use **Import .rlpack / editable project**:
+In **FPV World Studio → Library**, use **Import .rlpack / editable project**:
 
 - `momentum-contact-practice.rlpack` installs the ready-to-fly pack. Select
   **Keep moving after the catch** in the installed content and start a flight.
 - `momentum-contact-practice.zip` opens the editable project through the same
   importer. Use the existing actor/objective controls, preview, Undo, and export.
+
+After installing the exact pack, use **Library → Import recordings / examples** to choose
+`momentum-contact-practice.proofs.json`. It contains one Self-level and one Acro
+demonstration. Import verifies each against the installed pack before replay is
+available. These examples do not count as the player's own completed practice.
+Their saved date is fixed fixture metadata so the archive is reproducible.
 
 Catch runner 01 before runner 02, then keep flying for half a second. Successful
 catch momentum continues on the next native tick. Wrong-order targets, hazards,
@@ -50,6 +56,7 @@ From the repository root with Node 20 or later:
 
 ```sh
 node authoring/fpv-worlds/momentum-contact/qualify.mjs --write
+node authoring/fpv-worlds/momentum-contact/proof-archive.mjs --write
 ```
 
 This manually invoked functional probe uses production validation, pinned Rapier
@@ -72,6 +79,11 @@ baseline was captured on `2d447bc790bdf3951251c99041c8a918363ece0a` before edits
 - Independent pack builds and editable ZIP import/export preserve exact bytes
   and dependency identity. `course.mjs` is the readable fixture source;
   `evidence/practice-proofs.json` contains the two complete demonstration proofs.
+
+The second command uses the native `FPVProofArchive.v2` producer and importer to
+create the player-facing `.proofs.json`. Its exact pack dependency, archive and
+file hashes, both replay outcomes and checksum rejection evidence are recorded
+in `evidence/proof-archive.json`.
 
 This is functional evidence outside the permanent unit suites. Additional unit
 coverage remains deferred under D6. The DOM boundary is not a browser layout or
