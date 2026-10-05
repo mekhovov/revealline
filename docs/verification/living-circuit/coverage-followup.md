@@ -12,7 +12,7 @@ SIM Worlds embeds one compact statistics disclosure inside its result card. It p
 
 ## Current verification
 
-The targeted group passed **148/148**, followed by repository lint and validation. Coverage checks include entry/exit, Pulse, wrapped distance, either living Team head, full warnings, multiple sources, lane/projectile coordination, and exact historical replays. Host checks cover historical Continue/import/Retry, truthful reception, and result statistics ownership.
+The targeted group passed **148/148**, followed by repository lint, validation, and **9/9 optional-package checks**. Coverage checks include entry/exit, Pulse, wrapped distance, either living Team head, full warnings, multiple sources, lane/projectile coordination, and exact historical replays. Host checks cover historical Continue/import/Retry, truthful reception, and result statistics ownership.
 
 The real Snake host was opened with legal unfinished sessions prepared by `game/test/manual/snake-result-fixture.html`; the accepted final moves produced the results. These are browser layout and interaction observations, not human playthrough claims.
 
@@ -24,10 +24,18 @@ The real Snake host was opened with legal unfinished sessions prepared by `game/
 | Team, Ukrainian, 740×360, More and statistics expanded | Footer remained at 286.203–352 px; document scroll width stayed 740 px. [Screenshot](landscape-team-results-uk.jpg).                                    |
 | Versus, 320×640                                        | Draw offered Rematch; one activation restarted both boards at 0/8 without another entry step. [Screenshot](mobile-versus-result.jpg).                   |
 
+The live renderer fixture also advanced local-v2 from move 34 to 35 with reduced effects at 320px ([screenshot](mobile-local-v2-reduced.jpg)). A 1280×800 paired-board fixture rendered both accepted boards under interference ([screenshot](desktop-local-v2-versus.jpg)); independence is covered by engine/host tests, not inferred from this identical-input image. No browser console warnings or errors were observed.
+
 ## Simulation measurements and limits
 
 [The measurement JSON](coverage-followup-measurements.json) binds source hashes and records 18 exact winning routes with level/hazard seed 17. Seventeen active-source captures cleared reception at the same accepted simulation boundary. The selected winning journals did not include an active-source exit; a separately labeled legal-turn branch did, clearing at move 85 with zero extra simulation moves, 4,200 ms recovery and 1,600 ms shared clear time. These are simulation intervals, not browser paint latency.
 
 In the matched Quiet Return Team/Normal comparison, local-v1 entered an existing burst at move 78. Local-v2 starts an 800 ms warning at move 78 and interference at 82. Local samples exercised distant cable visibility; broadcast samples also exercised distant ordinary prey. Five sampled routes completed without interference. These results do not establish human route choices, reaction times or difficulty.
 
-A fresh core-game browser origin stopped at the normal password gate, so this follow-up claims no new core browser pass. Physical touch/controller sessions and human balance remain unverified. No current full distribution build has been completed; earlier receipts and source hashes retain their original scope. Related PRs #1095 and #1098 remained unchanged and conflicted at review; neither was integrated. Release admission is separate, targeting the existing active #57 / v0.150.0 while retaining draft status and disabling auto-merge.
+A fresh core-game browser origin stopped at the normal password gate, so this follow-up claims no new core browser pass. Physical touch/controller sessions and human balance remain unverified. SIM result lifecycle is covered by host regressions; a new browser flight was started and paused, not completed, so no new SIM browser result pass is claimed. Related PRs #1095 and #1098 remained unchanged and conflicted at review; neither was integrated. The PR is assigned to the existing active #57 / v0.150.0 milestone and remains draft with no automatic merge enabled; fresh-head CI remains separate from local build verification.
+
+## Committed distribution verification
+
+Runtime revision `a1d9bfd86a7b27f6517dc92d8788c355a5d544f0` produced **3,085 payload files** plus the manifest and **3,086 ZIP entries**. Every expanded file and ZIP member matches its manifest SHA-256, and all ZIP CRCs pass. The ZIP is 1,004,568,445 bytes with SHA-256 `b90f12d2f45ba523047b5b4ea3a999bfd5ab8eff74bcc6b1fbd37067432e81d5`. See [the complete build receipt](coverage-build-verification.json).
+
+The task-created output was removed only after checking its build marker, exact manifest inventory, lack of symlinks, and all checksums. The cleanup receipt records 3,089 files; source, local changes and Git history were preserved. Approximately 2.6 GiB remained free afterward. Earlier build receipts retain their original revision scope.
