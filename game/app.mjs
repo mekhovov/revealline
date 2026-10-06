@@ -1,3 +1,4 @@
+import { loadBaseArtwork } from './base-artwork.mjs';
 import { nativeArtReviewURL } from './ui/art-review-navigation.mjs';
 import { selectedArcadeCollection } from './presentation/industrial-arcade.mjs';
 import { specialistFailureCopy } from './hunt/actor-catalog.mjs';
@@ -458,12 +459,14 @@ try {
   let campaign = baseCampaign,
     classRegistry = baseClasses;
   campaign.classRecipes = classRegistry;
+  const baseArtwork = runtimeContent
+    ? { visualOverrides: {}, levelVisuals: [] }
+    : await loadBaseArtwork(campaign);
   const baseEntry = {
     campaign,
     classRecipes: classRegistry,
     themes: themesFile.themes,
-    visualOverrides: {},
-    levelVisuals: [],
+    ...baseArtwork,
     music: [],
     sourcePackId: null,
   };
