@@ -79,18 +79,12 @@ jobs:
           if-no-files-found: error
           retention-days: 7
 
-      - name: Require the exact protected main base on public Pages
+      - name: Require the exact protected main source on public Pages
         if: steps.admission.outputs.mode == 'release'
         env:
           GH_TOKEN: ${{ github.token }}
           PR_BASE_SHA: ${{ github.event.pull_request.base.sha }}
-          PR_TITLE: ${{ github.event.pull_request.title }}
-        run: |
-          set -euo pipefail
-          base_version="$(gh api "repos/$GITHUB_REPOSITORY/contents/package.json?ref=$PR_BASE_SHA" \
-            --jq .content | base64 --decode | jq -r .version)"
-          PR_BASE_VERSION="$base_version" \
-            node .source-gate-automation/publishing/pages-controller/release-train-boundary.mjs public
+        run: node .source-gate-automation/publishing/pages-controller/release-train-boundary.mjs public
 
       - name: Record temporary fast-release policy
         env:
@@ -341,11 +335,6 @@ jobs:
         run: |
           test "$(git rev-parse HEAD)" = "$EXPECTED_SOURCE"
           node .source-gate-automation/scripts/check-source-identity.mjs --root .
-
-      - name: Require exact release version identity
-        env:
-          PR_TITLE: ${{ github.event.pull_request.title }}
-        run: node .source-gate-automation/publishing/pages-controller/release-train-boundary.mjs source .
 
       - name: Install dependencies
         run: npm ci

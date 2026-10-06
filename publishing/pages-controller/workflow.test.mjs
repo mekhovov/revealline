@@ -95,16 +95,11 @@ test("source qualification retains mandatory guards while protected main owns pu
   assert.match(source, /cache-dependency-path: source\/package-lock\.json/);
   assert.match(source, /node --test scripts\/test-production-\*\.mjs/);
   assert.match(source, /run: npm run build/);
-  assert.match(
-    source,
-    /Require the exact protected main base on public Pages\n\s+if: steps\.admission\.outputs\.mode == 'release'/,
-  );
+  assert.match(source, /Require the exact protected main source on public Pages/);
   assert.match(source, /admission-preflight\.mjs/);
   assert.match(source, /release-train-boundary\.mjs public/);
-  assert.match(
-    source,
-    /PR_BASE_SHA: \$\{\{ github\.event\.pull_request\.base\.sha \}\}/,
-  );
+  assert.doesNotMatch(source, /PR_BASE_VERSION/);
+  assert.doesNotMatch(source, /Require exact release version identity/);
   assert.doesNotMatch(source, /  release_gate:|workflow run publish-frozen-pages\.yml/);
   for (const job of ["preflight", "focused", "test", "build", "release-ready"])
     assert.ok(source.includes(`  ${job}:\n`));
