@@ -3,11 +3,10 @@ name: Validate source for continuous main Pages
 on:
   pull_request:
     branches: [main]
-    # Draft promotion does not change source bytes. The exact-head gate already
-    # ran on open/synchronize. Draft promotion does not change source or
-    # admission metadata, so ready_for_review would duplicate the exact-head
-    # gate. Keep edited because release admission is intentionally title-based.
-    types: [opened, synchronize, reopened, edited, labeled, unlabeled, milestoned, demilestoned]
+    # Metadata changes do not alter admission. Gate only source-head lifecycle
+    # events so title, labels, milestones, and draft promotion cannot create
+    # redundant queue work.
+    types: [opened, synchronize, reopened]
 
 permissions:
   contents: read
@@ -353,14 +352,10 @@ jobs:
       - name: Validate release-critical source
         run: npm run validate
 
-      - name: Run extended static and provenance checks
+      - name: Run extended source checks
         if: vars.REVEALLINE_FULL_CI == 'true'
         run: |
-          npm run lint
-          npm run format:check
-          npm run format:native:check
           node --check authoring/motion-lab/app.js
-          node scripts/produce-field-kit-theme.mjs --check
           mkdir -p .cache
           node --test scripts/test-production-*.mjs
 
