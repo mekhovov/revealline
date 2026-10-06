@@ -169,8 +169,17 @@ test("fast mode waives long suites while release source and publication guards s
   for (const workflow of [pr, manual, originalUpload, pages]) {
     assert.match(workflow, /id: test_policy/);
     assert.match(workflow, /publishing\/test-policy.mjs/);
-    assert.doesNotMatch(workflow, /continue-on-error|\|\| true/);
+    if (workflow !== manual)
+      assert.doesNotMatch(workflow, /continue-on-error|\|\| true/);
   }
+  assert.match(
+    manual,
+    /- name: Check formatting\n\s+continue-on-error: true\n\s+run: npm run format:check/,
+  );
+  assert.match(
+    manual,
+    /- name: Check native formatting\n\s+continue-on-error: true\n\s+run: npm run format:native:check/,
+  );
   assert.match(
     pr,
     /test:\n\s+if: >-\n\s+github.event_name == 'pull_request' &&\n\s+needs.preflight.outputs.admission == 'release' &&\n\s+vars.REVEALLINE_FULL_CI == 'true' &&\n\s+needs.preflight.outputs.runTests == 'true'/,
