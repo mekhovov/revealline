@@ -12,6 +12,7 @@ import { inspectImageDataUrl } from '../game/content.mjs';
 import { campaignKey } from '../game/library.mjs';
 import { canonicalJSON, dataIdentity, required } from '../game/data-json.mjs';
 import { CURRENT_PICTURES } from '../game/presentation/current-pictures.mjs';
+import { resolveBaseArtwork } from '../game/base-artwork.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const hash = (bytes) => createHash('sha256').update(bytes).digest('hex');
@@ -97,18 +98,26 @@ export async function inventoryCurrentArt({ projectRoot = root } = {}) {
   }
   const base = await read('game/content/campaign.json'),
     classes = await read('game/content/classes.json'),
-    themes = await read('game/content/themes.json');
-  add({ ...base.value, classRecipes: classes.value }, themes.value.themes, {
-    kind: 'base',
-    path: base.path,
-    bytes: base.bytes,
-    sha256: base.sha256,
-    packId: null,
-    contracts: [
-      { path: classes.path, bytes: classes.bytes, sha256: classes.sha256 },
-      { path: themes.path, bytes: themes.bytes, sha256: themes.sha256 },
-    ],
-  });
+    themes = await read('game/content/themes.json'),
+    baseArt = await read('game/content/base-artwork.json');
+  resolveBaseArtwork(baseArt.value, { ...base.value, classRecipes: classes.value });
+  add(
+    { ...base.value, classRecipes: classes.value },
+    themes.value.themes,
+    {
+      kind: 'base',
+      path: baseArt.path,
+      bytes: baseArt.bytes,
+      sha256: baseArt.sha256,
+      packId: baseArt.value.id,
+      contracts: [
+        { path: base.path, bytes: base.bytes, sha256: base.sha256 },
+        { path: classes.path, bytes: classes.bytes, sha256: classes.sha256 },
+        { path: themes.path, bytes: themes.bytes, sha256: themes.sha256 },
+      ],
+    },
+    baseArt.value,
+  );
   for (const [file, kind] of [
     ['index.json', 'built-in'],
     ['archive-index.json', 'archive'],
