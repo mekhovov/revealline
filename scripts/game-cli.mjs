@@ -774,6 +774,11 @@ export async function addOfflineEntries(
     // Recorded spatial effects stay hosted for online play and exact optional
     // download, but are not charged to every installation's 80 MiB core.
     ...entries.filter((entry) => isOptionalSpatialAudioBody(entry.name)).map((entry) => entry.name),
+    // The review gallery duplicates paintings already embedded in playable
+    // content. Host its source copies without charging the offline game twice.
+    ...entries
+      .filter((entry) => entry.name.startsWith('authoring/library/classic-reveal-artwork/'))
+      .map((entry) => entry.name),
     ...entries
       .filter((entry) => isOptionalReactionVoiceBody(entry.name))
       .map((entry) => entry.name),
@@ -1684,6 +1689,20 @@ export async function validateLevels(root = PROJECT_ROOT) {
       fail(`Invalid campaign level ${level.id ?? '(unnamed)'}: ${JSON.stringify(result.errors)}`);
     if (ids.has(level.id)) fail(`Duplicate campaign level ID: ${level.id}`);
     ids.add(level.id);
+  }
+  if (await exists(path.join(root, 'game/base-artwork.mjs'))) {
+    const { resolveBaseArtwork } = await import(
+      pathToFileURL(path.join(root, 'game/base-artwork.mjs')).href
+    );
+    resolveBaseArtwork(
+      JSON.parse(await fs.readFile(path.join(root, 'game/content/base-artwork.json'), 'utf8')),
+      {
+        ...campaign,
+        classRecipes: JSON.parse(
+          await fs.readFile(path.join(root, 'game/content/classes.json'), 'utf8'),
+        ),
+      },
+    );
   }
   return { campaign: campaign.id, levels: campaign.levels.length };
 }

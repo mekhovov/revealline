@@ -149,6 +149,8 @@ test('a real terminal draw keeps both destination links direct and does not star
   const campaign = JSON.parse(
     await readFile(new URL('../content/campaign.json', import.meta.url), 'utf8'),
   );
+  // Synthetic geometry must not claim the identity of the shipped artwork owner.
+  campaign.id = 'departure-fixture';
   campaign.levels = [retryFixture('enemy-player').level];
   campaign.briefs = [];
   const f = await couchPage(t, { campaign });

@@ -1,3 +1,4 @@
+import { loadBaseArtwork } from '../base-artwork.mjs';
 import { loadAuthoredJourneyRoute } from '../content-design/route-loader.mjs';
 import { DEFAULT_JOURNEY_ROUTES } from '../content-design/default-entry.mjs';
 import { createCandidateSoloHost } from '../content-design/solo-host.mjs';
@@ -153,8 +154,11 @@ export async function createRemoteSoloVersusLibrarySources({
         baseEntry: {
           campaign: baseCampaign,
           classRecipes: classesFile.value,
-          visualOverrides: {},
-          levelVisuals: [],
+          ...(await loadBaseArtwork(baseCampaign, {
+            fetch: request,
+            signal,
+            url: new URL('content/base-artwork.json', root),
+          })),
           music: [],
           sourcePackId: null,
         },
