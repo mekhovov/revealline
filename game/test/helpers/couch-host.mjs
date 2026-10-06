@@ -10,6 +10,26 @@ const base = JSON.parse(
 const html = await readFile(new URL('../../couch/index.html', import.meta.url), 'utf8');
 let sequence = 0;
 
+function imageDimensions(bytes) {
+  if (bytes.subarray(1, 4).toString() === 'PNG')
+    return { width: bytes.readUInt32BE(16), height: bytes.readUInt32BE(20) };
+  assert.equal(bytes[0], 0xff, 'Fixture image must be PNG or JPEG.');
+  assert.equal(bytes[1], 0xd8, 'Fixture image must be PNG or JPEG.');
+  for (let offset = 2; offset + 9 < bytes.length; ) {
+    if (bytes[offset] !== 0xff) {
+      offset++;
+      continue;
+    }
+    const marker = bytes[offset + 1],
+      length = bytes.readUInt16BE(offset + 2);
+    if (marker >= 0xc0 && marker <= 0xcf && ![0xc4, 0xc8, 0xcc].includes(marker))
+      return { width: bytes.readUInt16BE(offset + 7), height: bytes.readUInt16BE(offset + 5) };
+    assert.ok(length >= 2, 'Fixture JPEG contains an invalid segment.');
+    offset += 2 + length;
+  }
+  assert.fail('Fixture JPEG has no dimensions.');
+}
+
 import { mountCouch } from './mount-html.mjs';
 export { mountCouch } from './mount-html.mjs';
 
@@ -97,9 +117,9 @@ export async function couchPage(
         set src(source) {
           this.source = source;
           const bytes = Buffer.from(source.split(',')[1], 'base64');
-          assert.equal(bytes.subarray(1, 4).toString(), 'PNG');
-          this.width = this.naturalWidth = bytes.readUInt32BE(16);
-          this.height = this.naturalHeight = bytes.readUInt32BE(20);
+          const { width, height } = imageDimensions(bytes);
+          this.width = this.naturalWidth = width;
+          this.height = this.naturalHeight = height;
           queueMicrotask(() => this.onload?.());
         }
         async decode() {}
