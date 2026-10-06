@@ -31,6 +31,8 @@ import {
   mountSimAudioControls,
   paintStickDirections,
   mountStickTrace,
+  mountFlightHud,
+  flightGoalFeedback,
 } from './sim-presentation.mjs';
 import {
   createFlightInput,
@@ -171,6 +173,7 @@ export function mountFlightApp({
     'help-dialog',
     'notebook-dialog',
     'studio-dialog',
+    'sim-flight-hud-details',
   ];
   const modalOpen = () =>
     dialogIds.some((id) => $(id).open) ||
@@ -257,6 +260,26 @@ export function mountFlightApp({
       presentation.setVolume(levels.interface);
     },
   });
+  let hudStorage;
+  try {
+    hudStorage = win.localStorage;
+  } catch {
+    /* Session preferences remain available. */
+  }
+  $('viewport').dataset.simHudHost = 'academy';
+  const flightHud = mountFlightHud({
+    container: $('viewport'),
+    storage: hudStorage,
+    locale: () => locale,
+    onExplain() {
+      pause();
+      paint(true);
+      flightHud.openDetails();
+    },
+    onLesson: () => openDialog('help-dialog'),
+    onPreferencesChange: () => paint(true),
+  });
+  const hudPreferences = flightHud.preferenceControls(doc.querySelector('.academy-options-panel'));
   updateSoundLabel(presentation.soundEnabled());
   const droneResponse = mountDroneResponse({
     root: $('academy-drone-response'),
@@ -745,6 +768,7 @@ export function mountFlightApp({
     appearanceControls.refresh();
     updateSoundLabel(presentation.soundEnabled());
     audioControls.refresh();
+    hudPreferences.refresh?.();
     for (const node of doc.querySelectorAll('[data-copy]'))
       if (c()[node.dataset.copy]) node.textContent = c()[node.dataset.copy];
     for (const node of doc.querySelectorAll('[data-copy="keys"]'))
@@ -830,6 +854,77 @@ export function mountFlightApp({
       cameraFov: Number($('camera-fov').value) || 82,
       cameraTilt: Number($('camera-tilt').value) || 0,
     });
+    const goal = flightGoalFeedback({
+      course: currentCourse(),
+      mode,
+      state,
+      legacy: true,
+      legacyFacts: (replay?.flight ?? flight).objectiveFeedback?.(),
+      locale,
+    });
+    const hudVisible = !terminal && !modalOpen() && !flightMenuOpen();
+    const hudActive = hudVisible && state.status === 'active' && !pausedReplay;
+    $('flight-app').dataset.simHudActive = String(hudActive);
+    $('viewport').dataset.simHudActive = String(hudActive);
+    flightHud.update(goal, {
+      visible: hudVisible,
+      active: hudActive,
+      paused: !hudActive,
+      replay: Boolean(replay),
+      lesson: true,
+      notice: hudActive ? '' : message ? messageText(message) : '',
+      details: [
+        currentCourse().locales[locale].brief,
+        targetText(state),
+        state.target?.min
+          ? `${locale === 'uk' ? 'Висота' : 'Height'}: ${state.target.min.y / 1000}–${state.target.max.y / 1000} m`
+          : '',
+        state.target?.type === 'land'
+          ? locale === 'uk'
+            ? 'М’яке торкання, газ ≤10%; швидкість перед зіткненням.'
+            : 'Soft touchdown, throttle ≤10%; speed is evaluated before collision.'
+          : '',
+        goal.detail,
+      ]
+        .filter(Boolean)
+        .join('\n'),
+    });
+    flightHud.setAim(renderer.aimScreen?.());
+    const cue = $('camera').value === 'fpv' ? renderer.objectiveScreen?.(state) : null;
+    flightHud.setWorldCue(
+      cue
+        ? {
+            ...cue,
+            label: cue.approach
+              ? locale === 'uk'
+                ? 'Поверніться на захід'
+                : 'Return to approach'
+              : cue.heightOnly
+                ? cue.vertical > 0
+                  ? locale === 'uk'
+                    ? 'Плавно вгору'
+                    : 'Climb gently'
+                  : locale === 'uk'
+                    ? 'Плавно вниз'
+                    : 'Descend gently'
+                : cue.occluded
+                  ? locale === 'uk'
+                    ? 'Знайдіть пряму видимість'
+                    : 'Find a clear view'
+                  : cue.type === 'gate'
+                    ? locale === 'uk'
+                      ? 'Пролетіть тут'
+                      : 'Through here'
+                    : cue.type === 'land'
+                      ? locale === 'uk'
+                        ? 'Майданчик'
+                        : 'Landing pad'
+                      : locale === 'uk'
+                        ? 'Цільова зона'
+                        : 'Target zone',
+          }
+        : null,
+    );
     const radioPreview = !replay && input.owner() === 'radio' ? radio.preview() : null,
       values =
         !replay && input.owner() === 'touch' && state.status !== 'active'
@@ -1635,6 +1730,7 @@ export function mountFlightApp({
       audio.dispose();
       appearanceControls.dispose();
       droneResponse.dispose();
+      flightHud.destroy();
       [...stickTraces, ...touchTraces].forEach((trace) => trace.dispose());
       for (const remove of listeners) remove();
       for (const button of courseButtons) {

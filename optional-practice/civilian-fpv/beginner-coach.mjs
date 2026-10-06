@@ -727,6 +727,7 @@ export function mountBeginnerCoach({
   root,
   window: win = globalThis.window,
   locale = () => 'en',
+  liveDisplay = true,
   onStart = () => {},
   onPause = () => {},
   onRetry = () => {},
@@ -1891,6 +1892,11 @@ export function mountBeginnerCoach({
     root.hidden = false;
     root.classList.add('beginner-coach');
     root.dataset.stage = stage;
+    // The shared flight HUD owns live presentation; keep the preparation lab intact.
+    if (stage === 'live' && !liveDisplay) {
+      root.hidden = true;
+      return;
+    }
     root.dataset.labImmersive = String(labImmersive && stage === 'guide');
     root.dataset.reducedMotion = String(Boolean(snapshot.reducedMotion));
     root.setAttribute('aria-label', t('Your flight coach', 'Ваш інструктор польоту'));
@@ -2261,7 +2267,7 @@ export function mountBeginnerCoach({
     paint();
   }
   function paint() {
-    if (!lesson || !refs.sticks) return;
+    if (!lesson || !refs.sticks || (stage === 'live' && !liveDisplay)) return;
     const input = stage === 'guide' ? labInput : controls();
     if (stage === 'guide') paintLab();
     if (refs.signal)
