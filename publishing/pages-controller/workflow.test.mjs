@@ -82,9 +82,6 @@ test("source qualification retains mandatory guards while protected main owns pu
   );
   for (const command of [
     "npm run validate",
-    "npm run lint",
-    "npm run format:check",
-    "npm run format:native:check",
     "node --check authoring/motion-lab/app.js",
     "node ../automation/scripts/run-test-shard.mjs --shard ${{ matrix.shard }}/4 --root .",
   ]) assert.ok(source.includes(command), `Missing source gate: ${command}`);
@@ -172,21 +169,17 @@ test("fast mode waives long suites while release source and publication guards s
     if (workflow !== manual)
       assert.doesNotMatch(workflow, /continue-on-error|\|\| true/);
   }
-  assert.match(
-    manual,
-    /- name: Check formatting\n\s+continue-on-error: true\n\s+run: npm run format:check/,
-  );
-  assert.match(
-    manual,
-    /- name: Check native formatting\n\s+continue-on-error: true\n\s+run: npm run format:native:check/,
-  );
+  for (const command of ['npm run lint', 'npm run format:check', 'npm run format:native:check']) {
+    assert.equal(manual.includes(command), false, `${command} must not block qualification`);
+    assert.equal(pr.includes(command), false, `${command} must not block pull requests`);
+  }
   assert.match(
     pr,
     /test:\n\s+if: >-\n\s+github.event_name == 'pull_request' &&\n\s+needs.preflight.outputs.admission == 'release' &&\n\s+vars.REVEALLINE_FULL_CI == 'true' &&\n\s+needs.preflight.outputs.runTests == 'true'/,
   );
   assert.match(
     pr,
-    /Run extended static and provenance checks\n\s+if: vars.REVEALLINE_FULL_CI == 'true'/,
+    /Run extended source checks\n\s+if: vars.REVEALLINE_FULL_CI == 'true'/,
   );
   assert.match(
     manual,
@@ -220,10 +213,6 @@ test("fast mode waives long suites while release source and publication guards s
       manual,
       [
         "Validate source",
-        "Lint source",
-        "Check formatting",
-        "Check native formatting",
-        "Require reviewed production slots in the committed ledger",
         "Freeze the exact qualified commit",
         "Inspect all frozen originals without release writes",
       ],
@@ -257,7 +246,7 @@ test("fast mode waives long suites while release source and publication guards s
   );
 });
 
-test("draft staging shares the bounded maintenance path policy without checking out PR code", async () => {
+test("queue staging is unrestricted and does not inspect or modify pull requests", async () => {
   const workflow = await fs.readFile(
     new URL(
       "../../.github/workflows/stage-unallocated-pr.yml",
@@ -265,22 +254,12 @@ test("draft staging shares the bounded maintenance path policy without checking 
     ),
     "utf8",
   );
-  for (const path of [
-    "docs\\/",
-    "publishing\\/",
-    "\\.github\\/workflows\\/",
-    "game\\/test\\/",
-  ])
-    assert.ok(workflow.includes(path), `Missing maintenance path: ${path}`);
-  assert.match(workflow, /github\.paginate\(github\.rest\.pulls\.listFiles/);
-  assert.match(workflow, /files\.length > 0/);
-  assert.match(workflow, /files\.every/);
-  assert.match(workflow, /if \(maintenance\) \{[\s\S]*?return;/);
+  assert.match(workflow, /Queue admission is unrestricted/);
   assert.doesNotMatch(
     workflow,
     /actions\/checkout|pull_request_target[\s\S]*?run:/,
   );
-  assert.match(workflow, /convertPullRequestToDraft/);
+  assert.doesNotMatch(workflow, /addLabels|convertPullRequestToDraft/);
 });
 
 test("publisher infrastructure suites run only when full CI and the test policy are enabled", async () => {
@@ -415,7 +394,7 @@ test("frozen publication is PR-only while every protected-main push deploys", as
   assert.doesNotMatch(continuous, /  pull_request:/);
 });
 
-test("draft staging never rewrites admission-bound PR titles", async () => {
+test("queue admission never rewrites titles, labels, milestones or draft state", async () => {
   const workflow = await fs.readFile(
     new URL("../../.github/workflows/stage-unallocated-pr.yml", import.meta.url),
     "utf8",
@@ -424,13 +403,6 @@ test("draft staging never rewrites admission-bound PR titles", async () => {
     workflow,
     /sync-target-title:|github\.rest\.(?:pulls|issues)\.update\s*\(/,
   );
-  assert.match(workflow, /\n  stage:\n/);
-  assert.match(workflow, /!github\.event\.pull_request\.draft/);
-  assert.match(workflow, /github\.event\.pull_request\.milestone == null/);
-  assert.match(
-    workflow,
-    /!contains\(github\.event\.pull_request\.labels\.\*\.name, 'release-train-approved'\)/,
-  );
-  assert.match(workflow, /github\.rest\.issues\.addLabels/);
-  assert.match(workflow, /labels: \['release-train-hold'\]/);
+  assert.match(workflow, /\n  record:\n/);
+  assert.doesNotMatch(workflow, /milestone|addLabels|convertPullRequestToDraft/);
 });

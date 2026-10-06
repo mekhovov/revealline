@@ -13,8 +13,8 @@ function fixture(overrides = {}) {
   return {
     pullRequest: {
       head: { sha: SHA },
-      milestone: { title: "v0.132.0" },
-      labels: [{ name: "fastline-approved" }],
+      milestone: null,
+      labels: [],
       draft: false,
       mergeable: true,
       mergeable_state: "clean",
@@ -23,7 +23,6 @@ function fixture(overrides = {}) {
       ...overrides,
     },
     observedHeadSha: SHA,
-    activeMilestone: "v0.132.0",
     requiredCheck: {
       status: "completed",
       conclusion: "success",
@@ -88,24 +87,13 @@ test("missing or stale admission receipts disarm even a successful exact head", 
   }
 });
 
-test("holds, drafts, milestone changes and review blockers do not merge", () => {
-  assert.equal(decideMergeAction(fixture({ draft: true })).action, "wait");
-  assert.equal(
-    decideMergeAction(
-      fixture({
-        labels: [{ name: "fastline-approved" }, { name: "hold: ux" }],
-      }),
-    ).action,
-    "wait",
-  );
-  assert.equal(
-    decideMergeAction(fixture({ milestone: { title: "v0.133.0" } })).action,
-    "wait",
-  );
-  assert.equal(
-    decideMergeAction(fixture({ review_decision: "CHANGES_REQUESTED" })).action,
-    "wait",
-  );
+test("drafts, labels, milestones and review state do not block an exact-head merge", () => {
+  for (const overrides of [
+    { draft: true },
+    { labels: [{ name: "hold: ux" }, { name: "release-train-hold" }] },
+    { milestone: { title: "v0.133.0" } },
+    { review_decision: "CHANGES_REQUESTED" },
+  ]) assert.equal(decideMergeAction(fixture(overrides)).action, "merge");
 });
 
 test("declared dependencies must already be merged", () => {
@@ -124,7 +112,6 @@ test("only explicitly labeled GitHub stacks use the asynchronous merge endpoint"
     decideMergeAction(
       fixture({
         labels: [
-          { name: "fastline-approved" },
           { name: "fastline-stack-merge" },
         ],
         stack: { number: 7, size: 2, position: 2 },
@@ -136,7 +123,6 @@ test("only explicitly labeled GitHub stacks use the asynchronous merge endpoint"
     decideMergeAction(
       fixture({
         labels: [
-          { name: "fastline-approved" },
           { name: "fastline-stack-merge" },
         ],
       }),
