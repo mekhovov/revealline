@@ -1,0 +1,147 @@
+{
+  "format": "FPVGroundMotionOldCachedNativeReceipt.v1",
+  "status": "passed",
+  "authorship": "Root-owned native browser observations and saved DOM/screenshots; archive assembled separately by D1.",
+  "archivedAt": "2026-10-05T00:07:27.692263+00:00",
+  "url": "http://127.0.0.1:8980/old/optional-practice/fpv-worlds/index.html",
+  "oldRuntime": {
+    "sourceRevision": "0b54fd0fdf8fe06dc900024a8b59713340b09bb3",
+    "sourceTree": "e946452076002444bfea9cd7d320da095bf927b5",
+    "receiptSHA256": "63f8feb89d56aa008ccd26bc982acd822881ef254486c07c44b5450936800e14",
+    "inventorySHA256": "a39cfe07d5b61b9f96cd810926eabcb2b46ecc2809a0dddeddeb389d2d63ab47"
+  },
+  "candidateSourceContextOnly": "9b5c3d65e2877847126c87f263fbc7e9aca357fb",
+  "oldRuntimeOverlays": 0,
+  "oldMembers": 102,
+  "oldSourceInputs": 95,
+  "fixtureSHA256": "0e0123e77cb8ab56751a44d128d7e6d93062ad76a5dfb0186f35ec103f3f8a77",
+  "browserSequence": [
+    "Public Prepare simulator offline rendered Offline runtime preparation completed.",
+    "Root verified owned PID31688, sent SIGTERM, and observed direct curl connection refusal exit7 before cached reload.",
+    "Native reload of old uninstrumented entry showed Ground movement diagnostic active beee4e776e18 and Restore revision52da4c934c10, plus explicit actor.groundMotion unsupported error.",
+    "Public Backup button rendered Backup ready:1 part(s); CUA download wait timed out.",
+    "Back, Start, briefing Start, Ready, deliberate Arm; built-in Lift and land rendered Flight active at61.1s, then Pause at61.2s with Continue.",
+    "Root closed tab26; D1 independently observed post-run curl refusal exit7 before restart."
+  ],
+  "retainedVisibleRevisions": {
+    "activeSHA256": "beee4e776e18bb77e464bdc7d1d752823ab3bf61f696f01eedc9e00d9e66b05c",
+    "restoreSHA256": "52da4c934c10a42b2cbc1a0955910ae2187cf8c48bd9e77a40234e427e08911a",
+    "observation": "Visible 12-character prefixes; exact full byte retention is qualified separately by the292-check native matrix."
+  },
+  "console": [],
+  "backup": {
+    "readyParts": 1,
+    "bytesCaptured": false,
+    "limitation": "Native download wait timed out; no exported bytes, exact byte comparison, or filesystem-save claim."
+  },
+  "serverStop": {
+    "pid": 31688,
+    "signal": "SIGTERM",
+    "authority": "Root observed owned PID and stopped it; exact historical stop timestamp was not separately provided.",
+    "preReloadCurlExitCode": 7,
+    "postRunRefusal": {
+      "observedAt": "2026-10-05T00:06:24.613156+00:00",
+      "url": "http://127.0.0.1:8980/old/optional-practice/fpv-worlds/index.html",
+      "exitCode": 7,
+      "stderr": "curl: (7) Failed to connect to 127.0.0.1 port 8980 after 0 ms: Couldn't connect to server\n",
+      "command": [
+        "curl",
+        "--max-time",
+        "5",
+        "--silent",
+        "--show-error",
+        "--output",
+        "/dev/null",
+        "http://127.0.0.1:8980/old/optional-practice/fpv-worlds/index.html"
+      ]
+    }
+  },
+  "serverRestored": {
+    "sessionId": 23411,
+    "observedAt": "2026-10-05T00:07:27.693876+00:00",
+    "curlExitCode": 0,
+    "httpStatus": 200,
+    "command": [
+      "python3",
+      "-m",
+      "http.server",
+      "8980",
+      "--bind",
+      "127.0.0.1",
+      "--directory",
+      "/tmp/fpv-ground-motion-native-9b5c-r3"
+    ]
+  },
+  "limitations": [
+    "Only the dedicated localhost origin was stopped; not device-wide browser offline, cache eviction, persistence durability, or network isolation.",
+    "Older unmodified admitted runtime only; this does not qualify candidate offline admission or candidate package bytes.",
+    "The unsupported opt-in course was retained and refused; no claim it ran on the old runtime.",
+    "Built-in flight smoke used native timing; no completion, FPS, hardware, or performance claim.",
+    "The292-check source-overlay native matrix remains a distinct receipt, including exact practice/proof/pack byte retention."
+  ],
+  "artifacts": [
+    {
+      "path": "fpv-ground-motion-old-offline-8980-prepared.txt.gz",
+      "rawBytes": 2315,
+      "rawSHA256": "0b7f86bb950f155bafcc9a211a07bf78afdade6070f98a812b1cd7fac9fb2d80",
+      "storedBytes": 956,
+      "storedSHA256": "78c189247520d15094cafb421062280b304d2e2988d2b9059f38b3d41d7b08bd"
+    },
+    {
+      "path": "fpv-ground-motion-old-offline-8980-prepared.png",
+      "rawBytes": 72132,
+      "rawSHA256": "a30d05cbcb6d0d4f854dc668a0067eabc144fdc662434acdb41e42f7d0f310bc",
+      "storedBytes": 72132,
+      "storedSHA256": "a30d05cbcb6d0d4f854dc668a0067eabc144fdc662434acdb41e42f7d0f310bc"
+    },
+    {
+      "path": "fpv-ground-motion-old-offline-8980-reopened.txt.gz",
+      "rawBytes": 2338,
+      "rawSHA256": "be13c24a0b7759ddee30f68f52337e71ec312ca7832126ae386b1eb9ed9cecfd",
+      "storedBytes": 970,
+      "storedSHA256": "82e343cc0f3b36e24e81fa85e29cb769f9afc5dbec6e5ed3db873c02aace0aee"
+    },
+    {
+      "path": "fpv-ground-motion-old-offline-8980-reopened.png",
+      "rawBytes": 72485,
+      "rawSHA256": "26ee49d8a7e310286c8ba46d3424915687909b646c6d848be00e1f9b1738fa94",
+      "storedBytes": 72485,
+      "storedSHA256": "26ee49d8a7e310286c8ba46d3424915687909b646c6d848be00e1f9b1738fa94"
+    },
+    {
+      "path": "fpv-ground-motion-old-offline-8980-active.txt.gz",
+      "rawBytes": 565,
+      "rawSHA256": "02939eef9befb58b686cf075d6797c37530686417d0976ad77267064a6c98f42",
+      "storedBytes": 343,
+      "storedSHA256": "31fc86bac65d613337671cc52b97773f1849e0fbf86752e0e020b8eafab919c3"
+    },
+    {
+      "path": "fpv-ground-motion-old-offline-8980-active.png",
+      "rawBytes": 72627,
+      "rawSHA256": "2433be1973199a7848a2a2b392ef6db5f885b8566bc6dbca79bfc0725b252a48",
+      "storedBytes": 72627,
+      "storedSHA256": "2433be1973199a7848a2a2b392ef6db5f885b8566bc6dbca79bfc0725b252a48"
+    },
+    {
+      "path": "fpv-ground-motion-old-offline-8980-paused.txt.gz",
+      "rawBytes": 1701,
+      "rawSHA256": "00bad6fb8537115fbdd3c4c345850300944e4844af1e9ed4669dc2df111d87eb",
+      "storedBytes": 743,
+      "storedSHA256": "f602440adb7d9fcb52267a7505b599765f28702077d87463700d00b8a9c36a12"
+    },
+    {
+      "path": "fpv-ground-motion-old-offline-8980-console.json.gz",
+      "rawBytes": 2,
+      "rawSHA256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "storedBytes": 22,
+      "storedSHA256": "64406e753d82e11c6bd63d1d04bb6aa083eefa0a46949bbfce994d556b989f0f"
+    },
+    {
+      "path": "fpv-ground-motion-old-offline-8980-post-refusal.json.gz",
+      "rawBytes": 457,
+      "rawSHA256": "aeb365057c9451182bd238c69ce71967a9168dff9262c51e7e11ab283bd4e088",
+      "storedBytes": 274,
+      "storedSHA256": "f0078f3b55cefc0c5a854677ee45d47ce2bc19d41f0fdc39738bc204792fa1d4"
+    }
+  ]
+}

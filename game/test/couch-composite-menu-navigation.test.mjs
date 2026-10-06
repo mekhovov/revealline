@@ -156,7 +156,7 @@ for (const adapter of ['keyboard', 'controller']) {
   test(`Legacy Versus ${adapter} reaches Find missions and terminal Next outside the main panel`, async (t) => {
     const { level } = retryFixture('mission-timeout');
     const f = await couchPage(t, {
-      campaign: { ...base, briefs: [], levels: [level] },
+      campaign: { ...base, id: 'navigation-fixture', briefs: [], levels: [level] },
       pads: adapter === 'controller' ? [pad()] : [],
       nativeKeyboard: true,
     });

@@ -1,0 +1,45 @@
+{
+  "format": "FPVHarborR2VisualReviewScope.v1",
+  "sourceCommit": "ca463bd1f2110305e553c8d5461f5e8ae0eebdca",
+  "accepted": "Bounded stylized first scene for eight-course expansion; no commercial-realism or full-world functional qualification claim.",
+  "observed": [
+    "continuous water in wide High and quay Balanced",
+    "recognizable original barge",
+    "closed deck frame and H pad Balanced",
+    "grazing Low coating alignment",
+    "Pixel Low container readability"
+  ],
+  "peerReview": "Read-only ca463bd1f source review found no actionable ownership/collision issue; no GPU or serialized validation performed by peer.",
+  "files": [
+    {
+      "path": "fpv-harbor-r2-browser-review.json",
+      "bytes": 13998,
+      "sha256": "b75443a82a17776bcc1a30ace04aa1d6a3b3e7ebb20ec533ee85086edbd1464d"
+    },
+    {
+      "path": "fpv-harbor-r2-container-pixel-low.png",
+      "bytes": 128000,
+      "sha256": "c35982ca7c036a1d2e57e151c8b471eb70f39b636e07c27cff3a0f69b77daab3"
+    },
+    {
+      "path": "fpv-harbor-r2-deck-balanced.png",
+      "bytes": 118727,
+      "sha256": "2e4774d03857671bad632a06b577cfe6e5a6b4e6b64b1d0efc67ad3a72e665ff"
+    },
+    {
+      "path": "fpv-harbor-r2-grazing-low.png",
+      "bytes": 125918,
+      "sha256": "9d404ef8e8940b3ba9e93ac2bcdc19e7f00c89ea7f73f8959253c0894a8274b4"
+    },
+    {
+      "path": "fpv-harbor-r2-quay-balanced.png",
+      "bytes": 133541,
+      "sha256": "7127e18baffa0bf97b04977f9f2dfac92766a842d1857b957e55db8904ac2a08"
+    },
+    {
+      "path": "fpv-harbor-r2-wide-high.png",
+      "bytes": 125334,
+      "sha256": "e6d696d4f9576fd07759a3ff955d9cb6d3389b8cf6df97796adc1371cb52325a"
+    }
+  ]
+}

@@ -23,6 +23,7 @@ import {
   snapshotSimThemeProfile,
 } from '../../optional-practice/civilian-fpv/world-themes.mjs';
 import { worldRecordIdentity } from '../../optional-practice/civilian-fpv/world-records.mjs';
+import { openWorldStore } from '../../optional-practice/civilian-fpv/world-store.mjs';
 
 const requireAuthoring = createRequire(
   new URL('../../authoring/fpv-worlds/package.json', import.meta.url),
@@ -32,14 +33,7 @@ const html = parse(
   await readFile(new URL('../../optional-practice/fpv-worlds/index.html', import.meta.url), 'utf8'),
 );
 
-function fixture(
-  t,
-  {
-    storage = new Map(),
-    url = 'https://example.test/optional-practice/fpv-worlds/index.html',
-    ...factories
-  } = {},
-) {
+function fixture(t, indexedDB = new IDBFactory()) {
   const doc = new Document(),
     win = new Events(),
     frames = new Map(),
@@ -106,7 +100,7 @@ function fixture(
       getItem: (key) => storage.get(key) ?? null,
       setItem: (key, value) => storage.set(key, value),
     },
-    indexedDB: new IDBFactory(),
+    indexedDB,
     requestAnimationFrame(callback) {
       frames.set(++frameId, callback);
       return frameId;
@@ -173,6 +167,204 @@ function fixture(
     },
   };
 }
+
+async function settleUntil(predicate, message) {
+  for (let i = 0; i < 100; i++) {
+    if (predicate()) return;
+    await new Promise((resolve) => setImmediate(resolve));
+  }
+  assert.ok(predicate(), message);
+}
+
+test('World random flight follows displayed filters and world scope, preserves mode and avoids repeats', async (t) => {
+  const h = fixture(t);
+  await h.app.ready;
+  const originals = structuredClone(WORLD_CATALOGUE),
+    choose = () => h.doc.querySelector('[data-random-flight="catalogue"]');
+  h.doc.querySelector('.add-challenge').click();
+  const playlist = h.$('playlist-entries').textContent;
+  h.$('theme-tabs')
+    .querySelectorAll('button')
+    .find((b) => b.textContent === 'Snake Hunt')
+    .click();
+  for (const [id, value] of [
+    ['activity-filter', 'hunt'],
+    ['difficulty-filter', 'beginner'],
+    ['completion-filter', 'new'],
+  ]) {
+    h.$(id).value = value;
+    h.$(id).emit('change');
+  }
+  h.doc.querySelector('[data-world="stadium"]').click();
+  const expected = new Set([
+    'snake-hunt-loops-01',
+    'snake-hunt-loops-02',
+    'snake-hunt-interception-loop-intercept',
+    'snake-hunt-route-choices-courtyard-approaches',
+    'native-pursuit-runner-court',
+    'native-pursuit-burst-lanes',
+  ]);
+  assert.match(choose().parentElement.textContent, /This world: Circuit stadium/);
+  assert.match(choose().parentElement.textContent, /6 filtered flights/);
+  assert.equal(choose().type, 'button');
+  h.$('flight-mode').value = 'acro';
+  const manuallySelected = WORLD_CATALOGUE.find((entry) => entry.id === 'snake-hunt-loops-01');
+  await h.app.startFlight(manuallySelected);
+  h.$('leave-flight').click();
+  await settleUntil(() => !h.$('flight-dialog').open, 'manual flight returns to catalogue');
+  let previous = manuallySelected.id;
+  for (let i = 0; i < 4; i++) {
+    choose().click();
+    await settleUntil(
+      () => h.app.snapshot().state?.status === 'disarmed',
+      h.$('studio-status').textContent,
+    );
+    const snapshot = h.app.snapshot();
+    assert.ok(expected.has(snapshot.course), snapshot.course);
+    assert.notEqual(snapshot.course, previous);
+    assert.equal(h.$('flight-mode').value, 'acro');
+    assert.equal(snapshot.state.ticks, 0);
+    assert.equal(snapshot.replay, null);
+    assert.equal(snapshot.records.length, 0);
+    previous = snapshot.course;
+    h.$('leave-flight').click();
+    await settleUntil(() => !h.$('flight-dialog').open, 'return to catalogue');
+  }
+  h.$('completion-filter').value = 'complete';
+  const previousAction = choose();
+  h.$('completion-filter').emit('change');
+  assert.equal(choose().disabled, true, 'completion filter has no eligible flights');
+  assert.match(choose().parentElement.textContent, /No matching flights/);
+  previousAction.click();
+  await new Promise((resolve) => setImmediate(resolve));
+  assert.equal(h.app.snapshot().course, undefined, 'activation rechecks eligibility');
+  h.$('completion-filter').value = 'all';
+  h.$('completion-filter').emit('change');
+  h.$('search').value = 'Clockwise catch';
+  h.$('search').emit('input');
+  assert.match(choose().parentElement.textContent, /Only one flight/);
+  choose().click();
+  await settleUntil(() => h.app.snapshot().state?.status === 'disarmed', 'single choice prepares');
+  assert.equal(h.app.snapshot().course, 'snake-hunt-loops-02');
+  h.$('leave-flight').click();
+  await settleUntil(() => !h.$('flight-dialog').open, 'single choice returns');
+  assert.equal(h.$('playlist-entries').textContent, playlist);
+  h.$('world-language').value = 'uk';
+  h.$('world-language').emit('change');
+  assert.equal(choose().disabled, true, 'search is re-evaluated in the selected language');
+  assert.equal(choose().textContent, 'Випадковий політ');
+  h.$('search').value = WORLD_CATALOGUE.find(
+    (entry) => entry.id === 'snake-hunt-loops-02',
+  ).course.locales.uk.title;
+  h.$('search').emit('input');
+  assert.match(choose().parentElement.textContent, /Лише один політ/);
+  choose().click();
+  await settleUntil(
+    () => h.app.snapshot().state?.status === 'disarmed',
+    'sole candidate may repeat',
+  );
+  assert.equal(h.app.snapshot().course, 'snake-hunt-loops-02');
+  assert.match(h.$('playlist-entries').textContent, /Перші троє/);
+  assert.deepEqual(WORLD_CATALOGUE, originals, 'selection leaves authored courses and seeds exact');
+});
+
+test('World random flight includes the active installed revision and excludes retained archived courses', async (t) => {
+  const indexedDB = new IDBFactory(),
+    store = await openWorldStore({ indexedDB });
+  t.after(() => store.close());
+  const source = WORLD_CATALOGUE.find((entry) => entry.id === 'snake-hunt-loops-01').course;
+  for (const [id, sha] of [
+    ['archived-random', 'a'],
+    ['active-random', 'b'],
+  ]) {
+    const course = structuredClone(source);
+    course.id = id;
+    course.world.id = 'random-installed';
+    course.locales.en.title = id;
+    await store.install({
+      project: {
+        format: 'FPVWorldProject.v1',
+        id: 'random-installed',
+        title: 'Installed random world',
+        world: { id: 'random-installed', title: 'Installed random world' },
+        source: { hash: null, anchors: [], colliders: [] },
+        overrides: {},
+        courses: [course],
+        themes: [],
+        campaigns: [],
+        playlists: [],
+        provenance: [],
+      },
+      assets: new Map(),
+      sha256: sha.repeat(64),
+    });
+  }
+  const h = fixture(t, indexedDB);
+  await h.app.ready;
+  h.$('theme-tabs')
+    .querySelectorAll('button')
+    .find((b) => b.textContent === 'My worlds')
+    .click();
+  const choose = h.doc.querySelector('[data-random-flight="catalogue"]');
+  assert.match(choose.parentElement.textContent, /This world: Installed random world/);
+  assert.match(choose.parentElement.textContent, /Only one flight/);
+  choose.click();
+  await settleUntil(
+    () => h.app.snapshot().state?.status === 'disarmed',
+    h.$('studio-status').textContent,
+  );
+  assert.equal(h.app.snapshot().course, 'active-random');
+  assert.equal((await store.list({ includeRevisions: true })).length, 2);
+});
+
+test('World ordinary results offer a filtered random next flight through unarmed preparation', async (t) => {
+  const h = fixture(t);
+  await h.app.ready;
+  const original = WORLD_CATALOGUE.find((entry) => entry.id === 'snake-hunt-loops-01'),
+    entry = { ...original, course: structuredClone(original.course) };
+  entry.course.rules.maxTicks = 2;
+  await h.app.startFlight(entry);
+  h.$('world-arm').click();
+  h.tick(6);
+  await settleUntil(
+    () => h.doc.querySelector('[data-random-flight="next"]'),
+    h.$('result-panel').textContent,
+  );
+  const next = h.doc.querySelector('[data-random-flight="next"]');
+  assert.match(next.parentElement.textContent, /This world: Circuit stadium/);
+  assert.equal(next.disabled, false);
+  next.click();
+  await settleUntil(
+    () => h.app.snapshot().state?.status === 'disarmed',
+    'next random flight prepares',
+  );
+  assert.notEqual(h.app.snapshot().course, entry.id);
+  assert.equal(h.rendered.at(-1).course.world.id, 'stadium');
+  assert.equal(h.app.snapshot().state.ticks, 0);
+  await h.app.startFlight(entry, {
+    playlist: {
+      id: 'random-result-playlist',
+      revision: 'r1',
+      entries: [{ packIdentity: entry.packIdentity, levelId: entry.id }],
+    },
+  });
+  h.$('world-arm').click();
+  h.tick(6);
+  await settleUntil(
+    () =>
+      !h.$('result-panel').hidden &&
+      h
+        .$('result-panel')
+        .querySelectorAll('button')
+        .some((button) => button.textContent === 'Fly again'),
+    'playlist results finish verification',
+  );
+  assert.equal(
+    h.doc.querySelector('[data-random-flight="next"]'),
+    null,
+    'playlist keeps its own continuation',
+  );
+});
 
 test('World disposal retires menu and renderer owners before their reparented controls disappear', async (t) => {
   const h = fixture(t);
@@ -678,6 +870,7 @@ for (const section of [false, true])
       nativeOutcome = h.$('result-panel'),
       shell = h.doc.querySelector('[data-mode-play-shell]');
     assert.equal(ended.replay.finished, true);
+    assert.equal(h.doc.querySelector('[data-random-flight="next"]'), null);
     assert.equal(ended.state.ticks, proof.frames.length);
     assert.equal(ended.state.status, 'paused');
     if (section) assert.equal(ended.sectionReplay.sectionComplete, false);

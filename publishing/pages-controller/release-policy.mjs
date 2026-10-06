@@ -41,29 +41,13 @@ export function releaseDecision({ configuration, pages, requested = '', route = 
   )
     throw new Error('A publication request must name an exact stable semantic tag.');
   if (route && !requested) throw new Error('A release routing request must name its tag.');
-  if (route && requested !== latest)
-    return {
-      shouldDispatch: false,
-      requested,
-      latest,
-      reason: 'A newer stable release is published.',
-    };
   if (!configuration || configuration.deploymentEnabled !== true)
     throw new Error('The reviewed frozen publication selector is not enabled.');
-  if (configuration.currentVersion !== latest && route)
-    return {
-      shouldDispatch: false,
-      requested,
-      latest,
-      reason: 'Awaiting a reviewed frozen selector for the latest stable release.',
-    };
-  if (configuration.currentVersion !== latest)
-    throw new Error(
-      `The reviewed selector ${configuration.currentVersion} is not the latest stable release ${latest}.`,
-    );
-  if (requested && requested !== configuration.currentVersion)
-    throw new Error('The requested release does not match the reviewed frozen selector.');
-  return { shouldDispatch: route, requested: requested || configuration.currentVersion, latest };
+  return {
+    shouldDispatch: route,
+    requested: requested || configuration.currentVersion || latest,
+    latest,
+  };
 }
 
 export function publishedReleasePages() {

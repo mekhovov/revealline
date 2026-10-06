@@ -14,6 +14,7 @@ import {
   FLIGHT_WORLDS,
   ACTIVITY_NAMES,
   CURATED_PLAYLISTS,
+  canonicalFreeFlightEntry,
 } from './world-catalogue.mjs';
 import { FLIGHT_COURSES } from './catalogue.mjs';
 import {
@@ -34,7 +35,7 @@ import {
   WORLD_FLIGHT_MODEL,
 } from './world-model.mjs';
 import { WORLD_COLLISION_BACKEND } from './world-collision.mjs';
-import { mountBeginnerCoach } from './beginner-coach.mjs';
+import { mountBeginnerCoach, learningObjectiveFeedback } from './beginner-coach.mjs';
 import {
   createFlightInput,
   createFlightMenuNavigation,
@@ -121,6 +122,8 @@ import {
   mountSimAudioControls,
   paintStickDirections,
   mountStickTrace,
+  mountFlightHud,
+  flightGoalFeedback,
 } from './sim-presentation.mjs';
 import { createWorldAudio } from './world-reaction-runtime.mjs';
 import { mountWorldHuntReactions } from './world-reaction-runtime.mjs';
@@ -1009,9 +1012,12 @@ export function mountWorldApp({
     return index < 0 ? null : learningEntries.get(sequence[index + 1]);
   };
   const sessionLearningComplete = new Map();
-  let learningPreferences = null,
+  let selectedWorld = null,
+    lastCatalogueFlightKey = null,
+    learningPreferences = null,
     learningResponse = null,
     lessonReturn = null,
+    learningDemoReturn = null,
     modePractice = false;
   const sectors = createSectorTracker();
   let storage;
@@ -1653,6 +1659,7 @@ export function mountWorldApp({
     immersive.refresh();
     updateSoundLabel();
     audioControls.refresh();
+    hudPreferences.refresh?.();
     huntPresentationControls.refresh();
     huntReactions.refresh();
     refreshEnemyGuide();
@@ -1854,9 +1861,41 @@ export function mountWorldApp({
         }).catch(reportError);
     },
   });
+  const returnToLesson = button(txt('Return to practice', 'Повернутися до практики'), () => {
+    const context = learningDemoReturn;
+    if (context)
+      return startFlight(context.entry, {
+        mode: context.mode,
+        recover: context.recover,
+        lessonCamera: context.camera,
+      });
+  });
+  returnToLesson.hidden = true;
+  $('world-replay-controls').append(returnToLesson);
+  $('world-viewport').dataset.simHudHost = 'worlds';
+  const flightHud = mountFlightHud({
+    container: $('world-viewport'),
+    storage,
+    locale: () => locale,
+    onExplain() {
+      pauseFlight();
+      flightHud.openDetails();
+      if (flight) updateHUD(flight.snapshot());
+    },
+    onLesson() {
+      if (current?.beginner) beginnerCoach.showGuide();
+    },
+    onPreferencesChange() {
+      if (flight) updateHUD(flight.snapshot());
+    },
+  });
+  const hudPreferences = flightHud.preferenceControls($('sim-flight-controls'));
+  const huntCaption = doc.querySelector('#world-viewport .reaction-live-caption');
+  if (huntCaption) $('world-viewport').append(huntCaption);
   let practiceOwnsFullscreen = false;
   const beginnerCoach = mountBeginnerCoach({
     root: $('beginner-coach'),
+    liveDisplay: false,
     window: win,
     locale: () => locale,
     onStart: () => {
@@ -1867,6 +1906,25 @@ export function mountWorldApp({
     onRetry: () => $('world-retry').click(),
     onNext: () => nextLearningFlight(),
     onExit: () => closeFlight(),
+    onWatchDemonstration: ({ mode, step }) => {
+      if (!current?.beginner) return;
+      const entry = demonstrationEntry(current),
+        proof = demonstrationFor(entry, mode);
+      if (!proof) return;
+      learningDemoReturn ??= {
+        entry: current,
+        mode: $('flight-mode').value,
+        camera: $('flight-camera').value,
+        recover:
+          !preview && !replayProof && recorder?.ticks() && !terminal(flight.snapshot())
+            ? recorder.export()
+            : undefined,
+      };
+      const options = Number.isInteger(step)
+        ? { checkpoint: { mode, index: step, proof, watch: true } }
+        : { preview: true, replayProof: proof, demonstration: true };
+      void startFlight(entry, { ...options, lessonDemo: true }).catch(reportError);
+    },
     onRadio: () => $('radio-setup-button').click(),
     readRadioPreview: () => ({ ...radio.preview(), index: radio.status().selected?.index }),
     createLessonPreview: (lesson, mode, proof) =>
@@ -2127,6 +2185,9 @@ export function mountWorldApp({
     );
   }
   function paintCoach(state, radioPreview = radio.preview()) {
+    const guide = beginnerCoach.blocksArm();
+    $('world-viewport').dataset.simHudGuide = String(guide);
+    if (guide) $('flight-dialog').dataset.simHudActive = 'false';
     const source = replayProof ? 'recording' : $('flight-source').value;
     const unavailable = source === 'radio' && !radioPreview?.controls;
     const controls =
@@ -2138,7 +2199,7 @@ export function mountWorldApp({
               (state?.lastInput?.[key] ?? 0) / 1000,
             ]),
           );
-    if (current?.beginner && !checkpointSession)
+    if (current?.beginner && (!checkpointSession || checkpointRequest?.watch))
       beginnerCoach.update({
         state,
         source,
@@ -2313,40 +2374,92 @@ export function mountWorldApp({
       ? `${name} · ${COPY_UK[entry.difficulty] && locale === 'uk' ? COPY_UK[entry.difficulty] : entry.difficulty} · ${entry.duration ?? 3} ${txt('min', 'хв')}`
       : name;
   }
-  function missionCampaign(entry) {
-    const lesson = learningById.get(entry.id);
-    if (lesson) {
-      const tier = [
-        ['beginner', ACRO_LESSON_ORDER],
-        ['experienced', EXPERIENCED_LESSON_ORDER],
-        ['advanced', ADVANCED_LESSON_ORDER],
-        ['pro', PRO_LESSON_ORDER],
-        ['master', MASTER_LESSON_ORDER],
-        ['self-level', SELF_LEVEL_LESSON_ORDER],
-      ].find(([, ids]) => ids.includes(entry.id));
-      const names = {
-        beginner: txt('Beginner', 'Початковий'),
-        experienced: txt('Experienced', 'Для досвідчених'),
-        advanced: txt('Advanced', 'Поглиблений'),
-        pro: 'Pro',
-        master: 'Master',
-        'self-level': txt('Optional self-level', 'Додаткове самовирівнювання'),
-      };
-      return {
-        key: `school:${tier[0]}`,
-        title: `${txt('Flight School', 'Льотна школа')} · ${names[tier[0]]}`,
-      };
+  function filteredCatalogue(complete = completedKeys()) {
+    const search = $('search').value.trim().toLocaleLowerCase(),
+      activity = $('activity-filter').value,
+      difficulty = $('difficulty-filter').value,
+      progress = $('completion-filter').value;
+    return catalogue.filter(
+      (e) =>
+        !e.archived &&
+        (theme === 'all' || e.theme === theme) &&
+        (activity === 'all' || catalogueActivity(e) === activity) &&
+        (difficulty === 'all' || e.difficulty === difficulty) &&
+        (progress === 'all' || complete.has(keyOf(e)) === (progress === 'complete')) &&
+        `${label(e)} ${localized(FLIGHT_WORLDS.find((w) => w.id === e.world)?.title)} ${e.course.environment}`
+          .toLocaleLowerCase()
+          .includes(search),
+    );
+  }
+  function randomFlightCandidates(worldId) {
+    return filteredCatalogue().filter((entry) => entry.world === worldId);
+  }
+  async function startRandomFlight(worldId) {
+    await ready;
+    if (disposed) return;
+    const candidates = randomFlightCandidates(worldId),
+      alternatives = candidates.filter((entry) => keyOf(entry) !== lastCatalogueFlightKey),
+      pool = alternatives.length ? alternatives : candidates;
+    if (!pool.length) {
+      status(txt('No challenges match these filters.', 'Немає завдань за цими фільтрами.'));
+      return;
     }
-    const world = FLIGHT_WORLDS.find((world) => world.id === entry.world);
-    return {
-      key: entry.world,
-      title: world
-        ? localized(world.title)
-        : (installed.find((pack) => pack.id === entry.projectId)?.project.title ?? entry.world),
-    };
+    const entry = pool[Math.floor(Math.random() * pool.length)];
+    lastCatalogueFlightKey = keyOf(entry);
+    // Selection never supplies a simulation seed or bypasses scene preparation/arming.
+    return startFlight(entry, { mode: $('flight-mode').value });
+  }
+  function randomFlightControl(worldId, next = false) {
+    const candidates = randomFlightCandidates(worldId),
+      entry = candidates[0] ?? catalogue.find((item) => !item.archived && item.world === worldId),
+      title =
+        localized(FLIGHT_WORLDS.find((world) => world.id === worldId)?.title) ||
+        installed.find((pack) => pack.id === entry?.projectId)?.project.title ||
+        worldId,
+      row = el('div', undefined, next ? 'button-row' : 'challenge-row'),
+      info = el('div', undefined, 'challenge-info'),
+      action = button(
+        next
+          ? txt('Random next flight', 'Випадковий наступний політ')
+          : txt('Random flight', 'Випадковий політ'),
+        () => startRandomFlight(worldId),
+        'primary',
+      );
+    action.dataset.randomFlight = next ? 'next' : 'catalogue';
+    action.disabled = candidates.length === 0;
+    if (title) action.setAttribute('aria-label', `${action.textContent}: ${title}`);
+    info.append(
+      el(
+        'strong',
+        title
+          ? `${txt('This world', 'Цей світ')}: ${title}`
+          : txt('No matching world', 'Немає відповідного світу'),
+      ),
+      el(
+        'small',
+        candidates.length === 0
+          ? txt(
+              'No matching flights. Change your filters.',
+              'Немає відповідних польотів. Змініть фільтри.',
+            )
+          : candidates.length === 1
+            ? txt(
+                'Only one flight matches your filters.',
+                'Лише один політ відповідає вашим фільтрам.',
+              )
+            : txt(
+                `${candidates.length} filtered flights. No immediate repeats.`,
+                `Польотів за фільтрами: ${candidates.length}. Без повторення поспіль.`,
+              ),
+      ),
+    );
+    row.append(info, action);
+    return row;
   }
   function renderCatalogue() {
     renderSchool();
+    const complete = completedKeys(),
+      filtered = filteredCatalogue(complete);
     $('world-grid').replaceChildren();
     $('level-count').textContent = catalogue.filter((entry) => !entry.archived).length;
     const count = doc.querySelectorAll('.catalogue-stats strong')[1];
@@ -2361,44 +2474,185 @@ export function mountWorldApp({
       if (!groups.has(id)) groups.set(id, []);
       groups.get(id).push(entry);
     }
-    for (const old of new Set(missionLibrary.missions.map((row) => row.ownerId)))
-      if (!groups.has(old)) missionLibrary.remove(old);
-    const complete = completedKeys();
-    for (const [id, missions] of groups) {
-      const positions = new Map(),
-        sizes = new Map();
-      for (const entry of missions) {
-        const key = missionCampaign(entry).key;
-        positions.set(entry, sizes.get(key) ?? 0);
-        sizes.set(key, (sizes.get(key) ?? 0) + 1);
-      }
-      missionLibrary.register({
-        id,
-        editionId: id,
-        edition: 'FPV SIM · Worlds',
-        collection: id === 'worlds:builtin' ? 'Classic' : 'Custom',
-        entries: missions,
-        describe: (entry) => ({
-          id: keyOf(entry),
-          revision: entry.course.revision ?? '',
-          campaignKey: missionCampaign(entry).key,
-          campaignTitle: missionCampaign(entry).title,
-          name: label(entry),
-          levelIndex: positions.get(entry),
-          ...(!entry.projectId
-            ? {
-                canonicalLevelKey: `sim-worlds:${keyOf(entry)}`,
-                globalLevelNumber:
-                  [...WORLD_CATALOGUE, ...BEGINNER_CATALOGUE].findIndex(
-                    (candidate) => keyOf(candidate) === keyOf(entry),
-                  ) + 1,
-              }
-            : {}),
-          campaignLevelCount: sizes.get(missionCampaign(entry).key),
-          modes: ['solo'],
-          tags: ['FPV', 'Practice'],
-          hook: entry.course.locales[locale]?.brief ?? entry.course.locales.en.brief,
-          rules: catalogueDetails(entry),
+    const shelf = el('div', undefined, 'world-shelf');
+    shelf.setAttribute('aria-label', txt('Choose a world', 'Виберіть світ'));
+    if (!groups.has(selectedWorld)) selectedWorld = groups.keys().next().value ?? null;
+    for (const [id, group] of groups) {
+      const world = FLIGHT_WORLDS.find((w) => w.id === id);
+      const choice = button(
+        '',
+        () => {
+          selectedWorld = id;
+          renderCatalogue();
+          const restored = [...$('world-grid').querySelectorAll('[data-world]')].find(
+            (n) => n.dataset.world === id,
+          );
+          restored?.focus({ preventScroll: true });
+          if (win.innerWidth < 900)
+            $('world-grid').querySelector('.world-card')?.scrollIntoView({ block: 'start' });
+        },
+        'world-choice',
+      );
+      choice.dataset.world = id;
+      choice.setAttribute('aria-pressed', String(id === selectedWorld));
+      choice.setAttribute('aria-controls', 'selected-world-challenges');
+      const map = el('div', undefined, 'world-mini-map');
+      map.setAttribute('aria-hidden', 'true');
+      const thumbnail = routeThumbnail(
+        doc,
+        group[0].course,
+        appearanceControls.resolve().appearance,
+      );
+      map.style.background = thumbnail.style.backgroundColor;
+      map.append(thumbnail);
+      const copy = el('span', undefined, 'world-choice-copy');
+      copy.append(
+        el(
+          'strong',
+          world
+            ? localized(world.title)
+            : (installed.find((p) => p.id === group[0].projectId)?.project.title ?? id),
+        ),
+        el(
+          'small',
+          `${group.length} ${txt('flights', 'польотів')} · ${group.filter((e) => complete.has(keyOf(e))).length} ✓`,
+        ),
+      );
+      choice.append(map, copy);
+      shelf.append(choice);
+    }
+    $('world-grid').append(shelf);
+    if (!groups.size) $('world-grid').append(randomFlightControl(null));
+    for (const [id, group] of groups) {
+      if (id !== selectedWorld) continue;
+
+      const world = FLIGHT_WORLDS.find((w) => w.id === id),
+        card = el('article', undefined, 'world-card'),
+        cover = el('div', undefined, 'world-cover');
+      card.id = 'selected-world-challenges';
+      const thumbnail = routeThumbnail(
+        doc,
+        group[0].course,
+        appearanceControls.resolve().appearance,
+      );
+      cover.style.background = thumbnail.style.backgroundColor;
+      cover.append(thumbnail);
+      const title = el('div', undefined, 'cover-title');
+      title.append(
+        el(
+          'strong',
+          world
+            ? localized(world.title)
+            : (installed.find((p) => p.id === group[0].projectId)?.project.title ?? id),
+        ),
+        el(
+          'span',
+          world ? localized(world.subtitle) : txt('Your authored world', 'Ваш власний світ'),
+        ),
+      );
+      cover.append(
+        title,
+        el(
+          'span',
+          localized(WORLD_THEMES.find((t) => t.id === group[0].theme)?.title) ||
+            txt('Custom world', 'Власний світ'),
+          'world-tag',
+        ),
+      );
+      card.append(cover);
+      const rows = el('div', undefined, 'challenge-list');
+      rows.append(randomFlightControl(id));
+      group.forEach((entry, i) => {
+        const row = el('div', undefined, 'challenge-row'),
+          info = el('div', undefined, 'challenge-info');
+        info.append(
+          el('strong', `${complete.has(keyOf(entry)) ? '✓ ' : ''}${label(entry)}`),
+          el('small', catalogueDetails(entry)),
+        );
+        if (demonstrationFor(entry, $('flight-mode').value)) {
+          const watch = button(
+            txt('Watch example', 'Переглянути приклад'),
+            () => watchDemonstration(entry),
+            'watch-example',
+          );
+          watch.setAttribute(
+            'aria-label',
+            `${txt('Watch demonstration', 'Переглянути демонстрацію')}: ${label(entry)}`,
+          );
+          info.append(watch);
+        }
+        if (worldEnemyGuide(entry.course, { mode: $('flight-mode').value }).rows.length) {
+          const inspect = button(txt('Preview targets', 'Переглянути цілі'), (event) =>
+            enemyGuide.open(entry.course, {
+              mode: $('flight-mode').value,
+              trigger: event.currentTarget,
+            }),
+          );
+          inspect.dataset.enemyGuideCourse = entry.id;
+          inspect.setAttribute('aria-controls', enemyGuide.dialog.id);
+          inspect.setAttribute(
+            'aria-label',
+            `${txt('Preview targets', 'Переглянути цілі')}: ${label(entry)}`,
+          );
+          info.append(inspect);
+        }
+        const fly = button(txt('Fly', 'Летіти'), () => startFlight(entry));
+        fly.setAttribute('aria-label', `${txt('Fly', 'Летіти')}: ${label(entry)}`);
+        const add = button(
+          '+',
+          () => {
+            if (entries.length >= 128)
+              throw new Error(
+                txt('A playlist supports up to 128 entries.', 'Добірка підтримує до 128 завдань.'),
+              );
+            entries.push({ packIdentity: entry.packIdentity, levelId: entry.id });
+            renderPlaylist();
+            status(txt('Added to your playlist.', 'Додано до добірки.'));
+          },
+          'add-challenge',
+        );
+        add.setAttribute(
+          'aria-label',
+          `${txt('Add to playlist', 'Додати до добірки')}: ${label(entry)}`,
+        );
+        row.append(el('span', String(i + 1).padStart(2, '0'), 'challenge-no'), info, fly, add);
+        rows.append(row);
+      });
+      card.append(rows);
+      card.append(
+        button(txt('Free flight', 'Вільний політ'), () => {
+          const source = canonicalFreeFlightEntry(catalogue, id);
+          if (!source) return;
+          const course = clone(source.course);
+          course.format = 'FlightCourse.v2';
+          delete course.pursuit;
+          course.id = unique('freeflight');
+          for (const language of ['en', 'uk'])
+            course.locales[language].title =
+              `${language === 'uk' ? 'Вільний політ' : 'Free flight'} · ${world?.title?.[language] ?? source.world}`;
+          course.world ??= {
+            id: source.world,
+            theme: source.theme,
+            style: world?.style ?? 'hangar',
+          };
+          course.actors = [];
+          course.rules = { ...course.rules, maxTicks: 36000 };
+          course.conditions ??= { profile: 'clear', revision: 'r1' };
+          course.steps = {
+            'self-level': [{ type: 'survive', ticks: 36000 }],
+            acro: [{ type: 'survive', ticks: 36000 }],
+          };
+          return startFlight(
+            {
+              ...source,
+              id: course.id,
+              freeFlight: true,
+              course: validateWorldCourse(course),
+              legacy: false,
+              beginner: undefined,
+            },
+            { preview: true },
+          );
         }),
         availability: () => ({ state: 'ready' }),
         card: (entry) => entry.course,
@@ -3932,7 +4186,8 @@ export function mountWorldApp({
     node.classList.toggle('sector-behind', value !== null && value > 0);
   }
   function updateSectorHUD() {
-    $('sector-panel').hidden = Boolean(checkpointSession) || modePractice;
+    $('sector-panel').hidden =
+      Boolean(checkpointSession) || modePractice || Boolean(current?.freeFlight);
     const latest = sectors.latest(sectorReference?.sectors),
       title = latest
         ? `${txt('Sector', 'Ділянка')} ${latest.index + 1} · ${seconds(latest.ticks)}`
@@ -4082,6 +4337,66 @@ export function mountWorldApp({
     updateSectorHUD();
     updateGhostHUD();
     const target = current.course.steps[$('flight-mode').value][state.step];
+    const guidance = flightGoalFeedback({
+      course: current.course,
+      mode: $('flight-mode').value,
+      state,
+      legacy: Boolean(current.legacy),
+      legacyFacts: current.legacy ? flight.objectiveFeedback?.() : null,
+      locale,
+      freeFlight: Boolean(current.freeFlight),
+    });
+    const numeric = flightHud.detailsRoot()?.open
+      ? learningObjectiveFeedback(target, current.legacy ? null : state, {
+          locale,
+          mode: $('flight-mode').value,
+        })
+      : null;
+    const hudVisible =
+      !finished &&
+      !terminal(state) &&
+      !beginnerCoach.blocksArm() &&
+      !playShell?.blocksPlay() &&
+      !flightMenuOpen() &&
+      $('flight-dialog').dataset.optionsOpen !== 'true' &&
+      $('flight-dialog').dataset.immersiveControls !== 'true' &&
+      !doc.querySelector('dialog[open]:not(#flight-dialog)');
+    const activeHud = hudVisible && state.status === 'active';
+    $('flight-dialog').dataset.simHudActive = String(activeHud);
+    $('world-viewport').dataset.simHudActive = String(activeHud);
+    $('world-viewport').dataset.simHudGuide = String(beginnerCoach.blocksArm());
+    flightHud.update(guidance, {
+      visible: hudVisible,
+      active: activeHud,
+      paused: state.status !== 'active',
+      replay: Boolean(replayProof),
+      lesson: Boolean(current.beginner),
+      telemetry:
+        current.beginner || current.freeFlight
+          ? state.health < 100
+            ? `♥ ${state.health}`
+            : ''
+          : [
+              Number.isFinite(state.health) ? `♥ ${state.health}` : '',
+              `${((state.ticks - (checkpointSession?.startTick ?? 0)) / 50).toFixed(1)} s`,
+            ]
+              .filter(Boolean)
+              .join(' · '),
+      notice: activeHud ? '' : $('flight-status').textContent,
+      details: !numeric
+        ? undefined
+        : [
+            numeric.objective,
+            ...numeric.checks.map(
+              (check) =>
+                `${check.label}: ${current.legacy ? '' : `${check.value} · `}${check.required}`,
+            ),
+            numeric.detail,
+            numeric.hint,
+          ]
+            .filter(Boolean)
+            .join('\n'),
+    });
     paintText(
       'flight-instruments',
       `${(state.position.y / 1000).toFixed(1)} m · ${(Math.hypot(state.velocity.x, state.velocity.y, state.velocity.z) / 1000) | 0} m/s · ${((state.ticks - (checkpointSession?.startTick ?? 0)) / 50).toFixed(1)} s${state.health !== undefined ? ` · ♥ ${state.health}` : ''}`,
@@ -4121,6 +4436,7 @@ export function mountWorldApp({
         objective += ` · ${txt('Touched your echo tail', 'Зіткнення зі своїм хвостом')}`;
     }
     if (modePractice) objective = `${modePracticeNotice()} · ${objective}`;
+    if (current.freeFlight) objective = freeFlightNotice();
     paintText('flight-objective', objective);
     $('world-arm').disabled =
       !sceneReady ||
@@ -4142,7 +4458,8 @@ export function mountWorldApp({
       Boolean(replayProof) ||
       Boolean(checkpointSession) ||
       !demonstrationFor(current, $('flight-mode').value);
-    $('export-flight').disabled = Boolean(checkpointSession) || modePractice;
+    $('export-flight').disabled =
+      Boolean(checkpointSession) || modePractice || Boolean(current.freeFlight);
     $('world-fire').hidden =
       Boolean(replayProof) ||
       current.legacy ||
@@ -4169,11 +4486,11 @@ export function mountWorldApp({
     input.enable(false);
     fire = false;
     radio.freeze('finished');
-    if (modePractice && !checkpointSession) {
+    if ((modePractice || current.freeFlight) && !checkpointSession) {
       $('result-panel').hidden = false;
       $('result-panel').replaceChildren(
         el('h2', txt('Practice ended', 'Тренування завершено')),
-        el('p', modePracticeNotice()),
+        el('p', current.freeFlight ? freeFlightNotice() : modePracticeNotice()),
         el(
           'p',
           txt(
@@ -4184,7 +4501,9 @@ export function mountWorldApp({
         button(txt('Practise again', 'Тренуватися ще раз'), () => startFlight(current), 'primary'),
         button(txt('Back to lobby', 'До меню'), () => closeFlight()),
       );
-      $('flight-status').textContent = modePracticeNotice();
+      $('flight-status').textContent = current.freeFlight
+        ? freeFlightNotice()
+        : modePracticeNotice();
       return;
     }
     if (checkpointSession) {
@@ -4539,6 +4858,49 @@ export function mountWorldApp({
               }),
           ),
         );
+      const resultActions = el('div', undefined, 'button-row');
+      resultActions.append(
+        button(txt('Fly again', 'Летіти ще раз'), () => $('world-retry').click(), 'primary'),
+      );
+      if (!$('world-next').disabled)
+        resultActions.append(
+          button(txt('Next flight', 'Наступний політ'), () => $('world-next').click(), 'primary'),
+        );
+      if (entry.beginner && state.status === 'complete' && !isPreview)
+        resultActions.append(
+          button(
+            !nextLearningEntry(entry)
+              ? txt('Return to your course', 'Повернутися до курсу')
+              : txt('Next lesson', 'Наступний урок'),
+            () => nextLearningFlight(),
+            'primary',
+          ),
+        );
+      if (entry.beginner && state.status === 'complete' && !nextLearningEntry(entry))
+        resultActions.append(
+          button(
+            txt('Explore more worlds', 'Досліджувати інші світи'),
+            async () => {
+              await closeFlight();
+              showTab('explore');
+            },
+            'primary',
+          ),
+        );
+      resultActions.append(
+        button(
+          entry.beginner
+            ? txt('Back to Flight School', 'До льотної школи')
+            : txt('Back to lobby', 'До меню'),
+          async () => {
+            await closeFlight();
+            if (entry.beginner) showTab('learn');
+          },
+        ),
+      );
+      $('result-panel').append(resultActions);
+      if (!isPreview && !entry.beginner && !completedPlaylist)
+        $('result-panel').append(randomFlightControl(entry.world, true));
       presentation.resume();
       resultDetails.append(
         button(txt('Watch verified flight', 'Переглянути перевірений політ'), () =>
@@ -4824,7 +5186,36 @@ export function mountWorldApp({
     audio.update(state, { active: !replayProof && state.status === 'active' });
     // Do not submit an intermediate scene while its assets or shaders are preparing.
     if (sceneReady) drawFlight(state);
+    const cue =
+      sceneReady && $('flight-camera').value === 'fpv' ? renderer?.objectiveScreen?.(state) : null;
+    flightHud.setWorldCue(
+      !cue || current?.freeFlight || beginnerCoach.blocksArm()
+        ? null
+        : {
+            ...cue,
+            label: cue.approach
+              ? txt('Return to approach', 'Поверніться на захід')
+              : cue.heightOnly
+                ? cue.vertical > 0
+                  ? txt('Climb gently', 'Плавно вгору')
+                  : txt('Descend gently', 'Плавно вниз')
+                : cue.occluded
+                  ? txt('Find a clear view', 'Знайдіть пряму видимість')
+                  : cue.type === 'gate' || cue.type === 'crossing-v1'
+                    ? txt('Through here', 'Пролетіть тут')
+                    : cue.type === 'land'
+                      ? txt('Landing pad', 'Майданчик')
+                      : cue.type === 'hunt-contact-v1'
+                        ? txt('Touch', 'Торкніться')
+                        : cue.type === 'eliminate'
+                          ? txt('Fire', 'Вогонь')
+                          : cue.type === 'actor-track-v1'
+                            ? txt('Follow / observe', 'Стежте')
+                            : txt('Target zone', 'Цільова зона'),
+          },
+    );
     const aim = renderer?.aimScreen?.();
+    flightHud.setAim(aim);
     if (aim) {
       $('aim-reticle').style.left = `${aim.x * 100}%`;
       $('aim-reticle').style.top = `${aim.y * 100}%`;
@@ -4834,6 +5225,11 @@ export function mountWorldApp({
     paintInput(state);
     if (terminal(state)) void finishFlight(flightToken).catch(reportError);
   }
+  const freeFlightNotice = () =>
+    txt(
+      'Free flight · no time limit · unscored',
+      'Вільний політ · без обмеження часу · без заліку',
+    );
   const modePracticeNotice = () =>
     txt(
       'Self-level practice · no score. Acro is needed for these manoeuvres.',
@@ -4857,6 +5253,18 @@ export function mountWorldApp({
       playShell?.enterPlay();
     }
     if (playShell) $('flight-dialog').prepend(playShell.elements.header);
+    if (
+      learningDemoReturn &&
+      !options.lessonDemo &&
+      !options.replayProof &&
+      !options.checkpoint?.watch
+    ) {
+      if (options.mode === undefined) options = { ...options, mode: learningDemoReturn.mode };
+      learningDemoReturn = null;
+    }
+    returnToLesson.hidden = !learningDemoReturn;
+    $('flight-dialog').classList.toggle('learning-replay', Boolean(learningDemoReturn));
+    returnToLesson.textContent = txt('Return to practice', 'Повернутися до практики');
     const requestedMode =
       options.mode ??
       options.replayProof?.mode ??
@@ -4918,6 +5326,8 @@ export function mountWorldApp({
     flight?.dispose?.();
     flight = null;
     current = entry;
+    if (!options.replayProof && !options.preview && !options.checkpoint && !entry.freeFlight)
+      lastCatalogueFlightKey = keyOf(entry);
     recorder = null;
     checkpointRequest = options.checkpoint ?? null;
     checkpointSession = null;
@@ -4925,21 +5335,27 @@ export function mountWorldApp({
     refreshEnemyGuide();
     const needsAcro = !entry.legacy && worldCourseRequiresAcro(entry.course);
     modePractice = needsAcro && requestedMode === 'self-level';
-    const learning = !checkpointRequest && learningById.get(entry.beginner);
+    const learning =
+      (!checkpointRequest || checkpointRequest.watch) && learningById.get(entry.beginner);
     if (learning) {
       learningPreferences ??= {
         'flight-camera': $('flight-camera').value,
       };
       learningResponse ??= { ...response };
       response = { ...DEFAULT_RESPONSE };
-      $('flight-camera').value = requestedMode === 'acro' ? 'fpv' : learning.camera;
+      $('flight-camera').value =
+        options.lessonCamera ?? (requestedMode === 'acro' ? 'fpv' : learning.camera);
       beginnerCoach.open(learning, {
         mode: requestedMode,
         keyboardPreset: $('flight-keyboard-preset').value,
         modePractice,
         demonstration: demonstrationFor({ ...entry, course: learning.course }, requestedMode),
+        recommendedDemonstration: demonstrationFor(
+          { ...entry, course: learning.course },
+          learning.mode,
+        ),
         practice: Boolean(options.recover),
-        replay: Boolean(options.replayProof),
+        replay: Boolean(options.replayProof || checkpointRequest?.watch),
       });
     } else {
       beginnerCoach.close();
@@ -4947,11 +5363,13 @@ export function mountWorldApp({
     }
     $('flight-dialog').classList.toggle('learning-flight', Boolean(learning));
     preview =
+      Boolean(entry.freeFlight) ||
       modePractice ||
       Boolean(checkpointRequest) ||
       Boolean(options.replayProof) ||
       (options.preview ?? false);
-    playingPlaylist = checkpointRequest || modePractice ? null : (options.playlist ?? null);
+    playingPlaylist =
+      checkpointRequest || modePractice || entry.freeFlight ? null : (options.playlist ?? null);
     playlistIndex = options.index ?? 0;
     finished = false;
     sceneReady = false;
@@ -5000,15 +5418,21 @@ export function mountWorldApp({
       ? $('world-replay-label').textContent
       : checkpointRequest
         ? txt('SECTION PRACTICE · UNSCORED', 'ТРЕНУВАННЯ ДІЛЯНКИ · БЕЗ ЗАЛІКУ')
-        : modePractice
-          ? txt('SELF-LEVEL PRACTICE · UNSCORED', 'ПРАКТИКА ІЗ САМОВИРІВНЮВАННЯМ · БЕЗ ЗАЛІКУ')
-          : preview
-            ? txt('AUTHORING PREVIEW', 'АВТОРСЬКИЙ ПЕРЕГЛЯД')
-            : learning
-              ? txt('FLIGHT SCHOOL', 'ЛЬОТНА ШКОЛА')
-              : localized(WORLD_THEMES.find((t) => t.id === entry.theme)?.title) || entry.world;
-    $('flight-brief').textContent = $('flight-menu-brief').textContent =
-      `${modePractice ? `${modePracticeNotice()} ` : ''}${entry.course.locales[locale].brief}`;
+        : entry.freeFlight
+          ? txt('FREE FLIGHT · UNSCORED', 'ВІЛЬНИЙ ПОЛІТ · БЕЗ ЗАЛІКУ')
+          : modePractice
+            ? txt('SELF-LEVEL PRACTICE · UNSCORED', 'ПРАКТИКА ІЗ САМОВИРІВНЮВАННЯМ · БЕЗ ЗАЛІКУ')
+            : preview
+              ? txt('AUTHORING PREVIEW', 'АВТОРСЬКИЙ ПЕРЕГЛЯД')
+              : learning
+                ? txt('FLIGHT SCHOOL', 'ЛЬОТНА ШКОЛА')
+                : localized(WORLD_THEMES.find((t) => t.id === entry.theme)?.title) || entry.world;
+    $('flight-brief').textContent = $('flight-menu-brief').textContent = entry.freeFlight
+      ? txt(
+          'Explore the world for as long as you like. Pause to change flight mode, view or controls. No score or recording is saved.',
+          'Досліджуйте світ скільки завгодно. На паузі змінюйте режим польоту, камеру чи керування. Результат і запис польоту не зберігаються.',
+        )
+      : `${modePractice ? `${modePracticeNotice()} ` : ''}${entry.course.locales[locale].brief}`;
     $('flight-status').textContent = txt('Preparing scene…', 'Підготовка сцени…');
     paintLoadout();
     if (ownsLaunch() && !$('flight-dialog').open) $('flight-dialog').showModal();
@@ -5142,19 +5566,20 @@ export function mountWorldApp({
         course: entry.course,
         mode: $('flight-mode').value,
         response: replayProof?.response ?? response,
-        unscoredPractice: modePractice,
+        unscoredPractice: modePractice || Boolean(entry.freeFlight),
       });
-      recorder = modePractice
-        ? null
-        : (entry.legacy ? createFlightRecorder : createWorldRecorder)(flight, {
-            session: replayProof
-              ? replayKind === 'demonstration'
-                ? 'demonstration'
-                : 'replay'
-              : preview
-                ? 'authoring'
-                : 'practice',
-          });
+      recorder =
+        modePractice || entry.freeFlight
+          ? null
+          : (entry.legacy ? createFlightRecorder : createWorldRecorder)(flight, {
+              session: replayProof
+                ? replayKind === 'demonstration'
+                  ? 'demonstration'
+                  : 'replay'
+                : preview
+                  ? 'authoring'
+                  : 'practice',
+            });
     }
     enemyStatsRunId = win.crypto?.randomUUID?.() ?? globalThis.crypto.randomUUID();
     if (options.recover) {
@@ -5307,7 +5732,7 @@ export function mountWorldApp({
       )}`;
   }
   async function closeFlight() {
-    continuousPlay.cancel('closed');
+    flightHud.closeDetails();
     enemyGuide.close();
     const token = ++flightToken;
     checkpointPreparation?.abort();
@@ -5321,6 +5746,12 @@ export function mountWorldApp({
     if (token !== flightToken || disposed) return;
     flight?.dispose?.();
     flight = null;
+    if (learningDemoReturn) $('flight-mode').value = learningDemoReturn.mode;
+    learningDemoReturn = null;
+    returnToLesson.hidden = true;
+    $('flight-dialog').classList.remove('learning-replay');
+    flightHud.setWorldCue(null);
+    $('flight-dialog').dataset.simHudActive = 'false';
     const closedLesson = current?.beginner;
     current = null;
     refreshEnemyGuide();
@@ -5891,7 +6322,12 @@ export function mountWorldApp({
             'Тренування ділянки триває · без нагород і запису.',
           )
         : preview
-          ? txt('Preview: completion does not earn rewards.', 'Перегляд: виконання не дає нагород.')
+          ? current?.freeFlight
+            ? freeFlightNotice()
+            : txt(
+                'Preview: completion does not earn rewards.',
+                'Перегляд: виконання не дає нагород.',
+              )
           : txt('Flight active.', 'Політ триває.');
     $('world-viewport').focus();
   });
@@ -5912,7 +6348,12 @@ export function mountWorldApp({
     if (enemyGuide.dialog.open) return { root: enemyGuide.dialog, key: enemyGuide.dialog.id };
     if (packRemovalReview?.dialog.open)
       return { root: packRemovalReview.dialog, key: 'pack-removal-review' };
-    const secondary = ['world-radio-dialog', 'drone-hangar', 'sim-settings']
+    const secondary = [
+      'world-radio-dialog',
+      'drone-hangar',
+      'sim-settings',
+      'sim-flight-hud-details',
+    ]
       .map($)
       .find((node) => node.open);
     if (secondary)
@@ -5972,7 +6413,8 @@ export function mountWorldApp({
       if (menuHint.textContent !== value) menuHint.textContent = value;
     },
     onBack() {
-      if (enemyGuide.dialog.open) enemyGuide.close();
+      if ($('sim-flight-hud-details')?.open) flightHud.closeDetails();
+      else if (enemyGuide.dialog.open) enemyGuide.close();
       else if (packRemovalReview?.dialog.open) $('pack-removal-cancel').click();
       else if ($('world-radio-dialog').open) closeRadio();
       else if ($('drone-hangar').open)
@@ -6139,6 +6581,9 @@ export function mountWorldApp({
   });
   on($('flight-mode'), 'change', () => {
     const selectedMode = $('flight-mode').value;
+    // An explicit player choice ends the temporary demonstration-mode override.
+    // Never restore the previous mode over the choice they just made.
+    learningDemoReturn = null;
     renderCatalogue();
     if (checkpointRequest) {
       const hasSection = checkpointRequest.index < current.course.steps[selectedMode].length;
@@ -7059,6 +7504,7 @@ export function mountWorldApp({
           droneResponse.dispose();
           stickTraces.forEach((trace) => trace.dispose());
           beginnerCoach.dispose();
+          flightHud.destroy();
           spatialEditor?.dispose();
           // Keep reparented controls available until their input, hints,
           // audio and editor owners have all retired.

@@ -1,0 +1,56 @@
+{
+  "format": "LibraryCohortFrozenRuntimeEquivalence.v1",
+  "observedAt": "2026-10-05T12:49:59.634357+00:00",
+  "head": "bdbb7c96fbf83841508794dc1ee750075099d171",
+  "admittedSource": "2c99a82508f23e508666d7354a1b473507514d48",
+  "distinctInputs": 138,
+  "packages": [
+    {
+      "id": "civilian-flight",
+      "inputs": 41,
+      "inputBytes": 1921336,
+      "allBytesMatch": true
+    },
+    {
+      "id": "civilian-fpv",
+      "inputs": 69,
+      "inputBytes": 5687631,
+      "allBytesMatch": true
+    },
+    {
+      "id": "fpv-worlds",
+      "inputs": 105,
+      "inputBytes": 16981607,
+      "allBytesMatch": true
+    }
+  ],
+  "changedFilesIntersectAdmittedInputs": false,
+  "changedPaths": [
+    "authoring/fpv-worlds/library-ground-cohort/README.md",
+    "authoring/fpv-worlds/library-ground-cohort/evidence/admission-2c99-r2/fpv-ground-cohort-admission-2c99a8250-r2.json.gz",
+    "authoring/fpv-worlds/library-ground-cohort/evidence/admission-2c99-r2/fpv-ground-cohort-admission-2c99a8250-r2.log.gz",
+    "authoring/fpv-worlds/library-ground-cohort/evidence/admission-2c99-r2/fpv-safe-cleanup-20261005.md.gz",
+    "authoring/fpv-worlds/library-ground-cohort/evidence/admission-2c99-r2/manifest-optional-civilian-flight.json.gz",
+    "authoring/fpv-worlds/library-ground-cohort/evidence/admission-2c99-r2/manifest-optional-civilian-fpv.json.gz",
+    "authoring/fpv-worlds/library-ground-cohort/evidence/admission-2c99-r2/manifest-optional-fpv-worlds.json.gz",
+    "authoring/fpv-worlds/library-ground-cohort/evidence/admission-2c99-r2/manifest.json",
+    "authoring/fpv-worlds/library-ground-cohort/evidence/admission-2c99-r2/optional-candidate-verification.json.gz",
+    "authoring/fpv-worlds/library-ground-cohort/evidence/admission-2c99-r2/optional-checksums.json.gz",
+    "authoring/fpv-worlds/library-ground-cohort/evidence/admission-2c99-r2/optional-package-review.json.gz",
+    "authoring/fpv-worlds/library-ground-cohort/evidence/admission-2c99-r2/optional-packages.json.gz",
+    "authoring/fpv-worlds/library-ground-cohort/evidence/admission-2c99-r2/source-inventory-optional-civilian-flight.json.gz",
+    "authoring/fpv-worlds/library-ground-cohort/evidence/admission-2c99-r2/source-inventory-optional-civilian-fpv.json.gz",
+    "authoring/fpv-worlds/library-ground-cohort/evidence/admission-2c99-r2/source-inventory-optional-fpv-worlds.json.gz",
+    "authoring/fpv-worlds/library-ground-cohort/evidence/qualification-2c99/fpv-ground-cohort-admission-2c99a8250-r1-preflight-failed.json.gz",
+    "authoring/fpv-worlds/library-ground-cohort/evidence/qualification-2c99/fpv-ground-cohort-materialize-2c99a8250-r1.json.gz",
+    "authoring/fpv-worlds/library-ground-cohort/evidence/qualification-2c99/fpv-ground-cohort-materialize-2c99a8250.mjs.gz",
+    "authoring/fpv-worlds/library-ground-cohort/evidence/qualification-2c99/fpv-ground-cohort-run-bounded-2c99a8250.py.gz",
+    "authoring/fpv-worlds/library-ground-cohort/evidence/qualification-2c99/fpv-ground-cohort-validate-2c99a8250-r1.json.gz",
+    "authoring/fpv-worlds/library-ground-cohort/evidence/qualification-2c99/fpv-ground-cohort-validate-2c99a8250-r1.log.gz",
+    "authoring/fpv-worlds/library-ground-cohort/evidence/qualification-2c99/manifest.json",
+    "authoring/fpv-worlds/library-ground-cohort/evidence/source-contract-inherited-v3.json",
+    "authoring/fpv-worlds/library-ground-cohort/qualify.mjs",
+    "docs/fpv-parallel-delivery-2026-10-04.md"
+  ],
+  "limit": "Runtime input byte equivalence only; old-source admission is not fresh exact-head package admission, current-main integration, native/offline qualification or publication readiness."
+}

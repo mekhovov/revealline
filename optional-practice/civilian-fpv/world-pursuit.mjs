@@ -193,7 +193,9 @@ export function admitFlightPursuit(course, collision) {
     byId = new Map(course.pursuit.nodes.map((n) => [n.id, n.position]));
   for (const policy of course.pursuit.actors) {
     const original = course.actors.find((a) => a.id === policy.id);
-    const shape = `${original.type}:${original.radius}:${original.height}`;
+    const shape =
+      `${original.type}:${original.radius}:${original.height}` +
+      (original.groundMotion ? `:${original.groundMotion}` : '');
     if (checked.has(shape)) continue;
     checked.add(shape);
     const probe = { ...original, position: { ...original.position } };
