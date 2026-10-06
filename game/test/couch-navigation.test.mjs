@@ -532,7 +532,7 @@ for (const turnPolicy of ['immediate', 'grid-center']) {
 test('one lost craft does not expose shared menu; both ended draws retain explicit Next', async (t) => {
   const { level } = retryFixture('self-contact');
   const f = await page(t, {
-    campaign: { ...base, briefs: [], levels: [level] },
+    campaign: { ...base, id: 'navigation-fixture', briefs: [], levels: [level] },
     pads: [pad(0), pad(1)],
   });
   f.join(0);
@@ -679,7 +679,10 @@ for (const turnPolicy of ['immediate', 'grid-center']) {
   test(`${turnPolicy}: real recovery clears only that player's continuous intent before later substeps`, async (t) => {
     const { level } = retryFixture('enemy-player');
     level.rules = { ...level.rules, lives: 3, respawnSeconds: 0.1, graceSeconds: 0 };
-    const f = await page(t, { campaign: { ...base, briefs: [], levels: [level] }, turnPolicy });
+    const f = await page(t, {
+      campaign: { ...base, id: 'navigation-fixture', briefs: [], levels: [level] },
+      turnPolicy,
+    });
     f.$('race-start').click();
     f.frame();
     f.key('KeyD');
@@ -773,7 +776,7 @@ for (const turnPolicy of ['immediate', 'grid-center']) {
         },
       };
       const f = await page(t, {
-        campaign: { ...base, briefs: [], levels: [level] },
+        campaign: { ...base, id: 'navigation-fixture', briefs: [], levels: [level] },
         turnPolicy,
         pads: adapter === 'controller' ? [pad(0)] : [],
       });
