@@ -828,6 +828,7 @@ export function mountWorldApp({
   };
   const sessionLearningComplete = new Map();
   let selectedWorld = null,
+    lastCatalogueFlightKey = null,
     learningPreferences = null,
     learningResponse = null,
     lessonReturn = null,
@@ -2264,14 +2265,12 @@ export function mountWorldApp({
       ? `${name} · ${COPY_UK[entry.difficulty] && locale === 'uk' ? COPY_UK[entry.difficulty] : entry.difficulty} · ${entry.duration ?? 3} ${txt('min', 'хв')}`
       : name;
   }
-  function renderCatalogue() {
-    renderSchool();
-    const complete = completedKeys(),
-      search = $('search').value.trim().toLocaleLowerCase(),
+  function filteredCatalogue(complete = completedKeys()) {
+    const search = $('search').value.trim().toLocaleLowerCase(),
       activity = $('activity-filter').value,
       difficulty = $('difficulty-filter').value,
       progress = $('completion-filter').value;
-    const filtered = catalogue.filter(
+    return catalogue.filter(
       (e) =>
         !e.archived &&
         (theme === 'all' || e.theme === theme) &&
@@ -2282,6 +2281,76 @@ export function mountWorldApp({
           .toLocaleLowerCase()
           .includes(search),
     );
+  }
+  function randomFlightCandidates(worldId) {
+    return filteredCatalogue().filter((entry) => entry.world === worldId);
+  }
+  async function startRandomFlight(worldId) {
+    await ready;
+    if (disposed) return;
+    const candidates = randomFlightCandidates(worldId),
+      alternatives = candidates.filter((entry) => keyOf(entry) !== lastCatalogueFlightKey),
+      pool = alternatives.length ? alternatives : candidates;
+    if (!pool.length) {
+      status(txt('No challenges match these filters.', 'Немає завдань за цими фільтрами.'));
+      return;
+    }
+    const entry = pool[Math.floor(Math.random() * pool.length)];
+    lastCatalogueFlightKey = keyOf(entry);
+    // Selection never supplies a simulation seed or bypasses scene preparation/arming.
+    return startFlight(entry, { mode: $('flight-mode').value });
+  }
+  function randomFlightControl(worldId, next = false) {
+    const candidates = randomFlightCandidates(worldId),
+      entry = candidates[0] ?? catalogue.find((item) => !item.archived && item.world === worldId),
+      title =
+        localized(FLIGHT_WORLDS.find((world) => world.id === worldId)?.title) ||
+        installed.find((pack) => pack.id === entry?.projectId)?.project.title ||
+        worldId,
+      row = el('div', undefined, next ? 'button-row' : 'challenge-row'),
+      info = el('div', undefined, 'challenge-info'),
+      action = button(
+        next
+          ? txt('Random next flight', 'Випадковий наступний політ')
+          : txt('Random flight', 'Випадковий політ'),
+        () => startRandomFlight(worldId),
+        'primary',
+      );
+    action.dataset.randomFlight = next ? 'next' : 'catalogue';
+    action.disabled = candidates.length === 0;
+    if (title) action.setAttribute('aria-label', `${action.textContent}: ${title}`);
+    info.append(
+      el(
+        'strong',
+        title
+          ? `${txt('This world', 'Цей світ')}: ${title}`
+          : txt('No matching world', 'Немає відповідного світу'),
+      ),
+      el(
+        'small',
+        candidates.length === 0
+          ? txt(
+              'No matching flights. Change your filters.',
+              'Немає відповідних польотів. Змініть фільтри.',
+            )
+          : candidates.length === 1
+            ? txt(
+                'Only one flight matches your filters.',
+                'Лише один політ відповідає вашим фільтрам.',
+              )
+            : txt(
+                `${candidates.length} filtered flights. No immediate repeats.`,
+                `Польотів за фільтрами: ${candidates.length}. Без повторення поспіль.`,
+              ),
+      ),
+    );
+    row.append(info, action);
+    return row;
+  }
+  function renderCatalogue() {
+    renderSchool();
+    const complete = completedKeys(),
+      filtered = filteredCatalogue(complete);
     $('world-grid').replaceChildren();
     $('level-count').textContent = catalogue.filter((e) => !e.archived).length;
     const worldCount = doc.querySelectorAll('.catalogue-stats strong')[1];
@@ -2343,6 +2412,7 @@ export function mountWorldApp({
       shelf.append(choice);
     }
     $('world-grid').append(shelf);
+    if (!groups.size) $('world-grid').append(randomFlightControl(null));
     for (const [id, group] of groups) {
       if (id !== selectedWorld) continue;
 
@@ -2381,6 +2451,7 @@ export function mountWorldApp({
       );
       card.append(cover);
       const rows = el('div', undefined, 'challenge-list');
+      rows.append(randomFlightControl(id));
       group.forEach((entry, i) => {
         const row = el('div', undefined, 'challenge-row'),
           info = el('div', undefined, 'challenge-info');
@@ -4578,6 +4649,8 @@ export function mountWorldApp({
         ),
       );
       $('result-panel').append(resultActions);
+      if (!isPreview && !entry.beginner && !completedPlaylist)
+        $('result-panel').append(randomFlightControl(entry.world, true));
       presentation.resume();
       $('result-panel').append(
         button(txt('Watch verified flight', 'Переглянути перевірений політ'), () =>
@@ -4971,6 +5044,8 @@ export function mountWorldApp({
     flight?.dispose?.();
     flight = null;
     current = entry;
+    if (!options.replayProof && !options.preview && !options.checkpoint && !entry.freeFlight)
+      lastCatalogueFlightKey = keyOf(entry);
     recorder = null;
     checkpointRequest = options.checkpoint ?? null;
     checkpointSession = null;
