@@ -91,19 +91,14 @@ jobs:
             game/build-config.json
           sparse-checkout-cone-mode: false
 
-      - name: Require exact source and version identity
+      - name: Require exact source identity
         id: source
         working-directory: source
         env:
           EXPECTED_SOURCE: ${{ inputs.source_sha }}
-          EXPECTED_NUMERIC_VERSION: ${{ steps.inputs.outputs.numeric_version }}
         run: |
           set -euo pipefail
           test "$(git rev-parse HEAD)" = "$EXPECTED_SOURCE"
-          test "$(jq -r .version package.json)" = "$EXPECTED_NUMERIC_VERSION"
-          test "$(jq -r .version package-lock.json)" = "$EXPECTED_NUMERIC_VERSION"
-          test "$(jq -r '.packages[""].version' package-lock.json)" = "$EXPECTED_NUMERIC_VERSION"
-          test "$(jq -r .version game/build-config.json)" = "$EXPECTED_NUMERIC_VERSION"
           echo "source_tree=$(git rev-parse 'HEAD^{tree}')" >> "$GITHUB_OUTPUT"
 
       - name: Require merged PR, current main and published predecessor

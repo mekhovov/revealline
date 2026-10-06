@@ -22,7 +22,7 @@ import { encodeSpritePNG, inspectSprite } from './produce-field-kit-sprites.mjs'
 import { compilePresentation } from './compile-presentation.mjs';
 import { writePresentation, retainedPresentationPath } from './write-presentation.mjs';
 import { readFieldKitRetainedOutput } from './field-kit-retained-runtime.mjs';
-import { retainFieldKitProductionHistory } from './team-production-history.mjs';
+import { retainPictureProductionHistory } from './picture-production-history.mjs';
 import { importThemeBundle, exportThemeBundle } from '../game/presentation/bundle.mjs';
 
 import {
@@ -1060,7 +1060,10 @@ async function generate(args) {
   } catch (error) {
     if (error.code !== 'ENOENT') throw error;
   }
-  production.document = retainFieldKitProductionHistory(production.document, history?.document);
+  // The current candidate introduces the pinned 54-picture successor. Keep the
+  // older Team-only writer strict and route this one explicit contract through
+  // its dedicated history validator.
+  production.document = retainPictureProductionHistory(production.document, history?.document);
   production.assets = new Map([...(history?.assets ?? []), ...production.assets]);
   production.coverage = presentationCoverage(production.document);
   const historyBytes = Buffer.from(
