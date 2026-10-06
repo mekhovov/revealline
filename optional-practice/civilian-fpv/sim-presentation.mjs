@@ -4677,6 +4677,114 @@ export const createSimFlightAudio = (() => {
 })();
 // END GENERATED ACADEMY SHARED AUDIO
 
+export function mountSimGlobalTools({
+  document: doc,
+  window: win,
+  gameReturn,
+  settingsRoot,
+  panels,
+  locale = () => 'en',
+  onOpen = () => {},
+  onControls = () => {},
+  loadProvider = () => import('../../game/ui/global-settings-tools.mjs'),
+  moduleURL = import.meta.url,
+} = {}) {
+  let coreURL;
+  const knownReturn = typeof gameReturn === 'string' && gameReturn.length > 0;
+  try {
+    coreURL = new URL('../../game/', moduleURL);
+    if (coreURL.origin !== new URL(win.location.href).origin)
+      throw new Error('Core origin mismatch');
+    if (knownReturn) {
+      const target = new URL(gameReturn, win.location.href);
+      if (target.origin !== coreURL.origin || !target.pathname.startsWith(coreURL.pathname))
+        throw new Error('Core return does not match this application');
+    }
+  } catch {
+    return {
+      ensure: async () => false,
+      refresh() {},
+      dispose() {},
+      root: () => null,
+      back: () => false,
+    };
+  }
+  const fallback = doc.createElement('section'),
+    link = doc.createElement('a'),
+    status = doc.createElement('p');
+  fallback.dataset.simGlobalToolsFallback = '';
+  link.href = coreURL.href;
+  link.target = '_blank';
+  link.rel = 'noopener';
+  status.setAttribute('role', 'status');
+  fallback.append(link, status);
+  panels.extras.append(fallback);
+  let provider,
+    pending,
+    disposed = false,
+    failed = false;
+  const refresh = () => {
+    provider?.refresh?.();
+    const uk = locale() === 'uk';
+    link.textContent = uk ? 'Відкрити спільні інструменти гри' : 'Open shared game tools';
+    link.hidden = !knownReturn;
+    status.textContent = failed
+      ? uk
+        ? knownReturn
+          ? 'Спільні інструменти недоступні тут. Відкрийте гру в новій вкладці. Інструменти SIM залишаються доступними.'
+          : 'Цей пакет не містить спільних інструментів основної гри. Інструменти SIM залишаються доступними.'
+        : knownReturn
+          ? 'Shared tools are unavailable here. Open the game in a new tab. SIM tools remain available.'
+          : 'This package does not include the main game tools. SIM tools remain available.'
+      : uk
+        ? 'Спільні інструменти завантажуються з основної гри.'
+        : 'Shared tools load from the main game.';
+  };
+  refresh();
+  const ensure = () => {
+    if (disposed) return Promise.resolve(false);
+    if (pending) return pending;
+    pending = Promise.resolve()
+      .then(() => loadProvider(new URL('ui/global-settings-tools.mjs', coreURL).href))
+      .then((module) => {
+        if (disposed) return false;
+        if (typeof module?.mountGlobalSettingsTools !== 'function')
+          throw new Error('Shared tools are unavailable');
+        provider = module.mountGlobalSettingsTools({
+          document: doc,
+          window: win,
+          settingsRoot,
+          panels,
+          prefix: 'sim-global-tools',
+          coreURL,
+          onOpen,
+        });
+        fallback.hidden = true;
+        onControls(provider.controls);
+        return true;
+      })
+      .catch(() => {
+        failed = true;
+        refresh();
+        return false;
+      });
+    return pending;
+  };
+  return {
+    ensure,
+    refresh,
+    root: () => provider?.root() ?? null,
+    frameFocused: () => provider?.frameFocused() === true,
+    handleFrameCommand: (command) => provider?.handleFrameCommand(command) === true,
+    back: () => provider?.back() === true,
+    dispose() {
+      disposed = true;
+      provider?.dispose();
+      fallback.remove();
+    },
+  };
+}
+
 const FLIGHT_HUD_PREFERENCE_KEY = 'revealline.sim-flight-hud.v1';
 const FLIGHT_HUD_PREFERENCE_EVENT = 'revealline:sim-flight-hud';
 const FLIGHT_HUD_STYLE = `

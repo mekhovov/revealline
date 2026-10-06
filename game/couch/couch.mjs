@@ -1,4 +1,12 @@
 import { loadBaseArtwork } from '../base-artwork.mjs';
+import { createEnemyStatsHost } from '../enemy-stats.mjs';
+import { mountEnemyStats } from '../ui/enemy-stats.mjs';
+import { arcadeEnemyDefeats } from '../ui/enemy-stats-events.mjs';
+import {
+  createContinuousPlayController,
+  mountContinuousPlayControls,
+} from '../ui/continuous-play.mjs';
+import { mountContinuousCelebration } from '../ui/continuous-celebration.mjs';
 import { nativeArtReviewURL } from '../ui/art-review-navigation.mjs';
 import { selectedArcadeCollection } from '../presentation/industrial-arcade.mjs';
 import {

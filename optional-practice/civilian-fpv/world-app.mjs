@@ -2456,23 +2456,54 @@ export function mountWorldApp({
     row.append(info, action);
     return row;
   }
+  function missionCampaign(entry) {
+    const lesson = learningById.get(entry.id);
+    if (lesson) {
+      const tier = [
+        ['beginner', ACRO_LESSON_ORDER],
+        ['experienced', EXPERIENCED_LESSON_ORDER],
+        ['advanced', ADVANCED_LESSON_ORDER],
+        ['pro', PRO_LESSON_ORDER],
+        ['master', MASTER_LESSON_ORDER],
+        ['self-level', SELF_LEVEL_LESSON_ORDER],
+      ].find(([, ids]) => ids.includes(entry.id));
+      const names = {
+        beginner: txt('Beginner', 'Початковий'),
+        experienced: txt('Experienced', 'Для досвідчених'),
+        advanced: txt('Advanced', 'Поглиблений'),
+        pro: 'Pro',
+        master: 'Master',
+        'self-level': txt('Optional self-level', 'Додаткове самовирівнювання'),
+      };
+      return {
+        key: `school:${tier[0]}`,
+        title: `${txt('Flight School', 'Льотна школа')} · ${names[tier[0]]}`,
+      };
+    }
+    const world = FLIGHT_WORLDS.find((world) => world.id === entry.world);
+    return {
+      key: entry.world,
+      title: world
+        ? localized(world.title)
+        : (installed.find((pack) => pack.id === entry.projectId)?.project.title ?? entry.world),
+    };
+  }
   function renderCatalogue() {
     renderSchool();
     const complete = completedKeys(),
       filtered = filteredCatalogue(complete);
     $('world-grid').replaceChildren();
-    $('level-count').textContent = catalogue.filter((entry) => !entry.archived).length;
-    const count = doc.querySelectorAll('.catalogue-stats strong')[1];
-    if (count)
-      count.textContent = new Set(
-        catalogue.filter((entry) => !entry.archived).map((entry) => entry.world),
+    $('level-count').textContent = catalogue.filter((e) => !e.archived).length;
+    const worldCount = doc.querySelectorAll('.catalogue-stats strong')[1];
+    if (worldCount)
+      worldCount.textContent = new Set(
+        catalogue.filter((e) => !e.archived).map((e) => e.world),
       ).size;
-    if (!missionLibrary) return;
+    $('empty-library').hidden = filtered.length > 0;
     const groups = new Map();
-    for (const entry of catalogue.filter((entry) => !entry.archived)) {
-      const id = entry.projectId ? `worlds:${entry.packIdentity}` : 'worlds:builtin';
-      if (!groups.has(id)) groups.set(id, []);
-      groups.get(id).push(entry);
+    for (const entry of filtered) {
+      if (!groups.has(entry.world)) groups.set(entry.world, []);
+      groups.get(entry.world).push(entry);
     }
     const shelf = el('div', undefined, 'world-shelf');
     shelf.setAttribute('aria-label', txt('Choose a world', 'Виберіть світ'));
@@ -2654,6 +2685,55 @@ export function mountWorldApp({
             { preview: true },
           );
         }),
+      );
+      $('world-grid').append(card);
+    }
+    if (missionLibrary) {
+      const libraryGroups = new Map();
+      for (const entry of catalogue.filter((entry) => !entry.archived)) {
+        const id = entry.projectId ? `worlds:${entry.packIdentity}` : 'worlds:builtin';
+        if (!libraryGroups.has(id)) libraryGroups.set(id, []);
+        libraryGroups.get(id).push(entry);
+      }
+    for (const old of new Set(missionLibrary.missions.map((row) => row.ownerId)))
+      if (!libraryGroups.has(old)) missionLibrary.remove(old);
+    const complete = completedKeys();
+    for (const [id, missions] of libraryGroups) {
+      const positions = new Map(),
+        sizes = new Map();
+      for (const entry of missions) {
+        const key = missionCampaign(entry).key;
+        positions.set(entry, sizes.get(key) ?? 0);
+        sizes.set(key, (sizes.get(key) ?? 0) + 1);
+      }
+      missionLibrary.register({
+        id,
+        editionId: id,
+        edition: 'FPV SIM · Worlds',
+        collection: id === 'worlds:builtin' ? 'Classic' : 'Custom',
+        entries: missions,
+        describe: (entry) => ({
+          id: keyOf(entry),
+          revision: entry.course.revision ?? '',
+          campaignKey: missionCampaign(entry).key,
+          campaignTitle: missionCampaign(entry).title,
+          name: label(entry),
+          levelIndex: positions.get(entry),
+          ...(!entry.projectId
+            ? {
+                canonicalLevelKey: `sim-worlds:${keyOf(entry)}`,
+                globalLevelNumber:
+                  [...WORLD_CATALOGUE, ...BEGINNER_CATALOGUE].findIndex(
+                    (candidate) => keyOf(candidate) === keyOf(entry),
+                  ) + 1,
+              }
+            : {}),
+          campaignLevelCount: sizes.get(missionCampaign(entry).key),
+          modes: ['solo'],
+          tags: ['FPV', 'Practice'],
+          hook: entry.course.locales[locale]?.brief ?? entry.course.locales.en.brief,
+          rules: catalogueDetails(entry),
+        }),
         availability: () => ({ state: 'ready' }),
         card: (entry) => entry.course,
         progressState: (entry) => ({
@@ -2663,7 +2743,8 @@ export function mountWorldApp({
         launch: (entry, { isCurrent }) => startFlight(entry, { isCurrent }),
       });
     }
-    missionChooser?.refresh();
+      missionChooser?.refresh();
+    }
     presentation.refresh();
   }
   function openMissionChooser(section = 'explore') {
