@@ -1,0 +1,50 @@
+{
+  "format": "FPVHarborDocksCheckpointBuild.v1",
+  "stage": "one course; actual visual review and ordinary completion qualification pending",
+  "source": {
+    "bytes": 761036,
+    "sha256": "c7609e2bb9b2371124a311e4128c3a3e6c81aaadd3613806bb6405270821d246",
+    "triangles": 7900,
+    "materials": 10,
+    "nodes": 53,
+    "textures": 2,
+    "colliders": 38
+  },
+  "prepared": {
+    "bytes": 760368,
+    "sha256": "9a0ec37f294afad1ac906e10f5483769bfca9dc1f7a0e30769fda110ecbc1854",
+    "validatorErrors": 0
+  },
+  "pack": {
+    "bytes": 787128,
+    "sha256": "f87a995b87763e336d7427fb39d770a701065d93829189f6d71b73484bafa631",
+    "identity": "fpv-pack:f87a995b87763e336d7427fb39d770a701065d93829189f6d71b73484bafa631"
+  },
+  "zip": {
+    "bytes": 787184,
+    "sha256": "0f1a134b5132cce835022376f5016f9f564196f0ca3b15107ba63f5b51c2b0cb"
+  },
+  "sourceFiles": [
+    {
+      "path": "source/scene.mjs",
+      "sha256": "86f7fb0c267989e0e81bc3fd0ea25e72d1e863f9af67ef9853cd5562041deeb2"
+    },
+    {
+      "path": "source/art.mjs",
+      "sha256": "1a9228236a8d1d39f210770ac4064d02ca45889bb711376daa8c2760f410091d"
+    },
+    {
+      "path": "source/lettering.mjs",
+      "sha256": "f4f52cbfce5cfb6c9f5390c1a94da17189a98e315ddf3dce139bf66ff1681c81"
+    },
+    {
+      "path": "build-checkpoint.mjs",
+      "sha256": "648a37d92a61f551d015977cfb2591d0e719a9dbbd883fd1555f5dd2f920a44d"
+    }
+  ],
+  "courses": [
+    "harbor-docks-01"
+  ],
+  "runtimeChanges": 0,
+  "limitsUnchanged": true
+}
