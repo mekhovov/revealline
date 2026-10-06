@@ -33,7 +33,13 @@ const html = parse(
   await readFile(new URL('../../optional-practice/fpv-worlds/index.html', import.meta.url), 'utf8'),
 );
 
-function fixture(t, indexedDB = new IDBFactory()) {
+function fixture(t, options = {}) {
+  const {
+    storage = new Map(),
+    url = 'https://example.test/optional-practice/fpv-worlds/index.html',
+    indexedDB = options?.open ? options : new IDBFactory(),
+    ...factories
+  } = options?.open ? {} : options;
   const doc = new Document(),
     win = new Events(),
     frames = new Map(),
