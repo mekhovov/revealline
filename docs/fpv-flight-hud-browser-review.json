@@ -1,0 +1,105 @@
+{
+  "format": "revealline.fpv-hud-browser-review.v1",
+  "date": "2026-10-05",
+  "sourceRevision": "3bbdc8dda7e1613fe4c2b838c40ffbbe9493f852",
+  "browser": "Codex in-app Chromium 154 on development Mac; DPR2",
+  "sourceReview": {
+    "worldsViewports": [
+      [390, 844],
+      [844, 390],
+      [1280, 800]
+    ],
+    "academyViewports": [[844, 390]],
+    "locales": ["en", "uk"],
+    "cardDefault": [240, 72],
+    "cardShortLandscape": [220, 64],
+    "explainHitTarget": [44, 44],
+    "horizontalOverflow": false,
+    "touchAndReplayOverlap": false,
+    "sharedPreferencesObserved": true,
+    "interfaceThemeOptions": 20,
+    "themeReceipt": "docs/fpv-flight-hud-themes.json"
+  },
+  "admittedReview": {
+    "origin": "http://127.0.0.1:8972",
+    "memberBytesUnmodified": true,
+    "fixtureMetadata": "Local current.json pointers only; runtime, worker and launcher bytes match admitted archives",
+    "worldsRevision": "b5251cb16ee6c1fba0c0f69805cceba546e3cb18be4db4b559a4a16a9d805c7a",
+    "academyRevision": "107bf57ae9ca3d86f28d551342c2e6940fcb3051e852e44fa884813dad16cc79",
+    "preparedBothViaLauncher": true,
+    "readyOfflineVisible": true,
+    "serverRefusedBeforeAndAfter": true,
+    "worldsReloadedDuringOutage": true,
+    "academyReloadedDuringOutage": true,
+    "worldsAcroTiltFullDemonstration": "completed with compact HUD",
+    "academyFlightStarted": true,
+    "academyExplainClose": "exact details displayed; returned paused; no automatic resume",
+    "warnings": [],
+    "errors": [],
+    "serverRestoredHTTP": 200
+  },
+  "existingRegression": {
+    "flightModelUIReplayRadio": {
+      "passed": 60,
+      "failed": 0
+    },
+    "offlineAndPackage": {
+      "passed": 53,
+      "failed": 0
+    }
+  },
+  "limitations": [
+    "Own-origin server outage, not browser-wide offline or storage eviction.",
+    "Desktop viewport simulation does not establish iPhone/Steam Deck or installed-app acceptance.",
+    "No physical radio/controller reconnect, human learning or sustained device FPS acceptance is claimed.",
+    "Full screen control in the in-app source host did not enter document.fullscreenElement; existing immersive full-window layout was reviewed.",
+    "Twenty-theme isolation reviewed in paused Academy; not every possible mode/theme/device combination."
+  ],
+  "artifacts": {
+    "fpv-hud-worlds-offline-state.txt": {
+      "path": "docs/evidence/fpv-flight-hud-browser-review/fpv-hud-worlds-offline-state.txt.gz",
+      "bytes": 2396,
+      "sha256": "1fe4e5c9e9d07bca2fe6ba2729b89c204dd3e9e97c08a6c9e8744f93fb6407e0"
+    },
+    "fpv-hud-academy-offline-state.txt": {
+      "path": "docs/evidence/fpv-flight-hud-browser-review/fpv-hud-academy-offline-state.txt.gz",
+      "bytes": 1508,
+      "sha256": "616d77a94c61866bd8ce1e0d24fb46245b8b3a425c492e9043729483c4bea5d2"
+    },
+    "fpv-hud-offline-stop.json": {
+      "path": "docs/evidence/fpv-flight-hud-browser-review/fpv-hud-offline-stop.json.gz",
+      "bytes": 125,
+      "sha256": "6831b835de307b77ef5cee108a3f28da1d39b1d98e0f83b155a57be39aa67a2b"
+    },
+    "fpv-hud-offline-end.json": {
+      "path": "docs/evidence/fpv-flight-hud-browser-review/fpv-hud-offline-end.json.gz",
+      "bytes": 125,
+      "sha256": "5b69d0b881f2da7d756a20f36a41f5fc8710c20eb1bcaf01f0ae182309034487"
+    },
+    "fpv-hud-safe-temp-cleanup.json": {
+      "path": "docs/evidence/fpv-flight-hud-browser-review/fpv-hud-safe-temp-cleanup.json.gz",
+      "bytes": 2986,
+      "sha256": "af1acf4372c3625a310d60cb79b510bc39133ca4ce46dc8f18eb27af50093d98"
+    },
+    "fpv-hud-worlds-offline.png": {
+      "path": "docs/evidence/fpv-flight-hud-browser-review/fpv-hud-worlds-offline.png",
+      "bytes": 47648,
+      "sha256": "c216b26bcf9c233206386bf994a2869032713d6f5ce5877121e6b37f960c7b34"
+    },
+    "fpv-hud-worlds-phone.png": {
+      "path": "docs/evidence/fpv-flight-hud-browser-review/fpv-hud-worlds-phone.png",
+      "bytes": 26660,
+      "sha256": "8e30ebbeedb53d0a032ee9d267d5d88053e35bf7d3ea49c1f54a85d759c75548"
+    },
+    "fpv-hud-worlds-handheld.png": {
+      "path": "docs/evidence/fpv-flight-hud-browser-review/fpv-hud-worlds-handheld.png",
+      "bytes": 49553,
+      "sha256": "c52f7686815012e0735c1494847abbabbc3f9e1008d6e860310413d962d8dab9"
+    },
+    "fpv-hud-academy-touch-landscape.png": {
+      "path": "docs/evidence/fpv-flight-hud-browser-review/fpv-hud-academy-touch-landscape.png",
+      "bytes": 38350,
+      "sha256": "aa9ae8c68f8be2b39379c9a6a81ec171eef9db9c93d8f4791c40fe34ea243562"
+    }
+  }
+}

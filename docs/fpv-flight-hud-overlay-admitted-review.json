@@ -1,0 +1,57 @@
+{
+  "format": "FPVFlightHudOverlayAdmittedReview.v1",
+  "date": "2026-10-05",
+  "sourceRevision": "614adef75a6e1cc28ea1d04acf26fa69b507c551",
+  "sourceTree": "9b2883396f8044a297f884be091d2fb364b89625",
+  "origin": "http://127.0.0.1:8974",
+  "staging": "Exact admitted distribution members served unchanged; only launcher current.json pointers are synthetic local metadata.",
+  "preparation": {
+    "worlds": "Ready offline",
+    "academy": "Ready offline"
+  },
+  "outage": {
+    "serverStopped": true,
+    "connectionRefusedBefore": true,
+    "connectionRefusedAfter": true,
+    "serverRestored": true,
+    "scope": "Dedicated origin outage; browser-wide network was not disabled."
+  },
+  "worlds": [
+    "Reloaded installed #learn entry with origin stopped",
+    "Opened Acro: the tilt stays",
+    "Watched full recorded Acro flight to Demonstration complete",
+    "Terminal result hid compact HUD, diagram, sticks and replay toolbar",
+    "No horizontal overflow at measured viewport"
+  ],
+  "academy": [
+    "Reloaded installed entry with origin stopped",
+    "Start and briefing Start entered native flight",
+    "Explain opened the exact conditions without compact HUD overlap",
+    "Close returned paused; Arm / resume remained required"
+  ],
+  "console": {
+    "worlds": {
+      "warnings": 0,
+      "errors": 0
+    },
+    "academy": {
+      "warnings": 0,
+      "errors": 0
+    }
+  },
+  "viewport": {
+    "measured": [1280, 720],
+    "requestedPhone": [390, 844],
+    "phoneOverrideApplied": false,
+    "overrideReset": true
+  },
+  "screenshot": {
+    "path": "docs/evidence/fpv-flight-hud-browser-review/current-admitted-result.png",
+    "sha256": "e18185cc383b21f518d9c3552896893bcffa711ca06cd6e385c43b5917ae1c1d"
+  },
+  "limitations": [
+    "No public deployment/installed-app/physical-controller/novice claim.",
+    "Requested phone override was not applied by this browser; no refreshed responsive acceptance.",
+    "This bounded outage does not cover eviction, browser-wide offline or arbitrary old-cache updates."
+  ]
+}

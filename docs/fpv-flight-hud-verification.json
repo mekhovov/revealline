@@ -1,0 +1,1044 @@
+{
+  "format": "FpvFlightHudFunctionalVerification.v1",
+  "createdAt": "2026-10-05T11:58:22.859Z",
+  "baseline": "614adef75a6e1cc28ea1d04acf26fa69b507c551",
+  "node": "v20.19.5",
+  "command": "node docs/evidence/fpv-flight-hud-probe.mjs",
+  "scope": "Observer-only typed HUD feedback and the existing 58 School plus24 Academy recommended-mode recordings. No browser, native/mobile hardware, novice acceptance, sustained FPS or new unit-suite coverage claimed.",
+  "limitations": [
+    "Focused malformed/missing/stale-state cases are synthetic adapter inputs, not accepted flight recordings.",
+    "Existing School recordings supply original final state identities. Academy v1 recordings have no final-state identity; direct and independent current-runtime replay states are compared here.",
+    "This probe does not exercise DOM layout, fullscreen, pointer ownership, real radio/controller hardware or offline packaging.",
+    "World hold/land comparisons use same-objective frames; transition snapshots already contain the next target. Runtime transitions and all final proof outcomes are checked separately.",
+    "All predicates are read-only presentation; no physics, proof bytes or course definitions are changed."
+  ],
+  "sources": {
+    "optional-practice/civilian-fpv/sim-presentation.mjs": "c8069450a534d49748e479f99ed3eb90dddd1b75b3d68072e054fbb5b8adef40",
+    "optional-practice/civilian-fpv/world-catalogue.mjs": "54cbcaea1085548862dfbf3a64a99bac4f27dd8c7529786da3320b2e0248e611",
+    "optional-practice/civilian-fpv/world-demonstrations.mjs": "c9f2d0ee5c571507ae1dce4f48898554cb2ad179218f1905cdc8013db2e2c114",
+    "optional-practice/civilian-fpv/world-model.mjs": "95b4547019dcc44d2fb7dd426718fe01ee824ad714967a61edf7ccafb0f71ce2",
+    "optional-practice/civilian-fpv/world-collision.mjs": "2899c7c84f9eae14b9a3434f585a8e873f4a1361e8f3ce4026ef27f44bdeef32",
+    "optional-practice/civilian-fpv/catalogue.mjs": "98338353d17eb585414538c9905040752fd5cd6699c48b17fa1706832b750997",
+    "optional-practice/civilian-fpv/demonstrations.mjs": "92bb4365c46d94f5c1fea9808ec4e24fb9014d35640ee488959c4e0f4b6c5cfa",
+    "optional-practice/civilian-fpv/model.mjs": "dc950bc9c3282a2f879c264e40004fd1ebf1860cb33ad49d3cf73cc158ce7577",
+    "optional-practice/civilian-fpv/math.mjs": "555c8b6ea170b46992133507d2a3d867f06185bca060239cab7db9c9b87f9f98",
+    "optional-practice/civilian-fpv/radio-profile.mjs": "f588fd5cda96ed9627a483f49ca843ace8d99a68fae42b0a4239c2cd0ab81933"
+  },
+  "probeSha256": "bd4d237245c26d17c1d9e1f44563fb40e6411944d3bc6272bf8ac1c9ac848f18",
+  "checks": [
+    {
+      "name": "Acro tilt in range does not invent dwell",
+      "passed": true
+    },
+    {
+      "name": "Centre sticks action retains actual tilt gauge",
+      "passed": true
+    },
+    {
+      "name": "Level hover does not qualify as retained tilt",
+      "passed": true
+    },
+    {
+      "name": "Missing legacy facts are unknown, never passed",
+      "passed": true
+    },
+    {
+      "name": "Exact legacy facts supply consumed-tick credit",
+      "passed": true
+    },
+    {
+      "name": "Stale legacy facts are ignored",
+      "passed": true
+    },
+    {
+      "name": "Zero velocity cannot hide a hard touchdown",
+      "passed": true
+    },
+    {
+      "name": "Soft touchdown then requests throttle down",
+      "passed": true
+    },
+    {
+      "name": "Wrong-side gate asks for approach-side return",
+      "passed": true
+    },
+    {
+      "name": "Stale actor tracking cannot supply credit",
+      "passed": true
+    },
+    {
+      "name": "Occlusion uses authoritative evaluation order",
+      "passed": true
+    },
+    {
+      "name": "Contact hunt uses caught IDs, not retained health",
+      "passed": true
+    },
+    {
+      "name": "Combat uses defeated status, not guessed health",
+      "passed": true
+    },
+    {
+      "name": "Survival has no invented airborne condition",
+      "passed": true
+    },
+    {
+      "name": "Terminal route completion comes from runtime state",
+      "passed": true
+    },
+    {
+      "name": "Every catalogue and School mode has safe EN/UK initial feedback",
+      "passed": true
+    },
+    {
+      "name": "All58 School demonstrations complete with original final identities and independent replay",
+      "passed": true
+    },
+    {
+      "name": "All24 original Academy recordings complete and independently replay exactly",
+      "passed": true
+    }
+  ],
+  "initial": {
+    "catalogue": 1840,
+    "school": 1496,
+    "types": {
+      "hunt-contact-v1": 224,
+      "hold": 1460,
+      "land": 652,
+      "gate": 748,
+      "actor-track-v1": 44,
+      "eliminate": 52,
+      "rotation-v1": 88,
+      "attitude-v1": 4,
+      "path-v1": 52,
+      "crossing-v1": 12
+    }
+  },
+  "school": {
+    "demonstrations": [
+      {
+        "id": "beginner-01",
+        "mode": "self-level",
+        "proofSha256": "1dfa3d637133570494d1715767e0ac195944e3ab2626117a05df57fa6b427a4e",
+        "frames": 360,
+        "finalStateIdentity": "9c5c44ff0f549053",
+        "direct": "complete",
+        "replay": "complete",
+        "predicateComparisons": 357,
+        "transitions": 3
+      },
+      {
+        "id": "beginner-02",
+        "mode": "self-level",
+        "proofSha256": "1c142919c6b28210c6420ec914b9fc79f22b7c365458b46447460030b448e070",
+        "frames": 564,
+        "finalStateIdentity": "f79e1ebe9e9f5a3b",
+        "direct": "complete",
+        "replay": "complete",
+        "predicateComparisons": 561,
+        "transitions": 3
+      },
+      {
+        "id": "beginner-03",
+        "mode": "self-level",
+        "proofSha256": "b91943fc4e9bb3a077f3aa6817db5722221b8953cb486dc7cafb67327eda3142",
+        "frames": 561,
+        "finalStateIdentity": "df7c0c7ddcbe98f8",
+        "direct": "complete",
+        "replay": "complete",
+        "predicateComparisons": 558,
+        "transitions": 3
+      },
+      {
+        "id": "beginner-04",
+        "mode": "self-level",
+        "proofSha256": "378c4aba12ddb3f91d8e486336e41e2250faddb2d872afda96fa8e3bdab8338d",
+        "frames": 696,
+        "finalStateIdentity": "2b02d54e3f436aa4",
+        "direct": "complete",
+        "replay": "complete",
+        "predicateComparisons": 691,
+        "transitions": 5
+      },
+      {
+        "id": "beginner-05",
+        "mode": "self-level",
+        "proofSha256": "1e481713f52d6e8a1a665664be199299ab89fb14940d36841a1ee992443de66b",
+        "frames": 654,
+        "finalStateIdentity": "7b57e5174cee28c4",
+        "direct": "complete",
+        "replay": "complete",
+        "predicateComparisons": 490,
+        "transitions": 4
+      },
+      {
+        "id": "beginner-06",
+        "mode": "self-level",
+        "proofSha256": "c87489d90a58b88119e74894e01185a98e1892f7205dc8de69986990f22f04c2",
+        "frames": 828,
+        "finalStateIdentity": "e2cdac9d77db8835",
+        "direct": "complete",
+        "replay": "complete",
+        "predicateComparisons": 824,
+        "transitions": 4
+      },
+      {
+        "id": "beginner-07",
+        "mode": "self-level",
+        "proofSha256": "d2cb0a446cc035ba9f8750679d61c363695ae73c9a68711c1be1f4388ad8d2de",
+        "frames": 948,
+        "finalStateIdentity": "52ca8f0f6d942fda",
+        "direct": "complete",
+        "replay": "complete",
+        "predicateComparisons": 799,
+        "transitions": 5
+      },
+      {
+        "id": "beginner-08",
+        "mode": "self-level",
+        "proofSha256": "d538149fc6dc07c0fac7056265e9f54bff81eba299fef040184455c2de3b7edd",
+        "frames": 830,
+        "finalStateIdentity": "502bfd5fba0dd1fa",
+        "direct": "complete",
+        "replay": "complete",
+        "predicateComparisons": 826,
+        "transitions": 4
+      },
+      {
+        "id": "beginner-09",
+        "mode": "self-level",
+        "proofSha256": "c69de24456bd94b1277acca5450672f3d77171ec3b8a78c0bf607cdd0571ccf0",
+        "frames": 899,
+        "finalStateIdentity": "fd81a13164a8da78",
+        "direct": "complete",
+        "replay": "complete",
+        "predicateComparisons": 706,
+        "transitions": 5
+      },
+      {
+        "id": "beginner-10",
+        "mode": "self-level",
+        "proofSha256": "49a3cb8765879d7e2bbf1910c32fbc5a3d93d8a99551bd2c38060f3cdce53991",
+        "frames": 732,
+        "finalStateIdentity": "573b969949ebedb6",
+        "direct": "complete",
+        "replay": "complete",
+        "predicateComparisons": 728,
+        "transitions": 4
+      },
+      {
+        "id": "beginner-11",
+        "mode": "self-level",
+        "proofSha256": "fd65e2b183fa8a7372b663b6f4c89c8685f2befbfe7104d1a146cf2f2f26269e",
+        "frames": 945,
+        "finalStateIdentity": "d22d2c0ed2f3769e",
+        "direct": "complete",
+        "replay": "complete",
+        "predicateComparisons": 408,
+        "transitions": 5
+      },
+      {
+        "id": "beginner-12",
+        "mode": "self-level",
+        "proofSha256": "1a5059c95014d600cc9f7283e26be9fde98475f57d98dbe682d6f4793d867b1e",
+        "frames": 1032,
+        "finalStateIdentity": "4d5e90cdbe3cccac",
+        "direct": "complete",
+        "replay": "complete",
+        "predicateComparisons": 665,
+        "transitions": 6
+      },
+      {
+        "id": "beginner-13",
+        "mode": "acro",
+        "proofSha256": "876516643e3a31ec48301628be3354701d26ffabaa589f933ca7a6aaf9fd4440",
+        "frames": 654,
+        "finalStateIdentity": "11f9978ff8f10766",
+        "direct": "complete",
+        "replay": "complete",
+        "predicateComparisons": 650,
+        "transitions": 4
+      },
+      {
+        "id": "beginner-14",
+        "mode": "acro",
+        "proofSha256": "f0db3202ff6d611e4f7512e96a49d25ca5b408c1ac0ac44708ee658c2d51b911",
+        "frames": 757,
+        "finalStateIdentity": "fe32539fa7036a87",
+        "direct": "complete",
+        "replay": "complete",
+        "predicateComparisons": 578,
+        "transitions": 4
+      },
+      {
+        "id": "beginner-15",
+        "mode": "acro",
+        "proofSha256": "3ed59a7e4222388df0d53febaacf5025fdfec463e44b75272065dc182c8ae98b",
+        "frames": 360,
+        "finalStateIdentity": "a263ee9df3245fc6",
+        "direct": "complete",
+        "replay": "complete",
+        "predicateComparisons": 357,
+        "transitions": 3
+      },
+      {
+        "id": "beginner-16",
+        "mode": "acro",
+        "proofSha256": "8cd46017b3c075ec19e4ce4cd247d3e4525fe72a7c952819773edcabb30a7573",
+        "frames": 712,
+        "finalStateIdentity": "98a71c96624ef754",
+        "direct": "complete",
+        "replay": "complete",
+        "predicateComparisons": 708,
+        "transitions": 4
+      },
+      {
+        "id": "beginner-17",
+        "mode": "acro",
+        "proofSha256": "5fd570aa5ac91314980efb96996251deea5d67c3cfa8dbfdee1d0fe959f235d4",
+        "frames": 608,
+        "finalStateIdentity": "e31f382df014b710",
+        "direct": "complete",
+        "replay": "complete",
+        "predicateComparisons": 604,
+        "transitions": 4
+      },
+      {
+        "id": "beginner-18",
+        "mode": "acro",
+        "proofSha256": "428cf745c8a65f522849f6a0dc47e477f8309a423a89f7021dc49f8d88cae2f1",
+        "frames": 961,
+        "finalStateIdentity": "c3cb25ef47210af2",
+        "direct": "complete",
+        "replay": "complete",
+        "predicateComparisons": 957,
+        "transitions": 4
+      },
+      {
+        "id": "beginner-19",
+        "mode": "acro",
+        "proofSha256": "5dbcc4a561bbacc663f91bb1e3a3da34703b3fa406a073edd827abfd24394d4d",
+        "frames": 973,
+        "finalStateIdentity": "4278125617729278",
+        "direct": "complete",
+        "replay": "complete",
+        "predicateComparisons": 967,
+        "transitions": 6
+      },
+      {
+        "id": "beginner-20",
+        "mode": "acro",
+        "proofSha256": "aeabb623a470a0acf50255ffb5731f0c8aca2a3a9aa599d793c1a80c9d076c60",
+        "frames": 908,
+        "finalStateIdentity": "85322821714cc6d5",
+        "direct": "complete",
+        "replay": "complete",
+        "predicateComparisons": 570,
+        "transitions": 5
+      },
+      {
+        "id": "beginner-21",
+        "mode": "acro",
+        "proofSha256": "624f193e9823260e21105a2ca901bc04b12f7d2663a9fe063959c0fbe0e85841",
+        "frames": 959,
+        "finalStateIdentity": "f68bc332fde2cd48",
+        "direct": "complete",
+        "replay": "complete",
+        "predicateComparisons": 954,
+        "transitions": 5
+      },
+      {
+        "id": "beginner-22",
+        "mode": "acro",
+        "proofSha256": "ea6c166f4a2b896094e8f4bcdd3734a80dbf7eea9e1ffd8a7816cc55297f0eaf",
+        "frames": 1763,
+        "finalStateIdentity": "1eed4ab679368ff7",
+        "direct": "complete",
+        "replay": "complete",
+        "predicateComparisons": 1753,
+        "transitions": 10
+      },
+      {
+        "id": "beginner-23",
+        "mode": "acro",
+        "proofSha256": "69b9077a0eb337e58e2344e7d8cfd02aef48f5cffcef5cd45bd1653b99b67a20",
+        "frames": 1057,
+        "finalStateIdentity": "2845a2ff4aec8315",
+        "direct": "complete",
+        "replay": "complete",
+        "predicateComparisons": 1052,
+        "transitions": 5
+      },
+      {
+        "id": "beginner-24",
+        "mode": "acro",
+        "proofSha256": "dff84c72c1440440a44e4055f35ff36992994ce9e3157d4ce856d9d512cb0e6b",
+        "frames": 1031,
+        "finalStateIdentity": "7524261f630f7a40",
+        "direct": "complete",
+        "replay": "complete",
+        "predicateComparisons": 421,
+        "transitions": 5
+      },
+      {
+        "id": "beginner-25",
+        "mode": "acro",
+        "proofSha256": "eb959e97d04a86b3e77ff4451a9a00b784ab23a09a3458a7f0487076e9a5c249",
+        "frames": 676,
+        "finalStateIdentity": "d8840ecf804778f1",
+        "direct": "complete",
+        "replay": "complete",
+        "predicateComparisons": 672,
+        "transitions": 4
+      },
+      {
+        "id": "beginner-26",
+        "mode": "acro",
+        "proofSha256": "b40ecb8ca37caa6027dbec9d883e5d742c6a13a8d8c95acc0c1ef2026ab471a0",
+        "frames": 1407,
+        "finalStateIdentity": "e0364f091e3eb2a4",
+        "direct": "complete",
+        "replay": "complete",
+        "predicateComparisons": 847,
+        "transitions": 8
+      },
+      {
+        "id": "beginner-27",
+        "mode": "acro",
+        "proofSha256": "4e6fd5ec883cd03ea838837177e5c3e7b11cc4a5e4d15766128291396be873ed",
+        "frames": 1379,
+        "finalStateIdentity": "a18a122f726dfe48",
+        "direct": "complete",
+        "replay": "complete",
+        "predicateComparisons": 808,
+        "transitions": 7
+      },
+      {
+        "id": "beginner-28",
+        "mode": "acro",
+        "proofSha256": "9cc0b2320b256cbfb67aa041e1a29cc39a06c11ddf3df8e27aba10f50badb97b",
+        "frames": 1151,
+        "finalStateIdentity": "4126e0a2e80d49ae",
+        "direct": "complete",
+        "replay": "complete",
+        "predicateComparisons": 1146,
+        "transitions": 5
+      },
+      {
+        "id": "beginner-29",
+        "mode": "acro",
+        "proofSha256": "33055fd094209a2ab16895b1d8d22697b5367bb67a07136b0b23152f40e88032",
+        "frames": 1597,
+        "finalStateIdentity": "cc775be8808698bd",
+        "direct": "complete",
+        "replay": "complete",
+        "predicateComparisons": 1590,
+        "transitions": 7
+      },
+      {
+        "id": "beginner-30",
+        "mode": "acro",
+        "proofSha256": "ff39a20f729a7a5ed45d636857a4ff6c5c551dc3b5f42eb25d8c6848b3b0c46f",
+        "frames": 1277,
+        "finalStateIdentity": "12ff1f943cd2eccf",
+        "direct": "complete",
+        "replay": "complete",
+        "predicateComparisons": 1069,
+        "transitions": 6
+      },
+      {
+        "id": "beginner-31",
+        "mode": "acro",
+        "proofSha256": "3a0fb5fec9f03125120b4848d7c2cdecd7f91bdc7f609b2b2dafc596be3061d1",
+        "frames": 1840,
+        "finalStateIdentity": "a9d39bddf15619d9",
+        "direct": "complete",
+        "replay": "complete",
+        "predicateComparisons": 638,
+        "transitions": 8
+      },
+      {
+        "id": "beginner-32",
+        "mode": "acro",
+        "proofSha256": "6a6f30ef5c9cdf0dad7b4ff050319421b98ceec074c19b3cf455bcb934744a3d",
+        "frames": 1709,
+        "finalStateIdentity": "77c17e1155019e55",
+        "direct": "complete",
+        "replay": "complete",
+        "predicateComparisons": 432,
+        "transitions": 8
+      },
+      {
+        "id": "beginner-33",
+        "mode": "acro",
+        "proofSha256": "0b0111be50be8f6425cda65906984e6101d7f2b530e33651aadc4e81e2f69ac9",
+        "frames": 2091,
+        "finalStateIdentity": "88d6cc9efa4bbd1a",
+        "direct": "complete",
+        "replay": "complete",
+        "predicateComparisons": 1908,
+        "transitions": 9
+      },
+      {
+        "id": "beginner-34",
+        "mode": "acro",
+        "proofSha256": "a18fd00c2de31aecd494d30a6904f991e72bb03f030a70868acd4fa466188a70",
+        "frames": 2446,
+        "finalStateIdentity": "783d9ac33d8dd03f",
+        "direct": "complete",
+        "replay": "complete",
+        "predicateComparisons": 921,
+        "transitions": 10
+      },
+      {
+        "id": "beginner-35",
+        "mode": "acro",
+        "proofSha256": "fd3ba62fbdce744998a18d4eeffc8c40cc86c88631269a336a431599be9f12ba",
+        "frames": 1902,
+        "finalStateIdentity": "8c29b29d69e761ab",
+        "direct": "complete",
+        "replay": "complete",
+        "predicateComparisons": 548,
+        "transitions": 8
+      },
+      {
+        "id": "beginner-36",
+        "mode": "acro",
+        "proofSha256": "afe1505778ce0954d3b11e23af718c645b4c40e8da197e1865244ef6a9494449",
+        "frames": 1796,
+        "finalStateIdentity": "ad7aa5de2e99f9fe",
+        "direct": "complete",
+        "replay": "complete",
+        "predicateComparisons": 615,
+        "transitions": 9
+      },
+      {
+        "id": "beginner-37",
+        "mode": "acro",
+        "proofSha256": "65d5efc21fb10f980d188137ddcffcdd875b0cbf24059031f3b7d457b2ebbcf0",
+        "frames": 2312,
+        "finalStateIdentity": "c4496bc85f21f7b4",
+        "direct": "complete",
+        "replay": "complete",
+        "predicateComparisons": 2303,
+        "transitions": 9
+      },
+      {
+        "id": "beginner-38",
+        "mode": "acro",
+        "proofSha256": "28700265dfc336671f3372a9e186939bbcdb55b35f57ebab799bd73187395336",
+        "frames": 1769,
+        "finalStateIdentity": "cabf135da49422b0",
+        "direct": "complete",
+        "replay": "complete",
+        "predicateComparisons": 753,
+        "transitions": 9
+      },
+      {
+        "id": "beginner-39",
+        "mode": "acro",
+        "proofSha256": "37d1e5d39e7575b87dcc9d784617223472a470b6d1afdbd57a8f2cf152a6fbbc",
+        "frames": 2028,
+        "finalStateIdentity": "c3c3eed9622e8f82",
+        "direct": "complete",
+        "replay": "complete",
+        "predicateComparisons": 644,
+        "transitions": 10
+      },
+      {
+        "id": "beginner-40",
+        "mode": "acro",
+        "proofSha256": "bddf111392e0fa296136bbc4fb0a7aa6dfdbe41f63f672578c8dc952b959570c",
+        "frames": 2007,
+        "finalStateIdentity": "7c4a810a0a8ab6e0",
+        "direct": "complete",
+        "replay": "complete",
+        "predicateComparisons": 754,
+        "transitions": 9
+      },
+      {
+        "id": "beginner-41",
+        "mode": "acro",
+        "proofSha256": "cdc12c625b0bc25787177492a4bb3fcaa7702a4fd5cb208c5be2980dd452d76e",
+        "frames": 2510,
+        "finalStateIdentity": "3d33e5a01e58079c",
+        "direct": "complete",
+        "replay": "complete",
+        "predicateComparisons": 1253,
+        "transitions": 11
+      },
+      {
+        "id": "beginner-42",
+        "mode": "acro",
+        "proofSha256": "c11485f46dbb81b08d881557eb876f4882815a04aafacd770bfb8b1c6b591891",
+        "frames": 2784,
+        "finalStateIdentity": "52dc63ca74fabe94",
+        "direct": "complete",
+        "replay": "complete",
+        "predicateComparisons": 835,
+        "transitions": 12
+      },
+      {
+        "id": "beginner-43",
+        "mode": "acro",
+        "proofSha256": "e861bed3f9f23653ab82719c523be7b53c96a48e834f2d37bdffac750dc45e48",
+        "frames": 1657,
+        "finalStateIdentity": "c272e62e0a9e6d02",
+        "direct": "complete",
+        "replay": "complete",
+        "predicateComparisons": 1419,
+        "transitions": 6
+      },
+      {
+        "id": "beginner-44",
+        "mode": "acro",
+        "proofSha256": "790ea96e4fb4b31ef808be39df4c0f8e539845d39e8dc09aba875071cd1b63ad",
+        "frames": 1657,
+        "finalStateIdentity": "774cd1ede8a1f63e",
+        "direct": "complete",
+        "replay": "complete",
+        "predicateComparisons": 1419,
+        "transitions": 6
+      },
+      {
+        "id": "beginner-45",
+        "mode": "acro",
+        "proofSha256": "0310209b89f25f8ac34183c04ff89f13349a69db047ccc9fd6cb2ba006a48a30",
+        "frames": 1045,
+        "finalStateIdentity": "23393f68b2059498",
+        "direct": "complete",
+        "replay": "complete",
+        "predicateComparisons": 807,
+        "transitions": 6
+      },
+      {
+        "id": "beginner-46",
+        "mode": "acro",
+        "proofSha256": "bbe49aeaafd3454f04162498bfb9f54b70a8b1438dcbd64928159079dfe48475",
+        "frames": 1527,
+        "finalStateIdentity": "21110474859f0887",
+        "direct": "complete",
+        "replay": "complete",
+        "predicateComparisons": 1358,
+        "transitions": 6
+      },
+      {
+        "id": "beginner-47",
+        "mode": "acro",
+        "proofSha256": "ae2a22f828bd5e6df64d8bce8b02679d38b512ccff12f21b9196b977e1e9c624",
+        "frames": 1678,
+        "finalStateIdentity": "9c8306ffaf6dcc89",
+        "direct": "complete",
+        "replay": "complete",
+        "predicateComparisons": 1115,
+        "transitions": 6
+      },
+      {
+        "id": "beginner-48",
+        "mode": "acro",
+        "proofSha256": "24c157a123366719811795245a29878175e9b77128c229d8c2de0b09c0e13604",
+        "frames": 1845,
+        "finalStateIdentity": "b58df5e614999bda",
+        "direct": "complete",
+        "replay": "complete",
+        "predicateComparisons": 1282,
+        "transitions": 6
+      },
+      {
+        "id": "beginner-49",
+        "mode": "acro",
+        "proofSha256": "b8eb034f4a6a3901b6b769cbd10493127a49dbf98e26d983c9a7c478faf973cf",
+        "frames": 1752,
+        "finalStateIdentity": "ce1234ce0817c6b8",
+        "direct": "complete",
+        "replay": "complete",
+        "predicateComparisons": 1584,
+        "transitions": 6
+      },
+      {
+        "id": "beginner-50",
+        "mode": "acro",
+        "proofSha256": "3846eb91d35ba9d08e62c985025fbfd30cfe3dce236de761af53c0fbcee76313",
+        "frames": 1846,
+        "finalStateIdentity": "5d1a9e28acad2504",
+        "direct": "complete",
+        "replay": "complete",
+        "predicateComparisons": 1191,
+        "transitions": 5
+      },
+      {
+        "id": "beginner-51",
+        "mode": "acro",
+        "proofSha256": "1abc58b4ff073a81b19e66ba94aea9dea9133de5e287b6af610c8daf8eb414c0",
+        "frames": 2018,
+        "finalStateIdentity": "7a49fb39bcb506c3",
+        "direct": "complete",
+        "replay": "complete",
+        "predicateComparisons": 1196,
+        "transitions": 5
+      },
+      {
+        "id": "beginner-52",
+        "mode": "acro",
+        "proofSha256": "33d3fd330086017a742a0e4a728f788bcb587e34b5f3b96bb6721d6b67034d26",
+        "frames": 2793,
+        "finalStateIdentity": "83ec857c83cdb077",
+        "direct": "complete",
+        "replay": "complete",
+        "predicateComparisons": 1314,
+        "transitions": 7
+      },
+      {
+        "id": "beginner-53",
+        "mode": "acro",
+        "proofSha256": "650cf558612131922f61c96d0aeb42acc26cab09d571e2a0a7f9b7d8ac8ede33",
+        "frames": 2491,
+        "finalStateIdentity": "83168bd78a32adf5",
+        "direct": "complete",
+        "replay": "complete",
+        "predicateComparisons": 1122,
+        "transitions": 5
+      },
+      {
+        "id": "beginner-54",
+        "mode": "acro",
+        "proofSha256": "a6b2f96e1f6978054dbb721fe6981dcdcaa643b1182a88af01b496fa2b40ff20",
+        "frames": 1542,
+        "finalStateIdentity": "2f94f3b6491254c7",
+        "direct": "complete",
+        "replay": "complete",
+        "predicateComparisons": 1152,
+        "transitions": 7
+      },
+      {
+        "id": "beginner-55",
+        "mode": "acro",
+        "proofSha256": "9f4a51642e7a7a579f392d8a424fa37b2f7c9d07830c1e29a861fe03a0a8ed91",
+        "frames": 2075,
+        "finalStateIdentity": "ffe2815daa8a832f",
+        "direct": "complete",
+        "replay": "complete",
+        "predicateComparisons": 1302,
+        "transitions": 7
+      },
+      {
+        "id": "beginner-56",
+        "mode": "acro",
+        "proofSha256": "27e0520a68d1a6e3b584191405a233d4f1eed00205ad40414920a6ef3b218818",
+        "frames": 2622,
+        "finalStateIdentity": "863576bd05ea03e6",
+        "direct": "complete",
+        "replay": "complete",
+        "predicateComparisons": 1321,
+        "transitions": 8
+      },
+      {
+        "id": "beginner-57",
+        "mode": "acro",
+        "proofSha256": "62f9a9334e346a773997e76f11f29cac8c3f7189f39f63ceea6df4fb86ed2e12",
+        "frames": 3212,
+        "finalStateIdentity": "def0ca53a5dcd820",
+        "direct": "complete",
+        "replay": "complete",
+        "predicateComparisons": 1361,
+        "transitions": 12
+      },
+      {
+        "id": "beginner-58",
+        "mode": "acro",
+        "proofSha256": "74dee49a09835d801928c6dd4357c948017b47f687724ad3c60dec211e11f7c8",
+        "frames": 5285,
+        "finalStateIdentity": "19644e21a6648a57",
+        "direct": "complete",
+        "replay": "complete",
+        "predicateComparisons": 2933,
+        "transitions": 17
+      }
+    ],
+    "frames": 87518,
+    "replayFrames": 87518,
+    "predicateComparisons": 56796,
+    "transitions": 374
+  },
+  "academy": {
+    "demonstrations": [
+      {
+        "id": "flight-01",
+        "mode": "self-level",
+        "proofSha256": "3ed2a52b4a597da21de599fe5989a8a3434749fd6754336503ea9619efff383b",
+        "frames": 239,
+        "finalStateSha256": "f77355fa3f472539c466b0c2023dc4b6257e6d577a28f4920a1f04e8241bd394",
+        "direct": "complete",
+        "replay": "complete",
+        "predicateComparisons": 237,
+        "transitions": 2
+      },
+      {
+        "id": "flight-01",
+        "mode": "acro",
+        "proofSha256": "cbe339c8db849d584a6bcc18ef2997c247d640b84cb9595dd6b6506d2bb1de43",
+        "frames": 239,
+        "finalStateSha256": "f77355fa3f472539c466b0c2023dc4b6257e6d577a28f4920a1f04e8241bd394",
+        "direct": "complete",
+        "replay": "complete",
+        "predicateComparisons": 237,
+        "transitions": 2
+      },
+      {
+        "id": "flight-02",
+        "mode": "self-level",
+        "proofSha256": "38bc8d1d2b52ea573fa262131b13ff721ea4011f878674cd7023c7c5cb1dbedf",
+        "frames": 383,
+        "finalStateSha256": "e83ac243258aea7cdd28260130b893b5c9d811bcc4e1b29ec84aefd4f06ad65d",
+        "direct": "complete",
+        "replay": "complete",
+        "predicateComparisons": 381,
+        "transitions": 2
+      },
+      {
+        "id": "flight-02",
+        "mode": "acro",
+        "proofSha256": "0d47f0994382504aa8463afba49f3d93d69468e679050721c361f046eddd82e3",
+        "frames": 383,
+        "finalStateSha256": "e83ac243258aea7cdd28260130b893b5c9d811bcc4e1b29ec84aefd4f06ad65d",
+        "direct": "complete",
+        "replay": "complete",
+        "predicateComparisons": 381,
+        "transitions": 2
+      },
+      {
+        "id": "flight-03",
+        "mode": "self-level",
+        "proofSha256": "ab58017440d3a6b74785c46a327d9b6e0e69821a1872538231eb1e7685b236ca",
+        "frames": 433,
+        "finalStateSha256": "7a791a09712f7facb34216224289f582cd236b85bc2ecfdefdf544b0a2a6d03e",
+        "direct": "complete",
+        "replay": "complete",
+        "predicateComparisons": 329,
+        "transitions": 4
+      },
+      {
+        "id": "flight-03",
+        "mode": "acro",
+        "proofSha256": "2ad55ff9b561850b4d9eb2e5f07ab2f2c73ff5ac8c7b79f6135c9b345f4e120b",
+        "frames": 433,
+        "finalStateSha256": "cc89ddb8ac21b5432cc5e06ae504f73a0b2538257be8aa4c34565d9f7bab008d",
+        "direct": "complete",
+        "replay": "complete",
+        "predicateComparisons": 329,
+        "transitions": 4
+      },
+      {
+        "id": "flight-04",
+        "mode": "self-level",
+        "proofSha256": "58745a84bb3cac5a4cb520edd2d24525807d5ae4c936f8a5e6926453108b55ea",
+        "frames": 433,
+        "finalStateSha256": "44730343ae830618514fd69a7d02709936d2f8f2844a8a179ceea9647b2c34c6",
+        "direct": "complete",
+        "replay": "complete",
+        "predicateComparisons": 329,
+        "transitions": 4
+      },
+      {
+        "id": "flight-04",
+        "mode": "acro",
+        "proofSha256": "aaabff64302f5a2ffa3c4e017c97de4292593b8c05ad22ff69e6230f339f40cc",
+        "frames": 433,
+        "finalStateSha256": "71c155dcb0e900d62ebed33875952efb6a4f2650fe5663d82c8d371453713d40",
+        "direct": "complete",
+        "replay": "complete",
+        "predicateComparisons": 329,
+        "transitions": 4
+      },
+      {
+        "id": "flight-05",
+        "mode": "self-level",
+        "proofSha256": "808797f792da7abb84faedf5f4406fbf520460bf0077988dfa81e23809e90daf",
+        "frames": 435,
+        "finalStateSha256": "f216d27448c614accd21985d06cc28fd5e2f414b87e52fd030f533b9f48b5571",
+        "direct": "complete",
+        "replay": "complete",
+        "predicateComparisons": 313,
+        "transitions": 4
+      },
+      {
+        "id": "flight-05",
+        "mode": "acro",
+        "proofSha256": "df9dd5fe940ca175de4e4d334e258ec45fb1e4b71577ca459cc69b2ec9e8674f",
+        "frames": 435,
+        "finalStateSha256": "956316ec5529cb488d4ca4f7b07e7cf653a0330ff17aecd13bc79400ddfb3c7a",
+        "direct": "complete",
+        "replay": "complete",
+        "predicateComparisons": 313,
+        "transitions": 4
+      },
+      {
+        "id": "flight-06",
+        "mode": "self-level",
+        "proofSha256": "fb7422e1b0e37f6e22f23a63433b07c5bb9d10819b28f82c2cdf0047632f6de2",
+        "frames": 899,
+        "finalStateSha256": "dd3e2cca245c5e6f9ead11331d083d618db830a234d618656066e876e0378295",
+        "direct": "complete",
+        "replay": "complete",
+        "predicateComparisons": 345,
+        "transitions": 6
+      },
+      {
+        "id": "flight-06",
+        "mode": "acro",
+        "proofSha256": "4713720d38fbfde2caea5e489a82b3d740cb22b8e1f4788dde375d7fe742d0ac",
+        "frames": 900,
+        "finalStateSha256": "7de4ad41de1d9f85611443fb63793a4ec3e84c06b5d8e66a3a749e5413f76480",
+        "direct": "complete",
+        "replay": "complete",
+        "predicateComparisons": 346,
+        "transitions": 6
+      },
+      {
+        "id": "flight-07",
+        "mode": "self-level",
+        "proofSha256": "4c5afc4a064aad27e051d4bb744bf6e6ec2fad25636cfdb5c38dde0f89ccf37a",
+        "frames": 498,
+        "finalStateSha256": "73a04c10fcc0e8dbd641143e47757f2b0a7ce561c97e0be83b5cc7a8cc6dae04",
+        "direct": "complete",
+        "replay": "complete",
+        "predicateComparisons": 494,
+        "transitions": 4
+      },
+      {
+        "id": "flight-07",
+        "mode": "acro",
+        "proofSha256": "8423183c303621a51876807179f3e4c34a307b61f7976f66338e1b029b02aa81",
+        "frames": 488,
+        "finalStateSha256": "81023df093d46c45c4d394772461578a7117eb2995a58691dba207f690675f0f",
+        "direct": "complete",
+        "replay": "complete",
+        "predicateComparisons": 484,
+        "transitions": 4
+      },
+      {
+        "id": "flight-08",
+        "mode": "self-level",
+        "proofSha256": "f04990c0921182c0f11f5a62445fec4759158a3a7082dcd065b5c828b376cdc1",
+        "frames": 491,
+        "finalStateSha256": "36491a97b781448cbf0f6c0c110ee86aef5b8a11030a6a86a841d0f6921b687b",
+        "direct": "complete",
+        "replay": "complete",
+        "predicateComparisons": 349,
+        "transitions": 4
+      },
+      {
+        "id": "flight-08",
+        "mode": "acro",
+        "proofSha256": "ff8b31e6f4e81a363eb0630a776e50166babbd26f1199c4d0553972766f44f52",
+        "frames": 491,
+        "finalStateSha256": "e3c0740bbcd62c3fd2fc6f80b87da1f6dbc4903d4d22076de76eca1aa8b8c79c",
+        "direct": "complete",
+        "replay": "complete",
+        "predicateComparisons": 349,
+        "transitions": 4
+      },
+      {
+        "id": "flight-09",
+        "mode": "self-level",
+        "proofSha256": "42fdc87542197925b83474d031e44677314d32c5d7b784e24250b7553977036d",
+        "frames": 638,
+        "finalStateSha256": "45a239d1c2e1fff4aab1b973e47244958eea5f7371df8ac17a5fc683071b5809",
+        "direct": "complete",
+        "replay": "complete",
+        "predicateComparisons": 339,
+        "transitions": 5
+      },
+      {
+        "id": "flight-09",
+        "mode": "acro",
+        "proofSha256": "3658dd25e8c77c7826f74bb568db55db5929bfb50e135911c080073de02ab20d",
+        "frames": 638,
+        "finalStateSha256": "ece63b3564dceffb6eed409c9dd255a4259865454e58b21afe2e6306fab604cf",
+        "direct": "complete",
+        "replay": "complete",
+        "predicateComparisons": 339,
+        "transitions": 5
+      },
+      {
+        "id": "flight-10",
+        "mode": "self-level",
+        "proofSha256": "bfc18214357db7d50aaf4795e62c0e8ee21b6e6a482b5d49cf8b93bc0808fcc3",
+        "frames": 610,
+        "finalStateSha256": "4c1c3c339ab0dfdf3347d52d84e91e0a8f3a885ff9bbcb8438b5c0c016e582d5",
+        "direct": "complete",
+        "replay": "complete",
+        "predicateComparisons": 310,
+        "transitions": 5
+      },
+      {
+        "id": "flight-10",
+        "mode": "acro",
+        "proofSha256": "d4509e72e983fc3946ffd98b1d3d819369488531739d7083c2993274b0747e5b",
+        "frames": 610,
+        "finalStateSha256": "1f09036702c47a0482697bfe6c3caba659e6852075882ec67fd8f730a04fc5f9",
+        "direct": "complete",
+        "replay": "complete",
+        "predicateComparisons": 310,
+        "transitions": 5
+      },
+      {
+        "id": "flight-11",
+        "mode": "self-level",
+        "proofSha256": "123fff0f89dedd2f683234cc6657a8a517726bab73df1e14aa484f2815b0a4e2",
+        "frames": 1243,
+        "finalStateSha256": "72dae5416972f5cc488744fe59a0272d5a670e77f633a1dc5a138d1cdf094cef",
+        "direct": "complete",
+        "replay": "complete",
+        "predicateComparisons": 433,
+        "transitions": 8
+      },
+      {
+        "id": "flight-11",
+        "mode": "acro",
+        "proofSha256": "a04fddcc2757fcd1f62925b8cd3553ce0e577ea142d931386771e5f5020cdddf",
+        "frames": 1243,
+        "finalStateSha256": "31d352e44cda5d2965e54d44049160f09c24a1dafe645a58a3902575970fd246",
+        "direct": "complete",
+        "replay": "complete",
+        "predicateComparisons": 433,
+        "transitions": 8
+      },
+      {
+        "id": "flight-12",
+        "mode": "self-level",
+        "proofSha256": "37617055d8c2d4179037fe3c5f3028a4aca627c5d86ced76898d615b92342c15",
+        "frames": 1126,
+        "finalStateSha256": "992a55ffa45a0a17c76831d2d8bd389facd42d24013fc83c6f0da5c4e7e8028c",
+        "direct": "complete",
+        "replay": "complete",
+        "predicateComparisons": 402,
+        "transitions": 7
+      },
+      {
+        "id": "flight-12",
+        "mode": "acro",
+        "proofSha256": "5010a05b8f23be9f2ea28897069f42b4d83dbca796373a4afac5eb0f13ca3d95",
+        "frames": 1126,
+        "finalStateSha256": "3a14446dd1356d50148a84ab57a910ad00cd7097a045bca87b4b265362888023",
+        "direct": "complete",
+        "replay": "complete",
+        "predicateComparisons": 402,
+        "transitions": 7
+      }
+    ],
+    "frames": 14847,
+    "replayFrames": 14847,
+    "predicateComparisons": 8513,
+    "transitions": 110
+  },
+  "totals": {
+    "demonstrations": 82,
+    "directlySteppedFrames": 102365,
+    "independentlyReplayedFrames": 102365,
+    "holdLandingPredicateComparisons": 65309,
+    "runtimeTransitions": 484,
+    "initialLocalizedFeedbackCalls": 3336
+  }
+}
