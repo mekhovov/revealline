@@ -3760,6 +3760,63 @@ proofs, plus 311 historical admitted-browser checks / 16 Watch replays; final na
 offline qualification and publication remain pending. Continue
 Festival, Harbor, Canals and then D6, retaining device/novice limits.
 
+## 5 October — Player-reported learning and exploration fixes
+
+Native stack **#1106**, based on main, contains **#1104 → #1105**. Lesson clarity
+#1104 is published at `037b6ac6303d064f9dba31fce8e5078a6c1bc72b`; untimed full-world
+free flight #1105 was first published at `a83823757cba76c26131f352d6b09ac4ba37eeb4`.
+The latter receives this documentation-only checkpoint as a normal fast-forward.
+Both remain Draft for exact committed-source package admission, reproducibility and
+offline qualification. No public availability or merge is claimed.
+
+The learning observer now exposes the actual altitude, tilt, centred-input, speed,
+heading and landing conditions. Named chapters explain their purpose; full-flight
+and section demonstrations are discoverable, and returning from a demonstration
+preserves an unfinished scored attempt's command prefix and resumes paused.
+Larger live readings/sticks and an active-objective direction cue were inspected
+in desktop, phone portrait/landscape and Ukrainian layouts. All 58 recommended-mode
+school demonstrations complete and independently replay: 87,518 ticks on each path,
+56,796 hold-frame comparisons, 239 accepted transitions, zero criterion mismatches.
+The receipt also covers 1,496 EN/UK lesson/mode states and 35 edge cases. These are
+functional checks, not novice acceptance or new unit coverage.
+
+Free flight now selects a full-world layout independently of filtered Hunt arenas
+and uses the existing untimed, unscored practice runtime. Its 142-assertion functional
+probe covers 14 worlds, 28 mode starts, imported fallback selection, immutable source
+courses and both modes remaining active beyond 36,000 ticks. This removes the old
+12-minute cutoff; it does not claim streamed, spatially unlimited terrain. See
+`fpv-learning-clarity.md`, `fpv-endless-exploration.md` and their evidence probes.
+
+The combined development player is retained at `dist/fpv-learning-clarity-playtest`:
+104 files / 15,651,677 bytes, ZIP SHA-256
+`df31491b9b04469d7c2feb60b378862f88015b413c0c905330496704a52deb6d`.
+It was launched and exercised but is explicitly not release-qualified.
+
+Independent Snake shared soundtrack **#1107**, branch `codex/snake-shared-soundtrack`,
+head `af179bb15f`, restores the shared transport/library using Snake's existing audio
+owner. Browser transport progression, Pause through Start/Retry, nested-library Back
+and music through gameplay Pause passed. Existing 69 shared menu/music and 12 catch
+audio checks pass. Audible device output and packaged/offline qualification remain
+pending. See `fpv-snake-shared-music.md` on that branch. It is also Draft.
+
+Storage repeatedly fell to zero during this work. One confirmed incomplete Git temp
+pack and two duplicate installed-extension download archives were safely removed;
+all source, refs, histories, protected builds and unique evidence were preserved.
+The interrupted branch switch was repaired only after verifying affected files
+matched the intended committed target byte-for-byte. All completed application
+changes are now committed and pushed. Full builds require the existing 3 GiB floor;
+do not bypass it or delete unique work to force qualification.
+
+Next priorities: finish exact package/offline qualification when space is stable;
+clarify Hunt contact versus Combat fire versus Follow/Observe interactions; add
+filtered random challenge selection; integrate SIM's shared music with explicit
+audio ownership. Richer beginner scenery and collidable landmarks inside expanded,
+versioned exploration worlds remain art/runtime work. Existing target contact was
+reproduced successfully in eight moving catches and exact replays; stopping momentum
+and non-destructible Follow/Observe actors are separate versioned design questions,
+not permission to rewrite existing proofs. Physical radio/mobile/Steam Deck and novice
+acceptance remain unclaimed. Festival, Harbor, Canals and D6 priorities remain in force.
+
 ## 5 October — Learning clarity and free exploration fixes
 
 From main `cfa30a228eb25d2bc7e4dd6d76e417c0d76a6873`, branch `codex/fpv-learning-clarity` implements the reviewed [learning clarity increment](fpv-learning-clarity.md): explicit real criteria, named chapters, prominent real-flight/section demonstrations, safe recorded-prefix return, FPV target cues and larger lesson sticks. All 58 recommended-mode proofs and 56,796 hold-frame comparisons pass unchanged. Native browser verification includes actual section/full replay, retained 11-second practice prefix, explicit flight-mode choice, EN/UK and desktop/phone viewports.
