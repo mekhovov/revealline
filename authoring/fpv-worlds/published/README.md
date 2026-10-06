@@ -15,13 +15,29 @@ courses, examples, presentation and installation are
 qualified. A compatible world may appear in both catalogues; a coating-dependent
 world must never enter the original one.
 
+`ground-motion-v1/index.json` is the cumulative catalogue for players that also
+support actor `groundMotion: 'support-v1'`. It retains the same closed row schema
+and immutable pack checks. Only this capable player's dedicated worker accepts
+the new index URL; older cached players retain their existing endpoints. Packs
+requiring ground motion must never enter either older catalogue.
+
+The ground-motion catalogue copies the complete eligible surface-coating feed
+byte-for-byte, including Mountain Reservoir r16 published through #1094. The
+original catalogue remains empty. This preserves discovery for newer players;
+the endpoint change does not update cached players or deliver demonstrations.
+Festival and Harbor still have separate catalogue publication gates, and neither
+has a row here. Preserve every existing compatible row when adding a later
+cohort; do not bypass an unpublished row by adding it to another feed. Optional
+demonstrations still require their separate proof archive.
+
 Catalogue versions select an existing, fixed capability contract. They do not
 negotiate arbitrary imported features or permit executable content. Future
 required features need another compatibility decision before publication.
 
-An older cached player still rejects a directly imported coating-dependent pack.
-New players distinguish a well-formed but unsupported required extension from
-malformed extension declarations. EN/UK guidance explains that the current SIM
+An older cached player still rejects a directly imported pack whose required
+coating or ground-motion feature it does not support. New players distinguish a
+well-formed but unsupported required extension or ground-motion version from
+malformed declarations. EN/UK guidance explains that the current SIM
 cannot import the feature and directs the player to the existing Flight practice
 launcher: **Check available practice → Play available version**. If that version
 still lacks the feature, a compatible pack is required. **Prepare offline** caches

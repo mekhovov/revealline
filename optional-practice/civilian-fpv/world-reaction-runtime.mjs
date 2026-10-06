@@ -64,7 +64,7 @@ const sourceHashes={
 'game/audio/reactions/actors.mjs':
 '79debf91cafa2e01cd65170037ee483977cbf7d5c3a619ccac9ed400264598b8',
 'optional-practice/civilian-fpv/world-library.mjs':
-'8c452316136b91dd9ac8f81de56a7a6aee931dcd62c4595c55e29bcdd10a5c9a',
+'508220ad83fc747a31e5ee4a7efbc860428cfaaffe91bc7f9ba1d1428fa51331',
 'game/audio/reactions/guide-0-en.m4a':
 '58f961f54b52d0dbb58f53f000ca85bba166236126e135dc1f5e89f8f9a94210',
 'game/audio/reactions/guide-0-uk.m4a':
@@ -7685,9 +7685,9 @@ const WORLD_LIMITS=external12['WORLD_LIMITS'];
 const worldSHA256=external12['worldSHA256'];
 
 const origin='https://raw.githubusercontent.com/mekhovov/revealline/';
-// This endpoint only publishes packs supported by the surface-coating-v1 runtime.
-// The original index remains compatible with already cached older players.
-const indexURL=origin+'main/authoring/fpv-worlds/published/surface-coating-v1/index.json';
+// This cohort supports ground motion support-v1 and surface-coating-v1.
+// Both older indexes retain their cached-runtime-compatible content.
+const indexURL=origin+'main/authoring/fpv-worlds/published/ground-motion-v1/index.json';
 const check=(condition)=>{
 if(!condition)throw new Error('Invalid world download.');
 };
