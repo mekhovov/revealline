@@ -14,6 +14,25 @@ remain pending and nonblocking, never passed by implication.
 
 ## Current execution checkpoint
 
+**5 October, frozen-source checkpoint.** Safe cleanup recovered approximately
+8.54 GiB of disposable allocation. Source, working changes, unique evidence and
+finalized Git packs/indexes were preserved; all 2,135 previously checked ref and
+worktree HEAD objects still resolve identically. This is a bounded preservation
+check, not recursive `git fsck`. The local audit journal is
+`/tmp/fpv-safe-cleanup-20261005.md`; its exact snapshot is retained with the
+[cohort admission evidence](../authoring/fpv-worlds/library-ground-cohort/evidence/admission-2c99-r2/manifest.json).
+
+Ground/P1 source `328f4c537` and the separate cumulative Library cohort source
+`2c99a8250` each pass full validation and their own all-three/two-identical package
+admission. The cohort keeps older feeds exact and carries the already-published
+Reservoir row. Its first admission attempt stopped before launch at the 3 GiB
+disk floor; retry `r2` passed after storage recovery. These results cover their
+named frozen sources only. Newer main `cfa30a2` audio/presentation changes must be
+integrated before final native/offline qualification; no current-main, native or
+release-ready claim follows from the frozen builds. No runtime source was changed
+by cleanup, and no newer audio change was silently included.
+
+### Historical execution checkpoint — 4 October
 Current main is `21826c460e80fa4e7fa47ec8e6ba9f98f75beea4`. Library transport,
 responsive menus, focus/ghost access, warm-frame readiness, language/Home ownership,
 coating capability, HUD work, Creator save recovery and cached-player compatibility

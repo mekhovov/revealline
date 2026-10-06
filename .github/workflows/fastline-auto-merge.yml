@@ -2,7 +2,10 @@ name: Fastline exact-head auto-merge
 
 on:
   workflow_run:
-    workflows: [Build and deploy GitHub Pages]
+    # Wake after either workflow that can create the exact-head release-ready
+    # check. Fast-release maintenance PRs skip the Pages build, so listening
+    # only for the deployment workflow leaves their controller decision stale.
+    workflows: [Build and deploy GitHub Pages, Validate source for continuous main Pages]
     types: [completed]
   pull_request:
     branches: [main]

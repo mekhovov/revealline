@@ -1,11 +1,4 @@
-import { createEnemyStatsHost } from '../enemy-stats.mjs';
-import { mountEnemyStats } from '../ui/enemy-stats.mjs';
-import { arcadeEnemyDefeats } from '../ui/enemy-stats-events.mjs';
-import {
-  createContinuousPlayController,
-  mountContinuousPlayControls,
-} from '../ui/continuous-play.mjs';
-import { mountContinuousCelebration } from '../ui/continuous-celebration.mjs';
+import { loadBaseArtwork } from '../base-artwork.mjs';
 import { nativeArtReviewURL } from '../ui/art-review-navigation.mjs';
 import { selectedArcadeCollection } from '../presentation/industrial-arcade.mjs';
 import {
@@ -419,8 +412,10 @@ try {
     campaign: { ...campaign, classRecipes: registry },
     classRecipes: registry,
     themes: themes.themes,
-    visualOverrides: {},
-    levelVisuals: [],
+    ...(await loadBaseArtwork(
+      { ...campaign, classRecipes: registry },
+      { signal: artworkLifetime.signal },
+    )),
     music: [],
     sourcePackId: null,
   };
