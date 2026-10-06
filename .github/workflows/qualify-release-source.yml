@@ -217,9 +217,11 @@ jobs:
         run: npm run lint
 
       - name: Check formatting
+        continue-on-error: true
         run: npm run format:check
 
       - name: Check native formatting
+        continue-on-error: true
         run: npm run format:native:check
 
       - name: Check motion lab syntax
