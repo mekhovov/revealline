@@ -2,9 +2,9 @@ import { boundedJSON, exactKeys, stableId } from '../../game/data-json.mjs';
 import { WORLD_LIMITS, worldSHA256 } from './world-content.mjs';
 
 const origin = 'https://raw.githubusercontent.com/mekhovov/revealline/';
-// This endpoint only publishes packs supported by the surface-coating-v1 runtime.
-// The original index remains compatible with already cached older players.
-const indexURL = origin + 'main/authoring/fpv-worlds/published/surface-coating-v1/index.json';
+// This cohort supports ground motion support-v1 and surface-coating-v1.
+// Both older indexes retain their cached-runtime-compatible content.
+const indexURL = origin + 'main/authoring/fpv-worlds/published/ground-motion-v1/index.json';
 const check = (condition) => {
   if (!condition) throw new Error('Invalid world download.');
 };
