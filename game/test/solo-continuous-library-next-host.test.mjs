@@ -284,6 +284,10 @@ for (const action of ['failure', 'cancel'])
       const base = JSON.parse(
         await readFile(new URL('../content/campaign.json', import.meta.url), 'utf8'),
       );
+      // This boundary fixture intentionally changes the campaign's playable
+      // identity. It must therefore not load the production first-signal
+      // artwork pack, whose identity validation belongs to that real campaign.
+      base.id = 'boundary-library';
       base.levels = [
         {
           ...retryFixture('self-contact').level,
