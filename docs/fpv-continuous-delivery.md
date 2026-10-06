@@ -3759,3 +3759,11 @@ Festival r5 eight-course source has616 checks / 16 ordinary completion and repla
 proofs, plus 311 historical admitted-browser checks / 16 Watch replays; final native
 offline qualification and publication remain pending. Continue
 Festival, Harbor, Canals and then D6, retaining device/novice limits.
+
+## 5 October — Learning clarity and free exploration fixes
+
+From main `cfa30a228eb25d2bc7e4dd6d76e417c0d76a6873`, branch `codex/fpv-learning-clarity` implements the reviewed [learning clarity increment](fpv-learning-clarity.md): explicit real criteria, named chapters, prominent real-flight/section demonstrations, safe recorded-prefix return, FPV target cues and larger lesson sticks. All 58 recommended-mode proofs and 56,796 hold-frame comparisons pass unchanged. Native browser verification includes actual section/full replay, retained 11-second practice prefix, explicit flight-mode choice, EN/UK and desktop/phone viewports.
+
+Free-flight canonical-world selection and endless unscored operation are a separate dependent increment. Snake shared soundtrack controls are a separate independent increment. They remain separately reviewable; no old course/replay contract is rewritten. [The running-target audit](fpv-running-target-contact-audit.md) found eight valid moving-target catches replaying correctly; the next increment must clarify Contact Hunt versus pulse combat versus observation and treat momentum-preserving Hunt changes as versioned behavior.
+
+These changes are locally verified development work, not public live availability. Full frozen-source package admission remains pending sufficient temporary storage (3 GiB heavy-build floor; below 1 GiB observed). No protected checks, holds, source budgets or cleanup safeguards were relaxed. Continue focused publication, then target-action clarity/random selection/shared settings, accessible scenery revisions and the established Festival → Harbor → Canals → D6 sequence. Human art/device/novice acceptance stays explicitly unmeasured and does not block independent development.
