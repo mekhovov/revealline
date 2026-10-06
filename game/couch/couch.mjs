@@ -1,3 +1,4 @@
+import { loadBaseArtwork } from '../base-artwork.mjs';
 import { nativeArtReviewURL } from '../ui/art-review-navigation.mjs';
 import { selectedArcadeCollection } from '../presentation/industrial-arcade.mjs';
 import { createLocalMatchRecorder, localMatchProvenance } from '../multiplayer-recording.mjs';
@@ -404,8 +405,10 @@ try {
     campaign: { ...campaign, classRecipes: registry },
     classRecipes: registry,
     themes: themes.themes,
-    visualOverrides: {},
-    levelVisuals: [],
+    ...(await loadBaseArtwork(
+      { ...campaign, classRecipes: registry },
+      { signal: artworkLifetime.signal },
+    )),
     music: [],
     sourcePackId: null,
   };
