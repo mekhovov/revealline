@@ -9,6 +9,7 @@ import {
   loadFocusedExecutionInputs,
   packageScriptShellSemantics,
   runFocusedCommands,
+  runFocusedCommandsParallel,
 } from './focused-tests.mjs';
 
 const directory = path.dirname(fileURLToPath(import.meta.url));
@@ -406,6 +407,30 @@ test('focused command execution succeeds only when every command succeeds', () =
     stderr: { write() {} },
   });
   assert.deepEqual(summary, { attempted: 1, failures: [], exitCode: 0 });
+});
+
+test('bounded parallel focused execution retains every command verdict', async () => {
+  const delay = 'setTimeout(() => process.exit(0), 80)';
+  const started = Date.now();
+  const summary = await runFocusedCommandsParallel(
+    [
+      { id: 'first', command: process.execPath, args: ['-e', delay] },
+      { id: 'second', command: process.execPath, args: ['-e', delay] },
+      { id: 'failure', command: process.execPath, args: ['-e', 'process.exit(9)'] },
+    ],
+    { concurrency: 2, stdout: { write() {} }, stderr: { write() {} } },
+  );
+  assert.equal(summary.attempted, 3);
+  assert.deepEqual(summary.failures.map(({ id, status }) => [id, status]), [['failure', 9]]);
+  assert.equal(summary.exitCode, 9);
+  assert.ok(Date.now() - started < 220, 'independent commands use the bounded worker pool');
+});
+
+test('parallel focused execution rejects invalid worker limits', async () => {
+  await assert.rejects(
+    runFocusedCommandsParallel([], { concurrency: 0, stdout: { write() {} }, stderr: { write() {} } }),
+    /concurrency/u,
+  );
 });
 
 test('execution planning removes only exact tests covered by the selected package script', () => {

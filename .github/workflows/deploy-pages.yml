@@ -96,8 +96,9 @@ jobs:
       needs.preflight.outputs.focusedRequired == 'true'
     needs: preflight
     runs-on: ubuntu-latest
-    # A large source change can select many focused commands. Bound the job so
-    # a child process that never returns cannot leave this PR pending forever.
+    # A large source change can select many focused commands. The runner uses a
+    # bounded four-worker pool, keeping independent gates from serializing into
+    # a timeout while retaining a firm upper bound for a stuck child process.
     timeout-minutes: 60
     permissions:
       contents: read
