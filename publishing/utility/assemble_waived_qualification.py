@@ -30,9 +30,6 @@ HISTORICAL_AUDIO_EVIDENCE_ARCHIVE = 'coordinator/audio-source-retention-audit-70
 HISTORICAL_AUDIO_EVIDENCE_SHA256 = '224cd93c3a7ef5e10708e83ae77b2e5958a52cd279ed198d12aeb60afdb6c3ce'
 COMMIT = re.compile(r'[0-9a-f]{40}')
 GATES = [('validate', 'npm run validate', 'Validate source'),
-         ('lint', 'npm run lint', 'Lint source'),
-         ('format', 'npm run format:check', 'Check formatting'),
-         ('native-format', 'npm run format:native:check', 'Check native formatting'),
          ('motion-syntax', 'node --check authoring/motion-lab/app.js', 'Check motion lab syntax')]
 
 

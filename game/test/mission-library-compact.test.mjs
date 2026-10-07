@@ -173,7 +173,7 @@ test('compact Filters close when checkbox focus moves to a card or footer, retai
   p.chooser.destroy();
 });
 
-test('compact filter traversal and controller select preview stay open until focus reaches a card', () => {
+test('compact filter traversal keeps controller select preview open until focus reaches a card', () => {
   const p = setup();
   const filters = p.$('journey-filter-details');
   filters.open = true;
@@ -198,11 +198,13 @@ test('compact filter traversal and controller select preview stay open until foc
   assert.equal(p.doc.activeElement, p.$('journey-detailed-cards'));
   assert.equal(filters.open, true);
   navigation.handle({ direction: 'down' });
-  assert.equal(p.doc.activeElement.id, 'journey-goal-retry');
-  assert.equal(filters.open, true, 'optional goal tools share the compact filter panel');
-  navigation.handle({ direction: 'down' });
   assert.equal(p.doc.activeElement, p.$('journey-cards').children[0]);
   assert.equal(filters.open, false);
+  assert.equal(
+    p.$('journey-goal').parentElement,
+    p.$('journey-back').parentElement,
+    'Goal controls remain in the controller-reachable action footer.',
+  );
   assert.equal(p.launches, 0);
   navigation.destroy();
   p.chooser.destroy();

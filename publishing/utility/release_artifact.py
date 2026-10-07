@@ -54,6 +54,10 @@ FASTLINE_WORKFLOW = '.github/workflows/fastline-release.yml'
 QUALIFICATION_WORKFLOWS = {WORKFLOW, FASTLINE_WORKFLOW}
 GATES = ['validate', 'motion-syntax', 'test']
 COMMANDS = ['npm run validate', 'node --check authoring/motion-lab/app.js']
+# Keep the retained-workflow evidence contract in lockstep with the fast
+# qualification workflow.  Lint and formatting are intentionally no longer
+# release gates, so evidence must neither require nor fabricate their steps.
+GATE_STEP_NAMES = ['Validate source', 'Check motion lab syntax']
 WAIVER_FORMAT = 'revealline-source-qualification.v2'
 POLICY_PATH = 'publishing/test-policy.json'
 WAIVER_AUTHORIZATION = 'explicit-user-request-20260922'
@@ -530,9 +534,7 @@ def verify_evidence(body, qualification, source, policy_body=None):
                     len({j['id'] for j in job_rows}) == len(job_rows), 'Waiver original jobs incomplete or borrowed')
             source_jobs_check(job_rows, source['commit'], waived=True)
             qualify = next(j for j in job_rows if str(j.get('name', '')).removeprefix('qualify / ') == 'qualify')
-            names = ['Validate source', 'Lint source', 'Check formatting',
-                     'Check native formatting', 'Check motion lab syntax']
-            for gate, name in zip(qualification['gates'], names):
+            for gate, name in zip(qualification['gates'], GATE_STEP_NAMES):
                 matched = [s for s in qualify.get('steps', []) if s.get('name') == name]
                 require(gate.get('jobId') == qualify['id'] and len(matched) == 1 and
                         all(gate['step'].get(k) == matched[0].get(k) for k in ['name', 'number', 'status', 'conclusion']) and
