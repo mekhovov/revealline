@@ -168,8 +168,12 @@ export function soloDatabase(indexedDB) {
     },
   };
 }
-export async function settle(predicate, message = 'Asynchronous host action did not settle.') {
-  await waitFor(predicate, { message });
+export async function settle(
+  predicate,
+  message = 'Asynchronous host action did not settle.',
+  options = {},
+) {
+  await waitFor(predicate, { ...options, message });
 }
 let sequence = 0;
 export async function soloPage(
