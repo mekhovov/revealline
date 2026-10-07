@@ -30,7 +30,7 @@ function fixture(options = {}) {
   }
   if (options.withModes) {
     const actions = Object.fromEntries(
-      ['solo', 'team', 'versus', 'snake', 'simulator'].map((name) => [
+      ['solo', 'team', 'versus', 'snake', 'overflight', 'simulator'].map((name) => [
         name,
         document.createElement('button'),
       ]),
@@ -77,6 +77,8 @@ test('keyboard and controller directions share the exact landing cycle and mode 
     navigation.handle({ direction: 'down' });
     assert.equal(h.document.activeElement, expected);
   }
+  navigation.handle({ direction: 'right' });
+  assert.equal(h.document.activeElement.dataset.gameMode, 'overflight');
   navigation.handle({ direction: 'right' });
   assert.equal(h.document.activeElement.dataset.gameMode, 'simulator');
   navigation.handle({ direction: 'right' });

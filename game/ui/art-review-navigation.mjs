@@ -17,7 +17,7 @@ export function actorArtReviewRevision(location = globalThis.location) {
 // These are routes owned by this build, not a general-purpose URL allowlist.
 // Do not transfer preview choices to community/provider links or another edition.
 const ART_REVIEW_NATIVE_PAGE =
-  /^(.*\/)(?:game\/(?:(?:index|company)\.html|couch\/(?:index\.html|relay-rescue\.html)?|snake\/(?:(?:index|play)\.html)?|studio\/(?:(?:index|snake)\.html)?|(?:hunt\/military-levels\.html|(?:playground|hunt|online|replay-theater|controller-lab)\/(?:index\.html)?))?|authoring\/(?:asset-studio|motion-lab|enemy-catalog|still-media|video-poster|design-atlas|industrial-art-review)\/(?:index\.html)?|optional-practice\/(?:civilian-fpv|fpv-worlds)\/(?:index\.html)?)$/;
+  /^(.*\/)(?:game\/(?:(?:index|company)\.html|couch\/(?:index\.html|relay-rescue\.html)?|snake\/(?:(?:index|play)\.html)?|overflight\/play\.html|studio\/(?:(?:index|snake|overflight)\.html)?|(?:hunt\/military-levels\.html|(?:playground|hunt|online|replay-theater|controller-lab)\/(?:index\.html)?))?|authoring\/(?:asset-studio|motion-lab|enemy-catalog|still-media|video-poster|design-atlas|industrial-art-review)\/(?:index\.html)?|optional-practice\/(?:civilian-fpv|fpv-worlds)\/(?:index\.html)?)$/;
 
 /** Inherit an explicit review-only art pin along a caller-owned native link.
  * Does not validate arbitrary navigation, persist preferences, transfer content,

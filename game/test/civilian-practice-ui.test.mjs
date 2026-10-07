@@ -295,6 +295,7 @@ test('gym reuses neutral controller menu navigation without arming on device joi
     'game-mode-team',
     'game-mode-versus',
     'game-mode-snake',
+    'game-mode-overflight',
     'game-mode-simulator',
   ]) {
     pad.pulse(15);
@@ -365,6 +366,7 @@ test('gym menu keyboard navigation owns arrows and returns from nested help with
     'game-mode-team',
     'game-mode-versus',
     'game-mode-snake',
+    'game-mode-overflight',
     'game-mode-simulator',
   ]) {
     arrow('ArrowRight');
@@ -600,7 +602,7 @@ test('gym adopts the complete common preference inventory and keeps practice too
   );
 });
 
-test('gym shares five ordered Ukrainian mode choices and mobile category keyboard/controller Back without restarting practice', async (t) => {
+test('gym shares six ordered Ukrainian mode choices and mobile category keyboard/controller Back without restarting practice', async (t) => {
   const originalLocale = getLocale();
   const f = await fixture(t, { search: '?game-return=/game/&lang=uk' });
   t.after(() => setLocale(originalLocale));
@@ -608,11 +610,11 @@ test('gym shares five ordered Ukrainian mode choices and mobile category keyboar
   const modes = f.doc.querySelector('.game-mode-choice');
   assert.deepEqual(
     modes.children.map((node) => node.dataset.gameMode),
-    ['solo', 'team', 'versus', 'snake', 'simulator'],
+    ['solo', 'team', 'versus', 'snake', 'overflight', 'simulator'],
   );
   assert.equal(modes.querySelectorAll('[aria-current="page"]').length, 1);
   assert.equal(modes.querySelector('[aria-current="page"]').dataset.gameMode, 'simulator');
-  assert.equal(modes.children[4].querySelector('.game-mode-badge').textContent, 'beta');
+  assert.equal(modes.children[5].querySelector('.game-mode-badge').textContent, 'beta');
   assert.equal(modes.children[3].dataset.menuIcon, 'snake');
   const root = $('gym-shell-settings-dialog');
   f.doc.defaultView.innerWidth = 320;
