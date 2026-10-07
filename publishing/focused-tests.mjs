@@ -402,8 +402,16 @@ export async function loadFocusedExecutionInputs(
 
 export function runFocusedCommands(
   commands,
-  { root = '.', spawn = spawnSync, stdout = process.stdout, stderr = process.stderr } = {},
+  {
+    root = '.',
+    spawn = spawnSync,
+    stdout = process.stdout,
+    stderr = process.stderr,
+    timeoutMs = 10 * 60 * 1000,
+  } = {},
 ) {
+  if (!Number.isSafeInteger(timeoutMs) || timeoutMs < 1)
+    throw new Error('Focused command timeout must be a positive safe integer.');
   const failures = [];
   let attempted = 0;
   for (const command of commands) {
@@ -416,6 +424,8 @@ export function runFocusedCommands(
         encoding: 'utf8',
         stdio: 'inherit',
         env: { ...process.env, CI: 'true' },
+        timeout: timeoutMs,
+        killSignal: 'SIGTERM',
       });
     } catch (error) {
       result = { error };
@@ -424,6 +434,7 @@ export function runFocusedCommands(
     const signal =
       typeof result?.signal === 'string' && result.signal.length ? result.signal : null;
     if (!result?.error && status === 0 && signal === null) continue;
+    const timedOut = result?.error?.code === 'ETIMEDOUT';
     const failure = {
       id: command.id,
       command: command.command,
@@ -435,9 +446,16 @@ export function runFocusedCommands(
           ? result.error.message
           : String(result.error)
         : null,
+      ...(timedOut ? { timedOut: true } : {}),
     };
     failures.push(failure);
     stderr.write(`[focused:${command.id}] failed ${JSON.stringify(failure)}\n`);
+    if (timedOut) {
+      stderr.write(
+        `[focused:${command.id}] timed out after ${timeoutMs}ms; remaining focused commands were not run.\n`,
+      );
+      return { attempted, failures, exitCode: 124 };
+    }
   }
   return {
     attempted,
