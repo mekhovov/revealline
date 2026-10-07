@@ -1,11 +1,9 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
-import { createDefaultThemeBundle } from '../presentation/catalog.mjs';
-import { FORMATS, validateThemeBundle } from '../presentation/model.mjs';
-import { hashPresentationBytes } from '../presentation/bundle.mjs';
+import { validateThemeBundle } from '../presentation/model.mjs';
 import { createPresentationHost } from '../presentation/host.mjs';
-import { compilePresentation } from '../../scripts/compile-presentation.mjs';
+import { createOverflightReuseFixture as reuseFixture } from '../../scripts/overflight-reuse-fixture.mjs';
 import { createStudioContextPresentation } from '../../authoring/asset-studio/scene-preview.mjs';
 import { BoardPainter } from '../ui/render.mjs';
 import { createRun } from '../core/index.mjs';
@@ -15,60 +13,6 @@ import { mediaFixture } from './helpers/media-fixtures.mjs';
 const readJSON = async (path) => JSON.parse(await readFile(new URL(path, import.meta.url), 'utf8'));
 const OVERFLIGHT_SLOT = 'pickup.supply-case-closed';
 const SOLO_SLOT = 'pickup.supply';
-
-/** A new in-memory theme binding, not a rewrite of any compiled release or
- * historical sprite. Both slots reference one existing generated PNG. */
-async function reuseFixture() {
-  const manifest = await readJSON('../../authoring/library/overflight-field-kit-v1/manifest.json');
-  const record = manifest.assets.find((asset) => asset.slotId === OVERFLIGHT_SLOT);
-  const bytes = new Uint8Array(
-    await readFile(
-      new URL(`../../authoring/library/overflight-field-kit-v1/${record.file}`, import.meta.url),
-    ),
-  );
-  assert.equal(await hashPresentationBytes(bytes), record.sha256);
-  assert.equal(bytes.length, record.bytes);
-  const original = createDefaultThemeBundle(),
-    before = structuredClone(original),
-    document = structuredClone(original),
-    slot = document.slots.find((entry) => entry.id === SOLO_SLOT);
-  const asset = {
-    format: FORMATS.asset,
-    id: 'overflight.field-kit.supply-case',
-    revision: record.slotRevision,
-    kind: 'image',
-    description: 'The generated Overflight supply case reused by the existing Solo supply slot.',
-    provenance: {
-      creator: 'RevealLine',
-      source: `authoring/library/overflight-field-kit-v1/${record.file}`,
-      license: 'Project-original artwork',
-      prompt: record.provenance,
-      parent: null,
-    },
-    file: {
-      sha256: record.sha256,
-      bytes: record.bytes,
-      mime: 'image/png',
-      width: record.width,
-      height: record.height,
-    },
-    geometry: structuredClone(slot.geometry),
-    recipe: null,
-    quality: { stage: 'produced', evidence: [] },
-  };
-  document.assets.push(asset);
-  const theme = document.themes[1];
-  for (const id of [OVERFLIGHT_SLOT, SOLO_SLOT])
-    theme.bindings[id] = { id: asset.id, revision: asset.revision };
-  validateThemeBundle(document);
-  const compiled = await compilePresentation(
-    document,
-    new Map([[record.sha256, new Blob([bytes], { type: 'image/png' })]]),
-    { themeId: theme.id },
-  );
-  assert.deepEqual(original, before, 'The original registered bundle stays unchanged.');
-  return { asset, bytes, document, compiled, themeId: theme.id };
-}
 
 function surface() {
   const calls = [],

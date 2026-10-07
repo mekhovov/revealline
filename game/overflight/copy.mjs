@@ -11,7 +11,8 @@ export const OVERFLIGHT_COPY = Object.freeze({
     encounterRemoved: 'Removed from the installed list. The current sortie is unchanged.',
     noInstalled: 'Install an Overflight package in Studio to play it here.',
     libraryFailed: 'Installed encounters could not be loaded.',
-    startHint: 'WASD / arrows or left stick · Space / RT boost · Escape / Menu pause',
+    startHint:
+      'WASD / arrows · Space boost · Escape pause. Controller uses your shared saved mapping; without one, left stick / RT / Menu. Radios need a saved shared setup.',
     help: 'Skim the crowd edge so your payload lands among the pursuers. Salvage remains on the ground. Each level pauses the sortie for one of three upgrades. Enemy warnings lock before the attack; move out of their path. Defeat the final tank to complete the sortie.',
     settings: 'Sortie settings',
     language: 'Language',
@@ -68,6 +69,9 @@ export const OVERFLIGHT_COPY = Object.freeze({
     rawPageHelp:
       'Inspection pauses the sortie. Each page contains up to 262,144 characters; join pages in order for the complete JSON record. Download contains all pages. Resume explicitly to continue.',
     measured: 'Local browser measurements; hardware is not inferred.',
+    trialHelp:
+      'Independent trial: 30-second warm-up, then 120 seconds (15 minutes for soak). It stops automatically. Keep this tab active; interruptions invalidate the trial. Reload for each trial.',
+    trialComplete: 'Trial complete · measurements frozen. Download or inspect the record.',
     renderingLost: 'Graphics were interrupted. The sortie is paused.',
     renderingRestored: 'Graphics restored. Resume when ready.',
     prepareFailed: 'Overflight could not be prepared.',
@@ -90,6 +94,12 @@ export const OVERFLIGHT_COPY = Object.freeze({
     reviewBuild_fan: 'Fan build',
     reviewBuild_echo: 'Echo build',
     reviewBuild_systems: 'Systems build',
+    'reviewBuild_fan-scanner': 'Fan + scanner · no pulse',
+    'reviewBuild_fan-shield': 'Fan + shield · no pulse',
+    'reviewBuild_echo-scanner': 'Echo + scanner · no pulse',
+    'reviewBuild_echo-shield': 'Echo + shield · no pulse',
+    reviewDraftBlocked:
+      'Review paused: no offered card fits this build, and no rerolls remain. Retry to begin a new review.',
     reviewHelp:
       'An automated pilot uses ordinary movement and boost inputs. Earned upgrades stay visible for 1.5 seconds before selection. Start and Resume remain manual; this is a build review, not a player playtest.',
     fixtureHelp:
@@ -98,6 +108,15 @@ export const OVERFLIGHT_COPY = Object.freeze({
     runtimeError: 'The sortie stopped after an error. Retry to prepare a new attempt.',
   },
   uk: {
+    'reviewBuild_fan-scanner': 'Віяло + сканер · без імпульсу',
+    'reviewBuild_fan-shield': 'Віяло + щит · без імпульсу',
+    'reviewBuild_echo-scanner': 'Відлуння + сканер · без імпульсу',
+    'reviewBuild_echo-shield': 'Відлуння + щит · без імпульсу',
+    reviewDraftBlocked:
+      'Перегляд призупинено: жодна картка не підходить цьому набору, а спроби заміни вичерпано. Почніть новий перегляд.',
+    trialHelp:
+      'Окремий замір: 30 секунд прогріву, потім 120 секунд (15 хвилин для тривалого тесту). Завершується автоматично. Тримайте вкладку активною; переривання робить замір недійсним. Перезавантажуйте перед кожним заміром.',
+    trialComplete: 'Замір завершено · дані зафіксовано. Завантажте або перегляньте запис.',
     title: 'Проліт',
     preparing: 'Готуємо «Проліт»…',
     briefing:
@@ -109,7 +128,8 @@ export const OVERFLIGHT_COPY = Object.freeze({
     encounterRemoved: 'Вилучено зі встановленого списку. Поточний виліт збережено.',
     noInstalled: 'Встановіть пакет «Проліт» у студії, щоб грати тут.',
     libraryFailed: 'Не вдалося завантажити встановлені сутички.',
-    startHint: 'WASD / стрілки або лівий стік · Пробіл / RT — прискорення · Escape / Menu — пауза',
+    startHint:
+      'WASD / стрілки · Пробіл — прискорення · Escape — пауза. Контролер використовує збережену спільну схему; без неї — лівий стік / RT / Menu. Для радіопульта потрібне збережене спільне налаштування.',
     help: 'Летіть уздовж краю натовпу, щоб заряд влучав у переслідувачів. Ресурси залишаються на землі. Кожен рівень зупиняє виліт для вибору одного з трьох покращень. Напрям атаки ворога фіксується після попередження — встигніть відійти. Здолайте фінальний танк, щоб завершити виліт.',
     settings: 'Налаштування вильоту',
     language: 'Мова',

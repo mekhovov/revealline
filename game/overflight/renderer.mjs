@@ -519,8 +519,18 @@ export async function createOverflightRenderer({
       }, 200);
       return true;
     },
-    resetMeasurements() {
-      benchmark = createOverflightBenchmark();
+    measurementComplete: () => benchmark.complete(),
+    resourceStats() {
+      return {
+        ...counts,
+        allocatedSprites: poolList.reduce((sum, pool) => sum + pool.size(), 3),
+        atlasBytes: atlas.inventory.baseRGBABytes ?? null,
+        contextLosses,
+        contextRestores,
+      };
+    },
+    resetMeasurements(protocol = {}) {
+      benchmark = createOverflightBenchmark(protocol);
       previousHull = null;
       hitAt = -Infinity;
       current = null;
