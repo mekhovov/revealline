@@ -265,11 +265,17 @@ test('native SIM mode links retain the accepted return preview on display and ac
     const nav = createSimModeLinks({ document: doc, gameReturn: returnURL, locale: () => locale });
     doc.body.append(nav);
     for (const link of nav.querySelectorAll('a')) {
-      assert.equal(new URL(link.href).searchParams.get('artReview'), 'industrial-roster-v3');
+      assert.equal(
+        new URL(link.getAttribute('href')).searchParams.get('artReview'),
+        'industrial-roster-v3',
+      );
       locale = 'uk';
       link.click();
-      assert.equal(new URL(link.href).searchParams.get('artReview'), 'industrial-roster-v3');
-      assert.equal(new URL(link.href).searchParams.get('lang'), 'uk');
+      assert.equal(
+        new URL(link.getAttribute('href')).searchParams.get('artReview'),
+        'industrial-roster-v3',
+      );
+      assert.equal(new URL(link.getAttribute('href')).searchParams.get('lang'), 'uk');
     }
     assert.equal(nav.querySelectorAll('a').length, 4);
   }

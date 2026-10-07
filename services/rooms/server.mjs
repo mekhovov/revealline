@@ -8,6 +8,7 @@ import { ROOM_CONTROL_PROTOCOL } from '../../game/online/room-client-lifecycle.m
 import { validateRoomContent, validateRoomCatalogue } from '../../game/online/room-content.mjs';
 import { loadRoomContentRegistry } from './content-registry.mjs';
 import { CLASSIC_SNAKE_LEVELS } from '../../game/snake/classic-catalogue.mjs';
+import { classicSnakeUsesVariableHazards } from '../../game/snake/classic-core.mjs';
 import { prepareClassicSnakeLevel } from '../../game/snake/classic-setup.mjs';
 import { FIRST_CONNECTION } from '../../game/coop/first-connection.mjs';
 import { RELAY_YARD } from '../../game/coop/relay-yard.mjs';
@@ -32,6 +33,10 @@ import {
 } from '../../game/online/room-core.mjs';
 
 const token = () => randomBytes(32).toString('hex');
+const hazardOptions = (recipe) =>
+  recipe.family === 'snake' && classicSnakeUsesVariableHazards(recipe.level)
+    ? { hazardSeed: randomBytes(4).readUInt32LE() }
+    : {};
 const digest = (value) => createHash('sha256').update(canonicalJSON(value)).digest('hex');
 const fail = (code, status, message) => {
   throw Object.assign(new TypeError(message), { code, status });
@@ -238,6 +243,7 @@ export async function createRoomService({
       contentHash: digest(recipe),
       engineVersion,
       now: now(),
+      ...hazardOptions(recipe),
     });
     const bearer = token(),
       invite = token();
@@ -367,7 +373,13 @@ export async function createRoomService({
           });
         syncActivation(room, true);
       } else if (url.pathname === '/input') submitAuthoritativeInput(room, auth.seat, body, now());
-      else if (url.pathname === '/rematch') rematchAuthoritativeRoom(room, auth.seat, now());
+      else if (url.pathname === '/rematch')
+        rematchAuthoritativeRoom(
+          room,
+          auth.seat,
+          now(),
+          room.seats[1 - auth.seat].rematch ? hazardOptions(room.recipe) : {},
+        );
       else if (url.pathname === '/leave') abandonAuthoritativeRoom(room, auth.seat, now());
       else throw new TypeError('Unsupported room operation.');
       syncActivation(room);

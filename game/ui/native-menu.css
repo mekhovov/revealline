@@ -1,11 +1,12 @@
 @import url('./menu-retune.css');
+@import url('./global-settings-view.css');
 
 /* Legacy layout and paint share one cascade layer. Theme recipes own opt-in appearance. */
 @layer legacy {
   /* One layout contract for active landing hosts. Historical snapshots are untouched. */
   body.field-kit
     :is(
-      :is(#shell-home, #race-main, #coop-menu).native-landing,
+      .native-landing,
       :is(#settings-dialog, #race-options-panel, #coop-options).native-settings
     ) {
     --native-menu-width: 510px;
@@ -15,10 +16,7 @@
     font-family: var(--fk-font-ui, 'Exo 2', sans-serif);
   }
   body.field-kit
-    :is(
-      :is(#shell-home, #race-main, #coop-menu).native-landing,
-      :is(#settings-dialog, #race-options-panel, #coop-options).native-settings
-    )
+    :is(.native-landing, :is(#settings-dialog, #race-options-panel, #coop-options).native-settings)
     [hidden] {
     display: none !important;
   }
@@ -55,14 +53,10 @@
     inset: 0;
     height: 100dvh;
   }
-  body.field-kit
-    :is(#shell-home, #race-main, #coop-menu).native-landing
-    :is(.home-art, .edition-home-art, [data-native-quiet], .eyebrow) {
+  body.field-kit .native-landing :is(.home-art, .edition-home-art, [data-native-quiet], .eyebrow) {
     display: none !important;
   }
-  body.field-kit
-    :is(#shell-home, #race-main, #coop-menu).native-landing
-    :is(.home-content, .menu-copy) {
+  body.field-kit .native-landing :is(.home-content, .menu-copy) {
     display: flex;
     flex-direction: column;
     align-items: stretch;
@@ -74,16 +68,11 @@
     margin: 0;
     align-self: flex-start;
   }
-  body.field-kit
-    :is(#shell-home, #race-main, #coop-menu).native-landing
-    :is(.home-content, .menu-copy)
-    > * {
+  body.field-kit .native-landing :is(.home-content, .menu-copy) > * {
     grid-area: auto;
     min-width: 0;
   }
-  body.field-kit
-    :is(#shell-home, #race-main, #coop-menu).native-landing
-    :is(#shell-title, #race-title, #coop-title) {
+  body.field-kit .native-landing :is(#shell-title, #race-title, #coop-title) {
     width: min(var(--native-menu-width), 100%);
     margin: 0 0 24px;
     font-family: var(--fk-font-pixel, 'Reveal Line Pixel', monospace);
@@ -95,11 +84,11 @@
     word-break: normal;
     text-wrap: balance;
   }
-  body.field-kit :is(#shell-home, #race-main, #coop-menu).native-landing #shell-title span {
+  body.field-kit .native-landing #shell-title span {
     display: block;
     color: var(--fk-accent, #ffda68);
   }
-  body.field-kit :is(#shell-home, #race-main, #coop-menu).native-landing .edition-home-logo {
+  body.field-kit .native-landing .edition-home-logo {
     max-height: 48px;
     width: auto;
     max-width: 180px;
@@ -114,7 +103,7 @@
     display: none;
     width: 100%;
   }
-  body.field-kit:not([data-text-face='plain'])
+  body.field-kit
     .native-landing
     :is(#shell-title, #race-title, #coop-title).native-game-title[data-logo-loaded='true']
     .native-brand-fallback {
@@ -127,7 +116,7 @@
     clip-path: inset(50%);
     white-space: nowrap;
   }
-  body.field-kit:not([data-text-face='plain'])
+  body.field-kit
     .native-landing
     :is(#shell-title, #race-title, #coop-title).native-game-title[data-logo-loaded='true']
     .fpv-line-wordmark {
@@ -215,33 +204,29 @@
     :is(button, a):focus-visible {
     outline-color: #5b81fd;
   }
-  body.field-kit :is(#shell-home, #race-main, #coop-menu).native-landing .game-mode-choice {
+  body.field-kit .native-landing .game-mode-choice {
     display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(5, minmax(0, 1fr));
     gap: 8px;
     width: min(var(--native-menu-width), 100%);
     margin: 0 0 24px;
   }
-  body.field-kit
-    :is(#shell-home, #race-main, #coop-menu).native-landing
-    .game-mode-choice:has([data-game-mode='versus'][hidden]) {
+  body.field-kit .native-landing .game-mode-choice:has([data-game-mode='versus'][hidden]) {
     grid-template-columns: minmax(110px, 160px);
   }
-  body.field-kit
-    :is(#shell-home, #race-main, #coop-menu).native-landing
-    .game-mode-choice
-    > :is(a, button) {
+  body.field-kit .native-landing .game-mode-choice > :is(a, button) {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: safe center;
-    gap: 8px;
+    position: relative;
+    gap: 5px;
     min-width: 0;
-    min-height: 54px;
-    padding: 8px;
+    min-height: 76px;
+    padding: 15px 3px 7px;
     margin: 0;
     color: var(--fk-text, #f3f5ef);
-    font: 400 var(--native-action-size) / 1.2 var(--fk-font-pixel, 'Reveal Line Pixel', monospace);
+    font: 600 clamp(11px, 2.6vw, 16px) / 1.2 var(--fk-font-ui, sans-serif);
     text-align: center;
     white-space: nowrap;
     text-decoration: none;
@@ -251,17 +236,14 @@
     background: #08121dde;
     box-shadow: none;
   }
-  body.field-kit :is(#shell-home, #race-main, #coop-menu).native-landing .game-mode-choice strong {
+  body.field-kit .native-landing .game-mode-choice strong {
     font: inherit;
   }
-  body.field-kit
-    :is(#shell-home, #race-main, #coop-menu).native-landing
-    .game-mode-choice
-    [aria-current] {
+  body.field-kit .native-landing .game-mode-choice [aria-current] {
     border-color: #ffda68;
     box-shadow: inset 0 -3px #ffda68;
   }
-  body.field-kit :is(#shell-home, #race-main, #coop-menu).native-landing .native-menu-actions {
+  body.field-kit .native-landing .native-menu-actions {
     display: flex;
     flex-direction: column;
     align-items: stretch;
@@ -273,10 +255,7 @@
     border: 0;
     background: none;
   }
-  body.field-kit
-    :is(#shell-home, #race-main, #coop-menu).native-landing
-    .native-menu-actions
-    > :is(button, a) {
+  body.field-kit .native-landing .native-menu-actions > :is(button, a) {
     display: flex;
     align-items: center;
     justify-content: flex-start;
@@ -299,25 +278,18 @@
     word-break: normal;
   }
   body.field-kit
-    :is(#shell-home, #race-main, #coop-menu).native-landing
+    .native-landing
     .native-menu-actions
     > :is(.primary, .race-primary, .field-kit-primary) {
     color: #111923;
     background: #ffda68;
     border-color: #ffda68;
   }
-  body.field-kit
-    :is(#shell-home, #race-main, #coop-menu).native-landing
-    .native-menu-actions
-    > button
-    > [aria-hidden='true'] {
+  body.field-kit .native-landing .native-menu-actions > button > [aria-hidden='true'] {
     margin-left: auto;
   }
   body.field-kit
-    :is(
-      :is(#shell-home, #race-main, #coop-menu).native-landing,
-      :is(#settings-dialog, #race-options-panel, #coop-options).native-settings
-    )
+    :is(.native-landing, :is(#settings-dialog, #race-options-panel, #coop-options).native-settings)
     [data-menu-icon]::before {
     content: '';
     display: inline-block;
@@ -337,10 +309,7 @@
     transform: none;
   }
   body.field-kit
-    :is(
-      :is(#shell-home, #race-main, #coop-menu).native-landing,
-      :is(#settings-dialog, #race-options-panel, #coop-options).native-settings
-    )
+    :is(.native-landing, :is(#settings-dialog, #race-options-panel, #coop-options).native-settings)
     :is(button, a, summary, select):not([data-menu-icon])::before {
     content: none;
   }
@@ -352,19 +321,21 @@
     padding: 8px 12px;
     font: 400 var(--native-action-size, 22px) / 1.4 var(--fk-font-pixel, monospace);
   }
-  body.field-kit :is(#shell-home, #race-main, #coop-menu).native-landing .native-menu-utilities {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
+  body.field-kit .native-landing .native-menu-utilities {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: stretch;
     gap: 8px;
     width: min(var(--native-menu-width), 100%);
-    margin: 12px 0 0;
+    margin: 16px 0 0;
+    padding-top: 12px;
+    border-top: 1px solid var(--fk-control-line, #788a9859);
   }
-  body.field-kit :is(#shell-home, #race-main, #coop-menu).native-landing .native-menu-fullscreen {
+  body.field-kit .native-landing .native-menu-utilities > :is(button, a) {
     display: inline-flex;
     align-items: center;
     gap: 10px;
-    min-width: 44px;
+    min-width: 0;
     min-height: 44px;
     max-width: 100%;
     margin: 0;
@@ -375,23 +346,20 @@
     box-shadow: none;
     background: #08121dde;
     color: #d0dae1;
-    font: 400 max(18px, calc(var(--native-action-size) - 4px)) / 1.35 var(--fk-font-ui, sans-serif);
+    font: 400 14px / 1.35 var(--fk-font-ui, sans-serif);
     text-align: left;
     overflow-wrap: normal;
     word-break: normal;
   }
   body.field-kit .native-fullscreen-status {
-    flex-basis: 100%;
+    grid-column: 1 / -1;
     margin: 0;
     max-width: var(--native-menu-width);
     font: 400 14px/1.4 var(--fk-font-ui, sans-serif);
     color: var(--fk-muted, #c1cbd4);
   }
   body.field-kit
-    :is(
-      :is(#shell-home, #race-main, #coop-menu).native-landing,
-      :is(#settings-dialog, #race-options-panel, #coop-options).native-settings
-    )
+    :is(.native-landing, :is(#settings-dialog, #race-options-panel, #coop-options).native-settings)
     :is(:focus-visible, .controller-focus) {
     outline: 3px solid var(--fk-focus, #85edff) !important;
     outline-offset: 4px;
@@ -399,7 +367,7 @@
     filter: none;
     scroll-margin: 12px;
   }
-  body.field-kit :is(#shell-home, #race-main, #coop-menu).native-landing .native-menu-footer {
+  body.field-kit .native-landing .native-menu-footer {
     position: absolute;
     inset: auto clamp(16px, 5vw, 72px) max(16px, env(safe-area-inset-bottom));
     display: flex;
@@ -422,9 +390,7 @@
     color: inherit;
     font: inherit;
   }
-  body.field-kit
-    :is(#shell-home, #race-main, #coop-menu).native-landing
-    :is(.home-status, .operation-status) {
+  body.field-kit .native-landing :is(.home-status, .operation-status) {
     font: 400 16px/1.4 var(--fk-font-ui, sans-serif);
     max-width: var(--native-menu-width);
   }
@@ -515,6 +481,17 @@
     grid-column: 1/-1;
     grid-row: 1;
     margin: 0;
+  }
+  body.field-kit :is(#settings-dialog, #race-options-panel, #coop-options).native-settings > h2,
+  body.field-kit
+    :is(#settings-dialog, #race-options-panel, #coop-options).native-settings
+    .shared-settings-heading
+    > :is(h1, h2) {
+    min-width: 0;
+    margin: 0;
+    font: 600 22px/1.25 var(--fk-font-ui, sans-serif);
+    overflow-wrap: normal;
+    word-break: normal;
   }
   body.field-kit
     :is(#settings-dialog, #race-options-panel, #coop-options).native-settings
@@ -649,26 +626,22 @@
     font-size: 22px;
     margin: 0 0 20px;
   }
-  body.field-kit[data-text-face='plain']
-    :is(#shell-home, #race-main, #coop-menu).native-landing
-    :is(h1, button, a),
+  body.field-kit[data-text-face='plain'] .native-landing :is(h1, button, a),
   body.field-kit[data-text-face='plain']
     :is(#settings-dialog, #race-options-panel, #coop-options).native-settings {
     font-family: system-ui, sans-serif;
   }
   body.field-kit[data-text-size='large']
     :is(
-      :is(#shell-home, #race-main, #coop-menu).native-landing,
+      .native-landing,
       :is(#settings-dialog, #race-options-panel, #coop-options).native-settings
     ) {
     --native-action-size: 33px;
   }
-  body.field-kit[data-text-size='large'] :is(#shell-home, #race-main, #coop-menu).native-landing {
+  body.field-kit[data-text-size='large'] .native-landing {
     justify-content: flex-start !important;
   }
-  body.field-kit[data-text-size='large']
-    :is(#shell-home, #race-main, #coop-menu).native-landing
-    .native-menu-footer {
+  body.field-kit[data-text-size='large'] .native-landing .native-menu-footer {
     position: relative;
     inset: auto;
     width: 100%;
@@ -684,23 +657,18 @@
         max(20px, var(--safe-left, env(safe-area-inset-left, 0px)));
       justify-content: safe center;
     }
-    body.field-kit
-      :is(#shell-home, #race-main, #coop-menu).native-landing
-      :is(#shell-title, #race-title, #coop-title) {
+    body.field-kit .native-landing :is(#shell-title, #race-title, #coop-title) {
       font-size: 44px;
       letter-spacing: -1px;
       margin-bottom: 20px;
     }
-    body.field-kit :is(#shell-home, #race-main, #coop-menu).native-landing #shell-title span {
+    body.field-kit .native-landing #shell-title span {
       display: inline;
     }
-    body.field-kit :is(#shell-home, #race-main, #coop-menu).native-landing .game-mode-choice {
+    body.field-kit .native-landing .game-mode-choice {
       margin-bottom: 20px;
     }
-    body.field-kit
-      :is(#shell-home, #race-main, #coop-menu).native-landing
-      .game-mode-choice
-      > :is(a, button) {
+    body.field-kit .native-landing .game-mode-choice > :is(a, button) {
       flex-direction: column;
       gap: 6px;
     }
@@ -736,8 +704,7 @@
       :is(#settings-dialog, #race-options-panel, #coop-options).native-settings
       .shared-settings-heading
       > :is(h1, h2) {
-      font-size: 33px;
-      line-height: 1.2;
+      font: 600 18px/1.25 var(--fk-font-ui, sans-serif);
       max-width: calc(100% - 60px);
       margin: 0;
     }
@@ -779,8 +746,8 @@
     }
   }
   @media (max-width: 480px) {
-    body.field-kit :is(#shell-home, #race-main, #coop-menu).native-landing .game-mode-choice {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+    body.field-kit .native-landing .game-mode-choice {
+      grid-template-columns: repeat(5, minmax(0, 1fr));
     }
   }
   @media (max-width: 360px) {
@@ -790,13 +757,10 @@
       padding-inline: max(12px, var(--safe-left, env(safe-area-inset-left, 0px)))
         max(12px, var(--safe-right, env(safe-area-inset-right, 0px)));
     }
-    body.field-kit :is(#shell-home, #race-main, #coop-menu).native-landing .game-mode-choice {
+    body.field-kit .native-landing .game-mode-choice {
       gap: 4px;
     }
-    body.field-kit
-      :is(#shell-home, #race-main, #coop-menu).native-landing
-      .game-mode-choice
-      > :is(a, button) {
+    body.field-kit .native-landing .game-mode-choice > :is(a, button) {
       padding-inline: 4px;
     }
   }
@@ -810,9 +774,7 @@
         max(28px, var(--safe-left, env(safe-area-inset-left, 0px)));
       justify-content: safe center;
     }
-    body.field-kit
-      :is(#shell-home, #race-main, #coop-menu).native-landing
-      :is(.home-content, .menu-copy),
+    body.field-kit .native-landing :is(.home-content, .menu-copy),
     body.field-kit #race-main.native-landing:not([hidden]) {
       display: grid;
       grid-template-columns: minmax(210px, 42%) minmax(250px, 48%);
@@ -820,22 +782,18 @@
       width: 100%;
       align-items: center;
     }
-    body.field-kit
-      :is(#shell-home, #race-main, #coop-menu).native-landing
-      :is(#shell-title, #race-title, #coop-title) {
+    body.field-kit .native-landing :is(#shell-title, #race-title, #coop-title) {
       grid-column: 1;
       grid-row: 1;
       font-size: 44px;
       margin: 0;
     }
-    body.field-kit
-      :is(#shell-home, #race-main, #coop-menu).native-landing
-      :is(#shell-title-modes, #race-mode-choices, #coop-lobby-modes) {
+    body.field-kit .native-landing :is(#shell-title-modes, #race-mode-choices, #coop-lobby-modes) {
       grid-column: 1;
       grid-row: 2;
       margin: 0;
     }
-    body.field-kit :is(#shell-home, #race-main, #coop-menu).native-landing .native-menu-actions {
+    body.field-kit .native-landing .native-menu-actions {
       grid-column: 2;
       grid-row: 1/3;
     }
@@ -843,7 +801,7 @@
       grid-column: 2;
       grid-row: 1/4;
     }
-    body.field-kit :is(#shell-home, #race-main, #coop-menu).native-landing .native-menu-utilities {
+    body.field-kit .native-landing .native-menu-utilities {
       grid-column: 2;
       grid-row: 3;
       margin-top: 0;
@@ -851,31 +809,25 @@
     body.field-kit #coop-menu.native-landing .native-menu-utilities {
       margin-top: 8px;
     }
-    body.field-kit :is(#shell-home, #race-main, #coop-menu).native-landing .native-menu-actions {
+    body.field-kit .native-landing .native-menu-actions {
       gap: 6px;
     }
-    body.field-kit
-      :is(#shell-home, #race-main, #coop-menu).native-landing
-      .native-menu-actions
-      > :is(button, a) {
+    body.field-kit .native-landing .native-menu-actions > :is(button, a) {
       min-height: 44px;
       padding: 6px 12px;
     }
-    body.field-kit :is(#shell-home, #race-main, #coop-menu).native-landing .game-mode-choice {
+    body.field-kit .native-landing .game-mode-choice {
       margin: 0;
     }
-    body.field-kit
-      :is(#shell-home, #race-main, #coop-menu).native-landing
-      .game-mode-choice
-      > :is(a, button) {
+    body.field-kit .native-landing .game-mode-choice > :is(a, button) {
       flex-direction: column;
       min-height: 66px;
       gap: 4px;
     }
-    body.field-kit :is(#shell-home, #race-main, #coop-menu).native-landing .native-menu-footer {
+    body.field-kit .native-landing .native-menu-footer {
       position: absolute;
     }
-    body.field-kit :is(#shell-home, #race-main, #coop-menu).native-landing .edition-home-logo {
+    body.field-kit .native-landing .edition-home-logo {
       display: none;
     }
     body.field-kit.game-shell #shell-home.native-landing .edition-home-logo.edition-propeller {
@@ -944,10 +896,7 @@
 
   /* Availability must outrank the primary/edition paints without hiding the control. */
   body.field-kit
-    :is(
-      :is(#shell-home, #race-main, #coop-menu).native-landing,
-      :is(#settings-dialog, #race-options-panel, #coop-options).native-settings
-    )
+    :is(.native-landing, :is(#settings-dialog, #race-options-panel, #coop-options).native-settings)
     :is(button, a, input, select, textarea):is(:disabled, [aria-disabled='true']) {
     color: var(--fk-muted) !important;
     background: var(--fk-panel) !important;
@@ -960,7 +909,7 @@
   @media (forced-colors: active) {
     body.field-kit
       :is(
-        :is(#shell-home, #race-main, #coop-menu).native-landing,
+        .native-landing,
         :is(#settings-dialog, #race-options-panel, #coop-options).native-settings
       ) {
       /* Keep the browser's chosen text and surface palette for the real controls. */
@@ -968,7 +917,7 @@
     }
     body.field-kit
       :is(
-        :is(#shell-home, #race-main, #coop-menu).native-landing,
+        .native-landing,
         :is(#settings-dialog, #race-options-panel, #coop-options).native-settings
       )
       [data-menu-icon]::before {
@@ -978,7 +927,7 @@
     }
     body.field-kit
       :is(
-        :is(#shell-home, #race-main, #coop-menu).native-landing,
+        .native-landing,
         :is(#settings-dialog, #race-options-panel, #coop-options).native-settings
       )
       :is([aria-selected='true'], [aria-current]:not([aria-current='false'])) {
@@ -987,7 +936,7 @@
     }
     body.field-kit
       :is(
-        :is(#shell-home, #race-main, #coop-menu).native-landing,
+        .native-landing,
         :is(#settings-dialog, #race-options-panel, #coop-options).native-settings
       )
       :is(:focus-visible, .controller-focus) {
@@ -995,7 +944,7 @@
     }
     body.field-kit
       :is(
-        :is(#shell-home, #race-main, #coop-menu).native-landing,
+        .native-landing,
         :is(#settings-dialog, #race-options-panel, #coop-options).native-settings
       )
       :is(button, a, input, select, textarea):is(:disabled, [aria-disabled='true']) {
@@ -1017,35 +966,25 @@
     }
   }
 
-  body.field-kit[data-text-size='large']
-    :is(#shell-home, #race-main, #coop-menu).native-landing
-    .game-mode-choice {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+  body.field-kit[data-text-size='large'] .native-landing .game-mode-choice {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
   }
   @media (max-width: 700px) {
-    body.field-kit[data-text-size='large']
-      :is(#shell-home, #race-main, #coop-menu).native-landing
-      .game-mode-choice {
-      grid-template-columns: 1fr;
+    body.field-kit[data-text-size='large'] .native-landing .game-mode-choice {
+      grid-template-columns: repeat(5, minmax(0, 1fr));
     }
-    body.field-kit[data-text-size='large']
-      :is(#shell-home, #race-main, #coop-menu).native-landing
-      .game-mode-choice
-      > :is(a, button) {
-      flex-direction: row;
+    body.field-kit[data-text-size='large'] .native-landing .game-mode-choice > :is(a, button) {
+      flex-direction: column;
     }
   }
   @media (max-width: 300px) {
-    body.field-kit :is(#shell-home, #race-main, #coop-menu).native-landing .game-mode-choice {
+    body.field-kit .native-landing .game-mode-choice {
       grid-template-columns: 1fr;
     }
-    body.field-kit
-      :is(#shell-home, #race-main, #coop-menu).native-landing
-      .game-mode-choice
-      > :is(a, button) {
+    body.field-kit .native-landing .game-mode-choice > :is(a, button) {
       flex-direction: row;
     }
-    body.field-kit :is(#shell-home, #race-main, #coop-menu).native-landing .native-menu-footer {
+    body.field-kit .native-landing .native-menu-footer {
       position: relative;
       inset: auto;
       margin-top: 48px;

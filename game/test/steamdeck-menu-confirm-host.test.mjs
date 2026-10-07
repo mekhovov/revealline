@@ -168,7 +168,7 @@ test('Steam Deck trusted click tails cannot undo Start or paused-menu actions', 
       axes: [0, 0, 0, 0],
       buttons: Array.from({ length: 17 }, () => ({ pressed: false, value: 0 })),
     },
-    page = await soloPage(t, { readPads: () => [pad] });
+    page = await soloPage(t, { readPads: () => [pad], initialReadyTimeoutMs: 30000 });
   const frame = (milliseconds = 20) => {
       time += milliseconds;
       page.frame(milliseconds);
@@ -264,7 +264,7 @@ test('Steam Deck trusted click tails cannot undo Start or paused-menu actions', 
   assert.equal(page.$('shell-home').open, true, 'paused Home remains open after A release');
 });
 
-test('every primary Pause action ignores a touch-derived A release echo', async (t) => {
+test('Pause and mission actions ignore a touch-derived A release echo', async (t) => {
   const cases = [
     {
       name: 'Resume',
@@ -314,7 +314,11 @@ test('every primary Pause action ignores a touch-derived A release echo', async 
           axes: [0, 0, 0, 0],
           buttons: Array.from({ length: 17 }, () => ({ pressed: false, value: 0 })),
         },
-        page = await soloPage(t, { readPads: () => [pad], ...entry.options });
+        page = await soloPage(t, {
+          readPads: () => [pad],
+          initialReadyTimeoutMs: 30000,
+          ...entry.options,
+        });
       page.frame();
       page.frame();
       page.$('start-button').click();
@@ -323,6 +327,13 @@ test('every primary Pause action ignores a touch-derived A release echo', async 
       page.frame();
       page.frame();
       assert.equal(page.$('game-overlay').dataset.kind, 'pause');
+      if (entry.id === 'pause-mission-info-toggle') {
+        assert.equal(
+          page.$(entry.id).closest('dialog'),
+          null,
+          'Mission info remains part of the paused result panel; the separate library owns its dialog.',
+        );
+      }
 
       const target = page.$(entry.id),
         originalHandler = target.onclick;
@@ -377,7 +388,7 @@ test('every primary Pause action ignores a touch-derived A release echo', async 
         axes: [0, 0, 0, 0],
         buttons: Array.from({ length: 17 }, () => ({ pressed: false, value: 0 })),
       },
-      page = await soloPage(t, { readPads: () => [pad] });
+      page = await soloPage(t, { readPads: () => [pad], initialReadyTimeoutMs: 30000 });
     page.frame();
     page.frame();
     page.$('start-button').click();

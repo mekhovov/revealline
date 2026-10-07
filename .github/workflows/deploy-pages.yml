@@ -96,6 +96,9 @@ jobs:
       needs.preflight.outputs.focusedRequired == 'true'
     needs: preflight
     runs-on: ubuntu-latest
+    # Host fixtures are CPU-intensive. Two workers preserve parallel progress
+    # without starving async test handoffs on the standard hosted runner.
+    timeout-minutes: 90
     permissions:
       contents: read
       pull-requests: read

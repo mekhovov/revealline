@@ -7,9 +7,38 @@
     <title>FPV / LINE · SIM Academy</title>
     <link rel="stylesheet" href="style.css" />
     <link rel="manifest" href="app.webmanifest" />
+    <script>
+      document.documentElement.dataset.modeShellPending = 'true';
+      const simLoadMessage = (message) => {
+        const status = document.getElementById('sim-menu-boot-message');
+        if (status && document.documentElement.dataset.modeShellPending)
+          status.textContent = message;
+      };
+      const simLoadFailed = () =>
+        simLoadMessage(
+          'Could not start. Reload to retry. / Не вдалося запустити. Оновіть сторінку.',
+        );
+      window.addEventListener('error', simLoadFailed, { once: true });
+      window.addEventListener('unhandledrejection', simLoadFailed, { once: true });
+      window.setTimeout(
+        () =>
+          simLoadMessage(
+            'Still loading… You can reload or go back. / Ще завантажується… Можна оновити сторінку або повернутися назад.',
+          ),
+        15000,
+      );
+    </script>
     <script type="module" src="app.mjs"></script>
   </head>
   <body class="field-kit sim-academy">
+    <section class="sim-menu-boot" role="status">
+      <strong>FPV / LINE</strong>
+      <p id="sim-menu-boot-message">Preparing game… / Підготовка гри…</p>
+      <a href="./index.html" onclick="event.preventDefault(); location.reload()"
+        >Reload / Оновити</a
+      >
+      <button type="button" onclick="history.back()">Back / Назад</button>
+    </section>
     <main id="flight-app" data-flight-state="ready" data-flight-menu-open="false">
       <header class="flight-header">
         <div class="brand">

@@ -1,3 +1,4 @@
+import { readSimMenuAudio } from './flight-fullscreen.mjs';
 import {
   createSimAppearancePreferences,
   resolveSimAppearance,
@@ -1027,7 +1028,7 @@ export function mountSimAudioControls({
   const mix = createSimAudioMix({ storage });
   const controls = [];
   const names = {
-    interface: ['Interface & feedback', 'Інтерфейс і сигнали'],
+    interface: ['Flight feedback', 'Звуки подій польоту'],
     motor: ['Drone motors', 'Мотори дрона'],
     ambience: ['Environment & wind', 'Оточення та вітер'],
   };
@@ -2396,6 +2397,7 @@ export function installSimThemeHost({
   window: win = doc?.defaultView ?? globalThis.window,
   getStorage = () => win?.localStorage,
   getAppearanceDefault = () => simAppearanceDefaultFromURL(win?.location),
+  displayPreferences,
 } = {}) {
   const preferences = createThemePreferences({ window: win, getStorage });
   const listeners = new Set();
@@ -2448,7 +2450,7 @@ export function installSimThemeHost({
   const refresh = () => {
     if (disposed) return snapshot;
     const values = preferences.snapshot(),
-      display = read('revealline.display.v1');
+      display = displayPreferences?.snapshot() ?? read('revealline.display.v1');
     const ornaments = values.ornaments === 'theme' ? 'subtle' : values.ornaments;
     const body = doc.body?.dataset ?? {};
     const appearanceDefault = getAppearanceDefault();
@@ -2479,10 +2481,13 @@ export function installSimThemeHost({
       ornaments: ['off', 'subtle', 'rich'].includes(ornaments) ? ornaments : 'subtle',
       accessibility: {
         ...values,
-        textFace: body.textFace ?? display.textFace,
-        textSize: body.textSize ?? display.textSize,
+        textFace: display.textFace ?? body.textFace,
+        textSize: display.textSize ?? body.textSize,
         reducedEffects:
-          display.reducedEffects === true || motion?.matches === true || body.effects === 'reduced',
+          display.effectiveReducedEffects === true ||
+          display.reducedEffects === true ||
+          motion?.matches === true ||
+          (!displayPreferences && body.effects === 'reduced'),
         coarsePointer: coarse?.matches === true,
       },
     });
@@ -2501,6 +2506,7 @@ export function installSimThemeHost({
     return snapshot;
   };
   const stop = preferences.subscribe(refresh);
+  const stopDisplay = displayPreferences?.subscribe(refresh);
   const storageChanged = (event) => {
     if (['revealline.display.v1', 'revealline.menu-style.v1'].includes(event.key)) refresh();
   };
@@ -2520,6 +2526,50 @@ export function installSimThemeHost({
     ready: Promise.resolve(snapshot),
     refresh,
     set: (patch) => preferences.set(patch),
+    availableThemeChoices() {
+      const requested = getAppearanceDefault();
+      const candidate = contextCandidate(requested);
+      const follow =
+        candidate ??
+        resolveThemeFamilySelection({ familyId: 'follow-game', appearanceDefault: requested });
+      const candidates = [...admitted.values()];
+      return [
+        {
+          id: 'follow-game',
+          family: follow.family,
+          interfaceTheme:
+            follow.interfaceTheme ??
+            getInterfaceTheme(follow.family.interface.id, follow.family.interface.revision),
+          basis: candidate?.basis,
+        },
+        ...BUILTIN_THEME_FAMILIES.map((family) => ({
+          id: family.id,
+          family,
+          interfaceTheme: getInterfaceTheme(family.interface.id, family.interface.revision),
+        })),
+        ...candidates
+          .filter((item) => !BUILTIN_THEME_FAMILIES.some((family) => family.id === item.family.id))
+          .map((item) => ({
+            id: item.family.id,
+            family: item.family,
+            interfaceTheme: item.interfaceTheme,
+            basis: item.basis,
+          })),
+      ];
+    },
+    applyComplete(id) {
+      override = null;
+      preferences.applyComplete(id);
+      const EventType = win?.CustomEvent ?? globalThis.CustomEvent;
+      if (EventType)
+        win?.dispatchEvent?.(
+          new EventType('revealline:complete-theme', { detail: { familyId: id } }),
+        );
+      return refresh();
+    },
+    subscribeStatus(listener) {
+      return preferences.subscribe(() => listener(preferences.getWarning()));
+    },
     getWarning: () => preferences.getWarning(),
     setInterface(id, revision) {
       const source = id === null ? null : getInterfaceTheme(id, revision);
@@ -2536,6 +2586,7 @@ export function installSimThemeHost({
       if (disposed) return;
       disposed = true;
       stop();
+      stopDisplay?.();
       preferences.dispose();
       observer?.disconnect();
       cleanup?.();
@@ -2561,6 +2612,7 @@ export function mountSimAppearanceControls({
   accepted = () => null,
   onChange = () => {},
   getAppearanceDefault = () => simAppearanceDefaultFromURL(win?.location),
+  displayPreferences,
 } = {}) {
   let storage;
   try {
@@ -2574,6 +2626,7 @@ export function mountSimAppearanceControls({
     window: win,
     getStorage: () => storage,
     getAppearanceDefault,
+    displayPreferences,
   });
   const fieldset = doc.createElement('fieldset');
   fieldset.className = 'sim-appearance-controls';
@@ -2733,6 +2786,7 @@ export function mountSimAppearanceControls({
   refresh();
   return Object.freeze({
     resolve,
+    host,
     preferences,
     refresh,
     changed: notify,
@@ -2767,6 +2821,13 @@ export function mountSimPresentation({
   const doc = root?.nodeType === 9 ? root : root?.ownerDocument;
   if (!doc || !win) throw new TypeError('Simulator presentation requires a document.');
   const releaseFonts = acquireFonts(doc, win);
+  let menuStorage;
+  try {
+    menuStorage = win.localStorage;
+  } catch {
+    /* Sound stays available for this visit. */
+  }
+  let menuSettings = readSimMenuAudio(menuStorage);
   let selected = Boolean(enabled);
   let level = audioVolume(volume);
   if (preferenceKey) {
@@ -2788,7 +2849,14 @@ export function mountSimPresentation({
   let lastTrustedAt = -Infinity;
   const voices = new Set();
   const buffers = new Map();
-  const active = () => !disposed && selected && wanted && focused && !doc.hidden;
+  const active = () =>
+    !disposed &&
+    selected &&
+    menuSettings.enabled &&
+    menuSettings.volume > 0 &&
+    wanted &&
+    focused &&
+    !doc.hidden;
 
   function stopVoices() {
     for (const source of voices) {
@@ -2833,7 +2901,7 @@ export function mountSimPresentation({
         if (!candidate || !audioHost.menuBus) return false;
       } else candidate = new AudioContext({ latencyHint: 'interactive' });
       master = candidate.createGain();
-      master.gain.value = 0.3 * level;
+      master.gain.value = 0.3 * level * menuSettings.volume;
       master.connect(audioHost ? audioHost.menuBus : candidate.destination);
       context = candidate;
       const epoch = generation;
@@ -2941,6 +3009,19 @@ export function mountSimPresentation({
   win.addEventListener('focus', gainFocus);
   win.addEventListener('pagehide', pageHide);
   win.addEventListener('pageshow', pageShow);
+  const menuPreferenceChanged = (event) => {
+    if (event?.type === 'storage' && event.key !== 'revealline.menu-audio.v1' && event.key !== null)
+      return;
+    try {
+      menuSettings = readSimMenuAudio(win.localStorage);
+    } catch {
+      /* Keep this visit's intent. */
+    }
+    if (master && context.state !== 'closed')
+      master.gain.setTargetAtTime(0.3 * level * menuSettings.volume, context.currentTime, 0.025);
+    synchronize();
+  };
+  win.addEventListener('storage', menuPreferenceChanged);
   const observer = win.MutationObserver
     ? new win.MutationObserver((records) => {
         for (const record of records) {
@@ -2962,12 +3043,25 @@ export function mountSimPresentation({
     refresh,
     soundEnabled: () => selected,
     volume: () => level,
+    get menuSettings() {
+      return menuSettings;
+    },
+    set menuSettings(value) {
+      menuSettings = { enabled: !!value.enabled, volume: audioVolume(value.volume) };
+    },
+    applyVolumes() {
+      if (master && context.state !== 'closed') {
+        master.gain.cancelScheduledValues(context.currentTime);
+        master.gain.setTargetAtTime(0.3 * level * menuSettings.volume, context.currentTime, 0.025);
+      }
+      synchronize();
+    },
     setVolume(value) {
       if (disposed) return;
       level = audioVolume(value);
       if (!master || context.state === 'closed') return;
       master.gain.cancelScheduledValues(context.currentTime);
-      master.gain.setTargetAtTime(0.3 * level, context.currentTime, 0.025);
+      master.gain.setTargetAtTime(0.3 * level * menuSettings.volume, context.currentTime, 0.025);
       if (!level) stopVoices();
     },
     setSoundPreference(value) {
@@ -3020,6 +3114,7 @@ export function mountSimPresentation({
       win.removeEventListener('focus', gainFocus);
       win.removeEventListener('pagehide', pageHide);
       win.removeEventListener('pageshow', pageShow);
+      win.removeEventListener('storage', menuPreferenceChanged);
       stopVoices();
       buffers.clear();
       master?.disconnect();
@@ -3268,7 +3363,7 @@ import * as academyAudioExternal0 from '../../game/i18n/index.mjs';
 export const createSimFlightAudio = (() => {
   const sourceHashes = Object.freeze({
     'optional-practice/civilian-fpv/world-audio.mjs':
-      '753913b5070fec47a140236f5f820107254969b122dcf420bf139421546c3fbb',
+      '4ddfe92837ad8b7fb8fe53da3db6e57f4ad505d1635cb6ace840da755cb9407a',
     'game/audio/dialogue-mix.mjs':
       '43ffa5b261e585e59b515fab19d1b6d0ccf636152ca6107602dbdb9143ddb00a',
     'game/ui/audio-output.mjs': 'dc1b2776407d0b6649b0d15c5c721bd59384d7e38a2e61087961ff7a37bd86c1',
@@ -4318,6 +4413,25 @@ export const createSimFlightAudio = (() => {
           }
           return voice;
         },
+        get movementSettings() {
+          return movement;
+        },
+        set movementSettings(value) {
+          if (
+            typeof value?.enabled !== 'boolean' ||
+            !Number.isFinite(value.volume) ||
+            value.volume < 0 ||
+            value.volume > 1
+          )
+            throw new TypeError(
+              'Movement sound requires an enabled boolean and volume between zero and one.',
+            );
+          movement = { enabled: value.enabled, volume: value.volume };
+        },
+        applyVolumes: applyOutput,
+        masterSnapshot: () => audioMaster.snapshot(),
+        subscribeMaster: (listener) => audioMaster.subscribe(listener),
+        setMasterVolume: (value) => preferences.setVolume(value),
         enabled: () => enabled,
         volumes: () => ({ ...levels }),
         setVolumes(values = {}) {
@@ -4562,6 +4676,114 @@ export const createSimFlightAudio = (() => {
   return modules['optional-practice/civilian-fpv/world-audio.mjs'].createWorldAudio;
 })();
 // END GENERATED ACADEMY SHARED AUDIO
+
+export function mountSimGlobalTools({
+  document: doc,
+  window: win,
+  gameReturn,
+  settingsRoot,
+  panels,
+  locale = () => 'en',
+  onOpen = () => {},
+  onControls = () => {},
+  loadProvider = () => import('../../game/ui/global-settings-tools.mjs'),
+  moduleURL = import.meta.url,
+} = {}) {
+  let coreURL;
+  const knownReturn = typeof gameReturn === 'string' && gameReturn.length > 0;
+  try {
+    coreURL = new URL('../../game/', moduleURL);
+    if (coreURL.origin !== new URL(win.location.href).origin)
+      throw new Error('Core origin mismatch');
+    if (knownReturn) {
+      const target = new URL(gameReturn, win.location.href);
+      if (target.origin !== coreURL.origin || !target.pathname.startsWith(coreURL.pathname))
+        throw new Error('Core return does not match this application');
+    }
+  } catch {
+    return {
+      ensure: async () => false,
+      refresh() {},
+      dispose() {},
+      root: () => null,
+      back: () => false,
+    };
+  }
+  const fallback = doc.createElement('section'),
+    link = doc.createElement('a'),
+    status = doc.createElement('p');
+  fallback.dataset.simGlobalToolsFallback = '';
+  link.href = coreURL.href;
+  link.target = '_blank';
+  link.rel = 'noopener';
+  status.setAttribute('role', 'status');
+  fallback.append(link, status);
+  panels.extras.append(fallback);
+  let provider,
+    pending,
+    disposed = false,
+    failed = false;
+  const refresh = () => {
+    provider?.refresh?.();
+    const uk = locale() === 'uk';
+    link.textContent = uk ? 'Відкрити спільні інструменти гри' : 'Open shared game tools';
+    link.hidden = !knownReturn;
+    status.textContent = failed
+      ? uk
+        ? knownReturn
+          ? 'Спільні інструменти недоступні тут. Відкрийте гру в новій вкладці. Інструменти SIM залишаються доступними.'
+          : 'Цей пакет не містить спільних інструментів основної гри. Інструменти SIM залишаються доступними.'
+        : knownReturn
+          ? 'Shared tools are unavailable here. Open the game in a new tab. SIM tools remain available.'
+          : 'This package does not include the main game tools. SIM tools remain available.'
+      : uk
+        ? 'Спільні інструменти завантажуються з основної гри.'
+        : 'Shared tools load from the main game.';
+  };
+  refresh();
+  const ensure = () => {
+    if (disposed) return Promise.resolve(false);
+    if (pending) return pending;
+    pending = Promise.resolve()
+      .then(() => loadProvider(new URL('ui/global-settings-tools.mjs', coreURL).href))
+      .then((module) => {
+        if (disposed) return false;
+        if (typeof module?.mountGlobalSettingsTools !== 'function')
+          throw new Error('Shared tools are unavailable');
+        provider = module.mountGlobalSettingsTools({
+          document: doc,
+          window: win,
+          settingsRoot,
+          panels,
+          prefix: 'sim-global-tools',
+          coreURL,
+          onOpen,
+        });
+        fallback.hidden = true;
+        onControls(provider.controls);
+        return true;
+      })
+      .catch(() => {
+        failed = true;
+        refresh();
+        return false;
+      });
+    return pending;
+  };
+  return {
+    ensure,
+    refresh,
+    root: () => provider?.root() ?? null,
+    frameFocused: () => provider?.frameFocused() === true,
+    handleFrameCommand: (command) => provider?.handleFrameCommand(command) === true,
+    back: () => provider?.back() === true,
+    dispose() {
+      disposed = true;
+      provider?.dispose();
+      fallback.remove();
+    },
+  };
+}
 
 const FLIGHT_HUD_PREFERENCE_KEY = 'revealline.sim-flight-hud.v1';
 const FLIGHT_HUD_PREFERENCE_EVENT = 'revealline:sim-flight-hud';

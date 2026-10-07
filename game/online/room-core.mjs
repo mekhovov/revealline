@@ -24,6 +24,7 @@ import {
   roomTeamControls,
 } from './room-controls.mjs';
 import { ROOM_EVENT_JOURNAL, ROOM_EVENT_LIMIT, projectRoomEvent } from './room-events.mjs';
+import { classicSnakeUsesVariableHazards } from '../snake/classic-core.mjs';
 import {
   createClassicSnakeMatch,
   queueClassicSnakeMatchTurn,
@@ -81,13 +82,17 @@ export function decodeNetworkState(value) {
   return value;
 }
 
-function createEngine(recipe, protocol) {
+function createEngine(recipe, protocol, hazardSeed) {
   required(
     ['snake', 'capture'].includes(recipe.family) && ['versus', 'team'].includes(recipe.mode),
     'Unsupported online game format.',
   );
   if (recipe.family === 'snake') {
-    const match = createClassicSnakeMatch(recipe.level, { mode: recipe.mode, seed: recipe.seed });
+    const match = createClassicSnakeMatch(recipe.level, {
+      mode: recipe.mode,
+      seed: recipe.seed,
+      ...(classicSnakeUsesVariableHazards(recipe.level) ? { hazardSeed } : {}),
+    });
     return { kind: 'snake', match, runs: match.runs };
   }
   if (recipe.mode === 'team') {
@@ -116,7 +121,7 @@ function createEngine(recipe, protocol) {
 /** Room ownership is server-only. Clients submit controls, never positions or results. */
 export function createAuthoritativeRoom(
   recipe,
-  { id, contentHash, protocol = ROOM_PROTOCOL, engineVersion = protocol, now = 0 } = {},
+  { id, contentHash, protocol = ROOM_PROTOCOL, engineVersion = protocol, now = 0, hazardSeed } = {},
 ) {
   required([ROOM_PROTOCOL, LEGACY_ROOM_PROTOCOL].includes(protocol), 'Unknown room protocol.');
   required(typeof id === 'string' && /^[a-f0-9]{32}$/.test(id), 'Invalid room identity.');
@@ -136,7 +141,7 @@ export function createAuthoritativeRoom(
     engineVersion,
     recipe: clone(recipe),
     recipeIdentity: dataIdentity(recipe),
-    engine: createEngine(recipe, protocol),
+    engine: createEngine(recipe, protocol, hazardSeed),
     status: 'waiting',
     generation: 1,
     tick: 0,
@@ -394,13 +399,14 @@ export function stepAuthoritativeRoom(room, now) {
     event(room, 'finished', { result: room.result });
   }
 }
-export function rematchAuthoritativeRoom(room, seat, now) {
+export function rematchAuthoritativeRoom(room, seat, now, { hazardSeed } = {}) {
   touchAuthoritativeRoom(room, seat, now);
   required(room.status === 'finished', 'Finish this round before requesting a rematch.');
   room.seats[seat].rematch = true;
   if (!room.seats.every((player) => player.rematch)) return;
+  const engine = createEngine(room.recipe, room.protocol, hazardSeed);
   room.generation++;
-  room.engine = createEngine(room.recipe, room.protocol);
+  room.engine = engine;
   room.status = 'waiting';
   room.tick = 0;
   room.activeMs = 0;
@@ -530,6 +536,9 @@ export function exportAuthoritativeRoomResult(room) {
     tick: room.tick,
     inputs: clone(room.history),
     result: clone(room.result),
+    ...(classicSnakeUsesVariableHazards(room.recipe.level)
+      ? { hazardSeed: room.engine.match.options.hazardSeed }
+      : {}),
     ...(room.engine.kind === 'snake' ? { replay: exportClassicSnakeMatch(room.engine.match) } : {}),
   };
 }
@@ -558,6 +567,7 @@ export function verifyAuthoritativeRoomResult(
     contentHash: receipt.contentHash,
     engineVersion,
     protocol: receipt.protocol,
+    ...(Object.hasOwn(receipt, 'hazardSeed') ? { hazardSeed: receipt.hazardSeed } : {}),
   });
   joinAuthoritativeRoom(room, 0);
   readyAuthoritativeRoom(room, 0, 0);
