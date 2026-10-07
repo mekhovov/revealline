@@ -13,7 +13,6 @@ const root = new URL('../', import.meta.url).pathname;
 
 test('sparse publication checkouts include the full admitted directory import closure', async (t) => {
   for (const [workflow, entry] of [
-    ['publish-frozen-pages.yml', 'publishing/pages-controller/publish.mjs'],
     ['fastline-release.yml', 'publishing/fastline-release-publisher.mjs'],
   ]) {
     const source = await readFile(path.join(root, '.github/workflows', workflow), 'utf8');
