@@ -30,7 +30,9 @@ function validateCommand(command) {
     typeof command.id !== 'string' ||
     !['node', 'npm'].includes(command.command) ||
     !Array.isArray(command.args) ||
-    command.args.some((argument) => typeof argument !== 'string' || argument.includes('\0'))
+    command.args.some((argument) => typeof argument !== 'string' || argument.includes('\0')) ||
+    (command.timeoutMs !== undefined &&
+      (!Number.isSafeInteger(command.timeoutMs) || command.timeoutMs < 1))
   )
     throw new Error('Focused-test manifest contains an invalid command.');
   return command;
@@ -416,6 +418,7 @@ export function runFocusedCommands(
   let attempted = 0;
   for (const command of commands) {
     attempted += 1;
+    const commandTimeoutMs = command.timeoutMs ?? timeoutMs;
     stdout.write(`\n[focused:${command.id}] ${command.command} ${command.args.join(' ')}\n`);
     let result;
     try {
@@ -424,7 +427,7 @@ export function runFocusedCommands(
         encoding: 'utf8',
         stdio: 'inherit',
         env: { ...process.env, CI: 'true' },
-        timeout: timeoutMs,
+        timeout: commandTimeoutMs,
         killSignal: 'SIGTERM',
       });
     } catch (error) {
@@ -452,7 +455,7 @@ export function runFocusedCommands(
     stderr.write(`[focused:${command.id}] failed ${JSON.stringify(failure)}\n`);
     if (timedOut) {
       stderr.write(
-        `[focused:${command.id}] timed out after ${timeoutMs}ms; remaining focused commands were not run.\n`,
+        `[focused:${command.id}] timed out after ${commandTimeoutMs}ms; remaining focused commands were not run.\n`,
       );
       return { attempted, failures, exitCode: 124 };
     }
