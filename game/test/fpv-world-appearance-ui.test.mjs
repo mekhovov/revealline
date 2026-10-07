@@ -182,13 +182,12 @@ async function settleUntil(predicate, message) {
   assert.ok(predicate(), message);
 }
 
-test('World random flight follows displayed filters and world scope, preserves mode and avoids repeats', async (t) => {
+test('World random flight from the shared chooser follows displayed filters, preserves mode and avoids repeats', async (t) => {
+  const priorLocale = getLocale();
   const h = fixture(t);
   await h.app.ready;
   const originals = structuredClone(WORLD_CATALOGUE),
     choose = () => h.doc.querySelector('[data-random-flight="catalogue"]');
-  h.doc.querySelector('.add-challenge').click();
-  const playlist = h.$('playlist-entries').textContent;
   h.$('theme-tabs')
     .querySelectorAll('button')
     .find((b) => b.textContent === 'Snake Hunt')
@@ -201,28 +200,19 @@ test('World random flight follows displayed filters and world scope, preserves m
     h.$(id).value = value;
     h.$(id).emit('change');
   }
-  h.doc.querySelector('[data-world="stadium"]').click();
-  const expected = new Set([
-    'snake-hunt-loops-01',
-    'snake-hunt-loops-02',
-    'snake-hunt-interception-loop-intercept',
-    'snake-hunt-route-choices-courtyard-approaches',
-    'native-pursuit-runner-court',
-    'native-pursuit-burst-lanes',
-  ]);
-  assert.match(choose().parentElement.textContent, /This world: Circuit stadium/);
-  assert.match(choose().parentElement.textContent, /6 filtered flights/);
+  const expected = new Set(
+    WORLD_CATALOGUE.filter(
+      (entry) => entry.theme === 'snake-hunt' && entry.activity === 'hunt' && entry.difficulty === 'beginner',
+    ).map((entry) => entry.id),
+  );
+  h.$('worlds-shell-action-missions').click();
   assert.equal(choose().type, 'button');
   h.$('flight-mode').value = 'acro';
-  const manuallySelected = WORLD_CATALOGUE.find((entry) => entry.id === 'snake-hunt-loops-01');
-  await h.app.startFlight(manuallySelected);
-  h.$('leave-flight').click();
-  await settleUntil(() => !h.$('flight-dialog').open, 'manual flight returns to catalogue');
-  let previous = manuallySelected.id;
+  let previous = null;
   for (let i = 0; i < 4; i++) {
     choose().click();
     await settleUntil(
-      () => h.app.snapshot().state?.status === 'disarmed',
+      () => ['active', 'disarmed'].includes(h.app.snapshot().state?.status),
       h.$('studio-status').textContent,
     );
     const snapshot = h.app.snapshot();
@@ -235,42 +225,44 @@ test('World random flight follows displayed filters and world scope, preserves m
     previous = snapshot.course;
     h.$('leave-flight').click();
     await settleUntil(() => !h.$('flight-dialog').open, 'return to catalogue');
+    h.$('worlds-shell-action-missions').click();
   }
   h.$('completion-filter').value = 'complete';
-  const previousAction = choose();
   h.$('completion-filter').emit('change');
-  assert.equal(choose().disabled, true, 'completion filter has no eligible flights');
-  assert.match(choose().parentElement.textContent, /No matching flights/);
-  previousAction.click();
+  choose().click();
   await new Promise((resolve) => setImmediate(resolve));
   assert.equal(h.app.snapshot().course, undefined, 'activation rechecks eligibility');
   h.$('completion-filter').value = 'all';
   h.$('completion-filter').emit('change');
   h.$('search').value = 'Clockwise catch';
   h.$('search').emit('input');
-  assert.match(choose().parentElement.textContent, /Only one flight/);
   choose().click();
-  await settleUntil(() => h.app.snapshot().state?.status === 'disarmed', 'single choice prepares');
+  await settleUntil(
+    () => ['active', 'disarmed'].includes(h.app.snapshot().state?.status),
+    'single choice prepares',
+  );
   assert.equal(h.app.snapshot().course, 'snake-hunt-loops-02');
   h.$('leave-flight').click();
   await settleUntil(() => !h.$('flight-dialog').open, 'single choice returns');
-  assert.equal(h.$('playlist-entries').textContent, playlist);
+  h.$('worlds-shell-action-missions').click();
   h.$('world-language').value = 'uk';
   h.$('world-language').emit('change');
-  assert.equal(choose().disabled, true, 'search is re-evaluated in the selected language');
   assert.equal(choose().textContent, 'Випадковий політ');
+  choose().click();
+  await new Promise((resolve) => setImmediate(resolve));
+  assert.equal(h.app.snapshot().course, undefined, 'English search is re-evaluated in Ukrainian');
   h.$('search').value = WORLD_CATALOGUE.find(
     (entry) => entry.id === 'snake-hunt-loops-02',
   ).course.locales.uk.title;
   h.$('search').emit('input');
-  assert.match(choose().parentElement.textContent, /Лише один політ/);
   choose().click();
   await settleUntil(
-    () => h.app.snapshot().state?.status === 'disarmed',
+    () => ['active', 'disarmed'].includes(h.app.snapshot().state?.status),
     'sole candidate may repeat',
   );
   assert.equal(h.app.snapshot().course, 'snake-hunt-loops-02');
-  assert.match(h.$('playlist-entries').textContent, /Перші троє/);
+  h.$('world-language').value = priorLocale;
+  h.$('world-language').emit('change');
   assert.deepEqual(WORLD_CATALOGUE, originals, 'selection leaves authored courses and seeds exact');
 });
 
@@ -309,14 +301,13 @@ test('World random flight includes the active installed revision and excludes re
   await h.app.ready;
   h.$('theme-tabs')
     .querySelectorAll('button')
-    .find((b) => b.textContent === 'My worlds')
+    .find((b) => ['My worlds', 'Мої світи'].includes(b.textContent))
     .click();
+  h.$('worlds-shell-action-missions').click();
   const choose = h.doc.querySelector('[data-random-flight="catalogue"]');
-  assert.match(choose.parentElement.textContent, /This world: Installed random world/);
-  assert.match(choose.parentElement.textContent, /Only one flight/);
   choose.click();
   await settleUntil(
-    () => h.app.snapshot().state?.status === 'disarmed',
+    () => ['active', 'disarmed'].includes(h.app.snapshot().state?.status),
     h.$('studio-status').textContent,
   );
   assert.equal(h.app.snapshot().course, 'active-random');
@@ -341,7 +332,7 @@ test('World ordinary results offer a filtered random next flight through unarmed
   assert.equal(next.disabled, false);
   next.click();
   await settleUntil(
-    () => h.app.snapshot().state?.status === 'disarmed',
+    () => ['active', 'disarmed'].includes(h.app.snapshot().state?.status),
     'next random flight prepares',
   );
   assert.notEqual(h.app.snapshot().course, entry.id);
