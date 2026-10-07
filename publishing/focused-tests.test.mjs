@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import { EventEmitter } from 'node:events';
 import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 import test from 'node:test';
@@ -410,20 +411,34 @@ test('focused command execution succeeds only when every command succeeds', () =
 });
 
 test('bounded parallel focused execution retains every command verdict', async () => {
-  const delay = 'setTimeout(() => process.exit(0), 80)';
-  const started = Date.now();
+  let active = 0;
+  let maximumActive = 0;
   const summary = await runFocusedCommandsParallel(
     [
-      { id: 'first', command: process.execPath, args: ['-e', delay] },
-      { id: 'second', command: process.execPath, args: ['-e', delay] },
-      { id: 'failure', command: process.execPath, args: ['-e', 'process.exit(9)'] },
+      { id: 'first', command: 'node', args: ['first'] },
+      { id: 'second', command: 'node', args: ['second'] },
+      { id: 'failure', command: 'node', args: ['failure'] },
     ],
-    { concurrency: 2, stdout: { write() {} }, stderr: { write() {} } },
+    {
+      concurrency: 2,
+      stdout: { write() {} },
+      stderr: { write() {} },
+      spawnChild(_command, args) {
+        const child = new EventEmitter();
+        active += 1;
+        maximumActive = Math.max(maximumActive, active);
+        setImmediate(() => {
+          active -= 1;
+          child.emit('close', args[0] === 'failure' ? 9 : 0, null);
+        });
+        return child;
+      },
+    },
   );
   assert.equal(summary.attempted, 3);
   assert.deepEqual(summary.failures.map(({ id, status }) => [id, status]), [['failure', 9]]);
   assert.equal(summary.exitCode, 9);
-  assert.ok(Date.now() - started < 220, 'independent commands use the bounded worker pool');
+  assert.equal(maximumActive, 2, 'independent commands use the bounded worker pool');
 });
 
 test('parallel focused execution rejects invalid worker limits', async () => {
@@ -790,7 +805,7 @@ test('focused CI installs the locked native fixture owner before selected checks
     'utf8',
   );
   const focused = workflow.split('  focused:\n')[1].split('\n  test:')[0];
-  assert.match(focused, /timeout-minutes: 60/u);
+  assert.match(focused, /timeout-minutes: 90/u);
   const steps = focused.split(/\n      - /);
   const install = steps.findIndex((step) =>
     step.startsWith('name: Install pinned authoring dependencies for selected focused gates\n'),

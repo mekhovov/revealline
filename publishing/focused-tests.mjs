@@ -632,7 +632,7 @@ async function main() {
     process.stdout.write(
       `Focused executions: ${execution.commands.length} (${execution.deduplicated.length} exact duplicate tests covered by selected package scripts)\n`,
     );
-  const result = await runFocusedCommandsParallel(execution.commands, { root, concurrency: 4 });
+  const result = await runFocusedCommandsParallel(execution.commands, { root, concurrency: 2 });
   if (result.exitCode !== 0) process.exitCode = result.exitCode;
 }
 
