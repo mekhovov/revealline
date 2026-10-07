@@ -115,7 +115,9 @@ export function validateCommunityEdition(source) {
         ? source.latestVersion
         : null,
     previewAvailable: source.previewAvailable === true,
-    ...(['classic', 'team', 'fpv'].includes(source.family) ? { family: source.family } : {}),
+    ...(['classic', 'team', 'fpv', 'overflight'].includes(source.family)
+      ? { family: source.family }
+      : {}),
   });
 }
 

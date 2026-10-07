@@ -56,7 +56,9 @@
         "game/test/classic-community-package.test.mjs",
         "game/test/overflight-project.test.mjs",
         "game/test/overflight-content.test.mjs",
-        "game/test/overflight-reuse.test.mjs"
+        "game/test/overflight-reuse.test.mjs",
+        "game/test/overflight-community.test.mjs",
+        "game/test/overflight-studio.test.mjs"
       ]
     },
     {
