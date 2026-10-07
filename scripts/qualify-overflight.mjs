@@ -7,7 +7,14 @@ import { execFileSync } from 'node:child_process';
 import { mkdirSync, readFileSync, renameSync, rmSync, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { canonicalJSON } from '../game/data-json.mjs';
-import { QUALIFICATION_BUILDS, pilot, selectCard } from '../game/overflight/review-pilot.mjs';
+import {
+  QUALIFICATION_BUILDS,
+  NO_PULSE_QUALIFICATION_BUILDS,
+  OVERFLIGHT_AUDIT_ROUTES,
+  createOverflightAuditPilot,
+  pilot,
+  selectCard,
+} from '../game/overflight/review-pilot.mjs';
 export { QUALIFICATION_BUILDS } from '../game/overflight/review-pilot.mjs';
 import {
   createOverflightRun,
@@ -50,8 +57,13 @@ export function qualifyOverflight({
   project = null,
   encounterSet = 'front',
 } = {}) {
-  if (!QUALIFICATION_BUILDS[direction]) throw new Error('Unknown qualification build.');
-  if (!['tight', 'orbit', 'figure-eight'].includes(route)) throw new Error('Unknown pilot route.');
+  if (!QUALIFICATION_BUILDS[direction] && !NO_PULSE_QUALIFICATION_BUILDS[direction])
+    throw new Error('Unknown qualification build.');
+  if (!['tight', 'orbit', 'figure-eight', ...OVERFLIGHT_AUDIT_ROUTES].includes(route))
+    throw new Error('Unknown pilot route.');
+  const auditPilot = OVERFLIGHT_AUDIT_ROUTES.includes(route)
+    ? createOverflightAuditPilot(route)
+    : null;
   const compiled = compileOverflightProject(
     project ?? createOverflightProject({ seed, encounterSet }),
   );
@@ -59,20 +71,65 @@ export function qualifyOverflight({
   startOverflight(run);
   let input = {},
     firstDraft = null,
-    evolution = null;
+    evolution = null,
+    draftBlocked = null;
   const samples = [];
   const densityPeaks = { opening: 0, developing: 0, late: 0, finale: 0 };
+  const densityExposure = { above800Ticks: 0, longestAbove800Ticks: 0, peakAt: null };
+  let above800Streak = 0,
+    priorPeak = 0,
+    firstAuditDamage = null;
+  const auditMotion = {
+    minX: Infinity,
+    maxX: -Infinity,
+    minY: Infinity,
+    maxY: -Infinity,
+    maximumDistanceFromStart: 0,
+  };
   const started = performance.now();
   while (run.phase !== 'won' && run.phase !== 'lost' && run.time < limit) {
     while (run.phase === 'upgrade') {
       if (firstDraft === null) firstDraft = round(run.time);
       const card = selectCard(run, direction);
+      if (!card) {
+        draftBlocked = {
+          time: round(run.time),
+          offers: run.offers.map((offer) => offer.id),
+          rerollsRemaining: run.progression.rerolls,
+        };
+        break;
+      }
       if (!chooseOverflightUpgrade(run, card.id))
         throw new Error('Pilot selected an illegal card.');
       if (card.kind === 'evolution' && evolution === null) evolution = round(run.time);
     }
-    if (run.tick % 6 === 0) input = pilot(run, route);
+    if (draftBlocked) break;
+    if (run.tick % 6 === 0) input = auditPilot ? auditPilot.input(run) : pilot(run, route);
     stepOverflight(run, input);
+    if (
+      auditPilot &&
+      auditPilot.state.startedAt !== null &&
+      firstAuditDamage === null &&
+      run.stats.damageTaken > auditPilot.state.damageAtStart
+    )
+      firstAuditDamage = run.time;
+    if (
+      auditPilot &&
+      auditPilot.state.startedAt !== null &&
+      run.airframesRemaining === auditPilot.state.airframesAtStart
+    ) {
+      auditMotion.minX = Math.min(auditMotion.minX, run.player.x);
+      auditMotion.maxX = Math.max(auditMotion.maxX, run.player.x);
+      auditMotion.minY = Math.min(auditMotion.minY, run.player.y);
+      auditMotion.maxY = Math.max(auditMotion.maxY, run.player.y);
+      auditMotion.maximumDistanceFromStart = Math.max(
+        auditMotion.maximumDistanceFromStart,
+        Math.hypot(
+          run.player.x - auditPilot.state.origin.x,
+          run.player.y - auditPilot.state.origin.y,
+        ),
+      );
+    }
     const window =
       run.time < 60
         ? 'opening'
@@ -82,6 +139,25 @@ export function qualifyOverflight({
             ? 'late'
             : 'finale';
     densityPeaks[window] = Math.max(densityPeaks[window], run.stats.enemiesVisible);
+    if (run.stats.enemiesVisible > 800) {
+      densityExposure.above800Ticks++;
+      densityExposure.longestAbove800Ticks = Math.max(
+        densityExposure.longestAbove800Ticks,
+        ++above800Streak,
+      );
+    } else above800Streak = 0;
+    if (run.stats.enemiesVisible > priorPeak) {
+      priorPeak = run.stats.enemiesVisible;
+      densityExposure.peakAt = {
+        time: run.time,
+        visible: priorPeak,
+        alive: run.stats.enemiesAlive,
+        encounter: run.encounter,
+        x: run.player.x,
+        y: run.player.y,
+        hull: run.player.hull,
+      };
+    }
     if (run.tick % 300 === 0)
       samples.push({
         time: run.time,
@@ -103,7 +179,21 @@ export function qualifyOverflight({
     airframes,
     qualification: 'ordinary-inputs-earned-upgrades-no-fixture',
     controller: 'deterministic-10hz-candidate-pilot-v1',
-    outcome: summary.outcome,
+    ...(auditPilot
+      ? {
+          audit: {
+            ...auditPilot.state,
+            firstDamageAt: firstAuditDamage,
+            firstAirframeMotion: {
+              ...auditMotion,
+              spanX: auditMotion.maxX - auditMotion.minX,
+              spanY: auditMotion.maxY - auditMotion.minY,
+            },
+          },
+        }
+      : {}),
+    outcome: draftBlocked ? 'draft-blocked' : summary.outcome,
+    ...(draftBlocked ? { draftBlocked } : {}),
     simulatedSeconds: round(run.time),
     observedWallMilliseconds: round(performance.now() - started),
     firstDraftSeconds: firstDraft,
@@ -116,6 +206,7 @@ export function qualifyOverflight({
     peakAlive: run.stats.peakAlive,
     peakVisible: run.stats.peakVisible,
     densityPeaks,
+    densityExposure,
     damageTaken: run.stats.damageTaken,
     airframesRemaining: run.airframesRemaining,
     finalRemainingHull:
@@ -165,6 +256,7 @@ export function createQualificationEvidence({
   compact = false,
   route = 'tight',
   encounterSets = ['front'],
+  buildDirections = Object.keys(QUALIFICATION_BUILDS),
 }) {
   const before = sourceBindings();
   const startedAt = new Date().toISOString();
@@ -184,7 +276,7 @@ export function createQualificationEvidence({
   );
   for (const encounterSet of encounterSets)
     for (const seed of seeds)
-      for (const direction of Object.keys(QUALIFICATION_BUILDS))
+      for (const direction of buildDirections)
         for (const count of airframes) {
           const result = qualifyOverflight({
             seed,
@@ -216,7 +308,7 @@ export function createQualificationEvidence({
       encounterSets,
       seeds,
       airframes,
-      buildDirections: Object.keys(QUALIFICATION_BUILDS),
+      buildDirections,
       route,
       simulationHz: 60,
       pilotHz: 10,
