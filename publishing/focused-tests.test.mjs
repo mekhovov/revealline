@@ -375,6 +375,32 @@ test('focused command execution uses real child exit status and still runs later
   assert.equal(summary.exitCode, 5);
 });
 
+test('focused command execution reports a timeout and stops the remaining queue', () => {
+  const calls = [];
+  const stderr = [];
+  const timeout = Object.assign(new Error('timed out'), { code: 'ETIMEDOUT' });
+  const summary = runFocusedCommands(
+    [
+      { id: 'blocked', command: 'node', args: ['blocked'] },
+      { id: 'must-not-run', command: 'node', args: ['later'] },
+    ],
+    {
+      spawn(command, args, options) {
+        calls.push([command, ...args, options.timeout, options.killSignal]);
+        return { status: null, signal: 'SIGTERM', error: timeout };
+      },
+      stdout: { write() {} },
+      stderr: { write(message) { stderr.push(message); } },
+      timeoutMs: 1234,
+    },
+  );
+  assert.deepEqual(calls, [['node', 'blocked', 1234, 'SIGTERM']]);
+  assert.equal(summary.attempted, 1);
+  assert.deepEqual(summary.failures.map(({ id, timedOut }) => [id, timedOut]), [['blocked', true]]);
+  assert.equal(summary.exitCode, 124);
+  assert.match(stderr.at(-1), /timed out after 1234ms/u);
+});
+
 test('focused command execution succeeds only when every command succeeds', () => {
   const summary = runFocusedCommands([{ id: 'pass', command: 'node', args: ['pass'] }], {
     spawn() {
@@ -743,6 +769,7 @@ test('focused CI installs the locked native fixture owner before selected checks
     'utf8',
   );
   const focused = workflow.split('  focused:\n')[1].split('\n  test:')[0];
+  assert.match(focused, /timeout-minutes: 60/u);
   const steps = focused.split(/\n      - /);
   const install = steps.findIndex((step) =>
     step.startsWith('name: Install pinned authoring dependencies for selected focused gates\n'),
