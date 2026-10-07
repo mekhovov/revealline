@@ -2,10 +2,9 @@ name: Fastline exact-head auto-merge
 
 on:
   workflow_run:
-    # Wake after either workflow that can create the exact-head release-ready
-    # check. Fast-release maintenance PRs skip the Pages build, so listening
-    # only for the deployment workflow leaves their controller decision stale.
-    workflows: [Build and deploy GitHub Pages, Validate source for continuous main Pages]
+    # Wake when the exact-head source gate completes, including a failure that
+    # must disarm an earlier auto-merge decision.
+    workflows: [Validate source for continuous main]
     types: [completed]
   pull_request:
     branches: [main]
