@@ -5,6 +5,7 @@ import path from 'node:path';
 import os from 'node:os';
 import { createHash } from 'node:crypto';
 import { buildProject, PUBLIC_SECURITY_HEADERS } from '../../scripts/game-cli.mjs';
+import { projectEditionModuleIndentation } from '../../scripts/edition-code-indentation.mjs';
 import { iosHTMLPolicy, IOS_CSP, stageNative, verifySite } from '../../scripts/native-cli.mjs';
 import { loadNativeSite } from '../../platforms/desktop/resources.mjs';
 import {
@@ -54,6 +55,7 @@ const ambientRuntimeFiles = [
   'game/ui/menu-retune.mjs',
   'game/ui/menu-retune.css',
   'game/ui/native-menu.css',
+  'game/ui/global-settings-view.css',
   'game/ui/menu-scenes.mjs',
   'game/ui/menu-scene-motion.mjs',
   'game/ui/menu-signal-loss.mjs',
@@ -62,6 +64,11 @@ const ambientRuntimeFiles = [
   'game/ui/art/menu-scenes/droneaid-main-background.png',
   'game/ui/art/menu-scenes/droneaid-wordmark-light.svg',
 ];
+
+const editionProjectedRuntimeFiles = new Set([
+  'game/ui/menu-scenes.mjs',
+  'game/ui/menu-scene-motion.mjs',
+]);
 
 test('the actual game has a static dark guard before resources and a single caught module entry', async () => {
   const html = await fs.readFile(new URL('index.html', sourceRoot), 'utf8');
@@ -158,6 +165,8 @@ test('build rewrites native root paths, preserves extras and includes boot bytes
     'game/i18n/bootstrap.mjs',
     'game/i18n/style.css',
     'game/vendor/i18next-26.4.2.min.js',
+    'game/vendor/lz-string-1.5.0.min.js',
+    'game/vendor/LZ-STRING-LICENSE.txt',
     'game/locales/en/common.json',
     'game/locales/en/interface.json',
     'game/locales/uk/common.json',
@@ -187,6 +196,7 @@ test('build rewrites native root paths, preserves extras and includes boot bytes
   await put('game/vendor/phaser-4.2.1.min.js', 'globalThis.Phaser = {};');
   await put('game/app.mjs', 'export {};');
   await put('game/content-launch.mjs', 'export {};');
+  await copy('game/snake/route.js');
   await put(
     'game/build-config.json',
     JSON.stringify({
@@ -249,8 +259,15 @@ test('build rewrites native root paths, preserves extras and includes boot bytes
     const bytes = await fs.readFile(path.join(out, name));
     assert.equal(record.bytes, bytes.length);
     assert.equal(record.sha256, digest(bytes));
-    if (ambientRuntimeFiles.includes(name))
-      assert.deepEqual(bytes, await fs.readFile(new URL(`../${name}`, sourceRoot)));
+    if (ambientRuntimeFiles.includes(name)) {
+      const source = await fs.readFile(new URL(`../${name}`, sourceRoot));
+      assert.deepEqual(
+        bytes,
+        editionProjectedRuntimeFiles.has(name)
+          ? projectEditionModuleIndentation(name, source)
+          : source,
+      );
+    }
   }
   const nativeFiles = [...ambientRuntimeFiles];
   const bridge = path.join(directory, 'fixture-bridge.mjs');
