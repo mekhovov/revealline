@@ -1,4 +1,4 @@
-name: Validate source for continuous main Pages
+name: Validate source for continuous main
 
 on:
   pull_request:
@@ -42,15 +42,10 @@ jobs:
             .github/workflows/deploy-pages.yml
             publishing/admission-binding.mjs
             publishing/admission-preflight.mjs
-            publishing/pages-controller/metadata.mjs
-            publishing/pages-controller/publication.json
-            publishing/pages-controller/release-policy.mjs
-            publishing/pages-controller/release-train-boundary.mjs
             publishing/focused-test-map.json
             publishing/focused-tests.mjs
             publishing/test-policy.json
             publishing/test-policy.mjs
-            scripts/pages-archive.mjs
           sparse-checkout-cone-mode: false
 
       - name: Set up Node.js
@@ -77,13 +72,6 @@ jobs:
           path: ${{ runner.temp }}/admission.json
           if-no-files-found: error
           retention-days: 7
-
-      - name: Require the exact protected main source on public Pages
-        if: steps.admission.outputs.mode == 'release'
-        env:
-          GH_TOKEN: ${{ github.token }}
-          PR_BASE_SHA: ${{ github.event.pull_request.base.sha }}
-        run: node .source-gate-automation/publishing/pages-controller/release-train-boundary.mjs public
 
       - name: Record temporary fast-release policy
         env:
@@ -303,7 +291,7 @@ jobs:
         uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
         with:
           # The PR build checks only its exact commit and tree. Immutable tags
-          # and full history remain confined to the frozen Pages publisher.
+          # and full history remain confined to release qualification.
           fetch-depth: 1
           ref: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.event_name == 'release' && github.event.release.tag_name || github.event_name == 'workflow_dispatch' && inputs.release_tag || github.ref }}
 
@@ -315,12 +303,7 @@ jobs:
           fetch-depth: 1
           persist-credentials: false
           sparse-checkout: |
-            publishing/pages-controller/metadata.mjs
-            publishing/pages-controller/publication.json
-            publishing/pages-controller/release-policy.mjs
-            publishing/pages-controller/release-train-boundary.mjs
             scripts/check-source-identity.mjs
-            scripts/pages-archive.mjs
           sparse-checkout-cone-mode: false
 
       - name: Set up Node.js
@@ -399,7 +382,7 @@ jobs:
             exit 0
           fi
           if [ "$ADMISSION" = scheduled ]; then
-            echo 'Explicit milestone schedule: selected validation passed under the explicit test policy; waived suites are not passed. Main Pages builds independently after merge.'
+            echo 'Explicit milestone schedule: selected validation passed under the explicit test policy; waived suites are not passed.'
             exit 0
           fi
           if [ "$ADMISSION" = release-evidence ]; then
