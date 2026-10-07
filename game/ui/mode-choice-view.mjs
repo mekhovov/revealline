@@ -1,11 +1,19 @@
 // Dependency-free presentation shared with bundled simulator builds.
-export const GAME_MODE_ORDER = Object.freeze(['solo', 'team', 'versus', 'snake', 'simulator']);
+export const GAME_MODE_ORDER = Object.freeze([
+  'solo',
+  'team',
+  'versus',
+  'snake',
+  'overflight',
+  'simulator',
+]);
 const copy = {
   en: {
     solo: 'Solo',
     team: 'Team',
     versus: 'VS',
     snake: 'Snake',
+    overflight: 'Overflight',
     simulator: 'SIM',
     mode: 'Game mode',
   },
@@ -14,6 +22,7 @@ const copy = {
     team: 'Разом',
     versus: 'VS',
     snake: 'Змійка',
+    overflight: 'Проліт',
     simulator: 'SIM',
     mode: 'Режим гри',
   },

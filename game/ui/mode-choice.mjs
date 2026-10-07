@@ -2,7 +2,7 @@ import { nativeArtReviewURL } from './art-review-navigation.mjs';
 import { t, localizedText, localizedAttribute, getLocale, onLocaleChange } from '../i18n/index.mjs';
 import { setMenuIcon } from './native-menu-icons.mjs';
 import { mountOptionalPracticePanel } from './optional-practice-panel.mjs';
-import { fpvWorldLaunchURL, snakeLaunchURL } from '../fpv-entry.mjs';
+import { fpvWorldLaunchURL, snakeLaunchURL, overflightLaunchURL } from '../fpv-entry.mjs';
 import { loadAcceptedAppearance } from '../presentation/theme-system.mjs';
 import { GAME_MODE_ORDER, renderModeChoices } from './mode-choice-view.mjs';
 const guideOwners = new WeakMap();
@@ -79,10 +79,31 @@ export function mountModeChoices({
     pause();
   };
   if (current !== 'snake') snake.addEventListener('click', enterSnake);
+  const overflight = modeActions.overflight ?? document.createElement('a');
+  overflight.id ||= `${current}-overflight`;
+  overflight.dataset.overflightEntry = 'true';
+  const overflightURL = () =>
+    overflightLaunchURL(
+      document.defaultView?.location?.href ?? globalThis.location?.href,
+      getLocale(),
+      getAppearanceDefault(),
+    );
+  if (current !== 'overflight') {
+    const initialOverflightURL = overflightURL();
+    if (initialOverflightURL) overflight.href = initialOverflightURL;
+    else if (!overflight.href) overflight.hidden = true;
+  }
+  const enterOverflight = (event) => {
+    const href = overflightURL();
+    if (!href) return event.preventDefault();
+    overflight.href = href;
+    pause();
+  };
+  if (current !== 'overflight') overflight.addEventListener('click', enterOverflight);
   const view = renderModeChoices({
     root,
     current,
-    actions: { ...modeActions, simulator, snake },
+    actions: { ...modeActions, simulator, snake, overflight },
     locale: getLocale(),
     setMenuIcon,
   });
@@ -137,6 +158,8 @@ export function mountModeChoices({
       guides.dispose();
       snake.removeEventListener('click', enterSnake);
       snake.remove();
+      overflight.removeEventListener('click', enterOverflight);
+      overflight.remove();
       simulator.remove();
     },
   };
