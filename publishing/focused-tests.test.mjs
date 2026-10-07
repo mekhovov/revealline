@@ -209,7 +209,7 @@ test('manifest-declared changed tests are not executed twice', () => {
   );
 });
 
-test('publishing changes run the exact-head controller, authority, determinism and public-byte gates', () => {
+test('publishing changes run the exact-head controller and release-object gates', () => {
   const plan = focusedTestPlan(['publishing/pages-controller/public-byte-audit.mjs'], manifest);
   assert.deepEqual(plan.categories, ['publishing']);
   const command = plan.commands.find(({ id }) => id === 'publishing-controller');
@@ -220,11 +220,7 @@ test('publishing changes run the exact-head controller, authority, determinism a
     'publishing/fastline-release-inputs.test.mjs',
     'publishing/fastline-release-objects.test.mjs',
     'publishing/fastline-release-publisher.test.mjs',
-    'publishing/pages-controller/archive-authority.test.mjs',
-    'publishing/pages-controller/assemble.test.mjs',
-    'publishing/pages-controller/metadata.test.mjs',
-    'publishing/pages-controller/public-byte-audit.test.mjs',
-    'publishing/pages-controller/release-asset.test.mjs',
+    'publishing/source-workflow.test.mjs',
   ])
     assert.ok(command.args.includes(required), `Missing focused gate: ${required}`);
 });
