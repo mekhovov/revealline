@@ -51,14 +51,14 @@ test('actual native menu imports and styles remain in each mode offline closure'
       'game/ui/mode-choice-view.mjs',
       'game/ui/mode-settings-view.mjs',
       'game/ui/native-menu-icons.mjs',
-      'game/ui/pause-menu.mjs',
       'game/ui/pause-menu.css',
       'game/ui/touch-steering.css',
     ])
       assert.ok(retained.has(name), `${mode}: ${name}`);
-    if (mode !== 'solo')
+    if (mode !== 'solo') {
       assert.ok(retained.has('game/ui/mode-boot.css'), `${mode} boot stylesheet`);
-    else assert.ok(retained.has('game/ui/mode-settings-view.css'), 'Snake category stylesheet');
+      assert.ok(retained.has('game/ui/pause-menu.mjs'), `${mode} Couch pause menu`);
+    } else assert.ok(retained.has('game/ui/mode-settings-view.css'), 'Snake category stylesheet');
   }
 });
 
