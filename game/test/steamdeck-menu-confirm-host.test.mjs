@@ -2,7 +2,6 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { settle, SoloElement, soloPage } from './helpers/solo-dom.mjs';
 import { waitFor } from './helpers/wait-for.mjs';
-import { openMissionLibrary } from './helpers/library-selection.mjs';
 
 function nativeConfirmDown(target) {
   const down = target.emit('keydown', {
@@ -329,10 +328,11 @@ test('Pause and mission actions ignore a touch-derived A release echo', async (t
       page.frame();
       assert.equal(page.$('game-overlay').dataset.kind, 'pause');
       if (entry.id === 'pause-mission-info-toggle') {
-        await openMissionLibrary(page, 'overlay-missions');
-        page.frame();
-        page.frame();
-        assert.equal(page.$(entry.id).closest('dialog')?.id, 'journey-chooser');
+        assert.equal(
+          page.$(entry.id).closest('dialog'),
+          null,
+          'Mission info remains part of the paused result panel; the separate library owns its dialog.',
+        );
       }
 
       const target = page.$(entry.id),

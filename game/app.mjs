@@ -7794,8 +7794,12 @@ try {
   }
   function enjoyCompletedPicture({ automatic = true } = {}) {
     if (run?.status !== 'won') return;
+    // `show-result` is the authoritative state for an explicit picture view.
+    // Reduced-motion renderers can settle before a paint has reflected the
+    // result overlay, so relying on that overlay's transient hidden flag here
+    // would incorrectly replace immediately usable actions with a picture gate.
     const resultAlreadyOpen =
-      !$('game-overlay').hidden && $('game-overlay').dataset.kind === 'won';
+      $('show-result').hidden && $('game-overlay').dataset.kind === 'won';
     const returnFocus =
       !dialogOpen() &&
       (document.activeElement === $('skip-celebration') ||
@@ -7807,11 +7811,13 @@ try {
       settledPictureRemaining = REWARD_SETTLED_SECONDS;
     } else clearSettledPictureTransition();
     show('skip-celebration', false);
-    if (resultAlreadyOpen) {
+    if (resultAlreadyOpen && automatic) {
       // The celebration is visual feedback, not a modal gate. Preserve the
       // live result actions once the player has reached them.
+      show('game-overlay', true);
       show('show-result', false);
       refreshHUD();
+      armResultAutoAdvance();
       return;
     }
     show('game-overlay', false);
@@ -8542,7 +8548,6 @@ try {
     show('game-overlay', true);
     show('show-result', false);
     show('view-picture', kind === 'won');
-    editionUI?.refresh();
     victoryStoryButton.hidden =
       kind !== 'won' ||
       practice ||
@@ -8768,10 +8773,15 @@ try {
     refreshMastery();
     refreshCourse();
     refreshDifficulty();
+    editionUI?.refresh();
     controllerReading?.refresh();
     if (!preservePauseFocus && !document.hidden && document.hasFocus() && !controllerDialog())
       controllerFocus()?.focus({ preventScroll: true });
-    if (kind === 'won') armResultAutoAdvance();
+    // Result actions are available throughout the celebration, but the
+    // automatic continuation countdown starts only once that feedback ends.
+    // Otherwise it can launch the next flight before the final picture has
+    // finished presenting.
+    if (kind === 'won' && !celebrationActive) armResultAutoAdvance();
     else clearResultAutoAdvance();
   }
   function resultAttemptCurrent(ticket) {
@@ -11098,9 +11108,10 @@ try {
           winRevealAge = 0;
           celebrationActive = true;
           // Results are immediately usable; the celebration remains a visual
-          // layer that can be skipped without withholding Retry or Next.
+          // layer behind the result. There is no separate skip step once
+          // Retry and Next are already available.
           overlay('won');
-          show('skip-celebration', true);
+          show('skip-celebration', false);
           show('show-result', false);
           warning(
             journeyRewardFailure ||
