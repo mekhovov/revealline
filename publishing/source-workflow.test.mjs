@@ -39,3 +39,13 @@ test('the package interface exposes no Pages build command', async () => {
   const manifest = JSON.parse(await fs.readFile(new URL('../package.json', import.meta.url), 'utf8'));
   assert.equal(Object.hasOwn(manifest.scripts, 'build:pages'), false);
 });
+
+test('the retired Pages playbook cannot prescribe a deployment path', async () => {
+  const source = await fs.readFile(
+    new URL('../.cursor/skills/deploy-release-pages/SKILL.md', import.meta.url),
+    'utf8',
+  );
+  assert.match(source, /^# Retired GitHub Pages delivery$/mu);
+  assert.match(source, /Do not deploy,\nretry, dispatch, validate, or troubleshoot a Pages publication/u);
+  assert.doesNotMatch(source, /actions\/deploy-pages|upload-pages-artifact|pages:\s*write/u);
+});
