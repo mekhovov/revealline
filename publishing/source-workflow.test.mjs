@@ -46,6 +46,6 @@ test('the retired Pages playbook cannot prescribe a deployment path', async () =
     'utf8',
   );
   assert.match(source, /^# Retired GitHub Pages delivery$/mu);
-  assert.match(source, /Do not deploy,\nretry, dispatch, validate, or troubleshoot a Pages publication/u);
+  assert.match(source, /has no Pages deployment path\. Do not deploy, retry,\ndispatch, validate, or troubleshoot a Pages publication/u);
   assert.doesNotMatch(source, /actions\/deploy-pages|upload-pages-artifact|pages:\s*write/u);
 });
