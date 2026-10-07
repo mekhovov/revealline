@@ -106,7 +106,9 @@ export function overflightPayload(build) {
   if (build.primary.branch === 'wide') {
     return {
       cooldown: [0, 0, 1, 0.95, 0.85][rank],
-      damage: [0, 0, 30, 38, 45][rank],
+      // Two correctly overlapped evolved charges can clear a 120-hull late
+      // pursuer without requiring Proximity Pulse as a compulsory finisher.
+      damage: [0, 0, 30, 38, 60][rank],
       radius: [0, 0, 40, 46, 48][rank],
       count: rank === 4 ? 5 : 3,
       spacing: [0, 0, 56, 60, 68][rank],

@@ -6,9 +6,17 @@ export const QUALIFICATION_BUILDS = Object.freeze({
   echo: ['primary:double', 'slow-field', 'proximity-pulse', 'shield'],
   systems: ['proximity-pulse', 'side-burst', 'scanner', 'primary:double'],
 });
+/** Explicit headless policies: never silently fill a no-pulse slot with pulse. */
+export const NO_PULSE_QUALIFICATION_BUILDS = Object.freeze({
+  'fan-scanner': ['primary:wide', 'slow-field', 'side-burst', 'scanner'],
+  'fan-shield': ['primary:wide', 'slow-field', 'side-burst', 'shield'],
+  'echo-scanner': ['primary:double', 'slow-field', 'side-burst', 'scanner'],
+  'echo-shield': ['primary:double', 'slow-field', 'side-burst', 'shield'],
+});
 export function selectCard(run, direction = 'fan') {
-  const preferences = QUALIFICATION_BUILDS[direction];
+  const preferences = QUALIFICATION_BUILDS[direction] ?? NO_PULSE_QUALIFICATION_BUILDS[direction];
   if (!preferences) throw new RangeError('Unknown Overflight review build.');
+  const strict = Object.hasOwn(NO_PULSE_QUALIFICATION_BUILDS, direction);
   const score = (card) => {
     const index = preferences.findIndex((prefix) => card.id.startsWith(prefix));
     return index < 0
@@ -17,12 +25,75 @@ export function selectCard(run, direction = 'fan') {
         : 50
       : index * 5 + (card.kind === 'evolution' ? -1 : 0);
   };
-  let sorted = [...run.offers].sort((a, b) => score(a) - score(b));
+  const sortedOffers = () =>
+    run.offers
+      .filter(
+        (card) =>
+          !strict ||
+          card.kind === 'utility' ||
+          preferences.some((prefix) => card.id.startsWith(prefix)),
+      )
+      .sort((a, b) => score(a) - score(b));
+  let sorted = sortedOffers();
+  if (strict) {
+    while ((!sorted.length || score(sorted[0]) >= 30) && run.progression.rerolls > 0) {
+      rerollOverflightUpgrades(run);
+      sorted = sortedOffers();
+    }
+    return sorted[0] ?? null;
+  }
   if (score(sorted[0]) >= 30 && run.progression.rerolls > 0) {
     rerollOverflightUpgrades(run);
-    sorted = [...run.offers].sort((a, b) => score(a) - score(b));
+    sorted = sortedOffers();
   }
   return sorted[0];
+}
+
+export const OVERFLIGHT_AUDIT_ROUTES = Object.freeze([
+  'park-after-pulse2',
+  'tiny-circle-after-pulse2',
+  'wall-after-pulse2',
+  'edge-loop-after-pulse2',
+]);
+
+/** Deliberately simple exploit probes, never selected by normal/native play. */
+export function createOverflightAuditPilot(route) {
+  if (!OVERFLIGHT_AUDIT_ROUTES.includes(route)) throw new RangeError('Unknown audit route.');
+  const state = {
+    startedAt: null,
+    hullAtStart: null,
+    damageAtStart: null,
+    airframesAtStart: null,
+    origin: null,
+    edgeDirection: 1,
+  };
+  return {
+    state,
+    input(run) {
+      if (state.startedAt === null) {
+        if (!run.build.combat.some((module) => module.id === 'proximity-pulse' && module.rank >= 2))
+          return pilot(run);
+        state.startedAt = run.time;
+        state.hullAtStart = run.player.hull;
+        state.damageAtStart = run.stats.damageTaken;
+        state.airframesAtStart = run.airframesRemaining;
+        state.origin = { x: run.player.x, y: run.player.y };
+      }
+      if (route === 'park-after-pulse2') return { x: 0, y: 0, boost: false };
+      if (route === 'wall-after-pulse2') return { x: -1, y: 0, boost: false };
+      if (route === 'tiny-circle-after-pulse2') {
+        const angle = (run.time - state.startedAt) * 9;
+        return { x: Math.cos(angle), y: Math.sin(angle), boost: false };
+      }
+      if (run.player.y >= run.compiled.arena.height - 80) state.edgeDirection = -1;
+      if (run.player.y <= 80) state.edgeDirection = 1;
+      return {
+        x: Math.max(-1, Math.min(1, (80 - run.player.x) / 40)),
+        y: state.edgeDirection,
+        boost: false,
+      };
+    },
+  };
 }
 
 /** A deterministic, imperfect pilot, recomputed at 10Hz; it sees ordinary game state.

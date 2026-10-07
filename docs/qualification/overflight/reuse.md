@@ -41,7 +41,8 @@ Both bindings select the same immutable asset record:
 }
 ```
 
-The complete sample bundle is produced by `reuseFixture()` in the test. It
+The complete sample bundle is produced by `createOverflightReuseFixture()` in
+`scripts/overflight-reuse-fixture.mjs`, shared by the test and browser review. It
 uses the existing slot geometry and validates through `validateThemeBundle`.
 `compilePresentation` verifies the PNG bytes and emits one hash-addressed image
 file for the two bindings. `createPresentationHost({ profile: 'board' })`
@@ -96,7 +97,14 @@ only constructs the registered main-game, Snake and Overflight Studio
 destinations, all inside the included `game` tree. The tool launcher entries
 were resolved from their HTML `data-module` attributes in this audit.
 
-No full distribution build or native stage was generated because available disk
-space was constrained. This audit establishes source/build inclusion closure;
-it does not replace built-distribution, offline-installation, GPU or target
-hardware qualification.
+This source audit preceded the successful distribution build recorded in
+[the build receipt](full-distribution-build.json). That older build predates the
+upgrade changes. Neither this dependency audit nor a successful build replaces
+offline-installation, GPU or target-hardware qualification.
+
+The follow-up now includes an actual browser rendering through Capture BoardPainter
+and the Asset Studio adapter: [review surface](parallel-20261005/reuse.html) and
+[capture](parallel-20261005/reuse-browser.png). Generate its temporary compiled
+bundle with `node scripts/build-overflight-reuse-review.mjs`, then serve this
+repository. Both renderers share one browser-decoded asset, with unchanged
+authoritative game state. This is a paused native-renderer demonstration.
