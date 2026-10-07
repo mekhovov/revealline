@@ -1640,6 +1640,8 @@ export function mountWorldApp({
     };
     for (const tool of doc.querySelectorAll('[data-sim-mission-tool]'))
       tool.textContent = toolNames[tool.dataset.simMissionTool];
+    for (const action of doc.querySelectorAll('[data-random-flight="catalogue"]'))
+      action.textContent = txt('Random flight', 'Випадковий політ');
     const toolsSummary = doc.querySelector('[data-sim-mission-tools] > summary');
     if (toolsSummary) toolsSummary.textContent = txt('SIM tools', 'Інструменти SIM');
     playShell?.setLocale(locale);
@@ -2392,7 +2394,7 @@ export function mountWorldApp({
     );
   }
   function randomFlightCandidates(worldId) {
-    return filteredCatalogue().filter((entry) => entry.world === worldId);
+    return filteredCatalogue().filter((entry) => !worldId || entry.world === worldId);
   }
   async function startRandomFlight(worldId) {
     await ready;
@@ -2488,7 +2490,10 @@ export function mountWorldApp({
         : (installed.find((pack) => pack.id === entry.projectId)?.project.title ?? entry.world),
     };
   }
-  function renderCatalogue() {
+  // Kept as the pre-unification renderer for the no-library bootstrap path.
+  // Once the shared chooser exists, renderCatalogue below owns the one live
+  // mission surface rather than leaving duplicate world and school cards.
+  function renderLegacyCatalogue() {
     renderSchool();
     const complete = completedKeys(),
       filtered = filteredCatalogue(complete);
@@ -2745,6 +2750,74 @@ export function mountWorldApp({
     }
       missionChooser?.refresh();
     }
+    presentation.refresh();
+  }
+  function renderCatalogue() {
+    renderSchool();
+    $('world-grid').replaceChildren();
+    $('level-count').textContent = catalogue.filter((entry) => !entry.archived).length;
+    const count = doc.querySelectorAll('.catalogue-stats strong')[1];
+    if (count)
+      count.textContent = new Set(
+        catalogue.filter((entry) => !entry.archived).map((entry) => entry.world),
+      ).size;
+    if (!missionLibrary) return renderLegacyCatalogue();
+
+    const groups = new Map();
+    for (const entry of catalogue.filter((entry) => !entry.archived)) {
+      const id = entry.projectId ? `worlds:${entry.packIdentity}` : 'worlds:builtin';
+      if (!groups.has(id)) groups.set(id, []);
+      groups.get(id).push(entry);
+    }
+    for (const old of new Set(missionLibrary.missions.map((row) => row.ownerId)))
+      if (!groups.has(old)) missionLibrary.remove(old);
+    const complete = completedKeys();
+    for (const [id, missions] of groups) {
+      const positions = new Map(),
+        sizes = new Map();
+      for (const entry of missions) {
+        const key = missionCampaign(entry).key;
+        positions.set(entry, sizes.get(key) ?? 0);
+        sizes.set(key, (sizes.get(key) ?? 0) + 1);
+      }
+      missionLibrary.register({
+        id,
+        editionId: id,
+        edition: 'FPV SIM · Worlds',
+        collection: id === 'worlds:builtin' ? 'Classic' : 'Custom',
+        entries: missions,
+        describe: (entry) => ({
+          id: keyOf(entry),
+          revision: entry.course.revision ?? '',
+          campaignKey: missionCampaign(entry).key,
+          campaignTitle: missionCampaign(entry).title,
+          name: label(entry),
+          levelIndex: positions.get(entry),
+          ...(!entry.projectId
+            ? {
+                canonicalLevelKey: `sim-worlds:${keyOf(entry)}`,
+                globalLevelNumber:
+                  [...WORLD_CATALOGUE, ...BEGINNER_CATALOGUE].findIndex(
+                    (candidate) => keyOf(candidate) === keyOf(entry),
+                  ) + 1,
+              }
+            : {}),
+          campaignLevelCount: sizes.get(missionCampaign(entry).key),
+          modes: ['solo'],
+          tags: ['FPV', 'Practice'],
+          hook: entry.course.locales[locale]?.brief ?? entry.course.locales.en.brief,
+          rules: catalogueDetails(entry),
+        }),
+        availability: () => ({ state: 'ready' }),
+        card: (entry) => entry.course,
+        progressState: (entry) => ({
+          state: complete.has(keyOf(entry)) ? 'completed' : 'new',
+          bestStars: null,
+        }),
+        launch: (entry, { isCurrent }) => startFlight(entry, { isCurrent }),
+      });
+    }
+    missionChooser.refresh();
     presentation.refresh();
   }
   function openMissionChooser(section = 'explore') {
@@ -6058,6 +6131,7 @@ export function mountWorldApp({
     renderPacks();
     paintLessonReturn();
     worldLibrary.refresh();
+    missionChooser?.refresh();
   });
   on($('play-playlist'), 'click', () => flySequence(playlistValue()));
   on($('save-playlist'), 'click', () => {
@@ -6967,6 +7041,12 @@ export function mountWorldApp({
   missionLibrary = createSimMissionLibrary();
   const missionTools = el('div', undefined, 'dialog-actions');
   const selectedTools = el('div', undefined, 'dialog-actions');
+  const randomMission = button(txt('Random flight', 'Випадковий політ'), async () => {
+    missionChooser.close();
+    await startRandomFlight();
+  });
+  randomMission.dataset.randomFlight = 'catalogue';
+  missionTools.append(randomMission);
   for (const [tab, en, uk] of [
     ['learn', 'Flight School', 'Льотна школа'],
     ['playlists', 'Playlists', 'Добірки'],
