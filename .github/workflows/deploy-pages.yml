@@ -96,10 +96,9 @@ jobs:
       needs.preflight.outputs.focusedRequired == 'true'
     needs: preflight
     runs-on: ubuntu-latest
-    # A large source change can select many focused commands. The runner uses a
-    # bounded four-worker pool, keeping independent gates from serializing into
-    # a timeout while retaining a firm upper bound for a stuck child process.
-    timeout-minutes: 60
+    # Host fixtures are CPU-intensive. Two workers preserve parallel progress
+    # without starving async test handoffs on the standard hosted runner.
+    timeout-minutes: 90
     permissions:
       contents: read
       pull-requests: read
