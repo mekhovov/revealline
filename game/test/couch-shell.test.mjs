@@ -666,7 +666,15 @@ test('a real finished draw exposes both frozen boards, Results returns without a
   const base = JSON.parse(
     await readFile(new URL('../content/campaign.json', import.meta.url), 'utf8'),
   );
-  const campaign = { ...base, briefs: [], levels: [retryFixture('enemy-player').level] };
+  // This fixture intentionally replaces the shipped level list. Give it its
+  // own identity so the production First Signal artwork pack is not presented
+  // as artwork for a different campaign.
+  const campaign = {
+    ...base,
+    id: 'couch-finished-draw',
+    briefs: [],
+    levels: [retryFixture('enemy-player').level],
+  };
   const f = await couchPage(t, { campaign }),
     firstResultsReveal = [];
   t.mock.method(f.$('race-start'), 'scrollIntoView', (options) => {
