@@ -369,15 +369,7 @@ for (const outcome of [
     if (outcome === 'picture') p.$('view-picture').click();
     if (failed) gate.reject(failure);
     else gate.resolve();
-    // The diagnostic adapter deliberately re-enters the result view. Under the
-    // bounded focused worker pool, that host handoff can legitimately wait for
-    // a busy event loop longer than the helper's ordinary 5-second assertion
-    // budget. This is a fixture scheduling allowance, not a product timeout.
-    await settle(
-      () => !p.$('next-button').disabled,
-      undefined,
-      outcome === 'failure-log-reentry' ? { timeoutMs: 20_000 } : undefined,
-    );
+    await settle(() => !p.$('next-button').disabled);
     await new Promise((resolve) => setTimeout(resolve, 15));
     if (outcome === 'hidden') {
       p.doc.hidden = false;
