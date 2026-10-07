@@ -2752,7 +2752,10 @@ try {
     const dialog = controllerDialog();
     if (dialog) return `modal:${dialog.id}`;
     if (courseBlocked()) return `course:${coursePhase}`;
-    if (celebrationActive) return 'celebration';
+    // A completed result remains actionable while its non-blocking celebration
+    // is playing. The picture-only fallback below is still used when no result
+    // overlay is open.
+    if (celebrationActive && $('game-overlay').hidden) return 'celebration';
     if (defeatActive) return 'defeat-presentation';
     if (run?.status === 'won') return $('show-result').hidden ? 'won' : 'picture';
     if (run?.status === 'lost') return 'lost';
@@ -7791,6 +7794,8 @@ try {
   }
   function enjoyCompletedPicture({ automatic = true } = {}) {
     if (run?.status !== 'won') return;
+    const resultAlreadyOpen =
+      !$('game-overlay').hidden && $('game-overlay').dataset.kind === 'won';
     const returnFocus =
       !dialogOpen() &&
       (document.activeElement === $('skip-celebration') ||
@@ -7802,6 +7807,13 @@ try {
       settledPictureRemaining = REWARD_SETTLED_SECONDS;
     } else clearSettledPictureTransition();
     show('skip-celebration', false);
+    if (resultAlreadyOpen) {
+      // The celebration is visual feedback, not a modal gate. Preserve the
+      // live result actions once the player has reached them.
+      show('show-result', false);
+      refreshHUD();
+      return;
+    }
     show('game-overlay', false);
     show('show-result', true);
     refreshHUD();
@@ -11085,10 +11097,11 @@ try {
           });
           winRevealAge = 0;
           celebrationActive = true;
-          show('game-overlay', false);
+          // Results are immediately usable; the celebration remains a visual
+          // layer that can be skipped without withholding Retry or Next.
+          overlay('won');
           show('skip-celebration', true);
           show('show-result', false);
-          $('skip-celebration').focus({ preventScroll: true });
           warning(
             journeyRewardFailure ||
               localizedMessage('interface:pictureUnlockedAWholeWorldFromOneBraveLine'),

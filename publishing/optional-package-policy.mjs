@@ -32,7 +32,10 @@ const BASE_OPTIONAL_PACKAGE_POLICIES = Object.freeze({
   'civilian-flight': Object.freeze({
     root: 'optional-practice/civilian-flight/',
     entry: 'optional-practice/civilian-flight/index.html',
-    limits: Object.freeze({ files: 64, bytes: 8 * 1024 * 1024 }),
+    // The runtime remains a 64-file archive. Its public source companion also
+    // carries the reviewed worker and launcher templates plus its inventory,
+    // so it needs two additional, explicitly bounded entries.
+    limits: Object.freeze({ files: 66, bytes: 8 * 1024 * 1024 }),
     localFiles: Object.freeze([
       'index.html',
       'app.mjs',
@@ -57,6 +60,8 @@ const BASE_OPTIONAL_PACKAGE_POLICIES = Object.freeze({
       'optional-practice/civilian-fpv/flight-fullscreen.mjs',
       'optional-practice/civilian-fpv/flight-fullscreen.css',
       'optional-practice/civilian-fpv/sim-presentation.mjs',
+      'optional-practice/civilian-fpv/math.mjs',
+      'optional-practice/civilian-fpv/rotation-table.mjs',
       'optional-practice/civilian-fpv/world-themes.mjs',
       'game/presentation/theme-system.mjs',
       'game/ui/audio-output.mjs',

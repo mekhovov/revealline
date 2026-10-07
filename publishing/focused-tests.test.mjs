@@ -377,7 +377,7 @@ test('focused command execution reports a timeout and stops the remaining queue'
   const timeout = Object.assign(new Error('timed out'), { code: 'ETIMEDOUT' });
   const summary = runFocusedCommands(
     [
-      { id: 'blocked', command: 'node', args: ['blocked'] },
+      { id: 'blocked', command: 'node', args: ['blocked'], timeoutMs: 4321 },
       { id: 'must-not-run', command: 'node', args: ['later'] },
     ],
     {
@@ -390,11 +390,11 @@ test('focused command execution reports a timeout and stops the remaining queue'
       timeoutMs: 1234,
     },
   );
-  assert.deepEqual(calls, [['node', 'blocked', 1234, 'SIGTERM']]);
+  assert.deepEqual(calls, [['node', 'blocked', 4321, 'SIGTERM']]);
   assert.equal(summary.attempted, 1);
   assert.deepEqual(summary.failures.map(({ id, timedOut }) => [id, timedOut]), [['blocked', true]]);
   assert.equal(summary.exitCode, 124);
-  assert.match(stderr.at(-1), /timed out after 1234ms/u);
+  assert.match(stderr.at(-1), /timed out after 4321ms/u);
 });
 
 test('focused command execution succeeds only when every command succeeds', () => {
