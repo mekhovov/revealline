@@ -16,8 +16,15 @@
     <meta name="theme-color" content="#111c21" />
     <title>Classic Snake · FPV / LINE</title>
     <link rel="stylesheet" href="../ui/mode-play-shell.css" />
+    <link rel="stylesheet" href="../ui/menu-scenes.css" />
     <link rel="stylesheet" href="../ui/optional-practice-panel.css" />
+    <link rel="stylesheet" href="../ui/touch-steering.css" />
     <link rel="stylesheet" href="classic.css" />
+    <link rel="stylesheet" href="../ui/mode-choice.css" />
+    <link rel="stylesheet" href="../ui/mode-settings-view.css" />
+    <link rel="stylesheet" href="../ui/global-settings-view.css" />
+    <link rel="stylesheet" href="../ui/pause-menu.css" />
+    <link rel="stylesheet" href="../ui/journey.css" />
     <script
       defer
       src="../ui/direct-tool-launch.js"
@@ -31,31 +38,16 @@
     <div id="snake-panels" hidden>
       <div id="snake-mode-links"></div>
       <section id="snake-missions">
-        <nav id="mode-tabs" aria-label="Play mode">
-          <button data-mode="solo">Solo</button><button data-mode="versus">Versus</button>
-          <button data-mode="team">Team</button>
-        </nav>
-        <div class="setup" aria-label="Game setup">
-          <label id="campaign-field"
-            ><span data-word="campaign"></span
-            ><select id="campaign"></select
-          ></label>
-          <label
-            ><span data-word="chapter"></span
-            ><select id="chapter"></select
-          ></label>
-          <label hidden
-            ><span data-word="mission"></span
-            ><select id="mission"></select
-          ></label>
-        </div>
-        <div id="mission-cards" class="mission-cards" role="group" aria-label="Missions"></div>
         <p id="progress-summary" role="status"></p>
         <nav class="progress-links" aria-label="Campaign progress">
           <button id="recent-level" hidden></button><button id="uncleared-level" hidden></button>
         </nav>
       </section>
       <section id="snake-expert">
+        <nav id="mode-tabs" aria-label="Play mode">
+          <button data-mode="solo">Solo</button><button data-mode="versus">Versus</button>
+          <button data-mode="team">Team</button>
+        </nav>
         <p data-word="changeHelp"></p>
         <div class="setup variants" aria-label="Round rules">
           <label
@@ -109,6 +101,7 @@
         <p id="mode-help"></p>
         <p id="speed-note" class="rule-badge"></p>
         <p id="record-summary"></p>
+        <p id="snake-rating-criteria"></p>
         <p id="controls-help" class="muted"></p>
       </section>
       <section id="snake-settings" class="setup">
@@ -153,8 +146,18 @@
             ><select id="board-style">
               <option value="theme">Game theme</option>
               <option value="retro">Retro Field</option>
+              <option value="living-circuit">Living Circuit</option>
             </select></label
           >
+          <label id="board-scene-field" hidden>
+            <span data-word="boardScene"></span>
+            <select id="board-scene">
+              <option value="auto">Auto · by chapter</option>
+              <option value="orchard">Orchard Workshop</option>
+              <option value="workshop">Workshop</option>
+              <option value="relay">Field Relay</option>
+            </select>
+          </label>
           <label
             ><span data-word="castLabel"></span
             ><select id="actor-cast">
@@ -251,6 +254,7 @@
       </section>
       <section id="snake-results">
         <p id="result-detail"></p>
+        <p id="snake-stars" class="snake-stars" role="status"></p>
         <p id="result-record"></p>
         <div class="run-controls">
           <button id="next" hidden>Next level</button
@@ -263,6 +267,7 @@
           <div class="level-strip">
             <h2 id="level-title"></h2>
             <span id="boundary" class="rule-badge"></span>
+            <p id="snake-onboarding" class="snake-onboarding"></p>
           </div>
           <div id="boards"></div>
           <div id="pads"></div>

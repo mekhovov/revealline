@@ -7,9 +7,38 @@
     <link rel="manifest" href="./app.webmanifest" />
     <title>FPV / LINE · Simulator</title>
     <link rel="stylesheet" href="../civilian-fpv/world-style.css" />
+    <script>
+      document.documentElement.dataset.modeShellPending = 'true';
+      const simLoadMessage = (message) => {
+        const status = document.getElementById('sim-menu-boot-message');
+        if (status && document.documentElement.dataset.modeShellPending)
+          status.textContent = message;
+      };
+      const simLoadFailed = () =>
+        simLoadMessage(
+          'Could not start. Reload to retry. / Не вдалося запустити. Оновіть сторінку.',
+        );
+      window.addEventListener('error', simLoadFailed, { once: true });
+      window.addEventListener('unhandledrejection', simLoadFailed, { once: true });
+      window.setTimeout(
+        () =>
+          simLoadMessage(
+            'Still loading… You can reload or go back. / Ще завантажується… Можна оновити сторінку або повернутися назад.',
+          ),
+        15000,
+      );
+    </script>
     <script type="module" src="../civilian-fpv/world-app.mjs"></script>
   </head>
   <body class="field-kit sim-worlds">
+    <section class="sim-menu-boot" role="status">
+      <strong>FPV / LINE</strong>
+      <p id="sim-menu-boot-message">Preparing game… / Підготовка гри…</p>
+      <a href="./index.html" onclick="event.preventDefault(); location.reload()"
+        >Reload / Оновити</a
+      >
+      <button type="button" onclick="history.back()">Back / Назад</button>
+    </section>
     <a class="sim-skip" href="#explore">Skip to flight selection</a>
     <header class="studio-header">
       <a class="wordmark" href="#explore" aria-label="FPV / LINE Simulator">

@@ -272,7 +272,8 @@
         {
           "id": "company-runtime-and-publication",
           "command": "npm",
-          "args": ["run", "company:test"]
+          "args": ["run", "company:test"],
+          "timeoutMs": 2700000
         },
         {
           "id": "company-review-measurements",
