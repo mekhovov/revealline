@@ -35,7 +35,7 @@ test('Creator module names are identical to native rank-one upgrade names', () =
     const item = overflightBuildItems({
       primary: { rank: 1, branch: null, evolved: false },
       combat: ['slow-field', 'proximity-pulse', 'side-burst'].includes(id) ? [{ id, rank: 1 }] : [],
-      support: ['scanner', 'shield'].includes(id) ? { id, rank: 1 } : null,
+      support: ['scanner', 'shield', 'plating'].includes(id) ? { id, rank: 1 } : null,
     }).find((entry) => entry.id === id);
     for (const locale of ['en', 'uk'])
       assert.equal(overflightModuleLabel(id, locale), item.title[locale]);

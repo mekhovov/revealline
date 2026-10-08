@@ -39,41 +39,43 @@ export function renderModeChoices({
   if (!root || !GAME_MODE_ORDER.includes(current))
     throw new Error('A visible game mode is required.');
   const document = root.ownerDocument;
-  const rows = GAME_MODE_ORDER.map((id) => {
-    const element = actions[id] ?? document.createElement('button');
-    if (element.tagName === 'BUTTON') element.type = 'button';
-    // A reused launch link must never retain primary/pressed paint from its old home.
-    element.classList.remove(
-      'primary',
-      'race-primary',
-      'field-kit-primary',
-      'selected',
-      'active-tab',
-    );
-    for (const attribute of [
-      'data-i18n',
-      'data-field-kit-copy',
-      'aria-current',
-      'aria-selected',
-      'aria-pressed',
-    ])
-      element.removeAttribute(attribute);
-    if (id === current) element.setAttribute('aria-current', 'page');
-    element.dataset.gameMode = id;
-    element.id ||= `${root.id || 'game-mode'}-${id}`;
-    const label = document.createElement('strong');
-    label.className = 'game-mode-label';
-    element.replaceChildren(label);
-    if (['solo', 'team', 'versus', 'simulator'].includes(id)) {
-      const badge = document.createElement('small');
-      badge.className = 'game-mode-badge';
-      badge.textContent = id === 'simulator' ? 'beta' : id === 'solo' ? '1P' : '2P';
-      badge.setAttribute('aria-hidden', 'true');
-      element.append(badge);
-    }
-    setMenuIcon(element, id);
-    return { id, element, label };
-  });
+  const rows = GAME_MODE_ORDER.filter((id) => id !== 'overflight' || actions.overflight).map(
+    (id) => {
+      const element = actions[id] ?? document.createElement('button');
+      if (element.tagName === 'BUTTON') element.type = 'button';
+      // A reused launch link must never retain primary/pressed paint from its old home.
+      element.classList.remove(
+        'primary',
+        'race-primary',
+        'field-kit-primary',
+        'selected',
+        'active-tab',
+      );
+      for (const attribute of [
+        'data-i18n',
+        'data-field-kit-copy',
+        'aria-current',
+        'aria-selected',
+        'aria-pressed',
+      ])
+        element.removeAttribute(attribute);
+      if (id === current) element.setAttribute('aria-current', 'page');
+      element.dataset.gameMode = id;
+      element.id ||= `${root.id || 'game-mode'}-${id}`;
+      const label = document.createElement('strong');
+      label.className = 'game-mode-label';
+      element.replaceChildren(label);
+      if (['solo', 'team', 'versus', 'simulator'].includes(id)) {
+        const badge = document.createElement('small');
+        badge.className = 'game-mode-badge';
+        badge.textContent = id === 'simulator' ? 'beta' : id === 'solo' ? '1P' : '2P';
+        badge.setAttribute('aria-hidden', 'true');
+        element.append(badge);
+      }
+      setMenuIcon(element, id);
+      return { id, element, label };
+    },
+  );
   root.classList.add('game-mode-choice');
   root.dataset.menuLayout = 'horizontal';
   root.dataset.menuScope = 'modes';

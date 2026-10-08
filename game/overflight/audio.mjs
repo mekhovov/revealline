@@ -1,4 +1,8 @@
-import { DESTRUCTION_CUES, destructionCategory } from '../ui/destruction-audio.mjs';
+import {
+  DESTRUCTION_CUES,
+  HUMAN_REACTION_CUES,
+  destructionCategory,
+} from '../ui/destruction-audio.mjs';
 
 /** Events enter the existing mixer once per accepted simulation step. It owns
  * mute, priorities, sample fallback and voice limits; replay/prepare stay silent. */
@@ -7,6 +11,7 @@ export function createOverflightAudio(
   { presentation = null, getDestruction = () => ({}) } = {},
 ) {
   let lastTick = '';
+  const launched = new WeakSet();
   const eventCursor = (run) =>
     `${run.tick}:${run.phase ?? ''}:${run.progression?.choices ?? 0}:${run.progression?.rerolls ?? 0}`;
   if (presentation?.readAudio) sound.setPublishedAudio(presentation.readAudio);
@@ -18,13 +23,13 @@ export function createOverflightAudio(
     warning: 'warning',
     arrival: 'warning',
     boost: 'burst',
-    start: 'notice',
     pickup: 'supply',
     'pickup.collected': 'supply',
     damage: 'impact',
     hit: 'impact',
     defeat: 'catch',
     salvage: 'supply',
+    supply: 'supply',
     system: 'pulse',
     shield: 'recover',
     handoff: 'recover',
@@ -42,6 +47,26 @@ export function createOverflightAudio(
     courier: 'supply',
   };
   return {
+    start(run, { retry, bodyId } = {}) {
+      if (!run || launched.has(run)) return;
+      launched.add(run);
+      return sound.feedbackDirector.launch({
+        board: 'overflight',
+        level: run.compiled?.id ?? 'overflight',
+        bodyId,
+        theme: { family: 'fpv' },
+        retry,
+      });
+    },
+    flight(run, { active = false, bodyId } = {}) {
+      sound.feedbackDirector.flight({
+        board: 'overflight',
+        active: active && run?.phase === 'playing',
+        bodyId,
+        moving: true,
+        boost: (run?.player?.boostRemaining ?? run?.player?.boostTime ?? 0) > 0,
+      });
+    },
     prepare() {
       return sound.publishedAudio?.prepare([
         'pickup',
@@ -49,6 +74,7 @@ export function createOverflightAudio(
         'victory',
         'failure',
         ...DESTRUCTION_CUES,
+        ...HUMAN_REACTION_CUES,
       ]);
     },
     update(run) {
@@ -57,9 +83,19 @@ export function createOverflightAudio(
       const heard = new Set();
       const events = Array.isArray(run.events) ? run.events : [];
       const terminal = events.find((event) => ['won', 'lost'].includes(event.type ?? event));
-      const brutal = getDestruction()?.brutal === true;
+      const destruction = getDestruction();
+      const brutal = destruction?.brutal === true;
       const hasDefeat = events.some((event) => event.type === 'defeat');
-      for (const event of events) {
+      const prioritized = [...events].sort((a, b) => {
+        const danger = (event) => ['warning', 'arrival', 'damage', 'hit'].includes(event.type);
+        if (danger(a) !== danger(b)) return danger(a) ? -1 : 1;
+        const distance = (event) =>
+          Number.isFinite(event.x)
+            ? Math.hypot(event.x - run.player.x, (event.y ?? run.player.y) - run.player.y)
+            : Infinity;
+        return distance(a) - distance(b);
+      });
+      for (const event of prioritized) {
         const type = typeof event === 'string' ? event : event.type;
         if (type === 'reroll' || type === 'upgrade-ready') {
           // A paused draft uses the shared menu bus and its saved preferences.
@@ -83,6 +119,10 @@ export function createOverflightAudio(
           pan,
           gainScale: cue === 'impact' ? 0.6 : cue === 'catch' ? 0.45 : 0.8,
           brutal,
+          vocals: destruction?.vocals,
+          audible:
+            !Number.isFinite(event.x) ||
+            Math.hypot(event.x - run.player.x, (event.y ?? run.player.y) - run.player.y) <= 560,
           family: event.family,
           machine: event.machine,
           material: cue === 'catch' ? event.material : 'metal',
@@ -109,6 +149,7 @@ export function createOverflightAudio(
     },
     dispose() {
       lastTick = '';
+      sound.feedbackDirector.flight({ board: 'overflight', active: false });
       if (presentation?.readAudio) sound.setPublishedAudio(null);
     },
   };

@@ -1,3 +1,10 @@
+import {
+  overflightArmoredDamage,
+  overflightAttackSpec,
+  overflightAttackContains,
+  hasOverflightEscape,
+  updateOverflightCaches,
+} from './tactics.mjs';
 import { createOverflightRun, OVERFLIGHT_STEP } from './core.mjs';
 import { rebuildOverflightGrid, visitOverflightGrid } from './grid.mjs';
 import { recordOverflightDefeat } from './defeat-feed.mjs';
@@ -10,6 +17,7 @@ import {
 
 export { OVERFLIGHT_STEP };
 export const OVERFLIGHT_HUNT_RULES = 'overflight-raid.v1';
+export const OVERFLIGHT_HUNT_RULES_V2 = 'overflight-raid.v2';
 const STEP = OVERFLIGHT_STEP;
 const EPS = 1e-9;
 const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
@@ -125,17 +133,20 @@ export function createOverflightHuntRun(
   compiled,
   { seed = compiled?.seed, airframes = 3, slowResume = true, fixture = null } = {},
 ) {
-  if (compiled?.format !== 'OverflightHuntCompiledV1')
+  if (!['OverflightHuntCompiledV1', 'OverflightHuntCompiledV2'].includes(compiled?.format))
     throw new TypeError('A compiled Overflight Hunt project is required.');
   if (![null, 'raid-reference'].includes(fixture)) throw new RangeError('Unknown Raid fixture.');
   // The same pooled state allocation is used by both modes. No second scene,
   // sprite owner, audio mixer or texture cache is introduced.
   const run = createOverflightRun(
-    { ...compiled, format: 'OverflightCompiledV1' },
+    {
+      ...compiled,
+      format: compiled.rulesVersion === 2 ? 'OverflightCompiledV2' : 'OverflightCompiledV1',
+    },
     { seed, airframes, slowResume },
   );
   run.compiled = compiled;
-  run.rules = OVERFLIGHT_HUNT_RULES;
+  run.rules = run.rulesVersion === 2 ? OVERFLIGHT_HUNT_RULES_V2 : OVERFLIGHT_HUNT_RULES;
   run.mode = 'raid';
   run.fixture = fixture;
   run.build = createOverflightHuntBuild();
@@ -334,6 +345,11 @@ export function spawnOverflightHuntEnemy(run, options = {}) {
     rewardTarget: behavior === 'courier',
     armorContactLatched: false,
     pendingFire: false,
+    attackKind: null,
+    attackCycle: 0,
+    attackFireCount: 0,
+    burstNextTick: 0,
+    cacheId: null,
     escapeRemaining: 18,
     revealed: false,
     _beforeHeading: options.heading ?? Math.PI,
@@ -582,8 +598,11 @@ function damagePlayer(run) {
     sound(run, 'shield');
     return true;
   }
-  run.player.hull = Math.max(0, run.player.hull - 20);
-  run.stats.damageTaken += 20;
+  const rank = run.rulesVersion === 2 ? (run.build.hunt.plating ?? 0) : 0;
+  run.player.armorReduction = rank * 0.1;
+  const actual = Math.min(run.player.hull, rank ? overflightArmoredDamage(20, rank) : 20);
+  run.player.hull -= actual;
+  run.stats.damageTaken += actual;
   sound(run, 'damage');
   if (!run.player.hull) replaceAirframe(run);
   return true;
@@ -682,8 +701,19 @@ function movePlayer(run, input, params) {
 function setWarning(run, enemy) {
   const warning = run.priorityAttacks.find((record) => !record.active);
   if (!warning) return false;
+  const spec =
+    run.rulesVersion === 2 && !run.fixture
+      ? overflightAttackSpec(enemy, run.player, run.compiled.combat)
+      : null;
+  if (
+    spec &&
+    (Math.abs(enemy.x - run.camera.x) > run.camera.width / 2 - 20 ||
+      Math.abs(enemy.y - run.camera.y) > run.camera.height / 2 - 20 ||
+      !hasOverflightEscape(run, spec))
+  )
+    return false;
   enemy.behaviorPhase = 'windup';
-  enemy.phaseRemaining = 1.2;
+  enemy.phaseRemaining = spec?.remaining ?? 1.2;
   enemy.heading = Math.atan2(run.player.y - enemy.y, run.player.x - enemy.x);
   enemy.attackX = run.player.x;
   enemy.attackY = run.player.y;
@@ -695,7 +725,14 @@ function setWarning(run, enemy) {
     radius: 25,
     remaining: 1.2,
     damage: 20,
+    kind: null,
+    ...(spec ?? {}),
   });
+  enemy.attackKind = spec?.kind ?? null;
+  enemy.attackSpec = spec;
+  enemy.attackCycle++;
+  enemy.attackFireCount = 0;
+  enemy.burstNextTick = 0;
   sound(run, 'warning', enemy);
   return true;
 }
@@ -708,7 +745,11 @@ function moveEnemies(run, params) {
     enemy.prevY = enemy.y;
     enemy._beforeHeading = enemy.heading;
     enemy._beforePhase = enemy.behaviorPhase;
-    enemy.pendingFire = false;
+    enemy.pendingFire = !!(
+      enemy.burstNextTick &&
+      run.tick >= enemy.burstNextTick &&
+      enemy.behaviorPhase === 'burst'
+    );
     const distance = Math.hypot(enemy.x - run.player.x, enemy.y - run.player.y);
     if (distance <= 540) nearby = true;
     enemy._beforeWarning = enemy.warning;
@@ -728,7 +769,8 @@ function moveEnemies(run, params) {
           if (warning.owner === enemy.id && warning.active) warning.remaining = 0.35;
       } else if (enemy.behaviorPhase === 'burst' && enemy.phaseRemaining <= 0) {
         enemy.behaviorPhase = 'recovery';
-        enemy.phaseRemaining = 3 + params.heavyExposureBonus;
+        enemy.phaseRemaining =
+          (run.compiled.combat?.machinery.exposureSeconds ?? 3) + params.heavyExposureBonus;
         for (const warning of run.priorityAttacks)
           if (warning.owner === enemy.id) warning.active = false;
       }
@@ -736,7 +778,7 @@ function moveEnemies(run, params) {
     } else if (enemy.behavior === 'shield' && enemy.phaseRemaining <= 0) {
       // Commit the shield orientation, giving the player time to flank it.
       enemy.heading = Math.atan2(run.player.y - enemy.y, run.player.x - enemy.x);
-      enemy.phaseRemaining = 1.8;
+      enemy.phaseRemaining = run.compiled.combat?.guard.commitSeconds ?? 1.8;
     } else if (enemy.behavior === 'sprinter') {
       if (enemy.behaviorPhase === 'patrol' && enemy.phaseRemaining <= 0 && distance < 260) {
         enemy.behaviorPhase = 'windup';
@@ -842,30 +884,51 @@ function firePending(run) {
   for (const enemy of run.enemies) {
     if (!enemy.active || !enemy.pendingFire) continue;
     enemy.pendingFire = false;
-    const slot = run._projectileFree.pop();
-    if (slot === undefined) {
+    const spec = enemy.attackSpec;
+    if (run.rulesVersion === 2 && spec?.kind === 'ground') {
+      if (overflightAttackContains(spec, run.player.x, run.player.y, run.player.radius))
+        damagePlayer(run);
+      effect(run, 'hostile-impact', spec.x, spec.y, spec.radius, 0.35);
+      sound(run, 'impact', enemy);
+      continue;
+    }
+    const offsets =
+      run.rulesVersion === 2 && spec?.kind === 'fan' ? [-spec.spread, 0, spec.spread] : [0];
+    // Reserve the complete attack before firing, never silently drop fan rays.
+    if (run._projectileFree.length < offsets.length) {
       run.stats.projectileDeferrals++;
       continue;
     }
-    const heading = enemy.heading;
-    const projectile = run.projectiles[slot];
-    Object.assign(projectile, {
-      id: run._nextId++,
-      active: true,
-      hostile: true,
-      owner: enemy.id,
-      x: enemy.x + Math.cos(heading) * (enemy.radius + 5),
-      y: enemy.y + Math.sin(heading) * (enemy.radius + 5),
-      vx: Math.cos(heading) * 230,
-      vy: Math.sin(heading) * 230,
-      radius: 5,
-      remaining: 2.8,
-      damage: 20,
-      _slot: slot,
-    });
-    projectile.prevX = projectile.x;
-    projectile.prevY = projectile.y;
-    run.stats.projectilesFired++;
+    for (const offset of offsets) {
+      const slot = run._projectileFree.pop();
+      const heading = enemy.heading + offset;
+      const projectile = run.projectiles[slot];
+      Object.assign(projectile, {
+        id: run._nextId++,
+        active: true,
+        hostile: true,
+        owner: enemy.id,
+        x: enemy.x + Math.cos(heading) * (enemy.radius + 5),
+        y: enemy.y + Math.sin(heading) * (enemy.radius + 5),
+        vx: Math.cos(heading) * 230,
+        vy: Math.sin(heading) * 230,
+        radius: 5,
+        remaining: 2.8,
+        damage: 20,
+        _slot: slot,
+      });
+      projectile.prevX = projectile.x;
+      projectile.prevY = projectile.y;
+      run.stats.projectilesFired++;
+    }
+    enemy.attackFireCount++;
+    enemy.burstNextTick =
+      run.rulesVersion === 2 &&
+      enemy.family === 'tracked-tank' &&
+      spec?.kind === 'lane' &&
+      enemy.attackFireCount < 3
+        ? run.tick + 8
+        : 0;
     sound(run, 'fire', enemy);
   }
 }
@@ -1083,6 +1146,7 @@ export function chooseOverflightHuntUpgrade(run, id) {
   run.progression.choices++;
   run.stats.upgradesChosen++;
   run.hunt.pendingChoices--;
+  run.player.armorReduction = overflightHuntParameters(run.build).armorReduction;
   if (offer.system === 'recovery-shield')
     run.player.shield = overflightHuntParameters(run.build).shieldCapacity;
   run.phase = 'playing';
@@ -1128,6 +1192,11 @@ export function stepOverflightHunt(run, input = {}, dt = STEP) {
   if (run.phase === 'playing') {
     firePending(run);
     if (run._sectorPending) enterSector(run, run.hunt.sector + 1);
+    updateOverflightCaches(
+      run,
+      (options) => spawnOverflightHuntEnemy(run, options),
+      (type) => sound(run, type),
+    );
     offerUpgrade(run);
   }
   updateCamera(run);
@@ -1137,7 +1206,7 @@ export function stepOverflightHunt(run, input = {}, dt = STEP) {
 export function overflightHuntSummary(run) {
   return {
     format: 'OverflightHuntRunSummaryV1',
-    rules: OVERFLIGHT_HUNT_RULES,
+    rules: run.rules,
     projectId: run.compiled.id,
     projectIdentity: run.compiled.projectIdentity ?? null,
     seed: run.seed,

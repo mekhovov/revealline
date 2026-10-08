@@ -10,7 +10,7 @@ export function overflightHuntEnemyLayers(enemy, size = 24) {
     layers.push({ frame, dx, dy, width, height, tint, rotation });
   const heading = enemy.heading ?? 0;
   const protectedState = ['guarded', 'machinery-guarded'].includes(enemy.contactState);
-  if (enemy.behavior === 'shield') {
+  if (enemy.behavior === 'shield' && !enemy.maxGuardIntegrity) {
     const reach = size * 0.52;
     add(
       'bar',
@@ -31,7 +31,7 @@ export function overflightHuntEnemyLayers(enemy, size = 24) {
         GUARDED,
         heading,
       );
-  } else if (enemy.contactState) {
+  } else if (enemy.contactState && !enemy.maxGuardIntegrity) {
     if (protectedState) {
       add('bar', 0, size * 0.4, size * 0.7, 3, GUARDED);
       add('bar', 0, -size * 0.4, size * 0.7, 3, GUARDED);

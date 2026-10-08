@@ -1,4 +1,9 @@
 import {
+  createOverflightCombatProfile,
+  validateOverflightCombatProfile,
+} from './combat-profile.mjs';
+import { OVERFLIGHT_DIFFICULTIES, seededOverflightRandom } from './tactics.mjs';
+import {
   boundedJSON,
   canonicalJSON,
   dataIdentity,
@@ -10,6 +15,8 @@ import { OVERFLIGHT_RESOURCES, OVERFLIGHT_SOLDIERS, OVERFLIGHT_MACHINERY } from 
 
 export const OVERFLIGHT_HUNT_PROJECT_FORMAT = 'OverflightHuntProjectV1';
 export const OVERFLIGHT_HUNT_COMPILED_FORMAT = 'OverflightHuntCompiledV1';
+export const OVERFLIGHT_HUNT_PROJECT_FORMAT_V2 = 'OverflightHuntProjectV2';
+export const OVERFLIGHT_HUNT_COMPILED_FORMAT_V2 = 'OverflightHuntCompiledV2';
 export const OVERFLIGHT_HUNT_PROJECT_MAX_BYTES = 128 * 1024;
 export const OVERFLIGHT_HUNT_ENCOUNTER_SETS = Object.freeze(['patrol', 'crossing', 'mixed']);
 export const OVERFLIGHT_HUNT_BEHAVIORS = Object.freeze([
@@ -32,6 +39,7 @@ export const OVERFLIGHT_HUNT_UPGRADES = Object.freeze([
   'heavy-exposure',
   'guard-interrupt',
   'recovery-shield',
+  'plating',
 ]);
 const freeze = (value) => {
   if (value && typeof value === 'object') {
@@ -90,29 +98,58 @@ const familySets = {
 };
 
 /** Finite encounter populations: advancing a sector never replaces casualties. */
-export function createOverflightHuntProject({ encounterSet = 'patrol', seed = 17031991 } = {}) {
+export function createOverflightHuntProject({
+  encounterSet = 'patrol',
+  seed = 17031991,
+  difficulty = 'standard',
+  legacy = false,
+} = {}) {
+  required(OVERFLIGHT_DIFFICULTIES.includes(difficulty), 'Unknown difficulty.');
+  const random = seededOverflightRandom(seed ^ 0x7f4a7c15);
   required(OVERFLIGHT_HUNT_ENCOUNTER_SETS.includes(encounterSet), 'Unknown Raid encounter set.');
   const families = familySets[encounterSet];
   const encounters = ['patrols', 'column', 'command'].map((id, sector) => {
     const left = sector * 960;
     const packs = Array.from({ length: [8, 10, 14][sector] }, (_, index) => {
-      const x = left + 120 + (index % 4) * 215;
-      const y = 170 + Math.floor(index / 4) * 240;
+      let x = left + 120 + (index % 4) * 215;
+      let y = 170 + Math.floor(index / 4) * 240;
+      if (!legacy) {
+        if (encounterSet === 'crossing') {
+          x = left + 170 + (index % 3) * 280;
+          y = 180 + Math.floor(index / 3) * 160;
+        }
+        if (encounterSet === 'mixed') {
+          const a = index * 2.399963;
+          x = left + 480 + Math.cos(a) * 290;
+          y = 540 + Math.sin(a) * 340;
+        }
+        x += (random() - 0.5) * 24;
+        y += (random() - 0.5) * 24;
+      }
       const family = families[(index + sector * 3) % families.length];
       return {
         id: `${id}-pack-${index + 1}`,
         family,
         behavior: familyBehavior[family],
-        count: 16,
+        count: legacy || difficulty === 'veteran' ? 16 : 12,
         x,
         y,
         spacing: 24,
-        speed: 64 + (index % 3) * 16,
-        route: [
-          point(Math.min(left + 850, x + 180), y + 75),
-          point(Math.max(left + 90, x - 100), Math.min(950, y + 160)),
-          point(x, y),
-        ],
+        speed: 64 + (index % 3) * 16 + (!legacy && difficulty === 'veteran' ? 12 : 0),
+        route:
+          !legacy && encounterSet === 'crossing'
+            ? [point(left + 130, y), point(left + 820, 1080 - y)]
+            : !legacy && encounterSet === 'mixed'
+              ? [
+                  point(left + 480, 540),
+                  point(left + 850 - (x - left) * 0.65, 1080 - y),
+                  point(x, y),
+                ]
+              : [
+                  point(Math.min(left + 850, x + 180), Math.min(950, y + 75)),
+                  point(Math.max(left + 90, x - 100), Math.min(950, y + 160)),
+                  point(x, y),
+                ],
       };
     });
     // Finite brace escorts threaten the objective approach. They commit to a
@@ -122,7 +159,7 @@ export function createOverflightHuntProject({ encounterSet = 'patrol', seed = 17
       id: `${id}-escort`,
       family: 'brace-trooper',
       behavior: 'brace',
-      count: 6,
+      count: legacy ? 6 : difficulty === 'veteran' ? 6 : 4,
       x: [420, 1550, 2680][sector],
       y: 540,
       spacing: 24,
@@ -188,7 +225,8 @@ export function createOverflightHuntProject({ encounterSet = 'patrol', seed = 17
     };
   });
   return {
-    format: OVERFLIGHT_HUNT_PROJECT_FORMAT,
+    format: legacy ? OVERFLIGHT_HUNT_PROJECT_FORMAT : OVERFLIGHT_HUNT_PROJECT_FORMAT_V2,
+    ...(!legacy ? { difficulty, combat: createOverflightCombatProfile(difficulty) } : {}),
     id: `overflight-raid-${encounterSet}`,
     title: title(
       `Overflight: Raid · ${encounterSet === 'patrol' ? 'Patrol Break' : encounterSet === 'crossing' ? 'Crossing Lines' : 'Countermove'}`,
@@ -202,12 +240,12 @@ export function createOverflightHuntProject({ encounterSet = 'patrol', seed = 17
       choices: 8,
       rerolls: 2,
       thresholds: [10, 35],
-      modules: [...OVERFLIGHT_HUNT_UPGRADES],
+      modules: OVERFLIGHT_HUNT_UPGRADES.filter((id) => !legacy || id !== 'plating'),
     },
     resources: structuredClone(OVERFLIGHT_RESOURCES),
     props: [
-      { id: 'raid-case-west', kind: 'supply-case', x: 980, y: 320 },
-      { id: 'raid-case-east', kind: 'supply-case', x: 1910, y: 760 },
+      { id: 'raid-case-west', kind: 'supply-case', x: legacy ? 980 : 520, y: 320 },
+      { id: 'raid-case-east', kind: 'supply-case', x: legacy ? 1910 : 1500, y: 650 },
     ],
   };
 }
@@ -301,10 +339,19 @@ export function validateOverflightHuntProject(source) {
       'upgrades',
       'resources',
       'props',
+      ...(project.format === OVERFLIGHT_HUNT_PROJECT_FORMAT_V2 ? ['difficulty', 'combat'] : []),
     ],
     'Raid project',
   );
-  required(project.format === OVERFLIGHT_HUNT_PROJECT_FORMAT, 'Unsupported Raid project version.');
+  required(
+    [OVERFLIGHT_HUNT_PROJECT_FORMAT, OVERFLIGHT_HUNT_PROJECT_FORMAT_V2].includes(project.format),
+    'Unsupported Raid project version.',
+  );
+  const v2 = project.format === OVERFLIGHT_HUNT_PROJECT_FORMAT_V2;
+  if (v2) {
+    required(OVERFLIGHT_DIFFICULTIES.includes(project.difficulty), 'Unknown difficulty.');
+    validateOverflightCombatProfile(project.combat);
+  }
   required(stableId(project.id), 'Invalid Raid project ID.');
   localized(project.title, 'Raid title');
   number(project.seed, 1, 0xffffffff, 'seed', true);
@@ -390,7 +437,7 @@ export function validateOverflightHuntProject(source) {
       );
       actor(pack);
       required(pack.behavior !== 'vehicle', 'Author machinery as objectives, not ordinary packs.');
-      number(pack.count, 6, 20, 'pack size', true);
+      number(pack.count, v2 ? 4 : 6, 20, 'pack size', true);
       number(pack.spacing, 16, 40, 'pack spacing');
       number(pack.speed, 30, 140, 'pack speed');
       const columns = Math.ceil(Math.sqrt(pack.count));
@@ -480,7 +527,9 @@ export function validateOverflightHuntProject(source) {
     Array.isArray(project.upgrades.modules) &&
       project.upgrades.modules.length >= 6 &&
       new Set(project.upgrades.modules).size === project.upgrades.modules.length &&
-      project.upgrades.modules.every((id) => OVERFLIGHT_HUNT_UPGRADES.includes(id)),
+      project.upgrades.modules.every(
+        (id) => OVERFLIGHT_HUNT_UPGRADES.includes(id) && (v2 || id !== 'plating'),
+      ),
     'Use at least six distinct registered Raid upgrade families.',
   );
   required(
@@ -503,7 +552,13 @@ export function compileOverflightHuntProject(source) {
   const project = validateOverflightHuntProject(source);
   return freeze({
     ...project,
-    format: OVERFLIGHT_HUNT_COMPILED_FORMAT,
+    format:
+      project.format === OVERFLIGHT_HUNT_PROJECT_FORMAT_V2
+        ? OVERFLIGHT_HUNT_COMPILED_FORMAT_V2
+        : OVERFLIGHT_HUNT_COMPILED_FORMAT,
+    rulesVersion: project.format === OVERFLIGHT_HUNT_PROJECT_FORMAT_V2 ? 2 : 1,
+    difficulty: project.difficulty ?? 'standard',
+    combat: project.combat ?? null,
     projectIdentity: dataIdentity(project),
     sourceFormat: project.format,
   });

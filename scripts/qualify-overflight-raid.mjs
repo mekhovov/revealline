@@ -24,6 +24,8 @@ import { createOverflightHuntReviewPilot } from '../game/overflight/raid-review-
 export function qualifyOverflightHunt({
   encounterSet = 'patrol',
   seed = 17031991,
+  difficulty = 'standard',
+  legacy = false,
   route = 'objectives',
   build = 'pursuer',
   airframes = 3,
@@ -31,7 +33,7 @@ export function qualifyOverflightHunt({
   baseline = false,
 } = {}) {
   const compiled = compileOverflightHuntProject(
-    createOverflightHuntProject({ encounterSet, seed }),
+    createOverflightHuntProject({ encounterSet, seed, difficulty, legacy }),
   );
   const run = createOverflightHuntRun(compiled, { airframes });
   // Technical capability audit: withhold reward drafts without changing any
@@ -73,6 +75,8 @@ export function qualifyOverflightHunt({
   return {
     encounterSet,
     seed,
+    difficulty,
+    rulesVersion: legacy ? 1 : 2,
     route,
     build,
     airframes,
@@ -201,6 +205,8 @@ if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.ur
   const root = fileURLToPath(new URL('../', import.meta.url));
   const paths = [
     'game/overflight/core.mjs',
+    'game/overflight/tactics.mjs',
+    'game/overflight/combat-profile.mjs',
     'game/overflight/grid.mjs',
     'game/overflight/upgrades.mjs',
     'game/overflight/defeat-feed.mjs',
