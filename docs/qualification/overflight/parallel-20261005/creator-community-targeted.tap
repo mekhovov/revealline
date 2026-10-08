@@ -1,0 +1,240 @@
+TAP version 13
+# Subtest: portable content cannot impersonate official recipes or introduce executable actor policies
+ok 1 - portable content cannot impersonate official recipes or introduce executable actor policies
+  ---
+  duration_ms: 11.116084
+  ...
+# Subtest: family dispatch preserves exact valid UTF-8 bytes and rejects unknown formats
+ok 2 - family dispatch preserves exact valid UTF-8 bytes and rejects unknown formats
+  ---
+  duration_ms: 6.381291
+  ...
+# Subtest: Classic community install, recovery removal, offload and reinstall retain exact recipe identity
+ok 3 - Classic community install, recovery removal, offload and reinstall retain exact recipe identity
+  ---
+  duration_ms: 73.599375
+  ...
+# Subtest: community Classic records persist under their owner and cannot enter official chapter records
+ok 4 - community Classic records persist under their owner and cannot enter official chapter records
+  ---
+  duration_ms: 147.276209
+  ...
+# Subtest: native Team and FPV families use their immutable launch and recovery paths
+ok 5 - native Team and FPV families use their immutable launch and recovery paths
+  ---
+  duration_ms: 3289.199917
+  ...
+# Subtest: FPV exact revision offload preserves other installed revisions and rejects stale review
+ok 6 - FPV exact revision offload preserves other installed revisions and rejects stale review
+  ---
+  duration_ms: 5.768833
+  ...
+# Subtest: Team exact offload retains edition-owned progress bytes
+ok 7 - Team exact offload retains edition-owned progress bytes
+  ---
+  duration_ms: 217.316292
+  ...
+# Subtest: family admission rejects unsupported flight rules before installation
+ok 8 - family admission rejects unsupported flight rules before installation
+  ---
+  duration_ms: 1.261583
+  ...
+# Subtest: pursuit Team packages pin editable source and reject altered runtime or self-attested clears
+ok 9 - pursuit Team packages pin editable source and reject altered runtime or self-attested clears
+  ---
+  duration_ms: 147.469583
+  ...
+# Subtest: different edition installs merge their journals even when native completion is reversed
+ok 10 - different edition installs merge their journals even when native completion is reversed
+  ---
+  duration_ms: 71.048416
+  ...
+# Subtest: failed offload rollback cannot overwrite another tab installation
+ok 11 - failed offload rollback cannot overwrite another tab installation
+  ---
+  duration_ms: 43.223792
+  ...
+# Subtest: Classic generation rejects stale reviews and keeps another exact-byte owner
+ok 12 - Classic generation rejects stale reviews and keeps another exact-byte owner
+  ---
+  duration_ms: 29.859667
+  ...
+# Subtest: Studio and Community release only their own references to a Snake recipe
+ok 13 - Studio and Community release only their own references to a Snake recipe
+  ---
+  duration_ms: 68.742833
+  ...
+# Subtest: legacy Classic split records migrate without discarding ambiguous local owners or old progress
+ok 14 - legacy Classic split records migrate without discarding ambiguous local owners or old progress
+  ---
+  duration_ms: 20.47575
+  ...
+# Subtest: journal migration keeps old localStorage bytes and rejects malformed recovery state
+ok 15 - journal migration keeps old localStorage bytes and rejects malformed recovery state
+  ---
+  duration_ms: 5.460416
+  ...
+# Subtest: simultaneous offload and canonical-equivalent install never strand the new receipt
+ok 16 - simultaneous offload and canonical-equivalent install never strand the new receipt
+  ---
+  duration_ms: 13.670708
+  ...
+# Subtest: catalog outage is surfaced while the injected client remains account-free
+ok 17 - catalog outage is surfaced while the injected client remains account-free
+  ---
+  duration_ms: 0.947417
+  ...
+# Subtest: catalog search, pagination, preview, reporting and unlisting use explicit service adapters
+ok 18 - catalog search, pagination, preview, reporting and unlisting use explicit service adapters
+  ---
+  duration_ms: 12.38525
+  ...
+# Subtest: corrupt catalog download cannot create an installed index
+ok 19 - corrupt catalog download cannot create an installed index
+  ---
+  duration_ms: 520.120834
+  ...
+# Subtest: immutable update installs beside the old edition and exposes offline play links
+ok 20 - immutable update installs beside the old edition and exposes offline play links
+  ---
+  duration_ms: 1559.114125
+  ...
+# Subtest: retained exact bytes reinstall offline into an empty runtime store
+ok 21 - retained exact bytes reinstall offline into an empty runtime store
+  ---
+  duration_ms: 929.421959
+  ...
+# Subtest: removing a recovery download preserves manifest ownership and exact offline recovery
+ok 22 - removing a recovery download preserves manifest ownership and exact offline recovery
+  ---
+  duration_ms: 2296.825875
+  ...
+# Subtest: download removal rejects a stale review and keeps the changed recovery bytes
+ok 23 - download removal rejects a stale review and keeps the changed recovery bytes
+  ---
+  duration_ms: 1479.64775
+  ...
+# Subtest: exact-edition offload keeps its manifest and ownership keys, then reinstalls offline
+ok 24 - exact-edition offload keeps its manifest and ownership keys, then reinstalls offline
+  ---
+  duration_ms: 1953.575375
+  ...
+# Subtest: offload keeps a shared asset until every active edition relinquishes it
+ok 25 - offload keeps a shared asset until every active edition relinquishes it
+  ---
+  duration_ms: 3800.72625
+  ...
+# Subtest: offload requires unchanged exact recovery and rejects a concurrent media generation
+ok 26 - offload requires unchanged exact recovery and rejects a concurrent media generation
+  ---
+  duration_ms: 4023.558459
+  ...
+# Subtest: an interrupted offload journal remains recoverable from its exact retained package
+ok 27 - an interrupted offload journal remains recoverable from its exact retained package
+  ---
+  duration_ms: 1910.136583
+  ...
+# Subtest: staged association recovers a committed install when the final journal write fails
+ok 28 - staged association recovers a committed install when the final journal write fails
+  ---
+  duration_ms: 614.082333
+  ...
+# Subtest: two injected creator accounts publish independently and track queued status
+ok 29 - two injected creator accounts publish independently and track queued status
+  ---
+  duration_ms: 877.178333
+  ...
+# Subtest: catalog page renders remote metadata only with safe localized text bindings
+ok 30 - catalog page renders remote metadata only with safe localized text bindings
+  ---
+  duration_ms: 1.208209
+  ...
+# Subtest: publisher retries the same immutable submission after an interrupted resumable upload
+ok 31 - publisher retries the same immutable submission after an interrupted resumable upload
+  ---
+  duration_ms: 576.178708
+  ...
+# Subtest: global family and publisher admission preserve Overflight bytes and reject resource closure changes
+ok 32 - global family and publisher admission preserve Overflight bytes and reject resource closure changes
+  ---
+  duration_ms: 27.404208
+  ...
+# Subtest: global install, exact recovery, offload and reinstall use the native Overflight library
+ok 33 - global install, exact recovery, offload and reinstall use the native Overflight library
+  ---
+  duration_ms: 181.559958
+  ...
+# Subtest: atomic shared ownership keeps Studio copies, rejects stale offload and retains differently formatted editions
+ok 34 - atomic shared ownership keeps Studio copies, rejects stale offload and retains differently formatted editions
+  ---
+  duration_ms: 118.917375
+  ...
+# Subtest: existing Studio v1 installations migrate as local owners without altering their content
+ok 35 - existing Studio v1 installations migrate as local owners without altering their content
+  ---
+  duration_ms: 17.133875
+  ...
+# Subtest: native and Studio compilation are identical, immutable and isolated from draft edits
+ok 36 - native and Studio compilation are identical, immutable and isolated from draft edits
+  ---
+  duration_ms: 4.932458
+  ...
+# Subtest: three encounter sets cover every admitted soldier and machinery family
+ok 37 - three encounter sets cover every admitted soldier and machinery family
+  ---
+  duration_ms: 1.698375
+  ...
+# Subtest: reject ambiguous schedules, unsupported resources, malformed thresholds and executable data
+ok 38 - reject ambiguous schedules, unsupported resources, malformed thresholds and executable data
+  ---
+  duration_ms: 5.77075
+  ...
+# Subtest: export → fresh-profile import → native compile preserves exact content and dependency closure
+ok 39 - export → fresh-profile import → native compile preserves exact content and dependency closure
+  ---
+  duration_ms: 15.818583
+  ...
+# Subtest: native launch retains same-build scope and removes arbitrary caller state
+ok 40 - native launch retains same-build scope and removes arbitrary caller state
+  ---
+  duration_ms: 1.349292
+  ...
+# Subtest: Creator enemy names cover the accepted closure and reuse the shared actor catalogue in both languages
+ok 41 - Creator enemy names cover the accepted closure and reuse the shared actor catalogue in both languages
+  ---
+  duration_ms: 1.12675
+  ...
+# Subtest: Creator module names are identical to native rank-one upgrade names
+ok 42 - Creator module names are identical to native rank-one upgrade names
+  ---
+  duration_ms: 0.578084
+  ...
+# Subtest: family selection preserves authored ordering and remains compiler checked
+ok 43 - family selection preserves authored ordering and remains compiler checked
+  ---
+  duration_ms: 1.484708
+  ...
+# Subtest: service admits exact Overflight closure as compiled content without claiming play qualification
+ok 44 - service admits exact Overflight closure as compiled content without claiming play qualification
+  ---
+  duration_ms: 7.635791
+  ...
+# Subtest: service rejects unknown or incomplete Overflight dependencies even when submitted bytes match their hash
+ok 45 - service rejects unknown or incomplete Overflight dependencies even when submitted bytes match their hash
+  ---
+  duration_ms: 21.718375
+  ...
+# Subtest: existing native families retain their catalogue preview capability
+ok 46 - existing native families retain their catalogue preview capability
+  ---
+  duration_ms: 0.092375
+  ...
+1..46
+# tests 46
+# suites 0
+# pass 46
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 20875.339416

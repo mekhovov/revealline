@@ -1,3 +1,4 @@
+import { mountEnvironmentReview } from './environments.mjs';
 import { createHuntDestruction, drawHuntRemains } from '../../game/hunt/destruction.mjs';
 import { exportJSONFile } from '../../game/platform.mjs';
 import { drawHuntActor, INDUSTRIAL_ROSTER_SAMPLES } from '../../game/hunt/actor-art.mjs';
@@ -27,6 +28,7 @@ import { mountReviewMotionPreferences } from './motion-preferences.mjs';
 import { updateReviewAudioStatus } from './audio-status.mjs';
 
 const $ = (id) => document.getElementById(id);
+mountEnvironmentReview($('chapter-environments'), $('language'));
 const motion = mountReviewMotionPreferences({
   window,
   checkbox: $('reduced'),
@@ -72,7 +74,7 @@ const copy = {
         'Shared FPV rig and connected body, six machinery families and five Team equipment states. Wheels, tracks and radar use the native presentation clock. Shapes keep their existing gameplay rules.',
       'materials-title': 'Shared terrain materials',
       'materials-note':
-        'Concrete, earth, steel, masonry, timber and damaged surfaces form the kit. The first three share original pixels with Military Field board tiles and supported native SIM material maps. Native hazard markers remain above these textures; physical material rules stay authored.',
+        'Concrete, earth, steel, masonry, timber and damaged surfaces form the kit. All six share original pixels with accepted Military Field chapter tiles and supported native SIM material maps. Native hazard markers remain above these textures; physical material rules stay authored.',
       'audio-title': 'Equipment and movement sounds',
       'audio-note':
         'Play a short sample through the game mixer. Your mute and Effects settings apply. Nothing plays automatically.',
@@ -172,7 +174,7 @@ const copy = {
         'Спільний FPV-дрон і з’єднане тіло, шість родин техніки та п’ять станів командного спорядження. Колеса, гусениці й радар використовують ігровий час відображення. Правила техніки збережено.',
       'materials-title': 'Спільні матеріали місцевості',
       'materials-note':
-        'Набір містить бетон, ґрунт, сталь, кладку, дерево й пошкоджені поверхні. Перші три використовують ті самі оригінальні пікселі на полі Military Field і в підтримуваних матеріалах SIM. Позначки небезпеки залишаються над текстурами; фізичні правила визначає рівень.',
+        'Набір містить бетон, ґрунт, сталь, кладку, дерево й пошкоджені поверхні. Усі шість використовують ті самі оригінальні пікселі в прийнятих розділах Military Field і підтримуваних матеріалах SIM. Позначки небезпеки залишаються над текстурами; фізичні правила визначає рівень.',
       'audio-title': 'Звуки спорядження та руху',
       'audio-note':
         'Короткі зразки відтворюються через ігровий мікшер. Діють ваші налаштування звуку та гучності ефектів. Автоматичного відтворення немає.',

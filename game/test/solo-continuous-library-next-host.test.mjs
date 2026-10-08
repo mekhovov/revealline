@@ -175,7 +175,7 @@ test(
     assert.equal(
       p.rendered.run,
       completed,
-       'The mission summary remains readable during its timer.',
+      'The mission summary remains readable during its timer.',
     );
     for (let tick = 0; tick < 25; tick++) p.frame(100);
     await running(p, 'level-0-1');
@@ -284,6 +284,10 @@ for (const action of ['failure', 'cancel'])
       const base = JSON.parse(
         await readFile(new URL('../content/campaign.json', import.meta.url), 'utf8'),
       );
+      // This boundary fixture intentionally changes the campaign's playable
+      // identity. It must therefore not load the production first-signal
+      // artwork pack, whose identity validation belongs to that real campaign.
+      base.id = 'boundary-library';
       base.levels = [
         {
           ...retryFixture('self-contact').level,
@@ -420,13 +424,10 @@ test('Solo final Journey result retains the picture while Browse permits a delib
   assert.ok(firstClassic, 'The compatible Classic mission remains available in the same browser.');
   const firstClassicId = JSON.parse(firstClassic.dataset.missionId);
   firstClassic.click();
-  await waitFor(
-    () => new URL(globalThis.location.href).searchParams.get('journey') === 'legacy',
-    {
-      message: 'The exact Legacy host receives this continuation.',
-      timeoutMs: 30000,
-    },
-  );
+  await waitFor(() => new URL(globalThis.location.href).searchParams.get('journey') === 'legacy', {
+    message: 'The exact Legacy host receives this continuation.',
+    timeoutMs: 30000,
+  });
   const selected = JSON.parse(
     new URL(globalThis.location.href).searchParams.get('library-mission'),
   );

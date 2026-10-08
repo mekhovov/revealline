@@ -157,9 +157,8 @@ test('late Custom clear follows authored Next, ends truthfully, and never grants
     p.key('ArrowDown', false);
     for (let tick = 0; tick < 900 && p.rendered.run.status !== 'won'; tick++) p.frame();
     assert.equal(p.rendered.run.status, 'won');
-    if (!p.$('skip-celebration').hidden) p.$('skip-celebration').click();
-    assert.equal(p.$('show-result').hidden, false);
-    p.$('show-result').click();
+    for (let tick = 0; tick < 400 && p.$('game-overlay').dataset.kind !== 'won'; tick++)
+      p.frame();
     assert.equal(p.$('game-overlay').dataset.kind, 'won');
     assert.equal(p.$('next-button').hidden, false);
   }
@@ -205,26 +204,9 @@ function showAllLifecycles(p) {
   p.$('journey-lifecycle').emit('change');
 }
 async function startPrepared(p, id) {
-  await settle(() => {
-    p.frame(0);
-    return p.rendered.run.levelId === id && p.$('game-overlay').dataset.kind === 'ready';
-  });
-  const accepted = p.rendered.run,
-    checkpoint = authoritativeCheckpoint(accepted);
-  assert.equal(p.rendered.paused, true);
-  assert.notEqual(p.doc.body.dataset.flightState, 'running');
-  assert.equal(p.$('game-overlay').hidden, false);
-  assert.equal(p.$('start-button').hidden, false);
-  assert.equal(p.$('start-button').textContent, 'Start mission ↗');
-  for (let i = 0; i < 12; i++) p.frame();
-  assert.deepEqual(
-    authoritativeCheckpoint(accepted),
-    checkpoint,
-    'Briefing does not consume simulation time.',
-  );
-  p.$('start-button').click();
   await running(p, id);
-  assert.equal(p.rendered.run, accepted, 'Start activates the exact prepared attempt.');
+  assert.equal(p.rendered.paused, false);
+  assert.equal(p.$('game-overlay').hidden, true);
 }
 async function running(p, id) {
   try {
@@ -318,7 +300,7 @@ test('Journey setup changes next preset and library details without replacing th
   assert.deepEqual(p.errors, []);
 });
 
-test('unified Solo prepares the included late Classic through validation before explicit Start', async (t) => {
+test('unified Solo validates and directly launches the included late Classic', async (t) => {
   const p = await soloPage(t, { titleScreen: true });
   await open(p);
   p.$('journey-collection').value = 'Classic';
@@ -391,7 +373,7 @@ test('unified Solo failed included-chapter read retries inline and preserves the
   assert.deepEqual(p.errors, []);
 });
 
-test('empty-profile Classic selection prepares its exact late mission and waits for Start without awarding a clear', async (t) => {
+test('empty-profile Classic selection directly launches its exact late mission without awarding a clear', async (t) => {
   const p = await soloPage(t, { titleScreen: true });
   await open(p);
   const card = [...p.$('journey-cards').children].find(
@@ -410,7 +392,7 @@ test('empty-profile Classic selection prepares its exact late mission and waits 
   assert.deepEqual(p.errors, []);
 });
 
-test('incoming opaque Classic handoff briefs its exact late mission without showing another picker', async (t) => {
+test('incoming opaque Classic handoff launches its exact late mission without another picker', async (t) => {
   const search = new URLSearchParams({ journey: 'legacy', 'library-mission': lateBase.id });
   const p = await soloPage(t, { titleScreen: true, search: `?${search}` });
   await startPrepared(p, lateBase.runtimeId);
@@ -609,7 +591,7 @@ for (const collection of ['Journey', 'Classic'])
     assert.deepEqual(p.errors, []);
   });
 
-test('incoming Journey selection briefs exactly its requested mission without another picker', async (t) => {
+test('incoming Journey selection launches exactly its requested mission without another picker', async (t) => {
   const id = JSON.stringify([
     'journey:whole-spatial-v5',
     'whole-spatial-v5',

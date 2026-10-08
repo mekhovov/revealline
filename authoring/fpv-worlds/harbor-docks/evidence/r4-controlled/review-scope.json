@@ -1,0 +1,100 @@
+{
+  "format": "FPVHarborControlledReview.v1",
+  "status": "passed",
+  "checks": 314,
+  "completeWatchPlaybacks": 16,
+  "source": "3e12db28e86af483daec7c7f82c6baba0c8657f0",
+  "admittedSource": "ca28461faa9a5245f55532bb27fbb5d69f557e16",
+  "packIdentity": "fpv-pack:d5bf4b9bb6829c04dbe1bb398893e5243cefc1f9acf018bf153a2012c8cf49b6",
+  "files": 102,
+  "proofModuleClosure": 20,
+  "runtimeOverlays": 0,
+  "scope": "Actual packaged modules through scripted legacy controls and real File/native-IDB storage. Controlled RAF advances200ms per pulse at public1x, retaining real performance time and pause/focus guards. All16 final states match independently qualified complete replays and were accepted by a true renderer.draw result. Eight-course editor/export/reimport/reopen ownership and resource disposal checked. This is not native-visible end-to-end or native-clock endurance evidence.",
+  "nativePublicUI": "Separate root-owned direct-entry journey pending; no offline claim yet.",
+  "errors": [],
+  "warnings": [],
+  "dropped": 0,
+  "owners": [
+    {
+      "createdRenderers": 1,
+      "resources": [
+        {
+          "available": true,
+          "disposed": true,
+          "quality": "balanced",
+          "drone": "racer",
+          "presentation": {
+            "collectionId": "authored",
+            "revision": "r1",
+            "profileId": null,
+            "actors": [],
+            "actorGoals": [],
+            "projectileBatches": 0,
+            "activeProjectiles": 0,
+            "surfaceDetailGroups": 0
+          },
+          "effects": {
+            "playerPulse": 9233635,
+            "hostilePulse": 16232561,
+            "ghost": 9824751,
+            "ghostEmissive": 2390144,
+            "trail": 9824751,
+            "goalOutline": 9169660,
+            "goalActive": 15266215,
+            "goalComplete": 9808542,
+            "goalInactive": 8366516,
+            "goalGlow": 11069917,
+            "goalGlowInactive": 9030085,
+            "goalEmissive": 8577493,
+            "goalBadge": 10872788,
+            "directionArrow": 15264432
+          },
+          "hunt": null,
+          "importedMaterialBindings": {
+            "applied": 0,
+            "diagnostics": []
+          },
+          "registered": {
+            "geometries": 0,
+            "materials": 0,
+            "textures": 0
+          },
+          "renderer": {
+            "calls": 157,
+            "triangles": 18412,
+            "geometries": 0,
+            "textures": 1,
+            "programs": 0,
+            "contextLost": true
+          }
+        }
+      ]
+    },
+    {
+      "createdRenderers": 0,
+      "resources": []
+    }
+  ],
+  "inventory": [
+    {
+      "path": "fpv-harbor-r4-package-8982-passed.json",
+      "bytes": 103040,
+      "sha256": "6b73e5e6c08d4d7b0f439fb2e266bf6488f598768476b629f7039aa511da0121"
+    },
+    {
+      "path": "fpv-harbor-r4-package-8982-passed.png",
+      "bytes": 85607,
+      "sha256": "323c5d1a6d22ce80589ba85d39f2160c31fcde17faba30df5df181e353272fe3"
+    },
+    {
+      "path": "fpv-harbor-r4-package-8982-console.json",
+      "bytes": 2,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    {
+      "path": "manifest.json",
+      "bytes": 25351,
+      "sha256": "1a365615c0bf5b15fbf81c6356e22d1170a21af61a2d49584c531c4215a08708"
+    }
+  ]
+}

@@ -1225,6 +1225,7 @@ export function buildWorldVisuals({
   quality = 'balanced',
   maxAnisotropy = 1,
   reviewRevision = runtimeActorArtRevision(),
+  industrialEnvironment = null,
 }) {
   const profile = resolveSimThemeProfile(course, presentation),
     theme = profile.palette,
@@ -1233,7 +1234,14 @@ export function buildWorldVisuals({
   const collectionId = simCollectionIdForProfile(profile),
     themed = Boolean(collectionId),
     kit = themed
-      ? createWorkshopMaterials({ material, quality, maxAnisotropy, collectionId, reviewRevision })
+      ? createWorkshopMaterials({
+          material,
+          quality,
+          maxAnisotropy,
+          collectionId,
+          reviewRevision,
+          industrialEnvironment,
+        })
       : null;
   const min = Object.fromEntries(Object.entries(course.bounds.min).map(([k, v]) => [k, v / 1000]));
   const max = Object.fromEntries(Object.entries(course.bounds.max).map(([k, v]) => [k, v / 1000]));
@@ -3924,6 +3932,7 @@ export function createWorkshopTexture(
     maxAnisotropy = 1,
     collectionId = 'industrial-workshop',
     reviewRevision = runtimeActorArtRevision(),
+    industrialEnvironment = null,
   } = {},
 ) {
   const collection = getSimVisualCollection(collectionId),
@@ -3963,15 +3972,24 @@ export function createWorkshopTexture(
       data[at + 2] = Math.min(255, Math.round(pigment.b * 255 * shade));
       data[at + 3] = 255;
     }
+  if (
+    industrialEnvironment &&
+    (industrialEnvironment.collection.id !== collectionId ||
+      industrialEnvironment.artRevision !== reviewRevision)
+  )
+    throw new TypeError('Industrial material binding differs from the accepted appearance.');
+  const recipe = industrialEnvironment?.sim?.[role];
   const sampleRole =
-    collectionId === 'military-field' &&
+    recipe?.material ??
+    (collectionId === 'military-field' &&
     [INDUSTRIAL_MATERIAL_REVISION, INDUSTRIAL_ENVIRONMENT_REVISION].includes(reviewRevision)
       ? { concrete: 'concrete', grass: 'earth', steel: 'metal' }[role]
-      : null;
+      : null);
   if (sampleRole)
     data.set(
       industrialMaterialPixels({ width: size, height: size }, sampleRole, {
-        revision: reviewRevision,
+        revision: industrialEnvironment?.materialRevision ?? reviewRevision,
+        variant: recipe?.variant ?? 0,
       }).rgba,
     );
   const texture = new THREE.DataTexture(data, size, size);
@@ -3980,6 +3998,13 @@ export function createWorkshopTexture(
   texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
   texture.userData = { simSurface: true, materialRole: role, revision: 'r1', collectionId };
   if (sampleRole) texture.userData.materialReviewRevision = reviewRevision;
+  if (recipe)
+    texture.userData.industrialEnvironment = {
+      id: industrialEnvironment.id,
+      revision: industrialEnvironment.revision,
+      material: recipe.material,
+      variant: recipe.variant,
+    };
   configureSimTextureSampling(texture, quality, maxAnisotropy);
   return texture;
 }
@@ -4027,6 +4052,7 @@ export function createWorkshopMaterials({
   maxAnisotropy = 1,
   collectionId = 'industrial-workshop',
   reviewRevision = runtimeActorArtRevision(),
+  industrialEnvironment = null,
 }) {
   const collection = getSimVisualCollection(collectionId);
   const maps = new Map(),
@@ -4035,7 +4061,13 @@ export function createWorkshopMaterials({
     if (!maps.has(role))
       maps.set(
         role,
-        createWorkshopTexture(role, { quality, maxAnisotropy, collectionId, reviewRevision }),
+        createWorkshopTexture(role, {
+          quality,
+          maxAnisotropy,
+          collectionId,
+          reviewRevision,
+          industrialEnvironment,
+        }),
       );
     return maps.get(role);
   };

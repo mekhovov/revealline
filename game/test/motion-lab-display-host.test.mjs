@@ -15,6 +15,7 @@ import { attachControllerNavigation } from '../ui/controller-navigation.mjs';
 import { attachControllerConfirmGuard } from '../ui/controller-confirm-guard.mjs';
 import { resolveAuthoringEditor } from '../ui/authoring-editors.mjs';
 import { pageActorArtPool } from '../presentation/actor-art-pool.mjs';
+import { overflightFieldKitArt } from '../presentation/overflight-field-kit-art.mjs';
 
 const NativeURL = globalThis.URL;
 const route = new NativeURL('../../authoring/motion-lab/', import.meta.url);
@@ -56,6 +57,11 @@ class MotionElement extends Element {
         get(target, key) {
           if (key in target) return target[key];
           if (key === 'measureText') return (text) => ({ width: String(text).length * 0.3 });
+          if (key === 'createImageData')
+            return (width, height) => {
+              target.calls.push({ op: key, args: [width, height] });
+              return { width, height, data: new Uint8ClampedArray(width * height * 4) };
+            };
           return (...args) => {
             target.calls.push({ op: key, args });
           };
@@ -521,6 +527,52 @@ if (owner) {
     },
   };
 }
+test('Overflight effect inspection uploads exact shared pixels, preserves native study state and releases its canvases', async (t) => {
+  const h = await harness(t);
+  await h.ready();
+  const panel = h.$('overflight-motion-study'),
+    canvas = panel.querySelector('canvas'),
+    select = panel.querySelector('select'),
+    controls = panel.querySelectorAll('input'),
+    progress = controls.find((control) => control.type === 'range'),
+    reduced = controls.find((control) => control.type === 'checkbox'),
+    before = freezeView(h),
+    frameOwners = h.frames.size;
+  const sourceCanvases = new Set();
+  const paints = () => {
+    const calls = canvas.context.calls.filter((call) => call.op === 'drawImage');
+    for (const call of calls) sourceCanvases.add(call.args[0]);
+    canvas.context.calls.length = 0;
+    return calls;
+  };
+  paints();
+  select.value = 'drop';
+  progress.value = '50';
+  progress.emit('input');
+  const full = paints();
+  assert.equal(full.length, 2, 'The complete impact includes its ring and shared pixel source');
+  const source = full[1].args[0],
+    upload = source.context.calls.find((call) => call.op === 'putImageData').args[0];
+  assert.deepEqual(upload.data, overflightFieldKitArt('pickup.overflight-impact').rgba);
+  assert.equal(source.context.calls.filter((call) => call.op === 'createImageData').length, 1);
+  reduced.checked = true;
+  reduced.emit('input');
+  assert.equal(paints().length, 1, 'Reduction removes decorative impact pixels');
+  select.value = 'warning';
+  select.emit('input');
+  assert.equal(paints().length, 2, 'Reduced effects retain the hostile warning ring and marker');
+  assert.deepEqual(freezeView(h), before);
+  assert.equal(h.frames.size, frameOwners, 'Scrubbing never creates a second animation clock');
+  assert.deepEqual(h.writes, [], 'Inspection never writes gameplay or appearance preferences');
+  h.host.emit('pagehide', { persisted: false });
+  for (const owned of [canvas, ...sourceCanvases]) {
+    assert.equal(owned.width, 0);
+    assert.equal(owned.height, 0);
+  }
+  for (const control of [select, progress, reduced])
+    assert.equal(control.listeners.get('input')?.size ?? 0, 0);
+});
+
 test('Motion shared actor controls use the actual host with one playback owner and unchanged player sandbox state', async (t) => {
   const h = await harness(t);
   await h.ready();

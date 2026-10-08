@@ -1,0 +1,22 @@
+Browser tab: 29, Title: "FPV / LINE · Simulator", URL: "http://127.0.0.1:8982/player/optional-practice/fpv-worlds/index.html#explore".
+0 AXWebArea FPV / LINE · Simulator, URL: 127.0.0.1:8982/player/optional-practice/fpv-worlds/index.html#explore
+	1 container flight-dialog
+		2 container
+			3 button Description: Menu, ID: worlds-shell-action-menu
+			4 text FPV SIM · Worlds
+			5 button Pause, ID: worlds-shell-action-pause
+				6 text Pause
+		7 container ID: world-viewport, Terminal cart escort 2.7 m · 0 m/s · 31.4 s · ♥ 100 4/4 · Land Yaw 0%, Throttle 49% Roll 0%, Pitch 0% Drone response. descending. 2.7 m · -0.4 m/s vertical · 0.0 m/s drift
+			8 image world-canvas
+			9 text Terminal cart escort
+			23 text 2.7 m · 0 m/s · 31.4 s · ♥ 100
+			24 text 4/4 · Land
+			21 text Follow the route, turns and landing. Pause or slow playback to study the flight.
+			14 container world-touch
+				15 container Description: Yaw 0%, Throttle 49%, ID: world-left-stick
+				16 container Description: Roll 0%, Pitch 0%, ID: world-right-stick
+			17 container Description: Drone response. descending. 2.7 m · -0.4 m/s vertical · 0.0 m/s drift, ID: flight-drone-response
+				18 button Hide drone response
+				22 text Drone upright
+
+The focused UI element is 7 container ID: world-viewport, Terminal cart escort 2.7 m · 0 m/s · 31.4 s · ♥ 100 4/4 · Land Yaw 0%, Throttle 49% Roll 0%, Pitch 0% Drone response. descending. 2.7 m · -0.4 m/s vertical · 0.0 m/s drift

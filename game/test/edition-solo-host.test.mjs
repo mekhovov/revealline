@@ -1,3 +1,4 @@
+import { nativeCaptureSession as nativeSession } from '../capture-presentation-session.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
@@ -51,7 +52,7 @@ test('artwork update offers explicit exact-snapshot recovery and Continue retain
     await settle(() => storage.getItem(key) !== null);
     original = storage.getItem(key);
     assert.equal(
-      JSON.parse(original).actorAppearancePin.authoredPresentationSha256,
+      nativeSession(JSON.parse(original)).actorAppearancePin.authoredPresentationSha256,
       f.descriptor.id,
     );
   });
@@ -144,10 +145,18 @@ test('artwork update offers explicit exact-snapshot recovery and Continue retain
     page.$('save-attempt-button').click();
     const resumed = JSON.parse(storage.getItem(key)),
       saved = JSON.parse(original);
-    assert.equal(resumed.campaignKey, saved.campaignKey);
-    assert.equal(resumed.runId, saved.runId);
-    assert.deepEqual(resumed.actorAppearancePin, saved.actorAppearancePin);
-    assert.deepEqual(resumed.replay, saved.replay);
+    assert.equal(nativeSession(resumed).campaignKey, nativeSession(saved).campaignKey);
+    assert.equal(nativeSession(resumed).runId, nativeSession(saved).runId);
+    assert.deepEqual(
+      nativeSession(resumed).actorAppearancePin,
+      nativeSession(saved).actorAppearancePin,
+    );
+    assert.deepEqual(nativeSession(resumed).replay, nativeSession(saved).replay);
+    assert.deepEqual(
+      resumed.appearance ?? null,
+      saved.appearance ?? null,
+      'Continue retains the accepted presentation envelope.',
+    );
     page.$('shell-menu').click();
     openEditionSettings(page, 'data');
     const choice = page.$('edition-presentation-select'),
@@ -312,7 +321,10 @@ for (const saving of ['verified', 'quota', 'occupied'])
     );
     const retained = page.storage.getItem(key);
     if (saving === 'verified')
-      assert.equal(JSON.parse(retained).actorAppearancePin.content.editionId, 'sample-public');
+      assert.equal(
+        nativeSession(JSON.parse(retained)).actorAppearancePin.content.editionId,
+        'sample-public',
+      );
     else assert.equal(retained, null);
     page.$('mode-leave-stay').click();
     assert.equal(page.$('mode-leave-dialog').open, false);
@@ -483,16 +495,22 @@ test('edition runs the complete Solo host with canonical rules, settings and mis
   page.$('settings-dialog').close();
   page.$('save-attempt-button').click();
   const saved = JSON.parse(storage.getItem(`${legacyKey}.solo-v2`));
-  assert.equal(saved.format, 'xonix-session.v6');
-  assert.equal(saved.actorAppearancePin.style, 'campaign');
-  assert.equal(saved.actorAppearancePin.format, 'revealline-actor-appearance-pin.v2');
-  assert.match(saved.actorAppearancePin.authoredPresentationSha256, /^[a-f0-9]{64}$/);
-  assert.equal(saved.actorAppearancePin.content.editionId, 'sample-public');
+  assert.equal(nativeSession(saved).format, 'xonix-session.v6');
+  assert.equal(nativeSession(saved).actorAppearancePin.style, 'campaign');
+  assert.equal(
+    nativeSession(saved).actorAppearancePin.format,
+    'revealline-actor-appearance-pin.v2',
+  );
+  assert.match(
+    nativeSession(saved).actorAppearancePin.authoredPresentationSha256,
+    /^[a-f0-9]{64}$/,
+  );
+  assert.equal(nativeSession(saved).actorAppearancePin.content.editionId, 'sample-public');
   assert.equal(storage.getItem(legacyKey), legacy);
   await page.$('export-replay').onclick();
   const recording = JSON.parse(page.$('replay-json').value);
   assert.equal(recording.format, 'revealline-replay-presentation.v2');
-  assert.deepEqual(recording.actorAppearancePin, saved.actorAppearancePin);
+  assert.deepEqual(recording.actorAppearancePin, nativeSession(saved).actorAppearancePin);
   page.$('replay-dialog').close();
   assert.ok(page.$('settings-panel-data').textContent.includes('Earlier preview save retained'));
   page.$('shell-worlds').click();
@@ -714,7 +732,9 @@ test('edition Continue preserves a matching receipt and rejects a same-ID change
         fetchResponse: f.fetcher,
       });
     assert.ok(
-      page.$('continue-saved-note').textContent.includes(JSON.parse(saved).replay.level.name),
+      page
+        .$('continue-saved-note')
+        .textContent.includes(nativeSession(JSON.parse(saved)).replay.level.name),
       'The preview resolves the exact saved candidate mission from its owned execution key.',
     );
     const beforeContinue = storage.getItem(key);
@@ -723,13 +743,13 @@ test('edition Continue preserves a matching receipt and rejects a same-ID change
     page.frame(0);
     assert.deepEqual(
       authoritativeCheckpoint(page.rendered.run),
-      JSON.parse(beforeContinue).replay.checkpoint,
+      nativeSession(JSON.parse(beforeContinue)).replay.checkpoint,
     );
     page.$('pause-button').click();
     page.$('save-attempt-button').click();
     assert.deepEqual(
-      JSON.parse(storage.getItem(key)).actorAppearancePin,
-      JSON.parse(saved).actorAppearancePin,
+      nativeSession(JSON.parse(storage.getItem(key))).actorAppearancePin,
+      nativeSession(JSON.parse(saved)).actorAppearancePin,
     );
   });
   for (const change of ['palette', 'missing receipt'])
@@ -739,8 +759,8 @@ test('edition Continue preserves a matching receipt and rejects a same-ID change
       if (change === 'palette') f.data.themes.themes[0].palette.accent = '#ff00ff';
       else {
         const prior = JSON.parse(saved);
-        prior.actorAppearancePin.format = 'revealline-actor-appearance-pin.v1';
-        delete prior.actorAppearancePin.authoredPresentationSha256;
+        nativeSession(prior).actorAppearancePin.format = 'revealline-actor-appearance-pin.v1';
+        delete nativeSession(prior).actorAppearancePin.authoredPresentationSha256;
         raw = JSON.stringify(prior);
       }
       storage.setItem(key, raw);

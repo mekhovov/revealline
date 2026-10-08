@@ -1,0 +1,189 @@
+{
+  "sourceRevision": "ca28461faa9a5245f55532bb27fbb5d69f557e16",
+  "sourceTree": "953adedee1a21664fc25dd65e8e66240c92e453d",
+  "runtimeIdenticalTo": "9b5c3d65e2877847126c87f263fbc7e9aca357fb",
+  "artifacts": [
+    {
+      "path": "source-inventory-optional-civilian-fpv.json.gz",
+      "rawBytes": 21034,
+      "rawSHA256": "ab3259cb9c176cc30563deafeaeb87488a9410e570e2832f9c1eada18ce0ad16",
+      "storedBytes": 4993,
+      "storedSHA256": "2e23f41ee5378db33176b23d007f6a68110f894a1a30fca56a6eecf719ddf238"
+    },
+    {
+      "path": "source-inventory-optional-civilian-flight.json.gz",
+      "rawBytes": 14052,
+      "rawSHA256": "fb22248470c0a6283c904a1831f4109595db788743fb90ac0dbdd7d7aa61a4c0",
+      "storedBytes": 3453,
+      "storedSHA256": "e36092f7fc2a545158f0afed394803c6491111b06052daf76c211027b22fb472"
+    },
+    {
+      "path": "source-inventory-optional-fpv-worlds.json.gz",
+      "rawBytes": 32166,
+      "rawSHA256": "ee89f832d915e947b44b199af546d4ad286a2bb13943f653a1740f760c7795b1",
+      "storedBytes": 7140,
+      "storedSHA256": "26a90829158806be97dd1f0878c0510e773c8e18fc37af0c934a52b20ff97978"
+    },
+    {
+      "path": "optional-packages.json.gz",
+      "rawBytes": 2633,
+      "rawSHA256": "536762e97cc8ce97cdf29c0b01a9e61cab8cd9ab4ca60776b0abfc1626cbe1b4",
+      "storedBytes": 1079,
+      "storedSHA256": "5011abbab81a4d2658901c8894aaa4324d5d8bd139490312a763cd699dd82eca"
+    },
+    {
+      "path": "optional-package-review.json.gz",
+      "rawBytes": 2838,
+      "rawSHA256": "22d6bf78282df565c515c72639bf556c9dc52bf4fc6fad782ac1ec45eea9e979",
+      "storedBytes": 455,
+      "storedSHA256": "41e7e2b386ad823be514adc4c398bfe582581bdaa71c7b896a8d12f30ea03723"
+    },
+    {
+      "path": "manifest-optional-civilian-fpv.json.gz",
+      "rawBytes": 12570,
+      "rawSHA256": "e1ad817d9fa1aa0c8cf6d3b75cfd65f3708a28cb12622be109ea592b4bf1a7df",
+      "storedBytes": 4011,
+      "storedSHA256": "8b8307a9b14fdb197ed00c23115570d27a65bf4a6b861ae89cd873e48c30233d"
+    },
+    {
+      "path": "manifest-optional-fpv-worlds.json.gz",
+      "rawBytes": 18746,
+      "rawSHA256": "91ca4355f4ac196c0b5667fbfa3457246360e021f3ae8eaf55ee62fbf85632f6",
+      "storedBytes": 5868,
+      "storedSHA256": "88816389866ce1bfd36081343854a2d91c8fdd69cd6ad2281712a2965580bdaf"
+    },
+    {
+      "path": "optional-candidate-verification.json.gz",
+      "rawBytes": 1142,
+      "rawSHA256": "b7b598f47ff8c9103a3095e5de4dc8f5dee370b10c0bfb650c381e41d3029700",
+      "storedBytes": 609,
+      "storedSHA256": "ce45ab124954edafc34661f66c1336219a0e4c54c81b480c0df2a8af04f6e2f6"
+    },
+    {
+      "path": "optional-checksums.json.gz",
+      "rawBytes": 2136,
+      "rawSHA256": "93f13c831147924c198134bd0b19523b913b221e9e537dc5627f3d4d72df1b47",
+      "storedBytes": 921,
+      "storedSHA256": "e874269baef2909a131d053c9ccb8b425a1d86d16b4b302fea2a74a42d3ded64"
+    },
+    {
+      "path": "manifest-optional-civilian-flight.json.gz",
+      "rawBytes": 8847,
+      "rawSHA256": "cea09d1eafda7a018b57da8f72df56c5f7e53b46980a146701e0436a1416481c",
+      "storedBytes": 2857,
+      "storedSHA256": "34572e6df57418849b0231abe47e54a56e0aab59b792f7121cef386d5bc569f7"
+    },
+    {
+      "path": "fpv-ground-motion-admitted-player-ca28461fa.json.gz",
+      "rawBytes": 42956,
+      "rawSHA256": "000b0d1240c0139507f8328601f7e599ad29f6aa78c2e02030908f84c93369ff",
+      "storedBytes": 7339,
+      "storedSHA256": "5b28930f3cbf0e4e603fc21f9f18a590c0c555f3c8849b68f5e222645db6994c"
+    },
+    {
+      "path": "fixture.json.gz",
+      "rawBytes": 97439,
+      "rawSHA256": "5b678a15a6385293d4a5e978e9779f62b9d5cf86e11f44777a2d42af95e0902b",
+      "storedBytes": 15463,
+      "storedSHA256": "050646539dae344c22a1e8cf5d1114e1290195977a1e244b532b45abd3e6cd69"
+    },
+    {
+      "path": "fpv-ground-motion-validate-ca284.log.gz",
+      "rawBytes": 1311,
+      "rawSHA256": "f68cad8d615c2a9cdeef083036e3ba0db895b83f4414fd403dc37d2310d55379",
+      "storedBytes": 568,
+      "storedSHA256": "3203ceab52dd52791a1a150318f41601084827be59e70c00ae570dd81bc10275"
+    },
+    {
+      "path": "fpv-ground-motion-validate-ca284-r2.log.gz",
+      "rawBytes": 3676,
+      "rawSHA256": "84e23dce934e07752356ce0dd3c842cc0e3c8683ea7ff5f8f4a79290a1e81916",
+      "storedBytes": 1535,
+      "storedSHA256": "8cc7b388fd5343bfb3bb68be9417da3889610ac0c4e89c21bb961cc57a0384ef"
+    },
+    {
+      "path": "fpv-ground-motion-existing-ca284.log.gz",
+      "rawBytes": 6051,
+      "rawSHA256": "89e1481db3f1aa03a3ad143ed1e6da399337be05f429ab14854b07abb37a022d",
+      "storedBytes": 1650,
+      "storedSHA256": "1e394caa0200deb9a2c2fc7751c748e4d19e1936bcb92f17e883bb5d87e2dac4"
+    },
+    {
+      "path": "fpv-ground-motion-admission-ca284.log.gz",
+      "rawBytes": 987,
+      "rawSHA256": "3736b3d65595e92466551667f9a85902f1bd37edd7257a1f2ba18f77bd7e696d",
+      "storedBytes": 399,
+      "storedSHA256": "a644050e0ef2f2eaa272a3239268aa9d486fce7f8eb96dc89c63eb5c79dba06e"
+    },
+    {
+      "path": "fpv-ground-motion-admission-ca284-r2.log.gz",
+      "rawBytes": 423,
+      "rawSHA256": "78804a0d806cddca7e388c4b39e9045468ba2cf471229bc1e867b6f8be9c66ba",
+      "storedBytes": 290,
+      "storedSHA256": "e630e338912d0a7573d3f47efda332be0e20bbde20ac3b85467b1409a5b4a704"
+    },
+    {
+      "path": "fpv-ground-motion-materialize-ca284.json.gz",
+      "rawBytes": 324,
+      "rawSHA256": "fdc3cda7ce8c91558fdb6e8c5b23be36f986337bae690ae565daa2f58436b0de",
+      "storedBytes": 240,
+      "storedSHA256": "5f4b19a7adfb59e33928c9c550a6177528be8324e8999a3422b22e04015581e9"
+    },
+    {
+      "path": "fpv-ground-motion-helpers-ca284.json.gz",
+      "rawBytes": 306,
+      "rawSHA256": "c2849c46ba54089fc81e8201094168c5b109ba1b387d8d02eec276c2e5266026",
+      "storedBytes": 228,
+      "storedSHA256": "5db3b56784068ec2e12688cf5816ab4ac18b41122a733433bda3fdb82bd3bfc8"
+    },
+    {
+      "path": "fpv-ground-motion-optional-ca284.json.gz",
+      "rawBytes": 307,
+      "rawSHA256": "300b5ba046c37a422e268bef26870dd81e0d8fbee0ab579063a68a3cc14cb26e",
+      "storedBytes": 228,
+      "storedSHA256": "1d12859bbe8b022d4ca10a557352f2c6b5687a45ed67470c3584f46a46fbf019"
+    },
+    {
+      "path": "fpv-ground-motion-stage-ca284.log.gz",
+      "rawBytes": 240,
+      "rawSHA256": "1f3067d7061642e4e623da0dac44288c44ca061d45cc9e43d8f7d71ef0ca7fcf",
+      "storedBytes": 168,
+      "storedSHA256": "e3fd6b3eee26aff37638a67c28bf89b1a3552376f4164f42f7708529927173cc"
+    },
+    {
+      "path": "fpv-ground-motion-native-admitted-prepare-ca284.log.gz",
+      "rawBytes": 229,
+      "rawSHA256": "82cddf1cf9a37b84ab4793144c405ae359ded20a6a66d4f3fbc9022869bc2ccc",
+      "storedBytes": 202,
+      "storedSHA256": "fd76351f70620779a22b96ae6c4736e8e25a8804344f0243e45530608c7ff157"
+    },
+    {
+      "path": "fpv-ground-motion-materialize-optional.mjs.gz",
+      "rawBytes": 3310,
+      "rawSHA256": "e1909c07f5691d62fcecdd76982ae3f733b7511bdbb9cc31033d3e97aa0ae474",
+      "storedBytes": 1553,
+      "storedSHA256": "eb3160ad5e55018708a66dc123230c275494a3c726d486f070cea179829c77da"
+    },
+    {
+      "path": "fpv-ground-motion-materialize-helpers.mjs.gz",
+      "rawBytes": 3361,
+      "rawSHA256": "b000d9314ce77dbd9268bef19e6f5739785e8d89649810dc390db62e73d8a0a3",
+      "storedBytes": 1593,
+      "storedSHA256": "4ffbf7b0e19a87c450ffc54613f8f99b88bfb735ef1d4fa520401329d74243a0"
+    },
+    {
+      "path": "fpv-library-compat-materialize.mjs.gz",
+      "rawBytes": 3484,
+      "rawSHA256": "898fb28fa22fa027dc514af8a879c77107e3c5febde3c4c52ba1968e65575bd8",
+      "storedBytes": 1634,
+      "storedSHA256": "4c87734f2fcae45478fa39e232aaf89dcea815cb138992ba161ab075c18884a8"
+    },
+    {
+      "path": "stage-fpv-ground-motion-admitted-player.mjs.gz",
+      "rawBytes": 4723,
+      "rawSHA256": "05d05dd711aaa87d16179dfbad45d8a6df006372050bf4285ccf89fa36bae301",
+      "storedBytes": 1877,
+      "storedSHA256": "bba6da4b9960a5d158bd8e2c885ab92c88a7fd20911d935e2851fedb55d9d252"
+    }
+  ]
+}

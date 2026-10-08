@@ -24,6 +24,7 @@ export function mountWorldEditor({
   });
   let source = course,
     selectedMode = mode,
+    sourceOptions = {},
     controls = null,
     disposed = false,
     dirty = true,
@@ -64,13 +65,14 @@ export function mountWorldEditor({
     }
     frame = win.requestAnimationFrame(render);
   }
-  function setCourse(value, nextMode = selectedMode) {
+  function setCourse(value, nextMode = selectedMode, options = {}) {
     if (disposed) return;
+    renderer.setPresentation?.(options.presentation ?? getPresentation());
+    renderer.setCourse(value, nextMode, options);
     sceneRequest++;
     source = value;
     selectedMode = nextMode;
-    renderer.setPresentation?.(getPresentation());
-    renderer.setCourse(value, nextMode);
+    sourceOptions = options;
     select(selection);
     invalidate();
   }
@@ -89,7 +91,7 @@ export function mountWorldEditor({
         try {
           onChange(value);
         } catch (error) {
-          setCourse(source, selectedMode);
+          setCourse(source, selectedMode, sourceOptions);
           onError(error);
         }
         invalidate();

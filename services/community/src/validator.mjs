@@ -195,12 +195,12 @@ export function createCreatorPackageValidator({
             assets: inspected.prepared.assets?.size ?? inspected.prepared.assets?.length ?? 0,
           },
         };
-      if (inspected.family === 'classic')
+      if (['classic', 'overflight'].includes(inspected.family))
         return {
           accepted: true,
           report: {
             format: inspected.pack.format,
-            family: 'classic',
+            family: inspected.family,
             editionId: inspected.editionId,
             runtimeIdentity: inspected.runtimeIdentity,
             validatorVersion,

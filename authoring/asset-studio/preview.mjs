@@ -1,5 +1,9 @@
 import { t, localizedText, localizedAttribute } from '../../game/i18n/index.mjs';
 import {
+  OVERFLIGHT_FIELD_KIT_IDS,
+  overflightFieldKitArt,
+} from '../../game/presentation/overflight-field-kit-art.mjs';
+import {
   TEAM_OUTCOME_SLOTS,
   drawTeamOutcomeBadge,
 } from '../../game/couch/coop-outcome-presentation.mjs';
@@ -162,6 +166,22 @@ export async function drawAssetPreview(surface, slot, asset, resolved, blobs, se
       await prepareFont(fontAsset, fontBlob, resolved);
       if (!isCurrent()) return;
     }
+    if (OVERFLIGHT_FIELD_KIT_IDS.includes(slot.id) && asset.kind === 'recipe') {
+      const pixels = overflightFieldKitArt(slot.id);
+      const canvas = document.createElement('canvas');
+      canvas.width = pixels.width;
+      canvas.height = pixels.height;
+      const ctx = canvas.getContext('2d');
+      const data = ctx.createImageData(pixels.width, pixels.height);
+      data.data.set(pixels.rgba);
+      ctx.putImageData(data, 0, 0);
+      canvas.style.imageRendering = 'pixelated';
+      canvas.style.width = mode === 'native' ? '16px' : '192px';
+      canvas.setAttribute('role', 'img');
+      canvas.setAttribute('aria-label', slot.label);
+      surface.append(canvas);
+      return;
+    }
     if (TEAM_OUTCOME_SLOTS.includes(slot.id)) {
       if (mode === 'context' && fieldMode !== 'team')
         throw new Error(t('tools:teamOutcomesUseCouchTeamContextChooseItsActualEvent'));
@@ -234,6 +254,13 @@ export async function drawAssetPreview(surface, slot, asset, resolved, blobs, se
     const blob = asset.file && blobs.get(asset.file.sha256);
     if (asset.file && !blob) {
       throw new Error(t('tools:fileBytesAreUnavailableReImportTheCompleteBundle'));
+    }
+    if (
+      asset.kind === 'audio' &&
+      (slot.id.startsWith('audio.destroy-') || slot.id.startsWith('audio.human-reaction-'))
+    ) {
+      audioRecipePreview(surface, slot, own, { audioMaster, readAudio: async () => ({ blob }) });
+      return;
     }
     if (asset.kind === 'audio') {
       phase(() => t('tools:studio.preview.loadingAudioMetadata'), 'decoding');

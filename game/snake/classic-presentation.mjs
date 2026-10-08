@@ -1,9 +1,12 @@
+import { DESTRUCTION_CUES, HUMAN_REACTION_CUES } from '../ui/destruction-audio.mjs';
 import { createPresentationHost } from '../presentation/host.mjs';
 import { installThemeHost } from '../presentation/theme-host.mjs';
 import { TOKEN_DEFAULTS } from '../presentation/model.mjs';
 import { loadAcceptedAppearance } from '../presentation/theme-system.mjs';
 import { actorArtReviewRevision } from '../hunt/preferences.mjs';
 import { INDUSTRIAL_BUILTIN_SPRITES } from '../presentation/industrial-arcade-builtins.mjs';
+import { requireAcceptedAttemptAppearance } from '../presentation/attempt-appearance.mjs';
+import { getArcadeCollection, getArcadePalette } from '../presentation/industrial-arcade.mjs';
 import {
   selectedArcadeCollection,
   industrialTexturePixels,
@@ -98,6 +101,7 @@ export function createClassicPresentation({
   let disposed = false,
     themeSnapshot = null,
     artRevision = actorArtReviewRevision(win?.location),
+    acceptedAppearance = undefined,
     current;
   function clearDerived() {
     for (const canvas of derived.values()) canvas.width = canvas.height = 0;
@@ -107,7 +111,15 @@ export function createClassicPresentation({
     if (disposed) return null;
     const frame = artwork.current()?.image(slot),
       image = frame?.image ?? null,
-      collection = selectedArcadeCollection(theme.effectivePreferences());
+      collection =
+        acceptedAppearance === undefined
+          ? selectedArcadeCollection(theme.effectivePreferences())
+          : acceptedAppearance?.collection
+            ? getArcadeCollection(
+                acceptedAppearance.collection.id,
+                acceptedAppearance.collection.revision,
+              )
+            : null;
     if (!image || slot !== 'terrain.wall' || collection?.id !== 'military-field') return image;
     if (
       frame.asset?.id !== `${slot}.field-kit` ||
@@ -128,7 +140,7 @@ export function createClassicPresentation({
           { width: canvas.width, height: canvas.height, rgba: pixels.data },
           slot,
           collection,
-          { reviewRevision: artRevision },
+          { reviewRevision: artRevision, environment: acceptedAppearance?.environmentPin ?? null },
         ).rgba,
       );
       context.putImageData(pixels, 0, 0);
@@ -148,20 +160,41 @@ export function createClassicPresentation({
   function update() {
     if (disposed) return;
     const t = themeSnapshot?.tokens ?? TOKEN_DEFAULTS;
+    const collectionPalette = acceptedAppearance?.collection
+      ? getArcadePalette(
+          getArcadeCollection(
+            acceptedAppearance.collection.id,
+            acceptedAppearance.collection.revision,
+          ),
+        )
+      : null;
     current = Object.freeze({
       owner: CLASSIC_PRESENTATION.id,
       revision: CLASSIC_PRESENTATION.revision,
       theme: themeSnapshot,
-      palette: Object.freeze({
-        field: t.ink,
-        alternate: t.panel,
-        grid: t.line,
-        text: t.text,
-        muted: t.muted,
-        accent: t.amber,
-        safe: t.safe ?? t.cyan,
-        danger: t.hazard,
-      }),
+      palette: Object.freeze(
+        collectionPalette
+          ? {
+              field: collectionPalette.paper,
+              alternate: collectionPalette.field,
+              grid: collectionPalette.grid,
+              text: collectionPalette.ink,
+              muted: collectionPalette.muted,
+              accent: collectionPalette.accent,
+              safe: collectionPalette.safe,
+              danger: collectionPalette.danger,
+            }
+          : {
+              field: t.ink,
+              alternate: t.panel,
+              grid: t.line,
+              text: t.text,
+              muted: t.muted,
+              accent: t.amber,
+              safe: t.safe ?? t.cyan,
+              danger: t.hazard,
+            },
+      ),
       image: imageFor,
       asset: (slot) => artwork.current()?.image(slot) ?? null,
       actorArtBudget: () => artwork.current()?.actorArtBudget() ?? null,
@@ -172,6 +205,7 @@ export function createClassicPresentation({
   }
   const stop = theme.subscribe((value) => {
     themeSnapshot = value;
+    clearDerived();
     update();
   });
   update();
@@ -203,16 +237,32 @@ export function createClassicPresentation({
   win?.addEventListener('pagehide', hide);
   return Object.freeze({
     snapshot: () => current,
+    boardSnapshot: () => artwork.current(),
     ready,
     theme,
     async readAudio(slot, options) {
       await ready;
       const snapshot = artwork.current();
-      if (disposed || slot !== 'audio.pickup' || snapshot?.resolved.assets[slot]?.kind !== 'audio')
+      if (
+        disposed ||
+        ![
+          'audio.pickup',
+          ...[...DESTRUCTION_CUES, ...HUMAN_REACTION_CUES].map((cue) => `audio.${cue}`),
+        ].includes(slot) ||
+        snapshot?.resolved.assets[slot]?.kind !== 'audio'
+      )
         return null;
       return artwork.readAudio(slot, { ...options, snapshot });
     },
+    setAttemptAppearance(value) {
+      acceptedAppearance = requireAcceptedAttemptAppearance(value);
+      artRevision = acceptedAppearance?.artRevision ?? null;
+      clearDerived();
+      update();
+    },
     setArtRevision(revision) {
+      if (acceptedAppearance !== undefined && revision !== artRevision)
+        throw new TypeError('Accepted artwork can only change with a new attempt.');
       if (revision === artRevision) return;
       artRevision = revision;
       clearDerived();

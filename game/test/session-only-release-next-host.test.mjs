@@ -1,3 +1,6 @@
+import { nativeCaptureSession as nativeSession } from '../capture-presentation-session.mjs';
+import { activateHostAction } from './helpers/host-action.mjs';
+import { waitFor } from './helpers/wait-for.mjs';
 import { winCurrentOpening } from './helpers/solo-opening-win.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
@@ -167,10 +170,23 @@ test('session-only Next prepares a new exact original without persistent writes'
   page.win.emit('pagehide', { persisted: true });
   await settle(() => !locks.held.has(writerKey));
   const suspended = JSON.parse(page.storage.getItem('revealline.suspended.dev.v1'));
-  assert.equal(suspended.format, 'xonix-session.v5');
-  assert.deepEqual(suspended.visualThemePin.selection, FRESH_SOLO_VISUAL_RELEASE.selection);
-  assert.equal(suspended.visualThemePin.presentation.sha256, selected.presentation.sha256);
-  assert.ok(suspended.presentationPins, 'The retained visual pin accompanies the exact picture');
+  assert.equal(nativeSession(suspended).format, 'xonix-session.v6');
+  assert.equal(
+    nativeSession(suspended).actorAppearancePin.format,
+    'revealline-actor-appearance-pin.v1',
+  );
+  assert.deepEqual(
+    nativeSession(suspended).visualThemePin.selection,
+    FRESH_SOLO_VISUAL_RELEASE.selection,
+  );
+  assert.equal(
+    nativeSession(suspended).visualThemePin.presentation.sha256,
+    selected.presentation.sha256,
+  );
+  assert.ok(
+    nativeSession(suspended).presentationPins,
+    'The retained visual pin accompanies the exact picture',
+  );
   page.win.emit('pageshow', { persisted: true });
   assert.match(page.$('save-warning').textContent, /session-only mode/);
   page.frame(0);
@@ -180,17 +196,59 @@ test('session-only Next prepares a new exact original without persistent writes'
     return page.doc.body.dataset.flightState === 'running';
   });
   winCurrentOpening(page);
+  assert.equal(page.$('skip-celebration').hidden, false);
+  page.$('skip-celebration').click();
+  assert.equal(page.$('show-result').hidden, false);
+  page.$('show-result').click();
   assert.equal(page.$('next-button').hidden, false);
   const won = page.rendered.run,
     writes = memory.allPuts.length,
     priorReads = reads;
-  page.$('next-button').click();
-  await settle(() => reads === priorReads + 1);
+  const advancing = activateHostAction(page.$('next-button'));
+  try {
+    await settle(() => reads === priorReads + 1);
+  } catch (error) {
+    error.message += JSON.stringify({
+      reads,
+      priorReads,
+      state: page.doc.body.dataset.flightState,
+      overlay: page.$('game-overlay').dataset.kind,
+      nextDisabled: page.$('next-button').disabled,
+      nextHidden: page.$('next-button').hidden,
+      preparation: page.$('flight-preparation-status').textContent,
+      message: page.$('run-message').textContent,
+      errors: page.errors.map(String),
+    });
+    nextDownload.resolve();
+    throw error;
+  }
   assert.equal(page.rendered.run, won, 'Won result stays usable while next artwork downloads');
   nextDownload.resolve();
-  await settle(() => {
-    page.frame(0);
-    return page.rendered.run !== won && page.doc.body.dataset.flightState === 'running';
+  await advancing;
+  // Next admits the complete retained visual release, not only the one-pixel
+  // picture. This is a bounded preparation allowance, not an input deadline.
+  await waitFor(
+    () => {
+      page.frame(0);
+      return page.rendered.run !== won && page.doc.body.dataset.flightState === 'running';
+    },
+    {
+      timeoutMs: 30000,
+      message: 'Next must finish its owned visual-release preparation and start the exact mission.',
+    },
+  ).catch((error) => {
+    error.message += JSON.stringify({
+      reads,
+      priorReads,
+      state: page.doc.body.dataset.flightState,
+      level: page.rendered.run.levelId,
+      overlay: page.$('game-overlay').dataset.kind,
+      preparation: page.$('flight-preparation-status').textContent,
+      message: page.$('run-message').textContent,
+      focus: page.doc.activeElement?.id,
+      errors: page.errors.map(String),
+    });
+    throw error;
   });
   assert.equal(page.rendered.run.levelId, campaign.levels[1].id);
   assert.equal(memory.allPuts.length, writes, 'No unauthorized media writes');
@@ -210,10 +268,7 @@ test('session-only Next prepares a new exact original without persistent writes'
   page.$('prepare-session-originals').click();
   await settle(() => !page.$('download-session-originals').hidden);
   assert.match(page.$('download-session-originals').href, /^blob:/);
-  assert.equal(
-    page.$('download-session-originals').download,
-    'RevealLine-session-originals.rlmedia',
-  );
+  assert.equal(page.$('download-session-originals').download, 'fpv-line-session-originals.rlmedia');
   assert.match(page.$('save-status').textContent, /originals verified/);
   const exported = await (await fetchBlob(page.$('download-session-originals').href)).blob();
   const imported = await importMediaBundle(exported, {

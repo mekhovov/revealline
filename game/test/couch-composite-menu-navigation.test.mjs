@@ -79,7 +79,9 @@ function navigation(f, adapter, team = false) {
   };
   return {
     reach(id) {
+      const trace = [];
       for (let n = 0; n < 40 && f.doc.activeElement.id !== id; n++) {
+        trace.push(f.doc.activeElement.id);
         if (adapter === 'controller') {
           const current = f.doc.activeElement,
             target = f.$(id),
@@ -87,11 +89,35 @@ function navigation(f, adapter, team = false) {
             controls = f.doc.querySelectorAll('button,a[href],select,input,textarea,summary'),
             forward = controls.indexOf(target) > controls.indexOf(current),
             withinGroup = group?.contains(target),
+            explicitScope = current.getAttribute('data-menu-navigation-scope'),
+            explicitOwner = explicitScope ? f.$(explicitScope) : null,
+            explicitActive =
+              (!explicitScope ||
+                (explicitOwner &&
+                  !explicitOwner.hidden &&
+                  !explicitOwner.closest('[hidden],[inert],[aria-hidden="true"]') &&
+                  (explicitOwner.tagName !== 'DIALOG' || explicitOwner.open))) &&
+              !current.closest('.shared-pause-menu'),
+            explicit =
+              explicitActive &&
+              ['left', 'right', 'up', 'down'].find((direction) =>
+                (current.getAttribute(`data-menu-${direction}`) || '').split(/\s+/).includes(id),
+              ),
             horizontal = withinGroup
               ? group.getAttribute('data-menu-layout') === 'horizontal'
               : group?.getAttribute('data-menu-layout') === 'vertical' &&
                 group.getAttribute('data-menu-edge-exit') !== 'true';
-          pulse(horizontal ? (forward ? 15 : 14) : forward ? 13 : 12);
+          pulse(
+            explicit
+              ? { left: 14, right: 15, up: 12, down: 13 }[explicit]
+              : horizontal
+                ? forward
+                  ? 15
+                  : 14
+                : forward
+                  ? 13
+                  : 12,
+          );
         } else if (
           f.doc.activeElement.getAttribute('role') === 'tab' &&
           f.$(id).getAttribute('role') === 'tab'
@@ -108,7 +134,11 @@ function navigation(f, adapter, team = false) {
           'Menu traversal never includes live-play actions.',
         );
       }
-      assert.equal(f.doc.activeElement.id, id, `${adapter} reaches visible ${id}.`);
+      assert.equal(
+        f.doc.activeElement.id,
+        id,
+        `${adapter} reaches visible ${id}: ${trace.join(' → ')}.`,
+      );
     },
     confirm: () => (adapter === 'controller' ? pulse(0) : key('Enter')),
     back: () => (adapter === 'controller' ? pulse(1) : key('Escape')),
@@ -126,15 +156,24 @@ for (const adapter of ['keyboard', 'controller']) {
   test(`Legacy Versus ${adapter} reaches Find missions and terminal Next outside the main panel`, async (t) => {
     const { level } = retryFixture('mission-timeout');
     const f = await couchPage(t, {
-      campaign: { ...base, briefs: [], levels: [level] },
+      campaign: { ...base, id: 'navigation-fixture', briefs: [], levels: [level] },
       pads: adapter === 'controller' ? [pad()] : [],
       nativeKeyboard: true,
     });
     const nav = navigation(f, adapter);
     nav.adopt();
     const initial = f.checkpoint();
-    nav.reach('race-journey-find');
-    const find = f.$('race-journey-find'),
+    nav.reach('race-quick-sound');
+    assert.equal(f.$('race-quick-sound').parentNode.className, 'native-menu-utilities');
+    nav.reach('race-start');
+    assert.deepEqual(
+      f.checkpoint(),
+      initial,
+      'Crossing the utility row does not start either board.',
+    );
+    const catalogueAction = adapter === 'controller' ? 'race-chapters' : 'race-journey-find';
+    nav.reach(catalogueAction);
+    const find = f.$(catalogueAction),
       open = find.onclick;
     let opening;
     find.onclick = (...args) => (opening = open.apply(find, args));
@@ -146,7 +185,7 @@ for (const adapter of ['keyboard', 'controller']) {
     f.frame();
     nav.back();
     assert.equal(f.$('journey-chooser').open, false);
-    assert.equal(f.doc.activeElement.id, 'race-journey-find');
+    assert.equal(f.doc.activeElement.id, catalogueAction);
     assert.deepEqual(f.checkpoint(), initial, 'Browsing does not replace either ready board.');
     f.frame();
     nav.reach('race-start');
@@ -176,8 +215,21 @@ for (const adapter of ['keyboard', 'controller']) {
     assert.deepEqual(f.checkpoint(), terminal, 'Cancelling Next preserves both finished boards.');
   });
 
+  test(`Team landing ${adapter} reaches the separate sound row and returns to Start`, async (t) => {
+    const f = await teamPage(t, { nativeFocus: true, capturePaint: true });
+    if (adapter === 'controller') f.pads.push(pad());
+    const nav = navigation(f, adapter, true);
+    const held = { hud: teamHud(f), paint: f.lastPaint };
+    nav.adopt();
+    nav.reach('coop-quick-sound');
+    assert.equal(f.$('coop-quick-sound').parentNode.className, 'native-menu-utilities');
+    nav.reach('coop-start');
+    assert.equal(f.$('coop-menu').hidden, false);
+    assert.deepEqual({ hud: teamHud(f), paint: f.lastPaint }, held);
+  });
+
   for (const state of ['paused', 'won', 'lost'])
-    test(`Team ${adapter} reaches visible masthead from ${state} without entering flight controls`, async (t) => {
+    test(`Team ${adapter} reaches the shared Home action or terminal masthead from ${state} without entering flight controls`, async (t) => {
       const f =
         state === 'won'
           ? await teamResult(t)
@@ -220,7 +272,7 @@ for (const adapter of ['keyboard', 'controller']) {
       assert.equal(f.$('coop-options').open, false);
       assert.equal(f.doc.activeElement.id, 'coop-settings-open');
       assert.deepEqual({ hud: teamHud(f), paint: f.lastPaint }, held);
-      for (const id of ['coop-race', 'coop-home']) {
+      for (const id of state === 'paused' ? ['coop-home-paused'] : ['coop-race', 'coop-home']) {
         nav.reach(id);
         if (state === 'paused') {
           nav.confirm();
