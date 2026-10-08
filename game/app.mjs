@@ -1,6 +1,5 @@
 import { loadBaseArtwork } from './base-artwork.mjs';
 import { nativeArtReviewURL } from './ui/art-review-navigation.mjs';
-import { selectedArcadeCollection } from './presentation/industrial-arcade.mjs';
 import { specialistFailureCopy } from './hunt/actor-catalog.mjs';
 import { getLocale } from './i18n/index.mjs';
 import { pursuitRoster } from './hunt/pursuit-goals.mjs';
@@ -319,7 +318,21 @@ import {
   readAssetStore as readPersistentAssetStore,
   writeAssetStore as writePersistentAssetStore,
 } from './storage.mjs';
-import { suspendSession, restoreSession, saveSession, SESSION_STORAGE_BYTES } from './sessions.mjs';
+import { SESSION_STORAGE_BYTES } from './sessions.mjs';
+import {
+  suspendCaptureSession as suspendSession,
+  restoreCaptureSession as restoreSession,
+  saveCaptureSession as saveSession,
+  nativeCaptureSession,
+  snapshotCaptureSession,
+} from './capture-presentation-session.mjs';
+import {
+  acceptAttemptAppearance,
+  restoreAttemptAppearance,
+} from './presentation/attempt-appearance.mjs';
+import { prepareIndustrialEnvironmentSource } from './presentation/industrial-environments.mjs';
+import { selectedArcadeCollection } from './presentation/industrial-arcade.mjs';
+import { runtimeActorArtRevision } from './hunt/preferences.mjs';
 import { createAttemptFilePreparer } from './attempt-file.mjs';
 import { challengeCampaign } from './challenges.mjs';
 import { createGalleryDifficultyResolver } from './gallery-difficulty.mjs';
@@ -1465,6 +1478,9 @@ try {
     event.returnValue = '';
   };
   window.addEventListener('beforeunload', protectSessionOriginals);
+  let acceptedCaptureAppearance,
+    captureEnvironmentCandidate = null,
+    captureEnvironmentReady = false;
   let flightVisualLease = null,
     freshVisualAttempt = false,
     pictureVisualController = null;
@@ -2362,6 +2378,40 @@ try {
       { entry, level, themeId, currentManifestSha256: pagePresentationSnapshot?.manifestSha256 },
       { baseURL: new URL('presentation/compiled/', gameDocumentURL(location.href)), ...options },
     );
+  }
+  async function prepareCaptureEnvironment(entry, level, { signal } = {}) {
+    signal?.throwIfAborted();
+    // Only this host's immutable built-in route can authorize chapter materials.
+    // Company, uploaded Studio previews, custom packs and practice keep ownership.
+    if (practice || runtimeContent || previewSession || !candidateHost?.owns(entry)) return null;
+    const project = authoredRoute.source ?? authoredRoute.navigation?.project;
+    if (!project) return null;
+    const source = entry.baseCampaign?.levels.find((item) => item.id === level.id) ?? level;
+    const candidate = await prepareIndustrialEnvironmentSource({
+      engine: 'capture',
+      mode: 'solo',
+      source,
+      origin: {
+        kind: 'builtin',
+        catalogueId: project.id,
+        catalogueRevision: project.revision,
+        sourceForm: `compiled-native-v1:${entry.policyVersion ?? project.policyId}:${entry.baseCampaign ? 'standard' : entry.difficulty}`,
+      },
+      signal,
+    });
+    signal?.throwIfAborted();
+    return candidate;
+  }
+  async function resolveSavedAttemptAppearance(session, appearance, { signal } = {}) {
+    signal?.throwIfAborted();
+    await candidateHost?.ensureExecution?.(session.campaignKey, { signal });
+    signal?.throwIfAborted();
+    const entry = findCampaignEntry(session.campaignKey);
+    if (!entry) throw new Error('This artwork needs its exact original mission source.');
+    const level = entry.campaign.levels.find((item) => item.id === session.replay.level.id);
+    if (!level) throw new Error('This artwork needs its exact original mission source.');
+    const candidate = await prepareCaptureEnvironment(entry, level, { signal });
+    return restoreAttemptAppearance(appearance, candidate);
   }
   async function actorContent(entry, level, themeId, { signal, retained = false } = {}) {
     if (practice || entry.activity === 'challenge') return null;
@@ -3594,6 +3644,7 @@ try {
     try {
       if (started && ['running', 'respawning'].includes(run.status)) {
         await retainFlightForFirstFlight({
+          attemptAppearance: acceptedCaptureAppearance ?? null,
           run,
           recorder,
           campaign,
@@ -3909,6 +3960,7 @@ try {
   }
   async function retainNavigationFlight(ticket, assertCurrent, onProgress) {
     const retained = await retainFlightForFirstFlight({
+      attemptAppearance: acceptedCaptureAppearance ?? null,
       run,
       recorder,
       campaign,
@@ -4617,6 +4669,10 @@ try {
             status.stage,
             () => worldAttemptCurrent(ticket),
           ),
+      });
+      assertCurrent();
+      ticket.environmentCandidate = await prepareCaptureEnvironment(entry, level, {
+        signal: ticket.controller.signal,
       });
       assertCurrent();
       ticket.visuals = await prepareFreshAttemptVisuals(entry, level, nextTheme.id, {
@@ -6591,7 +6647,7 @@ try {
     }
   }
   function refreshSavedFlight() {
-    const saved = savedAttempt();
+    const saved = nativeCaptureSession(savedAttempt());
     // Preview only the requested identity. Known compiled content must not
     // rebuild the authored catalog (or unrelated historical challenges).
     const key = !practice && typeof saved?.campaignKey === 'string' ? saved.campaignKey : null;
@@ -6647,6 +6703,7 @@ try {
     if (practice || !recorder || !started || ['won', 'lost'].includes(run.status))
       throw new Error(t('interface:startAnUnfinishedCampaignFlightToSaveIt'));
     return suspendSession({
+      attemptAppearance: acceptedCaptureAppearance ?? null,
       run,
       recorder,
       presentationLevel: campaign.levels.find((level) => level.id === run.levelId),
@@ -6732,6 +6789,8 @@ try {
     return entry;
   }
   async function restoreAttempt(candidate, { beforeAdopt, onAdopted, onStatus, signal } = {}) {
+    const savedCapture = snapshotCaptureSession(candidate);
+    candidate = nativeCaptureSession(savedCapture);
     if (courseSession || courseEntry)
       throw new Error(t('interface:endFirstFlightBeforeLoadingACampaignFlight'));
     if (sessionBusy) throw new Error(t('interface:aFlightIsAlreadyBeingVerified'));
@@ -6779,7 +6838,7 @@ try {
         );
       if (candidateHost && !candidateHost.owns(entry))
         throw new Error(t('interface:openThisLegacyFlightInTheOrdinaryGameThisRoute'));
-      const restored = await restoreSession(candidate, {
+      const restored = await restoreSession(savedCapture, {
         campaign: entry.campaign,
         campaignKey: campaignKey(entry.campaign),
         signal: controller.signal,
@@ -6797,6 +6856,15 @@ try {
           t('interface:loadingWasCancelledYourNewerSelectionIsKept'),
           'AbortError',
         );
+      const stagedCaptureAppearance = await restoreAttemptAppearance(
+        restored.attemptAppearance,
+        await prepareCaptureEnvironment(
+          entry,
+          entry.campaign.levels.find((level) => level.id === restored.run.levelId),
+          { signal: controller.signal },
+        ),
+      );
+      controller.signal.throwIfAborted();
       if (restored.session.visualThemePin) {
         stagedVisuals = await prepareSavedVisualTheme(
           {
@@ -6882,7 +6950,11 @@ try {
       adoptFlightActors(stagedActors);
       stagedActors = null;
       setTheme();
+      acceptedCaptureAppearance = stagedCaptureAppearance;
+      captureEnvironmentCandidate = null;
+      captureEnvironmentReady = true;
       painter.setLevel?.(run.level, { seed: run.seed, arcadeCollection: null, artRevision: null });
+      painter.setAttemptAppearance(acceptedCaptureAppearance);
       updateLoadout();
       overlay('pause');
       refreshHUD();
@@ -7238,6 +7310,7 @@ try {
     },
     resolveCampaign: (key) => findCampaignEntry(key)?.campaign,
     resolveMediaIdentityCatalog: () => pictureIdentity(),
+    resolveAttemptAppearance: resolveSavedAttemptAppearance,
     readStored: () => profileStorage().getItem(sessionKey),
     readBackupMarker: () => profileStorage().getItem(`${libraryKey}.backup-lock`),
     readJournal: () => readAssetStore(journalKey),
@@ -7257,9 +7330,12 @@ try {
       createSessionPictureView(await pictureMedia(options), sessionPictures),
     sessionPictures,
     assertExternalBackupSupported,
-    backupPreparation: externalBackup
-      ? { prepareExternalChapters: externalBackup.prepareExternalChapters }
-      : undefined,
+    backupPreparation: {
+      resolveAttemptAppearance: resolveSavedAttemptAppearance,
+      ...(externalBackup
+        ? { prepareExternalChapters: externalBackup.prepareExternalChapters }
+        : {}),
+    },
     backupSnapshot: externalBackup ? snapshotCurrentBackup : undefined,
     backupSet: practice
       ? null
@@ -9372,6 +9448,11 @@ try {
       if (!resultAttemptCurrent(ticket))
         throw new DOMException(t('interface:preparationCancelled'), 'AbortError');
       if (kind !== 'retry') {
+        ticket.environmentCandidate = await prepareCaptureEnvironment(entry, level, {
+          signal: ticket.controller.signal,
+        });
+        if (!resultAttemptCurrent(ticket))
+          throw new DOMException('Artwork preparation cancelled.', 'AbortError');
         ticket.visuals = await prepareFreshAttemptVisuals(entry, level, nextTheme.id, {
           signal: ticket.controller.signal,
           onStatus: ticket.feedback.update,
@@ -9597,6 +9678,11 @@ try {
     const keepVisuals =
       restoreAdoption || retainAttemptAppearance || preparedAttempt?.ticket.kind === 'retry';
     freshVisualAttempt = !keepVisuals;
+    if (!keepVisuals) {
+      acceptedCaptureAppearance = undefined;
+      captureEnvironmentCandidate = preparedAttempt?.ticket.environmentCandidate ?? null;
+      captureEnvironmentReady = Boolean(preparedAttempt);
+    }
     let previousPictures = null,
       adoptedPictures = null;
     if (preparedAttempt) {
@@ -9776,6 +9862,8 @@ try {
     }
     if (scenario?.music) assignMusic(scenario.music);
     painter.setLevel?.(run.level, { seed: run.seed });
+    if (acceptedCaptureAppearance !== undefined)
+      painter.setAttemptAppearance(acceptedCaptureAppearance);
     setTheme();
     started = false;
     paused = true;
@@ -9900,7 +9988,13 @@ try {
       !candidateHost?.owns(activeEntry) &&
       !!freshSoloVisualSelection(activeEntry, theme.id);
     const needsFreshActors = !practice && !flightActorsReady;
-    if (!flightPictures?.ready(theme.id) || needsFreshVisuals || needsFreshActors) {
+    const needsCaptureEnvironment = !captureEnvironmentReady;
+    if (
+      !flightPictures?.ready(theme.id) ||
+      needsFreshVisuals ||
+      needsFreshActors ||
+      needsCaptureEnvironment
+    ) {
       if (pictureResume) return;
       clearPictureRecovery();
       const owner = flightPictures,
@@ -9912,7 +10006,8 @@ try {
         actorChoice = actorPreferences.snapshot(),
         controller = new AbortController();
       let stagedVisuals = null,
-        stagedActors = null;
+        stagedActors = null,
+        stagedEnvironment = null;
       pictureVisualController = controller;
       pictureResume = ticket;
       paused = true;
@@ -9941,6 +10036,10 @@ try {
       })();
       return prepared
         .then(async () => {
+          if (needsCaptureEnvironment)
+            stagedEnvironment = await prepareCaptureEnvironment(selectedEntry, selectedLevel, {
+              signal: controller.signal,
+            });
           if (needsFreshVisuals)
             stagedVisuals = await prepareFreshAttemptVisuals(
               selectedEntry,
@@ -9995,6 +10094,10 @@ try {
             owner !== flightPictures
           )
             return;
+          if (needsCaptureEnvironment) {
+            captureEnvironmentCandidate = stagedEnvironment;
+            captureEnvironmentReady = true;
+          }
           pictureResume = null;
           pictureVisualController = null;
           resume({ alignCourseBoard, contentSwitchTicket });
@@ -10025,7 +10128,12 @@ try {
     titleFlightHold = false;
     courseEntryMessage = '';
     if (!started) {
-      painter.acceptEnemyArtwork?.();
+      if (acceptedCaptureAppearance === undefined)
+        acceptedCaptureAppearance = acceptAttemptAppearance(captureEnvironmentCandidate, {
+          artRevision: runtimeActorArtRevision(),
+          collection: selectedArcadeCollection(menuStyle.themeHost.effectivePreferences()),
+        });
+      painter.setAttemptAppearance(acceptedCaptureAppearance);
       rememberSelection();
     }
     started = true;
@@ -13500,7 +13608,8 @@ try {
             editionId,
             isCurrent: () => opener?.closest('dialog')?.open && document.contains(opener),
           }),
-        getSavedPresentation: () => savedAttempt()?.actorAppearancePin?.authoredPresentationSha256,
+        getSavedPresentation: () =>
+          nativeCaptureSession(savedAttempt())?.actorAppearancePin?.authoredPresentationSha256,
         onPresentationChange: (presentationId, opener) =>
           requestModeDeparture('catalogue', { preventDefault() {} }, opener, {
             origin: 'solo-title',

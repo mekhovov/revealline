@@ -1,0 +1,42 @@
+{
+  "format": "revealline-visual-evidence-package.v1",
+  "sourceRevision": "1717a5348111ae673209056b0eeef3e15e220f58",
+  "scope": "Actual-source browser observation, desktop viewport emulation and one native Studio UI round trip.",
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 3902,
+      "sha256": "923ca99b03f641cd01bb7327f36aa5e5e9ca0191b7f4869f9124aac624ec57f6"
+    },
+    {
+      "path": "source-identity.json",
+      "bytes": 2077,
+      "sha256": "ba8fd1e07e2ca08ffdd82154f32b1c749aeabbd6b248f41132917e4202d2c0bc"
+    },
+    {
+      "path": "studio-guarded-crossings-roundtrip.jpg",
+      "bytes": 96305,
+      "sha256": "f5ec0a6442f8017c7784f9d101fbd20669a7f31a29a8b87a4eedf3316cfd0caf"
+    },
+    {
+      "path": "studio-roundtrip.json",
+      "bytes": 2159,
+      "sha256": "35fe7ec434d81f3dfdcbe2dab3c9874cf40cbaacc119fc6722e78d88145f1b53"
+    },
+    {
+      "path": "versus-layouts.json",
+      "bytes": 6589,
+      "sha256": "7c2baca44523daf4102885c6cc52f67ddc65fa7b8ca228f86503328763430f81"
+    },
+    {
+      "path": "versus-refuge-bays-320.jpg",
+      "bytes": 28851,
+      "sha256": "14b21ffe53b5e5a22f803e2a4354d9e308ef7cf4f7cec0edc63132bb48dcf7dc"
+    },
+    {
+      "path": "versus-refuge-bays-desktop.jpg",
+      "bytes": 66787,
+      "sha256": "ecda99e3ce1d1babf8beeb9187b517023cc85c967ec4f6de1e5262ecd00c1c28"
+    }
+  ]
+}

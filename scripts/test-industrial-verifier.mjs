@@ -37,6 +37,50 @@ test('the feature manifest selects every required stream and real test paths', a
   );
 });
 
+test('industrial host phases install their locked SIM fixtures before executing native Studio checks', async () => {
+  const read = (file) => fs.readFile(new URL(`../${file}`, import.meta.url), 'utf8');
+  const manifest = JSON.parse(await read('publishing/industrial-feature-tests.json'));
+  const consumers = [];
+  for (const phase of selectIndustrialPhases(manifest)) {
+    const sources = await Promise.all(phase.files.map(read));
+    if (sources.some((source) => source.includes("requireAuthoring('fake-indexeddb')")))
+      consumers.push(phase.id);
+  }
+  assert.deepEqual(
+    consumers,
+    ['local-ux'],
+    'Update the workflow dependency scope when another phase adds native IndexedDB fixtures.',
+  );
+  const workflow = await read('.github/workflows/industrial-feature-tests.yml');
+  const steps = workflow.split(/\n      - /);
+  const installIndex = steps.findIndex((step) =>
+    step.startsWith('name: Install pinned SIM host-test dependencies\n'),
+  );
+  const executeIndex = steps.findIndex((step) =>
+    step.startsWith('name: Execute the feature phase on the exact PR head\n'),
+  );
+  assert.ok(installIndex >= 0 && executeIndex > installIndex);
+  assert.match(steps[installIndex], /if: matrix\.phase == 'local-ux'/);
+  assert.match(
+    steps[installIndex],
+    /run: npm ci --prefix authoring\/fpv-worlds --ignore-scripts\s*$/,
+  );
+  assert.doesNotMatch(steps[installIndex], /--omit=dev|continue-on-error/);
+  const owner = JSON.parse(await read('authoring/fpv-worlds/package.json'));
+  const lock = JSON.parse(await read('authoring/fpv-worlds/package-lock.json'));
+  assert.match(owner.devDependencies['fake-indexeddb'], /^\d+\.\d+\.\d+$/);
+  assert.equal(
+    lock.packages[''].devDependencies['fake-indexeddb'],
+    owner.devDependencies['fake-indexeddb'],
+  );
+  assert.equal(
+    lock.packages['node_modules/fake-indexeddb'].version,
+    owner.devDependencies['fake-indexeddb'],
+  );
+  assert.equal(lock.packages['node_modules/fake-indexeddb'].dev, true);
+  assert.match(lock.packages['node_modules/fake-indexeddb'].integrity, /^sha512-/);
+});
+
 test('TAP receipts cannot turn skipped, failed, absent or canceled tests into passing evidence', () => {
   const tap = '# tests 3\n# pass 3\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n';
   assert.equal(summarizeIndustrialTap(tap, 0, null).passed, true);

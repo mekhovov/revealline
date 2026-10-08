@@ -54,7 +54,8 @@ test('opening settings shows both presets without changing artwork, population o
   );
   assert.deepEqual(f.storage.writes, []);
   assert.deepEqual(f.calls, []);
-  assert.match(f.document.body.textContent, /Start or Restart/);
+  assert.match(f.document.body.textContent, /starting a new attempt/);
+  assert.match(f.document.body.textContent, /Retry and Continue keep accepted artwork/);
   assert.match(f.document.body.textContent, /Snake targets stay humanoid/);
   assert.equal(f.document.querySelector('details').open, false);
 });

@@ -1,0 +1,281 @@
+{
+  "source": "1717a5348111ae673209056b0eeef3e15e220f58",
+  "scope": "Desktop viewport emulation, actual-source Versus; not physical input or performance qualification",
+  "layouts": [
+    {
+      "width": 320,
+      "controls": [
+        {
+          "h": 45.328125,
+          "label": "Player 1: Up",
+          "w": 45.328125,
+          "x": 61.34375,
+          "y": 639.34375
+        },
+        {
+          "h": 45.328125,
+          "label": "Player 1: Left",
+          "w": 45.328125,
+          "x": 12.015625,
+          "y": 688.671875
+        },
+        {
+          "h": 45.328125,
+          "label": "Player 1: Down",
+          "w": 45.328125,
+          "x": 61.34375,
+          "y": 688.671875
+        },
+        {
+          "h": 45.328125,
+          "label": "Player 1: Right",
+          "w": 45.328125,
+          "x": 110.671875,
+          "y": 688.671875
+        },
+        {
+          "h": 45.328125,
+          "label": "Player 2: Up",
+          "w": 45.328125,
+          "x": 213.328125,
+          "y": 639.34375
+        },
+        {
+          "h": 45.328125,
+          "label": "Player 2: Left",
+          "w": 45.328125,
+          "x": 164,
+          "y": 688.671875
+        },
+        {
+          "h": 45.328125,
+          "label": "Player 2: Down",
+          "w": 45.328125,
+          "x": 213.328125,
+          "y": 688.671875
+        },
+        {
+          "h": 45.328125,
+          "label": "Player 2: Right",
+          "w": 45.328125,
+          "x": 262.65625,
+          "y": 688.671875
+        }
+      ],
+      "scroll": [320, 740],
+      "viewport": [320, 740]
+    },
+    {
+      "width": 360,
+      "controls": [
+        {
+          "h": 52,
+          "label": "Player 1: Up",
+          "w": 52,
+          "x": 68,
+          "y": 626
+        },
+        {
+          "h": 52,
+          "label": "Player 1: Left",
+          "w": 52,
+          "x": 12,
+          "y": 682
+        },
+        {
+          "h": 52,
+          "label": "Player 1: Down",
+          "w": 52,
+          "x": 68,
+          "y": 682
+        },
+        {
+          "h": 52,
+          "label": "Player 1: Right",
+          "w": 52,
+          "x": 124,
+          "y": 682
+        },
+        {
+          "h": 52,
+          "label": "Player 2: Up",
+          "w": 52,
+          "x": 240,
+          "y": 626
+        },
+        {
+          "h": 52,
+          "label": "Player 2: Left",
+          "w": 52,
+          "x": 184,
+          "y": 682
+        },
+        {
+          "h": 52,
+          "label": "Player 2: Down",
+          "w": 52,
+          "x": 240,
+          "y": 682
+        },
+        {
+          "h": 52,
+          "label": "Player 2: Right",
+          "w": 52,
+          "x": 296,
+          "y": 682
+        }
+      ],
+      "scroll": [360, 740],
+      "viewport": [360, 740]
+    },
+    {
+      "width": 390,
+      "controls": [
+        {
+          "h": 56,
+          "label": "Player 1: Up",
+          "w": 56,
+          "x": 75,
+          "y": 618
+        },
+        {
+          "h": 56,
+          "label": "Player 1: Left",
+          "w": 56,
+          "x": 15,
+          "y": 678
+        },
+        {
+          "h": 56,
+          "label": "Player 1: Down",
+          "w": 56,
+          "x": 75,
+          "y": 678
+        },
+        {
+          "h": 56,
+          "label": "Player 1: Right",
+          "w": 56,
+          "x": 135,
+          "y": 678
+        },
+        {
+          "h": 56,
+          "label": "Player 2: Up",
+          "w": 56,
+          "x": 259,
+          "y": 618
+        },
+        {
+          "h": 56,
+          "label": "Player 2: Left",
+          "w": 56,
+          "x": 199,
+          "y": 678
+        },
+        {
+          "h": 56,
+          "label": "Player 2: Down",
+          "w": 56,
+          "x": 259,
+          "y": 678
+        },
+        {
+          "h": 56,
+          "label": "Player 2: Right",
+          "w": 56,
+          "x": 319,
+          "y": 678
+        }
+      ],
+      "scroll": [390, 740],
+      "viewport": [390, 740]
+    }
+  ],
+  "format": "revealline-browser-layout-evidence.v1",
+  "originalReceiptSha256": "e07e66e18510699bb999bf8d1876a5b99466e5da6a0d6aac9598c04175374472",
+  "mission": {
+    "sourceKey": "ie1-DKea3BgygZRX8Tg0l9O8k5Be9XfepYolmVEf9pi9wwU",
+    "engine": "snake",
+    "mode": "versus",
+    "id": "classic-living-refuge-bays",
+    "revision": "1",
+    "contentSha256": "1195d8def64dab8e95b9497425c8c72be45a347b26468e1b78080c77e9ae9634",
+    "title": {
+      "en": "Refuge Bays",
+      "uk": "Затишні кишені"
+    }
+  },
+  "chapter": {
+    "id": "classic-snake-twin-intercepts",
+    "title": {
+      "en": "Twin Intercepts",
+      "uk": "Подвійні перехоплення"
+    },
+    "definition": {
+      "id": "industrial-env-classic-snake-twin-intercepts",
+      "revision": 1,
+      "appearanceSha256": "66dd9009654472284adbc0df9d8fc3de936a9cd077826d9272fbe61dd6dbc1c6"
+    },
+    "arcade": {
+      "terrain.wall": {
+        "material": "timber",
+        "variant": 3
+      },
+      "terrain.slow": {
+        "material": "earth",
+        "variant": 1
+      },
+      "terrain.lethal": {
+        "material": "metal",
+        "variant": 0
+      }
+    }
+  },
+  "appearance": {
+    "collection": {
+      "id": "military-field",
+      "revision": "r1"
+    },
+    "artRevision": "industrial-roster-v3",
+    "board": "modern"
+  },
+  "screenshots": {
+    "desktop": "versus-refuge-bays-desktop.jpg",
+    "width320": "versus-refuge-bays-320.jpg"
+  },
+  "observedSummary": [
+    {
+      "viewport": [320, 740],
+      "scrollExtent": [320, 740],
+      "horizontalOverflow": false,
+      "verticalOverflow": false,
+      "minimumDirectionButtonWidth": 45.328125,
+      "minimumDirectionButtonHeight": 45.328125,
+      "directionButtonCount": 8
+    },
+    {
+      "viewport": [360, 740],
+      "scrollExtent": [360, 740],
+      "horizontalOverflow": false,
+      "verticalOverflow": false,
+      "minimumDirectionButtonWidth": 52,
+      "minimumDirectionButtonHeight": 52,
+      "directionButtonCount": 8
+    },
+    {
+      "viewport": [390, 740],
+      "scrollExtent": [390, 740],
+      "horizontalOverflow": false,
+      "verticalOverflow": false,
+      "minimumDirectionButtonWidth": 56,
+      "minimumDirectionButtonHeight": 56,
+      "directionButtonCount": 8
+    }
+  ],
+  "limitations": [
+    "Desktop browser viewport emulation only; no physical-device input evidence.",
+    "The screenshots show attempt startup; they do not prove interception, mission completion or fair multiplayer outcomes.",
+    "No audio, frame-time, thermal, GPU-memory, landscape or enlarged-text measurement is included."
+  ]
+}

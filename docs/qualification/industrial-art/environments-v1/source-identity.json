@@ -1,0 +1,54 @@
+{
+  "format": "revealline-browser-evidence-source-binding.v1",
+  "sourceRevision": "1717a5348111ae673209056b0eeef3e15e220f58",
+  "before": {
+    "format": "revealline-source-identity.v1",
+    "sourceRevision": "1717a5348111ae673209056b0eeef3e15e220f58",
+    "sourceTree": "5b98b0f80560d4f310d2c5733289aa0e64cf674c",
+    "files": 26885,
+    "bytes": 2451111284,
+    "aggregateSha256": "b3bd9f9413e5d9462154f9ab328857708bb85af42d2b9e09fd9829424e92761a",
+    "aggregateFormat": "UTF-8 path sorted JSONL [path, Git mode, raw content SHA-256]",
+    "allTrackedSourceContentsAndModesMatch": true
+  },
+  "after": {
+    "format": "revealline-source-identity.v1",
+    "sourceRevision": "1717a5348111ae673209056b0eeef3e15e220f58",
+    "sourceTree": "5b98b0f80560d4f310d2c5733289aa0e64cf674c",
+    "files": 26885,
+    "bytes": 2451111284,
+    "aggregateSha256": "b3bd9f9413e5d9462154f9ab328857708bb85af42d2b9e09fd9829424e92761a",
+    "aggregateFormat": "UTF-8 path sorted JSONL [path, Git mode, raw content SHA-256]",
+    "allTrackedSourceContentsAndModesMatch": true
+  },
+  "sourceUnchanged": true,
+  "sourceReceiptSha256": "244484c174751fb7de9a79d113a3025ab1138dfd6c3508ccc7d22fbe253afb2e",
+  "scope": "The browser observation receipts identify this frozen actual source. The accompanying canonical identity was verified before and after producer/Studio software checks at the same clean revision. Screenshot hashes bind the copied bytes; they are not an independent browser/server attestation.",
+  "producer": {
+    "files": 16,
+    "sourceRows": 600,
+    "roomRows": 276,
+    "roomPreparations": 756,
+    "moduleBytes": 330026,
+    "packageBytes": 13837091,
+    "decodedBytesPerChapterMax": 3072
+  },
+  "softwareChecks": [
+    {
+      "command": ["node", "scripts/produce-industrial-environments.mjs", "--check"],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "node",
+        "--test",
+        "--test-concurrency=1",
+        "scripts/test-produce-industrial-environments.mjs"
+      ],
+      "tests": 2,
+      "pass": 2,
+      "fail": 0,
+      "exitCode": 0
+    }
+  ]
+}

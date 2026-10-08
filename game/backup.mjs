@@ -1,4 +1,14 @@
-import { boundedJSON, exactKeys, plainObject, required } from './data-json.mjs';
+import {
+  requireAcceptedAttemptAppearance,
+  snapshotAttemptAppearance,
+} from './presentation/attempt-appearance.mjs';
+import {
+  restoreCaptureSession as restoreSession,
+  snapshotCaptureSession as snapshotSession,
+  nativeCaptureSession,
+  captureSessionAppearance,
+} from './capture-presentation-session.mjs';
+import { boundedJSON, canonicalJSON, exactKeys, plainObject, required } from './data-json.mjs';
 import { CONTENT_LIMITS } from './content.mjs';
 import { browserDecodeImage } from './imports.mjs';
 import { importLibrary, campaignKey, LIBRARY_LIMITS } from './library.mjs';
@@ -9,8 +19,6 @@ import {
   PACK_LIMITS,
 } from './packs.mjs';
 import {
-  restoreSession,
-  snapshotSession,
   SESSION_IMPORT_BYTES,
   PRESENTATION_SESSION_FORMAT,
   STORY_SESSION_FORMAT,
@@ -38,7 +46,9 @@ export const MAX_BACKUP_BYTES =
 const limits = Object.freeze({
   maxBytes: MAX_BACKUP_BYTES,
   maxNodes: 3400000,
-  maxDepth: 30,
+  // One extra structural level retains the optional presentation envelope;
+  // the native session validator still enforces its unchanged inner depth.
+  maxDepth: 31,
   maxArray: MAX_REPLAY_TICKS,
   maxString: CONTENT_LIMITS.maxEncodedImageChars,
 });
@@ -141,6 +151,7 @@ export async function prepareBackup(
     resolveCampaign,
     expandCampaigns,
     resolveMediaIdentityCatalog,
+    resolveAttemptAppearance,
     prepareExternalChapters,
   } = {},
 ) {
@@ -169,6 +180,10 @@ export async function prepareBackup(
   required(
     resolveMediaIdentityCatalog === undefined || typeof resolveMediaIdentityCatalog === 'function',
     'The picture catalog resolver must be a trusted function.',
+  );
+  required(
+    resolveAttemptAppearance === undefined || typeof resolveAttemptAppearance === 'function',
+    'The attempt artwork resolver must be a trusted function.',
   );
   const known = new Map(registered.map((campaign) => [campaignKey(campaign), campaign]));
   const originals = [...registered];
@@ -207,7 +222,7 @@ export async function prepareBackup(
     checkAbort(signal);
   }
   if (value.session !== null) {
-    const key = value.session.campaignKey;
+    const key = nativeCaptureSession(value.session).campaignKey;
     required(
       typeof key === 'string' && key.length > 0 && key.length <= 300,
       'Saved attempt campaign identity is invalid.',
@@ -232,8 +247,8 @@ export async function prepareBackup(
       STORY_SESSION_FORMAT,
       VISUAL_SESSION_FORMAT,
       ACTOR_SESSION_FORMAT,
-    ].includes(value.session?.format) &&
-      value.session?.presentationPins !== null) ||
+    ].includes(nativeCaptureSession(value.session)?.format) &&
+      nativeCaptureSession(value.session)?.presentationPins !== null) ||
     value.library.pictureReceipts?.length
   ) {
     required(
@@ -250,7 +265,22 @@ export async function prepareBackup(
     checkAbort(signal);
   }
   if (value.session !== null) {
-    const key = value.session.campaignKey;
+    const key = nativeCaptureSession(value.session).campaignKey;
+    const artwork = captureSessionAppearance(value.session);
+    if (artwork?.environmentPin) {
+      required(
+        resolveAttemptAppearance,
+        'This backup needs its exact original mission artwork owner.',
+      );
+      const resolved = requireAcceptedAttemptAppearance(
+        await resolveAttemptAppearance(nativeCaptureSession(value.session), artwork, { signal }),
+      );
+      checkAbort(signal);
+      required(
+        canonicalJSON(snapshotAttemptAppearance(resolved)) === canonicalJSON(artwork),
+        'The backup artwork differs from its authenticated mission source.',
+      );
+    }
     await restoreSession(value.session, {
       campaign: known.get(key),
       campaignKey: key,

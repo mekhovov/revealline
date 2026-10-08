@@ -1,4 +1,6 @@
 import * as THREE from './vendor/three.module.js';
+import { resolveIndustrialEnvironment } from '../../game/presentation/industrial-environments.mjs';
+import { canonicalJSON } from '../../game/data-json.mjs';
 import { actorVisual } from '../../game/hunt/actor-catalog.mjs';
 import { sharedActorAppearance, runtimeActorArtRevision } from '../../game/hunt/preferences.mjs';
 import {
@@ -1371,6 +1373,26 @@ export function createFlightRenderer({
   }
   function setCourse(value, selectedMode = 'self-level', options = {}) {
     if (disposed || renderer.getContext().isContextLost()) return;
+    const environment = resolveIndustrialEnvironment(options.industrialEnvironment ?? null);
+    const retained = value.world?.themeProfile;
+    if (
+      retained?.format === 'ThemeProfile.v3' &&
+      (!environment ||
+        canonicalJSON(retained.industrialEnvironment) !==
+          canonicalJSON(options.industrialEnvironment) ||
+        retained.artRevision !== options.artRevision)
+    )
+      throw new TypeError(
+        'Retained environment requires authenticated source and matching actor art.',
+      );
+    if (
+      environment &&
+      (retained?.format !== 'ThemeProfile.v3' ||
+        options.artRevision !== environment.artRevision ||
+        retained?.id !== environment.collection.id ||
+        retained?.revision !== environment.collection.revision)
+    )
+      throw new TypeError('Environment differs from the accepted native appearance.');
     huntPresentation ??= createHuntPresentation?.({ THREE, scene }) ?? null;
     machineryRevision = Object.hasOwn(options, 'artRevision')
       ? options.artRevision
@@ -1416,6 +1438,7 @@ export function createFlightRenderer({
       quality,
       maxAnisotropy: renderer.capabilities.getMaxAnisotropy(),
       reviewRevision: machineryRevision,
+      industrialEnvironment: environment,
     });
     register(world);
     const theme = surroundings.theme;
