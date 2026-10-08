@@ -1,0 +1,70 @@
+{
+  "format": "FPVFestivalLibraryNativeBrowserReview.v1",
+  "date": "2026-10-05",
+  "fixture": {
+    "format": "FestivalLibraryManualBrowserFixture.v1",
+    "sourceRevision": "614adef75a6e1cc28ea1d04acf26fa69b507c551",
+    "sourceTree": "9b2883396f8044a297f884be091d2fb364b89625",
+    "packageRevision": "780ec41510a051a9d4a4d896910fff4e017c22116a8f00fc0e28462bc1f2cf76",
+    "zipSHA256": "286e891978b48c8b8a007803cf3f00c491520b10c53da57a9a9060e1950e9e41",
+    "manifestSHA256": "9cea7dc1fa5b8ef9cc275e24b272ab8ad5f3734b1e46bfb3d8ebe5bbb5e5b4f7",
+    "validatedManifestMembers": 111,
+    "catalogueHead": "6bdf8ca523e6e777a333fe262dc9324a289fce00",
+    "catalogueSHA256": "838580c0bbe658230702a7225242e790e3b63fbabb06c863df5ceec0612b2ad2",
+    "catalogueBytes": 936,
+    "interceptedURL": "https://raw.githubusercontent.com/mekhovov/revealline/main/authoring/fpv-worlds/published/surface-coating-v1/index.json",
+    "catalogue": {
+      "format": "FPVWorldLibrary.v1",
+      "worlds": [
+        {
+          "id": "mountain-reservoir",
+          "title": ["Mountain Reservoir", "Гірське водосховище"],
+          "revision": "r16",
+          "commit": "ea57d2e321896ab873c2ca6ca06791a88362a674",
+          "path": "authoring/fpv-worlds/mountain-reservoir/distribution/r16/mountain-reservoir.r16.rlpack",
+          "sha256": "50ffbb0e5da7dec94862a8f2ca85cfeb60542d3fe9f86bd3c4e288dfa0a2e554",
+          "bytes": 1379988,
+          "courses": 8
+        },
+        {
+          "id": "festival-grounds",
+          "title": ["Festival Grounds", "Фестивальний майданчик"],
+          "revision": "r5",
+          "commit": "62d0e72f2963a61cc65ef829a320d9a1c2593b0c",
+          "path": "authoring/fpv-worlds/festival-grounds/distribution/r5/festival-grounds.r5.rlpack",
+          "sha256": "87baca276e174f31ba19c02f4f2359c97affa07eefd4a5f4912b4d8664450f51",
+          "bytes": 1256875,
+          "courses": 8
+        }
+      ]
+    },
+    "scope": "Native player and native Worker; only pending catalogue HTTPS response intercepted. Packs use original immutable HTTPS URLs, request options, hash checks, importer and atomic persistence. Fresh origin; no profile, clock, simulator or offline qualification overrides."
+  },
+  "url": "http://127.0.0.1:8991/optional-practice/fpv-worlds/festival-fixture.html",
+  "viewport": [1280, 720],
+  "observations": [
+    "Browse optional worlds lists Reservoir r16 and Festival r5 together",
+    "Festival download validates and reports Pack saved using the native Worker",
+    "Installed Festival identity is 87baca276e17 with eight challenges",
+    "My worlds exposes all eight Festival missions",
+    "Main lawn loop prepares its scene and starts only after explicit Arm / resume",
+    "Active flight advances; Pause restores the menu",
+    "Reload retains Festival and the same eight-challenge installed identity"
+  ],
+  "consoleWarnings": [],
+  "consoleErrors": [],
+  "limitations": [
+    "Catalogue response is the pending PR bytes, not evidence of public feed publication.",
+    "Player bytes are admitted 614adef; no claim that all protected checks passed or this composition is publicly live.",
+    "This run covers installation/persistence/scene/arm/pause; no new proof-completion, physical-device FPS or offline claim."
+  ],
+  "screenshot": {
+    "path": "authoring/fpv-worlds/published/evidence/festival-r5-library-native-flight.png",
+    "sha256": "a0c3cc3d72117f4263f06c3a693ab558e30611e8afbeb6399a854c2539006fc5"
+  },
+  "fixtureSources": [
+    "authoring/fpv-worlds/published/evidence/festival-library-fixture-server.py",
+    "authoring/fpv-worlds/published/evidence/festival-library-fixture-bootstrap.js",
+    "authoring/fpv-worlds/published/evidence/festival-library-fixture-worker.js"
+  ]
+}

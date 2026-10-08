@@ -21,6 +21,7 @@ import { actorDefinition, resolveActorFamily } from '../hunt/actor-catalog.mjs';
 import { actorEventReaction } from '../hunt/actor-reactions.mjs';
 import { drawHuntActor } from '../hunt/actor-art.mjs';
 import { sharedActorAppearance } from '../hunt/preferences.mjs';
+import { OVERFLIGHT_REACTION_FAMILIES } from '../overflight/reactions.mjs';
 
 const recentLines = new Map();
 const HISTORY_KEY = 'revealline.reaction-recent.v1';
@@ -66,6 +67,7 @@ const familyFor = (event) =>
     'craft.redeployed': 'recovery',
     'player.revived': event.reason === 'reserve' ? 'recovery' : 'rescue',
     'rescue.completed': 'rescue',
+    ...OVERFLIGHT_REACTION_FAMILIES,
   })[event.type];
 const urgent = (event) =>
   /^(combat.locked|player.failed|player.downed|lineImpact.seeded|impact.launched)$/.test(
@@ -323,6 +325,8 @@ export function attachContextualReactions({
   function hide() {
     motion?.cancel();
     motion = null;
+    if (current?.terminal && resultContainer && !journeyOwnsReactionCaption(resultContainer))
+      renderResultReactionCaption(resultContainer, null, options.snapshot(), false, getLocale());
     current = null;
     panel.hidden = true;
     panel.style.display = 'none';
@@ -352,7 +356,9 @@ export function attachContextualReactions({
     }
     if (!enabled) {
       clearTimeout(timer);
-      hide();
+      // Retain an accepted result so its shared checkbox can hide/show the
+      // caption without replaying its voice. Incidental lines still expire.
+      if (!current?.terminal) hide();
     }
     for (const [key, control] of controls) {
       if (control.type === 'checkbox') control.checked = state[key];
@@ -496,6 +502,9 @@ export function attachContextualReactions({
       buffer = cache.get(line.id, getLocale());
     if (state.speech && speak && buffer) {
       activeVoice = sound.playDialogue(buffer, {
+        // An accepted result may speak after gameplay SFX are retired. This
+        // never bypasses gesture, full lifecycle pause, mute or dialogue prefs.
+        ui: terminal === true,
         onended: () => {
           activeVoice = null;
           release();

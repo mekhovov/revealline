@@ -411,6 +411,18 @@ test('semantic menu rows keep horizontal edges and move vertically into adjacent
   assert.equal(h.document.activeElement, solo, 'explicit links cannot reach disabled controls');
 });
 
+test('explicit navigation targets skip unavailable alternatives in authored order', (context) => {
+  const h = setup(context),
+    current = h.control('button', { id: 'current' }),
+    hidden = h.control('button', { id: 'hidden', hidden: true }),
+    disabled = h.control('button', { id: 'disabled', disabled: true }),
+    target = h.control('button', { id: 'target' });
+  current.setAttribute('data-menu-down', 'hidden disabled target');
+  current.focus();
+  h.api.handle({ direction: 'down' });
+  assert.equal(h.document.activeElement, target);
+});
+
 for (const input of ['controller', 'keyboard'])
   for (const transposed of [false, true])
     test(`semantic ${input} group crossing reaches overlapping wide actions ${transposed ? 'horizontally' : 'vertically'} before distant narrow utilities`, (t) => {

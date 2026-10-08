@@ -1,0 +1,267 @@
+{
+  "scope": "Actual ordinary neutral-input flight; diagnostic actor motion only, no completion proof",
+  "rows": [
+    {
+      "course": "harbor-docks-05",
+      "samples": [
+        {
+          "tick": 1,
+          "status": "active",
+          "actor": {
+            "x": 4000,
+            "y": 2000,
+            "z": 14
+          }
+        },
+        {
+          "tick": 251,
+          "status": "active",
+          "actor": {
+            "x": 4002,
+            "y": 2001,
+            "z": 2967
+          }
+        },
+        {
+          "tick": 501,
+          "status": "active",
+          "actor": {
+            "x": 4002,
+            "y": 2001,
+            "z": 2967
+          }
+        },
+        {
+          "tick": 751,
+          "status": "active",
+          "actor": {
+            "x": 4002,
+            "y": 2001,
+            "z": 2967
+          }
+        },
+        {
+          "tick": 1001,
+          "status": "active",
+          "actor": {
+            "x": 4002,
+            "y": 2001,
+            "z": 2967
+          }
+        },
+        {
+          "tick": 1251,
+          "status": "active",
+          "actor": {
+            "x": 4002,
+            "y": 2001,
+            "z": 2967
+          }
+        },
+        {
+          "tick": 1501,
+          "status": "active",
+          "actor": {
+            "x": 4002,
+            "y": 2001,
+            "z": 2967
+          }
+        },
+        {
+          "tick": 1751,
+          "status": "active",
+          "actor": {
+            "x": 4002,
+            "y": 2001,
+            "z": 2967
+          }
+        },
+        {
+          "tick": 2001,
+          "status": "active",
+          "actor": {
+            "x": 4002,
+            "y": 2001,
+            "z": 2967
+          }
+        },
+        {
+          "tick": 2251,
+          "status": "active",
+          "actor": {
+            "x": 4002,
+            "y": 2001,
+            "z": 2967
+          }
+        },
+        {
+          "tick": 2501,
+          "status": "active",
+          "actor": {
+            "x": 4002,
+            "y": 2001,
+            "z": 2967
+          }
+        },
+        {
+          "tick": 2751,
+          "status": "active",
+          "actor": {
+            "x": 4002,
+            "y": 2001,
+            "z": 2967
+          }
+        }
+      ],
+      "final": {
+        "id": "harbor-service-cart",
+        "type": "vehicle",
+        "role": "civilian",
+        "position": {
+          "x": 4002,
+          "y": 2001,
+          "z": 2967
+        },
+        "radius": 800,
+        "height": 1200,
+        "health": 50,
+        "maxHealth": 50,
+        "status": "active",
+        "pathIndex": 1,
+        "cooldown": 0,
+        "blocked": true
+      }
+    },
+    {
+      "course": "harbor-docks-06",
+      "samples": [
+        {
+          "tick": 1,
+          "status": "active",
+          "actor": {
+            "x": -15500,
+            "y": 5500,
+            "z": 30006
+          }
+        },
+        {
+          "tick": 251,
+          "status": "active",
+          "actor": {
+            "x": -15501,
+            "y": 5500,
+            "z": 30415
+          }
+        },
+        {
+          "tick": 501,
+          "status": "active",
+          "actor": {
+            "x": -15501,
+            "y": 5500,
+            "z": 30415
+          }
+        },
+        {
+          "tick": 751,
+          "status": "active",
+          "actor": {
+            "x": -15501,
+            "y": 5500,
+            "z": 30415
+          }
+        },
+        {
+          "tick": 1001,
+          "status": "active",
+          "actor": {
+            "x": -15501,
+            "y": 5500,
+            "z": 30415
+          }
+        },
+        {
+          "tick": 1251,
+          "status": "active",
+          "actor": {
+            "x": -15501,
+            "y": 5500,
+            "z": 30415
+          }
+        },
+        {
+          "tick": 1501,
+          "status": "active",
+          "actor": {
+            "x": -15501,
+            "y": 5500,
+            "z": 30415
+          }
+        },
+        {
+          "tick": 1751,
+          "status": "active",
+          "actor": {
+            "x": -15501,
+            "y": 5500,
+            "z": 30415
+          }
+        },
+        {
+          "tick": 2001,
+          "status": "active",
+          "actor": {
+            "x": -15501,
+            "y": 5500,
+            "z": 30415
+          }
+        },
+        {
+          "tick": 2251,
+          "status": "active",
+          "actor": {
+            "x": -15501,
+            "y": 5500,
+            "z": 30415
+          }
+        },
+        {
+          "tick": 2501,
+          "status": "active",
+          "actor": {
+            "x": -15501,
+            "y": 5500,
+            "z": 30415
+          }
+        },
+        {
+          "tick": 2751,
+          "status": "active",
+          "actor": {
+            "x": -15501,
+            "y": 5500,
+            "z": 30415
+          }
+        }
+      ],
+      "final": {
+        "id": "harbor-deck-inspector",
+        "type": "patrol",
+        "role": "civilian",
+        "position": {
+          "x": -15501,
+          "y": 5500,
+          "z": 30415
+        },
+        "radius": 300,
+        "height": 1800,
+        "health": 50,
+        "maxHealth": 50,
+        "status": "active",
+        "pathIndex": 1,
+        "cooldown": 0,
+        "blocked": true
+      }
+    }
+  ]
+}

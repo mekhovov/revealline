@@ -1,3 +1,4 @@
+import { readSimMenuAudio } from './flight-fullscreen.mjs';
 import {
   createSimAppearancePreferences,
   resolveSimAppearance,
@@ -5,6 +6,7 @@ import {
 } from './world-themes.mjs';
 import { setMenuIcon } from '../../game/ui/native-menu-icons.mjs';
 import { sharedEnemyArtwork } from '../../game/hunt/preferences.mjs';
+import { Q, attitude, atan2, cos, isqrt, rotate, roundDiv } from './math.mjs';
 import { mountEnemyAppearanceControls } from '../../game/ui/enemy-appearance-controls.mjs';
 import {
   resolvePresentation,
@@ -268,6 +270,698 @@ export function practiceSkillFeedback(target, state, locale = 'en') {
   };
 }
 
+/** Observer-only goal guidance. Gauge values use metres, seconds, degrees or percent.
+ * A gauge describes correction; earned describes runtime credit. Neither awards progress.
+ * Legacy facts must match this exact consumed tick; missing facts never imply success. */
+export function flightGoalFeedback({
+  course,
+  mode = 'acro',
+  state,
+  legacyFacts = null,
+  legacy = false,
+  locale = 'en',
+  freeFlight = false,
+} = {}) {
+  const t = (en, uk) => (locale === 'uk' ? uk : en);
+  const axes = ['x', 'y', 'z'];
+  const finite = Number.isFinite;
+  const vector = (v) => v && axes.every((key) => Number.isSafeInteger(v[key]));
+  const length = (v) => (vector(v) ? isqrt(axes.reduce((n, key) => n + v[key] ** 2, 0)) : null);
+  const p = vector(state?.position) ? state.position : null;
+  const q =
+    state?.orientation?.length === 4 && state.orientation.every(Number.isSafeInteger)
+      ? state.orientation
+      : null;
+  const angles = q ? attitude(q) : state?.attitude;
+  const index = Number.isInteger(state?.step) ? state.step : 0;
+  const steps = course?.steps?.[mode] ?? [];
+  const target = state?.target ?? steps[index];
+  const world = !legacy;
+  const facts =
+    legacyFacts?.index === index && legacyFacts.tick === state?.ticks ? legacyFacts : null;
+  const result = {
+    id: `${course?.id ?? 'flight'}:${mode}:${index}:${target?.type ?? 'none'}`,
+    phase: 'waiting',
+    action: t('Find the next target', 'Знайдіть наступну ціль'),
+    label: '',
+    gauge: {
+      kind: 'height',
+      value: null,
+      min: 0,
+      max: 1,
+      valid: false,
+      met: false,
+      oneSided: null,
+      detail: '',
+    },
+    checks: [],
+    earned: { kind: 'hold', value: 0, total: 1, complete: false },
+    detail: '',
+    interaction: null,
+    worldTargetId: null,
+  };
+  const check = (id, label, met, valid = true) => {
+    const item = { id, label, met: Boolean(valid && met), valid: Boolean(valid) };
+    result.checks.push(item);
+    return item.met;
+  };
+  const gauge = (kind, value, min, max, label, oneSided = null, detail = '') => {
+    const valid = finite(value) && finite(min) && finite(max);
+    result.label = label;
+    result.gauge = {
+      kind,
+      value: valid ? value : null,
+      min,
+      max,
+      valid,
+      met: valid && (oneSided === 'max' || value >= min) && (oneSided === 'min' || value <= max),
+      oneSided,
+      detail,
+    };
+  };
+  const earned = (kind, value, total, complete = false) => {
+    result.earned = {
+      kind,
+      value: finite(value) ? Math.max(0, value) : 0,
+      total: finite(total) ? Math.max(0, total) : 0,
+      complete: Boolean(complete),
+    };
+  };
+  const relativeTilt = (normal = { x: 0, y: Q, z: 0 }) => {
+    if (!q || !vector(normal)) return null;
+    const up = rotate(q, { x: 0, y: Q, z: 0 });
+    const dot = Math.max(
+      -Q,
+      Math.min(
+        Q,
+        roundDiv(
+          axes.reduce((sum, axis) => sum + up[axis] * normal[axis], 0),
+          Q,
+        ),
+      ),
+    );
+    return Math.abs(atan2(isqrt(Math.max(0, Q * Q - dot * dot)), dot));
+  };
+  const inBand = (value, min, max) => finite(value) && value >= min && value <= max;
+  const zone = () => p && axes.every((axis) => inBand(p[axis], target.min[axis], target.max[axis]));
+  const heightGauge = () =>
+    gauge(
+      'height',
+      p ? p.y / 1000 : null,
+      target.min.y / 1000,
+      target.max.y / 1000,
+      t('Height', 'Висота'),
+    );
+  const zoneAction = () =>
+    !p
+      ? t('Enter the marked zone', 'Увійдіть у позначену зону')
+      : p.y < target.min.y
+        ? t('Climb into the band', 'Підніміться в смугу')
+        : p.y > target.max.y
+          ? t('Descend into the band', 'Спустіться в смугу')
+          : t('Move inside the marker', 'Увійдіть у межі позначки');
+  if (freeFlight) {
+    result.phase = 'free-flight';
+    result.action = t('Explore freely', 'Досліджуйте вільно');
+    gauge(
+      'height',
+      p ? p.y / 1000 : null,
+      0,
+      (course?.bounds?.max?.y ?? 100000) / 1000,
+      t('Height', 'Висота'),
+    );
+    earned('none', 0, 0);
+    return result;
+  }
+  if (!target) {
+    const complete = state?.status === 'complete' || Boolean(steps.length && index >= steps.length);
+    result.phase = complete ? 'complete' : 'waiting';
+    result.action = complete
+      ? t('Route complete', 'Маршрут виконано')
+      : t('Waiting for the objective', 'Очікування цілі');
+    earned(
+      'steps',
+      complete ? steps.length || state?.total || 1 : 0,
+      steps.length || state?.total || 1,
+      complete,
+    );
+    return result;
+  }
+  result.phase = 'correct';
+  if (['hold', 'land'].includes(target.type)) {
+    const speed = world ? length(state?.velocity) : facts?.speed;
+    const tilt = world
+      ? target.type === 'land' && state?.support
+        ? relativeTilt(state.support.normal)
+        : angles && finite(angles.roll) && finite(angles.pitch)
+          ? Math.max(Math.abs(angles.roll), Math.abs(angles.pitch))
+          : null
+      : facts?.tilt;
+    const command = state?.lastInput;
+    const centred =
+      world && command
+        ? ['pitch', 'roll', 'yaw'].every(
+            (key) => finite(command[key]) && Math.abs(command[key]) <= 50,
+          )
+        : facts?.conditions?.centred;
+    const heading =
+      world && finite(angles?.yaw) && finite(target.heading)
+        ? Math.abs(((angles.yaw - target.heading + 54000) % 36000) - 18000)
+        : facts?.headingError;
+    const heightMet = check(
+      'height',
+      t('Height band', 'Смуга висоти'),
+      p && inBand(p.y, target.min.y, target.max.y),
+      Boolean(p),
+    );
+    const positionMet = check(
+      'position',
+      t('Inside marker', 'У межах позначки'),
+      p && ['x', 'z'].every((axis) => inBand(p[axis], target.min[axis], target.max[axis])),
+      Boolean(p),
+    );
+    const tiltMet = check(
+      'tilt',
+      t('Tilt band', 'Смуга нахилу'),
+      inBand(tilt, target.minTilt, target.maxTilt),
+      finite(tilt),
+    );
+    const centredMet =
+      !target.centred ||
+      check(
+        'centred',
+        t('Rotation sticks centred', 'Стіки обертання в центрі'),
+        centred,
+        world ? Boolean(command) : typeof facts?.conditions?.centred === 'boolean',
+      );
+    const speedMet = check(
+      'speed',
+      t('Slow enough', 'Достатньо повільно'),
+      finite(speed) && speed <= target.maxSpeed,
+      finite(speed),
+    );
+    const headingMet =
+      !finite(target.heading) ||
+      check(
+        'heading',
+        t('Correct heading', 'Правильний курс'),
+        finite(heading) && heading <= 1500,
+        finite(heading),
+      );
+    let touchdownMet = true,
+      throttleMet = true;
+    const throttle = world ? command?.throttle : facts?.throttle;
+    if (target.type === 'land') {
+      const supported = world
+        ? state.grounded && (!target.surface || state.support?.id === target.surface)
+        : facts?.grounded;
+      const impactSpeed = world ? state?.landingSpeed : facts?.landingSpeed;
+      const impactTilt = world ? state?.landingTilt : facts?.landingTilt;
+      touchdownMet = check(
+        'touchdown',
+        t('Soft touchdown', 'М’яке торкання'),
+        supported &&
+          finite(impactSpeed) &&
+          impactSpeed <= target.maxSpeed &&
+          finite(impactTilt) &&
+          impactTilt <= target.maxTilt,
+        typeof supported === 'boolean' && finite(impactSpeed) && finite(impactTilt),
+      );
+      throttleMet = check(
+        'throttle',
+        t('Throttle down', 'Газ униз'),
+        finite(throttle) && throttle <= 100,
+        finite(throttle),
+      );
+    }
+    heightGauge();
+    result.action = t('Hold steady', 'Утримуйте стабільно');
+    if (!heightMet) result.action = zoneAction();
+    else if (!positionMet) {
+      result.action = zoneAction();
+      const axis = ['x', 'z'].find(
+        (key) => !p || !inBand(p[key], target.min[key], target.max[key]),
+      );
+      gauge(
+        'range',
+        p ? p[axis] / 1000 : null,
+        target.min[axis] / 1000,
+        target.max[axis] / 1000,
+        t('Inside marker', 'У межах позначки'),
+      );
+    } else if (!tiltMet || !centredMet || target.minTilt > 0) {
+      gauge(
+        'tilt',
+        finite(tilt) ? tilt / 100 : null,
+        target.minTilt / 100,
+        target.maxTilt / 100,
+        t('Tilt', 'Нахил'),
+        target.minTilt ? null : 'max',
+      );
+      result.action = !tiltMet
+        ? tilt < target.minTilt
+          ? t('Tilt gently', 'Плавно нахиліть')
+          : t('Reduce the tilt', 'Зменште нахил')
+        : !centredMet
+          ? t('Centre rotation sticks', 'Центруйте стіки обертання')
+          : t('Keep the tilt; hold steady', 'Збережіть нахил; утримуйте');
+    }
+    // Once the entry pose is right, explain the next failing condition without replacing
+    // the tilt band during the defining Acro tilt-and-centre exercise.
+    if (heightMet && positionMet && tiltMet && centredMet) {
+      if (!speedMet) {
+        result.action = t('Brake the drift gently', 'Плавно загальмуйте дрейф');
+        if (!target.minTilt)
+          gauge(
+            'speed',
+            finite(speed) ? speed / 1000 : null,
+            0,
+            target.maxSpeed / 1000,
+            t('Speed', 'Швидкість'),
+            'max',
+          );
+      } else if (!headingMet) {
+        result.action = t('Turn the nose to the marker', 'Поверніть ніс до позначки');
+        gauge(
+          'heading',
+          finite(heading) ? heading / 100 : null,
+          0,
+          15,
+          t('Heading error', 'Відхилення курсу'),
+          'max',
+        );
+      } else if (!touchdownMet) {
+        result.action =
+          state?.grounded || facts?.grounded
+            ? t('Lift slightly; land softly again', 'Трохи злетіть; сядьте м’якіше')
+            : t('Touch down softly on the pad', 'М’яко торкніться майданчика');
+      } else if (!throttleMet) {
+        result.action = t('Lower throttle fully', 'Повністю опустіть газ');
+        gauge(
+          'throttle',
+          finite(throttle) ? throttle / 10 : null,
+          0,
+          10,
+          t('Throttle', 'Газ'),
+          'max',
+        );
+      } else result.phase = 'hold';
+    }
+    const hold = world ? state?.hold : facts?.hold;
+    earned('hold', finite(hold) ? hold / 50 : 0, target.ticks / 50, Boolean(facts?.accepted));
+    result.detail =
+      target.minTilt && target.centred && mode !== 'acro'
+        ? t(
+            'Self-level returns toward level when you release the sticks. The Acro example shows retained tilt.',
+            'Самовирівнювання повертає до горизонту після відпускання стіків. Приклад Acro показує збереження нахилу.',
+          )
+        : t(
+            'Keep every condition together; the hold restarts if one is lost.',
+            'Утримуйте всі умови разом; втрата однієї скидає час утримання.',
+          );
+    return result;
+  }
+  if (target.type === 'gate' || target.type === 'crossing-v1') {
+    const advanced = target.type === 'crossing-v1';
+    const sides = advanced
+      ? axes.filter((axis) => axis !== target.axis)
+      : [target.axis === 'x' ? 'z' : 'x', 'y'];
+    const bands = advanced
+      ? [
+          [target.minA, target.maxA],
+          [target.minB, target.maxB],
+        ]
+      : [
+          [target.minSide, target.maxSide],
+          [target.minY, target.maxY],
+        ];
+    const aligned = sides.map((axis, i) =>
+      check(
+        axis === 'y' ? 'height' : `opening-${axis}`,
+        axis === 'y'
+          ? t('Opening height', 'Висота отвору')
+          : t('Opening alignment', 'У створі отвору'),
+        p && inBand(p[axis], ...bands[i]),
+        Boolean(p),
+      ),
+    );
+    const remaining = p ? (target.at - p[target.axis]) * target.direction : null;
+    const approach = check(
+      'approach',
+      t('Approach side', 'Бік заходу'),
+      remaining > 0,
+      finite(remaining),
+    );
+    const side = Math.max(
+      0,
+      aligned.findIndex((value) => !value),
+    );
+    gauge(
+      sides[side] === 'y' ? 'height' : 'alignment',
+      p ? p[sides[side]] / 1000 : null,
+      bands[side][0] / 1000,
+      bands[side][1] / 1000,
+      t('Opening', 'Отвір'),
+    );
+    result.action = !p
+      ? t('Find the marked opening', 'Знайдіть позначений отвір')
+      : !approach
+        ? t('Return to the approach side', 'Поверніться на бік заходу')
+        : !aligned.every(Boolean)
+          ? t('Line up with the opening', 'Вирівняйтеся з отвором')
+          : t('Fly through the arrow', 'Пролетіть за стрілкою');
+    if (advanced) {
+      const speed = vector(state?.velocity) ? state.velocity[target.axis] * target.direction : null;
+      const forward = q ? rotate(q, { x: 0, y: 0, z: -Q })[target.axis] * target.direction : null;
+      const speedMet = check(
+        'speed',
+        t('Crossing speed', 'Швидкість перетину'),
+        speed >= target.minSpeed,
+        finite(speed),
+      );
+      const noseMet = check(
+        'heading',
+        t('Nose follows travel', 'Ніс уздовж руху'),
+        forward >= cos(target.forwardTolerance),
+        finite(forward),
+      );
+      check(
+        'airborne',
+        t('Clear of ground', 'Над землею'),
+        state?.grounded === false,
+        typeof state?.grounded === 'boolean',
+      );
+      check('zone', t('Inside practice zone', 'У навчальній зоні'), zone(), Boolean(p));
+      if (approach && aligned.every(Boolean) && !speedMet) {
+        result.action = t('Build speed toward the opening', 'Наберіть швидкість до отвору');
+        gauge(
+          'speed',
+          finite(speed) ? speed / 1000 : null,
+          target.minSpeed / 1000,
+          Math.max(target.minSpeed / 1000, 1),
+          t('Crossing speed', 'Швидкість перетину'),
+          'min',
+        );
+      } else if (approach && aligned.every(Boolean) && !noseMet)
+        result.action = t('Point the nose along the arrow', 'Спрямуйте ніс за стрілкою');
+    }
+    result.phase = !approach ? 'approach' : 'cross';
+    result.detail = t(
+      'Cross from the indicated side. Distance and alignment are guidance, not crossing credit.',
+      'Перетинайте з позначеного боку. Відстань і вирівнювання лише спрямовують, не зараховують перетин.',
+    );
+    earned('crossing', 0, 1);
+    return result;
+  }
+  if (['hunt-contact-v1', 'eliminate'].includes(target.type)) {
+    const contact = target.type === 'hunt-contact-v1';
+    const available = contact ? Array.isArray(state?.hunt?.caught) : Array.isArray(state?.actors);
+    const done = (id) =>
+      contact
+        ? state?.hunt?.caught?.includes(id)
+        : state?.actors?.some((actor) => actor.id === id && actor.status === 'defeated');
+    const caught = target.targets.filter(done).length;
+    result.phase = contact ? 'catch' : 'combat';
+    result.interaction = contact ? 'touch' : 'fire';
+    result.worldTargetId = target.targets.find((id) => !done(id)) ?? null;
+    result.action = contact
+      ? target.ordered
+        ? t('Touch the next marked target', 'Торкніться наступної цілі')
+        : t('Touch a marked target', 'Торкніться позначеної цілі')
+      : t('Fire at the marked target', 'Стріляйте в позначену ціль');
+    gauge(
+      'count',
+      available ? caught : null,
+      0,
+      target.targets.length,
+      contact ? t('Caught', 'Спіймано') : t('Defeated', 'Знешкоджено'),
+    );
+    result.gauge.met = available && caught === target.targets.length;
+    earned(contact ? 'catches' : 'defeats', caught, target.targets.length);
+    result.detail = contact
+      ? t(
+          'Contact catches count. Shooting does not complete this objective.',
+          'Зараховуються перехвати торканням. Стрільба не виконує цю ціль.',
+        )
+      : t(
+          'Use fire to defeat the targets. Touching them does not count.',
+          'Знешкодьте цілі вогнем. Торкання не зараховуються.',
+        );
+    return result;
+  }
+  if (target.type === 'survive') {
+    result.phase = 'survive';
+    result.action = t('Stay safe until time is up', 'Збережіться до кінця відліку');
+    gauge(
+      'time',
+      finite(state?.hold) ? state.hold / 50 : null,
+      0,
+      target.ticks / 50,
+      t('Time survived', 'Час виживання'),
+    );
+    result.gauge.met = finite(state?.hold) && state.hold >= target.ticks;
+    earned('time', (state?.hold ?? 0) / 50, target.ticks / 50);
+    return result;
+  }
+  if (target.type === 'actor-track-v1') {
+    const track = state?.actorTrack?.index === index ? state.actorTrack : null;
+    const actor = state?.actors?.find((item) => item.id === target.actorId);
+    const lift =
+      actor && (['patrol', 'sentry'].includes(actor.type) ? actor.height / 2 : actor.radius);
+    const distance =
+      p && vector(actor?.position) && finite(lift)
+        ? length({
+            x: actor.position.x - p.x,
+            y: actor.position.y + lift - p.y - (course?.rules?.droneRadius ?? 220),
+            z: actor.position.z - p.z,
+          })
+        : null;
+    const reasons = {
+      'acquire-subject': t('Face the marked subject', 'Спрямуйте ніс на об’єкт'),
+      'subject-unavailable': t('Subject unavailable; restart', 'Об’єкт недоступний; почніть знову'),
+      'airborne-clearance': t('Lift off to follow', 'Злетіть для стеження'),
+      'subject-range':
+        distance < target.minDistance
+          ? t('Back away a little', 'Трохи віддаліться')
+          : t('Move closer to the subject', 'Наблизьтеся до об’єкта'),
+      'relative-speed': t('Match the subject’s speed', 'Узгодьте швидкість з об’єктом'),
+      'airframe-tilt': t('Reduce the tilt', 'Зменште нахил'),
+      'nose-alignment': t('Point the nose at the subject', 'Спрямуйте ніс на об’єкт'),
+      'subject-occluded': t('Find a clear sight line', 'Знайдіть пряму видимість'),
+      'subject-travel': t('Keep following its movement', 'Продовжуйте стеження за рухом'),
+    };
+    result.phase = track?.status === 'tracking' ? 'track' : 'acquire';
+    result.interaction = target.minTargetTravel ? 'follow' : 'observe';
+    result.worldTargetId = target.actorId;
+    result.action =
+      reasons[track?.reason] ?? t('Keep the subject in view', 'Тримайте об’єкт у полі зору');
+    gauge(
+      'range',
+      finite(distance) ? distance / 1000 : null,
+      target.minDistance / 1000,
+      target.maxDistance / 1000,
+      t('Distance to subject', 'Відстань до об’єкта'),
+    );
+    // Runtime evaluates these in order and stops at the first failure. Later checks
+    // are unknown, never inferred from pixels or absent measurements after reset.
+    const order = [
+      'subject-unavailable',
+      'airborne-clearance',
+      'subject-range',
+      'relative-speed',
+      'airframe-tilt',
+      'nose-alignment',
+      'subject-occluded',
+    ];
+    const labels = [
+      t('Subject available', 'Об’єкт доступний'),
+      t('Airborne', 'У повітрі'),
+      t('Distance band', 'Смуга відстані'),
+      t('Matched speed', 'Узгоджена швидкість'),
+      t('Steady tilt', 'Стабільний нахил'),
+      t('Nose on subject', 'Ніс на об’єкт'),
+      t('Clear sight line', 'Пряма видимість'),
+    ];
+    const all = track && ['tracking', 'complete'].includes(track.status);
+    const failed = order.indexOf(track?.reason);
+    order.forEach((reason, i) =>
+      check(reason, labels[i], all || failed > i, Boolean(all || failed >= i)),
+    );
+    if (track?.reason === 'airframe-tilt') {
+      const tilt = relativeTilt();
+      gauge(
+        'tilt',
+        finite(tilt) ? tilt / 100 : null,
+        0,
+        target.maxTilt / 100,
+        t('Tilt', 'Нахил'),
+        'max',
+      );
+    }
+    const hold = track ? (state?.hold ?? 0) : 0;
+    if (target.minTargetTravel && hold >= target.ticks) {
+      earned(
+        'travel',
+        (track?.travel ?? 0) / 1000,
+        target.minTargetTravel / 1000,
+        track?.status === 'complete',
+      );
+      result.detail = t(
+        'Time held; keep following until the subject finishes the distance.',
+        'Час утримано; стежте, доки об’єкт не пройде потрібну відстань.',
+      );
+    } else earned('hold', hold / 50, target.ticks / 50, track?.status === 'complete');
+    return result;
+  }
+  const skillInfo = practiceSkillFeedback(target, state, locale);
+  if (skillInfo) {
+    const skill = state?.skill?.index === index ? state.skill : null;
+    const active = skill && ['active', 'complete'].includes(skill.status);
+    const complete = skill?.status === 'complete';
+    const angular = state?.angular;
+    const rotationLow = ['pitch', 'roll', 'yaw'].every(
+      (axis) => finite(angular?.[axis]) && Math.abs(angular[axis]) <= target.maxAngular,
+    );
+    const inZone = check('zone', t('Practice zone', 'Навчальна зона'), zone(), Boolean(p));
+    check(
+      'airborne',
+      t('Clear of ground', 'Над землею'),
+      state?.grounded === false,
+      typeof state?.grounded === 'boolean',
+    );
+    heightGauge();
+    result.phase = active ? 'manoeuvre' : 'entry';
+    result.action = !inZone
+      ? zoneAction()
+      : t('Follow the marked manoeuvre', 'Виконайте позначений маневр');
+    result.detail = skillInfo.hint;
+    const entryActions = {
+      'airborne-clearance': t('Recover into clear air', 'Поверніться у вільне повітря'),
+      'entry-attitude': t('Settle at the entry attitude', 'Стабілізуйте положення входу'),
+      'entry-bearing': t('Return to the marked entry', 'Поверніться до позначеного входу'),
+      'time-window': t('Return to entry; try again', 'Поверніться до входу; повторіть'),
+      'rotation-purity': t(
+        'Settle; use only the shown axis',
+        'Стабілізуйтеся; рухайте показану вісь',
+      ),
+      'missed-attitude': t('Retry the whole rotation', 'Повторіть повний оберт'),
+      'path-envelope': t('Return to the marked path band', 'Поверніться в смугу траєкторії'),
+      'path-direction': t('Return; follow the path arrow', 'Поверніться; летіть за стрілкою'),
+      'path-axial-progress': t('Combine travel with the turn', 'Поєднайте рух із поворотом'),
+      'rotation-path-phase': t('Match rotation to the path', 'Узгодьте оберт із траєкторією'),
+      'ambiguous-path': t('Return to entry; try again', 'Поверніться до входу; повторіть'),
+    };
+    if (target.type === 'rotation-v1') {
+      const checkpoint = active ? (skill.rotation?.checkpoint ?? 0) : 0;
+      const amount = active ? skill.rotation?.angle : null;
+      gauge(
+        'rotation',
+        finite(amount) ? amount / 100 : null,
+        (target.angle - target.tolerance) / 100,
+        (target.angle + target.tolerance) / 100,
+        t('Rotation traced', 'Пройдений оберт'),
+      );
+      result.action =
+        checkpoint >= target.angle / 9000
+          ? t('Settle at the exit attitude', 'Стабілізуйте положення виходу')
+          : skillInfo.label;
+      if (checkpoint >= target.angle / 9000)
+        earned('hold', (skill?.dwell ?? 0) / 50, target.settleTicks / 50, complete);
+      else earned('checkpoints', checkpoint, target.angle / 9000, complete);
+      check(
+        'settled',
+        t('Rotation settled', 'Обертання зупинено'),
+        rotationLow,
+        Boolean(angular && finite(target.maxAngular)),
+      );
+    } else if (target.type === 'attitude-v1') {
+      const angle = relativeTilt();
+      const expected = target.up === 'inverted' ? 180 : 0;
+      gauge(
+        'tilt',
+        finite(angle) ? angle / 100 : null,
+        Math.max(0, expected - target.tolerance / 100),
+        Math.min(180, expected + target.tolerance / 100),
+        t('Attitude', 'Положення'),
+      );
+      if (q)
+        result.gauge.met =
+          rotate(q, { x: 0, y: Q, z: 0 }).y * (target.up === 'upright' ? 1 : -1) >=
+          cos(target.tolerance);
+      result.action =
+        target.up === 'inverted'
+          ? t('Hold briefly inverted', 'Коротко утримайте перевернутим')
+          : t('Recover upright and settle', 'Вирівняйтеся й стабілізуйтеся');
+      const speed = length(state?.velocity);
+      check(
+        'speed',
+        t('Slow enough', 'Достатньо повільно'),
+        speed <= target.maxSpeed,
+        finite(speed),
+      );
+      check('settled', t('Rotation settled', 'Обертання зупинено'), rotationLow, Boolean(angular));
+      earned('hold', active ? (skill.dwell ?? 0) / 50 : 0, target.ticks / 50, complete);
+    } else if (target.type === 'path-v1') {
+      const radius = p
+        ? isqrt(
+            [...target.plane].reduce((sum, axis) => sum + (p[axis] - target.center[axis]) ** 2, 0),
+          )
+        : null;
+      gauge(
+        'range',
+        finite(radius) ? radius / 1000 : null,
+        target.radiusMin / 1000,
+        target.radiusMax / 1000,
+        t('Distance from landmark', 'Відстань до орієнтира'),
+      );
+      result.action =
+        radius < target.radiusMin
+          ? t('Move out into the path band', 'Віддаліться в смугу траєкторії')
+          : radius > target.radiusMax
+            ? t('Move in toward the path band', 'Наблизьтеся до смуги траєкторії')
+            : t('Follow the path arrow', 'Летіть за стрілкою траєкторії');
+      earned(
+        'checkpoints',
+        active ? (skill.path?.checkpoint ?? 0) : 0,
+        target.sweep / 9000,
+        complete,
+      );
+      if (target.coupled)
+        check(
+          'coupled',
+          t('Body follows the path', 'Корпус узгоджено з траєкторією'),
+          active &&
+            Math.abs(
+              (skill.rotation?.angle ?? 0) * target.sweep -
+                (skill.path?.winding ?? 0) * target.coupled.angle,
+            ) <=
+              target.coupled.phaseTolerance * target.sweep,
+          Boolean(active && skill.rotation && skill.path),
+        );
+      if (target.axialMin || target.axialMax) {
+        const axis = axes.find((key) => !target.plane.includes(key));
+        const travel = active && p && finite(skill.startAxis) ? p[axis] - skill.startAxis : null;
+        check(
+          'travel',
+          t('Required travel', 'Потрібне переміщення'),
+          inBand(travel, target.axialMin, target.axialMax),
+          finite(travel),
+        );
+      }
+    }
+    if (!active)
+      result.action =
+        entryActions[skill?.reason] ??
+        (!inZone
+          ? zoneAction()
+          : t('Settle at the marked entry', 'Стабілізуйтеся в позначеному вході'));
+    if (complete) result.phase = 'complete';
+    return result;
+  }
+  result.action = t('Follow the current objective', 'Виконайте поточну ціль');
+  return result;
+}
+
 /** Presentation only: shared game fonts, icons and short menu cues. No simulation input. */
 const fontOwners = new WeakMap();
 const cueNames = new Set(['focus', 'confirm', 'cancel']);
@@ -334,7 +1028,7 @@ export function mountSimAudioControls({
   const mix = createSimAudioMix({ storage });
   const controls = [];
   const names = {
-    interface: ['Interface & feedback', 'Інтерфейс і сигнали'],
+    interface: ['Flight feedback', 'Звуки подій польоту'],
     motor: ['Drone motors', 'Мотори дрона'],
     ambience: ['Environment & wind', 'Оточення та вітер'],
   };
@@ -1703,6 +2397,7 @@ export function installSimThemeHost({
   window: win = doc?.defaultView ?? globalThis.window,
   getStorage = () => win?.localStorage,
   getAppearanceDefault = () => simAppearanceDefaultFromURL(win?.location),
+  displayPreferences,
 } = {}) {
   const preferences = createThemePreferences({ window: win, getStorage });
   const listeners = new Set();
@@ -1755,7 +2450,7 @@ export function installSimThemeHost({
   const refresh = () => {
     if (disposed) return snapshot;
     const values = preferences.snapshot(),
-      display = read('revealline.display.v1');
+      display = displayPreferences?.snapshot() ?? read('revealline.display.v1');
     const ornaments = values.ornaments === 'theme' ? 'subtle' : values.ornaments;
     const body = doc.body?.dataset ?? {};
     const appearanceDefault = getAppearanceDefault();
@@ -1786,10 +2481,13 @@ export function installSimThemeHost({
       ornaments: ['off', 'subtle', 'rich'].includes(ornaments) ? ornaments : 'subtle',
       accessibility: {
         ...values,
-        textFace: body.textFace ?? display.textFace,
-        textSize: body.textSize ?? display.textSize,
+        textFace: display.textFace ?? body.textFace,
+        textSize: display.textSize ?? body.textSize,
         reducedEffects:
-          display.reducedEffects === true || motion?.matches === true || body.effects === 'reduced',
+          display.effectiveReducedEffects === true ||
+          display.reducedEffects === true ||
+          motion?.matches === true ||
+          (!displayPreferences && body.effects === 'reduced'),
         coarsePointer: coarse?.matches === true,
       },
     });
@@ -1808,6 +2506,7 @@ export function installSimThemeHost({
     return snapshot;
   };
   const stop = preferences.subscribe(refresh);
+  const stopDisplay = displayPreferences?.subscribe(refresh);
   const storageChanged = (event) => {
     if (['revealline.display.v1', 'revealline.menu-style.v1'].includes(event.key)) refresh();
   };
@@ -1827,6 +2526,50 @@ export function installSimThemeHost({
     ready: Promise.resolve(snapshot),
     refresh,
     set: (patch) => preferences.set(patch),
+    availableThemeChoices() {
+      const requested = getAppearanceDefault();
+      const candidate = contextCandidate(requested);
+      const follow =
+        candidate ??
+        resolveThemeFamilySelection({ familyId: 'follow-game', appearanceDefault: requested });
+      const candidates = [...admitted.values()];
+      return [
+        {
+          id: 'follow-game',
+          family: follow.family,
+          interfaceTheme:
+            follow.interfaceTheme ??
+            getInterfaceTheme(follow.family.interface.id, follow.family.interface.revision),
+          basis: candidate?.basis,
+        },
+        ...BUILTIN_THEME_FAMILIES.map((family) => ({
+          id: family.id,
+          family,
+          interfaceTheme: getInterfaceTheme(family.interface.id, family.interface.revision),
+        })),
+        ...candidates
+          .filter((item) => !BUILTIN_THEME_FAMILIES.some((family) => family.id === item.family.id))
+          .map((item) => ({
+            id: item.family.id,
+            family: item.family,
+            interfaceTheme: item.interfaceTheme,
+            basis: item.basis,
+          })),
+      ];
+    },
+    applyComplete(id) {
+      override = null;
+      preferences.applyComplete(id);
+      const EventType = win?.CustomEvent ?? globalThis.CustomEvent;
+      if (EventType)
+        win?.dispatchEvent?.(
+          new EventType('revealline:complete-theme', { detail: { familyId: id } }),
+        );
+      return refresh();
+    },
+    subscribeStatus(listener) {
+      return preferences.subscribe(() => listener(preferences.getWarning()));
+    },
     getWarning: () => preferences.getWarning(),
     setInterface(id, revision) {
       const source = id === null ? null : getInterfaceTheme(id, revision);
@@ -1843,6 +2586,7 @@ export function installSimThemeHost({
       if (disposed) return;
       disposed = true;
       stop();
+      stopDisplay?.();
       preferences.dispose();
       observer?.disconnect();
       cleanup?.();
@@ -1868,6 +2612,7 @@ export function mountSimAppearanceControls({
   accepted = () => null,
   onChange = () => {},
   getAppearanceDefault = () => simAppearanceDefaultFromURL(win?.location),
+  displayPreferences,
 } = {}) {
   let storage;
   try {
@@ -1881,6 +2626,7 @@ export function mountSimAppearanceControls({
     window: win,
     getStorage: () => storage,
     getAppearanceDefault,
+    displayPreferences,
   });
   const fieldset = doc.createElement('fieldset');
   fieldset.className = 'sim-appearance-controls';
@@ -2040,6 +2786,7 @@ export function mountSimAppearanceControls({
   refresh();
   return Object.freeze({
     resolve,
+    host,
     preferences,
     refresh,
     changed: notify,
@@ -2074,6 +2821,13 @@ export function mountSimPresentation({
   const doc = root?.nodeType === 9 ? root : root?.ownerDocument;
   if (!doc || !win) throw new TypeError('Simulator presentation requires a document.');
   const releaseFonts = acquireFonts(doc, win);
+  let menuStorage;
+  try {
+    menuStorage = win.localStorage;
+  } catch {
+    /* Sound stays available for this visit. */
+  }
+  let menuSettings = readSimMenuAudio(menuStorage);
   let selected = Boolean(enabled);
   let level = audioVolume(volume);
   if (preferenceKey) {
@@ -2095,7 +2849,14 @@ export function mountSimPresentation({
   let lastTrustedAt = -Infinity;
   const voices = new Set();
   const buffers = new Map();
-  const active = () => !disposed && selected && wanted && focused && !doc.hidden;
+  const active = () =>
+    !disposed &&
+    selected &&
+    menuSettings.enabled &&
+    menuSettings.volume > 0 &&
+    wanted &&
+    focused &&
+    !doc.hidden;
 
   function stopVoices() {
     for (const source of voices) {
@@ -2140,7 +2901,7 @@ export function mountSimPresentation({
         if (!candidate || !audioHost.menuBus) return false;
       } else candidate = new AudioContext({ latencyHint: 'interactive' });
       master = candidate.createGain();
-      master.gain.value = 0.3 * level;
+      master.gain.value = 0.3 * level * menuSettings.volume;
       master.connect(audioHost ? audioHost.menuBus : candidate.destination);
       context = candidate;
       const epoch = generation;
@@ -2248,6 +3009,19 @@ export function mountSimPresentation({
   win.addEventListener('focus', gainFocus);
   win.addEventListener('pagehide', pageHide);
   win.addEventListener('pageshow', pageShow);
+  const menuPreferenceChanged = (event) => {
+    if (event?.type === 'storage' && event.key !== 'revealline.menu-audio.v1' && event.key !== null)
+      return;
+    try {
+      menuSettings = readSimMenuAudio(win.localStorage);
+    } catch {
+      /* Keep this visit's intent. */
+    }
+    if (master && context.state !== 'closed')
+      master.gain.setTargetAtTime(0.3 * level * menuSettings.volume, context.currentTime, 0.025);
+    synchronize();
+  };
+  win.addEventListener('storage', menuPreferenceChanged);
   const observer = win.MutationObserver
     ? new win.MutationObserver((records) => {
         for (const record of records) {
@@ -2269,12 +3043,25 @@ export function mountSimPresentation({
     refresh,
     soundEnabled: () => selected,
     volume: () => level,
+    get menuSettings() {
+      return menuSettings;
+    },
+    set menuSettings(value) {
+      menuSettings = { enabled: !!value.enabled, volume: audioVolume(value.volume) };
+    },
+    applyVolumes() {
+      if (master && context.state !== 'closed') {
+        master.gain.cancelScheduledValues(context.currentTime);
+        master.gain.setTargetAtTime(0.3 * level * menuSettings.volume, context.currentTime, 0.025);
+      }
+      synchronize();
+    },
     setVolume(value) {
       if (disposed) return;
       level = audioVolume(value);
       if (!master || context.state === 'closed') return;
       master.gain.cancelScheduledValues(context.currentTime);
-      master.gain.setTargetAtTime(0.3 * level, context.currentTime, 0.025);
+      master.gain.setTargetAtTime(0.3 * level * menuSettings.volume, context.currentTime, 0.025);
       if (!level) stopVoices();
     },
     setSoundPreference(value) {
@@ -2327,6 +3114,7 @@ export function mountSimPresentation({
       win.removeEventListener('focus', gainFocus);
       win.removeEventListener('pagehide', pageHide);
       win.removeEventListener('pageshow', pageShow);
+      win.removeEventListener('storage', menuPreferenceChanged);
       stopVoices();
       buffers.clear();
       master?.disconnect();
@@ -2570,12 +3358,20 @@ export function paintStickDirections(element, { horizontal, vertical, locale = '
 
 // BEGIN GENERATED ACADEMY SHARED AUDIO
 // Generated by scripts/refresh-fpv-academy-audio.mjs; edit canonical audio sources instead.
-// No new package files, recordings, gameplay clocks or simulation state.
+// Existing package slot, compact CC0 reactions, no gameplay clocks or simulation state.
 import * as academyAudioExternal0 from '../../game/i18n/index.mjs';
 export const createSimFlightAudio = (() => {
   const sourceHashes = Object.freeze({
     'optional-practice/civilian-fpv/world-audio.mjs':
-      '753913b5070fec47a140236f5f820107254969b122dcf420bf139421546c3fbb',
+      'cc05ffc5e1b54f500efc17dccf77c96c608a2fc535e8947b8787eccb2103565f',
+    'game/ui/human-reaction-policy.mjs':
+      'dd5992bca561093f9a8c31c4e2cd51ddb239e97719df8d2567f27e4330f7b731',
+    'game/ui/destruction-audio.mjs':
+      'b9a52dbf64e751536a171a0e0d26223bd01e3e8d3fee5c0dffb4556b8775d85b',
+    'game/audio/human-reactions/portable.mjs':
+      '2f2654e7c6d2bb83d9f1b9e4c139ba348f205a70350328816eb0b3f8161fa696',
+    'game/ui/destruction-level.mjs':
+      'ffbdf16469259f5ef6be0197aa8efd458038106d39cae6b25a57231aff790f61',
     'game/audio/dialogue-mix.mjs':
       '43ffa5b261e585e59b515fab19d1b6d0ccf636152ca6107602dbdb9143ddb00a',
     'game/ui/audio-output.mjs': 'dc1b2776407d0b6649b0d15c5c721bd59384d7e38a2e61087961ff7a37bd86c1',
@@ -2583,13 +3379,257 @@ export const createSimFlightAudio = (() => {
     'game/audio-preferences.mjs':
       '9212831a3524c9e1ebe8c595783f9f53a112e02e3d51280d775ac103b94a9239',
     'game/ui/encounter-audio.mjs':
-      'de48fc709c99c571e1e2a15e8a5cb1958a53e6404751cc3482255f05c626c519',
+      '3e9d6fff44aadd5a31e4c61daa4de22b58c4383f406e7ce7de1a3910434b1608',
     'game/ui/movement-audio.mjs':
       '685d8e458401354028a2cacda0c7b1009b3c1e480a08d4cafce46d8f98b69020',
     'game/ui/dialogue-channel.mjs':
       'f4839f3a1634189a03eed6a3096dc595dfc88ee6437277ee82d78de05c300142',
   });
   const modules = Object.create(null);
+  modules['game/ui/destruction-audio.mjs'] = (() => {
+    /** Presentation-only vocabulary shared by every destruction adapter and Studio.
+     * Classify before coalescing crowds; never consume the simulation random stream. */
+    const DESTRUCTION_CATEGORIES = Object.freeze([
+      'soft',
+      'armored',
+      'light',
+      'heavy',
+      'electronic',
+    ]);
+    const DESTRUCTION_CUES = Object.freeze(DESTRUCTION_CATEGORIES.map((id) => `destroy-${id}`));
+
+    // Separate slots preserve the dry impact when Classic sounds is selected. Human identity
+    // is independent of armor/electronics material (for example a relay operator).
+    const HUMAN_REACTION_CUES = Object.freeze(
+      Array.from({ length: 8 }, (_, index) => `human-reaction-${index + 1}`),
+    );
+    const humanoidFamilies = new Set([
+      'lookout',
+      'patroller',
+      'runner',
+      'sprinter',
+      'courier',
+      'guard',
+      'refuge',
+      'refuge-seeker',
+      'switchback',
+      'pair',
+      'rendezvous-pair',
+      'shield',
+      'shield-bearer',
+      'brace',
+      'brace-trooper',
+      'relay-warden',
+    ]);
+    function isHumanoidDestruction(details = {}) {
+      if (details.machine || details.humanoid === false || details.flesh === false) return false;
+      return details.humanoid === true || humanoidFamilies.has(details.family ?? details.kind);
+    }
+
+    function destructionCategory(details = {}) {
+      if (DESTRUCTION_CATEGORIES.includes(details.category)) return details.category;
+      const family = String(details.family ?? details.kind ?? '').toLowerCase();
+      const machine = String(details.machine ?? '').toLowerCase();
+      if (/relay|jammer|radar|electronic|generator|core|sentry|turret/.test(family))
+        return 'electronic';
+      if (/tank|carrier|tracked|heavy/.test(family + ' ' + machine)) return 'heavy';
+      if (/shield|brace|guard|armored/.test(family) && !details.machine) return 'armored';
+      if (details.machine || /car|truck|rover|buggy|vehicle|transport/.test(family)) return 'light';
+      return details.material === 'metal' ? 'armored' : 'soft';
+    }
+
+    // Shape and decay, not loudness alone, separate infantry, equipment and engines.
+    const profiles = Object.freeze({
+      soft: [0.52, 0.24, 0.09, 190, 64, 'sine', 900, 280],
+      armored: [0.54, 0.32, 0.11, 250, 72, 'triangle', 1300, 320],
+      light: [0.58, 0.48, 0.16, 130, 38, 'triangle', 690, 100],
+      heavy: [0.64, 0.8, 0.22, 86, 32, 'sine', 420, 70],
+      electronic: [0.48, 0.33, 0.14, 710, 76, 'triangle', 1150, 145],
+    });
+
+    function destructionSoundRecipe(details = {}) {
+      const category = destructionCategory(details);
+      const [baseGain, maxDuration, cooldown, from, to, type, accentFrom, accentTo] =
+        profiles[category];
+      const scale = Number.isFinite(details.gainScale)
+        ? Math.max(0, Math.min(1, details.gainScale))
+        : 1;
+      const organic = category === 'soft' || category === 'armored';
+      const brutal = organic && details.brutal === true;
+      const rate = /sprinter|courier/.test(details.family ?? '')
+        ? 1.06
+        : /brace|guard/.test(details.family ?? '')
+          ? 0.96
+          : 1;
+      const gain = baseGain * scale * (brutal ? 1.12 : 1);
+      return {
+        category,
+        name: `destroy-${category}`,
+        gain,
+        priority: category === 'heavy' ? 4 : 3,
+        movement: false,
+        rate,
+        maxDuration,
+        cooldown,
+        // The recorded bank has quiet calibrated peaks. A full-scale oscillator
+        // needs matching attenuation or initial/offline kills are much louder.
+        tone: { from, to, duration: maxDuration * 0.7, gain: gain * (0.2 / 3), type },
+        layers: [
+          {
+            from: accentFrom,
+            to: accentTo,
+            duration: brutal ? 0.16 : 0.08,
+            gain: gain * ((brutal ? 0.085 : 0.045) / 3),
+            type: 'triangle',
+            kind: 'snare',
+            delay: 0.008,
+          },
+        ],
+      };
+    }
+
+    return {
+      DESTRUCTION_CATEGORIES: DESTRUCTION_CATEGORIES,
+      DESTRUCTION_CUES: DESTRUCTION_CUES,
+      HUMAN_REACTION_CUES: HUMAN_REACTION_CUES,
+      isHumanoidDestruction: isHumanoidDestruction,
+      destructionCategory: destructionCategory,
+      destructionSoundRecipe: destructionSoundRecipe,
+    };
+  })();
+  modules['game/ui/human-reaction-policy.mjs'] = (() => {
+    const HUMAN_REACTION_CUES = modules['game/ui/destruction-audio.mjs']['HUMAN_REACTION_CUES'];
+    const isHumanoidDestruction = modules['game/ui/destruction-audio.mjs']['isHumanoidDestruction'];
+
+    /** Cosmetic scheduling only. It never queues deaths or consumes gameplay RNG. */
+    function createHumanReactionPolicy({ random = Math.random } = {}) {
+      let tokens = 2,
+        lastTime = null,
+        lastOnset = -Infinity,
+        quietUntil = -Infinity;
+      let bag = [],
+        previous = null;
+      const metrics = { attempted: 0, admitted: 0, rejected: 0 };
+      return {
+        interrupt(now, duration = 0.35) {
+          quietUntil = Math.max(quietUntil, now + duration);
+        },
+        request(now, details = {}, activeVoices = 0) {
+          metrics.attempted++;
+          if (!Number.isFinite(now)) {
+            metrics.rejected++;
+            return null;
+          }
+          if (lastTime !== null) tokens = Math.min(2, tokens + Math.max(0, now - lastTime));
+          lastTime = now;
+          if (
+            !Number.isFinite(now) ||
+            details.vocals === false ||
+            !isHumanoidDestruction(details) ||
+            details.audible === false ||
+            activeVoices >= 2 ||
+            now < quietUntil ||
+            now - lastOnset < 0.25 ||
+            tokens < 1
+          ) {
+            metrics.rejected++;
+            return null;
+          }
+          if (!bag.length) {
+            bag = [...HUMAN_REACTION_CUES];
+            for (let i = bag.length - 1; i > 0; i--) {
+              const j = Math.floor(Math.max(0, Math.min(0.999999, random())) * (i + 1));
+              [bag[i], bag[j]] = [bag[j], bag[i]];
+            }
+            if (bag.at(-1) === previous) [bag[0], bag[bag.length - 1]] = [bag.at(-1), bag[0]];
+          }
+          previous = bag.pop();
+          tokens--;
+          lastOnset = now;
+          metrics.admitted++;
+          return previous;
+        },
+        snapshot: () => ({ ...metrics, tokens }),
+        reset() {
+          tokens = 2;
+          lastTime = null;
+          lastOnset = -Infinity;
+          quietUntil = -Infinity;
+          // Keep shuffle history across retries so every launch does not repeat take 1.
+          metrics.attempted = metrics.admitted = metrics.rejected = 0;
+        },
+      };
+    }
+
+    return { createHumanReactionPolicy: createHumanReactionPolicy };
+  })();
+  modules['game/audio/human-reactions/portable.mjs'] = (() => {
+    // Generated by scripts/produce-human-reactions.py. Exewin CC0; see authoring/audio/human-reactions-v1/sources.json.
+    // Compact identical performances for existing optional-package source projections.
+    // prettier-ignore
+    const HUMAN_REACTION_BANK = Object.freeze({"human-reaction-1":{"mime":"audio/mpeg","base64":"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","duration":0.7},"human-reaction-2":{"mime":"audio/mpeg","base64":"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uisrcj//0////+oYmRkMgbuFoTkmSFZkALABdl8HvC3TIFgK9UEzUkBgiNQy1ov8XhPZsKJIwJ7f2/xAj7K0B1CBJNDf/Lp5j+n/////+lUB1wmHyx4JIAQAWKL/+1TEkwPI5G0WDmsigQoNowG8vGipZ7JuSEaJ0HAfNGKUrGYJiHEiZSGFA28gYwTRq00R8Ejay2VZI+gVh2EeNAXJ4tb2+z////1f+nu/3esAKFuJbRrwdRMuCoxaMQeJgARuYnIglmpyOUrenDG/9WMGAj33L9iSX7PKu/+wt+Hee//W5jBKqAAAVaiC+EVHYQcKB/cfSXzVgYKCwsLCT1itYqLNizf6xTULCsVFWfqFhcVYKirdYoLYsK//9Yr/+1TEo4MJYGUaTecBARENo0W8PHKLf4rVTEFNRTQuMFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVX/+1TEsQMJAGMSLeWjgNuL4g2GCGhVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVX/+1TExwPHZCatJ7BiQAAANIAAAARVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVU=","duration":0.5076875},"human-reaction-3":{"mime":"audio/mpeg","base64":"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3mnUL+NDCpHYP561Pob2Pq9cX+IrAeTkn2mt5njBDgmWJ2cpLTmLuuEEpqdiBISH3//95DqhWdhW3//3Rl/rFcAARIwABL+Al0LPAEImwJVLmMc6SUxwsJTHSrmJW424yRt11/JRhr1y5voq5X3FYXjwISBiQtRlsIEcREMFCJ4igKEY9///RIiihUI0JEG2UXd8ib6wksNikAASkAkLrQth6bb/+1TEBoCJ7K1HTDyr0SuVaKjym0rORY7OF0OHLGWn0Ok6FWqLOT9uk18/GKZdqidVu4sTbHSOep1LKPVwiJRpFRMsPRxAYKgIz//+iWINE4oQIf+FOoO4FDQYAFUfrIUoUEu+0oGGLCX9lQiGh5+2gQ5G1/qBHx7Uh86j2Tk7HpTI2rOXM4SZEyCuSjllRmA3aGxYHW///oiSRQstBQLt/4ZqqLSLkQALYHBITQlEyLYn0US1Clp0i2BjQRYodlb/+1TEDoAI5K1Rp6TvUSMVaHDzj0kG6iIk6rJVDXOx2b2cZYLHIPNWNoYXdio6Y///3U0dFoXMYuDP////v/bSC0BIADgBIaVwcocTQdStOBYUZooonrMjY1WN5He7g/41ij6GxPn0WJFSL9qZUynwbxey5pZYRBqv4pw8bCo///9kBoqihmN3rVjMcYALYH6Fn6/H8N1HiZjlJA1oVGZIScmC4kvM0XfVr666xNYtgaz97KQPHt4G4S8ntYKdjBz/+1TEHAAJKKdRp7BL0SaWKXTxlirN//7lBBxhA7iLv///+r//+htSsuxEBODjzbSJMhjK1EGUqhFlU9YWA+y+uMaInnIGJVp6lAwsMKNtfwsAgJ1JgcagVEiXQ///5RwM6kNWJAX/+o9/r//+r+okAUCwAIAV1jtaBJRbTQRy6ap08uUUF8o6bg0tDpvX3b2qqnrijj9VUI0o8ro+VBzkLGhBPZThP1DYla6fM2rf8CMBWWEpKKKTiSDs21spAQf/+1TEKAAIlKUlJ4B8AN8LJXQwjdJSLpYCIAjiPX5GqCqsPbjiQoaCqUQ6EnyrvXPZbllHsRSXq/WNdqlXZYO/8lVMQU1FNC4wVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVX/+1TEPwPAAAGkAAAAIAAANIAAAARVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVU=","duration":0.3122083333333333},"human-reaction-4":{"mime":"audio/mpeg","base64":"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5GBYdMb///2Iok5UBHKzfikyOdf//hgBmkACgbECaACBEIFUQoFoEDFC5oBMmkeUqiQDDPEOuI3FIvzKYCgQiWRSHEhEOGDxQX/ikCpbP///0moKFGpMwfMLJ+YTn1cx///kirO6gBKBtpJoAVBIiikPITccpoQWY7i6mFhkMlGJqjchcBbts7GGyyUgsz3iJZCGA1k2//z/+1TEt4AKkQk1p4zyiUmhZzT0HerwIG////RTGKEB6qax/5yHnMc7///kZMYSJ/6EACA/iAMJmosUQFZCNmIU3nkm0aeiEhAmdPpSYsSWjs/6q42CJprqpg5IiQKhIGgZ/5ojt////JOowCwDDhqTPJS/UaC8w4SjTxtO//1UCqrVVUAAAgBmgAcAIB9IaelEFEkdM06Bo3E3ilUTqo1BEI7GIfXPvLosiSjX27gfDkVFRxX/zP///7TlUHQbMDD/+1TEuYAJIQk/p6hRWTIg53TyniNM4xvmjo3NEhEp//1HDxkmFMABA6tXvlQI+EmAEh+tSyYWVUapZh0FyvcWRSt+rqHCOyDymRBYwAoEI/6B7f///jRIoROIuA452f48pphZ0f//5BNVFQBAARmoxJKc0TDiug95c6AJTQO0lM1ti0Zlvooj6COhYkE1PoqNlmR0kRqJUuDhq/1Jf///1l0mlAQE4TxMTA4UxhTTzozkoiw/DhLCo3b//oySbAD/+1TExABJsQ09p5lREUegpjWHnKkAANAIrACdo2XqdNFxgssGk8UnwhzTSzJb/uFAUehlCgJSsVAJ2/+rf+X/9EEYBzHaP9DhSJJwqGv///o/kUxBTUU0LjBVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVUCTi0FkSQkCAwMo8y83P0wkZE0wiMjP//////3ZbKRrLPI7KRnY5MrUKCBw0FRQW//wKKigsaAoqLCQ0PFBZvFhYX/+1TEyYCJvQkz7CDtSQ6hJhDxFfCF1UxBTUU0LjBVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVX/+1TE1gAKmQcezAGuSP0aYrTxHfhVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVX/+1TEzAPIaNyaIwRvwAAANIAAAARVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVU=","duration":0.6753958333333333},"human-reaction-5":{"mime":"audio/mpeg","base64":"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","duration":0.3872083333333333},"human-reaction-6":{"mime":"audio/mpeg","base64":"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","duration":0.6211041666666667},"human-reaction-7":{"mime":"audio/mpeg","base64":"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OIJsABXbYIfOpRrloTEtzCeRYmh9JhSmYys79ofyPfA35M6eJH9ji3ZGnrCu7oJ0XjdFX0VRGCAY/27UHBHYY9RsOE3qX/u+j5Wjb04KAAAA6AA4rSk7CeSTGmXR2UyR1XojEPAIDx2X4j9bU/jncwoaF926LHdNaTHK7RFdqrKLt1S6haj5WkCkjLjtMloetFY+yoNh////+1TEpYALTLEzTL1YAV2WJumHqbIxSlf0BHqCkQAAHgAJtrQxwINFU9G6P1eeiq4L6P8FysrksTlFNyd3ljhRPNBsPk04W0pRtnVGw4IDBZd9DSXoI11AoAKcgEqZt+s8cF5//9CEJ6QACLFyCgAEYADSGZDsSmSQgXAMIZAUpU0WBHYgmEOAxWnk92tat361fKa7Bz+lUtVJrygDHr4YpnC0hHAz7KMUA81ydNb1//iMEYBnuphi/OHgsC07rRX/+1TEogAJtLFHp7T4EUOV5imJCwgARMAsAASgAS/AE0BwKVP1nz4NxcV0XjkMJLSwTBdafynJf2pScppbF2CNRDiJBxxgSAGVEgnYeRCe/KcgIABeTjKEm6X7LH8u//6nMCZqD6MjicgADgotmSI0Rqk8GAX8+DKP46jXfopKop1OpzRXF1eJpq02iZGg2jS9Ac0hPr2dAKBaY/64qB8Ac//+aRO/6pb///2af/9aZEjubU5uBs+caecGQRmgcpj/+1TEqAAKDLExTDRYQVATpmmXnspJbVkrAJGZOMvgfdXYuFil6h0NKjW44uNIi1y7wKgBSXUxKeR1NR2IDA0kolPy3nP/8eY3H+l1rolYKCdDVgwOPLKCSmyiVUehWqf+uJgqIi8VzxBLJOEkOgdB0UCWWEcXhEWb+sW1C////+rQFRbin//QDIoSNUxBTUU0LjBVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVX/+1TEqwAKBJ0vrExYQSYTZ3T2HhpVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVX/+1TEs4OJJH0MDLMMgPsNGUQ0sdhVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVU=","duration":0.6655625},"human-reaction-8":{"mime":"audio/mpeg","base64":"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","duration":0.6045625}});
+
+    return { HUMAN_REACTION_BANK: HUMAN_REACTION_BANK };
+  })();
+  modules['game/ui/destruction-level.mjs'] = (() => {
+    const HUMAN_REACTION_CUES = modules['game/ui/destruction-audio.mjs']['HUMAN_REACTION_CUES'];
+    /** Match imported destruction recordings to the admitted bank without changing
+     * their original samples. Summed channel magnitudes bound stereo/downmix peaks
+     * even when channels cancel in a mono audition. This runs once after decoding. */
+    const targets = Object.freeze({
+      ...Object.fromEntries(HUMAN_REACTION_CUES.map((name) => [name, -30])),
+      'destroy-soft': -30,
+      'destroy-armored': -30,
+      'destroy-light': -29,
+      'destroy-heavy': -28,
+      'destroy-electronic': -31,
+    });
+
+    function destructionBufferGain(name, buffer) {
+      if (!Object.hasOwn(targets, name)) return 1;
+      const { length, numberOfChannels, sampleRate, duration } = buffer ?? {};
+      if (
+        !Number.isSafeInteger(length) ||
+        length <= 0 ||
+        !Number.isSafeInteger(numberOfChannels) ||
+        numberOfChannels <= 0 ||
+        numberOfChannels > 32 ||
+        length * numberOfChannels > 4 * 1024 * 1024 ||
+        !Number.isFinite(sampleRate) ||
+        sampleRate <= 0 ||
+        !Number.isFinite(duration) ||
+        duration <= 0 ||
+        duration > 1 ||
+        typeof buffer.getChannelData !== 'function'
+      )
+        throw new TypeError('Invalid destruction audio buffer.');
+      const envelope = new Float64Array(length);
+      for (let channel = 0; channel < numberOfChannels; channel++) {
+        const data = buffer.getChannelData(channel);
+        if (data.length !== length) throw new TypeError('Incomplete destruction audio channel.');
+        for (let index = 0; index < length; index++) {
+          const value = data[index];
+          if (!Number.isFinite(value)) throw new TypeError('Nonfinite destruction audio sample.');
+          envelope[index] += Math.abs(value);
+        }
+      }
+      const window = Math.max(1, Math.min(length, Math.round(sampleRate * 0.05)));
+      let peak = 0,
+        energy = 0,
+        maximumEnergy = 0;
+      for (let index = 0; index < length; index++) {
+        const value = envelope[index];
+        peak = Math.max(peak, value);
+        energy += value * value;
+        if (index >= window) energy -= envelope[index - window] ** 2;
+        maximumEnergy = Math.max(maximumEnergy, energy);
+      }
+      const rms = Math.sqrt(maximumEnergy / window);
+      return Math.min(1, peak > 0 ? 0.1 / peak : 1, rms > 0 ? 10 ** (targets[name] / 20) / rms : 1);
+    }
+
+    return { destructionBufferGain: destructionBufferGain };
+  })();
   modules['game/audio/dialogue-mix.mjs'] = (() => {
     /** Decorative spoken reactions sit behind music and gameplay warnings.
      * The mix trim also applies to saved slider choices without rewriting preferences. */
@@ -3009,6 +4049,8 @@ export const createSimFlightAudio = (() => {
   modules['game/ui/encounter-audio.mjs'] = (() => {
     /** Shared semantic cues; both recorded and offline procedural renditions use
      * these recipes. No context, clock, randomness or actor mutation lives here. */
+    const destructionSoundRecipe =
+      modules['game/ui/destruction-audio.mjs']['destructionSoundRecipe'];
     const FAMILY_PITCH = Object.freeze({
       lookout: 1.1,
       patroller: 0.94,
@@ -3057,12 +4099,12 @@ export const createSimFlightAudio = (() => {
       return ACTOR_SOUNDS[family === 'shield-bearer' ? 'shield' : family] ?? ACTOR_SOUNDS.runner;
     }
     function encounterSoundRecipe(type, details = {}) {
+      if (type === 'catch') return destructionSoundRecipe(details);
       const pitch = FAMILY_PITCH[details.family] ?? 1;
       const actor = actorSoundProfile(details.family),
         tracked = details.machine === 'tracked',
         metal =
           details.material === 'metal' || [true, 'tracked', 'wheeled'].includes(details.machine);
-      const brutal = details.brutal === true;
       const recipes = {
         step: ['grain', 0.11, 0, 130 * actor.rate, 65 * actor.rate, 0.055],
         equipment: [actor.equipment, 0.12, 1, actor.from, actor.to, 0.085],
@@ -3079,14 +4121,6 @@ export const createSimFlightAudio = (() => {
         burst: ['paper', 0.19, 2, 190, 320, 0.09],
         recover: ['cancel', 0.13, 1, 310, 210, 0.08],
         blocked: ['contact-soft', 0.1, 1, 150, 100, 0.055],
-        catch: [
-          metal ? 'contact-metal' : 'contact-soft',
-          brutal ? 0.52 : 0.25,
-          3,
-          metal ? 150 : 390,
-          metal ? 55 : 690,
-          brutal ? 0.19 : 0.1,
-        ],
         fire: ['attack', 0.34, 4, 620, 110, 0.08],
         impact: ['impact', 0.48, 5, 170, 38, 0.15],
         pulse: ['deploy', 0.33, 3, 880, 260, 0.19],
@@ -3201,6 +4235,11 @@ export const createSimFlightAudio = (() => {
     return { dialogueChannel: dialogueChannel };
   })();
   modules['optional-practice/civilian-fpv/world-audio.mjs'] = (() => {
+    const createHumanReactionPolicy =
+      modules['game/ui/human-reaction-policy.mjs']['createHumanReactionPolicy'];
+    const HUMAN_REACTION_BANK =
+      modules['game/audio/human-reactions/portable.mjs']['HUMAN_REACTION_BANK'];
+    const destructionBufferGain = modules['game/ui/destruction-level.mjs']['destructionBufferGain'];
     const DEFAULT_DIALOGUE_VOLUME =
       modules['game/audio/dialogue-mix.mjs']['DEFAULT_DIALOGUE_VOLUME'];
     const DIALOGUE_MIX_GAIN = modules['game/audio/dialogue-mix.mjs']['DIALOGUE_MIX_GAIN'];
@@ -3212,13 +4251,14 @@ export const createSimFlightAudio = (() => {
       modules['game/ui/audio-output.mjs']['releasePlaybackAudioSession'];
     const createAudioMaster = modules['game/ui/audio-master.mjs']['createAudioMaster'];
     const createAudioPreferences = modules['game/audio-preferences.mjs']['createAudioPreferences'];
+    const destructionCategory = modules['game/ui/destruction-audio.mjs']['destructionCategory'];
     const encounterSoundRecipe = modules['game/ui/encounter-audio.mjs']['encounterSoundRecipe'];
     const actorPhaseSound = modules['game/ui/encounter-audio.mjs']['actorPhaseSound'];
     const readMovementAudio = modules['game/ui/movement-audio.mjs']['readMovementAudio'];
     const MOVEMENT_AUDIO_KEY = modules['game/ui/movement-audio.mjs']['MOVEMENT_AUDIO_KEY'];
     const dialogueChannel = modules['game/ui/dialogue-channel.mjs']['dialogueChannel'];
 
-    /** Optional presentation-only sound. No media requests or gameplay clocks. */
+    /** Optional presentation-only sound. Embedded CC0 vocals decode on activation; no media requests or gameplay clocks. */
     const PREFERENCE = 'revealline.fpv.world-audio.v1';
     const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
     const AMBIENCES = {
@@ -3258,6 +4298,9 @@ export const createSimFlightAudio = (() => {
       let dialogue = { enabled: false, volume: DEFAULT_DIALOGUE_VOLUME };
       let dialogueVoice = null;
       const effects = new Set();
+      const humanReactions = createHumanReactionPolicy();
+      const humanBuffers = new Map();
+      let preparingHumans = false;
       const audioMaster = options.audioMaster ?? createAudioMaster();
       const preferences =
         options.audioPreferences ??
@@ -3317,6 +4360,76 @@ export const createSimFlightAudio = (() => {
         effects.clear();
       }
 
+      function prepareHumans() {
+        if (
+          preparingHumans ||
+          !context?.decodeAudioData ||
+          options.getDestruction?.()?.vocals === false
+        )
+          return;
+        preparingHumans = true;
+        for (const [name, clip] of Object.entries(HUMAN_REACTION_BANK)) {
+          const bytes = Uint8Array.from(atob(clip.base64), (character) => character.charCodeAt(0));
+          void context
+            .decodeAudioData(bytes.buffer)
+            .then((buffer) => {
+              if (!disposed)
+                humanBuffers.set(name, { buffer, gain: destructionBufferGain(name, buffer) });
+            })
+            .catch(() => {});
+        }
+      }
+      function humanReaction(details) {
+        prepareHumans();
+        if (
+          !graph ||
+          !enabled ||
+          !wanted ||
+          masterState.volume === 0 ||
+          !levels.interface ||
+          context.state !== 'running' ||
+          dialogueVoice ||
+          dialogueChannel.active ||
+          [...effects].some((effect) => effect.priority >= 5) ||
+          effects.size >= 12
+        )
+          return;
+        const name = humanReactions.request(
+          context.currentTime,
+          details,
+          [...effects].filter((effect) => effect.humanReaction).length,
+        );
+        const clip = name && humanBuffers.get(name);
+        if (!clip) return;
+        const source = context.createBufferSource(),
+          volume = context.createGain(),
+          now = context.currentTime;
+        const duration = Math.min(0.7, clip.buffer.duration);
+        source.buffer = clip.buffer;
+        volume.gain.setValueAtTime(0.45 * clip.gain, now);
+        volume.gain.setValueAtTime(0.45 * clip.gain, now + Math.max(0, duration - 0.025));
+        volume.gain.linearRampToValueAtTime(0, now + duration);
+        source.connect(volume).connect(graph.buses.interface);
+        let stopped = false;
+        const voice = {
+          humanReaction: true,
+          priority: 2,
+          stop() {
+            if (stopped) return;
+            stopped = true;
+            try {
+              source.stop();
+            } catch {}
+            source.disconnect();
+            volume.disconnect();
+            effects.delete(voice);
+          },
+        };
+        effects.add(voice);
+        source.onended = voice.stop;
+        source.start(now);
+        source.stop(now + duration);
+      }
       function silence() {
         dialogueVoice?.stop();
         if (!graph || context.state === 'closed') return;
@@ -3427,6 +4540,8 @@ export const createSimFlightAudio = (() => {
         gain = 0.05,
         delay = 0,
         type = 'sine',
+        kind = 'tone',
+        destruction = false,
         movementCue = false,
         priority = 2,
       }) {
@@ -3447,13 +4562,35 @@ export const createSimFlightAudio = (() => {
         )
           return;
         if (priority >= 4) for (const effect of [...effects]) if (effect.movementCue) effect.stop();
-        if (effects.size >= 12) return;
-        const oscillator = context.createOscillator();
+        // Crowd feedback cannot use the warning reserve. A warning may reclaim
+        // a lower-priority tail, without adding a second output or context.
+        if (destruction && [...effects].filter((effect) => effect.destruction).length >= 10) return;
+        if (effects.size >= 12) {
+          const victim = [...effects].find((effect) => effect.priority < priority);
+          if (!victim) return;
+          victim.stop();
+        }
+        const oscillator =
+          kind === 'snare' ? context.createBufferSource() : context.createOscillator();
         const envelope = context.createGain();
         const start = context.currentTime + delay;
-        oscillator.type = type;
-        oscillator.frequency.setValueAtTime(from, start);
-        oscillator.frequency.exponentialRampToValueAtTime(Math.max(20, to), start + duration);
+        if (kind === 'snare') {
+          const samples = Math.max(1, Math.ceil(context.sampleRate * duration));
+          const buffer = context.createBuffer(1, samples, context.sampleRate);
+          const data = buffer.getChannelData(0);
+          let seed = 73471,
+            low = 0;
+          for (let index = 0; index < data.length; index++) {
+            seed = (Math.imul(seed, 1664525) + 1013904223) >>> 0;
+            low = low * 0.65 + (seed / 2147483648 - 1) * 0.35;
+            data[index] = low;
+          }
+          oscillator.buffer = buffer;
+        } else {
+          oscillator.type = type;
+          oscillator.frequency.setValueAtTime(from, start);
+          oscillator.frequency.exponentialRampToValueAtTime(Math.max(20, to), start + duration);
+        }
         envelope.gain.setValueAtTime(0, context.currentTime);
         envelope.gain.setValueAtTime(0, start);
         envelope.gain.linearRampToValueAtTime(gain, start + 0.008);
@@ -3464,6 +4601,7 @@ export const createSimFlightAudio = (() => {
         let stopped = false;
         const effect = {
           priority,
+          destruction,
           movementCue,
           stop() {
             if (stopped) return;
@@ -3484,6 +4622,40 @@ export const createSimFlightAudio = (() => {
         oscillator.stop(start + duration + 0.02);
       }
 
+      function actorSoundDetails(event = {}) {
+        const actor = actorDefinitions.get(event.actor);
+        const machine =
+          event.machine ??
+          (actor?.type === 'vehicle'
+            ? actor.vehicleModel === 'field-tank'
+              ? 'tracked'
+              : 'wheeled'
+            : false);
+        const machineFamily =
+          actor?.type === 'vehicle'
+            ? ({
+                'field-utility': 'utility-car',
+                'field-tank': 'tracked-tank',
+                'relay-truck': 'radar-truck',
+              }[actor.vehicleModel] ?? actor.vehicleModel)
+            : null;
+        return {
+          family:
+            event.family ??
+            machineFamily ??
+            actorFamilies.get(event.actor) ??
+            (actor?.speed > 0 ? 'patroller' : 'lookout'),
+          machine,
+          brutal: options.getDestruction?.()?.brutal === true,
+          vocals: options.getDestruction?.()?.vocals,
+          // Patrols and sentries use the humanoid painter. Drones, hazards and
+          // vehicles must never inherit a human voice from the family fallback.
+          humanoid:
+            event.humanoid ?? (actor ? ['patrol', 'sentry'].includes(actor.type) : undefined),
+          flesh: event.flesh,
+        };
+      }
+
       function cue(type, player = true, event = {}) {
         const kind = {
           catch: 'catch',
@@ -3502,30 +4674,25 @@ export const createSimFlightAudio = (() => {
           drive: 'drive',
         }[type];
         if (!kind) return;
-        const actor = actorDefinitions.get(event.actor);
-        const machine =
-          event.machine ??
-          (actor?.type === 'vehicle'
-            ? actor.vehicleModel === 'field-tank'
-              ? 'tracked'
-              : 'wheeled'
-            : false);
-        const recipe = encounterSoundRecipe(kind, {
-          family:
-            event.family ??
-            actorFamilies.get(event.actor) ??
-            (actor?.speed > 0 ? 'patroller' : 'lookout'),
-          machine,
-        });
+        const details = actorSoundDetails(event);
+        const recipe = encounterSoundRecipe(kind, details);
         const now = context?.currentTime ?? 0;
-        if (now - (recentCues.get(kind) ?? -Infinity) < (recipe.cooldown ?? 0.12)) return;
-        recentCues.set(kind, now);
+        const cueKey = kind === 'catch' ? `catch:${recipe.category}` : kind;
+        if (now - (recentCues.get(cueKey) ?? -Infinity) < (recipe.cooldown ?? 0.12)) return;
+        recentCues.set(cueKey, now);
+        if (recipe.priority >= 5 || (type === 'fire' && !player)) {
+          humanReactions.interrupt(now);
+          for (const effect of [...effects]) if (effect.humanReaction) effect.stop();
+        }
+        if (kind === 'catch') humanReaction(details);
         if (recipe.priority >= 5 || (type === 'fire' && !player)) dialogueChannel.interrupt();
         const voice = { ...recipe.tone, priority: recipe.priority, movementCue: recipe.movement };
         if (recipe.movement) voice.gain *= levels.interface;
         if (type === 'fire' && !player) voice.gain *= 0.65;
         if (type === 'objective' && gateStyle === 'digital') voice.type = 'triangle';
-        tone(voice);
+        tone({ ...voice, destruction: kind === 'catch' });
+        for (const layer of recipe.layers ?? [])
+          tone({ ...layer, priority: recipe.priority, destruction: kind === 'catch' });
       }
 
       async function resume() {
@@ -3540,6 +4707,7 @@ export const createSimFlightAudio = (() => {
             if (context.state !== 'closed') await context.suspend();
             return false;
           }
+          prepareHumans();
           return epoch === transition && context.state === 'running';
         } catch {
           return false;
@@ -3625,6 +4793,25 @@ export const createSimFlightAudio = (() => {
           }
           return voice;
         },
+        get movementSettings() {
+          return movement;
+        },
+        set movementSettings(value) {
+          if (
+            typeof value?.enabled !== 'boolean' ||
+            !Number.isFinite(value.volume) ||
+            value.volume < 0 ||
+            value.volume > 1
+          )
+            throw new TypeError(
+              'Movement sound requires an enabled boolean and volume between zero and one.',
+            );
+          movement = { enabled: value.enabled, volume: value.volume };
+        },
+        applyVolumes: applyOutput,
+        masterSnapshot: () => audioMaster.snapshot(),
+        subscribeMaster: (listener) => audioMaster.subscribe(listener),
+        setMasterVolume: (value) => preferences.setVolume(value),
         enabled: () => enabled,
         volumes: () => ({ ...levels }),
         setVolumes(values = {}) {
@@ -3687,6 +4874,7 @@ export const createSimFlightAudio = (() => {
           lastStep = null;
           lastContacts = null;
           recentCues.clear();
+          humanReactions.reset();
           actorPositions.clear();
           actorPhases.clear();
           actorFamilies = new Map(
@@ -3788,9 +4976,14 @@ export const createSimFlightAudio = (() => {
               }
               const events = snapshot.events ?? [];
               const types = new Set();
+              const destructionTypes = new Set();
               // Bound cue overlap independently of simulation actor/projectile counts.
               for (const event of events) {
-                if (types.has(event.type)) continue;
+                if (['catch', 'defeat'].includes(event.type)) {
+                  const category = destructionCategory(actorSoundDetails(event));
+                  if (destructionTypes.has(category)) continue;
+                  destructionTypes.add(category);
+                } else if (types.has(event.type)) continue;
                 types.add(event.type);
                 cue(event.type, event.actor === 'player', event);
               }
@@ -3832,6 +5025,7 @@ export const createSimFlightAudio = (() => {
         dispose() {
           if (disposed) return;
           disposed = true;
+          humanBuffers.clear();
           pause();
           releaseMaster();
           host.removeEventListener?.('storage', changed);
@@ -3869,3 +5063,820 @@ export const createSimFlightAudio = (() => {
   return modules['optional-practice/civilian-fpv/world-audio.mjs'].createWorldAudio;
 })();
 // END GENERATED ACADEMY SHARED AUDIO
+
+export function mountSimGlobalTools({
+  document: doc,
+  window: win,
+  gameReturn,
+  settingsRoot,
+  panels,
+  locale = () => 'en',
+  onOpen = () => {},
+  onControls = () => {},
+  loadProvider = () => import('../../game/ui/global-settings-tools.mjs'),
+  moduleURL = import.meta.url,
+} = {}) {
+  let coreURL;
+  const knownReturn = typeof gameReturn === 'string' && gameReturn.length > 0;
+  try {
+    coreURL = new URL('../../game/', moduleURL);
+    if (coreURL.origin !== new URL(win.location.href).origin)
+      throw new Error('Core origin mismatch');
+    if (knownReturn) {
+      const target = new URL(gameReturn, win.location.href);
+      if (target.origin !== coreURL.origin || !target.pathname.startsWith(coreURL.pathname))
+        throw new Error('Core return does not match this application');
+    }
+  } catch {
+    return {
+      ensure: async () => false,
+      refresh() {},
+      dispose() {},
+      root: () => null,
+      back: () => false,
+    };
+  }
+  const fallback = doc.createElement('section'),
+    link = doc.createElement('a'),
+    status = doc.createElement('p');
+  fallback.dataset.simGlobalToolsFallback = '';
+  link.href = coreURL.href;
+  link.target = '_blank';
+  link.rel = 'noopener';
+  status.setAttribute('role', 'status');
+  fallback.append(link, status);
+  panels.extras.append(fallback);
+  let provider,
+    pending,
+    disposed = false,
+    failed = false;
+  const refresh = () => {
+    provider?.refresh?.();
+    const uk = locale() === 'uk';
+    link.textContent = uk ? 'Відкрити спільні інструменти гри' : 'Open shared game tools';
+    link.hidden = !knownReturn;
+    status.textContent = failed
+      ? uk
+        ? knownReturn
+          ? 'Спільні інструменти недоступні тут. Відкрийте гру в новій вкладці. Інструменти SIM залишаються доступними.'
+          : 'Цей пакет не містить спільних інструментів основної гри. Інструменти SIM залишаються доступними.'
+        : knownReturn
+          ? 'Shared tools are unavailable here. Open the game in a new tab. SIM tools remain available.'
+          : 'This package does not include the main game tools. SIM tools remain available.'
+      : uk
+        ? 'Спільні інструменти завантажуються з основної гри.'
+        : 'Shared tools load from the main game.';
+  };
+  refresh();
+  const ensure = () => {
+    if (disposed) return Promise.resolve(false);
+    if (pending) return pending;
+    pending = Promise.resolve()
+      .then(() => loadProvider(new URL('ui/global-settings-tools.mjs', coreURL).href))
+      .then((module) => {
+        if (disposed) return false;
+        if (typeof module?.mountGlobalSettingsTools !== 'function')
+          throw new Error('Shared tools are unavailable');
+        provider = module.mountGlobalSettingsTools({
+          document: doc,
+          window: win,
+          settingsRoot,
+          panels,
+          prefix: 'sim-global-tools',
+          coreURL,
+          onOpen,
+        });
+        fallback.hidden = true;
+        onControls(provider.controls);
+        return true;
+      })
+      .catch(() => {
+        failed = true;
+        refresh();
+        return false;
+      });
+    return pending;
+  };
+  return {
+    ensure,
+    refresh,
+    root: () => provider?.root() ?? null,
+    frameFocused: () => provider?.frameFocused() === true,
+    handleFrameCommand: (command) => provider?.handleFrameCommand(command) === true,
+    back: () => provider?.back() === true,
+    dispose() {
+      disposed = true;
+      provider?.dispose();
+      fallback.remove();
+    },
+  };
+}
+
+const FLIGHT_HUD_PREFERENCE_KEY = 'revealline.sim-flight-hud.v1';
+const FLIGHT_HUD_PREFERENCE_EVENT = 'revealline:sim-flight-hud';
+const FLIGHT_HUD_STYLE = `
+[data-sim-hud][data-hud-component] {
+  --hud-ink: #f4f7fb;
+  --hud-muted: #ced8e3;
+  --hud-bg: #0a111bd9;
+  --hud-accent: color-mix(in srgb, var(--fk-amber, #f4bf62) 75%, white);
+  color: var(--hud-ink);
+  font: 14px/1.2 var(--fk-font-ui, system-ui, sans-serif);
+  text-align: start;
+  text-shadow: none;
+}
+[data-sim-hud][data-hud-component] *,
+[data-sim-hud][data-hud-component] *::before,
+[data-sim-hud][data-hud-component] *::after {
+  box-sizing: border-box;
+}
+[data-sim-hud][data-hud-component] :where(div, span, p, h2, strong, button, ul, li) {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-image: none;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+  color: inherit;
+  font: inherit;
+  text-shadow: none;
+  letter-spacing: normal;
+}
+[data-sim-hud][data-hud-component][hidden],
+[data-sim-hud][data-hud-component] [hidden] { display: none !important; }
+[data-sim-hud='flight'][data-hud-component] {
+  position: absolute;
+  inset: 0;
+  z-index: 16;
+  pointer-events: none;
+  container: sim-flight-hud / size;
+  --hud-card-width: 240px;
+  --hud-card-height: 72px;
+  --hud-left: clamp(var(--flight-safe-left, 12px), calc(50% - 120px), calc(100% - 290px - var(--flight-safe-right, 12px)));
+  --hud-top: clamp(70px, calc(var(--hud-aim-y, 50%) + 28px), calc(100% - 140px));
+}
+[data-sim-hud='flight'][data-hud-component] [data-hud-part='card'] {
+  position: absolute;
+  top: var(--hud-top);
+  left: var(--hud-left);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 40px;
+  grid-template-rows: 18px 22px 14px;
+  gap: 2px 6px;
+  width: min(var(--hud-card-width), calc(100% - var(--hud-left) - 64px));
+  height: var(--hud-card-height);
+  padding: 7px 8px;
+  background: var(--hud-bg);
+  border-radius: 6px;
+  overflow: hidden;
+  pointer-events: none;
+}
+[data-sim-hud='flight'][data-hud-component] [data-hud-part='action'] {
+  grid-column: 1;
+  font-weight: 600;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+[data-sim-hud='flight'][data-hud-component] [data-hud-part='gauge'] {
+  grid-column: 1;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+[data-sim-hud='flight'][data-hud-component] [data-hud-part='value'] { font-size: 20px; font-weight: 700; }
+[data-sim-hud='flight'][data-hud-component] [data-hud-part='gauge-name'] { max-width: 54px; overflow: hidden; text-overflow: ellipsis; font-size: 11px; color: var(--hud-muted); }
+[data-sim-hud='flight'][data-hud-component] [data-hud-part='gauge-track'] { flex: 1; min-width: 0; width: 104px; height: 22px; overflow: visible; }
+[data-sim-hud='flight'][data-hud-component] [data-hud-part='direction'] { color: var(--hud-accent); }
+[data-sim-hud='flight'][data-hud-component] [data-hud-part='checks'] {
+  grid-column: 1 / -1;
+  display: flex;
+  gap: 7px;
+  overflow: hidden;
+  font-size: 11px;
+  white-space: nowrap;
+  color: var(--hud-muted);
+}
+[data-sim-hud='flight'][data-hud-component] [data-hud-part='checks'] > span { overflow: hidden; text-overflow: ellipsis; }
+[data-sim-hud='flight'][data-hud-component] [data-hud-part='checks'] > [data-met='true'] { color: var(--hud-accent); }
+[data-sim-hud='flight'][data-hud-component] [data-hud-part='earned'] {
+  grid-column: 2;
+  grid-row: 1 / 3;
+  align-self: center;
+  position: relative;
+  width: 40px;
+  height: 40px;
+}
+[data-sim-hud='flight'][data-hud-component] [data-hud-part='earned'] svg { display: block; width: 40px; height: 40px; }
+[data-sim-hud='flight'][data-hud-component] [data-hud-part='earned-label'] { position: absolute; inset: 0; display: grid; place-items: center; font-size: 11px; font-variant-numeric: tabular-nums; }
+[data-sim-hud='flight'][data-hud-component] [data-hud-part='explain'] {
+  position: absolute;
+  top: var(--hud-top);
+  left: calc(var(--hud-left) + min(var(--hud-card-width), 100% - var(--hud-left) - 64px) + 6px);
+  width: 44px;
+  min-width: 44px;
+  height: 44px;
+  min-height: 44px;
+  padding: 0;
+  border: 1px solid #ffffff65;
+  border-radius: 50%;
+  background: var(--hud-bg);
+  color: var(--hud-ink);
+  font-size: 20px;
+  font-weight: 700;
+  cursor: pointer;
+  pointer-events: auto;
+}
+[data-sim-hud][data-hud-component] button:focus-visible { outline: 3px solid var(--hud-accent); outline-offset: 3px; }
+[data-sim-hud='flight'][data-hud-component] [data-hud-part='details'] {
+  grid-column: 1 / -1;
+  grid-row: 3;
+  min-width: 0;
+  padding: 0;
+  overflow: hidden;
+  font-size: 11px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  pointer-events: none;
+}
+[data-sim-hud='flight'][data-hud-component][data-hud-mode='minimal'] [data-hud-part='card'] { grid-template-rows: 18px 22px; height: 56px; }
+[data-sim-hud='flight'][data-hud-component][data-hud-mode='minimal'] [data-hud-part='checks'] { display: none; }
+[data-sim-hud='flight'][data-hud-component][data-hud-mode='detailed'] [data-hud-part='checks'] { display: none; }
+[data-sim-hud='flight'][data-hud-component][data-hud-size='large'] [data-hud-part='action'] { font-size: 16px; }
+[data-sim-hud='flight'][data-hud-component][data-hud-size='large'] [data-hud-part='value'] { font-size: 22px; }
+[data-sim-hud='flight'][data-hud-component][data-hud-size='large'] [data-hud-part='checks'] { font-size: 12px; }
+[data-sim-hud][data-hud-component][data-hud-contrast='high'] { --hud-bg: #000; --hud-ink: #fff; --hud-muted: #fff; --hud-accent: #ffe47a; }
+[data-sim-hud='flight'][data-hud-component] [data-hud-part='telemetry'] { position: absolute; top: max(12px, env(safe-area-inset-top)); left: max(12px, env(safe-area-inset-left)); padding: 4px 8px; border-radius: 4px; font-size: 14px; background: var(--hud-bg); }
+[data-sim-hud='flight'][data-hud-component] [data-hud-part='cue'] { position: absolute; width: 48px; height: 48px; transform: translate(-50%, -50%); color: var(--hud-accent); }
+[data-sim-hud='flight'][data-hud-component] [data-hud-part='brackets'] { position: absolute; inset: 0; }
+[data-sim-hud='flight'][data-hud-component] [data-hud-part='brackets'] > i { position: absolute; width: 11px; height: 11px; border: solid currentColor; border-width: 2px 0 0 2px; filter: drop-shadow(0 1px 1px #000); }
+[data-sim-hud='flight'][data-hud-component] [data-hud-part='brackets'] > i:nth-child(1) { top: 0; left: 0; }
+[data-sim-hud='flight'][data-hud-component] [data-hud-part='brackets'] > i:nth-child(2) { top: 0; right: 0; transform: rotate(90deg); }
+[data-sim-hud='flight'][data-hud-component] [data-hud-part='brackets'] > i:nth-child(3) { bottom: 0; right: 0; transform: rotate(180deg); }
+[data-sim-hud='flight'][data-hud-component] [data-hud-part='brackets'] > i:nth-child(4) { bottom: 0; left: 0; transform: rotate(270deg); }
+[data-sim-hud='flight'][data-hud-component] [data-hud-part='cue-arrow'] { position: absolute; inset: 0; display: grid; place-items: center; font: 32px/1 system-ui, sans-serif; text-shadow: 0 1px 3px #000; }
+[data-sim-hud='flight'][data-hud-component] [data-hud-part='cue-label'] { position: absolute; top: 51px; left: 50%; transform: translateX(-50%); width: max-content; max-width: 120px; color: var(--hud-ink); font-size: 12px; text-align: center; text-shadow: 0 1px 3px #000, 0 0 4px #000; }
+[data-sim-hud='flight'][data-hud-component] [data-hud-part='announcement'] { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+[data-sim-hud='details'][data-hud-component] { width: min(480px, calc(100vw - 24px)); max-height: calc(100dvh - 24px); margin: auto; padding: 20px; border: 1px solid #ffffff65; border-radius: 8px; background: #0a111b; overflow: auto; }
+[data-sim-hud='details'][data-hud-component]::backdrop { background: #0009; }
+[data-sim-hud='details'][data-hud-component] h2 { font-size: 20px; font-weight: 700; margin-bottom: 12px; }
+[data-sim-hud='details'][data-hud-component] p { white-space: pre-line; line-height: 1.5; margin-bottom: 16px; }
+[data-sim-hud='details'][data-hud-component] [data-hud-part='dialog-actions'] { display: flex; flex-wrap: wrap; gap: 8px; }
+[data-sim-hud='details'][data-hud-component] button { min-height: 44px; min-width: 44px; padding: 8px 14px; border: 1px solid #ffffff65; border-radius: 4px; background: #172431; cursor: pointer; }
+@container sim-flight-hud (max-height: 480px) and (min-width: 500px) {
+  [data-sim-hud='flight'][data-hud-component] [data-hud-part='card'] { --hud-card-width: 220px; --hud-card-height: 64px; top: clamp(58px, calc(var(--hud-aim-y, 50%) + 20px), calc(100% - 128px)); left: calc(50% - 110px); grid-template-rows: 16px 20px 12px; padding: 6px 8px; }
+  [data-sim-hud='flight'][data-hud-component] [data-hud-part='explain'] { top: clamp(58px, calc(var(--hud-aim-y, 50%) + 20px), calc(100% - 128px)); left: calc(50% + 116px); }
+}
+@media (forced-colors: active) {
+  [data-sim-hud][data-hud-component] { --hud-ink: CanvasText; --hud-muted: CanvasText; --hud-bg: Canvas; --hud-accent: Highlight; forced-color-adjust: auto; }
+}
+`;
+
+/** Observer-only flight feedback, shared by Academy and World Studio. */
+export function mountFlightHud({
+  container,
+  storage,
+  locale = () => 'en',
+  onExplain,
+  onMenu,
+  onLesson,
+  onPreferencesChange = () => {},
+}) {
+  if (!container?.ownerDocument) throw new TypeError('A flight HUD container is required.');
+  const doc = container.ownerDocument,
+    win = doc.defaultView;
+  const t = (en, uk) => (locale() === 'uk' ? uk : en);
+  const copy = (value) =>
+    typeof value === 'string' ? value : (value?.[locale()] ?? value?.en ?? '');
+  const normalize = (value = {}) => ({
+    mode: ['guided', 'minimal', 'detailed'].includes(value?.mode) ? value.mode : 'guided',
+    textSize: value?.textSize === 'large' ? 'large' : 'standard',
+    highContrast: value?.highContrast === true,
+  });
+  const store = () => (typeof storage === 'function' ? storage() : (storage ?? win?.localStorage));
+  const readPreferences = () => {
+    try {
+      return normalize(JSON.parse(store()?.getItem(FLIGHT_HUD_PREFERENCE_KEY) ?? 'null'));
+    } catch {
+      return normalize();
+    }
+  };
+  let preferences = readPreferences(),
+    feedback = null,
+    context = {},
+    disposed = false,
+    announcementKey = '',
+    checkSignature = '';
+  const preferenceViews = new Set(),
+    numberFormats = new Map();
+  const make = (tag, part, parent, text) => {
+    const element = doc.createElement(tag);
+    if (part) element.dataset.hudPart = part;
+    if (text !== undefined) element.textContent = text;
+    parent?.append(element);
+    return element;
+  };
+  const setText = (element, value) => {
+    if (element.textContent !== value) element.textContent = value;
+  };
+  const setAttribute = (element, name, value) => {
+    const text = String(value);
+    if (element.getAttribute(name) !== text) element.setAttribute(name, text);
+  };
+  const sheet = make('style');
+  sheet.dataset.simHudStyles = 'true';
+  sheet.textContent = FLIGHT_HUD_STYLE;
+  (doc.head ?? container).append(sheet);
+  const root = make('div', null, container);
+  root.dataset.simHud = 'flight';
+  root.dataset.hudComponent = 'true';
+  root.hidden = true;
+  const card = make('div', 'card', root),
+    action = make('div', 'action', card),
+    gauge = make('div', 'gauge', card),
+    value = make('strong', 'value', gauge),
+    gaugeName = make('span', 'gauge-name', gauge),
+    direction = make('span', 'direction', gauge),
+    earned = make('div', 'earned', card),
+    earnedLabel = make('span', 'earned-label', earned),
+    checks = make('div', 'checks', card),
+    explain = make('button', 'explain', root, '?'),
+    details = make('div', 'details', card),
+    telemetry = make('div', 'telemetry', root),
+    cue = make('div', 'cue', root),
+    brackets = make('div', 'brackets', cue),
+    cueArrow = make('span', 'cue-arrow', cue, '➜'),
+    cueLabel = make('span', 'cue-label', cue),
+    announcement = make('span', 'announcement', root);
+  explain.type = 'button';
+  card.setAttribute('role', 'group');
+  announcement.setAttribute('role', 'status');
+  announcement.setAttribute('aria-live', 'polite');
+  announcement.setAttribute('aria-atomic', 'true');
+  direction.setAttribute('aria-hidden', 'true');
+  cue.setAttribute('aria-hidden', 'true');
+  cue.hidden = true;
+  for (let i = 0; i < 4; i++) make('i', null, brackets);
+  const gaugeTrack = doc.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  gaugeTrack.dataset.hudPart = 'gauge-track';
+  gaugeTrack.setAttribute('viewBox', '0 0 120 24');
+  gaugeTrack.setAttribute('role', 'img');
+  const gaugeShape = (tag, attributes) => {
+    const element = doc.createElementNS('http://www.w3.org/2000/svg', tag);
+    for (const [name, attribute] of Object.entries(attributes))
+      element.setAttribute(name, attribute);
+    gaugeTrack.append(element);
+    return element;
+  };
+  gaugeShape('line', {
+    x1: '6',
+    x2: '114',
+    y1: '12',
+    y2: '12',
+    stroke: '#ffffff35',
+    'stroke-width': '4',
+    'stroke-linecap': 'round',
+  });
+  const gaugeBand = gaugeShape('rect', {
+      x: '42',
+      y: '7',
+      width: '36',
+      height: '10',
+      rx: '3',
+      fill: 'var(--hud-accent)',
+      opacity: '0.55',
+    }),
+    gaugeMarker = gaugeShape('path', {
+      d: 'M -4 2 L 0 7 L 4 2 M 0 7 L 0 21',
+      fill: 'none',
+      stroke: 'var(--hud-ink)',
+      'stroke-width': '2',
+      'stroke-linecap': 'round',
+      'stroke-linejoin': 'round',
+    });
+  gauge.insertBefore(gaugeTrack, direction);
+  const svg = doc.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  svg.setAttribute('viewBox', '0 0 40 40');
+  svg.setAttribute('aria-hidden', 'true');
+  const ring = doc.createElementNS('http://www.w3.org/2000/svg', 'circle');
+  for (const [name, attribute] of Object.entries({
+    cx: '20',
+    cy: '20',
+    r: '16',
+    fill: 'none',
+    stroke: 'var(--hud-accent)',
+    'stroke-width': '3',
+    'stroke-linecap': 'round',
+    pathLength: '100',
+    'stroke-dasharray': '0 100',
+    transform: 'rotate(-90 20 20)',
+  }))
+    ring.setAttribute(name, attribute);
+  svg.append(ring);
+  earned.prepend(svg);
+  const dialog = make('dialog');
+  dialog.id = 'sim-flight-hud-details';
+  dialog.dataset.simHud = 'details';
+  dialog.dataset.hudComponent = 'true';
+  const dialogTitle = make('h2', null, dialog),
+    dialogBody = make('p', null, dialog),
+    dialogActions = make('div', 'dialog-actions', dialog),
+    close = make('button', null, dialogActions),
+    lesson = make('button', null, dialogActions);
+  dialogTitle.id = 'sim-flight-hud-details-title';
+  dialog.setAttribute('aria-labelledby', dialogTitle.id);
+  close.type = lesson.type = 'button';
+  doc.body.append(dialog);
+  const format = (number, digits = 1) => {
+    if (!Number.isFinite(number)) return '—';
+    const language = locale() === 'uk' ? 'uk-UA' : 'en',
+      key = `${language}:${digits}`;
+    if (!numberFormats.has(key))
+      numberFormats.set(key, new Intl.NumberFormat(language, { maximumFractionDigits: digits }));
+    return numberFormats.get(key).format(number);
+  };
+  const unit = (kind) =>
+    ({
+      height: t('m', 'м'),
+      range: t('m', 'м'),
+      path: t('m', 'м'),
+      speed: t('m/s', 'м/с'),
+      tilt: '°',
+      heading: '°',
+      rotation: '°',
+      alignment: t('m', 'м'),
+      throttle: '%',
+      input: '%',
+      time: t('s', 'с'),
+    })[kind] ?? '';
+  const name = (kind) =>
+    ({
+      height: t('Height', 'Висота'),
+      range: t('Distance', 'Відстань'),
+      path: t('Path', 'Маршрут'),
+      speed: t('Speed', 'Швидкість'),
+      tilt: t('Tilt', 'Нахил'),
+      heading: t('Heading', 'Курс'),
+      rotation: t('Rotation', 'Обертання'),
+      alignment: t('Alignment', 'Напрямок'),
+      throttle: t('Throttle', 'Газ'),
+      input: t('Stick input', 'Сигнал стіка'),
+      time: t('Time', 'Час'),
+      count: t('Count', 'Кількість'),
+    })[kind] ?? '';
+  const detailText = () => {
+    const g = feedback?.gauge,
+      description = copy(typeof context.details === 'string' ? context.details : feedback?.detail),
+      range =
+        g?.valid && (Number.isFinite(g.min) || Number.isFinite(g.max))
+          ? `${copy(feedback?.label) || name(g.kind)}: ${format(g.value)} ${unit(g.kind)} · ${
+              g.oneSided === 'min'
+                ? `≥ ${format(g.min)}`
+                : g.oneSided === 'max'
+                  ? `≤ ${format(g.max)}`
+                  : `${format(g.min)}–${format(g.max)}`
+            } ${unit(g.kind)}`
+          : copy(g?.detail),
+      conditions = (feedback?.checks ?? [])
+        .map(
+          (check) =>
+            `${check.valid === false ? '—' : check.met ? '✓' : '○'} ${{ height: t('Height', 'Висота'), position: t('Zone', 'Зона'), tilt: t('Tilt', 'Нахил'), centred: t('Sticks', 'Стіки'), speed: t('Speed', 'Рух'), heading: t('Nose', 'Ніс'), touchdown: t('Landing', 'Посадка'), throttle: t('Throttle', 'Газ') }[check.id] ?? copy(check.label)}`,
+        )
+        .join('\n');
+    return [description, range, conditions].filter(Boolean).join('\n');
+  };
+  const numericLine = () => {
+    const g = feedback?.gauge;
+    if (!g || g.valid === false) return '';
+    const target =
+      g.oneSided === 'min'
+        ? `≥ ${format(g.min)}`
+        : g.oneSided === 'max'
+          ? `≤ ${format(g.max)}`
+          : `${format(g.min)}–${format(g.max)}`;
+    return `${copy(feedback?.label) || name(g.kind)} ${format(g.value)} ${unit(g.kind)} · ${target} ${unit(g.kind)}`;
+  };
+  const paintGauge = (g) => {
+    let lo = g.min,
+      hi = g.max;
+    if (g.oneSided === 'min') {
+      lo = 0;
+      hi = Math.abs(g.min) * 2;
+    } else if (g.oneSided === 'max') {
+      lo = 0;
+      hi = Math.abs(g.max) * 2;
+    } else {
+      const span = hi - lo;
+      lo -= span;
+      hi += span;
+    }
+    const ranged = Number.isFinite(lo) && Number.isFinite(hi) && hi > lo,
+      valid = g.valid !== false && Number.isFinite(g.value);
+    gaugeTrack.hidden = !ranged;
+    gaugeTrack.style.display = ranged ? '' : 'none';
+    value.hidden = ranged;
+    setText(value, valid ? (g.met ? '✓' : '○') : '—');
+    setText(gaugeName, copy(feedback?.label) || name(g.kind));
+    setText(direction, valid && ranged && g.met ? '✓' : '');
+    if (!ranged) return;
+    const toX = (n) => 6 + Math.max(0, Math.min(1, (n - lo) / (hi - lo))) * 108,
+      from = g.oneSided === 'max' ? lo : g.min,
+      to = g.oneSided === 'min' ? hi : g.max,
+      start = toX(from),
+      end = toX(to);
+    setAttribute(gaugeBand, 'x', start);
+    setAttribute(gaugeBand, 'width', Math.max(1, end - start));
+    gaugeMarker.style.display = valid ? '' : 'none';
+    if (valid) setAttribute(gaugeMarker, 'transform', `translate(${toX(g.value)} 0)`);
+    setAttribute(
+      gaugeTrack,
+      'aria-label',
+      `${copy(feedback?.label) || name(g.kind)}. ${valid ? (g.met ? t('Inside the target band', 'У цільовій смузі') : t('Outside the target band', 'Поза цільовою смугою')) : t('Waiting for a reading', 'Очікування показника')}`,
+    );
+  };
+  const closeDetails = () => {
+    if (dialog.open) dialog.close();
+  };
+  close.addEventListener('click', closeDetails);
+  lesson.addEventListener('click', () => {
+    closeDetails();
+    onLesson?.(feedback);
+  });
+  explain.addEventListener('click', (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    (onExplain ?? onMenu)?.(feedback);
+  });
+  const paintPreferences = () => {
+    for (const element of [root, dialog]) {
+      element.dataset.hudMode = preferences.mode;
+      element.dataset.hudSize = preferences.textSize;
+      element.dataset.hudContrast = preferences.highContrast ? 'high' : 'normal';
+    }
+    for (const view of preferenceViews) view.refresh();
+  };
+  const update = (next, options = {}) => {
+    if (disposed) return;
+    feedback = next;
+    context = options;
+    // Paused practice can retain guidance, but a covering menu or result owns
+    // the screen regardless of the simulation/playback state underneath it.
+    root.hidden =
+      options.visible === false ||
+      !feedback ||
+      (options.active === false && !options.paused && !options.replay);
+    if (!feedback) return;
+    telemetry.hidden = !options.telemetry;
+    setText(telemetry, options.telemetry ?? '');
+    const notice = !options.active ? copy(options.notice) : '',
+      title = notice || copy(feedback.action) || copy(feedback.label) || t('Fly', 'Політ'),
+      g = feedback.gauge;
+    setText(action, title);
+    action.title = [copy(feedback.label), title].filter(Boolean).join(' · ');
+    setAttribute(card, 'aria-label', action.title);
+    setAttribute(
+      explain,
+      'aria-label',
+      t('Explain the current objective', 'Пояснити поточну ціль'),
+    );
+    explain.title = t('Objective details', 'Умови завдання');
+    gauge.hidden = !g;
+    if (g) paintGauge(g);
+    const e = feedback.earned,
+      hasEarned = e && Number.isFinite(e.value) && Number.isFinite(e.total) && e.total > 0,
+      ratio = hasEarned ? Math.max(0, Math.min(1, e.value / e.total)) : 0;
+    earned.hidden = !hasEarned;
+    if (hasEarned) {
+      setAttribute(ring, 'stroke-dasharray', `${ratio * 100} 100`);
+      setText(
+        earnedLabel,
+        e.complete
+          ? '✓'
+          : e.kind === 'hold' || e.kind === 'time'
+            ? t('Hold', 'Час')
+            : e.kind === 'catches' || e.kind === 'defeats'
+              ? '◎'
+              : '↝',
+      );
+      setAttribute(earned, 'role', 'progressbar');
+      setAttribute(earned, 'aria-valuemin', '0');
+      setAttribute(earned, 'aria-valuemax', e.total);
+      setAttribute(earned, 'aria-valuenow', Math.max(0, Math.min(e.value, e.total)));
+      setAttribute(earned, 'aria-label', t('Earned progress', 'Виконаний прогрес'));
+    }
+    const allChecks = feedback.checks ?? [],
+      gaugeCheck =
+        { range: 'position', alignment: 'heading', input: 'centred' }[g?.kind] ?? g?.kind,
+      priority = (check) =>
+        check.valid === true && check.met ? 2 : check.id === gaugeCheck ? 0 : 1,
+      ordered = [...allChecks].sort((a, b) => priority(a) - priority(b)),
+      displayed = ordered.length > 4 ? ordered.slice(0, 3) : ordered,
+      signature = JSON.stringify([
+        locale(),
+        gaugeCheck,
+        allChecks.map((check) => [check.id, copy(check.label), check.met, check.valid]),
+      ]);
+    if (signature !== checkSignature) {
+      checks.replaceChildren();
+      for (const check of displayed) {
+        const row = make(
+          'span',
+          null,
+          checks,
+          `${check.valid !== true ? '—' : check.met ? '✓' : '○'} ${{ height: t('Height', 'Висота'), position: t('Zone', 'Зона'), tilt: t('Tilt', 'Нахил'), centred: t('Sticks', 'Стіки'), speed: t('Speed', 'Рух'), heading: t('Nose', 'Ніс'), touchdown: t('Landing', 'Посадка'), throttle: t('Throttle', 'Газ') }[check.id] ?? copy(check.label)}`,
+        );
+        row.dataset.met = String(check.valid === true && Boolean(check.met));
+        row.title = copy(check.label);
+      }
+      if (allChecks.length > 4) {
+        const remaining = ordered.slice(3),
+          met = remaining.every((check) => check.valid === true && check.met),
+          row = make('span', null, checks, `${met ? '✓' : '○'} ${t('Other', 'Інше')}`);
+        row.dataset.met = String(met);
+        row.title = remaining
+          .map(
+            (check) => `${check.valid !== true ? '—' : check.met ? '✓' : '○'} ${copy(check.label)}`,
+          )
+          .join('\n');
+      }
+      checkSignature = signature;
+    }
+    details.hidden = preferences.mode !== 'detailed';
+    if (!details.hidden) setText(details, numericLine());
+    if (dialog.open) {
+      setText(dialogTitle, title);
+      setText(dialogBody, detailText());
+    }
+    const key = `${feedback.id}:${feedback.phase}:${Boolean(e?.complete)}:${notice}`;
+    if (key !== announcementKey) {
+      setText(announcement, e?.complete ? `${t('Complete', 'Виконано')}. ${title}` : title);
+      announcementKey = key;
+    }
+  };
+  const applyPreferences = (value, notify = false) => {
+    preferences = normalize(value);
+    paintPreferences();
+    update(feedback, context);
+    if (notify) onPreferencesChange({ ...preferences });
+  };
+  const persistPreferences = (value) => {
+    if (disposed) return;
+    const next = normalize(value);
+    try {
+      store()?.setItem(FLIGHT_HUD_PREFERENCE_KEY, JSON.stringify(next));
+    } catch {
+      /* Session preference remains usable when storage is full. */
+    }
+    applyPreferences(next, true);
+    if (win?.CustomEvent)
+      win.dispatchEvent(new win.CustomEvent(FLIGHT_HUD_PREFERENCE_EVENT, { detail: next }));
+  };
+  const stored = (event) => {
+    if (event.key === FLIGHT_HUD_PREFERENCE_KEY || event.key === null)
+      applyPreferences(readPreferences(), true);
+  };
+  const shared = (event) => {
+    if (JSON.stringify(normalize(event.detail)) !== JSON.stringify(preferences))
+      applyPreferences(event.detail, true);
+  };
+  win?.addEventListener('storage', stored);
+  win?.addEventListener(FLIGHT_HUD_PREFERENCE_EVENT, shared);
+  paintPreferences();
+  return {
+    update,
+    preferences: () => ({ ...preferences }),
+    setAim(next) {
+      if (!disposed && Number.isFinite(next?.y))
+        root.style.setProperty('--hud-aim-y', `${Math.max(0.25, Math.min(0.7, next.y)) * 100}%`);
+    },
+    setWorldCue(next) {
+      if (disposed) return;
+      cue.hidden =
+        !next ||
+        next.visible === false ||
+        next.hidden === true ||
+        !Number.isFinite(next.x) ||
+        !Number.isFinite(next.y);
+      if (cue.hidden) return;
+      const offscreen = Boolean(
+          next.offscreen || next.behind || next.occluded || next.directionOnly,
+        ),
+        x = offscreen ? Math.max(0.05, Math.min(0.95, next.x)) : next.x,
+        y = offscreen ? Math.max(0.08, Math.min(0.72, next.y)) : next.y;
+      const dock = offscreen && x > 0.25 && x < 0.8 && y > 0.58;
+      cue.style.left = `${(dock ? 0.12 : x) * 100}%`;
+      cue.style.top = `${(dock ? 0.5 : y) * 100}%`;
+      cue.dataset.targetId = String(next.targetId ?? next.worldTargetId ?? '');
+      cue.dataset.occluded = String(Boolean(next.occluded));
+      brackets.hidden = offscreen;
+      cueArrow.hidden = !offscreen;
+      cueArrow.style.transform = `rotate(${Number.isFinite(next.angle) ? next.angle : 0}rad)`;
+      setText(cueLabel, copy(next.label));
+    },
+    preferenceControls(target) {
+      if (!target?.ownerDocument || disposed) return { destroy() {} };
+      const wrapper = make('section', null, target),
+        heading = make('h3', null, wrapper),
+        controls = {};
+      wrapper.dataset.simHudPreferences = 'true';
+      for (const key of ['mode', 'textSize', 'highContrast']) {
+        const label = make('label', null, wrapper),
+          caption = make('span', null, label),
+          control = make('select', null, label);
+        controls[key] = { caption, control };
+        control.dataset.hudPreference = key;
+        control.addEventListener('change', () =>
+          persistPreferences({
+            ...preferences,
+            [key]: key === 'highContrast' ? control.value === 'true' : control.value,
+          }),
+        );
+      }
+      const view = {
+        refresh() {
+          setText(heading, t('Flight guidance', 'Підказки польоту'));
+          for (const [key, label, options] of [
+            [
+              'mode',
+              t('Guidance', 'Підказки'),
+              [
+                ['guided', t('Guided', 'З підказками')],
+                ['minimal', t('Minimal', 'Мінімальні')],
+                ['detailed', t('Detailed', 'Докладні')],
+              ],
+            ],
+            [
+              'textSize',
+              t('Text size', 'Розмір тексту'),
+              [
+                ['standard', t('Standard', 'Стандартний')],
+                ['large', t('Large', 'Великий')],
+              ],
+            ],
+            [
+              'highContrast',
+              t('HUD contrast', 'Контраст приладів'),
+              [
+                ['false', t('Standard', 'Стандартний')],
+                ['true', t('High contrast', 'Високий контраст')],
+              ],
+            ],
+          ]) {
+            const { caption, control } = controls[key];
+            setText(caption, label);
+            const optionSignature = JSON.stringify(options);
+            if (control.dataset.options !== optionSignature) {
+              control.replaceChildren();
+              for (const [value, text] of options) {
+                const option = make('option', null, control, text);
+                option.value = value;
+              }
+              control.dataset.options = optionSignature;
+            }
+            control.value = String(preferences[key]);
+          }
+        },
+        destroy() {
+          preferenceViews.delete(view);
+          wrapper.remove();
+        },
+      };
+      preferenceViews.add(view);
+      view.refresh();
+      return view;
+    },
+    openDetails({ title, body } = {}) {
+      if (disposed) return;
+      setText(
+        dialogTitle,
+        copy(title) || copy(feedback?.action) || t('Flight objective', 'Завдання польоту'),
+      );
+      setText(
+        dialogBody,
+        copy(body) || detailText() || t('Fly at your own pace.', 'Літайте у власному темпі.'),
+      );
+      setText(close, t('Close', 'Закрити'));
+      setText(lesson, t('Lesson guide', 'Пояснення уроку'));
+      lesson.hidden = !context.lesson || typeof onLesson !== 'function';
+      if (!dialog.open) dialog.showModal();
+      close.focus({ preventScroll: true });
+    },
+    closeDetails,
+    detailsRoot: () => (dialog.open ? dialog : null),
+    destroy() {
+      if (disposed) return;
+      disposed = true;
+      win?.removeEventListener('storage', stored);
+      win?.removeEventListener(FLIGHT_HUD_PREFERENCE_EVENT, shared);
+      for (const view of [...preferenceViews]) view.destroy();
+      closeDetails();
+      dialog.remove();
+      root.remove();
+      sheet.remove();
+    },
+  };
+}

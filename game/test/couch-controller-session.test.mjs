@@ -33,6 +33,48 @@ function join(s, pads) {
   for (const p of pads) if (p) press(p, 0, false);
   return s.sample(pads);
 }
+test('continuation restores exact seats during direct entry and gates held controls independently', () => {
+  const a = pad(0),
+    b = pad(2),
+    extra = pad(1),
+    initialSlots = [2, 0],
+    s = session({ initialSlots });
+  initialSlots.reverse();
+  b.axes[0] = 1;
+  press(b, 0);
+  let f = s.sample([a, extra, b], { active: true });
+  assert.deepEqual(f.slots, [2, 0]);
+  assert.equal(f.pads[1], undefined, 'An unrelated connected pad does not acquire a seat.');
+  assert.equal(gamepadCommand(f.pads[2]).direction, null);
+  assert.equal(gamepadCommand(f.pads[2]).action, false);
+  press(a, 12);
+  f = s.sample([a, extra, b], { active: true });
+  assert.equal(gamepadCommand(f.pads[0]).direction, 'up');
+  assert.equal(gamepadCommand(f.pads[2]).direction, null);
+  b.axes[0] = 0;
+  press(b, 0, false);
+  s.sample([a, extra, b], { active: true });
+  b.axes[0] = 1;
+  f = s.sample([a, extra, b], { active: true });
+  assert.equal(gamepadCommand(f.pads[2]).direction, 'right');
+  assert.equal(s.state().menuSeat, 0);
+});
+test('continuation waits for a valid snapshot but never guesses missing or unconfigured devices', () => {
+  const a = pad(0),
+    absent = pad(2),
+    s = session({ initialSlots: [2, 0] });
+  assert.deepEqual(s.sample([], { active: true, error: new Error('blocked') }).slots, [null, null]);
+  assert.deepEqual(s.sample([a], { active: true }).slots, [null, 0]);
+  assert.deepEqual(s.sample([a, absent], { active: true }).slots, [null, 0]);
+  assert.deepEqual(s.sample([], { active: true }).slots, [null, null]);
+  assert.deepEqual(s.sample([a, absent], { active: true }).slots, [null, null]);
+  const unconfigured = session({ initialSlots: [0, null] });
+  assert.deepEqual(unconfigured.sample([pad(0, '')], { active: true }).slots, [null, null]);
+});
+test('continuation seat indexes are validated before admitting controller ownership', () => {
+  for (const initialSlots of [[0, 0], [-1, null], [256, null], [3072, null], [0], [null, '0']])
+    assert.throws(() => session({ initialSlots }), /unique bounded indexes/);
+});
 test('two identical pads join deliberately at sparse indexes; join never produces flight input', () => {
   const a = pad(3),
     b = pad(7),

@@ -1,3 +1,4 @@
+import { loadBaseArtwork } from './base-artwork.mjs';
 import { nativeArtReviewURL } from './ui/art-review-navigation.mjs';
 import { specialistFailureCopy } from './hunt/actor-catalog.mjs';
 import { getLocale } from './i18n/index.mjs';
@@ -471,12 +472,14 @@ try {
   let campaign = baseCampaign,
     classRegistry = baseClasses;
   campaign.classRecipes = classRegistry;
+  const baseArtwork = runtimeContent
+    ? { visualOverrides: {}, levelVisuals: [] }
+    : await loadBaseArtwork(campaign);
   const baseEntry = {
     campaign,
     classRecipes: classRegistry,
     themes: themesFile.themes,
-    visualOverrides: {},
-    levelVisuals: [],
+    ...baseArtwork,
     music: [],
     sourcePackId: null,
   };
@@ -2799,7 +2802,10 @@ try {
     const dialog = controllerDialog();
     if (dialog) return `modal:${dialog.id}`;
     if (courseBlocked()) return `course:${coursePhase}`;
-    if (celebrationActive) return 'celebration';
+    // A completed result remains actionable while its non-blocking celebration
+    // is playing. The picture-only fallback below is still used when no result
+    // overlay is open.
+    if (celebrationActive && $('game-overlay').hidden) return 'celebration';
     if (defeatActive) return 'defeat-presentation';
     if (run?.status === 'won') return $('show-result').hidden ? 'won' : 'picture';
     if (run?.status === 'lost') return 'lost';
@@ -7864,6 +7870,12 @@ try {
   }
   function enjoyCompletedPicture({ automatic = true } = {}) {
     if (run?.status !== 'won') return;
+    // `show-result` is the authoritative state for an explicit picture view.
+    // Reduced-motion renderers can settle before a paint has reflected the
+    // result overlay, so relying on that overlay's transient hidden flag here
+    // would incorrectly replace immediately usable actions with a picture gate.
+    const resultAlreadyOpen =
+      $('show-result').hidden && $('game-overlay').dataset.kind === 'won';
     const returnFocus =
       !dialogOpen() &&
       (document.activeElement === $('skip-celebration') ||
@@ -7875,6 +7887,15 @@ try {
       settledPictureRemaining = REWARD_SETTLED_SECONDS;
     } else clearSettledPictureTransition();
     show('skip-celebration', false);
+    if (resultAlreadyOpen && automatic) {
+      // The celebration is visual feedback, not a modal gate. Preserve the
+      // live result actions once the player has reached them.
+      show('game-overlay', true);
+      show('show-result', false);
+      refreshHUD();
+      armResultAutoAdvance();
+      return;
+    }
     show('game-overlay', false);
     show('show-result', true);
     refreshHUD();
@@ -8603,7 +8624,6 @@ try {
     show('game-overlay', true);
     show('show-result', false);
     show('view-picture', kind === 'won');
-    editionUI?.refresh();
     victoryStoryButton.hidden =
       kind !== 'won' ||
       practice ||
@@ -8829,10 +8849,15 @@ try {
     refreshMastery();
     refreshCourse();
     refreshDifficulty();
+    editionUI?.refresh();
     controllerReading?.refresh();
     if (!preservePauseFocus && !document.hidden && document.hasFocus() && !controllerDialog())
       controllerFocus()?.focus({ preventScroll: true });
-    if (kind === 'won') armResultAutoAdvance();
+    // Result actions are available throughout the celebration, but the
+    // automatic continuation countdown starts only once that feedback ends.
+    // Otherwise it can launch the next flight before the final picture has
+    // finished presenting.
+    if (kind === 'won' && !celebrationActive) armResultAutoAdvance();
     else clearResultAutoAdvance();
   }
   function resultAttemptCurrent(ticket) {
@@ -11190,10 +11215,12 @@ try {
           });
           winRevealAge = 0;
           celebrationActive = true;
-          show('game-overlay', false);
-          show('skip-celebration', true);
+          // Results are immediately usable; the celebration remains a visual
+          // layer behind the result. There is no separate skip step once
+          // Retry and Next are already available.
+          overlay('won');
+          show('skip-celebration', false);
           show('show-result', false);
-          $('skip-celebration').focus({ preventScroll: true });
           warning(
             journeyRewardFailure ||
               localizedMessage('interface:pictureUnlockedAWholeWorldFromOneBraveLine'),

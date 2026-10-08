@@ -4,9 +4,31 @@ import { createClassicTargetFacing, drawClassicTarget } from './classic-target-a
 import { drawClassicDrone, drawClassicCable } from './classic-flight-art.mjs';
 export { drawClassicTarget } from './classic-target-art.mjs';
 import { CLASSIC_SNAKE_CHAPTERS } from './classic-catalogue.mjs';
+import { classicSnakeSignalView, classicSnakeContactHazardV4 } from './classic-core.mjs';
+import {
+  resolveClassicBoardScene,
+  classicScenePalette,
+  drawClassicLivingGround,
+  drawClassicLivingWall,
+} from './classic-scenes.mjs';
+import {
+  captureClassicSignalTerrain,
+  classicSignalStrength,
+  drawClassicSignalInterference,
+  drawClassicSignalSources,
+} from './classic-signal-view.mjs';
+export { resolveClassicBoardScene, classicSceneBackdrop } from './classic-scenes.mjs';
 
 const UNIT = 28;
 const targetFacings = new WeakMap();
+const signalTerrainVersions = new WeakMap();
+function signalTerrainVersion(canvas, image) {
+  const previous = signalTerrainVersions.get(canvas);
+  if (previous && previous.image === image) return previous.version;
+  const version = (previous?.version ?? 0) + 1;
+  signalTerrainVersions.set(canvas, { image, version });
+  return version;
+}
 const INKS = [
   { body: '#153d61', edge: '#65b6ff', band: '#ffe16b' },
   { body: '#4b285e', edge: '#e3b5ff', band: '#ffffff' },
@@ -153,6 +175,146 @@ function drawPickup(ctx, pickup) {
   ctx.restore();
 }
 
+function drawConcealedContactEdges(ctx, run, target, palette) {
+  // Contact hazards stay truthful without actor silhouettes or cosmetic
+  // tracking cues. Use the simulation's pre-step lethal approach predicate.
+  const x = target.x * UNIT,
+    y = target.y * UNIT,
+    edges = [
+      [0, -1, x + 2, y + 2, x + UNIT - 2, y + 2],
+      [1, 0, x + UNIT - 2, y + 2, x + UNIT - 2, y + UNIT - 2],
+      [0, 1, x + 2, y + UNIT - 2, x + UNIT - 2, y + UNIT - 2],
+      [-1, 0, x + 2, y + 2, x + 2, y + UNIT - 2],
+    ].filter(([dx, dy]) => {
+      const from = { x: target.x + dx, y: target.y + dy };
+      if (run.level.wrap) {
+        from.x = (from.x + run.level.width) % run.level.width;
+        from.y = (from.y + run.level.height) % run.level.height;
+      }
+      return classicSnakeContactHazardV4(run.level, target, from);
+    });
+  if (!edges.length) return;
+  ctx.save();
+  ctx.strokeStyle = palette.danger;
+  ctx.lineWidth = 3;
+  ctx.setLineDash([]);
+  ctx.beginPath();
+  for (const [, , left, top, right, bottom] of edges) {
+    ctx.moveTo(left, top);
+    ctx.lineTo(right, bottom);
+  }
+  ctx.stroke();
+  ctx.restore();
+}
+
+function drawFieldMechanics(ctx, run, palette, { concealEnemies = false } = {}) {
+  if (!run.relays) return;
+  for (const relay of run.relays) {
+    const target = run.targets.find((actor) => actor.id === relay.ownerId);
+    if (!target) continue;
+    ctx.save();
+    ctx.strokeStyle = relay.collected ? palette.safe : palette.accent;
+    // Pads remain route landmarks, but their cosmetic link must not disclose
+    // an otherwise concealed relay owner's current position.
+    if (!concealEnemies) {
+      ctx.globalAlpha = 0.35;
+      ctx.setLineDash([3, 7]);
+      ctx.beginPath();
+      ctx.moveTo((target.x + 0.5) * UNIT, (target.y + 0.5) * UNIT);
+      ctx.lineTo((relay.x + 0.5) * UNIT, (relay.y + 0.5) * UNIT);
+      ctx.stroke();
+    }
+    ctx.globalAlpha = 1;
+    ctx.setLineDash([]);
+    const x = (relay.x + 0.5) * UNIT,
+      y = (relay.y + 0.5) * UNIT;
+    ctx.beginPath();
+    ctx.moveTo(x, y - 9);
+    ctx.lineTo(x + 9, y);
+    ctx.lineTo(x, y + 9);
+    ctx.lineTo(x - 9, y);
+    ctx.closePath();
+    ctx.fillStyle = palette.field;
+    ctx.fill();
+    ctx.stroke();
+    if (relay.collected) {
+      ctx.beginPath();
+      ctx.moveTo(x - 5, y);
+      ctx.lineTo(x - 1, y + 4);
+      ctx.lineTo(x + 5, y - 4);
+      ctx.stroke();
+    }
+    ctx.restore();
+  }
+  for (const target of run.targets) {
+    if (concealEnemies) drawConcealedContactEdges(ctx, run, target, palette);
+    const policy = run.level.targets.required[target.policyIndex];
+    const warning = target.phase === 'warning',
+      active = target.phase === 'active';
+    if (target.kind === 'lane' && (warning || active)) {
+      const { axis, from, to } = policy.lane;
+      ctx.save();
+      ctx.strokeStyle = warning ? palette.accent : palette.danger;
+      ctx.fillStyle = palette.danger;
+      ctx.lineWidth = active ? 3 : 2;
+      ctx.setLineDash(warning ? [5, 4] : []);
+      for (let at = from; at <= to; at++) {
+        const x = (axis === 'x' ? at : target.x) * UNIT;
+        const y = (axis === 'y' ? at : target.y) * UNIT;
+        if (active) {
+          ctx.globalAlpha = 0.22;
+          ctx.fillRect(x, y, UNIT, UNIT);
+          ctx.globalAlpha = 1;
+        }
+        ctx.strokeRect(x + 3, y + 3, UNIT - 6, UNIT - 6);
+      }
+      ctx.restore();
+    }
+    if (target.kind === 'guard' && warning) {
+      const vector = { up: [0, -1], right: [1, 0], down: [0, 1], left: [-1, 0] }[target.heading];
+      ctx.save();
+      ctx.strokeStyle = palette.accent;
+      ctx.setLineDash([5, 4]);
+      ctx.beginPath();
+      ctx.moveTo((target.x + 0.5) * UNIT, (target.y + 0.5) * UNIT);
+      ctx.lineTo(
+        (target.x + 0.5 + vector[0] * 48) * UNIT,
+        (target.y + 0.5 + vector[1] * 48) * UNIT,
+      );
+      ctx.stroke();
+      ctx.restore();
+    }
+    if (target.kind === 'eroder') {
+      for (const cell of policy.breaks) {
+        if (run.removedWalls.some((removed) => removed.x === cell.x && removed.y === cell.y))
+          continue;
+        const x = cell.x * UNIT,
+          y = cell.y * UNIT;
+        ctx.save();
+        ctx.strokeStyle = warning ? palette.accent : palette.muted;
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(x + 9, y + 3);
+        ctx.lineTo(x + 16, y + 11);
+        ctx.lineTo(x + 10, y + 17);
+        ctx.lineTo(x + 18, y + 25);
+        ctx.stroke();
+        ctx.restore();
+      }
+    }
+  }
+  for (const shot of run.projectiles) {
+    const [dx, dy] = { up: [0, -1], right: [1, 0], down: [0, 1], left: [-1, 0] }[shot.heading];
+    ctx.save();
+    ctx.fillStyle = palette.danger;
+    ctx.strokeStyle = palette.accent;
+    ctx.fillRect(shot.x * UNIT + 9, shot.y * UNIT + 9, 10, 10);
+    ctx.setLineDash([3, 3]);
+    ctx.strokeRect((shot.x + dx) * UNIT + 4, (shot.y + dy) * UNIT + 4, UNIT - 8, UNIT - 8);
+    ctx.restore();
+  }
+}
+
 export function drawClassicBoard(
   canvas,
   run,
@@ -163,6 +325,8 @@ export function drawClassicBoard(
     showRemains = true,
     style = 'cable',
     boardStyle = 'theme',
+    boardScene = 'auto',
+    chapterId = '',
     cast = 'rivals',
     artRevision = runtimeActorArtRevision(),
     presentation,
@@ -172,13 +336,26 @@ export function drawClassicBoard(
     attemptKey = run,
     pixelRatio = 1,
     cssWidth,
+    locale = 'en',
+    signalTreatment = 'contrast-loss',
+    // Explicit visual-fixture comparison only; no gameplay preference or URL
+    // setting enables the original partially visible enemy treatment.
+    signalDiagnosticOriginal = false,
   } = {},
 ) {
   const { width, height, walls, wrap } = run.level,
     retro = boardStyle === 'retro',
-    palette = retro ? RETRO_FIELD_PALETTE : (presentation?.palette ?? FALLBACK_PALETTE);
+    living = boardStyle === 'living-circuit',
+    scene = resolveClassicBoardScene({ boardScene, chapterId, levelId: run.level.id }),
+    palette = retro
+      ? RETRO_FIELD_PALETTE
+      : living
+        ? classicScenePalette(scene)
+        : (presentation?.palette ?? FALLBACK_PALETTE);
   const logicalWidth = width * UNIT,
-    logicalHeight = height * UNIT;
+    logicalHeight = height * UNIT,
+    signal = classicSnakeSignalView(run),
+    concealEnemies = !signalDiagnosticOriginal && classicSignalStrength(run, signal) > 0;
   const resolution = Math.max(
     1,
     Math.min(
@@ -203,14 +380,18 @@ export function drawClassicBoard(
   ctx.imageSmoothingEnabled = false;
   ctx.fillStyle = palette.field;
   ctx.fillRect(0, 0, logicalWidth, logicalHeight);
-  ctx.fillStyle = palette.alternate;
-  ctx.globalAlpha = 0.42;
-  for (let y = 0; y < height; y++)
-    for (let x = 0; x < width; x++)
-      if ((x + y) % 2 === 0) ctx.fillRect(x * UNIT, y * UNIT, UNIT, UNIT);
+  if (living)
+    drawClassicLivingGround(ctx, run.level, scene, { unit: UNIT, document: canvas.ownerDocument });
+  else {
+    ctx.fillStyle = palette.alternate;
+    ctx.globalAlpha = 0.42;
+    for (let y = 0; y < height; y++)
+      for (let x = 0; x < width; x++)
+        if ((x + y) % 2 === 0) ctx.fillRect(x * UNIT, y * UNIT, UNIT, UNIT);
+  }
   // Fine grid and sparse surface grain echo the main game's terrain without
   // competing with silhouettes or pretending to be additional obstacles.
-  ctx.globalAlpha = 0.17;
+  ctx.globalAlpha = living ? 0.65 : 0.17;
   ctx.strokeStyle = palette.grid;
   ctx.lineWidth = 0.5;
   ctx.beginPath();
@@ -230,20 +411,26 @@ export function drawClassicBoard(
       if ((x * 7 + y * 11) % 5 === 0) ctx.fillRect(x * UNIT + 8, y * UNIT + 8, 1, 1);
     }
   ctx.globalAlpha = 1;
-  if (showRemains) {
+  if (showRemains && !concealEnemies) {
     ctx.save();
     ctx.scale(UNIT / 16, UNIT / 16);
     for (const mark of classicCatchMarks(run))
       drawHuntRemains(ctx, mark, { brutal, blood, artRevision });
     ctx.restore();
   }
-  if (effects) {
+  if (effects && !concealEnemies) {
     ctx.save();
     ctx.scale(UNIT / 16, UNIT / 16);
     effects.draw(ctx);
     ctx.restore();
   }
-  for (const wall of walls) drawWall(ctx, wall, presentation, palette, retro);
+  for (const wall of walls)
+    if (!run.removedWalls?.some((removed) => removed.x === wall.x && removed.y === wall.y)) {
+      if (living)
+        drawClassicLivingWall(ctx, wall, scene, { unit: UNIT, document: canvas.ownerDocument });
+      else drawWall(ctx, wall, presentation, palette, retro);
+    }
+  ctx.globalAlpha = 1;
   drawShutters(ctx, run, palette);
   drawPickup(ctx, run.pickup);
   ctx.lineWidth = 3;
@@ -251,10 +438,32 @@ export function drawClassicBoard(
   ctx.setLineDash(wrap ? [7, 7] : []);
   ctx.strokeRect(1.5, 1.5, logicalWidth - 3, logicalHeight - 3);
   ctx.setLineDash([]);
+  const signalVisualKey = JSON.stringify([
+    boardStyle,
+    scene,
+    style,
+    cast,
+    artRevision,
+    accent,
+    brutal,
+    blood,
+    showRemains,
+    concealEnemies,
+    palette,
+    // Artwork may finish loading while a burst is paused at the same tick.
+    signalTerrainVersion(canvas, retro || living ? null : presentation?.image?.('terrain.wall')),
+  ]);
+  // Keep current terrain separate from moving actors. During a receiver
+  // dropout the degraded branch must not duplicate their full live contrast.
+  if (signal.active && !signal.suppressed && signalTreatment === 'contrast-loss')
+    captureClassicSignalTerrain(canvas, run, { unit: UNIT, visualKey: signalVisualKey });
   const targets = run.targets ?? (run.target ? [run.target] : []);
   if (!targetFacings.has(canvas)) targetFacings.set(canvas, createClassicTargetFacing());
   const headings = targetFacings.get(canvas)(run, attemptKey);
-  for (const target of targets)
+  // Omit actors before receiver sampling, not merely beneath the noise. This
+  // also hides nearby enemies inside the protected head regions and prevents
+  // shadows, labels, badges, and the clean-feed fraction leaking their motion.
+  for (const target of concealEnemies ? [] : targets) {
     drawClassicTarget(
       ctx,
       target.x * UNIT,
@@ -265,6 +474,7 @@ export function drawClassicBoard(
         ...target,
         heading: headings.get(target.id),
         cast,
+        boardStyle,
         artRevision,
         direction:
           target.kind === 'still' || (target.kind === 'sprinter' && target.phase === 'rest')
@@ -276,6 +486,8 @@ export function drawClassicBoard(
         reducedEffects: reduced,
       },
     );
+  }
+  ctx.globalAlpha = 1;
   for (const snake of run.snakes) {
     const ink = retro ? RETRO_INKS[snake.id % 2] : pilotInk(snake.id, accent);
     drawClassicCable(ctx, snake, ink, run.level, {
@@ -310,4 +522,15 @@ export function drawClassicBoard(
     ctx.lineTo(x + 8, y + 20);
     ctx.stroke();
   }
+  drawClassicSignalInterference(ctx, canvas, run, signal, {
+    unit: UNIT,
+    reduced,
+    timeMs: flight.timeMs,
+    palette,
+    treatment: signalTreatment,
+    visualKey: signalVisualKey,
+  });
+  // True hazard outlines stay crisp at native resolution after receiver processing.
+  drawFieldMechanics(ctx, run, palette, { concealEnemies });
+  drawClassicSignalSources(ctx, run, signal, { unit: UNIT, palette, locale });
 }

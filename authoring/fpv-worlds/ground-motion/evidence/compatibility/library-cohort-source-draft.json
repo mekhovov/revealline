@@ -1,0 +1,23 @@
+{
+  "applied": false,
+  "changes": [
+    {
+      "path": "optional-practice/civilian-fpv/world-library.mjs",
+      "beforeSHA256": "8c452316136b91dd9ac8f81de56a7a6aee931dcd62c4595c55e29bcdd10a5c9a",
+      "draftSHA256": "508220ad83fc747a31e5ee4a7efbc860428cfaaffe91bc7f9ba1d1428fa51331",
+      "delta": -18
+    },
+    {
+      "path": "optional-practice/worker-source.mjs",
+      "beforeSHA256": "0d2349ada562b9bba87c313c9a6a2a17afb97749d6a2b8a4655ef6047d83101c",
+      "draftSHA256": "85faeefa3d4fa2f101d87e5370ab29de07d62fe39526d3678fd7ad3319298b7d",
+      "delta": -2
+    }
+  ],
+  "generated": "Regenerate worker-template and world-reaction-runtime after applying readable source patch, then full exact identity/admission. No index file changes included.",
+  "patchArchive": {
+    "path": "library-cohort-source-draft.patch.gz",
+    "rawSHA256": "cec4b1d60dfbfb8132c35b27af866b91bb1de8f9ac4a2d5c0ad7f21ebbce4d65",
+    "storedSHA256": "e9a81af9873b9d16a095f37c8053e5f34e31f6fd7a3bab2b71b51815d22ff06b"
+  }
+}

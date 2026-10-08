@@ -330,6 +330,7 @@ test('explicit verified repair bypasses a same-sized corrupt official cache entr
 });
 
 function host(configPatch = {}, storage = new Map(), options = {}) {
+  const scope = options.scope ?? 'https://game.example/releases/v2/site/';
   const entries = new Map(
     options.entries ?? [
       ['game/index.html', '<title>Game</title>'],
@@ -551,6 +552,49 @@ test('a cached version supports nested navigations and sibling shipped assets wi
   });
   assert.match(await asset.text(), /animation=true/);
   assert.equal(h.calls.length, 0);
+});
+
+test('one installed PWA serves first-visit Survivor, Raid and Snake bookmarks and recorded audio offline', async () => {
+  const entries = [
+    ['game/index.html', 'Main game home'],
+    ['game/overflight/play.html', 'Survivor document'],
+    ['game/overflight/raid.html', 'Raid document'],
+    ['game/snake/index.html', 'Snake hub'],
+    ['game/snake/play.html', 'Classic Snake document'],
+    ['game/overflight/app.mjs', 'Shared Survivor and Raid runtime'],
+    ['game/overflight/raid-core.mjs', 'Raid rules'],
+    ['game/snake/classic-app.mjs', 'Snake runtime'],
+    ['game/vendor/phaser-4.2.1.min.js', 'Local Phaser'],
+  ];
+  const recording = {
+    path: 'game/audio/effects/human-reaction-1.wav',
+    bytes: 4,
+    sha256: digest('RIFF'),
+  };
+  for (const scope of ['https://game.example/', 'https://game.example/releases/v2/site/']) {
+    const h = host({ downloadFiles: [recording] }, new Map(), { entries, scope });
+    await h.dispatch('install');
+    await h.dispatch('activate');
+    const official = await h.caches.open('revealline-official-content-v1');
+    await official.put(
+      new URL(`/.revealline-official/sha256/${recording.sha256}`, scope).href,
+      new Response('RIFF', { headers: { 'Content-Length': '4' } }),
+    );
+    h.network.clear();
+    h.calls.length = 0;
+    for (const [path, body] of entries) {
+      const url = new URL(`${path}?lang=uk&seed=37&from=home#menu`, scope);
+      const request = path.endsWith('.html') ? navigationRequest(url) : new Request(url);
+      assert.equal(await (await h.dispatch('fetch', { request })).text(), body, url.href);
+    }
+    const sound = await h.dispatch('fetch', {
+      request: new Request(new URL(recording.path, scope)),
+    });
+    assert.equal(await sound.text(), 'RIFF');
+    assert.equal((await h.report()).status, 'ready');
+    assert.equal(h.calls.length, 0, 'first offline visits never need a prewarmed mode page');
+    assert.equal(h.claimed, 1, 'the main worker owns all three modes');
+  }
 });
 
 test('durable runtime resumes verified files after quota failure and worker replacement', async () => {

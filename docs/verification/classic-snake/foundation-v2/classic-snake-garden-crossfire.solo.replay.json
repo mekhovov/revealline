@@ -1,0 +1,303 @@
+{
+  "version": "classic-snake-replay.v1",
+  "ruleset": "classic-snake-core.v1",
+  "level": {
+    "version": "classic-snake-level.v1",
+    "id": "classic-snake-garden-crossfire",
+    "revision": "2",
+    "name": "Garden Weave",
+    "width": 24,
+    "height": 18,
+    "walls": [
+      {
+        "x": 11,
+        "y": 4
+      },
+      {
+        "x": 12,
+        "y": 4
+      },
+      {
+        "x": 13,
+        "y": 4
+      },
+      {
+        "x": 8,
+        "y": 5
+      },
+      {
+        "x": 16,
+        "y": 5
+      },
+      {
+        "x": 8,
+        "y": 6
+      },
+      {
+        "x": 16,
+        "y": 6
+      },
+      {
+        "x": 8,
+        "y": 7
+      },
+      {
+        "x": 16,
+        "y": 7
+      },
+      {
+        "x": 8,
+        "y": 8
+      },
+      {
+        "x": 16,
+        "y": 8
+      },
+      {
+        "x": 8,
+        "y": 9
+      },
+      {
+        "x": 16,
+        "y": 9
+      },
+      {
+        "x": 8,
+        "y": 10
+      },
+      {
+        "x": 16,
+        "y": 10
+      },
+      {
+        "x": 8,
+        "y": 11
+      },
+      {
+        "x": 16,
+        "y": 11
+      },
+      {
+        "x": 8,
+        "y": 12
+      },
+      {
+        "x": 16,
+        "y": 12
+      },
+      {
+        "x": 11,
+        "y": 14
+      },
+      {
+        "x": 12,
+        "y": 14
+      },
+      {
+        "x": 13,
+        "y": 14
+      }
+    ],
+    "spawns": [
+      {
+        "x": 5,
+        "y": 2,
+        "direction": "right"
+      },
+      {
+        "x": 18,
+        "y": 15,
+        "direction": "left"
+      }
+    ],
+    "goal": 14,
+    "stepMs": 180,
+    "speedupEvery": 4,
+    "minStepMs": 135,
+    "wrap": false,
+    "targetMovement": "flee",
+    "fleeEvery": 4
+  },
+  "levelIdentity": "49a25edf2fd12734",
+  "mode": "solo",
+  "seed": 17,
+  "steps": 222,
+  "turns": [
+    {
+      "tick": 0,
+      "playerId": 0,
+      "direction": "down"
+    },
+    {
+      "tick": 4,
+      "playerId": 0,
+      "direction": "left"
+    },
+    {
+      "tick": 9,
+      "playerId": 0,
+      "direction": "down"
+    },
+    {
+      "tick": 19,
+      "playerId": 0,
+      "direction": "right"
+    },
+    {
+      "tick": 36,
+      "playerId": 0,
+      "direction": "up"
+    },
+    {
+      "tick": 51,
+      "playerId": 0,
+      "direction": "left"
+    },
+    {
+      "tick": 68,
+      "playerId": 0,
+      "direction": "up"
+    },
+    {
+      "tick": 69,
+      "playerId": 0,
+      "direction": "right"
+    },
+    {
+      "tick": 75,
+      "playerId": 0,
+      "direction": "down"
+    },
+    {
+      "tick": 92,
+      "playerId": 0,
+      "direction": "left"
+    },
+    {
+      "tick": 95,
+      "playerId": 0,
+      "direction": "up"
+    },
+    {
+      "tick": 99,
+      "playerId": 0,
+      "direction": "right"
+    },
+    {
+      "tick": 101,
+      "playerId": 0,
+      "direction": "down"
+    },
+    {
+      "tick": 102,
+      "playerId": 0,
+      "direction": "right"
+    },
+    {
+      "tick": 107,
+      "playerId": 0,
+      "direction": "up"
+    },
+    {
+      "tick": 121,
+      "playerId": 0,
+      "direction": "right"
+    },
+    {
+      "tick": 126,
+      "playerId": 0,
+      "direction": "down"
+    },
+    {
+      "tick": 134,
+      "playerId": 0,
+      "direction": "left"
+    },
+    {
+      "tick": 138,
+      "playerId": 0,
+      "direction": "down"
+    },
+    {
+      "tick": 139,
+      "playerId": 0,
+      "direction": "left"
+    },
+    {
+      "tick": 140,
+      "playerId": 0,
+      "direction": "down"
+    },
+    {
+      "tick": 148,
+      "playerId": 0,
+      "direction": "right"
+    },
+    {
+      "tick": 155,
+      "playerId": 0,
+      "direction": "up"
+    },
+    {
+      "tick": 159,
+      "playerId": 0,
+      "direction": "left"
+    },
+    {
+      "tick": 163,
+      "playerId": 0,
+      "direction": "up"
+    },
+    {
+      "tick": 169,
+      "playerId": 0,
+      "direction": "left"
+    },
+    {
+      "tick": 172,
+      "playerId": 0,
+      "direction": "up"
+    },
+    {
+      "tick": 179,
+      "playerId": 0,
+      "direction": "right"
+    },
+    {
+      "tick": 184,
+      "playerId": 0,
+      "direction": "down"
+    },
+    {
+      "tick": 192,
+      "playerId": 0,
+      "direction": "left"
+    },
+    {
+      "tick": 198,
+      "playerId": 0,
+      "direction": "up"
+    },
+    {
+      "tick": 206,
+      "playerId": 0,
+      "direction": "left"
+    },
+    {
+      "tick": 215,
+      "playerId": 0,
+      "direction": "down"
+    },
+    {
+      "tick": 220,
+      "playerId": 0,
+      "direction": "right"
+    },
+    {
+      "tick": 221,
+      "playerId": 0,
+      "direction": "up"
+    }
+  ],
+  "checkpoint": "98f257ba90463670"
+}
