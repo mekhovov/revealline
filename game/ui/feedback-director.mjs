@@ -27,6 +27,7 @@ export class FeedbackDirector {
     this.boards = new Map();
     this.seen = new WeakMap();
     this.serial = 0;
+    this.destructionVariants = new Map();
     this.lastLevels = new Map();
     this.recent = new Map();
     this.generation = 0;
@@ -39,7 +40,8 @@ export class FeedbackDirector {
     for (const name of Object.keys(EFFECT_BANK)) this.load(name);
   }
   load(name) {
-    if (this.closed || this.buffers.has(name) || this.pending.has(name)) return;
+    if (this.closed || this.buffers.has(name)) return;
+    if (this.pending.has(name)) return this.pending.get(name);
     if (this.now() < (this.retryAfter.get(name) ?? -Infinity)) return;
     const entry = EFFECT_BANK[name];
     if (!entry) return;
@@ -61,6 +63,7 @@ export class FeedbackDirector {
         else this.retryAfter.delete(name);
       });
     this.pending.set(name, promise);
+    return promise;
   }
   play(
     name,
@@ -87,6 +90,13 @@ export class FeedbackDirector {
     if (name.startsWith('contact-') && !/[-][12]$/.test(name)) {
       const variant = this.serial++ % 3;
       if (variant) name += `-${variant}`;
+    }
+    if (name.startsWith('destroy-') && !/[-][12]$/.test(name)) {
+      const variant = this.destructionVariants.get(name) ?? 0;
+      this.destructionVariants.set(name, (variant + 1) % 3);
+      if (variant) name += `-${variant}`;
+      // Small per-recording variation, independent of the simulation seed.
+      rate *= [1, 1.025, 0.98][variant];
     }
     const s = this.sound,
       c = s.context;
@@ -255,6 +265,9 @@ export class FeedbackDirector {
         'combat.impact': 'impact',
         'combat.cancelled': 'recover',
         'combat.eliminated': 'catch',
+        'enemy.defeated': 'catch',
+        'encounter.defeated': 'catch',
+        'core.defeated': 'catch',
       }[event.type];
       if (combatCue && this.sound.encounter) {
         const hunt =
@@ -262,13 +275,52 @@ export class FeedbackDirector {
           run.level?.runningEnemies?.hunt ??
           run.level?.classic?.hunt ??
           run.definition?.classic?.hunt;
-        const humanoid = hunt?.targets?.find((target) => target.id === event.id);
+        const identity = event.actorId ?? event.enemy ?? event.id;
+        const actor = [
+          ...(run.enemies ?? []),
+          ...((run.classic ?? run).combatPatrols?.actors ?? []),
+        ].find((candidate) => candidate.id === identity);
+        const humanoid = hunt?.targets?.find((target) => target.id === identity);
+        const stronghold =
+          event.type === 'core.defeated'
+            ? run.strongholds?.find((candidate) => candidate.id === event.stronghold)
+            : null;
+        const rawFamily =
+          event.family ??
+          humanoid?.kind ??
+          actor?.pursuit?.behavior ??
+          actor?.family ??
+          (stronghold ? 'relay-sentinel' : actor?.type) ??
+          (['encounter.defeated', 'core.defeated'].includes(event.type)
+            ? 'relay-sentinel'
+            : undefined);
+        const family = humanoid
+          ? rawFamily
+          : ({
+              bouncer: 'utility-car',
+              'claimed-rover': 'cargo-truck',
+              'border-patrol': 'armored-carrier',
+              'contour-patrol': 'scout-car',
+              eroder: 'tracked-tank',
+              'relay-sentinel': 'radar-truck',
+            }[rawFamily] ?? rawFamily);
+        const machineFamily =
+          !family || /car|truck|tank|rover|vehicle|machine|lane-boss/.test(family);
+        const machine =
+          event.machine ??
+          (combatCue === 'catch' && !humanoid && actor?.bodyId !== 'humanoid' && machineFamily
+            ? ['eroder', 'lane-boss', 'tracked-tank'].includes(family)
+              ? 'tracked'
+              : 'wheeled'
+            : false);
+        const source = Number.isFinite(event.x) ? event : (stronghold?.core ?? actor);
         this.sound.encounter(combatCue, {
           board: options.board ?? 'solo',
-          family: humanoid?.kind,
-          machine: event.type === 'combat.eliminated' && !humanoid,
+          family,
+          machine,
+          material: event.material,
           brutal: (options.getDestruction?.() ?? this.sound.readDestruction?.())?.brutal === true,
-          pan: Number.isFinite(event.x) ? screenPan(event.x, run.width, options.placement) : 0,
+          pan: Number.isFinite(source?.x) ? screenPan(source.x, run.width, options.placement) : 0,
         });
         return;
       }
