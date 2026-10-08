@@ -192,6 +192,9 @@ test('actual native menu imports and styles remain in each mode offline closure'
     'game/ui/settings-panels.mjs',
     'game/ui/pause-menu.mjs',
     'game/ui/pause-menu.css',
+    'game/ui/device-controls.css',
+    'game/ui/handheld-play.css',
+    'game/ui/touch-steering.css',
     'game/ui/mode-boot.css',
     'game/couch/index.html',
     'game/couch/couch.mjs',
@@ -213,13 +216,179 @@ test('actual native menu imports and styles remain in each mode offline closure'
       'game/ui/mode-choice-view.mjs',
       'game/ui/mode-settings-view.mjs',
       'game/ui/native-menu-icons.mjs',
-      'game/ui/pause-menu.mjs',
       'game/ui/pause-menu.css',
+      'game/ui/touch-steering.css',
     ])
       assert.ok(retained.has(name), `${mode}: ${name}`);
-    if (mode !== 'solo')
+    if (mode !== 'solo') {
       assert.ok(retained.has('game/ui/mode-boot.css'), `${mode} boot stylesheet`);
-    else assert.ok(retained.has('game/ui/mode-settings-view.css'), 'Snake category stylesheet');
+      assert.ok(retained.has('game/ui/pause-menu.mjs'), `${mode} Couch pause menu`);
+    } else assert.ok(retained.has('game/ui/mode-settings-view.css'), 'Snake category stylesheet');
+  }
+});
+
+test('main home keeps the static encounter-host dependency needed before any mode can mount', async () => {
+  const names = [
+    'game/index.html',
+    'game/boot.mjs',
+    'game/app.mjs',
+    'game/content-design/solo-route-host.mjs',
+    'game/content-design/encounter-host.mjs',
+    'game/content-design/versus-host.mjs',
+    'game/couch/index.html',
+    'game/couch/couch.mjs',
+    'game/mission-library/remote-team.mjs',
+    'game/mission-library/spatial-next-editions.mjs',
+  ];
+  const files = await Promise.all(
+    names.map(async (name) => ({
+      name,
+      bytes: await readFile(new URL(`../${name}`, import.meta.url)),
+    })),
+  );
+  const core = selectOfflineCore(files, new Set());
+  for (const name of names.slice(0, 6))
+    assert.ok(core.retained.has(name), `${name} is required by the main home module graph`);
+  assert.equal(
+    core.references.get('game/content-design/encounter-host.mjs'),
+    'game/content-design/solo-route-host.mjs',
+  );
+  // The generic literal walker may also encounter app's optional Versus import.
+  // The actual static edge is why this shared factory cannot be excluded.
+  assert.match(
+    files.find(({ name }) => name === 'game/content-design/encounter-host.mjs').bytes.toString(),
+    /import\s*\{\s*createCandidateVersusHost\s*\}\s*from\s*['"]\.\/versus-host\.mjs['"]/,
+  );
+  for (const name of names.slice(6))
+    assert.ok(!core.retained.has(name), `${name} remains an optional mode destination`);
+});
+
+test('native Overflight source stays in player core while its linked Studio remains optional', async () => {
+  const player = (await readdir(new URL('../game/overflight/', import.meta.url)))
+    .filter((name) => /\.(?:mjs|css|html)$/.test(name))
+    .map((name) => `game/overflight/${name}`);
+  const shared = [
+    'game/ui/mode-play-shell.mjs',
+    'game/ui/mode-play-shell.css',
+    'game/ui/controller-navigation.mjs',
+    'game/ui/audio.mjs',
+    'game/ui/audio-master.mjs',
+    'game/ui/feedback-director.mjs',
+    'game/ui/human-reaction-policy.mjs',
+    'game/ui/destruction-audio.mjs',
+    'game/ui/defeat-sound-controls.mjs',
+    'game/ui/encounter-display-controls.mjs',
+    'game/ui/destruction-controls.mjs',
+    'game/audio/effects/bank.mjs',
+    'game/couch/couch-music-host.mjs',
+    'game/presentation/theme-host.mjs',
+    'game/presentation/theme-bootstrap.mjs',
+    'game/presentation/host.mjs',
+    'game/presentation/industrial-machinery.mjs',
+    'game/presentation/overflight-field-kit-art.mjs',
+    'game/presentation/overflight-motion.mjs',
+    'game/hunt/actor-art.mjs',
+    'game/vendor/phaser-4.2.1.min.js',
+  ];
+  const optional = [
+    'game/studio/overflight.html',
+    'game/studio/overflight.mjs',
+    'game/studio/overflight.css',
+    'game/studio/raid.html',
+    'game/studio/raid.mjs',
+    'game/studio/raid.css',
+    'authoring/library/overflight-field-kit-v1/manifest.json',
+    'authoring/library/overflight-field-kit-v1/pickup-salvage-small.png',
+  ];
+  const files = await Promise.all(
+    [...player, ...shared, ...optional].map(async (name) => ({
+      name,
+      bytes: await readFile(new URL(`../${name}`, import.meta.url)),
+    })),
+  );
+  const core = selectOfflineCore(files, new Set());
+  for (const name of [
+    'game/overflight/play.html',
+    'game/overflight/raid.html',
+    'game/overflight/raid-mode.mjs',
+    'game/overflight/raid-core.mjs',
+    'game/overflight/raid-project.mjs',
+    'game/overflight/app.mjs',
+    'game/overflight/core.mjs',
+    'game/overflight/renderer.mjs',
+    'game/overflight/atlas.mjs',
+    'game/overflight/style.css',
+    ...shared,
+  ])
+    assert.ok(core.retained.has(name), `${name} must not be hidden in tooling`);
+  for (const name of optional) {
+    assert.equal(core.retained.has(name), false, name);
+    assert.ok(core.optional.includes(name), name);
+  }
+  assert.ok(
+    ['game/overflight/play.html', 'game/overflight/raid.html'].includes(
+      core.references.get('game/overflight/app.mjs'),
+    ),
+  );
+  assert.equal(core.references.get('game/overflight/renderer.mjs'), 'game/overflight/app.mjs');
+});
+
+test('Classic Snake keeps its native chapters, rules, artwork and sound adapters in player core', async () => {
+  const player = (await readdir(new URL('../game/snake/', import.meta.url)))
+    .filter((name) => /\.(?:m?js|css|html)$/.test(name))
+    .map((name) => `game/snake/${name}`);
+  const shared = [
+    'game/ui/content-studio-navigation.mjs',
+    'game/ui/global-settings-tools.mjs',
+    'game/ui/install-offline-panel.mjs',
+    'game/ui/audio.mjs',
+    'game/ui/audio-master.mjs',
+    'game/ui/feedback-director.mjs',
+    'game/ui/human-reaction-policy.mjs',
+    'game/ui/destruction-audio.mjs',
+    'game/ui/defeat-sound-controls.mjs',
+    'game/audio/effects/bank.mjs',
+    'game/ui/fpv-body-recipes.mjs',
+    'authoring/motion-lab/animation.mjs',
+    'game/hunt/actor-art.mjs',
+    'game/hunt/destruction.mjs',
+    'game/presentation/host.mjs',
+  ];
+  const optional = [
+    'game/studio/snake.html',
+    'game/studio/snake.mjs',
+    'game/studio/snake.css',
+    'game/audio/effects/rotor.wav',
+    'game/audio/effects/human-reaction-1.wav',
+  ];
+  const files = await Promise.all(
+    [...player, ...shared, ...optional].map(async (name) => ({
+      name,
+      bytes: await readFile(new URL(`../${name}`, import.meta.url)),
+    })),
+  );
+  const { retained, optional: unretained } = selectOfflineCore(files, new Set());
+  for (const name of [
+    'game/snake/index.html',
+    'game/snake/hub.mjs',
+    'game/snake/play.html',
+    'game/snake/classic-app.mjs',
+    'game/snake/classic.css',
+    'game/snake/classic-audio.mjs',
+    'game/snake/classic-catalogue.mjs',
+    'game/snake/classic-catalogue-v4.mjs',
+    'game/snake/classic-core.mjs',
+    'game/snake/classic-core-v4.mjs',
+    'game/snake/classic-match.mjs',
+    'game/snake/classic-presentation.mjs',
+    'game/snake/classic-flight-art.mjs',
+    'game/snake/classic-target-art.mjs',
+    ...shared,
+  ])
+    assert.ok(retained.has(name), `${name} must be available on first offline play`);
+  for (const name of optional) {
+    assert.equal(retained.has(name), false, name);
+    assert.ok(unretained.includes(name), name);
   }
 });
 

@@ -138,7 +138,7 @@ test('lobby, setup and children use reachable native controls and Back restores 
   const modes = f.$('race-mode-choices');
   assert.deepEqual(
     modes.children.map((element) => element.dataset.gameMode ?? element.id),
-    ['solo', 'team', 'versus', 'snake', 'simulator'],
+    ['solo', 'team', 'versus', 'snake', 'overflight', 'simulator'],
   );
   const currentMode = modes.querySelector('[aria-current="page"]');
   assert.equal(currentMode.tagName, 'BUTTON');
@@ -148,6 +148,7 @@ test('lobby, setup and children use reachable native controls and Back restores 
   // The arcade seats, simulator and Snake stay reachable from the lobby.
   for (const node of [
     f.$('versus-fpv-sim'),
+    f.$('versus-overflight'),
     f.$('versus-snake'),
     currentMode,
     f.$('race-coop'),
@@ -167,6 +168,8 @@ test('lobby, setup and children use reachable native controls and Back restores 
   assert.equal(f.doc.activeElement, currentMode);
   press(f, 'Tab');
   assert.equal(f.doc.activeElement.id, 'versus-snake');
+  press(f, 'Tab');
+  assert.equal(f.doc.activeElement.id, 'versus-overflight');
   press(f, 'Tab');
   assert.equal(f.doc.activeElement.id, 'versus-fpv-sim');
   press(f, 'Tab');
@@ -663,7 +666,15 @@ test('a real finished draw exposes both frozen boards, Results returns without a
   const base = JSON.parse(
     await readFile(new URL('../content/campaign.json', import.meta.url), 'utf8'),
   );
-  const campaign = { ...base, briefs: [], levels: [retryFixture('enemy-player').level] };
+  // This fixture intentionally replaces the shipped level list. Give it its
+  // own identity so the production First Signal artwork pack is not presented
+  // as artwork for a different campaign.
+  const campaign = {
+    ...base,
+    id: 'couch-finished-draw',
+    briefs: [],
+    levels: [retryFixture('enemy-player').level],
+  };
   const f = await couchPage(t, { campaign }),
     firstResultsReveal = [];
   t.mock.method(f.$('race-start'), 'scrollIntoView', (options) => {

@@ -1275,12 +1275,13 @@ export function attachMissionLibraryBrowser({
   });
   function layoutGoal() {
     if (!goal) return;
-    // Pinning is useful but secondary to seeing and choosing the next route.
-    // The same live controls move into compact Filters without duplicating
-    // their preferences, listeners or focused mission.
+    // Goal actions are a continuation path, not merely filters.  Keep them in
+    // the footer even on compact layouts so the controller can leave the last
+    // mission card and reach Pin/Find/Clear without first opening a collapsed
+    // disclosure.  The view is still one live instance, so preferences and
+    // focus remain stable across responsive changes.
     const focused = doc.activeElement;
-    (compact ? filterOptions : footer).append(goal.element);
-    if (compact && goal.element.contains(focused)) filterDetails.open = true;
+    footer.append(goal.element);
     if (goal.element.contains(focused)) focused.focus({ preventScroll: true });
   }
   layoutGoal();
