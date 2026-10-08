@@ -1,6 +1,9 @@
 /** Events enter the existing mixer once per accepted simulation step. It owns
  * mute, priorities, sample fallback and voice limits; replay/prepare stay silent. */
-export function createOverflightAudio(sound, { presentation = null } = {}) {
+export function createOverflightAudio(
+  sound,
+  { presentation = null, getDestruction = () => ({}) } = {},
+) {
   let lastTick = '';
   const eventCursor = (run) =>
     `${run.tick}:${run.phase ?? ''}:${run.progression?.choices ?? 0}:${run.progression?.rerolls ?? 0}`;
@@ -11,34 +14,57 @@ export function createOverflightAudio(sound, { presentation = null } = {}) {
     impact: 'impact',
     pulse: 'pulse',
     warning: 'warning',
+    arrival: 'warning',
+    boost: 'burst',
+    start: 'notice',
     pickup: 'supply',
     'pickup.collected': 'supply',
     damage: 'impact',
     hit: 'impact',
-    defeat: 'impact',
+    defeat: 'catch',
     salvage: 'supply',
     system: 'pulse',
     shield: 'recover',
     handoff: 'recover',
-    'upgrade-ready': 'objective',
     upgrade: 'objective',
-    elite: 'warning',
-    final: 'warning',
+    elite: 'objective',
+    final: 'objective',
     level: 'objective',
     evolution: 'objective',
-    won: 'objective',
-    lost: 'failure',
   };
   return {
     prepare() {
-      return sound.publishedAudio?.prepare(['pickup']);
+      return sound.publishedAudio?.prepare(['pickup', 'confirm', 'victory', 'failure']);
     },
     update(run) {
       if (!run || eventCursor(run) === lastTick) return;
       lastTick = eventCursor(run);
       const heard = new Set();
-      for (const event of Array.isArray(run.events) ? run.events : []) {
+      const events = Array.isArray(run.events) ? run.events : [];
+      const terminal = events.find((event) => ['won', 'lost'].includes(event.type ?? event));
+      if (terminal) {
+        // The result belongs to the native menu bus: pausing the finished
+        // simulation must not cut its motif off with the remaining combat SFX.
+        sound.event({
+          type: 'run.completed',
+          ui: true,
+          board: 'overflight',
+          levelId: run.compiled?.id ?? 'overflight',
+          tick: run.tick,
+          won: (terminal.type ?? terminal) === 'won',
+          status: terminal.type ?? terminal,
+        });
+        return;
+      }
+      const brutal = getDestruction()?.brutal === true;
+      for (const event of events) {
         const type = typeof event === 'string' ? event : event.type;
+        if (type === 'reroll' || type === 'upgrade-ready') {
+          // A paused draft uses the shared menu bus and its saved preferences.
+          if (!heard.has('confirm')) sound.publishedCue('confirm');
+          heard.add('confirm');
+          continue;
+        }
         const cue = mapping[type];
         if (!cue || heard.has(cue)) continue;
         heard.add(cue);
@@ -48,8 +74,9 @@ export function createOverflightAudio(sound, { presentation = null } = {}) {
         sound.encounter(cue, {
           board: 'overflight',
           pan,
-          gainScale: cue === 'impact' ? 0.6 : 0.8,
-          material: 'metal',
+          gainScale: cue === 'impact' ? 0.6 : cue === 'catch' ? 0.45 : 0.8,
+          brutal,
+          material: cue === 'catch' ? 'soft' : 'metal',
         });
       }
     },

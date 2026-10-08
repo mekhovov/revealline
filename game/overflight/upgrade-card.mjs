@@ -25,6 +25,7 @@ export function createOverflightUpgradeCard({
   button.type = 'button';
   button.disabled = disabled;
   button.dataset.upgradeId = offer.id;
+  button.dataset.evolution = String(offer.kind === 'evolution');
   const kind = text(
     offer.kind === 'support'
       ? 'supportModule'
