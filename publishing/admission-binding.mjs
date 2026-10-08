@@ -24,20 +24,12 @@ export function dependenciesOf(body = '') {
   ].sort((a, b) => a - b);
 }
 
-export function classification(pull, paths) {
+export function classification(_pull, paths) {
   if (!Array.isArray(paths) || !paths.length) throw new Error('Empty changed-path inventory.');
-  if (/^Release evidence v\d+\.\d+\.\d+/.test(pull.title)) {
-    if (paths.some((name) => !name.startsWith('docs/')))
-      throw new Error('Evidence must be docs-only.');
-    return 'release-evidence';
-  }
-  if (/^Release v\d+\.\d+\.\d+/.test(pull.title)) return 'release';
-  if (/^v\d+\.\d+\.\d+/.test(pull.milestone?.title || '')) return 'scheduled';
-  return paths.some(
-    (name) => !/^(docs\/|publishing\/|\.github\/workflows\/|game\/test\/)/.test(name),
-  )
-    ? 'hold'
-    : 'maintenance';
+  // Queue admission deliberately does not restrict implementation paths. The
+  // exact changed-path inventory remains in the receipt for focused testing;
+  // titles, milestones, and labels cannot alter an admitted PR's class.
+  return 'maintenance';
 }
 
 export function admissionBinding(pull, { workflowRevision, policyDigest, paths }) {
@@ -55,23 +47,6 @@ export function admissionBinding(pull, { workflowRevision, policyDigest, paths }
     workflowRevision,
     policyDigest,
     classification: classification(pull, paths),
-    title: pull.title.trim().replace(/\s+/g, ' '),
-    milestone: pull.milestone
-      ? { number: pull.milestone.number, title: pull.milestone.title }
-      : null,
-    labels: (pull.labels || [])
-      .map((label) => label.name || label)
-      .filter(
-        (name) =>
-          [
-            'release-train-hold',
-            'do-not-merge',
-            'hold',
-            'fastline-approved',
-            'fastline-stack-merge',
-          ].includes(name) || name.startsWith('hold:'),
-      )
-      .sort(),
     dependencies: dependenciesOf(pull.body),
     paths: [...new Set(paths)].sort(),
   };

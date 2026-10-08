@@ -1,0 +1,109 @@
+{
+  "format": "FPVGroundMotionTypedDiagnosticAudit.v1",
+  "sourceRevision": "9b5c3d65e2877847126c87f263fbc7e9aca357fb",
+  "basedOn": {
+    "path": "/tmp/fpv-ground-motion-contract-9b5c-r4.json",
+    "sha256": "e35a9c5374ee769b39773415420bcf567ce48e905255460494c9dbec6420f74c"
+  },
+  "librarySHA256": "8c452316136b91dd9ac8f81de56a7a6aee931dcd62c4595c55e29bcdd10a5c9a",
+  "checks": [
+    {
+      "name": "Typed distinction null",
+      "passed": true
+    },
+    {
+      "name": "Guidance classification null",
+      "passed": true
+    },
+    {
+      "name": "Typed distinction false",
+      "passed": true
+    },
+    {
+      "name": "Guidance classification false",
+      "passed": true
+    },
+    {
+      "name": "Typed distinction true",
+      "passed": true
+    },
+    {
+      "name": "Guidance classification true",
+      "passed": true
+    },
+    {
+      "name": "Typed distinction 1",
+      "passed": true
+    },
+    {
+      "name": "Guidance classification 1",
+      "passed": true
+    },
+    {
+      "name": "Typed distinction {}",
+      "passed": true
+    },
+    {
+      "name": "Guidance classification {}",
+      "passed": true
+    },
+    {
+      "name": "Typed distinction []",
+      "passed": true
+    },
+    {
+      "name": "Guidance classification []",
+      "passed": true
+    },
+    {
+      "name": "Typed distinction \"\"",
+      "passed": true
+    },
+    {
+      "name": "Guidance classification \"\"",
+      "passed": true
+    },
+    {
+      "name": "Typed distinction \"support-v2\"",
+      "passed": true
+    },
+    {
+      "name": "Guidance classification \"support-v2\"",
+      "passed": true
+    },
+    {
+      "name": "Typed distinction \"legacy\"",
+      "passed": true
+    },
+    {
+      "name": "Guidance classification \"legacy\"",
+      "passed": true
+    },
+    {
+      "name": "Typed distinction \"SUPPORT-V1\"",
+      "passed": true
+    },
+    {
+      "name": "Guidance classification \"SUPPORT-V1\"",
+      "passed": true
+    },
+    {
+      "name": "Non-ground actor opt-in rejected drone is malformed, not unsupported",
+      "passed": true
+    },
+    {
+      "name": "Non-ground actor opt-in rejected hazard is malformed, not unsupported",
+      "passed": true
+    },
+    {
+      "name": "Unrelated errors unchanged",
+      "passed": true
+    },
+    {
+      "name": "Existing EN/UK update guidance reused exactly",
+      "passed": true
+    }
+  ],
+  "passed": true,
+  "scope": "Read retained native model validation diagnostics and invoke actual shared EN/UK copy helper. No physics/browser/build."
+}

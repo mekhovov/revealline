@@ -6,6 +6,7 @@ import { COOP_STARTER_PACK } from '../coop/library.mjs';
 import { COOP_PICTURE_BINDINGS } from '../couch/coop-picture-bindings.mjs';
 import { TEAM_ARENA_PREFERENCE_KEY } from '../couch/team-arena-preference.mjs';
 import { TEAM_CONTEXTUAL_TEACHING_FORMAT } from '../couch/team-contextual-teaching.mjs';
+import { ENEMY_STATS_KEY } from '../enemy-stats.mjs';
 
 // Actual Team markup, host, prepared originals and simulation. Finite DOM/Image
 // boundaries do not establish native layout, physical devices or public play.
@@ -41,13 +42,6 @@ const prepared = (f, title) =>
   );
 async function started(f, title) {
   await prepared(f, title);
-  if (!f.$('coop-overlay').hidden && /Start together/.test(f.$('coop-resume').textContent)) {
-    // Observe released input in the new briefing before the separate Start.
-    f.tick(2);
-    assert.equal(f.$('coop-overlay').hidden, false);
-    assert.equal(f.$('coop-clock').textContent, '0:00');
-    enter(f, f.$('coop-resume'));
-  }
   await waitFor(() => f.$('coop-overlay').hidden);
 }
 function pause(f) {
@@ -91,32 +85,20 @@ test('Team discovery opens through keyboard and Back restores the exact lobby op
   assert.equal(f.$('coop-level').value, 'first-connection');
 });
 
-test('a Team mission card prepares the exact arena and waits for a separate Start together', async (t) => {
+test('a Team mission card starts the exact arena with one activation', async (t) => {
   const f = await page(t, options);
   await open(f);
   enter(f, card(f, 'Relay Yard'));
   await prepared(f, 'Relay Yard');
   assert.equal(f.$('coop-menu').hidden, true);
-  assert.equal(f.$('coop-overlay').hidden, false);
-  assert.equal(f.$('coop-overlay-title').textContent, 'Relay Yard');
-  assert.match(f.$('coop-resume').textContent, /Start together/);
-  assert.equal(f.doc.activeElement.id, 'coop-resume');
+  assert.equal(f.$('coop-overlay').hidden, true);
   assert.equal(currentImage(f).sha256, COOP_PICTURE_BINDINGS[1].picture.sha256);
   assert.equal(f.$('coop-level').value, 'relay-yard');
-  assert.equal(f.$('coop-clock').textContent, '0:00');
   const picture = currentImage(f);
   f.press('KeyD');
-  f.tick(120);
-  assert.equal(f.$('coop-clock').textContent, '0:00');
-  assert.equal(f.$('coop-overlay').hidden, false);
-  enter(f, f.$('coop-resume'));
+  f.tick(240);
   assert.equal(f.$('coop-overlay').hidden, true);
-  assert.equal(
-    currentImage(f),
-    picture,
-    'Start consumes the prepared picture without replacing it.',
-  );
-  f.tick(120);
+  assert.equal(currentImage(f), picture, 'Direct play retains the admitted picture.');
   assert.notEqual(f.$('coop-clock').textContent, '0:00');
 });
 
@@ -140,7 +122,7 @@ test('a newer Back focus during Play admission prevents preparation and keeps th
   assert.equal(f.$('coop-level').value, 'first-connection');
 });
 
-test('successful built-in discovery updates its arena bookmark and introductory teaching only', async (t) => {
+test('successful built-in discovery starts directly and writes only its stats identity and arena bookmark', async (t) => {
   const values = new Map();
   const writes = [];
   const f = await page(t, {
@@ -156,17 +138,26 @@ test('successful built-in discovery updates its arena bookmark and introductory 
         },
       }),
   });
+  assert.deepEqual(
+    writes,
+    [`${ENEMY_STATS_KEY}:writer`],
+    'Opening the host allocates its statistics writer only.',
+  );
   await open(f);
+  assert.deepEqual(
+    writes,
+    [`${ENEMY_STATS_KEY}:writer`],
+    'Browsing missions awards no progress and saves no arena.',
+  );
   enter(f, card(f, 'Relay Yard'));
-  await prepared(f, 'Relay Yard');
-  assert.deepEqual(writes, [], 'Preparation does not persist a started attempt or arena bookmark.');
   await started(f, 'Relay Yard');
-  assert.deepEqual(writes, [TEAM_CONTEXTUAL_TEACHING_FORMAT, TEAM_ARENA_PREFERENCE_KEY]);
-  assert.deepEqual(JSON.parse(values.get(TEAM_CONTEXTUAL_TEACHING_FORMAT)), {
-    format: TEAM_CONTEXTUAL_TEACHING_FORMAT,
-    introduced: ['cut'],
-    completed: [],
-  });
+  assert.deepEqual(writes, [`${ENEMY_STATS_KEY}:writer`, TEAM_ARENA_PREFERENCE_KEY]);
+  assert.equal(values.has(ENEMY_STATS_KEY), false, 'Starting awards no enemy defeats.');
+  assert.equal(
+    values.has(TEAM_CONTEXTUAL_TEACHING_FORMAT),
+    false,
+    'No unshown teaching is persisted.',
+  );
   const bookmark = JSON.parse(values.get(TEAM_ARENA_PREFERENCE_KEY));
   assert.equal(bookmark.levelId, 'relay-yard');
   assert.equal(bookmark.packId, COOP_STARTER_PACK.id);

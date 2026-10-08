@@ -31,7 +31,9 @@
         "game/test/team-hunt-progress.test.mjs",
         "game/test/running-enemies-core.test.mjs",
         "game/test/team-running-enemies.test.mjs",
-        "game/test/classic-snake-legacy-seeds.test.mjs"
+        "game/test/classic-snake-legacy-seeds.test.mjs",
+        "game/test/overflight-core.test.mjs",
+        "game/test/overflight-balance.test.mjs"
       ]
     },
     {
@@ -51,7 +53,12 @@
         "game/test/asset-studio-return.test.mjs",
         "game/test/asset-studio-actor-animation.test.mjs",
         "game/test/asset-studio-preview-motion.test.mjs",
-        "game/test/classic-community-package.test.mjs"
+        "game/test/classic-community-package.test.mjs",
+        "game/test/overflight-project.test.mjs",
+        "game/test/overflight-content.test.mjs",
+        "game/test/overflight-reuse.test.mjs",
+        "game/test/overflight-community.test.mjs",
+        "game/test/overflight-studio.test.mjs"
       ]
     },
     {
@@ -84,7 +91,9 @@
         "game/test/published-audio.test.mjs",
         "game/test/coop-view-presentation.test.mjs",
         "game/test/fpv-world-textures.test.mjs",
-        "game/test/fpv-objective-labels.test.mjs"
+        "game/test/fpv-objective-labels.test.mjs",
+        "game/test/overflight-renderer.test.mjs",
+        "game/test/overflight-trial-report.test.mjs"
       ]
     },
     {
@@ -131,7 +140,11 @@
         "game/test/military-level-directory.test.mjs",
         "game/test/fpv-theme-family-controls.test.mjs",
         "game/test/download-initialization.test.mjs",
-        "game/test/offline.test.mjs"
+        "game/test/offline.test.mjs",
+        "game/test/overflight-host.test.mjs",
+        "game/test/overflight-controller.test.mjs",
+        "game/test/overflight-upgrade-preview.test.mjs",
+        "game/test/overflight-upgrade-card.test.mjs"
       ]
     }
   ]

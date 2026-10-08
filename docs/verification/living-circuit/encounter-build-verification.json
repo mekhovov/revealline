@@ -1,0 +1,22 @@
+{
+  "format": "snake-encounter-build.v1",
+  "out": "/private/tmp/pr1108-hidden-prey-distribution",
+  "version": "0.142.4",
+  "files": 3088,
+  "sha256": "72f8dace3471dbc45e543e09caf58574f807858edff4d56e1648a45c4af0f4b3",
+  "sourceRevision": null,
+  "verification": "all expanded and ZIP member sizes/SHA-256/CRCs verified",
+  "payloadBytesIncludingManifest": 1004346573,
+  "zipBytes": 1004871465,
+  "zipMembers": 3089,
+  "manifestSha256": "e95823da36aa97718d9a52ba5136dcc7a107d7293ec42b5dfc7602a2b010ef04",
+  "requiredModules": {
+    "game/snake/classic-catalogue-expeditions.mjs": "3f791ffc89c8cf455a41750f3101372ab177e23a553db3c637a41d78a413a893",
+    "game/snake/classic-catalogue-foundation-v1-archive.mjs": "8a0e8bdb63f1bf6f85f73bea3dcccd30e9344127c11286fcd6ffee5fd891c5d5",
+    "game/snake/classic-catalogue-field-v3-archive.mjs": "278819612d94520bdafc6cd96d5063640f074076f9eaca8eeb5c892c2e9caaff",
+    "game/snake/classic-view.mjs": "8617c19b5e7d3755576f3dc67418e0797f836094f1f1717af2c2ebf6c32c3362",
+    "game/couch/controller-session.mjs": "8e30b270ea46edabc8be1c612209ac8bc4aa58bd73b6768b941e9aec6a8f1eed"
+  },
+  "publicDeployment": false,
+  "disposableOutputRemoved": true
+}

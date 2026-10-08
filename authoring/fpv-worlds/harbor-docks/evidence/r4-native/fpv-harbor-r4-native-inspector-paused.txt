@@ -1,0 +1,25 @@
+Browser tab: 29, Title: "FPV / LINE · Simulator", URL: "http://127.0.0.1:8982/player/optional-practice/fpv-worlds/index.html#explore".
+0 AXWebArea FPV / LINE · Simulator, URL: 127.0.0.1:8982/player/optional-practice/fpv-worlds/index.html#explore
+	1 container FPV / LINE, ID: worlds-shell-home-dialog
+		2 heading FPV / LINE, Value: 1, ID: worlds-shell-home-title
+			3 image FPV / LINE
+		4 text FPV SIM · WORLDS
+		5 container Choose game mode
+			6 container
+				7 link Description: Solo, Value: 127.0.0.1:8982/player/game/?lang=en
+				8 link Description: Versus, Value: 127.0.0.1:8982/player/game/couch/?lang=en
+				9 link Description: Team, Value: 127.0.0.1:8982/player/game/couch/relay-rescue.html?lang=en
+				10 button FPV SIM
+				11 link Description: Snake, Value: 127.0.0.1:8982/player/game/snake/play.html?lang=en
+		12 text Deck inspection
+		13 container Main menu
+			14 button Continue, ID: worlds-shell-action-primary
+			15 button Select Mission, ID: worlds-shell-action-missions
+			16 button Settings, ID: worlds-shell-action-settings
+			17 button Full screen, ID: worlds-shell-action-fullscreen
+			18 checkbox Sound: off, Value: 0, ID: worlds-shell-action-sound
+		19 button Retry, ID: worlds-shell-action-home-retry
+			20 text Retry
+		21 text Tab/arrows move; Enter selects; Esc goes back. Controller: release, then press/release A to connect. Calibrated radio: hold yaw right for 0.7 s, then centre to connect; roll/pitch move, hold yaw right/left then centre to confirm/go back.
+
+The focused UI element is 14 button Continue, ID: worlds-shell-action-primary

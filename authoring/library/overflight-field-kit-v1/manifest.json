@@ -1,0 +1,235 @@
+{
+  "format": "revealline-overflight-assets.v1",
+  "id": "overflight-field-kit",
+  "revision": 1,
+  "status": "source-candidate",
+  "source": {
+    "path": "game/presentation/overflight-field-kit-art.mjs",
+    "sha256": "b86032fe18ac326c4ff0029c883e8ee0ceeeea4719edbfa1c7a6ef010325c4e7"
+  },
+  "motion": {
+    "id": "overflight-field-kit-motion",
+    "revision": 1
+  },
+  "assets": [
+    {
+      "slotId": "pickup.salvage-small",
+      "slotRevision": 1,
+      "file": "pickup-salvage-small.png",
+      "sha256": "fcef0c77d26dca9dc0a4b8893594731ff6977cac0f3602d2df1de78629eddcfa",
+      "bytes": 112,
+      "width": 16,
+      "height": 16,
+      "colors": [
+        "#162621",
+        "#bc7156",
+        "#e4e6ce",
+        "#edc363"
+      ],
+      "provenance": "Original code-authored shared Field Kit pixels; no reference game or generated concept pixels sampled."
+    },
+    {
+      "slotId": "pickup.salvage-cluster",
+      "slotRevision": 1,
+      "file": "pickup-salvage-cluster.png",
+      "sha256": "1991065d24731dd6ee1d8f014b5df50731189d16635cf6124fec140308c57758",
+      "bytes": 134,
+      "width": 16,
+      "height": 16,
+      "colors": [
+        "#162621",
+        "#bc7156",
+        "#e4e6ce",
+        "#edc363"
+      ],
+      "provenance": "Original code-authored shared Field Kit pixels; no reference game or generated concept pixels sampled."
+    },
+    {
+      "slotId": "pickup.supply-case-closed",
+      "slotRevision": 1,
+      "file": "pickup-supply-case-closed.png",
+      "sha256": "67779d1280a630872326086fbcd3bd9a58aeba77dd273a218aa1b30d4e98d8bc",
+      "bytes": 148,
+      "width": 16,
+      "height": 16,
+      "colors": [
+        "#162621",
+        "#344f3d",
+        "#64784d",
+        "#a4b4ab",
+        "#e4e6ce",
+        "#edc363"
+      ],
+      "provenance": "Original code-authored shared Field Kit pixels; no reference game or generated concept pixels sampled."
+    },
+    {
+      "slotId": "pickup.supply-case-open",
+      "slotRevision": 1,
+      "file": "pickup-supply-case-open.png",
+      "sha256": "137a0e4a5256d6532427af38a905584be1dd13ce4e2b7b1e09398a7c3b2964b1",
+      "bytes": 133,
+      "width": 16,
+      "height": 16,
+      "colors": [
+        "#162621",
+        "#344f3d",
+        "#8ce1d3",
+        "#a4b4ab",
+        "#edc363"
+      ],
+      "provenance": "Original code-authored shared Field Kit pixels; no reference game or generated concept pixels sampled."
+    },
+    {
+      "slotId": "pickup.support-marker",
+      "slotRevision": 1,
+      "file": "pickup-support-marker.png",
+      "sha256": "927417183a0f2ff6a5ddb8055418fde06c2e25647f3d9cac15fc3c7f3df8fc0f",
+      "bytes": 114,
+      "width": 16,
+      "height": 16,
+      "colors": [
+        "#162621",
+        "#344f3d",
+        "#64784d",
+        "#e4e6ce"
+      ],
+      "provenance": "Original code-authored shared Field Kit pixels; no reference game or generated concept pixels sampled."
+    },
+    {
+      "slotId": "pickup.module-primary",
+      "slotRevision": 1,
+      "file": "pickup-module-primary.png",
+      "sha256": "b41900a1eaca5505f73c65cd31c2e939e09b6f2e3085e4e191607f23f805a54e",
+      "bytes": 124,
+      "width": 16,
+      "height": 16,
+      "colors": [
+        "#162621",
+        "#344f3d",
+        "#64784d",
+        "#a4b4ab",
+        "#e4e6ce",
+        "#edc363"
+      ],
+      "provenance": "Original code-authored shared Field Kit pixels; no reference game or generated concept pixels sampled."
+    },
+    {
+      "slotId": "pickup.module-slow-field",
+      "slotRevision": 1,
+      "file": "pickup-module-slow-field.png",
+      "sha256": "0b9cf59b033dd5ce989f5c4333925f0e1548be3f63b617df9ee2a5012dd0e42c",
+      "bytes": 126,
+      "width": 16,
+      "height": 16,
+      "colors": [
+        "#162621",
+        "#344f3d",
+        "#64784d",
+        "#8ce1d3",
+        "#a4b4ab"
+      ],
+      "provenance": "Original code-authored shared Field Kit pixels; no reference game or generated concept pixels sampled."
+    },
+    {
+      "slotId": "pickup.module-proximity-pulse",
+      "slotRevision": 1,
+      "file": "pickup-module-proximity-pulse.png",
+      "sha256": "64e3368664c92c8154951e42be6ed156497e31e2ba490e2a2fe73b13c978b8f9",
+      "bytes": 134,
+      "width": 16,
+      "height": 16,
+      "colors": [
+        "#162621",
+        "#344f3d",
+        "#64784d",
+        "#8ce1d3",
+        "#a4b4ab",
+        "#e4e6ce"
+      ],
+      "provenance": "Original code-authored shared Field Kit pixels; no reference game or generated concept pixels sampled."
+    },
+    {
+      "slotId": "pickup.module-side-burst",
+      "slotRevision": 1,
+      "file": "pickup-module-side-burst.png",
+      "sha256": "0d8be14af4ea9001166b4c6c0de247e49ddcd80f1200c2bb0f69e9e37f7f21b5",
+      "bytes": 129,
+      "width": 16,
+      "height": 16,
+      "colors": [
+        "#162621",
+        "#344f3d",
+        "#64784d",
+        "#a4b4ab",
+        "#e4e6ce",
+        "#edc363"
+      ],
+      "provenance": "Original code-authored shared Field Kit pixels; no reference game or generated concept pixels sampled."
+    },
+    {
+      "slotId": "pickup.module-scanner",
+      "slotRevision": 1,
+      "file": "pickup-module-scanner.png",
+      "sha256": "79c17a3bb982666bddaa8655904d9fa7b7576642f3303b0f4a28376cf2096106",
+      "bytes": 136,
+      "width": 16,
+      "height": 16,
+      "colors": [
+        "#162621",
+        "#344f3d",
+        "#64784d",
+        "#8ce1d3",
+        "#a4b4ab",
+        "#e4e6ce"
+      ],
+      "provenance": "Original code-authored shared Field Kit pixels; no reference game or generated concept pixels sampled."
+    },
+    {
+      "slotId": "pickup.module-shield",
+      "slotRevision": 1,
+      "file": "pickup-module-shield.png",
+      "sha256": "6828329c12dbd7bbce310e89c34fe4180aebd5d96006ca160fa3014837592883",
+      "bytes": 133,
+      "width": 16,
+      "height": 16,
+      "colors": [
+        "#162621",
+        "#344f3d",
+        "#64784d",
+        "#8ce1d3",
+        "#a4b4ab",
+        "#e4e6ce"
+      ],
+      "provenance": "Original code-authored shared Field Kit pixels; no reference game or generated concept pixels sampled."
+    },
+    {
+      "slotId": "pickup.overflight-impact",
+      "slotRevision": 1,
+      "file": "pickup-overflight-impact.png",
+      "sha256": "be00fefe1b7068710e24862290b491008f486f05be2d0dee9e4f404c33b517c6",
+      "bytes": 122,
+      "width": 16,
+      "height": 16,
+      "colors": [
+        "#8ce1d3",
+        "#e4e6ce",
+        "#edc363"
+      ],
+      "provenance": "Original code-authored shared Field Kit pixels; no reference game or generated concept pixels sampled."
+    },
+    {
+      "slotId": "pickup.overflight-warning",
+      "slotRevision": 1,
+      "file": "pickup-overflight-warning.png",
+      "sha256": "b015b82d89cdd557a29ac68c5a22a626130dc8a4c960a7513ccf4eda8fe06790",
+      "bytes": 131,
+      "width": 16,
+      "height": 16,
+      "colors": [
+        "#162621",
+        "#edc363"
+      ],
+      "provenance": "Original code-authored shared Field Kit pixels; no reference game or generated concept pixels sampled."
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "format": "FPVHarborFinalPrerequisiteBridge.v1",
+  "head": "3397bd01350d2d5e124238965d4a7678a498b857",
+  "base": "f9617ba8e0fdb0a526171f0fab944d06ad2d834e",
+  "before": "8511ac144f4ece647701d496ad1702fb42a82181",
+  "recoveryRef": "codex/fpv-harbor-r4-before-final-parent-8511",
+  "commits": 10,
+  "changedFiles": 62,
+  "scope": "Only authoring/fpv-worlds/harbor-docks",
+  "harborTree": "ecdcf962f54ccd34003dfddbdfe17d423e7080c0",
+  "treeByteIdenticalBeforeAfter": true,
+  "runtimeUnchangedFromQualified9b5": true,
+  "clean": true,
+  "distribution": [
+    {
+      "path": "/private/tmp/fpv-mountain-reservoir-20261004/authoring/fpv-worlds/harbor-docks/distribution/r4/harbor-docks.r4.rlpack",
+      "bytes": 879213,
+      "sha256": "d5bf4b9bb6829c04dbe1bb398893e5243cefc1f9acf018bf153a2012c8cf49b6"
+    },
+    {
+      "path": "/private/tmp/fpv-mountain-reservoir-20261004/authoring/fpv-worlds/harbor-docks/distribution/r4/harbor-docks.r4.zip",
+      "bytes": 879269,
+      "sha256": "b68ff3f43965f33f44c60d4aea5d53aa74eacbaafaadfd24b88c5ae0201f097d"
+    },
+    {
+      "path": "/private/tmp/fpv-mountain-reservoir-20261004/authoring/fpv-worlds/harbor-docks/distribution/r4/harbor-docks.r4.proofs.json",
+      "bytes": 1018615,
+      "sha256": "7341d203aa2d3a61199a0000cc87a31f50553588dad610d878a5238aab433102"
+    }
+  ],
+  "historicalControlledSource": "3e12db28e86af483daec7c7f82c6baba0c8657f0",
+  "admittedSource": "ca28461faa9a5245f55532bb27fbb5d69f557e16",
+  "publication": "Not pushed. Await native/offline acceptance and root publication coordination."
+}

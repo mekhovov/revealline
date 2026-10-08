@@ -1,0 +1,1030 @@
+{
+  "runtime": "9b5c3d65e2877847126c87f263fbc7e9aca357fb",
+  "note": "Raw bytes verified after lossless compression. Historical diagnostics retain their own earlier runtime hashes; current acceptance is explicitly identified.",
+  "artifacts": [
+    {
+      "path": "historical/fpv-ground-motion-expanded-experiment-2.json.gz",
+      "original": "/tmp/fpv-ground-motion-expanded-experiment-2.json",
+      "rawBytes": 11668,
+      "rawSHA256": "a8263eddcf1a20b256a9aba02b1ea7eac9340b96d57ff3e07f3c939c2690d208",
+      "storedBytes": 922,
+      "storedSHA256": "7d65bf8262dfa38a5a03970df3e56a7302de0bf7481a122758f3414b38ccc8df"
+    },
+    {
+      "path": "historical/fpv-ground-motion-expanded-experiment-3.json.gz",
+      "original": "/tmp/fpv-ground-motion-expanded-experiment-3.json",
+      "rawBytes": 11683,
+      "rawSHA256": "0a176b8ae1fde614a15eaa983a53b522ea12dce36d2f309632418eec46950e81",
+      "storedBytes": 842,
+      "storedSHA256": "a2fb3aad357347de00b486db24fb6fac89dab82ab532075212d35b14daf21eda"
+    },
+    {
+      "path": "historical/fpv-ground-motion-expanded-experiment-4.json.gz",
+      "original": "/tmp/fpv-ground-motion-expanded-experiment-4.json",
+      "rawBytes": 11613,
+      "rawSHA256": "c123a95759c69fa72a3f67352e3ab15d39458933c0a293a31c9e0b61bcc04f6e",
+      "storedBytes": 843,
+      "storedSHA256": "f811f2d4d4a06e307b5bc37999c386913669ffd3c86ef0844024b5e09cab3a51"
+    },
+    {
+      "path": "historical/fpv-ground-motion-expanded-experiment-4.log.gz",
+      "original": "/tmp/fpv-ground-motion-expanded-experiment-4.log",
+      "rawBytes": 5952,
+      "rawSHA256": "bb5c3f3773007cca81c1834f74eebce648a1d2417ada4880b6c65412351d7101",
+      "storedBytes": 650,
+      "storedSHA256": "05bddaed8e683ca7091708a628570114da8c8bf361dd94073747570fa08e51f9"
+    },
+    {
+      "path": "historical/fpv-ground-motion-expanded-experiment-5.json.gz",
+      "original": "/tmp/fpv-ground-motion-expanded-experiment-5.json",
+      "rawBytes": 26200,
+      "rawSHA256": "fb94f95b49d5eb88d3c289b8d7a902231ea23ebaea58390a9baeeea6260d840f",
+      "storedBytes": 1395,
+      "storedSHA256": "8e1f039ead9e9ea33f92c227fcd0dea78bc26381951ba9a5b3cdc187009545a0"
+    },
+    {
+      "path": "historical/fpv-ground-motion-expanded-experiment-5.log.gz",
+      "original": "/tmp/fpv-ground-motion-expanded-experiment-5.log",
+      "rawBytes": 13474,
+      "rawSHA256": "f2970791c7d2496b10d99bcbff1b7d3ef9e9ad40aecc3a373a60d9b1a0bebe52",
+      "storedBytes": 1099,
+      "storedSHA256": "3c447d5535ec4a9b53df3549302fd33542782f71381663efe93dab4f7bb4ed8c"
+    },
+    {
+      "path": "historical/fpv-ground-motion-expanded-experiment-6-error.log.gz",
+      "original": "/tmp/fpv-ground-motion-expanded-experiment-6-error.log",
+      "rawBytes": 0,
+      "rawSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "storedBytes": 20,
+      "storedSHA256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+    },
+    {
+      "path": "historical/fpv-ground-motion-expanded-experiment-6.json.gz",
+      "original": "/tmp/fpv-ground-motion-expanded-experiment-6.json",
+      "rawBytes": 26167,
+      "rawSHA256": "00a02f0fa7ea4282c7d814503def277de0c91b88907a3f84d36cfe4c1e881b44",
+      "storedBytes": 1353,
+      "storedSHA256": "7d8385a38b909adc9c458d74a319cecc3f81056865a7828466607e1b45fa342c"
+    },
+    {
+      "path": "historical/fpv-ground-motion-expanded-experiment-6.log.gz",
+      "original": "/tmp/fpv-ground-motion-expanded-experiment-6.log",
+      "rawBytes": 13433,
+      "rawSHA256": "65879c7344ea9a15a54029e7804da961b6c2b4ecd2b5df3471753332b8f002d2",
+      "storedBytes": 1048,
+      "storedSHA256": "8f36530b94ccd90af2099120bad273752bb27a0edd6babd0730fc3ff13d8b596"
+    },
+    {
+      "path": "historical/fpv-ground-motion-expanded-experiment-7-error.log.gz",
+      "original": "/tmp/fpv-ground-motion-expanded-experiment-7-error.log",
+      "rawBytes": 0,
+      "rawSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "storedBytes": 20,
+      "storedSHA256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+    },
+    {
+      "path": "historical/fpv-ground-motion-expanded-experiment-7.json.gz",
+      "original": "/tmp/fpv-ground-motion-expanded-experiment-7.json",
+      "rawBytes": 40826,
+      "rawSHA256": "d15c8541602fa8d4edf07cfb2788af5a11407e92000767656cde34b255f9c4d8",
+      "storedBytes": 1957,
+      "storedSHA256": "e1322a34684c86afa4c714dbe538b9ff0f531be46c26db0364182e2f7b623492"
+    },
+    {
+      "path": "historical/fpv-ground-motion-expanded-experiment-7.log.gz",
+      "original": "/tmp/fpv-ground-motion-expanded-experiment-7.log",
+      "rawBytes": 22148,
+      "rawSHA256": "dad303402e81bed076d3d71be92ee6892cbf35a3a5660b646a9ec8e028decf71",
+      "storedBytes": 1615,
+      "storedSHA256": "79cea550cdcf864eebd9ffb855b85a3eadd23aaa9aa20540e8880c0736b48f19"
+    },
+    {
+      "path": "historical/fpv-ground-motion-expanded-experiment-8-error.log.gz",
+      "original": "/tmp/fpv-ground-motion-expanded-experiment-8-error.log",
+      "rawBytes": 0,
+      "rawSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "storedBytes": 20,
+      "storedSHA256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+    },
+    {
+      "path": "historical/fpv-ground-motion-expanded-experiment-8.json.gz",
+      "original": "/tmp/fpv-ground-motion-expanded-experiment-8.json",
+      "rawBytes": 42669,
+      "rawSHA256": "99132cf5d4a034f9fb4f4f9db1b9d64cb6fa247ffa70ec6f29e71d74bd2e68f9",
+      "storedBytes": 1920,
+      "storedSHA256": "1ae817c23ddec77e905f8137254f83a61e6d4dd6011854d651f13351f8636868"
+    },
+    {
+      "path": "historical/fpv-ground-motion-expanded-experiment-8.log.gz",
+      "original": "/tmp/fpv-ground-motion-expanded-experiment-8.log",
+      "rawBytes": 23992,
+      "rawSHA256": "4b5ad9e3697d8ebd4833bd6c18bf07adc95a8041575862359885ecea51b8f60e",
+      "storedBytes": 1579,
+      "storedSHA256": "4d4137761beebb2db63ff96927bd87699f6a2e5f0a54e758f382961d49145242"
+    },
+    {
+      "path": "historical/fpv-ground-motion-expanded-r2.mjs.gz",
+      "original": "/tmp/fpv-ground-motion-expanded-r2.mjs",
+      "rawBytes": 2147,
+      "rawSHA256": "43bb8d4dc972bc4053f77c729fd9744b8cb98530f116f16fd26eff93d99f1d9c",
+      "storedBytes": 1007,
+      "storedSHA256": "44c91684ebf27db64b3aff35765c477f81907318a0f503599ee837346a4ba45f"
+    },
+    {
+      "path": "historical/fpv-ground-motion-expanded-r3.mjs.gz",
+      "original": "/tmp/fpv-ground-motion-expanded-r3.mjs",
+      "rawBytes": 2191,
+      "rawSHA256": "72755d58b831b616ac64d18ffacd0ed8d027626d0843226782aa263725c4454d",
+      "storedBytes": 1032,
+      "storedSHA256": "cba9d7c2e55716869f8baee1c1026f1659a25cd7ef2d6322ed69142502aea0e9"
+    },
+    {
+      "path": "historical/fpv-ground-motion-expanded-r4.mjs.gz",
+      "original": "/tmp/fpv-ground-motion-expanded-r4.mjs",
+      "rawBytes": 2328,
+      "rawSHA256": "0a9b15ade9c261dad69dd297cb4cc4d1cb05f6cbf58b2809033b9fa298cc881f",
+      "storedBytes": 1077,
+      "storedSHA256": "1544350c0ec463d82381c1615da7aec1af84f65303e5b605a23f61f973a0eeb1"
+    },
+    {
+      "path": "historical/fpv-ground-motion-expanded-r5.mjs.gz",
+      "original": "/tmp/fpv-ground-motion-expanded-r5.mjs",
+      "rawBytes": 2556,
+      "rawSHA256": "3351b41a7fa0b50e0d01427fc431f0985ddd3e640383c609f79912b0b52ac677",
+      "storedBytes": 1142,
+      "storedSHA256": "c0f7b0f6af87d2c651d8c79b08f1d655829c557a6bb7cfdc0e6d52031865f8fb"
+    },
+    {
+      "path": "historical/fpv-ground-motion-expanded.mjs.gz",
+      "original": "/tmp/fpv-ground-motion-expanded.mjs",
+      "rawBytes": 2146,
+      "rawSHA256": "29c8e2e6f43dcd4489527c2dec382f79e7a66fa27f99f10f933b8c79c3a64e28",
+      "storedBytes": 1006,
+      "storedSHA256": "ec6a38b80a36a513bf69deb29e0e55dc88620e72604d814ea9d77805d4a28486"
+    },
+    {
+      "path": "historical/fpv-ground-motion-experiment-1-collision.mjs.gz",
+      "original": "/tmp/fpv-ground-motion-experiment-1-collision.mjs",
+      "rawBytes": 12338,
+      "rawSHA256": "1b7f473cf38bb76b34ba4fefef916522c70b5ad7ab462dcdb708dcc398c1bec3",
+      "storedBytes": 3857,
+      "storedSHA256": "e1f94eec6fbd353c9f94b44faf759877d9a67ef10b3374f7a024315fd06561d3"
+    },
+    {
+      "path": "historical/fpv-ground-motion-experiment-2-collision.mjs.gz",
+      "original": "/tmp/fpv-ground-motion-experiment-2-collision.mjs",
+      "rawBytes": 12450,
+      "rawSHA256": "1e11c9edfbdb4df74dcdd4c4bf5cd4d66087a095d1a3ef8c208e9c6af2e884f6",
+      "storedBytes": 3876,
+      "storedSHA256": "58d31a70be589d5469020535817cb2a74838f2238805d12b2b8f816fc9f68342"
+    },
+    {
+      "path": "historical/fpv-ground-motion-experiment-3-collision.mjs.gz",
+      "original": "/tmp/fpv-ground-motion-experiment-3-collision.mjs",
+      "rawBytes": 12811,
+      "rawSHA256": "c9ca5d38cb499ed66825e6c39e39ed46212d6e10d8d5c502c821738d8f2eeb3b",
+      "storedBytes": 3928,
+      "storedSHA256": "e807e96ca9bfcfcbd9d1b0fd719dd90825a04e54f0f52abf9488dc4fe4e0eb83"
+    },
+    {
+      "path": "historical/fpv-ground-motion-experiment-4-collision.mjs.gz",
+      "original": "/tmp/fpv-ground-motion-experiment-4-collision.mjs",
+      "rawBytes": 12889,
+      "rawSHA256": "34ed54bbde6f23e480f08cd43fb9ac8e174b45aee7478da2a45aa415205841bc",
+      "storedBytes": 3946,
+      "storedSHA256": "2a46258b1e9539466d39c334f7d880e1507601e683871d20e598719cad4d8cc5"
+    },
+    {
+      "path": "historical/fpv-ground-motion-experiment-5-collision.mjs.gz",
+      "original": "/tmp/fpv-ground-motion-experiment-5-collision.mjs",
+      "rawBytes": 13198,
+      "rawSHA256": "a2c50e4e3ba8c7fc43e5ccca0c1aac4a713e1fa6ff5e6499bfb800b6cdbeb165",
+      "storedBytes": 3998,
+      "storedSHA256": "fe08543721b140b0708e59c8f195c4715aa290f82131fac692fb8af586ddd6d1"
+    },
+    {
+      "path": "historical/fpv-ground-motion-experiment-7-collision.mjs.gz",
+      "original": "/tmp/fpv-ground-motion-experiment-7-collision.mjs",
+      "rawBytes": 13518,
+      "rawSHA256": "fddadaa92035856203baa1b3891900a44c42b34ae82ce920ad4d4c08bb02125e",
+      "storedBytes": 4064,
+      "storedSHA256": "cdafcb2fb2cadd9fe11c5fc6126c5d0f30636790b82c42244dfd52f661dd25a9"
+    },
+    {
+      "path": "historical/fpv-ground-motion-support-v1-experiment-1.json.gz",
+      "original": "/tmp/fpv-ground-motion-support-v1-experiment-1.json",
+      "rawBytes": 99492,
+      "rawSHA256": "98e2c8d906735a1c9270435a6f1e6fdb9e4360c5d2d1a352fd865239d210af56",
+      "storedBytes": 5845,
+      "storedSHA256": "89af395a767aa1f4da9c78a42889c3c2b8c5c72772d340fb4cf28e7d681512fc"
+    },
+    {
+      "path": "historical/fpv-ground-motion-support-v1-experiment-2.json.gz",
+      "original": "/tmp/fpv-ground-motion-support-v1-experiment-2.json",
+      "rawBytes": 101155,
+      "rawSHA256": "980b7557387d1d3832fb65060023be9123d9a828a5cd14582d481f9a8cd4bb83",
+      "storedBytes": 6063,
+      "storedSHA256": "07744cd57e22cd482a7f1106e83c50e9217980a09a7407f462c4fb706ff4a452"
+    },
+    {
+      "path": "historical/fpv-ground-motion-support-v1-experiment.mjs.gz",
+      "original": "/tmp/fpv-ground-motion-support-v1-experiment.mjs",
+      "rawBytes": 6908,
+      "rawSHA256": "44da0199e47f3aca0042af8a876174ef8a6ef9ef59afe14ca973bdaf8bd3d8bd",
+      "storedBytes": 2709,
+      "storedSHA256": "f699e8fc298ba389cfb31961993169ca7e1fd833439e41a0b30ee244c3a516ca"
+    },
+    {
+      "path": "historical/fpv-ground-motion-native-contact-trace.log.gz",
+      "original": "/tmp/fpv-ground-motion-native-contact-trace.log",
+      "rawBytes": 3759,
+      "rawSHA256": "915c54704c49cb85926b374adddb4ce54cd9da72ad25c30bb2343322eea43a74",
+      "storedBytes": 862,
+      "storedSHA256": "a1c6c4db30e641442bcbbff54ece9fab9fe195123b8f6bf49075ead0e2b98312"
+    },
+    {
+      "path": "historical/fpv-ground-motion-native-contact-trace.mjs.gz",
+      "original": "/tmp/fpv-ground-motion-native-contact-trace.mjs",
+      "rawBytes": 1993,
+      "rawSHA256": "8aef2d33d2e3deceb15dfd86d8d494ecc149cec476d4583575607d1fa93d68cd",
+      "storedBytes": 946,
+      "storedSHA256": "0c6ed206f1de6b758aa63d8f8fb631bc2b7009ce68d6ed3b32b402d839030a17"
+    },
+    {
+      "path": "historical/fpv-ground-motion-native-downhill-contact-trace.json.gz",
+      "original": "/tmp/fpv-ground-motion-native-downhill-contact-trace.json",
+      "rawBytes": 20628,
+      "rawSHA256": "83aaf760dbd8d92df45a1d92ad905ca23ccbf9f706ccf45397c1d7ca53ef4af1",
+      "storedBytes": 802,
+      "storedSHA256": "304b4f7341dfb5f143172f26d8951ded158bfddf58dc7a1faf5d1ded11ca309b"
+    },
+    {
+      "path": "historical/fpv-ground-motion-native-downhill-trace.log.gz",
+      "original": "/tmp/fpv-ground-motion-native-downhill-trace.log",
+      "rawBytes": 2160,
+      "rawSHA256": "5c7a757aa5dcb03d4f44dc0a50931df3aff7330eb53510a113ee0bbac67dbe37",
+      "storedBytes": 501,
+      "storedSHA256": "b6025bbc0503dda6fe7ea52c7c8c87fcb3c6c6509775fa56bad8be0e10e63f69"
+    },
+    {
+      "path": "historical/fpv-ground-motion-native-downhill-trace.mjs.gz",
+      "original": "/tmp/fpv-ground-motion-native-downhill-trace.mjs",
+      "rawBytes": 2007,
+      "rawSHA256": "ce518c720f5bea9af8fe1289a3fc863c1d1d5ef938774489aff74cb8bc3223a8",
+      "storedBytes": 956,
+      "storedSHA256": "2194747bf8a6cd439523f295c37b4080ac52161727ee8e45c950a22b5fbf5b0e"
+    },
+    {
+      "path": "historical/fpv-ground-motion-native-slope-contact-trace.json.gz",
+      "original": "/tmp/fpv-ground-motion-native-slope-contact-trace.json",
+      "rawBytes": 30783,
+      "rawSHA256": "342a4e9ae34a324dea478b2c66e583ca8efeb9f7ef39abd882bbd24e65176e70",
+      "storedBytes": 1319,
+      "storedSHA256": "8060ce0b1851e9d69f29899cede18d5c2967716f6619a8935edff4d738b30e43"
+    },
+    {
+      "path": "historical/fpv-ground-motion-native-slope-trace.json.gz",
+      "original": "/tmp/fpv-ground-motion-native-slope-trace.json",
+      "rawBytes": 26703,
+      "rawSHA256": "3f4f63593b761d3c875188c3a6d0cf35bf98459f87bfd8d57ac872d57ab346cc",
+      "storedBytes": 1114,
+      "storedSHA256": "5d72f5aab4f1e52e48111440c63cc3d9a74d25334c78f2aba7d99fab14f15eb7"
+    },
+    {
+      "path": "historical/fpv-ground-motion-native-downhill-contact-details.json.gz",
+      "original": "/tmp/fpv-ground-motion-native-downhill-contact-details.json",
+      "rawBytes": 24403,
+      "rawSHA256": "a7fdd210904f3e0bc0a6b4a7f0597393c33e4e00491fbe3154b3e548c5a7d710",
+      "storedBytes": 1020,
+      "storedSHA256": "7207760141b3f4a4b77fb21bb649ab048e37c4310a4474c515130a8906454473"
+    },
+    {
+      "path": "historical/fpv-ground-motion-native-downhill-contact-predictions.json.gz",
+      "original": "/tmp/fpv-ground-motion-native-downhill-contact-predictions.json",
+      "rawBytes": 39593,
+      "rawSHA256": "4cb1af1826131293dd41ddeb0b1000419bf6c5b58ed7e0043461b4a8d2926a8e",
+      "storedBytes": 1228,
+      "storedSHA256": "17dc620b6865321e34fcecf78f90f9ab7da012aedc7d86224f144f0877dee21c"
+    },
+    {
+      "path": "historical/fpv-ground-motion-native-downhill-details-error.log.gz",
+      "original": "/tmp/fpv-ground-motion-native-downhill-details-error.log",
+      "rawBytes": 0,
+      "rawSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "storedBytes": 20,
+      "storedSHA256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+    },
+    {
+      "path": "historical/fpv-ground-motion-native-downhill-details.log.gz",
+      "original": "/tmp/fpv-ground-motion-native-downhill-details.log",
+      "rawBytes": 2859,
+      "rawSHA256": "2f4b61a8b6026859825a65dbed1105c7b354937f9af129c2ea3a66913671ab88",
+      "storedBytes": 685,
+      "storedSHA256": "db5e7140190c04aadb75a654214eda5c3f38b6330f109af8f44013aa23571aa4"
+    },
+    {
+      "path": "historical/fpv-ground-motion-native-downhill-details.mjs.gz",
+      "original": "/tmp/fpv-ground-motion-native-downhill-details.mjs",
+      "rawBytes": 2047,
+      "rawSHA256": "f7e2675badb6124b25340c8fd4b9ca3fdf52ffdfdfc1b666ca93c0ba4c59b320",
+      "storedBytes": 964,
+      "storedSHA256": "b9b1bcf373edd370c34b9f6b5cc860740d8f3a5fe4c259e150f5cfb1841002bd"
+    },
+    {
+      "path": "historical/fpv-ground-motion-native-downhill-error.log.gz",
+      "original": "/tmp/fpv-ground-motion-native-downhill-error.log",
+      "rawBytes": 0,
+      "rawSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "storedBytes": 20,
+      "storedSHA256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+    },
+    {
+      "path": "historical/fpv-ground-motion-native-downhill-predictions-error.log.gz",
+      "original": "/tmp/fpv-ground-motion-native-downhill-predictions-error.log",
+      "rawBytes": 0,
+      "rawSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "storedBytes": 20,
+      "storedSHA256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+    },
+    {
+      "path": "historical/fpv-ground-motion-native-downhill-predictions.log.gz",
+      "original": "/tmp/fpv-ground-motion-native-downhill-predictions.log",
+      "rawBytes": 5623,
+      "rawSHA256": "f6eb48af3883d32e88e9cc5546b47b14363e00a08f0bd793c3d327b1fca5ff7c",
+      "storedBytes": 793,
+      "storedSHA256": "01c19a2319b8900d2b2273144eb456c6e4fa7e6ec3536dcd08fc8dcf5d66fd14"
+    },
+    {
+      "path": "historical/fpv-ground-motion-native-downhill-predictions.mjs.gz",
+      "original": "/tmp/fpv-ground-motion-native-downhill-predictions.mjs",
+      "rawBytes": 2202,
+      "rawSHA256": "8dc7da9141fef1b495b45772735fa68da6bf7597d92683e6afebef29c6ac486e",
+      "storedBytes": 1022,
+      "storedSHA256": "d680f6a7287fcd212168bf46a31ae873cc192a8f1a8f87af4afd2c9ecfa54669"
+    },
+    {
+      "path": "historical/fpv-native-ground-controller-exact-offset-diagnostic.json.gz",
+      "original": "/tmp/fpv-native-ground-controller-exact-offset-diagnostic.json",
+      "rawBytes": 16665,
+      "rawSHA256": "d16c84fd52f25fe50b9961a227586c0c14cd5f2cd1de3c6d6f94b799f764dda7",
+      "storedBytes": 2411,
+      "storedSHA256": "6b94a37a86d514ced407765005fd79869ec1f300e10c49a2ff12336f8200dd13"
+    },
+    {
+      "path": "historical/fpv-native-ground-controller-exact.mjs.gz",
+      "original": "/tmp/fpv-native-ground-controller-exact.mjs",
+      "rawBytes": 2356,
+      "rawSHA256": "e44fc22d7b9115919c66d1487ed1b51fa97f6ca46da517e5d3572f59a797f239",
+      "storedBytes": 1177,
+      "storedSHA256": "fbd8aac4d0093f9e73b836554106a3560b20f950ed40c72d1a971b692e3cbced"
+    },
+    {
+      "path": "historical/fpv-native-ground-controller-offset-diagnostic.json.gz",
+      "original": "/tmp/fpv-native-ground-controller-offset-diagnostic.json",
+      "rawBytes": 53678,
+      "rawSHA256": "588caefcb05b2260464465c0cb0b9c5e7cc0e6a532e311d2b6f8f8a01b86c2d4",
+      "storedBytes": 6880,
+      "storedSHA256": "2f467a55b67952acb9dd7aa435bf95cf7c141bba382992d8cfadff85220ee923"
+    },
+    {
+      "path": "historical/fpv-native-ground-controller.mjs.gz",
+      "original": "/tmp/fpv-native-ground-controller.mjs",
+      "rawBytes": 2381,
+      "rawSHA256": "b288f4cbc303ac9dea4cec1ee966f331a5d69c87f68e8ce6e3a8beb8386b3ac5",
+      "storedBytes": 1185,
+      "storedSHA256": "6b3a503c21af81bd710cb660c1a7492848846b9022f53e9185c33b9343d5ccfe"
+    },
+    {
+      "path": "historical/fpv-ground-motion-absent-legacy-comparison.json.gz",
+      "original": "/tmp/fpv-ground-motion-absent-legacy-comparison.json",
+      "rawBytes": 100674,
+      "rawSHA256": "708ff55568a6c83683f6c360e7237c1417a971fc24370aade4ca96f9032e00b8",
+      "storedBytes": 5826,
+      "storedSHA256": "ac6b29e70752fcf490003330b70f8d1c28561b3f858ebbd8e5be7a0356213b5b"
+    },
+    {
+      "path": "historical/fpv-harbor-r3-ground-actor-diagnostic.json.gz",
+      "original": "/tmp/fpv-harbor-r3-ground-actor-diagnostic.json",
+      "rawBytes": 5331,
+      "rawSHA256": "67ac74094d0de504f88510d471a1554ffff94d25d2e4101c19ef9dc7f09c087a",
+      "storedBytes": 522,
+      "storedSHA256": "4834d307ed554be6d0b94ed6021a4821bc8e80a93e2c33bb1773a13698bf44f6"
+    },
+    {
+      "path": "historical/fpv-harbor-r3-ground-actor-offset10-diagnostic.json.gz",
+      "original": "/tmp/fpv-harbor-r3-ground-actor-offset10-diagnostic.json",
+      "rawBytes": 5996,
+      "rawSHA256": "6291cbdf5fc43ec4aec030b00fad22a5de06f902e8731b9cdc53388bd0f21bf1",
+      "storedBytes": 537,
+      "storedSHA256": "2d2cc5e3553e740ef0d216dbe28799b3c688b7a82047f51dba664c04a00f0106"
+    },
+    {
+      "path": "historical/fpv-harbor-r3-minimal-ground-cases.json.gz",
+      "original": "/tmp/fpv-harbor-r3-minimal-ground-cases.json",
+      "rawBytes": 100674,
+      "rawSHA256": "a42c9ab1f34c552e0244f4e26b27143982f8019bb057050895f75e7e6c7ad520",
+      "storedBytes": 5824,
+      "storedSHA256": "10dc99b18c76a7934330ae5848bb957eeaf501edea4bb0f37af087df9531af37"
+    },
+    {
+      "path": "historical/fpv-ground-motion-9b5c-manual-r1-error.log.gz",
+      "original": "/tmp/fpv-ground-motion-9b5c-manual-r1-error.log",
+      "rawBytes": 361,
+      "rawSHA256": "f0932905f5cf6f0054eaff6d95624f80bb2071d8a7ef600e1ebf60d6f5f775a8",
+      "storedBytes": 229,
+      "storedSHA256": "acf100fc95019d16ead9efbc47e27f84e5e46478c1c3524a53e0ed86261d4ebf"
+    },
+    {
+      "path": "manual/patrol-fast-gap.json.gz",
+      "original": "/tmp/fpv-ground-motion-9b5c-manual-r2/patrol-fast-gap.json",
+      "rawBytes": 36605,
+      "rawSHA256": "8b8cb42617737174a034ee64fc64fc999063d707b0338aa04bdfc622def3a93d",
+      "storedBytes": 523,
+      "storedSHA256": "97a710500c139c7474ce81c68556de7ddbdae53b17024659294978a12f6a98ae"
+    },
+    {
+      "path": "manual/patrol-finite-flat.json.gz",
+      "original": "/tmp/fpv-ground-motion-9b5c-manual-r2/patrol-finite-flat.json",
+      "rawBytes": 36605,
+      "rawSHA256": "fb9f6781639cc3b97d61cba6f05bd6d5eccae297ca64d9ae9cb058f712c9a54b",
+      "storedBytes": 523,
+      "storedSHA256": "5658e1a06f35580ac40fef317ab48e03946fad83af2e90ab46ddfda7d798338b"
+    },
+    {
+      "path": "manual/patrol-half-space.json.gz",
+      "original": "/tmp/fpv-ground-motion-9b5c-manual-r2/patrol-half-space.json",
+      "rawBytes": 36605,
+      "rawSHA256": "4e18fef79448f6dee1adabfa44016740eac82c4f77cfddd6ea836795d768c1b2",
+      "storedBytes": 523,
+      "storedSHA256": "116272225656713c1ab053e62f6eb20b4ce76d2dacb564e3da1008d49fc00d3b"
+    },
+    {
+      "path": "manual/patrol-ledge.json.gz",
+      "original": "/tmp/fpv-ground-motion-9b5c-manual-r2/patrol-ledge.json",
+      "rawBytes": 36605,
+      "rawSHA256": "11142c2a5fa28030f2e1467b4d9fb582164f3808ba6b16443730033d880e1dd9",
+      "storedBytes": 523,
+      "storedSHA256": "6efd4372e2dc8343f3f49e99459cfb433cb3e880e8d9ebe4dfb0c1b8006348ec"
+    },
+    {
+      "path": "manual/patrol-narrow-finite.json.gz",
+      "original": "/tmp/fpv-ground-motion-9b5c-manual-r2/patrol-narrow-finite.json",
+      "rawBytes": 36605,
+      "rawSHA256": "e3d10f9df7ef11dd28e20de1925e7e0af193ce514caf252f59a9897ae1f6bc82",
+      "storedBytes": 522,
+      "storedSHA256": "f2546d9124ad9c1b742281cc2775947db4b44ea4937f85bd0ce8cdd0b2bb3ef2"
+    },
+    {
+      "path": "manual/patrol-slope-15-downhill.json.gz",
+      "original": "/tmp/fpv-ground-motion-9b5c-manual-r2/patrol-slope-15-downhill.json",
+      "rawBytes": 36605,
+      "rawSHA256": "329ee88dd25d9893fbae794e60b1fb8df400767265dfc7ec7a1a3e552c188cc0",
+      "storedBytes": 524,
+      "storedSHA256": "24873058ba17a5c853c6ddfc08f740427ef477dd3bc69af72108729b01223acd"
+    },
+    {
+      "path": "manual/patrol-slope-15-sideways.json.gz",
+      "original": "/tmp/fpv-ground-motion-9b5c-manual-r2/patrol-slope-15-sideways.json",
+      "rawBytes": 36605,
+      "rawSHA256": "4116a04da37ef371141fb68b4ab6690fa8c3c18a693c607cadbcf4e709e726f3",
+      "storedBytes": 524,
+      "storedSHA256": "4c10bd4a27fffa44de404b5ea026b23e4c5851b51c47c6901236c388ad642074"
+    },
+    {
+      "path": "manual/patrol-slope-15.json.gz",
+      "original": "/tmp/fpv-ground-motion-9b5c-manual-r2/patrol-slope-15.json",
+      "rawBytes": 36605,
+      "rawSHA256": "5ce5edd7b1e666ae16d8f3575f84de88056d0c1d6bf22fc4f46448a76a5de844",
+      "storedBytes": 523,
+      "storedSHA256": "d019fd74c4baee5ad6160455dcf99885ce016e7f1ac67572ee7ae3374782633e"
+    },
+    {
+      "path": "manual/patrol-slope-29.9-downhill.json.gz",
+      "original": "/tmp/fpv-ground-motion-9b5c-manual-r2/patrol-slope-29.9-downhill.json",
+      "rawBytes": 36605,
+      "rawSHA256": "54df7b55715e7451e9cb33eff81027d7d5e181ff2d3f173c52698b304d35114f",
+      "storedBytes": 523,
+      "storedSHA256": "c40e117b6e8fbac3b29b0f4096dbcc67fae24aabdadc6841c15054fdaed6dae5"
+    },
+    {
+      "path": "manual/patrol-slope-29.9-sideways.json.gz",
+      "original": "/tmp/fpv-ground-motion-9b5c-manual-r2/patrol-slope-29.9-sideways.json",
+      "rawBytes": 36605,
+      "rawSHA256": "a502894b1fbebc1271f9f3d74741dc3048ab7c7a5002002b31823db83317f524",
+      "storedBytes": 523,
+      "storedSHA256": "a136bceaec7d36f3b66943d2ffd10196b17ee6e18e23173cb51fe7a6edcee8a6"
+    },
+    {
+      "path": "manual/patrol-slope-29.9.json.gz",
+      "original": "/tmp/fpv-ground-motion-9b5c-manual-r2/patrol-slope-29.9.json",
+      "rawBytes": 36605,
+      "rawSHA256": "de27bc1a0580c05f491ea78aba47529a9a87e57bf30dfa278150781a74a640bd",
+      "storedBytes": 522,
+      "storedSHA256": "fcb8e20af5374faab7747a03f2f1c6cc8b6e72d0be314b0b4aae87dbfbfaf2a7"
+    },
+    {
+      "path": "manual/patrol-slope-30.1.json.gz",
+      "original": "/tmp/fpv-ground-motion-9b5c-manual-r2/patrol-slope-30.1.json",
+      "rawBytes": 36605,
+      "rawSHA256": "66b9fc8d8f61170e200b6628480f3f8a7d8e20861917161974826dc66a6384f2",
+      "storedBytes": 522,
+      "storedSHA256": "8c66e29efb1af806a83682fe9d9d8f3b50df0dec95fe09d5f304feb2a14af872"
+    },
+    {
+      "path": "manual/patrol-solid-slope-15.json.gz",
+      "original": "/tmp/fpv-ground-motion-9b5c-manual-r2/patrol-solid-slope-15.json",
+      "rawBytes": 36605,
+      "rawSHA256": "19df1237751c02d0a370b1b57202ed1b1ccaae6f4165da66fa7b8909fb57cbcf",
+      "storedBytes": 523,
+      "storedSHA256": "bed553e67f2516a99c9ba2d2be71f02bc7f67233e38df7d7bd1f7a5bc09e54f2"
+    },
+    {
+      "path": "manual/patrol-solid-slope-29.9.json.gz",
+      "original": "/tmp/fpv-ground-motion-9b5c-manual-r2/patrol-solid-slope-29.9.json",
+      "rawBytes": 36605,
+      "rawSHA256": "996c6dd3fef6971801f076e281f0d324a14286be564d56fe815772193e400bf2",
+      "storedBytes": 522,
+      "storedSHA256": "3c1867af6cc03f87a5832cfeb879fd67c212a6395c5785b742e26bc3ca5d753e"
+    },
+    {
+      "path": "manual/patrol-stacked-lower.json.gz",
+      "original": "/tmp/fpv-ground-motion-9b5c-manual-r2/patrol-stacked-lower.json",
+      "rawBytes": 36605,
+      "rawSHA256": "77603c5ca862d73a788c94a0a176b962c7324796a5852ada33a1dc2e9b71d1fd",
+      "storedBytes": 522,
+      "storedSHA256": "45e47b08649018390e7b5a94661e2ebdbad0d095c602087825a2ef650902557b"
+    },
+    {
+      "path": "manual/patrol-stacked-upper.json.gz",
+      "original": "/tmp/fpv-ground-motion-9b5c-manual-r2/patrol-stacked-upper.json",
+      "rawBytes": 36605,
+      "rawSHA256": "24146a2eb6a5d64b0080e741c5aec663e5d3a8126e0bfd37c206675bf98851c0",
+      "storedBytes": 521,
+      "storedSHA256": "75c6a8bcc3145711650ac192b71bf9ac1903b42ff679e5692b1af29ebe4f5963"
+    },
+    {
+      "path": "manual/patrol-step-down.json.gz",
+      "original": "/tmp/fpv-ground-motion-9b5c-manual-r2/patrol-step-down.json",
+      "rawBytes": 36605,
+      "rawSHA256": "c66fff59ae7fc8ae8aa5f2a200482fb3bac5da18b4a1924d4e06d53209866de3",
+      "storedBytes": 522,
+      "storedSHA256": "5fa67fba24730e24f5053f2d9a764baaf587aec28999b6ca8ead3c3720119b5b"
+    },
+    {
+      "path": "manual/patrol-step.json.gz",
+      "original": "/tmp/fpv-ground-motion-9b5c-manual-r2/patrol-step.json",
+      "rawBytes": 36605,
+      "rawSHA256": "960b766ea477e5a0e9556331b5080ed9b0591d1253fddd46822e1e57f81c2b46",
+      "storedBytes": 522,
+      "storedSHA256": "bcf8a74db698715fc72473a8a394f858f2d50c8e2dbcdfb42f52a9970b6ae949"
+    },
+    {
+      "path": "manual/patrol-thin-ceiling.json.gz",
+      "original": "/tmp/fpv-ground-motion-9b5c-manual-r2/patrol-thin-ceiling.json",
+      "rawBytes": 36605,
+      "rawSHA256": "132a8bcdf4823fa798e1e1acb951b54f6bbf95c6a1c9c263d0d84c46ceb74b6e",
+      "storedBytes": 524,
+      "storedSHA256": "d1a8a5ae59ccbf2b14ed7faa76af086f676da9e15393d9e7d0ba9191833f636b"
+    },
+    {
+      "path": "manual/patrol-tight-ceiling.json.gz",
+      "original": "/tmp/fpv-ground-motion-9b5c-manual-r2/patrol-tight-ceiling.json",
+      "rawBytes": 36605,
+      "rawSHA256": "dd4e145ff9cc332ded2ba9e3fc16c4974df610b2b55e1b8c7b2fe00bf60b39bd",
+      "storedBytes": 524,
+      "storedSHA256": "2eb045ac914e0b5ff37e8015881cca776932c029e31e53ba097505feb89d93f6"
+    },
+    {
+      "path": "manual/patrol-wall.json.gz",
+      "original": "/tmp/fpv-ground-motion-9b5c-manual-r2/patrol-wall.json",
+      "rawBytes": 36605,
+      "rawSHA256": "980fbc1fed208804c09218af3ad56389f584f42269b970974142fa9c346e3164",
+      "storedBytes": 523,
+      "storedSHA256": "3ed631cb382b980f25bba57b0df59cb726d94db56e234a8760a8d391f4bf78d9"
+    },
+    {
+      "path": "manual/patrol-wide-gap.json.gz",
+      "original": "/tmp/fpv-ground-motion-9b5c-manual-r2/patrol-wide-gap.json",
+      "rawBytes": 36605,
+      "rawSHA256": "fc6785523413e581158e42346a248a044122d6cbbe3aa644eed39aec8934973b",
+      "storedBytes": 523,
+      "storedSHA256": "868b37a493d7c69fa6123fc91a1916bb8aaeb08888c6d45445fdd89be887b7ee"
+    },
+    {
+      "path": "manual/qualification.json.gz",
+      "original": "/tmp/fpv-ground-motion-9b5c-manual-r2/qualification.json",
+      "rawBytes": 120571,
+      "rawSHA256": "c832bfc6fa4e8c02e31c75d726dda3bf53dbbc3c7c86bc91f97c6688fdf6560f",
+      "storedBytes": 8966,
+      "storedSHA256": "c40c624a02b8e7e5f48293b10f498fa34b2888c7991e0b7d8924b9408f8e9f57"
+    },
+    {
+      "path": "manual/sentry-fast-gap.json.gz",
+      "original": "/tmp/fpv-ground-motion-9b5c-manual-r2/sentry-fast-gap.json",
+      "rawBytes": 36599,
+      "rawSHA256": "bbc8ea8e0a6193636d8b5de5be5cd69f4af5c368949b7d4ff3ea3aff063d220b",
+      "storedBytes": 518,
+      "storedSHA256": "5147a78544ad479f057697019a21ea84f2721ef25cca69f4d823dfb544cb7237"
+    },
+    {
+      "path": "manual/sentry-finite-flat.json.gz",
+      "original": "/tmp/fpv-ground-motion-9b5c-manual-r2/sentry-finite-flat.json",
+      "rawBytes": 36599,
+      "rawSHA256": "a34a25fc31baea70a3f029b4bee81b94709323621334f561bc55296c75636335",
+      "storedBytes": 517,
+      "storedSHA256": "548835f5d81e0a208e2d883efa77a284f9f99cd326833d7e0ea2ea38c9b1cd46"
+    },
+    {
+      "path": "manual/sentry-half-space.json.gz",
+      "original": "/tmp/fpv-ground-motion-9b5c-manual-r2/sentry-half-space.json",
+      "rawBytes": 36599,
+      "rawSHA256": "96d768b5b2de9d50cb60ba4f0518139db2dad19a17566187e2ee60ffbebc96b3",
+      "storedBytes": 517,
+      "storedSHA256": "c27f11f2818cea3af5fa447c08cd8f27ac3f34a248f52a7a2a746124c04b5ab2"
+    },
+    {
+      "path": "manual/sentry-ledge.json.gz",
+      "original": "/tmp/fpv-ground-motion-9b5c-manual-r2/sentry-ledge.json",
+      "rawBytes": 36599,
+      "rawSHA256": "1c2f6b301b686e08485aa3c16c2cb935955da75c9ab0dd339d69deeb4fccb3ce",
+      "storedBytes": 517,
+      "storedSHA256": "35a3bd8e1a34f15201994a9cb3d09438145ccbbd781e7af17f0846d932ea9fe7"
+    },
+    {
+      "path": "manual/sentry-narrow-finite.json.gz",
+      "original": "/tmp/fpv-ground-motion-9b5c-manual-r2/sentry-narrow-finite.json",
+      "rawBytes": 36599,
+      "rawSHA256": "be75e55e22030d51538cd0ca43a576b8ca0106a6746a6662d7de3d1a10f21e26",
+      "storedBytes": 514,
+      "storedSHA256": "791625bd5c40004c3fd9c347a1841558ef1613dc7a833ffbc98934c7dfffa6bd"
+    },
+    {
+      "path": "manual/sentry-slope-15-downhill.json.gz",
+      "original": "/tmp/fpv-ground-motion-9b5c-manual-r2/sentry-slope-15-downhill.json",
+      "rawBytes": 36599,
+      "rawSHA256": "424bbf91326337c276a20c00a7fe92d26960b1faea606774b5ab0ae2ba08a36d",
+      "storedBytes": 519,
+      "storedSHA256": "6645352bc27c29da2079edfe5e17bbcaa4cc8db76336752cf78fb1ded2ad82a4"
+    },
+    {
+      "path": "manual/sentry-slope-15-sideways.json.gz",
+      "original": "/tmp/fpv-ground-motion-9b5c-manual-r2/sentry-slope-15-sideways.json",
+      "rawBytes": 36599,
+      "rawSHA256": "a31db8c5f522ddac51664291a574be2ab335b33d34e48e62b8d9a341ac81dc4b",
+      "storedBytes": 517,
+      "storedSHA256": "00ab3df23c8a27405bec787f95ca3b2d3b4e0d1e0f229bde99f6bd68a70e39ec"
+    },
+    {
+      "path": "manual/sentry-slope-15.json.gz",
+      "original": "/tmp/fpv-ground-motion-9b5c-manual-r2/sentry-slope-15.json",
+      "rawBytes": 36599,
+      "rawSHA256": "03fa49f14f222b30bd48835eedbdb87ebd0965634b35322558b1833dead36f90",
+      "storedBytes": 519,
+      "storedSHA256": "7b11bc803ddffa4014112b0424d8286caca949af6359eda1cf0816abd3a6fb6f"
+    },
+    {
+      "path": "manual/sentry-slope-29.9-downhill.json.gz",
+      "original": "/tmp/fpv-ground-motion-9b5c-manual-r2/sentry-slope-29.9-downhill.json",
+      "rawBytes": 36599,
+      "rawSHA256": "c9e9e353d34fafa24736493dfe6ca40332fe7745be8ad2c5d802b87301d9cd5b",
+      "storedBytes": 518,
+      "storedSHA256": "483906588bb5f04d576aad6eb34fc70c20d236ebfa8869444299bd74c5f3417e"
+    },
+    {
+      "path": "manual/sentry-slope-29.9-sideways.json.gz",
+      "original": "/tmp/fpv-ground-motion-9b5c-manual-r2/sentry-slope-29.9-sideways.json",
+      "rawBytes": 36599,
+      "rawSHA256": "27d085759b6751e71a946361d958fcc501fd119840f47853a34d8590ab7389ed",
+      "storedBytes": 519,
+      "storedSHA256": "0c9ce7c06ab6019d36e88186ce2b4fac4a48410bbd260e723743dc6c4b6840b0"
+    },
+    {
+      "path": "manual/sentry-slope-29.9.json.gz",
+      "original": "/tmp/fpv-ground-motion-9b5c-manual-r2/sentry-slope-29.9.json",
+      "rawBytes": 36599,
+      "rawSHA256": "444a1d1d4b5c3769716656c149a5f77b0362e3abfde4dd57640c5db64373b9ab",
+      "storedBytes": 517,
+      "storedSHA256": "96b87e0b6a78245417dac7dcbdc26ae51a367f40d615580c16c244e20b838700"
+    },
+    {
+      "path": "manual/sentry-slope-30.1.json.gz",
+      "original": "/tmp/fpv-ground-motion-9b5c-manual-r2/sentry-slope-30.1.json",
+      "rawBytes": 36599,
+      "rawSHA256": "6505ba38c10653dc5a5caedad4083c323ef78bea1a8583debc1ccd08196913ff",
+      "storedBytes": 518,
+      "storedSHA256": "fc3aaf847a1fcd375d22e1fdabf988d9d544f989e4ffca38357b0b90ba109ac4"
+    },
+    {
+      "path": "manual/sentry-solid-slope-15.json.gz",
+      "original": "/tmp/fpv-ground-motion-9b5c-manual-r2/sentry-solid-slope-15.json",
+      "rawBytes": 36599,
+      "rawSHA256": "287fecc82875f36ec3982e987e30098e78563497970d2f830d0e27291b4a3a22",
+      "storedBytes": 516,
+      "storedSHA256": "e3d3c4a1ec1636a01da9cc80cca7adf205683472c640d75c7dacbc8a891a2fec"
+    },
+    {
+      "path": "manual/sentry-solid-slope-29.9.json.gz",
+      "original": "/tmp/fpv-ground-motion-9b5c-manual-r2/sentry-solid-slope-29.9.json",
+      "rawBytes": 36599,
+      "rawSHA256": "7f2736248110931f339ac1eff912ba28bb8ad2d5d992e98adbbd8026077cdbe3",
+      "storedBytes": 518,
+      "storedSHA256": "73731e900770eade0a63de8b54d07a34f5a23a9d6fca2d4ae0676f72a6c7d45b"
+    },
+    {
+      "path": "manual/sentry-stacked-lower.json.gz",
+      "original": "/tmp/fpv-ground-motion-9b5c-manual-r2/sentry-stacked-lower.json",
+      "rawBytes": 36599,
+      "rawSHA256": "24e1adbe53250af30a72947e564e930b30fb1a51d4cfebed027b92b79a6cb795",
+      "storedBytes": 517,
+      "storedSHA256": "c05d2ca9f2a45a9e90b2e6dc171d31c2dae3e18b4c75eb6ecaeefc0a88576cad"
+    },
+    {
+      "path": "manual/sentry-stacked-upper.json.gz",
+      "original": "/tmp/fpv-ground-motion-9b5c-manual-r2/sentry-stacked-upper.json",
+      "rawBytes": 36599,
+      "rawSHA256": "d435c4adbac3c517e2e2f566672be94ef36629664917ba5f6c5033a9865f2768",
+      "storedBytes": 517,
+      "storedSHA256": "dae54e565634e5331f6bd241d1085ad54aee9b3e3923d19bfe3ffd84665d8516"
+    },
+    {
+      "path": "manual/sentry-step-down.json.gz",
+      "original": "/tmp/fpv-ground-motion-9b5c-manual-r2/sentry-step-down.json",
+      "rawBytes": 36599,
+      "rawSHA256": "7a2ddcb913811688dec8e98b5b6ec6f87bf3a8dc6ec78cd53a0b04a8e3c3fdac",
+      "storedBytes": 517,
+      "storedSHA256": "232523513f77e99906bffeabd25ccf23892ac4f75ad70f2d97108198c80e0e6c"
+    },
+    {
+      "path": "manual/sentry-step.json.gz",
+      "original": "/tmp/fpv-ground-motion-9b5c-manual-r2/sentry-step.json",
+      "rawBytes": 36599,
+      "rawSHA256": "aaa1569797285cb11f3e742a0b3170fe061b87dbfa7d9b3a0a735e505cd9dcc9",
+      "storedBytes": 516,
+      "storedSHA256": "253bf9ebf61be6c7870fc90031c9abee42c8a726f194dc3c9c8ea348f62d08cc"
+    },
+    {
+      "path": "manual/sentry-thin-ceiling.json.gz",
+      "original": "/tmp/fpv-ground-motion-9b5c-manual-r2/sentry-thin-ceiling.json",
+      "rawBytes": 36599,
+      "rawSHA256": "ccc021127716767899960e5441e7a41a26f8dee215d9407e01c6a58b42675f9f",
+      "storedBytes": 518,
+      "storedSHA256": "51dd945bd39c808526fad572065e2f42b2344bad1114125177ab4ac03a96cc30"
+    },
+    {
+      "path": "manual/sentry-tight-ceiling.json.gz",
+      "original": "/tmp/fpv-ground-motion-9b5c-manual-r2/sentry-tight-ceiling.json",
+      "rawBytes": 36599,
+      "rawSHA256": "ad6fe33e3e946eeaa2de9b1f357a5f74335887f68b4d6718a2db4817b69152d8",
+      "storedBytes": 518,
+      "storedSHA256": "e3d0a03cd07e91291fee37b01ffa928e9a35e54b2aac4c5abd1075c0ad83b451"
+    },
+    {
+      "path": "manual/sentry-wall.json.gz",
+      "original": "/tmp/fpv-ground-motion-9b5c-manual-r2/sentry-wall.json",
+      "rawBytes": 36599,
+      "rawSHA256": "07051cc6e3c8bf7408807e7c0ff813718e9b3007749e3c79be199e3480158b6e",
+      "storedBytes": 517,
+      "storedSHA256": "08f059d4cac70b736e547444e69ba7ca681b2b5d5c64db9cd75c53afc08f48ec"
+    },
+    {
+      "path": "manual/sentry-wide-gap.json.gz",
+      "original": "/tmp/fpv-ground-motion-9b5c-manual-r2/sentry-wide-gap.json",
+      "rawBytes": 36599,
+      "rawSHA256": "855c5273d2abdbf69bc3d9b40076c77d5c320a6a9154d63e39b873a99134bfb8",
+      "storedBytes": 517,
+      "storedSHA256": "fe86c12c5da364786e9ff814b0797e6e0607bee456ff7fa81c85c35faf2f139e"
+    },
+    {
+      "path": "manual/vehicle-fast-gap.json.gz",
+      "original": "/tmp/fpv-ground-motion-9b5c-manual-r2/vehicle-fast-gap.json",
+      "rawBytes": 36605,
+      "rawSHA256": "fe5e787a0f1c50957f9acd74ff355411b133f13e2e7f97e0f29f4b8bce0e1195",
+      "storedBytes": 523,
+      "storedSHA256": "11e4b052f70d9373a9ea58cadef5e94e71d45460497a49579c48e71c5d49838f"
+    },
+    {
+      "path": "manual/vehicle-finite-flat.json.gz",
+      "original": "/tmp/fpv-ground-motion-9b5c-manual-r2/vehicle-finite-flat.json",
+      "rawBytes": 36604,
+      "rawSHA256": "b5d1e032f68d72f479cc83de40310f4cbc1f524ce4776fd929f1a33231426036",
+      "storedBytes": 522,
+      "storedSHA256": "e5d39e8e90dd3037d9d65836b3c533c843f3d2a56fe141bff4373230b4ad0ceb"
+    },
+    {
+      "path": "manual/vehicle-half-space.json.gz",
+      "original": "/tmp/fpv-ground-motion-9b5c-manual-r2/vehicle-half-space.json",
+      "rawBytes": 36604,
+      "rawSHA256": "46a8056fdc2eea7fa32faa43394af95c0eecaa90177c79970fafb61c0b1c992e",
+      "storedBytes": 521,
+      "storedSHA256": "fe51a0c1ed603357d8b701abf741eb6c1b61a848f3ecd0613bcdcd9c5c061c63"
+    },
+    {
+      "path": "manual/vehicle-ledge.json.gz",
+      "original": "/tmp/fpv-ground-motion-9b5c-manual-r2/vehicle-ledge.json",
+      "rawBytes": 36604,
+      "rawSHA256": "41667aa3be4c32c035d05585cf2dafa6842aba74b26141d3cba2c426af0abac5",
+      "storedBytes": 522,
+      "storedSHA256": "08092b981c45227c6324be9798ca411bf9c4c2998bb1e08b0cca047e6449c3a2"
+    },
+    {
+      "path": "manual/vehicle-narrow-finite.json.gz",
+      "original": "/tmp/fpv-ground-motion-9b5c-manual-r2/vehicle-narrow-finite.json",
+      "rawBytes": 36604,
+      "rawSHA256": "c6e5f09063360a7781e38c668e2d134bd605fc49edbb0a1e4c977c54b520d9cc",
+      "storedBytes": 520,
+      "storedSHA256": "6f07ad0ddc9094a0c9695cdd51c097a532e3f7ab12feb50e6bc533d80490d280"
+    },
+    {
+      "path": "manual/vehicle-slope-15-downhill.json.gz",
+      "original": "/tmp/fpv-ground-motion-9b5c-manual-r2/vehicle-slope-15-downhill.json",
+      "rawBytes": 36605,
+      "rawSHA256": "42c896531d2791b1988a4fd8a654e94e67afcfd3498272fed1f50a0841663a84",
+      "storedBytes": 523,
+      "storedSHA256": "394c7be3018efb349f17c3177dd90c529e91a92d2a66d085cafb11e54ba955bf"
+    },
+    {
+      "path": "manual/vehicle-slope-15-sideways.json.gz",
+      "original": "/tmp/fpv-ground-motion-9b5c-manual-r2/vehicle-slope-15-sideways.json",
+      "rawBytes": 36605,
+      "rawSHA256": "cd3e9ddaff4000ab2bc5cc3bc2c078d36dff7949bfe41c644c95ceb29ad1c5d0",
+      "storedBytes": 523,
+      "storedSHA256": "1e475a54be948abfce7b3f56fec9abaa97f94225a53699aec622949592ceca7b"
+    },
+    {
+      "path": "manual/vehicle-slope-15.json.gz",
+      "original": "/tmp/fpv-ground-motion-9b5c-manual-r2/vehicle-slope-15.json",
+      "rawBytes": 36605,
+      "rawSHA256": "234f8408ac90629c816a28d13bac78ccc180a5424f50314405b6db0f28016197",
+      "storedBytes": 523,
+      "storedSHA256": "2bec15a1b6e4df3595151f93bb80116c4bf02b446ee7fe0b514d9435ffcec0f2"
+    },
+    {
+      "path": "manual/vehicle-slope-29.9-downhill.json.gz",
+      "original": "/tmp/fpv-ground-motion-9b5c-manual-r2/vehicle-slope-29.9-downhill.json",
+      "rawBytes": 36605,
+      "rawSHA256": "e1a5fa39e7ee4bd796ee75010a1f02d2ca54c39ab8fbfdf18b6cd6a070350ded",
+      "storedBytes": 523,
+      "storedSHA256": "7338484a6a8ddc51aa16d0c706708359f9fc5ac927d5800dc2dec178d8d80a72"
+    },
+    {
+      "path": "manual/vehicle-slope-29.9-sideways.json.gz",
+      "original": "/tmp/fpv-ground-motion-9b5c-manual-r2/vehicle-slope-29.9-sideways.json",
+      "rawBytes": 36605,
+      "rawSHA256": "6507b0ea2ea767bf2aa8eeb99d7fc784855f84fc5d8af7a88c06493043ea77da",
+      "storedBytes": 523,
+      "storedSHA256": "c6ac7d2e25401aa92568973f948ba1b9ea2ad23451376f1529378310ea95f0cb"
+    },
+    {
+      "path": "manual/vehicle-slope-29.9.json.gz",
+      "original": "/tmp/fpv-ground-motion-9b5c-manual-r2/vehicle-slope-29.9.json",
+      "rawBytes": 36605,
+      "rawSHA256": "6b40cc3c41b6732629417c8d0ada52dbfa42c6a43cc7cc1b17bf880ce012d705",
+      "storedBytes": 523,
+      "storedSHA256": "c579e1c3982d87be7bc0247000ebcc795d7b6c6bee6dfec55d25c0bc5bbf340e"
+    },
+    {
+      "path": "manual/vehicle-slope-30.1.json.gz",
+      "original": "/tmp/fpv-ground-motion-9b5c-manual-r2/vehicle-slope-30.1.json",
+      "rawBytes": 36605,
+      "rawSHA256": "a38a06862848b3deb3177ae7e99de479b2020e3c23822c21046e66a7b576e74f",
+      "storedBytes": 523,
+      "storedSHA256": "5033ab246d9f9b5f9238ca56e23adaeed8f25bfab271866b34b915ef5fcf60bb"
+    },
+    {
+      "path": "manual/vehicle-solid-slope-15.json.gz",
+      "original": "/tmp/fpv-ground-motion-9b5c-manual-r2/vehicle-solid-slope-15.json",
+      "rawBytes": 36605,
+      "rawSHA256": "c1adf588a1e25bf28e87234d859b083472bfb83788501b2f0a4c1ddb7b93fbce",
+      "storedBytes": 522,
+      "storedSHA256": "3afe938e6af89a4b000aadef3339dd10f14a1cfa4f376abeb10b9f8a40a8971e"
+    },
+    {
+      "path": "manual/vehicle-solid-slope-29.9.json.gz",
+      "original": "/tmp/fpv-ground-motion-9b5c-manual-r2/vehicle-solid-slope-29.9.json",
+      "rawBytes": 36605,
+      "rawSHA256": "28b809ab3a7a01a4bfb746a263c0880b7948d8aa947d30dcce6d7cf3905bd918",
+      "storedBytes": 522,
+      "storedSHA256": "7d1c5cfc6bcfb58e2e63bd8a074fac4b6bc84acc39f739510904982645cc6f86"
+    },
+    {
+      "path": "manual/vehicle-stacked-lower.json.gz",
+      "original": "/tmp/fpv-ground-motion-9b5c-manual-r2/vehicle-stacked-lower.json",
+      "rawBytes": 36604,
+      "rawSHA256": "8c5cd71d3512cad32a00316005e4183a8c452d3bcabdf56a59a038121dd7fd2e",
+      "storedBytes": 522,
+      "storedSHA256": "562a00e58e933d38a16f766379c4857e08bd16cec728f71c65c9114671ba8670"
+    },
+    {
+      "path": "manual/vehicle-stacked-upper.json.gz",
+      "original": "/tmp/fpv-ground-motion-9b5c-manual-r2/vehicle-stacked-upper.json",
+      "rawBytes": 36604,
+      "rawSHA256": "ea801eaa7a3c3f777699a78fa7cd00de0d2e92f9e51cdf75fc4422a1b00b4dc7",
+      "storedBytes": 522,
+      "storedSHA256": "a3521396e6f16a907bb1362f6b933062f19a8e0212ebd92deb3a1093cdeb3502"
+    },
+    {
+      "path": "manual/vehicle-step-down.json.gz",
+      "original": "/tmp/fpv-ground-motion-9b5c-manual-r2/vehicle-step-down.json",
+      "rawBytes": 36605,
+      "rawSHA256": "e2812b11a475498bd449769240346810d74a9cd53ca4a8af14d9afdba2392aa7",
+      "storedBytes": 522,
+      "storedSHA256": "ab4f73500c513d2739ae404377342133c57d4a07cb1e611ab5ca3a7f32a8cff7"
+    },
+    {
+      "path": "manual/vehicle-step.json.gz",
+      "original": "/tmp/fpv-ground-motion-9b5c-manual-r2/vehicle-step.json",
+      "rawBytes": 36605,
+      "rawSHA256": "1c47343c26302d9537a4467e88db38ce2b3965009755d49a4e01e33cb919ba89",
+      "storedBytes": 521,
+      "storedSHA256": "2a4a7a59de66d69ba05a208cdbdb57f6f93ad373720e3a1345855896ee986aaf"
+    },
+    {
+      "path": "manual/vehicle-thin-ceiling.json.gz",
+      "original": "/tmp/fpv-ground-motion-9b5c-manual-r2/vehicle-thin-ceiling.json",
+      "rawBytes": 36605,
+      "rawSHA256": "62d0e0509fc73a978d72392b4a2f1392288a8bf66bc6a3ca2e8507b97a0adbf1",
+      "storedBytes": 523,
+      "storedSHA256": "742393ed8362760cf3c6ac10b6272fef7f57acee76d50e5664f55af38483ae7b"
+    },
+    {
+      "path": "manual/vehicle-tight-ceiling.json.gz",
+      "original": "/tmp/fpv-ground-motion-9b5c-manual-r2/vehicle-tight-ceiling.json",
+      "rawBytes": 36604,
+      "rawSHA256": "4428ad6fee9471c8211d2679c98be054b7b7c52612c91445c34fc1ba4cd11d40",
+      "storedBytes": 522,
+      "storedSHA256": "df1553c971fbcc136467dd48cf2b6d4bc9c92db9594722f080699bc32f5c4785"
+    },
+    {
+      "path": "manual/vehicle-wall.json.gz",
+      "original": "/tmp/fpv-ground-motion-9b5c-manual-r2/vehicle-wall.json",
+      "rawBytes": 36604,
+      "rawSHA256": "11836400389035b82f34eab9383f680326f48244f723452d0f1d70decafc93b6",
+      "storedBytes": 522,
+      "storedSHA256": "b99458c38d1a4ce6b660f7ea1b2b3cd987e6cf29447ceb744707471094e5e825"
+    },
+    {
+      "path": "manual/vehicle-wide-gap.json.gz",
+      "original": "/tmp/fpv-ground-motion-9b5c-manual-r2/vehicle-wide-gap.json",
+      "rawBytes": 36604,
+      "rawSHA256": "e994302cf80819634e6f9a7f5354f717ffc03b3cda03328a281b3c9891224b56",
+      "storedBytes": 522,
+      "storedSHA256": "ccc61dea54652854cef1788a191a00b269286c1d000da458b2ce2a5b3a0a38eb"
+    },
+    {
+      "path": "fpv-ground-motion-harbor-full-candidate.json.gz",
+      "original": "/tmp/fpv-ground-motion-harbor-full-candidate.json",
+      "rawBytes": 4466,
+      "rawSHA256": "799f396c66b660231ed7d70a606b8edf5daee47346adc217858bdff647aa661b",
+      "storedBytes": 673,
+      "storedSHA256": "69ee31c6876e5939f43d4545544e4bd083a0b3d5a32248ca24da32266d875e37"
+    },
+    {
+      "path": "fpv-ground-motion-harbor-full.mjs.gz",
+      "original": "/tmp/fpv-ground-motion-harbor-full.mjs",
+      "rawBytes": 1712,
+      "rawSHA256": "4f2a1dfabf94b1bd8d8ad79d61d4dc34d2ecfb1e9f0ce33035808eb1316d9425",
+      "storedBytes": 853,
+      "storedSHA256": "b324da5a96c943d92c21ec4f29a04637cef1f1a27310b9cf8202388434c19c61"
+    },
+    {
+      "path": "fpv-ground-motion-9b5c-cost.json.gz",
+      "original": "/tmp/fpv-ground-motion-9b5c-cost.json",
+      "rawBytes": 9893,
+      "rawSHA256": "236d672ed1f957b0ee131d18c9046d6911bb82c4a51fddfeebcc7c5fab1b08e6",
+      "storedBytes": 866,
+      "storedSHA256": "462c8403722461328d8ae102ba6287276d379cb4d15fa6e098fa268a16adf4b5"
+    },
+    {
+      "path": "fpv-ground-motion-9b5c-retained-proofs.json.gz",
+      "original": "/tmp/fpv-ground-motion-9b5c-retained-proofs.json",
+      "rawBytes": 4199,
+      "rawSHA256": "b0ba517571b266c0da1c9140a573ec6ac8e6e9ffe795fc0973731f458163ceca",
+      "storedBytes": 1047,
+      "storedSHA256": "c68e4119d4669010daef06e06dec0d94b670703f777e878e6a277185bb8b26d8"
+    },
+    {
+      "path": "fpv-ground-motion-9b5c-existing-hunt.log.gz",
+      "original": "/tmp/fpv-ground-motion-9b5c-existing-hunt.log",
+      "rawBytes": 2221,
+      "rawSHA256": "987956f9f53c0c15a0933a24236daa965c35f789601336991ecf14b5d6aa2141",
+      "storedBytes": 711,
+      "storedSHA256": "8089f04e3e531bf7f2f59a7ea08b6564dec817de35dc4b532486373a9dd3e44c"
+    },
+    {
+      "path": "historical/harbor-r3-project.json.gz",
+      "original": "/tmp/fpv-harbor-world-r3-v1/prepared/project.json",
+      "rawBytes": 262783,
+      "rawSHA256": "dc1041278abdd931055ed5e5938312f5de0483489d4f127d2a7a2b2f1623a62f",
+      "storedBytes": 17424,
+      "storedSHA256": "7036578f4e6e3fa60715dc390355aa218cf2a9aa88d49e537ab27f88fb844b32"
+    },
+    {
+      "path": "historical/diagnose-ground-actors.mjs.gz",
+      "original": "/private/tmp/fpv-mountain-reservoir-20261004/authoring/fpv-worlds/harbor-docks/diagnose-ground-actors.mjs",
+      "rawBytes": 7566,
+      "rawSHA256": "1ff9143dd7c5c347f64ee26dbdbd970e26ccacbaa03ac33085fd3f08babbb12c",
+      "storedBytes": 2806,
+      "storedSHA256": "b518818b6c4271ca64b0c162a063c8a78e5fb7f2f9a703d4c0710528ce01fe85"
+    }
+  ]
+}

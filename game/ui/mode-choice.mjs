@@ -1,10 +1,16 @@
 import { nativeArtReviewURL } from './art-review-navigation.mjs';
-import { t, localizedText, localizedAttribute, getLocale } from '../i18n/index.mjs';
+import { t, localizedText, localizedAttribute, getLocale, onLocaleChange } from '../i18n/index.mjs';
 import { setMenuIcon } from './native-menu-icons.mjs';
 import { mountOptionalPracticePanel } from './optional-practice-panel.mjs';
-import { fpvWorldLaunchURL, snakeLaunchURL } from '../fpv-entry.mjs';
+import {
+  fpvWorldLaunchURL,
+  snakeLaunchURL,
+  overflightLaunchURL,
+  overflightHuntLaunchURL,
+} from '../fpv-entry.mjs';
 import { loadAcceptedAppearance } from '../presentation/theme-system.mjs';
-const MODES = Object.freeze([['solo'], ['versus'], ['team']]);
+import { GAME_MODE_ORDER, renderModeChoices } from './mode-choice-view.mjs';
+const guideOwners = new WeakMap();
 
 export function contextualAppearance(document) {
   let accepted = null;
@@ -31,74 +37,174 @@ export function mountModeChoices({
   current,
   actions,
   separateTeam = false,
+  guidesContainer = null,
   pause = () => {},
   getAppearanceDefault = () => contextualAppearance(root.ownerDocument),
 }) {
-  if (!root || !MODES.some(([id]) => id === current))
+  if (!root || !GAME_MODE_ORDER.includes(current))
     throw new Error(t('interface:aGameModeAndItsVisibleNavigationContainerAreRequired'));
   const document = root.ownerDocument;
-  for (const [id] of MODES) {
-    if (id !== current && actions?.[id]?.tagName !== 'A')
+  const modeActions = { ...actions };
+  for (const id of ['solo', 'team', 'versus']) {
+    if (id !== current && modeActions[id]?.tagName !== 'A')
       throw new Error(`The existing ${id} mode link is required.`);
   }
-  const choices = MODES.map(([id]) => {
-    const selected = id === current;
-    const element = selected ? document.createElement('button') : actions[id];
-    if (selected) {
-      element.type = 'button';
-      element.id = `${current}-current-mode`;
-    }
-    element.removeAttribute('data-i18n');
-    const label = document.createElement('strong');
-    localizedText(label, () => t(`interface:nativeMenu.${id}`));
-    element.replaceChildren(label);
-    setMenuIcon(element, id);
-    element.dataset.gameMode = id;
-    if (selected) element.setAttribute('aria-current', 'page');
-    return element;
-  });
-  root.classList.add('game-mode-choice');
-  root.dataset.menuLayout = 'horizontal';
-  root.dataset.menuScope = 'modes';
-  localizedAttribute(root, 'aria-label', () => t('common:game.mode'));
+  const selected = document.createElement('button');
+  selected.type = 'button';
+  selected.id = `${current}-current-mode`;
+  modeActions[current] = selected;
   // A simulator destination is not an arcade ruleset or Journey mode.
-  const simulator = document.createElement('button');
+  const simulator = modeActions.simulator ?? document.createElement('button');
   simulator.type = 'button';
-  simulator.id = `${current}-fpv-sim`;
+  simulator.id ||= `${current}-fpv-sim`;
   simulator.dataset.simulatorEntry = 'true';
-  const simulatorLabel = document.createElement('strong');
-  localizedText(simulatorLabel, () => t('interface:nativeMenu.fpvSim'));
-  simulator.append(simulatorLabel);
-  setMenuIcon(simulator, 'simulator');
-  const snake = document.createElement('a');
-  snake.id = `${current}-snake`;
+  const snake = modeActions.snake ?? document.createElement('a');
+  snake.id ||= `${current}-snake`;
   snake.dataset.snakeEntry = 'true';
-  const snakeLabel = document.createElement('strong');
-  localizedText(snakeLabel, () => (getLocale() === 'uk' ? 'Змійка' : 'Snake'));
-  snake.append(snakeLabel);
-  setMenuIcon(snake, 'controls');
   const snakeURL = () =>
     snakeLaunchURL(
       document.defaultView?.location?.href ?? globalThis.location?.href,
-      current,
+      ['solo', 'team', 'versus'].includes(current) ? current : 'solo',
       document.documentElement.lang,
       getAppearanceDefault(),
     );
   const initialSnakeURL = snakeLaunchURL(
     document.defaultView?.location?.href ?? globalThis.location?.href,
-    current,
+    ['solo', 'team', 'versus'].includes(current) ? current : 'solo',
     document.documentElement.lang,
   );
-  if (initialSnakeURL) snake.href = initialSnakeURL;
-  else snake.hidden = true;
+  if (current !== 'snake') {
+    if (initialSnakeURL) snake.href = initialSnakeURL;
+    else if (!snake.href) snake.hidden = true;
+  }
   const enterSnake = (event) => {
     const href = snakeURL();
     if (!href) return event.preventDefault();
     snake.href = href;
     pause();
   };
-  snake.addEventListener('click', enterSnake);
-  root.replaceChildren(...choices, simulator, snake);
+  if (current !== 'snake') snake.addEventListener('click', enterSnake);
+  const overflight = modeActions.overflight ?? document.createElement('a');
+  overflight.id ||= `${current}-overflight`;
+  overflight.dataset.overflightEntry = 'true';
+  const overflightURL = () =>
+    overflightLaunchURL(
+      document.defaultView?.location?.href ?? globalThis.location?.href,
+      getLocale(),
+      getAppearanceDefault(),
+    );
+  if (current !== 'overflight') {
+    const initialOverflightURL = overflightURL();
+    if (initialOverflightURL) overflight.href = initialOverflightURL;
+    else if (!overflight.href) overflight.hidden = true;
+  }
+  const enterOverflight = (event) => {
+    const href = overflightURL();
+    if (!href) return event.preventDefault();
+    overflight.href = href;
+    pause();
+  };
+  if (current !== 'overflight') overflight.addEventListener('click', enterOverflight);
+  const raid = document.createElement('a');
+  raid.id = `${current}-overflight-raid`;
+  raid.dataset.overflightHuntEntry = 'true';
+  const raidLabel = document.createElement('strong');
+  localizedText(raidLabel, () => (getLocale() === 'uk' ? 'Проліт: Наліт' : 'Overflight: Raid'));
+  raid.append(raidLabel);
+  setMenuIcon(raid, 'controls');
+  const raidURL = () =>
+    overflightHuntLaunchURL(
+      document.defaultView?.location?.href ?? globalThis.location?.href,
+      getLocale(),
+      getAppearanceDefault(),
+    );
+  const initialRaidURL = raidURL();
+  if (initialRaidURL) raid.href = initialRaidURL;
+  else raid.hidden = true;
+  const enterRaid = (event) => {
+    const href = raidURL();
+    if (!href) return event.preventDefault();
+    raid.href = href;
+    pause();
+  };
+  raid.addEventListener('click', enterRaid);
+  const view = renderModeChoices({
+    root,
+    current,
+    actions: { ...modeActions, simulator, snake, overflight },
+    locale: getLocale(),
+    setMenuIcon,
+  });
+  root.append(raid);
+  const unsubscribeLocale = onLocaleChange(() => view.refresh(getLocale()));
+  const guides = mountModeGuides({
+    container: guidesContainer ?? document.querySelector('.native-settings [id$="-panel-extras"]'),
+    document,
+    pause,
+  });
+  const simulatorHref = fpvWorldLaunchURL(
+    document.defaultView?.location?.href ?? globalThis.location?.href,
+    document.documentElement.lang,
+  );
+  const simulatorHome = simulatorHref ? new URL(simulatorHref) : null;
+  // Mode switching always enters Home. Deep links such as #learn remain
+  // available to lesson/mission entry points that deliberately request them.
+  if (simulatorHome) simulatorHome.hash = '';
+  const panel =
+    current === 'simulator' || simulator.tagName === 'A'
+      ? null
+      : mountOptionalPracticePanel({
+          document,
+          getAppearanceDefault,
+          container: root,
+          opener: simulator,
+          pause,
+          href: document.defaultView?.location?.href ?? globalThis.location?.href,
+          bundledHref: simulatorHome?.href ?? null,
+          packageId: 'fpv-worlds',
+          idPrefix: `${current}-fpv-sim`,
+          preferDirect: true,
+          timeoutMs: 4000,
+        });
+  if (panel && !panel.open) {
+    simulator.disabled = true;
+    localizedAttribute(simulator, 'title', () => t('interface:optionalPractice.simBrowserOnly'));
+  }
+  return {
+    closeMore: () =>
+      guides.closeMore() ||
+      guideOwners
+        .get(document.querySelector('.native-settings [id$="-panel-extras"]'))
+        ?.closeMore() ||
+      false,
+    openSimulator: panel?.open,
+    simulatorRoot: () => panel?.root?.() ?? null,
+    simulatorPrimary: () => panel?.primary?.() ?? simulator,
+    closeSimulator: () => panel?.close?.(),
+    dispose() {
+      unsubscribeLocale();
+      panel?.dispose();
+      guides.dispose();
+      snake.removeEventListener('click', enterSnake);
+      snake.remove();
+      overflight.removeEventListener('click', enterOverflight);
+      overflight.remove();
+      raid.removeEventListener('click', enterRaid);
+      raid.remove();
+      simulator.remove();
+    },
+  };
+}
+
+/** Secondary discovery belongs in Settings → Help & Extras on every host. */
+export function mountModeGuides({
+  container,
+  document = container?.ownerDocument,
+  pause = () => {},
+}) {
+  if (!container || !document) return { closeMore: () => false, dispose() {} };
+  if (guideOwners.has(container)) return guideOwners.get(container);
+
   const destinations = document.createElement('details');
   destinations.className = 'game-mode-destinations';
   const summary = document.createElement('summary');
@@ -135,40 +241,15 @@ export function mountModeChoices({
     });
     destinations.append(link);
   }
-  root.append(destinations);
-  const panel = mountOptionalPracticePanel({
-    document,
-    getAppearanceDefault,
-    container: root,
-    opener: simulator,
-    pause,
-    href: document.defaultView?.location?.href ?? globalThis.location?.href,
-    bundledHref: fpvWorldLaunchURL(
-      document.defaultView?.location?.href ?? globalThis.location?.href,
-      document.documentElement.lang,
-    ),
-    packageId: 'fpv-worlds',
-    idPrefix: `${current}-fpv-sim`,
-    preferDirect: true,
-    timeoutMs: 4000,
-  });
-  if (!panel.open) {
-    simulator.disabled = true;
-    localizedAttribute(simulator, 'title', () => t('interface:optionalPractice.simBrowserOnly'));
-  }
-  return {
+  container.append(destinations);
+  const owner = {
     closeMore,
-    openSimulator: panel.open,
-    simulatorRoot: () => panel.root?.() ?? null,
-    simulatorPrimary: () => panel.primary?.() ?? simulator,
-    closeSimulator: () => panel.close?.(),
     dispose() {
-      panel.dispose();
-      simulator.remove();
       destinations.removeEventListener('keydown', backFromMore);
       destinations.remove();
-      snake.removeEventListener('click', enterSnake);
-      snake.remove();
+      guideOwners.delete(container);
     },
   };
+  guideOwners.set(container, owner);
+  return owner;
 }

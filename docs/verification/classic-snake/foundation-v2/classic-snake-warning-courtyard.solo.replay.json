@@ -1,0 +1,305 @@
+{
+  "version": "classic-snake-replay.v1",
+  "ruleset": "classic-snake-core.v1",
+  "level": {
+    "version": "classic-snake-level.v1",
+    "id": "classic-snake-warning-courtyard",
+    "revision": "2",
+    "name": "Open Courtyard",
+    "width": 24,
+    "height": 18,
+    "walls": [
+      {
+        "x": 8,
+        "y": 5
+      },
+      {
+        "x": 9,
+        "y": 5
+      },
+      {
+        "x": 10,
+        "y": 5
+      },
+      {
+        "x": 11,
+        "y": 5
+      },
+      {
+        "x": 12,
+        "y": 5
+      },
+      {
+        "x": 13,
+        "y": 5
+      },
+      {
+        "x": 14,
+        "y": 5
+      },
+      {
+        "x": 15,
+        "y": 5
+      },
+      {
+        "x": 8,
+        "y": 6
+      },
+      {
+        "x": 8,
+        "y": 7
+      },
+      {
+        "x": 8,
+        "y": 8
+      },
+      {
+        "x": 8,
+        "y": 9
+      },
+      {
+        "x": 11,
+        "y": 9
+      },
+      {
+        "x": 12,
+        "y": 9
+      },
+      {
+        "x": 8,
+        "y": 10
+      },
+      {
+        "x": 15,
+        "y": 10
+      },
+      {
+        "x": 8,
+        "y": 11
+      },
+      {
+        "x": 15,
+        "y": 11
+      },
+      {
+        "x": 8,
+        "y": 12
+      },
+      {
+        "x": 15,
+        "y": 12
+      }
+    ],
+    "spawns": [
+      {
+        "x": 5,
+        "y": 2,
+        "direction": "right"
+      },
+      {
+        "x": 18,
+        "y": 15,
+        "direction": "left"
+      }
+    ],
+    "goal": 14,
+    "stepMs": 180,
+    "speedupEvery": 4,
+    "minStepMs": 135,
+    "wrap": false,
+    "targetMovement": "flee",
+    "fleeEvery": 5
+  },
+  "levelIdentity": "3e94b6df28930df3",
+  "mode": "solo",
+  "seed": 17,
+  "steps": 265,
+  "turns": [
+    {
+      "tick": 12,
+      "playerId": 0,
+      "direction": "down"
+    },
+    {
+      "tick": 27,
+      "playerId": 0,
+      "direction": "left"
+    },
+    {
+      "tick": 30,
+      "playerId": 0,
+      "direction": "up"
+    },
+    {
+      "tick": 41,
+      "playerId": 0,
+      "direction": "right"
+    },
+    {
+      "tick": 46,
+      "playerId": 0,
+      "direction": "up"
+    },
+    {
+      "tick": 49,
+      "playerId": 0,
+      "direction": "left"
+    },
+    {
+      "tick": 52,
+      "playerId": 0,
+      "direction": "down"
+    },
+    {
+      "tick": 66,
+      "playerId": 0,
+      "direction": "left"
+    },
+    {
+      "tick": 77,
+      "playerId": 0,
+      "direction": "up"
+    },
+    {
+      "tick": 94,
+      "playerId": 0,
+      "direction": "right"
+    },
+    {
+      "tick": 97,
+      "playerId": 0,
+      "direction": "down"
+    },
+    {
+      "tick": 101,
+      "playerId": 0,
+      "direction": "left"
+    },
+    {
+      "tick": 102,
+      "playerId": 0,
+      "direction": "down"
+    },
+    {
+      "tick": 111,
+      "playerId": 0,
+      "direction": "right"
+    },
+    {
+      "tick": 120,
+      "playerId": 0,
+      "direction": "down"
+    },
+    {
+      "tick": 122,
+      "playerId": 0,
+      "direction": "right"
+    },
+    {
+      "tick": 123,
+      "playerId": 0,
+      "direction": "up"
+    },
+    {
+      "tick": 132,
+      "playerId": 0,
+      "direction": "left"
+    },
+    {
+      "tick": 138,
+      "playerId": 0,
+      "direction": "down"
+    },
+    {
+      "tick": 140,
+      "playerId": 0,
+      "direction": "right"
+    },
+    {
+      "tick": 147,
+      "playerId": 0,
+      "direction": "down"
+    },
+    {
+      "tick": 155,
+      "playerId": 0,
+      "direction": "left"
+    },
+    {
+      "tick": 173,
+      "playerId": 0,
+      "direction": "up"
+    },
+    {
+      "tick": 189,
+      "playerId": 0,
+      "direction": "right"
+    },
+    {
+      "tick": 208,
+      "playerId": 0,
+      "direction": "down"
+    },
+    {
+      "tick": 217,
+      "playerId": 0,
+      "direction": "left"
+    },
+    {
+      "tick": 219,
+      "playerId": 0,
+      "direction": "down"
+    },
+    {
+      "tick": 222,
+      "playerId": 0,
+      "direction": "right"
+    },
+    {
+      "tick": 226,
+      "playerId": 0,
+      "direction": "up"
+    },
+    {
+      "tick": 234,
+      "playerId": 0,
+      "direction": "left"
+    },
+    {
+      "tick": 235,
+      "playerId": 0,
+      "direction": "up"
+    },
+    {
+      "tick": 236,
+      "playerId": 0,
+      "direction": "right"
+    },
+    {
+      "tick": 238,
+      "playerId": 0,
+      "direction": "down"
+    },
+    {
+      "tick": 247,
+      "playerId": 0,
+      "direction": "right"
+    },
+    {
+      "tick": 248,
+      "playerId": 0,
+      "direction": "down"
+    },
+    {
+      "tick": 249,
+      "playerId": 0,
+      "direction": "left"
+    },
+    {
+      "tick": 262,
+      "playerId": 0,
+      "direction": "up"
+    }
+  ],
+  "checkpoint": "a44b8cacb7fe8e2c"
+}
