@@ -1,0 +1,409 @@
+{
+  "format": "overflight-hunt-qualification.v1",
+  "commit": "2bf26dfb182793d7bc9b1c27a03be5b981c272b6",
+  "sourceBindings": [
+    {
+      "path": "game/overflight/core.mjs",
+      "sha256": "011eb87bed1833eaa5635edfec2e15c94461412250b2f553e03b91fdefaf2990"
+    },
+    {
+      "path": "game/overflight/grid.mjs",
+      "sha256": "ef130a7f9594bff6af374fe252bb8aafdc7e86762bb8ef60107914654f21dd30"
+    },
+    {
+      "path": "game/overflight/upgrades.mjs",
+      "sha256": "b9e1ea61405573a97e489d967f78ff1c34d220f5e467f1f0217568de5701f097"
+    },
+    {
+      "path": "game/overflight/defeat-feed.mjs",
+      "sha256": "8c8415abfecff6728c95c751e9bd0f346dbe649f1e7c12387ebb2cd386d500c8"
+    },
+    {
+      "path": "game/overflight/raid-core.mjs",
+      "sha256": "b9c904aa0d19fbd70155bb3f0764646480d15da9282f7e063689ecc625b0ee61"
+    },
+    {
+      "path": "game/overflight/raid-project.mjs",
+      "sha256": "ea9a045d7da32441628bb797536c8c527d35543cec99060d17db71994bb1e992"
+    },
+    {
+      "path": "game/overflight/raid-upgrades.mjs",
+      "sha256": "73487637deaa2054e2a2af129066bfbf25cc214ea1b046c7343f8c654447cfa4"
+    },
+    {
+      "path": "game/overflight/raid-review-pilot.mjs",
+      "sha256": "cf8a2ed59488fe718d18d3d9c726c78d4108a336b06a4464ca23e0c5179d8632"
+    },
+    {
+      "path": "scripts/qualify-overflight-raid.mjs",
+      "sha256": "24cc9ee3e805b37b296d72ff086c40720f3a001b828b3999a07c7c42410deb78"
+    }
+  ],
+  "reproduction": {
+    "executable": "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+    "command": [
+      "node",
+      "scripts/qualify-overflight-raid.mjs",
+      "--soak-seconds",
+      "900",
+      "--output",
+      "docs/qualification/overflight/raid-20261005/simulation-soak.json"
+    ],
+    "cwd": "/Users/oleksandr.mekhovov/.codex/worktrees/overflight-survivor/go_test/"
+  },
+  "environment": {
+    "node": "v20.19.5",
+    "platform": "darwin",
+    "release": "25.6.0",
+    "arch": "arm64",
+    "cpu": "Apple M4 Pro"
+  },
+  "evidence": "Headless ordinary input, earned cards. No browser/GPU performance or human-playtest qualification.",
+  "results": [
+    {
+      "kind": "raid-reference-simulation-soak",
+      "encounterSet": "patrol",
+      "seed": 17031991,
+      "seconds": 900,
+      "fixedSteps": 54000,
+      "passed": true,
+      "expectedAlive": 537,
+      "expectedVisible": 200,
+      "populationRanges": {
+        "alive": {
+          "min": 537,
+          "max": 537
+        },
+        "visible": {
+          "min": 200,
+          "max": 200
+        }
+      },
+      "highWater": {
+        "effects": 28,
+        "projectiles": 4,
+        "priorityAttacks": 2,
+        "visibleSpecialists": 8
+      },
+      "elapsedCpuMs": 10428.085875,
+      "samples": [
+        {
+          "time": 60,
+          "alive": 537,
+          "visible": 200,
+          "kills": 539,
+          "projectilesFired": 65,
+          "effects": 8,
+          "projectiles": 3,
+          "recycledActors": 539
+        },
+        {
+          "time": 120,
+          "alive": 537,
+          "visible": 200,
+          "kills": 1060,
+          "projectilesFired": 129,
+          "effects": 11,
+          "projectiles": 3,
+          "recycledActors": 1060
+        },
+        {
+          "time": 180,
+          "alive": 537,
+          "visible": 200,
+          "kills": 1462,
+          "projectilesFired": 199,
+          "effects": 1,
+          "projectiles": 4,
+          "recycledActors": 1462
+        },
+        {
+          "time": 240,
+          "alive": 537,
+          "visible": 200,
+          "kills": 1919,
+          "projectilesFired": 265,
+          "effects": 13,
+          "projectiles": 2,
+          "recycledActors": 1919
+        },
+        {
+          "time": 300,
+          "alive": 537,
+          "visible": 200,
+          "kills": 2467,
+          "projectilesFired": 336,
+          "effects": 19,
+          "projectiles": 2,
+          "recycledActors": 2467
+        },
+        {
+          "time": 360,
+          "alive": 537,
+          "visible": 200,
+          "kills": 3040,
+          "projectilesFired": 405,
+          "effects": 16,
+          "projectiles": 4,
+          "recycledActors": 3040
+        },
+        {
+          "time": 420,
+          "alive": 537,
+          "visible": 200,
+          "kills": 3483,
+          "projectilesFired": 469,
+          "effects": 8,
+          "projectiles": 2,
+          "recycledActors": 3483
+        },
+        {
+          "time": 480,
+          "alive": 537,
+          "visible": 200,
+          "kills": 3943,
+          "projectilesFired": 538,
+          "effects": 9,
+          "projectiles": 4,
+          "recycledActors": 3943
+        },
+        {
+          "time": 540,
+          "alive": 537,
+          "visible": 200,
+          "kills": 4476,
+          "projectilesFired": 607,
+          "effects": 17,
+          "projectiles": 3,
+          "recycledActors": 4476
+        },
+        {
+          "time": 600,
+          "alive": 537,
+          "visible": 200,
+          "kills": 4895,
+          "projectilesFired": 676,
+          "effects": 8,
+          "projectiles": 2,
+          "recycledActors": 4895
+        },
+        {
+          "time": 660,
+          "alive": 537,
+          "visible": 200,
+          "kills": 5359,
+          "projectilesFired": 743,
+          "effects": 12,
+          "projectiles": 3,
+          "recycledActors": 5359
+        },
+        {
+          "time": 720,
+          "alive": 537,
+          "visible": 200,
+          "kills": 5865,
+          "projectilesFired": 813,
+          "effects": 15,
+          "projectiles": 2,
+          "recycledActors": 5865
+        },
+        {
+          "time": 780,
+          "alive": 537,
+          "visible": 200,
+          "kills": 6412,
+          "projectilesFired": 880,
+          "effects": 19,
+          "projectiles": 4,
+          "recycledActors": 6412
+        },
+        {
+          "time": 840,
+          "alive": 537,
+          "visible": 200,
+          "kills": 6945,
+          "projectilesFired": 943,
+          "effects": 5,
+          "projectiles": 4,
+          "recycledActors": 6945
+        },
+        {
+          "time": 900,
+          "alive": 537,
+          "visible": 200,
+          "kills": 7475,
+          "projectilesFired": 1012,
+          "effects": 18,
+          "projectiles": 3,
+          "recycledActors": 7475
+        }
+      ],
+      "summary": {
+        "format": "OverflightHuntRunSummaryV1",
+        "rules": "overflight-raid.v1",
+        "projectId": "overflight-raid-patrol",
+        "projectIdentity": "4009c534db62a1ef",
+        "seed": 17031991,
+        "phase": "playing",
+        "outcome": "technical-fixture",
+        "reason": null,
+        "fixture": "raid-reference",
+        "fixtureWorkload": {
+          "kind": "raid-reference",
+          "gameplayResult": false,
+          "alive": 537,
+          "visible": 200,
+          "fullBuild": true,
+          "independentProjectiles": true,
+          "movingContactCollisions": true,
+          "partitionWrapping": true,
+          "recycledActors": 7475,
+          "ordinaryFamilyBehaviors": true,
+          "poolPolicy": "same-owned-pools",
+          "progressionPolicy": "disabled-for-controlled-fixture"
+        },
+        "time": 900,
+        "tick": 54000,
+        "airframes": 3,
+        "airframesRemaining": 3,
+        "slowResume": true,
+        "stats": {
+          "kills": 7475,
+          "spawned": 8012,
+          "enemiesAlive": 537,
+          "enemiesVisible": 200,
+          "peakAlive": 537,
+          "peakVisible": 200,
+          "heaviesAlive": 2,
+          "specialistsAlive": 20,
+          "priorityAttacks": 2,
+          "damageDealt": 7476,
+          "damageTaken": 1980,
+          "xpEarned": 0,
+          "xpCollected": 0,
+          "xpOnGround": 0,
+          "pickupsAlive": 0,
+          "pickupMerges": 0,
+          "boostsUsed": 910,
+          "airframesLost": 0,
+          "upgradesChosen": 0,
+          "rerollsUsed": 0,
+          "droppedVisualEffects": 0,
+          "collisionCandidates": 668042,
+          "hits": 7476,
+          "retired": 0,
+          "spawnDeferred": 0,
+          "fixtureDefeats": 7494,
+          "projectileDeferrals": 0,
+          "blockedContacts": 14,
+          "cleanArmorHits": 1,
+          "boostRefunds": 845,
+          "rushActivations": 112,
+          "noTargetSeconds": 0,
+          "distanceFlown": 158883.7299227478,
+          "objectiveChoices": 0,
+          "optionalChoices": 0,
+          "projectilesFired": 1012
+        },
+        "build": {
+          "primary": {
+            "rank": 1,
+            "branch": null,
+            "evolved": false
+          },
+          "combat": [],
+          "support": null,
+          "reinforcement": 0,
+          "repair": 0,
+          "hunt": {
+            "strike-width": 2,
+            "slow-wake": 2,
+            "rush-charge": 2,
+            "boost-cooldown": 2,
+            "boost-duration": 2,
+            "chain-window": 2,
+            "heavy-exposure": 2,
+            "guard-interrupt": 2,
+            "recovery-shield": 2
+          }
+        },
+        "upgrades": [],
+        "hunt": {
+          "sector": 2,
+          "objectives": [
+            {
+              "id": "leader-1",
+              "family": "patroller",
+              "sector": 0,
+              "enemyId": 135,
+              "completed": false
+            },
+            {
+              "id": "leader-2",
+              "family": "shield-bearer",
+              "sector": 0,
+              "enemyId": 136,
+              "completed": false
+            },
+            {
+              "id": "leader-3",
+              "family": "brace-trooper",
+              "sector": 0,
+              "enemyId": 137,
+              "completed": false
+            },
+            {
+              "id": "light-1",
+              "family": "utility-car",
+              "sector": 1,
+              "enemyId": 304,
+              "completed": false
+            },
+            {
+              "id": "light-2",
+              "family": "cargo-truck",
+              "sector": 1,
+              "enemyId": 305,
+              "completed": false
+            },
+            {
+              "id": "carrier",
+              "family": "armored-carrier",
+              "sector": 1,
+              "enemyId": 306,
+              "completed": false
+            },
+            {
+              "id": "command-tank",
+              "family": "tracked-tank",
+              "sector": 2,
+              "enemyId": 537,
+              "completed": false
+            }
+          ],
+          "score": 4204950,
+          "chain": 51,
+          "bestChain": 527,
+          "chainRemaining": 5.483333333333333,
+          "multiplier": 5,
+          "rushCharge": 0,
+          "rushRemaining": 0.3500000000000127,
+          "ordinaryKills": 0,
+          "couriersCaught": 1359,
+          "couriersEscaped": 0,
+          "armorHits": 1,
+          "objectivesCompleted": 0,
+          "pendingChoices": 0
+        },
+        "goals": {
+          "eliteSpawned": false,
+          "eliteDefeated": false,
+          "finalSpawned": false,
+          "finalDefeated": false,
+          "finalId": null
+        }
+      },
+      "evidence": "Deterministic Node simulation and pool invariants only. No rendering, audio, browser, graphics context, GPU, physical input, human playtest or target-hardware FPS claims."
+    }
+  ]
+}

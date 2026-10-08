@@ -1,0 +1,71 @@
+{
+  "format": "OverflightIndependentTrialsV1",
+  "fixture": "raid-reference",
+  "workload": {
+    "alive": 537,
+    "visible": 200
+  },
+  "valid": true,
+  "errors": [],
+  "trials": [
+    {
+      "index": 1,
+      "trial": "1",
+      "valid": true,
+      "reasons": [],
+      "passes": true,
+      "measuredSeconds": 119.996,
+      "samples": 14379,
+      "cadenceHz": 119.82899429980999,
+      "p95Ms": 9.199999988079071,
+      "p99Ms": 9.899999976158142,
+      "slowFraction": 0
+    },
+    {
+      "index": 2,
+      "trial": "2",
+      "valid": true,
+      "reasons": [],
+      "passes": true,
+      "measuredSeconds": 120.0045,
+      "samples": 14180,
+      "cadenceHz": 118.16223558283231,
+      "p95Ms": 10.399999976158142,
+      "p99Ms": 12.899999976158142,
+      "slowFraction": 0
+    },
+    {
+      "index": 3,
+      "trial": "3",
+      "valid": true,
+      "reasons": [],
+      "passes": true,
+      "measuredSeconds": 119.99409999996423,
+      "samples": 14136,
+      "cadenceHz": 117.80579211814758,
+      "p95Ms": 11.099999964237213,
+      "p99Ms": 13.800000011920929,
+      "slowFraction": 0.0003537068477645727
+    }
+  ],
+  "passes": true,
+  "scope": "Controlled Raid workload with automatic movement, full upgrades, recycled actors and fixed camera partitions. Normal sorties do not recycle actors. Recorded browser runs only; hardware identity, power mode and source binding require the receipt. This does not establish normal-run pacing, player enjoyment or target-device acceptance.",
+  "recordedAt": "2026-10-05T17:31:34.246Z",
+  "inputs": [
+    {
+      "path": "docs/qualification/overflight/raid-20261005/local-trial-1.json.gz",
+      "sha256": "e1e3d78e1f6a65a9183e3bc4f31e5d7e098d94ae8eb0d047a1ab74a20d900cd2",
+      "bytes": 287574
+    },
+    {
+      "path": "docs/qualification/overflight/raid-20261005/local-trial-2.json.gz",
+      "sha256": "e80dc5c063e2714032d7878772a359bcc2c59ba8248129cc565a86867aa5119c",
+      "bytes": 303202
+    },
+    {
+      "path": "docs/qualification/overflight/raid-20261005/local-trial-3.json.gz",
+      "sha256": "0d54e57d0b962c287ab88965f82dc558d6c1443503023f0431f1c8548bf86af1",
+      "bytes": 300774
+    }
+  ]
+}
