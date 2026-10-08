@@ -474,12 +474,14 @@ export class Soundscape {
     releasePlaybackAudioSession();
     return false;
   }
-  pause() {
+  pause({ preserveDestruction = false } = {}) {
     this.stopVoices('dialogue');
     if (this.persistentMusic) {
       this.gameplayPaused = true;
       this.cancelPreview();
-      this.stopVoices('sfx');
+      for (const voice of [...this.voices])
+        if (voice.bus === 'sfx' && !(preserveDestruction && voice.name?.startsWith('destroy-')))
+          voice.stop();
       this.tension = 0;
       return;
     }
@@ -739,7 +741,7 @@ export class Soundscape {
     )
       return false;
     const board = details.board ?? 'solo',
-      key = `encounter:${board}:${type}`;
+      key = `encounter:${board}:${recipe.category ?? type}`;
     if (
       c.currentTime - (this.recentEvents.get(key) ?? -Infinity) <
       (recipe.cooldown ??
@@ -754,31 +756,48 @@ export class Soundscape {
     if (recipe.priority >= 4)
       for (const voice of [...this.voices])
         if (voice.feedback && voice.movement && !voice.source?.loop) voice.stop();
-    if (this.feedbackDirector.play(recipe.name, { ...recipe, board, pan: details.pan ?? 0 }))
+    const ownership = { ...recipe, board, pan: details.pan ?? 0, feedback: true };
+    // Published destruction replacements use the same bus, headroom and lifetime.
+    if (recipe.category && this.publishedAudio?.play(recipe.name, ownership)) return true;
+    if (this.feedbackDirector.play(recipe.name, ownership)) return true;
+    const reserveFallback = () => {
+      const owned = [...this.voices].filter((voice) => voice.feedback);
+      if (this.voices.size < 64 && owned.length < 16) return true;
+      const victim = owned
+        .filter((voice) => voice.priority < recipe.priority)
+        .sort((a, b) => a.priority - b.priority)[0];
+      if (!victim) return false;
+      victim.stop();
       return true;
-    if (recipe.movement && [...this.voices].filter((voice) => voice.feedback).length >= 16)
-      return false;
+    };
     if (recipe.priority >= 5) dialogueChannel.interrupt();
-    // Missing optional samples remain audible now; loading never replays stale cues.
-    return this.play(
-      {
-        kind: 'tone',
-        encounter: true,
-        movement: recipe.movement,
-        cueName: recipe.name,
-        board,
-        priority: recipe.priority,
-        frequency: recipe.tone.from,
-        endFrequency: recipe.tone.to,
-        duration: recipe.tone.duration,
-        volume: recipe.tone.gain,
-        voice: 'lead',
-        wave: recipe.tone.type,
-        pan: details.pan ?? 0,
-      },
-      c.currentTime,
-    );
+    // Missing samples remain audible now; a late decode never replays a death.
+    let played = false;
+    for (const layer of [recipe.tone, ...(recipe.layers ?? [])]) {
+      if (!reserveFallback()) break;
+      played =
+        this.play(
+          {
+            kind: layer.kind ?? 'tone',
+            encounter: true,
+            movement: recipe.movement,
+            cueName: recipe.name,
+            board,
+            priority: recipe.priority,
+            frequency: layer.from,
+            endFrequency: layer.to,
+            duration: layer.duration,
+            volume: layer.gain,
+            voice: 'lead',
+            wave: layer.type,
+            pan: details.pan ?? 0,
+          },
+          c.currentTime + (layer.delay ?? 0),
+        ) || played;
+    }
+    return played;
   }
+
   events(events, run, theme, options = {}) {
     this.feedbackDirector.events(events, run, theme, options);
   }

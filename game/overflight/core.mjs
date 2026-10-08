@@ -44,14 +44,34 @@ function random(run, key = '_randomState') {
 }
 
 function sound(run, type, value = 1, position = run.player) {
-  const existing = run.events.find((event) => event.type === type);
+  // Bounded by the admitted roster: mass clears retain material identity without
+  // creating an event or voice for each enemy. Other semantic cues stay merged.
+  const family = type === 'defeat' ? position.family : undefined;
+  const existing = run.events.find((event) => event.type === type && event.family === family);
   if (existing) {
     existing.count++;
     existing.value += value;
     // One centroid per semantic cue, not a voice or allocation per casualty.
     existing.x += (position.x - existing.x) / existing.count;
     existing.y += (position.y - existing.y) / existing.count;
-  } else run.events.push({ type, count: 1, value, x: position.x, y: position.y });
+  } else
+    run.events.push({
+      type,
+      count: 1,
+      value,
+      x: position.x,
+      y: position.y,
+      ...(family
+        ? {
+            family,
+            machine: machineFamilies.has(family)
+              ? family === 'tracked-tank'
+                ? 'tracked'
+                : 'wheeled'
+              : false,
+          }
+        : {}),
+    });
 }
 
 function camera(run) {

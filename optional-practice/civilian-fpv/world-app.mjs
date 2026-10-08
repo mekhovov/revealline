@@ -1442,7 +1442,11 @@ export function mountWorldApp({
       }
     }
   }
-  const audio = createWorldAudio({ window: win, storage });
+  const audio = createWorldAudio({
+    window: win,
+    storage,
+    getDestruction: () => huntPresentationControls.preferences.snapshot(),
+  });
   const presentation = mountSimPresentation({
     root: doc,
     window: win,

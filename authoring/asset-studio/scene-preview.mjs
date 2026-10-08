@@ -397,7 +397,12 @@ export async function boardContextPreview(surface, slot, asset, resolved, blobs,
   }
   loop(own, render, options);
 }
-export function audioRecipePreview(surface, slot, own, { audioMaster = null } = {}) {
+export function audioRecipePreview(
+  surface,
+  slot,
+  own,
+  { audioMaster = null, readAudio = null } = {},
+) {
   const player = new Soundscape({ audioMaster }),
     box = text('div', '', 'recipe-sample'),
     play = text(
@@ -413,6 +418,7 @@ export function audioRecipePreview(surface, slot, own, { audioMaster = null } = 
       '',
       'control',
     );
+  if (readAudio) player.setPublishedAudio(readAudio);
   play.type = 'button';
   stop.type = 'button';
   box.append(text('h3', slot.label, '', 'heading'), play, stop, result);
@@ -476,7 +482,18 @@ export function audioRecipePreview(surface, slot, own, { audioMaster = null } = 
           focus: 'class.switched',
           cancel: 'craft.redeployed',
         }[cue];
-        player.event({ type: event, won: true, tick: performance.now() });
+        if (cue.startsWith('destroy-')) {
+          const name = cue;
+          if (readAudio) {
+            await player.publishedAudio.prepare([name]);
+            if (!player.publishedAudio.has(name)) throw new Error(t('tools:audioIsUnavailable'));
+          } else
+            await Promise.all(
+              [name, `${name}-1`, `${name}-2`].map((id) => player.feedbackDirector.load(id)),
+            );
+          if (!alive || request !== audition) return;
+          player.encounter('catch', { category: cue.slice(8), board: 'studio' });
+        } else player.event({ type: event, won: true, tick: performance.now() });
       }
       playbackLease = lease;
       lease.finish({ message: playbackCaption() });

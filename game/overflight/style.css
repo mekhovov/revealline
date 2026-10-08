@@ -63,6 +63,33 @@ button:disabled {
   display: flex;
   align-items: center;
 }
+.overflight-studio-links {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+.overflight-studio-link {
+  display: grid;
+  align-content: start;
+  gap: 6px;
+  min-height: 88px;
+  padding: 12px;
+  text-align: start;
+  text-decoration: none;
+  color: var(--fk-text, #f3eddd);
+  background: var(--fk-panel, #272b2e);
+  border: 2px solid var(--fk-control-line, #8f989c);
+}
+.overflight-studio-link strong {
+  color: var(--fk-accent, #e6b85c);
+}
+.overflight-studio-link span {
+  font-size: 0.9em;
+  line-height: 1.35;
+}
+.overflight-studio-link:hover {
+  border-color: var(--fk-accent, #e6b85c);
+}
 .overflight-check input {
   width: 22px;
   height: 22px;
@@ -289,7 +316,8 @@ button:disabled {
     min-height: 0;
     padding: 14px;
   }
-  .overflight-settings-grid {
+  .overflight-settings-grid,
+  .overflight-studio-links {
     grid-template-columns: 1fr;
   }
   #overflight-hud {

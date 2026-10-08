@@ -336,4 +336,96 @@ export const EFFECT_BANK = {
     bytes: 140844,
     sha256: '92c3ed412975bf1b557bada0ebb15865db004f096586e1f5a063564048fb2b86',
   },
+  // BEGIN CC0 destruction bank — produced by authoring/audio/revealline-v1/produce_destruction.py
+  'destroy-soft': {
+    file: 'destroy-soft.wav',
+    loop: false,
+    bytes: 21164,
+    sha256: '4ccf476d260718a54c78954918b06e0b222c75eae12c967f68e7ac5047b97acf',
+  },
+  'destroy-soft-1': {
+    file: 'destroy-soft-1.wav',
+    loop: false,
+    bytes: 21164,
+    sha256: '9724c67c085277040f44b7b39313d9cfe3af1afae4339a15bd625b47068ec2b8',
+  },
+  'destroy-soft-2': {
+    file: 'destroy-soft-2.wav',
+    loop: false,
+    bytes: 21164,
+    sha256: '575837cdd684af17be402d982569338f90813bbd983596dfaa173ebb36bdba89',
+  },
+  'destroy-armored': {
+    file: 'destroy-armored.wav',
+    loop: false,
+    bytes: 28844,
+    sha256: '341ec9b36071d2a2b8ee77c570b7ab950be85e795f5f1a2f74b32812d6f6b634',
+  },
+  'destroy-armored-1': {
+    file: 'destroy-armored-1.wav',
+    loop: false,
+    bytes: 28844,
+    sha256: 'f1090620c85ae18dbde22b4f51182a1d34addfe4ca78600cc51635e635dee760',
+  },
+  'destroy-armored-2': {
+    file: 'destroy-armored-2.wav',
+    loop: false,
+    bytes: 28844,
+    sha256: '603a4ee6f317ab05b326328269b26686fb7f3e1ce02515f255dabd1c616b4b3c',
+  },
+  'destroy-light': {
+    file: 'destroy-light.wav',
+    loop: false,
+    bytes: 43244,
+    sha256: 'b7f5836a2b207d984cf324b3eb2633c5c2971c313a640d1e0f0f2fb56bae7788',
+  },
+  'destroy-light-1': {
+    file: 'destroy-light-1.wav',
+    loop: false,
+    bytes: 43244,
+    sha256: '01bcffaec50d0b29b560a10fbdb6e00587a6d8858b2dac6af9a708e0d7169204',
+  },
+  'destroy-light-2': {
+    file: 'destroy-light-2.wav',
+    loop: false,
+    bytes: 43244,
+    sha256: '03c0e762813aaf041d36dd51912048319f4afa514dde4b00d020c7bf22ea7340',
+  },
+  'destroy-heavy': {
+    file: 'destroy-heavy.wav',
+    loop: false,
+    bytes: 72044,
+    sha256: '84b26977fc5779e551dcae00acb30ec473fb4a6b275f3c7903d6e30c9e1aedc7',
+  },
+  'destroy-heavy-1': {
+    file: 'destroy-heavy-1.wav',
+    loop: false,
+    bytes: 72044,
+    sha256: '0d19b678058042174743faa8a11018fb4acb4bc8a566813d844bff19358d05c7',
+  },
+  'destroy-heavy-2': {
+    file: 'destroy-heavy-2.wav',
+    loop: false,
+    bytes: 72044,
+    sha256: '2b51c0865cca213199a6db35bacb1aacbc079edb0e4e644b6c7aa0d5c30389ed',
+  },
+  'destroy-electronic': {
+    file: 'destroy-electronic.wav',
+    loop: false,
+    bytes: 28844,
+    sha256: '9cffbf1ec33ca0f183261bc4335befb6cf77ed76954485aeb928480415c0512a',
+  },
+  'destroy-electronic-1': {
+    file: 'destroy-electronic-1.wav',
+    loop: false,
+    bytes: 28844,
+    sha256: 'e46030c0b1e33f9805ff4e29ad4a4747b514c2c38733934b19c9db5b4251dfa4',
+  },
+  'destroy-electronic-2': {
+    file: 'destroy-electronic-2.wav',
+    loop: false,
+    bytes: 28844,
+    sha256: 'faf2c32947866105285d925723b9fbe02f4fd6391e5adb9a6a82586b9f61f5ce',
+  },
+  // END CC0 destruction bank
 };
