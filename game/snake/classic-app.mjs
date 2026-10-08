@@ -112,6 +112,13 @@ import { createClassicSnakeRatings, classicSnakeRatingForRecord } from './classi
 import { createClassicSnakeRecords } from './classic-records.mjs';
 import { resolveClassicSnakeRecipeEntry } from './classic-catalogue-archive.mjs';
 import { createClassicPresentation } from './classic-presentation.mjs';
+import { prepareClassicEnvironments } from './classic-environment.mjs';
+import { selectedArcadeCollection } from '../presentation/industrial-arcade.mjs';
+import {
+  acceptAttemptAppearance,
+  restoreAttemptAppearance,
+  snapshotAttemptAppearance,
+} from '../presentation/attempt-appearance.mjs';
 import { classicCatchMarks, drawClassicBoard, drawClassicTarget } from './classic-view.mjs';
 import { advanceClassicFlight } from './classic-flight-art.mjs';
 
@@ -157,6 +164,10 @@ const SAVE_KEY = `revealline.classic-snake.round.v2${communityIdentity ? `.${com
 const PREF_KEY = 'revealline.classic-snake.presentation.v1',
   SETUP_KEY = 'revealline.classic-snake.setup.v2';
 const SESSION_FORMAT = 'revealline-classic-snake-session.v3';
+const LEGACY_SESSION_FORMAT = 'revealline-classic-snake-session.v2';
+const environmentCandidate = await prepareClassicEnvironments(CLASSIC_SNAKE_LEVELS, {
+  official: !installedContent,
+});
 let sessionWriter = await claimProfileWriter(globalThis.navigator.locks, `${SAVE_KEY}:writer`);
 let writerRelease = Promise.resolve(),
   writerEpoch = 0;
@@ -271,7 +282,9 @@ const transition = createContinuousPlayController({
 const gamepadState = new Map(),
   gamepadSeats = new Map();
 const effects = [createHuntDestruction(), createHuntDestruction()];
-let acceptedArtRevision = runtimeActorArtRevision();
+let acceptedArtRevision = runtimeActorArtRevision(),
+  acceptedAppearance = null,
+  retainPreparedAppearance = false;
 const destruction = createDestructionPreferences(),
   remains = createEncounterDisplayPreferences();
 const display = createDisplayPreferences({
@@ -452,8 +465,10 @@ function session() {
     seed,
     style,
     match: exportClassicSnakeMatch(match),
+    appearance: snapshotAttemptAppearance(acceptedAppearance),
     statistics: enemyStats.session(statsAttempt),
     provenance: liveProvenance,
+    appearance: snapshotAttemptAppearance(acceptedAppearance),
   };
 }
 function save() {
@@ -525,7 +540,8 @@ function start() {
   if (missionChooser?.elements.dialog.open) missionChooser.close({ retune: false });
   $('game').querySelector('.arena').append($('snake-reaction-caption'));
   playShell?.enterPlay();
-  if (ready || match.runs.every((run) => run.tick === 0)) acceptEnemyArtwork();
+  if (ready || match.runs.every((run) => run.tick === 0))
+    acceptEnemyArtwork({ retain: retainPreparedAppearance });
   if (ready) void records.visit(entry.id);
   importEpoch++;
   ready = false;
@@ -845,7 +861,8 @@ function relative(player, offset) {
     heading = snake.turns.at(-1) ?? snake.direction;
   turn(player, directions[(directions.indexOf(heading) + offset + 4) % 4]);
 }
-function prepare({ launch = false, hazardSeed } = {}) {
+function prepare({ launch = false, retainAppearance = false, hazardSeed } = {}) {
+  retainPreparedAppearance = retainAppearance;
   transition.cancel('new-attempt');
   if (statsAttempt) enemyStats.finishAttempt(statsAttempt);
   liveProvenance = 'live';
@@ -869,8 +886,8 @@ function prepare({ launch = false, hazardSeed } = {}) {
       targetRules = 'authored';
     } else duel = 'score';
   }
-  acceptEnemyArtwork();
   const level = acceptedLevel();
+  acceptEnemyArtwork({ retain: retainAppearance });
   if (classicSnakeUsesVariableHazards(level))
     hazardSeed ??= nextClassicHazardSeed(match?.options.hazardSeed);
   match = createClassicSnakeMatch(level, {
@@ -894,9 +911,14 @@ function prepare({ launch = false, hazardSeed } = {}) {
   statsViews.forEach((view) => view.refresh());
   if (launch) start();
 }
-function acceptEnemyArtwork() {
-  acceptedArtRevision = runtimeActorArtRevision();
-  presentation.setArtRevision(acceptedArtRevision);
+function acceptEnemyArtwork({ retain = false } = {}) {
+  if (!retain)
+    acceptedAppearance = acceptAttemptAppearance(environmentCandidate(entry, mode), {
+      artRevision: runtimeActorArtRevision(),
+      collection: selectedArcadeCollection(presentation.theme.effectivePreferences()),
+    });
+  acceptedArtRevision = acceptedAppearance?.artRevision ?? null;
+  presentation.setAttemptAppearance(acceptedAppearance);
   effects.forEach((fx, index) => {
     fx.reset();
     effects[index] = createHuntDestruction({ artRevision: acceptedArtRevision });
@@ -1736,6 +1758,14 @@ function restore(raw, { provenance = 'import' } = {}) {
       'Unsupported round.',
     );
     let restored, next;
+    required(
+      source.format !== SESSION_FORMAT || Object.hasOwn(source, 'appearance'),
+      'Missing accepted artwork.',
+    );
+    const nextAppearance = restoreAttemptAppearance(
+      source.format === SESSION_FORMAT ? source.appearance : null,
+      environmentCandidate(item, source.mode),
+    );
     if (source.format === 'revealline-classic-snake-session.v1') {
       exactKeys(
         source,
@@ -1771,12 +1801,12 @@ function restore(raw, { provenance = 'import' } = {}) {
           'seed',
           'style',
           'match',
-          ...(source.format === SESSION_FORMAT ? ['statistics', 'provenance'] : []),
+          ...(source.format === SESSION_FORMAT ? ['appearance', 'statistics', 'provenance'] : []),
         ],
         'Classic Snake session',
       );
       required(
-        [SESSION_FORMAT, 'revealline-classic-snake-session.v2'].includes(source.format) &&
+        [SESSION_FORMAT, LEGACY_SESSION_FORMAT].includes(source.format) &&
           ['campaign', 'endless'].includes(source.activity),
         'Unsupported session.',
       );
@@ -1865,7 +1895,9 @@ function restore(raw, { provenance = 'import' } = {}) {
     sound.gameplayPaused = true;
     reactions.reset(`classic:${++reactionAttempt}`);
     reactions.suspend();
-    acceptEnemyArtwork();
+    acceptedAppearance = nextAppearance;
+    retainPreparedAppearance = true;
+    acceptEnemyArtwork({ retain: true });
     buildBoards();
     updateURL();
     renderCopy();
@@ -2117,7 +2149,7 @@ doc.addEventListener('keydown', (event) => {
     if (result()) {
       if (key === 'p') pause();
       else if (key !== 'r' && result() === 'won' && nextMission()) launchNext();
-      else prepare({ launch: true });
+      else prepare({ launch: true, retainAppearance: key === 'r' });
     } else if (key !== 'r') {
       if (ready || paused) start();
       else pause();
@@ -2505,7 +2537,7 @@ playShell = mountModePlayShell({
     pause: () => pause({ showMenu: false }),
     start: () => (result() ? prepare({ launch: true }) : start()),
     resume: start,
-    retry: () => prepare({ launch: true }),
+    retry: () => prepare({ launch: true, retainAppearance: true }),
     skip: () => $('next').click(),
     random: launchRandom,
     canResume: () => !result() && (!ready || (offerSavedContinue && !!savedRound)),

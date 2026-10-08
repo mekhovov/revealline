@@ -9,6 +9,10 @@ import * as themes from '../../optional-practice/civilian-fpv/world-themes.mjs';
 import * as soldiers from '../../optional-practice/civilian-fpv/industrial-soldiers.mjs';
 import * as vehicles from '../../optional-practice/civilian-fpv/industrial-vehicles.mjs';
 import { contrastRatio } from '../presentation/theme-system.mjs';
+import { canonicalJSON } from '../data-json.mjs';
+import { resolveIndustrialEnvironment } from '../presentation/industrial-environments.mjs';
+import { prepareNativeIndustrialAttempt } from '../../optional-practice/civilian-fpv/industrial-environment.mjs';
+import { WORLD_CATALOGUE } from '../../optional-practice/civilian-fpv/world-catalogue.mjs';
 import { actorVisual } from '../hunt/actor-catalog.mjs';
 import { sharedActorAppearance, runtimeActorArtRevision } from '../hunt/preferences.mjs';
 import {
@@ -183,6 +187,8 @@ async function rendererFixture() {
     actorVisual,
     sharedActorAppearance,
     runtimeActorArtRevision,
+    canonicalJSON,
+    resolveIndustrialEnvironment,
     structuredClone,
     THREE: {
       ...THREE,
@@ -408,4 +414,51 @@ test('renderer exposes only the active themed gate brackets at every quality and
       renderer.dispose();
     }
   assert.equal(JSON.stringify(course), before);
+});
+
+test('renderer requires a branded native environment before replacing its accepted scene', async () => {
+  const { renderer } = await rendererFixture();
+  const entry = WORLD_CATALOGUE.find((e) => e.id === 'native-pursuit-runner-court');
+  const accepted = await prepareNativeIndustrialAttempt({
+    entry,
+    mode: 'self-level',
+    presentation: { collectionId: 'military-field', revision: 'r1' },
+    artRevision: 'industrial-roster-v3',
+  });
+  try {
+    renderer.setPresentation({ collectionId: 'military-field', revision: 'r1' });
+    assert.throws(() => renderer.setCourse(accepted.course), /authenticated source/);
+    assert.throws(
+      () =>
+        renderer.setCourse(accepted.course, 'self-level', {
+          industrialEnvironment: accepted.course.world.themeProfile.industrialEnvironment,
+          artRevision: accepted.artRevision,
+        }),
+      /accepted or restored/,
+    );
+    assert.throws(
+      () =>
+        renderer.setCourse(accepted.course, 'self-level', {
+          industrialEnvironment: accepted.pin,
+          artRevision: null,
+        }),
+      /matching actor art/,
+    );
+    assert.doesNotThrow(() =>
+      renderer.setCourse(accepted.course, 'self-level', {
+        industrialEnvironment: accepted.pin,
+        artRevision: accepted.artRevision,
+      }),
+    );
+    assert.throws(
+      () =>
+        renderer.setCourse(entry.course, 'self-level', {
+          industrialEnvironment: accepted.pin,
+          artRevision: accepted.artRevision,
+        }),
+      /accepted native appearance/,
+    );
+  } finally {
+    renderer.dispose();
+  }
 });

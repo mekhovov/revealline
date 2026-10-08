@@ -413,6 +413,17 @@ export function createHuntDestruction({
       bloodEnabled = showBlood;
       if (bursts.length) lease = budget.claim(budgetOwner, { preview, cancel });
     },
+    // A caught atlas body is one transient piece, not another blast envelope.
+    // It shares this board's existing page lease after ordinary debris draws.
+    reserveTransientPieces(requested) {
+      const count = Number.isSafeInteger(requested) ? Math.max(0, Math.min(4, requested)) : 0;
+      if (!count) return 0;
+      lease = budget.claim(budgetOwner, { preview, cancel });
+      if (!lease?.active) return 0;
+      const admitted = Math.min(count, Math.max(0, lease.particles - drawn.particles));
+      drawn.particles += admitted;
+      return admitted;
+    },
     snapshot() {
       return Object.freeze({
         bursts: bursts.length,

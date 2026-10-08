@@ -1,3 +1,6 @@
+import { acceptAttemptAppearance } from '../presentation/attempt-appearance.mjs';
+import { prepareIndustrialEnvironmentSource } from '../presentation/industrial-environments.mjs';
+import { runtimeActorArtRevision } from '../hunt/preferences.mjs';
 import { loadBaseArtwork } from '../base-artwork.mjs';
 import { createEnemyStatsHost } from '../enemy-stats.mjs';
 import { mountEnemyStats } from '../ui/enemy-stats.mjs';
@@ -1095,7 +1098,17 @@ try {
     if (!current()) return false;
     clear({ resetDirection: cue !== null });
     if (!current()) return false;
-    if (match.status === 'ready') painters.forEach((p) => p.acceptEnemyArtwork?.());
+    if (match.status === 'ready') {
+      if (roundRecipe.attemptAppearance === undefined)
+        roundRecipe.attemptAppearance = acceptAttemptAppearance(
+          roundRecipe.environmentCandidate ?? null,
+          {
+            artRevision: runtimeActorArtRevision(),
+            collection: selectedArcadeCollection(menuStyle.themeHost.effectivePreferences()),
+          },
+        );
+      painters.forEach((p) => p.setAttemptAppearance(roundRecipe.attemptAppearance));
+    }
     resumeDuel(match, { preserveContinuation: true });
     if (cue) beginStartCue(cue);
     else {
@@ -1146,6 +1159,22 @@ try {
   async function prepareActors(recipe, { signal, onStatus, reader = installed } = {}) {
     const row = recipe.entry;
     recipe.actorNotice = '';
+    recipe.environmentCandidate =
+      !creatorVersusOwners.has(row) && candidateJourney?.owns(row)
+        ? await prepareIndustrialEnvironmentSource({
+            engine: 'capture',
+            mode: 'versus',
+            source: row.level,
+            origin: {
+              kind: 'builtin',
+              catalogueId: authoredRoute.source.id,
+              catalogueRevision: authoredRoute.source.revision,
+              sourceForm: `compiled-native-v1:${authoredRoute.source.policyId}:${row.difficulty}`,
+            },
+            signal,
+          })
+        : null;
+    signal?.throwIfAborted();
     // Creator editions retain their compiled authored actors. Their immutable
     // .rlpack owns no release actor-presentation authority.
     if (creatorVersusOwners.has(row)) return null;
@@ -1619,6 +1648,7 @@ try {
     painters.forEach((p) => {
       p.setLook(theme, bodyFor(theme, classId), entry.visualOverrides);
       p.setLevel?.(level, { seed: recipe.seed });
+      if (recipe.attemptAppearance !== undefined) p.setAttemptAppearance(recipe.attemptAppearance);
       p.skipCelebration?.();
     });
   }
@@ -1759,6 +1789,8 @@ try {
     const recipe = {
       ...baseRecipe,
       ...(rulesEdition === undefined ? {} : { rulesEdition }),
+      attemptAppearance: fresh ? undefined : roundRecipe.attemptAppearance,
+      environmentCandidate: fresh ? null : roundRecipe.environmentCandidate,
       actorStyle: fresh ? preference.actorStyle : roundRecipe.actorStyle,
       actorPreferenceRevision: fresh ? preference.revision : roundRecipe.actorPreferenceRevision,
       actorPresentation: fresh ? null : (actorLease?.pin().presentation ?? null),

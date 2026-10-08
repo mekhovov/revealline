@@ -1,4 +1,6 @@
+import { nativeCaptureSession as nativeSession } from '../capture-presentation-session.mjs';
 import { openMissionLibrary, activateMissionCard } from './helpers/library-selection.mjs';
+import { activateHostAction } from './helpers/host-action.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
@@ -92,6 +94,14 @@ function imageBoundary(t) {
 async function choosePressureChapter(page) {
   // Choose the exact authored edition through the visible unified gallery.
   await openMissionLibrary(page, 'shell-play');
+  page.$('journey-collection').value = 'Classic';
+  page.$('journey-collection').emit('change');
+  // This fixture deliberately exercises the retained v5 edition, not its
+  // current line-impact successor with a different accepted recipe identity.
+  page.$('journey-lifecycle').value = 'archive';
+  page.$('journey-lifecycle').emit('change');
+  page.$('journey-search').value = 'Pressure Lines';
+  page.$('journey-search').emit('input');
   const card = [...page.$('journey-cards').children].find(
     (element) => element.dataset.missionId === pressureMission.id,
   );
@@ -103,6 +113,11 @@ async function choosePressureChapter(page) {
   // retain their shared deadline and no application timeout is changed.
   try {
     await preparing;
+    assert.equal(
+      page.$('journey-chooser').open,
+      false,
+      'Download adopts the exact mission briefing.',
+    );
     await waitFor(
       () => {
         page.frame(0);
@@ -111,14 +126,24 @@ async function choosePressureChapter(page) {
           page.$('pack-select').value === pack.id &&
           page.rendered.run.levelId === pressureMission.runtimeId &&
           page.doc.body.dataset.pictureState === 'ready' &&
-          page.doc.body.dataset.flightState === 'running'
+          page.$('game-overlay').dataset.kind === 'ready'
         );
       },
       {
         timeoutMs: PRESSURE_ORIGINALS_TIMEOUT_MS,
         message:
-          'Selected Pressure Lines mission must prepare its exact picture and launch from the gallery.',
+          'Selected Pressure Lines mission must prepare its exact picture and briefing from the gallery.',
       },
+    );
+    const accepted = page.rendered.run;
+    assert.equal(page.rendered.paused, true, 'Mission selection prepares the briefing.');
+    await activateHostAction(page.$('start-button'));
+    page.frame(0);
+    assert.equal(page.doc.body.dataset.flightState, 'running');
+    assert.equal(
+      page.rendered.run,
+      accepted,
+      'Explicit Start activates the exact prepared edition.',
     );
   } catch (error) {
     error.message += `\n${JSON.stringify({
@@ -177,12 +202,12 @@ test('selected pressure chapter hides manual actions and actual keyboard action 
   page.$('pause-button').click();
   page.frame(0);
   const saved = JSON.parse(page.storage.getItem(sessionKey));
-  const original = verifyReplay(saved.replay);
+  const original = verifyReplay(nativeSession(saved).replay);
   assert.equal(original.match, true);
-  assert.ok(saved.replay.segments.some((s) => s.input.action));
-  assert.ok(saved.replay.segments.some((s) => s.input.pickup));
-  assert.ok(saved.replay.segments.some((s) => s.input.boost));
-  const clean = structuredClone(saved.replay);
+  assert.ok(nativeSession(saved).replay.segments.some((s) => s.input.action));
+  assert.ok(nativeSession(saved).replay.segments.some((s) => s.input.pickup));
+  assert.ok(nativeSession(saved).replay.segments.some((s) => s.input.boost));
+  const clean = structuredClone(nativeSession(saved).replay);
   for (const segment of clean.segments)
     Object.assign(segment.input, { action: false, pickup: false, boost: false });
   const withoutActions = verifyReplay(clean);
@@ -236,8 +261,8 @@ for (const turnPolicy of ['immediate', 'grid-center']) {
     assert.equal(page.$('score').textContent, String(run.score).padStart(5, '0'));
     page.$('pause-button').click();
     const saved = JSON.parse(page.storage.getItem(sessionKey));
-    assert.equal(verifyReplay(saved.replay).match, true);
-    assert.deepEqual(saved.replay.checkpoint, authoritativeCheckpoint(run));
+    assert.equal(verifyReplay(nativeSession(saved).replay).match, true);
+    assert.deepEqual(nativeSession(saved).replay.checkpoint, authoritativeCheckpoint(run));
     assert.deepEqual(page.errors, []);
   });
 
@@ -279,8 +304,8 @@ for (const turnPolicy of ['immediate', 'grid-center']) {
     assert.equal(page.rendered.paused, true);
     assert.deepEqual(authoritativeCheckpoint(run), paused);
     const saved = JSON.parse(page.storage.getItem(sessionKey));
-    assert.equal(saved.continuation.direction, 'down');
-    assert.equal(verifyReplay(saved.replay).match, true);
+    assert.equal(nativeSession(saved).continuation.direction, 'down');
+    assert.equal(verifyReplay(nativeSession(saved).replay).match, true);
     assert.deepEqual(page.errors, []);
   });
 }
@@ -315,8 +340,10 @@ test('Always enables actual mouse steering and survives a complete backup; omitt
   await settle(() => !page.$('export-backup').disabled);
   const backup = JSON.parse(page.$('save-json').value);
   assert.equal(backup.library.preferences.screenControls, 'always');
+  const exportedSession = structuredClone(backup.session);
+  nativeSession(exportedSession).savedAt = nativeSession(JSON.parse(slot)).savedAt;
   assert.deepEqual(
-    { ...backup.session, savedAt: JSON.parse(slot).savedAt },
+    exportedSession,
     JSON.parse(slot),
     'Export may refresh savedAt; run identity, continuation and complete replay remain exact.',
   );
@@ -423,8 +450,8 @@ test('an already joined controller takes its first fresh turn after touch withou
   assert.equal(page.rendered.paused, false);
   page.$('pause-button').click();
   const saved = JSON.parse(page.storage.getItem(sessionKey));
-  assert.equal(saved.continuation.direction, 'down');
-  assert.equal(verifyReplay(saved.replay).match, true);
+  assert.equal(nativeSession(saved).continuation.direction, 'down');
+  assert.equal(verifyReplay(nativeSession(saved).replay).match, true);
   assert.deepEqual(page.errors, []);
 });
 
@@ -496,7 +523,7 @@ for (const turnPolicy of ['immediate', 'grid-center']) {
       before = pauseForHand(page),
       original = JSON.parse(before.slot),
       library = currentProfile(page.storage).library;
-    assert.equal(verifyReplay(original.replay).match, true);
+    assert.equal(verifyReplay(nativeSession(original).replay).match, true);
     const strip = page.doc.querySelector('.play-controls'),
       append = strip.append;
     let groupMoves = 0,
@@ -542,15 +569,21 @@ for (const turnPolicy of ['immediate', 'grid-center']) {
     page.$('pause-button').click();
     page.frame(0);
     const continued = JSON.parse(page.storage.getItem(sessionKey));
-    assert.equal(continued.runId, original.runId);
-    assert.equal(continued.campaignKey, original.campaignKey);
-    assert.equal(continued.continuation.direction, 'down');
+    assert.equal(nativeSession(continued).runId, nativeSession(original).runId);
+    assert.equal(nativeSession(continued).campaignKey, nativeSession(original).campaignKey);
+    assert.equal(nativeSession(continued).continuation.direction, 'down');
     assert.equal(before.run.turnPolicy, turnPolicy);
-    assert.deepEqual(continued.replay.segments, [
-      { ...original.replay.segments[0], ticks: original.replay.ticks + 12 },
+    assert.deepEqual(nativeSession(continued).replay.segments, [
+      {
+        ...nativeSession(original).replay.segments[0],
+        ticks: nativeSession(original).replay.ticks + 12,
+      },
     ]);
-    assert.deepEqual(continued.replay.checkpoint, authoritativeCheckpoint(before.run));
-    assert.equal(verifyReplay(continued.replay).match, true);
+    assert.deepEqual(
+      nativeSession(continued).replay.checkpoint,
+      authoritativeCheckpoint(before.run),
+    );
+    assert.equal(verifyReplay(nativeSession(continued).replay).match, true);
     assert.deepEqual(page.errors, []);
   });
 }
@@ -648,8 +681,16 @@ test('quota refusal keeps the session hand and exact stored bytes with visible f
 });
 
 test('practice hand placement stays session-only without changing profile or saved flight', async (t) => {
-  const page = await soloPage(t, { campaign, storage: storageWith(handPreferences('left')) });
-  page.$('demo-button').click();
+  const scenario = JSON.parse(
+    await readFile(new URL('../content/scenarios/line-impact-demo.json', import.meta.url)),
+  );
+  const page = await soloPage(t, {
+    campaign,
+    storage: storageWith(handPreferences('left')),
+    search: '?practice=1',
+    previewStorage: memoryStorage({ 'revealline.playground.current': JSON.stringify(scenario) }),
+  });
+  assert.equal(page.$('demo-button').hidden, true, 'The native Practice route owns this visit.');
   pauseForHand(page);
   const before = new Map(page.storage.map),
     writes = page.storage.writes.length;
@@ -693,14 +734,15 @@ test('complete-backup import and Undo adopt hand placement without rewriting the
   steeringHand(page, 'left');
   assert.equal(currentProfile(page.storage).library.preferences.screenSteeringHand, 'left');
   const undone = JSON.parse(page.storage.getItem(sessionKey));
+  nativeSession(undone).savedAt = nativeSession(original).savedAt;
   assert.deepEqual(
-    { ...undone, savedAt: original.savedAt },
+    undone,
     original,
     'The existing Undo snapshot may refresh savedAt; every attempt, replay and continuation field stays exact.',
   );
   page.frame(0);
   assert.equal(page.rendered.paused, true);
   assert.equal(page.rendered.run.tick, 0);
-  assert.equal(verifyReplay(original.replay).match, true);
+  assert.equal(verifyReplay(nativeSession(original).replay).match, true);
   assert.deepEqual(page.errors, []);
 });

@@ -1,3 +1,5 @@
+import { activateHostAction } from './helpers/host-action.mjs';
+import { nativeCaptureSession as nativeSession } from '../capture-presentation-session.mjs';
 import { winCurrentOpening } from './helpers/solo-opening-win.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
@@ -8,12 +10,13 @@ import { ACTOR_SESSION_FORMAT } from '../sessions.mjs';
 const sessionKey = 'revealline.suspended.dev.v1';
 const readyMessage = 'Flight assets ready. Press Resume to continue.';
 async function restart(t) {
-  const h = await soloPage(t, { titleScreen: true });
-  h.$('shell-featured').click();
+  const h = await soloPage(t, { titleScreen: true, waitForPictures: false });
+  await activateHostAction(h.$('shell-featured'));
   await settle(() => h.doc.body.dataset.flightState === 'running');
+  assert.equal(h.doc.body.dataset.pictureState, 'ready');
   h.$('pause-button').click();
   const original = JSON.parse(h.storage.getItem(sessionKey));
-  assert.equal(original.format, ACTOR_SESSION_FORMAT);
+  assert.equal(nativeSession(original).format, ACTOR_SESSION_FORMAT);
   h.frame(0);
   const picture = structuredClone(h.rendered.backdrop.pin);
   h.$('overlay-restart').click();
@@ -31,7 +34,7 @@ test('confirmed Restart clears completed preparation status before real victory'
   assert.deepEqual(h.rendered.backdrop.pin, picture);
   assert.equal(
     h.doc.documentElement.dataset.presentationManifest,
-    original.visualThemePin.presentation.sha256,
+    nativeSession(original).visualThemePin.presentation.sha256,
   );
   winCurrentOpening(h);
   assert.equal(resumedStatus, '', 'Readiness instruction retires when Restart starts flying');
@@ -58,8 +61,11 @@ test('ready preparation remains paused without focus and clears only after expli
   assert.equal(h.$('flight-preparation-status').textContent, '');
   h.$('pause-button').click();
   const retained = JSON.parse(h.storage.getItem(sessionKey));
-  assert.deepEqual(retained.presentationPins, original.presentationPins);
-  assert.deepEqual(retained.visualThemePin, original.visualThemePin);
-  assert.equal(verifyReplay(retained.replay).match, true);
+  assert.deepEqual(
+    nativeSession(retained).presentationPins,
+    nativeSession(original).presentationPins,
+  );
+  assert.deepEqual(nativeSession(retained).visualThemePin, nativeSession(original).visualThemePin);
+  assert.equal(verifyReplay(nativeSession(retained).replay).match, true);
   assert.deepEqual(h.errors, []);
 });
