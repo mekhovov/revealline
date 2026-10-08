@@ -4,14 +4,28 @@ import test from 'node:test';
 
 const workflows = new URL('../.github/workflows/', import.meta.url);
 
-test('active workflows do not require GitHub Pages', async () => {
+test('pull-request admission workflows do not require GitHub Pages', async () => {
   for (const name of await fs.readdir(workflows)) {
     if (!/\.ya?ml$/u.test(name)) continue;
+    // Publishing the protected main snapshot is intentionally optional and
+    // runs only after a merge. It must not become an admission dependency for
+    // pull requests, but it is not itself a pull-request workflow.
+    if (name === 'publish-main-pages.yml') continue;
     const source = await fs.readFile(new URL(name, workflows), 'utf8');
     assert.doesNotMatch(source, /github-pages|pages:\s*write/u, name);
     assert.doesNotMatch(source, /actions\/(?:upload-pages-artifact|deploy-pages)@/u, name);
     assert.doesNotMatch(source, /main-pages|stage-pages|pages-production/u, name);
   }
+});
+
+test('the optional Pages publisher cannot run for a pull request', async () => {
+  const source = await fs.readFile(
+    new URL('../.github/workflows/publish-main-pages.yml', import.meta.url),
+    'utf8',
+  );
+  assert.match(source, /push:\n\s+branches: \[main\]/u);
+  assert.match(source, /workflow_dispatch:/u);
+  assert.doesNotMatch(source, /pull_request|pull_request_target|workflow_run/u);
 });
 
 test('the required exact-head source gate remains independent of hosted deployment', async () => {
