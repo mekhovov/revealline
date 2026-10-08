@@ -240,6 +240,7 @@ export function createSimModeLinks({
     ['team', 'couch/relay-rescue.html'],
     ['versus', 'couch/'],
     ['snake', 'snake/play.html'],
+    ['overflight', 'overflight/play.html'],
   ]) {
     const element = doc.createElement('a');
     const target = new URL(root.base + path, root.accepted);
