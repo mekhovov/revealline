@@ -1,3 +1,4 @@
+import { createHumanReactionPolicy } from './human-reaction-policy.mjs';
 import { DEFAULT_DIALOGUE_VOLUME, DIALOGUE_MIX_GAIN } from '../audio/dialogue-mix.mjs';
 import { encounterSoundRecipe } from './encounter-audio.mjs';
 import {
@@ -47,6 +48,7 @@ export class Soundscape {
     this.movementSettings = readMovementAudio();
     this.dialogueSettings = { enabled: false, volume: DEFAULT_DIALOGUE_VOLUME };
     this.feedbackDirector = new FeedbackDirector(this);
+    this.humanReactions = createHumanReactionPolicy();
     this.persistentMusic = persistentMusic;
     this.context = null;
     this.contextFactory = contextFactory;
@@ -474,12 +476,14 @@ export class Soundscape {
     releasePlaybackAudioSession();
     return false;
   }
-  pause() {
+  pause({ preserveDestruction = false } = {}) {
     this.stopVoices('dialogue');
     if (this.persistentMusic) {
       this.gameplayPaused = true;
       this.cancelPreview();
-      this.stopVoices('sfx');
+      for (const voice of [...this.voices])
+        if (voice.bus === 'sfx' && !(preserveDestruction && voice.name?.startsWith('destroy-')))
+          voice.stop();
       this.tension = 0;
       return;
     }
@@ -712,6 +716,43 @@ export class Soundscape {
       ...options,
     });
   }
+  /** Optional humanoid feedback, independent of visual gore. Missing bytes keep
+   * the classic impact; never replay later. */
+  humanReaction(details = {}) {
+    const c = this.context;
+    if (
+      !this.enabled ||
+      this.paused ||
+      this.gameplayPaused ||
+      this.disposed ||
+      this.audioMaster.muted ||
+      this.audioMaster.volume === 0 ||
+      c?.state !== 'running' ||
+      !this.settings.master ||
+      !this.settings.sfx
+    )
+      return false;
+    const voices = [...this.voices];
+    if (voices.some((voice) => voice.radio || voice.dialogue || voice.priority >= 5)) return false;
+    const name = this.humanReactions.request(
+      c.currentTime,
+      { ...details, vocals: this.readDestruction?.()?.vocals ?? details.vocals },
+      voices.filter((voice) => voice.humanReaction).length,
+    );
+    if (!name) return false;
+    const options = {
+      board: details.board ?? 'solo',
+      pan: details.pan ?? 0,
+      humanReaction: true,
+      priority: 2,
+      feedback: true,
+      maxDuration: 0.7,
+      gain: 0.45,
+    };
+    return (
+      this.publishedAudio?.play(name, options) || Boolean(this.feedbackDirector.play(name, options))
+    );
+  }
   /** Shared enemy, machinery and tactical cues, including an offline fallback. */
   encounter(type, details = {}) {
     const recipe = encounterSoundRecipe(type, details),
@@ -739,7 +780,7 @@ export class Soundscape {
     )
       return false;
     const board = details.board ?? 'solo',
-      key = `encounter:${board}:${type}`;
+      key = `encounter:${board}:${recipe.category ?? type}`;
     if (
       c.currentTime - (this.recentEvents.get(key) ?? -Infinity) <
       (recipe.cooldown ??
@@ -747,6 +788,11 @@ export class Soundscape {
     )
       return false;
     this.recentEvents.set(key, c.currentTime);
+    if (recipe.priority >= 5) {
+      this.humanReactions?.interrupt(c.currentTime);
+      for (const voice of [...this.voices]) if (voice.humanReaction) voice.retire();
+    }
+    if (type === 'catch') this.humanReaction?.(details);
     if (this.recentEvents.size > 64)
       this.recentEvents.delete(this.recentEvents.keys().next().value);
     // A warning arriving later in the same transaction owns the foreground.
@@ -754,31 +800,48 @@ export class Soundscape {
     if (recipe.priority >= 4)
       for (const voice of [...this.voices])
         if (voice.feedback && voice.movement && !voice.source?.loop) voice.stop();
-    if (this.feedbackDirector.play(recipe.name, { ...recipe, board, pan: details.pan ?? 0 }))
+    const ownership = { ...recipe, board, pan: details.pan ?? 0, feedback: true };
+    // Published destruction replacements use the same bus, headroom and lifetime.
+    if (recipe.category && this.publishedAudio?.play(recipe.name, ownership)) return true;
+    if (this.feedbackDirector.play(recipe.name, ownership)) return true;
+    const reserveFallback = () => {
+      const owned = [...this.voices].filter((voice) => voice.feedback);
+      if (this.voices.size < 64 && owned.length < 16) return true;
+      const victim = owned
+        .filter((voice) => voice.priority < recipe.priority)
+        .sort((a, b) => a.priority - b.priority)[0];
+      if (!victim) return false;
+      victim.stop();
       return true;
-    if (recipe.movement && [...this.voices].filter((voice) => voice.feedback).length >= 16)
-      return false;
+    };
     if (recipe.priority >= 5) dialogueChannel.interrupt();
-    // Missing optional samples remain audible now; loading never replays stale cues.
-    return this.play(
-      {
-        kind: 'tone',
-        encounter: true,
-        movement: recipe.movement,
-        cueName: recipe.name,
-        board,
-        priority: recipe.priority,
-        frequency: recipe.tone.from,
-        endFrequency: recipe.tone.to,
-        duration: recipe.tone.duration,
-        volume: recipe.tone.gain,
-        voice: 'lead',
-        wave: recipe.tone.type,
-        pan: details.pan ?? 0,
-      },
-      c.currentTime,
-    );
+    // Missing samples remain audible now; a late decode never replays a death.
+    let played = false;
+    for (const layer of [recipe.tone, ...(recipe.layers ?? [])]) {
+      if (!reserveFallback()) break;
+      played =
+        this.play(
+          {
+            kind: layer.kind ?? 'tone',
+            encounter: true,
+            movement: recipe.movement,
+            cueName: recipe.name,
+            board,
+            priority: recipe.priority,
+            frequency: layer.from,
+            endFrequency: layer.to,
+            duration: layer.duration,
+            volume: layer.gain,
+            voice: 'lead',
+            wave: layer.type,
+            pan: details.pan ?? 0,
+          },
+          c.currentTime + (layer.delay ?? 0),
+        ) || played;
+    }
+    return played;
   }
+
   events(events, run, theme, options = {}) {
     this.feedbackDirector.events(events, run, theme, options);
   }

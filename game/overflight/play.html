@@ -16,8 +16,11 @@
       data-industrial-workshop
     />
     <link rel="stylesheet" href="../ui/mode-play-shell.css" />
+    <link rel="stylesheet" href="../ui/mode-choice.css" />
     <link rel="stylesheet" href="../ui/quick-music-controls.css" />
     <link rel="stylesheet" href="../i18n/style.css" />
+    <link rel="stylesheet" href="../ui/journey.css" />
+    <link rel="stylesheet" href="../ui/touch-controls-view.css" />
     <link rel="stylesheet" href="style.css" />
     <script type="module" src="app.mjs"></script>
   </head>
@@ -45,11 +48,21 @@
           </div>
         </div>
         <p data-copy="startHint"></p>
+        <details id="overflight-role-guide" class="overflight-role-guide">
+          <summary data-copy="readTheField"></summary>
+          <div id="overflight-role-previews" data-role-previews class="overflight-role-grid"></div>
+          <p data-copy="cacheHint"></p>
+        </details>
         <p id="fixture-description" hidden></p>
         <p id="review-description" hidden></p>
         <p id="review-help" data-copy="reviewHelp" hidden></p>
       </section>
       <section id="overflight-help">
+        <details class="overflight-role-guide" open>
+          <summary data-copy="readTheField"></summary>
+          <div data-role-previews class="overflight-role-grid"></div>
+          <p data-copy="cacheHint"></p>
+        </details>
         <p data-copy="help"></p>
         <p data-copy="startHint"></p>
       </section>
@@ -59,7 +72,14 @@
         <a id="studio-link" href="../studio/overflight.html" data-copy="workshop"></a>
       </section>
       <section id="overflight-settings">
+        <button id="open-flight-deck" type="button" data-copy="character"></button>
         <div class="overflight-settings-grid">
+          <label
+            ><span data-copy="difficulty"></span
+            ><select id="difficulty">
+              <option value="standard" data-copy="difficultyStandard"></option>
+              <option value="veteran" data-copy="difficultyVeteran"></option></select
+          ></label>
           <label
             ><span data-copy="language"></span
             ><select id="language">
@@ -100,6 +120,8 @@
           /></label>
         </div>
         <p data-copy="nextSortie"></p>
+        <p id="difficulty-help" data-copy="difficultyHelp"></p>
+        <section id="overflight-studios"></section>
         <section id="overflight-destruction">
           <h3 data-copy="battlefieldEffects"></h3>
           <label class="overflight-check"
@@ -135,6 +157,10 @@
         <h3 data-copy="build"></h3>
         <div id="result-build" class="overflight-result-build"></div>
         <div id="overflight-result-commentator"></div>
+        <div class="overflight-result-actions">
+          <button id="survivor-same-seed" type="button" data-copy="sameSeed"></button
+          ><button id="survivor-new-sortie" type="button" data-copy="newSortie"></button>
+        </div>
         <p data-copy="resultHint"></p>
       </section>
       <section id="overflight-game" aria-label="Overflight battlefield">
@@ -148,7 +174,7 @@
               <div id="hud-health" class="overflight-health-meter" role="progressbar">
                 <span id="hud-health-fill"></span>
               </div>
-              <span id="hud-airframes"></span>
+              <span id="hud-airframes"></span><span id="hud-protection"></span>
             </div>
             <div class="overflight-clock">
               <span class="overflight-eyebrow" data-copy="sortie"></span
@@ -159,6 +185,7 @@
             </div>
           </div>
           <p id="hud-review" hidden></p>
+          <p id="hud-cache" class="overflight-cache-hint" role="status" hidden></p>
           <div id="hud-reward" class="overflight-reward-toast" role="status" hidden></div>
           <div id="overflight-commentator" class="overflight-commentator"></div>
           <div class="overflight-bottomline">

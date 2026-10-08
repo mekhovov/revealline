@@ -267,3 +267,36 @@ test('shared Settings Extras guide links retain review on their real same-build 
   assert.equal(f.paused(), 3);
   assert.deepEqual(f.visits, []);
 });
+
+for (const operation of ['play', 'raid']) {
+  test(`Overflight ${operation} shares one native mode row and reaches Snake and SIM`, async (context) => {
+    const sourceHref = `https://example.test/project/game/overflight/${operation}.html?lang=uk`;
+    const state = fixture(context, 'overflight', { sourceHref });
+    const choices = state.root.querySelectorAll('[data-game-mode]');
+    assert.deepEqual(
+      choices.map((element) => element.dataset.gameMode),
+      ['solo', 'team', 'versus', 'snake', 'overflight', 'simulator'],
+    );
+    assert.equal(state.root.style.getPropertyValue('--game-mode-count'), '6');
+    assert.equal(
+      choices.filter((element) => element.getAttribute('aria-current') === 'page').length,
+      1,
+    );
+    assert.equal(choices[4].tagName, 'BUTTON');
+    assert.equal(choices[4].dataset.menuIcon, 'overflight');
+    assert.equal(choices[4].getAttribute('data-menu-right').split(' ')[0], 'overflight-fpv-sim');
+    const snake = state.document.getElementById('overflight-snake');
+    snake.click();
+    assert.equal(new URL(snake.href).pathname, '/project/game/snake/play.html');
+    state.button.click();
+    state.deferred.shift()(entry());
+    await waitFor(() => state.visits.length === 1);
+    const simulator = new URL(state.visits[0]);
+    assert.equal(
+      simulator.searchParams.get('game-return'),
+      new URL(sourceHref).pathname + '?lang=uk',
+    );
+    assert.equal(simulator.hash, '');
+    assert.equal(state.paused(), 2);
+  });
+}

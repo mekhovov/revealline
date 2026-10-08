@@ -1,8 +1,17 @@
+import {
+  DESTRUCTION_CUES,
+  HUMAN_REACTION_CUES,
+  destructionCategory,
+} from '../ui/destruction-audio.mjs';
 import { screenPan } from '../ui/feedback-cues.mjs';
+import { classicTargetIdentity } from './classic-target-identity.mjs';
 
 /** Presentation adapter only. The shared mixer owns samples, priority, movement
  * limits, master mute and pause. Replayed/imported history never emits old SFX. */
-export function createClassicAudio(sound, { getDestruction = () => ({}), presentation } = {}) {
+export function createClassicAudio(
+  sound,
+  { getDestruction = () => ({}), getBoardStyle = () => 'theme', presentation } = {},
+) {
   let states = new WeakMap();
   let eventSteps = new WeakMap();
   function events(run, { active = true, board = 'snake-0', placement } = {}) {
@@ -55,13 +64,16 @@ export function createClassicAudio(sound, { getDestruction = () => ({}), present
         bodyId: 'fpv-scout-v1',
         status: snake.alive ? 'active' : 'dead',
       })),
-      enemies: (run.targets ?? (run.target ? [run.target] : [])).map((target) => ({
-        ...target,
-        bodyId: 'humanoid',
-        family: target.kind,
-        // Pulse is frozen simulation state, not an audio/animation timer.
-        frozenUntil: run.pulseTicks > 0 ? Infinity : 0,
-      })),
+      enemies: (run.targets ?? (run.target ? [run.target] : [])).map((target) => {
+        const identity = classicTargetIdentity(target.kind, getBoardStyle());
+        return {
+          ...target,
+          ...identity,
+          bodyId: identity.humanoid ? 'humanoid' : identity.family,
+          // Pulse is frozen simulation state, not an audio/animation timer.
+          frozenUntil: run.pulseTicks > 0 ? Infinity : 0,
+        };
+      }),
     });
     if (active && run.tick > state.tick) {
       const catchCount = run.catches + (run.bonusCatches ?? 0);
@@ -69,12 +81,25 @@ export function createClassicAudio(sound, { getDestruction = () => ({}), present
         const latest = run.recentCatches?.at(-1);
         const pan = screenPan(latest?.x ?? run.level.width / 2, run.level.width, placement);
         sound.event?.({ type: 'pickup.collected', board, pan, feedback: true, tick: run.tick });
-        sound.encounter('catch', {
-          family: latest?.kind,
-          board,
-          brutal: getDestruction().brutal,
-          pan,
-        });
+        const categories = new Set();
+        // Several co-op catches may land in one step. Retain each material, not
+        // just the final casualty; the shared mixer bounds overlapping voices.
+        const recent = run.recentCatches?.slice(-Math.max(1, catchCount - state.catches)) ?? [
+          latest,
+        ];
+        for (const caught of recent.length ? recent : [latest]) {
+          const identity = classicTargetIdentity(caught?.kind, getBoardStyle());
+          const category = destructionCategory(identity);
+          if (categories.has(category)) continue;
+          categories.add(category);
+          sound.encounter('catch', {
+            ...identity,
+            board,
+            brutal: getDestruction().brutal,
+            vocals: getDestruction().vocals,
+            pan: screenPan(caught?.x ?? run.level.width / 2, run.level.width, placement),
+          });
+        }
       }
       if ((run.pickupsUsed ?? 0) > state.pickups) {
         const pickup =
@@ -108,7 +133,7 @@ export function createClassicAudio(sound, { getDestruction = () => ({}), present
     prepare() {
       // Warm only the catch binding after explicit Start. Missing/late recordings
       // use the registered core recipe now, never replaying an earlier catch.
-      return sound.publishedAudio?.prepare(['pickup']);
+      return sound.publishedAudio?.prepare(['pickup', ...DESTRUCTION_CUES, ...HUMAN_REACTION_CUES]);
     },
     reset() {
       states = new WeakMap();

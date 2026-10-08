@@ -19,6 +19,10 @@ import {
 } from './offline-download-session.mjs';
 import { captureInstallPrompt, installInstructions } from './ui/pwa-install.mjs';
 import { attachDownloadsNavigation } from './ui/downloads-navigation.mjs';
+import {
+  attachOfflinePackageChoice,
+  syncOfflinePackageChoices,
+} from './ui/offline-package-choices.mjs';
 import { createSoundtrackSource } from './soundtrack-source.mjs';
 import { createManagedMediaStore } from './managed-media-store.mjs';
 import { SOUNDTRACK_CATALOGUE, SOUNDTRACK_ARCHIVES } from './content/soundtrack-catalogue.mjs';
@@ -64,13 +68,12 @@ const experienceStatuses = new Map();
 const groupInputs = () => document.querySelectorAll('input[data-group]');
 function syncGroupInputs() {
   if (!catalogue) return;
-  for (const input of groupInputs()) {
-    const group = catalogue.groups.find((item) => item.id === input.dataset.group);
-    input.checked =
-      selected.has(group.id) ||
-      (group.category === 'community' &&
-        ($('all-game').checked || group.requires.every((id) => selected.has(id))));
-  }
+  syncOfflinePackageChoices({
+    catalogue,
+    selected,
+    allInput: $('all-game'),
+    inputs: groupInputs(),
+  });
 }
 let controller,
   catalogue,
@@ -926,28 +929,14 @@ async function initialize() {
       input.disabled = true;
       input.dataset.group = group.id;
       input.checked = selected.has(group.id);
-      input.onchange = () => {
-        if (!initialized || controller) return;
-        resumeApprovedGame = null;
-        yieldedToPlay = false;
-        if (input.checked) selected.add(group.id);
-        else {
-          if ($('all-game').checked && group.category === 'community') {
-            gameIDs().forEach((id) => selected.add(id));
-            $('all-game').checked = false;
-          }
-          selected.delete(group.id);
-          if (group.category === 'community') group.requires.forEach((id) => selected.delete(id));
-        }
-        if (!['community', 'experience', 'extra'].includes(group.category))
-          $('all-game').checked = false;
-        ready = false;
-        lastEstimate = null;
-        $('download-game').disabled = true;
-        $('activate').hidden = true;
-        syncGroupInputs();
-        void health().catch((error) => operation(() => errorText(error)));
-      };
+      attachOfflinePackageChoice(input, {
+        group,
+        catalogue,
+        selected,
+        allInput: $('all-game'),
+        enabled: () => initialized && !controller,
+        onChange: selectionChanged,
+      });
       const caption = document.createElement('span');
       localizedText(caption, () =>
         group.category === 'archive'

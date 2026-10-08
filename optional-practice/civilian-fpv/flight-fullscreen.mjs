@@ -224,7 +224,7 @@ export function createSimModeLinks({
   try {
     const accepted = new URL(gameReturn);
     const match =
-      /^(.*\/)game\/(?:index\.html|company\.html|couch\/(?:index\.html|relay-rescue\.html)?|snake\/(?:index\.html|play\.html)?)?$/.exec(
+      /^(.*\/)game\/(?:index\.html|company\.html|couch\/(?:index\.html|relay-rescue\.html)?|snake\/(?:index\.html|play\.html)?|overflight\/(?:play|raid)\.html)?$/.exec(
         accepted.pathname,
       );
     if (match && !accepted.username && !accepted.password)
@@ -240,6 +240,7 @@ export function createSimModeLinks({
     ['team', 'couch/relay-rescue.html'],
     ['versus', 'couch/'],
     ['snake', 'snake/play.html'],
+    ['overflight', 'overflight/play.html'],
   ]) {
     const element = doc.createElement('a');
     const target = new URL(root.base + path, root.accepted);
@@ -7149,7 +7150,7 @@ return null;
 // These are routes owned by this build, not a general-purpose URL allowlist.
 // Do not transfer preview choices to community/provider links or another edition.
 const ART_REVIEW_NATIVE_PAGE=
-/^(.*\/)(?:game\/(?:(?:index|company)\.html|couch\/(?:index\.html|relay-rescue\.html)?|snake\/(?:(?:index|play)\.html)?|overflight\/play\.html|studio\/(?:(?:index|snake|overflight)\.html)?|(?:hunt\/military-levels\.html|(?:playground|hunt|online|replay-theater|controller-lab)\/(?:index\.html)?))?|authoring\/(?:asset-studio|motion-lab|enemy-catalog|still-media|video-poster|design-atlas|industrial-art-review)\/(?:index\.html)?|optional-practice\/(?:civilian-fpv|fpv-worlds)\/(?:index\.html)?)$/;
+/^(.*\/)(?:game\/(?:(?:index|company)\.html|couch\/(?:index\.html|relay-rescue\.html)?|snake\/(?:(?:index|play)\.html)?|overflight\/(?:play|raid)\.html|studio\/(?:(?:index|snake|overflight|raid)\.html)?|(?:hunt\/military-levels\.html|(?:playground|hunt|online|replay-theater|controller-lab)\/(?:index\.html)?))?|authoring\/(?:asset-studio|motion-lab|enemy-catalog|still-media|video-poster|design-atlas|industrial-art-review)\/(?:index\.html)?|optional-practice\/(?:civilian-fpv|fpv-worlds)\/(?:index\.html)?)$/;
 
 /** Inherit an explicit review-only art pin along a caller-owned native link.
      * Does not validate arbitrary navigation, persist preferences, transfer content,
@@ -8189,7 +8190,7 @@ export const readSimRadioAudio=sharedGlobalSettings.readSimRadioAudio;
 export const SIM_RADIO_AUDIO_KEY=sharedGlobalSettings.SIM_RADIO_AUDIO_KEY;
 export const attachSimMenuAudioSettings=sharedGlobalSettings.attachSimMenuAudioSettings;
 export const readSimMenuAudio=sharedGlobalSettings.readSimMenuAudio;
-// Canonical source sha256: dd906a75075dda6e077490eaeeeea09f0c1c640ff45645979f1421d236ba22c5
+// Canonical source sha256: b1495afc3c7be24458ccb75dcb83d49d00ce21e378b3e8df8409cde6f78b38e8
 const sharedModeShell=(()=>{
 // Dependency-free presentation shared with bundled simulator builds.
 const GAME_MODE_ORDER=Object.freeze([
@@ -8232,7 +8233,8 @@ setMenuIcon=()=>{},
 if(!root|| !GAME_MODE_ORDER.includes(current))
 throw new Error('A visible game mode is required.');
 const document=root.ownerDocument;
-const rows=GAME_MODE_ORDER.map((id)=>{
+const rows=GAME_MODE_ORDER.filter((id)=>id!=='overflight'||actions.overflight).map(
+(id)=>{
 const element=actions[id]??document.createElement('button');
 if(element.tagName==='BUTTON')element.type='button';
 // A reused launch link must never retain primary/pressed paint from its old home.
@@ -8266,8 +8268,10 @@ element.append(badge);
 }
 setMenuIcon(element,id);
 return{id,element,label};
-});
+},
+);
 root.classList.add('game-mode-choice');
+root.style.setProperty('--game-mode-count',String(rows.length));
 root.dataset.menuLayout='horizontal';
 root.dataset.menuScope='modes';
 root.replaceChildren(...rows.map(({element})=>element));

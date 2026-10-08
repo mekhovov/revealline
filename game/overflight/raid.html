@@ -1,0 +1,274 @@
+<!doctype html>
+<html lang="en" data-game-mode="overflight-hunt">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#17191b" />
+    <title>Overflight: Raid · FPV / LINE</title>
+    <script
+      src="../presentation/theme-bootstrap.mjs"
+      data-theme-density="player"
+      data-theme-follow-context="true"
+    ></script>
+    <link
+      rel="stylesheet"
+      href="../presentation/industrial-workshop.css"
+      data-industrial-workshop
+    />
+    <link rel="stylesheet" href="../ui/mode-play-shell.css" />
+    <link rel="stylesheet" href="../ui/mode-choice.css" />
+    <link rel="stylesheet" href="../ui/quick-music-controls.css" />
+    <link rel="stylesheet" href="../i18n/style.css" />
+    <link rel="stylesheet" href="../ui/journey.css" />
+    <link rel="stylesheet" href="../ui/touch-controls-view.css" />
+    <link rel="stylesheet" href="style.css" />
+    <script type="module" src="app.mjs"></script>
+  </head>
+  <body class="field-kit overflight-player overflight-raid">
+    <p id="boot-status" role="status">Preparing Raid…</p>
+    <main id="overflight-shell" hidden></main>
+    <div id="overflight-panels" hidden>
+      <nav id="overflight-mode-links"></nav>
+      <section id="overflight-missions">
+        <h2 data-copy="field"></h2>
+        <p data-copy="briefing"></p>
+        <div id="overflight-mission-list" class="overflight-mission-list"></div>
+        <h3 data-copy="installed"></h3>
+        <div id="overflight-installed-list" class="overflight-mission-list"></div>
+        <p id="installed-status" role="status"></p>
+      </section>
+      <section id="overflight-briefing">
+        <div class="overflight-hangar">
+          <div id="character-preview" class="overflight-character-preview" aria-hidden="true"></div>
+          <div>
+            <p class="overflight-eyebrow" data-copy="yourAirframe"></p>
+            <label for="character-select" data-copy="character"></label>
+            <select id="character-select"></select>
+            <p id="character-hint" class="micro-note" data-copy="characterHint"></p>
+          </div>
+        </div>
+        <p data-copy="startHint"></p>
+        <details id="overflight-role-guide" class="overflight-role-guide">
+          <summary data-copy="readTheField"></summary>
+          <div id="overflight-role-previews" data-role-previews class="overflight-role-grid"></div>
+          <p data-copy="cacheHint"></p>
+        </details>
+        <div class="raid-contact-key">
+          <span data-copy="contactExposed"></span><span data-copy="contactGuarded"></span
+          ><span data-copy="contactHeavy"></span>
+        </div>
+        <p id="fixture-description" hidden></p>
+        <p id="review-description" hidden></p>
+        <p id="review-help" data-copy="reviewHelp" hidden></p>
+      </section>
+      <section id="overflight-help">
+        <details class="overflight-role-guide" open>
+          <summary data-copy="readTheField"></summary>
+          <div data-role-previews class="overflight-role-grid"></div>
+          <p data-copy="cacheHint"></p>
+        </details>
+        <p data-copy="help"></p>
+        <p data-copy="startHint"></p>
+      </section>
+      <section id="overflight-workshop">
+        <h2 data-copy="workshop"></h2>
+        <p data-copy="workshopHelp"></p>
+        <a id="studio-link" href="../studio/raid.html" data-copy="workshop"></a>
+      </section>
+      <section id="overflight-settings">
+        <button id="open-flight-deck" type="button" data-copy="character"></button>
+        <div class="overflight-settings-grid">
+          <label
+            ><span data-copy="difficulty"></span
+            ><select id="difficulty">
+              <option value="standard" data-copy="difficultyStandard"></option>
+              <option value="veteran" data-copy="difficultyVeteran"></option></select
+          ></label>
+          <label
+            ><span data-copy="language"></span
+            ><select id="language">
+              <option value="en">English</option>
+              <option value="uk">Українська</option>
+            </select></label
+          >
+          <label
+            ><span data-copy="airframes"></span
+            ><select id="airframes">
+              <option value="1" data-copy="oneAirframe"></option>
+              <option value="3" data-copy="threeAirframes" selected></option></select
+          ></label>
+          <label class="overflight-check"
+            ><input id="slow-resume" type="checkbox" /><span data-copy="slowResume"></span
+          ></label>
+          <label class="overflight-check"
+            ><input id="reduced-effects" type="checkbox" /><span data-copy="reduced"></span
+          ></label>
+          <label
+            ><span data-copy="textFace"></span
+            ><select id="text-face">
+              <option value="pixel" data-copy="themeText"></option>
+              <option value="plain" data-copy="plainText"></option></select
+          ></label>
+          <label
+            ><span data-copy="textSize"></span
+            ><select id="text-size">
+              <option value="standard" data-copy="standard"></option>
+              <option value="large" data-copy="large"></option></select
+          ></label>
+          <label class="overflight-check"
+            ><input id="muted" type="checkbox" /><span data-copy="muted"></span
+          ></label>
+          <label
+            ><span data-copy="volume"></span
+            ><input id="volume" type="range" min="0" max="1" step="0.05"
+          /></label>
+        </div>
+        <p data-copy="nextSortie"></p>
+        <p id="difficulty-help" data-copy="difficultyHelp"></p>
+        <section id="overflight-studios"></section>
+        <section id="overflight-destruction">
+          <h3 data-copy="battlefieldEffects"></h3>
+          <label class="overflight-check"
+            ><input id="overflight-enemy-remains" type="checkbox" /><span
+              data-copy="keepRemains"
+            ></span
+          ></label>
+          <p id="overflight-enemy-remains-status" role="status" hidden></p>
+          <button
+            id="overflight-enemy-remains-retry"
+            type="button"
+            data-copy="retrySaving"
+            hidden
+          ></button>
+          <p class="micro-note" data-copy="remainsHint"></p>
+        </section>
+        <section id="overflight-commentator-settings"></section>
+        <div id="overflight-appearance"></div>
+        <div id="overflight-music"></div>
+      </section>
+      <section id="overflight-results">
+        <div class="overflight-result-hero">
+          <div class="overflight-result-insignia" aria-hidden="true"><span>✦</span></div>
+          <div>
+            <p id="result-kicker" class="overflight-eyebrow"></p>
+            <h2 id="result-title"></h2>
+            <p id="result-message"></p>
+          </div>
+        </div>
+        <p id="result-review" hidden></p>
+        <dl id="result-stats"></dl>
+        <div id="result-milestones" class="overflight-result-milestones"></div>
+        <h3 data-copy="build"></h3>
+        <div id="result-build" class="overflight-result-build"></div>
+        <div id="overflight-result-commentator"></div>
+        <p id="raid-records" role="status"></p>
+        <div class="overflight-result-actions">
+          <button id="raid-same-seed" type="button" data-copy="sameSeed"></button
+          ><button id="raid-new-sortie" type="button" data-copy="newSortie"></button>
+        </div>
+        <p data-copy="resultHint"></p>
+      </section>
+      <section id="overflight-game" aria-label="Overflight battlefield">
+        <div id="render-host" tabindex="0"></div>
+        <aside id="overflight-music-now-playing" class="overflight-music-credit" hidden></aside>
+        <div id="overflight-hud" aria-live="off">
+          <div class="overflight-xp"><div id="xp-fill"></div></div>
+          <div class="overflight-topline">
+            <div class="overflight-vitals">
+              <span id="hud-hull"></span>
+              <div id="hud-health" class="overflight-health-meter" role="progressbar">
+                <span id="hud-health-fill"></span>
+              </div>
+              <span id="hud-airframes"></span><span id="hud-protection"></span>
+            </div>
+            <div class="overflight-clock">
+              <span class="overflight-eyebrow" data-copy="sortie"></span
+              ><strong id="hud-time">00:00</strong>
+            </div>
+            <div class="overflight-tally">
+              <span id="hud-level"></span><span id="hud-kills"></span>
+            </div>
+          </div>
+          <div class="raid-hunt-strip">
+            <p id="hud-objective"></p>
+            <span id="hud-chain"></span><span id="hud-score"></span>
+          </div>
+          <p id="hud-review" hidden></p>
+          <p id="hud-cache" class="overflight-cache-hint" role="status" hidden></p>
+          <div id="hud-reward" class="overflight-reward-toast" role="status" hidden></div>
+          <div id="overflight-commentator" class="overflight-commentator"></div>
+          <div class="overflight-bottomline">
+            <span id="hud-build"></span>
+            <div class="raid-boost">
+              <span id="hud-boost"></span><span id="hud-rush"></span>
+              <div id="raid-rush-meter" role="progressbar"><span id="raid-rush-fill"></span></div>
+            </div>
+          </div>
+        </div>
+        <p
+          id="raid-event-status"
+          class="raid-accessible-status"
+          role="status"
+          aria-live="polite"
+          aria-atomic="true"
+        ></p>
+        <p id="play-status" role="status" hidden></p>
+        <details id="overflight-diagnostics" hidden>
+          <summary data-copy="diagnostics"></summary>
+          <p data-copy="measured"></p>
+          <pre id="diagnostic-values"></pre>
+          <button id="download-metrics" type="button" data-copy="download"></button>
+          <button id="inspect-raw-metrics" type="button" data-copy="inspectRaw"></button>
+          <div id="raw-metrics-navigation" hidden>
+            <label
+              ><span data-copy="rawPage"></span>
+              <select id="raw-metrics-page"></select
+            ></label>
+            <p data-copy="rawPageHelp"></p>
+          </div>
+          <textarea
+            id="raw-metrics"
+            readonly
+            wrap="off"
+            aria-label="Raw measurements JSON"
+            hidden
+          ></textarea>
+          <button
+            id="test-graphics-recovery"
+            type="button"
+            data-copy="testRecovery"
+            disabled
+          ></button>
+          <p id="diagnostic-status" role="status" hidden></p>
+          <section id="review-clip-controls" hidden>
+            <p data-copy="clipLimit"></p>
+            <button id="record-review-clip" type="button" data-copy="recordClip" disabled></button>
+            <p id="review-clip-status" role="status"></p>
+            <video id="review-clip-video" controls muted playsinline hidden></video>
+            <a id="download-review-clip" data-copy="downloadClip" hidden></a>
+          </section>
+        </details>
+      </section>
+    </div>
+    <dialog
+      id="upgrade-dialog"
+      class="mode-play-dialog overflight-upgrade"
+      aria-labelledby="upgrade-title"
+    >
+      <header class="mode-play-dialog-head">
+        <div class="upgrade-celebration" aria-hidden="true">
+          <span>✦</span><i></i><i></i><i></i><i></i><i></i><i></i>
+        </div>
+        <div>
+          <p id="upgrade-level" class="overflight-eyebrow"></p>
+          <h1 id="upgrade-title" data-copy="upgrades"></h1>
+          <p data-copy="upgradeHint"></p>
+        </div>
+      </header>
+      <div id="upgrade-cards" class="overflight-upgrade-cards"></div>
+      <footer class="mode-play-actions">
+        <button id="reroll-upgrades" type="button"></button><span id="rerolls-left"></span>
+      </footer>
+    </dialog>
+  </body>
+</html>

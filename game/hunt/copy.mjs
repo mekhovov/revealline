@@ -13,6 +13,11 @@ const copy = {
     unavailable: 'This variant is not available for this mission.',
     brutal: 'Brutal enemy destruction — blood, body parts and explosions',
     blood: 'Blood and body parts',
+    defeatSounds: 'Defeat sounds',
+    classicSounds: 'Classic sounds',
+    humanoidReactions: 'Humanoid reactions',
+    defeatSoundsHelp:
+      'Choose sounds for defeated humanoids in every mode. Vehicles keep their material sounds. This choice is independent of blood and gore.',
     brutalHelp:
       'Optional graphic pixel destruction. Hunting also works with this off. Reduced effects limits motion.',
     preview: 'Preview destruction',
@@ -48,6 +53,11 @@ const copy = {
     unavailable: 'Цей варіант недоступний для цієї місії.',
     brutal: 'Жорстоке знищення ворогів — кров, частини тіл і вибухи',
     blood: 'Кров і частини тіл',
+    defeatSounds: 'Звуки знищення',
+    classicSounds: 'Класичні звуки',
+    humanoidReactions: 'Реакції гуманоїдів',
+    defeatSoundsHelp:
+      'Оберіть звуки знищення гуманоїдів для всіх режимів. Техніка зберігає звуки своїх матеріалів. Цей вибір не залежить від крові та жорстоких ефектів.',
     brutalHelp:
       'Необов’язкові відверті піксельні ефекти. Полювання працює й без них. Зменшені ефекти обмежують рух.',
     preview: 'Переглянути знищення',

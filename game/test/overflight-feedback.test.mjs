@@ -133,7 +133,7 @@ test('every added semantic audio cue resolves to a native recipe and bounded spa
   audio.update(run);
   assert.deepEqual(
     heard.map((row) => row.type),
-    ['burst', 'warning', 'catch', 'supply', 'objective'],
+    ['warning', 'burst', 'catch', 'supply', 'objective'],
   );
   for (const row of heard) {
     assert.ok(encounterSoundRecipe(row.type, row.details));
@@ -159,7 +159,8 @@ test('every added semantic audio cue resolves to a native recipe and bounded spa
   run.events = [{ type: 'defeat' }, { type: 'final' }, { type: 'won' }, { type: 'won' }];
   audio.update(run);
   audio.update(run);
-  assert.equal(heard.length, 5, 'terminal motif replaces lower-priority simultaneous effects');
+  assert.equal(heard.length, 6, 'the final destruction is heard before the terminal motif');
+  assert.equal(heard.at(-1).type, 'catch');
   assert.deepEqual(menu, ['confirm', 'confirm', 'victory']);
   audio.reset();
   run.phase = 'lost';

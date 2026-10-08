@@ -6,6 +6,7 @@ import { validateDemoCatalog } from '../game/demo-catalog.mjs';
 import { REACTION_PORTRAITS } from '../game/journey/reaction-portraits.mjs';
 import { REACTION_VOICE_PILOT } from '../game/audio/reactions/pilot.mjs';
 import { ACTOR_VOICE_RECORDINGS } from '../game/audio/reactions/actors.mjs';
+import { DESTRUCTION_CUES, HUMAN_REACTION_CUES } from '../game/ui/destruction-audio.mjs';
 import {
   ACTOR_PRESENTATION_SLOTS,
   validateCompiledPresentation,
@@ -169,7 +170,7 @@ export function projectEditionActorVoices(name, bytes) {
 
 /** Classic's shared board host reads the original immutable runtime manifest.
  * Its dynamic file closure follows that registered profile, not two historical
- * sprites. Only the shared collection cue extends this board's audio authority;
+ * sprites. Shared collection and destruction cues extend this board's audio authority;
  * menu, font, picture and soundtrack payload ownership remains separate. */
 export function editionClassicPresentationResources(
   source = readFileSync(
@@ -179,11 +180,15 @@ export function editionClassicPresentationResources(
 ) {
   const manifest = validateCompiledPresentation(source),
     actors = new Set(ACTOR_PRESENTATION_SLOTS),
+    audioSlots = new Set([
+      'audio.pickup',
+      ...[...DESTRUCTION_CUES, ...HUMAN_REACTION_CUES].map((cue) => `audio.${cue}`),
+    ]),
     resources = new Set(['game/presentation/compiled/runtime.json']);
   for (const [slot, asset] of Object.entries(manifest.resolved.assets)) {
     if (
       !(asset.kind === 'image' && (actors.has(slot) || /^(terrain|pickup)\./.test(slot))) &&
-      !(slot === 'audio.pickup' && asset.kind === 'audio')
+      !(audioSlots.has(slot) && asset.kind === 'audio')
     )
       continue;
     resources.add(`game/presentation/compiled/${manifest.urls[asset.file.sha256].slice(2)}`);
