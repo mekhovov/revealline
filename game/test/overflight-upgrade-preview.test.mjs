@@ -14,7 +14,15 @@ import {
   overflightUpgradePreviewModel,
 } from '../overflight/upgrade-preview.mjs';
 
-const modules = ['primary', 'slow-field', 'proximity-pulse', 'side-burst', 'scanner', 'shield'];
+const modules = [
+  'primary',
+  'slow-field',
+  'proximity-pulse',
+  'side-burst',
+  'scanner',
+  'shield',
+  'plating',
+];
 function examples() {
   const result = [];
   for (const branch of ['wide', 'double']) {
@@ -29,7 +37,7 @@ function examples() {
   }
   for (const system of modules.slice(1)) {
     const build = createOverflightBuild();
-    for (let rank = 1; rank <= 3; rank++) {
+    for (let rank = 1; rank <= (system === 'plating' ? 2 : 3); rank++) {
       const offer = legalOverflightUpgrades(build, modules).find(
         (item) => item.id === `${system}:${rank}`,
       );
@@ -48,7 +56,7 @@ const attribute = (node, name) => node.attrs?.find((item) => item.name === name)
 
 test('every legal branch, module rank and fallback utility has informative EN/UK SVG before/after views', () => {
   const cases = examples();
-  assert.equal(cases.length, 24);
+  assert.equal(cases.length, 26);
   for (const { offer, build } of cases) {
     for (const locale of ['en', 'uk']) {
       const markup = overflightUpgradePreview(offer, { locale, build });

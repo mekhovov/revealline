@@ -21,6 +21,7 @@ const modules = {
   'side-burst': { en: 'Side burst', uk: 'Бічний залп' },
   scanner: { en: 'Salvage scanner', uk: 'Сканер трофеїв' },
   shield: { en: 'Recovery shield', uk: 'Захисний екран' },
+  plating: { en: 'Reactive plating', uk: 'Реактивна броня' },
 };
 export function overflightFamilyOptions(locale = 'en') {
   const language = locale === 'uk' ? 'uk' : 'en';

@@ -1,3 +1,6 @@
+import { createHumanReactionPolicy } from '../../game/ui/human-reaction-policy.mjs';
+import { HUMAN_REACTION_BANK } from '../../game/audio/human-reactions/portable.mjs';
+import { destructionBufferGain } from '../../game/ui/destruction-level.mjs';
 import { DEFAULT_DIALOGUE_VOLUME, DIALOGUE_MIX_GAIN } from '../../game/audio/dialogue-mix.mjs';
 import {
   createGameAudioContext,
@@ -7,11 +10,12 @@ import {
 } from '../../game/ui/audio-output.mjs';
 import { createAudioMaster } from '../../game/ui/audio-master.mjs';
 import { createAudioPreferences } from '../../game/audio-preferences.mjs';
+import { destructionCategory } from '../../game/ui/destruction-audio.mjs';
 import { encounterSoundRecipe, actorPhaseSound } from '../../game/ui/encounter-audio.mjs';
 import { readMovementAudio, MOVEMENT_AUDIO_KEY } from '../../game/ui/movement-audio.mjs';
 import { dialogueChannel } from '../../game/ui/dialogue-channel.mjs';
 
-/** Optional presentation-only sound. No media requests or gameplay clocks. */
+/** Optional presentation-only sound. Embedded CC0 vocals decode on activation; no media requests or gameplay clocks. */
 const PREFERENCE = 'revealline.fpv.world-audio.v1';
 const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
 const AMBIENCES = {
@@ -51,6 +55,9 @@ export function createWorldAudio(options = {}) {
   let dialogue = { enabled: false, volume: DEFAULT_DIALOGUE_VOLUME };
   let dialogueVoice = null;
   const effects = new Set();
+  const humanReactions = createHumanReactionPolicy();
+  const humanBuffers = new Map();
+  let preparingHumans = false;
   const audioMaster = options.audioMaster ?? createAudioMaster();
   const preferences =
     options.audioPreferences ??
@@ -110,6 +117,76 @@ export function createWorldAudio(options = {}) {
     effects.clear();
   }
 
+  function prepareHumans() {
+    if (
+      preparingHumans ||
+      !context?.decodeAudioData ||
+      options.getDestruction?.()?.vocals === false
+    )
+      return;
+    preparingHumans = true;
+    for (const [name, clip] of Object.entries(HUMAN_REACTION_BANK)) {
+      const bytes = Uint8Array.from(atob(clip.base64), (character) => character.charCodeAt(0));
+      void context
+        .decodeAudioData(bytes.buffer)
+        .then((buffer) => {
+          if (!disposed)
+            humanBuffers.set(name, { buffer, gain: destructionBufferGain(name, buffer) });
+        })
+        .catch(() => {});
+    }
+  }
+  function humanReaction(details) {
+    prepareHumans();
+    if (
+      !graph ||
+      !enabled ||
+      !wanted ||
+      masterState.volume === 0 ||
+      !levels.interface ||
+      context.state !== 'running' ||
+      dialogueVoice ||
+      dialogueChannel.active ||
+      [...effects].some((effect) => effect.priority >= 5) ||
+      effects.size >= 12
+    )
+      return;
+    const name = humanReactions.request(
+      context.currentTime,
+      details,
+      [...effects].filter((effect) => effect.humanReaction).length,
+    );
+    const clip = name && humanBuffers.get(name);
+    if (!clip) return;
+    const source = context.createBufferSource(),
+      volume = context.createGain(),
+      now = context.currentTime;
+    const duration = Math.min(0.7, clip.buffer.duration);
+    source.buffer = clip.buffer;
+    volume.gain.setValueAtTime(0.45 * clip.gain, now);
+    volume.gain.setValueAtTime(0.45 * clip.gain, now + Math.max(0, duration - 0.025));
+    volume.gain.linearRampToValueAtTime(0, now + duration);
+    source.connect(volume).connect(graph.buses.interface);
+    let stopped = false;
+    const voice = {
+      humanReaction: true,
+      priority: 2,
+      stop() {
+        if (stopped) return;
+        stopped = true;
+        try {
+          source.stop();
+        } catch {}
+        source.disconnect();
+        volume.disconnect();
+        effects.delete(voice);
+      },
+    };
+    effects.add(voice);
+    source.onended = voice.stop;
+    source.start(now);
+    source.stop(now + duration);
+  }
   function silence() {
     dialogueVoice?.stop();
     if (!graph || context.state === 'closed') return;
@@ -220,6 +297,8 @@ export function createWorldAudio(options = {}) {
     gain = 0.05,
     delay = 0,
     type = 'sine',
+    kind = 'tone',
+    destruction = false,
     movementCue = false,
     priority = 2,
   }) {
@@ -240,13 +319,34 @@ export function createWorldAudio(options = {}) {
     )
       return;
     if (priority >= 4) for (const effect of [...effects]) if (effect.movementCue) effect.stop();
-    if (effects.size >= 12) return;
-    const oscillator = context.createOscillator();
+    // Crowd feedback cannot use the warning reserve. A warning may reclaim
+    // a lower-priority tail, without adding a second output or context.
+    if (destruction && [...effects].filter((effect) => effect.destruction).length >= 10) return;
+    if (effects.size >= 12) {
+      const victim = [...effects].find((effect) => effect.priority < priority);
+      if (!victim) return;
+      victim.stop();
+    }
+    const oscillator = kind === 'snare' ? context.createBufferSource() : context.createOscillator();
     const envelope = context.createGain();
     const start = context.currentTime + delay;
-    oscillator.type = type;
-    oscillator.frequency.setValueAtTime(from, start);
-    oscillator.frequency.exponentialRampToValueAtTime(Math.max(20, to), start + duration);
+    if (kind === 'snare') {
+      const samples = Math.max(1, Math.ceil(context.sampleRate * duration));
+      const buffer = context.createBuffer(1, samples, context.sampleRate);
+      const data = buffer.getChannelData(0);
+      let seed = 73471,
+        low = 0;
+      for (let index = 0; index < data.length; index++) {
+        seed = (Math.imul(seed, 1664525) + 1013904223) >>> 0;
+        low = low * 0.65 + (seed / 2147483648 - 1) * 0.35;
+        data[index] = low;
+      }
+      oscillator.buffer = buffer;
+    } else {
+      oscillator.type = type;
+      oscillator.frequency.setValueAtTime(from, start);
+      oscillator.frequency.exponentialRampToValueAtTime(Math.max(20, to), start + duration);
+    }
     envelope.gain.setValueAtTime(0, context.currentTime);
     envelope.gain.setValueAtTime(0, start);
     envelope.gain.linearRampToValueAtTime(gain, start + 0.008);
@@ -257,6 +357,7 @@ export function createWorldAudio(options = {}) {
     let stopped = false;
     const effect = {
       priority,
+      destruction,
       movementCue,
       stop() {
         if (stopped) return;
@@ -277,6 +378,39 @@ export function createWorldAudio(options = {}) {
     oscillator.stop(start + duration + 0.02);
   }
 
+  function actorSoundDetails(event = {}) {
+    const actor = actorDefinitions.get(event.actor);
+    const machine =
+      event.machine ??
+      (actor?.type === 'vehicle'
+        ? actor.vehicleModel === 'field-tank'
+          ? 'tracked'
+          : 'wheeled'
+        : false);
+    const machineFamily =
+      actor?.type === 'vehicle'
+        ? ({
+            'field-utility': 'utility-car',
+            'field-tank': 'tracked-tank',
+            'relay-truck': 'radar-truck',
+          }[actor.vehicleModel] ?? actor.vehicleModel)
+        : null;
+    return {
+      family:
+        event.family ??
+        machineFamily ??
+        actorFamilies.get(event.actor) ??
+        (actor?.speed > 0 ? 'patroller' : 'lookout'),
+      machine,
+      brutal: options.getDestruction?.()?.brutal === true,
+      vocals: options.getDestruction?.()?.vocals,
+      // Patrols and sentries use the humanoid painter. Drones, hazards and
+      // vehicles must never inherit a human voice from the family fallback.
+      humanoid: event.humanoid ?? (actor ? ['patrol', 'sentry'].includes(actor.type) : undefined),
+      flesh: event.flesh,
+    };
+  }
+
   function cue(type, player = true, event = {}) {
     const kind = {
       catch: 'catch',
@@ -295,30 +429,25 @@ export function createWorldAudio(options = {}) {
       drive: 'drive',
     }[type];
     if (!kind) return;
-    const actor = actorDefinitions.get(event.actor);
-    const machine =
-      event.machine ??
-      (actor?.type === 'vehicle'
-        ? actor.vehicleModel === 'field-tank'
-          ? 'tracked'
-          : 'wheeled'
-        : false);
-    const recipe = encounterSoundRecipe(kind, {
-      family:
-        event.family ??
-        actorFamilies.get(event.actor) ??
-        (actor?.speed > 0 ? 'patroller' : 'lookout'),
-      machine,
-    });
+    const details = actorSoundDetails(event);
+    const recipe = encounterSoundRecipe(kind, details);
     const now = context?.currentTime ?? 0;
-    if (now - (recentCues.get(kind) ?? -Infinity) < (recipe.cooldown ?? 0.12)) return;
-    recentCues.set(kind, now);
+    const cueKey = kind === 'catch' ? `catch:${recipe.category}` : kind;
+    if (now - (recentCues.get(cueKey) ?? -Infinity) < (recipe.cooldown ?? 0.12)) return;
+    recentCues.set(cueKey, now);
+    if (recipe.priority >= 5 || (type === 'fire' && !player)) {
+      humanReactions.interrupt(now);
+      for (const effect of [...effects]) if (effect.humanReaction) effect.stop();
+    }
+    if (kind === 'catch') humanReaction(details);
     if (recipe.priority >= 5 || (type === 'fire' && !player)) dialogueChannel.interrupt();
     const voice = { ...recipe.tone, priority: recipe.priority, movementCue: recipe.movement };
     if (recipe.movement) voice.gain *= levels.interface;
     if (type === 'fire' && !player) voice.gain *= 0.65;
     if (type === 'objective' && gateStyle === 'digital') voice.type = 'triangle';
-    tone(voice);
+    tone({ ...voice, destruction: kind === 'catch' });
+    for (const layer of recipe.layers ?? [])
+      tone({ ...layer, priority: recipe.priority, destruction: kind === 'catch' });
   }
 
   async function resume() {
@@ -333,6 +462,7 @@ export function createWorldAudio(options = {}) {
         if (context.state !== 'closed') await context.suspend();
         return false;
       }
+      prepareHumans();
       return epoch === transition && context.state === 'running';
     } catch {
       return false;
@@ -496,6 +626,7 @@ export function createWorldAudio(options = {}) {
       lastStep = null;
       lastContacts = null;
       recentCues.clear();
+      humanReactions.reset();
       actorPositions.clear();
       actorPhases.clear();
       actorFamilies = new Map(
@@ -593,9 +724,14 @@ export function createWorldAudio(options = {}) {
           }
           const events = snapshot.events ?? [];
           const types = new Set();
+          const destructionTypes = new Set();
           // Bound cue overlap independently of simulation actor/projectile counts.
           for (const event of events) {
-            if (types.has(event.type)) continue;
+            if (['catch', 'defeat'].includes(event.type)) {
+              const category = destructionCategory(actorSoundDetails(event));
+              if (destructionTypes.has(category)) continue;
+              destructionTypes.add(category);
+            } else if (types.has(event.type)) continue;
             types.add(event.type);
             cue(event.type, event.actor === 'player', event);
           }
@@ -637,6 +773,7 @@ export function createWorldAudio(options = {}) {
     dispose() {
       if (disposed) return;
       disposed = true;
+      humanBuffers.clear();
       pause();
       releaseMaster();
       host.removeEventListener?.('storage', changed);

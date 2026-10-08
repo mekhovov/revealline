@@ -270,3 +270,95 @@ test('board audio authority and Company closure include the pickup recording onl
   h.host.close();
   await assert.rejects(h.host.readAudio('audio.pickup'), /No current audio release/);
 });
+
+test('compiled destruction recordings play through the board host and ship in Company editions without menu or music audio', async (t) => {
+  const files = {
+    'destroy-soft': 'destroy-soft.wav',
+    'destroy-heavy': 'destroy-heavy.wav',
+    victory: 'confirm.wav',
+    music: 'warning.wav',
+  };
+  const bundle = structuredClone(createDefaultThemeBundle());
+  const blobs = new Map();
+  const originals = new Map();
+  for (const [cue, file] of Object.entries(files)) {
+    const bytes = new Uint8Array(
+      await readFile(new URL(`../audio/effects/${file}`, import.meta.url)),
+    );
+    const hash = await hashPresentationBytes(bytes);
+    const asset = bundle.assets.find((entry) => entry.id === `audio.${cue}.default`);
+    assert.ok(asset, `Registered shared slot for ${cue}`);
+    Object.assign(asset, {
+      kind: 'audio',
+      recipe: null,
+      file: { sha256: hash, bytes: bytes.length, mime: 'audio/wav', width: null, height: null },
+    });
+    blobs.set(hash, new Blob([bytes]));
+    originals.set(cue, { bytes, hash });
+  }
+  const compiled = await compilePresentation(bundle, blobs);
+  const manifest = new TextDecoder().decode(compiled.files.get('runtime.json'));
+  const resources = editionClassicPresentationResources(manifest);
+  for (const cue of ['destroy-soft', 'destroy-heavy'])
+    assert.ok(
+      resources.includes(`game/presentation/compiled/assets/${originals.get(cue).hash}.wav`),
+    );
+  for (const cue of ['victory', 'music'])
+    assert.ok(
+      !resources.includes(`game/presentation/compiled/assets/${originals.get(cue).hash}.wav`),
+    );
+
+  const host = createPresentationHost({
+    profile: 'board',
+    document: {},
+    baseURL: 'https://example.test/game/presentation/compiled/',
+    fetch: async (url) => new Response(compiled.files.get(url.split('/compiled/')[1])),
+  });
+  await host.load();
+  for (const cue of ['destroy-soft', 'destroy-heavy']) {
+    const result = await host.readAudio(`audio.${cue}`);
+    assert.deepEqual(new Uint8Array(await result.blob.arrayBuffer()), originals.get(cue).bytes);
+  }
+  await assert.rejects(host.readAudio('audio.music'), /profile cannot read/);
+  await assert.rejects(host.readAudio('audio.victory'), /profile cannot read/);
+
+  t.mock.method(globalThis, 'fetch', async () => new Response(null, { status: 404 }));
+  const h = audioHarness();
+  h.context.decodeAudioData = async (bytes) => ({
+    duration: 0.4,
+    length: 3200,
+    numberOfChannels: 1,
+    sampleRate: 8000,
+    getChannelData: () => new Float32Array(3200).fill(0.03),
+    identity: await hashPresentationBytes(new Uint8Array(bytes)),
+  });
+  h.soundscape.setPublishedAudio((slot, options) => host.readAudio(slot, options));
+  t.after(async () => {
+    await h.soundscape.dispose();
+    host.close();
+  });
+  await h.soundscape.enable();
+  await h.soundscape.publishedAudio.prepare(['destroy-soft', 'destroy-heavy']);
+  assert.equal(h.sources.length, 0, 'decoding does not replay or start a cue');
+  assert.equal(h.soundscape.encounter('catch', { family: 'runner', board: 'snake-0' }), true);
+  assert.equal(
+    h.soundscape.encounter('catch', {
+      family: 'tracked-tank',
+      machine: 'tracked',
+      board: 'snake-0',
+    }),
+    true,
+  );
+  const voices = [...h.soundscape.voices];
+  assert.deepEqual(
+    voices.map((voice) => voice.name),
+    ['destroy-soft', 'destroy-heavy'],
+  );
+  assert.deepEqual(
+    voices.map((voice) => voice.source.buffer.identity),
+    [originals.get('destroy-soft').hash, originals.get('destroy-heavy').hash],
+  );
+  assert.ok(
+    voices.every((voice) => voice.feedback && voice.bus === 'sfx' && voice.board === 'snake-0'),
+  );
+});

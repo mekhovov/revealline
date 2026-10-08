@@ -1,0 +1,253 @@
+- main:
+  - navigation "Creator navigation":
+    - link "Main game":
+      - /url: http://localhost:8887/game/?lang=en
+    - link "Content Studio":
+      - /url: http://localhost:8887/game/studio/?lang=en
+    - link "Play Raid":
+      - /url: http://localhost:8887/game/overflight/raid.html?lang=en
+    - link "Community":
+      - /url: http://localhost:8887/game/community/store.html?lang=en
+    - link "Asset Studio":
+      - /url: http://localhost:8887/authoring/asset-studio/?lang=en
+    - link "Motion Lab":
+      - /url: http://localhost:8887/authoring/motion-lab/?lang=en#overflight-motion-study
+  - heading "Raid Studio" [level=1]
+  - paragraph: Author the same finite encounters played in native Raid. Shared appearances, sounds and motion stay in their existing Studios.
+  - status: Package imported and its shared dependencies verified.
+  - text: Encounter set
+  - combobox "Encounter set":
+    - option "patrol" [selected]
+    - option "crossing"
+    - option "mixed"
+  - button "New from preset"
+  - button "Validate"
+  - button "Preview"
+  - button "Save draft"
+  - button "Load saved draft"
+  - button "Install in this profile"
+  - button "Export package"
+  - button "Import package"
+  - group "Sortie":
+    - generic: Sortie
+    - text: Title · EN
+    - textbox "Title · EN": Raid · Creator review
+    - text: Назва · UK
+    - textbox "Назва · UK": "Проліт: Наліт · Зрив патруля"
+    - text: Seed
+    - spinbutton "Seed": "17031991"
+    - text: World width
+    - spinbutton "World width": "2880"
+    - text: World height
+    - spinbutton "World height": "1080"
+  - text: Encounter sector
+  - combobox "Encounter sector":
+    - option "1 · Break the patrols" [selected]
+    - option "2 · Intercept the column"
+    - option "3 · Finish the hunt"
+  - text: Edit actor or pack
+  - combobox "Edit actor or pack":
+    - option "◆ leader-1 · patroller" [selected]
+    - option "◆ leader-2 · shield-bearer"
+    - option "◆ leader-3 · brace-trooper"
+    - option "● patrols-pack-1 · patroller"
+    - option "● patrols-pack-2 · lookout"
+    - option "● patrols-pack-3 · runner"
+    - option "● patrols-pack-4 · refuge-seeker"
+    - option "● patrols-pack-5 · courier"
+    - option "● patrols-pack-6 · sprinter"
+    - option "● patrols-pack-7 · rendezvous-pair"
+    - option "● patrols-pack-8 · relay-warden"
+    - option "● patrols-escort · brace-trooper"
+  - group "Arena layout. Select and drag targets or route points.":
+    - generic: 1 · Break the patrols
+    - 'button "patrols-pack-1: patroller"'
+    - 'button "patrols-pack-2: lookout"'
+    - 'button "patrols-pack-3: runner"'
+    - 'button "patrols-pack-4: refuge-seeker"'
+    - 'button "patrols-pack-5: courier"'
+    - 'button "patrols-pack-6: sprinter"'
+    - 'button "patrols-pack-7: rendezvous-pair"'
+    - 'button "patrols-pack-8: relay-warden"'
+    - 'button "patrols-escort: brace-trooper"'
+    - 'button "leader-1: patroller"'
+    - button "Route point 1"
+    - button "Route point 2"
+    - 'button "leader-2: shield-bearer"'
+    - 'button "leader-3: brace-trooper"'
+    - generic: 2 · Intercept the column
+    - 'button "column-pack-1: refuge-seeker"'
+    - 'button "column-pack-2: courier"'
+    - 'button "column-pack-3: sprinter"'
+    - 'button "column-pack-4: rendezvous-pair"'
+    - 'button "column-pack-5: relay-warden"'
+    - 'button "column-pack-6: patroller"'
+    - 'button "column-pack-7: lookout"'
+    - 'button "column-pack-8: runner"'
+    - 'button "column-pack-9: refuge-seeker"'
+    - 'button "column-pack-10: courier"'
+    - 'button "column-escort: brace-trooper"'
+    - 'button "light-1: utility-car"'
+    - 'button "light-2: cargo-truck"'
+    - 'button "carrier: armored-carrier"'
+    - generic: 3 · Finish the hunt
+    - 'button "command-pack-1: rendezvous-pair"'
+    - 'button "command-pack-2: relay-warden"'
+    - 'button "command-pack-3: patroller"'
+    - 'button "command-pack-4: lookout"'
+    - 'button "command-pack-5: runner"'
+    - 'button "command-pack-6: refuge-seeker"'
+    - 'button "command-pack-7: courier"'
+    - 'button "command-pack-8: sprinter"'
+    - 'button "command-pack-9: rendezvous-pair"'
+    - 'button "command-pack-10: relay-warden"'
+    - 'button "command-pack-11: patroller"'
+    - 'button "command-pack-12: lookout"'
+    - 'button "command-pack-13: runner"'
+    - 'button "command-pack-14: refuge-seeker"'
+    - 'button "command-escort: brace-trooper"'
+    - 'button "command-tank: tracked-tank"'
+  - paragraph: Gold dots are finite packs; outlined targets advance the encounter. Select a marker, then drag it or its route points. Arrow keys move focused markers; Shift moves farther. Routes commit instead of tracking the drone continuously.
+  - heading "leader-1" [level=2]
+  - text: Shared appearance
+  - combobox "Shared appearance":
+    - option "lookout"
+    - option "patroller" [selected]
+    - option "runner"
+    - option "sprinter"
+    - option "courier"
+    - option "guard"
+    - option "refuge-seeker"
+    - option "switchback"
+    - option "rendezvous-pair"
+    - option "shield-bearer"
+    - option "brace-trooper"
+    - option "relay-warden"
+  - text: Contact behavior
+  - combobox "Contact behavior":
+    - option "patrol" [selected]
+    - option "crossing"
+    - option "runner"
+    - option "sprinter"
+    - option "shield"
+    - option "brace"
+  - text: X
+  - spinbutton "X": "340"
+  - text: "Y"
+  - spinbutton "Y": "410"
+  - paragraph: Objective · exposed body or guard facing · guaranteed upgrade
+  - heading "Committed route" [level=2]
+  - text: X1
+  - spinbutton "X1": "415"
+  - text: Y1
+  - spinbutton "Y1": "470"
+  - button "Remove" [disabled]
+  - text: X2
+  - spinbutton "X2": "275"
+  - text: Y2
+  - spinbutton "Y2": "350"
+  - button "Remove" [disabled]
+  - button "Add route point"
+  - group "Upgrade opportunities":
+    - generic: Upgrade opportunities
+    - paragraph: Six objective milestones plus two optional pack-hunting rewards. Enable at least six families so every draft has three legal choices.
+    - text: Rerolls
+    - spinbutton "Rerolls": "2"
+    - text: First kill milestone
+    - spinbutton "First kill milestone": "10"
+    - text: Second kill milestone
+    - spinbutton "Second kill milestone": "35"
+    - text: Strike width
+    - checkbox "Strike width" [checked]
+    - text: Slow wake
+    - checkbox "Slow wake" [checked]
+    - text: Rush charge
+    - checkbox "Rush charge" [checked]
+    - text: Boost cooldown
+    - checkbox "Boost cooldown" [checked]
+    - text: Boost duration
+    - checkbox "Boost duration" [checked]
+    - text: Chain window
+    - checkbox "Chain window" [checked]
+    - text: Heavy exposure
+    - checkbox "Heavy exposure" [checked]
+    - text: Guard interrupt
+    - checkbox "Guard interrupt" [checked]
+    - text: Recovery shield
+    - checkbox "Recovery shield" [checked]
+  - group "Shared supply-case props":
+    - generic: Shared supply-case props
+    - text: raid-case-west · X
+    - spinbutton "raid-case-west · X": "980"
+    - text: raid-case-west · Y
+    - spinbutton "raid-case-west · Y": "320"
+    - text: raid-case-east · X
+    - spinbutton "raid-case-east · X": "1910"
+    - text: raid-case-east · Y
+    - spinbutton "raid-case-east · Y": "760"
+  - generic "Advanced project source"
+  - heading "Installed sorties" [level=2]
+  - link "Raid · Creator review":
+    - /url: http://localhost:8887/game/overflight/raid.html?community=239d7354b9981cf9&lang=en
+  - heading "Native preview" [level=2]
+  - status: Native preview ready. Press Start below.
+  - iframe [active] [id="raid-preview"]:
+    - main:
+      - button "Menu"
+      - generic: "Overflight: Raid"
+      - button "Pause" [disabled]
+      - region "Overflight battlefield":
+        - generic: Hull 100 / 100
+        - progressbar "Hull"
+        - generic: Spare airframes 2
+        - generic: Sortie
+        - strong: 00:00
+        - generic: Level 1
+        - generic: 0 Cleared
+        - paragraph: Sector 1 · Break the patrols · Targets 0/7
+        - generic: Chain 0 · ×1
+        - generic: Score 0
+        - generic: Boost Ready
+        - generic: Rush 0/20
+        - progressbar "Rush"
+        - status: Studio preview is ready. Press Start to fly.
+      - dialog "FPV / LINE":
+        - heading "FPV / LINE" [level=1]:
+          - img "FPV / LINE"
+        - paragraph: "Overflight: Raid"
+        - navigation "Choose game mode":
+          - navigation:
+            - link "Capture":
+              - /url: http://localhost:8887/game/index.html?lang=en
+            - link "Snake":
+              - /url: http://localhost:8887/game/snake/play.html?lang=en
+        - paragraph: Raid · Creator review
+        - navigation "Main menu":
+          - button "Start"
+          - button "Select Mission"
+          - button "Settings"
+          - button "Enter fullscreen": Full screen
+          - 'button "Sound: off"'
+      - dialog "Raid · Creator review":
+        - heading "Raid · Creator review" [active] [level=1]
+        - paragraph: Your flight is your weapon. Sweep exposed enemies, flank shields and boost through open armor. Hunt the marked targets to complete the Raid.
+        - paragraph: Flight deck
+        - generic: Choose your drone
+        - combobox "Choose your drone":
+          - option "Scout" [selected]
+          - option "Light carrier"
+          - option "Heavy carrier"
+          - option "Interceptor"
+          - option "Fiber relay"
+          - option "Impact craft"
+          - option "Trapper"
+        - paragraph: Your look, your flight. All airframes share the same handling and upgrades for now.
+        - paragraph: WASD / arrows · Space boost · Escape pause. Controller uses your shared saved mapping; without one, left stick / RT / Menu. Radios need a saved shared setup.
+        - generic: OPEN → touch to destroy
+        - generic: SHIELD → flank or wait for recovery
+        - generic: OPEN ARMOR → boost through
+        - button "Back"
+        - button "Start"
+        - button "How to play"
+      - text: ✓ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄
+    - text: + + + + + + + + +

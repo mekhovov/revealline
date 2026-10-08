@@ -1,5 +1,37 @@
 export const OVERFLIGHT_COPY = Object.freeze({
   en: {
+    chooseOperation: 'Choose your operation',
+    survivorOperation: 'Survivor',
+    raidOperation: 'Raid',
+    survivorOperationHelp: 'Fly through the swarm. Grow your arsenal. Survive the final surge.',
+    raidOperationHelp: 'Read the formation. Strike through targets. Chain your next approach.',
+    selectEncounter: 'Choose an encounter →',
+    switchOperation: 'Open operation →',
+    difficulty: 'Operation difficulty',
+    difficultyStandard: 'Standard',
+    difficultyVeteran: 'Veteran',
+    difficultyHelp:
+      'Veteran changes formations and pressure. Your records stay separate. Applies to the next official sortie.',
+    authoredDifficulty: 'Installed encounters keep their authored difficulty and rules.',
+    legacyRules: 'Legacy rules',
+    readTheField: 'Read the battlefield',
+    roleExposed: 'Exposed infantry',
+    roleExposedHelp: 'Raid: touch to destroy. Survivor: clear them with your payloads.',
+    roleShield: 'Facing shield',
+    roleShieldHelp: 'The plate faces one way. Fly around it and attack the exposed side.',
+    roleArmor: 'Open armor',
+    roleArmorHelp:
+      'Watch the warning, then use the recovery opening. Raid needs a fresh boosted pass.',
+    cacheHint:
+      'Open cache: fly out, then choose one reward. +30 hull or +1 reroll and boost ready.',
+    cacheReady: 'Cache open · choose one reward',
+    armorProtection: 'Plating',
+    shieldHits: 'Shield hits',
+    manageInstalled: 'Manage installed encounters',
+    sameSeed: 'Retry same seed',
+    newSortie: 'New sortie',
+    encounterBrowserHelp:
+      'Choose a battlefield to launch. Gold marks priority targets; mint marks supply cases.',
     yourAirframe: 'Flight deck',
     character: 'Choose your drone',
     characterLocked:
@@ -46,7 +78,7 @@ export const OVERFLIGHT_COPY = Object.freeze({
     noInstalled: 'Install an Overflight package in Studio to play it here.',
     libraryFailed: 'Installed encounters could not be loaded.',
     startHint:
-      'WASD / arrows · Space boost · Escape pause. Controller uses your shared saved mapping; without one, left stick / RT / Menu. Radios need a saved shared setup.',
+      'WASD / arrows · Space boost · Escape pause. Touch: drag to steer and hold Boost with your other thumb; choose stick, swipe or D-pad in Settings. Controller uses your shared saved mapping; without one, left stick / RT / Menu. Radios need a saved shared setup.',
     help: 'Skim the crowd edge so your payload lands among the pursuers. Salvage remains on the ground. Each level pauses the sortie for one of three upgrades. Enemy warnings lock before the attack; move out of their path. Defeat the final tank to complete the sortie.',
     settings: 'Sortie settings',
     language: 'Language',
@@ -142,6 +174,39 @@ export const OVERFLIGHT_COPY = Object.freeze({
     runtimeError: 'The sortie stopped after an error. Retry to prepare a new attempt.',
   },
   uk: {
+    chooseOperation: 'Оберіть операцію',
+    survivorOperation: 'Виживання',
+    raidOperation: 'Наліт',
+    survivorOperationHelp:
+      'Пролітайте крізь натовп. Розвивайте озброєння. Витримайте останню хвилю.',
+    raidOperationHelp: 'Читайте стрій. Пробивайтеся крізь цілі. Поєднуйте атаки в серії.',
+    selectEncounter: 'Вибрати поле →',
+    switchOperation: 'Відкрити операцію →',
+    difficulty: 'Складність операції',
+    difficultyStandard: 'Стандарт',
+    difficultyVeteran: 'Ветеран',
+    difficultyHelp:
+      'Ветеран змінює стрій і тиск ворогів. Рекорди зберігаються окремо. Для наступного офіційного вильоту.',
+    authoredDifficulty: 'Встановлені поля зберігають авторські складність і правила.',
+    legacyRules: 'Класичні правила',
+    readTheField: 'Читайте поле бою',
+    roleExposed: 'Відкрита піхота',
+    roleExposedHelp: 'Наліт: знищуйте дотиком. Виживання: атакуйте зарядами.',
+    roleShield: 'Напрямлений щит',
+    roleShieldHelp: 'Щит дивиться в один бік. Облітайте його й атакуйте з відкритого боку.',
+    roleArmor: 'Відкрита броня',
+    roleArmorHelp:
+      'Стежте за попередженням, атакуйте під час відновлення. У нальоті потрібен новий проліт із прискоренням.',
+    cacheHint:
+      'Відкрита схованка: відлетіть і поверніться за однією нагородою. +30 міцності або +1 заміна й готовий ривок.',
+    cacheReady: 'Схованка відкрита · оберіть нагороду',
+    armorProtection: 'Броня',
+    shieldHits: 'Захищених ударів',
+    manageInstalled: 'Керувати встановленими полями',
+    sameSeed: 'Повторити те саме поле',
+    newSortie: 'Новий виліт',
+    encounterBrowserHelp:
+      'Оберіть поле для старту. Золото позначає головні цілі, м’ятний — схованки.',
     yourAirframe: 'Льотний майданчик',
     character: 'Оберіть свій дрон',
     characterLocked:
@@ -197,7 +262,7 @@ export const OVERFLIGHT_COPY = Object.freeze({
     noInstalled: 'Встановіть пакет «Проліт» у студії, щоб грати тут.',
     libraryFailed: 'Не вдалося завантажити встановлені сутички.',
     startHint:
-      'WASD / стрілки · Пробіл — прискорення · Escape — пауза. Контролер використовує збережену спільну схему; без неї — лівий стік / RT / Menu. Для радіопульта потрібне збережене спільне налаштування.',
+      'WASD / стрілки · Пробіл — прискорення · Escape — пауза. Сенсорне керування: тягніть для руху й утримуйте «Прискорення» іншим пальцем; оберіть стік, жести чи хрестовину в налаштуваннях. Контролер використовує збережену спільну схему; без неї — лівий стік / RT / Menu. Для радіопульта потрібне збережене спільне налаштування.',
     help: 'Летіть уздовж краю натовпу, щоб заряд влучав у переслідувачів. Ресурси залишаються на землі. Кожен рівень зупиняє виліт для вибору одного з трьох покращень. Напрям атаки ворога фіксується після попередження — встигніть відійти. Здолайте фінальний танк, щоб завершити виліт.',
     settings: 'Налаштування вильоту',
     language: 'Мова',

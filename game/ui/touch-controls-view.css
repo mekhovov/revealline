@@ -1,0 +1,112 @@
+/* Solo's thumb sizes and feedback, independent of any game's page layout. */
+@layer legacy {
+  .shared-touch-controls {
+    --touch-size: 156px;
+    --touch-opacity: 0.55;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    pointer-events: none;
+  }
+  .shared-touch-controls[data-touch-size='large'] {
+    --touch-size: 192px;
+  }
+  .shared-touch-controls[data-touch-side='left'] {
+    flex-direction: row-reverse;
+  }
+  .shared-touch-controls :is(.shared-touch-surface, .shared-touch-pad, .shared-touch-action) {
+    pointer-events: auto;
+    touch-action: none;
+    user-select: none;
+    -webkit-user-select: none;
+    opacity: var(--touch-opacity);
+    flex-shrink: 0;
+  }
+  .shared-touch-surface {
+    width: var(--touch-size);
+    height: var(--touch-size);
+    box-sizing: border-box;
+    border: 2px solid var(--fk-control-line, #a3dfffb3);
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--fk-panel, #0b1d32) 60%, transparent);
+    color: var(--fk-text, #d4f6ff);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font: 13px/1.4 var(--fk-font-ui, sans-serif);
+  }
+  .shared-touch-surface > span:first-child {
+    font: 54px/1.3 var(--fk-font-ui, sans-serif);
+  }
+  .shared-touch-pad {
+    width: var(--touch-size);
+    height: var(--touch-size);
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    gap: 0;
+    border-radius: 30%;
+    background: color-mix(in srgb, var(--fk-panel, #122e43) 34%, transparent);
+  }
+  .shared-touch-pad button {
+    width: 100%;
+    height: 100%;
+    min-width: 0;
+    min-height: 0;
+    padding: 0;
+    border: 2px solid var(--fk-control-line, #5386a8);
+    border-radius: 18%;
+    box-shadow: none;
+    background: color-mix(in srgb, var(--fk-panel-raised, #19364a) 70%, transparent);
+    color: var(--fk-text, #c4f3ff);
+    font: bold 25px/1 var(--fk-font-ui, sans-serif);
+    touch-action: none;
+  }
+  .shared-touch-pad button[data-direction='up'] {
+    grid-area: 1 / 2;
+  }
+  .shared-touch-pad button[data-direction='left'] {
+    grid-area: 2 / 1;
+  }
+  .shared-touch-pad button[data-direction='down'] {
+    grid-area: 3 / 2;
+  }
+  .shared-touch-pad button[data-direction='right'] {
+    grid-area: 2 / 3;
+  }
+  .shared-touch-pad button[data-presentation-control][aria-label] {
+    font-size: 0;
+  }
+  .shared-touch-action {
+    min-width: 76px;
+    min-height: 76px;
+  }
+  .shared-touch-indicator {
+    position: fixed;
+    z-index: 20;
+    pointer-events: none;
+    width: 112px;
+    height: 112px;
+    transform: translate(-50%, -50%);
+    border: 2px solid var(--fk-control-line, #bdefff99);
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--fk-panel-raised, #12354b) 20%, transparent);
+  }
+  .shared-touch-indicator i {
+    position: absolute;
+    left: 36px;
+    top: 36px;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--fk-text, #c4f3ff) 60%, transparent);
+    border: 2px solid var(--fk-text, #ecfcff);
+    transform: translate(var(--stick-x, 0px), var(--stick-y, 0px));
+  }
+  .shared-touch-controls[hidden],
+  .shared-touch-controls [hidden] {
+    display: none;
+  }
+}

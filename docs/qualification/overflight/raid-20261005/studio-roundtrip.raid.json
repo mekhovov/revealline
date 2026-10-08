@@ -1,0 +1,1149 @@
+{
+  "format": "revealline-overflight-hunt-package.v1",
+  "project": {
+    "format": "OverflightHuntProjectV1",
+    "id": "overflight-raid-patrol",
+    "title": {
+      "en": "Raid · Creator review",
+      "uk": "Проліт: Наліт · Зрив патруля"
+    },
+    "seed": 17031991,
+    "arena": {
+      "width": 2880,
+      "height": 1080,
+      "cameraWidth": 960,
+      "cameraHeight": 540
+    },
+    "population": {
+      "capacity": 1500,
+      "specialists": 8,
+      "heavies": 4,
+      "priorityAttacks": 2
+    },
+    "encounters": [
+      {
+        "id": "patrols",
+        "title": {
+          "en": "Break the patrols",
+          "uk": "Розбий патрулі"
+        },
+        "sector": 0,
+        "entry": {
+          "x": 160,
+          "y": 540
+        },
+        "packs": [
+          {
+            "id": "patrols-pack-1",
+            "family": "patroller",
+            "behavior": "patrol",
+            "count": 16,
+            "x": 120,
+            "y": 170,
+            "spacing": 24,
+            "speed": 64,
+            "route": [
+              {
+                "x": 300,
+                "y": 245
+              },
+              {
+                "x": 90,
+                "y": 330
+              },
+              {
+                "x": 120,
+                "y": 170
+              }
+            ]
+          },
+          {
+            "id": "patrols-pack-2",
+            "family": "lookout",
+            "behavior": "patrol",
+            "count": 16,
+            "x": 335,
+            "y": 170,
+            "spacing": 24,
+            "speed": 80,
+            "route": [
+              {
+                "x": 515,
+                "y": 245
+              },
+              {
+                "x": 235,
+                "y": 330
+              },
+              {
+                "x": 335,
+                "y": 170
+              }
+            ]
+          },
+          {
+            "id": "patrols-pack-3",
+            "family": "runner",
+            "behavior": "runner",
+            "count": 16,
+            "x": 550,
+            "y": 170,
+            "spacing": 24,
+            "speed": 96,
+            "route": [
+              {
+                "x": 730,
+                "y": 245
+              },
+              {
+                "x": 450,
+                "y": 330
+              },
+              {
+                "x": 550,
+                "y": 170
+              }
+            ]
+          },
+          {
+            "id": "patrols-pack-4",
+            "family": "refuge-seeker",
+            "behavior": "runner",
+            "count": 16,
+            "x": 765,
+            "y": 170,
+            "spacing": 24,
+            "speed": 64,
+            "route": [
+              {
+                "x": 850,
+                "y": 245
+              },
+              {
+                "x": 665,
+                "y": 330
+              },
+              {
+                "x": 765,
+                "y": 170
+              }
+            ]
+          },
+          {
+            "id": "patrols-pack-5",
+            "family": "courier",
+            "behavior": "courier",
+            "count": 16,
+            "x": 120,
+            "y": 410,
+            "spacing": 24,
+            "speed": 80,
+            "route": [
+              {
+                "x": 300,
+                "y": 485
+              },
+              {
+                "x": 90,
+                "y": 570
+              },
+              {
+                "x": 120,
+                "y": 410
+              }
+            ]
+          },
+          {
+            "id": "patrols-pack-6",
+            "family": "sprinter",
+            "behavior": "sprinter",
+            "count": 16,
+            "x": 335,
+            "y": 410,
+            "spacing": 24,
+            "speed": 96,
+            "route": [
+              {
+                "x": 515,
+                "y": 485
+              },
+              {
+                "x": 235,
+                "y": 570
+              },
+              {
+                "x": 335,
+                "y": 410
+              }
+            ]
+          },
+          {
+            "id": "patrols-pack-7",
+            "family": "rendezvous-pair",
+            "behavior": "crossing",
+            "count": 16,
+            "x": 550,
+            "y": 410,
+            "spacing": 24,
+            "speed": 64,
+            "route": [
+              {
+                "x": 730,
+                "y": 485
+              },
+              {
+                "x": 450,
+                "y": 570
+              },
+              {
+                "x": 550,
+                "y": 410
+              }
+            ]
+          },
+          {
+            "id": "patrols-pack-8",
+            "family": "relay-warden",
+            "behavior": "crossing",
+            "count": 16,
+            "x": 765,
+            "y": 410,
+            "spacing": 24,
+            "speed": 80,
+            "route": [
+              {
+                "x": 850,
+                "y": 485
+              },
+              {
+                "x": 665,
+                "y": 570
+              },
+              {
+                "x": 765,
+                "y": 410
+              }
+            ]
+          },
+          {
+            "id": "patrols-escort",
+            "family": "brace-trooper",
+            "behavior": "brace",
+            "count": 6,
+            "x": 420,
+            "y": 540,
+            "spacing": 24,
+            "speed": 42,
+            "route": [
+              {
+                "x": 455,
+                "y": 565
+              },
+              {
+                "x": 385,
+                "y": 515
+              }
+            ]
+          }
+        ],
+        "objectives": [
+          {
+            "id": "leader-1",
+            "family": "patroller",
+            "behavior": "patrol",
+            "x": 340,
+            "y": 410,
+            "armorSegments": 0,
+            "route": [
+              {
+                "x": 415,
+                "y": 470
+              },
+              {
+                "x": 275,
+                "y": 350
+              }
+            ]
+          },
+          {
+            "id": "leader-2",
+            "family": "shield-bearer",
+            "behavior": "shield",
+            "x": 620,
+            "y": 740,
+            "armorSegments": 0,
+            "route": [
+              {
+                "x": 685,
+                "y": 800
+              },
+              {
+                "x": 555,
+                "y": 680
+              }
+            ]
+          },
+          {
+            "id": "leader-3",
+            "family": "brace-trooper",
+            "behavior": "brace",
+            "x": 800,
+            "y": 340,
+            "armorSegments": 0,
+            "route": [
+              {
+                "x": 865,
+                "y": 400
+              },
+              {
+                "x": 735,
+                "y": 280
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "column",
+        "title": {
+          "en": "Intercept the column",
+          "uk": "Перехопи колону"
+        },
+        "sector": 1,
+        "entry": {
+          "x": 1120,
+          "y": 540
+        },
+        "packs": [
+          {
+            "id": "column-pack-1",
+            "family": "refuge-seeker",
+            "behavior": "runner",
+            "count": 16,
+            "x": 1080,
+            "y": 170,
+            "spacing": 24,
+            "speed": 64,
+            "route": [
+              {
+                "x": 1260,
+                "y": 245
+              },
+              {
+                "x": 1050,
+                "y": 330
+              },
+              {
+                "x": 1080,
+                "y": 170
+              }
+            ]
+          },
+          {
+            "id": "column-pack-2",
+            "family": "courier",
+            "behavior": "courier",
+            "count": 16,
+            "x": 1295,
+            "y": 170,
+            "spacing": 24,
+            "speed": 80,
+            "route": [
+              {
+                "x": 1475,
+                "y": 245
+              },
+              {
+                "x": 1195,
+                "y": 330
+              },
+              {
+                "x": 1295,
+                "y": 170
+              }
+            ]
+          },
+          {
+            "id": "column-pack-3",
+            "family": "sprinter",
+            "behavior": "sprinter",
+            "count": 16,
+            "x": 1510,
+            "y": 170,
+            "spacing": 24,
+            "speed": 96,
+            "route": [
+              {
+                "x": 1690,
+                "y": 245
+              },
+              {
+                "x": 1410,
+                "y": 330
+              },
+              {
+                "x": 1510,
+                "y": 170
+              }
+            ]
+          },
+          {
+            "id": "column-pack-4",
+            "family": "rendezvous-pair",
+            "behavior": "crossing",
+            "count": 16,
+            "x": 1725,
+            "y": 170,
+            "spacing": 24,
+            "speed": 64,
+            "route": [
+              {
+                "x": 1810,
+                "y": 245
+              },
+              {
+                "x": 1625,
+                "y": 330
+              },
+              {
+                "x": 1725,
+                "y": 170
+              }
+            ]
+          },
+          {
+            "id": "column-pack-5",
+            "family": "relay-warden",
+            "behavior": "crossing",
+            "count": 16,
+            "x": 1080,
+            "y": 410,
+            "spacing": 24,
+            "speed": 80,
+            "route": [
+              {
+                "x": 1260,
+                "y": 485
+              },
+              {
+                "x": 1050,
+                "y": 570
+              },
+              {
+                "x": 1080,
+                "y": 410
+              }
+            ]
+          },
+          {
+            "id": "column-pack-6",
+            "family": "patroller",
+            "behavior": "patrol",
+            "count": 16,
+            "x": 1295,
+            "y": 410,
+            "spacing": 24,
+            "speed": 96,
+            "route": [
+              {
+                "x": 1475,
+                "y": 485
+              },
+              {
+                "x": 1195,
+                "y": 570
+              },
+              {
+                "x": 1295,
+                "y": 410
+              }
+            ]
+          },
+          {
+            "id": "column-pack-7",
+            "family": "lookout",
+            "behavior": "patrol",
+            "count": 16,
+            "x": 1510,
+            "y": 410,
+            "spacing": 24,
+            "speed": 64,
+            "route": [
+              {
+                "x": 1690,
+                "y": 485
+              },
+              {
+                "x": 1410,
+                "y": 570
+              },
+              {
+                "x": 1510,
+                "y": 410
+              }
+            ]
+          },
+          {
+            "id": "column-pack-8",
+            "family": "runner",
+            "behavior": "runner",
+            "count": 16,
+            "x": 1725,
+            "y": 410,
+            "spacing": 24,
+            "speed": 80,
+            "route": [
+              {
+                "x": 1810,
+                "y": 485
+              },
+              {
+                "x": 1625,
+                "y": 570
+              },
+              {
+                "x": 1725,
+                "y": 410
+              }
+            ]
+          },
+          {
+            "id": "column-pack-9",
+            "family": "refuge-seeker",
+            "behavior": "runner",
+            "count": 16,
+            "x": 1080,
+            "y": 650,
+            "spacing": 24,
+            "speed": 96,
+            "route": [
+              {
+                "x": 1260,
+                "y": 725
+              },
+              {
+                "x": 1050,
+                "y": 810
+              },
+              {
+                "x": 1080,
+                "y": 650
+              }
+            ]
+          },
+          {
+            "id": "column-pack-10",
+            "family": "courier",
+            "behavior": "courier",
+            "count": 16,
+            "x": 1295,
+            "y": 650,
+            "spacing": 24,
+            "speed": 64,
+            "route": [
+              {
+                "x": 1475,
+                "y": 725
+              },
+              {
+                "x": 1195,
+                "y": 810
+              },
+              {
+                "x": 1295,
+                "y": 650
+              }
+            ]
+          },
+          {
+            "id": "column-escort",
+            "family": "brace-trooper",
+            "behavior": "brace",
+            "count": 6,
+            "x": 1550,
+            "y": 540,
+            "spacing": 24,
+            "speed": 42,
+            "route": [
+              {
+                "x": 1585,
+                "y": 565
+              },
+              {
+                "x": 1515,
+                "y": 515
+              }
+            ]
+          }
+        ],
+        "objectives": [
+          {
+            "id": "light-1",
+            "family": "utility-car",
+            "behavior": "vehicle",
+            "x": 1210,
+            "y": 340,
+            "armorSegments": 1,
+            "route": [
+              {
+                "x": 1275,
+                "y": 400
+              },
+              {
+                "x": 1145,
+                "y": 280
+              }
+            ]
+          },
+          {
+            "id": "light-2",
+            "family": "cargo-truck",
+            "behavior": "vehicle",
+            "x": 1520,
+            "y": 760,
+            "armorSegments": 1,
+            "route": [
+              {
+                "x": 1585,
+                "y": 820
+              },
+              {
+                "x": 1455,
+                "y": 700
+              }
+            ]
+          },
+          {
+            "id": "carrier",
+            "family": "armored-carrier",
+            "behavior": "vehicle",
+            "x": 1770,
+            "y": 480,
+            "armorSegments": 2,
+            "route": [
+              {
+                "x": 1835,
+                "y": 540
+              },
+              {
+                "x": 1705,
+                "y": 420
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "command",
+        "title": {
+          "en": "Finish the hunt",
+          "uk": "Заверши полювання"
+        },
+        "sector": 2,
+        "entry": {
+          "x": 2080,
+          "y": 540
+        },
+        "packs": [
+          {
+            "id": "command-pack-1",
+            "family": "rendezvous-pair",
+            "behavior": "crossing",
+            "count": 16,
+            "x": 2040,
+            "y": 170,
+            "spacing": 24,
+            "speed": 64,
+            "route": [
+              {
+                "x": 2220,
+                "y": 245
+              },
+              {
+                "x": 2010,
+                "y": 330
+              },
+              {
+                "x": 2040,
+                "y": 170
+              }
+            ]
+          },
+          {
+            "id": "command-pack-2",
+            "family": "relay-warden",
+            "behavior": "crossing",
+            "count": 16,
+            "x": 2255,
+            "y": 170,
+            "spacing": 24,
+            "speed": 80,
+            "route": [
+              {
+                "x": 2435,
+                "y": 245
+              },
+              {
+                "x": 2155,
+                "y": 330
+              },
+              {
+                "x": 2255,
+                "y": 170
+              }
+            ]
+          },
+          {
+            "id": "command-pack-3",
+            "family": "patroller",
+            "behavior": "patrol",
+            "count": 16,
+            "x": 2470,
+            "y": 170,
+            "spacing": 24,
+            "speed": 96,
+            "route": [
+              {
+                "x": 2650,
+                "y": 245
+              },
+              {
+                "x": 2370,
+                "y": 330
+              },
+              {
+                "x": 2470,
+                "y": 170
+              }
+            ]
+          },
+          {
+            "id": "command-pack-4",
+            "family": "lookout",
+            "behavior": "patrol",
+            "count": 16,
+            "x": 2685,
+            "y": 170,
+            "spacing": 24,
+            "speed": 64,
+            "route": [
+              {
+                "x": 2770,
+                "y": 245
+              },
+              {
+                "x": 2585,
+                "y": 330
+              },
+              {
+                "x": 2685,
+                "y": 170
+              }
+            ]
+          },
+          {
+            "id": "command-pack-5",
+            "family": "runner",
+            "behavior": "runner",
+            "count": 16,
+            "x": 2040,
+            "y": 410,
+            "spacing": 24,
+            "speed": 80,
+            "route": [
+              {
+                "x": 2220,
+                "y": 485
+              },
+              {
+                "x": 2010,
+                "y": 570
+              },
+              {
+                "x": 2040,
+                "y": 410
+              }
+            ]
+          },
+          {
+            "id": "command-pack-6",
+            "family": "refuge-seeker",
+            "behavior": "runner",
+            "count": 16,
+            "x": 2255,
+            "y": 410,
+            "spacing": 24,
+            "speed": 96,
+            "route": [
+              {
+                "x": 2435,
+                "y": 485
+              },
+              {
+                "x": 2155,
+                "y": 570
+              },
+              {
+                "x": 2255,
+                "y": 410
+              }
+            ]
+          },
+          {
+            "id": "command-pack-7",
+            "family": "courier",
+            "behavior": "courier",
+            "count": 16,
+            "x": 2470,
+            "y": 410,
+            "spacing": 24,
+            "speed": 64,
+            "route": [
+              {
+                "x": 2650,
+                "y": 485
+              },
+              {
+                "x": 2370,
+                "y": 570
+              },
+              {
+                "x": 2470,
+                "y": 410
+              }
+            ]
+          },
+          {
+            "id": "command-pack-8",
+            "family": "sprinter",
+            "behavior": "sprinter",
+            "count": 16,
+            "x": 2685,
+            "y": 410,
+            "spacing": 24,
+            "speed": 80,
+            "route": [
+              {
+                "x": 2770,
+                "y": 485
+              },
+              {
+                "x": 2585,
+                "y": 570
+              },
+              {
+                "x": 2685,
+                "y": 410
+              }
+            ]
+          },
+          {
+            "id": "command-pack-9",
+            "family": "rendezvous-pair",
+            "behavior": "crossing",
+            "count": 16,
+            "x": 2040,
+            "y": 650,
+            "spacing": 24,
+            "speed": 96,
+            "route": [
+              {
+                "x": 2220,
+                "y": 725
+              },
+              {
+                "x": 2010,
+                "y": 810
+              },
+              {
+                "x": 2040,
+                "y": 650
+              }
+            ]
+          },
+          {
+            "id": "command-pack-10",
+            "family": "relay-warden",
+            "behavior": "crossing",
+            "count": 16,
+            "x": 2255,
+            "y": 650,
+            "spacing": 24,
+            "speed": 64,
+            "route": [
+              {
+                "x": 2435,
+                "y": 725
+              },
+              {
+                "x": 2155,
+                "y": 810
+              },
+              {
+                "x": 2255,
+                "y": 650
+              }
+            ]
+          },
+          {
+            "id": "command-pack-11",
+            "family": "patroller",
+            "behavior": "patrol",
+            "count": 16,
+            "x": 2470,
+            "y": 650,
+            "spacing": 24,
+            "speed": 80,
+            "route": [
+              {
+                "x": 2650,
+                "y": 725
+              },
+              {
+                "x": 2370,
+                "y": 810
+              },
+              {
+                "x": 2470,
+                "y": 650
+              }
+            ]
+          },
+          {
+            "id": "command-pack-12",
+            "family": "lookout",
+            "behavior": "patrol",
+            "count": 16,
+            "x": 2685,
+            "y": 650,
+            "spacing": 24,
+            "speed": 96,
+            "route": [
+              {
+                "x": 2770,
+                "y": 725
+              },
+              {
+                "x": 2585,
+                "y": 810
+              },
+              {
+                "x": 2685,
+                "y": 650
+              }
+            ]
+          },
+          {
+            "id": "command-pack-13",
+            "family": "runner",
+            "behavior": "runner",
+            "count": 16,
+            "x": 2040,
+            "y": 890,
+            "spacing": 24,
+            "speed": 64,
+            "route": [
+              {
+                "x": 2220,
+                "y": 965
+              },
+              {
+                "x": 2010,
+                "y": 950
+              },
+              {
+                "x": 2040,
+                "y": 890
+              }
+            ]
+          },
+          {
+            "id": "command-pack-14",
+            "family": "refuge-seeker",
+            "behavior": "runner",
+            "count": 16,
+            "x": 2255,
+            "y": 890,
+            "spacing": 24,
+            "speed": 80,
+            "route": [
+              {
+                "x": 2435,
+                "y": 965
+              },
+              {
+                "x": 2155,
+                "y": 950
+              },
+              {
+                "x": 2255,
+                "y": 890
+              }
+            ]
+          },
+          {
+            "id": "command-escort",
+            "family": "brace-trooper",
+            "behavior": "brace",
+            "count": 6,
+            "x": 2680,
+            "y": 540,
+            "spacing": 24,
+            "speed": 42,
+            "route": [
+              {
+                "x": 2715,
+                "y": 565
+              },
+              {
+                "x": 2645,
+                "y": 515
+              }
+            ]
+          }
+        ],
+        "objectives": [
+          {
+            "id": "command-tank",
+            "family": "tracked-tank",
+            "behavior": "vehicle",
+            "x": 2600,
+            "y": 520,
+            "armorSegments": 3,
+            "route": [
+              {
+                "x": 2665,
+                "y": 580
+              },
+              {
+                "x": 2535,
+                "y": 460
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "upgrades": {
+      "choices": 8,
+      "rerolls": 2,
+      "thresholds": [
+        10,
+        35
+      ],
+      "modules": [
+        "strike-width",
+        "slow-wake",
+        "rush-charge",
+        "boost-cooldown",
+        "boost-duration",
+        "chain-window",
+        "heavy-exposure",
+        "guard-interrupt",
+        "recovery-shield"
+      ]
+    },
+    "resources": {
+      "profile": "board",
+      "actorArtRevision": "industrial-roster-v3",
+      "wardrobes": [
+        "tactical",
+        "rivals",
+        "arcade"
+      ],
+      "soldiers": [
+        "lookout",
+        "patroller",
+        "runner",
+        "sprinter",
+        "courier",
+        "guard",
+        "refuge-seeker",
+        "switchback",
+        "rendezvous-pair",
+        "shield-bearer",
+        "brace-trooper",
+        "relay-warden"
+      ],
+      "machinery": [
+        "utility-car",
+        "cargo-truck",
+        "armored-carrier",
+        "scout-car",
+        "tracked-tank",
+        "radar-truck"
+      ],
+      "effects": {
+        "id": "overflight-field-kit",
+        "revision": 1
+      },
+      "motion": {
+        "id": "overflight-field-kit-motion",
+        "revision": 1
+      },
+      "pools": {
+        "pickups": 2048,
+        "effects": 512,
+        "projectiles": 512
+      }
+    },
+    "props": [
+      {
+        "id": "raid-case-west",
+        "kind": "supply-case",
+        "x": 980,
+        "y": 320
+      },
+      {
+        "id": "raid-case-east",
+        "kind": "supply-case",
+        "x": 1910,
+        "y": 760
+      }
+    ]
+  },
+  "dependencies": {
+    "profile": "board",
+    "actorArtRevision": "industrial-roster-v3",
+    "wardrobes": [
+      "tactical",
+      "rivals",
+      "arcade"
+    ],
+    "soldiers": [
+      "lookout",
+      "patroller",
+      "runner",
+      "sprinter",
+      "courier",
+      "guard",
+      "refuge-seeker",
+      "switchback",
+      "rendezvous-pair",
+      "shield-bearer",
+      "brace-trooper",
+      "relay-warden"
+    ],
+    "machinery": [
+      "utility-car",
+      "cargo-truck",
+      "armored-carrier",
+      "scout-car",
+      "tracked-tank",
+      "radar-truck"
+    ],
+    "effects": {
+      "id": "overflight-field-kit",
+      "revision": 1
+    },
+    "motion": {
+      "id": "overflight-field-kit-motion",
+      "revision": 1
+    },
+    "pools": {
+      "pickups": 2048,
+      "effects": 512,
+      "projectiles": 512
+    }
+  }
+}

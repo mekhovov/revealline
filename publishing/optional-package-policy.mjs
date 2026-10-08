@@ -32,10 +32,9 @@ const BASE_OPTIONAL_PACKAGE_POLICIES = Object.freeze({
   'civilian-flight': Object.freeze({
     root: 'optional-practice/civilian-flight/',
     entry: 'optional-practice/civilian-flight/index.html',
-    // The runtime remains a 64-file archive. Its public source companion also
-    // carries the reviewed worker and launcher templates plus its inventory,
-    // so it needs two additional, explicitly bounded entries.
-    limits: Object.freeze({ files: 66, bytes: 8 * 1024 * 1024 }),
+    // Destruction and shared defeat audio add eight reviewed source dependencies;
+    // the launcher/source closure stays bounded separately from its byte budget.
+    limits: Object.freeze({ files: 72, bytes: 8 * 1024 * 1024 }),
     localFiles: Object.freeze([
       'index.html',
       'app.mjs',
@@ -68,6 +67,7 @@ const BASE_OPTIONAL_PACKAGE_POLICIES = Object.freeze({
       'game/ui/audio-master.mjs',
       'game/audio-preferences.mjs',
       'game/audio/dialogue-mix.mjs',
+      'game/ui/destruction-audio.mjs',
       'game/ui/encounter-audio.mjs',
       'game/ui/movement-audio.mjs',
       'game/ui/dialogue-channel.mjs',
@@ -621,8 +621,14 @@ export const OPTIONAL_PACKAGE_POLICIES = Object.freeze(
             'game/ui/art/menu-scenes/fpv.webp',
             'game/ui/art-review-navigation.mjs',
             'game/hunt/preferences.mjs',
+            'game/hunt/copy.mjs',
             'game/hunt/actor-catalog.mjs',
             'game/ui/enemy-appearance-controls.mjs',
+            'game/ui/defeat-sound-controls.mjs',
+            'game/ui/destruction-audio.mjs',
+            'game/ui/destruction-level.mjs',
+            'game/ui/human-reaction-policy.mjs',
+            'game/audio/human-reactions/portable.mjs',
           ]),
         ]),
       }),

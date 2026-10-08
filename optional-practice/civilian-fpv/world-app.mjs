@@ -1442,7 +1442,11 @@ export function mountWorldApp({
       }
     }
   }
-  const audio = createWorldAudio({ window: win, storage });
+  const audio = createWorldAudio({
+    window: win,
+    storage,
+    getDestruction: () => huntPresentationControls.preferences.snapshot(),
+  });
   const presentation = mountSimPresentation({
     root: doc,
     window: win,
@@ -1512,6 +1516,7 @@ export function mountWorldApp({
     document: doc,
     window: win,
     container: $('sim-flight-controls'),
+    soundContainer: $('sim-audio-mix'),
     storage,
     locale: () => locale,
   });

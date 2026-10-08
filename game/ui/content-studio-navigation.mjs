@@ -61,3 +61,24 @@ export function mountContentStudioLinks({ document: doc, href }) {
     link.removeAttribute('aria-disabled');
   }
 }
+
+/** One named editor section is a navigation destination, never a content or
+ * playback command. Open its native disclosure before the large editor loads. */
+export function openContentStudioSection({ document: doc, href }) {
+  let page;
+  try {
+    page = new URL(href);
+  } catch {
+    return false;
+  }
+  if (
+    !/\/game\/studio\/(?:index\.html)?$/.test(page.pathname) ||
+    page.hash !== '#reaction-voice-editor-panel'
+  )
+    return false;
+  const section = doc.getElementById('reaction-voice-editor-panel');
+  if (!section) return false;
+  section.open = true;
+  section.scrollIntoView?.({ block: 'start' });
+  return true;
+}
