@@ -33,9 +33,10 @@ const BASE_OPTIONAL_PACKAGE_POLICIES = Object.freeze({
     root: 'optional-practice/civilian-flight/',
     entry: 'optional-practice/civilian-flight/index.html',
     // The runtime remains a 64-file archive. Its public source companion also
-    // carries the reviewed worker and launcher templates plus its inventory,
-    // so it needs two additional, explicitly bounded entries.
-    limits: Object.freeze({ files: 66, bytes: 8 * 1024 * 1024 }),
+    // carries the reviewed worker and launcher templates plus its inventory.
+    // Destruction audio is a direct, reviewed world-audio dependency, so the
+    // source companion needs three additional, explicitly bounded entries.
+    limits: Object.freeze({ files: 67, bytes: 8 * 1024 * 1024 }),
     localFiles: Object.freeze([
       'index.html',
       'app.mjs',
