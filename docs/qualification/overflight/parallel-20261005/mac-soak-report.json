@@ -1,0 +1,38 @@
+{
+  "recordedAt": "2026-10-05T12:40:18.142Z",
+  "runtimeSource": "a4d9b96757a467b2771f686b5db614ce9ef51473",
+  "inputSha256": "ce3f0c450a4107df2df73ca328902488702e372a2ff01e9187b6130335a1b0f2",
+  "valid": true,
+  "invalidReasons": [],
+  "window": {
+    "index": 1,
+    "complete": true,
+    "measuredSeconds": 900.004,
+    "cadenceMs": {
+      "samples": 107997,
+      "p50": 8.300000011920929,
+      "p95": 10,
+      "p99": 11.099999964237213,
+      "worst": 37.60000002384186
+    },
+    "cadenceHz": 119.99613335051845,
+    "slowFraction": 0.000009259516468050038,
+    "passes": true
+  },
+  "rawOverflow": 0,
+  "recordedResourceSamples": 63,
+  "allPopulationsCorrect": true,
+  "oneCanvas": true,
+  "fixedPools": true,
+  "fixedAtlasBytes": true,
+  "spriteHighWater": 1837,
+  "firstHighWaterTime": 150,
+  "heap": {
+    "first": 69068824,
+    "last": 66975723,
+    "min": 44660701,
+    "max": 95794161
+  },
+  "scope": "Single 30-second warm-up plus 900-second local Mac resource soak. JS heap is observational, includes diagnostic buffers and is not GPU/process memory or proof against every leak.",
+  "stableAllocationAfterFirstHighWater": true
+}

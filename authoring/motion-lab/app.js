@@ -11,6 +11,7 @@ import { getMotionDisplay } from './display.mjs';
 import { freezeMotionPresets, motionText, motionCollectionReason } from './copy.mjs';
 import { createPreviewLoop } from './preview-loop.mjs';
 import { mountSharedActorPanel } from './shared-actor-panel.mjs';
+import { mountOverflightMotionPanel } from './overflight-panel.mjs';
 import { canvasTextFonts } from '../../game/text-face.mjs';
 import { fieldKitCopy } from '../../game/ui/field-kit-copy.mjs';
 import { createOperationStatus } from '../../game/ui/operation-status.mjs';
@@ -77,6 +78,7 @@ const directionLabel = (direction) => {
 
 function mountMotionLab() {
   let sharedActorPanel = null;
+  const overflightMotionPanel = mountOverflightMotionPanel(document.getElementById('overflight-motion-study'));
   const $ = (id) => document.getElementById(id);
   // The lightweight reading control already works while presets are pending.
   // Retire only the real launcher's temporary action, never a newer focus owner.
@@ -2366,6 +2368,7 @@ function mountMotionLab() {
       disposed = true;
       startupAbort.abort();
       sharedActorPanel?.dispose();
+      overflightMotionPanel.dispose();
       setStudyReady(false);
       clearHeld({ preserveDirection: true, forgetPhysical: true });
       listeners.splice(0).forEach((remove) => remove());
@@ -2388,6 +2391,7 @@ function mountMotionLab() {
       rotorEditor?.refresh();
       partsEditor?.refresh();
       sharedActorPanel?.refresh();
+      overflightMotionPanel.refresh();
     }
   });
   const stopDisplay = display.subscribe((value) => {

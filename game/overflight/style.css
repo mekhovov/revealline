@@ -1,0 +1,1187 @@
+@import url('../ui/field-kit-fonts.css');
+
+:root {
+  color-scheme: var(--iw-color-scheme, dark);
+  font-family: var(--fk-font-ui, 'Exo 2', sans-serif);
+  background: var(--fk-bg, #17191b);
+  color: var(--fk-text, #f3eddd);
+}
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+}
+[hidden] {
+  display: none !important;
+}
+a {
+  color: var(--fk-accent, #e6b85c);
+}
+button,
+input,
+select {
+  font: inherit;
+}
+button,
+select {
+  min-height: 44px;
+  padding: 8px 12px;
+  color: var(--fk-text, #f3eddd);
+  background: var(--fk-panel, #272b2e);
+  border: 2px solid var(--fk-control-line, #8f989c);
+}
+button {
+  cursor: pointer;
+}
+button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+:where(button, a, select, input, [tabindex]):focus-visible {
+  outline: 3px solid var(--fk-focus, #78dce8);
+  outline-offset: 3px;
+}
+#boot-status {
+  margin: 16px;
+}
+.overflight-settings-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+.overflight-settings-grid label {
+  display: grid;
+  gap: 6px;
+}
+.overflight-settings-grid .overflight-check {
+  display: flex;
+  align-items: center;
+}
+.overflight-studio-links {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+.overflight-studio-link {
+  display: grid;
+  align-content: start;
+  gap: 6px;
+  min-height: 88px;
+  padding: 12px;
+  text-align: start;
+  text-decoration: none;
+  color: var(--fk-text, #f3eddd);
+  background: var(--fk-panel, #272b2e);
+  border: 2px solid var(--fk-control-line, #8f989c);
+}
+.overflight-studio-link strong {
+  color: var(--fk-accent, #e6b85c);
+}
+.overflight-studio-link span {
+  font-size: 0.9em;
+  line-height: 1.35;
+}
+.overflight-studio-link:hover {
+  border-color: var(--fk-accent, #e6b85c);
+}
+.overflight-check input {
+  width: 22px;
+  height: 22px;
+}
+#overflight-game {
+  position: relative;
+  display: grid;
+  overflow: hidden;
+  background: #101710;
+}
+#render-host {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+  outline-offset: -3px;
+}
+#render-host canvas {
+  display: block;
+  image-rendering: pixelated;
+}
+#render-host {
+  touch-action: none;
+}
+.overflight-touch {
+  position: absolute;
+  z-index: 5;
+  bottom: max(44px, calc(env(safe-area-inset-bottom, 0px) + 36px));
+  left: max(16px, calc(env(safe-area-inset-left, 0px) + 12px));
+  right: max(16px, calc(env(safe-area-inset-right, 0px) + 12px));
+}
+.overflight-touch .shared-touch-pad button {
+  min-height: 0;
+  padding: 0;
+}
+.overflight-touch .shared-touch-action {
+  min-width: 86px;
+  min-height: 76px;
+  border-radius: 20%;
+  white-space: pre-line;
+  line-height: 1.35;
+}
+.overflight-touch .shared-touch-action:is([data-pressed='true'], [data-ready='true']) {
+  border-color: var(--fk-accent, #e6b85c);
+}
+.overflight-touch .shared-touch-action[data-pressed='true'] {
+  background: var(--fk-accent, #e6b85c);
+  color: var(--fk-bg, #17191b);
+}
+.overflight-player .shared-touch-settings {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin-block: 20px;
+}
+.overflight-player .shared-touch-settings label {
+  display: grid;
+  gap: 6px;
+}
+.overflight-player .shared-touch-settings p {
+  grid-column: 1 / -1;
+}
+@media (max-width: 440px) {
+  .overflight-touch {
+    gap: 10px;
+  }
+  .overflight-player .shared-touch-settings {
+    grid-template-columns: 1fr;
+  }
+}
+#overflight-hud {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  font-family: var(--fk-font-mono, monospace);
+  font-size: 14px;
+  color: #f3f0db;
+  text-shadow: 1px 1px 2px #070b12;
+}
+.overflight-xp {
+  height: 5px;
+  background: #101923d9;
+}
+#xp-fill {
+  height: 100%;
+  width: 0;
+  background: #78dce8;
+}
+.overflight-topline,
+.overflight-bottomline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 7px 12px;
+  background: #07111cb8;
+}
+.overflight-topline > * {
+  flex: 1;
+}
+#hud-time {
+  text-align: center;
+  font-size: 18px;
+}
+#hud-level {
+  text-align: right;
+}
+#hud-review {
+  display: inline-block;
+  margin: 6px 12px;
+  padding: 4px 8px;
+  background: #07111ce8;
+  font-size: 11px;
+  color: #e6b85c;
+}
+.overflight-bottomline {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  font-size: 12px;
+}
+#hud-build {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+#play-status {
+  position: absolute;
+  left: 50%;
+  top: 48%;
+  transform: translate(-50%, -50%);
+  max-width: min(560px, 90%);
+  padding: 14px 20px;
+  background: var(--fk-panel, #272b2e);
+  border: 2px solid var(--fk-accent, #e6b85c);
+  text-align: center;
+  pointer-events: none;
+}
+.overflight-upgrade {
+  width: min(1100px, calc(100vw - 24px));
+}
+.overflight-upgrade header {
+  padding: 16px 24px;
+}
+.overflight-upgrade h1 {
+  font-family: var(--fk-font-display, inherit);
+  margin: 0;
+  font-size: clamp(24px, 3vw, 40px);
+}
+.overflight-upgrade p {
+  margin: 8px 0 0;
+}
+.overflight-upgrade-cards {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  padding: 8px 24px 24px;
+  overflow: auto;
+}
+.overflight-upgrade-card {
+  text-align: left;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-height: 230px;
+  border-color: var(--fk-accent, #e6b85c);
+}
+.overflight-upgrade-card .upgrade-title {
+  font-size: 21px;
+  line-height: 1.15;
+  color: inherit;
+}
+.overflight-upgrade-card span {
+  display: block;
+}
+.overflight-upgrade-card .upgrade-heading {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 64px;
+}
+.overflight-upgrade-card .upgrade-names {
+  min-width: 0;
+}
+.upgrade-kind {
+  font-size: 12px;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+.upgrade-preview {
+  width: 100%;
+  border: 1px solid #64756d;
+  background: #0c1718;
+}
+.upgrade-preview svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.upgrade-description {
+  font-size: 15px;
+  line-height: 1.4;
+  font-weight: 500;
+}
+.overflight-upgrade-card[data-review-selected] {
+  opacity: 1;
+}
+.overflight-upgrade-card[data-review-selected='true'] {
+  outline: 3px solid var(--fk-focus, #78dce8);
+  outline-offset: 3px;
+}
+.overflight-upgrade-card .upgrade-evolution {
+  margin-top: auto;
+  color: inherit;
+  font-size: 12px;
+  font-weight: 500;
+}
+.overflight-upgrade-card .upgrade-ranks {
+  display: flex;
+  gap: 5px;
+  margin-bottom: 6px;
+}
+.upgrade-rank {
+  width: 22px;
+  height: 5px;
+  border: 1px solid currentColor;
+}
+.upgrade-rank[data-filled='true'] {
+  background: currentColor;
+}
+.upgrade-rank[data-next='true'] {
+  background: currentColor;
+  opacity: 0.6;
+}
+[data-text-size='large'] .upgrade-description {
+  font-size: 18px;
+}
+[data-text-size='large'] :is(.upgrade-kind, .upgrade-evolution) {
+  font-size: 15px;
+}
+#result-stats {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 8px 24px;
+}
+#result-stats dd {
+  margin: 0;
+}
+#overflight-diagnostics {
+  position: absolute;
+  right: 12px;
+  top: 52px;
+  max-width: min(500px, calc(100% - 24px));
+  padding: 12px;
+  background: #101923ed;
+  color: #f3f0db;
+  max-height: 70%;
+  overflow: auto;
+  font: 12px var(--fk-font-mono, monospace);
+}
+#diagnostic-values {
+  white-space: pre-wrap;
+}
+@media (max-width: 700px) {
+  .overflight-upgrade-cards {
+    grid-template-columns: 1fr;
+    max-height: 55dvh;
+  }
+  .overflight-upgrade-card {
+    min-height: 0;
+    padding: 14px;
+  }
+  .overflight-settings-grid,
+  .overflight-studio-links {
+    grid-template-columns: 1fr;
+  }
+  #overflight-hud {
+    font-size: 12px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  * {
+    scroll-behavior: auto;
+  }
+}
+
+.overflight-mission-list {
+  display: grid;
+  gap: 12px;
+}
+#overflight-music {
+  margin-top: 24px;
+  border-top: 1px solid var(--fk-control-line, #8f989c);
+}
+#overflight-music section > button {
+  margin: 4px;
+}
+.overflight-music-credit {
+  position: absolute;
+  bottom: 42px;
+  left: 12px;
+  max-width: 50%;
+  padding: 6px 10px;
+  background: #07111cb8;
+  font-size: 11px;
+}
+.overflight-music-credit span {
+  display: block;
+}
+
+#hud-build {
+  display: flex;
+  gap: 12px;
+}
+.overflight-build-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.overflight-pulse-charge {
+  display: inline-block;
+  width: 32px;
+  height: 7px;
+  border: 1px solid #8ce1d3;
+  background: #0c1718;
+  flex-shrink: 0;
+}
+.overflight-pulse-fill {
+  display: block;
+  height: 100%;
+  background: #8ce1d3;
+}
+.overflight-pulse-charge[data-ready='true'] .overflight-pulse-fill {
+  background: #edc363;
+}
+.overflight-module-icon {
+  width: 20px;
+  height: 20px;
+  image-rendering: pixelated;
+  flex-shrink: 0;
+}
+.overflight-upgrade-card .overflight-module-icon {
+  width: 32px;
+  height: 32px;
+}
+
+[data-theme-text-size='large'] #overflight-hud {
+  font-size: 18px;
+}
+[data-theme-text-size='large'] .overflight-bottomline {
+  font-size: 16px;
+}
+[data-theme-hud='opaque']
+  :is(.overflight-topline, .overflight-bottomline, .overflight-music-credit) {
+  background: #07111c;
+}
+
+.overflight-installed-entry {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  gap: 8px;
+}
+@media (max-width: 700px) {
+  .overflight-installed-entry {
+    grid-template-columns: 1fr 1fr;
+  }
+  .overflight-installed-entry > :first-child {
+    grid-column: 1 / -1;
+  }
+}
+
+#raw-metrics {
+  display: block;
+  width: 100%;
+  height: 240px;
+  resize: vertical;
+  color: inherit;
+  background: #07111c;
+  font: 11px var(--fk-font-mono, monospace);
+}
+#review-clip-video {
+  display: block;
+  width: 100%;
+  max-height: 220px;
+  margin: 12px 0;
+}
+
+/* Flight instruments stay at the edges; the battlefield owns the center. */
+.overflight-topline {
+  align-items: flex-start;
+  background: linear-gradient(#07110fef, #07110f99 78%, transparent);
+  padding: 12px 18px 18px;
+}
+.overflight-vitals,
+.overflight-tally,
+.overflight-clock {
+  display: grid;
+  gap: 5px;
+}
+.overflight-vitals {
+  max-width: 210px;
+}
+.overflight-tally {
+  justify-items: end;
+}
+.overflight-clock {
+  justify-items: center;
+}
+.overflight-eyebrow {
+  font: 600 11px var(--fk-font-mono, monospace);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--fk-accent, #e6b85c);
+  margin: 0;
+}
+#hud-time {
+  font-size: clamp(20px, 2vw, 29px);
+  line-height: 1;
+}
+#hud-hull {
+  font-weight: 700;
+}
+#hud-airframes {
+  font-size: 11px;
+  color: #c1cbbd;
+}
+#hud-kills {
+  color: #edc363;
+  font-size: 16px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+#hud-level {
+  font-size: 12px;
+  color: #9aebda;
+}
+.overflight-health-meter {
+  height: 6px;
+  border: 1px solid #a1b0a1;
+  background: #101710;
+  overflow: hidden;
+}
+#hud-health-fill {
+  display: block;
+  height: 100%;
+  background: #a5d88b;
+  transition: width 0.2s;
+}
+.overflight-health-meter[data-critical='true'] #hud-health-fill {
+  background: #f9a275;
+}
+.overflight-xp {
+  height: 5px;
+}
+#xp-fill {
+  background: #e6b85c;
+  box-shadow: 0 0 8px #e6b85c66;
+  transition: width 0.18s;
+}
+.overflight-hangar {
+  display: grid;
+  grid-template-columns: 130px minmax(0, 1fr);
+  gap: 24px;
+  align-items: center;
+  padding: 18px;
+  border: 1px solid var(--fk-control-line, #8f989c);
+  background: #111d1a;
+  margin-bottom: 20px;
+}
+.overflight-hangar label {
+  display: block;
+  margin: 10px 0 6px;
+  font-weight: 700;
+}
+.overflight-hangar select {
+  width: 100%;
+}
+.overflight-hangar .micro-note {
+  margin-bottom: 0;
+  font-size: 13px;
+  color: #bcc8bf;
+}
+.overflight-character-preview {
+  min-height: 130px;
+  display: grid;
+  place-items: center;
+  background:
+    repeating-linear-gradient(0deg, transparent 0 23px, #728b7922 23px 24px),
+    repeating-linear-gradient(90deg, #0b1713 0 23px, #728b7922 23px 24px);
+  border: 1px solid #546b5b;
+}
+.overflight-character-preview canvas {
+  width: 112px;
+  height: 112px;
+  image-rendering: pixelated;
+}
+#overflight-destruction,
+#overflight-commentator-settings {
+  margin-top: 24px;
+  border-top: 1px solid var(--fk-control-line, #8f989c);
+  padding-top: 12px;
+}
+#overflight-destruction label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 12px 0;
+}
+#overflight-destruction input {
+  width: 22px;
+  height: 22px;
+}
+#overflight-destruction button {
+  margin-right: 8px;
+}
+.overflight-upgrade .mode-play-dialog-head {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  position: relative;
+  overflow: hidden;
+  border-bottom: 2px solid var(--fk-accent, #e6b85c);
+  background: linear-gradient(110deg, #53432155, transparent 70%);
+}
+.overflight-upgrade .overflight-eyebrow {
+  margin: 0 0 6px;
+}
+.upgrade-celebration {
+  position: relative;
+  flex: 0 0 68px;
+  height: 68px;
+  display: grid;
+  place-items: center;
+}
+.upgrade-celebration > span {
+  font-size: 64px;
+  line-height: 1;
+  color: #edc363;
+  filter: drop-shadow(0 0 10px #edc36344);
+}
+.upgrade-celebration i {
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  left: 32px;
+  top: 32px;
+  background: #9aebda;
+  opacity: 0;
+  --x: -42px;
+  --y: -27px;
+}
+.upgrade-celebration i:nth-of-type(2) {
+  --x: 48px;
+  --y: -25px;
+}
+.upgrade-celebration i:nth-of-type(3) {
+  --x: 42px;
+  --y: 28px;
+}
+.upgrade-celebration i:nth-of-type(4) {
+  --x: -45px;
+  --y: 23px;
+}
+.upgrade-celebration i:nth-of-type(5) {
+  --x: 5px;
+  --y: -43px;
+}
+.upgrade-celebration i:nth-of-type(6) {
+  --x: -7px;
+  --y: 43px;
+}
+.overflight-upgrade[open] .upgrade-celebration > span {
+  animation: overflight-achievement 0.55s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.overflight-upgrade[open] .upgrade-celebration i {
+  animation: overflight-spark 0.8s ease-out both;
+}
+.overflight-upgrade[open] .overflight-upgrade-card {
+  animation: overflight-card-arrival 0.38s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.overflight-upgrade[open] .overflight-upgrade-card:nth-child(2) {
+  animation-delay: 55ms;
+}
+.overflight-upgrade[open] .overflight-upgrade-card:nth-child(3) {
+  animation-delay: 110ms;
+}
+.overflight-upgrade-card {
+  transition:
+    border-color 0.12s,
+    box-shadow 0.12s;
+}
+.overflight-upgrade-card:hover,
+.overflight-upgrade-card:focus-visible {
+  border-color: #9aebda;
+  box-shadow: inset 0 3px #9aebda;
+}
+.overflight-upgrade-card[data-evolution='true'] {
+  border-color: #9aebda;
+}
+.overflight-upgrade[data-evolution='true'] .upgrade-celebration > span {
+  color: #9aebda;
+}
+.overflight-reward-toast {
+  position: absolute;
+  top: 18%;
+  left: 50%;
+  transform: translateX(-50%);
+  display: grid;
+  grid-template-columns: 28px auto;
+  column-gap: 10px;
+  padding: 10px 20px;
+  min-width: 230px;
+  max-width: 70%;
+  background: #14211bef;
+  border-left: 3px solid #edc363;
+  box-shadow: 0 4px 12px #0006;
+  animation: overflight-toast 2.2s both;
+}
+.overflight-reward-toast canvas {
+  grid-row: span 2;
+  align-self: center;
+}
+.overflight-reward-toast span {
+  font-size: 10px;
+  text-transform: uppercase;
+  color: #edc363;
+  letter-spacing: 0.08em;
+}
+.overflight-reward-toast strong {
+  font-size: 16px;
+}
+.overflight-reward-toast[data-evolution='true'] {
+  border-color: #9aebda;
+}
+.overflight-commentator {
+  position: absolute;
+  bottom: 72px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(520px, 70%);
+}
+#overflight-results {
+  --result-accent: #e6b85c;
+}
+#overflight-results[data-outcome='lost'] {
+  --result-accent: #b3c3b5;
+}
+.overflight-result-hero {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  margin: 6px 0 24px;
+}
+.overflight-result-insignia {
+  flex: 0 0 80px;
+  height: 90px;
+  display: grid;
+  place-items: center;
+  border: 2px solid var(--result-accent);
+  background: #16251d;
+  clip-path: polygon(0 0, 100% 0, 100% 80%, 50% 100%, 0 80%);
+}
+.overflight-result-insignia span {
+  font-size: 64px;
+  color: var(--result-accent);
+}
+#result-title {
+  font: 36px var(--fk-font-display, inherit);
+  margin: 8px 0;
+}
+#result-message {
+  margin: 0;
+  color: #c3cbbf;
+  max-width: 48ch;
+}
+#result-stats {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+.overflight-result-stat {
+  border-top: 2px solid var(--result-accent);
+  background: #101a16;
+  padding: 12px;
+}
+.overflight-result-stat dt {
+  color: #b6c3b7;
+  font-size: 12px;
+}
+.overflight-result-stat dd {
+  color: #f3eddd;
+  font: 700 clamp(22px, 3vw, 36px) var(--fk-font-mono, monospace);
+  margin-top: 8px !important;
+}
+.overflight-result-milestones {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin: 18px 0;
+}
+.overflight-result-milestones span {
+  padding: 7px 10px;
+  border: 1px solid #667e68;
+  color: #b9e4a5;
+  background: #17251b;
+  font-size: 12px;
+}
+.overflight-result-build {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+.overflight-result-module {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px;
+  background: #1d2724;
+  border: 1px solid #63746a;
+}
+.overflight-result-module span {
+  margin-left: auto;
+  font-size: 12px;
+  white-space: nowrap;
+  color: #a7c9b7;
+}
+.result-reveal .overflight-result-insignia {
+  animation: overflight-achievement 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.result-reveal .overflight-result-stat {
+  animation: overflight-card-arrival 0.45s both;
+}
+.result-reveal .overflight-result-stat:nth-child(2) {
+  animation-delay: 0.06s;
+}
+.result-reveal .overflight-result-stat:nth-child(3) {
+  animation-delay: 0.12s;
+}
+.result-reveal .overflight-result-stat:nth-child(4) {
+  animation-delay: 0.18s;
+}
+@keyframes overflight-achievement {
+  from {
+    transform: scale(0.55) rotate(-16deg);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1) rotate(0);
+    opacity: 1;
+  }
+}
+@keyframes overflight-card-arrival {
+  from {
+    transform: translateY(16px);
+    opacity: 0.4;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+@keyframes overflight-spark {
+  0% {
+    opacity: 0;
+    transform: translate(0, 0);
+  }
+  15% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(var(--x), var(--y));
+  }
+}
+@keyframes overflight-toast {
+  0% {
+    opacity: 0;
+    translate: 0 8px;
+  }
+  12%,
+  80% {
+    opacity: 1;
+    translate: 0 0;
+  }
+  100% {
+    opacity: 0;
+    translate: 0 -5px;
+  }
+}
+[data-effects='reduced']
+  :is(
+    .upgrade-celebration > span,
+    .upgrade-celebration i,
+    .overflight-upgrade-card,
+    .overflight-reward-toast,
+    .overflight-result-insignia,
+    .overflight-result-stat
+  ) {
+  animation: none !important;
+}
+[data-effects='reduced'] :is(#xp-fill, #hud-health-fill) {
+  transition: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  :is(
+    .upgrade-celebration > span,
+    .upgrade-celebration i,
+    .overflight-upgrade-card,
+    .overflight-reward-toast,
+    .overflight-result-insignia,
+    .overflight-result-stat
+  ) {
+    animation: none !important;
+  }
+  :is(#xp-fill, #hud-health-fill) {
+    transition: none;
+  }
+}
+@media (max-width: 700px) {
+  .overflight-topline {
+    padding: 8px 10px 14px;
+    gap: 12px;
+  }
+  .overflight-vitals {
+    max-width: 160px;
+  }
+  #hud-hull,
+  #hud-kills {
+    font-size: 12px;
+  }
+  #hud-airframes,
+  #hud-level {
+    font-size: 10px;
+  }
+  .overflight-hangar {
+    grid-template-columns: 90px minmax(0, 1fr);
+    gap: 12px;
+    padding: 12px;
+  }
+  .overflight-character-preview {
+    min-height: 100px;
+  }
+  .overflight-character-preview canvas {
+    width: 90px;
+    height: 90px;
+  }
+  .upgrade-celebration {
+    flex-basis: 42px;
+  }
+  .upgrade-celebration > span {
+    font-size: 48px;
+  }
+  .overflight-upgrade .mode-play-dialog-head {
+    padding: 12px 16px;
+    gap: 12px;
+  }
+  #result-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .overflight-result-build {
+    grid-template-columns: 1fr;
+  }
+  .overflight-result-insignia {
+    flex-basis: 54px;
+    height: 64px;
+  }
+  .overflight-result-insignia span {
+    font-size: 44px;
+  }
+  #result-title {
+    font-size: 28px;
+  }
+}
+
+/* Raid uses the shared shell and typography; its instruments emphasize the hunt. */
+.raid-hunt-strip {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.35rem 0.65rem;
+  background: rgb(9 18 15 / 82%);
+  border-left: 3px solid #f4c765;
+  font-size: clamp(0.65rem, 1.4vw, 0.95rem);
+}
+.raid-hunt-strip p {
+  margin: 0;
+}
+#hud-chain {
+  color: #9aebda;
+  white-space: nowrap;
+}
+#hud-chain[data-active='true'] {
+  color: #f4c765;
+}
+#hud-score {
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.raid-boost {
+  display: grid;
+  gap: 0.2rem;
+  min-width: 11rem;
+  text-align: right;
+}
+#hud-rush {
+  color: #f4c765;
+  font-size: 0.75em;
+}
+#raid-rush-meter {
+  height: 4px;
+  background: #283d33;
+}
+#raid-rush-fill {
+  height: 100%;
+  background: #9aebda;
+}
+#raid-rush-meter[data-ready='true'] #raid-rush-fill {
+  background: #f4c765;
+}
+.raid-contact-key {
+  display: grid;
+  gap: 0.65rem;
+  margin: 1.25rem 0;
+}
+.raid-contact-key span {
+  padding: 0.65rem 0.85rem;
+  border-left: 3px solid #9aebda;
+  background: rgb(0 0 0 / 18%);
+}
+.raid-contact-key span:nth-child(2) {
+  border-color: #f9a275;
+}
+.raid-contact-key span:nth-child(3) {
+  border-color: #f4c765;
+}
+.raid-upgrade-preview {
+  width: 100%;
+  height: auto;
+  image-rendering: pixelated;
+  border: 1px solid #385044;
+}
+.overflight-result-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin: 1rem 0;
+}
+.overflight-raid .overflight-build-item {
+  font-size: 0.76em;
+}
+.overflight-raid #hud-build {
+  max-width: 72%;
+  flex-wrap: wrap;
+}
+@media (max-width: 700px) {
+  .raid-hunt-strip {
+    flex-wrap: wrap;
+    gap: 0.2rem 0.75rem;
+  }
+  #hud-objective {
+    flex-basis: 100%;
+  }
+  .raid-boost {
+    min-width: 8rem;
+  }
+  .overflight-raid #hud-build {
+    max-width: 60%;
+  }
+}
+
+.raid-accessible-status {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+.overflight-operation-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  width: min(100%, 780px);
+  margin: 12px auto;
+}
+.overflight-operation-card {
+  display: grid;
+  gap: 7px;
+  padding: 10px 12px 13px;
+  border: 2px solid var(--fk-control-line, #66786c);
+  background: var(--fk-panel, #182b23);
+  color: var(--fk-text, #f3eddd);
+  text-decoration: none;
+  text-align: start;
+  border-radius: 3px;
+}
+.overflight-operation-card[aria-current] {
+  border-color: var(--fk-accent, #f4c765);
+}
+.overflight-operation-card[aria-current] :is(strong, small) {
+  color: inherit;
+}
+.overflight-operation-card canvas {
+  display: block;
+  width: 100%;
+  height: 100px;
+  object-fit: contain;
+  background: #11251f;
+  image-rendering: pixelated;
+}
+.overflight-operation-card strong {
+  font-size: 1.2rem;
+  color: var(--fk-accent, #f4c765);
+}
+.overflight-operation-card span {
+  line-height: 1.35;
+  font-size: 0.9rem;
+}
+.overflight-operation-card small {
+  color: var(--fk-accent, #f4c765);
+}
+.overflight-role-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 12px;
+}
+.overflight-role-card {
+  background: var(--fk-panel, #182b23);
+  padding: 10px;
+}
+.overflight-role-card canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+  image-rendering: pixelated;
+  margin-bottom: 8px;
+}
+.overflight-role-card p {
+  margin: 7px 0 0;
+  font-size: 0.9rem;
+}
+.overflight-role-guide summary {
+  cursor: pointer;
+  min-height: 44px;
+  padding: 12px 0;
+}
+.overflight-cache-hint {
+  max-width: 620px;
+  margin: 8px auto;
+  padding: 7px 12px;
+  color: #f4c765;
+  background: #10201ee8;
+  border-left: 3px solid #f4c765;
+  font-size: 0.8rem;
+}
+#hud-protection {
+  color: #f4c765;
+  font-size: 0.75rem;
+}
+.overflight-installed-tools {
+  width: 100%;
+}
+.overflight-installed-tools summary {
+  cursor: pointer;
+  min-height: 44px;
+  padding: 10px;
+}
+@media (max-width: 580px) {
+  .overflight-operation-grid {
+    gap: 8px;
+    margin: 10px auto;
+  }
+  .overflight-operation-card {
+    padding: 7px;
+  }
+  .overflight-operation-card strong {
+    font-size: 1.1rem;
+  }
+  .overflight-operation-card span {
+    font-size: 0.75rem;
+  }
+  .overflight-role-grid {
+    grid-template-columns: 1fr;
+  }
+  .overflight-role-card canvas {
+    max-width: 240px;
+  }
+  .overflight-cache-hint {
+    max-width: 82%;
+    font-size: 0.7rem;
+  }
+}

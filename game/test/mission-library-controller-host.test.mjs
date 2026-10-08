@@ -273,11 +273,12 @@ async function prepareFirstVersusMission(controls) {
     frame();
     return (
       !p.$('journey-chooser').open &&
-      p.state() === 'ready' &&
-      p.renders.every((run, index) => run !== previousBoards[index]) &&
-      !p.$('race-start').disabled &&
-      p.$('race-picture-cancel').hidden
+      p.state() === 'running' &&
+      p.renders.every((run, index) => run !== previousBoards[index])
     );
+  }).catch((error) => {
+    error.message += ` ${JSON.stringify({ status: p.state(), chooser: p.$('journey-chooser').open, changed: p.renders.map((run, index) => run !== previousBoards[index]), disabled: p.$('race-start').disabled, cancelHidden: p.$('race-picture-cancel').hidden, focus: p.doc.activeElement?.id, message: p.$('race-message').textContent })}`;
+    throw error;
   });
 }
 
@@ -285,16 +286,8 @@ test('Versus controller Play and replacement Stay preserve both paused boards an
   const controls = await host(t, 'versus');
   const { p, pulse, reach, frame, opener } = controls;
   await prepareFirstVersusMission(controls);
-  assert.equal(p.doc.activeElement.id, 'race-start');
-  assert.equal(p.$('race-briefing').hidden, false);
-  const prepared = p.checkpoint();
-  frame();
-  assert.deepEqual(p.checkpoint(), prepared);
-  pulse(0);
-  await settle(() => {
-    frame();
-    return p.state() === 'running';
-  });
+  assert.equal(p.$('race-briefing').hidden, true);
+  assert.equal(p.state(), 'running');
 
   assert.equal(p.renders[0].level.id, 'signal-01');
   assert.equal(p.renders[1].level.id, 'signal-01');
@@ -373,8 +366,10 @@ for (const outcome of ['confirm again', 'direction then return', 'back', 'failur
   test(`Versus pending Start retains only its exact picture-confirmation action: ${outcome}`, async (t) => {
     const picture = controlledPictureRead();
     const controls = await host(t, 'versus', { onDatabase: picture.onDatabase });
-    const { p, pulse, frame } = controls;
-    await prepareFirstVersusMission(controls);
+    const { p, pulse, reach, frame } = controls;
+    pulse(1);
+    reach(p.$('race-start'));
+    assert.equal(p.state(), 'ready');
     assert.equal(p.doc.activeElement.id, 'race-start');
     const before = p.checkpoint();
     const gate = picture.hold();
@@ -471,29 +466,25 @@ test('Versus controller Download & play joins repeated Confirm without exposing 
   assertFocus(p, card);
 
   release();
-  await settle(
-    () => !p.$('journey-chooser').open && p.$('race-level').value.endsWith('/night-shift-03'),
-  );
+  await settle(() => {
+    frame();
+    return (
+      !p.$('journey-chooser').open &&
+      p.$('race-level').value.endsWith('/night-shift-03') &&
+      p.state() === 'running'
+    );
+  });
   frame();
   assert.equal(requests, 2);
-  assert.equal(p.state(), 'ready');
-  assert.equal(p.doc.activeElement.id, 'race-start');
-  assert.equal(p.$('race-briefing').hidden, false);
+  assert.equal(p.state(), 'running');
+  assert.equal(p.$('race-briefing').hidden, true);
   assert.equal(p.renders[0].level.id, 'night-shift-03');
   assert.equal(p.renders[1].level.id, 'night-shift-03');
   assert.notDeepEqual(
     p.checkpoint(),
     before,
-    'The ready setup changes only after the owned preparation succeeds.',
+    'The accepted mission launches only after the owned preparation succeeds.',
   );
-  const prepared = p.checkpoint();
-  frame();
-  assert.deepEqual(p.checkpoint(), prepared);
-  pulse(0);
-  await settle(() => {
-    frame();
-    return p.state() === 'running';
-  });
 });
 
 for (const mode of ['solo', 'versus', 'team'])

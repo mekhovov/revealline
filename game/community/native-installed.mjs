@@ -3,16 +3,25 @@ import { creatorSHA256 } from '../creator/bytes.mjs';
 import { createInstalledTeamCampaignStore } from '../creator/team-installed.mjs';
 import { exportCreatorTeamCampaign } from '../creator/team.mjs';
 import { exportCreatorTeamMediaCampaign } from '../creator/team-media.mjs';
+import { createOverflightLibrary } from '../overflight/community.mjs';
+import { createOverflightHuntLibrary } from '../overflight/raid-community.mjs';
 
-/** Team and flight keep their existing storage, replay proofs and exact edition keys. */
+/** Native modes keep their existing stores, ownership and exact edition keys. */
 export function createCommunityNativeInstalled({ indexedDB = globalThis.indexedDB } = {}) {
   const team = createInstalledTeamCampaignStore({ indexedDB });
+  const projects = {
+    overflight: createOverflightLibrary({ indexedDB }),
+    'overflight-hunt': createOverflightHuntLibrary({ indexedDB }),
+  };
+  const projectLibrary = (family) => (Object.hasOwn(projects, family) ? projects[family] : null);
   let flight = null;
   const world = () =>
     (flight ??= import('../../optional-practice/civilian-fpv/world-store.mjs').then((module) =>
       module.openWorldStore({ indexedDB }),
     ));
   async function storage(linked) {
+    if (projectLibrary(linked.family))
+      return projectLibrary(linked.family).editionStorage(linked.creatorEditionId);
     if (linked.family === 'team') {
       const inventory = await team.inventory();
       const edition = inventory.editions.find(
@@ -20,18 +29,22 @@ export function createCommunityNativeInstalled({ indexedDB = globalThis.indexedD
       );
       return edition ? { installed: true, offloaded: false, manifestRetained: true } : null;
     }
+    required(linked.family === 'fpv', 'Unsupported native Community family.');
     const store = await world(),
       revision = await store.get(linked.runtimeIdentity, { sha256: linked.creatorEditionId });
     return revision ? { installed: true, offloaded: false, manifestRetained: true } : null;
   }
   async function exported(linked) {
     let blob;
-    if (linked.family === 'team') {
+    if (projectLibrary(linked.family))
+      blob = await projectLibrary(linked.family).exportEdition(linked.creatorEditionId);
+    else if (linked.family === 'team') {
       const loaded = await team.load(linked.creatorEditionId);
       blob = loaded.media
         ? exportCreatorTeamMediaCampaign(loaded.media)
         : exportCreatorTeamCampaign(loaded.prepared);
     } else {
+      required(linked.family === 'fpv', 'Unsupported native Community family.');
       const stored = await (
         await world()
       ).get(linked.runtimeIdentity, { sha256: linked.creatorEditionId });
@@ -50,12 +63,16 @@ export function createCommunityNativeInstalled({ indexedDB = globalThis.indexedD
   return Object.freeze({
     storage,
     async install(inspected) {
-      if (inspected.family === 'team') {
+      if (projectLibrary(inspected.family)) {
+        await projectLibrary(inspected.family).installEdition(inspected);
+        return { family: inspected.family, missions: 1, assets: 0 };
+      } else if (inspected.family === 'team') {
         const review = await team.reviewInstall(inspected.prepared);
         required(review.enoughManagedSpace, 'The Team media library has insufficient space.');
         const installed = await team.install(inspected.prepared);
         required(installed.editionId === inspected.editionId, 'Team installed identity changed.');
       } else {
+        required(inspected.family === 'fpv', 'Unsupported native Community family.');
         const store = await world();
         await store.install({
           ...inspected.prepared,
@@ -74,12 +91,21 @@ export function createCommunityNativeInstalled({ indexedDB = globalThis.indexedD
         ? await (await world()).list({ includeRevisions: true })
         : [];
       return [
+        ...(
+          await Promise.all(
+            families
+              .filter((family) => projectLibrary(family))
+              .map((family) => projectLibrary(family).editions()),
+          )
+        ).flat(),
         ...editions.map((entry) => entry.editionId),
         ...revisions.map((revision) => revision.sha256),
       ];
     },
     export: exported,
     async reviewOffload(linked) {
+      if (projectLibrary(linked.family))
+        return projectLibrary(linked.family).reviewEditionOffload(linked.creatorEditionId);
       const blob = await exported(linked);
       let generation;
       if (linked.family === 'team') generation = (await team.inventory()).generation;
@@ -94,17 +120,21 @@ export function createCommunityNativeInstalled({ indexedDB = globalThis.indexedD
       };
     },
     async offload(review) {
-      if (review.family === 'team')
+      if (projectLibrary(review.family)) await projectLibrary(review.family).offloadEdition(review);
+      else if (review.family === 'team')
         await team.offloadEdition(review.editionId, { expectedGeneration: review.generation });
-      else
+      else {
+        required(review.family === 'fpv', 'Unsupported native Community family.');
         await (
           await world()
         ).removeRevision(review.runtimeIdentity, review.editionId, {
           expectedGeneration: review.generation,
         });
+      }
     },
     close() {
       team.close();
+      Object.values(projects).forEach((store) => store.dispose());
       if (flight) void flight.then((store) => store.close());
     },
   });

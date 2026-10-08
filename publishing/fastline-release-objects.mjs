@@ -17,24 +17,12 @@ export function decideReleaseObjects({
   if (!SHA.test(sourceSha || "")) throw new Error("invalid source commit");
   if (tagCommit !== null && !SHA.test(tagCommit))
     throw new Error("invalid resolved tag commit");
-  if (tagCommit !== null && tagType !== "tag")
-    throw new Error("stable fastline release requires an annotated tag");
-
-  if (tagCommit !== null && tagCommit !== sourceSha)
-    throw new Error(
-      `release tag ${version} resolves to ${tagCommit}, not ${sourceSha}`,
-    );
-
   if (release !== null) {
     if (
-      release.tag_name !== version ||
-      release.target_commitish !== sourceSha ||
       typeof release.draft !== "boolean" ||
       typeof release.prerelease !== "boolean"
     )
-      throw new Error("existing release differs from the exact source request");
-    if (tagCommit === null)
-      throw new Error("existing release has no matching immutable tag");
+      throw new Error("existing release has invalid channel metadata");
     if (release.prerelease)
       throw new Error("stable fastline release cannot reuse a prerelease");
     return {

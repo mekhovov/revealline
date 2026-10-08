@@ -2,6 +2,7 @@ import { Soundscape } from './audio.mjs';
 import { createGameAudioContext } from './audio-output.mjs';
 import { createAudioMaster } from './audio-master.mjs';
 import { createAudioPreferences } from '../audio-preferences.mjs';
+import { createDestructionPreferences } from '../hunt/preferences.mjs';
 import { readMovementAudio, MOVEMENT_AUDIO_KEY } from './movement-audio.mjs';
 
 const sample = (id, label, description) =>
@@ -70,6 +71,10 @@ export function createIndustrialAudioReview({
       window: host,
       getStorage: () => host.localStorage,
     }),
+    destruction = createDestructionPreferences({
+      window: host,
+      getStorage: () => host.localStorage,
+    }),
     sound = soundFactory({
       audioMaster: master,
       contextFactory: () => createGameAudioContext(host),
@@ -80,6 +85,7 @@ export function createIndustrialAudioReview({
     playing = false,
     currentSample = null;
   sound.configure({ master: 1, music: 0 });
+  sound.setDestructionPreferences(destruction.snapshot);
   const movement = () => {
     let storage;
     try {
@@ -134,6 +140,7 @@ export function createIndustrialAudioReview({
     host.removeEventListener?.('pageshow', movement);
     unsubscribe();
     preferences.dispose();
+    destruction.dispose();
     master.dispose();
     await sound.dispose();
   }

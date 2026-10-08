@@ -11,13 +11,11 @@ import { authoritativeCheckpoint } from '../replay.mjs';
 
 function openEarnedResult(page) {
   const checkpoint = authoritativeCheckpoint(page.rendered.run);
-  assert.equal(page.$('game-overlay').hidden, true, 'The earned picture keeps its own screen.');
-  if (!page.$('skip-celebration').hidden) page.$('skip-celebration').click();
-  page.frame(0);
-  assert.equal(page.$('show-result').hidden, false);
-  page.$('show-result').click();
-  assert.equal(page.$('game-overlay').hidden, false);
+  assert.equal(page.$('game-overlay').hidden, false, 'The earned result is immediately usable.');
   assert.equal(page.$('game-overlay').dataset.kind, 'won');
+  assert.equal(page.$('show-result').hidden, true, 'No separate picture screen blocks actions.');
+  assert.equal(page.$('retry-button').hidden, false);
+  assert.equal(page.$('retry-button').disabled, false);
   assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
 }
 

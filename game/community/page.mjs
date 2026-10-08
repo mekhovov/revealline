@@ -8,6 +8,7 @@ import { createCommunityStateStore } from './state.mjs';
 import { createTusBrowserUpload } from './tus-upload.mjs';
 import {
   formatDate,
+  getLocale,
   formatNumber,
   localizedAttribute,
   localizedMessage,
@@ -134,7 +135,18 @@ function render() {
     const flags = document.createElement('p');
     if (edition.family)
       flags.append(
-        text('span', { classic: 'Snake', team: 'Team', fpv: 'FPV SIM' }[edition.family], 'badge'),
+        text(
+          'span',
+          () =>
+            ({
+              classic: 'Snake',
+              team: 'Team',
+              fpv: 'FPV SIM',
+              overflight: getLocale() === 'uk' ? 'Проліт' : 'Overflight',
+              'overflight-hunt': getLocale() === 'uk' ? 'Проліт: Наліт' : 'Overflight: Raid',
+            })[edition.family],
+          'badge',
+        ),
       );
     if (edition.installed)
       flags.append(text('span', localizedMessage('common:status.installed'), 'badge'));
@@ -147,7 +159,16 @@ function render() {
     card.append(flags);
     if (edition.localCopyRetained)
       card.append(
-        text('p', localizedMessage('interface:community.localSnakeCopyRetained'), 'meta'),
+        text(
+          'p',
+          ['overflight', 'overflight-hunt'].includes(edition.family)
+            ? () =>
+                getLocale() === 'uk'
+                  ? 'Локальна копія Studio також використовує цей виліт. Вивантаження видання збереже її.'
+                  : 'A local Studio copy also uses this sortie. Offloading this edition keeps that copy.'
+            : localizedMessage('interface:community.localSnakeCopyRetained'),
+          'meta',
+        ),
       );
     const preview = document.createElement('figure');
     preview.className = 'preview';
@@ -202,11 +223,17 @@ function render() {
               await library.offloadInstalled(edition, review);
               await refresh({ reset: true });
               status(
-                localizedMessage(
-                  review.localCopyRetained
-                    ? 'interface:community.snakeEditionOffloadedLocalKept'
-                    : 'interface:community.installedMediaOffloaded',
-                ),
+                review.localCopyRetained &&
+                  ['overflight', 'overflight-hunt'].includes(edition.family)
+                  ? () =>
+                      getLocale() === 'uk'
+                        ? 'Видання вивантажено. Локальну копію та пакет відновлення збережено.'
+                        : 'Edition offloaded. The local copy and recovery package are retained.'
+                  : localizedMessage(
+                      review.localCopyRetained
+                        ? 'interface:community.snakeEditionOffloadedLocalKept'
+                        : 'interface:community.installedMediaOffloaded',
+                    ),
               );
             },
             'secondary',

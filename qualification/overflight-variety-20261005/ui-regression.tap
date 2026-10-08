@@ -1,0 +1,115 @@
+TAP version 13
+# Subtest: all native families, wardrobes and motion poses fit two audited textures
+ok 1 - all native families, wardrobes and motion poses fit two audited textures
+  ---
+  duration_ms: 1.644209
+  ...
+# Subtest: field equipment is deterministic, original bounded pixel data with distinct silhouettes
+ok 2 - field equipment is deterministic, original bounded pixel data with distinct silhouettes
+  ---
+  duration_ms: 1.93975
+  ...
+# Subtest: native family gait timing and reduced effects preserve meaningful danger cues
+ok 3 - native family gait timing and reduced effects preserve meaningful danger cues
+  ---
+  duration_ms: 0.182041
+  ...
+# Subtest: authored cast preserves mixed wardrobes and explicit cast only selects a rendered wardrobe
+ok 4 - authored cast preserves mixed wardrobes and explicit cast only selects a rendered wardrobe
+  ---
+  duration_ms: 0.072083
+  ...
+# Subtest: shared effect composites preserve full danger cues and locate chain endpoints in world space
+ok 5 - shared effect composites preserve full danger cues and locate chain endpoints in world space
+  ---
+  duration_ms: 0.307
+  ...
+# Subtest: cadence retains foreground stalls, excludes known pauses, and exports bounded ordered samples
+ok 6 - cadence retains foreground stalls, excludes known pauses, and exports bounded ordered samples
+  ---
+  duration_ms: 0.595417
+  ...
+# Subtest: benchmark gates remain strict and cannot accept an incomplete protocol
+ok 7 - benchmark gates remain strict and cannot accept an incomplete protocol
+  ---
+  duration_ms: 0.4695
+  ...
+# Subtest: 120 Hz full protocol retains all three measured windows beyond 36000 samples
+ok 8 - 120 Hz full protocol retains all three measured windows beyond 36000 samples
+  ---
+  duration_ms: 12.2605
+  ...
+# Subtest: a paused or hidden trial cannot pass even when its retained cadence is fast
+ok 9 - a paused or hidden trial cannot pass even when its retained cadence is fast
+  ---
+  duration_ms: 0.643875
+  ...
+# Subtest: a completed independent trial freezes before inspection and ignores subsequent pauses
+ok 10 - a completed independent trial freezes before inspection and ignores subsequent pauses
+  ---
+  duration_ms: 0.526416
+  ...
+# Subtest: persistent native remains obey shared settings, preserve live draw counts, and survive recovery without new texture work
+ok 11 - persistent native remains obey shared settings, preserve live draw counts, and survive recovery without new texture work
+  ---
+  duration_ms: 35.05825
+  ...
+# Subtest: enemy behavior cues retain phase, rally direction and reward identity with reduced effects
+ok 12 - enemy behavior cues retain phase, rally direction and reward identity with reduced effects
+  ---
+  duration_ms: 18.867209
+  ...
+# Subtest: renderer submits every visible actor above 64 without texture work, preserves simulation, restores and disposes
+ok 13 - renderer submits every visible actor above 64 without texture work, preserves simulation, restores and disposes
+  ---
+  duration_ms: 20.569916
+  ...
+# Subtest: diagnostic context restoration uses the extension and cancels its timer on destroy
+ok 14 - diagnostic context restoration uses the extension and cancels its timer on destroy
+  ---
+  duration_ms: 478.330417
+  ...
+# Subtest: normal and reduced-effects renderers preserve identical real-core outcomes over 600 ticks
+ok 15 - normal and reduced-effects renderers preserve identical real-core outcomes over 600 ticks
+  ---
+  duration_ms: 269.298041
+  ...
+# Subtest: official and installed encounters retain exact compiler identities and owner launches
+ok 16 - official and installed encounters retain exact compiler identities and owner launches
+  ---
+  duration_ms: 6.998209
+  ...
+# Subtest: different authored schedules produce different diagrams without mutating projects
+ok 17 - different authored schedules produce different diagrams without mutating projects
+  ---
+  duration_ms: 4.783125
+  ...
+# Subtest: family home contains two native operation choices, preserving URL context for other mode
+ok 18 - family home contains two native operation choices, preserving URL context for other mode
+  ---
+  duration_ms: 0.960958
+  ...
+# Subtest: committed fan and lane warnings match each damaging ray and full half-width
+ok 19 - committed fan and lane warnings match each damaging ray and full half-width
+  ---
+  duration_ms: 0.23775
+  ...
+# Subtest: guard facing, damage and armor opening remain geometrically distinct
+ok 20 - guard facing, damage and armor opening remain geometrically distinct
+  ---
+  duration_ms: 0.205209
+  ...
+# Subtest: open cache shows two physical choices with distinct glyphs and disabled state
+ok 21 - open cache shows two physical choices with distinct glyphs and disabled state
+  ---
+  duration_ms: 0.16325
+  ...
+1..21
+# tests 21
+# suites 0
+# pass 21
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1041.007333

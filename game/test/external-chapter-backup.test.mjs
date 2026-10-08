@@ -4,6 +4,7 @@ import { readFile } from 'node:fs/promises';
 import { createRun, stepRun, CLASSES, FIXED_DT } from '../core/index.mjs';
 import { createRecorder, recordInput } from '../replay.mjs';
 import { suspendSession } from '../sessions.mjs';
+import { ENEMY_STATS_BACKUP_FORMAT, emptyEnemyStats } from '../enemy-stats.mjs';
 import { createExternalChapterBackup } from '../external-chapter-backup.mjs';
 import {
   createExternalBackupAssets,
@@ -967,4 +968,46 @@ test('modeled reply loss after committed final journal clear re-establishes owne
   assert.equal(h.storage.getItem(h.keys.sessionKey), 'exact prior slot bytes');
   assert.equal(h.storage.getItem(h.keys.lockKey), null);
   assert.deepEqual(h.media.contents(), mediaBefore);
+});
+
+test('paused aggregate snapshots preserve enemy sidecars and include them in the unchanged-state fence', async (t) => {
+  const h = await setup(t);
+  const enemyStats = {
+    format: ENEMY_STATS_BACKUP_FORMAT,
+    statistics: {
+      ...emptyEnemyStats(),
+      lineages: { player: { 'snake/lookout': 9 } },
+    },
+  };
+  const contents = {
+    library: emptyLibrary(),
+    packs: emptyPackLibrary(),
+    session: null,
+    enemyStats,
+  };
+  const snapshot = await h.companion.snapshot(() => contents);
+  assert.deepEqual(snapshot.enemyStats, enemyStats);
+  const prepared = await prepareBackup(await exportBackup(snapshot, h.options()), h.options());
+  assert.deepEqual(prepared.enemyStats, enemyStats);
+  let reads = 0;
+  await assert.rejects(
+    h.companion.snapshot(() => ({
+      ...contents,
+      enemyStats: {
+        ...enemyStats,
+        statistics: {
+          ...enemyStats.statistics,
+          lineages: { player: { 'snake/lookout': ++reads } },
+        },
+      },
+    })),
+    /snapshot changed/,
+  );
+  await assert.rejects(
+    h.companion.snapshot(() => ({
+      ...contents,
+      enemyStats: { ...enemyStats, format: 'future-enemy-stats' },
+    })),
+    /Unsupported enemy statistics/,
+  );
 });
