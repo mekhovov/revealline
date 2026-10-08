@@ -23,7 +23,7 @@ const sourceHashes={
 'optional-practice/civilian-fpv/world-hunt-reactions.mjs':
 '7d890938c2ec3b6d8bd6046db3b436589cf7b356c0e7004ef8814e59713dbbc7',
 'game/ui/contextual-reactions.mjs':
-'e5edcb242ffd35d251ee74f39634f745150e4f66ccd44d46eea16c29852ea715',
+'78b0412a2a70d0d84e502d5240132c3b6324e80c9ae185121aeee353978f4d8a',
 'game/ui/hunt-feedback-layout.mjs':
 '697525f452578880c62102b984da3ff51ec794913c3a2708187c62815c816de5',
 'game/ui/reaction-caption.mjs':'5b7edf3006681a02b40134ff4eee2b1f7da3770eec2b5e9b9ae70c39332a5890',
@@ -49,10 +49,11 @@ const sourceHashes={
 'a9128e8139a965abc49e4327e56f8edb57fa3dab1c870caecc36292db0866496',
 'game/journey/reaction-recording-format.mjs':
 'cdcd3da4bf5ab6c13190968cd1d286bcae070a005e879e9d291db92a31fef0f4',
-'game/journey/reactions.mjs':'bf4e7d60510b3c7df2ba61436011159654ef91148d555e0787f6c67de0e31027',
+'game/journey/reactions.mjs':'34668e7517f3c510505e53a2e9872cf29f92ba7269238919144ec84cce6ee062',
 'game/journey/campaign-feedback.mjs':
 '7b9b1df9c7cee0e7a6ac3d632ef53874e287054306c614453b37c767523b784e',
 'game/hunt/actor-reactions.mjs':'6abddc59bb89ded4622004bd362d23b86313a71e142744f98e750895493fe652',
+'game/overflight/reactions.mjs':'9402c2906611074efba28361e2717b0d6955190c9eb037ad371d9b7930a445bf',
 'game/journey/reaction-preferences.mjs':
 'a14d2dcb99daffd83dcbf62311e6756d587db3134bf04c81cd2cd420b4f6809a',
 'game/journey/reaction-options.mjs':
@@ -4624,10 +4625,68 @@ actorReactionLine:actorReactionLine,
 actorEventReaction:actorEventReaction,
 };
 })();
+modules['game/overflight/reactions.mjs']=(()=>{
+/** Stable shared Voice Studio entries. Missing recordings use the existing
+ * caption path; these entries never synthesize speech or claim a recorded voice. */
+const OVERFLIGHT_REACTION_FAMILIES=Object.freeze({
+'overflight.upgraded':'overflight-upgrade',
+'overflight.evolved':'overflight-evolution',
+'overflight.cleared':'overflight-clear',
+'overflight.replaced':'overflight-handoff',
+});
+const OVERFLIGHT_REACTION_LINES=Object.freeze(
+[
+[
+'upgrade',
+'overflight-upgrade',
+'New pattern. Try it on your next pass.',
+'Нова схема удару. Спробуй її на наступному прольоті.',
+],
+[
+'evolution',
+'overflight-evolution',
+'The pattern has evolved. Make room for a wider pass.',
+'Схема удару змінилася. Знайди місце для ширшого прольоту.',
+],
+[
+'clear',
+'overflight-clear',
+'A group cleared. Salvage is on the ground.',
+'Групу знищено. На землі залишилися трофеї.',
+],
+[
+'handoff',
+'overflight-handoff',
+'Replacement airborne. Your modules are still with you.',
+'Новий борт у повітрі. Твої модулі збережено.',
+],
+[
+'lost',
+'result',
+'No airframes remain. The sortie is over.',
+'Бортів більше немає. Виліт завершено.',
+],
+].map(([id,family,en,uk])=>
+Object.freeze({
+id:`overflight-reaction.v1/${id}`,
+speaker:'engineer',
+family,
+text:Object.freeze({en,uk}),
+}),
+),
+);
+
+return{
+OVERFLIGHT_REACTION_FAMILIES:OVERFLIGHT_REACTION_FAMILIES,
+OVERFLIGHT_REACTION_LINES:OVERFLIGHT_REACTION_LINES,
+};
+})();
 modules['game/journey/reactions.mjs']=(()=>{
 const campaignResultLine=modules['game/journey/campaign-feedback.mjs']['campaignResultLine'];
 const ACTOR_REACTION_LINES=modules['game/hunt/actor-reactions.mjs']['ACTOR_REACTION_LINES'];
 const actorReactionLine=modules['game/hunt/actor-reactions.mjs']['actorReactionLine'];
+const OVERFLIGHT_REACTION_LINES=
+modules['game/overflight/reactions.mjs']['OVERFLIGHT_REACTION_LINES'];
 /** Original, non-blocking personality copy. No simulated facts, gameplay rules,
  * scores, requests to keep playing, or rewards are derived from these captions. */
 const JOURNEY_REACTIONS=Object.freeze({
@@ -4726,6 +4785,7 @@ text:Object.freeze({en,uk}),
 ),
 ]),
 ...ACTOR_REACTION_LINES,
+...OVERFLIGHT_REACTION_LINES,
 ]);
 const byId=new Map(REACTION_LINES.map((line)=>[line.id,line]));
 function reactionLine(id,locale='en'){
@@ -4745,17 +4805,24 @@ text:line.text[locale==='uk'?'uk':'en'],
 /** Host-owned result context only. Never infer ownership from titles or URLs.
  * A finished race without a successful board is not a completion reaction. */
 function journeyResultReaction(context,locale='en'){
+const overflight=context?.presentation==='overflight'&&context.mode==='solo';
 if(
 !context||
 context.owned!==true||
 !['solo','versus','team'].includes(context.mode)||
-!['won','draw'].includes(context.outcome)||
+!['won','draw',...(overflight?['lost']:[])].includes(context.outcome)||
 (context.outcome==='draw'&&context.mode!=='versus')||
 typeof context.missionId!=='string'||
 !context.missionId||
 context.missionId.length>512
 )
 return null;
+if(overflight)
+// This existing Engineer line and its exact recording fit a successful sortie.
+return reactionLine(
+context.outcome==='won'?'journey-reaction.v1/engineer/0':'overflight-reaction.v1/lost',
+locale,
+);
 const authored=campaignResultLine(context,locale);
 if(authored)return Object.freeze(authored);
 const speaker=
@@ -6873,6 +6940,8 @@ const resolveActorFamily=external5['resolveActorFamily'];
 const actorEventReaction=modules['game/hunt/actor-reactions.mjs']['actorEventReaction'];
 const drawHuntActor=external8['drawHuntActor'];
 const sharedActorAppearance=external9['sharedActorAppearance'];
+const OVERFLIGHT_REACTION_FAMILIES=
+modules['game/overflight/reactions.mjs']['OVERFLIGHT_REACTION_FAMILIES'];
 
 const recentLines=new Map();
 const HISTORY_KEY='revealline.reaction-recent.v1';
@@ -6918,6 +6987,7 @@ const familyFor=(event)=>
 'craft.redeployed':'recovery',
 'player.revived':event.reason==='reserve'?'recovery':'rescue',
 'rescue.completed':'rescue',
+...OVERFLIGHT_REACTION_FAMILIES,
 })[event.type];
 const urgent=(event)=>
 /^(combat.locked|player.failed|player.downed|lineImpact.seeded|impact.launched)$/.test(event.type);
@@ -7173,6 +7243,8 @@ release();
 function hide(){
 motion?.cancel();
 motion=null;
+if(current?.terminal&&resultContainer&& !journeyOwnsReactionCaption(resultContainer))
+renderResultReactionCaption(resultContainer,null,options.snapshot(),false,getLocale());
 current=null;
 panel.hidden=true;
 panel.style.display='none';
@@ -7202,7 +7274,9 @@ void cache.cancel();
 }
 if(!enabled){
 clearTimeout(timer);
-hide();
+// Retain an accepted result so its shared checkbox can hide/show the
+// caption without replaying its voice. Incidental lines still expire.
+if(!current?.terminal)hide();
 }
 for(const[key,control]of controls){
 if(control.type==='checkbox')control.checked=state[key];
@@ -7346,6 +7420,9 @@ const state=options.snapshot(),
 buffer=cache.get(line.id,getLocale());
 if(state.speech&&speak&&buffer){
 activeVoice=sound.playDialogue(buffer,{
+// An accepted result may speak after gameplay SFX are retired. This
+// never bypasses gesture, full lifecycle pause, mute or dialogue prefs.
+ui:terminal===true,
 onended:()=>{
 activeVoice=null;
 release();

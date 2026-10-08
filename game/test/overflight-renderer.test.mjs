@@ -358,6 +358,104 @@ function fakeEnvironment() {
   };
 }
 
+test('persistent native remains obey shared settings, preserve live draw counts, and survive recovery without new texture work', async () => {
+  const environment = fakeEnvironment(),
+    prior = globalThis.Phaser;
+  globalThis.Phaser = environment.Phaser;
+  const appearance = {
+    reducedEffects: false,
+    playerSlot: 'player.carrier.detailed',
+    destruction: { showRemains: true, brutal: true, blood: true },
+    snapshot: {
+      image: (id) =>
+        id === 'player.carrier.detailed' ? { image: {}, asset: { id: 'accepted-carrier' } } : null,
+    },
+  };
+  let renderer;
+  try {
+    renderer = await createOverflightRenderer({
+      parent: { ownerDocument: environment.document },
+      appearance,
+    });
+    const run = {
+      phase: 'playing',
+      time: 3,
+      tick: 180,
+      camera: { x: 1440, y: 540, width: 960, height: 540 },
+      airframes: 3,
+      airframesRemaining: 2,
+      player: { x: 1440, y: 540, heading: 0, hull: 60, maxHull: 100, shield: 1 },
+      enemies: Array.from({ length: 700 }, (_, id) => ({
+        id,
+        active: true,
+        family: 'runner',
+        wardrobe: 0,
+        x: 1440,
+        y: 540,
+        radius: 8,
+      })),
+      defeats: {
+        sequence: 400,
+        capacity: 512,
+        records: Array.from({ length: 512 }, (_, index) => ({
+          sequence: index + 1,
+          id: index,
+          family: index % 2 ? 'runner' : 'tracked-tank',
+          wardrobe: 1,
+          x: 1440,
+          y: 540,
+          time: 2.9,
+          heading: 0,
+        })),
+      },
+    };
+    const before = structuredClone(run),
+      baked = environment.counts();
+    renderer.present(run);
+    assert.equal(renderer.stats().counts.rendered, 700);
+    assert.equal(renderer.stats().remains.stored, 400);
+    assert.equal(renderer.stats().counts.remains, 320);
+    assert.equal(renderer.stats().counts.defeats, 24);
+    assert.equal(renderer.stats().heroArtwork.assetId, 'accepted-carrier');
+    assert.equal(renderer.stats().heroArtwork.playerSlot, appearance.playerSlot);
+    assert.ok(!environment.images.some((image) => image.Frame?.[0] === 'hero-ring'));
+    const residue = () =>
+      environment.images.filter(
+        (image) => [3, 19].includes(image.Depth?.[0]) && image.Visible?.[0],
+      );
+    assert.ok(residue().some((image) => image.Frame[0].includes(':blood')));
+    appearance.destruction.blood = false;
+    renderer.present(run);
+    assert.ok(residue().every((image) => !image.Frame[0].includes(':blood')));
+    appearance.destruction.brutal = false;
+    renderer.present(run);
+    assert.ok(residue().every((image) => image.Frame[0].includes(':clean')));
+    appearance.reducedEffects = true;
+    renderer.present(run);
+    assert.equal(renderer.stats().counts.defeats, 0);
+    assert.equal(renderer.stats().counts.remains, 320);
+    environment.game().renderer.emit('lose');
+    environment.game().renderer.emit('restore');
+    renderer.present(run);
+    assert.equal(renderer.stats().remains.stored, 400);
+    appearance.destruction.showRemains = false;
+    renderer.present(run);
+    assert.equal(residue().length, 0);
+    assert.deepEqual(
+      environment.counts(),
+      baked,
+      'Settings and recovery never repaint or upload textures.',
+    );
+    assert.deepEqual(run, before, 'Presentation never alters accepted kills or live actors.');
+    renderer.resetMeasurements();
+    assert.equal(renderer.stats().remains.stored, 0);
+    assert.equal(residue().length, 0);
+  } finally {
+    await renderer?.destroy();
+    globalThis.Phaser = prior;
+  }
+});
+
 test('enemy behavior cues retain phase, rally direction and reward identity with reduced effects', async () => {
   const environment = fakeEnvironment(),
     prior = globalThis.Phaser;
