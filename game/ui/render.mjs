@@ -1,9 +1,12 @@
+import { createActorDefeatPresentation } from './actor-defeat-presentation.mjs';
+import { requireAcceptedAttemptAppearance } from '../presentation/attempt-appearance.mjs';
 import { canvasInterfaceFonts } from '../presentation/theme-system.mjs';
 import { createHuntDestruction } from '../hunt/destruction.mjs';
 import { runtimeActorArtRevision } from '../hunt/preferences.mjs';
 import { preparedRotorRecipe } from './rotor-presentation.mjs';
 import {
   createArcadeAdapter,
+  getArcadeCollection,
   selectedArcadeCollection,
 } from '../presentation/industrial-arcade.mjs';
 import { contactCueUnderstroke } from './contact-cue.mjs';
@@ -145,6 +148,8 @@ export class BoardPainter {
     this.enemyBodies = createEnemyBodyAssets({ changed: () => this.reportAssets() });
     this.animation = createAnimationState();
     this.actorPresentation = createActorPresentation();
+    this.actorDefeats = createActorDefeatPresentation({ kind: 'capture' });
+    this.actorFinishBodies = new Map();
     this.combatPresentation = createCombatPresentation();
     this.huntDestruction = createHuntDestruction();
     this.heading = 0;
@@ -189,11 +194,17 @@ export class BoardPainter {
     this.celebration = null;
     this._winState = null;
     this.actorPresentation.reset();
+    this.actorDefeats.reset();
+    this.actorFinishBodies.clear();
   }
   // A read-only compiled release snapshot is cosmetic. It never replaces the
   // source theme, picture, body preset or any simulation-owned reference.
   setPresentation(snapshot = null) {
-    if (snapshot !== this.presentation) this.arcadeAdapter.clear();
+    if (snapshot !== this.presentation) {
+      this.arcadeAdapter.clear();
+      this.actorDefeats.reset();
+      this.actorFinishBodies.clear();
+    }
     this.presentation = snapshot;
   }
   setInterfaceProvider(provider) {
@@ -218,6 +229,8 @@ export class BoardPainter {
     this.background = this.makeArt(theme);
     this.animation = createAnimationState();
     this.actorPresentation.reset();
+    this.actorDefeats.reset();
+    this.actorFinishBodies.clear();
     this.combatPresentation.reset();
     this.huntDestruction.reset();
     const knownBody = Object.hasOwn(this.presets.characters, bodyId)
@@ -300,7 +313,21 @@ export class BoardPainter {
   }
   // Only the host's first activation or new-attempt preparation calls this.
   // Resume never rereads the menu choices for an already accepted attempt.
+  setAttemptAppearance(appearance) {
+    if (this.acceptedAttemptAppearance === appearance) return;
+    const accepted = requireAcceptedAttemptAppearance(appearance);
+    this.acceptEnemyArtwork({
+      artRevision: accepted?.artRevision ?? null,
+      arcadeCollection: accepted?.collection
+        ? getArcadeCollection(accepted.collection.id, accepted.collection.revision)
+        : null,
+    });
+    this.arcadeAdapter.setEnvironment(accepted?.environmentPin ?? null);
+    this.acceptedAttemptAppearance = appearance;
+  }
   acceptEnemyArtwork({ artRevision = runtimeActorArtRevision(), arcadeCollection } = {}) {
+    this.acceptedAttemptAppearance = undefined;
+    this.arcadeAdapter.setEnvironment(null);
     this.artRevision = artRevision;
     this.arcadeAdapter.setReviewRevision(artRevision);
     this.combatPresentation.setArtRevision(artRevision);
@@ -329,6 +356,8 @@ export class BoardPainter {
     this.speedRatio = 0;
     this.time = 0;
     this.actorPresentation.reset();
+    this.actorDefeats.reset();
+    this.actorFinishBodies.clear();
     this.combatPresentation.reset();
     this.huntDestruction.reset();
   }
@@ -391,6 +420,7 @@ export class BoardPainter {
     ctx.restore();
   }
   effectsFor(events = [], run = null) {
+    this.actorDefeats.observe(run, events, (id) => this.actorFinishBodies.get(id));
     for (const event of events) {
       const effect = presentationEvent(event, run);
       if (effect) this.effects.push(effect);
@@ -595,6 +625,24 @@ export class BoardPainter {
       actorSkins,
       bodyRecipes: this.theme.actorRecipes ?? {},
     });
+    if (this.actorFinishSource !== actorPresentation || !this.actorDefeats.bind(state)) {
+      this.actorDefeats.reset();
+      this.actorDefeats.bind(state);
+      this.actorFinishBodies.clear();
+      this.actorFinishSource = actorPresentation;
+    }
+    const actorFinishes = this.actorDefeats.advance(state, {
+      dt,
+      paused: state.status === 'won' ? celebrationPaused : paused,
+      reduced,
+      concealed: fullReveal,
+    });
+    for (const enemy of state.enemies) {
+      if (enemy.type !== 'relay-sentinel' || state.encounter?.defeated) continue;
+      const frame = actorFrames.get(enemy.id),
+        sprite = this.enemyBody(frame, enemySprites[enemy.type]);
+      if (sprite?.geometry?.animation) this.actorFinishBodies.set(enemy.id, { frame, sprite });
+    }
     // A compiled default owns its bitmap; do not acquire the old full original too.
     // Keep every frame in the metadata request so the compiled bitmap can still
     // use the catalog's bounded surface-motion accents.
@@ -705,6 +753,9 @@ export class BoardPainter {
     });
     if (combat && !fullReveal) drawCombatScrap(ctx, combat, p, combatOptions);
     this.huntDestruction.draw(ctx, { unit: 1 / (canvasCSSWidth / W), color: p.accent });
+    this.actorDefeats.draw(ctx, actorFinishes, (count) =>
+      this.huntDestruction.reserveTransientPieces(count),
+    );
     // Reveal decoration belongs below current hazards, actors and live cuts.
     // An old capture pulse must never wash over a newly opened live line.
     if (!fullReveal && captureAccent)

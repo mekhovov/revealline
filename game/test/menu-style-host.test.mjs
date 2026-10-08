@@ -1,3 +1,4 @@
+import { nativeCaptureSession as nativeSession } from '../capture-presentation-session.mjs';
 import { modelTeamDialogs } from './helpers/coop-host.mjs';
 import {
   installCoopPresentation,
@@ -10,6 +11,7 @@ import { readFile } from 'node:fs/promises';
 import { MENU_STYLE_PREFERENCES_KEY } from '../menu-style-preferences.mjs';
 import { THEME_PREFERENCES_KEY, DEFAULT_THEME_PREFERENCES } from '../presentation/theme-system.mjs';
 import { DISPLAY_PREFERENCES_KEY } from '../display-preferences.mjs';
+import { ENEMY_STATS_KEY } from '../enemy-stats.mjs';
 import { authoritativeCheckpoint, verifyReplay } from '../replay.mjs';
 import { emptyLibrary, updatePreferences, saveLibrary } from '../library.mjs';
 import { soloPage, memoryStorage, settle } from './helpers/solo-dom.mjs';
@@ -23,6 +25,7 @@ const teamHTML = await readFile(new URL('../couch/relay-rescue.html', import.met
 const profileKey = 'revealline.library.dev.v1';
 const sessionKey = 'revealline.suspended.dev.v1';
 const simAppearanceKey = 'revealline.fpv.appearance.v1';
+const enemyStatsWriterKey = `${ENEMY_STATS_KEY}:writer`;
 const raw = (store) => JSON.parse(store.getItem(THEME_PREFERENCES_KEY));
 const appearanceKeys = new Set([THEME_PREFERENCES_KEY, simAppearanceKey]);
 const unrelated = (store) => new Map([...store.map].filter(([key]) => !appearanceKeys.has(key)));
@@ -246,7 +249,10 @@ for (const turnPolicy of ['immediate', 'grid-center']) {
     for (let n = 0; n < 12; n++) page.frame();
     page.$('pause-button').click();
     page.frame(0);
-    assert.equal(verifyReplay(JSON.parse(store.getItem(sessionKey)).replay).match, true);
+    assert.equal(
+      verifyReplay(nativeSession(JSON.parse(store.getItem(sessionKey))).replay).match,
+      true,
+    );
     assert.deepEqual(page.errors, []);
   });
 }
@@ -287,7 +293,7 @@ test('unified appearance survives Solo, Team, Versus and Solo return without alt
     async (t) => {
       const before = store.writes.length,
         page = await teamPage(t, store);
-      assert.equal(store.writes.length, before);
+      assert.deepEqual(store.writes.slice(before).map(([key]) => key), [enemyStatsWriterKey]);
       reflects(page, 'coop-', 'vyshyvanka', 'rich');
       page.$('coop-start').click();
       page.tick(10);
@@ -318,7 +324,7 @@ test('unified appearance survives Solo, Team, Versus and Solo return without alt
       assert.deepEqual(page.geometry(), geometry);
       assert.deepEqual(page.fonts(), fonts);
       assert.equal(page.$('coop-clock').textContent, clock);
-      assert.equal(page.$('coop-overlay-title').textContent, 'Both players paused');
+      assert.equal(page.$('coop-overlay-title').textContent, 'PAUSED');
       assert.equal(page.doc.body.dataset.textFace, 'plain');
       assert.equal(page.doc.body.dataset.textSize, 'large');
       assert.equal(page.doc.body.dataset.effects, 'reduced');
@@ -337,6 +343,9 @@ test('unified appearance survives Solo, Team, Versus and Solo return without alt
       page.frames(8);
       page.$('race-pause').click();
       page.frame(0);
+      // Starting a distinct game creates its statistics session. Appearance
+      // edits below must preserve that session and every other unrelated record.
+      records = unrelated(store);
       const checkpoint = page.checkpoint(),
         pictures = page.drawOptions.map((options) => options.backdrop);
       page.$('race-options').focus();

@@ -1,3 +1,4 @@
+import { validateNativeIndustrialCourses } from './industrial-environment.mjs';
 import { WORLD_SURFACE_COATING_EXTENSION, validateWorldSurfaceCoatings } from './world-themes.mjs';
 import { assertCriterionAnchorTranslation, compileContentProject } from './content-definitions.mjs';
 /** Browser/Node boundary for user-owned FPV worlds. No network or renderer dependencies. */
@@ -1218,6 +1219,7 @@ export async function preparePack(input, { assets = new Map() } = {}) {
   const project = resolveProject(input),
     map = await fileMap(assets, WORLD_LIMITS.packBytes),
     entries = [];
+  await validateNativeIndustrialCourses(project.courses);
   for (const [path, bytes] of [...map].sort(([a], [b]) => a.localeCompare(b)))
     entries.push({ path, bytes: bytes.length, sha256: await worldSHA256(bytes) });
   if (project.world.modelAsset)
@@ -1248,6 +1250,7 @@ export async function inspectPack(value) {
   const manifest = safeJSON(decoder.decode(bytes.subarray(12, 12 + length)));
   assert(manifest.format === WORLD_PACK_FORMAT, 'Unsupported FPV pack format.');
   const project = resolveProject(manifest.project);
+  await validateNativeIndustrialCourses(project.courses);
   assert(
     Array.isArray(manifest.assets) && manifest.assets.length <= WORLD_LIMITS.files,
     'Invalid asset list.',

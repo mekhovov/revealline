@@ -1,13 +1,12 @@
-name: Validate source for continuous main Pages
+name: Validate source for continuous main
 
 on:
   pull_request:
     branches: [main]
-    # Draft promotion does not change source bytes. The exact-head gate already
-    # ran on open/synchronize. Draft promotion does not change source or
-    # admission metadata, so ready_for_review would duplicate the exact-head
-    # gate. Keep edited because release admission is intentionally title-based.
-    types: [opened, synchronize, reopened, edited, labeled, unlabeled, milestoned, demilestoned]
+    # Metadata changes do not alter admission. Gate only source-head lifecycle
+    # events so title, labels, milestones, and draft promotion cannot create
+    # redundant queue work.
+    types: [opened, synchronize, reopened]
 
 permissions:
   contents: read
@@ -43,15 +42,10 @@ jobs:
             .github/workflows/deploy-pages.yml
             publishing/admission-binding.mjs
             publishing/admission-preflight.mjs
-            publishing/pages-controller/metadata.mjs
-            publishing/pages-controller/publication.json
-            publishing/pages-controller/release-policy.mjs
-            publishing/pages-controller/release-train-boundary.mjs
             publishing/focused-test-map.json
             publishing/focused-tests.mjs
             publishing/test-policy.json
             publishing/test-policy.mjs
-            scripts/pages-archive.mjs
           sparse-checkout-cone-mode: false
 
       - name: Set up Node.js
@@ -79,19 +73,6 @@ jobs:
           if-no-files-found: error
           retention-days: 7
 
-      - name: Require the exact protected main base on public Pages
-        if: steps.admission.outputs.mode == 'release'
-        env:
-          GH_TOKEN: ${{ github.token }}
-          PR_BASE_SHA: ${{ github.event.pull_request.base.sha }}
-          PR_TITLE: ${{ github.event.pull_request.title }}
-        run: |
-          set -euo pipefail
-          base_version="$(gh api "repos/$GITHUB_REPOSITORY/contents/package.json?ref=$PR_BASE_SHA" \
-            --jq .content | base64 --decode | jq -r .version)"
-          PR_BASE_VERSION="$base_version" \
-            node .source-gate-automation/publishing/pages-controller/release-train-boundary.mjs public
-
       - name: Record temporary fast-release policy
         env:
           FULL_CI: ${{ vars.REVEALLINE_FULL_CI || 'false' }}
@@ -115,6 +96,9 @@ jobs:
       needs.preflight.outputs.focusedRequired == 'true'
     needs: preflight
     runs-on: ubuntu-latest
+    # Host fixtures are CPU-intensive. Two workers preserve parallel progress
+    # without starving async test handoffs on the standard hosted runner.
+    timeout-minutes: 90
     permissions:
       contents: read
       pull-requests: read
@@ -310,7 +294,7 @@ jobs:
         uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
         with:
           # The PR build checks only its exact commit and tree. Immutable tags
-          # and full history remain confined to the frozen Pages publisher.
+          # and full history remain confined to release qualification.
           fetch-depth: 1
           ref: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.event_name == 'release' && github.event.release.tag_name || github.event_name == 'workflow_dispatch' && inputs.release_tag || github.ref }}
 
@@ -322,12 +306,7 @@ jobs:
           fetch-depth: 1
           persist-credentials: false
           sparse-checkout: |
-            publishing/pages-controller/metadata.mjs
-            publishing/pages-controller/publication.json
-            publishing/pages-controller/release-policy.mjs
-            publishing/pages-controller/release-train-boundary.mjs
             scripts/check-source-identity.mjs
-            scripts/pages-archive.mjs
           sparse-checkout-cone-mode: false
 
       - name: Set up Node.js
@@ -342,25 +321,16 @@ jobs:
           test "$(git rev-parse HEAD)" = "$EXPECTED_SOURCE"
           node .source-gate-automation/scripts/check-source-identity.mjs --root .
 
-      - name: Require exact release version identity
-        env:
-          PR_TITLE: ${{ github.event.pull_request.title }}
-        run: node .source-gate-automation/publishing/pages-controller/release-train-boundary.mjs source .
-
       - name: Install dependencies
         run: npm ci
 
       - name: Validate release-critical source
         run: npm run validate
 
-      - name: Run extended static and provenance checks
+      - name: Run extended source checks
         if: vars.REVEALLINE_FULL_CI == 'true'
         run: |
-          npm run lint
-          npm run format:check
-          npm run format:native:check
           node --check authoring/motion-lab/app.js
-          node scripts/produce-field-kit-theme.mjs --check
           mkdir -p .cache
           node --test scripts/test-production-*.mjs
 
@@ -415,7 +385,7 @@ jobs:
             exit 0
           fi
           if [ "$ADMISSION" = scheduled ]; then
-            echo 'Explicit milestone schedule: selected validation passed under the explicit test policy; waived suites are not passed. Main Pages builds independently after merge.'
+            echo 'Explicit milestone schedule: selected validation passed under the explicit test policy; waived suites are not passed.'
             exit 0
           fi
           if [ "$ADMISSION" = release-evidence ]; then

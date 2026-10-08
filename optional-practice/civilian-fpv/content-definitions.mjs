@@ -1,6 +1,6 @@
 import { boundedJSON, dataIdentity, stableId } from '../../game/data-json.mjs';
 import { validateWorldCourse } from './world-model.mjs';
-import { resolveThemeExperience } from './world-themes.mjs';
+import { resolveThemeExperience, validateThemeProfile } from './world-themes.mjs';
 
 export const CONTENT_FORMATS = Object.freeze({
   world: 'World.v1',
@@ -158,6 +158,11 @@ export function splitCourseDefinition(input, { layoutId, challengeId } = {}) {
     rules: clone(c.rules),
     conditions: clone(c.conditions),
   };
+  if (c.world.themeProfile?.format === 'ThemeProfile.v3') {
+    challenge.recordedThemeProfile = clone(c.world.themeProfile);
+    delete world.presentation.themeProfile;
+    world.presentation.theme = c.world.themeProfile.authoredFallback.id;
+  }
   return { world, layout, challenge };
 }
 
@@ -224,6 +229,14 @@ export function compileChallengeDefinition({
     ...(challenge.rulesetId ? { rulesetId: challenge.rulesetId } : {}),
     ...(challenge.themeId ? { themeId: challenge.themeId } : {}),
   };
+  if (challenge.recordedThemeProfile !== undefined) {
+    const retained = validateThemeProfile(challenge.recordedThemeProfile);
+    check(
+      retained.format === 'ThemeProfile.v3',
+      'Recorded challenge presentation requires ThemeProfile.v3.',
+    );
+    course.world = { ...course.world, theme: retained.id, themeProfile: retained };
+  }
   const experience = resolveThemeExperience({ course, campaign, profiles, rulesets });
   return {
     course: validateWorldCourse(experience.course),

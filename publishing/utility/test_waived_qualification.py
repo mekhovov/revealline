@@ -27,7 +27,11 @@ def fixture():
                                    'number': 21, 'status': 'completed', 'conclusion': 'success'}},
         'scope': 'Exact PR source validation; artifact deferred to frozen source'}
     q['gates'].pop()
-    names = ['Validate source', 'Lint source', 'Check formatting', 'Check native formatting', 'Check motion lab syntax']
+    # The release workflow now keeps only source validation and the focused
+    # Motion Lab syntax check as fast qualification gates.  Keep this fixture
+    # aligned with that contract instead of inventing retired lint/format
+    # evidence for a waived release.
+    names = ['Validate source', 'Check motion lab syntax']
     for index, (gate, name) in enumerate(zip(q['gates'], names), 1):
         gate.update(jobId=101)
         gate['step'].update(name=name, number=index)

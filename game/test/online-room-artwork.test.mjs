@@ -1,4 +1,3 @@
-// Authored regressions; automated suites remain waived and unrun.
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
@@ -122,6 +121,8 @@ test('native room board preparation cancels raw artwork fetches and never mounts
     },
     say: (en) => en,
     prepareRoomBoardPainters,
+    prepareRoomEnvironment: async () => null,
+    presentation: { ready: Promise.resolve() },
     lifecycle: { snapshot: () => ({ epoch: 0 }) },
     painters: [old],
     fetch: (url, { signal }) => {
@@ -161,4 +162,70 @@ test('suspending a room releases the poll slot before the retired request settle
   assert.equal(controller.signal.aborted, true);
   assert.equal(context.polling, null, 'foreground recovery can start a fresh poll immediately');
   assert.equal(context.previousFrame, null);
+});
+
+test('room artwork rejection releases newly allocated boards and preserves the previous owner', async (t) => {
+  for (const phase of ['restore', 'accept', 'bind'])
+    await t.test(phase, async () => {
+      const owner = {},
+        old = painter(),
+        created = [],
+        mounted = [];
+      const fail = () => {
+        throw new Error('Unowned chapter artwork');
+      };
+      const context = {
+        credentials: owner,
+        stopped: false,
+        document: { hidden: false, createElement: () => ({ setAttribute() {} }) },
+        say: (en) => en,
+        prepareRoomBoardPainters,
+        prepareRoomEnvironment: async () => ({}),
+        presentation: {
+          ready: Promise.resolve(),
+          boardSnapshot: () => ({}),
+          theme: { effectivePreferences: () => ({}) },
+          setAttemptAppearance: phase === 'bind' ? fail : () => {},
+        },
+        lifecycle: { snapshot: () => ({ epoch: 0 }) },
+        painters: [old],
+        fetch: async () => ({ ok: true, json: async () => ({ themes: [{}] }) }),
+        BoardPainter: function () {
+          const value = {
+            ...painter(),
+            setLook: async () => {},
+            setPresentation() {},
+            setAttemptAppearance() {},
+          };
+          created.push(value);
+          return value;
+        },
+        roomAppearanceIdentity: () => ({}),
+        endpoint: 'https://rooms.example',
+        ROOM_APPEARANCE_KEY: 'art',
+        sessionStorage: { getItem: () => null },
+        restoreRoomAppearance: phase === 'restore' ? fail : () => undefined,
+        acceptAttemptAppearance: phase === 'accept' ? fail : () => ({}),
+        runtimeActorArtRevision: () => 'roster-v3',
+        selectedArcadeCollection: () => null,
+        roomError: (message, code) => Object.assign(new Error(message), { code }),
+        roomUI: { boards: (...args) => mounted.push(args) },
+      };
+      const allocate = await roomFunction('allocateBoards', context);
+      await assert.rejects(
+        allocate(
+          { engine: { kind: 'capture', runs: [{}, {}] } },
+          owner,
+          0,
+          new AbortController().signal,
+        ),
+        phase === 'restore' ? { code: 'ROOM_ARTWORK_RESTORE' } : /Unowned chapter artwork/,
+      );
+      assert.deepEqual(
+        created.map((entry) => entry.retired),
+        [1, 1],
+      );
+      assert.equal(old.retired, 0);
+      assert.equal(mounted.length, 0);
+    });
 });

@@ -1,0 +1,4318 @@
+{
+  "format": "OverflightAutomatedRoutesEvidenceV1",
+  "startedAt": "2026-10-05T10:56:29.225Z",
+  "completedAt": "2026-10-05T10:56:39.441Z",
+  "implementationBaseMainSha": "2d447bc790bdf3951251c99041c8a918363ece0a",
+  "gitHeadAtRun": "13241b30a2e9da7656f0278f7ffd4f3a6c78e432",
+  "sourceKind": "working-tree-candidate",
+  "environment": {
+    "node": "v20.19.5",
+    "platform": "darwin",
+    "architecture": "arm64"
+  },
+  "sourceBindings": [
+    {
+      "path": "game/data-json.mjs",
+      "bytes": 5594,
+      "sha256": "9ce33d6173f3cba8587ed7a7f1924c66e9d9c86ffa59b37a743764ea0b01f7bd"
+    },
+    {
+      "path": "game/overflight/core.mjs",
+      "bytes": 55848,
+      "sha256": "b8b8563073c0480a9ca613b90e6a93b309da5e585030e7c67477bb7792f3337e"
+    },
+    {
+      "path": "game/overflight/grid.mjs",
+      "bytes": 2552,
+      "sha256": "ef130a7f9594bff6af374fe252bb8aafdc7e86762bb8ef60107914654f21dd30"
+    },
+    {
+      "path": "game/overflight/project.mjs",
+      "bytes": 10115,
+      "sha256": "265d3b65111f54c0afc7ca6c0daa8d7a6ba018618de461a59b3003e934230c62"
+    },
+    {
+      "path": "game/overflight/review-pilot.mjs",
+      "bytes": 4408,
+      "sha256": "3391710682e438fb4353321097009fad91cb9ebbd8a15256bcae4f658bb4e263"
+    },
+    {
+      "path": "game/overflight/upgrades.mjs",
+      "bytes": 15350,
+      "sha256": "064ac8894ef56734a96b690b0c6237e2c6e359b4dba475fb81e04b52b3d7d715"
+    },
+    {
+      "path": "scripts/qualify-overflight.mjs",
+      "bytes": 12841,
+      "sha256": "262c8234df23276e574e7e9a615fbe33bd6eb09ddd44e60468fc229fed6cb1ea"
+    }
+  ],
+  "sourceSetSha256": "8fa4bccdb806159a21110826e9db74574d0f31662b2f5eab92f470f1624af351",
+  "projects": [
+    {
+      "seed": 17031991,
+      "encounterSet": "front",
+      "projectId": "overflight-front",
+      "projectIdentity": "8ab8476ceeb653ae",
+      "sourceSha256": "09edd80ff608cf0a02a1d7d812bc66fc7f60a990bc1597da9ac11f014679596e"
+    }
+  ],
+  "protocol": {
+    "encounterSets": [
+      "front"
+    ],
+    "seeds": [
+      17031991
+    ],
+    "airframes": [
+      1,
+      3
+    ],
+    "buildDirections": [
+      "fan",
+      "echo",
+      "systems"
+    ],
+    "route": "tight",
+    "simulationHz": 60,
+    "pilotHz": 10,
+    "maximumSimulatedSeconds": 480,
+    "regularSpawnEndsAtSeconds": 360,
+    "finalDefeatEndsImmediately": true,
+    "compact": false,
+    "sampleEverySeconds": 5,
+    "modificationsDuringRun": "movement/boost inputs and legal earned-card choices/rerolls only"
+  },
+  "scopeLimits": [
+    "Deterministic headless candidate pilot with full game-state access; no fixture population, HP, damage or XP injection.",
+    "Only the listed encounter sets, seeds, builds and deterministic pilot inputs are exercised; these are not exhaustive difficulty or balance results.",
+    "A successful automated route establishes reachability for these inputs, not human difficulty, fun, accessibility or physical controller acceptance.",
+    "Wall time includes the Node pilot and is observational only; it is not browser FPS, GPU, frame-time, heap, thermal or target-hardware evidence.",
+    "Source hashes bind the listed simulation/compiler/driver files; this is not a complete repository, native package, Community or release acceptance receipt.",
+    "Timestamps and observed wall times change on replay; deterministic result hashes exclude only observedWallMilliseconds."
+  ],
+  "deterministicResultsSha256": "0a622710822f8b0baad36d5aea41823983951c4f461b2d28c56298f758ce66db",
+  "results": [
+    {
+      "direction": "fan",
+      "route": "tight",
+      "seed": 17031991,
+      "projectIdentity": "8ab8476ceeb653ae",
+      "encounterSet": "front",
+      "airframes": 1,
+      "qualification": "ordinary-inputs-earned-upgrades-no-fixture",
+      "controller": "deterministic-10hz-candidate-pilot-v1",
+      "outcome": "lost",
+      "simulatedSeconds": 303.68,
+      "observedWallMilliseconds": 1426.26,
+      "firstDraftSeconds": 19.17,
+      "primaryEvolutionSeconds": 93.68,
+      "lastChoiceSeconds": 230.23333333333332,
+      "earnedChoices": 10,
+      "kills": 3570,
+      "collectedXP": 4888,
+      "groundXP": 600,
+      "peakAlive": 436,
+      "peakVisible": 367,
+      "densityPeaks": {
+        "opening": 57,
+        "developing": 97,
+        "late": 367,
+        "finale": 354
+      },
+      "damageTaken": 100,
+      "airframesRemaining": 0,
+      "finalRemainingHull": 5000,
+      "build": {
+        "primary": {
+          "rank": 4,
+          "branch": "wide",
+          "evolved": true
+        },
+        "combat": [
+          {
+            "id": "proximity-pulse",
+            "rank": 3
+          },
+          {
+            "id": "side-burst",
+            "rank": 3
+          }
+        ],
+        "support": {
+          "id": "scanner",
+          "rank": 1
+        },
+        "reinforcement": 0,
+        "repair": 0
+      },
+      "choices": [
+        {
+          "id": "primary:wide:2",
+          "time": 19.166666666666668,
+          "tick": 1150
+        },
+        {
+          "id": "proximity-pulse:1",
+          "time": 27.883333333333333,
+          "tick": 1673
+        },
+        {
+          "id": "side-burst:1",
+          "time": 46.86666666666667,
+          "tick": 2812
+        },
+        {
+          "id": "primary:wide:3",
+          "time": 70.01666666666667,
+          "tick": 4201
+        },
+        {
+          "id": "primary:wide:4",
+          "time": 93.68333333333334,
+          "tick": 5621
+        },
+        {
+          "id": "proximity-pulse:2",
+          "time": 118.4,
+          "tick": 7104
+        },
+        {
+          "id": "proximity-pulse:3",
+          "time": 138.28333333333333,
+          "tick": 8297
+        },
+        {
+          "id": "side-burst:2",
+          "time": 149.46666666666667,
+          "tick": 8968
+        },
+        {
+          "id": "side-burst:3",
+          "time": 179.56666666666666,
+          "tick": 10774
+        },
+        {
+          "id": "scanner:1",
+          "time": 230.23333333333332,
+          "tick": 13814
+        }
+      ],
+      "samples": [
+        {
+          "time": 5,
+          "hull": 100,
+          "alive": 15,
+          "visible": 6,
+          "kills": 0,
+          "xp": 0,
+          "choices": 0
+        },
+        {
+          "time": 10,
+          "hull": 100,
+          "alive": 28,
+          "visible": 14,
+          "kills": 2,
+          "xp": 2,
+          "choices": 0
+        },
+        {
+          "time": 15,
+          "hull": 100,
+          "alive": 40,
+          "visible": 28,
+          "kills": 5,
+          "xp": 5,
+          "choices": 0
+        },
+        {
+          "time": 20,
+          "hull": 100,
+          "alive": 42,
+          "visible": 31,
+          "kills": 18,
+          "xp": 14,
+          "choices": 1
+        },
+        {
+          "time": 25,
+          "hull": 100,
+          "alive": 39,
+          "visible": 27,
+          "kills": 36,
+          "xp": 32,
+          "choices": 1
+        },
+        {
+          "time": 30,
+          "hull": 100,
+          "alive": 38,
+          "visible": 31,
+          "kills": 52,
+          "xp": 50,
+          "choices": 2
+        },
+        {
+          "time": 35,
+          "hull": 100,
+          "alive": 35,
+          "visible": 32,
+          "kills": 69,
+          "xp": 66,
+          "choices": 2
+        },
+        {
+          "time": 40,
+          "hull": 100,
+          "alive": 23,
+          "visible": 21,
+          "kills": 84,
+          "xp": 81,
+          "choices": 2
+        },
+        {
+          "time": 45,
+          "hull": 100,
+          "alive": 34,
+          "visible": 23,
+          "kills": 98,
+          "xp": 97,
+          "choices": 2
+        },
+        {
+          "time": 50,
+          "hull": 100,
+          "alive": 47,
+          "visible": 43,
+          "kills": 110,
+          "xp": 107,
+          "choices": 3
+        },
+        {
+          "time": 55,
+          "hull": 100,
+          "alive": 58,
+          "visible": 47,
+          "kills": 124,
+          "xp": 117,
+          "choices": 3
+        },
+        {
+          "time": 60,
+          "hull": 100,
+          "alive": 60,
+          "visible": 44,
+          "kills": 147,
+          "xp": 139,
+          "choices": 3
+        },
+        {
+          "time": 65,
+          "hull": 100,
+          "alive": 61,
+          "visible": 46,
+          "kills": 171,
+          "xp": 159,
+          "choices": 3
+        },
+        {
+          "time": 70,
+          "hull": 100,
+          "alive": 60,
+          "visible": 48,
+          "kills": 197,
+          "xp": 179,
+          "choices": 3
+        },
+        {
+          "time": 75,
+          "hull": 100,
+          "alive": 63,
+          "visible": 55,
+          "kills": 219,
+          "xp": 204,
+          "choices": 4
+        },
+        {
+          "time": 80,
+          "hull": 100,
+          "alive": 37,
+          "visible": 36,
+          "kills": 248,
+          "xp": 232,
+          "choices": 4
+        },
+        {
+          "time": 85,
+          "hull": 100,
+          "alive": 47,
+          "visible": 29,
+          "kills": 273,
+          "xp": 259,
+          "choices": 4
+        },
+        {
+          "time": 90,
+          "hull": 100,
+          "alive": 64,
+          "visible": 42,
+          "kills": 291,
+          "xp": 278,
+          "choices": 4
+        },
+        {
+          "time": 95,
+          "hull": 100,
+          "alive": 68,
+          "visible": 52,
+          "kills": 322,
+          "xp": 316,
+          "choices": 5
+        },
+        {
+          "time": 100,
+          "hull": 100,
+          "alive": 76,
+          "visible": 52,
+          "kills": 349,
+          "xp": 350,
+          "choices": 5
+        },
+        {
+          "time": 105,
+          "hull": 100,
+          "alive": 67,
+          "visible": 43,
+          "kills": 393,
+          "xp": 389,
+          "choices": 5
+        },
+        {
+          "time": 110,
+          "hull": 80,
+          "alive": 57,
+          "visible": 32,
+          "kills": 438,
+          "xp": 432,
+          "choices": 5
+        },
+        {
+          "time": 115,
+          "hull": 80,
+          "alive": 66,
+          "visible": 51,
+          "kills": 463,
+          "xp": 458,
+          "choices": 5
+        },
+        {
+          "time": 120,
+          "hull": 80,
+          "alive": 36,
+          "visible": 24,
+          "kills": 497,
+          "xp": 486,
+          "choices": 6
+        },
+        {
+          "time": 125,
+          "hull": 80,
+          "alive": 59,
+          "visible": 36,
+          "kills": 524,
+          "xp": 533,
+          "choices": 6
+        },
+        {
+          "time": 130,
+          "hull": 80,
+          "alive": 82,
+          "visible": 61,
+          "kills": 551,
+          "xp": 591,
+          "choices": 6
+        },
+        {
+          "time": 135,
+          "hull": 65,
+          "alive": 89,
+          "visible": 78,
+          "kills": 594,
+          "xp": 667,
+          "choices": 6
+        },
+        {
+          "time": 140,
+          "hull": 65,
+          "alive": 82,
+          "visible": 54,
+          "kills": 651,
+          "xp": 788,
+          "choices": 7
+        },
+        {
+          "time": 145,
+          "hull": 65,
+          "alive": 89,
+          "visible": 47,
+          "kills": 694,
+          "xp": 995,
+          "choices": 7
+        },
+        {
+          "time": 150,
+          "hull": 65,
+          "alive": 73,
+          "visible": 42,
+          "kills": 760,
+          "xp": 1187,
+          "choices": 8
+        },
+        {
+          "time": 155,
+          "hull": 65,
+          "alive": 67,
+          "visible": 54,
+          "kills": 816,
+          "xp": 1328,
+          "choices": 8
+        },
+        {
+          "time": 160,
+          "hull": 65,
+          "alive": 40,
+          "visible": 34,
+          "kills": 846,
+          "xp": 1454,
+          "choices": 8
+        },
+        {
+          "time": 165,
+          "hull": 50,
+          "alive": 87,
+          "visible": 52,
+          "kills": 864,
+          "xp": 1528,
+          "choices": 8
+        },
+        {
+          "time": 170,
+          "hull": 50,
+          "alive": 110,
+          "visible": 83,
+          "kills": 906,
+          "xp": 1583,
+          "choices": 8
+        },
+        {
+          "time": 175,
+          "hull": 50,
+          "alive": 112,
+          "visible": 42,
+          "kills": 969,
+          "xp": 1669,
+          "choices": 8
+        },
+        {
+          "time": 180,
+          "hull": 50,
+          "alive": 127,
+          "visible": 89,
+          "kills": 1019,
+          "xp": 1758,
+          "choices": 9
+        },
+        {
+          "time": 185,
+          "hull": 50,
+          "alive": 90,
+          "visible": 61,
+          "kills": 1121,
+          "xp": 1831,
+          "choices": 9
+        },
+        {
+          "time": 190,
+          "hull": 50,
+          "alive": 104,
+          "visible": 85,
+          "kills": 1172,
+          "xp": 1884,
+          "choices": 9
+        },
+        {
+          "time": 195,
+          "hull": 50,
+          "alive": 92,
+          "visible": 47,
+          "kills": 1248,
+          "xp": 1934,
+          "choices": 9
+        },
+        {
+          "time": 200,
+          "hull": 50,
+          "alive": 49,
+          "visible": 29,
+          "kills": 1294,
+          "xp": 2011,
+          "choices": 9
+        },
+        {
+          "time": 205,
+          "hull": 50,
+          "alive": 112,
+          "visible": 66,
+          "kills": 1316,
+          "xp": 2079,
+          "choices": 9
+        },
+        {
+          "time": 210,
+          "hull": 50,
+          "alive": 141,
+          "visible": 96,
+          "kills": 1372,
+          "xp": 2135,
+          "choices": 9
+        },
+        {
+          "time": 215,
+          "hull": 50,
+          "alive": 167,
+          "visible": 126,
+          "kills": 1431,
+          "xp": 2178,
+          "choices": 9
+        },
+        {
+          "time": 220,
+          "hull": 50,
+          "alive": 174,
+          "visible": 131,
+          "kills": 1509,
+          "xp": 2242,
+          "choices": 9
+        },
+        {
+          "time": 225,
+          "hull": 50,
+          "alive": 160,
+          "visible": 119,
+          "kills": 1608,
+          "xp": 2338,
+          "choices": 9
+        },
+        {
+          "time": 230,
+          "hull": 50,
+          "alive": 151,
+          "visible": 109,
+          "kills": 1702,
+          "xp": 2397,
+          "choices": 9
+        },
+        {
+          "time": 235,
+          "hull": 50,
+          "alive": 169,
+          "visible": 100,
+          "kills": 1769,
+          "xp": 2463,
+          "choices": 10
+        },
+        {
+          "time": 240,
+          "hull": 50,
+          "alive": 68,
+          "visible": 54,
+          "kills": 1873,
+          "xp": 2539,
+          "choices": 10
+        },
+        {
+          "time": 245,
+          "hull": 50,
+          "alive": 190,
+          "visible": 93,
+          "kills": 1911,
+          "xp": 2639,
+          "choices": 10
+        },
+        {
+          "time": 250,
+          "hull": 50,
+          "alive": 293,
+          "visible": 147,
+          "kills": 1968,
+          "xp": 2735,
+          "choices": 10
+        },
+        {
+          "time": 255,
+          "hull": 50,
+          "alive": 348,
+          "visible": 271,
+          "kills": 2073,
+          "xp": 2799,
+          "choices": 10
+        },
+        {
+          "time": 260,
+          "hull": 50,
+          "alive": 421,
+          "visible": 353,
+          "kills": 2160,
+          "xp": 2869,
+          "choices": 10
+        },
+        {
+          "time": 265,
+          "hull": 50,
+          "alive": 351,
+          "visible": 289,
+          "kills": 2390,
+          "xp": 3027,
+          "choices": 10
+        },
+        {
+          "time": 270,
+          "hull": 50,
+          "alive": 345,
+          "visible": 274,
+          "kills": 2556,
+          "xp": 3221,
+          "choices": 10
+        },
+        {
+          "time": 275,
+          "hull": 50,
+          "alive": 351,
+          "visible": 286,
+          "kills": 2709,
+          "xp": 3349,
+          "choices": 10
+        },
+        {
+          "time": 280,
+          "hull": 50,
+          "alive": 191,
+          "visible": 189,
+          "kills": 2873,
+          "xp": 3516,
+          "choices": 10
+        },
+        {
+          "time": 285,
+          "hull": 50,
+          "alive": 270,
+          "visible": 193,
+          "kills": 2984,
+          "xp": 3641,
+          "choices": 10
+        },
+        {
+          "time": 290,
+          "hull": 20,
+          "alive": 345,
+          "visible": 259,
+          "kills": 3099,
+          "xp": 3829,
+          "choices": 10
+        },
+        {
+          "time": 295,
+          "hull": 20,
+          "alive": 415,
+          "visible": 342,
+          "kills": 3219,
+          "xp": 4067,
+          "choices": 10
+        },
+        {
+          "time": 300,
+          "hull": 20,
+          "alive": 400,
+          "visible": 336,
+          "kills": 3425,
+          "xp": 4558,
+          "choices": 10
+        }
+      ]
+    },
+    {
+      "direction": "fan",
+      "route": "tight",
+      "seed": 17031991,
+      "projectIdentity": "8ab8476ceeb653ae",
+      "encounterSet": "front",
+      "airframes": 3,
+      "qualification": "ordinary-inputs-earned-upgrades-no-fixture",
+      "controller": "deterministic-10hz-candidate-pilot-v1",
+      "outcome": "won",
+      "simulatedSeconds": 339.08,
+      "observedWallMilliseconds": 1717.45,
+      "firstDraftSeconds": 19.17,
+      "primaryEvolutionSeconds": 93.68,
+      "lastChoiceSeconds": 230.23333333333332,
+      "earnedChoices": 10,
+      "kills": 4624,
+      "collectedXP": 6940,
+      "groundXP": 1299,
+      "peakAlive": 617,
+      "peakVisible": 459,
+      "densityPeaks": {
+        "opening": 57,
+        "developing": 97,
+        "late": 367,
+        "finale": 459
+      },
+      "damageTaken": 178,
+      "airframesRemaining": 2,
+      "finalRemainingHull": null,
+      "build": {
+        "primary": {
+          "rank": 4,
+          "branch": "wide",
+          "evolved": true
+        },
+        "combat": [
+          {
+            "id": "proximity-pulse",
+            "rank": 3
+          },
+          {
+            "id": "side-burst",
+            "rank": 3
+          }
+        ],
+        "support": {
+          "id": "scanner",
+          "rank": 1
+        },
+        "reinforcement": 0,
+        "repair": 0
+      },
+      "choices": [
+        {
+          "id": "primary:wide:2",
+          "time": 19.166666666666668,
+          "tick": 1150
+        },
+        {
+          "id": "proximity-pulse:1",
+          "time": 27.883333333333333,
+          "tick": 1673
+        },
+        {
+          "id": "side-burst:1",
+          "time": 46.86666666666667,
+          "tick": 2812
+        },
+        {
+          "id": "primary:wide:3",
+          "time": 70.01666666666667,
+          "tick": 4201
+        },
+        {
+          "id": "primary:wide:4",
+          "time": 93.68333333333334,
+          "tick": 5621
+        },
+        {
+          "id": "proximity-pulse:2",
+          "time": 118.4,
+          "tick": 7104
+        },
+        {
+          "id": "proximity-pulse:3",
+          "time": 138.28333333333333,
+          "tick": 8297
+        },
+        {
+          "id": "side-burst:2",
+          "time": 149.46666666666667,
+          "tick": 8968
+        },
+        {
+          "id": "side-burst:3",
+          "time": 179.56666666666666,
+          "tick": 10774
+        },
+        {
+          "id": "scanner:1",
+          "time": 230.23333333333332,
+          "tick": 13814
+        }
+      ],
+      "samples": [
+        {
+          "time": 5,
+          "hull": 100,
+          "alive": 15,
+          "visible": 6,
+          "kills": 0,
+          "xp": 0,
+          "choices": 0
+        },
+        {
+          "time": 10,
+          "hull": 100,
+          "alive": 28,
+          "visible": 14,
+          "kills": 2,
+          "xp": 2,
+          "choices": 0
+        },
+        {
+          "time": 15,
+          "hull": 100,
+          "alive": 40,
+          "visible": 28,
+          "kills": 5,
+          "xp": 5,
+          "choices": 0
+        },
+        {
+          "time": 20,
+          "hull": 100,
+          "alive": 42,
+          "visible": 31,
+          "kills": 18,
+          "xp": 14,
+          "choices": 1
+        },
+        {
+          "time": 25,
+          "hull": 100,
+          "alive": 39,
+          "visible": 27,
+          "kills": 36,
+          "xp": 32,
+          "choices": 1
+        },
+        {
+          "time": 30,
+          "hull": 100,
+          "alive": 38,
+          "visible": 31,
+          "kills": 52,
+          "xp": 50,
+          "choices": 2
+        },
+        {
+          "time": 35,
+          "hull": 100,
+          "alive": 35,
+          "visible": 32,
+          "kills": 69,
+          "xp": 66,
+          "choices": 2
+        },
+        {
+          "time": 40,
+          "hull": 100,
+          "alive": 23,
+          "visible": 21,
+          "kills": 84,
+          "xp": 81,
+          "choices": 2
+        },
+        {
+          "time": 45,
+          "hull": 100,
+          "alive": 34,
+          "visible": 23,
+          "kills": 98,
+          "xp": 97,
+          "choices": 2
+        },
+        {
+          "time": 50,
+          "hull": 100,
+          "alive": 47,
+          "visible": 43,
+          "kills": 110,
+          "xp": 107,
+          "choices": 3
+        },
+        {
+          "time": 55,
+          "hull": 100,
+          "alive": 58,
+          "visible": 47,
+          "kills": 124,
+          "xp": 117,
+          "choices": 3
+        },
+        {
+          "time": 60,
+          "hull": 100,
+          "alive": 60,
+          "visible": 44,
+          "kills": 147,
+          "xp": 139,
+          "choices": 3
+        },
+        {
+          "time": 65,
+          "hull": 100,
+          "alive": 61,
+          "visible": 46,
+          "kills": 171,
+          "xp": 159,
+          "choices": 3
+        },
+        {
+          "time": 70,
+          "hull": 100,
+          "alive": 60,
+          "visible": 48,
+          "kills": 197,
+          "xp": 179,
+          "choices": 3
+        },
+        {
+          "time": 75,
+          "hull": 100,
+          "alive": 63,
+          "visible": 55,
+          "kills": 219,
+          "xp": 204,
+          "choices": 4
+        },
+        {
+          "time": 80,
+          "hull": 100,
+          "alive": 37,
+          "visible": 36,
+          "kills": 248,
+          "xp": 232,
+          "choices": 4
+        },
+        {
+          "time": 85,
+          "hull": 100,
+          "alive": 47,
+          "visible": 29,
+          "kills": 273,
+          "xp": 259,
+          "choices": 4
+        },
+        {
+          "time": 90,
+          "hull": 100,
+          "alive": 64,
+          "visible": 42,
+          "kills": 291,
+          "xp": 278,
+          "choices": 4
+        },
+        {
+          "time": 95,
+          "hull": 100,
+          "alive": 68,
+          "visible": 52,
+          "kills": 322,
+          "xp": 316,
+          "choices": 5
+        },
+        {
+          "time": 100,
+          "hull": 100,
+          "alive": 76,
+          "visible": 52,
+          "kills": 349,
+          "xp": 350,
+          "choices": 5
+        },
+        {
+          "time": 105,
+          "hull": 100,
+          "alive": 67,
+          "visible": 43,
+          "kills": 393,
+          "xp": 389,
+          "choices": 5
+        },
+        {
+          "time": 110,
+          "hull": 80,
+          "alive": 57,
+          "visible": 32,
+          "kills": 438,
+          "xp": 432,
+          "choices": 5
+        },
+        {
+          "time": 115,
+          "hull": 80,
+          "alive": 66,
+          "visible": 51,
+          "kills": 463,
+          "xp": 458,
+          "choices": 5
+        },
+        {
+          "time": 120,
+          "hull": 80,
+          "alive": 36,
+          "visible": 24,
+          "kills": 497,
+          "xp": 486,
+          "choices": 6
+        },
+        {
+          "time": 125,
+          "hull": 80,
+          "alive": 59,
+          "visible": 36,
+          "kills": 524,
+          "xp": 533,
+          "choices": 6
+        },
+        {
+          "time": 130,
+          "hull": 80,
+          "alive": 82,
+          "visible": 61,
+          "kills": 551,
+          "xp": 591,
+          "choices": 6
+        },
+        {
+          "time": 135,
+          "hull": 65,
+          "alive": 89,
+          "visible": 78,
+          "kills": 594,
+          "xp": 667,
+          "choices": 6
+        },
+        {
+          "time": 140,
+          "hull": 65,
+          "alive": 82,
+          "visible": 54,
+          "kills": 651,
+          "xp": 788,
+          "choices": 7
+        },
+        {
+          "time": 145,
+          "hull": 65,
+          "alive": 89,
+          "visible": 47,
+          "kills": 694,
+          "xp": 995,
+          "choices": 7
+        },
+        {
+          "time": 150,
+          "hull": 65,
+          "alive": 73,
+          "visible": 42,
+          "kills": 760,
+          "xp": 1187,
+          "choices": 8
+        },
+        {
+          "time": 155,
+          "hull": 65,
+          "alive": 67,
+          "visible": 54,
+          "kills": 816,
+          "xp": 1328,
+          "choices": 8
+        },
+        {
+          "time": 160,
+          "hull": 65,
+          "alive": 40,
+          "visible": 34,
+          "kills": 846,
+          "xp": 1454,
+          "choices": 8
+        },
+        {
+          "time": 165,
+          "hull": 50,
+          "alive": 87,
+          "visible": 52,
+          "kills": 864,
+          "xp": 1528,
+          "choices": 8
+        },
+        {
+          "time": 170,
+          "hull": 50,
+          "alive": 110,
+          "visible": 83,
+          "kills": 906,
+          "xp": 1583,
+          "choices": 8
+        },
+        {
+          "time": 175,
+          "hull": 50,
+          "alive": 112,
+          "visible": 42,
+          "kills": 969,
+          "xp": 1669,
+          "choices": 8
+        },
+        {
+          "time": 180,
+          "hull": 50,
+          "alive": 127,
+          "visible": 89,
+          "kills": 1019,
+          "xp": 1758,
+          "choices": 9
+        },
+        {
+          "time": 185,
+          "hull": 50,
+          "alive": 90,
+          "visible": 61,
+          "kills": 1121,
+          "xp": 1831,
+          "choices": 9
+        },
+        {
+          "time": 190,
+          "hull": 50,
+          "alive": 104,
+          "visible": 85,
+          "kills": 1172,
+          "xp": 1884,
+          "choices": 9
+        },
+        {
+          "time": 195,
+          "hull": 50,
+          "alive": 92,
+          "visible": 47,
+          "kills": 1248,
+          "xp": 1934,
+          "choices": 9
+        },
+        {
+          "time": 200,
+          "hull": 50,
+          "alive": 49,
+          "visible": 29,
+          "kills": 1294,
+          "xp": 2011,
+          "choices": 9
+        },
+        {
+          "time": 205,
+          "hull": 50,
+          "alive": 112,
+          "visible": 66,
+          "kills": 1316,
+          "xp": 2079,
+          "choices": 9
+        },
+        {
+          "time": 210,
+          "hull": 50,
+          "alive": 141,
+          "visible": 96,
+          "kills": 1372,
+          "xp": 2135,
+          "choices": 9
+        },
+        {
+          "time": 215,
+          "hull": 50,
+          "alive": 167,
+          "visible": 126,
+          "kills": 1431,
+          "xp": 2178,
+          "choices": 9
+        },
+        {
+          "time": 220,
+          "hull": 50,
+          "alive": 174,
+          "visible": 131,
+          "kills": 1509,
+          "xp": 2242,
+          "choices": 9
+        },
+        {
+          "time": 225,
+          "hull": 50,
+          "alive": 160,
+          "visible": 119,
+          "kills": 1608,
+          "xp": 2338,
+          "choices": 9
+        },
+        {
+          "time": 230,
+          "hull": 50,
+          "alive": 151,
+          "visible": 109,
+          "kills": 1702,
+          "xp": 2397,
+          "choices": 9
+        },
+        {
+          "time": 235,
+          "hull": 50,
+          "alive": 169,
+          "visible": 100,
+          "kills": 1769,
+          "xp": 2463,
+          "choices": 10
+        },
+        {
+          "time": 240,
+          "hull": 50,
+          "alive": 68,
+          "visible": 54,
+          "kills": 1873,
+          "xp": 2539,
+          "choices": 10
+        },
+        {
+          "time": 245,
+          "hull": 50,
+          "alive": 190,
+          "visible": 93,
+          "kills": 1911,
+          "xp": 2639,
+          "choices": 10
+        },
+        {
+          "time": 250,
+          "hull": 50,
+          "alive": 293,
+          "visible": 147,
+          "kills": 1968,
+          "xp": 2735,
+          "choices": 10
+        },
+        {
+          "time": 255,
+          "hull": 50,
+          "alive": 348,
+          "visible": 271,
+          "kills": 2073,
+          "xp": 2799,
+          "choices": 10
+        },
+        {
+          "time": 260,
+          "hull": 50,
+          "alive": 421,
+          "visible": 353,
+          "kills": 2160,
+          "xp": 2869,
+          "choices": 10
+        },
+        {
+          "time": 265,
+          "hull": 50,
+          "alive": 351,
+          "visible": 289,
+          "kills": 2390,
+          "xp": 3027,
+          "choices": 10
+        },
+        {
+          "time": 270,
+          "hull": 50,
+          "alive": 345,
+          "visible": 274,
+          "kills": 2556,
+          "xp": 3221,
+          "choices": 10
+        },
+        {
+          "time": 275,
+          "hull": 50,
+          "alive": 351,
+          "visible": 286,
+          "kills": 2709,
+          "xp": 3349,
+          "choices": 10
+        },
+        {
+          "time": 280,
+          "hull": 50,
+          "alive": 191,
+          "visible": 189,
+          "kills": 2873,
+          "xp": 3516,
+          "choices": 10
+        },
+        {
+          "time": 285,
+          "hull": 50,
+          "alive": 270,
+          "visible": 193,
+          "kills": 2984,
+          "xp": 3641,
+          "choices": 10
+        },
+        {
+          "time": 290,
+          "hull": 20,
+          "alive": 345,
+          "visible": 259,
+          "kills": 3099,
+          "xp": 3829,
+          "choices": 10
+        },
+        {
+          "time": 295,
+          "hull": 20,
+          "alive": 415,
+          "visible": 342,
+          "kills": 3219,
+          "xp": 4067,
+          "choices": 10
+        },
+        {
+          "time": 300,
+          "hull": 20,
+          "alive": 400,
+          "visible": 336,
+          "kills": 3425,
+          "xp": 4558,
+          "choices": 10
+        },
+        {
+          "time": 305,
+          "hull": 100,
+          "alive": 437,
+          "visible": 45,
+          "kills": 3578,
+          "xp": 4888,
+          "choices": 10
+        },
+        {
+          "time": 310,
+          "hull": 76,
+          "alive": 581,
+          "visible": 237,
+          "kills": 3624,
+          "xp": 4966,
+          "choices": 10
+        },
+        {
+          "time": 315,
+          "hull": 76,
+          "alive": 580,
+          "visible": 373,
+          "kills": 3814,
+          "xp": 5244,
+          "choices": 10
+        },
+        {
+          "time": 320,
+          "hull": 46,
+          "alive": 366,
+          "visible": 355,
+          "kills": 4031,
+          "xp": 5874,
+          "choices": 10
+        },
+        {
+          "time": 325,
+          "hull": 22,
+          "alive": 415,
+          "visible": 290,
+          "kills": 4182,
+          "xp": 6305,
+          "choices": 10
+        },
+        {
+          "time": 330,
+          "hull": 22,
+          "alive": 429,
+          "visible": 333,
+          "kills": 4368,
+          "xp": 6646,
+          "choices": 10
+        },
+        {
+          "time": 335,
+          "hull": 22,
+          "alive": 489,
+          "visible": 405,
+          "kills": 4508,
+          "xp": 6764,
+          "choices": 10
+        }
+      ]
+    },
+    {
+      "direction": "echo",
+      "route": "tight",
+      "seed": 17031991,
+      "projectIdentity": "8ab8476ceeb653ae",
+      "encounterSet": "front",
+      "airframes": 1,
+      "qualification": "ordinary-inputs-earned-upgrades-no-fixture",
+      "controller": "deterministic-10hz-candidate-pilot-v1",
+      "outcome": "won",
+      "simulatedSeconds": 342.82,
+      "observedWallMilliseconds": 1842.01,
+      "firstDraftSeconds": 19.17,
+      "primaryEvolutionSeconds": 94.17,
+      "lastChoiceSeconds": 228.7,
+      "earnedChoices": 10,
+      "kills": 4731,
+      "collectedXP": 6231,
+      "groundXP": 2122,
+      "peakAlive": 585,
+      "peakVisible": 466,
+      "densityPeaks": {
+        "opening": 57,
+        "developing": 105,
+        "late": 433,
+        "finale": 466
+      },
+      "damageTaken": 30,
+      "airframesRemaining": 1,
+      "finalRemainingHull": null,
+      "build": {
+        "primary": {
+          "rank": 4,
+          "branch": "double",
+          "evolved": true
+        },
+        "combat": [
+          {
+            "id": "proximity-pulse",
+            "rank": 3
+          },
+          {
+            "id": "slow-field",
+            "rank": 3
+          }
+        ],
+        "support": {
+          "id": "shield",
+          "rank": 1
+        },
+        "reinforcement": 0,
+        "repair": 0
+      },
+      "choices": [
+        {
+          "id": "primary:double:2",
+          "time": 19.166666666666668,
+          "tick": 1150
+        },
+        {
+          "id": "proximity-pulse:1",
+          "time": 28.15,
+          "tick": 1689
+        },
+        {
+          "id": "shield:1",
+          "time": 44.766666666666666,
+          "tick": 2686
+        },
+        {
+          "id": "primary:double:3",
+          "time": 67.2,
+          "tick": 4032
+        },
+        {
+          "id": "primary:double:4",
+          "time": 94.16666666666667,
+          "tick": 5650
+        },
+        {
+          "id": "slow-field:1",
+          "time": 114.13333333333334,
+          "tick": 6848
+        },
+        {
+          "id": "slow-field:2",
+          "time": 137.08333333333334,
+          "tick": 8225
+        },
+        {
+          "id": "slow-field:3",
+          "time": 148.53333333333333,
+          "tick": 8912
+        },
+        {
+          "id": "proximity-pulse:2",
+          "time": 172.8,
+          "tick": 10368
+        },
+        {
+          "id": "proximity-pulse:3",
+          "time": 228.7,
+          "tick": 13722
+        }
+      ],
+      "samples": [
+        {
+          "time": 5,
+          "hull": 100,
+          "alive": 15,
+          "visible": 6,
+          "kills": 0,
+          "xp": 0,
+          "choices": 0
+        },
+        {
+          "time": 10,
+          "hull": 100,
+          "alive": 28,
+          "visible": 14,
+          "kills": 2,
+          "xp": 2,
+          "choices": 0
+        },
+        {
+          "time": 15,
+          "hull": 100,
+          "alive": 40,
+          "visible": 28,
+          "kills": 5,
+          "xp": 5,
+          "choices": 0
+        },
+        {
+          "time": 20,
+          "hull": 100,
+          "alive": 45,
+          "visible": 34,
+          "kills": 15,
+          "xp": 14,
+          "choices": 1
+        },
+        {
+          "time": 25,
+          "hull": 100,
+          "alive": 40,
+          "visible": 30,
+          "kills": 35,
+          "xp": 35,
+          "choices": 1
+        },
+        {
+          "time": 30,
+          "hull": 100,
+          "alive": 40,
+          "visible": 36,
+          "kills": 50,
+          "xp": 50,
+          "choices": 2
+        },
+        {
+          "time": 35,
+          "hull": 100,
+          "alive": 39,
+          "visible": 33,
+          "kills": 65,
+          "xp": 65,
+          "choices": 2
+        },
+        {
+          "time": 40,
+          "hull": 100,
+          "alive": 20,
+          "visible": 19,
+          "kills": 87,
+          "xp": 83,
+          "choices": 2
+        },
+        {
+          "time": 45,
+          "hull": 100,
+          "alive": 30,
+          "visible": 19,
+          "kills": 102,
+          "xp": 102,
+          "choices": 3
+        },
+        {
+          "time": 50,
+          "hull": 100,
+          "alive": 48,
+          "visible": 38,
+          "kills": 109,
+          "xp": 108,
+          "choices": 3
+        },
+        {
+          "time": 55,
+          "hull": 100,
+          "alive": 58,
+          "visible": 44,
+          "kills": 124,
+          "xp": 124,
+          "choices": 3
+        },
+        {
+          "time": 60,
+          "hull": 100,
+          "alive": 66,
+          "visible": 57,
+          "kills": 141,
+          "xp": 141,
+          "choices": 3
+        },
+        {
+          "time": 65,
+          "hull": 100,
+          "alive": 63,
+          "visible": 58,
+          "kills": 169,
+          "xp": 169,
+          "choices": 3
+        },
+        {
+          "time": 70,
+          "hull": 100,
+          "alive": 61,
+          "visible": 52,
+          "kills": 196,
+          "xp": 195,
+          "choices": 4
+        },
+        {
+          "time": 75,
+          "hull": 100,
+          "alive": 63,
+          "visible": 52,
+          "kills": 219,
+          "xp": 213,
+          "choices": 4
+        },
+        {
+          "time": 80,
+          "hull": 100,
+          "alive": 38,
+          "visible": 37,
+          "kills": 247,
+          "xp": 240,
+          "choices": 4
+        },
+        {
+          "time": 85,
+          "hull": 100,
+          "alive": 51,
+          "visible": 37,
+          "kills": 269,
+          "xp": 267,
+          "choices": 4
+        },
+        {
+          "time": 90,
+          "hull": 100,
+          "alive": 70,
+          "visible": 57,
+          "kills": 285,
+          "xp": 285,
+          "choices": 4
+        },
+        {
+          "time": 95,
+          "hull": 100,
+          "alive": 80,
+          "visible": 67,
+          "kills": 310,
+          "xp": 313,
+          "choices": 5
+        },
+        {
+          "time": 100,
+          "hull": 100,
+          "alive": 68,
+          "visible": 50,
+          "kills": 357,
+          "xp": 368,
+          "choices": 5
+        },
+        {
+          "time": 105,
+          "hull": 100,
+          "alive": 69,
+          "visible": 59,
+          "kills": 391,
+          "xp": 408,
+          "choices": 5
+        },
+        {
+          "time": 110,
+          "hull": 100,
+          "alive": 69,
+          "visible": 56,
+          "kills": 426,
+          "xp": 444,
+          "choices": 5
+        },
+        {
+          "time": 115,
+          "hull": 100,
+          "alive": 66,
+          "visible": 46,
+          "kills": 463,
+          "xp": 494,
+          "choices": 6
+        },
+        {
+          "time": 120,
+          "hull": 100,
+          "alive": 30,
+          "visible": 27,
+          "kills": 503,
+          "xp": 524,
+          "choices": 6
+        },
+        {
+          "time": 125,
+          "hull": 100,
+          "alive": 58,
+          "visible": 24,
+          "kills": 525,
+          "xp": 556,
+          "choices": 6
+        },
+        {
+          "time": 130,
+          "hull": 100,
+          "alive": 77,
+          "visible": 62,
+          "kills": 556,
+          "xp": 643,
+          "choices": 6
+        },
+        {
+          "time": 135,
+          "hull": 85,
+          "alive": 99,
+          "visible": 87,
+          "kills": 584,
+          "xp": 738,
+          "choices": 6
+        },
+        {
+          "time": 140,
+          "hull": 85,
+          "alive": 80,
+          "visible": 63,
+          "kills": 653,
+          "xp": 846,
+          "choices": 7
+        },
+        {
+          "time": 145,
+          "hull": 85,
+          "alive": 78,
+          "visible": 62,
+          "kills": 705,
+          "xp": 1038,
+          "choices": 7
+        },
+        {
+          "time": 150,
+          "hull": 85,
+          "alive": 84,
+          "visible": 55,
+          "kills": 749,
+          "xp": 1210,
+          "choices": 8
+        },
+        {
+          "time": 155,
+          "hull": 85,
+          "alive": 79,
+          "visible": 64,
+          "kills": 804,
+          "xp": 1333,
+          "choices": 8
+        },
+        {
+          "time": 160,
+          "hull": 85,
+          "alive": 45,
+          "visible": 44,
+          "kills": 841,
+          "xp": 1459,
+          "choices": 8
+        },
+        {
+          "time": 165,
+          "hull": 85,
+          "alive": 67,
+          "visible": 36,
+          "kills": 884,
+          "xp": 1620,
+          "choices": 8
+        },
+        {
+          "time": 170,
+          "hull": 85,
+          "alive": 105,
+          "visible": 69,
+          "kills": 911,
+          "xp": 1688,
+          "choices": 8
+        },
+        {
+          "time": 175,
+          "hull": 85,
+          "alive": 104,
+          "visible": 79,
+          "kills": 977,
+          "xp": 1778,
+          "choices": 9
+        },
+        {
+          "time": 180,
+          "hull": 85,
+          "alive": 116,
+          "visible": 91,
+          "kills": 1030,
+          "xp": 1823,
+          "choices": 9
+        },
+        {
+          "time": 185,
+          "hull": 85,
+          "alive": 96,
+          "visible": 69,
+          "kills": 1115,
+          "xp": 1890,
+          "choices": 9
+        },
+        {
+          "time": 190,
+          "hull": 85,
+          "alive": 114,
+          "visible": 81,
+          "kills": 1162,
+          "xp": 1929,
+          "choices": 9
+        },
+        {
+          "time": 195,
+          "hull": 85,
+          "alive": 110,
+          "visible": 89,
+          "kills": 1230,
+          "xp": 1994,
+          "choices": 9
+        },
+        {
+          "time": 200,
+          "hull": 85,
+          "alive": 48,
+          "visible": 43,
+          "kills": 1295,
+          "xp": 2067,
+          "choices": 9
+        },
+        {
+          "time": 205,
+          "hull": 85,
+          "alive": 96,
+          "visible": 49,
+          "kills": 1332,
+          "xp": 2122,
+          "choices": 9
+        },
+        {
+          "time": 210,
+          "hull": 85,
+          "alive": 145,
+          "visible": 72,
+          "kills": 1368,
+          "xp": 2167,
+          "choices": 9
+        },
+        {
+          "time": 215,
+          "hull": 85,
+          "alive": 181,
+          "visible": 148,
+          "kills": 1417,
+          "xp": 2203,
+          "choices": 9
+        },
+        {
+          "time": 220,
+          "hull": 85,
+          "alive": 159,
+          "visible": 126,
+          "kills": 1524,
+          "xp": 2294,
+          "choices": 9
+        },
+        {
+          "time": 225,
+          "hull": 85,
+          "alive": 155,
+          "visible": 128,
+          "kills": 1613,
+          "xp": 2353,
+          "choices": 9
+        },
+        {
+          "time": 230,
+          "hull": 85,
+          "alive": 159,
+          "visible": 126,
+          "kills": 1694,
+          "xp": 2426,
+          "choices": 10
+        },
+        {
+          "time": 235,
+          "hull": 85,
+          "alive": 155,
+          "visible": 121,
+          "kills": 1783,
+          "xp": 2532,
+          "choices": 10
+        },
+        {
+          "time": 240,
+          "hull": 85,
+          "alive": 72,
+          "visible": 71,
+          "kills": 1869,
+          "xp": 2605,
+          "choices": 10
+        },
+        {
+          "time": 245,
+          "hull": 85,
+          "alive": 179,
+          "visible": 90,
+          "kills": 1922,
+          "xp": 2696,
+          "choices": 10
+        },
+        {
+          "time": 250,
+          "hull": 85,
+          "alive": 302,
+          "visible": 212,
+          "kills": 1959,
+          "xp": 2735,
+          "choices": 10
+        },
+        {
+          "time": 255,
+          "hull": 85,
+          "alive": 365,
+          "visible": 282,
+          "kills": 2056,
+          "xp": 2806,
+          "choices": 10
+        },
+        {
+          "time": 260,
+          "hull": 85,
+          "alive": 396,
+          "visible": 336,
+          "kills": 2185,
+          "xp": 2903,
+          "choices": 10
+        },
+        {
+          "time": 265,
+          "hull": 85,
+          "alive": 382,
+          "visible": 322,
+          "kills": 2359,
+          "xp": 2988,
+          "choices": 10
+        },
+        {
+          "time": 270,
+          "hull": 85,
+          "alive": 386,
+          "visible": 318,
+          "kills": 2515,
+          "xp": 3090,
+          "choices": 10
+        },
+        {
+          "time": 275,
+          "hull": 85,
+          "alive": 330,
+          "visible": 249,
+          "kills": 2730,
+          "xp": 3259,
+          "choices": 10
+        },
+        {
+          "time": 280,
+          "hull": 85,
+          "alive": 218,
+          "visible": 216,
+          "kills": 2846,
+          "xp": 3411,
+          "choices": 10
+        },
+        {
+          "time": 285,
+          "hull": 85,
+          "alive": 275,
+          "visible": 194,
+          "kills": 2979,
+          "xp": 3527,
+          "choices": 10
+        },
+        {
+          "time": 290,
+          "hull": 85,
+          "alive": 392,
+          "visible": 313,
+          "kills": 3052,
+          "xp": 3578,
+          "choices": 10
+        },
+        {
+          "time": 295,
+          "hull": 85,
+          "alive": 472,
+          "visible": 342,
+          "kills": 3162,
+          "xp": 3763,
+          "choices": 10
+        },
+        {
+          "time": 300,
+          "hull": 85,
+          "alive": 501,
+          "visible": 402,
+          "kills": 3324,
+          "xp": 3858,
+          "choices": 10
+        },
+        {
+          "time": 305,
+          "hull": 85,
+          "alive": 462,
+          "visible": 397,
+          "kills": 3553,
+          "xp": 4134,
+          "choices": 10
+        },
+        {
+          "time": 310,
+          "hull": 85,
+          "alive": 442,
+          "visible": 383,
+          "kills": 3763,
+          "xp": 4419,
+          "choices": 10
+        },
+        {
+          "time": 315,
+          "hull": 85,
+          "alive": 467,
+          "visible": 395,
+          "kills": 3927,
+          "xp": 4603,
+          "choices": 10
+        },
+        {
+          "time": 320,
+          "hull": 70,
+          "alive": 300,
+          "visible": 292,
+          "kills": 4097,
+          "xp": 4810,
+          "choices": 10
+        },
+        {
+          "time": 325,
+          "hull": 70,
+          "alive": 332,
+          "visible": 246,
+          "kills": 4265,
+          "xp": 5059,
+          "choices": 10
+        },
+        {
+          "time": 330,
+          "hull": 70,
+          "alive": 402,
+          "visible": 253,
+          "kills": 4395,
+          "xp": 5637,
+          "choices": 10
+        },
+        {
+          "time": 335,
+          "hull": 70,
+          "alive": 515,
+          "visible": 441,
+          "kills": 4482,
+          "xp": 6062,
+          "choices": 10
+        },
+        {
+          "time": 340,
+          "hull": 70,
+          "alive": 559,
+          "visible": 391,
+          "kills": 4638,
+          "xp": 6204,
+          "choices": 10
+        }
+      ]
+    },
+    {
+      "direction": "echo",
+      "route": "tight",
+      "seed": 17031991,
+      "projectIdentity": "8ab8476ceeb653ae",
+      "encounterSet": "front",
+      "airframes": 3,
+      "qualification": "ordinary-inputs-earned-upgrades-no-fixture",
+      "controller": "deterministic-10hz-candidate-pilot-v1",
+      "outcome": "won",
+      "simulatedSeconds": 342.82,
+      "observedWallMilliseconds": 1765.77,
+      "firstDraftSeconds": 19.17,
+      "primaryEvolutionSeconds": 94.17,
+      "lastChoiceSeconds": 228.7,
+      "earnedChoices": 10,
+      "kills": 4731,
+      "collectedXP": 6231,
+      "groundXP": 2122,
+      "peakAlive": 585,
+      "peakVisible": 466,
+      "densityPeaks": {
+        "opening": 57,
+        "developing": 105,
+        "late": 433,
+        "finale": 466
+      },
+      "damageTaken": 30,
+      "airframesRemaining": 3,
+      "finalRemainingHull": null,
+      "build": {
+        "primary": {
+          "rank": 4,
+          "branch": "double",
+          "evolved": true
+        },
+        "combat": [
+          {
+            "id": "proximity-pulse",
+            "rank": 3
+          },
+          {
+            "id": "slow-field",
+            "rank": 3
+          }
+        ],
+        "support": {
+          "id": "shield",
+          "rank": 1
+        },
+        "reinforcement": 0,
+        "repair": 0
+      },
+      "choices": [
+        {
+          "id": "primary:double:2",
+          "time": 19.166666666666668,
+          "tick": 1150
+        },
+        {
+          "id": "proximity-pulse:1",
+          "time": 28.15,
+          "tick": 1689
+        },
+        {
+          "id": "shield:1",
+          "time": 44.766666666666666,
+          "tick": 2686
+        },
+        {
+          "id": "primary:double:3",
+          "time": 67.2,
+          "tick": 4032
+        },
+        {
+          "id": "primary:double:4",
+          "time": 94.16666666666667,
+          "tick": 5650
+        },
+        {
+          "id": "slow-field:1",
+          "time": 114.13333333333334,
+          "tick": 6848
+        },
+        {
+          "id": "slow-field:2",
+          "time": 137.08333333333334,
+          "tick": 8225
+        },
+        {
+          "id": "slow-field:3",
+          "time": 148.53333333333333,
+          "tick": 8912
+        },
+        {
+          "id": "proximity-pulse:2",
+          "time": 172.8,
+          "tick": 10368
+        },
+        {
+          "id": "proximity-pulse:3",
+          "time": 228.7,
+          "tick": 13722
+        }
+      ],
+      "samples": [
+        {
+          "time": 5,
+          "hull": 100,
+          "alive": 15,
+          "visible": 6,
+          "kills": 0,
+          "xp": 0,
+          "choices": 0
+        },
+        {
+          "time": 10,
+          "hull": 100,
+          "alive": 28,
+          "visible": 14,
+          "kills": 2,
+          "xp": 2,
+          "choices": 0
+        },
+        {
+          "time": 15,
+          "hull": 100,
+          "alive": 40,
+          "visible": 28,
+          "kills": 5,
+          "xp": 5,
+          "choices": 0
+        },
+        {
+          "time": 20,
+          "hull": 100,
+          "alive": 45,
+          "visible": 34,
+          "kills": 15,
+          "xp": 14,
+          "choices": 1
+        },
+        {
+          "time": 25,
+          "hull": 100,
+          "alive": 40,
+          "visible": 30,
+          "kills": 35,
+          "xp": 35,
+          "choices": 1
+        },
+        {
+          "time": 30,
+          "hull": 100,
+          "alive": 40,
+          "visible": 36,
+          "kills": 50,
+          "xp": 50,
+          "choices": 2
+        },
+        {
+          "time": 35,
+          "hull": 100,
+          "alive": 39,
+          "visible": 33,
+          "kills": 65,
+          "xp": 65,
+          "choices": 2
+        },
+        {
+          "time": 40,
+          "hull": 100,
+          "alive": 20,
+          "visible": 19,
+          "kills": 87,
+          "xp": 83,
+          "choices": 2
+        },
+        {
+          "time": 45,
+          "hull": 100,
+          "alive": 30,
+          "visible": 19,
+          "kills": 102,
+          "xp": 102,
+          "choices": 3
+        },
+        {
+          "time": 50,
+          "hull": 100,
+          "alive": 48,
+          "visible": 38,
+          "kills": 109,
+          "xp": 108,
+          "choices": 3
+        },
+        {
+          "time": 55,
+          "hull": 100,
+          "alive": 58,
+          "visible": 44,
+          "kills": 124,
+          "xp": 124,
+          "choices": 3
+        },
+        {
+          "time": 60,
+          "hull": 100,
+          "alive": 66,
+          "visible": 57,
+          "kills": 141,
+          "xp": 141,
+          "choices": 3
+        },
+        {
+          "time": 65,
+          "hull": 100,
+          "alive": 63,
+          "visible": 58,
+          "kills": 169,
+          "xp": 169,
+          "choices": 3
+        },
+        {
+          "time": 70,
+          "hull": 100,
+          "alive": 61,
+          "visible": 52,
+          "kills": 196,
+          "xp": 195,
+          "choices": 4
+        },
+        {
+          "time": 75,
+          "hull": 100,
+          "alive": 63,
+          "visible": 52,
+          "kills": 219,
+          "xp": 213,
+          "choices": 4
+        },
+        {
+          "time": 80,
+          "hull": 100,
+          "alive": 38,
+          "visible": 37,
+          "kills": 247,
+          "xp": 240,
+          "choices": 4
+        },
+        {
+          "time": 85,
+          "hull": 100,
+          "alive": 51,
+          "visible": 37,
+          "kills": 269,
+          "xp": 267,
+          "choices": 4
+        },
+        {
+          "time": 90,
+          "hull": 100,
+          "alive": 70,
+          "visible": 57,
+          "kills": 285,
+          "xp": 285,
+          "choices": 4
+        },
+        {
+          "time": 95,
+          "hull": 100,
+          "alive": 80,
+          "visible": 67,
+          "kills": 310,
+          "xp": 313,
+          "choices": 5
+        },
+        {
+          "time": 100,
+          "hull": 100,
+          "alive": 68,
+          "visible": 50,
+          "kills": 357,
+          "xp": 368,
+          "choices": 5
+        },
+        {
+          "time": 105,
+          "hull": 100,
+          "alive": 69,
+          "visible": 59,
+          "kills": 391,
+          "xp": 408,
+          "choices": 5
+        },
+        {
+          "time": 110,
+          "hull": 100,
+          "alive": 69,
+          "visible": 56,
+          "kills": 426,
+          "xp": 444,
+          "choices": 5
+        },
+        {
+          "time": 115,
+          "hull": 100,
+          "alive": 66,
+          "visible": 46,
+          "kills": 463,
+          "xp": 494,
+          "choices": 6
+        },
+        {
+          "time": 120,
+          "hull": 100,
+          "alive": 30,
+          "visible": 27,
+          "kills": 503,
+          "xp": 524,
+          "choices": 6
+        },
+        {
+          "time": 125,
+          "hull": 100,
+          "alive": 58,
+          "visible": 24,
+          "kills": 525,
+          "xp": 556,
+          "choices": 6
+        },
+        {
+          "time": 130,
+          "hull": 100,
+          "alive": 77,
+          "visible": 62,
+          "kills": 556,
+          "xp": 643,
+          "choices": 6
+        },
+        {
+          "time": 135,
+          "hull": 85,
+          "alive": 99,
+          "visible": 87,
+          "kills": 584,
+          "xp": 738,
+          "choices": 6
+        },
+        {
+          "time": 140,
+          "hull": 85,
+          "alive": 80,
+          "visible": 63,
+          "kills": 653,
+          "xp": 846,
+          "choices": 7
+        },
+        {
+          "time": 145,
+          "hull": 85,
+          "alive": 78,
+          "visible": 62,
+          "kills": 705,
+          "xp": 1038,
+          "choices": 7
+        },
+        {
+          "time": 150,
+          "hull": 85,
+          "alive": 84,
+          "visible": 55,
+          "kills": 749,
+          "xp": 1210,
+          "choices": 8
+        },
+        {
+          "time": 155,
+          "hull": 85,
+          "alive": 79,
+          "visible": 64,
+          "kills": 804,
+          "xp": 1333,
+          "choices": 8
+        },
+        {
+          "time": 160,
+          "hull": 85,
+          "alive": 45,
+          "visible": 44,
+          "kills": 841,
+          "xp": 1459,
+          "choices": 8
+        },
+        {
+          "time": 165,
+          "hull": 85,
+          "alive": 67,
+          "visible": 36,
+          "kills": 884,
+          "xp": 1620,
+          "choices": 8
+        },
+        {
+          "time": 170,
+          "hull": 85,
+          "alive": 105,
+          "visible": 69,
+          "kills": 911,
+          "xp": 1688,
+          "choices": 8
+        },
+        {
+          "time": 175,
+          "hull": 85,
+          "alive": 104,
+          "visible": 79,
+          "kills": 977,
+          "xp": 1778,
+          "choices": 9
+        },
+        {
+          "time": 180,
+          "hull": 85,
+          "alive": 116,
+          "visible": 91,
+          "kills": 1030,
+          "xp": 1823,
+          "choices": 9
+        },
+        {
+          "time": 185,
+          "hull": 85,
+          "alive": 96,
+          "visible": 69,
+          "kills": 1115,
+          "xp": 1890,
+          "choices": 9
+        },
+        {
+          "time": 190,
+          "hull": 85,
+          "alive": 114,
+          "visible": 81,
+          "kills": 1162,
+          "xp": 1929,
+          "choices": 9
+        },
+        {
+          "time": 195,
+          "hull": 85,
+          "alive": 110,
+          "visible": 89,
+          "kills": 1230,
+          "xp": 1994,
+          "choices": 9
+        },
+        {
+          "time": 200,
+          "hull": 85,
+          "alive": 48,
+          "visible": 43,
+          "kills": 1295,
+          "xp": 2067,
+          "choices": 9
+        },
+        {
+          "time": 205,
+          "hull": 85,
+          "alive": 96,
+          "visible": 49,
+          "kills": 1332,
+          "xp": 2122,
+          "choices": 9
+        },
+        {
+          "time": 210,
+          "hull": 85,
+          "alive": 145,
+          "visible": 72,
+          "kills": 1368,
+          "xp": 2167,
+          "choices": 9
+        },
+        {
+          "time": 215,
+          "hull": 85,
+          "alive": 181,
+          "visible": 148,
+          "kills": 1417,
+          "xp": 2203,
+          "choices": 9
+        },
+        {
+          "time": 220,
+          "hull": 85,
+          "alive": 159,
+          "visible": 126,
+          "kills": 1524,
+          "xp": 2294,
+          "choices": 9
+        },
+        {
+          "time": 225,
+          "hull": 85,
+          "alive": 155,
+          "visible": 128,
+          "kills": 1613,
+          "xp": 2353,
+          "choices": 9
+        },
+        {
+          "time": 230,
+          "hull": 85,
+          "alive": 159,
+          "visible": 126,
+          "kills": 1694,
+          "xp": 2426,
+          "choices": 10
+        },
+        {
+          "time": 235,
+          "hull": 85,
+          "alive": 155,
+          "visible": 121,
+          "kills": 1783,
+          "xp": 2532,
+          "choices": 10
+        },
+        {
+          "time": 240,
+          "hull": 85,
+          "alive": 72,
+          "visible": 71,
+          "kills": 1869,
+          "xp": 2605,
+          "choices": 10
+        },
+        {
+          "time": 245,
+          "hull": 85,
+          "alive": 179,
+          "visible": 90,
+          "kills": 1922,
+          "xp": 2696,
+          "choices": 10
+        },
+        {
+          "time": 250,
+          "hull": 85,
+          "alive": 302,
+          "visible": 212,
+          "kills": 1959,
+          "xp": 2735,
+          "choices": 10
+        },
+        {
+          "time": 255,
+          "hull": 85,
+          "alive": 365,
+          "visible": 282,
+          "kills": 2056,
+          "xp": 2806,
+          "choices": 10
+        },
+        {
+          "time": 260,
+          "hull": 85,
+          "alive": 396,
+          "visible": 336,
+          "kills": 2185,
+          "xp": 2903,
+          "choices": 10
+        },
+        {
+          "time": 265,
+          "hull": 85,
+          "alive": 382,
+          "visible": 322,
+          "kills": 2359,
+          "xp": 2988,
+          "choices": 10
+        },
+        {
+          "time": 270,
+          "hull": 85,
+          "alive": 386,
+          "visible": 318,
+          "kills": 2515,
+          "xp": 3090,
+          "choices": 10
+        },
+        {
+          "time": 275,
+          "hull": 85,
+          "alive": 330,
+          "visible": 249,
+          "kills": 2730,
+          "xp": 3259,
+          "choices": 10
+        },
+        {
+          "time": 280,
+          "hull": 85,
+          "alive": 218,
+          "visible": 216,
+          "kills": 2846,
+          "xp": 3411,
+          "choices": 10
+        },
+        {
+          "time": 285,
+          "hull": 85,
+          "alive": 275,
+          "visible": 194,
+          "kills": 2979,
+          "xp": 3527,
+          "choices": 10
+        },
+        {
+          "time": 290,
+          "hull": 85,
+          "alive": 392,
+          "visible": 313,
+          "kills": 3052,
+          "xp": 3578,
+          "choices": 10
+        },
+        {
+          "time": 295,
+          "hull": 85,
+          "alive": 472,
+          "visible": 342,
+          "kills": 3162,
+          "xp": 3763,
+          "choices": 10
+        },
+        {
+          "time": 300,
+          "hull": 85,
+          "alive": 501,
+          "visible": 402,
+          "kills": 3324,
+          "xp": 3858,
+          "choices": 10
+        },
+        {
+          "time": 305,
+          "hull": 85,
+          "alive": 462,
+          "visible": 397,
+          "kills": 3553,
+          "xp": 4134,
+          "choices": 10
+        },
+        {
+          "time": 310,
+          "hull": 85,
+          "alive": 442,
+          "visible": 383,
+          "kills": 3763,
+          "xp": 4419,
+          "choices": 10
+        },
+        {
+          "time": 315,
+          "hull": 85,
+          "alive": 467,
+          "visible": 395,
+          "kills": 3927,
+          "xp": 4603,
+          "choices": 10
+        },
+        {
+          "time": 320,
+          "hull": 70,
+          "alive": 300,
+          "visible": 292,
+          "kills": 4097,
+          "xp": 4810,
+          "choices": 10
+        },
+        {
+          "time": 325,
+          "hull": 70,
+          "alive": 332,
+          "visible": 246,
+          "kills": 4265,
+          "xp": 5059,
+          "choices": 10
+        },
+        {
+          "time": 330,
+          "hull": 70,
+          "alive": 402,
+          "visible": 253,
+          "kills": 4395,
+          "xp": 5637,
+          "choices": 10
+        },
+        {
+          "time": 335,
+          "hull": 70,
+          "alive": 515,
+          "visible": 441,
+          "kills": 4482,
+          "xp": 6062,
+          "choices": 10
+        },
+        {
+          "time": 340,
+          "hull": 70,
+          "alive": 559,
+          "visible": 391,
+          "kills": 4638,
+          "xp": 6204,
+          "choices": 10
+        }
+      ]
+    },
+    {
+      "direction": "systems",
+      "route": "tight",
+      "seed": 17031991,
+      "projectIdentity": "8ab8476ceeb653ae",
+      "encounterSet": "front",
+      "airframes": 1,
+      "qualification": "ordinary-inputs-earned-upgrades-no-fixture",
+      "controller": "deterministic-10hz-candidate-pilot-v1",
+      "outcome": "lost",
+      "simulatedSeconds": 320.25,
+      "observedWallMilliseconds": 1490.57,
+      "firstDraftSeconds": 19.17,
+      "primaryEvolutionSeconds": null,
+      "lastChoiceSeconds": 223.85,
+      "earnedChoices": 10,
+      "kills": 4164,
+      "collectedXP": 7228,
+      "groundXP": 48,
+      "peakAlive": 479,
+      "peakVisible": 436,
+      "densityPeaks": {
+        "opening": 57,
+        "developing": 99,
+        "late": 399,
+        "finale": 436
+      },
+      "damageTaken": 100,
+      "airframesRemaining": 0,
+      "finalRemainingHull": 3481.6000000000026,
+      "build": {
+        "primary": {
+          "rank": 2,
+          "branch": "double",
+          "evolved": false
+        },
+        "combat": [
+          {
+            "id": "proximity-pulse",
+            "rank": 3
+          },
+          {
+            "id": "side-burst",
+            "rank": 3
+          }
+        ],
+        "support": {
+          "id": "scanner",
+          "rank": 3
+        },
+        "reinforcement": 0,
+        "repair": 0
+      },
+      "choices": [
+        {
+          "id": "scanner:1",
+          "time": 19.166666666666668,
+          "tick": 1150
+        },
+        {
+          "id": "proximity-pulse:1",
+          "time": 30.683333333333334,
+          "tick": 1841
+        },
+        {
+          "id": "proximity-pulse:2",
+          "time": 50.916666666666664,
+          "tick": 3055
+        },
+        {
+          "id": "proximity-pulse:3",
+          "time": 68.15,
+          "tick": 4089
+        },
+        {
+          "id": "primary:double:2",
+          "time": 90.05,
+          "tick": 5403
+        },
+        {
+          "id": "side-burst:1",
+          "time": 114.23333333333333,
+          "tick": 6854
+        },
+        {
+          "id": "side-burst:2",
+          "time": 135.28333333333333,
+          "tick": 8117
+        },
+        {
+          "id": "side-burst:3",
+          "time": 146.38333333333333,
+          "tick": 8783
+        },
+        {
+          "id": "scanner:2",
+          "time": 172.36666666666667,
+          "tick": 10342
+        },
+        {
+          "id": "scanner:3",
+          "time": 223.85,
+          "tick": 13431
+        }
+      ],
+      "samples": [
+        {
+          "time": 5,
+          "hull": 100,
+          "alive": 15,
+          "visible": 6,
+          "kills": 0,
+          "xp": 0,
+          "choices": 0
+        },
+        {
+          "time": 10,
+          "hull": 100,
+          "alive": 28,
+          "visible": 14,
+          "kills": 2,
+          "xp": 2,
+          "choices": 0
+        },
+        {
+          "time": 15,
+          "hull": 100,
+          "alive": 40,
+          "visible": 28,
+          "kills": 5,
+          "xp": 5,
+          "choices": 0
+        },
+        {
+          "time": 20,
+          "hull": 100,
+          "alive": 44,
+          "visible": 33,
+          "kills": 16,
+          "xp": 16,
+          "choices": 1
+        },
+        {
+          "time": 25,
+          "hull": 100,
+          "alive": 42,
+          "visible": 31,
+          "kills": 33,
+          "xp": 33,
+          "choices": 1
+        },
+        {
+          "time": 30,
+          "hull": 100,
+          "alive": 46,
+          "visible": 38,
+          "kills": 44,
+          "xp": 44,
+          "choices": 1
+        },
+        {
+          "time": 35,
+          "hull": 100,
+          "alive": 44,
+          "visible": 34,
+          "kills": 60,
+          "xp": 60,
+          "choices": 2
+        },
+        {
+          "time": 40,
+          "hull": 100,
+          "alive": 28,
+          "visible": 25,
+          "kills": 79,
+          "xp": 79,
+          "choices": 2
+        },
+        {
+          "time": 45,
+          "hull": 100,
+          "alive": 40,
+          "visible": 26,
+          "kills": 92,
+          "xp": 92,
+          "choices": 2
+        },
+        {
+          "time": 50,
+          "hull": 100,
+          "alive": 53,
+          "visible": 28,
+          "kills": 104,
+          "xp": 99,
+          "choices": 2
+        },
+        {
+          "time": 55,
+          "hull": 100,
+          "alive": 61,
+          "visible": 43,
+          "kills": 121,
+          "xp": 121,
+          "choices": 3
+        },
+        {
+          "time": 60,
+          "hull": 100,
+          "alive": 58,
+          "visible": 48,
+          "kills": 149,
+          "xp": 149,
+          "choices": 3
+        },
+        {
+          "time": 65,
+          "hull": 100,
+          "alive": 61,
+          "visible": 53,
+          "kills": 171,
+          "xp": 170,
+          "choices": 3
+        },
+        {
+          "time": 70,
+          "hull": 100,
+          "alive": 72,
+          "visible": 59,
+          "kills": 185,
+          "xp": 185,
+          "choices": 4
+        },
+        {
+          "time": 75,
+          "hull": 100,
+          "alive": 57,
+          "visible": 42,
+          "kills": 225,
+          "xp": 225,
+          "choices": 4
+        },
+        {
+          "time": 80,
+          "hull": 100,
+          "alive": 27,
+          "visible": 24,
+          "kills": 258,
+          "xp": 250,
+          "choices": 4
+        },
+        {
+          "time": 85,
+          "hull": 100,
+          "alive": 47,
+          "visible": 36,
+          "kills": 273,
+          "xp": 272,
+          "choices": 4
+        },
+        {
+          "time": 90,
+          "hull": 100,
+          "alive": 55,
+          "visible": 32,
+          "kills": 300,
+          "xp": 299,
+          "choices": 4
+        },
+        {
+          "time": 95,
+          "hull": 100,
+          "alive": 69,
+          "visible": 53,
+          "kills": 321,
+          "xp": 326,
+          "choices": 5
+        },
+        {
+          "time": 100,
+          "hull": 100,
+          "alive": 68,
+          "visible": 55,
+          "kills": 357,
+          "xp": 363,
+          "choices": 5
+        },
+        {
+          "time": 105,
+          "hull": 100,
+          "alive": 56,
+          "visible": 42,
+          "kills": 404,
+          "xp": 413,
+          "choices": 5
+        },
+        {
+          "time": 110,
+          "hull": 100,
+          "alive": 63,
+          "visible": 46,
+          "kills": 432,
+          "xp": 454,
+          "choices": 5
+        },
+        {
+          "time": 115,
+          "hull": 100,
+          "alive": 66,
+          "visible": 50,
+          "kills": 463,
+          "xp": 488,
+          "choices": 6
+        },
+        {
+          "time": 120,
+          "hull": 100,
+          "alive": 31,
+          "visible": 27,
+          "kills": 502,
+          "xp": 539,
+          "choices": 6
+        },
+        {
+          "time": 125,
+          "hull": 100,
+          "alive": 55,
+          "visible": 17,
+          "kills": 528,
+          "xp": 569,
+          "choices": 6
+        },
+        {
+          "time": 130,
+          "hull": 100,
+          "alive": 93,
+          "visible": 72,
+          "kills": 540,
+          "xp": 603,
+          "choices": 6
+        },
+        {
+          "time": 135,
+          "hull": 100,
+          "alive": 81,
+          "visible": 68,
+          "kills": 602,
+          "xp": 737,
+          "choices": 6
+        },
+        {
+          "time": 140,
+          "hull": 100,
+          "alive": 82,
+          "visible": 65,
+          "kills": 651,
+          "xp": 934,
+          "choices": 7
+        },
+        {
+          "time": 145,
+          "hull": 100,
+          "alive": 81,
+          "visible": 66,
+          "kills": 702,
+          "xp": 1076,
+          "choices": 7
+        },
+        {
+          "time": 150,
+          "hull": 100,
+          "alive": 80,
+          "visible": 52,
+          "kills": 753,
+          "xp": 1267,
+          "choices": 8
+        },
+        {
+          "time": 155,
+          "hull": 100,
+          "alive": 91,
+          "visible": 54,
+          "kills": 792,
+          "xp": 1375,
+          "choices": 8
+        },
+        {
+          "time": 160,
+          "hull": 100,
+          "alive": 43,
+          "visible": 36,
+          "kills": 843,
+          "xp": 1532,
+          "choices": 8
+        },
+        {
+          "time": 165,
+          "hull": 100,
+          "alive": 71,
+          "visible": 43,
+          "kills": 880,
+          "xp": 1667,
+          "choices": 8
+        },
+        {
+          "time": 170,
+          "hull": 100,
+          "alive": 96,
+          "visible": 41,
+          "kills": 920,
+          "xp": 1735,
+          "choices": 8
+        },
+        {
+          "time": 175,
+          "hull": 100,
+          "alive": 130,
+          "visible": 93,
+          "kills": 951,
+          "xp": 1767,
+          "choices": 9
+        },
+        {
+          "time": 180,
+          "hull": 100,
+          "alive": 112,
+          "visible": 57,
+          "kills": 1034,
+          "xp": 1852,
+          "choices": 9
+        },
+        {
+          "time": 185,
+          "hull": 100,
+          "alive": 119,
+          "visible": 61,
+          "kills": 1092,
+          "xp": 1913,
+          "choices": 9
+        },
+        {
+          "time": 190,
+          "hull": 100,
+          "alive": 119,
+          "visible": 81,
+          "kills": 1157,
+          "xp": 1968,
+          "choices": 9
+        },
+        {
+          "time": 195,
+          "hull": 100,
+          "alive": 105,
+          "visible": 79,
+          "kills": 1235,
+          "xp": 2028,
+          "choices": 9
+        },
+        {
+          "time": 200,
+          "hull": 100,
+          "alive": 41,
+          "visible": 41,
+          "kills": 1302,
+          "xp": 2101,
+          "choices": 9
+        },
+        {
+          "time": 205,
+          "hull": 100,
+          "alive": 94,
+          "visible": 55,
+          "kills": 1334,
+          "xp": 2152,
+          "choices": 9
+        },
+        {
+          "time": 210,
+          "hull": 100,
+          "alive": 155,
+          "visible": 125,
+          "kills": 1358,
+          "xp": 2173,
+          "choices": 9
+        },
+        {
+          "time": 215,
+          "hull": 100,
+          "alive": 168,
+          "visible": 134,
+          "kills": 1430,
+          "xp": 2240,
+          "choices": 9
+        },
+        {
+          "time": 220,
+          "hull": 100,
+          "alive": 155,
+          "visible": 131,
+          "kills": 1528,
+          "xp": 2337,
+          "choices": 9
+        },
+        {
+          "time": 225,
+          "hull": 100,
+          "alive": 163,
+          "visible": 133,
+          "kills": 1605,
+          "xp": 2424,
+          "choices": 10
+        },
+        {
+          "time": 230,
+          "hull": 100,
+          "alive": 155,
+          "visible": 125,
+          "kills": 1698,
+          "xp": 2518,
+          "choices": 10
+        },
+        {
+          "time": 235,
+          "hull": 100,
+          "alive": 164,
+          "visible": 132,
+          "kills": 1774,
+          "xp": 2596,
+          "choices": 10
+        },
+        {
+          "time": 240,
+          "hull": 100,
+          "alive": 99,
+          "visible": 94,
+          "kills": 1842,
+          "xp": 2665,
+          "choices": 10
+        },
+        {
+          "time": 245,
+          "hull": 100,
+          "alive": 194,
+          "visible": 119,
+          "kills": 1907,
+          "xp": 2733,
+          "choices": 10
+        },
+        {
+          "time": 250,
+          "hull": 100,
+          "alive": 315,
+          "visible": 177,
+          "kills": 1946,
+          "xp": 2773,
+          "choices": 10
+        },
+        {
+          "time": 255,
+          "hull": 100,
+          "alive": 398,
+          "visible": 349,
+          "kills": 2023,
+          "xp": 2851,
+          "choices": 10
+        },
+        {
+          "time": 260,
+          "hull": 100,
+          "alive": 348,
+          "visible": 289,
+          "kills": 2233,
+          "xp": 3059,
+          "choices": 10
+        },
+        {
+          "time": 265,
+          "hull": 100,
+          "alive": 360,
+          "visible": 277,
+          "kills": 2381,
+          "xp": 3211,
+          "choices": 10
+        },
+        {
+          "time": 270,
+          "hull": 100,
+          "alive": 365,
+          "visible": 289,
+          "kills": 2536,
+          "xp": 3372,
+          "choices": 10
+        },
+        {
+          "time": 275,
+          "hull": 100,
+          "alive": 383,
+          "visible": 330,
+          "kills": 2677,
+          "xp": 3529,
+          "choices": 10
+        },
+        {
+          "time": 280,
+          "hull": 100,
+          "alive": 239,
+          "visible": 199,
+          "kills": 2825,
+          "xp": 3678,
+          "choices": 10
+        },
+        {
+          "time": 285,
+          "hull": 100,
+          "alive": 336,
+          "visible": 284,
+          "kills": 2918,
+          "xp": 3776,
+          "choices": 10
+        },
+        {
+          "time": 290,
+          "hull": 70,
+          "alive": 362,
+          "visible": 288,
+          "kills": 3082,
+          "xp": 4011,
+          "choices": 10
+        },
+        {
+          "time": 295,
+          "hull": 40,
+          "alive": 406,
+          "visible": 340,
+          "kills": 3228,
+          "xp": 4432,
+          "choices": 10
+        },
+        {
+          "time": 300,
+          "hull": 25,
+          "alive": 443,
+          "visible": 386,
+          "kills": 3382,
+          "xp": 4899,
+          "choices": 10
+        },
+        {
+          "time": 305,
+          "hull": 10,
+          "alive": 439,
+          "visible": 345,
+          "kills": 3576,
+          "xp": 5455,
+          "choices": 10
+        },
+        {
+          "time": 310,
+          "hull": 10,
+          "alive": 445,
+          "visible": 394,
+          "kills": 3760,
+          "xp": 6011,
+          "choices": 10
+        },
+        {
+          "time": 315,
+          "hull": 10,
+          "alive": 431,
+          "visible": 393,
+          "kills": 3963,
+          "xp": 6595,
+          "choices": 10
+        },
+        {
+          "time": 320,
+          "hull": 10,
+          "alive": 235,
+          "visible": 234,
+          "kills": 4162,
+          "xp": 7222,
+          "choices": 10
+        }
+      ]
+    },
+    {
+      "direction": "systems",
+      "route": "tight",
+      "seed": 17031991,
+      "projectIdentity": "8ab8476ceeb653ae",
+      "encounterSet": "front",
+      "airframes": 3,
+      "qualification": "ordinary-inputs-earned-upgrades-no-fixture",
+      "controller": "deterministic-10hz-candidate-pilot-v1",
+      "outcome": "won",
+      "simulatedSeconds": 353.18,
+      "observedWallMilliseconds": 1958.45,
+      "firstDraftSeconds": 19.17,
+      "primaryEvolutionSeconds": null,
+      "lastChoiceSeconds": 223.85,
+      "earnedChoices": 10,
+      "kills": 5048,
+      "collectedXP": 8492,
+      "groundXP": 179,
+      "peakAlive": 777,
+      "peakVisible": 634,
+      "densityPeaks": {
+        "opening": 57,
+        "developing": 99,
+        "late": 399,
+        "finale": 634
+      },
+      "damageTaken": 124,
+      "airframesRemaining": 2,
+      "finalRemainingHull": null,
+      "build": {
+        "primary": {
+          "rank": 2,
+          "branch": "double",
+          "evolved": false
+        },
+        "combat": [
+          {
+            "id": "proximity-pulse",
+            "rank": 3
+          },
+          {
+            "id": "side-burst",
+            "rank": 3
+          }
+        ],
+        "support": {
+          "id": "scanner",
+          "rank": 3
+        },
+        "reinforcement": 0,
+        "repair": 0
+      },
+      "choices": [
+        {
+          "id": "scanner:1",
+          "time": 19.166666666666668,
+          "tick": 1150
+        },
+        {
+          "id": "proximity-pulse:1",
+          "time": 30.683333333333334,
+          "tick": 1841
+        },
+        {
+          "id": "proximity-pulse:2",
+          "time": 50.916666666666664,
+          "tick": 3055
+        },
+        {
+          "id": "proximity-pulse:3",
+          "time": 68.15,
+          "tick": 4089
+        },
+        {
+          "id": "primary:double:2",
+          "time": 90.05,
+          "tick": 5403
+        },
+        {
+          "id": "side-burst:1",
+          "time": 114.23333333333333,
+          "tick": 6854
+        },
+        {
+          "id": "side-burst:2",
+          "time": 135.28333333333333,
+          "tick": 8117
+        },
+        {
+          "id": "side-burst:3",
+          "time": 146.38333333333333,
+          "tick": 8783
+        },
+        {
+          "id": "scanner:2",
+          "time": 172.36666666666667,
+          "tick": 10342
+        },
+        {
+          "id": "scanner:3",
+          "time": 223.85,
+          "tick": 13431
+        }
+      ],
+      "samples": [
+        {
+          "time": 5,
+          "hull": 100,
+          "alive": 15,
+          "visible": 6,
+          "kills": 0,
+          "xp": 0,
+          "choices": 0
+        },
+        {
+          "time": 10,
+          "hull": 100,
+          "alive": 28,
+          "visible": 14,
+          "kills": 2,
+          "xp": 2,
+          "choices": 0
+        },
+        {
+          "time": 15,
+          "hull": 100,
+          "alive": 40,
+          "visible": 28,
+          "kills": 5,
+          "xp": 5,
+          "choices": 0
+        },
+        {
+          "time": 20,
+          "hull": 100,
+          "alive": 44,
+          "visible": 33,
+          "kills": 16,
+          "xp": 16,
+          "choices": 1
+        },
+        {
+          "time": 25,
+          "hull": 100,
+          "alive": 42,
+          "visible": 31,
+          "kills": 33,
+          "xp": 33,
+          "choices": 1
+        },
+        {
+          "time": 30,
+          "hull": 100,
+          "alive": 46,
+          "visible": 38,
+          "kills": 44,
+          "xp": 44,
+          "choices": 1
+        },
+        {
+          "time": 35,
+          "hull": 100,
+          "alive": 44,
+          "visible": 34,
+          "kills": 60,
+          "xp": 60,
+          "choices": 2
+        },
+        {
+          "time": 40,
+          "hull": 100,
+          "alive": 28,
+          "visible": 25,
+          "kills": 79,
+          "xp": 79,
+          "choices": 2
+        },
+        {
+          "time": 45,
+          "hull": 100,
+          "alive": 40,
+          "visible": 26,
+          "kills": 92,
+          "xp": 92,
+          "choices": 2
+        },
+        {
+          "time": 50,
+          "hull": 100,
+          "alive": 53,
+          "visible": 28,
+          "kills": 104,
+          "xp": 99,
+          "choices": 2
+        },
+        {
+          "time": 55,
+          "hull": 100,
+          "alive": 61,
+          "visible": 43,
+          "kills": 121,
+          "xp": 121,
+          "choices": 3
+        },
+        {
+          "time": 60,
+          "hull": 100,
+          "alive": 58,
+          "visible": 48,
+          "kills": 149,
+          "xp": 149,
+          "choices": 3
+        },
+        {
+          "time": 65,
+          "hull": 100,
+          "alive": 61,
+          "visible": 53,
+          "kills": 171,
+          "xp": 170,
+          "choices": 3
+        },
+        {
+          "time": 70,
+          "hull": 100,
+          "alive": 72,
+          "visible": 59,
+          "kills": 185,
+          "xp": 185,
+          "choices": 4
+        },
+        {
+          "time": 75,
+          "hull": 100,
+          "alive": 57,
+          "visible": 42,
+          "kills": 225,
+          "xp": 225,
+          "choices": 4
+        },
+        {
+          "time": 80,
+          "hull": 100,
+          "alive": 27,
+          "visible": 24,
+          "kills": 258,
+          "xp": 250,
+          "choices": 4
+        },
+        {
+          "time": 85,
+          "hull": 100,
+          "alive": 47,
+          "visible": 36,
+          "kills": 273,
+          "xp": 272,
+          "choices": 4
+        },
+        {
+          "time": 90,
+          "hull": 100,
+          "alive": 55,
+          "visible": 32,
+          "kills": 300,
+          "xp": 299,
+          "choices": 4
+        },
+        {
+          "time": 95,
+          "hull": 100,
+          "alive": 69,
+          "visible": 53,
+          "kills": 321,
+          "xp": 326,
+          "choices": 5
+        },
+        {
+          "time": 100,
+          "hull": 100,
+          "alive": 68,
+          "visible": 55,
+          "kills": 357,
+          "xp": 363,
+          "choices": 5
+        },
+        {
+          "time": 105,
+          "hull": 100,
+          "alive": 56,
+          "visible": 42,
+          "kills": 404,
+          "xp": 413,
+          "choices": 5
+        },
+        {
+          "time": 110,
+          "hull": 100,
+          "alive": 63,
+          "visible": 46,
+          "kills": 432,
+          "xp": 454,
+          "choices": 5
+        },
+        {
+          "time": 115,
+          "hull": 100,
+          "alive": 66,
+          "visible": 50,
+          "kills": 463,
+          "xp": 488,
+          "choices": 6
+        },
+        {
+          "time": 120,
+          "hull": 100,
+          "alive": 31,
+          "visible": 27,
+          "kills": 502,
+          "xp": 539,
+          "choices": 6
+        },
+        {
+          "time": 125,
+          "hull": 100,
+          "alive": 55,
+          "visible": 17,
+          "kills": 528,
+          "xp": 569,
+          "choices": 6
+        },
+        {
+          "time": 130,
+          "hull": 100,
+          "alive": 93,
+          "visible": 72,
+          "kills": 540,
+          "xp": 603,
+          "choices": 6
+        },
+        {
+          "time": 135,
+          "hull": 100,
+          "alive": 81,
+          "visible": 68,
+          "kills": 602,
+          "xp": 737,
+          "choices": 6
+        },
+        {
+          "time": 140,
+          "hull": 100,
+          "alive": 82,
+          "visible": 65,
+          "kills": 651,
+          "xp": 934,
+          "choices": 7
+        },
+        {
+          "time": 145,
+          "hull": 100,
+          "alive": 81,
+          "visible": 66,
+          "kills": 702,
+          "xp": 1076,
+          "choices": 7
+        },
+        {
+          "time": 150,
+          "hull": 100,
+          "alive": 80,
+          "visible": 52,
+          "kills": 753,
+          "xp": 1267,
+          "choices": 8
+        },
+        {
+          "time": 155,
+          "hull": 100,
+          "alive": 91,
+          "visible": 54,
+          "kills": 792,
+          "xp": 1375,
+          "choices": 8
+        },
+        {
+          "time": 160,
+          "hull": 100,
+          "alive": 43,
+          "visible": 36,
+          "kills": 843,
+          "xp": 1532,
+          "choices": 8
+        },
+        {
+          "time": 165,
+          "hull": 100,
+          "alive": 71,
+          "visible": 43,
+          "kills": 880,
+          "xp": 1667,
+          "choices": 8
+        },
+        {
+          "time": 170,
+          "hull": 100,
+          "alive": 96,
+          "visible": 41,
+          "kills": 920,
+          "xp": 1735,
+          "choices": 8
+        },
+        {
+          "time": 175,
+          "hull": 100,
+          "alive": 130,
+          "visible": 93,
+          "kills": 951,
+          "xp": 1767,
+          "choices": 9
+        },
+        {
+          "time": 180,
+          "hull": 100,
+          "alive": 112,
+          "visible": 57,
+          "kills": 1034,
+          "xp": 1852,
+          "choices": 9
+        },
+        {
+          "time": 185,
+          "hull": 100,
+          "alive": 119,
+          "visible": 61,
+          "kills": 1092,
+          "xp": 1913,
+          "choices": 9
+        },
+        {
+          "time": 190,
+          "hull": 100,
+          "alive": 119,
+          "visible": 81,
+          "kills": 1157,
+          "xp": 1968,
+          "choices": 9
+        },
+        {
+          "time": 195,
+          "hull": 100,
+          "alive": 105,
+          "visible": 79,
+          "kills": 1235,
+          "xp": 2028,
+          "choices": 9
+        },
+        {
+          "time": 200,
+          "hull": 100,
+          "alive": 41,
+          "visible": 41,
+          "kills": 1302,
+          "xp": 2101,
+          "choices": 9
+        },
+        {
+          "time": 205,
+          "hull": 100,
+          "alive": 94,
+          "visible": 55,
+          "kills": 1334,
+          "xp": 2152,
+          "choices": 9
+        },
+        {
+          "time": 210,
+          "hull": 100,
+          "alive": 155,
+          "visible": 125,
+          "kills": 1358,
+          "xp": 2173,
+          "choices": 9
+        },
+        {
+          "time": 215,
+          "hull": 100,
+          "alive": 168,
+          "visible": 134,
+          "kills": 1430,
+          "xp": 2240,
+          "choices": 9
+        },
+        {
+          "time": 220,
+          "hull": 100,
+          "alive": 155,
+          "visible": 131,
+          "kills": 1528,
+          "xp": 2337,
+          "choices": 9
+        },
+        {
+          "time": 225,
+          "hull": 100,
+          "alive": 163,
+          "visible": 133,
+          "kills": 1605,
+          "xp": 2424,
+          "choices": 10
+        },
+        {
+          "time": 230,
+          "hull": 100,
+          "alive": 155,
+          "visible": 125,
+          "kills": 1698,
+          "xp": 2518,
+          "choices": 10
+        },
+        {
+          "time": 235,
+          "hull": 100,
+          "alive": 164,
+          "visible": 132,
+          "kills": 1774,
+          "xp": 2596,
+          "choices": 10
+        },
+        {
+          "time": 240,
+          "hull": 100,
+          "alive": 99,
+          "visible": 94,
+          "kills": 1842,
+          "xp": 2665,
+          "choices": 10
+        },
+        {
+          "time": 245,
+          "hull": 100,
+          "alive": 194,
+          "visible": 119,
+          "kills": 1907,
+          "xp": 2733,
+          "choices": 10
+        },
+        {
+          "time": 250,
+          "hull": 100,
+          "alive": 315,
+          "visible": 177,
+          "kills": 1946,
+          "xp": 2773,
+          "choices": 10
+        },
+        {
+          "time": 255,
+          "hull": 100,
+          "alive": 398,
+          "visible": 349,
+          "kills": 2023,
+          "xp": 2851,
+          "choices": 10
+        },
+        {
+          "time": 260,
+          "hull": 100,
+          "alive": 348,
+          "visible": 289,
+          "kills": 2233,
+          "xp": 3059,
+          "choices": 10
+        },
+        {
+          "time": 265,
+          "hull": 100,
+          "alive": 360,
+          "visible": 277,
+          "kills": 2381,
+          "xp": 3211,
+          "choices": 10
+        },
+        {
+          "time": 270,
+          "hull": 100,
+          "alive": 365,
+          "visible": 289,
+          "kills": 2536,
+          "xp": 3372,
+          "choices": 10
+        },
+        {
+          "time": 275,
+          "hull": 100,
+          "alive": 383,
+          "visible": 330,
+          "kills": 2677,
+          "xp": 3529,
+          "choices": 10
+        },
+        {
+          "time": 280,
+          "hull": 100,
+          "alive": 239,
+          "visible": 199,
+          "kills": 2825,
+          "xp": 3678,
+          "choices": 10
+        },
+        {
+          "time": 285,
+          "hull": 100,
+          "alive": 336,
+          "visible": 284,
+          "kills": 2918,
+          "xp": 3776,
+          "choices": 10
+        },
+        {
+          "time": 290,
+          "hull": 70,
+          "alive": 362,
+          "visible": 288,
+          "kills": 3082,
+          "xp": 4011,
+          "choices": 10
+        },
+        {
+          "time": 295,
+          "hull": 40,
+          "alive": 406,
+          "visible": 340,
+          "kills": 3228,
+          "xp": 4432,
+          "choices": 10
+        },
+        {
+          "time": 300,
+          "hull": 25,
+          "alive": 443,
+          "visible": 386,
+          "kills": 3382,
+          "xp": 4899,
+          "choices": 10
+        },
+        {
+          "time": 305,
+          "hull": 10,
+          "alive": 439,
+          "visible": 345,
+          "kills": 3576,
+          "xp": 5455,
+          "choices": 10
+        },
+        {
+          "time": 310,
+          "hull": 10,
+          "alive": 445,
+          "visible": 394,
+          "kills": 3760,
+          "xp": 6011,
+          "choices": 10
+        },
+        {
+          "time": 315,
+          "hull": 10,
+          "alive": 431,
+          "visible": 393,
+          "kills": 3963,
+          "xp": 6595,
+          "choices": 10
+        },
+        {
+          "time": 320,
+          "hull": 10,
+          "alive": 235,
+          "visible": 234,
+          "kills": 4162,
+          "xp": 7222,
+          "choices": 10
+        },
+        {
+          "time": 325,
+          "hull": 100,
+          "alive": 424,
+          "visible": 101,
+          "kills": 4173,
+          "xp": 7238,
+          "choices": 10
+        },
+        {
+          "time": 330,
+          "hull": 100,
+          "alive": 558,
+          "visible": 310,
+          "kills": 4239,
+          "xp": 7288,
+          "choices": 10
+        },
+        {
+          "time": 335,
+          "hull": 100,
+          "alive": 565,
+          "visible": 309,
+          "kills": 4432,
+          "xp": 7781,
+          "choices": 10
+        },
+        {
+          "time": 340,
+          "hull": 76,
+          "alive": 653,
+          "visible": 300,
+          "kills": 4544,
+          "xp": 7965,
+          "choices": 10
+        },
+        {
+          "time": 345,
+          "hull": 76,
+          "alive": 768,
+          "visible": 585,
+          "kills": 4629,
+          "xp": 8078,
+          "choices": 10
+        },
+        {
+          "time": 350,
+          "hull": 76,
+          "alive": 670,
+          "visible": 562,
+          "kills": 4927,
+          "xp": 8389,
+          "choices": 10
+        }
+      ]
+    }
+  ]
+}

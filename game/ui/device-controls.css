@@ -1,3 +1,5 @@
+@import url('./touch-steering.css');
+
 /* Legacy layout and paint share one cascade layer. Theme recipes own opt-in appearance. */
 @layer legacy {
   /* Fullscreen flight surface. Input chooses controls; viewport chooses geometry. */
@@ -24,44 +26,6 @@
     display: none;
     border: 0;
     padding: 0;
-  }
-  .game-shell .play-controls .direction-controls [data-move='up'] {
-    grid-area: 1 / 2;
-  }
-  .game-shell .play-controls .direction-controls [data-move='left'] {
-    grid-area: 2 / 1;
-  }
-  .game-shell .play-controls .direction-controls [data-move='right'] {
-    grid-area: 2 / 3;
-  }
-  .game-shell .play-controls .direction-controls [data-move='down'] {
-    grid-area: 3 / 2;
-  }
-  .game-shell .play-controls .direction-controls {
-    display: grid;
-    grid-template-columns: repeat(3, 46px);
-    grid-template-rows: repeat(3, 46px);
-    gap: 4px;
-  }
-  .game-shell .direction-controls button {
-    width: 46px;
-    height: 46px;
-    min-width: 46px;
-    min-height: 46px;
-    padding: 0;
-    border: 2px solid #5386a8;
-    background: #101d32ee;
-    color: #c4f3ff;
-    border-radius: 0;
-    font: bold 25px/1 var(--fk-font-ui, sans-serif);
-    touch-action: none;
-    box-shadow: inset 0 -4px #203952;
-  }
-  .game-shell .direction-controls button.pressed {
-    background: #315d79;
-    border-color: #a4efff;
-    color: white;
-    transform: translateY(1px);
   }
   .game-shell[data-screen-controls='shown'] {
     --touch-gutter: 164px;
@@ -443,15 +407,6 @@
     flex-wrap: wrap;
   }
   @media (max-width: 680px) and (orientation: portrait) {
-    .game-shell .play-controls .direction-controls {
-      grid-template-columns: repeat(3, 56px);
-      grid-template-rows: repeat(3, 56px);
-    }
-    .game-shell .play-controls .direction-controls button {
-      width: 56px;
-      height: 56px;
-      min-height: 56px;
-    }
     .game-shell[data-screen-controls='shown'] {
       --touch-gutter: 196px;
     }
@@ -542,90 +497,15 @@
 
   /* A broad steering surface follows either thumb; the visible stick follows the
    contact point. Actions stay on the opposite side and support a second finger. */
-  .game-shell {
-    --touch-size: 156px;
-    --touch-opacity: 0.55;
-  }
-  .game-shell[data-touch-size='large'] {
-    --touch-size: 192px;
-  }
   .game-shell[data-screen-controls='shown'] .play-controls {
     flex-direction: row;
     bottom: max(24px, calc(var(--safe-bottom) + 12px));
     left: max(24px, calc(var(--safe-left) + 12px));
     right: max(24px, calc(var(--safe-right) + 12px));
   }
-  .game-shell #touch-surface {
-    width: var(--touch-size);
-    height: var(--touch-size);
-    border: 2px solid #a3dfffb3;
-    border-radius: 50%;
-    background: #0b1d3266;
-    color: #d4f6ff;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    touch-action: none;
-    user-select: none;
-    -webkit-user-select: none;
-    opacity: var(--touch-opacity);
-    font: 13px/1.4 var(--fk-font-ui, sans-serif);
-  }
-  .game-shell #touch-surface > span:first-child {
-    font: 54px/1.3 var(--fk-font-ui, sans-serif);
-  }
   .game-shell[data-touch-mode='dpad'] #touch-surface,
   .game-shell:not([data-touch-mode='dpad']) .play-controls .direction-controls {
     display: none;
-  }
-  .game-shell .play-controls .direction-controls {
-    width: var(--touch-size);
-    height: var(--touch-size);
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(3, 1fr);
-    gap: 0;
-    touch-action: none;
-    user-select: none;
-    -webkit-user-select: none;
-    border-radius: 30%;
-    background: #122e4355;
-    opacity: var(--touch-opacity);
-  }
-  .game-shell .play-controls .direction-controls button {
-    width: 100%;
-    height: 100%;
-    min-width: 0;
-    min-height: 0;
-    border-radius: 18%;
-    box-shadow: none;
-    background: #19364ab3;
-  }
-  .game-shell .play-controls .direction-controls:active,
-  .game-shell #touch-surface:active {
-    opacity: 0.85;
-  }
-  .game-shell #touch-indicator {
-    position: fixed;
-    z-index: 8;
-    pointer-events: none;
-    width: 112px;
-    height: 112px;
-    transform: translate(-50%, -50%);
-    border: 2px solid #bdefff99;
-    border-radius: 50%;
-    background: #12354b33;
-  }
-  .game-shell #touch-indicator i {
-    position: absolute;
-    left: 36px;
-    top: 36px;
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    background: #c4f3ff99;
-    border: 2px solid #ecfcff;
-    transform: translate(var(--stick-x, 0px), var(--stick-y, 0px));
   }
   .game-shell[data-screen-controls='shown']:not([data-touch-mode='dpad']) #game-canvas {
     touch-action: none;

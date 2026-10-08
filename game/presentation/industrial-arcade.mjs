@@ -1,3 +1,4 @@
+import { resolveIndustrialEnvironment } from './industrial-environments.mjs';
 import { FIELD_KIT_COLORS, FIELD_KIT_SPRITE_IDS } from './pixel-art.mjs';
 import { TEAM_RUNTIME_IMAGE_SLOTS } from './team-runtime-slots.mjs';
 import {
@@ -15,6 +16,7 @@ import {
 import { INDUSTRIAL_MACHINERY_REVISION } from './industrial-machinery.mjs';
 import { runtimeActorArtRevision } from '../hunt/preferences.mjs';
 import {
+  industrialMaterialPixels,
   INDUSTRIAL_MATERIAL_REVISION,
   INDUSTRIAL_TERRAIN_MATERIALS,
 } from './industrial-materials.mjs';
@@ -56,6 +58,14 @@ export function getArcadeCollection(id, revision) {
     collections.find((entry) => entry.id === id && (!revision || entry.revision === revision)) ??
     null
   );
+}
+
+/** Resolve a palette only from this runtime's exact installed collection record.
+ * Portable id/revision pairs must first pass getArcadeCollection. */
+export function getArcadePalette(collection) {
+  if (!collections.includes(collection))
+    throw new TypeError('Unavailable Arcade collection authority.');
+  return paletteFor(collection);
 }
 
 export function selectedArcadeCollection(preferences) {
@@ -171,8 +181,20 @@ export function industrialTexturePixels(
   { width, height, rgba },
   slot,
   collection = INDUSTRIAL_ARCADE_COLLECTION,
-  { reviewRevision = null } = {},
+  { reviewRevision = null, environment = null } = {},
 ) {
+  const admitted = resolveIndustrialEnvironment(environment);
+  const binding = admitted?.arcade[slot];
+  if (
+    binding &&
+    collection.id === admitted.collection.id &&
+    collection.revision === admitted.collection.revision &&
+    reviewRevision === admitted.artRevision
+  )
+    return industrialMaterialPixels({ width, height }, binding.material, {
+      revision: admitted.materialRevision,
+      variant: binding.variant,
+    });
   // Enemy livery must never recolor the Ukrainian FPV player into the opposing kit.
   if (collection.id === 'military-field' && slot.startsWith('player.'))
     return { width, height, rgba: new Uint8ClampedArray(rgba) };
@@ -273,9 +295,21 @@ export function createArcadeAdapter({
   reviewRevision = runtimeActorArtRevision(),
 } = {}) {
   if (reviewRevision === 'industrial-overhead-v2') reviewRevision = INDUSTRIAL_MATERIAL_REVISION;
-  let snapshots = new WeakMap();
+  let snapshots = new WeakMap(),
+    environment = null;
   const canvases = new Set();
   return {
+    setEnvironment(pin) {
+      const next = resolveIndustrialEnvironment(pin);
+      const previous = resolveIndustrialEnvironment(environment);
+      if (next?.id === previous?.id && next?.revision === previous?.revision) {
+        environment = pin ?? null;
+        return false;
+      }
+      this.clear();
+      environment = pin ?? null;
+      return true;
+    },
     setReviewRevision(value) {
       const next = value === 'industrial-overhead-v2' ? INDUSTRIAL_MATERIAL_REVISION : value;
       if (next === reviewRevision) return false;
@@ -288,7 +322,8 @@ export function createArcadeAdapter({
       const variants = snapshots.get(base) ?? new Map();
       const key = `${collection.id}@${collection.revision}`;
       if (variants.has(key)) return variants.get(key);
-      const frames = new Map();
+      const frames = new Map(),
+        acceptedEnvironment = environment;
       const adapted = Object.freeze({
         ...base,
         appearance: collection,
@@ -329,6 +364,7 @@ export function createArcadeAdapter({
             data.data.set(
               industrialTexturePixels({ width, height, rgba: data.data }, slot, collection, {
                 reviewRevision,
+                environment: acceptedEnvironment,
               }).rgba,
             );
             ctx.putImageData(data, 0, 0);

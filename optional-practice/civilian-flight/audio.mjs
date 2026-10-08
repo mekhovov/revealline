@@ -30,6 +30,22 @@ export function createPracticeAudio({ window, createAudio = createWorldAudio } =
     enabled: audio.enabled,
     setEnabled: audio.setEnabled,
     subscribe: audio.subscribe,
+    masterSnapshot: audio.masterSnapshot,
+    subscribeMaster: audio.subscribeMaster,
+    setMasterVolume: audio.setMasterVolume,
+    get context() {
+      return audio.context;
+    },
+    get menuBus() {
+      return audio.menuBus;
+    },
+    get movementSettings() {
+      return audio.movementSettings;
+    },
+    set movementSettings(value) {
+      audio.movementSettings = value;
+    },
+    applyVolumes: audio.applyVolumes,
     resume: audio.resume,
     pause: audio.pause,
     update(state, command) {

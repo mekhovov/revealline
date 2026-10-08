@@ -13,7 +13,6 @@ const root = new URL('../', import.meta.url).pathname;
 
 test('sparse publication checkouts include the full admitted directory import closure', async (t) => {
   for (const [workflow, entry] of [
-    ['publish-frozen-pages.yml', 'publishing/pages-controller/publish.mjs'],
     ['fastline-release.yml', 'publishing/fastline-release-publisher.mjs'],
   ]) {
     const source = await readFile(path.join(root, '.github/workflows', workflow), 'utf8');
@@ -91,6 +90,12 @@ test('maintainer recipe adds a temporary fourth app, launches, updates, rolls ba
           '  ...BASE_OPTIONAL_PACKAGE_POLICIES,',
           `  ...BASE_OPTIONAL_PACKAGE_POLICIES,
   'sample-flight': Object.freeze({ ...BASE_OPTIONAL_PACKAGE_POLICIES['civilian-flight'], root: 'optional-practice/sample-flight/', entry: 'optional-practice/sample-flight/index.html', template: 'optional-practice/worker-template.mjs' }),`,
+        )
+        // This unpublished app explicitly adopts the same literal core-only
+        // tools link. Its archive still cannot include the core settings tree.
+        .replace(
+          "['civilian-flight', 'civilian-fpv', 'fpv-worlds'].includes(id)",
+          "['civilian-flight', 'civilian-fpv', 'fpv-worlds', 'sample-flight'].includes(id)",
         ),
     ),
   );

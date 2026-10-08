@@ -42,7 +42,7 @@ export function createCommunityLibrary({
     classicInstalled ?? (globalThis.indexedDB ? createCommunityClassicInstalled() : null);
   const natives =
     nativeInstalled ?? (globalThis.indexedDB ? createCommunityNativeInstalled() : null);
-  const isNative = (family) => ['team', 'fpv'].includes(family);
+  const isNative = (family) => ['team', 'fpv', 'overflight', 'overflight-hunt'].includes(family);
   const runtimeStorage = async (linked) => {
     const storage =
       linked.family === 'classic'
@@ -64,7 +64,11 @@ export function createCommunityLibrary({
         ? `../couch/relay-rescue.html?community-team=${linked.creatorEditionId}`
         : linked.family === 'fpv'
           ? `../../optional-practice/civilian-fpv/index.html?community-world=${encodeURIComponent(linked.runtimeIdentity)}&community-revision=${linked.creatorEditionId}`
-          : `../creator/player.html?edition=${encodeURIComponent(linked.creatorEditionId)}`;
+          : linked.family === 'overflight-hunt'
+            ? `../overflight/raid.html?community=${encodeURIComponent(linked.runtimeIdentity)}`
+            : linked.family === 'overflight'
+              ? `../overflight/play.html?community=${encodeURIComponent(linked.runtimeIdentity)}`
+              : `../creator/player.html?edition=${encodeURIComponent(linked.creatorEditionId)}`;
   const runtimeExport = (linked) => {
     if (linked.family === 'classic') {
       required(classics, 'Classic community storage is unavailable.');

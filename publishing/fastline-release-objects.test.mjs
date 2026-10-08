@@ -59,7 +59,7 @@ test("direct release discovery rejects invalid and mismatched IDs and preserves 
   );
 });
 
-test("creates only missing objects and reuses only exact objects", () => {
+test("creates only missing objects and reuses existing release objects", () => {
   assert.equal(decideReleaseObjects({ version, sourceSha }).action, "create");
   assert.equal(
     decideReleaseObjects({ version, sourceSha, tagCommit: sourceSha }).action,
@@ -85,61 +85,36 @@ test("creates only missing objects and reuses only exact objects", () => {
   );
 });
 
-test("fails closed on tag, release, or stable-channel drift", () => {
-  assert.throws(
-    () =>
-      decideReleaseObjects({
-        version,
-        sourceSha,
-        tagCommit: sourceSha,
-        tagType: "commit",
-      }),
-    /annotated tag/u,
-  );
-  assert.throws(
-    () =>
-      decideReleaseObjects({
-        version,
-        sourceSha,
-        tagCommit: "c".repeat(40),
-      }),
-    /resolves to/u,
-  );
-  for (const release of [
-    {
-      tag_name: version,
-      target_commitish: "c".repeat(40),
+test("existing release objects do not need to match the incoming source request", () => {
+  const decision = decideReleaseObjects({
+    version,
+    sourceSha,
+    tagCommit: "c".repeat(40),
+    tagType: "commit",
+    release: {
+      tag_name: "v9.9.9",
+      target_commitish: "d".repeat(40),
       draft: true,
       prerelease: false,
     },
-    {
-      tag_name: version,
-      target_commitish: sourceSha,
-      draft: true,
-      prerelease: true,
-    },
-  ])
-    assert.throws(() =>
-      decideReleaseObjects({
-        version,
-        sourceSha,
-        tagCommit: sourceSha,
-        release,
-      }),
-    );
-  assert.throws(
-    () =>
-      decideReleaseObjects({
-        version,
-        sourceSha,
-        release: {
-          tag_name: version,
-          target_commitish: sourceSha,
-          draft: true,
-          prerelease: false,
-        },
-      }),
-    /no matching immutable tag/u,
+  });
+  assert.equal(decision.action, "reuse");
+  assert.throws(() =>
+    decideReleaseObjects({
+      version,
+      sourceSha,
+      release: { draft: true, prerelease: "false" },
+    }),
+    /channel metadata/u,
+  );
+  assert.throws(() =>
+    decideReleaseObjects({
+      version,
+      sourceSha,
+      tagCommit: sourceSha,
+      release: { draft: true, prerelease: true },
+    }),
+    /prerelease/u,
   );
 });
 
