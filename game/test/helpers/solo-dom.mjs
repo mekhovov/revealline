@@ -168,8 +168,17 @@ export function soloDatabase(indexedDB) {
     },
   };
 }
-export async function settle(predicate, message = 'Asynchronous host action did not settle.') {
-  await waitFor(predicate, { message });
+export async function settle(
+  predicate,
+  message = 'Asynchronous host action did not settle.',
+  options = {},
+) {
+  // The focused gate runs independent host processes concurrently. Its runner
+  // can schedule a valid asynchronous handoff later than the interactive
+  // fixture's five-second default; retain the fast local feedback while
+  // giving CI a deterministic scheduler allowance.
+  const timeoutMs = options.timeoutMs ?? (process.env.CI ? 20_000 : 5_000);
+  await waitFor(predicate, { ...options, timeoutMs, message });
 }
 let sequence = 0;
 export async function soloPage(

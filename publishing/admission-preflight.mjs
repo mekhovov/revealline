@@ -20,8 +20,7 @@ async function api(endpoint) {
 const pull = await api(`pulls/${event.pull_request.number}`);
 if (
   pull.head.sha !== event.pull_request.head.sha ||
-  pull.base.sha !== event.pull_request.base.sha ||
-  pull.title !== event.pull_request.title
+  pull.base.sha !== event.pull_request.base.sha
 )
   throw new Error('PR changed before preflight; await its new gate.');
 const paths = new Set();

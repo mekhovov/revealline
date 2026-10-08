@@ -27,6 +27,7 @@ export class FeedbackDirector {
     this.boards = new Map();
     this.seen = new WeakMap();
     this.serial = 0;
+    this.destructionVariants = new Map();
     this.lastLevels = new Map();
     this.recent = new Map();
     this.generation = 0;
@@ -39,7 +40,8 @@ export class FeedbackDirector {
     for (const name of Object.keys(EFFECT_BANK)) this.load(name);
   }
   load(name) {
-    if (this.closed || this.buffers.has(name) || this.pending.has(name)) return;
+    if (this.closed || this.buffers.has(name)) return;
+    if (this.pending.has(name)) return this.pending.get(name);
     if (this.now() < (this.retryAfter.get(name) ?? -Infinity)) return;
     const entry = EFFECT_BANK[name];
     if (!entry) return;
@@ -61,6 +63,7 @@ export class FeedbackDirector {
         else this.retryAfter.delete(name);
       });
     this.pending.set(name, promise);
+    return promise;
   }
   play(
     name,
@@ -76,6 +79,7 @@ export class FeedbackDirector {
       radio = false,
       movement = false,
       maxDuration = null,
+      humanReaction = false,
     } = {},
   ) {
     const cueFamily = name.replace(/-[12]$/, '');
@@ -87,6 +91,13 @@ export class FeedbackDirector {
     if (name.startsWith('contact-') && !/[-][12]$/.test(name)) {
       const variant = this.serial++ % 3;
       if (variant) name += `-${variant}`;
+    }
+    if (name.startsWith('destroy-') && !/[-][12]$/.test(name)) {
+      const variant = this.destructionVariants.get(name) ?? 0;
+      this.destructionVariants.set(name, (variant + 1) % 3);
+      if (variant) name += `-${variant}`;
+      // Small per-recording variation, independent of the simulation seed.
+      rate *= [1, 1.025, 0.98][variant];
     }
     const s = this.sound,
       c = s.context;
@@ -118,6 +129,10 @@ export class FeedbackDirector {
       [...s.voices].some((v) => v.radio || v.dialogue || (v.feedback && v.priority >= 5))
     )
       return null;
+    if (priority >= 5) {
+      this.sound.humanReactions?.interrupt(c.currentTime);
+      for (const voice of [...s.voices]) if (voice.humanReaction) voice.retire();
+    }
     if (priority >= 5)
       for (const voice of [...s.voices]) if (voice.radio || voice.dialogue) voice.stop();
     if (priority >= 4)
@@ -188,6 +203,7 @@ export class FeedbackDirector {
       radio,
       movement,
       priority,
+      humanReaction,
       board,
       source,
       volume,
@@ -227,7 +243,7 @@ export class FeedbackDirector {
     // Re-enter a periodic texture at its global phase, without an attack restart.
     try {
       source.start(c.currentTime + delay, loop ? (c.currentTime * rate) % buffer.duration : 0);
-      if (!loop) source.stop(start + duration + 0.01);
+      if (!loop) source.stop(start + duration + (humanReaction ? 0 : 0.01));
     } catch {
       voice.stop();
       return null;
@@ -255,6 +271,9 @@ export class FeedbackDirector {
         'combat.impact': 'impact',
         'combat.cancelled': 'recover',
         'combat.eliminated': 'catch',
+        'enemy.defeated': 'catch',
+        'encounter.defeated': 'catch',
+        'core.defeated': 'catch',
       }[event.type];
       if (combatCue && this.sound.encounter) {
         const hunt =
@@ -262,13 +281,57 @@ export class FeedbackDirector {
           run.level?.runningEnemies?.hunt ??
           run.level?.classic?.hunt ??
           run.definition?.classic?.hunt;
-        const humanoid = hunt?.targets?.find((target) => target.id === event.id);
+        const identity = event.actorId ?? event.enemy ?? event.id;
+        const actor = [
+          ...(run.enemies ?? []),
+          ...((run.runningEnemies ?? run.classic ?? run).combatPatrols?.actors ?? []),
+        ].find((candidate) => candidate.id === identity);
+        const humanoid = hunt?.targets?.find((target) => target.id === identity);
+        const stronghold =
+          event.type === 'core.defeated'
+            ? run.strongholds?.find((candidate) => candidate.id === event.stronghold)
+            : null;
+        const rawFamily =
+          event.family ??
+          humanoid?.kind ??
+          actor?.pursuit?.behavior ??
+          actor?.family ??
+          (stronghold ? 'relay-sentinel' : actor?.type) ??
+          (['encounter.defeated', 'core.defeated'].includes(event.type)
+            ? 'relay-sentinel'
+            : undefined);
+        const family = humanoid
+          ? rawFamily
+          : ({
+              bouncer: 'utility-car',
+              'claimed-rover': 'cargo-truck',
+              'border-patrol': 'armored-carrier',
+              'contour-patrol': 'scout-car',
+              eroder: 'tracked-tank',
+              'relay-sentinel': 'radar-truck',
+            }[rawFamily] ?? rawFamily);
+        const machineFamily =
+          !family || /car|truck|tank|rover|vehicle|machine|lane-boss/.test(family);
+        const machine =
+          event.machine ??
+          (combatCue === 'catch' && !humanoid && actor?.bodyId !== 'humanoid' && machineFamily
+            ? ['eroder', 'lane-boss', 'tracked-tank'].includes(family)
+              ? 'tracked'
+              : 'wheeled'
+            : false);
+        const source = Number.isFinite(event.x) ? event : (stronghold?.core ?? actor);
         this.sound.encounter(combatCue, {
           board: options.board ?? 'solo',
-          family: humanoid?.kind,
-          machine: event.type === 'combat.eliminated' && !humanoid,
+          family,
+          machine,
+          material: event.material,
+          humanoid:
+            event.humanoid ??
+            (humanoid ? true : actor?.bodyId ? actor.bodyId === 'humanoid' : undefined),
+          flesh: event.flesh,
+          vocals: (options.getDestruction?.() ?? this.sound.readDestruction?.())?.vocals,
           brutal: (options.getDestruction?.() ?? this.sound.readDestruction?.())?.brutal === true,
-          pan: Number.isFinite(event.x) ? screenPan(event.x, run.width, options.placement) : 0,
+          pan: Number.isFinite(source?.x) ? screenPan(source.x, run.width, options.placement) : 0,
         });
         return;
       }
@@ -349,6 +412,106 @@ export class FeedbackDirector {
         });
     });
   }
+  /** Shared explicit launch owner. Resume and decoding completion never call it. */
+  launch({ board = 'solo', level, bodyId = 'fpv-scout-v1', theme = {}, retry } = {}) {
+    const fpv =
+      movementFor(bodyId, theme) === 'rotor' || /fixedwing|delta-interceptor/.test(bodyId);
+    const again = retry ?? Boolean(level && this.lastLevels.get(board) === level);
+    const intro = fpv ? (again ? 'esc-retry' : 'esc-start') : again ? 'retry' : 'start';
+    const started = this.play(intro, { priority: 4, board });
+    if (fpv && started)
+      this.play(getLocale() === 'uk' ? 'radio-armed-uk' : 'radio-armed-en', {
+        radio: true,
+        gain: 0.7,
+        priority: 2,
+        board,
+        delay: this.buffers.get(intro).duration + 0.08,
+      });
+    if (
+      !started &&
+      fpv &&
+      !this.buffers.has(intro) &&
+      !this.sound.audioMaster.muted &&
+      this.sound.audioMaster.volume > 0 &&
+      this.sound.play &&
+      this.sound.voices.size <= 12
+    ) {
+      // First activation may still be decoding. Give immediate ESC-like note
+      // feedback; its later recording never replays this launch.
+      const notes = again
+        ? [
+            [0, 783.99, 0.09],
+            [0.14, 1046.5, 0.12],
+          ]
+        : [
+            [0, 523.25, 0.12],
+            [0.17, 659.25, 0.12],
+            [0.34, 783.99, 0.14],
+            [0.58, 1046.5, 0.18],
+          ];
+      for (const [offset, frequency, duration] of notes)
+        this.sound.play(
+          {
+            kind: 'tone',
+            voice: 'lead',
+            frequency,
+            duration,
+            volume: 0.012,
+            encounter: true,
+            cueName: intro,
+            board,
+            priority: 4,
+          },
+          (this.sound.context?.currentTime ?? 0) + offset,
+        );
+    } else if (!started && !fpv && this.buffers.size === 0) this.sound.tone?.(440, 0.08, 0.035);
+    this.lastLevels.set(board, level);
+    return started;
+  }
+  /** One owner per drone bed; no crowd or grid simulation adapter is required. */
+  flight({
+    board = 'overflight',
+    active = false,
+    bodyId = 'fpv-scout-v1',
+    moving = true,
+    boost = false,
+  } = {}) {
+    this.flightLoops ??= new Map();
+    let voice = this.flightLoops.get(board);
+    const sound = this.sound;
+    if (
+      !active ||
+      !moving ||
+      !sound.enabled ||
+      sound.paused ||
+      sound.gameplayPaused ||
+      sound.audioMaster.muted ||
+      sound.movementSettings?.enabled === false ||
+      sound.movementSettings?.volume === 0
+    ) {
+      voice?.stop();
+      this.flightLoops.delete(board);
+      return;
+    }
+    if (voice && !sound.voices.has(voice)) {
+      this.flightLoops.delete(board);
+      voice = null;
+    }
+    const name = movementFor(bodyId, { family: 'fpv' });
+    if (voice && voice.name !== name) {
+      voice.stop();
+      voice = null;
+    }
+    const foreground = [...sound.voices].some(
+      (item) => item.radio || item.priority >= 5 || /esc-(start|retry)/.test(item.name ?? ''),
+    );
+    const gain = (boost ? 0.22 : 0.15) * (foreground ? 0.5 : 1);
+    if (!voice) {
+      voice = this.play(name, { board, movement: true, loop: true, priority: 0, gain });
+      if (voice) this.flightLoops.set(board, voice);
+    }
+    voice?.set(gain, 0, boost ? 1.12 : 1);
+  }
   update(active, theme, run, options = {}) {
     const board = options.board ?? 'solo';
     let state = this.boards.get(board);
@@ -382,23 +545,12 @@ export class FeedbackDirector {
     }
     if (options.silentStart) state.started = true;
     if (!state.started) {
-      const level = run.levelId ?? run.level?.id;
-      const body = playerMovementBody(run.player ?? run.players?.[0] ?? {}, run, theme, options);
-      const fpv = movementFor(body, theme) === 'rotor' || /fixedwing|delta-interceptor/.test(body);
-      const retry = level && this.lastLevels.get(board) === level;
-      const intro = fpv ? (retry ? 'esc-retry' : 'esc-start') : retry ? 'retry' : 'start';
-      const started = this.play(intro, { priority: 4, board });
-      // Scheduled now, owned by the normal SFX lifecycle; decoding never replays it later.
-      if (fpv && started)
-        this.play(getLocale() === 'uk' ? 'radio-armed-uk' : 'radio-armed-en', {
-          radio: true,
-          gain: 0.7,
-          priority: 2,
-          board,
-          delay: this.buffers.get(intro).duration + 0.08,
-        });
-      if (!started && this.buffers.size === 0) this.sound.tone?.(440, 0.08, 0.035);
-      this.lastLevels.set(board, level);
+      this.launch({
+        board,
+        level: run.levelId ?? run.level?.id,
+        bodyId: playerMovementBody(run.player ?? run.players?.[0] ?? {}, run, theme, options),
+        theme,
+      });
       state.started = true;
     }
     const players = (run.players ?? [run.player]).filter(
@@ -650,6 +802,8 @@ export class FeedbackDirector {
       if (voice.feedback && voice.bus !== 'menu') voice.stop();
     this.recent.clear();
     this.boards.clear();
+    this.flightLoops?.clear();
+    this.sound.humanReactions?.reset();
     this.seen = new WeakMap();
     this.generation++;
   }

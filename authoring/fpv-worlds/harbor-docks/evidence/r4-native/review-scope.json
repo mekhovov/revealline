@@ -1,0 +1,137 @@
+{
+  "format": "FPVHarborNativePublicReview.v1",
+  "status": "passed within stated scope",
+  "entry": "http://127.0.0.1:8982/player/optional-practice/fpv-worlds/index.html",
+  "admittedSource": "ca28461faa9a5245f55532bb27fbb5d69f557e16",
+  "prerequisite": "f9617ba8e0fdb0a526171f0fab944d06ad2d834e",
+  "qualifiedRuntime": "9b5c3d65e2877847126c87f263fbc7e9aca357fb",
+  "files": 102,
+  "runtimeOverlays": 0,
+  "clock": "Unmodified native requestAnimationFrame at public 1x; separate from the controlled-RAF matrix.",
+  "packSHA256": "d5bf4b9bb6829c04dbe1bb398893e5243cefc1f9acf018bf153a2012c8cf49b6",
+  "proofSHA256": "7341d203aa2d3a61199a0000cc87a31f50553588dad610d878a5238aab433102",
+  "operator": "Root actual browser via visible public UI; authoring agent subsequently inspected saved text, screenshots and console.",
+  "operatorObserved": [
+    "Native File chooser installed exact Harbor r4 pack, eight courses, then imported sixteen of sixteen proofs as verified.",
+    "Terminal cart escort normal-RAF Watch completed at displayed 34.5s; cart Follow showed 4.1/6s at 14.5s during direct observation.",
+    "Deck inspection normal-RAF Watch completed at displayed 32.2s; inspector visibly grounded at 15.2s.",
+    "Both courses: Fly this challenge, deliberate Arm, active flight, then Pause and Continue menu.",
+    "Prepare offline completed; after online retention check, PID 55388 was command-verified and SIGTERM stopped only this origin. curl refused with exit 7.",
+    "Actual stopped-origin reload retained Harbor eight courses and exact d5bf pack; cart selected, deliberately armed, native flight advanced, then Pause displayed Continue."
+  ],
+  "savedTextVerified": {
+    "cartDemonstrationEndSeconds": 34.5,
+    "inspectorDemonstrationEndSeconds": 32.2,
+    "offlineArmSeconds": 0.3,
+    "offlineActiveSeconds": 17.5,
+    "pauseMenus": 3,
+    "warnings": [],
+    "errors": []
+  },
+  "captureLimits": [
+    "Import/offline-prepared/reopened accessibility captures report unchanged trees and do not independently reproduce full catalogue/acknowledgment; those steps are explicitly attributed to root direct observation.",
+    "cart-watch.png captures the later landing phase at 31.2s, not the directly observed Follow interval at 14.5s; cart-watch.txt is 31.4s.",
+    "inspector-watch.png captures the inspector during the later landing phase at15.1s, with TXT 15.2s.",
+    "offline-arm.png is a zero-throttle near-spawn view at 0.5s, not additional scene-art acceptance.",
+    "Native flights are launch/pause smoke checks, not manually completed routes. Only the two actual 1x Watch examples have native completion observations. No sixteen-native-playback endurance, FPS, hardware or novice claim."
+  ],
+  "serverAfterReview": {
+    "action": "Same immutable origin restarted only after root closed tab 29 and authorized restart; no listener existed before restart.",
+    "session": 44900,
+    "root": "/tmp/fpv-harbor-r4-import-v1",
+    "verifiedHTTPStatus": 200,
+    "checkedUTC": "2026-10-05T00:39:09.752732+00:00"
+  },
+  "inventory": [
+    {
+      "path": "fpv-harbor-r4-native-cart-arm.txt",
+      "bytes": 446,
+      "sha256": "e8ac2374a2eae7b7bd1213ddb6f20fd611bc5ed58423f636910dbf5d2d2cb4fc"
+    },
+    {
+      "path": "fpv-harbor-r4-native-cart-complete.txt",
+      "bytes": 478,
+      "sha256": "e1d4ca01f2c3b42c4e59e62bbdc424a7294379f65db2930dc5b1a11a18137c10"
+    },
+    {
+      "path": "fpv-harbor-r4-native-cart-paused.txt",
+      "bytes": 265,
+      "sha256": "436ce2ed3be7f4bdd411003e67a56a4e743adbd586fd40781c429a8aa1016172"
+    },
+    {
+      "path": "fpv-harbor-r4-native-cart-watch.png",
+      "bytes": 60158,
+      "sha256": "c738bbd83c5d1f1013e9783212693a8e94387fa0dba3d17a6b2b9bb586f750b1"
+    },
+    {
+      "path": "fpv-harbor-r4-native-cart-watch.txt",
+      "bytes": 1472,
+      "sha256": "91aea6b4b15d6dcf5027782ebfbb13411c51653beffaa8ad4f67674f1f1a4441"
+    },
+    {
+      "path": "fpv-harbor-r4-native-console.json",
+      "bytes": 2,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    {
+      "path": "fpv-harbor-r4-native-imports.txt",
+      "bytes": 272,
+      "sha256": "64607339e210d8c1fb1d99f030129443a7a4260b8a987dea69528ffd5d34ea89"
+    },
+    {
+      "path": "fpv-harbor-r4-native-inspector-arm.txt",
+      "bytes": 1426,
+      "sha256": "279f8160fa708f987beed7212160eb3ebfe32044ab8aeaeab93b95a2681b9789"
+    },
+    {
+      "path": "fpv-harbor-r4-native-inspector-complete.txt",
+      "bytes": 475,
+      "sha256": "a61bc84bd6bbfd34f143a2ef1b61c88cf29e7e3f41a51cc9689bd3c7235eb5f6"
+    },
+    {
+      "path": "fpv-harbor-r4-native-inspector-paused.txt",
+      "bytes": 1570,
+      "sha256": "1be1359ffea0623b7dc5fb6da2128221200bc201b2b45905e8ee46832026f9ae"
+    },
+    {
+      "path": "fpv-harbor-r4-native-inspector-watch.png",
+      "bytes": 47818,
+      "sha256": "2689cfc290af7389ab37c25c512d0ddcca25b0de5ab8e594f694a18ef47cd1b0"
+    },
+    {
+      "path": "fpv-harbor-r4-native-inspector-watch.txt",
+      "bytes": 1505,
+      "sha256": "a482d2fce2410af9d2d668c1a9f556f41fb8010ea25915db9c1cdb4c748346ed"
+    },
+    {
+      "path": "fpv-harbor-r4-native-offline-active.txt",
+      "bytes": 1473,
+      "sha256": "1735033478ff480e3c8fab651200c83274247b4a327e92b31deab71d0cf1aacf"
+    },
+    {
+      "path": "fpv-harbor-r4-native-offline-arm.png",
+      "bytes": 70607,
+      "sha256": "e1ac797a50ec9281dff7535d8db0cc280c3a31aab177d8c5d016268a6359fcaf"
+    },
+    {
+      "path": "fpv-harbor-r4-native-offline-arm.txt",
+      "bytes": 446,
+      "sha256": "ec1484ca46f1da9b75f1461ee64e893c0d2da1535a1f1e5aacaa4e0a4f54a624"
+    },
+    {
+      "path": "fpv-harbor-r4-native-offline-paused.txt",
+      "bytes": 265,
+      "sha256": "970b922e9f8e6dd681b28170c8ab623c816dd3ed17dc9be73598e4b0710ccd0c"
+    },
+    {
+      "path": "fpv-harbor-r4-native-offline-prepared.txt",
+      "bytes": 269,
+      "sha256": "3baa7d6828f76a302b440676ddc9a496de06f4a3b998ce695b1f707ca800975d"
+    },
+    {
+      "path": "fpv-harbor-r4-native-offline-reopened.txt",
+      "bytes": 279,
+      "sha256": "a4393ff58758abcc03d142a7dd6919874cc179568a62fd533f3dc73c8c4981f9"
+    }
+  ]
+}

@@ -1,0 +1,201 @@
+{
+  "url": "http://127.0.0.1:8981/docs/evidence/fpv-flight-hud-browser.html",
+  "checks": [
+    {
+      "pass": true,
+      "name": "Range target band is fixed middle third"
+    },
+    {
+      "pass": true,
+      "name": "Full duration alone does not award completion"
+    },
+    {
+      "pass": true,
+      "name": "Blocking check is visible, groups bounded at four"
+    },
+    {
+      "pass": true,
+      "name": "Guided value is nonnumeric"
+    },
+    {
+      "pass": true,
+      "name": "One-sided target range is half of track"
+    },
+    {
+      "pass": true,
+      "name": "Zero-width range has safe binary marker"
+    },
+    {
+      "pass": true,
+      "name": "Occlusion gives direction only"
+    },
+    {
+      "pass": true,
+      "name": "All display preferences persist"
+    },
+    {
+      "pass": true,
+      "name": "Detailed numbers occupy one bounded row"
+    },
+    {
+      "pass": true,
+      "name": "Paused explanation opens separately"
+    },
+    {
+      "pass": true,
+      "name": "Explicit suppression hides active HUD"
+    },
+    {
+      "pass": true,
+      "name": "Visibility returns for active HUD"
+    },
+    {
+      "pass": true,
+      "name": "Explicit suppression hides paused HUD"
+    },
+    {
+      "pass": true,
+      "name": "Visibility returns for paused HUD"
+    },
+    {
+      "pass": true,
+      "name": "Explicit suppression hides replay HUD"
+    },
+    {
+      "pass": true,
+      "name": "Visibility returns for replay HUD"
+    },
+    {
+      "pass": true,
+      "name": "Component stylesheet enforces hidden on the HUD root"
+    },
+    {
+      "pass": true,
+      "name": "World hidden result preserves flight HUD and controls"
+    },
+    {
+      "pass": true,
+      "name": "World result immediately suppresses HUD without another update"
+    },
+    {
+      "pass": true,
+      "name": "World result suppresses sticks"
+    },
+    {
+      "pass": true,
+      "name": "World result suppresses drone diagram"
+    },
+    {
+      "pass": true,
+      "name": "World result suppresses replay toolbar"
+    },
+    {
+      "pass": true,
+      "name": "World result replacement keeps HUD and controls suppressed"
+    },
+    {
+      "pass": true,
+      "name": "World result closing restores unchanged flight HUD"
+    },
+    {
+      "pass": true,
+      "name": "World result closing restores sticks"
+    },
+    {
+      "pass": true,
+      "name": "World result closing restores drone diagram"
+    },
+    {
+      "pass": true,
+      "name": "World result closing restores replay toolbar"
+    },
+    {
+      "pass": true,
+      "name": "Academy hidden result preserves flight HUD and controls"
+    },
+    {
+      "pass": true,
+      "name": "Academy result immediately suppresses HUD without another update"
+    },
+    {
+      "pass": true,
+      "name": "Academy result suppresses sticks"
+    },
+    {
+      "pass": true,
+      "name": "Academy result suppresses drone diagram"
+    },
+    {
+      "pass": true,
+      "name": "Academy result suppresses replay toolbar"
+    },
+    {
+      "pass": true,
+      "name": "Academy result replacement keeps HUD and controls suppressed"
+    },
+    {
+      "pass": true,
+      "name": "Academy result closing restores unchanged flight HUD"
+    },
+    {
+      "pass": true,
+      "name": "Academy result closing restores sticks"
+    },
+    {
+      "pass": true,
+      "name": "Academy result closing restores drone diagram"
+    },
+    {
+      "pass": true,
+      "name": "Academy result closing restores replay toolbar"
+    },
+    {
+      "pass": true,
+      "name": "Default card obeys bounded dimensions"
+    }
+  ],
+  "date": "2026-10-05",
+  "baseRevision": "ecf1d7ee8c413cff26b5287dbdc95f713e821376",
+  "sources": {
+    "optional-practice/civilian-fpv/app.mjs": "075296b60a97c1d91a389f888982a29f47adceaefa8dd17547967cfc3bfe69e0",
+    "optional-practice/civilian-fpv/world-app.mjs": "e8594e74656a60bb162cfbc37ef5e475eefdfb928972745a29fa0837a7f1b6b4",
+    "optional-practice/civilian-fpv/sim-presentation.mjs": "c8069450a534d49748e479f99ed3eb90dddd1b75b3d68072e054fbb5b8adef40",
+    "optional-practice/civilian-fpv/flight-fullscreen.css": "b0143e326f5d2aa79bd58af08c77d631bb19bf7dc1545543482652dec2e896c7",
+    "optional-practice/civilian-fpv/style.css": "ebf5f91cc8a949e584761a36e8ad7e77a33d8c1b0f8a20b9381b93aa59c2b01c",
+    "docs/evidence/fpv-flight-hud-browser.html": "afde4028684d51563ec713adbbfeedc47c673ef742d5245afc38f65c9d43ca12"
+  },
+  "nativeBrowser": {
+    "viewport": [1280, 720],
+    "world": [
+      "Acro tilt full recorded flight reaches demonstration result; HUD hidden",
+      "Result hides sticks, drone diagram and replay toolbar",
+      "Retry opens guide without flight HUD",
+      "Leave guide restores HUD",
+      "Pause menu suppresses HUD",
+      "Continue restores HUD",
+      "Explain suppresses HUD; Close returns paused with explicit resume"
+    ],
+    "academy": [
+      "Start restores guidance",
+      "Pause suppresses guidance",
+      "Continue restores guidance",
+      "Explain suppresses guidance; Close returns paused with explicit resume"
+    ]
+  },
+  "regression": {
+    "existingFlightModelUiRadioReplay": {
+      "passed": 60,
+      "failed": 0
+    },
+    "eslint": "pass",
+    "syntax": "pass",
+    "canonicalPresentationProjection": "byte-identical",
+    "diffWhitespace": "pass"
+  },
+  "limitations": [
+    "Fresh source browser verification; package receipts at 3bbdc8 remain historical and do not qualify these changed bytes.",
+    "Fresh complete package qualification deferred: free space below the required 3 GiB floor (about 2 GiB most recently observed).",
+    "No new physical-device, controller, novice or performance claim. Viewport override was not applied by this browser session; responsive acceptance is not refreshed.",
+    "No new unit coverage; expanded native browser functional probes only."
+  ]
+}

@@ -1,61 +1,20 @@
-name: Stage unallocated pull requests
+name: Record queue admission
 
 on:
   pull_request_target:
     types:
-      [opened, reopened, ready_for_review, edited, labeled, unlabeled, milestoned, demilestoned]
-
-permissions:
-  issues: write
-  pull-requests: write
+      [opened, reopened]
 
 concurrency:
   group: stage-unallocated-pr-${{ github.event.pull_request.number }}
   cancel-in-progress: true
 
 jobs:
-  # PR titles are user-owned admission metadata. Automated renaming races the
-  # source preflight snapshot and can invalidate an otherwise merge-ready PR.
-  # Milestones and release-hold enforcement remain independent of title syncing.
-  stage:
-    # A release title or an explicit version milestone allocates a product
-    # slot. Bounded maintenance paths are admitted without spending that slot;
-    # the label remains an explicit escape hatch for an independently reviewed
-    # exceptional change.
-    if: >-
-      !github.event.pull_request.draft &&
-      !startsWith(github.event.pull_request.title, 'Release v') &&
-      github.event.pull_request.milestone == null &&
-      !contains(github.event.pull_request.labels.*.name, 'release-train-approved')
+  record:
     runs-on: ubuntu-latest
     steps:
-      - name: Keep bounded maintenance ready or mark unallocated product work on hold
+      - name: Record unrestricted queue admission
         uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v8.0.0
         with:
           script: |
-            const files = await github.paginate(github.rest.pulls.listFiles, {
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              pull_number: context.payload.pull_request.number,
-              per_page: 100,
-            });
-            const maintenance =
-              files.length > 0 &&
-              files.every(({ filename }) =>
-                /^(docs\/|publishing\/|\.github\/workflows\/|game\/test\/)/.test(filename),
-              );
-            if (maintenance) {
-              core.notice('Bounded maintenance paths do not consume a product release slot.');
-              return;
-            }
-            // GitHub's Actions integration cannot call the GraphQL
-            // convertPullRequestToDraft mutation. The required release-ready
-            // check already prevents this PR from merging, so label the hold
-            // explicitly instead of making queue hygiene itself fail.
-            await github.rest.issues.addLabels({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              issue_number: context.payload.pull_request.number,
-              labels: ['release-train-hold'],
-            });
-            core.notice('Marked unallocated product work as release-train-hold.');
+            core.notice('Queue admission is unrestricted; no hold label or draft transition is applied.');

@@ -1,0 +1,534 @@
+{
+  "format": "RevealLineDestructionProductionV1",
+  "sourceManifestSha256": "b6cad04e5080204c5ec84152d0912b5ef21eaeb55f56aaed0cc5e4f8b31cfa29",
+  "producerSha256": "ecbb65511e291b70ef311f9ec4376a137caa15eb9c022e2780631b6195d7ef57",
+  "decoder": "ffmpeg version 9.0.2 Copyright (c) 2000-2026 the FFmpeg developers",
+  "channels": 1,
+  "sampleRate": 48000,
+  "bitsPerSample": 16,
+  "review": "Candidate audio. Measurements are technical evidence, not a human listening certificate.",
+  "entries": {
+    "destroy-soft": {
+      "file": "destroy-soft.wav",
+      "loop": false,
+      "bytes": 21164,
+      "sha256": "4ccf476d260718a54c78954918b06e0b222c75eae12c967f68e7ac5047b97acf",
+      "samplePeakDbfs": -24.5798693042547,
+      "max50msDbfs": -30.00029730546643,
+      "rmsDbfs": -35.81840201074189,
+      "frames": 10560,
+      "duration": 0.22,
+      "recipe": {
+        "duration": 0.22,
+        "targetMax50msDbfs": -30,
+        "samplePeakCeilingDbfs": -20,
+        "layers": [
+          {
+            "source": "impact/impactPunch_medium_000.ogg",
+            "weight": 0.8,
+            "rate": 1,
+            "offset": 0,
+            "lowpass": 6000
+          },
+          {
+            "source": "impact/impactSoft_medium_000.ogg",
+            "weight": 0.3,
+            "rate": 1,
+            "offset": 0.008,
+            "lowpass": 3500
+          }
+        ]
+      }
+    },
+    "destroy-soft-1": {
+      "file": "destroy-soft-1.wav",
+      "loop": false,
+      "bytes": 21164,
+      "sha256": "9724c67c085277040f44b7b39313d9cfe3af1afae4339a15bd625b47068ec2b8",
+      "samplePeakDbfs": -24.539542687198708,
+      "max50msDbfs": -30.000192441158795,
+      "rmsDbfs": -35.95899667562528,
+      "frames": 10560,
+      "duration": 0.22,
+      "recipe": {
+        "duration": 0.22,
+        "targetMax50msDbfs": -30,
+        "samplePeakCeilingDbfs": -20,
+        "layers": [
+          {
+            "source": "impact/impactPunch_medium_001.ogg",
+            "weight": 0.8,
+            "rate": 1,
+            "offset": 0,
+            "lowpass": 6000
+          },
+          {
+            "source": "impact/impactSoft_medium_001.ogg",
+            "weight": 0.3,
+            "rate": 1,
+            "offset": 0.008,
+            "lowpass": 3500
+          }
+        ]
+      }
+    },
+    "destroy-soft-2": {
+      "file": "destroy-soft-2.wav",
+      "loop": false,
+      "bytes": 21164,
+      "sha256": "575837cdd684af17be402d982569338f90813bbd983596dfaa173ebb36bdba89",
+      "samplePeakDbfs": -24.43732842927202,
+      "max50msDbfs": -30.00019758993382,
+      "rmsDbfs": -35.434128776805096,
+      "frames": 10560,
+      "duration": 0.22,
+      "recipe": {
+        "duration": 0.22,
+        "targetMax50msDbfs": -30,
+        "samplePeakCeilingDbfs": -20,
+        "layers": [
+          {
+            "source": "impact/impactPunch_medium_002.ogg",
+            "weight": 0.8,
+            "rate": 1,
+            "offset": 0,
+            "lowpass": 6000
+          },
+          {
+            "source": "impact/impactSoft_medium_002.ogg",
+            "weight": 0.3,
+            "rate": 1,
+            "offset": 0.008,
+            "lowpass": 3500
+          }
+        ]
+      }
+    },
+    "destroy-armored": {
+      "file": "destroy-armored.wav",
+      "loop": false,
+      "bytes": 28844,
+      "sha256": "341ec9b36071d2a2b8ee77c570b7ab950be85e795f5f1a2f74b32812d6f6b634",
+      "samplePeakDbfs": -24.006392355522323,
+      "max50msDbfs": -30.00021473851659,
+      "rmsDbfs": -36.94899785737296,
+      "frames": 14400,
+      "duration": 0.3,
+      "recipe": {
+        "duration": 0.3,
+        "targetMax50msDbfs": -30,
+        "samplePeakCeilingDbfs": -20,
+        "layers": [
+          {
+            "source": "impact/impactPunch_medium_000.ogg",
+            "weight": 0.58,
+            "rate": 0.94,
+            "offset": 0,
+            "lowpass": 5000
+          },
+          {
+            "source": "impact/impactMetal_heavy_000.ogg",
+            "weight": 0.7,
+            "rate": 1,
+            "offset": 0,
+            "lowpass": 7000
+          },
+          {
+            "source": "impact/impactPlate_light_000.ogg",
+            "weight": 0.18,
+            "rate": 1.05,
+            "offset": 0.012,
+            "lowpass": 5500
+          }
+        ]
+      }
+    },
+    "destroy-armored-1": {
+      "file": "destroy-armored-1.wav",
+      "loop": false,
+      "bytes": 28844,
+      "sha256": "f1090620c85ae18dbde22b4f51182a1d34addfe4ca78600cc51635e635dee760",
+      "samplePeakDbfs": -24.019014139731325,
+      "max50msDbfs": -30.000253879673075,
+      "rmsDbfs": -37.006815445916374,
+      "frames": 14400,
+      "duration": 0.3,
+      "recipe": {
+        "duration": 0.3,
+        "targetMax50msDbfs": -30,
+        "samplePeakCeilingDbfs": -20,
+        "layers": [
+          {
+            "source": "impact/impactPunch_medium_001.ogg",
+            "weight": 0.58,
+            "rate": 0.94,
+            "offset": 0,
+            "lowpass": 5000
+          },
+          {
+            "source": "impact/impactMetal_heavy_001.ogg",
+            "weight": 0.7,
+            "rate": 1,
+            "offset": 0,
+            "lowpass": 7000
+          },
+          {
+            "source": "impact/impactPlate_light_001.ogg",
+            "weight": 0.18,
+            "rate": 1.05,
+            "offset": 0.012,
+            "lowpass": 5500
+          }
+        ]
+      }
+    },
+    "destroy-armored-2": {
+      "file": "destroy-armored-2.wav",
+      "loop": false,
+      "bytes": 28844,
+      "sha256": "603a4ee6f317ab05b326328269b26686fb7f3e1ce02515f255dabd1c616b4b3c",
+      "samplePeakDbfs": -23.53986882710226,
+      "max50msDbfs": -30.000270635782364,
+      "rmsDbfs": -36.30576405376039,
+      "frames": 14400,
+      "duration": 0.3,
+      "recipe": {
+        "duration": 0.3,
+        "targetMax50msDbfs": -30,
+        "samplePeakCeilingDbfs": -20,
+        "layers": [
+          {
+            "source": "impact/impactPunch_medium_002.ogg",
+            "weight": 0.58,
+            "rate": 0.94,
+            "offset": 0,
+            "lowpass": 5000
+          },
+          {
+            "source": "impact/impactMetal_heavy_002.ogg",
+            "weight": 0.7,
+            "rate": 1,
+            "offset": 0,
+            "lowpass": 7000
+          },
+          {
+            "source": "impact/impactPlate_light_002.ogg",
+            "weight": 0.18,
+            "rate": 1.05,
+            "offset": 0.012,
+            "lowpass": 5500
+          }
+        ]
+      }
+    },
+    "destroy-light": {
+      "file": "destroy-light.wav",
+      "loop": false,
+      "bytes": 43244,
+      "sha256": "b7f5836a2b207d984cf324b3eb2633c5c2971c313a640d1e0f0f2fb56bae7788",
+      "samplePeakDbfs": -22.430478567477618,
+      "max50msDbfs": -29.00020558299665,
+      "rmsDbfs": -31.76714852768425,
+      "frames": 21600,
+      "duration": 0.45,
+      "recipe": {
+        "duration": 0.45,
+        "targetMax50msDbfs": -29,
+        "samplePeakCeilingDbfs": -20,
+        "layers": [
+          {
+            "source": "scifi/explosionCrunch_000.ogg",
+            "weight": 0.82,
+            "rate": 1.12,
+            "offset": 0,
+            "lowpass": 7800
+          },
+          {
+            "source": "impact/impactMetal_heavy_000.ogg",
+            "weight": 0.45,
+            "rate": 1,
+            "offset": 0.015,
+            "lowpass": 6000
+          }
+        ]
+      }
+    },
+    "destroy-light-1": {
+      "file": "destroy-light-1.wav",
+      "loop": false,
+      "bytes": 43244,
+      "sha256": "01bcffaec50d0b29b560a10fbdb6e00587a6d8858b2dac6af9a708e0d7169204",
+      "samplePeakDbfs": -21.5539874427866,
+      "max50msDbfs": -29.00037543530746,
+      "rmsDbfs": -30.962519927262854,
+      "frames": 21600,
+      "duration": 0.45,
+      "recipe": {
+        "duration": 0.45,
+        "targetMax50msDbfs": -29,
+        "samplePeakCeilingDbfs": -20,
+        "layers": [
+          {
+            "source": "scifi/explosionCrunch_001.ogg",
+            "weight": 0.82,
+            "rate": 1.12,
+            "offset": 0,
+            "lowpass": 7800
+          },
+          {
+            "source": "impact/impactMetal_heavy_001.ogg",
+            "weight": 0.45,
+            "rate": 1,
+            "offset": 0.015,
+            "lowpass": 6000
+          }
+        ]
+      }
+    },
+    "destroy-light-2": {
+      "file": "destroy-light-2.wav",
+      "loop": false,
+      "bytes": 43244,
+      "sha256": "03c0e762813aaf041d36dd51912048319f4afa514dde4b00d020c7bf22ea7340",
+      "samplePeakDbfs": -22.14759298145065,
+      "max50msDbfs": -29.000244114562065,
+      "rmsDbfs": -32.070754569734596,
+      "frames": 21600,
+      "duration": 0.45,
+      "recipe": {
+        "duration": 0.45,
+        "targetMax50msDbfs": -29,
+        "samplePeakCeilingDbfs": -20,
+        "layers": [
+          {
+            "source": "scifi/explosionCrunch_002.ogg",
+            "weight": 0.82,
+            "rate": 1.12,
+            "offset": 0,
+            "lowpass": 7800
+          },
+          {
+            "source": "impact/impactMetal_heavy_002.ogg",
+            "weight": 0.45,
+            "rate": 1,
+            "offset": 0.015,
+            "lowpass": 6000
+          }
+        ]
+      }
+    },
+    "destroy-heavy": {
+      "file": "destroy-heavy.wav",
+      "loop": false,
+      "bytes": 72044,
+      "sha256": "84b26977fc5779e551dcae00acb30ec473fb4a6b275f3c7903d6e30c9e1aedc7",
+      "samplePeakDbfs": -22.029599264233134,
+      "max50msDbfs": -28.00024155196139,
+      "rmsDbfs": -31.587040271035143,
+      "frames": 36000,
+      "duration": 0.75,
+      "recipe": {
+        "duration": 0.75,
+        "targetMax50msDbfs": -28,
+        "samplePeakCeilingDbfs": -20,
+        "layers": [
+          {
+            "source": "scifi/explosionCrunch_000.ogg",
+            "weight": 0.85,
+            "rate": 0.86,
+            "offset": 0,
+            "lowpass": 6200
+          },
+          {
+            "source": "scifi/lowFrequency_explosion_000.ogg",
+            "weight": 0.48,
+            "rate": 1,
+            "offset": 0,
+            "lowpass": 2000
+          },
+          {
+            "source": "impact/impactPlate_light_000.ogg",
+            "weight": 0.2,
+            "rate": 0.84,
+            "offset": 0.025,
+            "lowpass": 4800
+          }
+        ]
+      }
+    },
+    "destroy-heavy-1": {
+      "file": "destroy-heavy-1.wav",
+      "loop": false,
+      "bytes": 72044,
+      "sha256": "0d19b678058042174743faa8a11018fb4acb4bc8a566813d844bff19358d05c7",
+      "samplePeakDbfs": -22.614763840428708,
+      "max50msDbfs": -28.000243559664284,
+      "rmsDbfs": -31.477787639013442,
+      "frames": 36000,
+      "duration": 0.75,
+      "recipe": {
+        "duration": 0.75,
+        "targetMax50msDbfs": -28,
+        "samplePeakCeilingDbfs": -20,
+        "layers": [
+          {
+            "source": "scifi/explosionCrunch_001.ogg",
+            "weight": 0.85,
+            "rate": 0.86,
+            "offset": 0,
+            "lowpass": 6200
+          },
+          {
+            "source": "scifi/lowFrequency_explosion_001.ogg",
+            "weight": 0.48,
+            "rate": 1,
+            "offset": 0,
+            "lowpass": 2000
+          },
+          {
+            "source": "impact/impactPlate_light_001.ogg",
+            "weight": 0.2,
+            "rate": 0.84,
+            "offset": 0.025,
+            "lowpass": 4800
+          }
+        ]
+      }
+    },
+    "destroy-heavy-2": {
+      "file": "destroy-heavy-2.wav",
+      "loop": false,
+      "bytes": 72044,
+      "sha256": "2b51c0865cca213199a6db35bacb1aacbc079edb0e4e644b6c7aa0d5c30389ed",
+      "samplePeakDbfs": -21.880210894793365,
+      "max50msDbfs": -28.000282505881195,
+      "rmsDbfs": -31.549413974119112,
+      "frames": 36000,
+      "duration": 0.75,
+      "recipe": {
+        "duration": 0.75,
+        "targetMax50msDbfs": -28,
+        "samplePeakCeilingDbfs": -20,
+        "layers": [
+          {
+            "source": "scifi/explosionCrunch_002.ogg",
+            "weight": 0.85,
+            "rate": 0.86,
+            "offset": 0,
+            "lowpass": 6200
+          },
+          {
+            "source": "scifi/lowFrequency_explosion_000.ogg",
+            "weight": 0.48,
+            "rate": 1,
+            "offset": 0,
+            "lowpass": 2000
+          },
+          {
+            "source": "impact/impactPlate_light_002.ogg",
+            "weight": 0.2,
+            "rate": 0.84,
+            "offset": 0.025,
+            "lowpass": 4800
+          }
+        ]
+      }
+    },
+    "destroy-electronic": {
+      "file": "destroy-electronic.wav",
+      "loop": false,
+      "bytes": 28844,
+      "sha256": "9cffbf1ec33ca0f183261bc4335befb6cf77ed76954485aeb928480415c0512a",
+      "samplePeakDbfs": -26.107981701691614,
+      "max50msDbfs": -31.00032871981209,
+      "rmsDbfs": -34.31298435972714,
+      "frames": 14400,
+      "duration": 0.3,
+      "recipe": {
+        "duration": 0.3,
+        "targetMax50msDbfs": -31,
+        "samplePeakCeilingDbfs": -20,
+        "layers": [
+          {
+            "source": "digital/zap1.ogg",
+            "weight": 0.6,
+            "rate": 0.92,
+            "offset": 0,
+            "lowpass": 4800
+          },
+          {
+            "source": "impact/impactMetal_heavy_000.ogg",
+            "weight": 0.55,
+            "rate": 1.2,
+            "offset": 0,
+            "lowpass": 7500
+          }
+        ]
+      }
+    },
+    "destroy-electronic-1": {
+      "file": "destroy-electronic-1.wav",
+      "loop": false,
+      "bytes": 28844,
+      "sha256": "e46030c0b1e33f9805ff4e29ad4a4747b514c2c38733934b19c9db5b4251dfa4",
+      "samplePeakDbfs": -26.341356099028474,
+      "max50msDbfs": -31.00026648763088,
+      "rmsDbfs": -32.726893777123344,
+      "frames": 14400,
+      "duration": 0.3,
+      "recipe": {
+        "duration": 0.3,
+        "targetMax50msDbfs": -31,
+        "samplePeakCeilingDbfs": -20,
+        "layers": [
+          {
+            "source": "digital/zap2.ogg",
+            "weight": 0.6,
+            "rate": 1.08,
+            "offset": 0,
+            "lowpass": 4800
+          },
+          {
+            "source": "impact/impactMetal_heavy_001.ogg",
+            "weight": 0.55,
+            "rate": 1.2,
+            "offset": 0,
+            "lowpass": 7500
+          }
+        ]
+      }
+    },
+    "destroy-electronic-2": {
+      "file": "destroy-electronic-2.wav",
+      "loop": false,
+      "bytes": 28844,
+      "sha256": "faf2c32947866105285d925723b9fbe02f4fd6391e5adb9a6a82586b9f61f5ce",
+      "samplePeakDbfs": -27.983486947583472,
+      "max50msDbfs": -31.00031981459326,
+      "rmsDbfs": -32.51294660295413,
+      "frames": 14400,
+      "duration": 0.3,
+      "recipe": {
+        "duration": 0.3,
+        "targetMax50msDbfs": -31,
+        "samplePeakCeilingDbfs": -20,
+        "layers": [
+          {
+            "source": "digital/lowDown.ogg",
+            "weight": 0.6,
+            "rate": 1,
+            "offset": 0,
+            "lowpass": 4800
+          },
+          {
+            "source": "impact/impactMetal_heavy_002.ogg",
+            "weight": 0.55,
+            "rate": 1.2,
+            "offset": 0,
+            "lowpass": 7500
+          }
+        ]
+      }
+    }
+  }
+}

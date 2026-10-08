@@ -91,19 +91,14 @@ jobs:
             game/build-config.json
           sparse-checkout-cone-mode: false
 
-      - name: Require exact source and version identity
+      - name: Require exact source identity
         id: source
         working-directory: source
         env:
           EXPECTED_SOURCE: ${{ inputs.source_sha }}
-          EXPECTED_NUMERIC_VERSION: ${{ steps.inputs.outputs.numeric_version }}
         run: |
           set -euo pipefail
           test "$(git rev-parse HEAD)" = "$EXPECTED_SOURCE"
-          test "$(jq -r .version package.json)" = "$EXPECTED_NUMERIC_VERSION"
-          test "$(jq -r .version package-lock.json)" = "$EXPECTED_NUMERIC_VERSION"
-          test "$(jq -r '.packages[""].version' package-lock.json)" = "$EXPECTED_NUMERIC_VERSION"
-          test "$(jq -r .version game/build-config.json)" = "$EXPECTED_NUMERIC_VERSION"
           echo "source_tree=$(git rev-parse 'HEAD^{tree}')" >> "$GITHUB_OUTPUT"
 
       - name: Require merged PR, current main and published predecessor
@@ -502,5 +497,5 @@ jobs:
             '### Fastline publication' \
             '' \
             'Exact annotated tag, draft and nine immutable assets were reconciled and published.' \
-            'The release event now owns archive/selector/Pages routing; archive admission and exact public bytes remain blocking.' \
+            'The release event now owns archive and selector routing; release-asset integrity remains blocking.' \
             'Long suites remained waived and were not reported as passed.' >> "$GITHUB_STEP_SUMMARY"

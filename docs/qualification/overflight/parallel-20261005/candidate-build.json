@@ -1,0 +1,137 @@
+{
+  "recordedAt": "2026-10-05T11:58:36.210Z",
+  "sourceRevision": "a4d9b96757a467b2771f686b5db614ce9ef51473",
+  "version": "0.142.4",
+  "manifestFiles": 3097,
+  "payloadBytes": 1003166747,
+  "zipBytes": 1004154491,
+  "zipSha256": "e34d21dcb046af86934d133f3d870cfc0475aada5f15e46e0f9c1189ec1b7f65",
+  "verified": [
+    {
+      "path": "game/build-info.json",
+      "bytes": 143,
+      "sha256": "b96c44b820003d3358f8c6ef95b6149aa487a58e97ba0121891b813c0df92f6a"
+    },
+    {
+      "path": "game/overflight/app.mjs",
+      "bytes": 44913,
+      "sha256": "f13dceb0ac0157522bf38a2c1e55c0c3c65261255a3ea6a17c798614625f4d43"
+    },
+    {
+      "path": "game/overflight/atlas.mjs",
+      "bytes": 10254,
+      "sha256": "81b73babe10e4dc55c91571a3dec7c75e5d96ee5699968d64791d21ee0b273ac"
+    },
+    {
+      "path": "game/overflight/audio.mjs",
+      "bytes": 2149,
+      "sha256": "f87fc9c7a0ef3057128e956225fa8846b8d667a1a5c1db351c35707f0565b787"
+    },
+    {
+      "path": "game/overflight/benchmark.mjs",
+      "bytes": 7633,
+      "sha256": "d1b95883888b79dffc853d795ec9f22d2a4eb85d23ad9af842ed551f8bd2c53b"
+    },
+    {
+      "path": "game/overflight/community.mjs",
+      "bytes": 11384,
+      "sha256": "cd614db12fab0d48091266c8c2a7372476d5e6f6b8987a486de9aee676226dfa"
+    },
+    {
+      "path": "game/overflight/controller.mjs",
+      "bytes": 7506,
+      "sha256": "bda1c454b870c811a34bde729a75c04dad5d886792ae8d6b6900dd33b596aa5c"
+    },
+    {
+      "path": "game/overflight/copy.mjs",
+      "bytes": 16109,
+      "sha256": "bb93602c982c4ac2833a69f9c720c1f848d5b0af3600173197ceb44d7f995f03"
+    },
+    {
+      "path": "game/overflight/core.mjs",
+      "bytes": 55848,
+      "sha256": "b8b8563073c0480a9ca613b90e6a93b309da5e585030e7c67477bb7792f3337e"
+    },
+    {
+      "path": "game/overflight/grid.mjs",
+      "bytes": 2552,
+      "sha256": "ef130a7f9594bff6af374fe252bb8aafdc7e86762bb8ef60107914654f21dd30"
+    },
+    {
+      "path": "game/overflight/host-loop.mjs",
+      "bytes": 8020,
+      "sha256": "9be5fd61350f8f8eb434e50476baf367cb4fa16ec9c34898fddcbe6114c3b613"
+    },
+    {
+      "path": "game/overflight/play.html",
+      "bytes": 12002,
+      "sha256": "15138aa6bac9f1139a246ddf63750944b263f67f3cb0f4b4b9b2f972e2586225"
+    },
+    {
+      "path": "game/overflight/project.mjs",
+      "bytes": 10115,
+      "sha256": "265d3b65111f54c0afc7ca6c0daa8d7a6ba018618de461a59b3003e934230c62"
+    },
+    {
+      "path": "game/overflight/renderer.mjs",
+      "bytes": 21435,
+      "sha256": "5dab3747e843db5e6a73979842f7539c011bc63745895b68bedeae9c17fb57e6"
+    },
+    {
+      "path": "game/overflight/review-pilot.mjs",
+      "bytes": 7023,
+      "sha256": "f925e46ae35c4af9463c869c2c2a0de1e9a518858ed0a27fce6edf6a2dffde19"
+    },
+    {
+      "path": "game/overflight/review-recorder.mjs",
+      "bytes": 4049,
+      "sha256": "dfc6a5d8b24fb4310ad2c300352815539483ac3a4f21eca36306e289f15bc48d"
+    },
+    {
+      "path": "game/overflight/style.css",
+      "bytes": 7621,
+      "sha256": "b219ad370db92b86ddfa715097d538118cbd8389b8372be4bd50b68cddcd0456"
+    },
+    {
+      "path": "game/overflight/trial-report.mjs",
+      "bytes": 4529,
+      "sha256": "f281a346beb8c58b949916ec127c011bc16da94fcb063826870b6acc55527bac"
+    },
+    {
+      "path": "game/overflight/upgrade-card.mjs",
+      "bytes": 2959,
+      "sha256": "779f5c8f2b8e56927c2d771fa0d9132eb6683eb95e40d373a7ae669a18ea6a72"
+    },
+    {
+      "path": "game/overflight/upgrade-preview.mjs",
+      "bytes": 17165,
+      "sha256": "120cb740c32c0fbb3ff8aa3cc88787aa3b03fc267abf68ac24ae3880252b70af"
+    },
+    {
+      "path": "game/overflight/upgrades.mjs",
+      "bytes": 15503,
+      "sha256": "b9e1ea61405573a97e489d967f78ff1c34d220f5e467f1f0217568de5701f097"
+    },
+    {
+      "path": "game/studio/overflight-labels.mjs",
+      "bytes": 2131,
+      "sha256": "148fb88b4c4ccddb3cf22f81b8f9521c2c17ae44c3a09ecd1db4ba1720baa404"
+    },
+    {
+      "path": "game/studio/overflight.css",
+      "bytes": 2448,
+      "sha256": "0d84728c6cdb29878b7549ca66e9226de98b5f6da2dbbd2d8cc89299e7c0c32d"
+    },
+    {
+      "path": "game/studio/overflight.html",
+      "bytes": 5957,
+      "sha256": "ece81744f481d97f69f531d92b756634bab2653cc4d4dbbd3b4ca07a338381fe"
+    },
+    {
+      "path": "game/studio/overflight.mjs",
+      "bytes": 19026,
+      "sha256": "16deb20d68d68d02b4c16e862b26f5a077516bdad36d4352aeea10da317d7a75"
+    }
+  ],
+  "scope": "Full local build and selected emitted-file verification; no release or target-device acceptance."
+}

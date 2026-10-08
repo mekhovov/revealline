@@ -1,18 +1,33 @@
 import { attachMenuAudioSettings } from './menu-audio.mjs';
 import { t } from '../i18n/index.mjs';
-const cueNames = new Set(['focus', 'confirm', 'cancel', 'capture', 'failure', 'victory', 'pickup']);
+import { DESTRUCTION_CUES, HUMAN_REACTION_CUES } from './destruction-audio.mjs';
+import { destructionBufferGain } from './destruction-level.mjs';
+const cueNames = new Set([
+  'focus',
+  'confirm',
+  'cancel',
+  'capture',
+  'failure',
+  'victory',
+  'pickup',
+  ...DESTRUCTION_CUES,
+  ...HUMAN_REACTION_CUES,
+]);
 
 /** Read-only session cache. An unavailable cue uses its existing procedural
  * fallback; a late decode never replays an event that has already happened. */
 export function createPublishedCues({ sound, readAudio }) {
   const cache = new Map(),
+    attenuation = new Map(),
     pending = new Set(),
+    loads = new Map(),
     voices = new Set(),
     recent = new Map();
   let closed = false;
   const cancelPending = () => {
     for (const controller of pending) controller.abort();
     pending.clear();
+    loads.clear();
     for (const [key, value] of cache) if (value === 'loading') cache.delete(key);
   };
   const available = (ui = false) =>
@@ -27,6 +42,7 @@ export function createPublishedCues({ sound, readAudio }) {
     (ui ? sound.menuSettings?.enabled !== false : sound.settings.sfx) &&
     (ui || !sound.persistentMusic || !sound.gameplayPaused);
   function load(name) {
+    if (cache.get(name) === 'loading') return loads.get(name);
     if (
       !cueNames.has(name) ||
       cache.has(name) ||
@@ -36,7 +52,7 @@ export function createPublishedCues({ sound, readAudio }) {
     const controller = new AbortController();
     pending.add(controller);
     cache.set(name, 'loading');
-    return Promise.resolve()
+    const promise = Promise.resolve()
       .then(() => readAudio(`audio.${name}`, { signal: controller.signal }))
       .then(async (result) => {
         if (!result || controller.signal.aborted || closed || !sound.enabled) return null;
@@ -45,10 +61,13 @@ export function createPublishedCues({ sound, readAudio }) {
         if (
           !Number.isFinite(decoded.duration) ||
           decoded.duration <= 0 ||
-          decoded.duration > 15 ||
+          decoded.duration >
+            (HUMAN_REACTION_CUES.includes(name) ? 0.7 : DESTRUCTION_CUES.includes(name) ? 1 : 15) ||
           decoded.length * decoded.numberOfChannels > 4 * 1024 * 1024
         )
           throw new Error(t('interface:publishedCueExceedsItsDecodedBudget'));
+        if ([...DESTRUCTION_CUES, ...HUMAN_REACTION_CUES].includes(name))
+          attenuation.set(name, destructionBufferGain(name, decoded));
         return decoded;
       })
       .then((decoded) => {
@@ -57,14 +76,36 @@ export function createPublishedCues({ sound, readAudio }) {
       .catch(() => {
         if (!closed && !controller.signal.aborted) cache.set(name, false);
       })
-      .finally(() => pending.delete(controller));
+      .finally(() => {
+        pending.delete(controller);
+        if (loads.get(name) === promise) loads.delete(name);
+      });
+    loads.set(name, promise);
+    return promise;
   }
   return Object.freeze({
+    has(name) {
+      const value = cache.get(name);
+      return !!value && value !== 'loading';
+    },
     prepare(names) {
       if (!available()) return Promise.resolve();
       return Promise.all(names.filter((name) => cueNames.has(name)).map(load));
     },
-    play(name, { ui = false, board = 'solo', pan = 0, feedback = false, priority = 2 } = {}) {
+    play(
+      name,
+      {
+        ui = false,
+        board = 'solo',
+        pan = 0,
+        feedback = false,
+        priority = 2,
+        gain = 1,
+        rate = 1,
+        maxDuration = null,
+        humanReaction = false,
+      } = {},
+    ) {
       if (!cueNames.has(name) || !available(ui)) return false;
       const buffer = cache.get(name);
       if (buffer === undefined) {
@@ -74,25 +115,62 @@ export function createPublishedCues({ sound, readAudio }) {
       if (!buffer || buffer === 'loading') return false;
       const now = sound.context.currentTime;
       if (ui && now - (recent.get(name) ?? -Infinity) < 0.08) return true;
-      if (sound.voices.size >= 64) return false;
+      const destruction = [...DESTRUCTION_CUES, ...HUMAN_REACTION_CUES].includes(name);
+      const owned = [...sound.voices].filter((voice) => voice.feedback);
+      if (feedback && (owned.length >= 16 || sound.voices.size >= 64)) {
+        const victim = owned
+          .filter((voice) => voice.priority < priority)
+          .sort((a, b) => a.priority - b.priority)[0];
+        if (!victim) return true; // A budget rejection must not trigger a synthetic duplicate.
+        victim.stop();
+      }
+      if (sound.voices.size >= 64) return true;
+      if (destruction && now - (recent.get(`${board}:${name}`) ?? -Infinity) < 0.09) return true;
+      if (destruction) recent.set(`${board}:${name}`, now);
       recent.set(name, now);
       const source = sound.context.createBufferSource(),
         panner = pan ? sound.context.createStereoPanner?.() : null;
       source.buffer = buffer;
+      const volume = sound.context.createGain();
+      const playbackRate = Math.max(0.8, Math.min(1.2, Number.isFinite(rate) ? rate : 1));
+      const duration = Math.min(
+        buffer.duration / playbackRate,
+        destruction ? (maxDuration ?? 0.85) : Infinity,
+      );
+      source.playbackRate?.setValueAtTime(playbackRate, now);
+      const level =
+        Math.max(0, Math.min(1, Number.isFinite(gain) ? gain : 1)) * (attenuation.get(name) ?? 1);
+      volume.gain.setValueAtTime(level, now);
+      if (destruction) {
+        volume.gain.setValueAtTime(level, now + Math.max(0, duration - 0.02));
+        volume.gain.linearRampToValueAtTime?.(0, now + duration);
+      }
+      source.connect(volume);
       const bus = ui ? (sound.menuBus ?? sound.sfxBus) : sound.sfxBus;
       if (panner) {
-        source.connect(panner);
+        volume.connect(panner);
         panner.pan.setValueAtTime(Math.max(-1, Math.min(1, pan)), now);
         panner.connect(bus);
-      } else source.connect(bus);
+      } else volume.connect(bus);
       let stopped = false;
       const voice = {
         bus: ui ? 'menu' : 'sfx',
         name,
         board,
         feedback,
+        humanReaction,
+        cueFamily: name,
         priority,
         source,
+        retire() {
+          if (!humanReaction) {
+            voice.stop();
+            return;
+          }
+          volume.gain.cancelScheduledValues?.(sound.context.currentTime);
+          volume.gain.setTargetAtTime?.(0, sound.context.currentTime, 0.008);
+          source.stop(sound.context.currentTime + 0.04);
+        },
         stop() {
           if (stopped) return;
           stopped = true;
@@ -100,6 +178,7 @@ export function createPublishedCues({ sound, readAudio }) {
             source.stop();
           } catch {}
           source.disconnect();
+          volume.disconnect();
           panner?.disconnect();
           voices.delete(voice);
           sound.voices.delete(voice);
@@ -108,8 +187,13 @@ export function createPublishedCues({ sound, readAudio }) {
       source.onended = voice.stop;
       sound.voices.add(voice);
       voices.add(voice);
-      source.start(now);
-      source.stop(now + buffer.duration);
+      try {
+        source.start(now);
+        source.stop(now + duration);
+      } catch {
+        voice.stop();
+        return false;
+      }
       return true;
     },
     cancelPending,
@@ -118,6 +202,7 @@ export function createPublishedCues({ sound, readAudio }) {
       for (const voice of [...voices]) voice.stop();
       cancelPending();
       cache.clear();
+      attenuation.clear();
       recent.clear();
     },
   });

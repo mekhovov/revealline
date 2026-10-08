@@ -1,0 +1,730 @@
+{
+  "format": "OverflightStaticImageMemoryInventoryV1",
+  "recordedAt": "2026-10-05T06:03:57.167Z",
+  "implementationBaseMainSha": "2d447bc790bdf3951251c99041c8a918363ece0a",
+  "method": "Static source/manifest arithmetic and local compressed-file identity/dimension verification. Source bindings refreshed after input and role-cue changes; the same atlas frames/textures/canvases and shared source inventory are used. No image decode, canvas/GPU allocation, live browser inspection or heap sampling was performed.",
+  "sourceBindings": [
+    {
+      "path": "game/overflight/app.mjs",
+      "bytes": 41748,
+      "sha256": "0ab78afc478bf1be65ff60c529b8dd307d836598b83bf10e6fe3ccdafb778e53"
+    },
+    {
+      "path": "game/overflight/atlas.mjs",
+      "bytes": 10254,
+      "sha256": "81b73babe10e4dc55c91571a3dec7c75e5d96ee5699968d64791d21ee0b273ac"
+    },
+    {
+      "path": "game/overflight/renderer.mjs",
+      "bytes": 21102,
+      "sha256": "ee2be4f8705eb9719bc70372dbf1fedc6ab2c37c73676fa29733f900f1a57e76"
+    },
+    {
+      "path": "game/overflight/project.mjs",
+      "bytes": 10115,
+      "sha256": "265d3b65111f54c0afc7ca6c0daa8d7a6ba018618de461a59b3003e934230c62"
+    },
+    {
+      "path": "game/presentation/host.mjs",
+      "bytes": 33619,
+      "sha256": "f66561db3bc6135612f40b10d3c119ab428380b985d884ee4154501e1c58732c"
+    },
+    {
+      "path": "game/presentation/actor-art-pool.mjs",
+      "bytes": 7491,
+      "sha256": "023e7c36ef80810cb0e958ecd4546b2bf5a8117414cf2c540b6949f83926a029"
+    },
+    {
+      "path": "game/presentation/catalog.mjs",
+      "bytes": 24116,
+      "sha256": "9e00e8c38daef0d60e31aa5792e26fc79e012acd3a49edcd5b3f8213e086e7b8"
+    },
+    {
+      "path": "game/presentation/team-runtime-slots.mjs",
+      "bytes": 1669,
+      "sha256": "4d078cf93726755540e83d1f84143808f385c0b56ea6212a502ab4a438418738"
+    },
+    {
+      "path": "game/presentation/industrial-arcade.mjs",
+      "bytes": 14604,
+      "sha256": "823c5f61d3e485ea9e6361791ecbd4a8f315542558d19e9598b9336fb717ffca"
+    },
+    {
+      "path": "game/presentation/industrial-arcade-builtins.mjs",
+      "bytes": 3545,
+      "sha256": "20c3eb3f1a52f5ab09675f9cc283b7c72921356734042ca5d54b298533f0f086"
+    },
+    {
+      "path": "game/presentation/theme-system.mjs",
+      "bytes": 65920,
+      "sha256": "317e107e509f94449050c52f1756bd8436691f0d92bb8185aed697b3ba3127d6"
+    },
+    {
+      "path": "game/presentation/industrial-materials.mjs",
+      "bytes": 7229,
+      "sha256": "0dd948dd6ed8cd787e6588e98a75f35e9e41d06bfb248f761fdb3ccb1866adbd"
+    },
+    {
+      "path": "game/presentation/industrial-machinery.mjs",
+      "bytes": 13604,
+      "sha256": "4b1eddf3c797ba6b52d68f14a1f2a3b282ede3e204fedfc387a72fe4a219f151"
+    },
+    {
+      "path": "game/presentation/overflight-field-kit-art.mjs",
+      "bytes": 4688,
+      "sha256": "b86032fe18ac326c4ff0029c883e8ee0ceeeea4719edbfa1c7a6ef010325c4e7"
+    },
+    {
+      "path": "game/presentation/overflight-motion.mjs",
+      "bytes": 3411,
+      "sha256": "40aec991021863bbb5c080f1e56485e748d46a602ada2228d3bb32a5b56f9a31"
+    },
+    {
+      "path": "game/hunt/actor-art.mjs",
+      "bytes": 44270,
+      "sha256": "6e8bd02d8655be40e5e19d639f76ca2a2aa89eba11c5471bd4c37ef323498b4c"
+    },
+    {
+      "path": "game/ui/actor-presentation.mjs",
+      "bytes": 39456,
+      "sha256": "c573620d2abf38c415951573c65ba28aa029291207d3c7fa3f573a8319220cd0"
+    },
+    {
+      "path": "game/presentation/compiled/runtime.json",
+      "bytes": 1264907,
+      "sha256": "b1123620aa68398dd8131aafa23f29bd686224bb9e50bf86ceeeef94752a1ef3"
+    }
+  ],
+  "sourceSetSha256": "55cb882e49ac15e44463c422fd3ed40a64c2d8188a505c307e9b27481556d3ab",
+  "defaultPresentation": {
+    "manifestPath": "game/presentation/compiled/runtime.json",
+    "manifestSha256": "b1123620aa68398dd8131aafa23f29bd686224bb9e50bf86ceeeef94752a1ef3",
+    "manifestFileBytes": 1264907,
+    "source": {
+      "id": "field-kit",
+      "revision": 104
+    },
+    "hostProfile": "board",
+    "retainedManifestPin": null,
+    "pinScope": "The current Overflight host requests runtime.json without a retainedManifestSha256 override. Historical runtime.*.json files are not added to this inventory.",
+    "hero": {
+      "slot": "player.scout.detailed",
+      "id": "player.scout.detailed.field-kit",
+      "revision": 2,
+      "sha256": "3fa6527474d2da84fed128052df7ee8ac2b34a25eaf5a162d21be849a12fd65c",
+      "width": 64,
+      "height": 64,
+      "nominalRGBABytes": 16384
+    },
+    "selectionScope": "Default compiled field-kit board sources. User/session appearance changes and actual browser-selected adapter state are not inferred from the original hero asset ID."
+  },
+  "overflightTextures": {
+    "count": 2,
+    "mipmapsRequested": false,
+    "entries": [
+      {
+        "name": "sprite atlas",
+        "width": 1020,
+        "height": 1292,
+        "formatAssumption": "RGBA8",
+        "nominalBaseBytes": 5271360
+      },
+      {
+        "name": "ground tile",
+        "width": 256,
+        "height": 256,
+        "formatAssumption": "RGBA8",
+        "nominalBaseBytes": 262144
+      }
+    ],
+    "nominalGPUBaseRGBABytes": 5533504,
+    "budgetBytes": 33554432,
+    "frames": {
+      "soldier": 216,
+      "machinery": 36,
+      "hero": 4,
+      "equipment": 13,
+      "geometry": 7
+    },
+    "limits": "Base texel arithmetic only; excludes driver alignment, engine textures/buffers, texture metadata, framebuffer/depth storage and implementation copies. Not a measured GPU allocation."
+  },
+  "retainedAtlasCanvases": {
+    "count": 2,
+    "nominalRGBABytes": 5533504,
+    "lifetime": "Atlas and ground source canvases remain available for context restoration until renderer/Game destruction, then both dimensions are set to zero.",
+    "physicalStorageClass": "Browser-dependent: nominal canvas bytes are not asserted to be CPU-only or physically disjoint from GPU/unified memory."
+  },
+  "preparationScratch": {
+    "width": 64,
+    "height": 64,
+    "nominalRGBABytes": 16384,
+    "logicalRetirement": "Scratch canvas width and height become zero before bakeOverflightAtlas returns.",
+    "backendReleaseMeasured": false,
+    "otherTransients": "paintPixels also creates ImageData; generated 64x64 material pixels and matching ImageData each have 16,384 RGBA bytes. Generated 16x16 equipment pixels/ImageData each have 1,024 bytes. Allocation overlap/GC retention, canvas backend scratch and decoder temporaries are not measured."
+  },
+  "sharedBoardSources": {
+    "resolvedImageSlots": 33,
+    "resolvedActorSlots": [
+      "enemy.border-patrol",
+      "enemy.bouncer",
+      "enemy.claimed-rover",
+      "enemy.contour-patrol",
+      "enemy.eroder",
+      "enemy.lane-boss",
+      "enemy.relay-sentinel",
+      "player.bomber.compact",
+      "player.bomber.detailed",
+      "player.carrier.compact",
+      "player.carrier.detailed",
+      "player.fiber.compact",
+      "player.fiber.detailed",
+      "player.impact.compact",
+      "player.impact.detailed",
+      "player.interceptor.compact",
+      "player.interceptor.detailed",
+      "player.scout.compact",
+      "player.scout.detailed",
+      "player.trapper.compact",
+      "player.trapper.detailed",
+      "team.core.exposed",
+      "team.core.secured",
+      "team.core.shielded"
+    ],
+    "resolvedTerrainAndPickupSlots": [
+      "pickup.freeze",
+      "pickup.life",
+      "pickup.objective",
+      "pickup.slow",
+      "pickup.speed",
+      "pickup.supply",
+      "terrain.lethal",
+      "terrain.slow",
+      "terrain.wall"
+    ],
+    "deduplication": "Full decoded originals deduplicate by file SHA-256. Actor-pool crops deduplicate by hash plus rectangle; non-actor crops remain per slot. Animated originals are not cropped by this host.",
+    "uniqueOriginals": 33,
+    "nominalOriginalRGBABytes": 260096,
+    "actorPoolOriginals": 24,
+    "nominalActorPoolOriginalRGBABytes": 245760,
+    "uniqueCroppedViews": 0,
+    "nominalCroppedRGBABytes": 0,
+    "uniqueCompressedSourceFileBytes": 11425,
+    "retainedCompressedBytes": null,
+    "compressedRetentionLimit": "The board profile creates no CSS object URLs and its sourceBlobs map is local to load(). Compressed input bytes 11,425 are a known loading payload, not established steady-state retained memory; Blob/decoder/HTTP-cache lifetime requires browser measurement.",
+    "metadataHeapBytes": null,
+    "metadataLimit": "The snapshot retains resolved manifest metadata. UTF-8 manifest file size is recorded separately and is not a measurement of parsed JS heap.",
+    "overflightEquipmentSourceOverrides": [],
+    "originals": [
+      {
+        "sha256": "5c51f6d7b29af2e8be90adc5d01257f1b5d34ac5aaf0bb533fd2088bd944b683",
+        "path": "game/presentation/compiled/assets/5c51f6d7b29af2e8be90adc5d01257f1b5d34ac5aaf0bb533fd2088bd944b683.png",
+        "mime": "image/png",
+        "width": 32,
+        "height": 32,
+        "nominalRGBABytes": 4096,
+        "compressedFileBytes": 295,
+        "fileIdentityVerified": true,
+        "slots": [
+          "enemy.border-patrol"
+        ],
+        "actorPool": true
+      },
+      {
+        "sha256": "e35ca174c360d5a572c72e6be448666cf3da1438cf0d91f8ea7ff8c221b8eb5e",
+        "path": "game/presentation/compiled/assets/e35ca174c360d5a572c72e6be448666cf3da1438cf0d91f8ea7ff8c221b8eb5e.png",
+        "mime": "image/png",
+        "width": 32,
+        "height": 32,
+        "nominalRGBABytes": 4096,
+        "compressedFileBytes": 290,
+        "fileIdentityVerified": true,
+        "slots": [
+          "enemy.bouncer"
+        ],
+        "actorPool": true
+      },
+      {
+        "sha256": "fedb83171e9c894c8cbc446d4fb2bf460359b587068a33d0e108b14e185a0adc",
+        "path": "game/presentation/compiled/assets/fedb83171e9c894c8cbc446d4fb2bf460359b587068a33d0e108b14e185a0adc.png",
+        "mime": "image/png",
+        "width": 32,
+        "height": 32,
+        "nominalRGBABytes": 4096,
+        "compressedFileBytes": 282,
+        "fileIdentityVerified": true,
+        "slots": [
+          "enemy.claimed-rover"
+        ],
+        "actorPool": true
+      },
+      {
+        "sha256": "4edc2d90b443fbc191cbd741c824732113a590cd758e32d8e098c63eba4e70a9",
+        "path": "game/presentation/compiled/assets/4edc2d90b443fbc191cbd741c824732113a590cd758e32d8e098c63eba4e70a9.png",
+        "mime": "image/png",
+        "width": 32,
+        "height": 32,
+        "nominalRGBABytes": 4096,
+        "compressedFileBytes": 269,
+        "fileIdentityVerified": true,
+        "slots": [
+          "enemy.contour-patrol"
+        ],
+        "actorPool": true
+      },
+      {
+        "sha256": "05af7a73b7dadc8821cecccf0abb4f763dafae7ad21500a3293957fa88ed7d76",
+        "path": "game/presentation/compiled/assets/05af7a73b7dadc8821cecccf0abb4f763dafae7ad21500a3293957fa88ed7d76.png",
+        "mime": "image/png",
+        "width": 32,
+        "height": 32,
+        "nominalRGBABytes": 4096,
+        "compressedFileBytes": 275,
+        "fileIdentityVerified": true,
+        "slots": [
+          "enemy.eroder"
+        ],
+        "actorPool": true
+      },
+      {
+        "sha256": "cea04fc27e33583748da59f8bc873505d15b8c37745f0b30b5a4415f4d7c87cb",
+        "path": "game/presentation/compiled/assets/cea04fc27e33583748da59f8bc873505d15b8c37745f0b30b5a4415f4d7c87cb.png",
+        "mime": "image/png",
+        "width": 64,
+        "height": 64,
+        "nominalRGBABytes": 16384,
+        "compressedFileBytes": 446,
+        "fileIdentityVerified": true,
+        "slots": [
+          "enemy.lane-boss"
+        ],
+        "actorPool": true
+      },
+      {
+        "sha256": "2d4e0eafa015c8e434082b8be0552556e0abfe057248233a701cac4d1b3f4cd0",
+        "path": "game/presentation/compiled/assets/2d4e0eafa015c8e434082b8be0552556e0abfe057248233a701cac4d1b3f4cd0.png",
+        "mime": "image/png",
+        "width": 64,
+        "height": 64,
+        "nominalRGBABytes": 16384,
+        "compressedFileBytes": 515,
+        "fileIdentityVerified": true,
+        "slots": [
+          "enemy.relay-sentinel"
+        ],
+        "actorPool": true
+      },
+      {
+        "sha256": "02b4ab6f9e8339b921ac83fa0f72e334ab98edc82a46ae5b70499d4ea5dfb872",
+        "path": "game/presentation/compiled/assets/02b4ab6f9e8339b921ac83fa0f72e334ab98edc82a46ae5b70499d4ea5dfb872.png",
+        "mime": "image/png",
+        "width": 24,
+        "height": 24,
+        "nominalRGBABytes": 2304,
+        "compressedFileBytes": 233,
+        "fileIdentityVerified": true,
+        "slots": [
+          "pickup.freeze"
+        ],
+        "actorPool": false
+      },
+      {
+        "sha256": "7e696d173490ae948cead01a22c5650bc6ffef16c70c514ba6d88413d460a192",
+        "path": "game/presentation/compiled/assets/7e696d173490ae948cead01a22c5650bc6ffef16c70c514ba6d88413d460a192.png",
+        "mime": "image/png",
+        "width": 24,
+        "height": 24,
+        "nominalRGBABytes": 2304,
+        "compressedFileBytes": 185,
+        "fileIdentityVerified": true,
+        "slots": [
+          "pickup.life"
+        ],
+        "actorPool": false
+      },
+      {
+        "sha256": "44ebf8c1d8a028a919012f75978d025d1698aeb3d295c8813edc1a7ebae71868",
+        "path": "game/presentation/compiled/assets/44ebf8c1d8a028a919012f75978d025d1698aeb3d295c8813edc1a7ebae71868.png",
+        "mime": "image/png",
+        "width": 16,
+        "height": 16,
+        "nominalRGBABytes": 1024,
+        "compressedFileBytes": 156,
+        "fileIdentityVerified": true,
+        "slots": [
+          "pickup.objective"
+        ],
+        "actorPool": false
+      },
+      {
+        "sha256": "53f17c3672c097ce79b63629e4dfbffe9d5a2ecacf4ac99ec67704538951d9fe",
+        "path": "game/presentation/compiled/assets/53f17c3672c097ce79b63629e4dfbffe9d5a2ecacf4ac99ec67704538951d9fe.png",
+        "mime": "image/png",
+        "width": 24,
+        "height": 24,
+        "nominalRGBABytes": 2304,
+        "compressedFileBytes": 159,
+        "fileIdentityVerified": true,
+        "slots": [
+          "pickup.slow"
+        ],
+        "actorPool": false
+      },
+      {
+        "sha256": "5cda580ceefd258918dcf6c49f0f8ad68966999c153a876fb01c2f171b659420",
+        "path": "game/presentation/compiled/assets/5cda580ceefd258918dcf6c49f0f8ad68966999c153a876fb01c2f171b659420.png",
+        "mime": "image/png",
+        "width": 24,
+        "height": 24,
+        "nominalRGBABytes": 2304,
+        "compressedFileBytes": 137,
+        "fileIdentityVerified": true,
+        "slots": [
+          "pickup.speed"
+        ],
+        "actorPool": false
+      },
+      {
+        "sha256": "7954823e793dd6140528d271c12653fca559eda862ca83c4be73c6bfbdf9c26c",
+        "path": "game/presentation/compiled/assets/7954823e793dd6140528d271c12653fca559eda862ca83c4be73c6bfbdf9c26c.png",
+        "mime": "image/png",
+        "width": 16,
+        "height": 16,
+        "nominalRGBABytes": 1024,
+        "compressedFileBytes": 152,
+        "fileIdentityVerified": true,
+        "slots": [
+          "pickup.supply"
+        ],
+        "actorPool": false
+      },
+      {
+        "sha256": "33955b0fafb24b5edab1d605d6b3a8453a0073438aa87785cc2376ec36953346",
+        "path": "game/presentation/compiled/assets/33955b0fafb24b5edab1d605d6b3a8453a0073438aa87785cc2376ec36953346.png",
+        "mime": "image/png",
+        "width": 32,
+        "height": 32,
+        "nominalRGBABytes": 4096,
+        "compressedFileBytes": 314,
+        "fileIdentityVerified": true,
+        "slots": [
+          "player.bomber.compact"
+        ],
+        "actorPool": true
+      },
+      {
+        "sha256": "de2406eaf230f4701c82249f0709f1238616cca532d2be1b02d3105503646c3c",
+        "path": "game/presentation/compiled/assets/de2406eaf230f4701c82249f0709f1238616cca532d2be1b02d3105503646c3c.png",
+        "mime": "image/png",
+        "width": 64,
+        "height": 64,
+        "nominalRGBABytes": 16384,
+        "compressedFileBytes": 564,
+        "fileIdentityVerified": true,
+        "slots": [
+          "player.bomber.detailed"
+        ],
+        "actorPool": true
+      },
+      {
+        "sha256": "7258c2453b49a52aaa2ba003c4e076eb7aa2d87d21abb6df65f5f5178f9f6a59",
+        "path": "game/presentation/compiled/assets/7258c2453b49a52aaa2ba003c4e076eb7aa2d87d21abb6df65f5f5178f9f6a59.png",
+        "mime": "image/png",
+        "width": 32,
+        "height": 32,
+        "nominalRGBABytes": 4096,
+        "compressedFileBytes": 328,
+        "fileIdentityVerified": true,
+        "slots": [
+          "player.carrier.compact"
+        ],
+        "actorPool": true
+      },
+      {
+        "sha256": "8535d7dec70f8fb64d3c0aa8ac919daa7609a477dada753b67429c9c7ae2cadb",
+        "path": "game/presentation/compiled/assets/8535d7dec70f8fb64d3c0aa8ac919daa7609a477dada753b67429c9c7ae2cadb.png",
+        "mime": "image/png",
+        "width": 64,
+        "height": 64,
+        "nominalRGBABytes": 16384,
+        "compressedFileBytes": 639,
+        "fileIdentityVerified": true,
+        "slots": [
+          "player.carrier.detailed"
+        ],
+        "actorPool": true
+      },
+      {
+        "sha256": "ad53247e6be0c1c2a3080a8ebabd0ca24b1394be0caa109138926e821b08ae35",
+        "path": "game/presentation/compiled/assets/ad53247e6be0c1c2a3080a8ebabd0ca24b1394be0caa109138926e821b08ae35.png",
+        "mime": "image/png",
+        "width": 32,
+        "height": 32,
+        "nominalRGBABytes": 4096,
+        "compressedFileBytes": 303,
+        "fileIdentityVerified": true,
+        "slots": [
+          "player.fiber.compact"
+        ],
+        "actorPool": true
+      },
+      {
+        "sha256": "77a93635bc7d39976bbf571f056a68f75ef43e1b655b6512fd293b2b568306e3",
+        "path": "game/presentation/compiled/assets/77a93635bc7d39976bbf571f056a68f75ef43e1b655b6512fd293b2b568306e3.png",
+        "mime": "image/png",
+        "width": 64,
+        "height": 64,
+        "nominalRGBABytes": 16384,
+        "compressedFileBytes": 567,
+        "fileIdentityVerified": true,
+        "slots": [
+          "player.fiber.detailed"
+        ],
+        "actorPool": true
+      },
+      {
+        "sha256": "4c0ab153dd814ff806ff0d9a63bb1ef5ad9eac532f8f771d1288265d7327ec68",
+        "path": "game/presentation/compiled/assets/4c0ab153dd814ff806ff0d9a63bb1ef5ad9eac532f8f771d1288265d7327ec68.png",
+        "mime": "image/png",
+        "width": 32,
+        "height": 32,
+        "nominalRGBABytes": 4096,
+        "compressedFileBytes": 331,
+        "fileIdentityVerified": true,
+        "slots": [
+          "player.impact.compact"
+        ],
+        "actorPool": true
+      },
+      {
+        "sha256": "f03dc7d839fef8d53cae7b29cc106dd094c976af6e3758d71110bf0d47140efa",
+        "path": "game/presentation/compiled/assets/f03dc7d839fef8d53cae7b29cc106dd094c976af6e3758d71110bf0d47140efa.png",
+        "mime": "image/png",
+        "width": 64,
+        "height": 64,
+        "nominalRGBABytes": 16384,
+        "compressedFileBytes": 583,
+        "fileIdentityVerified": true,
+        "slots": [
+          "player.impact.detailed"
+        ],
+        "actorPool": true
+      },
+      {
+        "sha256": "2d0b8b6260f73e3fe008c5ac228021f681747183a586ed7ca9dde3906b22dcc3",
+        "path": "game/presentation/compiled/assets/2d0b8b6260f73e3fe008c5ac228021f681747183a586ed7ca9dde3906b22dcc3.png",
+        "mime": "image/png",
+        "width": 32,
+        "height": 32,
+        "nominalRGBABytes": 4096,
+        "compressedFileBytes": 341,
+        "fileIdentityVerified": true,
+        "slots": [
+          "player.interceptor.compact"
+        ],
+        "actorPool": true
+      },
+      {
+        "sha256": "85bb90c58fb61a1fdd212316f223dad209d374386e1aad14f044df4c1ea2af7e",
+        "path": "game/presentation/compiled/assets/85bb90c58fb61a1fdd212316f223dad209d374386e1aad14f044df4c1ea2af7e.png",
+        "mime": "image/png",
+        "width": 64,
+        "height": 64,
+        "nominalRGBABytes": 16384,
+        "compressedFileBytes": 635,
+        "fileIdentityVerified": true,
+        "slots": [
+          "player.interceptor.detailed"
+        ],
+        "actorPool": true
+      },
+      {
+        "sha256": "827da59e870daf2e8548168399449bd894b4cdf7953a1f8ca48a7ed6df8f8d91",
+        "path": "game/presentation/compiled/assets/827da59e870daf2e8548168399449bd894b4cdf7953a1f8ca48a7ed6df8f8d91.png",
+        "mime": "image/png",
+        "width": 32,
+        "height": 32,
+        "nominalRGBABytes": 4096,
+        "compressedFileBytes": 325,
+        "fileIdentityVerified": true,
+        "slots": [
+          "player.scout.compact"
+        ],
+        "actorPool": true
+      },
+      {
+        "sha256": "3fa6527474d2da84fed128052df7ee8ac2b34a25eaf5a162d21be849a12fd65c",
+        "path": "game/presentation/compiled/assets/3fa6527474d2da84fed128052df7ee8ac2b34a25eaf5a162d21be849a12fd65c.png",
+        "mime": "image/png",
+        "width": 64,
+        "height": 64,
+        "nominalRGBABytes": 16384,
+        "compressedFileBytes": 600,
+        "fileIdentityVerified": true,
+        "slots": [
+          "player.scout.detailed"
+        ],
+        "actorPool": true
+      },
+      {
+        "sha256": "83b8dea4de4fad710942a60c18f03c34849df904a45edb0316b6287c3770fb3c",
+        "path": "game/presentation/compiled/assets/83b8dea4de4fad710942a60c18f03c34849df904a45edb0316b6287c3770fb3c.png",
+        "mime": "image/png",
+        "width": 32,
+        "height": 32,
+        "nominalRGBABytes": 4096,
+        "compressedFileBytes": 327,
+        "fileIdentityVerified": true,
+        "slots": [
+          "player.trapper.compact"
+        ],
+        "actorPool": true
+      },
+      {
+        "sha256": "78033ee190de99663e4b936e480562d4cc93d9e90190b529ef46d07877c43826",
+        "path": "game/presentation/compiled/assets/78033ee190de99663e4b936e480562d4cc93d9e90190b529ef46d07877c43826.png",
+        "mime": "image/png",
+        "width": 64,
+        "height": 64,
+        "nominalRGBABytes": 16384,
+        "compressedFileBytes": 586,
+        "fileIdentityVerified": true,
+        "slots": [
+          "player.trapper.detailed"
+        ],
+        "actorPool": true
+      },
+      {
+        "sha256": "6abc4a68192b4d517b22690c43126de34a1c403caf4a24ec57aa8b2ff68f079a",
+        "path": "game/presentation/compiled/assets/6abc4a68192b4d517b22690c43126de34a1c403caf4a24ec57aa8b2ff68f079a.png",
+        "mime": "image/png",
+        "width": 64,
+        "height": 64,
+        "nominalRGBABytes": 16384,
+        "compressedFileBytes": 395,
+        "fileIdentityVerified": true,
+        "slots": [
+          "team.core.exposed"
+        ],
+        "actorPool": true
+      },
+      {
+        "sha256": "28e58f70c759b20798fac07e6f9d1b336e936ee23beea26bb4be30fd5528311d",
+        "path": "game/presentation/compiled/assets/28e58f70c759b20798fac07e6f9d1b336e936ee23beea26bb4be30fd5528311d.png",
+        "mime": "image/png",
+        "width": 64,
+        "height": 64,
+        "nominalRGBABytes": 16384,
+        "compressedFileBytes": 366,
+        "fileIdentityVerified": true,
+        "slots": [
+          "team.core.secured"
+        ],
+        "actorPool": true
+      },
+      {
+        "sha256": "009d14748f943002091255caebd32e4df1c886569575f512ab0d55d7a3ff637a",
+        "path": "game/presentation/compiled/assets/009d14748f943002091255caebd32e4df1c886569575f512ab0d55d7a3ff637a.png",
+        "mime": "image/png",
+        "width": 64,
+        "height": 64,
+        "nominalRGBABytes": 16384,
+        "compressedFileBytes": 389,
+        "fileIdentityVerified": true,
+        "slots": [
+          "team.core.shielded"
+        ],
+        "actorPool": true
+      },
+      {
+        "sha256": "963bdc61942194177b4d0dac32ba560c0200f55c83f21d939356b8680b6f644c",
+        "path": "game/presentation/compiled/assets/963bdc61942194177b4d0dac32ba560c0200f55c83f21d939356b8680b6f644c.png",
+        "mime": "image/png",
+        "width": 16,
+        "height": 16,
+        "nominalRGBABytes": 1024,
+        "compressedFileBytes": 148,
+        "fileIdentityVerified": true,
+        "slots": [
+          "terrain.lethal"
+        ],
+        "actorPool": false
+      },
+      {
+        "sha256": "544551f875b2fd52c41dbbd384d6710a80fb23d744ae8a9bca3353cd23752a48",
+        "path": "game/presentation/compiled/assets/544551f875b2fd52c41dbbd384d6710a80fb23d744ae8a9bca3353cd23752a48.png",
+        "mime": "image/png",
+        "width": 16,
+        "height": 16,
+        "nominalRGBABytes": 1024,
+        "compressedFileBytes": 144,
+        "fileIdentityVerified": true,
+        "slots": [
+          "terrain.slow"
+        ],
+        "actorPool": false
+      },
+      {
+        "sha256": "326d159fab7ab655e40c493e5e3ae27713157b419788134f23363ef222ad27db",
+        "path": "game/presentation/compiled/assets/326d159fab7ab655e40c493e5e3ae27713157b419788134f23363ef222ad27db.png",
+        "mime": "image/png",
+        "width": 16,
+        "height": 16,
+        "nominalRGBABytes": 1024,
+        "compressedFileBytes": 146,
+        "fileIdentityVerified": true,
+        "slots": [
+          "terrain.wall"
+        ],
+        "actorPool": false
+      }
+    ],
+    "crops": []
+  },
+  "appearanceAdapter": {
+    "defaultPreferences": {
+      "familyId": "follow-game",
+      "arcadeArt": "follow-game",
+      "highContrast": false,
+      "opaqueHud": false,
+      "ornaments": "theme"
+    },
+    "defaultResolvedCollection": "industrial-workshop",
+    "defaultAtlasEligibleDerivedImages": [
+      {
+        "slot": "player.scout.detailed",
+        "width": 64,
+        "height": 64,
+        "nominalCanvasRGBABytes": 16384
+      }
+    ],
+    "defaultConditionalNominalRGBABytes": 16384,
+    "actualSelectedAppearanceDerivedBytes": null,
+    "explanation": "With untouched shared defaults, the industrial-workshop adapter can retain one derived 64x64 Scout canvas requested during atlas baking. These are additional to the original board bitmap and atlas. It is cleared with the adapter. This is conditional source arithmetic, not live selection/cache measurement. The 13 Overflight equipment slots have no default manifest image override."
+  },
+  "framebuffers": {
+    "logicalWidth": 960,
+    "logicalHeight": 540,
+    "observedBackingWidth": 960,
+    "observedBackingHeight": 540,
+    "nominalRGBA8BytesPerColorSurface": 2073600,
+    "nominal32BitBytesPerDepthStencilSurface": 2073600,
+    "allocatedColorSurfaces": null,
+    "allocatedDepthStencilSurfaces": null,
+    "totalDriverFramebufferBytes": null,
+    "antialiasRequested": false,
+    "scope": "Per-surface arithmetic only. Actual front/back/compositor buffers, depth/stencil format/presence, engine render targets, pooling, alignment and driver copies are unknown. Excluded from atlas totals."
+  },
+  "proceduralCaches": {
+    "known": "Native soldier/machinery atlas poses are drawn through Canvas procedures; no separate native-actor bitmap cache is allocated by the inspected draw paths. Actor descriptors/catalogue maps, adapter source masks and actorImagePaintMetrics WeakMap remain ordinary JS objects.",
+    "measuredHeapBytes": null,
+    "otherPresentationCanvases": "Module-card/HUD icon canvases, selected appearance variants, theme CSS/compositor surfaces, Phaser internal white/default textures, engine pools, audio and all general JS heap are outside this static image inventory."
+  },
+  "totalResidentMemoryBytes": null,
+  "totalGPUAllocationBytes": null,
+  "limits": [
+    "No browser performance or heap trial was disturbed for this inventory.",
+    "Nominal storage categories must not be summed and described as actual resident GPU/system memory; browser sharing and copies are unknown.",
+    "An alternate manifest, cropped/animated uploaded artwork or selected appearance requires a new source/selection-specific inventory.",
+    "Behavior cues reuse atlas frames and pooled status images; the pool objects and associated renderer buffers are not quantified by this static texture inventory. Review video recording buffers are also unmeasured."
+  ]
+}

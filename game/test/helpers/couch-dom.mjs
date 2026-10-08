@@ -243,22 +243,60 @@ export class Element extends Events {
     this.captures.delete(id);
     this.emit('lostpointercapture', { pointerId: id });
   }
-  getContext() {
-    // Native board rendering is modeled by the host fixtures, but shared field
-    // guides now paint real actor rigs during menu preparation as well.
-    return (this.canvasContext ??= {
-      id: this.id,
-      canvas: this,
-      globalAlpha: 1,
-      imageSmoothingEnabled: true,
-      clearRect() {},
-      fillRect() {},
-      save() {},
-      restore() {},
-      translate() {},
-      rotate() {},
-      scale() {},
-    });
+  getContext(kind = '2d') {
+    if (kind !== '2d') return null;
+    if (!this._context) {
+      // Canvas is a browser boundary here. Actual painting assertions install
+      // their own recording context; menu previews need the ordinary 2D API.
+      const canvas = this;
+      const noop = () => {};
+      this._context = {
+        canvas,
+        get id() {
+          return canvas.id;
+        },
+        globalAlpha: 1,
+        imageSmoothingEnabled: true,
+        measureText: (text) => ({ width: String(text).length * 8 }),
+        createLinearGradient: () => ({ addColorStop: noop }),
+        createRadialGradient: () => ({ addColorStop: noop }),
+        createPattern: () => null,
+      };
+      for (const method of [
+        'save',
+        'restore',
+        'clearRect',
+        'fillRect',
+        'strokeRect',
+        'beginPath',
+        'closePath',
+        'moveTo',
+        'lineTo',
+        'quadraticCurveTo',
+        'bezierCurveTo',
+        'arc',
+        'arcTo',
+        'ellipse',
+        'rect',
+        'roundRect',
+        'fill',
+        'stroke',
+        'clip',
+        'translate',
+        'rotate',
+        'scale',
+        'transform',
+        'setTransform',
+        'resetTransform',
+        'drawImage',
+        'fillText',
+        'strokeText',
+        'setLineDash',
+        'putImageData',
+      ])
+        this._context[method] = noop;
+    }
+    return this._context;
   }
   appendChild(node) {
     if (!node?.nodeType) throw new TypeError('appendChild requires a Node.');

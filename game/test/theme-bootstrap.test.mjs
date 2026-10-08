@@ -14,7 +14,9 @@ import {
   presentationThemeVariables,
   resolveStoredAppearance,
   resolveThemeFamilySelection,
+  createThemePreferences,
 } from '../presentation/theme-system.mjs';
+import { createDisplayPreferences } from '../display-preferences.mjs';
 
 const root = path.resolve(import.meta.dirname, '../..');
 const source = await fs.readFile(path.join(root, 'game/presentation/theme-bootstrap.mjs'), 'utf8');
@@ -190,6 +192,33 @@ test('read-only startup matches runtime migration for new, existing, damaged and
     assert.equal(dataset.interfaceTheme, expected);
   }
   assert.equal(seed({}, { brokenStorage: true }).dataset.interfaceTheme, 'industrial-workshop');
+});
+
+test('changing shared accessibility preferences does not change theme intent in the next game', () => {
+  const records = {},
+    writes = [];
+  const storage = {
+    getItem: (key) => records[key] ?? null,
+    setItem(key, value) {
+      records[key] = value;
+      writes.push(key);
+    },
+  };
+  const firstTheme = createThemePreferences({ window: null, getStorage: () => storage });
+  const display = createDisplayPreferences({ window: null, getStorage: () => storage });
+  const before = firstTheme.snapshot();
+  display.set({ textFace: 'plain', textSize: 'large', reducedEffects: true });
+  const nextTheme = createThemePreferences({ window: null, getStorage: () => storage });
+  assert.deepEqual(nextTheme.snapshot(), before);
+  assert.equal(nextTheme.snapshot().familyId, 'follow-game');
+  assert.deepEqual(writes, ['revealline.display.v1'], 'Accessibility does not write theme intent.');
+  const painted = seed(records);
+  assert.equal(painted.dataset.interfaceTheme, 'industrial-workshop');
+  assert.equal(painted.dataset.themeTextSize, 'large');
+  assert.equal(painted.dataset.themeMotion, 'reduced');
+  display.dispose();
+  firstTheme.dispose();
+  nextTheme.dispose();
 });
 
 test('first-paint density, motion, legibility and cosmetic context use bounded canonical choices', () => {
