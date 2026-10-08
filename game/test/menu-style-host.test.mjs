@@ -10,6 +10,7 @@ import { readFile } from 'node:fs/promises';
 import { MENU_STYLE_PREFERENCES_KEY } from '../menu-style-preferences.mjs';
 import { THEME_PREFERENCES_KEY, DEFAULT_THEME_PREFERENCES } from '../presentation/theme-system.mjs';
 import { DISPLAY_PREFERENCES_KEY } from '../display-preferences.mjs';
+import { ENEMY_STATS_KEY } from '../enemy-stats.mjs';
 import { authoritativeCheckpoint, verifyReplay } from '../replay.mjs';
 import { emptyLibrary, updatePreferences, saveLibrary } from '../library.mjs';
 import { soloPage, memoryStorage, settle } from './helpers/solo-dom.mjs';
@@ -23,6 +24,7 @@ const teamHTML = await readFile(new URL('../couch/relay-rescue.html', import.met
 const profileKey = 'revealline.library.dev.v1';
 const sessionKey = 'revealline.suspended.dev.v1';
 const simAppearanceKey = 'revealline.fpv.appearance.v1';
+const enemyStatsWriterKey = `${ENEMY_STATS_KEY}:writer`;
 const raw = (store) => JSON.parse(store.getItem(THEME_PREFERENCES_KEY));
 const appearanceKeys = new Set([THEME_PREFERENCES_KEY, simAppearanceKey]);
 const unrelated = (store) => new Map([...store.map].filter(([key]) => !appearanceKeys.has(key)));
@@ -287,7 +289,7 @@ test('unified appearance survives Solo, Team, Versus and Solo return without alt
     async (t) => {
       const before = store.writes.length,
         page = await teamPage(t, store);
-      assert.equal(store.writes.length, before);
+      assert.deepEqual(store.writes.slice(before).map(([key]) => key), [enemyStatsWriterKey]);
       reflects(page, 'coop-', 'vyshyvanka', 'rich');
       page.$('coop-start').click();
       page.tick(10);

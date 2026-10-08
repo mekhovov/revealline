@@ -128,7 +128,7 @@ test('company startup presentation block supplies the admitted candidate and wai
 });
 
 for (const personal of [null, 'tryzub']) {
-  test(`actual custom campaign adoption latches interface and exact arcade dependency${personal ? ' while preserving the personal choice' : ''}`, async (t) => {
+  test(`custom campaign selection prepares the current interface and exact arcade dependency${personal ? ' while preserving the personal choice' : ''}`, async (t) => {
     const fixture = await fixtureWithCustomCampaigns();
     const preference = personal
       ? JSON.stringify({ ...DEFAULT_THEME_PREFERENCES, familyId: personal })
@@ -168,9 +168,10 @@ for (const personal of [null, 'tryzub']) {
     }
     page.frame(0);
     assert.equal(page.rendered.run.levelId, 'custom-theme-mission');
-    assert.equal(page.rendered.paused, false, 'One activation starts the accepted custom mission.');
+    assert.equal(page.rendered.paused, true, 'Selection prepares the accepted custom mission.');
     assert.equal(page.rendered.run.tick, 0, 'The new mission starts at its initial boundary.');
-    assert.equal(page.$('game-overlay').hidden, true, 'No mandatory briefing blocks gameplay.');
+    assert.equal(page.$('game-overlay').dataset.kind, 'ready');
+    page.$('start-button').click();
     await settle(() => {
       page.frame(0);
       return (

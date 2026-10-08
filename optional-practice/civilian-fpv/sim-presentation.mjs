@@ -6,6 +6,7 @@ import {
 } from './world-themes.mjs';
 import { setMenuIcon } from '../../game/ui/native-menu-icons.mjs';
 import { sharedEnemyArtwork } from '../../game/hunt/preferences.mjs';
+import { Q, attitude, atan2, cos, isqrt, rotate, roundDiv } from './math.mjs';
 import { mountEnemyAppearanceControls } from '../../game/ui/enemy-appearance-controls.mjs';
 import {
   resolvePresentation,
@@ -267,6 +268,698 @@ export function practiceSkillFeedback(target, state, locale = 'en') {
     status: skill?.status ?? 'entry',
     reason: skill?.reason ?? null,
   };
+}
+
+/** Observer-only goal guidance. Gauge values use metres, seconds, degrees or percent.
+ * A gauge describes correction; earned describes runtime credit. Neither awards progress.
+ * Legacy facts must match this exact consumed tick; missing facts never imply success. */
+export function flightGoalFeedback({
+  course,
+  mode = 'acro',
+  state,
+  legacyFacts = null,
+  legacy = false,
+  locale = 'en',
+  freeFlight = false,
+} = {}) {
+  const t = (en, uk) => (locale === 'uk' ? uk : en);
+  const axes = ['x', 'y', 'z'];
+  const finite = Number.isFinite;
+  const vector = (v) => v && axes.every((key) => Number.isSafeInteger(v[key]));
+  const length = (v) => (vector(v) ? isqrt(axes.reduce((n, key) => n + v[key] ** 2, 0)) : null);
+  const p = vector(state?.position) ? state.position : null;
+  const q =
+    state?.orientation?.length === 4 && state.orientation.every(Number.isSafeInteger)
+      ? state.orientation
+      : null;
+  const angles = q ? attitude(q) : state?.attitude;
+  const index = Number.isInteger(state?.step) ? state.step : 0;
+  const steps = course?.steps?.[mode] ?? [];
+  const target = state?.target ?? steps[index];
+  const world = !legacy;
+  const facts =
+    legacyFacts?.index === index && legacyFacts.tick === state?.ticks ? legacyFacts : null;
+  const result = {
+    id: `${course?.id ?? 'flight'}:${mode}:${index}:${target?.type ?? 'none'}`,
+    phase: 'waiting',
+    action: t('Find the next target', 'Знайдіть наступну ціль'),
+    label: '',
+    gauge: {
+      kind: 'height',
+      value: null,
+      min: 0,
+      max: 1,
+      valid: false,
+      met: false,
+      oneSided: null,
+      detail: '',
+    },
+    checks: [],
+    earned: { kind: 'hold', value: 0, total: 1, complete: false },
+    detail: '',
+    interaction: null,
+    worldTargetId: null,
+  };
+  const check = (id, label, met, valid = true) => {
+    const item = { id, label, met: Boolean(valid && met), valid: Boolean(valid) };
+    result.checks.push(item);
+    return item.met;
+  };
+  const gauge = (kind, value, min, max, label, oneSided = null, detail = '') => {
+    const valid = finite(value) && finite(min) && finite(max);
+    result.label = label;
+    result.gauge = {
+      kind,
+      value: valid ? value : null,
+      min,
+      max,
+      valid,
+      met: valid && (oneSided === 'max' || value >= min) && (oneSided === 'min' || value <= max),
+      oneSided,
+      detail,
+    };
+  };
+  const earned = (kind, value, total, complete = false) => {
+    result.earned = {
+      kind,
+      value: finite(value) ? Math.max(0, value) : 0,
+      total: finite(total) ? Math.max(0, total) : 0,
+      complete: Boolean(complete),
+    };
+  };
+  const relativeTilt = (normal = { x: 0, y: Q, z: 0 }) => {
+    if (!q || !vector(normal)) return null;
+    const up = rotate(q, { x: 0, y: Q, z: 0 });
+    const dot = Math.max(
+      -Q,
+      Math.min(
+        Q,
+        roundDiv(
+          axes.reduce((sum, axis) => sum + up[axis] * normal[axis], 0),
+          Q,
+        ),
+      ),
+    );
+    return Math.abs(atan2(isqrt(Math.max(0, Q * Q - dot * dot)), dot));
+  };
+  const inBand = (value, min, max) => finite(value) && value >= min && value <= max;
+  const zone = () => p && axes.every((axis) => inBand(p[axis], target.min[axis], target.max[axis]));
+  const heightGauge = () =>
+    gauge(
+      'height',
+      p ? p.y / 1000 : null,
+      target.min.y / 1000,
+      target.max.y / 1000,
+      t('Height', 'Висота'),
+    );
+  const zoneAction = () =>
+    !p
+      ? t('Enter the marked zone', 'Увійдіть у позначену зону')
+      : p.y < target.min.y
+        ? t('Climb into the band', 'Підніміться в смугу')
+        : p.y > target.max.y
+          ? t('Descend into the band', 'Спустіться в смугу')
+          : t('Move inside the marker', 'Увійдіть у межі позначки');
+  if (freeFlight) {
+    result.phase = 'free-flight';
+    result.action = t('Explore freely', 'Досліджуйте вільно');
+    gauge(
+      'height',
+      p ? p.y / 1000 : null,
+      0,
+      (course?.bounds?.max?.y ?? 100000) / 1000,
+      t('Height', 'Висота'),
+    );
+    earned('none', 0, 0);
+    return result;
+  }
+  if (!target) {
+    const complete = state?.status === 'complete' || Boolean(steps.length && index >= steps.length);
+    result.phase = complete ? 'complete' : 'waiting';
+    result.action = complete
+      ? t('Route complete', 'Маршрут виконано')
+      : t('Waiting for the objective', 'Очікування цілі');
+    earned(
+      'steps',
+      complete ? steps.length || state?.total || 1 : 0,
+      steps.length || state?.total || 1,
+      complete,
+    );
+    return result;
+  }
+  result.phase = 'correct';
+  if (['hold', 'land'].includes(target.type)) {
+    const speed = world ? length(state?.velocity) : facts?.speed;
+    const tilt = world
+      ? target.type === 'land' && state?.support
+        ? relativeTilt(state.support.normal)
+        : angles && finite(angles.roll) && finite(angles.pitch)
+          ? Math.max(Math.abs(angles.roll), Math.abs(angles.pitch))
+          : null
+      : facts?.tilt;
+    const command = state?.lastInput;
+    const centred =
+      world && command
+        ? ['pitch', 'roll', 'yaw'].every(
+            (key) => finite(command[key]) && Math.abs(command[key]) <= 50,
+          )
+        : facts?.conditions?.centred;
+    const heading =
+      world && finite(angles?.yaw) && finite(target.heading)
+        ? Math.abs(((angles.yaw - target.heading + 54000) % 36000) - 18000)
+        : facts?.headingError;
+    const heightMet = check(
+      'height',
+      t('Height band', 'Смуга висоти'),
+      p && inBand(p.y, target.min.y, target.max.y),
+      Boolean(p),
+    );
+    const positionMet = check(
+      'position',
+      t('Inside marker', 'У межах позначки'),
+      p && ['x', 'z'].every((axis) => inBand(p[axis], target.min[axis], target.max[axis])),
+      Boolean(p),
+    );
+    const tiltMet = check(
+      'tilt',
+      t('Tilt band', 'Смуга нахилу'),
+      inBand(tilt, target.minTilt, target.maxTilt),
+      finite(tilt),
+    );
+    const centredMet =
+      !target.centred ||
+      check(
+        'centred',
+        t('Rotation sticks centred', 'Стіки обертання в центрі'),
+        centred,
+        world ? Boolean(command) : typeof facts?.conditions?.centred === 'boolean',
+      );
+    const speedMet = check(
+      'speed',
+      t('Slow enough', 'Достатньо повільно'),
+      finite(speed) && speed <= target.maxSpeed,
+      finite(speed),
+    );
+    const headingMet =
+      !finite(target.heading) ||
+      check(
+        'heading',
+        t('Correct heading', 'Правильний курс'),
+        finite(heading) && heading <= 1500,
+        finite(heading),
+      );
+    let touchdownMet = true,
+      throttleMet = true;
+    const throttle = world ? command?.throttle : facts?.throttle;
+    if (target.type === 'land') {
+      const supported = world
+        ? state.grounded && (!target.surface || state.support?.id === target.surface)
+        : facts?.grounded;
+      const impactSpeed = world ? state?.landingSpeed : facts?.landingSpeed;
+      const impactTilt = world ? state?.landingTilt : facts?.landingTilt;
+      touchdownMet = check(
+        'touchdown',
+        t('Soft touchdown', 'М’яке торкання'),
+        supported &&
+          finite(impactSpeed) &&
+          impactSpeed <= target.maxSpeed &&
+          finite(impactTilt) &&
+          impactTilt <= target.maxTilt,
+        typeof supported === 'boolean' && finite(impactSpeed) && finite(impactTilt),
+      );
+      throttleMet = check(
+        'throttle',
+        t('Throttle down', 'Газ униз'),
+        finite(throttle) && throttle <= 100,
+        finite(throttle),
+      );
+    }
+    heightGauge();
+    result.action = t('Hold steady', 'Утримуйте стабільно');
+    if (!heightMet) result.action = zoneAction();
+    else if (!positionMet) {
+      result.action = zoneAction();
+      const axis = ['x', 'z'].find(
+        (key) => !p || !inBand(p[key], target.min[key], target.max[key]),
+      );
+      gauge(
+        'range',
+        p ? p[axis] / 1000 : null,
+        target.min[axis] / 1000,
+        target.max[axis] / 1000,
+        t('Inside marker', 'У межах позначки'),
+      );
+    } else if (!tiltMet || !centredMet || target.minTilt > 0) {
+      gauge(
+        'tilt',
+        finite(tilt) ? tilt / 100 : null,
+        target.minTilt / 100,
+        target.maxTilt / 100,
+        t('Tilt', 'Нахил'),
+        target.minTilt ? null : 'max',
+      );
+      result.action = !tiltMet
+        ? tilt < target.minTilt
+          ? t('Tilt gently', 'Плавно нахиліть')
+          : t('Reduce the tilt', 'Зменште нахил')
+        : !centredMet
+          ? t('Centre rotation sticks', 'Центруйте стіки обертання')
+          : t('Keep the tilt; hold steady', 'Збережіть нахил; утримуйте');
+    }
+    // Once the entry pose is right, explain the next failing condition without replacing
+    // the tilt band during the defining Acro tilt-and-centre exercise.
+    if (heightMet && positionMet && tiltMet && centredMet) {
+      if (!speedMet) {
+        result.action = t('Brake the drift gently', 'Плавно загальмуйте дрейф');
+        if (!target.minTilt)
+          gauge(
+            'speed',
+            finite(speed) ? speed / 1000 : null,
+            0,
+            target.maxSpeed / 1000,
+            t('Speed', 'Швидкість'),
+            'max',
+          );
+      } else if (!headingMet) {
+        result.action = t('Turn the nose to the marker', 'Поверніть ніс до позначки');
+        gauge(
+          'heading',
+          finite(heading) ? heading / 100 : null,
+          0,
+          15,
+          t('Heading error', 'Відхилення курсу'),
+          'max',
+        );
+      } else if (!touchdownMet) {
+        result.action =
+          state?.grounded || facts?.grounded
+            ? t('Lift slightly; land softly again', 'Трохи злетіть; сядьте м’якіше')
+            : t('Touch down softly on the pad', 'М’яко торкніться майданчика');
+      } else if (!throttleMet) {
+        result.action = t('Lower throttle fully', 'Повністю опустіть газ');
+        gauge(
+          'throttle',
+          finite(throttle) ? throttle / 10 : null,
+          0,
+          10,
+          t('Throttle', 'Газ'),
+          'max',
+        );
+      } else result.phase = 'hold';
+    }
+    const hold = world ? state?.hold : facts?.hold;
+    earned('hold', finite(hold) ? hold / 50 : 0, target.ticks / 50, Boolean(facts?.accepted));
+    result.detail =
+      target.minTilt && target.centred && mode !== 'acro'
+        ? t(
+            'Self-level returns toward level when you release the sticks. The Acro example shows retained tilt.',
+            'Самовирівнювання повертає до горизонту після відпускання стіків. Приклад Acro показує збереження нахилу.',
+          )
+        : t(
+            'Keep every condition together; the hold restarts if one is lost.',
+            'Утримуйте всі умови разом; втрата однієї скидає час утримання.',
+          );
+    return result;
+  }
+  if (target.type === 'gate' || target.type === 'crossing-v1') {
+    const advanced = target.type === 'crossing-v1';
+    const sides = advanced
+      ? axes.filter((axis) => axis !== target.axis)
+      : [target.axis === 'x' ? 'z' : 'x', 'y'];
+    const bands = advanced
+      ? [
+          [target.minA, target.maxA],
+          [target.minB, target.maxB],
+        ]
+      : [
+          [target.minSide, target.maxSide],
+          [target.minY, target.maxY],
+        ];
+    const aligned = sides.map((axis, i) =>
+      check(
+        axis === 'y' ? 'height' : `opening-${axis}`,
+        axis === 'y'
+          ? t('Opening height', 'Висота отвору')
+          : t('Opening alignment', 'У створі отвору'),
+        p && inBand(p[axis], ...bands[i]),
+        Boolean(p),
+      ),
+    );
+    const remaining = p ? (target.at - p[target.axis]) * target.direction : null;
+    const approach = check(
+      'approach',
+      t('Approach side', 'Бік заходу'),
+      remaining > 0,
+      finite(remaining),
+    );
+    const side = Math.max(
+      0,
+      aligned.findIndex((value) => !value),
+    );
+    gauge(
+      sides[side] === 'y' ? 'height' : 'alignment',
+      p ? p[sides[side]] / 1000 : null,
+      bands[side][0] / 1000,
+      bands[side][1] / 1000,
+      t('Opening', 'Отвір'),
+    );
+    result.action = !p
+      ? t('Find the marked opening', 'Знайдіть позначений отвір')
+      : !approach
+        ? t('Return to the approach side', 'Поверніться на бік заходу')
+        : !aligned.every(Boolean)
+          ? t('Line up with the opening', 'Вирівняйтеся з отвором')
+          : t('Fly through the arrow', 'Пролетіть за стрілкою');
+    if (advanced) {
+      const speed = vector(state?.velocity) ? state.velocity[target.axis] * target.direction : null;
+      const forward = q ? rotate(q, { x: 0, y: 0, z: -Q })[target.axis] * target.direction : null;
+      const speedMet = check(
+        'speed',
+        t('Crossing speed', 'Швидкість перетину'),
+        speed >= target.minSpeed,
+        finite(speed),
+      );
+      const noseMet = check(
+        'heading',
+        t('Nose follows travel', 'Ніс уздовж руху'),
+        forward >= cos(target.forwardTolerance),
+        finite(forward),
+      );
+      check(
+        'airborne',
+        t('Clear of ground', 'Над землею'),
+        state?.grounded === false,
+        typeof state?.grounded === 'boolean',
+      );
+      check('zone', t('Inside practice zone', 'У навчальній зоні'), zone(), Boolean(p));
+      if (approach && aligned.every(Boolean) && !speedMet) {
+        result.action = t('Build speed toward the opening', 'Наберіть швидкість до отвору');
+        gauge(
+          'speed',
+          finite(speed) ? speed / 1000 : null,
+          target.minSpeed / 1000,
+          Math.max(target.minSpeed / 1000, 1),
+          t('Crossing speed', 'Швидкість перетину'),
+          'min',
+        );
+      } else if (approach && aligned.every(Boolean) && !noseMet)
+        result.action = t('Point the nose along the arrow', 'Спрямуйте ніс за стрілкою');
+    }
+    result.phase = !approach ? 'approach' : 'cross';
+    result.detail = t(
+      'Cross from the indicated side. Distance and alignment are guidance, not crossing credit.',
+      'Перетинайте з позначеного боку. Відстань і вирівнювання лише спрямовують, не зараховують перетин.',
+    );
+    earned('crossing', 0, 1);
+    return result;
+  }
+  if (['hunt-contact-v1', 'eliminate'].includes(target.type)) {
+    const contact = target.type === 'hunt-contact-v1';
+    const available = contact ? Array.isArray(state?.hunt?.caught) : Array.isArray(state?.actors);
+    const done = (id) =>
+      contact
+        ? state?.hunt?.caught?.includes(id)
+        : state?.actors?.some((actor) => actor.id === id && actor.status === 'defeated');
+    const caught = target.targets.filter(done).length;
+    result.phase = contact ? 'catch' : 'combat';
+    result.interaction = contact ? 'touch' : 'fire';
+    result.worldTargetId = target.targets.find((id) => !done(id)) ?? null;
+    result.action = contact
+      ? target.ordered
+        ? t('Touch the next marked target', 'Торкніться наступної цілі')
+        : t('Touch a marked target', 'Торкніться позначеної цілі')
+      : t('Fire at the marked target', 'Стріляйте в позначену ціль');
+    gauge(
+      'count',
+      available ? caught : null,
+      0,
+      target.targets.length,
+      contact ? t('Caught', 'Спіймано') : t('Defeated', 'Знешкоджено'),
+    );
+    result.gauge.met = available && caught === target.targets.length;
+    earned(contact ? 'catches' : 'defeats', caught, target.targets.length);
+    result.detail = contact
+      ? t(
+          'Contact catches count. Shooting does not complete this objective.',
+          'Зараховуються перехвати торканням. Стрільба не виконує цю ціль.',
+        )
+      : t(
+          'Use fire to defeat the targets. Touching them does not count.',
+          'Знешкодьте цілі вогнем. Торкання не зараховуються.',
+        );
+    return result;
+  }
+  if (target.type === 'survive') {
+    result.phase = 'survive';
+    result.action = t('Stay safe until time is up', 'Збережіться до кінця відліку');
+    gauge(
+      'time',
+      finite(state?.hold) ? state.hold / 50 : null,
+      0,
+      target.ticks / 50,
+      t('Time survived', 'Час виживання'),
+    );
+    result.gauge.met = finite(state?.hold) && state.hold >= target.ticks;
+    earned('time', (state?.hold ?? 0) / 50, target.ticks / 50);
+    return result;
+  }
+  if (target.type === 'actor-track-v1') {
+    const track = state?.actorTrack?.index === index ? state.actorTrack : null;
+    const actor = state?.actors?.find((item) => item.id === target.actorId);
+    const lift =
+      actor && (['patrol', 'sentry'].includes(actor.type) ? actor.height / 2 : actor.radius);
+    const distance =
+      p && vector(actor?.position) && finite(lift)
+        ? length({
+            x: actor.position.x - p.x,
+            y: actor.position.y + lift - p.y - (course?.rules?.droneRadius ?? 220),
+            z: actor.position.z - p.z,
+          })
+        : null;
+    const reasons = {
+      'acquire-subject': t('Face the marked subject', 'Спрямуйте ніс на об’єкт'),
+      'subject-unavailable': t('Subject unavailable; restart', 'Об’єкт недоступний; почніть знову'),
+      'airborne-clearance': t('Lift off to follow', 'Злетіть для стеження'),
+      'subject-range':
+        distance < target.minDistance
+          ? t('Back away a little', 'Трохи віддаліться')
+          : t('Move closer to the subject', 'Наблизьтеся до об’єкта'),
+      'relative-speed': t('Match the subject’s speed', 'Узгодьте швидкість з об’єктом'),
+      'airframe-tilt': t('Reduce the tilt', 'Зменште нахил'),
+      'nose-alignment': t('Point the nose at the subject', 'Спрямуйте ніс на об’єкт'),
+      'subject-occluded': t('Find a clear sight line', 'Знайдіть пряму видимість'),
+      'subject-travel': t('Keep following its movement', 'Продовжуйте стеження за рухом'),
+    };
+    result.phase = track?.status === 'tracking' ? 'track' : 'acquire';
+    result.interaction = target.minTargetTravel ? 'follow' : 'observe';
+    result.worldTargetId = target.actorId;
+    result.action =
+      reasons[track?.reason] ?? t('Keep the subject in view', 'Тримайте об’єкт у полі зору');
+    gauge(
+      'range',
+      finite(distance) ? distance / 1000 : null,
+      target.minDistance / 1000,
+      target.maxDistance / 1000,
+      t('Distance to subject', 'Відстань до об’єкта'),
+    );
+    // Runtime evaluates these in order and stops at the first failure. Later checks
+    // are unknown, never inferred from pixels or absent measurements after reset.
+    const order = [
+      'subject-unavailable',
+      'airborne-clearance',
+      'subject-range',
+      'relative-speed',
+      'airframe-tilt',
+      'nose-alignment',
+      'subject-occluded',
+    ];
+    const labels = [
+      t('Subject available', 'Об’єкт доступний'),
+      t('Airborne', 'У повітрі'),
+      t('Distance band', 'Смуга відстані'),
+      t('Matched speed', 'Узгоджена швидкість'),
+      t('Steady tilt', 'Стабільний нахил'),
+      t('Nose on subject', 'Ніс на об’єкт'),
+      t('Clear sight line', 'Пряма видимість'),
+    ];
+    const all = track && ['tracking', 'complete'].includes(track.status);
+    const failed = order.indexOf(track?.reason);
+    order.forEach((reason, i) =>
+      check(reason, labels[i], all || failed > i, Boolean(all || failed >= i)),
+    );
+    if (track?.reason === 'airframe-tilt') {
+      const tilt = relativeTilt();
+      gauge(
+        'tilt',
+        finite(tilt) ? tilt / 100 : null,
+        0,
+        target.maxTilt / 100,
+        t('Tilt', 'Нахил'),
+        'max',
+      );
+    }
+    const hold = track ? (state?.hold ?? 0) : 0;
+    if (target.minTargetTravel && hold >= target.ticks) {
+      earned(
+        'travel',
+        (track?.travel ?? 0) / 1000,
+        target.minTargetTravel / 1000,
+        track?.status === 'complete',
+      );
+      result.detail = t(
+        'Time held; keep following until the subject finishes the distance.',
+        'Час утримано; стежте, доки об’єкт не пройде потрібну відстань.',
+      );
+    } else earned('hold', hold / 50, target.ticks / 50, track?.status === 'complete');
+    return result;
+  }
+  const skillInfo = practiceSkillFeedback(target, state, locale);
+  if (skillInfo) {
+    const skill = state?.skill?.index === index ? state.skill : null;
+    const active = skill && ['active', 'complete'].includes(skill.status);
+    const complete = skill?.status === 'complete';
+    const angular = state?.angular;
+    const rotationLow = ['pitch', 'roll', 'yaw'].every(
+      (axis) => finite(angular?.[axis]) && Math.abs(angular[axis]) <= target.maxAngular,
+    );
+    const inZone = check('zone', t('Practice zone', 'Навчальна зона'), zone(), Boolean(p));
+    check(
+      'airborne',
+      t('Clear of ground', 'Над землею'),
+      state?.grounded === false,
+      typeof state?.grounded === 'boolean',
+    );
+    heightGauge();
+    result.phase = active ? 'manoeuvre' : 'entry';
+    result.action = !inZone
+      ? zoneAction()
+      : t('Follow the marked manoeuvre', 'Виконайте позначений маневр');
+    result.detail = skillInfo.hint;
+    const entryActions = {
+      'airborne-clearance': t('Recover into clear air', 'Поверніться у вільне повітря'),
+      'entry-attitude': t('Settle at the entry attitude', 'Стабілізуйте положення входу'),
+      'entry-bearing': t('Return to the marked entry', 'Поверніться до позначеного входу'),
+      'time-window': t('Return to entry; try again', 'Поверніться до входу; повторіть'),
+      'rotation-purity': t(
+        'Settle; use only the shown axis',
+        'Стабілізуйтеся; рухайте показану вісь',
+      ),
+      'missed-attitude': t('Retry the whole rotation', 'Повторіть повний оберт'),
+      'path-envelope': t('Return to the marked path band', 'Поверніться в смугу траєкторії'),
+      'path-direction': t('Return; follow the path arrow', 'Поверніться; летіть за стрілкою'),
+      'path-axial-progress': t('Combine travel with the turn', 'Поєднайте рух із поворотом'),
+      'rotation-path-phase': t('Match rotation to the path', 'Узгодьте оберт із траєкторією'),
+      'ambiguous-path': t('Return to entry; try again', 'Поверніться до входу; повторіть'),
+    };
+    if (target.type === 'rotation-v1') {
+      const checkpoint = active ? (skill.rotation?.checkpoint ?? 0) : 0;
+      const amount = active ? skill.rotation?.angle : null;
+      gauge(
+        'rotation',
+        finite(amount) ? amount / 100 : null,
+        (target.angle - target.tolerance) / 100,
+        (target.angle + target.tolerance) / 100,
+        t('Rotation traced', 'Пройдений оберт'),
+      );
+      result.action =
+        checkpoint >= target.angle / 9000
+          ? t('Settle at the exit attitude', 'Стабілізуйте положення виходу')
+          : skillInfo.label;
+      if (checkpoint >= target.angle / 9000)
+        earned('hold', (skill?.dwell ?? 0) / 50, target.settleTicks / 50, complete);
+      else earned('checkpoints', checkpoint, target.angle / 9000, complete);
+      check(
+        'settled',
+        t('Rotation settled', 'Обертання зупинено'),
+        rotationLow,
+        Boolean(angular && finite(target.maxAngular)),
+      );
+    } else if (target.type === 'attitude-v1') {
+      const angle = relativeTilt();
+      const expected = target.up === 'inverted' ? 180 : 0;
+      gauge(
+        'tilt',
+        finite(angle) ? angle / 100 : null,
+        Math.max(0, expected - target.tolerance / 100),
+        Math.min(180, expected + target.tolerance / 100),
+        t('Attitude', 'Положення'),
+      );
+      if (q)
+        result.gauge.met =
+          rotate(q, { x: 0, y: Q, z: 0 }).y * (target.up === 'upright' ? 1 : -1) >=
+          cos(target.tolerance);
+      result.action =
+        target.up === 'inverted'
+          ? t('Hold briefly inverted', 'Коротко утримайте перевернутим')
+          : t('Recover upright and settle', 'Вирівняйтеся й стабілізуйтеся');
+      const speed = length(state?.velocity);
+      check(
+        'speed',
+        t('Slow enough', 'Достатньо повільно'),
+        speed <= target.maxSpeed,
+        finite(speed),
+      );
+      check('settled', t('Rotation settled', 'Обертання зупинено'), rotationLow, Boolean(angular));
+      earned('hold', active ? (skill.dwell ?? 0) / 50 : 0, target.ticks / 50, complete);
+    } else if (target.type === 'path-v1') {
+      const radius = p
+        ? isqrt(
+            [...target.plane].reduce((sum, axis) => sum + (p[axis] - target.center[axis]) ** 2, 0),
+          )
+        : null;
+      gauge(
+        'range',
+        finite(radius) ? radius / 1000 : null,
+        target.radiusMin / 1000,
+        target.radiusMax / 1000,
+        t('Distance from landmark', 'Відстань до орієнтира'),
+      );
+      result.action =
+        radius < target.radiusMin
+          ? t('Move out into the path band', 'Віддаліться в смугу траєкторії')
+          : radius > target.radiusMax
+            ? t('Move in toward the path band', 'Наблизьтеся до смуги траєкторії')
+            : t('Follow the path arrow', 'Летіть за стрілкою траєкторії');
+      earned(
+        'checkpoints',
+        active ? (skill.path?.checkpoint ?? 0) : 0,
+        target.sweep / 9000,
+        complete,
+      );
+      if (target.coupled)
+        check(
+          'coupled',
+          t('Body follows the path', 'Корпус узгоджено з траєкторією'),
+          active &&
+            Math.abs(
+              (skill.rotation?.angle ?? 0) * target.sweep -
+                (skill.path?.winding ?? 0) * target.coupled.angle,
+            ) <=
+              target.coupled.phaseTolerance * target.sweep,
+          Boolean(active && skill.rotation && skill.path),
+        );
+      if (target.axialMin || target.axialMax) {
+        const axis = axes.find((key) => !target.plane.includes(key));
+        const travel = active && p && finite(skill.startAxis) ? p[axis] - skill.startAxis : null;
+        check(
+          'travel',
+          t('Required travel', 'Потрібне переміщення'),
+          inBand(travel, target.axialMin, target.axialMax),
+          finite(travel),
+        );
+      }
+    }
+    if (!active)
+      result.action =
+        entryActions[skill?.reason] ??
+        (!inZone
+          ? zoneAction()
+          : t('Settle at the marked entry', 'Стабілізуйтеся в позначеному вході'));
+    if (complete) result.phase = 'complete';
+    return result;
+  }
+  result.action = t('Follow the current objective', 'Виконайте поточну ціль');
+  return result;
 }
 
 /** Presentation only: shared game fonts, icons and short menu cues. No simulation input. */
@@ -4371,8 +5064,6 @@ export const createSimFlightAudio = (() => {
 })();
 // END GENERATED ACADEMY SHARED AUDIO
 
-/** Load the exact core tools beside this optional application when available.
- * Standalone packages retain their native tools if the core extension is absent. */
 export function mountSimGlobalTools({
   document: doc,
   window: win,
@@ -4477,6 +5168,715 @@ export function mountSimGlobalTools({
       disposed = true;
       provider?.dispose();
       fallback.remove();
+    },
+  };
+}
+
+const FLIGHT_HUD_PREFERENCE_KEY = 'revealline.sim-flight-hud.v1';
+const FLIGHT_HUD_PREFERENCE_EVENT = 'revealline:sim-flight-hud';
+const FLIGHT_HUD_STYLE = `
+[data-sim-hud][data-hud-component] {
+  --hud-ink: #f4f7fb;
+  --hud-muted: #ced8e3;
+  --hud-bg: #0a111bd9;
+  --hud-accent: color-mix(in srgb, var(--fk-amber, #f4bf62) 75%, white);
+  color: var(--hud-ink);
+  font: 14px/1.2 var(--fk-font-ui, system-ui, sans-serif);
+  text-align: start;
+  text-shadow: none;
+}
+[data-sim-hud][data-hud-component] *,
+[data-sim-hud][data-hud-component] *::before,
+[data-sim-hud][data-hud-component] *::after {
+  box-sizing: border-box;
+}
+[data-sim-hud][data-hud-component] :where(div, span, p, h2, strong, button, ul, li) {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-image: none;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+  color: inherit;
+  font: inherit;
+  text-shadow: none;
+  letter-spacing: normal;
+}
+[data-sim-hud][data-hud-component][hidden],
+[data-sim-hud][data-hud-component] [hidden] { display: none !important; }
+[data-sim-hud='flight'][data-hud-component] {
+  position: absolute;
+  inset: 0;
+  z-index: 16;
+  pointer-events: none;
+  container: sim-flight-hud / size;
+  --hud-card-width: 240px;
+  --hud-card-height: 72px;
+  --hud-left: clamp(var(--flight-safe-left, 12px), calc(50% - 120px), calc(100% - 290px - var(--flight-safe-right, 12px)));
+  --hud-top: clamp(70px, calc(var(--hud-aim-y, 50%) + 28px), calc(100% - 140px));
+}
+[data-sim-hud='flight'][data-hud-component] [data-hud-part='card'] {
+  position: absolute;
+  top: var(--hud-top);
+  left: var(--hud-left);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 40px;
+  grid-template-rows: 18px 22px 14px;
+  gap: 2px 6px;
+  width: min(var(--hud-card-width), calc(100% - var(--hud-left) - 64px));
+  height: var(--hud-card-height);
+  padding: 7px 8px;
+  background: var(--hud-bg);
+  border-radius: 6px;
+  overflow: hidden;
+  pointer-events: none;
+}
+[data-sim-hud='flight'][data-hud-component] [data-hud-part='action'] {
+  grid-column: 1;
+  font-weight: 600;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+[data-sim-hud='flight'][data-hud-component] [data-hud-part='gauge'] {
+  grid-column: 1;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+[data-sim-hud='flight'][data-hud-component] [data-hud-part='value'] { font-size: 20px; font-weight: 700; }
+[data-sim-hud='flight'][data-hud-component] [data-hud-part='gauge-name'] { max-width: 54px; overflow: hidden; text-overflow: ellipsis; font-size: 11px; color: var(--hud-muted); }
+[data-sim-hud='flight'][data-hud-component] [data-hud-part='gauge-track'] { flex: 1; min-width: 0; width: 104px; height: 22px; overflow: visible; }
+[data-sim-hud='flight'][data-hud-component] [data-hud-part='direction'] { color: var(--hud-accent); }
+[data-sim-hud='flight'][data-hud-component] [data-hud-part='checks'] {
+  grid-column: 1 / -1;
+  display: flex;
+  gap: 7px;
+  overflow: hidden;
+  font-size: 11px;
+  white-space: nowrap;
+  color: var(--hud-muted);
+}
+[data-sim-hud='flight'][data-hud-component] [data-hud-part='checks'] > span { overflow: hidden; text-overflow: ellipsis; }
+[data-sim-hud='flight'][data-hud-component] [data-hud-part='checks'] > [data-met='true'] { color: var(--hud-accent); }
+[data-sim-hud='flight'][data-hud-component] [data-hud-part='earned'] {
+  grid-column: 2;
+  grid-row: 1 / 3;
+  align-self: center;
+  position: relative;
+  width: 40px;
+  height: 40px;
+}
+[data-sim-hud='flight'][data-hud-component] [data-hud-part='earned'] svg { display: block; width: 40px; height: 40px; }
+[data-sim-hud='flight'][data-hud-component] [data-hud-part='earned-label'] { position: absolute; inset: 0; display: grid; place-items: center; font-size: 11px; font-variant-numeric: tabular-nums; }
+[data-sim-hud='flight'][data-hud-component] [data-hud-part='explain'] {
+  position: absolute;
+  top: var(--hud-top);
+  left: calc(var(--hud-left) + min(var(--hud-card-width), 100% - var(--hud-left) - 64px) + 6px);
+  width: 44px;
+  min-width: 44px;
+  height: 44px;
+  min-height: 44px;
+  padding: 0;
+  border: 1px solid #ffffff65;
+  border-radius: 50%;
+  background: var(--hud-bg);
+  color: var(--hud-ink);
+  font-size: 20px;
+  font-weight: 700;
+  cursor: pointer;
+  pointer-events: auto;
+}
+[data-sim-hud][data-hud-component] button:focus-visible { outline: 3px solid var(--hud-accent); outline-offset: 3px; }
+[data-sim-hud='flight'][data-hud-component] [data-hud-part='details'] {
+  grid-column: 1 / -1;
+  grid-row: 3;
+  min-width: 0;
+  padding: 0;
+  overflow: hidden;
+  font-size: 11px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  pointer-events: none;
+}
+[data-sim-hud='flight'][data-hud-component][data-hud-mode='minimal'] [data-hud-part='card'] { grid-template-rows: 18px 22px; height: 56px; }
+[data-sim-hud='flight'][data-hud-component][data-hud-mode='minimal'] [data-hud-part='checks'] { display: none; }
+[data-sim-hud='flight'][data-hud-component][data-hud-mode='detailed'] [data-hud-part='checks'] { display: none; }
+[data-sim-hud='flight'][data-hud-component][data-hud-size='large'] [data-hud-part='action'] { font-size: 16px; }
+[data-sim-hud='flight'][data-hud-component][data-hud-size='large'] [data-hud-part='value'] { font-size: 22px; }
+[data-sim-hud='flight'][data-hud-component][data-hud-size='large'] [data-hud-part='checks'] { font-size: 12px; }
+[data-sim-hud][data-hud-component][data-hud-contrast='high'] { --hud-bg: #000; --hud-ink: #fff; --hud-muted: #fff; --hud-accent: #ffe47a; }
+[data-sim-hud='flight'][data-hud-component] [data-hud-part='telemetry'] { position: absolute; top: max(12px, env(safe-area-inset-top)); left: max(12px, env(safe-area-inset-left)); padding: 4px 8px; border-radius: 4px; font-size: 14px; background: var(--hud-bg); }
+[data-sim-hud='flight'][data-hud-component] [data-hud-part='cue'] { position: absolute; width: 48px; height: 48px; transform: translate(-50%, -50%); color: var(--hud-accent); }
+[data-sim-hud='flight'][data-hud-component] [data-hud-part='brackets'] { position: absolute; inset: 0; }
+[data-sim-hud='flight'][data-hud-component] [data-hud-part='brackets'] > i { position: absolute; width: 11px; height: 11px; border: solid currentColor; border-width: 2px 0 0 2px; filter: drop-shadow(0 1px 1px #000); }
+[data-sim-hud='flight'][data-hud-component] [data-hud-part='brackets'] > i:nth-child(1) { top: 0; left: 0; }
+[data-sim-hud='flight'][data-hud-component] [data-hud-part='brackets'] > i:nth-child(2) { top: 0; right: 0; transform: rotate(90deg); }
+[data-sim-hud='flight'][data-hud-component] [data-hud-part='brackets'] > i:nth-child(3) { bottom: 0; right: 0; transform: rotate(180deg); }
+[data-sim-hud='flight'][data-hud-component] [data-hud-part='brackets'] > i:nth-child(4) { bottom: 0; left: 0; transform: rotate(270deg); }
+[data-sim-hud='flight'][data-hud-component] [data-hud-part='cue-arrow'] { position: absolute; inset: 0; display: grid; place-items: center; font: 32px/1 system-ui, sans-serif; text-shadow: 0 1px 3px #000; }
+[data-sim-hud='flight'][data-hud-component] [data-hud-part='cue-label'] { position: absolute; top: 51px; left: 50%; transform: translateX(-50%); width: max-content; max-width: 120px; color: var(--hud-ink); font-size: 12px; text-align: center; text-shadow: 0 1px 3px #000, 0 0 4px #000; }
+[data-sim-hud='flight'][data-hud-component] [data-hud-part='announcement'] { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+[data-sim-hud='details'][data-hud-component] { width: min(480px, calc(100vw - 24px)); max-height: calc(100dvh - 24px); margin: auto; padding: 20px; border: 1px solid #ffffff65; border-radius: 8px; background: #0a111b; overflow: auto; }
+[data-sim-hud='details'][data-hud-component]::backdrop { background: #0009; }
+[data-sim-hud='details'][data-hud-component] h2 { font-size: 20px; font-weight: 700; margin-bottom: 12px; }
+[data-sim-hud='details'][data-hud-component] p { white-space: pre-line; line-height: 1.5; margin-bottom: 16px; }
+[data-sim-hud='details'][data-hud-component] [data-hud-part='dialog-actions'] { display: flex; flex-wrap: wrap; gap: 8px; }
+[data-sim-hud='details'][data-hud-component] button { min-height: 44px; min-width: 44px; padding: 8px 14px; border: 1px solid #ffffff65; border-radius: 4px; background: #172431; cursor: pointer; }
+@container sim-flight-hud (max-height: 480px) and (min-width: 500px) {
+  [data-sim-hud='flight'][data-hud-component] [data-hud-part='card'] { --hud-card-width: 220px; --hud-card-height: 64px; top: clamp(58px, calc(var(--hud-aim-y, 50%) + 20px), calc(100% - 128px)); left: calc(50% - 110px); grid-template-rows: 16px 20px 12px; padding: 6px 8px; }
+  [data-sim-hud='flight'][data-hud-component] [data-hud-part='explain'] { top: clamp(58px, calc(var(--hud-aim-y, 50%) + 20px), calc(100% - 128px)); left: calc(50% + 116px); }
+}
+@media (forced-colors: active) {
+  [data-sim-hud][data-hud-component] { --hud-ink: CanvasText; --hud-muted: CanvasText; --hud-bg: Canvas; --hud-accent: Highlight; forced-color-adjust: auto; }
+}
+`;
+
+/** Observer-only flight feedback, shared by Academy and World Studio. */
+export function mountFlightHud({
+  container,
+  storage,
+  locale = () => 'en',
+  onExplain,
+  onMenu,
+  onLesson,
+  onPreferencesChange = () => {},
+}) {
+  if (!container?.ownerDocument) throw new TypeError('A flight HUD container is required.');
+  const doc = container.ownerDocument,
+    win = doc.defaultView;
+  const t = (en, uk) => (locale() === 'uk' ? uk : en);
+  const copy = (value) =>
+    typeof value === 'string' ? value : (value?.[locale()] ?? value?.en ?? '');
+  const normalize = (value = {}) => ({
+    mode: ['guided', 'minimal', 'detailed'].includes(value?.mode) ? value.mode : 'guided',
+    textSize: value?.textSize === 'large' ? 'large' : 'standard',
+    highContrast: value?.highContrast === true,
+  });
+  const store = () => (typeof storage === 'function' ? storage() : (storage ?? win?.localStorage));
+  const readPreferences = () => {
+    try {
+      return normalize(JSON.parse(store()?.getItem(FLIGHT_HUD_PREFERENCE_KEY) ?? 'null'));
+    } catch {
+      return normalize();
+    }
+  };
+  let preferences = readPreferences(),
+    feedback = null,
+    context = {},
+    disposed = false,
+    announcementKey = '',
+    checkSignature = '';
+  const preferenceViews = new Set(),
+    numberFormats = new Map();
+  const make = (tag, part, parent, text) => {
+    const element = doc.createElement(tag);
+    if (part) element.dataset.hudPart = part;
+    if (text !== undefined) element.textContent = text;
+    parent?.append(element);
+    return element;
+  };
+  const setText = (element, value) => {
+    if (element.textContent !== value) element.textContent = value;
+  };
+  const setAttribute = (element, name, value) => {
+    const text = String(value);
+    if (element.getAttribute(name) !== text) element.setAttribute(name, text);
+  };
+  const sheet = make('style');
+  sheet.dataset.simHudStyles = 'true';
+  sheet.textContent = FLIGHT_HUD_STYLE;
+  (doc.head ?? container).append(sheet);
+  const root = make('div', null, container);
+  root.dataset.simHud = 'flight';
+  root.dataset.hudComponent = 'true';
+  root.hidden = true;
+  const card = make('div', 'card', root),
+    action = make('div', 'action', card),
+    gauge = make('div', 'gauge', card),
+    value = make('strong', 'value', gauge),
+    gaugeName = make('span', 'gauge-name', gauge),
+    direction = make('span', 'direction', gauge),
+    earned = make('div', 'earned', card),
+    earnedLabel = make('span', 'earned-label', earned),
+    checks = make('div', 'checks', card),
+    explain = make('button', 'explain', root, '?'),
+    details = make('div', 'details', card),
+    telemetry = make('div', 'telemetry', root),
+    cue = make('div', 'cue', root),
+    brackets = make('div', 'brackets', cue),
+    cueArrow = make('span', 'cue-arrow', cue, '➜'),
+    cueLabel = make('span', 'cue-label', cue),
+    announcement = make('span', 'announcement', root);
+  explain.type = 'button';
+  card.setAttribute('role', 'group');
+  announcement.setAttribute('role', 'status');
+  announcement.setAttribute('aria-live', 'polite');
+  announcement.setAttribute('aria-atomic', 'true');
+  direction.setAttribute('aria-hidden', 'true');
+  cue.setAttribute('aria-hidden', 'true');
+  cue.hidden = true;
+  for (let i = 0; i < 4; i++) make('i', null, brackets);
+  const gaugeTrack = doc.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  gaugeTrack.dataset.hudPart = 'gauge-track';
+  gaugeTrack.setAttribute('viewBox', '0 0 120 24');
+  gaugeTrack.setAttribute('role', 'img');
+  const gaugeShape = (tag, attributes) => {
+    const element = doc.createElementNS('http://www.w3.org/2000/svg', tag);
+    for (const [name, attribute] of Object.entries(attributes))
+      element.setAttribute(name, attribute);
+    gaugeTrack.append(element);
+    return element;
+  };
+  gaugeShape('line', {
+    x1: '6',
+    x2: '114',
+    y1: '12',
+    y2: '12',
+    stroke: '#ffffff35',
+    'stroke-width': '4',
+    'stroke-linecap': 'round',
+  });
+  const gaugeBand = gaugeShape('rect', {
+      x: '42',
+      y: '7',
+      width: '36',
+      height: '10',
+      rx: '3',
+      fill: 'var(--hud-accent)',
+      opacity: '0.55',
+    }),
+    gaugeMarker = gaugeShape('path', {
+      d: 'M -4 2 L 0 7 L 4 2 M 0 7 L 0 21',
+      fill: 'none',
+      stroke: 'var(--hud-ink)',
+      'stroke-width': '2',
+      'stroke-linecap': 'round',
+      'stroke-linejoin': 'round',
+    });
+  gauge.insertBefore(gaugeTrack, direction);
+  const svg = doc.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  svg.setAttribute('viewBox', '0 0 40 40');
+  svg.setAttribute('aria-hidden', 'true');
+  const ring = doc.createElementNS('http://www.w3.org/2000/svg', 'circle');
+  for (const [name, attribute] of Object.entries({
+    cx: '20',
+    cy: '20',
+    r: '16',
+    fill: 'none',
+    stroke: 'var(--hud-accent)',
+    'stroke-width': '3',
+    'stroke-linecap': 'round',
+    pathLength: '100',
+    'stroke-dasharray': '0 100',
+    transform: 'rotate(-90 20 20)',
+  }))
+    ring.setAttribute(name, attribute);
+  svg.append(ring);
+  earned.prepend(svg);
+  const dialog = make('dialog');
+  dialog.id = 'sim-flight-hud-details';
+  dialog.dataset.simHud = 'details';
+  dialog.dataset.hudComponent = 'true';
+  const dialogTitle = make('h2', null, dialog),
+    dialogBody = make('p', null, dialog),
+    dialogActions = make('div', 'dialog-actions', dialog),
+    close = make('button', null, dialogActions),
+    lesson = make('button', null, dialogActions);
+  dialogTitle.id = 'sim-flight-hud-details-title';
+  dialog.setAttribute('aria-labelledby', dialogTitle.id);
+  close.type = lesson.type = 'button';
+  doc.body.append(dialog);
+  const format = (number, digits = 1) => {
+    if (!Number.isFinite(number)) return '—';
+    const language = locale() === 'uk' ? 'uk-UA' : 'en',
+      key = `${language}:${digits}`;
+    if (!numberFormats.has(key))
+      numberFormats.set(key, new Intl.NumberFormat(language, { maximumFractionDigits: digits }));
+    return numberFormats.get(key).format(number);
+  };
+  const unit = (kind) =>
+    ({
+      height: t('m', 'м'),
+      range: t('m', 'м'),
+      path: t('m', 'м'),
+      speed: t('m/s', 'м/с'),
+      tilt: '°',
+      heading: '°',
+      rotation: '°',
+      alignment: t('m', 'м'),
+      throttle: '%',
+      input: '%',
+      time: t('s', 'с'),
+    })[kind] ?? '';
+  const name = (kind) =>
+    ({
+      height: t('Height', 'Висота'),
+      range: t('Distance', 'Відстань'),
+      path: t('Path', 'Маршрут'),
+      speed: t('Speed', 'Швидкість'),
+      tilt: t('Tilt', 'Нахил'),
+      heading: t('Heading', 'Курс'),
+      rotation: t('Rotation', 'Обертання'),
+      alignment: t('Alignment', 'Напрямок'),
+      throttle: t('Throttle', 'Газ'),
+      input: t('Stick input', 'Сигнал стіка'),
+      time: t('Time', 'Час'),
+      count: t('Count', 'Кількість'),
+    })[kind] ?? '';
+  const detailText = () => {
+    const g = feedback?.gauge,
+      description = copy(typeof context.details === 'string' ? context.details : feedback?.detail),
+      range =
+        g?.valid && (Number.isFinite(g.min) || Number.isFinite(g.max))
+          ? `${copy(feedback?.label) || name(g.kind)}: ${format(g.value)} ${unit(g.kind)} · ${
+              g.oneSided === 'min'
+                ? `≥ ${format(g.min)}`
+                : g.oneSided === 'max'
+                  ? `≤ ${format(g.max)}`
+                  : `${format(g.min)}–${format(g.max)}`
+            } ${unit(g.kind)}`
+          : copy(g?.detail),
+      conditions = (feedback?.checks ?? [])
+        .map(
+          (check) =>
+            `${check.valid === false ? '—' : check.met ? '✓' : '○'} ${{ height: t('Height', 'Висота'), position: t('Zone', 'Зона'), tilt: t('Tilt', 'Нахил'), centred: t('Sticks', 'Стіки'), speed: t('Speed', 'Рух'), heading: t('Nose', 'Ніс'), touchdown: t('Landing', 'Посадка'), throttle: t('Throttle', 'Газ') }[check.id] ?? copy(check.label)}`,
+        )
+        .join('\n');
+    return [description, range, conditions].filter(Boolean).join('\n');
+  };
+  const numericLine = () => {
+    const g = feedback?.gauge;
+    if (!g || g.valid === false) return '';
+    const target =
+      g.oneSided === 'min'
+        ? `≥ ${format(g.min)}`
+        : g.oneSided === 'max'
+          ? `≤ ${format(g.max)}`
+          : `${format(g.min)}–${format(g.max)}`;
+    return `${copy(feedback?.label) || name(g.kind)} ${format(g.value)} ${unit(g.kind)} · ${target} ${unit(g.kind)}`;
+  };
+  const paintGauge = (g) => {
+    let lo = g.min,
+      hi = g.max;
+    if (g.oneSided === 'min') {
+      lo = 0;
+      hi = Math.abs(g.min) * 2;
+    } else if (g.oneSided === 'max') {
+      lo = 0;
+      hi = Math.abs(g.max) * 2;
+    } else {
+      const span = hi - lo;
+      lo -= span;
+      hi += span;
+    }
+    const ranged = Number.isFinite(lo) && Number.isFinite(hi) && hi > lo,
+      valid = g.valid !== false && Number.isFinite(g.value);
+    gaugeTrack.hidden = !ranged;
+    gaugeTrack.style.display = ranged ? '' : 'none';
+    value.hidden = ranged;
+    setText(value, valid ? (g.met ? '✓' : '○') : '—');
+    setText(gaugeName, copy(feedback?.label) || name(g.kind));
+    setText(direction, valid && ranged && g.met ? '✓' : '');
+    if (!ranged) return;
+    const toX = (n) => 6 + Math.max(0, Math.min(1, (n - lo) / (hi - lo))) * 108,
+      from = g.oneSided === 'max' ? lo : g.min,
+      to = g.oneSided === 'min' ? hi : g.max,
+      start = toX(from),
+      end = toX(to);
+    setAttribute(gaugeBand, 'x', start);
+    setAttribute(gaugeBand, 'width', Math.max(1, end - start));
+    gaugeMarker.style.display = valid ? '' : 'none';
+    if (valid) setAttribute(gaugeMarker, 'transform', `translate(${toX(g.value)} 0)`);
+    setAttribute(
+      gaugeTrack,
+      'aria-label',
+      `${copy(feedback?.label) || name(g.kind)}. ${valid ? (g.met ? t('Inside the target band', 'У цільовій смузі') : t('Outside the target band', 'Поза цільовою смугою')) : t('Waiting for a reading', 'Очікування показника')}`,
+    );
+  };
+  const closeDetails = () => {
+    if (dialog.open) dialog.close();
+  };
+  close.addEventListener('click', closeDetails);
+  lesson.addEventListener('click', () => {
+    closeDetails();
+    onLesson?.(feedback);
+  });
+  explain.addEventListener('click', (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    (onExplain ?? onMenu)?.(feedback);
+  });
+  const paintPreferences = () => {
+    for (const element of [root, dialog]) {
+      element.dataset.hudMode = preferences.mode;
+      element.dataset.hudSize = preferences.textSize;
+      element.dataset.hudContrast = preferences.highContrast ? 'high' : 'normal';
+    }
+    for (const view of preferenceViews) view.refresh();
+  };
+  const update = (next, options = {}) => {
+    if (disposed) return;
+    feedback = next;
+    context = options;
+    // Paused practice can retain guidance, but a covering menu or result owns
+    // the screen regardless of the simulation/playback state underneath it.
+    root.hidden =
+      options.visible === false ||
+      !feedback ||
+      (options.active === false && !options.paused && !options.replay);
+    if (!feedback) return;
+    telemetry.hidden = !options.telemetry;
+    setText(telemetry, options.telemetry ?? '');
+    const notice = !options.active ? copy(options.notice) : '',
+      title = notice || copy(feedback.action) || copy(feedback.label) || t('Fly', 'Політ'),
+      g = feedback.gauge;
+    setText(action, title);
+    action.title = [copy(feedback.label), title].filter(Boolean).join(' · ');
+    setAttribute(card, 'aria-label', action.title);
+    setAttribute(
+      explain,
+      'aria-label',
+      t('Explain the current objective', 'Пояснити поточну ціль'),
+    );
+    explain.title = t('Objective details', 'Умови завдання');
+    gauge.hidden = !g;
+    if (g) paintGauge(g);
+    const e = feedback.earned,
+      hasEarned = e && Number.isFinite(e.value) && Number.isFinite(e.total) && e.total > 0,
+      ratio = hasEarned ? Math.max(0, Math.min(1, e.value / e.total)) : 0;
+    earned.hidden = !hasEarned;
+    if (hasEarned) {
+      setAttribute(ring, 'stroke-dasharray', `${ratio * 100} 100`);
+      setText(
+        earnedLabel,
+        e.complete
+          ? '✓'
+          : e.kind === 'hold' || e.kind === 'time'
+            ? t('Hold', 'Час')
+            : e.kind === 'catches' || e.kind === 'defeats'
+              ? '◎'
+              : '↝',
+      );
+      setAttribute(earned, 'role', 'progressbar');
+      setAttribute(earned, 'aria-valuemin', '0');
+      setAttribute(earned, 'aria-valuemax', e.total);
+      setAttribute(earned, 'aria-valuenow', Math.max(0, Math.min(e.value, e.total)));
+      setAttribute(earned, 'aria-label', t('Earned progress', 'Виконаний прогрес'));
+    }
+    const allChecks = feedback.checks ?? [],
+      gaugeCheck =
+        { range: 'position', alignment: 'heading', input: 'centred' }[g?.kind] ?? g?.kind,
+      priority = (check) =>
+        check.valid === true && check.met ? 2 : check.id === gaugeCheck ? 0 : 1,
+      ordered = [...allChecks].sort((a, b) => priority(a) - priority(b)),
+      displayed = ordered.length > 4 ? ordered.slice(0, 3) : ordered,
+      signature = JSON.stringify([
+        locale(),
+        gaugeCheck,
+        allChecks.map((check) => [check.id, copy(check.label), check.met, check.valid]),
+      ]);
+    if (signature !== checkSignature) {
+      checks.replaceChildren();
+      for (const check of displayed) {
+        const row = make(
+          'span',
+          null,
+          checks,
+          `${check.valid !== true ? '—' : check.met ? '✓' : '○'} ${{ height: t('Height', 'Висота'), position: t('Zone', 'Зона'), tilt: t('Tilt', 'Нахил'), centred: t('Sticks', 'Стіки'), speed: t('Speed', 'Рух'), heading: t('Nose', 'Ніс'), touchdown: t('Landing', 'Посадка'), throttle: t('Throttle', 'Газ') }[check.id] ?? copy(check.label)}`,
+        );
+        row.dataset.met = String(check.valid === true && Boolean(check.met));
+        row.title = copy(check.label);
+      }
+      if (allChecks.length > 4) {
+        const remaining = ordered.slice(3),
+          met = remaining.every((check) => check.valid === true && check.met),
+          row = make('span', null, checks, `${met ? '✓' : '○'} ${t('Other', 'Інше')}`);
+        row.dataset.met = String(met);
+        row.title = remaining
+          .map(
+            (check) => `${check.valid !== true ? '—' : check.met ? '✓' : '○'} ${copy(check.label)}`,
+          )
+          .join('\n');
+      }
+      checkSignature = signature;
+    }
+    details.hidden = preferences.mode !== 'detailed';
+    if (!details.hidden) setText(details, numericLine());
+    if (dialog.open) {
+      setText(dialogTitle, title);
+      setText(dialogBody, detailText());
+    }
+    const key = `${feedback.id}:${feedback.phase}:${Boolean(e?.complete)}:${notice}`;
+    if (key !== announcementKey) {
+      setText(announcement, e?.complete ? `${t('Complete', 'Виконано')}. ${title}` : title);
+      announcementKey = key;
+    }
+  };
+  const applyPreferences = (value, notify = false) => {
+    preferences = normalize(value);
+    paintPreferences();
+    update(feedback, context);
+    if (notify) onPreferencesChange({ ...preferences });
+  };
+  const persistPreferences = (value) => {
+    if (disposed) return;
+    const next = normalize(value);
+    try {
+      store()?.setItem(FLIGHT_HUD_PREFERENCE_KEY, JSON.stringify(next));
+    } catch {
+      /* Session preference remains usable when storage is full. */
+    }
+    applyPreferences(next, true);
+    if (win?.CustomEvent)
+      win.dispatchEvent(new win.CustomEvent(FLIGHT_HUD_PREFERENCE_EVENT, { detail: next }));
+  };
+  const stored = (event) => {
+    if (event.key === FLIGHT_HUD_PREFERENCE_KEY || event.key === null)
+      applyPreferences(readPreferences(), true);
+  };
+  const shared = (event) => {
+    if (JSON.stringify(normalize(event.detail)) !== JSON.stringify(preferences))
+      applyPreferences(event.detail, true);
+  };
+  win?.addEventListener('storage', stored);
+  win?.addEventListener(FLIGHT_HUD_PREFERENCE_EVENT, shared);
+  paintPreferences();
+  return {
+    update,
+    preferences: () => ({ ...preferences }),
+    setAim(next) {
+      if (!disposed && Number.isFinite(next?.y))
+        root.style.setProperty('--hud-aim-y', `${Math.max(0.25, Math.min(0.7, next.y)) * 100}%`);
+    },
+    setWorldCue(next) {
+      if (disposed) return;
+      cue.hidden =
+        !next ||
+        next.visible === false ||
+        next.hidden === true ||
+        !Number.isFinite(next.x) ||
+        !Number.isFinite(next.y);
+      if (cue.hidden) return;
+      const offscreen = Boolean(
+          next.offscreen || next.behind || next.occluded || next.directionOnly,
+        ),
+        x = offscreen ? Math.max(0.05, Math.min(0.95, next.x)) : next.x,
+        y = offscreen ? Math.max(0.08, Math.min(0.72, next.y)) : next.y;
+      const dock = offscreen && x > 0.25 && x < 0.8 && y > 0.58;
+      cue.style.left = `${(dock ? 0.12 : x) * 100}%`;
+      cue.style.top = `${(dock ? 0.5 : y) * 100}%`;
+      cue.dataset.targetId = String(next.targetId ?? next.worldTargetId ?? '');
+      cue.dataset.occluded = String(Boolean(next.occluded));
+      brackets.hidden = offscreen;
+      cueArrow.hidden = !offscreen;
+      cueArrow.style.transform = `rotate(${Number.isFinite(next.angle) ? next.angle : 0}rad)`;
+      setText(cueLabel, copy(next.label));
+    },
+    preferenceControls(target) {
+      if (!target?.ownerDocument || disposed) return { destroy() {} };
+      const wrapper = make('section', null, target),
+        heading = make('h3', null, wrapper),
+        controls = {};
+      wrapper.dataset.simHudPreferences = 'true';
+      for (const key of ['mode', 'textSize', 'highContrast']) {
+        const label = make('label', null, wrapper),
+          caption = make('span', null, label),
+          control = make('select', null, label);
+        controls[key] = { caption, control };
+        control.dataset.hudPreference = key;
+        control.addEventListener('change', () =>
+          persistPreferences({
+            ...preferences,
+            [key]: key === 'highContrast' ? control.value === 'true' : control.value,
+          }),
+        );
+      }
+      const view = {
+        refresh() {
+          setText(heading, t('Flight guidance', 'Підказки польоту'));
+          for (const [key, label, options] of [
+            [
+              'mode',
+              t('Guidance', 'Підказки'),
+              [
+                ['guided', t('Guided', 'З підказками')],
+                ['minimal', t('Minimal', 'Мінімальні')],
+                ['detailed', t('Detailed', 'Докладні')],
+              ],
+            ],
+            [
+              'textSize',
+              t('Text size', 'Розмір тексту'),
+              [
+                ['standard', t('Standard', 'Стандартний')],
+                ['large', t('Large', 'Великий')],
+              ],
+            ],
+            [
+              'highContrast',
+              t('HUD contrast', 'Контраст приладів'),
+              [
+                ['false', t('Standard', 'Стандартний')],
+                ['true', t('High contrast', 'Високий контраст')],
+              ],
+            ],
+          ]) {
+            const { caption, control } = controls[key];
+            setText(caption, label);
+            const optionSignature = JSON.stringify(options);
+            if (control.dataset.options !== optionSignature) {
+              control.replaceChildren();
+              for (const [value, text] of options) {
+                const option = make('option', null, control, text);
+                option.value = value;
+              }
+              control.dataset.options = optionSignature;
+            }
+            control.value = String(preferences[key]);
+          }
+        },
+        destroy() {
+          preferenceViews.delete(view);
+          wrapper.remove();
+        },
+      };
+      preferenceViews.add(view);
+      view.refresh();
+      return view;
+    },
+    openDetails({ title, body } = {}) {
+      if (disposed) return;
+      setText(
+        dialogTitle,
+        copy(title) || copy(feedback?.action) || t('Flight objective', 'Завдання польоту'),
+      );
+      setText(
+        dialogBody,
+        copy(body) || detailText() || t('Fly at your own pace.', 'Літайте у власному темпі.'),
+      );
+      setText(close, t('Close', 'Закрити'));
+      setText(lesson, t('Lesson guide', 'Пояснення уроку'));
+      lesson.hidden = !context.lesson || typeof onLesson !== 'function';
+      if (!dialog.open) dialog.showModal();
+      close.focus({ preventScroll: true });
+    },
+    closeDetails,
+    detailsRoot: () => (dialog.open ? dialog : null),
+    destroy() {
+      if (disposed) return;
+      disposed = true;
+      win?.removeEventListener('storage', stored);
+      win?.removeEventListener(FLIGHT_HUD_PREFERENCE_EVENT, shared);
+      for (const view of [...preferenceViews]) view.destroy();
+      closeDetails();
+      dialog.remove();
+      root.remove();
+      sheet.remove();
     },
   };
 }

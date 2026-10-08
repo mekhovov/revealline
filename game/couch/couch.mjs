@@ -1,3 +1,4 @@
+import { loadBaseArtwork } from '../base-artwork.mjs';
 import { createEnemyStatsHost } from '../enemy-stats.mjs';
 import { mountEnemyStats } from '../ui/enemy-stats.mjs';
 import { arcadeEnemyDefeats } from '../ui/enemy-stats-events.mjs';
@@ -419,8 +420,10 @@ try {
     campaign: { ...campaign, classRecipes: registry },
     classRecipes: registry,
     themes: themes.themes,
-    visualOverrides: {},
-    levelVisuals: [],
+    ...(await loadBaseArtwork(
+      { ...campaign, classRecipes: registry },
+      { signal: artworkLifetime.signal },
+    )),
     music: [],
     sourcePackId: null,
   };

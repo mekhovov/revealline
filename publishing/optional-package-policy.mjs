@@ -32,8 +32,8 @@ const BASE_OPTIONAL_PACKAGE_POLICIES = Object.freeze({
   'civilian-flight': Object.freeze({
     root: 'optional-practice/civilian-flight/',
     entry: 'optional-practice/civilian-flight/index.html',
-    // Shared defeat audio and its settings add seven exact dependencies; the
-    // launcher/source closure stays bounded separately from its byte budget.
+    // Destruction and shared defeat audio add eight reviewed source dependencies;
+    // the launcher/source closure stays bounded separately from its byte budget.
     limits: Object.freeze({ files: 72, bytes: 8 * 1024 * 1024 }),
     localFiles: Object.freeze([
       'index.html',
@@ -59,12 +59,15 @@ const BASE_OPTIONAL_PACKAGE_POLICIES = Object.freeze({
       'optional-practice/civilian-fpv/flight-fullscreen.mjs',
       'optional-practice/civilian-fpv/flight-fullscreen.css',
       'optional-practice/civilian-fpv/sim-presentation.mjs',
+      'optional-practice/civilian-fpv/math.mjs',
+      'optional-practice/civilian-fpv/rotation-table.mjs',
       'optional-practice/civilian-fpv/world-themes.mjs',
       'game/presentation/theme-system.mjs',
       'game/ui/audio-output.mjs',
       'game/ui/audio-master.mjs',
       'game/audio-preferences.mjs',
       'game/audio/dialogue-mix.mjs',
+      'game/ui/destruction-audio.mjs',
       'game/ui/encounter-audio.mjs',
       'game/ui/movement-audio.mjs',
       'game/ui/dialogue-channel.mjs',

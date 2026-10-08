@@ -7,14 +7,16 @@ import { openMissionLibrary } from './helpers/library-selection.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
 import { waitFor } from './helpers/wait-for.mjs';
 
-// These full-host scenarios await catalogue/picture preparation before testing
-// menu state. Keep that bounded startup allowance separate from action deadlines.
 function frames(page, count) {
   for (let i = 0; i < count; i++) page.frame();
 }
 
+function pausePage(t) {
+  return soloPage(t, { initialReadyTimeoutMs: 30000 });
+}
+
 test('Pause offers a confirmed mission restart that replaces the attempt from tick zero', async (t) => {
-  const page = await soloPage(t, { initialReadyTimeoutMs: 30000 });
+  const page = await pausePage(t);
   page.$('start-button').click();
   await settle(() => page.doc.body.dataset.flightState === 'running');
   page.key('ArrowDown');
@@ -65,15 +67,11 @@ test('Pause offers a confirmed mission restart that replaces the attempt from ti
 });
 
 test('Restart is limited to Pause and does not leak into briefings or result menus', async (t) => {
-  const page = await soloPage(t, { initialReadyTimeoutMs: 30000 });
+  const page = await pausePage(t);
   assert.equal(page.$('game-overlay').dataset.kind, 'ready');
   assert.equal(page.$('overlay-restart').hidden, true);
   assert.equal(page.$('pause-mission-info').hidden, false);
-  assert.equal(
-    page.$('pause-mission-info').open,
-    true,
-    'ready brief remains available in mission selection',
-  );
+  assert.equal(page.$('pause-mission-info').open, true, 'ready brief remains directly available');
   page.$('start-button').click();
   await settle(() => page.doc.body.dataset.flightState === 'running');
   page.key('Escape');
@@ -94,7 +92,7 @@ test('Restart is limited to Pause and does not leak into briefings or result men
 });
 
 test('Pause owns the compact action set and each child restores its exact opener', async (t) => {
-  const page = await soloPage(t, { initialReadyTimeoutMs: 30000 });
+  const page = await pausePage(t);
   page.$('start-button').click();
   await settle(() => page.doc.body.dataset.flightState === 'running');
   page.key('Escape');
@@ -108,8 +106,17 @@ test('Pause owns the compact action set and each child restores its exact opener
   assert.equal(page.doc.querySelector('.shell-bar #shell-fullscreen'), null);
   assert.deepEqual(
     [...page.$('overlay-restart').parentElement.children].map((item) => item.id),
-    ['overlay-restart', 'journey-skip', 'overlay-random-level', 'overlay-missions'],
-    'mission commands keep row-major visual and focus order',
+    [
+      'overlay-restart',
+      'journey-skip',
+      'overlay-random-level',
+      'overlay-missions',
+      'copy-level-link',
+      'played-level-link',
+      'level-link-status',
+      'pause-mission-info',
+    ],
+    'mission controls and link feedback keep row-major document order',
   );
   assert.deepEqual(
     [...page.$('pause-sound-heading').parentElement.parentElement.children].map(
@@ -125,6 +132,7 @@ test('Pause owns the compact action set and each child restores its exact opener
     'journey-skip',
     'overlay-random-level',
     'overlay-missions',
+    'pause-mission-info-toggle',
     'overlay-sound',
     'overlay-next-song',
     'overlay-settings',
@@ -157,19 +165,6 @@ test('Pause owns the compact action set and each child restores its exact opener
   }
 
   await openMissionLibrary(page, 'overlay-missions');
-  assert.equal(page.$('pause-mission-info').closest('dialog')?.id, 'journey-chooser');
-  assert.equal(page.$('copy-level-link').closest('dialog')?.id, 'journey-chooser');
-  assert.equal(page.$('game-overlay').contains(page.$('pause-mission-info')), false);
-  page.$('pause-mission-info').open = true;
-  page.$('overlay-field-details').focus();
-  page.$('overlay-field-details').click();
-  assert.equal(page.$('flight-details-dialog').open, true);
-  page.$('flight-details-back').click();
-  await Promise.resolve();
-  assert.equal(page.$('journey-chooser').open, true);
-  assert.equal(page.doc.activeElement, page.$('overlay-field-details'));
-  assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
-
   page.$('journey-back').click();
   await Promise.resolve();
   assert.equal(page.doc.activeElement, page.$('overlay-missions'));
@@ -180,7 +175,7 @@ test('Pause owns the compact action set and each child restores its exact opener
 });
 
 test('Solo shell tools opened during flight return focus inside the Pause menu', async (t) => {
-  const page = await soloPage(t, { initialReadyTimeoutMs: 30000 });
+  const page = await pausePage(t);
   page.$('start-button').click();
   await settle(() => page.doc.body.dataset.flightState === 'running');
 
@@ -216,7 +211,7 @@ test('Solo shell tools opened during flight return focus inside the Pause menu',
 });
 
 test('Classic Skip resolves universally, cancels on Back or Resume, and adopts without awarding a clear', async (t) => {
-  const page = await soloPage(t, { initialReadyTimeoutMs: 30000 });
+  const page = await pausePage(t);
   page.$('start-button').click();
   await settle(() => page.doc.body.dataset.flightState === 'running');
   page.key('ArrowDown');
@@ -240,7 +235,7 @@ test('Classic Skip resolves universally, cancels on Back or Resume, and adopts w
   page.key('Escape');
   await settle(() => page.doc.body.dataset.flightState === 'running');
   assert.equal(page.rendered.run, original);
-  assert.equal(page.$('journey-skip').textContent, 'Skip');
+  assert.equal(page.$('journey-skip').textContent, 'Skip mission');
 
   page.$('pause-button').click();
   page.$('journey-skip').click();
@@ -250,7 +245,7 @@ test('Classic Skip resolves universally, cancels on Back or Resume, and adopts w
   page.$('start-button').click();
   await settle(() => page.doc.body.dataset.flightState === 'running');
   assert.equal(page.rendered.run, original);
-  assert.equal(page.$('journey-skip').textContent, 'Skip');
+  assert.equal(page.$('journey-skip').textContent, 'Skip mission');
 
   page.$('pause-button').click();
   page.$('journey-skip').click();

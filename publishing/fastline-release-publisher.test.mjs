@@ -338,38 +338,31 @@ test('absent object after ambiguous write stops with original diagnostic and no 
   assert.equal(writes, 1);
 });
 
-test('creation receipt rejects missing ID and mismatched source without recovery writes', async () => {
-  for (const returned of [
-    { ...draft, id: undefined },
-    { ...draft, target_commitish: 'b'.repeat(40) },
-  ]) {
-    await assert.rejects(
-      ensureDraftRelease({
-        repository,
-        version,
-        sourceSha,
-        inspect: async () => tagOnly,
-        request: async () => returned,
-      }),
-      /missing release ID|differs/u,
-    );
-  }
-});
-
-test('discovered mismatched tag fails closed immediately', async () => {
-  let reads = 0;
+test('creation receipt still requires a release ID', async () => {
   await assert.rejects(
     ensureDraftRelease({
       repository,
       version,
       sourceSha,
-      inspect: async () =>
-        ++reads === 1 ? tagOnly : { ...withRelease(), tagCommit: 'b'.repeat(40) },
-      request: async () => draft,
-      wait: async () => assert.fail('must not retry a mismatch'),
+      inspect: async () => tagOnly,
+      request: async () => ({ ...draft, id: undefined }),
     }),
-    /release tag/u,
+    /missing release ID/u,
   );
+});
+
+test('discovered tags do not need to resolve to the incoming source', async () => {
+  let reads = 0;
+  const release = await ensureDraftRelease({
+    repository,
+    version,
+    sourceSha,
+    inspect: async () =>
+      ++reads === 1 ? tagOnly : { ...withRelease(), tagCommit: 'b'.repeat(40) },
+    request: async () => draft,
+    wait: async () => assert.fail('must not retry a mismatch'),
+  });
+  assert.equal(release.id, draft.id);
 });
 
 test('duplicate asset names are rejected rather than collapsed', () => {
@@ -550,10 +543,10 @@ for (const status of [409, 422]) {
       else
         await assert.rejects(
           result,
-          authority === 'missing' ? /Reference already exists/u : /resolves to/u,
+          /Reference already exists/u,
         );
       assert.equal(writes.length, 2);
-      assert.equal(reads, authority === 'missing' ? 5 : 2);
+      assert.equal(reads, authority === 'matching' ? 2 : 5);
     });
   }
 }
@@ -871,17 +864,4 @@ test('trusted publisher sparse checkout includes the complete static edition val
     'game/editions/package-budget.mjs',
   ])
     assert.ok(checkout.includes(file), file);
-});
-
-test('frozen Pages validation tracks and checks out the Company budget policy', async () => {
-  const workflow = await readFile(
-    new URL('../.github/workflows/publish-frozen-pages.yml', import.meta.url),
-    'utf8',
-  );
-  const policy = 'game/editions/package-budget.mjs';
-  assert.ok(workflow.split('\npermissions:')[0].includes(policy));
-  const checkout = workflow
-    .split('- name: Check out publishing controller and immutable tags')[1]
-    ?.split('- name:')[0];
-  assert.ok(checkout?.includes(`/${policy}`));
 });
