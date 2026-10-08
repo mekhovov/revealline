@@ -77,6 +77,7 @@ export function renderModeChoices({
     },
   );
   root.classList.add('game-mode-choice');
+  root.style.setProperty('--game-mode-count', String(rows.length));
   root.dataset.menuLayout = 'horizontal';
   root.dataset.menuScope = 'modes';
   root.replaceChildren(...rows.map(({ element }) => element));

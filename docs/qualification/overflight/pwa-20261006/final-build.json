@@ -1,0 +1,33 @@
+{
+  "sourceCommit": "92367843769c2d9ac380bf0caae3f3b196602951",
+  "buildId": "7240cc6c399f859926b6fbe13b6ad8f0021b96f4dadc4fd3ef91c9b37e866849",
+  "coreFiles": 1621,
+  "coreBytes": 60052456,
+  "matches": [
+    {
+      "path": "game/snake/classic-app.mjs",
+      "bytes": 79894,
+      "sha256": "bd6c9e1c97384fdabebc12070307c6d78eed82857f255c4bb2d4334b1e0109d3"
+    },
+    {
+      "path": "game/overflight/app.mjs",
+      "bytes": 67093,
+      "sha256": "f1a33d24f777680ba129934f0f5319b8902fc745f668bcbb2e9da825280b6775"
+    },
+    {
+      "path": "game/downloads.mjs",
+      "bytes": 31851,
+      "sha256": "d7473b9570fa95c708186c83d4103071fcdaedc5ace9d53858fcdaf89662709e"
+    },
+    {
+      "path": "game/ui/offline-package-choices.mjs",
+      "bytes": 1643,
+      "sha256": "88956f1cc3bb560412e17c8c2d21a9253e47f4e62302804150d589c771070f78"
+    },
+    {
+      "path": "game/content-design/versus-host.mjs",
+      "bytes": 4386,
+      "sha256": "b0b60d6eb004706d44f5a510ea8eed2081973d05203d0ed0cead2f6efc40200d"
+    }
+  ]
+}
