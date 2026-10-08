@@ -68,6 +68,7 @@ const BASE_OPTIONAL_PACKAGE_POLICIES = Object.freeze({
       'game/ui/audio-master.mjs',
       'game/audio-preferences.mjs',
       'game/audio/dialogue-mix.mjs',
+      'game/ui/destruction-audio.mjs',
       'game/ui/encounter-audio.mjs',
       'game/ui/movement-audio.mjs',
       'game/ui/dialogue-channel.mjs',
