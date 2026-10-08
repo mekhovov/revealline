@@ -33,6 +33,8 @@ import { validateThemeProfile } from './world-themes.mjs';
 import {
   HUNT_CONTACT_CRITERION,
   HUNT_FLIGHT_MODEL,
+  HUNT_MOMENTUM_MODEL,
+  HUNT_MOMENTUM_CONTACT,
   HUNT_TAIL_LIMITS,
   validateHuntContact,
   huntContact,
@@ -874,6 +876,44 @@ function relativeTilt(orientation, surfaceNormal) {
   return Math.abs(atan2(isqrt(Math.max(0, Q * Q - dot * dot)), dot));
 }
 
+function identityForWorldCourse(source, mode, rates) {
+  const contactHunt = huntContact(source, mode);
+  const gameplay = { ...source };
+  delete gameplay.locales;
+  delete gameplay.environment;
+  delete gameplay.world;
+  return Object.freeze({
+    model:
+      source.format === PURSUIT_COURSE
+        ? pursuitModel(source.pursuit)
+        : contactHunt
+          ? contactHunt.contactPolicy === HUNT_MOMENTUM_CONTACT
+            ? HUNT_MOMENTUM_MODEL
+            : HUNT_FLIGHT_MODEL
+          : WORLD_FLIGHT_MODEL,
+    backend: WORLD_COLLISION_BACKEND,
+    course: source.id,
+    courseIdentity: dataIdentity(gameplay),
+    worldIdentity: dataIdentity({
+      id: source.world.id,
+      bounds: source.bounds,
+      obstacles: source.obstacles,
+    }),
+    mode,
+    responseIdentity: responseIdentity(rates),
+    rulesIdentity: dataIdentity(source.rules),
+    conditionsIdentity: dataIdentity(source.conditions),
+  });
+}
+
+/** Exact portable identity without initializing physics or creating a flight. */
+export function worldFlightIdentity({ course, mode = 'self-level', response = DEFAULT_RESPONSE }) {
+  const source = validateWorldCourse(course),
+    rates = validateFlightResponse(response);
+  required(MODES.includes(mode), 'Unsupported flight mode');
+  return identityForWorldCourse(source, mode, rates);
+}
+
 /** v2 keeps v1's integer force/attitude integration, replacing only collision,
  * objectives and actor rules. Legacy model.mjs and its replay format are untouched. */
 // Practice is an in-memory host policy, never part of a portable scored proof.
@@ -904,6 +944,7 @@ export function createWorldFlight({
   );
   const rules = source.rules;
   const contactHunt = huntContact(source, mode);
+  const momentumCatch = contactHunt?.contactPolicy === HUNT_MOMENTUM_CONTACT;
   const contactTargets = new Set(contactHunt?.targets ?? []);
   const pursuit =
     source.format === PURSUIT_COURSE
@@ -913,29 +954,7 @@ export function createWorldFlight({
   const couriers = new Set(
     (source.pursuit?.actors ?? []).filter((p) => p.family === 'courier').map((p) => p.id),
   );
-  const gameplay = { ...source };
-  delete gameplay.locales;
-  delete gameplay.environment;
-  delete gameplay.world;
-  const identity = Object.freeze({
-    model: pursuit
-      ? pursuitModel(source.pursuit)
-      : contactHunt
-        ? HUNT_FLIGHT_MODEL
-        : WORLD_FLIGHT_MODEL,
-    backend: WORLD_COLLISION_BACKEND,
-    course: source.id,
-    courseIdentity: dataIdentity(gameplay),
-    worldIdentity: dataIdentity({
-      id: source.world.id,
-      bounds: source.bounds,
-      obstacles: source.obstacles,
-    }),
-    mode,
-    responseIdentity: responseIdentity(rates),
-    rulesIdentity: dataIdentity(rules),
-    conditionsIdentity: dataIdentity(source.conditions),
-  });
+  const identity = identityForWorldCourse(source, mode, rates);
   let collision;
   let state;
   let disposed = false;
@@ -1377,9 +1396,13 @@ export function createWorldFlight({
         AXES.reduce((n, k) => n + state.velocity[k] * hit.normal[k], 0),
         Q,
       );
-      if (hit.moving) state.velocity = { x: 0, y: 0, z: 0 };
-      else if (into < 0)
-        for (const k of AXES) state.velocity[k] -= roundDiv(hit.normal[k] * into, Q);
+      // Only an accepted opt-in catch retains its incoming momentum. Keep the
+      // swept contact position and all other hull/support responses unchanged.
+      if (!momentumCatch || !caught) {
+        if (hit.moving) state.velocity = { x: 0, y: 0, z: 0 };
+        else if (into < 0)
+          for (const k of AXES) state.velocity[k] -= roundDiv(hit.normal[k] * into, Q);
+      }
       const hard = hit.moving || hit.normal.y < 866025 || impactSpeed > 1500;
       if (hard) {
         if (caught) continue;

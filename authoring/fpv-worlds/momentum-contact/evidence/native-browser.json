@@ -1,0 +1,79 @@
+{
+  "format": "fpv-hunt-momentum-native-browser.v1",
+  "observedDate": "2026-10-05",
+  "observer": "Root agent using the native browser; screenshot files inspected by implementation agent.",
+  "sourceRevision": "1ba932e6f61b918a9571c4a193c30f554855e951",
+  "previewURL": "http://127.0.0.1:8918/optional-practice/fpv-worlds/",
+  "previewKind": "Immutable committed source served on a fresh localhost origin; not a built release.",
+  "sourceFiles": [
+    {
+      "path": "optional-practice/civilian-fpv/world-app.mjs",
+      "sha256": "6283394f54747669ee980c692e7a5bdf9ae56bc21b33e593f77e314571ba2022"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-model.mjs",
+      "sha256": "626563d18b6180f009aaac8ed5d599069e62b25a1a35af6a860a85a30b12b6d8"
+    }
+  ],
+  "packIdentity": "fpv-pack:01c247ba293abc36af8ff26667b2e12f8fdd0f85ec8e429d1d27f320de7b9c9e",
+  "proofArchive": {
+    "file": "momentum-contact-practice.proofs.json",
+    "bytes": 41774,
+    "sha256": "56cdcf1067a7840622b418708e70071ec0f805f867c0929eed25caebb756886b"
+  },
+  "steps": [
+    {
+      "action": "Install the practice pack through Library",
+      "result": "Exact pack installed; identity shown as 01c247ba293a."
+    },
+    {
+      "action": "Import the native proof archive through Library",
+      "result": "2/2 examples verified."
+    },
+    {
+      "action": "Open the imported challenge in My worlds",
+      "result": "Watch example is visible and usable."
+    },
+    {
+      "action": "Watch the Self-level demonstration",
+      "result": "Demonstration complete; 20.9 seconds; caught 2/2; echo tail 0."
+    },
+    {
+      "action": "Switch Settings to Acro",
+      "result": "Playback safely resets to paused at 0 seconds; explicit Resume is required."
+    },
+    {
+      "action": "Resume the Acro demonstration",
+      "result": "Demonstration complete; 20.9 seconds; caught 2/2; echo tail 0."
+    }
+  ],
+  "console": {
+    "warningEntries": 0,
+    "errorEntries": 0,
+    "source": "Root agent observed native browser warning/error logs."
+  },
+  "screenshots": [
+    {
+      "mode": "self-level",
+      "file": "fpv-hunt-native-self-level-complete.png",
+      "bytes": 73773,
+      "sha256": "2479ad259f30ddc29e0b73d1818bde210269eb7a2d412274b42da70a0119817a",
+      "width": 65536,
+      "height": 4292542531
+    },
+    {
+      "mode": "acro",
+      "file": "fpv-hunt-native-acro-complete.png",
+      "bytes": 73691,
+      "sha256": "d1d643bb179373243fb3e0be01585129f1b3a885d5cedd2af01f5bb4d3e992b5",
+      "width": 65536,
+      "height": 4292542531
+    }
+  ],
+  "limitations": [
+    "This confirms the listed native browser import, Watch discovery, replay completion and mode-switch journeys only.",
+    "The pre-existing main-branch HUD remains visible in result screenshots; its separate fix is PR #1110 and is outside this PR.",
+    "Immutable package, public deployment, offline, physical-device and human player acceptance gates remain open.",
+    "Additional permanent unit coverage remains deferred under D6."
+  ]
+}
