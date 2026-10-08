@@ -1,0 +1,198 @@
+TAP version 13
+# Subtest: offline actions serialize button intent and retain the invoking dialog owner
+ok 1 - offline actions serialize button intent and retain the invoking dialog owner
+  ---
+  duration_ms: 6.266
+  type: 'test'
+  ...
+# Subtest: native offload uses only the runtime remover and retains world and proof data
+ok 2 - native offload uses only the runtime remover and retains world and proof data
+  ---
+  duration_ms: 6.964666
+  type: 'test'
+  ...
+# Subtest: unavailable workers disable both native controls without invoking operations
+ok 3 - unavailable workers disable both native controls without invoking operations
+  ---
+  duration_ms: 0.458958
+  type: 'test'
+  ...
+# Subtest: disposal aborts the download and a late success cannot repaint the removed host
+ok 4 - disposal aborts the download and a late success cannot repaint the removed host
+  ---
+  duration_ms: 0.167375
+  type: 'test'
+  ...
+# Subtest: pagehide cancels preparation, reports cancellation and releases busy ownership
+ok 5 - pagehide cancels preparation, reports cancellation and releases busy ownership
+  ---
+  duration_ms: 9.884417
+  type: 'test'
+  ...
+# Subtest: failed removal remains retryable and never reports a removed installation
+ok 6 - failed removal remains retryable and never reports a removed installation
+  ---
+  duration_ms: 9.447041
+  type: 'test'
+  ...
+# Subtest: status cancellation owns lookup and reply lifetime without cancelling a playing worker
+ok 7 - status cancellation owns lookup and reply lifetime without cancelling a playing worker
+  ---
+  duration_ms: 4.22025
+  type: 'test'
+  ...
+# Subtest: cancelling initial verification never records a late successful installation
+ok 8 - cancelling initial verification never records a late successful installation
+  ---
+  duration_ms: 7.102792
+  type: 'test'
+  ...
+# Subtest: cancelling final verification rejects after activation without publishing a receipt
+ok 9 - cancelling final verification rejects after activation without publishing a receipt
+  ---
+  duration_ms: 11.86675
+  type: 'test'
+  ...
+# Subtest: pagehide cancels its package operation and a fresh owner can reinstall
+ok 10 - pagehide cancels its package operation and a fresh owner can reinstall
+  ---
+  duration_ms: 19.576875
+  type: 'test'
+  ...
+# Subtest: default progress belongs to the invoking native modal and Cancel restores its focus
+ok 11 - default progress belongs to the invoking native modal and Cancel restores its focus
+  ---
+  duration_ms: 7.46975
+  type: 'test'
+  ...
+# Subtest: closing a moved settings owner cancels its download without reclaiming focus
+ok 12 - closing a moved settings owner cancels its download without reclaiming focus
+  ---
+  duration_ms: 6.698
+  type: 'test'
+  ...
+# Subtest: successful preparation removes progress without stealing focus from another control
+ok 13 - successful preparation removes progress without stealing focus from another control
+  ---
+  duration_ms: 5.608458
+  type: 'test'
+  ...
+# Subtest: custom progress keeps caller-owned UI, focus and dialog lifetime unchanged
+ok 14 - custom progress keeps caller-owned UI, focus and dialog lifetime unchanged
+  ---
+  duration_ms: 6.495333
+  type: 'test'
+  ...
+# Subtest: a closed explicit progress owner cannot start a hidden download
+ok 15 - a closed explicit progress owner cannot start a hidden download
+  ---
+  duration_ms: 0.549417
+  type: 'test'
+  ...
+# Subtest: late registration is cancelled and cannot recreate an installation receipt
+ok 16 - late registration is cancelled and cannot recreate an installation receipt
+  ---
+  duration_ms: 12.399833
+  type: 'test'
+  ...
+# Subtest: removal retains registration ownership after caller cancellation until even a late activated worker is removed
+ok 17 - removal retains registration ownership after caller cancellation until even a late activated worker is removed
+  ---
+  duration_ms: 6.395916
+  type: 'test'
+  ...
+# (node:38394) ExperimentalWarning: The MockTimers API is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: a stuck registration bounds removal waiting and a timed-out removal never runs later
+ok 18 - a stuck registration bounds removal waiting and a timed-out removal never runs later
+  ---
+  duration_ms: 7.520958
+  type: 'test'
+  ...
+# Subtest: offload waits for worker write settlement and both game wrappers use scoped removal
+ok 19 - offload waits for worker write settlement and both game wrappers use scoped removal
+  ---
+  duration_ms: 12.573625
+  type: 'test'
+  ...
+# Subtest: offload cancels an old verification before its pointer and exact cache are removed
+ok 20 - offload cancels an old verification before its pointer and exact cache are removed
+  ---
+  duration_ms: 5.676334
+  type: 'test'
+  ...
+# Subtest: missing dependencies require repair, then exact offload and a fresh install restore the same receipt
+ok 21 - missing dependencies require repair, then exact offload and a fresh install restore the same receipt
+  ---
+  duration_ms: 24.487625
+  type: 'test'
+  ...
+# Subtest: civilian-flight worker keeps cancellation received before its controller exists
+ok 22 - civilian-flight worker keeps cancellation received before its controller exists
+  ---
+  duration_ms: 0.749709
+  type: 'test'
+  ...
+# Subtest: civilian-flight worker waits for final writes then rejects cancellation, without announcing ready
+ok 23 - civilian-flight worker waits for final writes then rejects cancellation, without announcing ready
+  ---
+  duration_ms: 5.77775
+  type: 'test'
+  ...
+# Subtest: civilian-flight old controlling worker does not recreate an offloaded cache on a later asset read
+ok 24 - civilian-flight old controlling worker does not recreate an offloaded cache on a later asset read
+  ---
+  duration_ms: 1.230542
+  type: 'test'
+  ...
+# Subtest: civilian-flight read-only status does not recreate a cache removed after its names were read
+ok 25 - civilian-flight read-only status does not recreate a cache removed after its names were read
+  ---
+  duration_ms: 0.521
+  type: 'test'
+  ...
+# Subtest: civilian-flight status cannot certify an empty dependency set or a missing package
+ok 26 - civilian-flight status cannot certify an empty dependency set or a missing package
+  ---
+  duration_ms: 0.168667
+  type: 'test'
+  ...
+# Subtest: package worker keeps cancellation received before its controller exists
+ok 27 - package worker keeps cancellation received before its controller exists
+  ---
+  duration_ms: 0.322917
+  type: 'test'
+  ...
+# Subtest: package worker waits for final writes then rejects cancellation, without announcing ready
+ok 28 - package worker waits for final writes then rejects cancellation, without announcing ready
+  ---
+  duration_ms: 5.662833
+  type: 'test'
+  ...
+# Subtest: package old controlling worker does not recreate an offloaded cache on a later asset read
+ok 29 - package old controlling worker does not recreate an offloaded cache on a later asset read
+  ---
+  duration_ms: 0.645
+  type: 'test'
+  ...
+# Subtest: package read-only status does not recreate a cache removed after its names were read
+ok 30 - package read-only status does not recreate a cache removed after its names were read
+  ---
+  duration_ms: 0.463667
+  type: 'test'
+  ...
+# Subtest: package status cannot certify an empty dependency set or a missing package
+ok 31 - package status cannot certify an empty dependency set or a missing package
+  ---
+  duration_ms: 0.175792
+  type: 'test'
+  ...
+1..31
+# tests 31
+# suites 0
+# pass 31
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 712.174459

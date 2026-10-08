@@ -202,3 +202,31 @@ test('boot failure preserves recovery focus and cannot establish a Ready handoff
   assert.equal(page.$('boot-return').hidden, false);
   assert.equal(page.$('race-start').disabled, true);
 });
+
+test('failure during the Ready handoff restores visible boot feedback and keyboard recovery', async (t) => {
+  let readyHandoff = false;
+  const page = await ready(t, {
+    beforeImport({ document }) {
+      t.mock.method(document.getElementById('race-start'), 'scrollIntoView', () => {
+        assert.equal(document.documentElement.dataset.toolState, 'ready');
+        assert.equal(document.getElementById('boot-status').hidden, true);
+        assert.equal(document.getElementById('boot-return').hidden, true);
+        readyHandoff = true;
+        throw new Error('Ready handoff failed');
+      });
+    },
+  });
+  assert.equal(readyHandoff, true);
+  assert.equal(page.doc.documentElement.dataset.toolState, 'error');
+  assert.equal(page.$('boot-status').hidden, false);
+  assert.equal(page.$('boot-status').dataset.state, 'error');
+  assert.match(page.$('boot-status').textContent, /Ready handoff failed/);
+  assert.equal(page.$('boot-return').hidden, false);
+  assert.equal(page.$('boot-return').closest('[inert]'), null);
+  assert.equal(page.doc.activeElement, page.$('boot-return'));
+  assert.equal(page.$('race-start').disabled, true);
+  page.frames(3);
+  assert.equal(page.$('race-start').disabled, true);
+  assert.equal(page.doc.activeElement, page.$('boot-return'));
+  assert.match(page.$('boot-status').textContent, /Ready handoff failed/);
+});

@@ -1,0 +1,110 @@
+{
+  "format": "FPVHarborRevisionComparison.v1",
+  "status": "passed",
+  "source": "1e599c2687c3e2578afcf58c207995b05e0a1ed0",
+  "runtimePrerequisite": "9b5c3d65e2877847126c87f263fbc7e9aca357fb",
+  "oldPackSHA256": "97887c21d200f6e1bc180eea7aeb2e1ed99e72eb4e86e089ab39dd0ab108dcad",
+  "newPackSHA256": "d5bf4b9bb6829c04dbe1bb398893e5243cefc1f9acf018bf153a2012c8cf49b6",
+  "checks": [
+    {
+      "name": "All project fields outside explicit revision/courses/definitions/authoring unchanged",
+      "passed": true
+    },
+    {
+      "name": "Project revision r3 to r4",
+      "passed": true
+    },
+    {
+      "name": "harbor-docks-01 explicit r4",
+      "passed": true
+    },
+    {
+      "name": "harbor-docks-01 every remaining course byte-level JSON value unchanged",
+      "passed": true
+    },
+    {
+      "name": "harbor-docks-02 explicit r4",
+      "passed": true
+    },
+    {
+      "name": "harbor-docks-02 every remaining course byte-level JSON value unchanged",
+      "passed": true
+    },
+    {
+      "name": "harbor-docks-03 explicit r4",
+      "passed": true
+    },
+    {
+      "name": "harbor-docks-03 every remaining course byte-level JSON value unchanged",
+      "passed": true
+    },
+    {
+      "name": "harbor-docks-04 explicit r4",
+      "passed": true
+    },
+    {
+      "name": "harbor-docks-04 every remaining course byte-level JSON value unchanged",
+      "passed": true
+    },
+    {
+      "name": "harbor-docks-05 explicit r4",
+      "passed": true
+    },
+    {
+      "name": "harbor-service-cart only opt-in value",
+      "passed": true
+    },
+    {
+      "name": "harbor-docks-05 every remaining course byte-level JSON value unchanged",
+      "passed": true
+    },
+    {
+      "name": "harbor-docks-06 explicit r4",
+      "passed": true
+    },
+    {
+      "name": "harbor-deck-inspector only opt-in value",
+      "passed": true
+    },
+    {
+      "name": "harbor-docks-06 every remaining course byte-level JSON value unchanged",
+      "passed": true
+    },
+    {
+      "name": "harbor-docks-07 explicit r4",
+      "passed": true
+    },
+    {
+      "name": "harbor-training-drone remains unmarked",
+      "passed": true
+    },
+    {
+      "name": "harbor-docks-07 every remaining course byte-level JSON value unchanged",
+      "passed": true
+    },
+    {
+      "name": "harbor-docks-08 explicit r4",
+      "passed": true
+    },
+    {
+      "name": "harbor-docks-08 every remaining course byte-level JSON value unchanged",
+      "passed": true
+    },
+    {
+      "name": "Definition worlds only revision/opt-in changes",
+      "passed": true
+    },
+    {
+      "name": "Definition layouts only revision/opt-in changes",
+      "passed": true
+    },
+    {
+      "name": "harbor-docks-source.glb exact bytes",
+      "passed": true
+    },
+    {
+      "name": "prepared/models/harbor-docks.glb exact bytes",
+      "passed": true
+    }
+  ]
+}

@@ -853,7 +853,12 @@ export function attachLibraryPanel(api) {
   async function backupContents() {
     if (api.backupSnapshot) return api.backupSnapshot();
     const { library, packs } = api.get();
-    return { library, packs, session: api.currentSession() };
+    return {
+      library,
+      packs,
+      session: api.currentSession(),
+      ...(api.enemyStats ? { enemyStats: await api.enemyStats() } : {}),
+    };
   }
   function releaseTask(owner, restoreFocus = true) {
     if (libraryTask !== owner) return;
@@ -1071,7 +1076,7 @@ export function attachLibraryPanel(api) {
       )
         throw new Error(t('interface:thisBackupExceedsTheImportBudget'));
       const parsed = typeof candidate === 'string' ? JSON.parse(candidate) : candidate;
-      if (['xonix-backup.v1', 'xonix-backup.v2'].includes(parsed.format)) {
+      if (['xonix-backup.v1', 'xonix-backup.v2', 'xonix-backup.v3'].includes(parsed.format)) {
         const options = await backupOptions();
         operation.check();
         const prepared = await prepareBackup(parsed, { ...options, signal: operation.signal });
@@ -1151,9 +1156,11 @@ export function attachLibraryPanel(api) {
         const contents = await backupContents();
         old = await prepareBackup(
           {
-            format: Object.hasOwn(contents, 'externalChapters')
-              ? 'xonix-backup.v2'
-              : 'xonix-backup.v1',
+            format: Object.hasOwn(contents, 'enemyStats')
+              ? 'xonix-backup.v3'
+              : Object.hasOwn(contents, 'externalChapters')
+                ? 'xonix-backup.v2'
+                : 'xonix-backup.v1',
             ...contents,
           },
           options,

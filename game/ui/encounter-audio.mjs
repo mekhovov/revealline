@@ -1,5 +1,6 @@
 /** Shared semantic cues; both recorded and offline procedural renditions use
  * these recipes. No context, clock, randomness or actor mutation lives here. */
+import { destructionSoundRecipe } from './destruction-audio.mjs';
 const FAMILY_PITCH = Object.freeze({
   lookout: 1.1,
   patroller: 0.94,
@@ -42,11 +43,11 @@ export function actorSoundProfile(family) {
   return ACTOR_SOUNDS[family === 'shield-bearer' ? 'shield' : family] ?? ACTOR_SOUNDS.runner;
 }
 export function encounterSoundRecipe(type, details = {}) {
+  if (type === 'catch') return destructionSoundRecipe(details);
   const pitch = FAMILY_PITCH[details.family] ?? 1;
   const actor = actorSoundProfile(details.family),
     tracked = details.machine === 'tracked',
     metal = details.material === 'metal' || [true, 'tracked', 'wheeled'].includes(details.machine);
-  const brutal = details.brutal === true;
   const recipes = {
     step: ['grain', 0.11, 0, 130 * actor.rate, 65 * actor.rate, 0.055],
     equipment: [actor.equipment, 0.12, 1, actor.from, actor.to, 0.085],
@@ -56,14 +57,6 @@ export function encounterSoundRecipe(type, details = {}) {
     burst: ['paper', 0.19, 2, 190, 320, 0.09],
     recover: ['cancel', 0.13, 1, 310, 210, 0.08],
     blocked: ['contact-soft', 0.1, 1, 150, 100, 0.055],
-    catch: [
-      metal ? 'contact-metal' : 'contact-soft',
-      brutal ? 0.52 : 0.25,
-      3,
-      metal ? 150 : 390,
-      metal ? 55 : 690,
-      brutal ? 0.19 : 0.1,
-    ],
     fire: ['attack', 0.34, 4, 620, 110, 0.08],
     impact: ['impact', 0.48, 5, 170, 38, 0.15],
     pulse: ['deploy', 0.33, 3, 880, 260, 0.19],

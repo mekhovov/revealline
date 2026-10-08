@@ -268,6 +268,7 @@ test('the shared Snake launcher delivers the complete shared board-art provider 
     'game/snake/play.html',
     'game/snake/classic-app.mjs',
     'game/snake/classic.css',
+    'game/ui/touch-steering.css',
     'game/snake/classic-match.mjs',
     'game/snake/classic-core-v2.mjs',
     'game/snake/classic-catalogue-v2.mjs',

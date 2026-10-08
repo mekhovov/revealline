@@ -1,0 +1,19 @@
+{
+  "recordedAt": "2026-10-05T06:33:05.275Z",
+  "sourceRevision": "cbd9d23d1a2eff81e7059013024974e2d6e1ca41",
+  "buildReceipt": "full-distribution-build.json",
+  "origin": "http://127.0.0.1:8881",
+  "play": {
+    "started": true,
+    "pausedAt": "00:09",
+    "hull": 60,
+    "airframes": 3
+  },
+  "studio": {
+    "validatedIdentity": "8ab8476ceeb653ae",
+    "encounters": 18,
+    "nativePreviewStarted": true,
+    "pausedState": "Hull 20/100 · Airframes 3\n00:13\nLevel 1\nOverflight payload 1\nBoost Ready\n\nPaused · use Resume"
+  },
+  "scope": "Packaged native Start/Pause and Creator compile/preview functional smoke only. Not offline installation, performance or target-device qualification."
+}

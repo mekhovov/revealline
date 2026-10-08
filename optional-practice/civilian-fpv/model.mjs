@@ -222,8 +222,10 @@ export function createFlight({
     mode,
     responseIdentity: responseIdentity(rates),
   };
-  let state;
+  let state,
+    lastObjectiveFeedback = null;
   const reset = () => {
+    lastObjectiveFeedback = null;
     state = {
       ticks: 0,
       status: 'disarmed',
@@ -329,8 +331,21 @@ export function createFlight({
     state.heightRange.max = Math.max(state.heightRange.max, next.y);
     const target = source.steps[mode][state.step];
     let accepted = false;
-    if (target.type === 'gate') accepted = crossesGate(before, next, target);
-    else {
+    if (target.type === 'gate') {
+      accepted = crossesGate(before, next, target);
+      lastObjectiveFeedback = {
+        tick: state.ticks,
+        index: state.step,
+        type: target.type,
+        accepted,
+        eligible: accepted,
+        position: { ...next },
+        beforePosition: { ...before },
+        speed,
+        tilt,
+        conditions: { crossing: accepted },
+      };
+    } else {
       const heading =
         target.heading === null
           ? 0
@@ -352,6 +367,44 @@ export function createFlight({
             state.landingTilt <= target.maxTilt));
       state.hold = inside ? state.hold + 1 : 0;
       accepted = state.hold >= target.ticks;
+      // Observer facts use the same consumed command and pre-collision speed
+      // as the v1 criterion above. Keep them outside replay state and hashes.
+      const conditions = {
+        position: ['x', 'y', 'z'].every(
+          (key) => next[key] >= target.min[key] && next[key] <= target.max[key],
+        ),
+        speed: speed <= target.maxSpeed,
+        maxTilt: tilt <= target.maxTilt,
+        minTilt: tilt >= target.minTilt,
+        heading: heading <= 1500,
+        centred:
+          !target.centred || ['pitch', 'roll', 'yaw'].every((key) => Math.abs(command[key]) <= 50),
+        grounded: target.type !== 'land' || next.y === 0,
+        throttle: target.type !== 'land' || command.throttle <= 100,
+        landingSpeed: target.type !== 'land' || state.landingSpeed <= target.maxSpeed,
+        landingTilt: target.type !== 'land' || state.landingTilt <= target.maxTilt,
+      };
+      lastObjectiveFeedback = {
+        tick: state.ticks,
+        index: state.step,
+        type: target.type,
+        accepted,
+        eligible: inside,
+        within: conditions.position,
+        position: { ...next },
+        beforePosition: { ...before },
+        hold: state.hold,
+        requiredHold: target.ticks,
+        speed,
+        tilt,
+        headingError: heading,
+        centred: ['pitch', 'roll', 'yaw'].every((key) => Math.abs(command[key]) <= 50),
+        throttle: command.throttle,
+        grounded: next.y === 0,
+        landingSpeed: state.landingSpeed,
+        landingTilt: state.landingTilt,
+        conditions,
+      };
     }
     if (accepted) {
       state.step++;
@@ -365,6 +418,7 @@ export function createFlight({
     course: () => structuredClone(source),
     response: () => ({ ...rates }),
     snapshot,
+    objectiveFeedback: () => structuredClone(lastObjectiveFeedback),
     step,
     reset,
     arm() {

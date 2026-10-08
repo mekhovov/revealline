@@ -29,7 +29,11 @@ const channel = 'release-v0.3.0';
 const currentVersion = 'v0.3.1';
 const png =
   'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+/l9sAAAAASUVORK5CYII=';
-const decodeImage = async () => ({ naturalWidth: 1, naturalHeight: 1 });
+const decodeImage = async (dataUrl) => {
+  const header = inspectImageDataUrl(dataUrl);
+  assert.equal(header.valid, true);
+  return { naturalWidth: header.width, naturalHeight: header.height };
+};
 const level = {
   version: 'xonix-level.v1',
   id: 'transfer-level',

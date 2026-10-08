@@ -1,5 +1,32 @@
 import { mountModePlayShell } from '../../game/ui/mode-play-shell.mjs';
 import { setMenuIcon } from '../../game/ui/native-menu-icons.mjs';
+import { attachDefeatSoundControls } from '../../game/ui/defeat-sound-controls.mjs';
+import {
+  createSimModeLinks,
+  createSimContinuousPlayController,
+  createSimEnemyStatsHost,
+  mountSimEnemyStats,
+  mountSimContinuousPlayControls,
+  mountSimContinuousCelebration,
+  createSimDisplayPreferences,
+  getSimMenuAnimation,
+  setSimMenuAnimation,
+  subscribeSimMenuAnimation,
+  attachSimThemeFamilyControls,
+  mountSimGlobalSettings,
+  mountSimModeSettings,
+  simAttachSettingsPanels,
+  simSettingsPanelBack,
+  simSettingsTabOwnsKey,
+  attachSimMenuAudioSettings,
+  attachSimMissionLibraryChooser,
+  createSimMissionLibrary,
+} from '../civilian-fpv/flight-fullscreen.mjs';
+import {
+  installSimThemeHost,
+  mountSimPresentation,
+  mountSimGlobalTools,
+} from '../civilian-fpv/sim-presentation.mjs';
 import { createFlightMenuNavigation } from '../civilian-fpv/input.mjs';
 import { createPracticeAudio } from './audio.mjs';
 import { getLocale, setLocale, onLocaleChange } from '../../game/i18n/index.mjs';
@@ -16,6 +43,54 @@ import { attachPracticeInput } from './input.mjs';
 import { PRACTICE_COPY } from './copy.mjs';
 import { preparePracticeOffline, removePracticeOffline } from './offline.mjs';
 
+function renderDrillPreview({ container, diagram, document: doc }) {
+  const canvas = doc.createElement('canvas');
+  canvas.className = 'journey-card-map';
+  canvas.width = 288;
+  canvas.height = Math.round((288 * diagram.world.depth) / diagram.world.width);
+  canvas.setAttribute('aria-hidden', 'true');
+  container.append(canvas);
+  const ctx = canvas.getContext?.('2d');
+  if (!ctx) return;
+  const padding = 12,
+    sx = (canvas.width - padding * 2) / diagram.world.width,
+    sy = (canvas.height - padding * 2) / diagram.world.depth,
+    position = (point) => [padding + point.x * sx, padding + point.z * sy];
+  ctx.fillStyle = '#091814';
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  ctx.strokeStyle = '#567363';
+  ctx.lineWidth = 1;
+  ctx.strokeRect(padding, padding, canvas.width - padding * 2, canvas.height - padding * 2);
+  ctx.beginPath();
+  ctx.moveTo(...position(diagram.spawn));
+  for (const point of diagram.checkpoints) ctx.lineTo(...position(point));
+  ctx.stroke();
+  diagram.checkpoints.forEach((point, index) => {
+    const [x, y] = position(point);
+    ctx.strokeStyle = point.landed ? '#99d0ff' : '#f6c66f';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.arc(x, y, Math.max(4, point.radius * sx), 0, Math.PI * 2);
+    ctx.stroke();
+    ctx.fillStyle = '#eef5e8';
+    ctx.font = '12px system-ui';
+    ctx.fillText(String(index + 1), x + Math.max(4, point.radius * sx) + 2, y - 2);
+  });
+  const [x, y] = position(diagram.spawn);
+  ctx.save();
+  ctx.translate(x, y);
+  ctx.rotate((diagram.spawn.heading * Math.PI) / 180);
+  ctx.fillStyle = '#dcf59e';
+  ctx.beginPath();
+  ctx.moveTo(0, -7);
+  ctx.lineTo(5, 5);
+  ctx.lineTo(0, 2);
+  ctx.lineTo(-5, 5);
+  ctx.closePath();
+  ctx.fill();
+  ctx.restore();
+}
+
 export function mountCivilianPractice({ document: doc, window: win }) {
   const launchLocale = win.location?.href && new URL(win.location.href).searchParams.get('lang');
   if (launchLocale === 'en' || launchLocale === 'uk') setLocale(launchLocale);
@@ -27,10 +102,18 @@ export function mountCivilianPractice({ document: doc, window: win }) {
     recordingTicks = 0,
     recordingFull = false,
     previous = null,
+    previousExecution = null,
     accumulator = 0,
     frame = null,
     disposed = false,
     playShell = null,
+    modeSettings = null,
+    globalSettings = null,
+    globalTools = null,
+    missionLibrary = null,
+    missionChooser = null,
+    missionCatalogue = null,
+    customCatalogue = false,
     gamepads = [];
   const readGamepads = () => {
     try {
@@ -41,6 +124,92 @@ export function mountCivilianPractice({ document: doc, window: win }) {
     return gamepads;
   };
   const completed = new Set();
+  const drillCopy = (drill) => drill.locales[getLocale()] ?? drill.locales.en;
+  function syncMissionLibrary() {
+    if (!missionLibrary || missionCatalogue === catalogue) return;
+    const acceptedCatalogue = catalogue,
+      identity = model.identity;
+    missionCatalogue = acceptedCatalogue;
+    const catalogueCopy = () =>
+      acceptedCatalogue.locales[getLocale()] ?? acceptedCatalogue.locales.en;
+    missionLibrary.register({
+      id: 'gym-drills',
+      editionId: identity,
+      edition: catalogueCopy().title,
+      collection: customCatalogue ? 'Custom' : 'Classic',
+      entries: acceptedCatalogue.drills,
+      describe: (entry) => ({
+        id: entry.id,
+        revision: entry.revision,
+        name: drillCopy(entry).title,
+        campaignKey: acceptedCatalogue.id,
+        campaignTitle: catalogueCopy().title,
+        levelIndex: acceptedCatalogue.drills.indexOf(entry),
+        ...(!customCatalogue
+          ? {
+              canonicalLevelKey: `gym:${entry.id}`,
+              globalLevelNumber: acceptedCatalogue.drills.indexOf(entry) + 1,
+            }
+          : {}),
+        modes: ['solo'],
+        tags: ['Practice'],
+      }),
+      presentation: (entry) => ({
+        name: drillCopy(entry).title,
+        campaignTitle: catalogueCopy().title,
+        edition: catalogueCopy().title,
+      }),
+      details: (entry) => ({ challenge: drillCopy(entry).brief }),
+      availability: () => ({ state: 'ready' }),
+      progressState: (entry) => ({
+        state: completed.has(`${identity}:${entry.id}`) ? 'completed' : 'new',
+        bestStars: null,
+      }),
+      card: (entry) => ({
+        world: acceptedCatalogue.world,
+        spawn: entry.spawn,
+        checkpoints: entry.checkpoints,
+      }),
+      launch(entry) {
+        if (disposed || catalogue !== acceptedCatalogue) return false;
+        reset(entry.id);
+        $('start').click();
+        return model.snapshot().status === 'active';
+      },
+    });
+  }
+  function openMissionLibrary(opener) {
+    if (!missionLibrary) {
+      missionLibrary = createSimMissionLibrary();
+      syncMissionLibrary();
+      missionChooser = attachSimMissionLibraryChooser({
+        document: doc,
+        library: missionLibrary,
+        mode: 'solo',
+        supportedModes: ['solo'],
+        availableCollectionsOnly: true,
+        onPause: pause,
+        getCurrentId: () =>
+          missionLibrary.missions.find((row) => row.runtimeId === model.drill().id)?.id,
+        readState: () => {
+          try {
+            return JSON.parse(win.sessionStorage?.getItem('revealline.gym-library.v1') ?? 'null');
+          } catch {
+            return null;
+          }
+        },
+        writeState: (state) =>
+          win.sessionStorage?.setItem('revealline.gym-library.v1', JSON.stringify(state)),
+        goalPreferenceOptions: {
+          editionId: 'sim-flight-gym',
+          getStorage: () => win.localStorage,
+        },
+        description: () => (catalogue.locales[getLocale()] ?? catalogue.locales.en).description,
+        renderPreview: renderDrillPreview,
+      });
+    }
+    missionChooser.open(opener);
+  }
   const audio = createPracticeAudio({ window: win });
   const updateSound = () => {
     $('sound').textContent = tr(audio.enabled() ? 'soundOn' : 'soundOff');
@@ -48,6 +217,109 @@ export function mountCivilianPractice({ document: doc, window: win }) {
     playShell?.update({ muted: !audio.enabled() });
   };
   const stopSound = audio.subscribe(updateSound);
+  const presentation = mountSimPresentation({
+    root: doc,
+    window: win,
+    enabled: audio.enabled(),
+    audioHost: audio,
+  });
+  const stopPresentationSound = audio.subscribe((enabled) =>
+    presentation.setSoundPreference(enabled),
+  );
+  const display = createSimDisplayPreferences({ window: win, getStorage: () => win.localStorage });
+  const stopDisplay = display.subscribe((state) => {
+    doc.body.dataset.textFace = state.textFace;
+    doc.body.dataset.textSize = state.textSize;
+    doc.body.dataset.effects = state.effectiveReducedEffects ? 'reduced' : 'full';
+  });
+  const themeHost = installSimThemeHost({
+    document: doc,
+    window: win,
+    displayPreferences: display,
+  });
+  const stopAnimation = subscribeSimMenuAnimation((enabled) => {
+    doc.documentElement.dataset.menuAnimation = enabled ? 'on' : 'off';
+  }, win);
+  const enemyStatistics = createSimEnemyStatsHost({ gameType: 'gym' });
+  void enemyStatistics.stats.read();
+  const enemyStatsViews = [
+    mountSimEnemyStats({
+      document: doc,
+      container: $('discovery').parentElement,
+      stats: enemyStatistics.stats,
+      variant: 'hud',
+      locale: getLocale,
+      spritePortraits: false,
+    }),
+  ];
+  const continuousPlay = createSimContinuousPlayController({
+    isCurrent: (identity) =>
+      identity === model && !disposed && model.snapshot().status === 'complete',
+    isActive: () => !doc.hidden && (doc.hasFocus?.() ?? true) && !playShell?.topDialog(),
+    onNext: () => nextDrill(),
+    onRetry: () => {
+      reset();
+      $('start').click();
+    },
+  });
+  const resultActions = doc.createElement('div');
+  resultActions.className = 'button-row continuous-result-actions';
+  resultActions.hidden = true;
+  $('discovery').after(resultActions);
+  const labels = {
+    en: ['Next drill', 'Try again', 'Random drill', 'Choose mission', 'Home'],
+    uk: ['Наступна вправа', 'Спробувати знову', 'Випадкова вправа', 'Вибрати місію', 'Додому'],
+  };
+  const handlers = [
+    () => nextDrill(),
+    () => {
+      reset();
+      $('start').click();
+    },
+    () => {
+      const choices = catalogue.drills.filter((row) => row.id !== model.drill().id);
+      reset((choices[Math.floor(Math.random() * choices.length)] ?? catalogue.drills[0]).id);
+      $('start').click();
+    },
+    () => playShell.open('missions'),
+    () => playShell.openHome(),
+  ];
+  const resultButtons = handlers.map((handler, index) => {
+    const node = doc.createElement('button');
+    node.type = 'button';
+    node.className = `button ${index === 0 ? 'primary' : 'secondary'}`;
+    node.textContent = (labels[getLocale()] ?? labels.en)[index];
+    node.onclick = () => {
+      continuousPlay.cancel('action');
+      handler();
+    };
+    resultActions.append(node);
+    return node;
+  });
+  const flowControls = mountSimContinuousPlayControls({
+    document: doc,
+    parent: resultActions,
+    primaryAction: resultButtons[0],
+    controller: continuousPlay,
+    locale: () => getLocale(),
+  });
+  const flowCelebration = mountSimContinuousCelebration({
+    document: doc,
+    controller: continuousPlay,
+    reduced: () => display.snapshot().effectiveReducedEffects,
+  });
+  function nextDrill() {
+    const index = catalogue.drills.findIndex((row) => row.id === model.drill().id);
+    const next = catalogue.drills[index + 1];
+    if (!next) return playShell.open('missions');
+    reset(next.id);
+    $('start').click();
+  }
+  const cancelFlow = () => continuousPlay.cancel('interaction');
+  doc.addEventListener('pointerdown', cancelFlow);
+  doc.addEventListener('keydown', cancelFlow);
+  win.addEventListener('blur', cancelFlow);
+  win.addEventListener('gamepaddisconnected', cancelFlow);
   const canvas = $('board');
   let context;
   try {
@@ -57,6 +329,7 @@ export function mountCivilianPractice({ document: doc, window: win }) {
   }
   $('fallback').hidden = !!context;
   const pause = () => {
+    continuousPlay.cancel('paused');
     model.pause();
     audio.pause();
     input?.clear();
@@ -89,6 +362,7 @@ export function mountCivilianPractice({ document: doc, window: win }) {
       }),
     );
     $('drill').value = model.drill().id;
+    missionChooser?.refresh();
   }
   function render() {
     if (disposed) return;
@@ -114,6 +388,7 @@ export function mountCivilianPractice({ document: doc, window: win }) {
           : state.status === 'complete'
             ? 'results'
             : state.status,
+      transitionActive: !['idle', 'cancelled'].includes(continuousPlay.snapshot().phase),
       missionName: copy.title,
       summary: copy.brief,
       canResume: !recordingFull && state.ticks > 0 && state.status !== 'complete',
@@ -190,13 +465,19 @@ export function mountCivilianPractice({ document: doc, window: win }) {
     options();
     updateSound();
     playShell?.setLocale(getLocale());
-    for (const { node, en, uk } of modeLabels) node.textContent = getLocale() === 'uk' ? uk : en;
+    modes.refresh?.();
+    modeSettings?.refresh(getLocale());
+    globalSettings?.refresh(getLocale());
+    globalTools?.refresh();
     render();
   }
   function reset(drillId = model.drill().id) {
+    continuousPlay.cancel('new-attempt');
+    resultActions.hidden = true;
     audio.reset();
     input.clear();
     model = createPractice(catalogue, drillId);
+    syncMissionLibrary();
     commands = [];
     recordingTicks = 0;
     recordingFull = false;
@@ -231,12 +512,30 @@ export function mountCivilianPractice({ document: doc, window: win }) {
       if (replayPractice(catalogue, trace()).status === 'complete')
         completed.add(`${model.identity}:${model.drill().id}`);
       options();
+      const hasNext =
+        catalogue.drills.findIndex((row) => row.id === model.drill().id) <
+        catalogue.drills.length - 1;
+      resultActions.hidden = false;
+      resultButtons[0].hidden = !hasNext;
+      (hasNext ? resultButtons[0] : resultButtons[1]).focus();
+      continuousPlay.begin({ identity: model, outcome: 'won', canAdvance: hasNext });
     }
   }
   function tick(now) {
     if (disposed) return;
+    const executedAt = win.performance?.now?.() ?? now,
+      elapsed = previous === null ? 0 : Math.max(0, now - previous),
+      executionDelta = previousExecution === null ? 0 : executedAt - previousExecution;
+    previousExecution = executedAt;
+    // Cancel the transition before a stalled callback can launch its destination.
+    if (elapsed > 1000 || executionDelta > 1000) {
+      pause();
+      previous = now;
+      frame = win.requestAnimationFrame(tick);
+      return;
+    }
     menuNavigation.poll({ now, gamepads: readGamepads() });
-    if (previous !== null && now - previous > 1000) pause();
+    continuousPlay.advance(elapsed);
     if (model.snapshot().status === 'active') {
       accumulator += previous === null ? 0 : Math.max(0, Math.min(250, now - previous));
       while (accumulator >= 1000 / PRACTICE_HZ && model.snapshot().status === 'active') {
@@ -254,6 +553,7 @@ export function mountCivilianPractice({ document: doc, window: win }) {
     model.start();
     void audio.resume();
     previous = null;
+    previousExecution = null;
     accumulator = 0;
     $('arena').focus();
     render();
@@ -293,6 +593,7 @@ export function mountCivilianPractice({ document: doc, window: win }) {
     try {
       const checked = validatePracticeCatalogue($('catalogue').value);
       catalogue = checked;
+      customCatalogue = true;
       reset(checked.drills[0].id);
       $('author-status').textContent = tr('imported');
     } catch {
@@ -328,6 +629,7 @@ export function mountCivilianPractice({ document: doc, window: win }) {
   playSurface.classList.add('gym-play-surface');
   const missions = section('gym-missions');
   missions.append($('drill').closest('label'), $('brief'));
+  missions.hidden = true;
   const briefing = section('gym-briefing');
   const instructions = doc.createElement('p');
   instructions.dataset.copy = 'instructions';
@@ -338,11 +640,14 @@ export function mountCivilianPractice({ document: doc, window: win }) {
   languageName.textContent = 'Language / Мова';
   language.append(languageName, $('language'));
   settings.append(language, $('sound'), $('connect'), $('pad-status'), $('instructions'));
+  const practiceData = $('help-dialog').querySelector('details');
+  const offlineControls = section('gym-offline');
+  offlineControls.append($('offline'), $('remove-offline'), $('package-status'));
   const expert = section('gym-expert');
   const helper = $('help');
   expert.append(helper);
-  const modes = section('gym-mode-links');
-  let arcadeRoot = null;
+  let arcadeRoot = null,
+    gameReturn = null;
   try {
     const current = new URL(win.location.href);
     const retained = current.searchParams.get('game-return');
@@ -360,48 +665,24 @@ export function mountCivilianPractice({ document: doc, window: win }) {
         /^(.*\/game\/)(?:index\.html|company\.html|couch\/(?:index\.html|relay-rescue\.html)?|snake\/(?:index\.html|play\.html)?)?$/.exec(
           target.pathname,
         );
-      if (match) arcadeRoot = new URL(match[1], target);
+      if (match) {
+        arcadeRoot = new URL(match[1], target);
+        if (supplied) gameReturn = supplied.href;
+      }
     }
   } catch {
     /* Isolated packages do not invent an arcade installation. */
   }
-  const modeLabels = [];
-  for (const [path, en, uk] of [
-    ['', 'Solo', 'Соло'],
-    ['couch/', 'Versus', 'Двобій'],
-    ['couch/relay-rescue.html', 'Team', 'Команда'],
-    [null, 'FPV SIM', 'FPV SIM'],
-    ['snake/play.html', 'Snake', 'Змійка'],
-  ]) {
-    if (!arcadeRoot && path !== null) continue;
-    const node = doc.createElement(path === null ? 'button' : 'a');
-    node.className = 'button';
-    setMenuIcon(
-      node,
-      { Solo: 'solo', Versus: 'versus', Team: 'team', 'FPV SIM': 'simulator', Snake: 'controls' }[
-        en
-      ],
-    );
-    modeLabels.push({ node, en, uk });
-    node.textContent = getLocale() === 'uk' ? uk : en;
-    if (path === null) {
-      node.type = 'button';
-      node.setAttribute('aria-current', 'page');
-    } else {
-      const target = new URL(path, arcadeRoot);
-      target.searchParams.set('lang', getLocale());
-      node.href = target.href;
-      node.onclick = () => {
-        target.searchParams.set('lang', getLocale());
-        node.href = target.href;
-      };
-    }
-    modes.append(node);
-  }
+  const modes = createSimModeLinks({
+    document: doc,
+    gameReturn: arcadeRoot?.href,
+    locale: getLocale,
+    setMenuIcon,
+  });
   const wordmarkURL = arcadeRoot
     ? new URL('ui/art/identity/fpv-line/wordmark.png', arcadeRoot).href
     : '';
-  doc.querySelector('body > header').hidden = true;
+  doc.body.querySelector(':scope > header').hidden = true;
   doc.querySelector('.gym-toolbar').hidden = true;
   playShell = mountModePlayShell({
     document: doc,
@@ -410,7 +691,7 @@ export function mountCivilianPractice({ document: doc, window: win }) {
     wordmarkURL,
     modeName: () => (getLocale() === 'uk' ? 'FPV SIM · Тренувальний зал' : 'FPV SIM · Flight gym'),
     locale: getLocale(),
-    services: { setMenuIcon },
+    services: { setMenuIcon, settingsPanelBack: simSettingsPanelBack },
     slots: { modes, missions, briefing, play: playSurface, settings, expert },
     actions: {
       pause,
@@ -440,7 +721,12 @@ export function mountCivilianPractice({ document: doc, window: win }) {
         void request?.catch?.(() => {});
       },
       open(surface) {
+        if (surface === 'settings') void globalTools?.ensure();
         if (model.snapshot().status === 'active') pause();
+        if (surface === 'missions') {
+          openMissionLibrary(doc.activeElement);
+          return false;
+        }
         if (surface === 'results') {
           // The completed board and discovery remain the native result scene.
           playShell.enterPlay();
@@ -449,9 +735,14 @@ export function mountCivilianPractice({ document: doc, window: win }) {
           return false;
         }
         if (surface === 'briefing') render();
-        if (surface === 'workshop' || surface === 'help') {
+        if (surface === 'workshop') {
+          playShell.open('settings');
+          modeSettings.navigation.select('gym-settings-tab-data', { drill: true, focus: true });
+          practiceData.open = true;
+          return false;
+        }
+        if (surface === 'help') {
           $('help').click();
-          if (surface === 'workshop') $('help-dialog').querySelector('details').open = true;
           return false;
         }
       },
@@ -459,10 +750,137 @@ export function mountCivilianPractice({ document: doc, window: win }) {
     initial: 'home',
     focusPlay: () => $('arena').focus(),
   });
+  modeSettings = mountSimModeSettings({
+    root: playShell.elements.dialogs.settings,
+    content: playShell.elements.content.settings,
+    prefix: 'gym-settings',
+    locale: getLocale(),
+    setMenuIcon,
+    attachPanels: simAttachSettingsPanels,
+    groups: {
+      gameplay: [section('gym-gameplay')],
+      controls: [$('connect'), $('pad-status'), $('instructions')],
+      audio: [$('sound')],
+      display: [language],
+      accessibility: [section('gym-accessibility')],
+      data: [practiceData],
+      content: [offlineControls],
+      extras: [playShell.elements.buttons.workshop, playShell.elements.buttons.help],
+    },
+  });
+  const defeatSounds = attachDefeatSoundControls({
+    document: doc,
+    window: win,
+    getStorage: () => win.localStorage,
+    container: modeSettings.panels.audio,
+    prefix: 'gym-',
+  });
+  const appearance = attachSimThemeFamilyControls({
+    document: doc,
+    root: modeSettings.panels.display,
+    host: themeHost,
+    prefix: 'gym-global-',
+  });
+  const displayBinding = (key) => ({
+    get: () => display.snapshot()[key],
+    set: (value) => display.set({ [key]: value }),
+    subscribe: (listener) => display.subscribe(listener),
+  });
+  globalSettings = mountSimGlobalSettings({
+    document: doc,
+    root: playShell.elements.dialogs.settings,
+    panels: modeSettings.panels,
+    prefix: 'gym-global',
+    locale: getLocale(),
+    controls: {
+      language,
+      appearance: modeSettings.panels.display.querySelector('[data-theme-controls]'),
+    },
+    bindings: {
+      textFace: displayBinding('textFace'),
+      textSize: displayBinding('textSize'),
+      reducedEffects: displayBinding('reducedEffects'),
+      menuAnimation: {
+        get: () => getSimMenuAnimation(win),
+        set: (value) => setSimMenuAnimation(value, win),
+        subscribe: (listener) => subscribeSimMenuAnimation(listener, win),
+      },
+      masterMuted: {
+        get: () => audio.masterSnapshot().muted,
+        set: (value) => audio.setEnabled(!value),
+        subscribe: (listener) => audio.subscribeMaster(listener),
+      },
+      masterVolume: {
+        get: () => audio.masterSnapshot().volume,
+        set: (value) => audio.setMasterVolume(value),
+        subscribe: (listener) => audio.subscribeMaster(listener),
+      },
+    },
+    duplicates: { masterMuted: [$('sound')] },
+  });
+  const audioCues = section('gym-audio-cues');
+  const stopAudioCues = attachSimMenuAudioSettings(
+    {
+      get menuSettings() {
+        return presentation.menuSettings;
+      },
+      set menuSettings(value) {
+        presentation.menuSettings = value;
+      },
+      get movementSettings() {
+        return audio.movementSettings;
+      },
+      set movementSettings(value) {
+        audio.movementSettings = value;
+      },
+      applyVolumes() {
+        presentation.applyVolumes();
+        audio.applyVolumes();
+      },
+    },
+    doc,
+    { target: audioCues, window: win, getStorage: () => win.localStorage, idPrefix: 'gym-global' },
+  );
+  globalSettings.update({ controls: { audioCues } });
+  globalTools = mountSimGlobalTools({
+    document: doc,
+    window: win,
+    gameReturn,
+    settingsRoot: playShell.elements.dialogs.settings,
+    panels: modeSettings.panels,
+    locale: getLocale,
+    onOpen: pause,
+    onControls: (controls) => globalSettings.update({ controls }),
+  });
+  settings.hidden = true;
+  enemyStatsViews.push(
+    mountSimEnemyStats({
+      document: doc,
+      container: playShell.elements.content.pause,
+      stats: enemyStatistics.stats,
+      variant: 'panel',
+      locale: getLocale,
+      spritePortraits: false,
+    }),
+  );
+  playShell.elements.buttons.expert.hidden = true;
   const menuHint = doc.createElement('p');
   menuHint.className = 'gym-menu-hint';
   const menuContext = () => {
-    const dialog = $('help-dialog').open ? $('help-dialog') : playShell.topDialog();
+    const tool = globalTools?.root();
+    if (tool)
+      return {
+        root: tool,
+        key: `global-tools:${tool.id}`,
+        blockRadio: true,
+        frameFocused: globalTools.frameFocused(),
+        handleFrameCommand: globalTools.handleFrameCommand,
+      };
+    const dialog = missionChooser?.elements.dialog.open
+      ? missionChooser.elements.dialog
+      : $('help-dialog').open
+        ? $('help-dialog')
+        : playShell.topDialog();
     if (dialog) return { root: dialog, key: dialog.id, blockRadio: true };
     if (model.snapshot().status === 'active') return null;
     return {
@@ -472,19 +890,29 @@ export function mountCivilianPractice({ document: doc, window: win }) {
     };
   };
   const menuNavigation = createFlightMenuNavigation({
+    onAction: () => continuousPlay.cancel('controller'),
     document: doc,
     window: win,
     locale: getLocale,
     getContext: menuContext,
+    ownsKeyboardEvent: (event) => simSettingsTabOwnsKey(event, menuContext()?.root),
     onHint(value) {
       const context = menuContext();
       if (!value && context?.root.dataset.modeSurface) return;
       menuHint.hidden = !context;
-      if (context && menuHint.parentNode !== context.root) context.root.append(menuHint);
+      const parent =
+        context?.root === playShell.elements.dialogs.settings
+          ? modeSettings.panels.extras
+          : missionChooser && context?.root === missionChooser.elements.dialog
+            ? missionChooser.elements.filters.querySelector('.journey-filter-options')
+            : context?.root;
+      if (parent && menuHint.parentNode !== parent) parent.append(menuHint);
       if (menuHint.textContent !== value) menuHint.textContent = value;
     },
     onBack() {
-      if ($('help-dialog').open) $('close-help').click();
+      if (globalTools?.back()) return;
+      if (missionChooser?.elements.dialog.open) missionChooser.close();
+      else if ($('help-dialog').open) $('close-help').click();
       else if (playShell.topDialog()) playShell.back();
       else playShell.openHome();
     },
@@ -495,12 +923,35 @@ export function mountCivilianPractice({ document: doc, window: win }) {
   const dispose = () => {
     if (disposed) return;
     disposed = true;
+    missionChooser?.destroy();
+    missionLibrary?.dispose();
+    $('sound').onclick = null;
     menuNavigation.dispose();
     menuHint.remove();
+    globalSettings?.destroy();
+    globalTools?.dispose();
+    appearance.dispose();
+    stopAudioCues();
+    modeSettings?.destroy();
+    enemyStatsViews.forEach((view) => view.dispose());
+    enemyStatistics.close();
+    continuousPlay.dispose();
+    flowControls.dispose();
+    flowCelebration.dispose();
+    doc.removeEventListener('pointerdown', cancelFlow);
+    doc.removeEventListener('keydown', cancelFlow);
+    win.removeEventListener('blur', cancelFlow);
+    win.removeEventListener('gamepaddisconnected', cancelFlow);
+    stopAnimation();
+    themeHost.dispose();
+    stopDisplay();
+    display.dispose();
+    stopPresentationSound();
+    presentation.dispose();
     input.dispose();
     stopSound();
+    defeatSounds.dispose();
     audio.dispose();
-    $('sound').onclick = null;
     stopLocale();
     win.cancelAnimationFrame(frame);
     win.removeEventListener('pagehide', pagehide);

@@ -1,0 +1,140 @@
+{
+  "format": "RevealLineDestructionSourcesV1",
+  "retrieved": "2026-10-05",
+  "license": "CC0-1.0",
+  "author": "Kenney",
+  "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+  "notes": "Exact unmodified selected source OGGs and embedded license; archives inspected in memory and not retained. Derived arrangements remain CC0. No hardware/listening qualification claimed.",
+  "packs": {
+    "impact": {
+      "sourcePage": "https://kenney.nl/assets/impact-sounds",
+      "downloadUrl": "https://kenney.nl/media/pages/assets/impact-sounds/87b4ddecda-1677589768/kenney_impact-sounds.zip",
+      "archiveBytes": 800850,
+      "archiveSha256": "029d734af1582474edf3a694d1b0cebc97c1c152f2f39fa34d4c2bafc5de77f8",
+      "licenseFile": "impact/License.txt",
+      "licenseSha256": "b49aa9c56b04528b95913de13e506a0f7c5e807b9925db9bfef86af1f91120db",
+      "files": {
+        "impactPunch_medium_000.ogg": {
+          "archivePath": "Audio/impactPunch_medium_000.ogg",
+          "bytes": 8800,
+          "sha256": "486988aa2d6440ffc4c62a0e8ccf3c23673ba84424bd4723378d451b7255eb5c"
+        },
+        "impactPunch_medium_001.ogg": {
+          "archivePath": "Audio/impactPunch_medium_001.ogg",
+          "bytes": 8701,
+          "sha256": "e71d23abcc3f10d9d6bc9615b2a431fff70b12333a5fcdd9964457564ace4349"
+        },
+        "impactPunch_medium_002.ogg": {
+          "archivePath": "Audio/impactPunch_medium_002.ogg",
+          "bytes": 10399,
+          "sha256": "6492f9ccbc8d24dcef607bb1b48790b7870961474561f7fe5601e1c73a3018ef"
+        },
+        "impactSoft_medium_000.ogg": {
+          "archivePath": "Audio/impactSoft_medium_000.ogg",
+          "bytes": 5351,
+          "sha256": "7d3ba0bb5e60a11b5d3e558c141303dcf494256675fbf753c0d252d2cf0481e3"
+        },
+        "impactSoft_medium_001.ogg": {
+          "archivePath": "Audio/impactSoft_medium_001.ogg",
+          "bytes": 5506,
+          "sha256": "7642a4fd43e547afe4f7adfadb3dabb681c0ff512f52c1674bae30a726841faf"
+        },
+        "impactSoft_medium_002.ogg": {
+          "archivePath": "Audio/impactSoft_medium_002.ogg",
+          "bytes": 5358,
+          "sha256": "5069e3571a77d7f7aae9ef71d0364aa245fb7d64a7c8cc9956f221d03088c089"
+        },
+        "impactMetal_heavy_000.ogg": {
+          "archivePath": "Audio/impactMetal_heavy_000.ogg",
+          "bytes": 6110,
+          "sha256": "e07045693e4a2b3d165c424e3dab4c781d9ff8880a386880ac89a51315d7f831"
+        },
+        "impactMetal_heavy_001.ogg": {
+          "archivePath": "Audio/impactMetal_heavy_001.ogg",
+          "bytes": 7279,
+          "sha256": "83554049f81f4db9209379e103c30bfa63f65c42189a03f300b045c2c82e23ae"
+        },
+        "impactMetal_heavy_002.ogg": {
+          "archivePath": "Audio/impactMetal_heavy_002.ogg",
+          "bytes": 5634,
+          "sha256": "b914c8f1eb7c0f34bb165d7c77f4be0351f6be0660c13c53e65424e262e2c093"
+        },
+        "impactPlate_light_000.ogg": {
+          "archivePath": "Audio/impactPlate_light_000.ogg",
+          "bytes": 10474,
+          "sha256": "6e797cf8a5bfc52d7ed5eb47c227974c1cf2a674954fec5b539cea7d62c7282c"
+        },
+        "impactPlate_light_001.ogg": {
+          "archivePath": "Audio/impactPlate_light_001.ogg",
+          "bytes": 11730,
+          "sha256": "947915c2eb6ac57ee08fd3a48b297fd108d69abc72076e79882c21cad0eef56e"
+        },
+        "impactPlate_light_002.ogg": {
+          "archivePath": "Audio/impactPlate_light_002.ogg",
+          "bytes": 9932,
+          "sha256": "8ac5869ea434cf0d364872774efe70b2d666a4f02ba35ddfc1e051d336721be8"
+        }
+      }
+    },
+    "scifi": {
+      "sourcePage": "https://kenney.nl/assets/sci-fi-sounds",
+      "downloadUrl": "https://kenney.nl/media/pages/assets/sci-fi-sounds/6b296f9ecf-1677589334/kenney_sci-fi-sounds.zip",
+      "archiveBytes": 5875104,
+      "archiveSha256": "119340f351a5098ad814f78719438c0da355a9ce8a4c8a3af6a8d48aa3d49e04",
+      "licenseFile": "scifi/License.txt",
+      "licenseSha256": "a9767b25c3533f69d03af136480efad08efba19a9f0d89616992b34c79fd6186",
+      "files": {
+        "explosionCrunch_000.ogg": {
+          "archivePath": "Audio/explosionCrunch_000.ogg",
+          "bytes": 28274,
+          "sha256": "4b597d658d0ae101f0a030fbeea5fc3a4292ab85f017470a8254a8e7959cbd69"
+        },
+        "explosionCrunch_001.ogg": {
+          "archivePath": "Audio/explosionCrunch_001.ogg",
+          "bytes": 47916,
+          "sha256": "fdd04d6f0032d4d57c134ad37f3587d2d00e58c9572715275bd8cf4f43593576"
+        },
+        "explosionCrunch_002.ogg": {
+          "archivePath": "Audio/explosionCrunch_002.ogg",
+          "bytes": 47907,
+          "sha256": "be2b8ddc62e4a24c91e2e77793de98549ce216faf2f323a917e7d6f34321ff97"
+        },
+        "lowFrequency_explosion_000.ogg": {
+          "archivePath": "Audio/lowFrequency_explosion_000.ogg",
+          "bytes": 14317,
+          "sha256": "3cb48d86dab63140cfb9aaeea4d4a6846abaca5831d157d8adbec0490da26343"
+        },
+        "lowFrequency_explosion_001.ogg": {
+          "archivePath": "Audio/lowFrequency_explosion_001.ogg",
+          "bytes": 9408,
+          "sha256": "cdda50600a4928f2f1b8371224d53c171ac799c1cf2c30b11999508985250b3b"
+        }
+      }
+    },
+    "digital": {
+      "sourcePage": "https://kenney.nl/assets/digital-audio",
+      "downloadUrl": "https://kenney.nl/media/pages/assets/digital-audio/216eac4753-1677590265/kenney_digital-audio.zip",
+      "archiveBytes": 990367,
+      "archiveSha256": "24e6ce28b76a6d8c89cff4d331e0965ff5c3de8a73c612028e9d363cc64e4f06",
+      "licenseFile": "digital/License.txt",
+      "licenseSha256": "654d24e000d1c3b2a1d2264151f49e273e8a26d24e26e9bffc2aeb48cea93815",
+      "files": {
+        "zap1.ogg": {
+          "archivePath": "Audio/zap1.ogg",
+          "bytes": 8126,
+          "sha256": "4e4bf11c671a4be0723022a7177f8e122329fa32a0c59555581f4193ed111585"
+        },
+        "zap2.ogg": {
+          "archivePath": "Audio/zap2.ogg",
+          "bytes": 9819,
+          "sha256": "169cf3876647bae0a28a7eb3fc5b5bd573ab9efae7b56b64a8700ff9bafb3494"
+        },
+        "lowDown.ogg": {
+          "archivePath": "Audio/lowDown.ogg",
+          "bytes": 5956,
+          "sha256": "e0215fcfd8b9d7877f74d5c46b239a13d7db0d25998da97b80404931ef9eef5d"
+        }
+      }
+    }
+  }
+}

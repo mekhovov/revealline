@@ -1,0 +1,87 @@
+# Continuous gameplay implementation
+
+Working branch: `codex/snake-continuous-play`. Updated 2026-10-05. No public deployment is claimed by this document.
+
+## Shared flow
+
+Start, Continue, Next, Retry, Random, and Skip enter play directly. Optional mission information remains available through Choose mission. The existing compact Menu UX pause structure, settings-return behavior, focus graph, and generated optional-package sources remain the integration contract.
+
+Ordinary Snake loss runs a 650 ms impact effect, eight replay moves from nine compact snapshots at 240 ms/move, and a 400 ms ready cue before retrying. Immediate Retry skips the delay. Victory retains a 5,200 ms celebration and a separate cancellable 5,000 ms auto-next countdown. Next/Retry work throughout; a loss never starts victory confetti. Home, another action, backgrounding, and controller disconnection cancel pending progression. Engines still own simulation and persistence; the host-owned transition controller owns delayed launches.
+
+Snake Results automatically loops its final-eight preview without advancing simulation, saving attempts, awarding progress, or rearming countdowns. Next, Retry/Rematch, Home, and continuation status remain in the action footer; the bounded preview and details scroll. More options holds secondary actions. Other modes place statistics and countdowns inside their actual result cards. Explicit View picture has a reachable continuation dock; accepted new attempts clear reward-only presentation before painting the new run.
+
+SIM Worlds now owns one compact statistics view inside its result card. Run/lifetime totals remain visible, the enemy-family breakdown starts collapsed, and verification updates preserve the same action row and focus. Reopening results reuses the subscription; language changes refresh it and disposal retires it. Authoring previews do not add awards.
+
+## Living Circuit and live interference
+
+Living Circuit is a third board style alongside Theme and Retro. `classic-scenes.mjs` exports:
+
+- `resolveClassicBoardScene({ boardScene, chapterId, levelId })`: explicit `orchard`, `workshop`, or `relay` wins; `auto` resolves by chapter, with a stable identity fallback.
+- `classicSceneBackdrop(scene, { document })`: cached procedural PNG data URL for the outer board-card background, or `null` when Canvas is unavailable.
+
+The host passes `boardStyle: 'living-circuit'`, `boardScene`, and `chapterId` to `drawClassicBoard`. Scene choice is cosmetic: it consumes no simulation or hazard RNG and changes neither canvas dimensions nor playable coordinates. The quiet center uses the current `industrial-roster-v3` material generator; ornamental trees, workshops, crates, and native machinery live in the external frame. Only accepted wall cells receive raised wall materials. Shared actor art, accepted facing, footprint, and art-revision behavior remain authoritative.
+
+Jamming processes the **live** board through the shared `applyAnalogSignalNoise` effect. It replaces the earlier opaque blackout. At most 65% of the feed is processed, horizontal tearing is bounded to 0.15 cell, and a two-cell neighborhood around every head plus source cells stays readable, including wrap seams. Reduced effects freezes noise and tearing while still refreshing live positions on simulation ticks. The renderer draws antenna/radius cues; each host-owned board status line carries reception text outside the playfield.
+
+The latest hidden-prey treatment removes **all enemy art** before receiver sampling, including enemies beside the head and the transmitting jammer body. Enemy simulation and turning continue normally. Terrain, snake, an antenna beacon, and truthful lethal hazard edges remain readable; no clean-feed fraction, shadow, badge, or relay-owner line leaks enemy movement. Reduced effects hides the same enemies. The manual comparison fixture supports steering without saves or awards. See [encounter expansion](verification/living-circuit/encounter-expansion.md) for the current research, catalogue audit and verification; [jamming comparison](verification/living-circuit/jamming-comparison.md) records the preceding treatment.
+
+New recipes opt into local six-cell or full-board broadcast profiles. A dedicated accepted `hazardSeed` varies their schedule independently of target/spawn randomness. New attempts and retries roll that schedule; Continue and recordings preserve it, while matched Versus boards share it. Pulse freezes the schedule and stabilizes reception; catching a source ends its interference. See [field mechanics](classic-snake-field-mechanics.md) for timing, counterplay, and compatibility.
+
+Current local missions use `local-burst-v2`; changed encounters have new exact recipe revisions. Only a living head in the six-cell Euclidean radius can start a warning; Team counts either head and wrap seams use wrapped distance. Leaving cancels the warning or ends the burst, with recovery before a fresh full warning. Pulse freezes source clocks while accepted head movement can still leave coverage. The pure `source.exposed` projection keeps reception status truthful for both current and historical local recordings. Broadcast timing rules are unchanged; encounter recipes can change their target rosters and positions.
+
+## Progress and compatibility
+
+Enemy totals count accepted live simulation events, including failed attempts and bonus targets, using resumable transactional lineage counters. Replays, previews, and imported history do not create awards. Backup merges use the maximum per lineage. Menu disclosures show run/lifetime totals compactly; the existing Collections page retains portrait cards, filters, and picture ownership. Snake grants no new pictures.
+
+Verified finite Snake clears earn completion stars. Exact setup calibrations are regenerated from verified evidence, retaining historical keys and budgets. Variable-hazard recipes retain completion and personal records without implying equivalent silver/gold thresholds. The complete catalogue now has 144 missions: 24 new encounters in Uncharted Circuits, 33 revised foundation routes and 14 revised specialist routes. The opening six missions remain unchanged. Forty-eight missions use v4. Exact old foundation and field recipes join the earlier bounded archive so Continue/import/Retry and historical grades retain their accepted setup. Community entries cannot inherit archive authority.
+
+## Main integration decision
+
+Integrated `origin/main` through `e3e1e8b8d3b061a85c77f7bc82159db810dff688` into this feature branch. The original Menu UX baseline is preserved at `261db930d`; the completed earlier UX refinement is `d457f69bbe`. Shared-source conflicts retain the host/engine ownership above, main's target-facing observer, accepted `artRevision`, shared machinery/material generators, and optional-package generation. Open PRs #1095 and #1098 were inspected: their separate appearance/continuation ownership was not copied into this integration.
+
+Key source boundaries:
+
+| Concern              | Sources                                                                                                  |
+| -------------------- | -------------------------------------------------------------------------------------------------------- |
+| Transition ownership | `game/ui/continuous-play.mjs`, `continuous-celebration.mjs`                                              |
+| Native hosts         | `game/app.mjs`, `game/couch/`, `game/snake/classic-app.mjs`, optional Academy/Gym/Worlds hosts           |
+| Visuals              | `game/snake/classic-view.mjs`, `classic-scenes.mjs`, `classic-signal-view.mjs`, `classic-target-art.mjs` |
+| Rules and replay     | `game/snake/classic-core-v4.mjs`, `classic-match.mjs`, `classic-recent-replay.mjs`                       |
+| Progress             | `game/enemy-stats.mjs`, `game/ui/enemy-stats.mjs`, `game/backup.mjs`, Snake records/ratings              |
+
+## Verification scope
+
+The mission-selector follow-up extracts the main game's browser into
+`game/ui/mission-library-browser.mjs` and uses it across main Solo/Team/Versus,
+Snake, Academy, Worlds/School and Gym. All current missions are scrollable with
+complete native board or route schemes; engine adapters retain launch, progress
+and preview ownership. The optional SIM packages project this same source into
+their existing shell slots. Compact layouts put secondary controls in disclosures
+and preserve visible launch/Back actions. Source checks, mobile measurements,
+screenshots and verification limits are recorded in
+[shared mission selectors](verification/shared-mission-library/README.md).
+
+Current hidden-prey and catalogue verification is recorded in [encounter expansion](verification/living-circuit/encounter-expansion.md). The following coverage/results receipts describe preceding source revisions.
+
+The preceding coverage/results follow-up passed **148 targeted checks**, repository validation and lint. All **144 current recordings** qualify; exactly 24 local-v2 proofs were regenerated and the other 120 remain unchanged. All 24 retained local-v1 recordings verify exactly, and the 249 calibration rows retain their setup keys and budgets; only their source-proof hashes changed. Current mobile result observations, simulation measurements and remaining limits are recorded in [coverage follow-up](verification/living-circuit/coverage-followup.md). A full distribution build of runtime `a1d9bfd86a7b27f6517dc92d8788c355a5d544f0` passes expanded-file and ZIP checksum verification; see the follow-up receipt. No public deployment is claimed.
+
+The following results belong to the earlier source revisions. The renderer/scene/fixture/scheduler group had **32 passing tests**, covering unchanged geometry/replay identity, quiet materials, chapter selection without RNG, native target heading, live bounded noise, wrapping, readable danger outlines, double broadcast antennas, Pulse/terminal behavior, and reduced-effects/cache refresh. Its **144 recordings** passed qualification and calibration checks verified **249 exact setups**, including 30 historical gold records. These checks establish deterministic completion, not universal human difficulty calibration.
+
+Review found and corrected a mid-burst speedup edge: an accepted catch could change the next interval from 200 to 190 ms and overshoot the burst deadline. Profiled scheduling respects the hard duration bound at a visible simulation boundary, with start/deadline timestamps shifted together during Pulse. The regression exercises an accepted catch; legacy checkpoint compatibility still passes. The host suite passes **49 tests**, including fresh Retry seeds, exact Continue, historical recipe retention, and paused scene changes. Independent review exercised all 360 prepared archive variants and community-alias rejection.
+
+Browser checks cover the three scenes, local/broadcast interference, Solo/Team/Versus fixture playback, reduced effects, English/Ukrainian, 320×640 portrait, and 740×360 landscape. The real 320px results dialog is 592.75px high, with automatic replay and Retry/Home visible and no horizontal overflow. Screenshots and the final verification record are in `verification/living-circuit/`. The manual fixture at `game/test/manual/snake-visual-fixture.html` runs real verified journals without saving or awarding progress.
+
+The tracking-treatment follow-up passes 81 targeted renderer/scene/fixture/host checks and all 12 fixture scenarios replay to their accepted outcomes. Browser comparison covers original noise, stronger snow and selected detail loss, live reduced-effects movement, manual steering, and a 290px-wide Team board at 320px without horizontal overflow. Simulation and proof data are unchanged.
+
+The earlier tracking-treatment verification passed repository validation and lint with six byte-identical canonical shared projections. After disk space became available, a full build of implementation revision `001cebbac8e611a9e28bdcd0b8b17e061b935a10` produced 3,084 distribution files plus the manifest (1,004,029,760 payload bytes). Every expanded-file and ZIP-member checksum was verified against the manifest, including ZIP CRCs. The ZIP SHA-256 is `0c605653ea172dfb4e53c2ad3089fa4308975a28af90afe33afd9436dcc4959b`; the manifest SHA-256 is `ec5448ff7f766fb44f74393c6ae0b6e8616bdfca05c6658f6511e48adace4ab0`. The task-created disposable output was removed after verification, retaining the checksum record and approximately 2.8 GiB free space. Source and Git history were preserved. This verifies the distribution build, not publication admission.
+
+CI follow-up corrected stale mandatory-briefing and picture-gate assertions while preserving input-release, save, replay, focus, and data-isolation checks. It also fixed statistics shutdown callbacks and cancelled-import writer mutation, with an explicit observation → flush → close → reopen regression. Studio previews now use isolated statistics storage and never open the player database. The follow-up passes 131 targeted checks, including 23 statistics lifecycle/persistence tests and four Studio preview isolation tests. The optional fourth-app maintainer fixture now explicitly declares its reviewed core-only settings-tools import; the archive still excludes those core tools.
+
+The main-game picture suite passes five checks covering the full/reduced celebration, immediate Next/Retry, explicit More → View picture, timer cancellation, and held Confirm ownership. The older fullscreen-gate assertions were replaced to reflect the approved accessible-action flow; the runtime required no additional change.
+
+Earlier verification belongs to its corresponding source, not automatically to the current merge:
+
+- Initial implementation `241a388ab`: 127 combined Snake/statistics/transition/audio tests, 109 shared/non-Snake checks, nine optional-package checks, full validation, and a 3,010-file build (`88a7bcd4…`). Its victory timing was 3.8 seconds.
+- UX refinement `d457f69bbe`: the retained measurement record reports 106 Snake/shared/core checks, 73 optional-host checks, nine package checks, full validation and a 3,010-file build (`16333648…`). Browser checks covered Snake and core at 320×640 and 740×360, live picture-view Next, automatic Next, and reachable actions without horizontal overflow.
+
+Detailed previous measurements remain in `verification/snake-continuous-play-measurements.json`. Those build hashes do not certify the new Living Circuit/variable-signal source. Physical controller/touch sessions and human difficulty calibration remain separate from deterministic tests.

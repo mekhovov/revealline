@@ -1,82 +1,24 @@
-/** Fail-closed source-version and previous-public-release guards for release PRs. */
+/** Exact-source Pages boundary checks. Version metadata is informational only. */
 import * as fs from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { parseJSON, VERSION } from './metadata.mjs';
-import { publishedReleasePages, releaseDecision } from './release-policy.mjs';
+import { parseJSON } from './metadata.mjs';
 
 const MAX_PUBLIC_BYTES = 1_000_000;
 
-function stableVersion(value) {
-  if (typeof value !== 'string' || !/^\d+\.\d+\.\d+$/.test(value))
-    throw new Error('Release source must use one stable numeric version.');
-  return value;
-}
-
-export function verifyNextReleaseTitle(title, latest) {
-  const match = /^Release v(\d+\.\d+\.\d+)(?:\s|$)/.exec(title || '');
-  if (!match || !VERSION.test(latest))
-    throw new Error('A next release must name one exact stable version.');
-  const requested = match[1].split('.').map(BigInt);
-  const current = latest.slice(1).split('.').map(BigInt);
-  for (let index = 0; index < 3; index++) {
-    if (requested[index] > current[index]) return `v${match[1]}`;
-    if (requested[index] < current[index]) break;
-  }
-  throw new Error(`Release v${match[1]} must be newer than published ${latest}.`);
-}
-
-export function verifyPublishedBase(baseVersion, latest, requested = null) {
-  const base = `v${stableVersion(baseVersion)}`;
-  // A cumulative root may finish the version already allocated on main.
-  // This does not admit a different unpublished product root or reuse a release.
-  if (requested === base) {
-    verifyNextReleaseTitle(`Release ${requested}`, latest);
-    return base;
-  }
-  if (base !== latest)
-    throw new Error(
-      `Current main source ${base} is not the publicly accepted ${latest} release. ` +
-        'Finish its immutable release and Pages acceptance before promoting another product root.',
-    );
-  return base;
-}
-
 export function verifySourceVersion({
-  title,
   packageVersion,
-  lockVersion,
-  rootVersion,
-  buildVersion,
 }) {
-  const match = /^Release(?: evidence)? v(\d+\.\d+\.\d+)(?:\s|$)/.exec(title || '');
-  if (!match)
-    throw new Error(
-      'A release PR must have an exact Release vX.Y.Z or Release evidence vX.Y.Z title.',
-    );
-  const version = stableVersion(packageVersion);
-  for (const [name, value] of [
-    ['package-lock version', lockVersion],
-    ['package-lock root version', rootVersion],
-    ['game build version', buildVersion],
-    ['release title version', match[1]],
-  ]) {
-    if (value !== version) throw new Error(`${name} ${value} does not match ${version}.`);
-  }
-  return `v${version}`;
+  // Versions remain available to callers and release notes, but do not control
+  // Pages admission or block a source build.
+  return typeof packageVersion === 'string' ? packageVersion : null;
 }
 
 export function verifyPublicBoundary({
-  configuration,
-  pages,
   deployment,
   buildInfo,
   expectedMainSha = null,
-  expectedGameVersion = null,
 }) {
-  const { latest } = releaseDecision({ configuration, pages });
-  if (!VERSION.test(configuration.currentVersion))
-    throw new Error('The reviewed selector has an invalid current version.');
   if (
     deployment?.format !== 'revealline-main-deployment.v1' ||
     deployment?.channel !== 'main' ||
@@ -90,14 +32,11 @@ export function verifyPublicBoundary({
       `Public main deployment ${deployment.sourceRevision} does not match protected base ${expectedMainSha}.`,
     );
   if (
-    !/^\d+\.\d+\.\d+$/.test(buildInfo?.version || '') ||
-    (expectedGameVersion !== null && buildInfo.version !== expectedGameVersion) ||
     buildInfo?.sourceRevision !== deployment.sourceRevision ||
     buildInfo?.entry !== 'game/index.html'
   )
     throw new Error('Public game bytes do not match the continuous-main deployment marker.');
   return {
-    latest,
     sourceRevision: deployment.sourceRevision,
     buildVersion: deployment.buildVersion,
   };
@@ -126,21 +65,10 @@ async function fetchPublicJSON(url) {
 async function verifySource(root) {
   const read = async (name) => parseJSON(await fs.readFile(path.join(root, name)));
   const packageJSON = await read('package.json');
-  const lock = await read('package-lock.json');
-  const build = await read('game/build-config.json');
-  return verifySourceVersion({
-    title: process.env.PR_TITLE,
-    packageVersion: packageJSON.version,
-    lockVersion: lock.version,
-    rootVersion: lock.packages?.['']?.version,
-    buildVersion: build.version,
-  });
+  return verifySourceVersion({ packageVersion: packageJSON.version });
 }
 
 async function verifyPublic() {
-  const configuration = parseJSON(
-    await fs.readFile(new URL('./publication.json', import.meta.url)),
-  );
   const base = (process.env.PUBLIC_BASE || 'https://mekhovov.github.io/revealline').replace(
     /\/$/,
     '',
@@ -150,20 +78,7 @@ async function verifyPublic() {
   );
   const deployment = await fetchPublicJSON(`${base}/main-deployment.json?boundary=${cacheKey}`);
   const buildInfo = await fetchPublicJSON(`${base}/game/build-info.json?boundary=${cacheKey}`);
-  const boundary = verifyPublicBoundary({
-    configuration,
-    pages: publishedReleasePages(),
-    deployment,
-    buildInfo,
-    expectedMainSha: process.env.PR_BASE_SHA || null,
-    expectedGameVersion: process.env.PR_BASE_VERSION || null,
-  });
-  const requested = verifyNextReleaseTitle(process.env.PR_TITLE, boundary.latest);
-  return {
-    ...boundary,
-    base: verifyPublishedBase(process.env.PR_BASE_VERSION, boundary.latest, requested),
-    requested,
-  };
+  return verifyPublicBoundary({ deployment, buildInfo, expectedMainSha: process.env.PR_BASE_SHA || null });
 }
 
 async function main() {

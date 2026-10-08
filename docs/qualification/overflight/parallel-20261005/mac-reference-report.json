@@ -1,0 +1,67 @@
+{
+  "format": "OverflightIndependentTrialsV1",
+  "fixture": "reference",
+  "valid": true,
+  "errors": [],
+  "trials": [
+    {
+      "index": 1,
+      "trial": "1",
+      "valid": true,
+      "reasons": [],
+      "passes": true,
+      "measuredSeconds": 119.99580000001193,
+      "samples": 14399,
+      "cadenceHz": 119.99586652198302,
+      "p95Ms": 10.300000011920929,
+      "p99Ms": 13.5,
+      "slowFraction": 0
+    },
+    {
+      "index": 2,
+      "trial": "2",
+      "valid": true,
+      "reasons": [],
+      "passes": true,
+      "measuredSeconds": 120.0005,
+      "samples": 14400,
+      "cadenceHz": 119.99950000208332,
+      "p95Ms": 9.800000011920929,
+      "p99Ms": 10.5,
+      "slowFraction": 0
+    },
+    {
+      "index": 3,
+      "trial": "3",
+      "valid": true,
+      "reasons": [],
+      "passes": true,
+      "measuredSeconds": 120.00030000001192,
+      "samples": 14400,
+      "cadenceHz": 119.99970000073807,
+      "p95Ms": 9.799999952316284,
+      "p99Ms": 10.699999988079071,
+      "slowFraction": 0
+    }
+  ],
+  "passes": true,
+  "scope": "Recorded browser runs only. Hardware identity, power mode and source binding require the accompanying receipt. This does not establish player enjoyment or target-device acceptance.",
+  "recordedAt": "2026-10-05T12:09:32.368Z",
+  "inputs": [
+    {
+      "path": "docs/qualification/overflight/parallel-20261005/mac-reference-trial-1.json.gz",
+      "sha256": "4538f540fce6b3402c3d1546533e57f2d3a52bec9af4efc65541a0bf5f15eb6c",
+      "bytes": 324314
+    },
+    {
+      "path": "docs/qualification/overflight/parallel-20261005/mac-reference-trial-2.json.gz",
+      "sha256": "47e1d6a9c00745b28b984f297dbf04b685d2aebde50b46428ca89381eea8d42c",
+      "bytes": 304909
+    },
+    {
+      "path": "docs/qualification/overflight/parallel-20261005/mac-reference-trial-3.json.gz",
+      "sha256": "bdf4f00e37a1c4c9285bce5f182e70a98c2050af92f1fd2ac238dfd0f06a8496",
+      "bytes": 303997
+    }
+  ]
+}

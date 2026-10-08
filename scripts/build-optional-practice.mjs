@@ -21,6 +21,37 @@ const hash = (bytes) => createHash('sha256').update(bytes).digest('hex');
 const requireValid = (condition, message) => {
   if (!condition) throw new Error(message);
 };
+/** Select only policy-owned UI and validator messages for an offline package. */
+export function projectOptionalLocale(catalogues, policy) {
+  const projected = {
+    errors: Object.fromEntries(
+      Object.entries(catalogues.errors).filter(([key]) => key.startsWith('dataJson.')),
+    ),
+  };
+  const namespaces = new Set([
+    ...Object.keys(policy.localeKeys ?? {}),
+    ...Object.keys(policy.localeKeyPrefixes ?? {}),
+  ]);
+  for (const namespace of namespaces) {
+    const source = catalogues[namespace],
+      prefixes = policy.localeKeyPrefixes?.[namespace] ?? [];
+    const keys = [
+      ...new Set([
+        ...(policy.localeKeys?.[namespace] ?? []),
+        ...Object.keys(source).filter((key) => prefixes.some((prefix) => key.startsWith(prefix))),
+      ]),
+    ];
+    requireValid(
+      keys.every((key) => typeof source[key] === 'string'),
+      'Optional locale projection is incomplete',
+    );
+    projected[namespace] = {
+      ...projected[namespace],
+      ...Object.fromEntries(keys.map((key) => [key, source[key]])),
+    };
+  }
+  return projected;
+}
 async function ordinary(root, name, limits) {
   let target = root;
   for (const part of name.split('/')) {
@@ -64,7 +95,7 @@ function resourceReferences(name, bytes) {
       return path.posix.normalize(path.posix.join(path.posix.dirname(name), reference));
     });
 }
-function staticImports(name, bytes, verifiedVendor = false) {
+export function optionalModuleDependencies(name, bytes, policy, verifiedVendor = false) {
   if (!/\.(mjs|js)$/.test(name)) return [];
   const result = [];
   const visit = (node) => {
@@ -90,6 +121,16 @@ function staticImports(name, bytes, verifiedVendor = false) {
         typeof node.source.value === 'string' && /^\.\.?\//.test(node.source.value),
         'Optional practice permits only explicit relative module dependencies',
       );
+      // The exact reviewed core tool is an optional host capability. It is not
+      // promised by the archive's offline manifest; its host handles failure.
+      // Eager imports and every other source remain part of the strict closure.
+      if (
+        node.type === 'ImportExpression' &&
+        policy?.coreOnlyImports?.some(
+          (entry) => entry.from === name && entry.source === node.source.value,
+        )
+      )
+        return;
       result.push(
         path.posix.normalize(path.posix.join(path.posix.dirname(name), node.source.value)),
       );
@@ -153,7 +194,10 @@ export function buildBundledOptionalPractice(entries, { packageId = 'civilian-fp
       `Optional vendor bytes differ from the reviewed dependency: ${name}`,
     );
     selected.set(name, bytes);
-    pending.push(...staticImports(name, bytes, !!vendor), ...resourceReferences(name, bytes));
+    pending.push(
+      ...optionalModuleDependencies(name, bytes, policy, !!vendor),
+      ...resourceReferences(name, bytes),
+    );
   }
   const files = [...selected]
       .sort(([a], [b]) => a.localeCompare(b))
@@ -234,23 +278,20 @@ export async function buildOptionalPractice(
     if (name === 'game/i18n/catalogs.mjs') {
       const locales = {};
       for (const locale of ['en', 'uk']) {
-        const errors = JSON.parse(await readInput(`game/locales/${locale}/errors.json`));
-        locales[locale] = {
-          errors: Object.fromEntries(
-            Object.entries(errors).filter(([key]) => key.startsWith('dataJson.')),
-          ),
-        };
-        for (const [namespace, keys] of Object.entries(policy.localeKeys ?? {})) {
-          const source = JSON.parse(await readInput(`game/locales/${locale}/${namespace}.json`));
-          requireValid(
-            keys.every((key) => typeof source[key] === 'string'),
-            'Optional locale projection is incomplete',
+        const namespaces = new Set([
+          'errors',
+          ...Object.keys(policy.localeKeys ?? {}),
+          ...Object.keys(policy.localeKeyPrefixes ?? {}),
+        ]);
+        const catalogues = {};
+        for (const namespace of namespaces)
+          catalogues[namespace] = JSON.parse(
+            await readInput(`game/locales/${locale}/${namespace}.json`),
           );
-          locales[locale][namespace] = Object.fromEntries(keys.map((key) => [key, source[key]]));
-        }
+        locales[locale] = projectOptionalLocale(catalogues, policy);
       }
       bytes = Buffer.from(
-        `// Selected optional-practice validator messages only.\nglobalThis.RevealLineTranslations=${JSON.stringify(locales)};\n`,
+        `// Selected optional-practice validator and settings messages.\nglobalThis.RevealLineTranslations=${JSON.stringify(locales)};\n`,
       );
     } else bytes = generatedIcons.get(name) ?? (await readInput(name));
     const vendor = vendorPins.get(name);
@@ -259,7 +300,7 @@ export async function buildOptionalPractice(
       `Optional vendor bytes differ from the reviewed dependency: ${name}`,
     );
     entries.set(name, bytes);
-    pending.push(...staticImports(name, bytes, !!vendor));
+    pending.push(...optionalModuleDependencies(name, bytes, policy, !!vendor));
     pending.push(...resourceReferences(name, bytes));
   }
   let installation;

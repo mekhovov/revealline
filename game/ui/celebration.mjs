@@ -1,9 +1,15 @@
 import { t } from '../i18n/index.mjs';
-import { hashText } from './music.mjs';
+// Keep the visual sampler independent of the music engine so optional games can
+// project the exact same confetti implementation without loading an audio host.
+function hashText(value) {
+  let hash = 2166136261;
+  for (const character of String(value)) hash = Math.imul(hash ^ character.charCodeAt(0), 16777619);
+  return hash >>> 0;
+}
 const clamp = (v, a, b) => Math.min(b, Math.max(a, v)),
   TAU = Math.PI * 2;
 const ease = (v) => 1 - (1 - clamp(v, 0, 1)) ** 3;
-export const CELEBRATION_SECONDS = 3.8;
+export const CELEBRATION_SECONDS = 5.2;
 const PAPER_COUNT = 104;
 const GLINT_COUNT = 16;
 // Keep the family IDs stable for existing presentation consumers. Each now

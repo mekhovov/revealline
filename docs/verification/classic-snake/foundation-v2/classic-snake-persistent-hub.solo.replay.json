@@ -1,0 +1,267 @@
+{
+  "version": "classic-snake-replay.v1",
+  "ruleset": "classic-snake-core.v1",
+  "level": {
+    "version": "classic-snake-level.v1",
+    "id": "classic-snake-persistent-hub",
+    "revision": "2",
+    "name": "Borderless Hub",
+    "width": 24,
+    "height": 18,
+    "walls": [
+      {
+        "x": 7,
+        "y": 4
+      },
+      {
+        "x": 7,
+        "y": 5
+      },
+      {
+        "x": 7,
+        "y": 6
+      },
+      {
+        "x": 7,
+        "y": 7
+      },
+      {
+        "x": 10,
+        "y": 7
+      },
+      {
+        "x": 11,
+        "y": 7
+      },
+      {
+        "x": 12,
+        "y": 7
+      },
+      {
+        "x": 7,
+        "y": 8
+      },
+      {
+        "x": 10,
+        "y": 8
+      },
+      {
+        "x": 11,
+        "y": 8
+      },
+      {
+        "x": 12,
+        "y": 8
+      },
+      {
+        "x": 7,
+        "y": 9
+      },
+      {
+        "x": 10,
+        "y": 9
+      },
+      {
+        "x": 11,
+        "y": 9
+      },
+      {
+        "x": 12,
+        "y": 9
+      },
+      {
+        "x": 10,
+        "y": 10
+      },
+      {
+        "x": 11,
+        "y": 10
+      },
+      {
+        "x": 12,
+        "y": 10
+      },
+      {
+        "x": 16,
+        "y": 10
+      },
+      {
+        "x": 16,
+        "y": 11
+      },
+      {
+        "x": 16,
+        "y": 12
+      },
+      {
+        "x": 16,
+        "y": 13
+      },
+      {
+        "x": 16,
+        "y": 14
+      }
+    ],
+    "spawns": [
+      {
+        "x": 5,
+        "y": 2,
+        "direction": "right"
+      },
+      {
+        "x": 18,
+        "y": 15,
+        "direction": "left"
+      }
+    ],
+    "goal": 13,
+    "stepMs": 175,
+    "speedupEvery": 0,
+    "minStepMs": 175,
+    "wrap": true,
+    "targetMovement": "flee",
+    "fleeEvery": 4
+  },
+  "levelIdentity": "03e76a1a7a7c47a8",
+  "mode": "solo",
+  "seed": 17,
+  "steps": 180,
+  "turns": [
+    {
+      "tick": 14,
+      "playerId": 0,
+      "direction": "up"
+    },
+    {
+      "tick": 23,
+      "playerId": 0,
+      "direction": "right"
+    },
+    {
+      "tick": 27,
+      "playerId": 0,
+      "direction": "up"
+    },
+    {
+      "tick": 35,
+      "playerId": 0,
+      "direction": "left"
+    },
+    {
+      "tick": 38,
+      "playerId": 0,
+      "direction": "down"
+    },
+    {
+      "tick": 44,
+      "playerId": 0,
+      "direction": "left"
+    },
+    {
+      "tick": 51,
+      "playerId": 0,
+      "direction": "down"
+    },
+    {
+      "tick": 58,
+      "playerId": 0,
+      "direction": "left"
+    },
+    {
+      "tick": 60,
+      "playerId": 0,
+      "direction": "up"
+    },
+    {
+      "tick": 65,
+      "playerId": 0,
+      "direction": "right"
+    },
+    {
+      "tick": 69,
+      "playerId": 0,
+      "direction": "up"
+    },
+    {
+      "tick": 76,
+      "playerId": 0,
+      "direction": "right"
+    },
+    {
+      "tick": 82,
+      "playerId": 0,
+      "direction": "up"
+    },
+    {
+      "tick": 88,
+      "playerId": 0,
+      "direction": "left"
+    },
+    {
+      "tick": 101,
+      "playerId": 0,
+      "direction": "down"
+    },
+    {
+      "tick": 106,
+      "playerId": 0,
+      "direction": "left"
+    },
+    {
+      "tick": 118,
+      "playerId": 0,
+      "direction": "down"
+    },
+    {
+      "tick": 127,
+      "playerId": 0,
+      "direction": "right"
+    },
+    {
+      "tick": 128,
+      "playerId": 0,
+      "direction": "down"
+    },
+    {
+      "tick": 131,
+      "playerId": 0,
+      "direction": "left"
+    },
+    {
+      "tick": 137,
+      "playerId": 0,
+      "direction": "up"
+    },
+    {
+      "tick": 148,
+      "playerId": 0,
+      "direction": "left"
+    },
+    {
+      "tick": 154,
+      "playerId": 0,
+      "direction": "up"
+    },
+    {
+      "tick": 155,
+      "playerId": 0,
+      "direction": "left"
+    },
+    {
+      "tick": 159,
+      "playerId": 0,
+      "direction": "down"
+    },
+    {
+      "tick": 173,
+      "playerId": 0,
+      "direction": "left"
+    },
+    {
+      "tick": 179,
+      "playerId": 0,
+      "direction": "up"
+    }
+  ],
+  "checkpoint": "16152b7eb0d9c66c"
+}

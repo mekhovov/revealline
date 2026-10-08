@@ -1,0 +1,265 @@
+{
+  "version": "classic-snake-replay.v1",
+  "ruleset": "classic-snake-core.v1",
+  "level": {
+    "version": "classic-snake-level.v1",
+    "id": "classic-snake-banking-steps",
+    "revision": "2",
+    "name": "Edge Steps",
+    "width": 24,
+    "height": 18,
+    "walls": [
+      {
+        "x": 6,
+        "y": 4
+      },
+      {
+        "x": 7,
+        "y": 4
+      },
+      {
+        "x": 6,
+        "y": 5
+      },
+      {
+        "x": 7,
+        "y": 5
+      },
+      {
+        "x": 13,
+        "y": 5
+      },
+      {
+        "x": 13,
+        "y": 6
+      },
+      {
+        "x": 13,
+        "y": 7
+      },
+      {
+        "x": 10,
+        "y": 8
+      },
+      {
+        "x": 11,
+        "y": 8
+      },
+      {
+        "x": 13,
+        "y": 8
+      },
+      {
+        "x": 10,
+        "y": 9
+      },
+      {
+        "x": 11,
+        "y": 9
+      },
+      {
+        "x": 13,
+        "y": 9
+      },
+      {
+        "x": 14,
+        "y": 13
+      },
+      {
+        "x": 15,
+        "y": 13
+      }
+    ],
+    "spawns": [
+      {
+        "x": 5,
+        "y": 2,
+        "direction": "right"
+      },
+      {
+        "x": 18,
+        "y": 15,
+        "direction": "left"
+      }
+    ],
+    "goal": 11,
+    "stepMs": 175,
+    "speedupEvery": 0,
+    "minStepMs": 175,
+    "wrap": true,
+    "targetMovement": "still",
+    "fleeEvery": 3
+  },
+  "levelIdentity": "7714e722760fff36",
+  "mode": "team",
+  "seed": 17,
+  "steps": 78,
+  "turns": [
+    {
+      "tick": 0,
+      "playerId": 1,
+      "direction": "down"
+    },
+    {
+      "tick": 4,
+      "playerId": 0,
+      "direction": "down"
+    },
+    {
+      "tick": 5,
+      "playerId": 0,
+      "direction": "left"
+    },
+    {
+      "tick": 6,
+      "playerId": 1,
+      "direction": "right"
+    },
+    {
+      "tick": 11,
+      "playerId": 1,
+      "direction": "down"
+    },
+    {
+      "tick": 14,
+      "playerId": 0,
+      "direction": "down"
+    },
+    {
+      "tick": 16,
+      "playerId": 1,
+      "direction": "left"
+    },
+    {
+      "tick": 20,
+      "playerId": 0,
+      "direction": "left"
+    },
+    {
+      "tick": 24,
+      "playerId": 0,
+      "direction": "up"
+    },
+    {
+      "tick": 25,
+      "playerId": 1,
+      "direction": "up"
+    },
+    {
+      "tick": 27,
+      "playerId": 0,
+      "direction": "right"
+    },
+    {
+      "tick": 29,
+      "playerId": 1,
+      "direction": "left"
+    },
+    {
+      "tick": 35,
+      "playerId": 0,
+      "direction": "up"
+    },
+    {
+      "tick": 35,
+      "playerId": 1,
+      "direction": "up"
+    },
+    {
+      "tick": 36,
+      "playerId": 0,
+      "direction": "left"
+    },
+    {
+      "tick": 36,
+      "playerId": 1,
+      "direction": "left"
+    },
+    {
+      "tick": 39,
+      "playerId": 1,
+      "direction": "down"
+    },
+    {
+      "tick": 40,
+      "playerId": 0,
+      "direction": "down"
+    },
+    {
+      "tick": 45,
+      "playerId": 0,
+      "direction": "right"
+    },
+    {
+      "tick": 46,
+      "playerId": 1,
+      "direction": "right"
+    },
+    {
+      "tick": 49,
+      "playerId": 0,
+      "direction": "up"
+    },
+    {
+      "tick": 50,
+      "playerId": 1,
+      "direction": "up"
+    },
+    {
+      "tick": 54,
+      "playerId": 0,
+      "direction": "right"
+    },
+    {
+      "tick": 55,
+      "playerId": 0,
+      "direction": "up"
+    },
+    {
+      "tick": 58,
+      "playerId": 0,
+      "direction": "left"
+    },
+    {
+      "tick": 60,
+      "playerId": 0,
+      "direction": "up"
+    },
+    {
+      "tick": 62,
+      "playerId": 1,
+      "direction": "left"
+    },
+    {
+      "tick": 63,
+      "playerId": 1,
+      "direction": "down"
+    },
+    {
+      "tick": 64,
+      "playerId": 0,
+      "direction": "left"
+    },
+    {
+      "tick": 67,
+      "playerId": 1,
+      "direction": "right"
+    },
+    {
+      "tick": 72,
+      "playerId": 0,
+      "direction": "down"
+    },
+    {
+      "tick": 77,
+      "playerId": 0,
+      "direction": "right"
+    },
+    {
+      "tick": 77,
+      "playerId": 1,
+      "direction": "down"
+    }
+  ],
+  "checkpoint": "2af78d82b837b2a8"
+}

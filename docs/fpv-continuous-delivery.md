@@ -3354,7 +3354,245 @@ empty until the finished content and compatible runtime are published and verifi
 quality standard, followed by D6. Physical-device, novice and universal FPS/offline
 claims remain pending.
 
+### 5 October — Explicit ground movement correction; publication hold retained
 
+Main remains `21826c460e80fa4e7fa47ec8e6ba9f98f75beea4`. The human
+#1083/P1 delivery hold remains in effect. First Reservoir Library row #1094,
+combined reliability evidence #1096, Festival content #1097, stick-width
+observation #1099 and imported-catalogue truthfulness #1100 remain held Drafts;
+none is enrolled for automatic merge. Earlier October 4 checkpoints are
+historical where superseded by this entry. No release bypass or hold removal is
+part of this increment.
+
+Integrated reliability #1096 is already complete and held, including its exact
+admitted online journey, stopped-origin offline tail and representative longer
+session evidence. Ground movement is a new Harbor prerequisite, not unfinished
+work from that integrated journey. The qualified Reservoir Library row and
+Festival content remain held; the remaining world order is Harbor, then Canals,
+then D6. The future support-v1 Library cohort is a separate delivery increment.
+
+Harbor exposed a real finite-platform ground-actor stall: ordinary native
+3000-tick flights stopped permanently on both solid boxes and equivalent closed
+meshes while retaining named support. The original half-space paths continued.
+The focused `groundMotion: "support-v1"` capability opts in only patrol, sentry
+and vehicle actors. Absent fields retain the legacy branch and course identities;
+no WORLD_RULES default, model/backend identity, snapshot field, player physics,
+input, renderer or reward changes are introduced. The correction retains native
+swept movement and full-shape upward-clearance checking. Older validators reject
+the new actor field before installation, and both older Library feeds remain
+unchanged. A later Harbor row needs a compatible cohort rather than registration
+in an older feed.
+
+Frozen runtime `9b5c3d65e2877847126c87f263fbc7e9aca357fb` has 534 manual
+geometry/replay/reset/ownership checks across 66 bounded cases, 1372 contract and
+editor/import checks, ten representative unchanged legacy recordings replayed
+exactly, and nine existing contact-hunt tests. Native source qualification passes
+292 checks including actual completion, export/import, Watch and old/new storage
+retention. Root's separately stopped-origin old-cache tail retains the
+unsupported pack and its older revision, refuses the new course, and still runs
+and pauses an ordinary built-in flight. Backup readiness was visible but its
+download capture timed out, so no exported-byte claim is made. Historical failed
+experiments and fixture failures remain losslessly archived in
+[the ground-motion evidence](../authoring/fpv-worlds/ground-motion/README.md).
+
+The exact candidate `ca28461faa9a5245f55532bb27fbb5d69f557e16` then passed
+full Node 22 validation, 26 existing runtime/content checks and all-three-package
+admission with two byte-identical builds. The 95 Worlds inputs total 16,744,060
+bytes, leaving 33,156 bytes under the unchanged ceiling. The 102-member player
+passed a separate native 8981 matrix, 292/292 with zero runtime overlays, four
+owners, no warnings/errors/dropped observations and zero registered renderer
+resources after disposal. Candidate offline and Harbor's complete native
+presentation journey remain separate next checks; the old-cache tail above
+does not establish either. The sparse prerequisite failures and subsequent exact
+Git-blob/APFS materialization are retained rather than treated as product faults.
+
+Harbor r4 explicitly opts in its cart and inspector while preserving the accepted
+scene, colliders, route criteria and remaining courses. Its static qualification
+passes 407 checks; all sixteen ordinary flights, independent replays and archive
+reimports pass 540 checks. This is separate content evidence and not a current
+public Library listing, completed native art review or unrestricted movement
+guarantee. The bounded 12-actor CPU observation records the added correction cost;
+it establishes no browser FPS or hardware-performance claim. Full regression and
+new unit coverage remain D6, with physical-device and novice qualification still
+unclaimed.
+
+## 2026-10-05 — Harbor r4 qualified on the explicit ground-motion prerequisite
+
+Harbor now has eight distinct EN/UK challenges and sixteen fresh ordinary-input
+proofs. Its accepted r2 scene remains exact: 7,900 triangles, ten imported material
+batches, two original maps and 38 solid records. The raised quay and service deck
+remain real collision supports; background water stays outside playable bounds.
+Only the civilian cart and inspector opt into `groundMotion: "support-v1"`.
+The final prerequisite is Draft [#1101](https://github.com/mekhovov/revealline/pull/1101),
+head `f9617ba8e0fdb0a526171f0fab944d06ad2d834e`, retaining qualified runtime
+`9b5c3d65e2877847126c87f263fbc7e9aca357fb`. The data branch was rebased
+linearly with a recovery ref and exact Harbor-tree/distribution comparison; it
+does not change runtime, Library feeds, ceilings or objective tolerances.
+
+Static qualification passes 407 checks; 540 ordinary-flight/replay/archive checks
+cover all sixteen complete examples. Across 6,700 civilian ticks, independent
+feet-to-solid gaps remain 12–13mm on the exact named supports, within the explicitly
+approved r4-only 14mm rounding envelope. Follow completes six continuous seconds
+and 4.2m target travel; Observe completes four seconds. The isolated fictional,
+stationary, nonfiring training drone records real 50→25→0 health and defeat in
+both modes. Historical r3 finite-platform failures and their 12mm observer remain
+preserved; no source or pose shortcut is presented as a fix.
+
+The exact 102-member admitted player at
+`ca28461faa9a5245f55532bb27fbb5d69f557e16` passes a separate controlled
+packaged-module matrix: 314 checks, sixteen complete Watch endpoints and
+eight-course editor/export/reimport/reopen, with no errors/warnings/dropped
+observations and correct created-renderer disposal. Scripted legacy controls
+and controlled RAF are explicit; this is not native-visible end-to-end or
+native-clock endurance evidence.
+
+Root then used the unmodified direct entry and visible file choosers to install
+the exact pack and verify all sixteen proofs. Two normal-RAF/public-1x examples
+completed at displayed 34.5s (cart) and 32.2s (inspector), followed by deliberate
+Arm and Pause/Continue for each. The moving subjects were directly observed;
+retained screenshots are accurately labeled later landing-phase views.
+Prepare offline completed, root stopped only the verified dedicated origin,
+curl refused with exit 7, and a real cached reload retained the eight-course pack.
+Offline cart launch reached a saved Flight active state at 17.5s and paused to
+Continue. The console was empty. These flights are bounded launch/pause checks,
+not manual course completions or hardware/FPS qualification.
+
+The pack is 879,213 bytes, SHA256
+`d5bf4b9bb6829c04dbe1bb398893e5243cefc1f9acf018bf153a2012c8cf49b6`;
+the sixteen-record archive is 1,018,615 bytes, SHA256
+`7341d203aa2d3a61199a0000cc87a31f50553588dad610d878a5238aab433102`.
+The [Harbor README](../authoring/fpv-worlds/harbor-docks/README.md) links the
+editable ZIP, originals, failed diagnostics and separate CPU/controlled/native
+evidence. Bundled 14-world/196-challenge counts remain unchanged; installing
+Harbor adds one optional world and eight challenges.
+
+The human #1083/P1 main-merge hold remains in force: prepare the qualified child
+as Draft in a native dependency stack, with no automatic merge. Compatible
+Library-cohort publication is separate and no Harbor row is added to an older
+feed. Bounded stylized scene acceptance does not imply commercial-realism,
+physical-device or novice acceptance. Canals remains the next world, then D6.
+
+Publication checkpoint: the movement correction is attached Draft **#1101** and
+Harbor is attached Draft **#1102**. Native GitHub stack **#1103** was created
+through the stack API, rooted on main with the linear order `#1101 → #1102`.
+Initial exact remote heads are `f9617ba8e0fdb0a526171f0fab944d06ad2d834e`
+and `7bde8bfcb856638cba1fda6b7924986bed46290a`, respectively. Both retain
+milestone57; no auto-merge, fastline labels, manual retarget or protected merge
+was requested. This subsequent checkpoint changes documentation only. The
+coordinated main hold is still active; neither new PR is called publicly live.
+
+Next engineering increment is the separately qualified cumulative Library
+capability cohort for support-v1. Preserve both older feeds and do not bypass
+the held Reservoir row or advertise an unqualified Harbor revision. Subsequent
+approved compatible row publication must also populate the new cohort, so a newer
+player does not lose previously available worlds. Canals follows Harbor as the
+next eight-course art/content increment; D6 remains after those deliverables.
+
+### 5 October — Ground prerequisite integrated with P1; new admission pending
+
+The Character owner explicitly released the former #1083/P1 main-merge hold
+after public e03 verification. Reservoir's first Library row #1094 subsequently
+merged as `00770c96eb8eab8d0aedda433d115f86188d5a75`; that follow-up is data-only.
+Ground #1101 and its Harbor native stack #1103 remain Draft while the changed
+P1 runtime is integrated and qualified. Historical held-state checkpoints above
+are preserved as records, not current publication instructions. Integrated
+reliability #1096 was already complete before this new prerequisite.
+
+The ground branch preserves published f961 in recovery ref
+`codex/fpv-ground-motion-before-p1-e03` and rebases its focused changes onto
+`e03fdbb5cd73176a01df49347fbe9eab722f1882`. Frozen integrated runtime
+`c888632ecefe7b3846ef19d16a693eb060a91fc3` retains P1's V3 pursuit, appearance,
+offline lifecycle and package policy. A real native-query observation found
+that pursuit admission's body-shape cache skipped a second, distinct movement
+policy. The only integration-specific adjustment appends an optional policy
+suffix; absent-policy keys, decisions and movement remain unchanged.
+
+Thirty-five existing native pursuit/editor/successor/completion checks pass.
+The bounded manual comparison passes 1,074 controls: 192 V2/V3 normalized,
+exported and compiled courses, 22 paired 150-tick flights, all 16 retained
+Festival r5 recordings and all 16 Harbor r4 recordings with exact completed
+identities. The other 12 catalogue entries are FlightCourse.v1 and outside
+the World-validator loop. The established ten retained legacy recordings also
+pass, overlapping four Festival records. Eight synthetic mixed-policy V3
+partial-practice recordings replay exactly and reject policy removal. The
+initial manual error-message expectation failure is retained; production did
+not change for that fixture correction. See the
+[P1 integration archive](../authoring/fpv-worlds/ground-motion/evidence/integration-p1/README.md).
+
+P1 changed the actual dependency closure and existing policy. The new committed
+source inventory has 105 Worlds inputs, 16,981,627 raw bytes and 3,989,893 bytes
+of reserve under its inherited 128-file / 20 MiB ceiling; this feature does not
+edit those limits. Historical ca284 admission and native 8981 remain precisely
+95-input / 102-member evidence. Fresh integrated validation, package admission,
+native browser and populated-storage/offline qualification remain pending and
+must use the new actual manifests. Source integration may be published as a
+Draft while storage recovery blocks those gates; no admission or readiness
+claim is inferred from the source checks.
+
+Root will cascade the preserved Harbor data/evidence onto this parent and
+coordinate explicit branch leases. No push, merge, admission or new unit suite
+was performed by this integration handoff. Harbor's recorded content checks
+remain separate from the upcoming compatible Library cohort. Canals proceeds
+through its first scene checkpoint before complete routes; broader regression,
+physical-device and novice gates remain D6.
+
+### 5 October — P1 ground package admission complete; native integration next
+
+After safe storage recovery, the ground parent rebased cleanly onto data-only
+main `00770c96eb8eab8d0aedda433d115f86188d5a75`. Qualification source
+`328f4c5373a89342aca2063134c0bc2823ecbb07` retains all 105 runtime inputs
+byte-identically to c888. Recovery ref
+`codex/fpv-ground-motion-before-row-007` preserves pre-rebase 68c9611.
+
+Fresh full Node 22 validation and all three optional-package admissions pass,
+with two byte-identical builds per package and every committed source input
+verified. Worlds now has the actual P1 closure: 105 inputs, 112 full members,
+16,981,627 source bytes and 3,989,893 bytes of reserve under the inherited
+20 MiB / 128-member policy. Academy has 76 members. The exact no-overlay Worlds
+stage passes 243 hash/ownership checks. The small
+[integrated admission archive](../authoring/fpv-worlds/ground-motion/evidence/integration-p1-admission/README.md)
+retains successful logs and the earlier bounded sparse-materialization failure.
+
+This closes validation and package admission for the integrated parent.
+Fresh native browser and populated-storage/offline acceptance remain pending;
+old ca284/8981 results are not relabeled. Root will cascade Harbor onto the
+docs-complete parent and coordinate explicit branch leases before updating the
+Draft native stack. The separate Library cohort must preserve older feeds and
+carry eligible published rows forward. No push, merge or new unit coverage was
+performed by this admission handoff. Canals remains at its first-scene stage;
+broader regression, novice and physical-device qualification remain D6.
+
+### 5 October — Disk recovery, current P1 admission and Reservoir public launch
+
+The user authorized disposable-cache cleanup while preserving development data.
+About 7 GiB of cache/duplicate allocation was recovered, principally 23 stale,
+unindexed, incomplete Git temporary packs that Git classified as garbage.
+Finalized Git packs/indexes and all 2,135 previously checked ref/worktree HEAD
+objects remain unchanged and readable. This is a bounded preservation check,
+not a recursive repository integrity claim. Unique qualification archives,
+working files, installed extensions and browser offline/profile data remain.
+Local validation and package builds resumed; runtime qualification is no longer
+blocked by disk space.
+
+Ground's final documentation head `d78ae3bdd84e7f92ea88f94f8ca9e3fe04afe009`
+retains all 105 inputs from admitted `328f4c5373a89342aca2063134c0bc2823ecbb07`.
+Full validation and all-three admission pass, with two byte-identical builds per
+package and an exact 112-member Worlds stage. Its new
+[P1 admission evidence](../authoring/fpv-worlds/ground-motion/evidence/integration-p1-admission/README.md)
+keeps failures and historical results separate. Harbor was cascaded linearly
+onto this parent with recovery refs; every Harbor source/distribution/evidence
+byte remains identical to prior `f70834deb9bb21b0b9f000f355884af047fc0ba9`.
+Native stack1103 remains `#1101 → #1102`, both Draft pending fresh integrated
+native/offline checks. No manual retarget, bypass or merge is requested.
+
+Reservoir Library #1094 is publicly available: the public deployment marker
+identifies `00770c96eb8eab8d0aedda433d115f86188d5a75`, and root launched the
+actual public SIM, used Browse/Download to install r16 (eight challenges,
+identity prefix `50ffbb0e5da7`), and opened Shoreline check-in. Deliberate arm,
+pause and continue worked; the captured ordinary flight reached 30.8 seconds.
+This is public installation/launch evidence, not a manual course completion,
+new recording, hardware or sustained performance claim. The compatible Library
+cohort must copy the eligible Reservoir row and retain both older feeds.
 ### 5 October — Stick geometry observation qualified; publication held
 
 The separate Worlds display-only candidate `34ddde3ed0416f0e90aae8170101bd6a6c8d08e2`
@@ -3437,6 +3675,7 @@ Acro mode observation match. The focused change is qualified for a held Draft PR
 protected publication remains subject to the explicit human hold. No published
 Browse, whole replay completion, offline or performance claim is added. See the
 [focused scope](../authoring/fpv-worlds/catalogue-truthfulness/README.md).
+
 ## 4 October — Combined online journey and publication
 
 Reservoir r16 data #1090 merged normally as
@@ -3521,3 +3760,254 @@ Festival r5 eight-course source has616 checks / 16 ordinary completion and repla
 proofs, plus 311 historical admitted-browser checks / 16 Watch replays; final native
 offline qualification and publication remain pending. Continue
 Festival, Harbor, Canals and then D6, retaining device/novice limits.
+
+## 5 October — Player-reported learning and exploration fixes
+
+Native stack **#1106**, based on main, contains **#1104 → #1105**. Lesson clarity
+#1104 is published at `037b6ac6303d064f9dba31fce8e5078a6c1bc72b`; untimed full-world
+free flight #1105 was first published at `a83823757cba76c26131f352d6b09ac4ba37eeb4`.
+The latter receives this documentation-only checkpoint as a normal fast-forward.
+Both remain Draft for exact committed-source package admission, reproducibility and
+offline qualification. No public availability or merge is claimed.
+
+The learning observer now exposes the actual altitude, tilt, centred-input, speed,
+heading and landing conditions. Named chapters explain their purpose; full-flight
+and section demonstrations are discoverable, and returning from a demonstration
+preserves an unfinished scored attempt's command prefix and resumes paused.
+Larger live readings/sticks and an active-objective direction cue were inspected
+in desktop, phone portrait/landscape and Ukrainian layouts. All 58 recommended-mode
+school demonstrations complete and independently replay: 87,518 ticks on each path,
+56,796 hold-frame comparisons, 239 accepted transitions, zero criterion mismatches.
+The receipt also covers 1,496 EN/UK lesson/mode states and 35 edge cases. These are
+functional checks, not novice acceptance or new unit coverage.
+
+Free flight now selects a full-world layout independently of filtered Hunt arenas
+and uses the existing untimed, unscored practice runtime. Its 142-assertion functional
+probe covers 14 worlds, 28 mode starts, imported fallback selection, immutable source
+courses and both modes remaining active beyond 36,000 ticks. This removes the old
+12-minute cutoff; it does not claim streamed, spatially unlimited terrain. See
+`fpv-learning-clarity.md`, `fpv-endless-exploration.md` and their evidence probes.
+
+The combined development player is retained at `dist/fpv-learning-clarity-playtest`:
+104 files / 15,651,677 bytes, ZIP SHA-256
+`df31491b9b04469d7c2feb60b378862f88015b413c0c905330496704a52deb6d`.
+It was launched and exercised but is explicitly not release-qualified.
+
+Independent Snake shared soundtrack **#1107**, branch `codex/snake-shared-soundtrack`,
+head `af179bb15f`, restores the shared transport/library using Snake's existing audio
+owner. Browser transport progression, Pause through Start/Retry, nested-library Back
+and music through gameplay Pause passed. Existing 69 shared menu/music and 12 catch
+audio checks pass. Audible device output and packaged/offline qualification remain
+pending. See `fpv-snake-shared-music.md` on that branch. It is also Draft.
+
+Storage repeatedly fell to zero during this work. One confirmed incomplete Git temp
+pack and two duplicate installed-extension download archives were safely removed;
+all source, refs, histories, protected builds and unique evidence were preserved.
+The interrupted branch switch was repaired only after verifying affected files
+matched the intended committed target byte-for-byte. All completed application
+changes are now committed and pushed. Full builds require the existing 3 GiB floor;
+do not bypass it or delete unique work to force qualification.
+
+Next priorities: finish exact package/offline qualification when space is stable;
+clarify Hunt contact versus Combat fire versus Follow/Observe interactions; add
+filtered random challenge selection; integrate SIM's shared music with explicit
+audio ownership. Richer beginner scenery and collidable landmarks inside expanded,
+versioned exploration worlds remain art/runtime work. Existing target contact was
+reproduced successfully in eight moving catches and exact replays; stopping momentum
+and non-destructible Follow/Observe actors are separate versioned design questions,
+not permission to rewrite existing proofs. Physical radio/mobile/Steam Deck and novice
+acceptance remain unclaimed. Festival, Harbor, Canals and D6 priorities remain in force.
+
+## 5 October — Learning clarity and free exploration fixes
+
+From main `cfa30a228eb25d2bc7e4dd6d76e417c0d76a6873`, branch `codex/fpv-learning-clarity` implements the reviewed [learning clarity increment](fpv-learning-clarity.md): explicit real criteria, named chapters, prominent real-flight/section demonstrations, safe recorded-prefix return, FPV target cues and larger lesson sticks. All 58 recommended-mode proofs and 56,796 hold-frame comparisons pass unchanged. Native browser verification includes actual section/full replay, retained 11-second practice prefix, explicit flight-mode choice, EN/UK and desktop/phone viewports.
+
+Free-flight canonical-world selection and endless unscored operation are a separate dependent increment. Snake shared soundtrack controls are a separate independent increment. They remain separately reviewable; no old course/replay contract is rewritten. [The running-target audit](fpv-running-target-contact-audit.md) found eight valid moving-target catches replaying correctly; the next increment must clarify Contact Hunt versus pulse combat versus observation and treat momentum-preserving Hunt changes as versioned behavior.
+
+These changes are locally verified development work, not public live availability. Full frozen-source package admission remains pending sufficient temporary storage (3 GiB heavy-build floor; below 1 GiB observed). No protected checks, holds, source budgets or cleanup safeguards were relaxed. Continue focused publication, then target-action clarity/random selection/shared settings, accessible scenery revisions and the established Festival → Harbor → Canals → D6 sequence. Human art/device/novice acceptance stays explicitly unmeasured and does not block independent development.
+
+## 5 October — Shared graphical flight HUD
+
+Focused PR **#1110**, branch `codex/fpv-graphical-flight-hud`, is appended to native
+stack **#1106** after **#1104 → #1105**. Its implemented/frozen candidate is
+`3bbdc8dda7e1613fe4c2b838c40ffbbe9493f852`, based on exact parent
+`29646092ff152d4807e44522ff6f1e67ba7b79d9`. A following documentation-only
+fast-forward records qualification. No parent heads, stack targets, holds or
+required protections were altered. Public deployment is not claimed.
+
+Both SIM hosts replace their large numeric coach and duplicate telemetry with a
+shared compact target-band gauge, one correction and a runtime-earned progress
+ring. Exact conditions live behind safely paused Explain. Current target cues
+distinguish hold/landing, entry-side gates, tracking and Touch/Fire; hidden targets
+receive directional/obstructed guidance. Missing facts cannot earn success.
+Preferences, typed feedback and read-only legacy criterion facts preserve physics,
+recordings, scoring and identities. See `fpv-graphical-flight-hud.md`.
+
+All 58 School and 24 Academy demonstrations complete and replay unchanged:
+102,365 ticks per path, 65,309 eligibility comparisons and 484 transitions.
+The functional receipt contains 18 focused checks plus 3,336 EN/UK feedback cases;
+74 projection/legacy checks and 60 existing flight/UI/radio/replay tests pass.
+Browser review covers 390×844, 844×390 and 1280×800, EN/UK, touch, safe Explain,
+shared preferences and twenty theme options. Same-workload callback mean was
+0.089 ms versus old coach 0.108 ms; this is not an FPS/input-latency claim.
+
+Storage recovery removed only ten audited abandoned incomplete Git temporary
+packs (2,935,750,656 bytes), each checksum-invalid, unopened and unchanged during
+two checks. Valid packs, refs, source, registered worktrees and unique evidence
+were preserved. Free space stayed above 3 GiB for all qualification phases.
+All three frozen package admissions and two identical builds each passed, along
+with full Node22 validation and 53 existing offline/package checks.
+Exact admitted World/Academy prepared via their launchers and reloaded during a
+verified stopped-origin outage; Academy Explain returned paused and the full Acro
+tilt demonstration completed in World Studio without console warnings/errors.
+The local server was restored. Byte/hash receipts and screenshots are committed.
+
+#1110 remains Draft for coordinated parent publication and exact-head CI/reviews,
+not a remaining storage or package qualification failure. Parent Draft states
+were preserved. Next concrete delivery step: reconcile #1104/#1105 frozen
+qualification and current-main native stack ancestry with explicit recovery refs
+and remote-head leases where needed, then protected publication and actual public
+SIM launch. Additional unit coverage remains D6; physical-device/controller/novice
+acceptance and installed-app fullscreen are unclaimed. No scenery/physics/mission
+expansion was included in this HUD increment.
+
+## 5 October — HUD/results overlap correction
+
+Follow-up to #1110 fixes the reported compact HUD painting above the lesson
+completion menu. Both hosts now give covering menus and terminal results explicit
+HUD visibility ownership, separate from paused/replay state. Ordinary paused
+practice retains accessible Explain. Canonical CSS immediately suppresses the HUD
+when a result appears after the frame update, including the asynchronous recording
+verification interval. Completed results also hide idle sticks, the drone diagram
+and replay transport so they cannot overlap the restored menu header.
+
+Native browser verification passed 38 functional DOM checks covering both hosts,
+active/paused/replay suppression, result replacement, controls and restoration.
+The real Acro tilt demonstration ends with a clear result; World and Academy
+Pause/Continue and Explain/Close restore guidance safely. All 60 existing flight,
+UI, radio and replay regressions pass; scoped lint/syntax and shared style
+projection checks pass. Evidence: `fpv-flight-hud-overlay-verification.json`.
+
+Fresh development preview: http://127.0.0.1:8981/optional-practice/fpv-worlds/index.html?lang=en#learn.
+The immutable 8972 admitted preview and historical package receipts still identify
+3bbdc8 and do not contain this follow-up. Do not mark the new source package-qualified
+or public live: the stable 3 GiB build floor is not currently met. Preserve #1110's
+Draft/native-stack position and repeat frozen package qualification before release.
+
+## 5 October — Parallel publication, Library and contact gameplay
+
+Native stack **#1106** was reconciled onto main
+`2d447bc790bdf3951251c99041c8a918363ece0a` as a coordinated linear cascade.
+Recovery refs retain all three former remote heads. All six patches compare
+identically in range-diff, and the three branches were pushed atomically with
+explicit per-branch remote-head leases. Live membership remains
+**#1104 → #1105 → #1110**; no PR was retargeted or protection changed.
+The new code heads are `55493cb94783`, `0e3cc79c89f6` and `614adef75a6e`.
+See `fpv-stack-1106-cascade-20261005.json`.
+
+The frozen HUD code at `614adef` passes all three package admissions, two identical
+builds per package, committed-input/member verification and full Node 22
+validation. Both parent exact-head CI package receipts are also retained.
+The refreshed functional run completes and independently replays all 58 School
+and 24 Academy demonstrations (102,365 ticks per path, 65,309 criterion comparisons,
+484 transitions). The exact admitted hosts reload with their dedicated origin
+stopped. Acro tilt reaches a clear result without HUD/stick/replay overlap;
+Academy Explain returns paused. No console warnings/errors were observed.
+See `fpv-flight-hud-package-qualification-614adef.json` and
+`fpv-flight-hud-overlay-admitted-review.json`.
+
+The current 53-case offline/package regression suite is **not run**: concurrent
+volume allocation dropped free space below the 3 GiB heavy-build floor after
+admission and validation. Prior passing results remain explicitly historical.
+Safe cache/invalid-temp-pack cleanup and lossless compression of inactive temporary
+receipts preserve source, commits, valid Git objects, worktrees and all evidence
+bytes. Stop expanding cleanup merely to chase ongoing allocation; retain the
+restoration manifests. Fresh responsive/device acceptance is not claimed: the
+current browser ignored the requested viewport override and remained 1280×720.
+
+Independent **#1113** (`codex/fpv-festival-library`) adds the merged Festival r5
+pack to the capable Library feed while preserving Reservoir and the original
+feed. Its 37 data checks pass. Native pending-catalogue integration verifies
+Browse, immutable HTTPS download/hash validation, all eight installed missions,
+scene preparation, deliberate arm/pause and retained identity after reload.
+Only the catalogue response is a local fixture; public feed publication remains
+pending. Its release-ready gate explicitly holds without an allocated release
+slot; do not invent a version or bypass the gate.
+
+Independent **#1114** (`codex/fpv-hunt-momentum-contact`) introduces opt-in
+`retain-momentum-v1` ordinary Hunt catches and preserves legacy identities and
+all other collision responses. A small editable/importable moving-runner practice
+pack and both-mode proof archive accompany 15,714 initial functional assertions.
+Native import verified the pack and both examples, then exposed an existing
+hard-coded world-model restriction hiding Hunt demonstrations. Correct that
+read-only model selection and verify actual example playback before calling the
+increment complete. Package/device/public qualification remains pending.
+
+Filtered random flight selection is developing independently on
+`codex/fpv-filtered-random-flight`, based on the frozen HUD code and intended as
+its next focused stack member. Keep it out of #1110. It reuses current catalogue
+filters within the explicitly selected world, avoids immediate repeats when
+possible, and keeps normal preparation and deliberate arming.
+
+Performance **#1099** retains exact head `823fd48afb77`; the failed candidate job
+was an upload-stage timeout after tests/build passed. Only that failed job was
+retried; attempt 2 remained in progress at the checkpoint. The human Ready and
+fastline-approved history is preserved. Do not claim publication before exact
+checks, protected merge and public deployment/launch verification.
+
+The Harbor-capable Library cohort retains a clean linear base on Harbor
+`c958e5e13d03`; probe-only preparation `bdbb7c96f` checks all inherited catalogue
+and policy members, including rejection of dropped/changed entries (60 checks).
+No parent branch changed. Coordinate #1101 → #1102 → cohort rebasing later with
+recovery refs and explicit leases. Carry Festival forward only after its feed
+entry is published. Harbor integration, Canals completion and D6 remain next;
+physical hardware/novice acceptance is unclaimed and does not block independent
+feature work. No new public-live claim is made in this checkpoint.
+
+## 5 October — Random flight, native Hunt and protected performance merge
+
+Live native stack **#1106** is now **#1104 → #1105 → #1110 → #1115**, all Draft.
+Only the random-flight child was rebased and appended using the supported native
+stack operation. HUD parent #1110 remains exactly
+`b0f8555a45a41a829e2d81230a0608c72acb6c89`; its admitted runtime source remains
+`614adef75a6e1cc28ea1d04acf26fa69b507c551`.
+
+**#1115** is published as a focused Draft. Random selection uses the selected
+world's visible filters, preserves flight mode, avoids repeating a manually or
+randomly chosen flight when another match exists, and keeps deliberate arming.
+All 19 mounted World UI checks pass. Native EN verification covers empty/single
+matches and Enter preparing **Wide oval** unarmed at zero throttle and elapsed
+time; Menu retains its title and hides the HUD. The long UK world label and
+button fit the 1280×720 mission modal without horizontal overflow or browser
+warnings/errors. The receipt and screenshot are retained in
+`fpv-filtered-random-flight-native-review.json`. Fresh package admission, offline
+qualification and protected delivery remain outstanding for this child.
+
+Performance **#1099** merged through the protected exact-head path at
+**12:43:12 UTC**, from `823fd48afb771b49700bd18f29593f22a016664a` to main merge
+`e3e1e8b8d3b061a85c77f7bc82159db810dff688`, with `bypass_rules: false`.
+All 23 recorded checks were successful or explicitly skipped. The lossless
+[merge archive](evidence/fpv-performance-protected-merge-20261005/manifest.json)
+retains eligibility, merge request, merge result and publication observations.
+Pages run **37311488518** was queued after merge and was in progress at
+**12:44:53 UTC**, alongside Company run **37311488428**. At that observation both
+public markers still named `2d447bc790bdf3951251c99041c8a918363ece0a`.
+Actual public launch of the merged performance change is not yet verified.
+
+Hunt **#1114** runtime `1ba932e6f61b918a9571c4a193c30f554855e951` now has actual
+native playback verification on the isolated 8918 preview: the practice pack and
+both examples imported, **2/2 recordings verified**, and Self-level and Acro
+demonstrations each completed in **20.9 seconds**, **Caught 2/2**. Changing modes
+kept playback paused. The documentation follow-up is separate from that runtime
+identity; no future branch head is assumed. Package/device/public qualification
+remains pending.
+
+Festival **#1113** has passed its native pending-catalogue fixture flow and remains
+Draft pending release allocation and actual feed publication. Reservoir remains
+preserved; the fixture is not evidence that the Festival row is publicly served.
+
+Available disk space is about **2.6 GiB**, below the stable **3 GiB** floor for heavy
+qualification. No further cleanup is planned. Preserve existing admissions and
+evidence, and keep heavy qualification stopped until the stable floor is met.
+This checkpoint changes documentation only; current runtime and package input
+identities remain unchanged.
