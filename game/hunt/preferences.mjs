@@ -159,6 +159,8 @@ export const createDestructionPreferences = (options = {}) =>
     ...options,
     key: DESTRUCTION_PREFERENCES_KEY,
     format: 'DestructionPreferencesV1',
+    // Retain the shared V1 boolean: true = reactions, false = classic sounds.
+    // Missing legacy values choose reactions without changing the visual settings.
     defaults: { brutal: false, blood: true, vocals: true },
     normalize: (value) => ({ vocals: true, ...value }),
     valid: (value) =>

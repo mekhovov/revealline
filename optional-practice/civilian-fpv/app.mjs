@@ -1,5 +1,6 @@
 import { fpvReturnURL } from '../../game/fpv-entry.mjs';
 import { getLocale, setLocale } from '../../game/i18n/index.mjs';
+import { attachDefeatSoundControls } from '../../game/ui/defeat-sound-controls.mjs';
 import {
   createFlight,
   createFlightRecorder,
@@ -306,6 +307,13 @@ export function mountFlightApp({
     onPreferencesChange: () => paint(true),
   });
   const hudPreferences = flightHud.preferenceControls(doc.querySelector('.academy-options-panel'));
+  const defeatSounds = attachDefeatSoundControls({
+    document: doc,
+    window: win,
+    getStorage: () => win.localStorage,
+    container: $('academy-audio-mix'),
+    prefix: 'academy-',
+  });
   updateSoundLabel(presentation.soundEnabled());
   const droneResponse = mountDroneResponse({
     root: $('academy-drone-response'),
@@ -2275,6 +2283,7 @@ export function mountFlightApp({
       renderer.dispose();
       immersive.dispose();
       audioControls.dispose();
+      defeatSounds.dispose();
       presentation.dispose();
       audio.dispose();
       appearanceControls.dispose();
