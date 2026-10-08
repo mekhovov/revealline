@@ -82,7 +82,7 @@ export function fpvWorldLaunchURL(href, locale = 'en', appearanceDefault = null)
   )
     return null;
   const match =
-    /^(.*\/)game\/(?:(?:index|company)\.html|couch\/(?:index\.html|relay-rescue\.html)?|snake\/(?:(?:index|play)\.html)?)?$/.exec(
+    /^(.*\/)game\/(?:(?:index|company)\.html|couch\/(?:index\.html|relay-rescue\.html)?|snake\/(?:(?:index|play)\.html)?|overflight\/(?:play|raid)\.html)?$/.exec(
       game.pathname,
     );
   if (!match) return null;
@@ -115,6 +115,8 @@ export function fpvReturnURL(href) {
         'snake/',
         'snake/index.html',
         'snake/play.html',
+        'overflight/play.html',
+        'overflight/raid.html',
       ].some((name) => target.pathname === gameRoot.pathname + name)
     )
       return null;
@@ -140,7 +142,7 @@ export function snakeLaunchURL(href, mode = 'solo', locale = 'en', appearanceDef
   )
     return null;
   const match =
-    /^(.*\/)game\/(?:(?:index|company)\.html|couch\/(?:index\.html|relay-rescue\.html)?|snake\/(?:(?:index|play)\.html)?)?$/.exec(
+    /^(.*\/)game\/(?:(?:index|company)\.html|couch\/(?:index\.html|relay-rescue\.html)?|snake\/(?:(?:index|play)\.html)?|overflight\/(?:play|raid)\.html)?$/.exec(
       current.pathname,
     );
   if (!match) return null;

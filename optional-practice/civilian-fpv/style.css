@@ -5883,7 +5883,7 @@ body .mode-settings-view[open] [data-settings-back][data-menu-icon]::before {
 /* Layout belongs to the shared mode chooser, including theme-styled hosts. */
 .game-mode-choice {
   display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
+  grid-template-columns: repeat(var(--game-mode-count, 5), minmax(0, 1fr));
   gap: clamp(4px, 1vw, 8px);
   margin: 0 0 20px;
   min-width: 0;
