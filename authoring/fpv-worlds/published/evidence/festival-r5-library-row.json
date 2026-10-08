@@ -1,0 +1,253 @@
+{
+  "format": "FPVFestivalLibraryRow.v1",
+  "verifiedAt": "2026-10-05T11:52:37.607Z",
+  "baseMain": "2d447bc790bdf3951251c99041c8a918363ece0a",
+  "contentMerge": "d867c7f1f138ee6a0ce25ea7a4f4312928c4a40c",
+  "index": {
+    "path": "authoring/fpv-worlds/published/surface-coating-v1/index.json",
+    "bytes": 936,
+    "sha256": "838580c0bbe658230702a7225242e790e3b63fbabb06c863df5ceec0612b2ad2"
+  },
+  "row": {
+    "id": "festival-grounds",
+    "title": ["Festival Grounds", "Фестивальний майданчик"],
+    "revision": "r5",
+    "commit": "62d0e72f2963a61cc65ef829a320d9a1c2593b0c",
+    "path": "authoring/fpv-worlds/festival-grounds/distribution/r5/festival-grounds.r5.rlpack",
+    "sha256": "87baca276e174f31ba19c02f4f2359c97affa07eefd4a5f4912b4d8664450f51",
+    "bytes": 1256875,
+    "courses": 8,
+    "url": "https://raw.githubusercontent.com/mekhovov/revealline/62d0e72f2963a61cc65ef829a320d9a1c2593b0c/authoring/fpv-worlds/festival-grounds/distribution/r5/festival-grounds.r5.rlpack"
+  },
+  "preservedReservoir": {
+    "id": "mountain-reservoir",
+    "title": ["Mountain Reservoir", "Гірське водосховище"],
+    "revision": "r16",
+    "commit": "ea57d2e321896ab873c2ca6ca06791a88362a674",
+    "path": "authoring/fpv-worlds/mountain-reservoir/distribution/r16/mountain-reservoir.r16.rlpack",
+    "sha256": "50ffbb0e5da7dec94862a8f2ca85cfeb60542d3fe9f86bd3c4e288dfa0a2e554",
+    "bytes": 1379988,
+    "courses": 8,
+    "url": "https://raw.githubusercontent.com/mekhovov/revealline/ea57d2e321896ab873c2ca6ca06791a88362a674/authoring/fpv-worlds/mountain-reservoir/distribution/r16/mountain-reservoir.r16.rlpack"
+  },
+  "requests": [
+    {
+      "url": "https://raw.githubusercontent.com/mekhovov/revealline/62d0e72f2963a61cc65ef829a320d9a1c2593b0c/authoring/fpv-worlds/festival-grounds/distribution/r5/festival-grounds.r5.rlpack",
+      "status": 200,
+      "finalURL": "https://raw.githubusercontent.com/mekhovov/revealline/62d0e72f2963a61cc65ef829a320d9a1c2593b0c/authoring/fpv-worlds/festival-grounds/distribution/r5/festival-grounds.r5.rlpack",
+      "bytes": 1256875,
+      "sha256": "87baca276e174f31ba19c02f4f2359c97affa07eefd4a5f4912b4d8664450f51",
+      "etag": "W/\"f2d36d022770cabab635a85c3e197d929cdefd3f08cebd912f034438ec0e8b28\""
+    },
+    {
+      "url": "https://raw.githubusercontent.com/mekhovov/revealline/62d0e72f2963a61cc65ef829a320d9a1c2593b0c/authoring/fpv-worlds/festival-grounds/distribution/r5/manifest.json",
+      "status": 200,
+      "finalURL": "https://raw.githubusercontent.com/mekhovov/revealline/62d0e72f2963a61cc65ef829a320d9a1c2593b0c/authoring/fpv-worlds/festival-grounds/distribution/r5/manifest.json",
+      "bytes": 4633,
+      "sha256": "76b7b77f8c2d4da82ba0fbd86273eaa073f6fea90d9b958dd77d8c99768c67fe",
+      "etag": "W/\"0cc9684cf70c91f4907181dec54e1f4615f1176137001baf5fee80d27fbcc129\""
+    },
+    {
+      "url": "https://raw.githubusercontent.com/mekhovov/revealline/62d0e72f2963a61cc65ef829a320d9a1c2593b0c/authoring/fpv-worlds/festival-grounds/distribution/r5/festival-grounds.r5.proofs.json",
+      "status": 200,
+      "finalURL": "https://raw.githubusercontent.com/mekhovov/revealline/62d0e72f2963a61cc65ef829a320d9a1c2593b0c/authoring/fpv-worlds/festival-grounds/distribution/r5/festival-grounds.r5.proofs.json",
+      "bytes": 1098458,
+      "sha256": "277503e86f3cb0b9cd60bc405ec41562bed1533c3f8a779391141ac3985884b6",
+      "etag": "W/\"36bf24e0b67cbd1f334328a033e5467e657567a46b1dc3013454a95e3f5209db\""
+    }
+  ],
+  "checks": [
+    {
+      "name": "Current strict parser accepts Reservoir followed by Festival",
+      "passed": true
+    },
+    {
+      "name": "Published Reservoir row retains every field and immutable URL",
+      "passed": true
+    },
+    {
+      "name": "Original cached-runtime catalogue is byte-exact and remains empty",
+      "passed": true
+    },
+    {
+      "name": "Pinned immutable content is included in merged PR1097 and main",
+      "passed": true
+    },
+    {
+      "name": "Immutable HTTP bytes match committed festival-grounds.r5.rlpack",
+      "passed": true
+    },
+    {
+      "name": "Immutable HTTP bytes match committed manifest.json",
+      "passed": true
+    },
+    {
+      "name": "Immutable HTTP bytes match committed festival-grounds.r5.proofs.json",
+      "passed": true
+    },
+    {
+      "name": "Pack size and SHA-256 match the row and published release manifest",
+      "passed": true
+    },
+    {
+      "name": "EN/UK titles, revision and eight-course count match release metadata",
+      "passed": true
+    },
+    {
+      "name": "Proof archive retains its separate immutable size/hash and sixteen records",
+      "passed": true
+    },
+    {
+      "name": "Current main imports the exact Festival r5 project with eight distinct courses",
+      "passed": true
+    },
+    {
+      "name": "Pack roundtrip preserves every published byte",
+      "passed": true
+    },
+    {
+      "name": "Festival does not require Harbor support-v1 actor movement",
+      "passed": true
+    },
+    {
+      "name": "Checksummed archive import retains sixteen unique exact course/mode pairs",
+      "passed": true
+    },
+    {
+      "name": "festival-grounds-01/self-level retains exact pack and normalized course",
+      "passed": true
+    },
+    {
+      "name": "festival-grounds-01/acro retains exact pack and normalized course",
+      "passed": true
+    },
+    {
+      "name": "festival-grounds-02/self-level retains exact pack and normalized course",
+      "passed": true
+    },
+    {
+      "name": "festival-grounds-02/acro retains exact pack and normalized course",
+      "passed": true
+    },
+    {
+      "name": "festival-grounds-03/self-level retains exact pack and normalized course",
+      "passed": true
+    },
+    {
+      "name": "festival-grounds-03/acro retains exact pack and normalized course",
+      "passed": true
+    },
+    {
+      "name": "festival-grounds-04/self-level retains exact pack and normalized course",
+      "passed": true
+    },
+    {
+      "name": "festival-grounds-04/acro retains exact pack and normalized course",
+      "passed": true
+    },
+    {
+      "name": "festival-grounds-05/self-level retains exact pack and normalized course",
+      "passed": true
+    },
+    {
+      "name": "festival-grounds-05/acro retains exact pack and normalized course",
+      "passed": true
+    },
+    {
+      "name": "festival-grounds-06/self-level retains exact pack and normalized course",
+      "passed": true
+    },
+    {
+      "name": "festival-grounds-06/acro retains exact pack and normalized course",
+      "passed": true
+    },
+    {
+      "name": "festival-grounds-07/self-level retains exact pack and normalized course",
+      "passed": true
+    },
+    {
+      "name": "festival-grounds-07/acro retains exact pack and normalized course",
+      "passed": true
+    },
+    {
+      "name": "festival-grounds-08/self-level retains exact pack and normalized course",
+      "passed": true
+    },
+    {
+      "name": "festival-grounds-08/acro retains exact pack and normalized course",
+      "passed": true
+    },
+    {
+      "name": "Qualification source matches frozen main: optional-practice/civilian-fpv/world-library.mjs",
+      "passed": true
+    },
+    {
+      "name": "Qualification source matches frozen main: optional-practice/civilian-fpv/world-content.mjs",
+      "passed": true
+    },
+    {
+      "name": "Qualification source matches frozen main: optional-practice/civilian-fpv/world-records.mjs",
+      "passed": true
+    },
+    {
+      "name": "Qualification source matches frozen main: optional-practice/civilian-fpv/world-model.mjs",
+      "passed": true
+    },
+    {
+      "name": "Qualification source matches frozen main: optional-practice/civilian-fpv/world-themes.mjs",
+      "passed": true
+    },
+    {
+      "name": "Qualification source matches frozen main: optional-practice/civilian-fpv/content-definitions.mjs",
+      "passed": true
+    },
+    {
+      "name": "Qualification source matches frozen main: game/data-json.mjs",
+      "passed": true
+    }
+  ],
+  "source": [
+    {
+      "path": "optional-practice/civilian-fpv/world-library.mjs",
+      "bytes": 9094,
+      "sha256": "065d1f290696c6730a8a9cf1a983ea5853115efc4b0b0b60fd80be1e8ef5e90f"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-content.mjs",
+      "bytes": 49894,
+      "sha256": "8ccfa7c0fef5002d1bc181ad96083966f56e7cec71267520c676e68f8ebe5bee"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-records.mjs",
+      "bytes": 11475,
+      "sha256": "8fb720ec1a1a1e5cbc7ec5b253d14b6d76d680e6c03dc5f2c92b3e2e407d4c27"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-model.mjs",
+      "bytes": 59130,
+      "sha256": "95b4547019dcc44d2fb7dd426718fe01ee824ad714967a61edf7ccafb0f71ce2"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-themes.mjs",
+      "bytes": 22851,
+      "sha256": "afba6fd6914167398e1d3f27ac547ada118b088a9dff9f65b9dc78cbd03a9a1a"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/content-definitions.mjs",
+      "bytes": 10697,
+      "sha256": "c28a55d39ef63d9682543c656f5e8c42145cf14a7f9156975b02dc717410c342"
+    },
+    {
+      "path": "game/data-json.mjs",
+      "bytes": 5594,
+      "sha256": "9ce33d6173f3cba8587ed7a7f1924c66e9d9c86ffa59b37a743764ea0b01f7bd"
+    }
+  ],
+  "limitations": [
+    "Data-only catalogue change. No runtime, package, physics, course or recording bytes changed.",
+    "Node HTTP/parser/import/roundtrip/dependency checks; no new flight, browser, Worker or offline run.",
+    "Existing content flight/replay/native/offline qualification remains attributed to PR1097 receipts.",
+    "Proofs remain a separate explicit archive import. No bundled or precached world is added.",
+    "Protected publication and actual public Browse/download/install still require separate verification."
+  ]
+}

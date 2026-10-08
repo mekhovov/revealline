@@ -38,8 +38,23 @@ export function createControllerSession({
   onLoss = () => {},
   restoreKey = null,
   restoreInFlight = false,
+  initialSlots = null,
   storage,
 } = {}) {
+  if (
+    initialSlots !== null &&
+    (!Array.isArray(initialSlots) ||
+      initialSlots.length !== 2 ||
+      initialSlots.some(
+        (slot) =>
+          slot !== null &&
+          (!Number.isInteger(slot) || slot < 0 || (slot > 255 && slot < 1024) || slot > 3071),
+      ) ||
+      new Set(initialSlots.filter((slot) => slot !== null)).size !==
+        initialSlots.filter((slot) => slot !== null).length)
+  )
+    throw new TypeError('Initial controller seats need two unique bounded indexes or null.');
+  let pendingInitialSlots = initialSlots && [...initialSlots];
   if (storage === undefined && restoreKey) {
     try {
       storage = eventTarget?.localStorage ?? globalThis.localStorage;
@@ -121,7 +136,7 @@ export function createControllerSession({
     saved.save(entries);
   }
   function restore() {
-    if (!saved || capturing || (!editable && !restoreInFlight)) return;
+    if (!saved || capturing || (!editable && !restoreInFlight && !pendingInitialSlots)) return;
     const entries = saved.entries();
     const physical = [...devices.values()].filter((d) => d.index < 1024);
     const wasEditable = editable;
@@ -250,6 +265,21 @@ export function createControllerSession({
       devices.get(index).pad = pad;
     }
     restore();
+    if (pendingInitialSlots && !error) {
+      // An exact continuation carries seat ownership across hosts once. Only
+      // connected, configured devices qualify; absent pads cannot join later.
+      seats.fill(null);
+      pendingInitialSlots.forEach((index, seat) => {
+        const d = devices.get(index);
+        if (d?.profile && !splits.has(index)) {
+          seats[seat] = index;
+          releaseState(d);
+        }
+      });
+      menuSeat = seats.findIndex((index) => index !== null);
+      if (menuSeat < 0) menuSeat = null;
+      pendingInitialSlots = null;
+    }
     let confirmHeld = false;
     const pads = [],
       menuPads = [],

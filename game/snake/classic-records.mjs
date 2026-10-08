@@ -1,14 +1,20 @@
 import { boundedJSON, canonicalJSON, dataIdentity, exactKeys, required } from '../data-json.mjs';
 import { createProfileRecordBackend } from '../profile-storage.mjs';
-import { exportClassicSnakeReplay, validateClassicSnakeLevel } from './classic-core.mjs';
+import {
+  exportClassicSnakeReplay,
+  validateClassicSnakeLevel,
+  classicSnakeUsesVariableHazards,
+} from './classic-core.mjs';
 import { restoreClassicSnakeMatch } from './classic-match.mjs';
 import { CLASSIC_SNAKE_LEVELS } from './classic-catalogue.mjs';
+import { classicSnakeRecipeEntries } from './classic-catalogue-archive.mjs';
 import {
   validateClassicSnakePackage,
   classicSnakePackageEntries,
   classicSnakePackageIdentity,
 } from './classic-community.mjs';
 import { CLASSIC_PACES, prepareClassicSnakeLevel } from './classic-setup.mjs';
+import { classicSnakeRatingForRecord } from './classic-ratings.mjs';
 
 // Distinct from the earlier unreleased, metric-only candidate. Its bytes are kept.
 const FORMAT = 'classic-snake-progress.proof.v2';
@@ -21,27 +27,32 @@ const integer = (n) => Number.isSafeInteger(n) && n >= 0;
 const policies = ['mission', 'endless', 'score', 'survival'];
 export const classicRecordKey = (run, mode, policy = 'mission') =>
   `${mode}/${policy}/${run.levelIdentity}/${run.seed}`;
+const completionOnly = (row) => {
+  const witness = Object.values(row.proofs ?? {})[0];
+  return classicSnakeUsesVariableHazards(witness?.match?.replays?.[witness.board]?.level);
+};
 
 /** Match only definitions that the public setup can actually prepare. This is
  * cached per catalogue entry, not inferred from an imported level's own ID. */
-function ownedRecipe(level, catalogue, recipes) {
+function ownedRecipe(level, catalogue, recipes, allowArchive) {
   const entry = catalogue.get(level?.id);
   required(entry, 'Snake records require a catalogue mission.');
   if (!recipes.has(entry.id)) {
     const variants = new Map();
-    for (const pace of Object.keys(CLASSIC_PACES))
-      for (const format of ['campaign', 'endless'])
-        for (const targetRules of ['authored', 'moving', 'varied'])
-          for (const preset of ['classic', 'pursuit', 'tactical', 'arcade']) {
-            try {
-              const prepared = validateClassicSnakeLevel(
-                prepareClassicSnakeLevel(entry, { pace, format, targetRules, preset }),
-              );
-              variants.set(canonicalJSON(prepared), prepared);
-            } catch {
-              // A preset not admitted for this geometry cannot own a record.
+    for (const candidate of classicSnakeRecipeEntries(entry, { allowArchive }))
+      for (const pace of Object.keys(CLASSIC_PACES))
+        for (const format of ['campaign', 'endless'])
+          for (const targetRules of ['authored', 'moving', 'varied'])
+            for (const preset of ['classic', 'pursuit', 'tactical', 'arcade']) {
+              try {
+                const prepared = validateClassicSnakeLevel(
+                  prepareClassicSnakeLevel(candidate, { pace, format, targetRules, preset }),
+                );
+                variants.set(canonicalJSON(prepared), prepared);
+              } catch {
+                // A preset not admitted for this geometry cannot own a record.
+              }
             }
-          }
     recipes.set(entry.id, variants);
   }
   const accepted = recipes.get(entry.id).get(canonicalJSON(validateClassicSnakeLevel(level)));
@@ -51,7 +62,7 @@ function ownedRecipe(level, catalogue, recipes) {
 
 /** Only exact match proofs can own progress. Cache bounded serialized witnesses
  * to avoid replaying the same stored rounds inside every database transaction. */
-function proofVerifier(catalogue, recipes) {
+function proofVerifier(catalogue, recipes, allowArchive) {
   const cache = new Map();
   // Canonical JSON has no more UTF-16 code units than UTF-8 bytes. A valid
   // 24 MiB profile therefore fits in 24 Mi code units (at most 48 MiB in JS).
@@ -84,6 +95,7 @@ function proofVerifier(catalogue, recipes) {
       witness.match?.replays?.[witness.board]?.level,
       catalogue,
       recipes,
+      allowArchive,
     );
     const accepted = restoreClassicSnakeMatch(witness.match, { level });
     const run = accepted.runs[witness.board];
@@ -106,7 +118,9 @@ function proofVerifier(catalogue, recipes) {
       teamwork: clear && mode === 'team' && run.snakes.every((snake) => snake.catches >= 2),
       noSupplies:
         clear &&
-        ['classic-snake-level.v2', 'classic-snake-level.v3'].includes(level.version) &&
+        ['classic-snake-level.v2', 'classic-snake-level.v3', 'classic-snake-level.v4'].includes(
+          level.version,
+        ) &&
         level.pickups.length > 0 &&
         run.pickupsUsed === 0,
       identity: dataIdentity(witness),
@@ -319,17 +333,25 @@ function mergeProgress(base, pending) {
 /** Validating the entire stored merge preserves unknown/corrupt bytes on failure.
  * Database transactions merge independent tab writes; the local queue also keeps
  * stale reads and failed-write fallbacks from replacing newer in-memory progress. */
+function availableDatabase() {
+  try {
+    return globalThis.indexedDB;
+  } catch {
+    return null;
+  }
+}
+
 export function createClassicSnakeRecords({
   onChange = () => {},
   onWarning = () => {},
-  indexedDB = globalThis.indexedDB,
+  indexedDB = availableDatabase(),
   contentPack = null,
 } = {}) {
   const pack = contentPack === null ? null : validateClassicSnakePackage(contentPack);
   const entries = pack ? classicSnakePackageEntries(pack) : CLASSIC_SNAKE_LEVELS;
   const catalogue = new Map(entries.map((entry) => [entry.id, entry])),
     recipes = new Map();
-  const verifier = proofVerifier(catalogue, recipes),
+  const verifier = proofVerifier(catalogue, recipes, !pack),
     validate = validator(verifier, catalogue);
   const backend = createProfileRecordBackend({
     key: pack ? `${FORMAT}/community/${classicSnakePackageIdentity(pack)}` : FORMAT,
@@ -413,6 +435,7 @@ export function createClassicSnakeRecords({
       }
     });
   return {
+    ratingScope: backend.key,
     read: () =>
       enqueue(async () => {
         if (closed) return structuredClone(state);
@@ -425,6 +448,17 @@ export function createClassicSnakeRecords({
         return structuredClone(state);
       }),
     snapshot: () => structuredClone(state),
+    ratingEvidence: () =>
+      Object.entries(state.rows).map(([key, row]) => ({
+        key,
+        mode: row.mode,
+        policy: row.policy,
+        seed: row.seed,
+        levelIdentity: row.levelIdentity,
+        clear: row.clear,
+        completionOnly: completionOnly(row),
+        fewestMoves: row.fewest?.value ?? null,
+      })),
     diagnostics: () => verifier.diagnostics(),
     recent: () => structuredClone(state.lastPlayed),
     get: (run, mode, policy = 'mission') => {
@@ -443,10 +477,12 @@ export function createClassicSnakeRecords({
         fewest: row.fewest ? { value: row.fewest.value } : null,
         teamwork: row.teamwork,
         noSupplies: row.noSupplies,
+        rating: classicSnakeRatingForRecord({ ...row, completionOnly: completionOnly(row) }),
+        variableHazards: completionOnly(row),
       };
     },
     async remember(run, { mode, chapterId, level, match, policy = 'mission', allowClear = true }) {
-      const expected = ownedRecipe(level, catalogue, recipes);
+      const expected = ownedRecipe(level, catalogue, recipes, !pack);
       required(
         chapterId === expected.entry.chapterId && typeof allowClear === 'boolean',
         'Snake record chapter differs.',

@@ -85,10 +85,9 @@ test('actual unified Journey chooser supersedes held Next artwork without a stal
   first.click();
   await settle(() => {
     p.frame(0);
-    return p.rendered.run !== completed && p.$('game-overlay').dataset.kind === 'ready';
+    return p.rendered.run !== completed && running();
   });
-  assert.equal(p.rendered.paused, true);
-  p.$('start-button').click();
+  assert.equal(p.rendered.paused, false);
   await settle(running);
   assert.notEqual(p.rendered.run, completed);
   const accepted = p.rendered.run,

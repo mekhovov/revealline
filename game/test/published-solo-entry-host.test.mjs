@@ -6,7 +6,7 @@ import { addAuthoredRuntimeSnapshots } from '../../scripts/authored-runtime-snap
 import { createCandidateSoloHost } from '../content-design/solo-host.mjs';
 import { journeyActorThemeCandidates } from '../presentation/journey-actor-materials.mjs';
 import { createRun } from '../core/index.mjs';
-import { authoritativeCheckpoint, createRecorder } from '../replay.mjs';
+import { createRecorder } from '../replay.mjs';
 import { suspendSession } from '../sessions.mjs';
 import { campaignKey } from '../library.mjs';
 import { committedCaches } from './helpers/committed-caches.mjs';
@@ -221,7 +221,7 @@ test('published Solo boots the starter and starts an unprepared chapter online w
   await waitFor(() => {
     h.frame(0);
     return (
-      h.page.rendered.run.levelId === mission.id && h.$('game-overlay').dataset.kind === 'ready'
+      h.page.rendered.run.levelId === mission.id && h.doc.body.dataset.flightState === 'running'
     );
   }).catch((error) => {
     error.message += `\n${JSON.stringify({
@@ -235,23 +235,10 @@ test('published Solo boots the starter and starts an unprepared chapter online w
   });
   const accepted = h.page.rendered.run;
   assert.equal(accepted.levelId, mission.id);
-  assert.equal(h.$('game-overlay').dataset.kind, 'ready');
-  assert.equal(h.$('game-overlay').hidden, false);
-  assert.equal(h.page.rendered.paused, true);
-  assert.notEqual(h.doc.body.dataset.flightState, 'running');
-  const checkpoint = authoritativeCheckpoint(accepted);
-  for (let i = 0; i < 12; i++) h.frame();
-  assert.deepEqual(
-    authoritativeCheckpoint(accepted),
-    checkpoint,
-    'The published mission briefing does not consume simulation time.',
-  );
-  await activateHostAction(h.$('start-button'));
-  await waitFor(() => {
-    h.frame(0);
-    return h.doc.body.dataset.flightState === 'running';
-  });
-  assert.equal(h.page.rendered.run, accepted, 'Start activates the exact prepared mission.');
+  assert.equal(h.$('game-overlay').hidden, true);
+  assert.equal(h.page.rendered.paused, false);
+  assert.equal(h.doc.body.dataset.flightState, 'running');
+  assert.equal(h.page.rendered.run, accepted, 'The card activation starts the exact mission.');
   assert.equal(h.page.rendered.run.levelId, mission.id);
   assert.deepEqual(h.runtimeReads.slice(2), [chapter.path]);
   assert.equal(h.$('install-offline-dialog')?.open ?? false, false);

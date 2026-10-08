@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="en">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Snake visual verification · fixture only</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      font: 16px system-ui;
+      background: #101b22;
+      color: #f4f0da;
+    }
+    * {
+      box-sizing: border-box;
+    }
+    [hidden] {
+      display: none !important;
+    }
+    body {
+      margin: 0;
+      padding: clamp(8px, 2vw, 24px);
+    }
+    main {
+      max-width: 1280px;
+      margin: auto;
+    }
+    h1 {
+      font-size: 1.3rem;
+      margin: 0 0 8px;
+    }
+    h2 {
+      font-size: 0.9rem;
+      margin: 0 0 8px;
+      background: #10212de8;
+      padding: 6px;
+    }
+    p {
+      font-size: 0.85rem;
+      line-height: 1.4;
+      margin: 8px 0;
+    }
+    header {
+      margin-bottom: 12px;
+    }
+    .fixture-label {
+      color: #ffc463;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+    .controls {
+      display: flex;
+      gap: 8px;
+      align-items: end;
+      flex-wrap: wrap;
+      margin: 12px 0;
+    }
+    label {
+      display: grid;
+      gap: 4px;
+      font-size: 0.8rem;
+    }
+    button,
+    select {
+      font: inherit;
+      min-height: 40px;
+      padding: 7px 10px;
+      border: 1px solid #9eb7bd;
+      background: #233746;
+      color: inherit;
+      border-radius: 3px;
+    }
+    button {
+      cursor: pointer;
+    }
+    button:disabled {
+      opacity: 0.45;
+      cursor: default;
+    }
+    button:focus-visible,
+    select:focus-visible {
+      outline: 3px solid #f7c962;
+      outline-offset: 2px;
+    }
+    #seek {
+      background: #806329;
+    }
+    #boards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr));
+      gap: 12px;
+    }
+    article {
+      min-width: 0;
+      padding: 12px;
+      background: #182c38;
+      background-size: 100% 100%;
+      image-rendering: pixelated;
+      border: 1px solid #687d7f;
+    }
+    article:only-child {
+      width: 100%;
+      max-width: 720px;
+      justify-self: center;
+    }
+    canvas {
+      display: block;
+      width: 100%;
+      height: auto;
+      image-rendering: pixelated;
+      aspect-ratio: 4/3;
+      border: 2px solid #a3b8ba;
+    }
+    .reception {
+      min-height: 38px;
+      background: #10212def;
+      padding: 7px;
+      margin-bottom: 0;
+      font-variant-numeric: tabular-nums;
+    }
+    #state {
+      padding: 8px;
+      background: #233746;
+      font-weight: 600;
+    }
+    #evidence {
+      color: #bdcbc8;
+      max-width: 85ch;
+    }
+    @media (max-width: 400px) {
+      article {
+        padding: 6px;
+      }
+      .controls {
+        gap: 6px;
+      }
+      button,
+      select {
+        min-height: 44px;
+      }
+      button {
+        flex: 1 1 130px;
+      }
+    }
+  </style>
+  <main id="snake-visual-fixture">
+    <header>
+      <p class="fixture-label">Manual verification fixture only · no saves or awards</p>
+      <h1>Living Circuit and live radio interference</h1>
+      <p>
+        Actual engine and renderer. Starts paused inside a verified mission's active burst. Step to
+        prove the board remains live; Play follows the accepted route. Scene/effects changes do not
+        change simulation.
+      </p>
+    </header>
+    <div class="controls">
+      <label
+        >Players<select id="mode">
+          <option value="solo">Solo</option>
+          <option value="team">Team</option>
+          <option value="versus">Versus</option>
+        </select></label
+      >
+      <label
+        >Source<select id="signal">
+          <option value="local">Local · six-cell radius</option>
+          <option value="broadcast">Broadcast · full board</option>
+        </select></label
+      >
+      <label
+        >Scenario<select id="scenario">
+          <option value="tracking">Moving prey / longer cable</option>
+          <option value="intro">First burst</option>
+        </select></label
+      >
+      <label
+        >Board family<select id="style">
+          <option value="living-circuit">Living Circuit</option>
+          <option value="theme">Theme</option>
+          <option value="retro">Retro</option>
+        </select></label
+      >
+      <label
+        >Scene<select id="scene">
+          <option value="auto">Auto · chapter</option>
+          <option value="orchard">Orchard Workshop</option>
+          <option value="workshop">Workshop</option>
+          <option value="relay">Field Relay</option>
+        </select></label
+      >
+      <label
+        >Receiver comparison<select id="treatment">
+          <option value="contrast-loss">Reception collapse · selected</option>
+          <option value="baseline">Original · reference</option>
+          <option value="snow-only">Stronger snow · trial</option>
+        </select></label
+      >
+      <label
+        ><span>Effects</span
+        ><span><input type="checkbox" id="reduced" /> Reduced effects</span></label
+      >
+    </div>
+    <div class="controls">
+      <button id="seek">Seek active burst</button><button id="step">Step one move</button>
+      <button id="play" aria-pressed="false">Play verified route</button
+      ><button id="reset">Reset to start</button>
+      <button id="take-controls" aria-pressed="false">Take controls · arrows / WASD</button>
+    </div>
+    <div class="controls" id="steering" aria-label="Manual steering" hidden>
+      <button data-direction="up" aria-label="Turn up">↑</button>
+      <button data-direction="left" aria-label="Turn left">←</button>
+      <button data-direction="down" aria-label="Turn down">↓</button>
+      <button data-direction="right" aria-label="Turn right">→</button>
+    </div>
+    <p id="state" role="status">Verifying authored recording…</p>
+    <section id="boards" aria-label="Actual simulation boards"></section>
+    <p id="evidence"></p>
+  </main>
+  <script type="module" src="./snake-visual-fixture.mjs"></script>
+</html>

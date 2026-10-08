@@ -2,12 +2,12 @@
 // Native flight logic remains in its existing cores. No simulation clock or record recipe changes.
 const sourceHashes={
 'optional-practice/civilian-fpv/world-audio.mjs':
-'753913b5070fec47a140236f5f820107254969b122dcf420bf139421546c3fbb',
+'cc05ffc5e1b54f500efc17dccf77c96c608a2fc535e8947b8787eccb2103565f',
 'game/audio/dialogue-mix.mjs':'43ffa5b261e585e59b515fab19d1b6d0ccf636152ca6107602dbdb9143ddb00a',
 'game/ui/audio-output.mjs':'dc1b2776407d0b6649b0d15c5c721bd59384d7e38a2e61087961ff7a37bd86c1',
 'game/ui/audio-master.mjs':'6bf14bc5268c0eff8f38c21c819f398917712fdc2607c33977ac873111d1dca8',
 'game/audio-preferences.mjs':'9212831a3524c9e1ebe8c595783f9f53a112e02e3d51280d775ac103b94a9239',
-'game/ui/encounter-audio.mjs':'de48fc709c99c571e1e2a15e8a5cb1958a53e6404751cc3482255f05c626c519',
+'game/ui/encounter-audio.mjs':'3e9d6fff44aadd5a31e4c61daa4de22b58c4383f406e7ce7de1a3910434b1608',
 'game/ui/movement-audio.mjs':'685d8e458401354028a2cacda0c7b1009b3c1e480a08d4cafce46d8f98b69020',
 'game/ui/dialogue-channel.mjs':'f4839f3a1634189a03eed6a3096dc595dfc88ee6437277ee82d78de05c300142',
 'optional-practice/civilian-fpv/world-hangar.mjs':
@@ -23,7 +23,7 @@ const sourceHashes={
 'optional-practice/civilian-fpv/world-hunt-reactions.mjs':
 '7d890938c2ec3b6d8bd6046db3b436589cf7b356c0e7004ef8814e59713dbbc7',
 'game/ui/contextual-reactions.mjs':
-'e5edcb242ffd35d251ee74f39634f745150e4f66ccd44d46eea16c29852ea715',
+'78b0412a2a70d0d84e502d5240132c3b6324e80c9ae185121aeee353978f4d8a',
 'game/ui/hunt-feedback-layout.mjs':
 '697525f452578880c62102b984da3ff51ec794913c3a2708187c62815c816de5',
 'game/ui/reaction-caption.mjs':'5b7edf3006681a02b40134ff4eee2b1f7da3770eec2b5e9b9ae70c39332a5890',
@@ -49,10 +49,11 @@ const sourceHashes={
 'a9128e8139a965abc49e4327e56f8edb57fa3dab1c870caecc36292db0866496',
 'game/journey/reaction-recording-format.mjs':
 'cdcd3da4bf5ab6c13190968cd1d286bcae070a005e879e9d291db92a31fef0f4',
-'game/journey/reactions.mjs':'bf4e7d60510b3c7df2ba61436011159654ef91148d555e0787f6c67de0e31027',
+'game/journey/reactions.mjs':'34668e7517f3c510505e53a2e9872cf29f92ba7269238919144ec84cce6ee062',
 'game/journey/campaign-feedback.mjs':
 '7b9b1df9c7cee0e7a6ac3d632ef53874e287054306c614453b37c767523b784e',
 'game/hunt/actor-reactions.mjs':'6abddc59bb89ded4622004bd362d23b86313a71e142744f98e750895493fe652',
+'game/overflight/reactions.mjs':'f400c252a6597b4497303517a8bf0d482be67f42b6a7d650f71fa0736c8172d9',
 'game/journey/reaction-preferences.mjs':
 'a14d2dcb99daffd83dcbf62311e6756d587db3134bf04c81cd2cd420b4f6809a',
 'game/journey/reaction-options.mjs':
@@ -64,7 +65,7 @@ const sourceHashes={
 'game/audio/reactions/actors.mjs':
 '79debf91cafa2e01cd65170037ee483977cbf7d5c3a619ccac9ed400264598b8',
 'optional-practice/civilian-fpv/world-library.mjs':
-'065d1f290696c6730a8a9cf1a983ea5853115efc4b0b0b60fd80be1e8ef5e90f',
+'508220ad83fc747a31e5ee4a7efbc860428cfaaffe91bc7f9ba1d1428fa51331',
 'game/audio/reactions/guide-0-en.m4a':
 '58f961f54b52d0dbb58f53f000ca85bba166236126e135dc1f5e89f8f9a94210',
 'game/audio/reactions/guide-0-uk.m4a':
@@ -114,19 +115,23 @@ const sourceHashes={
 'game/audio/reactions/actors-v1/actor-patroller-caught-uk.m4a':
 '08087574625bd72a08a58b4549ba6884255d32de2003071014755641eac2f025',
 };
-import*as external0 from'../../game/i18n/index.mjs';
-import*as external1 from'./vendor/three.module.js';
-import*as external2 from'./world-visuals.mjs';
-import*as external3 from'./world-themes.mjs';
-import*as external4 from'./world-pursuit.mjs';
-import*as external5 from'../../game/hunt/actor-catalog.mjs';
-import*as external6 from'./snake-hunt.mjs';
-import*as external7 from'../../game/data-json.mjs';
-import*as external8 from'../../game/hunt/actor-art.mjs';
-import*as external9 from'../../game/hunt/preferences.mjs';
-import*as external10 from'./world-model.mjs';
-import*as external11 from'./flight-sectors.mjs';
-import*as external12 from'./world-content.mjs';
+import*as external0 from'../../game/ui/human-reaction-policy.mjs';
+import*as external1 from'../../game/audio/human-reactions/portable.mjs';
+import*as external2 from'../../game/ui/destruction-level.mjs';
+import*as external3 from'../../game/i18n/index.mjs';
+import*as external4 from'../../game/ui/destruction-audio.mjs';
+import*as external5 from'./vendor/three.module.js';
+import*as external6 from'./world-visuals.mjs';
+import*as external7 from'./world-themes.mjs';
+import*as external8 from'./world-pursuit.mjs';
+import*as external9 from'../../game/hunt/actor-catalog.mjs';
+import*as external10 from'./snake-hunt.mjs';
+import*as external11 from'../../game/data-json.mjs';
+import*as external12 from'../../game/hunt/actor-art.mjs';
+import*as external13 from'../../game/hunt/preferences.mjs';
+import*as external14 from'./world-model.mjs';
+import*as external15 from'./flight-sectors.mjs';
+import*as external16 from'./world-content.mjs';
 const modules=Object.create(null);
 modules['game/audio/dialogue-mix.mjs']=(()=>{
 /** Decorative spoken reactions sit behind music and gameplay warnings.
@@ -203,7 +208,7 @@ releasePlaybackAudioSession:releasePlaybackAudioSession,
 };
 })();
 modules['game/ui/audio-master.mjs']=(()=>{
-const t=external0['t'];
+const t=external3['t'];
 const volumeValue=(value)=>{
 if(!Number.isFinite(value)||value<0||value>1)
 throw new TypeError(t('interface:audioVolumeMustBeBetweenZeroAndOne'));
@@ -537,6 +542,7 @@ createAudioPreferences:createAudioPreferences,
 modules['game/ui/encounter-audio.mjs']=(()=>{
 /** Shared semantic cues; both recorded and offline procedural renditions use
  * these recipes. No context, clock, randomness or actor mutation lives here. */
+const destructionSoundRecipe=external4['destructionSoundRecipe'];
 const FAMILY_PITCH=Object.freeze({
 lookout:1.1,
 patroller:0.94,
@@ -579,11 +585,11 @@ function actorSoundProfile(family){
 return ACTOR_SOUNDS[family==='shield-bearer'?'shield':family]??ACTOR_SOUNDS.runner;
 }
 function encounterSoundRecipe(type,details={}){
+if(type==='catch')return destructionSoundRecipe(details);
 const pitch=FAMILY_PITCH[details.family]??1;
 const actor=actorSoundProfile(details.family),
 tracked=details.machine==='tracked',
 metal=details.material==='metal'||[true,'tracked','wheeled'].includes(details.machine);
-const brutal=details.brutal===true;
 const recipes={
 step:['grain',0.11,0,130*actor.rate,65*actor.rate,0.055],
 equipment:[actor.equipment,0.12,1,actor.from,actor.to,0.085],
@@ -593,14 +599,6 @@ warning:['warning',0.44,5,620,860,0.13],
 burst:['paper',0.19,2,190,320,0.09],
 recover:['cancel',0.13,1,310,210,0.08],
 blocked:['contact-soft',0.1,1,150,100,0.055],
-catch:[
-metal?'contact-metal':'contact-soft',
-brutal?0.52:0.25,
-3,
-metal?150:390,
-metal?55:690,
-brutal?0.19:0.1,
-],
 fire:['attack',0.34,4,620,110,0.08],
 impact:['impact',0.48,5,170,38,0.15],
 pulse:['deploy',0.33,3,880,260,0.19],
@@ -705,6 +703,9 @@ kind:active?.radio?'radio':active?'dialogue':null,
 return{dialogueChannel:dialogueChannel};
 })();
 modules['optional-practice/civilian-fpv/world-audio.mjs']=(()=>{
+const createHumanReactionPolicy=external0['createHumanReactionPolicy'];
+const HUMAN_REACTION_BANK=external1['HUMAN_REACTION_BANK'];
+const destructionBufferGain=external2['destructionBufferGain'];
 const DEFAULT_DIALOGUE_VOLUME=modules['game/audio/dialogue-mix.mjs']['DEFAULT_DIALOGUE_VOLUME'];
 const DIALOGUE_MIX_GAIN=modules['game/audio/dialogue-mix.mjs']['DIALOGUE_MIX_GAIN'];
 const createGameAudioContext=modules['game/ui/audio-output.mjs']['createGameAudioContext'];
@@ -715,13 +716,14 @@ const releasePlaybackAudioSession=
 modules['game/ui/audio-output.mjs']['releasePlaybackAudioSession'];
 const createAudioMaster=modules['game/ui/audio-master.mjs']['createAudioMaster'];
 const createAudioPreferences=modules['game/audio-preferences.mjs']['createAudioPreferences'];
+const destructionCategory=external4['destructionCategory'];
 const encounterSoundRecipe=modules['game/ui/encounter-audio.mjs']['encounterSoundRecipe'];
 const actorPhaseSound=modules['game/ui/encounter-audio.mjs']['actorPhaseSound'];
 const readMovementAudio=modules['game/ui/movement-audio.mjs']['readMovementAudio'];
 const MOVEMENT_AUDIO_KEY=modules['game/ui/movement-audio.mjs']['MOVEMENT_AUDIO_KEY'];
 const dialogueChannel=modules['game/ui/dialogue-channel.mjs']['dialogueChannel'];
 
-/** Optional presentation-only sound. No media requests or gameplay clocks. */
+/** Optional presentation-only sound. Embedded CC0 vocals decode on activation; no media requests or gameplay clocks. */
 const PREFERENCE='revealline.fpv.world-audio.v1';
 const clamp=(value,min,max)=>Math.max(min,Math.min(max,value));
 const AMBIENCES={
@@ -761,6 +763,9 @@ let gateStyle='chime';
 let dialogue={enabled:false,volume:DEFAULT_DIALOGUE_VOLUME};
 let dialogueVoice=null;
 const effects=new Set();
+const humanReactions=createHumanReactionPolicy();
+const humanBuffers=new Map();
+let preparingHumans=false;
 const audioMaster=options.audioMaster??createAudioMaster();
 const preferences=
 options.audioPreferences??
@@ -820,6 +825,71 @@ for(const effect of effects)effect.stop();
 effects.clear();
 }
 
+function prepareHumans(){
+if(preparingHumans|| !context?.decodeAudioData||options.getDestruction?.()?.vocals===false)
+return;
+preparingHumans=true;
+for(const[name,clip]of Object.entries(HUMAN_REACTION_BANK)){
+const bytes=Uint8Array.from(atob(clip.base64),(character)=>character.charCodeAt(0));
+void context
+.decodeAudioData(bytes.buffer)
+.then((buffer)=>{
+if(!disposed)humanBuffers.set(name,{buffer,gain:destructionBufferGain(name,buffer)});
+})
+.catch(()=>{});
+}
+}
+function humanReaction(details){
+prepareHumans();
+if(
+!graph||
+!enabled||
+!wanted||
+masterState.volume===0||
+!levels.interface||
+context.state!=='running'||
+dialogueVoice||
+dialogueChannel.active||
+[...effects].some((effect)=>effect.priority>=5)||
+effects.size>=12
+)
+return;
+const name=humanReactions.request(
+context.currentTime,
+details,
+[...effects].filter((effect)=>effect.humanReaction).length,
+);
+const clip=name&&humanBuffers.get(name);
+if(!clip)return;
+const source=context.createBufferSource(),
+volume=context.createGain(),
+now=context.currentTime;
+const duration=Math.min(0.7,clip.buffer.duration);
+source.buffer=clip.buffer;
+volume.gain.setValueAtTime(0.45*clip.gain,now);
+volume.gain.setValueAtTime(0.45*clip.gain,now+Math.max(0,duration-0.025));
+volume.gain.linearRampToValueAtTime(0,now+duration);
+source.connect(volume).connect(graph.buses.interface);
+let stopped=false;
+const voice={
+humanReaction:true,
+priority:2,
+stop(){
+if(stopped)return;
+stopped=true;
+try{
+source.stop();
+}catch{}
+source.disconnect();
+volume.disconnect();
+effects.delete(voice);
+},
+};
+effects.add(voice);
+source.onended=voice.stop;
+source.start(now);
+source.stop(now+duration);
+}
 function silence(){
 dialogueVoice?.stop();
 if(!graph||context.state==='closed')return;
@@ -930,6 +1000,8 @@ duration=0.12,
 gain=0.05,
 delay=0,
 type='sine',
+kind='tone',
+destruction=false,
 movementCue=false,
 priority=2,
 }){
@@ -948,13 +1020,34 @@ movementCue&&
 )
 return;
 if(priority>=4)for(const effect of[...effects])if(effect.movementCue)effect.stop();
-if(effects.size>=12)return;
-const oscillator=context.createOscillator();
+// Crowd feedback cannot use the warning reserve. A warning may reclaim
+// a lower-priority tail, without adding a second output or context.
+if(destruction&&[...effects].filter((effect)=>effect.destruction).length>=10)return;
+if(effects.size>=12){
+const victim=[...effects].find((effect)=>effect.priority<priority);
+if(!victim)return;
+victim.stop();
+}
+const oscillator=kind==='snare'?context.createBufferSource():context.createOscillator();
 const envelope=context.createGain();
 const start=context.currentTime+delay;
+if(kind==='snare'){
+const samples=Math.max(1,Math.ceil(context.sampleRate*duration));
+const buffer=context.createBuffer(1,samples,context.sampleRate);
+const data=buffer.getChannelData(0);
+let seed=73471,
+low=0;
+for(let index=0;index<data.length;index++){
+seed=(Math.imul(seed,1664525)+1013904223)>>>0;
+low=low*0.65+(seed/2147483648-1)*0.35;
+data[index]=low;
+}
+oscillator.buffer=buffer;
+}else{
 oscillator.type=type;
 oscillator.frequency.setValueAtTime(from,start);
 oscillator.frequency.exponentialRampToValueAtTime(Math.max(20,to),start+duration);
+}
 envelope.gain.setValueAtTime(0,context.currentTime);
 envelope.gain.setValueAtTime(0,start);
 envelope.gain.linearRampToValueAtTime(gain,start+0.008);
@@ -965,6 +1058,7 @@ oscillator
 let stopped=false;
 const effect={
 priority,
+destruction,
 movementCue,
 stop(){
 if(stopped)return;
@@ -985,6 +1079,35 @@ oscillator.start(start);
 oscillator.stop(start+duration+0.02);
 }
 
+function actorSoundDetails(event={}){
+const actor=actorDefinitions.get(event.actor);
+const machine=
+event.machine??
+(actor?.type==='vehicle'?(actor.vehicleModel==='field-tank'?'tracked':'wheeled'):false);
+const machineFamily=
+actor?.type==='vehicle'
+?({
+'field-utility':'utility-car',
+'field-tank':'tracked-tank',
+'relay-truck':'radar-truck',
+}[actor.vehicleModel]??actor.vehicleModel)
+:null;
+return{
+family:
+event.family??
+machineFamily??
+actorFamilies.get(event.actor)??
+(actor?.speed>0?'patroller':'lookout'),
+machine,
+brutal:options.getDestruction?.()?.brutal===true,
+vocals:options.getDestruction?.()?.vocals,
+// Patrols and sentries use the humanoid painter. Drones, hazards and
+// vehicles must never inherit a human voice from the family fallback.
+humanoid:event.humanoid??(actor?['patrol','sentry'].includes(actor.type):undefined),
+flesh:event.flesh,
+};
+}
+
 function cue(type,player=true,event={}){
 const kind={
 catch:'catch',
@@ -1003,24 +1126,25 @@ equipment:'equipment',
 drive:'drive',
 }[type];
 if(!kind)return;
-const actor=actorDefinitions.get(event.actor);
-const machine=
-event.machine??
-(actor?.type==='vehicle'?(actor.vehicleModel==='field-tank'?'tracked':'wheeled'):false);
-const recipe=encounterSoundRecipe(kind,{
-family:
-event.family??actorFamilies.get(event.actor)??(actor?.speed>0?'patroller':'lookout'),
-machine,
-});
+const details=actorSoundDetails(event);
+const recipe=encounterSoundRecipe(kind,details);
 const now=context?.currentTime??0;
-if(now-(recentCues.get(kind)?? -Infinity)<(recipe.cooldown??0.12))return;
-recentCues.set(kind,now);
+const cueKey=kind==='catch'?`catch:${recipe.category}`:kind;
+if(now-(recentCues.get(cueKey)?? -Infinity)<(recipe.cooldown??0.12))return;
+recentCues.set(cueKey,now);
+if(recipe.priority>=5||(type==='fire'&& !player)){
+humanReactions.interrupt(now);
+for(const effect of[...effects])if(effect.humanReaction)effect.stop();
+}
+if(kind==='catch')humanReaction(details);
 if(recipe.priority>=5||(type==='fire'&& !player))dialogueChannel.interrupt();
 const voice={...recipe.tone,priority:recipe.priority,movementCue:recipe.movement};
 if(recipe.movement)voice.gain*=levels.interface;
 if(type==='fire'&& !player)voice.gain*=0.65;
 if(type==='objective'&&gateStyle==='digital')voice.type='triangle';
-tone(voice);
+tone({...voice,destruction:kind==='catch'});
+for(const layer of recipe.layers??[])
+tone({...layer,priority:recipe.priority,destruction:kind==='catch'});
 }
 
 async function resume(){
@@ -1035,6 +1159,7 @@ if(disposed|| !enabled|| !wanted){
 if(context.state!=='closed')await context.suspend();
 return false;
 }
+prepareHumans();
 return epoch===transition&&context.state==='running';
 }catch{
 return false;
@@ -1118,6 +1243,23 @@ return null;
 }
 return voice;
 },
+get movementSettings(){
+return movement;
+},
+set movementSettings(value){
+if(
+typeof value?.enabled!=='boolean'||
+!Number.isFinite(value.volume)||
+value.volume<0||
+value.volume>1
+)
+throw new TypeError('Movement sound requires an enabled boolean and volume between zero and one.');
+movement={enabled:value.enabled,volume:value.volume};
+},
+applyVolumes:applyOutput,
+masterSnapshot:()=>audioMaster.snapshot(),
+subscribeMaster:(listener)=>audioMaster.subscribe(listener),
+setMasterVolume:(value)=>preferences.setVolume(value),
 enabled:()=>enabled,
 volumes:()=>({...levels}),
 setVolumes(values={}){
@@ -1178,6 +1320,7 @@ lastTick=null;
 lastStep=null;
 lastContacts=null;
 recentCues.clear();
+humanReactions.reset();
 actorPositions.clear();
 actorPhases.clear();
 actorFamilies=new Map((course.pursuit?.actors??[]).map((policy)=>[policy.id,policy.family]));
@@ -1266,9 +1409,14 @@ if(sound!=='warning')cue('equipment',false,{actor:actor.id,family:actor.pursuit.
 }
 const events=snapshot.events??[];
 const types=new Set();
+const destructionTypes=new Set();
 // Bound cue overlap independently of simulation actor/projectile counts.
 for(const event of events){
-if(types.has(event.type))continue;
+if(['catch','defeat'].includes(event.type)){
+const category=destructionCategory(actorSoundDetails(event));
+if(destructionTypes.has(category))continue;
+destructionTypes.add(category);
+}else if(types.has(event.type))continue;
 types.add(event.type);
 cue(event.type,event.actor==='player',event);
 }
@@ -1310,6 +1458,7 @@ lastPlaying=playing;
 dispose(){
 if(disposed)return;
 disposed=true;
+humanBuffers.clear();
 pause();
 releaseMaster();
 host.removeEventListener?.('storage',changed);
@@ -1345,14 +1494,14 @@ graph=null;
 return{createWorldAudio:createWorldAudio};
 })();
 modules['optional-practice/civilian-fpv/world-hangar.mjs']=(()=>{
-const THREE=external1;
-const buildDroneVisual=external2['buildDroneVisual'];
-const createEnvironmentLight=external2['createEnvironmentLight'];
-const setSurfaceQuality=external2['setSurfaceQuality'];
-const resolveSimThemeProfile=external3['resolveSimThemeProfile'];
-const createWorkshopMaterials=external2['createWorkshopMaterials'];
-const disposeSimVisualGroup=external2['disposeSimVisualGroup'];
-const simCollectionIdForProfile=external2['simCollectionIdForProfile'];
+const THREE=external5;
+const buildDroneVisual=external6['buildDroneVisual'];
+const createEnvironmentLight=external6['createEnvironmentLight'];
+const setSurfaceQuality=external6['setSurfaceQuality'];
+const resolveSimThemeProfile=external7['resolveSimThemeProfile'];
+const createWorkshopMaterials=external6['createWorkshopMaterials'];
+const disposeSimVisualGroup=external6['disposeSimVisualGroup'];
+const simCollectionIdForProfile=external6['simCollectionIdForProfile'];
 
 /** A close inspection view. Appearance selections never modify flight physics. */
 function mountDroneHangar({
@@ -1533,9 +1682,9 @@ renderer?.forceContextLoss();
 return{mountDroneHangar:mountDroneHangar};
 })();
 modules['optional-practice/civilian-fpv/world-pursuit-editor.mjs']=(()=>{
-const PURSUIT_COURSE=external4['PURSUIT_COURSE'];
-const PURSUIT_FORMAT_V2=external4['PURSUIT_FORMAT_V2'];
-const PURSUIT_FAMILIES=external4['PURSUIT_FAMILIES'];
+const PURSUIT_COURSE=external8['PURSUIT_COURSE'];
+const PURSUIT_FORMAT_V2=external8['PURSUIT_FORMAT_V2'];
+const PURSUIT_FAMILIES=external8['PURSUIT_FAMILIES'];
 
 /** Remove policy ownership with the same transaction as native actor/objective edits. */
 function removePursuitActor(course,id){
@@ -1740,12 +1889,12 @@ renderPursuitEditor:renderPursuitEditor,
 };
 })();
 modules['optional-practice/civilian-fpv/world-enemy-guide.mjs']=(()=>{
-const actorDefinition=external5['actorDefinition'];
-const HUNT_CONTACT_CRITERION=external6['HUNT_CONTACT_CRITERION'];
-const PURSUIT_FAMILIES=external4['PURSUIT_FAMILIES'];
-const PURSUIT_FORMAT=external4['PURSUIT_FORMAT'];
-const PURSUIT_FORMAT_V2=external4['PURSUIT_FORMAT_V2'];
-const PURSUIT_RULES=external4['PURSUIT_RULES'];
+const actorDefinition=external9['actorDefinition'];
+const HUNT_CONTACT_CRITERION=external10['HUNT_CONTACT_CRITERION'];
+const PURSUIT_FAMILIES=external8['PURSUIT_FAMILIES'];
+const PURSUIT_FORMAT=external8['PURSUIT_FORMAT'];
+const PURSUIT_FORMAT_V2=external8['PURSUIT_FORMAT_V2'];
+const PURSUIT_RULES=external8['PURSUIT_RULES'];
 
 // Names are shared with Capture/Snake; goals and counters describe only native
 // flight policies. A costume never grants an unimplemented flight capability.
@@ -2107,18 +2256,18 @@ dialog.remove();
 return{worldEnemyGuide:worldEnemyGuide,mountWorldEnemyGuide:mountWorldEnemyGuide};
 })();
 modules['optional-practice/civilian-fpv/world-actor-editor.mjs']=(()=>{
-const WORLD_VEHICLE_MODELS=external4['WORLD_VEHICLE_MODELS'];
+const WORLD_VEHICLE_MODELS=external8['WORLD_VEHICLE_MODELS'];
 const renderPursuitEditor=
 modules['optional-practice/civilian-fpv/world-pursuit-editor.mjs']['renderPursuitEditor'];
 const removePursuitActor=
 modules['optional-practice/civilian-fpv/world-pursuit-editor.mjs']['removePursuitActor'];
 const worldEnemyGuide=
 modules['optional-practice/civilian-fpv/world-enemy-guide.mjs']['worldEnemyGuide'];
-const boundedJSON=external7['boundedJSON'];
-const exactKeys=external7['exactKeys'];
-const ACTOR_CASTS=external5['ACTOR_CASTS'];
-const drawHuntActor=external8['drawHuntActor'];
-const sharedActorAppearance=external9['sharedActorAppearance'];
+const boundedJSON=external11['boundedJSON'];
+const exactKeys=external11['exactKeys'];
+const ACTOR_CASTS=external9['ACTOR_CASTS'];
+const drawHuntActor=external12['drawHuntActor'];
+const sharedActorAppearance=external13['sharedActorAppearance'];
 
 const TYPES=['drone','patrol','sentry','vehicle','hazard'];
 const AXES=['x','y','z'];
@@ -3612,12 +3761,12 @@ container.replaceChildren();
 return{mountActorEditor:mountActorEditor};
 })();
 modules['optional-practice/civilian-fpv/world-progress.mjs']=(()=>{
-const boundedJSON=external7['boundedJSON'];
-const createWorldFlight=external10['createWorldFlight'];
-const initWorldRuntime=external10['initWorldRuntime'];
-const replayWorldFlight=external10['replayWorldFlight'];
-const validateWorldCourse=external10['validateWorldCourse'];
-const WORLD_MAX_TICKS=external10['WORLD_MAX_TICKS'];
+const boundedJSON=external11['boundedJSON'];
+const createWorldFlight=external14['createWorldFlight'];
+const initWorldRuntime=external14['initWorldRuntime'];
+const replayWorldFlight=external14['replayWorldFlight'];
+const validateWorldCourse=external14['validateWorldCourse'];
+const WORLD_MAX_TICKS=external14['WORLD_MAX_TICKS'];
 
 const centre=(step)=>
 step.min
@@ -3856,7 +4005,7 @@ throw error;
 }
 
 return{
-createSectorTracker:external11['createSectorTracker'],
+createSectorTracker:external15['createSectorTracker'],
 medalTargets:medalTargets,
 evaluateWorldResult:evaluateWorldResult,
 compatibleGhost:compatibleGhost,
@@ -4405,10 +4554,10 @@ admitReactionDecode:admitReactionDecode,
 };
 })();
 modules['game/journey/campaign-feedback.mjs']=(()=>{
-const boundedJSON=external7['boundedJSON'];
-const exactKeys=external7['exactKeys'];
-const required=external7['required'];
-const stableId=external7['stableId'];
+const boundedJSON=external11['boundedJSON'];
+const exactKeys=external11['exactKeys'];
+const required=external11['required'];
+const stableId=external11['stableId'];
 
 const CAMPAIGN_FEEDBACK_FORMAT='revealline-campaign-feedback.v1';
 // Original fixed synth phrases. These are presentation recipes, not schedules
@@ -4511,9 +4660,9 @@ campaignVictoryMotif:campaignVictoryMotif,
 };
 })();
 modules['game/hunt/actor-reactions.mjs']=(()=>{
-const ACTOR_CATALOG_VERSION=external5['ACTOR_CATALOG_VERSION'];
-const actorDefinition=external5['actorDefinition'];
-const resolveActorFamily=external5['resolveActorFamily'];
+const ACTOR_CATALOG_VERSION=external9['ACTOR_CATALOG_VERSION'];
+const actorDefinition=external9['actorDefinition'];
+const resolveActorFamily=external9['resolveActorFamily'];
 
 /** Original optional copy. Selection is deterministic and carries no simulated
  * facts. Hosts must use their existing incidental-reaction budget and priority.
@@ -4607,10 +4756,82 @@ actorReactionLine:actorReactionLine,
 actorEventReaction:actorEventReaction,
 };
 })();
+modules['game/overflight/reactions.mjs']=(()=>{
+/** Stable shared Voice Studio entries. Missing recordings use the existing
+ * caption path; these entries never synthesize speech or claim a recorded voice. */
+const OVERFLIGHT_REACTION_FAMILIES=Object.freeze({
+'overflight.upgraded':'overflight-upgrade',
+'overflight.evolved':'overflight-evolution',
+'overflight.cleared':'overflight-clear',
+'overflight.replaced':'overflight-handoff',
+'overflight.hunt-cleared':'overflight-hunt-clear',
+'overflight.hunt-rush':'overflight-hunt-rush',
+});
+const OVERFLIGHT_REACTION_LINES=Object.freeze(
+[
+[
+'hunt-clear',
+'overflight-hunt-clear',
+'Clean pass. Choose your next target.',
+'Чистий проліт. Обирай наступну ціль.',
+],
+[
+'hunt-rush',
+'overflight-hunt-rush',
+'Rush ready. Your next boost starts it.',
+'Ривок готовий. Наступне прискорення його активує.',
+],
+[
+'upgrade',
+'overflight-upgrade',
+'New pattern. Try it on your next pass.',
+'Нова схема удару. Спробуй її на наступному прольоті.',
+],
+[
+'evolution',
+'overflight-evolution',
+'The pattern has evolved. Make room for a wider pass.',
+'Схема удару змінилася. Знайди місце для ширшого прольоту.',
+],
+[
+'clear',
+'overflight-clear',
+'A group cleared. Salvage is on the ground.',
+'Групу знищено. На землі залишилися трофеї.',
+],
+[
+'handoff',
+'overflight-handoff',
+'Replacement airborne. Your modules are still with you.',
+'Новий борт у повітрі. Твої модулі збережено.',
+],
+[
+'lost',
+'result',
+'No airframes remain. The sortie is over.',
+'Бортів більше немає. Виліт завершено.',
+],
+].map(([id,family,en,uk])=>
+Object.freeze({
+id:`overflight-reaction.v1/${id}`,
+speaker:'engineer',
+family,
+text:Object.freeze({en,uk}),
+}),
+),
+);
+
+return{
+OVERFLIGHT_REACTION_FAMILIES:OVERFLIGHT_REACTION_FAMILIES,
+OVERFLIGHT_REACTION_LINES:OVERFLIGHT_REACTION_LINES,
+};
+})();
 modules['game/journey/reactions.mjs']=(()=>{
 const campaignResultLine=modules['game/journey/campaign-feedback.mjs']['campaignResultLine'];
 const ACTOR_REACTION_LINES=modules['game/hunt/actor-reactions.mjs']['ACTOR_REACTION_LINES'];
 const actorReactionLine=modules['game/hunt/actor-reactions.mjs']['actorReactionLine'];
+const OVERFLIGHT_REACTION_LINES=
+modules['game/overflight/reactions.mjs']['OVERFLIGHT_REACTION_LINES'];
 /** Original, non-blocking personality copy. No simulated facts, gameplay rules,
  * scores, requests to keep playing, or rewards are derived from these captions. */
 const JOURNEY_REACTIONS=Object.freeze({
@@ -4709,6 +4930,7 @@ text:Object.freeze({en,uk}),
 ),
 ]),
 ...ACTOR_REACTION_LINES,
+...OVERFLIGHT_REACTION_LINES,
 ]);
 const byId=new Map(REACTION_LINES.map((line)=>[line.id,line]));
 function reactionLine(id,locale='en'){
@@ -4728,17 +4950,24 @@ text:line.text[locale==='uk'?'uk':'en'],
 /** Host-owned result context only. Never infer ownership from titles or URLs.
  * A finished race without a successful board is not a completion reaction. */
 function journeyResultReaction(context,locale='en'){
+const overflight=context?.presentation==='overflight'&&context.mode==='solo';
 if(
 !context||
 context.owned!==true||
 !['solo','versus','team'].includes(context.mode)||
-!['won','draw'].includes(context.outcome)||
+!['won','draw',...(overflight?['lost']:[])].includes(context.outcome)||
 (context.outcome==='draw'&&context.mode!=='versus')||
 typeof context.missionId!=='string'||
 !context.missionId||
 context.missionId.length>512
 )
 return null;
+if(overflight)
+// This existing Engineer line and its exact recording fit a successful sortie.
+return reactionLine(
+context.outcome==='won'?'journey-reaction.v1/engineer/0':'overflight-reaction.v1/lost',
+locale,
+);
 const authored=campaignResultLine(context,locale);
 if(authored)return Object.freeze(authored);
 const speaker=
@@ -4774,8 +5003,8 @@ journeyResultReaction:journeyResultReaction,
 };
 })();
 modules['game/journey/reaction-preferences.mjs']=(()=>{
-const boundedJSON=external7['boundedJSON'];
-const exactKeys=external7['exactKeys'];
+const boundedJSON=external11['boundedJSON'];
+const exactKeys=external11['exactKeys'];
 
 const JOURNEY_REACTION_PREFERENCES_KEY='revealline.journey-reactions.v1';
 const format='JourneyReactionPreferencesV1';
@@ -4937,8 +5166,8 @@ createReactionPreferences:createReactionPreferences,
 })();
 modules['game/journey/reaction-options.mjs']=(()=>{
 const DEFAULT_DIALOGUE_VOLUME=modules['game/audio/dialogue-mix.mjs']['DEFAULT_DIALOGUE_VOLUME'];
-const boundedJSON=external7['boundedJSON'];
-const exactKeys=external7['exactKeys'];
+const boundedJSON=external11['boundedJSON'];
+const exactKeys=external11['exactKeys'];
 
 const REACTION_OPTIONS_KEY='revealline.reaction-presentation.v1';
 const DEFAULT_REACTION_OPTIONS=Object.freeze({
@@ -6839,8 +7068,8 @@ const renderResultReactionCaption=
 modules['game/ui/reaction-caption.mjs']['renderResultReactionCaption'];
 const createReactionVoiceCache=
 modules['game/journey/reaction-voice-cache.mjs']['createReactionVoiceCache'];
-const currentLocale=external0['getLocale'];
-const onLocaleChange=external0['onLocaleChange'];
+const currentLocale=external3['getLocale'];
+const onLocaleChange=external3['onLocaleChange'];
 const JOURNEY_REACTIONS=modules['game/journey/reactions.mjs']['JOURNEY_REACTIONS'];
 const REACTION_LINES=modules['game/journey/reactions.mjs']['REACTION_LINES'];
 const reactionLine=modules['game/journey/reactions.mjs']['reactionLine'];
@@ -6851,11 +7080,13 @@ const createReactionOptions=modules['game/journey/reaction-options.mjs']['create
 const createReactionVoiceLibrary=
 modules['game/journey/reaction-voice-library.mjs']['createReactionVoiceLibrary'];
 const REACTION_PORTRAITS=modules['game/journey/reaction-portraits.mjs']['REACTION_PORTRAITS'];
-const actorDefinition=external5['actorDefinition'];
-const resolveActorFamily=external5['resolveActorFamily'];
+const actorDefinition=external9['actorDefinition'];
+const resolveActorFamily=external9['resolveActorFamily'];
 const actorEventReaction=modules['game/hunt/actor-reactions.mjs']['actorEventReaction'];
-const drawHuntActor=external8['drawHuntActor'];
-const sharedActorAppearance=external9['sharedActorAppearance'];
+const drawHuntActor=external12['drawHuntActor'];
+const sharedActorAppearance=external13['sharedActorAppearance'];
+const OVERFLIGHT_REACTION_FAMILIES=
+modules['game/overflight/reactions.mjs']['OVERFLIGHT_REACTION_FAMILIES'];
 
 const recentLines=new Map();
 const HISTORY_KEY='revealline.reaction-recent.v1';
@@ -6901,6 +7132,7 @@ const familyFor=(event)=>
 'craft.redeployed':'recovery',
 'player.revived':event.reason==='reserve'?'recovery':'rescue',
 'rescue.completed':'rescue',
+...OVERFLIGHT_REACTION_FAMILIES,
 })[event.type];
 const urgent=(event)=>
 /^(combat.locked|player.failed|player.downed|lineImpact.seeded|impact.launched)$/.test(event.type);
@@ -7156,6 +7388,8 @@ release();
 function hide(){
 motion?.cancel();
 motion=null;
+if(current?.terminal&&resultContainer&& !journeyOwnsReactionCaption(resultContainer))
+renderResultReactionCaption(resultContainer,null,options.snapshot(),false,getLocale());
 current=null;
 panel.hidden=true;
 panel.style.display='none';
@@ -7185,7 +7419,9 @@ void cache.cancel();
 }
 if(!enabled){
 clearTimeout(timer);
-hide();
+// Retain an accepted result so its shared checkbox can hide/show the
+// caption without replaying its voice. Incidental lines still expire.
+if(!current?.terminal)hide();
 }
 for(const[key,control]of controls){
 if(control.type==='checkbox')control.checked=state[key];
@@ -7329,6 +7565,9 @@ const state=options.snapshot(),
 buffer=cache.get(line.id,getLocale());
 if(state.speech&&speak&&buffer){
 activeVoice=sound.playDialogue(buffer,{
+// An accepted result may speak after gameplay SFX are retired. This
+// never bypasses gesture, full lifecycle pause, mute or dialogue prefs.
+ui:terminal===true,
 onended:()=>{
 activeVoice=null;
 release();
@@ -7525,7 +7764,7 @@ attachContextualReactions:attachContextualReactions,
 modules['optional-practice/civilian-fpv/world-hunt-reactions.mjs']=(()=>{
 const attachContextualReactions=
 modules['game/ui/contextual-reactions.mjs']['attachContextualReactions'];
-const HUNT_CONTACT_CRITERION=external6['HUNT_CONTACT_CRITERION'];
+const HUNT_CONTACT_CRITERION=external10['HUNT_CONTACT_CRITERION'];
 
 /** Presentation projection only: native SIM has unarmed stationary/patrol prey.
  * Do not infer unsupported arcade behavior from a course's name or artwork. */
@@ -7678,22 +7917,23 @@ mountWorldHuntReactions:mountWorldHuntReactions,
 };
 })();
 modules['optional-practice/civilian-fpv/world-library.mjs']=(()=>{
-const boundedJSON=external7['boundedJSON'];
-const exactKeys=external7['exactKeys'];
-const stableId=external7['stableId'];
-const WORLD_LIMITS=external12['WORLD_LIMITS'];
-const worldSHA256=external12['worldSHA256'];
+const boundedJSON=external11['boundedJSON'];
+const exactKeys=external11['exactKeys'];
+const stableId=external11['stableId'];
+const WORLD_LIMITS=external16['WORLD_LIMITS'];
+const worldSHA256=external16['worldSHA256'];
 
 const origin='https://raw.githubusercontent.com/mekhovov/revealline/';
-// This endpoint only publishes packs supported by the surface-coating-v1 runtime.
-// The original index remains compatible with already cached older players.
-const indexURL=origin+'main/authoring/fpv-worlds/published/surface-coating-v1/index.json';
+// This cohort supports ground motion support-v1 and surface-coating-v1.
+// Both older indexes retain their cached-runtime-compatible content.
+const indexURL=origin+'main/authoring/fpv-worlds/published/ground-motion-v1/index.json';
 const check=(condition)=>{
 if(!condition)throw new Error('Invalid world download.');
 };
 
 function worldImportErrorCopy(error){
-if(error?.code!=='unsupported-world-extension')return null;
+if(!['unsupported-world-extension','unsupported-ground-motion'].includes(error?.code))
+return null;
 return[
 'This SIM version does not support a required world feature. Open Flight practice, choose Check available practice, then Play available version. If that version still cannot import it, use a compatible pack. Prepare offline saves the version you opened.',
 'Ця версія SIM не підтримує потрібну можливість світу. Відкрийте «Практика польоту», виберіть «Перевірити доступну практику», а потім «Грати в доступну версію». Якщо імпорт усе ще неможливий, потрібен сумісний пакунок. Підготовка офлайн зберігає відкриту версію.',

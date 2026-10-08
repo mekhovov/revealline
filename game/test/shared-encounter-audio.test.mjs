@@ -94,8 +94,8 @@ test('family tells, supplies and machine impacts have bounded shared recipes', (
     encounterSoundRecipe('warning', { family: 'shield' }).rate,
   );
   assert.equal(encounterSoundRecipe('warning').priority, 5);
-  assert.equal(encounterSoundRecipe('catch', { machine: true }).name, 'contact-metal');
-  assert.equal(encounterSoundRecipe('catch').name, 'contact-soft');
+  assert.equal(encounterSoundRecipe('catch', { machine: true }).name, 'destroy-light');
+  assert.equal(encounterSoundRecipe('catch').name, 'destroy-soft');
   assert.notEqual(encounterSoundRecipe('pulse').name, encounterSoundRecipe('reel').name);
 });
 
@@ -147,6 +147,32 @@ test('Snake shares rotor/prey feedback and deduplicates catches, supplies and sh
   assert.equal(cues.at(-1)[0], 'pulse');
 });
 
+test('Snake observes mechanic cues at each simulation step without replaying duplicate events', () => {
+  const cues = [];
+  const audio = createClassicAudio({ encounter: (...cue) => cues.push(cue) });
+  const run = snake();
+  run.tick = 1;
+  run.events = [{ type: 'target.warning', tick: 1, target: { kind: 'jammer', x: 4 } }];
+  audio.events(run, { board: 'snake-1' });
+  audio.events(run, { board: 'snake-1' });
+  run.tick = 2;
+  run.events = [
+    { type: 'relay.collected', tick: 2, relay: { x: 5 } },
+    { type: 'target.opened', tick: 2, target: { kind: 'relay', x: 7 } },
+  ];
+  audio.events(run);
+  run.tick = 3;
+  run.events = [{ type: 'target.warning', tick: 3, target: { kind: 'lane', x: 4 } }];
+  audio.events(run, { active: false });
+  audio.events(run);
+  assert.deepEqual(
+    cues.map(([cue]) => cue),
+    ['warning', 'supply', 'objective'],
+  );
+  assert.equal(cues[0][1].board, 'snake-1');
+  assert.equal(cues[0][1].family, 'jammer');
+});
+
 test('flight shares master mute, creates one context and sounds the terminal catch once', async () => {
   const { context, made } = contextHarness();
   let creations = 0;
@@ -183,7 +209,7 @@ test('flight shares master mute, creates one context and sounds the terminal cat
   };
   audio.update(final, { active: false });
   const after = made.filter((node) => node.started).length;
-  assert.equal(after, before + 1);
+  assert.equal(after, before + 1 + encounterSoundRecipe('catch').layers.length);
   audio.update(final, { active: false });
   assert.equal(made.filter((node) => node.started).length, after);
   audioMaster.setMuted(true);
@@ -204,6 +230,7 @@ test('offline encounter fallback retains its sweep and paired-board stereo posit
       audioMaster: { muted: false, volume: 1 },
       settings: { master: 1, sfx: 1 },
       recentEvents: new Map(),
+      voices: new Set(),
       feedbackDirector: { play: () => null },
       play(note) {
         notes.push(note);
@@ -304,7 +331,7 @@ test('native flight movement accents use accepted vehicle material and prime res
   assert.equal(newSources.length, 1);
   assert.equal(
     newSources[0].frequency.value,
-    encounterSoundRecipe('drive', { machine: 'tracked', family: 'lookout' }).tone.from,
+    encounterSoundRecipe('drive', { machine: 'tracked', family: 'tracked-tank' }).tone.from,
   );
   audio.update(state);
   assert.equal(made.filter((node) => node.started).length, initial + 1);
@@ -325,4 +352,68 @@ test('native flight movement accents use accepted vehicle material and prime res
     'restored positions are only observed',
   );
   audio.dispose();
+});
+
+test('optional FPV flight retains all five destruction materials in one transaction with a bounded native output', async () => {
+  const { context, made } = contextHarness();
+  const master = createAudioMaster({ muted: false, volume: 0.4 });
+  const host = {
+    AudioContext: function () {
+      return context;
+    },
+    addEventListener() {},
+    removeEventListener() {},
+  };
+  const storage = { getItem: () => null, setItem() {} };
+  const audio = createWorldAudio({ window: host, storage, audioMaster: master });
+  audio.setCourse({
+    actors: [
+      { id: 'runner', type: 'patrol' },
+      { id: 'shield', type: 'patrol' },
+      { id: 'car', type: 'vehicle', vehicleModel: 'field-utility' },
+      { id: 'tank', type: 'vehicle', vehicleModel: 'field-tank' },
+      { id: 'radar', type: 'vehicle', vehicleModel: 'relay-truck' },
+    ],
+    pursuit: {
+      actors: [
+        { id: 'runner', family: 'runner' },
+        { id: 'shield', family: 'shield-bearer' },
+      ],
+    },
+  });
+  await audio.resume();
+  const snapshot = { ticks: 0, step: 0, status: 'active', events: [], velocity: {}, contacts: 0 };
+  audio.update(snapshot);
+  const before = made.filter((node) => node.started).length;
+  context.currentTime = 1;
+  snapshot.ticks++;
+  snapshot.events = Array.from({ length: 400 }, () => ({ type: 'defeat', actor: 'runner' }));
+  snapshot.events.push(
+    ...['shield', 'car', 'tank', 'radar'].map((actor) => ({ type: 'defeat', actor })),
+  );
+  snapshot.events.push({ type: 'catch', actor: 'runner' });
+  const unchanged = structuredClone(snapshot);
+  audio.update(snapshot);
+  const created = made.filter((node) => node.started).slice(before);
+  assert.equal(created.length, 10, 'five tone/noise pairs, independent of the 405 events');
+  assert.equal(created.filter((node) => node.buffer).length, 5);
+  assert.equal(
+    new Set(created.filter((node) => !node.buffer).map((node) => node.frequency.value)).size,
+    5,
+  );
+  audio.update(snapshot);
+  assert.equal(made.filter((node) => node.started).length, before + 10);
+  assert.deepEqual(snapshot, unchanged, 'audio never mutates simulation');
+  // The remaining two effect slots keep warning cues available during a mass clear.
+  snapshot.ticks++;
+  snapshot.events = [{ type: 'warning', actor: 'shield' }];
+  audio.update(snapshot);
+  assert.equal(made.filter((node) => node.started).length, before + 11);
+  audio.pause();
+  assert.ok(
+    created.every((node) => node.stopped),
+    'pause releases every destruction layer',
+  );
+  audio.dispose();
+  master.dispose();
 });

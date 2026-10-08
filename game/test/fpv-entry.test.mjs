@@ -99,6 +99,8 @@ test('World SIM returns to the actual arcade mode, query and community without b
       'game/snake/',
       'game/snake/index.html',
       'game/snake/play.html',
+      'game/overflight/play.html',
+      'game/overflight/raid.html',
     ]) {
       const source = root + entry + '?journey=horizon#menu';
       const target = fpvWorldLaunchURL(source, 'uk', { familyId: 'tryzub', revision: 'r1' });
@@ -147,4 +149,26 @@ test('Snake launch keeps the selected seats and bounded cosmetics within the cur
   ])
     assert.equal(snakeLaunchURL(href), null, href);
   assert.equal(snakeLaunchURL('https://example.test/game/', 'unknown'), null);
+});
+
+test('Survivor and Raid keep same-build Snake and exact SIM return routes', () => {
+  for (const root of [
+    'https://example.test/project/',
+    'https://example.test/project/editions/example/releases/v1.2.3/site/',
+    'capacitor://localhost/',
+    'file:///app/site/',
+  ]) {
+    for (const operation of ['play', 'raid']) {
+      const source = root + `game/overflight/${operation}.html?lang=uk&community=local#menu`;
+      const snake = new URL(snakeLaunchURL(source, 'solo', 'uk'));
+      assert.equal(snake.pathname, new URL(root + 'game/snake/play.html').pathname);
+      assert.equal(snake.searchParams.get('mode'), 'solo');
+      assert.equal(snake.searchParams.get('lang'), 'uk');
+      assert.equal(snake.searchParams.has('community'), false);
+      const simulator = fpvWorldLaunchURL(source, 'uk');
+      assert.equal(fpvWorldReturnURL(simulator), source);
+    }
+  }
+  assert.equal(fpvWorldLaunchURL('https://example.test/game/overflight/unknown.html'), null);
+  assert.equal(snakeLaunchURL('https://example.test/game/overflight/unknown.html'), null);
 });

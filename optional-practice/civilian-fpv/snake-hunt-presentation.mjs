@@ -1,5 +1,6 @@
 import { HUNT_PRESENTATION_CATALOG } from '../../game/hunt/presentation-catalog.mjs';
 import { createDestructionPreferences } from '../../game/hunt/preferences.mjs';
+import { attachDefeatSoundControls } from '../../game/ui/defeat-sound-controls.mjs';
 import { createEncounterDisplayPreferences } from '../../game/encounter-display-preferences.mjs';
 import { actorVisual } from '../../game/hunt/actor-catalog.mjs';
 import { sharedActorAppearance } from '../../game/hunt/preferences.mjs';
@@ -16,10 +17,18 @@ export function mountSnakeHuntPresentationControls({
   document,
   window,
   container,
+  soundContainer,
   storage,
   locale,
 }) {
   const preferences = createDestructionPreferences({ window, getStorage: () => storage });
+  const defeatSounds = attachDefeatSoundControls({
+    document,
+    window,
+    container: soundContainer ?? container,
+    prefix: 'sim-',
+    preferences,
+  });
   const display = createEncounterDisplayPreferences({ window, getStorage: () => storage });
   const snapshot = () => ({
     ...preferences.snapshot(),
@@ -77,6 +86,7 @@ export function mountSnakeHuntPresentationControls({
     preferences: Object.freeze({ snapshot }),
     refresh,
     dispose() {
+      defeatSounds.dispose();
       unsubscribe();
       unsubscribeDisplay();
       preferences.dispose();

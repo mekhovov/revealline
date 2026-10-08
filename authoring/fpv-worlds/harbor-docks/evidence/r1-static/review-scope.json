@@ -1,0 +1,64 @@
+{
+  "format": "FPVHarborR1VisualReviewScope.v1",
+  "sourceCommit": "73f46d0ac31af14182dc97899a90c0d743f38d4e",
+  "foundationAccepted": [
+    "closed containers",
+    "supported gantry",
+    "grazing Low alignment"
+  ],
+  "sceneAcceptance": false,
+  "remaining": [
+    "hard water rectangle edge against broad gray plane",
+    "boxlike vessel with blank cabin",
+    "blank service facade and roof"
+  ],
+  "pixelCapture": "Retained, but root did not personally visually accept this view.",
+  "resources": "Registered geometry/material/texture owners zero and renderer programs zero on disposal; engine fallback texture remains1.",
+  "files": [
+    {
+      "path": "fpv-harbor-r1-browser-review.json",
+      "bytes": 17725,
+      "sha256": "0ce4123260f1f5e2eb45dff3af9044a34f330f4453f95c421df6b9984dd02f5c"
+    },
+    {
+      "path": "fpv-harbor-r1-containers-balanced.png",
+      "bytes": 136512,
+      "sha256": "e4ada306b6cfe9726e61cda42d71e3d9d1ad941b36f5f8701e4956bbdd20ba3b"
+    },
+    {
+      "path": "fpv-harbor-r1-containers-pixel-low.png",
+      "bytes": 127564,
+      "sha256": "304501e47a58311da653a3ff080feba6577bbb7e474858a91c0d5fa290c423e5"
+    },
+    {
+      "path": "fpv-harbor-r1-deck-balanced.png",
+      "bytes": 114863,
+      "sha256": "38e4292d86c81f56399b1a065da7c79c302a10252229a31c0df1b37924a5f6a6"
+    },
+    {
+      "path": "fpv-harbor-r1-entry-balanced.png",
+      "bytes": 121526,
+      "sha256": "a96d26c333e015a8c8bd8dd4ed1b47cfd9c3a037117d34a60c1155cbffce7d3c"
+    },
+    {
+      "path": "fpv-harbor-r1-grazing-low.png",
+      "bytes": 125298,
+      "sha256": "f365c98a06fda24d5b9495ed11c833e030108e579ea97d691ee6c5abaf216e8a"
+    },
+    {
+      "path": "fpv-harbor-r1-under-balanced.png",
+      "bytes": 117872,
+      "sha256": "661f616870d4907716790b9c6ad6932cbb190c1717d23a0a3421b89de37c38e8"
+    },
+    {
+      "path": "fpv-harbor-r1-water-balanced.png",
+      "bytes": 132231,
+      "sha256": "b16f2cd60a94fff865610b697f09e5a1232e6e487df558df3e1350c2cc4fc3c3"
+    },
+    {
+      "path": "fpv-harbor-r1-wide-high.png",
+      "bytes": 123430,
+      "sha256": "4be4eafa7135659150d6150fa358b116608b940f69b855615341f91c2e30c116"
+    }
+  ]
+}

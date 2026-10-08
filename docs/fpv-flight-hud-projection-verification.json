@@ -1,0 +1,323 @@
+{
+  "format": "FPVFlightHudProjectionObservation.v1",
+  "head": "29646092ff152d4807e44522ff6f1e67ba7b79d9",
+  "baselineRevision": "cfa30a228eb25d2bc7e4dd6d76e417c0d76a6873",
+  "sources": {
+    "optional-practice/civilian-fpv/model.mjs": "dc950bc9c3282a2f879c264e40004fd1ebf1860cb33ad49d3cf73cc158ce7577",
+    "optional-practice/civilian-fpv/renderer.mjs": "7a55ab73cad122eeedff61a7ada0842dfa675d33f605d02a659c6db8b24351e1",
+    "optional-practice/civilian-fpv/catalogue.mjs": "98338353d17eb585414538c9905040752fd5cd6699c48b17fa1706832b750997",
+    "optional-practice/civilian-fpv/demonstrations.mjs": "92bb4365c46d94f5c1fea9808ec4e24fb9014d35640ee488959c4e0f4b6c5cfa",
+    "docs/evidence/fpv-flight-hud-projection-probe.mjs": "0b6c138680a380ddc1a321b8ed1687df3747dc5c32ff5e5a91a5a68bbcd4b4f8"
+  },
+  "checks": [
+    {
+      "name": "production objectiveScreen method found",
+      "passed": true
+    },
+    {
+      "name": "gate marks the actual opening center",
+      "passed": true
+    },
+    {
+      "name": "front gate is visible with real distance",
+      "passed": true
+    },
+    {
+      "name": "visibility query cached over five accepted ticks",
+      "passed": true
+    },
+    {
+      "name": "repeated render frames do not repeat an unchanged query",
+      "passed": true
+    },
+    {
+      "name": "visibility cache refreshed on next tick bucket",
+      "passed": true
+    },
+    {
+      "name": "behind goal has finite edge direction",
+      "passed": true
+    },
+    {
+      "name": "x/-1 wrong-side gate points 1.5m onto entry side",
+      "passed": true
+    },
+    {
+      "name": "x/-1 gate plane still requires approach",
+      "passed": true
+    },
+    {
+      "name": "x/-1 correct-side gate points to opening",
+      "passed": true
+    },
+    {
+      "name": "x/-1 side change refreshes obstruction in same tick bucket",
+      "passed": true
+    },
+    {
+      "name": "x/1 wrong-side gate points 1.5m onto entry side",
+      "passed": true
+    },
+    {
+      "name": "x/1 gate plane still requires approach",
+      "passed": true
+    },
+    {
+      "name": "x/1 correct-side gate points to opening",
+      "passed": true
+    },
+    {
+      "name": "x/1 side change refreshes obstruction in same tick bucket",
+      "passed": true
+    },
+    {
+      "name": "z/-1 wrong-side gate points 1.5m onto entry side",
+      "passed": true
+    },
+    {
+      "name": "z/-1 gate plane still requires approach",
+      "passed": true
+    },
+    {
+      "name": "z/-1 correct-side gate points to opening",
+      "passed": true
+    },
+    {
+      "name": "z/-1 side change refreshes obstruction in same tick bucket",
+      "passed": true
+    },
+    {
+      "name": "z/1 wrong-side gate points 1.5m onto entry side",
+      "passed": true
+    },
+    {
+      "name": "z/1 gate plane still requires approach",
+      "passed": true
+    },
+    {
+      "name": "z/1 correct-side gate points to opening",
+      "passed": true
+    },
+    {
+      "name": "z/1 side change refreshes obstruction in same tick bucket",
+      "passed": true
+    },
+    {
+      "name": "advanced vertical crossing also guides back to entry side",
+      "passed": true
+    },
+    {
+      "name": "opaque wall gives direction only, never a bracket",
+      "passed": true
+    },
+    {
+      "name": "blocked central goal projects to edge",
+      "passed": true
+    },
+    {
+      "name": "translucent geometry does not claim opaque occlusion",
+      "passed": true
+    },
+    {
+      "name": "invisible geometry does not claim rendered occlusion",
+      "passed": true
+    },
+    {
+      "name": "sprite labels are excluded before ray intersection",
+      "passed": true
+    },
+    {
+      "name": "outside zone uses nearest boundary",
+      "passed": true
+    },
+    {
+      "name": "inside hold has no false behind or direction arrow",
+      "passed": true
+    },
+    {
+      "name": "below a zone retains explicit climb guidance",
+      "passed": true
+    },
+    {
+      "name": "above a zone retains explicit descent guidance",
+      "passed": true
+    },
+    {
+      "name": "landing points to the pad center, not the airborne drone",
+      "passed": true
+    },
+    {
+      "name": "on-pad marker suppressed while landing gauges continue",
+      "passed": true
+    },
+    {
+      "name": "raised landing uses actual support top at four meters",
+      "passed": true
+    },
+    {
+      "name": "missing named landing surface has no invented marker",
+      "passed": true
+    },
+    {
+      "name": "rotation-v1 uses authored skill zone",
+      "passed": true
+    },
+    {
+      "name": "attitude-v1 uses authored skill zone",
+      "passed": true
+    },
+    {
+      "name": "path-v1 uses authored skill zone",
+      "passed": true
+    },
+    {
+      "name": "advanced crossing uses actual opening",
+      "passed": true
+    },
+    {
+      "name": "follow tracks the actual actor center",
+      "passed": true
+    },
+    {
+      "name": "unavailable subject has no guessed position",
+      "passed": true
+    },
+    {
+      "name": "ordered Hunt points to the next eligible actor",
+      "passed": true
+    },
+    {
+      "name": "combat skips defeated actors",
+      "passed": true
+    },
+    {
+      "name": "occluded known actor has navigation direction but no silhouette",
+      "passed": true
+    },
+    {
+      "name": "survival without an authored location has no invented marker",
+      "passed": true
+    },
+    {
+      "name": "expired attempts have no active objective marker",
+      "passed": true
+    },
+    {
+      "name": "flight-01/self-level legacy replay unchanged",
+      "passed": true
+    },
+    {
+      "name": "flight-01/acro legacy replay unchanged",
+      "passed": true
+    },
+    {
+      "name": "flight-02/self-level legacy replay unchanged",
+      "passed": true
+    },
+    {
+      "name": "flight-02/acro legacy replay unchanged",
+      "passed": true
+    },
+    {
+      "name": "flight-03/self-level legacy replay unchanged",
+      "passed": true
+    },
+    {
+      "name": "flight-03/acro legacy replay unchanged",
+      "passed": true
+    },
+    {
+      "name": "flight-04/self-level legacy replay unchanged",
+      "passed": true
+    },
+    {
+      "name": "flight-04/acro legacy replay unchanged",
+      "passed": true
+    },
+    {
+      "name": "flight-05/self-level legacy replay unchanged",
+      "passed": true
+    },
+    {
+      "name": "flight-05/acro legacy replay unchanged",
+      "passed": true
+    },
+    {
+      "name": "flight-06/self-level legacy replay unchanged",
+      "passed": true
+    },
+    {
+      "name": "flight-06/acro legacy replay unchanged",
+      "passed": true
+    },
+    {
+      "name": "flight-07/self-level legacy replay unchanged",
+      "passed": true
+    },
+    {
+      "name": "flight-07/acro legacy replay unchanged",
+      "passed": true
+    },
+    {
+      "name": "flight-08/self-level legacy replay unchanged",
+      "passed": true
+    },
+    {
+      "name": "flight-08/acro legacy replay unchanged",
+      "passed": true
+    },
+    {
+      "name": "flight-09/self-level legacy replay unchanged",
+      "passed": true
+    },
+    {
+      "name": "flight-09/acro legacy replay unchanged",
+      "passed": true
+    },
+    {
+      "name": "flight-10/self-level legacy replay unchanged",
+      "passed": true
+    },
+    {
+      "name": "flight-10/acro legacy replay unchanged",
+      "passed": true
+    },
+    {
+      "name": "flight-11/self-level legacy replay unchanged",
+      "passed": true
+    },
+    {
+      "name": "flight-11/acro legacy replay unchanged",
+      "passed": true
+    },
+    {
+      "name": "flight-12/self-level legacy replay unchanged",
+      "passed": true
+    },
+    {
+      "name": "flight-12/acro legacy replay unchanged",
+      "passed": true
+    },
+    {
+      "name": "all original demonstration facts and replay outcomes qualified",
+      "passed": true
+    },
+    {
+      "name": "actual pre-collision and landing facts exercised",
+      "passed": true
+    }
+  ],
+  "legacy": {
+    "proofs": 24,
+    "ticks": 14847,
+    "acceptedObjectives": 110,
+    "landingFacts": 4737,
+    "preCollisionDifferences": 481
+  },
+  "limitations": [
+    "Projection calls the extracted production method with real bundled Three.js math and bounded geometric fixtures; it does not create WebGL or launch a host.",
+    "Legacy verification replays existing recorded commands and compares complete results with the pinned baseline model; feedback never changes snapshots.",
+    "This does not qualify renderer frame times, hardware, all imported geometry, player acceptance or public deployment.",
+    "Additional unit coverage remains deferred; this is a standalone manual evidence probe."
+  ]
+}

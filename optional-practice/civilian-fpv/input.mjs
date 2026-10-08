@@ -1,4 +1,5 @@
 import { neutralFlightInput } from './radio-profile.mjs';
+import { menuGroupNeighbor } from '../../game/ui/menu-navigation-groups.mjs';
 
 export const KEYBOARD_PRESET_KEY = 'revealline.fpv.keyboard-preset.v1';
 const keyboardPresets = Object.freeze({
@@ -529,8 +530,10 @@ export function createFlightMenuNavigation({
   document: doc = globalThis.document,
   getContext = () => null,
   onBack = () => {},
+  onAction = () => {},
   onHint = () => {},
   locale = () => 'en',
+  ownsKeyboardEvent = () => false,
 } = {}) {
   const selector = 'button,a[href],select,input:not([type="hidden"]),textarea,summary';
   const directions = { ArrowUp: 'up', ArrowDown: 'down', ArrowLeft: 'left', ArrowRight: 'right' };
@@ -589,7 +592,8 @@ export function createFlightMenuNavigation({
     lastTime = null;
   }
   function sync() {
-    const next = !disposed && !doc.hidden && doc.hasFocus?.() !== false ? getContext() : null;
+    const candidate = !disposed && !doc.hidden ? getContext() : null;
+    const next = doc.hasFocus?.() !== false || candidate?.frameFocused ? candidate : null;
     if (
       next?.root !== context?.root ||
       next?.key !== context?.key ||
@@ -614,6 +618,10 @@ export function createFlightMenuNavigation({
         );
       else onHint('');
     }
+    if (context && next) {
+      context.frameFocused = next.frameFocused;
+      context.handleFrameCommand = next.handleFrameCommand;
+    }
     if (editing && (!available(editing.element) || !context?.root.contains(editing.element)))
       cancelEdit();
     return !!context;
@@ -627,6 +635,11 @@ export function createFlightMenuNavigation({
   }
   function command(action) {
     if (!sync()) return;
+    onAction(action);
+    if (context.frameFocused) {
+      context.handleFrameCommand?.({ back: action === 'back' });
+      return;
+    }
     if (action === 'back') {
       if (editing) {
         cancelEdit();
@@ -699,6 +712,11 @@ export function createFlightMenuNavigation({
       } else current.click();
       return;
     }
+    const grouped = menuGroupNeighbor(items, current, action);
+    if (grouped) {
+      focus(grouped);
+      return;
+    }
     const rect = current.getBoundingClientRect(),
       horizontal = ['left', 'right'].includes(action);
     const sign = ['right', 'down'].includes(action) ? 1 : -1;
@@ -745,6 +763,7 @@ export function createFlightMenuNavigation({
         return;
       }
       if (state.pending !== source.action) {
+        onAction(source.action);
         state.pending = source.action;
         state.since = now;
       }
@@ -760,6 +779,10 @@ export function createFlightMenuNavigation({
       state.pending = null;
       if (!source.neutral || !state.qualified) {
         state.ready = source.neutral;
+        return;
+      }
+      if (context.frameFocused) {
+        command(action);
         return;
       }
       if (joined !== source.key) {
@@ -815,7 +838,7 @@ export function createFlightMenuNavigation({
         (typeof pad.buttons[index] === 'number'
           ? pad.buttons[index]
           : (pad.buttons[index]?.value ?? 0)) > 0.5;
-      const held = [0, 1, 12, 13, 14, 15].filter(pressed);
+      const held = [0, 1, ...(context.frameFocused ? [9] : []), 12, 13, 14, 15].filter(pressed);
       const x = pad.axes[0] ?? 0,
         y = pad.axes[1] ?? 0;
       if (![x, y].every((value) => Number.isFinite(value) && Math.abs(value) <= 1)) continue;
@@ -829,7 +852,13 @@ export function createFlightMenuNavigation({
         hold: 0,
         neutral: !held.length && centered,
         action:
-          centered && held.length === 1 && (pressed(0) ? 'confirm' : pressed(1) ? 'back' : null),
+          centered &&
+          held.length === 1 &&
+          (pressed(0)
+            ? 'confirm'
+            : pressed(1) || (context.frameFocused && pressed(9))
+              ? 'back'
+              : null),
         direction: !held.length ? stick : dpad && (centered || stick === dpad) ? dpad : null,
       });
     }
@@ -856,7 +885,10 @@ export function createFlightMenuNavigation({
       });
     }
     const keys = new Set(sampled.map((source) => source.key));
-    if (joined && !keys.has(joined)) reset({ leaveDevice: true });
+    if (joined && !keys.has(joined)) {
+      onAction('disconnect');
+      reset({ leaveDevice: true });
+    }
     for (const key of sources.keys()) if (!keys.has(key)) sources.delete(key);
     for (const source of sampled) sample(source, now);
   }
@@ -870,7 +902,8 @@ export function createFlightMenuNavigation({
       event.ctrlKey ||
       event.metaKey ||
       event.altKey ||
-      !active
+      !active ||
+      ownsKeyboardEvent(event)
     )
       return;
     if (
@@ -915,7 +948,9 @@ export function createFlightMenuNavigation({
     heldKeys.clear();
     blockedKeys.clear();
   };
-  listen(win, 'blur', suspend);
+  listen(win, 'blur', () => {
+    if (!getContext()?.frameFocused) suspend();
+  });
   listen(doc, 'visibilitychange', suspend);
   return {
     poll,

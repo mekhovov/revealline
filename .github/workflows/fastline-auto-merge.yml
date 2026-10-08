@@ -2,7 +2,9 @@ name: Fastline exact-head auto-merge
 
 on:
   workflow_run:
-    workflows: [Build and deploy GitHub Pages]
+    # Wake when the exact-head source gate completes, including a failure that
+    # must disarm an earlier auto-merge decision.
+    workflows: [Validate source for continuous main]
     types: [completed]
   pull_request:
     branches: [main]
