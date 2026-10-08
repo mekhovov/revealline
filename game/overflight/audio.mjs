@@ -31,6 +31,13 @@ export function createOverflightAudio(
     final: 'objective',
     level: 'objective',
     evolution: 'objective',
+    'hunt-kill': 'catch',
+    'hunt-blocked': 'blocked',
+    'armor-break': 'reel',
+    'rush-ready': 'notice',
+    rush: 'pulse',
+    objective: 'objective',
+    courier: 'supply',
   };
   return {
     prepare() {

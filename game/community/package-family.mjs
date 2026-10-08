@@ -12,6 +12,12 @@ import {
   overflightPackageIdentity,
 } from '../overflight/community.mjs';
 
+import {
+  OVERFLIGHT_HUNT_PACKAGE_FORMAT,
+  importOverflightHuntPackage,
+  overflightHuntPackageIdentity,
+} from '../overflight/raid-community.mjs';
+
 /** Native validators own each format. Family detection never trusts a file extension. */
 export async function inspectCommunityPackage(source, options = {}) {
   const blob = ownCreatorBlob(source, 256 * 1024 * 1024, 'Community package');
@@ -79,8 +85,9 @@ export async function inspectCommunityPackage(source, options = {}) {
   const bytes = await blob.arrayBuffer();
   new TextDecoder('utf-8', { fatal: true }).decode(bytes);
   const json = JSON.parse(new TextDecoder('utf-8', { fatal: true }).decode(bytes));
-  if (json?.format === OVERFLIGHT_PACKAGE_FORMAT) {
-    const pack = await importOverflightPackage(blob),
+  if ([OVERFLIGHT_PACKAGE_FORMAT, OVERFLIGHT_HUNT_PACKAGE_FORMAT].includes(json?.format)) {
+    const raid = json.format === OVERFLIGHT_HUNT_PACKAGE_FORMAT;
+    const pack = await (raid ? importOverflightHuntPackage : importOverflightPackage)(blob),
       text = await blob.text(),
       editionId = await creatorSHA256(bytes);
     required(
@@ -88,11 +95,11 @@ export async function inspectCommunityPackage(source, options = {}) {
       'Overflight packages must use plain UTF-8 without a byte-order marker.',
     );
     return {
-      family: 'overflight',
+      family: raid ? 'overflight-hunt' : 'overflight',
       pack,
       text,
       editionId,
-      runtimeIdentity: overflightPackageIdentity(pack),
+      runtimeIdentity: (raid ? overflightHuntPackageIdentity : overflightPackageIdentity)(pack),
       title: pack.project.title.en,
       missions: 1,
     };

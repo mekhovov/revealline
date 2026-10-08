@@ -143,6 +143,7 @@ function render() {
               team: 'Team',
               fpv: 'FPV SIM',
               overflight: getLocale() === 'uk' ? 'Проліт' : 'Overflight',
+              'overflight-hunt': getLocale() === 'uk' ? 'Проліт: Наліт' : 'Overflight: Raid',
             })[edition.family],
           'badge',
         ),
@@ -160,7 +161,7 @@ function render() {
       card.append(
         text(
           'p',
-          edition.family === 'overflight'
+          ['overflight', 'overflight-hunt'].includes(edition.family)
             ? () =>
                 getLocale() === 'uk'
                   ? 'Локальна копія Studio також використовує цей виліт. Вивантаження видання збереже її.'
@@ -222,7 +223,8 @@ function render() {
               await library.offloadInstalled(edition, review);
               await refresh({ reset: true });
               status(
-                review.localCopyRetained && edition.family === 'overflight'
+                review.localCopyRetained &&
+                  ['overflight', 'overflight-hunt'].includes(edition.family)
                   ? () =>
                       getLocale() === 'uk'
                         ? 'Видання вивантажено. Локальну копію та пакет відновлення збережено.'
