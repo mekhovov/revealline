@@ -1,3 +1,5 @@
+import { overflightCombatEditor } from './overflight-combat-editor.mjs';
+import { upgradeOverflightProjectCopy } from '../overflight/project-upgrade.mjs';
 import {
   createOverflightProject,
   validateOverflightProject,
@@ -238,6 +240,13 @@ function renderEditor() {
       ['crossing', 'Crossing', 'Перетин'],
       ['surge', 'Surge', 'Натиск'],
       ['relief', 'Relief', 'Перепочинок'],
+      ...(draft.combat
+        ? [
+            ['flank', 'Flanking wedge', 'Фланговий клин'],
+            ['armored', 'Shield advance', 'Наступ щитів'],
+            ['support', 'Relay surge', 'Натиск зв’язку'],
+          ]
+        : []),
     ])
       pattern.append(element('option', words(en, uk), { value: id }));
     pattern.value = encounter.pattern;
@@ -344,7 +353,7 @@ function renderEditor() {
       element('input', '', { type: 'checkbox' }),
     );
     input.checked = draft.upgrades.modules.includes(id);
-    input.disabled = id === 'primary';
+    input.disabled = id === 'primary' || (id === 'plating' && !draft.combat);
     input.addEventListener('change', () => {
       draft.upgrades.modules = OVERFLIGHT_MODULES.filter((module) =>
         module === id ? input.checked : draft.upgrades.modules.includes(module),
@@ -356,7 +365,14 @@ function renderEditor() {
   placement.append(
     element(
       'legend',
-      words('Low supply cases · decorative, open flight', 'Низькі ящики · вільний політ'),
+      words(
+        draft.combat
+          ? 'Supply-case placement · first two are guarded rewards'
+          : 'Low supply cases · decorative, open flight',
+        draft.combat
+          ? 'Розміщення ящиків · перші два дають винагороди'
+          : 'Низькі ящики · вільний політ',
+      ),
     ),
   );
   draft.props.forEach((prop, index) => {
@@ -383,7 +399,13 @@ function renderEditor() {
       renderEditor();
     }),
   );
-  editor.append(general, encounters, progression, placement);
+  editor.append(
+    general,
+    overflightCombatEditor({ document, project: draft, locale, onChange: refreshSource }),
+    encounters,
+    progression,
+    placement,
+  );
   refreshSource();
 }
 const packageText = element('textarea', '', {
@@ -427,6 +449,11 @@ file.addEventListener(
 );
 actions.append(
   preset,
+  button(words('Make updated copy', 'Створити оновлену копію'), () => {
+    draft = upgradeOverflightProjectCopy(draft, { difficulty: draft.difficulty ?? 'standard' });
+    renderEditor();
+    check();
+  }),
   button(words('Use encounter set', 'Застосувати набір хвиль'), () => {
     draft = createOverflightProject({ encounterSet: preset.value });
     renderEditor();

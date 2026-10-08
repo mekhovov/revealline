@@ -255,7 +255,10 @@ export async function drawAssetPreview(surface, slot, asset, resolved, blobs, se
     if (asset.file && !blob) {
       throw new Error(t('tools:fileBytesAreUnavailableReImportTheCompleteBundle'));
     }
-    if (asset.kind === 'audio' && slot.id.startsWith('audio.destroy-')) {
+    if (
+      asset.kind === 'audio' &&
+      (slot.id.startsWith('audio.destroy-') || slot.id.startsWith('audio.human-reaction-'))
+    ) {
       audioRecipePreview(surface, slot, own, { audioMaster, readAudio: async () => ({ blob }) });
       return;
     }

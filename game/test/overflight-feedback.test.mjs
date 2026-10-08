@@ -133,7 +133,7 @@ test('every added semantic audio cue resolves to a native recipe and bounded spa
   audio.update(run);
   assert.deepEqual(
     heard.map((row) => row.type),
-    ['burst', 'warning', 'catch', 'supply', 'objective'],
+    ['warning', 'burst', 'catch', 'supply', 'objective'],
   );
   for (const row of heard) {
     assert.ok(encounterSoundRecipe(row.type, row.details));

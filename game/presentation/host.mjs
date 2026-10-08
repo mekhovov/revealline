@@ -1,4 +1,4 @@
-import { DESTRUCTION_CUES } from '../ui/destruction-audio.mjs';
+import { DESTRUCTION_CUES, HUMAN_REACTION_CUES } from '../ui/destruction-audio.mjs';
 import { pageActorArtPool } from './actor-art-pool.mjs';
 import { localizedMessage } from '../i18n/index.mjs';
 import {
@@ -391,7 +391,10 @@ export function createPresentationHost({
       required(
         profile === 'full' ||
           (profile === 'board' &&
-            (slot === 'audio.pickup' || DESTRUCTION_CUES.some((cue) => slot === `audio.${cue}`))),
+            (slot === 'audio.pickup' ||
+              [...DESTRUCTION_CUES, ...HUMAN_REACTION_CUES].some(
+                (cue) => slot === `audio.${cue}`,
+              ))),
         profile === 'actors'
           ? 'An actor-only host cannot read audio.'
           : 'This presentation profile cannot read this audio slot.',
@@ -401,7 +404,7 @@ export function createPresentationHost({
       const asset = snapshot.resolved.assets[slot];
       required(
         (/^audio\.(focus|confirm|cancel|capture|failure|victory|pickup|music)$/.test(slot) ||
-          DESTRUCTION_CUES.some((cue) => slot === `audio.${cue}`)) &&
+          [...DESTRUCTION_CUES, ...HUMAN_REACTION_CUES].some((cue) => slot === `audio.${cue}`)) &&
           asset?.kind === 'audio',
         'No compiled audio for this slot.',
       );

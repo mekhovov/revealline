@@ -9,6 +9,34 @@ export const DESTRUCTION_CATEGORIES = Object.freeze([
 ]);
 export const DESTRUCTION_CUES = Object.freeze(DESTRUCTION_CATEGORIES.map((id) => `destroy-${id}`));
 
+// Separate slots preserve the dry impact when gore is disabled. Human identity
+// is independent of armor/electronics material (for example a relay operator).
+export const HUMAN_REACTION_CUES = Object.freeze(
+  Array.from({ length: 8 }, (_, index) => `human-reaction-${index + 1}`),
+);
+const humanoidFamilies = new Set([
+  'lookout',
+  'patroller',
+  'runner',
+  'sprinter',
+  'courier',
+  'guard',
+  'refuge',
+  'refuge-seeker',
+  'switchback',
+  'pair',
+  'rendezvous-pair',
+  'shield',
+  'shield-bearer',
+  'brace',
+  'brace-trooper',
+  'relay-warden',
+]);
+export function isHumanoidDestruction(details = {}) {
+  if (details.machine || details.humanoid === false || details.flesh === false) return false;
+  return details.humanoid === true || humanoidFamilies.has(details.family ?? details.kind);
+}
+
 export function destructionCategory(details = {}) {
   if (DESTRUCTION_CATEGORIES.includes(details.category)) return details.category;
   const family = String(details.family ?? details.kind ?? '').toLowerCase();

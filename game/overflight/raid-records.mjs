@@ -1,15 +1,16 @@
 import { boundedJSON, dataIdentity, exactKeys, required } from '../data-json.mjs';
 import { createProfileRecordBackend } from '../profile-storage.mjs';
-import { OVERFLIGHT_HUNT_RULES } from './raid-core.mjs';
 
-export const OVERFLIGHT_HUNT_RECORDS_FORMAT = 'overflight-hunt-records.v1';
-export const OVERFLIGHT_HUNT_RECORD_RULES = OVERFLIGHT_HUNT_RULES;
-const empty = () => ({ format: OVERFLIGHT_HUNT_RECORDS_FORMAT, entries: {} });
+export const OVERFLIGHT_HUNT_RECORDS_FORMAT = 'overflight-hunt-records.v2';
+export const OVERFLIGHT_HUNT_LEGACY_RECORDS_FORMAT = 'overflight-hunt-records.v1';
+export const OVERFLIGHT_HUNT_RECORD_RULES = 'overflight-raid.v2';
+const legacyRules = 'overflight-raid.v1';
+const versionOf = (run) => (run?.compiled?.format === 'OverflightHuntCompiledV2' ? 2 : 1);
 const finite = (value) => Number.isFinite(value) && value >= 0;
 
 export function overflightHuntRecordContext(run) {
   required(
-    run?.compiled?.format === 'OverflightHuntCompiledV1',
+    ['OverflightHuntCompiledV1', 'OverflightHuntCompiledV2'].includes(run?.compiled?.format),
     'Raid records need a compiled hunt.',
   );
   required(/^[a-f0-9]{16}$/.test(run.compiled.projectIdentity), 'Missing Raid content identity.');
@@ -22,11 +23,14 @@ export function overflightHuntRecordContext(run) {
     'Invalid Raid settings.',
   );
   return {
-    rules: OVERFLIGHT_HUNT_RECORD_RULES,
+    rules: versionOf(run) === 2 ? OVERFLIGHT_HUNT_RECORD_RULES : legacyRules,
     project: run.compiled.projectIdentity,
     seed: run.seed,
     airframes: run.airframes,
     slowResume: run.slowResume,
+    ...(versionOf(run) === 2
+      ? { difficulty: run.difficulty ?? run.compiled.difficulty ?? 'standard' }
+      : {}),
   };
 }
 
@@ -59,7 +63,9 @@ function validateResult(result) {
     required(finite(result[key]), `Invalid Raid record ${key}.`);
 }
 
-function validate(source) {
+function validateRecords(source, version) {
+  const format =
+    version === 2 ? OVERFLIGHT_HUNT_RECORDS_FORMAT : OVERFLIGHT_HUNT_LEGACY_RECORDS_FORMAT;
   const state = boundedJSON(source, {
     maxBytes: 256 * 1024,
     maxNodes: 18000,
@@ -67,7 +73,7 @@ function validate(source) {
     maxArray: 16,
   });
   exactKeys(state, ['format', 'entries'], 'Raid records');
-  required(state.format === OVERFLIGHT_HUNT_RECORDS_FORMAT, 'Unsupported Raid records.');
+  required(state.format === format, 'Unsupported Raid records.');
   required(
     state.entries && !Array.isArray(state.entries) && typeof state.entries === 'object',
     'Invalid Raid record entries.',
@@ -78,11 +84,18 @@ function validate(source) {
     exactKeys(entry, ['context', 'fastestClear', 'bestScore', 'last'], 'Raid records entry');
     exactKeys(
       entry.context,
-      ['rules', 'project', 'seed', 'airframes', 'slowResume'],
+      [
+        'rules',
+        'project',
+        'seed',
+        'airframes',
+        'slowResume',
+        ...(version === 2 ? ['difficulty'] : []),
+      ],
       'Raid record context',
     );
     required(
-      entry.context.rules === OVERFLIGHT_HUNT_RECORD_RULES,
+      entry.context.rules === (version === 2 ? OVERFLIGHT_HUNT_RECORD_RULES : legacyRules),
       'Unsupported Raid record rules.',
     );
     required(/^[a-f0-9]{16}$/.test(entry.context.project), 'Invalid Raid project identity.');
@@ -96,6 +109,11 @@ function validate(source) {
       [1, 3].includes(entry.context.airframes) && typeof entry.context.slowResume === 'boolean',
       'Invalid Raid record settings.',
     );
+    if (version === 2)
+      required(
+        ['standard', 'veteran'].includes(entry.context.difficulty),
+        'Invalid Raid difficulty.',
+      );
     required(dataIdentity(entry.context) === key, 'Raid record identity differs.');
     for (const field of ['fastestClear', 'bestScore', 'last']) validateResult(entry[field]);
     required(
@@ -123,11 +141,15 @@ function resultOf(run) {
 
 /** The existing profile database owns persistence; cosmetic appearance never
  * separates competitive records. Failed writes retain a clearly session-only result. */
-export function createOverflightHuntRecords({ backend, ...options } = {}) {
+function createRecordStore({ backend, version, ...options }) {
+  const format =
+    version === 2 ? OVERFLIGHT_HUNT_RECORDS_FORMAT : OVERFLIGHT_HUNT_LEGACY_RECORDS_FORMAT;
+  const validate = (source) => validateRecords(source, version);
+  const empty = () => ({ format, entries: {} });
   const store =
     backend ??
     createProfileRecordBackend({
-      key: OVERFLIGHT_HUNT_RECORDS_FORMAT,
+      key: format,
       empty,
       validate,
       ...options,
@@ -210,6 +232,22 @@ export function createOverflightHuntRecords({ backend, ...options } = {}) {
       session.clear();
       known.clear();
       store.close?.();
+    },
+  };
+}
+
+/** Rules revisions have independent durable buckets. Loading a revised sortie never
+ * rewrites old history, and historical projects can still read their exact records. */
+export function createOverflightHuntRecords({ backend, legacyBackend, ...options } = {}) {
+  const current = createRecordStore({ ...options, backend, version: 2 });
+  const legacy = createRecordStore({ ...options, backend: legacyBackend ?? backend, version: 1 });
+  const storeFor = (run) => (versionOf(run) === 2 ? current : legacy);
+  return {
+    read: (run) => storeFor(run).read(run),
+    record: (run) => storeFor(run).record(run),
+    dispose() {
+      current.dispose();
+      legacy.dispose();
     },
   };
 }

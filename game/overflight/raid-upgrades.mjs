@@ -10,8 +10,24 @@ export const HUNT_UPGRADE_IDS = Object.freeze([
   'heavy-exposure',
   'guard-interrupt',
   'recovery-shield',
+  'plating',
 ]);
 const definitions = {
+  plating: {
+    title: text('Reactive plating', 'Реактивна броня'),
+    direction: 'breaker',
+    descriptions: [
+      text('Unplated hull', 'Корпус без броні'),
+      text(
+        'Reduce hull damage by 10%; excludes Objective shield',
+        'Шкода корпусу менша на 10%; несумісно з екраном за ціль',
+      ),
+      text(
+        'Reduce hull damage by 20%; no recharge required',
+        'Шкода корпусу менша на 20%; без перезаряджання',
+      ),
+    ],
+  },
   'strike-width': {
     title: text('Broad pass', 'Широкий проліт'),
     direction: 'sweeper',
@@ -154,6 +170,7 @@ export function overflightHuntParameters(build) {
     heavyExposureBonus: [0, 0.5, 1][rank('heavy-exposure')],
     interruptRadius: [0, 110, 150][rank('guard-interrupt')],
     shieldCapacity: rank('recovery-shield'),
+    armorReduction: rank('plating') * 0.1,
   };
 }
 export function overflightHuntUpgradeParameters(id, rank = 0) {
@@ -173,7 +190,11 @@ export function overflightHuntBuildItems(build) {
 }
 export function legalOverflightHuntUpgrades(build, allowedModules = HUNT_UPGRADE_IDS) {
   return HUNT_UPGRADE_IDS.filter(
-    (id) => allowedModules.includes(id) && overflightHuntUpgradeRank(build, id) < 2,
+    (id) =>
+      allowedModules.includes(id) &&
+      overflightHuntUpgradeRank(build, id) < 2 &&
+      !(id === 'plating' && overflightHuntUpgradeRank(build, 'recovery-shield')) &&
+      !(id === 'recovery-shield' && overflightHuntUpgradeRank(build, 'plating')),
   ).map((id) => {
     const def = definitions[id],
       rank = overflightHuntUpgradeRank(build, id) + 1;
