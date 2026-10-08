@@ -62,6 +62,15 @@ Studio exports and imported courses still require their ordinary validation and
 content ownership; this authoring feature does not qualify a new mission for
 release.
 
+An imported ordinary `FlightCourse.v2` Hunt may explicitly carry
+`contactPolicy: "retain-momentum-v1"`. Its successful eligible catches retain
+velocity and its recording uses the separate `civilian-world-hunt.v2` model.
+The editor preserves that field through Apply, movement and target-reference
+normalization; existing controls do not add it to new objectives. Missing policy
+keeps the original contact behavior and identity. Native pursuit does not accept
+this policy. See the [importable momentum practice](../authoring/fpv-worlds/momentum-contact/README.md)
+for the fixture, compatibility rationale and focused functional evidence.
+
 ## Verification boundary
 
 Regression sources cover the unarmed preset, accepted targets/order/tail values,

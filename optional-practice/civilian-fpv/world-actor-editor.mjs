@@ -973,6 +973,9 @@ export function mountActorEditor({ container, getCourse, onChange, locale = 'en'
         throw new TypeError(text('huntConflict'));
       const values = {
         type: 'hunt-contact-v1',
+        ...(current?.step.contactPolicy === undefined
+          ? {}
+          : { contactPolicy: current.step.contactPolicy }),
         targets: [...targets],
         ordered: ordered.checked,
         tail: {
