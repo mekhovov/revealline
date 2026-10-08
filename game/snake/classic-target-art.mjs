@@ -1,18 +1,8 @@
 import { drawHuntActor } from '../hunt/actor-art.mjs';
 import { drawMachinerySpecimen } from '../presentation/industrial-machinery.mjs';
+import { classicTargetIdentity } from './classic-target-identity.mjs';
 
 const HEADINGS = new Set(['up', 'right', 'down', 'left']);
-const MACHINE_FAMILIES = Object.freeze({
-  jammer: 'radar-truck',
-  lane: 'tracked-tank',
-  relay: 'radar-truck',
-  perimeter: 'utility-car',
-  contour: 'scout-car',
-  rover: 'armored-carrier',
-  ricochet: 'utility-car',
-  eroder: 'cargo-truck',
-  guard: 'tracked-tank',
-});
 const ANGLES = { up: 0, right: Math.PI / 2, down: Math.PI, left: -Math.PI / 2 };
 
 /** Historical v1 targets have positions but no saved heading. Observe only the
@@ -76,7 +66,8 @@ export function drawClassicTarget(ctx, x, y, size, pose = 0, options = {}) {
     ricochet: 'runner',
     eroder: 'guard',
   };
-  const machinery = options.boardStyle === 'living-circuit' && MACHINE_FAMILIES[options.kind];
+  const identity = classicTargetIdentity(options.kind, options.boardStyle);
+  const machinery = identity.machine && identity.family;
   if (machinery)
     drawMachinerySpecimen(ctx, machinery, {
       x: x + size / 2,

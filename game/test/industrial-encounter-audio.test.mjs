@@ -6,13 +6,15 @@ import {
   INDUSTRIAL_AUDIO_SAMPLES,
 } from '../ui/industrial-audio-review.mjs';
 import { AUDIO_PREFERENCES_KEY } from '../audio-preferences.mjs';
+import { DESTRUCTION_PREFERENCES_KEY } from '../hunt/preferences.mjs';
+import { HUMAN_REACTION_CUES } from '../ui/destruction-audio.mjs';
 import { MOVEMENT_AUDIO_KEY } from '../ui/movement-audio.mjs';
 import { actorSoundProfile, encounterSoundRecipe } from '../ui/encounter-audio.mjs';
 import { FeedbackDirector } from '../ui/feedback-director.mjs';
 import { audioHarness } from './helpers/soundtrack-audio.mjs';
 import { updateReviewAudioStatus } from '../../authoring/industrial-art-review/audio-status.mjs';
 
-function reviewHarness({ muted = false, enable } = {}) {
+function reviewHarness({ muted = false, enable, vocals } = {}) {
   const events = () => {
       const listeners = new Map();
       return {
@@ -34,6 +36,11 @@ function reviewHarness({ muted = false, enable } = {}) {
     timers = new Map(),
     calls = [],
     document = { ...events(), hidden: false };
+  if (vocals !== undefined)
+    storage.set(
+      DESTRUCTION_PREFERENCES_KEY,
+      JSON.stringify({ format: 'DestructionPreferencesV1', brutal: false, blood: false, vocals }),
+    );
   let timerId = 0;
   const host = {
     ...events(),
@@ -54,6 +61,9 @@ function reviewHarness({ muted = false, enable } = {}) {
   };
   const sound = {
       configure() {},
+      setDestructionPreferences(read) {
+        this.readDestruction = read;
+      },
       applyVolumes() {},
       async enable() {
         calls.push(['enable']);
@@ -121,6 +131,47 @@ test('listening honors saved mute/volume with no autoplay or preference writes',
   assert.equal((await h.review.play('runner')).played, true);
   assert.equal(h.writes.length, 1);
   await h.review.dispose();
+});
+
+test('defeat auditions honor saved Classic sounds, live cross-tab reactions and preference disposal', async (t) => {
+  const h = reviewHarness({ vocals: false }),
+    audio = audioHarness();
+  t.after(async () => {
+    await h.review.dispose();
+    await audio.soundscape.dispose();
+  });
+  audio.soundscape.setDestructionPreferences(h.sound.readDestruction);
+  await audio.soundscape.enable();
+  for (const name of HUMAN_REACTION_CUES)
+    audio.soundscape.feedbackDirector.buffers.set(name, { duration: 0.3 });
+  await h.review.play('runner', { treatment: 'brutal' });
+  h.advance(520);
+  const details = h.calls.find(([kind]) => kind === 'catch')[1];
+  audio.soundscape.encounter('catch', details);
+  assert.equal([...audio.soundscape.voices].filter((voice) => voice.humanReaction).length, 0);
+  const external = (vocals) => {
+    const raw = JSON.stringify({
+      format: 'DestructionPreferencesV1',
+      brutal: false,
+      blood: false,
+      vocals,
+    });
+    h.storage.set(DESTRUCTION_PREFERENCES_KEY, raw);
+    h.host.emit('storage', {
+      type: 'storage',
+      key: DESTRUCTION_PREFERENCES_KEY,
+      storageArea: h.host.localStorage,
+      newValue: raw,
+    });
+  };
+  external(true);
+  audio.context.currentTime = 1;
+  audio.soundscape.encounter('catch', { ...details, brutal: false });
+  assert.equal([...audio.soundscape.voices].filter((voice) => voice.humanReaction).length, 1);
+  assert.deepEqual(h.writes, [], 'Auditioning and synchronization never rewrite preferences');
+  await h.review.dispose();
+  external(false);
+  assert.equal(h.sound.readDestruction().vocals, true, 'Disposed review retires its observer');
 });
 
 test('changing a sample cancels the old sequence; release clears every delayed accent', async () => {
