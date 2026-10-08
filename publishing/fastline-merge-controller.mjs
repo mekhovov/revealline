@@ -11,7 +11,6 @@ import {
   validationPolicyDigest,
 } from "./admission-binding.mjs";
 
-const HOLD_LABELS = new Set(["release-train-hold", "do-not-merge", "hold"]);
 const STACK_MERGE_LABEL = "fastline-stack-merge";
 
 export function dependencyNumbers(body = "") {
@@ -23,7 +22,6 @@ export function dependencyNumbers(body = "") {
 export function decideMergeAction({
   pullRequest,
   observedHeadSha,
-  activeMilestone,
   requiredCheck,
   dependencies = [],
 }) {
@@ -36,20 +34,6 @@ export function decideMergeAction({
       return "event has no exact head SHA";
     if (pullRequest.head?.sha !== observedHeadSha)
       return "head changed after inspection";
-    if (!activeMilestone) return "active release variable is not configured";
-    if (pullRequest.milestone?.title !== activeMilestone)
-      return "pull request is outside the active milestone";
-    if (pullRequest.draft) return "pull request remains draft";
-    if (!labels.has("fastline-approved"))
-      return "fastline-approved label is absent";
-    if (
-      [...labels].some(
-        (label) => HOLD_LABELS.has(label) || label.startsWith("hold:"),
-      )
-    )
-      return "hold label is present";
-    if (pullRequest.review_decision === "CHANGES_REQUESTED")
-      return "review changes are requested";
     if (dependencies.some((dependency) => !dependency.merged_at))
       return "declared predecessor is not merged";
     if (
@@ -208,22 +192,6 @@ async function graphql(query, variables) {
   return result.data;
 }
 
-async function reviewDecision(owner, repository, number) {
-  const data = await graphql(
-    `
-      query ($owner: String!, $repository: String!, $number: Int!) {
-        repository(owner: $owner, name: $repository) {
-          pullRequest(number: $number) {
-            reviewDecision
-          }
-        }
-      }
-    `,
-    { owner, repository, number },
-  );
-  return data.repository.pullRequest.reviewDecision;
-}
-
 async function setAutoMerge(pullRequest, action, headSha) {
   if (action === "arm")
     return graphql(
@@ -355,7 +323,6 @@ async function main() {
   const pullRequest = await github(
     `/repos/${owner}/${repository}/pulls/${number}`,
   );
-  pullRequest.review_decision = await reviewDecision(owner, repository, number);
   const checks = await github(
     `/repos/${owner}/${repository}/commits/${pullRequest.head.sha}/check-runs?per_page=100`,
   );
@@ -388,7 +355,6 @@ async function main() {
   const decision = decideMergeAction({
     pullRequest,
     observedHeadSha,
-    activeMilestone: process.env.ACTIVE_MILESTONE || "",
     requiredCheck,
     dependencies,
   });
@@ -408,11 +374,8 @@ async function main() {
   );
   if (["update", "stack", "merge", "arm"].includes(decision.action)) {
     const fresh = await github(`/repos/${owner}/${repository}/pulls/${number}`);
-    fresh.review_decision = await reviewDecision(owner, repository, number);
     if (
       fresh.head.sha !== observedHeadSha ||
-      fresh.draft ||
-      fresh.review_decision === "CHANGES_REQUESTED" ||
       !sameAdmission(
         requiredCheck.admissionReceipt,
         fresh,

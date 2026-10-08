@@ -1,11 +1,18 @@
 import test from 'node:test';
+import { createEnemyStats } from '../enemy-stats.mjs';
+import { getLocale, setLocale } from '../i18n/index.mjs';
+import { sourceSimGlobalTools, menuPad } from './helpers/global-tools-fixture.mjs';
+import { waitFor } from './helpers/wait-for.mjs';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { createRequire } from 'node:module';
 import { parse } from 'parse5';
 import { Document, Events } from './helpers/couch-dom.mjs';
 import { mountWorldApp, routeThumbnail } from '../../optional-practice/civilian-fpv/world-app.mjs';
-import { WORLD_CATALOGUE } from '../../optional-practice/civilian-fpv/world-catalogue.mjs';
+import {
+  WORLD_CATALOGUE,
+  BEGINNER_CATALOGUE,
+} from '../../optional-practice/civilian-fpv/world-catalogue.mjs';
 import {
   createWorldFlight,
   createWorldRecorder,
@@ -16,6 +23,7 @@ import {
   snapshotSimThemeProfile,
 } from '../../optional-practice/civilian-fpv/world-themes.mjs';
 import { worldRecordIdentity } from '../../optional-practice/civilian-fpv/world-records.mjs';
+import { openWorldStore } from '../../optional-practice/civilian-fpv/world-store.mjs';
 
 const requireAuthoring = createRequire(
   new URL('../../authoring/fpv-worlds/package.json', import.meta.url),
@@ -25,12 +33,18 @@ const html = parse(
   await readFile(new URL('../../optional-practice/fpv-worlds/index.html', import.meta.url), 'utf8'),
 );
 
-function fixture(t) {
+function fixture(t, options = {}) {
+  const {
+    storage = new Map(),
+    url = 'https://example.test/optional-practice/fpv-worlds/index.html',
+    indexedDB = options?.open ? options : new IDBFactory(),
+    ...factories
+  } = options?.open ? {} : options;
   const doc = new Document(),
     win = new Events(),
-    storage = new Map(),
     frames = new Map(),
     rendered = [];
+  const pads = [];
   let frameId = 0,
     now = 0,
     rendererDisposals = 0;
@@ -80,15 +94,19 @@ function fixture(t) {
     .find((node) => node.tagName === 'html')
     .childNodes.find((node) => node.tagName === 'body');
   for (const child of body.childNodes) copy(child, doc.body);
+  const originalSettingsControls = [
+    ...doc.getElementById('sim-settings').querySelectorAll('button,select,input'),
+    ...doc.getElementById('sim-flight-controls').querySelectorAll('button,select,input'),
+  ].filter((node) => node.id !== 'close-sim-settings');
   Object.assign(win, {
-    location: new URL('https://example.test/optional-practice/fpv-worlds/index.html'),
+    location: new URL(url),
     performance: { now: () => now },
-    navigator: { getGamepads: () => [] },
+    navigator: { getGamepads: () => pads },
     localStorage: {
       getItem: (key) => storage.get(key) ?? null,
       setItem: (key, value) => storage.set(key, value),
     },
-    indexedDB: new IDBFactory(),
+    indexedDB,
     requestAnimationFrame(callback) {
       frames.set(++frameId, callback);
       return frameId;
@@ -128,13 +146,20 @@ function fixture(t) {
       rendererDisposals++;
     },
   };
-  const app = mountWorldApp({ document: doc, window: win, rendererFactory: () => renderer });
+  const app = mountWorldApp({
+    document: doc,
+    window: win,
+    rendererFactory: () => renderer,
+    ...factories,
+  });
   t.after(() => app.dispose());
   return {
     app,
     doc,
     win,
     rendered,
+    pads,
+    originalSettingsControls,
     pendingFrames: () => frames.size,
     rendererDisposals: () => rendererDisposals,
     $: (id) => doc.getElementById(id),
@@ -148,6 +173,195 @@ function fixture(t) {
     },
   };
 }
+
+async function settleUntil(predicate, message) {
+  for (let i = 0; i < 100; i++) {
+    if (predicate()) return;
+    await new Promise((resolve) => setImmediate(resolve));
+  }
+  assert.ok(predicate(), message);
+}
+
+test('World random flight from the shared chooser follows displayed filters, preserves mode and avoids repeats', async (t) => {
+  const priorLocale = getLocale();
+  const h = fixture(t);
+  await h.app.ready;
+  const originals = structuredClone(WORLD_CATALOGUE),
+    choose = () => h.doc.querySelector('[data-random-flight="catalogue"]');
+  h.$('theme-tabs')
+    .querySelectorAll('button')
+    .find((b) => b.textContent === 'Snake Hunt')
+    .click();
+  for (const [id, value] of [
+    ['activity-filter', 'hunt'],
+    ['difficulty-filter', 'beginner'],
+    ['completion-filter', 'new'],
+  ]) {
+    h.$(id).value = value;
+    h.$(id).emit('change');
+  }
+  const expected = new Set(
+    WORLD_CATALOGUE.filter(
+      (entry) => entry.theme === 'snake-hunt' && entry.activity === 'hunt' && entry.difficulty === 'beginner',
+    ).map((entry) => entry.id),
+  );
+  h.$('worlds-shell-action-missions').click();
+  assert.equal(choose().type, 'button');
+  h.$('flight-mode').value = 'acro';
+  let previous = null;
+  for (let i = 0; i < 4; i++) {
+    choose().click();
+    await settleUntil(
+      () => ['active', 'disarmed'].includes(h.app.snapshot().state?.status),
+      h.$('studio-status').textContent,
+    );
+    const snapshot = h.app.snapshot();
+    assert.ok(expected.has(snapshot.course), snapshot.course);
+    assert.notEqual(snapshot.course, previous);
+    assert.equal(h.$('flight-mode').value, 'acro');
+    assert.equal(snapshot.state.ticks, 0);
+    assert.equal(snapshot.replay, null);
+    assert.equal(snapshot.records.length, 0);
+    previous = snapshot.course;
+    h.$('leave-flight').click();
+    await settleUntil(() => !h.$('flight-dialog').open, 'return to catalogue');
+    h.$('worlds-shell-action-missions').click();
+  }
+  h.$('completion-filter').value = 'complete';
+  h.$('completion-filter').emit('change');
+  choose().click();
+  await new Promise((resolve) => setImmediate(resolve));
+  assert.equal(h.app.snapshot().course, undefined, 'activation rechecks eligibility');
+  h.$('completion-filter').value = 'all';
+  h.$('completion-filter').emit('change');
+  h.$('search').value = 'Clockwise catch';
+  h.$('search').emit('input');
+  choose().click();
+  await settleUntil(
+    () => ['active', 'disarmed'].includes(h.app.snapshot().state?.status),
+    'single choice prepares',
+  );
+  assert.equal(h.app.snapshot().course, 'snake-hunt-loops-02');
+  h.$('leave-flight').click();
+  await settleUntil(() => !h.$('flight-dialog').open, 'single choice returns');
+  h.$('worlds-shell-action-missions').click();
+  h.$('world-language').value = 'uk';
+  h.$('world-language').emit('change');
+  assert.equal(choose().textContent, 'Випадковий політ');
+  choose().click();
+  await new Promise((resolve) => setImmediate(resolve));
+  assert.equal(h.app.snapshot().course, undefined, 'English search is re-evaluated in Ukrainian');
+  h.$('search').value = WORLD_CATALOGUE.find(
+    (entry) => entry.id === 'snake-hunt-loops-02',
+  ).course.locales.uk.title;
+  h.$('search').emit('input');
+  choose().click();
+  await settleUntil(
+    () => ['active', 'disarmed'].includes(h.app.snapshot().state?.status),
+    'sole candidate may repeat',
+  );
+  assert.equal(h.app.snapshot().course, 'snake-hunt-loops-02');
+  h.$('world-language').value = priorLocale;
+  h.$('world-language').emit('change');
+  assert.deepEqual(WORLD_CATALOGUE, originals, 'selection leaves authored courses and seeds exact');
+});
+
+test('World random flight includes the active installed revision and excludes retained archived courses', async (t) => {
+  const indexedDB = new IDBFactory(),
+    store = await openWorldStore({ indexedDB });
+  t.after(() => store.close());
+  const source = WORLD_CATALOGUE.find((entry) => entry.id === 'snake-hunt-loops-01').course;
+  for (const [id, sha] of [
+    ['archived-random', 'a'],
+    ['active-random', 'b'],
+  ]) {
+    const course = structuredClone(source);
+    course.id = id;
+    course.world.id = 'random-installed';
+    course.locales.en.title = id;
+    await store.install({
+      project: {
+        format: 'FPVWorldProject.v1',
+        id: 'random-installed',
+        title: 'Installed random world',
+        world: { id: 'random-installed', title: 'Installed random world' },
+        source: { hash: null, anchors: [], colliders: [] },
+        overrides: {},
+        courses: [course],
+        themes: [],
+        campaigns: [],
+        playlists: [],
+        provenance: [],
+      },
+      assets: new Map(),
+      sha256: sha.repeat(64),
+    });
+  }
+  const h = fixture(t, indexedDB);
+  await h.app.ready;
+  h.$('theme-tabs')
+    .querySelectorAll('button')
+    .find((b) => ['My worlds', 'Мої світи'].includes(b.textContent))
+    .click();
+  h.$('worlds-shell-action-missions').click();
+  const choose = h.doc.querySelector('[data-random-flight="catalogue"]');
+  choose.click();
+  await settleUntil(
+    () => ['active', 'disarmed'].includes(h.app.snapshot().state?.status),
+    h.$('studio-status').textContent,
+  );
+  assert.equal(h.app.snapshot().course, 'active-random');
+  assert.equal((await store.list({ includeRevisions: true })).length, 2);
+});
+
+test('World ordinary results offer a filtered random next flight through unarmed preparation', async (t) => {
+  const h = fixture(t);
+  await h.app.ready;
+  const original = WORLD_CATALOGUE.find((entry) => entry.id === 'snake-hunt-loops-01'),
+    entry = { ...original, course: structuredClone(original.course) };
+  entry.course.rules.maxTicks = 2;
+  await h.app.startFlight(entry);
+  h.$('world-arm').click();
+  h.tick(6);
+  await settleUntil(
+    () => h.doc.querySelector('[data-random-flight="next"]'),
+    h.$('result-panel').textContent,
+  );
+  const next = h.doc.querySelector('[data-random-flight="next"]');
+  assert.match(next.parentElement.textContent, /This world: Circuit stadium/);
+  assert.equal(next.disabled, false);
+  next.click();
+  await settleUntil(
+    () => ['active', 'disarmed'].includes(h.app.snapshot().state?.status),
+    'next random flight prepares',
+  );
+  assert.notEqual(h.app.snapshot().course, entry.id);
+  assert.equal(h.rendered.at(-1).course.world.id, 'stadium');
+  assert.equal(h.app.snapshot().state.ticks, 0);
+  await h.app.startFlight(entry, {
+    playlist: {
+      id: 'random-result-playlist',
+      revision: 'r1',
+      entries: [{ packIdentity: entry.packIdentity, levelId: entry.id }],
+    },
+  });
+  h.$('world-arm').click();
+  h.tick(6);
+  await settleUntil(
+    () =>
+      !h.$('result-panel').hidden &&
+      h
+        .$('result-panel')
+        .querySelectorAll('button')
+        .some((button) => button.textContent === 'Fly again'),
+    'playlist results finish verification',
+  );
+  assert.equal(
+    h.doc.querySelector('[data-random-flight="next"]'),
+    null,
+    'playlist keeps its own continuation',
+  );
+});
 
 test('World disposal retires menu and renderer owners before their reparented controls disappear', async (t) => {
   const h = fixture(t);
@@ -206,12 +420,14 @@ test('World app prepares a pinned appearance and queues drone/theme changes afte
   const theme = h.$('sim-appearance-world');
   theme.value = 'industrial-workshop';
   theme.emit('change');
-  await h.app.startFlight(entry);
-  assert.equal(h.rendered.at(-1).course.world.themeProfile.id, 'industrial-workshop');
+  h.$('worlds-shell-action-missions').click();
+  assert.equal(h.$('journey-chooser').open, true);
   assert.equal(
-    h.doc.querySelector('.world-mini-map svg').getAttribute('data-sim-profile'),
+    h.doc.querySelector('svg[data-sim-profile]').getAttribute('data-sim-profile'),
     'industrial-workshop',
   );
+  await h.app.startFlight(entry);
+  assert.equal(h.rendered.at(-1).course.world.themeProfile.id, 'industrial-workshop');
   h.$('world-arm').click();
   assert.equal(h.app.snapshot().state.status, 'active');
   h.app.pause();
@@ -219,8 +435,9 @@ test('World app prepares a pinned appearance and queues drone/theme changes afte
   const renderCount = h.rendered.length;
   theme.value = 'authored';
   theme.emit('change');
+  h.$('worlds-shell-action-missions').click();
   assert.notEqual(
-    h.doc.querySelector('.world-mini-map svg').getAttribute('data-sim-profile'),
+    h.doc.querySelector('svg[data-sim-profile]').getAttribute('data-sim-profile'),
     'industrial-workshop',
   );
   assert.equal(h.rendered.length, renderCount);
@@ -237,7 +454,7 @@ test('World app prepares a pinned appearance and queues drone/theme changes afte
   assert.equal(h.app.snapshot().appearance.accepted.collectionId, 'authored');
   assert.equal(h.app.snapshot().appearance.accepted.drone, 'utility');
   assert.equal(h.app.snapshot().appearance.pending, false);
-  assert.equal(h.app.snapshot().state.status, 'disarmed');
+  assert.equal(h.app.snapshot().state.status, 'active');
 });
 
 test('World route thumbnails share selected palettes without modifying source geometry or authored scene references', (t) => {
@@ -303,7 +520,7 @@ test('World recovery retains its saved theme and drone while new appearance choi
   h.$('sim-appearance-world').emit('change');
   assert.equal(h.app.snapshot().appearance.accepted.drone, 'utility');
   assert.equal(h.app.snapshot().appearance.pending, true);
-  assert.equal(h.app.snapshot().state.status, 'paused');
+  assert.equal(h.app.snapshot().state.status, 'active');
   assert.equal(h.rendered.at(-1).course, prepared);
 });
 
@@ -375,7 +592,10 @@ for (const savedFallback of [false, true])
 test('World pre-arm appearance refresh keeps focus on the control the player is using', async (t) => {
   const h = fixture(t);
   await h.app.ready;
-  await h.app.startFlight(WORLD_CATALOGUE.find((item) => !item.legacy));
+  await h.app.startFlight(
+    WORLD_CATALOGUE.find((item) => !item.legacy),
+    { paused: true },
+  );
   h.$('world-flight-menu').click();
   h.$('worlds-shell-action-settings').click();
   const select = h.$('sim-appearance-world');
@@ -393,7 +613,7 @@ test('World pre-arm appearance refresh keeps focus on the control the player is 
   assert.equal(h.rendered.at(-1).profile.id, 'industrial-workshop');
   assert.match(h.$('flight-status').textContent, /^Ready/);
   assert.equal(h.$('sim-settings').open, true);
-  assert.equal(h.$('worlds-shell-home-dialog').open, true);
+  assert.equal(h.$('worlds-shell-pause-dialog').open, true);
   assert.equal(
     h.doc.activeElement === select,
     true,
@@ -410,12 +630,12 @@ test('World title retains connected catalogue nodes and transfers the common bar
   assert.ok(h.doc.querySelector('#worlds-shell-home-dialog img'));
   assert.ok(h.$('theme-tabs').isConnected);
   h.$('worlds-shell-action-missions').click();
-  assert.equal(h.$('worlds-shell-missions-dialog').open, true);
+  assert.equal(h.$('journey-chooser').open, true);
   assert.ok(h.$('world-grid').isConnected);
   const entry = WORLD_CATALOGUE.find((item) => !item.legacy);
   await h.app.startFlight(entry);
   assert.equal(h.$('worlds-shell-home-dialog').open, false);
-  assert.equal(h.$('worlds-shell-missions-dialog').open, false);
+  assert.equal(h.$('journey-chooser').open, false);
   assert.equal(h.$('worlds-shell-action-menu').closest('dialog'), h.$('flight-dialog'));
   h.$('world-arm').click();
   assert.equal(h.app.snapshot().state.status, 'active');
@@ -437,12 +657,12 @@ test('World keyboard and native pause actions open the same shared menu without 
     h.$('world-arm').click();
     assert.equal(h.app.snapshot().state.status, 'active');
     pause();
-    assert.equal(h.$('worlds-shell-home-dialog').open, true);
+    assert.equal(h.$('worlds-shell-pause-dialog').open, true);
     assert.notEqual(h.$('flight-dialog').dataset.flightMenuOpen, 'true');
     assert.equal(h.app.snapshot().state.status, 'paused');
     const paused = h.app.snapshot().state;
-    h.$('worlds-shell-home-dialog').emit('cancel', { bubbles: false });
-    assert.equal(h.$('worlds-shell-home-dialog').open, false);
+    h.$('worlds-shell-pause-dialog').emit('cancel', { bubbles: false });
+    assert.equal(h.$('worlds-shell-pause-dialog').open, false);
     assert.equal(h.$('flight-dialog').open, true);
     assert.deepEqual(h.app.snapshot().state, paused);
   }
@@ -567,7 +787,10 @@ test('World menu Back dismisses the visible surface without closing its paused n
   h.$('lobby-settings').click = () => assert.fail('Settings must use its shared native action');
   h.$('worlds-shell-action-settings').click();
   assert.equal(h.$('sim-settings').open, true);
-  assert.equal(h.$('sim-flight-controls').parentElement, h.$('sim-settings-controls'));
+  assert.equal(
+    h.$('flight-source').closest('[role="tabpanel"]').id,
+    'worlds-settings-panel-controls',
+  );
   escape(h.$('sim-settings').querySelector('button'));
   assert.equal(h.$('sim-settings').open, false);
   assert.equal(h.$('worlds-shell-home-dialog').open, true);
@@ -644,6 +867,7 @@ for (const section of [false, true])
       nativeOutcome = h.$('result-panel'),
       shell = h.doc.querySelector('[data-mode-play-shell]');
     assert.equal(ended.replay.finished, true);
+    assert.equal(h.doc.querySelector('[data-random-flight="next"]'), null);
     assert.equal(ended.state.ticks, proof.frames.length);
     assert.equal(ended.state.status, 'paused');
     if (section) assert.equal(ended.sectionReplay.sectionComplete, false);
@@ -671,3 +895,556 @@ for (const section of [false, true])
     assert.equal(h.doc.activeElement, nativeOutcome);
     assert.equal(shell.dataset.phase, 'results');
   });
+
+test('World categories retain every authored preference and restore Home and Pause openers', async (t) => {
+  const h = fixture(t);
+  await h.app.ready;
+  h.doc.defaultView.innerWidth = 390;
+  const homeSettings = h.$('worlds-shell-action-settings');
+  homeSettings.focus();
+  homeSettings.click();
+  for (const original of h.originalSettingsControls) {
+    const control = original.id === 'sim-motion' ? h.$('worlds-global-reducedEffects') : original;
+    const panel = control.closest('[role="tabpanel"]');
+    assert.ok(panel, `${control.id} belongs to a settings category`);
+    assert.equal(panel.closest('dialog'), h.$('sim-settings'));
+    h.$(panel.getAttribute('aria-labelledby')).click();
+    assert.equal(control.closest('[hidden],[inert]'), null, `${control.id} is reachable`);
+  }
+  h.$('worlds-settings-tab-controls').click();
+  h.$('close-sim-settings').click();
+  assert.equal(h.$('sim-settings').open, true);
+  assert.equal(h.$('sim-settings').dataset.settingsView, 'categories');
+  h.$('close-sim-settings').click();
+  assert.equal(h.$('sim-settings').open, false);
+  assert.equal(h.doc.activeElement, homeSettings);
+  await h.app.startFlight(WORLD_CATALOGUE.find((item) => !item.legacy));
+  h.$('world-arm').click();
+  h.$('world-flight-menu').click();
+  const pauseSettings = h.$('worlds-shell-action-pause-settings');
+  pauseSettings.focus();
+  pauseSettings.click();
+  h.$('close-sim-settings').click();
+  assert.equal(h.doc.activeElement, pauseSettings);
+  assert.equal(h.app.snapshot().state.status, 'paused');
+});
+
+test('Worlds uses shared display and master settings ahead of old SIM-local preferences', async (t) => {
+  const storage = new Map([
+    [
+      'revealline.display.v1',
+      JSON.stringify({ textFace: 'plain', textSize: 'large', reducedEffects: true }),
+    ],
+    ['revealline.audio-master.v1', JSON.stringify({ muted: true, volume: 0.25 })],
+    [
+      'revealline.appearance.v2',
+      JSON.stringify({
+        familyId: 'industrial-workshop',
+        arcadeArt: 'follow-game',
+        ornaments: 'theme',
+        highContrast: false,
+        opaqueHud: false,
+      }),
+    ],
+    [
+      'revealline.fpv.world-settings.v1',
+      JSON.stringify({ 'sim-text-face': 'pixel', 'sim-motion': 'system' }),
+    ],
+  ]);
+  const h = fixture(t, { storage });
+  await h.app.ready;
+  assert.equal(h.$('sim-text-face').value, 'plain');
+  assert.equal(h.$('worlds-global-textSize').value, 'large');
+  assert.equal(h.$('worlds-global-reducedEffects').checked, true);
+  assert.equal(h.$('worlds-global-masterVolume').value, '0.25');
+  assert.equal(h.doc.documentElement.dataset.themeFamily, 'industrial-workshop');
+  assert.equal(h.doc.body.dataset.effects, 'reduced');
+  const root = h.$('sim-settings');
+  for (const key of [
+    'language',
+    'appearance',
+    'textFace',
+    'textSize',
+    'reducedEffects',
+    'menuAnimation',
+    'masterMuted',
+    'masterVolume',
+  ])
+    assert.equal(root.querySelectorAll(`[data-global-setting="${key}"]`).length, 1, key);
+  h.$('worlds-global-textSize').value = 'standard';
+  h.$('worlds-global-textSize').emit('change');
+  assert.equal(JSON.parse(storage.get('revealline.display.v1')).textSize, 'standard');
+});
+
+test('World shared tools keep iframe focus through D-pad and return to paused Settings on controller Back', async (t) => {
+  const h = fixture(t, { globalToolsFactory: sourceSimGlobalTools });
+  await h.app.ready;
+  const entry = WORLD_CATALOGUE.find((item) => !item.legacy);
+  await h.app.startFlight(entry);
+  h.$('world-arm').click();
+  h.tick(3);
+  h.$('worlds-shell-action-pause').click();
+  const paused = h.app.snapshot().state;
+  h.$('worlds-shell-action-settings').click();
+  h.$('worlds-settings-tab-controls').click();
+  await waitFor(() => h.$('sim-global-tools-controllerTools'));
+  const opener = h.$('sim-global-tools-controllerTools');
+  opener.focus();
+  opener.click();
+  const dialog = h.$('sim-global-tools-tool-dialog'),
+    frame = dialog.querySelector('iframe');
+  assert.equal(dialog.open, true);
+  frame.focus();
+  const pad = menuPad();
+  h.pads.push(pad);
+  h.tick(2);
+  pad.buttons[13] = { pressed: true, value: 1 };
+  h.tick();
+  pad.buttons[13] = { pressed: false, value: 0 };
+  h.tick();
+  assert.equal(h.doc.activeElement, frame);
+  assert.deepEqual(h.app.snapshot().state, paused);
+  pad.buttons[1] = { pressed: true, value: 1 };
+  h.tick();
+  pad.buttons[1] = { pressed: false, value: 0 };
+  h.tick();
+  assert.equal(dialog.open, false);
+  assert.equal(h.$('sim-settings').open, true);
+  assert.equal(h.doc.activeElement, opener);
+  assert.deepEqual(h.app.snapshot().state, paused);
+  opener.click();
+  assert.equal(dialog.open, true);
+  frame.focus();
+  h.tick(2);
+  pad.buttons[9] = { pressed: true, value: 1 };
+  h.tick();
+  pad.buttons[9] = { pressed: false, value: 0 };
+  h.tick();
+  assert.equal(dialog.open, false, 'Start also exits the focused tool frame.');
+  assert.equal(h.$('sim-settings').open, true);
+  assert.equal(h.doc.activeElement, opener);
+  assert.deepEqual(h.app.snapshot().state, paused);
+});
+
+test('fresh Ukrainian World launch localizes shared Appearance and cue controls immediately', async (t) => {
+  const prior = getLocale();
+  t.after(() => setLocale(prior, { persist: false }));
+  setLocale('en', { persist: false });
+  const h = fixture(t, {
+    url: 'https://example.test/optional-practice/fpv-worlds/index.html?lang=uk',
+  });
+  await h.app.ready;
+  assert.equal(h.doc.querySelector('.theme-family-controls h3').textContent, 'Вигляд');
+  assert.equal(h.$('sim-global-menu-audio-enabled').closest('label').textContent, 'Звуки меню');
+});
+
+test('World flight feedback and shared menu sound retain separate sliders and preference records', async (t) => {
+  const storage = new Map([
+    [
+      'revealline.fpv.audio-mix.v1',
+      JSON.stringify({ format: 'SimAudioMix.v1', interface: 0.62, motor: 0.7, ambience: 0.8 }),
+    ],
+    ['revealline.menu-audio.v1', JSON.stringify({ enabled: true, volume: 0.35 })],
+  ]);
+  const h = fixture(t, { storage });
+  await h.app.ready;
+  const feedback = h.$('sim-audio-mix-interface'),
+    menu = h.$('sim-global-menu-audio-volume');
+  assert.equal(feedback.value, '62');
+  assert.equal(menu.value, '35');
+  const originalMenu = storage.get('revealline.menu-audio.v1');
+  feedback.value = '21';
+  feedback.emit('input');
+  assert.equal(menu.value, '35');
+  assert.equal(storage.get('revealline.menu-audio.v1'), originalMenu);
+  assert.deepEqual(JSON.parse(storage.get('revealline.fpv.audio-mix.v1')), {
+    format: 'SimAudioMix.v1',
+    interface: 0.21,
+    motor: 0.7,
+    ambience: 0.8,
+  });
+  const savedMix = storage.get('revealline.fpv.audio-mix.v1');
+  menu.value = '76';
+  menu.emit('input');
+  assert.equal(feedback.value, '21');
+  assert.equal(storage.get('revealline.fpv.audio-mix.v1'), savedMix);
+  assert.deepEqual(JSON.parse(storage.get('revealline.menu-audio.v1')), {
+    enabled: true,
+    volume: 0.76,
+  });
+});
+
+test('World result shortcuts are immediately available while the result is being verified', async (t) => {
+  const h = fixture(t);
+  await h.app.ready;
+  const source = WORLD_CATALOGUE.find((item) => !item.legacy);
+  const entry = {
+    ...source,
+    course: {
+      ...source.course,
+      actors: [],
+      steps: {
+        'self-level': [{ type: 'survive', ticks: 1 }],
+        acro: [{ type: 'survive', ticks: 1 }],
+      },
+    },
+  };
+  await h.app.startFlight(entry, { preview: true });
+  h.$('world-arm').click();
+  h.tick(3);
+  const choice = (text) =>
+    [...h.$('result-panel').querySelectorAll('button')].find((node) => node.textContent === text);
+  assert.ok(choice('Random level'));
+  assert.ok(choice('Choose mission'));
+  assert.ok(choice('Home'));
+  choice('Choose mission').click();
+  assert.equal(h.$('journey-chooser').open, true);
+  assert.equal(h.app.snapshot().state.status, 'complete');
+});
+
+test('World defeat focuses Retry and verification preserves the connected action row and chosen focus', async (t) => {
+  const h = fixture(t);
+  await h.app.ready;
+  const source = WORLD_CATALOGUE.find((item) => !item.legacy);
+  const entry = {
+    ...source,
+    course: {
+      ...source.course,
+      rules: { ...source.course.rules, maxTicks: 1 },
+    },
+  };
+  await h.app.startFlight(entry, { preview: true });
+  h.$('world-arm').click();
+  h.tick(3);
+  assert.equal(h.app.snapshot().state.status, 'expired');
+  const panel = h.$('result-panel'),
+    actionRow = panel.querySelector('.continuous-result-actions'),
+    retry = [...actionRow.querySelectorAll('button')].find(
+      (node) => node.textContent === 'Fly again',
+    ),
+    choose = [...actionRow.querySelectorAll('button')].find(
+      (node) => node.textContent === 'Choose mission',
+    );
+  assert.equal(h.doc.activeElement, retry, 'Defeat must prepare Retry, never Next.');
+  choose.focus();
+  let removals = 0;
+  const remove = actionRow.remove.bind(actionRow);
+  actionRow.remove = () => {
+    removals++;
+    return remove();
+  };
+  await waitFor(() =>
+    panel.textContent.includes('Authoring preview · no rewards or completion earned.'),
+  );
+  assert.equal(removals, 0, 'Verification must not detach and blur the action subtree.');
+  assert.equal(actionRow.isConnected, true);
+  assert.equal(
+    h.doc.activeElement,
+    choose,
+    'Verification must not override deliberate navigation.',
+  );
+  assert.equal(panel.querySelector('.continuous-result-actions'), actionRow);
+});
+
+test('World results embed one compact live statistics disclosure without replacing verified actions', async (t) => {
+  const priorDatabase = Object.getOwnPropertyDescriptor(globalThis, 'indexedDB');
+  const database = new IDBFactory();
+  Object.defineProperty(globalThis, 'indexedDB', { configurable: true, value: database });
+  t.after(() =>
+    priorDatabase
+      ? Object.defineProperty(globalThis, 'indexedDB', priorDatabase)
+      : delete globalThis.indexedDB,
+  );
+  const values = new Map();
+  const storage = {
+    getItem: (key) => values.get(key) ?? null,
+    setItem: (key, value) => values.set(key, value),
+  };
+  const prior = createEnemyStats({ indexedDB: database, storage });
+  const attempt = prior.beginAttempt({ gameType: 'worlds' });
+  await prior.observe(attempt, {
+    sequence: 1,
+    defeats: [
+      { family: 'drone' },
+      { family: 'drone' },
+      { family: 'drone' },
+      { family: 'drone' },
+      { family: 'runner' },
+      { family: 'runner' },
+    ],
+  });
+  await prior.flush();
+  prior.close();
+  const h = fixture(t, { storage: values });
+  await h.app.ready;
+  const source = WORLD_CATALOGUE.find((item) => !item.legacy);
+  const entry = {
+    ...source,
+    course: {
+      ...source.course,
+      actors: [],
+      steps: {
+        'self-level': [{ type: 'survive', ticks: 1 }],
+        acro: [{ type: 'survive', ticks: 1 }],
+      },
+    },
+  };
+  let firstStats;
+  for (let pass = 0; pass < 2; pass++) {
+    await h.app.startFlight(entry, { preview: true });
+    h.$('world-arm').click();
+    h.tick(3);
+    assert.equal(h.app.snapshot().state.status, 'complete');
+    const panel = h.$('result-panel');
+    const stats = panel.querySelector('.enemy-stats');
+    assert.ok(stats, 'statistics belong inside the earned result card');
+    assert.equal(stats.dataset.variant, 'panel');
+    assert.equal(panel.querySelectorAll('.enemy-stats').length, 1);
+    if (firstStats) assert.equal(stats, firstStats, 'Retry reuses the same owned subscription');
+    firstStats = stats;
+    const disclosure = stats.querySelector('details');
+    assert.equal(disclosure.open, false, 'new results start with compact totals');
+    await waitFor(() => stats.querySelector('.enemy-stats-total').textContent === '6');
+    assert.equal(
+      stats.querySelector('.enemy-stats-run strong').textContent,
+      '0',
+      'an authoring preview cannot award another run total',
+    );
+    const actions = panel.querySelector('.continuous-result-actions');
+    assert.equal(stats.parentElement, panel);
+    assert.ok(panel.children.indexOf(stats) < panel.children.indexOf(actions));
+    assert.equal(
+      stats.contains(actions),
+      false,
+      'essential actions are never inside optional details',
+    );
+    const choose = [...actions.querySelectorAll('button')].find(
+      (node) => node.textContent === 'Choose mission',
+    );
+    choose.focus();
+    disclosure.querySelector('summary').click();
+    assert.equal(disclosure.open, true);
+    assert.equal(disclosure.querySelectorAll('.enemy-stats-row').length, 2);
+    await waitFor(() =>
+      panel.textContent.includes('Authoring preview · no rewards or completion earned.'),
+    );
+    assert.equal(h.doc.activeElement, choose);
+    assert.equal(panel.querySelector('.continuous-result-actions'), actions);
+    assert.equal(panel.querySelector('.enemy-stats'), stats);
+    assert.equal(disclosure.open, true, 'verification cannot collapse deliberate disclosure');
+  }
+  h.$('world-language').value = 'uk';
+  h.$('world-language').emit('change');
+  assert.equal(firstStats.getAttribute('aria-label'), 'Переможені вороги');
+  assert.match(firstStats.querySelector('.enemy-stats-summary').textContent, /За весь час/);
+  await h.app.dispose();
+  assert.equal(firstStats.isConnected, false, 'host disposal retires the result statistics view');
+  const after = createEnemyStats({ indexedDB: database, storage });
+  await after.read();
+  assert.equal(
+    after.totals({ gameType: 'worlds' }).total,
+    6,
+    'viewing, verification, reopening, and disposal do not create enemy awards',
+  );
+  after.close();
+});
+
+test('Worlds and School share one complete scrollable library with direct native launches', async (t) => {
+  const h = fixture(t);
+  await h.app.ready;
+  h.$('worlds-shell-action-missions').click();
+  const cards = h.doc.querySelectorAll('.journey-card');
+  assert.equal(cards.length, WORLD_CATALOGUE.length + BEGINNER_CATALOGUE.length);
+  assert.equal(h.$('world-grid').children.length, 0);
+  assert.equal(h.$('school-lessons').children.length, 0);
+  assert.equal(new Set(cards.map((card) => card.dataset.missionId)).size, cards.length);
+  const entry = BEGINNER_CATALOGUE.at(-1);
+  const card = cards.find(
+    (node) => JSON.parse(node.dataset.missionId)[3] === `${entry.packIdentity}:${entry.id}`,
+  );
+  assert.ok(card);
+  assert.equal(card.querySelectorAll('button').length, 0);
+  card.focus();
+  card.click();
+  await waitFor(() => h.app.snapshot().course === entry.id && h.$('flight-dialog').open);
+  assert.equal(h.$('journey-chooser').open, false);
+  assert.equal(h.$('worlds-shell-briefing-dialog').open, false);
+  assert.equal(h.$('flight-dialog').open, true);
+  assert.ok(['active', 'disarmed'].includes(h.app.snapshot().state.status));
+  h.$('world-flight-menu').click();
+  h.$('worlds-shell-action-missions').click();
+  h.doc.querySelector('[data-sim-mission-tool="learn"]').click();
+  assert.equal(h.doc.querySelectorAll('.journey-card').length, cards.length);
+  assert.equal(h.$('journey-chooser').open, true);
+  assert.ok(h.doc.querySelector('[data-sim-mission-tools]').contains(h.$('school-continue')));
+});
+
+test('World route preview uses the selected Acro route and changes no course geometry', async (t) => {
+  const h = fixture(t);
+  await h.app.ready;
+  const course = structuredClone(WORLD_CATALOGUE[0].course);
+  course.steps.acro = [
+    { type: 'hold', min: { x: 1000, y: 0, z: 2000 }, max: { x: 2000, y: 1000, z: 3000 } },
+  ];
+  const before = structuredClone(course);
+  const selfLevel = routeThumbnail(h.doc, course, { flightMode: 'self-level' });
+  const acro = routeThumbnail(h.doc, course, { flightMode: 'acro' });
+  assert.equal(acro.getAttribute('data-flight-mode'), 'acro');
+  assert.notEqual(
+    selfLevel.querySelector('path[stroke-dasharray]').getAttribute('d'),
+    acro.querySelector('path[stroke-dasharray]').getAttribute('d'),
+  );
+  assert.deepEqual(course, before);
+});
+
+test('World mission library owns controller navigation and isolated pinned goals', async (t) => {
+  const storage = new Map();
+  const h = fixture(t, { storage });
+  await h.app.ready;
+  h.$('worlds-shell-action-missions').click();
+  const chooser = h.$('journey-chooser');
+  const pad = menuPad();
+  h.pads.push(pad);
+  h.tick(2);
+  pad.buttons[0] = { pressed: true, value: 1 };
+  h.tick();
+  pad.buttons[0] = { pressed: false, value: 0 };
+  h.tick();
+  pad.buttons[13] = { pressed: true, value: 1 };
+  h.tick();
+  pad.buttons[13] = { pressed: false, value: 0 };
+  h.tick();
+  assert.ok(chooser.contains(h.doc.activeElement));
+  h.doc.querySelector('.journey-card').focus();
+  h.$('journey-goal-pin').click();
+  assert.ok(storage.has('revealline.mission-goal.v1.sim-worlds.solo'));
+  assert.equal(storage.has('revealline.mission-goal.v1.default.solo'), false);
+  pad.buttons[1] = { pressed: true, value: 1 };
+  h.tick();
+  pad.buttons[1] = { pressed: false, value: 0 };
+  h.tick();
+  assert.equal(chooser.open, false);
+  assert.equal(h.$('worlds-shell-home-dialog').open, true);
+  assert.equal(h.app.snapshot().state, undefined);
+});
+
+test('World mission launch cannot steal Home focus after deferred scene preparation', async (t) => {
+  let releaseScene;
+  const h = fixture(t, {
+    rendererFactory: () => ({
+      available: true,
+      setPresentation() {},
+      setCourse() {},
+      setQuality() {},
+      setDrone() {},
+      setGhost() {},
+      setPath() {},
+      draw() {},
+      dispose() {},
+      loadScene() {
+        return new Promise((resolve) => {
+          releaseScene = resolve;
+        });
+      },
+    }),
+  });
+  await h.app.ready;
+  h.$('worlds-shell-action-missions').click();
+  const entry = WORLD_CATALOGUE.find((item) => !item.legacy && !item.beginner);
+  const card = h.doc
+    .querySelectorAll('.journey-card')
+    .find((node) => JSON.parse(node.dataset.missionId)[3] === `${entry.packIdentity}:${entry.id}`);
+  card.focus();
+  card.click();
+  await waitFor(() => releaseScene);
+  h.$('worlds-shell-action-menu').click();
+  const home = h.$('worlds-shell-home-dialog');
+  assert.equal(home.open, true);
+  const focus = h.doc.activeElement;
+  releaseScene();
+  await new Promise((resolve) => setTimeout(resolve, 50));
+  assert.equal(home.open, true);
+  assert.equal(h.doc.activeElement === focus, true);
+  assert.notEqual(h.app.snapshot().state.status, 'active');
+  assert.equal(
+    h.$('world-arm').disabled,
+    false,
+    'The prepared attempt remains available to Continue.',
+  );
+  h.$('worlds-shell-action-primary').click();
+  assert.equal(h.app.snapshot().state.status, 'active');
+});
+
+test('World Hunt schemes expose actual targets, patrols and collision footprints without inventing an unordered route', (t) => {
+  const h = fixture(t);
+  const hunts = WORLD_CATALOGUE.slice(0, 6);
+  const diagrams = hunts.map((entry) => routeThumbnail(h.doc, entry.course));
+  for (const [index, diagram] of diagrams.entries()) {
+    const course = hunts[index].course,
+      step = course.steps['self-level'][0];
+    assert.equal(diagram.querySelectorAll('[data-preview-target]').length, step.targets.length);
+    assert.equal(diagram.querySelectorAll('[data-preview-spawn]').length, 1);
+    if (!step.ordered)
+      assert.equal(
+        diagram.querySelector('[data-preview-route]').getAttribute('d').includes('L'),
+        false,
+      );
+  }
+  assert.equal(
+    new Set(
+      diagrams.map((diagram) =>
+        diagram
+          .querySelectorAll('[data-preview-target]')
+          .map((node) => node.getAttribute('d'))
+          .join('|'),
+      ),
+    ).size,
+    6,
+  );
+  const course = structuredClone(
+    WORLD_CATALOGUE.find((entry) => entry.course.obstacles.some((obstacle) => obstacle.rotation))
+      .course,
+  );
+  course.actors[0] ??= { id: 'schematic-test', position: course.spawn, path: [] };
+  course.actors[0].path = [{ ...course.spawn, x: course.spawn.x + 1000 }];
+  const before = structuredClone(course),
+    diagram = routeThumbnail(h.doc, course);
+  assert.equal(diagram.querySelectorAll('[data-preview-obstacle]').length, course.obstacles.length);
+  assert.ok(diagram.querySelector('[data-preview-patrol]'));
+  assert.deepEqual(course, before);
+});
+
+test('World shared chooser remains usable when native scene loading fails', async (t) => {
+  const h = fixture(t, {
+    rendererFactory: () => ({
+      available: true,
+      setPresentation() {},
+      setCourse() {},
+      setQuality() {},
+      setDrone() {},
+      setGhost() {},
+      setPath() {},
+      draw() {},
+      dispose() {},
+      async loadScene() {
+        throw new Error('Scene fixture unavailable');
+      },
+    }),
+  });
+  await h.app.ready;
+  h.$('worlds-shell-action-missions').click();
+  const card = h.doc.querySelector('.journey-card');
+  card.focus();
+  card.click();
+  await waitFor(
+    () =>
+      h.$('journey-chooser').open &&
+      h.$('journey-chooser').textContent.includes('Scene fixture unavailable'),
+  );
+  assert.equal(
+    h.doc.querySelectorAll('.journey-card').length,
+    WORLD_CATALOGUE.length + BEGINNER_CATALOGUE.length,
+  );
+  assert.ok(h.doc.querySelectorAll('.journey-card').every((item) => !item.disabled));
+  assert.notEqual(h.app.snapshot().state.status, 'active');
+});

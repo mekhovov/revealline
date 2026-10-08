@@ -1,0 +1,1458 @@
+{
+  "format": "overflight-hunt-qualification.v1",
+  "commit": "2bf26dfb182793d7bc9b1c27a03be5b981c272b6",
+  "sourceBindings": [
+    {
+      "path": "game/overflight/core.mjs",
+      "sha256": "011eb87bed1833eaa5635edfec2e15c94461412250b2f553e03b91fdefaf2990"
+    },
+    {
+      "path": "game/overflight/grid.mjs",
+      "sha256": "ef130a7f9594bff6af374fe252bb8aafdc7e86762bb8ef60107914654f21dd30"
+    },
+    {
+      "path": "game/overflight/upgrades.mjs",
+      "sha256": "b9e1ea61405573a97e489d967f78ff1c34d220f5e467f1f0217568de5701f097"
+    },
+    {
+      "path": "game/overflight/defeat-feed.mjs",
+      "sha256": "8c8415abfecff6728c95c751e9bd0f346dbe649f1e7c12387ebb2cd386d500c8"
+    },
+    {
+      "path": "game/overflight/raid-core.mjs",
+      "sha256": "b9c904aa0d19fbd70155bb3f0764646480d15da9282f7e063689ecc625b0ee61"
+    },
+    {
+      "path": "game/overflight/raid-project.mjs",
+      "sha256": "ea9a045d7da32441628bb797536c8c527d35543cec99060d17db71994bb1e992"
+    },
+    {
+      "path": "game/overflight/raid-upgrades.mjs",
+      "sha256": "73487637deaa2054e2a2af129066bfbf25cc214ea1b046c7343f8c654447cfa4"
+    },
+    {
+      "path": "game/overflight/raid-review-pilot.mjs",
+      "sha256": "cf8a2ed59488fe718d18d3d9c726c78d4108a336b06a4464ca23e0c5179d8632"
+    },
+    {
+      "path": "scripts/qualify-overflight-raid.mjs",
+      "sha256": "24cc9ee3e805b37b296d72ff086c40720f3a001b828b3999a07c7c42410deb78"
+    }
+  ],
+  "reproduction": {
+    "executable": "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+    "command": [
+      "node",
+      "scripts/qualify-overflight-raid.mjs",
+      "--baseline",
+      "--matrix",
+      "--output",
+      "docs/qualification/overflight/raid-20261005/baseline-capability.json"
+    ],
+    "cwd": "/Users/oleksandr.mekhovov/.codex/worktrees/overflight-survivor/go_test/"
+  },
+  "environment": {
+    "node": "v20.19.5",
+    "platform": "darwin",
+    "release": "25.6.0",
+    "arch": "arm64",
+    "cpu": "Apple M4 Pro"
+  },
+  "evidence": "Headless ordinary input, earned cards. No browser/GPU performance or human-playtest qualification.",
+  "results": [
+    {
+      "encounterSet": "patrol",
+      "seed": 17031991,
+      "route": "objectives",
+      "build": "pursuer",
+      "airframes": 3,
+      "limit": 600,
+      "baseline": true,
+      "qualificationPolicy": "Technical baseline-kit audit: upgrade drafts disabled; normal contact and objective rules.",
+      "completed": true,
+      "elapsedCpuMs": 214.46774999999997,
+      "choices": [],
+      "samples": [
+        {
+          "time": 0.016666666666666666,
+          "x": 160.85121318981987,
+          "y": 539.3852349184634,
+          "hull": 100,
+          "lives": 3,
+          "objectives": 0,
+          "kills": 0,
+          "score": 0,
+          "alive": 137,
+          "visible": 73,
+          "chain": 0,
+          "rush": 0
+        },
+        {
+          "time": 10,
+          "x": 1316.946844234613,
+          "y": 450.0987463073212,
+          "hull": 100,
+          "lives": 3,
+          "objectives": 4,
+          "kills": 12,
+          "score": 4200,
+          "alive": 294,
+          "visible": 146,
+          "chain": 1,
+          "rush": 0
+        },
+        {
+          "time": 20,
+          "x": 2228.0824331494373,
+          "y": 474.4880950631449,
+          "hull": 100,
+          "lives": 3,
+          "objectives": 6,
+          "kills": 35,
+          "score": 10900,
+          "alive": 486,
+          "visible": 125,
+          "chain": 6,
+          "rush": 2.116666666666677
+        }
+      ],
+      "summary": {
+        "format": "OverflightHuntRunSummaryV1",
+        "rules": "overflight-raid.v1",
+        "projectId": "overflight-raid-patrol",
+        "projectIdentity": "4009c534db62a1ef",
+        "seed": 17031991,
+        "phase": "won",
+        "outcome": "won",
+        "reason": "objectives-complete",
+        "fixture": null,
+        "fixtureWorkload": null,
+        "time": 27.083333333333332,
+        "tick": 1625,
+        "airframes": 3,
+        "airframesRemaining": 3,
+        "slowResume": true,
+        "stats": {
+          "kills": 58,
+          "spawned": 537,
+          "enemiesAlive": 447,
+          "enemiesVisible": 102,
+          "peakAlive": 508,
+          "peakVisible": 169,
+          "heaviesAlive": 0,
+          "specialistsAlive": 17,
+          "priorityAttacks": 0,
+          "damageDealt": 61,
+          "damageTaken": 40,
+          "xpEarned": 51,
+          "xpCollected": 51,
+          "xpOnGround": 0,
+          "pickupsAlive": 0,
+          "pickupMerges": 0,
+          "boostsUsed": 10,
+          "airframesLost": 0,
+          "upgradesChosen": 0,
+          "rerollsUsed": 0,
+          "droppedVisualEffects": 0,
+          "collisionCandidates": 9801,
+          "hits": 61,
+          "retired": 0,
+          "spawnDeferred": 0,
+          "fixtureDefeats": 0,
+          "projectileDeferrals": 0,
+          "blockedContacts": 68,
+          "cleanArmorHits": 7,
+          "boostRefunds": 10,
+          "rushActivations": 1,
+          "noTargetSeconds": 0,
+          "distanceFlown": 4929.9565710159895,
+          "objectiveChoices": 6,
+          "optionalChoices": 2,
+          "projectilesFired": 26
+        },
+        "build": {
+          "primary": {
+            "rank": 1,
+            "branch": null,
+            "evolved": false
+          },
+          "combat": [],
+          "support": null,
+          "reinforcement": 0,
+          "repair": 0,
+          "hunt": {
+            "strike-width": 0,
+            "slow-wake": 0,
+            "rush-charge": 0,
+            "boost-cooldown": 0,
+            "boost-duration": 0,
+            "chain-window": 0,
+            "heavy-exposure": 0,
+            "guard-interrupt": 0,
+            "recovery-shield": 0
+          }
+        },
+        "upgrades": [],
+        "hunt": {
+          "sector": 2,
+          "objectives": [
+            {
+              "id": "leader-1",
+              "family": "patroller",
+              "sector": 0,
+              "enemyId": 135,
+              "completed": true
+            },
+            {
+              "id": "leader-2",
+              "family": "shield-bearer",
+              "sector": 0,
+              "enemyId": 136,
+              "completed": true
+            },
+            {
+              "id": "leader-3",
+              "family": "brace-trooper",
+              "sector": 0,
+              "enemyId": 137,
+              "completed": true
+            },
+            {
+              "id": "light-1",
+              "family": "utility-car",
+              "sector": 1,
+              "enemyId": 306,
+              "completed": true
+            },
+            {
+              "id": "light-2",
+              "family": "cargo-truck",
+              "sector": 1,
+              "enemyId": 307,
+              "completed": true
+            },
+            {
+              "id": "carrier",
+              "family": "armored-carrier",
+              "sector": 1,
+              "enemyId": 308,
+              "completed": true
+            },
+            {
+              "id": "command-tank",
+              "family": "tracked-tank",
+              "sector": 2,
+              "enemyId": 552,
+              "completed": true
+            }
+          ],
+          "score": 17250,
+          "chain": 7,
+          "bestChain": 22,
+          "chainRemaining": 4,
+          "multiplier": 2,
+          "rushCharge": 18,
+          "rushRemaining": 0,
+          "ordinaryKills": 51,
+          "couriersCaught": 4,
+          "couriersEscaped": 32,
+          "armorHits": 7,
+          "objectivesCompleted": 7,
+          "pendingChoices": 8
+        },
+        "goals": {
+          "eliteSpawned": false,
+          "eliteDefeated": false,
+          "finalSpawned": false,
+          "finalDefeated": true,
+          "finalId": null
+        }
+      }
+    },
+    {
+      "encounterSet": "patrol",
+      "seed": 17031991,
+      "route": "packs",
+      "build": "pursuer",
+      "airframes": 3,
+      "limit": 600,
+      "baseline": true,
+      "qualificationPolicy": "Technical baseline-kit audit: upgrade drafts disabled; normal contact and objective rules.",
+      "completed": true,
+      "elapsedCpuMs": 169.18829200000005,
+      "choices": [],
+      "samples": [
+        {
+          "time": 0.016666666666666666,
+          "x": 160.85121318981987,
+          "y": 539.3852349184634,
+          "hull": 100,
+          "lives": 3,
+          "objectives": 0,
+          "kills": 0,
+          "score": 0,
+          "alive": 137,
+          "visible": 73,
+          "chain": 0,
+          "rush": 0
+        },
+        {
+          "time": 10,
+          "x": 639.5741226303442,
+          "y": 754.3871241761966,
+          "hull": 100,
+          "lives": 3,
+          "objectives": 2,
+          "kills": 54,
+          "score": 22350,
+          "alive": 83,
+          "visible": 3,
+          "chain": 54,
+          "rush": 0
+        },
+        {
+          "time": 20,
+          "x": 772.857946015501,
+          "y": 165.07475845803748,
+          "hull": 100,
+          "lives": 3,
+          "objectives": 3,
+          "kills": 118,
+          "score": 45550,
+          "alive": 172,
+          "visible": 40,
+          "chain": 63,
+          "rush": 0.18333333333334606
+        },
+        {
+          "time": 30,
+          "x": 1568.5227244312746,
+          "y": 482.1462796857159,
+          "hull": 100,
+          "lives": 3,
+          "objectives": 5,
+          "kills": 138,
+          "score": 60550,
+          "alive": 152,
+          "visible": 110,
+          "chain": 83,
+          "rush": 0
+        },
+        {
+          "time": 40,
+          "x": 1690.566279228864,
+          "y": 483.6303337350982,
+          "hull": 100,
+          "lives": 3,
+          "objectives": 6,
+          "kills": 173,
+          "score": 70950,
+          "alive": 332,
+          "visible": 74,
+          "chain": 28,
+          "rush": 0.10000000000001275
+        },
+        {
+          "time": 50,
+          "x": 2649.6895898129305,
+          "y": 538.8733447974026,
+          "hull": 80,
+          "lives": 3,
+          "objectives": 6,
+          "kills": 198,
+          "score": 79350,
+          "alive": 298,
+          "visible": 154,
+          "chain": 2,
+          "rush": 4.233333333333336
+        }
+      ],
+      "summary": {
+        "format": "OverflightHuntRunSummaryV1",
+        "rules": "overflight-raid.v1",
+        "projectId": "overflight-raid-patrol",
+        "projectIdentity": "4009c534db62a1ef",
+        "seed": 17031991,
+        "phase": "won",
+        "outcome": "won",
+        "reason": "objectives-complete",
+        "fixture": null,
+        "fixtureWorkload": null,
+        "time": 51.916666666666664,
+        "tick": 3115,
+        "airframes": 3,
+        "airframesRemaining": 3,
+        "slowResume": true,
+        "stats": {
+          "kills": 200,
+          "spawned": 537,
+          "enemiesAlive": 296,
+          "enemiesVisible": 145,
+          "peakAlive": 376,
+          "peakVisible": 177,
+          "heaviesAlive": 0,
+          "specialistsAlive": 3,
+          "priorityAttacks": 0,
+          "damageDealt": 203,
+          "damageTaken": 60,
+          "xpEarned": 193,
+          "xpCollected": 193,
+          "xpOnGround": 0,
+          "pickupsAlive": 0,
+          "pickupMerges": 0,
+          "boostsUsed": 27,
+          "airframesLost": 0,
+          "upgradesChosen": 0,
+          "rerollsUsed": 0,
+          "droppedVisualEffects": 0,
+          "collisionCandidates": 19200,
+          "hits": 203,
+          "retired": 0,
+          "spawnDeferred": 0,
+          "fixtureDefeats": 0,
+          "projectileDeferrals": 0,
+          "blockedContacts": 125,
+          "cleanArmorHits": 7,
+          "boostRefunds": 25,
+          "rushActivations": 4,
+          "noTargetSeconds": 0,
+          "distanceFlown": 9527.481272683577,
+          "objectiveChoices": 6,
+          "optionalChoices": 2,
+          "projectilesFired": 30
+        },
+        "build": {
+          "primary": {
+            "rank": 1,
+            "branch": null,
+            "evolved": false
+          },
+          "combat": [],
+          "support": null,
+          "reinforcement": 0,
+          "repair": 0,
+          "hunt": {
+            "strike-width": 0,
+            "slow-wake": 0,
+            "rush-charge": 0,
+            "boost-cooldown": 0,
+            "boost-duration": 0,
+            "chain-window": 0,
+            "heavy-exposure": 0,
+            "guard-interrupt": 0,
+            "recovery-shield": 0
+          }
+        },
+        "upgrades": [],
+        "hunt": {
+          "sector": 2,
+          "objectives": [
+            {
+              "id": "leader-1",
+              "family": "patroller",
+              "sector": 0,
+              "enemyId": 135,
+              "completed": true
+            },
+            {
+              "id": "leader-2",
+              "family": "shield-bearer",
+              "sector": 0,
+              "enemyId": 136,
+              "completed": true
+            },
+            {
+              "id": "leader-3",
+              "family": "brace-trooper",
+              "sector": 0,
+              "enemyId": 137,
+              "completed": true
+            },
+            {
+              "id": "light-1",
+              "family": "utility-car",
+              "sector": 1,
+              "enemyId": 306,
+              "completed": true
+            },
+            {
+              "id": "light-2",
+              "family": "cargo-truck",
+              "sector": 1,
+              "enemyId": 307,
+              "completed": true
+            },
+            {
+              "id": "carrier",
+              "family": "armored-carrier",
+              "sector": 1,
+              "enemyId": 308,
+              "completed": true
+            },
+            {
+              "id": "command-tank",
+              "family": "tracked-tank",
+              "sector": 2,
+              "enemyId": 555,
+              "completed": true
+            }
+          ],
+          "score": 80750,
+          "chain": 2,
+          "bestChain": 83,
+          "chainRemaining": 4,
+          "multiplier": 1,
+          "rushCharge": 0,
+          "rushRemaining": 2.316666666666676,
+          "ordinaryKills": 193,
+          "couriersCaught": 11,
+          "couriersEscaped": 41,
+          "armorHits": 7,
+          "objectivesCompleted": 7,
+          "pendingChoices": 8
+        },
+        "goals": {
+          "eliteSpawned": false,
+          "eliteDefeated": false,
+          "finalSpawned": false,
+          "finalDefeated": true,
+          "finalId": null
+        }
+      }
+    },
+    {
+      "encounterSet": "crossing",
+      "seed": 17031991,
+      "route": "objectives",
+      "build": "pursuer",
+      "airframes": 3,
+      "limit": 600,
+      "baseline": true,
+      "qualificationPolicy": "Technical baseline-kit audit: upgrade drafts disabled; normal contact and objective rules.",
+      "completed": true,
+      "elapsedCpuMs": 74.46674999999993,
+      "choices": [],
+      "samples": [
+        {
+          "time": 0.016666666666666666,
+          "x": 160.85121318981987,
+          "y": 539.3852349184634,
+          "hull": 100,
+          "lives": 3,
+          "objectives": 0,
+          "kills": 0,
+          "score": 0,
+          "alive": 137,
+          "visible": 73,
+          "chain": 0,
+          "rush": 0
+        },
+        {
+          "time": 10,
+          "x": 1316.946844234613,
+          "y": 450.0987463073212,
+          "hull": 100,
+          "lives": 3,
+          "objectives": 4,
+          "kills": 14,
+          "score": 4500,
+          "alive": 292,
+          "visible": 149,
+          "chain": 1,
+          "rush": 0
+        },
+        {
+          "time": 20,
+          "x": 2558.6435053707582,
+          "y": 508.1783179294455,
+          "hull": 100,
+          "lives": 3,
+          "objectives": 6,
+          "kills": 36,
+          "score": 13550,
+          "alive": 489,
+          "visible": 155,
+          "chain": 14,
+          "rush": 0
+        }
+      ],
+      "summary": {
+        "format": "OverflightHuntRunSummaryV1",
+        "rules": "overflight-raid.v1",
+        "projectId": "overflight-raid-crossing",
+        "projectIdentity": "1cea4947d5f6d38a",
+        "seed": 17031991,
+        "phase": "won",
+        "outcome": "won",
+        "reason": "objectives-complete",
+        "fixture": null,
+        "fixtureWorkload": null,
+        "time": 22.133333333333333,
+        "tick": 1328,
+        "airframes": 3,
+        "airframesRemaining": 3,
+        "slowResume": true,
+        "stats": {
+          "kills": 50,
+          "spawned": 537,
+          "enemiesAlive": 475,
+          "enemiesVisible": 157,
+          "peakAlive": 515,
+          "peakVisible": 166,
+          "heaviesAlive": 0,
+          "specialistsAlive": 17,
+          "priorityAttacks": 0,
+          "damageDealt": 53,
+          "damageTaken": 40,
+          "xpEarned": 43,
+          "xpCollected": 43,
+          "xpOnGround": 0,
+          "pickupsAlive": 0,
+          "pickupMerges": 0,
+          "boostsUsed": 9,
+          "airframesLost": 0,
+          "upgradesChosen": 0,
+          "rerollsUsed": 0,
+          "droppedVisualEffects": 0,
+          "collisionCandidates": 8245,
+          "hits": 53,
+          "retired": 0,
+          "spawnDeferred": 0,
+          "fixtureDefeats": 0,
+          "projectileDeferrals": 0,
+          "blockedContacts": 139,
+          "cleanArmorHits": 7,
+          "boostRefunds": 9,
+          "rushActivations": 2,
+          "noTargetSeconds": 0,
+          "distanceFlown": 4093.574381108956,
+          "objectiveChoices": 6,
+          "optionalChoices": 2,
+          "projectilesFired": 19
+        },
+        "build": {
+          "primary": {
+            "rank": 1,
+            "branch": null,
+            "evolved": false
+          },
+          "combat": [],
+          "support": null,
+          "reinforcement": 0,
+          "repair": 0,
+          "hunt": {
+            "strike-width": 0,
+            "slow-wake": 0,
+            "rush-charge": 0,
+            "boost-cooldown": 0,
+            "boost-duration": 0,
+            "chain-window": 0,
+            "heavy-exposure": 0,
+            "guard-interrupt": 0,
+            "recovery-shield": 0
+          }
+        },
+        "upgrades": [],
+        "hunt": {
+          "sector": 2,
+          "objectives": [
+            {
+              "id": "leader-1",
+              "family": "patroller",
+              "sector": 0,
+              "enemyId": 135,
+              "completed": true
+            },
+            {
+              "id": "leader-2",
+              "family": "shield-bearer",
+              "sector": 0,
+              "enemyId": 136,
+              "completed": true
+            },
+            {
+              "id": "leader-3",
+              "family": "brace-trooper",
+              "sector": 0,
+              "enemyId": 137,
+              "completed": true
+            },
+            {
+              "id": "light-1",
+              "family": "scout-car",
+              "sector": 1,
+              "enemyId": 306,
+              "completed": true
+            },
+            {
+              "id": "light-2",
+              "family": "cargo-truck",
+              "sector": 1,
+              "enemyId": 307,
+              "completed": true
+            },
+            {
+              "id": "carrier",
+              "family": "armored-carrier",
+              "sector": 1,
+              "enemyId": 308,
+              "completed": true
+            },
+            {
+              "id": "command-tank",
+              "family": "tracked-tank",
+              "sector": 2,
+              "enemyId": 549,
+              "completed": true
+            }
+          ],
+          "score": 16450,
+          "chain": 4,
+          "bestChain": 24,
+          "chainRemaining": 4,
+          "multiplier": 1,
+          "rushCharge": 0,
+          "rushRemaining": 4.800000000000001,
+          "ordinaryKills": 43,
+          "couriersCaught": 8,
+          "couriersEscaped": 12,
+          "armorHits": 7,
+          "objectivesCompleted": 7,
+          "pendingChoices": 8
+        },
+        "goals": {
+          "eliteSpawned": false,
+          "eliteDefeated": false,
+          "finalSpawned": false,
+          "finalDefeated": true,
+          "finalId": null
+        }
+      }
+    },
+    {
+      "encounterSet": "crossing",
+      "seed": 17031991,
+      "route": "packs",
+      "build": "pursuer",
+      "airframes": 3,
+      "limit": 600,
+      "baseline": true,
+      "qualificationPolicy": "Technical baseline-kit audit: upgrade drafts disabled; normal contact and objective rules.",
+      "completed": true,
+      "elapsedCpuMs": 140.523375,
+      "choices": [],
+      "samples": [
+        {
+          "time": 0.016666666666666666,
+          "x": 160.85121318981987,
+          "y": 539.3852349184634,
+          "hull": 100,
+          "lives": 3,
+          "objectives": 0,
+          "kills": 0,
+          "score": 0,
+          "alive": 137,
+          "visible": 73,
+          "chain": 0,
+          "rush": 0
+        },
+        {
+          "time": 10,
+          "x": 746.4079002920537,
+          "y": 327.77833414388306,
+          "hull": 100,
+          "lives": 3,
+          "objectives": 2,
+          "kills": 61,
+          "score": 22050,
+          "alive": 76,
+          "visible": 69,
+          "chain": 61,
+          "rush": 0
+        },
+        {
+          "time": 20,
+          "x": 667.4287187537211,
+          "y": 206.15684761423142,
+          "hull": 100,
+          "lives": 3,
+          "objectives": 3,
+          "kills": 107,
+          "score": 54850,
+          "alive": 197,
+          "visible": 51,
+          "chain": 39,
+          "rush": 1.133333333333347
+        },
+        {
+          "time": 30,
+          "x": 1392.9252096262583,
+          "y": 748.8790551907035,
+          "hull": 100,
+          "lives": 3,
+          "objectives": 4,
+          "kills": 124,
+          "score": 62600,
+          "alive": 180,
+          "visible": 72,
+          "chain": 0,
+          "rush": 0
+        },
+        {
+          "time": 40,
+          "x": 1654.6060805713437,
+          "y": 442.3571072374453,
+          "hull": 40,
+          "lives": 3,
+          "objectives": 6,
+          "kills": 154,
+          "score": 70450,
+          "alive": 349,
+          "visible": 109,
+          "chain": 20,
+          "rush": 2.716666666666675
+        },
+        {
+          "time": 50,
+          "x": 2662.489053667009,
+          "y": 525.3546980322159,
+          "hull": 40,
+          "lives": 3,
+          "objectives": 6,
+          "kills": 193,
+          "score": 84800,
+          "alive": 310,
+          "visible": 136,
+          "chain": 7,
+          "rush": 0
+        }
+      ],
+      "summary": {
+        "format": "OverflightHuntRunSummaryV1",
+        "rules": "overflight-raid.v1",
+        "projectId": "overflight-raid-crossing",
+        "projectIdentity": "1cea4947d5f6d38a",
+        "seed": 17031991,
+        "phase": "won",
+        "outcome": "won",
+        "reason": "objectives-complete",
+        "fixture": null,
+        "fixtureWorkload": null,
+        "time": 52.166666666666664,
+        "tick": 3130,
+        "airframes": 3,
+        "airframesRemaining": 3,
+        "slowResume": true,
+        "stats": {
+          "kills": 202,
+          "spawned": 537,
+          "enemiesAlive": 301,
+          "enemiesVisible": 164,
+          "peakAlive": 369,
+          "peakVisible": 185,
+          "heaviesAlive": 0,
+          "specialistsAlive": 7,
+          "priorityAttacks": 0,
+          "damageDealt": 205,
+          "damageTaken": 60,
+          "xpEarned": 195,
+          "xpCollected": 195,
+          "xpOnGround": 0,
+          "pickupsAlive": 0,
+          "pickupMerges": 0,
+          "boostsUsed": 25,
+          "airframesLost": 0,
+          "upgradesChosen": 0,
+          "rerollsUsed": 0,
+          "droppedVisualEffects": 0,
+          "collisionCandidates": 15033,
+          "hits": 205,
+          "retired": 0,
+          "spawnDeferred": 0,
+          "fixtureDefeats": 0,
+          "projectileDeferrals": 0,
+          "blockedContacts": 92,
+          "cleanArmorHits": 7,
+          "boostRefunds": 25,
+          "rushActivations": 3,
+          "noTargetSeconds": 0,
+          "distanceFlown": 9569.221009459427,
+          "objectiveChoices": 6,
+          "optionalChoices": 2,
+          "projectilesFired": 35
+        },
+        "build": {
+          "primary": {
+            "rank": 1,
+            "branch": null,
+            "evolved": false
+          },
+          "combat": [],
+          "support": null,
+          "reinforcement": 0,
+          "repair": 0,
+          "hunt": {
+            "strike-width": 0,
+            "slow-wake": 0,
+            "rush-charge": 0,
+            "boost-cooldown": 0,
+            "boost-duration": 0,
+            "chain-window": 0,
+            "heavy-exposure": 0,
+            "guard-interrupt": 0,
+            "recovery-shield": 0
+          }
+        },
+        "upgrades": [],
+        "hunt": {
+          "sector": 2,
+          "objectives": [
+            {
+              "id": "leader-1",
+              "family": "patroller",
+              "sector": 0,
+              "enemyId": 135,
+              "completed": true
+            },
+            {
+              "id": "leader-2",
+              "family": "shield-bearer",
+              "sector": 0,
+              "enemyId": 136,
+              "completed": true
+            },
+            {
+              "id": "leader-3",
+              "family": "brace-trooper",
+              "sector": 0,
+              "enemyId": 137,
+              "completed": true
+            },
+            {
+              "id": "light-1",
+              "family": "scout-car",
+              "sector": 1,
+              "enemyId": 306,
+              "completed": true
+            },
+            {
+              "id": "light-2",
+              "family": "cargo-truck",
+              "sector": 1,
+              "enemyId": 307,
+              "completed": true
+            },
+            {
+              "id": "carrier",
+              "family": "armored-carrier",
+              "sector": 1,
+              "enemyId": 308,
+              "completed": true
+            },
+            {
+              "id": "command-tank",
+              "family": "tracked-tank",
+              "sector": 2,
+              "enemyId": 557,
+              "completed": true
+            }
+          ],
+          "score": 87400,
+          "chain": 16,
+          "bestChain": 68,
+          "chainRemaining": 4,
+          "multiplier": 3,
+          "rushCharge": 19,
+          "rushRemaining": 0,
+          "ordinaryKills": 195,
+          "couriersCaught": 14,
+          "couriersEscaped": 34,
+          "armorHits": 7,
+          "objectivesCompleted": 7,
+          "pendingChoices": 8
+        },
+        "goals": {
+          "eliteSpawned": false,
+          "eliteDefeated": false,
+          "finalSpawned": false,
+          "finalDefeated": true,
+          "finalId": null
+        }
+      }
+    },
+    {
+      "encounterSet": "mixed",
+      "seed": 17031991,
+      "route": "objectives",
+      "build": "pursuer",
+      "airframes": 3,
+      "limit": 600,
+      "baseline": true,
+      "qualificationPolicy": "Technical baseline-kit audit: upgrade drafts disabled; normal contact and objective rules.",
+      "completed": true,
+      "elapsedCpuMs": 85.09833300000003,
+      "choices": [],
+      "samples": [
+        {
+          "time": 0.016666666666666666,
+          "x": 160.85121318981987,
+          "y": 539.3852349184634,
+          "hull": 100,
+          "lives": 3,
+          "objectives": 0,
+          "kills": 0,
+          "score": 0,
+          "alive": 137,
+          "visible": 73,
+          "chain": 0,
+          "rush": 0
+        },
+        {
+          "time": 10,
+          "x": 1316.946844234613,
+          "y": 450.0987463073212,
+          "hull": 100,
+          "lives": 3,
+          "objectives": 4,
+          "kills": 12,
+          "score": 4200,
+          "alive": 294,
+          "visible": 145,
+          "chain": 1,
+          "rush": 0
+        },
+        {
+          "time": 20,
+          "x": 2228.0824331494373,
+          "y": 474.4880950631449,
+          "hull": 100,
+          "lives": 3,
+          "objectives": 6,
+          "kills": 37,
+          "score": 11400,
+          "alive": 484,
+          "visible": 124,
+          "chain": 7,
+          "rush": 2.116666666666677
+        }
+      ],
+      "summary": {
+        "format": "OverflightHuntRunSummaryV1",
+        "rules": "overflight-raid.v1",
+        "projectId": "overflight-raid-mixed",
+        "projectIdentity": "72646a15e2b84dd5",
+        "seed": 17031991,
+        "phase": "won",
+        "outcome": "won",
+        "reason": "objectives-complete",
+        "fixture": null,
+        "fixtureWorkload": null,
+        "time": 27.083333333333332,
+        "tick": 1625,
+        "airframes": 3,
+        "airframesRemaining": 3,
+        "slowResume": true,
+        "stats": {
+          "kills": 56,
+          "spawned": 537,
+          "enemiesAlive": 457,
+          "enemiesVisible": 119,
+          "peakAlive": 507,
+          "peakVisible": 166,
+          "heaviesAlive": 0,
+          "specialistsAlive": 17,
+          "priorityAttacks": 0,
+          "damageDealt": 59,
+          "damageTaken": 40,
+          "xpEarned": 49,
+          "xpCollected": 49,
+          "xpOnGround": 0,
+          "pickupsAlive": 0,
+          "pickupMerges": 0,
+          "boostsUsed": 10,
+          "airframesLost": 0,
+          "upgradesChosen": 0,
+          "rerollsUsed": 0,
+          "droppedVisualEffects": 0,
+          "collisionCandidates": 9570,
+          "hits": 59,
+          "retired": 0,
+          "spawnDeferred": 0,
+          "fixtureDefeats": 0,
+          "projectileDeferrals": 0,
+          "blockedContacts": 68,
+          "cleanArmorHits": 7,
+          "boostRefunds": 10,
+          "rushActivations": 1,
+          "noTargetSeconds": 0,
+          "distanceFlown": 4929.9565710159895,
+          "objectiveChoices": 6,
+          "optionalChoices": 2,
+          "projectilesFired": 26
+        },
+        "build": {
+          "primary": {
+            "rank": 1,
+            "branch": null,
+            "evolved": false
+          },
+          "combat": [],
+          "support": null,
+          "reinforcement": 0,
+          "repair": 0,
+          "hunt": {
+            "strike-width": 0,
+            "slow-wake": 0,
+            "rush-charge": 0,
+            "boost-cooldown": 0,
+            "boost-duration": 0,
+            "chain-window": 0,
+            "heavy-exposure": 0,
+            "guard-interrupt": 0,
+            "recovery-shield": 0
+          }
+        },
+        "upgrades": [],
+        "hunt": {
+          "sector": 2,
+          "objectives": [
+            {
+              "id": "leader-1",
+              "family": "patroller",
+              "sector": 0,
+              "enemyId": 135,
+              "completed": true
+            },
+            {
+              "id": "leader-2",
+              "family": "shield-bearer",
+              "sector": 0,
+              "enemyId": 136,
+              "completed": true
+            },
+            {
+              "id": "leader-3",
+              "family": "guard",
+              "sector": 0,
+              "enemyId": 137,
+              "completed": true
+            },
+            {
+              "id": "light-1",
+              "family": "utility-car",
+              "sector": 1,
+              "enemyId": 306,
+              "completed": true
+            },
+            {
+              "id": "light-2",
+              "family": "radar-truck",
+              "sector": 1,
+              "enemyId": 307,
+              "completed": true
+            },
+            {
+              "id": "carrier",
+              "family": "armored-carrier",
+              "sector": 1,
+              "enemyId": 308,
+              "completed": true
+            },
+            {
+              "id": "command-tank",
+              "family": "tracked-tank",
+              "sector": 2,
+              "enemyId": 552,
+              "completed": true
+            }
+          ],
+          "score": 15000,
+          "chain": 4,
+          "bestChain": 22,
+          "chainRemaining": 4,
+          "multiplier": 1,
+          "rushCharge": 14,
+          "rushRemaining": 0,
+          "ordinaryKills": 49,
+          "couriersCaught": 0,
+          "couriersEscaped": 24,
+          "armorHits": 7,
+          "objectivesCompleted": 7,
+          "pendingChoices": 8
+        },
+        "goals": {
+          "eliteSpawned": false,
+          "eliteDefeated": false,
+          "finalSpawned": false,
+          "finalDefeated": true,
+          "finalId": null
+        }
+      }
+    },
+    {
+      "encounterSet": "mixed",
+      "seed": 17031991,
+      "route": "packs",
+      "build": "pursuer",
+      "airframes": 3,
+      "limit": 600,
+      "baseline": true,
+      "qualificationPolicy": "Technical baseline-kit audit: upgrade drafts disabled; normal contact and objective rules.",
+      "completed": true,
+      "elapsedCpuMs": 190.13637500000004,
+      "choices": [],
+      "samples": [
+        {
+          "time": 0.016666666666666666,
+          "x": 160.85121318981987,
+          "y": 539.3852349184634,
+          "hull": 100,
+          "lives": 3,
+          "objectives": 0,
+          "kills": 0,
+          "score": 0,
+          "alive": 137,
+          "visible": 73,
+          "chain": 0,
+          "rush": 0
+        },
+        {
+          "time": 10,
+          "x": 753.1080937358529,
+          "y": 311.1296889011345,
+          "hull": 100,
+          "lives": 3,
+          "objectives": 2,
+          "kills": 58,
+          "score": 21050,
+          "alive": 79,
+          "visible": 72,
+          "chain": 58,
+          "rush": 0
+        },
+        {
+          "time": 20,
+          "x": 735.2120143817494,
+          "y": 240.70039375350655,
+          "hull": 100,
+          "lives": 3,
+          "objectives": 3,
+          "kills": 109,
+          "score": 52100,
+          "alive": 197,
+          "visible": 68,
+          "chain": 43,
+          "rush": 1.2000000000000135
+        },
+        {
+          "time": 30,
+          "x": 1398.8790327906831,
+          "y": 756.5599954624042,
+          "hull": 100,
+          "lives": 3,
+          "objectives": 4,
+          "kills": 124,
+          "score": 60850,
+          "alive": 182,
+          "visible": 71,
+          "chain": 0,
+          "rush": 0
+        },
+        {
+          "time": 40,
+          "x": 1546.6326328321234,
+          "y": 550.2245707723415,
+          "hull": 80,
+          "lives": 3,
+          "objectives": 6,
+          "kills": 144,
+          "score": 64400,
+          "alive": 393,
+          "visible": 88,
+          "chain": 0,
+          "rush": 4.366666666666669
+        },
+        {
+          "time": 50,
+          "x": 1591.719310950903,
+          "y": 487.0262940416266,
+          "hull": 20,
+          "lives": 3,
+          "objectives": 6,
+          "kills": 189,
+          "score": 75100,
+          "alive": 332,
+          "visible": 63,
+          "chain": 43,
+          "rush": 2.066666666666677
+        },
+        {
+          "time": 60,
+          "x": 2037.8563389754381,
+          "y": 824.8159300820046,
+          "hull": 100,
+          "lives": 2,
+          "objectives": 6,
+          "kills": 196,
+          "score": 76650,
+          "alive": 305,
+          "visible": 63,
+          "chain": 1,
+          "rush": 0
+        }
+      ],
+      "summary": {
+        "format": "OverflightHuntRunSummaryV1",
+        "rules": "overflight-raid.v1",
+        "projectId": "overflight-raid-mixed",
+        "projectIdentity": "72646a15e2b84dd5",
+        "seed": 17031991,
+        "phase": "won",
+        "outcome": "won",
+        "reason": "objectives-complete",
+        "fixture": null,
+        "fixtureWorkload": null,
+        "time": 63.35,
+        "tick": 3801,
+        "airframes": 3,
+        "airframesRemaining": 2,
+        "slowResume": true,
+        "stats": {
+          "kills": 203,
+          "spawned": 537,
+          "enemiesAlive": 289,
+          "enemiesVisible": 119,
+          "peakAlive": 408,
+          "peakVisible": 168,
+          "heaviesAlive": 0,
+          "specialistsAlive": 5,
+          "priorityAttacks": 0,
+          "damageDealt": 206,
+          "damageTaken": 100,
+          "xpEarned": 196,
+          "xpCollected": 196,
+          "xpOnGround": 0,
+          "pickupsAlive": 0,
+          "pickupMerges": 0,
+          "boostsUsed": 28,
+          "airframesLost": 1,
+          "upgradesChosen": 0,
+          "rerollsUsed": 0,
+          "droppedVisualEffects": 0,
+          "collisionCandidates": 16037,
+          "hits": 206,
+          "retired": 0,
+          "spawnDeferred": 0,
+          "fixtureDefeats": 0,
+          "projectileDeferrals": 0,
+          "blockedContacts": 175,
+          "cleanArmorHits": 7,
+          "boostRefunds": 27,
+          "rushActivations": 4,
+          "noTargetSeconds": 0,
+          "distanceFlown": 11516.954938287257,
+          "objectiveChoices": 6,
+          "optionalChoices": 2,
+          "projectilesFired": 36
+        },
+        "build": {
+          "primary": {
+            "rank": 1,
+            "branch": null,
+            "evolved": false
+          },
+          "combat": [],
+          "support": null,
+          "reinforcement": 0,
+          "repair": 0,
+          "hunt": {
+            "strike-width": 0,
+            "slow-wake": 0,
+            "rush-charge": 0,
+            "boost-cooldown": 0,
+            "boost-duration": 0,
+            "chain-window": 0,
+            "heavy-exposure": 0,
+            "guard-interrupt": 0,
+            "recovery-shield": 0
+          }
+        },
+        "upgrades": [],
+        "hunt": {
+          "sector": 2,
+          "objectives": [
+            {
+              "id": "leader-1",
+              "family": "patroller",
+              "sector": 0,
+              "enemyId": 135,
+              "completed": true
+            },
+            {
+              "id": "leader-2",
+              "family": "shield-bearer",
+              "sector": 0,
+              "enemyId": 136,
+              "completed": true
+            },
+            {
+              "id": "leader-3",
+              "family": "guard",
+              "sector": 0,
+              "enemyId": 137,
+              "completed": true
+            },
+            {
+              "id": "light-1",
+              "family": "utility-car",
+              "sector": 1,
+              "enemyId": 306,
+              "completed": true
+            },
+            {
+              "id": "light-2",
+              "family": "radar-truck",
+              "sector": 1,
+              "enemyId": 307,
+              "completed": true
+            },
+            {
+              "id": "carrier",
+              "family": "armored-carrier",
+              "sector": 1,
+              "enemyId": 308,
+              "completed": true
+            },
+            {
+              "id": "command-tank",
+              "family": "tracked-tank",
+              "sector": 2,
+              "enemyId": 554,
+              "completed": true
+            }
+          ],
+          "score": 78100,
+          "chain": 8,
+          "bestChain": 66,
+          "chainRemaining": 4,
+          "multiplier": 2,
+          "rushCharge": 14,
+          "rushRemaining": 0,
+          "ordinaryKills": 196,
+          "couriersCaught": 16,
+          "couriersEscaped": 45,
+          "armorHits": 7,
+          "objectivesCompleted": 7,
+          "pendingChoices": 8
+        },
+        "goals": {
+          "eliteSpawned": false,
+          "eliteDefeated": false,
+          "finalSpawned": false,
+          "finalDefeated": true,
+          "finalId": null
+        }
+      }
+    }
+  ]
+}

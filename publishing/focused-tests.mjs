@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import * as fs from 'node:fs/promises';
 import path from 'node:path';
-import { spawnSync } from 'node:child_process';
+import { spawn, spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { parseTestPolicy, readTestPolicy } from './test-policy.mjs';
 
@@ -30,7 +30,9 @@ function validateCommand(command) {
     typeof command.id !== 'string' ||
     !['node', 'npm'].includes(command.command) ||
     !Array.isArray(command.args) ||
-    command.args.some((argument) => typeof argument !== 'string' || argument.includes('\0'))
+    command.args.some((argument) => typeof argument !== 'string' || argument.includes('\0')) ||
+    (command.timeoutMs !== undefined &&
+      (!Number.isSafeInteger(command.timeoutMs) || command.timeoutMs < 1))
   )
     throw new Error('Focused-test manifest contains an invalid command.');
   return command;
@@ -402,12 +404,21 @@ export async function loadFocusedExecutionInputs(
 
 export function runFocusedCommands(
   commands,
-  { root = '.', spawn = spawnSync, stdout = process.stdout, stderr = process.stderr } = {},
+  {
+    root = '.',
+    spawn = spawnSync,
+    stdout = process.stdout,
+    stderr = process.stderr,
+    timeoutMs = 10 * 60 * 1000,
+  } = {},
 ) {
+  if (!Number.isSafeInteger(timeoutMs) || timeoutMs < 1)
+    throw new Error('Focused command timeout must be a positive safe integer.');
   const failures = [];
   let attempted = 0;
   for (const command of commands) {
     attempted += 1;
+    const commandTimeoutMs = command.timeoutMs ?? timeoutMs;
     stdout.write(`\n[focused:${command.id}] ${command.command} ${command.args.join(' ')}\n`);
     let result;
     try {
@@ -416,6 +427,8 @@ export function runFocusedCommands(
         encoding: 'utf8',
         stdio: 'inherit',
         env: { ...process.env, CI: 'true' },
+        timeout: commandTimeoutMs,
+        killSignal: 'SIGTERM',
       });
     } catch (error) {
       result = { error };
@@ -424,6 +437,7 @@ export function runFocusedCommands(
     const signal =
       typeof result?.signal === 'string' && result.signal.length ? result.signal : null;
     if (!result?.error && status === 0 && signal === null) continue;
+    const timedOut = result?.error?.code === 'ETIMEDOUT';
     const failure = {
       id: command.id,
       command: command.command,
@@ -435,9 +449,16 @@ export function runFocusedCommands(
           ? result.error.message
           : String(result.error)
         : null,
+      ...(timedOut ? { timedOut: true } : {}),
     };
     failures.push(failure);
     stderr.write(`[focused:${command.id}] failed ${JSON.stringify(failure)}\n`);
+    if (timedOut) {
+      stderr.write(
+        `[focused:${command.id}] timed out after ${commandTimeoutMs}ms; remaining focused commands were not run.\n`,
+      );
+      return { attempted, failures, exitCode: 124 };
+    }
   }
   return {
     attempted,
@@ -445,6 +466,91 @@ export function runFocusedCommands(
     exitCode:
       failures.find(({ status }) => Number.isInteger(status) && status !== 0)?.status ||
       (failures.length ? 1 : 0),
+  };
+}
+
+/** Execute independent focused commands with a bounded worker pool.  A large
+ * stacked PR can legitimately select many orthogonal checks; serial execution
+ * turns that coverage into a workflow timeout instead of a useful verdict.
+ * Each command still has its own timeout and every non-zero result remains a
+ * failure. */
+export async function runFocusedCommandsParallel(
+  commands,
+  {
+    root = '.',
+    concurrency = 1,
+    spawnChild = spawn,
+    stdout = process.stdout,
+    stderr = process.stderr,
+    timeoutMs = 10 * 60 * 1000,
+  } = {},
+) {
+  if (!Number.isSafeInteger(concurrency) || concurrency < 1)
+    throw new Error('Focused command concurrency must be a positive safe integer.');
+  if (!Number.isSafeInteger(timeoutMs) || timeoutMs < 1)
+    throw new Error('Focused command timeout must be a positive safe integer.');
+  const failures = [];
+  let next = 0;
+  const execute = async (command) => {
+    const commandTimeoutMs = command.timeoutMs ?? timeoutMs;
+    stdout.write(`\n[focused:${command.id}] ${command.command} ${command.args.join(' ')}\n`);
+    const result = await new Promise((resolve) => {
+      let settled = false;
+      const finish = (value) => {
+        if (!settled) {
+          settled = true;
+          resolve(value);
+        }
+      };
+      try {
+        const child = spawnChild(command.command, command.args, {
+          cwd: root,
+          stdio: 'inherit',
+          env: { ...process.env, CI: 'true' },
+          timeout: commandTimeoutMs,
+          killSignal: 'SIGTERM',
+        });
+        child.once('error', (error) => finish({ error }));
+        child.once('close', (status, signal) => finish({ status, signal }));
+      } catch (error) {
+        finish({ error });
+      }
+    });
+    const status = Number.isInteger(result?.status) ? result.status : null;
+    const signal = typeof result?.signal === 'string' && result.signal.length ? result.signal : null;
+    if (!result?.error && status === 0 && signal === null) return;
+    const timedOut = result?.error?.code === 'ETIMEDOUT';
+    const failure = {
+      id: command.id,
+      command: command.command,
+      args: command.args,
+      status,
+      signal,
+      error: result?.error
+        ? result.error instanceof Error
+          ? result.error.message
+          : String(result.error)
+        : null,
+      ...(timedOut ? { timedOut: true } : {}),
+    };
+    failures.push(failure);
+    stderr.write(`[focused:${command.id}] failed ${JSON.stringify(failure)}\n`);
+  };
+  const worker = async () => {
+    while (next < commands.length) {
+      const command = commands[next++];
+      await execute(command);
+    }
+  };
+  await Promise.all(Array.from({ length: Math.min(concurrency, commands.length) }, worker));
+  return {
+    attempted: commands.length,
+    failures,
+    exitCode:
+      failures.some(({ timedOut }) => timedOut)
+        ? 124
+        : failures.find(({ status }) => Number.isInteger(status) && status !== 0)?.status ||
+          (failures.length ? 1 : 0),
   };
 }
 
@@ -526,7 +632,7 @@ async function main() {
     process.stdout.write(
       `Focused executions: ${execution.commands.length} (${execution.deduplicated.length} exact duplicate tests covered by selected package scripts)\n`,
     );
-  const result = runFocusedCommands(execution.commands, { root });
+  const result = await runFocusedCommandsParallel(execution.commands, { root, concurrency: 2 });
   if (result.exitCode !== 0) process.exitCode = result.exitCode;
 }
 

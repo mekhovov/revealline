@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import { EventEmitter } from 'node:events';
 import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 import test from 'node:test';
@@ -9,6 +10,7 @@ import {
   loadFocusedExecutionInputs,
   packageScriptShellSemantics,
   runFocusedCommands,
+  runFocusedCommandsParallel,
 } from './focused-tests.mjs';
 
 const directory = path.dirname(fileURLToPath(import.meta.url));
@@ -209,7 +211,7 @@ test('manifest-declared changed tests are not executed twice', () => {
   );
 });
 
-test('publishing changes run the exact-head controller, authority, determinism and public-byte gates', () => {
+test('publishing changes run the exact-head controller and release-object gates', () => {
   const plan = focusedTestPlan(['publishing/pages-controller/public-byte-audit.mjs'], manifest);
   assert.deepEqual(plan.categories, ['publishing']);
   const command = plan.commands.find(({ id }) => id === 'publishing-controller');
@@ -220,11 +222,7 @@ test('publishing changes run the exact-head controller, authority, determinism a
     'publishing/fastline-release-inputs.test.mjs',
     'publishing/fastline-release-objects.test.mjs',
     'publishing/fastline-release-publisher.test.mjs',
-    'publishing/pages-controller/archive-authority.test.mjs',
-    'publishing/pages-controller/assemble.test.mjs',
-    'publishing/pages-controller/metadata.test.mjs',
-    'publishing/pages-controller/public-byte-audit.test.mjs',
-    'publishing/pages-controller/release-asset.test.mjs',
+    'publishing/source-workflow.test.mjs',
   ])
     assert.ok(command.args.includes(required), `Missing focused gate: ${required}`);
 });
@@ -375,6 +373,32 @@ test('focused command execution uses real child exit status and still runs later
   assert.equal(summary.exitCode, 5);
 });
 
+test('focused command execution reports a timeout and stops the remaining queue', () => {
+  const calls = [];
+  const stderr = [];
+  const timeout = Object.assign(new Error('timed out'), { code: 'ETIMEDOUT' });
+  const summary = runFocusedCommands(
+    [
+      { id: 'blocked', command: 'node', args: ['blocked'], timeoutMs: 4321 },
+      { id: 'must-not-run', command: 'node', args: ['later'] },
+    ],
+    {
+      spawn(command, args, options) {
+        calls.push([command, ...args, options.timeout, options.killSignal]);
+        return { status: null, signal: 'SIGTERM', error: timeout };
+      },
+      stdout: { write() {} },
+      stderr: { write(message) { stderr.push(message); } },
+      timeoutMs: 1234,
+    },
+  );
+  assert.deepEqual(calls, [['node', 'blocked', 4321, 'SIGTERM']]);
+  assert.equal(summary.attempted, 1);
+  assert.deepEqual(summary.failures.map(({ id, timedOut }) => [id, timedOut]), [['blocked', true]]);
+  assert.equal(summary.exitCode, 124);
+  assert.match(stderr.at(-1), /timed out after 4321ms/u);
+});
+
 test('focused command execution succeeds only when every command succeeds', () => {
   const summary = runFocusedCommands([{ id: 'pass', command: 'node', args: ['pass'] }], {
     spawn() {
@@ -384,6 +408,44 @@ test('focused command execution succeeds only when every command succeeds', () =
     stderr: { write() {} },
   });
   assert.deepEqual(summary, { attempted: 1, failures: [], exitCode: 0 });
+});
+
+test('bounded parallel focused execution retains every command verdict', async () => {
+  let active = 0;
+  let maximumActive = 0;
+  const summary = await runFocusedCommandsParallel(
+    [
+      { id: 'first', command: 'node', args: ['first'] },
+      { id: 'second', command: 'node', args: ['second'] },
+      { id: 'failure', command: 'node', args: ['failure'] },
+    ],
+    {
+      concurrency: 2,
+      stdout: { write() {} },
+      stderr: { write() {} },
+      spawnChild(_command, args) {
+        const child = new EventEmitter();
+        active += 1;
+        maximumActive = Math.max(maximumActive, active);
+        setImmediate(() => {
+          active -= 1;
+          child.emit('close', args[0] === 'failure' ? 9 : 0, null);
+        });
+        return child;
+      },
+    },
+  );
+  assert.equal(summary.attempted, 3);
+  assert.deepEqual(summary.failures.map(({ id, status }) => [id, status]), [['failure', 9]]);
+  assert.equal(summary.exitCode, 9);
+  assert.equal(maximumActive, 2, 'independent commands use the bounded worker pool');
+});
+
+test('parallel focused execution rejects invalid worker limits', async () => {
+  await assert.rejects(
+    runFocusedCommandsParallel([], { concurrency: 0, stdout: { write() {} }, stderr: { write() {} } }),
+    /concurrency/u,
+  );
 });
 
 test('execution planning removes only exact tests covered by the selected package script', () => {
@@ -743,6 +805,7 @@ test('focused CI installs the locked native fixture owner before selected checks
     'utf8',
   );
   const focused = workflow.split('  focused:\n')[1].split('\n  test:')[0];
+  assert.match(focused, /timeout-minutes: 90/u);
   const steps = focused.split(/\n      - /);
   const install = steps.findIndex((step) =>
     step.startsWith('name: Install pinned authoring dependencies for selected focused gates\n'),

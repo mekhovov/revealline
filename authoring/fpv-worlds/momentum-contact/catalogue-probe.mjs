@@ -258,10 +258,19 @@ const createHost = (idb) => {
   return host;
 };
 const choosePractice = (host) => {
-  host.$('search').value = 'Keep moving after the catch';
-  host.$('search').emit('input');
+  host.$('hero-browse').click();
+  const search = host.$('journey-search');
+  search.value = 'Keep moving after the catch';
+  search.emit('input');
+  const card = [...host.doc.querySelectorAll('.journey-card')].find((node) =>
+    node.textContent.includes('Keep moving after the catch'),
+  );
+  check(card, 'Imported practice appears in the mission browser');
+  card.click();
 };
-const watchButton = (host) => host.$('world-grid').querySelector('.watch-example');
+const watchButton = (host) =>
+  [...host.doc.querySelectorAll('button')].find((node) => node.textContent === 'Watch example') ??
+  null;
 const importFile = async (host, id, bytes, name, done) => {
   const file = Object.assign(new Blob([bytes]), { name });
   host.$(id).files = [file];
@@ -304,6 +313,7 @@ try {
   for (const mode of modes) {
     host.$('flight-mode').value = mode;
     host.$('flight-mode').emit('change');
+    choosePractice(host);
     check(!!watchButton(host), `${mode}: imported verified example exposes Watch`);
   }
   rows.push({

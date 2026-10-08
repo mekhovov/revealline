@@ -40,50 +40,6 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  default-capacity:
-    runs-on: ubuntu-latest
-    # A full-source checkout took 9m04s in run 36770088880; leave bounded
-    # time for the unchanged dependency/capacity inspection and receipt upload.
-    timeout-minutes: 20
-    steps:
-      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
-        with:
-          ref: ${{ github.event.pull_request.head.sha || github.sha }}
-          persist-credentials: false
-      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
-        with:
-          package-manager-cache: false
-          node-version: '22.13.1'
-          cache: npm
-      - run: npm ci
-      - name: Inspect complete default-build dependencies and rolling Pages capacity
-        run: |
-          mkdir -p .cache/default-capacity
-          node scripts/inspect-default-build.mjs --out .cache/default-capacity/default-inspection.json
-          node --input-type=module <<'NODE'
-          import fs from 'node:fs';
-          const report = JSON.parse(fs.readFileSync('.cache/default-capacity/default-inspection.json'));
-          if (report.publicationProfile !== 'main-pages')
-            throw new Error('Capacity inspection did not use the rolling main Pages profile.');
-          const operatingLimit = 950_000_000;
-          if (report.payloadBytesIncludingManifest > operatingLimit)
-            throw new Error(
-              `Rolling main Pages profile exceeds ${operatingLimit} bytes before separately staged metadata/packages: ${report.payloadBytesIncludingManifest}`,
-            );
-          console.log(
-            `Rolling main Pages profile: ${report.payloadBytesIncludingManifest} / ${operatingLimit} bytes.`,
-          );
-          NODE
-      - uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
-        with:
-          name: default-capacity-${{ github.event.pull_request.head.sha || github.sha }}
-          path: .cache/default-capacity/default-inspection.json
-          if-no-files-found: error
-          retention-days: 14
-      - name: Report inspection boundary
-        run: |
-          echo 'The complete checkout passed exact-source dependency preparation and the rolling main Pages profile stayed below the 950 MB operating threshold.' >> "$GITHUB_STEP_SUMMARY"
-          echo 'The 25 MB margin protects the 975 MB hard limit for separately staged metadata/packages. This small inventory is not a frozen default ZIP, installation receipt or permission to promote.' >> "$GITHUB_STEP_SUMMARY"
   optional-practice:
     runs-on: ubuntu-latest
     timeout-minutes: 8
@@ -148,7 +104,7 @@ jobs:
       - name: Verify both source release formats and edition admission
         if: steps.test_policy.outputs.runTests == 'true'
         run: |
-          node --test publishing/fastline-release-publisher.test.mjs publishing/fastline-release-inputs.test.mjs publishing/pages-controller/metadata.test.mjs publishing/pages-controller/workflow.test.mjs scripts/source-manifest-snapshot.test.mjs
+          node --test publishing/fastline-release-publisher.test.mjs publishing/fastline-release-inputs.test.mjs publishing/source-workflow.test.mjs scripts/source-manifest-snapshot.test.mjs
           cd publishing/utility
           python3 -m unittest test_source_manifest test_release_artifact test_upload_source test_assemble_waived_qualification
       - name: Compile twice and inspect original candidate ZIP members

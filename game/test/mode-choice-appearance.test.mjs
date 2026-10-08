@@ -38,12 +38,13 @@ const entry = () =>
 function fixture(context, current, { getAppearanceDefault, sourceHref } = {}) {
   const document = new Document(),
     root = document.createElement('nav'),
+    extras = document.createElement('section'),
     local = memory(),
     session = memory(),
     requests = [],
     visits = [],
     deferred = [];
-  document.body.append(root);
+  document.body.append(root, extras);
   document.documentElement.lang = 'uk';
   const href =
     sourceHref ??
@@ -78,6 +79,7 @@ function fixture(context, current, { getAppearanceDefault, sourceHref } = {}) {
     root,
     current,
     actions,
+    guidesContainer: extras,
     pause: () => {
       pauses++;
     },
@@ -94,6 +96,7 @@ function fixture(context, current, { getAppearanceDefault, sourceHref } = {}) {
   return {
     document,
     root,
+    extras,
     controls,
     local,
     session,
@@ -129,7 +132,7 @@ for (const current of ['versus', 'team']) {
     assert.equal(target.searchParams.get('appearanceRevision'), 'r1');
     assert.equal(target.searchParams.get('game-return'), new URL(state.href).pathname);
     assert.equal(target.searchParams.get('lang'), 'uk');
-    assert.equal(target.hash, '#learn');
+    assert.equal(target.hash, '', 'A mode switch opens SIM Home rather than its mission chooser.');
     assert.deepEqual(
       [state.local.writes, state.session.writes],
       before,
@@ -180,9 +183,10 @@ test('the explicit Solo context getter remains primary over compiled and accepte
 });
 
 for (const current of ['solo', 'versus', 'team']) {
-  test(`${current} keeps primary mode entry direct and extra discovery collapsed`, (context) => {
+  test(`${current} keeps primary modes compact and puts discovery in Settings Extras`, (context) => {
     const state = fixture(context, current);
-    const disclosure = state.root.querySelector('.game-mode-destinations');
+    assert.equal(state.root.querySelector('.game-mode-destinations'), null);
+    const disclosure = state.extras.querySelector('.game-mode-destinations');
     assert.equal(disclosure.tagName, 'DETAILS');
     assert.notEqual(disclosure.open, true);
     assert.ok(disclosure.querySelector('summary'));
@@ -245,10 +249,10 @@ for (const current of ['solo', 'versus', 'team'])
     assert.equal(link.isConnected, false);
   });
 
-test('shared More modes guide links retain review on their real same-build paths before and after click', (t) => {
+test('shared Settings Extras guide links retain review on their real same-build paths before and after click', (t) => {
   const source = new URL('../couch/?artReview=industrial-roster-v3', import.meta.url);
   const f = fixture(t, 'versus', { sourceHref: source.href });
-  const links = f.root.querySelector('.game-mode-destinations').querySelectorAll('a');
+  const links = f.extras.querySelector('.game-mode-destinations').querySelectorAll('a');
   assert.equal(links.length, 3);
   for (const [index, name] of ['snake', 'hunt', 'online'].entries()) {
     const before = new URL(links[index].href);
@@ -263,3 +267,36 @@ test('shared More modes guide links retain review on their real same-build paths
   assert.equal(f.paused(), 3);
   assert.deepEqual(f.visits, []);
 });
+
+for (const operation of ['play', 'raid']) {
+  test(`Overflight ${operation} shares one native mode row and reaches Snake and SIM`, async (context) => {
+    const sourceHref = `https://example.test/project/game/overflight/${operation}.html?lang=uk`;
+    const state = fixture(context, 'overflight', { sourceHref });
+    const choices = state.root.querySelectorAll('[data-game-mode]');
+    assert.deepEqual(
+      choices.map((element) => element.dataset.gameMode),
+      ['solo', 'team', 'versus', 'snake', 'overflight', 'simulator'],
+    );
+    assert.equal(state.root.style.getPropertyValue('--game-mode-count'), '6');
+    assert.equal(
+      choices.filter((element) => element.getAttribute('aria-current') === 'page').length,
+      1,
+    );
+    assert.equal(choices[4].tagName, 'BUTTON');
+    assert.equal(choices[4].dataset.menuIcon, 'overflight');
+    assert.equal(choices[4].getAttribute('data-menu-right').split(' ')[0], 'overflight-fpv-sim');
+    const snake = state.document.getElementById('overflight-snake');
+    snake.click();
+    assert.equal(new URL(snake.href).pathname, '/project/game/snake/play.html');
+    state.button.click();
+    state.deferred.shift()(entry());
+    await waitFor(() => state.visits.length === 1);
+    const simulator = new URL(state.visits[0]);
+    assert.equal(
+      simulator.searchParams.get('game-return'),
+      new URL(sourceHref).pathname + '?lang=uk',
+    );
+    assert.equal(simulator.hash, '');
+    assert.equal(state.paused(), 2);
+  });
+}
