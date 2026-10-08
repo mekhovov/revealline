@@ -2,15 +2,16 @@ import { boundedJSON, exactKeys, stableId } from '../../game/data-json.mjs';
 import { WORLD_LIMITS, worldSHA256 } from './world-content.mjs';
 
 const origin = 'https://raw.githubusercontent.com/mekhovov/revealline/';
-// This endpoint only publishes packs supported by the surface-coating-v1 runtime.
-// The original index remains compatible with already cached older players.
-const indexURL = origin + 'main/authoring/fpv-worlds/published/surface-coating-v1/index.json';
+// This cohort supports ground motion support-v1 and surface-coating-v1.
+// Both older indexes retain their cached-runtime-compatible content.
+const indexURL = origin + 'main/authoring/fpv-worlds/published/ground-motion-v1/index.json';
 const check = (condition) => {
   if (!condition) throw new Error('Invalid world download.');
 };
 
 export function worldImportErrorCopy(error) {
-  if (error?.code !== 'unsupported-world-extension') return null;
+  if (!['unsupported-world-extension', 'unsupported-ground-motion'].includes(error?.code))
+    return null;
   return [
     'This SIM version does not support a required world feature. Open Flight practice, choose Check available practice, then Play available version. If that version still cannot import it, use a compatible pack. Prepare offline saves the version you opened.',
     'Ця версія SIM не підтримує потрібну можливість світу. Відкрийте «Практика польоту», виберіть «Перевірити доступну практику», а потім «Грати в доступну версію». Якщо імпорт усе ще неможливий, потрібен сумісний пакунок. Підготовка офлайн зберігає відкриту версію.',

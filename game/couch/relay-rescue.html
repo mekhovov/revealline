@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <script src="../presentation/theme-bootstrap.mjs" data-theme-density="player"></script>
+    <link rel="stylesheet" href="../ui/mode-boot.css" />
     <script src="../snake/route.js" data-mode="team"></script>
     <link
       rel="stylesheet"
@@ -32,6 +33,7 @@
     <link rel="stylesheet" href="../ui/quick-music-controls.css" />
     <link rel="stylesheet" href="../ui/menu-scenes.css" />
     <link rel="stylesheet" href="../ui/native-menu.css" />
+    <link rel="stylesheet" href="../ui/pause-menu.css" />
     <link
       rel="icon"
       type="image/png"
@@ -42,6 +44,28 @@
   </head>
   <body class="field-kit field-kit-support" data-field-kit-page="relay-rescue">
     <div data-language-control data-language-launch></div>
+
+    <section id="mode-boot" class="mode-boot" aria-label="FPV / LINE">
+      <div class="mode-boot-card">
+        <img
+          class="fpv-line-wordmark"
+          src="../ui/art/identity/fpv-line/wordmark.png"
+          alt="FPV / LINE"
+        />
+        <p id="coop-boot" class="operation-status" data-state="busy" role="status">
+          <span aria-hidden="true" style="display: inline-flex; gap: 3px; color: #78dce8"
+            ><i style="display: inline-block; width: 4px; height: 8px; background: currentColor"></i
+            ><i style="display: inline-block; width: 4px; height: 8px; background: currentColor"></i
+            ><i
+              style="display: inline-block; width: 4px; height: 8px; background: currentColor"
+            ></i></span
+          ><span data-i18n="interface:loadingRelayRescue">Loading Relay Rescue.</span>
+        </p>
+        <a id="mode-boot-return" href="../" data-i18n="interface:backToTheGame2"
+          >Back to the game</a
+        >
+      </div>
+    </section>
 
     <main id="coop-app">
       <header class="masthead">
@@ -72,19 +96,7 @@
           >
             Start with a small loop. Cover each other, then meet to join a larger cut.
           </p>
-          <p id="coop-boot" class="operation-status" data-state="busy" role="status">
-            <span aria-hidden="true" style="display: inline-flex; gap: 3px; color: #78dce8"
-              ><i
-                style="display: inline-block; width: 4px; height: 8px; background: currentColor"
-              ></i
-              ><i
-                style="display: inline-block; width: 4px; height: 8px; background: currentColor"
-              ></i
-              ><i
-                style="display: inline-block; width: 4px; height: 8px; background: currentColor"
-              ></i></span
-            ><span data-i18n="interface:loadingRelayRescue">Loading Relay Rescue.</span>
-          </p>
+          <span id="coop-boot-slot" hidden></span>
           <script src="team-entry.js"></script>
           <p id="coop-selection-status" class="setup-note" role="status" hidden></p>
           <div class="coop-launch-grid">

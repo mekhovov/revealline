@@ -1,0 +1,859 @@
+{
+  "format": "FPVGroundP1SourceBridge.v1",
+  "scope": "Read-only committed source inventory, not package admission",
+  "baseline": "e03fdbb5cd73176a01df49347fbe9eab722f1882",
+  "candidate": "c888632ecefe7b3846ef19d16a693eb060a91fc3",
+  "inputs": [
+    {
+      "path": "game/data-json.mjs",
+      "baselineBytes": 5594,
+      "baselineSHA256": "9ce33d6173f3cba8587ed7a7f1924c66e9d9c86ffa59b37a743764ea0b01f7bd",
+      "bytes": 5594,
+      "sha256": "9ce33d6173f3cba8587ed7a7f1924c66e9d9c86ffa59b37a743764ea0b01f7bd",
+      "changed": false
+    },
+    {
+      "path": "game/encounter-display-preferences.mjs",
+      "baselineBytes": 7314,
+      "baselineSHA256": "6cd94187c299eaaa4cb14790c12d84388fb8d8dd4a5b48902dadd74dc6475b03",
+      "bytes": 7314,
+      "sha256": "6cd94187c299eaaa4cb14790c12d84388fb8d8dd4a5b48902dadd74dc6475b03",
+      "changed": false
+    },
+    {
+      "path": "game/fpv-entry.mjs",
+      "baselineBytes": 6522,
+      "baselineSHA256": "c22c30a1ad01e87d156cfaeb7dc0be927b31805cd45a4bc2479f297d096795da",
+      "bytes": 6522,
+      "sha256": "c22c30a1ad01e87d156cfaeb7dc0be927b31805cd45a4bc2479f297d096795da",
+      "changed": false
+    },
+    {
+      "path": "game/hunt/actor-art.mjs",
+      "baselineBytes": 44270,
+      "baselineSHA256": "6e8bd02d8655be40e5e19d639f76ca2a2aa89eba11c5471bd4c37ef323498b4c",
+      "bytes": 44270,
+      "sha256": "6e8bd02d8655be40e5e19d639f76ca2a2aa89eba11c5471bd4c37ef323498b4c",
+      "changed": false
+    },
+    {
+      "path": "game/hunt/actor-catalog.mjs",
+      "baselineBytes": 17530,
+      "baselineSHA256": "c9acd0eea22d93cb210667797b8de81fc8995bdbfef2ae13e8d56c14b9972f8d",
+      "bytes": 17530,
+      "sha256": "c9acd0eea22d93cb210667797b8de81fc8995bdbfef2ae13e8d56c14b9972f8d",
+      "changed": false
+    },
+    {
+      "path": "game/hunt/industrial-soldier-kit.mjs",
+      "baselineBytes": 3713,
+      "baselineSHA256": "e3b42bc53333fd659499112df90f0e4c53899eb31d80b065c534b4e337ca9524",
+      "bytes": 3713,
+      "sha256": "e3b42bc53333fd659499112df90f0e4c53899eb31d80b065c534b4e337ca9524",
+      "changed": false
+    },
+    {
+      "path": "game/hunt/preferences.mjs",
+      "baselineBytes": 6767,
+      "baselineSHA256": "ce10db9d695b2f4c4a0045a6d805d386225f4026a9015fec6a88ce390d2fd233",
+      "bytes": 6767,
+      "sha256": "ce10db9d695b2f4c4a0045a6d805d386225f4026a9015fec6a88ce390d2fd233",
+      "changed": false
+    },
+    {
+      "path": "game/hunt/presentation-catalog.mjs",
+      "baselineBytes": 4479,
+      "baselineSHA256": "cf39bc033b1f3263f21481f04c7595bac7a06a4613759b90594855834d067796",
+      "bytes": 4479,
+      "sha256": "cf39bc033b1f3263f21481f04c7595bac7a06a4613759b90594855834d067796",
+      "changed": false
+    },
+    {
+      "path": "game/i18n/bootstrap.mjs",
+      "baselineBytes": 13117,
+      "baselineSHA256": "242e4791b2202d2644b91df5aa76355019890525af774ee2e795c937988b0395",
+      "bytes": 13117,
+      "sha256": "242e4791b2202d2644b91df5aa76355019890525af774ee2e795c937988b0395",
+      "changed": false
+    },
+    {
+      "path": "game/i18n/index.mjs",
+      "baselineBytes": 417,
+      "baselineSHA256": "29f40a6d92826ced1eb53283ed32e342ac6e95920abbf8d549f2d78e65b48d07",
+      "bytes": 417,
+      "sha256": "29f40a6d92826ced1eb53283ed32e342ac6e95920abbf8d549f2d78e65b48d07",
+      "changed": false
+    },
+    {
+      "path": "game/locales/en/errors.json",
+      "baselineBytes": 71247,
+      "baselineSHA256": "c9ae30690d8379d685117b74b62517e580c980b3501c9b42d562037cdc0c04db",
+      "bytes": 71247,
+      "sha256": "c9ae30690d8379d685117b74b62517e580c980b3501c9b42d562037cdc0c04db",
+      "changed": false
+    },
+    {
+      "path": "game/locales/en/interface.json",
+      "baselineBytes": 503409,
+      "baselineSHA256": "d5e17737ac36afd89c7a01f082e34a4fd72939a98811a7dc62a80e7167dd10be",
+      "bytes": 503409,
+      "sha256": "d5e17737ac36afd89c7a01f082e34a4fd72939a98811a7dc62a80e7167dd10be",
+      "changed": false
+    },
+    {
+      "path": "game/locales/uk/errors.json",
+      "baselineBytes": 113049,
+      "baselineSHA256": "e77e08aa64b2e472c87e2234be8a38783e4744a88a189b58930b26ae78b2c772",
+      "bytes": 113049,
+      "sha256": "e77e08aa64b2e472c87e2234be8a38783e4744a88a189b58930b26ae78b2c772",
+      "changed": false
+    },
+    {
+      "path": "game/locales/uk/interface.json",
+      "baselineBytes": 817899,
+      "baselineSHA256": "2e7e28e535f02326bb30aadc7299936e144dd8353f0a1621a5e609095fbcfcb3",
+      "bytes": 817899,
+      "sha256": "2e7e28e535f02326bb30aadc7299936e144dd8353f0a1621a5e609095fbcfcb3",
+      "changed": false
+    },
+    {
+      "path": "game/presentation/actor-animation.mjs",
+      "baselineBytes": 6246,
+      "baselineSHA256": "53ddaf069ed5da7bae3ab8ef6bf1284f38957ceb91f06315a489814cb2c06234",
+      "bytes": 6246,
+      "sha256": "53ddaf069ed5da7bae3ab8ef6bf1284f38957ceb91f06315a489814cb2c06234",
+      "changed": false
+    },
+    {
+      "path": "game/presentation/industrial-machinery.mjs",
+      "baselineBytes": 13604,
+      "baselineSHA256": "4b1eddf3c797ba6b52d68f14a1f2a3b282ede3e204fedfc387a72fe4a219f151",
+      "bytes": 13604,
+      "sha256": "4b1eddf3c797ba6b52d68f14a1f2a3b282ede3e204fedfc387a72fe4a219f151",
+      "changed": false
+    },
+    {
+      "path": "game/presentation/industrial-materials.mjs",
+      "baselineBytes": 7229,
+      "baselineSHA256": "0dd948dd6ed8cd787e6588e98a75f35e9e41d06bfb248f761fdb3ccb1866adbd",
+      "bytes": 7229,
+      "sha256": "0dd948dd6ed8cd787e6588e98a75f35e9e41d06bfb248f761fdb3ccb1866adbd",
+      "changed": false
+    },
+    {
+      "path": "game/presentation/theme-system.mjs",
+      "baselineBytes": 65920,
+      "baselineSHA256": "317e107e509f94449050c52f1756bd8436691f0d92bb8185aed697b3ba3127d6",
+      "bytes": 65920,
+      "sha256": "317e107e509f94449050c52f1756bd8436691f0d92bb8185aed697b3ba3127d6",
+      "changed": false
+    },
+    {
+      "path": "game/profile-database.mjs",
+      "baselineBytes": 152,
+      "baselineSHA256": "6a843fc68c3d639ca6d3bac8c77228eccf21cd72a525872245bd5cbbd9d68a1c",
+      "bytes": 152,
+      "sha256": "6a843fc68c3d639ca6d3bac8c77228eccf21cd72a525872245bd5cbbd9d68a1c",
+      "changed": false
+    },
+    {
+      "path": "game/profile-storage.mjs",
+      "baselineBytes": 6205,
+      "baselineSHA256": "7f0e6cc3a957ddc00a032d41e8bea782907b901f714708de5385667fe5fbbaec",
+      "bytes": 6205,
+      "sha256": "7f0e6cc3a957ddc00a032d41e8bea782907b901f714708de5385667fe5fbbaec",
+      "changed": false
+    },
+    {
+      "path": "game/rewards/audio-groups.mjs",
+      "baselineBytes": 2937,
+      "baselineSHA256": "85e1340e57dc925927830d6dd436d7b3da4b459f781e5f989d8efbbe54a44b6b",
+      "bytes": 2937,
+      "sha256": "85e1340e57dc925927830d6dd436d7b3da4b459f781e5f989d8efbbe54a44b6b",
+      "changed": false
+    },
+    {
+      "path": "game/rewards/exploration.mjs",
+      "baselineBytes": 9341,
+      "baselineSHA256": "e997a52802aee1410f06faa75ca4984958fd979d495b1b34b0ee2582c5628ccd",
+      "bytes": 9341,
+      "sha256": "e997a52802aee1410f06faa75ca4984958fd979d495b1b34b0ee2582c5628ccd",
+      "changed": false
+    },
+    {
+      "path": "game/rewards/learning-profiles.mjs",
+      "baselineBytes": 1519,
+      "baselineSHA256": "f24f81f972c921c7d3f89713c8a470086affd0b420783c1ab97cb15c6de4dc1d",
+      "bytes": 1519,
+      "sha256": "f24f81f972c921c7d3f89713c8a470086affd0b420783c1ab97cb15c6de4dc1d",
+      "changed": false
+    },
+    {
+      "path": "game/rewards/model.mjs",
+      "baselineBytes": 34442,
+      "baselineSHA256": "1f7ac62d4c5e9a01d1435e93116d7b59eb9bac8c4714769a9abaaba98d790d92",
+      "bytes": 34442,
+      "sha256": "1f7ac62d4c5e9a01d1435e93116d7b59eb9bac8c4714769a9abaaba98d790d92",
+      "changed": false
+    },
+    {
+      "path": "game/rewards/store.mjs",
+      "baselineBytes": 17038,
+      "baselineSHA256": "0d12e0e1b83e55a8103c9efe9bfde90291005150dac766af7ee42bd51f91521f",
+      "bytes": 17038,
+      "sha256": "0d12e0e1b83e55a8103c9efe9bfde90291005150dac766af7ee42bd51f91521f",
+      "changed": false
+    },
+    {
+      "path": "game/ui/art-review-navigation.mjs",
+      "baselineBytes": 2344,
+      "baselineSHA256": "663e9300a1fd3acfaff3ec69d3c7bf04a4b919fa2b4dc7fc4d82108ce936d736",
+      "bytes": 2344,
+      "sha256": "663e9300a1fd3acfaff3ec69d3c7bf04a4b919fa2b4dc7fc4d82108ce936d736",
+      "changed": false
+    },
+    {
+      "path": "game/ui/art/identity/fpv-line/wordmark.png",
+      "baselineBytes": 485216,
+      "baselineSHA256": "1a0e6083ddc1147f20b374178c68618c4fc2ea1cb915664178f371ec055cc298",
+      "bytes": 485216,
+      "sha256": "1a0e6083ddc1147f20b374178c68618c4fc2ea1cb915664178f371ec055cc298",
+      "changed": false
+    },
+    {
+      "path": "game/ui/art/menu-scenes/fpv-portrait.webp",
+      "baselineBytes": 482136,
+      "baselineSHA256": "3d651795fa7623b0200fadaed05a1127109a9c9c6cbd44d183a92a8e12c2ee24",
+      "bytes": 482136,
+      "sha256": "3d651795fa7623b0200fadaed05a1127109a9c9c6cbd44d183a92a8e12c2ee24",
+      "changed": false
+    },
+    {
+      "path": "game/ui/art/menu-scenes/fpv.webp",
+      "baselineBytes": 514190,
+      "baselineSHA256": "19f43cb1602e59a692d416d36d715e664765eecc24784b3b3e6516651c53df45",
+      "bytes": 514190,
+      "sha256": "19f43cb1602e59a692d416d36d715e664765eecc24784b3b3e6516651c53df45",
+      "changed": false
+    },
+    {
+      "path": "game/ui/enemy-appearance-controls.mjs",
+      "baselineBytes": 8004,
+      "baselineSHA256": "a572a659eecb660a934e35aff2003b3428ec56bc354583a68f7c2c505939ffdb",
+      "bytes": 8004,
+      "sha256": "a572a659eecb660a934e35aff2003b3428ec56bc354583a68f7c2c505939ffdb",
+      "changed": false
+    },
+    {
+      "path": "game/ui/native-menu-icons.mjs",
+      "baselineBytes": 1903,
+      "baselineSHA256": "8a0a3b8c739e3c55708f8b634df6292103cbc37324313969b2d8346be5ab49db",
+      "bytes": 1903,
+      "sha256": "8a0a3b8c739e3c55708f8b634df6292103cbc37324313969b2d8346be5ab49db",
+      "changed": false
+    },
+    {
+      "path": "game/ui/reward-knowledge.mjs",
+      "baselineBytes": 2251,
+      "baselineSHA256": "77232a28c5112c0d20c291ca629bebbd908ca9945344bb997e0a4b392a8e931b",
+      "bytes": 2251,
+      "sha256": "77232a28c5112c0d20c291ca629bebbd908ca9945344bb997e0a4b392a8e931b",
+      "changed": false
+    },
+    {
+      "path": "game/vendor/I18NEXT-LICENSE.txt",
+      "baselineBytes": 1082,
+      "baselineSHA256": "1cd0a2b02a6cc40ef8ee16310d13eeffdd7b5de4a562fd3ee7c921d8eb54f60a",
+      "bytes": 1082,
+      "sha256": "1cd0a2b02a6cc40ef8ee16310d13eeffdd7b5de4a562fd3ee7c921d8eb54f60a",
+      "changed": false
+    },
+    {
+      "path": "game/vendor/i18next-26.4.2.min.js",
+      "baselineBytes": 43702,
+      "baselineSHA256": "eb0dd6d72e8f756b90faf864853af2a17870fe97b54473b7c34494870c65901c",
+      "bytes": 43702,
+      "sha256": "eb0dd6d72e8f756b90faf864853af2a17870fe97b54473b7c34494870c65901c",
+      "changed": false
+    },
+    {
+      "path": "optional-practice/civilian-fpv/README.md",
+      "baselineBytes": 25804,
+      "baselineSHA256": "2e97f96dcd653804eedf49f6a1d073cc9c8a71399db0cc5d7d1cbfae0ae66774",
+      "bytes": 25804,
+      "sha256": "2e97f96dcd653804eedf49f6a1d073cc9c8a71399db0cc5d7d1cbfae0ae66774",
+      "changed": false
+    },
+    {
+      "path": "optional-practice/civilian-fpv/attempts.mjs",
+      "baselineBytes": 13389,
+      "baselineSHA256": "5353e993c615dbb7091ab5d50497db82e71d3970f1587e6bb1398cc565be2494",
+      "bytes": 13389,
+      "sha256": "5353e993c615dbb7091ab5d50497db82e71d3970f1587e6bb1398cc565be2494",
+      "changed": false
+    },
+    {
+      "path": "optional-practice/civilian-fpv/beginner-coach.mjs",
+      "baselineBytes": 101913,
+      "baselineSHA256": "20978a85d7f6e2a2e516bfcbbd08eb7798557b25b3aa9c48878473d694d2a39c",
+      "bytes": 101913,
+      "sha256": "20978a85d7f6e2a2e516bfcbbd08eb7798557b25b3aa9c48878473d694d2a39c",
+      "changed": false
+    },
+    {
+      "path": "optional-practice/civilian-fpv/catalogue.mjs",
+      "baselineBytes": 10565,
+      "baselineSHA256": "98338353d17eb585414538c9905040752fd5cd6699c48b17fa1706832b750997",
+      "bytes": 10565,
+      "sha256": "98338353d17eb585414538c9905040752fd5cd6699c48b17fa1706832b750997",
+      "changed": false
+    },
+    {
+      "path": "optional-practice/civilian-fpv/content-definitions.mjs",
+      "baselineBytes": 10697,
+      "baselineSHA256": "c28a55d39ef63d9682543c656f5e8c42145cf14a7f9156975b02dc717410c342",
+      "bytes": 10697,
+      "sha256": "c28a55d39ef63d9682543c656f5e8c42145cf14a7f9156975b02dc717410c342",
+      "changed": false
+    },
+    {
+      "path": "optional-practice/civilian-fpv/demonstrations.mjs",
+      "baselineBytes": 221646,
+      "baselineSHA256": "92bb4365c46d94f5c1fea9808ec4e24fb9014d35640ee488959c4e0f4b6c5cfa",
+      "bytes": 221646,
+      "sha256": "92bb4365c46d94f5c1fea9808ec4e24fb9014d35640ee488959c4e0f4b6c5cfa",
+      "changed": false
+    },
+    {
+      "path": "optional-practice/civilian-fpv/expressive-hunt-courses.mjs",
+      "baselineBytes": 12582,
+      "baselineSHA256": "732c6d72dded07e7541965b3c250cfe339dd98ea49d22d2085b856cb869b9ede",
+      "bytes": 12582,
+      "sha256": "732c6d72dded07e7541965b3c250cfe339dd98ea49d22d2085b856cb869b9ede",
+      "changed": false
+    },
+    {
+      "path": "optional-practice/civilian-fpv/flight-fullscreen.mjs",
+      "baselineBytes": 23038,
+      "baselineSHA256": "2747a2a32e93a4ead14a649d936ee5304b129ad17cfff812edad40f548fc7bb9",
+      "bytes": 23038,
+      "sha256": "2747a2a32e93a4ead14a649d936ee5304b129ad17cfff812edad40f548fc7bb9",
+      "changed": false
+    },
+    {
+      "path": "optional-practice/civilian-fpv/flight-sectors.mjs",
+      "baselineBytes": 2673,
+      "baselineSHA256": "5b1b54bde4e578e61da7d59f4a80a86db9aafbc78b4523d2ba2b540277a0a16d",
+      "bytes": 2673,
+      "sha256": "5b1b54bde4e578e61da7d59f4a80a86db9aafbc78b4523d2ba2b540277a0a16d",
+      "changed": false
+    },
+    {
+      "path": "optional-practice/civilian-fpv/industrial-soldiers.mjs",
+      "baselineBytes": 18718,
+      "baselineSHA256": "469e98e0a7d322e26b16afd96d7fc4f10282289c95a5289c999094c86ef3d90b",
+      "bytes": 18718,
+      "sha256": "469e98e0a7d322e26b16afd96d7fc4f10282289c95a5289c999094c86ef3d90b",
+      "changed": false
+    },
+    {
+      "path": "optional-practice/civilian-fpv/industrial-vehicles.mjs",
+      "baselineBytes": 10613,
+      "baselineSHA256": "10abf3263171ee0acc4177c822d8416b8da465403415db1500f74da5a98fba46",
+      "bytes": 10613,
+      "sha256": "10abf3263171ee0acc4177c822d8416b8da465403415db1500f74da5a98fba46",
+      "changed": false
+    },
+    {
+      "path": "optional-practice/civilian-fpv/input.mjs",
+      "baselineBytes": 36565,
+      "baselineSHA256": "2d2bb875278e727f589de4e71300ebe1a3640b278abea8f067a79ba06f1d159a",
+      "bytes": 36565,
+      "sha256": "2d2bb875278e727f589de4e71300ebe1a3640b278abea8f067a79ba06f1d159a",
+      "changed": false
+    },
+    {
+      "path": "optional-practice/civilian-fpv/math.mjs",
+      "baselineBytes": 3062,
+      "baselineSHA256": "555c8b6ea170b46992133507d2a3d867f06185bca060239cab7db9c9b87f9f98",
+      "bytes": 3062,
+      "sha256": "555c8b6ea170b46992133507d2a3d867f06185bca060239cab7db9c9b87f9f98",
+      "changed": false
+    },
+    {
+      "path": "optional-practice/civilian-fpv/model.mjs",
+      "baselineBytes": 17641,
+      "baselineSHA256": "9e4cd11cfdde2dd43b437069b8cb7a359a8132495db806cb5f68e8674d48aaf6",
+      "bytes": 17641,
+      "sha256": "9e4cd11cfdde2dd43b437069b8cb7a359a8132495db806cb5f68e8674d48aaf6",
+      "changed": false
+    },
+    {
+      "path": "optional-practice/civilian-fpv/native-pursuit-courses.mjs",
+      "baselineBytes": 7559,
+      "baselineSHA256": "2d35af03d1df8b026c340b465577df9517e7d6f59df002b1f75235e611311992",
+      "bytes": 7559,
+      "sha256": "2d35af03d1df8b026c340b465577df9517e7d6f59df002b1f75235e611311992",
+      "changed": false
+    },
+    {
+      "path": "optional-practice/civilian-fpv/notebook.mjs",
+      "baselineBytes": 18432,
+      "baselineSHA256": "74159518b1c79be1c2858503cd8ddee79aed8796e9b21bf6a9a8721d5099a129",
+      "bytes": 18432,
+      "sha256": "74159518b1c79be1c2858503cd8ddee79aed8796e9b21bf6a9a8721d5099a129",
+      "changed": false
+    },
+    {
+      "path": "optional-practice/civilian-fpv/offline.mjs",
+      "baselineBytes": 2887,
+      "baselineSHA256": "d6abd2e8142f13aa7d3cf85a3df1491fcbaba78e3ee76eec7835d188131a0d71",
+      "bytes": 2887,
+      "sha256": "d6abd2e8142f13aa7d3cf85a3df1491fcbaba78e3ee76eec7835d188131a0d71",
+      "changed": false
+    },
+    {
+      "path": "optional-practice/civilian-fpv/playlists.mjs",
+      "baselineBytes": 5130,
+      "baselineSHA256": "ed81b450bc268cf8096fe14a7c1a46e9a5fca0c32ff8fdedad3c356955280a77",
+      "bytes": 5130,
+      "sha256": "ed81b450bc268cf8096fe14a7c1a46e9a5fca0c32ff8fdedad3c356955280a77",
+      "changed": false
+    },
+    {
+      "path": "optional-practice/civilian-fpv/radio-controls.mjs",
+      "baselineBytes": 5726,
+      "baselineSHA256": "ec81c8b2d7cfe8586a7b73ef0887972019c7c1c39e64e6f32ea0d39437d7d4fb",
+      "bytes": 5726,
+      "sha256": "ec81c8b2d7cfe8586a7b73ef0887972019c7c1c39e64e6f32ea0d39437d7d4fb",
+      "changed": false
+    },
+    {
+      "path": "optional-practice/civilian-fpv/radio-guide.mjs",
+      "baselineBytes": 37387,
+      "baselineSHA256": "52685411b2099492a1bb26ffed12911c2a006fae971229a08147c0ddfd81a2b1",
+      "bytes": 37387,
+      "sha256": "52685411b2099492a1bb26ffed12911c2a006fae971229a08147c0ddfd81a2b1",
+      "changed": false
+    },
+    {
+      "path": "optional-practice/civilian-fpv/radio-profile.mjs",
+      "baselineBytes": 18097,
+      "baselineSHA256": "f588fd5cda96ed9627a483f49ca843ace8d99a68fae42b0a4239c2cd0ab81933",
+      "bytes": 18097,
+      "sha256": "f588fd5cda96ed9627a483f49ca843ace8d99a68fae42b0a4239c2cd0ab81933",
+      "changed": false
+    },
+    {
+      "path": "optional-practice/civilian-fpv/radio-runtime.mjs",
+      "baselineBytes": 8037,
+      "baselineSHA256": "3d908c7f6f1295fddacb952fadfc327206153248dbf5222ef31677eb4ff8f71b",
+      "bytes": 8037,
+      "sha256": "3d908c7f6f1295fddacb952fadfc327206153248dbf5222ef31677eb4ff8f71b",
+      "changed": false
+    },
+    {
+      "path": "optional-practice/civilian-fpv/radio-session.mjs",
+      "baselineBytes": 3780,
+      "baselineSHA256": "98fdd029f1deb9eb6b51f2ae2f8fb5c441e2b3a7a2aca520a7e9ce5e267e80ef",
+      "bytes": 3780,
+      "sha256": "98fdd029f1deb9eb6b51f2ae2f8fb5c441e2b3a7a2aca520a7e9ce5e267e80ef",
+      "changed": false
+    },
+    {
+      "path": "optional-practice/civilian-fpv/radio-setup.mjs",
+      "baselineBytes": 45087,
+      "baselineSHA256": "d4c091a8539221e71e39a12436af45a681a21e13f5468b8b4ecccd1b4c05e7d6",
+      "bytes": 45087,
+      "sha256": "d4c091a8539221e71e39a12436af45a681a21e13f5468b8b4ecccd1b4c05e7d6",
+      "changed": false
+    },
+    {
+      "path": "optional-practice/civilian-fpv/renderer.mjs",
+      "baselineBytes": 124533,
+      "baselineSHA256": "e2b8bd1f30bfdf813a368e15c73d2c58daabae4753fa4b0417d8ec8f8586e91c",
+      "bytes": 124533,
+      "sha256": "e2b8bd1f30bfdf813a368e15c73d2c58daabae4753fa4b0417d8ec8f8586e91c",
+      "changed": false
+    },
+    {
+      "path": "optional-practice/civilian-fpv/rotation-table.mjs",
+      "baselineBytes": 7509,
+      "baselineSHA256": "2ddab304ac99a2e70fc7e84fc6c27eedb49f1f3dac976baed680effa659cef41",
+      "bytes": 7509,
+      "sha256": "2ddab304ac99a2e70fc7e84fc6c27eedb49f1f3dac976baed680effa659cef41",
+      "changed": false
+    },
+    {
+      "path": "optional-practice/civilian-fpv/sim-presentation.mjs",
+      "baselineBytes": 506383,
+      "baselineSHA256": "e1e0d6f545845e2984254a0002e5f3480787e583b3d3580151a9598fff15ffcb",
+      "bytes": 506383,
+      "sha256": "e1e0d6f545845e2984254a0002e5f3480787e583b3d3580151a9598fff15ffcb",
+      "changed": false
+    },
+    {
+      "path": "optional-practice/civilian-fpv/snake-hunt-catalogue.mjs",
+      "baselineBytes": 23242,
+      "baselineSHA256": "a77f55d138fadd3642ae4cd20326d6f9ab8fc9fdce34a2497d6741b51ea3897a",
+      "bytes": 23242,
+      "sha256": "a77f55d138fadd3642ae4cd20326d6f9ab8fc9fdce34a2497d6741b51ea3897a",
+      "changed": false
+    },
+    {
+      "path": "optional-practice/civilian-fpv/snake-hunt-presentation.mjs",
+      "baselineBytes": 18498,
+      "baselineSHA256": "6ab81ddf65ad8e43a788f17588f7c51ec0d5ef8dd65dfe85cd99d07c9fe4cf87",
+      "bytes": 18498,
+      "sha256": "6ab81ddf65ad8e43a788f17588f7c51ec0d5ef8dd65dfe85cd99d07c9fe4cf87",
+      "changed": false
+    },
+    {
+      "path": "optional-practice/civilian-fpv/snake-hunt.mjs",
+      "baselineBytes": 3747,
+      "baselineSHA256": "6ae79b5bc2f1d601305f34ec1ee1bb65d935ff2c11428feec96baeedc56d8d05",
+      "bytes": 3747,
+      "sha256": "6ae79b5bc2f1d601305f34ec1ee1bb65d935ff2c11428feec96baeedc56d8d05",
+      "changed": false
+    },
+    {
+      "path": "optional-practice/civilian-fpv/style.css",
+      "baselineBytes": 87704,
+      "baselineSHA256": "04ff745f2bff3ae2ee08dff1af64eba49f8aeddc4c36caae685773415b48bf41",
+      "bytes": 87704,
+      "sha256": "04ff745f2bff3ae2ee08dff1af64eba49f8aeddc4c36caae685773415b48bf41",
+      "changed": false
+    },
+    {
+      "path": "optional-practice/civilian-fpv/vendor/LICENSE.txt",
+      "baselineBytes": 1081,
+      "baselineSHA256": "8b378ebe60e2fe500158cb0ac71cb5e8b7d92953c2abcc63a0eb90499653b5bc",
+      "bytes": 1081,
+      "sha256": "8b378ebe60e2fe500158cb0ac71cb5e8b7d92953c2abcc63a0eb90499653b5bc",
+      "changed": false
+    },
+    {
+      "path": "optional-practice/civilian-fpv/vendor/addons/controls/TransformControls.js",
+      "baselineBytes": 51722,
+      "baselineSHA256": "10f6d3e4c108dff62110f61a76749f9a1826c9781df9c3eb4ca0b5d9d2f5c4a8",
+      "bytes": 51722,
+      "sha256": "10f6d3e4c108dff62110f61a76749f9a1826c9781df9c3eb4ca0b5d9d2f5c4a8",
+      "changed": false
+    },
+    {
+      "path": "optional-practice/civilian-fpv/vendor/addons/loaders/GLTFLoader.js",
+      "baselineBytes": 117586,
+      "baselineSHA256": "03952cb129d558f92b8e6c757fbf7c1f718b3126c4d34f264d574b40ea36054f",
+      "bytes": 117586,
+      "sha256": "03952cb129d558f92b8e6c757fbf7c1f718b3126c4d34f264d574b40ea36054f",
+      "changed": false
+    },
+    {
+      "path": "optional-practice/civilian-fpv/vendor/addons/provenance.json",
+      "baselineBytes": 1689,
+      "baselineSHA256": "a87fc39c9dc00b9ca055b006600c51c3f5ebfcc2117f523486979af1d0040be1",
+      "bytes": 1689,
+      "sha256": "a87fc39c9dc00b9ca055b006600c51c3f5ebfcc2117f523486979af1d0040be1",
+      "changed": false
+    },
+    {
+      "path": "optional-practice/civilian-fpv/vendor/addons/utils/BufferGeometryUtils.js",
+      "baselineBytes": 37728,
+      "baselineSHA256": "259085a7dac89e0840393a9347c77123fbc4206ec2146bf0c29ffc72e14a2800",
+      "bytes": 37728,
+      "sha256": "259085a7dac89e0840393a9347c77123fbc4206ec2146bf0c29ffc72e14a2800",
+      "changed": false
+    },
+    {
+      "path": "optional-practice/civilian-fpv/vendor/addons/utils/SkeletonUtils.js",
+      "baselineBytes": 11551,
+      "baselineSHA256": "28017bf37d0ecb0c4be6048db759ff14df729a562464830b064d4cc239c5af17",
+      "bytes": 11551,
+      "sha256": "28017bf37d0ecb0c4be6048db759ff14df729a562464830b064d4cc239c5af17",
+      "changed": false
+    },
+    {
+      "path": "optional-practice/civilian-fpv/vendor/rapier/LICENSE",
+      "baselineBytes": 11343,
+      "baselineSHA256": "4c05555705e3efde601fb1252ae48f1d63992af8a8fb8947745b7fa834e8f519",
+      "bytes": 11343,
+      "sha256": "4c05555705e3efde601fb1252ae48f1d63992af8a8fb8947745b7fa834e8f519",
+      "changed": false
+    },
+    {
+      "path": "optional-practice/civilian-fpv/vendor/rapier/provenance.json",
+      "baselineBytes": 1030,
+      "baselineSHA256": "6dc04a5eca22760fd38665af7649222da26ce343ff67f5ca68e5ed244e30d074",
+      "bytes": 1030,
+      "sha256": "6dc04a5eca22760fd38665af7649222da26ce343ff67f5ca68e5ed244e30d074",
+      "changed": false
+    },
+    {
+      "path": "optional-practice/civilian-fpv/vendor/rapier/rapier.mjs",
+      "baselineBytes": 4340292,
+      "baselineSHA256": "02dc6a4e2fffc013bab08fbb44fa68f501d8303615e9afe4c7d89ad4eedda0d0",
+      "bytes": 4340292,
+      "sha256": "02dc6a4e2fffc013bab08fbb44fa68f501d8303615e9afe4c7d89ad4eedda0d0",
+      "changed": false
+    },
+    {
+      "path": "optional-practice/civilian-fpv/vendor/three.core.js",
+      "baselineBytes": 1458113,
+      "baselineSHA256": "9edde002b066a9a05676a6127f67735b62baf399bdea529f2f7e31657da769e6",
+      "bytes": 1458113,
+      "sha256": "9edde002b066a9a05676a6127f67735b62baf399bdea529f2f7e31657da769e6",
+      "changed": false
+    },
+    {
+      "path": "optional-practice/civilian-fpv/vendor/three.module.js",
+      "baselineBytes": 662772,
+      "baselineSHA256": "9052042d676cb0fdc1ddfefe193053f34b7ac0513a616fdac4535d49987812ea",
+      "bytes": 662772,
+      "sha256": "9052042d676cb0fdc1ddfefe193053f34b7ac0513a616fdac4535d49987812ea",
+      "changed": false
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-app.mjs",
+      "baselineBytes": 268191,
+      "baselineSHA256": "50f3ee5a45f51aee87700a6a3e49bd7c6680b031cdb3a92c9503b298bbae1e79",
+      "bytes": 268191,
+      "sha256": "50f3ee5a45f51aee87700a6a3e49bd7c6680b031cdb3a92c9503b298bbae1e79",
+      "changed": false
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-assets.mjs",
+      "baselineBytes": 1168270,
+      "baselineSHA256": "e1b987e2580b8b1e2d1afdfa3e9f0bc2d36a37e0bf516681cb0e94f045afd34c",
+      "bytes": 1168270,
+      "sha256": "e1b987e2580b8b1e2d1afdfa3e9f0bc2d36a37e0bf516681cb0e94f045afd34c",
+      "changed": false
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-catalogue.mjs",
+      "baselineBytes": 240703,
+      "baselineSHA256": "7b4fa89cf98335aee201b8061049c9c6818446c073ff938328e8f75a7344ef76",
+      "bytes": 240703,
+      "sha256": "7b4fa89cf98335aee201b8061049c9c6818446c073ff938328e8f75a7344ef76",
+      "changed": false
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-collision.mjs",
+      "baselineBytes": 12256,
+      "baselineSHA256": "2899c7c84f9eae14b9a3434f585a8e873f4a1361e8f3ce4026ef27f44bdeef32",
+      "bytes": 14101,
+      "sha256": "827088d5c8f65a4965944149631f74838bc2e8e930332be559e48c96d6b3922f",
+      "changed": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-content.mjs",
+      "baselineBytes": 49894,
+      "baselineSHA256": "8ccfa7c0fef5002d1bc181ad96083966f56e7cec71267520c676e68f8ebe5bee",
+      "bytes": 49894,
+      "sha256": "8ccfa7c0fef5002d1bc181ad96083966f56e7cec71267520c676e68f8ebe5bee",
+      "changed": false
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-demonstrations.mjs",
+      "baselineBytes": 2207074,
+      "baselineSHA256": "c9f2d0ee5c571507ae1dce4f48898554cb2ad179218f1905cdc8013db2e2c114",
+      "bytes": 2207074,
+      "sha256": "c9f2d0ee5c571507ae1dce4f48898554cb2ad179218f1905cdc8013db2e2c114",
+      "changed": false
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-editor.mjs",
+      "baselineBytes": 5402,
+      "baselineSHA256": "06cd81f0036641ca5d3bfe408f843e4db446b9d61c8ca58778e01ee468c9c85c",
+      "bytes": 5402,
+      "sha256": "06cd81f0036641ca5d3bfe408f843e4db446b9d61c8ca58778e01ee468c9c85c",
+      "changed": false
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-model.mjs",
+      "baselineBytes": 59130,
+      "baselineSHA256": "95b4547019dcc44d2fb7dd426718fe01ee824ad714967a61edf7ccafb0f71ce2",
+      "bytes": 59667,
+      "sha256": "1894f07291957d0c87cc9ab7e5b143fbcb599d889d7cebab069f41e7b08f0b0a",
+      "changed": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-pursuit.mjs",
+      "baselineBytes": 25289,
+      "baselineSHA256": "e496582854670dae5ed75e3f5e0fdeb3d19b7c3a6973d0fdd8d14f6187861f13",
+      "bytes": 25362,
+      "sha256": "5512d0a2dd104307e3b89adbbabae8e02934553c7bc2f31efa49456ffe0ec878",
+      "changed": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+      "baselineBytes": 894439,
+      "baselineSHA256": "9ca82ecf700d6018133ef041bb15f83c9366aa2bd6fc01ce1d0912da2143f509",
+      "bytes": 894479,
+      "sha256": "2099b562b096452d10ebea7f671dbb33ad84d4c54868f3a3bd5bff0fbc670ea1",
+      "changed": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-records.mjs",
+      "baselineBytes": 11475,
+      "baselineSHA256": "8fb720ec1a1a1e5cbc7ec5b253d14b6d76d680e6c03dc5f2c92b3e2e407d4c27",
+      "bytes": 11475,
+      "sha256": "8fb720ec1a1a1e5cbc7ec5b253d14b6d76d680e6c03dc5f2c92b3e2e407d4c27",
+      "changed": false
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-store.mjs",
+      "baselineBytes": 14207,
+      "baselineSHA256": "67aca935d0dd889db2310e2df9a4649d6755901e3d82990905b27ba15dde69b0",
+      "bytes": 14207,
+      "sha256": "67aca935d0dd889db2310e2df9a4649d6755901e3d82990905b27ba15dde69b0",
+      "changed": false
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-style.css",
+      "baselineBytes": 109686,
+      "baselineSHA256": "8ba5cb780efde14c81146444dd1ae60d3a40664a9629d358b6acdbce89bdb89d",
+      "bytes": 109686,
+      "sha256": "8ba5cb780efde14c81146444dd1ae60d3a40664a9629d358b6acdbce89bdb89d",
+      "changed": false
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-themes.mjs",
+      "baselineBytes": 22851,
+      "baselineSHA256": "afba6fd6914167398e1d3f27ac547ada118b088a9dff9f65b9dc78cbd03a9a1a",
+      "bytes": 22851,
+      "sha256": "afba6fd6914167398e1d3f27ac547ada118b088a9dff9f65b9dc78cbd03a9a1a",
+      "changed": false
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-visuals.mjs",
+      "baselineBytes": 121894,
+      "baselineSHA256": "e47a2df527f2c482d0cb169c994de5ce3646a2218246d1e13e799fd8ea0c5231",
+      "bytes": 121894,
+      "sha256": "e47a2df527f2c482d0cb169c994de5ce3646a2218246d1e13e799fd8ea0c5231",
+      "changed": false
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-zip.mjs",
+      "baselineBytes": 6269,
+      "baselineSHA256": "874b371c817810a5869bc3ba37c94ff6fae4fc5cd418298f35340d2ce09039c8",
+      "bytes": 6269,
+      "sha256": "874b371c817810a5869bc3ba37c94ff6fae4fc5cd418298f35340d2ce09039c8",
+      "changed": false
+    },
+    {
+      "path": "optional-practice/fpv-worlds/README.md",
+      "baselineBytes": 5851,
+      "baselineSHA256": "6520e5a40dcd9858ebf53e085dc1d37e27cc0617d228ab1721ad045444896ed5",
+      "bytes": 5851,
+      "sha256": "6520e5a40dcd9858ebf53e085dc1d37e27cc0617d228ab1721ad045444896ed5",
+      "changed": false
+    },
+    {
+      "path": "optional-practice/fpv-worlds/SCENERY-LICENSES.txt",
+      "baselineBytes": 1402,
+      "baselineSHA256": "d879c1a60cabeb2179e7a60fe6d827ef17828d263de84369f2f994eceb7439cd",
+      "bytes": 1402,
+      "sha256": "d879c1a60cabeb2179e7a60fe6d827ef17828d263de84369f2f994eceb7439cd",
+      "changed": false
+    },
+    {
+      "path": "optional-practice/fpv-worlds/app.webmanifest",
+      "baselineBytes": 504,
+      "baselineSHA256": "57c44da18b2a120b907c94a105940a86ae158726ac514c6401958d870ab3ddb0",
+      "bytes": 504,
+      "sha256": "57c44da18b2a120b907c94a105940a86ae158726ac514c6401958d870ab3ddb0",
+      "changed": false
+    },
+    {
+      "path": "optional-practice/fpv-worlds/guide.html",
+      "baselineBytes": 15992,
+      "baselineSHA256": "091186125c09f19e415c329d2a4183eeca3dc45bd2fe44e5ba2f3aa9170cf4f2",
+      "bytes": 15992,
+      "sha256": "091186125c09f19e415c329d2a4183eeca3dc45bd2fe44e5ba2f3aa9170cf4f2",
+      "changed": false
+    },
+    {
+      "path": "optional-practice/fpv-worlds/index.html",
+      "baselineBytes": 34101,
+      "baselineSHA256": "2236d259e04f92d79fef2b3fe181e2eeb499d52af2d1d8502d0d517232476a5e",
+      "bytes": 34101,
+      "sha256": "2236d259e04f92d79fef2b3fe181e2eeb499d52af2d1d8502d0d517232476a5e",
+      "changed": false
+    },
+    {
+      "path": "optional-practice/fpv-worlds/package-info.json",
+      "baselineBytes": 1953,
+      "baselineSHA256": "fa717dfeb5ba0f3e84fef0564e486bd47545896229d55733f3a485e85414e014",
+      "bytes": 1953,
+      "sha256": "fa717dfeb5ba0f3e84fef0564e486bd47545896229d55733f3a485e85414e014",
+      "changed": false
+    },
+    {
+      "path": "optional-practice/fpv-worlds/preview.png",
+      "baselineBytes": 197771,
+      "baselineSHA256": "a80c3e123dd83e6c1072503a3fdc091538d5415e21ba1b26ad345ab19d2c72a1",
+      "bytes": 197771,
+      "sha256": "a80c3e123dd83e6c1072503a3fdc091538d5415e21ba1b26ad345ab19d2c72a1",
+      "changed": false
+    },
+    {
+      "path": "optional-practice/fpv-worlds/scenery-provenance.json",
+      "baselineBytes": 13161,
+      "baselineSHA256": "d45c8608de29b2b2fb4f7b2d3d1e10559cb7c1302972ebd7363b6cde6400c878",
+      "bytes": 13161,
+      "sha256": "d45c8608de29b2b2fb4f7b2d3d1e10559cb7c1302972ebd7363b6cde6400c878",
+      "changed": false
+    },
+    {
+      "path": "optional-practice/guide.mjs",
+      "baselineBytes": 733,
+      "baselineSHA256": "31eff4946e03a906e593301e76c4a49fade84f9c05abeb13aa52b06b2dfa3203",
+      "bytes": 733,
+      "sha256": "31eff4946e03a906e593301e76c4a49fade84f9c05abeb13aa52b06b2dfa3203",
+      "changed": false
+    },
+    {
+      "path": "optional-practice/install-context.mjs",
+      "baselineBytes": 19020,
+      "baselineSHA256": "ceb0ef835b3d518a639d81582495327c4470579a8e6a34caffdbca7468b55160",
+      "bytes": 19020,
+      "sha256": "ceb0ef835b3d518a639d81582495327c4470579a8e6a34caffdbca7468b55160",
+      "changed": false
+    },
+    {
+      "path": "optional-practice/launcher-template.mjs",
+      "baselineBytes": 13771,
+      "baselineSHA256": "aa52fd03f73e5fde0ba90eb5e701a4454b41e54d6e9208cceba0aafbaeb3fb4b",
+      "bytes": 13771,
+      "sha256": "aa52fd03f73e5fde0ba90eb5e701a4454b41e54d6e9208cceba0aafbaeb3fb4b",
+      "changed": false
+    },
+    {
+      "path": "optional-practice/navigation.mjs",
+      "baselineBytes": 2719,
+      "baselineSHA256": "c59fd48a3cce005934ac290773da5b60d18e9a2bebc392a9e911a34b7112f6f1",
+      "bytes": 2719,
+      "sha256": "c59fd48a3cce005934ac290773da5b60d18e9a2bebc392a9e911a34b7112f6f1",
+      "changed": false
+    },
+    {
+      "path": "optional-practice/worker-template.mjs",
+      "baselineBytes": 6785,
+      "baselineSHA256": "dc756c54e0ffeea780eca5c0ae7cb651cf042ebfe24519d33ca7018273a20a4f",
+      "bytes": 6785,
+      "sha256": "dc756c54e0ffeea780eca5c0ae7cb651cf042ebfe24519d33ca7018273a20a4f",
+      "changed": false
+    }
+  ],
+  "count": 105,
+  "bytes": 16981627,
+  "inputDelta": 2495,
+  "currentPolicyBytes": 20971520,
+  "reserve": 3989893,
+  "changed": [
+    "optional-practice/civilian-fpv/world-collision.mjs",
+    "optional-practice/civilian-fpv/world-model.mjs",
+    "optional-practice/civilian-fpv/world-pursuit.mjs",
+    "optional-practice/civilian-fpv/world-reaction-runtime.mjs"
+  ]
+}

@@ -59,7 +59,7 @@ test('Versus save warning uses existing pause and recovery without changing eith
   const p = await setup(t, 'standard', { assetDatabase: undefined });
   const reveals = [];
   t.mock.method(p.$('race-start'), 'scrollIntoView', (options) => reveals.push(options));
-  assert.equal(p.$('race-journey-save').parentNode, p.$('race-main'));
+  assert.equal(p.$('race-journey-save').parentNode, p.$('race-settings-panel-data'));
   assert.equal(p.$('race-journey-save').hidden, false);
   assert.equal(p.$('race-journey-save-options').hidden, false);
   assert.equal(p.$('race-pause').dataset.journeyUnsaved, 'true');
@@ -79,6 +79,8 @@ test('Versus save warning uses existing pause and recovery without changing eith
   const previous = [...p.renders],
     checkpoint = p.checkpoint();
   p.$('race-journey-save-options').click();
+  assert.equal(p.$('race-options-panel').hidden, false);
+  assert.equal(p.$('race-settings-panel-data').hidden, false);
   assert.equal(p.doc.activeElement, p.$('race-journey-save-retry'));
   assert.equal(p.state(), 'paused');
   p.$('race-journey-save-retry').click();
@@ -87,6 +89,8 @@ test('Versus save warning uses existing pause and recovery without changing eith
   p.frames(30);
   assert.deepEqual(p.checkpoint(), checkpoint);
   assert.equal(p.state(), 'paused');
+  p.$('race-options-back').click();
+  assert.equal(p.$('race-main').hidden, false);
   p.$('race-start').click();
   p.frame();
   assert.equal(p.renders[0].status, 'running');

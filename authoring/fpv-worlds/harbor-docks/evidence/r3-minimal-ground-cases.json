@@ -1,0 +1,4030 @@
+{
+  "format": "FPVHarborGroundActorDiagnostic.v1",
+  "scope": "Actual unchanged createWorldFlight ordinary neutral inputs for3000ticks/case. Synthetic minimal geometry cases; no completed route, replacement collider or runtime acceptance claim.",
+  "project": {
+    "path": "/tmp/fpv-harbor-world-r3-v1/prepared/project.json",
+    "bytes": 262783,
+    "sha256": "dc1041278abdd931055ed5e5938312f5de0483489d4f127d2a7a2b2f1623a62f"
+  },
+  "runtime": [
+    {
+      "path": "world-model.mjs",
+      "bytes": 55549,
+      "sha256": "ce94192472f8cc0be1a70ec2dcdf7dc728956f55f589bb84335c851737f54d3e"
+    },
+    {
+      "path": "world-collision.mjs",
+      "bytes": 12256,
+      "sha256": "2899c7c84f9eae14b9a3434f585a8e873f4a1361e8f3ce4026ef27f44bdeef32"
+    },
+    {
+      "path": "vendor/rapier/rapier.mjs",
+      "bytes": 4340292,
+      "sha256": "02dc6a4e2fffc013bab08fbb44fa68f501d8303615e9afe4c7d89ad4eedda0d0"
+    }
+  ],
+  "tickHz": 50,
+  "cases": [
+    {
+      "name": "vehicle canonical half-space control",
+      "expected": "Continuous movement on $floor; no finite-box contact.",
+      "course": {
+        "format": "FlightCourse.v2",
+        "id": "harbor-diagnostic-1",
+        "revision": "diagnostic-r1",
+        "environment": "container-yard",
+        "world": {
+          "id": "harbor-docks",
+          "theme": "operations",
+          "style": "container-yard",
+          "themeProfile": {
+            "format": "ThemeProfile.v1",
+            "id": "operations",
+            "revision": "r1",
+            "title": {
+              "en": "Field Operations",
+              "uk": "Польові операції"
+            },
+            "palette": {
+              "sky": 12898517,
+              "fog": 11255746,
+              "ground": 6713707,
+              "wall": 5267818,
+              "accent": 9553852,
+              "warm": 15710059
+            },
+            "textureFilter": "linear",
+            "drone": "utility",
+            "characters": "training-patrol",
+            "assets": {
+              "gate": "builtin:utility-gate",
+              "marker": "builtin:signal-beacon",
+              "enemy": "builtin:sentry",
+              "vehicle": "builtin:patrol-rover"
+            },
+            "audio": {
+              "ambience": "industrial",
+              "motor": "utility",
+              "gate": "radio"
+            },
+            "ui": {
+              "accent": "#a5c581",
+              "font": "system-ui",
+              "borderRadius": 4
+            }
+          }
+        },
+        "locales": {
+          "en": {
+            "title": "Terminal cart escort",
+            "brief": "Acquire the civilian service cart on the central land-side lane and follow its actual travel before returning to the quay H.",
+            "lesson": "Keep 4–7m range, match speed and hold the subject in the nose view for six continuous seconds while it travels at least four metres. No weapons are used in this layout."
+          },
+          "uk": {
+            "title": "Супровід портового візка",
+            "brief": "Знайдіть цивільний службовий візок на центральній смузі суходолу й супроводжуйте його справжній рух перед поверненням до H на причалі.",
+            "lesson": "Тримайте відстань 4–7м, узгодьте швидкість і утримуйте об’єкт у напрямку носа шість секунд поспіль, доки він проїде щонайменше чотири метри. У цьому маршруті немає застосування зброї."
+          }
+        },
+        "spawn": {
+          "x": -2000,
+          "y": 250,
+          "z": 34000
+        },
+        "bounds": {
+          "min": {
+            "x": -44000,
+            "y": 0,
+            "z": -48000
+          },
+          "max": {
+            "x": 40000,
+            "y": 28000,
+            "z": 46000
+          }
+        },
+        "obstacles": [],
+        "steps": {
+          "self-level": [
+            {
+              "type": "hold",
+              "min": {
+                "x": -1000,
+                "y": 15000,
+                "z": -1000
+              },
+              "max": {
+                "x": 1000,
+                "y": 17000,
+                "z": 1000
+              },
+              "ticks": 50,
+              "maxSpeed": 500,
+              "maxTilt": 1000,
+              "minTilt": 0,
+              "centred": false,
+              "heading": null
+            }
+          ],
+          "acro": [
+            {
+              "type": "hold",
+              "min": {
+                "x": -1000,
+                "y": 15000,
+                "z": -1000
+              },
+              "max": {
+                "x": 1000,
+                "y": 17000,
+                "z": 1000
+              },
+              "ticks": 50,
+              "maxSpeed": 500,
+              "maxTilt": 1000,
+              "minTilt": 0,
+              "centred": false,
+              "heading": null
+            }
+          ]
+        },
+        "actors": [
+          {
+            "id": "harbor-service-cart",
+            "type": "vehicle",
+            "role": "civilian",
+            "position": {
+              "x": 4000,
+              "y": 0,
+              "z": 0
+            },
+            "path": [
+              {
+                "x": 4000,
+                "y": 0,
+                "z": 0
+              },
+              {
+                "x": 4000,
+                "y": 0,
+                "z": 18000
+              }
+            ],
+            "speed": 700,
+            "radius": 800,
+            "height": 1200,
+            "fireEveryTicks": 0,
+            "damage": 0,
+            "health": 50,
+            "projectileSpeed": 8000,
+            "range": 20000
+          }
+        ],
+        "rules": {
+          "seed": 1,
+          "maxTicks": 10000,
+          "droneRadius": 220,
+          "playerHealth": 100,
+          "collisionDamage": 0,
+          "playerDamage": 25,
+          "fireCooldown": 8,
+          "projectileSpeed": 20000,
+          "projectileTicks": 150
+        },
+        "conditions": {
+          "profile": "clear",
+          "revision": "r1"
+        }
+      },
+      "travel": 42000,
+      "blockedTicks": 0,
+      "maxStill": 0,
+      "missingSupport": 0,
+      "supports": {
+        "$floor": 3000
+      },
+      "heightRange": [
+        0,
+        0
+      ],
+      "samples": [
+        {
+          "tick": 1,
+          "position": {
+            "x": 4000,
+            "y": 0,
+            "z": 14
+          },
+          "blocked": false,
+          "support": {
+            "id": "$floor",
+            "y": 1,
+            "normal": {
+              "x": 0,
+              "y": 1000000,
+              "z": 0
+            }
+          }
+        },
+        {
+          "tick": 251,
+          "position": {
+            "x": 4000,
+            "y": 0,
+            "z": 3514
+          },
+          "blocked": false,
+          "support": {
+            "id": "$floor",
+            "y": 1,
+            "normal": {
+              "x": 0,
+              "y": 1000000,
+              "z": 0
+            }
+          }
+        },
+        {
+          "tick": 501,
+          "position": {
+            "x": 4000,
+            "y": 0,
+            "z": 7014
+          },
+          "blocked": false,
+          "support": {
+            "id": "$floor",
+            "y": 1,
+            "normal": {
+              "x": 0,
+              "y": 1000000,
+              "z": 0
+            }
+          }
+        },
+        {
+          "tick": 751,
+          "position": {
+            "x": 4000,
+            "y": 0,
+            "z": 10514
+          },
+          "blocked": false,
+          "support": {
+            "id": "$floor",
+            "y": 1,
+            "normal": {
+              "x": 0,
+              "y": 1000000,
+              "z": 0
+            }
+          }
+        },
+        {
+          "tick": 1001,
+          "position": {
+            "x": 4000,
+            "y": 0,
+            "z": 14014
+          },
+          "blocked": false,
+          "support": {
+            "id": "$floor",
+            "y": 1,
+            "normal": {
+              "x": 0,
+              "y": 1000000,
+              "z": 0
+            }
+          }
+        },
+        {
+          "tick": 1251,
+          "position": {
+            "x": 4000,
+            "y": 0,
+            "z": 17514
+          },
+          "blocked": false,
+          "support": {
+            "id": "$floor",
+            "y": 1,
+            "normal": {
+              "x": 0,
+              "y": 1000000,
+              "z": 0
+            }
+          }
+        },
+        {
+          "tick": 1501,
+          "position": {
+            "x": 4000,
+            "y": 0,
+            "z": 14938
+          },
+          "blocked": false,
+          "support": {
+            "id": "$floor",
+            "y": 1,
+            "normal": {
+              "x": 0,
+              "y": 1000000,
+              "z": 0
+            }
+          }
+        },
+        {
+          "tick": 1751,
+          "position": {
+            "x": 4000,
+            "y": 0,
+            "z": 11438
+          },
+          "blocked": false,
+          "support": {
+            "id": "$floor",
+            "y": 1,
+            "normal": {
+              "x": 0,
+              "y": 1000000,
+              "z": 0
+            }
+          }
+        },
+        {
+          "tick": 2001,
+          "position": {
+            "x": 4000,
+            "y": 0,
+            "z": 7938
+          },
+          "blocked": false,
+          "support": {
+            "id": "$floor",
+            "y": 1,
+            "normal": {
+              "x": 0,
+              "y": 1000000,
+              "z": 0
+            }
+          }
+        },
+        {
+          "tick": 2251,
+          "position": {
+            "x": 4000,
+            "y": 0,
+            "z": 4438
+          },
+          "blocked": false,
+          "support": {
+            "id": "$floor",
+            "y": 1,
+            "normal": {
+              "x": 0,
+              "y": 1000000,
+              "z": 0
+            }
+          }
+        },
+        {
+          "tick": 2501,
+          "position": {
+            "x": 4000,
+            "y": 0,
+            "z": 938
+          },
+          "blocked": false,
+          "support": {
+            "id": "$floor",
+            "y": 1,
+            "normal": {
+              "x": 0,
+              "y": 1000000,
+              "z": 0
+            }
+          }
+        },
+        {
+          "tick": 2751,
+          "position": {
+            "x": 4000,
+            "y": 0,
+            "z": 2618
+          },
+          "blocked": false,
+          "support": {
+            "id": "$floor",
+            "y": 1,
+            "normal": {
+              "x": 0,
+              "y": 1000000,
+              "z": 0
+            }
+          }
+        }
+      ],
+      "final": {
+        "id": "harbor-service-cart",
+        "type": "vehicle",
+        "role": "civilian",
+        "position": {
+          "x": 4000,
+          "y": 0,
+          "z": 6104
+        },
+        "radius": 800,
+        "height": 1200,
+        "health": 50,
+        "maxHealth": 50,
+        "status": "active",
+        "pathIndex": 1,
+        "cooldown": 0,
+        "blocked": false
+      },
+      "status": "active"
+    },
+    {
+      "name": "patrol canonical half-space control",
+      "expected": "Continuous walking on $floor; no finite-box contact.",
+      "course": {
+        "format": "FlightCourse.v2",
+        "id": "harbor-diagnostic-2",
+        "revision": "diagnostic-r1",
+        "environment": "container-yard",
+        "world": {
+          "id": "harbor-docks",
+          "theme": "operations",
+          "style": "container-yard",
+          "themeProfile": {
+            "format": "ThemeProfile.v1",
+            "id": "operations",
+            "revision": "r1",
+            "title": {
+              "en": "Field Operations",
+              "uk": "Польові операції"
+            },
+            "palette": {
+              "sky": 12898517,
+              "fog": 11255746,
+              "ground": 6713707,
+              "wall": 5267818,
+              "accent": 9553852,
+              "warm": 15710059
+            },
+            "textureFilter": "linear",
+            "drone": "utility",
+            "characters": "training-patrol",
+            "assets": {
+              "gate": "builtin:utility-gate",
+              "marker": "builtin:signal-beacon",
+              "enemy": "builtin:sentry",
+              "vehicle": "builtin:patrol-rover"
+            },
+            "audio": {
+              "ambience": "industrial",
+              "motor": "utility",
+              "gate": "radio"
+            },
+            "ui": {
+              "accent": "#a5c581",
+              "font": "system-ui",
+              "borderRadius": 4
+            }
+          }
+        },
+        "locales": {
+          "en": {
+            "title": "Deck inspection",
+            "brief": "Observe the civilian inspector walking on the raised service deck from the open east side, then return to the quay.",
+            "lesson": "Hold a steady 4–8m view for four continuous seconds with low relative speed and tilt. The walker has real support at 5.5m; no minimum travel is required for this observation."
+          },
+          "uk": {
+            "title": "Огляд службового майданчика",
+            "brief": "Спостерігайте за цивільним інспектором на піднятому службовому майданчику з відкритого східного боку, потім поверніться на причал.",
+            "lesson": "Утримуйте стабільний вид із відстані 4–8м чотири секунди поспіль із малою відносною швидкістю та нахилом. Під пішоходом є справжня опора на висоті 5,5м; мінімальний шлях для спостереження не потрібен."
+          }
+        },
+        "spawn": {
+          "x": -2000,
+          "y": 250,
+          "z": 34000
+        },
+        "bounds": {
+          "min": {
+            "x": -44000,
+            "y": 0,
+            "z": -48000
+          },
+          "max": {
+            "x": 40000,
+            "y": 28000,
+            "z": 46000
+          }
+        },
+        "obstacles": [],
+        "steps": {
+          "self-level": [
+            {
+              "type": "hold",
+              "min": {
+                "x": -1000,
+                "y": 15000,
+                "z": -1000
+              },
+              "max": {
+                "x": 1000,
+                "y": 17000,
+                "z": 1000
+              },
+              "ticks": 50,
+              "maxSpeed": 500,
+              "maxTilt": 1000,
+              "minTilt": 0,
+              "centred": false,
+              "heading": null
+            }
+          ],
+          "acro": [
+            {
+              "type": "hold",
+              "min": {
+                "x": -1000,
+                "y": 15000,
+                "z": -1000
+              },
+              "max": {
+                "x": 1000,
+                "y": 17000,
+                "z": 1000
+              },
+              "ticks": 50,
+              "maxSpeed": 500,
+              "maxTilt": 1000,
+              "minTilt": 0,
+              "centred": false,
+              "heading": null
+            }
+          ]
+        },
+        "actors": [
+          {
+            "id": "harbor-deck-inspector",
+            "type": "patrol",
+            "role": "civilian",
+            "position": {
+              "x": -15500,
+              "y": 0,
+              "z": 30000
+            },
+            "path": [
+              {
+                "x": -15500,
+                "y": 0,
+                "z": 30000
+              },
+              {
+                "x": -15500,
+                "y": 0,
+                "z": 33500
+              }
+            ],
+            "speed": 300,
+            "radius": 300,
+            "height": 1800,
+            "fireEveryTicks": 0,
+            "damage": 0,
+            "health": 50,
+            "projectileSpeed": 8000,
+            "range": 20000
+          }
+        ],
+        "rules": {
+          "seed": 1,
+          "maxTicks": 10000,
+          "droneRadius": 220,
+          "playerHealth": 100,
+          "collisionDamage": 0,
+          "playerDamage": 25,
+          "fireCooldown": 8,
+          "projectileSpeed": 20000,
+          "projectileTicks": 150
+        },
+        "conditions": {
+          "profile": "clear",
+          "revision": "r1"
+        }
+      },
+      "travel": 18000,
+      "blockedTicks": 0,
+      "maxStill": 0,
+      "missingSupport": 0,
+      "supports": {
+        "$floor": 3000
+      },
+      "heightRange": [
+        0,
+        0
+      ],
+      "samples": [
+        {
+          "tick": 1,
+          "position": {
+            "x": -15500,
+            "y": 0,
+            "z": 30006
+          },
+          "blocked": false,
+          "support": {
+            "id": "$floor",
+            "y": 1,
+            "normal": {
+              "x": 0,
+              "y": 1000000,
+              "z": 0
+            }
+          }
+        },
+        {
+          "tick": 251,
+          "position": {
+            "x": -15500,
+            "y": 0,
+            "z": 31506
+          },
+          "blocked": false,
+          "support": {
+            "id": "$floor",
+            "y": 1,
+            "normal": {
+              "x": 0,
+              "y": 1000000,
+              "z": 0
+            }
+          }
+        },
+        {
+          "tick": 501,
+          "position": {
+            "x": -15500,
+            "y": 0,
+            "z": 33006
+          },
+          "blocked": false,
+          "support": {
+            "id": "$floor",
+            "y": 1,
+            "normal": {
+              "x": 0,
+              "y": 1000000,
+              "z": 0
+            }
+          }
+        },
+        {
+          "tick": 751,
+          "position": {
+            "x": -15500,
+            "y": 0,
+            "z": 32442
+          },
+          "blocked": false,
+          "support": {
+            "id": "$floor",
+            "y": 1,
+            "normal": {
+              "x": 0,
+              "y": 1000000,
+              "z": 0
+            }
+          }
+        },
+        {
+          "tick": 1001,
+          "position": {
+            "x": -15500,
+            "y": 0,
+            "z": 30942
+          },
+          "blocked": false,
+          "support": {
+            "id": "$floor",
+            "y": 1,
+            "normal": {
+              "x": 0,
+              "y": 1000000,
+              "z": 0
+            }
+          }
+        },
+        {
+          "tick": 1251,
+          "position": {
+            "x": -15500,
+            "y": 0,
+            "z": 30618
+          },
+          "blocked": false,
+          "support": {
+            "id": "$floor",
+            "y": 1,
+            "normal": {
+              "x": 0,
+              "y": 1000000,
+              "z": 0
+            }
+          }
+        },
+        {
+          "tick": 1501,
+          "position": {
+            "x": -15500,
+            "y": 0,
+            "z": 32118
+          },
+          "blocked": false,
+          "support": {
+            "id": "$floor",
+            "y": 1,
+            "normal": {
+              "x": 0,
+              "y": 1000000,
+              "z": 0
+            }
+          }
+        },
+        {
+          "tick": 1751,
+          "position": {
+            "x": -15500,
+            "y": 0,
+            "z": 33330
+          },
+          "blocked": false,
+          "support": {
+            "id": "$floor",
+            "y": 1,
+            "normal": {
+              "x": 0,
+              "y": 1000000,
+              "z": 0
+            }
+          }
+        },
+        {
+          "tick": 2001,
+          "position": {
+            "x": -15500,
+            "y": 0,
+            "z": 31830
+          },
+          "blocked": false,
+          "support": {
+            "id": "$floor",
+            "y": 1,
+            "normal": {
+              "x": 0,
+              "y": 1000000,
+              "z": 0
+            }
+          }
+        },
+        {
+          "tick": 2251,
+          "position": {
+            "x": -15500,
+            "y": 0,
+            "z": 30330
+          },
+          "blocked": false,
+          "support": {
+            "id": "$floor",
+            "y": 1,
+            "normal": {
+              "x": 0,
+              "y": 1000000,
+              "z": 0
+            }
+          }
+        },
+        {
+          "tick": 2501,
+          "position": {
+            "x": -15500,
+            "y": 0,
+            "z": 31230
+          },
+          "blocked": false,
+          "support": {
+            "id": "$floor",
+            "y": 1,
+            "normal": {
+              "x": 0,
+              "y": 1000000,
+              "z": 0
+            }
+          }
+        },
+        {
+          "tick": 2751,
+          "position": {
+            "x": -15500,
+            "y": 0,
+            "z": 32730
+          },
+          "blocked": false,
+          "support": {
+            "id": "$floor",
+            "y": 1,
+            "normal": {
+              "x": 0,
+              "y": 1000000,
+              "z": 0
+            }
+          }
+        }
+      ],
+      "final": {
+        "id": "harbor-deck-inspector",
+        "type": "patrol",
+        "role": "civilian",
+        "position": {
+          "x": -15500,
+          "y": 0,
+          "z": 32724
+        },
+        "radius": 300,
+        "height": 1800,
+        "health": 50,
+        "maxHealth": 50,
+        "status": "active",
+        "pathIndex": 0,
+        "cooldown": 0,
+        "blocked": false
+      },
+      "status": "active"
+    },
+    {
+      "name": "vehicle exact raised quay only",
+      "expected": "Diagnostic only; support and motion observations retained, not a completion proof.",
+      "course": {
+        "format": "FlightCourse.v2",
+        "id": "harbor-diagnostic-3",
+        "revision": "diagnostic-r1",
+        "environment": "container-yard",
+        "world": {
+          "id": "harbor-docks",
+          "theme": "operations",
+          "style": "container-yard",
+          "themeProfile": {
+            "format": "ThemeProfile.v1",
+            "id": "operations",
+            "revision": "r1",
+            "title": {
+              "en": "Field Operations",
+              "uk": "Польові операції"
+            },
+            "palette": {
+              "sky": 12898517,
+              "fog": 11255746,
+              "ground": 6713707,
+              "wall": 5267818,
+              "accent": 9553852,
+              "warm": 15710059
+            },
+            "textureFilter": "linear",
+            "drone": "utility",
+            "characters": "training-patrol",
+            "assets": {
+              "gate": "builtin:utility-gate",
+              "marker": "builtin:signal-beacon",
+              "enemy": "builtin:sentry",
+              "vehicle": "builtin:patrol-rover"
+            },
+            "audio": {
+              "ambience": "industrial",
+              "motor": "utility",
+              "gate": "radio"
+            },
+            "ui": {
+              "accent": "#a5c581",
+              "font": "system-ui",
+              "borderRadius": 4
+            }
+          }
+        },
+        "locales": {
+          "en": {
+            "title": "Terminal cart escort",
+            "brief": "Acquire the civilian service cart on the central land-side lane and follow its actual travel before returning to the quay H.",
+            "lesson": "Keep 4–7m range, match speed and hold the subject in the nose view for six continuous seconds while it travels at least four metres. No weapons are used in this layout."
+          },
+          "uk": {
+            "title": "Супровід портового візка",
+            "brief": "Знайдіть цивільний службовий візок на центральній смузі суходолу й супроводжуйте його справжній рух перед поверненням до H на причалі.",
+            "lesson": "Тримайте відстань 4–7м, узгодьте швидкість і утримуйте об’єкт у напрямку носа шість секунд поспіль, доки він проїде щонайменше чотири метри. У цьому маршруті немає застосування зброї."
+          }
+        },
+        "spawn": {
+          "x": -2000,
+          "y": 2250,
+          "z": 34000
+        },
+        "bounds": {
+          "min": {
+            "x": -44000,
+            "y": 0,
+            "z": -48000
+          },
+          "max": {
+            "x": 40000,
+            "y": 28000,
+            "z": 46000
+          }
+        },
+        "obstacles": [
+          {
+            "id": "platform-quay",
+            "min": {
+              "x": -47000,
+              "y": 0,
+              "z": -52000
+            },
+            "max": {
+              "x": 43000,
+              "y": 2000,
+              "z": 50000
+            }
+          }
+        ],
+        "steps": {
+          "self-level": [
+            {
+              "type": "hold",
+              "min": {
+                "x": -1000,
+                "y": 15000,
+                "z": -1000
+              },
+              "max": {
+                "x": 1000,
+                "y": 17000,
+                "z": 1000
+              },
+              "ticks": 50,
+              "maxSpeed": 500,
+              "maxTilt": 1000,
+              "minTilt": 0,
+              "centred": false,
+              "heading": null
+            }
+          ],
+          "acro": [
+            {
+              "type": "hold",
+              "min": {
+                "x": -1000,
+                "y": 15000,
+                "z": -1000
+              },
+              "max": {
+                "x": 1000,
+                "y": 17000,
+                "z": 1000
+              },
+              "ticks": 50,
+              "maxSpeed": 500,
+              "maxTilt": 1000,
+              "minTilt": 0,
+              "centred": false,
+              "heading": null
+            }
+          ]
+        },
+        "actors": [
+          {
+            "id": "harbor-service-cart",
+            "type": "vehicle",
+            "role": "civilian",
+            "position": {
+              "x": 4000,
+              "y": 2000,
+              "z": 0
+            },
+            "path": [
+              {
+                "x": 4000,
+                "y": 2000,
+                "z": 0
+              },
+              {
+                "x": 4000,
+                "y": 2000,
+                "z": 18000
+              }
+            ],
+            "speed": 700,
+            "radius": 800,
+            "height": 1200,
+            "fireEveryTicks": 0,
+            "damage": 0,
+            "health": 50,
+            "projectileSpeed": 8000,
+            "range": 20000
+          }
+        ],
+        "rules": {
+          "seed": 1,
+          "maxTicks": 10000,
+          "droneRadius": 220,
+          "playerHealth": 100,
+          "collisionDamage": 0,
+          "playerDamage": 25,
+          "fireCooldown": 8,
+          "projectileSpeed": 20000,
+          "projectileTicks": 150
+        },
+        "conditions": {
+          "profile": "clear",
+          "revision": "r1"
+        }
+      },
+      "travel": 2967.190905958273,
+      "blockedTicks": 2788,
+      "maxStill": 2788,
+      "missingSupport": 0,
+      "supports": {
+        "platform-quay": 3000
+      },
+      "heightRange": [
+        2000,
+        2001
+      ],
+      "samples": [
+        {
+          "tick": 1,
+          "position": {
+            "x": 4000,
+            "y": 2000,
+            "z": 14
+          },
+          "blocked": false,
+          "support": {
+            "id": "platform-quay",
+            "y": 2000,
+            "normal": {
+              "x": 0,
+              "y": 1000000,
+              "z": 0
+            }
+          }
+        },
+        {
+          "tick": 251,
+          "position": {
+            "x": 4002,
+            "y": 2001,
+            "z": 2967
+          },
+          "blocked": true,
+          "support": {
+            "id": "platform-quay",
+            "y": 2001,
+            "normal": {
+              "x": 0,
+              "y": 1000000,
+              "z": 0
+            }
+          }
+        },
+        {
+          "tick": 501,
+          "position": {
+            "x": 4002,
+            "y": 2001,
+            "z": 2967
+          },
+          "blocked": true,
+          "support": {
+            "id": "platform-quay",
+            "y": 2001,
+            "normal": {
+              "x": 0,
+              "y": 1000000,
+              "z": 0
+            }
+          }
+        },
+        {
+          "tick": 751,
+          "position": {
+            "x": 4002,
+            "y": 2001,
+            "z": 2967
+          },
+          "blocked": true,
+          "support": {
+            "id": "platform-quay",
+            "y": 2001,
+            "normal": {
+              "x": 0,
+              "y": 1000000,
+              "z": 0
+            }
+          }
+        },
+        {
+          "tick": 1001,
+          "position": {
+            "x": 4002,
+            "y": 2001,
+            "z": 2967
+          },
+          "blocked": true,
+          "support": {
+            "id": "platform-quay",
+            "y": 2001,
+            "normal": {
+              "x": 0,
+              "y": 1000000,
+              "z": 0
+            }
+          }
+        },
+        {
+          "tick": 1251,
+          "position": {
+            "x": 4002,
+            "y": 2001,
+            "z": 2967
+          },
+          "blocked": true,
+          "support": {
+            "id": "platform-quay",
+            "y": 2001,
+            "normal": {
+              "x": 0,
+              "y": 1000000,
+              "z": 0
+            }
+          }
+        },
+        {
+          "tick": 1501,
+          "position": {
+            "x": 4002,
+            "y": 2001,
+            "z": 2967
+          },
+          "blocked": true,
+          "support": {
+            "id": "platform-quay",
+            "y": 2001,
+            "normal": {
+              "x": 0,
+              "y": 1000000,
+              "z": 0
+            }
+          }
+        },
+        {
+          "tick": 1751,
+          "position": {
+            "x": 4002,
+            "y": 2001,
+            "z": 2967
+          },
+          "blocked": true,
+          "support": {
+            "id": "platform-quay",
+            "y": 2001,
+            "normal": {
+              "x": 0,
+              "y": 1000000,
+              "z": 0
+            }
+          }
+        },
+        {
+          "tick": 2001,
+          "position": {
+            "x": 4002,
+            "y": 2001,
+            "z": 2967
+          },
+          "blocked": true,
+          "support": {
+            "id": "platform-quay",
+            "y": 2001,
+            "normal": {
+              "x": 0,
+              "y": 1000000,
+              "z": 0
+            }
+          }
+        },
+        {
+          "tick": 2251,
+          "position": {
+            "x": 4002,
+            "y": 2001,
+            "z": 2967
+          },
+          "blocked": true,
+          "support": {
+            "id": "platform-quay",
+            "y": 2001,
+            "normal": {
+              "x": 0,
+              "y": 1000000,
+              "z": 0
+            }
+          }
+        },
+        {
+          "tick": 2501,
+          "position": {
+            "x": 4002,
+            "y": 2001,
+            "z": 2967
+          },
+          "blocked": true,
+          "support": {
+            "id": "platform-quay",
+            "y": 2001,
+            "normal": {
+              "x": 0,
+              "y": 1000000,
+              "z": 0
+            }
+          }
+        },
+        {
+          "tick": 2751,
+          "position": {
+            "x": 4002,
+            "y": 2001,
+            "z": 2967
+          },
+          "blocked": true,
+          "support": {
+            "id": "platform-quay",
+            "y": 2001,
+            "normal": {
+              "x": 0,
+              "y": 1000000,
+              "z": 0
+            }
+          }
+        }
+      ],
+      "final": {
+        "id": "harbor-service-cart",
+        "type": "vehicle",
+        "role": "civilian",
+        "position": {
+          "x": 4002,
+          "y": 2001,
+          "z": 2967
+        },
+        "radius": 800,
+        "height": 1200,
+        "health": 50,
+        "maxHealth": 50,
+        "status": "active",
+        "pathIndex": 1,
+        "cooldown": 0,
+        "blocked": true
+      },
+      "status": "active"
+    },
+    {
+      "name": "patrol exact raised deck only",
+      "expected": "Diagnostic only; support and motion observations retained, not a completion proof.",
+      "course": {
+        "format": "FlightCourse.v2",
+        "id": "harbor-diagnostic-4",
+        "revision": "diagnostic-r1",
+        "environment": "container-yard",
+        "world": {
+          "id": "harbor-docks",
+          "theme": "operations",
+          "style": "container-yard",
+          "themeProfile": {
+            "format": "ThemeProfile.v1",
+            "id": "operations",
+            "revision": "r1",
+            "title": {
+              "en": "Field Operations",
+              "uk": "Польові операції"
+            },
+            "palette": {
+              "sky": 12898517,
+              "fog": 11255746,
+              "ground": 6713707,
+              "wall": 5267818,
+              "accent": 9553852,
+              "warm": 15710059
+            },
+            "textureFilter": "linear",
+            "drone": "utility",
+            "characters": "training-patrol",
+            "assets": {
+              "gate": "builtin:utility-gate",
+              "marker": "builtin:signal-beacon",
+              "enemy": "builtin:sentry",
+              "vehicle": "builtin:patrol-rover"
+            },
+            "audio": {
+              "ambience": "industrial",
+              "motor": "utility",
+              "gate": "radio"
+            },
+            "ui": {
+              "accent": "#a5c581",
+              "font": "system-ui",
+              "borderRadius": 4
+            }
+          }
+        },
+        "locales": {
+          "en": {
+            "title": "Deck inspection",
+            "brief": "Observe the civilian inspector walking on the raised service deck from the open east side, then return to the quay.",
+            "lesson": "Hold a steady 4–8m view for four continuous seconds with low relative speed and tilt. The walker has real support at 5.5m; no minimum travel is required for this observation."
+          },
+          "uk": {
+            "title": "Огляд службового майданчика",
+            "brief": "Спостерігайте за цивільним інспектором на піднятому службовому майданчику з відкритого східного боку, потім поверніться на причал.",
+            "lesson": "Утримуйте стабільний вид із відстані 4–8м чотири секунди поспіль із малою відносною швидкістю та нахилом. Під пішоходом є справжня опора на висоті 5,5м; мінімальний шлях для спостереження не потрібен."
+          }
+        },
+        "spawn": {
+          "x": -12000,
+          "y": 5750,
+          "z": 34000
+        },
+        "bounds": {
+          "min": {
+            "x": -44000,
+            "y": 0,
+            "z": -48000
+          },
+          "max": {
+            "x": 40000,
+            "y": 28000,
+            "z": 46000
+          }
+        },
+        "obstacles": [
+          {
+            "id": "platform-service-deck",
+            "min": {
+              "x": -21000,
+              "y": 5200,
+              "z": 27000
+            },
+            "max": {
+              "x": -10000,
+              "y": 5500,
+              "z": 36000
+            }
+          }
+        ],
+        "steps": {
+          "self-level": [
+            {
+              "type": "hold",
+              "min": {
+                "x": -1000,
+                "y": 15000,
+                "z": -1000
+              },
+              "max": {
+                "x": 1000,
+                "y": 17000,
+                "z": 1000
+              },
+              "ticks": 50,
+              "maxSpeed": 500,
+              "maxTilt": 1000,
+              "minTilt": 0,
+              "centred": false,
+              "heading": null
+            }
+          ],
+          "acro": [
+            {
+              "type": "hold",
+              "min": {
+                "x": -1000,
+                "y": 15000,
+                "z": -1000
+              },
+              "max": {
+                "x": 1000,
+                "y": 17000,
+                "z": 1000
+              },
+              "ticks": 50,
+              "maxSpeed": 500,
+              "maxTilt": 1000,
+              "minTilt": 0,
+              "centred": false,
+              "heading": null
+            }
+          ]
+        },
+        "actors": [
+          {
+            "id": "harbor-deck-inspector",
+            "type": "patrol",
+            "role": "civilian",
+            "position": {
+              "x": -15500,
+              "y": 5500,
+              "z": 30000
+            },
+            "path": [
+              {
+                "x": -15500,
+                "y": 5500,
+                "z": 30000
+              },
+              {
+                "x": -15500,
+                "y": 5500,
+                "z": 33500
+              }
+            ],
+            "speed": 300,
+            "radius": 300,
+            "height": 1800,
+            "fireEveryTicks": 0,
+            "damage": 0,
+            "health": 50,
+            "projectileSpeed": 8000,
+            "range": 20000
+          }
+        ],
+        "rules": {
+          "seed": 1,
+          "maxTicks": 10000,
+          "droneRadius": 220,
+          "playerHealth": 100,
+          "collisionDamage": 0,
+          "playerDamage": 25,
+          "fireCooldown": 8,
+          "projectileSpeed": 20000,
+          "projectileTicks": 150
+        },
+        "conditions": {
+          "profile": "clear",
+          "revision": "r1"
+        }
+      },
+      "travel": 415.0710678118655,
+      "blockedTicks": 2931,
+      "maxStill": 2931,
+      "missingSupport": 0,
+      "supports": {
+        "platform-service-deck": 3000
+      },
+      "heightRange": [
+        5500,
+        5500
+      ],
+      "samples": [
+        {
+          "tick": 1,
+          "position": {
+            "x": -15500,
+            "y": 5500,
+            "z": 30006
+          },
+          "blocked": false,
+          "support": {
+            "id": "platform-service-deck",
+            "y": 5501,
+            "normal": {
+              "x": 0,
+              "y": 1000000,
+              "z": 0
+            }
+          }
+        },
+        {
+          "tick": 251,
+          "position": {
+            "x": -15501,
+            "y": 5500,
+            "z": 30415
+          },
+          "blocked": true,
+          "support": {
+            "id": "platform-service-deck",
+            "y": 5501,
+            "normal": {
+              "x": 0,
+              "y": 1000000,
+              "z": 0
+            }
+          }
+        },
+        {
+          "tick": 501,
+          "position": {
+            "x": -15501,
+            "y": 5500,
+            "z": 30415
+          },
+          "blocked": true,
+          "support": {
+            "id": "platform-service-deck",
+            "y": 5501,
+            "normal": {
+              "x": 0,
+              "y": 1000000,
+              "z": 0
+            }
+          }
+        },
+        {
+          "tick": 751,
+          "position": {
+            "x": -15501,
+            "y": 5500,
+            "z": 30415
+          },
+          "blocked": true,
+          "support": {
+            "id": "platform-service-deck",
+            "y": 5501,
+            "normal": {
+              "x": 0,
+              "y": 1000000,
+              "z": 0
+            }
+          }
+        },
+        {
+          "tick": 1001,
+          "position": {
+            "x": -15501,
+            "y": 5500,
+            "z": 30415
+          },
+          "blocked": true,
+          "support": {
+            "id": "platform-service-deck",
+            "y": 5501,
+            "normal": {
+              "x": 0,
+              "y": 1000000,
+              "z": 0
+            }
+          }
+        },
+        {
+          "tick": 1251,
+          "position": {
+            "x": -15501,
+            "y": 5500,
+            "z": 30415
+          },
+          "blocked": true,
+          "support": {
+            "id": "platform-service-deck",
+            "y": 5501,
+            "normal": {
+              "x": 0,
+              "y": 1000000,
+              "z": 0
+            }
+          }
+        },
+        {
+          "tick": 1501,
+          "position": {
+            "x": -15501,
+            "y": 5500,
+            "z": 30415
+          },
+          "blocked": true,
+          "support": {
+            "id": "platform-service-deck",
+            "y": 5501,
+            "normal": {
+              "x": 0,
+              "y": 1000000,
+              "z": 0
+            }
+          }
+        },
+        {
+          "tick": 1751,
+          "position": {
+            "x": -15501,
+            "y": 5500,
+            "z": 30415
+          },
+          "blocked": true,
+          "support": {
+            "id": "platform-service-deck",
+            "y": 5501,
+            "normal": {
+              "x": 0,
+              "y": 1000000,
+              "z": 0
+            }
+          }
+        },
+        {
+          "tick": 2001,
+          "position": {
+            "x": -15501,
+            "y": 5500,
+            "z": 30415
+          },
+          "blocked": true,
+          "support": {
+            "id": "platform-service-deck",
+            "y": 5501,
+            "normal": {
+              "x": 0,
+              "y": 1000000,
+              "z": 0
+            }
+          }
+        },
+        {
+          "tick": 2251,
+          "position": {
+            "x": -15501,
+            "y": 5500,
+            "z": 30415
+          },
+          "blocked": true,
+          "support": {
+            "id": "platform-service-deck",
+            "y": 5501,
+            "normal": {
+              "x": 0,
+              "y": 1000000,
+              "z": 0
+            }
+          }
+        },
+        {
+          "tick": 2501,
+          "position": {
+            "x": -15501,
+            "y": 5500,
+            "z": 30415
+          },
+          "blocked": true,
+          "support": {
+            "id": "platform-service-deck",
+            "y": 5501,
+            "normal": {
+              "x": 0,
+              "y": 1000000,
+              "z": 0
+            }
+          }
+        },
+        {
+          "tick": 2751,
+          "position": {
+            "x": -15501,
+            "y": 5500,
+            "z": 30415
+          },
+          "blocked": true,
+          "support": {
+            "id": "platform-service-deck",
+            "y": 5501,
+            "normal": {
+              "x": 0,
+              "y": 1000000,
+              "z": 0
+            }
+          }
+        }
+      ],
+      "final": {
+        "id": "harbor-deck-inspector",
+        "type": "patrol",
+        "role": "civilian",
+        "position": {
+          "x": -15501,
+          "y": 5500,
+          "z": 30415
+        },
+        "radius": 300,
+        "height": 1800,
+        "health": 50,
+        "maxHealth": 50,
+        "status": "active",
+        "pathIndex": 1,
+        "cooldown": 0,
+        "blocked": true
+      },
+      "status": "active"
+    },
+    {
+      "name": "vehicle narrower finite support",
+      "expected": "Diagnostic only; support and motion observations retained, not a completion proof.",
+      "course": {
+        "format": "FlightCourse.v2",
+        "id": "harbor-diagnostic-5",
+        "revision": "diagnostic-r1",
+        "environment": "container-yard",
+        "world": {
+          "id": "harbor-docks",
+          "theme": "operations",
+          "style": "container-yard",
+          "themeProfile": {
+            "format": "ThemeProfile.v1",
+            "id": "operations",
+            "revision": "r1",
+            "title": {
+              "en": "Field Operations",
+              "uk": "Польові операції"
+            },
+            "palette": {
+              "sky": 12898517,
+              "fog": 11255746,
+              "ground": 6713707,
+              "wall": 5267818,
+              "accent": 9553852,
+              "warm": 15710059
+            },
+            "textureFilter": "linear",
+            "drone": "utility",
+            "characters": "training-patrol",
+            "assets": {
+              "gate": "builtin:utility-gate",
+              "marker": "builtin:signal-beacon",
+              "enemy": "builtin:sentry",
+              "vehicle": "builtin:patrol-rover"
+            },
+            "audio": {
+              "ambience": "industrial",
+              "motor": "utility",
+              "gate": "radio"
+            },
+            "ui": {
+              "accent": "#a5c581",
+              "font": "system-ui",
+              "borderRadius": 4
+            }
+          }
+        },
+        "locales": {
+          "en": {
+            "title": "Terminal cart escort",
+            "brief": "Acquire the civilian service cart on the central land-side lane and follow its actual travel before returning to the quay H.",
+            "lesson": "Keep 4–7m range, match speed and hold the subject in the nose view for six continuous seconds while it travels at least four metres. No weapons are used in this layout."
+          },
+          "uk": {
+            "title": "Супровід портового візка",
+            "brief": "Знайдіть цивільний службовий візок на центральній смузі суходолу й супроводжуйте його справжній рух перед поверненням до H на причалі.",
+            "lesson": "Тримайте відстань 4–7м, узгодьте швидкість і утримуйте об’єкт у напрямку носа шість секунд поспіль, доки він проїде щонайменше чотири метри. У цьому маршруті немає застосування зброї."
+          }
+        },
+        "spawn": {
+          "x": 0,
+          "y": 2250,
+          "z": 20000
+        },
+        "bounds": {
+          "min": {
+            "x": -44000,
+            "y": 0,
+            "z": -48000
+          },
+          "max": {
+            "x": 40000,
+            "y": 28000,
+            "z": 46000
+          }
+        },
+        "obstacles": [
+          {
+            "id": "platform-quay",
+            "min": {
+              "x": -2000,
+              "y": 0,
+              "z": -2000
+            },
+            "max": {
+              "x": 10000,
+              "y": 2000,
+              "z": 22000
+            }
+          }
+        ],
+        "steps": {
+          "self-level": [
+            {
+              "type": "hold",
+              "min": {
+                "x": -1000,
+                "y": 15000,
+                "z": -1000
+              },
+              "max": {
+                "x": 1000,
+                "y": 17000,
+                "z": 1000
+              },
+              "ticks": 50,
+              "maxSpeed": 500,
+              "maxTilt": 1000,
+              "minTilt": 0,
+              "centred": false,
+              "heading": null
+            }
+          ],
+          "acro": [
+            {
+              "type": "hold",
+              "min": {
+                "x": -1000,
+                "y": 15000,
+                "z": -1000
+              },
+              "max": {
+                "x": 1000,
+                "y": 17000,
+                "z": 1000
+              },
+              "ticks": 50,
+              "maxSpeed": 500,
+              "maxTilt": 1000,
+              "minTilt": 0,
+              "centred": false,
+              "heading": null
+            }
+          ]
+        },
+        "actors": [
+          {
+            "id": "harbor-service-cart",
+            "type": "vehicle",
+            "role": "civilian",
+            "position": {
+              "x": 4000,
+              "y": 2000,
+              "z": 0
+            },
+            "path": [
+              {
+                "x": 4000,
+                "y": 2000,
+                "z": 0
+              },
+              {
+                "x": 4000,
+                "y": 2000,
+                "z": 18000
+              }
+            ],
+            "speed": 700,
+            "radius": 800,
+            "height": 1200,
+            "fireEveryTicks": 0,
+            "damage": 0,
+            "health": 50,
+            "projectileSpeed": 8000,
+            "range": 20000
+          }
+        ],
+        "rules": {
+          "seed": 1,
+          "maxTicks": 10000,
+          "droneRadius": 220,
+          "playerHealth": 100,
+          "collisionDamage": 0,
+          "playerDamage": 25,
+          "fireCooldown": 8,
+          "projectileSpeed": 20000,
+          "projectileTicks": 150
+        },
+        "conditions": {
+          "profile": "clear",
+          "revision": "r1"
+        }
+      },
+      "travel": 1021.076696830622,
+      "blockedTicks": 2927,
+      "maxStill": 2927,
+      "missingSupport": 0,
+      "supports": {
+        "platform-quay": 3000
+      },
+      "heightRange": [
+        2000,
+        2001
+      ],
+      "samples": [
+        {
+          "tick": 1,
+          "position": {
+            "x": 4000,
+            "y": 2000,
+            "z": 14
+          },
+          "blocked": false,
+          "support": {
+            "id": "platform-quay",
+            "y": 2000,
+            "normal": {
+              "x": 0,
+              "y": 1000000,
+              "z": 0
+            }
+          }
+        },
+        {
+          "tick": 251,
+          "position": {
+            "x": 4001,
+            "y": 2001,
+            "z": 1021
+          },
+          "blocked": true,
+          "support": {
+            "id": "platform-quay",
+            "y": 2001,
+            "normal": {
+              "x": 0,
+              "y": 1000000,
+              "z": 0
+            }
+          }
+        },
+        {
+          "tick": 501,
+          "position": {
+            "x": 4001,
+            "y": 2001,
+            "z": 1021
+          },
+          "blocked": true,
+          "support": {
+            "id": "platform-quay",
+            "y": 2001,
+            "normal": {
+              "x": 0,
+              "y": 1000000,
+              "z": 0
+            }
+          }
+        },
+        {
+          "tick": 751,
+          "position": {
+            "x": 4001,
+            "y": 2001,
+            "z": 1021
+          },
+          "blocked": true,
+          "support": {
+            "id": "platform-quay",
+            "y": 2001,
+            "normal": {
+              "x": 0,
+              "y": 1000000,
+              "z": 0
+            }
+          }
+        },
+        {
+          "tick": 1001,
+          "position": {
+            "x": 4001,
+            "y": 2001,
+            "z": 1021
+          },
+          "blocked": true,
+          "support": {
+            "id": "platform-quay",
+            "y": 2001,
+            "normal": {
+              "x": 0,
+              "y": 1000000,
+              "z": 0
+            }
+          }
+        },
+        {
+          "tick": 1251,
+          "position": {
+            "x": 4001,
+            "y": 2001,
+            "z": 1021
+          },
+          "blocked": true,
+          "support": {
+            "id": "platform-quay",
+            "y": 2001,
+            "normal": {
+              "x": 0,
+              "y": 1000000,
+              "z": 0
+            }
+          }
+        },
+        {
+          "tick": 1501,
+          "position": {
+            "x": 4001,
+            "y": 2001,
+            "z": 1021
+          },
+          "blocked": true,
+          "support": {
+            "id": "platform-quay",
+            "y": 2001,
+            "normal": {
+              "x": 0,
+              "y": 1000000,
+              "z": 0
+            }
+          }
+        },
+        {
+          "tick": 1751,
+          "position": {
+            "x": 4001,
+            "y": 2001,
+            "z": 1021
+          },
+          "blocked": true,
+          "support": {
+            "id": "platform-quay",
+            "y": 2001,
+            "normal": {
+              "x": 0,
+              "y": 1000000,
+              "z": 0
+            }
+          }
+        },
+        {
+          "tick": 2001,
+          "position": {
+            "x": 4001,
+            "y": 2001,
+            "z": 1021
+          },
+          "blocked": true,
+          "support": {
+            "id": "platform-quay",
+            "y": 2001,
+            "normal": {
+              "x": 0,
+              "y": 1000000,
+              "z": 0
+            }
+          }
+        },
+        {
+          "tick": 2251,
+          "position": {
+            "x": 4001,
+            "y": 2001,
+            "z": 1021
+          },
+          "blocked": true,
+          "support": {
+            "id": "platform-quay",
+            "y": 2001,
+            "normal": {
+              "x": 0,
+              "y": 1000000,
+              "z": 0
+            }
+          }
+        },
+        {
+          "tick": 2501,
+          "position": {
+            "x": 4001,
+            "y": 2001,
+            "z": 1021
+          },
+          "blocked": true,
+          "support": {
+            "id": "platform-quay",
+            "y": 2001,
+            "normal": {
+              "x": 0,
+              "y": 1000000,
+              "z": 0
+            }
+          }
+        },
+        {
+          "tick": 2751,
+          "position": {
+            "x": 4001,
+            "y": 2001,
+            "z": 1021
+          },
+          "blocked": true,
+          "support": {
+            "id": "platform-quay",
+            "y": 2001,
+            "normal": {
+              "x": 0,
+              "y": 1000000,
+              "z": 0
+            }
+          }
+        }
+      ],
+      "final": {
+        "id": "harbor-service-cart",
+        "type": "vehicle",
+        "role": "civilian",
+        "position": {
+          "x": 4001,
+          "y": 2001,
+          "z": 1021
+        },
+        "radius": 800,
+        "height": 1200,
+        "health": 50,
+        "maxHealth": 50,
+        "status": "active",
+        "pathIndex": 1,
+        "cooldown": 0,
+        "blocked": true
+      },
+      "status": "active"
+    },
+    {
+      "name": "vehicle same-envelope closed trimesh diagnostic",
+      "expected": "Diagnostic geometry representation only; not an approved content change. Mesh interiors differ from cuboid solids.",
+      "course": {
+        "format": "FlightCourse.v2",
+        "id": "harbor-diagnostic-6",
+        "revision": "diagnostic-r1",
+        "environment": "container-yard",
+        "world": {
+          "id": "harbor-docks",
+          "theme": "operations",
+          "style": "container-yard",
+          "themeProfile": {
+            "format": "ThemeProfile.v1",
+            "id": "operations",
+            "revision": "r1",
+            "title": {
+              "en": "Field Operations",
+              "uk": "Польові операції"
+            },
+            "palette": {
+              "sky": 12898517,
+              "fog": 11255746,
+              "ground": 6713707,
+              "wall": 5267818,
+              "accent": 9553852,
+              "warm": 15710059
+            },
+            "textureFilter": "linear",
+            "drone": "utility",
+            "characters": "training-patrol",
+            "assets": {
+              "gate": "builtin:utility-gate",
+              "marker": "builtin:signal-beacon",
+              "enemy": "builtin:sentry",
+              "vehicle": "builtin:patrol-rover"
+            },
+            "audio": {
+              "ambience": "industrial",
+              "motor": "utility",
+              "gate": "radio"
+            },
+            "ui": {
+              "accent": "#a5c581",
+              "font": "system-ui",
+              "borderRadius": 4
+            }
+          }
+        },
+        "locales": {
+          "en": {
+            "title": "Terminal cart escort",
+            "brief": "Acquire the civilian service cart on the central land-side lane and follow its actual travel before returning to the quay H.",
+            "lesson": "Keep 4–7m range, match speed and hold the subject in the nose view for six continuous seconds while it travels at least four metres. No weapons are used in this layout."
+          },
+          "uk": {
+            "title": "Супровід портового візка",
+            "brief": "Знайдіть цивільний службовий візок на центральній смузі суходолу й супроводжуйте його справжній рух перед поверненням до H на причалі.",
+            "lesson": "Тримайте відстань 4–7м, узгодьте швидкість і утримуйте об’єкт у напрямку носа шість секунд поспіль, доки він проїде щонайменше чотири метри. У цьому маршруті немає застосування зброї."
+          }
+        },
+        "spawn": {
+          "x": -2000,
+          "y": 2250,
+          "z": 34000
+        },
+        "bounds": {
+          "min": {
+            "x": -44000,
+            "y": 0,
+            "z": -48000
+          },
+          "max": {
+            "x": 40000,
+            "y": 28000,
+            "z": 46000
+          }
+        },
+        "obstacles": [
+          {
+            "id": "platform-quay",
+            "type": "trimesh",
+            "vertices": [
+              -47000,
+              0,
+              -52000,
+              43000,
+              0,
+              -52000,
+              -47000,
+              2000,
+              -52000,
+              43000,
+              2000,
+              -52000,
+              -47000,
+              0,
+              50000,
+              43000,
+              0,
+              50000,
+              -47000,
+              2000,
+              50000,
+              43000,
+              2000,
+              50000
+            ],
+            "indices": [
+              0,
+              2,
+              1,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              5,
+              7,
+              6,
+              0,
+              1,
+              4,
+              1,
+              5,
+              4,
+              2,
+              6,
+              3,
+              3,
+              6,
+              7,
+              0,
+              4,
+              2,
+              2,
+              4,
+              6,
+              1,
+              3,
+              5,
+              3,
+              7,
+              5
+            ]
+          }
+        ],
+        "steps": {
+          "self-level": [
+            {
+              "type": "hold",
+              "min": {
+                "x": -1000,
+                "y": 15000,
+                "z": -1000
+              },
+              "max": {
+                "x": 1000,
+                "y": 17000,
+                "z": 1000
+              },
+              "ticks": 50,
+              "maxSpeed": 500,
+              "maxTilt": 1000,
+              "minTilt": 0,
+              "centred": false,
+              "heading": null
+            }
+          ],
+          "acro": [
+            {
+              "type": "hold",
+              "min": {
+                "x": -1000,
+                "y": 15000,
+                "z": -1000
+              },
+              "max": {
+                "x": 1000,
+                "y": 17000,
+                "z": 1000
+              },
+              "ticks": 50,
+              "maxSpeed": 500,
+              "maxTilt": 1000,
+              "minTilt": 0,
+              "centred": false,
+              "heading": null
+            }
+          ]
+        },
+        "actors": [
+          {
+            "id": "harbor-service-cart",
+            "type": "vehicle",
+            "role": "civilian",
+            "position": {
+              "x": 4000,
+              "y": 2000,
+              "z": 0
+            },
+            "path": [
+              {
+                "x": 4000,
+                "y": 2000,
+                "z": 0
+              },
+              {
+                "x": 4000,
+                "y": 2000,
+                "z": 18000
+              }
+            ],
+            "speed": 700,
+            "radius": 800,
+            "height": 1200,
+            "fireEveryTicks": 0,
+            "damage": 0,
+            "health": 50,
+            "projectileSpeed": 8000,
+            "range": 20000
+          }
+        ],
+        "rules": {
+          "seed": 1,
+          "maxTicks": 10000,
+          "droneRadius": 220,
+          "playerHealth": 100,
+          "collisionDamage": 0,
+          "playerDamage": 25,
+          "fireCooldown": 8,
+          "projectileSpeed": 20000,
+          "projectileTicks": 150
+        },
+        "conditions": {
+          "profile": "clear",
+          "revision": "r1"
+        }
+      },
+      "travel": 5888.491254436104,
+      "blockedTicks": 2571,
+      "maxStill": 2571,
+      "missingSupport": 0,
+      "supports": {
+        "platform-quay": 3000
+      },
+      "heightRange": [
+        1999,
+        1999
+      ],
+      "samples": [
+        {
+          "tick": 1,
+          "position": {
+            "x": 3999,
+            "y": 1999,
+            "z": 15
+          },
+          "blocked": false,
+          "support": {
+            "id": "platform-quay",
+            "y": 2001,
+            "normal": {
+              "x": 0,
+              "y": 1000000,
+              "z": 0
+            }
+          }
+        },
+        {
+          "tick": 251,
+          "position": {
+            "x": 3878,
+            "y": 1999,
+            "z": 3349
+          },
+          "blocked": false,
+          "support": {
+            "id": "platform-quay",
+            "y": 2001,
+            "normal": {
+              "x": 0,
+              "y": 1000000,
+              "z": 0
+            }
+          }
+        },
+        {
+          "tick": 501,
+          "position": {
+            "x": 3830,
+            "y": 1999,
+            "z": 5813
+          },
+          "blocked": true,
+          "support": {
+            "id": "platform-quay",
+            "y": 2001,
+            "normal": {
+              "x": 0,
+              "y": 1000000,
+              "z": 0
+            }
+          }
+        },
+        {
+          "tick": 751,
+          "position": {
+            "x": 3830,
+            "y": 1999,
+            "z": 5813
+          },
+          "blocked": true,
+          "support": {
+            "id": "platform-quay",
+            "y": 2001,
+            "normal": {
+              "x": 0,
+              "y": 1000000,
+              "z": 0
+            }
+          }
+        },
+        {
+          "tick": 1001,
+          "position": {
+            "x": 3830,
+            "y": 1999,
+            "z": 5813
+          },
+          "blocked": true,
+          "support": {
+            "id": "platform-quay",
+            "y": 2001,
+            "normal": {
+              "x": 0,
+              "y": 1000000,
+              "z": 0
+            }
+          }
+        },
+        {
+          "tick": 1251,
+          "position": {
+            "x": 3830,
+            "y": 1999,
+            "z": 5813
+          },
+          "blocked": true,
+          "support": {
+            "id": "platform-quay",
+            "y": 2001,
+            "normal": {
+              "x": 0,
+              "y": 1000000,
+              "z": 0
+            }
+          }
+        },
+        {
+          "tick": 1501,
+          "position": {
+            "x": 3830,
+            "y": 1999,
+            "z": 5813
+          },
+          "blocked": true,
+          "support": {
+            "id": "platform-quay",
+            "y": 2001,
+            "normal": {
+              "x": 0,
+              "y": 1000000,
+              "z": 0
+            }
+          }
+        },
+        {
+          "tick": 1751,
+          "position": {
+            "x": 3830,
+            "y": 1999,
+            "z": 5813
+          },
+          "blocked": true,
+          "support": {
+            "id": "platform-quay",
+            "y": 2001,
+            "normal": {
+              "x": 0,
+              "y": 1000000,
+              "z": 0
+            }
+          }
+        },
+        {
+          "tick": 2001,
+          "position": {
+            "x": 3830,
+            "y": 1999,
+            "z": 5813
+          },
+          "blocked": true,
+          "support": {
+            "id": "platform-quay",
+            "y": 2001,
+            "normal": {
+              "x": 0,
+              "y": 1000000,
+              "z": 0
+            }
+          }
+        },
+        {
+          "tick": 2251,
+          "position": {
+            "x": 3830,
+            "y": 1999,
+            "z": 5813
+          },
+          "blocked": true,
+          "support": {
+            "id": "platform-quay",
+            "y": 2001,
+            "normal": {
+              "x": 0,
+              "y": 1000000,
+              "z": 0
+            }
+          }
+        },
+        {
+          "tick": 2501,
+          "position": {
+            "x": 3830,
+            "y": 1999,
+            "z": 5813
+          },
+          "blocked": true,
+          "support": {
+            "id": "platform-quay",
+            "y": 2001,
+            "normal": {
+              "x": 0,
+              "y": 1000000,
+              "z": 0
+            }
+          }
+        },
+        {
+          "tick": 2751,
+          "position": {
+            "x": 3830,
+            "y": 1999,
+            "z": 5813
+          },
+          "blocked": true,
+          "support": {
+            "id": "platform-quay",
+            "y": 2001,
+            "normal": {
+              "x": 0,
+              "y": 1000000,
+              "z": 0
+            }
+          }
+        }
+      ],
+      "final": {
+        "id": "harbor-service-cart",
+        "type": "vehicle",
+        "role": "civilian",
+        "position": {
+          "x": 3830,
+          "y": 1999,
+          "z": 5813
+        },
+        "radius": 800,
+        "height": 1200,
+        "health": 50,
+        "maxHealth": 50,
+        "status": "active",
+        "pathIndex": 1,
+        "cooldown": 0,
+        "blocked": true
+      },
+      "status": "active"
+    },
+    {
+      "name": "patrol same-envelope closed trimesh diagnostic",
+      "expected": "Diagnostic geometry representation only; not an approved content change.",
+      "course": {
+        "format": "FlightCourse.v2",
+        "id": "harbor-diagnostic-7",
+        "revision": "diagnostic-r1",
+        "environment": "container-yard",
+        "world": {
+          "id": "harbor-docks",
+          "theme": "operations",
+          "style": "container-yard",
+          "themeProfile": {
+            "format": "ThemeProfile.v1",
+            "id": "operations",
+            "revision": "r1",
+            "title": {
+              "en": "Field Operations",
+              "uk": "Польові операції"
+            },
+            "palette": {
+              "sky": 12898517,
+              "fog": 11255746,
+              "ground": 6713707,
+              "wall": 5267818,
+              "accent": 9553852,
+              "warm": 15710059
+            },
+            "textureFilter": "linear",
+            "drone": "utility",
+            "characters": "training-patrol",
+            "assets": {
+              "gate": "builtin:utility-gate",
+              "marker": "builtin:signal-beacon",
+              "enemy": "builtin:sentry",
+              "vehicle": "builtin:patrol-rover"
+            },
+            "audio": {
+              "ambience": "industrial",
+              "motor": "utility",
+              "gate": "radio"
+            },
+            "ui": {
+              "accent": "#a5c581",
+              "font": "system-ui",
+              "borderRadius": 4
+            }
+          }
+        },
+        "locales": {
+          "en": {
+            "title": "Deck inspection",
+            "brief": "Observe the civilian inspector walking on the raised service deck from the open east side, then return to the quay.",
+            "lesson": "Hold a steady 4–8m view for four continuous seconds with low relative speed and tilt. The walker has real support at 5.5m; no minimum travel is required for this observation."
+          },
+          "uk": {
+            "title": "Огляд службового майданчика",
+            "brief": "Спостерігайте за цивільним інспектором на піднятому службовому майданчику з відкритого східного боку, потім поверніться на причал.",
+            "lesson": "Утримуйте стабільний вид із відстані 4–8м чотири секунди поспіль із малою відносною швидкістю та нахилом. Під пішоходом є справжня опора на висоті 5,5м; мінімальний шлях для спостереження не потрібен."
+          }
+        },
+        "spawn": {
+          "x": -12000,
+          "y": 5750,
+          "z": 34000
+        },
+        "bounds": {
+          "min": {
+            "x": -44000,
+            "y": 0,
+            "z": -48000
+          },
+          "max": {
+            "x": 40000,
+            "y": 28000,
+            "z": 46000
+          }
+        },
+        "obstacles": [
+          {
+            "id": "platform-service-deck",
+            "type": "trimesh",
+            "vertices": [
+              -21000,
+              5200,
+              27000,
+              -10000,
+              5200,
+              27000,
+              -21000,
+              5500,
+              27000,
+              -10000,
+              5500,
+              27000,
+              -21000,
+              5200,
+              36000,
+              -10000,
+              5200,
+              36000,
+              -21000,
+              5500,
+              36000,
+              -10000,
+              5500,
+              36000
+            ],
+            "indices": [
+              0,
+              2,
+              1,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              5,
+              7,
+              6,
+              0,
+              1,
+              4,
+              1,
+              5,
+              4,
+              2,
+              6,
+              3,
+              3,
+              6,
+              7,
+              0,
+              4,
+              2,
+              2,
+              4,
+              6,
+              1,
+              3,
+              5,
+              3,
+              7,
+              5
+            ]
+          }
+        ],
+        "steps": {
+          "self-level": [
+            {
+              "type": "hold",
+              "min": {
+                "x": -1000,
+                "y": 15000,
+                "z": -1000
+              },
+              "max": {
+                "x": 1000,
+                "y": 17000,
+                "z": 1000
+              },
+              "ticks": 50,
+              "maxSpeed": 500,
+              "maxTilt": 1000,
+              "minTilt": 0,
+              "centred": false,
+              "heading": null
+            }
+          ],
+          "acro": [
+            {
+              "type": "hold",
+              "min": {
+                "x": -1000,
+                "y": 15000,
+                "z": -1000
+              },
+              "max": {
+                "x": 1000,
+                "y": 17000,
+                "z": 1000
+              },
+              "ticks": 50,
+              "maxSpeed": 500,
+              "maxTilt": 1000,
+              "minTilt": 0,
+              "centred": false,
+              "heading": null
+            }
+          ]
+        },
+        "actors": [
+          {
+            "id": "harbor-deck-inspector",
+            "type": "patrol",
+            "role": "civilian",
+            "position": {
+              "x": -15500,
+              "y": 5500,
+              "z": 30000
+            },
+            "path": [
+              {
+                "x": -15500,
+                "y": 5500,
+                "z": 30000
+              },
+              {
+                "x": -15500,
+                "y": 5500,
+                "z": 33500
+              }
+            ],
+            "speed": 300,
+            "radius": 300,
+            "height": 1800,
+            "fireEveryTicks": 0,
+            "damage": 0,
+            "health": 50,
+            "projectileSpeed": 8000,
+            "range": 20000
+          }
+        ],
+        "rules": {
+          "seed": 1,
+          "maxTicks": 10000,
+          "droneRadius": 220,
+          "playerHealth": 100,
+          "collisionDamage": 0,
+          "playerDamage": 25,
+          "fireCooldown": 8,
+          "projectileSpeed": 20000,
+          "projectileTicks": 150
+        },
+        "conditions": {
+          "profile": "clear",
+          "revision": "r1"
+        }
+      },
+      "travel": 300.32455532033674,
+      "blockedTicks": 2950,
+      "maxStill": 2950,
+      "missingSupport": 0,
+      "supports": {
+        "platform-service-deck": 3000
+      },
+      "heightRange": [
+        5500,
+        5500
+      ],
+      "samples": [
+        {
+          "tick": 1,
+          "position": {
+            "x": -15500,
+            "y": 5500,
+            "z": 30006
+          },
+          "blocked": false,
+          "support": {
+            "id": "platform-service-deck",
+            "y": 5501,
+            "normal": {
+              "x": 0,
+              "y": 1000000,
+              "z": 0
+            }
+          }
+        },
+        {
+          "tick": 251,
+          "position": {
+            "x": -15502,
+            "y": 5500,
+            "z": 30300
+          },
+          "blocked": true,
+          "support": {
+            "id": "platform-service-deck",
+            "y": 5501,
+            "normal": {
+              "x": 0,
+              "y": 1000000,
+              "z": 0
+            }
+          }
+        },
+        {
+          "tick": 501,
+          "position": {
+            "x": -15502,
+            "y": 5500,
+            "z": 30300
+          },
+          "blocked": true,
+          "support": {
+            "id": "platform-service-deck",
+            "y": 5501,
+            "normal": {
+              "x": 0,
+              "y": 1000000,
+              "z": 0
+            }
+          }
+        },
+        {
+          "tick": 751,
+          "position": {
+            "x": -15502,
+            "y": 5500,
+            "z": 30300
+          },
+          "blocked": true,
+          "support": {
+            "id": "platform-service-deck",
+            "y": 5501,
+            "normal": {
+              "x": 0,
+              "y": 1000000,
+              "z": 0
+            }
+          }
+        },
+        {
+          "tick": 1001,
+          "position": {
+            "x": -15502,
+            "y": 5500,
+            "z": 30300
+          },
+          "blocked": true,
+          "support": {
+            "id": "platform-service-deck",
+            "y": 5501,
+            "normal": {
+              "x": 0,
+              "y": 1000000,
+              "z": 0
+            }
+          }
+        },
+        {
+          "tick": 1251,
+          "position": {
+            "x": -15502,
+            "y": 5500,
+            "z": 30300
+          },
+          "blocked": true,
+          "support": {
+            "id": "platform-service-deck",
+            "y": 5501,
+            "normal": {
+              "x": 0,
+              "y": 1000000,
+              "z": 0
+            }
+          }
+        },
+        {
+          "tick": 1501,
+          "position": {
+            "x": -15502,
+            "y": 5500,
+            "z": 30300
+          },
+          "blocked": true,
+          "support": {
+            "id": "platform-service-deck",
+            "y": 5501,
+            "normal": {
+              "x": 0,
+              "y": 1000000,
+              "z": 0
+            }
+          }
+        },
+        {
+          "tick": 1751,
+          "position": {
+            "x": -15502,
+            "y": 5500,
+            "z": 30300
+          },
+          "blocked": true,
+          "support": {
+            "id": "platform-service-deck",
+            "y": 5501,
+            "normal": {
+              "x": 0,
+              "y": 1000000,
+              "z": 0
+            }
+          }
+        },
+        {
+          "tick": 2001,
+          "position": {
+            "x": -15502,
+            "y": 5500,
+            "z": 30300
+          },
+          "blocked": true,
+          "support": {
+            "id": "platform-service-deck",
+            "y": 5501,
+            "normal": {
+              "x": 0,
+              "y": 1000000,
+              "z": 0
+            }
+          }
+        },
+        {
+          "tick": 2251,
+          "position": {
+            "x": -15502,
+            "y": 5500,
+            "z": 30300
+          },
+          "blocked": true,
+          "support": {
+            "id": "platform-service-deck",
+            "y": 5501,
+            "normal": {
+              "x": 0,
+              "y": 1000000,
+              "z": 0
+            }
+          }
+        },
+        {
+          "tick": 2501,
+          "position": {
+            "x": -15502,
+            "y": 5500,
+            "z": 30300
+          },
+          "blocked": true,
+          "support": {
+            "id": "platform-service-deck",
+            "y": 5501,
+            "normal": {
+              "x": 0,
+              "y": 1000000,
+              "z": 0
+            }
+          }
+        },
+        {
+          "tick": 2751,
+          "position": {
+            "x": -15502,
+            "y": 5500,
+            "z": 30300
+          },
+          "blocked": true,
+          "support": {
+            "id": "platform-service-deck",
+            "y": 5501,
+            "normal": {
+              "x": 0,
+              "y": 1000000,
+              "z": 0
+            }
+          }
+        }
+      ],
+      "final": {
+        "id": "harbor-deck-inspector",
+        "type": "patrol",
+        "role": "civilian",
+        "position": {
+          "x": -15502,
+          "y": 5500,
+          "z": 30300
+        },
+        "radius": 300,
+        "height": 1800,
+        "health": 50,
+        "maxHealth": 50,
+        "status": "active",
+        "pathIndex": 1,
+        "cooldown": 0,
+        "blocked": true
+      },
+      "status": "active"
+    },
+    {
+      "name": "vehicle finite support with real blocking wall",
+      "expected": "A correction must still stop at the actual wall, with no pass-through or endpoint snap.",
+      "course": {
+        "format": "FlightCourse.v2",
+        "id": "harbor-diagnostic-8",
+        "revision": "diagnostic-r1",
+        "environment": "container-yard",
+        "world": {
+          "id": "harbor-docks",
+          "theme": "operations",
+          "style": "container-yard",
+          "themeProfile": {
+            "format": "ThemeProfile.v1",
+            "id": "operations",
+            "revision": "r1",
+            "title": {
+              "en": "Field Operations",
+              "uk": "Польові операції"
+            },
+            "palette": {
+              "sky": 12898517,
+              "fog": 11255746,
+              "ground": 6713707,
+              "wall": 5267818,
+              "accent": 9553852,
+              "warm": 15710059
+            },
+            "textureFilter": "linear",
+            "drone": "utility",
+            "characters": "training-patrol",
+            "assets": {
+              "gate": "builtin:utility-gate",
+              "marker": "builtin:signal-beacon",
+              "enemy": "builtin:sentry",
+              "vehicle": "builtin:patrol-rover"
+            },
+            "audio": {
+              "ambience": "industrial",
+              "motor": "utility",
+              "gate": "radio"
+            },
+            "ui": {
+              "accent": "#a5c581",
+              "font": "system-ui",
+              "borderRadius": 4
+            }
+          }
+        },
+        "locales": {
+          "en": {
+            "title": "Terminal cart escort",
+            "brief": "Acquire the civilian service cart on the central land-side lane and follow its actual travel before returning to the quay H.",
+            "lesson": "Keep 4–7m range, match speed and hold the subject in the nose view for six continuous seconds while it travels at least four metres. No weapons are used in this layout."
+          },
+          "uk": {
+            "title": "Супровід портового візка",
+            "brief": "Знайдіть цивільний службовий візок на центральній смузі суходолу й супроводжуйте його справжній рух перед поверненням до H на причалі.",
+            "lesson": "Тримайте відстань 4–7м, узгодьте швидкість і утримуйте об’єкт у напрямку носа шість секунд поспіль, доки він проїде щонайменше чотири метри. У цьому маршруті немає застосування зброї."
+          }
+        },
+        "spawn": {
+          "x": -2000,
+          "y": 2250,
+          "z": 34000
+        },
+        "bounds": {
+          "min": {
+            "x": -44000,
+            "y": 0,
+            "z": -48000
+          },
+          "max": {
+            "x": 40000,
+            "y": 28000,
+            "z": 46000
+          }
+        },
+        "obstacles": [
+          {
+            "id": "platform-quay",
+            "min": {
+              "x": -47000,
+              "y": 0,
+              "z": -52000
+            },
+            "max": {
+              "x": 43000,
+              "y": 2000,
+              "z": 50000
+            }
+          },
+          {
+            "id": "wall-diagnostic",
+            "min": {
+              "x": 1000,
+              "y": 2000,
+              "z": 8000
+            },
+            "max": {
+              "x": 7000,
+              "y": 4500,
+              "z": 9000
+            }
+          }
+        ],
+        "steps": {
+          "self-level": [
+            {
+              "type": "hold",
+              "min": {
+                "x": -1000,
+                "y": 15000,
+                "z": -1000
+              },
+              "max": {
+                "x": 1000,
+                "y": 17000,
+                "z": 1000
+              },
+              "ticks": 50,
+              "maxSpeed": 500,
+              "maxTilt": 1000,
+              "minTilt": 0,
+              "centred": false,
+              "heading": null
+            }
+          ],
+          "acro": [
+            {
+              "type": "hold",
+              "min": {
+                "x": -1000,
+                "y": 15000,
+                "z": -1000
+              },
+              "max": {
+                "x": 1000,
+                "y": 17000,
+                "z": 1000
+              },
+              "ticks": 50,
+              "maxSpeed": 500,
+              "maxTilt": 1000,
+              "minTilt": 0,
+              "centred": false,
+              "heading": null
+            }
+          ]
+        },
+        "actors": [
+          {
+            "id": "harbor-service-cart",
+            "type": "vehicle",
+            "role": "civilian",
+            "position": {
+              "x": 4000,
+              "y": 2000,
+              "z": 0
+            },
+            "path": [
+              {
+                "x": 4000,
+                "y": 2000,
+                "z": 0
+              },
+              {
+                "x": 4000,
+                "y": 2000,
+                "z": 18000
+              }
+            ],
+            "speed": 700,
+            "radius": 800,
+            "height": 1200,
+            "fireEveryTicks": 0,
+            "damage": 0,
+            "health": 50,
+            "projectileSpeed": 8000,
+            "range": 20000
+          }
+        ],
+        "rules": {
+          "seed": 1,
+          "maxTicks": 10000,
+          "droneRadius": 220,
+          "playerHealth": 100,
+          "collisionDamage": 0,
+          "playerDamage": 25,
+          "fireCooldown": 8,
+          "projectileSpeed": 20000,
+          "projectileTicks": 150
+        },
+        "conditions": {
+          "profile": "clear",
+          "revision": "r1"
+        }
+      },
+      "travel": 2967.190905958273,
+      "blockedTicks": 2788,
+      "maxStill": 2788,
+      "missingSupport": 0,
+      "supports": {
+        "platform-quay": 3000
+      },
+      "heightRange": [
+        2000,
+        2001
+      ],
+      "samples": [
+        {
+          "tick": 1,
+          "position": {
+            "x": 4000,
+            "y": 2000,
+            "z": 14
+          },
+          "blocked": false,
+          "support": {
+            "id": "platform-quay",
+            "y": 2000,
+            "normal": {
+              "x": 0,
+              "y": 1000000,
+              "z": 0
+            }
+          }
+        },
+        {
+          "tick": 251,
+          "position": {
+            "x": 4002,
+            "y": 2001,
+            "z": 2967
+          },
+          "blocked": true,
+          "support": {
+            "id": "platform-quay",
+            "y": 2001,
+            "normal": {
+              "x": 0,
+              "y": 1000000,
+              "z": 0
+            }
+          }
+        },
+        {
+          "tick": 501,
+          "position": {
+            "x": 4002,
+            "y": 2001,
+            "z": 2967
+          },
+          "blocked": true,
+          "support": {
+            "id": "platform-quay",
+            "y": 2001,
+            "normal": {
+              "x": 0,
+              "y": 1000000,
+              "z": 0
+            }
+          }
+        },
+        {
+          "tick": 751,
+          "position": {
+            "x": 4002,
+            "y": 2001,
+            "z": 2967
+          },
+          "blocked": true,
+          "support": {
+            "id": "platform-quay",
+            "y": 2001,
+            "normal": {
+              "x": 0,
+              "y": 1000000,
+              "z": 0
+            }
+          }
+        },
+        {
+          "tick": 1001,
+          "position": {
+            "x": 4002,
+            "y": 2001,
+            "z": 2967
+          },
+          "blocked": true,
+          "support": {
+            "id": "platform-quay",
+            "y": 2001,
+            "normal": {
+              "x": 0,
+              "y": 1000000,
+              "z": 0
+            }
+          }
+        },
+        {
+          "tick": 1251,
+          "position": {
+            "x": 4002,
+            "y": 2001,
+            "z": 2967
+          },
+          "blocked": true,
+          "support": {
+            "id": "platform-quay",
+            "y": 2001,
+            "normal": {
+              "x": 0,
+              "y": 1000000,
+              "z": 0
+            }
+          }
+        },
+        {
+          "tick": 1501,
+          "position": {
+            "x": 4002,
+            "y": 2001,
+            "z": 2967
+          },
+          "blocked": true,
+          "support": {
+            "id": "platform-quay",
+            "y": 2001,
+            "normal": {
+              "x": 0,
+              "y": 1000000,
+              "z": 0
+            }
+          }
+        },
+        {
+          "tick": 1751,
+          "position": {
+            "x": 4002,
+            "y": 2001,
+            "z": 2967
+          },
+          "blocked": true,
+          "support": {
+            "id": "platform-quay",
+            "y": 2001,
+            "normal": {
+              "x": 0,
+              "y": 1000000,
+              "z": 0
+            }
+          }
+        },
+        {
+          "tick": 2001,
+          "position": {
+            "x": 4002,
+            "y": 2001,
+            "z": 2967
+          },
+          "blocked": true,
+          "support": {
+            "id": "platform-quay",
+            "y": 2001,
+            "normal": {
+              "x": 0,
+              "y": 1000000,
+              "z": 0
+            }
+          }
+        },
+        {
+          "tick": 2251,
+          "position": {
+            "x": 4002,
+            "y": 2001,
+            "z": 2967
+          },
+          "blocked": true,
+          "support": {
+            "id": "platform-quay",
+            "y": 2001,
+            "normal": {
+              "x": 0,
+              "y": 1000000,
+              "z": 0
+            }
+          }
+        },
+        {
+          "tick": 2501,
+          "position": {
+            "x": 4002,
+            "y": 2001,
+            "z": 2967
+          },
+          "blocked": true,
+          "support": {
+            "id": "platform-quay",
+            "y": 2001,
+            "normal": {
+              "x": 0,
+              "y": 1000000,
+              "z": 0
+            }
+          }
+        },
+        {
+          "tick": 2751,
+          "position": {
+            "x": 4002,
+            "y": 2001,
+            "z": 2967
+          },
+          "blocked": true,
+          "support": {
+            "id": "platform-quay",
+            "y": 2001,
+            "normal": {
+              "x": 0,
+              "y": 1000000,
+              "z": 0
+            }
+          }
+        }
+      ],
+      "final": {
+        "id": "harbor-service-cart",
+        "type": "vehicle",
+        "role": "civilian",
+        "position": {
+          "x": 4002,
+          "y": 2001,
+          "z": 2967
+        },
+        "radius": 800,
+        "height": 1200,
+        "health": 50,
+        "maxHealth": 50,
+        "status": "active",
+        "pathIndex": 1,
+        "cooldown": 0,
+        "blocked": true
+      },
+      "status": "active"
+    },
+    {
+      "name": "vehicle finite support ending before target",
+      "expected": "A correction must retain support and stop at the actual ledge, without hidden ground or authored endpoint snap.",
+      "course": {
+        "format": "FlightCourse.v2",
+        "id": "harbor-diagnostic-9",
+        "revision": "diagnostic-r1",
+        "environment": "container-yard",
+        "world": {
+          "id": "harbor-docks",
+          "theme": "operations",
+          "style": "container-yard",
+          "themeProfile": {
+            "format": "ThemeProfile.v1",
+            "id": "operations",
+            "revision": "r1",
+            "title": {
+              "en": "Field Operations",
+              "uk": "Польові операції"
+            },
+            "palette": {
+              "sky": 12898517,
+              "fog": 11255746,
+              "ground": 6713707,
+              "wall": 5267818,
+              "accent": 9553852,
+              "warm": 15710059
+            },
+            "textureFilter": "linear",
+            "drone": "utility",
+            "characters": "training-patrol",
+            "assets": {
+              "gate": "builtin:utility-gate",
+              "marker": "builtin:signal-beacon",
+              "enemy": "builtin:sentry",
+              "vehicle": "builtin:patrol-rover"
+            },
+            "audio": {
+              "ambience": "industrial",
+              "motor": "utility",
+              "gate": "radio"
+            },
+            "ui": {
+              "accent": "#a5c581",
+              "font": "system-ui",
+              "borderRadius": 4
+            }
+          }
+        },
+        "locales": {
+          "en": {
+            "title": "Terminal cart escort",
+            "brief": "Acquire the civilian service cart on the central land-side lane and follow its actual travel before returning to the quay H.",
+            "lesson": "Keep 4–7m range, match speed and hold the subject in the nose view for six continuous seconds while it travels at least four metres. No weapons are used in this layout."
+          },
+          "uk": {
+            "title": "Супровід портового візка",
+            "brief": "Знайдіть цивільний службовий візок на центральній смузі суходолу й супроводжуйте його справжній рух перед поверненням до H на причалі.",
+            "lesson": "Тримайте відстань 4–7м, узгодьте швидкість і утримуйте об’єкт у напрямку носа шість секунд поспіль, доки він проїде щонайменше чотири метри. У цьому маршруті немає застосування зброї."
+          }
+        },
+        "spawn": {
+          "x": 0,
+          "y": 2250,
+          "z": 4000
+        },
+        "bounds": {
+          "min": {
+            "x": -44000,
+            "y": 0,
+            "z": -48000
+          },
+          "max": {
+            "x": 40000,
+            "y": 28000,
+            "z": 46000
+          }
+        },
+        "obstacles": [
+          {
+            "id": "platform-quay",
+            "min": {
+              "x": -2000,
+              "y": 0,
+              "z": -2000
+            },
+            "max": {
+              "x": 10000,
+              "y": 2000,
+              "z": 9000
+            }
+          }
+        ],
+        "steps": {
+          "self-level": [
+            {
+              "type": "hold",
+              "min": {
+                "x": -1000,
+                "y": 15000,
+                "z": -1000
+              },
+              "max": {
+                "x": 1000,
+                "y": 17000,
+                "z": 1000
+              },
+              "ticks": 50,
+              "maxSpeed": 500,
+              "maxTilt": 1000,
+              "minTilt": 0,
+              "centred": false,
+              "heading": null
+            }
+          ],
+          "acro": [
+            {
+              "type": "hold",
+              "min": {
+                "x": -1000,
+                "y": 15000,
+                "z": -1000
+              },
+              "max": {
+                "x": 1000,
+                "y": 17000,
+                "z": 1000
+              },
+              "ticks": 50,
+              "maxSpeed": 500,
+              "maxTilt": 1000,
+              "minTilt": 0,
+              "centred": false,
+              "heading": null
+            }
+          ]
+        },
+        "actors": [
+          {
+            "id": "harbor-service-cart",
+            "type": "vehicle",
+            "role": "civilian",
+            "position": {
+              "x": 4000,
+              "y": 2000,
+              "z": 0
+            },
+            "path": [
+              {
+                "x": 4000,
+                "y": 2000,
+                "z": 0
+              },
+              {
+                "x": 4000,
+                "y": 2000,
+                "z": 18000
+              }
+            ],
+            "speed": 700,
+            "radius": 800,
+            "height": 1200,
+            "fireEveryTicks": 0,
+            "damage": 0,
+            "health": 50,
+            "projectileSpeed": 8000,
+            "range": 20000
+          }
+        ],
+        "rules": {
+          "seed": 1,
+          "maxTicks": 10000,
+          "droneRadius": 220,
+          "playerHealth": 100,
+          "collisionDamage": 0,
+          "playerDamage": 25,
+          "fireCooldown": 8,
+          "projectileSpeed": 20000,
+          "projectileTicks": 150
+        },
+        "conditions": {
+          "profile": "clear",
+          "revision": "r1"
+        }
+      },
+      "travel": 2465.102188020938,
+      "blockedTicks": 2824,
+      "maxStill": 2824,
+      "missingSupport": 0,
+      "supports": {
+        "platform-quay": 3000
+      },
+      "heightRange": [
+        1999,
+        2000
+      ],
+      "samples": [
+        {
+          "tick": 1,
+          "position": {
+            "x": 4000,
+            "y": 2000,
+            "z": 14
+          },
+          "blocked": false,
+          "support": {
+            "id": "platform-quay",
+            "y": 2000,
+            "normal": {
+              "x": 0,
+              "y": 1000000,
+              "z": 0
+            }
+          }
+        },
+        {
+          "tick": 251,
+          "position": {
+            "x": 4000,
+            "y": 1999,
+            "z": 2465
+          },
+          "blocked": true,
+          "support": {
+            "id": "platform-quay",
+            "y": 2001,
+            "normal": {
+              "x": 0,
+              "y": 1000000,
+              "z": 0
+            }
+          }
+        },
+        {
+          "tick": 501,
+          "position": {
+            "x": 4000,
+            "y": 1999,
+            "z": 2465
+          },
+          "blocked": true,
+          "support": {
+            "id": "platform-quay",
+            "y": 2001,
+            "normal": {
+              "x": 0,
+              "y": 1000000,
+              "z": 0
+            }
+          }
+        },
+        {
+          "tick": 751,
+          "position": {
+            "x": 4000,
+            "y": 1999,
+            "z": 2465
+          },
+          "blocked": true,
+          "support": {
+            "id": "platform-quay",
+            "y": 2001,
+            "normal": {
+              "x": 0,
+              "y": 1000000,
+              "z": 0
+            }
+          }
+        },
+        {
+          "tick": 1001,
+          "position": {
+            "x": 4000,
+            "y": 1999,
+            "z": 2465
+          },
+          "blocked": true,
+          "support": {
+            "id": "platform-quay",
+            "y": 2001,
+            "normal": {
+              "x": 0,
+              "y": 1000000,
+              "z": 0
+            }
+          }
+        },
+        {
+          "tick": 1251,
+          "position": {
+            "x": 4000,
+            "y": 1999,
+            "z": 2465
+          },
+          "blocked": true,
+          "support": {
+            "id": "platform-quay",
+            "y": 2001,
+            "normal": {
+              "x": 0,
+              "y": 1000000,
+              "z": 0
+            }
+          }
+        },
+        {
+          "tick": 1501,
+          "position": {
+            "x": 4000,
+            "y": 1999,
+            "z": 2465
+          },
+          "blocked": true,
+          "support": {
+            "id": "platform-quay",
+            "y": 2001,
+            "normal": {
+              "x": 0,
+              "y": 1000000,
+              "z": 0
+            }
+          }
+        },
+        {
+          "tick": 1751,
+          "position": {
+            "x": 4000,
+            "y": 1999,
+            "z": 2465
+          },
+          "blocked": true,
+          "support": {
+            "id": "platform-quay",
+            "y": 2001,
+            "normal": {
+              "x": 0,
+              "y": 1000000,
+              "z": 0
+            }
+          }
+        },
+        {
+          "tick": 2001,
+          "position": {
+            "x": 4000,
+            "y": 1999,
+            "z": 2465
+          },
+          "blocked": true,
+          "support": {
+            "id": "platform-quay",
+            "y": 2001,
+            "normal": {
+              "x": 0,
+              "y": 1000000,
+              "z": 0
+            }
+          }
+        },
+        {
+          "tick": 2251,
+          "position": {
+            "x": 4000,
+            "y": 1999,
+            "z": 2465
+          },
+          "blocked": true,
+          "support": {
+            "id": "platform-quay",
+            "y": 2001,
+            "normal": {
+              "x": 0,
+              "y": 1000000,
+              "z": 0
+            }
+          }
+        },
+        {
+          "tick": 2501,
+          "position": {
+            "x": 4000,
+            "y": 1999,
+            "z": 2465
+          },
+          "blocked": true,
+          "support": {
+            "id": "platform-quay",
+            "y": 2001,
+            "normal": {
+              "x": 0,
+              "y": 1000000,
+              "z": 0
+            }
+          }
+        },
+        {
+          "tick": 2751,
+          "position": {
+            "x": 4000,
+            "y": 1999,
+            "z": 2465
+          },
+          "blocked": true,
+          "support": {
+            "id": "platform-quay",
+            "y": 2001,
+            "normal": {
+              "x": 0,
+              "y": 1000000,
+              "z": 0
+            }
+          }
+        }
+      ],
+      "final": {
+        "id": "harbor-service-cart",
+        "type": "vehicle",
+        "role": "civilian",
+        "position": {
+          "x": 4000,
+          "y": 1999,
+          "z": 2465
+        },
+        "radius": 800,
+        "height": 1200,
+        "health": 50,
+        "maxHealth": 50,
+        "status": "active",
+        "pathIndex": 1,
+        "cooldown": 0,
+        "blocked": true
+      },
+      "status": "active"
+    }
+  ]
+}

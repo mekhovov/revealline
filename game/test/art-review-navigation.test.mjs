@@ -8,6 +8,7 @@ import { parse } from 'acorn';
 import {
   nativeArtReviewURL,
   snakeLaunchURL,
+  overflightLaunchURL,
   fpvLaunchURL,
   fpvWorldLaunchURL,
   fpvReturnURL,
@@ -47,6 +48,10 @@ test('an explicit art review crosses fixed native pages only inside the same bui
         'game/snake/index.html',
         'game/snake/play.html',
         'game/studio/snake.html',
+        'game/studio/overflight.html',
+        'game/studio/raid.html',
+        'game/overflight/play.html',
+        'game/overflight/raid.html',
         'game/playground/',
         'game/hunt/',
         'game/online/',
@@ -121,6 +126,7 @@ test('native launch/return functions preserve preview without replacing appearan
     const source = `${root}game/?edition=sample&journey=opening&artReview=industrial-roster-v3`;
     for (const target of [
       snakeLaunchURL(source, 'team', 'uk', pin),
+      overflightLaunchURL(source, 'uk', pin),
       fpvLaunchURL(source, 'uk', pin),
       fpvWorldLaunchURL(source, 'uk', pin),
     ]) {
@@ -265,12 +271,42 @@ test('native SIM mode links retain the accepted return preview on display and ac
     const nav = createSimModeLinks({ document: doc, gameReturn: returnURL, locale: () => locale });
     doc.body.append(nav);
     for (const link of nav.querySelectorAll('a')) {
-      assert.equal(new URL(link.href).searchParams.get('artReview'), 'industrial-roster-v3');
+      assert.equal(
+        new URL(link.getAttribute('href')).searchParams.get('artReview'),
+        'industrial-roster-v3',
+      );
       locale = 'uk';
       link.click();
-      assert.equal(new URL(link.href).searchParams.get('artReview'), 'industrial-roster-v3');
-      assert.equal(new URL(link.href).searchParams.get('lang'), 'uk');
+      assert.equal(
+        new URL(link.getAttribute('href')).searchParams.get('artReview'),
+        'industrial-roster-v3',
+      );
+      assert.equal(new URL(link.getAttribute('href')).searchParams.get('lang'), 'uk');
     }
-    assert.equal(nav.querySelectorAll('a').length, 4);
+    assert.equal(nav.querySelectorAll('a').length, 5);
+    const overflight = nav.querySelector('[data-game-mode="overflight"]');
+    assert.equal(
+      new URL(overflight.getAttribute('href')).pathname,
+      new URL(`${root}game/overflight/play.html`).pathname,
+    );
+  }
+});
+
+test('SIM mode navigation accepts validated Survivor and Raid return locations', () => {
+  for (const page of ['play', 'raid']) {
+    const doc = new Document();
+    const nav = createSimModeLinks({
+      document: doc,
+      gameReturn: `https://example.test/project/game/overflight/${page}.html?lang=uk`,
+      locale: () => 'uk',
+    });
+    assert.deepEqual(
+      nav.querySelectorAll('[data-game-mode]').map((node) => node.dataset.gameMode),
+      ['solo', 'team', 'versus', 'snake', 'overflight', 'simulator'],
+    );
+    assert.equal(
+      nav.querySelector('[data-game-mode="overflight"]').getAttribute('href'),
+      'https://example.test/project/game/overflight/play.html?lang=uk',
+    );
   }
 });

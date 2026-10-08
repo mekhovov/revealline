@@ -1,0 +1,255 @@
+{
+  "version": "classic-snake-replay.v1",
+  "ruleset": "classic-snake-core.v1",
+  "level": {
+    "version": "classic-snake-level.v1",
+    "id": "classic-snake-turning-pockets",
+    "revision": "2",
+    "name": "Turning Pockets",
+    "width": 24,
+    "height": 18,
+    "walls": [
+      {
+        "x": 14,
+        "y": 4
+      },
+      {
+        "x": 15,
+        "y": 4
+      },
+      {
+        "x": 18,
+        "y": 4
+      },
+      {
+        "x": 7,
+        "y": 5
+      },
+      {
+        "x": 8,
+        "y": 5
+      },
+      {
+        "x": 14,
+        "y": 5
+      },
+      {
+        "x": 15,
+        "y": 5
+      },
+      {
+        "x": 18,
+        "y": 5
+      },
+      {
+        "x": 7,
+        "y": 6
+      },
+      {
+        "x": 8,
+        "y": 6
+      },
+      {
+        "x": 18,
+        "y": 6
+      },
+      {
+        "x": 7,
+        "y": 7
+      },
+      {
+        "x": 8,
+        "y": 7
+      },
+      {
+        "x": 18,
+        "y": 7
+      },
+      {
+        "x": 7,
+        "y": 8
+      },
+      {
+        "x": 8,
+        "y": 8
+      },
+      {
+        "x": 18,
+        "y": 8
+      },
+      {
+        "x": 13,
+        "y": 10
+      },
+      {
+        "x": 13,
+        "y": 11
+      },
+      {
+        "x": 10,
+        "y": 12
+      },
+      {
+        "x": 11,
+        "y": 12
+      },
+      {
+        "x": 13,
+        "y": 12
+      },
+      {
+        "x": 10,
+        "y": 13
+      },
+      {
+        "x": 11,
+        "y": 13
+      },
+      {
+        "x": 13,
+        "y": 13
+      }
+    ],
+    "spawns": [
+      {
+        "x": 5,
+        "y": 2,
+        "direction": "right"
+      },
+      {
+        "x": 18,
+        "y": 15,
+        "direction": "left"
+      }
+    ],
+    "goal": 9,
+    "stepMs": 190,
+    "speedupEvery": 0,
+    "minStepMs": 190,
+    "wrap": false,
+    "targetMovement": "flee",
+    "fleeEvery": 6
+  },
+  "levelIdentity": "d753cd3509fd8213",
+  "mode": "solo",
+  "seed": 17,
+  "steps": 190,
+  "turns": [
+    {
+      "tick": 8,
+      "playerId": 0,
+      "direction": "down"
+    },
+    {
+      "tick": 15,
+      "playerId": 0,
+      "direction": "right"
+    },
+    {
+      "tick": 17,
+      "playerId": 0,
+      "direction": "down"
+    },
+    {
+      "tick": 25,
+      "playerId": 0,
+      "direction": "left"
+    },
+    {
+      "tick": 34,
+      "playerId": 0,
+      "direction": "up"
+    },
+    {
+      "tick": 51,
+      "playerId": 0,
+      "direction": "right"
+    },
+    {
+      "tick": 68,
+      "playerId": 0,
+      "direction": "down"
+    },
+    {
+      "tick": 85,
+      "playerId": 0,
+      "direction": "left"
+    },
+    {
+      "tick": 100,
+      "playerId": 0,
+      "direction": "up"
+    },
+    {
+      "tick": 106,
+      "playerId": 0,
+      "direction": "right"
+    },
+    {
+      "tick": 110,
+      "playerId": 0,
+      "direction": "up"
+    },
+    {
+      "tick": 120,
+      "playerId": 0,
+      "direction": "right"
+    },
+    {
+      "tick": 130,
+      "playerId": 0,
+      "direction": "down"
+    },
+    {
+      "tick": 132,
+      "playerId": 0,
+      "direction": "left"
+    },
+    {
+      "tick": 149,
+      "playerId": 0,
+      "direction": "up"
+    },
+    {
+      "tick": 151,
+      "playerId": 0,
+      "direction": "left"
+    },
+    {
+      "tick": 152,
+      "playerId": 0,
+      "direction": "up"
+    },
+    {
+      "tick": 153,
+      "playerId": 0,
+      "direction": "right"
+    },
+    {
+      "tick": 170,
+      "playerId": 0,
+      "direction": "down"
+    },
+    {
+      "tick": 177,
+      "playerId": 0,
+      "direction": "left"
+    },
+    {
+      "tick": 179,
+      "playerId": 0,
+      "direction": "up"
+    },
+    {
+      "tick": 184,
+      "playerId": 0,
+      "direction": "left"
+    },
+    {
+      "tick": 189,
+      "playerId": 0,
+      "direction": "down"
+    }
+  ],
+  "checkpoint": "a3a844f50085d201"
+}

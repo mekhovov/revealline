@@ -1,9 +1,7 @@
 @import url('./optional-practice-panel.css');
 
-/* Legacy layout and paint share one cascade layer. Theme recipes own opt-in appearance. */
 @layer legacy {
   .game-mode-destinations {
-    grid-column: 1 / -1;
     min-width: 0;
     font-size: var(--fk-text-secondary, 14px);
   }
@@ -13,75 +11,85 @@
     cursor: pointer;
     color: var(--fk-muted, #a5b2bb);
   }
+  .game-mode-destinations a {
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    color: var(--fk-accent, #f4bf62);
+  }
   .game-mode-destinations > summary:focus-visible {
     outline: 2px solid var(--fk-focus, #78dce8);
     outline-offset: 2px;
   }
-  .game-mode-destinations a {
-    min-height: 44px;
-    display: inline-flex;
-    align-items: center;
-    margin-inline-end: 24px;
-    color: var(--fk-accent, #f4bf62);
-    font-size: var(--fk-text-secondary, 14px);
-  }
-  .field-kit .game-mode-choice {
-    display: grid;
-    grid-template-columns: repeat(5, minmax(0, 1fr));
-    gap: var(--fk-space-2, 8px);
-    margin: 0 0 var(--fk-space-6, 24px);
-  }
-
-  .field-kit .game-mode-choice > :is(a, button),
-  .field-kit #couch-app .game-mode-choice > :is(a, button) {
-    display: flex;
-    min-width: 0;
-    min-height: var(--fk-target-size, 44px);
-    flex-direction: column;
-    align-items: stretch;
-    justify-content: center;
-    padding: 10px 12px;
-    border: 2px solid var(--fk-control-line, #647786);
-    background: var(--fk-panel, #101923);
-    color: var(--fk-text, #f3f0db);
-    font-family: var(--fk-font-ui, sans-serif);
-    font-size: var(--fk-text-control, 16px);
-    line-height: var(--fk-leading-control, 1.35);
-    text-align: left;
-    text-decoration: none;
-    overflow-wrap: anywhere;
-  }
-
-  .field-kit .game-mode-choice > [aria-current],
-  .field-kit #couch-app .game-mode-choice > [aria-current] {
-    border-color: var(--fk-accent, #f4bf62);
-    box-shadow: inset 0 -4px var(--fk-accent, #f4bf62);
-  }
-
-  .field-kit .game-mode-choice > :is(a, button):hover,
-  .field-kit .game-mode-choice > :is(a, button):focus-visible,
-  .field-kit #couch-app .game-mode-choice > :is(a, button):hover,
-  .field-kit #couch-app .game-mode-choice > :is(a, button):focus-visible {
-    background: var(--fk-panel-raised, #182531);
-    border-color: var(--fk-focus, #78dce8);
-  }
-
-  .field-kit .game-mode-description {
-    color: var(--fk-muted, #a5b2bb);
-    font-size: var(--fk-text-secondary, 14px);
-    font-weight: normal;
-  }
-
-  .field-kit .game-mode-choice[hidden] {
+  .game-mode-choice[hidden] {
     display: none;
   }
+}
 
-  @media (max-width: 640px) {
-    .field-kit .game-mode-choice {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-    .field-kit .game-mode-choice > [data-snake-entry] {
-      grid-column: 1 / -1;
-    }
+/* Layout belongs to the shared mode chooser, including theme-styled hosts. */
+.game-mode-choice {
+  display: grid;
+  grid-template-columns: repeat(var(--game-mode-count, 5), minmax(0, 1fr));
+  gap: clamp(4px, 1vw, 8px);
+  margin: 0 0 20px;
+  min-width: 0;
+}
+body.field-kit .game-mode-choice > :is(a, button),
+body.field-kit #couch-app .game-mode-choice > :is(a, button) {
+  position: relative;
+  display: flex;
+  box-sizing: border-box;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  min-width: 0;
+  min-height: 76px;
+  padding: 15px 3px 7px;
+  margin: 0;
+  font: 600 clamp(11px, 2.6vw, 16px) / 1.2 var(--fk-font-ui, sans-serif);
+  text-align: center;
+  white-space: nowrap;
+  text-decoration: none;
+  overflow-wrap: normal;
+  word-break: normal;
+}
+.game-mode-choice strong {
+  font: inherit;
+}
+.game-mode-choice .game-mode-badge {
+  position: absolute;
+  top: 4px;
+  right: 5px;
+  font: 600 9px/1 var(--fk-font-ui, sans-serif);
+  letter-spacing: 0.02em;
+  opacity: 0.8;
+}
+.game-mode-choice [data-menu-icon]::before {
+  content: '';
+  display: block;
+  flex: 0 0 20px;
+  width: 20px;
+  height: 20px;
+  background: currentColor;
+  mask: var(--native-menu-icon) center/contain no-repeat;
+  -webkit-mask: var(--native-menu-icon) center/contain no-repeat;
+}
+.game-mode-choice > [aria-current='page'] {
+  box-shadow: inset 0 -3px var(--fk-accent, #f4bf62);
+}
+.game-mode-choice > :is(:focus-visible, .controller-focus) {
+  outline: 3px solid var(--fk-focus, #78dce8);
+  outline-offset: 3px;
+}
+@media (max-width: 360px) {
+  body.field-kit .game-mode-choice > :is(a, button),
+  body.field-kit #couch-app .game-mode-choice > :is(a, button) {
+    font-size: 11px;
+  }
+}
+@media (max-width: 299px) {
+  .game-mode-choice {
+    grid-template-columns: repeat(3, minmax(44px, 1fr));
   }
 }

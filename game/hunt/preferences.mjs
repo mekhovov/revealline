@@ -18,6 +18,7 @@ function storedChoice({
   format,
   defaults,
   valid,
+  normalize = (value) => value,
   window: target = globalThis,
   getStorage = () => globalThis.localStorage,
   writable = () => true,
@@ -29,7 +30,7 @@ function storedChoice({
   const listeners = new Set();
   const parse = (raw) => {
     if (raw === null) return { ...defaults };
-    const value = boundedJSON(raw, { maxBytes: 512, maxNodes: 12, maxDepth: 2 });
+    const value = normalize(boundedJSON(raw, { maxBytes: 512, maxNodes: 12, maxDepth: 2 }));
     exactKeys(value, ['format', ...Object.keys(defaults)], format);
     if (value.format !== format || !valid(value))
       throw new TypeError('Unsupported preference record.');
@@ -158,8 +159,14 @@ export const createDestructionPreferences = (options = {}) =>
     ...options,
     key: DESTRUCTION_PREFERENCES_KEY,
     format: 'DestructionPreferencesV1',
-    defaults: { brutal: false, blood: true },
-    valid: (value) => typeof value.brutal === 'boolean' && typeof value.blood === 'boolean',
+    // Retain the shared V1 boolean: true = reactions, false = classic sounds.
+    // Missing legacy values choose reactions without changing the visual settings.
+    defaults: { brutal: false, blood: true, vocals: true },
+    normalize: (value) => ({ vocals: true, ...value }),
+    valid: (value) =>
+      typeof value.brutal === 'boolean' &&
+      typeof value.blood === 'boolean' &&
+      typeof value.vocals === 'boolean',
   });
 
 /** Cosmetic cast choice is shared by Capture, Snake, Studio and flight hosts.

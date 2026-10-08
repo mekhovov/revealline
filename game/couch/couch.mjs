@@ -1,8 +1,24 @@
 import { acceptAttemptAppearance } from '../presentation/attempt-appearance.mjs';
 import { prepareIndustrialEnvironmentSource } from '../presentation/industrial-environments.mjs';
 import { runtimeActorArtRevision } from '../hunt/preferences.mjs';
+import { loadBaseArtwork } from '../base-artwork.mjs';
+import { createEnemyStatsHost } from '../enemy-stats.mjs';
+import { mountEnemyStats } from '../ui/enemy-stats.mjs';
+import { arcadeEnemyDefeats } from '../ui/enemy-stats-events.mjs';
+import {
+  createContinuousPlayController,
+  mountContinuousPlayControls,
+} from '../ui/continuous-play.mjs';
+import { mountContinuousCelebration } from '../ui/continuous-celebration.mjs';
 import { nativeArtReviewURL } from '../ui/art-review-navigation.mjs';
 import { selectedArcadeCollection } from '../presentation/industrial-arcade.mjs';
+import {
+  mountGlobalSettingsTools,
+  globalSettingsToolsRoot,
+  globalSettingsToolFrameFocused,
+  closeGlobalSettingsTool,
+  guardGlobalSettingsToolBlur,
+} from '../ui/global-settings-tools.mjs';
 import { createLocalMatchRecorder, localMatchProvenance } from '../multiplayer-recording.mjs';
 import { recordingVerificationHref } from '../ui/recording-verification.mjs';
 import { pursuitRoster } from '../hunt/pursuit-goals.mjs';
@@ -407,8 +423,10 @@ try {
     campaign: { ...campaign, classRecipes: registry },
     classRecipes: registry,
     themes: themes.themes,
-    visualOverrides: {},
-    levelVisuals: [],
+    ...(await loadBaseArtwork(
+      { ...campaign, classRecipes: registry },
+      { signal: artworkLifetime.signal },
+    )),
     music: [],
     sourcePackId: null,
   };
@@ -496,7 +514,10 @@ try {
     onOpen() {
       if (shell.scope() !== 'main') return;
       const target = $('race-journey-save').hidden ? $('race-start') : $('race-journey-save-retry');
-      if (!target.disabled && !target.hidden) target.focus();
+      if (!target.disabled && !target.hidden) {
+        if ($('race-journey-save').hidden) target.focus();
+        else shell.openSettings('data', target);
+      }
     },
   });
   let journeyThemeSources;
@@ -976,6 +997,51 @@ try {
     disposed = false,
     frameId = null,
     stopNative = () => {};
+  const statsSessionId = crypto.randomUUID();
+  const enemyStatistics = createEnemyStatsHost({ gameType: 'versus' });
+  void enemyStatistics.stats.read();
+  const enemyStatsViews = [];
+  enemyStatsViews.push(
+    mountEnemyStats({
+      container: $('race-message').parentElement,
+      stats: enemyStatistics.stats,
+      gameType: 'versus',
+      getAttempt: enemyStatistics.getAttempt,
+      locale: () => document.documentElement.lang,
+      variant: 'panel',
+    }),
+  );
+  enemyStatsViews.push(
+    mountEnemyStats({
+      container: $('race-clock').parentElement,
+      stats: enemyStatistics.stats,
+      gameType: 'versus',
+      getAttempt: enemyStatistics.getAttempt,
+      locale: () => document.documentElement.lang,
+      variant: 'hud',
+    }),
+  );
+  const continuousPlay = createContinuousPlayController({
+    isCurrent: (identity) => identity === match && !disposed && match?.status === 'finished',
+    isActive: () => !document.hidden && document.hasFocus(),
+    onNext: () => $('race-start').click(),
+    onRetry: () => $('race-start').click(),
+  });
+  const flowControls = mountContinuousPlayControls({
+    parent: $('race-start').parentElement,
+    primaryAction: $('race-start'),
+    controller: continuousPlay,
+    locale: () => document.documentElement.lang,
+  });
+  const flowCelebration = mountContinuousCelebration({
+    controller: continuousPlay,
+    reduced: () => displayPreferences.snapshot().effectiveReducedEffects,
+  });
+  const cancelContinuousPlay = () => continuousPlay.cancel('interaction');
+  document.addEventListener('pointerdown', cancelContinuousPlay, true);
+  document.addEventListener('keydown', cancelContinuousPlay, true);
+  window.addEventListener('blur', cancelContinuousPlay);
+  window.addEventListener('gamepaddisconnected', cancelContinuousPlay);
   function hideStartCue() {
     startCue = null;
     $('race-start-cue').hidden = true;
@@ -2276,6 +2342,7 @@ try {
   }
 
   $('race-start').onclick = () => {
+    continuousPlay.cancel('action');
     if (libraryContinuation) return;
     if (match.status === 'finished' && creatorVersusContinuation(roundRecipe.entry))
       return continueMission($('race-start'));
@@ -2668,6 +2735,7 @@ try {
   });
   const controllerSession = createControllerSession({
     restoreKey: COUCH_RESTORE_KEY,
+    initialSlots: incomingContinuation?.slots,
     onLoss: () => {
       pendingPadLoss = true;
       pause();
@@ -2726,6 +2794,7 @@ try {
     root: $('race-encounter-help'),
     getLevels: () => match?.runs?.map((run) => run.level) ?? [],
   });
+  let globalSettingsVisit = 0;
   shell = createCouchShell({
     controllerNeedsTouch: (seat) => slots[seat] !== null && !controllerSession.completeFlight(seat),
     getSceneContext: () => ({
@@ -2754,6 +2823,7 @@ try {
     getTeamJourneyRoute: () =>
       librarySourceReturn?.mode === 'team' ? librarySourceReturn.journey : null,
     onTransition: ({ to, back = false } = {}) => {
+      globalSettingsVisit++;
       ++libraryOpenEpoch;
       cancelLibraryDecision();
       clear();
@@ -2972,9 +3042,7 @@ try {
     localizedText(stay, () => t('interface:stay'));
     stay.type = 'button';
     replace.id = 'race-library-play';
-    localizedText(replace, () =>
-      t(context.continuousNext ? 'interface:replacePlay' : 'interface:replaceAndPrepare'),
-    );
+    localizedText(replace, () => t('interface:replacePlay'));
     replace.type = 'button';
     dialog.append(heading, copy, stay, replace);
     document.body.append(dialog);
@@ -3061,12 +3129,10 @@ try {
       const accepted = await startRace(entry, {
         rulesEdition: selection.rulesEdition,
         libraryStart: context.continuousNext ? null : context,
-        briefingOnly: !context.continuousNext,
+        briefingOnly: false,
       });
       const started =
-        accepted === true &&
-        roundRecipe.entry === entry &&
-        match.status === (context.continuousNext ? 'running' : 'ready');
+        accepted === true && roundRecipe.entry === entry && match.status === 'running';
       if (started) currentLibrarySelection = { match, id: context.libraryMissionId };
       return started;
     }
@@ -3109,9 +3175,7 @@ try {
       const adopted = staged.adopt(current);
       if (!adopted?.current() || !focus.current() || controller.signal.aborted) return false;
       focus.dispose();
-      const started = context.continuousNext
-        ? adopted.start()
-        : showPreparedBriefing(match, generation);
+      const started = adopted.start();
       if (started) currentLibrarySelection = { match, id: context.libraryMissionId };
       return started;
     } finally {
@@ -3356,12 +3420,9 @@ try {
     if (!context.isCurrent()) return false;
     const accepted = await startRace(entry, {
       libraryStart: context.continuousNext ? null : context,
-      briefingOnly: !context.continuousNext,
+      briefingOnly: false,
     });
-    const started =
-      accepted === true &&
-      roundRecipe.entry === entry &&
-      match.status === (context.continuousNext ? 'running' : 'ready');
+    const started = accepted === true && roundRecipe.entry === entry && match.status === 'running';
     if (started) currentLibrarySelection = { match, id: context.libraryMissionId };
     return started;
   }
@@ -3480,12 +3541,10 @@ try {
                   if (!context.isCurrent()) return false;
                   const accepted = await startRace(entry, {
                     libraryStart: context.continuousNext ? null : context,
-                    briefingOnly: !context.continuousNext,
+                    briefingOnly: false,
                   });
                   const started =
-                    accepted === true &&
-                    roundRecipe.entry === entry &&
-                    match.status === (context.continuousNext ? 'running' : 'ready');
+                    accepted === true && roundRecipe.entry === entry && match.status === 'running';
                   if (started)
                     currentLibrarySelection = {
                       match,
@@ -4013,7 +4072,32 @@ try {
   });
   if ($('race-offline')) $('race-offline').onclick = () => installOfflinePanel.open();
 
+  const globalTools = mountGlobalSettingsTools({
+    document,
+    window,
+    prefix: 'race-global',
+    settingsRoot: $('race-options-panel'),
+    panels: Object.fromEntries(
+      ['controls', 'data', 'content', 'extras'].map((name) => [
+        name,
+        $(`race-settings-panel-${name}`),
+      ]),
+    ),
+    existing: {
+      offlineTools: [$('race-offline'), $('race-offline-status')].filter(Boolean),
+      about: $('race-more-about'),
+    },
+    getSettingsOpen: () => !disposed && shell.scope() === 'options',
+    getOwner: () => ({ attempt: catalogueAttempt(), visit: globalSettingsVisit }),
+    isOwnerCurrent: (owner) =>
+      owner?.visit === globalSettingsVisit && catalogueAttemptCurrent(owner.attempt),
+    onOpen: clear,
+    offlinePanel: installOfflinePanel,
+  });
+  shell.refreshGlobalSettings?.({ controls: globalTools.controls });
+
   function couchScope() {
+    if (globalSettingsToolsRoot(document)) return `couch:${globalSettingsToolsRoot(document).id}`;
     if (music?.root()) return 'couch-music-library';
     const modal = [...document.querySelectorAll('dialog[open]')].at(-1);
     if (modal) return `couch:${modal.id}`;
@@ -4091,7 +4175,11 @@ try {
     }
   }
   function updateMenu() {
-    if (!match || disposed) return;
+    if (bootFailed || !match || disposed) return;
+    $('race-start').parentElement.classList.toggle(
+      'continuous-result-actions',
+      match.status === 'finished',
+    );
     runningEnemyControls.forEach((control) => control.refresh());
     const completedBoards = match.runs.filter((run) => run.status === 'won').length;
     journeyReactions.present({
@@ -4131,7 +4219,13 @@ try {
       $('race-journey-skip').hidden = match.status === 'finished';
       $('race-journey-skip').disabled = contentBusy;
       localizedText($('race-journey-skip'), () =>
-        journeySkipArmed === match ? t('interface:confirmSkip') : t('interface:skipMission'),
+        journeySkipArmed === match
+          ? t('interface:confirmSkip')
+          : t(
+              match.status === 'paused'
+                ? 'interface:nativeMenu.pauseSkip'
+                : 'interface:skipMission',
+            ),
       );
       $('race-journey-find').disabled = contentBusy;
     }
@@ -4268,6 +4362,8 @@ try {
     'race-focus',
     'race-options',
     'race-quick-sound',
+    'race-pause-next-song',
+    'versus-landing-fullscreen',
     'race-settings-tab-controls',
     'race-settings-tab-audio',
     'race-settings-tab-display',
@@ -4330,32 +4426,36 @@ try {
     onTabBoundary: () => playgroundTabBoundary({ window, suspend }),
     getScope: couchScope,
     getRoot: () =>
-      installOfflinePanel?.frameFocused()
+      globalSettingsToolFrameFocused(document) || installOfflinePanel?.frameFocused()
         ? null
-        : music?.root() ||
+        : globalSettingsToolsRoot(document) ||
+          music?.root() ||
           [...document.querySelectorAll('dialog[open]')].at(-1) ||
           // Find/Next sit beside the main panel for Legacy and installed missions
           // too. The existing allowlist excludes all live-board controls.
           (shell.scope() === 'main' ? $('couch-app') : shell.root()),
     getDefaultFocus: () =>
-      installOfflinePanel?.isOpen()
-        ? $('install-offline-downloads')
-        : libraryDecision
-          ? $('race-library-stay')
-          : music?.root()
-            ? music.primary()
-            : journeyPictures?.root()
-              ? journeyPictures.primary()
-              : $('journey-backup')?.open
-                ? $('journey-backup-export')
-                : $('journey-chooser')?.open
-                  ? journeyChooser?.primary() || $('journey-search')
-                  : shell.primary(),
+      globalSettingsToolsRoot(document)
+        ? globalSettingsToolsRoot(document).querySelector('button:not([disabled])')
+        : installOfflinePanel?.isOpen()
+          ? $('install-offline-downloads')
+          : libraryDecision
+            ? $('race-library-stay')
+            : music?.root()
+              ? music.primary()
+              : journeyPictures?.root()
+                ? journeyPictures.primary()
+                : $('journey-backup')?.open
+                  ? $('journey-backup-export')
+                  : $('journey-chooser')?.open
+                    ? journeyChooser?.primary() || $('journey-search')
+                    : shell.primary(),
     keyboard: true,
     nativeReadingScroll: true,
     ownsKeyboardEvent: (event) =>
       !music?.root() && settingsTabOwnsKey(event, $('race-options-panel')),
     accept: (element) =>
+      !!globalSettingsToolsRoot(document)?.contains(element) ||
       !!element.closest('[data-menu-scope]') ||
       music?.contains(element) ||
       (element.tagName === 'A' &&
@@ -4376,33 +4476,37 @@ try {
     onNativeInput: (event) => setReadingModality(nextInputModality(readingModality, event)),
     activateControl: (element) => controllerConfirmGuard.activate(element),
     onBack: () =>
-      installOfflinePanel?.isOpen()
-        ? installOfflinePanel.close()
-        : libraryDecision
-          ? libraryDecision.finish(false)
-          : music?.root()
-            ? music.back()
-            : journeyPictures?.root()
-              ? journeyPictures.close()
-              : $('journey-backup')?.open
-                ? $('journey-backup-back').click()
-                : $('journey-chooser')?.open
-                  ? journeyChooser.close()
-                  : shell.back(),
+      closeGlobalSettingsTool(document)
+        ? undefined
+        : installOfflinePanel?.isOpen()
+          ? installOfflinePanel.close()
+          : libraryDecision
+            ? libraryDecision.finish(false)
+            : music?.root()
+              ? music.back()
+              : journeyPictures?.root()
+                ? journeyPictures.close()
+                : $('journey-backup')?.open
+                  ? $('journey-backup-back').click()
+                  : $('journey-chooser')?.open
+                    ? journeyChooser.close()
+                    : shell.back(),
     onMenu: () =>
-      installOfflinePanel?.isOpen()
-        ? installOfflinePanel.close()
-        : libraryDecision
-          ? libraryDecision.finish(false)
-          : music?.root()
-            ? music.back()
-            : journeyPictures?.root()
-              ? journeyPictures.close()
-              : $('journey-backup')?.open
-                ? $('journey-backup-back').click()
-                : $('journey-chooser')?.open
-                  ? journeyChooser.close()
-                  : shell.back(),
+      closeGlobalSettingsTool(document)
+        ? undefined
+        : installOfflinePanel?.isOpen()
+          ? installOfflinePanel.close()
+          : libraryDecision
+            ? libraryDecision.finish(false)
+            : music?.root()
+              ? music.back()
+              : journeyPictures?.root()
+                ? journeyPictures.close()
+                : $('journey-backup')?.open
+                  ? $('journey-backup-back').click()
+                  : $('journey-chooser')?.open
+                    ? journeyChooser.close()
+                    : shell.back(),
     onHint: (message, context) => {
       if (
         context?.kind === 'reading' &&
@@ -4452,6 +4556,12 @@ try {
     // Clear before sampling so that this frame cannot claim a new menu owner.
     if (assignmentsChanged || pendingPadLoss) menuRouter.clear();
     const result = menuRouter.sample({ scope, timeMs: now });
+    if (
+      result.disconnected ||
+      (result.confirmSnapshot?.eligible && result.confirmSnapshot.held) ||
+      Object.values(result.ui).some(Boolean)
+    )
+      continuousPlay.cancel('controller');
     // Joining consumes the controller edge as assignment, but Steam may still
     // mirror that same physical press as a delayed native Enter/click.
     controllerConfirmGuard.observe(result.confirmHeld || controllerSession.frame().confirmHeld);
@@ -4478,6 +4588,10 @@ try {
     if (assignmentsChanged || pendingPadLoss) {
       shell.cancelDeparture();
       clear();
+      updateMenu();
+      return;
+    }
+    if (globalTools.handleFrameCommand(result.ui)) {
       updateMenu();
       return;
     }
@@ -4532,7 +4646,18 @@ try {
   const pagehide = (event) => {
     suspend();
     if (event.persisted) return;
+    continuousPlay.dispose();
+    flowControls.dispose();
+    flowCelebration.dispose();
+    enemyStatsViews.forEach((view) => view.dispose());
+    void enemyStatistics.stats.flush().finally(() => enemyStatistics.close());
+    document.removeEventListener('pointerdown', cancelContinuousPlay, true);
+    document.removeEventListener('keydown', cancelContinuousPlay, true);
+    window.removeEventListener('blur', cancelContinuousPlay);
+    window.removeEventListener('gamepaddisconnected', cancelContinuousPlay);
+    shell.destroy();
     installOfflinePanel?.dispose();
+    void globalTools.dispose();
     runningEnemyControls.forEach((control) => control.dispose());
     runningEnemyPreferences.dispose();
     contentController?.abort();
@@ -4559,7 +4684,6 @@ try {
     reading.destroy();
     encounterHelp.dispose();
     navigation.destroy();
-    shell.destroy();
     stopNative();
     cancelAnimationFrame(frameId);
     window.removeEventListener('blur', windowBlur);
@@ -4569,7 +4693,7 @@ try {
     document.removeEventListener('pointerdown', nativeMenuInput, true);
     document.removeEventListener('keydown', nativeMenuInput, true);
   };
-  const windowBlur = guardInstallOfflineBlur(suspend);
+  const windowBlur = guardGlobalSettingsToolBlur(guardInstallOfflineBlur(suspend));
   window.addEventListener('blur', windowBlur);
   window.addEventListener('gamepaddisconnected', disconnected);
   window.addEventListener('pagehide', pagehide);
@@ -4577,7 +4701,7 @@ try {
   document.addEventListener('pointerdown', nativeMenuInput, true);
   document.addEventListener('keydown', nativeMenuInput, true);
   function frame(now) {
-    if (disposed) return;
+    if (bootFailed || disposed) return;
     const available = !document.hidden && document.hasFocus();
     if (!available && !inactive) suspend();
     if (available && inactive) {
@@ -4601,6 +4725,7 @@ try {
         );
       pendingPadLoss = false;
     }
+    continuousPlay.advance(dt * 1000);
     if (available && wasRunning && match.status === 'running' && !cueState.blocksPlay) {
       if (dt > 0.25) pause();
       else {
@@ -4642,6 +4767,16 @@ try {
           accumulator -= FIXED_DT;
           for (let i = 0; i < 2; i++)
             if (match.runs[i].tick !== before[i]) {
+              enemyStatistics.begin(`${statsSessionId}:${generation}`, {
+                provenance: roundRecipe.tuning.adminOverride ? 'preview' : 'live',
+              });
+              const enemyDefeats = arcadeEnemyDefeats(match.runs[i]);
+              if (enemyDefeats.length)
+                void enemyStatistics.observe({
+                  board: String(i),
+                  sequence: match.runs[i].tick,
+                  defeats: enemyDefeats,
+                });
               painters[i].effectsFor(match.runs[i].events, match.runs[i]);
               contextualReactions?.events(match.runs[i].events, {
                 attemptId: String(generation),
@@ -4680,12 +4815,13 @@ try {
       }
     }
     if (match.status === 'finished' && !finished) {
+      const victory = match.winner !== null || match.runs.some((run) => run.status === 'won');
       sound.events(
         [
           {
             type: 'run.completed',
             tick: Math.max(...match.runs.map((run) => run.tick)),
-            status: 'won',
+            status: victory ? 'won' : 'lost',
           },
         ],
         match,
@@ -4696,7 +4832,11 @@ try {
             ? {
                 owned: true,
                 mode: 'versus',
-                outcome: match.runs.filter((r) => r.status === 'won').length === 2 ? 'draw' : 'won',
+                outcome: victory
+                  ? match.runs.filter((r) => r.status === 'won').length === 2
+                    ? 'draw'
+                    : 'won'
+                  : 'lost',
                 missionId: roundRecipe.entry.mission.id,
                 feedback: roundRecipe.entry.campaignFeedback,
               }
@@ -4704,6 +4844,14 @@ try {
         },
       );
       finished = true;
+      enemyStatistics.finish();
+      continuousPlay.begin({
+        identity: match,
+        outcome: victory ? 'won' : 'lost',
+        canAdvance: false,
+        canRetry: false,
+        replayMs: 0,
+      });
       clear();
       if (match.winner !== null) won[match.winner]++;
       let journeyRewardFailure = null;
@@ -5078,15 +5226,24 @@ try {
 } catch (error) {
   document.documentElement.dataset.toolState = 'error';
   bootFailed = true;
-  bootDisplay.finish({
-    state: 'error',
-    message: localizedMessage('gameplay:theRaceCouldNotLoad', { value1: error.message }),
-  });
+  const message = localizedMessage('gameplay:theRaceCouldNotLoad', { value1: error.message });
+  // Ready clears the original status lease before picture/focus handoff ends.
+  // A later failure needs fresh feedback in the still-visible recovery shell.
+  bootStatus.begin({ message }).finish({ state: 'error', message });
+  const recovery = $('boot-return');
+  recovery.hidden = false;
   releaseArtwork({ persisted: false });
   $('race-start').disabled = true;
   localizedText($('race-message'), () =>
     t('gameplay:theRaceCouldNotLoad', { value1: error.message }),
   );
+  if (
+    bootFinished &&
+    !document.hidden &&
+    document.hasFocus?.() !== false &&
+    (unclaimedFocus(document.activeElement) || $('couch-app').contains(document.activeElement))
+  )
+    recovery.focus({ preventScroll: true });
 } finally {
   initialFocusPending = false;
   document.removeEventListener('focusin', initialFocusChoice, true);

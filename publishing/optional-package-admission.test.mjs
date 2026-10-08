@@ -37,6 +37,30 @@ function manifestChange(f, edit) {
 }
 const built = await build();
 
+test('SIM Worlds ships the shared defeat choice and recorded reactions in its verified offline closure', async () => {
+  const world = await buildOptionalPractice(root, {
+    packageId: 'fpv-worlds',
+    engineCommit: binding.sourceRevision,
+    engineTree: binding.sourceTree,
+  });
+  const f = fixture(world);
+  const admission = await validateOptionalPackageAdmission(f.envelope, f);
+  assert.equal(admission.packages[0].id, 'fpv-worlds');
+  const source = readEditionZip(f.files.get(f.package.sourceArchive.path));
+  for (const name of [
+    'game/ui/defeat-sound-controls.mjs',
+    'game/hunt/preferences.mjs',
+    'game/hunt/copy.mjs',
+    'game/ui/destruction-audio.mjs',
+    'game/ui/human-reaction-policy.mjs',
+    'game/audio/human-reactions/portable.mjs',
+  ]) {
+    const runtime = world.entries.find((entry) => entry.name === name);
+    assert.ok(runtime, `${name} is available without the core installation`);
+    assert.deepEqual(source.get(name), runtime.bytes);
+  }
+});
+
 test('optional candidate is byte-reproducible and inventories only its selected public dependency closure', async () => {
   const first = fixture(built),
     second = fixture(await build());

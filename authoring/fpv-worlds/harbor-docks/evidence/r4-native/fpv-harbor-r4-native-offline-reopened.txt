@@ -1,0 +1,3 @@
+Browser tab: 29, Title: "FPV / LINE · Simulator", URL: "http://127.0.0.1:8982/player/optional-practice/fpv-worlds/index.html#packs".
+There has been no change in the accessibility tree.
+The focused UI element is 3 heading Select Mission, Value: 1, ID: worlds-shell-missions-title

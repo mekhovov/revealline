@@ -11,7 +11,13 @@ import {
   plainObject,
   required,
 } from '../game/data-json.mjs';
-import { MAX_BACKUP_BYTES, BACKUP_FORMAT, EXTERNAL_BACKUP_FORMAT } from '../game/backup.mjs';
+import {
+  MAX_BACKUP_BYTES,
+  BACKUP_FORMAT,
+  EXTERNAL_BACKUP_FORMAT,
+  ACHIEVEMENT_BACKUP_FORMAT,
+} from '../game/backup.mjs';
+import { inspectEnemyStatsBackup } from '../game/enemy-stats.mjs';
 import { BACKUP_SET_MAX_BYTES } from '../game/backup-set.mjs';
 import { MEDIA_BUNDLE_FORMAT, MEDIA_BUNDLE_LIMITS } from '../game/media-bundle.mjs';
 import { validateStoredStillMedia, storedStillHashes } from '../game/media-storage-record.mjs';
@@ -314,7 +320,7 @@ async function inspectComponent(id, path, handle, bytes) {
   if (id === 'game') {
     const value = json(await readAt(handle, bytes), MAX_BACKUP_BYTES);
     fail(
-      [BACKUP_FORMAT, EXTERNAL_BACKUP_FORMAT].includes(value.format),
+      [BACKUP_FORMAT, EXTERNAL_BACKUP_FORMAT, ACHIEVEMENT_BACKUP_FORMAT].includes(value.format),
       'unsupported game-data format.',
     );
     exactKeys(
@@ -324,7 +330,11 @@ async function inspectComponent(id, path, handle, bytes) {
         'library',
         'packs',
         'session',
-        ...(value.format === EXTERNAL_BACKUP_FORMAT ? ['externalChapters'] : []),
+        ...(value.format === EXTERNAL_BACKUP_FORMAT ||
+        (value.format === ACHIEVEMENT_BACKUP_FORMAT && Object.hasOwn(value, 'externalChapters'))
+          ? ['externalChapters']
+          : []),
+        ...(value.format === ACHIEVEMENT_BACKUP_FORMAT ? ['enemyStats'] : []),
       ],
       'game-data envelope',
     );
@@ -334,8 +344,9 @@ async function inspectComponent(id, path, handle, bytes) {
         (value.session === null || plainObject(value.session)),
       'incomplete game-data envelope.',
     );
-    if (value.format === EXTERNAL_BACKUP_FORMAT)
+    if (value.format === EXTERNAL_BACKUP_FORMAT || Object.hasOwn(value, 'externalChapters'))
       validateExternalChapterIndex(value.externalChapters);
+    if (value.format === ACHIEVEMENT_BACKUP_FORMAT) inspectEnemyStatsBackup(value.enemyStats);
     return {
       format: value.format,
       inspection: 'bounded JSON envelope; replay/earned ownership not evaluated',

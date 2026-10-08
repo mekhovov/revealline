@@ -1,0 +1,51 @@
+{
+  "sourceCommit": "5a1f3a0c4",
+  "firstRetry": "Results Retry restarted at100hull,3airframes,level1,00:00.",
+  "additionalRetries": [
+    {
+      "retry": 2,
+      "hud": "\n          \n          \n            Hull 100/100 · Airframes 300:00Level 1\n          \n          Automated review · Fan build\n          \n            Overflight payload 1Boost Ready\n          \n        ",
+      "canvases": 1
+    },
+    {
+      "retry": 3,
+      "hud": "\n          \n          \n            Hull 100/100 · Airframes 300:00Level 1\n          \n          Automated review · Fan build\n          \n            Overflight payload 1Boost Ready\n          \n        ",
+      "canvases": 1
+    },
+    {
+      "retry": 4,
+      "hud": "\n          \n          \n            Hull 100/100 · Airframes 300:00Level 1\n          \n          Automated review · Fan build\n          \n            Overflight payload 1Boost Ready\n          \n        ",
+      "canvases": 1
+    },
+    {
+      "retry": 5,
+      "hud": "\n          \n          \n            Hull 100/100 · Airframes 300:00Level 1\n          \n          Automated review · Fan build\n          \n            Overflight payload 1Boost Ready\n          \n        ",
+      "canvases": 1
+    },
+    {
+      "retry": 6,
+      "hud": "\n          \n          \n            Hull 100/100 · Airframes 300:00Level 1\n          \n          Automated review · Fan build\n          \n            Overflight payload 1Boost Ready\n          \n        ",
+      "canvases": 1
+    },
+    {
+      "retry": 7,
+      "hud": "\n          \n          \n            Hull 100/100 · Airframes 300:00Level 1\n          \n          Automated review · Fan build\n          \n            Overflight payload 1Boost Ready\n          \n        ",
+      "canvases": 1
+    },
+    {
+      "retry": 8,
+      "hud": "\n          \n          \n            Hull 100/100 · Airframes 300:00Level 1\n          \n          Automated review · Fan build\n          \n            Overflight payload 1Boost Ready\n          \n        ",
+      "canvases": 1
+    },
+    {
+      "retry": 9,
+      "hud": "\n          \n          \n            Hull 100/100 · Airframes 300:00Level 1\n          \n          Automated review · Fan build\n          \n            Overflight payload 1Boost Ready\n          \n        ",
+      "canvases": 1
+    },
+    {
+      "retry": 10,
+      "hud": "\n          \n          \n            Hull 100/100 · Airframes 300:00Level 1\n          \n          Automated review · Fan build\n          \n            Overflight payload 1Boost Ready\n          \n        ",
+      "canvases": 1
+    }
+  ]
+}

@@ -1,0 +1,680 @@
+{
+  "format": "FPVHarborDocksStaticViews.v1",
+  "fixture": "64f61fb52dd6a26504ad9e568684e392786bf1f40f6b225490074cacd3fd4251",
+  "sourceCommit": "73f46d0ac31af14182dc97899a90c0d743f38d4e",
+  "baselinePlayer": "0b54fd0fdf8fe06dc900024a8b59713340b09bb3",
+  "observations": [
+    {
+      "variant": "candidate",
+      "revision": "r1",
+      "pose": "entry",
+      "course": "harbor-docks-01",
+      "mode": "self-level",
+      "quality": "balanced",
+      "appearance": "authored",
+      "positionMetres": [
+        -2,
+        6.2,
+        41
+      ],
+      "targetMetres": [
+        11,
+        10,
+        -11
+      ],
+      "pixelSHA256": "67df1eb424baa221f3a84b84777dd69622c7e48479a92bb5cff67fcc5af8ad1f",
+      "resources": {
+        "available": true,
+        "disposed": false,
+        "quality": "balanced",
+        "drone": "racer",
+        "presentation": {
+          "collectionId": "authored",
+          "revision": "r1",
+          "profileId": "operations",
+          "actors": [],
+          "actorGoals": [],
+          "projectileBatches": 0,
+          "activeProjectiles": 0,
+          "surfaceDetailGroups": 42
+        },
+        "effects": {
+          "playerPulse": 9233635,
+          "hostilePulse": 16232561,
+          "ghost": 9824751,
+          "ghostEmissive": 2390144,
+          "trail": 9824751,
+          "goalOutline": 9169660,
+          "goalActive": 15266215,
+          "goalComplete": 9808542,
+          "goalInactive": 8366516,
+          "goalGlow": 11069917,
+          "goalGlowInactive": 9030085,
+          "goalEmissive": 8577493,
+          "goalBadge": 10872788,
+          "directionArrow": 15264432
+        },
+        "hunt": null,
+        "importedMaterialBindings": {
+          "applied": 0,
+          "diagnostics": [],
+          "diagnosticsTruncated": 0
+        },
+        "registered": {
+          "geometries": 246,
+          "materials": 296,
+          "textures": 26
+        },
+        "renderer": {
+          "calls": 158,
+          "triangles": 14704,
+          "geometries": 110,
+          "textures": 22,
+          "programs": 12,
+          "contextLost": false
+        }
+      }
+    },
+    {
+      "variant": "candidate",
+      "revision": "r1",
+      "pose": "container",
+      "course": "harbor-docks-01",
+      "mode": "self-level",
+      "quality": "balanced",
+      "appearance": "authored",
+      "positionMetres": [
+        -10.5,
+        4.5,
+        3
+      ],
+      "targetMetres": [
+        -17,
+        3.5,
+        -5
+      ],
+      "pixelSHA256": "bf51da0223f3c6eb599e3afd12a7c97c57a5c8038ad563229df507868acdacb3",
+      "resources": {
+        "available": true,
+        "disposed": false,
+        "quality": "balanced",
+        "drone": "racer",
+        "presentation": {
+          "collectionId": "authored",
+          "revision": "r1",
+          "profileId": "operations",
+          "actors": [],
+          "actorGoals": [],
+          "projectileBatches": 0,
+          "activeProjectiles": 0,
+          "surfaceDetailGroups": 42
+        },
+        "effects": {
+          "playerPulse": 9233635,
+          "hostilePulse": 16232561,
+          "ghost": 9824751,
+          "ghostEmissive": 2390144,
+          "trail": 9824751,
+          "goalOutline": 9169660,
+          "goalActive": 15266215,
+          "goalComplete": 9808542,
+          "goalInactive": 8366516,
+          "goalGlow": 11069917,
+          "goalGlowInactive": 9030085,
+          "goalEmissive": 8577493,
+          "goalBadge": 10872788,
+          "directionArrow": 15264432
+        },
+        "hunt": null,
+        "importedMaterialBindings": {
+          "applied": 0,
+          "diagnostics": [],
+          "diagnosticsTruncated": 0
+        },
+        "registered": {
+          "geometries": 246,
+          "materials": 296,
+          "textures": 26
+        },
+        "renderer": {
+          "calls": 102,
+          "triangles": 13158,
+          "geometries": 78,
+          "textures": 15,
+          "programs": 12,
+          "contextLost": false
+        }
+      }
+    },
+    {
+      "variant": "candidate",
+      "revision": "r1",
+      "pose": "under",
+      "course": "harbor-docks-01",
+      "mode": "self-level",
+      "quality": "balanced",
+      "appearance": "authored",
+      "positionMetres": [
+        23,
+        5,
+        -12
+      ],
+      "targetMetres": [
+        23,
+        15,
+        -22
+      ],
+      "pixelSHA256": "3b28183140b361e3d54f268441eab985dc76ba714c116b31b215cb4c6fb2af28",
+      "resources": {
+        "available": true,
+        "disposed": false,
+        "quality": "balanced",
+        "drone": "racer",
+        "presentation": {
+          "collectionId": "authored",
+          "revision": "r1",
+          "profileId": "operations",
+          "actors": [],
+          "actorGoals": [],
+          "projectileBatches": 0,
+          "activeProjectiles": 0,
+          "surfaceDetailGroups": 42
+        },
+        "effects": {
+          "playerPulse": 9233635,
+          "hostilePulse": 16232561,
+          "ghost": 9824751,
+          "ghostEmissive": 2390144,
+          "trail": 9824751,
+          "goalOutline": 9169660,
+          "goalActive": 15266215,
+          "goalComplete": 9808542,
+          "goalInactive": 8366516,
+          "goalGlow": 11069917,
+          "goalGlowInactive": 9030085,
+          "goalEmissive": 8577493,
+          "goalBadge": 10872788,
+          "directionArrow": 15264432
+        },
+        "hunt": null,
+        "importedMaterialBindings": {
+          "applied": 0,
+          "diagnostics": [],
+          "diagnosticsTruncated": 0
+        },
+        "registered": {
+          "geometries": 246,
+          "materials": 296,
+          "textures": 26
+        },
+        "renderer": {
+          "calls": 86,
+          "triangles": 13036,
+          "geometries": 65,
+          "textures": 14,
+          "programs": 12,
+          "contextLost": false
+        }
+      }
+    },
+    {
+      "variant": "candidate",
+      "revision": "r1",
+      "pose": "deck",
+      "course": "harbor-docks-01",
+      "mode": "self-level",
+      "quality": "balanced",
+      "appearance": "authored",
+      "positionMetres": [
+        -7,
+        7,
+        40
+      ],
+      "targetMetres": [
+        -24,
+        4.8,
+        31
+      ],
+      "pixelSHA256": "2465d81301e3464c0d8e7f8b119eaeec7bb8ae0fa0fa79879f871d931cd66995",
+      "resources": {
+        "available": true,
+        "disposed": false,
+        "quality": "balanced",
+        "drone": "racer",
+        "presentation": {
+          "collectionId": "authored",
+          "revision": "r1",
+          "profileId": "operations",
+          "actors": [],
+          "actorGoals": [],
+          "projectileBatches": 0,
+          "activeProjectiles": 0,
+          "surfaceDetailGroups": 42
+        },
+        "effects": {
+          "playerPulse": 9233635,
+          "hostilePulse": 16232561,
+          "ghost": 9824751,
+          "ghostEmissive": 2390144,
+          "trail": 9824751,
+          "goalOutline": 9169660,
+          "goalActive": 15266215,
+          "goalComplete": 9808542,
+          "goalInactive": 8366516,
+          "goalGlow": 11069917,
+          "goalGlowInactive": 9030085,
+          "goalEmissive": 8577493,
+          "goalBadge": 10872788,
+          "directionArrow": 15264432
+        },
+        "hunt": null,
+        "importedMaterialBindings": {
+          "applied": 0,
+          "diagnostics": [],
+          "diagnosticsTruncated": 0
+        },
+        "registered": {
+          "geometries": 246,
+          "materials": 296,
+          "textures": 26
+        },
+        "renderer": {
+          "calls": 116,
+          "triangles": 13252,
+          "geometries": 86,
+          "textures": 16,
+          "programs": 12,
+          "contextLost": false
+        }
+      }
+    },
+    {
+      "variant": "candidate",
+      "revision": "r1",
+      "pose": "quay",
+      "course": "harbor-docks-01",
+      "mode": "self-level",
+      "quality": "balanced",
+      "appearance": "authored",
+      "positionMetres": [
+        33.8,
+        4.6,
+        28
+      ],
+      "targetMetres": [
+        65,
+        3,
+        -3
+      ],
+      "pixelSHA256": "6891bda4f60b81a05972f72d32b43f85c03fa27064b661a32868d419e8ae7d86",
+      "resources": {
+        "available": true,
+        "disposed": false,
+        "quality": "balanced",
+        "drone": "racer",
+        "presentation": {
+          "collectionId": "authored",
+          "revision": "r1",
+          "profileId": "operations",
+          "actors": [],
+          "actorGoals": [],
+          "projectileBatches": 0,
+          "activeProjectiles": 0,
+          "surfaceDetailGroups": 42
+        },
+        "effects": {
+          "playerPulse": 9233635,
+          "hostilePulse": 16232561,
+          "ghost": 9824751,
+          "ghostEmissive": 2390144,
+          "trail": 9824751,
+          "goalOutline": 9169660,
+          "goalActive": 15266215,
+          "goalComplete": 9808542,
+          "goalInactive": 8366516,
+          "goalGlow": 11069917,
+          "goalGlowInactive": 9030085,
+          "goalEmissive": 8577493,
+          "goalBadge": 10872788,
+          "directionArrow": 15264432
+        },
+        "hunt": null,
+        "importedMaterialBindings": {
+          "applied": 0,
+          "diagnostics": [],
+          "diagnosticsTruncated": 0
+        },
+        "registered": {
+          "geometries": 246,
+          "materials": 296,
+          "textures": 26
+        },
+        "renderer": {
+          "calls": 90,
+          "triangles": 13072,
+          "geometries": 67,
+          "textures": 14,
+          "programs": 12,
+          "contextLost": false
+        }
+      }
+    },
+    {
+      "variant": "candidate",
+      "revision": "r1",
+      "pose": "wide",
+      "course": "harbor-docks-01",
+      "mode": "self-level",
+      "quality": "high",
+      "appearance": "authored",
+      "positionMetres": [
+        -40,
+        25,
+        40
+      ],
+      "targetMetres": [
+        8,
+        6,
+        -8
+      ],
+      "pixelSHA256": "582e4b2b90d2fc922feca51ba917817ffb7c54518d8f67a48453dffc2c802f46",
+      "resources": {
+        "available": true,
+        "disposed": false,
+        "quality": "high",
+        "drone": "racer",
+        "presentation": {
+          "collectionId": "authored",
+          "revision": "r1",
+          "profileId": "operations",
+          "actors": [],
+          "actorGoals": [],
+          "projectileBatches": 0,
+          "activeProjectiles": 0,
+          "surfaceDetailGroups": 42
+        },
+        "effects": {
+          "playerPulse": 9233635,
+          "hostilePulse": 16232561,
+          "ghost": 9824751,
+          "ghostEmissive": 2390144,
+          "trail": 9824751,
+          "goalOutline": 9169660,
+          "goalActive": 15266215,
+          "goalComplete": 9808542,
+          "goalInactive": 8366516,
+          "goalGlow": 11069917,
+          "goalGlowInactive": 9030085,
+          "goalEmissive": 8577493,
+          "goalBadge": 10872788,
+          "directionArrow": 15264432
+        },
+        "hunt": null,
+        "importedMaterialBindings": {
+          "applied": 0,
+          "diagnostics": [],
+          "diagnosticsTruncated": 0
+        },
+        "registered": {
+          "geometries": 257,
+          "materials": 302,
+          "textures": 26
+        },
+        "renderer": {
+          "calls": 200,
+          "triangles": 19028,
+          "geometries": 146,
+          "textures": 24,
+          "programs": 12,
+          "contextLost": false
+        }
+      }
+    },
+    {
+      "variant": "candidate",
+      "revision": "r1",
+      "pose": "grazing",
+      "course": "harbor-docks-01",
+      "mode": "self-level",
+      "quality": "low",
+      "appearance": "authored",
+      "positionMetres": [
+        -7,
+        2.7,
+        26
+      ],
+      "targetMetres": [
+        -30,
+        2.4,
+        -15
+      ],
+      "pixelSHA256": "26d33bf69ccb694564240376244b6a7ead4d9b0a384d60220ad89a985674d153",
+      "resources": {
+        "available": true,
+        "disposed": false,
+        "quality": "low",
+        "drone": "racer",
+        "presentation": {
+          "collectionId": "authored",
+          "revision": "r1",
+          "profileId": "operations",
+          "actors": [],
+          "actorGoals": [],
+          "projectileBatches": 0,
+          "activeProjectiles": 0,
+          "surfaceDetailGroups": 42
+        },
+        "effects": {
+          "playerPulse": 9233635,
+          "hostilePulse": 16232561,
+          "ghost": 9824751,
+          "ghostEmissive": 2390144,
+          "trail": 9824751,
+          "goalOutline": 9169660,
+          "goalActive": 15266215,
+          "goalComplete": 9808542,
+          "goalInactive": 8366516,
+          "goalGlow": 11069917,
+          "goalGlowInactive": 9030085,
+          "goalEmissive": 8577493,
+          "goalBadge": 10872788,
+          "directionArrow": 15264432
+        },
+        "hunt": null,
+        "importedMaterialBindings": {
+          "applied": 0,
+          "diagnostics": [],
+          "diagnosticsTruncated": 0
+        },
+        "registered": {
+          "geometries": 246,
+          "materials": 296,
+          "textures": 23
+        },
+        "renderer": {
+          "calls": 62,
+          "triangles": 6640,
+          "geometries": 60,
+          "textures": 16,
+          "programs": 10,
+          "contextLost": false
+        }
+      }
+    },
+    {
+      "variant": "candidate",
+      "revision": "r1",
+      "pose": "container",
+      "course": "harbor-docks-01",
+      "mode": "self-level",
+      "quality": "low",
+      "appearance": "pixel",
+      "positionMetres": [
+        -10.5,
+        4.5,
+        3
+      ],
+      "targetMetres": [
+        -17,
+        3.5,
+        -5
+      ],
+      "pixelSHA256": "94aee88cb3e11339c82eaf285c58558b6696eb6c47e24eaeba5138c9e54f4443",
+      "resources": {
+        "available": true,
+        "disposed": false,
+        "quality": "low",
+        "drone": "racer",
+        "presentation": {
+          "collectionId": "authored",
+          "revision": "r1",
+          "profileId": "pixel",
+          "actors": [],
+          "actorGoals": [],
+          "projectileBatches": 0,
+          "activeProjectiles": 0,
+          "surfaceDetailGroups": 42
+        },
+        "effects": {
+          "playerPulse": 9233635,
+          "hostilePulse": 16232561,
+          "ghost": 9824751,
+          "ghostEmissive": 2390144,
+          "trail": 9824751,
+          "goalOutline": 9169660,
+          "goalActive": 15266215,
+          "goalComplete": 9808542,
+          "goalInactive": 8366516,
+          "goalGlow": 11069917,
+          "goalGlowInactive": 9030085,
+          "goalEmissive": 8577493,
+          "goalBadge": 10872788,
+          "directionArrow": 15264432
+        },
+        "hunt": null,
+        "importedMaterialBindings": {
+          "applied": 0,
+          "diagnostics": [],
+          "diagnosticsTruncated": 0
+        },
+        "registered": {
+          "geometries": 246,
+          "materials": 296,
+          "textures": 23
+        },
+        "renderer": {
+          "calls": 43,
+          "triangles": 6530,
+          "geometries": 42,
+          "textures": 12,
+          "programs": 10,
+          "contextLost": false
+        }
+      }
+    }
+  ],
+  "errors": [],
+  "disposal": {
+    "before": {
+      "available": true,
+      "disposed": false,
+      "quality": "low",
+      "drone": "racer",
+      "presentation": {
+        "collectionId": "authored",
+        "revision": "r1",
+        "profileId": "pixel",
+        "actors": [],
+        "actorGoals": [],
+        "projectileBatches": 0,
+        "activeProjectiles": 0,
+        "surfaceDetailGroups": 42
+      },
+      "effects": {
+        "playerPulse": 9233635,
+        "hostilePulse": 16232561,
+        "ghost": 9824751,
+        "ghostEmissive": 2390144,
+        "trail": 9824751,
+        "goalOutline": 9169660,
+        "goalActive": 15266215,
+        "goalComplete": 9808542,
+        "goalInactive": 8366516,
+        "goalGlow": 11069917,
+        "goalGlowInactive": 9030085,
+        "goalEmissive": 8577493,
+        "goalBadge": 10872788,
+        "directionArrow": 15264432
+      },
+      "hunt": null,
+      "importedMaterialBindings": {
+        "applied": 0,
+        "diagnostics": [],
+        "diagnosticsTruncated": 0
+      },
+      "registered": {
+        "geometries": 246,
+        "materials": 296,
+        "textures": 23
+      },
+      "renderer": {
+        "calls": 43,
+        "triangles": 6530,
+        "geometries": 42,
+        "textures": 12,
+        "programs": 10,
+        "contextLost": false
+      }
+    },
+    "after": {
+      "available": true,
+      "disposed": true,
+      "quality": "low",
+      "drone": "racer",
+      "presentation": {
+        "collectionId": "authored",
+        "revision": "r1",
+        "profileId": null,
+        "actors": [],
+        "actorGoals": [],
+        "projectileBatches": 0,
+        "activeProjectiles": 0,
+        "surfaceDetailGroups": 0
+      },
+      "effects": {
+        "playerPulse": 9233635,
+        "hostilePulse": 16232561,
+        "ghost": 9824751,
+        "ghostEmissive": 2390144,
+        "trail": 9824751,
+        "goalOutline": 9169660,
+        "goalActive": 15266215,
+        "goalComplete": 9808542,
+        "goalInactive": 8366516,
+        "goalGlow": 11069917,
+        "goalGlowInactive": 9030085,
+        "goalEmissive": 8577493,
+        "goalBadge": 10872788,
+        "directionArrow": 15264432
+      },
+      "hunt": null,
+      "importedMaterialBindings": {
+        "applied": 0,
+        "diagnostics": []
+      },
+      "registered": {
+        "geometries": 0,
+        "materials": 0,
+        "textures": 0
+      },
+      "renderer": {
+        "calls": 43,
+        "triangles": 6530,
+        "geometries": 0,
+        "textures": 1,
+        "programs": 0,
+        "contextLost": true
+      }
+    }
+  }
+}
