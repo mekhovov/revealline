@@ -107,6 +107,55 @@ button:disabled {
   display: block;
   image-rendering: pixelated;
 }
+#render-host {
+  touch-action: none;
+}
+.overflight-touch {
+  position: absolute;
+  z-index: 5;
+  bottom: max(44px, calc(env(safe-area-inset-bottom, 0px) + 36px));
+  left: max(16px, calc(env(safe-area-inset-left, 0px) + 12px));
+  right: max(16px, calc(env(safe-area-inset-right, 0px) + 12px));
+}
+.overflight-touch .shared-touch-pad button {
+  min-height: 0;
+  padding: 0;
+}
+.overflight-touch .shared-touch-action {
+  min-width: 86px;
+  min-height: 76px;
+  border-radius: 20%;
+  white-space: pre-line;
+  line-height: 1.35;
+}
+.overflight-touch .shared-touch-action:is([data-pressed='true'], [data-ready='true']) {
+  border-color: var(--fk-accent, #e6b85c);
+}
+.overflight-touch .shared-touch-action[data-pressed='true'] {
+  background: var(--fk-accent, #e6b85c);
+  color: var(--fk-bg, #17191b);
+}
+.overflight-player .shared-touch-settings {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin-block: 20px;
+}
+.overflight-player .shared-touch-settings label {
+  display: grid;
+  gap: 6px;
+}
+.overflight-player .shared-touch-settings p {
+  grid-column: 1 / -1;
+}
+@media (max-width: 440px) {
+  .overflight-touch {
+    gap: 10px;
+  }
+  .overflight-player .shared-touch-settings {
+    grid-template-columns: 1fr;
+  }
+}
 #overflight-hud {
   position: absolute;
   inset: 0;

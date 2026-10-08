@@ -71,7 +71,12 @@ import { attachContextualReactions } from '../ui/contextual-reactions.mjs';
 import { createEncounterDisplayPreferences } from '../encounter-display-preferences.mjs';
 import { createDisplayPreferences } from '../display-preferences.mjs';
 import { createTouchPreferences } from '../touch-preferences.mjs';
+import { nextInputModality, showScreenControls } from '../input-presentation.mjs';
 import { attachTouchSteering } from '../ui/touch-steering.mjs';
+import {
+  mountTouchControlsView,
+  mountTouchPresentationSettings,
+} from '../ui/touch-controls-view.mjs';
 import { createHuntDestruction } from '../hunt/destruction.mjs';
 import { createBoardFootprints } from '../couch/board-footprint.mjs';
 import { createAudioMaster } from '../ui/audio-master.mjs';
@@ -351,43 +356,44 @@ ratings = createClassicSnakeRatings({
   canWrite: () => sessionWriter.writable,
   onWarning: () => {},
 });
-const touchInputs = [],
-  touchSeats = [];
+let touchControllers = [],
+  touchViews = [],
+  touchModality =
+    globalThis.navigator.maxTouchPoints > 0 ||
+    globalThis.matchMedia?.('(any-pointer: coarse)').matches
+      ? 'touch'
+      : 'keyboard';
 const touch = createTouchPreferences({ onChange: () => applyTouch() });
 function clearTouch() {
-  touchInputs.forEach((input) => input.clear());
+  for (const controller of touchControllers) controller.clear();
 }
-function disposeTouch() {
-  touchInputs.splice(0).forEach((input) => input.destroy());
-  touchSeats.length = 0;
+function disposeTouchControls() {
+  for (const controller of touchControllers) controller.destroy();
+  for (const view of touchViews) view.dispose();
+  touchControllers = [];
+  touchViews = [];
 }
-function touchActive() {
-  return (
-    pageActive() &&
-    !result() &&
-    !playShell?.topDialog() &&
-    !missionChooser?.elements.dialog.open &&
-    (!paused || ready)
-  );
+function applyTouchVisibility() {
+  const visible = showScreenControls({
+    modality: touchModality,
+    scope: 'flight',
+    running: !ready && !paused && !result(),
+  });
+  const pads = $('pads');
+  if (pads.hidden === !visible) return;
+  pads.hidden = !visible;
+  if (!visible) clearTouch();
+  footprint?.refresh();
 }
 function applyTouch() {
-  clearTouch();
   const prefs = touch.snapshot();
-  $('pads').style.setProperty('--touch-opacity', String(prefs.opacity));
+  $('pads').style.setProperty('--snake-pad-size', prefs.size === 'large' ? '64px' : '56px');
+  clearTouch();
+  $('pads').style.setProperty('--snake-pad-opacity', String(prefs.opacity));
+  for (const view of touchViews) view.apply(prefs);
   $('pads').dataset.side = prefs.side;
-  for (const { group, pad, surface, turns, instruction } of touchSeats) {
-    group.dataset.touchMode = prefs.mode;
-    group.dataset.touchSize = prefs.size;
-    pad.hidden = prefs.mode !== 'dpad' || steering === 'turns';
-    turns.hidden = prefs.mode !== 'dpad' || steering !== 'turns';
-    surface.hidden = prefs.mode === 'dpad';
-    instruction.textContent = t(
-      prefs.mode === 'swipe' ? 'interface:swipeToSteer' : 'interface:dragToSteer',
-    );
-  }
-  if ($('steering')) $('steering').closest('label').hidden = prefs.mode !== 'dpad';
   touchPresentationControls?.refresh();
-  footprint?.refresh();
+  applyTouchVisibility();
 }
 const campaignFor = (item) =>
   CLASSIC_SNAKE_CAMPAIGNS.find((campaign) =>
@@ -538,7 +544,6 @@ function start() {
   boards[0]?.canvas.focus({ preventScroll: true });
 }
 function finish() {
-  clearTouch();
   sound.event?.({
     type: 'run.completed',
     levelId: entry.id,
@@ -892,7 +897,7 @@ function acceptEnemyArtwork() {
   });
 }
 function buildBoards() {
-  disposeTouch();
+  disposeTouchControls();
   boardLayoutObserver?.disconnect();
   footprint?.dispose();
   $('boards').replaceChildren();
@@ -961,95 +966,65 @@ function buildBoards() {
   primeEffects();
 }
 function buildPads() {
-  disposeTouch();
+  disposeTouchControls();
   $('pads').replaceChildren();
+  $('pads').dataset.steering = steering;
   for (let player = 0; player < (mode === 'solo' ? 1 : 2); player++) {
-    const group = el('div', null, 'snake-touch-seat'),
-      label = el('p', text(player ? 'p2' : 'p1'), 'pad-label'),
-      pad = el('div', null, 'pad direction-controls'),
-      turns = el('div', null, 'pad turn-pad'),
-      surface = el('div', null, 'touch-surface'),
-      compass = el('span', '✥'),
-      instruction = el('span', null, 'touch-instruction'),
-      indicator = el('span', null, 'touch-indicator');
+    const group = el('div'),
+      label = el('p', text(player ? 'p2' : 'p1'), 'pad-label');
     group.dataset.player = String(player);
-    for (const [control, description] of [
-      [pad, t('interface:directionControls')],
-      [turns, text('turns')],
-      [surface, t('interface:touchSteeringDragToFlyAndTurn')],
-    ]) {
-      control.setAttribute('role', 'group');
-      control.setAttribute('aria-label', `${label.textContent}: ${description}`);
-    }
-    compass.setAttribute('aria-hidden', 'true');
-    indicator.setAttribute('aria-hidden', 'true');
-    indicator.hidden = true;
-    indicator.append(el('i'));
-    surface.append(compass, instruction);
-    for (const [direction, symbol] of [
-      ['up', '↑'],
-      ['left', '←'],
-      ['down', '↓'],
-      ['right', '→'],
-    ]) {
-      const button = el('button', symbol);
-      button.type = 'button';
-      button.dataset.direction = direction;
-      button.setAttribute('aria-label', `${label.textContent}: ${text(direction)}`);
-      // Pointer presses and slides belong to the shared gesture engine. Keep
-      // keyboard/assistive activation without replaying the following click.
-      button.addEventListener('click', (event) => {
-        if (event.detail === 0 && !pad.hidden && touchActive()) turn(player, direction);
-      });
-      pad.append(button);
-    }
-    for (const [direction, symbol, offset] of [
-      ['turnLeft', '↶', -1],
-      ['turnRight', '↷', 1],
-    ]) {
-      const button = el('button', symbol);
-      button.type = 'button';
-      button.dataset.direction = direction;
-      button.setAttribute('aria-label', `${label.textContent}: ${text(direction)}`);
-      button.addEventListener('pointerdown', (event) => {
-        if (event.button !== 0 || turns.hidden || !touchActive()) return;
-        event.preventDefault();
-        relative(player, offset);
-      });
-      button.addEventListener('click', (event) => {
-        if (event.detail === 0 && !turns.hidden && touchActive()) relative(player, offset);
-      });
-      turns.append(button);
-    }
     if (mode !== 'solo') group.append(label);
-    group.append(pad, surface, turns, indicator);
     $('pads').append(group);
-    touchSeats.push({ group, pad, surface, turns, instruction });
-    touchInputs.push(
+    if (steering === 'turns') {
+      const pad = el('div', null, 'pad turn-pad');
+      pad.setAttribute('role', 'group');
+      pad.setAttribute('aria-label', label.textContent);
+      for (const [direction, symbol, offset] of [
+        ['turnLeft', '↶', -1],
+        ['turnRight', '↷', 1],
+      ]) {
+        const button = el('button', symbol);
+        button.type = 'button';
+        button.dataset.direction = direction;
+        button.setAttribute('aria-label', `${label.textContent}: ${text(direction)}`);
+        button.addEventListener('click', () => relative(player, offset));
+        pad.append(button);
+      }
+      group.append(pad);
+      continue;
+    }
+    const view = mountTouchControlsView({
+      document: doc,
+      mount: group,
+      idPrefix: `snake-touch-${player}`,
+    });
+    view.root.setAttribute('role', 'group');
+    view.root.setAttribute('aria-label', label.textContent);
+    touchViews.push(view);
+    touchControllers.push(
       attachTouchSteering({
+        // Team pilots share one board, so each steers through their own thumb area.
+        arena: mode === 'team' ? null : boards[mode === 'versus' ? player : 0]?.canvas,
+        pad: view.pad,
+        surface: view.surface,
+        indicator: view.indicator,
         window: globalThis,
-        // A shared Team board cannot identify which player's thumb touched it.
-        // Each labelled seat remains independently steerable with two fingers.
-        arena: mode === 'team' ? null : boards[player]?.canvas,
-        pad,
-        surface,
-        indicator,
         getSettings: () => touch.snapshot(),
-        active: () => touchActive() && !(touch.snapshot().mode === 'dpad' && steering === 'turns'),
-        onDirection: (direction) => {
-          for (const button of pad.children)
-            button.classList.toggle('pressed', button.dataset.direction === direction);
-          turn(player, direction);
-        },
-        onRelease: () => {
-          for (const button of pad.children) button.classList.remove('pressed');
-        },
+        active: () => !pageDeparted && !result() && !playShell?.topDialog() && (ready || !paused),
+        onDirection: (direction) => turn(player, direction),
         onCancel: () => pause(),
       }),
     );
+    for (const [direction, button] of Object.entries(view.directionButtons))
+      button.addEventListener('click', (event) => {
+        // Pointerdown already steers; keyboard/assistive activation has no pointer.
+        if (event.detail === 0) turn(player, direction);
+      });
   }
   applyTouch();
+  footprint?.refresh();
 }
+
 function renderProgress() {
   const chapterEntries = CLASSIC_SNAKE_LEVELS.filter((item) => item.chapterId === entry.chapterId);
   syncLibraryMode();
@@ -1406,6 +1381,7 @@ function renderCopy() {
   snakeSettingsView?.refresh(locale);
   snakeGlobalSettings?.refresh(locale);
   touchPresentationControls?.refresh();
+  for (const view of touchViews) view.apply(touch.snapshot());
   renderModeLinks();
   $('campaign-link').textContent = text('campaigns');
   $('campaign-link').href = nativeArtReviewURL(`./?lang=${locale}`, globalThis.location.href);
@@ -1539,6 +1515,7 @@ function refresh() {
   }
   const outcome = result();
   doc.body.dataset.playing = String(!ready && !paused);
+  applyTouchVisibility();
   playShell?.update({
     phase: outcome ? 'results' : ready ? 'ready' : paused ? 'paused' : 'playing',
     transitionActive: !['idle', 'cancelled'].includes(transition.snapshot().phase),
@@ -2091,6 +2068,22 @@ $('import').addEventListener('change', async () => {
   }
   $('import').value = '';
 });
+doc.addEventListener(
+  'pointerdown',
+  (event) => {
+    if (!$('pads').contains(event.target)) touchModality = nextInputModality(touchModality, event);
+    applyTouchVisibility();
+  },
+  true,
+);
+doc.addEventListener(
+  'keydown',
+  (event) => {
+    if (!$('pads').contains(event.target)) touchModality = nextInputModality(touchModality, event);
+    applyTouchVisibility();
+  },
+  true,
+);
 doc.addEventListener('keydown', (event) => {
   if (event.defaultPrevented || playShell?.topDialog()) return;
   if (event.key === 'Escape' && !event.repeat) {
@@ -2165,6 +2158,10 @@ function pollGamepads() {
     const previous = gamepadState.get(pad.index);
     gamepadState.set(pad.index, buttons);
     if (!previous) continue;
+    if (buttons.some((pressed, i) => pressed && !previous[i])) {
+      touchModality = 'gamepad';
+      applyTouchVisibility();
+    }
     if (playShell?.topDialog()) {
       const directionIndex = buttons.slice(0, 4).findIndex((pressed, i) => pressed && !previous[i]);
       const command = {
@@ -2211,7 +2208,7 @@ doc.addEventListener('visibilitychange', () => {
 });
 globalThis.addEventListener('blur', pause);
 globalThis.addEventListener('resize', () => {
-  touchInputs.forEach((input) => input.cancel());
+  for (const controller of touchControllers) controller.cancel();
 });
 globalThis.addEventListener('focus', () => {
   void records.read().then(() => ratings.refresh());
@@ -2239,7 +2236,8 @@ globalThis.addEventListener('pagehide', (event) => {
   classicAudio.reset();
   if (!event.persisted) {
     classicAudio.dispose();
-    disposeTouch();
+    disposeTouchControls();
+    touchPresentationControls?.dispose();
     touch.destroy();
     snakeDefeatSoundControls.dispose();
     snakeOfflinePanel?.dispose();
@@ -2574,70 +2572,12 @@ snakeGlobalSettings = mountGlobalSettings({
   },
 });
 const snakeTouchSettings = el('section');
-const touchFields = [];
-for (const [key, en, uk, choices] of [
-  [
-    'mode',
-    'Touch steering',
-    'Сенсорне керування',
-    [
-      ['stick', 'Floating stick', 'Плаваючий стік'],
-      ['swipe', 'Swipe', 'Свайп'],
-      ['dpad', 'Direction pad', 'Панель напрямків'],
-    ],
-  ],
-  [
-    'side',
-    'Steering hand',
-    'Рука керування',
-    [
-      ['right', 'Right', 'Права'],
-      ['left', 'Left', 'Ліва'],
-    ],
-  ],
-  [
-    'size',
-    'Touch control size',
-    'Розмір сенсорного керування',
-    [
-      ['regular', 'Regular', 'Звичайний'],
-      ['large', 'Large', 'Великий'],
-    ],
-  ],
-  ['opacity', 'Touch control opacity', 'Прозорість сенсорного керування'],
-]) {
-  const row = el('label'),
-    caption = el('span'),
-    input = el(choices ? 'select' : 'input');
-  input.id = `snake-global-touch-${key}`;
-  row.append(caption, input);
-  if (!choices) {
-    input.type = 'range';
-    input.min = '0.2';
-    input.max = '1';
-    input.step = '0.05';
-  }
-  input.addEventListener('change', () =>
-    touch.set({ ...touch.snapshot(), [key]: choices ? input.value : Number(input.value) }),
-  );
-  snakeTouchSettings.append(row);
-  touchFields.push({ key, en, uk, choices, caption, input });
-}
-touchPresentationControls = {
-  refresh() {
-    for (const field of touchFields) {
-      field.caption.textContent = locale === 'uk' ? field.uk : field.en;
-      if (field.choices)
-        options(
-          field.input,
-          field.choices.map(([key, en, uk]) => [key, locale === 'uk' ? uk : en]),
-          touch.snapshot()[field.key],
-        );
-      else field.input.value = String(touch.snapshot()[field.key]);
-    }
-  },
-};
-touchPresentationControls.refresh();
+touchPresentationControls = mountTouchPresentationSettings({
+  document: doc,
+  mount: snakeTouchSettings,
+  preferences: touch,
+  idPrefix: 'snake-global',
+});
 const snakeAudioCues = el('section');
 attachMenuAudioSettings(sound, doc, {
   target: snakeAudioCues,
