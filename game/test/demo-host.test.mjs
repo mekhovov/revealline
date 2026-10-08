@@ -375,7 +375,7 @@ test('unattended playback bounds a visible stall and automatically repeats compl
       },
       {
         timeoutMs: DEMO_HOST_READY_TIMEOUT_MS + 30000,
-        message: 'A completed demo must automatically start its next owned scene.',
+        message: `A completed demo must rotate (scene ${scene}, status ${completed.status}, tick ${completed.tick}, caption ${page.$('demo-caption').textContent}).`,
       },
     );
     assert.ok(completed.tick > 0, 'Rotation follows an advanced real-core performance.');
@@ -593,23 +593,49 @@ test('demo control hints show the saved keyboard bindings in the actual app', as
   assert.deepEqual(page.errors, []);
 });
 
-test('compact toolbar owns transport; details are absent from the board until requested', async (t) => {
+test('spectator information and play invitation stay visible while details remain optional', async (t) => {
   const page = await demoPage(t);
   await page.open();
   assert.equal(page.$('demo-panel').hidden, true);
-  for (const id of ['demo-watch-pause', 'demo-next', 'demo-interrupt', 'demo-details-toggle']) {
+  for (const id of ['demo-watch-pause', 'demo-next']) {
     assert.ok(page.$(id).closest('.demo-header-actions'), id);
-    assert.ok(page.$(id).getAttribute('aria-label'), 'Icon controls retain localized names.');
+    assert.ok(page.$(id).getAttribute('aria-label'), 'Transport retains localized names.');
   }
+  assert.ok(page.$('demo-caption').closest('#demo-audience'));
+  assert.ok(page.$('demo-now-playing').closest('#demo-audience'));
+  assert.ok(page.$('demo-interrupt').closest('.demo-header-actions'));
+  assert.ok(page.$('demo-details-toggle').closest('.demo-header-actions'));
+  assert.match(page.$('demo-interrupt').textContent, /Want to play/);
+  assert.match(page.$('demo-join-hint').textContent, /practice/);
+  assert.equal(page.$('demo-guide-portrait').hidden, false);
   const run = page.demoFrame.run;
   page.$('demo-details-toggle').click();
   assert.equal(page.$('demo-panel').hidden, false);
+  assert.equal(page.$('demo-dialog').dataset.details, 'open');
+  assert.equal(page.doc.activeElement, page.$('demo-details-close'));
+  assert.equal(page.$('demo-panel-status').textContent, page.$('demo-status').textContent);
+  assert.equal(page.$('demo-panel-caption').textContent, page.$('demo-caption').textContent);
   assert.equal(page.$('demo-details-toggle').getAttribute('aria-expanded'), 'true');
   frames(page, 4);
   assert.equal(page.demoFrame.run, run, 'Opening details cannot take over or replace the run.');
-  page.$('demo-details-toggle').click();
+  page.$('demo-details-close').click();
   assert.equal(page.$('demo-panel').hidden, true);
+  assert.equal(page.doc.activeElement, page.$('demo-details-toggle'));
   page.$('demo-interrupt').click();
   assert.equal(page.$('demo-panel').hidden, false);
   assert.equal(page.$('demo-actions').hidden, false);
+});
+
+test('demo guide respects the shared character-reactions preference without hiding teaching captions', async (t) => {
+  const storage = memoryStorage();
+  storage.setItem(
+    'revealline.journey-reactions.v1',
+    JSON.stringify({ format: 'JourneyReactionPreferencesV1', enabled: false }),
+  );
+  const page = await demoPage(t, { storage });
+  await page.open();
+  assert.equal(page.$('demo-guide-portrait').hidden, true);
+  assert.equal(page.$('demo-guide-label').hidden, true);
+  assert.ok(page.$('demo-caption').textContent.length > 0);
+  assert.equal(page.$('demo-audience').hidden, false);
 });
