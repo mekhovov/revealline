@@ -2914,8 +2914,8 @@ No offline check yet.</pre
       </div>
     </dialog>
     <dialog id="demo-dialog" class="demo-dialog" aria-labelledby="demo-level">
-      <header class="demo-header">
-        <div>
+      <header class="demo-header" data-ui-surface="toolbar">
+        <div class="demo-heading">
           <p class="eyebrow">
             <span data-i18n="demo:title">DEMO</span> · <span id="demo-source"></span>
           </p>
@@ -2924,25 +2924,17 @@ No offline check yet.</pre
         <div class="demo-header-actions" data-demo-ui>
           <button
             id="demo-watch-pause"
-            data-icon="Ⅱ"
             class="button secondary"
             type="button"
-            data-i18n="demo:pauseDemo"
+            data-i18n="demo:pauseShort"
           >
-            Pause demo
+            Pause
           </button>
-          <button
-            id="demo-next"
-            data-icon="⏭"
-            class="button secondary"
-            type="button"
-            data-i18n="demo:next"
-          >
-            Next demonstration
+          <button id="demo-next" class="button secondary" type="button" data-i18n="demo:nextShort">
+            Next level
           </button>
           <button
             id="demo-interrupt"
-            data-icon="▶"
             data-demo-ui
             class="button primary"
             type="button"
@@ -2955,7 +2947,6 @@ No offline check yet.</pre
             class="button secondary"
             type="button"
             data-demo-ui
-            data-icon="☰"
             data-i18n="demo:details"
             data-i18n-aria-label="demo:details"
             aria-controls="demo-panel"
@@ -2963,21 +2954,18 @@ No offline check yet.</pre
           >
             Audio &amp; details
           </button>
-
           <button
             id="demo-fullscreen"
-            data-icon="⛶"
             type="button"
             class="button secondary"
             data-demo-ui
-            data-i18n="demo:enterFullscreen"
+            data-i18n="demo:fullscreenShort"
             hidden
           >
-            Enter fullscreen
+            Fullscreen
           </button>
           <button
             id="demo-back"
-            data-icon="×"
             type="button"
             class="button secondary"
             data-demo-exit
@@ -2997,12 +2985,37 @@ No offline check yet.</pre
           aria-label="Live game demonstration"
         ></canvas>
       </div>
+      <section id="demo-audience" class="demo-audience" data-demo-ui>
+        <div class="demo-commentary" data-ui-surface="toolbar">
+          <img id="demo-guide-portrait" width="48" height="48" alt="" aria-hidden="true" hidden />
+          <div>
+            <p id="demo-guide-label" class="eyebrow" data-i18n="demo:guide">Flight guide</p>
+            <p id="demo-caption" class="demo-compact-caption"></p>
+            <p id="demo-status" class="demo-readout"></p>
+          </div>
+        </div>
+        <div class="demo-listening" data-ui-surface="toolbar">
+          <p id="demo-music-state" class="eyebrow"></p>
+          <p id="demo-now-playing"></p>
+          <p id="demo-join-hint" data-i18n="demo:joinHint">
+            Steer to take over · practice, no rewards
+          </p>
+        </div>
+      </section>
       <div id="demo-panel" class="demo-panel" data-demo-ui hidden>
-        <p id="demo-caption" class="demo-compact-caption"></p>
+        <p id="demo-panel-caption"></p>
+        <p id="demo-panel-status"></p>
+        <button
+          id="demo-details-close"
+          type="button"
+          class="button secondary"
+          data-i18n="demo:closeDetails"
+        >
+          Close details
+        </button>
         <details id="demo-details" data-demo-ui open>
           <summary>
-            <span data-i18n="demo:details">Audio &amp; details</span
-            ><span id="demo-now-playing"></span>
+            <span data-i18n="demo:details">Audio &amp; details</span>
           </summary>
           <div id="demo-audio" data-demo-ui></div>
           <label class="demo-picture-setting" data-demo-ui
@@ -3012,7 +3025,6 @@ No offline check yet.</pre
             ></label
           >
           <div class="demo-notes">
-            <p id="demo-status"></p>
             <p id="demo-picture-note"></p>
           </div>
         </details>

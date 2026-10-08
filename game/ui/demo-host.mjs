@@ -1,3 +1,7 @@
+import { attachDemoLayout } from './demo-layout.mjs';
+import { REACTION_PORTRAITS } from '../journey/reaction-portraits.mjs';
+import { createReactionPreferences } from '../journey/reaction-preferences.mjs';
+import { musicStatusLabel } from './music-credit.mjs';
 import { createDemoReward } from './demo-reward.mjs';
 import { createDemoSceneTransition } from './demo-scene-transition.mjs';
 import {
@@ -66,9 +70,14 @@ export function attachDemoHost({
     dialog = $('demo-dialog'),
     canvas = $('demo-canvas');
   if (!dialog || !canvas) return null;
+  const guidePreferences = createReactionPreferences({
+    getStorage: () => storage,
+    window: doc.defaultView ?? globalThis,
+  });
   const reward = createDemoReward({ document: doc, canvas, readMedia, audioMaster });
   const sceneTransition = createDemoSceneTransition(canvas, doc);
   const fullscreen = attachDemoFullscreen({ document: doc, dialog, button: $('demo-fullscreen') });
+  const layout = attachDemoLayout({ document: doc, dialog, canvas });
   const idle = createDemoIdle(),
     captions = createDemoCaptions();
   let settings = readDemoSettings(storage, settingsKey, getContext().reduced);
@@ -134,9 +143,35 @@ export function attachDemoHost({
       terminal = ['won', 'lost'].includes(state?.status);
     const loading = busy || !director?.player;
     dialog.dataset.scene = loading ? 'loading' : 'playing';
-    const track = audio?.snapshot?.()?.track;
-    if ($('demo-now-playing'))
-      text('demo-now-playing', track ? `${track.title} · ${track.artist || ''}` : '');
+    const audioState = audio?.snapshot?.(),
+      track = audioState?.track;
+    text(
+      'demo-now-playing',
+      track
+        ? `${track.title} · ${track.artist || t('interface:artistNotRecorded')}`
+        : t('interface:noTrackSelected'),
+    );
+    text(
+      'demo-music-state',
+      audioState?.muted ? t('demo:audio.soundOff') : musicStatusLabel(audioState?.status ?? 'idle'),
+    );
+    $('demo-now-playing').title = $('demo-now-playing').textContent;
+    const guideVisible = guidePreferences.snapshot().enabled && !practice;
+    $('demo-guide-portrait').hidden = !guideVisible;
+    $('demo-guide-label').hidden = !guideVisible;
+    const portrait =
+      REACTION_PORTRAITS.guide[
+        !getContext().reduced &&
+        !interrupted &&
+        !loading &&
+        ['demo:tipClose', 'demo:tipPowerup', 'demo:tipObjective'].includes(caption)
+          ? 'react'
+          : 'idle'
+      ];
+    if ($('demo-guide-portrait').getAttribute('src') !== portrait)
+      $('demo-guide-portrait').src = portrait;
+    $('demo-join-hint').hidden = !!practice;
+
     text(
       'demo-source',
       t(
@@ -193,10 +228,15 @@ export function attachDemoHost({
               : 'demo:blurredPicture',
       ),
     );
+    text('demo-panel-caption', $('demo-caption').textContent);
+    text('demo-panel-status', $('demo-status').textContent);
     $('demo-panel').hidden = !detailsOpen && !interrupted && !practice;
+    dialog.dataset.details = $('demo-panel').hidden ? 'closed' : 'open';
+    $('demo-details-close').hidden = interrupted || !!practice;
     $('demo-details-toggle').setAttribute('aria-expanded', String(!$('demo-panel').hidden));
     text('demo-details-toggle', t('demo:details'));
-    text('demo-next', t('demo:next'));
+    text('demo-next', t('demo:nextShort'));
+    $('demo-next').setAttribute('aria-label', t('demo:next'));
     text('demo-interrupt', t('demo:playChoices'));
     text('demo-back', t('demo:back'));
     $('demo-actions').hidden = !interrupted && !practice;
@@ -211,9 +251,13 @@ export function attachDemoHost({
     $('demo-interrupt').hidden = !!practice;
     $('demo-watch-pause').hidden = !!practice;
     $('demo-watch-pause').disabled = handoffPending;
-    text('demo-watch-pause', t(interrupted ? 'demo:resumeDemo' : 'demo:pauseDemo'));
+    text('demo-watch-pause', t(interrupted ? 'demo:resumeShort' : 'demo:pauseShort'));
+    $('demo-watch-pause').setAttribute(
+      'aria-label',
+      t(interrupted ? 'demo:resumeDemo' : 'demo:pauseDemo'),
+    );
     $('demo-watch-pause').setAttribute('aria-pressed', String(interrupted));
-    $('demo-watch-pause').dataset.icon = interrupted ? '▶' : 'Ⅱ';
+
     $('demo-return').hidden = !practice;
     $('demo-pause').hidden = !practice || !armed;
     const capabilities = arcadeActionCapabilities(state?.level);
@@ -655,6 +699,14 @@ export function attachDemoHost({
   listen($('demo-details-toggle'), 'click', () => {
     detailsOpen = !detailsOpen;
     renderControls();
+    if (detailsOpen && !interrupted && !practice)
+      $('demo-details-close').focus({ preventScroll: true });
+  });
+  listen($('demo-details-close'), 'click', () => {
+    detailsOpen = false;
+    if (interrupted || practice) return;
+    renderControls();
+    $('demo-details-toggle').focus();
   });
   listen($('demo-next'), 'click', () => {
     if (!busy && !practice) {
@@ -894,6 +946,8 @@ export function attachDemoHost({
     },
   });
   const unsubscribe = onLocaleChange(renderControls);
+  const unsubscribeAudio = audio?.subscribe?.(renderControls);
+  const unsubscribeGuide = guidePreferences.subscribe(renderControls);
   return {
     get active() {
       return active;
@@ -950,7 +1004,11 @@ export function attachDemoHost({
       audioControls.dispose();
       input.destroy();
       fullscreen.dispose();
+      layout.dispose();
       unsubscribe?.();
+      unsubscribeAudio?.();
+      unsubscribeGuide?.();
+      guidePreferences.dispose();
       for (const remove of listeners) remove();
     },
   };
