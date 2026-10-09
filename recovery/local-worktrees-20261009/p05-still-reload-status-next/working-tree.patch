@@ -1,0 +1,227 @@
+diff --git a/docs/still-media-workshop.md b/docs/still-media-workshop.md
+index 462901502..e3f2eb798 100644
+--- a/docs/still-media-workshop.md
++++ b/docs/still-media-workshop.md
+@@ -28,7 +28,7 @@ Selectors list authored Standard contexts once. The actual execution catalog res
+ 
+ ## Upload, preview and save
+ 
+-1. Open local media and wait for complete saved-original/catalog verification. Read failure disables editing without creating an empty replacement.
++1. Open local media and wait for complete saved-original/catalog verification. Read failure disables editing without creating an empty replacement. If opening fails, resolve the displayed cause and use **Reload saved media and installed maps**. A successful current reload reconciles that failed Open’s host status; failed or cancelled reloads do not announce recovery. Newer host feedback retains its own ownership. This status reconciliation does not save, replace originals or change return focus.
+ 2. Select a chapter, map and world. Choose one original PNG/JPEG and enter credit, source declaration and description. These declarations are not automatic rights certification.
+ 3. **Preview chosen file** checks signature/header, dimensions, full decoding and SHA-256 before isolated display. It writes no storage. Keep the original externally; no cropping, resizing or reencoding is performed.
+ 4. **Save assignment** prepares the complete candidate, retains original history/owners, and commits under both source-catalog and media-generation guards. Quota/write refusal preserves old saved bytes, draft and preview. Notification failure or late cancellation cannot undo a committed save.
+diff --git a/game/test/still-media-host.test.mjs b/game/test/still-media-host.test.mjs
+index 9a18a3fb0..50b8954b2 100644
+--- a/game/test/still-media-host.test.mjs
++++ b/game/test/still-media-host.test.mjs
+@@ -426,3 +426,139 @@ test('classic picture workshop exposes loading and Back before storage explanati
+   assert.ok(title < status && status < back && back < explanation);
+   assert.match(html.slice(status, back), /data-state="busy"[\s\S]*Loading the picture workshop/);
+ });
++
++test('successful dialog Reload clears its failed Open status without replacing saved originals', async (t) => {
++  const seeded = await setup(t);
++  await seeded.host.open();
++  seeded.$('still-media-file').files = [new Blob([pngBytes()])];
++  seeded.$('still-media-file').onchange();
++  seeded.$('still-media-credit').value = 'Fixture';
++  seeded.$('still-media-source').value = 'Original test';
++  seeded.$('still-media-description').value = 'Retained before recovery';
++  assert.equal(await seeded.$('still-media-preview').onclick(), true);
++  assert.equal(await seeded.$('still-media-save').onclick(), true);
++  const before = await createStillMediaStore({
++    managedStore: seeded.managers[0],
++    decodeImage,
++  }).read();
++  seeded.$('still-host-close').onclick();
++  let blocked = true;
++  const h = await setup(t, {
++    memory: seeded.memory,
++    host: {
++      createStills(args) {
++        const store = createStillMediaStore(args);
++        return {
++          ...store,
++          read(options) {
++            if (blocked) throw new Error('Close source game before reading local media.');
++            return store.read(options);
++          },
++        };
++      },
++    },
++  });
++  const opener = h.$('still-host-open');
++  opener.focus();
++  assert.equal(await opener.onclick(), false);
++  assert.match(h.$('still-host-status').textContent, /Workshop open failed/);
++  assert.equal(h.$('still-host-status').dataset.state, 'error');
++  assert.equal(await h.$('still-media-reload').onclick(), false);
++  assert.match(h.$('still-media-status').textContent, /Close source game/);
++  assert.match(h.$('still-host-status').textContent, /Workshop open failed/);
++  const writes = h.memory.allPuts.length;
++  blocked = false;
++  assert.equal(await h.$('still-media-reload').onclick(), true);
++  assert.equal(h.host.panel.snapshot().generation, 1);
++  assert.match(h.$('still-media-stats').textContent, /1 retained image records/);
++  assert.match(h.$('still-host-status').textContent, /Real local media opened/);
++  assert.equal(h.$('still-host-status').dataset.state, 'ready');
++  assert.equal(h.memory.allPuts.length, writes, 'Reload verifies; it does not save.');
++  const after = await createStillMediaStore({
++    managedStore: h.managers[0],
++    decodeImage,
++  }).read();
++  assert.deepEqual(after.document, before.document);
++  assert.deepEqual(
++    Buffer.from(await after.assets[0].blob.arrayBuffer()),
++    Buffer.from(await before.assets[0].blob.arrayBuffer()),
++  );
++  h.host.panel.dialog.emit('cancel');
++  assert.equal(h.doc.activeElement === opener, true);
++  assert.match(h.$('still-host-status').textContent, /Real local media opened/);
++});
++
++test('cancelled Reload cannot publish recovery or reclaim focus after dialog Close', async (t) => {
++  const held = deferred(),
++    entered = deferred();
++  let first = true;
++  const h = await setup(t, {
++    host: {
++      createStills(args) {
++        const store = createStillMediaStore(args);
++        return {
++          ...store,
++          async read(options) {
++            if (first) {
++              first = false;
++              throw new Error('Close source game before reading local media.');
++            }
++            entered.resolve();
++            await held.promise;
++            return store.read(options);
++          },
++        };
++      },
++    },
++  });
++  h.$('still-host-open').focus();
++  assert.equal(await h.host.open(), false);
++  const failed = h.$('still-host-status').textContent;
++  const loading = h.$('still-media-reload').onclick();
++  await entered.promise;
++  h.host.panel.dialog.emit('cancel');
++  h.host.panel.dialog.emit('cancel');
++  h.$('still-host-close').focus();
++  held.resolve();
++  assert.equal(await loading, false);
++  assert.equal(h.$('still-host-status').textContent, failed);
++  assert.equal(h.$('still-host-status').dataset.state, 'error');
++  assert.equal(h.doc.activeElement === h.$('still-host-close'), true);
++});
++
++test('Reload recovery does not overwrite newer host operation feedback', async (t) => {
++  const held = deferred(),
++    entered = deferred();
++  let first = true;
++  const h = await setup(t, {
++    host: {
++      createStills(args) {
++        const store = createStillMediaStore(args);
++        return {
++          ...store,
++          async read(options) {
++            if (first) {
++              first = false;
++              throw new Error('Close source game before reading local media.');
++            }
++            entered.resolve();
++            await held.promise;
++            return store.read(options);
++          },
++        };
++      },
++    },
++  });
++  assert.equal(await h.host.open(), false);
++  const loading = h.$('still-media-reload').onclick();
++  await entered.promise;
++  // Direct handlers model competing owners, not native access through an inert modal.
++  assert.equal(await h.$('still-host-export-audio').onclick(), true);
++  const newer = h.$('still-host-status').textContent;
++  assert.match(newer, /Soundtrack backup prepared/);
++  held.resolve();
++  assert.equal(await loading, true);
++  assert.equal(h.host.panel.snapshot().ready, true);
++  assert.equal(h.$('still-host-status').textContent, newer);
++  assert.equal(h.doc.activeElement === h.$('still-host-download-audio'), true);
++});
+diff --git a/game/ui/still-media-host.mjs b/game/ui/still-media-host.mjs
+index 2e97db61e..68cb630af 100644
+--- a/game/ui/still-media-host.mjs
++++ b/game/ui/still-media-host.mjs
+@@ -98,7 +98,10 @@ export function attachStillMediaHost({
+     openController = null;
+ 
+   const feedback = createOperationStatus(status);
+-  let activity = null;
++  let activity = null,
++    failedOpenFeedback = null;
++  const openedMessage = () =>
++    `Real local media opened for ${channel ?? sourceChannel}. Picture assignments are ready for fresh flights in this edition.`;
+   function setStatus(message, state = 'ready') {
+     if (activity) activity.update({ message, progress: null });
+     else feedback.begin({ message }).finish({ message, state });
+@@ -138,6 +141,7 @@ export function attachStillMediaHost({
+     $('still-host-download-audio').removeAttribute('href');
+   }
+   function cancelOpen() {
++    failedOpenFeedback = null;
+     ++openSerial;
+     openController?.abort();
+     openController = null;
+@@ -204,6 +208,12 @@ export function attachStillMediaHost({
+           preview: createPreview({ canvas: doc.createElement('canvas'), presets: source.presets }),
+           decodeImage,
+           URLImpl,
++          onLoaded: () => {
++            if (disposed || opening) return;
++            // Reconcile only the failed Open's lease; newer host feedback owns itself.
++            failedOpenFeedback?.finish({ message: openedMessage() });
++            failedOpenFeedback = null;
++          },
+           onClose: () => {
+             if (opening) cancelOpen();
+             router.clear();
+@@ -222,9 +232,10 @@ export function attachStillMediaHost({
+         navigation.sync();
+         setStatus(
+           result
+-            ? `Real local media opened for ${channel ?? sourceChannel}. Picture assignments are ready for fresh flights in this edition.`
++            ? openedMessage()
+             : 'Workshop open failed. Read its error; saved data was not replaced. Audio recovery can be attempted after closing the dialog.',
+         );
++        failedOpenFeedback = result ? null : lease;
+       }
+       lease.finish({ message: status.textContent, state: result ? 'ready' : 'error' });
+       return result;
+diff --git a/game/ui/still-media-panel.mjs b/game/ui/still-media-panel.mjs
+index 71b92c28e..0bbf6d9a5 100644
+--- a/game/ui/still-media-panel.mjs
++++ b/game/ui/still-media-panel.mjs
+@@ -20,6 +20,7 @@ export function attachStillMediaPanel({
+   catalog,
+   preview,
+   onClose = () => {},
++  onLoaded = () => {},
+   onSaved = () => {},
+   decodeImage,
+   URLImpl = globalThis.URL,
+@@ -507,6 +508,8 @@ export function attachStillMediaPanel({
+         setStatus(
+           'Saved originals verified. Fresh flights use the current assignment; existing flights and earned pictures keep their saved revision.',
+         );
++        check();
++        onLoaded();
+       },
+     );
+   }

@@ -1,0 +1,660 @@
+diff --git a/authoring/prompts/cross-mode-delivery.md b/authoring/prompts/cross-mode-delivery.md
+index 988160ec7..17587ba9f 100644
+--- a/authoring/prompts/cross-mode-delivery.md
++++ b/authoring/prompts/cross-mode-delivery.md
+@@ -190,7 +190,6 @@ The [supporting-screen delivery](../../docs/supporting-screen-readability.md) al
+ 
+ “For P03 saved Continue, use an actual played-and-saved flight and the visible title Cancel action, then enter Team, leave its lobby without starting and return to Solo. Compare the saved HUD/checkpoint before explicit continuation. Record late decoder rejection and busy-cleanup timing only if actually observed; HTTP cannot delay the saved blob decode. Keep genuine Team victory and multi-page Collection/score journeys as separate remaining gates, and retain preliminary actions that missed the intended cancellation window.”
+ 
+-
+ ## Shared Settings and quick sound qualification
+ 
+ “Use the current whole-game UX plan. Open Solo Home, Versus Ready/paused and Team Ready/paused through their actual routes. Toggle quick Sound and confirm the same master state in Settings without starting or replacing an attempt. Enter each category with keyboard, modeled controller and pointer; Left/Right/Home/End must have one category owner. Leave Controls during key capture through the existing cancellation action. Close Settings and prove the actual opener, both checkpoints and explicit Resume remain intact. Change Plain/Large, menu palette and ornaments in one mode, then return to another. Compare saved authority with visible selectors; retain failed-save intent. Record actual cached admission separately from cold Back and modeled persisted events. Measure portrait, short landscape and handheld categories and reduced-effects rows at 44 pixels or larger. Confirm new modules ship recursively in both game and release-catalogue runtimes. Keep physical input, meaningful 200% zoom, full themes and final exact-source/public gates explicit.”
+@@ -202,3 +201,19 @@ The [supporting-screen delivery](../../docs/supporting-screen-readability.md) al
+ ## Missions Back returns to its entry
+ 
+ “From the title Missions button, the field Missions button and the ready/paused Mission brief, use Back, Escape and modeled controller Back. Return to the actual surviving opener without resuming or changing the paused cut, checkpoint or saved payload. Follow Home → Missions → Collection → Choose appearance → Back and preserve the same Home visit. Include touch-like activation with focus elsewhere, an unavailable opener, expected native autofocus, a queued old close and a newer dialog/focus established during close or pause. Do not let reopening Home cover that newer owner. Keep Deploy, Back to flight and legacy programmatic field entry as their existing intentional destinations. Qualify actual native focus separately; source/model coverage does not certify physical touch/controller operation or complete P03.”
++
++## Team lobby artwork preview
++
++Use the exact current Team picture selection as the lobby preview source. Keep the passive 2:1 figure inside the lobby and outside movable Pause/results tools. Borrow the prepared image; add no second read/decode/URL, simulation, animation loop or focus target. Clear old pixels when the current selection retires; stale preparation must neither paint nor clear newer art. Keep one operation status and existing Cancel/Retry rules. A preview-only paint failure offers Retry preview against the same prepared binding and leaves valid Start available. Preserve procedural-import labels, exact starter rejection and original lease cleanup. Test preview and arena drawing separately, including no arena paint before Start, newer focus, stale completion, retained Change setup, Pause/results and cached/terminal return. Qualify real pixels and responsive/input/accessibility behavior separately from the model tests.
++
++## Verify Team completed-picture parity
++
++“On the exact source, finish First Connection and Relay Yard using their existing legal Standard routes. Confirm hidden cells still exist at completion and Relay Yard retains walls; the accepted original must nevertheless be drawn completely without later masks, hazards or actor labels. Keep actual coverage, run bytes, completion count and lease ownership unchanged through repeated normal/reduced paints. Check ordinary running/paused/lost concealment, missing/procedural fallback and failed/invalid picture cleanup. Retain the original masking failure and complete affected renderer/binding/host results. Then observe an actual Team win separately: the unchanged Results dialog still covers part of the canvas, so do not claim an unobstructed viewer, animation, full P08-A or physical-device acceptance from this still-picture fix.”
++
++### Keep Team artwork an earned reward
++
++“Use the exact prepared Team picture for a narrow lobby border teaser with an opaque black centre and an explicit Win to reveal the full picture caption. Retain its 2:1 identity, existing lease and current selection; invent no run or captured state. Confirm both ready arenas and retained Change setup remain concealed, then earn actual wins and inspect full-picture rendering with unchanged coverage. Preserve the missing-mask failure, earlier candidate bytes and complete affected runtime results; qualify native pixels and layout separately.”
++
++### Keep the Team lobby return action visible
++
++“On the exact composed Team candidate, earn a win and choose Change setup; also pause a real attempt and explicitly confirm Change setup. Preserve the concealed teaser, accepted image lease, selected arena and separate Start action. After final lobby layout, focus the current available primary action and reveal it only when outside the viewport. Veto the old handoff after newer focus, input, Settings visit, attempt or lifecycle intent, including reentrant focus/layout callbacks. Keep cleanup synchronous and retire all temporary listeners; do not add a delayed focus task or broaden asynchronous picture recovery. Retain the original offscreen failure, actual-host red/green regressions and native geometry/hit-test evidence separately. Check Plain/Large at 844×390 and portrait size; no simulated route or finite layout establishes physical-device or public acceptance.”
+diff --git a/authoring/skills/xonix-runtime-maintainer/SKILL.md b/authoring/skills/xonix-runtime-maintainer/SKILL.md
+index 62d0e1c2b..e58a299c7 100644
+--- a/authoring/skills/xonix-runtime-maintainer/SKILL.md
++++ b/authoring/skills/xonix-runtime-maintainer/SKILL.md
+@@ -5,7 +5,6 @@ description: Maintain, test, build and archive this project's playable Xonix run
+ 
+ # Xonix Runtime Maintainer
+ 
+-
+ Current sequencing is [the revised whole-game UX plan](../../../docs/whole-game-ux-plan.md). Settings is a host-local surface with shared Controls, Audio, Appearance & accessibility and Game data categories. Use `attachSettingsPanels` for categories and compose `settingsTabOwnsKey` into the host navigation capture boundary; never add a second preference or controller owner. Enter the real category before editing or asserting control reachability. Preserve input release, paused checkpoints, actual opener return, retained category and explicit Resume. Team Settings is a native dialog, not an Options disclosure; model native Tab/default cancel locally in host fixtures without inventing application return focus. Quick Sound controls operate the existing master authority; their visible labels and pressed state agree across modes.
+ 
+ Menu/audio `pageshow.persisted` reconciliation reads validated current storage and preserves unsaved/session-only local intent. Storage reads, listeners and dialog close callbacks can retire their owner or produce newer intent. Recheck ownership before writes/focus; terminal cleanup retires before closing native surfaces. Test late audio activation after mute, stale restoration, failed saves and actual browser Back separately. A cold Back page load is not BFCache proof. Interface appearance does not pin a complete game theme or change existing map/art identity; exact complete-theme restoration remains a later qualified contract.
+@@ -578,7 +577,6 @@ For [Recovery readability](../../../docs/recovery-display-readability.md), use t
+ 
+ For [Recovery startup navigation](../../../docs/recovery-startup-navigation.md), keep Back/Reload navigable before version/catalog readiness with one page-owned router. Retry replaces the read generation and deadline, not controller assignment. Background or stale completion must neither adopt data nor restore focus. Retire focused Reload to Find only synchronously for the same current foreground startup; clear stale navigation focus so later neutral polling cannot revive that handoff. Keep the existing reader's close-before-Back guarantee, explicit discovery and zero-write scope. Test actual held, failed, timed-out and late startup with the real router/navigation entry and distinguish modeled pad edges from physical controller acceptance.
+ 
+-
+ When Recovery Back awaits reader close, capture its originating view and read generation. Permit the deferred host callback only for that same current foreground owner; invalidate the final navigation after pagehide. Preserve close-before-Back and allow a fresh current Back after a cancelled stale request. Test the actual host/view/reader with a held readonly transaction abort, both legitimate closure and history/background supersession. Keep modeled storage events separate from native IndexedDB and BFCache evidence; see the deferred Back correction in [Recovery startup navigation](../../../docs/recovery-startup-navigation.md).
+ 
+ When a Recovery read disables its focused Find, Review or preparation action, pass that exact origin into the current operation. Transfer only its foreground focus synchronously to Cancel; never use body focus alone as ownership evidence. Return only while Cancel still owns focus, the operation remains current and background cancellation has not invalidated that return. Keep Find's result-aware Find/Review destination, other enabled origins and the existing successful download-link destination. Preserve newer focus, unowned/background starts and closed views. Test the real view with the observed disabled-control blur, empty/error/channel outcomes and original preparation; retain native focus and downloaded-byte evidence separately. Recovery is currently an explicit troubleshooting URL, not an advertised Library destination. Do not silently add navigation or fabricate eligible profiles to complete a test. See [ready-action focus continuity](../../../docs/recovery-startup-navigation.md#ready-action-focus-continuity).
+@@ -630,3 +628,19 @@ Regression example: exercise actual Collection → Records → Saves file import
+ When a reviewed producer repair advances the compiled theme revision, inspect explicit runtime consumers as well as registry metadata. Team's closed picture table binds the complete pack, level, theme revision, collection and asset tuple; unchanged image bytes alone do not make a newer snapshot compatible. Revalidate each tuple against the actual compiled snapshot, then advance only its explicitly reviewed revision. Never wildcard, infer the current revision at runtime or edit historical release bindings. Run the complete binding and host tests against the real compiled metadata and originals, retaining the stale-binding failure and both older/newer snapshot refusals. Do not alter simulation, artwork, saved ownership or unrelated producer fingerprints to repair this compatibility boundary.
+ 
+ Prompt: “After a metadata-only theme revision, find exact revision consumers, reproduce their refusal against actual compiled metadata, and reconcile only reviewed identities. Prove both starter pictures still use their original full-frame assets and that unreviewed revisions fail before image reads. Preserve historical failures and distinguish source tests from native/public acceptance.”
++
++## Team lobby picture consumer
++
++Keep a Team lobby artwork preview passive and outside `coop-tools`, which moves into Pause and results. Borrow only the current prepared selection's exact image; never create another decoder, URL, read, core or animation loop. Clear retired pixels synchronously; stale async completions must neither paint nor clear a newer selection. Use the existing picture status and Cancel/Retry owner. Preview-only rendering failure must offer retry from the retained binding without disposing it or blocking valid Start. Keep preview recovery lobby-only, preserve labelled procedural imports and exact starter rejection, and let the existing lease own resource release. Trace preview and arena canvases separately in tests; retain no arena draw before explicit Start and no Solo data writes. Native layout/pixel/input, offline and release evidence remain distinct. See [Team picture host](../../../docs/team-picture-host.md#lobby-artwork-preview).
++
++## Team completed-picture parity
++
++Follow [Team victory picture](../../../docs/team-victory-picture.md). A won Team arena may display its accepted full-frame picture while recorded coverage remains below 100%. Preserve the existing picture identity/lease checks before the terminal presentation branch, and restore canvas state even when drawing fails. Do not fill simulation cells, retire image ownership, create scores, or replace the accepted image to produce the reward. Running/paused/lost and missing/procedural-image behavior stay intact. Prove the branch with actual authored public-command wins and before-fix masking failures; distinguish finite drawing/lease tests from a real winning browser journey and the still-separate unobstructed result viewer/animation.
++
++### Preserve the earned Team picture
++
++A lobby preview is not an earned reward. Keep the exact prepared image identity and full 2:1 mapping, but cover its centre with opaque #000 and expose only a narrow border teaser. State that winning reveals the full picture. Do not create a fake run, claim captured cells or change ownership/progress to render the teaser. Prove ready and retained Change setup stay concealed, with opaque source-over drawing; pair those checks with actual authored-win full-picture tests. Keep the earlier full-lobby candidate and its missing-mask discriminator as history, not product authority. Native pixel/layout evidence remains separate.
++
++When composing the Team teaser onto shared Settings, retain `modelTeamDialogs()` in the finite host fixture and keep preview/arena recordings separate. Test a held original finishing behind the current Settings selector without focus or run adoption. Use each authored route in actual-host victory tests: `coverageClear` for First Connection, `yardOpening` for Relay Yard. The route defaults correspond to Full teamwork; do not substitute another play-style label or count simulated wins as native input qualification.
++
++For [visible Team lobby return](../../../docs/team-victory-picture.md#visible-lobby-return-action), finish retained-teaser layout before handing focus to the current primary. Reveal only an offscreen action with nearest scrolling; preserve already visible placement. Keep the synchronous handoff bound to its lobby generation and Settings visit, with newer focus/input/lifecycle intent permanently vetoing its remaining work. Recheck after focus and layout callbacks and remove temporary listeners on every exit. Reuse actual-host confirmation and earned-win journeys; finite rectangles verify requested scrolling, not native viewport or hit-target results. This does not alter asynchronous picture recovery, start a run, reacquire artwork or award Solo progress.
+diff --git a/docs/team-picture-host.md b/docs/team-picture-host.md
+index 9dc4e10e4..61782e949 100644
+--- a/docs/team-picture-host.md
++++ b/docs/team-picture-host.md
+@@ -1,5 +1,11 @@
+ # Team picture host integration candidate
+ 
++## Current composition
++
++The existing-arena teaser and completed-picture branch are composed on corrected v0.60.9 `628e95daf403082768cdcf900a8ea1d1ef4629a2`, with its explicit fpv27 bindings and separate Settings dialog preserved. This is a source candidate; browser, public-release and phase acceptance remain separate. The lobby behavior is described below and completed-picture behavior in [Team victory picture](team-victory-picture.md).
++
++## Historical host integration
++
+ This internal P08 work package composes the reviewed Team painter, lease and two-row binding table onto P05-B/static checkpoint `063ff5d650b6e071d2b59e89fa6e9fb5058b3f08`. It is not whole-phase acceptance or a release. Later P03/P02 compositions and final accepted presentation authority remain separate gates.
+ 
+ The compiled runtime snapshot is SHA-256 `94e24b96644c5c1c2e8d4e014f4d80fe7812359827863d75f00ab132c684982f`: fpv revision 19 with a null collection. The existing First Connection and Relay Yard recipes use only the two approved Orchard/Foundry derivatives described in [Team picture bindings](team-picture-bindings.md). No mission, artwork, producer, registry or Team schema is added. A newer accepted theme revision requires an explicit binding review and qualification; the match is not broadened automatically.
+@@ -15,3 +21,15 @@ New actual-host tests use real Team markup, entry modules, core, controller navi
+ The [host evidence](verification/cross-mode/p08-team-host/README.md) retains two closed native recordings on the same held production. The normal origin has nine events and seven inspected JPEGs: actual First Connection play reaches 4.6% captured ground, retains its picture through Retry and paused Stay, and returns to ready setup only after explicit discard. An attempted unboosted opening failed; this is not a native full win, joint-cut completion or successful rescue. The delayed origin has nine events and six inspected JPEGs. Only the exact Foundry PNG GET waits six seconds; its bytes and HEAD response are unchanged. A fresh required-picture request is cancelled, remains cancelled after the delayed response, then explicitly retried. Ready preserves a later Help focus, and only explicit Start enters Relay Yard. The first attempted Cancel found no matching target after readiness and performed no action; that observation is retained.
+ 
+ Fifteen HTTP bodies and local files match their exact authority before and after each native run. These desktop observations do not complete the Team encounter matrix, actor parity, imported-pack picture coverage, offline/public checks, responsive layouts or physical-device qualification. Later P03/P02 composition and final accepted presentation authority remain open. No phase or release is accepted by this checkpoint.
++
++## Lobby artwork preview
++
++The subsequent lobby teaser borrows the current prepared image from the same exact selection used by Start and Retry. A narrow one-cell border remains visible around an opaque black centre; the caption says that winning earns the full picture. The full 2:1 source mapping stays intact beneath the concealment. This is a visual teaser, not invented captured terrain or a collision map. Its passive 2:1 canvas and arena caption stay inside the lobby, outside the tools that move into Pause and results. It adds no image read, decode, URL, animation loop, simulation or focus stop. The caption describes artwork; scenic structures do not declare collisions.
++
++Changing arena clears old pixels immediately. Only current preparation may publish a new picture or error; stale callbacks may neither paint nor clear newer artwork. Cancel and required-art failures retain the existing status/Retry owner and readiness rules. Other imported namespaces show a labelled procedural/no-picture state. Modified starter content still requires its exact approved binding.
++
++A preview-only canvas failure reports its limitation through the existing picture status and offers Retry preview using the already prepared image. It does not dispose the lease, reload the picture, or block a valid Start. Pause/results do not expose this lobby-only recovery. Change setup repaints a retained selection without new image work. Terminal cleanup clears borrowed pixels while the original lease remains the sole resource owner.
++
++Tests must trace preview and arena canvases independently: a lobby preview draw must never weaken the no-arena-before-Start assertion. Model image identity, clear/draw ownership, focus, cancellation, Retry, lifecycle and imports; retain native decoding, layout, accessibility, offline and release qualification as separate evidence. Earlier counts and recordings above describe their original source, not this successor.
++
++The corrected-609 composition preserves the separate Settings dialog and current preference/focus owner. A held preview may finish while Settings is open, but cannot close it, refocus Start or begin a flight. The actual-host terminal route selects `yardOpening` for Relay Yard and `coverageClear` for First Connection; both Retry the accepted original recipe and image even if hidden setup values change. The keyboard driver lets Start consume its real neutral release tick before sending fresh route commands; it does not write the run or skip capture events. These source checks remain separate from browser rasterization and real winning input.
+diff --git a/game/couch/coop-view.mjs b/game/couch/coop-view.mjs
+index a4f5f3736..162320b9a 100644
+--- a/game/couch/coop-view.mjs
++++ b/game/couch/coop-view.mjs
+@@ -131,6 +131,9 @@ export function createCoopPainter(canvas) {
+       if (picture?.image) {
+         ctx.imageSmoothingEnabled = false;
+         ctx.drawImage(picture.image, 0, 0, 1152, 576, 0, 0, run.width, run.height);
++        // The accepted original is the victory reward. Keep the actual captured
++        // cells and score intact while retiring the live arena's concealment/cues.
++        if (run.status === 'won') return;
+       }
+       for (let y = 0; y < run.height; y++) {
+         for (let x = 0; x < run.width; x++) {
+diff --git a/game/couch/relay-rescue.css b/game/couch/relay-rescue.css
+index fe83be36c..4725fa33c 100644
+--- a/game/couch/relay-rescue.css
++++ b/game/couch/relay-rescue.css
+@@ -175,6 +175,49 @@ a:hover {
+   gap: 8%;
+   padding: clamp(30px, 5vw, 76px) 0 42px;
+ }
++.coop-picture-preview {
++  margin: 0 0 20px;
++}
++.coop-preview-frame {
++  position: relative;
++  width: min(100%, 480px);
++  aspect-ratio: 2 / 1;
++  margin-inline: auto;
++  background: var(--fk-bg);
++  border: 1px solid var(--fk-control-line);
++}
++#coop-preview-canvas {
++  display: block;
++  width: 100%;
++  height: 100%;
++  image-rendering: pixelated;
++}
++#coop-preview-canvas[hidden],
++#coop-preview-message[hidden] {
++  display: none;
++}
++#coop-preview-message {
++  position: absolute;
++  inset: 0;
++  display: grid;
++  align-content: center;
++  margin: 0;
++  padding: 12px;
++  color: var(--fk-muted);
++  text-align: center;
++}
++.coop-picture-preview figcaption {
++  margin-top: 8px;
++  color: var(--fk-muted);
++  font-size: 0.875rem;
++  line-height: 1.5;
++  overflow-wrap: anywhere;
++}
++@media (max-height: 500px) {
++  .coop-preview-frame {
++    width: min(100%, 288px);
++  }
++}
+ .eyebrow {
+   font-size: 0.72rem;
+   letter-spacing: 0.18em;
+diff --git a/game/couch/relay-rescue.html b/game/couch/relay-rescue.html
+index 32f9a6caf..8e1367168 100644
+--- a/game/couch/relay-rescue.html
++++ b/game/couch/relay-rescue.html
+@@ -59,6 +59,22 @@
+           <p id="coop-level-note" class="setup-note">
+             One open field. Bait a Hunter, cover the crossing, then take the anchors together.
+           </p>
++          <figure id="coop-picture-preview" class="coop-picture-preview" data-state="preparing">
++            <div class="coop-preview-frame">
++              <canvas
++                id="coop-preview-canvas"
++                width="576"
++                height="288"
++                aria-hidden="true"
++                hidden
++              ></canvas>
++              <p id="coop-preview-message">Preparing artwork…</p>
++            </div>
++            <figcaption id="coop-preview-caption">
++              Selected arena preview. Win to reveal the full picture. Scenery does not mark
++              obstacles.
++            </figcaption>
++          </figure>
+           <button id="coop-start" class="primary field-kit-primary" type="button" disabled>
+             Preparing arena…
+           </button>
+diff --git a/game/couch/relay-rescue.mjs b/game/couch/relay-rescue.mjs
+index 47ae5a115..f3a0110e4 100644
+--- a/game/couch/relay-rescue.mjs
++++ b/game/couch/relay-rescue.mjs
+@@ -650,16 +650,83 @@ export function bootCoop() {
+       },
+     };
+   }
++  let previewBinding = null,
++    previewState = 'preparing',
++    pictureMessage = '';
++  function clearPicturePreview() {
++    previewBinding = null;
++    const canvas = $('coop-preview-canvas');
++    canvas.hidden = true;
++    // Reset pixels without obtaining a second image or releasing the shared lease.
++    // Preview failure must not interrupt the original lease's terminal cleanup.
++    try {
++      canvas.width = 576;
++      return true;
++    } catch {
++      return false;
++    }
++  }
++  function picturePreview({ retry = false } = {}) {
++    if (run) return;
++    const selection = pictureSelection,
++      binding = selection?.state === 'ready' ? selection.binding : null,
++      canvas = $('coop-preview-canvas'),
++      message = $('coop-preview-message'),
++      name = selection?.pack.levels.find((level) => level.id === selection.levelId)?.name;
++    $('coop-preview-caption').textContent = name
++      ? `${name} preview. Win to reveal the full picture. Scenery does not mark obstacles.`
++      : 'Selected arena preview. Win to reveal the full picture. Scenery does not mark obstacles.';
++    if (binding && previewBinding === binding && !retry) return;
++    const cleared = clearPicturePreview();
++    message.hidden = false;
++    if (binding) {
++      previewBinding = binding;
++      try {
++        if (!cleared) throw new Error('Preview canvas unavailable.');
++        const context = canvas.getContext('2d');
++        if (!context) throw new Error('Preview canvas unavailable.');
++        context.imageSmoothingEnabled = false;
++        context.globalAlpha = 1;
++        context.globalCompositeOperation = 'source-over';
++        context.drawImage(binding.image, 0, 0, canvas.width, canvas.height);
++        // One-cell border teaser only. The full original remains an earned reward.
++        context.fillStyle = '#000';
++        context.fillRect(8, 8, canvas.width - 16, canvas.height - 16);
++        canvas.hidden = false;
++        message.hidden = true;
++        previewState = 'ready';
++      } catch {
++        previewState = 'unavailable';
++        message.textContent = 'Artwork preview unavailable.';
++      }
++    } else {
++      previewState = selection?.state ?? 'empty';
++      if (previewState === 'ready') previewState = 'procedural';
++      message.textContent =
++        previewState === 'procedural'
++          ? 'Procedural arena · no picture preview.'
++          : previewState === 'preparing'
++            ? 'Preparing artwork…'
++            : 'No artwork ready.';
++    }
++    $('coop-picture-preview').dataset.state = previewState;
++  }
+   function pictureUI(messageText) {
++    picturePreview();
+     const busy = Boolean(pictureOperation),
+-      ready = pictureSelection?.state === 'ready';
++      ready = pictureSelection?.state === 'ready',
++      retryPreview = !run && ready && previewState === 'unavailable';
+     $('coop-start').disabled = !startPermitted || !ready || busy;
+     $('coop-picture-cancel').hidden = !busy;
+-    $('coop-picture-retry').hidden = busy || ready;
++    $('coop-picture-retry').hidden = busy || (ready && !retryPreview);
++    $('coop-picture-retry').textContent = retryPreview ? 'Retry preview' : 'Retry picture';
+     $('coop-picture-status').dataset.state = busy
+       ? 'preparing'
+       : (pictureSelection?.state ?? 'cancelled');
+-    if (messageText) $('coop-picture-status').textContent = messageText;
++    if (messageText) pictureMessage = messageText;
++    $('coop-picture-status').textContent = retryPreview
++      ? `${pictureMessage} Artwork preview unavailable. Retry preview or Start with the prepared picture.`
++      : pictureMessage;
+   }
+   function retirePicture() {
+     const operation = pictureOperation;
+@@ -668,6 +735,7 @@ export function bootCoop() {
+     operation?.focus.finish(null, false);
+     if (pictureSelection && pictureSelection !== acceptedPicture) pictureSelection.lease?.dispose();
+     pictureSelection = null;
++    clearPicturePreview();
+   }
+   function cancelPicture({ restore = true } = {}) {
+     const operation = pictureOperation;
+@@ -770,7 +838,18 @@ export function bootCoop() {
+     return operation.promise;
+   }
+   $('coop-picture-cancel').onclick = () => cancelPicture();
+-  $('coop-picture-retry').onclick = () => preparePicture({ retry: true });
++  $('coop-picture-retry').onclick = () => {
++    if (!run && pictureSelection?.state === 'ready' && previewState === 'unavailable') {
++      const focus = pictureFocus($('coop-picture-retry'));
++      picturePreview({ retry: true });
++      pictureUI();
++      focus.finish(
++        previewState === 'ready' ? () => navigation.focusAvailable() : $('coop-picture-retry'),
++      );
++      return;
++    }
++    return preparePicture({ retry: true });
++  };
+   function currentRecipe() {
+     if (run)
+       return {
+@@ -826,6 +905,7 @@ export function bootCoop() {
+     if (pictureSelection && pictureSelection !== selection) retirePicture();
+     pictureSelection = selection;
+     if (previousPicture && previousPicture !== selection) previousPicture.lease?.dispose();
++    pictureUI();
+     generation++;
+     startCoop(run);
+     document.body.classList.add('playing');
+@@ -901,31 +981,112 @@ export function bootCoop() {
+     input.focus();
+     message('Choose fresh directions when you are ready.');
+   }
++  // This synchronous handoff owns only the return from an attempt to its lobby.
++  // Do not let focus/layout callbacks revive it after a newer action or lifecycle.
++  function lobbyFocus() {
++    const origin = document.activeElement,
++      epoch = generation + 1,
++      visit = settingsVisit;
++    let target = null,
++      moved = inactive || !foreground();
++    const lose = () => {
++      moved = true;
++    };
++    const focusChanged = (event) => {
++      if (!unclaimedFocus(event.target) && event.target !== origin && event.target !== target)
++        lose();
++    };
++    const blurred = (event) => {
++      if (event.target === window) lose();
++    };
++    const hidden = () => {
++      if (document.hidden) lose();
++    };
++    const observers = [
++      [document, 'focusin', focusChanged],
++      [document, 'keydown', lose],
++      [document, 'pointerdown', lose],
++      [document, 'visibilitychange', hidden],
++      [window, 'blur', blurred],
++      [window, 'pagehide', lose],
++    ];
++    for (const [node, type, callback] of observers) node.addEventListener(type, callback, true);
++    const current = () =>
++      !moved &&
++      !disposed &&
++      !inactive &&
++      foreground() &&
++      !run &&
++      generation === epoch &&
++      settingsVisit === visit &&
++      !settingsDialog.open &&
++      !departure &&
++      !$('coop-menu').hidden;
++    return {
++      finish() {
++        target = primary();
++        const owns = () =>
++          current() &&
++          primary() === target &&
++          (document.activeElement === origin ||
++            document.activeElement === target ||
++            unclaimedFocus(document.activeElement));
++        if (!owns() || !visibleAction(target) || !owns()) return;
++        if (document.activeElement !== target) target.focus({ preventScroll: true });
++        const focused = () =>
++          current() && primary() === target && document.activeElement === target;
++        if (!focused() || !visibleAction(target) || !focused()) return;
++        const rect = target.getBoundingClientRect(),
++          width = document.documentElement.clientWidth || window.innerWidth,
++          height = document.documentElement.clientHeight || window.innerHeight;
++        if (
++          ![rect.left, rect.top, rect.right, rect.bottom, width, height].every(Number.isFinite) ||
++          rect.width <= 0 ||
++          rect.height <= 0 ||
++          width <= 16 ||
++          height <= 16 ||
++          (rect.left >= 8 && rect.top >= 8 && rect.right <= width - 8 && rect.bottom <= height - 8)
++        )
++          return;
++        if (!focused() || !visibleAction(target) || !focused()) return;
++        target.scrollIntoView({ block: 'nearest', inline: 'nearest', behavior: 'instant' });
++      },
++      cancel() {
++        for (const [node, type, callback] of observers)
++          node.removeEventListener(type, callback, true);
++      },
++    };
++  }
+   function lobby() {
+     if (disposed || departure) return;
+-    cancelImport();
+-    importRequest++;
+-    clear();
+-    const retainedPicture = acceptedPicture;
+-    retirePicture();
+-    acceptedPicture = null;
+-    run = null;
+-    attemptLevel = null;
+-    attemptPack = null;
+-    generation++;
+-    document.body.classList.remove('playing');
+-    $('coop-play').hidden = true;
+-    $('coop-menu').hidden = false;
+-    showPackStatus();
+-    placeTools(false);
+-    if (retainedPicture?.sourcePack === pack && retainedPicture.levelId === selectedLevel().id) {
+-      pictureSelection = retainedPicture;
+-      pictureUI('Team picture ready. Start remains a separate action.');
+-    } else {
+-      retainedPicture?.lease?.dispose();
+-      void preparePicture();
++    const focus = lobbyFocus();
++    try {
++      cancelImport();
++      importRequest++;
++      clear();
++      const retainedPicture = acceptedPicture;
++      retirePicture();
++      acceptedPicture = null;
++      run = null;
++      attemptLevel = null;
++      attemptPack = null;
++      generation++;
++      document.body.classList.remove('playing');
++      $('coop-play').hidden = true;
++      $('coop-menu').hidden = false;
++      showPackStatus();
++      placeTools(false);
++      if (retainedPicture?.sourcePack === pack && retainedPicture.levelId === selectedLevel().id) {
++        pictureSelection = retainedPicture;
++        pictureUI('Team picture ready. Start remains a separate action.');
++      } else {
++        retainedPicture?.lease?.dispose();
++        void preparePicture();
++      }
++      focus.finish();
++    } finally {
++      focus.cancel();
+     }
+-    primary().focus({ preventScroll: true });
+   }
+   const unfinished = () => run && ['running', 'paused'].includes(run.status);
+   const departureLabels = {
+diff --git a/game/test/coop-won-terminal-host.test.mjs b/game/test/coop-won-terminal-host.test.mjs
+index 72816e10c..aa402173d 100644
+--- a/game/test/coop-won-terminal-host.test.mjs
++++ b/game/test/coop-won-terminal-host.test.mjs
+@@ -1,7 +1,7 @@
+ import test from 'node:test';
+ import assert from 'node:assert/strict';
+ import { page } from './helpers/coop-host.mjs';
+-import { coverageClear } from './helpers/coop-route-search.mjs';
++import { coverageClear, yardOpening } from './helpers/coop-route-search.mjs';
+ import { COOP_PICTURE_BINDINGS } from '../couch/coop-picture-bindings.mjs';
+ import { createModeReturn } from '../mode-return.mjs';
+ 
+@@ -53,9 +53,14 @@ async function win(t, { level = 'first-connection', ...options } = {}) {
+     reads: f.artwork.calls.reads.length,
+     urls: [...f.artwork.calls.urls],
+   };
+-  const route = coverageClear('standard', { boost: true, cover: true });
++  const route = (level === 'relay-yard' ? yardOpening : coverageClear)('standard', {
++    boost: true,
++    cover: true,
++  });
+   assert.equal(route.run.status, 'won', 'The unchanged authored core route is legal');
+-  f.tick(); // First animation callback establishes the host clock.
++  // Start clears both seats. Let the real host establish its clock and consume
++  // that neutral release before sending fresh route commands.
++  f.tick(2);
+   let hostCommandTicks = 0;
+   for (const commands of route.log) {
+     hostCommandTicks++;
+@@ -104,36 +109,53 @@ async function win(t, { level = 'first-connection', ...options } = {}) {
+   return { f, first, terminal };
+ }
+ 
+-test('First Connection: earned Team victory focuses Retry; keyboard Retry preserves exact authored recipe and picture', async (t) => {
+-  const { f, first } = await win(t);
+-  // Hidden setup values are not authority for Retry of the terminal attempt.
+-  f.$('coop-level').value = 'relay-yard';
+-  f.$('coop-difficulty').value = 'expert';
+-  f.$('coop-experiment').value = 'independent';
+-  f.tap('Enter');
+-  assert.equal(f.$('coop-discard-dialog').open, false);
+-  assert.equal(f.$('coop-overlay').hidden, true);
+-  assert.equal(f.doc.activeElement.id, 'coop-canvas');
+-  assert.deepEqual(hud(f), first.hud);
+-  assert.equal(
+-    f.lastPaint,
+-    first.paint,
+-    'Retry recreates the authored initial arena, actors and HUD',
+-  );
+-  assert.equal(image(f), first.image, 'Exact accepted original is reused');
+-  assert.equal(f.artwork.calls.reads.length, first.reads);
+-  assert.deepEqual(f.artwork.calls.urls, first.urls);
+-  assert.equal(f.artwork.calls.releases.includes(first.image.src), false);
+-  f.tick(4);
+-  assert.equal(f.$('coop-coverage').textContent, '0.0%');
+-  assert.equal(f.$('coop-overlay').hidden, true);
+-  assert.deepEqual(f.visits, []);
+-});
++for (const [level, name] of [
++  ['first-connection', 'First Connection'],
++  ['relay-yard', 'Relay Yard'],
++])
++  test(`${name}: earned Team victory focuses Retry; keyboard Retry preserves exact authored recipe and picture`, async (t) => {
++    const { f, first } = await win(t, { level });
++    // Hidden setup values are not authority for Retry of the terminal attempt.
++    f.$('coop-level').value = level === 'relay-yard' ? 'first-connection' : 'relay-yard';
++    f.$('coop-difficulty').value = 'expert';
++    f.$('coop-experiment').value = 'independent';
++    f.tap('Enter');
++    assert.equal(f.$('coop-discard-dialog').open, false);
++    assert.equal(f.$('coop-overlay').hidden, true);
++    assert.equal(f.doc.activeElement.id, 'coop-canvas');
++    assert.deepEqual(hud(f), first.hud);
++    assert.equal(
++      f.lastPaint,
++      first.paint,
++      'Retry recreates the authored initial arena, actors and HUD',
++    );
++    assert.equal(image(f), first.image, 'Exact accepted original is reused');
++    assert.equal(f.artwork.calls.reads.length, first.reads);
++    assert.deepEqual(f.artwork.calls.urls, first.urls);
++    assert.equal(f.artwork.calls.releases.includes(first.image.src), false);
++    f.tick(4);
++    assert.equal(f.$('coop-coverage').textContent, '0.0%');
++    assert.equal(f.$('coop-overlay').hidden, true);
++    assert.deepEqual(f.visits, []);
++  });
+ 
+ test('earned Team victory → keyboard Change setup returns to Ready without discard or automatic Start', async (t) => {
+   const { f, first } = await win(t);
+   tabTo(f, 'coop-lobby');
++  f.doc.documentElement.clientWidth = 844;
++  f.doc.documentElement.clientHeight = 390;
++  f.$('coop-start')._rect = { x: 118, y: 1080, width: 300, height: 47 };
++  const reveals = [];
++  t.mock.method(f.$('coop-start'), 'scrollIntoView', (options) => {
++    reveals.push({ options, active: f.doc.activeElement.id });
++  });
+   f.tap('Enter');
++  assert.deepEqual(reveals, [
++    {
++      options: { block: 'nearest', inline: 'nearest', behavior: 'instant' },
++      active: 'coop-start',
++    },
++  ]);
+   assert.equal(f.$('coop-discard-dialog').open, false);
+   assert.equal(f.$('coop-menu').hidden, false);
+   assert.equal(f.$('coop-play').hidden, true);
+diff --git a/game/test/helpers/coop-host.mjs b/game/test/helpers/coop-host.mjs
+index 45005b9b5..de071572c 100644
+--- a/game/test/helpers/coop-host.mjs
++++ b/game/test/helpers/coop-host.mjs
+@@ -48,6 +48,7 @@ export async function page(
+     capturePaint = false,
+     presentation = {},
+     waitPicture = true,
++    previewContextAvailable = true,
+   } = {},
+ ) {
+   const doc = new Document(),
+@@ -76,6 +77,57 @@ export async function page(
+     }
+   }
+   const drawImages = [];
++  // Lobby preview owns a separate recorder. It must never add arena draws or
++  // perturb capture hashes used by historical play/Retry tests.
++  const previewDrawImages = [],
++    previewOperations = [];
++  let failPreviewPaint = false,
++    failPreviewReset = false;
++  const setPreviewResetFailure = (value) => {
++    failPreviewReset = Boolean(value);
++  };
++  const failNextPreviewPaint = () => {
++    failPreviewPaint = true;
++  };
++  const previewContext = new Proxy(
++    {},
++    {
++      get(target, key) {
++        if (Object.hasOwn(target, key)) return target[key];
++        return (...args) => {
++          previewOperations.push([key, ...args]);
++          if (key === 'drawImage') {
++            if (failPreviewPaint) {
++              failPreviewPaint = false;
++              throw new Error('Modeled lobby preview paint failure');
++            }
++            previewDrawImages.push(args[0]);
++          }
++        };
++      },
++      set(target, key, value) {
++        target[key] = value;
++        previewOperations.push(['set', key, value]);
++        return true;
++      },
++    },
++  );
++  const previewCanvas = $('coop-preview-canvas');
++  if (previewCanvas) {
++    previewCanvas.width = 576;
++    previewCanvas.height = 288;
++    let previewWidth = previewCanvas.width;
++    Object.defineProperty(previewCanvas, 'width', {
++      configurable: true,
++      get: () => previewWidth,
++      set(value) {
++        previewOperations.push(['resize', 'width', value]);
++        if (failPreviewReset) throw new Error('Modeled lobby preview reset failure');
++        previewWidth = value;
++      },
++    });
++    previewCanvas.getContext = () => (previewContextAvailable ? previewContext : null);
++  }
+   let failPaint = false,
+     paintDepth = 0,
+     paintHash = null,
+@@ -186,7 +238,7 @@ export async function page(
+     },
+   });
+   const artwork = installCoopPresentation({ doc, win, install, ...presentation });
+-  beforeImport({ $, doc, win, install });
++  beforeImport({ $, doc, win, install, failNextPreviewPaint });
+   await import(`../../couch/relay-rescue.mjs?host-test=${++sequence}`);
+   if (!expectError) {
+     if (waitPicture)
+@@ -262,6 +314,10 @@ export async function page(
+   return {
+     artwork,
+     drawImages,
++    previewDrawImages,
++    previewOperations,
++    failNextPreviewPaint,
++    setPreviewResetFailure,
+     $,
+     doc,
+     win,

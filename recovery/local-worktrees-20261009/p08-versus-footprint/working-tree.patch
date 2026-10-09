@@ -1,0 +1,239 @@
+diff --git a/authoring/skills/xonix-runtime-maintainer/SKILL.md b/authoring/skills/xonix-runtime-maintainer/SKILL.md
+index 71b67be34..77523aeb0 100644
+--- a/authoring/skills/xonix-runtime-maintainer/SKILL.md
++++ b/authoring/skills/xonix-runtime-maintainer/SKILL.md
+@@ -293,6 +293,8 @@ When a task touches reveal artwork, a saved flight, Collection or media export,
+ 
+ For the bounded [P08-A static Versus parity candidate](../../../docs/shared-static-pictures.md), reuse exact fresh Solo assignment/baseline/release resolution through a read-only picture lease; never call the durable default-materialization path from Versus. Keep one accepted decoded original and fit for both boards. Retry retains the attempt and captured choice; setup changes alone establish a new choice. Confirm current metadata before Start, fence stale/cancelled completion, and release only owned resources. During a focused Retry or asynchronous Start confirmation, transfer only that action’s owned focus to visible Cancel; later navigation, foreground loss and stale completion must prevent focus restoration. Expire Start/Next intent on suspend or controller loss even if the page returns before preparation resolves; keep completed picture readiness and require a fresh Start gesture. Keep the [scoped evidence](../../../docs/verification/cross-mode/p08-a/README.md) distinct from full phase or release acceptance. A failed selected image must refuse Start visibly. Preserve the separate optional whole-release snapshot fallback and historical procedural/training behavior, with an explicit notice; do not infer a stricter global release policy. The shared store may perform its established schema initialization, but this lease must not commit media, assignments or Solo progress. Check user-original priority, saved/earned pin preservation, both aspect ratios and actual native fit independently of modeled source tests. Team adoption and new asset production remain separate.
+ 
++For [Versus board fitting](../../../docs/field-kit-surfaces.md), measure each arena's content box and pass its fitted bitmap width to the shared painter; `object-fit: contain` alone does not make element width authoritative. Keep the canvas out of intrinsic grid sizing, suppress duplicate resize writes, fence stale observer callbacks and refresh cached-page restoration without resuming or replacing the match. Without ResizeObserver, refresh only on meaningful layout-state changes, including encounter visibility/copy, after both cues update and before either painter draws. Use the guide's two-seat touch/text/rotation prompt and retain the explicit narrow-board 64-logical-pixel cap limitation; modeled geometry is not native readability qualification.
++
+ When composing that adapter onto current P03/P05 hosts, preserve their fixed routes, display lifetime and ready-focus ownership; finish lobby boot cleanup before awaiting a required picture so Back and Cancel remain reachable. The [P05-A composition evidence](../../../docs/verification/cross-mode/p08-p05-integration/README.md) separates 210-case runtime coverage from the normal and exact-response-delay native journeys. It does not cover Team pictures, all assignments/devices or P05-B. The existing finished-to-Next path can replace prior results before picture readiness; P07 owns that remaining preservation requirement.
+ 
+ ## Retain completed Results during Next
+diff --git a/docs/field-kit-surfaces.md b/docs/field-kit-surfaces.md
+index 636c57dbf..e501497bb 100644
+--- a/docs/field-kit-surfaces.md
++++ b/docs/field-kit-surfaces.md
+@@ -8,6 +8,10 @@ Collection prioritizes artwork, medals and mastery, with an expanded picture vie
+ 
+ Couch setup/results, Replay Theater, controller practice and About opt into the same supporting-page styles and independent Standard/Large controls. The replay/couch hosts and authoring tools already receive the shared compiled presentation through the phase-5 page host. Generated privacy/credits pages include the surface stylesheet. Workshop remains a single navigation destination for the existing editors and local Asset Studio.
+ 
++Versus fits each complete 4:3 or 2:1 board inside its own arena and passes that visible CSS width to the shared painter. The canvas contributes no intrinsic size to the layout; arena observation handles touch-pad, typography and viewport reflow. Hosts without ResizeObserver also reconcile encounter visibility and copy before painting, so wrapped instructions cannot leave a stale footprint. Cached-page restoration refreshes the footprint without resuming play or changing the accepted picture. Maintenance prompt: “Test both seats at different width/height constraints, then change touch controls, Large text and orientation. Confirm unchanged checkpoints, picture identity and results while actor/cut sizing follows the visible board. Exercise hidden boards and late resize callbacks after restoration/disposal. Qualify actual native readability separately: the existing 64-logical-pixel enemy cap still limits a 240-pixel-wide 72-column board to 13.33 CSS pixels.”
++
++Keep authored image fitting separate: [`object-fit: contain`](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/object-fit) can leave a smaller bitmap inside a larger element box. That element width is not the board's displayed width.
++
+ Pages release and archive catalogs use the same fonts, tokens, compiled components and Standard/Large selector. Each version has a Play action, source identity, ZIP and manifest links. The controller copies a bounded presentation dependency graph, font notices and hash-verified compiled assets into `catalog-ui/`, outside every frozen edition. The current/archived play URLs and all original game files remain intact. Historical controllers without compiled presentation retain a readable fallback. Catalog bytes count toward the existing main/archive budgets.
+ 
+ Workshop links directly to Motion lab, the picture/story editor, video-poster workshop and design atlas as well as the existing mission, enemy and asset tools. Motion lab now ships its explicit runtime files and includes shared text sizing and a Return to game link. Its independent preview inputs and toy ability rules remain intact.
+diff --git a/game/couch/couch.css b/game/couch/couch.css
+index 1aa0487f2..8f4618ecb 100644
+--- a/game/couch/couch.css
++++ b/game/couch/couch.css
+@@ -257,7 +257,9 @@ body.race-focus #couch-app {
+   font-size: 15px;
+ }
+ .race-arena {
++  position: relative;
+   display: flex;
++  padding: 0;
+   min-height: 0;
+   justify-content: center;
+   align-items: center;
+@@ -266,9 +268,13 @@ body.race-focus #couch-app {
+   border: 1px solid #344d71;
+ }
+ .race-arena canvas {
++  position: absolute;
++  left: 50%;
++  top: 50%;
++  transform: translate(-50%, -50%);
+   display: block;
+-  width: 100%;
+-  height: 100%;
++  width: 0;
++  height: 0;
+   min-width: 0;
+   min-height: 0;
+   max-width: 100%;
+diff --git a/game/couch/couch.mjs b/game/couch/couch.mjs
+index b6dd48914..49efa0cce 100644
+--- a/game/couch/couch.mjs
++++ b/game/couch/couch.mjs
+@@ -1,5 +1,6 @@
+ import { mountPresentationPage } from '../presentation/page.mjs';
+ import { createCouchShell } from './couch-shell.mjs';
++import { createBoardFootprints } from './board-footprint.mjs';
+ import { readVersusSoloReturnToken } from '../mode-return-v2.mjs';
+ import { prepareCouchChapter } from './couch-chapter.mjs';
+ import { createCouchInstalledChapters } from './couch-installed-chapters.mjs';
+@@ -147,7 +148,7 @@ const presentationPage = mountPresentationPage({
+ });
+ // Cosmetic menu choice follows this same accepted release; it owns no board lease.
+ presentationPage.ready.then((snapshot) => menuStyle.setPresentation(snapshot)).catch(() => {});
+-let featured, installed, staticPictures, publishedAudio, publishedPlayer;
++let featured, installed, staticPictures, publishedAudio, publishedPlayer, boardFootprints;
+ const releaseArtwork = (event) => {
+   if (event.persisted) return;
+   stopMasterView();
+@@ -166,6 +167,7 @@ const releaseArtwork = (event) => {
+   featured?.dispose();
+   installed?.dispose();
+   staticPictures?.dispose();
++  boardFootprints?.dispose();
+   window.removeEventListener('pagehide', releaseArtwork);
+ };
+ window.addEventListener('pagehide', releaseArtwork);
+@@ -331,6 +333,9 @@ try {
+   }
+   let selectedMapKey = null;
+   const contexts = [0, 1].map((i) => $(`race-canvas-${i}`).getContext('2d'));
++  const touchPads = [...document.querySelectorAll('.race-pad')];
++  boardFootprints = createBoardFootprints([0, 1].map((i) => $(`race-canvas-${i}`)));
++  let boardLayoutKey = null;
+   let match,
+     theme,
+     backdrop = null,
+@@ -555,8 +560,8 @@ try {
+       const canvas = $(`race-canvas-${player}`);
+       canvas.width = width;
+       canvas.height = height;
+-      canvas.style.setProperty('--board-ratio', `${width} / ${height}`);
+     }
++    boardFootprints.refresh();
+     sound.reset();
+     sound.setTrack(entry.track || DEFAULT_TRACKS[0], { atBoundary: true });
+     publishedPlayer?.setAuthoredTrack(entry.track || DEFAULT_TRACKS[0]);
+@@ -1093,6 +1098,27 @@ try {
+     menuHint = 'Choose the primary action with South when everyone is ready.';
+     updateMenu();
+   }
++  function refreshBoardLayout() {
++    // Observer-capable hosts receive the actual arena content box. The fallback
++    // must also notice cue visibility/copy changes that can wrap above a board.
++    const layoutKey = JSON.stringify([
++      $('race-boards').hidden,
++      ...touchPads.map((pad) => pad.hidden),
++      document.body.dataset.textSize,
++      document.body.dataset.textFace,
++      ...(boardFootprints.observesResize
++        ? []
++        : [0, 1].flatMap((i) => [
++            $(`racer-encounter-${i}`).hidden,
++            $(`racer-encounter-title-${i}`).textContent,
++            $(`racer-encounter-instruction-${i}`).textContent,
++          ])),
++    ]);
++    if (layoutKey !== boardLayoutKey) {
++      boardLayoutKey = layoutKey;
++      boardFootprints.refresh();
++    }
++  }
+   function updateMenu() {
+     if (!match || disposed) return;
+     const running = match.status === 'running';
+@@ -1121,6 +1147,9 @@ try {
+       focusTransition,
+       summary: `${entry.chapter} · ${entry.level.name} · ${mode(entry.level)} · ${theme.name} · ${$('race-turn').value === 'grid-center' ? 'Grid-center turns' : 'Immediate turns'} · ${Number($('race-time').value)} seconds`,
+     });
++    // Reconcile deliberate layout transitions immediately, including browsers
++    // without ResizeObserver. Ordinary frames only compare cheap state values.
++    refreshBoardLayout();
+     const owner = menuOwner ? slots.indexOf(menuOwner.index) : -1;
+     const text = running
+       ? shell.controllerHint()
+@@ -1431,7 +1460,13 @@ try {
+         instruction.textContent = '';
+         delete group.dataset.phase;
+       }
++    }
++    // Both cues must settle before fallback measurement and either board draw.
++    refreshBoardLayout();
++    for (let i = 0; i < 2; i++) {
++      const run = match.runs[i];
+       painters[i].draw(contexts[i], run, Math.min(dt, 0.1), {
++        displayCSSWidth: boardFootprints.width(i),
+         textFace: displayPreferences.snapshot().textFace,
+         paused: match.status !== 'running',
+         reduced: displayPreferences.snapshot().effectiveReducedEffects,
+diff --git a/game/test/helpers/couch-host.mjs b/game/test/helpers/couch-host.mjs
+index 91e3e204c..5552ef755 100644
+--- a/game/test/helpers/couch-host.mjs
++++ b/game/test/helpers/couch-host.mjs
+@@ -70,11 +70,20 @@ export async function couchPage(
+     URLImpl = globalThis.URL,
+     expectBootFailure = false,
+     audio,
++    rendering,
+   } = {},
+ ) {
+   const doc = new Document(),
+     win = new Events();
+   doc.parentNode = win;
++  if (rendering) {
++    const createElement = doc.createElement.bind(doc);
++    doc.createElement = (tag) => {
++      const element = createElement(tag);
++      if (tag === 'canvas') element.getContext = () => rendering.contextFor(element);
++      return element;
++    };
++  }
+   mountCouch(doc, html);
+   if (audio?.createElement) {
+     const createElement = doc.createElement.bind(doc);
+@@ -110,6 +119,7 @@ export async function couchPage(
+     URL: URLImpl,
+     Image:
+       ImageClass ||
++      rendering?.Image ||
+       class {
+         constructor() {
+           images.push(this);
+@@ -155,6 +165,7 @@ export async function couchPage(
+       rafs.delete(id);
+     },
+   };
++  if (rendering?.ResizeObserver) globals.ResizeObserver = rendering.ResizeObserver;
+   if (audio?.Context) globals.AudioContext = audio.Context;
+   for (const [key, value] of Object.entries(globals)) {
+     original.set(key, Object.getOwnPropertyDescriptor(globalThis, key));
+@@ -169,15 +180,22 @@ export async function couchPage(
+     'draw',
+   ]) {
+     methods.set(key, BoardPainter.prototype[key]);
+-    BoardPainter.prototype[key] =
+-      key === 'draw'
+-        ? (context, run, dt, options) => {
+-            renders[Number(context.id.slice(-1))] = run;
+-            drawOptions[Number(context.id.slice(-1))] = options;
+-          }
+-        : key === 'effectsFor'
+-          ? (events) => observedEvents.push(...events.map((event) => ({ ...event })))
+-          : () => {};
++    if (key === 'draw') {
++      BoardPainter.prototype[key] = function (context, run, dt, options) {
++        const seat = Number((context.canvas?.id || context.id).slice(-1));
++        renders[seat] = run;
++        drawOptions[seat] = options;
++        if (rendering) {
++          methods.get('draw').call(this, context, run, dt, options);
++          rendering.onDraw?.({ painter: this, context, run, dt, options, seat });
++        }
++      };
++    } else if (key === 'effectsFor') {
++      BoardPainter.prototype[key] = function (events, run) {
++        observedEvents.push(...events.map((event) => ({ ...event })));
++        if (rendering) methods.get(key).call(this, events, run);
++      };
++    } else if (!rendering) BoardPainter.prototype[key] = () => {};
+   }
+   t.after(() => {
+     win.emit('pagehide', { persisted: false });
+@@ -252,6 +270,7 @@ export async function couchPage(
+     join,
+     key,
+     readCount: () => reads,
++    pendingFrames: () => rafs.size,
+     pads: () => pads,
+     setPads: (next) => {
+       pads = next;

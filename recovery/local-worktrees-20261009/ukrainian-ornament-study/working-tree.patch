@@ -1,0 +1,377 @@
+diff --git a/docs/research/xposed-journey-ledger.json b/docs/research/xposed-journey-ledger.json
+index 9eada0f8b..fac78f851 100644
+--- a/docs/research/xposed-journey-ledger.json
++++ b/docs/research/xposed-journey-ledger.json
+@@ -3,6 +3,16 @@
+   "schemaVersion": 2,
+   "reviewDate": "2026-09-20",
+   "status": "implementation-review-in-progress; original proposals retained, final dispositions pending",
++  "ukrainianOrnamentAtlas": {
++    "reviewDate": "2026-09-24",
++    "plan": "docs/ukrainian-ornament-atlas.md",
++    "edition": "whole-ornament-v2",
++    "status": "Nine-map copy-on-write source candidate; no default promotion or public/human acceptance claim",
++    "missions": ["four-motor-landings", "circuit-lanes", "twin-lens-chambers", "toolbench-weave", "dnipro-crossings", "two-districts", "two-ways-home", "second-approach", "windbreak-weave"],
++    "disposition": "Original ornament-inspired geometry, preserving previous editions and all unrelated v1 maps. Fourteen attributed source entries are documented in the atlas. No new final disposition for the 48 numbered Reloaded references is claimed.",
++    "comparison": "Use asymmetric star shoulders, staggered cutwork mouths, unequal paired-panel approaches, branching pockets and broken rim routes as real walls. Keep foundations, objectives, relay connectors, arrows, enemy domains and shared gp4 movement unchanged.",
++    "limits": "Original abstract layouts, not copied coordinates, charts or artwork. Nine Standard/immediate/seed-1 legal clears are feasibility samples, not complete two-route/preset/control or human-balance qualification. Earlier observations and hashes remain unchanged."
++  },
+   "ukrainianOrnamentStudy": {
+     "reviewDate": "2026-09-24",
+     "plan": "docs/ukrainian-ornament-study.md",
+diff --git a/docs/spatial-challenge-plan.md b/docs/spatial-challenge-plan.md
+index 93f99d3fe..c2eb778c6 100644
+--- a/docs/spatial-challenge-plan.md
++++ b/docs/spatial-challenge-plan.md
+@@ -26,6 +26,17 @@ delivery. Previous editions remain in the same tagged selector. This advances
+ three of Phase E's optional studies, not the whole Team/cultural phase or the
+ wall-free early-campaign work in Phase B. Human/cultural/device review remains open.
+ 
++The same draft now prepares [nine additional ornament adaptations](ukrainian-ornament-atlas.md)
++as the separate opt-in `whole-ornament-v2` edition: Four motor landings, Circuit
++lanes, Twin lens chambers, Toolbench weave, Dnipro crossings, Two districts,
++Two ways home, Second approach and Windbreak weave. Fourteen attributed source
++entries support original stars, cutwork, tile panels, branches, kilim forms,
++paper-cut negative space and carved-rim rhythms. Together with v1 this makes
++twelve studies, not twelve new mission IDs. The other 82 v1 missions remain
++unchanged; v1 and earlier editions remain selectable. Geometry and bounded route
++evidence advance parts of Phases C–E, not their completion. No default promotion,
++version allocation, public delivery or human balance acceptance is claimed.
++
+ ## Outcome and non-negotiable rules
+ 
+ Create distinct, fair spatial problems, not arbitrary per-map physics or a larger
+diff --git a/docs/ukrainian-ornament-study.md b/docs/ukrainian-ornament-study.md
+index 2da02abd9..a1cadf258 100644
+--- a/docs/ukrainian-ornament-study.md
++++ b/docs/ukrainian-ornament-study.md
+@@ -63,10 +63,12 @@ core lesson. No silent core insertion.
+   impassable walls and capture-dependent threat removal support route ordering;
+   do not import its per-terrain speeds or homing into ordinary keepers.
+ 
+-Future candidates, not implemented here: star chambers, Reshetylivka-style open
+-cutwork lattice, and Poltava broken-tree branching yards. Petrykivka is a separate
+-painting tradition, not a synonym for vyshyvanka. Fine decorative details belong
+-in artwork, not unreadable collision geometry; functional colours stay consistent.
++The separate [nine-map atlas successor](ukrainian-ornament-atlas.md) now prepares
++star clusters, Reshetylivka-style open cutwork, Poltavian branches and six more
++original adaptations in `whole-ornament-v2`. Its evidence is separate from this
++v1 study and does not promote either route by default. Petrykivka is a painting
++tradition, not a synonym for vyshyvanka. Fine decorative details belong in
++artwork, not unreadable collision geometry; functional colours stay consistent.
+ 
+ ## Implementation and acceptance checklist
+ 
+diff --git a/game/content-design/mode-href.mjs b/game/content-design/mode-href.mjs
+index 38b9c407f..942108bc3 100644
+--- a/game/content-design/mode-href.mjs
++++ b/game/content-design/mode-href.mjs
+@@ -13,6 +13,7 @@ export const AUTHORED_JOURNEY_ROUTE_IDS = Object.freeze([
+   'whole-spatial-v5',
+   'whole-spatial-v6',
+   'whole-ornament-v1',
++  'whole-ornament-v2',
+ ]);
+ export const isAuthoredJourneyRouteId = (id) => AUTHORED_JOURNEY_ROUTE_IDS.includes(id);
+ export const authoredJourneyUsesActorMaterials = (id) =>
+@@ -25,6 +26,7 @@ export const authoredJourneyUsesActorMaterials = (id) =>
+     'whole-spatial-v5',
+     'whole-spatial-v6',
+     'whole-ornament-v1',
++    'whole-ornament-v2',
+   ].includes(id);
+ 
+ /** Fixed same-game destinations. Team has different authored missions and is
+diff --git a/game/content-design/route-definition.mjs b/game/content-design/route-definition.mjs
+index d7fcf0744..4cc3a7c24 100644
+--- a/game/content-design/route-definition.mjs
++++ b/game/content-design/route-definition.mjs
+@@ -18,9 +18,21 @@ export function createAuthoredJourneyRouteDefinition(
+     createWholeSortingCandidates,
+     createSpatialChallengeJourney,
+     createUkrainianOrnamentJourney,
++    createUkrainianOrnamentAtlasJourney,
+   },
+ ) {
+   if (!isAuthoredJourneyRouteId(id)) return null;
++  if (id === 'whole-ornament-v2')
++    return freezeDesign({
++      id,
++      label: 'Ukrainian ornament atlas · twelve studies · balance pending',
++      sessionKey: 'revealline.suspended.journey-whole-ornament.v2',
++      profileKey: 'journey-whole-ornament-v2',
++      source: createUkrainianOrnamentAtlasJourney({ artwork: true }),
++      corePackIds: [...WHOLE_JOURNEY_CORE_PACK_IDS],
++      optionalCampaignIds: ['ornament-crossings', 'workshop-routing'],
++      preserveOriginalThemes: true,
++    });
+   if (id === 'whole-ornament-v1')
+     return freezeDesign({
+       id,
+diff --git a/game/content-design/route-loader.mjs b/game/content-design/route-loader.mjs
+index 65f9dca7a..c30c91946 100644
+--- a/game/content-design/route-loader.mjs
++++ b/game/content-design/route-loader.mjs
+@@ -7,7 +7,9 @@ import { createAuthoredJourneyRouteDefinition } from './route-definition.mjs';
+ export async function loadAuthoredJourneyRoute(id) {
+   if (!isAuthoredJourneyRouteId(id)) return null;
+   let factories;
+-  if (id === 'whole-ornament-v1') {
++  if (id === 'whole-ornament-v2') {
++    factories = await import('./ukrainian-ornament-atlas.mjs');
++  } else if (id === 'whole-ornament-v1') {
+     factories = await import('./ukrainian-ornament-candidates.mjs');
+   } else if (id === 'whole-spatial-v6') {
+     factories = await import('./spatial-challenge-journey.mjs');
+diff --git a/game/content-design/route.mjs b/game/content-design/route.mjs
+index 89d8d7d0f..e08c154e9 100644
+--- a/game/content-design/route.mjs
++++ b/game/content-design/route.mjs
+@@ -10,6 +10,7 @@ import {
+ import { createWholeJourneyCandidates } from './whole-journey-candidates.mjs';
+ import { createSpatialChallengeJourney } from './spatial-challenge-journey.mjs';
+ import { createUkrainianOrnamentJourney } from './ukrainian-ornament-candidates.mjs';
++import { createUkrainianOrnamentAtlasJourney } from './ukrainian-ornament-atlas.mjs';
+ 
+ import { createAuthoredJourneyRouteDefinition } from './route-definition.mjs';
+ export { createCandidateSequence } from './sequence.mjs';
+@@ -28,5 +29,6 @@ export function createAuthoredJourneyRoute(id) {
+     createWholeSortingCandidates,
+     createSpatialChallengeJourney,
+     createUkrainianOrnamentJourney,
++    createUkrainianOrnamentAtlasJourney,
+   });
+ }
+diff --git a/game/couch/mode-entry.js b/game/couch/mode-entry.js
+index 9f14e62b4..98297d81a 100644
+--- a/game/couch/mode-entry.js
++++ b/game/couch/mode-entry.js
+@@ -20,6 +20,7 @@
+     'whole-spatial-v5',
+     'whole-spatial-v6',
+     'whole-ornament-v1',
++    'whole-ornament-v2',
+   ];
+   const teamRoutes = [
+     'team-greybox',
+diff --git a/game/mission-library/journey-presentation.mjs b/game/mission-library/journey-presentation.mjs
+index c607972ed..0ac1d7d2e 100644
+--- a/game/mission-library/journey-presentation.mjs
++++ b/game/mission-library/journey-presentation.mjs
+@@ -1,4 +1,8 @@
+ import { WHOLE_JOURNEY_REMIX_PACK_IDS } from '../content-design/whole-journey-order.mjs';
++import {
++  UKRAINIAN_ORNAMENT_ATLAS_REVISION,
++  UKRAINIAN_ORNAMENT_ATLAS_IDS,
++} from '../content-design/ukrainian-ornament-atlas-registry.mjs';
+ 
+ /** Text-only projection of an already resolved manifest. No engine, geometry,
+  * image fetching or decoding is needed to describe a mission at its preset. */
+@@ -26,7 +30,12 @@ export function authoredJourneyMissionTags(mission, manifest) {
+   const tags = [];
+   if (manifest.policyId === 'journey-arcade-v2') tags.push('Arcade');
+   if (WHOLE_JOURNEY_REMIX_PACK_IDS.includes(mission.packId)) tags.push('Remix');
+-  if (mission.packId === 'ornament-crossings-study' && mission.campaignId === 'ornament-crossings')
++  if (
++    (mission.packId === 'ornament-crossings-study' &&
++      mission.campaignId === 'ornament-crossings') ||
++    (manifest.level?.revision === UKRAINIAN_ORNAMENT_ATLAS_REVISION &&
++      UKRAINIAN_ORNAMENT_ATLAS_IDS.includes(mission.levelId))
++  )
+     tags.push('Ukrainian');
+   if (mission.packId === 'workshop-routing-study' && mission.campaignId === 'workshop-routing')
+     tags.push('FPV');
+diff --git a/game/mission-library/spatial-editions.mjs b/game/mission-library/spatial-editions.mjs
+index 3a76ae432..2d4c1092b 100644
+--- a/game/mission-library/spatial-editions.mjs
++++ b/game/mission-library/spatial-editions.mjs
+@@ -9,6 +9,7 @@ import { journeyActorThemeCandidates } from '../presentation/journey-actor-mater
+ import { journeyLibrarySource } from './journey-source.mjs';
+ import { combineJourneyLibrarySources } from './cross-mode-journey.mjs';
+ import { journeyMissionDetails, authoredJourneyMissionTags } from './journey-presentation.mjs';
++import { UKRAINIAN_ORNAMENT_ATLAS_IDS } from '../content-design/ukrainian-ornament-atlas-registry.mjs';
+ 
+ const REVISED_MISSIONS = new Set([
+   'two-bays',
+@@ -19,6 +20,12 @@ const REVISED_MISSIONS = new Set([
+   'crossing-complete',
+ ]);
+ const ALTERNATE = Object.freeze({
++  'whole-ornament-v2': {
++    routeId: 'whole-ornament-v1',
++    label: 'Previous atlas missions · ornament v1',
++    missionIds: UKRAINIAN_ORNAMENT_ATLAS_IDS,
++    earlierActiveRouteId: 'whole-ornament-v1',
++  },
+   'whole-spatial-v6': { routeId: 'whole-spatial-v5', label: 'Previous Journey · v5' },
+   'whole-spatial-v5': {
+     routeId: 'whole-spatial-v6',
+@@ -28,6 +35,7 @@ const ALTERNATE = Object.freeze({
+     routeId: 'whole-spatial-v6',
+     label: 'Previous ornament studies · v6',
+     missionIds: ['cross-stitch-crossings', 'rushnyk-bands', 'pysanka-sections'],
++    earlierActiveRouteId: 'whole-spatial-v6',
+   },
+ });
+ 
+@@ -132,17 +140,16 @@ export async function createSpatialEditionSources({
+       },
+     };
+   });
+-  // The opt-in ornament successor also retains the six prior v5 alternatives.
+-  // Their profile is independent: never lend the v6 profile to v5 records.
+-  const earlier =
+-    activeRouteId === 'whole-ornament-v1'
+-      ? await createSpatialEditionSources({
+-          activeRouteId: 'whole-spatial-v6',
+-          originalThemes,
+-          difficulty,
+-          launch,
+-        })
+-      : null;
++  // Walk only this fixed acyclic predecessor registry, retaining changed maps
++  // rather than duplicating entire catalogues. Every edition owns its progress.
++  const earlier = alternate.earlierActiveRouteId
++    ? await createSpatialEditionSources({
++        activeRouteId: alternate.earlierActiveRouteId,
++        originalThemes,
++        difficulty,
++        launch,
++      })
++    : null;
+   return Object.freeze({
+     sources: Object.freeze([
+       Object.freeze({
+diff --git a/game/studio/index.html b/game/studio/index.html
+index 81b15fb3a..f3fde6fdf 100644
+--- a/game/studio/index.html
++++ b/game/studio/index.html
+@@ -161,6 +161,9 @@
+                   <option value="ukrainian-ornament-v1">
+                     Ukrainian ornament crossings · study 1
+                   </option>
++                  <option value="ukrainian-ornament-v2">
++                    Ukrainian ornament atlas · twelve studies
++                  </option>
+                 </select>
+               </label>
+               <button id="whole-variety">
+@@ -248,6 +251,27 @@
+                 walls never close cuts. Optional studies, unchanged core order and pictures.
+                 Separate review progress; human balance, cultural and device review pending.
+               </p>
++              <p class="note">
++                Ukrainian ornament atlas:
++                <a
++                  href="../?journey=whole-ornament-v2"
++                  target="_blank"
++                  rel="noopener"
++                  aria-label="Solo · whole-ornament-v2 (new tab)"
++                  >Solo ↗</a
++                >
++                ·
++                <a
++                  href="../couch/?journey=whole-ornament-v2"
++                  target="_blank"
++                  rel="noopener"
++                  aria-label="Versus · whole-ornament-v2 (new tab)"
++                  >Versus ↗</a
++                >. Nine further mission editions add star clusters, cutwork windows, branching
++                compositions and broken rings. Filter Ukrainian in Missions; FPV studies retain both
++                tags. Existing pictures and shared rules remain. Earlier editions stay selectable;
++                balance, cultural and device review pending.
++              </p>
+             </div>
+             <div class="candidate-entry" data-library-entry>
+               <button id="whole-timed">
+diff --git a/game/studio/studio.mjs b/game/studio/studio.mjs
+index 31d5e03c4..e7a3cc706 100644
+--- a/game/studio/studio.mjs
++++ b/game/studio/studio.mjs
+@@ -32,6 +32,7 @@ import { createApexFieldCandidates } from '../content-design/apex-field-candidat
+ import { createWholeJourneyCandidates } from '../content-design/whole-journey-candidates.mjs';
+ import { createSpatialChallengeJourney } from '../content-design/spatial-challenge-journey.mjs';
+ import { createUkrainianOrnamentJourney } from '../content-design/ukrainian-ornament-candidates.mjs';
++import { createUkrainianOrnamentAtlasJourney } from '../content-design/ukrainian-ornament-atlas.mjs';
+ import {
+   createWholeSpatialCandidates,
+   createWholeFieldCandidates,
+@@ -993,13 +994,15 @@ $('whole-timed').onclick = guarded(() => {
+ $('whole-variety').onclick = guarded(() => {
+   if (!discardSource()) return;
+   const create =
+-    $('whole-variety-edition').value === 'ukrainian-ornament-v1'
+-      ? createUkrainianOrnamentJourney
+-      : $('whole-variety-edition').value === 'spatial-challenge-v1'
+-        ? createSpatialChallengeJourney
+-        : $('whole-variety-edition').value === 'sorting-lanes-1'
+-          ? createWholeSortingCandidates
+-          : createWholeVarietyCandidates;
++    $('whole-variety-edition').value === 'ukrainian-ornament-v2'
++      ? createUkrainianOrnamentAtlasJourney
++      : $('whole-variety-edition').value === 'ukrainian-ornament-v1'
++        ? createUkrainianOrnamentJourney
++        : $('whole-variety-edition').value === 'spatial-challenge-v1'
++          ? createSpatialChallengeJourney
++          : $('whole-variety-edition').value === 'sorting-lanes-1'
++            ? createWholeSortingCandidates
++            : createWholeVarietyCandidates;
+   $('source').value = JSON.stringify(create({ artwork: true }), null, 2);
+   sourceChanged = true;
+   inspectSource();
+diff --git a/game/test/content-route-loader.test.mjs b/game/test/content-route-loader.test.mjs
+index 130c3437a..486f4d87d 100644
+--- a/game/test/content-route-loader.test.mjs
++++ b/game/test/content-route-loader.test.mjs
+@@ -35,6 +35,7 @@ const golden = {
+   'whole-spatial-v5': [252377, '74162393aa803207f7e933f4ded83a64a6b223c926aecc5be7bffd113fd959fe'],
+   'whole-spatial-v6': [254863, '8e718fffeed559c5075a4e94d6967d02c266661347ea67392bbb6fe35878769f'],
+   'whole-ornament-v1': [256801, 'ff830aa5ebf20320522bbe00cda9bf738b36e0525724181be977f6d6018ba52c'],
++  'whole-ornament-v2': [263327, '8c31ee62798147dcd174dc680bd7a435187255b5699fcff9d3ea5cbd8af73b56'],
+ };
+ 
+ test('all supported routes are covered by pinned edition snapshots', () => {
+@@ -175,6 +176,7 @@ test('all literal lazy imports and shared modules are in the actual game build i
+   const source = await readFile(new URL(loaderURL), 'utf8');
+   const imports = [...source.matchAll(/import\('(.+?)'\)/g)].map((m) => m[1]);
+   assert.deepEqual(imports, [
++    './ukrainian-ornament-atlas.mjs',
+     './ukrainian-ornament-candidates.mjs',
+     './spatial-challenge-journey.mjs',
+     './whole-spatial-candidates.mjs',
+diff --git a/game/test/studio-candidate-library.test.mjs b/game/test/studio-candidate-library.test.mjs
+index dd5df5ada..46cb0fe96 100644
+--- a/game/test/studio-candidate-library.test.mjs
++++ b/game/test/studio-candidate-library.test.mjs
+@@ -156,6 +156,23 @@ test('outer-pocket search preserves the Shared windows edition selector beside i
+   assert.equal($('team-window-edition').closest('[data-library-entry]'), visible()[0]);
+ });
+ 
++test('ornament atlas is separately inspectable and searchable without changing the Studio default', async () => {
++  const { search, visible, $ } = setup();
++  search('whole-ornament-v2');
++  assert.equal(visible().length, 1);
++  assert.equal(visible()[0], $('whole-variety').closest('[data-library-entry]'));
++  assert([...$('whole-variety-edition').options].some((o) => o.value === 'ukrainian-ornament-v2'));
++  assert.equal($('whole-variety-edition').value, 'variety-1');
++  const source = await readFile(new URL('../studio/studio.mjs', import.meta.url), 'utf8');
++  const handler = source.slice(
++    source.indexOf("$('whole-variety').onclick"),
++    source.indexOf("$('import').onchange"),
++  );
++  assert.match(handler, /'ukrainian-ornament-v2'\s*\? createUkrainianOrnamentAtlasJourney/);
++  assert.match(handler, /discardSource\(\)/);
++  assert.doesNotMatch(handler, /session\.replace|queueSave|launchPreview/);
++});
++
+ test('Team pressure search keeps edition choice, original Inspect and bundled player together', () => {
+   const { $, visible, search } = setup();
+   search('team-pressure-originals-1');
+@@ -174,6 +191,7 @@ test('all review routes keep explicit external-tab safety and distinct accessibl
+     'whole-spatial-v5',
+     'whole-spatial-v6',
+     'whole-ornament-v1',
++    'whole-ornament-v2',
+     'whole-spatial-v3',
+     'whole-spatial-v2',
+     'whole-spatial-v1',
