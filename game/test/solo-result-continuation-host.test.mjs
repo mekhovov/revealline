@@ -154,7 +154,10 @@ async function win(p) {
   await settle(() => p.doc.body.dataset.flightState === 'running');
   p.key('ArrowDown');
   p.key('ArrowDown', false);
-  for (let i = 0; i < 900 && p.rendered.run.status !== 'won'; i++) p.frame();
+  // A frame below the app's long-frame safety threshold executes the same
+  // fixed simulation steps in one scene update. It preserves the real win and
+  // reward-recording path without spending hundreds of render turns per case.
+  for (let i = 0; i < 30 && p.rendered.run.status !== 'won'; i++) p.frame(250);
   assert.equal(p.rendered.run.status, 'won');
   assert.equal(
     p.$('game-overlay').hidden,
