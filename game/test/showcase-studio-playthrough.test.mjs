@@ -283,7 +283,10 @@ test(
   'guided Studio source survives export/import and compiled ordinary win, corrective application and exact Collection revisit',
   // Both real host journeys also run alongside the company file-level suite.
   // Bound slow hosted runners without removing any gameplay or persistence checks.
-  { timeout: 120000 },
+  // This covers two complete authored routes, asset decoding, persistence and
+  // the Collection revisit. Allow for shared CI runners while retaining the
+  // test's bounded route and storage assertions.
+  { timeout: 180000 },
   async (t) => {
     const priorLocale = getLocale();
     setLocale('en', { persist: false });
@@ -586,7 +589,9 @@ async function realShowcaseEdition() {
 
 test(
   'real Threads showcase survives guided staging, source round trip, ordinary wins and bilingual corrective Collection revisit',
-  { timeout: 120000 },
+  // Two complete authored routes plus the Collection revisit can exceed the
+  // old limit when this CPU-heavy host fixture shares a CI runner.
+  { timeout: 180000 },
   async (t) => {
     const priorLocale = getLocale();
     setLocale('en', { persist: false });
