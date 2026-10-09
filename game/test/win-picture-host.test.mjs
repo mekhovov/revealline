@@ -5,6 +5,7 @@ import { activateHostAction } from './helpers/host-action.mjs';
 import { retryFixture } from './fixtures/retry-scenarios.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
 import { CELEBRATION_SECONDS } from '../ui/celebration.mjs';
+import { REWARD_SETTLED_SECONDS } from '../ui/reward-arrival.mjs';
 
 const campaign = {
   version: 'xonix-campaign.v1',
@@ -80,25 +81,24 @@ async function win(t, { reduced = false, readPads, beforeFrame } = {}) {
   assert.equal(page.rendered.run.status, 'won', 'Real controls earn the picture.');
   assert.equal(page.rendered.fullReveal, true);
   assert.equal(page.rendered.paused, true);
-  assert.equal(page.$('game-overlay').hidden, false);
-  assert.equal(page.$('game-overlay').dataset.kind, 'won');
+  assert.equal(page.$('game-overlay').hidden, true);
   assert.equal(page.$('skip-celebration').hidden, true);
   return { page, surface };
 }
 
 for (const reduced of [false, true])
-  test(`${reduced ? 'reduced' : 'full'} effects: a legal win keeps results usable while its celebration finishes`, async (t) => {
+  test(`${reduced ? 'reduced' : 'full'} effects: a legal win presents its earned picture before the automatic result`, async (t) => {
     const { page, surface } = await win(t, { reduced });
     assert.equal(
       page.doc.body.dataset.winPicture,
-      'off',
-      'The result controls remain available while the final capture animates.',
+      'revealing',
+      'The result is held back while the final capture animates.',
     );
     for (let i = 0; i < 18; i++) page.frame(100);
     assert.equal(
       page.doc.body.dataset.winPicture,
-      'off',
-      'Full and reduced effects do not add a picture gate before results.',
+      'revealing',
+      'Full and reduced effects keep the earned picture as the focus.',
     );
     const run = page.rendered.run;
     const checkpoint = authoritativeCheckpoint(run);
@@ -108,20 +108,35 @@ for (const reduced of [false, true])
       assert.equal(surface.frame.painter.celebrationStatus.active, true);
       assert.equal(page.$('skip-celebration').hidden, true);
     }
-    for (
-      let i = 0;
-      i < Math.ceil(CELEBRATION_SECONDS * 10) + 2 && !surface.frame.painter.celebrationStatus.finished;
-      i++
-    )
-      page.frame(100);
+    if (reduced) {
+      // The reduced renderer begins at its finished visual state but still
+      // honours the board and full-picture timing owned by the host.
+      for (
+        let i = 0;
+        i < Math.ceil(CELEBRATION_SECONDS * 10) + 2 && page.$('show-result').hidden;
+        i++
+      )
+        page.frame(100);
+    } else
+      for (
+        let i = 0;
+        i < Math.ceil(CELEBRATION_SECONDS * 10) + 2 && !surface.frame.painter.celebrationStatus.finished;
+        i++
+      )
+        page.frame(100);
     assert.equal(surface.frame.painter.celebrationStatus.finished, true);
     // The painter reaches its terminal frame before the host consumes that
     // status on the following update.
     page.frame(0);
-    assert.equal(page.$('game-overlay').hidden, false, 'Results remain open after the celebration.');
+    assert.equal(page.$('game-overlay').hidden, true, 'The earned picture fills the game after the celebration.');
+    assert.equal(page.$('show-result').hidden, false);
+    assert.equal(page.doc.body.dataset.winPicture, 'settled');
+    assert.equal(page.$('next-button').hidden, true, 'Next appears after the short picture hold.');
+    for (let i = 0; i < Math.ceil(REWARD_SETTLED_SECONDS * 10) + 2; i++) page.frame(100);
+    assert.equal(page.$('game-overlay').hidden, false, 'The result follows without requiring a click.');
     assert.equal(page.$('game-overlay').dataset.kind, 'won');
     assert.equal(page.$('show-result').hidden, true);
-    assert.equal(page.$('next-button').hidden, false, 'Next remains available without a picture gate.');
+    assert.equal(page.$('next-button').hidden, false);
     if (!reduced) {
       assert.equal(page.$('result-auto-next').hidden, false);
       assert.match(page.$('result-auto-next').textContent, /starts automatically/);
@@ -129,8 +144,8 @@ for (const reduced of [false, true])
     assert.equal(page.doc.activeElement.id, 'next-button');
     assert.equal(
       page.doc.body.dataset.flightState,
-      reduced ? 'picture' : 'result',
-      'Reduced effects retain their short presentation state without hiding result actions.',
+      'result',
+      'Both motion preferences return to the same automatic result state.',
     );
     assert.equal(page.rendered.fullReveal, true);
     assert.equal(page.rendered.run, run);
@@ -154,22 +169,24 @@ for (const reduced of [false, true])
     assert.deepEqual(page.errors, []);
   });
 
-test('the direct victory result does not expose a redundant animation-skip step', async (t) => {
+test('the automatic victory presentation does not expose a redundant animation-skip step', async (t) => {
   const { page, surface } = await win(t);
   const checkpoint = authoritativeCheckpoint(page.rendered.run);
   assert.equal(page.$('skip-celebration').hidden, true);
-  assert.equal(page.$('game-overlay').hidden, false);
-  assert.equal(page.$('game-overlay').dataset.kind, 'won');
+  assert.equal(page.$('game-overlay').hidden, true);
   for (let i = 0; i < Math.ceil(CELEBRATION_SECONDS * 10) + 2; i++) page.frame(100);
   assert.equal(surface.frame.painter.celebrationStatus.finished, true);
   page.frame(0);
   assert.equal(page.$('skip-celebration').hidden, true);
-  assert.equal(page.$('show-result').hidden, true);
+  assert.equal(page.$('show-result').hidden, false);
+  for (let i = 0; i < Math.ceil(REWARD_SETTLED_SECONDS * 10) + 2; i++) page.frame(100);
+  assert.equal(page.$('game-overlay').dataset.kind, 'won');
+  assert.equal(page.$('game-overlay').hidden, false);
   assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
   assert.deepEqual(page.errors, []);
 });
 
-test('held controller Confirm cannot activate a direct victory result action', async (t) => {
+test('held controller Confirm cannot interrupt the automatic victory presentation', async (t) => {
   let now = 1000;
   const previous = Object.getOwnPropertyDescriptor(performance, 'now');
   Object.defineProperty(performance, 'now', { configurable: true, value: () => now });
@@ -200,8 +217,7 @@ test('held controller Confirm cannot activate a direct victory result action', a
   };
   for (let i = 0; i < 24; i++) frame();
   assert.equal(page.$('skip-celebration').hidden, true);
-  assert.equal(page.$('game-overlay').hidden, false);
-  assert.equal(page.$('game-overlay').dataset.kind, 'won');
+  assert.equal(page.$('game-overlay').hidden, true);
   assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
   assert.deepEqual(page.errors, []);
 });
