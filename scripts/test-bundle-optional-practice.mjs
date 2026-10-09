@@ -93,7 +93,7 @@ test('maintainer recipe adds a temporary fourth app, launches, updates, rolls ba
         )
         // This unpublished app explicitly adopts the same literal core-only
         // tools link. Its archive still cannot include the core settings tree.
-        .replace(
+        .replaceAll(
           "['civilian-flight', 'civilian-fpv', 'fpv-worlds'].includes(id)",
           "['civilian-flight', 'civilian-fpv', 'fpv-worlds', 'sample-flight'].includes(id)",
         ),
