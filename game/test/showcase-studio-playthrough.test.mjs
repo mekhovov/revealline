@@ -283,10 +283,7 @@ test(
   'guided Studio source survives export/import and compiled ordinary win, corrective application and exact Collection revisit',
   // Both real host journeys also run alongside the company file-level suite.
   // Bound slow hosted runners without removing any gameplay or persistence checks.
-  // This covers two complete authored routes, asset decoding, persistence and
-  // the Collection revisit. Allow for shared CI runners while retaining the
-  // test's bounded route and storage assertions.
-  { timeout: 180000 },
+  { timeout: 120000 },
   async (t) => {
     const priorLocale = getLocale();
     setLocale('en', { persist: false });
