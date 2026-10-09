@@ -32,9 +32,10 @@ const BASE_OPTIONAL_PACKAGE_POLICIES = Object.freeze({
   'civilian-flight': Object.freeze({
     root: 'optional-practice/civilian-flight/',
     entry: 'optional-practice/civilian-flight/index.html',
-    // Destruction and shared defeat audio add eight reviewed source dependencies;
-    // the launcher/source closure stays bounded separately from its byte budget.
-    limits: Object.freeze({ files: 72, bytes: 8 * 1024 * 1024 }),
+    // The installed archive contains the reviewed launcher (eight files) in
+    // addition to its application closure. Keep a finite envelope while
+    // accounting for that release-only surface.
+    limits: Object.freeze({ files: 80, bytes: 8 * 1024 * 1024 }),
     localFiles: Object.freeze([
       'index.html',
       'app.mjs',
