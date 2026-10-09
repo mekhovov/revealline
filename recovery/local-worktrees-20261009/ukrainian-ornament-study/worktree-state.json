@@ -1,0 +1,49 @@
+{
+  "sourceWorktree": "/Users/oleksandr.mekhovov/.codex/worktrees/ukrainian-ornament-study",
+  "branch": "codex/ukrainian-ornament-study",
+  "head": "440140872c10571aeca58271e06fd60cbc5f4cfe",
+  "status": [
+    " M docs/research/xposed-journey-ledger.json",
+    " M docs/spatial-challenge-plan.md",
+    " M docs/ukrainian-ornament-study.md",
+    " M game/content-design/mode-href.mjs",
+    " M game/content-design/route-definition.mjs",
+    " M game/content-design/route-loader.mjs",
+    " M game/content-design/route.mjs",
+    " M game/couch/mode-entry.js",
+    " M game/mission-library/journey-presentation.mjs",
+    " M game/mission-library/spatial-editions.mjs",
+    " M game/studio/index.html",
+    " M game/studio/studio.mjs",
+    " M game/test/content-route-loader.test.mjs",
+    " M game/test/studio-candidate-library.test.mjs",
+    "?? docs/ukrainian-ornament-atlas.md",
+    "?? game/content-design/ukrainian-ornament-atlas-registry.mjs",
+    "?? game/content-design/ukrainian-ornament-atlas.mjs",
+    "?? game/content-design/ukrainian-ornament-core.mjs",
+    "?? game/content-design/ukrainian-ornament-optional.mjs",
+    "?? game/test/fixtures/ukrainian-ornament-atlas-routes.json",
+    "?? game/test/ukrainian-ornament-atlas-library.test.mjs",
+    "?? game/test/ukrainian-ornament-atlas-routes.test.mjs",
+    "?? game/test/ukrainian-ornament-atlas.test.mjs"
+  ],
+  "localCommitCountOutsideOriginMain": 9,
+  "artifacts": {
+    "workingTreePatch": {
+      "path": "working-tree.patch",
+      "sha256": "696c6ee35b8f2095edd011a112d087310d68998c5310d3738b780c553aedfdc8",
+      "bytes": 19038
+    },
+    "untrackedArchive": {
+      "path": "untracked.tar.gz",
+      "sha256": "77e446b9d8c46edf1668d8bf34def0494b1977353bd6738e4ebf9f437d670061",
+      "bytes": 33264
+    },
+    "localCommitPatch": {
+      "path": "local-commits.patch",
+      "sha256": "09f515189edd877fddc4167aa3ba169def220413b85ff5a48151ea3823a5dbf9",
+      "bytes": 2429510
+    },
+    "conflictStages": 0
+  }
+}
