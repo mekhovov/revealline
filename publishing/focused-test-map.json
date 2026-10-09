@@ -205,7 +205,7 @@
       "pathPatterns": [
         "^game/(?:team|navigation)/",
         "^game/couch/(?!coop-(?:picture-bindings|presentation)\\.mjs$)",
-        "^game/test/.*(couch|team|navigation|pause|result).*\\.test\\.mjs$"
+        "^game/test/(?!solo-result-continuation-host\\.test\\.mjs$).*(couch|team|navigation|pause|result).*\\.test\\.mjs$"
       ],
       "commands": [
         {
