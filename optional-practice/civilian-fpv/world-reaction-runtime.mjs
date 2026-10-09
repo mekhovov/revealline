@@ -13,7 +13,7 @@ const sourceHashes={
 'optional-practice/civilian-fpv/world-hangar.mjs':
 '759d21e034e65e99600df72ef7e04a2fdff8359ec9119baa401323b248ec85ef',
 'optional-practice/civilian-fpv/world-actor-editor.mjs':
-'8969a8102ca7f5d0aafa36ad2b108fe68560b3dceb51332b37ff2901415c9e3b',
+'28471be1c8659b76072ce9ae21dd0c0547f480486d56e208339327b9718c785a',
 'optional-practice/civilian-fpv/world-pursuit-editor.mjs':
 'c1ab754353a095a4c6206d4d353e0d500fd30440d2ed73b2aa426d0ec9b75270',
 'optional-practice/civilian-fpv/world-enemy-guide.mjs':
@@ -3215,6 +3215,7 @@ next.steps[mode].some(
 throw new TypeError(text('huntConflict'));
 const values={
 type:'hunt-contact-v1',
+...(current?.step.contactPolicy===undefined?{}:{contactPolicy:current.step.contactPolicy}),
 targets:[...targets],
 ordered:ordered.checked,
 tail:{
