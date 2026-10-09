@@ -356,12 +356,10 @@ test(
     });
     assert.deepEqual(saved.receipts[0].definition, f.reward);
     assert.ok(f.requests.includes(`game/${f.art.path}`));
-    assert.equal(
-      page.$('game-overlay').hidden,
-      false,
-      'Victory actions need no picture dismissal.',
-    );
-    assert.equal(page.$('show-result').hidden, true);
+    page.$('skip-celebration').onclick();
+    assert.equal(page.$('game-overlay').hidden, true, 'The earned picture owns the win moment.');
+    assert.equal(page.$('show-result').hidden, false);
+    page.$('show-result').click();
     assert.equal(page.$('game-overlay').dataset.kind, 'won');
     assert.equal(page.$('result-picture').hidden, false);
     assert.equal(page.$('next-button').hidden, false);
@@ -663,6 +661,10 @@ test(
         authoritativeCheckpoint(page.rendered.run),
         authoritativeCheckpoint(expected),
       );
+      page.$('skip-celebration').onclick();
+      assert.equal(page.$('game-overlay').hidden, true, 'The earned picture appears before result actions.');
+      assert.equal(page.$('show-result').hidden, false);
+      page.$('show-result').click();
       assert.equal(page.$('next-button').disabled, false);
       assert.equal(page.$('retry-button').disabled, false);
       return authoritativeCheckpoint(page.rendered.run);
@@ -686,10 +688,7 @@ test(
       'Two actual wins cannot grant a six-win finale or application bonus.',
     );
     assert.ok(f.requests.includes(`game/${f.art.path}`));
-    // Reward persistence can finish during the celebration. Follow the native
-    // result action before asking for the activity attached to the earned art.
-    if (!page.$('skip-celebration').hidden) page.$('skip-celebration').click();
-    page.$('show-result').click();
+    // The win helper already returned from the earned-picture presentation.
     assert.equal(page.$('game-overlay').dataset.kind, 'won');
     assert.equal(page.$('result-picture').hidden, false);
     const lessonOpen = page.$('edition-lesson-open');

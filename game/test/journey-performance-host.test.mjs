@@ -68,11 +68,15 @@ function win(page, idle = 0) {
   for (let tick = 0; tick < MOVEMENT_TICK_BUDGET && reference.status === 'running'; tick++)
     stepRun(reference, { direction: 'down' }, FIXED_DT);
   assert.deepEqual(authoritativeCheckpoint(page.rendered.run), authoritativeCheckpoint(reference));
-  assert.equal(page.$('game-overlay').hidden, false, 'The won menu is usable during celebration.');
+  page.$('skip-celebration').onclick();
+  assert.equal(page.$('game-overlay').hidden, true, 'The earned picture owns the win celebration.');
+  assert.equal(page.$('show-result').hidden, false, 'The player can return to results if needed.');
+  page.$('show-result').click();
+  assert.equal(page.$('game-overlay').hidden, false, 'Returning from the picture opens the won menu.');
   assert.equal(page.$('game-overlay').dataset.kind, 'won');
   assert.equal(page.$('retry-button').hidden, false);
   assert.equal(page.$('retry-button').disabled, false);
-  assert.equal(page.$('show-result').hidden, true, 'Results need no preliminary picture click.');
+  assert.equal(page.$('show-result').hidden, true);
 }
 
 test(
