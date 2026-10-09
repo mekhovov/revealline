@@ -1,0 +1,29 @@
+{
+  "sourceWorktree": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-narrow-hud-on-actor622",
+  "branch": "codex/p05-narrow-hud-on-actor622",
+  "head": "80efcc3ddda302a014c3409c248892f36b3a12a9",
+  "status": [
+    " M authoring/skills/xonix-runtime-maintainer/SKILL.md",
+    " M game/app.mjs",
+    " M game/couch/couch.css",
+    " M game/ui/field-kit-compiled.css",
+    "?? docs/narrow-hud-layout.md",
+    "?? game/test/hud-numeric-values.test.mjs",
+    "?? game/ui/hud-values.mjs"
+  ],
+  "localCommitCountOutsideOriginMain": 0,
+  "artifacts": {
+    "workingTreePatch": {
+      "path": "working-tree.patch",
+      "sha256": "56c453d512b561179303ad5cfbb60ab1797751a4c31031d74947370b26aeaf66",
+      "bytes": 6944
+    },
+    "untrackedArchive": {
+      "path": "untracked.tar.gz",
+      "sha256": "3fc7fccc2e7dd1a44dc185d1784c4c287c7facd03969921eef6c294aeaa902c8",
+      "bytes": 4664
+    },
+    "localCommitPatch": null,
+    "conflictStages": 0
+  }
+}

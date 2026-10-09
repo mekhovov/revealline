@@ -1,0 +1,35 @@
+{
+  "sourceWorktree": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-team-lobby-visible-focus",
+  "branch": "codex/p03-team-lobby-visible-focus",
+  "head": "628e95daf403082768cdcf900a8ea1d1ef4629a2",
+  "status": [
+    " M authoring/prompts/cross-mode-delivery.md",
+    " M authoring/skills/xonix-runtime-maintainer/SKILL.md",
+    " M docs/team-picture-host.md",
+    " M game/couch/coop-view.mjs",
+    " M game/couch/relay-rescue.css",
+    " M game/couch/relay-rescue.html",
+    " M game/couch/relay-rescue.mjs",
+    " M game/test/coop-won-terminal-host.test.mjs",
+    " M game/test/helpers/coop-host.mjs",
+    "?? docs/team-victory-picture.md",
+    "?? game/test/coop-lobby-focus.test.mjs",
+    "?? game/test/coop-lobby-preview.test.mjs",
+    "?? game/test/coop-victory-picture.test.mjs"
+  ],
+  "localCommitCountOutsideOriginMain": 0,
+  "artifacts": {
+    "workingTreePatch": {
+      "path": "working-tree.patch",
+      "sha256": "8954691e96693249504b2d9d5dad54d106f8dc57959de509e4f951b654d3ef98",
+      "bytes": 42543
+    },
+    "untrackedArchive": {
+      "path": "untracked.tar.gz",
+      "sha256": "b386c0b961f3c7c59deb780aee08023c48b6a6dc65fc7913811766f13b72146b",
+      "bytes": 12255
+    },
+    "localCommitPatch": null,
+    "conflictStages": 0
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "sourceWorktree": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint",
+  "branch": "codex/p08-versus-footprint",
+  "head": "d34e283819376eb43e4942287d9767b22a4f6487",
+  "status": [
+    " M authoring/skills/xonix-runtime-maintainer/SKILL.md",
+    " M docs/field-kit-surfaces.md",
+    " M game/couch/couch.css",
+    " M game/couch/couch.mjs",
+    " M game/test/helpers/couch-host.mjs",
+    "?? game/couch/board-footprint.mjs",
+    "?? game/test/board-footprint.test.mjs",
+    "?? game/test/couch-board-footprint-host.test.mjs"
+  ],
+  "localCommitCountOutsideOriginMain": 0,
+  "artifacts": {
+    "workingTreePatch": {
+      "path": "working-tree.patch",
+      "sha256": "a5d1c005001b65cb0505ec02e4f69da6cf9fa9dd00b6c581919e9653b09a64dc",
+      "bytes": 14258
+    },
+    "untrackedArchive": {
+      "path": "untracked.tar.gz",
+      "sha256": "ad95b2f527d08ce36af520b645b102c276b0a02ca1ff71b8c038706170f94afa",
+      "bytes": 7508
+    },
+    "localCommitPatch": null,
+    "conflictStages": 0
+  }
+}

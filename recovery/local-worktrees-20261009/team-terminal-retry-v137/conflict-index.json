@@ -1,0 +1,38 @@
+[
+  {
+    "path": "game/couch/couch.mjs",
+    "mode": "100644",
+    "blob": "f76cf8073753c0573c22753db57714bdd35818fa",
+    "stage": 1
+  },
+  {
+    "path": "game/couch/couch.mjs",
+    "mode": "100644",
+    "blob": "803f6f9081bc7b67266398ae945476bcbf148e19",
+    "stage": 2
+  },
+  {
+    "path": "game/couch/couch.mjs",
+    "mode": "100644",
+    "blob": "29bfaa63db00c177ee73fecd744b540354be5732",
+    "stage": 3
+  },
+  {
+    "path": "game/i18n/catalogs.mjs",
+    "mode": "100644",
+    "blob": "38afe32d97ce478e91013e815175d0cdceebf7dd",
+    "stage": 1
+  },
+  {
+    "path": "game/i18n/catalogs.mjs",
+    "mode": "100644",
+    "blob": "815a56ba09b12a5eab5a5ad6787193de4a9974ca",
+    "stage": 2
+  },
+  {
+    "path": "game/i18n/catalogs.mjs",
+    "mode": "100644",
+    "blob": "d9b28d392fb2c2be0c82302c5a6fe15e79f1d609",
+    "stage": 3
+  }
+]

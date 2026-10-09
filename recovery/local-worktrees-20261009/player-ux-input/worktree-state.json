@@ -1,0 +1,46 @@
+{
+  "sourceWorktree": "/Users/oleksandr.mekhovov/.codex/worktrees/player-ux-input",
+  "branch": "codex/player-ux-input",
+  "head": "9a205c9526514b1a8ef6852d6a94789a04ec49f7",
+  "status": [
+    " M authoring/library/fpv-field-kit/production.rltheme",
+    " M game/couch/coop-picture-bindings.mjs",
+    " M game/couch/coop-presentation.mjs",
+    " M game/presentation/compiled/manifest.json",
+    " M game/presentation/compiled/runtime.json",
+    " M game/presentation/compiled/studio.json",
+    " M game/test/coop-actor-presentation.test.mjs",
+    " M game/test/coop-historical-import-picture.test.mjs",
+    " M game/test/coop-picture-bindings.test.mjs",
+    " M game/test/coop-reviewed-successor-picture.test.mjs",
+    " M game/test/couch-static-picture-host.test.mjs",
+    " M game/test/field-kit-retained-runtime.test.mjs",
+    " M game/test/journey-owned-controls.test.mjs",
+    " M game/test/team-discovery-input.test.mjs",
+    " M game/test/team-picture-identity-extension.test.mjs",
+    " M game/test/whole-originals-host-scenarios.mjs",
+    " M scripts/field-kit-retained-runtime.mjs",
+    " M scripts/team-picture-review-extension.mjs",
+    "?? authoring/library/fpv-field-kit/retained/runtime.b4a7285520550e4cd04c7b9e80b4c6468c0a914faac77c05fa7f86a72c8a3c8f.json",
+    "?? docs/verification/team-picture-identity-extension/identity-harness.before.txt",
+    "?? docs/verification/team-picture-identity-extension/production63.md",
+    "?? docs/verification/team-picture-identity-extension/review-production63.json",
+    "?? game/presentation/compiled/runtime.b4a7285520550e4cd04c7b9e80b4c6468c0a914faac77c05fa7f86a72c8a3c8f.json",
+    "?? game/test/fixtures/whole-originals-tuned-host-routes.json"
+  ],
+  "localCommitCountOutsideOriginMain": 0,
+  "artifacts": {
+    "workingTreePatch": {
+      "path": "working-tree.patch",
+      "sha256": "b8a4efb7756057ee0c82cd6d938d83702637de211e11abf90cf2e6f4ee3916f9",
+      "bytes": 304072
+    },
+    "untrackedArchive": {
+      "path": "untracked.tar.gz",
+      "sha256": "fec7e2a30b1e2a5a81f7a6706b60bc1cb6fb7d7f3528be91dbd3ebb12dfd00db",
+      "bytes": 170482
+    },
+    "localCommitPatch": null,
+    "conflictStages": 0
+  }
+}
