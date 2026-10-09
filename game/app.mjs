@@ -7868,14 +7868,19 @@ try {
     resultAutoAdvanceSecond = null;
     refreshResultAutoAdvance();
   }
+  function presentEarnedVictoryMedia() {
+    if (run?.status !== 'won' || practice || completionWarning || dialogOpen()) return;
+    if (
+      presentedVictoryRun !== run &&
+      flightPictures?.pins() &&
+      storyPinForTheme(flightPictures.pins(), theme.id)
+    ) {
+      presentedVictoryRun = run;
+      openVictoryStory({ autoplay: true });
+    } else editionUI?.presentVictoryVideo?.(run, $('show-result'));
+  }
   function enjoyCompletedPicture({ automatic = true } = {}) {
     if (run?.status !== 'won') return;
-    // `show-result` is the authoritative state for an explicit picture view.
-    // Reduced-motion renderers can settle before a paint has reflected the
-    // result overlay, so relying on that overlay's transient hidden flag here
-    // would incorrectly replace immediately usable actions with a picture gate.
-    const resultAlreadyOpen =
-      $('show-result').hidden && $('game-overlay').dataset.kind === 'won';
     const returnFocus =
       !dialogOpen() &&
       (document.activeElement === $('skip-celebration') ||
@@ -7887,32 +7892,13 @@ try {
       settledPictureRemaining = REWARD_SETTLED_SECONDS;
     } else clearSettledPictureTransition();
     show('skip-celebration', false);
-    if (resultAlreadyOpen && automatic) {
-      // The celebration is visual feedback, not a modal gate. Preserve the
-      // live result actions once the player has reached them.
-      show('game-overlay', true);
-      show('show-result', false);
-      refreshHUD();
-      armResultAutoAdvance();
-      return;
-    }
+    // The earned picture is the immediate reward. Hold it without result
+    // controls so its reveal reads as a short, uninterrupted celebration.
+    // Manual re-entry uses the same full-screen view, but never replays media.
     show('game-overlay', false);
     show('show-result', true);
     refreshHUD();
     if (returnFocus) $('show-result').focus({ preventScroll: true });
-    if (
-      presentedVictoryRun !== run &&
-      !practice &&
-      !completionWarning &&
-      !dialogOpen() &&
-      flightPictures?.pins() &&
-      storyPinForTheme(flightPictures.pins(), theme.id)
-    ) {
-      presentedVictoryRun = run;
-      openVictoryStory({ autoplay: true });
-    } else if (!practice && !completionWarning && !dialogOpen()) {
-      editionUI?.presentVictoryVideo?.(run, $('show-result'));
-    }
   }
   function focusPauseToolReturn(id) {
     const target = $(id);
@@ -11215,10 +11201,10 @@ try {
           });
           winRevealAge = 0;
           celebrationActive = true;
-          // Results are immediately usable; the celebration remains a visual
-          // layer behind the result. There is no separate skip step once
-          // Retry and Next are already available.
-          overlay('won');
+          // Let the capture animation resolve into the earned picture before
+          // presenting the mission result. This keeps the reward visible as a
+          // real celebration rather than making it background decoration.
+          show('game-overlay', false);
           show('skip-celebration', false);
           show('show-result', false);
           warning(
@@ -11274,6 +11260,9 @@ try {
       if (settledPictureRemaining <= 1e-9) {
         clearSettledPictureTransition();
         $('show-result').click();
+        // A video (or story) follows the still reward, never replaces its
+        // opening moment. Its dialog pauses the result countdown until closed.
+        presentEarnedVictoryMedia();
       }
     }
     if (

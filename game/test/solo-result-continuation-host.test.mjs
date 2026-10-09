@@ -158,16 +158,20 @@ async function win(p) {
   assert.equal(p.rendered.run.status, 'won');
   assert.equal(
     p.$('game-overlay').hidden,
+    true,
+    'The earned picture gets its full-screen celebration before result actions appear.',
+  );
+  for (let i = 0; i < 90 && p.$('game-overlay').hidden; i++) p.frame(100);
+  assert.equal(
+    p.$('game-overlay').hidden,
     false,
-    'The earned result is usable during celebration.',
+    'The result opens automatically after the earned-picture hold.',
   );
   assert.equal(
     p.$('skip-celebration').hidden,
     true,
     'No picture gate precedes the actual result actions.',
   );
-  if (!p.$('skip-celebration').hidden) p.$('skip-celebration').click();
-  if (!p.$('show-result').hidden) p.$('show-result').click();
   p.frame(0);
   assert.equal(p.$('game-overlay').dataset.kind, 'won');
   await settle(

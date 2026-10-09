@@ -1,6 +1,6 @@
 /* Shared theme paint overrides these original layout defaults. */
 @layer legacy {
-  /* An earned picture owns the stage until its player asks for the results.
+  /* An earned picture owns the stage during its short celebration hold.
    Preserve the board's aspect ratio, including portrait and ultrawide artwork. */
   body.field-kit.game-shell:is([data-win-picture='celebrating'], [data-win-picture='settled']) {
     overflow: hidden;
