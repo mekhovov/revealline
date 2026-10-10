@@ -179,6 +179,16 @@ test('other Team runtime paths retain the navigation gate', () => {
   assert.deepEqual(plan.unknownRuntime, []);
 });
 
+test('Solo result-continuation coverage runs directly without the unrelated Team navigation bundle', () => {
+  const file = 'game/test/solo-result-continuation-host.test.mjs';
+  const plan = focusedTestPlan([file], manifest);
+  assert.ok(!plan.categories.includes('player-navigation-team'));
+  assert.deepEqual(plan.commands.map(({ id }) => id), [
+    'unknown-runtime-validate',
+    `changed-test:${file}`,
+  ]);
+});
+
 test('Versus runtime changes retain native controller Start ownership coverage once', () => {
   const file = 'game/test/mission-library-controller-host.test.mjs';
   const plan = focusedTestPlan(['game/couch/couch.mjs', file], manifest);
