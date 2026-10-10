@@ -99,6 +99,13 @@ export function asynchronousMergeRequest(headSha) {
   };
 }
 
+// Pull-request merges made with the workflow token do not emit a second
+// `push` workflow run. Dispatch the rolling Pages build deliberately after a
+// controller-owned merge so public play always follows protected main.
+export function mainPagesDispatchRequest() {
+  return { ref: "main" };
+}
+
 export function asynchronousMergeResult(value) {
   const status = value?.status;
   if (status === "pending") return { done: false, merged: false };
@@ -178,6 +185,17 @@ async function mergeStack(owner, repository, pullRequest, headSha) {
   }
   throw new Error(
     "Asynchronous stacked merge did not finish within the bounded poll window.",
+  );
+}
+
+async function dispatchMainPages(owner, repository) {
+  await github(
+    `/repos/${owner}/${repository}/actions/workflows/publish-main-pages.yml/dispatches`,
+    {
+      method: "POST",
+      body: JSON.stringify(mainPagesDispatchRequest()),
+      headers: { "content-type": "application/json" },
+    },
   );
 }
 
@@ -389,6 +407,7 @@ async function main() {
       );
     }
   }
+  let merged = false;
   if (decision.action === "update") {
     await github(
       `/repos/${owner}/${repository}/pulls/${number}/update-branch`,
@@ -399,7 +418,7 @@ async function main() {
       },
     );
   } else if (decision.action === "stack") {
-    const merged = await mergeStack(
+    merged = await mergeStack(
       owner,
       repository,
       pullRequest,
@@ -423,8 +442,15 @@ async function main() {
       throw new Error(
         result?.message || "GitHub rejected the exact-head merge.",
       );
+    merged = true;
   } else if (decision.action === "arm" || decision.action === "disarm")
     await setAutoMerge(pullRequest, decision.action, observedHeadSha);
+  if (merged) {
+    await dispatchMainPages(owner, repository);
+    await appendSummary([
+      "Dispatched the rolling Pages build from protected main after the merge.",
+    ]);
+  }
 }
 
 async function checkedAdmission(owner, repository, check, pullRequest) {

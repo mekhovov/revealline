@@ -6,6 +6,7 @@ import {
   asynchronousMergeResult,
   decideMergeAction,
   dependencyNumbers,
+  mainPagesDispatchRequest,
 } from "./fastline-merge-controller.mjs";
 
 const SHA = "1".repeat(40);
@@ -158,6 +159,10 @@ test("stacked merge payload and polling results remain exact and fail closed", (
   );
 });
 
+test("a controller-owned merge dispatches the rolling Pages workflow from main", () => {
+  assert.deepEqual(mainPagesDispatchRequest(), { ref: "main" });
+});
+
 test("dependency references are explicit and deduplicated by the caller", () => {
   assert.deepEqual(
     dependencyNumbers("Depends on #573\nBlocked by #576"),
@@ -177,6 +182,7 @@ test("the privileged workflow is a safe no-op until the trusted controller reach
   assert.match(workflow, /cancel-in-progress: false/);
   assert.doesNotMatch(workflow, /workflow_run\.conclusion == 'success'/);
   assert.match(workflow, /contents: write/);
+  assert.match(workflow, /actions: write/);
   assert.match(
     workflow,
     /if: hashFiles\('publishing\/fastline-merge-controller\.mjs'\) == ''/,
