@@ -124,6 +124,11 @@ jobs:
           if-no-files-found: error
           retention-days: 14
       - name: Save immutable candidates for review
+        # The archive is hundreds of megabytes.  It is retained for main and
+        # manually qualified candidates, but uploading it on every pull
+        # request can exhaust this job's bounded time after all verification
+        # has already succeeded.  PRs retain the compact manifests above.
+        if: github.event_name != 'pull_request'
         uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
         with:
           name: company-candidate-${{ github.event.pull_request.head.sha || github.sha }}
