@@ -1,0 +1,22 @@
+{
+  "sourceWorktree": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-still-reload-status-next",
+  "branch": "codex/still-media-reload-status-next",
+  "head": "2f1074a37ade9c731ea7be37a6e56e533b51d1ac",
+  "status": [
+    " M docs/still-media-workshop.md",
+    " M game/test/still-media-host.test.mjs",
+    " M game/ui/still-media-host.mjs",
+    " M game/ui/still-media-panel.mjs"
+  ],
+  "localCommitCountOutsideOriginMain": 0,
+  "artifacts": {
+    "workingTreePatch": {
+      "path": "working-tree.patch",
+      "sha256": "95898723cc2607ff76e20828283d980dfd262c8b810dc7cb6cd51de2d196e520",
+      "bytes": 10310
+    },
+    "untrackedArchive": null,
+    "localCommitPatch": null,
+    "conflictStages": 0
+  }
+}

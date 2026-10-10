@@ -1,0 +1,34 @@
+{
+  "sourceWorktree": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08a-team-earned-picture",
+  "branch": "codex/p08a-team-earned-picture",
+  "head": "628e95daf403082768cdcf900a8ea1d1ef4629a2",
+  "status": [
+    " M authoring/prompts/cross-mode-delivery.md",
+    " M authoring/skills/xonix-runtime-maintainer/SKILL.md",
+    " M docs/team-picture-host.md",
+    " M game/couch/coop-view.mjs",
+    " M game/couch/relay-rescue.css",
+    " M game/couch/relay-rescue.html",
+    " M game/couch/relay-rescue.mjs",
+    " M game/test/coop-won-terminal-host.test.mjs",
+    " M game/test/helpers/coop-host.mjs",
+    "?? docs/team-victory-picture.md",
+    "?? game/test/coop-lobby-preview.test.mjs",
+    "?? game/test/coop-victory-picture.test.mjs"
+  ],
+  "localCommitCountOutsideOriginMain": 0,
+  "artifacts": {
+    "workingTreePatch": {
+      "path": "working-tree.patch",
+      "sha256": "f747a5da4e26e65fd5200db4f28664f692ec2df4957f3776f0de13ccc39cd480",
+      "bytes": 29397
+    },
+    "untrackedArchive": {
+      "path": "untracked.tar.gz",
+      "sha256": "3cbc12f6d46980bbc0ca3a9954a65c468bd91d1baf8be1335b36da9506f310b6",
+      "bytes": 10193
+    },
+    "localCommitPatch": null,
+    "conflictStages": 0
+  }
+}

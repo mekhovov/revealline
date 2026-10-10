@@ -1,0 +1,19 @@
+{
+  "sourceWorktree": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-close-focus-tests",
+  "branch": "codex/p03-close-focus-tests",
+  "head": "ef1430174dfd35a9df441233988b8737d0401851",
+  "status": [
+    " M game/test/still-media-host.test.mjs"
+  ],
+  "localCommitCountOutsideOriginMain": 0,
+  "artifacts": {
+    "workingTreePatch": {
+      "path": "working-tree.patch",
+      "sha256": "478180851784e4dd510d6db8b74153e537ec29ed333c67a1ee5077a23d543551",
+      "bytes": 4348
+    },
+    "untrackedArchive": null,
+    "localCommitPatch": null,
+    "conflictStages": 0
+  }
+}
