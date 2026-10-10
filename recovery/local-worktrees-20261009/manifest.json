@@ -1,0 +1,857 @@
+{
+  "createdAt": "2026-10-09",
+  "worktrees": [
+    {
+      "sourceWorktree": "/Users/oleksandr.mekhovov/.codex/worktrees/fpv-world-framework/go_test",
+      "branch": "codex/fpv-art-combined-verification",
+      "head": "f643ef77767fafab6324a5c2d564fc6b995ab4a4",
+      "status": [
+        " M docs/fpv-continuous-delivery.md"
+      ],
+      "localCommitCountOutsideOriginMain": 64,
+      "artifacts": {
+        "workingTreePatch": {
+          "path": "working-tree.patch",
+          "sha256": "61c74a7f19b185bf3e4fd7cf0461ecc44ce848a1fbf4c3527fae57e555f0ee85",
+          "bytes": 10039
+        },
+        "untrackedArchive": null,
+        "localCommitPatch": {
+          "path": "local-commits.patch",
+          "sha256": "0c15eb52fc191c49c125b6e39bc12309a9b7950d784fc7d4fd7e96d1c7b92125",
+          "bytes": 633398
+        },
+        "conflictStages": 0
+      }
+    },
+    {
+      "sourceWorktree": "/Users/oleksandr.mekhovov/.codex/worktrees/player-ux-input",
+      "branch": "codex/player-ux-input",
+      "head": "9a205c9526514b1a8ef6852d6a94789a04ec49f7",
+      "status": [
+        " M authoring/library/fpv-field-kit/production.rltheme",
+        " M game/couch/coop-picture-bindings.mjs",
+        " M game/couch/coop-presentation.mjs",
+        " M game/presentation/compiled/manifest.json",
+        " M game/presentation/compiled/runtime.json",
+        " M game/presentation/compiled/studio.json",
+        " M game/test/coop-actor-presentation.test.mjs",
+        " M game/test/coop-historical-import-picture.test.mjs",
+        " M game/test/coop-picture-bindings.test.mjs",
+        " M game/test/coop-reviewed-successor-picture.test.mjs",
+        " M game/test/couch-static-picture-host.test.mjs",
+        " M game/test/field-kit-retained-runtime.test.mjs",
+        " M game/test/journey-owned-controls.test.mjs",
+        " M game/test/team-discovery-input.test.mjs",
+        " M game/test/team-picture-identity-extension.test.mjs",
+        " M game/test/whole-originals-host-scenarios.mjs",
+        " M scripts/field-kit-retained-runtime.mjs",
+        " M scripts/team-picture-review-extension.mjs",
+        "?? authoring/library/fpv-field-kit/retained/runtime.b4a7285520550e4cd04c7b9e80b4c6468c0a914faac77c05fa7f86a72c8a3c8f.json",
+        "?? docs/verification/team-picture-identity-extension/identity-harness.before.txt",
+        "?? docs/verification/team-picture-identity-extension/production63.md",
+        "?? docs/verification/team-picture-identity-extension/review-production63.json",
+        "?? game/presentation/compiled/runtime.b4a7285520550e4cd04c7b9e80b4c6468c0a914faac77c05fa7f86a72c8a3c8f.json",
+        "?? game/test/fixtures/whole-originals-tuned-host-routes.json"
+      ],
+      "localCommitCountOutsideOriginMain": 0,
+      "artifacts": {
+        "workingTreePatch": {
+          "path": "working-tree.patch",
+          "sha256": "b8a4efb7756057ee0c82cd6d938d83702637de211e11abf90cf2e6f4ee3916f9",
+          "bytes": 304072
+        },
+        "untrackedArchive": {
+          "path": "untracked.tar.gz",
+          "sha256": "fec7e2a30b1e2a5a81f7a6706b60bc1cb6fb7d7f3528be91dbd3ebb12dfd00db",
+          "bytes": 170482
+        },
+        "localCommitPatch": null,
+        "conflictStages": 0
+      }
+    },
+    {
+      "sourceWorktree": "/Users/oleksandr.mekhovov/.codex/worktrees/team-picture-v01322/go_test",
+      "branch": "codex/pages-v01322-selector",
+      "head": "4da146a92e9af1a27078664d374cefb7e961f1b9",
+      "status": [
+        " M publishing/pages-controller/catalog.json",
+        "?? publishing/pages-controller/evidence/current-v01322/",
+        "?? publishing/pages-controller/metadata/v0.132.2/"
+      ],
+      "localCommitCountOutsideOriginMain": 0,
+      "artifacts": {
+        "workingTreePatch": {
+          "path": "working-tree.patch",
+          "sha256": "5500633792ac8fffe7fd4a68cf5337269134fcaae14fe8e754b08d438f90b0f2",
+          "bytes": 993
+        },
+        "untrackedArchive": {
+          "path": "untracked.tar.gz",
+          "sha256": "53f42c000a5a4902d5c8582f05400fe0a25365b67ffa22d3e54cadd4ddcb6ffa",
+          "bytes": 74533
+        },
+        "localCommitPatch": null,
+        "conflictStages": 0
+      }
+    },
+    {
+      "sourceWorktree": "/Users/oleksandr.mekhovov/.codex/worktrees/team-terminal-retry-v137/go_test",
+      "branch": "codex/v1418-failure-continuation",
+      "head": "22d187db746e2b246485eafa9a1c268c51b74f5e",
+      "status": [
+        "A  docs/player-first-ux4-versus-start-cue.md",
+        "M  game/couch/couch.css",
+        "UU game/couch/couch.mjs",
+        "M  game/couch/index.html",
+        "A  game/couch/start-cue.mjs",
+        "UU game/i18n/catalogs.mjs",
+        "M  game/locales/en/interface.json",
+        "M  game/locales/uk/interface.json",
+        "A  game/test/couch-start-cue-host.test.mjs",
+        "A  game/test/couch-start-cue.test.mjs",
+        "M  game/test/helpers/couch-host.mjs"
+      ],
+      "localCommitCountOutsideOriginMain": 1,
+      "artifacts": {
+        "workingTreePatch": {
+          "path": "working-tree.patch",
+          "sha256": "2744821805ea3e5d6ab430d544c8e329413d48763e43af2b0419680e4e52a387",
+          "bytes": 2655128
+        },
+        "untrackedArchive": null,
+        "localCommitPatch": {
+          "path": "local-commits.patch",
+          "sha256": "177a52b647826e42c71010d1f8fb88eb3db2068187f65e575a3c8893d802eb2c",
+          "bytes": 21268
+        },
+        "conflictStages": 6
+      }
+    },
+    {
+      "sourceWorktree": "/Users/oleksandr.mekhovov/.codex/worktrees/ukrainian-ornament-study",
+      "branch": "codex/ukrainian-ornament-study",
+      "head": "440140872c10571aeca58271e06fd60cbc5f4cfe",
+      "status": [
+        " M docs/research/xposed-journey-ledger.json",
+        " M docs/spatial-challenge-plan.md",
+        " M docs/ukrainian-ornament-study.md",
+        " M game/content-design/mode-href.mjs",
+        " M game/content-design/route-definition.mjs",
+        " M game/content-design/route-loader.mjs",
+        " M game/content-design/route.mjs",
+        " M game/couch/mode-entry.js",
+        " M game/mission-library/journey-presentation.mjs",
+        " M game/mission-library/spatial-editions.mjs",
+        " M game/studio/index.html",
+        " M game/studio/studio.mjs",
+        " M game/test/content-route-loader.test.mjs",
+        " M game/test/studio-candidate-library.test.mjs",
+        "?? docs/ukrainian-ornament-atlas.md",
+        "?? game/content-design/ukrainian-ornament-atlas-registry.mjs",
+        "?? game/content-design/ukrainian-ornament-atlas.mjs",
+        "?? game/content-design/ukrainian-ornament-core.mjs",
+        "?? game/content-design/ukrainian-ornament-optional.mjs",
+        "?? game/test/fixtures/ukrainian-ornament-atlas-routes.json",
+        "?? game/test/ukrainian-ornament-atlas-library.test.mjs",
+        "?? game/test/ukrainian-ornament-atlas-routes.test.mjs",
+        "?? game/test/ukrainian-ornament-atlas.test.mjs"
+      ],
+      "localCommitCountOutsideOriginMain": 9,
+      "artifacts": {
+        "workingTreePatch": {
+          "path": "working-tree.patch",
+          "sha256": "696c6ee35b8f2095edd011a112d087310d68998c5310d3738b780c553aedfdc8",
+          "bytes": 19038
+        },
+        "untrackedArchive": {
+          "path": "untracked.tar.gz",
+          "sha256": "77e446b9d8c46edf1668d8bf34def0494b1977353bd6738e4ebf9f437d670061",
+          "bytes": 33264
+        },
+        "localCommitPatch": {
+          "path": "local-commits.patch",
+          "sha256": "09f515189edd877fddc4167aa3ba169def220413b85ff5a48151ea3823a5dbf9",
+          "bytes": 2429510
+        },
+        "conflictStages": 0
+      }
+    },
+    {
+      "sourceWorktree": "/Users/oleksandr.mekhovov/.codex/worktrees/unified-game-menus/go_test",
+      "branch": "codex/unified-game-menus",
+      "head": "21826c460e80fa4e7fa47ec8e6ba9f98f75beea4",
+      "status": [
+        " M game/app.mjs",
+        " M game/couch/couch-music-host.mjs",
+        " M game/couch/couch-shell.mjs",
+        " M game/couch/couch.mjs",
+        " M game/couch/index.html",
+        " M game/couch/mode-entry.js",
+        " M game/couch/relay-rescue.html",
+        " M game/couch/relay-rescue.mjs",
+        " M game/hunt/index.html",
+        " M game/i18n/catalogs.mjs",
+        " M game/index.html",
+        " M game/locales/en/interface.json",
+        " M game/locales/uk/interface.json",
+        " M game/online/index.html",
+        " M game/presentation/theme-bootstrap.mjs",
+        " M game/presentation/theme-system.mjs",
+        " M game/snake/classic-app.mjs",
+        " M game/snake/classic.css",
+        " M game/snake/play.html",
+        " M game/studio/snake.html",
+        " M game/test/authored-mode-bootstrap.test.mjs",
+        " M game/test/candidate-versus-host.test.mjs",
+        " M game/test/civilian-practice-ui.test.mjs",
+        " M game/test/classic-snake-ui.test.mjs",
+        " M game/test/controller-navigation.test.mjs",
+        " M game/test/couch-composite-menu-navigation.test.mjs",
+        " M game/test/couch-initial-focus.test.mjs",
+        " M game/test/couch-menu-music.test.mjs",
+        " M game/test/fpv-flight-ui.test.mjs",
+        " M game/test/fpv-world-appearance-ui.test.mjs",
+        " M game/test/helpers/couch-dom.mjs",
+        " M game/test/journey-menu-return-host.test.mjs",
+        " M game/test/menu-audio-localization.test.mjs",
+        " M game/test/mode-choice-appearance.test.mjs",
+        " M game/test/mode-play-shell.test.mjs",
+        " M game/test/native-landing-fullscreen.test.mjs",
+        " M game/test/pause-menu-host.test.mjs",
+        " M game/test/shared-pause-hierarchy.test.mjs",
+        " M game/test/steamdeck-menu-confirm-host.test.mjs",
+        " M game/test/theme-bootstrap.test.mjs",
+        " M game/ui/brand-identity.css",
+        " M game/ui/field-kit-surfaces.mjs",
+        " M game/ui/flight-information-details.mjs",
+        " M game/ui/game-shell.mjs",
+        " M game/ui/menu-audio.mjs",
+        " M game/ui/menu-navigation-groups.mjs",
+        " M game/ui/menu-scenes.mjs",
+        " M game/ui/mode-choice.css",
+        " M game/ui/mode-choice.mjs",
+        " M game/ui/mode-play-shell.css",
+        " M game/ui/mode-play-shell.mjs",
+        " M game/ui/native-menu-icons.mjs",
+        " M game/ui/native-menu.css",
+        " M game/ui/native-menus.mjs",
+        " M game/ui/profile-recovery-dialog.mjs",
+        " M optional-practice/civilian-flight/README.md",
+        " M optional-practice/civilian-flight/app.mjs",
+        " M optional-practice/civilian-flight/audio.mjs",
+        " M optional-practice/civilian-flight/index.html",
+        " M optional-practice/civilian-flight/style.css",
+        " M optional-practice/civilian-fpv/app.mjs",
+        " M optional-practice/civilian-fpv/flight-fullscreen.css",
+        " M optional-practice/civilian-fpv/flight-fullscreen.mjs",
+        " M optional-practice/civilian-fpv/index.html",
+        " M optional-practice/civilian-fpv/input.mjs",
+        " M optional-practice/civilian-fpv/sim-presentation.mjs",
+        " M optional-practice/civilian-fpv/style.css",
+        " M optional-practice/civilian-fpv/world-app.mjs",
+        " M optional-practice/civilian-fpv/world-audio.mjs",
+        " M optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+        " M optional-practice/fpv-worlds/index.html",
+        " M publishing/optional-package-candidate.mjs",
+        " M publishing/optional-package-policy.mjs",
+        " M scripts/build-optional-practice.mjs",
+        " M scripts/refresh-fpv-play-shell.mjs",
+        " M scripts/refresh-fpv-presentation-assets.mjs",
+        " M scripts/test-offline-core-closure.mjs",
+        " M scripts/test-optional-fpv-package.mjs",
+        " M scripts/test-optional-practice.mjs",
+        "?? docs/verification/unified-game-menus-2026-10-05.md",
+        "?? game/test/global-settings-tools-host.test.mjs",
+        "?? game/test/global-settings-tools.test.mjs",
+        "?? game/test/global-settings-view.test.mjs",
+        "?? game/test/helpers/global-tools-fixture.mjs",
+        "?? game/test/mode-choice-view.test.mjs",
+        "?? game/test/mode-settings-view.test.mjs",
+        "?? game/test/native-global-settings.test.mjs",
+        "?? game/test/native-landing-structure.test.mjs",
+        "?? game/test/pause-menu.test.mjs",
+        "?? game/test/sim-global-tools.test.mjs",
+        "?? game/test/team-hunt-settings-host.test.mjs",
+        "?? game/ui/global-settings-tools.css",
+        "?? game/ui/global-settings-tools.mjs",
+        "?? game/ui/global-settings-view.css",
+        "?? game/ui/global-settings-view.mjs",
+        "?? game/ui/menu-animation-preferences.mjs",
+        "?? game/ui/mode-boot.css",
+        "?? game/ui/mode-choice-view.mjs",
+        "?? game/ui/mode-settings-view.css",
+        "?? game/ui/mode-settings-view.mjs",
+        "?? game/ui/pause-menu.css",
+        "?? game/ui/pause-menu.mjs",
+        "?? scripts/test-optional-core-tools-boundary.mjs",
+        "?? scripts/test-optional-global-settings-locales.mjs"
+      ],
+      "localCommitCountOutsideOriginMain": 0,
+      "artifacts": {
+        "workingTreePatch": {
+          "path": "working-tree.patch",
+          "sha256": "1a040b0b2d23d10d4f6c0b45e293bfdeec298e88a50659323b61c540fec6765a",
+          "bytes": 2958646
+        },
+        "untrackedArchive": {
+          "path": "untracked.tar.gz",
+          "sha256": "1fbe474f3c9f3f9da2e6a7c270a0b58b8231b3026d05c88a32d625953edbf90e",
+          "bytes": 32478
+        },
+        "localCommitPatch": null,
+        "conflictStages": 0
+      }
+    },
+    {
+      "sourceWorktree": "/Users/oleksandr.mekhovov/.codex/worktrees/v0131-localization-finish/go_test",
+      "branch": "codex/v1417-ledger-reconciliation",
+      "head": "e1e31312d3e34842688eb9922bbda1203238c435",
+      "status": [
+        " M authoring/library/fpv-field-kit/production.rltheme",
+        " M game/presentation/compiled/manifest.json",
+        " M game/presentation/compiled/runtime.json",
+        " M game/presentation/compiled/studio.json",
+        " M scripts/produce-field-kit-theme.mjs",
+        " M scripts/test-field-kit-recipe-sources.mjs"
+      ],
+      "localCommitCountOutsideOriginMain": 0,
+      "artifacts": {
+        "workingTreePatch": {
+          "path": "working-tree.patch",
+          "sha256": "54044b81171efb1767e769e4baed7be1a9110e6e5ac6bb6f5b305520827ce5f4",
+          "bytes": 706838
+        },
+        "untrackedArchive": null,
+        "localCommitPatch": null,
+        "conflictStages": 0
+      }
+    },
+    {
+      "sourceWorktree": "/Users/oleksandr.mekhovov/.codex/worktrees/v135-replay-audit/go_test",
+      "branch": "codex/v135-replay-audit",
+      "head": "651b78756039f48d332a97528503193d9111c382",
+      "status": [
+        "A  docs/player-first-ux2-couch-secondary-navigation.md",
+        "M  game/build-config.json",
+        "M  game/couch/couch-shell.mjs",
+        "M  game/couch/couch.css",
+        "M  game/couch/index.html",
+        "M  game/couch/relay-rescue.mjs",
+        "M  game/test/couch-shell.test.mjs",
+        "M  game/test/shared-pause-hierarchy.test.mjs",
+        "M  package-lock.json",
+        "M  package.json"
+      ],
+      "localCommitCountOutsideOriginMain": 7,
+      "artifacts": {
+        "workingTreePatch": {
+          "path": "working-tree.patch",
+          "sha256": "31ef01e5174d5242d604a0129032df1bdeec393642e01769fd2b5fb41ccfbd6c",
+          "bytes": 21641
+        },
+        "untrackedArchive": null,
+        "localCommitPatch": {
+          "path": "local-commits.patch",
+          "sha256": "d9532ba19e67536990c2b3578eb21a48142a85a7f14172dc2c8edd8976b7c01e",
+          "bytes": 1868537
+        },
+        "conflictStages": 0
+      }
+    },
+    {
+      "sourceWorktree": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-close-focus-tests",
+      "branch": "codex/p03-close-focus-tests",
+      "head": "ef1430174dfd35a9df441233988b8737d0401851",
+      "status": [
+        " M game/test/still-media-host.test.mjs"
+      ],
+      "localCommitCountOutsideOriginMain": 0,
+      "artifacts": {
+        "workingTreePatch": {
+          "path": "working-tree.patch",
+          "sha256": "478180851784e4dd510d6db8b74153e537ec29ed333c67a1ee5077a23d543551",
+          "bytes": 4348
+        },
+        "untrackedArchive": null,
+        "localCommitPatch": null,
+        "conflictStages": 0
+      }
+    },
+    {
+      "sourceWorktree": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-enemy-reading-next",
+      "branch": "codex/p03-enemy-reading-next",
+      "head": "2f1074a37ade9c731ea7be37a6e56e533b51d1ac",
+      "status": [
+        " M authoring/enemy-catalog/index.html",
+        " M authoring/enemy-catalog/workshop.mjs",
+        " M authoring/skills/xonix-runtime-maintainer/SKILL.md",
+        " M docs/enemy-catalog.md",
+        " M game/test/enemy-workshop-host.test.mjs",
+        " M game/ui/enemy-catalog-panel.css"
+      ],
+      "localCommitCountOutsideOriginMain": 0,
+      "artifacts": {
+        "workingTreePatch": {
+          "path": "working-tree.patch",
+          "sha256": "e4eedc818dc3b4843cf0cad08cafa350dbea8012f858bdc31238404d1e1dfff2",
+          "bytes": 23830
+        },
+        "untrackedArchive": null,
+        "localCommitPatch": null,
+        "conflictStages": 0
+      }
+    },
+    {
+      "sourceWorktree": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-enemy-workshop-return",
+      "branch": "codex/p03-enemy-workshop-return",
+      "head": "628e95daf403082768cdcf900a8ea1d1ef4629a2",
+      "status": [
+        " M authoring/enemy-catalog/index.html",
+        " M authoring/skills/xonix-runtime-maintainer/SKILL.md",
+        " M docs/enemy-catalog.md",
+        "?? game/test/enemy-workshop-host.test.mjs"
+      ],
+      "localCommitCountOutsideOriginMain": 0,
+      "artifacts": {
+        "workingTreePatch": {
+          "path": "working-tree.patch",
+          "sha256": "c6a8db573c5480c755d2e54c854d09db046f662588552381c6dd419f4c5f3dbd",
+          "bytes": 7854
+        },
+        "untrackedArchive": {
+          "path": "untracked.tar.gz",
+          "sha256": "9afa6a82014d759e9fa55f0d4112e51330a5bfdfcbd715bc5b39d1990953de36",
+          "bytes": 3934
+        },
+        "localCommitPatch": null,
+        "conflictStages": 0
+      }
+    },
+    {
+      "sourceWorktree": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-release-history-about",
+      "branch": "codex/p03-release-history-about",
+      "head": "628e95daf403082768cdcf900a8ea1d1ef4629a2",
+      "status": [
+        " M authoring/skills/xonix-runtime-maintainer/SKILL.md",
+        " M docs/field-kit-surfaces.md",
+        " M game/app.mjs",
+        " M game/index.html",
+        " M game/test/field-kit-flow.test.mjs",
+        " M game/test/site-release-links.test.mjs",
+        " M scripts/test-pages-current-entry.mjs",
+        " M site/about.html",
+        " M site/landing.css",
+        " M site/landing.mjs",
+        " M site/release-links.mjs",
+        "?? game/test/landing-release-history-host.test.mjs"
+      ],
+      "localCommitCountOutsideOriginMain": 0,
+      "artifacts": {
+        "workingTreePatch": {
+          "path": "working-tree.patch",
+          "sha256": "70227afcc28b00d891417176a2c4818c1b56cac59fc80bb1abad559b1d61329e",
+          "bytes": 26628
+        },
+        "untrackedArchive": {
+          "path": "untracked.tar.gz",
+          "sha256": "02f351414496f355ff2cb654677a797a0d2a1364a8a246220b0c3196b6a32b0d",
+          "bytes": 2905
+        },
+        "localCommitPatch": null,
+        "conflictStages": 0
+      }
+    },
+    {
+      "sourceWorktree": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-story-focus",
+      "branch": "codex/p03-story-focus",
+      "head": "1167291e27773ef076ed64b6e06ba7c0339423a0",
+      "status": [
+        " M game/test/victory-story-ui.test.mjs",
+        " M game/ui/victory-story.mjs"
+      ],
+      "localCommitCountOutsideOriginMain": 0,
+      "artifacts": {
+        "workingTreePatch": {
+          "path": "working-tree.patch",
+          "sha256": "2713877dee9394dfb29e631d54b8d9255d7e1c4f0ce1348aa3616ad24acaec53",
+          "bytes": 5069
+        },
+        "untrackedArchive": null,
+        "localCommitPatch": null,
+        "conflictStages": 0
+      }
+    },
+    {
+      "sourceWorktree": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-team-lobby-visible-focus",
+      "branch": "codex/p03-team-lobby-visible-focus",
+      "head": "628e95daf403082768cdcf900a8ea1d1ef4629a2",
+      "status": [
+        " M authoring/prompts/cross-mode-delivery.md",
+        " M authoring/skills/xonix-runtime-maintainer/SKILL.md",
+        " M docs/team-picture-host.md",
+        " M game/couch/coop-view.mjs",
+        " M game/couch/relay-rescue.css",
+        " M game/couch/relay-rescue.html",
+        " M game/couch/relay-rescue.mjs",
+        " M game/test/coop-won-terminal-host.test.mjs",
+        " M game/test/helpers/coop-host.mjs",
+        "?? docs/team-victory-picture.md",
+        "?? game/test/coop-lobby-focus.test.mjs",
+        "?? game/test/coop-lobby-preview.test.mjs",
+        "?? game/test/coop-victory-picture.test.mjs"
+      ],
+      "localCommitCountOutsideOriginMain": 0,
+      "artifacts": {
+        "workingTreePatch": {
+          "path": "working-tree.patch",
+          "sha256": "8954691e96693249504b2d9d5dad54d106f8dc57959de509e4f951b654d3ef98",
+          "bytes": 42543
+        },
+        "untrackedArchive": {
+          "path": "untracked.tar.gz",
+          "sha256": "b386c0b961f3c7c59deb780aee08023c48b6a6dc65fc7913811766f13b72146b",
+          "bytes": 12255
+        },
+        "localCommitPatch": null,
+        "conflictStages": 0
+      }
+    },
+    {
+      "sourceWorktree": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03m-title-modes",
+      "branch": "codex/p03m-title-modes",
+      "head": "abdca9a71f82f5d97101aae7bb3179574eee5ce4",
+      "status": [
+        "?? game/ui/mode-choice.css",
+        "?? game/ui/mode-choice.mjs"
+      ],
+      "localCommitCountOutsideOriginMain": 1,
+      "artifacts": {
+        "workingTreePatch": {
+          "path": "working-tree.patch",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        },
+        "untrackedArchive": {
+          "path": "untracked.tar.gz",
+          "sha256": "df7bbb3e8d5c13fe47f1cb9b910ed3f93effde236b1eabda743660459c77a9f3",
+          "bytes": 1458
+        },
+        "localCommitPatch": {
+          "path": "local-commits.patch",
+          "sha256": "b7381e0d9aa1c373d99ddb89191f247f91ac49abae0bcb04fb94828148f8230f",
+          "bytes": 1002210
+        },
+        "conflictStages": 0
+      }
+    },
+    {
+      "sourceWorktree": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-narrow-hud-next",
+      "branch": "codex/p05-narrow-hud-next",
+      "head": "ef1430174dfd35a9df441233988b8737d0401851",
+      "status": [
+        " M authoring/skills/xonix-runtime-maintainer/SKILL.md",
+        " M game/couch/couch.css",
+        " M game/ui/field-kit-compiled.css",
+        "?? docs/narrow-hud-layout.md"
+      ],
+      "localCommitCountOutsideOriginMain": 0,
+      "artifacts": {
+        "workingTreePatch": {
+          "path": "working-tree.patch",
+          "sha256": "b4304c443f197ce49a1b0a0c474b65933571a32ca98e1487c0016f13ba6360e2",
+          "bytes": 4969
+        },
+        "untrackedArchive": {
+          "path": "untracked.tar.gz",
+          "sha256": "9104ceb48ab3f35f1264a5b892d8baccbcca9150f3294fea16a7c9cababb2799",
+          "bytes": 2074
+        },
+        "localCommitPatch": null,
+        "conflictStages": 0
+      }
+    },
+    {
+      "sourceWorktree": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-narrow-hud-on-actor622",
+      "branch": "codex/p05-narrow-hud-on-actor622",
+      "head": "80efcc3ddda302a014c3409c248892f36b3a12a9",
+      "status": [
+        " M authoring/skills/xonix-runtime-maintainer/SKILL.md",
+        " M game/app.mjs",
+        " M game/couch/couch.css",
+        " M game/ui/field-kit-compiled.css",
+        "?? docs/narrow-hud-layout.md",
+        "?? game/test/hud-numeric-values.test.mjs",
+        "?? game/ui/hud-values.mjs"
+      ],
+      "localCommitCountOutsideOriginMain": 0,
+      "artifacts": {
+        "workingTreePatch": {
+          "path": "working-tree.patch",
+          "sha256": "56c453d512b561179303ad5cfbb60ab1797751a4c31031d74947370b26aeaf66",
+          "bytes": 6944
+        },
+        "untrackedArchive": {
+          "path": "untracked.tar.gz",
+          "sha256": "3fc7fccc2e7dd1a44dc185d1784c4c287c7facd03969921eef6c294aeaa902c8",
+          "bytes": 4664
+        },
+        "localCommitPatch": null,
+        "conflictStages": 0
+      }
+    },
+    {
+      "sourceWorktree": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-still-reload-status-next",
+      "branch": "codex/still-media-reload-status-next",
+      "head": "2f1074a37ade9c731ea7be37a6e56e533b51d1ac",
+      "status": [
+        " M docs/still-media-workshop.md",
+        " M game/test/still-media-host.test.mjs",
+        " M game/ui/still-media-host.mjs",
+        " M game/ui/still-media-panel.mjs"
+      ],
+      "localCommitCountOutsideOriginMain": 0,
+      "artifacts": {
+        "workingTreePatch": {
+          "path": "working-tree.patch",
+          "sha256": "95898723cc2607ff76e20828283d980dfd262c8b810dc7cb6cd51de2d196e520",
+          "bytes": 10310
+        },
+        "untrackedArchive": null,
+        "localCommitPatch": null,
+        "conflictStages": 0
+      }
+    },
+    {
+      "sourceWorktree": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint",
+      "branch": "codex/p08-versus-footprint",
+      "head": "d34e283819376eb43e4942287d9767b22a4f6487",
+      "status": [
+        " M authoring/skills/xonix-runtime-maintainer/SKILL.md",
+        " M docs/field-kit-surfaces.md",
+        " M game/couch/couch.css",
+        " M game/couch/couch.mjs",
+        " M game/test/helpers/couch-host.mjs",
+        "?? game/couch/board-footprint.mjs",
+        "?? game/test/board-footprint.test.mjs",
+        "?? game/test/couch-board-footprint-host.test.mjs"
+      ],
+      "localCommitCountOutsideOriginMain": 0,
+      "artifacts": {
+        "workingTreePatch": {
+          "path": "working-tree.patch",
+          "sha256": "a5d1c005001b65cb0505ec02e4f69da6cf9fa9dd00b6c581919e9653b09a64dc",
+          "bytes": 14258
+        },
+        "untrackedArchive": {
+          "path": "untracked.tar.gz",
+          "sha256": "ad95b2f527d08ce36af520b645b102c276b0a02ca1ff71b8c038706170f94afa",
+          "bytes": 7508
+        },
+        "localCommitPatch": null,
+        "conflictStages": 0
+      }
+    },
+    {
+      "sourceWorktree": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08a-team-earned-picture",
+      "branch": "codex/p08a-team-earned-picture",
+      "head": "628e95daf403082768cdcf900a8ea1d1ef4629a2",
+      "status": [
+        " M authoring/prompts/cross-mode-delivery.md",
+        " M authoring/skills/xonix-runtime-maintainer/SKILL.md",
+        " M docs/team-picture-host.md",
+        " M game/couch/coop-view.mjs",
+        " M game/couch/relay-rescue.css",
+        " M game/couch/relay-rescue.html",
+        " M game/couch/relay-rescue.mjs",
+        " M game/test/coop-won-terminal-host.test.mjs",
+        " M game/test/helpers/coop-host.mjs",
+        "?? docs/team-victory-picture.md",
+        "?? game/test/coop-lobby-preview.test.mjs",
+        "?? game/test/coop-victory-picture.test.mjs"
+      ],
+      "localCommitCountOutsideOriginMain": 0,
+      "artifacts": {
+        "workingTreePatch": {
+          "path": "working-tree.patch",
+          "sha256": "f747a5da4e26e65fd5200db4f28664f692ec2df4957f3776f0de13ccc39cd480",
+          "bytes": 29397
+        },
+        "untrackedArchive": {
+          "path": "untracked.tar.gz",
+          "sha256": "3cbc12f6d46980bbc0ca3a9954a65c468bd91d1baf8be1335b36da9506f310b6",
+          "bytes": 10193
+        },
+        "localCommitPatch": null,
+        "conflictStages": 0
+      }
+    },
+    {
+      "sourceWorktree": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/team-after-music",
+      "branch": "codex/team-after-music",
+      "head": "595fdadddf3cf5c4240c430b78d27772915df83d",
+      "status": [
+        "M  authoring/asset-studio/cross-mode-preview.mjs",
+        "M  authoring/asset-studio/helpers.mjs",
+        "M  authoring/asset-studio/index.html",
+        "A  authoring/asset-studio/inventory-history.mjs",
+        "A  authoring/asset-studio/operation-focus.mjs",
+        "M  authoring/asset-studio/operation.mjs",
+        "M  authoring/asset-studio/preview.mjs",
+        "M  authoring/asset-studio/studio.css",
+        "M  authoring/asset-studio/studio.mjs",
+        "M  authoring/asset-studio/team-preview-fixture.mjs",
+        "M  authoring/library/fpv-field-kit/production.rltheme",
+        "A  authoring/library/team-anchor-field-kit-v1/README.md",
+        "A  authoring/library/team-anchor-field-kit-v1/prepared/available.png",
+        "A  authoring/library/team-anchor-field-kit-v1/prepared/captured.png",
+        "A  authoring/library/team-anchor-field-kit-v1/prepared/manifest.json",
+        "A  authoring/library/team-anchor-field-kit-v1/review.html",
+        "A  authoring/library/team-anchor-field-kit-v1/source.mjs",
+        "A  authoring/library/team-feedback-field-kit-v1/README.md",
+        "A  authoring/library/team-feedback-field-kit-v1/prepared/manifest.json",
+        "A  authoring/library/team-feedback-field-kit-v1/prepared/recovery.png",
+        "A  authoring/library/team-feedback-field-kit-v1/prepared/rescue.png",
+        "A  authoring/library/team-feedback-field-kit-v1/prepared/slowed.png",
+        "A  authoring/library/team-feedback-field-kit-v1/prepared/support.png",
+        "A  authoring/library/team-feedback-field-kit-v1/review.html",
+        "A  authoring/library/team-feedback-field-kit-v1/source.mjs",
+        "A  docs/verification/team-public-retention/README.md",
+        "A  docs/verification/team-public-retention/public-retention-final-node20.tap.json",
+        "A  docs/verification/team-public-retention/public-retention-final-node22.tap.json",
+        "A  docs/verification/team-public-retention/public50-baseline-red.tap.json",
+        "A  docs/verification/team-public-retention/report.json",
+        "M  game/app.mjs",
+        "M  game/couch/coop-actor-presentation.mjs",
+        "A  game/couch/coop-anchor-presentation.mjs",
+        "A  game/couch/coop-cue-palette.mjs",
+        "A  game/couch/coop-effect-presentation.mjs",
+        "A  game/couch/coop-event-feedback.mjs",
+        "A  game/couch/coop-event-presentation.mjs",
+        "A  game/couch/coop-owned-presentation.mjs",
+        " M game/couch/coop-picture-bindings.mjs",
+        "A  game/couch/coop-presentation-display.mjs",
+        "A  game/couch/coop-retained-presentation.mjs",
+        "A  game/couch/coop-threat-presentation.mjs",
+        "M  game/couch/coop-view.mjs",
+        "M  game/couch/index.html",
+        "M  game/couch/relay-rescue.css",
+        "M  game/couch/relay-rescue.html",
+        "M  game/couch/relay-rescue.mjs",
+        "M  game/index.html",
+        "A  game/presentation/compiled/assets/0e1e3a81fb1517f8d9fbea61a139e38118e3dc89f0ce3f2148e17376fcf66b6c.png",
+        "A  game/presentation/compiled/assets/4cabfd9cbdb4b7d4a3389f466896f0ed134a73f8964a4e5c65578b10b9027fdf.png",
+        "A  game/presentation/compiled/assets/53dc09b7187b54af081994da3e27dfbb31ab229097fae735de1b2b52388c7408.png",
+        "A  game/presentation/compiled/assets/a2d58468a2d56988b6542bf44e74728ab53aa9d5f312d874b60a3de05f9a9def.png",
+        "A  game/presentation/compiled/assets/e4b2ae934b66821bf1ba9db755a23f11df2470d48ad47f549eb2a2aeebbd0353.png",
+        "A  game/presentation/compiled/assets/fad4a744dfdfb9bd328494e9ffff0440c6ed520695d89aa8ca9a5aee3c3ee9d6.png",
+        "M  game/presentation/compiled/manifest.json",
+        "A  game/presentation/compiled/runtime.29298673ed6cc49222b1d52d77efc4f8968abe42a29df5c29b2861bd8f9ce1ed.json",
+        "A  game/presentation/compiled/runtime.a0ad21cd1412fed07b73dbf0e1ec31ded747a8210a97ccc1efeb1e2c26b24584.json",
+        "M  game/presentation/compiled/runtime.json",
+        "M  game/presentation/compiled/studio.json",
+        "M  game/presentation/dependencies.mjs",
+        "M  game/presentation/host.mjs",
+        "A  game/presentation/manifest-path.mjs",
+        "M  game/presentation/model.mjs",
+        "M  game/presentation/studio-session.mjs",
+        "A  game/presentation/team-actor-slots.mjs",
+        "A  game/presentation/team-anchor-slots.mjs",
+        "A  game/presentation/team-effect-slots.mjs",
+        "A  game/presentation/team-event-slots.mjs",
+        "A  game/presentation/team-threat-slots.mjs",
+        "M  game/presentation/visual-theme-catalogue.mjs",
+        "M  game/replay-theater/app.mjs",
+        "M  game/test/about-navigation-host.test.mjs",
+        "A  game/test/asset-studio-cold-return-host.test.mjs",
+        "M  game/test/asset-studio-cross-mode.test.mjs",
+        "A  game/test/asset-studio-help-links.test.mjs",
+        "M  game/test/asset-studio-host-loading.test.mjs",
+        "A  game/test/asset-studio-operation-focus.test.mjs",
+        "A  game/test/asset-studio-team-authoring-host.test.mjs",
+        "M  game/test/asset-studio-team-fixture.test.mjs",
+        "M  game/test/coop-actor-layout.test.mjs",
+        "M  game/test/coop-actor-presentation.test.mjs",
+        "A  game/test/coop-crawling-prime.test.mjs",
+        "A  game/test/coop-cue-palette.test.mjs",
+        "M  game/test/coop-custom-artwork-host.test.mjs",
+        "A  game/test/coop-event-feedback.test.mjs",
+        "A  game/test/coop-event-host.test.mjs",
+        "M  game/test/coop-host.test.mjs",
+        "M  game/test/coop-import-artwork-host.test.mjs",
+        "M  game/test/coop-import-next.test.mjs",
+        "A  game/test/coop-owned-presentation.test.mjs",
+        " M game/test/coop-picture-bindings.test.mjs",
+        "M  game/test/coop-picture-host.test.mjs",
+        "A  game/test/coop-presentation-display.test.mjs",
+        "A  game/test/coop-results-resize.test.mjs",
+        "A  game/test/coop-terminal-guidance.test.mjs",
+        "M  game/test/coop-view-presentation.test.mjs",
+        "A  game/test/cross-mode-art-inventory.test.mjs",
+        "A  game/test/field-kit-team-production.test.mjs",
+        "A  game/test/fixtures/production-team-followup-source-fpv40.json",
+        "M  game/test/helpers/coop-host.mjs",
+        "M  game/test/helpers/coop-import-win.mjs",
+        "M  game/test/helpers/coop-presentation-fixture.mjs",
+        "M  game/test/helpers/coop-win.mjs",
+        "M  game/test/helpers/solo-dom.mjs",
+        "M  game/test/hud-status-cues.test.mjs",
+        "A  game/test/look-preparation.test.mjs",
+        "A  game/test/loss-difficulty-host.test.mjs",
+        "A  game/test/mission-selection-status-host.test.mjs",
+        "A  game/test/presentation-archive-formatting.test.mjs",
+        "M  game/test/presentation-dependencies.test.mjs",
+        "M  game/test/presentation-host.test.mjs",
+        "A  game/test/presentation-output-preparation.test.mjs",
+        "M  game/test/presentation-production-history.test.mjs",
+        "A  game/test/presentation-production-slots.test.mjs",
+        "A  game/test/presentation-retained-publishing.test.mjs",
+        "M  game/test/replay-theater-navigation.test.mjs",
+        "A  game/test/required-look-host.test.mjs",
+        "M  game/test/shared-settings-solo.test.mjs",
+        "M  game/test/solo-result-continuation-host.test.mjs",
+        "A  game/test/studio-inventory-history.test.mjs",
+        "A  game/test/studio-transfer-history.test.mjs",
+        "A  game/test/team-actor-slots.test.mjs",
+        "A  game/test/team-anchor-slots.test.mjs",
+        "A  game/test/team-effect-slots.test.mjs",
+        "A  game/test/team-event-slots.test.mjs",
+        "A  game/test/team-threat-slots.test.mjs",
+        "A  game/test/team-visual-theme-identity-compatibility.test.mjs",
+        "M  game/test/terminal-navigation.test.mjs",
+        "M  game/test/touchscreen-controller-host.test.mjs",
+        "M  game/test/visual-theme-lease.test.mjs",
+        "M  game/ui/field-kit-surfaces.css",
+        "M  game/ui/game-shell.mjs",
+        "A  game/ui/look-preparation.mjs",
+        "M  game/ui/render.mjs",
+        "M  scripts/check-field-kit-readiness.mjs",
+        "A  scripts/field-kit-team-assets.mjs",
+        "M  scripts/game-cli.mjs",
+        "A  scripts/prepare-presentation-output.mjs",
+        "M  scripts/presentation-production-history.mjs",
+        "M  scripts/produce-field-kit-theme.mjs",
+        "A  scripts/produce-team-anchor-art.mjs",
+        "A  scripts/produce-team-feedback-art.mjs",
+        "A  scripts/retained-team-presentation.mjs",
+        "A  scripts/reviewed-team-art.mjs",
+        "M  scripts/test-field-kit-recipe-sources.mjs",
+        "A  scripts/test-retained-team-presentation.mjs",
+        "A  scripts/test-team-anchor-art.mjs",
+        "A  scripts/test-team-feedback-art.mjs",
+        "M  scripts/write-presentation.mjs"
+      ],
+      "localCommitCountOutsideOriginMain": 0,
+      "artifacts": {
+        "workingTreePatch": {
+          "path": "working-tree.patch",
+          "sha256": "ada7c89b55af1e6e6f99348cf418e7ebaab9018f00bd3b4d395da5c873aa8ab0",
+          "bytes": 3198536
+        },
+        "untrackedArchive": null,
+        "localCommitPatch": null,
+        "conflictStages": 0
+      }
+    }
+  ]
+}
