@@ -226,8 +226,14 @@ test('normal community mission library launches Sky Watch and holds the finished
     );
   }
   assert.equal(page.rendered.run.status, 'won');
+  assert.equal(
+    page.$('game-overlay').hidden,
+    true,
+    'The completed Sky Watch board takes over before its video reward.',
+  );
   assert.equal(page.doc.querySelector('.earned-video-dialog'), null);
   for (let i = 0; i < 18; i++) page.frame(100);
+  assert.equal(page.doc.body.dataset.winPicture, 'revealing');
   assert.equal(
     page.doc.querySelector('.earned-video-dialog'),
     null,
@@ -239,9 +245,10 @@ test('normal community mission library launches Sky Watch and holds the finished
   for (let i = 0; i < 50; i++) page.frame(100);
   assert.equal(
     page.$('game-overlay').hidden,
-    true,
-    'Automatic continuation waits while the earned video is open',
+    false,
+    'The full-screen video leaves its prepared result underneath and pauses automatic continuation',
   );
+  assert.equal(page.rendered.run.status, 'won');
   dialog.querySelector('button').click();
   assert.equal(page.doc.querySelector('.earned-video-dialog'), null);
   for (let i = 0; i < 15 && page.$('game-overlay').hidden; i++) page.frame(100);
