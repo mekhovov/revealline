@@ -54,3 +54,7 @@ The user explicitly waived unavailable Iris Xe/Windows, M1 Safari, physical cont
 The Community lifecycle check was local. Live production account/publication, PostgreSQL deployment and real-network moderation were not exercised. Publication remains a separate delivery action. No live Community content was created.
 
 Performance results collected while recording, opening diagnostic UI or running concurrent build work are invalid for acceptance. Existing renderer/lifecycle capacity evidence remains separate; this delivery does not infer new target-hardware acceptance from it.
+
+## Final CI follow-up
+
+The foundation PR's broader Company candidate job exposed four pre-existing edition-appearance test failures: tests clicked SIM while the secondary mode menu was collapsed. Parent commit **93d12f993** corrects only the test interaction: open the actual menu, expand More when necessary and assert visibility. All existing appearance, preference, cancellation and failure assertions remain. The corrected real test file passes **4/4** (`edition-appearance-tests.tap`). The correction was merged into the delivery branch. All recorded runtime source hashes still match tested build `0b2000fff`; later changes are tests and evidence only. Final GitHub checks are rerunning, not counted as passed.
