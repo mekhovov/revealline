@@ -4038,3 +4038,34 @@ pack bytes and does not claim new device, FPS, offline or unit coverage.
 Next: finish the public Library journey, then current-main integrated
 performance/reliability verification. Preserve the approved order of content
 work and defer Canals until the shared quality/delivery path is qualified.
+
+
+## 13 October — Public Library delivery verified
+
+#1155 merged as `e5dce34d35b0f7bca81c95f54e27fba9b8e6cacd`. Its Pages run was
+superseded by successful run **38460556864** at main descendant
+`6514e5c3ab8171bc75af287e08262977db88e2b3`. The public `main-deployment.json`
+reported that exact source and `main-6514e5c3ab81`; the actual public SIM was
+reloaded and launched after that observation. Library delivery is now verified
+live, rather than merely merged.
+
+Actual Library downloads of Reservoir r16, Festival r5 and Harbor r4 persist
+across reload, exposing all 24 courses. The separate Harbor archive imported
+16/16 verified records through ordinary file selection. Terminal cart escort
+then completed visible native replay in both Self-level and Acro, with no
+captured browser warnings/errors. The shared chooser exposes Watch example
+under SIM tools. Demonstration-to-practice, Pause and a settings mode change
+were checked; the latter returned unarmed at zero elapsed time and throttle.
+See [exact identities and limits](evidence/fpv-public-library-20261013/receipt.json).
+
+This increment records verification only. No physics, runtime, content revision,
+package limits or scoring changed. Concurrent Overflight edits and untracked
+files in the main checkout remain untouched; this report uses a separate sparse
+checkout based on main6514. No full package build was attempted near the disk
+headroom floor (roughly 3.2 GiB available).
+
+Next priority: a current-main admitted integrated Creator/offline journey and
+longer representative performance windows, preserving historical evidence and
+reporting exact tested identities. Qualify the shared quality standard before
+Canals production; D6 remains the final coverage/release phase. This public UI
+check does not claim new offline recovery, hardware FPS or physical-radio results.
