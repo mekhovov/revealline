@@ -4069,3 +4069,38 @@ longer representative performance windows, preserving historical evidence and
 reporting exact tested identities. Qualify the shared quality standard before
 Canals production; D6 remains the final coverage/release phase. This public UI
 check does not claim new offline recovery, hardware FPS or physical-radio results.
+
+
+## 13 October — Current-main admission, Creator and stopped-origin flight
+
+Continue from `codex/fpv-current-main-qualification`, based on main
+`45e943bd40831e21fa9b55cb712725e49a901e13`. Existing workflow
+[38467392436](https://github.com/mekhovov/revealline/actions/runs/38467392436) passed
+all-three/two-build optional admission and the selected fpv-learning company
+candidate. All 117 World source inputs match both this main and the observed
+public deployment6514; all 122 admitted members passed exact extraction checks.
+The candidate review gates remain pending and publicEligible remains false.
+
+Actual public Creator verification covered a non-first Reservoir course, Acro-only
+position edit, Undo/Redo, mode/course switching and native editable export. Native
+parser inspection preserved seven other courses, Self-level, source bindings and
+all asset bytes. The four changed coordinates exactly describe the intended
+100 mm Acro edit. The draft was restored without replacing the installed pack.
+
+The exact admitted player then downloaded Reservoir through the real Library,
+prepared offline files, reloaded with its dedicated origin server stopped,
+reopened all eight courses and ran course02 for 19 seconds after deliberate
+arming. Pause hid guidance; captured browser warnings/errors were empty. This
+is a bounded stopped-origin check, not complete offline recovery or performance
+qualification. [Receipt and screenshots](evidence/fpv-current-main-qualification-20261013/README.md).
+
+Authorized safe cleanup restored about 5 GiB free. Old generated duplicate paths
+remain byte-identical via independent APFS clones; unique files, source, Git,
+unfinished work, browser databases and recordings remain intact. Local per-file
+audits are retained outside the repository. The stable 3 GiB build floor is unchanged.
+
+Next: finish the cohesive current-candidate Creator/reimport/rollback/records
+journey and longer representative performance windows. Keep the offline result
+visible beside its Settings action. Qualify the common quality standard before
+Canals; D6 stays last. Do not promote historical counts, pending hardware/player
+acceptance or this neutral-input run into a complete release claim.
