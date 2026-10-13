@@ -288,7 +288,7 @@ test('later prey never moves into a snake and eroders only open authored wall ce
 });
 
 test('v4 appends 48 distinct authored encounters while historical versions retain 96 entries', () => {
-  assert.equal(CLASSIC_SNAKE_LEVELS.length, 192);
+  assert.equal(CLASSIC_SNAKE_LEVELS.length, 240);
   assert.equal(CLASSIC_SNAKE_LEVELS.filter((row) => /v[123]$/.test(row.level.version)).length, 96);
   assert.deepEqual(
     CLASSIC_SNAKE_V4_LEVELS.map((row) => row.chapterId).reduce((counts, id) => {
