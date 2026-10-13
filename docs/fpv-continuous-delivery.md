@@ -4138,3 +4138,9 @@ package checks, 11 navigation guard cases, scoped lint and browser layouts pass.
 Full admission stays with CI while local free space is below 3 GiB. Next content
 work is candidate selection, archive/license provenance, preparation, collision,
 course authoring and qualification, without changing existing package limits.
+
+Published as [PR #1169](https://github.com/mekhovov/revealline/pull/1169), implementation
+head `a0b012f564b9c1c0094022e6f2f72d86d51c9242`. Cloud qualification was dispatched
+in [run 38477507774](https://github.com/mekhovov/revealline/actions/runs/38477507774);
+PR-triggered run 38477509680 also started. This checkpoint is docs-only; protected
+checks and publication remain pending. No live availability claim.
