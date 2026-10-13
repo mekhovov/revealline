@@ -215,7 +215,7 @@ async function replace(file, begin, end, body) {
 }
 await replace('optional-practice/civilian-fpv/flight-fullscreen.mjs', jsBegin, jsEnd, generated);
 const css = [
-  await read('game/ui/mode-play-shell.css'),
+  (await read('game/ui/mode-play-shell.css')).replace(/^@import[^;]+;\s*/gm, ''),
   await read('game/ui/pause-menu.css'),
   await read('game/ui/mode-settings-view.css'),
   await read('game/ui/global-settings-view.css'),

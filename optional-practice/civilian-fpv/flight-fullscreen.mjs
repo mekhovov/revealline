@@ -8185,7 +8185,7 @@ export const readSimRadioAudio=sharedGlobalSettings.readSimRadioAudio;
 export const SIM_RADIO_AUDIO_KEY=sharedGlobalSettings.SIM_RADIO_AUDIO_KEY;
 export const attachSimMenuAudioSettings=sharedGlobalSettings.attachSimMenuAudioSettings;
 export const readSimMenuAudio=sharedGlobalSettings.readSimMenuAudio;
-// Canonical source sha256: f57b6147875e5ad9db9477248827813a1044e4492022a091b771626f2490fc96
+// Canonical source sha256: 8c650e1e5393d78ea5a698f16a3f6edbf04140f9aa741381c2abfabf05ebb6b8
 const sharedModeShell=(()=>{
 // Dependency-free presentation shared with bundled simulator builds.
 const GAME_MODE_ORDER=Object.freeze([
@@ -9152,7 +9152,13 @@ utilities.append(
 button('sound',()=>actions.toggleSound?.()),
 button('fullscreen',()=>actions.fullscreen?.()),
 );
-home.append(edition,modes,mission,menu,utilities);
+const layout=el('div','landing-layout');
+const identity=el('div','landing-identity');
+const commands=el('div','landing-commands');
+identity.append(dialogs.home.querySelector('.mode-play-dialog-head'),edition,modes);
+commands.append(mission,menu,utilities);
+layout.append(identity,commands);
+home.append(layout);
 const landingNavigation=wireLandingMenuNavigation({
 modesRoot:modes,
 scopeRoot:dialogs.home,
@@ -9247,7 +9253,11 @@ const control=buttons[name];
 if(services.attachFullscreen){
 control.setAttribute('data-fullscreen-label','');
 cleanups.push(services.attachFullscreen(control,doc,{escapeRoot}));
-}else control.hidden= !actions.fullscreen;
+}else
+control.hidden=
+!actions.fullscreen||
+!doc.fullscreenEnabled||
+typeof doc.documentElement?.requestFullscreen!=='function';
 }
 buttons.sound.hidden= !actions.toggleSound;
 function resumable(){

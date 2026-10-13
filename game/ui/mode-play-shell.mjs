@@ -393,7 +393,13 @@ export function mountModePlayShell({
     button('sound', () => actions.toggleSound?.()),
     button('fullscreen', () => actions.fullscreen?.()),
   );
-  home.append(edition, modes, mission, menu, utilities);
+  const layout = el('div', 'landing-layout');
+  const identity = el('div', 'landing-identity');
+  const commands = el('div', 'landing-commands');
+  identity.append(dialogs.home.querySelector('.mode-play-dialog-head'), edition, modes);
+  commands.append(mission, menu, utilities);
+  layout.append(identity, commands);
+  home.append(layout);
   const landingNavigation = wireLandingMenuNavigation({
     modesRoot: modes,
     scopeRoot: dialogs.home,
@@ -478,7 +484,11 @@ export function mountModePlayShell({
     if (services.attachFullscreen) {
       control.setAttribute('data-fullscreen-label', '');
       cleanups.push(services.attachFullscreen(control, doc, { escapeRoot }));
-    } else control.hidden = !actions.fullscreen;
+    } else
+      control.hidden =
+        !actions.fullscreen ||
+        !doc.fullscreenEnabled ||
+        typeof doc.documentElement?.requestFullscreen !== 'function';
   }
   buttons.sound.hidden = !actions.toggleSound;
   function resumable() {

@@ -4,6 +4,20 @@ import { createMissionLibrarySessionState } from '../mission-library/handoff.mjs
 import { overflightMissionSource, paintOverflightMission } from './mission-library.mjs';
 import { createOverflightOperationCards, paintOverflightRole } from './operation-view.mjs';
 import { DESTRUCTION_CUES, HUMAN_REACTION_CUES } from '../ui/destruction-audio.mjs';
+import { mountModeSettings } from '../ui/mode-settings-view.mjs';
+import { mountGlobalSettings } from '../ui/global-settings-view.mjs';
+import { mountGlobalSettingsTools } from '../ui/global-settings-tools.mjs';
+import {
+  attachSettingsPanels,
+  settingsPanelBack,
+  settingsTabOwnsKey,
+} from '../ui/settings-panels.mjs';
+import { attachMenuAudioSettings } from '../ui/menu-audio.mjs';
+import {
+  getMenuAnimation,
+  setMenuAnimation,
+  subscribeMenuAnimation,
+} from '../ui/menu-animation-preferences.mjs';
 import { mountModePlayShell } from '../ui/mode-play-shell.mjs';
 import { attachModalNavigation } from '../ui/modal-navigation.mjs';
 import { attachFullscreen } from '../ui/fullscreen.mjs';
@@ -198,6 +212,9 @@ let run = null,
   shell = null,
   modeChoices = null,
   offlinePanel = null,
+  settingsView = null,
+  globalSettings = null,
+  settingsTools = null,
   touchInput = null,
   navigator = null,
   controller = null,
@@ -318,6 +335,7 @@ function releaseInput() {
 }
 function activeModal() {
   return (
+    settingsTools?.root() ??
     offlinePanel?.root() ??
     modeChoices?.simulatorRoot() ??
     music?.root() ??
@@ -1128,6 +1146,8 @@ function onFrame(now) {
 }
 function refreshCopy() {
   touchInput?.refreshCopy();
+  settingsView?.refresh(getLocale());
+  globalSettings?.refresh(getLocale());
   doc.documentElement.lang = getLocale();
   doc.title = `${text('title')} · FPV / LINE`;
   for (const node of doc.querySelectorAll('[data-copy]'))
@@ -1200,7 +1220,7 @@ shell = mountModePlayShell({
         ['modes', $('overflight-mode-links')],
       ]),
   ),
-  services: { attachModalNavigation, attachFullscreen, setMenuIcon },
+  services: { attachModalNavigation, attachFullscreen, setMenuIcon, settingsPanelBack },
   actions: {
     open: (surface) => {
       if (surface === 'missions') {
@@ -1234,12 +1254,14 @@ shell = mountModePlayShell({
   },
 });
 const offlineSettings = el('section', '', 'overflight-offline-settings');
+const touchSettings = el('section');
+$('overflight-settings').append(touchSettings);
 touchInput = createOverflightTouch({
   document: doc,
   window: win,
   arena: $('render-host'),
   mount: $('overflight-game'),
-  settingsMount: $('overflight-settings'),
+  settingsMount: touchSettings,
   active: () =>
     !retired &&
     !preparing &&
@@ -1569,11 +1591,16 @@ async function refreshMissions() {
 navigator = attachControllerNavigation({
   document: doc,
   keyboard: true,
+  ownsKeyboardEvent: (event) => settingsTabOwnsKey(event, shell?.topDialog()),
   getScope: () => (activeModal() ? 'ui' : 'flight'),
-  getRoot: () => (offlinePanel?.frameFocused() ? null : (activeModal() ?? $('overflight-shell'))),
+  getRoot: () =>
+    settingsTools?.frameFocused() || offlinePanel?.frameFocused()
+      ? null
+      : (activeModal() ?? $('overflight-shell')),
   getDefaultFocus: () => activeModal()?.querySelector('button:not(:disabled),a[href]'),
   getControlLabels: () => controller?.labels() ?? { confirm: '', back: '', directions: '' },
   onBack: () => {
+    if (settingsTools?.back()) return;
     if (offlinePanel?.root()) offlinePanel.close();
     else if (modeChoices?.simulatorRoot()) modeChoices.closeSimulator();
     else if (music?.root()) music.back();
@@ -1581,6 +1608,7 @@ navigator = attachControllerNavigation({
     else if (!$('upgrade-dialog').open) shell.back();
   },
   onMenu: () => {
+    if (settingsTools?.back()) return;
     if (offlinePanel?.root()) offlinePanel.close();
     else if (modeChoices?.simulatorRoot()) modeChoices.closeSimulator();
     else if (music?.root()) music.back();
@@ -1599,6 +1627,95 @@ const encounterDisplay = attachEncounterDisplayControls({
   window: win,
   prefix: 'overflight-',
 });
+// Reparent the existing host controls so their preferences and listeners stay intact.
+const settingsRoot = shell.elements.dialogs.settings;
+const field = (id) => $(id).closest('label');
+const audioCues = el('section');
+cleanup.push(
+  attachMenuAudioSettings(sound, doc, {
+    target: audioCues,
+    window: win,
+    getStorage: () => win.localStorage,
+    idPrefix: 'overflight-global',
+  }),
+);
+settingsView = mountModeSettings({
+  root: settingsRoot,
+  content: shell.elements.content.settings,
+  prefix: 'overflight-menu-settings',
+  locale: getLocale(),
+  setMenuIcon,
+  attachPanels: attachSettingsPanels,
+  groups: {
+    gameplay: [
+      operationCards.root,
+      $('open-flight-deck'),
+      field('difficulty'),
+      $('difficulty-help'),
+      field('airframes'),
+      $('overflight-settings').querySelector('[data-copy="nextSortie"]'),
+    ],
+    controls: [touchSettings],
+    audio: [
+      field('muted'),
+      field('volume'),
+      $('overflight-music'),
+      $('overflight-commentator-settings'),
+      $('overflight-settings').querySelector('.defeat-sound-controls'),
+      audioCues,
+    ],
+    display: [field('language'), $('overflight-appearance'), $('overflight-destruction')],
+    accessibility: [
+      field('text-face'),
+      field('text-size'),
+      field('reduced-effects'),
+      field('slow-resume'),
+    ],
+    data: [el('section')],
+    content: [offlineSettings],
+    extras: [$('overflight-studios'), shell.elements.buttons.help, shell.elements.buttons.workshop],
+  },
+});
+globalSettings = mountGlobalSettings({
+  document: doc,
+  root: settingsRoot,
+  panels: settingsView.panels,
+  prefix: 'overflight-global',
+  locale: getLocale(),
+  controls: {
+    language: field('language'),
+    appearance: $('overflight-appearance'),
+    textFace: field('text-face'),
+    textSize: field('text-size'),
+    reducedEffects: field('reduced-effects'),
+    masterMuted: field('muted'),
+    masterVolume: field('volume'),
+    touchPresentation: touchSettings,
+    audioCues,
+    musicLibrary: $('overflight-music'),
+    offlineTools: offlineSettings,
+  },
+  bindings: {
+    menuAnimation: {
+      get: () => getMenuAnimation(win),
+      set: (value) => setMenuAnimation(value, win),
+      subscribe: (listener) => subscribeMenuAnimation(listener, win),
+    },
+  },
+});
+settingsTools = mountGlobalSettingsTools({
+  document: doc,
+  window: win,
+  settingsRoot,
+  panels: settingsView.panels,
+  prefix: 'overflight-global-tools',
+  existing: { offlineTools: offlineSettings },
+  offlinePanel,
+  coreURL: new URL('../', import.meta.url),
+  onOpen: () => pause({ menu: false }),
+});
+globalSettings.update({ controls: settingsTools.controls });
+$('overflight-settings').hidden = true;
 cleanup.push(onLocaleChange(refreshCopy));
 cleanup.push(
   display.subscribe((value) => {
@@ -1867,6 +1984,9 @@ async function dispose() {
   missionRegistry?.dispose();
   offlinePanel?.dispose();
   modeChoices?.dispose();
+  await settingsTools?.dispose();
+  globalSettings?.destroy();
+  settingsView?.destroy();
   shell.dispose();
   themeControls.dispose();
   encounterDisplay.dispose();
