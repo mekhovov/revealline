@@ -1,4 +1,8 @@
 import {
+  CLASSIC_SNAKE_OPERATION_CHAPTERS_B,
+  CLASSIC_SNAKE_OPERATION_LEVELS_B,
+} from './classic-catalogue-operations-b.mjs';
+import {
   CLASSIC_SNAKE_OPERATION_CHAPTERS_A,
   CLASSIC_SNAKE_OPERATION_LEVELS_A,
 } from './classic-catalogue-operations-a.mjs';
@@ -788,6 +792,7 @@ export const CLASSIC_SNAKE_CHAPTERS = freeze([
   ...CLASSIC_SNAKE_V3_CHAPTERS,
   ...CLASSIC_SNAKE_V4_CHAPTERS,
   ...CLASSIC_SNAKE_OPERATION_CHAPTERS_A,
+  ...CLASSIC_SNAKE_OPERATION_CHAPTERS_B,
 ]);
 export const CLASSIC_SNAKE_LEVELS = freeze([
   ...FOUNDATION_LEVELS,
@@ -795,8 +800,18 @@ export const CLASSIC_SNAKE_LEVELS = freeze([
   ...CLASSIC_SNAKE_V3_LEVELS,
   ...CLASSIC_SNAKE_V4_LEVELS,
   ...CLASSIC_SNAKE_OPERATION_LEVELS_A,
+  ...CLASSIC_SNAKE_OPERATION_LEVELS_B,
 ]);
 export const CLASSIC_SNAKE_CAMPAIGNS = freeze([
+  {
+    id: 'classic-continuous-operations-b-v1',
+    title: bilingual('Operation Frontiers', 'Операційні рубежі'),
+    description: bilingual(
+      'Six chapters of signal smuggling, changing terrain, refuge interceptions, supplies and shared operations.',
+      'Шість розділів із перевезенням під перешкодами, змінним рельєфом, перехопленнями укриттів, припасами та спільними операціями.',
+    ),
+    chapterIds: CLASSIC_SNAKE_OPERATION_CHAPTERS_B.map((chapter) => chapter.id),
+  },
   {
     id: 'classic-continuous-operations-a-v1',
     title: bilingual('Continuous Operations', 'Безперервні операції'),
