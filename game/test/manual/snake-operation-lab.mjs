@@ -1,3 +1,4 @@
+import { CLASSIC_SNAKE_OPERATION_LEVELS_B } from '../../snake/classic-catalogue-operations-b.mjs';
 import { CLASSIC_SNAKE_OPERATION_LEVELS_A } from '../../snake/classic-catalogue-operations-a.mjs';
 import { classicOperationStatus } from '../../snake/classic-operation-status.mjs';
 import { OPERATION_PROTOTYPES } from './snake-operation-recipes.mjs';
@@ -24,7 +25,7 @@ const locale = () => $('language').value;
 const copy = (en, uk) => (locale() === 'uk' ? uk : en);
 const labEntries = [
   ...OPERATION_PROTOTYPES,
-  ...CLASSIC_SNAKE_OPERATION_LEVELS_A.map((row) => ({
+  ...[...CLASSIC_SNAKE_OPERATION_LEVELS_A, ...CLASSIC_SNAKE_OPERATION_LEVELS_B].map((row) => ({
     ...row,
     hint: row.description,
     scene: row.composition.scene,
@@ -80,6 +81,7 @@ function mount() {
     mode: $('mode').value,
     policy: 'mission',
     seed: 17,
+    ...(entry().level.targets.required.some((p) => p.signalProfile) ? { hazardSeed: 17 } : {}),
   });
   $('boards').replaceChildren();
   cards = [];
@@ -121,8 +123,8 @@ function translate() {
     setupLabel: ['Lab setup', 'Налаштування'],
     title: ['Continuous operations', 'Безперервні операції'],
     notice: [
-      'Eight mechanic prototypes and 48 campaign drafts. No progress, records or preferences are saved.',
-      'Вісім прототипів механік і 48 чернеток місій. Прогрес, рекорди та налаштування не зберігаються.',
+      'Eight mechanic prototypes and 96 campaign missions. No progress, records or preferences are saved.',
+      'Вісім прототипів механік і 96 місій кампаній. Прогрес, рекорди та налаштування не зберігаються.',
     ],
     missionLabel: ['Mission', 'Місія'],
     modeLabel: ['Mode', 'Режим'],
@@ -215,7 +217,9 @@ $('proof').addEventListener('click', async () => {
     const data = await (
       await fetch(
         draft
-          ? '../fixtures/classic-snake-operations-a-proofs.json'
+          ? CLASSIC_SNAKE_OPERATION_LEVELS_B.some((e) => e.id === entry().id)
+            ? '../fixtures/classic-snake-operations-b-proofs.json'
+            : '../fixtures/classic-snake-operations-a-proofs.json'
           : '../fixtures/classic-snake-v5-prototype-proofs.json',
       )
     ).json();
