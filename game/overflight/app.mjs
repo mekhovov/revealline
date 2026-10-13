@@ -397,9 +397,13 @@ function pause({ menu = true } = {}) {
   if (menu) shell?.open('home');
   else if (run.phase === 'paused') showStatus(text('paused'));
 }
-function start() {
+function start({ retainRun = false } = {}) {
   if (!run || !renderer || preparing || runtimeFailed || contextGuard.blocked() || retired) return;
-  if (run.phase === 'ready' && preparationIdentity?.characterId !== options.characterId) {
+  if (
+    !retainRun &&
+    run.phase === 'ready' &&
+    preparationIdentity?.characterId !== options.characterId
+  ) {
     void prepare({ launch: true }).catch(() => {});
     return;
   }
@@ -407,9 +411,10 @@ function start() {
   const freshLaunch = run.phase === 'ready';
   if (run.phase === 'ready') {
     if (
-      run.airframes !== options.airframes ||
-      run.slowResume !== options.slowResume ||
-      run.flight.id !== overflightFlightProfile(options.characterId, options.flightTraits).id
+      !retainRun &&
+      (run.airframes !== options.airframes ||
+        run.slowResume !== options.slowResume ||
+        run.flight.id !== overflightFlightProfile(options.characterId, options.flightTraits).id)
     ) {
       run = mode.createRun(compiled, { seed, ...options, fixture });
       run.appearance = preparationIdentity;
@@ -1369,7 +1374,8 @@ const disposeModeActions = mode.installActions?.({
     resultRun = null;
     releaseInput();
     shell.enterPlay();
-    start();
+    review.reset();
+    start({ retainRun: true });
   },
   canAct: () =>
     run?.phase === 'playing' && !activeModal() && !contextGuard.blocked() && !doc.hidden,
