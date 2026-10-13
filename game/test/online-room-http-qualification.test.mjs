@@ -2,12 +2,13 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { fixture } from './helpers/room-service-http-fixture.mjs';
 import { CLASSIC_SNAKE_LEVELS } from '../snake/classic-catalogue.mjs';
+import { CLASSIC_SNAKE_PURSUIT_V1_ARCHIVED_LEVELS } from '../snake/classic-catalogue-pursuit-v1-archive.mjs';
 import { createRoomClientLifecycle } from '../online/room-client-lifecycle.mjs';
 import { createRoomEventCursor } from '../online/room-events.mjs';
 import { restoreTrustedRoomSnapshot, verifyAuthoritativeRoomResult } from '../online/room-core.mjs';
 import { pursuitPilotCases } from '../../scripts/qualify-pursuit-pilots.mjs';
 
-// The same legal seed-17 routes qualified by classic-snake-pilot-completion.
+// The same historical revision-1 seed-17 routes qualified by classic-snake-pilot-completion.
 // Every move below travels through real HTTP and the authoritative native
 // service. No simulation object, target, clock budget or objective is patched.
 const routes = {
@@ -138,9 +139,13 @@ for (const mode of ['versus', 'team']) {
     `real HTTP ${mode}: duplicate/lost/late delivery preserves native completion and once-only catch events`,
     { timeout: 30000 },
     async (t) => {
-      const entry = CLASSIC_SNAKE_LEVELS.find(
+      const current = CLASSIC_SNAKE_LEVELS.find(
         (level) => level.id === 'classic-living-cable-cutoff',
       );
+      const entry = CLASSIC_SNAKE_PURSUIT_V1_ARCHIVED_LEVELS.find(
+        (level) => level.id === current.id,
+      );
+      assert.equal(current.level.revision, '2');
       assert.ok(entry);
       const h = await fixture(t, {
         entry: { ...entry, family: 'snake', mode },
