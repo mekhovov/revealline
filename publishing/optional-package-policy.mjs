@@ -605,6 +605,8 @@ export const OPTIONAL_PACKAGE_POLICIES = Object.freeze(
         sharedFiles: Object.freeze([
           ...new Set([
             ...policy.sharedFiles,
+            'game/access-gate.mjs',
+            'game/access-gate.css',
             // The legacy civilian-flight archive also hosts the shared SIM
             // presentation. Its theme selector now imports the retained
             // industrial environment catalogue, so that closure must be
@@ -656,6 +658,8 @@ export function optionalRuntimePaths(policy, { launcher = false } = {}) {
           'worker.js',
           'icons/icon-192.png',
           'icons/icon-512.png',
+          'access-gate.mjs',
+          'access-gate.css',
         ].map((name) => 'launcher/' + name)
       : []),
     ...policy.localFiles.map((name) => policy.root + name),

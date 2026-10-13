@@ -1,19 +1,63 @@
 <!doctype html>
-<html lang="en" data-build-version="__REVEALLINE_VERSION__" data-tool-state="loading">
+<html
+  lang="en"
+  data-build-version="__REVEALLINE_VERSION__"
+  data-tool-state="loading"
+  data-access-state="locked"
+>
   <head>
     <meta charset="UTF-8" />
-    <script src="../presentation/theme-bootstrap.mjs" data-theme-density="player"></script>
+    <!-- access-gate:start -->
+    <meta name="revealline-access-id" content="revealline" />
+    <meta name="revealline-access-title" content="FPV / LINE" />
+    <meta
+      name="revealline-access-salt"
+      content="bWVraG92b3YuZ2l0aHViLmlvL3JldmVhbGxpbmUvYWNjZXNzL3Yx"
+    />
+    <meta name="revealline-access-verifier" content="fD62nYJ5uj8yGLsEBEAn2Blq8lcesFrR_gdebUswlxg" />
+    <style>
+      html:not([data-access-state='unlocked']) body > :not(#access-gate):not(script) {
+        display: none !important;
+      }
+    </style>
+    <link rel="stylesheet" href="../access-gate.css" />
+    <script src="../access-gate.mjs" defer></script>
+    <!-- access-gate:end -->
+
+    <script
+      src="../presentation/theme-bootstrap.mjs"
+      data-theme-density="player"
+      type="application/x-revealline-locked"
+      data-access-type=""
+    ></script>
     <link rel="stylesheet" href="../ui/mode-boot.css" />
-    <script src="../snake/route.js" data-mode="team"></script>
+    <script
+      src="../snake/route.js"
+      data-mode="team"
+      type="application/x-revealline-locked"
+      data-access-type=""
+    ></script>
     <link
       rel="stylesheet"
       href="../presentation/industrial-workshop.css"
       data-industrial-workshop
     />
     <link rel="stylesheet" href="../i18n/style.css" />
-    <script src="../vendor/i18next-26.4.2.min.js"></script>
-    <script src="../i18n/catalogs.mjs"></script>
-    <script src="../i18n/bootstrap.mjs"></script>
+    <script
+      src="../vendor/i18next-26.4.2.min.js"
+      type="application/x-revealline-locked"
+      data-access-type=""
+    ></script>
+    <script
+      src="../i18n/catalogs.mjs"
+      type="application/x-revealline-locked"
+      data-access-type=""
+    ></script>
+    <script
+      src="../i18n/bootstrap.mjs"
+      type="application/x-revealline-locked"
+      data-access-type=""
+    ></script>
 
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="theme-color" content="#0b1a24" />
@@ -97,7 +141,11 @@
             Start with a small loop. Cover each other, then meet to join a larger cut.
           </p>
           <span id="coop-boot-slot" hidden></span>
-          <script src="team-entry.js"></script>
+          <script
+            src="team-entry.js"
+            type="application/x-revealline-locked"
+            data-access-type=""
+          ></script>
           <p id="coop-selection-status" class="setup-note" role="status" hidden></p>
           <div class="coop-launch-grid">
             <figure id="coop-picture-preview" class="coop-picture-preview" data-state="preparing">
@@ -1374,12 +1422,20 @@
         </section>
       </dialog>
     </main>
-    <script defer src="./mode-entry.js" data-mode="team"></script>
+    <script
+      defer
+      src="./mode-entry.js"
+      data-mode="team"
+      type="application/x-revealline-locked"
+      data-access-type=""
+    ></script>
     <script
       defer
       src="../ui/direct-tool-launch.js"
       data-module="./relay-rescue.mjs"
       data-status="coop-boot"
+      type="application/x-revealline-locked"
+      data-access-type=""
     ></script>
   </body>
 </html>

@@ -1,4 +1,4 @@
-(() => {
+(async () => {
   const host = globalThis;
   const doc = host.document;
   if (!doc || host.RevealLineAccess) return;
@@ -16,7 +16,11 @@
   const ready = new Promise((resolve) => {
     resolveReady = resolve;
   });
-  host.RevealLineAccess = Object.freeze({ ready, storageKey });
+  let resolveScriptsReady;
+  const scriptsReady = new Promise((resolve) => {
+    resolveScriptsReady = resolve;
+  });
+  host.RevealLineAccess = Object.freeze({ ready, scriptsReady, storageKey });
 
   const storage = {
     read() {
@@ -34,11 +38,53 @@
       }
     },
   };
+  // Protected HTML keeps executable scripts inert until the shared unlock succeeds.
+  // Restore attributes (including currentScript data) and parser order; modules and
+  // deferred classics run after the ordinary classics, once the document is ready.
+  const startPage = async () => {
+    const scripts = [...doc.querySelectorAll('script[data-access-type]')];
+    const deferred = (node) => node.dataset.accessType === 'module' || node.hasAttribute('defer');
+    const ordered = [...scripts.filter((node) => !deferred(node)), ...scripts.filter(deferred)];
+    for (const original of ordered) {
+      const script = doc.createElement('script');
+      for (const { name, value } of original.attributes) {
+        if (!['type', 'data-access-type'].includes(name)) script.setAttribute(name, value);
+      }
+      if (original.dataset.accessType) script.type = original.dataset.accessType;
+      script.async = false;
+      script.textContent = original.textContent;
+      const loaded =
+        script.src || script.type === 'module'
+          ? new Promise((resolve, reject) => {
+              script.onload = resolve;
+              script.onerror = () =>
+                reject(new Error('The page could not load. Reload to try again.'));
+            })
+          : Promise.resolve();
+      original.replaceWith(script);
+      await loaded;
+    }
+    resolveScriptsReady(true);
+  };
   const unlock = () => {
     doc.documentElement.dataset.accessState = 'unlocked';
     resolveReady(true);
     doc.dispatchEvent(new CustomEvent('revealline-access-unlocked', { detail: { id: config.id } }));
+    startPage().catch((error) => {
+      doc.documentElement.dataset.accessState = 'failed';
+      const message = doc.createElement('p');
+      message.id = 'access-gate';
+      message.className = 'access-gate';
+      message.setAttribute('role', 'alert');
+      message.textContent = error.message;
+      doc.body.prepend(message);
+    });
   };
+
+  if (doc.readyState === 'loading')
+    await new Promise((resolve) =>
+      doc.addEventListener('DOMContentLoaded', resolve, { once: true }),
+    );
 
   if (config.id && config.salt && config.verifier && storage.read() === config.verifier) {
     unlock();
