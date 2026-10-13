@@ -1,5 +1,11 @@
 # Overflight candidate qualification
 
+The [current continuation](continuation-20261013/README.md) supersedes the remaining
+items below: seeded layouts and warning-aware routes, the 15-minute local soak,
+recovery/retry and packaged offline launches are complete. Unavailable target
+hardware and human sessions are explicitly skipped at the user's direction.
+Riy is delivered separately as a C1 review prototype; release is not claimed.
+
 The [readability and broader-balance continuation](readability-20261013/README.md)
 adds compact armor cues, three-seed/both-airframe evidence, and an actual Raid
 Creator download/import/re-export with native completion. It records the remaining
