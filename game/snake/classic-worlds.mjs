@@ -1,3 +1,7 @@
+import {
+  CLASSIC_SNAKE_OPERATION_CHAPTERS_A,
+  CLASSIC_SNAKE_OPERATION_LEVELS_A,
+} from './classic-catalogue-operations-a.mjs';
 /** Cosmetic composition only. Never part of a level recipe, random stream or proof.
  * Shared material/actor providers remain the owners of artwork bytes. */
 export const CLASSIC_WORLD_REVISION = 'snake-worlds-v1';
@@ -48,20 +52,29 @@ const chapters = [
   ['expedition-circuits', 'quarry', 'expedition-courts', 'court'],
 ];
 export const CLASSIC_CHAPTER_COMPOSITIONS = Object.freeze(
-  Object.fromEntries(
-    chapters.map(([chapter, scene, mood, zoning]) => [
+  Object.fromEntries([
+    ...chapters.map(([chapter, scene, mood, zoning]) => [
       `classic-snake-${chapter}`,
       Object.freeze({ scene, mood, zoning }),
     ]),
-  ),
+    ...CLASSIC_SNAKE_OPERATION_CHAPTERS_A.map((chapter) => [
+      chapter.id,
+      Object.freeze(chapter.composition),
+    ]),
+  ]),
+);
+
+const missionCompositions = new Map(
+  CLASSIC_SNAKE_OPERATION_LEVELS_A.map((entry) => [entry.id, entry.composition]),
 );
 
 export function resolveClassicWorld({
   boardStyle = 'living-circuit',
   boardScene = 'auto',
   chapterId = '',
+  levelId = '',
 } = {}) {
-  const authored = CLASSIC_CHAPTER_COMPOSITIONS[chapterId];
+  const authored = missionCompositions.get(levelId) ?? CLASSIC_CHAPTER_COMPOSITIONS[chapterId];
   const scene =
     CLASSIC_BOARD_SCENES.includes(boardScene) && boardScene !== 'auto'
       ? boardScene
