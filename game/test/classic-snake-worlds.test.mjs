@@ -167,7 +167,7 @@ test('the complete world range reuses at most 192 tiny material tiles and 24 bac
         classicSceneBackdrop(scene, { document, treatment });
       }
   assert.equal(surfaces.filter((x) => x.width === 32).length, 192);
-  assert.equal(surfaces.filter((x) => x.width === 384).length, 24);
+  assert.equal(surfaces.filter((x) => x.width === 1 && x.height === 1).length, 24);
   const bytes = surfaces.reduce((n, c) => n + c.width * c.height * 4, 0);
-  assert.ok(bytes < 16 * 1024 * 1024, `${bytes} bytes including even released backdrop canvases`);
+  assert.ok(bytes < 16 * 1024 * 1024, `${bytes} bytes after releasing backdrop backing stores`);
 });
