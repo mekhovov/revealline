@@ -42,7 +42,8 @@ export function createCommunityLibrary({
     classicInstalled ?? (globalThis.indexedDB ? createCommunityClassicInstalled() : null);
   const natives =
     nativeInstalled ?? (globalThis.indexedDB ? createCommunityNativeInstalled() : null);
-  const isNative = (family) => ['team', 'fpv', 'overflight', 'overflight-hunt'].includes(family);
+  const isNative = (family) =>
+    ['team', 'fpv', 'overflight', 'overflight-hunt', 'overflight-riy'].includes(family);
   const runtimeStorage = async (linked) => {
     const storage =
       linked.family === 'classic'
@@ -64,11 +65,13 @@ export function createCommunityLibrary({
         ? `../couch/relay-rescue.html?community-team=${linked.creatorEditionId}`
         : linked.family === 'fpv'
           ? `../../optional-practice/civilian-fpv/index.html?community-world=${encodeURIComponent(linked.runtimeIdentity)}&community-revision=${linked.creatorEditionId}`
-          : linked.family === 'overflight-hunt'
-            ? `../overflight/raid.html?community=${encodeURIComponent(linked.runtimeIdentity)}`
-            : linked.family === 'overflight'
-              ? `../overflight/play.html?community=${encodeURIComponent(linked.runtimeIdentity)}`
-              : `../creator/player.html?edition=${encodeURIComponent(linked.creatorEditionId)}`;
+          : linked.family === 'overflight-riy'
+            ? `../overflight/play.html?operation=riy&community=${encodeURIComponent(linked.runtimeIdentity)}`
+            : linked.family === 'overflight-hunt'
+              ? `../overflight/raid.html?community=${encodeURIComponent(linked.runtimeIdentity)}`
+              : linked.family === 'overflight'
+                ? `../overflight/play.html?community=${encodeURIComponent(linked.runtimeIdentity)}`
+                : `../creator/player.html?edition=${encodeURIComponent(linked.creatorEditionId)}`;
   const runtimeExport = (linked) => {
     if (linked.family === 'classic') {
       required(classics, 'Classic community storage is unavailable.');
@@ -78,7 +81,9 @@ export function createCommunityLibrary({
       required(natives, 'Native community storage is unavailable.');
       return natives.export(linked);
     }
-    return exportInstalledCreatorBundle(creatorStore, linked.creatorEditionId, { decodeImage });
+    return exportInstalledCreatorBundle(creatorStore, linked.creatorEditionId, {
+      decodeImage,
+    });
   };
   const verifyPackage = async (edition, blob) => {
     const safe = validateCommunityEdition(edition);
@@ -159,7 +164,10 @@ export function createCommunityLibrary({
       editionId: safe.editionId,
       creatorEditionId: prepared.editionId,
       ...(inspected.family !== 'creator'
-        ? { family: inspected.family, runtimeIdentity: inspected.runtimeIdentity }
+        ? {
+            family: inspected.family,
+            runtimeIdentity: inspected.runtimeIdentity,
+          }
         : {}),
       collectionId: safe.collectionId,
       slug: safe.slug,
@@ -248,7 +256,10 @@ export function createCommunityLibrary({
             localCopyRetained: storage?.localCopyRetained ?? false,
             creatorEditionId: linked?.creatorEditionId ?? null,
             ...(linked?.family
-              ? { family: linked.family, runtimeIdentity: linked.runtimeIdentity }
+              ? {
+                  family: linked.family,
+                  runtimeIdentity: linked.runtimeIdentity,
+                }
               : {}),
             attemptKey: linked
               ? linked.family === 'classic'
@@ -453,7 +464,10 @@ export function createCommunityLibrary({
         } catch {
           journalComplete = false;
         }
-        return Object.freeze({ ...(await status(safe.editionId)), journalComplete });
+        return Object.freeze({
+          ...(await status(safe.editionId)),
+          journalComplete,
+        });
       });
     },
     status,

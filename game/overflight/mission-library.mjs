@@ -10,18 +10,19 @@ export function overflightMissionSource({
 }) {
   const local = (value) => value?.[locale()] ?? value?.en ?? '';
   const title = () =>
-    locale() === 'uk'
+    mode.name?.[locale()] ??
+    (locale() === 'uk'
       ? mode.id === 'overflight-hunt'
         ? 'Наліт'
         : 'Виживання'
       : mode.id === 'overflight-hunt'
         ? 'Raid'
-        : 'Survivor';
+        : 'Survivor');
   const detail = (entry) => {
     const project = entry.project;
     const uk = locale() === 'uk';
     const veteran = project.difficulty === 'veteran';
-    return `${uk ? (veteran ? 'Ветеран' : 'Стандарт') : veteran ? 'Veteran' : 'Standard'} · ${project.format.endsWith('V1') ? (uk ? 'Класичні правила' : 'Legacy rules') : title()}`;
+    return `${uk ? (veteran ? 'Ветеран' : 'Стандарт') : veteran ? 'Veteran' : 'Standard'} · ${(project.survivorFormat ?? project.format).endsWith('V1') ? (uk ? 'Класичні правила' : 'Legacy rules') : title()}`;
   };
   const name = (entry) => `${local(entry.project.title)} · ${detail(entry).split(' · ')[0]}`;
   return {

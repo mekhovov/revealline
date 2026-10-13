@@ -1,3 +1,4 @@
+import { overflightFlightProfile, overflightFlightProfileHint } from './flight-profile.mjs';
 import { createMissionLibrary } from '../mission-library/library.mjs';
 import { attachMissionLibraryChooser } from '../ui/mission-library-chooser.mjs';
 import { createMissionLibrarySessionState } from '../mission-library/handoff.mjs';
@@ -48,7 +49,10 @@ import {
   QUALIFICATION_BUILDS,
   NO_PULSE_QUALIFICATION_BUILDS,
 } from './review-pilot.mjs';
-import { createOverflightReviewRecorder } from './review-recorder.mjs';
+import {
+  createOverflightReviewRecorder,
+  createOverflightReviewAudioTap,
+} from './review-recorder.mjs';
 import { overflightFieldKitArt } from '../presentation/overflight-field-kit-art.mjs';
 import {
   createOverflightRun,
@@ -122,8 +126,15 @@ let mode =
         selectCard,
         previewRequest: overflightPreviewRequest,
       };
-if (mode.id === 'overflight' && params.get('prototype') === 'riy')
+if (
+  mode.id === 'overflight' &&
+  (params.get('operation') === 'riy' || params.get('prototype') === 'riy')
+)
   mode = (await import('./riy-mode.mjs')).createOverflightRiyMode(mode);
+if (mode.id === 'overflight-hunt' && ['time-attack', 'marathon'].includes(params.get('operation')))
+  mode = (await import('./raid-variants.mjs')).createOverflightRaidVariant(mode, {
+    variant: params.get('operation'),
+  });
 const records = mode.createRecords?.();
 if (['en', 'uk'].includes(params.get('lang'))) setLocale(params.get('lang'), { persist: false });
 const text = (key) => mode.text(getLocale(), key);
@@ -165,6 +176,7 @@ let options = {
   airframes: 3,
   slowResume: true,
   characterId: DEFAULT_OVERFLIGHT_CHARACTER,
+  flightTraits: false,
 };
 try {
   const saved = JSON.parse(win.localStorage.getItem(OPTION_KEY) ?? 'null');
@@ -174,6 +186,7 @@ try {
       airframes: saved.airframes,
       slowResume: saved.slowResume,
       characterId: normalizeOverflightCharacterId(saved.characterId),
+      flightTraits: saved.flightTraits === true,
     };
 } catch {
   /* Storage is optional; local choices remain usable. */
@@ -184,6 +197,7 @@ const persistOptions = () => {
     difficulty: $('difficulty').value,
     airframes: Number($('airframes').value),
     slowResume: $('slow-resume').checked,
+    flightTraits: $('flight-traits').checked,
   };
   try {
     win.localStorage.setItem(OPTION_KEY, JSON.stringify(options));
@@ -245,7 +259,11 @@ let characterEntries = [],
   rewardTimer = null,
   resultRun = null;
 const clipRecorder = reviewBuild
-  ? createOverflightReviewRecorder({ window: win, onState: updateClip })
+  ? createOverflightReviewRecorder({
+      window: win,
+      onState: updateClip,
+      getAudio: () => createOverflightReviewAudioTap(sound),
+    })
   : null;
 const rendererOwner = createOverflightRendererOwner();
 const contextGuard = createOverflightContextGuard({ pause, release: releaseInput });
@@ -388,7 +406,11 @@ function start() {
   if (run.phase === 'upgrade') return syncUpgrade();
   const freshLaunch = run.phase === 'ready';
   if (run.phase === 'ready') {
-    if (run.airframes !== options.airframes || run.slowResume !== options.slowResume) {
+    if (
+      run.airframes !== options.airframes ||
+      run.slowResume !== options.slowResume ||
+      run.flight.id !== overflightFlightProfile(options.characterId, options.flightTraits).id
+    ) {
       run = mode.createRun(compiled, { seed, ...options, fixture });
       run.appearance = preparationIdentity;
       run.review = !!reviewBuild || !!mode.prototype;
@@ -574,7 +596,9 @@ function refreshCharacters() {
   const characterId = canSelect ? options.characterId : preparationIdentity?.characterId;
   select.value = characterId ?? options.characterId;
   select.disabled = preparing || !characterEntries.length || !canSelect;
-  $('character-hint').textContent = text(canSelect ? 'characterHint' : 'characterLocked');
+  $('flight-traits').disabled = !canSelect || preparing;
+  $('character-hint').textContent =
+    `${text(canSelect ? 'characterHint' : 'characterLocked')} ${overflightFlightProfileHint(select.value, canSelect ? options.flightTraits : run?.flight?.id !== 'balanced', getLocale())}`;
   const character = characterEntries.find((entry) => entry.id === select.value);
   $('character-preview').replaceChildren();
   if (character) {
@@ -617,6 +641,12 @@ function result() {
     ['elapsed', formatTime(run.time)],
     ['salvage', summary.stats.xpCollected],
     ['upgradesEarned', summary.stats.upgradesChosen],
+    ...(run.riy
+      ? [
+          ['escortCommands', run.riy.commands],
+          ['escortShots', run.riy.escorts.reduce((n, escort) => n + escort.shots, 0)],
+        ]
+      : []),
   ]) {
     const stat = el('div', '', 'overflight-result-stat');
     stat.append(
@@ -935,12 +965,15 @@ function readInput() {
       Number(held.has('KeyW') || held.has('ArrowUp'));
   const boost = (!editing && held.has('Space')) || axes.boost;
   const touch = touchInput?.sample() ?? { x: 0, y: 0, boost: false, neutral: true };
-  return inputGate.sample({
+  const sampled = inputGate.sample({
     x: keyX || axes.x || touch.x,
     y: keyY || axes.y || touch.y,
     boost: boost || touch.boost,
+    focus: !modal && axes.focus === true,
     neutral: !held.size && axes.neutral && touch.neutral,
   });
+  if (sampled.focus) mode.requestFocus?.();
+  return sampled;
 }
 function reviewIdentity() {
   return reviewBuild
@@ -1330,6 +1363,14 @@ const disposeModeActions = mode.installActions?.({
   prepare,
   getSeed: () => seed,
   getRun: () => run,
+  onVariantResultRefresh: () => result(),
+  canContinueContract: () => !preparing && !runtimeFailed && !contextGuard.blocked() && !retired,
+  onContinueContract: () => {
+    resultRun = null;
+    releaseInput();
+    shell.enterPlay();
+    start();
+  },
   canAct: () =>
     run?.phase === 'playing' && !activeModal() && !contextGuard.blocked() && !doc.hidden,
 });
@@ -1346,7 +1387,7 @@ if ($('survivor-same-seed')) {
 }
 operationCards = createOverflightOperationCards({
   document: doc,
-  current: mode.id,
+  current: mode.operationId ?? mode.id,
   text,
   destination,
   onSelect: () => {
@@ -1487,12 +1528,14 @@ async function openMissionLibrary() {
     const results = await Promise.all(
       candidates.map(async (candidate) => {
         const definition = mode.compileProject(candidate);
-        const saved = await records.read({
+        const recordQuery = {
           compiled: definition,
           seed: definition.seed,
           ...options,
           difficulty: candidate.difficulty ?? 'standard',
-        });
+          flight: overflightFlightProfile(options.characterId, options.flightTraits),
+        };
+        const saved = await records.read(mode.recordQuery?.(recordQuery) ?? recordQuery);
         return [
           definition.projectIdentity,
           saved.fastestClear
@@ -1648,12 +1691,20 @@ for (const [id, event, fn] of [
             (set) => mode.createProject({ encounterSet: set }).id === project.id,
           ) ?? mode.encounterSets[0];
         void prepare({
-          nextProject: mode.createProject({ encounterSet, difficulty: options.difficulty }),
+          nextProject: mode.createProject({ encounterSet, seed, difficulty: options.difficulty }),
         }).catch(() => {});
       }
     },
   ],
   ['slow-resume', 'change', persistOptions],
+  [
+    'flight-traits',
+    'change',
+    () => {
+      persistOptions();
+      refreshCharacters();
+    },
+  ],
   [
     'character-select',
     'change',
@@ -1698,6 +1749,7 @@ for (const [id, event, fn] of [
 $('difficulty').value = options.difficulty;
 $('airframes').value = String(options.airframes);
 $('slow-resume').checked = options.slowResume;
+$('flight-traits').checked = options.flightTraits;
 listen($('upgrade-dialog'), 'cancel', (event) => event.preventDefault());
 listen(doc, 'keydown', (event) => {
   if (gameplayKeys.has(event.code)) held.press(event.code, event.repeat);

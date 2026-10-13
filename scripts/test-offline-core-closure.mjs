@@ -611,3 +611,30 @@ test('radio redistribution metadata stays core while source recordings remain se
     assert.ok(!result.retained.has('authoring/audio/unrelated.wav'));
   }
 });
+
+test('Riy operation keeps its dynamic runtime and authored package graph in offline core', async () => {
+  const player = (await readdir(new URL('../game/overflight/', import.meta.url)))
+    .filter((name) => /\.(?:mjs|css|html)$/.test(name))
+    .map((name) => `game/overflight/${name}`);
+  const editor = ['game/studio/overflight.mjs', 'game/studio/riy-editor.mjs'];
+  const files = await Promise.all(
+    [...player, ...editor].map(async (name) => ({
+      name,
+      bytes: await readFile(new URL(`../${name}`, import.meta.url)),
+    })),
+  );
+  // The query selects the operation; it must not need a separate cached document.
+  const core = selectOfflineCore(files, new Set());
+  for (const name of ['riy-mode', 'riy-core', 'riy-project', 'riy-community'])
+    assert.ok(
+      core.retained.has(`game/overflight/${name}.mjs`),
+      `${name} is needed before an offline Riy launch`,
+    );
+  for (const name of editor)
+    assert.equal(
+      core.retained.has(name),
+      false,
+      'the shared editor stays in the optional tooling package',
+    );
+  assert.equal(core.references.get('game/overflight/riy-mode.mjs'), 'game/overflight/app.mjs');
+});

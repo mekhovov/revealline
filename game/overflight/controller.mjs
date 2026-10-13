@@ -82,6 +82,7 @@ export function createOverflightController({
     stickActive = false,
     rawState = new Map(),
     confirmActive = false,
+    abilityHeld = false,
     last = null,
     destroyed = false;
   const radio = createSoloRadioInput({
@@ -106,6 +107,7 @@ export function createOverflightController({
     stickActive = false;
     rawState = new Map();
     confirmActive = false;
+    abilityHeld = false;
   }
   function clear() {
     reset();
@@ -190,6 +192,8 @@ export function createOverflightController({
       output.y = strength('down') - strength('up');
     }
     output.boost = frame.flight.boost;
+    output.focus = frame.flight.action && !abilityHeld;
+    abilityHeld = !!frame.flight.action;
     return output;
   }
   return {

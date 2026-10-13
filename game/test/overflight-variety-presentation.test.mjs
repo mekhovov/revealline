@@ -92,7 +92,7 @@ test('different authored schedules produce different diagrams without mutating p
   );
 });
 
-test('family home contains two native operation choices, preserving URL context for other mode', () => {
+test('family home exposes all five operations and preserves operation queries with locale', () => {
   const document = new Document();
   const create = document.createElement.bind(document);
   document.createElement = (tag) => {
@@ -106,19 +106,22 @@ test('family home contains two native operation choices, preserving URL context 
     document,
     current: 'overflight',
     text: (key) => key,
-    destination: (path) => path + '?lang=uk',
+    destination: (path) => `${path}${path.includes('?') ? '&' : '?'}lang=uk`,
     onSelect: () => selected++,
     onLeave: () => left++,
   });
   view.refresh();
-  assert.equal(view.root.children.length, 2);
-  const [survivor, raid] = view.root.children;
+  assert.equal(view.root.children.length, 5);
+  const [survivor, riy, raid, timeAttack, marathon] = view.root.children;
   assert.equal(survivor.getAttribute('aria-current'), 'true');
   assert.equal(raid.href, './raid.html?lang=uk');
+  assert.equal(riy.href, './play.html?operation=riy&lang=uk');
+  assert.equal(timeAttack.href, './raid.html?operation=time-attack&lang=uk');
+  assert.equal(marathon.href, './raid.html?operation=marathon&lang=uk');
   survivor.click();
-  raid.click();
+  for (const card of [riy, raid, timeAttack, marathon]) card.click();
   assert.equal(selected, 1);
-  assert.equal(left, 1);
+  assert.equal(left, 4);
 });
 
 test('committed fan and lane warnings match each damaging ray and full half-width', () => {

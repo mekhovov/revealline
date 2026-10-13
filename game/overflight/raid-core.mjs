@@ -131,7 +131,14 @@ function population(run) {
 
 export function createOverflightHuntRun(
   compiled,
-  { seed = compiled?.seed, airframes = 3, slowResume = true, fixture = null } = {},
+  {
+    seed = compiled?.seed,
+    airframes = 3,
+    slowResume = true,
+    fixture = null,
+    characterId,
+    flightTraits = false,
+  } = {},
 ) {
   if (!['OverflightHuntCompiledV1', 'OverflightHuntCompiledV2'].includes(compiled?.format))
     throw new TypeError('A compiled Overflight Hunt project is required.');
@@ -143,7 +150,7 @@ export function createOverflightHuntRun(
       ...compiled,
       format: compiled.rulesVersion === 2 ? 'OverflightCompiledV2' : 'OverflightCompiledV1',
     },
-    { seed, airframes, slowResume },
+    { seed, airframes, slowResume, characterId, flightTraits: !fixture && flightTraits },
   );
   run.compiled = compiled;
   run.rules = run.rulesVersion === 2 ? OVERFLIGHT_HUNT_RULES_V2 : OVERFLIGHT_HUNT_RULES;
@@ -539,7 +546,7 @@ function refundBoost(run) {
 }
 function replaceAirframe(run) {
   if (run.fixture) {
-    run.player.hull = 100;
+    run.player.hull = run.player.maxHull;
     run.player.invulnerable = 0.75;
     run.stats.fixtureDefeats++;
     return;
@@ -579,7 +586,7 @@ function replaceAirframe(run) {
   Object.assign(run.player, {
     x: bestX,
     y: bestY,
-    hull: 100,
+    hull: run.player.maxHull,
     vx: 0,
     vy: 0,
     boostRemaining: 0,
@@ -657,7 +664,7 @@ function movePlayer(run, input, params) {
     x = Math.cos(player.heading);
     y = Math.sin(player.heading);
   }
-  const speed = player.boostRemaining > 0 ? 330 : 180;
+  const speed = player.boostRemaining > 0 ? run.flight.boostSpeed : run.flight.speed;
   player.vx += (x * speed - player.vx) * 0.35;
   player.vy += (y * speed - player.vy) * 0.35;
   player.x = clamp(
@@ -1205,6 +1212,7 @@ export function stepOverflightHunt(run, input = {}, dt = STEP) {
 }
 export function overflightHuntSummary(run) {
   return {
+    flight: run.flight,
     format: 'OverflightHuntRunSummaryV1',
     rules: run.rules,
     projectId: run.compiled.id,
