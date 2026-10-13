@@ -1,0 +1,20 @@
+TAP version 13
+# Subtest: overflight-riy: authenticated owner updates, non-owner rejection, disk upload and offline edition recovery
+ok 1 - overflight-riy: authenticated owner updates, non-owner rejection, disk upload and offline edition recovery
+  ---
+  duration_ms: 403.752917
+  ...
+# Subtest: overflight-hunt: authenticated owner updates, non-owner rejection, disk upload and offline edition recovery
+ok 2 - overflight-hunt: authenticated owner updates, non-owner rejection, disk upload and offline edition recovery
+  ---
+  duration_ms: 323.65225
+  ...
+1..2
+# tests 2
+# suites 0
+# pass 2
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1207.767125

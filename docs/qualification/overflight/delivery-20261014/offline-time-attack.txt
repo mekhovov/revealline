@@ -1,0 +1,21 @@
+- main:
+  - button "Menu"
+  - generic: "Survive: Time Attack"
+  - button "Pause"
+  - region "Overflight battlefield":
+    - generic: Hull 100 / 100
+    - progressbar "Hull"
+    - generic: Spare airframes 2
+    - generic: Sortie
+    - strong: 00:00
+    - generic: Level 1
+    - generic: 0 Cleared
+    - paragraph: Sector 1 · Break the patrols · Targets 0/7
+    - generic: Chain 0 · ×1
+    - generic: Medal time 0.2s
+    - generic: Boost Ready
+    - generic: Rush 0/20
+    - progressbar "Rush"
+    - status
+  - text: ⌃ ✓ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄
+- text: + + + + + + + + +
