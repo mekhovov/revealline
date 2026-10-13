@@ -1,3 +1,5 @@
+import { classicOperationStatus } from '../snake/classic-operation-status.mjs';
+import { OPERATION_PROTOTYPES } from './manual/snake-operation-recipes.mjs';
 import { classicBoardPreferences, isClassicWorldStyle } from '../snake/classic-worlds.mjs';
 import { nextInputModality, showScreenControls } from '../input-presentation.mjs';
 import { createTouchPreferences } from '../touch-preferences.mjs';
@@ -45,6 +47,7 @@ import {
 import * as matches from '../snake/classic-match.mjs';
 import {
   prepareClassicSnakeLevel,
+  classicSnakeMissionSettings,
   classicSnakeSurvivalEntry,
   CLASSIC_PACES,
 } from '../snake/classic-setup.mjs';
@@ -478,6 +481,8 @@ async function harness({
     required,
     CLASSIC_PACES,
     prepareClassicSnakeLevel,
+    classicSnakeMissionSettings,
+    classicOperationStatus,
     classicSnakeSurvivalEntry,
     OFFICIAL_CAMPAIGNS: CLASSIC_SNAKE_CAMPAIGNS,
     OFFICIAL_FEATURED: CLASSIC_SNAKE_FEATURED,
@@ -1171,8 +1176,8 @@ test('the Snake library shows all missions and filters without changing the paus
   state.frame(200);
   state.shell.open('missions');
   const before = state.created.map((run) => core.exportClassicSnakeReplay(run));
-  assert.equal(state.$('journey-cards').children.length, 144);
-  assert.equal(state.$('journey-campaign-rail').children.length, 23);
+  assert.equal(state.$('journey-cards').children.length, 192);
+  assert.equal(state.$('journey-campaign-rail').children.length, 29);
   const first = libraryCard(state, CLASSIC_SNAKE_LEVELS[0].id);
   state.$('journey-search').value = 'Quiet Channel';
   state.$('journey-search').emit('input');
@@ -2028,5 +2033,41 @@ for (const worldStyle of ['toybox', 'atmospheric-ruins', 'night-arcade']) {
     assert.equal(state.drawings.at(-1).options.boardStyle, worldStyle);
     assert.equal(state.drawings.at(-1).options.boardScene, 'quarry');
     assert.equal(new URL(state.location.href).searchParams.get('board'), worldStyle);
+  });
+}
+
+for (const mode of ['solo', 'team', 'versus']) {
+  test(`${mode} operation entry admits authored Mission Race and retains objectives through retry`, async () => {
+    const entry = {
+      ...CLASSIC_SNAKE_LEVELS[0],
+      title: OPERATION_PROTOTYPES[7].title,
+      description: OPERATION_PROTOTYPES[7].hint,
+      level: { ...OPERATION_PROTOTYPES[7].level, id: CLASSIC_SNAKE_LEVELS[0].id },
+    };
+    const state = await harness({
+      entry,
+      mode,
+      activity: 'endless',
+      query: '&targets=varied&duel=score',
+      catalogue: CLASSIC_SNAKE_LEVELS.map((row) => (row.id === entry.id ? entry : row)),
+    });
+    const first = state.created[0];
+    assert.deepEqual(first.level.operation, entry.level.operation);
+    assert.equal(state.$('format').value, 'campaign');
+    assert.equal(state.$('format').disabled, true);
+    assert.equal(state.$('target-rules').value, 'authored');
+    assert.equal(state.$('target-rules').disabled, true);
+    assert.equal(state.document.body.dataset.playing, 'true');
+    assert.match(
+      state.document.querySelector('[data-stat="operation"]').textContent,
+      /Stage 1\/2.*Delivered 0\/2.*Plate 0\/1/,
+    );
+    state.shell.open('pause');
+    state.$('continue').click();
+    state.frame(0);
+    assert.deepEqual(state.drawings.at(-1).run.operation, first.operation);
+    state.retry();
+    assert.deepEqual(state.created.at(-1).operation, first.operation);
+    assert.deepEqual(state.created.at(-1).level.operation, entry.level.operation);
   });
 }
