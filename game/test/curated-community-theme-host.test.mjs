@@ -197,6 +197,7 @@ for (const personal of [null, 'tryzub']) {
     };
     destination = undefined;
     page.$('shell-menu').click();
+    if (page.$('solo-fpv-sim').hidden) page.$('shell-title-modes-more').click();
     page.$('solo-fpv-sim').click();
     await settle(() => destination);
     assert.equal(destination.searchParams.get('appearanceFamily'), second.family.id);
@@ -256,6 +257,7 @@ for (const outcome of ['cancel', 'failure']) {
     };
     destination = undefined;
     page.$('shell-menu').click();
+    if (page.$('solo-fpv-sim').hidden) page.$('shell-title-modes-more').click();
     page.$('solo-fpv-sim').click();
     await settle(() => destination);
     assert.equal(destination.searchParams.get('appearanceFamily'), first.family.id);
