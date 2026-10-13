@@ -903,3 +903,24 @@ body:is(
     grid-column: 2;
   }
 }
+
+/* Objectives keep their own full-width line instead of squeezing six counters on mobile. */
+.board-stats .snake-operation-status {
+  grid-column: 1 / -1;
+  flex-basis: 100%;
+  color: var(--accent, #e6bd62);
+  font-size: clamp(0.75rem, 2.8vw, 0.95rem);
+  line-height: 1.35;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+.snake-operation-status[hidden] {
+  display: none;
+}
+
+.board-stats[data-operation='true'] {
+  flex-wrap: wrap;
+}
+.board-stats[data-operation='true'] [data-stat='caught'] {
+  display: none;
+}

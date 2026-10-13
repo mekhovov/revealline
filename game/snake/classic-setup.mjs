@@ -29,6 +29,8 @@ export function prepareClassicSnakeLevel(
   entry,
   { pace = 'normal', format = 'campaign', targetRules = 'authored', preset = 'classic' } = {},
 ) {
+  if (entry.level.operation && (format !== 'campaign' || targetRules !== 'authored'))
+    throw new Error('Operations require authored Campaign / Mission Race rules.');
   let level = structuredClone(entry.level);
   if (targetRules === 'moving' || targetRules === 'varied' || format === 'endless')
     level = structuredClone(
@@ -49,4 +51,12 @@ export function prepareClassicSnakeLevel(
     Math.max(60, Math.round(level.minStepMs * CLASSIC_PACES[pace])),
   );
   return level;
+}
+
+/** UI admission keeps staged missions intact when chosen from a remix or score setup.
+ * Engine/import validation remains strict; this only selects the visible supported controls. */
+export function classicSnakeMissionSettings(entry, settings) {
+  return entry.level.operation
+    ? { ...settings, format: 'campaign', targetRules: 'authored' }
+    : settings;
 }
