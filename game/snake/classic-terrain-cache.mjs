@@ -1,6 +1,6 @@
 /** Shared, bounded cosmetic surfaces. Live boards and signal scratch buffers are
- * owned elsewhere. Eight MiB leaves headroom for material atlases and receivers. */
-export const CLASSIC_TERRAIN_CACHE_BYTES = 8 * 1024 * 1024;
+ * owned elsewhere. Four MiB leaves headroom for decoded backdrops, material atlases and receivers. */
+export const CLASSIC_TERRAIN_CACHE_BYTES = 4 * 1024 * 1024;
 const owners = new WeakMap();
 const images = new WeakMap();
 let nextImage = 1;
@@ -41,16 +41,6 @@ export function drawClassicCachedTerrain(ctx, owner, key, width, height, paint, 
       paint(ctx);
       return;
     }
-    const canvas = owner.createElement('canvas');
-    canvas.width = width;
-    canvas.height = height;
-    const context = canvas.getContext?.('2d');
-    if (!context?.fillRect || !context?.stroke) {
-      paint(ctx);
-      return;
-    }
-    context.imageSmoothingEnabled = false;
-    paint(context);
     while (cache.bytes + bytes > CLASSIC_TERRAIN_CACHE_BYTES && cache.entries.size) {
       const oldest = cache.entries.keys().next().value;
       const released = cache.entries.get(oldest);
@@ -59,6 +49,17 @@ export function drawClassicCachedTerrain(ctx, owner, key, width, height, paint, 
       // Explicitly release backing pixels, rather than waiting for GC while scrolling.
       released.canvas.width = released.canvas.height = 1;
     }
+    const canvas = owner.createElement('canvas');
+    canvas.width = width;
+    canvas.height = height;
+    const context = canvas.getContext?.('2d');
+    if (!context?.fillRect || !context?.stroke) {
+      canvas.width = canvas.height = 1;
+      paint(ctx);
+      return;
+    }
+    context.imageSmoothingEnabled = false;
+    paint(context);
     entry = { canvas, bytes };
     cache.entries.set(key, entry);
     cache.bytes += bytes;

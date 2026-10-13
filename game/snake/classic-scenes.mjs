@@ -154,6 +154,7 @@ export function classicSceneMaterial(
 }
 const surfaces = new WeakMap();
 const backdrops = new WeakMap();
+export const CLASSIC_BACKDROP_SIZE = Object.freeze({ width: 256, height: 192 });
 function canvasFactory(owner) {
   return () =>
     owner?.createElement?.('canvas') ??
@@ -215,7 +216,48 @@ export function drawClassicLivingGround(
         ctx.globalAlpha = 1;
       }
     }
+  drawAuthoredFloorLight(ctx, level, unit, composition);
   drawFloorComposition(ctx, level, palette, unit, composition, treatment);
+}
+
+/** Static illumination stays beneath the grid, walls and actors. It supplies
+ * the authored chapter time of day without fog, glare or a new gameplay cue. */
+function drawAuthoredFloorLight(ctx, level, unit, world) {
+  if (!['morning', 'late', 'night'].includes(world.light)) return;
+  const width = level.width * unit,
+    height = level.height * unit;
+  ctx.save();
+  ctx.beginPath();
+  ctx.rect(0, 0, width, height);
+  ctx.clip();
+  if (world.light === 'night') {
+    // A quiet equipment pool around the authored focus. Four nested bands
+    // total less than six percent opacity even where they overlap.
+    const [fx, fy] = world.focus ?? [level.width / 2, level.height / 2];
+    ctx.fillStyle = '#accfdb';
+    ctx.globalAlpha = 0.014;
+    for (const radius of [5, 4, 3, 2]) {
+      ctx.beginPath();
+      ctx.ellipse(fx * unit, fy * unit, radius * unit, radius * unit * 0.7, 0, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  } else {
+    const vertical = world.axis === 'vertical';
+    const length = vertical ? height : width;
+    const band = length / 8;
+    ctx.fillStyle = world.light === 'morning' ? '#ffe9b8' : '#e5a078';
+    for (let i = 0; i < 8; i++) {
+      ctx.globalAlpha = 0.06 * (1 - i / 8);
+      const start = world.light === 'morning' ? i * band : length - (i + 1) * band;
+      ctx.fillRect(
+        vertical ? 0 : start,
+        vertical ? start : 0,
+        vertical ? width : band,
+        vertical ? band : height,
+      );
+    }
+  }
+  ctx.restore();
 }
 
 // Flat, low-contrast inlays identify a place without suggesting solid geometry.
@@ -616,11 +658,14 @@ export function classicSceneBackdrop(
   if (cache.has(key)) return cache.get(key);
   const canvas = canvasFactory(document)();
   if (!canvas?.toDataURL) return null;
-  canvas.width = 384;
-  canvas.height = 288;
+  canvas.width = CLASSIC_BACKDROP_SIZE.width;
+  canvas.height = CLASSIC_BACKDROP_SIZE.height;
   const ctx = canvas.getContext('2d');
   if (!ctx) return null;
   ctx.imageSmoothingEnabled = false;
+  // Keep the authored composition coordinates while bounding every decoded
+  // CSS image, including previously selected looks retained by the browser.
+  ctx.scale(canvas.width / 384, canvas.height / 288);
   const material = texture(document, selected, false, 0, treatment);
   rect(ctx, '#172c34', 0, 0, 384, 288);
   if (material)

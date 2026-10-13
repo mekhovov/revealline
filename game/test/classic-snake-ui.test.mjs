@@ -76,6 +76,7 @@ import { snakeStudioReturnHref } from '../ui/content-studio-navigation.mjs';
 import { fpvWorldLaunchURL, appearanceLaunchURL, nativeArtReviewURL } from '../fpv-entry.mjs';
 import { CLASSIC_COPY } from '../snake/classic-copy.mjs';
 import { advanceClassicFlight } from '../snake/classic-flight-art.mjs';
+import { advanceClassicReactionTime } from '../snake/classic-world-reactions.mjs';
 import { t } from '../i18n/index.mjs';
 import { mountEnemyAppearanceControls } from '../ui/enemy-appearance-controls.mjs';
 import { prepareClassicEnvironments } from '../snake/classic-environment.mjs';
@@ -125,9 +126,11 @@ async function harness({
   query = '',
   cosmetics = null,
   savedRound = null,
+  recordReceipt = { verified: true, saved: true },
   catalogue = CLASSIC_SNAKE_LEVELS,
 } = {}) {
   const document = new Document();
+  let harnessLocale = 'en';
   document.hasFocus = () => focused;
   const writerClaims = [];
   document.createElement = (tag) => {
@@ -386,9 +389,11 @@ async function harness({
     screen: { orientation: new Events() },
     navigator: { getGamepads: () => pads },
     setTimeout,
-    getLocale: () => 'en',
+    getLocale: () => harnessLocale,
     t,
-    setLocale() {},
+    setLocale(value) {
+      harnessLocale = value;
+    },
     onLocaleChange() {},
     createDestructionPreferences: () =>
       createDestructionPreferences({
@@ -464,7 +469,9 @@ async function harness({
     createClassicSnakeRecords: () => ({
       async read() {},
       async visit() {},
-      async remember() {},
+      async remember() {
+        return recordReceipt;
+      },
       chapter: () => 0,
       cleared: () => false,
       get: () => null,
@@ -477,6 +484,7 @@ async function harness({
     },
     drawClassicTarget() {},
     advanceClassicFlight,
+    advanceClassicReactionTime,
     boundedJSON,
     exactKeys,
     required,
@@ -2099,5 +2107,26 @@ for (const mode of ['solo', 'versus', 'team'])
       saved.appearance,
     );
     restored.window.emit('blur');
-    assert.equal(JSON.parse(restored.storage.get('revealline.classic-snake.round.v2')).match.replays[0].level.revision, '1');
+    assert.equal(
+      JSON.parse(restored.storage.get('revealline.classic-snake.round.v2')).match.replays[0].level
+        .revision,
+      '1',
+    );
   });
+
+test('a verified session-only clear keeps its stars and localized visible saving notice without blocking Retry', async () => {
+  for (const locale of ['en', 'uk']) {
+    const state = await harness({
+      query: `&lang=${locale}`,
+      recordReceipt: { verified: true, saved: false },
+    });
+    flyVerifiedRoute(state);
+    await flush();
+    assert.equal(state.$('snake-stars').textContent, '★★★');
+    assert.equal(state.$('result-save-notice').hidden, false);
+    assert.equal(state.$('result-save-notice').textContent, CLASSIC_COPY[locale].verifiedNotSaved);
+    state.shell.elements.buttons.retry.click();
+    assert.equal(state.created.length, 2);
+    assert.equal(state.$('result-save-notice').hidden, true);
+  }
+});

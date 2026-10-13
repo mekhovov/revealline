@@ -1,6 +1,13 @@
 /** Cosmetic state observation only. Never mutates a run or creates progress.
  * Compact replay uses the same fields, so it gets the same accepted-state cues. */
 const boards = new WeakMap();
+/** Effect lifetimes continue after a board finishes, independently of its frozen
+ * drone clock. The host still freezes this cosmetic clock on pause/background. */
+export function advanceClassicReactionTime(previous = 0, elapsedMs = 0, active = true) {
+  if (!active) return previous;
+  const elapsed = Number.isFinite(elapsedMs) ? Math.max(0, Math.min(100, elapsedMs)) : 0;
+  return (previous + elapsed) % 60000;
+}
 const same = (a, b) => a.x === b.x && a.y === b.y;
 const copy = (run) => ({
   tick: run.tick,

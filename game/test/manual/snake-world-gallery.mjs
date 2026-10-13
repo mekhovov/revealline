@@ -110,7 +110,7 @@ async function mount() {
       after = measure(true),
       cache = classicTerrainCacheStats(document);
     $('status').textContent =
-      `Same-device synchronous redraw (not frame rate): uncached worlds median ${before.median} ms / p95 ${before.p95} ms; cached worlds median ${after.median} ms / p95 ${after.p95} ms. ${cards.length * 12} samples each. Terrain ${(cache.bytes / 1048576).toFixed(2)} / 8 MiB, ${cache.entries} retained boards.`;
+      `Same-device synchronous redraw (not frame rate): uncached worlds median ${before.median} ms / p95 ${before.p95} ms; cached worlds median ${after.median} ms / p95 ${after.p95} ms. ${cards.length * 12} samples each. Terrain ${(cache.bytes / 1048576).toFixed(2)} / ${(cache.limit / 1048576).toFixed(0)} MiB, ${cache.entries} retained boards.`;
   });
   render();
 }

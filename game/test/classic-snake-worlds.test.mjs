@@ -13,6 +13,7 @@ import {
   drawClassicLivingWall,
   drawClassicLivingGround,
   classicSceneBackdrop,
+  CLASSIC_BACKDROP_SIZE,
 } from '../snake/classic-scenes.mjs';
 import { createClassicSnake, exportClassicSnakeReplay } from '../snake/classic-core.mjs';
 import { drawClassicBoard } from '../snake/classic-view.mjs';
@@ -147,12 +148,16 @@ test('selector preview uses the same world renderer and selected appearance with
 });
 
 test('the complete world range reuses at most 192 tiny material tiles and 24 backdrop encodings', () => {
-  const surfaces = [];
+  const surfaces = [],
+    decodedBackdrops = [];
   const document = {
     createElement() {
       const { context, canvas } = canvasHarness();
       context.createImageData = (w, h) => ({ data: new Uint8ClampedArray(w * h * 4) });
-      canvas.toDataURL = () => 'data:image/png;base64,fixture';
+      canvas.toDataURL = () => {
+        decodedBackdrops.push({ width: canvas.width, height: canvas.height });
+        return 'data:image/png;base64,fixture';
+      };
       surfaces.push(canvas);
       return canvas;
     },
@@ -168,6 +173,38 @@ test('the complete world range reuses at most 192 tiny material tiles and 24 bac
       }
   assert.equal(surfaces.filter((x) => x.width === 32).length, 192);
   assert.equal(surfaces.filter((x) => x.width === 1 && x.height === 1).length, 24);
-  const bytes = surfaces.reduce((n, c) => n + c.width * c.height * 4, 0);
+  assert.equal(decodedBackdrops.length, 24);
+  assert.ok(
+    decodedBackdrops.every(
+      ({ width, height }) =>
+        width === CLASSIC_BACKDROP_SIZE.width && height === CLASSIC_BACKDROP_SIZE.height,
+    ),
+  );
+  const bytes = [...surfaces, ...decodedBackdrops].reduce((n, c) => n + c.width * c.height * 4, 0);
   assert.ok(bytes < 16 * 1024 * 1024, `${bytes} bytes after releasing backdrop backing stores`);
+});
+
+test('authored morning, late and night light uses distinct quiet floor treatments', () => {
+  const draws = (light) => {
+    const { context, calls } = canvasHarness();
+    drawClassicLivingGround(context, { width: 24, height: 18 }, 'orchard', {
+      composition: { light, focus: [6, 7], axis: 'vertical' },
+    });
+    return calls;
+  };
+  const morning = draws('morning'),
+    late = draws('late'),
+    night = draws('night');
+  const bands = (calls, color) =>
+    calls.filter(([op, ...args]) => op === 'fillRect' && args.at(-1) === color);
+  assert.equal(bands(morning, '#ffe9b8').length, 8);
+  assert.equal(bands(late, '#e5a078').length, 8);
+  assert.equal(bands(morning, '#ffe9b8')[0][2], 0, 'morning enters from the starting edge');
+  assert.ok(bands(late, '#e5a078')[0][2] > 0, 'late light enters from the opposite edge');
+  assert.equal(night.filter(([op]) => op === 'ellipse').length, 4);
+  assert.ok(night.some(([op, x, y]) => op === 'ellipse' && x === 6 * 28 && y === 7 * 28));
+  assert.deepEqual(
+    draws(undefined).filter(([op]) => op === 'ellipse'),
+    [],
+  );
 });

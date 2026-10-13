@@ -359,6 +359,7 @@ export function drawClassicBoard(
     // setting enables the original partially visible enemy treatment.
     signalDiagnosticOriginal = false,
     terrainCache = true,
+    effectTimeMs,
   } = {},
 ) {
   const { width, height, walls, wrap } = run.level,
@@ -497,7 +498,8 @@ export function drawClassicBoard(
   const visualTimeMs = Number.isFinite(flight.timeMs)
     ? flight.timeMs
     : (run.elapsedMs ?? 0) % 60000;
-  const worldEffects = observeClassicWorldReactions(canvas, run, attemptKey, visualTimeMs);
+  const reactionTimeMs = Number.isFinite(effectTimeMs) ? effectTimeMs : visualTimeMs;
+  const worldEffects = observeClassicWorldReactions(canvas, run, attemptKey, reactionTimeMs);
   if (structuredTerrain)
     drawClassicWorldEquipment(ctx, run, world, {
       unit: UNIT,
@@ -613,7 +615,7 @@ export function drawClassicBoard(
   drawClassicWorldReactions(ctx, run, worldEffects, world, {
     unit: UNIT,
     palette,
-    timeMs: visualTimeMs,
+    timeMs: reactionTimeMs,
     reduced,
     concealEnemies,
   });
