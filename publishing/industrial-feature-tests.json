@@ -159,6 +159,7 @@
         "game/test/industrial-environment-review.test.mjs",
         "game/test/continuous-host.test.mjs",
         "game/test/overflight-host.test.mjs",
+        "game/test/overflight-sortie.test.mjs",
         "game/test/overflight-controller.test.mjs",
         "game/test/overflight-upgrade-preview.test.mjs",
         "game/test/overflight-upgrade-card.test.mjs"

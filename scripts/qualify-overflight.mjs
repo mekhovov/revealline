@@ -79,7 +79,13 @@ export function qualifyOverflight({
     draftBlocked = null;
   const samples = [];
   const densityPeaks = { opening: 0, developing: 0, late: 0, finale: 0 };
-  const densityExposure = { above800Ticks: 0, longestAbove800Ticks: 0, peakAt: null };
+  const densityExposure = {
+    atLeast600Ticks: 0,
+    above800Ticks: 0,
+    longestAbove800Ticks: 0,
+    reliefTicks: 0,
+    peakAt: null,
+  };
   let above800Streak = 0,
     priorPeak = 0,
     firstAuditDamage = null;
@@ -143,6 +149,8 @@ export function qualifyOverflight({
             ? 'late'
             : 'finale';
     densityPeaks[window] = Math.max(densityPeaks[window], run.stats.enemiesVisible);
+    if (run.stats.enemiesVisible >= 600) densityExposure.atLeast600Ticks++;
+    if (run.pressure === 'relief') densityExposure.reliefTicks++;
     if (run.stats.enemiesVisible > 800) {
       densityExposure.above800Ticks++;
       densityExposure.longestAbove800Ticks = Math.max(
@@ -182,7 +190,7 @@ export function qualifyOverflight({
     encounterSet: project ? null : encounterSet,
     airframes,
     qualification: 'ordinary-inputs-earned-upgrades-no-fixture',
-    controller: 'deterministic-10hz-candidate-pilot-v1',
+    controller: 'deterministic-10hz-candidate-pilot-v2',
     ...(auditPilot
       ? {
           audit: {

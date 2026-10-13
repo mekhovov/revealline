@@ -1,0 +1,6666 @@
+{
+  "generatedAt": "2026-10-13T20:22:11.230Z",
+  "baseMain": "6514e5c3a",
+  "scope": "Deterministic simulation route reachability only; not human enjoyment, first-player pacing, physical gamepad or GPU qualification.",
+  "seeds": [
+    17031991,
+    42,
+    20261005
+  ],
+  "airframePresets": [
+    1,
+    3
+  ],
+  "groups": 252,
+  "groupsWithCompletion": 201,
+  "attempts": 356,
+  "failedAttempts": 155,
+  "sourceBindings": [
+    {
+      "path": "game/data-json.mjs",
+      "sha256": "9ce33d6173f3cba8587ed7a7f1924c66e9d9c86ffa59b37a743764ea0b01f7bd"
+    },
+    {
+      "path": "game/overflight/core.mjs",
+      "sha256": "833e5a0f0c74415d037c7f9d90c4001e3f20d5ed8aac23b67466f05333aa51a9"
+    },
+    {
+      "path": "game/overflight/raid-core.mjs",
+      "sha256": "e126c99e96ccbeb5ccc880d6fa42e1427144ba5e6474fea0782ca1ba9f7ebb1b"
+    },
+    {
+      "path": "game/overflight/project.mjs",
+      "sha256": "6dcad6a768cc00d5d29fba70a7044fb50c1d45f995b93e7d8f63893707db4dc4"
+    },
+    {
+      "path": "game/overflight/raid-project.mjs",
+      "sha256": "43f5abd2d946953bcabcecc8b88ae4d3bd71c1ff32a083cfcffee53357057ca4"
+    },
+    {
+      "path": "game/overflight/upgrades.mjs",
+      "sha256": "68786b4ef3e21f127e7cafe698fffa90c3c496b3bc3ddac8b9c64a14c9eab77b"
+    },
+    {
+      "path": "game/overflight/raid-upgrades.mjs",
+      "sha256": "6b7ad7aad09d6e2c1cf7d97c156fc6b1acfc9427cb6efc3ba2ac5410cc82e3a5"
+    },
+    {
+      "path": "game/overflight/grid.mjs",
+      "sha256": "ef130a7f9594bff6af374fe252bb8aafdc7e86762bb8ef60107914654f21dd30"
+    },
+    {
+      "path": "game/overflight/tactics.mjs",
+      "sha256": "39e709a53c6e7bb5b1c9022bbeac1cd9e5a7826e582ab8c44efb51395e035f60"
+    },
+    {
+      "path": "game/overflight/combat-profile.mjs",
+      "sha256": "b555a85b874c2fef014357a91483a1b65718a11771dccdc13b55c5a8025344cb"
+    },
+    {
+      "path": "game/overflight/review-pilot.mjs",
+      "sha256": "f925e46ae35c4af9463c869c2c2a0de1e9a518858ed0a27fce6edf6a2dffde19"
+    },
+    {
+      "path": "game/overflight/raid-review-pilot.mjs",
+      "sha256": "2c1254ccb6762fa19a5909ad64fde32f8c25ad5991bda026f0b66c71e4ec09b2"
+    },
+    {
+      "path": "scripts/qualify-overflight.mjs",
+      "sha256": "1162a3e50aff6aa7d32477597c5684262013f57b678162a5849b136ac2af90da"
+    },
+    {
+      "path": "scripts/qualify-overflight-raid.mjs",
+      "sha256": "21a552696042334043203d9491beb4d02a4eab27eb1056c0bd32b1f9e7c19dc8"
+    },
+    {
+      "path": "scripts/qualify-overflight-variety.mjs",
+      "sha256": "03eadcca3e46028c28a2e93a321f6ef79df77c1d7de31c4fc967167f424de234"
+    }
+  ],
+  "rows": [
+    {
+      "key": "raid/17031991/1/standard/patrol/sweeper",
+      "mode": "raid",
+      "seed": 17031991,
+      "airframes": 1,
+      "difficulty": "standard",
+      "encounterSet": "patrol",
+      "build": "sweeper",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "packs",
+          "outcome": "won",
+          "time": 53.333333333333336,
+          "lives": 1,
+          "peakVisible": 124,
+          "damageTaken": 60,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/17031991/1/standard/patrol/pursuer",
+      "mode": "raid",
+      "seed": 17031991,
+      "airframes": 1,
+      "difficulty": "standard",
+      "encounterSet": "patrol",
+      "build": "pursuer",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "objectives",
+          "outcome": "won",
+          "time": 22.866666666666667,
+          "lives": 1,
+          "peakVisible": 126,
+          "damageTaken": 0,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/17031991/1/standard/patrol/breaker",
+      "mode": "raid",
+      "seed": 17031991,
+      "airframes": 1,
+      "difficulty": "standard",
+      "encounterSet": "patrol",
+      "build": "breaker",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "objectives",
+          "outcome": "won",
+          "time": 26.15,
+          "lives": 1,
+          "peakVisible": 130,
+          "damageTaken": 0,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/17031991/1/standard/patrol/baseline",
+      "mode": "raid",
+      "seed": 17031991,
+      "airframes": 1,
+      "difficulty": "standard",
+      "encounterSet": "patrol",
+      "build": "baseline",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "objectives",
+          "outcome": "won",
+          "time": 26.416666666666668,
+          "lives": 1,
+          "peakVisible": 129,
+          "damageTaken": 0,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/17031991/1/standard/crossing/sweeper",
+      "mode": "raid",
+      "seed": 17031991,
+      "airframes": 1,
+      "difficulty": "standard",
+      "encounterSet": "crossing",
+      "build": "sweeper",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "packs",
+          "outcome": "won",
+          "time": 49.733333333333334,
+          "lives": 1,
+          "peakVisible": 172,
+          "damageTaken": 20,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/17031991/1/standard/crossing/pursuer",
+      "mode": "raid",
+      "seed": 17031991,
+      "airframes": 1,
+      "difficulty": "standard",
+      "encounterSet": "crossing",
+      "build": "pursuer",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "objectives",
+          "outcome": "won",
+          "time": 22.783333333333335,
+          "lives": 1,
+          "peakVisible": 174,
+          "damageTaken": 18,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/17031991/1/standard/crossing/breaker",
+      "mode": "raid",
+      "seed": 17031991,
+      "airframes": 1,
+      "difficulty": "standard",
+      "encounterSet": "crossing",
+      "build": "breaker",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "objectives",
+          "outcome": "won",
+          "time": 24.45,
+          "lives": 1,
+          "peakVisible": 172,
+          "damageTaken": 0,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/17031991/1/standard/crossing/baseline",
+      "mode": "raid",
+      "seed": 17031991,
+      "airframes": 1,
+      "difficulty": "standard",
+      "encounterSet": "crossing",
+      "build": "baseline",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "objectives",
+          "outcome": "won",
+          "time": 27.333333333333332,
+          "lives": 1,
+          "peakVisible": 170,
+          "damageTaken": 0,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/17031991/1/standard/mixed/sweeper",
+      "mode": "raid",
+      "seed": 17031991,
+      "airframes": 1,
+      "difficulty": "standard",
+      "encounterSet": "mixed",
+      "build": "sweeper",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "packs",
+          "outcome": "won",
+          "time": 49.6,
+          "lives": 1,
+          "peakVisible": 147,
+          "damageTaken": 20,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/17031991/1/standard/mixed/pursuer",
+      "mode": "raid",
+      "seed": 17031991,
+      "airframes": 1,
+      "difficulty": "standard",
+      "encounterSet": "mixed",
+      "build": "pursuer",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "objectives",
+          "outcome": "won",
+          "time": 22.85,
+          "lives": 1,
+          "peakVisible": 168,
+          "damageTaken": 0,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/17031991/1/standard/mixed/breaker",
+      "mode": "raid",
+      "seed": 17031991,
+      "airframes": 1,
+      "difficulty": "standard",
+      "encounterSet": "mixed",
+      "build": "breaker",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "objectives",
+          "outcome": "won",
+          "time": 22.6,
+          "lives": 1,
+          "peakVisible": 167,
+          "damageTaken": 0,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/17031991/1/standard/mixed/baseline",
+      "mode": "raid",
+      "seed": 17031991,
+      "airframes": 1,
+      "difficulty": "standard",
+      "encounterSet": "mixed",
+      "build": "baseline",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "objectives",
+          "outcome": "won",
+          "time": 23.75,
+          "lives": 1,
+          "peakVisible": 166,
+          "damageTaken": 0,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/17031991/1/veteran/patrol/sweeper",
+      "mode": "raid",
+      "seed": 17031991,
+      "airframes": 1,
+      "difficulty": "veteran",
+      "encounterSet": "patrol",
+      "build": "sweeper",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "packs",
+          "outcome": "won",
+          "time": 51.56666666666667,
+          "lives": 1,
+          "peakVisible": 171,
+          "damageTaken": 0,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/17031991/1/veteran/patrol/pursuer",
+      "mode": "raid",
+      "seed": 17031991,
+      "airframes": 1,
+      "difficulty": "veteran",
+      "encounterSet": "patrol",
+      "build": "pursuer",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "objectives",
+          "outcome": "won",
+          "time": 22.833333333333332,
+          "lives": 1,
+          "peakVisible": 167,
+          "damageTaken": 0,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/17031991/1/veteran/patrol/breaker",
+      "mode": "raid",
+      "seed": 17031991,
+      "airframes": 1,
+      "difficulty": "veteran",
+      "encounterSet": "patrol",
+      "build": "breaker",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "objectives",
+          "outcome": "won",
+          "time": 24.6,
+          "lives": 1,
+          "peakVisible": 167,
+          "damageTaken": 0,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/17031991/1/veteran/patrol/baseline",
+      "mode": "raid",
+      "seed": 17031991,
+      "airframes": 1,
+      "difficulty": "veteran",
+      "encounterSet": "patrol",
+      "build": "baseline",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "objectives",
+          "outcome": "won",
+          "time": 24.666666666666668,
+          "lives": 1,
+          "peakVisible": 166,
+          "damageTaken": 0,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/17031991/1/veteran/crossing/sweeper",
+      "mode": "raid",
+      "seed": 17031991,
+      "airframes": 1,
+      "difficulty": "veteran",
+      "encounterSet": "crossing",
+      "build": "sweeper",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "packs",
+          "outcome": "won",
+          "time": 50.733333333333334,
+          "lives": 1,
+          "peakVisible": 234,
+          "damageTaken": 0,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/17031991/1/veteran/crossing/pursuer",
+      "mode": "raid",
+      "seed": 17031991,
+      "airframes": 1,
+      "difficulty": "veteran",
+      "encounterSet": "crossing",
+      "build": "pursuer",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "objectives",
+          "outcome": "won",
+          "time": 22.616666666666667,
+          "lives": 1,
+          "peakVisible": 242,
+          "damageTaken": 0,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/17031991/1/veteran/crossing/breaker",
+      "mode": "raid",
+      "seed": 17031991,
+      "airframes": 1,
+      "difficulty": "veteran",
+      "encounterSet": "crossing",
+      "build": "breaker",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "objectives",
+          "outcome": "won",
+          "time": 27.083333333333332,
+          "lives": 1,
+          "peakVisible": 238,
+          "damageTaken": 0,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/17031991/1/veteran/crossing/baseline",
+      "mode": "raid",
+      "seed": 17031991,
+      "airframes": 1,
+      "difficulty": "veteran",
+      "encounterSet": "crossing",
+      "build": "baseline",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "objectives",
+          "outcome": "won",
+          "time": 25.483333333333334,
+          "lives": 1,
+          "peakVisible": 236,
+          "damageTaken": 0,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/17031991/1/veteran/mixed/sweeper",
+      "mode": "raid",
+      "seed": 17031991,
+      "airframes": 1,
+      "difficulty": "veteran",
+      "encounterSet": "mixed",
+      "build": "sweeper",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "packs",
+          "outcome": "won",
+          "time": 42.71666666666667,
+          "lives": 1,
+          "peakVisible": 259,
+          "damageTaken": 0,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/17031991/1/veteran/mixed/pursuer",
+      "mode": "raid",
+      "seed": 17031991,
+      "airframes": 1,
+      "difficulty": "veteran",
+      "encounterSet": "mixed",
+      "build": "pursuer",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "objectives",
+          "outcome": "won",
+          "time": 22.416666666666668,
+          "lives": 1,
+          "peakVisible": 225,
+          "damageTaken": 18,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/17031991/1/veteran/mixed/breaker",
+      "mode": "raid",
+      "seed": 17031991,
+      "airframes": 1,
+      "difficulty": "veteran",
+      "encounterSet": "mixed",
+      "build": "breaker",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "objectives",
+          "outcome": "won",
+          "time": 24.6,
+          "lives": 1,
+          "peakVisible": 220,
+          "damageTaken": 0,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/17031991/1/veteran/mixed/baseline",
+      "mode": "raid",
+      "seed": 17031991,
+      "airframes": 1,
+      "difficulty": "veteran",
+      "encounterSet": "mixed",
+      "build": "baseline",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "objectives",
+          "outcome": "won",
+          "time": 24.25,
+          "lives": 1,
+          "peakVisible": 221,
+          "damageTaken": 0,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/17031991/3/standard/patrol/sweeper",
+      "mode": "raid",
+      "seed": 17031991,
+      "airframes": 3,
+      "difficulty": "standard",
+      "encounterSet": "patrol",
+      "build": "sweeper",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "packs",
+          "outcome": "won",
+          "time": 53.333333333333336,
+          "lives": 3,
+          "peakVisible": 124,
+          "damageTaken": 60,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/17031991/3/standard/patrol/pursuer",
+      "mode": "raid",
+      "seed": 17031991,
+      "airframes": 3,
+      "difficulty": "standard",
+      "encounterSet": "patrol",
+      "build": "pursuer",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "objectives",
+          "outcome": "won",
+          "time": 22.866666666666667,
+          "lives": 3,
+          "peakVisible": 126,
+          "damageTaken": 0,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/17031991/3/standard/patrol/breaker",
+      "mode": "raid",
+      "seed": 17031991,
+      "airframes": 3,
+      "difficulty": "standard",
+      "encounterSet": "patrol",
+      "build": "breaker",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "objectives",
+          "outcome": "won",
+          "time": 26.15,
+          "lives": 3,
+          "peakVisible": 130,
+          "damageTaken": 0,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/17031991/3/standard/patrol/baseline",
+      "mode": "raid",
+      "seed": 17031991,
+      "airframes": 3,
+      "difficulty": "standard",
+      "encounterSet": "patrol",
+      "build": "baseline",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "objectives",
+          "outcome": "won",
+          "time": 26.416666666666668,
+          "lives": 3,
+          "peakVisible": 129,
+          "damageTaken": 0,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/17031991/3/standard/crossing/sweeper",
+      "mode": "raid",
+      "seed": 17031991,
+      "airframes": 3,
+      "difficulty": "standard",
+      "encounterSet": "crossing",
+      "build": "sweeper",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "packs",
+          "outcome": "won",
+          "time": 49.733333333333334,
+          "lives": 3,
+          "peakVisible": 172,
+          "damageTaken": 20,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/17031991/3/standard/crossing/pursuer",
+      "mode": "raid",
+      "seed": 17031991,
+      "airframes": 3,
+      "difficulty": "standard",
+      "encounterSet": "crossing",
+      "build": "pursuer",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "objectives",
+          "outcome": "won",
+          "time": 22.783333333333335,
+          "lives": 3,
+          "peakVisible": 174,
+          "damageTaken": 18,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/17031991/3/standard/crossing/breaker",
+      "mode": "raid",
+      "seed": 17031991,
+      "airframes": 3,
+      "difficulty": "standard",
+      "encounterSet": "crossing",
+      "build": "breaker",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "objectives",
+          "outcome": "won",
+          "time": 24.45,
+          "lives": 3,
+          "peakVisible": 172,
+          "damageTaken": 0,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/17031991/3/standard/crossing/baseline",
+      "mode": "raid",
+      "seed": 17031991,
+      "airframes": 3,
+      "difficulty": "standard",
+      "encounterSet": "crossing",
+      "build": "baseline",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "objectives",
+          "outcome": "won",
+          "time": 27.333333333333332,
+          "lives": 3,
+          "peakVisible": 170,
+          "damageTaken": 0,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/17031991/3/standard/mixed/sweeper",
+      "mode": "raid",
+      "seed": 17031991,
+      "airframes": 3,
+      "difficulty": "standard",
+      "encounterSet": "mixed",
+      "build": "sweeper",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "packs",
+          "outcome": "won",
+          "time": 49.6,
+          "lives": 3,
+          "peakVisible": 147,
+          "damageTaken": 20,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/17031991/3/standard/mixed/pursuer",
+      "mode": "raid",
+      "seed": 17031991,
+      "airframes": 3,
+      "difficulty": "standard",
+      "encounterSet": "mixed",
+      "build": "pursuer",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "objectives",
+          "outcome": "won",
+          "time": 22.85,
+          "lives": 3,
+          "peakVisible": 168,
+          "damageTaken": 0,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/17031991/3/standard/mixed/breaker",
+      "mode": "raid",
+      "seed": 17031991,
+      "airframes": 3,
+      "difficulty": "standard",
+      "encounterSet": "mixed",
+      "build": "breaker",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "objectives",
+          "outcome": "won",
+          "time": 22.6,
+          "lives": 3,
+          "peakVisible": 167,
+          "damageTaken": 0,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/17031991/3/standard/mixed/baseline",
+      "mode": "raid",
+      "seed": 17031991,
+      "airframes": 3,
+      "difficulty": "standard",
+      "encounterSet": "mixed",
+      "build": "baseline",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "objectives",
+          "outcome": "won",
+          "time": 23.75,
+          "lives": 3,
+          "peakVisible": 166,
+          "damageTaken": 0,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/17031991/3/veteran/patrol/sweeper",
+      "mode": "raid",
+      "seed": 17031991,
+      "airframes": 3,
+      "difficulty": "veteran",
+      "encounterSet": "patrol",
+      "build": "sweeper",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "packs",
+          "outcome": "won",
+          "time": 51.56666666666667,
+          "lives": 3,
+          "peakVisible": 171,
+          "damageTaken": 0,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/17031991/3/veteran/patrol/pursuer",
+      "mode": "raid",
+      "seed": 17031991,
+      "airframes": 3,
+      "difficulty": "veteran",
+      "encounterSet": "patrol",
+      "build": "pursuer",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "objectives",
+          "outcome": "won",
+          "time": 22.833333333333332,
+          "lives": 3,
+          "peakVisible": 167,
+          "damageTaken": 0,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/17031991/3/veteran/patrol/breaker",
+      "mode": "raid",
+      "seed": 17031991,
+      "airframes": 3,
+      "difficulty": "veteran",
+      "encounterSet": "patrol",
+      "build": "breaker",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "objectives",
+          "outcome": "won",
+          "time": 24.6,
+          "lives": 3,
+          "peakVisible": 167,
+          "damageTaken": 0,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/17031991/3/veteran/patrol/baseline",
+      "mode": "raid",
+      "seed": 17031991,
+      "airframes": 3,
+      "difficulty": "veteran",
+      "encounterSet": "patrol",
+      "build": "baseline",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "objectives",
+          "outcome": "won",
+          "time": 24.666666666666668,
+          "lives": 3,
+          "peakVisible": 166,
+          "damageTaken": 0,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/17031991/3/veteran/crossing/sweeper",
+      "mode": "raid",
+      "seed": 17031991,
+      "airframes": 3,
+      "difficulty": "veteran",
+      "encounterSet": "crossing",
+      "build": "sweeper",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "packs",
+          "outcome": "won",
+          "time": 50.733333333333334,
+          "lives": 3,
+          "peakVisible": 234,
+          "damageTaken": 0,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/17031991/3/veteran/crossing/pursuer",
+      "mode": "raid",
+      "seed": 17031991,
+      "airframes": 3,
+      "difficulty": "veteran",
+      "encounterSet": "crossing",
+      "build": "pursuer",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "objectives",
+          "outcome": "won",
+          "time": 22.616666666666667,
+          "lives": 3,
+          "peakVisible": 242,
+          "damageTaken": 0,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/17031991/3/veteran/crossing/breaker",
+      "mode": "raid",
+      "seed": 17031991,
+      "airframes": 3,
+      "difficulty": "veteran",
+      "encounterSet": "crossing",
+      "build": "breaker",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "objectives",
+          "outcome": "won",
+          "time": 27.083333333333332,
+          "lives": 3,
+          "peakVisible": 238,
+          "damageTaken": 0,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/17031991/3/veteran/crossing/baseline",
+      "mode": "raid",
+      "seed": 17031991,
+      "airframes": 3,
+      "difficulty": "veteran",
+      "encounterSet": "crossing",
+      "build": "baseline",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "objectives",
+          "outcome": "won",
+          "time": 25.483333333333334,
+          "lives": 3,
+          "peakVisible": 236,
+          "damageTaken": 0,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/17031991/3/veteran/mixed/sweeper",
+      "mode": "raid",
+      "seed": 17031991,
+      "airframes": 3,
+      "difficulty": "veteran",
+      "encounterSet": "mixed",
+      "build": "sweeper",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "packs",
+          "outcome": "won",
+          "time": 42.71666666666667,
+          "lives": 3,
+          "peakVisible": 259,
+          "damageTaken": 0,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/17031991/3/veteran/mixed/pursuer",
+      "mode": "raid",
+      "seed": 17031991,
+      "airframes": 3,
+      "difficulty": "veteran",
+      "encounterSet": "mixed",
+      "build": "pursuer",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "objectives",
+          "outcome": "won",
+          "time": 22.416666666666668,
+          "lives": 3,
+          "peakVisible": 225,
+          "damageTaken": 18,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/17031991/3/veteran/mixed/breaker",
+      "mode": "raid",
+      "seed": 17031991,
+      "airframes": 3,
+      "difficulty": "veteran",
+      "encounterSet": "mixed",
+      "build": "breaker",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "objectives",
+          "outcome": "won",
+          "time": 24.6,
+          "lives": 3,
+          "peakVisible": 220,
+          "damageTaken": 0,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/17031991/3/veteran/mixed/baseline",
+      "mode": "raid",
+      "seed": 17031991,
+      "airframes": 3,
+      "difficulty": "veteran",
+      "encounterSet": "mixed",
+      "build": "baseline",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "objectives",
+          "outcome": "won",
+          "time": 24.25,
+          "lives": 3,
+          "peakVisible": 221,
+          "damageTaken": 0,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/42/1/standard/patrol/sweeper",
+      "mode": "raid",
+      "seed": 42,
+      "airframes": 1,
+      "difficulty": "standard",
+      "encounterSet": "patrol",
+      "build": "sweeper",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "packs",
+          "outcome": "won",
+          "time": 51.71666666666667,
+          "lives": 1,
+          "peakVisible": 137,
+          "damageTaken": 0,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/42/1/standard/patrol/pursuer",
+      "mode": "raid",
+      "seed": 42,
+      "airframes": 1,
+      "difficulty": "standard",
+      "encounterSet": "patrol",
+      "build": "pursuer",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "objectives",
+          "outcome": "won",
+          "time": 23.033333333333335,
+          "lives": 1,
+          "peakVisible": 131,
+          "damageTaken": 0,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/42/1/standard/patrol/breaker",
+      "mode": "raid",
+      "seed": 42,
+      "airframes": 1,
+      "difficulty": "standard",
+      "encounterSet": "patrol",
+      "build": "breaker",
+      "hasCompletion": false,
+      "attempts": [
+        {
+          "route": "objectives",
+          "outcome": "lost",
+          "time": 14.733333333333333,
+          "lives": 0,
+          "peakVisible": 131,
+          "damageTaken": 100,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/42/1/standard/patrol/baseline",
+      "mode": "raid",
+      "seed": 42,
+      "airframes": 1,
+      "difficulty": "standard",
+      "encounterSet": "patrol",
+      "build": "baseline",
+      "hasCompletion": false,
+      "attempts": [
+        {
+          "route": "objectives",
+          "outcome": "lost",
+          "time": 14.733333333333333,
+          "lives": 0,
+          "peakVisible": 131,
+          "damageTaken": 100,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/42/1/standard/crossing/sweeper",
+      "mode": "raid",
+      "seed": 42,
+      "airframes": 1,
+      "difficulty": "standard",
+      "encounterSet": "crossing",
+      "build": "sweeper",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "packs",
+          "outcome": "won",
+          "time": 51.05,
+          "lives": 1,
+          "peakVisible": 183,
+          "damageTaken": 0,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/42/1/standard/crossing/pursuer",
+      "mode": "raid",
+      "seed": 42,
+      "airframes": 1,
+      "difficulty": "standard",
+      "encounterSet": "crossing",
+      "build": "pursuer",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "objectives",
+          "outcome": "won",
+          "time": 19.483333333333334,
+          "lives": 1,
+          "peakVisible": 136,
+          "damageTaken": 0,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/42/1/standard/crossing/breaker",
+      "mode": "raid",
+      "seed": 42,
+      "airframes": 1,
+      "difficulty": "standard",
+      "encounterSet": "crossing",
+      "build": "breaker",
+      "hasCompletion": false,
+      "attempts": [
+        {
+          "route": "objectives",
+          "outcome": "lost",
+          "time": 14.733333333333333,
+          "lives": 0,
+          "peakVisible": 127,
+          "damageTaken": 100,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/42/1/standard/crossing/baseline",
+      "mode": "raid",
+      "seed": 42,
+      "airframes": 1,
+      "difficulty": "standard",
+      "encounterSet": "crossing",
+      "build": "baseline",
+      "hasCompletion": false,
+      "attempts": [
+        {
+          "route": "objectives",
+          "outcome": "lost",
+          "time": 14.733333333333333,
+          "lives": 0,
+          "peakVisible": 127,
+          "damageTaken": 100,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/42/1/standard/mixed/sweeper",
+      "mode": "raid",
+      "seed": 42,
+      "airframes": 1,
+      "difficulty": "standard",
+      "encounterSet": "mixed",
+      "build": "sweeper",
+      "hasCompletion": false,
+      "attempts": [
+        {
+          "route": "packs",
+          "outcome": "lost",
+          "time": 30.916666666666668,
+          "lives": 0,
+          "peakVisible": 126,
+          "damageTaken": 100,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/42/1/standard/mixed/pursuer",
+      "mode": "raid",
+      "seed": 42,
+      "airframes": 1,
+      "difficulty": "standard",
+      "encounterSet": "mixed",
+      "build": "pursuer",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "objectives",
+          "outcome": "won",
+          "time": 23.033333333333335,
+          "lives": 1,
+          "peakVisible": 169,
+          "damageTaken": 0,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/42/1/standard/mixed/breaker",
+      "mode": "raid",
+      "seed": 42,
+      "airframes": 1,
+      "difficulty": "standard",
+      "encounterSet": "mixed",
+      "build": "breaker",
+      "hasCompletion": false,
+      "attempts": [
+        {
+          "route": "objectives",
+          "outcome": "lost",
+          "time": 14.733333333333333,
+          "lives": 0,
+          "peakVisible": 132,
+          "damageTaken": 100,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/42/1/standard/mixed/baseline",
+      "mode": "raid",
+      "seed": 42,
+      "airframes": 1,
+      "difficulty": "standard",
+      "encounterSet": "mixed",
+      "build": "baseline",
+      "hasCompletion": false,
+      "attempts": [
+        {
+          "route": "objectives",
+          "outcome": "lost",
+          "time": 14.733333333333333,
+          "lives": 0,
+          "peakVisible": 132,
+          "damageTaken": 100,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/42/1/veteran/patrol/sweeper",
+      "mode": "raid",
+      "seed": 42,
+      "airframes": 1,
+      "difficulty": "veteran",
+      "encounterSet": "patrol",
+      "build": "sweeper",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "packs",
+          "outcome": "won",
+          "time": 43.93333333333333,
+          "lives": 1,
+          "peakVisible": 149,
+          "damageTaken": 0,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/42/1/veteran/patrol/pursuer",
+      "mode": "raid",
+      "seed": 42,
+      "airframes": 1,
+      "difficulty": "veteran",
+      "encounterSet": "patrol",
+      "build": "pursuer",
+      "hasCompletion": false,
+      "attempts": [
+        {
+          "route": "objectives",
+          "outcome": "lost",
+          "time": 14.65,
+          "lives": 0,
+          "peakVisible": 162,
+          "damageTaken": 100,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/42/1/veteran/patrol/breaker",
+      "mode": "raid",
+      "seed": 42,
+      "airframes": 1,
+      "difficulty": "veteran",
+      "encounterSet": "patrol",
+      "build": "breaker",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "objectives",
+          "outcome": "won",
+          "time": 23.983333333333334,
+          "lives": 1,
+          "peakVisible": 170,
+          "damageTaken": 0,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/42/1/veteran/patrol/baseline",
+      "mode": "raid",
+      "seed": 42,
+      "airframes": 1,
+      "difficulty": "veteran",
+      "encounterSet": "patrol",
+      "build": "baseline",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "objectives",
+          "outcome": "won",
+          "time": 26.683333333333334,
+          "lives": 1,
+          "peakVisible": 169,
+          "damageTaken": 0,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/42/1/veteran/crossing/sweeper",
+      "mode": "raid",
+      "seed": 42,
+      "airframes": 1,
+      "difficulty": "veteran",
+      "encounterSet": "crossing",
+      "build": "sweeper",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "packs",
+          "outcome": "won",
+          "time": 47.95,
+          "lives": 1,
+          "peakVisible": 252,
+          "damageTaken": 0,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/42/1/veteran/crossing/pursuer",
+      "mode": "raid",
+      "seed": 42,
+      "airframes": 1,
+      "difficulty": "veteran",
+      "encounterSet": "crossing",
+      "build": "pursuer",
+      "hasCompletion": false,
+      "attempts": [
+        {
+          "route": "objectives",
+          "outcome": "lost",
+          "time": 14.65,
+          "lives": 0,
+          "peakVisible": 163,
+          "damageTaken": 100,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/42/1/veteran/crossing/breaker",
+      "mode": "raid",
+      "seed": 42,
+      "airframes": 1,
+      "difficulty": "veteran",
+      "encounterSet": "crossing",
+      "build": "breaker",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "objectives",
+          "outcome": "won",
+          "time": 26.966666666666665,
+          "lives": 1,
+          "peakVisible": 244,
+          "damageTaken": 0,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/42/1/veteran/crossing/baseline",
+      "mode": "raid",
+      "seed": 42,
+      "airframes": 1,
+      "difficulty": "veteran",
+      "encounterSet": "crossing",
+      "build": "baseline",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "objectives",
+          "outcome": "won",
+          "time": 26.7,
+          "lives": 1,
+          "peakVisible": 244,
+          "damageTaken": 0,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/42/1/veteran/mixed/sweeper",
+      "mode": "raid",
+      "seed": 42,
+      "airframes": 1,
+      "difficulty": "veteran",
+      "encounterSet": "mixed",
+      "build": "sweeper",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "packs",
+          "outcome": "won",
+          "time": 42.28333333333333,
+          "lives": 1,
+          "peakVisible": 230,
+          "damageTaken": 0,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/42/1/veteran/mixed/pursuer",
+      "mode": "raid",
+      "seed": 42,
+      "airframes": 1,
+      "difficulty": "veteran",
+      "encounterSet": "mixed",
+      "build": "pursuer",
+      "hasCompletion": false,
+      "attempts": [
+        {
+          "route": "objectives",
+          "outcome": "lost",
+          "time": 14.65,
+          "lives": 0,
+          "peakVisible": 173,
+          "damageTaken": 100,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/42/1/veteran/mixed/breaker",
+      "mode": "raid",
+      "seed": 42,
+      "airframes": 1,
+      "difficulty": "veteran",
+      "encounterSet": "mixed",
+      "build": "breaker",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "objectives",
+          "outcome": "won",
+          "time": 24.5,
+          "lives": 1,
+          "peakVisible": 221,
+          "damageTaken": 0,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/42/1/veteran/mixed/baseline",
+      "mode": "raid",
+      "seed": 42,
+      "airframes": 1,
+      "difficulty": "veteran",
+      "encounterSet": "mixed",
+      "build": "baseline",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "objectives",
+          "outcome": "won",
+          "time": 26.7,
+          "lives": 1,
+          "peakVisible": 221,
+          "damageTaken": 0,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/42/3/standard/patrol/sweeper",
+      "mode": "raid",
+      "seed": 42,
+      "airframes": 3,
+      "difficulty": "standard",
+      "encounterSet": "patrol",
+      "build": "sweeper",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "packs",
+          "outcome": "won",
+          "time": 51.71666666666667,
+          "lives": 3,
+          "peakVisible": 137,
+          "damageTaken": 0,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/42/3/standard/patrol/pursuer",
+      "mode": "raid",
+      "seed": 42,
+      "airframes": 3,
+      "difficulty": "standard",
+      "encounterSet": "patrol",
+      "build": "pursuer",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "objectives",
+          "outcome": "won",
+          "time": 23.033333333333335,
+          "lives": 3,
+          "peakVisible": 131,
+          "damageTaken": 0,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/42/3/standard/patrol/breaker",
+      "mode": "raid",
+      "seed": 42,
+      "airframes": 3,
+      "difficulty": "standard",
+      "encounterSet": "patrol",
+      "build": "breaker",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "objectives",
+          "outcome": "won",
+          "time": 32.2,
+          "lives": 2,
+          "peakVisible": 135,
+          "damageTaken": 120,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/42/3/standard/patrol/baseline",
+      "mode": "raid",
+      "seed": 42,
+      "airframes": 3,
+      "difficulty": "standard",
+      "encounterSet": "patrol",
+      "build": "baseline",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "objectives",
+          "outcome": "won",
+          "time": 31.433333333333334,
+          "lives": 2,
+          "peakVisible": 133,
+          "damageTaken": 120,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/42/3/standard/crossing/sweeper",
+      "mode": "raid",
+      "seed": 42,
+      "airframes": 3,
+      "difficulty": "standard",
+      "encounterSet": "crossing",
+      "build": "sweeper",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "packs",
+          "outcome": "won",
+          "time": 51.05,
+          "lives": 3,
+          "peakVisible": 183,
+          "damageTaken": 0,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/42/3/standard/crossing/pursuer",
+      "mode": "raid",
+      "seed": 42,
+      "airframes": 3,
+      "difficulty": "standard",
+      "encounterSet": "crossing",
+      "build": "pursuer",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "objectives",
+          "outcome": "won",
+          "time": 19.483333333333334,
+          "lives": 3,
+          "peakVisible": 136,
+          "damageTaken": 0,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/42/3/standard/crossing/breaker",
+      "mode": "raid",
+      "seed": 42,
+      "airframes": 3,
+      "difficulty": "standard",
+      "encounterSet": "crossing",
+      "build": "breaker",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "objectives",
+          "outcome": "won",
+          "time": 32.6,
+          "lives": 2,
+          "peakVisible": 150,
+          "damageTaken": 120,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/42/3/standard/crossing/baseline",
+      "mode": "raid",
+      "seed": 42,
+      "airframes": 3,
+      "difficulty": "standard",
+      "encounterSet": "crossing",
+      "build": "baseline",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "objectives",
+          "outcome": "won",
+          "time": 34.18333333333333,
+          "lives": 2,
+          "peakVisible": 150,
+          "damageTaken": 120,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/42/3/standard/mixed/sweeper",
+      "mode": "raid",
+      "seed": 42,
+      "airframes": 3,
+      "difficulty": "standard",
+      "encounterSet": "mixed",
+      "build": "sweeper",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "packs",
+          "outcome": "won",
+          "time": 46.45,
+          "lives": 2,
+          "peakVisible": 175,
+          "damageTaken": 120,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/42/3/standard/mixed/pursuer",
+      "mode": "raid",
+      "seed": 42,
+      "airframes": 3,
+      "difficulty": "standard",
+      "encounterSet": "mixed",
+      "build": "pursuer",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "objectives",
+          "outcome": "won",
+          "time": 23.033333333333335,
+          "lives": 3,
+          "peakVisible": 169,
+          "damageTaken": 0,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/42/3/standard/mixed/breaker",
+      "mode": "raid",
+      "seed": 42,
+      "airframes": 3,
+      "difficulty": "standard",
+      "encounterSet": "mixed",
+      "build": "breaker",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "objectives",
+          "outcome": "won",
+          "time": 29.25,
+          "lives": 2,
+          "peakVisible": 166,
+          "damageTaken": 100,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/42/3/standard/mixed/baseline",
+      "mode": "raid",
+      "seed": 42,
+      "airframes": 3,
+      "difficulty": "standard",
+      "encounterSet": "mixed",
+      "build": "baseline",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "objectives",
+          "outcome": "won",
+          "time": 32.516666666666666,
+          "lives": 2,
+          "peakVisible": 167,
+          "damageTaken": 120,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/42/3/veteran/patrol/sweeper",
+      "mode": "raid",
+      "seed": 42,
+      "airframes": 3,
+      "difficulty": "veteran",
+      "encounterSet": "patrol",
+      "build": "sweeper",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "packs",
+          "outcome": "won",
+          "time": 43.93333333333333,
+          "lives": 3,
+          "peakVisible": 149,
+          "damageTaken": 0,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/42/3/veteran/patrol/pursuer",
+      "mode": "raid",
+      "seed": 42,
+      "airframes": 3,
+      "difficulty": "veteran",
+      "encounterSet": "patrol",
+      "build": "pursuer",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "objectives",
+          "outcome": "won",
+          "time": 26.8,
+          "lives": 2,
+          "peakVisible": 175,
+          "damageTaken": 100,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/42/3/veteran/patrol/breaker",
+      "mode": "raid",
+      "seed": 42,
+      "airframes": 3,
+      "difficulty": "veteran",
+      "encounterSet": "patrol",
+      "build": "breaker",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "objectives",
+          "outcome": "won",
+          "time": 23.983333333333334,
+          "lives": 3,
+          "peakVisible": 170,
+          "damageTaken": 0,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/42/3/veteran/patrol/baseline",
+      "mode": "raid",
+      "seed": 42,
+      "airframes": 3,
+      "difficulty": "veteran",
+      "encounterSet": "patrol",
+      "build": "baseline",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "objectives",
+          "outcome": "won",
+          "time": 26.683333333333334,
+          "lives": 3,
+          "peakVisible": 169,
+          "damageTaken": 0,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/42/3/veteran/crossing/sweeper",
+      "mode": "raid",
+      "seed": 42,
+      "airframes": 3,
+      "difficulty": "veteran",
+      "encounterSet": "crossing",
+      "build": "sweeper",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "packs",
+          "outcome": "won",
+          "time": 47.95,
+          "lives": 3,
+          "peakVisible": 252,
+          "damageTaken": 0,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/42/3/veteran/crossing/pursuer",
+      "mode": "raid",
+      "seed": 42,
+      "airframes": 3,
+      "difficulty": "veteran",
+      "encounterSet": "crossing",
+      "build": "pursuer",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "objectives",
+          "outcome": "won",
+          "time": 26.8,
+          "lives": 2,
+          "peakVisible": 181,
+          "damageTaken": 100,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/42/3/veteran/crossing/breaker",
+      "mode": "raid",
+      "seed": 42,
+      "airframes": 3,
+      "difficulty": "veteran",
+      "encounterSet": "crossing",
+      "build": "breaker",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "objectives",
+          "outcome": "won",
+          "time": 26.966666666666665,
+          "lives": 3,
+          "peakVisible": 244,
+          "damageTaken": 0,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/42/3/veteran/crossing/baseline",
+      "mode": "raid",
+      "seed": 42,
+      "airframes": 3,
+      "difficulty": "veteran",
+      "encounterSet": "crossing",
+      "build": "baseline",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "objectives",
+          "outcome": "won",
+          "time": 26.7,
+          "lives": 3,
+          "peakVisible": 244,
+          "damageTaken": 0,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/42/3/veteran/mixed/sweeper",
+      "mode": "raid",
+      "seed": 42,
+      "airframes": 3,
+      "difficulty": "veteran",
+      "encounterSet": "mixed",
+      "build": "sweeper",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "packs",
+          "outcome": "won",
+          "time": 42.28333333333333,
+          "lives": 3,
+          "peakVisible": 230,
+          "damageTaken": 0,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/42/3/veteran/mixed/pursuer",
+      "mode": "raid",
+      "seed": 42,
+      "airframes": 3,
+      "difficulty": "veteran",
+      "encounterSet": "mixed",
+      "build": "pursuer",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "objectives",
+          "outcome": "won",
+          "time": 26.8,
+          "lives": 2,
+          "peakVisible": 225,
+          "damageTaken": 100,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/42/3/veteran/mixed/breaker",
+      "mode": "raid",
+      "seed": 42,
+      "airframes": 3,
+      "difficulty": "veteran",
+      "encounterSet": "mixed",
+      "build": "breaker",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "objectives",
+          "outcome": "won",
+          "time": 24.5,
+          "lives": 3,
+          "peakVisible": 221,
+          "damageTaken": 0,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/42/3/veteran/mixed/baseline",
+      "mode": "raid",
+      "seed": 42,
+      "airframes": 3,
+      "difficulty": "veteran",
+      "encounterSet": "mixed",
+      "build": "baseline",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "objectives",
+          "outcome": "won",
+          "time": 26.7,
+          "lives": 3,
+          "peakVisible": 221,
+          "damageTaken": 0,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/20261005/1/standard/patrol/sweeper",
+      "mode": "raid",
+      "seed": 20261005,
+      "airframes": 1,
+      "difficulty": "standard",
+      "encounterSet": "patrol",
+      "build": "sweeper",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "packs",
+          "outcome": "won",
+          "time": 53.56666666666667,
+          "lives": 1,
+          "peakVisible": 129,
+          "damageTaken": 0,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/20261005/1/standard/patrol/pursuer",
+      "mode": "raid",
+      "seed": 20261005,
+      "airframes": 1,
+      "difficulty": "standard",
+      "encounterSet": "patrol",
+      "build": "pursuer",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "objectives",
+          "outcome": "won",
+          "time": 24.3,
+          "lives": 1,
+          "peakVisible": 127,
+          "damageTaken": 0,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/20261005/1/standard/patrol/breaker",
+      "mode": "raid",
+      "seed": 20261005,
+      "airframes": 1,
+      "difficulty": "standard",
+      "encounterSet": "patrol",
+      "build": "breaker",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "objectives",
+          "outcome": "won",
+          "time": 24.05,
+          "lives": 1,
+          "peakVisible": 127,
+          "damageTaken": 0,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/20261005/1/standard/patrol/baseline",
+      "mode": "raid",
+      "seed": 20261005,
+      "airframes": 1,
+      "difficulty": "standard",
+      "encounterSet": "patrol",
+      "build": "baseline",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "objectives",
+          "outcome": "won",
+          "time": 26.783333333333335,
+          "lives": 1,
+          "peakVisible": 127,
+          "damageTaken": 20,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/20261005/1/standard/crossing/sweeper",
+      "mode": "raid",
+      "seed": 20261005,
+      "airframes": 1,
+      "difficulty": "standard",
+      "encounterSet": "crossing",
+      "build": "sweeper",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "packs",
+          "outcome": "won",
+          "time": 54.61666666666667,
+          "lives": 1,
+          "peakVisible": 184,
+          "damageTaken": 0,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/20261005/1/standard/crossing/pursuer",
+      "mode": "raid",
+      "seed": 20261005,
+      "airframes": 1,
+      "difficulty": "standard",
+      "encounterSet": "crossing",
+      "build": "pursuer",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "objectives",
+          "outcome": "won",
+          "time": 22.266666666666666,
+          "lives": 1,
+          "peakVisible": 156,
+          "damageTaken": 20,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/20261005/1/standard/crossing/breaker",
+      "mode": "raid",
+      "seed": 20261005,
+      "airframes": 1,
+      "difficulty": "standard",
+      "encounterSet": "crossing",
+      "build": "breaker",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "objectives",
+          "outcome": "won",
+          "time": 22.316666666666666,
+          "lives": 1,
+          "peakVisible": 152,
+          "damageTaken": 0,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/20261005/1/standard/crossing/baseline",
+      "mode": "raid",
+      "seed": 20261005,
+      "airframes": 1,
+      "difficulty": "standard",
+      "encounterSet": "crossing",
+      "build": "baseline",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "objectives",
+          "outcome": "won",
+          "time": 26.783333333333335,
+          "lives": 1,
+          "peakVisible": 160,
+          "damageTaken": 20,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/20261005/1/standard/mixed/sweeper",
+      "mode": "raid",
+      "seed": 20261005,
+      "airframes": 1,
+      "difficulty": "standard",
+      "encounterSet": "mixed",
+      "build": "sweeper",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "packs",
+          "outcome": "won",
+          "time": 49.15,
+          "lives": 1,
+          "peakVisible": 159,
+          "damageTaken": 0,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/20261005/1/standard/mixed/pursuer",
+      "mode": "raid",
+      "seed": 20261005,
+      "airframes": 1,
+      "difficulty": "standard",
+      "encounterSet": "mixed",
+      "build": "pursuer",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "objectives",
+          "outcome": "won",
+          "time": 22.05,
+          "lives": 1,
+          "peakVisible": 169,
+          "damageTaken": 0,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/20261005/1/standard/mixed/breaker",
+      "mode": "raid",
+      "seed": 20261005,
+      "airframes": 1,
+      "difficulty": "standard",
+      "encounterSet": "mixed",
+      "build": "breaker",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "objectives",
+          "outcome": "won",
+          "time": 22.266666666666666,
+          "lives": 1,
+          "peakVisible": 170,
+          "damageTaken": 0,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/20261005/1/standard/mixed/baseline",
+      "mode": "raid",
+      "seed": 20261005,
+      "airframes": 1,
+      "difficulty": "standard",
+      "encounterSet": "mixed",
+      "build": "baseline",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "objectives",
+          "outcome": "won",
+          "time": 24.966666666666665,
+          "lives": 1,
+          "peakVisible": 170,
+          "damageTaken": 0,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/20261005/1/veteran/patrol/sweeper",
+      "mode": "raid",
+      "seed": 20261005,
+      "airframes": 1,
+      "difficulty": "veteran",
+      "encounterSet": "patrol",
+      "build": "sweeper",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "packs",
+          "outcome": "won",
+          "time": 51.666666666666664,
+          "lives": 1,
+          "peakVisible": 172,
+          "damageTaken": 0,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/20261005/1/veteran/patrol/pursuer",
+      "mode": "raid",
+      "seed": 20261005,
+      "airframes": 1,
+      "difficulty": "veteran",
+      "encounterSet": "patrol",
+      "build": "pursuer",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "objectives",
+          "outcome": "won",
+          "time": 27.683333333333334,
+          "lives": 1,
+          "peakVisible": 167,
+          "damageTaken": 0,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/20261005/1/veteran/patrol/breaker",
+      "mode": "raid",
+      "seed": 20261005,
+      "airframes": 1,
+      "difficulty": "veteran",
+      "encounterSet": "patrol",
+      "build": "breaker",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "objectives",
+          "outcome": "won",
+          "time": 23.3,
+          "lives": 1,
+          "peakVisible": 161,
+          "damageTaken": 0,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/20261005/1/veteran/patrol/baseline",
+      "mode": "raid",
+      "seed": 20261005,
+      "airframes": 1,
+      "difficulty": "veteran",
+      "encounterSet": "patrol",
+      "build": "baseline",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "objectives",
+          "outcome": "won",
+          "time": 25.866666666666667,
+          "lives": 1,
+          "peakVisible": 163,
+          "damageTaken": 0,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/20261005/1/veteran/crossing/sweeper",
+      "mode": "raid",
+      "seed": 20261005,
+      "airframes": 1,
+      "difficulty": "veteran",
+      "encounterSet": "crossing",
+      "build": "sweeper",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "packs",
+          "outcome": "won",
+          "time": 45.9,
+          "lives": 1,
+          "peakVisible": 233,
+          "damageTaken": 0,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/20261005/1/veteran/crossing/pursuer",
+      "mode": "raid",
+      "seed": 20261005,
+      "airframes": 1,
+      "difficulty": "veteran",
+      "encounterSet": "crossing",
+      "build": "pursuer",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "objectives",
+          "outcome": "won",
+          "time": 23.1,
+          "lives": 1,
+          "peakVisible": 230,
+          "damageTaken": 0,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/20261005/1/veteran/crossing/breaker",
+      "mode": "raid",
+      "seed": 20261005,
+      "airframes": 1,
+      "difficulty": "veteran",
+      "encounterSet": "crossing",
+      "build": "breaker",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "objectives",
+          "outcome": "won",
+          "time": 22.983333333333334,
+          "lives": 1,
+          "peakVisible": 246,
+          "damageTaken": 0,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/20261005/1/veteran/crossing/baseline",
+      "mode": "raid",
+      "seed": 20261005,
+      "airframes": 1,
+      "difficulty": "veteran",
+      "encounterSet": "crossing",
+      "build": "baseline",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "objectives",
+          "outcome": "won",
+          "time": 23.733333333333334,
+          "lives": 1,
+          "peakVisible": 238,
+          "damageTaken": 0,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/20261005/1/veteran/mixed/sweeper",
+      "mode": "raid",
+      "seed": 20261005,
+      "airframes": 1,
+      "difficulty": "veteran",
+      "encounterSet": "mixed",
+      "build": "sweeper",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "packs",
+          "outcome": "won",
+          "time": 37.4,
+          "lives": 1,
+          "peakVisible": 243,
+          "damageTaken": 0,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/20261005/1/veteran/mixed/pursuer",
+      "mode": "raid",
+      "seed": 20261005,
+      "airframes": 1,
+      "difficulty": "veteran",
+      "encounterSet": "mixed",
+      "build": "pursuer",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "objectives",
+          "outcome": "won",
+          "time": 22.933333333333334,
+          "lives": 1,
+          "peakVisible": 223,
+          "damageTaken": 0,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/20261005/1/veteran/mixed/breaker",
+      "mode": "raid",
+      "seed": 20261005,
+      "airframes": 1,
+      "difficulty": "veteran",
+      "encounterSet": "mixed",
+      "build": "breaker",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "objectives",
+          "outcome": "won",
+          "time": 22.983333333333334,
+          "lives": 1,
+          "peakVisible": 221,
+          "damageTaken": 0,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/20261005/1/veteran/mixed/baseline",
+      "mode": "raid",
+      "seed": 20261005,
+      "airframes": 1,
+      "difficulty": "veteran",
+      "encounterSet": "mixed",
+      "build": "baseline",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "objectives",
+          "outcome": "won",
+          "time": 23.733333333333334,
+          "lives": 1,
+          "peakVisible": 221,
+          "damageTaken": 0,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/20261005/3/standard/patrol/sweeper",
+      "mode": "raid",
+      "seed": 20261005,
+      "airframes": 3,
+      "difficulty": "standard",
+      "encounterSet": "patrol",
+      "build": "sweeper",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "packs",
+          "outcome": "won",
+          "time": 53.56666666666667,
+          "lives": 3,
+          "peakVisible": 129,
+          "damageTaken": 0,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/20261005/3/standard/patrol/pursuer",
+      "mode": "raid",
+      "seed": 20261005,
+      "airframes": 3,
+      "difficulty": "standard",
+      "encounterSet": "patrol",
+      "build": "pursuer",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "objectives",
+          "outcome": "won",
+          "time": 24.3,
+          "lives": 3,
+          "peakVisible": 127,
+          "damageTaken": 0,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/20261005/3/standard/patrol/breaker",
+      "mode": "raid",
+      "seed": 20261005,
+      "airframes": 3,
+      "difficulty": "standard",
+      "encounterSet": "patrol",
+      "build": "breaker",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "objectives",
+          "outcome": "won",
+          "time": 24.05,
+          "lives": 3,
+          "peakVisible": 127,
+          "damageTaken": 0,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/20261005/3/standard/patrol/baseline",
+      "mode": "raid",
+      "seed": 20261005,
+      "airframes": 3,
+      "difficulty": "standard",
+      "encounterSet": "patrol",
+      "build": "baseline",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "objectives",
+          "outcome": "won",
+          "time": 26.783333333333335,
+          "lives": 3,
+          "peakVisible": 127,
+          "damageTaken": 20,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/20261005/3/standard/crossing/sweeper",
+      "mode": "raid",
+      "seed": 20261005,
+      "airframes": 3,
+      "difficulty": "standard",
+      "encounterSet": "crossing",
+      "build": "sweeper",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "packs",
+          "outcome": "won",
+          "time": 54.61666666666667,
+          "lives": 3,
+          "peakVisible": 184,
+          "damageTaken": 0,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/20261005/3/standard/crossing/pursuer",
+      "mode": "raid",
+      "seed": 20261005,
+      "airframes": 3,
+      "difficulty": "standard",
+      "encounterSet": "crossing",
+      "build": "pursuer",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "objectives",
+          "outcome": "won",
+          "time": 22.266666666666666,
+          "lives": 3,
+          "peakVisible": 156,
+          "damageTaken": 20,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/20261005/3/standard/crossing/breaker",
+      "mode": "raid",
+      "seed": 20261005,
+      "airframes": 3,
+      "difficulty": "standard",
+      "encounterSet": "crossing",
+      "build": "breaker",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "objectives",
+          "outcome": "won",
+          "time": 22.316666666666666,
+          "lives": 3,
+          "peakVisible": 152,
+          "damageTaken": 0,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/20261005/3/standard/crossing/baseline",
+      "mode": "raid",
+      "seed": 20261005,
+      "airframes": 3,
+      "difficulty": "standard",
+      "encounterSet": "crossing",
+      "build": "baseline",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "objectives",
+          "outcome": "won",
+          "time": 26.783333333333335,
+          "lives": 3,
+          "peakVisible": 160,
+          "damageTaken": 20,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/20261005/3/standard/mixed/sweeper",
+      "mode": "raid",
+      "seed": 20261005,
+      "airframes": 3,
+      "difficulty": "standard",
+      "encounterSet": "mixed",
+      "build": "sweeper",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "packs",
+          "outcome": "won",
+          "time": 49.15,
+          "lives": 3,
+          "peakVisible": 159,
+          "damageTaken": 0,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/20261005/3/standard/mixed/pursuer",
+      "mode": "raid",
+      "seed": 20261005,
+      "airframes": 3,
+      "difficulty": "standard",
+      "encounterSet": "mixed",
+      "build": "pursuer",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "objectives",
+          "outcome": "won",
+          "time": 22.05,
+          "lives": 3,
+          "peakVisible": 169,
+          "damageTaken": 0,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/20261005/3/standard/mixed/breaker",
+      "mode": "raid",
+      "seed": 20261005,
+      "airframes": 3,
+      "difficulty": "standard",
+      "encounterSet": "mixed",
+      "build": "breaker",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "objectives",
+          "outcome": "won",
+          "time": 22.266666666666666,
+          "lives": 3,
+          "peakVisible": 170,
+          "damageTaken": 0,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/20261005/3/standard/mixed/baseline",
+      "mode": "raid",
+      "seed": 20261005,
+      "airframes": 3,
+      "difficulty": "standard",
+      "encounterSet": "mixed",
+      "build": "baseline",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "objectives",
+          "outcome": "won",
+          "time": 24.966666666666665,
+          "lives": 3,
+          "peakVisible": 170,
+          "damageTaken": 0,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/20261005/3/veteran/patrol/sweeper",
+      "mode": "raid",
+      "seed": 20261005,
+      "airframes": 3,
+      "difficulty": "veteran",
+      "encounterSet": "patrol",
+      "build": "sweeper",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "packs",
+          "outcome": "won",
+          "time": 51.666666666666664,
+          "lives": 3,
+          "peakVisible": 172,
+          "damageTaken": 0,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/20261005/3/veteran/patrol/pursuer",
+      "mode": "raid",
+      "seed": 20261005,
+      "airframes": 3,
+      "difficulty": "veteran",
+      "encounterSet": "patrol",
+      "build": "pursuer",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "objectives",
+          "outcome": "won",
+          "time": 27.683333333333334,
+          "lives": 3,
+          "peakVisible": 167,
+          "damageTaken": 0,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/20261005/3/veteran/patrol/breaker",
+      "mode": "raid",
+      "seed": 20261005,
+      "airframes": 3,
+      "difficulty": "veteran",
+      "encounterSet": "patrol",
+      "build": "breaker",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "objectives",
+          "outcome": "won",
+          "time": 23.3,
+          "lives": 3,
+          "peakVisible": 161,
+          "damageTaken": 0,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/20261005/3/veteran/patrol/baseline",
+      "mode": "raid",
+      "seed": 20261005,
+      "airframes": 3,
+      "difficulty": "veteran",
+      "encounterSet": "patrol",
+      "build": "baseline",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "objectives",
+          "outcome": "won",
+          "time": 25.866666666666667,
+          "lives": 3,
+          "peakVisible": 163,
+          "damageTaken": 0,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/20261005/3/veteran/crossing/sweeper",
+      "mode": "raid",
+      "seed": 20261005,
+      "airframes": 3,
+      "difficulty": "veteran",
+      "encounterSet": "crossing",
+      "build": "sweeper",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "packs",
+          "outcome": "won",
+          "time": 45.9,
+          "lives": 3,
+          "peakVisible": 233,
+          "damageTaken": 0,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/20261005/3/veteran/crossing/pursuer",
+      "mode": "raid",
+      "seed": 20261005,
+      "airframes": 3,
+      "difficulty": "veteran",
+      "encounterSet": "crossing",
+      "build": "pursuer",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "objectives",
+          "outcome": "won",
+          "time": 23.1,
+          "lives": 3,
+          "peakVisible": 230,
+          "damageTaken": 0,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/20261005/3/veteran/crossing/breaker",
+      "mode": "raid",
+      "seed": 20261005,
+      "airframes": 3,
+      "difficulty": "veteran",
+      "encounterSet": "crossing",
+      "build": "breaker",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "objectives",
+          "outcome": "won",
+          "time": 22.983333333333334,
+          "lives": 3,
+          "peakVisible": 246,
+          "damageTaken": 0,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/20261005/3/veteran/crossing/baseline",
+      "mode": "raid",
+      "seed": 20261005,
+      "airframes": 3,
+      "difficulty": "veteran",
+      "encounterSet": "crossing",
+      "build": "baseline",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "objectives",
+          "outcome": "won",
+          "time": 23.733333333333334,
+          "lives": 3,
+          "peakVisible": 238,
+          "damageTaken": 0,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/20261005/3/veteran/mixed/sweeper",
+      "mode": "raid",
+      "seed": 20261005,
+      "airframes": 3,
+      "difficulty": "veteran",
+      "encounterSet": "mixed",
+      "build": "sweeper",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "packs",
+          "outcome": "won",
+          "time": 37.4,
+          "lives": 3,
+          "peakVisible": 243,
+          "damageTaken": 0,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/20261005/3/veteran/mixed/pursuer",
+      "mode": "raid",
+      "seed": 20261005,
+      "airframes": 3,
+      "difficulty": "veteran",
+      "encounterSet": "mixed",
+      "build": "pursuer",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "objectives",
+          "outcome": "won",
+          "time": 22.933333333333334,
+          "lives": 3,
+          "peakVisible": 223,
+          "damageTaken": 0,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/20261005/3/veteran/mixed/breaker",
+      "mode": "raid",
+      "seed": 20261005,
+      "airframes": 3,
+      "difficulty": "veteran",
+      "encounterSet": "mixed",
+      "build": "breaker",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "objectives",
+          "outcome": "won",
+          "time": 22.983333333333334,
+          "lives": 3,
+          "peakVisible": 221,
+          "damageTaken": 0,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "raid/20261005/3/veteran/mixed/baseline",
+      "mode": "raid",
+      "seed": 20261005,
+      "airframes": 3,
+      "difficulty": "veteran",
+      "encounterSet": "mixed",
+      "build": "baseline",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "objectives",
+          "outcome": "won",
+          "time": 23.733333333333334,
+          "lives": 3,
+          "peakVisible": 221,
+          "damageTaken": 0,
+          "seconds600": null,
+          "seconds800": null
+        }
+      ]
+    },
+    {
+      "key": "survivor/17031991/1/standard/front/fan-shield",
+      "mode": "survivor",
+      "seed": 17031991,
+      "airframes": 1,
+      "difficulty": "standard",
+      "encounterSet": "front",
+      "build": "fan-shield",
+      "hasCompletion": false,
+      "attempts": [
+        {
+          "route": "tight",
+          "outcome": "lost",
+          "time": 212.43,
+          "lives": 0,
+          "peakVisible": 130,
+          "damageTaken": 100,
+          "seconds600": 0,
+          "seconds800": 0
+        },
+        {
+          "route": "orbit",
+          "outcome": "lost",
+          "time": 136.5,
+          "lives": 0,
+          "peakVisible": 84,
+          "damageTaken": 100,
+          "seconds600": 0,
+          "seconds800": 0
+        },
+        {
+          "route": "figure-eight",
+          "outcome": "lost",
+          "time": 182,
+          "lives": 0,
+          "peakVisible": 206,
+          "damageTaken": 100,
+          "seconds600": 0,
+          "seconds800": 0
+        }
+      ]
+    },
+    {
+      "key": "survivor/17031991/1/standard/front/echo-scanner",
+      "mode": "survivor",
+      "seed": 17031991,
+      "airframes": 1,
+      "difficulty": "standard",
+      "encounterSet": "front",
+      "build": "echo-scanner",
+      "hasCompletion": false,
+      "attempts": [
+        {
+          "route": "tight",
+          "outcome": "lost",
+          "time": 129.67,
+          "lives": 0,
+          "peakVisible": 86,
+          "damageTaken": 100,
+          "seconds600": 0,
+          "seconds800": 0
+        },
+        {
+          "route": "orbit",
+          "outcome": "lost",
+          "time": 136.28,
+          "lives": 0,
+          "peakVisible": 77,
+          "damageTaken": 100,
+          "seconds600": 0,
+          "seconds800": 0
+        },
+        {
+          "route": "figure-eight",
+          "outcome": "lost",
+          "time": 229.03,
+          "lives": 0,
+          "peakVisible": 137,
+          "damageTaken": 100,
+          "seconds600": 0,
+          "seconds800": 0
+        }
+      ]
+    },
+    {
+      "key": "survivor/17031991/1/standard/front/systems",
+      "mode": "survivor",
+      "seed": 17031991,
+      "airframes": 1,
+      "difficulty": "standard",
+      "encounterSet": "front",
+      "build": "systems",
+      "hasCompletion": false,
+      "attempts": [
+        {
+          "route": "tight",
+          "outcome": "lost",
+          "time": 196.05,
+          "lives": 0,
+          "peakVisible": 106,
+          "damageTaken": 100,
+          "seconds600": 0,
+          "seconds800": 0
+        },
+        {
+          "route": "orbit",
+          "outcome": "lost",
+          "time": 189.7,
+          "lives": 0,
+          "peakVisible": 119,
+          "damageTaken": 100,
+          "seconds600": 0,
+          "seconds800": 0
+        },
+        {
+          "route": "figure-eight",
+          "outcome": "lost",
+          "time": 135.87,
+          "lives": 0,
+          "peakVisible": 92,
+          "damageTaken": 100,
+          "seconds600": 0,
+          "seconds800": 0
+        }
+      ]
+    },
+    {
+      "key": "survivor/17031991/1/standard/crossing/fan-shield",
+      "mode": "survivor",
+      "seed": 17031991,
+      "airframes": 1,
+      "difficulty": "standard",
+      "encounterSet": "crossing",
+      "build": "fan-shield",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "tight",
+          "outcome": "lost",
+          "time": 290.02,
+          "lives": 0,
+          "peakVisible": 393,
+          "damageTaken": 100,
+          "seconds600": 0,
+          "seconds800": 0
+        },
+        {
+          "route": "orbit",
+          "outcome": "lost",
+          "time": 96.72,
+          "lives": 0,
+          "peakVisible": 96,
+          "damageTaken": 100,
+          "seconds600": 0,
+          "seconds800": 0
+        },
+        {
+          "route": "figure-eight",
+          "outcome": "won",
+          "time": 326.18,
+          "lives": 1,
+          "peakVisible": 511,
+          "damageTaken": 80,
+          "seconds600": 0,
+          "seconds800": 0
+        }
+      ]
+    },
+    {
+      "key": "survivor/17031991/1/standard/crossing/echo-scanner",
+      "mode": "survivor",
+      "seed": 17031991,
+      "airframes": 1,
+      "difficulty": "standard",
+      "encounterSet": "crossing",
+      "build": "echo-scanner",
+      "hasCompletion": false,
+      "attempts": [
+        {
+          "route": "tight",
+          "outcome": "lost",
+          "time": 86.37,
+          "lives": 0,
+          "peakVisible": 63,
+          "damageTaken": 100,
+          "seconds600": 0,
+          "seconds800": 0
+        },
+        {
+          "route": "orbit",
+          "outcome": "lost",
+          "time": 88.17,
+          "lives": 0,
+          "peakVisible": 92,
+          "damageTaken": 100,
+          "seconds600": 0,
+          "seconds800": 0
+        },
+        {
+          "route": "figure-eight",
+          "outcome": "lost",
+          "time": 270.42,
+          "lives": 0,
+          "peakVisible": 228,
+          "damageTaken": 100,
+          "seconds600": 0,
+          "seconds800": 0
+        }
+      ]
+    },
+    {
+      "key": "survivor/17031991/1/standard/crossing/systems",
+      "mode": "survivor",
+      "seed": 17031991,
+      "airframes": 1,
+      "difficulty": "standard",
+      "encounterSet": "crossing",
+      "build": "systems",
+      "hasCompletion": false,
+      "attempts": [
+        {
+          "route": "tight",
+          "outcome": "lost",
+          "time": 94.98,
+          "lives": 0,
+          "peakVisible": 68,
+          "damageTaken": 100,
+          "seconds600": 0,
+          "seconds800": 0
+        },
+        {
+          "route": "orbit",
+          "outcome": "lost",
+          "time": 90.25,
+          "lives": 0,
+          "peakVisible": 92,
+          "damageTaken": 100,
+          "seconds600": 0,
+          "seconds800": 0
+        },
+        {
+          "route": "figure-eight",
+          "outcome": "lost",
+          "time": 83.95,
+          "lives": 0,
+          "peakVisible": 95,
+          "damageTaken": 100,
+          "seconds600": 0,
+          "seconds800": 0
+        }
+      ]
+    },
+    {
+      "key": "survivor/17031991/1/standard/mixed/fan-shield",
+      "mode": "survivor",
+      "seed": 17031991,
+      "airframes": 1,
+      "difficulty": "standard",
+      "encounterSet": "mixed",
+      "build": "fan-shield",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "tight",
+          "outcome": "lost",
+          "time": 153.42,
+          "lives": 0,
+          "peakVisible": 101,
+          "damageTaken": 100,
+          "seconds600": 0,
+          "seconds800": 0
+        },
+        {
+          "route": "orbit",
+          "outcome": "won",
+          "time": 324.38,
+          "lives": 1,
+          "peakVisible": 453,
+          "damageTaken": 40,
+          "seconds600": 0,
+          "seconds800": 0
+        }
+      ]
+    },
+    {
+      "key": "survivor/17031991/1/standard/mixed/echo-scanner",
+      "mode": "survivor",
+      "seed": 17031991,
+      "airframes": 1,
+      "difficulty": "standard",
+      "encounterSet": "mixed",
+      "build": "echo-scanner",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "tight",
+          "outcome": "won",
+          "time": 320.08,
+          "lives": 1,
+          "peakVisible": 509,
+          "damageTaken": 40,
+          "seconds600": 0,
+          "seconds800": 0
+        }
+      ]
+    },
+    {
+      "key": "survivor/17031991/1/standard/mixed/systems",
+      "mode": "survivor",
+      "seed": 17031991,
+      "airframes": 1,
+      "difficulty": "standard",
+      "encounterSet": "mixed",
+      "build": "systems",
+      "hasCompletion": false,
+      "attempts": [
+        {
+          "route": "tight",
+          "outcome": "lost",
+          "time": 313.1,
+          "lives": 0,
+          "peakVisible": 428,
+          "damageTaken": 100,
+          "seconds600": 0,
+          "seconds800": 0
+        },
+        {
+          "route": "orbit",
+          "outcome": "lost",
+          "time": 155.28,
+          "lives": 0,
+          "peakVisible": 101,
+          "damageTaken": 100,
+          "seconds600": 0,
+          "seconds800": 0
+        },
+        {
+          "route": "figure-eight",
+          "outcome": "lost",
+          "time": 310,
+          "lives": 0,
+          "peakVisible": 452,
+          "damageTaken": 100,
+          "seconds600": 0,
+          "seconds800": 0
+        }
+      ]
+    },
+    {
+      "key": "survivor/17031991/1/veteran/front/fan-shield",
+      "mode": "survivor",
+      "seed": 17031991,
+      "airframes": 1,
+      "difficulty": "veteran",
+      "encounterSet": "front",
+      "build": "fan-shield",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "tight",
+          "outcome": "lost",
+          "time": 155.03,
+          "lives": 0,
+          "peakVisible": 136,
+          "damageTaken": 100,
+          "seconds600": 0,
+          "seconds800": 0
+        },
+        {
+          "route": "orbit",
+          "outcome": "lost",
+          "time": 98.07,
+          "lives": 0,
+          "peakVisible": 68,
+          "damageTaken": 100,
+          "seconds600": 0,
+          "seconds800": 0
+        },
+        {
+          "route": "figure-eight",
+          "outcome": "won",
+          "time": 334.43,
+          "lives": 1,
+          "peakVisible": 535,
+          "damageTaken": 80,
+          "seconds600": 0,
+          "seconds800": 0
+        }
+      ]
+    },
+    {
+      "key": "survivor/17031991/1/veteran/front/echo-scanner",
+      "mode": "survivor",
+      "seed": 17031991,
+      "airframes": 1,
+      "difficulty": "veteran",
+      "encounterSet": "front",
+      "build": "echo-scanner",
+      "hasCompletion": false,
+      "attempts": [
+        {
+          "route": "tight",
+          "outcome": "lost",
+          "time": 123.75,
+          "lives": 0,
+          "peakVisible": 68,
+          "damageTaken": 100,
+          "seconds600": 0,
+          "seconds800": 0
+        },
+        {
+          "route": "orbit",
+          "outcome": "lost",
+          "time": 116.55,
+          "lives": 0,
+          "peakVisible": 88,
+          "damageTaken": 100,
+          "seconds600": 0,
+          "seconds800": 0
+        },
+        {
+          "route": "figure-eight",
+          "outcome": "lost",
+          "time": 151.73,
+          "lives": 0,
+          "peakVisible": 136,
+          "damageTaken": 100,
+          "seconds600": 0,
+          "seconds800": 0
+        }
+      ]
+    },
+    {
+      "key": "survivor/17031991/1/veteran/front/systems",
+      "mode": "survivor",
+      "seed": 17031991,
+      "airframes": 1,
+      "difficulty": "veteran",
+      "encounterSet": "front",
+      "build": "systems",
+      "hasCompletion": false,
+      "attempts": [
+        {
+          "route": "tight",
+          "outcome": "lost",
+          "time": 173.32,
+          "lives": 0,
+          "peakVisible": 141,
+          "damageTaken": 100,
+          "seconds600": 0,
+          "seconds800": 0
+        },
+        {
+          "route": "orbit",
+          "outcome": "lost",
+          "time": 135.62,
+          "lives": 0,
+          "peakVisible": 136,
+          "damageTaken": 100,
+          "seconds600": 0,
+          "seconds800": 0
+        },
+        {
+          "route": "figure-eight",
+          "outcome": "lost",
+          "time": 148.5,
+          "lives": 0,
+          "peakVisible": 104,
+          "damageTaken": 100,
+          "seconds600": 0,
+          "seconds800": 0
+        }
+      ]
+    },
+    {
+      "key": "survivor/17031991/1/veteran/crossing/fan-shield",
+      "mode": "survivor",
+      "seed": 17031991,
+      "airframes": 1,
+      "difficulty": "veteran",
+      "encounterSet": "crossing",
+      "build": "fan-shield",
+      "hasCompletion": false,
+      "attempts": [
+        {
+          "route": "tight",
+          "outcome": "lost",
+          "time": 28,
+          "lives": 0,
+          "peakVisible": 53,
+          "damageTaken": 100,
+          "seconds600": 0,
+          "seconds800": 0
+        },
+        {
+          "route": "orbit",
+          "outcome": "lost",
+          "time": 76.32,
+          "lives": 0,
+          "peakVisible": 63,
+          "damageTaken": 100,
+          "seconds600": 0,
+          "seconds800": 0
+        },
+        {
+          "route": "figure-eight",
+          "outcome": "lost",
+          "time": 55.43,
+          "lives": 0,
+          "peakVisible": 64,
+          "damageTaken": 100,
+          "seconds600": 0,
+          "seconds800": 0
+        }
+      ]
+    },
+    {
+      "key": "survivor/17031991/1/veteran/crossing/echo-scanner",
+      "mode": "survivor",
+      "seed": 17031991,
+      "airframes": 1,
+      "difficulty": "veteran",
+      "encounterSet": "crossing",
+      "build": "echo-scanner",
+      "hasCompletion": false,
+      "attempts": [
+        {
+          "route": "tight",
+          "outcome": "lost",
+          "time": 42.13,
+          "lives": 0,
+          "peakVisible": 53,
+          "damageTaken": 100,
+          "seconds600": 0,
+          "seconds800": 0
+        },
+        {
+          "route": "orbit",
+          "outcome": "lost",
+          "time": 56.1,
+          "lives": 0,
+          "peakVisible": 61,
+          "damageTaken": 100,
+          "seconds600": 0,
+          "seconds800": 0
+        },
+        {
+          "route": "figure-eight",
+          "outcome": "lost",
+          "time": 62.53,
+          "lives": 0,
+          "peakVisible": 61,
+          "damageTaken": 100,
+          "seconds600": 0,
+          "seconds800": 0
+        }
+      ]
+    },
+    {
+      "key": "survivor/17031991/1/veteran/crossing/systems",
+      "mode": "survivor",
+      "seed": 17031991,
+      "airframes": 1,
+      "difficulty": "veteran",
+      "encounterSet": "crossing",
+      "build": "systems",
+      "hasCompletion": false,
+      "attempts": [
+        {
+          "route": "tight",
+          "outcome": "lost",
+          "time": 42.48,
+          "lives": 0,
+          "peakVisible": 53,
+          "damageTaken": 100,
+          "seconds600": 0,
+          "seconds800": 0
+        },
+        {
+          "route": "orbit",
+          "outcome": "lost",
+          "time": 76.82,
+          "lives": 0,
+          "peakVisible": 43,
+          "damageTaken": 100,
+          "seconds600": 0,
+          "seconds800": 0
+        },
+        {
+          "route": "figure-eight",
+          "outcome": "lost",
+          "time": 32.32,
+          "lives": 0,
+          "peakVisible": 61,
+          "damageTaken": 100,
+          "seconds600": 0,
+          "seconds800": 0
+        }
+      ]
+    },
+    {
+      "key": "survivor/17031991/1/veteran/mixed/fan-shield",
+      "mode": "survivor",
+      "seed": 17031991,
+      "airframes": 1,
+      "difficulty": "veteran",
+      "encounterSet": "mixed",
+      "build": "fan-shield",
+      "hasCompletion": false,
+      "attempts": [
+        {
+          "route": "tight",
+          "outcome": "lost",
+          "time": 229.12,
+          "lives": 0,
+          "peakVisible": 161,
+          "damageTaken": 100,
+          "seconds600": 0,
+          "seconds800": 0
+        },
+        {
+          "route": "orbit",
+          "outcome": "lost",
+          "time": 125.3,
+          "lives": 0,
+          "peakVisible": 104,
+          "damageTaken": 100,
+          "seconds600": 0,
+          "seconds800": 0
+        },
+        {
+          "route": "figure-eight",
+          "outcome": "lost",
+          "time": 121.8,
+          "lives": 0,
+          "peakVisible": 85,
+          "damageTaken": 100,
+          "seconds600": 0,
+          "seconds800": 0
+        }
+      ]
+    },
+    {
+      "key": "survivor/17031991/1/veteran/mixed/echo-scanner",
+      "mode": "survivor",
+      "seed": 17031991,
+      "airframes": 1,
+      "difficulty": "veteran",
+      "encounterSet": "mixed",
+      "build": "echo-scanner",
+      "hasCompletion": false,
+      "attempts": [
+        {
+          "route": "tight",
+          "outcome": "lost",
+          "time": 231.57,
+          "lives": 0,
+          "peakVisible": 180,
+          "damageTaken": 100,
+          "seconds600": 0,
+          "seconds800": 0
+        },
+        {
+          "route": "orbit",
+          "outcome": "lost",
+          "time": 246.2,
+          "lives": 0,
+          "peakVisible": 212,
+          "damageTaken": 100,
+          "seconds600": 0,
+          "seconds800": 0
+        },
+        {
+          "route": "figure-eight",
+          "outcome": "lost",
+          "time": 116.58,
+          "lives": 0,
+          "peakVisible": 75,
+          "damageTaken": 100,
+          "seconds600": 0,
+          "seconds800": 0
+        }
+      ]
+    },
+    {
+      "key": "survivor/17031991/1/veteran/mixed/systems",
+      "mode": "survivor",
+      "seed": 17031991,
+      "airframes": 1,
+      "difficulty": "veteran",
+      "encounterSet": "mixed",
+      "build": "systems",
+      "hasCompletion": false,
+      "attempts": [
+        {
+          "route": "tight",
+          "outcome": "lost",
+          "time": 131.58,
+          "lives": 0,
+          "peakVisible": 77,
+          "damageTaken": 100,
+          "seconds600": 0,
+          "seconds800": 0
+        },
+        {
+          "route": "orbit",
+          "outcome": "lost",
+          "time": 233.63,
+          "lives": 0,
+          "peakVisible": 188,
+          "damageTaken": 100,
+          "seconds600": 0,
+          "seconds800": 0
+        },
+        {
+          "route": "figure-eight",
+          "outcome": "lost",
+          "time": 187.62,
+          "lives": 0,
+          "peakVisible": 111,
+          "damageTaken": 100,
+          "seconds600": 0,
+          "seconds800": 0
+        }
+      ]
+    },
+    {
+      "key": "survivor/17031991/3/standard/front/fan-shield",
+      "mode": "survivor",
+      "seed": 17031991,
+      "airframes": 3,
+      "difficulty": "standard",
+      "encounterSet": "front",
+      "build": "fan-shield",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "tight",
+          "outcome": "won",
+          "time": 327.17,
+          "lives": 2,
+          "peakVisible": 529,
+          "damageTaken": 100,
+          "seconds600": 0,
+          "seconds800": 0
+        }
+      ]
+    },
+    {
+      "key": "survivor/17031991/3/standard/front/echo-scanner",
+      "mode": "survivor",
+      "seed": 17031991,
+      "airframes": 3,
+      "difficulty": "standard",
+      "encounterSet": "front",
+      "build": "echo-scanner",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "tight",
+          "outcome": "won",
+          "time": 320.12,
+          "lives": 1,
+          "peakVisible": 540,
+          "damageTaken": 220,
+          "seconds600": 0,
+          "seconds800": 0
+        }
+      ]
+    },
+    {
+      "key": "survivor/17031991/3/standard/front/systems",
+      "mode": "survivor",
+      "seed": 17031991,
+      "airframes": 3,
+      "difficulty": "standard",
+      "encounterSet": "front",
+      "build": "systems",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "tight",
+          "outcome": "won",
+          "time": 327.17,
+          "lives": 2,
+          "peakVisible": 649,
+          "damageTaken": 100,
+          "seconds600": 4.65,
+          "seconds800": 0
+        }
+      ]
+    },
+    {
+      "key": "survivor/17031991/3/standard/crossing/fan-shield",
+      "mode": "survivor",
+      "seed": 17031991,
+      "airframes": 3,
+      "difficulty": "standard",
+      "encounterSet": "crossing",
+      "build": "fan-shield",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "tight",
+          "outcome": "won",
+          "time": 323.08,
+          "lives": 2,
+          "peakVisible": 394,
+          "damageTaken": 100,
+          "seconds600": 0,
+          "seconds800": 0
+        }
+      ]
+    },
+    {
+      "key": "survivor/17031991/3/standard/crossing/echo-scanner",
+      "mode": "survivor",
+      "seed": 17031991,
+      "airframes": 3,
+      "difficulty": "standard",
+      "encounterSet": "crossing",
+      "build": "echo-scanner",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "tight",
+          "outcome": "lost",
+          "time": 275.25,
+          "lives": 0,
+          "peakVisible": 433,
+          "damageTaken": 300,
+          "seconds600": 0,
+          "seconds800": 0
+        },
+        {
+          "route": "orbit",
+          "outcome": "won",
+          "time": 316.37,
+          "lives": 2,
+          "peakVisible": 509,
+          "damageTaken": 180,
+          "seconds600": 0,
+          "seconds800": 0
+        }
+      ]
+    },
+    {
+      "key": "survivor/17031991/3/standard/crossing/systems",
+      "mode": "survivor",
+      "seed": 17031991,
+      "airframes": 3,
+      "difficulty": "standard",
+      "encounterSet": "crossing",
+      "build": "systems",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "tight",
+          "outcome": "won",
+          "time": 325.23,
+          "lives": 2,
+          "peakVisible": 465,
+          "damageTaken": 160,
+          "seconds600": 0,
+          "seconds800": 0
+        }
+      ]
+    },
+    {
+      "key": "survivor/17031991/3/standard/mixed/fan-shield",
+      "mode": "survivor",
+      "seed": 17031991,
+      "airframes": 3,
+      "difficulty": "standard",
+      "encounterSet": "mixed",
+      "build": "fan-shield",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "tight",
+          "outcome": "won",
+          "time": 324.78,
+          "lives": 2,
+          "peakVisible": 566,
+          "damageTaken": 160,
+          "seconds600": 0,
+          "seconds800": 0
+        }
+      ]
+    },
+    {
+      "key": "survivor/17031991/3/standard/mixed/echo-scanner",
+      "mode": "survivor",
+      "seed": 17031991,
+      "airframes": 3,
+      "difficulty": "standard",
+      "encounterSet": "mixed",
+      "build": "echo-scanner",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "tight",
+          "outcome": "won",
+          "time": 320.08,
+          "lives": 3,
+          "peakVisible": 509,
+          "damageTaken": 40,
+          "seconds600": 0,
+          "seconds800": 0
+        }
+      ]
+    },
+    {
+      "key": "survivor/17031991/3/standard/mixed/systems",
+      "mode": "survivor",
+      "seed": 17031991,
+      "airframes": 3,
+      "difficulty": "standard",
+      "encounterSet": "mixed",
+      "build": "systems",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "tight",
+          "outcome": "won",
+          "time": 333.27,
+          "lives": 2,
+          "peakVisible": 428,
+          "damageTaken": 140,
+          "seconds600": 0,
+          "seconds800": 0
+        }
+      ]
+    },
+    {
+      "key": "survivor/17031991/3/veteran/front/fan-shield",
+      "mode": "survivor",
+      "seed": 17031991,
+      "airframes": 3,
+      "difficulty": "veteran",
+      "encounterSet": "front",
+      "build": "fan-shield",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "tight",
+          "outcome": "won",
+          "time": 329.7,
+          "lives": 2,
+          "peakVisible": 512,
+          "damageTaken": 140,
+          "seconds600": 0,
+          "seconds800": 0
+        }
+      ]
+    },
+    {
+      "key": "survivor/17031991/3/veteran/front/echo-scanner",
+      "mode": "survivor",
+      "seed": 17031991,
+      "airframes": 3,
+      "difficulty": "veteran",
+      "encounterSet": "front",
+      "build": "echo-scanner",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "tight",
+          "outcome": "won",
+          "time": 317.78,
+          "lives": 2,
+          "peakVisible": 518,
+          "damageTaken": 180,
+          "seconds600": 0,
+          "seconds800": 0
+        }
+      ]
+    },
+    {
+      "key": "survivor/17031991/3/veteran/front/systems",
+      "mode": "survivor",
+      "seed": 17031991,
+      "airframes": 3,
+      "difficulty": "veteran",
+      "encounterSet": "front",
+      "build": "systems",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "tight",
+          "outcome": "won",
+          "time": 338.77,
+          "lives": 2,
+          "peakVisible": 504,
+          "damageTaken": 180,
+          "seconds600": 0,
+          "seconds800": 0
+        }
+      ]
+    },
+    {
+      "key": "survivor/17031991/3/veteran/crossing/fan-shield",
+      "mode": "survivor",
+      "seed": 17031991,
+      "airframes": 3,
+      "difficulty": "veteran",
+      "encounterSet": "crossing",
+      "build": "fan-shield",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "tight",
+          "outcome": "won",
+          "time": 325.88,
+          "lives": 1,
+          "peakVisible": 410,
+          "damageTaken": 280,
+          "seconds600": 0,
+          "seconds800": 0
+        }
+      ]
+    },
+    {
+      "key": "survivor/17031991/3/veteran/crossing/echo-scanner",
+      "mode": "survivor",
+      "seed": 17031991,
+      "airframes": 3,
+      "difficulty": "veteran",
+      "encounterSet": "crossing",
+      "build": "echo-scanner",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "tight",
+          "outcome": "lost",
+          "time": 308.95,
+          "lives": 0,
+          "peakVisible": 372,
+          "damageTaken": 300,
+          "seconds600": 0,
+          "seconds800": 0
+        },
+        {
+          "route": "orbit",
+          "outcome": "won",
+          "time": 317.17,
+          "lives": 1,
+          "peakVisible": 460,
+          "damageTaken": 200,
+          "seconds600": 0,
+          "seconds800": 0
+        }
+      ]
+    },
+    {
+      "key": "survivor/17031991/3/veteran/crossing/systems",
+      "mode": "survivor",
+      "seed": 17031991,
+      "airframes": 3,
+      "difficulty": "veteran",
+      "encounterSet": "crossing",
+      "build": "systems",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "tight",
+          "outcome": "lost",
+          "time": 284.97,
+          "lives": 0,
+          "peakVisible": 303,
+          "damageTaken": 300,
+          "seconds600": 0,
+          "seconds800": 0
+        },
+        {
+          "route": "orbit",
+          "outcome": "won",
+          "time": 319.75,
+          "lives": 1,
+          "peakVisible": 656,
+          "damageTaken": 240,
+          "seconds600": 1.3333333333333333,
+          "seconds800": 0
+        }
+      ]
+    },
+    {
+      "key": "survivor/17031991/3/veteran/mixed/fan-shield",
+      "mode": "survivor",
+      "seed": 17031991,
+      "airframes": 3,
+      "difficulty": "veteran",
+      "encounterSet": "mixed",
+      "build": "fan-shield",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "tight",
+          "outcome": "won",
+          "time": 327.93,
+          "lives": 2,
+          "peakVisible": 536,
+          "damageTaken": 160,
+          "seconds600": 0,
+          "seconds800": 0
+        }
+      ]
+    },
+    {
+      "key": "survivor/17031991/3/veteran/mixed/echo-scanner",
+      "mode": "survivor",
+      "seed": 17031991,
+      "airframes": 3,
+      "difficulty": "veteran",
+      "encounterSet": "mixed",
+      "build": "echo-scanner",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "tight",
+          "outcome": "won",
+          "time": 318.27,
+          "lives": 2,
+          "peakVisible": 371,
+          "damageTaken": 140,
+          "seconds600": 0,
+          "seconds800": 0
+        }
+      ]
+    },
+    {
+      "key": "survivor/17031991/3/veteran/mixed/systems",
+      "mode": "survivor",
+      "seed": 17031991,
+      "airframes": 3,
+      "difficulty": "veteran",
+      "encounterSet": "mixed",
+      "build": "systems",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "tight",
+          "outcome": "lost",
+          "time": 323.3,
+          "lives": 0,
+          "peakVisible": 609,
+          "damageTaken": 300,
+          "seconds600": 0.6833333333333333,
+          "seconds800": 0
+        },
+        {
+          "route": "orbit",
+          "outcome": "won",
+          "time": 338.27,
+          "lives": 1,
+          "peakVisible": 641,
+          "damageTaken": 200,
+          "seconds600": 4.35,
+          "seconds800": 0
+        }
+      ]
+    },
+    {
+      "key": "survivor/42/1/standard/front/fan-shield",
+      "mode": "survivor",
+      "seed": 42,
+      "airframes": 1,
+      "difficulty": "standard",
+      "encounterSet": "front",
+      "build": "fan-shield",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "tight",
+          "outcome": "won",
+          "time": 327.13,
+          "lives": 1,
+          "peakVisible": 376,
+          "damageTaken": 20,
+          "seconds600": 0,
+          "seconds800": 0
+        }
+      ]
+    },
+    {
+      "key": "survivor/42/1/standard/front/echo-scanner",
+      "mode": "survivor",
+      "seed": 42,
+      "airframes": 1,
+      "difficulty": "standard",
+      "encounterSet": "front",
+      "build": "echo-scanner",
+      "hasCompletion": false,
+      "attempts": [
+        {
+          "route": "tight",
+          "outcome": "lost",
+          "time": 86,
+          "lives": 0,
+          "peakVisible": 75,
+          "damageTaken": 100,
+          "seconds600": 0,
+          "seconds800": 0
+        },
+        {
+          "route": "orbit",
+          "outcome": "lost",
+          "time": 287.43,
+          "lives": 0,
+          "peakVisible": 451,
+          "damageTaken": 100,
+          "seconds600": 0,
+          "seconds800": 0
+        },
+        {
+          "route": "figure-eight",
+          "outcome": "lost",
+          "time": 133.85,
+          "lives": 0,
+          "peakVisible": 74,
+          "damageTaken": 100,
+          "seconds600": 0,
+          "seconds800": 0
+        }
+      ]
+    },
+    {
+      "key": "survivor/42/1/standard/front/systems",
+      "mode": "survivor",
+      "seed": 42,
+      "airframes": 1,
+      "difficulty": "standard",
+      "encounterSet": "front",
+      "build": "systems",
+      "hasCompletion": false,
+      "attempts": [
+        {
+          "route": "tight",
+          "outcome": "lost",
+          "time": 129.7,
+          "lives": 0,
+          "peakVisible": 86,
+          "damageTaken": 100,
+          "seconds600": 0,
+          "seconds800": 0
+        },
+        {
+          "route": "orbit",
+          "outcome": "lost",
+          "time": 288,
+          "lives": 0,
+          "peakVisible": 330,
+          "damageTaken": 100,
+          "seconds600": 0,
+          "seconds800": 0
+        },
+        {
+          "route": "figure-eight",
+          "outcome": "lost",
+          "time": 137,
+          "lives": 0,
+          "peakVisible": 98,
+          "damageTaken": 100,
+          "seconds600": 0,
+          "seconds800": 0
+        }
+      ]
+    },
+    {
+      "key": "survivor/42/1/standard/crossing/fan-shield",
+      "mode": "survivor",
+      "seed": 42,
+      "airframes": 1,
+      "difficulty": "standard",
+      "encounterSet": "crossing",
+      "build": "fan-shield",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "tight",
+          "outcome": "lost",
+          "time": 185.07,
+          "lives": 0,
+          "peakVisible": 127,
+          "damageTaken": 100,
+          "seconds600": 0,
+          "seconds800": 0
+        },
+        {
+          "route": "orbit",
+          "outcome": "won",
+          "time": 324.98,
+          "lives": 1,
+          "peakVisible": 368,
+          "damageTaken": 60,
+          "seconds600": 0,
+          "seconds800": 0
+        }
+      ]
+    },
+    {
+      "key": "survivor/42/1/standard/crossing/echo-scanner",
+      "mode": "survivor",
+      "seed": 42,
+      "airframes": 1,
+      "difficulty": "standard",
+      "encounterSet": "crossing",
+      "build": "echo-scanner",
+      "hasCompletion": false,
+      "attempts": [
+        {
+          "route": "tight",
+          "outcome": "lost",
+          "time": 312.38,
+          "lives": 0,
+          "peakVisible": 469,
+          "damageTaken": 100,
+          "seconds600": 0,
+          "seconds800": 0
+        },
+        {
+          "route": "orbit",
+          "outcome": "lost",
+          "time": 163.88,
+          "lives": 0,
+          "peakVisible": 111,
+          "damageTaken": 100,
+          "seconds600": 0,
+          "seconds800": 0
+        },
+        {
+          "route": "figure-eight",
+          "outcome": "lost",
+          "time": 176.57,
+          "lives": 0,
+          "peakVisible": 87,
+          "damageTaken": 100,
+          "seconds600": 0,
+          "seconds800": 0
+        }
+      ]
+    },
+    {
+      "key": "survivor/42/1/standard/crossing/systems",
+      "mode": "survivor",
+      "seed": 42,
+      "airframes": 1,
+      "difficulty": "standard",
+      "encounterSet": "crossing",
+      "build": "systems",
+      "hasCompletion": false,
+      "attempts": [
+        {
+          "route": "tight",
+          "outcome": "lost",
+          "time": 191.63,
+          "lives": 0,
+          "peakVisible": 124,
+          "damageTaken": 100,
+          "seconds600": 0,
+          "seconds800": 0
+        },
+        {
+          "route": "orbit",
+          "outcome": "lost",
+          "time": 169.8,
+          "lives": 0,
+          "peakVisible": 161,
+          "damageTaken": 100,
+          "seconds600": 0,
+          "seconds800": 0
+        },
+        {
+          "route": "figure-eight",
+          "outcome": "lost",
+          "time": 312.48,
+          "lives": 0,
+          "peakVisible": 480,
+          "damageTaken": 100,
+          "seconds600": 0,
+          "seconds800": 0
+        }
+      ]
+    },
+    {
+      "key": "survivor/42/1/standard/mixed/fan-shield",
+      "mode": "survivor",
+      "seed": 42,
+      "airframes": 1,
+      "difficulty": "standard",
+      "encounterSet": "mixed",
+      "build": "fan-shield",
+      "hasCompletion": false,
+      "attempts": [
+        {
+          "route": "tight",
+          "outcome": "lost",
+          "time": 55.82,
+          "lives": 0,
+          "peakVisible": 46,
+          "damageTaken": 100,
+          "seconds600": 0,
+          "seconds800": 0
+        },
+        {
+          "route": "orbit",
+          "outcome": "lost",
+          "time": 224.42,
+          "lives": 0,
+          "peakVisible": 195,
+          "damageTaken": 100,
+          "seconds600": 0,
+          "seconds800": 0
+        },
+        {
+          "route": "figure-eight",
+          "outcome": "lost",
+          "time": 183.53,
+          "lives": 0,
+          "peakVisible": 102,
+          "damageTaken": 100,
+          "seconds600": 0,
+          "seconds800": 0
+        }
+      ]
+    },
+    {
+      "key": "survivor/42/1/standard/mixed/echo-scanner",
+      "mode": "survivor",
+      "seed": 42,
+      "airframes": 1,
+      "difficulty": "standard",
+      "encounterSet": "mixed",
+      "build": "echo-scanner",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "tight",
+          "outcome": "lost",
+          "time": 65.72,
+          "lives": 0,
+          "peakVisible": 43,
+          "damageTaken": 100,
+          "seconds600": 0,
+          "seconds800": 0
+        },
+        {
+          "route": "orbit",
+          "outcome": "won",
+          "time": 322.38,
+          "lives": 1,
+          "peakVisible": 833,
+          "damageTaken": 80,
+          "seconds600": 9.683333333333334,
+          "seconds800": 1.8833333333333333
+        }
+      ]
+    },
+    {
+      "key": "survivor/42/1/standard/mixed/systems",
+      "mode": "survivor",
+      "seed": 42,
+      "airframes": 1,
+      "difficulty": "standard",
+      "encounterSet": "mixed",
+      "build": "systems",
+      "hasCompletion": false,
+      "attempts": [
+        {
+          "route": "tight",
+          "outcome": "lost",
+          "time": 127.55,
+          "lives": 0,
+          "peakVisible": 69,
+          "damageTaken": 100,
+          "seconds600": 0,
+          "seconds800": 0
+        },
+        {
+          "route": "orbit",
+          "outcome": "lost",
+          "time": 254.95,
+          "lives": 0,
+          "peakVisible": 290,
+          "damageTaken": 100,
+          "seconds600": 0,
+          "seconds800": 0
+        },
+        {
+          "route": "figure-eight",
+          "outcome": "lost",
+          "time": 329.15,
+          "lives": 0,
+          "peakVisible": 460,
+          "damageTaken": 130,
+          "seconds600": 0,
+          "seconds800": 0
+        }
+      ]
+    },
+    {
+      "key": "survivor/42/1/veteran/front/fan-shield",
+      "mode": "survivor",
+      "seed": 42,
+      "airframes": 1,
+      "difficulty": "veteran",
+      "encounterSet": "front",
+      "build": "fan-shield",
+      "hasCompletion": false,
+      "attempts": [
+        {
+          "route": "tight",
+          "outcome": "lost",
+          "time": 104.9,
+          "lives": 0,
+          "peakVisible": 63,
+          "damageTaken": 100,
+          "seconds600": 0,
+          "seconds800": 0
+        },
+        {
+          "route": "orbit",
+          "outcome": "lost",
+          "time": 171.93,
+          "lives": 0,
+          "peakVisible": 114,
+          "damageTaken": 100,
+          "seconds600": 0,
+          "seconds800": 0
+        },
+        {
+          "route": "figure-eight",
+          "outcome": "lost",
+          "time": 99.62,
+          "lives": 0,
+          "peakVisible": 73,
+          "damageTaken": 100,
+          "seconds600": 0,
+          "seconds800": 0
+        }
+      ]
+    },
+    {
+      "key": "survivor/42/1/veteran/front/echo-scanner",
+      "mode": "survivor",
+      "seed": 42,
+      "airframes": 1,
+      "difficulty": "veteran",
+      "encounterSet": "front",
+      "build": "echo-scanner",
+      "hasCompletion": false,
+      "attempts": [
+        {
+          "route": "tight",
+          "outcome": "lost",
+          "time": 171.52,
+          "lives": 0,
+          "peakVisible": 111,
+          "damageTaken": 100,
+          "seconds600": 0,
+          "seconds800": 0
+        },
+        {
+          "route": "orbit",
+          "outcome": "lost",
+          "time": 166.05,
+          "lives": 0,
+          "peakVisible": 175,
+          "damageTaken": 100,
+          "seconds600": 0,
+          "seconds800": 0
+        },
+        {
+          "route": "figure-eight",
+          "outcome": "lost",
+          "time": 108.53,
+          "lives": 0,
+          "peakVisible": 75,
+          "damageTaken": 100,
+          "seconds600": 0,
+          "seconds800": 0
+        }
+      ]
+    },
+    {
+      "key": "survivor/42/1/veteran/front/systems",
+      "mode": "survivor",
+      "seed": 42,
+      "airframes": 1,
+      "difficulty": "veteran",
+      "encounterSet": "front",
+      "build": "systems",
+      "hasCompletion": false,
+      "attempts": [
+        {
+          "route": "tight",
+          "outcome": "lost",
+          "time": 36.62,
+          "lives": 0,
+          "peakVisible": 57,
+          "damageTaken": 100,
+          "seconds600": 0,
+          "seconds800": 0
+        },
+        {
+          "route": "orbit",
+          "outcome": "lost",
+          "time": 42.77,
+          "lives": 0,
+          "peakVisible": 69,
+          "damageTaken": 100,
+          "seconds600": 0,
+          "seconds800": 0
+        },
+        {
+          "route": "figure-eight",
+          "outcome": "lost",
+          "time": 132.62,
+          "lives": 0,
+          "peakVisible": 101,
+          "damageTaken": 100,
+          "seconds600": 0,
+          "seconds800": 0
+        }
+      ]
+    },
+    {
+      "key": "survivor/42/1/veteran/crossing/fan-shield",
+      "mode": "survivor",
+      "seed": 42,
+      "airframes": 1,
+      "difficulty": "veteran",
+      "encounterSet": "crossing",
+      "build": "fan-shield",
+      "hasCompletion": false,
+      "attempts": [
+        {
+          "route": "tight",
+          "outcome": "lost",
+          "time": 134.6,
+          "lives": 0,
+          "peakVisible": 95,
+          "damageTaken": 100,
+          "seconds600": 0,
+          "seconds800": 0
+        },
+        {
+          "route": "orbit",
+          "outcome": "lost",
+          "time": 157.3,
+          "lives": 0,
+          "peakVisible": 103,
+          "damageTaken": 100,
+          "seconds600": 0,
+          "seconds800": 0
+        },
+        {
+          "route": "figure-eight",
+          "outcome": "lost",
+          "time": 262.17,
+          "lives": 0,
+          "peakVisible": 205,
+          "damageTaken": 130,
+          "seconds600": 0,
+          "seconds800": 0
+        }
+      ]
+    },
+    {
+      "key": "survivor/42/1/veteran/crossing/echo-scanner",
+      "mode": "survivor",
+      "seed": 42,
+      "airframes": 1,
+      "difficulty": "veteran",
+      "encounterSet": "crossing",
+      "build": "echo-scanner",
+      "hasCompletion": false,
+      "attempts": [
+        {
+          "route": "tight",
+          "outcome": "lost",
+          "time": 144.03,
+          "lives": 0,
+          "peakVisible": 92,
+          "damageTaken": 100,
+          "seconds600": 0,
+          "seconds800": 0
+        },
+        {
+          "route": "orbit",
+          "outcome": "lost",
+          "time": 236.7,
+          "lives": 0,
+          "peakVisible": 105,
+          "damageTaken": 100,
+          "seconds600": 0,
+          "seconds800": 0
+        },
+        {
+          "route": "figure-eight",
+          "outcome": "lost",
+          "time": 219.28,
+          "lives": 0,
+          "peakVisible": 114,
+          "damageTaken": 130,
+          "seconds600": 0,
+          "seconds800": 0
+        }
+      ]
+    },
+    {
+      "key": "survivor/42/1/veteran/crossing/systems",
+      "mode": "survivor",
+      "seed": 42,
+      "airframes": 1,
+      "difficulty": "veteran",
+      "encounterSet": "crossing",
+      "build": "systems",
+      "hasCompletion": false,
+      "attempts": [
+        {
+          "route": "tight",
+          "outcome": "lost",
+          "time": 262.7,
+          "lives": 0,
+          "peakVisible": 245,
+          "damageTaken": 100,
+          "seconds600": 0,
+          "seconds800": 0
+        },
+        {
+          "route": "orbit",
+          "outcome": "lost",
+          "time": 135.75,
+          "lives": 0,
+          "peakVisible": 106,
+          "damageTaken": 100,
+          "seconds600": 0,
+          "seconds800": 0
+        },
+        {
+          "route": "figure-eight",
+          "outcome": "lost",
+          "time": 141.62,
+          "lives": 0,
+          "peakVisible": 110,
+          "damageTaken": 100,
+          "seconds600": 0,
+          "seconds800": 0
+        }
+      ]
+    },
+    {
+      "key": "survivor/42/1/veteran/mixed/fan-shield",
+      "mode": "survivor",
+      "seed": 42,
+      "airframes": 1,
+      "difficulty": "veteran",
+      "encounterSet": "mixed",
+      "build": "fan-shield",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "tight",
+          "outcome": "lost",
+          "time": 111.58,
+          "lives": 0,
+          "peakVisible": 61,
+          "damageTaken": 100,
+          "seconds600": 0,
+          "seconds800": 0
+        },
+        {
+          "route": "orbit",
+          "outcome": "won",
+          "time": 333.93,
+          "lives": 1,
+          "peakVisible": 484,
+          "damageTaken": 80,
+          "seconds600": 0,
+          "seconds800": 0
+        }
+      ]
+    },
+    {
+      "key": "survivor/42/1/veteran/mixed/echo-scanner",
+      "mode": "survivor",
+      "seed": 42,
+      "airframes": 1,
+      "difficulty": "veteran",
+      "encounterSet": "mixed",
+      "build": "echo-scanner",
+      "hasCompletion": false,
+      "attempts": [
+        {
+          "route": "tight",
+          "outcome": "lost",
+          "time": 42.97,
+          "lives": 0,
+          "peakVisible": 34,
+          "damageTaken": 100,
+          "seconds600": 0,
+          "seconds800": 0
+        },
+        {
+          "route": "orbit",
+          "outcome": "lost",
+          "time": 137.9,
+          "lives": 0,
+          "peakVisible": 81,
+          "damageTaken": 100,
+          "seconds600": 0,
+          "seconds800": 0
+        },
+        {
+          "route": "figure-eight",
+          "outcome": "lost",
+          "time": 209.3,
+          "lives": 0,
+          "peakVisible": 156,
+          "damageTaken": 100,
+          "seconds600": 0,
+          "seconds800": 0
+        }
+      ]
+    },
+    {
+      "key": "survivor/42/1/veteran/mixed/systems",
+      "mode": "survivor",
+      "seed": 42,
+      "airframes": 1,
+      "difficulty": "veteran",
+      "encounterSet": "mixed",
+      "build": "systems",
+      "hasCompletion": false,
+      "attempts": [
+        {
+          "route": "tight",
+          "outcome": "lost",
+          "time": 111.85,
+          "lives": 0,
+          "peakVisible": 90,
+          "damageTaken": 100,
+          "seconds600": 0,
+          "seconds800": 0
+        },
+        {
+          "route": "orbit",
+          "outcome": "lost",
+          "time": 135.52,
+          "lives": 0,
+          "peakVisible": 158,
+          "damageTaken": 100,
+          "seconds600": 0,
+          "seconds800": 0
+        },
+        {
+          "route": "figure-eight",
+          "outcome": "lost",
+          "time": 140.55,
+          "lives": 0,
+          "peakVisible": 155,
+          "damageTaken": 100,
+          "seconds600": 0,
+          "seconds800": 0
+        }
+      ]
+    },
+    {
+      "key": "survivor/42/3/standard/front/fan-shield",
+      "mode": "survivor",
+      "seed": 42,
+      "airframes": 3,
+      "difficulty": "standard",
+      "encounterSet": "front",
+      "build": "fan-shield",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "tight",
+          "outcome": "won",
+          "time": 327.13,
+          "lives": 3,
+          "peakVisible": 376,
+          "damageTaken": 20,
+          "seconds600": 0,
+          "seconds800": 0
+        }
+      ]
+    },
+    {
+      "key": "survivor/42/3/standard/front/echo-scanner",
+      "mode": "survivor",
+      "seed": 42,
+      "airframes": 3,
+      "difficulty": "standard",
+      "encounterSet": "front",
+      "build": "echo-scanner",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "tight",
+          "outcome": "won",
+          "time": 316.17,
+          "lives": 1,
+          "peakVisible": 651,
+          "damageTaken": 240,
+          "seconds600": 4.85,
+          "seconds800": 0
+        }
+      ]
+    },
+    {
+      "key": "survivor/42/3/standard/front/systems",
+      "mode": "survivor",
+      "seed": 42,
+      "airframes": 3,
+      "difficulty": "standard",
+      "encounterSet": "front",
+      "build": "systems",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "tight",
+          "outcome": "won",
+          "time": 327.07,
+          "lives": 1,
+          "peakVisible": 482,
+          "damageTaken": 240,
+          "seconds600": 0,
+          "seconds800": 0
+        }
+      ]
+    },
+    {
+      "key": "survivor/42/3/standard/crossing/fan-shield",
+      "mode": "survivor",
+      "seed": 42,
+      "airframes": 3,
+      "difficulty": "standard",
+      "encounterSet": "crossing",
+      "build": "fan-shield",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "tight",
+          "outcome": "won",
+          "time": 326.43,
+          "lives": 2,
+          "peakVisible": 485,
+          "damageTaken": 100,
+          "seconds600": 0,
+          "seconds800": 0
+        }
+      ]
+    },
+    {
+      "key": "survivor/42/3/standard/crossing/echo-scanner",
+      "mode": "survivor",
+      "seed": 42,
+      "airframes": 3,
+      "difficulty": "standard",
+      "encounterSet": "crossing",
+      "build": "echo-scanner",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "tight",
+          "outcome": "won",
+          "time": 319.87,
+          "lives": 2,
+          "peakVisible": 469,
+          "damageTaken": 120,
+          "seconds600": 0,
+          "seconds800": 0
+        }
+      ]
+    },
+    {
+      "key": "survivor/42/3/standard/crossing/systems",
+      "mode": "survivor",
+      "seed": 42,
+      "airframes": 3,
+      "difficulty": "standard",
+      "encounterSet": "crossing",
+      "build": "systems",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "tight",
+          "outcome": "won",
+          "time": 327.87,
+          "lives": 2,
+          "peakVisible": 614,
+          "damageTaken": 140,
+          "seconds600": 1.55,
+          "seconds800": 0
+        }
+      ]
+    },
+    {
+      "key": "survivor/42/3/standard/mixed/fan-shield",
+      "mode": "survivor",
+      "seed": 42,
+      "airframes": 3,
+      "difficulty": "standard",
+      "encounterSet": "mixed",
+      "build": "fan-shield",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "tight",
+          "outcome": "won",
+          "time": 335.23,
+          "lives": 1,
+          "peakVisible": 532,
+          "damageTaken": 200,
+          "seconds600": 0,
+          "seconds800": 0
+        }
+      ]
+    },
+    {
+      "key": "survivor/42/3/standard/mixed/echo-scanner",
+      "mode": "survivor",
+      "seed": 42,
+      "airframes": 3,
+      "difficulty": "standard",
+      "encounterSet": "mixed",
+      "build": "echo-scanner",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "tight",
+          "outcome": "won",
+          "time": 317.97,
+          "lives": 1,
+          "peakVisible": 382,
+          "damageTaken": 260,
+          "seconds600": 0,
+          "seconds800": 0
+        }
+      ]
+    },
+    {
+      "key": "survivor/42/3/standard/mixed/systems",
+      "mode": "survivor",
+      "seed": 42,
+      "airframes": 3,
+      "difficulty": "standard",
+      "encounterSet": "mixed",
+      "build": "systems",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "tight",
+          "outcome": "won",
+          "time": 330.67,
+          "lives": 1,
+          "peakVisible": 486,
+          "damageTaken": 200,
+          "seconds600": 0,
+          "seconds800": 0
+        }
+      ]
+    },
+    {
+      "key": "survivor/42/3/veteran/front/fan-shield",
+      "mode": "survivor",
+      "seed": 42,
+      "airframes": 3,
+      "difficulty": "veteran",
+      "encounterSet": "front",
+      "build": "fan-shield",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "tight",
+          "outcome": "won",
+          "time": 332.33,
+          "lives": 1,
+          "peakVisible": 585,
+          "damageTaken": 280,
+          "seconds600": 0,
+          "seconds800": 0
+        }
+      ]
+    },
+    {
+      "key": "survivor/42/3/veteran/front/echo-scanner",
+      "mode": "survivor",
+      "seed": 42,
+      "airframes": 3,
+      "difficulty": "veteran",
+      "encounterSet": "front",
+      "build": "echo-scanner",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "tight",
+          "outcome": "won",
+          "time": 317.88,
+          "lives": 2,
+          "peakVisible": 499,
+          "damageTaken": 160,
+          "seconds600": 0,
+          "seconds800": 0
+        }
+      ]
+    },
+    {
+      "key": "survivor/42/3/veteran/front/systems",
+      "mode": "survivor",
+      "seed": 42,
+      "airframes": 3,
+      "difficulty": "veteran",
+      "encounterSet": "front",
+      "build": "systems",
+      "hasCompletion": false,
+      "attempts": [
+        {
+          "route": "tight",
+          "outcome": "lost",
+          "time": 230,
+          "lives": 0,
+          "peakVisible": 177,
+          "damageTaken": 300,
+          "seconds600": 0,
+          "seconds800": 0
+        },
+        {
+          "route": "orbit",
+          "outcome": "lost",
+          "time": 247.97,
+          "lives": 0,
+          "peakVisible": 175,
+          "damageTaken": 300,
+          "seconds600": 0,
+          "seconds800": 0
+        },
+        {
+          "route": "figure-eight",
+          "outcome": "lost",
+          "time": 255.93,
+          "lives": 0,
+          "peakVisible": 218,
+          "damageTaken": 300,
+          "seconds600": 0,
+          "seconds800": 0
+        }
+      ]
+    },
+    {
+      "key": "survivor/42/3/veteran/crossing/fan-shield",
+      "mode": "survivor",
+      "seed": 42,
+      "airframes": 3,
+      "difficulty": "veteran",
+      "encounterSet": "crossing",
+      "build": "fan-shield",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "tight",
+          "outcome": "won",
+          "time": 330.38,
+          "lives": 2,
+          "peakVisible": 555,
+          "damageTaken": 180,
+          "seconds600": 0,
+          "seconds800": 0
+        }
+      ]
+    },
+    {
+      "key": "survivor/42/3/veteran/crossing/echo-scanner",
+      "mode": "survivor",
+      "seed": 42,
+      "airframes": 3,
+      "difficulty": "veteran",
+      "encounterSet": "crossing",
+      "build": "echo-scanner",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "tight",
+          "outcome": "won",
+          "time": 321.77,
+          "lives": 2,
+          "peakVisible": 433,
+          "damageTaken": 140,
+          "seconds600": 0,
+          "seconds800": 0
+        }
+      ]
+    },
+    {
+      "key": "survivor/42/3/veteran/crossing/systems",
+      "mode": "survivor",
+      "seed": 42,
+      "airframes": 3,
+      "difficulty": "veteran",
+      "encounterSet": "crossing",
+      "build": "systems",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "tight",
+          "outcome": "won",
+          "time": 339.6,
+          "lives": 1,
+          "peakVisible": 451,
+          "damageTaken": 200,
+          "seconds600": 0,
+          "seconds800": 0
+        }
+      ]
+    },
+    {
+      "key": "survivor/42/3/veteran/mixed/fan-shield",
+      "mode": "survivor",
+      "seed": 42,
+      "airframes": 3,
+      "difficulty": "veteran",
+      "encounterSet": "mixed",
+      "build": "fan-shield",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "tight",
+          "outcome": "won",
+          "time": 328.18,
+          "lives": 1,
+          "peakVisible": 422,
+          "damageTaken": 260,
+          "seconds600": 0,
+          "seconds800": 0
+        }
+      ]
+    },
+    {
+      "key": "survivor/42/3/veteran/mixed/echo-scanner",
+      "mode": "survivor",
+      "seed": 42,
+      "airframes": 3,
+      "difficulty": "veteran",
+      "encounterSet": "mixed",
+      "build": "echo-scanner",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "tight",
+          "outcome": "won",
+          "time": 324.35,
+          "lives": 1,
+          "peakVisible": 660,
+          "damageTaken": 240,
+          "seconds600": 1.9666666666666666,
+          "seconds800": 0
+        }
+      ]
+    },
+    {
+      "key": "survivor/42/3/veteran/mixed/systems",
+      "mode": "survivor",
+      "seed": 42,
+      "airframes": 3,
+      "difficulty": "veteran",
+      "encounterSet": "mixed",
+      "build": "systems",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "tight",
+          "outcome": "lost",
+          "time": 283.28,
+          "lives": 0,
+          "peakVisible": 416,
+          "damageTaken": 300,
+          "seconds600": 0,
+          "seconds800": 0
+        },
+        {
+          "route": "orbit",
+          "outcome": "lost",
+          "time": 329.93,
+          "lives": 0,
+          "peakVisible": 869,
+          "damageTaken": 300,
+          "seconds600": 14.033333333333333,
+          "seconds800": 5.183333333333334
+        },
+        {
+          "route": "figure-eight",
+          "outcome": "won",
+          "time": 339.17,
+          "lives": 1,
+          "peakVisible": 658,
+          "damageTaken": 260,
+          "seconds600": 5.583333333333333,
+          "seconds800": 0
+        }
+      ]
+    },
+    {
+      "key": "survivor/20261005/1/standard/front/fan-shield",
+      "mode": "survivor",
+      "seed": 20261005,
+      "airframes": 1,
+      "difficulty": "standard",
+      "encounterSet": "front",
+      "build": "fan-shield",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "tight",
+          "outcome": "lost",
+          "time": 171.37,
+          "lives": 0,
+          "peakVisible": 123,
+          "damageTaken": 100,
+          "seconds600": 0,
+          "seconds800": 0
+        },
+        {
+          "route": "orbit",
+          "outcome": "lost",
+          "time": 292.42,
+          "lives": 0,
+          "peakVisible": 342,
+          "damageTaken": 100,
+          "seconds600": 0,
+          "seconds800": 0
+        },
+        {
+          "route": "figure-eight",
+          "outcome": "won",
+          "time": 330.65,
+          "lives": 1,
+          "peakVisible": 362,
+          "damageTaken": 80,
+          "seconds600": 0,
+          "seconds800": 0
+        }
+      ]
+    },
+    {
+      "key": "survivor/20261005/1/standard/front/echo-scanner",
+      "mode": "survivor",
+      "seed": 20261005,
+      "airframes": 1,
+      "difficulty": "standard",
+      "encounterSet": "front",
+      "build": "echo-scanner",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "tight",
+          "outcome": "lost",
+          "time": 244.62,
+          "lives": 0,
+          "peakVisible": 288,
+          "damageTaken": 100,
+          "seconds600": 0,
+          "seconds800": 0
+        },
+        {
+          "route": "orbit",
+          "outcome": "lost",
+          "time": 105.18,
+          "lives": 0,
+          "peakVisible": 81,
+          "damageTaken": 100,
+          "seconds600": 0,
+          "seconds800": 0
+        },
+        {
+          "route": "figure-eight",
+          "outcome": "won",
+          "time": 321.02,
+          "lives": 1,
+          "peakVisible": 427,
+          "damageTaken": 60,
+          "seconds600": 0,
+          "seconds800": 0
+        }
+      ]
+    },
+    {
+      "key": "survivor/20261005/1/standard/front/systems",
+      "mode": "survivor",
+      "seed": 20261005,
+      "airframes": 1,
+      "difficulty": "standard",
+      "encounterSet": "front",
+      "build": "systems",
+      "hasCompletion": false,
+      "attempts": [
+        {
+          "route": "tight",
+          "outcome": "lost",
+          "time": 107.45,
+          "lives": 0,
+          "peakVisible": 133,
+          "damageTaken": 100,
+          "seconds600": 0,
+          "seconds800": 0
+        },
+        {
+          "route": "orbit",
+          "outcome": "lost",
+          "time": 119,
+          "lives": 0,
+          "peakVisible": 127,
+          "damageTaken": 100,
+          "seconds600": 0,
+          "seconds800": 0
+        },
+        {
+          "route": "figure-eight",
+          "outcome": "lost",
+          "time": 84.43,
+          "lives": 0,
+          "peakVisible": 69,
+          "damageTaken": 100,
+          "seconds600": 0,
+          "seconds800": 0
+        }
+      ]
+    },
+    {
+      "key": "survivor/20261005/1/standard/crossing/fan-shield",
+      "mode": "survivor",
+      "seed": 20261005,
+      "airframes": 1,
+      "difficulty": "standard",
+      "encounterSet": "crossing",
+      "build": "fan-shield",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "tight",
+          "outcome": "lost",
+          "time": 319.83,
+          "lives": 0,
+          "peakVisible": 555,
+          "damageTaken": 100,
+          "seconds600": 0,
+          "seconds800": 0
+        },
+        {
+          "route": "orbit",
+          "outcome": "won",
+          "time": 332.12,
+          "lives": 1,
+          "peakVisible": 476,
+          "damageTaken": 40,
+          "seconds600": 0,
+          "seconds800": 0
+        }
+      ]
+    },
+    {
+      "key": "survivor/20261005/1/standard/crossing/echo-scanner",
+      "mode": "survivor",
+      "seed": 20261005,
+      "airframes": 1,
+      "difficulty": "standard",
+      "encounterSet": "crossing",
+      "build": "echo-scanner",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "tight",
+          "outcome": "lost",
+          "time": 195,
+          "lives": 0,
+          "peakVisible": 91,
+          "damageTaken": 100,
+          "seconds600": 0,
+          "seconds800": 0
+        },
+        {
+          "route": "orbit",
+          "outcome": "won",
+          "time": 318.68,
+          "lives": 1,
+          "peakVisible": 534,
+          "damageTaken": 60,
+          "seconds600": 0,
+          "seconds800": 0
+        }
+      ]
+    },
+    {
+      "key": "survivor/20261005/1/standard/crossing/systems",
+      "mode": "survivor",
+      "seed": 20261005,
+      "airframes": 1,
+      "difficulty": "standard",
+      "encounterSet": "crossing",
+      "build": "systems",
+      "hasCompletion": false,
+      "attempts": [
+        {
+          "route": "tight",
+          "outcome": "lost",
+          "time": 319.25,
+          "lives": 0,
+          "peakVisible": 598,
+          "damageTaken": 130,
+          "seconds600": 0,
+          "seconds800": 0
+        },
+        {
+          "route": "orbit",
+          "outcome": "lost",
+          "time": 172.1,
+          "lives": 0,
+          "peakVisible": 186,
+          "damageTaken": 100,
+          "seconds600": 0,
+          "seconds800": 0
+        },
+        {
+          "route": "figure-eight",
+          "outcome": "lost",
+          "time": 177.82,
+          "lives": 0,
+          "peakVisible": 157,
+          "damageTaken": 100,
+          "seconds600": 0,
+          "seconds800": 0
+        }
+      ]
+    },
+    {
+      "key": "survivor/20261005/1/standard/mixed/fan-shield",
+      "mode": "survivor",
+      "seed": 20261005,
+      "airframes": 1,
+      "difficulty": "standard",
+      "encounterSet": "mixed",
+      "build": "fan-shield",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "tight",
+          "outcome": "won",
+          "time": 335.63,
+          "lives": 1,
+          "peakVisible": 772,
+          "damageTaken": 80,
+          "seconds600": 7.266666666666667,
+          "seconds800": 0
+        }
+      ]
+    },
+    {
+      "key": "survivor/20261005/1/standard/mixed/echo-scanner",
+      "mode": "survivor",
+      "seed": 20261005,
+      "airframes": 1,
+      "difficulty": "standard",
+      "encounterSet": "mixed",
+      "build": "echo-scanner",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "tight",
+          "outcome": "won",
+          "time": 324.67,
+          "lives": 1,
+          "peakVisible": 403,
+          "damageTaken": 60,
+          "seconds600": 0,
+          "seconds800": 0
+        }
+      ]
+    },
+    {
+      "key": "survivor/20261005/1/standard/mixed/systems",
+      "mode": "survivor",
+      "seed": 20261005,
+      "airframes": 1,
+      "difficulty": "standard",
+      "encounterSet": "mixed",
+      "build": "systems",
+      "hasCompletion": false,
+      "attempts": [
+        {
+          "route": "tight",
+          "outcome": "lost",
+          "time": 94.73,
+          "lives": 0,
+          "peakVisible": 86,
+          "damageTaken": 100,
+          "seconds600": 0,
+          "seconds800": 0
+        },
+        {
+          "route": "orbit",
+          "outcome": "lost",
+          "time": 151.98,
+          "lives": 0,
+          "peakVisible": 130,
+          "damageTaken": 100,
+          "seconds600": 0,
+          "seconds800": 0
+        },
+        {
+          "route": "figure-eight",
+          "outcome": "lost",
+          "time": 96.43,
+          "lives": 0,
+          "peakVisible": 89,
+          "damageTaken": 100,
+          "seconds600": 0,
+          "seconds800": 0
+        }
+      ]
+    },
+    {
+      "key": "survivor/20261005/1/veteran/front/fan-shield",
+      "mode": "survivor",
+      "seed": 20261005,
+      "airframes": 1,
+      "difficulty": "veteran",
+      "encounterSet": "front",
+      "build": "fan-shield",
+      "hasCompletion": false,
+      "attempts": [
+        {
+          "route": "tight",
+          "outcome": "lost",
+          "time": 134.77,
+          "lives": 0,
+          "peakVisible": 81,
+          "damageTaken": 100,
+          "seconds600": 0,
+          "seconds800": 0
+        },
+        {
+          "route": "orbit",
+          "outcome": "lost",
+          "time": 33.93,
+          "lives": 0,
+          "peakVisible": 39,
+          "damageTaken": 100,
+          "seconds600": 0,
+          "seconds800": 0
+        },
+        {
+          "route": "figure-eight",
+          "outcome": "lost",
+          "time": 37.32,
+          "lives": 0,
+          "peakVisible": 37,
+          "damageTaken": 100,
+          "seconds600": 0,
+          "seconds800": 0
+        }
+      ]
+    },
+    {
+      "key": "survivor/20261005/1/veteran/front/echo-scanner",
+      "mode": "survivor",
+      "seed": 20261005,
+      "airframes": 1,
+      "difficulty": "veteran",
+      "encounterSet": "front",
+      "build": "echo-scanner",
+      "hasCompletion": false,
+      "attempts": [
+        {
+          "route": "tight",
+          "outcome": "lost",
+          "time": 205.63,
+          "lives": 0,
+          "peakVisible": 106,
+          "damageTaken": 100,
+          "seconds600": 0,
+          "seconds800": 0
+        },
+        {
+          "route": "orbit",
+          "outcome": "lost",
+          "time": 103.82,
+          "lives": 0,
+          "peakVisible": 74,
+          "damageTaken": 100,
+          "seconds600": 0,
+          "seconds800": 0
+        },
+        {
+          "route": "figure-eight",
+          "outcome": "lost",
+          "time": 32.52,
+          "lives": 0,
+          "peakVisible": 42,
+          "damageTaken": 100,
+          "seconds600": 0,
+          "seconds800": 0
+        }
+      ]
+    },
+    {
+      "key": "survivor/20261005/1/veteran/front/systems",
+      "mode": "survivor",
+      "seed": 20261005,
+      "airframes": 1,
+      "difficulty": "veteran",
+      "encounterSet": "front",
+      "build": "systems",
+      "hasCompletion": false,
+      "attempts": [
+        {
+          "route": "tight",
+          "outcome": "lost",
+          "time": 195.58,
+          "lives": 0,
+          "peakVisible": 114,
+          "damageTaken": 100,
+          "seconds600": 0,
+          "seconds800": 0
+        },
+        {
+          "route": "orbit",
+          "outcome": "lost",
+          "time": 242.02,
+          "lives": 0,
+          "peakVisible": 211,
+          "damageTaken": 100,
+          "seconds600": 0,
+          "seconds800": 0
+        },
+        {
+          "route": "figure-eight",
+          "outcome": "lost",
+          "time": 149.33,
+          "lives": 0,
+          "peakVisible": 133,
+          "damageTaken": 100,
+          "seconds600": 0,
+          "seconds800": 0
+        }
+      ]
+    },
+    {
+      "key": "survivor/20261005/1/veteran/crossing/fan-shield",
+      "mode": "survivor",
+      "seed": 20261005,
+      "airframes": 1,
+      "difficulty": "veteran",
+      "encounterSet": "crossing",
+      "build": "fan-shield",
+      "hasCompletion": false,
+      "attempts": [
+        {
+          "route": "tight",
+          "outcome": "lost",
+          "time": 135.82,
+          "lives": 0,
+          "peakVisible": 99,
+          "damageTaken": 100,
+          "seconds600": 0,
+          "seconds800": 0
+        },
+        {
+          "route": "orbit",
+          "outcome": "lost",
+          "time": 134.35,
+          "lives": 0,
+          "peakVisible": 107,
+          "damageTaken": 100,
+          "seconds600": 0,
+          "seconds800": 0
+        },
+        {
+          "route": "figure-eight",
+          "outcome": "lost",
+          "time": 127.85,
+          "lives": 0,
+          "peakVisible": 85,
+          "damageTaken": 100,
+          "seconds600": 0,
+          "seconds800": 0
+        }
+      ]
+    },
+    {
+      "key": "survivor/20261005/1/veteran/crossing/echo-scanner",
+      "mode": "survivor",
+      "seed": 20261005,
+      "airframes": 1,
+      "difficulty": "veteran",
+      "encounterSet": "crossing",
+      "build": "echo-scanner",
+      "hasCompletion": false,
+      "attempts": [
+        {
+          "route": "tight",
+          "outcome": "lost",
+          "time": 233.68,
+          "lives": 0,
+          "peakVisible": 182,
+          "damageTaken": 100,
+          "seconds600": 0,
+          "seconds800": 0
+        },
+        {
+          "route": "orbit",
+          "outcome": "lost",
+          "time": 181.62,
+          "lives": 0,
+          "peakVisible": 117,
+          "damageTaken": 100,
+          "seconds600": 0,
+          "seconds800": 0
+        },
+        {
+          "route": "figure-eight",
+          "outcome": "lost",
+          "time": 139.87,
+          "lives": 0,
+          "peakVisible": 107,
+          "damageTaken": 100,
+          "seconds600": 0,
+          "seconds800": 0
+        }
+      ]
+    },
+    {
+      "key": "survivor/20261005/1/veteran/crossing/systems",
+      "mode": "survivor",
+      "seed": 20261005,
+      "airframes": 1,
+      "difficulty": "veteran",
+      "encounterSet": "crossing",
+      "build": "systems",
+      "hasCompletion": false,
+      "attempts": [
+        {
+          "route": "tight",
+          "outcome": "lost",
+          "time": 146.63,
+          "lives": 0,
+          "peakVisible": 97,
+          "damageTaken": 100,
+          "seconds600": 0,
+          "seconds800": 0
+        },
+        {
+          "route": "orbit",
+          "outcome": "lost",
+          "time": 236.85,
+          "lives": 0,
+          "peakVisible": 161,
+          "damageTaken": 100,
+          "seconds600": 0,
+          "seconds800": 0
+        },
+        {
+          "route": "figure-eight",
+          "outcome": "lost",
+          "time": 124.52,
+          "lives": 0,
+          "peakVisible": 155,
+          "damageTaken": 100,
+          "seconds600": 0,
+          "seconds800": 0
+        }
+      ]
+    },
+    {
+      "key": "survivor/20261005/1/veteran/mixed/fan-shield",
+      "mode": "survivor",
+      "seed": 20261005,
+      "airframes": 1,
+      "difficulty": "veteran",
+      "encounterSet": "mixed",
+      "build": "fan-shield",
+      "hasCompletion": false,
+      "attempts": [
+        {
+          "route": "tight",
+          "outcome": "lost",
+          "time": 80.1,
+          "lives": 0,
+          "peakVisible": 47,
+          "damageTaken": 100,
+          "seconds600": 0,
+          "seconds800": 0
+        },
+        {
+          "route": "orbit",
+          "outcome": "lost",
+          "time": 128.27,
+          "lives": 0,
+          "peakVisible": 90,
+          "damageTaken": 100,
+          "seconds600": 0,
+          "seconds800": 0
+        },
+        {
+          "route": "figure-eight",
+          "outcome": "lost",
+          "time": 91.62,
+          "lives": 0,
+          "peakVisible": 80,
+          "damageTaken": 100,
+          "seconds600": 0,
+          "seconds800": 0
+        }
+      ]
+    },
+    {
+      "key": "survivor/20261005/1/veteran/mixed/echo-scanner",
+      "mode": "survivor",
+      "seed": 20261005,
+      "airframes": 1,
+      "difficulty": "veteran",
+      "encounterSet": "mixed",
+      "build": "echo-scanner",
+      "hasCompletion": false,
+      "attempts": [
+        {
+          "route": "tight",
+          "outcome": "lost",
+          "time": 290.02,
+          "lives": 0,
+          "peakVisible": 305,
+          "damageTaken": 100,
+          "seconds600": 0,
+          "seconds800": 0
+        },
+        {
+          "route": "orbit",
+          "outcome": "lost",
+          "time": 147.2,
+          "lives": 0,
+          "peakVisible": 77,
+          "damageTaken": 100,
+          "seconds600": 0,
+          "seconds800": 0
+        },
+        {
+          "route": "figure-eight",
+          "outcome": "lost",
+          "time": 80.87,
+          "lives": 0,
+          "peakVisible": 57,
+          "damageTaken": 100,
+          "seconds600": 0,
+          "seconds800": 0
+        }
+      ]
+    },
+    {
+      "key": "survivor/20261005/1/veteran/mixed/systems",
+      "mode": "survivor",
+      "seed": 20261005,
+      "airframes": 1,
+      "difficulty": "veteran",
+      "encounterSet": "mixed",
+      "build": "systems",
+      "hasCompletion": false,
+      "attempts": [
+        {
+          "route": "tight",
+          "outcome": "lost",
+          "time": 157,
+          "lives": 0,
+          "peakVisible": 125,
+          "damageTaken": 100,
+          "seconds600": 0,
+          "seconds800": 0
+        },
+        {
+          "route": "orbit",
+          "outcome": "lost",
+          "time": 143,
+          "lives": 0,
+          "peakVisible": 217,
+          "damageTaken": 100,
+          "seconds600": 0,
+          "seconds800": 0
+        },
+        {
+          "route": "figure-eight",
+          "outcome": "lost",
+          "time": 162.72,
+          "lives": 0,
+          "peakVisible": 184,
+          "damageTaken": 100,
+          "seconds600": 0,
+          "seconds800": 0
+        }
+      ]
+    },
+    {
+      "key": "survivor/20261005/3/standard/front/fan-shield",
+      "mode": "survivor",
+      "seed": 20261005,
+      "airframes": 3,
+      "difficulty": "standard",
+      "encounterSet": "front",
+      "build": "fan-shield",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "tight",
+          "outcome": "won",
+          "time": 330.88,
+          "lives": 2,
+          "peakVisible": 497,
+          "damageTaken": 180,
+          "seconds600": 0,
+          "seconds800": 0
+        }
+      ]
+    },
+    {
+      "key": "survivor/20261005/3/standard/front/echo-scanner",
+      "mode": "survivor",
+      "seed": 20261005,
+      "airframes": 3,
+      "difficulty": "standard",
+      "encounterSet": "front",
+      "build": "echo-scanner",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "tight",
+          "outcome": "won",
+          "time": 318.87,
+          "lives": 2,
+          "peakVisible": 390,
+          "damageTaken": 160,
+          "seconds600": 0,
+          "seconds800": 0
+        }
+      ]
+    },
+    {
+      "key": "survivor/20261005/3/standard/front/systems",
+      "mode": "survivor",
+      "seed": 20261005,
+      "airframes": 3,
+      "difficulty": "standard",
+      "encounterSet": "front",
+      "build": "systems",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "tight",
+          "outcome": "won",
+          "time": 333.32,
+          "lives": 1,
+          "peakVisible": 484,
+          "damageTaken": 260,
+          "seconds600": 0,
+          "seconds800": 0
+        }
+      ]
+    },
+    {
+      "key": "survivor/20261005/3/standard/crossing/fan-shield",
+      "mode": "survivor",
+      "seed": 20261005,
+      "airframes": 3,
+      "difficulty": "standard",
+      "encounterSet": "crossing",
+      "build": "fan-shield",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "tight",
+          "outcome": "won",
+          "time": 337.08,
+          "lives": 2,
+          "peakVisible": 555,
+          "damageTaken": 120,
+          "seconds600": 0,
+          "seconds800": 0
+        }
+      ]
+    },
+    {
+      "key": "survivor/20261005/3/standard/crossing/echo-scanner",
+      "mode": "survivor",
+      "seed": 20261005,
+      "airframes": 3,
+      "difficulty": "standard",
+      "encounterSet": "crossing",
+      "build": "echo-scanner",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "tight",
+          "outcome": "won",
+          "time": 317.57,
+          "lives": 2,
+          "peakVisible": 580,
+          "damageTaken": 120,
+          "seconds600": 0,
+          "seconds800": 0
+        }
+      ]
+    },
+    {
+      "key": "survivor/20261005/3/standard/crossing/systems",
+      "mode": "survivor",
+      "seed": 20261005,
+      "airframes": 3,
+      "difficulty": "standard",
+      "encounterSet": "crossing",
+      "build": "systems",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "tight",
+          "outcome": "won",
+          "time": 332.77,
+          "lives": 2,
+          "peakVisible": 598,
+          "damageTaken": 130,
+          "seconds600": 0,
+          "seconds800": 0
+        }
+      ]
+    },
+    {
+      "key": "survivor/20261005/3/standard/mixed/fan-shield",
+      "mode": "survivor",
+      "seed": 20261005,
+      "airframes": 3,
+      "difficulty": "standard",
+      "encounterSet": "mixed",
+      "build": "fan-shield",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "tight",
+          "outcome": "won",
+          "time": 335.63,
+          "lives": 3,
+          "peakVisible": 772,
+          "damageTaken": 80,
+          "seconds600": 7.266666666666667,
+          "seconds800": 0
+        }
+      ]
+    },
+    {
+      "key": "survivor/20261005/3/standard/mixed/echo-scanner",
+      "mode": "survivor",
+      "seed": 20261005,
+      "airframes": 3,
+      "difficulty": "standard",
+      "encounterSet": "mixed",
+      "build": "echo-scanner",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "tight",
+          "outcome": "won",
+          "time": 324.67,
+          "lives": 3,
+          "peakVisible": 403,
+          "damageTaken": 60,
+          "seconds600": 0,
+          "seconds800": 0
+        }
+      ]
+    },
+    {
+      "key": "survivor/20261005/3/standard/mixed/systems",
+      "mode": "survivor",
+      "seed": 20261005,
+      "airframes": 3,
+      "difficulty": "standard",
+      "encounterSet": "mixed",
+      "build": "systems",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "tight",
+          "outcome": "won",
+          "time": 332.33,
+          "lives": 1,
+          "peakVisible": 471,
+          "damageTaken": 250,
+          "seconds600": 0,
+          "seconds800": 0
+        }
+      ]
+    },
+    {
+      "key": "survivor/20261005/3/veteran/front/fan-shield",
+      "mode": "survivor",
+      "seed": 20261005,
+      "airframes": 3,
+      "difficulty": "veteran",
+      "encounterSet": "front",
+      "build": "fan-shield",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "tight",
+          "outcome": "won",
+          "time": 326.58,
+          "lives": 2,
+          "peakVisible": 631,
+          "damageTaken": 160,
+          "seconds600": 1.5833333333333333,
+          "seconds800": 0
+        }
+      ]
+    },
+    {
+      "key": "survivor/20261005/3/veteran/front/echo-scanner",
+      "mode": "survivor",
+      "seed": 20261005,
+      "airframes": 3,
+      "difficulty": "veteran",
+      "encounterSet": "front",
+      "build": "echo-scanner",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "tight",
+          "outcome": "won",
+          "time": 322.07,
+          "lives": 2,
+          "peakVisible": 498,
+          "damageTaken": 180,
+          "seconds600": 0,
+          "seconds800": 0
+        }
+      ]
+    },
+    {
+      "key": "survivor/20261005/3/veteran/front/systems",
+      "mode": "survivor",
+      "seed": 20261005,
+      "airframes": 3,
+      "difficulty": "veteran",
+      "encounterSet": "front",
+      "build": "systems",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "tight",
+          "outcome": "lost",
+          "time": 244.57,
+          "lives": 0,
+          "peakVisible": 268,
+          "damageTaken": 300,
+          "seconds600": 0,
+          "seconds800": 0
+        },
+        {
+          "route": "orbit",
+          "outcome": "won",
+          "time": 336.78,
+          "lives": 1,
+          "peakVisible": 787,
+          "damageTaken": 280,
+          "seconds600": 7.933333333333334,
+          "seconds800": 0
+        }
+      ]
+    },
+    {
+      "key": "survivor/20261005/3/veteran/crossing/fan-shield",
+      "mode": "survivor",
+      "seed": 20261005,
+      "airframes": 3,
+      "difficulty": "veteran",
+      "encounterSet": "crossing",
+      "build": "fan-shield",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "tight",
+          "outcome": "won",
+          "time": 322.03,
+          "lives": 1,
+          "peakVisible": 548,
+          "damageTaken": 200,
+          "seconds600": 0,
+          "seconds800": 0
+        }
+      ]
+    },
+    {
+      "key": "survivor/20261005/3/veteran/crossing/echo-scanner",
+      "mode": "survivor",
+      "seed": 20261005,
+      "airframes": 3,
+      "difficulty": "veteran",
+      "encounterSet": "crossing",
+      "build": "echo-scanner",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "tight",
+          "outcome": "won",
+          "time": 319.68,
+          "lives": 1,
+          "peakVisible": 369,
+          "damageTaken": 200,
+          "seconds600": 0,
+          "seconds800": 0
+        }
+      ]
+    },
+    {
+      "key": "survivor/20261005/3/veteran/crossing/systems",
+      "mode": "survivor",
+      "seed": 20261005,
+      "airframes": 3,
+      "difficulty": "veteran",
+      "encounterSet": "crossing",
+      "build": "systems",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "tight",
+          "outcome": "won",
+          "time": 349.48,
+          "lives": 2,
+          "peakVisible": 682,
+          "damageTaken": 160,
+          "seconds600": 10.233333333333333,
+          "seconds800": 0
+        }
+      ]
+    },
+    {
+      "key": "survivor/20261005/3/veteran/mixed/fan-shield",
+      "mode": "survivor",
+      "seed": 20261005,
+      "airframes": 3,
+      "difficulty": "veteran",
+      "encounterSet": "mixed",
+      "build": "fan-shield",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "tight",
+          "outcome": "won",
+          "time": 326.02,
+          "lives": 2,
+          "peakVisible": 413,
+          "damageTaken": 140,
+          "seconds600": 0,
+          "seconds800": 0
+        }
+      ]
+    },
+    {
+      "key": "survivor/20261005/3/veteran/mixed/echo-scanner",
+      "mode": "survivor",
+      "seed": 20261005,
+      "airframes": 3,
+      "difficulty": "veteran",
+      "encounterSet": "mixed",
+      "build": "echo-scanner",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "tight",
+          "outcome": "won",
+          "time": 318.77,
+          "lives": 2,
+          "peakVisible": 330,
+          "damageTaken": 100,
+          "seconds600": 0,
+          "seconds800": 0
+        }
+      ]
+    },
+    {
+      "key": "survivor/20261005/3/veteran/mixed/systems",
+      "mode": "survivor",
+      "seed": 20261005,
+      "airframes": 3,
+      "difficulty": "veteran",
+      "encounterSet": "mixed",
+      "build": "systems",
+      "hasCompletion": true,
+      "attempts": [
+        {
+          "route": "tight",
+          "outcome": "lost",
+          "time": 308.15,
+          "lives": 0,
+          "peakVisible": 387,
+          "damageTaken": 300,
+          "seconds600": 0,
+          "seconds800": 0
+        },
+        {
+          "route": "orbit",
+          "outcome": "won",
+          "time": 328.57,
+          "lives": 1,
+          "peakVisible": 463,
+          "damageTaken": 270,
+          "seconds600": 0,
+          "seconds800": 0
+        }
+      ]
+    }
+  ]
+}
