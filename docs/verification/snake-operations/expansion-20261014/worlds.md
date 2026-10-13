@@ -20,6 +20,10 @@ All new structure details and reactions are original procedural pixel artwork. T
 - Mobile comparison has no horizontal document overflow at 320px; each card contains a 278×208.5 board. Production boards retain their larger existing responsive footprint.
 - 42 optional installation/offline/distribution tests pass. An earlier full distribution build completed with 3,259 files; its receipt is retained in `build.json`, with its working-tree limitation stated. Only this task's generated output was removed afterward to recover space.
 
+- A subsequent clean committed-source distribution at `d55b9b83f8f3ec014b9d777a66984b0a23e6433f` completed with 3,262 files. See `committed-build.json` for hashes and the explicit distinction between independently recorded source identity and the null embedded development-build revision.
+
 ## Acceptance boundaries
 
 The code, content and automated evidence do not establish player-rated fun, unaided recognition by new players, or physical phone/controller performance. Those require observing people and hardware that this environment cannot substitute. The gallery, operation lab and per-mission tactical audit are provided for that review. No universal jammer grading or subjective visual acceptance is claimed.
+
+The user skipped the final player review on 14 October 2026. It is not a remaining implementation gate. Physical-device measurements remain unperformed and are not represented as passes.
