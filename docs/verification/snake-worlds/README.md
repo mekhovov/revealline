@@ -1,6 +1,6 @@
 # Snake world foundation — 13 October 2026
 
-This is the first reviewable visual slice of the approved 96-mission expansion, rebased onto `main` at `fba236ef80bd0310ae3b9c33fd7c26b1529b245c`. It does **not** complete P0 or either gameplay release.
+This is the first reviewable visual slice of the approved 96-mission expansion, rebased onto `main` at `e5dce34d35b0f7bca81c95f54e27fba9b8e6cacd` (including the FPV library update that merged during verification). It does **not** complete P0 or either gameplay release.
 
 ## Delivered
 
