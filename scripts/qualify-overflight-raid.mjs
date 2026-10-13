@@ -18,6 +18,7 @@ import {
   chooseOverflightHuntUpgrade,
   overflightHuntSummary,
   overflightHuntFixtureInput,
+  overflightHuntContactState,
 } from '../game/overflight/raid-core.mjs';
 import { createOverflightHuntReviewPilot } from '../game/overflight/raid-review-pilot.mjs';
 
@@ -42,6 +43,17 @@ export function qualifyOverflightHunt({
   const pilot = createOverflightHuntReviewPilot({ route, build });
   const samples = [],
     choices = [];
+  const pacing = {
+    observation:
+      'Post-step visible target states sampled at 10 Hz; not a human decision or safety assessment.',
+    sampleSeconds: 0,
+    noVisibleTargetSeconds: 0,
+    guardedTargetsOnlySeconds: 0,
+    exposedInfantrySeconds: 0,
+    exposedMachineryOnlySeconds: 0,
+    objectiveTimeline: [],
+  };
+  const completedObjectives = new Set();
   let nextSample = 0;
   const started = performance.now();
   startOverflightHunt(run);
@@ -54,6 +66,46 @@ export function qualifyOverflightHunt({
       continue;
     }
     stepOverflightHunt(run, pilot.input(run));
+    for (const objective of run.hunt.objectives) {
+      if (!objective.completed || completedObjectives.has(objective.id)) continue;
+      completedObjectives.add(objective.id);
+      pacing.objectiveTimeline.push({
+        id: objective.id,
+        sector: objective.sector,
+        time: run.time,
+        kills: run.stats.kills,
+        damageTaken: run.stats.damageTaken,
+        boostsUsed: run.stats.boostsUsed,
+      });
+    }
+    if (run.tick % 6 === 0) {
+      let visible = false,
+        infantry = false,
+        machinery = false;
+      for (const enemy of run.enemies) {
+        if (
+          !enemy.active ||
+          enemy.warning > 0 ||
+          Math.abs(enemy.x - run.camera.x) > run.camera.width / 2 ||
+          Math.abs(enemy.y - run.camera.y) > run.camera.height / 2
+        )
+          continue;
+        visible = true;
+        const state = overflightHuntContactState(enemy, run.player);
+        infantry ||= state === 'exposed';
+        machinery ||= state === 'machinery-exposed';
+      }
+      pacing.sampleSeconds += 0.1;
+      pacing[
+        infantry
+          ? 'exposedInfantrySeconds'
+          : machinery
+            ? 'exposedMachineryOnlySeconds'
+            : visible
+              ? 'guardedTargetsOnlySeconds'
+              : 'noVisibleTargetSeconds'
+      ] += 0.1;
+    }
     if (run.time >= nextSample) {
       samples.push({
         time: run.time,
@@ -88,6 +140,7 @@ export function qualifyOverflightHunt({
     completed: ['won', 'lost'].includes(run.phase),
     elapsedCpuMs: performance.now() - started,
     choices,
+    pacing,
     samples,
     summary: overflightHuntSummary(run),
   };

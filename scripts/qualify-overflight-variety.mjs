@@ -79,7 +79,7 @@ for (const difficulty of ['standard', 'veteran']) {
     for (const direction of ['fan-shield', 'echo-scanner', 'systems']) {
       // Preserve failures. Alternate movement establishes reachability without
       // weakening the difficulty just to make a single automated route win.
-      for (const route of ['tight', 'orbit']) {
+      for (const route of ['tight', 'orbit', 'figure-eight']) {
         const result = qualifyOverflight({
           seed,
           difficulty,

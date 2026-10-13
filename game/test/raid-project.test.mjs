@@ -118,7 +118,7 @@ test('formation routes account for every member offset and cannot strand edge ac
 });
 test('surviving escorts cannot overlap a later sector beyond the visible specialist budget', () => {
   const project = createOverflightHuntProject();
-  const next = project.encounters[1].packs.find((p) => p.behavior === 'brace');
+  const next = project.encounters[1].packs.find((p) => p.behavior === 'shield');
   const old = project.encounters[0].packs.find((p) => p.behavior === 'brace');
   next.count = 6;
   old.count = 6;
