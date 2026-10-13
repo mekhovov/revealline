@@ -1,5 +1,9 @@
 # Overflight candidate qualification
 
+The [13 October pacing continuation](pacing-20261013/README.md) records the latest
+Survivor/Raid gameplay changes, current-source route checks and remaining review
+priorities after rebasing onto main. Earlier receipts below remain historical.
+
 Recorded 5 October 2026 against implementation base main
 `2d447bc790bdf3951251c99041c8a918363ece0a`. This is working-tree candidate
 qualification. No target-device, human-play or release gate is accepted by these automated receipts.
