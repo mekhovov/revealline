@@ -425,13 +425,31 @@ export function createClassicSnakeRecords({
   };
   const update = (merge) =>
     enqueue(async () => {
-      if (closed) return;
-      pending = validate(mergeProgress(pending, validate(merge(empty()))));
+      if (closed) return { saved: false };
+      const previousPending = pending;
+      try {
+        pending = validate(mergeProgress(pending, validate(merge(empty()))));
+      } catch (error) {
+        // The accepted proof was verified before this bounded profile merge.
+        // A full profile must not turn a valid result into a failed verification.
+        onWarning(error);
+        return { saved: false };
+      }
       try {
         await flush();
+        return { saved: true };
       } catch (error) {
-        publish(validate(mergeProgress(state, pending)));
+        try {
+          publish(validate(mergeProgress(state, pending)));
+        } catch {
+          // Neither evict old proofs nor retain an oversized retry queue. The
+          // current result remains verified in its host; the stored profile and
+          // earlier retryable writes remain intact.
+          pending = previousPending;
+          verifier.prune(state, pending);
+        }
         onWarning(error);
+        return { saved: false };
       }
     });
   return {
@@ -503,7 +521,7 @@ export function createClassicSnakeRecords({
       const id = proof.identity,
         key = proof.key,
         clear = allowClear && proof.clear;
-      await update((previous) => {
+      const storage = await update((previous) => {
         const before = previous.rows[key] ?? {
           levelId: proof.levelId,
           chapterId: proof.chapterId,
@@ -551,6 +569,7 @@ export function createClassicSnakeRecords({
         keepReferencedProofs(row);
         return { ...previous, rows: { ...previous.rows, [key]: row } };
       });
+      return { verified: true, saved: storage.saved };
     },
     visit: (levelId) => {
       required(catalogue.has(levelId), 'Unknown Snake recent mission.');
