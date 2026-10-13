@@ -61,8 +61,8 @@ export const OVERFLIGHT_COPY = Object.freeze({
     intactSortie: 'No airframes lost',
     boostsUsed: 'Boosts used',
     flightLevel: 'Flight level',
-    title: 'Overflight',
-    preparing: 'Preparing Overflight…',
+    title: 'Survive',
+    preparing: 'Preparing Survive…',
     briefing:
       'Fly through the gaps. Your payload fires automatically as you fly. Collect salvage, build your equipment and defeat the final tank.',
     field: 'Encounters',
@@ -245,7 +245,7 @@ export const OVERFLIGHT_COPY = Object.freeze({
     trialHelp:
       'Окремий замір: 30 секунд прогріву, потім 120 секунд (15 хвилин для тривалого тесту). Завершується автоматично. Тримайте вкладку активною; переривання робить замір недійсним. Перезавантажуйте перед кожним заміром.',
     trialComplete: 'Замір завершено · дані зафіксовано. Завантажте або перегляньте запис.',
-    title: 'Проліт',
+    title: 'Вижити',
     preparing: 'Готуємо «Проліт»…',
     briefing:
       'Пролітайте крізь прогалини. Дрон автоматично застосовує заряд під час польоту. Збирайте ресурси, покращуйте спорядження та здолайте фінальний танк.',

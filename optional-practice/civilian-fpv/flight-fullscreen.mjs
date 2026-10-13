@@ -8185,7 +8185,7 @@ export const readSimRadioAudio=sharedGlobalSettings.readSimRadioAudio;
 export const SIM_RADIO_AUDIO_KEY=sharedGlobalSettings.SIM_RADIO_AUDIO_KEY;
 export const attachSimMenuAudioSettings=sharedGlobalSettings.attachSimMenuAudioSettings;
 export const readSimMenuAudio=sharedGlobalSettings.readSimMenuAudio;
-// Canonical source sha256: b1495afc3c7be24458ccb75dcb83d49d00ce21e378b3e8df8409cde6f78b38e8
+// Canonical source sha256: f57b6147875e5ad9db9477248827813a1044e4492022a091b771626f2490fc96
 const sharedModeShell=(()=>{
 // Dependency-free presentation shared with bundled simulator builds.
 const GAME_MODE_ORDER=Object.freeze([
@@ -8200,20 +8200,24 @@ const copy={
 en:{
 solo:'Solo',
 team:'Team',
-versus:'VS',
+versus:'Duel',
 snake:'Snake',
-overflight:'Overflight',
+overflight:'Survive',
 simulator:'SIM',
 mode:'Game mode',
+more:'More',
+less:'Less',
 },
 uk:{
 solo:'Соло',
 team:'Разом',
-versus:'VS',
+versus:'Дуель',
 snake:'Змійка',
-overflight:'Проліт',
+overflight:'Вижити',
 simulator:'SIM',
 mode:'Режим гри',
+more:'Ще',
+less:'Згорнути',
 },
 };
 
@@ -8254,41 +8258,98 @@ element.id||=`${root.id||'game-mode'}-${id}`;
 const label=document.createElement('strong');
 label.className='game-mode-label';
 element.replaceChildren(label);
-if(['solo','team','versus','simulator'].includes(id)){
+if(['solo','team','versus','overflight','simulator'].includes(id)){
 const badge=document.createElement('small');
 badge.className='game-mode-badge';
-badge.textContent=id==='simulator'?'beta':id==='solo'?'1P':'2P';
+badge.textContent=['simulator','overflight'].includes(id)
+?'beta'
+:id==='solo'
+?'1P'
+:'2P';
 badge.setAttribute('aria-hidden','true');
 element.append(badge);
 }
 setMenuIcon(element,id);
-return{id,element,label};
+return{id,element,label,available:!element.hidden};
 },
 );
-root.classList.add('game-mode-choice');
-root.style.setProperty('--game-mode-count',String(rows.length));
-root.dataset.menuLayout='horizontal';
-root.dataset.menuScope='modes';
-root.replaceChildren(...rows.map(({element})=>element));
-for(const[index,{element}]of rows.entries()){
+const primary=rows.filter(({id})=>['solo','team','versus'].includes(id));
+const secondary=rows.filter((row)=> !primary.includes(row));
+const more=document.createElement('button');
+more.type='button';
+more.id=`${root.id||current+'-modes'}-more`;
+more.dataset.modeMore='true';
+more.setAttribute('aria-controls',secondary.map(({element})=>element.id).join(' '));
+const moreLabel=document.createElement('strong');
+more.append(moreLabel);
+setMenuIcon(more,'more');
+let language=locale;
+let expanded=secondary.some(({id})=>id===current);
+const emit=(name)=>{
+const EventType=document.defaultView?.Event??globalThis.Event;
+if(EventType)root.dispatchEvent(new EventType(name,{bubbles:true}));
+};
+const horizontal=(elements)=>{
+for(const[index,element]of elements.entries()){
+for(const[direction,delta]of[
+['left',-1],
+['right',1],
+])
 element.setAttribute(
-'data-menu-left',
+`data-menu-${direction}`,
 Array.from(
-{length:rows.length-1},
-(_,offset)=>rows[(index-offset-1+rows.length)%rows.length].element.id,
-).join(' '),
-);
-element.setAttribute(
-'data-menu-right',
-Array.from(
-{length:rows.length-1},
-(_,offset)=>rows[(index+offset+1)%rows.length].element.id,
+{length:elements.length-1},
+(_,offset)=>
+elements[
+(index+delta*(offset+1)+elements.length*elements.length)%
+elements.length
+].id,
 ).join(' '),
 );
 }
-const EventType=document.defaultView?.Event??globalThis.Event;
-if(EventType)root.dispatchEvent(new EventType('game-mode-choices-ready',{bubbles:true}));
+};
+const refreshLayout=()=>{
+root.dataset.modesExpanded=String(expanded);
+root.style.setProperty('--game-mode-count',expanded?'3':'4');
+more.setAttribute('aria-expanded',String(expanded));
+moreLabel.textContent=(copy[language]??copy.en)[expanded?'less':'more'];
+for(const{element,available}of secondary)element.hidden= !expanded|| !available;
+// Follow visual reading order across the two rows, then the disclosure.
+horizontal([...(expanded?rows:primary).map(({element})=>element),more]);
+};
+const close=(force=false)=>{
+if(!expanded||(!force&& !root.contains(document.activeElement)))return false;
+expanded=false;
+refreshLayout();
+emit('game-mode-visibility-changed');
+more.focus({preventScroll:true});
+return true;
+};
+const toggle=()=>{
+if(expanded)return close(true);
+expanded=true;
+refreshLayout();
+emit('game-mode-visibility-changed');
+(
+secondary.find(({element})=> !element.disabled&& !element.hidden)?.element??more
+).focus({
+preventScroll:true,
+});
+};
+const keydown=(event)=>{
+if(event.key!=='Escape'|| !expanded)return;
+event.preventDefault();
+event.stopPropagation();
+close();
+};
+more.addEventListener('click',toggle);
+root.addEventListener('keydown',keydown);
+root.classList.add('game-mode-choice');
+root.dataset.menuLayout='horizontal';
+root.dataset.menuScope='modes';
+root.replaceChildren(...rows.map(({element})=>element),more);
 const refresh=(locale)=>{
+language=locale;
 const labels=copy[locale]??copy.en;
 root.setAttribute('aria-label',labels.mode);
 for(const{id,element,label}of rows){
@@ -8296,12 +8357,24 @@ label.textContent=labels[id];
 const players=id==='solo'?'1P ':['team','versus'].includes(id)?'2P ':'';
 element.setAttribute(
 'aria-label',
-`${players}${labels[id]}${id==='simulator'?' beta':''}`,
+`${players}${labels[id]}${['simulator','overflight'].includes(id)?' beta':''}`,
 );
 }
+refreshLayout();
 };
 refresh(locale);
-return{choices:Object.fromEntries(rows.map(({id,element})=>[id,element])),refresh};
+emit('game-mode-choices-ready');
+return{
+choices:Object.fromEntries(rows.map(({id,element})=>[id,element])),
+refresh,
+more,
+close,
+dispose(){
+more.removeEventListener('click',toggle);
+root.removeEventListener('keydown',keydown);
+more.remove();
+},
+};
 }
 
 // Browser key identities must not depend on the language used at module startup.
@@ -8778,11 +8851,6 @@ scopeRoot=modesRoot?.closest?.('[id]')??null,
 const groups=steps
 .map((step)=>(Array.isArray(step)?step:[step]).filter((node)=>node?.id))
 .filter((group)=>group.length);
-const modes=[...(modesRoot?.querySelectorAll('[data-game-mode]')??[])].filter(
-(node)=>node.id,
-);
-const selected=
-current??modes.find((node)=>node.getAttribute('aria-current')==='page')??null;
 const originals=new Map();
 const set=(nodes,direction,targets)=>{
 nodes=nodes.filter((node)=>node?.id);
@@ -8807,9 +8875,19 @@ if(value)node.setAttribute(`data-menu-${direction}`,value);
 else node.removeAttribute(`data-menu-${direction}`);
 }
 };
+const refresh=()=>{
+const modes=[...(modesRoot?.querySelectorAll('[data-game-mode]')??[])].filter(
+(node)=>node.id&& !node.hidden,
+);
+const more=modesRoot?.querySelector('[data-mode-more]');
+const selected=
+(current&& !current.hidden?current:null)??
+modes.find((node)=>node.getAttribute('aria-current')==='page')??
+more??
+null;
 if(groups.length){
-set(modes,'down',groups.flat());
-set(modes,'up',groups.toReversed().flat());
+set([...modes,more].filter(Boolean),'down',groups.flat());
+set([...modes,more].filter(Boolean),'up',groups.toReversed().flat());
 groups.forEach((group,index)=>{
 set(group,'up',[
 ...groups.slice(0,index).toReversed().flat(),
@@ -8825,8 +8903,21 @@ direction,
 Array.isArray(targets)?targets:[targets],
 );
 }
+if(more?.getAttribute('aria-expanded')==='true'){
+const extras=modes.filter((node)=>
+['snake','overflight','simulator'].includes(node.dataset.gameMode),
+);
+set([more],'down',[...extras,...groups.flat()]);
+}
+};
+refresh();
+modesRoot?.addEventListener('game-mode-visibility-changed',refresh);
+modesRoot?.addEventListener('game-mode-choices-ready',refresh);
+
 return{
 dispose(){
+modesRoot?.removeEventListener('game-mode-visibility-changed',refresh);
+modesRoot?.removeEventListener('game-mode-choices-ready',refresh);
 for(const[node,values]of originals)
 for(const[direction,value]of Object.entries(values).filter(
 ([direction])=>direction!=='scope',
@@ -9294,6 +9385,13 @@ return true;
 function back(){
 const dialog=topDialog();
 if(!dialog|| !Object.values(dialogs).includes(dialog))return false;
+if(dialog===dialogs.home&&modes.contains(doc.activeElement)){
+const more=modes.querySelector('[data-mode-more][aria-expanded="true"]');
+if(more){
+more.click();
+return true;
+}
+}
 if(services.settingsPanelBack?.(dialog))return true;
 if(dialog===dialogs.home||dialog===dialogs.pause){
 if(state.phase==='results')return open('results');
