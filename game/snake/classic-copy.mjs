@@ -171,6 +171,7 @@ export const CLASSIC_COPY = {
     continue: 'Continue saved round',
     saved: 'Round saved on this device.',
     storage: 'Local saving is unavailable. You can still export your replay.',
+    verifiedNotSaved: 'Verified this session; record not saved. Export your replay to keep it.',
     invalid: 'This file is not a supported Snake round. Your current round was kept.',
     loaded: 'Round restored and paused. Press Resume when ready.',
     loadedComplete: 'Completed round restored. Retry or choose the next level.',
@@ -361,6 +362,8 @@ export const CLASSIC_COPY = {
     continue: 'Продовжити збережений раунд',
     saved: 'Раунд збережено на цьому пристрої.',
     storage: 'Локальне збереження недоступне. Ви можете експортувати повтор.',
+    verifiedNotSaved:
+      'Перевірено в цьому сеансі; рекорд не збережено. Експортуйте повтор, щоб зберегти його.',
     invalid: 'Цей файл не є підтримуваним раундом Змійки. Поточну гру збережено.',
     loaded: 'Раунд відновлено й призупинено. Натисніть «Продовжити».',
     loadedComplete: 'Завершений раунд відновлено. Повторіть або оберіть наступний рівень.',

@@ -1,0 +1,186 @@
+{
+  "format": "FPVFreeWorldPreparation.v1",
+  "id": "cc0-orbital-workshop",
+  "title": [
+    "Orbital Workshop",
+    "Орбітальна майстерня"
+  ],
+  "kit": "space-station-kit",
+  "sourceURL": "https://kenney.nl/assets/space-station-kit",
+  "downloadURL": "https://kenney.nl/media/pages/assets/space-station-kit/6475288f2e-1712749919/kenney_space-station-kit.zip",
+  "archiveSha256": "215e79bd5415cff93665183390f0343ed9acf87780306331013b78520170c6d8",
+  "license": "CC0-1.0",
+  "tool": "@gltf-transform 4.5.1",
+  "modelBytes": 86048,
+  "modelSha256": "368b63689b027215c051b3f2c6a02a204334b14bfea91b08f0df7a9d0d28d7ba",
+  "packBytes": 155913,
+  "packSha256": "916d8da5a1b2b29ddc20ef7bf090fbc38038ea926d7bdd1a0e560ce513c5e71c",
+  "collisionSurfaces": 43,
+  "collisionTriangles": 1476,
+  "validation": {
+    "numErrors": 0,
+    "numWarnings": 0,
+    "numInfos": 0,
+    "numHints": 0,
+    "messages": [],
+    "truncated": false
+  },
+  "placements": [
+    {
+      "model": "Models/GLB format/wall-window.glb",
+      "sha256": "55053731040bad9e0a02cd5cbef4d6ce4516f40019d41488eb36a5bdebcda6f3",
+      "placement": {
+        "model": "wall-window",
+        "x": -22,
+        "z": 20,
+        "size": 12,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 12
+    },
+    {
+      "model": "Models/GLB format/wall-window.glb",
+      "sha256": "55053731040bad9e0a02cd5cbef4d6ce4516f40019d41488eb36a5bdebcda6f3",
+      "placement": {
+        "model": "wall-window",
+        "x": 22,
+        "z": 20,
+        "size": 12,
+        "yaw": 180,
+        "y": 0
+      },
+      "scale": 12
+    },
+    {
+      "model": "Models/GLB format/wall-door.glb",
+      "sha256": "e1692da0f0a0ebd2dfd36787dbe9a47748141d82bbbb12b0381919d52e271603",
+      "placement": {
+        "model": "wall-door",
+        "x": -22,
+        "z": 0,
+        "size": 12,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 12
+    },
+    {
+      "model": "Models/GLB format/wall-door.glb",
+      "sha256": "e1692da0f0a0ebd2dfd36787dbe9a47748141d82bbbb12b0381919d52e271603",
+      "placement": {
+        "model": "wall-door",
+        "x": 22,
+        "z": 0,
+        "size": 12,
+        "yaw": 180,
+        "y": 0
+      },
+      "scale": 12
+    },
+    {
+      "model": "Models/GLB format/wall-detail.glb",
+      "sha256": "7cee7abe1ea412acdf182da770bd3920bf023ecd165d5c9b3db3a60a0d7ae7d8",
+      "placement": {
+        "model": "wall-detail",
+        "x": -22,
+        "z": -20,
+        "size": 12,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 29.999990276995472
+    },
+    {
+      "model": "Models/GLB format/wall-detail.glb",
+      "sha256": "7cee7abe1ea412acdf182da770bd3920bf023ecd165d5c9b3db3a60a0d7ae7d8",
+      "placement": {
+        "model": "wall-detail",
+        "x": 22,
+        "z": -20,
+        "size": 12,
+        "yaw": 180,
+        "y": 0
+      },
+      "scale": 29.999990276995472
+    },
+    {
+      "model": "Models/GLB format/container-tall.glb",
+      "sha256": "e790f12cdab2e50d266d54e1bbb8a05a1cd77629a065254be3734a67b6053358",
+      "placement": {
+        "model": "container-tall",
+        "x": -12,
+        "z": -30,
+        "size": 6,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 9.999999602635718
+    },
+    {
+      "model": "Models/GLB format/container-wide.glb",
+      "sha256": "3bed318d187ce26b816b7f84b706ecb57cffef94ab1bb8266ca91aa35073e6f0",
+      "placement": {
+        "model": "container-wide",
+        "x": 12,
+        "z": -30,
+        "size": 8,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 13.33333280351429
+    },
+    {
+      "model": "Models/GLB format/computer-wide.glb",
+      "sha256": "62420ce928f288f91ce85e2245e80e6c9efbee9b6e91b7ea9b83d0289fa647c4",
+      "placement": {
+        "model": "computer-wide",
+        "x": -20,
+        "z": 32,
+        "size": 5,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 6.249999674037116
+    },
+    {
+      "model": "Models/GLB format/table-display-planet.glb",
+      "sha256": "55f4055020546163a7bc4b025d150b128917a046f903def087a9cc52767fa68a",
+      "placement": {
+        "model": "table-display-planet",
+        "x": 21,
+        "z": 32,
+        "size": 6,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 12
+    },
+    {
+      "model": "Models/GLB format/structure.glb",
+      "sha256": "ef12f1eaec019116ece1aebb0c512ce19a5cbc385f7a393c62d9f32f129cf088",
+      "placement": {
+        "model": "structure",
+        "x": -35,
+        "z": 0,
+        "size": 9,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 8.999999986588955
+    },
+    {
+      "model": "Models/GLB format/structure.glb",
+      "sha256": "ef12f1eaec019116ece1aebb0c512ce19a5cbc385f7a393c62d9f32f129cf088",
+      "placement": {
+        "model": "structure",
+        "x": 35,
+        "z": 0,
+        "size": 9,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 8.999999986588955
+    }
+  ]
+}

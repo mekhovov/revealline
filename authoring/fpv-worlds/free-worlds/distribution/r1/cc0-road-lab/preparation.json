@@ -1,0 +1,173 @@
+{
+  "format": "FPVFreeWorldPreparation.v1",
+  "id": "cc0-road-lab",
+  "title": [
+    "Roadworks Practice Park",
+    "Дорожній тренувальний парк"
+  ],
+  "kit": "city-kit-roads",
+  "sourceURL": "https://kenney.nl/assets/city-kit-roads",
+  "downloadURL": "https://kenney.nl/media/pages/assets/city-kit-roads/74288c9459-1791628607/kenney_city-kit-roads.zip",
+  "archiveSha256": "374a4552115cbd11b4ec5c930ee31a533562dc78a09af249a655d03f7ea3b959",
+  "license": "CC0-1.0",
+  "tool": "@gltf-transform 4.5.1",
+  "modelBytes": 31796,
+  "modelSha256": "2750ad9f976270561277c5623bca10c2bee9cd874eec3a87686f1a4fefd3a944",
+  "packBytes": 63754,
+  "packSha256": "97fe29db831659500a8850ed0e0a0252c37b6a6c893b37536e1967404683c355",
+  "collisionSurfaces": 11,
+  "collisionTriangles": 565,
+  "validation": {
+    "numErrors": 0,
+    "numWarnings": 0,
+    "numInfos": 0,
+    "numHints": 0,
+    "messages": [],
+    "truncated": false
+  },
+  "placements": [
+    {
+      "model": "Models/GLB format/road-straight.glb",
+      "sha256": "f8f744fb6fc96dedd5ad1f763b550166f2624a3757bf36b4b39969d2e7cacac5",
+      "placement": {
+        "model": "road-straight",
+        "x": -24,
+        "z": -24,
+        "size": 24,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 24
+    },
+    {
+      "model": "Models/GLB format/road-straight.glb",
+      "sha256": "f8f744fb6fc96dedd5ad1f763b550166f2624a3757bf36b4b39969d2e7cacac5",
+      "placement": {
+        "model": "road-straight",
+        "x": 24,
+        "z": -24,
+        "size": 24,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 24
+    },
+    {
+      "model": "Models/GLB format/road-straight.glb",
+      "sha256": "f8f744fb6fc96dedd5ad1f763b550166f2624a3757bf36b4b39969d2e7cacac5",
+      "placement": {
+        "model": "road-straight",
+        "x": -24,
+        "z": 0,
+        "size": 24,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 24
+    },
+    {
+      "model": "Models/GLB format/road-straight.glb",
+      "sha256": "f8f744fb6fc96dedd5ad1f763b550166f2624a3757bf36b4b39969d2e7cacac5",
+      "placement": {
+        "model": "road-straight",
+        "x": 24,
+        "z": 0,
+        "size": 24,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 24
+    },
+    {
+      "model": "Models/GLB format/road-straight.glb",
+      "sha256": "f8f744fb6fc96dedd5ad1f763b550166f2624a3757bf36b4b39969d2e7cacac5",
+      "placement": {
+        "model": "road-straight",
+        "x": -24,
+        "z": 24,
+        "size": 24,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 24
+    },
+    {
+      "model": "Models/GLB format/road-straight.glb",
+      "sha256": "f8f744fb6fc96dedd5ad1f763b550166f2624a3757bf36b4b39969d2e7cacac5",
+      "placement": {
+        "model": "road-straight",
+        "x": 24,
+        "z": 24,
+        "size": 24,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 24
+    },
+    {
+      "model": "Models/GLB format/road-crossroad.glb",
+      "sha256": "2dc52a28cf89ec88025a047c0f6fff4c643f16b0f50f0e9a1140f16230c28b12",
+      "placement": {
+        "model": "road-crossroad",
+        "x": 0,
+        "z": 0,
+        "size": 20,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 20
+    },
+    {
+      "model": "Models/GLB format/bridge-pillar-wide.glb",
+      "sha256": "8e605ee4b59bdb5066a08d32458c0676a2763da483925e9761a28e6a77120b82",
+      "placement": {
+        "model": "bridge-pillar-wide",
+        "x": -18,
+        "z": -30,
+        "size": 10,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 71.4285711244661
+    },
+    {
+      "model": "Models/GLB format/bridge-pillar-wide.glb",
+      "sha256": "8e605ee4b59bdb5066a08d32458c0676a2763da483925e9761a28e6a77120b82",
+      "placement": {
+        "model": "bridge-pillar-wide",
+        "x": 18,
+        "z": -30,
+        "size": 10,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 71.4285711244661
+    },
+    {
+      "model": "Models/GLB format/construction-barrier.glb",
+      "sha256": "906f73a6d62d8de58a4c5a19e76ff95b460c42b37e5fa37478b8612f06793f26",
+      "placement": {
+        "model": "construction-barrier",
+        "x": -11,
+        "z": 20,
+        "size": 4,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 17.77777824872807
+    },
+    {
+      "model": "Models/GLB format/construction-barrier.glb",
+      "sha256": "906f73a6d62d8de58a4c5a19e76ff95b460c42b37e5fa37478b8612f06793f26",
+      "placement": {
+        "model": "construction-barrier",
+        "x": 11,
+        "z": 20,
+        "size": 4,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 17.77777824872807
+    }
+  ]
+}

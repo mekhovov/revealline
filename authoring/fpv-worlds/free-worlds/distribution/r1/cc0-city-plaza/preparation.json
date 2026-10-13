@@ -1,0 +1,160 @@
+{
+  "format": "FPVFreeWorldPreparation.v1",
+  "id": "cc0-city-plaza",
+  "title": [
+    "City Plaza",
+    "Міська площа"
+  ],
+  "kit": "city-kit-commercial",
+  "sourceURL": "https://kenney.nl/assets/city-kit-commercial",
+  "downloadURL": "https://kenney.nl/media/pages/assets/city-kit-commercial/a742d900eb-1753115042/kenney_city-kit-commercial_2.1.zip",
+  "archiveSha256": "f8b09b081c2bb88bcc126e2dec1cb40fd0dad7e7e591b6c26aaefe96fb35276b",
+  "license": "CC0-1.0",
+  "tool": "@gltf-transform 4.5.1",
+  "modelBytes": 604116,
+  "modelSha256": "bd63e781abd6335d51fc9db2a206369cacc73be79b3d2ea918d063433c87435d",
+  "packBytes": 1289830,
+  "packSha256": "08dd572b3812ffeac3ba1e87ef1890afa7e3d3f127493c189197d1739f1e78ce",
+  "collisionSurfaces": 10,
+  "collisionTriangles": 15009,
+  "validation": {
+    "numErrors": 0,
+    "numWarnings": 0,
+    "numInfos": 0,
+    "numHints": 0,
+    "messages": [],
+    "truncated": false
+  },
+  "placements": [
+    {
+      "model": "Models/GLB format/building-a.glb",
+      "sha256": "5cf220f90ee3f21e7abe38055ca409a48aa8ef1d5ffab6e2deb99e5a5e1ed5e0",
+      "placement": {
+        "model": "building-a",
+        "x": -24,
+        "z": 20,
+        "size": 13,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 13.829787269119981
+    },
+    {
+      "model": "Models/GLB format/building-a.glb",
+      "sha256": "5cf220f90ee3f21e7abe38055ca409a48aa8ef1d5ffab6e2deb99e5a5e1ed5e0",
+      "placement": {
+        "model": "building-a",
+        "x": 24,
+        "z": 20,
+        "size": 13,
+        "yaw": 180,
+        "y": 0
+      },
+      "scale": 13.829787269119981
+    },
+    {
+      "model": "Models/GLB format/building-g.glb",
+      "sha256": "9a28fa2fdfac07492ee95589882213cfd6eb32d6752cb3b2f5404604c676d27a",
+      "placement": {
+        "model": "building-g",
+        "x": -24,
+        "z": 0,
+        "size": 13,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 13.402061460375203
+    },
+    {
+      "model": "Models/GLB format/building-g.glb",
+      "sha256": "9a28fa2fdfac07492ee95589882213cfd6eb32d6752cb3b2f5404604c676d27a",
+      "placement": {
+        "model": "building-g",
+        "x": 24,
+        "z": 0,
+        "size": 13,
+        "yaw": 180,
+        "y": 0
+      },
+      "scale": 13.402061460375203
+    },
+    {
+      "model": "Models/GLB format/building-m.glb",
+      "sha256": "1cdc717ac86a0479043ff0d0146142f5dfc2622c0e3aaac484fad5807f94d580",
+      "placement": {
+        "model": "building-m",
+        "x": -24,
+        "z": -20,
+        "size": 13,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 10.46698735753016
+    },
+    {
+      "model": "Models/GLB format/building-m.glb",
+      "sha256": "1cdc717ac86a0479043ff0d0146142f5dfc2622c0e3aaac484fad5807f94d580",
+      "placement": {
+        "model": "building-m",
+        "x": 24,
+        "z": -20,
+        "size": 13,
+        "yaw": 180,
+        "y": 0
+      },
+      "scale": 10.46698735753016
+    },
+    {
+      "model": "Models/GLB format/building-skyscraper-a.glb",
+      "sha256": "d8339bbb75944ff91d1ec9a70ec6dead71bd98b94a42d3dd0fc1f3b107ddbe85",
+      "placement": {
+        "model": "building-skyscraper-a",
+        "x": -35,
+        "z": -35,
+        "size": 16,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 11.76470472738416
+    },
+    {
+      "model": "Models/GLB format/building-skyscraper-c.glb",
+      "sha256": "e73c357554f7561fedb8c1cbecf9d7163ba09ada264d661c59a0f0a180e0185f",
+      "placement": {
+        "model": "building-skyscraper-c",
+        "x": 35,
+        "z": -35,
+        "size": 16,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 11.528279915359931
+    },
+    {
+      "model": "Models/GLB format/detail-parasol-a.glb",
+      "sha256": "70e636bea8dc67c3bfd19b163333e824356118458c8c401017322ec43c10a7f7",
+      "placement": {
+        "model": "detail-parasol-a",
+        "x": -12,
+        "z": 25,
+        "size": 4,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 9.99999985098839
+    },
+    {
+      "model": "Models/GLB format/detail-parasol-b.glb",
+      "sha256": "2d58c1d16df16f618afd9f7fd9f13e82791c50cd7cd77edaa493fbdd09e708d2",
+      "placement": {
+        "model": "detail-parasol-b",
+        "x": 12,
+        "z": 25,
+        "size": 4,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 9.99999985098839
+    }
+  ]
+}

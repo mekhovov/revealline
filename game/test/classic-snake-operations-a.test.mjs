@@ -28,8 +28,8 @@ const proofs = JSON.parse(
 test('Release A contains six ordered chapters of eight finite, distinctly authored operations', () => {
   assert.equal(entries.length, 48);
   assert.equal(chapters.length, 6);
-  assert.equal(CLASSIC_SNAKE_LEVELS.length, 192);
-  assert.equal(CLASSIC_SNAKE_CHAPTERS.length, 29);
+  assert.equal(CLASSIC_SNAKE_LEVELS.length, 240);
+  assert.equal(CLASSIC_SNAKE_CHAPTERS.length, 35);
   assert.equal(new Set(entries.map((e) => e.id)).size, 48);
   assert.equal(new Set(entries.map((e) => e.description.en)).size, 48);
   for (const chapter of chapters)
