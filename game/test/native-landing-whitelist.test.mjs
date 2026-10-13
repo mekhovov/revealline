@@ -47,7 +47,7 @@ function assertLanding(page, { root, actions, modes }) {
   );
   assert.deepEqual(
     modeControls.map((node) => node.dataset.gameMode),
-    modes,
+    ['solo', 'team', 'versus'].filter((mode) => modes.includes(mode)),
   );
   assert.equal(
     modeControls.filter((node) => node.getAttribute('aria-current') === 'page').length,
@@ -70,7 +70,7 @@ function assertLanding(page, { root, actions, modes }) {
   }
 }
 const soloActions = [
-  'solo-fpv-sim',
+  'shell-title-modes-more',
   'shell-featured',
   'shell-play',
   'shell-options',
@@ -91,7 +91,9 @@ function assertSoloDestinations(page) {
   for (const [id, category] of Object.entries(soloSettings)) {
     assert.equal(page.$(id).closest('[role="tabpanel"]')?.id, `settings-panel-${category}`);
     assert.equal(page.doc.querySelectorAll(`#${id}`).length, 1, `${id} retains its real node`);
-    if (id === 'shell-offline' && page.doc.body.dataset.editionId)
+    if (id === 'shell-music')
+      assert.equal(page.$(id).hidden, true, 'Shared master sound replaces the duplicate toggle.');
+    else if (id === 'shell-offline' && page.doc.body.dataset.editionId)
       assert.equal(
         page.$(id).hidden,
         true,
@@ -104,7 +106,10 @@ function assertSoloDestinations(page) {
 function assertContentDestinations(page, mode, prefix) {
   for (const id of [`${mode}-communities`, 'game-check-updates']) {
     const node = page.$(id);
-    assert.equal(node.closest('[role="tabpanel"]')?.id, `${prefix}-panel-content`);
+    assert.equal(
+      node.closest('[role="tabpanel"]')?.id,
+      `${prefix}-panel-${id === 'game-check-updates' ? 'extras' : 'content'}`,
+    );
     assert.equal(node.closest('.native-menu-actions'), null);
     assert.equal(node.getAttribute('target'), null, `${id} keeps same-window navigation`);
   }
@@ -197,7 +202,7 @@ test('Versus and Team keep their complete lobby actions within the same whitelis
     assertLanding(page, {
       root: 'race-main',
       actions: [
-        'versus-fpv-sim',
+        'race-mode-choices-more',
         'race-start',
         'race-chapters',
         'race-options',
@@ -223,7 +228,7 @@ test('Versus and Team keep their complete lobby actions within the same whitelis
     assertLanding(page, {
       root: 'coop-menu',
       actions: [
-        'team-fpv-sim',
+        'coop-mode-actions-more',
         'coop-start',
         'coop-discovery-open',
         'coop-settings-open',
