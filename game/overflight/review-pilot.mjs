@@ -1,5 +1,6 @@
 /** Explicit review-demo pilot only. Never enabled by an ordinary game start. */
 import { rerollOverflightUpgrades } from './core.mjs';
+import { overflightAttackContains } from './tactics.mjs';
 
 export const QUALIFICATION_BUILDS = Object.freeze({
   fan: ['primary:wide', 'proximity-pulse', 'side-burst', 'scanner'],
@@ -98,7 +99,7 @@ export function createOverflightAuditPilot(route) {
 
 /** A deterministic, imperfect pilot, recomputed at 10Hz; it sees ordinary game state.
  * It pursues salvage, skirts the boss, and compares short movement candidates to
- * avoid nearby bodies/committed attack circles. It cannot alter the simulation. */
+ * avoid nearby bodies/visible committed attack geometry. It cannot alter the simulation. */
 export function pilot(run, route = 'tight') {
   const player = run.player;
   const arena = run.compiled.arena;
@@ -156,7 +157,7 @@ export function pilot(run, route = 'tight') {
         else if (distance < safety + 35) score -= (safety + 35 - distance) * 0.15;
       }
       for (const attack of run.priorityAttacks) {
-        if (attack.active && Math.hypot(x - attack.x, y - attack.y) < attack.radius + 18)
+        if (attack.active && overflightAttackContains(attack, x, y, player.radius + 9))
           score -= 500;
       }
       // Small direction continuity penalty prevents purely numerical jitter.

@@ -189,3 +189,50 @@ test('open cache shows two physical choices with distinct glyphs and disabled st
   assert.equal(layers.filter((layer) => layer.frame === 'arrow').length, 2);
   assert.notEqual(layers[0].tint, layers[3].tint);
 });
+
+test('distant armor stays compact without losing state, while approaches and priority targets stay detailed', () => {
+  const enemy = { x: 500, y: 200, maxArmor: 100, armor: 50, exposureRemaining: 0 };
+  const before = structuredClone(enemy);
+  const full = overflightTacticalEnemyLayers(enemy, 32);
+  const near = overflightTacticalEnemyLayers(enemy, 32, { x: 400, y: 200 });
+  const far = overflightTacticalEnemyLayers(enemy, 32, { x: 100, y: 200 });
+  assert.deepEqual(near, full);
+  assert.equal(far.length, full.length, 'every closed-armor state cue stays present');
+  assert.ok(far[0].width < full[0].width);
+  assert.ok(far.slice(2).every((cue) => cue.width < full[2].width));
+  assert.equal(
+    far[1].width / (far[0].width - 2),
+    0.5,
+    'compact bar retains the actual armor fraction',
+  );
+  const halfway = overflightTacticalEnemyLayers(enemy, 32, { x: 310, y: 200 });
+  assert.ok(
+    halfway[0].width > far[0].width && halfway[0].width < full[0].width,
+    'detail changes continuously during approach',
+  );
+  for (const priority of [
+    { heavy: true },
+    { role: 'elite' },
+    { role: 'final' },
+    { objectiveId: 'required' },
+  ])
+    assert.deepEqual(
+      overflightTacticalEnemyLayers({ ...enemy, ...priority }, 32, { x: 100, y: 200 }),
+      full,
+    );
+  for (const state of [{ exposureRemaining: 3 }, { armor: 0 }]) {
+    const open = overflightTacticalEnemyLayers({ ...enemy, ...state }, 32, { x: 100, y: 200 });
+    assert.equal(
+      open.filter((cue) => cue.frame === 'arrow').length,
+      2,
+      'opening still has geometry in addition to color',
+    );
+  }
+  const guard = { ...enemy, maxArmor: 0, maxGuardIntegrity: 50, guardIntegrity: 30, heading: 1 };
+  assert.deepEqual(
+    overflightTacticalEnemyLayers(guard, 24, { x: 0, y: 0 }),
+    overflightTacticalEnemyLayers(guard, 24),
+    'shield facing remains explicit at every distance',
+  );
+  assert.deepEqual(enemy, before);
+});
