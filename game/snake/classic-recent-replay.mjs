@@ -28,6 +28,7 @@ const VISUAL_FIELDS = [
   'relays',
   'removedWalls',
   'danger',
+  'operation',
 ];
 
 export function classicVisualSnapshot(run) {
