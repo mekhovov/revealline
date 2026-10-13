@@ -180,6 +180,12 @@ export async function settle(
   const timeoutMs = options.timeoutMs ?? (process.env.CI ? 20_000 : 5_000);
   await waitFor(predicate, { ...options, timeoutMs, message });
 }
+export function clickVisibleSimulator(page) {
+  const simulator = page.$('solo-fpv-sim');
+  if (simulator.hidden) simulator.parentElement.querySelector('[data-mode-more]')?.click();
+  assert.equal(simulator.hidden, false, 'SIM must be revealed through More before launch.');
+  simulator.click();
+}
 let sequence = 0;
 export async function soloPage(
   t,
