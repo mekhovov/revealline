@@ -21,14 +21,13 @@ and immutable pack checks. Only this capable player's dedicated worker accepts
 the new index URL; older cached players retain their existing endpoints. Packs
 requiring ground motion must never enter either older catalogue.
 
-The ground-motion catalogue copies the complete eligible surface-coating feed
-byte-for-byte, including Mountain Reservoir r16 published through #1094. The
-original catalogue remains empty. This preserves discovery for newer players;
-the endpoint change does not update cached players or deliver demonstrations.
-Festival and Harbor still have separate catalogue publication gates, and neither
-has a row here. Preserve every existing compatible row when adding a later
-cohort; do not bypass an unpublished row by adding it to another feed. Optional
-demonstrations still require their separate proof archive.
+The ground-motion catalogue retains both eligible surface-coating rows unchanged:
+Mountain Reservoir r16 and Festival Grounds r5. It additionally lists Harbor Docks
+r4, whose two moving ground subjects require `support-v1`. The original feed
+remains empty and the surface-coating feed remains unchanged. Preserve every
+eligible row when extending a cumulative feed. Switching endpoints does not
+update cached players or install demonstrations; examples remain separate proof
+archive imports.
 
 Catalogue versions select an existing, fixed capability contract. They do not
 negotiate arbitrary imported features or permit executable content. Future
@@ -66,7 +65,7 @@ to the merged #1097 content head, its exact 1,256,875-byte size and SHA-256
 `87baca276e174f31ba19c02f4f2359c97affa07eefd4a5f4912b4d8664450f51`.
 Reservoir's row and the original catalogue bytes stay unchanged. Festival does
 not need Harbor's opt-in ground movement; it is eligible for the current
-surface-coating player without the pending Harbor runtime or new Library cohort.
+surface-coating player without requiring the ground-motion runtime.
 
 Its [sixteen demonstrations](https://raw.githubusercontent.com/mekhovov/revealline/62d0e72f2963a61cc65ef829a320d9a1c2593b0c/authoring/fpv-worlds/festival-grounds/distribution/r5/festival-grounds.r5.proofs.json)
 remain a separate explicit recording import. [The row receipt](evidence/festival-r5-library-row.json)
@@ -92,3 +91,35 @@ pending catalogue response; immutable HTTPS pack download, hash validation and
 atomic installation remain unchanged. No console warnings/errors were observed.
 This is local integration evidence, not public catalogue publication, another
 full-flight qualification, or a hardware/offline performance claim.
+
+## Cumulative ground-motion publication — 13 October 2026
+
+The newer player had switched to the ground-motion feed before Festival was
+added to the older feed. This change restores Festival discovery for that player
+and adds the already-qualified Harbor content. It changes only catalogue data,
+not player, Worker, package, physics or recording bytes.
+
+Harbor's [eight-course r4 pack](https://raw.githubusercontent.com/mekhovov/revealline/8af1b67220be4f26e9b68d821e2b574b63a23904/authoring/fpv-worlds/harbor-docks/distribution/r4/harbor-docks.r4.rlpack)
+is pinned to its merged content commit: **879,213 bytes**, SHA-256
+`d5bf4b9bb6829c04dbe1bb398893e5243cefc1f9acf018bf153a2012c8cf49b6`.
+Its [sixteen demonstrations](https://raw.githubusercontent.com/mekhovov/revealline/8af1b67220be4f26e9b68d821e2b574b63a23904/authoring/fpv-worlds/harbor-docks/distribution/r4/harbor-docks.r4.proofs.json)
+remain a separate import. Existing full-flight, native-browser and offline
+qualification is recorded in [Harbor's content evidence](../harbor-docks/README.md).
+The Library labels it **Harbor Docks / Портові доки**.
+
+The [current data receipt](evidence/ground-library-three-worlds-20261013.json)
+passes **84 checks**: all three immutable HTTP pack/proof pairs match their pinned
+commits and main, all three packs round-trip without changed bytes, every one of
+48 recordings names the exact pack/course/mode, and older feeds are byte-exact.
+These are dependency checks, not 48 new complete-flight replays. The first run
+caught a verifier assumption that Library and project titles must match exactly;
+Reservoir intentionally has a longer project title. The check now preserves the
+existing published labels and validates project identity independently.
+
+Reproduce with
+`node authoring/fpv-worlds/published/qualify-ground-library.mjs NEW_RECEIPT.json`.
+The command refuses to overwrite evidence, bounds each download to 4 MiB and
+does not build packages or generate proofs. Public Browse/download/install must
+be observed after publication; this receipt alone does not establish live or
+offline availability. Canals and the broader performance/reliability work remain
+outside this catalogue increment.

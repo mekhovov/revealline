@@ -4011,3 +4011,30 @@ qualification. No further cleanup is planned. Preserve existing admissions and
 evidence, and keep heavy qualification stopped until the stable floor is met.
 This checkpoint changes documentation only; current runtime and package input
 identities remain unchanged.
+
+
+## 13 October — Rebase and cumulative Library repair
+
+Rebased onto current main `fba236ef80bd0310ae3b9c33fd7c26b1529b245c` (already
+up to date), then continued on `codex/fpv-library-complete-worlds`. Concurrent
+Overflight edits and untracked migration/history files remain untouched and are
+excluded from this change.
+
+The current ground-motion Library feed omitted Festival even though its older
+surface-coating entry had merged, and had no Harbor row. The repair retains
+Reservoir, copies Festival's exact existing row, and adds Harbor r4 at immutable
+commit `8af1b67220be4f26e9b68d821e2b574b63a23904`. Both older feeds remain
+byte-exact. The new publication receipt passes 84 HTTP/parser/import/roundtrip
+and dependency checks covering three packs, 24 courses and 48 separate records.
+No runtime, physics, package inputs, course identity or recording changed.
+
+Actual public player launch and navigation to Library were observed before
+publication; this is not evidence that the candidate three-row feed is live.
+Focused PR publication and subsequent actual public downloads remain next.
+Heavy package builds were not started: approximately 2.8 GiB free is below the
+existing stable 3 GiB floor. This small catalogue qualification uses existing
+pack bytes and does not claim new device, FPS, offline or unit coverage.
+
+Next: finish the public Library journey, then current-main integrated
+performance/reliability verification. Preserve the approved order of content
+work and defer Canals until the shared quality/delivery path is qualified.
