@@ -1,5 +1,20 @@
 # Overflight candidate qualification
 
+The [current continuation](continuation-20261013/README.md) supersedes the remaining
+items below: seeded layouts and warning-aware routes, the 15-minute local soak,
+recovery/retry and packaged offline launches are complete. Unavailable target
+hardware and human sessions are explicitly skipped at the user's direction.
+Riy is delivered separately as a C1 review prototype; release is not claimed.
+
+The [readability and broader-balance continuation](readability-20261013/README.md)
+adds compact armor cues, three-seed/both-airframe evidence, and an actual Raid
+Creator download/import/re-export with native completion. It records the remaining
+seed-specific balance gap explicitly.
+
+The [13 October pacing continuation](pacing-20261013/README.md) records the latest
+Survivor/Raid gameplay changes, current-source route checks and remaining review
+priorities after rebasing onto main. Earlier receipts below remain historical.
+
 Recorded 5 October 2026 against implementation base main
 `2d447bc790bdf3951251c99041c8a918363ece0a`. This is working-tree candidate
 qualification. No target-device, human-play or release gate is accepted by these automated receipts.

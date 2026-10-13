@@ -146,9 +146,15 @@ export function createOverflightProject({
         id: `formation-${index + 1}`,
         start: window.start,
         end,
-        spawnPerSecond: rate,
-        speed: Math.min(78, 38 + index * 4 + (difficulty === 'veteran' ? 8 : 0)),
-        hp: index < 3 ? 30 : index < 6 ? 45 : 60,
+        // Late formations build a dense front that rewards overlapping passes.
+        // Keep their movement below the earlier interceptors: density supplies
+        // pressure without turning the whole crowd into fast pursuit specialists.
+        spawnPerSecond: window.start >= 240 ? 40 : rate,
+        speed:
+          window.start >= 240
+            ? 36
+            : Math.min(78, 38 + index * 4 + (difficulty === 'veteran' ? 8 : 0)),
+        hp: window.start >= 240 ? 120 : index < 3 ? 30 : index < 6 ? 45 : 60,
         families: families[window.pattern],
         pattern: window.pattern,
       });
