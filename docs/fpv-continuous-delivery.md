@@ -4069,3 +4069,78 @@ longer representative performance windows, preserving historical evidence and
 reporting exact tested identities. Qualify the shared quality standard before
 Canals production; D6 remains the final coverage/release phase. This public UI
 check does not claim new offline recovery, hardware FPS or physical-radio results.
+
+
+## 13 October — Current-main admission, Creator and stopped-origin flight
+
+Continue from `codex/fpv-current-main-qualification`, based on main
+`45e943bd40831e21fa9b55cb712725e49a901e13`. Existing workflow
+[38467392436](https://github.com/mekhovov/revealline/actions/runs/38467392436) passed
+all-three/two-build optional admission and the selected fpv-learning company
+candidate. All 117 World source inputs match both this main and the observed
+public deployment6514; all 122 admitted members passed exact extraction checks.
+The candidate review gates remain pending and publicEligible remains false.
+
+Actual public Creator verification covered a non-first Reservoir course, Acro-only
+position edit, Undo/Redo, mode/course switching and native editable export. Native
+parser inspection preserved seven other courses, Self-level, source bindings and
+all asset bytes. The four changed coordinates exactly describe the intended
+100 mm Acro edit. The draft was restored without replacing the installed pack.
+
+The exact admitted player then downloaded Reservoir through the real Library,
+prepared offline files, reloaded with its dedicated origin server stopped,
+reopened all eight courses and ran course02 for 19 seconds after deliberate
+arming. Pause hid guidance; captured browser warnings/errors were empty. This
+is a bounded stopped-origin check, not complete offline recovery or performance
+qualification. [Receipt and screenshots](evidence/fpv-current-main-qualification-20261013/README.md).
+
+Authorized safe cleanup restored about 5 GiB free. Old generated duplicate paths
+remain byte-identical via independent APFS clones; unique files, source, Git,
+unfinished work, browser databases and recordings remain intact. Local per-file
+audits are retained outside the repository. The stable 3 GiB build floor is unchanged.
+
+Next: finish the cohesive current-candidate Creator/reimport/rollback/records
+journey and longer representative performance windows. Keep the offline result
+visible beside its Settings action. Qualify the common quality standard before
+Canals; D6 stays last. Do not promote historical counts, pending hardware/player
+acceptance or this neutral-input run into a complete release claim.
+
+The evidence-only branch was subsequently rebased onto main `41e5986ed6c208db2dd63fbbb52a912b69050388`.
+A separate source bridge matches 114/117 World inputs at that head. The admitted
+artifact and native stopped-origin observations remain bound to45e; no newer
+package or release identity is inferred.
+
+Published evidence PR **#1166**, `codex/fpv-current-main-qualification`. Newer main41e
+changes three admitted inputs: `game/ui/native-menu-icons.mjs`,
+`optional-practice/civilian-fpv/flight-fullscreen.mjs`, and
+`optional-practice/civilian-fpv/style.css`. The old candidate is therefore not a
+complete source bridge to that main. Fresh existing-workflow run
+[38473307634](https://github.com/mekhovov/revealline/actions/runs/38473307634) is in
+progress on frozen `b7bf654486014efc6c8b8af25323b9d06f88e388`; its source includes
+those updates. Read its final admission before continuing current-package
+qualification. Subsequent evidence-only commits do not change that tested identity.
+
+Later storage observation: other activity reduced available space from the
+post-cleanup 5.3 GiB peak to roughly 2.2 GiB. The safe cleanup and all preserved
+paths remain; the 3 GiB local heavy-build floor is not currently stable. Keep
+large local builds paused and use the existing cloud candidate run. This does
+not invalidate the earlier completed bounded browser check.
+
+## 2026-10-14 — Workshop import guide and free-resource shortlist
+
+Independent `codex/fpv-world-import-guide` from main `0a3e1fb51a8060fd3d3bfaa94956e4ae575bbcbd`.
+Preserved root Overflight edits and qualification branch #1166. Added local EN/UK
+collapsible importing help plus 23 external scene/kit candidates; see
+[workflow, priorities and verification](fpv-world-import-guide.md). No new worlds
+are claimed installed. Explicit isolated HTTPS anchors are navigation; optional
+runtime network dependencies remain forbidden. Three preflights, existing 9/9
+package checks, 11 navigation guard cases, scoped lint and browser layouts pass.
+Full admission stays with CI while local free space is below 3 GiB. Next content
+work is candidate selection, archive/license provenance, preparation, collision,
+course authoring and qualification, without changing existing package limits.
+
+Published as [PR #1169](https://github.com/mekhovov/revealline/pull/1169), implementation
+head `a0b012f564b9c1c0094022e6f2f72d86d51c9242`. Cloud qualification was dispatched
+in [run 38477507774](https://github.com/mekhovov/revealline/actions/runs/38477507774);
+PR-triggered run 38477509680 also started. This checkpoint is docs-only; protected
+checks and publication remain pending. No live availability claim.
