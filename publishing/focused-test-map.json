@@ -377,7 +377,8 @@
     {
       "id": "unknown-runtime-validate",
       "command": "npm",
-      "args": ["run", "validate"]
+      "args": ["run", "validate"],
+      "timeoutMs": 1800000
     }
   ]
 }
