@@ -279,6 +279,38 @@ const COPY_EN = {
   applyJson: 'Validate & apply JSON',
   testFlight: 'Test flight',
   exportChallenge: 'Export challenge',
+  worldGuideTitle: 'How to import your first world',
+  worldGuideIntro:
+    'Want a ready-to-fly world? Use Library. This importer is for scenery you want to turn into your own course.',
+  worldGuideGet:
+    'Download and unzip one scene. Prefer a self-contained GLB. A kit with many models must first be assembled into one scene in Blender.',
+  worldGuideConvert:
+    'Have a .blend, FBX or OBJ? Open or import it in Blender, then File → Export → glTF 2.0 → glTF Binary (.glb). Use PNG/JPEG textures and leave Draco compression off. Export custom properties if you authored gameplay markers.',
+  worldGuideCredit:
+    'Fill in Asset author, the original Source URL and the actual License before choosing files. CC0 is not a substitute for an unknown license. Keep credits and note your changes when sharing CC BY work.',
+  worldGuideSelect:
+    'Choose scene files: select exactly one .glb, or one .gltf together with its .bin and PNG/JPEG files. For nested texture folders use Choose scene folder and preserve the directory structure. Select the scene subfolder, not an entire asset kit.',
+  worldGuidePlayable:
+    'Read the import report and Preview world. Scenery is visual only: add simplified collision markers, a safe spawn and route objectives. Check the flight bounds and use Test flight in both modes. The automatic starter route is not a finished level.',
+  worldGuideSave:
+    'Export editable project for a backup, then Install pack to keep it in this browser. Export world pack to share; recipients import it in Library. Export again after edits. Before importing a different scene, back up your draft and choose Start a new world.',
+  worldGuideLimits:
+    'Current scene limit: 16 MiB after packing, up to 128 supplied files. PNG/JPEG only. A download being free does not guarantee compatibility; large scenes need texture reduction and geometry cleanup before import.',
+  worldGuideTrouble:
+    'Missing resource? Keep file names and folders unchanged, or re-export a self-contained GLB. Unsupported extension? Re-export without geometry compression and with PNG/JPEG textures. Missing spawn/colliders? Follow the authoring guide below; these are gameplay data, not texture errors.',
+  worldGuideLinks: 'Export and authoring help',
+  worldGuideAuthoring: 'SIM markers, collisions and export preset',
+  worldResourcesTitle: 'Find free scenes & scenery — 23 candidates',
+  worldResourcesIntro:
+    'These are source resources for review, not installed or verified SIM levels. Links open a new tab and need internet. The guide itself stays with the simulator.',
+  worldResourcesScenes: 'Assembled scenes — convert and prepare',
+  worldResourcesSceneHelp:
+    'Start with the small construction site. Poly Haven scenes offer richer detail but need Blender export and substantial optimization for the 16 MiB limit. Choose the Blender scene, not an Unreal project or an HDRI alone.',
+  worldResourcesKits: 'Build your own world — assemble these kits',
+  worldResourcesKitHelp:
+    'Kenney kits contain reusable pieces, not authored flight courses. Combine a small selection in Blender and export one scene. Smuggler’s Cove is also a source collection; its Unreal project is not directly importable.',
+  worldResourcesLicense:
+    'Listed sources advertise CC0; check and keep the license supplied with your chosen download. Asset license and import compatibility are separate checks.',
   worldImport: 'Import a world',
   importHelp:
     'Choose a GLB, or a glTF and all its local textures/buffers. Blender and Crocotile\n              export these formats.',
@@ -450,6 +482,38 @@ const COPY_UK = {
   applyJson: 'Перевірити та застосувати JSON',
   testFlight: 'Пробний політ',
   exportChallenge: 'Експорт завдання',
+  worldGuideTitle: 'Як імпортувати свій перший світ',
+  worldGuideIntro:
+    'Хочете готовий до польоту світ? Відкрийте бібліотеку. Цей імпорт призначений для сцен, з яких ви створите власну трасу.',
+  worldGuideGet:
+    'Завантажте й розпакуйте одну сцену. Найпростіше — GLB з усіма ресурсами всередині. Набір окремих моделей спочатку зберіть в одну сцену у Blender.',
+  worldGuideConvert:
+    'Маєте .blend, FBX або OBJ? Відкрийте чи імпортуйте його у Blender: File → Export → glTF 2.0 → glTF Binary (.glb). Використовуйте PNG/JPEG без стиснення Draco. Експортуйте власні властивості, якщо створювали ігрові маркери.',
+  worldGuideCredit:
+    'Перед вибором файлів укажіть автора, оригінальне посилання та справжню ліцензію. CC0 не замінює невідому ліцензію. Для CC BY збережіть авторство й опишіть свої зміни під час поширення.',
+  worldGuideSelect:
+    'У «Вибрати файли сцени» виберіть рівно один .glb або один .gltf разом із .bin та PNG/JPEG. Для вкладених текстур скористайтеся «Вибрати папку сцени», зберігши структуру папок. Вибирайте папку однієї сцени, а не всього набору.',
+  worldGuidePlayable:
+    'Прочитайте звіт і відкрийте «Перегляд світу». Видима геометрія сама не створює зіткнень: додайте спрощені колайдери, безпечний старт і цілі маршруту. Перевірте межі та «Тестовий політ» в обох режимах. Автоматичний початковий маршрут — ще не готовий рівень.',
+  worldGuideSave:
+    'Збережіть резервну копію через «Експорт редагованого проєкту», а «Встановити пакунок» збереже його в цьому браузері. Для поширення експортуйте пакунок світу; отримувач імпортує його в бібліотеці. Повторюйте експорт після змін. Перед іншою сценою збережіть чернетку й натисніть «Почати новий світ».',
+  worldGuideLimits:
+    'Поточна межа сцени: 16 МіБ після пакування, до 128 вхідних файлів. Лише PNG/JPEG. Безкоштовне завантаження не гарантує сумісності: великі сцени потребують зменшення текстур і спрощення геометрії.',
+  worldGuideTrouble:
+    'Немає ресурсу? Збережіть назви й папки або повторно експортуйте самодостатній GLB. Непідтримуване розширення? Експортуйте без стиснення геометрії, з PNG/JPEG. Немає старту чи колайдерів? Відкрийте посібник автора нижче — це ігрові дані, а не помилка текстур.',
+  worldGuideLinks: 'Допомога з експорту та створення світів',
+  worldGuideAuthoring: 'Маркери SIM, зіткнення та налаштування експорту',
+  worldResourcesTitle: 'Безкоштовні сцени й моделі — 23 кандидати',
+  worldResourcesIntro:
+    'Це вихідні ресурси для огляду, а не встановлені чи перевірені рівні SIM. Посилання відкривають нову вкладку й потребують інтернету. Сам посібник залишається в симуляторі.',
+  worldResourcesScenes: 'Зібрані сцени — конвертація та підготовка',
+  worldResourcesSceneHelp:
+    'Почніть із невеликого будмайданчика. Сцени Poly Haven детальніші, але потребують експорту з Blender і суттєвої оптимізації до 16 МіБ. Вибирайте сцену Blender, а не проєкт Unreal чи лише HDRI.',
+  worldResourcesKits: 'Створіть власний світ — зберіть ці набори',
+  worldResourcesKitHelp:
+    'Набори Kenney містять окремі деталі, а не готові траси. Зберіть невелику добірку у Blender й експортуйте одну сцену. Smuggler’s Cove — також колекція ресурсів; її проєкт Unreal не імпортується напряму.',
+  worldResourcesLicense:
+    'Наведені джерела вказують CC0; перевірте й збережіть ліцензію саме свого завантаження. Ліцензія ресурсу та сумісність імпорту — окремі перевірки.',
   worldImport: 'Імпорт світу',
   importHelp:
     'Виберіть GLB або glTF з усіма локальними текстурами й буферами. Blender і Crocotile експортують ці формати.',

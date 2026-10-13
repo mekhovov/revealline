@@ -1,0 +1,1690 @@
+{
+  "format": "FPVGeneratedShellAdmittedPlayer.v1",
+  "packageId": "fpv-worlds",
+  "sourceRevision": "45e943bd40831e21fa9b55cb712725e49a901e13",
+  "sourceTree": "10ab43f7098961940975db2348aef96bdd30033e",
+  "output": "/tmp/fpv-admitted-main-45e943bd4",
+  "entry": "optional-practice/fpv-worlds/index.html",
+  "zip": {
+    "bytes": 16848421,
+    "path": "distribution-optional-fpv-worlds.zip",
+    "sha256": "c628ded19d049e034b6d3f2537ef4f7db43b4e497cb52220d5a8aabb5bd3b8ef"
+  },
+  "checks": [
+    {
+      "name": "source-bound two-build admission",
+      "passed": true
+    },
+    {
+      "name": "candidate checksum: distribution-optional-civilian-flight.zip",
+      "passed": true
+    },
+    {
+      "name": "candidate checksum: distribution-optional-civilian-fpv.zip",
+      "passed": true
+    },
+    {
+      "name": "candidate checksum: distribution-optional-fpv-worlds.zip",
+      "passed": true
+    },
+    {
+      "name": "candidate checksum: manifest-optional-civilian-flight.json",
+      "passed": true
+    },
+    {
+      "name": "candidate checksum: manifest-optional-civilian-fpv.json",
+      "passed": true
+    },
+    {
+      "name": "candidate checksum: manifest-optional-fpv-worlds.json",
+      "passed": true
+    },
+    {
+      "name": "candidate checksum: optional-candidate-verification.json",
+      "passed": true
+    },
+    {
+      "name": "candidate checksum: optional-package-review.json",
+      "passed": true
+    },
+    {
+      "name": "candidate checksum: optional-packages.json",
+      "passed": true
+    },
+    {
+      "name": "candidate checksum: source-inventory-optional-civilian-flight.json",
+      "passed": true
+    },
+    {
+      "name": "candidate checksum: source-inventory-optional-civilian-fpv.json",
+      "passed": true
+    },
+    {
+      "name": "candidate checksum: source-inventory-optional-fpv-worlds.json",
+      "passed": true
+    },
+    {
+      "name": "candidate checksum: source-optional-civilian-flight.zip",
+      "passed": true
+    },
+    {
+      "name": "candidate checksum: source-optional-civilian-fpv.zip",
+      "passed": true
+    },
+    {
+      "name": "candidate checksum: source-optional-fpv-worlds.zip",
+      "passed": true
+    },
+    {
+      "name": "admitted distribution identity",
+      "passed": true
+    },
+    {
+      "name": "admitted descriptor identity",
+      "passed": true
+    },
+    {
+      "name": "complete member set",
+      "passed": true
+    },
+    {
+      "name": "admitted member: game/audio/human-reactions/portable.mjs",
+      "passed": true
+    },
+    {
+      "name": "staged bytes: game/audio/human-reactions/portable.mjs",
+      "passed": true
+    },
+    {
+      "name": "admitted member: game/data-json.mjs",
+      "passed": true
+    },
+    {
+      "name": "staged bytes: game/data-json.mjs",
+      "passed": true
+    },
+    {
+      "name": "admitted member: game/encounter-display-preferences.mjs",
+      "passed": true
+    },
+    {
+      "name": "staged bytes: game/encounter-display-preferences.mjs",
+      "passed": true
+    },
+    {
+      "name": "admitted member: game/fpv-entry.mjs",
+      "passed": true
+    },
+    {
+      "name": "staged bytes: game/fpv-entry.mjs",
+      "passed": true
+    },
+    {
+      "name": "admitted member: game/hunt/actor-art.mjs",
+      "passed": true
+    },
+    {
+      "name": "staged bytes: game/hunt/actor-art.mjs",
+      "passed": true
+    },
+    {
+      "name": "admitted member: game/hunt/actor-catalog.mjs",
+      "passed": true
+    },
+    {
+      "name": "staged bytes: game/hunt/actor-catalog.mjs",
+      "passed": true
+    },
+    {
+      "name": "admitted member: game/hunt/copy.mjs",
+      "passed": true
+    },
+    {
+      "name": "staged bytes: game/hunt/copy.mjs",
+      "passed": true
+    },
+    {
+      "name": "admitted member: game/hunt/industrial-soldier-kit.mjs",
+      "passed": true
+    },
+    {
+      "name": "staged bytes: game/hunt/industrial-soldier-kit.mjs",
+      "passed": true
+    },
+    {
+      "name": "admitted member: game/hunt/preferences.mjs",
+      "passed": true
+    },
+    {
+      "name": "staged bytes: game/hunt/preferences.mjs",
+      "passed": true
+    },
+    {
+      "name": "admitted member: game/hunt/presentation-catalog.mjs",
+      "passed": true
+    },
+    {
+      "name": "staged bytes: game/hunt/presentation-catalog.mjs",
+      "passed": true
+    },
+    {
+      "name": "admitted member: game/i18n/bootstrap.mjs",
+      "passed": true
+    },
+    {
+      "name": "staged bytes: game/i18n/bootstrap.mjs",
+      "passed": true
+    },
+    {
+      "name": "admitted member: game/i18n/catalogs.mjs",
+      "passed": true
+    },
+    {
+      "name": "staged bytes: game/i18n/catalogs.mjs",
+      "passed": true
+    },
+    {
+      "name": "admitted member: game/i18n/index.mjs",
+      "passed": true
+    },
+    {
+      "name": "staged bytes: game/i18n/index.mjs",
+      "passed": true
+    },
+    {
+      "name": "admitted member: game/presentation/actor-animation.mjs",
+      "passed": true
+    },
+    {
+      "name": "staged bytes: game/presentation/actor-animation.mjs",
+      "passed": true
+    },
+    {
+      "name": "admitted member: game/presentation/industrial-environments-data.mjs",
+      "passed": true
+    },
+    {
+      "name": "staged bytes: game/presentation/industrial-environments-data.mjs",
+      "passed": true
+    },
+    {
+      "name": "admitted member: game/presentation/industrial-environments.mjs",
+      "passed": true
+    },
+    {
+      "name": "staged bytes: game/presentation/industrial-environments.mjs",
+      "passed": true
+    },
+    {
+      "name": "admitted member: game/presentation/industrial-machinery.mjs",
+      "passed": true
+    },
+    {
+      "name": "staged bytes: game/presentation/industrial-machinery.mjs",
+      "passed": true
+    },
+    {
+      "name": "admitted member: game/presentation/industrial-materials.mjs",
+      "passed": true
+    },
+    {
+      "name": "staged bytes: game/presentation/industrial-materials.mjs",
+      "passed": true
+    },
+    {
+      "name": "admitted member: game/presentation/theme-system.mjs",
+      "passed": true
+    },
+    {
+      "name": "staged bytes: game/presentation/theme-system.mjs",
+      "passed": true
+    },
+    {
+      "name": "admitted member: game/profile-database.mjs",
+      "passed": true
+    },
+    {
+      "name": "staged bytes: game/profile-database.mjs",
+      "passed": true
+    },
+    {
+      "name": "admitted member: game/profile-storage.mjs",
+      "passed": true
+    },
+    {
+      "name": "staged bytes: game/profile-storage.mjs",
+      "passed": true
+    },
+    {
+      "name": "admitted member: game/rewards/audio-groups.mjs",
+      "passed": true
+    },
+    {
+      "name": "staged bytes: game/rewards/audio-groups.mjs",
+      "passed": true
+    },
+    {
+      "name": "admitted member: game/rewards/exploration.mjs",
+      "passed": true
+    },
+    {
+      "name": "staged bytes: game/rewards/exploration.mjs",
+      "passed": true
+    },
+    {
+      "name": "admitted member: game/rewards/learning-profiles.mjs",
+      "passed": true
+    },
+    {
+      "name": "staged bytes: game/rewards/learning-profiles.mjs",
+      "passed": true
+    },
+    {
+      "name": "admitted member: game/rewards/model.mjs",
+      "passed": true
+    },
+    {
+      "name": "staged bytes: game/rewards/model.mjs",
+      "passed": true
+    },
+    {
+      "name": "admitted member: game/rewards/store.mjs",
+      "passed": true
+    },
+    {
+      "name": "staged bytes: game/rewards/store.mjs",
+      "passed": true
+    },
+    {
+      "name": "admitted member: game/ui/art-review-navigation.mjs",
+      "passed": true
+    },
+    {
+      "name": "staged bytes: game/ui/art-review-navigation.mjs",
+      "passed": true
+    },
+    {
+      "name": "admitted member: game/ui/art/identity/fpv-line/wordmark.png",
+      "passed": true
+    },
+    {
+      "name": "staged bytes: game/ui/art/identity/fpv-line/wordmark.png",
+      "passed": true
+    },
+    {
+      "name": "admitted member: game/ui/art/menu-scenes/fpv-portrait.webp",
+      "passed": true
+    },
+    {
+      "name": "staged bytes: game/ui/art/menu-scenes/fpv-portrait.webp",
+      "passed": true
+    },
+    {
+      "name": "admitted member: game/ui/art/menu-scenes/fpv.webp",
+      "passed": true
+    },
+    {
+      "name": "staged bytes: game/ui/art/menu-scenes/fpv.webp",
+      "passed": true
+    },
+    {
+      "name": "admitted member: game/ui/defeat-sound-controls.mjs",
+      "passed": true
+    },
+    {
+      "name": "staged bytes: game/ui/defeat-sound-controls.mjs",
+      "passed": true
+    },
+    {
+      "name": "admitted member: game/ui/destruction-audio.mjs",
+      "passed": true
+    },
+    {
+      "name": "staged bytes: game/ui/destruction-audio.mjs",
+      "passed": true
+    },
+    {
+      "name": "admitted member: game/ui/destruction-level.mjs",
+      "passed": true
+    },
+    {
+      "name": "staged bytes: game/ui/destruction-level.mjs",
+      "passed": true
+    },
+    {
+      "name": "admitted member: game/ui/enemy-appearance-controls.mjs",
+      "passed": true
+    },
+    {
+      "name": "staged bytes: game/ui/enemy-appearance-controls.mjs",
+      "passed": true
+    },
+    {
+      "name": "admitted member: game/ui/human-reaction-policy.mjs",
+      "passed": true
+    },
+    {
+      "name": "staged bytes: game/ui/human-reaction-policy.mjs",
+      "passed": true
+    },
+    {
+      "name": "admitted member: game/ui/menu-navigation-groups.mjs",
+      "passed": true
+    },
+    {
+      "name": "staged bytes: game/ui/menu-navigation-groups.mjs",
+      "passed": true
+    },
+    {
+      "name": "admitted member: game/ui/native-menu-icons.mjs",
+      "passed": true
+    },
+    {
+      "name": "staged bytes: game/ui/native-menu-icons.mjs",
+      "passed": true
+    },
+    {
+      "name": "admitted member: game/ui/reward-knowledge.mjs",
+      "passed": true
+    },
+    {
+      "name": "staged bytes: game/ui/reward-knowledge.mjs",
+      "passed": true
+    },
+    {
+      "name": "admitted member: game/vendor/I18NEXT-LICENSE.txt",
+      "passed": true
+    },
+    {
+      "name": "staged bytes: game/vendor/I18NEXT-LICENSE.txt",
+      "passed": true
+    },
+    {
+      "name": "admitted member: game/vendor/i18next-26.4.2.min.js",
+      "passed": true
+    },
+    {
+      "name": "staged bytes: game/vendor/i18next-26.4.2.min.js",
+      "passed": true
+    },
+    {
+      "name": "admitted member: launcher/app.mjs",
+      "passed": true
+    },
+    {
+      "name": "staged bytes: launcher/app.mjs",
+      "passed": true
+    },
+    {
+      "name": "admitted member: launcher/app.webmanifest",
+      "passed": true
+    },
+    {
+      "name": "staged bytes: launcher/app.webmanifest",
+      "passed": true
+    },
+    {
+      "name": "admitted member: launcher/context.mjs",
+      "passed": true
+    },
+    {
+      "name": "staged bytes: launcher/context.mjs",
+      "passed": true
+    },
+    {
+      "name": "admitted member: launcher/icons/icon-192.png",
+      "passed": true
+    },
+    {
+      "name": "staged bytes: launcher/icons/icon-192.png",
+      "passed": true
+    },
+    {
+      "name": "admitted member: launcher/icons/icon-512.png",
+      "passed": true
+    },
+    {
+      "name": "staged bytes: launcher/icons/icon-512.png",
+      "passed": true
+    },
+    {
+      "name": "admitted member: launcher/index.html",
+      "passed": true
+    },
+    {
+      "name": "staged bytes: launcher/index.html",
+      "passed": true
+    },
+    {
+      "name": "admitted member: launcher/navigation.mjs",
+      "passed": true
+    },
+    {
+      "name": "staged bytes: launcher/navigation.mjs",
+      "passed": true
+    },
+    {
+      "name": "admitted member: launcher/worker.js",
+      "passed": true
+    },
+    {
+      "name": "staged bytes: launcher/worker.js",
+      "passed": true
+    },
+    {
+      "name": "admitted member: optional-package.json",
+      "passed": true
+    },
+    {
+      "name": "staged bytes: optional-package.json",
+      "passed": true
+    },
+    {
+      "name": "admitted member: optional-practice/civilian-fpv/README.md",
+      "passed": true
+    },
+    {
+      "name": "staged bytes: optional-practice/civilian-fpv/README.md",
+      "passed": true
+    },
+    {
+      "name": "admitted member: optional-practice/civilian-fpv/attempts.mjs",
+      "passed": true
+    },
+    {
+      "name": "staged bytes: optional-practice/civilian-fpv/attempts.mjs",
+      "passed": true
+    },
+    {
+      "name": "admitted member: optional-practice/civilian-fpv/beginner-coach.mjs",
+      "passed": true
+    },
+    {
+      "name": "staged bytes: optional-practice/civilian-fpv/beginner-coach.mjs",
+      "passed": true
+    },
+    {
+      "name": "admitted member: optional-practice/civilian-fpv/catalogue.mjs",
+      "passed": true
+    },
+    {
+      "name": "staged bytes: optional-practice/civilian-fpv/catalogue.mjs",
+      "passed": true
+    },
+    {
+      "name": "admitted member: optional-practice/civilian-fpv/content-definitions.mjs",
+      "passed": true
+    },
+    {
+      "name": "staged bytes: optional-practice/civilian-fpv/content-definitions.mjs",
+      "passed": true
+    },
+    {
+      "name": "admitted member: optional-practice/civilian-fpv/demonstrations.mjs",
+      "passed": true
+    },
+    {
+      "name": "staged bytes: optional-practice/civilian-fpv/demonstrations.mjs",
+      "passed": true
+    },
+    {
+      "name": "admitted member: optional-practice/civilian-fpv/expressive-hunt-courses.mjs",
+      "passed": true
+    },
+    {
+      "name": "staged bytes: optional-practice/civilian-fpv/expressive-hunt-courses.mjs",
+      "passed": true
+    },
+    {
+      "name": "admitted member: optional-practice/civilian-fpv/flight-fullscreen.mjs",
+      "passed": true
+    },
+    {
+      "name": "staged bytes: optional-practice/civilian-fpv/flight-fullscreen.mjs",
+      "passed": true
+    },
+    {
+      "name": "admitted member: optional-practice/civilian-fpv/flight-sectors.mjs",
+      "passed": true
+    },
+    {
+      "name": "staged bytes: optional-practice/civilian-fpv/flight-sectors.mjs",
+      "passed": true
+    },
+    {
+      "name": "admitted member: optional-practice/civilian-fpv/industrial-environment.mjs",
+      "passed": true
+    },
+    {
+      "name": "staged bytes: optional-practice/civilian-fpv/industrial-environment.mjs",
+      "passed": true
+    },
+    {
+      "name": "admitted member: optional-practice/civilian-fpv/industrial-soldiers.mjs",
+      "passed": true
+    },
+    {
+      "name": "staged bytes: optional-practice/civilian-fpv/industrial-soldiers.mjs",
+      "passed": true
+    },
+    {
+      "name": "admitted member: optional-practice/civilian-fpv/industrial-vehicles.mjs",
+      "passed": true
+    },
+    {
+      "name": "staged bytes: optional-practice/civilian-fpv/industrial-vehicles.mjs",
+      "passed": true
+    },
+    {
+      "name": "admitted member: optional-practice/civilian-fpv/input.mjs",
+      "passed": true
+    },
+    {
+      "name": "staged bytes: optional-practice/civilian-fpv/input.mjs",
+      "passed": true
+    },
+    {
+      "name": "admitted member: optional-practice/civilian-fpv/math.mjs",
+      "passed": true
+    },
+    {
+      "name": "staged bytes: optional-practice/civilian-fpv/math.mjs",
+      "passed": true
+    },
+    {
+      "name": "admitted member: optional-practice/civilian-fpv/model.mjs",
+      "passed": true
+    },
+    {
+      "name": "staged bytes: optional-practice/civilian-fpv/model.mjs",
+      "passed": true
+    },
+    {
+      "name": "admitted member: optional-practice/civilian-fpv/native-pursuit-courses.mjs",
+      "passed": true
+    },
+    {
+      "name": "staged bytes: optional-practice/civilian-fpv/native-pursuit-courses.mjs",
+      "passed": true
+    },
+    {
+      "name": "admitted member: optional-practice/civilian-fpv/notebook.mjs",
+      "passed": true
+    },
+    {
+      "name": "staged bytes: optional-practice/civilian-fpv/notebook.mjs",
+      "passed": true
+    },
+    {
+      "name": "admitted member: optional-practice/civilian-fpv/offline.mjs",
+      "passed": true
+    },
+    {
+      "name": "staged bytes: optional-practice/civilian-fpv/offline.mjs",
+      "passed": true
+    },
+    {
+      "name": "admitted member: optional-practice/civilian-fpv/playlists.mjs",
+      "passed": true
+    },
+    {
+      "name": "staged bytes: optional-practice/civilian-fpv/playlists.mjs",
+      "passed": true
+    },
+    {
+      "name": "admitted member: optional-practice/civilian-fpv/radio-controls.mjs",
+      "passed": true
+    },
+    {
+      "name": "staged bytes: optional-practice/civilian-fpv/radio-controls.mjs",
+      "passed": true
+    },
+    {
+      "name": "admitted member: optional-practice/civilian-fpv/radio-guide.mjs",
+      "passed": true
+    },
+    {
+      "name": "staged bytes: optional-practice/civilian-fpv/radio-guide.mjs",
+      "passed": true
+    },
+    {
+      "name": "admitted member: optional-practice/civilian-fpv/radio-profile.mjs",
+      "passed": true
+    },
+    {
+      "name": "staged bytes: optional-practice/civilian-fpv/radio-profile.mjs",
+      "passed": true
+    },
+    {
+      "name": "admitted member: optional-practice/civilian-fpv/radio-runtime.mjs",
+      "passed": true
+    },
+    {
+      "name": "staged bytes: optional-practice/civilian-fpv/radio-runtime.mjs",
+      "passed": true
+    },
+    {
+      "name": "admitted member: optional-practice/civilian-fpv/radio-session.mjs",
+      "passed": true
+    },
+    {
+      "name": "staged bytes: optional-practice/civilian-fpv/radio-session.mjs",
+      "passed": true
+    },
+    {
+      "name": "admitted member: optional-practice/civilian-fpv/radio-setup.mjs",
+      "passed": true
+    },
+    {
+      "name": "staged bytes: optional-practice/civilian-fpv/radio-setup.mjs",
+      "passed": true
+    },
+    {
+      "name": "admitted member: optional-practice/civilian-fpv/renderer.mjs",
+      "passed": true
+    },
+    {
+      "name": "staged bytes: optional-practice/civilian-fpv/renderer.mjs",
+      "passed": true
+    },
+    {
+      "name": "admitted member: optional-practice/civilian-fpv/rotation-table.mjs",
+      "passed": true
+    },
+    {
+      "name": "staged bytes: optional-practice/civilian-fpv/rotation-table.mjs",
+      "passed": true
+    },
+    {
+      "name": "admitted member: optional-practice/civilian-fpv/sim-presentation.mjs",
+      "passed": true
+    },
+    {
+      "name": "staged bytes: optional-practice/civilian-fpv/sim-presentation.mjs",
+      "passed": true
+    },
+    {
+      "name": "admitted member: optional-practice/civilian-fpv/snake-hunt-catalogue.mjs",
+      "passed": true
+    },
+    {
+      "name": "staged bytes: optional-practice/civilian-fpv/snake-hunt-catalogue.mjs",
+      "passed": true
+    },
+    {
+      "name": "admitted member: optional-practice/civilian-fpv/snake-hunt-presentation.mjs",
+      "passed": true
+    },
+    {
+      "name": "staged bytes: optional-practice/civilian-fpv/snake-hunt-presentation.mjs",
+      "passed": true
+    },
+    {
+      "name": "admitted member: optional-practice/civilian-fpv/snake-hunt.mjs",
+      "passed": true
+    },
+    {
+      "name": "staged bytes: optional-practice/civilian-fpv/snake-hunt.mjs",
+      "passed": true
+    },
+    {
+      "name": "admitted member: optional-practice/civilian-fpv/style.css",
+      "passed": true
+    },
+    {
+      "name": "staged bytes: optional-practice/civilian-fpv/style.css",
+      "passed": true
+    },
+    {
+      "name": "admitted member: optional-practice/civilian-fpv/vendor/LICENSE.txt",
+      "passed": true
+    },
+    {
+      "name": "staged bytes: optional-practice/civilian-fpv/vendor/LICENSE.txt",
+      "passed": true
+    },
+    {
+      "name": "admitted member: optional-practice/civilian-fpv/vendor/addons/controls/TransformControls.js",
+      "passed": true
+    },
+    {
+      "name": "staged bytes: optional-practice/civilian-fpv/vendor/addons/controls/TransformControls.js",
+      "passed": true
+    },
+    {
+      "name": "admitted member: optional-practice/civilian-fpv/vendor/addons/loaders/GLTFLoader.js",
+      "passed": true
+    },
+    {
+      "name": "staged bytes: optional-practice/civilian-fpv/vendor/addons/loaders/GLTFLoader.js",
+      "passed": true
+    },
+    {
+      "name": "admitted member: optional-practice/civilian-fpv/vendor/addons/provenance.json",
+      "passed": true
+    },
+    {
+      "name": "staged bytes: optional-practice/civilian-fpv/vendor/addons/provenance.json",
+      "passed": true
+    },
+    {
+      "name": "admitted member: optional-practice/civilian-fpv/vendor/addons/utils/BufferGeometryUtils.js",
+      "passed": true
+    },
+    {
+      "name": "staged bytes: optional-practice/civilian-fpv/vendor/addons/utils/BufferGeometryUtils.js",
+      "passed": true
+    },
+    {
+      "name": "admitted member: optional-practice/civilian-fpv/vendor/addons/utils/SkeletonUtils.js",
+      "passed": true
+    },
+    {
+      "name": "staged bytes: optional-practice/civilian-fpv/vendor/addons/utils/SkeletonUtils.js",
+      "passed": true
+    },
+    {
+      "name": "admitted member: optional-practice/civilian-fpv/vendor/rapier/LICENSE",
+      "passed": true
+    },
+    {
+      "name": "staged bytes: optional-practice/civilian-fpv/vendor/rapier/LICENSE",
+      "passed": true
+    },
+    {
+      "name": "admitted member: optional-practice/civilian-fpv/vendor/rapier/provenance.json",
+      "passed": true
+    },
+    {
+      "name": "staged bytes: optional-practice/civilian-fpv/vendor/rapier/provenance.json",
+      "passed": true
+    },
+    {
+      "name": "admitted member: optional-practice/civilian-fpv/vendor/rapier/rapier.mjs",
+      "passed": true
+    },
+    {
+      "name": "staged bytes: optional-practice/civilian-fpv/vendor/rapier/rapier.mjs",
+      "passed": true
+    },
+    {
+      "name": "admitted member: optional-practice/civilian-fpv/vendor/three.core.js",
+      "passed": true
+    },
+    {
+      "name": "staged bytes: optional-practice/civilian-fpv/vendor/three.core.js",
+      "passed": true
+    },
+    {
+      "name": "admitted member: optional-practice/civilian-fpv/vendor/three.module.js",
+      "passed": true
+    },
+    {
+      "name": "staged bytes: optional-practice/civilian-fpv/vendor/three.module.js",
+      "passed": true
+    },
+    {
+      "name": "admitted member: optional-practice/civilian-fpv/world-app.mjs",
+      "passed": true
+    },
+    {
+      "name": "staged bytes: optional-practice/civilian-fpv/world-app.mjs",
+      "passed": true
+    },
+    {
+      "name": "admitted member: optional-practice/civilian-fpv/world-assets.mjs",
+      "passed": true
+    },
+    {
+      "name": "staged bytes: optional-practice/civilian-fpv/world-assets.mjs",
+      "passed": true
+    },
+    {
+      "name": "admitted member: optional-practice/civilian-fpv/world-catalogue.mjs",
+      "passed": true
+    },
+    {
+      "name": "staged bytes: optional-practice/civilian-fpv/world-catalogue.mjs",
+      "passed": true
+    },
+    {
+      "name": "admitted member: optional-practice/civilian-fpv/world-collision.mjs",
+      "passed": true
+    },
+    {
+      "name": "staged bytes: optional-practice/civilian-fpv/world-collision.mjs",
+      "passed": true
+    },
+    {
+      "name": "admitted member: optional-practice/civilian-fpv/world-content.mjs",
+      "passed": true
+    },
+    {
+      "name": "staged bytes: optional-practice/civilian-fpv/world-content.mjs",
+      "passed": true
+    },
+    {
+      "name": "admitted member: optional-practice/civilian-fpv/world-demonstrations.mjs",
+      "passed": true
+    },
+    {
+      "name": "staged bytes: optional-practice/civilian-fpv/world-demonstrations.mjs",
+      "passed": true
+    },
+    {
+      "name": "admitted member: optional-practice/civilian-fpv/world-editor.mjs",
+      "passed": true
+    },
+    {
+      "name": "staged bytes: optional-practice/civilian-fpv/world-editor.mjs",
+      "passed": true
+    },
+    {
+      "name": "admitted member: optional-practice/civilian-fpv/world-model.mjs",
+      "passed": true
+    },
+    {
+      "name": "staged bytes: optional-practice/civilian-fpv/world-model.mjs",
+      "passed": true
+    },
+    {
+      "name": "admitted member: optional-practice/civilian-fpv/world-pursuit.mjs",
+      "passed": true
+    },
+    {
+      "name": "staged bytes: optional-practice/civilian-fpv/world-pursuit.mjs",
+      "passed": true
+    },
+    {
+      "name": "admitted member: optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+      "passed": true
+    },
+    {
+      "name": "staged bytes: optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+      "passed": true
+    },
+    {
+      "name": "admitted member: optional-practice/civilian-fpv/world-records.mjs",
+      "passed": true
+    },
+    {
+      "name": "staged bytes: optional-practice/civilian-fpv/world-records.mjs",
+      "passed": true
+    },
+    {
+      "name": "admitted member: optional-practice/civilian-fpv/world-store.mjs",
+      "passed": true
+    },
+    {
+      "name": "staged bytes: optional-practice/civilian-fpv/world-store.mjs",
+      "passed": true
+    },
+    {
+      "name": "admitted member: optional-practice/civilian-fpv/world-style.css",
+      "passed": true
+    },
+    {
+      "name": "staged bytes: optional-practice/civilian-fpv/world-style.css",
+      "passed": true
+    },
+    {
+      "name": "admitted member: optional-practice/civilian-fpv/world-themes.mjs",
+      "passed": true
+    },
+    {
+      "name": "staged bytes: optional-practice/civilian-fpv/world-themes.mjs",
+      "passed": true
+    },
+    {
+      "name": "admitted member: optional-practice/civilian-fpv/world-visuals.mjs",
+      "passed": true
+    },
+    {
+      "name": "staged bytes: optional-practice/civilian-fpv/world-visuals.mjs",
+      "passed": true
+    },
+    {
+      "name": "admitted member: optional-practice/civilian-fpv/world-zip.mjs",
+      "passed": true
+    },
+    {
+      "name": "staged bytes: optional-practice/civilian-fpv/world-zip.mjs",
+      "passed": true
+    },
+    {
+      "name": "admitted member: optional-practice/fpv-worlds/README.md",
+      "passed": true
+    },
+    {
+      "name": "staged bytes: optional-practice/fpv-worlds/README.md",
+      "passed": true
+    },
+    {
+      "name": "admitted member: optional-practice/fpv-worlds/SCENERY-LICENSES.txt",
+      "passed": true
+    },
+    {
+      "name": "staged bytes: optional-practice/fpv-worlds/SCENERY-LICENSES.txt",
+      "passed": true
+    },
+    {
+      "name": "admitted member: optional-practice/fpv-worlds/app.webmanifest",
+      "passed": true
+    },
+    {
+      "name": "staged bytes: optional-practice/fpv-worlds/app.webmanifest",
+      "passed": true
+    },
+    {
+      "name": "admitted member: optional-practice/fpv-worlds/guide.html",
+      "passed": true
+    },
+    {
+      "name": "staged bytes: optional-practice/fpv-worlds/guide.html",
+      "passed": true
+    },
+    {
+      "name": "admitted member: optional-practice/fpv-worlds/icons/icon-192.png",
+      "passed": true
+    },
+    {
+      "name": "staged bytes: optional-practice/fpv-worlds/icons/icon-192.png",
+      "passed": true
+    },
+    {
+      "name": "admitted member: optional-practice/fpv-worlds/icons/icon-512.png",
+      "passed": true
+    },
+    {
+      "name": "staged bytes: optional-practice/fpv-worlds/icons/icon-512.png",
+      "passed": true
+    },
+    {
+      "name": "admitted member: optional-practice/fpv-worlds/index.html",
+      "passed": true
+    },
+    {
+      "name": "staged bytes: optional-practice/fpv-worlds/index.html",
+      "passed": true
+    },
+    {
+      "name": "admitted member: optional-practice/fpv-worlds/package-info.json",
+      "passed": true
+    },
+    {
+      "name": "staged bytes: optional-practice/fpv-worlds/package-info.json",
+      "passed": true
+    },
+    {
+      "name": "admitted member: optional-practice/fpv-worlds/preview.png",
+      "passed": true
+    },
+    {
+      "name": "staged bytes: optional-practice/fpv-worlds/preview.png",
+      "passed": true
+    },
+    {
+      "name": "admitted member: optional-practice/fpv-worlds/scenery-provenance.json",
+      "passed": true
+    },
+    {
+      "name": "staged bytes: optional-practice/fpv-worlds/scenery-provenance.json",
+      "passed": true
+    },
+    {
+      "name": "admitted member: optional-practice/fpv-worlds/worker.js",
+      "passed": true
+    },
+    {
+      "name": "staged bytes: optional-practice/fpv-worlds/worker.js",
+      "passed": true
+    },
+    {
+      "name": "admitted member: optional-practice/guide.mjs",
+      "passed": true
+    },
+    {
+      "name": "staged bytes: optional-practice/guide.mjs",
+      "passed": true
+    },
+    {
+      "name": "admitted member: optional-practice/install-context.mjs",
+      "passed": true
+    },
+    {
+      "name": "staged bytes: optional-practice/install-context.mjs",
+      "passed": true
+    },
+    {
+      "name": "admitted member: optional-practice/navigation.mjs",
+      "passed": true
+    },
+    {
+      "name": "staged bytes: optional-practice/navigation.mjs",
+      "passed": true
+    }
+  ],
+  "files": [
+    {
+      "path": "game/audio/human-reactions/portable.mjs",
+      "bytes": 52575,
+      "sha256": "2f2654e7c6d2bb83d9f1b9e4c139ba348f205a70350328816eb0b3f8161fa696"
+    },
+    {
+      "path": "game/data-json.mjs",
+      "bytes": 5594,
+      "sha256": "9ce33d6173f3cba8587ed7a7f1924c66e9d9c86ffa59b37a743764ea0b01f7bd"
+    },
+    {
+      "path": "game/encounter-display-preferences.mjs",
+      "bytes": 7314,
+      "sha256": "6cd94187c299eaaa4cb14790c12d84388fb8d8dd4a5b48902dadd74dc6475b03"
+    },
+    {
+      "path": "game/fpv-entry.mjs",
+      "bytes": 8019,
+      "sha256": "8ea8de44dde7bbf1db9be64b9d709818fce54075758fcccadf7064f3b1731c52"
+    },
+    {
+      "path": "game/hunt/actor-art.mjs",
+      "bytes": 44270,
+      "sha256": "6e8bd02d8655be40e5e19d639f76ca2a2aa89eba11c5471bd4c37ef323498b4c"
+    },
+    {
+      "path": "game/hunt/actor-catalog.mjs",
+      "bytes": 17530,
+      "sha256": "c9acd0eea22d93cb210667797b8de81fc8995bdbfef2ae13e8d56c14b9972f8d"
+    },
+    {
+      "path": "game/hunt/copy.mjs",
+      "bytes": 4717,
+      "sha256": "9e57f007948c134ca3a18f6c672f9d30d073839c5596f930ff78896b23189011"
+    },
+    {
+      "path": "game/hunt/industrial-soldier-kit.mjs",
+      "bytes": 3713,
+      "sha256": "e3b42bc53333fd659499112df90f0e4c53899eb31d80b065c534b4e337ca9524"
+    },
+    {
+      "path": "game/hunt/preferences.mjs",
+      "bytes": 7098,
+      "sha256": "b28b212ff99bd56fa41e80a897ad05748d7c83d89087487bb6af9889cf43f53a"
+    },
+    {
+      "path": "game/hunt/presentation-catalog.mjs",
+      "bytes": 4479,
+      "sha256": "cf39bc033b1f3263f21481f04c7595bac7a06a4613759b90594855834d067796"
+    },
+    {
+      "path": "game/i18n/bootstrap.mjs",
+      "bytes": 13117,
+      "sha256": "242e4791b2202d2644b91df5aa76355019890525af774ee2e795c937988b0395"
+    },
+    {
+      "path": "game/i18n/catalogs.mjs",
+      "bytes": 39884,
+      "sha256": "a2cfd22c1c44f38a8e7c63f8836358aab9d749f856a7689ee1e42c7bb4553719"
+    },
+    {
+      "path": "game/i18n/index.mjs",
+      "bytes": 417,
+      "sha256": "29f40a6d92826ced1eb53283ed32e342ac6e95920abbf8d549f2d78e65b48d07"
+    },
+    {
+      "path": "game/presentation/actor-animation.mjs",
+      "bytes": 6246,
+      "sha256": "53ddaf069ed5da7bae3ab8ef6bf1284f38957ceb91f06315a489814cb2c06234"
+    },
+    {
+      "path": "game/presentation/industrial-environments-data.mjs",
+      "bytes": 330026,
+      "sha256": "02b6034d294f84abf4bb90a0f4b1f5ad7b8558337ac6387678dad720c4305938"
+    },
+    {
+      "path": "game/presentation/industrial-environments.mjs",
+      "bytes": 9240,
+      "sha256": "78f3159366dd92bcb58035eb40eae89b9b6c498ecb287ca07f37f0888348cf87"
+    },
+    {
+      "path": "game/presentation/industrial-machinery.mjs",
+      "bytes": 13604,
+      "sha256": "4b1eddf3c797ba6b52d68f14a1f2a3b282ede3e204fedfc387a72fe4a219f151"
+    },
+    {
+      "path": "game/presentation/industrial-materials.mjs",
+      "bytes": 7229,
+      "sha256": "0dd948dd6ed8cd787e6588e98a75f35e9e41d06bfb248f761fdb3ccb1866adbd"
+    },
+    {
+      "path": "game/presentation/theme-system.mjs",
+      "bytes": 65878,
+      "sha256": "f1ab57202233decee84e5c8378f85ac58b97e655af233594e5b407d7238d41f0"
+    },
+    {
+      "path": "game/profile-database.mjs",
+      "bytes": 152,
+      "sha256": "6a843fc68c3d639ca6d3bac8c77228eccf21cd72a525872245bd5cbbd9d68a1c"
+    },
+    {
+      "path": "game/profile-storage.mjs",
+      "bytes": 6205,
+      "sha256": "7f0e6cc3a957ddc00a032d41e8bea782907b901f714708de5385667fe5fbbaec"
+    },
+    {
+      "path": "game/rewards/audio-groups.mjs",
+      "bytes": 2937,
+      "sha256": "85e1340e57dc925927830d6dd436d7b3da4b459f781e5f989d8efbbe54a44b6b"
+    },
+    {
+      "path": "game/rewards/exploration.mjs",
+      "bytes": 9341,
+      "sha256": "e997a52802aee1410f06faa75ca4984958fd979d495b1b34b0ee2582c5628ccd"
+    },
+    {
+      "path": "game/rewards/learning-profiles.mjs",
+      "bytes": 1519,
+      "sha256": "f24f81f972c921c7d3f89713c8a470086affd0b420783c1ab97cb15c6de4dc1d"
+    },
+    {
+      "path": "game/rewards/model.mjs",
+      "bytes": 34442,
+      "sha256": "1f7ac62d4c5e9a01d1435e93116d7b59eb9bac8c4714769a9abaaba98d790d92"
+    },
+    {
+      "path": "game/rewards/store.mjs",
+      "bytes": 17038,
+      "sha256": "0d12e0e1b83e55a8103c9efe9bfde90291005150dac766af7ee42bd51f91521f"
+    },
+    {
+      "path": "game/ui/art-review-navigation.mjs",
+      "bytes": 2392,
+      "sha256": "04b81a0ab13dc2e2c6141a51597955d8ab80419466cd9e650104d1538048fec2"
+    },
+    {
+      "path": "game/ui/art/identity/fpv-line/wordmark.png",
+      "bytes": 485216,
+      "sha256": "1a0e6083ddc1147f20b374178c68618c4fc2ea1cb915664178f371ec055cc298"
+    },
+    {
+      "path": "game/ui/art/menu-scenes/fpv-portrait.webp",
+      "bytes": 482136,
+      "sha256": "3d651795fa7623b0200fadaed05a1127109a9c9c6cbd44d183a92a8e12c2ee24"
+    },
+    {
+      "path": "game/ui/art/menu-scenes/fpv.webp",
+      "bytes": 514190,
+      "sha256": "19f43cb1602e59a692d416d36d715e664765eecc24784b3b3e6516651c53df45"
+    },
+    {
+      "path": "game/ui/defeat-sound-controls.mjs",
+      "bytes": 2773,
+      "sha256": "b99f97c97e46fd82cd93338e4448c707bf650e6ffb0d5813d2ec68879b56451e"
+    },
+    {
+      "path": "game/ui/destruction-audio.mjs",
+      "bytes": 3628,
+      "sha256": "b9a52dbf64e751536a171a0e0d26223bd01e3e8d3fee5c0dffb4556b8775d85b"
+    },
+    {
+      "path": "game/ui/destruction-level.mjs",
+      "bytes": 2221,
+      "sha256": "ffbdf16469259f5ef6be0197aa8efd458038106d39cae6b25a57231aff790f61"
+    },
+    {
+      "path": "game/ui/enemy-appearance-controls.mjs",
+      "bytes": 8141,
+      "sha256": "f34c869b039cfd23841a5c8886e7509d2e5f88bc4ecbe0ae56e5fc0f59e1d165"
+    },
+    {
+      "path": "game/ui/human-reaction-policy.mjs",
+      "bytes": 1974,
+      "sha256": "dd5992bca561093f9a8c31c4e2cd51ddb239e97719df8d2567f27e4330f7b731"
+    },
+    {
+      "path": "game/ui/menu-navigation-groups.mjs",
+      "bytes": 3541,
+      "sha256": "f07127e0a125296e37ca8fe36de9c04590df67642a0c25f33c9e66adec32063d"
+    },
+    {
+      "path": "game/ui/native-menu-icons.mjs",
+      "bytes": 2599,
+      "sha256": "865e5ae85a598f6ee2c25798e7379b59a8ca564b4c2ef4a56cd84bf0633e0aa1"
+    },
+    {
+      "path": "game/ui/reward-knowledge.mjs",
+      "bytes": 2251,
+      "sha256": "77232a28c5112c0d20c291ca629bebbd908ca9945344bb997e0a4b392a8e931b"
+    },
+    {
+      "path": "game/vendor/I18NEXT-LICENSE.txt",
+      "bytes": 1082,
+      "sha256": "1cd0a2b02a6cc40ef8ee16310d13eeffdd7b5de4a562fd3ee7c921d8eb54f60a"
+    },
+    {
+      "path": "game/vendor/i18next-26.4.2.min.js",
+      "bytes": 43702,
+      "sha256": "eb0dd6d72e8f756b90faf864853af2a17870fe97b54473b7c34494870c65901c"
+    },
+    {
+      "path": "launcher/app.mjs",
+      "bytes": 15964,
+      "sha256": "a6257272fe86fbd3ca1b6cbe65ca5d9c08498e8f2d94667eaba9b97f0e581ae4"
+    },
+    {
+      "path": "launcher/app.webmanifest",
+      "bytes": 646,
+      "sha256": "2415d98ee9661b76428c33c345a05d6ac9bc0522ab8a457b4b563426aa71d9a6"
+    },
+    {
+      "path": "launcher/context.mjs",
+      "bytes": 19020,
+      "sha256": "ceb0ef835b3d518a639d81582495327c4470579a8e6a34caffdbca7468b55160"
+    },
+    {
+      "path": "launcher/icons/icon-192.png",
+      "bytes": 33508,
+      "sha256": "5bc0f892cc5c13a7b1564cca9ef3ee0799a38b7b5fb63ccc9d7559dc2bf3a34d"
+    },
+    {
+      "path": "launcher/icons/icon-512.png",
+      "bytes": 82577,
+      "sha256": "47f0661543ba686911027a8005c8b318c4f9146958f1736ee32fb056e5bfea91"
+    },
+    {
+      "path": "launcher/index.html",
+      "bytes": 1505,
+      "sha256": "c917f1faa05a00d5f83e4256c7efb50d87557b5015b6352b48b3f2eb4019b184"
+    },
+    {
+      "path": "launcher/navigation.mjs",
+      "bytes": 2719,
+      "sha256": "c59fd48a3cce005934ac290773da5b60d18e9a2bebc392a9e911a34b7112f6f1"
+    },
+    {
+      "path": "launcher/worker.js",
+      "bytes": 7630,
+      "sha256": "b5c7e7501cb3928dffcc8cfa5e93f4306cea120f619ddb110f4ccd396d62d7c2"
+    },
+    {
+      "path": "optional-package.json",
+      "bytes": 22264,
+      "sha256": "8e2a323fc64ec3b44b517a5c3791cdd886f1b61eb4576ee5ca5654fc97dc6b2d"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/README.md",
+      "bytes": 25804,
+      "sha256": "2e97f96dcd653804eedf49f6a1d073cc9c8a71399db0cc5d7d1cbfae0ae66774"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/attempts.mjs",
+      "bytes": 13389,
+      "sha256": "5353e993c615dbb7091ab5d50497db82e71d3970f1587e6bb1398cc565be2494"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/beginner-coach.mjs",
+      "bytes": 123353,
+      "sha256": "216d7c0e37248b7de2833639f980ca665c12b012865e16bde738b8af1f61379e"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/catalogue.mjs",
+      "bytes": 10565,
+      "sha256": "98338353d17eb585414538c9905040752fd5cd6699c48b17fa1706832b750997"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/content-definitions.mjs",
+      "bytes": 11313,
+      "sha256": "c3cc752eaef2b2e8d2865e4ba371e49097ba5fd6d069c1ca35f19cf94406ffad"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/demonstrations.mjs",
+      "bytes": 221646,
+      "sha256": "92bb4365c46d94f5c1fea9808ec4e24fb9014d35640ee488959c4e0f4b6c5cfa"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/expressive-hunt-courses.mjs",
+      "bytes": 12582,
+      "sha256": "732c6d72dded07e7541965b3c250cfe339dd98ea49d22d2085b856cb869b9ede"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/flight-fullscreen.mjs",
+      "bytes": 289102,
+      "sha256": "6c3d1a30db252ef219d6e02d3cca17053a4ba2316f8a873cd9300aa761adfe19"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/flight-sectors.mjs",
+      "bytes": 2673,
+      "sha256": "5b1b54bde4e578e61da7d59f4a80a86db9aafbc78b4523d2ba2b540277a0a16d"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/industrial-environment.mjs",
+      "bytes": 7447,
+      "sha256": "f16dfab709c376b098927155f37b06e21b1f8a9e727da769388d0beba86f790f"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/industrial-soldiers.mjs",
+      "bytes": 18718,
+      "sha256": "469e98e0a7d322e26b16afd96d7fc4f10282289c95a5289c999094c86ef3d90b"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/industrial-vehicles.mjs",
+      "bytes": 10613,
+      "sha256": "10abf3263171ee0acc4177c822d8416b8da465403415db1500f74da5a98fba46"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/input.mjs",
+      "bytes": 37567,
+      "sha256": "2bbe8cc370c680ea4836c1443bad83be8bc55c6d09c294893655f3ea4a409623"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/math.mjs",
+      "bytes": 3062,
+      "sha256": "555c8b6ea170b46992133507d2a3d867f06185bca060239cab7db9c9b87f9f98"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/model.mjs",
+      "bytes": 19650,
+      "sha256": "dc950bc9c3282a2f879c264e40004fd1ebf1860cb33ad49d3cf73cc158ce7577"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/native-pursuit-courses.mjs",
+      "bytes": 7559,
+      "sha256": "2d35af03d1df8b026c340b465577df9517e7d6f59df002b1f75235e611311992"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/notebook.mjs",
+      "bytes": 18432,
+      "sha256": "74159518b1c79be1c2858503cd8ddee79aed8796e9b21bf6a9a8721d5099a129"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/offline.mjs",
+      "bytes": 2887,
+      "sha256": "d6abd2e8142f13aa7d3cf85a3df1491fcbaba78e3ee76eec7835d188131a0d71"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/playlists.mjs",
+      "bytes": 5130,
+      "sha256": "ed81b450bc268cf8096fe14a7c1a46e9a5fca0c32ff8fdedad3c356955280a77"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/radio-controls.mjs",
+      "bytes": 5726,
+      "sha256": "ec81c8b2d7cfe8586a7b73ef0887972019c7c1c39e64e6f32ea0d39437d7d4fb"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/radio-guide.mjs",
+      "bytes": 37387,
+      "sha256": "52685411b2099492a1bb26ffed12911c2a006fae971229a08147c0ddfd81a2b1"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/radio-profile.mjs",
+      "bytes": 18097,
+      "sha256": "f588fd5cda96ed9627a483f49ca843ace8d99a68fae42b0a4239c2cd0ab81933"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/radio-runtime.mjs",
+      "bytes": 8037,
+      "sha256": "3d908c7f6f1295fddacb952fadfc327206153248dbf5222ef31677eb4ff8f71b"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/radio-session.mjs",
+      "bytes": 3780,
+      "sha256": "98fdd029f1deb9eb6b51f2ae2f8fb5c441e2b3a7a2aca520a7e9ce5e267e80ef"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/radio-setup.mjs",
+      "bytes": 45087,
+      "sha256": "d4c091a8539221e71e39a12436af45a681a21e13f5468b8b4ecccd1b4c05e7d6"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/renderer.mjs",
+      "bytes": 137023,
+      "sha256": "a13634c725f4df35823fb506f53e1bfd88f35cf9232ac46e8c3d4d9cf038a2f3"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/rotation-table.mjs",
+      "bytes": 7509,
+      "sha256": "2ddab304ac99a2e70fc7e84fc6c27eedb49f1f3dac976baed680effa659cef41"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/sim-presentation.mjs",
+      "bytes": 642499,
+      "sha256": "935a2bc8b9af9171eaea95414157765a8d92b6d8f11d223ae6bc28271d3248e8"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/snake-hunt-catalogue.mjs",
+      "bytes": 23242,
+      "sha256": "a77f55d138fadd3642ae4cd20326d6f9ab8fc9fdce34a2497d6741b51ea3897a"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/snake-hunt-presentation.mjs",
+      "bytes": 18795,
+      "sha256": "bc579645b8ad951b534c71b270bef19783b215bc925cc428317930512e51ceb5"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/snake-hunt.mjs",
+      "bytes": 4144,
+      "sha256": "3efbfb2ffb36b381927c4d3fbdb2bf664a2ed3e55558550b4f0d91080e5682ff"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/style.css",
+      "bytes": 162075,
+      "sha256": "5a0d855a96be7553c19681889029decb01ba8658ec3a72bdb214b35f00280e2d"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/vendor/LICENSE.txt",
+      "bytes": 1081,
+      "sha256": "8b378ebe60e2fe500158cb0ac71cb5e8b7d92953c2abcc63a0eb90499653b5bc"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/vendor/addons/controls/TransformControls.js",
+      "bytes": 51722,
+      "sha256": "10f6d3e4c108dff62110f61a76749f9a1826c9781df9c3eb4ca0b5d9d2f5c4a8"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/vendor/addons/loaders/GLTFLoader.js",
+      "bytes": 117586,
+      "sha256": "03952cb129d558f92b8e6c757fbf7c1f718b3126c4d34f264d574b40ea36054f"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/vendor/addons/provenance.json",
+      "bytes": 1689,
+      "sha256": "a87fc39c9dc00b9ca055b006600c51c3f5ebfcc2117f523486979af1d0040be1"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/vendor/addons/utils/BufferGeometryUtils.js",
+      "bytes": 37728,
+      "sha256": "259085a7dac89e0840393a9347c77123fbc4206ec2146bf0c29ffc72e14a2800"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/vendor/addons/utils/SkeletonUtils.js",
+      "bytes": 11551,
+      "sha256": "28017bf37d0ecb0c4be6048db759ff14df729a562464830b064d4cc239c5af17"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/vendor/rapier/LICENSE",
+      "bytes": 11343,
+      "sha256": "4c05555705e3efde601fb1252ae48f1d63992af8a8fb8947745b7fa834e8f519"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/vendor/rapier/provenance.json",
+      "bytes": 1030,
+      "sha256": "6dc04a5eca22760fd38665af7649222da26ce343ff67f5ca68e5ed244e30d074"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/vendor/rapier/rapier.mjs",
+      "bytes": 4340292,
+      "sha256": "02dc6a4e2fffc013bab08fbb44fa68f501d8303615e9afe4c7d89ad4eedda0d0"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/vendor/three.core.js",
+      "bytes": 1458113,
+      "sha256": "9edde002b066a9a05676a6127f67735b62baf399bdea529f2f7e31657da769e6"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/vendor/three.module.js",
+      "bytes": 662772,
+      "sha256": "9052042d676cb0fdc1ddfefe193053f34b7ac0513a616fdac4535d49987812ea"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-app.mjs",
+      "bytes": 320071,
+      "sha256": "e69dd0fee635f411fafd3a32a6fe44b0f6a8f50efcee42f8bdaeee062e6642cd"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-assets.mjs",
+      "bytes": 1168270,
+      "sha256": "e1b987e2580b8b1e2d1afdfa3e9f0bc2d36a37e0bf516681cb0e94f045afd34c"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-catalogue.mjs",
+      "bytes": 241971,
+      "sha256": "54cbcaea1085548862dfbf3a64a99bac4f27dd8c7529786da3320b2e0248e611"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-collision.mjs",
+      "bytes": 14101,
+      "sha256": "827088d5c8f65a4965944149631f74838bc2e8e930332be559e48c96d6b3922f"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-content.mjs",
+      "bytes": 50090,
+      "sha256": "4e2822f1c94bdef24f62fb14629dd4909c8d8ed3aea6708f2fdf2e8ca5b8081b"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-demonstrations.mjs",
+      "bytes": 2207074,
+      "sha256": "c9f2d0ee5c571507ae1dce4f48898554cb2ad179218f1905cdc8013db2e2c114"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-editor.mjs",
+      "bytes": 5517,
+      "sha256": "756be0060ca09ae22c282f9447b4c2689385248beddf263c4f71f3e7f5c47012"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-model.mjs",
+      "bytes": 60704,
+      "sha256": "539b0dcb1a368b258730b5ed248806f8750bf41bd05c41cf68167e69d81a9f39"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-pursuit.mjs",
+      "bytes": 25362,
+      "sha256": "5512d0a2dd104307e3b89adbbabae8e02934553c7bc2f31efa49456ffe0ec878"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+      "bytes": 903772,
+      "sha256": "102cf7f7a811bb8931f6ee7277cc15b5561d8fbfb4c6f90f26f569d5da8601cf"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-records.mjs",
+      "bytes": 11475,
+      "sha256": "8fb720ec1a1a1e5cbc7ec5b253d14b6d76d680e6c03dc5f2c92b3e2e407d4c27"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-store.mjs",
+      "bytes": 14207,
+      "sha256": "67aca935d0dd889db2310e2df9a4649d6755901e3d82990905b27ba15dde69b0"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-style.css",
+      "bytes": 115924,
+      "sha256": "29d3619c387b0ebf9952b54acc6fc954e765a29fb96bad6c6721aa817283b2fc"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-themes.mjs",
+      "bytes": 23925,
+      "sha256": "d49d22de9ac821e7b5cee5614fdffca8510bd12be0d6eaaee28ff7225365b8c4"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-visuals.mjs",
+      "bytes": 122577,
+      "sha256": "ffc85abe696b3dea85c83275da10730c5f5f17b186edf53bf00739bb4003d0d0"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-zip.mjs",
+      "bytes": 6269,
+      "sha256": "874b371c817810a5869bc3ba37c94ff6fae4fc5cd418298f35340d2ce09039c8"
+    },
+    {
+      "path": "optional-practice/fpv-worlds/README.md",
+      "bytes": 5851,
+      "sha256": "6520e5a40dcd9858ebf53e085dc1d37e27cc0617d228ab1721ad045444896ed5"
+    },
+    {
+      "path": "optional-practice/fpv-worlds/SCENERY-LICENSES.txt",
+      "bytes": 1402,
+      "sha256": "d879c1a60cabeb2179e7a60fe6d827ef17828d263de84369f2f994eceb7439cd"
+    },
+    {
+      "path": "optional-practice/fpv-worlds/app.webmanifest",
+      "bytes": 646,
+      "sha256": "2415d98ee9661b76428c33c345a05d6ac9bc0522ab8a457b4b563426aa71d9a6"
+    },
+    {
+      "path": "optional-practice/fpv-worlds/guide.html",
+      "bytes": 15992,
+      "sha256": "091186125c09f19e415c329d2a4183eeca3dc45bd2fe44e5ba2f3aa9170cf4f2"
+    },
+    {
+      "path": "optional-practice/fpv-worlds/icons/icon-192.png",
+      "bytes": 33508,
+      "sha256": "5bc0f892cc5c13a7b1564cca9ef3ee0799a38b7b5fb63ccc9d7559dc2bf3a34d"
+    },
+    {
+      "path": "optional-practice/fpv-worlds/icons/icon-512.png",
+      "bytes": 82577,
+      "sha256": "47f0661543ba686911027a8005c8b318c4f9146958f1736ee32fb056e5bfea91"
+    },
+    {
+      "path": "optional-practice/fpv-worlds/index.html",
+      "bytes": 35459,
+      "sha256": "b72b5f3ebce7ecf252464eb0cba7f7a4f3e4eda9db05d646dd0dd1b426f01360"
+    },
+    {
+      "path": "optional-practice/fpv-worlds/package-info.json",
+      "bytes": 1953,
+      "sha256": "fa717dfeb5ba0f3e84fef0564e486bd47545896229d55733f3a485e85414e014"
+    },
+    {
+      "path": "optional-practice/fpv-worlds/preview.png",
+      "bytes": 197771,
+      "sha256": "a80c3e123dd83e6c1072503a3fdc091538d5415e21ba1b26ad345ab19d2c72a1"
+    },
+    {
+      "path": "optional-practice/fpv-worlds/scenery-provenance.json",
+      "bytes": 13161,
+      "sha256": "d45c8608de29b2b2fb4f7b2d3d1e10559cb7c1302972ebd7363b6cde6400c878"
+    },
+    {
+      "path": "optional-practice/fpv-worlds/worker.js",
+      "bytes": 23017,
+      "sha256": "c4b278c8962b600c267d4fa0e6bf7bd132a985adba6ff58232ce444da9ad372b"
+    },
+    {
+      "path": "optional-practice/guide.mjs",
+      "bytes": 733,
+      "sha256": "31eff4946e03a906e593301e76c4a49fade84f9c05abeb13aa52b06b2dfa3203"
+    },
+    {
+      "path": "optional-practice/install-context.mjs",
+      "bytes": 19020,
+      "sha256": "ceb0ef835b3d518a639d81582495327c4470579a8e6a34caffdbca7468b55160"
+    },
+    {
+      "path": "optional-practice/navigation.mjs",
+      "bytes": 2719,
+      "sha256": "c59fd48a3cce005934ac290773da5b60d18e9a2bebc392a9e911a34b7112f6f1"
+    }
+  ],
+  "originalInputs": 117,
+  "originalInputBytes": 18023734,
+  "immutableReuse": {
+    "root": "/private/tmp/fpv-cloud-admission-45e943bd4",
+    "linked": 0,
+    "writtenBytes": 16829181
+  },
+  "limitations": [
+    "Exact admitted distribution, no overlays.",
+    "Local serving does not establish installed/offline, public deployment or hardware performance."
+  ]
+}
