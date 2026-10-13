@@ -4119,3 +4119,9 @@ complete source bridge to that main. Fresh existing-workflow run
 progress on frozen `b7bf654486014efc6c8b8af25323b9d06f88e388`; its source includes
 those updates. Read its final admission before continuing current-package
 qualification. Subsequent evidence-only commits do not change that tested identity.
+
+Later storage observation: other activity reduced available space from the
+post-cleanup 5.3 GiB peak to roughly 2.2 GiB. The safe cleanup and all preserved
+paths remain; the 3 GiB local heavy-build floor is not currently stable. Keep
+large local builds paused and use the existing cloud candidate run. This does
+not invalidate the earlier completed bounded browser check.
