@@ -61,6 +61,7 @@ Raw JSON is losslessly gzip-compressed; `gzip -dc FILE.json.gz` reads it.
   encounter. No invulnerability, XP or damage injection is used. This does not
   rule out every exploit, build or seed.
 - [Native late Survivor view](survivor-late.png) retains the 04:51 crowd composition. Dense machinery armor brackets still need readability review in motion.
+- [Native Survivor result](survivor-result.png) completed at 05:27 with 2,602 clears and all ten earned choices using the Systems review build.
 - [Native Raid result](raid-result.png) shows completion through the shared shell
   using the explicit automated-review entry. It is a visual/functional smoke
   check, not a human playtest. Browser checks ran alongside Node validation, so
