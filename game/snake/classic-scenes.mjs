@@ -4,7 +4,8 @@ import {
 } from '../presentation/industrial-materials.mjs';
 import { drawMachinerySpecimen } from '../presentation/industrial-machinery.mjs';
 
-export const CLASSIC_BOARD_SCENES = Object.freeze(['auto', 'orchard', 'workshop', 'relay']);
+import { resolveClassicWorld } from './classic-worlds.mjs';
+export { CLASSIC_BOARD_SCENES } from './classic-worlds.mjs';
 export const CLASSIC_SCENE_MATERIAL_REVISION = INDUSTRIAL_ENVIRONMENT_REVISION;
 const SCENES = Object.freeze({
   orchard: Object.freeze({
@@ -18,7 +19,8 @@ const SCENES = Object.freeze({
     danger: '#ff8478',
     material: 'earth',
     tint: [83, 93, 54],
-    wall: 'concrete',
+    wall: 'timber',
+    wallTint: [151, 125, 75],
   }),
   workshop: Object.freeze({
     field: '#344650',
@@ -32,6 +34,7 @@ const SCENES = Object.freeze({
     material: 'metal',
     tint: [52, 69, 80],
     wall: 'metal',
+    wallTint: [164, 104, 69],
   }),
   relay: Object.freeze({
     field: '#566264',
@@ -45,57 +48,90 @@ const SCENES = Object.freeze({
     material: 'concrete',
     tint: [83, 95, 96],
     wall: 'concrete',
+    wallTint: [164, 173, 169],
+  }),
+  freight: Object.freeze({
+    field: '#3e4c52',
+    alternate: '#455359',
+    grid: '#2c383d',
+    text: '#f6f3df',
+    muted: '#aeb0a5',
+    accent: '#efb85e',
+    safe: '#92d8ef',
+    danger: '#ff8478',
+    material: 'concrete',
+    tint: [62, 76, 82],
+    wall: 'metal',
+    wallTint: [164, 78, 57],
+  }),
+  harbor: Object.freeze({
+    field: '#456162',
+    alternate: '#4b6767',
+    grid: '#2b484a',
+    text: '#f6f3df',
+    muted: '#bac4ba',
+    accent: '#f3a486',
+    safe: '#92d8ef',
+    danger: '#ff8478',
+    material: 'concrete',
+    tint: [69, 97, 98],
+    wall: 'concrete',
+    wallTint: [150, 182, 172],
+  }),
+  quarry: Object.freeze({
+    field: '#394b43',
+    alternate: '#405249',
+    grid: '#263930',
+    text: '#f6f3df',
+    muted: '#aeb9a5',
+    accent: '#d4c57e',
+    safe: '#92d8ef',
+    danger: '#ff8478',
+    material: 'earth',
+    tint: [57, 75, 67],
+    wall: 'masonry',
+    wallTint: [106, 120, 118],
   }),
 });
-const CHAPTER_SCENES = new Map([
-  ...[
-    'first-coils',
-    'wide-turns',
-    'island-circuits',
-    'moving-quarry',
-    'escape-lines',
-    'field-supplies',
-  ].map((id) => [`classic-snake-${id}`, 'orchard']),
-  ...[
-    'borderless-routes',
-    'chicanes',
-    'shared-circuits',
-    'final-weave',
-    'burst-timing',
-    'route-windows',
-    'moving-windows',
-  ].map((id) => [`classic-snake-${id}`, 'workshop']),
-  ...[
-    'patrol-routes',
-    'combined-pursuit',
-    'twin-intercepts',
-    'signal-tactics',
-    'patrol-frontiers',
-    'field-mastery',
-  ].map((id) => [`classic-snake-${id}`, 'relay']),
-]);
-const fingerprint = (value) => {
-  let hash = 2166136261;
-  for (const char of String(value)) hash = Math.imul(hash ^ char.charCodeAt(0), 16777619) >>> 0;
-  return hash;
-};
-
-/** Cosmetic chapter selection never reads a run, its seed, or a random stream. */
-export function resolveClassicBoardScene({
-  boardScene = 'auto',
-  chapterId = '',
-  levelId = '',
-} = {}) {
-  if (Object.hasOwn(SCENES, boardScene)) return boardScene;
-  if (CHAPTER_SCENES.has(chapterId)) return CHAPTER_SCENES.get(chapterId);
-  const identity = chapterId || levelId;
-  return identity ? ['orchard', 'workshop', 'relay'][fingerprint(identity) % 3] : 'orchard';
+/** Cosmetic chapter selection never reads a run or its random streams. */
+export function resolveClassicBoardScene(options = {}) {
+  return resolveClassicWorld(options).scene;
 }
-export const classicScenePalette = (scene) =>
-  SCENES[resolveClassicBoardScene({ boardScene: scene })];
+export function classicScenePalette(scene, treatment = 'living-circuit') {
+  const base = SCENES[resolveClassicBoardScene({ boardScene: scene })];
+  if (treatment === 'toybox')
+    return {
+      ...base,
+      wall: 'timber',
+      wallTint: base.wallTint.map((v) => Math.min(220, v + 26)),
+      tint: base.tint.map((v) => v + 15),
+      grid: '#444b44',
+    };
+  if (treatment === 'atmospheric-ruins')
+    return {
+      ...base,
+      wall: 'masonry',
+      wallTint: base.wallTint.map((v) => Math.round(v * 0.7 + 28)),
+      tint: base.tint.map((v) => Math.round(v * 0.65)),
+      grid: '#283932',
+    };
+  if (treatment === 'night-arcade')
+    return {
+      ...base,
+      wall: 'metal',
+      wallTint: [43, 62, 77],
+      tint: [19, 29, 42],
+      field: '#131d2a',
+      grid: '#233446',
+    };
+  return base;
+}
 
-export function classicSceneMaterial(scene, { wall = false, variant = 0 } = {}) {
-  const palette = classicScenePalette(scene);
+export function classicSceneMaterial(
+  scene,
+  { wall = false, variant = 0, treatment = 'living-circuit' } = {},
+) {
+  const palette = classicScenePalette(scene, treatment);
   const sample = industrialMaterialPixels(
     { width: 32, height: 32 },
     wall ? palette.wall : palette.material,
@@ -110,8 +146,8 @@ export function classicSceneMaterial(scene, { wall = false, variant = 0 } = {}) 
     // accepted wall cells. All material pixels remain opaque.
     for (let channel = 0; channel < 3; channel++) {
       sample.rgba[at + channel] = wall
-        ? [79, 101, 119][channel] + (luminance - 125) * 0.72
-        : palette.tint[channel] + (luminance - 110) * 0.15;
+        ? palette.wallTint[channel] + (luminance - 125) * 0.72
+        : palette.tint[channel] + (luminance - 110) * 0.07;
     }
   }
   return sample;
@@ -123,14 +159,18 @@ function canvasFactory(owner) {
     owner?.createElement?.('canvas') ??
     (typeof OffscreenCanvas === 'function' ? new OffscreenCanvas(1, 1) : null);
 }
-function texture(owner, scene, wall, variant) {
+function texture(owner, scene, wall, variant, treatment = 'living-circuit') {
   if (!owner || typeof owner !== 'object') return null;
+  const world = resolveClassicWorld({ boardScene: scene, boardStyle: treatment });
+  scene = world.scene;
+  treatment = world.treatment;
+  variant = ((variant % 4) + 4) % 4;
   if (!surfaces.has(owner)) surfaces.set(owner, new Map());
   const cache = surfaces.get(owner),
-    key = `${scene}/${wall}/${variant}`;
+    key = `${scene}/${wall}/${variant}/${treatment}`;
   if (cache.has(key)) return cache.get(key);
   const canvas = canvasFactory(owner)(),
-    pixels = classicSceneMaterial(scene, { wall, variant });
+    pixels = classicSceneMaterial(scene, { wall, variant, treatment });
   if (!canvas) return null;
   canvas.width = canvas.height = 32;
   const context = canvas.getContext?.('2d');
@@ -144,47 +184,191 @@ function texture(owner, scene, wall, variant) {
 }
 
 /** Exact original playable rectangle. Scenery lives in the shell backdrop. */
-export function drawClassicLivingGround(ctx, level, scene, { unit = 28, document } = {}) {
-  const palette = classicScenePalette(scene);
+export function drawClassicLivingGround(
+  ctx,
+  level,
+  scene,
+  { unit = 28, document, treatment = 'living-circuit', zoning = 'court' } = {},
+) {
+  const palette = classicScenePalette(scene, treatment);
   ctx.fillStyle = palette.field;
   ctx.fillRect(0, 0, level.width * unit, level.height * unit);
   for (let y = 0; y < level.height; y++)
     for (let x = 0; x < level.width; x++) {
-      const tile = texture(document, scene, false, (x * 7 + y * 11) % 4);
+      const tile = texture(document, scene, false, (x * 7 + y * 11) % 4, treatment);
       if (tile) ctx.drawImage(tile, x * unit, y * unit, unit, unit);
-      else if ((x + y) % 2) {
-        ctx.fillStyle = palette.alternate;
+      // Floor zoning is deliberately low contrast and cannot read as a wall.
+      const marked =
+        zoning === 'rows'
+          ? y % 5 === 2
+          : zoning === 'tracks'
+            ? x % 6 === 2
+            : zoning === 'quays'
+              ? y === 2 || y === level.height - 3
+              : zoning === 'bays'
+                ? x % 6 < 3 && y % 6 < 3
+                : x > 2 && x < level.width - 3 && (y === 2 || y === level.height - 3);
+      if (marked) {
+        ctx.globalAlpha = 0.07;
+        ctx.fillStyle = palette.accent;
         ctx.fillRect(x * unit, y * unit, unit, unit);
-      }
-      // Tiny chips become sparser toward the clear central routes.
-      const edge = Math.min(x, y, level.width - x - 1, level.height - y - 1);
-      if (edge < 2 && (x * 17 + y * 5) % 3 === 0) {
-        ctx.fillStyle = scene === 'orchard' ? '#71804a' : '#7b8580';
-        ctx.fillRect(x * unit + 4, y * unit + 17, 2, 2);
-        ctx.fillStyle = palette.grid;
-        ctx.fillRect(x * unit + 7, y * unit + 19, 3, 1);
+        ctx.globalAlpha = 1;
       }
     }
 }
 
-export function drawClassicLivingWall(ctx, wall, scene, { unit = 28, document } = {}) {
+/** Four-connected components; holes and removed cells never enter a footprint. */
+export function classicWallStructures(walls) {
+  const remaining = new Map(walls.map((cell) => [`${cell.x},${cell.y}`, cell]));
+  const result = new Map();
+  while (remaining.size) {
+    const start = remaining.values().next().value;
+    const queue = [start],
+      cells = [];
+    remaining.delete(`${start.x},${start.y}`);
+    for (let at = 0; at < queue.length; at++) {
+      const cell = queue[at];
+      cells.push(cell);
+      for (const [dx, dy] of [
+        [1, 0],
+        [-1, 0],
+        [0, 1],
+        [0, -1],
+      ]) {
+        const key = `${cell.x + dx},${cell.y + dy}`;
+        if (remaining.has(key)) {
+          queue.push(remaining.get(key));
+          remaining.delete(key);
+        }
+      }
+    }
+    const x = Math.min(...cells.map((cell) => cell.x));
+    const y = Math.min(...cells.map((cell) => cell.y));
+    const structure = Object.freeze({
+      x,
+      y,
+      width: Math.max(...cells.map((cell) => cell.x)) - x + 1,
+      height: Math.max(...cells.map((cell) => cell.y)) - y + 1,
+    });
+    for (const cell of cells) result.set(`${cell.x},${cell.y}`, structure);
+  }
+  return result;
+}
+
+/** External edges belong to the accepted solid-cell union. All inlays and
+ * silhouettes stay inside their own cell, including corners beside a passage. */
+export function drawClassicLivingWall(
+  ctx,
+  wall,
+  scene,
+  {
+    unit = 28,
+    document,
+    treatment = 'living-circuit',
+    occupied = new Set(),
+    structure = null,
+  } = {},
+) {
   const x = wall.x * unit,
     y = wall.y * unit;
-  const tile = texture(document, scene, true, (wall.x + wall.y) % 4);
+  const tile = texture(document, scene, true, (wall.x + wall.y) % 4, treatment);
+  const p = classicScenePalette(scene, treatment);
+  ctx.fillStyle = `rgb(${p.wallTint.join(',')})`;
+  ctx.fillRect(x, y, unit, unit);
   if (tile) ctx.drawImage(tile, x, y, unit, unit);
-  else {
-    ctx.fillStyle = '#4f6577';
-    ctx.fillRect(x, y, unit, unit);
+  const top = !occupied.has(`${wall.x},${wall.y - 1}`),
+    bottom = !occupied.has(`${wall.x},${wall.y + 1}`),
+    left = !occupied.has(`${wall.x - 1},${wall.y}`),
+    right = !occupied.has(`${wall.x + 1},${wall.y}`);
+  // Native 28px modular specimens scale with the same square geometry.
+  ctx.save();
+  ctx.translate(x, y);
+  ctx.scale(unit / 28, unit / 28);
+  ctx.save();
+  ctx.beginPath();
+  ctx.rect(0, 0, 28, 28);
+  ctx.clip();
+  if (structure) {
+    ctx.translate((structure.x - wall.x) * 28, (structure.y - wall.y) * 28);
+    ctx.scale(structure.width, structure.height);
   }
-  ctx.fillStyle = '#a2b5bd';
-  ctx.fillRect(x + 1, y + 1, unit - 2, 2);
-  ctx.fillRect(x + 1, y + 1, 2, unit - 2);
-  ctx.fillStyle = '#233742';
-  ctx.fillRect(x, y + unit - 3, unit, 3);
-  ctx.fillRect(x + unit - 2, y + 2, 2, unit - 2);
-  ctx.strokeStyle = '#122932';
-  ctx.lineWidth = 1;
-  ctx.strokeRect(x + 0.5, y + 0.5, unit - 1, unit - 1);
+  if (scene === 'orchard') {
+    rect(ctx, '#425a49', 5, 5, 18, 18);
+    rect(ctx, '#77917a', 7, 7, 6, 14);
+    rect(ctx, '#8da189', 15, 7, 6, 14);
+    rect(ctx, '#c3b47f', 5, 13, 18, 2);
+  } else if (scene === 'freight') {
+    for (let at = 5; at < 24; at += 5) {
+      rect(ctx, '#7b4036', at, 4, 2, 20);
+      rect(ctx, '#d89872', at + 2, 4, 1, 20);
+    }
+    if (bottom) rect(ctx, '#ead0a0', 7, 20, 11, 3);
+  } else if (scene === 'workshop') {
+    rect(ctx, '#4b5550', 4, 6, 20, 16);
+    rect(ctx, '#c58a5a', 7, 4, 14, 20);
+    rect(ctx, '#e7b47a', 8, 6, 2, 16);
+    rect(ctx, '#547e78', 4, 11, 20, 5);
+    rect(ctx, '#a1c5af', 5, 11, 18, 1);
+  } else if (scene === 'relay') {
+    rect(ctx, '#526375', 5, 5, 18, 18);
+    rect(ctx, '#c3c4ae', 7, 7, 14, 8);
+    for (let at = 8; at < 22; at += 4) rect(ctx, '#384451', at, 18, 2, 4);
+    rect(ctx, '#d7a961', 19, 5, 4, 5);
+  } else if (scene === 'harbor') {
+    rect(ctx, '#467970', 5, 5, 18, 18);
+    rect(ctx, '#a2c9b3', 8, 7, 12, 3);
+    for (let at = 12; at < 22; at += 4) rect(ctx, '#244b4c', 8, at, 12, 2);
+    rect(ctx, '#d68d75', 4, 4, 4, 4);
+  } else {
+    rect(ctx, '#454f51', 4, 12, 20, 2);
+    rect(ctx, '#b2b9a5', 4, 5, 20, 2);
+    rect(ctx, '#414e4a', 13, 5, 2, 7);
+    rect(ctx, '#414e4a', 8, 14, 2, 9);
+    rect(ctx, '#758657', 18, 17, 6, 6);
+  }
+  if (treatment === 'toybox') {
+    // Enamel face within a timber frame and four oversized recessed fittings.
+    rect(ctx, '#dfc291', 3, 3, 22, 2);
+    rect(ctx, '#674831', 3, 23, 22, 2);
+    for (const [a, b] of [
+      [4, 4],
+      [21, 4],
+      [4, 21],
+      [21, 21],
+    ]) {
+      rect(ctx, '#efd7a4', a, b, 3, 3);
+      rect(ctx, '#745638', a + 1, b + 1, 1, 1);
+    }
+  } else if (treatment === 'atmospheric-ruins') {
+    ctx.globalAlpha = 0.38;
+    rect(ctx, '#34494a', 3, 3, 22, 22);
+    ctx.globalAlpha = 1;
+    for (const [a, b] of [
+      [12, 3],
+      [11, 7],
+      [14, 11],
+      [13, 15],
+    ])
+      rect(ctx, '#283b39', a, b, 2, 5);
+    rect(ctx, '#638258', 3, 18, 5, 6);
+    rect(ctx, '#9aaa6a', 5, 20, 2, 3);
+  } else if (treatment === 'night-arcade') {
+    ctx.globalAlpha = 0.76;
+    rect(ctx, '#172a3b', 3, 3, 22, 22);
+    ctx.globalAlpha = 1;
+    rect(ctx, p.accent, 6, 6, 16, 1);
+    rect(ctx, p.accent, 6, 7, 1, 9);
+    rect(ctx, '#7cbdc9', 16, 15, 6, 2);
+    rect(ctx, '#7cbdc9', 21, 11, 1, 10);
+  }
+  ctx.restore();
+  const rim = treatment === 'night-arcade' ? p.accent : '#293b38';
+  // A continuous rim, rather than a pile of separately outlined tiles.
+  if (top) rect(ctx, '#ded5af', 0, 0, 28, 2);
+  if (left) rect(ctx, '#b1b49a', 0, 0, 2, 28);
+  if (bottom) rect(ctx, rim, 0, 25, 28, 3);
+  if (right) rect(ctx, rim, 26, 0, 2, 28);
+  ctx.restore();
 }
 
 function rect(ctx, color, x, y, w, h) {
@@ -236,12 +420,18 @@ function workshop(ctx, x, y, width = 76, height = 32) {
 
 /** Scenery is a background for the host's outer frame, never a board overlay.
  * No generated asset files, network fetch, simulation seed or animation clock. */
-export function classicSceneBackdrop(scene, { document = globalThis.document } = {}) {
+export function classicSceneBackdrop(
+  scene,
+  { document = globalThis.document, treatment = 'living-circuit' } = {},
+) {
   if (!document || typeof document !== 'object') return null;
-  const selected = resolveClassicBoardScene({ boardScene: scene });
+  const world = resolveClassicWorld({ boardScene: scene, boardStyle: treatment });
+  const selected = world.scene;
+  treatment = world.treatment;
+  const key = `${selected}/${treatment}`;
   if (!backdrops.has(document)) backdrops.set(document, new Map());
   const cache = backdrops.get(document);
-  if (cache.has(selected)) return cache.get(selected);
+  if (cache.has(key)) return cache.get(key);
   const canvas = canvasFactory(document)();
   if (!canvas?.toDataURL) return null;
   canvas.width = 384;
@@ -249,7 +439,7 @@ export function classicSceneBackdrop(scene, { document = globalThis.document } =
   const ctx = canvas.getContext('2d');
   if (!ctx) return null;
   ctx.imageSmoothingEnabled = false;
-  const material = texture(document, selected, false, 0);
+  const material = texture(document, selected, false, 0, treatment);
   rect(ctx, '#172c34', 0, 0, 384, 288);
   if (material)
     for (let y = 0; y < 288; y += 32)
@@ -311,6 +501,6 @@ export function classicSceneBackdrop(scene, { document = globalThis.document } =
       rect(ctx, '#dd7068', x - 2, y - 14, 4, 4);
     }
   const url = canvas.toDataURL('image/png');
-  cache.set(selected, url);
+  cache.set(key, url);
   return url;
 }

@@ -754,17 +754,35 @@
 #board-scene-field[hidden] {
   display: none;
 }
-body[data-board-style='living-circuit'] .board-wrap {
+body:is(
+    [data-board-style='living-circuit'],
+    [data-board-style='toybox'],
+    [data-board-style='atmospheric-ruins'],
+    [data-board-style='night-arcade']
+  )
+  .board-wrap {
   background-color: #27392f;
   background-size: 100% 100%;
   background-position: center;
   image-rendering: pixelated;
   border-color: #a7a378;
 }
-body[data-board-style='living-circuit'][data-board-scene='workshop'] .board-wrap {
+body:is(
+    [data-board-style='living-circuit'],
+    [data-board-style='toybox'],
+    [data-board-style='atmospheric-ruins'],
+    [data-board-style='night-arcade']
+  )[data-board-scene='workshop']
+  .board-wrap {
   border-color: #839eab;
 }
-body[data-board-style='living-circuit'][data-board-scene='relay'] .board-wrap {
+body:is(
+    [data-board-style='living-circuit'],
+    [data-board-style='toybox'],
+    [data-board-style='atmospheric-ruins'],
+    [data-board-style='night-arcade']
+  )[data-board-scene='relay']
+  .board-wrap {
   border-color: #a2b3a4;
 }
 .snake-stars {

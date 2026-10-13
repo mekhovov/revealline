@@ -173,3 +173,20 @@ test('Classic cannot replace creator-owned images, acquire a copied pin or resam
   assert.equal(h.created.length, 0);
   h.presentation.dispose();
 });
+
+test('selector artwork projects its own accepted chapter without replacing the running attempt', async () => {
+  const h = await harness();
+  const live = acceptAttemptAppearance(lookup(entries[0], 'solo'), military);
+  const other = acceptAttemptAppearance(lookup(entries.at(-1), 'team'), military);
+  h.presentation.setAttemptAppearance(live);
+  const image = h.presentation.snapshot().image('terrain.wall');
+  const preview = h.presentation.previewSnapshot(other);
+  const next = preview.image('terrain.wall');
+  assert.notEqual(next, image);
+  assert.notDeepEqual(next.pixels, image.pixels);
+  assert.equal(h.presentation.snapshot().image('terrain.wall'), image);
+  assert.equal(image.width, 16, 'browsing keeps the accepted live texture intact');
+  assert.throws(() => h.presentation.previewSnapshot(structuredClone(other)));
+  h.presentation.dispose();
+  assert.equal(next.width, 0);
+});
