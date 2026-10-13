@@ -452,7 +452,11 @@ export async function createOverflightRenderer({
             );
         }
         if (enemy.maxGuardIntegrity > 0 || enemy.maxArmor > 0)
-          for (const cue of overflightTacticalEnemyLayers(enemy, size))
+          for (const cue of overflightTacticalEnemyLayers(
+            enemy,
+            size,
+            run.hunt ? null : run.player,
+          ))
             pools.status.take(
               cue.frame,
               cue.x,

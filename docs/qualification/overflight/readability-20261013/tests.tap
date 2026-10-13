@@ -1,0 +1,155 @@
+TAP version 13
+# Subtest: every Raid upgrade compare live rank parameters without changing the build
+ok 1 - every Raid upgrade compare live rank parameters without changing the build
+  ---
+  duration_ms: 3.227625
+  ...
+# Subtest: native card previews draw selected atlas sprites and reduced motion freezes the entire demonstration
+ok 2 - native card previews draw selected atlas sprites and reduced motion freezes the entire demonstration
+  ---
+  duration_ms: 5.160375
+  ...
+# Subtest: native cards remain keyboard buttons, carry complete EN/UK comparisons and delegate exact legal choices
+ok 3 - native cards remain keyboard buttons, carry complete EN/UK comparisons and delegate exact legal choices
+  ---
+  duration_ms: 4.235542
+  ...
+# Subtest: contact cues distinguish facing guards, closed machinery and segmented openings without enclosing the drone
+ok 4 - contact cues distinguish facing guards, closed machinery and segmented openings without enclosing the drone
+  ---
+  duration_ms: 0.3245
+  ...
+# Subtest: Raid localization keys match and preview rejects impossible ranks or systems
+ok 5 - Raid localization keys match and preview rejects impossible ranks or systems
+  ---
+  duration_ms: 0.172375
+  ...
+# Subtest: boost streaks reflect offensive width only while striking and preserve body size
+ok 6 - boost streaks reflect offensive width only while striking and preserve body size
+  ---
+  duration_ms: 0.119625
+  ...
+# Subtest: all native families, wardrobes and motion poses fit two audited textures
+ok 7 - all native families, wardrobes and motion poses fit two audited textures
+  ---
+  duration_ms: 1.515208
+  ...
+# Subtest: field equipment is deterministic, original bounded pixel data with distinct silhouettes
+ok 8 - field equipment is deterministic, original bounded pixel data with distinct silhouettes
+  ---
+  duration_ms: 1.956167
+  ...
+# Subtest: native family gait timing and reduced effects preserve meaningful danger cues
+ok 9 - native family gait timing and reduced effects preserve meaningful danger cues
+  ---
+  duration_ms: 0.180875
+  ...
+# Subtest: authored cast preserves mixed wardrobes and explicit cast only selects a rendered wardrobe
+ok 10 - authored cast preserves mixed wardrobes and explicit cast only selects a rendered wardrobe
+  ---
+  duration_ms: 0.073417
+  ...
+# Subtest: shared effect composites preserve full danger cues and locate chain endpoints in world space
+ok 11 - shared effect composites preserve full danger cues and locate chain endpoints in world space
+  ---
+  duration_ms: 0.300625
+  ...
+# Subtest: cadence retains foreground stalls, excludes known pauses, and exports bounded ordered samples
+ok 12 - cadence retains foreground stalls, excludes known pauses, and exports bounded ordered samples
+  ---
+  duration_ms: 0.482875
+  ...
+# Subtest: benchmark gates remain strict and cannot accept an incomplete protocol
+ok 13 - benchmark gates remain strict and cannot accept an incomplete protocol
+  ---
+  duration_ms: 0.550833
+  ...
+# Subtest: 120 Hz full protocol retains all three measured windows beyond 36000 samples
+ok 14 - 120 Hz full protocol retains all three measured windows beyond 36000 samples
+  ---
+  duration_ms: 12.705333
+  ...
+# Subtest: a paused or hidden trial cannot pass even when its retained cadence is fast
+ok 15 - a paused or hidden trial cannot pass even when its retained cadence is fast
+  ---
+  duration_ms: 0.631291
+  ...
+# Subtest: a completed independent trial freezes before inspection and ignores subsequent pauses
+ok 16 - a completed independent trial freezes before inspection and ignores subsequent pauses
+  ---
+  duration_ms: 0.7275
+  ...
+# Subtest: persistent native remains obey shared settings, preserve live draw counts, and survive recovery without new texture work
+ok 17 - persistent native remains obey shared settings, preserve live draw counts, and survive recovery without new texture work
+  ---
+  duration_ms: 36.466375
+  ...
+# Subtest: enemy behavior cues retain phase, rally direction and reward identity with reduced effects
+ok 18 - enemy behavior cues retain phase, rally direction and reward identity with reduced effects
+  ---
+  duration_ms: 18.183458
+  ...
+# Subtest: renderer submits every visible actor above 64 without texture work, preserves simulation, restores and disposes
+ok 19 - renderer submits every visible actor above 64 without texture work, preserves simulation, restores and disposes
+  ---
+  duration_ms: 21.820291
+  ...
+# Subtest: diagnostic context restoration uses the extension and cancels its timer on destroy
+ok 20 - diagnostic context restoration uses the extension and cancels its timer on destroy
+  ---
+  duration_ms: 477.901125
+  ...
+# Subtest: normal and reduced-effects renderers preserve identical real-core outcomes over 600 ticks
+ok 21 - normal and reduced-effects renderers preserve identical real-core outcomes over 600 ticks
+  ---
+  duration_ms: 252.141458
+  ...
+# Subtest: armor detail follows approach distance without changing actor coverage, quality cues or simulation
+ok 22 - armor detail follows approach distance without changing actor coverage, quality cues or simulation
+  ---
+  duration_ms: 15.445208
+  ...
+# Subtest: official and installed encounters retain exact compiler identities and owner launches
+ok 23 - official and installed encounters retain exact compiler identities and owner launches
+  ---
+  duration_ms: 7.967458
+  ...
+# Subtest: different authored schedules produce different diagrams without mutating projects
+ok 24 - different authored schedules produce different diagrams without mutating projects
+  ---
+  duration_ms: 4.285166
+  ...
+# Subtest: family home contains two native operation choices, preserving URL context for other mode
+ok 25 - family home contains two native operation choices, preserving URL context for other mode
+  ---
+  duration_ms: 0.84625
+  ...
+# Subtest: committed fan and lane warnings match each damaging ray and full half-width
+ok 26 - committed fan and lane warnings match each damaging ray and full half-width
+  ---
+  duration_ms: 0.256417
+  ...
+# Subtest: guard facing, damage and armor opening remain geometrically distinct
+ok 27 - guard facing, damage and armor opening remain geometrically distinct
+  ---
+  duration_ms: 0.187875
+  ...
+# Subtest: open cache shows two physical choices with distinct glyphs and disabled state
+ok 28 - open cache shows two physical choices with distinct glyphs and disabled state
+  ---
+  duration_ms: 0.104666
+  ...
+# Subtest: distant armor stays compact without losing state, while approaches and priority targets stay detailed
+ok 29 - distant armor stays compact without losing state, while approaches and priority targets stay detailed
+  ---
+  duration_ms: 0.394625
+  ...
+1..29
+# tests 29
+# suites 0
+# pass 29
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1061.571833
