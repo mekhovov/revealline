@@ -1,3 +1,5 @@
+import { CLASSIC_SNAKE_PURSUIT_V1_ARCHIVED_LEVELS } from '../snake/classic-catalogue-pursuit-v1-archive.mjs';
+import { prepareClassicSnakeLevel } from '../snake/classic-setup.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {
@@ -89,12 +91,16 @@ function inputStep(match, routes, step) {
 for (const pilot of PILOTS)
   for (const mode of ['solo', 'versus', 'team'])
     for (const [pace, stepMs] of Object.entries(paces))
-      test(`${pilot.id}: authored ${mode}/${pace}/seed17 has a legal verified completion route`, async () => {
+      test(`${pilot.id}: historical ${mode}/${pace}/seed17 keeps its exact verified completion route`, async () => {
         const entry = cases.find(
           (row) => row.pilot === pilot.id && row.mode === mode && row.pace === pace,
         );
         assert.ok(entry, 'The route must remain a declared pilot case.');
-        const accepted = structuredClone(entry.level);
+        const original = structuredClone(entry.level);
+        const accepted = prepareClassicSnakeLevel(
+          CLASSIC_SNAKE_PURSUIT_V1_ARCHIVED_LEVELS.find((e) => e.id === pilot.id),
+          { pace },
+        );
         assert.equal(accepted.version, 'classic-snake-level.v3');
         assert.equal(accepted.revision, '1');
         assert.equal(accepted.goal, pilot.goal);
@@ -142,7 +148,8 @@ for (const pilot of PILOTS)
           assert.deepEqual(run.level, accepted);
         }
         if (mode === 'versus') assert.deepEqual(match.runs[0], match.runs[1]);
-        assert.deepEqual(entry.level, accepted);
+        assert.deepEqual(entry.level, original);
+        assert.equal(entry.level.revision, '2');
         const session = {
           format: 'revealline-classic-snake-session.v2',
           activity: 'campaign',

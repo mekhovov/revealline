@@ -367,11 +367,9 @@ export function assertIndustrialEnvironmentRetention(previous, next) {
       canonicalJSON(definition)
     )
       throw new Error(`Retained environment definition changed: ${definition.id}`);
-  const aliases = new Map(
-    next.roomAliases.map((row) => [row.slice(0, 3).join('\0'), canonicalJSON(row)]),
-  );
+  const aliases = new Set(next.roomAliases.map((row) => canonicalJSON(row)));
   for (const row of previous.roomAliases)
-    if (aliases.get(row.slice(0, 3).join('\0')) !== canonicalJSON(row))
+    if (!aliases.has(canonicalJSON(row)))
       throw new Error('A retained native room preparation changed.');
 }
 
@@ -515,6 +513,36 @@ export async function createIndustrialEnvironmentBatch({ previous = null } = {})
   };
   if (new Set(data.sources.map((row) => row[0])).size !== data.sources.length)
     throw new Error('Duplicate environment source tuple; revise its source form explicitly.');
+  // New gameplay revisions acquire new source rows. Older accepted pins and
+  // native-room preparations remain byte-exact, with their original owners.
+  // Room aliases may name multiple historical recipe hashes; runtime admission
+  // still authenticates the full recipe, never just an alias label.
+  if (previous) {
+    for (const old of previous.definitions) {
+      if (!definitions.some((d) => d.id === old.id && d.revision === old.revision))
+        definitions.push(structuredClone(old));
+    }
+    const keys = new Set(data.sources.map((row) => row[0]));
+    for (const old of previous.sources) {
+      if (keys.has(old[0])) continue;
+      const def = previous.definitions[old[6]];
+      data.sources.push([
+        old[0],
+        index(owners, previous.owners[old[1]]),
+        index(formats, previous.formats[old[2]]),
+        ...old.slice(3, 6),
+        definitions.findIndex((d) => d.id === def.id && d.revision === def.revision),
+        ...old.slice(7),
+      ]);
+      keys.add(old[0]);
+    }
+    const aliases = new Set(data.roomAliases.map((row) => canonicalJSON(row)));
+    for (const old of previous.roomAliases)
+      if (!aliases.has(canonicalJSON(old))) {
+        data.roomAliases.push(structuredClone(old));
+        aliases.add(canonicalJSON(old));
+      }
+  }
   assertIndustrialEnvironmentRetention(previous, data);
   const files = new Map(),
     inventory = [],

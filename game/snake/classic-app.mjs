@@ -1803,10 +1803,6 @@ function restore(raw, { provenance = 'import' } = {}) {
       source.format !== SESSION_FORMAT || Object.hasOwn(source, 'appearance'),
       'Missing accepted artwork.',
     );
-    const nextAppearance = restoreAttemptAppearance(
-      source.format === SESSION_FORMAT ? source.appearance : null,
-      environmentCandidate(item, source.mode),
-    );
     if (source.format === 'revealline-classic-snake-session.v1') {
       exactKeys(
         source,
@@ -1886,6 +1882,11 @@ function restore(raw, { provenance = 'import' } = {}) {
         'Round ownership mismatch.',
       );
     }
+    // Resolve historical gameplay authority before restoring its accepted art.
+    const nextAppearance = restoreAttemptAppearance(
+      source.format === SESSION_FORMAT ? source.appearance : null,
+      environmentCandidate(item, source.mode),
+    );
     const statistics =
       source.format === SESSION_FORMAT ? validateEnemyStatsSession(source.statistics) : null;
     if (source.format === SESSION_FORMAT) {

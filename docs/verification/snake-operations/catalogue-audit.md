@@ -160,6 +160,8 @@ All 48 previous recipes are retained verbatim in the official archive. New recor
 - Supply and courier offers remain before completion. New recipe identities earn completion stars without borrowing old silver/gold thresholds.
 - Pilot fixes affect qualification only: it prioritizes required prey over optional couriers and measures the approach to protected prey without treating their occupied cells as traversable.
 - No gameplay geometry, steering timing, warning duration or enemy simulation changed in this audit.
+- All 18 pinned historical pilot recordings still qualify against their archived recipes.
+- Historical accepted artwork remains bound to the archived recipe across Solo, Team and Versus restoration. The environment producer retains prior source rows and aliases alongside current rows; its check and 20 shared environment/pilot tests pass.
 
 ## Remaining expansion work
 

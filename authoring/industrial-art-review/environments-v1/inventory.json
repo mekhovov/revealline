@@ -7511,7 +7511,7 @@
       },
       "missions": [
         {
-          "sourceKey": "ie1-zu791cWUixlQJga3VxWcXH-X_o1kbeL_ZJFvipWhxBE",
+          "sourceKey": "ie1-i6W8O2Uec9THaI631mr1Owt0Pa1ZCAmxWZUxtNasV9M",
           "engine": "snake",
           "mode": "solo",
           "origin": {
@@ -7521,8 +7521,8 @@
           },
           "format": "classic-snake-level.v3",
           "id": "classic-living-refuge-bays",
-          "revision": "1",
-          "contentSha256": "1195d8def64dab8e95b9497425c8c72be45a347b26468e1b78080c77e9ae9634",
+          "revision": "2",
+          "contentSha256": "e5c1cea7be7ccfcfbb49ee737da4d36c24350ffbd82218cfa6281ad936b59b99",
           "title": {
             "en": "Refuge Bays",
             "uk": "Затишні кишені"
@@ -7534,7 +7534,7 @@
           }
         },
         {
-          "sourceKey": "ie1-DKea3BgygZRX8Tg0l9O8k5Be9XfepYolmVEf9pi9wwU",
+          "sourceKey": "ie1-kCqdhZubvCOl_LFJt0r-8OKQJJOrDMAHOgUdvtcaqSc",
           "engine": "snake",
           "mode": "versus",
           "origin": {
@@ -7544,8 +7544,8 @@
           },
           "format": "classic-snake-level.v3",
           "id": "classic-living-refuge-bays",
-          "revision": "1",
-          "contentSha256": "1195d8def64dab8e95b9497425c8c72be45a347b26468e1b78080c77e9ae9634",
+          "revision": "2",
+          "contentSha256": "e5c1cea7be7ccfcfbb49ee737da4d36c24350ffbd82218cfa6281ad936b59b99",
           "title": {
             "en": "Refuge Bays",
             "uk": "Затишні кишені"
@@ -7557,7 +7557,7 @@
           }
         },
         {
-          "sourceKey": "ie1-dKsFQsas2tal4TJgH28loKNnmy3FbuMwlt9mHmbdQ5A",
+          "sourceKey": "ie1-b4YisPB142Lh7eIbE-xCMEdVvJepM13ddq4CM25eyDw",
           "engine": "snake",
           "mode": "team",
           "origin": {
@@ -7567,8 +7567,8 @@
           },
           "format": "classic-snake-level.v3",
           "id": "classic-living-refuge-bays",
-          "revision": "1",
-          "contentSha256": "1195d8def64dab8e95b9497425c8c72be45a347b26468e1b78080c77e9ae9634",
+          "revision": "2",
+          "contentSha256": "e5c1cea7be7ccfcfbb49ee737da4d36c24350ffbd82218cfa6281ad936b59b99",
           "title": {
             "en": "Refuge Bays",
             "uk": "Затишні кишені"
@@ -7580,7 +7580,7 @@
           }
         },
         {
-          "sourceKey": "ie1-HQx7FlfoXmIAZxfhRtKqtAIdMLyEeMwzP5tPeJGpAHo",
+          "sourceKey": "ie1-zfQXvPvDzQvb-ENQQ5lywDOYox_4AApzLb05jF3s4gQ",
           "engine": "snake",
           "mode": "solo",
           "origin": {
@@ -7590,8 +7590,8 @@
           },
           "format": "classic-snake-level.v3",
           "id": "classic-living-switchback-yard",
-          "revision": "1",
-          "contentSha256": "ca9ed9dbaa72e286857a3a8e50b983e02bbf0f79e21318736e2f343f2c070642",
+          "revision": "2",
+          "contentSha256": "6dfe8ddcf74bdeb047c469b202cbc43eae01d6a263ba79d26c081591ef4740e4",
           "title": {
             "en": "Switchback Yard",
             "uk": "Двір зміни курсу"
@@ -7603,7 +7603,7 @@
           }
         },
         {
-          "sourceKey": "ie1-7mbraXu60qfllvpoUV41gknfftqk4OeL3ACW1QbLhSU",
+          "sourceKey": "ie1-Bks6JKHelZ7m9HX9HgfezF0UsbvsW7Km9vuH3zKwPoM",
           "engine": "snake",
           "mode": "versus",
           "origin": {
@@ -7613,8 +7613,8 @@
           },
           "format": "classic-snake-level.v3",
           "id": "classic-living-switchback-yard",
-          "revision": "1",
-          "contentSha256": "ca9ed9dbaa72e286857a3a8e50b983e02bbf0f79e21318736e2f343f2c070642",
+          "revision": "2",
+          "contentSha256": "6dfe8ddcf74bdeb047c469b202cbc43eae01d6a263ba79d26c081591ef4740e4",
           "title": {
             "en": "Switchback Yard",
             "uk": "Двір зміни курсу"
@@ -7626,7 +7626,7 @@
           }
         },
         {
-          "sourceKey": "ie1-haGg5wHR17uT79HIoOX7XLLzL6F9gkfbN2vgBvCAVRw",
+          "sourceKey": "ie1-lyYJIsWUbeC3Cw3cjb0RirtHphxTvT_W5zpSFwpykO0",
           "engine": "snake",
           "mode": "team",
           "origin": {
@@ -7636,8 +7636,8 @@
           },
           "format": "classic-snake-level.v3",
           "id": "classic-living-switchback-yard",
-          "revision": "1",
-          "contentSha256": "ca9ed9dbaa72e286857a3a8e50b983e02bbf0f79e21318736e2f343f2c070642",
+          "revision": "2",
+          "contentSha256": "6dfe8ddcf74bdeb047c469b202cbc43eae01d6a263ba79d26c081591ef4740e4",
           "title": {
             "en": "Switchback Yard",
             "uk": "Двір зміни курсу"
@@ -7649,7 +7649,7 @@
           }
         },
         {
-          "sourceKey": "ie1-Ivn5cPrGOhkaVc2VvPmtJZIRykgV42eBFWd93eUyLYc",
+          "sourceKey": "ie1-OaG33h0vLmEgbCVAZ0-41IEB6x-4xCpjHlczUibe3LA",
           "engine": "snake",
           "mode": "solo",
           "origin": {
@@ -7659,8 +7659,8 @@
           },
           "format": "classic-snake-level.v3",
           "id": "classic-living-rendezvous-crossing",
-          "revision": "1",
-          "contentSha256": "bd4914fea4b066a7b3ab5a1e4e17784e5582576e51e8d37b991f66c68c5a0b69",
+          "revision": "2",
+          "contentSha256": "481183834126a98a10c0b2a17187f2dd200ab81764c320fec64e52674ed92342",
           "title": {
             "en": "Rendezvous Crossing",
             "uk": "Перехрестя зустрічі"
@@ -7672,7 +7672,7 @@
           }
         },
         {
-          "sourceKey": "ie1-Jc1uq9xzNHu-Zm6g5KfDAYXVxHc3dH1bvA99khX167w",
+          "sourceKey": "ie1-Oecpybg5KypJ_gbaQ6mzptQQpZwG-FE0gyFSolLVyqw",
           "engine": "snake",
           "mode": "versus",
           "origin": {
@@ -7682,8 +7682,8 @@
           },
           "format": "classic-snake-level.v3",
           "id": "classic-living-rendezvous-crossing",
-          "revision": "1",
-          "contentSha256": "bd4914fea4b066a7b3ab5a1e4e17784e5582576e51e8d37b991f66c68c5a0b69",
+          "revision": "2",
+          "contentSha256": "481183834126a98a10c0b2a17187f2dd200ab81764c320fec64e52674ed92342",
           "title": {
             "en": "Rendezvous Crossing",
             "uk": "Перехрестя зустрічі"
@@ -7695,7 +7695,7 @@
           }
         },
         {
-          "sourceKey": "ie1-elx37CbPkrPIqQOPO-CXYN8Hq66Ui7zYUpSHx_MwXcQ",
+          "sourceKey": "ie1-rylozyxwJ80DrC0SUEoXwkeLT19FuuuF8FBkDo-yIds",
           "engine": "snake",
           "mode": "team",
           "origin": {
@@ -7705,8 +7705,8 @@
           },
           "format": "classic-snake-level.v3",
           "id": "classic-living-rendezvous-crossing",
-          "revision": "1",
-          "contentSha256": "bd4914fea4b066a7b3ab5a1e4e17784e5582576e51e8d37b991f66c68c5a0b69",
+          "revision": "2",
+          "contentSha256": "481183834126a98a10c0b2a17187f2dd200ab81764c320fec64e52674ed92342",
           "title": {
             "en": "Rendezvous Crossing",
             "uk": "Перехрестя зустрічі"
@@ -7718,7 +7718,7 @@
           }
         },
         {
-          "sourceKey": "ie1-4Ai97NfzIOOuvh-73cD-wg9mr8v9nV2ZOnjHc7VBW4g",
+          "sourceKey": "ie1-oPcUftUyH4u7STfdIg79JaumYE7sklfbO5qBk3CXqcU",
           "engine": "snake",
           "mode": "solo",
           "origin": {
@@ -7728,8 +7728,8 @@
           },
           "format": "classic-snake-level.v3",
           "id": "classic-living-cable-cutoff",
-          "revision": "1",
-          "contentSha256": "f6428ae40e6b1867f90f79b80a8954f70f54fe22b366652c07ba96a9554fb731",
+          "revision": "2",
+          "contentSha256": "df14eb4f92e2bd6c0f71c60b536ae828619d42f9d18df863de3d2787d58baf6d",
           "title": {
             "en": "Cable Cutoff",
             "uk": "Кабельний заслін"
@@ -7741,7 +7741,7 @@
           }
         },
         {
-          "sourceKey": "ie1-d63Sgg-4Cbne3Pb9Q-aaMmrGsJbK9tFLFnfwUwIL8yQ",
+          "sourceKey": "ie1-2RGZAUIALT0xE2TEUk2I0vIN6AG1WBhHWXrU3uN78Y4",
           "engine": "snake",
           "mode": "versus",
           "origin": {
@@ -7751,8 +7751,8 @@
           },
           "format": "classic-snake-level.v3",
           "id": "classic-living-cable-cutoff",
-          "revision": "1",
-          "contentSha256": "f6428ae40e6b1867f90f79b80a8954f70f54fe22b366652c07ba96a9554fb731",
+          "revision": "2",
+          "contentSha256": "df14eb4f92e2bd6c0f71c60b536ae828619d42f9d18df863de3d2787d58baf6d",
           "title": {
             "en": "Cable Cutoff",
             "uk": "Кабельний заслін"
@@ -7764,7 +7764,7 @@
           }
         },
         {
-          "sourceKey": "ie1-ETNFAKFi56RsQ550EiJpAMl9hKJmP8N5SJhrUks8EKE",
+          "sourceKey": "ie1-s6i_QMxgtmGFxTHpmT9PU_sioDDb-_J-A2gfmyRzUao",
           "engine": "snake",
           "mode": "team",
           "origin": {
@@ -7774,8 +7774,8 @@
           },
           "format": "classic-snake-level.v3",
           "id": "classic-living-cable-cutoff",
-          "revision": "1",
-          "contentSha256": "f6428ae40e6b1867f90f79b80a8954f70f54fe22b366652c07ba96a9554fb731",
+          "revision": "2",
+          "contentSha256": "df14eb4f92e2bd6c0f71c60b536ae828619d42f9d18df863de3d2787d58baf6d",
           "title": {
             "en": "Cable Cutoff",
             "uk": "Кабельний заслін"
@@ -7787,7 +7787,7 @@
           }
         },
         {
-          "sourceKey": "ie1-J-3uUVVJiYGID9jor2O3Iktl26cLPdgAstZ9QnNf9e8",
+          "sourceKey": "ie1-FHE-h6InWRZvrk1HsAwP3GCB9K1WOld5kN4A2UHUUhU",
           "engine": "snake",
           "mode": "solo",
           "origin": {
@@ -7797,8 +7797,8 @@
           },
           "format": "classic-snake-level.v3",
           "id": "classic-living-return-pincer",
-          "revision": "1",
-          "contentSha256": "8dad72bbeb03c62880d1318d373b206f8275044101cae8c2c778aee10e952889",
+          "revision": "2",
+          "contentSha256": "14d2f27a3692a413aed6b990d23840f01e07ae95ed4ade0dcfe5956292916f4b",
           "title": {
             "en": "Return Pincer",
             "uk": "Обхідні лещата"
@@ -7810,7 +7810,7 @@
           }
         },
         {
-          "sourceKey": "ie1-xXPxVweD66fKqesq8qY0pYLQmunjRI-k3Q73o8oNxQ4",
+          "sourceKey": "ie1-9zIM8fyt0I997M0C1k19cockQjNAJng6YtCnGBK7eR8",
           "engine": "snake",
           "mode": "versus",
           "origin": {
@@ -7820,8 +7820,8 @@
           },
           "format": "classic-snake-level.v3",
           "id": "classic-living-return-pincer",
-          "revision": "1",
-          "contentSha256": "8dad72bbeb03c62880d1318d373b206f8275044101cae8c2c778aee10e952889",
+          "revision": "2",
+          "contentSha256": "14d2f27a3692a413aed6b990d23840f01e07ae95ed4ade0dcfe5956292916f4b",
           "title": {
             "en": "Return Pincer",
             "uk": "Обхідні лещата"
@@ -7833,7 +7833,7 @@
           }
         },
         {
-          "sourceKey": "ie1-nKsJmRTde4T0w9RF9FRoMFlM7WGH0MoVvzT9ssTBulc",
+          "sourceKey": "ie1-ii2gH8A-M4G8hBz-OUencoRSuaqLuOi39C4Ps_anNVc",
           "engine": "snake",
           "mode": "team",
           "origin": {
@@ -7843,8 +7843,8 @@
           },
           "format": "classic-snake-level.v3",
           "id": "classic-living-return-pincer",
-          "revision": "1",
-          "contentSha256": "8dad72bbeb03c62880d1318d373b206f8275044101cae8c2c778aee10e952889",
+          "revision": "2",
+          "contentSha256": "14d2f27a3692a413aed6b990d23840f01e07ae95ed4ade0dcfe5956292916f4b",
           "title": {
             "en": "Return Pincer",
             "uk": "Обхідні лещата"
@@ -7856,7 +7856,7 @@
           }
         },
         {
-          "sourceKey": "ie1-XdVbO1yjC7nB3FWaajUlGPZYjkrpyNae2DaeH55rnrE",
+          "sourceKey": "ie1-n3JF19yfHnIGrSaGNxr9VZ7rQpHzh9utx3zTJSmgh5Y",
           "engine": "snake",
           "mode": "solo",
           "origin": {
@@ -7866,8 +7866,8 @@
           },
           "format": "classic-snake-level.v3",
           "id": "classic-living-twin-intercepts",
-          "revision": "1",
-          "contentSha256": "70d903630b9d2d20cab536b20da6d32478b6f20e49dc37e57b515e66b3f1d076",
+          "revision": "2",
+          "contentSha256": "19b50d9f1fe6fc544658b55a48aade3d78bb45066f39ad1a8872d1a16f28baf6",
           "title": {
             "en": "Twin Intercepts",
             "uk": "Подвійні перехоплення"
@@ -7879,7 +7879,7 @@
           }
         },
         {
-          "sourceKey": "ie1-XwI8qi8KJsiNENOb75hCxqWA5S7WblyXAAaWZ8Wx7KM",
+          "sourceKey": "ie1-LjJhn7GH3yR4-ZGJWYe75bZk6GvXNhDU214vfiTrshc",
           "engine": "snake",
           "mode": "versus",
           "origin": {
@@ -7889,8 +7889,8 @@
           },
           "format": "classic-snake-level.v3",
           "id": "classic-living-twin-intercepts",
-          "revision": "1",
-          "contentSha256": "70d903630b9d2d20cab536b20da6d32478b6f20e49dc37e57b515e66b3f1d076",
+          "revision": "2",
+          "contentSha256": "19b50d9f1fe6fc544658b55a48aade3d78bb45066f39ad1a8872d1a16f28baf6",
           "title": {
             "en": "Twin Intercepts",
             "uk": "Подвійні перехоплення"
@@ -7902,7 +7902,7 @@
           }
         },
         {
-          "sourceKey": "ie1--82QSVZRuBrM16R2QbzKakiPJyyyH7-y0ewPxFl3Jmw",
+          "sourceKey": "ie1-BU8FIkWbrMc1St7AEbaYg73R2DLj0oE6-Ts2z44DMAE",
           "engine": "snake",
           "mode": "team",
           "origin": {
@@ -7912,8 +7912,8 @@
           },
           "format": "classic-snake-level.v3",
           "id": "classic-living-twin-intercepts",
-          "revision": "1",
-          "contentSha256": "70d903630b9d2d20cab536b20da6d32478b6f20e49dc37e57b515e66b3f1d076",
+          "revision": "2",
+          "contentSha256": "19b50d9f1fe6fc544658b55a48aade3d78bb45066f39ad1a8872d1a16f28baf6",
           "title": {
             "en": "Twin Intercepts",
             "uk": "Подвійні перехоплення"
@@ -8100,7 +8100,7 @@
       },
       "missions": [
         {
-          "sourceKey": "ie1-8HZHhtJ3exkr3DTRr5jcSZgi5clX-xqtKM8HIlN4ZZE",
+          "sourceKey": "ie1-YyLGmZj8Ngyk2QnnvZ2pmMaBToqXfjt9i5oQ3A3kBR0",
           "engine": "snake",
           "mode": "solo",
           "origin": {
@@ -8110,8 +8110,8 @@
           },
           "format": "classic-snake-level.v3",
           "id": "classic-living-shield-window",
-          "revision": "1",
-          "contentSha256": "99dcdd613e573c62acb6da52449b34d075e69bfd00ac6976691bfd5caf2fc2b8",
+          "revision": "2",
+          "contentSha256": "47dc0cea35050d51dd7d697aab10e051650dc327212c172050c32ccf9a365017",
           "title": {
             "en": "Shield Window",
             "uk": "Вікно щита"
@@ -8123,7 +8123,7 @@
           }
         },
         {
-          "sourceKey": "ie1-yT1ZckbB0PKXqm6OZsKDbyLcoTcWO_b8JW6eOqTT5j4",
+          "sourceKey": "ie1-Fs7w3pWXhQujHIo4GGs-0TfL3Lr9GfIAkkfKj9zWaeA",
           "engine": "snake",
           "mode": "versus",
           "origin": {
@@ -8133,8 +8133,8 @@
           },
           "format": "classic-snake-level.v3",
           "id": "classic-living-shield-window",
-          "revision": "1",
-          "contentSha256": "99dcdd613e573c62acb6da52449b34d075e69bfd00ac6976691bfd5caf2fc2b8",
+          "revision": "2",
+          "contentSha256": "47dc0cea35050d51dd7d697aab10e051650dc327212c172050c32ccf9a365017",
           "title": {
             "en": "Shield Window",
             "uk": "Вікно щита"
@@ -8146,7 +8146,7 @@
           }
         },
         {
-          "sourceKey": "ie1-94nJK1_APXgO0dgNACHGHxUqZ1ibXXV7avA58WW2QpQ",
+          "sourceKey": "ie1-UMC_ziNUfXmRzxSH6OmDYH6BxAcPKcpU6sD0dMj5Qt8",
           "engine": "snake",
           "mode": "team",
           "origin": {
@@ -8156,8 +8156,8 @@
           },
           "format": "classic-snake-level.v3",
           "id": "classic-living-shield-window",
-          "revision": "1",
-          "contentSha256": "99dcdd613e573c62acb6da52449b34d075e69bfd00ac6976691bfd5caf2fc2b8",
+          "revision": "2",
+          "contentSha256": "47dc0cea35050d51dd7d697aab10e051650dc327212c172050c32ccf9a365017",
           "title": {
             "en": "Shield Window",
             "uk": "Вікно щита"
@@ -8169,7 +8169,7 @@
           }
         },
         {
-          "sourceKey": "ie1-ssiQiS2pMoyX93ro5tdSuQoDzYhoQAIzdOXQuhMU8u4",
+          "sourceKey": "ie1-PHiwpzsdCORRflFm-Zp4itOs_krN4kO4u2w15jnpNpE",
           "engine": "snake",
           "mode": "solo",
           "origin": {
@@ -8179,8 +8179,8 @@
           },
           "format": "classic-snake-level.v3",
           "id": "classic-living-brace-break",
-          "revision": "1",
-          "contentSha256": "9d07a501dc73bce818e84cd3996a4c14522b76780023f780d14150dd84d242d3",
+          "revision": "2",
+          "contentSha256": "8111e9092aa568ce706765f27e89a5c2fb464397985feb63b02e0cba10a061c3",
           "title": {
             "en": "Brace Break",
             "uk": "Пауза броні"
@@ -8192,7 +8192,7 @@
           }
         },
         {
-          "sourceKey": "ie1-YzfvESd4teRg-nG49PfoPC7PkbtMoUYFEFxj1L_9fJE",
+          "sourceKey": "ie1-L8jTm5pzs9U9Lwp4fGE3deDFlxlKiJ8lcg6N3sARm-0",
           "engine": "snake",
           "mode": "versus",
           "origin": {
@@ -8202,8 +8202,8 @@
           },
           "format": "classic-snake-level.v3",
           "id": "classic-living-brace-break",
-          "revision": "1",
-          "contentSha256": "9d07a501dc73bce818e84cd3996a4c14522b76780023f780d14150dd84d242d3",
+          "revision": "2",
+          "contentSha256": "8111e9092aa568ce706765f27e89a5c2fb464397985feb63b02e0cba10a061c3",
           "title": {
             "en": "Brace Break",
             "uk": "Пауза броні"
@@ -8215,7 +8215,7 @@
           }
         },
         {
-          "sourceKey": "ie1-ynGULnLc-ot1REy0UfDBwjcjBMRy1ehGxroVXHj405I",
+          "sourceKey": "ie1-40AvZc3o7w4KyDjdhw2VIP2_wpm0QSTtSNtxpzrlsx0",
           "engine": "snake",
           "mode": "team",
           "origin": {
@@ -8225,8 +8225,8 @@
           },
           "format": "classic-snake-level.v3",
           "id": "classic-living-brace-break",
-          "revision": "1",
-          "contentSha256": "9d07a501dc73bce818e84cd3996a4c14522b76780023f780d14150dd84d242d3",
+          "revision": "2",
+          "contentSha256": "8111e9092aa568ce706765f27e89a5c2fb464397985feb63b02e0cba10a061c3",
           "title": {
             "en": "Brace Break",
             "uk": "Пауза броні"
@@ -8238,7 +8238,7 @@
           }
         },
         {
-          "sourceKey": "ie1-Hdb4M7R9xw3236vsl8TWFrliZiUKbFdGUU4EpUN9fu8",
+          "sourceKey": "ie1-pdS2trItFoB8CsWXfHY5x-YbkqNY7gmIkuNRSjGcC4I",
           "engine": "snake",
           "mode": "solo",
           "origin": {
@@ -8248,8 +8248,8 @@
           },
           "format": "classic-snake-level.v3",
           "id": "classic-living-shutter-flank",
-          "revision": "1",
-          "contentSha256": "5b1d8fbfd5e2a86cf14a863ad1930362c2561834593d954f154bb42b855c006f",
+          "revision": "2",
+          "contentSha256": "2fbbfc9b869b82bb9614393e1fdc7b51070af68f7b79d00518fdca55127e06a0",
           "title": {
             "en": "Shutter Flank",
             "uk": "Фланг заслінки"
@@ -8261,7 +8261,7 @@
           }
         },
         {
-          "sourceKey": "ie1-KsEGPc0jIHA5ORO2wXq4u0Kzdkh6zjVrHgmzmUmbel8",
+          "sourceKey": "ie1-1cPnP_X9MbYbVORGQHXGn4xu88Umf9nqtVJqu7UEVpA",
           "engine": "snake",
           "mode": "versus",
           "origin": {
@@ -8271,8 +8271,8 @@
           },
           "format": "classic-snake-level.v3",
           "id": "classic-living-shutter-flank",
-          "revision": "1",
-          "contentSha256": "5b1d8fbfd5e2a86cf14a863ad1930362c2561834593d954f154bb42b855c006f",
+          "revision": "2",
+          "contentSha256": "2fbbfc9b869b82bb9614393e1fdc7b51070af68f7b79d00518fdca55127e06a0",
           "title": {
             "en": "Shutter Flank",
             "uk": "Фланг заслінки"
@@ -8284,7 +8284,7 @@
           }
         },
         {
-          "sourceKey": "ie1-MlmvPR4LaVQJClD7WBWXiX37z8yVggrkmvB4kfsU9LM",
+          "sourceKey": "ie1-oiOJrCKdCAuDTeckYDFenDJJYr6p6XnauoQb1exHMBI",
           "engine": "snake",
           "mode": "team",
           "origin": {
@@ -8294,8 +8294,8 @@
           },
           "format": "classic-snake-level.v3",
           "id": "classic-living-shutter-flank",
-          "revision": "1",
-          "contentSha256": "5b1d8fbfd5e2a86cf14a863ad1930362c2561834593d954f154bb42b855c006f",
+          "revision": "2",
+          "contentSha256": "2fbbfc9b869b82bb9614393e1fdc7b51070af68f7b79d00518fdca55127e06a0",
           "title": {
             "en": "Shutter Flank",
             "uk": "Фланг заслінки"
@@ -8307,7 +8307,7 @@
           }
         },
         {
-          "sourceKey": "ie1-y8wF-m7UVtVtuJYHWPYUz80VeZYNCKRmRf0hJZ1AsSQ",
+          "sourceKey": "ie1-6fn0v1Oxa5ylyhXo5q45z-2YBzmLP65n7daQlL7KZ3A",
           "engine": "snake",
           "mode": "solo",
           "origin": {
@@ -8317,8 +8317,8 @@
           },
           "format": "classic-snake-level.v3",
           "id": "classic-living-frozen-opening",
-          "revision": "1",
-          "contentSha256": "2270e798a3b734cd9cd455666c276c3ed648fc4e74e18e51fa107dd8bd169a25",
+          "revision": "2",
+          "contentSha256": "2a689014e1f85236f2b7874ff7be460098ac5c653cbc89b73f9bc38e9c5bd28e",
           "title": {
             "en": "Frozen Opening",
             "uk": "Завмерле вікно"
@@ -8330,7 +8330,7 @@
           }
         },
         {
-          "sourceKey": "ie1-i-xq0muaz08DrhGwSa6mtPTjq5fGlM-XMB5fYtugFMY",
+          "sourceKey": "ie1-6SAkw2wpKuQN2GAN6eH8GGT5VGLCQoHpCwGtsB5HoN0",
           "engine": "snake",
           "mode": "versus",
           "origin": {
@@ -8340,8 +8340,8 @@
           },
           "format": "classic-snake-level.v3",
           "id": "classic-living-frozen-opening",
-          "revision": "1",
-          "contentSha256": "2270e798a3b734cd9cd455666c276c3ed648fc4e74e18e51fa107dd8bd169a25",
+          "revision": "2",
+          "contentSha256": "2a689014e1f85236f2b7874ff7be460098ac5c653cbc89b73f9bc38e9c5bd28e",
           "title": {
             "en": "Frozen Opening",
             "uk": "Завмерле вікно"
@@ -8353,7 +8353,7 @@
           }
         },
         {
-          "sourceKey": "ie1-uhLt4addmGTJAwqQ-_TlflWjgeuNAPkRvvXuhdpWyQY",
+          "sourceKey": "ie1-YohNouQQOPzmrvFbFEYD7A8-ko0xwJFC-EnrvqT6CEA",
           "engine": "snake",
           "mode": "team",
           "origin": {
@@ -8363,8 +8363,8 @@
           },
           "format": "classic-snake-level.v3",
           "id": "classic-living-frozen-opening",
-          "revision": "1",
-          "contentSha256": "2270e798a3b734cd9cd455666c276c3ed648fc4e74e18e51fa107dd8bd169a25",
+          "revision": "2",
+          "contentSha256": "2a689014e1f85236f2b7874ff7be460098ac5c653cbc89b73f9bc38e9c5bd28e",
           "title": {
             "en": "Frozen Opening",
             "uk": "Завмерле вікно"
@@ -8376,7 +8376,7 @@
           }
         },
         {
-          "sourceKey": "ie1-Ihqy512ZUqt-Leju-W-AjCnHyshajLNGbdAH5J7HwRU",
+          "sourceKey": "ie1-27N3iHsyqkmq4uswXiWaRTYJjkjgEIhkZnQdaB5GUqc",
           "engine": "snake",
           "mode": "solo",
           "origin": {
@@ -8386,8 +8386,8 @@
           },
           "format": "classic-snake-level.v3",
           "id": "classic-living-supply-flanks",
-          "revision": "1",
-          "contentSha256": "2b227975d81ca8daea8fe516c258c77bdd6111ed3fdabbbdd74a7e83dc250487",
+          "revision": "2",
+          "contentSha256": "ef89e912cc53bce0cf629f2030007d52864ee88dba84b8800c3cb33ea8cc77f8",
           "title": {
             "en": "Supply Flanks",
             "uk": "Припаси на флангах"
@@ -8399,7 +8399,7 @@
           }
         },
         {
-          "sourceKey": "ie1-Xy-QaEnl5WqcSCiZ7GQb5xXVWYXANimEfzw8REZhWJE",
+          "sourceKey": "ie1-nkVDSiIeosqDkRAdvrHtZbLkZHNw4-PIxdvounapz28",
           "engine": "snake",
           "mode": "versus",
           "origin": {
@@ -8409,8 +8409,8 @@
           },
           "format": "classic-snake-level.v3",
           "id": "classic-living-supply-flanks",
-          "revision": "1",
-          "contentSha256": "2b227975d81ca8daea8fe516c258c77bdd6111ed3fdabbbdd74a7e83dc250487",
+          "revision": "2",
+          "contentSha256": "ef89e912cc53bce0cf629f2030007d52864ee88dba84b8800c3cb33ea8cc77f8",
           "title": {
             "en": "Supply Flanks",
             "uk": "Припаси на флангах"
@@ -8422,7 +8422,7 @@
           }
         },
         {
-          "sourceKey": "ie1-5OwGIAcKdGeA4rwh4IJwM693INWVa1WcMm5GMh2f1UM",
+          "sourceKey": "ie1-A8HOGMGyTdu7mV2LuymOtQjEjVAGP4unFdBnXITex1M",
           "engine": "snake",
           "mode": "team",
           "origin": {
@@ -8432,8 +8432,8 @@
           },
           "format": "classic-snake-level.v3",
           "id": "classic-living-supply-flanks",
-          "revision": "1",
-          "contentSha256": "2b227975d81ca8daea8fe516c258c77bdd6111ed3fdabbbdd74a7e83dc250487",
+          "revision": "2",
+          "contentSha256": "ef89e912cc53bce0cf629f2030007d52864ee88dba84b8800c3cb33ea8cc77f8",
           "title": {
             "en": "Supply Flanks",
             "uk": "Припаси на флангах"
@@ -8445,7 +8445,7 @@
           }
         },
         {
-          "sourceKey": "ie1-uk4rn2xi7bQGKEmRy0dRAeqtVR_bb4t5vj5E98QoSmI",
+          "sourceKey": "ie1-T4kx5xGZEMieXifDxSnaYt3JwJKHqhyBacdPreErQK8",
           "engine": "snake",
           "mode": "solo",
           "origin": {
@@ -8455,8 +8455,8 @@
           },
           "format": "classic-snake-level.v3",
           "id": "classic-living-living-airfield",
-          "revision": "1",
-          "contentSha256": "b9ed749d2dae458244ef6b9d1237fb183f82e2c5dee374ddcc73d509611f843b",
+          "revision": "2",
+          "contentSha256": "69303f817450f06f91ccdd48dcd9a10a49fd8b9e6960ffa6915e1c8a9294ab92",
           "title": {
             "en": "Living Airfield",
             "uk": "Живий аеродром"
@@ -8468,7 +8468,7 @@
           }
         },
         {
-          "sourceKey": "ie1-AvYMZQDP8O6aoI0_isyVagUAZzNAztGMu7igAQN3f_g",
+          "sourceKey": "ie1-luWYjT2rsTIYmleF7a2Zq5HkoX7dBbLf65Ymy9tDBPY",
           "engine": "snake",
           "mode": "versus",
           "origin": {
@@ -8478,8 +8478,8 @@
           },
           "format": "classic-snake-level.v3",
           "id": "classic-living-living-airfield",
-          "revision": "1",
-          "contentSha256": "b9ed749d2dae458244ef6b9d1237fb183f82e2c5dee374ddcc73d509611f843b",
+          "revision": "2",
+          "contentSha256": "69303f817450f06f91ccdd48dcd9a10a49fd8b9e6960ffa6915e1c8a9294ab92",
           "title": {
             "en": "Living Airfield",
             "uk": "Живий аеродром"
@@ -8491,7 +8491,7 @@
           }
         },
         {
-          "sourceKey": "ie1-8pKp9cLw2gOBkkct5AhLY4kj1iUtoHdRReJjyVR165c",
+          "sourceKey": "ie1-VLpRl_iLVFmfRRgWNVxryLAo4uB4iuX2PDTlM0KZ49M",
           "engine": "snake",
           "mode": "team",
           "origin": {
@@ -8501,8 +8501,8 @@
           },
           "format": "classic-snake-level.v3",
           "id": "classic-living-living-airfield",
-          "revision": "1",
-          "contentSha256": "b9ed749d2dae458244ef6b9d1237fb183f82e2c5dee374ddcc73d509611f843b",
+          "revision": "2",
+          "contentSha256": "69303f817450f06f91ccdd48dcd9a10a49fd8b9e6960ffa6915e1c8a9294ab92",
           "title": {
             "en": "Living Airfield",
             "uk": "Живий аеродром"
@@ -9704,7 +9704,7 @@
   ],
   "roomPreparations": 756,
   "roomSources": 276,
-  "moduleBytes": 330026,
+  "moduleBytes": 422824,
   "packageBytes": 13837091,
   "decodedBytesPerChapterMax": 3072,
   "scope": "Produced and software-admitted, presentation only. No new missions, gameplay policy, automatic default promotion or human/device acceptance."
