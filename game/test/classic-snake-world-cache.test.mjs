@@ -1,4 +1,12 @@
 import test from 'node:test';
+import { CLASSIC_BACKDROP_SIZE } from '../snake/classic-scenes.mjs';
+import {
+  CLASSIC_SIGNAL_RECEIVER_LIMIT,
+  CLASSIC_SIGNAL_SAMPLE_EDGE,
+  classicSignalCacheStats,
+  captureClassicSignalTerrain,
+  drawClassicSignalInterference,
+} from '../snake/classic-signal-view.mjs';
 import assert from 'node:assert/strict';
 import { CLASSIC_SNAKE_LEVELS } from '../snake/classic-catalogue.mjs';
 import { CLASSIC_MISSION_COMPOSITIONS } from '../snake/classic-compositions.mjs';
@@ -9,6 +17,7 @@ import {
   CLASSIC_TERRAIN_CACHE_BYTES,
 } from '../snake/classic-terrain-cache.mjs';
 import {
+  advanceClassicReactionTime,
   observeClassicWorldReactions,
   drawClassicWorldReactions,
 } from '../snake/classic-world-reactions.mjs';
@@ -151,4 +160,91 @@ test('cosmetic reactions never award progress, replay twice on redraw, or reveal
     0,
     'new attempts do not inherit effects',
   );
+});
+
+test('terminal cosmetic reactions expire while the completed drone stays frozen', () => {
+  const canvas = {},
+    attempt = {},
+    level = {},
+    run = { tick: 0, level, recentCatches: [], removedWalls: [] };
+  let clock = 0;
+  observeClassicWorldReactions(canvas, run, attempt, clock);
+  run.tick = 1;
+  run.status = 'won';
+  run.recentCatches = [{ x: 2, y: 3, tick: 1 }];
+  assert.equal(observeClassicWorldReactions(canvas, run, attempt, clock).length, 1);
+  for (let i = 0; i < 6; i++) clock = advanceClassicReactionTime(clock, 100, true);
+  assert.equal(run.tick, 1, 'terminal simulation does not advance');
+  assert.equal(observeClassicWorldReactions(canvas, run, attempt, clock).length, 0);
+  assert.equal(
+    advanceClassicReactionTime(clock, 100, false),
+    clock,
+    'pause/background freezes cosmetics',
+  );
+  assert.equal(advanceClassicReactionTime(59950, 100, true), 50, 'bounded clock wraps');
+  assert.equal(advanceClassicReactionTime(clock, Infinity, true), clock);
+});
+
+test('aggregate terrain, decoded backgrounds, material and receiver pixels stay below 16 MiB', () => {
+  const decoded = 24 * CLASSIC_BACKDROP_SIZE.width * CLASSIC_BACKDROP_SIZE.height * 4;
+  const tiles = 192 * 32 * 32 * 4;
+  // Each receiver keeps one surface, current terrain, and three reusable pixel buffers.
+  const receivers = CLASSIC_SIGNAL_RECEIVER_LIMIT * CLASSIC_SIGNAL_SAMPLE_EDGE ** 2 * 4 * 5;
+  const total = CLASSIC_TERRAIN_CACHE_BYTES + decoded + tiles + receivers;
+  assert.ok(total <= 16 * 1024 * 1024, `${total} aggregate cached pixel bytes`);
+});
+
+test('receiver LRU releases surfaces and scratch buffers and resamples an evicted paused board', () => {
+  const surfaces = [];
+  let samples = 0;
+  const owner = {
+    createElement() {
+      const surface = {
+        width: 0,
+        height: 0,
+        getContext() {
+          return {
+            drawImage() {},
+            putImageData() {},
+            getImageData(x, y, w, h) {
+              samples++;
+              return { data: new Uint8ClampedArray(w * h * 4) };
+            },
+          };
+        },
+      };
+      surfaces.push(surface);
+      return surface;
+    },
+  };
+  const canvases = Array.from({ length: 6 }, () => ({
+    width: 560,
+    height: 560,
+    ownerDocument: owner,
+  }));
+  const run = {
+    level: { width: 20, height: 20, wrap: false },
+    tick: 1,
+    status: 'running',
+    snakes: [{ alive: true, body: [{ x: 3, y: 3 }] }],
+  };
+  const signal = { active: true, sources: [{ x: 10, y: 10, radius: null, phase: 'jamming' }] };
+  const ctx = new Proxy({}, { get: () => () => {} });
+  const draw = (canvas) => {
+    captureClassicSignalTerrain(canvas, run);
+    drawClassicSignalInterference(ctx, canvas, run, signal, { reduced: true });
+  };
+  for (const canvas of canvases) {
+    draw(canvas);
+    assert.ok(classicSignalCacheStats(owner).entries <= CLASSIC_SIGNAL_RECEIVER_LIMIT);
+    assert.ok(
+      classicSignalCacheStats(owner).bytes <= CLASSIC_SIGNAL_RECEIVER_LIMIT * 320 * 320 * 4 * 5,
+    );
+  }
+  assert.equal(surfaces.filter((s) => s.width === 1 && s.height === 1).length, 3);
+  const previous = samples;
+  draw(canvases[0]);
+  assert.equal(samples, previous + 2, 'evicted terrain and live receiver are freshly sampled');
+  draw(canvases[0]);
+  assert.equal(samples, previous + 2, 'unchanged paused board reuses only its fresh sample');
 });

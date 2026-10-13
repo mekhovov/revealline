@@ -124,6 +124,7 @@ import {
 } from '../presentation/attempt-appearance.mjs';
 import { classicCatchMarks, drawClassicBoard, drawClassicTarget } from './classic-view.mjs';
 import { advanceClassicFlight } from './classic-flight-art.mjs';
+import { advanceClassicReactionTime } from './classic-world-reactions.mjs';
 
 const doc = globalThis.document,
   $ = (id) => doc.getElementById(id);
@@ -257,7 +258,9 @@ let savedRound = readLocal(SAVE_KEY) ?? readLocal(OLD_SAVE_KEY),
   earlyFailures = 0;
 let recordedMatch = null,
   verifiedOutcome = null,
-  flightFrames = [];
+  unsavedOutcome = null,
+  flightFrames = [],
+  reactionTimeMs = 0;
 let celebration = null,
   transitionControls = null,
   resultPreview = null,
@@ -499,11 +502,11 @@ function remember() {
           policy: accepted.options.policy,
           match: accepted,
         })
-        .then(() => {
-          if (match === owner && result() === 'won') {
-            verifiedOutcome = owner;
-            refresh();
-          }
+        .then((receipt) => {
+          if (match !== owner) return;
+          if (receipt?.saved === false) unsavedOutcome = owner;
+          if (result() === 'won') verifiedOutcome = owner;
+          refresh();
         })
         .catch(() => {
           saveNotice = 'storage';
@@ -802,7 +805,7 @@ function installTransitionControls() {
   media.append(resultPreview, replayControls);
   const overview = el('div', null, 'snake-result-overview');
   const summary = el('div', null, 'snake-result-summary');
-  summary.append($('result-detail'), $('snake-stars'), $('result-record'));
+  summary.append($('result-detail'), $('snake-stars'), $('result-record'), $('result-save-notice'));
   overview.append(media, summary);
   $('snake-results').prepend(overview);
   for (const [container, variant] of [
@@ -884,6 +887,7 @@ function prepare({ launch = false, retainAppearance = false, hazardSeed } = {}) 
   resultPlayback = null;
   recordedMatch = null;
   verifiedOutcome = null;
+  unsavedOutcome = null;
   if (format === 'endless' && mode === 'versus' && duel === 'survival') {
     if (survivalEntry) {
       entry = survivalEntry;
@@ -906,6 +910,7 @@ function prepare({ launch = false, retainAppearance = false, hazardSeed } = {}) 
   runs = match.runs;
   recentReplay.reset(runs);
   flightFrames = [];
+  reactionTimeMs = 0;
   ready = true;
   paused = true;
   previousFrame = null;
@@ -1748,6 +1753,8 @@ function ratingCriteriaText(run, displayMode = mode) {
 }
 function renderRatings() {
   if (!$('snake-stars')) return;
+  $('result-save-notice').hidden = unsavedOutcome !== match || !result();
+  $('result-save-notice').textContent = unsavedOutcome === match ? text('verifiedNotSaved') : '';
   const eligible = format === 'campaign' && mode !== 'versus';
   const grade =
     eligible && verifiedOutcome === match
@@ -1929,11 +1936,13 @@ function restore(raw, { provenance = 'import' } = {}) {
       .frames()
       .forEach((frames, board) => frames.forEach((frame) => recentReplay.capture(frame, board)));
     flightFrames = [];
+    reactionTimeMs = 0;
     ready = false;
     paused = true;
     previousFrame = null;
     recordedMatch = null;
     verifiedOutcome = null;
+    unsavedOutcome = null;
     sound.gameplayPaused = true;
     reactions.reset(`classic:${++reactionAttempt}`);
     reactions.suspend();
@@ -2446,6 +2455,11 @@ function frame(now) {
       { id: 'fpv', family: 'fpv' },
       { status: result() ? 'won' : paused || ready ? 'paused' : 'running' },
     );
+  reactionTimeMs = advanceClassicReactionTime(
+    reactionTimeMs,
+    elapsed,
+    !ready && (!paused || !!result()) && pageActive() && flow.phase !== 'replay',
+  );
   runs.forEach((run, i) => {
     const choice = destruction.snapshot();
     flightFrames[i] = advanceClassicFlight(
@@ -2475,6 +2489,7 @@ function frame(now) {
         : run;
     drawClassicBoard(boards[i].canvas, shown, {
       attemptKey: match,
+      effectTimeMs: flow.phase === 'replay' ? (shown.elapsedMs ?? 0) % 60000 : reactionTimeMs,
       locale,
       effects: flow.phase === 'replay' ? null : effects[i],
       ...choice,
