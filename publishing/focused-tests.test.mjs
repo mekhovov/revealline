@@ -420,6 +420,37 @@ test('focused command execution succeeds only when every command succeeds', () =
   assert.deepEqual(summary, { attempted: 1, failures: [], exitCode: 0 });
 });
 
+test('fallback validation receives its bounded thirty-minute budget without widening other commands', async () => {
+  const plan = focusedTestPlan(['game/new-player-runtime.mjs'], manifest);
+  const execution = focusedCommandExecutionPlan(plan.commands);
+  const fallback = execution.commands.find(({ id }) => id === 'unknown-runtime-validate');
+  assert.ok(fallback);
+  assert.equal(fallback.timeoutMs, 30 * 60 * 1000);
+  const calls = [];
+  const summary = await runFocusedCommandsParallel(
+    [...execution.commands, { id: 'ordinary', command: 'node', args: ['ordinary'] }],
+    {
+      concurrency: 2,
+      stdout: { write() {} },
+      stderr: { write() {} },
+      spawnChild(command, args, options) {
+        calls.push([command, args, options.timeout, options.killSignal]);
+        const child = new EventEmitter();
+        setImmediate(() => child.emit('close', args.includes('validate') ? 7 : 0, null));
+        return child;
+      },
+    },
+  );
+  assert.deepEqual(calls, [
+    ['npm', ['run', 'validate'], 1800000, 'SIGTERM'],
+    ['node', ['ordinary'], 600000, 'SIGTERM'],
+  ]);
+  assert.equal(summary.exitCode, 7);
+  assert.deepEqual(summary.failures.map(({ id, status }) => [id, status]), [
+    ['unknown-runtime-validate', 7],
+  ]);
+});
+
 test('bounded parallel focused execution retains every command verdict', async () => {
   let active = 0;
   let maximumActive = 0;
