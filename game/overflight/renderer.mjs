@@ -231,6 +231,7 @@ export async function createOverflightRenderer({
               projectiles: imagePool(scene, key, 35),
               warnings: imagePool(scene, key, 60),
               status: imagePool(scene, key, 65),
+              escorts: imagePool(scene, key, 69),
               heroStatus: imagePool(scene, key, 72),
             };
             poolList = Object.values(pools);
@@ -600,6 +601,51 @@ export async function createOverflightRenderer({
           Math.atan2(projectile.vy ?? 0, projectile.vx ?? 1),
         );
       else if (projectile.hostile) danger(projectile.x, projectile.y, 7, camera, run.time);
+    }
+    for (const escort of run.riy?.escorts ?? []) {
+      const tint = escort.role === 'sweeper' ? colors.cyan : colors.amber;
+      pools.escorts.take(
+        `hero:${reduced ? 0 : Math.floor(run.time * 60) % OVERFLIGHT_HERO_FRAMES}`,
+        escort.x,
+        escort.y,
+        44,
+        44,
+        tint,
+        1,
+        escort.heading + Math.PI / 2,
+      );
+      pools.status.take(
+        'bar',
+        escort.x,
+        escort.y + 18,
+        escort.role === 'sweeper' ? 14 : 6,
+        3,
+        tint,
+      );
+      if (escort.beamRemaining > 0) {
+        const dx = escort.targetX - escort.x,
+          dy = escort.targetY - escort.y;
+        pools.projectiles.take(
+          'bar',
+          escort.x + dx / 2,
+          escort.y + dy / 2,
+          Math.hypot(dx, dy),
+          2,
+          tint,
+          reduced ? 0.45 : 0.8,
+          Math.atan2(dy, dx),
+        );
+      }
+    }
+    const riyTarget =
+      run.riy?.targetId &&
+      run.enemies.find((enemy) => enemy.active && enemy.id === run.riy.targetId);
+    if (riyTarget) {
+      const size = riyTarget.radius + 9;
+      for (const side of [-1, 1]) {
+        pools.status.take('bar', riyTarget.x + side * size, riyTarget.y, 2, 16, colors.amber);
+        pools.status.take('bar', riyTarget.x, riyTarget.y + side * size, 16, 2, colors.amber);
+      }
     }
     const player = run.player;
     if (previousHull !== null && player.hull < previousHull) hitAt = run.time;

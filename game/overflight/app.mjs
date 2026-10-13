@@ -92,7 +92,7 @@ const win = globalThis.window;
 const $ = (id) => doc.getElementById(id);
 const params = new URL(win.location.href).searchParams;
 // One native host owns both modes: lifecycle, input, rendering, settings and audio.
-const mode =
+let mode =
   doc.documentElement.dataset.gameMode === 'overflight-hunt'
     ? (await import('./raid-mode.mjs')).OVERFLIGHT_HUNT_MODE
     : {
@@ -122,6 +122,8 @@ const mode =
         selectCard,
         previewRequest: overflightPreviewRequest,
       };
+if (mode.id === 'overflight' && params.get('prototype') === 'riy')
+  mode = (await import('./riy-mode.mjs')).createOverflightRiyMode(mode);
 const records = mode.createRecords?.();
 if (['en', 'uk'].includes(params.get('lang'))) setLocale(params.get('lang'), { persist: false });
 const text = (key) => mode.text(getLocale(), key);
@@ -309,6 +311,7 @@ function showStatus(message = '') {
   $('play-status').hidden = !message;
 }
 function releaseInput() {
+  mode.releaseInput?.();
   input = { x: 0, y: 0, boost: false };
   inputGate.release();
   controller?.clear();
@@ -388,7 +391,7 @@ function start() {
     if (run.airframes !== options.airframes || run.slowResume !== options.slowResume) {
       run = mode.createRun(compiled, { seed, ...options, fixture });
       run.appearance = preparationIdentity;
-      run.review = !!reviewBuild;
+      run.review = !!reviewBuild || !!mode.prototype;
     }
     mode.start(run);
   } else if (run.phase === 'paused') mode.resume(run);
@@ -478,6 +481,7 @@ function updateClip(state = clipRecorder?.snapshot()) {
 function updateHUD() {
   updateRecoveryControl();
   if (!run) return;
+  mode.refreshOverlay?.(run, getLocale());
   $('hud-time').textContent = formatTime(run.time);
   $('hud-hull').textContent =
     `${text('hull')} ${Math.ceil(run.player.hull)} / ${run.player.maxHull}`;
@@ -838,7 +842,7 @@ async function prepare({
     seed = nextSeed;
     run = mode.createRun(compiled, { seed, ...options, fixture });
     run.appearance = preparationIdentity;
-    run.review = !!reviewBuild;
+    run.review = !!reviewBuild || !!mode.prototype;
     review.reset();
     audio.reset();
     commentator?.reset(run);
@@ -967,6 +971,7 @@ function measurement({ raw = false } = {}) {
     capturedAt: new Date().toISOString(),
     fixture,
     benchmarkTrial,
+    prototype: mode.prototype ?? null,
     review: reviewIdentity(),
     clipCaptureUsed,
     viewport: {
@@ -1227,7 +1232,7 @@ shell = mountModePlayShell({
       updateShell();
     },
   },
-  initial: studio || params.has('community') || reviewBuild ? 'briefing' : 'home',
+  initial: studio || params.has('community') || reviewBuild || mode.prototype ? 'briefing' : 'home',
   focusPlay: () => $('render-host').focus({ preventScroll: true }),
   onSurfaceChange: (name) => {
     if (name === 'missions') void refreshMissions();
@@ -1320,7 +1325,15 @@ commentator = createOverflightCommentator({
   getReduced: () => display.snapshot().effectiveReducedEffects,
   acquireGain: (settings) => music?.player.acquireGain(settings),
 });
-if (mode.installActions) mode.installActions({ document: doc, prepare, getSeed: () => seed });
+const disposeModeActions = mode.installActions?.({
+  document: doc,
+  prepare,
+  getSeed: () => seed,
+  getRun: () => run,
+  canAct: () =>
+    run?.phase === 'playing' && !activeModal() && !contextGuard.blocked() && !doc.hidden,
+});
+if (typeof disposeModeActions === 'function') cleanup.push(disposeModeActions);
 if ($('survivor-same-seed')) {
   listen($('survivor-same-seed'), 'click', () => {
     void prepare({ launch: true }).catch(() => {});
