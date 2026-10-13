@@ -4125,3 +4125,22 @@ post-cleanup 5.3 GiB peak to roughly 2.2 GiB. The safe cleanup and all preserved
 paths remain; the 3 GiB local heavy-build floor is not currently stable. Keep
 large local builds paused and use the existing cloud candidate run. This does
 not invalidate the earlier completed bounded browser check.
+
+## 2026-10-14 — Workshop import guide and free-resource shortlist
+
+Independent `codex/fpv-world-import-guide` from main `0a3e1fb51a8060fd3d3bfaa94956e4ae575bbcbd`.
+Preserved root Overflight edits and qualification branch #1166. Added local EN/UK
+collapsible importing help plus 23 external scene/kit candidates; see
+[workflow, priorities and verification](fpv-world-import-guide.md). No new worlds
+are claimed installed. Explicit isolated HTTPS anchors are navigation; optional
+runtime network dependencies remain forbidden. Three preflights, existing 9/9
+package checks, 11 navigation guard cases, scoped lint and browser layouts pass.
+Full admission stays with CI while local free space is below 3 GiB. Next content
+work is candidate selection, archive/license provenance, preparation, collision,
+course authoring and qualification, without changing existing package limits.
+
+Published as [PR #1169](https://github.com/mekhovov/revealline/pull/1169), implementation
+head `a0b012f564b9c1c0094022e6f2f72d86d51c9242`. Cloud qualification was dispatched
+in [run 38477507774](https://github.com/mekhovov/revealline/actions/runs/38477507774);
+PR-triggered run 38477509680 also started. This checkpoint is docs-only; protected
+checks and publication remain pending. No live availability claim.
