@@ -1,0 +1,665 @@
+# Retained historical excerpt after an ownership migration. Exact original bytes are preserved separately. Original totals and verification statements describe the original scope; this excerpt is not a current qualification or a complete test result.
+
+- main:
+  - button "Menu"
+  - generic: Riy · escorts
+  - button "Pause" [disabled]
+  - region "Survive battlefield":
+    - generic: Hull 100 / 100
+    - progressbar "Hull"
+    - generic: Spare airframes 2
+    - generic: Sortie
+    - strong: 00:00
+    - generic: Level 1
+    - generic: 0 Cleared
+    - generic: Overflight payload 1
+    - generic: Boost Ready
+    - complementary:
+      - strong: Riy · escorts
+      - generic: Sweeper · wide cover / Breaker · concentrated hits
+      - generic: Escorts following
+      - button "F · Focus target" [disabled]
+  - dialog "FPV / LINE":
+    - heading "FPV / LINE" [level=1]:
+      - img "FPV / LINE"
+    - navigation "Choose game mode":
+      - navigation "Game mode":
+        - link "1P Solo":
+          - /url: http://127.0.0.1:8900/game/index.html?lang=en
+          - strong: Solo
+          - generic: 1P
+        - link "2P Team":
+          - /url: http://127.0.0.1:8900/game/couch/relay-rescue.html?lang=en
+          - strong: Team
+          - generic: 2P
+        - link "2P Duel":
+          - /url: http://127.0.0.1:8900/game/couch/?lang=en
+          - strong: Duel
+          - generic: 2P
+        - link "Snake":
+          - /url: http://127.0.0.1:8900/game/snake/play.html?mode=solo&lang=en
+          - strong: Snake
+        - button "Survive beta":
+          - strong: Survive
+          - generic: beta
+        - button "SIM beta":
+          - strong: SIM
+          - generic: beta
+        - button "Less ⌃" [expanded]:
+          - strong: Less
+          - text: ⌃
+    - paragraph: Riy · Overflight · Breakthrough
+    - navigation "Main menu":
+      - button "Start"
+      - button "Select Mission"
+      - button "Settings"
+    - group "Settings":
+      - 'button "Sound: off"'
+      - button "Enter fullscreen": Full screen
+  - dialog "Settings":
+    - heading "Settings" [level=1]
+    - region "Choose your operation":
+      - link "Survivor Fly through the swarm. Grow your arsenal. Survive the final surge. Open operation →":
+        - /url: http://127.0.0.1:8900/game/overflight/play.html?lang=en
+        - strong: Survivor
+        - generic: Fly through the swarm. Grow your arsenal. Survive the final surge.
+        - generic: Open operation →
+      - button "Riy Lead Sweeper and Breaker escorts; focus their attacks on priority targets. Choose an encounter →":
+        - strong: Riy
+        - generic: Lead Sweeper and Breaker escorts; focus their attacks on priority targets.
+        - generic: Choose an encounter →
+      - link "Raid Read the formation. Strike through targets. Chain your next approach. Open operation →":
+        - /url: http://127.0.0.1:8900/game/overflight/raid.html?lang=en
+        - strong: Raid
+        - generic: Read the formation. Strike through targets. Chain your next approach.
+        - generic: Open operation →
+      - link "Time Attack Race the same route. Clean attacks earn a better medal time. Open operation →":
+        - /url: http://127.0.0.1:8900/game/overflight/raid.html?operation=time-attack&lang=en
+        - strong: Time Attack
+        - generic: Race the same route. Clean attacks earn a better medal time.
+        - generic: Open operation →
+      - link "Contract Marathon Bank your score or risk another contract. Hull and upgrades carry forward. Open operation →":
+        - /url: http://127.0.0.1:8900/game/overflight/raid.html?operation=marathon&lang=en
+        - strong: Contract Marathon
+        - generic: Bank your score or risk another contract. Hull and upgrades carry forward.
+        - generic: Open operation →
+    - button "Choose your drone"
+    - generic: Operation difficulty
+    - combobox "Operation difficulty":
+      - option "Standard" [selected]
+      - option "Veteran"
+    - generic: Language
+    - combobox "Language":
+      - option "English" [selected]
+      - option "Українська"
+    - generic: Airframes
+    - combobox "Airframes":
+      - option "One airframe · challenge"
+      - option "Three airframes · build retained" [selected]
+    - checkbox "Brief slow motion after an upgrade" [checked]
+    - generic: Brief slow motion after an upgrade
+    - checkbox "Reduced effects"
+    - generic: Reduced effects
+    - generic: Text face
+    - combobox "Text face":
+      - option "Theme font" [selected]
+      - option "Plain"
+    - generic: Text size
+    - combobox "Text size":
+      - option "Standard" [selected]
+      - option "Large"
+    - checkbox "Mute" [checked]
+    - generic: Mute
+    - generic: Master volume
+    - slider "Master volume": "0.65"
+    - generic: Defeat sounds
+    - combobox "Defeat sounds":
+      - option "Classic sounds"
+      - option "Humanoid reactions" [selected]
+    - paragraph: Choose sounds for defeated humanoids in every mode. Vehicles keep their material sounds. This choice is independent of blood and gore.
+    - paragraph: Sortie options apply on the next Start or Retry.
+    - paragraph: Veteran changes formations and pressure. Your records stay separate. Applies to the next official sortie.
+    - region "Studios & sound library":
+      - heading "Studios & sound library" [level=3]
+      - paragraph: Editors open in another tab and keep this sortie paused. Music opens here.
+      - link "Sound Studio · opens in another tab. Preview and replace destruction sounds, impacts and game cues.":
+        - /url: http://127.0.0.1:8900/authoring/asset-studio/?studio=sounds&lang=en
+        - strong: Sound Studio
+        - generic: Preview and replace destruction sounds, impacts and game cues.
+      - link "Overflight Studio · opens in another tab. Edit an encounter and preview it with this same runtime.":
+        - /url: http://127.0.0.1:8900/game/studio/overflight.html?operation=riy&lang=en
+        - strong: Overflight Studio
+        - generic: Edit an encounter and preview it with this same runtime.
+      - link "Asset Studio · opens in another tab. Drone, enemy, terrain and effect artwork.":
+        - /url: http://127.0.0.1:8900/authoring/asset-studio/?lang=en
+        - strong: Asset Studio
+        - generic: Drone, enemy, terrain and effect artwork.
+      - link "Motion Lab · opens in another tab. Propellers, movement and combat animations.":
+        - /url: http://127.0.0.1:8900/authoring/motion-lab/?lang=en
+        - strong: Motion Lab
+        - generic: Propellers, movement and combat animations.
+      - link "Voice Studio · opens in another tab. Commentator lines and character recordings.":
+        - /url: http://127.0.0.1:8900/game/studio/index.html?lang=en#reaction-voice-editor-panel
+        - strong: Voice Studio
+        - generic: Commentator lines and character recordings.
+      - link "Theme Studio · opens in another tab. Shared interface themes and presentation.":
+        - /url: http://127.0.0.1:8900/authoring/asset-studio/?studio=themes&lang=en
+        - strong: Theme Studio
+        - generic: Shared interface themes and presentation.
+      - button "Music library Choose, import and organize your soundtrack.":
+        - strong: Music library
+        - generic: Choose, import and organize your soundtrack.
+    - heading "Battlefield effects" [level=3]
+    - checkbox "Keep enemy remains on the battlefield" [checked]
+    - generic: Keep enemy remains on the battlefield
+    - paragraph: Shared with the main game. The oldest traces are recycled to keep the battlefield responsive.
+    - checkbox "Brutal enemy destruction — blood, body parts and explosions"
+    - generic: Brutal enemy destruction — blood, body parts and explosions
+    - checkbox "Blood and body parts" [checked] [disabled]
+    - generic: Blood and body parts
+    - paragraph: Optional graphic pixel destruction. Hunting also works with this off. Reduced effects limits motion.
+    - button "Preview destruction"
+    - checkbox "Commentator" [checked]
+    - text: Commentator
+    - group "Character reaction sound and captions":
+      - generic: Character reaction sound and captions
+      - checkbox "Reaction sounds" [checked]
+      - generic: Reaction sounds
+      - checkbox "Spoken reactions"
+      - generic: Spoken reactions
+      - checkbox "Reaction captions" [checked]
+      - generic: Reaction captions
+      - slider "Dialogue volume": "0.25"
+      - generic: Dialogue volume
+      - combobox "Caption size":
+        - option "100%" [selected]
+        - option "150%"
+        - option "200%"
+      - generic: Caption size
+      - checkbox "Solid caption background" [checked]
+      - generic: Solid caption background
+      - button "Preview caption"
+      - button "Retry saving"
+      - paragraph: Generated voice preview. Missing recordings use captions.
+    - heading "Appearance" [level=3]
+    - generic: Enemy appearance preset
+    - combobox "Enemy appearance preset":
+      - option "Original level artwork" [selected]
+      - option "Military Field · soldiers and vehicles"
+    - status: Applies when starting a new attempt. Retry and Continue keep accepted artwork. Creator-owned custom artwork is retained.
+    - generic "What changes?"
+    - heading "Theme" [level=4]
+    - group "Theme":
+      - button "Follow campaign / community ✓ Use the campaign or community theme, with Flight Deck as the game default." [pressed]:
+        - strong: Follow campaign / community ✓
+        - generic: Mission
+        - generic: Launch
+        - generic: Hover
+        - generic: Pressed
+        - generic: Focus
+        - generic: Detail
+        - generic: Balanced ⌄
+        - generic: ✓
+        - generic: Show telemetry
+        - generic: Use the campaign or community theme, with Flight Deck as the game default.
+      - 'button "Signal Blue The original flight interface: midnight-blue panels, crisp cyan signals and compact instruments."':
+        - strong: Signal Blue
+        - generic: Mission
+        - generic: Launch
+        - generic: Hover
+        - generic: Pressed
+        - generic: Focus
+        - generic: Detail
+        - generic: Balanced ⌄
+        - generic: ✓
+        - generic: Show telemetry
+        - generic: "The original flight interface: midnight-blue panels, crisp cyan signals and compact instruments."
+      - 'button "Flight Deck The game''s signature flight console: machined graphite steel, ivory labels and warm amber controls."':
+        - strong: Flight Deck
+        - generic: Mission
+        - generic: Launch
+        - generic: Hover
+        - generic: Pressed
+        - generic: Focus
+        - generic: Detail
+        - generic: Balanced ⌄
+        - generic: ✓
+        - generic: Show telemetry
+        - generic: "The game's signature flight console: machined graphite steel, ivory labels and warm amber controls."
+      - button "Military Field Field vehicles and concrete checkpoints. Existing enemy rules stay the same.":
+        - strong: Military Field
+        - generic: Mission
+        - generic: Launch
+        - generic: Hover
+        - generic: Pressed
+        - generic: Focus
+        - generic: Detail
+        - generic: Balanced ⌄
+        - generic: ✓
+        - generic: Show telemetry
+        - generic: Field vehicles and concrete checkpoints. Existing enemy rules stay the same.
+      - button "Ember Foundry A furnace-side control room in forged steel, warm copper and ember light.":
+        - strong: Ember Foundry
+        - generic: Mission
+        - generic: Launch
+        - generic: Hover
+        - generic: Pressed
+        - generic: Focus
+        - generic: Detail
+        - generic: Balanced ⌄
+        - generic: ✓
+        - generic: Show telemetry
+        - generic: A furnace-side control room in forged steel, warm copper and ember light.
+      - button "Polar Relay An arctic radio station with blue steel, pale enamel and clear ice-blue signals.":
+        - strong: Polar Relay
+        - generic: Mission
+        - generic: Launch
+        - generic: Hover
+        - generic: Pressed
+        - generic: Focus
+        - generic: Detail
+        - generic: Balanced ⌄
+        - generic: ✓
+        - generic: Show telemetry
+        - generic: An arctic radio station with blue steel, pale enamel and clear ice-blue signals.
+      - button "Vyshyvanka Ukrainian embroidery in scarlet thread, black linen and warm ivory.":
+        - strong: Vyshyvanka
+        - generic: Mission
+        - generic: Launch
+        - generic: Hover
+        - generic: Pressed
+        - generic: Focus
+        - generic: Detail
+        - generic: Balanced ⌄
+        - generic: ✓
+        - generic: Show telemetry
+        - generic: Ukrainian embroidery in scarlet thread, black linen and warm ivory.
+      - button "Dnipro Porcelain River-blue lines on white ceramic, inspired by the Dnipro.":
+        - strong: Dnipro Porcelain
+        - generic: Mission
+        - generic: Launch
+        - generic: Hover
+        - generic: Pressed
+        - generic: Focus
+        - generic: Detail
+        - generic: Balanced ⌄
+        - generic: ✓
+        - generic: Show telemetry
+        - generic: River-blue lines on white ceramic, inspired by the Dnipro.
+      - button "Tryzub Ukrainian trident inspiration in navy enamel and wheat gold.":
+        - strong: Tryzub
+        - generic: Mission
+        - generic: Launch
+        - generic: Hover
+        - generic: Pressed
+        - generic: Focus
+        - generic: Detail
+        - generic: Balanced ⌄
+        - generic: ✓
+        - generic: Show telemetry
+        - generic: Ukrainian trident inspiration in navy enamel and wheat gold.
+      - button "Desktop 98 A late-1990s desktop with silver bevels and a familiar teal backdrop.":
+        - strong: Desktop 98
+        - generic: Mission
+        - generic: Launch
+        - generic: Hover
+        - generic: Pressed
+        - generic: Focus
+        - generic: Detail
+        - generic: Balanced ⌄
+        - generic: ✓
+        - generic: Show telemetry
+        - generic: A late-1990s desktop with silver bevels and a familiar teal backdrop.
+      - button "DOS Navigator A text-mode explorer with midnight-blue panels and bright command keys.":
+        - strong: DOS Navigator
+        - generic: Mission
+        - generic: Launch
+        - generic: Hover
+        - generic: Pressed
+        - generic: Focus
+        - generic: Detail
+        - generic: Balanced ⌄
+        - generic: ✓
+        - generic: Show telemetry
+        - generic: A text-mode explorer with midnight-blue panels and bright command keys.
+      - button "Orchard Workshop A quiet orchard workshop in warm paper, timber and leaf green.":
+        - strong: Orchard Workshop
+        - generic: Mission
+        - generic: Launch
+        - generic: Hover
+        - generic: Pressed
+        - generic: Focus
+        - generic: Detail
+        - generic: Balanced ⌄
+        - generic: ✓
+        - generic: Show telemetry
+        - generic: A quiet orchard workshop in warm paper, timber and leaf green.
+      - button "Neon Ruins Ancient pixel ruins, indigo stone and softly glowing jade.":
+        - strong: Neon Ruins
+        - generic: Mission
+        - generic: Launch
+        - generic: Hover
+        - generic: Pressed
+        - generic: Focus
+        - generic: Detail
+        - generic: Balanced ⌄
+        - generic: ✓
+        - generic: Show telemetry
+        - generic: Ancient pixel ruins, indigo stone and softly glowing jade.
+      - button "Pocket LCD A pocket-size adventure in sage green and dark ink, inspired by early handhelds.":
+        - strong: Pocket LCD
+        - generic: Mission
+        - generic: Launch
+        - generic: Hover
+        - generic: Pressed
+        - generic: Focus
+        - generic: Detail
+        - generic: Balanced ⌄
+        - generic: ✓
+        - generic: Show telemetry
+        - generic: A pocket-size adventure in sage green and dark ink, inspired by early handhelds.
+      - button "Copper Observatory A night-sky observatory with petrol-blue instruments and warm copper.":
+        - strong: Copper Observatory
+        - generic: Mission
+        - generic: Launch
+        - generic: Hover
+        - generic: Pressed
+        - generic: Focus
+        - generic: Detail
+        - generic: Balanced ⌄
+        - generic: ✓
+        - generic: Show telemetry
+        - generic: A night-sky observatory with petrol-blue instruments and warm copper.
+      - button "Sakura Station A spring garden station in porcelain, cherry red and plum ink.":
+        - strong: Sakura Station
+        - generic: Mission
+        - generic: Launch
+        - generic: Hover
+        - generic: Pressed
+        - generic: Focus
+        - generic: Detail
+        - generic: Balanced ⌄
+        - generic: ✓
+        - generic: Show telemetry
+        - generic: A spring garden station in porcelain, cherry red and plum ink.
+      - button "Obsidian Reliquary A volcanic-stone sanctuary with aged gold, bone-white labels and garnet details.":
+        - strong: Obsidian Reliquary
+        - generic: Mission
+        - generic: Launch
+        - generic: Hover
+        - generic: Pressed
+        - generic: Focus
+        - generic: Detail
+        - generic: Balanced ⌄
+        - generic: ✓
+        - generic: Show telemetry
+        - generic: A volcanic-stone sanctuary with aged gold, bone-white labels and garnet details.
+      - button "Deep Space A midnight spacecraft bridge with ice-blue instruments and warm navigation lights.":
+        - strong: Deep Space
+        - generic: Mission
+        - generic: Launch
+        - generic: Hover
+        - generic: Pressed
+        - generic: Focus
+        - generic: Detail
+        - generic: Balanced ⌄
+        - generic: ✓
+        - generic: Show telemetry
+        - generic: A midnight spacecraft bridge with ice-blue instruments and warm navigation lights.
+      - button "Moonlit Grove A quiet forest after dark, with fern-green surfaces and silver moonlight.":
+        - strong: Moonlit Grove
+        - generic: Mission
+        - generic: Launch
+        - generic: Hover
+        - generic: Pressed
+        - generic: Focus
+        - generic: Detail
+        - generic: Balanced ⌄
+        - generic: ✓
+        - generic: Show telemetry
+        - generic: A quiet forest after dark, with fern-green surfaces and silver moonlight.
+    - generic "Customize appearance"
+    - option "Follow theme" [selected]
+    - option "Original mission visuals"
+    - option "Theme default" [selected]
+    - option "Off"
+    - option "Subtle"
+    - option "Detailed"
+    - checkbox "High contrast"
+    - generic: High contrast
+    - checkbox "Opaque HUD background"
+    - generic: Opaque HUD background
+    - paragraph: Choose a theme card to apply it immediately. Mission visuals change on a new attempt; SIM world changes wait for Retry or a new flight. Story pictures stay as authored.
+    - region "Music":
+      - heading "Music" [level=3]
+      - status:
+        - text: Carol of the Bells (Metal Version) · paused
+        - link "Visit Alexander Nakarada — opens in a new tab":
+          - /url: https://creatorchords.com/music/carol-of-the-bells-metal-version/
+          - text: Creator source ↗
+      - button "Play music"
+      - button "Pause music"
+      - button "Previous track"
+      - button "Next track"
+      - generic: Music volume · this session
+      - slider "Music volume · this session": "0.55"
+      - generic: Effects volume · this session
+      - slider "Effects volume · this session": "0.7"
+      - button "Music library"
+      - paragraph: Music volume lasts for this visit. Master sound is shared across game modes.
+      - region "Current soundtrack details":
+        - paragraph: "Track: Carol of the Bells (Metal Version)"
+        - paragraph: "Artist: Alexander Nakarada"
+        - paragraph: "File: Carol of the Bells (Metal Version).mp3"
+        - paragraph:
+          - link "Visit Alexander Nakarada — opens in a new tab":
+            - /url: https://creatorchords.com/music/carol-of-the-bells-metal-version/
+            - text: Creator source ↗
+      - generic "Music shortcuts"
+    - generic: Touch steering
+    - combobox "Touch steering":
+      - option "Floating stick · drag from anywhere" [selected]
+      - option "Swipe · flick to turn"
+      - option "D-pad · tap or slide between directions"
+    - generic: Steering hand
+    - combobox "Steering hand":
+      - option "Right" [selected]
+      - option "Left"
+    - generic: Touch control size
+    - combobox "Touch control size":
+      - option "Regular" [selected]
+      - option "Large"
+    - generic: Touch control opacity
+    - slider "Touch control opacity": "0.55"
+    - heading "Content & Offline" [level=3]
+    - button "Install & offline play"
+    - status: Selected chapters ready offline
+    - button "How to play"
+    - button "Workshop"
+    - button "Back"
+- text: + + + + + + + + +
+- dialog "Install & offline play":
+  - heading "Install & offline play" [level=2]
+  - button "Choose downloads"
+  - button "Back to game"
+  - iframe [active]:
+    - main:
+      - generic: Language
+      - combobox "Language":
+        - option "English" [selected]
+        - option "Українська"
+      - status
+      - heading "Install & offline play" [level=1]
+      - paragraph: Download once, then play without an internet connection. Recorded music is optional; game sounds and the procedural score are included.
+      - region "Game updates":
+        - heading "Game updates" [level=2]
+        - status: Check the latest published game. Review the download size before updating; your progress is kept.
+        - link "Check for updates":
+          - /url: http://127.0.0.1:8900/app/update.html?return=http%3A%2F%2F127.0.0.1%3A8900%2Fgame%2Fdownloads.html%3Fembedded%3D1
+      - region "Install FPV / LINE":
+        - heading "Install FPV / LINE" [level=2]
+        - status: Playing in the browser
+        - generic "How to install"
+        - list:
+          - listitem: Use Install app when your browser offers it.
+          - listitem: Otherwise open the browser menu and look for Install app or Add to Home Screen. You can also keep playing here.
+        - paragraph: This browser may not support app installation. Downloaded gameplay still works offline in a supported browser.
+        - link "Open the app launcher":
+          - /url: http://127.0.0.1:8900/app/
+        - paragraph: Installing the icon does not download the game. You can also download and keep playing in this browser.
+      - region "Game for offline play":
+        - heading "Game for offline play" [level=2]
+        - status: Selected chapters ready offline
+        - checkbox "Solo Starter · opening chapter and essential game sounds" [checked] [disabled]
+        - text: Solo Starter · opening chapter and essential game sounds
+        - checkbox "All current levels, modes and communities"
+        - text: All current levels, modes and communities
+        - heading "Communities" [level=3]
+        - paragraph: Choose communities to keep on this device, then switch between them here or in Settings → Content & Offline → Communities. Community rewards include their pictures and listening activities. Soundtrack albums remain optional. Online play needs no download.
+        - button "Select all communities"
+        - button "Select all games, communities, SIM & extras"
+        - paragraph: "Selection only: review the total below, then confirm the download. Soundtracks, archives and authoring tools stay separate."
+        - checkbox "Social Drone UA / LINE"
+        - text: Social Drone UA / LINE
+        - paragraph: 85.9 MiB including shared dependencies · Not fully prepared offline
+        - link "Play Social Drone UA / LINE":
+          - /url: http://127.0.0.1:8900/game/communities/social-drone-ua/
+        - checkbox "Victory Drones / LINE"
+        - text: Victory Drones / LINE
+        - paragraph: 79.9 MiB including shared dependencies · Not fully prepared offline
+        - link "Play Victory Drones / LINE":
+          - /url: http://127.0.0.1:8900/game/communities/victory-drones/
+        - 'checkbox "Ukraine: Living Culture / LINE"'
+        - text: "Ukraine: Living Culture / LINE"
+        - paragraph: 96.6 MiB including shared dependencies · Not fully prepared offline
+        - 'link "Play Ukraine: Living Culture / LINE"':
+          - /url: http://127.0.0.1:8900/game/communities/ukraine-culture/
+        - checkbox "FPV Learning / LINE"
+        - text: FPV Learning / LINE
+        - paragraph: 86.7 MiB including shared dependencies · Not fully prepared offline
+        - link "Play FPV Learning / LINE":
+          - /url: http://127.0.0.1:8900/game/communities/fpv-learning/
+        - paragraph: 116.7 MiB including shared dependencies · Not fully prepared offline
+        - checkbox "DroneAid / LINE"
+        - text: DroneAid / LINE
+        - paragraph: 88.7 MiB including shared dependencies · Not fully prepared offline
+        - link "Play DroneAid / LINE":
+          - /url: http://127.0.0.1:8900/game/communities/droneaid/
+        - checkbox "Community Relay / LINE"
+        - text: Community Relay / LINE
+        - paragraph: 84.4 MiB including shared dependencies · Not fully prepared offline
+        - link "Play Community Relay / LINE":
+          - /url: http://127.0.0.1:8900/game/communities/droneaid-community/
+        - heading "More game modes & simulator" [level=3]
+        - checkbox "FPV flight practice"
+        - text: FPV flight practice
+        - paragraph: 81.1 MiB including shared dependencies · Not fully prepared offline
+        - link "Play FPV flight practice":
+          - /url: http://127.0.0.1:8900/optional-practice/civilian-fpv/?game-return=%2Fgame%2F
+        - checkbox "SIM FPV · Flight simulator"
+        - text: SIM FPV · Flight simulator
+        - paragraph: 90.9 MiB including shared dependencies · Not fully prepared offline
+        - link "Play SIM FPV · Flight simulator":
+          - /url: http://127.0.0.1:8900/optional-practice/fpv-worlds/?game-return=%2Fgame%2F
+        - checkbox "Survive · all Overflight operations" [checked]
+        - text: Survive · all Overflight operations
+        - paragraph: 81.6 MiB including shared dependencies · Ready offline
+        - link "Play Survive · all Overflight operations":
+          - /url: http://127.0.0.1:8900/game/overflight/play.html?game-return=%2Fgame%2F
+        - checkbox "Snake · Classic" [checked]
+        - text: Snake · Classic
+        - paragraph: 81.6 MiB including shared dependencies · Ready offline
+        - link "Play Snake · Classic":
+          - /url: http://127.0.0.1:8900/game/snake/play.html?game-return=%2Fgame%2F
+        - paragraph: Keep Overflight Survivor and Raid, Snake, or the simulator ready for offline play with their built-in content and sounds. Shared files are downloaded once. 3D flight requires WebGL 2. Imported content remains in its own library.
+        - paragraph: "Up to 104.8 MiB including runtime, app launcher and original artwork; 0.0 MiB remain. Allow 0.8 MiB additional storage while keeping an existing edition. Estimated free: 10,240.0 MiB. Actual network transfer may be smaller with compression."
+        - paragraph: Choose the size that suits your connection; mobile data charges may apply. Keep this app open while downloading. Verification and app setup happen automatically.
+        - button "Offline setup complete" [disabled]
+        - button "Pause download" [disabled]
+        - button "Cancel remaining download" [disabled]
+        - status: Your selected game is verified and ready offline. Recorded soundtracks remain optional.
+        - generic "Choose chapters, modes and optional extras"
+        - generic "Storage and repair"
+        - status: This edition will open from the app icon at the next launch. Your saved progress is kept.
+      - region "Optional soundtracks":
+        - heading "Optional soundtracks" [level=2]
+        - status: "Soundtracks: 0 downloaded of 77."
+        - paragraph: Downloads are saved one recording at a time. Pause or close this page at any time; Resume reuses completed files. Downloads pause when this page is backgrounded. Audio settings keeps your playlists, assignments and mute preferences.
+        - paragraph: "378.5 MiB for all soundtracks · 378.5 MiB remaining · allow 390.0 MiB additional space. Estimated free: 10,240.0 MiB."
+        - button "Download all soundtracks · up to 378.5 MiB"
+        - button "Pause soundtrack download" [disabled]
+        - button "Cancel remaining soundtrack download" [disabled]
+        - status
+        - heading "Holizna — Retro Wave 1" [level=3]
+        - paragraph: 50.1 MiB · 50.1 MiB remaining · allow 58.6 MiB free space
+        - button "Download / resume · up to 50.1 MiB"
+        - button "Remove download"
+        - heading "Holizna — Retro Wave 2" [level=3]
+        - paragraph: 39.6 MiB · 39.6 MiB remaining · allow 48.1 MiB free space
+        - button "Download / resume · up to 39.6 MiB"
+        - button "Remove download"
+        - heading "Rock & Metal" [level=3]
+        - paragraph: 23.0 MiB · 23.0 MiB remaining · allow 31.2 MiB free space
+        - button "Download / resume · up to 23.0 MiB"
+        - button "Remove download"
+        - heading "3xBlast — Pop-Punk Chiptune" [level=3]
+        - paragraph: 25.9 MiB · 25.9 MiB remaining · allow 33.1 MiB free space
+        - button "Download / resume · up to 25.9 MiB"
+        - button "Remove download"
+        - heading "Tracker & FM Arcade" [level=3]
+        - paragraph: 17.9 MiB · 17.9 MiB remaining · allow 24.3 MiB free space
+        - button "Download / resume · up to 17.9 MiB"
+        - button "Remove download"
+        - heading "Metal — Extra Battles" [level=3]
+        - paragraph: 6.8 MiB · 6.8 MiB remaining · allow 10.5 MiB free space
+        - button "Download / resume · up to 6.8 MiB"
+        - button "Remove download"
+        - heading "Metal & Synth-Metal — Preview" [level=3]
+        - paragraph: 37.9 MiB · 37.9 MiB remaining · allow 47.3 MiB free space
+        - button "Download / resume · up to 37.9 MiB"
+        - button "Remove download"
+        - heading "Instrumental Rock — Preview" [level=3]
+        - paragraph: 24.8 MiB · 24.8 MiB remaining · allow 35.7 MiB free space
+        - button "Download / resume · up to 24.8 MiB"
+        - button "Remove download"
+        - heading "Electronic & Dance — Preview" [level=3]
+        - paragraph: 49.9 MiB · 49.9 MiB remaining · allow 58.5 MiB free space
+        - button "Download / resume · up to 49.9 MiB"
+        - button "Remove download"
+        - heading "90s Synth & FM — Preview" [level=3]
+        - paragraph: 26.9 MiB · 26.9 MiB remaining · allow 38.4 MiB free space
+        - button "Download / resume · up to 26.9 MiB"
+        - button "Remove download"
+        - heading "90s Synth & FM — Short Cues — Preview" [level=3]
+        - paragraph: 7.0 MiB · 7.0 MiB remaining · allow 9.3 MiB free space
+        - button "Download / resume · up to 7.0 MiB"
+        - button "Remove download"
+        - heading "Fakebit & Chiptune — Short Cues — Preview" [level=3]
+        - paragraph: 11.0 MiB · 11.0 MiB remaining · allow 13.1 MiB free space
+        - button "Download / resume · up to 11.0 MiB"
+        - button "Remove download"
+        - heading "Fakebit & Chiptune — Preview" [level=3]
+        - paragraph: 12.7 MiB · 12.7 MiB remaining · allow 16.8 MiB free space
+        - button "Download / resume · up to 12.7 MiB"
+        - button "Remove download"
+        - heading "Ambient — Short Cues — Preview" [level=3]
+        - paragraph: 2.7 MiB · 2.7 MiB remaining · allow 5.5 MiB free space
+        - button "Download / resume · up to 2.7 MiB"
+        - button "Remove download"
+        - heading "Electronic & Dance — Short Cues — Preview" [level=3]
+        - paragraph: 2.5 MiB · 2.5 MiB remaining · allow 4.9 MiB free space
+        - button "Download / resume · up to 2.5 MiB"
+        - button "Remove download"
+        - heading "Synthwave & Electro — approved" [level=3]
+        - paragraph: 5.0 MiB · 5.0 MiB remaining · allow 9.9 MiB free space
+        - button "Download / resume · up to 5.0 MiB"
+        - button "Remove download"
+        - heading "Metal — approved" [level=3]
+        - paragraph: 26.8 MiB · 26.8 MiB remaining · allow 35.4 MiB free space
+        - button "Download / resume · up to 26.8 MiB"
+        - button "Remove download"
+        - heading "Ukrainian opening & action" [level=3]
+        - paragraph: 8.2 MiB · 8.2 MiB remaining · allow 16.5 MiB free space
+        - button "Download / resume · up to 8.2 MiB"
+        - button "Remove download"
+      - generic "Verification details"
