@@ -70,6 +70,7 @@ import {
   createOverflightReviewPlayback,
   createOverflightKeyboardState,
   createOverflightJSONPages,
+  overflightSortieProject,
 } from './host-loop.mjs';
 import { createOverflightAudio, overflightMusicContext } from './audio.mjs';
 import { createOverflightTouch } from './touch.mjs';
@@ -188,10 +189,10 @@ const persistOptions = () => {
     /* Session-only preference. */
   }
 };
-let project = mode.createProject({ difficulty: options.difficulty });
-let compiled = mode.compileProject(project);
 let seed = Number(params.get('seed'));
-if (!Number.isSafeInteger(seed) || seed < 1 || seed > 0xffffffff) seed = compiled.seed;
+if (!Number.isSafeInteger(seed) || seed < 1 || seed > 0xffffffff) seed = mode.defaultProject.seed;
+let project = mode.createProject({ seed, difficulty: options.difficulty });
+let compiled = mode.compileProject(project);
 let run = null,
   renderer = null,
   shell = null,
@@ -725,22 +726,18 @@ function transition() {
     result();
   }
 }
-function projectForSortie() {
-  if (
-    selectedInstalled ||
-    studio ||
-    project.format.endsWith('V1') ||
-    project.difficulty === options.difficulty
-  )
-    return project;
-  const encounterSet = mode.encounterSets.find(
-    (set) => mode.createProject({ encounterSet: set }).id === project.id,
-  );
-  return encounterSet
-    ? mode.createProject({ encounterSet, difficulty: options.difficulty })
-    : project;
+function projectForSortie(nextSeed) {
+  return overflightSortieProject(mode, project, {
+    seed: nextSeed,
+    difficulty: options.difficulty,
+    authored: !!selectedInstalled || studio,
+  });
 }
-async function prepare({ nextProject = projectForSortie(), nextSeed = seed, launch = false } = {}) {
+async function prepare({
+  nextSeed = seed,
+  nextProject = projectForSortie(nextSeed),
+  launch = false,
+} = {}) {
   const nextCompiled = mode.compileProject(nextProject);
   if (!Number.isSafeInteger(nextSeed) || nextSeed < 1 || nextSeed > 0xffffffff)
     throw new TypeError('Invalid preview seed.');
