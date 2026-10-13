@@ -188,7 +188,7 @@ export function drawClassicLivingGround(
   ctx,
   level,
   scene,
-  { unit = 28, document, treatment = 'living-circuit', zoning = 'court' } = {},
+  { unit = 28, document, treatment = 'living-circuit', zoning = 'court', composition = {} } = {},
 ) {
   const palette = classicScenePalette(scene, treatment);
   ctx.fillStyle = palette.field;
@@ -215,6 +215,127 @@ export function drawClassicLivingGround(
         ctx.globalAlpha = 1;
       }
     }
+  drawFloorComposition(ctx, level, palette, unit, composition, treatment);
+}
+
+// Flat, low-contrast inlays identify a place without suggesting solid geometry.
+// The focal position is authored; wall silhouettes always cover this floor layer.
+function drawFloorComposition(ctx, level, palette, unit, world, treatment) {
+  const [fx, fy] = world.focus ?? [level.width / 2, level.height / 2];
+  const vertical = world.axis === 'vertical';
+  ctx.save();
+  ctx.beginPath();
+  ctx.rect(0, 0, level.width * unit, level.height * unit);
+  ctx.clip();
+  ctx.translate(fx * unit, fy * unit);
+  if (vertical) ctx.rotate(Math.PI / 2);
+  ctx.scale(unit, unit);
+  ctx.strokeStyle = palette.accent;
+  ctx.fillStyle = palette.accent;
+  ctx.lineWidth = 0.035;
+  ctx.globalAlpha = treatment === 'night-arcade' ? 0.18 : 0.1;
+  const box = (x, y, w, h) => ctx.fillRect(x, y, w, h);
+  const path = (points) => {
+    ctx.beginPath();
+    points.forEach(([x, y], i) => (i ? ctx.lineTo(x, y) : ctx.moveTo(x, y)));
+    ctx.stroke();
+  };
+  switch (world.floor) {
+    case 'oval':
+      for (const radius of [3, 5]) {
+        ctx.beginPath();
+        ctx.ellipse(0, 0, radius * 1.5, radius, 0, 0, Math.PI * 2);
+        ctx.stroke();
+      }
+      break;
+    case 'ring':
+      ctx.strokeRect(-5, -4, 10, 8);
+      ctx.strokeRect(-6, -5, 12, 10);
+      break;
+    case 'elbow':
+      path([
+        [-10, 2],
+        [2, 2],
+        [2, -8],
+      ]);
+      path([
+        [-10, 3],
+        [3, 3],
+        [3, -8],
+      ]);
+      break;
+    case 'fork':
+      path([
+        [-12, 0],
+        [0, 0],
+        [7, -5],
+      ]);
+      path([
+        [0, 0],
+        [7, 5],
+      ]);
+      break;
+    case 'seam':
+      for (let x = -24; x < 24; x += 3) {
+        path([
+          [x, -1],
+          [x + 1, 0],
+          [x, 1],
+        ]);
+      }
+      break;
+    case 'cross':
+      box(-18, -1, 36, 2);
+      box(-1, -18, 2, 36);
+      break;
+    case 'islands':
+      for (const [x, y] of [
+        [-5, -3],
+        [3, 3],
+      ]) {
+        ctx.beginPath();
+        ctx.ellipse(x, y, 4, 2.5, 0, 0, Math.PI * 2);
+        ctx.stroke();
+      }
+      break;
+    case 'slalom':
+      path([
+        [-12, -3],
+        [-6, -3],
+        [-6, 3],
+        [0, 3],
+        [0, -3],
+        [6, -3],
+        [6, 3],
+        [12, 3],
+      ]);
+      break;
+    case 'terraces':
+      for (let n = 0; n < 4; n++)
+        path([
+          [-9 + n * 2, 6 - n * 2],
+          [8, 6 - n * 2],
+          [8, -6],
+        ]);
+      break;
+    case 'rows':
+      for (let y = -12; y < 12; y += 3) box(-9, y, 18, 0.28);
+      break;
+    case 'bays':
+      for (let x = -12; x < 12; x += 5) ctx.strokeRect(x, -4, 3, 8);
+      break;
+  }
+  // A flat station seal is the landmark for open lessons; it is not a new obstacle.
+  ctx.globalAlpha = 0.15;
+  ctx.strokeRect(-0.8, -0.8, 1.6, 1.6);
+  path([
+    [-0.6, 0],
+    [0, -0.6],
+    [0.6, 0],
+    [0, 0.6],
+    [-0.6, 0],
+  ]);
+  ctx.restore();
 }
 
 /** Four-connected components; holes and removed cells never enter a footprint. */
@@ -267,6 +388,7 @@ export function drawClassicLivingWall(
     treatment = 'living-circuit',
     occupied = new Set(),
     structure = null,
+    composition = {},
   } = {},
 ) {
   const x = wall.x * unit,
@@ -326,6 +448,7 @@ export function drawClassicLivingWall(
     rect(ctx, '#414e4a', 8, 14, 2, 9);
     rect(ctx, '#758657', 18, 17, 6, 6);
   }
+  drawStructureDetails(ctx, composition.structure, treatment);
   if (treatment === 'toybox') {
     // Enamel face within a timber frame and four oversized recessed fittings.
     rect(ctx, '#dfc291', 3, 3, 22, 2);
@@ -369,6 +492,65 @@ export function drawClassicLivingWall(
   if (bottom) rect(ctx, rim, 0, 25, 28, 3);
   if (right) rect(ctx, rim, 26, 0, 2, 28);
   ctx.restore();
+}
+
+function drawStructureDetails(ctx, kind, treatment) {
+  const light = treatment === 'night-arcade' ? '#86ded8' : '#e5c18b';
+  if (kind === 'planter') {
+    rect(ctx, '#644a30', 3, 3, 22, 22);
+    rect(ctx, '#2b4634', 5, 5, 18, 18);
+    for (let y = 7; y < 23; y += 5)
+      for (let x = 7; x < 23; x += 5) {
+        rect(ctx, '#74925b', x, y, 3, 3);
+        rect(ctx, '#e3b655', x, y, 1, 1);
+      }
+  } else if (kind === 'irrigator' || kind === 'coolant') {
+    rect(ctx, '#294e50', 4, 4, 20, 20);
+    for (let y = 6; y < 24; y += 6) {
+      rect(ctx, '#7aaba5', 5, y, 18, 3);
+      rect(ctx, '#c8ddd0', 5, y, 18, 1);
+    }
+    rect(ctx, light, 4, 12, 5, 5);
+  } else if (kind === 'crane') {
+    rect(ctx, '#233841', 4, 4, 20, 20);
+    rect(ctx, '#b98c4b', 5, 5, 18, 4);
+    rect(ctx, '#b98c4b', 5, 5, 4, 18);
+    rect(ctx, '#4f6269', 12, 12, 11, 11);
+    for (let n = 0; n < 4; n++) rect(ctx, light, 13 + n * 2, 13 + n * 2, 2, 2);
+  } else if (kind === 'antenna') {
+    rect(ctx, '#263c54', 4, 4, 20, 20);
+    rect(ctx, '#b6c4b8', 12, 4, 4, 20);
+    rect(ctx, '#a0b6b6', 4, 12, 20, 4);
+    rect(ctx, light, 9, 9, 10, 10);
+    rect(ctx, '#475866', 11, 11, 6, 6);
+  } else if (kind === 'shelter') {
+    rect(ctx, '#d3d1b9', 4, 4, 20, 20);
+    rect(ctx, '#718491', 6, 6, 16, 10);
+    rect(ctx, '#293b52', 8, 8, 12, 6);
+    rect(ctx, light, 11, 19, 6, 4);
+  } else if (kind === 'floodgate') {
+    rect(ctx, '#284e50', 4, 4, 20, 20);
+    for (let x = 6; x < 24; x += 4) rect(ctx, '#adc2ae', x, 5, 2, 18);
+    rect(ctx, '#cc957d', 4, 12, 20, 3);
+  } else if (kind === 'terrace') {
+    rect(ctx, '#bbc1a6', 3, 3, 22, 22);
+    rect(ctx, '#586758', 5, 5, 18, 18);
+    rect(ctx, '#9fa991', 7, 7, 14, 14);
+    rect(ctx, '#43534b', 9, 9, 10, 10);
+    rect(ctx, '#839564', 11, 11, 6, 6);
+  }
+  if (treatment === 'toybox') {
+    // Painted shaped corner blocks, not just a colour transform.
+    for (const [x, y] of [
+      [2, 2],
+      [20, 2],
+      [2, 20],
+      [20, 20],
+    ]) {
+      rect(ctx, '#d99757', x, y, 6, 6);
+      rect(ctx, '#fff0bc', x + 1, y + 1, 4, 1);
+    }
+  }
 }
 
 function rect(ctx, color, x, y, w, h) {
