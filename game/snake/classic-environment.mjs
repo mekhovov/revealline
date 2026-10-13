@@ -1,3 +1,4 @@
+import { CLASSIC_SNAKE_ARCHIVED_LEVELS } from './classic-catalogue-archive.mjs';
 import {
   hasIndustrialEnvironmentSource,
   prepareIndustrialEnvironmentSource,
@@ -16,7 +17,9 @@ const ORIGIN = Object.freeze({
 export async function prepareClassicEnvironments(entries, { official = false, signal } = {}) {
   const candidates = new WeakMap();
   if (!official) return () => null;
-  for (const entry of entries) {
+  const ids = new Set(entries.map((entry) => entry.id));
+  const retained = CLASSIC_SNAKE_ARCHIVED_LEVELS.filter((entry) => ids.has(entry.id));
+  for (const entry of new Set([...entries, ...retained])) {
     const original = entry.level,
       fingerprint = JSON.stringify(original),
       modes = new Map();
