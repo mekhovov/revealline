@@ -1,3 +1,4 @@
+import { CLASSIC_SNAKE_PURSUIT_V1_ARCHIVED_LEVELS } from './classic-catalogue-pursuit-v1-archive.mjs';
 // Frozen official recipes. IDs alone never admit a recording.
 import { CLASSIC_SNAKE_LOCAL_V1_ARCHIVED_LEVELS } from './classic-catalogue-signal-v1-archive.mjs';
 import { CLASSIC_SNAKE_FOUNDATION_V1_ARCHIVED_LEVELS } from './classic-catalogue-foundation-v1-archive.mjs';
@@ -690,6 +691,7 @@ export const CLASSIC_SNAKE_ARCHIVED_LEVELS = freeze([
       pickups: [],
     },
   },
+  ...CLASSIC_SNAKE_PURSUIT_V1_ARCHIVED_LEVELS,
   ...CLASSIC_SNAKE_LOCAL_V1_ARCHIVED_LEVELS,
   ...CLASSIC_SNAKE_FOUNDATION_V1_ARCHIVED_LEVELS,
   ...CLASSIC_SNAKE_FIELD_V3_ARCHIVED_LEVELS,
