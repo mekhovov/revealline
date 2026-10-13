@@ -1,0 +1,86 @@
+/** Cosmetic composition only. Never part of a level recipe, random stream or proof.
+ * Shared material/actor providers remain the owners of artwork bytes. */
+export const CLASSIC_WORLD_REVISION = 'snake-worlds-v1';
+export const CLASSIC_BOARD_STYLES = Object.freeze([
+  'theme',
+  'retro',
+  'living-circuit',
+  'toybox',
+  'atmospheric-ruins',
+  'night-arcade',
+]);
+export const CLASSIC_BOARD_SCENES = Object.freeze([
+  'auto',
+  'orchard',
+  'workshop',
+  'relay',
+  'freight',
+  'harbor',
+  'quarry',
+]);
+export const isClassicWorldStyle = (style) => CLASSIC_BOARD_STYLES.slice(2).includes(style);
+
+// Explicit chapter art direction; community chapters use a neutral opening
+// composition, never an ID hash pretending to be authored scenery.
+const chapters = [
+  ['first-coils', 'orchard', 'nursery', 'rows'],
+  ['wide-turns', 'orchard', 'irrigation-court', 'court'],
+  ['island-circuits', 'harbor', 'pump-islands', 'quays'],
+  ['moving-quarry', 'freight', 'loading-bays', 'bays'],
+  ['borderless-routes', 'harbor', 'tidal-loops', 'quays'],
+  ['chicanes', 'freight', 'shunting-yard', 'tracks'],
+  ['shared-circuits', 'workshop', 'assembly-hall', 'bays'],
+  ['final-weave', 'quarry', 'survey-terraces', 'court'],
+  ['patrol-routes', 'relay', 'antenna-court', 'court'],
+  ['escape-lines', 'orchard', 'glasshouse-paths', 'rows'],
+  ['burst-timing', 'workshop', 'pressure-room', 'tracks'],
+  ['route-windows', 'workshop', 'valve-court', 'court'],
+  ['field-supplies', 'freight', 'supply-depot', 'bays'],
+  ['combined-pursuit', 'quarry', 'reclaimed-courts', 'court'],
+  ['twin-intercepts', 'harbor', 'twin-docks', 'quays'],
+  ['moving-windows', 'freight', 'shutter-yard', 'tracks'],
+  ['signal-tactics', 'relay', 'receiver-array', 'tracks'],
+  ['patrol-frontiers', 'quarry', 'perimeter-gardens', 'rows'],
+  ['field-mastery', 'relay', 'summit-station', 'court'],
+  ['crossing-routes', 'freight', 'crossing-platforms', 'tracks'],
+  ['changing-shortcuts', 'workshop', 'service-works', 'bays'],
+  ['hidden-signals', 'relay', 'listening-post', 'rows'],
+  ['expedition-circuits', 'quarry', 'expedition-courts', 'court'],
+];
+export const CLASSIC_CHAPTER_COMPOSITIONS = Object.freeze(
+  Object.fromEntries(
+    chapters.map(([chapter, scene, mood, zoning]) => [
+      `classic-snake-${chapter}`,
+      Object.freeze({ scene, mood, zoning }),
+    ]),
+  ),
+);
+
+export function resolveClassicWorld({
+  boardStyle = 'living-circuit',
+  boardScene = 'auto',
+  chapterId = '',
+} = {}) {
+  const authored = CLASSIC_CHAPTER_COMPOSITIONS[chapterId];
+  const scene =
+    CLASSIC_BOARD_SCENES.includes(boardScene) && boardScene !== 'auto'
+      ? boardScene
+      : (authored?.scene ?? 'orchard');
+  return Object.freeze({
+    version: 1,
+    revision: CLASSIC_WORLD_REVISION,
+    scene,
+    treatment: isClassicWorldStyle(boardStyle) ? boardStyle : 'living-circuit',
+    composition: authored?.mood ?? 'open-court',
+    zoning: authored?.zoning ?? 'court',
+  });
+}
+
+export function classicBoardPreferences(params, saved = {}) {
+  const board = params.get('board') ?? saved.boardStyle;
+  const scene = params.get('scene') ?? saved.boardScene;
+  return {
+    boardStyle: CLASSIC_BOARD_STYLES.includes(board) ? board : 'living-circuit',
+    boardScene: CLASSIC_BOARD_SCENES.includes(scene) ? scene : 'auto',
+  };
+}
