@@ -325,12 +325,12 @@ test('Mission Race uses independent v5 boards and match verification preserves s
   assert.deepEqual(restoreClassicSnakeMatch(exportClassicSnakeMatch(match)), match);
 });
 
-test('all four prototype routes complete in Solo and Team at three paces, without mutating recipes', async () => {
+test('all eight prototype routes complete in Solo and Team at three paces, without mutating recipes', async () => {
   const { readFile } = await import('node:fs/promises');
   const { proofs } = JSON.parse(
     await readFile(new URL('./fixtures/classic-snake-v5-prototype-proofs.json', import.meta.url)),
   );
-  assert.equal(proofs.length, 8);
+  assert.equal(proofs.length, 16);
   for (const proof of proofs) {
     const recipe = OPERATION_PROTOTYPES.find((p) => p.level.id === proof.level.id).level;
     const restored = restoreClassicSnakeReplay(proof, { level: recipe });

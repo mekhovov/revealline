@@ -1,3 +1,11 @@
+import {
+  routingObjectCells,
+  validateOperationRouting,
+  initializeOperationRouting,
+  acceptOperationRouting,
+  operationTargetPath,
+  operationActivationsMet,
+} from './classic-routing-v5.mjs';
 /** Experimental continuous operations. The public catalogue stays on v1–v4. */
 import { boundedJSON, dataIdentity, exactKeys, required } from '../data-json.mjs';
 import {
@@ -30,6 +38,7 @@ function baseLevel(source) {
   return { ...base, version: CLASSIC_SNAKE_V4_LEVEL };
 }
 const objectCells = (operation) => [
+  ...routingObjectCells(operation),
   ...operation.parcels.map((p) => p.at),
   ...operation.docks.map((d) => d.at),
   ...operation.stages.flatMap((s) => (s.exit ? [s.exit] : [])),
@@ -49,7 +58,7 @@ export function validateClassicSnakeLevelV5(source) {
     'Continuous operations require Mission Race, not Score or Endless.',
   );
   const op = input.operation;
-  exactKeys(op, ['stages', 'parcels', 'docks'], 'Snake operation');
+  exactKeys(op, ['stages', 'parcels', 'docks', 'switchyards', 'plates'], 'Snake operation');
   required(
     Array.isArray(op.stages) && integer(op.stages.length, 1, 3),
     'Use one to three continuous stages.',
@@ -101,7 +110,7 @@ export function validateClassicSnakeLevelV5(source) {
   const assigned = new Set();
   let catches = 0;
   for (const stage of op.stages) {
-    exactKeys(stage, ['id', 'catches', 'deliveries', 'exit'], 'Operation stage');
+    exactKeys(stage, ['id', 'catches', 'deliveries', 'exit', 'activations'], 'Operation stage');
     required(
       integer(stage.catches, catches, base.goal),
       'Stage catch thresholds must increase cumulatively.',
@@ -120,7 +129,7 @@ export function validateClassicSnakeLevelV5(source) {
     required(stage.exit === null || typeof stage.exit === 'object', 'Invalid extraction cell.');
     if (stage.exit !== null) point(stage.exit);
     required(
-      stage.catches > catches || stage.deliveries.length || stage.exit,
+      stage.catches > catches || stage.deliveries.length || stage.exit || stage.activations?.length,
       'An empty stage has no objective.',
     );
     catches = stage.catches;
@@ -133,6 +142,7 @@ export function validateClassicSnakeLevelV5(source) {
     op.docks.every((d) => op.parcels.some((p) => p.dockId === d.id)),
     'Unused cargo dock.',
   );
+  validateOperationRouting(base, op, occupied);
   // Supplies and fixed encounter anchors keep their distinct, readable role.
   const reserved = new Set(objectCells(op).map(key));
   required(
@@ -197,9 +207,11 @@ function acceptOperation(run, plans) {
       }
     }
   }
+  acceptOperationRouting(run, plans);
   const stage = run.level.operation.stages[run.operation.stage];
   if (
     stage &&
+    operationActivationsMet(run, stage) &&
     run.catches >= stage.catches &&
     stage.deliveries.every((id) =>
       run.operation.parcels.some((p) => p.id === id && p.state === 'delivered'),
@@ -212,6 +224,7 @@ function acceptOperation(run, plans) {
   }
 }
 const rules = {
+  targetPath: operationTargetPath,
   reservedCells: (run) => objectCells(run.level.operation),
   grows: (run, plan) =>
     Boolean(plan.target || plan.s.pendingGrowth || availableParcel(run, plan.next)),
@@ -234,6 +247,7 @@ export function createClassicSnakeV5(source, options = {}) {
     parcels: level.operation.parcels.map((p) => ({ id: p.id, state: 'waiting', carrier: null })),
   };
   for (const snake of run.snakes) snake.pendingGrowth = 0;
+  initializeOperationRouting(run);
   return run;
 }
 export const queueClassicSnakeTurnV5 = queueClassicSnakeTurnV4;

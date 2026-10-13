@@ -20,7 +20,7 @@ function recipe(id, name, walls, goal, operation, wrap = false) {
     name,
     width: 24,
     height: 18,
-    walls,
+    walls: [...walls].sort((a, b) => a.y - b.y || a.x - b.x),
     spawns: [
       { x: 5, y: 2, direction: 'right' },
       { x: 18, y: 15, direction: 'left' },
@@ -39,7 +39,7 @@ function recipe(id, name, walls, goal, operation, wrap = false) {
     operation,
   };
 }
-export const OPERATION_PROTOTYPES = freeze([
+const CARGO_PROTOTYPES = freeze([
   {
     title: { en: 'Two clearances', uk: 'Два дозволи' },
     scene: 'relay',
@@ -125,3 +125,147 @@ export const OPERATION_PROTOTYPES = freeze([
     ),
   },
 ]);
+
+function loop(x, y, dx, dy, w = 4, h = 4) {
+  const path = [point(x, y)];
+  for (let i = 1; i <= w; i++) path.push(point(x + dx * i, y));
+  for (let i = 1; i <= h; i++) path.push(point(x + dx * w, y + dy * i));
+  for (let i = w - 1; i >= 0; i--) path.push(point(x + dx * i, y + dy * h));
+  for (let i = h - 1; i > 0; i--) path.push(point(x, y + dy * i));
+  return path;
+}
+function routed(id, name, walls, groups, stages, goal = 2) {
+  const level = recipe(id, name, walls, goal, {
+    stages,
+    parcels: [],
+    docks: [],
+    switchyards: groups,
+  });
+  level.targets = {
+    maxActive: groups.length,
+    required: groups.map((g) => ({ kind: 'patroller', every: 4, path: g.routes[0] })),
+    bonus: null,
+  };
+  return level;
+}
+const activation = (kind, id, count = 1) => ({ kind, id, count });
+const activationStage = (id, catches, activations, exit = null) => ({
+  ...stage(id, catches, [], exit),
+  activations,
+});
+const junction = (id, policyIndex, x, y, switches, w = 4, h = 4) => ({
+  id,
+  policyIndex,
+  switches,
+  routes: [loop(x, y, -1, -1, w, h), loop(x, y, 1, 1, w, h)],
+});
+const ROUTING_PROTOTYPES = [
+  {
+    title: { en: 'Choose the branch', uk: 'Обери гілку' },
+    scene: 'freight',
+    hint: {
+      en: 'Cross either linked switch to change the next branch at the diamond junction. Intercept the patrol on the selected loop; it never reverses mid-route.',
+      uk: 'Перетніть один зі з’єднаних перемикачів, щоб змінити наступну гілку на розвилці. Перехопіть патруль на обраному колі: посеред маршруту він не розвертається.',
+    },
+    level: routed(
+      'choose-branch',
+      'Choose the branch',
+      [...rectangle(9, 5, 2, 2), ...rectangle(14, 10, 2, 2)],
+      [junction('freight', 0, 12, 8, [point(6, 8), point(19, 6)])],
+      [activationStage('interception', 2, [activation('switchyard', 'freight')], point(20, 12))],
+    ),
+  },
+  {
+    title: { en: 'Two dispatchers', uk: 'Два диспетчери' },
+    scene: 'freight',
+    hint: {
+      en: 'Two junctions, two patrols. Route each patrol separately, then find an interception lane that keeps your growing cable clear.',
+      uk: 'Дві розвилки та два патрулі. Спрямуйте кожен окремо, а тоді знайдіть шлях перехоплення, не перекриваючи його кабелем.',
+    },
+    level: routed(
+      'two-dispatchers',
+      'Two dispatchers',
+      [
+        ...rectangle(6, 6, 1, 1),
+        ...rectangle(10, 10, 1, 1),
+        ...rectangle(15, 6, 1, 1),
+        ...rectangle(19, 10, 1, 1),
+      ],
+      [
+        junction('west', 0, 8, 8, [point(3, 8)], 3, 3),
+        junction('east', 1, 17, 8, [point(21, 8)], 3, 3),
+      ],
+      [
+        activationStage('dispatch', 1, [
+          activation('switchyard', 'west'),
+          activation('switchyard', 'east'),
+        ]),
+        stage('collection', 4, [], point(12, 14)),
+      ],
+      4,
+    ),
+  },
+  {
+    title: { en: 'Hold the shortcut', uk: 'Утримай короткий шлях' },
+    scene: 'workshop',
+    hint: {
+      en: 'Your cable holds the striped plate down. Cross its open gate or take the outside bypass. After release, amber warns for at least 800 ms; the gate yields while occupied.',
+      uk: 'Кабель утримує смугасту плиту. Пройдіть відкриті ворота або скористайтеся обходом. Після звільнення плити жовтий сигнал попереджає щонайменше 800 мс; зайняті ворота не зачиняються.',
+    },
+    level: recipe(
+      'hold-shortcut',
+      'Hold the shortcut',
+      [...rectangle(10, 4, 1, 4), ...rectangle(10, 9, 1, 5)],
+      1,
+      {
+        stages: [
+          activationStage('crossing', 0, [activation('plate', 'copper')], point(14, 8)),
+          stage('return', 1, [], point(4, 12)),
+        ],
+        parcels: [],
+        docks: [],
+        plates: [{ id: 'copper', pads: [point(7, 8)], gates: [point(10, 8)] }],
+      },
+    ),
+  },
+  {
+    title: { en: 'Loaded pressure', uk: 'Вантаж під тиском' },
+    scene: 'workshop',
+    hint: {
+      en: 'Load two parcels before crossing the pressure court. Extra cable keeps the shortcut open longer; unload on the far side and plan a lighter return.',
+      uk: 'Візьміть дві посилки перед переходом через плиту. Довший кабель довше утримує короткий шлях відкритим. Розвантажтеся з іншого боку та сплануйте легше повернення.',
+    },
+    level: recipe(
+      'loaded-pressure',
+      'Loaded pressure',
+      [...rectangle(13, 4, 2, 3), ...rectangle(13, 10, 2, 4)],
+      1,
+      {
+        stages: [
+          {
+            ...stage('pressure-delivery', 0, ['parcel-a', 'parcel-b']),
+            activations: [activation('plate', 'pressure')],
+          },
+          stage('extraction', 1, [], point(5, 13)),
+        ],
+        parcels: [parcel('parcel-a', 8, 3, 'east-dock'), parcel('parcel-b', 8, 12, 'east-dock')],
+        docks: [dock('east-dock', 19, 8)],
+        plates: [
+          {
+            id: 'pressure',
+            pads: [point(10, 8)],
+            gates: [
+              point(13, 7),
+              point(14, 7),
+              point(13, 8),
+              point(14, 8),
+              point(13, 9),
+              point(14, 9),
+            ],
+          },
+        ],
+      },
+    ),
+  },
+];
+export const OPERATION_PROTOTYPES = freeze([...CARGO_PROTOTYPES, ...ROUTING_PROTOTYPES]);
