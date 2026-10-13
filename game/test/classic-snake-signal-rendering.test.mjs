@@ -120,7 +120,14 @@ test('every enemy, including nearby prey and the jammer body, disappears before 
     }
   }
   changed.recentCatches[0].x--;
-  for (const boardStyle of ['theme', 'retro', 'living-circuit'])
+  for (const boardStyle of [
+    'theme',
+    'retro',
+    'living-circuit',
+    'toybox',
+    'atmospheric-ruins',
+    'night-arcade',
+  ])
     for (const reduced of [false, true])
       for (const signalTreatment of ['baseline', 'snow-only', 'contrast-loss']) {
         const options = { boardStyle, reduced, signalTreatment };

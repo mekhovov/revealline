@@ -1,3 +1,5 @@
+import { resolveClassicWorld, isClassicWorldStyle } from './classic-worlds.mjs';
+import { INDUSTRIAL_BUILTIN_SPRITES } from '../presentation/industrial-arcade-builtins.mjs';
 import { drawHuntRemains } from '../hunt/destruction.mjs';
 import { runtimeActorArtRevision } from '../hunt/preferences.mjs';
 import { createClassicTargetFacing, drawClassicTarget } from './classic-target-art.mjs';
@@ -6,10 +8,10 @@ export { drawClassicTarget } from './classic-target-art.mjs';
 import { CLASSIC_SNAKE_CHAPTERS } from './classic-catalogue.mjs';
 import { classicSnakeSignalView, classicSnakeContactHazardV4 } from './classic-core.mjs';
 import {
-  resolveClassicBoardScene,
   classicScenePalette,
   drawClassicLivingGround,
   drawClassicLivingWall,
+  classicWallStructures,
 } from './classic-scenes.mjs';
 import {
   captureClassicSignalTerrain,
@@ -345,12 +347,13 @@ export function drawClassicBoard(
 ) {
   const { width, height, walls, wrap } = run.level,
     retro = boardStyle === 'retro',
-    living = boardStyle === 'living-circuit',
-    scene = resolveClassicBoardScene({ boardScene, chapterId, levelId: run.level.id }),
+    living = isClassicWorldStyle(boardStyle),
+    world = resolveClassicWorld({ boardStyle, boardScene, chapterId }),
+    scene = world.scene,
     palette = retro
       ? RETRO_FIELD_PALETTE
       : living
-        ? classicScenePalette(scene)
+        ? classicScenePalette(scene, world.treatment)
         : (presentation?.palette ?? FALLBACK_PALETTE);
   const logicalWidth = width * UNIT,
     logicalHeight = height * UNIT,
@@ -381,7 +384,12 @@ export function drawClassicBoard(
   ctx.fillStyle = palette.field;
   ctx.fillRect(0, 0, logicalWidth, logicalHeight);
   if (living)
-    drawClassicLivingGround(ctx, run.level, scene, { unit: UNIT, document: canvas.ownerDocument });
+    drawClassicLivingGround(ctx, run.level, scene, {
+      unit: UNIT,
+      document: canvas.ownerDocument,
+      treatment: world.treatment,
+      zoning: world.zoning,
+    });
   else {
     ctx.fillStyle = palette.alternate;
     ctx.globalAlpha = 0.42;
@@ -424,12 +432,26 @@ export function drawClassicBoard(
     effects.draw(ctx);
     ctx.restore();
   }
-  for (const wall of walls)
-    if (!run.removedWalls?.some((removed) => removed.x === wall.x && removed.y === wall.y)) {
-      if (living)
-        drawClassicLivingWall(ctx, wall, scene, { unit: UNIT, document: canvas.ownerDocument });
-      else drawWall(ctx, wall, presentation, palette, retro);
-    }
+  const removed = new Set((run.removedWalls ?? []).map(({ x, y }) => `${x},${y}`));
+  const visibleWalls = walls.filter(({ x, y }) => !removed.has(`${x},${y}`));
+  const occupied = new Set(visibleWalls.map(({ x, y }) => `${x},${y}`));
+  const structures = living ? classicWallStructures(visibleWalls) : null;
+  const wallAsset = presentation?.asset?.('terrain.wall')?.asset;
+  const creatorWall =
+    wallAsset &&
+    (wallAsset.id !== 'terrain.wall.field-kit' ||
+      !INDUSTRIAL_BUILTIN_SPRITES['terrain.wall'].includes(wallAsset.file?.sha256));
+  for (const wall of visibleWalls) {
+    if (living && !creatorWall)
+      drawClassicLivingWall(ctx, wall, scene, {
+        unit: UNIT,
+        document: canvas.ownerDocument,
+        treatment: world.treatment,
+        occupied,
+        structure: structures.get(`${wall.x},${wall.y}`),
+      });
+    else drawWall(ctx, wall, presentation, palette, retro);
+  }
   ctx.globalAlpha = 1;
   drawShutters(ctx, run, palette);
   drawPickup(ctx, run.pickup);
@@ -440,6 +462,7 @@ export function drawClassicBoard(
   ctx.setLineDash([]);
   const signalVisualKey = JSON.stringify([
     boardStyle,
+    world,
     scene,
     style,
     cast,
@@ -451,7 +474,10 @@ export function drawClassicBoard(
     concealEnemies,
     palette,
     // Artwork may finish loading while a burst is paused at the same tick.
-    signalTerrainVersion(canvas, retro || living ? null : presentation?.image?.('terrain.wall')),
+    signalTerrainVersion(
+      canvas,
+      retro || (living && !creatorWall) ? null : presentation?.image?.('terrain.wall'),
+    ),
   ]);
   // Keep current terrain separate from moving actors. During a receiver
   // dropout the degraded branch must not duplicate their full live contrast.
