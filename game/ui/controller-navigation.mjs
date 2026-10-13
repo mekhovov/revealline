@@ -1120,7 +1120,9 @@ export function attachControllerNavigation({
         ['range', 'checkbox', 'radio'].includes(settingField.type));
     if (
       directionalSetting &&
-      (event.key.startsWith('Arrow') || ['Enter', ' '].includes(event.key))
+      (event.key.startsWith('Arrow') ||
+        event.key === 'Enter' ||
+        (event.key === ' ' && !['checkbox', 'radio'].includes(settingField.type)))
     ) {
       event.preventDefault();
       setMenuInput('keyboard');
