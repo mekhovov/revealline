@@ -1,7 +1,7 @@
 import { dataIdentity } from '../data-json.mjs';
 import { getLocale } from '../i18n/index.mjs';
 import { createClassicSnake, classicSnakeUsesVariableHazards } from './classic-core.mjs';
-import { prepareClassicSnakeLevel } from './classic-setup.mjs';
+import { prepareClassicSnakeLevel, classicSnakeMissionSettings } from './classic-setup.mjs';
 import { drawClassicBoard } from './classic-view.mjs';
 
 /** Browsing has no attempt, clock, profile writer or awards. Exact catalogue
@@ -31,7 +31,7 @@ export function classicSnakeLibrarySource({
     return chapter === campaign ? chapter : `${campaign} · ${chapter}`;
   };
   function prepared(entry) {
-    const setup = getSetup(),
+    const setup = classicSnakeMissionSettings(entry, getSetup()),
       seed = getSeed(),
       key = JSON.stringify([setup.pace, setup.format, setup.targetRules, setup.preset, seed]);
     let item = cache.get(entry);

@@ -1,5 +1,7 @@
 # Continuous Snake operations — prototype slice, 13 October 2026
 
+**Update:** the subsequent [Release A implementation report](release-a.md) records production admission and 48 new missions. The prototype evidence below describes the preceding slice.
+
 The visual foundation (#1157) is merged. The first four prototypes merged in #1158. This continuation starts from `main` at `45e943bd4` and completes **all eight P0 gameplay prototypes**, covering staged objectives, cargo, switchyards and cable plates. It does not complete production admission, player acceptance or ship the planned 96 missions. The public catalogue remains 144 missions; no existing recipe or calibrated rating is changed.
 
 ## Completed

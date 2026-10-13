@@ -349,7 +349,7 @@ export function drawClassicBoard(
   const { width, height, walls, wrap } = run.level,
     retro = boardStyle === 'retro',
     living = isClassicWorldStyle(boardStyle),
-    world = resolveClassicWorld({ boardStyle, boardScene, chapterId }),
+    world = resolveClassicWorld({ boardStyle, boardScene, chapterId, levelId: run.level.id }),
     scene = world.scene,
     palette = retro
       ? RETRO_FIELD_PALETTE

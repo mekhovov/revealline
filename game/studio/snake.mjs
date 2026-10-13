@@ -309,7 +309,11 @@ const current = () => draft.entries[active];
 const upgradedEntries = new WeakMap();
 function editableLevel() {
   const entry = current();
-  if (!['classic-snake-level.v3', 'classic-snake-level.v4'].includes(entry.level.version)) {
+  if (
+    !['classic-snake-level.v3', 'classic-snake-level.v4', 'classic-snake-level.v5'].includes(
+      entry.level.version,
+    )
+  ) {
     const previous = entry.level.version;
     entry.level = prepareClassicSnakeStudioLevel(entry.level);
     upgradedEntries.set(entry, previous);
@@ -359,18 +363,24 @@ function paint() {
     context = board.getContext('2d'),
     cell = board.width / level.width;
   const previous = upgradedEntries.get(current());
-  formatNotice.hidden = !previous && level.version !== 'classic-snake-level.v4';
+  formatNotice.hidden =
+    !previous && !['classic-snake-level.v4', 'classic-snake-level.v5'].includes(level.version);
   formatNotice.textContent = previous
     ? words(
         `This draft mission was upgraded from ${previous} to Snake v3 for your gameplay edits.`,
         `Цю чернетку місії оновлено з ${previous} до Snake v3 для редагування ігрових правил.`,
       )
-    : level.version === 'classic-snake-level.v4'
+    : level.version === 'classic-snake-level.v5'
       ? words(
-          'This mission keeps its authored field mechanics. Posts, lanes, relay pads and erosion marks remain editable in Advanced recipe JSON.',
-          'Місія зберігає задані польові механіки. Пости, смуги, ретранслятори й позначки руйнування можна змінити в розширеному JSON рецепта.',
+          'This operation keeps its stages, cargo, junctions and cable plates. Edit these together in Advanced recipe JSON; validate and play every changed route.',
+          'Операція зберігає етапи, вантаж, розвилки й кабельні плити. Редагуйте їх разом у розширеному JSON рецепта; перевіряйте грою кожен змінений маршрут.',
         )
-      : '';
+      : level.version === 'classic-snake-level.v4'
+        ? words(
+            'This mission keeps its authored field mechanics. Posts, lanes, relay pads and erosion marks remain editable in Advanced recipe JSON.',
+            'Місія зберігає задані польові механіки. Пости, смуги, ретранслятори й позначки руйнування можна змінити в розширеному JSON рецепта.',
+          )
+        : '';
   board.height = Math.round(cell * level.height);
   context.imageSmoothingEnabled = false;
   context.fillStyle = '#1a2b2a';

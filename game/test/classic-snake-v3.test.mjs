@@ -28,7 +28,7 @@ function front(run, target, kind) {
 }
 
 test('v3 adds twelve distinct layouts without changing the 84 historical recipes', () => {
-  const historical = CLASSIC_SNAKE_LEVELS.filter((row) => !row.level.version.endsWith('v4'));
+  const historical = CLASSIC_SNAKE_LEVELS.filter((row) => /v[123]$/.test(row.level.version));
   assert.equal(historical.length, 96);
   const previous = historical.filter((row) => row.level.version !== 'classic-snake-level.v3');
   assert.equal(previous.length, 84);

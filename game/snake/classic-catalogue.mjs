@@ -1,3 +1,7 @@
+import {
+  CLASSIC_SNAKE_OPERATION_CHAPTERS_A,
+  CLASSIC_SNAKE_OPERATION_LEVELS_A,
+} from './classic-catalogue-operations-a.mjs';
 import { CLASSIC_SNAKE_V4_CHAPTERS, CLASSIC_SNAKE_V4_LEVELS } from './classic-catalogue-v4.mjs';
 import { CLASSIC_SNAKE_V3_CHAPTERS, CLASSIC_SNAKE_V3_LEVELS } from './classic-catalogue-v3.mjs';
 import { CLASSIC_SNAKE_V2_CHAPTERS, CLASSIC_SNAKE_V2_LEVELS } from './classic-catalogue-v2.mjs';
@@ -783,14 +787,25 @@ export const CLASSIC_SNAKE_CHAPTERS = freeze([
   ...CLASSIC_SNAKE_V2_CHAPTERS,
   ...CLASSIC_SNAKE_V3_CHAPTERS,
   ...CLASSIC_SNAKE_V4_CHAPTERS,
+  ...CLASSIC_SNAKE_OPERATION_CHAPTERS_A,
 ]);
 export const CLASSIC_SNAKE_LEVELS = freeze([
   ...FOUNDATION_LEVELS,
   ...CLASSIC_SNAKE_V2_LEVELS,
   ...CLASSIC_SNAKE_V3_LEVELS,
   ...CLASSIC_SNAKE_V4_LEVELS,
+  ...CLASSIC_SNAKE_OPERATION_LEVELS_A,
 ]);
 export const CLASSIC_SNAKE_CAMPAIGNS = freeze([
+  {
+    id: 'classic-continuous-operations-a-v1',
+    title: bilingual('Continuous Operations', 'Безперервні операції'),
+    description: bilingual(
+      'Six chapters of linked deliveries, patrol dispatch and cable-held routes. Every clearance continues on the same board.',
+      'Шість розділів зі зв’язаними доставками, керуванням патрулями та маршрутами, що утримуються кабелем. Кожен етап триває на тому самому полі.',
+    ),
+    chapterIds: CLASSIC_SNAKE_OPERATION_CHAPTERS_A.map((chapter) => chapter.id),
+  },
   {
     id: 'classic-living-routes-v1',
     title: bilingual('Living Routes', 'Живі маршрути'),

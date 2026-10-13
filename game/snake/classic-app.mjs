@@ -1,3 +1,4 @@
+import { classicOperationStatus } from './classic-operation-status.mjs';
 import { classicBoardPreferences, isClassicWorldStyle } from './classic-worlds.mjs';
 import { claimProfileWriter } from '../profile-writer.mjs';
 import {
@@ -106,6 +107,7 @@ import {
 } from './classic-match.mjs';
 import {
   prepareClassicSnakeLevel,
+  classicSnakeMissionSettings,
   CLASSIC_PACES,
   classicSnakeSurvivalEntry,
 } from './classic-setup.mjs';
@@ -617,17 +619,23 @@ function nextMission() {
 function launchMission(destination, { nextMode = mode } = {}) {
   if (!destination) return false;
   let hazardSeed;
+  const destinationSettings = classicSnakeMissionSettings(destination, settings());
   // Validate before retiring the visible result. A rejected destination leaves
   // its current board and actions usable.
   try {
-    const level = prepareClassicSnakeLevel(destination, settings());
+    const level = prepareClassicSnakeLevel(destination, destinationSettings);
     if (classicSnakeUsesVariableHazards(level))
       hazardSeed = nextClassicHazardSeed(match?.options.hazardSeed);
     createClassicSnakeMatch(level, {
       mode: nextMode,
       seed,
       ...(hazardSeed === undefined ? {} : { hazardSeed }),
-      policy: format === 'campaign' ? 'mission' : nextMode === 'versus' ? duel : 'endless',
+      policy:
+        destinationSettings.format === 'campaign'
+          ? 'mission'
+          : nextMode === 'versus'
+            ? duel
+            : 'endless',
     });
   } catch {
     saveNotice = 'invalid';
@@ -637,6 +645,7 @@ function launchMission(destination, { nextMode = mode } = {}) {
   save();
   mode = nextMode;
   entry = destination;
+  ({ format, targetRules } = destinationSettings);
   prepare({ launch: true, hazardSeed });
   return true;
 }
@@ -857,6 +866,7 @@ function relative(player, offset) {
   turn(player, directions[(directions.indexOf(heading) + offset + 4) % 4]);
 }
 function prepare({ launch = false, retainAppearance = false, hazardSeed } = {}) {
+  ({ format, targetRules } = classicSnakeMissionSettings(entry, settings()));
   retainPreparedAppearance = retainAppearance;
   transition.cancel('new-attempt');
   if (statsAttempt) enemyStats.finishAttempt(statsAttempt);
@@ -945,6 +955,12 @@ function buildBoards() {
     reception.dataset.stat = 'reception';
     reception.setAttribute('role', 'status');
     stats.append(reception);
+    const operation = el('div', null, 'snake-operation-status');
+    operation.hidden = !run.operation;
+    stats.dataset.operation = String(!!run.operation);
+    operation.dataset.stat = 'operation';
+    operation.setAttribute('role', 'status');
+    stats.append(operation);
     canvas.width = run.level.width * 28;
     canvas.height = run.level.height * 28;
     canvas.tabIndex = 0;
@@ -956,7 +972,7 @@ function buildBoards() {
     card.append(stats, wrap);
     if (mode === 'versus') card.prepend(el('p', text(index ? 'p2' : 'p1'), 'player-label'));
     $('boards').append(card);
-    boards.push({ canvas, fields, message, title, detail, wrap, reception });
+    boards.push({ canvas, fields, message, title, detail, wrap, reception, operation });
   }
   buildPads();
   footprint = createBoardFootprints(boards.map((board) => board.canvas));
@@ -1388,7 +1404,8 @@ function renderCopy() {
   for (const option of $('duel').options)
     if (option.value === 'survival') option.disabled = !survivalEntry;
   const survival = format === 'endless' && mode === 'versus' && duel === 'survival';
-  for (const id of ['target-rules', 'preset']) $(id).disabled = survival;
+  for (const id of ['target-rules', 'preset']) $(id).disabled = survival || !!entry.level.operation;
+  $('format').disabled = !!entry.level.operation;
   $('featured').hidden =
     format !== 'campaign' ||
     !CLASSIC_SNAKE_FEATURED.some((item) => item.chapterId === entry.chapterId);
@@ -1514,7 +1531,8 @@ function failureText(run, boardResult) {
     .join(' ');
 }
 function readyInstruction() {
-  if (runs[0]?.level.version === 'classic-snake-level.v4') return entry.description[locale];
+  if (runs[0]?.level.operation || runs[0]?.level.version === 'classic-snake-level.v4')
+    return entry.description[locale];
   return text(
     runs[0]?.level.targets?.required.some((policy) => ['shield', 'brace'].includes(policy.kind))
       ? 'specialistHelp'
@@ -1615,7 +1633,7 @@ function refresh() {
   renderRatings();
   const onboarding = $('snake-onboarding');
   if (onboarding) {
-    const fieldMission = runs[0].level.version === 'classic-snake-level.v4';
+    const fieldMission = !!runs[0].operation || runs[0].level.version === 'classic-snake-level.v4';
     const signals = runs.map(classicSnakeSignalView);
     const jammer = signals.flatMap((signal) => signal.sources)[0];
     const warning = signals.some((signal) => signal.warning);
@@ -1648,6 +1666,9 @@ function refresh() {
     board.fields.caught.value.textContent =
       format === 'endless' ? String(summary.catches) : `${summary.catches} / ${summary.goal}`;
     board.fields.length.value.textContent = summary.lengths.join(' + ');
+    board.operation.hidden = !run.operation;
+    const operationText = classicOperationStatus(run, locale);
+    if (board.operation.textContent !== operationText) board.operation.textContent = operationText;
     const signal = classicSnakeSignalView(run);
     board.reception.hidden = !signal.sources.length;
     const signalState = signal.suppressed
