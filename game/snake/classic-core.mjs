@@ -1,4 +1,21 @@
 import {
+  CLASSIC_SNAKE_V5_LEVEL,
+  CLASSIC_SNAKE_V5_CORE,
+  CLASSIC_SNAKE_V5_REPLAY,
+  validateClassicSnakeLevelV5,
+  createClassicSnakeV5,
+  queueClassicSnakeTurnV5,
+  stepClassicSnakeV5,
+  classicSnakeSummaryV5,
+  exportClassicSnakeReplayV5,
+  restoreClassicSnakeReplayV5,
+} from './classic-core-v5.mjs';
+export {
+  CLASSIC_SNAKE_V5_LEVEL,
+  CLASSIC_SNAKE_V5_CORE,
+  CLASSIC_SNAKE_V5_REPLAY,
+} from './classic-core-v5.mjs';
+import {
   CLASSIC_SNAKE_V4_LEVEL,
   CLASSIC_SNAKE_V4_CORE,
   CLASSIC_SNAKE_V4_REPLAY,
@@ -125,6 +142,7 @@ function initialBody(level, spawn) {
 
 /** A separate classic-grid recipe: no territory, captures, abilities or old-core conversion. */
 export function validateClassicSnakeLevel(source) {
+  if (source?.version === CLASSIC_SNAKE_V5_LEVEL) return validateClassicSnakeLevelV5(source);
   if (source?.version === CLASSIC_SNAKE_V4_LEVEL) return validateClassicSnakeLevelV4(source);
   if (source?.version === CLASSIC_SNAKE_V3_LEVEL) return validateClassicSnakeLevelV3(source);
   if (source?.version === CLASSIC_SNAKE_V2_LEVEL) return validateClassicSnakeLevelV2(source);
@@ -280,6 +298,7 @@ function spawnTarget(run) {
 }
 
 export function createClassicSnake(source, options = {}) {
+  if (source?.version === CLASSIC_SNAKE_V5_LEVEL) return createClassicSnakeV5(source, options);
   if (source?.version === CLASSIC_SNAKE_V4_LEVEL) return createClassicSnakeV4(source, options);
   if (source?.version === CLASSIC_SNAKE_V3_LEVEL) return createClassicSnakeV3(source, options);
   if (source?.version === CLASSIC_SNAKE_V2_LEVEL) return createClassicSnakeV2(source, options);
@@ -323,6 +342,8 @@ export function createClassicSnake(source, options = {}) {
 
 /** One input edge, not a held direction. No reversal against pending turns. */
 export function queueClassicSnakeTurn(run, playerId, direction) {
+  if (run?.version === CLASSIC_SNAKE_V5_CORE)
+    return queueClassicSnakeTurnV5(run, playerId, direction);
   if (run?.version === CLASSIC_SNAKE_V4_CORE)
     return queueClassicSnakeTurnV4(run, playerId, direction);
   if (run?.version === CLASSIC_SNAKE_V3_CORE)
@@ -400,6 +421,7 @@ function stepMilliseconds(run) {
 
 /** One automatic, simultaneous grid step. UI pausing simply stops calling this. */
 export function stepClassicSnake(run) {
+  if (run?.version === CLASSIC_SNAKE_V5_CORE) return stepClassicSnakeV5(run);
   if (run?.version === CLASSIC_SNAKE_V4_CORE) return stepClassicSnakeV4(run);
   if (run?.version === CLASSIC_SNAKE_V3_CORE) return stepClassicSnakeV3(run);
   if (run?.version === CLASSIC_SNAKE_V2_CORE) return stepClassicSnakeV2(run);
@@ -489,6 +511,7 @@ export function stepClassicSnake(run) {
 }
 
 export function classicSnakeSummary(run) {
+  if (run?.version === CLASSIC_SNAKE_V5_CORE) return classicSnakeSummaryV5(run);
   if (run?.version === CLASSIC_SNAKE_V4_CORE) return classicSnakeSummaryV4(run);
   if (run?.version === CLASSIC_SNAKE_V3_CORE) return classicSnakeSummaryV3(run);
   if (run?.version === CLASSIC_SNAKE_V2_CORE) return classicSnakeSummaryV2(run);
@@ -529,6 +552,7 @@ const checkpoint = (run) =>
     events: run.events,
   });
 export function exportClassicSnakeReplay(run) {
+  if (run?.version === CLASSIC_SNAKE_V5_CORE) return exportClassicSnakeReplayV5(run);
   if (run?.version === CLASSIC_SNAKE_V4_CORE) return exportClassicSnakeReplayV4(run);
   if (run?.version === CLASSIC_SNAKE_V3_CORE) return exportClassicSnakeReplayV3(run);
   if (run?.version === CLASSIC_SNAKE_V2_CORE) return exportClassicSnakeReplayV2(run);
@@ -548,6 +572,8 @@ export function exportClassicSnakeReplay(run) {
 /** Saves contain only an accepted recipe, turn journal and verified checkpoint.
  * No serialized body/score can become authority without reproducing the inputs. */
 export function restoreClassicSnakeReplay(source, { level: expectedLevel } = {}) {
+  if (source?.version === CLASSIC_SNAKE_V5_REPLAY)
+    return restoreClassicSnakeReplayV5(source, { level: expectedLevel });
   if (source?.version === CLASSIC_SNAKE_V4_REPLAY)
     return restoreClassicSnakeReplayV4(source, { level: expectedLevel });
   if (source?.version === CLASSIC_SNAKE_V3_REPLAY)
