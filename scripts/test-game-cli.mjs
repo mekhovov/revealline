@@ -180,6 +180,7 @@ test('real Git snapshot runs an older frozen entry through an aliased temp root 
   // Archive the implementation's real metadata dependencies too. No module may
   // resolve back into the current working tree during the frozen build.
   for (const relative of [
+    'scripts/access-pages.mjs',
     'scripts/pack-indexes.mjs',
     'scripts/brand-icons.mjs',
     'scripts/build-entry-writer.mjs',
