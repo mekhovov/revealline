@@ -830,3 +830,49 @@ test('armor detail follows approach distance without changing actor coverage, qu
     globalThis.Phaser = prior;
   }
 });
+
+test('Riy reuses hero frames for two escorts and retains both roles with reduced effects', async () => {
+  const { createOverflightRiy } = await import('../overflight/riy-core.mjs');
+  const environment = fakeEnvironment(),
+    prior = globalThis.Phaser;
+  globalThis.Phaser = environment.Phaser;
+  const appearance = {
+    reducedEffects: false,
+    playerSlot: 'player.scout.detailed',
+    snapshot: { image: () => ({ image: {}, asset: { id: 'accepted-scout' } }) },
+  };
+  let renderer;
+  try {
+    renderer = await createOverflightRenderer({
+      parent: { ownerDocument: environment.document },
+      appearance,
+    });
+    const run = createOverflightRun(compileOverflightProject(createOverflightProject()));
+    startOverflight(run);
+    run.riy = createOverflightRiy(run);
+    const original = structuredClone(run.riy),
+      baked = environment.counts();
+    const escorts = () =>
+      environment.images.filter((image) => image.Depth?.[0] === 69 && image.Visible?.[0]);
+    for (let frame = 0; frame < 20; frame++) {
+      appearance.reducedEffects = frame > 9;
+      renderer.present(run);
+      assert.equal(escorts().length, 2);
+      assert.ok(
+        escorts().every((image) => image.Frame[0].startsWith('hero:') && image.displayWidth === 44),
+      );
+    }
+    assert.deepEqual(run.riy, original);
+    assert.deepEqual(
+      environment.counts(),
+      baked,
+      'escorts require no additional atlas painting or uploads',
+    );
+    delete run.riy;
+    renderer.present(run);
+    assert.equal(escorts().length, 0, 'ordinary Survivor has no escort sprites');
+  } finally {
+    await renderer?.destroy();
+    globalThis.Phaser = prior;
+  }
+});
