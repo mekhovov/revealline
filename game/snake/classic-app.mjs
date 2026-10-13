@@ -2488,7 +2488,10 @@ function frame(now) {
       presentation: presentation.snapshot(),
       accent,
       reduced: isReduced(),
-      flight: flightFrames[i],
+      flight:
+        flow.phase === 'replay'
+          ? { ...flightFrames[i], timeMs: (shown.elapsedMs ?? 0) % 60000 }
+          : flightFrames[i],
       cssWidth: footprint?.width(i),
       pixelRatio: globalThis.devicePixelRatio ?? 1,
     });
