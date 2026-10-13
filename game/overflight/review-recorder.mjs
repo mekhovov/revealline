@@ -1,5 +1,51 @@
-/** Optional, silent battlefield-only capture. No DOM/HUD or microphone capture. */
-export function createOverflightReviewRecorder({ window, onState = () => {} }) {
+/** Tap the existing post-master mix without replacing its audible destination.
+ * Only this capture branch is owned here; never suspend/close the game context.
+ * HTMLMediaElement playlists are absent unless already routed through this bus.
+ */
+export function createOverflightReviewAudioTap(sound) {
+  const context = sound?.context;
+  const output = sound?.compressor ?? sound?.master;
+  if (
+    !context ||
+    context.state === 'closed' ||
+    !context.createMediaStreamDestination ||
+    !output?.connect ||
+    !output?.disconnect
+  )
+    return null;
+  let destination = null;
+  let disposed = false;
+  const dispose = () => {
+    if (disposed) return;
+    disposed = true;
+    if (destination) {
+      try {
+        output.disconnect(destination);
+      } catch {
+        /* The sound owner may have already disposed its graph. */
+      }
+      for (const track of destination.stream?.getTracks() ?? []) track.stop();
+    }
+  };
+  try {
+    destination = context.createMediaStreamDestination();
+    output.connect(destination);
+    return { tracks: destination.stream.getAudioTracks(), dispose };
+  } catch {
+    dispose();
+    return null;
+  }
+}
+
+/** Bounded battlefield capture, optionally including an injected game-mix tap.
+ * No DOM/HUD, microphone, user-media request or independent sound owner.
+ * getAudio returns a newly owned { tracks, dispose } tap or null for silent video.
+ */
+export function createOverflightReviewRecorder({
+  window,
+  onState = () => {},
+  getAudio = () => null,
+}) {
   const maximumBytes = 16 * 1024 * 1024;
   let active = null,
     url = null,
@@ -14,8 +60,12 @@ export function createOverflightReviewRecorder({ window, onState = () => {} }) {
     url = null;
   };
   const release = (record) => {
+    if (record.released) return;
+    record.released = true;
     window.clearTimeout(record.timer);
-    for (const track of record.stream.getTracks()) track.stop();
+    for (const track of new Set([...record.stream.getTracks(), ...record.audioClones]))
+      track.stop();
+    record.audioTap?.dispose();
   };
   const cancel = () => {
     const record = active;
@@ -52,7 +102,13 @@ export function createOverflightReviewRecorder({ window, onState = () => {} }) {
     });
     record.chunks = [];
     url = window.URL.createObjectURL(blob);
-    publish({ phase: 'ready', url, mimeType: blob.type, bytes: blob.size });
+    publish({
+      phase: 'ready',
+      url,
+      mimeType: blob.type,
+      bytes: blob.size,
+      audio: record.audioClones.length > 0,
+    });
   };
   const stop = () => {
     const record = active;
@@ -76,12 +132,21 @@ export function createOverflightReviewRecorder({ window, onState = () => {} }) {
         publish({ phase: 'unsupported' });
         return false;
       }
-      let stream = null;
+      let stream = null,
+        audioTap = null;
+      const audioClones = [];
       try {
         stream = canvas.captureStream(30);
-        const mimeType = ['video/webm;codecs=vp9', 'video/webm;codecs=vp8', 'video/mp4'].find(
-          (type) => window.MediaRecorder.isTypeSupported(type),
-        );
+        audioTap = getAudio();
+        for (const track of audioTap?.tracks ?? []) {
+          const clone = track.clone();
+          audioClones.push(clone);
+          stream.addTrack(clone);
+        }
+        const formats = audioClones.length
+          ? ['video/webm;codecs=vp9,opus', 'video/webm;codecs=vp8,opus', 'video/webm', 'video/mp4']
+          : ['video/webm;codecs=vp9', 'video/webm;codecs=vp8', 'video/mp4'];
+        const mimeType = formats.find((type) => window.MediaRecorder.isTypeSupported(type));
         const recorder = new window.MediaRecorder(stream, {
           ...(mimeType ? { mimeType } : {}),
           videoBitsPerSecond: 2000000,
@@ -89,6 +154,9 @@ export function createOverflightReviewRecorder({ window, onState = () => {} }) {
         const record = {
           recorder,
           stream,
+          audioTap,
+          audioClones,
+          released: false,
           chunks: [],
           bytes: 0,
           timer: null,
@@ -111,11 +179,15 @@ export function createOverflightReviewRecorder({ window, onState = () => {} }) {
         recorder.onerror = () => finish(record, 'failed');
         recorder.start(250);
         record.timer = window.setTimeout(stop, 20000);
-        publish({ phase: 'recording' });
+        publish({ phase: 'recording', audio: audioClones.length > 0 });
         return true;
       } catch {
         if (active) cancel();
-        else for (const track of stream?.getTracks() ?? []) track.stop();
+        else {
+          for (const track of new Set([...(stream?.getTracks() ?? []), ...audioClones]))
+            track.stop();
+          audioTap?.dispose();
+        }
         publish({ phase: 'failed' });
         return false;
       }

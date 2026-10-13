@@ -1,3 +1,4 @@
+import { overflightFlightProfile } from './flight-profile.mjs';
 import {
   applyOverflightGuard,
   overflightArmoredDamage,
@@ -114,7 +115,14 @@ function makePool(size, factory) {
 
 export function createOverflightRun(
   compiled,
-  { seed = compiled?.seed, airframes = 1, slowResume = true, fixture = null } = {},
+  {
+    seed = compiled?.seed,
+    airframes = 1,
+    slowResume = true,
+    fixture = null,
+    characterId,
+    flightTraits = false,
+  } = {},
 ) {
   if (!['OverflightCompiledV1', 'OverflightCompiledV2'].includes(compiled?.format))
     throw new TypeError('A compiled Overflight project is required.');
@@ -123,12 +131,14 @@ export function createOverflightRun(
     throw new RangeError('Seed must be a nonzero uint32.');
   if (![null, 'reference', 'stress'].includes(fixture))
     throw new RangeError('Unknown benchmark fixture.');
+  const flight = overflightFlightProfile(characterId, !fixture && flightTraits);
   const enemyCapacity = fixture === 'stress' ? 2500 : compiled.population.capacity;
   const pickupCapacity = compiled.resources?.pools?.pickups ?? 2048;
   const effectCapacity = compiled.resources?.pools?.effects ?? 512;
   const projectileCapacity = compiled.resources?.pools?.projectiles ?? 512;
   const run = {
     compiled,
+    flight,
     rulesVersion: compiled.rulesVersion ?? (compiled.format.endsWith('V2') ? 2 : 1),
     difficulty: compiled.difficulty ?? 'standard',
     caches: createOverflightCaches(compiled),
@@ -149,8 +159,8 @@ export function createOverflightRun(
       vx: 0,
       vy: 0,
       radius: 9,
-      hull: 100,
-      maxHull: 100,
+      hull: flight.maxHull,
+      maxHull: flight.maxHull,
       boostRemaining: 0,
       boostCooldown: 0,
       invulnerable: 0,
@@ -857,7 +867,7 @@ function movePlayer(run, input) {
   }
   run._boostHeld = boost;
   if (magnitude > 0.05) player.heading = Math.atan2(y, x);
-  const speed = player.boostRemaining > 0 ? 330 : 180;
+  const speed = player.boostRemaining > 0 ? run.flight.boostSpeed : run.flight.speed;
   if (player.boostRemaining > 0 && magnitude < 0.05) {
     x = Math.cos(player.heading);
     y = Math.sin(player.heading);
@@ -1895,6 +1905,7 @@ function wrapFixtureEnemy(run, enemy) {
 
 export function overflightSummary(run) {
   return {
+    flight: run.flight,
     format: 'OverflightRunSummaryV1',
     projectId: run.compiled.id,
     projectIdentity: run.compiled.projectIdentity ?? null,

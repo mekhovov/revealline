@@ -6,7 +6,25 @@ export const OVERFLIGHT_OPERATIONS = Object.freeze([
     key: 'survivorOperation',
     detail: 'survivorOperationHelp',
   },
+  {
+    id: 'overflight-riy',
+    path: './play.html?operation=riy',
+    key: 'riyOperation',
+    detail: 'riyOperationHelp',
+  },
   { id: 'overflight-hunt', path: './raid.html', key: 'raidOperation', detail: 'raidOperationHelp' },
+  {
+    id: 'time-attack',
+    path: './raid.html?operation=time-attack',
+    key: 'timeAttackOperation',
+    detail: 'timeAttackOperationHelp',
+  },
+  {
+    id: 'marathon',
+    path: './raid.html?operation=marathon',
+    key: 'marathonOperation',
+    detail: 'marathonOperationHelp',
+  },
 ]);
 
 export function paintOverflightOperation(context, kind, paintSprite = () => {}) {
@@ -16,7 +34,7 @@ export function paintOverflightOperation(context, kind, paintSprite = () => {}) 
   context.fillStyle = '#1d352b';
   for (let x = 0; x < 320; x += 24) context.fillRect(x, 0, 1, 132);
   for (let y = 0; y < 132; y += 24) context.fillRect(0, y, 320, 1);
-  if (kind === 'overflight') {
+  if (kind === 'overflight' || kind === 'overflight-riy') {
     for (let index = 0; index < 30; index++) {
       const side = index % 2 ? 1 : -1;
       const x = 160 + side * (65 + (index % 5) * 17);
@@ -31,6 +49,10 @@ export function paintOverflightOperation(context, kind, paintSprite = () => {}) 
       context.stroke();
     }
     paintSprite(context, 'drone', 164, 49, 62, 0);
+    if (kind === 'overflight-riy') {
+      paintSprite(context, 'drone', 116, 80, 36, 0);
+      paintSprite(context, 'drone', 212, 80, 36, 0);
+    }
   } else {
     context.strokeStyle = '#9aebda';
     context.lineWidth = 3;

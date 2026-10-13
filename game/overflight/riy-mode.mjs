@@ -1,10 +1,17 @@
-import { createOverflightRiy, stepOverflightRiy } from './riy-core.mjs';
+import { createOverflightRiyProject, compileOverflightRiyProject } from './riy-project.mjs';
+import {
+  createOverflightRiyLibrary,
+  createOverflightRiyPackage,
+  exportOverflightRiyPackage,
+} from './riy-community.mjs';
+import { overflightPreviewRequest } from './host-loop.mjs';
+import { createOverflightRiy, stepOverflightRiy, overflightRiyTarget } from './riy-core.mjs';
 
 const copy = {
   en: {
-    title: 'Riy · escort prototype',
+    title: 'Riy · escorts',
     briefing:
-      'Lead two escorts through the swarm. Sweeper clears nearby packs; Breaker delivers concentrated hits. Press F or Focus target to send both toward a visible priority target for three seconds. Move closer to create a new attack angle. Escorts are support equipment; your hull and airframes remain the risk.',
+      'Lead two escorts through the swarm. Sweeper clears nearby packs; Breaker delivers concentrated hits. Press F, the controller Ability button, or Focus target to send both toward a visible priority target briefly. Move closer to create a new attack angle. Escorts are support equipment; your hull and airframes remain the risk.',
     focus: 'F · Focus target',
     locked: 'Focusing priority target',
     following: 'Escorts following',
@@ -12,9 +19,9 @@ const copy = {
     cooldown: 'Focus ready in',
   },
   uk: {
-    title: 'Рій · прототип супроводу',
+    title: 'Рій · супровід',
     briefing:
-      'Ведіть два дрони супроводу крізь натовп. Зачисник атакує групи поруч, Пробійник завдає зосереджених ударів. Натисніть F або «Зосередити вогонь», щоб на три секунди спрямувати обох на видиму пріоритетну ціль. Зближуйтеся для нового кута атаки. Супровід — це допоміжне обладнання; ризикуєте своїм корпусом і запасними дронами.',
+      'Ведіть два дрони супроводу крізь натовп. Зачисник атакує групи поруч, Пробійник завдає зосереджених ударів. Натисніть F, кнопку здібності на контролері або «Зосередити вогонь», щоб ненадовго спрямувати обох на видиму пріоритетну ціль. Зближуйтеся для нового кута атаки. Супровід — це допоміжне обладнання; ризикуєте своїм корпусом і запасними дронами.',
     focus: 'F · Зосередити вогонь',
     locked: 'Атака пріоритетної цілі',
     following: 'Супровід у строю',
@@ -31,9 +38,28 @@ export function createOverflightRiyMode(base) {
   const label = (locale, key) => (copy[locale] ?? copy.en)[key];
   return {
     ...base,
-    name: { en: 'Riy · escort prototype', uk: 'Рій · прототип супроводу' },
-    prototype: 'overflight-riy-v1',
+    name: { en: 'Riy · escorts', uk: 'Рій · супровід' },
+    id: 'overflight-riy',
+    defaultProject: createOverflightRiyProject(),
+    createProject: createOverflightRiyProject,
+    compileProject: compileOverflightRiyProject,
+    createLibrary: createOverflightRiyLibrary,
+    createPackage: createOverflightRiyPackage,
+    exportPackage: exportOverflightRiyPackage,
+    studioPath: '../studio/overflight.html?operation=riy',
+    previewRequest: (event, context) =>
+      overflightPreviewRequest(event, { ...context, modeId: 'overflight-riy' }),
     fixtures: [],
+    pilot(run, build) {
+      const target = overflightRiyTarget(run);
+      return {
+        ...base.pilot(run, build),
+        focus:
+          run.riy.cooldown === 0 &&
+          !!target &&
+          (target.role !== 'common' || target.maxArmor > 0 || target.guardIntegrity > 0),
+      };
+    },
     text: (locale, key) => label(locale, key) ?? base.text(locale, key),
     createRun(compiled, options) {
       const run = base.createRun(compiled, options);
@@ -43,7 +69,7 @@ export function createOverflightRiyMode(base) {
     },
     step(run, input, dt) {
       const before = run.tick;
-      const focus = queued;
+      const focus = queued || input.focus === true;
       queued = false;
       base.step(run, input, dt);
       if (run.tick !== before) stepOverflightRiy(run, { focus });
@@ -52,10 +78,13 @@ export function createOverflightRiyMode(base) {
     summary(run) {
       return {
         ...base.summary(run),
-        prototype: 'overflight-riy-v1',
+        operation: 'overflight-riy',
         escortCommands: run.riy.commands,
         escortShots: run.riy.escorts.map(({ role, shots }) => ({ role, shots })),
       };
+    },
+    requestFocus() {
+      queued = true;
     },
     releaseInput() {
       queued = false;
@@ -87,7 +116,10 @@ export function createOverflightRiyMode(base) {
       button.type = 'button';
       button.setAttribute('aria-keyshortcuts', 'F');
       const request = () => {
-        if (canAct() && getRun()?.riy.cooldown === 0) queued = true;
+        if (canAct() && getRun()?.riy.cooldown === 0) {
+          queued = true;
+          document.getElementById('render-host')?.focus({ preventScroll: true });
+        }
       };
       const keydown = (event) => {
         if (

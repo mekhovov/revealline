@@ -97,6 +97,15 @@ const familySets = {
   ],
 };
 
+/** Shared compiler/Studio boundary: small wings do not shrink ordinary crowds. */
+export function overflightHuntMinimumPackSize(format, behavior) {
+  return format === OVERFLIGHT_HUNT_PROJECT_FORMAT_V2
+    ? ['shield', 'brace'].includes(behavior)
+      ? 2
+      : 4
+    : 6;
+}
+
 /** Finite encounter populations: advancing a sector never replaces casualties. */
 export function createOverflightHuntProject({
   encounterSet = 'patrol',
@@ -152,34 +161,70 @@ export function createOverflightHuntProject({
                 ],
       };
     });
-    // Finite escorts threaten the objective approach through a shield screen
-    // or a short brace route instead of pursuing into the next sector.
-    // The simulation admits guards against the shared specialist budget.
+    // A finite shield screen and an offset brace wing create two approaches:
+    // flank the committed facing, or sweep the exposed wing after its warning.
+    // Their combined population is unchanged and old-sector survivors remain.
     const escortX = [420, 1550, 2680][sector];
     const escortY = !legacy && sector === 1 ? 760 : 540;
-    // The column's second vehicle is protected by a committed shield screen.
-    // Its rear stays open; the introductory exposed leader is still a free pass.
     const shieldScreen = !legacy && sector === 1;
-    packs.push({
-      id: `${id}-escort`,
-      family: shieldScreen ? 'shield-bearer' : 'brace-trooper',
-      behavior: shieldScreen ? 'shield' : 'brace',
-      count: legacy ? 6 : difficulty === 'veteran' ? 6 : 4,
+    const escort = (suffix, shield, y, count) => ({
+      id: `${id}-escort${suffix}`,
+      family: shield ? 'shield-bearer' : 'brace-trooper',
+      behavior: shield ? 'shield' : 'brace',
+      count,
       x: escortX,
-      y: escortY,
-      spacing: 24,
-      speed: 42,
-      route: [point(escortX + 35, escortY + 25), point(escortX - 35, escortY - 25)],
-    });
-    const objective = (name, family, behavior, x, y, armorSegments = 0) => ({
-      id: name,
-      family,
-      behavior,
-      x,
       y,
-      armorSegments,
-      route: [point(x + 65, y + 60), point(x - 65, y - 60)],
+      spacing: 32,
+      speed: 42,
+      route: [point(escortX + 35, y + 25), point(escortX - 35, y - 25)],
     });
+    if (legacy) {
+      packs.push({ ...escort('', false, escortY, 6), spacing: 24 });
+    } else {
+      const wingSize = difficulty === 'veteran' ? 3 : 2;
+      packs.push(escort('', shieldScreen, escortY - 42, wingSize));
+      packs.push(escort('-wing', !shieldScreen, escortY + 42, wingSize));
+    }
+    const objective = (name, family, behavior, x, y, armorSegments = 0) => {
+      // Keep the exposed introductory pass identical. Later sets teach distinct
+      // interception geometry, rather than changing ordinary crowds only.
+      const placement =
+        !legacy &&
+        {
+          crossing: {
+            'leader-2': point(710, 700),
+            'leader-3': point(800, 300),
+            'light-1': point(1230, 300),
+            'light-2': point(1550, 700),
+            carrier: point(1780, 400),
+            'command-tank': point(2530, 430),
+          },
+          mixed: {
+            'leader-2': point(670, 770),
+            'leader-3': point(780, 360),
+            'light-1': point(1270, 600),
+            'light-2': point(1510, 360),
+            carrier: point(1770, 740),
+            'command-tank': point(2640, 660),
+          },
+        }[encounterSet]?.[name];
+      if (placement) ({ x, y } = placement);
+      let route = [point(x + 65, y + 60), point(x - 65, y - 60)];
+      if (!legacy && name !== 'leader-1') {
+        const bounds = (dx, dy) =>
+          point(
+            Math.max(left + 90, Math.min(left + 860, x + dx)),
+            Math.max(120, Math.min(950, y + dy)),
+          );
+        route =
+          encounterSet === 'crossing'
+            ? [bounds(-110, 150), bounds(95, -140)]
+            : encounterSet === 'mixed'
+              ? [bounds(-110, -100), bounds(70, -125), bounds(60, 115)]
+              : [bounds(90, 35), bounds(-110, 80), bounds(-30, -60)];
+      }
+      return { id: name, family, behavior, x, y, armorSegments, route };
+    };
     return {
       id,
       title: [
@@ -236,7 +281,12 @@ export function createOverflightHuntProject({
     ),
     seed,
     arena: { width: 2880, height: 1080, cameraWidth: 960, cameraHeight: 540 },
-    population: { capacity: 1500, specialists: 8, heavies: 4, priorityAttacks: 2 },
+    population: {
+      capacity: 1500,
+      specialists: 8,
+      heavies: 4,
+      priorityAttacks: 2,
+    },
     encounters,
     upgrades: {
       choices: 8,
@@ -246,8 +296,18 @@ export function createOverflightHuntProject({
     },
     resources: structuredClone(OVERFLIGHT_RESOURCES),
     props: [
-      { id: 'raid-case-west', kind: 'supply-case', x: legacy ? 980 : 520, y: 320 },
-      { id: 'raid-case-east', kind: 'supply-case', x: legacy ? 1910 : 1500, y: 650 },
+      {
+        id: 'raid-case-west',
+        kind: 'supply-case',
+        x: legacy ? 980 : 520,
+        y: 320,
+      },
+      {
+        id: 'raid-case-east',
+        kind: 'supply-case',
+        x: legacy ? 1910 : 1500,
+        y: 650,
+      },
     ],
   };
 }
@@ -439,7 +499,13 @@ export function validateOverflightHuntProject(source) {
       );
       actor(pack);
       required(pack.behavior !== 'vehicle', 'Author machinery as objectives, not ordinary packs.');
-      number(pack.count, v2 ? 4 : 6, 20, 'pack size', true);
+      number(
+        pack.count,
+        overflightHuntMinimumPackSize(project.format, pack.behavior),
+        20,
+        'pack size',
+        true,
+      );
       number(pack.spacing, 16, 40, 'pack spacing');
       number(pack.speed, 30, 140, 'pack speed');
       const columns = Math.ceil(Math.sqrt(pack.count));

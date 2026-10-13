@@ -121,7 +121,7 @@ test('surviving escorts cannot overlap a later sector beyond the visible special
   const next = project.encounters[1].packs.find((p) => p.behavior === 'shield');
   const old = project.encounters[0].packs.find((p) => p.behavior === 'brace');
   next.count = 6;
-  old.count = 6;
+  old.count = 4;
   next.x = old.x + 100;
   next.y = old.y;
   next.route = structuredClone(old.route);
@@ -139,7 +139,10 @@ test('Raid and Survivor portable formats cannot be silently interchanged', async
   );
 });
 test('author → preview → export → fresh-profile import → native play preserves definition', async () => {
-  const authored = createOverflightHuntProject({ encounterSet: 'crossing', seed: 101 });
+  const authored = createOverflightHuntProject({
+    encounterSet: 'crossing',
+    seed: 101,
+  });
   authored.encounters[0].packs[0].route[0] = { x: 770, y: 390 };
   authored.encounters[1].objectives[0].x = 1320;
   authored.upgrades.thresholds = [12, 40];
@@ -172,4 +175,57 @@ test('author → preview → export → fresh-profile import → native play pre
     () => importOverflightHuntPackage(new Blob([JSON.stringify(corrupt)])),
     /closure/,
   );
+});
+
+test('paired specialist wings preserve budgets while objective routes distinguish all sets', () => {
+  const routes = new Set();
+  for (const difficulty of ['standard', 'veteran']) {
+    for (const encounterSet of OVERFLIGHT_HUNT_ENCOUNTER_SETS) {
+      for (const seed of [17031991, 42, 101]) {
+        const project = compileOverflightHuntProject(
+          createOverflightHuntProject({ difficulty, encounterSet, seed }),
+        );
+        for (const encounter of project.encounters) {
+          const escorts = encounter.packs.filter((p) => ['shield', 'brace'].includes(p.behavior));
+          assert.deepEqual(new Set(escorts.map((p) => p.behavior)), new Set(['shield', 'brace']));
+          assert.equal(
+            escorts.reduce((sum, p) => sum + p.count, 0),
+            difficulty === 'veteran' ? 6 : 4,
+          );
+          assert.ok(
+            encounter.objectives.every((o) =>
+              o.route.every(
+                (p) => p.x >= encounter.sector * 960 + 90 && p.x <= encounter.sector * 960 + 860,
+              ),
+            ),
+          );
+        }
+        const first = project.encounters[0].objectives[0];
+        assert.equal(first.behavior, 'patrol');
+        assert.deepEqual({ x: first.x, y: first.y }, { x: 340, y: 410 });
+        if (difficulty === 'standard' && seed === 42)
+          routes.add(JSON.stringify(project.encounters.map((e) => e.objectives)));
+      }
+    }
+  }
+  assert.equal(routes.size, 3);
+});
+
+test('small V2 specialist wings do not admit tiny ordinary packs or change legacy escorts', () => {
+  const ordinary = createOverflightHuntProject();
+  ordinary.encounters[0].packs[0].count = 2;
+  assert.throws(() => compileOverflightHuntProject(ordinary), /pack size/);
+  const single = createOverflightHuntProject();
+  single.encounters[0].packs.find((p) => p.behavior === 'brace').count = 1;
+  assert.throws(() => compileOverflightHuntProject(single), /pack size/);
+  const legacy = compileOverflightHuntProject(createOverflightHuntProject({ legacy: true }));
+  assert.ok(
+    legacy.encounters.every(
+      (e) => e.packs.filter((p) => ['shield', 'brace'].includes(p.behavior)).length === 1,
+    ),
+  );
+  assert.deepEqual(legacy.encounters[1].objectives[0].route, [
+    { x: 1275, y: 400 },
+    { x: 1145, y: 280 },
+  ]);
 });
