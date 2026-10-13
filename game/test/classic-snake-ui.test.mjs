@@ -1,3 +1,4 @@
+import { CLASSIC_SNAKE_PURSUIT_V1_ARCHIVED_LEVELS } from '../snake/classic-catalogue-pursuit-v1-archive.mjs';
 import { classicOperationStatus } from '../snake/classic-operation-status.mjs';
 import { OPERATION_PROTOTYPES } from './manual/snake-operation-recipes.mjs';
 import { classicBoardPreferences, isClassicWorldStyle } from '../snake/classic-worlds.mjs';
@@ -2071,3 +2072,32 @@ for (const mode of ['solo', 'team', 'versus']) {
     assert.deepEqual(state.created.at(-1).level.operation, entry.level.operation);
   });
 }
+
+for (const mode of ['solo', 'versus', 'team'])
+  test(`${mode} restores the original chapter artwork owner with a retained recipe`, async () => {
+    const old = CLASSIC_SNAKE_PURSUIT_V1_ARCHIVED_LEVELS.find(
+      (e) => e.id === 'classic-living-cable-cutoff',
+    );
+    const original = await harness({ entry: old, mode, catalogue: [old] });
+    const select = original.document.querySelector('[data-enemy-appearance]');
+    select.value = 'military';
+    select.emit('change');
+    await flush();
+    original.start();
+    original.window.emit('blur');
+    const saved = JSON.parse(original.storage.get('revealline.classic-snake.round.v2'));
+    assert.ok(saved.appearance.environmentPin);
+    assert.equal(saved.match.replays[0].level.revision, '1');
+    const restored = await harness({
+      entry: CLASSIC_SNAKE_LEVELS.find((e) => e.id === old.id),
+      mode,
+    });
+    await importSession(restored.$, saved);
+    assert.equal(restored.$('save-status').textContent, CLASSIC_COPY.en.loaded);
+    assert.deepEqual(
+      snapshotAttemptAppearance(restored.acceptedAppearances.at(-1)),
+      saved.appearance,
+    );
+    restored.window.emit('blur');
+    assert.equal(JSON.parse(restored.storage.get('revealline.classic-snake.round.v2')).match.replays[0].level.revision, '1');
+  });
