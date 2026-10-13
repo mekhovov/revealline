@@ -1,0 +1,147 @@
+{
+  "format": "FPVFreeWorldPreparation.v1",
+  "id": "cc0-industrial-yard",
+  "title": [
+    "Industrial Service Yard",
+    "Промисловий двір"
+  ],
+  "kit": "city-kit-industrial",
+  "sourceURL": "https://kenney.nl/assets/city-kit-industrial",
+  "downloadURL": "https://kenney.nl/media/pages/assets/city-kit-industrial/0ec35b139d-1788171848/kenney_city-kit-industrial_2.0.zip",
+  "archiveSha256": "5b381164e5760f3830a2dbee43b972deee38b2a695d091b56e238ab2910c96d2",
+  "license": "CC0-1.0",
+  "tool": "@gltf-transform 4.5.1",
+  "modelBytes": 401864,
+  "modelSha256": "a548620836942a3e395cd70ac5af222c34f8fe677a9bb72961b8b687eb39f9b9",
+  "packBytes": 1054654,
+  "packSha256": "74fc5afb38af089a0bf58740640b070532d36cdd181011b9ef2fb8742d496273",
+  "collisionSurfaces": 15,
+  "collisionTriangles": 10781,
+  "validation": {
+    "numErrors": 0,
+    "numWarnings": 0,
+    "numInfos": 0,
+    "numHints": 0,
+    "messages": [],
+    "truncated": false
+  },
+  "placements": [
+    {
+      "model": "Models/GLB format/building-a.glb",
+      "sha256": "0e6ef8eb1e1bdbb9d06b5496b5daf3066e00eaf74b3fcd61b74072116a1c86cf",
+      "placement": {
+        "model": "building-a",
+        "x": -22,
+        "z": 20,
+        "size": 15,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 7.199119141592154
+    },
+    {
+      "model": "Models/GLB format/building-a.glb",
+      "sha256": "0e6ef8eb1e1bdbb9d06b5496b5daf3066e00eaf74b3fcd61b74072116a1c86cf",
+      "placement": {
+        "model": "building-a",
+        "x": 22,
+        "z": 20,
+        "size": 15,
+        "yaw": 180,
+        "y": 0
+      },
+      "scale": 7.199119141592154
+    },
+    {
+      "model": "Models/GLB format/building-h.glb",
+      "sha256": "5a6a6c6824467972ba00b5a3c3cbb19da6e96673bc4e42daf1f09cfd4d2ed0e1",
+      "placement": {
+        "model": "building-h",
+        "x": -22,
+        "z": 0,
+        "size": 15,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 11.348799687267716
+    },
+    {
+      "model": "Models/GLB format/building-h.glb",
+      "sha256": "5a6a6c6824467972ba00b5a3c3cbb19da6e96673bc4e42daf1f09cfd4d2ed0e1",
+      "placement": {
+        "model": "building-h",
+        "x": 22,
+        "z": 0,
+        "size": 15,
+        "yaw": 180,
+        "y": 0
+      },
+      "scale": 11.348799687267716
+    },
+    {
+      "model": "Models/GLB format/building-l.glb",
+      "sha256": "86f03eb0b0c5882c59de79b505ffba4377a9b4591588215aa880ab6362087066",
+      "placement": {
+        "model": "building-l",
+        "x": -22,
+        "z": -20,
+        "size": 15,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 7.199121406968642
+    },
+    {
+      "model": "Models/GLB format/building-l.glb",
+      "sha256": "86f03eb0b0c5882c59de79b505ffba4377a9b4591588215aa880ab6362087066",
+      "placement": {
+        "model": "building-l",
+        "x": 22,
+        "z": -20,
+        "size": 15,
+        "yaw": 180,
+        "y": 0
+      },
+      "scale": 7.199121406968642
+    },
+    {
+      "model": "Models/GLB format/water-tower.glb",
+      "sha256": "11ac7ae19f32ce889bfe7a9c8e78c8ce8c77b7a76b52fd4ffa439a022ea2ef40",
+      "placement": {
+        "model": "water-tower",
+        "x": -34,
+        "z": -34,
+        "size": 8,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 9.387293770028503
+    },
+    {
+      "model": "Models/GLB format/shipping-container-a.glb",
+      "sha256": "7b2d5ca874c8e659ee6cfd1614f0470b70410b2ddc7620ac83b8954dedeb861d",
+      "placement": {
+        "model": "shipping-container-a",
+        "x": 31,
+        "z": 34,
+        "size": 12,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 14.587891121110951
+    },
+    {
+      "model": "Models/GLB format/detail-tank.glb",
+      "sha256": "9e955732e4ef9ccff4a4d6967d29d8a7d2f9ed16c903923f2568216d9f0b50d2",
+      "placement": {
+        "model": "detail-tank",
+        "x": 32,
+        "z": -32,
+        "size": 7,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 8.254713017128033
+    }
+  ]
+}
