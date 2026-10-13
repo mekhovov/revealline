@@ -1177,8 +1177,8 @@ test('the Snake library shows all missions and filters without changing the paus
   state.frame(200);
   state.shell.open('missions');
   const before = state.created.map((run) => core.exportClassicSnakeReplay(run));
-  assert.equal(state.$('journey-cards').children.length, 192);
-  assert.equal(state.$('journey-campaign-rail').children.length, 29);
+  assert.equal(state.$('journey-cards').children.length, 240);
+  assert.equal(state.$('journey-campaign-rail').children.length, 35);
   const first = libraryCard(state, CLASSIC_SNAKE_LEVELS[0].id);
   state.$('journey-search').value = 'Quiet Channel';
   state.$('journey-search').emit('input');

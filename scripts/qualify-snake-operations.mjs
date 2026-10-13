@@ -1,3 +1,4 @@
+import { CLASSIC_SNAKE_OPERATION_LEVELS_B } from '../game/snake/classic-catalogue-operations-b.mjs';
 import { readFile, writeFile } from 'node:fs/promises';
 import { CLASSIC_SNAKE_LEVELS } from '../game/snake/classic-catalogue.mjs';
 import { CLASSIC_SNAKE_OPERATION_LEVELS_A } from '../game/snake/classic-catalogue-operations-a.mjs';
@@ -6,12 +7,24 @@ import { restoreClassicSnakeReplay } from '../game/snake/classic-core.mjs';
 import { proveClassicSnakeV4 } from '../game/test/helpers/classic-snake-v4-playthrough.mjs';
 
 const suite = process.argv.find((a) => a.startsWith('--suite='))?.slice(8) ?? 'operations-a';
-if (!['operations-a', 'variety'].includes(suite)) throw new Error('Unknown qualification suite');
+if (!['operations-a', 'operations-b', 'variety'].includes(suite))
+  throw new Error('Unknown qualification suite');
 const entries =
   suite === 'variety'
     ? CLASSIC_SNAKE_LEVELS.filter((e) => /\.v[23]$/.test(e.level.version))
-    : CLASSIC_SNAKE_OPERATION_LEVELS_A;
-const output = new URL(`../game/test/fixtures/classic-snake-${suite}-proofs.json`, import.meta.url);
+    : suite === 'operations-b'
+      ? CLASSIC_SNAKE_OPERATION_LEVELS_B
+      : CLASSIC_SNAKE_OPERATION_LEVELS_A;
+const hazardSeed = Number(
+  process.argv.find((a) => a.startsWith('--hazard-seed='))?.slice(14) ?? 17,
+);
+if (!Number.isSafeInteger(hazardSeed) || hazardSeed < 0 || hazardSeed > 0xffffffff)
+  throw new Error('Invalid hazard seed');
+const suffix = hazardSeed === 17 ? '' : `-hazards-${hazardSeed}`;
+const output = new URL(
+  `../game/test/fixtures/classic-snake-${suite}${suffix}-proofs.json`,
+  import.meta.url,
+);
 const only = process.argv.find((a) => a.startsWith('--mission='))?.slice(10);
 let previous;
 try {
@@ -21,7 +34,11 @@ try {
 }
 const proofs = previous.proofs;
 const failures = [];
-for (const entry of entries.filter((e) => !only || e.id.endsWith(only))) {
+for (const entry of entries.filter(
+  (e) =>
+    (!only || e.id.endsWith(only)) &&
+    (hazardSeed === 17 || e.level.targets.required.some((p) => p.signalProfile)),
+)) {
   for (const mode of ['solo', 'team'])
     for (const pace of ['normal', 'slow', 'fast']) {
       const level = prepareClassicSnakeLevel(entry, { pace });
@@ -40,6 +57,7 @@ for (const entry of entries.filter((e) => !only || e.id.endsWith(only))) {
       try {
         const replay = proveClassicSnakeV4(level, {
           mode,
+          hazardSeed,
           maxSteps: suite === 'variety' ? 1600 : 480,
           maxBacktracks: 32,
         });
