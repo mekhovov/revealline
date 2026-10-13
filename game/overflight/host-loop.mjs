@@ -1,5 +1,20 @@
 export const OVERFLIGHT_STEP_SECONDS = 1 / 60;
 
+/** Regenerate built-in V2 encounters with the run seed. Authored content and
+ * legacy definitions retain their exact layouts, even with a runtime seed override. */
+export function overflightSortieProject(mode, project, { seed, difficulty, authored = false }) {
+  if (
+    authored ||
+    project.format.endsWith('V1') ||
+    (project.seed === seed && project.difficulty === difficulty)
+  )
+    return project;
+  const encounterSet = mode.encounterSets.find(
+    (set) => mode.createProject({ encounterSet: set }).id === project.id,
+  );
+  return encounterSet ? mode.createProject({ encounterSet, seed, difficulty }) : project;
+}
+
 /** Focus loss can swallow keyup. Require a fresh press after clearing keys. */
 export function createOverflightKeyboardState() {
   const held = new Set();

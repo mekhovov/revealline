@@ -152,22 +152,24 @@ export function createOverflightHuntProject({
                 ],
       };
     });
-    // Finite brace escorts threaten the objective approach. They commit to a
-    // short local route rather than pursuing the player into the next sector.
+    // Finite escorts threaten the objective approach through a shield screen
+    // or a short brace route instead of pursuing into the next sector.
     // The simulation admits guards against the shared specialist budget.
+    const escortX = [420, 1550, 2680][sector];
+    const escortY = !legacy && sector === 1 ? 760 : 540;
+    // The column's second vehicle is protected by a committed shield screen.
+    // Its rear stays open; the introductory exposed leader is still a free pass.
+    const shieldScreen = !legacy && sector === 1;
     packs.push({
       id: `${id}-escort`,
-      family: 'brace-trooper',
-      behavior: 'brace',
+      family: shieldScreen ? 'shield-bearer' : 'brace-trooper',
+      behavior: shieldScreen ? 'shield' : 'brace',
       count: legacy ? 6 : difficulty === 'veteran' ? 6 : 4,
-      x: [420, 1550, 2680][sector],
-      y: 540,
+      x: escortX,
+      y: escortY,
       spacing: 24,
       speed: 42,
-      route: [
-        point([420, 1550, 2680][sector] + 35, 565),
-        point([420, 1550, 2680][sector] - 35, 515),
-      ],
+      route: [point(escortX + 35, escortY + 25), point(escortX - 35, escortY - 25)],
     });
     const objective = (name, family, behavior, x, y, armorSegments = 0) => ({
       id: name,

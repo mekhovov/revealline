@@ -60,6 +60,44 @@ export function createOverflightHuntReviewPilot({ route = 'objectives', build = 
         goalY = target.y + Math.sin(outward + 0.5) * radius;
         attack = false;
       }
+      // A protected escort can block the intended objective approach. Route
+      // around its committed facing using the same visible contact state a
+      // player sees, rather than repeatedly driving into the screen.
+      const gx = goalX - p.x,
+        gy = goalY - p.y,
+        goalDistance = Math.hypot(gx, gy) || 1;
+      let blocker = null,
+        blockerDistance = Infinity;
+      for (const enemy of run.enemies) {
+        if (!enemy.active || enemy.id === target.id || enemy.warning > 0) continue;
+        const protectedState = overflightHuntContactState(enemy, p);
+        if (!['guarded', 'machinery-guarded'].includes(protectedState)) continue;
+        const dx = enemy.x - p.x,
+          dy = enemy.y - p.y,
+          along = (dx * gx + dy * gy) / goalDistance,
+          across = Math.abs(dx * gy - dy * gx) / goalDistance;
+        if (
+          along > 0 &&
+          along < Math.min(100, goalDistance) &&
+          across < enemy.radius + p.radius + 12 &&
+          along < blockerDistance
+        ) {
+          blocker = enemy;
+          blockerDistance = along;
+        }
+      }
+      if (blocker) {
+        const outward = Math.atan2(p.y - blocker.y, p.x - blocker.x);
+        const rear = blocker.heading + Math.PI;
+        const delta = Math.max(
+          -0.65,
+          Math.min(0.65, Math.atan2(Math.sin(rear - outward), Math.cos(rear - outward))),
+        );
+        const radius = blocker.radius + p.radius + 48;
+        goalX = blocker.x + Math.cos(outward + delta) * radius;
+        goalY = blocker.y + Math.sin(outward + delta) * radius;
+        attack = false;
+      }
       // Already-fired shots are independent of their owner's body. Avoid them
       // with a short perpendicular diversion, without hiding them from the core.
       for (const shot of run.projectiles) {
