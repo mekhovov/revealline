@@ -1,5 +1,19 @@
 # Final combined Library and Creator journey
 
+## Public Library follow-up — 13 October 2026
+
+The published Browse/download gap is closed for Reservoir r16, Festival r5 and
+Harbor r4 by merged #1155 and actual public-player verification. All three
+downloads persisted across reload (24 courses). Harbor’s separate archive imported
+16/16 verified records; Terminal cart escort completed visible playback in both
+Self-level and Acro. Practice, pause and safe mode-change handoffs were observed.
+[The bounded receipt](evidence/fpv-public-library-20261013/receipt.json) records the
+public deployment and exact recording identities. This closes the public delivery
+subtask only: the historical Creator/offline/performance results below are not
+fresh qualification of today’s main.
+
+## Historical combined qualification
+
 Status: executed bounded qualification, 4 October 2026 UTC. Source8965 and exact
 admitted8966 each passed453 native online controls; the admitted native page also
 passed a separately observed stopped-origin reload/edit/flight check. Final source
