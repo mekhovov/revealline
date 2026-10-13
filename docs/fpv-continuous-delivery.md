@@ -4177,3 +4177,10 @@ conversion/optimization (1.1–3.4 GB Blender scenes; one ~13.2 GB Unreal collec
 and are explicitly not offered as playable maps. Local free space remains below
 the unchanged stable 3 GiB full-build floor. No core/world/asset limits were raised;
 only catalogue metadata grows to a bounded 32 rows / 32 KiB. No public-live claim.
+
+Published as [PR #1174](https://github.com/mekhovov/revealline/pull/1174).
+All 19 immutable remote catalogue downloads were fetched from GitHub and matched
+the declared size and SHA-256, including the preserved three maps. Cloud candidate
+run [38484966895](https://github.com/mekhovov/revealline/actions/runs/38484966895)
+started on `8600cf3bdaf68956a55343a08aaded56ac755862`; this subsequent checkpoint
+changes documentation only. Read the latest exact-head checks before any merge.
