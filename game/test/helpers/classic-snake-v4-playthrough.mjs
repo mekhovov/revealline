@@ -51,7 +51,9 @@ function distanceToObjectives(run, snake) {
   for (const gate of run.shutters ?? [])
     if (gate.closed) for (const at of gate.cells) walls.add(key(at));
   const targets = targetsOf(run);
-  let objectives = targets.filter((target) => target.kind !== 'relay' || target.phase === 'open');
+  let objectives = targets.filter(
+    (target) => target.role !== 'bonus' && (target.kind !== 'relay' || target.phase === 'open'),
+  );
   for (const relay of run.relays ?? []) if (!relay.collected) objectives.push(relay);
   for (const target of targets)
     if (target.kind === 'relay' && target.phase !== 'open') walls.add(key(target));
@@ -122,7 +124,13 @@ function distanceToObjectives(run, snake) {
       )
         continue;
       const target = targets.find((actor) => same(actor, next));
-      if (target && classicSnakeContactHazardV4(run.level, target, at)) continue;
+      if (target && classicSnakeContactHazardV4(run.level, target, at)) {
+        // Stay close to a protected objective without pretending its cell is
+        // traversable. Otherwise a temporary shield makes every route equally
+        // distant and the pilot leaves just before the recovery window.
+        if (goals.has(identity)) nearest = Math.min(nearest, at.distance + 1);
+        continue;
+      }
       visited.add(identity);
       queue.push({ ...next, distance: at.distance + 1 });
     }

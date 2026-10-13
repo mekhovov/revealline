@@ -4666,3 +4666,50 @@
     }
   }
 }
+
+/* Import help is local text; external resources load only on an explicit visit. */
+@layer legacy {
+  .sim-worlds .world-import-guide {
+    margin-block: 12px;
+    border: 1px solid var(--line);
+    padding: 12px 16px;
+    min-width: 0;
+  }
+  .sim-worlds .world-import-guide summary {
+    min-height: 44px;
+    cursor: pointer;
+    align-content: center;
+    font-weight: 700;
+  }
+  .sim-worlds .world-import-guide :is(p, li) {
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+  }
+  .sim-worlds .world-import-guide ol {
+    padding-inline-start: 24px;
+  }
+  .sim-worlds .world-import-guide ol li {
+    margin-block: 12px;
+  }
+  .sim-worlds .world-import-guide a {
+    color: var(--fk-cyan);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .sim-worlds .world-import-guide a:focus-visible {
+    outline: 2px solid var(--fk-amber);
+    outline-offset: 3px;
+  }
+  .sim-worlds .world-resource-links {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
+    gap: 4px 16px;
+    padding: 0;
+    list-style: none;
+  }
+  .sim-worlds .world-resource-links a {
+    display: block;
+    min-height: 44px;
+    align-content: center;
+  }
+}
