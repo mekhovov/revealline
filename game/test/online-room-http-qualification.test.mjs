@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { fixture } from './helpers/room-service-http-fixture.mjs';
-import { CLASSIC_SNAKE_LEVELS } from '../snake/classic-catalogue.mjs';
+import { CLASSIC_SNAKE_PURSUIT_V1_ARCHIVED_LEVELS } from '../snake/classic-catalogue-pursuit-v1-archive.mjs';
 import { createRoomClientLifecycle } from '../online/room-client-lifecycle.mjs';
 import { createRoomEventCursor } from '../online/room-events.mjs';
 import { restoreTrustedRoomSnapshot, verifyAuthoritativeRoomResult } from '../online/room-core.mjs';
@@ -138,7 +138,7 @@ for (const mode of ['versus', 'team']) {
     `real HTTP ${mode}: duplicate/lost/late delivery preserves native completion and once-only catch events`,
     { timeout: 30000 },
     async (t) => {
-      const entry = CLASSIC_SNAKE_LEVELS.find(
+      const entry = CLASSIC_SNAKE_PURSUIT_V1_ARCHIVED_LEVELS.find(
         (level) => level.id === 'classic-living-cable-cutoff',
       );
       assert.ok(entry);

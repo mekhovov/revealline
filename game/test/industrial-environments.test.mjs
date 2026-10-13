@@ -53,8 +53,8 @@ const prepare = (row) =>
 
 test('all fourteen chapters and exact local/native-room source forms admit', async () => {
   assert.equal(catalogue.chapters.length, 14);
-  assert.equal(ordinary.length, 324);
-  assert.equal(catalogue.sources.filter((row) => row.roomCatalogueId).length, 276);
+  assert.equal(ordinary.length, 360);
+  assert.equal(catalogue.sources.filter((row) => row.roomCatalogueId).length, 492);
   assert.equal(catalogue.roomAliases.length, 756);
   const engines = new Set(),
     chapters = new Set();

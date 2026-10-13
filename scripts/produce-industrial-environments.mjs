@@ -9,6 +9,7 @@ import {
   CLASSIC_SNAKE_V3_CHAPTERS,
   CLASSIC_SNAKE_V3_LEVELS,
 } from '../game/snake/classic-catalogue-v3.mjs';
+import { CLASSIC_SNAKE_PURSUIT_V1_ARCHIVED_LEVELS } from '../game/snake/classic-catalogue-pursuit-v1-archive.mjs';
 import { prepareClassicSnakeLevel } from '../game/snake/classic-setup.mjs';
 import { prepareRunningEnemyLevel } from '../game/hunt/running-enemies.mjs';
 import { prepareTeamRunningEnemies } from '../game/hunt/team-running-enemies.mjs';
@@ -198,7 +199,14 @@ export async function collectIndustrialEnvironmentSources() {
   }
   for (const chapter of CLASSIC_SNAKE_V3_CHAPTERS)
     chapters.push({ ...chapter, engine: 'snake', modes: ['solo', 'versus', 'team'] });
-  for (const entry of CLASSIC_SNAKE_V3_LEVELS) {
+  // The published environment pins bind to the original v3 recipes. Keep
+  // those exact sources and room preparations while admitting revision 2 as
+  // additional sources; a new mission must never repoint an immutable pin.
+  const historicalLiving = CLASSIC_SNAKE_PURSUIT_V1_ARCHIVED_LEVELS.filter((entry) =>
+    entry.id.startsWith('classic-living-'),
+  );
+  for (const entry of [...historicalLiving, ...CLASSIC_SNAKE_V3_LEVELS]) {
+    const retained = entry.level.revision === '1';
     const chapter = chapters.find((c) => c.id === entry.chapterId);
     for (const mode of ['solo', 'versus', 'team']) {
       const row = add(
@@ -225,6 +233,7 @@ export async function collectIndustrialEnvironmentSources() {
           level: entry.level,
           chapter,
           sourceKey: row.sourceKey,
+          retained,
         });
     }
   }
@@ -326,13 +335,14 @@ export async function collectIndustrialEnvironmentSources() {
           );
           seen.set(hash, row);
         }
-        roomAliases.push({
-          catalogueId: entry.id,
-          pace,
-          targets,
-          sourceKey: row.sourceKey,
-          contentSha256: hash,
-        });
+        if (entry.retained !== false)
+          roomAliases.push({
+            catalogueId: entry.id,
+            pace,
+            targets,
+            sourceKey: row.sourceKey,
+            contentSha256: hash,
+          });
       }
   }
   if (chapters.length !== 14)
