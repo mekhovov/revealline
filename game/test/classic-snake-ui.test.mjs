@@ -1,3 +1,4 @@
+import { classicBoardPreferences, isClassicWorldStyle } from '../snake/classic-worlds.mjs';
 import { nextInputModality, showScreenControls } from '../input-presentation.mjs';
 import { createTouchPreferences } from '../touch-preferences.mjs';
 import { attachTouchSteering } from '../ui/touch-steering.mjs';
@@ -188,6 +189,8 @@ async function harness({
     appearanceActions = [],
     acceptedAppearances = [];
   const context = createContext({
+    classicBoardPreferences,
+    isClassicWorldStyle,
     resolveClassicBoardScene,
     classicSceneBackdrop,
     nextClassicHazardSeed,
@@ -420,6 +423,7 @@ async function harness({
       }),
     createClassicPresentation: () => ({
       snapshot: () => null,
+      previewSnapshot: () => null,
       setArtRevision: (revision) => artworkSelections.push(revision),
       setAttemptAppearance(value) {
         acceptedAppearances.push(value);
@@ -2008,3 +2012,21 @@ test('Snake reveals shared controls for real touch on hybrid devices and hides t
     'Paused gameplay never leaves live controls behind a menu.',
   );
 });
+
+for (const worldStyle of ['toybox', 'atmospheric-ruins', 'night-arcade']) {
+  test(`${worldStyle} changes paused scenery without a new attempt`, async () => {
+    const state = await harness({ query: `&board=${worldStyle}&scene=harbor` });
+    state.shell.open('settings');
+    const before = core.exportClassicSnakeReplay(state.created[0]);
+    assert.equal(state.$('board-scene-field').hidden, false);
+    state.$('board-scene').value = 'quarry';
+    state.$('board-scene').emit('change');
+    state.frame(0);
+    state.frame(500);
+    assert.equal(state.created.length, 1);
+    assert.deepEqual(core.exportClassicSnakeReplay(state.created[0]), before);
+    assert.equal(state.drawings.at(-1).options.boardStyle, worldStyle);
+    assert.equal(state.drawings.at(-1).options.boardScene, 'quarry');
+    assert.equal(new URL(state.location.href).searchParams.get('board'), worldStyle);
+  });
+}

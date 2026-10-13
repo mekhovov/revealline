@@ -108,6 +108,7 @@ export function classicSnakeLibrarySource({
           width: run.level.width,
           height: run.level.height,
           chapterId: entry.chapterId,
+          cast: entry.cast ?? 'rivals',
           run,
         });
       }
@@ -119,17 +120,29 @@ export function classicSnakeLibrarySource({
   };
 }
 
-export function renderClassicSnakeLibraryPreview({ container, diagram, document }) {
+export function renderClassicSnakeLibraryPreview({
+  container,
+  diagram,
+  document,
+  appearance = {},
+}) {
   if (diagram?.kind !== 'classic-snake') return;
   const canvas = document.createElement('canvas');
   canvas.className = 'journey-card-map';
   canvas.setAttribute('aria-hidden', 'true');
   container.append(canvas);
   drawClassicBoard(canvas, diagram.run, {
-    boardStyle: 'retro',
+    boardStyle: 'living-circuit',
+    cast: diagram.cast ?? 'rivals',
+    ...appearance,
     chapterId: diagram.chapterId,
     reduced: true,
     cssWidth: 288,
     pixelRatio: 1,
   });
+  return {
+    release() {
+      canvas.width = canvas.height = 0;
+    },
+  };
 }

@@ -28,7 +28,15 @@ function context() {
 }
 
 test('scene Auto follows chapter identity while explicit choice wins without touching RNG', () => {
-  assert.deepEqual(CLASSIC_BOARD_SCENES, ['auto', 'orchard', 'workshop', 'relay']);
+  assert.deepEqual(CLASSIC_BOARD_SCENES, [
+    'auto',
+    'orchard',
+    'workshop',
+    'relay',
+    'freight',
+    'harbor',
+    'quarry',
+  ]);
   const opening = CLASSIC_SNAKE_LEVELS.find((entry) => entry.id === 'classic-snake-open-loop');
   assert.ok(opening, 'fresh-profile opening mission exists in the accepted catalogue');
   assert.equal(resolveClassicBoardScene(opening), 'orchard');
@@ -87,8 +95,23 @@ test('Living Circuit preserves the complete grid, actual wall cells, and every r
   const run = createClassicSnake(entry.level);
   const before = exportClassicSnakeReplay(run),
     dimensions = [];
-  for (const boardStyle of ['theme', 'retro', 'living-circuit'])
-    for (const boardScene of ['auto', 'orchard', 'workshop', 'relay']) {
+  for (const boardStyle of [
+    'theme',
+    'retro',
+    'living-circuit',
+    'toybox',
+    'atmospheric-ruins',
+    'night-arcade',
+  ])
+    for (const boardScene of [
+      'auto',
+      'orchard',
+      'workshop',
+      'relay',
+      'freight',
+      'harbor',
+      'quarry',
+    ]) {
       const { ctx, calls } = context();
       const canvas = { width: 0, height: 0, style: {}, getContext: () => ctx };
       drawClassicBoard(canvas, run, {

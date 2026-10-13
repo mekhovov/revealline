@@ -1,3 +1,4 @@
+import { classicBoardPreferences, isClassicWorldStyle } from './classic-worlds.mjs';
 import { claimProfileWriter } from '../profile-writer.mjs';
 import {
   createEnemyStats,
@@ -206,16 +207,7 @@ let targetRules = choice(
 let preset = choice(PRESETS, params.get('preset') ?? selected.preset, 'classic');
 let duel = choice(['score', 'survival'], params.get('duel') ?? selected.duel, 'score');
 let style = choice(['cable', 'signal'], cosmetic.style, 'cable');
-let boardStyle = choice(
-  ['theme', 'retro', 'living-circuit'],
-  params.get('board') ?? cosmetic.boardStyle,
-  'theme',
-);
-let boardScene = choice(
-  ['auto', 'orchard', 'workshop', 'relay'],
-  params.get('scene') ?? cosmetic.boardScene,
-  'auto',
-);
+let { boardStyle, boardScene } = classicBoardPreferences(params, cosmetic);
 const actorAppearance = sharedActorAppearance();
 const currentCast = () => {
   const value = actorAppearance.snapshot().cast;
@@ -292,7 +284,10 @@ const display = createDisplayPreferences({
     $('snake-display-status').textContent = key ? t(key) : message;
   },
 });
-const presentation = createClassicPresentation({ displayPreferences: display });
+const presentation = createClassicPresentation({
+  displayPreferences: display,
+  onChange: () => missionChooser?.refresh(),
+});
 const enemyAppearanceControls = mountEnemyAppearanceControls({
   document: doc,
   container: $('snake-enemy-appearance'),
@@ -1176,7 +1171,31 @@ function openMissionLibrary() {
         locale === 'uk'
           ? 'Усі місії Snake. Оберіть поле й починайте; розділи допоможуть знайти наступне випробування.'
           : 'Every Snake mission. Choose a board to play; chapters help you find your next challenge.',
-      renderPreview: renderClassicSnakeLibraryPreview,
+      renderPreview: (options) => {
+        const destination = CLASSIC_SNAKE_LEVELS.find((item) => item.id === options.row.runtimeId);
+        const previewAppearance = acceptAttemptAppearance(
+          environmentCandidate(destination, options.mode),
+          {
+            artRevision: acceptedArtRevision,
+            collection: acceptedAppearance?.collection ?? null,
+          },
+        );
+        return renderClassicSnakeLibraryPreview({
+          ...options,
+          appearance: {
+            boardStyle,
+            boardScene,
+            style,
+            cast:
+              actorAppearance.snapshot().cast === 'authored'
+                ? options.diagram.cast
+                : actorAppearance.snapshot().cast,
+            artRevision: acceptedArtRevision,
+            presentation: presentation.previewSnapshot(previewAppearance),
+            locale,
+          },
+        });
+      },
       onPause: () => {
         pause({ showMenu: false });
         importEpoch++;
@@ -1444,9 +1463,10 @@ function applyBoardScene() {
     levelId: entry.id,
   });
   doc.body.dataset.boardScene = scene;
-  $('board-scene-field').hidden = boardStyle !== 'living-circuit';
-  const background =
-    boardStyle === 'living-circuit' ? classicSceneBackdrop(scene, { document: doc }) : null;
+  $('board-scene-field').hidden = !isClassicWorldStyle(boardStyle);
+  const background = isClassicWorldStyle(boardStyle)
+    ? classicSceneBackdrop(scene, { document: doc, treatment: boardStyle })
+    : null;
   for (const board of boards) {
     board.wrap.style.backgroundImage = background ? `url("${background}")` : '';
     board.wrap.dataset.scene = scene;

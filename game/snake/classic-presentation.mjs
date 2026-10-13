@@ -107,18 +107,15 @@ export function createClassicPresentation({
     for (const canvas of derived.values()) canvas.width = canvas.height = 0;
     derived.clear();
   }
-  function imageFor(slot) {
+  function imageFor(slot, appearance = acceptedAppearance) {
     if (disposed) return null;
     const frame = artwork.current()?.image(slot),
       image = frame?.image ?? null,
       collection =
-        acceptedAppearance === undefined
+        appearance === undefined
           ? selectedArcadeCollection(theme.effectivePreferences())
-          : acceptedAppearance?.collection
-            ? getArcadeCollection(
-                acceptedAppearance.collection.id,
-                acceptedAppearance.collection.revision,
-              )
+          : appearance?.collection
+            ? getArcadeCollection(appearance.collection.id, appearance.collection.revision)
             : null;
     if (!image || slot !== 'terrain.wall' || collection?.id !== 'military-field') return image;
     if (
@@ -126,7 +123,13 @@ export function createClassicPresentation({
       !INDUSTRIAL_BUILTIN_SPRITES[slot]?.includes(frame.asset?.file?.sha256)
     )
       return image;
-    if (derived.has(slot)) return derived.get(slot);
+    const key = JSON.stringify([slot, appearance]);
+    if (derived.has(key)) {
+      const cached = derived.get(key);
+      derived.delete(key);
+      derived.set(key, cached);
+      return cached;
+    }
     try {
       const canvas = doc.createElement('canvas');
       canvas.width = image.width;
@@ -140,11 +143,23 @@ export function createClassicPresentation({
           { width: canvas.width, height: canvas.height, rgba: pixels.data },
           slot,
           collection,
-          { reviewRevision: artRevision, environment: acceptedAppearance?.environmentPin ?? null },
+          {
+            reviewRevision:
+              appearance === undefined ? artRevision : (appearance?.artRevision ?? null),
+            environment: appearance?.environmentPin ?? null,
+          },
         ).rgba,
       );
       context.putImageData(pixels, 0, 0);
-      derived.set(slot, canvas);
+      derived.set(key, canvas);
+      // Visible selector cards and live boards share this bounded provider.
+      // Eviction releases pixels; a later draw can regenerate from its pin.
+      while (derived.size > 16) {
+        const oldest = derived.keys().next().value;
+        const retired = derived.get(oldest);
+        retired.width = retired.height = 0;
+        derived.delete(oldest);
+      }
       return canvas;
     } catch {
       return image;
@@ -237,6 +252,10 @@ export function createClassicPresentation({
   win?.addEventListener('pagehide', hide);
   return Object.freeze({
     snapshot: () => current,
+    previewSnapshot(value) {
+      const appearance = requireAcceptedAttemptAppearance(value);
+      return Object.freeze({ ...current, image: (slot) => imageFor(slot, appearance) });
+    },
     boardSnapshot: () => artwork.current(),
     ready,
     theme,
