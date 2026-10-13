@@ -4109,3 +4109,13 @@ The evidence-only branch was subsequently rebased onto main `41e5986ed6c208db2dd
 A separate source bridge matches 114/117 World inputs at that head. The admitted
 artifact and native stopped-origin observations remain bound to45e; no newer
 package or release identity is inferred.
+
+Published evidence PR **#1166**, `codex/fpv-current-main-qualification`. Newer main41e
+changes three admitted inputs: `game/ui/native-menu-icons.mjs`,
+`optional-practice/civilian-fpv/flight-fullscreen.mjs`, and
+`optional-practice/civilian-fpv/style.css`. The old candidate is therefore not a
+complete source bridge to that main. Fresh existing-workflow run
+[38473307634](https://github.com/mekhovov/revealline/actions/runs/38473307634) is in
+progress on frozen `b7bf654486014efc6c8b8af25323b9d06f88e388`; its source includes
+those updates. Read its final admission before continuing current-package
+qualification. Subsequent evidence-only commits do not change that tested identity.
