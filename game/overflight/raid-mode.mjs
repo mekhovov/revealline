@@ -194,7 +194,7 @@ export const OVERFLIGHT_HUNT_MODE = Object.freeze({
   id: 'overflight-hunt',
   fixtures: ['raid-reference'],
   fixtureInput: overflightHuntFixtureInput,
-  name: { en: 'Overflight: Raid', uk: 'Проліт: Наліт' },
+  name: { en: 'Survive: Raid', uk: 'Вижити: Наліт' },
   defaultProject: DEFAULT_OVERFLIGHT_HUNT_PROJECT,
   compileProject: compileOverflightHuntProject,
   createProject: createOverflightHuntProject,

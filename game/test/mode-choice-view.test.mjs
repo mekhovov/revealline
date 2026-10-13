@@ -22,7 +22,7 @@ for (const current of GAME_MODE_ORDER) {
     );
     const view = renderModeChoices({ root, current, actions, setMenuIcon });
     assert.deepEqual(
-      [...root.children].map((item) => item.dataset.gameMode),
+      [...root.querySelectorAll('[data-game-mode]')].map((item) => item.dataset.gameMode),
       GAME_MODE_ORDER,
     );
     assert.equal(root.querySelectorAll('[aria-current="page"]').length, 1);
@@ -43,7 +43,13 @@ for (const current of GAME_MODE_ORDER) {
     assert.equal(actions.solo.getAttribute('aria-label'), '1P Соло');
     assert.equal(root.querySelectorAll('[aria-current="page"]').length, 1);
     assert.equal(actions.solo.dataset.menuRight.split(' ')[0], actions.team.id);
-    assert.equal(actions.solo.dataset.menuLeft.split(' ')[0], actions.simulator.id);
-    assert.equal(actions.simulator.dataset.menuRight.split(' ')[0], actions.solo.id);
+    assert.equal(actions.solo.dataset.menuLeft.split(' ')[0], view.more.id);
+    if (view.more.getAttribute('aria-expanded') === 'true')
+      assert.equal(actions.simulator.dataset.menuRight.split(' ')[0], view.more.id);
+    assert.equal(actions.versus.querySelector('strong').textContent, 'Дуель');
+    assert.equal(actions.overflight.querySelector('strong').textContent, 'Вижити');
+    assert.equal(actions.overflight.querySelector('.game-mode-badge').textContent, 'beta');
+    assert.equal(actions.snake.hidden, ['solo', 'team', 'versus'].includes(current));
+    view.dispose();
   });
 }

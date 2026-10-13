@@ -92,11 +92,6 @@ export function wireLandingMenuNavigation({
   const groups = steps
     .map((step) => (Array.isArray(step) ? step : [step]).filter((node) => node?.id))
     .filter((group) => group.length);
-  const modes = [...(modesRoot?.querySelectorAll('[data-game-mode]') ?? [])].filter(
-    (node) => node.id,
-  );
-  const selected =
-    current ?? modes.find((node) => node.getAttribute('aria-current') === 'page') ?? null;
   const originals = new Map();
   const set = (nodes, direction, targets) => {
     nodes = nodes.filter((node) => node?.id);
@@ -121,26 +116,49 @@ export function wireLandingMenuNavigation({
       else node.removeAttribute(`data-menu-${direction}`);
     }
   };
-  if (groups.length) {
-    set(modes, 'down', groups.flat());
-    set(modes, 'up', groups.toReversed().flat());
-    groups.forEach((group, index) => {
-      set(group, 'up', [
-        ...groups.slice(0, index).toReversed().flat(),
-        ...(selected ? [selected] : []),
-      ]);
-      set(group, 'down', [...groups.slice(index + 1).flat(), ...(selected ? [selected] : [])]);
-    });
-    for (const { nodes, direction, targets } of links)
-      if (['up', 'right', 'down', 'left'].includes(direction))
-        set(
-          Array.isArray(nodes) ? nodes : [nodes],
-          direction,
-          Array.isArray(targets) ? targets : [targets],
-        );
-  }
+  const refresh = () => {
+    const modes = [...(modesRoot?.querySelectorAll('[data-game-mode]') ?? [])].filter(
+      (node) => node.id && !node.hidden,
+    );
+    const more = modesRoot?.querySelector('[data-mode-more]');
+    const selected =
+      (current && !current.hidden ? current : null) ??
+      modes.find((node) => node.getAttribute('aria-current') === 'page') ??
+      more ??
+      null;
+    if (groups.length) {
+      set([...modes, more].filter(Boolean), 'down', groups.flat());
+      set([...modes, more].filter(Boolean), 'up', groups.toReversed().flat());
+      groups.forEach((group, index) => {
+        set(group, 'up', [
+          ...groups.slice(0, index).toReversed().flat(),
+          ...(selected ? [selected] : []),
+        ]);
+        set(group, 'down', [...groups.slice(index + 1).flat(), ...(selected ? [selected] : [])]);
+      });
+      for (const { nodes, direction, targets } of links)
+        if (['up', 'right', 'down', 'left'].includes(direction))
+          set(
+            Array.isArray(nodes) ? nodes : [nodes],
+            direction,
+            Array.isArray(targets) ? targets : [targets],
+          );
+    }
+    if (more?.getAttribute('aria-expanded') === 'true') {
+      const extras = modes.filter((node) =>
+        ['snake', 'overflight', 'simulator'].includes(node.dataset.gameMode),
+      );
+      set([more], 'down', [...extras, ...groups.flat()]);
+    }
+  };
+  refresh();
+  modesRoot?.addEventListener('game-mode-visibility-changed', refresh);
+  modesRoot?.addEventListener('game-mode-choices-ready', refresh);
+
   return {
     dispose() {
+      modesRoot?.removeEventListener('game-mode-visibility-changed', refresh);
+      modesRoot?.removeEventListener('game-mode-choices-ready', refresh);
       for (const [node, values] of originals)
         for (const [direction, value] of Object.entries(values).filter(
           ([direction]) => direction !== 'scope',
@@ -596,6 +614,13 @@ export function mountModePlayShell({
   function back() {
     const dialog = topDialog();
     if (!dialog || !Object.values(dialogs).includes(dialog)) return false;
+    if (dialog === dialogs.home && modes.contains(doc.activeElement)) {
+      const more = modes.querySelector('[data-mode-more][aria-expanded="true"]');
+      if (more) {
+        more.click();
+        return true;
+      }
+    }
     if (services.settingsPanelBack?.(dialog)) return true;
     if (dialog === dialogs.home || dialog === dialogs.pause) {
       if (state.phase === 'results') return open('results');
