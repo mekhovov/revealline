@@ -141,6 +141,8 @@ test('publisher copies only the frozen lightweight launcher and points at the im
   );
   validateEditionCodeClosure(launcher);
   const dependencies = [
+    'access-gate.mjs',
+    'access-gate.css',
     'edition-context.mjs',
     'profile-writer.mjs',
     'i18n/index.mjs',
@@ -217,9 +219,19 @@ test('publisher copies only the frozen lightweight launcher and points at the im
   await collect(path.join(output, 'app'));
   assert.equal(
     published.size,
-    17 + LAUNCHER_NAVIGATION_FILES.length + LAUNCHER_APPEARANCE_FILES.length + 2,
+    17 + LAUNCHER_NAVIGATION_FILES.length + LAUNCHER_APPEARANCE_FILES.length + 4,
   );
   validateEditionCodeClosure(published);
+  for (const file of ['access-gate.mjs', 'access-gate.css'])
+    assert.deepEqual(published.get(`app/${file}`), launcher.get(`app/${file}`));
+  const gateStylesheet = path.join(source, 'app/access-gate.css');
+  const gateStylesheetBytes = await fs.readFile(gateStylesheet);
+  await fs.rm(gateStylesheet);
+  await assert.rejects(
+    publishOfflineLauncher(source, path.join(temp, 'broken-access-gate'), 'v1.0.0'),
+    /missing an imported dependency: access-gate\.css/,
+  );
+  await fs.writeFile(gateStylesheet, gateStylesheetBytes);
   const controllerProfilesPath = path.join(source, 'app/couch/controller-profiles.mjs');
   const controllerProfilesBytes = await fs.readFile(controllerProfilesPath);
   assert.deepEqual(published.get('app/couch/controller-profiles.mjs'), controllerProfilesBytes);
