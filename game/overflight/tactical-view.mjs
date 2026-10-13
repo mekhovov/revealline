@@ -13,7 +13,7 @@ const layer = (frame, x, y, width, height, tint, alpha = 1, rotation = 0) => ({
 });
 
 /** Shared V2 geometry. Rendering never infers damage from an appearance family. */
-export function overflightTacticalEnemyLayers(enemy, size = 24) {
+export function overflightTacticalEnemyLayers(enemy, size = 24, player = null) {
   const layers = [];
   if (enemy.maxGuardIntegrity > 0) {
     const intact = enemy.guardIntegrity > 0;
@@ -44,22 +44,43 @@ export function overflightTacticalEnemyLayers(enemy, size = 24) {
     else layers.push(layer('arrow', enemy.x, enemy.y - size * 0.7, 12, 12, OPEN, 1, Math.PI / 2));
   }
   if (enemy.maxArmor > 0) {
+    // Distant ordinary armor stays legible without enclosing the whole crowd
+    // in large brackets. Ease to full detail before contact; priority targets
+    // and Raid (no player context) always keep the complete approach geometry.
+    const priority = enemy.heavy || enemy.objectiveId || ['elite', 'final'].includes(enemy.role);
+    const detail =
+      !player || priority
+        ? 1
+        : Math.max(
+            0,
+            Math.min(1, (240 - Math.hypot(enemy.x - player.x, enemy.y - player.y)) / 100),
+          );
+    const mix = (compact, full) => compact + (full - compact) * detail;
+    const width = mix(14, 30),
+      barY = enemy.y - size * mix(0.48, 0.68);
     const fraction = Math.max(0, Math.min(1, enemy.armor / enemy.maxArmor));
     const exposed = enemy.exposureRemaining > 0 || enemy.armor <= 0;
-    layers.push(layer('bar', enemy.x, enemy.y - size * 0.68, 34, 6, 0x12241f));
+    layers.push(layer('bar', enemy.x, barY, width + mix(2, 4), mix(3, 6), 0x12241f));
     if (fraction)
       layers.push(
-        layer('bar', enemy.x - 15 * (1 - fraction), enemy.y - size * 0.68, fraction * 30, 4, GOLD),
+        layer(
+          'bar',
+          enemy.x - (width / 2) * (1 - fraction),
+          barY,
+          fraction * width,
+          mix(2, 4),
+          GOLD,
+        ),
       );
     if (exposed)
       for (const side of [-1, 1])
         layers.push(
           layer(
             'arrow',
-            enemy.x + side * size * 0.75,
+            enemy.x + side * size * mix(0.46, 0.75),
             enemy.y,
-            13,
-            13,
+            mix(8, 13),
+            mix(8, 13),
             OPEN,
             1,
             side < 0 ? 0 : Math.PI,
@@ -68,7 +89,16 @@ export function overflightTacticalEnemyLayers(enemy, size = 24) {
     else
       for (const side of [-1, 1])
         layers.push(
-          layer('bar', enemy.x + side * size * 0.53, enemy.y, size * 0.7, 4, GOLD, 1, Math.PI / 2),
+          layer(
+            'bar',
+            enemy.x + side * size * mix(0.4, 0.53),
+            enemy.y,
+            size * mix(0.24, 0.7),
+            mix(2, 4),
+            GOLD,
+            1,
+            Math.PI / 2,
+          ),
         );
   }
   return layers;

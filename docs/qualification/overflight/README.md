@@ -1,5 +1,10 @@
 # Overflight candidate qualification
 
+The [readability and broader-balance continuation](readability-20261013/README.md)
+adds compact armor cues, three-seed/both-airframe evidence, and an actual Raid
+Creator download/import/re-export with native completion. It records the remaining
+seed-specific balance gap explicitly.
+
 The [13 October pacing continuation](pacing-20261013/README.md) records the latest
 Survivor/Raid gameplay changes, current-source route checks and remaining review
 priorities after rebasing onto main. Earlier receipts below remain historical.

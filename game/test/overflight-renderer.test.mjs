@@ -757,3 +757,76 @@ test('normal and reduced-effects renderers preserve identical real-core outcomes
     globalThis.Phaser = prior;
   }
 });
+
+test('armor detail follows approach distance without changing actor coverage, quality cues or simulation', async () => {
+  const environment = fakeEnvironment(),
+    prior = globalThis.Phaser;
+  globalThis.Phaser = environment.Phaser;
+  const appearance = {
+    reducedEffects: false,
+    snapshot: { image: (id) => (id.startsWith('player.') ? { image: {} } : null) },
+  };
+  let renderer;
+  try {
+    renderer = await createOverflightRenderer({
+      parent: { ownerDocument: environment.document },
+      appearance,
+    });
+    const run = {
+      phase: 'playing',
+      time: 3,
+      tick: 180,
+      camera: { x: 1440, y: 540, width: 960, height: 540 },
+      player: { x: 1440, y: 540, heading: 0, hull: 100, invulnerable: 0 },
+      enemies: [
+        { x: 1080, y: 480 },
+        { x: 1380, y: 480 },
+        { x: 1790, y: 480, heavy: true },
+        { x: 1790, y: 600, objectiveId: 'priority' },
+      ].map((enemy, id) => ({
+        id,
+        family: 'armored-carrier',
+        active: true,
+        radius: 14,
+        wardrobe: 0,
+        heading: 0,
+        armor: 100,
+        maxArmor: 100,
+        exposureRemaining: 0,
+        ...enemy,
+      })),
+      pickups: [],
+      effects: [],
+    };
+    const before = structuredClone(run),
+      baked = environment.counts();
+    const cues = () =>
+      environment.images
+        .filter((image) => image.Depth?.[0] === 65 && image.Visible?.[0])
+        .map((image) => ({
+          frame: image.Frame[0],
+          position: image.Position,
+          tint: image.Tint[0],
+          width: image.displayWidth,
+          height: image.displayHeight,
+        }));
+    renderer.present(run);
+    const normal = cues();
+    const tracks = normal.filter((cue) => cue.tint === 0x12241f);
+    assert.equal(renderer.stats().counts.rendered, 4);
+    assert.equal(tracks.length, 4);
+    assert.equal(tracks[0].width, 16, 'distant ordinary machinery has a compact armor bar');
+    assert.ok(
+      tracks.slice(1).every((cue) => cue.width === 34),
+      'near, heavy and objective machinery retain full detail',
+    );
+    appearance.reducedEffects = true;
+    renderer.present(run);
+    assert.deepEqual(cues(), normal);
+    assert.deepEqual(run, before);
+    assert.deepEqual(environment.counts(), baked, 'approach cues need no new textures or painting');
+  } finally {
+    await renderer?.destroy();
+    globalThis.Phaser = prior;
+  }
+});
