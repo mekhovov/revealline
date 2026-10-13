@@ -190,7 +190,7 @@ export function qualifyOverflight({
     encounterSet: project ? null : encounterSet,
     airframes,
     qualification: 'ordinary-inputs-earned-upgrades-no-fixture',
-    controller: 'deterministic-10hz-candidate-pilot-v1',
+    controller: 'deterministic-10hz-candidate-pilot-v2',
     ...(auditPilot
       ? {
           audit: {
