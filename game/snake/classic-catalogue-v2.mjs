@@ -771,6 +771,16 @@ export const CLASSIC_SNAKE_V2_CHAPTERS = freeze(
     description: bilingual(enBrief, ukBrief),
   })),
 );
+// Quotas preserve supplies and long-body finales without repeating a teaching
+// encounter fourteen times. Each row is an authored six-mission progression.
+const pursuitGoals = [
+  [3, 4, 4, 5, 5, 6],
+  [5, 5, 6, 6, 7, 8],
+  [5, 5, 6, 6, 7, 8],
+  [6, 6, 7, 7, 8, 8],
+  [8, 8, 8, 10, 8, 10],
+  [9, 8, 10, 10, 10, 12],
+];
 export const CLASSIC_SNAKE_V2_LEVELS = freeze(
   rows.map(([slug, en, uk, enBrief, ukBrief, rectangles, route, options = {}], index) => {
     const chapter = Math.floor(index / 6),
@@ -795,16 +805,40 @@ export const CLASSIC_SNAKE_V2_LEVELS = freeze(
         { kind: 'runner', every: 3 },
         { kind: 'sprinter', every: 3 },
       ];
+    // The first two patrols teach one route. Later patrol encounters return
+    // from the opposite end, forcing a fresh interception instead of camping
+    // the same spawn. Both paths retain precisely the accepted walkable loop.
+    const returnPatrol = chapter === 0 && within >= 2;
+    if (returnPatrol) {
+      const halfway = Math.floor(path.length / 2);
+      const reversed = [...path.slice(halfway), ...path.slice(0, halfway)].reverse();
+      required = [...required, { kind: 'patroller', every: 4, path: reversed }];
+    }
+    const mixedRecovery = chapter === 2 && within >= 3;
+    if (mixedRecovery) required = [...required, { kind: 'runner', every: 3 }];
     const id = `classic-pursuit-${slug}`;
     return {
       id,
       chapterId: CLASSIC_SNAKE_V2_CHAPTERS[chapter].id,
       title: bilingual(en, uk),
-      description: bilingual(enBrief, ukBrief),
+      description: bilingual(
+        enBrief +
+          (returnPatrol
+            ? ' The next patrol returns from the opposite side: change your interception.'
+            : mixedRecovery
+              ? ' Runners alternate with sprinters; check which movement warning applies.'
+              : ''),
+        ukBrief +
+          (returnPatrol
+            ? ' Наступний патруль повертається з протилежного боку: змініть перехоплення.'
+            : mixedRecovery
+              ? ' Бігуни чергуються зі спринтерами; стежте за відповідним попередженням руху.'
+              : ''),
+      ),
       level: {
         version: 'classic-snake-level.v2',
         id,
-        revision: '1',
+        revision: '2',
         name: en,
         width: WIDTH,
         height: HEIGHT,
@@ -817,7 +851,7 @@ export const CLASSIC_SNAKE_V2_LEVELS = freeze(
             direction: 'left',
           },
         ],
-        goal: chapter === 0 && within < 2 ? 8 : [10, 12, 14, 14, 16, 18][chapter],
+        goal: pursuitGoals[chapter][within],
         stepMs: 200,
         speedupEvery: 0,
         minStepMs: 200,
