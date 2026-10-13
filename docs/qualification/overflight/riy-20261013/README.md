@@ -46,7 +46,9 @@ for three seconds, with a six-second command cooldown. No extra home tile.
   death rewards, deterministic commands, paused clocks, cooldown, leash, airframe
   recall, menu input release and listener disposal.
 - Reduced effects keep both escorts, reuse the same atlas and never mutate gameplay.
-  Scoped lint, formatting and whitespace checks pass. [Source hashes](source.json).
+  [7/7 CI-registration checks](ci-registration.tap) also pass. Initial missing
+  workflow/package fixtures were restored from tracked sparse-checkout inputs
+  before the final run. Scoped lint, formatting and whitespace checks pass. [Source hashes](source.json).
 
 ## Review boundary and next design decisions
 
