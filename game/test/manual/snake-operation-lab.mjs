@@ -1,4 +1,5 @@
-import { operationActivationsMet } from '../../snake/classic-routing-v5.mjs';
+import { CLASSIC_SNAKE_OPERATION_LEVELS_A } from '../../snake/classic-catalogue-operations-a.mjs';
+import { classicOperationStatus } from '../../snake/classic-operation-status.mjs';
 import { OPERATION_PROTOTYPES } from './snake-operation-recipes.mjs';
 import {
   createClassicSnakeMatch,
@@ -21,7 +22,15 @@ let match,
   generation = 0;
 const locale = () => $('language').value;
 const copy = (en, uk) => (locale() === 'uk' ? uk : en);
-const entry = () => OPERATION_PROTOTYPES[Number($('mission').value) || 0];
+const labEntries = [
+  ...OPERATION_PROTOTYPES,
+  ...CLASSIC_SNAKE_OPERATION_LEVELS_A.map((row) => ({
+    ...row,
+    hint: row.description,
+    scene: row.composition.scene,
+  })),
+];
+const entry = () => labEntries[Number($('mission').value) || 0];
 $('setup').open = $('help').open = !window.matchMedia('(max-width: 600px), (max-height: 400px)')
   .matches;
 const settings = { mode: 'dpad', side: 'right', size: 'regular', opacity: 1 };
@@ -45,31 +54,10 @@ function paint() {
   $('step').disabled = match.status !== 'running';
   $('status').textContent = match.runs
     .map((run, i) => {
-      const op = run.operation,
-        stage = run.level.operation.stages[op.stage];
       const prefix = match.options.mode === 'versus' ? `P${i + 1} · ` : '';
-      if (!stage) return prefix + copy('Operation complete', 'Операцію завершено');
       return (
         prefix +
-        copy(
-          `Stage ${op.stage + 1}/${run.level.operation.stages.length}`,
-          `Етап ${op.stage + 1}/${run.level.operation.stages.length}`,
-        ) +
-        (stage.catches
-          ? copy(
-              ` · Catches ${run.catches}/${stage.catches}`,
-              ` · Цілі ${run.catches}/${stage.catches}`,
-            )
-          : '') +
-        (stage.deliveries.length
-          ? copy(
-              ` · Delivered ${stage.deliveries.filter((id) => op.parcels.some((p) => p.id === id && p.state === 'delivered')).length}/${stage.deliveries.length}`,
-              ` · Доставлено ${stage.deliveries.filter((id) => op.parcels.some((p) => p.id === id && p.state === 'delivered')).length}/${stage.deliveries.length}`,
-            )
-          : '') +
-        (stage.activations?.length && !operationActivationsMet(run, stage)
-          ? copy(' · Activate marked routing controls', ' · Активуйте позначені перемикачі')
-          : '') +
+        classicOperationStatus(run, locale()) +
         (run.status === 'lost' ? copy(' · Crashed — Retry', ' · Зіткнення — Спробувати знову') : '')
       );
     })
@@ -133,8 +121,8 @@ function translate() {
     setupLabel: ['Lab setup', 'Налаштування'],
     title: ['Continuous operations', 'Безперервні операції'],
     notice: [
-      'Eight review prototypes. No progress, records or preferences are saved.',
-      'Вісім прототипів для перевірки. Прогрес, рекорди та налаштування не зберігаються.',
+      'Eight mechanic prototypes and 48 campaign drafts. No progress, records or preferences are saved.',
+      'Вісім прототипів механік і 48 чернеток місій. Прогрес, рекорди та налаштування не зберігаються.',
     ],
     missionLabel: ['Mission', 'Місія'],
     modeLabel: ['Mode', 'Режим'],
@@ -151,7 +139,7 @@ function translate() {
   };
   for (const [id, values] of Object.entries(texts)) $(id).textContent = copy(...values);
   Array.from($('mission').options).forEach(
-    (option, i) => (option.textContent = OPERATION_PROTOTYPES[i].title[locale()]),
+    (option, i) => (option.textContent = labEntries[i].title[locale()]),
   );
   const modeNames = {
     solo: ['Solo', 'Один гравець'],
@@ -192,7 +180,7 @@ function translate() {
   $('hint').textContent = entry().hint[locale()];
   paint();
 }
-for (const [i, prototype] of OPERATION_PROTOTYPES.entries()) {
+for (const [i, prototype] of labEntries.entries()) {
   const option = document.createElement('option');
   option.value = String(i);
   option.textContent = prototype.title.en;
@@ -223,13 +211,22 @@ $('proof').addEventListener('click', async () => {
   mount();
   const identity = generation;
   try {
-    const data = await (await fetch('../fixtures/classic-snake-v5-prototype-proofs.json')).json();
+    const draft = entry().level.id.startsWith('classic-operation-');
+    const data = await (
+      await fetch(
+        draft
+          ? '../fixtures/classic-snake-operations-a-proofs.json'
+          : '../fixtures/classic-snake-v5-prototype-proofs.json',
+      )
+    ).json();
     if (generation !== identity) return;
-    route = data.proofs.find(
-      (p) =>
-        p.level.id === entry().level.id &&
-        p.mode === (match.options.mode === 'team' ? 'team' : 'solo'),
-    );
+    route = data.proofs
+      .map((p) => p.replay ?? p)
+      .find(
+        (p) =>
+          p.level.id === entry().level.id &&
+          p.mode === (match.options.mode === 'team' ? 'team' : 'solo'),
+      );
     if (!route) throw new Error('Missing qualification route');
     playing = true;
     lastTime = performance.now();
