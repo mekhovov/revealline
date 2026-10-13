@@ -4104,3 +4104,8 @@ journey and longer representative performance windows. Keep the offline result
 visible beside its Settings action. Qualify the common quality standard before
 Canals; D6 stays last. Do not promote historical counts, pending hardware/player
 acceptance or this neutral-input run into a complete release claim.
+
+The evidence-only branch was subsequently rebased onto main `41e5986ed6c208db2dd63fbbb52a912b69050388`.
+A separate source bridge matches 114/117 World inputs at that head. The admitted
+artifact and native stopped-origin observations remain bound to45e; no newer
+package or release identity is inferred.
