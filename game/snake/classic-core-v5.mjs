@@ -6,7 +6,7 @@ import {
   operationTargetPath,
   operationActivationsMet,
 } from './classic-routing-v5.mjs';
-/** Experimental continuous operations. The public catalogue stays on v1–v4. */
+/** Bounded continuous operations sharing the accepted v4 movement boundary. */
 import { boundedJSON, dataIdentity, exactKeys, required } from '../data-json.mjs';
 import {
   CLASSIC_SNAKE_V4_LEVEL,

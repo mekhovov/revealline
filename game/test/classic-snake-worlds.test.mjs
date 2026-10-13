@@ -42,8 +42,8 @@ test('new profiles use Lively FPV while saved looks and explicit legacy links wi
     assert.equal(prefs(`scene=${scene}`, { boardScene: 'orchard' }).boardScene, scene);
 });
 
-test('all 144 recipes retain identity and all 23 chapters have explicit cosmetic direction', () => {
-  assert.equal(CLASSIC_SNAKE_LEVELS.length, 144);
+test('all 192 recipes retain identity and all 29 chapters have explicit cosmetic direction', () => {
+  assert.equal(CLASSIC_SNAKE_LEVELS.length, 192);
   assert.deepEqual(
     Object.keys(CLASSIC_CHAPTER_COMPOSITIONS).sort(),
     CLASSIC_SNAKE_CHAPTERS.map((x) => x.id).sort(),
