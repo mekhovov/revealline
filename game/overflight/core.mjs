@@ -319,6 +319,7 @@ export function createOverflightRun(
     _spawnCredit: 0,
     _boostStartedTick: -1000,
     _reliefUntil: 0,
+    _clearReliefReadyAt: 0,
     _clearWindowTick: 0,
     _clearWindowKills: 0,
     _encounterIndex: 0,
@@ -1028,8 +1029,19 @@ function director(run) {
       run._pacingReleasePending = false;
     }
     if (run.tick - run._clearWindowTick >= 60) {
-      if (run.stats.kills - run._clearWindowKills >= 20 && run.time >= run._reliefUntil)
+      if (
+        encounter &&
+        encounter.pattern !== 'relief' &&
+        run.stats.kills - run._clearWindowKills >= 20 &&
+        run.time >= run._reliefUntil &&
+        run.time >= run._clearReliefReadyAt
+      ) {
         run._reliefUntil = run.time + run.compiled.combat.pacing.reliefSeconds;
+        // A clearing pass earns space, then the formation gets time to develop.
+        // Without a recovery interval, strong builds can chain spawn suppression
+        // throughout every authored pressure window. Existing bodies stay alive.
+        run._clearReliefReadyAt = run.time + run.compiled.combat.pacing.reliefSeconds * 3;
+      }
       run._clearWindowTick = run.tick;
       run._clearWindowKills = run.stats.kills;
     }
