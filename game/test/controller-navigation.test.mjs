@@ -3358,3 +3358,55 @@ test('registered native frame exit leaves sequential focus to the browser withou
   assert.equal(h.document.activeElement, close);
   assert.deepEqual(calls, [true, false], 'Native modal containment is unchanged.');
 });
+
+for (const kind of ['select', 'range']) {
+  test(`Settings keyboard navigates past ${kind} and edits only after explicit Confirm`, (t) => {
+    const h = setup(t, { keyboard: true });
+    h.document.body.classList.add('native-settings');
+    h.setScope('settings', h.document.body);
+    const field =
+      kind === 'select'
+        ? h.select()
+        : h.control('input', { type: 'range', min: '0', max: '10', step: '1', value: '4' });
+    const next = h.control('button');
+    let changes = 0;
+    field.addEventListener('change', () => changes++);
+    const original = field.value;
+    field.focus();
+    assert.equal(field.emit('keydown', { key: 'ArrowDown' }).defaultPrevented, true);
+    assert.equal(h.document.activeElement, next);
+    assert.equal(field.value, original);
+    next.emit('keydown', { key: 'ArrowUp' });
+    assert.equal(h.document.activeElement, field);
+    field.emit('keydown', { key: 'Enter' });
+    field.emit('keydown', { key: 'ArrowDown' });
+    assert.equal(field.value, original, 'Editing is a preview until committed.');
+    field.emit('keydown', { key: 'Escape' });
+    assert.equal(changes, 0);
+    assert.equal(h.editors().length, 0);
+    field.emit('keydown', { key: 'Enter' });
+    field.emit('keydown', { key: 'ArrowDown' });
+    field.emit('keydown', { key: 'Enter', repeat: true });
+    assert.equal(changes, 0, 'A held Confirm cannot apply a new choice.');
+    field.emit('keydown', { key: 'Enter' });
+    assert.equal(changes, 1);
+    assert.notEqual(field.value, original);
+    field.emit('keydown', { key: 'ArrowDown' });
+    assert.equal(h.document.activeElement, next);
+    assert.equal(h.calls.back, 0);
+  });
+}
+
+test('Settings keyboard leaves text editing native and arrows leave checkboxes without toggling', (t) => {
+  const h = setup(t, { keyboard: true });
+  h.document.body.classList.add('native-settings');
+  h.setScope('settings', h.document.body);
+  const check = h.control('input', { type: 'checkbox', checked: false });
+  const text = h.control('input', { type: 'text', value: 'Keep this text' });
+  check.focus();
+  check.emit('keydown', { key: 'ArrowDown' });
+  assert.equal(h.document.activeElement, text);
+  assert.equal(check.checked, false);
+  assert.equal(text.emit('keydown', { key: 'ArrowLeft' }).defaultPrevented, false);
+  assert.equal(text.value, 'Keep this text');
+});

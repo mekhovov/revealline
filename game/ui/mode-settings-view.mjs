@@ -91,6 +91,7 @@ export function mountModeSettings({
     panel.setAttribute('aria-labelledby', tab.id);
     panel.tabIndex = -1;
     panel.dataset.menuLayout = 'vertical';
+    panel.dataset.menuEdgeExit = 'true';
     panel.append(heading);
     for (const node of nodes) {
       moves.push({ node, parent: node.parentNode, next: node.nextSibling });

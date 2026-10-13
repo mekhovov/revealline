@@ -114,7 +114,7 @@ test('family home contains two native operation choices, preserving URL context 
   assert.equal(view.root.children.length, 2);
   const [survivor, raid] = view.root.children;
   assert.equal(survivor.getAttribute('aria-current'), 'true');
-  assert.equal(raid.href, './raid.html?lang=uk');
+  assert.equal(raid.getAttribute('href'), './raid.html?lang=uk');
   survivor.click();
   raid.click();
   assert.equal(selected, 1);
