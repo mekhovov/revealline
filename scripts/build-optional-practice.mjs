@@ -76,8 +76,32 @@ function resourceReferences(name, bytes) {
     references.push(...(JSON.parse(bytes.toString('utf8')).icons ?? []).map((icon) => icon.src));
   if (name.endsWith('.html')) {
     const visit = (node) => {
-      for (const attribute of node.attrs ?? [])
-        if (['src', 'href'].includes(attribute.name)) references.push(attribute.value);
+      for (const attribute of node.attrs ?? []) {
+        if (!['src', 'href'].includes(attribute.name)) continue;
+        // Explicit outbound help links are navigation, never offline dependencies.
+        // Keep remote scripts, styles, images and other resource URLs forbidden.
+        if (
+          node.tagName === 'a' &&
+          attribute.name === 'href' &&
+          /^https:\/\//i.test(attribute.value)
+        ) {
+          const attrs = Object.fromEntries(node.attrs.map(({ name, value }) => [name, value]));
+          const url = new URL(attribute.value);
+          const rel = new Set((attrs.rel ?? '').toLowerCase().split(/\s+/));
+          requireValid(
+            attrs.target === '_blank' &&
+              rel.has('noopener') &&
+              rel.has('noreferrer') &&
+              !url.username &&
+              !url.password &&
+              !('ping' in attrs) &&
+              !('download' in attrs),
+            'External practice help links must use isolated HTTPS navigation',
+          );
+          continue;
+        }
+        references.push(attribute.value);
+      }
       for (const child of node.childNodes ?? []) visit(child);
     };
     visit(parseHTML(bytes.toString('utf8')));
