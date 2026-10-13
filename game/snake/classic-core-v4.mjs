@@ -806,7 +806,7 @@ function finish(run, status, cause = null, players = []) {
 }
 const policyFor = (run, t) =>
   t.role === 'bonus' ? run.level.targets.bonus.policy : run.level.targets.required[t.policyIndex];
-function spawn(run, role) {
+function spawn(run, role, rules) {
   const bonus = role === 'bonus',
     serial = bonus ? run.spawnedBonus : run.spawnedRequired;
   const policyIndex = bonus ? 0 : serial % run.level.targets.required.length;
@@ -816,6 +816,7 @@ function spawn(run, role) {
     return false; // A survivor must be caught before the next pair can begin.
   const candidates = p.at ? [p.at] : (p.path ?? geometry(run.level).cells),
     occupied = blocked(run);
+  for (const cell of rules?.reservedCells?.(run) ?? []) occupied.add(key(cell));
   const stream = bonus ? 'bonusRandom' : 'random',
     snapshot = run[stream],
     offset = random(run, stream) % candidates.length;
@@ -873,10 +874,10 @@ function spawn(run, role) {
   run.events.push({ type: 'target.spawned', tick: run.tick, target: structuredClone(t) });
   return true;
 }
-function refill(run) {
+function refill(run, rules) {
   if (run.status !== 'running') return;
   const remaining = run.level.objective === 'endless' ? Infinity : run.level.goal - run.catches;
-  if (remaining <= 0) {
+  if (remaining <= 0 && !rules) {
     run.targets = [];
     finish(run, 'won');
     return;
@@ -889,18 +890,18 @@ function refill(run) {
     !run.targets.some((t) => t.role === 'bonus') &&
     run.targets.length < run.level.targets.maxActive
   )
-    spawn(run, 'bonus');
+    spawn(run, 'bonus', rules);
   while (
     run.targets.length < run.level.targets.maxActive &&
     run.targets.filter((t) => t.role === 'required').length < remaining
   )
-    if (!spawn(run, 'required')) break;
+    if (!spawn(run, 'required', rules)) break;
   // Shutter cells are temporary shortcuts, never required spawn locations.
   // Filling the permanent field is therefore the bounded Endless clear.
   const bodies = bodyCells(run);
   if (!run.targets.length && geometry(run.level).cells.every((cell) => bodies.has(key(cell)))) {
     run.pickup = null;
-    finish(run, 'won', 'board-filled');
+    if (!rules || rules.complete(run)) finish(run, 'won', 'board-filled');
     return;
   }
   if (!run.pickup && run.pickupCursor < run.level.pickups.length) {
@@ -1190,7 +1191,7 @@ function moveTargets(run) {
   }
 }
 
-export function createClassicSnakeV4(source, options = {}) {
+export function createClassicSnakeV4(source, options = {}, rules) {
   const settings = boundedJSON(options, { maxBytes: 1024, maxNodes: 10, maxDepth: 1 });
   exactKeys(settings, ['mode', 'seed', 'hazardSeed'], 'Classic Snake options');
   const { mode = 'solo', seed = 17 } = settings;
@@ -1253,7 +1254,7 @@ export function createClassicSnakeV4(source, options = {}) {
     history: [],
   };
   syncShutters(run, true);
-  refill(run);
+  refill(run, rules);
   return run;
 }
 export function queueClassicSnakeTurnV4(run, playerId, direction) {
@@ -1288,7 +1289,9 @@ export function classicSnakeStepMillisecondsV4(run) {
       (run.level.speedupEvery ? Math.floor(run.catches / run.level.speedupEvery) * 10 : 0),
   );
 }
-export function stepClassicSnakeV4(run) {
+// Trusted successor adapters may extend accepted movement. Historical v4 calls
+// provide no rules, preserving their state, journals and exact checkpoints.
+export function stepClassicSnakeV4(run, rules) {
   if (run.status !== 'running') return run;
   run.events = [];
   if (run.tick >= MAX_STEPS) {
@@ -1307,7 +1310,9 @@ export function stepClassicSnakeV4(run) {
   const plans = run.snakes.map((s) => {
     const direction = s.turns[0] ?? s.direction,
       next = destination(run.level, s.body[0], direction);
-    return { s, direction, next, target: run.targets.find((t) => same(t, next)) ?? null };
+    const plan = { s, direction, next, target: run.targets.find((t) => same(t, next)) ?? null };
+    plan.grows = rules ? rules.grows(run, plan) : Boolean(plan.target);
+    return plan;
   });
   const failures = new Map(),
     fail = (id, cause) => {
@@ -1329,7 +1334,7 @@ export function stepClassicSnakeV4(run) {
   }
   for (const p of plans)
     for (const owner of plans)
-      if ((owner.target ? owner.s.body : owner.s.body.slice(0, -1)).some((c) => same(c, p.next)))
+      if ((owner.grows ? owner.s.body : owner.s.body.slice(0, -1)).some((c) => same(c, p.next)))
         fail(p.s.id, owner.s.id === p.s.id ? 'body' : 'partner-body');
   const stepDuration = classicSnakeStepMillisecondsV4(run);
   run.elapsedMs += stepDuration;
@@ -1351,7 +1356,7 @@ export function stepClassicSnakeV4(run) {
   }
   for (const p of plans) {
     p.s.body.unshift(p.next);
-    if (!p.target) p.s.body.pop();
+    if (!p.grows) p.s.body.pop();
     if (p.target) {
       if (
         p.target.kind === 'jammer' &&
@@ -1391,6 +1396,7 @@ export function stepClassicSnakeV4(run) {
       });
     }
   }
+  rules?.accept?.(run, plans);
   collectRelays(run);
   syncSignal(run);
   run.recentCatches = run.recentCatches.slice(-24);
@@ -1400,7 +1406,7 @@ export function stepClassicSnakeV4(run) {
       run.pickup = null;
       run.pickupsUsed++;
       if (pickup.kind === 'pulse') run.pulseTicks = 8;
-      else p.s.body.splice(Math.max(4, p.s.body.length - 4));
+      else p.s.body.splice(Math.max(rules?.tailFloor?.(run, p.s) ?? 4, p.s.body.length - 4));
       run.events.push({
         type: 'pickup.collected',
         tick: run.tick,
@@ -1409,7 +1415,9 @@ export function stepClassicSnakeV4(run) {
         length: p.s.body.length,
       });
     }
-  if (run.level.objective === 'mission' && run.catches >= run.level.goal) {
+  if (
+    rules ? rules.complete(run) : run.level.objective === 'mission' && run.catches >= run.level.goal
+  ) {
     run.targets = [];
     run.pickup = null;
     finish(run, 'won');
@@ -1434,7 +1442,7 @@ export function stepClassicSnakeV4(run) {
   moveTargets(run);
   if (!pausedTargets) advanceSpecials(run, run.signal.jammed || localSignalOnEntry);
   syncShutters(run, true);
-  refill(run);
+  refill(run, rules);
   if (run.status === 'running' && run.tick === MAX_STEPS) finish(run, 'lost', 'step-limit');
   return run;
 }
@@ -1487,7 +1495,20 @@ export function exportClassicSnakeReplayV4(run) {
     checkpoint: checkpoint(run),
   };
 }
-export function restoreClassicSnakeReplayV4(source, { level: expected } = {}) {
+export function restoreClassicSnakeReplayV4(source, options = {}) {
+  return restoreClassicSnakeReplayWithEngine(source, options, {
+    replayVersion: CLASSIC_SNAKE_V4_REPLAY,
+    coreVersion: CLASSIC_SNAKE_V4_CORE,
+    create: createClassicSnakeV4,
+    validate: validateClassicSnakeLevelV4,
+    queue: queueClassicSnakeTurnV4,
+    step: stepClassicSnakeV4,
+  });
+}
+
+// Bounded verification is shared by v4 and successors; the envelope determines
+// the engine explicitly. No recording is silently upgraded to newer rules.
+export function restoreClassicSnakeReplayWithEngine(source, { level: expected } = {}, engine) {
   const r = boundedJSON(source, {
     maxBytes: 2 * 1024 * 1024,
     maxNodes: 120000,
@@ -1508,21 +1529,20 @@ export function restoreClassicSnakeReplayV4(source, { level: expected } = {}) {
       'turns',
       'checkpoint',
     ],
-    'Classic Snake v4 replay',
+    'Classic Snake replay',
   );
   required(
-    r.version === CLASSIC_SNAKE_V4_REPLAY && r.ruleset === CLASSIC_SNAKE_V4_CORE,
+    r.version === engine.replayVersion && r.ruleset === engine.coreVersion,
     'Unsupported Snake replay.',
   );
-  const run = createClassicSnakeV4(r.level, {
+  const run = engine.create(r.level, {
     mode: r.mode,
     seed: r.seed,
     ...(Object.hasOwn(r, 'hazardSeed') ? { hazardSeed: r.hazardSeed } : {}),
   });
   required(
     r.levelIdentity === run.levelIdentity &&
-      (!expected ||
-        canonicalJSON(validateClassicSnakeLevelV4(expected)) === canonicalJSON(run.level)),
+      (!expected || canonicalJSON(engine.validate(expected)) === canonicalJSON(run.level)),
     'Snake replay recipe differs.',
   );
   required(
@@ -1547,11 +1567,11 @@ export function restoreClassicSnakeReplayV4(source, { level: expected } = {}) {
   for (let tick = 0; tick <= r.steps; tick++) {
     while (r.turns[cursor]?.tick === tick) {
       const t = r.turns[cursor++];
-      required(queueClassicSnakeTurnV4(run, t.playerId, t.direction), 'Rejected replay turn.');
+      required(engine.queue(run, t.playerId, t.direction), 'Rejected replay turn.');
     }
     if (tick < r.steps) {
       required(run.status === 'running', 'Replay continues after result.');
-      stepClassicSnakeV4(run);
+      engine.step(run);
     }
   }
   required(checkpoint(run) === r.checkpoint, 'Snake replay failed exact verification.');

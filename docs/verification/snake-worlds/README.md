@@ -33,6 +33,10 @@ The original modular structure drawing is authored in `game/snake/classic-scenes
 
 Not established: physical phone/controller performance, grayscale recognition study, user-rated beauty/fun, a full offline release artifact, or the planned new-mission proof matrix.
 
+## Subsequent progress
+
+The [continuous-operations prototype slice](../snake-operations/README.md) now implements four of the eight P0 prototypes (staged objectives and cargo), with exact recordings and a playable review lab. Switchyards and cable plates remain next. The table below records the original visual-slice boundary; see that report for the current completion detail.
+
 ## Remaining plan and recommended order
 
 | Priority       | Work                                                                                                                                                 | Why it matters / risk of deferral                                                                                                                           |

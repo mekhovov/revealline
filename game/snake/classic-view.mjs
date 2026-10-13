@@ -1,3 +1,4 @@
+import { drawClassicOperation } from './classic-operation-view.mjs';
 import { resolveClassicWorld, isClassicWorldStyle } from './classic-worlds.mjs';
 import { INDUSTRIAL_BUILTIN_SPRITES } from '../presentation/industrial-arcade-builtins.mjs';
 import { drawHuntRemains } from '../hunt/destruction.mjs';
@@ -556,6 +557,7 @@ export function drawClassicBoard(
     treatment: signalTreatment,
     visualKey: signalVisualKey,
   });
+  drawClassicOperation(ctx, run, { unit: UNIT, palette });
   // True hazard outlines stay crisp at native resolution after receiver processing.
   drawFieldMechanics(ctx, run, palette, { concealEnemies });
   drawClassicSignalSources(ctx, run, signal, { unit: UNIT, palette, locale });
