@@ -137,7 +137,7 @@ test('lobby, setup and children use reachable native controls and Back restores 
   assert.equal(f.$('race-setup').inert, true);
   const modes = f.$('race-mode-choices');
   assert.deepEqual(
-    modes.children.map((element) => element.dataset.gameMode ?? element.id),
+    modes.querySelectorAll('[data-game-mode]').map((element) => element.dataset.gameMode),
     ['solo', 'team', 'versus', 'snake', 'overflight', 'simulator'],
   );
   const currentMode = modes.querySelector('[aria-current="page"]');
@@ -145,8 +145,12 @@ test('lobby, setup and children use reachable native controls and Back restores 
   assert.equal(currentMode.tabIndex, 0);
   assert.equal(currentMode.getAttribute('href'), null);
   assert.equal(f.doc.activeElement.id, 'race-start');
-  // The arcade seats, simulator and Snake stay reachable from the lobby.
+  // Expand the extra modes before checking their native Tab order.
+  const more = modes.querySelector('[data-mode-more]');
+  more.click();
+  f.$('race-start').focus();
   for (const node of [
+    more,
     f.$('versus-fpv-sim'),
     f.$('versus-overflight'),
     f.$('versus-snake'),
@@ -172,6 +176,8 @@ test('lobby, setup and children use reachable native controls and Back restores 
   assert.equal(f.doc.activeElement.id, 'versus-overflight');
   press(f, 'Tab');
   assert.equal(f.doc.activeElement.id, 'versus-fpv-sim');
+  press(f, 'Tab');
+  assert.equal(f.doc.activeElement, more);
   press(f, 'Tab');
   assert.equal(f.doc.activeElement.id, 'race-start');
   press(f, 'Tab');

@@ -2,12 +2,7 @@ import { nativeArtReviewURL } from './art-review-navigation.mjs';
 import { t, localizedText, localizedAttribute, getLocale, onLocaleChange } from '../i18n/index.mjs';
 import { setMenuIcon } from './native-menu-icons.mjs';
 import { mountOptionalPracticePanel } from './optional-practice-panel.mjs';
-import {
-  fpvWorldLaunchURL,
-  snakeLaunchURL,
-  overflightLaunchURL,
-  overflightHuntLaunchURL,
-} from '../fpv-entry.mjs';
+import { fpvWorldLaunchURL, snakeLaunchURL, overflightLaunchURL } from '../fpv-entry.mjs';
 import { loadAcceptedAppearance } from '../presentation/theme-system.mjs';
 import { GAME_MODE_ORDER, renderModeChoices } from './mode-choice-view.mjs';
 const guideOwners = new WeakMap();
@@ -105,29 +100,6 @@ export function mountModeChoices({
     pause();
   };
   if (current !== 'overflight') overflight.addEventListener('click', enterOverflight);
-  const raid = document.createElement('a');
-  raid.id = `${current}-overflight-raid`;
-  raid.dataset.overflightHuntEntry = 'true';
-  const raidLabel = document.createElement('strong');
-  localizedText(raidLabel, () => (getLocale() === 'uk' ? 'Проліт: Наліт' : 'Overflight: Raid'));
-  raid.append(raidLabel);
-  setMenuIcon(raid, 'controls');
-  const raidURL = () =>
-    overflightHuntLaunchURL(
-      document.defaultView?.location?.href ?? globalThis.location?.href,
-      getLocale(),
-      getAppearanceDefault(),
-    );
-  const initialRaidURL = raidURL();
-  if (initialRaidURL) raid.href = initialRaidURL;
-  else raid.hidden = true;
-  const enterRaid = (event) => {
-    const href = raidURL();
-    if (!href) return event.preventDefault();
-    raid.href = href;
-    pause();
-  };
-  raid.addEventListener('click', enterRaid);
   const view = renderModeChoices({
     root,
     current,
@@ -135,7 +107,6 @@ export function mountModeChoices({
     locale: getLocale(),
     setMenuIcon,
   });
-  root.append(raid);
   const unsubscribeLocale = onLocaleChange(() => view.refresh(getLocale()));
   const guides = mountModeGuides({
     container: guidesContainer ?? document.querySelector('.native-settings [id$="-panel-extras"]'),
@@ -172,6 +143,7 @@ export function mountModeChoices({
   }
   return {
     closeMore: () =>
+      view.close() ||
       guides.closeMore() ||
       guideOwners
         .get(document.querySelector('.native-settings [id$="-panel-extras"]'))
@@ -183,14 +155,13 @@ export function mountModeChoices({
     closeSimulator: () => panel?.close?.(),
     dispose() {
       unsubscribeLocale();
+      view.dispose();
       panel?.dispose();
       guides.dispose();
       snake.removeEventListener('click', enterSnake);
       snake.remove();
       overflight.removeEventListener('click', enterOverflight);
       overflight.remove();
-      raid.removeEventListener('click', enterRaid);
-      raid.remove();
       simulator.remove();
     },
   };

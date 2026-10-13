@@ -117,6 +117,7 @@ for (const current of ['versus', 'team']) {
       appearanceRevision: 'r1',
     });
     const before = structuredClone([state.local.writes, state.session.writes]);
+    if (state.button.hidden) state.root.querySelector('[data-mode-more]').click();
     state.button.click();
     assert.equal(state.paused(), 1);
     assert.equal(state.requests.length, 1);
@@ -146,6 +147,7 @@ for (const current of ['versus', 'team']) {
       appearanceFamily: '../invalid',
       appearanceRevision: 'r1',
     });
+    if (state.button.hidden) state.root.querySelector('[data-mode-more]').click();
     state.button.click();
     saveAcceptedAppearance(state.session, recent);
     const before = structuredClone([state.local.writes, state.session.writes]);
@@ -176,6 +178,7 @@ test('the explicit Solo context getter remains primary over compiled and accepte
     appearanceRevision: recent.family.revision,
   });
   saveAcceptedAppearance(state.session, recent);
+  if (state.button.hidden) state.root.querySelector('[data-mode-more]').click();
   state.button.click();
   state.deferred.shift()(entry());
   await waitFor(() => state.visits.length === 1);
@@ -196,6 +199,7 @@ for (const current of ['solo', 'versus', 'team']) {
     assert.equal(target.pathname, '/project/game/snake/play.html');
     assert.equal(target.searchParams.get('mode'), current);
     assert.equal(target.searchParams.get('lang'), 'uk');
+    assert.equal(state.root.querySelector('[data-overflight-hunt-entry]'), null);
     assert.equal(state.paused(), 0, 'Opening a landing page never starts or pauses an attempt.');
     disclosure.open = true;
     snake.focus();
@@ -215,6 +219,7 @@ for (const block of ['cancelled', 'hidden'])
   test(`${block} entry checks cannot navigate or transfer an accepted custom theme`, async (context) => {
     const state = fixture(context, 'team');
     const before = structuredClone([state.local.writes, state.session.writes]);
+    if (state.button.hidden) state.root.querySelector('[data-mode-more]').click();
     state.button.click();
     if (block === 'cancelled') state.controls.closeSimulator();
     else state.root.hidden = true;
@@ -277,7 +282,7 @@ for (const operation of ['play', 'raid']) {
       choices.map((element) => element.dataset.gameMode),
       ['solo', 'team', 'versus', 'snake', 'overflight', 'simulator'],
     );
-    assert.equal(state.root.style.getPropertyValue('--game-mode-count'), '6');
+    assert.equal(state.root.style.getPropertyValue('--game-mode-count'), '3');
     assert.equal(
       choices.filter((element) => element.getAttribute('aria-current') === 'page').length,
       1,
@@ -288,6 +293,7 @@ for (const operation of ['play', 'raid']) {
     const snake = state.document.getElementById('overflight-snake');
     snake.click();
     assert.equal(new URL(snake.href).pathname, '/project/game/snake/play.html');
+    if (state.button.hidden) state.root.querySelector('[data-mode-more]').click();
     state.button.click();
     state.deferred.shift()(entry());
     await waitFor(() => state.visits.length === 1);

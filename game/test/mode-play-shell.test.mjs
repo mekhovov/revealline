@@ -82,6 +82,8 @@ test('keyboard and controller directions share the exact landing cycle and mode 
   navigation.handle({ direction: 'right' });
   assert.equal(h.document.activeElement.dataset.gameMode, 'simulator');
   navigation.handle({ direction: 'right' });
+  assert.equal(h.document.activeElement.dataset.modeMore, 'true');
+  navigation.handle({ direction: 'right' });
   assert.equal(h.document.activeElement.dataset.gameMode, 'solo');
   h.shell.elements.buttons.fullscreen.hidden = true;
   h.shell.elements.buttons.sound.focus();
@@ -533,3 +535,61 @@ test('results focus Next immediately and Pause cancels an active transition with
   h.shell.open('results');
   assert.equal(h.document.activeElement, h.shell.elements.buttons.retry);
 });
+
+for (const currentMode of ['solo', 'team', 'versus', 'snake', 'overflight', 'simulator']) {
+  test(`${currentMode}: More supports controller confirm, all destinations, Back and collapsed wrap`, () => {
+    const h = fixture({ withModes: true, currentMode, actions: { fullscreen() {} } });
+    const home = h.shell.elements.home;
+    const more = home.querySelector('[data-mode-more]');
+    const navigation = attachControllerNavigation({
+      document: h.document,
+      keyboard: true,
+      getScope: () => 'home',
+      getRoot: () => home,
+      getDefaultFocus: () => more,
+      onBack: () => h.shell.back(),
+    });
+    if (more.getAttribute('aria-expanded') === 'true') more.click();
+    more.focus();
+    navigation.handle({ confirm: true });
+    assert.equal(more.getAttribute('aria-expanded'), 'true');
+    assert.equal(h.document.activeElement.dataset.gameMode, 'snake');
+    for (const name of ['overflight', 'simulator']) {
+      navigation.handle({ direction: 'right' });
+      assert.equal(h.document.activeElement.dataset.gameMode, name);
+    }
+    navigation.handle({ direction: 'right' });
+    assert.equal(h.document.activeElement, more);
+    navigation.handle({ direction: 'right' });
+    assert.equal(h.document.activeElement.dataset.gameMode, 'solo');
+    navigation.handle({ back: true });
+    assert.equal(more.getAttribute('aria-expanded'), 'false');
+    assert.equal(h.document.activeElement, more);
+    assert.equal(home.open, true, 'Closing More never leaves Home or starts play.');
+    assert.deepEqual(h.calls, []);
+    more.focus();
+    for (const next of [
+      h.shell.elements.buttons.primary,
+      h.shell.elements.buttons.missions,
+      h.shell.elements.buttons.settings,
+      h.shell.elements.buttons.sound,
+      h.shell.elements.buttons.fullscreen,
+    ]) {
+      navigation.handle({ direction: 'down' });
+      assert.equal(h.document.activeElement, next);
+    }
+    navigation.handle({ direction: 'down' });
+    assert.equal(
+      h.document.activeElement,
+      ['solo', 'team', 'versus'].includes(currentMode)
+        ? home.querySelector('[aria-current="page"]')
+        : more,
+    );
+    more.click();
+    home.querySelector('[data-game-mode="snake"]').emit('keydown', { key: 'Escape' });
+    assert.equal(more.getAttribute('aria-expanded'), 'false');
+    assert.equal(h.document.activeElement, more);
+    navigation.destroy();
+    h.shell.dispose();
+  });
+}
