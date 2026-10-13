@@ -1,4 +1,4 @@
-import { drawClassicOperation } from './classic-operation-view.mjs';
+import { drawClassicOperation, drawClassicOperationLinks } from './classic-operation-view.mjs';
 import { resolveClassicWorld, isClassicWorldStyle } from './classic-worlds.mjs';
 import { INDUSTRIAL_BUILTIN_SPRITES } from '../presentation/industrial-arcade-builtins.mjs';
 import { drawHuntRemains } from '../hunt/destruction.mjs';
@@ -454,6 +454,7 @@ export function drawClassicBoard(
     else drawWall(ctx, wall, presentation, palette, retro);
   }
   ctx.globalAlpha = 1;
+  drawClassicOperationLinks(ctx, run, { unit: UNIT, palette });
   drawShutters(ctx, run, palette);
   drawPickup(ctx, run.pickup);
   ctx.lineWidth = 3;

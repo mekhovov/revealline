@@ -1,3 +1,4 @@
+import { operationActivationsMet } from '../../snake/classic-routing-v5.mjs';
 import { OPERATION_PROTOTYPES } from './snake-operation-recipes.mjs';
 import {
   createClassicSnakeMatch,
@@ -66,6 +67,9 @@ function paint() {
               ` · Доставлено ${stage.deliveries.filter((id) => op.parcels.some((p) => p.id === id && p.state === 'delivered')).length}/${stage.deliveries.length}`,
             )
           : '') +
+        (stage.activations?.length && !operationActivationsMet(run, stage)
+          ? copy(' · Activate marked routing controls', ' · Активуйте позначені перемикачі')
+          : '') +
         (run.status === 'lost' ? copy(' · Crashed — Retry', ' · Зіткнення — Спробувати знову') : '')
       );
     })
@@ -129,8 +133,8 @@ function translate() {
     setupLabel: ['Lab setup', 'Налаштування'],
     title: ['Continuous operations', 'Безперервні операції'],
     notice: [
-      'Four review prototypes. No progress, records or preferences are saved.',
-      'Чотири прототипи для перевірки. Прогрес, рекорди та налаштування не зберігаються.',
+      'Eight review prototypes. No progress, records or preferences are saved.',
+      'Вісім прототипів для перевірки. Прогрес, рекорди та налаштування не зберігаються.',
     ],
     missionLabel: ['Mission', 'Місія'],
     modeLabel: ['Mode', 'Режим'],

@@ -1,3 +1,4 @@
+import { operationActivationsMet } from '../../snake/classic-routing-v5.mjs';
 import {
   createClassicSnake,
   queueClassicSnakeTurn,
@@ -67,21 +68,36 @@ function distanceToObjectives(run, snake) {
     const docks = carried.map(
       (p) => recipe.docks.find((d) => d.id === recipe.parcels.find((r) => r.id === p.id).dockId).at,
     );
+    const pendingActivations = (stage?.activations ?? [])
+      .filter((goal) => {
+        const s = (goal.kind === 'switchyard' ? state.switchyards : state.plates).find(
+          (s) => s.id === goal.id,
+        );
+        return (goal.kind === 'switchyard' ? s.toggles : s.activations) < goal.count;
+      })
+      .flatMap((goal) =>
+        goal.kind === 'switchyard'
+          ? recipe.switchyards.find((g) => g.id === goal.id).switches
+          : recipe.plates.find((g) => g.id === goal.id).pads,
+      );
     const ready =
       stage &&
+      operationActivationsMet(run, stage) &&
       run.catches >= stage.catches &&
       stage.deliveries.every((id) =>
         state.parcels.some((p) => p.id === id && p.state === 'delivered'),
       );
-    objectives = docks.length
-      ? docks
-      : waiting.length
-        ? waiting.map((p) => p.at)
-        : ready && stage.exit
-          ? [stage.exit]
-          : stage && run.catches < stage.catches
-            ? objectives
-            : [];
+    objectives = pendingActivations.length
+      ? pendingActivations
+      : docks.length
+        ? docks
+        : waiting.length
+          ? waiting.map((p) => p.at)
+          : ready && stage.exit
+            ? [stage.exit]
+            : stage && run.catches < stage.catches
+              ? objectives
+              : [];
   }
   const goals = new Set(objectives.map(key)),
     start = snake.body[0];
@@ -183,6 +199,18 @@ export function proveClassicSnakeV4(
           ].includes(event.type),
         ).length *
           10000;
+      for (const goal of run.level.operation?.stages[run.operation.stage]?.activations ?? []) {
+        const value = (r) => {
+          const state = (
+            goal.kind === 'switchyard' ? r.operation.switchyards : r.operation.plates
+          ).find((s) => s.id === goal.id);
+          return Math.min(
+            goal.count,
+            goal.kind === 'switchyard' ? state.toggles : state.activations,
+          );
+        };
+        score += (value(candidate) - value(run)) * 10000;
+      }
       for (const snake of candidate.snakes) {
         const result = distanceToObjectives(candidate, snake);
         score -= result.distance * 100;

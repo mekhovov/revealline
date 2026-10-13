@@ -925,6 +925,7 @@ function refill(run, rules) {
 function syncShutters(run, closing = false) {
   const occupied = blocked(run, { targets: true });
   for (const s of run.shutters) {
+    if (s.kind === 'cable-plate') continue;
     const phase = (run.tick + s.phase) % 48,
       wantsClosed = phase >= 32;
     s.warning = phase >= 24 && phase < 32;
@@ -1123,7 +1124,7 @@ function moveShield(run, actor, distances) {
   }
   return destination(run.level, actor, actor.heading);
 }
-function moveTargets(run) {
+function moveTargets(run, rules) {
   if (run.pulseTicks > 0) {
     run.pulseTicks--;
     return;
@@ -1171,8 +1172,9 @@ function moveTargets(run) {
       if (--t.wait > 0) continue;
       t.wait = p.every;
       if (p.path) {
-        const index = (t.routeIndex + 1) % p.path.length;
-        next = p.path[index];
+        const path = rules?.targetPath?.(run, t, p) ?? p.path;
+        const index = (t.routeIndex + 1) % path.length;
+        next = path[index];
         if (!blocked(run).has(key(next))) t.routeIndex = index;
       } else {
         const dir = fleeDirection(run, t, distances);
@@ -1439,7 +1441,7 @@ export function stepClassicSnakeV4(run, rules) {
     if (policyFor(run, target).signalProfile === 'local-burst-v2')
       retireLocalSignalOutsideCoverage(run, target);
   syncSignal(run);
-  moveTargets(run);
+  moveTargets(run, rules);
   if (!pausedTargets) advanceSpecials(run, run.signal.jammed || localSignalOnEntry);
   syncShutters(run, true);
   refill(run, rules);

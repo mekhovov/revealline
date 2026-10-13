@@ -1,3 +1,4 @@
+import { operationActivationsMet } from './classic-routing-v5.mjs';
 /** Read-only objective projection used by live boards, previews and compact replay. */
 export function classicOperationMarkers(run) {
   const recipe = run.level.operation,
@@ -6,7 +7,10 @@ export function classicOperationMarkers(run) {
   const stage = recipe.stages[state.stage];
   if (!stage) return [];
   const delivered = (id) => state.parcels.some((p) => p.id === id && p.state === 'delivered');
-  const ready = run.catches >= stage.catches && stage.deliveries.every(delivered);
+  const ready =
+    run.catches >= stage.catches &&
+    stage.deliveries.every(delivered) &&
+    operationActivationsMet(run, stage);
   const dockLabel = (id) => String.fromCharCode(65 + recipe.docks.findIndex((d) => d.id === id));
   const markers = [];
   for (const parcel of recipe.parcels) {
@@ -33,6 +37,32 @@ export function classicOperationMarkers(run) {
         ...dock.at,
         label: dockLabel(dock.id),
         ready: parcels.every((p) => delivered(p.id)),
+      });
+  }
+  for (const group of recipe.switchyards ?? []) {
+    const progress = state.switchyards.find((s) => s.id === group.id);
+    for (const at of group.switches)
+      markers.push({
+        kind: 'switch',
+        ...at,
+        label: String(progress.selection + 1),
+        ready: progress.selection === 1,
+      });
+    markers.push({
+      kind: 'junction',
+      ...group.routes[0][0],
+      label: String(progress.selection + 1),
+      ready: true,
+    });
+  }
+  for (const group of recipe.plates ?? []) {
+    const progress = state.plates.find((s) => s.id === group.id);
+    for (const at of group.pads)
+      markers.push({
+        kind: 'plate',
+        ...at,
+        label: progress.held ? '=' : '≡',
+        ready: progress.held,
       });
   }
   if (stage.exit) markers.push({ kind: 'exit', ...stage.exit, label: ready ? '→' : '·', ready });
@@ -65,7 +95,7 @@ export function drawClassicOperation(ctx, run, { unit = 28, palette } = {}) {
     } else {
       ctx.strokeStyle = marker.ready ? palette.safe : palette.accent;
       ctx.setLineDash(marker.kind === 'exit' && !marker.ready ? [3, 3] : []);
-      if (marker.kind === 'dock') {
+      if (['dock', 'junction'].includes(marker.kind)) {
         ctx.beginPath();
         ctx.moveTo(14, 1);
         ctx.lineTo(27, 14);
@@ -73,6 +103,18 @@ export function drawClassicOperation(ctx, run, { unit = 28, palette } = {}) {
         ctx.lineTo(1, 14);
         ctx.closePath();
         ctx.stroke();
+      } else if (marker.kind === 'plate') {
+        ctx.strokeRect(1, 5, 26, 18);
+        for (let x = 4; x < 25; x += 6) {
+          ctx.beginPath();
+          ctx.moveTo(x, 6);
+          ctx.lineTo(x - 2, 10);
+          ctx.stroke();
+        }
+      } else if (marker.kind === 'switch') {
+        ctx.strokeRect(3, 3, 22, 22);
+        ctx.fillStyle = palette.accent;
+        ctx.fillRect(marker.ready ? 17 : 5, 1, 6, 6);
       } else ctx.strokeRect(2, 2, 24, 24);
       // Open floor remains visible through dock brackets and extraction pads.
       ctx.fillStyle = '#101d27';
@@ -85,4 +127,36 @@ export function drawClassicOperation(ctx, run, { unit = 28, palette } = {}) {
     }
     ctx.restore();
   }
+}
+
+export function drawClassicOperationLinks(ctx, run, { unit = 28, palette } = {}) {
+  if (!run.level.operation) return;
+  ctx.save();
+  ctx.lineWidth = 1;
+  ctx.globalAlpha = 0.45;
+  ctx.strokeStyle = palette.accent;
+  ctx.setLineDash([3, 5]);
+  const line = (a, b) => {
+    ctx.beginPath();
+    ctx.moveTo((a.x + 0.5) * unit, (a.y + 0.5) * unit);
+    ctx.lineTo((b.x + 0.5) * unit, (a.y + 0.5) * unit);
+    ctx.lineTo((b.x + 0.5) * unit, (b.y + 0.5) * unit);
+    ctx.stroke();
+  };
+  for (const group of run.level.operation.switchyards ?? []) {
+    for (const at of group.switches) line(at, group.routes[0][0]);
+    const state = run.operation.switchyards.find((s) => s.id === group.id);
+    ctx.setLineDash([]);
+    ctx.beginPath();
+    group.routes[state.selection].forEach((p, i) => {
+      if (i) ctx.lineTo((p.x + 0.5) * unit, (p.y + 0.5) * unit);
+      else ctx.moveTo((p.x + 0.5) * unit, (p.y + 0.5) * unit);
+    });
+    ctx.closePath();
+    ctx.stroke();
+    ctx.setLineDash([3, 5]);
+  }
+  for (const group of run.level.operation.plates ?? [])
+    for (const at of group.pads) line(at, group.gates[0]);
+  ctx.restore();
 }
