@@ -17,7 +17,7 @@ import {
   verifyLocalMatchRecordingAsync,
 } from '../game/multiplayer-recording.mjs';
 import { snapshotReplayPresentation } from '../game/replay-presentation.mjs';
-import { CLASSIC_SNAKE_V3_LEVELS } from '../game/snake/classic-catalogue-v3.mjs';
+import { CLASSIC_SNAKE_PURSUIT_V1_ARCHIVED_LEVELS } from '../game/snake/classic-catalogue-pursuit-v1-archive.mjs';
 import { prepareClassicSnakeLevel } from '../game/snake/classic-setup.mjs';
 import { validateClassicSnakeLevel } from '../game/snake/classic-core.mjs';
 import {
@@ -115,7 +115,7 @@ export function pursuitPilotCases() {
   for (const id of snakeIds)
     for (const mode of ['solo', 'versus', 'team'])
       for (const pace of ['slow', 'normal', 'fast']) {
-        const entry = CLASSIC_SNAKE_V3_LEVELS.find((item) => item.id === id);
+        const entry = CLASSIC_SNAKE_PURSUIT_V1_ARCHIVED_LEVELS.find((item) => item.id === id);
         const level = validateClassicSnakeLevel(
           prepareClassicSnakeLevel(entry, {
             pace,
@@ -185,7 +185,7 @@ export async function preparePursuitPilotPacket(directory) {
     format: CLASSIC_PACKAGE_FORMAT,
     title: { en: 'Living Routes pilots', uk: 'Пілотні Живі маршрути' },
     entries: snakeIds.map((id) => {
-      const { title, description, level } = CLASSIC_SNAKE_V3_LEVELS.find(
+      const { title, description, level } = CLASSIC_SNAKE_PURSUIT_V1_ARCHIVED_LEVELS.find(
         (entry) => entry.id === id,
       );
       return { title, description, level };

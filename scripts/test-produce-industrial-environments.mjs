@@ -30,7 +30,7 @@ test('all fourteen bounded native Studio packages regenerate retained sources an
   );
   assert.equal(batch.files.size, 16);
   assert.equal(batch.inventory.chapters.length, 14);
-  assert.equal(batch.inventory.roomSources, 276);
+  assert.equal(batch.inventory.roomSources, 492);
   assert.equal(batch.inventory.roomPreparations, 756);
   assert.ok(batch.inventory.moduleBytes < 512 * 1024);
   assert.ok(batch.inventory.packageBytes < 20 * 1024 * 1024);
@@ -78,7 +78,9 @@ test('chapter transport does not authorize unpublished picture slots in the load
   const before = JSON.stringify(studio.document);
   assert.throws(
     () => adoptStudioBundle(studio.document, broader),
-    /Unsupported imported slot contract: picture\.retro\./,
+    (error) =>
+      error instanceof Error &&
+      missing.some(({ id }) => error.message === `Unsupported imported slot contract: ${id}`),
   );
   assert.equal(JSON.stringify(studio.document), before);
 });

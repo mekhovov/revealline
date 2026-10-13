@@ -7923,6 +7923,420 @@
             "kind": "exact",
             "missionId": "classic-living-twin-intercepts"
           }
+        },
+        {
+          "sourceKey": "ie1-i6W8O2Uec9THaI631mr1Owt0Pa1ZCAmxWZUxtNasV9M",
+          "engine": "snake",
+          "mode": "solo",
+          "origin": {
+            "catalogueId": "classic-catalogue",
+            "catalogueRevision": "classic-catalogue-v3",
+            "sourceForm": "authored"
+          },
+          "format": "classic-snake-level.v3",
+          "id": "classic-living-refuge-bays",
+          "revision": "2",
+          "contentSha256": "e5c1cea7be7ccfcfbb49ee737da4d36c24350ffbd82218cfa6281ad936b59b99",
+          "title": {
+            "en": "Refuge Bays",
+            "uk": "Затишні кишені"
+          },
+          "launch": {
+            "href": "game/snake/play.html?mode=solo&level=classic-living-refuge-bays&lang=en",
+            "kind": "exact",
+            "missionId": "classic-living-refuge-bays"
+          }
+        },
+        {
+          "sourceKey": "ie1-kCqdhZubvCOl_LFJt0r-8OKQJJOrDMAHOgUdvtcaqSc",
+          "engine": "snake",
+          "mode": "versus",
+          "origin": {
+            "catalogueId": "classic-catalogue",
+            "catalogueRevision": "classic-catalogue-v3",
+            "sourceForm": "authored"
+          },
+          "format": "classic-snake-level.v3",
+          "id": "classic-living-refuge-bays",
+          "revision": "2",
+          "contentSha256": "e5c1cea7be7ccfcfbb49ee737da4d36c24350ffbd82218cfa6281ad936b59b99",
+          "title": {
+            "en": "Refuge Bays",
+            "uk": "Затишні кишені"
+          },
+          "launch": {
+            "href": "game/snake/play.html?mode=versus&level=classic-living-refuge-bays&lang=en",
+            "kind": "exact",
+            "missionId": "classic-living-refuge-bays"
+          }
+        },
+        {
+          "sourceKey": "ie1-b4YisPB142Lh7eIbE-xCMEdVvJepM13ddq4CM25eyDw",
+          "engine": "snake",
+          "mode": "team",
+          "origin": {
+            "catalogueId": "classic-catalogue",
+            "catalogueRevision": "classic-catalogue-v3",
+            "sourceForm": "authored"
+          },
+          "format": "classic-snake-level.v3",
+          "id": "classic-living-refuge-bays",
+          "revision": "2",
+          "contentSha256": "e5c1cea7be7ccfcfbb49ee737da4d36c24350ffbd82218cfa6281ad936b59b99",
+          "title": {
+            "en": "Refuge Bays",
+            "uk": "Затишні кишені"
+          },
+          "launch": {
+            "href": "game/snake/play.html?mode=team&level=classic-living-refuge-bays&lang=en",
+            "kind": "exact",
+            "missionId": "classic-living-refuge-bays"
+          }
+        },
+        {
+          "sourceKey": "ie1-zfQXvPvDzQvb-ENQQ5lywDOYox_4AApzLb05jF3s4gQ",
+          "engine": "snake",
+          "mode": "solo",
+          "origin": {
+            "catalogueId": "classic-catalogue",
+            "catalogueRevision": "classic-catalogue-v3",
+            "sourceForm": "authored"
+          },
+          "format": "classic-snake-level.v3",
+          "id": "classic-living-switchback-yard",
+          "revision": "2",
+          "contentSha256": "6dfe8ddcf74bdeb047c469b202cbc43eae01d6a263ba79d26c081591ef4740e4",
+          "title": {
+            "en": "Switchback Yard",
+            "uk": "Двір зміни курсу"
+          },
+          "launch": {
+            "href": "game/snake/play.html?mode=solo&level=classic-living-switchback-yard&lang=en",
+            "kind": "exact",
+            "missionId": "classic-living-switchback-yard"
+          }
+        },
+        {
+          "sourceKey": "ie1-Bks6JKHelZ7m9HX9HgfezF0UsbvsW7Km9vuH3zKwPoM",
+          "engine": "snake",
+          "mode": "versus",
+          "origin": {
+            "catalogueId": "classic-catalogue",
+            "catalogueRevision": "classic-catalogue-v3",
+            "sourceForm": "authored"
+          },
+          "format": "classic-snake-level.v3",
+          "id": "classic-living-switchback-yard",
+          "revision": "2",
+          "contentSha256": "6dfe8ddcf74bdeb047c469b202cbc43eae01d6a263ba79d26c081591ef4740e4",
+          "title": {
+            "en": "Switchback Yard",
+            "uk": "Двір зміни курсу"
+          },
+          "launch": {
+            "href": "game/snake/play.html?mode=versus&level=classic-living-switchback-yard&lang=en",
+            "kind": "exact",
+            "missionId": "classic-living-switchback-yard"
+          }
+        },
+        {
+          "sourceKey": "ie1-lyYJIsWUbeC3Cw3cjb0RirtHphxTvT_W5zpSFwpykO0",
+          "engine": "snake",
+          "mode": "team",
+          "origin": {
+            "catalogueId": "classic-catalogue",
+            "catalogueRevision": "classic-catalogue-v3",
+            "sourceForm": "authored"
+          },
+          "format": "classic-snake-level.v3",
+          "id": "classic-living-switchback-yard",
+          "revision": "2",
+          "contentSha256": "6dfe8ddcf74bdeb047c469b202cbc43eae01d6a263ba79d26c081591ef4740e4",
+          "title": {
+            "en": "Switchback Yard",
+            "uk": "Двір зміни курсу"
+          },
+          "launch": {
+            "href": "game/snake/play.html?mode=team&level=classic-living-switchback-yard&lang=en",
+            "kind": "exact",
+            "missionId": "classic-living-switchback-yard"
+          }
+        },
+        {
+          "sourceKey": "ie1-OaG33h0vLmEgbCVAZ0-41IEB6x-4xCpjHlczUibe3LA",
+          "engine": "snake",
+          "mode": "solo",
+          "origin": {
+            "catalogueId": "classic-catalogue",
+            "catalogueRevision": "classic-catalogue-v3",
+            "sourceForm": "authored"
+          },
+          "format": "classic-snake-level.v3",
+          "id": "classic-living-rendezvous-crossing",
+          "revision": "2",
+          "contentSha256": "481183834126a98a10c0b2a17187f2dd200ab81764c320fec64e52674ed92342",
+          "title": {
+            "en": "Rendezvous Crossing",
+            "uk": "Перехрестя зустрічі"
+          },
+          "launch": {
+            "href": "game/snake/play.html?mode=solo&level=classic-living-rendezvous-crossing&lang=en",
+            "kind": "exact",
+            "missionId": "classic-living-rendezvous-crossing"
+          }
+        },
+        {
+          "sourceKey": "ie1-Oecpybg5KypJ_gbaQ6mzptQQpZwG-FE0gyFSolLVyqw",
+          "engine": "snake",
+          "mode": "versus",
+          "origin": {
+            "catalogueId": "classic-catalogue",
+            "catalogueRevision": "classic-catalogue-v3",
+            "sourceForm": "authored"
+          },
+          "format": "classic-snake-level.v3",
+          "id": "classic-living-rendezvous-crossing",
+          "revision": "2",
+          "contentSha256": "481183834126a98a10c0b2a17187f2dd200ab81764c320fec64e52674ed92342",
+          "title": {
+            "en": "Rendezvous Crossing",
+            "uk": "Перехрестя зустрічі"
+          },
+          "launch": {
+            "href": "game/snake/play.html?mode=versus&level=classic-living-rendezvous-crossing&lang=en",
+            "kind": "exact",
+            "missionId": "classic-living-rendezvous-crossing"
+          }
+        },
+        {
+          "sourceKey": "ie1-rylozyxwJ80DrC0SUEoXwkeLT19FuuuF8FBkDo-yIds",
+          "engine": "snake",
+          "mode": "team",
+          "origin": {
+            "catalogueId": "classic-catalogue",
+            "catalogueRevision": "classic-catalogue-v3",
+            "sourceForm": "authored"
+          },
+          "format": "classic-snake-level.v3",
+          "id": "classic-living-rendezvous-crossing",
+          "revision": "2",
+          "contentSha256": "481183834126a98a10c0b2a17187f2dd200ab81764c320fec64e52674ed92342",
+          "title": {
+            "en": "Rendezvous Crossing",
+            "uk": "Перехрестя зустрічі"
+          },
+          "launch": {
+            "href": "game/snake/play.html?mode=team&level=classic-living-rendezvous-crossing&lang=en",
+            "kind": "exact",
+            "missionId": "classic-living-rendezvous-crossing"
+          }
+        },
+        {
+          "sourceKey": "ie1-oPcUftUyH4u7STfdIg79JaumYE7sklfbO5qBk3CXqcU",
+          "engine": "snake",
+          "mode": "solo",
+          "origin": {
+            "catalogueId": "classic-catalogue",
+            "catalogueRevision": "classic-catalogue-v3",
+            "sourceForm": "authored"
+          },
+          "format": "classic-snake-level.v3",
+          "id": "classic-living-cable-cutoff",
+          "revision": "2",
+          "contentSha256": "df14eb4f92e2bd6c0f71c60b536ae828619d42f9d18df863de3d2787d58baf6d",
+          "title": {
+            "en": "Cable Cutoff",
+            "uk": "Кабельний заслін"
+          },
+          "launch": {
+            "href": "game/snake/play.html?mode=solo&level=classic-living-cable-cutoff&lang=en",
+            "kind": "exact",
+            "missionId": "classic-living-cable-cutoff"
+          }
+        },
+        {
+          "sourceKey": "ie1-2RGZAUIALT0xE2TEUk2I0vIN6AG1WBhHWXrU3uN78Y4",
+          "engine": "snake",
+          "mode": "versus",
+          "origin": {
+            "catalogueId": "classic-catalogue",
+            "catalogueRevision": "classic-catalogue-v3",
+            "sourceForm": "authored"
+          },
+          "format": "classic-snake-level.v3",
+          "id": "classic-living-cable-cutoff",
+          "revision": "2",
+          "contentSha256": "df14eb4f92e2bd6c0f71c60b536ae828619d42f9d18df863de3d2787d58baf6d",
+          "title": {
+            "en": "Cable Cutoff",
+            "uk": "Кабельний заслін"
+          },
+          "launch": {
+            "href": "game/snake/play.html?mode=versus&level=classic-living-cable-cutoff&lang=en",
+            "kind": "exact",
+            "missionId": "classic-living-cable-cutoff"
+          }
+        },
+        {
+          "sourceKey": "ie1-s6i_QMxgtmGFxTHpmT9PU_sioDDb-_J-A2gfmyRzUao",
+          "engine": "snake",
+          "mode": "team",
+          "origin": {
+            "catalogueId": "classic-catalogue",
+            "catalogueRevision": "classic-catalogue-v3",
+            "sourceForm": "authored"
+          },
+          "format": "classic-snake-level.v3",
+          "id": "classic-living-cable-cutoff",
+          "revision": "2",
+          "contentSha256": "df14eb4f92e2bd6c0f71c60b536ae828619d42f9d18df863de3d2787d58baf6d",
+          "title": {
+            "en": "Cable Cutoff",
+            "uk": "Кабельний заслін"
+          },
+          "launch": {
+            "href": "game/snake/play.html?mode=team&level=classic-living-cable-cutoff&lang=en",
+            "kind": "exact",
+            "missionId": "classic-living-cable-cutoff"
+          }
+        },
+        {
+          "sourceKey": "ie1-FHE-h6InWRZvrk1HsAwP3GCB9K1WOld5kN4A2UHUUhU",
+          "engine": "snake",
+          "mode": "solo",
+          "origin": {
+            "catalogueId": "classic-catalogue",
+            "catalogueRevision": "classic-catalogue-v3",
+            "sourceForm": "authored"
+          },
+          "format": "classic-snake-level.v3",
+          "id": "classic-living-return-pincer",
+          "revision": "2",
+          "contentSha256": "14d2f27a3692a413aed6b990d23840f01e07ae95ed4ade0dcfe5956292916f4b",
+          "title": {
+            "en": "Return Pincer",
+            "uk": "Обхідні лещата"
+          },
+          "launch": {
+            "href": "game/snake/play.html?mode=solo&level=classic-living-return-pincer&lang=en",
+            "kind": "exact",
+            "missionId": "classic-living-return-pincer"
+          }
+        },
+        {
+          "sourceKey": "ie1-9zIM8fyt0I997M0C1k19cockQjNAJng6YtCnGBK7eR8",
+          "engine": "snake",
+          "mode": "versus",
+          "origin": {
+            "catalogueId": "classic-catalogue",
+            "catalogueRevision": "classic-catalogue-v3",
+            "sourceForm": "authored"
+          },
+          "format": "classic-snake-level.v3",
+          "id": "classic-living-return-pincer",
+          "revision": "2",
+          "contentSha256": "14d2f27a3692a413aed6b990d23840f01e07ae95ed4ade0dcfe5956292916f4b",
+          "title": {
+            "en": "Return Pincer",
+            "uk": "Обхідні лещата"
+          },
+          "launch": {
+            "href": "game/snake/play.html?mode=versus&level=classic-living-return-pincer&lang=en",
+            "kind": "exact",
+            "missionId": "classic-living-return-pincer"
+          }
+        },
+        {
+          "sourceKey": "ie1-ii2gH8A-M4G8hBz-OUencoRSuaqLuOi39C4Ps_anNVc",
+          "engine": "snake",
+          "mode": "team",
+          "origin": {
+            "catalogueId": "classic-catalogue",
+            "catalogueRevision": "classic-catalogue-v3",
+            "sourceForm": "authored"
+          },
+          "format": "classic-snake-level.v3",
+          "id": "classic-living-return-pincer",
+          "revision": "2",
+          "contentSha256": "14d2f27a3692a413aed6b990d23840f01e07ae95ed4ade0dcfe5956292916f4b",
+          "title": {
+            "en": "Return Pincer",
+            "uk": "Обхідні лещата"
+          },
+          "launch": {
+            "href": "game/snake/play.html?mode=team&level=classic-living-return-pincer&lang=en",
+            "kind": "exact",
+            "missionId": "classic-living-return-pincer"
+          }
+        },
+        {
+          "sourceKey": "ie1-n3JF19yfHnIGrSaGNxr9VZ7rQpHzh9utx3zTJSmgh5Y",
+          "engine": "snake",
+          "mode": "solo",
+          "origin": {
+            "catalogueId": "classic-catalogue",
+            "catalogueRevision": "classic-catalogue-v3",
+            "sourceForm": "authored"
+          },
+          "format": "classic-snake-level.v3",
+          "id": "classic-living-twin-intercepts",
+          "revision": "2",
+          "contentSha256": "19b50d9f1fe6fc544658b55a48aade3d78bb45066f39ad1a8872d1a16f28baf6",
+          "title": {
+            "en": "Twin Intercepts",
+            "uk": "Подвійні перехоплення"
+          },
+          "launch": {
+            "href": "game/snake/play.html?mode=solo&level=classic-living-twin-intercepts&lang=en",
+            "kind": "exact",
+            "missionId": "classic-living-twin-intercepts"
+          }
+        },
+        {
+          "sourceKey": "ie1-LjJhn7GH3yR4-ZGJWYe75bZk6GvXNhDU214vfiTrshc",
+          "engine": "snake",
+          "mode": "versus",
+          "origin": {
+            "catalogueId": "classic-catalogue",
+            "catalogueRevision": "classic-catalogue-v3",
+            "sourceForm": "authored"
+          },
+          "format": "classic-snake-level.v3",
+          "id": "classic-living-twin-intercepts",
+          "revision": "2",
+          "contentSha256": "19b50d9f1fe6fc544658b55a48aade3d78bb45066f39ad1a8872d1a16f28baf6",
+          "title": {
+            "en": "Twin Intercepts",
+            "uk": "Подвійні перехоплення"
+          },
+          "launch": {
+            "href": "game/snake/play.html?mode=versus&level=classic-living-twin-intercepts&lang=en",
+            "kind": "exact",
+            "missionId": "classic-living-twin-intercepts"
+          }
+        },
+        {
+          "sourceKey": "ie1-BU8FIkWbrMc1St7AEbaYg73R2DLj0oE6-Ts2z44DMAE",
+          "engine": "snake",
+          "mode": "team",
+          "origin": {
+            "catalogueId": "classic-catalogue",
+            "catalogueRevision": "classic-catalogue-v3",
+            "sourceForm": "authored"
+          },
+          "format": "classic-snake-level.v3",
+          "id": "classic-living-twin-intercepts",
+          "revision": "2",
+          "contentSha256": "19b50d9f1fe6fc544658b55a48aade3d78bb45066f39ad1a8872d1a16f28baf6",
+          "title": {
+            "en": "Twin Intercepts",
+            "uk": "Подвійні перехоплення"
+          },
+          "launch": {
+            "href": "game/snake/play.html?mode=team&level=classic-living-twin-intercepts&lang=en",
+            "kind": "exact",
+            "missionId": "classic-living-twin-intercepts"
+          }
         }
       ]
     },
@@ -8503,6 +8917,420 @@
           "id": "classic-living-living-airfield",
           "revision": "1",
           "contentSha256": "b9ed749d2dae458244ef6b9d1237fb183f82e2c5dee374ddcc73d509611f843b",
+          "title": {
+            "en": "Living Airfield",
+            "uk": "Живий аеродром"
+          },
+          "launch": {
+            "href": "game/snake/play.html?mode=team&level=classic-living-living-airfield&lang=en",
+            "kind": "exact",
+            "missionId": "classic-living-living-airfield"
+          }
+        },
+        {
+          "sourceKey": "ie1-YyLGmZj8Ngyk2QnnvZ2pmMaBToqXfjt9i5oQ3A3kBR0",
+          "engine": "snake",
+          "mode": "solo",
+          "origin": {
+            "catalogueId": "classic-catalogue",
+            "catalogueRevision": "classic-catalogue-v3",
+            "sourceForm": "authored"
+          },
+          "format": "classic-snake-level.v3",
+          "id": "classic-living-shield-window",
+          "revision": "2",
+          "contentSha256": "47dc0cea35050d51dd7d697aab10e051650dc327212c172050c32ccf9a365017",
+          "title": {
+            "en": "Shield Window",
+            "uk": "Вікно щита"
+          },
+          "launch": {
+            "href": "game/snake/play.html?mode=solo&level=classic-living-shield-window&lang=en",
+            "kind": "exact",
+            "missionId": "classic-living-shield-window"
+          }
+        },
+        {
+          "sourceKey": "ie1-Fs7w3pWXhQujHIo4GGs-0TfL3Lr9GfIAkkfKj9zWaeA",
+          "engine": "snake",
+          "mode": "versus",
+          "origin": {
+            "catalogueId": "classic-catalogue",
+            "catalogueRevision": "classic-catalogue-v3",
+            "sourceForm": "authored"
+          },
+          "format": "classic-snake-level.v3",
+          "id": "classic-living-shield-window",
+          "revision": "2",
+          "contentSha256": "47dc0cea35050d51dd7d697aab10e051650dc327212c172050c32ccf9a365017",
+          "title": {
+            "en": "Shield Window",
+            "uk": "Вікно щита"
+          },
+          "launch": {
+            "href": "game/snake/play.html?mode=versus&level=classic-living-shield-window&lang=en",
+            "kind": "exact",
+            "missionId": "classic-living-shield-window"
+          }
+        },
+        {
+          "sourceKey": "ie1-UMC_ziNUfXmRzxSH6OmDYH6BxAcPKcpU6sD0dMj5Qt8",
+          "engine": "snake",
+          "mode": "team",
+          "origin": {
+            "catalogueId": "classic-catalogue",
+            "catalogueRevision": "classic-catalogue-v3",
+            "sourceForm": "authored"
+          },
+          "format": "classic-snake-level.v3",
+          "id": "classic-living-shield-window",
+          "revision": "2",
+          "contentSha256": "47dc0cea35050d51dd7d697aab10e051650dc327212c172050c32ccf9a365017",
+          "title": {
+            "en": "Shield Window",
+            "uk": "Вікно щита"
+          },
+          "launch": {
+            "href": "game/snake/play.html?mode=team&level=classic-living-shield-window&lang=en",
+            "kind": "exact",
+            "missionId": "classic-living-shield-window"
+          }
+        },
+        {
+          "sourceKey": "ie1-PHiwpzsdCORRflFm-Zp4itOs_krN4kO4u2w15jnpNpE",
+          "engine": "snake",
+          "mode": "solo",
+          "origin": {
+            "catalogueId": "classic-catalogue",
+            "catalogueRevision": "classic-catalogue-v3",
+            "sourceForm": "authored"
+          },
+          "format": "classic-snake-level.v3",
+          "id": "classic-living-brace-break",
+          "revision": "2",
+          "contentSha256": "8111e9092aa568ce706765f27e89a5c2fb464397985feb63b02e0cba10a061c3",
+          "title": {
+            "en": "Brace Break",
+            "uk": "Пауза броні"
+          },
+          "launch": {
+            "href": "game/snake/play.html?mode=solo&level=classic-living-brace-break&lang=en",
+            "kind": "exact",
+            "missionId": "classic-living-brace-break"
+          }
+        },
+        {
+          "sourceKey": "ie1-L8jTm5pzs9U9Lwp4fGE3deDFlxlKiJ8lcg6N3sARm-0",
+          "engine": "snake",
+          "mode": "versus",
+          "origin": {
+            "catalogueId": "classic-catalogue",
+            "catalogueRevision": "classic-catalogue-v3",
+            "sourceForm": "authored"
+          },
+          "format": "classic-snake-level.v3",
+          "id": "classic-living-brace-break",
+          "revision": "2",
+          "contentSha256": "8111e9092aa568ce706765f27e89a5c2fb464397985feb63b02e0cba10a061c3",
+          "title": {
+            "en": "Brace Break",
+            "uk": "Пауза броні"
+          },
+          "launch": {
+            "href": "game/snake/play.html?mode=versus&level=classic-living-brace-break&lang=en",
+            "kind": "exact",
+            "missionId": "classic-living-brace-break"
+          }
+        },
+        {
+          "sourceKey": "ie1-40AvZc3o7w4KyDjdhw2VIP2_wpm0QSTtSNtxpzrlsx0",
+          "engine": "snake",
+          "mode": "team",
+          "origin": {
+            "catalogueId": "classic-catalogue",
+            "catalogueRevision": "classic-catalogue-v3",
+            "sourceForm": "authored"
+          },
+          "format": "classic-snake-level.v3",
+          "id": "classic-living-brace-break",
+          "revision": "2",
+          "contentSha256": "8111e9092aa568ce706765f27e89a5c2fb464397985feb63b02e0cba10a061c3",
+          "title": {
+            "en": "Brace Break",
+            "uk": "Пауза броні"
+          },
+          "launch": {
+            "href": "game/snake/play.html?mode=team&level=classic-living-brace-break&lang=en",
+            "kind": "exact",
+            "missionId": "classic-living-brace-break"
+          }
+        },
+        {
+          "sourceKey": "ie1-pdS2trItFoB8CsWXfHY5x-YbkqNY7gmIkuNRSjGcC4I",
+          "engine": "snake",
+          "mode": "solo",
+          "origin": {
+            "catalogueId": "classic-catalogue",
+            "catalogueRevision": "classic-catalogue-v3",
+            "sourceForm": "authored"
+          },
+          "format": "classic-snake-level.v3",
+          "id": "classic-living-shutter-flank",
+          "revision": "2",
+          "contentSha256": "2fbbfc9b869b82bb9614393e1fdc7b51070af68f7b79d00518fdca55127e06a0",
+          "title": {
+            "en": "Shutter Flank",
+            "uk": "Фланг заслінки"
+          },
+          "launch": {
+            "href": "game/snake/play.html?mode=solo&level=classic-living-shutter-flank&lang=en",
+            "kind": "exact",
+            "missionId": "classic-living-shutter-flank"
+          }
+        },
+        {
+          "sourceKey": "ie1-1cPnP_X9MbYbVORGQHXGn4xu88Umf9nqtVJqu7UEVpA",
+          "engine": "snake",
+          "mode": "versus",
+          "origin": {
+            "catalogueId": "classic-catalogue",
+            "catalogueRevision": "classic-catalogue-v3",
+            "sourceForm": "authored"
+          },
+          "format": "classic-snake-level.v3",
+          "id": "classic-living-shutter-flank",
+          "revision": "2",
+          "contentSha256": "2fbbfc9b869b82bb9614393e1fdc7b51070af68f7b79d00518fdca55127e06a0",
+          "title": {
+            "en": "Shutter Flank",
+            "uk": "Фланг заслінки"
+          },
+          "launch": {
+            "href": "game/snake/play.html?mode=versus&level=classic-living-shutter-flank&lang=en",
+            "kind": "exact",
+            "missionId": "classic-living-shutter-flank"
+          }
+        },
+        {
+          "sourceKey": "ie1-oiOJrCKdCAuDTeckYDFenDJJYr6p6XnauoQb1exHMBI",
+          "engine": "snake",
+          "mode": "team",
+          "origin": {
+            "catalogueId": "classic-catalogue",
+            "catalogueRevision": "classic-catalogue-v3",
+            "sourceForm": "authored"
+          },
+          "format": "classic-snake-level.v3",
+          "id": "classic-living-shutter-flank",
+          "revision": "2",
+          "contentSha256": "2fbbfc9b869b82bb9614393e1fdc7b51070af68f7b79d00518fdca55127e06a0",
+          "title": {
+            "en": "Shutter Flank",
+            "uk": "Фланг заслінки"
+          },
+          "launch": {
+            "href": "game/snake/play.html?mode=team&level=classic-living-shutter-flank&lang=en",
+            "kind": "exact",
+            "missionId": "classic-living-shutter-flank"
+          }
+        },
+        {
+          "sourceKey": "ie1-6fn0v1Oxa5ylyhXo5q45z-2YBzmLP65n7daQlL7KZ3A",
+          "engine": "snake",
+          "mode": "solo",
+          "origin": {
+            "catalogueId": "classic-catalogue",
+            "catalogueRevision": "classic-catalogue-v3",
+            "sourceForm": "authored"
+          },
+          "format": "classic-snake-level.v3",
+          "id": "classic-living-frozen-opening",
+          "revision": "2",
+          "contentSha256": "2a689014e1f85236f2b7874ff7be460098ac5c653cbc89b73f9bc38e9c5bd28e",
+          "title": {
+            "en": "Frozen Opening",
+            "uk": "Завмерле вікно"
+          },
+          "launch": {
+            "href": "game/snake/play.html?mode=solo&level=classic-living-frozen-opening&lang=en",
+            "kind": "exact",
+            "missionId": "classic-living-frozen-opening"
+          }
+        },
+        {
+          "sourceKey": "ie1-6SAkw2wpKuQN2GAN6eH8GGT5VGLCQoHpCwGtsB5HoN0",
+          "engine": "snake",
+          "mode": "versus",
+          "origin": {
+            "catalogueId": "classic-catalogue",
+            "catalogueRevision": "classic-catalogue-v3",
+            "sourceForm": "authored"
+          },
+          "format": "classic-snake-level.v3",
+          "id": "classic-living-frozen-opening",
+          "revision": "2",
+          "contentSha256": "2a689014e1f85236f2b7874ff7be460098ac5c653cbc89b73f9bc38e9c5bd28e",
+          "title": {
+            "en": "Frozen Opening",
+            "uk": "Завмерле вікно"
+          },
+          "launch": {
+            "href": "game/snake/play.html?mode=versus&level=classic-living-frozen-opening&lang=en",
+            "kind": "exact",
+            "missionId": "classic-living-frozen-opening"
+          }
+        },
+        {
+          "sourceKey": "ie1-YohNouQQOPzmrvFbFEYD7A8-ko0xwJFC-EnrvqT6CEA",
+          "engine": "snake",
+          "mode": "team",
+          "origin": {
+            "catalogueId": "classic-catalogue",
+            "catalogueRevision": "classic-catalogue-v3",
+            "sourceForm": "authored"
+          },
+          "format": "classic-snake-level.v3",
+          "id": "classic-living-frozen-opening",
+          "revision": "2",
+          "contentSha256": "2a689014e1f85236f2b7874ff7be460098ac5c653cbc89b73f9bc38e9c5bd28e",
+          "title": {
+            "en": "Frozen Opening",
+            "uk": "Завмерле вікно"
+          },
+          "launch": {
+            "href": "game/snake/play.html?mode=team&level=classic-living-frozen-opening&lang=en",
+            "kind": "exact",
+            "missionId": "classic-living-frozen-opening"
+          }
+        },
+        {
+          "sourceKey": "ie1-27N3iHsyqkmq4uswXiWaRTYJjkjgEIhkZnQdaB5GUqc",
+          "engine": "snake",
+          "mode": "solo",
+          "origin": {
+            "catalogueId": "classic-catalogue",
+            "catalogueRevision": "classic-catalogue-v3",
+            "sourceForm": "authored"
+          },
+          "format": "classic-snake-level.v3",
+          "id": "classic-living-supply-flanks",
+          "revision": "2",
+          "contentSha256": "ef89e912cc53bce0cf629f2030007d52864ee88dba84b8800c3cb33ea8cc77f8",
+          "title": {
+            "en": "Supply Flanks",
+            "uk": "Припаси на флангах"
+          },
+          "launch": {
+            "href": "game/snake/play.html?mode=solo&level=classic-living-supply-flanks&lang=en",
+            "kind": "exact",
+            "missionId": "classic-living-supply-flanks"
+          }
+        },
+        {
+          "sourceKey": "ie1-nkVDSiIeosqDkRAdvrHtZbLkZHNw4-PIxdvounapz28",
+          "engine": "snake",
+          "mode": "versus",
+          "origin": {
+            "catalogueId": "classic-catalogue",
+            "catalogueRevision": "classic-catalogue-v3",
+            "sourceForm": "authored"
+          },
+          "format": "classic-snake-level.v3",
+          "id": "classic-living-supply-flanks",
+          "revision": "2",
+          "contentSha256": "ef89e912cc53bce0cf629f2030007d52864ee88dba84b8800c3cb33ea8cc77f8",
+          "title": {
+            "en": "Supply Flanks",
+            "uk": "Припаси на флангах"
+          },
+          "launch": {
+            "href": "game/snake/play.html?mode=versus&level=classic-living-supply-flanks&lang=en",
+            "kind": "exact",
+            "missionId": "classic-living-supply-flanks"
+          }
+        },
+        {
+          "sourceKey": "ie1-A8HOGMGyTdu7mV2LuymOtQjEjVAGP4unFdBnXITex1M",
+          "engine": "snake",
+          "mode": "team",
+          "origin": {
+            "catalogueId": "classic-catalogue",
+            "catalogueRevision": "classic-catalogue-v3",
+            "sourceForm": "authored"
+          },
+          "format": "classic-snake-level.v3",
+          "id": "classic-living-supply-flanks",
+          "revision": "2",
+          "contentSha256": "ef89e912cc53bce0cf629f2030007d52864ee88dba84b8800c3cb33ea8cc77f8",
+          "title": {
+            "en": "Supply Flanks",
+            "uk": "Припаси на флангах"
+          },
+          "launch": {
+            "href": "game/snake/play.html?mode=team&level=classic-living-supply-flanks&lang=en",
+            "kind": "exact",
+            "missionId": "classic-living-supply-flanks"
+          }
+        },
+        {
+          "sourceKey": "ie1-T4kx5xGZEMieXifDxSnaYt3JwJKHqhyBacdPreErQK8",
+          "engine": "snake",
+          "mode": "solo",
+          "origin": {
+            "catalogueId": "classic-catalogue",
+            "catalogueRevision": "classic-catalogue-v3",
+            "sourceForm": "authored"
+          },
+          "format": "classic-snake-level.v3",
+          "id": "classic-living-living-airfield",
+          "revision": "2",
+          "contentSha256": "69303f817450f06f91ccdd48dcd9a10a49fd8b9e6960ffa6915e1c8a9294ab92",
+          "title": {
+            "en": "Living Airfield",
+            "uk": "Живий аеродром"
+          },
+          "launch": {
+            "href": "game/snake/play.html?mode=solo&level=classic-living-living-airfield&lang=en",
+            "kind": "exact",
+            "missionId": "classic-living-living-airfield"
+          }
+        },
+        {
+          "sourceKey": "ie1-luWYjT2rsTIYmleF7a2Zq5HkoX7dBbLf65Ymy9tDBPY",
+          "engine": "snake",
+          "mode": "versus",
+          "origin": {
+            "catalogueId": "classic-catalogue",
+            "catalogueRevision": "classic-catalogue-v3",
+            "sourceForm": "authored"
+          },
+          "format": "classic-snake-level.v3",
+          "id": "classic-living-living-airfield",
+          "revision": "2",
+          "contentSha256": "69303f817450f06f91ccdd48dcd9a10a49fd8b9e6960ffa6915e1c8a9294ab92",
+          "title": {
+            "en": "Living Airfield",
+            "uk": "Живий аеродром"
+          },
+          "launch": {
+            "href": "game/snake/play.html?mode=versus&level=classic-living-living-airfield&lang=en",
+            "kind": "exact",
+            "missionId": "classic-living-living-airfield"
+          }
+        },
+        {
+          "sourceKey": "ie1-VLpRl_iLVFmfRRgWNVxryLAo4uB4iuX2PDTlM0KZ49M",
+          "engine": "snake",
+          "mode": "team",
+          "origin": {
+            "catalogueId": "classic-catalogue",
+            "catalogueRevision": "classic-catalogue-v3",
+            "sourceForm": "authored"
+          },
+          "format": "classic-snake-level.v3",
+          "id": "classic-living-living-airfield",
+          "revision": "2",
+          "contentSha256": "69303f817450f06f91ccdd48dcd9a10a49fd8b9e6960ffa6915e1c8a9294ab92",
           "title": {
             "en": "Living Airfield",
             "uk": "Живий аеродром"
@@ -9703,8 +10531,8 @@
     }
   ],
   "roomPreparations": 756,
-  "roomSources": 276,
-  "moduleBytes": 330026,
+  "roomSources": 492,
+  "moduleBytes": 383944,
   "packageBytes": 13837091,
   "decodedBytesPerChapterMax": 3072,
   "scope": "Produced and software-admitted, presentation only. No new missions, gameplay policy, automatic default promotion or human/device acceptance."
