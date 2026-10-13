@@ -1,3 +1,9 @@
+import {
+  observeClassicWorldReactions,
+  drawClassicWorldReactions,
+  drawClassicWorldEquipment,
+} from './classic-world-reactions.mjs';
+import { drawClassicCachedTerrain, classicTerrainImageKey } from './classic-terrain-cache.mjs';
 import { drawClassicOperation, drawClassicOperationLinks } from './classic-operation-view.mjs';
 import { resolveClassicWorld, isClassicWorldStyle } from './classic-worlds.mjs';
 import { INDUSTRIAL_BUILTIN_SPRITES } from '../presentation/industrial-arcade-builtins.mjs';
@@ -126,6 +132,11 @@ function drawShutters(ctx, run, palette) {
       if (shutter.closed) {
         ctx.fillStyle = '#26313e';
         ctx.fillRect(x, y, UNIT, UNIT);
+        ctx.fillStyle = '#657984';
+        ctx.fillRect(x + 3, y + 3, 9, 22);
+        ctx.fillRect(x + 16, y + 3, 9, 22);
+        ctx.fillStyle = '#172831';
+        ctx.fillRect(x + 13, y + 1, 2, 26);
         ctx.strokeRect(x + 1.5, y + 1.5, UNIT - 3, UNIT - 3);
         ctx.beginPath();
         ctx.moveTo(x + 6, y + 6);
@@ -134,6 +145,9 @@ function drawShutters(ctx, run, palette) {
         ctx.lineTo(x + 6, y + 22);
         ctx.stroke();
       } else {
+        ctx.fillStyle = '#829593';
+        ctx.fillRect(x, y, 2, UNIT);
+        ctx.fillRect(x + UNIT - 2, y, 2, UNIT);
         ctx.strokeRect(x + 2, y + 2, UNIT - 4, UNIT - 4);
         if (shutter.warning || shutter.yielding) {
           ctx.setLineDash([]);
@@ -344,6 +358,7 @@ export function drawClassicBoard(
     // Explicit visual-fixture comparison only; no gameplay preference or URL
     // setting enables the original partially visible enemy treatment.
     signalDiagnosticOriginal = false,
+    terrainCache = true,
   } = {},
 ) {
   const { width, height, walls, wrap } = run.level,
@@ -382,44 +397,89 @@ export function drawClassicBoard(
   if (!ctx) return;
   ctx.setTransform(bitmapWidth / logicalWidth, 0, 0, bitmapHeight / logicalHeight, 0, 0);
   ctx.imageSmoothingEnabled = false;
-  ctx.fillStyle = palette.field;
-  ctx.fillRect(0, 0, logicalWidth, logicalHeight);
-  if (living)
-    drawClassicLivingGround(ctx, run.level, scene, {
-      unit: UNIT,
-      document: canvas.ownerDocument,
-      treatment: world.treatment,
-      zoning: world.zoning,
-    });
-  else {
-    ctx.fillStyle = palette.alternate;
-    ctx.globalAlpha = 0.42;
-    for (let y = 0; y < height; y++)
-      for (let x = 0; x < width; x++)
-        if ((x + y) % 2 === 0) ctx.fillRect(x * UNIT, y * UNIT, UNIT, UNIT);
-  }
-  // Fine grid and sparse surface grain echo the main game's terrain without
-  // competing with silhouettes or pretending to be additional obstacles.
-  ctx.globalAlpha = living ? 0.65 : 0.17;
-  ctx.strokeStyle = palette.grid;
-  ctx.lineWidth = 0.5;
-  ctx.beginPath();
-  for (let x = 1; x < width; x++) {
-    ctx.moveTo(x * UNIT, 0);
-    ctx.lineTo(x * UNIT, logicalHeight);
-  }
-  for (let y = 1; y < height; y++) {
-    ctx.moveTo(0, y * UNIT);
-    ctx.lineTo(logicalWidth, y * UNIT);
-  }
-  ctx.stroke();
-  ctx.fillStyle = palette.muted;
-  ctx.globalAlpha = 0.08;
-  for (let y = 0; y < height; y++)
-    for (let x = 0; x < width; x++) {
-      if ((x * 7 + y * 11) % 5 === 0) ctx.fillRect(x * UNIT + 8, y * UNIT + 8, 1, 1);
-    }
-  ctx.globalAlpha = 1;
+  const removed = new Set((run.removedWalls ?? []).map(({ x, y }) => `${x},${y}`));
+  const visibleWalls = walls.filter(({ x, y }) => !removed.has(`${x},${y}`));
+  const occupied = new Set(visibleWalls.map(({ x, y }) => `${x},${y}`));
+  const wallAsset = presentation?.asset?.('terrain.wall')?.asset;
+  const creatorWall =
+    wallAsset &&
+    (wallAsset.id !== 'terrain.wall.field-kit' ||
+      !INDUSTRIAL_BUILTIN_SPRITES['terrain.wall'].includes(wallAsset.file?.sha256));
+  const structuredTerrain = !retro && !creatorWall && (living || Boolean(wallAsset));
+  const structures = structuredTerrain ? classicWallStructures(visibleWalls) : null;
+  const terrainKey = JSON.stringify([
+    run.level.id,
+    width,
+    height,
+    visibleWalls,
+    boardStyle,
+    world,
+    palette,
+    wallAsset,
+    classicTerrainImageKey(presentation?.image?.('terrain.wall')),
+    presentation?.environment ?? null,
+  ]);
+  drawClassicCachedTerrain(
+    ctx,
+    canvas.ownerDocument,
+    terrainKey,
+    logicalWidth,
+    logicalHeight,
+    (ctx) => {
+      ctx.fillStyle = palette.field;
+      ctx.fillRect(0, 0, logicalWidth, logicalHeight);
+      if (living)
+        drawClassicLivingGround(ctx, run.level, scene, {
+          unit: UNIT,
+          document: canvas.ownerDocument,
+          treatment: world.treatment,
+          zoning: world.zoning,
+          composition: world,
+        });
+      else {
+        ctx.fillStyle = palette.alternate;
+        ctx.globalAlpha = 0.42;
+        for (let y = 0; y < height; y++)
+          for (let x = 0; x < width; x++)
+            if ((x + y) % 2 === 0) ctx.fillRect(x * UNIT, y * UNIT, UNIT, UNIT);
+      }
+      // Fine grid and sparse surface grain echo the main game's terrain without
+      // competing with silhouettes or pretending to be additional obstacles.
+      ctx.globalAlpha = living ? 0.65 : 0.17;
+      ctx.strokeStyle = palette.grid;
+      ctx.lineWidth = 0.5;
+      ctx.beginPath();
+      for (let x = 1; x < width; x++) {
+        ctx.moveTo(x * UNIT, 0);
+        ctx.lineTo(x * UNIT, logicalHeight);
+      }
+      for (let y = 1; y < height; y++) {
+        ctx.moveTo(0, y * UNIT);
+        ctx.lineTo(logicalWidth, y * UNIT);
+      }
+      ctx.stroke();
+      ctx.fillStyle = palette.muted;
+      ctx.globalAlpha = 0.08;
+      for (let y = 0; y < height; y++)
+        for (let x = 0; x < width; x++) {
+          if ((x * 7 + y * 11) % 5 === 0) ctx.fillRect(x * UNIT + 8, y * UNIT + 8, 1, 1);
+        }
+      ctx.globalAlpha = 1;
+      for (const wall of visibleWalls) {
+        if (structuredTerrain)
+          drawClassicLivingWall(ctx, wall, scene, {
+            unit: UNIT,
+            document: canvas.ownerDocument,
+            treatment: world.treatment,
+            occupied,
+            structure: structures.get(`${wall.x},${wall.y}`),
+            composition: world,
+          });
+        else drawWall(ctx, wall, presentation, palette, retro);
+      }
+    },
+    terrainCache,
+  );
   if (showRemains && !concealEnemies) {
     ctx.save();
     ctx.scale(UNIT / 16, UNIT / 16);
@@ -433,27 +493,15 @@ export function drawClassicBoard(
     effects.draw(ctx);
     ctx.restore();
   }
-  const removed = new Set((run.removedWalls ?? []).map(({ x, y }) => `${x},${y}`));
-  const visibleWalls = walls.filter(({ x, y }) => !removed.has(`${x},${y}`));
-  const occupied = new Set(visibleWalls.map(({ x, y }) => `${x},${y}`));
-  const structures = living ? classicWallStructures(visibleWalls) : null;
-  const wallAsset = presentation?.asset?.('terrain.wall')?.asset;
-  const creatorWall =
-    wallAsset &&
-    (wallAsset.id !== 'terrain.wall.field-kit' ||
-      !INDUSTRIAL_BUILTIN_SPRITES['terrain.wall'].includes(wallAsset.file?.sha256));
-  for (const wall of visibleWalls) {
-    if (living && !creatorWall)
-      drawClassicLivingWall(ctx, wall, scene, {
-        unit: UNIT,
-        document: canvas.ownerDocument,
-        treatment: world.treatment,
-        occupied,
-        structure: structures.get(`${wall.x},${wall.y}`),
-      });
-    else drawWall(ctx, wall, presentation, palette, retro);
-  }
   ctx.globalAlpha = 1;
+  const worldEffects = observeClassicWorldReactions(canvas, run, attemptKey, flight.timeMs ?? 0);
+  if (structuredTerrain)
+    drawClassicWorldEquipment(ctx, run, world, {
+      unit: UNIT,
+      palette,
+      timeMs: flight.timeMs,
+      reduced,
+    });
   drawClassicOperationLinks(ctx, run, { unit: UNIT, palette });
   drawShutters(ctx, run, palette);
   drawPickup(ctx, run.pickup);
@@ -478,7 +526,7 @@ export function drawClassicBoard(
     // Artwork may finish loading while a burst is paused at the same tick.
     signalTerrainVersion(
       canvas,
-      retro || (living && !creatorWall) ? null : presentation?.image?.('terrain.wall'),
+      retro || structuredTerrain ? null : presentation?.image?.('terrain.wall'),
     ),
   ]);
   // Keep current terrain separate from moving actors. During a receiver
@@ -559,6 +607,13 @@ export function drawClassicBoard(
     visualKey: signalVisualKey,
   });
   drawClassicOperation(ctx, run, { unit: UNIT, palette });
+  drawClassicWorldReactions(ctx, run, worldEffects, world, {
+    unit: UNIT,
+    palette,
+    timeMs: flight.timeMs,
+    reduced,
+    concealEnemies,
+  });
   // True hazard outlines stay crisp at native resolution after receiver processing.
   drawFieldMechanics(ctx, run, palette, { concealEnemies });
   drawClassicSignalSources(ctx, run, signal, { unit: UNIT, palette, locale });

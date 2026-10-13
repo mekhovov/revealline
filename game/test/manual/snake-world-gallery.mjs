@@ -1,3 +1,4 @@
+import { classicTerrainCacheStats } from '../../snake/classic-terrain-cache.mjs';
 import { CLASSIC_SNAKE_LEVELS } from '../../snake/classic-catalogue.mjs';
 import { createClassicSnake, classicSnakeUsesVariableHazards } from '../../snake/classic-core.mjs';
 import { drawClassicBoard } from '../../snake/classic-view.mjs';
@@ -40,20 +41,33 @@ async function mount() {
             }),
     };
   });
-  function paint(card, boardStyle = card.style) {
+  function paint(card, boardStyle = card.style, terrainCache = true) {
     drawClassicBoard(card.canvas, card.run, {
       boardStyle,
+      terrainCache,
       boardScene: card.scene,
       chapterId: card.entry.chapterId,
       reduced: true,
       cssWidth: card.canvas.clientWidth || 288,
     });
+    if ($('geometry').checked) {
+      const ctx = card.canvas.getContext('2d'),
+        sx = card.canvas.width / (card.run.level.width * 28);
+      ctx.setTransform(sx, 0, 0, sx, 0, 0);
+      ctx.strokeStyle = '#ff5cff';
+      ctx.lineWidth = 1;
+      const removed = new Set((card.run.removedWalls ?? []).map((p) => `${p.x},${p.y}`));
+      for (const cell of card.run.level.walls)
+        if (!removed.has(`${cell.x},${cell.y}`))
+          ctx.strokeRect(cell.x * 28 + 0.5, cell.y * 28 + 0.5, 27, 27);
+    }
   }
   function render() {
     cards.length = 0;
     $('boards').replaceChildren();
     document.body.dataset.width = $('width').value;
     document.body.dataset.labels = $('labels').value;
+    document.body.dataset.gray = String($('gray').checked);
     for (const { name, scene, entry, run } of entries)
       for (const [index, style] of CLASSIC_BOARD_STYLES.slice(2).entries()) {
         if ($('look').value !== 'all' && $('look').value !== style) continue;
@@ -73,26 +87,30 @@ async function mount() {
       }
     $('status').textContent = `${cards.length} boards · same gameplay geometry across every look.`;
   }
-  for (const id of ['look', 'width', 'labels']) $(id).addEventListener('change', render);
+  for (const id of ['look', 'width', 'labels', 'gray', 'geometry'])
+    $(id).addEventListener('change', render);
   $('benchmark').addEventListener('click', () => {
-    const measure = (original) => {
+    const measure = (cached) => {
       const samples = [];
-      for (let i = 0; i < 5; i++)
-        for (const card of cards) {
+      for (const card of cards) {
+        paint(card, card.style, cached); // warm the current board like active play
+        for (let i = 0; i < 12; i++) {
           const start = performance.now();
-          paint(card, original ? 'theme' : card.style);
+          paint(card, card.style, cached);
           samples.push(performance.now() - start);
         }
+      }
       samples.sort((a, b) => a - b);
       return {
         median: samples[Math.floor(samples.length / 2)].toFixed(2),
         p95: samples[Math.floor(samples.length * 0.95)].toFixed(2),
       };
     };
-    const before = measure(true),
-      after = measure(false);
+    const before = measure(false),
+      after = measure(true),
+      cache = classicTerrainCacheStats(document);
     $('status').textContent =
-      `Same-device synchronous redraw (not frame rate): Game Theme median ${before.median} ms / p95 ${before.p95} ms; worlds median ${after.median} ms / p95 ${after.p95} ms. ${cards.length * 5} samples each.`;
+      `Same-device synchronous redraw (not frame rate): uncached worlds median ${before.median} ms / p95 ${before.p95} ms; cached worlds median ${after.median} ms / p95 ${after.p95} ms. ${cards.length * 12} samples each. Terrain ${(cache.bytes / 1048576).toFixed(2)} / 8 MiB, ${cache.entries} retained boards.`;
   });
   render();
 }
