@@ -96,7 +96,7 @@ const mode =
     ? (await import('./raid-mode.mjs')).OVERFLIGHT_HUNT_MODE
     : {
         id: 'overflight',
-        name: { en: 'Overflight', uk: 'Проліт' },
+        name: { en: 'Survive', uk: 'Вижити' },
         defaultProject: DEFAULT_OVERFLIGHT_PROJECT,
         compileProject: compileOverflightProject,
         createProject: createOverflightProject,
@@ -1344,7 +1344,8 @@ operationCards = createOverflightOperationCards({
   },
   onLeave: () => pause({ menu: false }),
 });
-shell.elements.dialogs.home.querySelector('.mode-play-main-menu').before(operationCards.root);
+// Raid is an operation within Survive, not another landing destination.
+$('overflight-settings').prepend(operationCards.root);
 function refreshOperationView() {
   const paint = renderer?.paintPreviewSprite;
   operationCards?.refresh(paint);

@@ -291,6 +291,7 @@ test('gym reuses neutral controller menu navigation without arming on device joi
   pad.pulse(13);
   assert.equal(f.doc.activeElement, $('game-mode-simulator'));
   for (const id of [
+    'simulator-modes-more',
     'game-mode-solo',
     'game-mode-team',
     'game-mode-versus',
@@ -362,6 +363,7 @@ test('gym menu keyboard navigation owns arrows and returns from nested help with
   arrow();
   assert.equal(f.doc.activeElement, $('game-mode-simulator'));
   for (const id of [
+    'simulator-modes-more',
     'game-mode-solo',
     'game-mode-team',
     'game-mode-versus',
@@ -609,7 +611,7 @@ test('gym shares six ordered Ukrainian mode choices and mobile category keyboard
   const $ = (id) => f.doc.getElementById(id);
   const modes = f.doc.querySelector('.game-mode-choice');
   assert.deepEqual(
-    modes.children.map((node) => node.dataset.gameMode),
+    modes.querySelectorAll('[data-game-mode]').map((node) => node.dataset.gameMode),
     ['solo', 'team', 'versus', 'snake', 'overflight', 'simulator'],
   );
   assert.equal(modes.querySelectorAll('[aria-current="page"]').length, 1);
