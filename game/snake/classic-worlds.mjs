@@ -1,4 +1,8 @@
 import {
+  CLASSIC_SNAKE_OPERATION_CHAPTERS_B,
+  CLASSIC_SNAKE_OPERATION_LEVELS_B,
+} from './classic-catalogue-operations-b.mjs';
+import {
   CLASSIC_SNAKE_OPERATION_CHAPTERS_A,
   CLASSIC_SNAKE_OPERATION_LEVELS_A,
 } from './classic-catalogue-operations-a.mjs';
@@ -57,15 +61,17 @@ export const CLASSIC_CHAPTER_COMPOSITIONS = Object.freeze(
       `classic-snake-${chapter}`,
       Object.freeze({ scene, mood, zoning }),
     ]),
-    ...CLASSIC_SNAKE_OPERATION_CHAPTERS_A.map((chapter) => [
-      chapter.id,
-      Object.freeze(chapter.composition),
-    ]),
+    ...[...CLASSIC_SNAKE_OPERATION_CHAPTERS_A, ...CLASSIC_SNAKE_OPERATION_CHAPTERS_B].map(
+      (chapter) => [chapter.id, Object.freeze(chapter.composition)],
+    ),
   ]),
 );
 
 const missionCompositions = new Map(
-  CLASSIC_SNAKE_OPERATION_LEVELS_A.map((entry) => [entry.id, entry.composition]),
+  [...CLASSIC_SNAKE_OPERATION_LEVELS_A, ...CLASSIC_SNAKE_OPERATION_LEVELS_B].map((entry) => [
+    entry.id,
+    entry.composition,
+  ]),
 );
 
 export function resolveClassicWorld({
