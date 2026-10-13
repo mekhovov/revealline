@@ -19,6 +19,7 @@ import {
   spawnOverflightHuntEnemy,
 } from '../overflight/raid-core.mjs';
 import { rebuildOverflightGrid } from '../overflight/grid.mjs';
+import { createOverflightHuntReviewPilot } from '../overflight/raid-review-pilot.mjs';
 import {
   createOverflightBuild,
   legalOverflightUpgrades,
@@ -52,6 +53,46 @@ const hit = (run, enemy, damage, offset = 30) => {
   rebuildOverflightGrid(run._grid, run.enemies);
   return damageOverflightArea(run, enemy.x + offset, enemy.y, Math.abs(offset) + 1, damage);
 };
+
+test('Raid review approach flanks a visible protected escort without changing simulation state', () => {
+  const run = createOverflightHuntRun(compileOverflightHuntProject(createOverflightHuntProject()));
+  // A minimal public-state observation isolates navigation from random packs.
+  const player = { ...run.player, x: 500, y: 500 };
+  const shield = {
+    active: true,
+    id: 1,
+    x: 560,
+    y: 500,
+    radius: 8,
+    vx: 0,
+    vy: 0,
+    heading: Math.PI,
+    behavior: 'shield',
+    behaviorPhase: 'patrol',
+    warning: 0,
+  };
+  const target = {
+    active: true,
+    id: 2,
+    x: 640,
+    y: 500,
+    radius: 17,
+    vx: 0,
+    vy: 0,
+    heading: Math.PI,
+    behavior: 'vehicle',
+    behaviorPhase: 'recovery',
+    warning: 0,
+    objectiveId: 'vehicle',
+    maxArmorSegments: 1,
+  };
+  const observation = { player, enemies: [shield, target], projectiles: [], hunt: run.hunt };
+  const before = structuredClone(observation);
+  const input = createOverflightHuntReviewPilot().input(observation);
+  assert.notEqual(input.y, 0, 'approach leaves the blocked straight line');
+  assert.equal(input.boost, false);
+  assert.deepEqual(observation, before, 'review pilot only submits ordinary inputs');
+});
 test('V2 adds explicit editable combat while V1 preserves original durability and capabilities', () => {
   for (const legacy of [true, false]) {
     const project = createOverflightProject({ legacy });
@@ -253,6 +294,51 @@ test('fan gaps and temporal warning combinations retain a baseline escape at are
     false,
     'a later warning does not conceal an earlier unavoidable commitment',
   );
+});
+
+test('mass clearing earns bounded relief without suppressing every subsequent pressure window', () => {
+  for (const difficulty of ['standard', 'veteran']) {
+    const run = quiet();
+    const seconds = difficulty === 'standard' ? 8 : 5;
+    run.compiled.combat.pacing.reliefSeconds = seconds;
+    run.compiled.encounters = [
+      {
+        id: 'pressure',
+        start: 0,
+        end: 90,
+        pattern: 'pursuit',
+        spawnPerSecond: 10,
+        hp: 30,
+        speed: 0,
+        families: ['patroller'],
+      },
+    ];
+    const clear = () => {
+      for (let i = 0; i < 20; i++)
+        spawnOverflightEnemy(run, { x: 100, y: 100, hp: 30, speed: 0, warning: 0 });
+      rebuildOverflightGrid(run._grid, run.enemies);
+      damageOverflightArea(run, 100, 100, 50, 30);
+    };
+    const advance = (ticks) => {
+      for (let i = 0; i < ticks; i++) stepOverflight(run);
+    };
+    clear();
+    advance(60);
+    const firstEnd = run._reliefUntil;
+    assert.equal(firstEnd, 1 + seconds);
+    const spawned = run.stats.spawned;
+    advance(seconds * 60 - 1);
+    assert.equal(run.stats.spawned, spawned, 'no instant replacement during earned space');
+    clear();
+    const afterClear = run.stats.spawned;
+    advance(61);
+    assert.equal(run._reliefUntil, firstEnd, 'another burst cannot renew relief immediately');
+    assert.ok(run.stats.spawned > afterClear, 'authored pressure resumes');
+    while (run.time < run._clearReliefReadyAt) stepOverflight(run);
+    clear();
+    advance(60);
+    assert.ok(run._reliefUntil > firstEnd, 'a later clearing pass can earn space again');
+  }
 });
 test('cache groups stay finite, coexist, and require a deliberate physical reward entry', () => {
   const run = quiet();
