@@ -146,6 +146,11 @@ test('completed-frame trials include explicitly requested native Survivor and Ri
     evaluate('overflight-riy', 'benchmark=1&trial=soak', 'fan-shield').protocol.measurementSeconds,
     900,
   );
+  assert.equal(
+    evaluate('overflight-riy', 'benchmark=1&trial=1&measureAt=240', 'fan-shield').protocol
+      .measureAt,
+    240,
+  );
 });
 
 test('native catalogue exposes all eighteen compiled layouts for all five operations', async () => {
