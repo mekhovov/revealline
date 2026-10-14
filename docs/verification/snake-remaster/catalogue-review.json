@@ -2,8 +2,8 @@
   "format": "classic-snake-remaster-review.v1",
   "scope": "240 official missions; deterministic recipe review plus authored tactical revision rationales. This is not a player study.",
   "prototypes": 18,
-  "retained": 230,
-  "revised": 10,
+  "retained": 226,
+  "revised": 14,
   "missions": [
     {
       "id": "classic-snake-open-loop",
@@ -344,7 +344,7 @@
           12,
           13
         ],
-        "floor": "elbow",
+        "floor": "authored",
         "light": "morning"
       },
       "differenceFromPrevious": "walls: 23 → 26; families: runner → stationary prey. 24 solid cells differ from classic-snake-u-turn-yard; this mission asks: Alternate between the two elbows; the outside route lets your tail clear the middle..",
@@ -386,7 +386,7 @@
           14,
           4
         ],
-        "floor": "elbow",
+        "floor": "authored",
         "light": "late"
       },
       "differenceFromPrevious": "walls: 26 → 25; families: stationary prey → runner; catches: 8 → 9. 20 solid cells differ from classic-snake-staggered-elbows; this mission asks: Three posts create small pockets.",
@@ -420,7 +420,7 @@
         ],
         "footprint": null,
         "anchor": null,
-        "floor": "elbow",
+        "floor": "authored",
         "light": "late"
       },
       "differenceFromPrevious": "walls: 25 → 22; families: runner → stationary prey; catches: 9 → 8. 15 solid cells differ from classic-snake-turning-pockets; this mission asks: The offset bars form an S.",
@@ -462,7 +462,7 @@
           11,
           8
         ],
-        "floor": "elbow",
+        "floor": "authored",
         "light": "late"
       },
       "differenceFromPrevious": "walls: 22 → 28; families: stationary prey → runner; catches: 8 → 10. 26 solid cells differ from classic-snake-s-bend; this mission asks: Switch between opposed corners using the wide space around them.",
@@ -588,7 +588,7 @@
           11,
           7
         ],
-        "floor": "islands",
+        "floor": "authored",
         "light": "morning"
       },
       "differenceFromPrevious": "walls: 15 → 22; families: runner → stationary prey; catches: 10 → 9. 17 solid cells differ from classic-snake-split-islands; this mission asks: Treat the solid L-shaped island as a detour, not a shortcut..",
@@ -630,7 +630,7 @@
           9,
           4
         ],
-        "floor": "islands",
+        "floor": "authored",
         "light": "late"
       },
       "differenceFromPrevious": "walls: 22 → 41; families: stationary prey → runner; catches: 9 → 11. 34 solid cells differ from classic-snake-bent-causeway; this mission asks: Pass alternating ends of the three staggered walls without folding back into your tail.",
@@ -664,7 +664,7 @@
         ],
         "footprint": null,
         "anchor": null,
-        "floor": "islands",
+        "floor": "authored",
         "light": "late"
       },
       "differenceFromPrevious": "walls: 41 → 24; families: runner → stationary prey; catches: 11 → 10. 19 solid cells differ from classic-snake-three-detours; this mission asks: The inner courtyard is shorter; the outer loop leaves more room for a long body..",
@@ -706,7 +706,7 @@
           11,
           9
         ],
-        "floor": "islands",
+        "floor": "authored",
         "light": "late"
       },
       "differenceFromPrevious": "walls: 24 → 20; families: stationary prey → runner; catches: 10 → 12. 19 solid cells differ from classic-snake-inner-or-outer; this mission asks: Use the corner islands to plan a full circuit around the central block.",
@@ -832,7 +832,7 @@
           11,
           8
         ],
-        "floor": "fork",
+        "floor": "authored",
         "light": "morning"
       },
       "differenceFromPrevious": "walls: 24 → 20; catches: 12 → 13. 8 solid cells differ from classic-snake-parallel-paths; this mission asks: Four blocks leave a central crossing.",
@@ -866,7 +866,7 @@
         ],
         "footprint": null,
         "anchor": null,
-        "floor": "fork",
+        "floor": "authored",
         "light": "late"
       },
       "differenceFromPrevious": "walls: 20 → 11. 9 solid cells differ from classic-snake-crossroads; this mission asks: Use a gap in the divider to shorten the chase without trapping your own body..",
@@ -908,7 +908,7 @@
           10,
           3
         ],
-        "floor": "fork",
+        "floor": "authored",
         "light": "late"
       },
       "differenceFromPrevious": "walls: 11 → 20; catches: 13 → 14. 18 solid cells differ from classic-snake-broken-divider; this mission asks: Three islands offer three approaches.",
@@ -942,7 +942,7 @@
         ],
         "footprint": null,
         "anchor": null,
-        "floor": "fork",
+        "floor": "authored",
         "light": "late"
       },
       "differenceFromPrevious": "walls: 20 → 27. 26 solid cells differ from classic-snake-runner-triangle; this mission asks: Choose a bypass through the staggered walls to meet the runner ahead..",
@@ -984,7 +984,7 @@
           11,
           8
         ],
-        "floor": "seam",
+        "floor": "authored",
         "light": "morning"
       },
       "differenceFromPrevious": "walls: 27 → 18; families: runner → stationary prey; catches: 14 → 10; wrap: false → true. 16 solid cells differ from classic-snake-cutoff-network; this mission asks: All four edges wrap.",
@@ -1026,7 +1026,7 @@
           6,
           9
         ],
-        "floor": "seam",
+        "floor": "authored",
         "light": "morning"
       },
       "differenceFromPrevious": "walls: 18 → 13; families: stationary prey → runner; catches: 10 → 12. 11 solid cells differ from classic-snake-keep-the-tail; this mission asks: The two blocks are solid; use the wrapping edge to travel between their outer sides.",
@@ -1068,7 +1068,7 @@
           10,
           8
         ],
-        "floor": "seam",
+        "floor": "authored",
         "light": "morning"
       },
       "differenceFromPrevious": "walls: 13 → 15; families: runner → stationary prey; catches: 12 → 11. 13 solid cells differ from classic-snake-lighten-at-home; this mission asks: Step around the staggered islands, or cross an edge for a wider turn..",
@@ -1110,7 +1110,7 @@
           11,
           7
         ],
-        "floor": "seam",
+        "floor": "authored",
         "light": "late"
       },
       "differenceFromPrevious": "walls: 15 → 23; families: stationary prey → runner; catches: 11 → 13. 17 solid cells differ from classic-snake-banking-steps; this mission asks: Circle the central block and watch both sides of an edge before wrapping through it.",
@@ -1152,7 +1152,7 @@
           6,
           9
         ],
-        "floor": "seam",
+        "floor": "authored",
         "light": "late"
       },
       "differenceFromPrevious": "walls: 23 → 29; families: runner → stationary prey; catches: 13 → 12. 21 solid cells differ from classic-snake-persistent-hub; this mission asks: Alternate inside passes with wrapping routes around the two large islands..",
@@ -1194,7 +1194,7 @@
           18,
           4
         ],
-        "floor": "seam",
+        "floor": "authored",
         "light": "late"
       },
       "differenceFromPrevious": "walls: 29 → 24; families: stationary prey → runner; catches: 12 → 14. 20 solid cells differ from classic-snake-two-return-rhythm; this mission asks: Connect the three islands with loops that cross the board boundary.",
@@ -1236,7 +1236,7 @@
           7,
           5
         ],
-        "floor": "slalom",
+        "floor": "authored",
         "light": "morning"
       },
       "differenceFromPrevious": "walls: 24 → 11; families: runner → stationary prey; catches: 14 → 12; wrap: true → false. 8 solid cells differ from classic-snake-return-weave; this mission asks: Edges are solid again.",
@@ -1270,7 +1270,7 @@
         ],
         "footprint": null,
         "anchor": null,
-        "floor": "slalom",
+        "floor": "authored",
         "light": "morning"
       },
       "differenceFromPrevious": "walls: 11 → 20; families: stationary prey → runner; catches: 12 → 14. 17 solid cells differ from classic-snake-one-warning; this mission asks: Enter the courtyard through its opening and choose an exit before the body arrives.",
@@ -1312,7 +1312,7 @@
           6,
           13
         ],
-        "floor": "slalom",
+        "floor": "authored",
         "light": "morning"
       },
       "differenceFromPrevious": "walls: 20 → 19; families: runner → stationary prey; catches: 14 → 13. 18 solid cells differ from classic-snake-warning-courtyard; this mission asks: Offset walls create crossing approaches.",
@@ -1354,7 +1354,7 @@
           16,
           4
         ],
-        "floor": "slalom",
+        "floor": "authored",
         "light": "late"
       },
       "differenceFromPrevious": "walls: 19 → 23; families: stationary prey → runner; catches: 13 → 14. 17 solid cells differ from classic-snake-crossed-sightlines; this mission asks: The horizontal bars require two turns.",
@@ -1396,7 +1396,7 @@
           6,
           8
         ],
-        "floor": "slalom",
+        "floor": "authored",
         "light": "late"
       },
       "differenceFromPrevious": "walls: 23 → 19; families: runner → stationary prey. 16 solid cells differ from classic-snake-screened-approach; this mission asks: Plan both turns before entering the staggered passage between the islands..",
@@ -1430,7 +1430,7 @@
         ],
         "footprint": null,
         "anchor": null,
-        "floor": "slalom",
+        "floor": "authored",
         "light": "late"
       },
       "differenceFromPrevious": "walls: 19 → 22; families: stationary prey → runner. 21 solid cells differ from classic-snake-guarded-returns; this mission asks: Weave between the upper and lower islands, using the outer loop when the middle fills.",
@@ -1556,7 +1556,7 @@
           11,
           8
         ],
-        "floor": "cross",
+        "floor": "authored",
         "light": "morning"
       },
       "differenceFromPrevious": "walls: 26 → 22; families: runner → stationary prey; catches: 14 → 13. 16 solid cells differ from classic-snake-crossing-schedule; this mission asks: Use opposite loops around the islands; meet only when the crossing is free..",
@@ -1598,7 +1598,7 @@
           14,
           13
         ],
-        "floor": "cross",
+        "floor": "authored",
         "light": "late"
       },
       "differenceFromPrevious": "walls: 22 → 28; families: stationary prey → runner; catches: 13 → 14. 27 solid cells differ from classic-snake-paired-loops; this mission asks: The U-shaped detour has a narrow entrance and a broad outside return.",
@@ -1632,7 +1632,7 @@
         ],
         "footprint": null,
         "anchor": null,
-        "floor": "cross",
+        "floor": "authored",
         "light": "late"
       },
       "differenceFromPrevious": "walls: 28 → 24; families: runner → stationary prey. 22 solid cells differ from classic-snake-shared-detour; this mission asks: Choose the upper or lower passage around the walls; avoid a head-on meeting in Team..",
@@ -1674,7 +1674,7 @@
           14,
           13
         ],
-        "floor": "cross",
+        "floor": "authored",
         "light": "late"
       },
       "differenceFromPrevious": "walls: 24 → 22; families: stationary prey → runner. 10 solid cells differ from classic-snake-support-corridor; this mission asks: Follow the offset openings as one circuit.",
@@ -1800,7 +1800,7 @@
           11,
           13
         ],
-        "floor": "terraces",
+        "floor": "authored",
         "light": "morning"
       },
       "differenceFromPrevious": "walls: 21 → 22; catches: 18 → 14; wrap: false → true. 19 solid cells differ from classic-snake-fork-and-warning; this mission asks: This board wraps.",
@@ -1842,7 +1842,7 @@
           12,
           7
         ],
-        "floor": "terraces",
+        "floor": "authored",
         "light": "late"
       },
       "differenceFromPrevious": "walls: 22 → 30; catches: 14 → 19; wrap: true → false. 23 solid cells differ from classic-snake-ordered-islands; this mission asks: The large central island leaves two approaches.",
@@ -1884,7 +1884,7 @@
           7,
           13
         ],
-        "floor": "terraces",
+        "floor": "authored",
         "light": "late"
       },
       "differenceFromPrevious": "walls: 30 → 29; catches: 19 → 14; wrap: false → true. 25 solid cells differ from classic-snake-last-shedding-bank; this mission asks: Wrapping edges offer a bypass around the three staggered bars; do not meet your own tail there.",
@@ -1926,7 +1926,7 @@
           11,
           7
         ],
-        "floor": "terraces",
+        "floor": "authored",
         "light": "late"
       },
       "differenceFromPrevious": "walls: 29 → 28; catches: 14 → 20; wrap: true → false. 21 solid cells differ from classic-snake-woven-gauntlet; this mission asks: Solid edges, moving quarry and a long body: connect the staggered openings into your final circuit..",
@@ -2052,7 +2052,7 @@
           11,
           8
         ],
-        "floor": "oval",
+        "floor": "authored",
         "light": "morning"
       },
       "differenceFromPrevious": "walls: 26 → 24. 16 solid cells differ from classic-pursuit-split-yard; this mission asks: Four approaches meet the island circuit.",
@@ -2094,7 +2094,7 @@
           17,
           6
         ],
-        "floor": "oval",
+        "floor": "authored",
         "light": "late"
       },
       "differenceFromPrevious": "walls: 24 → 40; catches: 4 → 5. 35 solid cells differ from classic-pursuit-island-clock; this mission asks: Side bays let your tail clear the long patrol lane before you return.",
@@ -2136,7 +2136,7 @@
           6,
           12
         ],
-        "floor": "oval",
+        "floor": "authored",
         "light": "late"
       },
       "differenceFromPrevious": "walls: 40 → 30. 19 solid cells differ from classic-pursuit-passing-bays; this mission asks: The patrol revisits the centre from two loops.",
@@ -2170,7 +2170,7 @@
         ],
         "footprint": null,
         "anchor": null,
-        "floor": "oval",
+        "floor": "authored",
         "light": "late"
       },
       "differenceFromPrevious": "walls: 30 → 28; catches: 5 → 6. 18 solid cells differ from classic-pursuit-crossroads; this mission asks: The outside patrol is longer than the broken inner ring.",
@@ -2212,7 +2212,7 @@
           6,
           6
         ],
-        "floor": "fork",
+        "floor": "authored",
         "light": "morning"
       },
       "differenceFromPrevious": "walls: 28 → 21; families: patroller → runner; catches: 6 → 5. 15 solid cells differ from classic-pursuit-inner-shortcut; this mission asks: Asymmetric cover changes the runner’s escape.",
@@ -2254,7 +2254,7 @@
           16,
           10
         ],
-        "floor": "fork",
+        "floor": "authored",
         "light": "morning"
       },
       "differenceFromPrevious": "walls: 21 → 40. 34 solid cells differ from classic-pursuit-open-intercept; this mission asks: A tall elbow hides the shorter route.",
@@ -2296,7 +2296,7 @@
           8,
           7
         ],
-        "floor": "fork",
+        "floor": "authored",
         "light": "morning"
       },
       "differenceFromPrevious": "walls: 40 → 42; catches: 5 → 6. 32 solid cells differ from classic-pursuit-blind-corner; this mission asks: Alternating walls reach opposite edges.",
@@ -2330,7 +2330,7 @@
         ],
         "footprint": null,
         "anchor": null,
-        "floor": "fork",
+        "floor": "authored",
         "light": "late"
       },
       "differenceFromPrevious": "walls: 42 → 31. 24 solid cells differ from classic-pursuit-zigzag-exit; this mission asks: Two unequal gaps connect inside and outside.",
@@ -2372,7 +2372,7 @@
           6,
           12
         ],
-        "floor": "fork",
+        "floor": "authored",
         "light": "late"
       },
       "differenceFromPrevious": "walls: 31 → 50; catches: 6 → 7; wrap: false → true. 40 solid cells differ from classic-pursuit-broken-ring; this mission asks: Edges wrap.",
@@ -2414,7 +2414,7 @@
           15,
           8
         ],
-        "floor": "fork",
+        "floor": "authored",
         "light": "late"
       },
       "differenceFromPrevious": "walls: 50 → 54; catches: 7 → 8; wrap: true → false. 52 solid cells differ from classic-pursuit-border-cutoff; this mission asks: Three broad junctions offer different escape loops.",
@@ -2456,7 +2456,7 @@
           6,
           6
         ],
-        "floor": "slalom",
+        "floor": "authored",
         "light": "morning"
       },
       "differenceFromPrevious": "walls: 54 → 56; families: runner → sprinter; catches: 8 → 5. 56 solid cells differ from classic-pursuit-three-way-escape; this mission asks: Watch the warning in the long straight.",
@@ -2498,7 +2498,7 @@
           16,
           10
         ],
-        "floor": "slalom",
+        "floor": "authored",
         "light": "morning"
       },
       "differenceFromPrevious": "walls: 56 → 38. 22 solid cells differ from classic-pursuit-first-dash; this mission asks: The large right-angle route gives a second approach during the sprint recovery..",
@@ -2540,7 +2540,7 @@
           11,
           9
         ],
-        "floor": "slalom",
+        "floor": "authored",
         "light": "morning"
       },
       "differenceFromPrevious": "walls: 38 → 63; catches: 5 → 6. 43 solid cells differ from classic-pursuit-corner-pause; this mission asks: An S circuit alternates long straights.",
@@ -2582,7 +2582,7 @@
           13,
           7
         ],
-        "floor": "slalom",
+        "floor": "authored",
         "light": "late"
       },
       "differenceFromPrevious": "walls: 63 → 39; families: sprinter → sprinter/runner. 27 solid cells differ from classic-pursuit-alternating-straights; this mission asks: Offset islands interrupt straight approaches.",
@@ -2624,7 +2624,7 @@
           7,
           12
         ],
-        "floor": "slalom",
+        "floor": "authored",
         "light": "late"
       },
       "differenceFromPrevious": "walls: 39 → 48; catches: 6 → 7. 32 solid cells differ from classic-pursuit-staggered-cover; this mission asks: Two loops meet at an open crossing.",
@@ -2666,7 +2666,7 @@
           11,
           9
         ],
-        "floor": "slalom",
+        "floor": "authored",
         "light": "late"
       },
       "differenceFromPrevious": "walls: 48 → 42; catches: 7 → 8. 38 solid cells differ from classic-pursuit-crossing-bursts; this mission asks: A central barrier reaches the lower edge.",
@@ -2708,7 +2708,7 @@
           10,
           6
         ],
-        "floor": "ring",
+        "floor": "authored",
         "light": "morning"
       },
       "differenceFromPrevious": "walls: 42 → 16; families: sprinter/runner → runner; catches: 8 → 6. 9 solid cells differ from classic-pursuit-long-way-round; this mission asks: The warning marks a closing shortcut.",
@@ -2750,7 +2750,7 @@
           16,
           11
         ],
-        "floor": "ring",
+        "floor": "authored",
         "light": "morning"
       },
       "differenceFromPrevious": "walls: 16 → 52. 42 solid cells differ from classic-pursuit-first-shutter; this mission asks: The gated middle competes with two unequal permanent routes..",
@@ -2792,7 +2792,7 @@
           15,
           8
         ],
-        "floor": "ring",
+        "floor": "authored",
         "light": "morning"
       },
       "differenceFromPrevious": "walls: 52 → 32; catches: 6 → 7. 18 solid cells differ from classic-pursuit-split-corridor; this mission asks: Two shutters are out of phase.",
@@ -2826,7 +2826,7 @@
         ],
         "footprint": null,
         "anchor": null,
-        "floor": "ring",
+        "floor": "authored",
         "light": "late"
       },
       "differenceFromPrevious": "walls: 32 → 26; families: runner → patroller. 11 solid cells differ from classic-pursuit-offset-windows; this mission asks: Timed radial cuts shorten a ring with a permanently open circumference..",
@@ -2868,7 +2868,7 @@
           4,
           8
         ],
-        "floor": "ring",
+        "floor": "authored",
         "light": "late"
       },
       "differenceFromPrevious": "walls: 26 → 38; families: patroller → runner; catches: 7 → 8. 38 solid cells differ from classic-pursuit-clockwork-ring; this mission asks: An edge-reaching wall interrupts the old outer circuit.",
@@ -2910,7 +2910,7 @@
           11,
           8
         ],
-        "floor": "ring",
+        "floor": "authored",
         "light": "late"
       },
       "differenceFromPrevious": "walls: 38 → 44. 39 solid cells differ from classic-pursuit-boundary-detour; this mission asks: Three junctions and two timed shortcuts reward planning the return before the catch..",
@@ -2952,7 +2952,7 @@
           7,
           6
         ],
-        "floor": "bays",
+        "floor": "authored",
         "light": "morning"
       },
       "differenceFromPrevious": "walls: 44 → 18. 6 solid cells differ from classic-pursuit-return-junction; this mission asks: Touch the pulse in the open bay to pause target movement for eight steps..",
@@ -2994,7 +2994,7 @@
           12,
           8
         ],
-        "floor": "bays",
+        "floor": "authored",
         "light": "morning"
       },
       "differenceFromPrevious": "walls: 18 → 44. 38 solid cells differ from classic-pursuit-first-pulse; this mission asks: The reel removes four tail cells, down to four.",
@@ -3036,7 +3036,7 @@
           11,
           5
         ],
-        "floor": "bays",
+        "floor": "authored",
         "light": "morning"
       },
       "differenceFromPrevious": "walls: 44 → 56. 31 solid cells differ from classic-pursuit-cable-service; this mission asks: A side supply bay costs a detour.",
@@ -3078,7 +3078,7 @@
           11,
           4
         ],
-        "floor": "bays",
+        "floor": "authored",
         "light": "late"
       },
       "differenceFromPrevious": "walls: 56 → 32; catches: 8 → 10. 15 solid cells differ from classic-pursuit-choose-the-detour; this mission asks: The courier is optional: 250 points and growth, without required-catch credit.",
@@ -3120,7 +3120,7 @@
           7,
           10
         ],
-        "floor": "bays",
+        "floor": "authored",
         "light": "late"
       },
       "differenceFromPrevious": "walls: 32 → 64; catches: 10 → 8. 44 solid cells differ from classic-pursuit-courier-crossing; this mission asks: Two loops meet at a supply junction.",
@@ -3162,7 +3162,7 @@
           12,
           10
         ],
-        "floor": "bays",
+        "floor": "authored",
         "light": "late"
       },
       "differenceFromPrevious": "walls: 64 → 48; catches: 8 → 10. 29 solid cells differ from classic-pursuit-shared-supply; this mission asks: Courier offers follow required catches four and eight.",
@@ -3204,7 +3204,7 @@
           10,
           8
         ],
-        "floor": "cross",
+        "floor": "authored",
         "light": "morning"
       },
       "differenceFromPrevious": "walls: 48 → 40; families: runner → patroller/sprinter/runner; catches: 10 → 9. 28 solid cells differ from classic-pursuit-last-offer; this mission asks: Alternate predictable patrols and warned sprints around two nested circuits..",
@@ -3246,7 +3246,7 @@
           12,
           8
         ],
-        "floor": "cross",
+        "floor": "authored",
         "light": "morning"
       },
       "differenceFromPrevious": "walls: 40 → 39; families: patroller/sprinter/runner → runner; catches: 9 → 8. 33 solid cells differ from classic-pursuit-patrol-into-sprint; this mission asks: A runner can change direction near the timed shortcut.",
@@ -3288,7 +3288,7 @@
           11,
           8
         ],
-        "floor": "cross",
+        "floor": "authored",
         "light": "morning"
       },
       "differenceFromPrevious": "walls: 39 → 50; families: runner → runner/sprinter; catches: 8 → 10; wrap: false → true. 34 solid cells differ from classic-pursuit-runner-at-the-window; this mission asks: Wrap between offset chicanes.",
@@ -3330,7 +3330,7 @@
           18,
           7
         ],
-        "floor": "cross",
+        "floor": "authored",
         "light": "late"
       },
       "differenceFromPrevious": "walls: 50 → 58; wrap: true → false. 52 solid cells differ from classic-pursuit-border-relay; this mission asks: Two targets share three return routes.",
@@ -3372,7 +3372,7 @@
           7,
           11
         ],
-        "floor": "cross",
+        "floor": "authored",
         "light": "late"
       },
       "differenceFromPrevious": "walls: 58 → 52; families: runner/sprinter → runner. 46 solid cells differ from classic-pursuit-forked-interception; this mission asks: Supply detours and a yielding shutter share one circuit.",
@@ -3414,7 +3414,7 @@
           11,
           7
         ],
-        "floor": "cross",
+        "floor": "authored",
         "light": "late"
       },
       "differenceFromPrevious": "walls: 52 → 50; families: runner → runner/sprinter; catches: 10 → 12. 37 solid cells differ from classic-pursuit-supply-circuit; this mission asks: Three courtyards connect through open bypasses and two shutters.",
@@ -3456,7 +3456,7 @@
           7,
           6
         ],
-        "floor": "islands",
+        "floor": "authored",
         "light": "morning"
       },
       "differenceFromPrevious": "walls: 50 → 18; families: runner/sprinter → refuge; catches: 12 → 4. 14 solid cells differ from classic-pursuit-final-airfield; this mission asks: The refuge seeker announces its next bay.",
@@ -3498,7 +3498,7 @@
           15,
           11
         ],
-        "floor": "islands",
+        "floor": "authored",
         "light": "morning"
       },
       "differenceFromPrevious": "walls: 18 → 26; families: refuge → switchback; catches: 4 → 5. 14 solid cells differ from classic-living-refuge-bays; this mission asks: The scarf runner signals its next exit before committing.",
@@ -3540,7 +3540,7 @@
           8,
           6
         ],
-        "floor": "islands",
+        "floor": "authored",
         "light": "morning"
       },
       "differenceFromPrevious": "walls: 26 → 30; families: switchback → pair; catches: 5 → 6. 20 solid cells differ from classic-living-switchback-yard; this mission asks: Two partners seek one meeting place.",
@@ -3582,7 +3582,7 @@
           16,
           7
         ],
-        "floor": "islands",
+        "floor": "authored",
         "light": "late"
       },
       "differenceFromPrevious": "walls: 30 → 36; families: pair → refuge/switchback. 30 solid cells differ from classic-living-rendezvous-crossing; this mission asks: Two offset passages turn your cable into a temporary barrier.",
@@ -3624,7 +3624,7 @@
           6,
           8
         ],
-        "floor": "islands",
+        "floor": "authored",
         "light": "late"
       },
       "differenceFromPrevious": "walls: 36 → 32; families: refuge/switchback → pair. 20 solid cells differ from classic-living-cable-cutoff; this mission asks: Pair goals alternate across the long divider.",
@@ -3666,7 +3666,7 @@
           11,
           7
         ],
-        "floor": "islands",
+        "floor": "authored",
         "light": "late"
       },
       "differenceFromPrevious": "walls: 32 → 34; families: pair → refuge/runner/switchback; catches: 6 → 9. 27 solid cells differ from classic-living-return-pincer; this mission asks: Refuge seekers, runners and switchbacks share three courtyards.",
@@ -3708,7 +3708,7 @@
           7,
           6
         ],
-        "floor": "ring",
+        "floor": "authored",
         "light": "morning"
       },
       "differenceFromPrevious": "walls: 34 → 30; families: refuge/runner/switchback → shield; catches: 9 → 4. 23 solid cells differ from classic-living-twin-intercepts; this mission asks: Specialist: the marked shield front is fatal.",
@@ -3750,7 +3750,7 @@
           17,
           11
         ],
-        "floor": "ring",
+        "floor": "authored",
         "light": "morning"
       },
       "differenceFromPrevious": "walls: 30 → 50; families: shield → brace; catches: 4 → 5. 44 solid cells differ from classic-living-shield-window; this mission asks: Specialist: warning and burst are protected.",
@@ -3792,7 +3792,7 @@
           11,
           6
         ],
-        "floor": "ring",
+        "floor": "authored",
         "light": "morning"
       },
       "differenceFromPrevious": "walls: 50 → 24; families: brace → shield/runner; catches: 5 → 6. 16 solid cells differ from classic-living-brace-break; this mission asks: The center shortcut opens beside the shield.",
@@ -3834,7 +3834,7 @@
           11,
           6
         ],
-        "floor": "ring",
+        "floor": "authored",
         "light": "late"
       },
       "differenceFromPrevious": "walls: 24 → 28; families: shield/runner → brace/switchback. 24 solid cells differ from classic-living-shutter-flank; this mission asks: Pulse freezes the current armor state, not just movement.",
@@ -3876,7 +3876,7 @@
           9,
           11
         ],
-        "floor": "ring",
+        "floor": "authored",
         "light": "late"
       },
       "differenceFromPrevious": "walls: 28 → 32; families: brace/switchback → shield/refuge/sprinter; catches: 6 → 9. 22 solid cells differ from classic-living-frozen-opening; this mission asks: Refuge goals and shield flanks compete with supply detours.",
@@ -3918,7 +3918,7 @@
           11,
           8
         ],
-        "floor": "ring",
+        "floor": "authored",
         "light": "late"
       },
       "differenceFromPrevious": "walls: 32 → 34; families: shield/refuge/sprinter → refuge/shield/switchback/brace; catches: 9 → 12. 28 solid cells differ from classic-living-supply-flanks; this mission asks: Two timed crossings link specialist and ordinary prey.",
@@ -3960,7 +3960,7 @@
           10,
           6
         ],
-        "floor": "cross",
+        "floor": "authored",
         "light": "morning"
       },
       "differenceFromPrevious": "walls: 34 → 9; families: refuge/shield/switchback/brace → jammer; catches: 12 → 2. 7 solid cells differ from classic-living-living-airfield; this mission asks: Two antennas teach local reception.",
@@ -4002,7 +4002,7 @@
           15,
           11
         ],
-        "floor": "cross",
+        "floor": "authored",
         "light": "morning"
       },
       "differenceFromPrevious": "walls: 9 → 19; families: jammer → jammer/patroller/runner/refuge/switchback; catches: 2 → 6. 19 solid cells differ from classic-field-signal-check; this mission asks: Prey keeps arriving while the antenna survives.",
@@ -4044,7 +4044,7 @@
           11,
           4
         ],
-        "floor": "cross",
+        "floor": "authored",
         "light": "morning"
       },
       "differenceFromPrevious": "walls: 19 → 8; families: jammer/patroller/runner/refuge/switchback → lane; catches: 6 → 3. 8 solid cells differ from classic-field-quiet-return; this mission asks: Three different crossings teach horizontal and vertical warnings.",
@@ -4086,7 +4086,7 @@
           9,
           5
         ],
-        "floor": "cross",
+        "floor": "authored",
         "light": "late"
       },
       "differenceFromPrevious": "walls: 8 → 14; families: lane → lane/runner/refuge; catches: 3 → 4. 12 solid cells differ from classic-field-lane-window; this mission asks: A moving target changes which lane return is useful.",
@@ -4128,7 +4128,7 @@
           10,
           11
         ],
-        "floor": "cross",
+        "floor": "authored",
         "light": "late"
       },
       "differenceFromPrevious": "walls: 14 → 16; families: lane/runner/refuge → relay; catches: 4 → 1. 14 solid cells differ from classic-field-two-returns; this mission asks: Touch both diamond relays, then catch the opened sentinel.",
@@ -4170,7 +4170,7 @@
           14,
           11
         ],
-        "floor": "cross",
+        "floor": "authored",
         "light": "late"
       },
       "differenceFromPrevious": "Same encounter vocabulary, different authored route. 16 solid cells differ from classic-field-relay-key; this mission asks: Visit the two courts before approaching the locked core.",
@@ -4212,7 +4212,7 @@
           7,
           8
         ],
-        "floor": "cross",
+        "floor": "authored",
         "light": "night"
       },
       "differenceFromPrevious": "walls: 16 → 12; families: relay → jammer; catches: 1 → 3. 10 solid cells differ from classic-field-linked-courts; this mission asks: Visit three different broadcast posts.",
@@ -4254,7 +4254,7 @@
           16,
           10
         ],
-        "floor": "cross",
+        "floor": "authored",
         "light": "night"
       },
       "differenceFromPrevious": "walls: 12 → 21; families: jammer → jammer/runner/switchback/refuge; catches: 3 → 6. 19 solid cells differ from classic-field-broadcast-check; this mission asks: Prey keeps moving and can turn unseen during broadcast.",
@@ -4296,7 +4296,7 @@
           10,
           5
         ],
-        "floor": "cross",
+        "floor": "authored",
         "light": "night"
       },
       "differenceFromPrevious": "walls: 21 → 18; families: jammer/runner/switchback/refuge → jammer/runner/lane/refuge. 15 solid cells differ from classic-field-quiet-channel; this mission asks: Each source and lane has a different approach.",
@@ -4338,7 +4338,7 @@
           14,
           12
         ],
-        "floor": "cross",
+        "floor": "authored",
         "light": "night"
       },
       "differenceFromPrevious": "walls: 18 → 15; families: jammer/runner/lane/refuge → jammer/runner/relay/lane/refuge. 6 solid cells differ from classic-field-signal-crossing; this mission asks: Two cores use different relay pairs.",
@@ -4357,10 +4357,10 @@
       "id": "classic-field-border-watch",
       "chapter": "classic-snake-patrol-frontiers",
       "world": "quarry",
-      "disposition": "retain-gameplay-remaster-presentation",
-      "centralDecision": "The patrol follows the outer circuit. Cut across the empty interior to intercept it.",
+      "disposition": "revise-gameplay",
+      "centralDecision": "Three perimeter interceptions teach the outer circuit. Cut across the clear interior; the next mission combines this route with a runner.",
       "opening": "From (5,2), read the spawned perimeter and choose an approach around 20 occupied cells before the first catch.",
-      "pressure": "6 accepted catches; perimeter.",
+      "pressure": "3 accepted catches; perimeter.",
       "recovery": "Terrain leaves a 3×3 turning area centred at (5,2); check the open ends of the solid structures before returning. This is static route evidence, not a guarantee against a moving target, hazard or cable.",
       "focalArrangement": {
         "family": "terrace",
@@ -4380,15 +4380,15 @@
           10,
           6
         ],
-        "floor": "ring",
+        "floor": "authored",
         "light": "morning"
       },
-      "differenceFromPrevious": "walls: 15 → 20; families: jammer/runner/relay/lane/refuge → perimeter. 20 solid cells differ from classic-field-relay-airfield; this mission asks: The patrol follows the outer circuit.",
-      "rationale": "Retain the authored decision: The patrol follows the outer circuit. Cut across the empty interior to intercept it. Improve its terrace construction and survey-arch focal assembly without adding collision cells.",
+      "differenceFromPrevious": "walls: 15 → 20; families: jammer/runner/relay/lane/refuge → perimeter; catches: 6 → 3. 20 solid cells differ from classic-field-relay-airfield; this mission asks: Three perimeter interceptions teach the outer circuit.",
+      "rationale": "A single unchanged 72-cell perimeter policy repeated six times without a second decision. Three catches teach approach, interception and a longer-cable return; Border Cutoff retains eight mixed-policy catches.",
       "measurements": {
         "walls": 20,
         "families": "perimeter",
-        "catches": 6,
+        "catches": 3,
         "stages": 1,
         "cargo": 0,
         "gates": 0,
@@ -4422,10 +4422,10 @@
           15,
           11
         ],
-        "floor": "ring",
+        "floor": "authored",
         "light": "morning"
       },
-      "differenceFromPrevious": "walls: 20 → 18; families: perimeter → perimeter/runner; catches: 6 → 8. 18 solid cells differ from classic-field-border-watch; this mission asks: Alternate perimeter interceptions with open-field catches.",
+      "differenceFromPrevious": "walls: 20 → 18; families: perimeter → perimeter/runner; catches: 3 → 8. 18 solid cells differ from classic-field-border-watch; this mission asks: Alternate perimeter interceptions with open-field catches.",
       "rationale": "Retain the authored decision: Alternate perimeter interceptions with open-field catches. Leave your outer return clear. Improve its terrace construction and survey-arch focal assembly without adding collision cells.",
       "measurements": {
         "walls": 18,
@@ -4441,10 +4441,10 @@
       "id": "classic-field-contour-orbit",
       "chapter": "classic-snake-patrol-frontiers",
       "world": "quarry",
-      "disposition": "retain-gameplay-remaster-presentation",
-      "centralDecision": "The crawler circles the island. Wait at the next corner instead of following its heels.",
+      "disposition": "revise-gameplay",
+      "centralDecision": "Make three interceptions around the island. Take the next cut instead of following the crawler’s heels; the following mission adds an outer patrol.",
       "opening": "From (5,2), read the spawned contour and choose an approach around 36 occupied cells before the first catch.",
-      "pressure": "6 accepted catches; contour.",
+      "pressure": "3 accepted catches; contour.",
       "recovery": "Terrain leaves a 3×3 turning area centred at (5,2); check the open ends of the solid structures before returning. This is static route evidence, not a guarantee against a moving target, hazard or cable.",
       "focalArrangement": {
         "family": "terrace",
@@ -4464,15 +4464,15 @@
           11,
           8
         ],
-        "floor": "ring",
+        "floor": "authored",
         "light": "morning"
       },
-      "differenceFromPrevious": "walls: 18 → 36; families: perimeter/runner → contour; catches: 8 → 6. 32 solid cells differ from classic-field-border-cutoff; this mission asks: The crawler circles the island.",
-      "rationale": "Retain the authored decision: The crawler circles the island. Wait at the next corner instead of following its heels. Improve its terrace construction and survey-arch focal assembly without adding collision cells.",
+      "differenceFromPrevious": "walls: 18 → 36; families: perimeter/runner → contour; catches: 8 → 3. 32 solid cells differ from classic-field-border-cutoff; this mission asks: Make three interceptions around the island.",
+      "rationale": "The 28-cell island loop repeats one unchanged contour policy with no supplies, speed changes or stages. Match the three-catch introductory rhythm of Oval Intercept, before Contour Transfer adds a second circuit.",
       "measurements": {
         "walls": 36,
         "families": "contour",
-        "catches": 6,
+        "catches": 3,
         "stages": 1,
         "cargo": 0,
         "gates": 0,
@@ -4506,10 +4506,10 @@
           13,
           6
         ],
-        "floor": "ring",
+        "floor": "authored",
         "light": "late"
       },
-      "differenceFromPrevious": "walls: 36 → 42; families: contour → contour/perimeter; catches: 6 → 8. 6 solid cells differ from classic-field-contour-orbit; this mission asks: Inner and outer circuits require different shortcuts.",
+      "differenceFromPrevious": "walls: 36 → 42; families: contour → contour/perimeter; catches: 3 → 8. 6 solid cells differ from classic-field-contour-orbit; this mission asks: Inner and outer circuits require different shortcuts.",
       "rationale": "Retain the authored decision: Inner and outer circuits require different shortcuts. Both patrols yield when your cable blocks their next cell. Improve its terrace construction and survey-arch focal assembly without adding collision cells.",
       "measurements": {
         "walls": 42,
@@ -4525,10 +4525,10 @@
       "id": "classic-field-wake-watch",
       "chapter": "classic-snake-patrol-frontiers",
       "world": "quarry",
-      "disposition": "retain-gameplay-remaster-presentation",
-      "centralDecision": "The dormant rover warns when you approach, then follows your position. Its body is always safe to catch.",
+      "disposition": "revise-gameplay",
+      "centralDecision": "Wake three rovers from open approaches, then intercept their announced movement. Their bodies are always safe to catch.",
       "opening": "From (5,2), read the spawned rover and choose an approach around 12 occupied cells before the first catch.",
-      "pressure": "6 accepted catches; rover.",
+      "pressure": "3 accepted catches; rover.",
       "recovery": "Terrain leaves a 3×3 turning area centred at (5,2); check the open ends of the solid structures before returning. This is static route evidence, not a guarantee against a moving target, hazard or cable.",
       "focalArrangement": {
         "family": "terrace",
@@ -4548,15 +4548,15 @@
           10,
           7
         ],
-        "floor": "ring",
+        "floor": "authored",
         "light": "late"
       },
-      "differenceFromPrevious": "walls: 42 → 12; families: contour/perimeter → rover; catches: 8 → 6. 3 solid cells differ from classic-field-contour-transfer; this mission asks: The dormant rover warns when you approach, then follows your position.",
-      "rationale": "Retain the authored decision: The dormant rover warns when you approach, then follows your position. Its body is always safe to catch. Improve its terrace construction and survey-arch focal assembly without adding collision cells.",
+      "differenceFromPrevious": "walls: 42 → 12; families: contour/perimeter → rover; catches: 8 → 3. 3 solid cells differ from classic-field-contour-transfer; this mission asks: Wake three rovers from open approaches, then intercept their announced movement.",
+      "rationale": "Six identical rover policies repeated the wake-and-intercept lesson after it was established. Three preserve learning and cable growth; Wake Courtyard keeps eight alternating rover and perimeter encounters.",
       "measurements": {
         "walls": 12,
         "families": "rover",
-        "catches": 6,
+        "catches": 3,
         "stages": 1,
         "cargo": 0,
         "gates": 0,
@@ -4590,10 +4590,10 @@
           8,
           8
         ],
-        "floor": "ring",
+        "floor": "authored",
         "light": "late"
       },
-      "differenceFromPrevious": "walls: 12 → 25; families: rover → rover/perimeter; catches: 6 → 8. 25 solid cells differ from classic-field-wake-watch; this mission asks: Wake the rover from an open approach, then meet the outer patrol on a different return..",
+      "differenceFromPrevious": "walls: 12 → 25; families: rover → rover/perimeter; catches: 3 → 8. 25 solid cells differ from classic-field-wake-watch; this mission asks: Wake the rover from an open approach, then meet the outer patrol on a different return..",
       "rationale": "Retain the authored decision: Wake the rover from an open approach, then meet the outer patrol on a different return. Improve its terrace construction and survey-arch focal assembly without adding collision cells.",
       "measurements": {
         "walls": 25,
@@ -4609,10 +4609,10 @@
       "id": "classic-field-ricochet-line",
       "chapter": "classic-snake-field-mastery",
       "world": "relay",
-      "disposition": "retain-gameplay-remaster-presentation",
-      "centralDecision": "This target reflects when blocked. Predict the return along its straight instead of chasing it.",
+      "disposition": "revise-gameplay",
+      "centralDecision": "Read three reflected returns along the straight. Intercept ahead of the target; the next yard adds a waking rover.",
       "opening": "From (5,2), read the spawned ricochet and choose an approach around 12 occupied cells before the first catch.",
-      "pressure": "6 accepted catches; ricochet.",
+      "pressure": "3 accepted catches; ricochet.",
       "recovery": "Terrain leaves a 3×3 turning area centred at (5,2); check the open ends of the solid structures before returning. This is static route evidence, not a guarantee against a moving target, hazard or cable.",
       "focalArrangement": {
         "family": "shelter",
@@ -4632,15 +4632,15 @@
           9,
           6
         ],
-        "floor": "terraces",
+        "floor": "authored",
         "light": "morning"
       },
-      "differenceFromPrevious": "walls: 25 → 12; families: rover/perimeter → ricochet; catches: 8 → 6. 7 solid cells differ from classic-field-wake-courtyard; this mission asks: This target reflects when blocked.",
-      "rationale": "Retain the authored decision: This target reflects when blocked. Predict the return along its straight instead of chasing it. Improve its shelter construction and receiver-dish focal assembly without adding collision cells.",
+      "differenceFromPrevious": "walls: 25 → 12; families: rover/perimeter → ricochet; catches: 8 → 3. 7 solid cells differ from classic-field-wake-courtyard; this mission asks: Read three reflected returns along the straight.",
+      "rationale": "One horizontal-reflection policy repeated six catches with unchanged cover and speed. Three keep a first read, correction and confirmation before Ricochet Yard combines reflections with a rover.",
       "measurements": {
         "walls": 12,
         "families": "ricochet",
-        "catches": 6,
+        "catches": 3,
         "stages": 1,
         "cargo": 0,
         "gates": 0,
@@ -4674,10 +4674,10 @@
           16,
           10
         ],
-        "floor": "terraces",
+        "floor": "authored",
         "light": "morning"
       },
-      "differenceFromPrevious": "walls: 12 → 19; families: ricochet → ricochet/rover; catches: 6 → 8. 19 solid cells differ from classic-field-ricochet-line; this mission asks: Use island corners to intercept reflected routes while the rover announces its approach..",
+      "differenceFromPrevious": "walls: 12 → 19; families: ricochet → ricochet/rover; catches: 3 → 8. 19 solid cells differ from classic-field-ricochet-line; this mission asks: Use island corners to intercept reflected routes while the rover announces its approach..",
       "rationale": "Retain the authored decision: Use island corners to intercept reflected routes while the rover announces its approach. Improve its shelter construction and receiver-dish focal assembly without adding collision cells.",
       "measurements": {
         "walls": 19,
@@ -4708,7 +4708,7 @@
         ],
         "footprint": null,
         "anchor": null,
-        "floor": "terraces",
+        "floor": "authored",
         "light": "morning"
       },
       "differenceFromPrevious": "walls: 19 → 5; families: ricochet/rover → eroder/runner; catches: 8 → 2. 5 solid cells differ from classic-field-ricochet-yard; this mission asks: Let one eroder open the marked shortcut, then intercept the runner.",
@@ -4750,7 +4750,7 @@
           6,
           11
         ],
-        "floor": "terraces",
+        "floor": "authored",
         "light": "late"
       },
       "differenceFromPrevious": "walls: 5 → 14; families: eroder/runner → eroder/ricochet/refuge; catches: 2 → 4. 9 solid cells differ from classic-field-open-seam; this mission asks: Two different marked notches change the return route.",
@@ -4792,7 +4792,7 @@
           10,
           11
         ],
-        "floor": "terraces",
+        "floor": "authored",
         "light": "late"
       },
       "differenceFromPrevious": "walls: 14 → 18; families: eroder/ricochet/refuge → guard; catches: 4 → 3. 13 solid cells differ from classic-field-seam-return; this mission asks: Three guards face different approaches.",
@@ -4834,7 +4834,7 @@
           12,
           5
         ],
-        "floor": "terraces",
+        "floor": "authored",
         "light": "late"
       },
       "differenceFromPrevious": "walls: 18 → 21; families: guard → guard/rover/runner; catches: 3 → 6. 10 solid cells differ from classic-field-guard-line; this mission asks: Rovers share the approaches to three different guards.",
@@ -4876,7 +4876,7 @@
           6,
           5
         ],
-        "floor": "terraces",
+        "floor": "authored",
         "light": "night"
       },
       "differenceFromPrevious": "walls: 21 → 9; families: guard/rover/runner → jammer/patroller/eroder/guard/refuge. 8 solid cells differ from classic-field-guard-return; this mission asks: Open two different routes while moving prey shares local interference.",
@@ -4918,7 +4918,7 @@
           15,
           11
         ],
-        "floor": "terraces",
+        "floor": "authored",
         "light": "night"
       },
       "differenceFromPrevious": "walls: 9 → 22; families: jammer/patroller/eroder/guard/refuge → lane/relay/guard/ricochet/runner; catches: 6 → 8. 22 solid cells differ from classic-field-field-links; this mission asks: Eight encounters use distinct posts, relay pairs and lane directions.",
@@ -4960,7 +4960,7 @@
           8,
           6
         ],
-        "floor": "fork",
+        "floor": "authored",
         "light": "morning"
       },
       "differenceFromPrevious": "walls: 22 → 18; families: lane/relay/guard/ricochet/runner → patroller/runner; catches: 8 → 4. 10 solid cells differ from classic-field-field-finale; this mission asks: Cut across one island circuit or intercept the runner.",
@@ -5002,7 +5002,7 @@
           16,
           11
         ],
-        "floor": "fork",
+        "floor": "authored",
         "light": "morning"
       },
       "differenceFromPrevious": "walls: 18 → 32; families: patroller/runner → switchback/refuge; catches: 4 → 6. 26 solid cells differ from classic-expedition-orchard-fork; this mission asks: Read the announced bay before entering a court.",
@@ -5044,7 +5044,7 @@
           11,
           8
         ],
-        "floor": "fork",
+        "floor": "authored",
         "light": "morning"
       },
       "differenceFromPrevious": "walls: 32 → 28; families: switchback/refuge → pair. 20 solid cells differ from classic-expedition-switchback-courts; this mission asks: Meet the partners at either end of the divider.",
@@ -5086,7 +5086,7 @@
           10,
           3
         ],
-        "floor": "fork",
+        "floor": "authored",
         "light": "late"
       },
       "differenceFromPrevious": "walls: 28 → 20; families: pair → runner/perimeter; wrap: false → true. 20 solid cells differ from classic-expedition-opposite-platforms; this mission asks: Cross an edge to get ahead of the runner, or meet the short patrol circuit.",
@@ -5128,7 +5128,7 @@
           7,
           9
         ],
-        "floor": "fork",
+        "floor": "authored",
         "light": "late"
       },
       "differenceFromPrevious": "walls: 20 → 28; families: runner/perimeter → ricochet/switchback; wrap: true → false. 28 solid cells differ from classic-expedition-boundary-exchange; this mission asks: Predict the reflected return while another target announces its next corner.",
@@ -5170,7 +5170,7 @@
           8,
           8
         ],
-        "floor": "fork",
+        "floor": "authored",
         "light": "late"
       },
       "differenceFromPrevious": "walls: 28 → 24; families: ricochet/switchback → contour/patroller. 13 solid cells differ from classic-expedition-mirror-returns; this mission asks: Two moving circuits share a timed crossing.",
@@ -5204,7 +5204,7 @@
         ],
         "footprint": null,
         "anchor": null,
-        "floor": "elbow",
+        "floor": "authored",
         "light": "morning"
       },
       "differenceFromPrevious": "walls: 24 → 10; families: contour/patroller → runner/sprinter. 10 solid cells differ from classic-expedition-inner-outer-transfer; this mission asks: Take the brief middle opening or begin the longer return before the sprinter accelerates..",
@@ -5246,7 +5246,7 @@
           15,
           10
         ],
-        "floor": "elbow",
+        "floor": "authored",
         "light": "morning"
       },
       "differenceFromPrevious": "walls: 10 → 22; families: runner/sprinter → refuge/sprinter. 22 solid cells differ from classic-expedition-shutter-split; this mission asks: The Pulse supply is off the shortest route.",
@@ -5288,7 +5288,7 @@
           8,
           8
         ],
-        "floor": "elbow",
+        "floor": "authored",
         "light": "morning"
       },
       "differenceFromPrevious": "walls: 22 → 24; families: refuge/sprinter → brace/runner; catches: 6 → 8. 15 solid cells differ from classic-expedition-pulse-detour; this mission asks: Keep both turning yards open as your cable grows.",
@@ -5330,7 +5330,7 @@
           15,
           10
         ],
-        "floor": "elbow",
+        "floor": "authored",
         "light": "late"
       },
       "differenceFromPrevious": "walls: 24 → 21; families: brace/runner → patroller/runner; catches: 8 → 10. 7 solid cells differ from classic-expedition-tail-workshop; this mission asks: Couriers cross the outer route after four and eight catches.",
@@ -5372,7 +5372,7 @@
           6,
           5
         ],
-        "floor": "elbow",
+        "floor": "authored",
         "light": "late"
       },
       "differenceFromPrevious": "walls: 21 → 14; families: patroller/runner → eroder/refuge/ricochet; catches: 10 → 4. 14 solid cells differ from classic-expedition-courier-overpass; this mission asks: Each eroder opens a different marked notch.",
@@ -5414,7 +5414,7 @@
           4,
           6
         ],
-        "floor": "elbow",
+        "floor": "authored",
         "light": "late"
       },
       "differenceFromPrevious": "families: eroder/refuge/ricochet → shield/refuge/sprinter; catches: 4 → 8. 14 solid cells differ from classic-expedition-breaking-bridge; this mission asks: Read two alternating openings.",
@@ -5456,7 +5456,7 @@
           9,
           6
         ],
-        "floor": "seam",
+        "floor": "authored",
         "light": "morning"
       },
       "differenceFromPrevious": "walls: 14 → 16; families: shield/refuge/sprinter → jammer/runner/refuge; catches: 8 → 6. 16 solid cells differ from classic-expedition-clockwork-intercepts; this mission asks: The runner keeps moving when interference hides it.",
@@ -5498,7 +5498,7 @@
           17,
           8
         ],
-        "floor": "seam",
+        "floor": "authored",
         "light": "morning"
       },
       "differenceFromPrevious": "walls: 16 → 24; families: jammer/runner/refuge → jammer/switchback/refuge; catches: 6 → 4. 24 solid cells differ from classic-expedition-edge-of-reception; this mission asks: Read the prey’s next bay before the warning ends.",
@@ -5540,7 +5540,7 @@
           9,
           8
         ],
-        "floor": "seam",
+        "floor": "authored",
         "light": "morning"
       },
       "differenceFromPrevious": "walls: 24 → 29; families: jammer/switchback/refuge → jammer/perimeter/runner/contour; catches: 4 → 6. 23 solid cells differ from classic-expedition-blind-bend; this mission asks: Broadcast hides moving enemies across the board.",
@@ -5582,7 +5582,7 @@
           16,
           9
         ],
-        "floor": "seam",
+        "floor": "authored",
         "light": "late"
       },
       "differenceFromPrevious": "walls: 29 → 24; families: jammer/perimeter/runner/contour → jammer/relay/runner/refuge; catches: 6 → 4. 10 solid cells differ from classic-expedition-moving-shadow; this mission asks: Disable the beacon first, or reach the two marked relay pads through a broadcast burst.",
@@ -5624,7 +5624,7 @@
           11,
           12
         ],
-        "floor": "seam",
+        "floor": "authored",
         "light": "late"
       },
       "differenceFromPrevious": "walls: 24 → 28; families: jammer/relay/runner/refuge → jammer/sprinter/runner/refuge; catches: 4 → 6; wrap: false → true. 28 solid cells differ from classic-expedition-quiet-relay; this mission asks: Coverage also wraps across an edge.",
@@ -5666,7 +5666,7 @@
           8,
           9
         ],
-        "floor": "seam",
+        "floor": "authored",
         "light": "late"
       },
       "differenceFromPrevious": "walls: 28 → 24; families: jammer/sprinter/runner/refuge → jammer/runner/switchback/refuge/sprinter; catches: 6 → 8; wrap: true → false. 24 solid cells differ from classic-expedition-clear-ground; this mission asks: Three different beacons interrupt the chase.",
@@ -5708,7 +5708,7 @@
           6,
           6
         ],
-        "floor": "islands",
+        "floor": "authored",
         "light": "morning"
       },
       "differenceFromPrevious": "walls: 24 → 27; families: jammer/runner/switchback/refuge/sprinter → guard/runner/refuge; catches: 8 → 6. 24 solid cells differ from classic-expedition-radio-chase; this mission asks: Every outpost faces a different approach.",
@@ -5750,7 +5750,7 @@
           15,
           11
         ],
-        "floor": "islands",
+        "floor": "authored",
         "light": "morning"
       },
       "differenceFromPrevious": "walls: 27 → 12; families: guard/runner/refuge → lane/runner/switchback/refuge. 8 solid cells differ from classic-expedition-outpost-circuit; this mission asks: Horizontal and vertical lanes change the useful crossing.",
@@ -5792,7 +5792,7 @@
           8,
           7
         ],
-        "floor": "islands",
+        "floor": "authored",
         "light": "morning"
       },
       "differenceFromPrevious": "walls: 12 → 27; families: lane/runner/switchback/refuge → relay/refuge/switchback/runner/sprinter. 17 solid cells differ from classic-expedition-crosswind-gates; this mission asks: Two cores have different relay pairs.",
@@ -5834,7 +5834,7 @@
           12,
           7
         ],
-        "floor": "islands",
+        "floor": "authored",
         "light": "late"
       },
       "differenceFromPrevious": "families: relay/refuge/switchback/runner/sprinter → rover/shield/contour/runner/refuge. 25 solid cells differ from classic-expedition-relay-islands; this mission asks: Wake the rover from the route you want it to take.",
@@ -5876,7 +5876,7 @@
           7,
           12
         ],
-        "floor": "islands",
+        "floor": "authored",
         "light": "late"
       },
       "differenceFromPrevious": "walls: 27 → 12; families: rover/shield/contour/runner/refuge → eroder/jammer/runner/guard/refuge. 11 solid cells differ from classic-expedition-waking-junction; this mission asks: Open a new route, restore reception at the beacon, or catch prey before it crosses the workshop.",
@@ -5918,7 +5918,7 @@
           15,
           6
         ],
-        "floor": "islands",
+        "floor": "authored",
         "light": "late"
       },
       "differenceFromPrevious": "walls: 12 → 24; families: eroder/jammer/runner/guard/refuge → jammer/runner/relay/lane/refuge/guard/switchback/ricochet; catches: 6 → 8. 20 solid cells differ from classic-expedition-signal-workshop; this mission asks: Eight different encounters change the best way home.",
@@ -5960,7 +5960,7 @@
           9,
           5
         ],
-        "floor": "bays",
+        "floor": "authored",
         "light": "morning"
       },
       "differenceFromPrevious": "walls: 24 → 8; families: jammer/runner/relay/lane/refuge/guard/switchback/ricochet → patroller; catches: 8 → 2. 7 solid cells differ from classic-expedition-four-routes-home; this mission asks: Touch a lever.",
@@ -6002,7 +6002,7 @@
           17,
           8
         ],
-        "floor": "bays",
+        "floor": "authored",
         "light": "morning"
       },
       "differenceFromPrevious": "walls: 8 → 14; catches: 2 → 3; stages: 1 → 2. 14 solid cells differ from classic-operation-first-dispatch; this mission asks: A wide upper loop and a tall lower loop meet at one junction.",
@@ -6044,7 +6044,7 @@
           9,
           6
         ],
-        "floor": "bays",
+        "floor": "authored",
         "light": "morning"
       },
       "differenceFromPrevious": "walls: 14 → 12; stages: 2 → 1. 10 solid cells differ from classic-operation-long-and-short; this mission asks: The patrol takes the platform edge.",
@@ -6078,7 +6078,7 @@
         ],
         "footprint": null,
         "anchor": null,
-        "floor": "bays",
+        "floor": "authored",
         "light": "late"
       },
       "differenceFromPrevious": "walls: 12 → 7; families: patroller → patroller/runner; catches: 3 → 4. 3 solid cells differ from classic-operation-platform-cut; this mission asks: Redirect the patrol while a runner changes the useful interception.",
@@ -6112,7 +6112,7 @@
         ],
         "footprint": null,
         "anchor": null,
-        "floor": "bays",
+        "floor": "authored",
         "light": "late"
       },
       "differenceFromPrevious": "walls: 7 → 4; families: patroller/runner → patroller; stages: 1 → 2. 4 solid cells differ from classic-operation-courier-gap; this mission asks: Each lever owns a different junction.",
@@ -6154,7 +6154,7 @@
           14,
           10
         ],
-        "floor": "bays",
+        "floor": "authored",
         "light": "late"
       },
       "differenceFromPrevious": "walls: 4 → 12; catches: 4 → 3; wrap: false → true. 12 solid cells differ from classic-operation-twin-dispatch; this mission asks: Wrap from the distant lever to the opposite approach.",
@@ -6196,7 +6196,7 @@
           9,
           5
         ],
-        "floor": "bays",
+        "floor": "authored",
         "light": "night"
       },
       "differenceFromPrevious": "walls: 12 → 13; stages: 2 → 1; wrap: true → false. 7 solid cells differ from classic-operation-edge-express; this mission asks: Route the patrol before entering the shutter court.",
@@ -6238,7 +6238,7 @@
           18,
           11
         ],
-        "floor": "bays",
+        "floor": "authored",
         "light": "night"
       },
       "differenceFromPrevious": "walls: 13 → 10; families: patroller → patroller/sprinter; catches: 3 → 5; stages: 1 → 2. 6 solid cells differ from classic-operation-shutter-transfer; this mission asks: Complete an upper interception, then change the dispatch again for the lower return.",
@@ -6272,7 +6272,7 @@
         ],
         "footprint": null,
         "anchor": null,
-        "floor": "cross",
+        "floor": "authored",
         "light": "morning"
       },
       "differenceFromPrevious": "walls: 10 → 9; families: patroller/sprinter → runner; catches: 5 → 1; gates: 0 → 1. 9 solid cells differ from classic-operation-last-departure; this mission asks: Hold the striped pad with your cable and cross the shortcut.",
@@ -6306,7 +6306,7 @@
         ],
         "footprint": null,
         "anchor": null,
-        "floor": "cross",
+        "floor": "authored",
         "light": "morning"
       },
       "differenceFromPrevious": "walls: 9 → 8; catches: 1 → 3. 8 solid cells differ from classic-operation-first-pressure; this mission asks: Two pads control one gate.",
@@ -6340,7 +6340,7 @@
         ],
         "footprint": null,
         "anchor": null,
-        "floor": "cross",
+        "floor": "authored",
         "light": "morning"
       },
       "differenceFromPrevious": "walls: 8 → 12. 11 solid cells differ from classic-operation-near-and-far; this mission asks: The runner commits along the east side of the elbow.",
@@ -6374,7 +6374,7 @@
         ],
         "footprint": null,
         "anchor": null,
-        "floor": "cross",
+        "floor": "authored",
         "light": "late"
       },
       "differenceFromPrevious": "walls: 12 → 14; gates: 1 → 2. 14 solid cells differ from classic-operation-pressure-elbow; this mission asks: Open two independent shortcuts.",
@@ -6416,7 +6416,7 @@
           13,
           12
         ],
-        "floor": "cross",
+        "floor": "authored",
         "light": "late"
       },
       "differenceFromPrevious": "catches: 3 → 1; cargo: 0 → 2; gates: 2 → 1. 14 solid cells differ from classic-operation-double-pressure; this mission asks: Collect both parcels before unloading beyond the gate.",
@@ -6458,7 +6458,7 @@
           10,
           10
         ],
-        "floor": "cross",
+        "floor": "authored",
         "light": "late"
       },
       "differenceFromPrevious": "walls: 14 → 18; families: runner → switchback; catches: 1 → 4; stages: 2 → 1; cargo: 2 → 0. 18 solid cells differ from classic-operation-heavy-crossing; this mission asks: The switchback commits around the valve’s east side.",
@@ -6500,7 +6500,7 @@
           11,
           6
         ],
-        "floor": "cross",
+        "floor": "authored",
         "light": "night"
       },
       "differenceFromPrevious": "walls: 18 → 20; families: switchback → runner; catches: 4 → 3; stages: 1 → 2; wrap: false → true. 14 solid cells differ from classic-operation-runner-valve; this mission asks: The closed gate is not your only crossing.",
@@ -6534,7 +6534,7 @@
         ],
         "footprint": null,
         "anchor": null,
-        "floor": "cross",
+        "floor": "authored",
         "light": "night"
       },
       "differenceFromPrevious": "walls: 20 → 15; catches: 3 → 4; cargo: 0 → 2; gates: 1 → 2; wrap: true → false. 15 solid cells differ from classic-operation-edge-pressure; this mission asks: Deliver to opposite sides of two gates, then regroup in the centre.",
@@ -6576,7 +6576,7 @@
           10,
           7
         ],
-        "floor": "rows",
+        "floor": "authored",
         "light": "morning"
       },
       "differenceFromPrevious": "walls: 15 → 12; catches: 4 → 2; gates: 2 → 0. 12 solid cells differ from classic-operation-assembly-return; this mission asks: Carry two parcels to dock A.",
@@ -6618,7 +6618,7 @@
           12,
           11
         ],
-        "floor": "rows",
+        "floor": "authored",
         "light": "morning"
       },
       "differenceFromPrevious": "cargo: 2 → 4. 10 solid cells differ from classic-operation-orchard-post; this mission asks: Two docks take different parcels.",
@@ -6660,7 +6660,7 @@
           13,
           8
         ],
-        "floor": "rows",
+        "floor": "authored",
         "light": "morning"
       },
       "differenceFromPrevious": "walls: 12 → 24; catches: 2 → 3; cargo: 4 → 2. 18 solid cells differ from classic-operation-split-delivery; this mission asks: Load outside the glasshouse, unload before the narrow elbow, then pursue the runner around its open side..",
@@ -6702,7 +6702,7 @@
           16,
           10
         ],
-        "floor": "rows",
+        "floor": "authored",
         "light": "late"
       },
       "differenceFromPrevious": "walls: 24 → 12; cargo: 2 → 4. 9 solid cells differ from classic-operation-glasshouse-elbow; this mission asks: Only the current harvest is collectable.",
@@ -6744,7 +6744,7 @@
           7,
           9
         ],
-        "floor": "rows",
+        "floor": "authored",
         "light": "late"
       },
       "differenceFromPrevious": "walls: 12 → 20; families: runner → refuge; catches: 3 → 4; cargo: 4 → 2. 16 solid cells differ from classic-operation-two-harvests; this mission asks: The refuge seeker commits through the aisle between the two glasshouses.",
@@ -6778,7 +6778,7 @@
         ],
         "footprint": null,
         "anchor": null,
-        "floor": "rows",
+        "floor": "authored",
         "light": "late"
       },
       "differenceFromPrevious": "walls: 20 → 7; families: refuge → runner; catches: 4 → 2; gates: 0 → 1. 7 solid cells differ from classic-operation-refuge-cargo; this mission asks: The loaded cable holds an irrigation gate.",
@@ -6820,7 +6820,7 @@
           8,
           8
         ],
-        "floor": "rows",
+        "floor": "authored",
         "light": "night"
       },
       "differenceFromPrevious": "walls: 7 → 24; catches: 2 → 3; gates: 1 → 0; wrap: false → true. 24 solid cells differ from classic-operation-irrigation-shortcut; this mission asks: Parcels lie on opposite edges.",
@@ -6862,7 +6862,7 @@
           15,
           10
         ],
-        "floor": "rows",
+        "floor": "authored",
         "light": "night"
       },
       "differenceFromPrevious": "walls: 24 → 20; families: runner → runner/sprinter; catches: 3 → 5; stages: 2 → 3; cargo: 2 → 4; wrap: true → false. 16 solid cells differ from classic-operation-border-harvest; this mission asks: Deliver the north and south harvests before meeting in the centre.",
@@ -6904,7 +6904,7 @@
           9,
           6
         ],
-        "floor": "seam",
+        "floor": "authored",
         "light": "morning"
       },
       "differenceFromPrevious": "walls: 20 → 21; families: runner/sprinter → runner; catches: 5 → 3; cargo: 4 → 0; wrap: false → true. 12 solid cells differ from classic-operation-harvest-rendezvous; this mission asks: Catch, cross the harbour, then catch again.",
@@ -6946,7 +6946,7 @@
           16,
           9
         ],
-        "floor": "seam",
+        "floor": "authored",
         "light": "morning"
       },
       "differenceFromPrevious": "walls: 21 → 20; stages: 3 → 2; cargo: 0 → 2. 18 solid cells differ from classic-operation-harbor-clearances; this mission asks: The docks sit across the edge from their parcels.",
@@ -6988,7 +6988,7 @@
           11,
           6
         ],
-        "floor": "seam",
+        "floor": "authored",
         "light": "morning"
       },
       "differenceFromPrevious": "walls: 20 → 32; families: runner → pair; catches: 3 → 4; cargo: 2 → 0. 28 solid cells differ from classic-operation-seam-parcels; this mission asks: The pair takes opposite approaches around the long quay.",
@@ -7030,7 +7030,7 @@
           16,
           8
         ],
-        "floor": "seam",
+        "floor": "authored",
         "light": "late"
       },
       "differenceFromPrevious": "walls: 32 → 39; families: pair → refuge. 37 solid cells differ from classic-operation-north-south; this mission asks: The quays block a straight chase.",
@@ -7072,7 +7072,7 @@
           11,
           12
         ],
-        "floor": "seam",
+        "floor": "authored",
         "light": "late"
       },
       "differenceFromPrevious": "walls: 39 → 16; families: refuge → runner; catches: 4 → 3; gates: 0 → 1. 16 solid cells differ from classic-operation-offset-quays; this mission asks: An occupied pad opens a middle crossing.",
@@ -7114,7 +7114,7 @@
           14,
           10
         ],
-        "floor": "seam",
+        "floor": "authored",
         "light": "late"
       },
       "differenceFromPrevious": "walls: 16 → 11; families: runner → patroller; stages: 2 → 1; gates: 1 → 0. 11 solid cells differ from classic-operation-tidal-door; this mission asks: Reach either lever through the edge, then intercept on the selected quay loop.",
@@ -7156,7 +7156,7 @@
           8,
           8
         ],
-        "floor": "seam",
+        "floor": "authored",
         "light": "night"
       },
       "differenceFromPrevious": "walls: 11 → 28; families: patroller → runner; stages: 1 → 3; cargo: 0 → 2. 24 solid cells differ from classic-operation-quay-dispatch; this mission asks: Collect the near load, deliver across the seam, then collect the far load.",
@@ -7198,7 +7198,7 @@
           16,
           9
         ],
-        "floor": "seam",
+        "floor": "authored",
         "light": "night"
       },
       "differenceFromPrevious": "walls: 28 → 30; families: runner → runner/switchback; catches: 3 → 5; cargo: 2 → 0. 18 solid cells differ from classic-operation-lighten-at-sea; this mission asks: Three arrows alternate the useful edge.",
@@ -7240,7 +7240,7 @@
           9,
           5
         ],
-        "floor": "ring",
+        "floor": "authored",
         "light": "morning"
       },
       "differenceFromPrevious": "walls: 30 → 12; families: runner/switchback → runner/lane; catches: 5 → 3; stages: 3 → 2; wrap: true → false. 6 solid cells differ from classic-operation-horizon-relay; this mission asks: Clear the first runner before crossing the furnace lane.",
@@ -7282,7 +7282,7 @@
           10,
           11
         ],
-        "floor": "ring",
+        "floor": "authored",
         "light": "morning"
       },
       "differenceFromPrevious": "walls: 12 → 10; families: runner/lane → lane/runner/sprinter; cargo: 0 → 2. 6 solid cells differ from classic-operation-furnace-permit; this mission asks: Take coolant around the marked lane to its dock.",
@@ -7324,7 +7324,7 @@
           9,
           6
         ],
-        "floor": "ring",
+        "floor": "authored",
         "light": "morning"
       },
       "differenceFromPrevious": "walls: 10 → 12; families: lane/runner/sprinter → guard/runner/switchback/sprinter; catches: 3 → 4; cargo: 2 → 0. 11 solid cells differ from classic-operation-coolant-cargo; this mission asks: The guard changes posts only after its shot clears.",
@@ -7366,7 +7366,7 @@
           16,
           5
         ],
-        "floor": "ring",
+        "floor": "authored",
         "light": "late"
       },
       "differenceFromPrevious": "walls: 12 → 11; families: guard/runner/switchback/sprinter → lane/runner/sprinter; catches: 4 → 3; gates: 0 → 1. 10 solid cells differ from classic-operation-watch-the-aim; this mission asks: The pressure shortcut approaches the lane from its flank.",
@@ -7408,7 +7408,7 @@
           7,
           5
         ],
-        "floor": "ring",
+        "floor": "authored",
         "light": "late"
       },
       "differenceFromPrevious": "walls: 11 → 8; families: lane/runner/sprinter → lane; catches: 3 → 2; gates: 1 → 0. 8 solid cells differ from classic-operation-pressure-flank; this mission asks: One lane attacks across, the next attacks down.",
@@ -7450,7 +7450,7 @@
           14,
           11
         ],
-        "floor": "ring",
+        "floor": "authored",
         "light": "late"
       },
       "differenceFromPrevious": "families: lane → guard/sprinter/runner; catches: 2 → 4; cargo: 0 → 2. 6 solid cells differ from classic-operation-crossing-orders; this mission asks: Deliver to two sides of the guard.",
@@ -7484,7 +7484,7 @@
         ],
         "footprint": null,
         "anchor": null,
-        "floor": "ring",
+        "floor": "authored",
         "light": "night"
       },
       "differenceFromPrevious": "walls: 8 → 5; families: guard/sprinter/runner → patroller/guard; catches: 4 → 3; stages: 2 → 1; cargo: 2 → 0. 4 solid cells differ from classic-operation-guarded-transfer; this mission asks: Redirect the patrol away from the marked firing approach.",
@@ -7526,7 +7526,7 @@
           16,
           11
         ],
-        "floor": "ring",
+        "floor": "authored",
         "light": "night"
       },
       "differenceFromPrevious": "walls: 5 → 14; families: patroller/guard → lane/guard/runner/sprinter/refuge; catches: 3 → 5; stages: 1 → 3; cargo: 0 → 2. 14 solid cells differ from classic-operation-furnace-switch; this mission asks: Carry the coolant, clear the two warned posts, then extract at the loading bay.",
@@ -7568,7 +7568,7 @@
           9,
           6
         ],
-        "floor": "islands",
+        "floor": "authored",
         "light": "morning"
       },
       "differenceFromPrevious": "walls: 14 → 15; families: lane/guard/runner/sprinter/refuge → runner; catches: 5 → 1; stages: 3 → 1. 12 solid cells differ from classic-operation-works-clearance; this mission asks: Complete the dock delivery, then open the extraction by catching the runner.",
@@ -7610,7 +7610,7 @@
           16,
           11
         ],
-        "floor": "islands",
+        "floor": "authored",
         "light": "morning"
       },
       "differenceFromPrevious": "walls: 15 → 24; catches: 1 → 3; stages: 1 → 2. 21 solid cells differ from classic-operation-dock-permission; this mission asks: The first landing activates the second delivery.",
@@ -7652,7 +7652,7 @@
           11,
           6
         ],
-        "floor": "islands",
+        "floor": "authored",
         "light": "morning"
       },
       "differenceFromPrevious": "walls: 24 → 16; gates: 0 → 1. 16 solid cells differ from classic-operation-two-landings; this mission asks: Hold the pump gate, unload beyond it, then extract through the other side.",
@@ -7694,7 +7694,7 @@
           9,
           5
         ],
-        "floor": "islands",
+        "floor": "authored",
         "light": "late"
       },
       "differenceFromPrevious": "walls: 16 → 8; families: runner → patroller/runner; gates: 1 → 0. 8 solid cells differ from classic-operation-pump-return; this mission asks: Choose the patrol’s branch before collecting its clearance.",
@@ -7736,7 +7736,7 @@
           10,
           12
         ],
-        "floor": "islands",
+        "floor": "authored",
         "light": "late"
       },
       "differenceFromPrevious": "walls: 8 → 16; families: patroller/runner → runner; wrap: false → true. 14 solid cells differ from classic-operation-loading-dispatch; this mission asks: A shutter changes the middle approach while you deliver.",
@@ -7778,7 +7778,7 @@
           14,
           10
         ],
-        "floor": "islands",
+        "floor": "authored",
         "light": "late"
       },
       "differenceFromPrevious": "walls: 16 → 12; families: runner → relay/runner/sprinter; wrap: true → false. 9 solid cells differ from classic-operation-harbor-window; this mission asks: Touch both linked relay pads to catch the shielded post, then complete the delivery.",
@@ -7820,7 +7820,7 @@
           7,
           8
         ],
-        "floor": "islands",
+        "floor": "authored",
         "light": "night"
       },
       "differenceFromPrevious": "walls: 12 → 28; families: relay/runner/sprinter → pair; catches: 3 → 4; stages: 2 → 3. 28 solid cells differ from classic-operation-relay-load; this mission asks: Deliver one load before the return cargo activates.",
@@ -7862,7 +7862,7 @@
           17,
           6
         ],
-        "floor": "islands",
+        "floor": "authored",
         "light": "night"
       },
       "differenceFromPrevious": "walls: 28 → 20; families: pair → runner/sprinter; catches: 4 → 5; cargo: 2 → 4; gates: 0 → 1. 16 solid cells differ from classic-operation-outbound-inbound; this mission asks: Two cargo stages share a pressure shortcut.",
@@ -7904,7 +7904,7 @@
           10,
           6
         ],
-        "floor": "terraces",
+        "floor": "authored",
         "light": "morning"
       },
       "differenceFromPrevious": "walls: 20 → 18; families: runner/sprinter → jammer/runner; catches: 5 → 2; stages: 3 → 2; cargo: 4 → 2; gates: 1 → 0. 8 solid cells differ from classic-operation-harbor-homecoming; this mission asks: The antenna changes posts only while reception is clear.",
@@ -7946,7 +7946,7 @@
           11,
           11
         ],
-        "floor": "terraces",
+        "floor": "authored",
         "light": "morning"
       },
       "differenceFromPrevious": "walls: 18 → 26; families: jammer/runner → jammer/switchback; catches: 2 → 3; cargo: 2 → 0. 14 solid cells differ from classic-operation-silent-parcel; this mission asks: A narrow central ridge separates two antennas.",
@@ -7988,7 +7988,7 @@
           8,
           8
         ],
-        "floor": "terraces",
+        "floor": "authored",
         "light": "morning"
       },
       "differenceFromPrevious": "walls: 26 → 24; families: jammer/switchback → jammer/runner; catches: 3 → 2; cargo: 0 → 2. 24 solid cells differ from classic-operation-ridge-reception; this mission asks: Broadcast can hide the runner anywhere.",
@@ -8022,7 +8022,7 @@
         ],
         "footprint": null,
         "anchor": null,
-        "floor": "terraces",
+        "floor": "authored",
         "light": "late"
       },
       "differenceFromPrevious": "walls: 24 → 4; families: jammer/runner → jammer/patroller/runner; catches: 2 → 3; cargo: 2 → 0. 2 solid cells differ from classic-operation-broadcast-freight; this mission asks: Select the patrol’s next branch before broadcast hides it.",
@@ -8064,7 +8064,7 @@
           8,
           11
         ],
-        "floor": "terraces",
+        "floor": "authored",
         "light": "late"
       },
       "differenceFromPrevious": "walls: 4 → 34; families: jammer/patroller/runner → jammer/runner/refuge; catches: 3 → 4; cargo: 0 → 2; wrap: false → true. 32 solid cells differ from classic-operation-unseen-dispatch; this mission asks: The clear wrapping edge is shorter than the covered middle.",
@@ -8106,7 +8106,7 @@
           12,
           7
         ],
-        "floor": "terraces",
+        "floor": "authored",
         "light": "late"
       },
       "differenceFromPrevious": "walls: 34 → 22; families: jammer/runner/refuge → jammer/refuge/runner; catches: 4 → 3; wrap: true → false. 16 solid cells differ from classic-operation-clear-side-channel; this mission asks: One catch releases Pulse in a side bay.",
@@ -8140,7 +8140,7 @@
         ],
         "footprint": null,
         "anchor": null,
-        "floor": "terraces",
+        "floor": "authored",
         "light": "night"
       },
       "differenceFromPrevious": "walls: 22 → 9; families: jammer/refuge/runner → jammer/runner/refuge; cargo: 2 → 0; gates: 0 → 1. 8 solid cells differ from classic-operation-pulse-rendezvous; this mission asks: Your cable holds the receiver shortcut open.",
@@ -8182,7 +8182,7 @@
           15,
           10
         ],
-        "floor": "terraces",
+        "floor": "authored",
         "light": "night"
       },
       "differenceFromPrevious": "walls: 9 → 12; families: jammer/runner/refuge → jammer/runner/lane; catches: 3 → 4; stages: 2 → 3; cargo: 0 → 2; gates: 1 → 0. 12 solid cells differ from classic-operation-receiver-bridge; this mission asks: A local approach becomes a broadcast return.",
@@ -8224,7 +8224,7 @@
           6,
           10
         ],
-        "floor": "elbow",
+        "floor": "authored",
         "light": "morning"
       },
       "differenceFromPrevious": "walls: 12 → 14; families: jammer/runner/lane → eroder/runner; catches: 4 → 2; stages: 3 → 2; cargo: 2 → 0. 14 solid cells differ from classic-operation-summit-blackbird; this mission asks: The marked stone can break open, but the outer path is always safe.",
@@ -8266,7 +8266,7 @@
           11,
           11
         ],
-        "floor": "elbow",
+        "floor": "authored",
         "light": "morning"
       },
       "differenceFromPrevious": "walls: 14 → 19; families: eroder/runner → eroder/refuge/runner; catches: 2 → 3; cargo: 0 → 2. 12 solid cells differ from classic-operation-first-notch; this mission asks: Load before approaching the marked stone.",
@@ -8308,7 +8308,7 @@
           12,
           8
         ],
-        "floor": "elbow",
+        "floor": "authored",
         "light": "morning"
       },
       "differenceFromPrevious": "walls: 19 → 26; families: eroder/refuge/runner → eroder/runner/switchback; catches: 3 → 4; cargo: 2 → 0. 16 solid cells differ from classic-operation-loaded-excavation; this mission asks: Two breaks alter different corners of a stepped island.",
@@ -8342,7 +8342,7 @@
         ],
         "footprint": null,
         "anchor": null,
-        "floor": "elbow",
+        "floor": "authored",
         "light": "late"
       },
       "differenceFromPrevious": "walls: 26 → 20; families: eroder/runner/switchback → eroder/runner; catches: 4 → 3; cargo: 0 → 2; wrap: false → true. 18 solid cells differ from classic-operation-stepped-masonry; this mission asks: Wrapping offers an immediate detour; demolition offers a later central cut.",
@@ -8384,7 +8384,7 @@
           7,
           5
         ],
-        "floor": "elbow",
+        "floor": "authored",
         "light": "late"
       },
       "differenceFromPrevious": "walls: 20 → 13; families: eroder/runner → eroder/runner/refuge; cargo: 2 → 0; gates: 0 → 1; wrap: true → false. 11 solid cells differ from classic-operation-survey-seam; this mission asks: The plate opens a temporary doorway; the eroder opens a permanent notch elsewhere.",
@@ -8426,7 +8426,7 @@
           6,
           11
         ],
-        "floor": "elbow",
+        "floor": "authored",
         "light": "late"
       },
       "differenceFromPrevious": "walls: 13 → 19; families: eroder/runner/refuge → eroder/ricochet/runner; cargo: 0 → 2; gates: 1 → 0. 17 solid cells differ from classic-operation-temporary-permanent; this mission asks: A reflected hunter changes its route when a marked barrier disappears.",
@@ -8460,7 +8460,7 @@
         ],
         "footprint": null,
         "anchor": null,
-        "floor": "elbow",
+        "floor": "authored",
         "light": "night"
       },
       "differenceFromPrevious": "walls: 19 → 23; families: eroder/ricochet/runner → relay/eroder/runner. 22 solid cells differ from classic-operation-ricochet-quarry; this mission asks: Visit both relay pads around the arch before catching its core.",
@@ -8494,7 +8494,7 @@
         ],
         "footprint": null,
         "anchor": null,
-        "floor": "elbow",
+        "floor": "authored",
         "light": "night"
       },
       "differenceFromPrevious": "walls: 23 → 13; families: relay/eroder/runner → eroder/refuge/runner; catches: 3 → 5; stages: 2 → 3. 11 solid cells differ from classic-operation-restored-arch; this mission asks: Three distinct notches and moving prey change the useful approach between stages.",
@@ -8536,7 +8536,7 @@
           7,
           6
         ],
-        "floor": "ring",
+        "floor": "authored",
         "light": "morning"
       },
       "differenceFromPrevious": "walls: 13 → 28; families: eroder/refuge/runner → refuge; catches: 5 → 3; stages: 3 → 2; cargo: 2 → 0. 24 solid cells differ from classic-operation-garden-breaches; this mission asks: The seeker marks its next refuge across the glasshouse.",
@@ -8570,7 +8570,7 @@
         ],
         "footprint": null,
         "anchor": null,
-        "floor": "ring",
+        "floor": "authored",
         "light": "morning"
       },
       "differenceFromPrevious": "walls: 28 → 16; families: refuge → refuge/switchback/runner; cargo: 0 → 2. 7 solid cells differ from classic-operation-glasshouse-intentions; this mission asks: A refuge seeker and a switchback announce different exits.",
@@ -8612,7 +8612,7 @@
           11,
           6
         ],
-        "floor": "ring",
+        "floor": "authored",
         "light": "morning"
       },
       "differenceFromPrevious": "walls: 16 → 28; families: refuge/switchback/runner → pair; catches: 3 → 4; cargo: 2 → 0. 25 solid cells differ from classic-operation-orchard-forks; this mission asks: Two partners seek one shelter; catching the first changes the survivor’s behavior.",
@@ -8654,7 +8654,7 @@
           7,
           5
         ],
-        "floor": "ring",
+        "floor": "authored",
         "light": "late"
       },
       "differenceFromPrevious": "walls: 28 → 15; families: pair → refuge/switchback; catches: 4 → 3; gates: 0 → 1. 7 solid cells differ from classic-operation-paired-shelters; this mission asks: Hold the hedge doorway with your cable while the seeker changes bays.",
@@ -8688,7 +8688,7 @@
         ],
         "footprint": null,
         "anchor": null,
-        "floor": "ring",
+        "floor": "authored",
         "light": "late"
       },
       "differenceFromPrevious": "walls: 15 → 26; catches: 3 → 4; cargo: 0 → 2; gates: 1 → 0. 21 solid cells differ from classic-operation-held-hedge; this mission asks: Two open-ended elbows offer a short inward delivery and a broad outward escape.",
@@ -8730,7 +8730,7 @@
           7,
           9
         ],
-        "floor": "ring",
+        "floor": "authored",
         "light": "late"
       },
       "differenceFromPrevious": "walls: 26 → 34; wrap: false → true. 21 solid cells differ from classic-operation-seedling-spiral; this mission asks: Read the destination across a wrapping edge.",
@@ -8772,7 +8772,7 @@
           9,
           7
         ],
-        "floor": "ring",
+        "floor": "authored",
         "light": "night"
       },
       "differenceFromPrevious": "walls: 34 → 14; families: refuge/switchback → jammer/refuge/switchback; catches: 4 → 3; wrap: true → false. 12 solid cells differ from classic-operation-garden-seam; this mission asks: Local interference hides a seeker after its destination warning.",
@@ -8814,7 +8814,7 @@
           13,
           9
         ],
-        "floor": "ring",
+        "floor": "authored",
         "light": "night"
       },
       "differenceFromPrevious": "walls: 14 → 22; families: jammer/refuge/switchback → refuge/switchback/sprinter; catches: 3 → 4; stages: 2 → 3; cargo: 2 → 3. 21 solid cells differ from classic-operation-quiet-conservatory; this mission asks: Deliver into three different courts.",
@@ -8856,7 +8856,7 @@
           9,
           5
         ],
-        "floor": "bays",
+        "floor": "authored",
         "light": "morning"
       },
       "differenceFromPrevious": "walls: 22 → 20; families: refuge/switchback/sprinter → runner/sprinter; catches: 4 → 3; stages: 3 → 2; cargo: 3 → 2. 20 solid cells differ from classic-operation-three-garden-returns; this mission asks: The first catch releases Pulse off the delivery line.",
@@ -8890,7 +8890,7 @@
         ],
         "footprint": null,
         "anchor": null,
-        "floor": "bays",
+        "floor": "authored",
         "light": "morning"
       },
       "differenceFromPrevious": "walls: 20 → 21; families: runner/sprinter → refuge/runner; catches: 3 → 4. 16 solid cells differ from classic-operation-pulse-loading-bay; this mission asks: Cargo length and catch growth share the narrow return.",
@@ -8932,7 +8932,7 @@
           11,
           6
         ],
-        "floor": "bays",
+        "floor": "authored",
         "light": "morning"
       },
       "differenceFromPrevious": "walls: 21 → 20; families: refuge/runner → brace/runner; catches: 4 → 3. 16 solid cells differ from classic-operation-reel-before-return; this mission asks: Pulse can hold a braced enemy in its current state.",
@@ -8974,7 +8974,7 @@
           11,
           5
         ],
-        "floor": "bays",
+        "floor": "authored",
         "light": "late"
       },
       "differenceFromPrevious": "walls: 20 → 22; families: brace/runner → jammer/switchback/runner. 12 solid cells differ from classic-operation-cold-window; this mission asks: Pulse competes with a direct antenna interception.",
@@ -9008,7 +9008,7 @@
         ],
         "footprint": null,
         "anchor": null,
-        "floor": "bays",
+        "floor": "authored",
         "light": "late"
       },
       "differenceFromPrevious": "walls: 22 → 9; families: jammer/switchback/runner → runner/refuge; catches: 3 → 4; gates: 0 → 1. 2 solid cells differ from classic-operation-radio-spares; this mission asks: Reel frees turning space but can release a cable-held doorway sooner.",
@@ -9050,7 +9050,7 @@
           14,
           8
         ],
-        "floor": "bays",
+        "floor": "authored",
         "light": "late"
       },
       "differenceFromPrevious": "walls: 9 → 24; families: runner/refuge → shield/refuge/runner; catches: 4 → 3; gates: 1 → 0. 24 solid cells differ from classic-operation-short-cable-long-door; this mission asks: The shield commits along the gap between freight bays.",
@@ -9092,7 +9092,7 @@
           8,
           7
         ],
-        "floor": "bays",
+        "floor": "authored",
         "light": "night"
       },
       "differenceFromPrevious": "walls: 24 → 20; families: shield/refuge/runner → sprinter/refuge/runner; catches: 3 → 5. 12 solid cells differ from classic-operation-freight-flank; this mission asks: A Pulse offer follows the first catch; Reel follows the third.",
@@ -9134,7 +9134,7 @@
           15,
           10
         ],
-        "floor": "bays",
+        "floor": "authored",
         "light": "night"
       },
       "differenceFromPrevious": "walls: 20 → 12; families: sprinter/refuge/runner → lane/runner/jammer/refuge/brace; stages: 2 → 3. 5 solid cells differ from classic-operation-two-offers-one-route; this mission asks: The freight finale links a warned lane, a broadcast source and two supply detours.",
@@ -9176,7 +9176,7 @@
           10,
           6
         ],
-        "floor": "cross",
+        "floor": "authored",
         "light": "morning"
       },
       "differenceFromPrevious": "walls: 12 → 24; families: lane/runner/jammer/refuge/brace → pair; catches: 5 → 2; stages: 3 → 1. 21 solid cells differ from classic-operation-last-train-home; this mission asks: Two docks accept different parcels.",
@@ -9210,7 +9210,7 @@
         ],
         "footprint": null,
         "anchor": null,
-        "floor": "cross",
+        "floor": "authored",
         "light": "morning"
       },
       "differenceFromPrevious": "walls: 24 → 4; families: pair → patroller/runner; catches: 2 → 3; stages: 1 → 2; cargo: 2 → 0. 3 solid cells differ from classic-operation-shared-manifest; this mission asks: Two levers control one departure.",
@@ -9244,7 +9244,7 @@
         ],
         "footprint": null,
         "anchor": null,
-        "floor": "cross",
+        "floor": "authored",
         "light": "morning"
       },
       "differenceFromPrevious": "walls: 4 → 18; families: patroller/runner → refuge/runner; gates: 0 → 2. 16 solid cells differ from classic-operation-opposed-levers; this mission asks: Each plate controls a different door.",
@@ -9286,7 +9286,7 @@
           15,
           6
         ],
-        "floor": "cross",
+        "floor": "authored",
         "light": "late"
       },
       "differenceFromPrevious": "walls: 18 → 28; families: refuge/runner → runner/refuge; cargo: 0 → 4; gates: 2 → 0. 28 solid cells differ from classic-operation-two-held-doors; this mission asks: Four parcels cross two docks.",
@@ -9328,7 +9328,7 @@
           10,
           11
         ],
-        "floor": "cross",
+        "floor": "authored",
         "light": "late"
       },
       "differenceFromPrevious": "walls: 28 → 18; families: runner/refuge → jammer/switchback/refuge/runner; catches: 3 → 4; cargo: 4 → 2. 18 solid cells differ from classic-operation-opposite-loads; this mission asks: Either Team head can activate the local circle on the shared feed.",
@@ -9370,7 +9370,7 @@
           14,
           10
         ],
-        "floor": "cross",
+        "floor": "authored",
         "light": "late"
       },
       "differenceFromPrevious": "walls: 18 → 21; families: jammer/switchback/refuge/runner → refuge/switchback/runner; catches: 4 → 5; stages: 2 → 3; cargo: 2 → 0. 16 solid cells differ from classic-operation-shared-frequency; this mission asks: Three stage exits alternate corners without resetting the board.",
@@ -9412,7 +9412,7 @@
           8,
           8
         ],
-        "floor": "cross",
+        "floor": "authored",
         "light": "night"
       },
       "differenceFromPrevious": "walls: 21 → 20; families: refuge/switchback/runner → relay/refuge/runner; catches: 5 → 3; stages: 3 → 2; cargo: 0 → 2. 14 solid cells differ from classic-operation-staggered-rendezvous; this mission asks: Split the two relay pads or visit them on one long loop.",
@@ -9454,7 +9454,7 @@
           14,
           10
         ],
-        "floor": "cross",
+        "floor": "authored",
         "light": "night"
       },
       "differenceFromPrevious": "walls: 20 → 12; families: relay/refuge/runner → lane/switchback/refuge; catches: 3 → 4; stages: 2 → 3. 9 solid cells differ from classic-operation-relay-partners; this mission asks: Opposite warning lanes, shared cargo and switching prey divide attention.",
@@ -9488,7 +9488,7 @@
         ],
         "footprint": null,
         "anchor": null,
-        "floor": "terraces",
+        "floor": "authored",
         "light": "morning"
       },
       "differenceFromPrevious": "walls: 12 → 4; families: lane/switchback/refuge → patroller/refuge; catches: 4 → 3; stages: 3 → 2. 0 solid cells differ from classic-operation-summit-coordination; this mission asks: Select a patrol route through the reclaimed machine court.",
@@ -9530,7 +9530,7 @@
           7,
           5
         ],
-        "floor": "terraces",
+        "floor": "authored",
         "light": "morning"
       },
       "differenceFromPrevious": "walls: 4 → 13; families: patroller/refuge → eroder/refuge/runner; gates: 0 → 1. 13 solid cells differ from classic-operation-citadel-dispatch; this mission asks: A held door and an eroded notch offer two different short routes.",
@@ -9572,7 +9572,7 @@
           8,
           8
         ],
-        "floor": "terraces",
+        "floor": "authored",
         "light": "morning"
       },
       "differenceFromPrevious": "walls: 13 → 28; families: eroder/refuge/runner → jammer/relay/refuge/runner; catches: 3 → 4; stages: 2 → 3; cargo: 2 → 0; gates: 1 → 0. 26 solid cells differ from classic-operation-stone-cable; this mission asks: Broadcast and a relay core divide the approach.",
@@ -9614,7 +9614,7 @@
           15,
           10
         ],
-        "floor": "terraces",
+        "floor": "authored",
         "light": "late"
       },
       "differenceFromPrevious": "walls: 28 → 12; families: jammer/relay/refuge/runner → guard/runner/lane/brace; cargo: 0 → 2. 5 solid cells differ from classic-operation-citadel-reception; this mission asks: A projectile guard and lane own different approaches to the terrace.",
@@ -9656,7 +9656,7 @@
           15,
           11
         ],
-        "floor": "terraces",
+        "floor": "authored",
         "light": "late"
       },
       "differenceFromPrevious": "walls: 12 → 26; families: guard/runner/lane/brace → eroder/ricochet/switchback/runner; wrap: false → true. 22 solid cells differ from classic-operation-furnace-terrace; this mission asks: Wrapping, reflected prey and a changing stone cut create three ways across.",
@@ -9690,7 +9690,7 @@
         ],
         "footprint": null,
         "anchor": null,
-        "floor": "terraces",
+        "floor": "authored",
         "light": "late"
       },
       "differenceFromPrevious": "walls: 26 → 8; families: eroder/ricochet/switchback/runner → patroller/refuge/shield; catches: 4 → 3; stages: 3 → 2; cargo: 2 → 0; gates: 0 → 1; wrap: true → false. 7 solid cells differ from classic-operation-border-citadel; this mission asks: Patrol dispatch and a cable-held side gate are independent.",
@@ -9732,7 +9732,7 @@
           7,
           8
         ],
-        "floor": "terraces",
+        "floor": "authored",
         "light": "night"
       },
       "differenceFromPrevious": "walls: 8 → 22; families: patroller/refuge/shield → jammer/shield/refuge/guard/runner; catches: 3 → 5; stages: 2 → 3; cargo: 0 → 3; gates: 1 → 0. 21 solid cells differ from classic-operation-garden-machinery; this mission asks: Each dock completes a different stage: clear a local antenna, flank armor, then carry the last parcel past a guard.",
@@ -9774,7 +9774,7 @@
           17,
           10
         ],
-        "floor": "terraces",
+        "floor": "authored",
         "light": "night"
       },
       "differenceFromPrevious": "walls: 22 → 17; families: jammer/shield/refuge/guard/runner → jammer/refuge/eroder/lane/brace/runner; catches: 5 → 6; cargo: 3 → 2; gates: 0 → 1. 11 solid cells differ from classic-operation-three-court-delivery; this mission asks: Restore reception, deliver across a held door, then choose the last extraction around a warned lane.",

@@ -29,6 +29,18 @@
       max-width: 80ch;
       line-height: 1.5;
     }
+    [hidden] {
+      display: none !important;
+    }
+    select {
+      max-width: 100%;
+    }
+    label {
+      max-width: 100%;
+    }
+    nav.controls {
+      margin-top: 12px;
+    }
     .controls {
       display: flex;
       flex-wrap: wrap;
@@ -97,10 +109,15 @@
       simulation state. This review page does not save progress.
     </p>
     <p>
-      <a href="?review=authored">Compare 18 authored compositions across four looks</a> ·
+      <a href="?review=authored">Compare the authored catalogue across four looks</a> ·
       <a href="?">Representative gameplay states</a>
     </p>
     <div class="controls">
+      <label id="chapter-control" hidden
+        >Chapter<select id="chapter">
+          <option value="all">All chapters</option>
+        </select></label
+      >
       <label
         >Look<select id="look">
           <option value="all">All four looks</option>
@@ -127,7 +144,12 @@
       <button id="benchmark">Measure redraw cost</button>
       <button id="frameBenchmark">Measure frame intervals</button>
     </div>
-    <p id="status" role="status">Loading the verified jammer recording…</p>
+    <nav class="controls" id="page-controls" aria-label="Comparison pages" hidden>
+      <button id="previous">Previous missions</button>
+      <span id="page-summary" aria-live="polite"></span>
+      <button id="next">Next missions</button>
+    </nav>
+    <p id="status" role="status">Loading the comparison…</p>
     <section id="boards" aria-label="World comparison"></section>
     <script type="module" src="./snake-world-gallery.mjs?review=tactical-remaster-1"></script>
   </main>
