@@ -3,6 +3,11 @@
  * exclusively in the raw native-state digest. No number is rounded or tolerated.
  * Changing the observations below requires a successor contract version. */
 export const LOCAL_TERMINAL_OBSERVATIONS = 'revealline-capture-terminal-observations.v1';
+export const EXPEDITION_TERMINAL_OBSERVATIONS = 'revealline-capture-terminal-observations.v2';
+export const localTerminalObservationContract = (mode, state) =>
+  mode === 'team' && state.ruleset === 'revealline-coop.v17'
+    ? EXPEDITION_TERMINAL_OBSERVATIONS
+    : LOCAL_TERMINAL_OBSERVATIONS;
 
 // Deliberately pinned here, not collected from the engine's evolving registry.
 // A new native generation needs an explicit observation-contract review.
@@ -39,6 +44,7 @@ const supportedRulesets = Object.freeze({
     'revealline-coop.v14',
     'revealline-coop.v15',
     'revealline-coop.v16',
+    'revealline-coop.v17',
   ]),
 });
 
@@ -300,6 +306,26 @@ function teamBoard(run) {
     powerups: rows(run.bonuses?.items, ['id', 'kind', 'collectedTick']),
     timedBonuses: bonuses(run.bonuses?.timed),
     effects: run.bonuses?.effects ?? null,
+    ...(run.environment
+      ? {
+          environment: {
+            ...pick(run.environment, ['version', 'stage', 'patrolTick']),
+            protected: cells(run.environment.protected),
+            relays: rows(run.environment.relays, ['id', 'open']),
+            emitters: rows(run.environment.emitters, [
+              'id',
+              'phase',
+              'until',
+              'target',
+              'line',
+              'cutId',
+              'disabled',
+            ]),
+            erosion: rows(run.environment.erosion, ['id', 'until', 'warning', 'disabled']),
+            patrols: rows(run.environment.patrols, ['id', 'offset', 'clockwise']),
+          },
+        }
+      : {}),
   };
 }
 
@@ -308,7 +334,7 @@ function teamBoard(run) {
 export function localTerminalObservations(mode, state) {
   assertLocalTerminalObservationSupport(mode, state);
   return {
-    contract: LOCAL_TERMINAL_OBSERVATIONS,
+    contract: localTerminalObservationContract(mode, state),
     mode,
     ...(mode === 'versus'
       ? {
