@@ -177,6 +177,7 @@ test('other Team runtime paths retain the navigation gate', () => {
   const plan = focusedTestPlan(['game/couch/relay-rescue.mjs'], manifest);
   assert.deepEqual(plan.categories, ['localization', 'player-navigation-team']);
   assert.deepEqual(plan.unknownRuntime, []);
+  assert.equal(plan.commands.find(({ id }) => id === 'player-navigation-team')?.timeoutMs, 1200000);
 });
 
 test('Solo result-continuation coverage runs directly without the unrelated Team navigation bundle', () => {
