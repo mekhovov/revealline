@@ -23,6 +23,7 @@ export const TEAM_CONTENT_ROUTES = Object.freeze(
     { id: 'team-cultural-specialist-originals-1', classification: 'archived' },
     { id: 'team-cultural-specialist-originals-2', classification: 'current' },
     { id: 'team-expedition-v1', classification: 'current' },
+    { id: 'humanoid-hunt-v1', classification: 'current' },
     { id: 'team-timed-originals', classification: 'archived' },
     { id: 'team-window-spatial-1', classification: 'archived' },
     { id: 'team-depot-spatial-1', classification: 'tooling' },
@@ -41,7 +42,8 @@ export const ARCHIVED_CLASSIC_PACK_IDS = Object.freeze([
 export function classifyContent({ family, id, source } = {}) {
   if (family === 'journey') {
     if (!AUTHORED_JOURNEY_ROUTE_IDS.includes(id)) return null;
-    return Object.values(DEFAULT_JOURNEY_ROUTES).includes(id) || id === 'duel-expedition-v1'
+    return Object.values(DEFAULT_JOURNEY_ROUTES).includes(id) ||
+      ['duel-expedition-v1', 'humanoid-hunt-v1'].includes(id)
       ? 'current'
       : 'archived';
   }

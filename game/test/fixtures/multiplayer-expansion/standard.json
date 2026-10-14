@@ -4774,9 +4774,14 @@
       "tunedIdentity": "66c26cda48afa88b",
       "status": "won",
       "coverage": 0.6595838866755201,
-      "tick": 5695,
+      "tick": 5701,
       "closed": [6, 6],
       "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 6
+        },
         {
           "a": null,
           "b": null,
@@ -4888,7 +4893,7 @@
           "ticks": 618
         }
       ],
-      "checkpoint": "ee0f55ac67a57b9369db5a9201583511c13216aee2744c456d05e89019676155"
+      "checkpoint": "6f980a654d54c60b334ee45ac1c0fec3fbe3df094ae0d76d142f648646e5c146"
     },
     {
       "missionId": "team-archive-exchange",
@@ -7813,9 +7818,9 @@
       "authoredIdentity": "7dac782ad88d5067",
       "tunedIdentity": "1c2493e87ad9c63e",
       "status": "won",
-      "coverage": 0.9676695105523125,
-      "tick": 5126,
-      "closed": [7, 4],
+      "coverage": 0.820835204310732,
+      "tick": 4897,
+      "closed": [8, 4],
       "segments": [
         {
           "a": null,
@@ -7853,24 +7858,24 @@
           "ticks": 279
         },
         {
-          "a": "up",
-          "b": null,
-          "ticks": 95
-        },
-        {
           "a": "down",
           "b": null,
-          "ticks": 129
-        },
-        {
-          "a": "left",
-          "b": null,
-          "ticks": 272
+          "ticks": 41
         },
         {
           "a": "right",
           "b": null,
-          "ticks": 639
+          "ticks": 367
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 320
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 136
         },
         {
           "a": null,
@@ -7883,47 +7888,37 @@
           "ticks": 326
         },
         {
+          "a": "down",
+          "b": null,
+          "ticks": 462
+        },
+        {
           "a": null,
-          "b": "left",
-          "ticks": 271
-        },
-        {
-          "a": "up",
-          "b": "left",
-          "ticks": 41
-        },
-        {
-          "a": "up",
-          "b": "right",
-          "ticks": 41
-        },
-        {
-          "a": "up",
           "b": "up",
-          "ticks": 41
+          "ticks": 136
         },
         {
           "a": "up",
-          "b": "down",
-          "ticks": 13
+          "b": null,
+          "ticks": 41
         },
         {
-          "a": null,
-          "b": "down",
-          "ticks": 354
+          "a": "right",
+          "b": null,
+          "ticks": 266
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 211
         },
         {
           "a": "left",
           "b": null,
-          "ticks": 102
-        },
-        {
-          "a": "down",
-          "b": null,
-          "ticks": 469
+          "ticks": 258
         }
       ],
-      "checkpoint": "6edf9b2dc20951a4779e40cc0dfa2705cc6a898ffb6b0fe5d08405e870b10fff"
+      "checkpoint": "2f4fa621e422d5715cf1c2e108f6eadca816c6e8fa1f8290090bd2777972275a"
     },
     {
       "missionId": "team-cross-court-cover",

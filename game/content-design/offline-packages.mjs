@@ -14,6 +14,7 @@ export function authoredPackageId(routeId, mode, packId) {
   // Dedicated current Duel chapters retain independent download consent and
   // never acquire an unsupported Solo entry. Historical route IDs stay intact.
   if (routeId === 'duel-expedition-v1') return mode === 'versus' ? `versus:${packId}` : null;
+  if (routeId === 'humanoid-hunt-v1') return `${mode}:${packId}`;
   if (routeId !== DEFAULT_JOURNEY_ROUTES[mode]) return `archive:journey:${routeId}`;
   const chapter = chapterByPack.get(packId);
   if (chapter) {

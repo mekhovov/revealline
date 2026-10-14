@@ -3,6 +3,7 @@ import { libraryMissionId } from '../game/mission-library/library.mjs';
 import { classicLibrarySources } from '../game/mission-library/classic-source.mjs';
 import { authoredPackageId } from '../game/content-design/offline-packages.mjs';
 import { classifyContent } from '../game/content-design/content-lifecycle.mjs';
+import { teamJourneyLibraryOwner } from '../game/mission-library/team-source.mjs';
 
 const paths = { solo: 'game/', versus: 'game/couch/', team: 'game/couch/relay-rescue.html' };
 const runtimes = (mode) => (mode === 'solo' ? ['shared'] : [`runtime:${mode}`]);
@@ -48,7 +49,7 @@ export function buildOfflineDestinations({ journeys, teamProjects, classicIndex,
                 route.id,
                 [group],
                 libraryMissionId({
-                  owner: `journey:${route.id}`,
+                  owner: team ? teamJourneyLibraryOwner(route.id) : `journey:${route.id}`,
                   edition: route.id,
                   campaign: JSON.stringify(['candidate', pack.id, campaign.id]),
                   mission: missionId,

@@ -1,3 +1,4 @@
+import { supplementalTeamSources } from '../mission-library/supplemental-hunt.mjs';
 import {
   acceptAttemptAppearance,
   restoreAttemptAppearance,
@@ -827,7 +828,8 @@ export function bootCoop({
   let knockdowns = [null, null];
   const cueOverflowAttempts = new WeakSet();
   let cueOverflowRun = null,
-    cueOverflowKey = '';
+    cueOverflowKey = '',
+    cueDetailsOwner = null;
   function updateCueOverflow() {
     const active = !loopStopped && !!run && ['running', 'paused'].includes(run.status),
       overflow = active && hasCoopCueOverflow(painter.cueLayout),
@@ -890,20 +892,28 @@ export function bootCoop({
       loopStopped
     )
       return;
-    openSettings();
+    const owner = openSettings({ opener: $('coop-field-details') });
+    if (!owner || !settingsCurrent(owner) || !settingsDialog.open) return;
     settingsPanels?.select('coop-settings-tab-extras', { drill: true });
     $('coop-help').open = true;
     updateCueOverflow();
     controllerConfirmGuard.requireNeutral();
     const region = $('coop-help-reading');
     region.scrollTop = 0;
-    navigation.beginReading({
+    // The reader belongs to Settings. Its local entry stays inside that modal;
+    // the Settings visit owns the return to the original paused field action.
+    cueDetailsOwner = owner;
+    const entered = navigation.beginReading({
       region,
-      origin: $('coop-field-details'),
+      origin: $('coop-help-read'),
       exit: $('coop-help-reading-done'),
       label: t('interface:fieldDetails'),
       getLabel: () => t('interface:fieldDetails'),
     });
+    if (!entered) {
+      cueDetailsOwner = null;
+      return;
+    }
     region.scrollIntoView({ block: 'nearest', inline: 'nearest', behavior: 'instant' });
   }
   $('coop-field-details').onclick = openCueDetails;
@@ -1540,7 +1550,19 @@ export function bootCoop({
         if (hint.textContent !== message) localizedText(hint, () => message);
       } else menuHint = message;
     },
-    onReadingChange: (state) => reading?.changed(state),
+    onReadingChange: (state, { restoreFocus = false, invalidated = false } = {}) => {
+      reading?.changed(state);
+      if (state || !cueDetailsOwner) return;
+      const owner = cueDetailsOwner;
+      cueDetailsOwner = null;
+      if (
+        restoreFocus &&
+        !invalidated &&
+        settingsCurrent(owner) &&
+        [$('coop-help-reading'), $('coop-help-reading-done')].includes(document.activeElement)
+      )
+        closeSettings();
+    },
   });
   reading = attachControllerReading({
     getNavigation: () => navigation,
@@ -1771,9 +1793,8 @@ export function bootCoop({
       void music.start().then(() => contextualReactions?.prepare());
     }
   }
-  function openSettings({ difficulty = false } = {}) {
+  function openSettings({ difficulty = false, opener = $('coop-settings-open') } = {}) {
     cancelNext();
-    const opener = $('coop-settings-open');
     if (
       disposed ||
       departure ||
@@ -1820,6 +1841,7 @@ export function bootCoop({
       if (visibleAction(target) && settingsCurrent(owner) && document.activeElement === active)
         target.focus({ preventScroll: true });
     }
+    return settingsCurrent(owner) && settingsDialog.open ? owner : null;
   }
   function closeSettings({ restore = true } = {}) {
     if (!settingsDialog.open) return;
@@ -4545,6 +4567,12 @@ export function bootCoop({
   function getTeamLibrary() {
     if (!missionLibrary) {
       missionLibrary = createMissionLibrary();
+      for (const source of supplementalTeamSources({
+        launch: launchRemoteTeamRow,
+        difficulty: libraryDifficulty,
+        activeRouteId: libraryEdition,
+      }))
+        registerTeamSource(source, () => null);
       if (libraryEdition !== 'team-expedition-v1')
         registerTeamSource(
           teamExpeditionLibrarySource({

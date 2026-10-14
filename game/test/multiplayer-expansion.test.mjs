@@ -33,7 +33,9 @@ test('new expeditions appear in Current editions without changing historical cla
   const { themes } = JSON.parse(
     await readFile(new URL('../content-design/themes.json', import.meta.url)),
   );
-  const [source] = duelExpeditionLibrarySources({ themes, launch: () => {} });
+  const source = duelExpeditionLibrarySources({ themes, launch: () => {} }).find(
+    (row) => row.editionId === 'duel-expedition-v1',
+  );
   assert.equal(source.lifecycle, 'current');
   assert.equal(source.entries.length, 72);
 });

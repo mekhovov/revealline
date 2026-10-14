@@ -1,3 +1,4 @@
+import { supplementalDuelSources } from './supplemental-hunt.mjs';
 import {
   createTeamExpansionCandidates,
   createDuelExpansionCandidates,
@@ -80,13 +81,15 @@ export function duelExpeditionLibrarySources({
   difficulty = () => 'standard',
   activeRouteId,
 }) {
-  if (activeRouteId === DUEL_EXPANSION_ROUTE) return [];
+  const supplemental = supplementalDuelSources({ launch, themes, difficulty, activeRouteId });
+  if (activeRouteId === DUEL_EXPANSION_ROUTE) return supplemental;
   const source = createDuelExpansionCandidates();
   const host = createCandidateVersusHost(source, {
     themes,
     corePackIds: source.packs.map((p) => p.id),
   });
   return [
+    ...supplemental,
     journeyLibrarySource({
       editionId: DUEL_EXPANSION_ROUTE,
       edition: 'Duel Expeditions',

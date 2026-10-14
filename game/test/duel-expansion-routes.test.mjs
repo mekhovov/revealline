@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
-import { createHash } from 'node:crypto';
+import { assertExpansionCheckpoint } from './helpers/multiplayer-expansion-checkpoint.mjs';
 import { createDuelExpansionCandidates } from '../content-design/multiplayer-expansion.mjs';
 import { compileContentProject, resolveMission } from '../content-design/project.mjs';
 import { applyGameplayTuning, resolveGameplayTuning } from '../gameplay-tuning.mjs';
@@ -65,11 +65,7 @@ for (const difficulty of ['gentle', 'standard', 'expert'])
               authoritativeCheckpoint(match.runs[1]),
               row.missionId,
             );
-            assert.equal(
-              createHash('sha256').update(JSON.stringify(match)).digest('hex'),
-              row.checkpoint,
-              row.missionId,
-            );
+            assertExpansionCheckpoint('versus', match, row, `duel-${difficulty}-${turnPolicy}`);
           }
         }
       }
@@ -101,6 +97,6 @@ test('an environmental Duel resumes exact continuation and a rematch starts clea
       resumeDuel(match, { preserveContinuation: true });
     }
   }
-  assert.equal(createHash('sha256').update(JSON.stringify(match)).digest('hex'), row.checkpoint);
+  assertExpansionCheckpoint('versus', match, row, 'duel-standard-immediate');
   assert.equal(JSON.stringify(createDuel(level, row.options, protocol)), fresh);
 });
