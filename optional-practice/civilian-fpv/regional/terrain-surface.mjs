@@ -47,12 +47,12 @@ export function createTerrainSurface({ style = 'plain', quality = 'balanced', or
     terrainOrigin: {
       value: new THREE.Vector3(originMm.x / 1000, originMm.y / 1000, originMm.z / 1000),
     },
-    terrainSand: { value: new THREE.Color(0xc7aa7a) },
-    terrainRock: { value: new THREE.Color(0x9c684b) },
-    terrainStratum: { value: new THREE.Color(0xc18b62) },
+    terrainSand: { value: new THREE.Color(0xcab58e) },
+    terrainRock: { value: new THREE.Color(0x9b795c) },
+    terrainStratum: { value: new THREE.Color(0xb69572) },
   };
   material.name = `Canyon sediment · ${quality}`;
-  material.customProgramCacheKey = () => `fpv-terrain-surface-v1-${quality}`;
+  material.customProgramCacheKey = () => `fpv-terrain-surface-v2-${quality}`;
   material.onBeforeCompile = (shader) => {
     Object.assign(shader.uniforms, uniforms);
     shader.vertexShader = shader.vertexShader
@@ -78,18 +78,23 @@ ${quality === 'performance' ? '' : noise}`,
       '#include <color_fragment>',
       `#include <color_fragment>
 vec3 terrainFace = normalize(vTerrainNormal);
-float terrainCliff = smoothstep(0.15, 0.65, 1.0 - abs(terrainFace.y));
-float terrainWave = vTerrainPoint.y * 0.8 + sin(vTerrainPoint.x * 0.015 + vTerrainPoint.z * 0.011) * 0.8;
-float terrainBand = 0.5 + 0.2 * sin(terrainWave) * (1.0 - smoothstep(0.5, 3.0, fwidth(terrainWave)));
-vec3 terrainTint = mix(terrainSand, mix(terrainRock, terrainStratum, terrainBand), terrainCliff);
+float terrainCliff = smoothstep(0.18, 0.72, 1.0 - abs(terrainFace.y));
+// Irregular, broad sediment deposits replace evenly spaced horizontal stripes.
+// Performance keeps the zero-noise-sample path; other tiers reuse their broad sample.
+float terrainDeposit = ${
+        quality === 'performance'
+          ? '0.5 + 0.18 * sin(dot(vTerrainPoint, vec3(0.037, 0.061, 0.023))) + 0.12 * sin(dot(vTerrainPoint, vec3(0.013, -0.027, 0.071)))'
+          : 'terrainNoise(vTerrainPoint * vec3(0.032, 0.115, 0.032))'
+      };
+vec3 terrainSediment = mix(terrainRock, terrainStratum, 0.3 + 0.45 * terrainDeposit);
+vec3 terrainTint = mix(terrainSand, terrainSediment, terrainCliff);
 ${
   quality === 'performance'
     ? ''
     : `
-float terrainBroad = terrainNoise(vTerrainPoint * 0.075);
 float terrainNear = 1.0 - smoothstep(0.03, 0.5, length(fwidth(vTerrainPoint)));
 float terrainGrain = terrainNoise(vTerrainPoint * 2.5) - 0.5;
-terrainTint *= 0.88 + 0.24 * terrainBroad + terrainGrain * terrainNear * 0.15;
+terrainTint *= 0.94 + 0.12 * terrainDeposit + terrainGrain * terrainNear * 0.12;
 ${quality === 'quality' ? 'terrainTint *= 1.0 + (terrainNoise(vTerrainPoint * 7.0) - 0.5) * terrainNear * 0.09;' : ''}`
 }
 diffuseColor.rgb *= terrainTint;`,
