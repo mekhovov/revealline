@@ -23,6 +23,7 @@ export function installOptionalLauncher(
         'Open the available version, then choose Prepare offline. Your existing version stays available.',
       error: 'This version is unavailable. Previously prepared practice remains available.',
       offline: 'Ready offline',
+      checking: 'Checking prepared versions…',
       repair:
         'Needs repair: a saved installation has missing files or no owning worker. Remove this offline copy, then download it again.',
       available: 'Available online. Choose Download for offline use to prepare this version.',
@@ -51,6 +52,7 @@ export function installOptionalLauncher(
         'Відкрийте доступну версію та виберіть підготовку офлайн. Попередня версія залишається доступною.',
       error: 'Ця версія недоступна. Раніше підготовлена практика залишається доступною.',
       offline: 'Готово офлайн',
+      checking: 'Перевірка підготовлених версій…',
       repair:
         'Потрібне відновлення: у збереженій версії бракує файлів або власного воркера. Видаліть цю офлайн-копію, потім завантажте її знову.',
       available:
@@ -144,12 +146,18 @@ export function installOptionalLauncher(
   }
   const validate = (value) =>
     validateOptionalInstallationReference(value, { packageId, root, baseURL: location.href });
+  let restoreRevision = 0;
   async function restore() {
-    prepared = null;
-    repairReference = null;
-    $('open').hidden = true;
-    $('previous').hidden = true;
-    stateKey = available ? 'available' : 'status';
+    const revision = ++restoreRevision;
+    let nextPrepared = null,
+      nextRepair = null,
+      nextLauncherReady = false,
+      nextState = available ? 'available' : 'status';
+    const links = new Map();
+    // Keep the last verified actions visible while checking. Publish one complete
+    // result, so a slower older check cannot hide a newer rollback action.
+    stateKey = 'checking';
+    render();
     try {
       const state = JSON.parse(
         localStorage.getItem(optionalInstallationKey(packageId, root)) ?? '{}',
@@ -164,23 +172,35 @@ export function installOptionalLauncher(
             new URL('./', new URL(value.entry, value.scope)),
           );
           if (!ready) {
-            stateKey = 'repair';
-            repairReference ??= value;
+            nextState = 'repair';
+            nextRepair ??= value;
             continue;
           }
           if (key === 'active') {
-            prepared = value;
-            stateKey = 'offline';
+            nextPrepared = value;
+            nextState = 'offline';
           }
-          $(element).href = entryURL(value);
-          $(element).hidden = false;
+          links.set(element, entryURL(value));
         }
     } catch {
-      /* Bad storage leaves all launch actions hidden. */
+      // An incomplete verification cannot advertise a newly prepared version.
+      nextPrepared = null;
+      links.clear();
+      nextState = 'error';
     }
-    if (prepared) {
-      launcherReady = await inspectOptionalOffline?.(new URL('./', location.href));
-      if (!launcherReady) stateKey = 'repair';
+    if (nextPrepared) {
+      nextLauncherReady = await inspectOptionalOffline?.(new URL('./', location.href));
+      if (!nextLauncherReady) nextState = 'repair';
+    }
+    if (revision !== restoreRevision) return;
+    prepared = nextPrepared;
+    repairReference = nextRepair;
+    launcherReady = nextLauncherReady;
+    stateKey = nextState;
+    for (const element of ['open', 'previous']) {
+      const href = links.get(element);
+      if (href) $(element).href = href;
+      $(element).hidden = !href;
     }
     render();
   }
@@ -190,6 +210,7 @@ export function installOptionalLauncher(
     render();
   };
   let busy = false,
+    checking = false,
     activeRequest = null,
     hidden = false;
   globalThis.addEventListener?.('pagehide', () => {
@@ -273,13 +294,22 @@ export function installOptionalLauncher(
       $('check').disabled = false;
     }
   };
-  $('check').onclick = async () => {
-    await restore();
-    return check(false);
+  const refresh = async (play = false) => {
+    if (busy || checking) return;
+    checking = true;
+    $('check').disabled = true;
+    try {
+      await restore();
+      await check(play);
+    } finally {
+      checking = false;
+      $('check').disabled = false;
+    }
   };
+  $('check').onclick = () => refresh(false);
   if ($('download'))
     $('download').onclick = async () => {
-      if (!available || busy) return;
+      if (!available || busy || checking) return;
       busy = true;
       $('download').disabled = true;
       try {
@@ -299,7 +329,7 @@ export function installOptionalLauncher(
   if ($('remove'))
     $('remove').onclick = async () => {
       const value = repairReference ?? prepared;
-      if (!value || busy) return;
+      if (!value || busy || checking) return;
       busy = true;
       try {
         await removeOptionalOffline({ packageId, location: { href: entryURL(value) } });
@@ -333,11 +363,7 @@ export function installOptionalLauncher(
   render();
   mountPracticeNavigation?.();
   // Unknown query parameters cannot select a route or arm a flight.
-  return restore().then(() => {
-    if (query.get('action') === 'play') {
-      globalThis.history?.replaceState(null, '', '?lang=' + locale);
-      return check(true);
-    }
-    return check(false);
-  });
+  const play = query.get('action') === 'play';
+  if (play) globalThis.history?.replaceState(null, '', '?lang=' + locale);
+  return refresh(play);
 }

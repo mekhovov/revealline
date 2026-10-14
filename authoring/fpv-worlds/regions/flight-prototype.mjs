@@ -13,7 +13,7 @@ import {
   validateRegionManifest,
   createRegionPlanner,
 } from "./region-manifest.mjs";
-import { createVerifiedTerrainWindow } from "./verified-terrain-window.mjs";
+import { createVerifiedFlightGeometry } from "./verified-flight-geometry.mjs";
 
 const AXES = ["x", "y", "z"],
   RADIUS = 220;
@@ -36,6 +36,7 @@ function candidateStep(state, command, mode, rates) {
 export function createRegionalFlightPrototype({
   manifest: input,
   source,
+  geometryProfile = "terrain-v1",
   spawnId,
   mode = "self-level",
   response = DEFAULT_RESPONSE,
@@ -51,7 +52,7 @@ export function createRegionalFlightPrototype({
     (item) => item.id === (spawnId ?? manifest.spawns[0].id),
   );
   fail(spawn, "Unknown region spawn");
-  const terrain = createVerifiedTerrainWindow(manifest, source),
+  const terrain = createVerifiedFlightGeometry(manifest, { profile: geometryProfile, source }),
     root = new THREE.Group(),
     dronePose = new THREE.Object3D(),
     cameraAnchor = new THREE.Object3D();
@@ -99,6 +100,7 @@ export function createRegionalFlightPrototype({
     ),
     pendingTargetMm: pendingTarget && { ...pendingTarget },
     terrain: terrain.snapshot(),
+    geometryProfile,
     model: "regional-authoring-flight-prototype.v1",
     unscored: true,
     playerReady: false,

@@ -7,6 +7,7 @@ import {
 import { createRegionSourceWindow } from "./source-window.mjs";
 import { compileTerrainCell, validateTerrainCell } from "./terrain-cell.mjs";
 import { prepareTerrainWindow } from "./terrain-admission.mjs";
+import { validateTerrainSurface } from "./terrain-surface.mjs";
 
 const GEOMETRY_BYTES_PER_CELL = 1089 * 3 * 4 * 2 + 32 * 32 * 6 * 4;
 const fail = (condition, message) => {
@@ -29,10 +30,13 @@ export function createVerifiedTerrainWindow(
     concurrency = 2,
     timeoutMs = 120000,
     maxGeometryBytes = 2 * 1024 * 1024,
+    surfaceStyle = "plain",
+    surfaceQuality = "balanced",
   } = {},
 ) {
   const manifest = validateRegionManifest(input),
     planner = createRegionPlanner(manifest);
+  validateTerrainSurface(surfaceStyle, surfaceQuality);
   const assets = new Map(manifest.assets.map((asset) => [asset.id, asset]));
   const chunks = new Map(manifest.chunks.map((chunk) => [chunk.id, chunk]));
   fail(
@@ -160,6 +164,8 @@ export function createVerifiedTerrainWindow(
         requiredChunkIds: required,
         originMm: plan.origin,
         maxGeometryBytes: requiredBytes,
+        surfaceStyle,
+        surfaceQuality,
       });
       current(token);
       if (supportPose) {
