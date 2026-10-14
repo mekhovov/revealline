@@ -1,3 +1,8 @@
+import {
+  applyFlightSupport,
+  initializeFlightSupport,
+  relativeFlightTilt as relativeTilt,
+} from './flight-support.mjs';
 import { projectContactVelocity } from './flight-contact.mjs';
 import {
   boundedJSON,
@@ -862,18 +867,6 @@ function validateCommand(input) {
   );
   return { ...input, actions: input.actions ?? 0 };
 }
-function relativeTilt(orientation, surfaceNormal) {
-  const up = attitude(orientation).up;
-  const dot = clamp(
-    roundDiv(
-      AXES.reduce((n, k) => n + up[k] * surfaceNormal[k], 0),
-      Q,
-    ),
-    -Q,
-    Q,
-  );
-  return Math.abs(atan2(isqrt(Math.max(0, Q * Q - dot * dot)), dot));
-}
 
 function identityForWorldCourse(source, mode, rates) {
   const contactHunt = huntContact(source, mode);
@@ -1057,8 +1050,7 @@ export function createWorldFlight({
             radius: contactHunt.tail.radius,
           });
       const ground = collision.support(state.position, rules.droneRadius, 5);
-      state.grounded = !!ground && Math.abs(ground.y - state.position.y) <= 5;
-      state.support = state.grounded ? ground : null;
+      initializeFlightSupport(state, ground);
     } catch (error) {
       collision.dispose();
       throw error;
@@ -1405,22 +1397,7 @@ export function createWorldFlight({
       }
     }
     const ground = collision.support(state.position, rules.droneRadius, 60);
-    state.grounded =
-      !!ground &&
-      state.velocity.y <= 0 &&
-      state.position.y - ground.y <= 6 &&
-      state.position.y >= ground.y - 6;
-    state.support = state.grounded ? ground : null;
-    if (state.grounded) {
-      state.position.y = Math.max(state.position.y, ground.y);
-      if (!wasGrounded) {
-        state.landingSpeed = impactSpeed;
-        state.landingTilt = relativeTilt(state.orientation, ground.normal);
-      }
-      state.velocity.y = 0;
-      state.velocity.x = roundDiv(state.velocity.x * 700, 1000);
-      state.velocity.z = roundDiv(state.velocity.z * 700, 1000);
-    }
+    applyFlightSupport(state, ground, wasGrounded, impactSpeed);
     weapons(command, motions, before);
     // Successor contacts are committed only after all native hull damage and
     // projectile impacts. A fatal transaction cannot also award a catch.

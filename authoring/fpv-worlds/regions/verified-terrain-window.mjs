@@ -274,6 +274,12 @@ export function createVerifiedTerrainWindow(
       queue = operation.catch(() => {});
       return operation;
     },
+    flightSupport(...args) {
+      if (disposed) throw new Error("Verified geometry is disposed");
+      return state === "ready"
+        ? committed.flightSupport(...args)
+        : { status: "not-ready" };
+    },
     castMotion(...args) {
       if (disposed) throw new Error("Verified geometry is disposed");
       return state === "ready"
