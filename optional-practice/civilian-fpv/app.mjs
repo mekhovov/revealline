@@ -21,6 +21,7 @@ import { restoreVerifiedRadio } from './radio-session.mjs';
 import { mountRadioSetup } from './radio-setup.mjs';
 import {
   mountFlightFullscreen,
+  mountFlightCameraControls,
   attachSimMissionLibraryChooser,
   createSimMissionLibrary,
   createSimContinuousPlayController,
@@ -166,6 +167,7 @@ export function mountFlightApp({
     lastRadioDiscovery = -Infinity,
     message = null,
     playShell = null,
+    cameraControls = null,
     modeSettingsView = null,
     globalSettingsView = null,
     globalTools = null,
@@ -391,8 +393,8 @@ export function mountFlightApp({
   }
   const gamepadHelp = () =>
     locale === 'uk'
-      ? 'A — увімкнути / продовжити · Y — скинути · Menu / B — пауза. Лівий стік: поворот і зміна газу; правий: нахил. Відпустіть лівий стік, щоб утримувати газ. D-pad — нахил, LB/RB — поворот, LT/RT — менше/більше газу.'
-      : 'A / Cross: arm · Y / Triangle: reset · Menu / B: pause. Left stick: yaw and throttle adjustment; right: tilt. Release the left stick to hold throttle. D-pad: tilt, LB/RB: yaw, LT/RT: less/more throttle. Steam Input: use a Gamepad layout.';
+      ? 'A — увімкнути / продовжити · Y — скинути · Menu / B — пауза · R3 — камера. Лівий стік: поворот і зміна газу; правий: нахил. Відпустіть лівий стік, щоб утримувати газ. D-pad — нахил, LB/RB — поворот, LT/RT — менше/більше газу.'
+      : 'A / Cross: arm · Y / Triangle: reset · Menu / B: pause · R3: camera. Left stick: yaw and throttle adjustment; right: tilt. Release the left stick to hold throttle. D-pad: tilt, LB/RB: yaw, LT/RT: less/more throttle. Steam Input: use a Gamepad layout.';
   function gamepadScope() {
     if (
       replay ||
@@ -439,7 +441,8 @@ export function mountFlightApp({
       } else if (action === 'reset') {
         setFlightMenu(false);
         reset();
-      } else if (action === 'pause' || action === 'back') setFlightMenu(true);
+      } else if (action === 'camera') cameraControls?.cycle();
+      else if (action === 'pause' || action === 'back') setFlightMenu(true);
     }
   }
   const radio = createRadioRuntime({
@@ -987,6 +990,7 @@ export function mountFlightApp({
       $('academy-controller-hint').textContent = gamepadHelp();
       $('academy-controller-hint').hidden = input.owner() !== 'controller';
     }
+    cameraControls?.refresh();
     renderer.draw?.(state, {
       cameraMode: $('camera').value || 'fpv',
       cameraFov: Number($('camera-fov').value) || 82,
@@ -2224,6 +2228,26 @@ export function mountFlightApp({
   $('academy-close-options').dataset.settingsBack = '';
   listen($('academy-close-options'), 'click', () => playShell.back());
 
+  cameraControls = mountFlightCameraControls({
+    document: doc,
+    window: win,
+    shell: playShell,
+    select: $('camera'),
+    viewport: $('viewport'),
+    locale: () => locale,
+    available: () =>
+      Boolean(
+        sceneReady &&
+          flight &&
+          !['complete', 'expired', 'destroyed'].includes(flight.snapshot().status),
+      ),
+    canShortcut: () =>
+      !playShell.blocksPlay() &&
+      !modalOpen() &&
+      !flightMenuOpen() &&
+      !immersive.snapshot().toolsOpen,
+  });
+
   // Existing renderer preparation remains asynchronous; Play enters its native
   // disarmed scene, where Arm becomes available as soon as assets are ready.
   reset();
@@ -2275,6 +2299,7 @@ export function mountFlightApp({
       missionChooser.destroy();
       missionLibrary.dispose();
       watchMission.onclick = null;
+      cameraControls?.dispose();
       playShell?.dispose();
       menuNavigation.dispose();
       menuHint.remove();
