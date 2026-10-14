@@ -1,6 +1,7 @@
 /** Public-input balance diagnostic. No injected upgrades, movement or healing. */
 import { readFileSync, writeFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
+import { gzipSync } from 'node:zlib';
 import { execFileSync } from 'node:child_process';
 import {
   createOverflightProject,
@@ -243,6 +244,8 @@ const report = {
   ],
   cases,
 };
-const output = process.argv.find((arg) => arg.endsWith('.json'));
-if (output) writeFileSync(output, JSON.stringify(report, null, 2) + '\n');
-else console.log(JSON.stringify(report));
+const output = process.argv.find((arg) => arg.endsWith('.json') || arg.endsWith('.json.gz'));
+if (output) {
+  const bytes = Buffer.from(JSON.stringify(report, null, 2) + '\n');
+  writeFileSync(output, output.endsWith('.gz') ? gzipSync(bytes) : bytes);
+} else console.log(JSON.stringify(report));

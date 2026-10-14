@@ -311,10 +311,10 @@ function finishAssembly(ctx, item, world, custom) {
   const { x, y, width: w, height: h, family } = item;
   const industrial = ['container', 'dispatch', 'shelter', 'receiver', 'pump'].includes(family);
   if (industrial) {
-    // One roof has broad light/shadow planes. Repeating native ribs remain a
-    // quiet construction detail instead of reading as hundreds of tiny crates.
+    // One roof has opaque light/shadow planes. Native modules define the edge;
+    // the interior must read as one structure rather than many tiny crates.
     const roof = family === 'container' ? ['#775344', '#624939'] : ['#6a7769', '#536256'];
-    ctx.globalAlpha = 0.82;
+    ctx.globalAlpha = 1;
     box(ctx, roof[0], x + 5, y + 5, w - 10, h * 0.48 - 5);
     box(ctx, roof[1], x + 5, y + h * 0.48, w - 10, h * 0.52 - 9);
     ctx.globalAlpha = 1;
@@ -340,7 +340,19 @@ function finishAssembly(ctx, item, world, custom) {
       box(ctx, '#7f8468', dx, y + h - 22, 25, 2);
       for (let row = 0; row < 3; row++) box(ctx, '#465044', dx + 3, y + h - 17 + row * 4, 18, 1);
     }
+  } else if (family === 'planter') {
+    // A continuous raised field/shelterbelt, with a few long planted strips.
+    box(ctx, '#434b2e', x + 4, y + 4, w - 8, h - 8);
+    box(ctx, '#646747', x + 5, y + 5, w - 10, 4);
+    box(ctx, '#28362a', x + 5, y + h - 13, w - 10, 8);
+    for (let row = 24; row < h - 20; row += 48) {
+      box(ctx, '#344730', x + 12, y + row + 3, w - 24, 19);
+      box(ctx, '#53633b', x + 12, y + row, w - 24, 13);
+      for (let gap = 100; gap < w - 48; gap += 168) box(ctx, '#434b2e', x + gap, y + row, 14, 22);
+    }
   } else if (family === 'glasshouse') {
+    box(ctx, '#658275', x + 4, y + 4, w - 8, h / 2 - 4);
+    box(ctx, '#4b695a', x + 4, y + h / 2, w - 8, h / 2 - 7);
     // Joined glazing bays have a broken ridge, not a grid of detached mini houses.
     for (let panel = 84; panel < w - 20; panel += 112) {
       box(ctx, '#324a3d', x + panel, y + 4, 3, h - 8);
@@ -352,9 +364,47 @@ function finishAssembly(ctx, item, world, custom) {
       box(ctx, '#708c7b', x + panel + 3, y + h * 0.6 + 3, 9, 3);
     }
   } else if (family === 'terrace') {
+    box(ctx, '#77775d', x + 4, y + 4, w - 8, h - 8);
     for (let row = 26; row < h - 8; row += 56) {
       box(ctx, '#60624f', x + 5, y + row, w - 10, 7);
       box(ctx, world.palette[3], x + 5, y + row, w - 10, 2);
+    }
+    for (let ledge = 72; ledge < w - 36; ledge += 176)
+      box(ctx, '#666a53', x + ledge, y + h * 0.35, 24, 8);
+  } else {
+    // Large equipment uses a quiet plinth and a few recognizable components.
+    // This prevents native modules becoming a carpet of repeated machinery.
+    box(ctx, world.palette[1], x + 4, y + 4, w - 8, h - 8);
+    box(ctx, world.palette[2], x + 8, y + 8, w - 16, 3);
+    const cy = y + Math.floor(h / 2),
+      cx = x + Math.floor(w / 2);
+    if (family === 'floodgate') {
+      box(ctx, '#293f3b', x + 10, y + 20, w - 20, h - 40);
+      box(ctx, '#66766a', x + 12, cy - 9, w - 24, 18);
+      for (let brace = 32; brace < w - 20; brace += 112)
+        box(ctx, '#8c9174', x + brace, y + 14, 8, h - 28);
+    } else if (family === 'reclaimer') {
+      box(ctx, '#3c463a', x + 14, cy - 20, w - 28, 40);
+      box(ctx, '#8c7d51', x + 14, cy - 23, w - 28, 4);
+      box(ctx, '#b19a62', cx - 25, cy - 33, 50, 58);
+      box(ctx, '#50594a', cx - 17, cy - 23, 34, 34);
+      for (let rib = 38; rib < w - 20; rib += 48) box(ctx, '#65705c', x + rib, cy - 14, 3, 28);
+    } else if (family === 'irrigator') {
+      box(ctx, '#213e34', x + 14, cy - 4, w - 28, 12);
+      box(ctx, '#75866a', x + 14, cy - 6, w - 28, 4);
+      for (const at of [0.25, 0.72]) {
+        const px = x + Math.floor(w * at);
+        box(ctx, '#2b4135', px + 3, cy - 19, 27, 42);
+        box(ctx, '#6c7b56', px, cy - 22, 25, 38);
+        box(ctx, '#9aa27a', px + 4, cy - 22, 17, 4);
+      }
+    } else if (family === 'antenna') {
+      box(ctx, '#2b3c35', cx - 29, cy - 28, 58, 56);
+      box(ctx, '#708072', cx - 24, cy - 33, 48, 52);
+      box(ctx, '#a1ac91', cx - 18, cy - 33, 36, 3);
+      box(ctx, '#354c40', cx - 3, y + 16, 6, h - 32);
+      for (const at of [0.25, 0.75]) box(ctx, '#8f9b82', cx - 26, y + h * at, 52, 3);
+      box(ctx, '#71816d', x + 16, cy + 30, w - 32, 3);
     }
   }
 }

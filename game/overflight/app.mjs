@@ -101,6 +101,7 @@ import {
   createOverflightClock,
   createOverflightInputGate,
   createOverflightRendererOwner,
+  createOverflightWorldSourceQueue,
   createOverflightContextGuard,
   overflightPreviewRequest,
   createOverflightReviewPlayback,
@@ -383,10 +384,16 @@ const theme = installThemeHost({
 });
 const artwork = createPresentationHost({ profile: 'board', document: doc });
 const artAbort = new AbortController();
-let artWorldKey = JSON.stringify(overflightWorldImageSlots(compiled.presentation));
+const initialWorldSlots = overflightWorldImageSlots(compiled.presentation);
 const artReady = artwork.load({
   signal: artAbort.signal,
-  worldImageSlots: JSON.parse(artWorldKey),
+  worldImageSlots: initialWorldSlots,
+});
+const worldSources = createOverflightWorldSourceQueue({
+  ready: artReady,
+  initialSlots: initialWorldSlots,
+  load: (worldImageSlots) => artwork.load({ signal: artAbort.signal, worldImageSlots }),
+  current: () => artwork.current(),
 });
 const arcade = createArcadeAdapter({
   reviewRevision: compiled.resources.actorArtRevision,
@@ -669,7 +676,7 @@ function updateHUD() {
     $('hud-cache').title = overflightCacheHint(compiled, getLocale());
   }
   $('hud-level').textContent = `${text('level')} ${run.progression.choices + 1}`;
-  const cooldown = Math.max(0, run.player.boostCooldown ?? 0);
+  const cooldown = Math.max(0, mode.boostRecovery?.(run) ?? run.player.boostCooldown ?? 0);
   touchInput?.updateBoost({ cooldown, readyLabel: text('ready') });
   $('hud-boost').textContent = [
     `${text('boost')} ${cooldown > 0 ? `${cooldown.toFixed(1)}s` : text('ready')}`,
@@ -1029,139 +1036,133 @@ async function prepare({
   if ($('upgrade-dialog').open) $('upgrade-dialog').close();
   showStatus(text('preparing'));
   try {
-    await Promise.all([artReady, theme.ready]);
+    await theme.ready;
     if (retired || ticket !== epoch) return false;
     const nextWorldSlots = overflightWorldImageSlots(nextCompiled.presentation);
-    const nextWorldKey = JSON.stringify(nextWorldSlots);
-    if (nextWorldKey !== artWorldKey) {
-      // A scene switch releases decoded sources from the previous world. The
-      // shared actor/theme inventory keeps the same accepted appearance identity.
-      await artwork.load({ signal: artAbort.signal, worldImageSlots: nextWorldSlots });
+    return await worldSources.use(nextWorldSlots, async (base) => {
       if (retired || ticket !== epoch) return false;
-      artWorldKey = nextWorldKey;
-    }
-    const base = artwork.current();
-    const resolvedTheme = theme.snapshot();
-    const collection = selectedArcadeCollection(theme.effectivePreferences());
-    const cast = castPreferences.snapshot().cast;
-    const selectedCharacter = resolveOverflightCharacter(base, options.characterId);
-    const frozenIdentity = {
-      manifestSha256: base.manifestSha256,
-      presentation: base.source,
-      themeIdentity: resolvedTheme.identity,
-      familyId: resolvedTheme.familyId,
-      familyRevision: resolvedTheme.familyRevision,
-      interfaceId: resolvedTheme.interfaceId,
-      interfaceRevision: resolvedTheme.revision,
-      arcade: collection ? { id: collection.id, revision: collection.revision } : null,
-      actorArtRevision: nextCompiled.resources.actorArtRevision,
-      equipment: nextCompiled.resources.effects,
-      materialStyle: resolvedTheme.materialStyle,
-      materialVariant: resolvedTheme.materialVariant,
-      characterId: selectedCharacter.id,
-      playerSlot: selectedCharacter.playerSlot,
-      cast,
-      visualIdentity: nextCompiled.visualIdentity,
-    };
-    const nextRenderer = await rendererOwner.acquire(JSON.stringify(frozenIdentity), async () => {
-      renderer = null;
-      contextGuard.restore();
-      recoveryPending = false;
-      recoveryUnsupported = false;
-      arcade.clear();
-      characterEntries = [];
-      arcade.setReviewRevision(nextCompiled.resources.actorArtRevision);
-      const snapshot = arcade.resolve(base, collection);
-      characterEntries = prepareOverflightCharacters(snapshot);
-      appearance = {
-        snapshot,
-        playerSlot: frozenIdentity.playerSlot,
-        characterId: frozenIdentity.characterId,
-        theme: resolvedTheme,
-        artRevision: frozenIdentity.actorArtRevision,
-        cast: frozenIdentity.cast,
-        reducedEffects: display.snapshot().effectiveReducedEffects,
-        destruction: encounterDisplay.snapshot(),
-        presentation: nextCompiled.presentation,
-        arena: nextCompiled.arena,
+      const resolvedTheme = theme.snapshot();
+      const collection = selectedArcadeCollection(theme.effectivePreferences());
+      const cast = castPreferences.snapshot().cast;
+      const selectedCharacter = resolveOverflightCharacter(base, options.characterId);
+      const frozenIdentity = {
+        manifestSha256: base.manifestSha256,
+        presentation: base.source,
+        themeIdentity: resolvedTheme.identity,
+        familyId: resolvedTheme.familyId,
+        familyRevision: resolvedTheme.familyRevision,
+        interfaceId: resolvedTheme.interfaceId,
+        interfaceRevision: resolvedTheme.revision,
+        arcade: collection ? { id: collection.id, revision: collection.revision } : null,
+        actorArtRevision: nextCompiled.resources.actorArtRevision,
+        equipment: nextCompiled.resources.effects,
+        materialStyle: resolvedTheme.materialStyle,
+        materialVariant: resolvedTheme.materialVariant,
+        characterId: selectedCharacter.id,
+        playerSlot: selectedCharacter.playerSlot,
+        cast,
+        visualIdentity: nextCompiled.visualIdentity,
       };
-      return createOverflightRenderer({
-        parent: $('render-host'),
-        appearance,
-        presentation: nextCompiled.presentation,
-        arena: nextCompiled.arena,
-        onFrame,
-        onContextLost() {
-          contextGuard.lose();
-          updateRecoveryControl();
-          showStatus(text('renderingLost'));
-        },
-        onContextRestored() {
-          contextGuard.restore();
-          recoveryPending = false;
-          updateRecoveryControl();
-          updateShell();
-          showStatus(text('renderingRestored'));
-        },
-        onError(error) {
-          runtimeFailed = true;
-          rendererOwner.invalidate();
-          pause();
-          showStatus(`${text('runtimeError')} ${error?.message ?? ''}`);
-        },
+      const nextRenderer = await rendererOwner.acquire(JSON.stringify(frozenIdentity), async () => {
+        renderer = null;
+        contextGuard.restore();
+        recoveryPending = false;
+        recoveryUnsupported = false;
+        arcade.clear();
+        characterEntries = [];
+        arcade.setReviewRevision(nextCompiled.resources.actorArtRevision);
+        const snapshot = arcade.resolve(base, collection);
+        characterEntries = prepareOverflightCharacters(snapshot);
+        appearance = {
+          snapshot,
+          playerSlot: frozenIdentity.playerSlot,
+          characterId: frozenIdentity.characterId,
+          theme: resolvedTheme,
+          artRevision: frozenIdentity.actorArtRevision,
+          cast: frozenIdentity.cast,
+          reducedEffects: display.snapshot().effectiveReducedEffects,
+          destruction: encounterDisplay.snapshot(),
+          presentation: nextCompiled.presentation,
+          arena: nextCompiled.arena,
+        };
+        return createOverflightRenderer({
+          parent: $('render-host'),
+          appearance,
+          presentation: nextCompiled.presentation,
+          arena: nextCompiled.arena,
+          onFrame,
+          onContextLost() {
+            contextGuard.lose();
+            updateRecoveryControl();
+            showStatus(text('renderingLost'));
+          },
+          onContextRestored() {
+            contextGuard.restore();
+            recoveryPending = false;
+            updateRecoveryControl();
+            updateShell();
+            showStatus(text('renderingRestored'));
+          },
+          onError(error) {
+            runtimeFailed = true;
+            rendererOwner.invalidate();
+            pause();
+            showStatus(`${text('runtimeError')} ${error?.message ?? ''}`);
+          },
+        });
       });
+      if (retired || ticket !== epoch) return false;
+      renderer = nextRenderer;
+      preparationIdentity = Object.freeze({
+        projectIdentity: nextCompiled.projectIdentity,
+        ...frozenIdentity,
+      });
+      music?.setContext(overflightMusicContext(nextCompiled, frozenIdentity));
+      project = nextProject;
+      compiled = nextCompiled;
+      seed = nextSeed;
+      run = retainedRun ?? mode.createRun(compiled, { seed, ...options, fixture });
+      run.appearance = preparationIdentity;
+      run.review = run.review || studio || review.active() || !!mode.prototype;
+      review.reset();
+      audio.reset();
+      commentator?.reset(run);
+      clock.reset();
+      clock.clearMeasurements();
+      renderer.resetMeasurements?.(benchmarkProtocol);
+      completedMeasurement = null;
+      resourceSamples = [];
+      nextResourceSample = 0;
+      lastPhase = null;
+      offerKey = '';
+      hudBuildKey = null;
+      lastFrame = null;
+      frames = [];
+      simulation = [];
+      longFrames = 0;
+      rawOverflow = 0;
+      clipCaptureUsed = false;
+      rawPages = null;
+      $('raw-metrics').value = '';
+      $('raw-metrics').hidden = true;
+      $('raw-metrics-navigation').hidden = true;
+      preparing = false;
+      refreshCharacters();
+      runtimeFailed = false;
+      showStatus();
+      updateHUD();
+      updateShell();
+      renderer.present(run);
+      refreshOperationView();
+      if (launch) {
+        shell.enterPlay();
+        start({ retainRun: !!retainedRun });
+      } else if (studio || params.has('community')) {
+        shell.open('briefing');
+        if (studio) showStatus(text('previewReady'));
+      }
+      return true;
     });
-    if (retired || ticket !== epoch) return false;
-    renderer = nextRenderer;
-    preparationIdentity = Object.freeze({
-      projectIdentity: nextCompiled.projectIdentity,
-      ...frozenIdentity,
-    });
-    music?.setContext(overflightMusicContext(nextCompiled, frozenIdentity));
-    project = nextProject;
-    compiled = nextCompiled;
-    seed = nextSeed;
-    run = retainedRun ?? mode.createRun(compiled, { seed, ...options, fixture });
-    run.appearance = preparationIdentity;
-    run.review = run.review || studio || review.active() || !!mode.prototype;
-    review.reset();
-    audio.reset();
-    commentator?.reset(run);
-    clock.reset();
-    clock.clearMeasurements();
-    renderer.resetMeasurements?.(benchmarkProtocol);
-    completedMeasurement = null;
-    resourceSamples = [];
-    nextResourceSample = 0;
-    lastPhase = null;
-    offerKey = '';
-    hudBuildKey = null;
-    lastFrame = null;
-    frames = [];
-    simulation = [];
-    longFrames = 0;
-    rawOverflow = 0;
-    clipCaptureUsed = false;
-    rawPages = null;
-    $('raw-metrics').value = '';
-    $('raw-metrics').hidden = true;
-    $('raw-metrics-navigation').hidden = true;
-    preparing = false;
-    refreshCharacters();
-    runtimeFailed = false;
-    showStatus();
-    updateHUD();
-    updateShell();
-    renderer.present(run);
-    refreshOperationView();
-    if (launch) {
-      shell.enterPlay();
-      start();
-    } else if (studio || params.has('community')) {
-      shell.open('briefing');
-      if (studio) showStatus(text('previewReady'));
-    }
-    return true;
   } catch (error) {
     if (ticket !== epoch || retired) return false;
     preparing = false;
@@ -2443,9 +2444,10 @@ async function dispose() {
   void sound.dispose();
   audioPreferences.dispose();
   audioMaster.dispose();
+  artAbort.abort();
+  await worldSources.dispose();
   await rendererOwner.dispose();
   arcade.clear();
-  artAbort.abort();
   artwork.close();
   theme.dispose();
   display.dispose();

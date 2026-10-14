@@ -1,4 +1,4 @@
-import { overflightHuntContactState } from './raid-core.mjs';
+import { overflightHuntContactState, overflightHuntBoostRecovery } from './raid-core.mjs';
 import { overflightTerrainWaypoint } from './terrain.mjs';
 
 const preferences = {
@@ -17,7 +17,8 @@ export function createOverflightHuntReviewPilot({ route = 'objectives', build = 
     previousBoost = false;
   return {
     input(run) {
-      const p = run.player;
+      const p = run.player,
+        boostRecovery = overflightHuntBoostRecovery(run);
       let target = run.enemies.find((enemy) => enemy.active && enemy.id === targetId);
       const packBudget = [50, 120, 180][run.hunt.sector];
       const huntingPacks = route === 'packs' && run.hunt.ordinaryKills < packBudget;
@@ -54,7 +55,7 @@ export function createOverflightHuntReviewPilot({ route = 'objectives', build = 
         state === 'guarded' ||
         state === 'machinery-guarded' ||
         (target.maxArmorSegments &&
-          (target.armorContactLatched || (p.boostCooldown > 0 && p.boostRemaining <= 0)))
+          (target.armorContactLatched || (boostRecovery > 0 && p.boostRemaining <= 0)))
       ) {
         const radius = 92;
         goalX = target.x + Math.cos(outward + 0.5) * radius;
@@ -119,7 +120,7 @@ export function createOverflightHuntReviewPilot({ route = 'objectives', build = 
       const dx = waypoint.x - p.x,
         dy = waypoint.y - p.y,
         length = Math.hypot(dx, dy) || 1;
-      const boost = attack && d < 88 && d > 10 && p.boostCooldown <= 0 && !previousBoost;
+      const boost = attack && d < 88 && d > 10 && boostRecovery <= 0 && !previousBoost;
       previousBoost = boost;
       return { x: dx / length, y: dy / length, boost };
     },
