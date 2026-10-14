@@ -1,0 +1,849 @@
+{
+  "format": "FPVFreeWorldPreparation.v1",
+  "id": "cc0-coaster-park",
+  "title": [
+    "Coaster Practice Park",
+    "Тренувальний парк атракціонів"
+  ],
+  "kit": "coaster-kit",
+  "sourceURL": "https://kenney.nl/assets/coaster-kit",
+  "downloadURL": "https://kenney.nl/media/pages/assets/coaster-kit/546fdc554f-1731487890/kenney_coaster-kit.zip",
+  "archiveSha256": "7723d02e3ea822371e12e14722e72d572fdb0384c1379c1469e0598a371f5c7a",
+  "license": "CC0-1.0",
+  "tool": "@gltf-transform 4.5.1",
+  "modelBytes": 489268,
+  "modelSha256": "be85f6ba51e4bb78e2bb1f18f3925fa9bf8d7b41afaee904baee4d9301a08bed",
+  "packBytes": 1201279,
+  "packSha256": "a0483ee22fabdc190fc65858c458ed4730297a0179f8ede793383775a7568025",
+  "collisionSurfaces": 65,
+  "collisionTriangles": 16730,
+  "validation": {
+    "numErrors": 0,
+    "numWarnings": 0,
+    "numInfos": 0,
+    "numHints": 0,
+    "messages": [],
+    "truncated": false
+  },
+  "placements": [
+    {
+      "model": "Models/GLB format/park-entrance.glb",
+      "sha256": "bddb62f3de0368312809b9351764dc22c963ee4797b15a89a3e16005077eef37",
+      "placement": {
+        "model": "park-entrance",
+        "x": 0,
+        "z": 52,
+        "size": 15,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 4.862236568726222
+    },
+    {
+      "model": "Models/GLB format/path-straight.glb",
+      "sha256": "22c416d5fc46adc99862e93141b9f1315b04d334eb96f640839a235c7c376034",
+      "placement": {
+        "model": "path-straight",
+        "x": 0,
+        "z": -32,
+        "size": 8,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 8
+    },
+    {
+      "model": "Models/GLB format/path-straight.glb",
+      "sha256": "22c416d5fc46adc99862e93141b9f1315b04d334eb96f640839a235c7c376034",
+      "placement": {
+        "model": "path-straight",
+        "x": 0,
+        "z": -24,
+        "size": 8,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 8
+    },
+    {
+      "model": "Models/GLB format/path-straight.glb",
+      "sha256": "22c416d5fc46adc99862e93141b9f1315b04d334eb96f640839a235c7c376034",
+      "placement": {
+        "model": "path-straight",
+        "x": 0,
+        "z": -16,
+        "size": 8,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 8
+    },
+    {
+      "model": "Models/GLB format/path-straight.glb",
+      "sha256": "22c416d5fc46adc99862e93141b9f1315b04d334eb96f640839a235c7c376034",
+      "placement": {
+        "model": "path-straight",
+        "x": 0,
+        "z": -8,
+        "size": 8,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 8
+    },
+    {
+      "model": "Models/GLB format/path-straight.glb",
+      "sha256": "22c416d5fc46adc99862e93141b9f1315b04d334eb96f640839a235c7c376034",
+      "placement": {
+        "model": "path-straight",
+        "x": 0,
+        "z": 0,
+        "size": 8,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 8
+    },
+    {
+      "model": "Models/GLB format/path-straight.glb",
+      "sha256": "22c416d5fc46adc99862e93141b9f1315b04d334eb96f640839a235c7c376034",
+      "placement": {
+        "model": "path-straight",
+        "x": 0,
+        "z": 8,
+        "size": 8,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 8
+    },
+    {
+      "model": "Models/GLB format/path-straight.glb",
+      "sha256": "22c416d5fc46adc99862e93141b9f1315b04d334eb96f640839a235c7c376034",
+      "placement": {
+        "model": "path-straight",
+        "x": 0,
+        "z": 16,
+        "size": 8,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 8
+    },
+    {
+      "model": "Models/GLB format/path-straight.glb",
+      "sha256": "22c416d5fc46adc99862e93141b9f1315b04d334eb96f640839a235c7c376034",
+      "placement": {
+        "model": "path-straight",
+        "x": 0,
+        "z": 24,
+        "size": 8,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 8
+    },
+    {
+      "model": "Models/GLB format/path-straight.glb",
+      "sha256": "22c416d5fc46adc99862e93141b9f1315b04d334eb96f640839a235c7c376034",
+      "placement": {
+        "model": "path-straight",
+        "x": 0,
+        "z": 32,
+        "size": 8,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 8
+    },
+    {
+      "model": "Models/GLB format/path-straight.glb",
+      "sha256": "22c416d5fc46adc99862e93141b9f1315b04d334eb96f640839a235c7c376034",
+      "placement": {
+        "model": "path-straight",
+        "x": -32,
+        "z": 24,
+        "size": 8,
+        "yaw": 90,
+        "y": 0
+      },
+      "scale": 8
+    },
+    {
+      "model": "Models/GLB format/path-straight.glb",
+      "sha256": "22c416d5fc46adc99862e93141b9f1315b04d334eb96f640839a235c7c376034",
+      "placement": {
+        "model": "path-straight",
+        "x": -24,
+        "z": 24,
+        "size": 8,
+        "yaw": 90,
+        "y": 0
+      },
+      "scale": 8
+    },
+    {
+      "model": "Models/GLB format/path-straight.glb",
+      "sha256": "22c416d5fc46adc99862e93141b9f1315b04d334eb96f640839a235c7c376034",
+      "placement": {
+        "model": "path-straight",
+        "x": -16,
+        "z": 24,
+        "size": 8,
+        "yaw": 90,
+        "y": 0
+      },
+      "scale": 8
+    },
+    {
+      "model": "Models/GLB format/path-straight.glb",
+      "sha256": "22c416d5fc46adc99862e93141b9f1315b04d334eb96f640839a235c7c376034",
+      "placement": {
+        "model": "path-straight",
+        "x": -8,
+        "z": 24,
+        "size": 8,
+        "yaw": 90,
+        "y": 0
+      },
+      "scale": 8
+    },
+    {
+      "model": "Models/GLB format/path-straight.glb",
+      "sha256": "22c416d5fc46adc99862e93141b9f1315b04d334eb96f640839a235c7c376034",
+      "placement": {
+        "model": "path-straight",
+        "x": 8,
+        "z": 24,
+        "size": 8,
+        "yaw": 90,
+        "y": 0
+      },
+      "scale": 8
+    },
+    {
+      "model": "Models/GLB format/path-straight.glb",
+      "sha256": "22c416d5fc46adc99862e93141b9f1315b04d334eb96f640839a235c7c376034",
+      "placement": {
+        "model": "path-straight",
+        "x": 16,
+        "z": 24,
+        "size": 8,
+        "yaw": 90,
+        "y": 0
+      },
+      "scale": 8
+    },
+    {
+      "model": "Models/GLB format/path-straight.glb",
+      "sha256": "22c416d5fc46adc99862e93141b9f1315b04d334eb96f640839a235c7c376034",
+      "placement": {
+        "model": "path-straight",
+        "x": 24,
+        "z": 24,
+        "size": 8,
+        "yaw": 90,
+        "y": 0
+      },
+      "scale": 8
+    },
+    {
+      "model": "Models/GLB format/path-straight.glb",
+      "sha256": "22c416d5fc46adc99862e93141b9f1315b04d334eb96f640839a235c7c376034",
+      "placement": {
+        "model": "path-straight",
+        "x": 32,
+        "z": 24,
+        "size": 8,
+        "yaw": 90,
+        "y": 0
+      },
+      "scale": 8
+    },
+    {
+      "model": "Models/GLB format/coaster-steel-looping.glb",
+      "sha256": "7ed4f314f52667281882727553e775e57def1281e8c5746c121ff6f88c7daad0",
+      "placement": {
+        "model": "coaster-steel-looping",
+        "x": -23,
+        "z": -6,
+        "size": 18,
+        "yaw": 90,
+        "y": 0
+      },
+      "scale": 4.506601466992665
+    },
+    {
+      "model": "Models/GLB format/coaster-steel-looping.glb",
+      "sha256": "7ed4f314f52667281882727553e775e57def1281e8c5746c121ff6f88c7daad0",
+      "placement": {
+        "model": "coaster-steel-looping",
+        "x": 23,
+        "z": -6,
+        "size": 18,
+        "yaw": 90,
+        "y": 0
+      },
+      "scale": 4.506601466992665
+    },
+    {
+      "model": "Models/GLB format/coaster-steel-straight.glb",
+      "sha256": "1da423a1a4de2c271cd00352476defc421f2f78c592995ee4394132e44c6c92d",
+      "placement": {
+        "model": "coaster-steel-straight",
+        "x": -46,
+        "z": -42,
+        "size": 16,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 3.999999999999999
+    },
+    {
+      "model": "Models/GLB format/coaster-steel-straight.glb",
+      "sha256": "1da423a1a4de2c271cd00352476defc421f2f78c592995ee4394132e44c6c92d",
+      "placement": {
+        "model": "coaster-steel-straight",
+        "x": -46,
+        "z": -26,
+        "size": 16,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 3.999999999999999
+    },
+    {
+      "model": "Models/GLB format/coaster-steel-straight.glb",
+      "sha256": "1da423a1a4de2c271cd00352476defc421f2f78c592995ee4394132e44c6c92d",
+      "placement": {
+        "model": "coaster-steel-straight",
+        "x": -46,
+        "z": -10,
+        "size": 16,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 3.999999999999999
+    },
+    {
+      "model": "Models/GLB format/coaster-steel-straight.glb",
+      "sha256": "1da423a1a4de2c271cd00352476defc421f2f78c592995ee4394132e44c6c92d",
+      "placement": {
+        "model": "coaster-steel-straight",
+        "x": -46,
+        "z": 6,
+        "size": 16,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 3.999999999999999
+    },
+    {
+      "model": "Models/GLB format/coaster-steel-straight.glb",
+      "sha256": "1da423a1a4de2c271cd00352476defc421f2f78c592995ee4394132e44c6c92d",
+      "placement": {
+        "model": "coaster-steel-straight",
+        "x": -46,
+        "z": 22,
+        "size": 16,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 3.999999999999999
+    },
+    {
+      "model": "Models/GLB format/coaster-steel-straight.glb",
+      "sha256": "1da423a1a4de2c271cd00352476defc421f2f78c592995ee4394132e44c6c92d",
+      "placement": {
+        "model": "coaster-steel-straight",
+        "x": -46,
+        "z": 38,
+        "size": 16,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 3.999999999999999
+    },
+    {
+      "model": "Models/GLB format/coaster-wood-straight-hill-complete.glb",
+      "sha256": "92077da1ee2c51042ec0789390cddc811347fab94674b432fae4752ef5ce64c5",
+      "placement": {
+        "model": "coaster-wood-straight-hill-complete",
+        "x": 41,
+        "z": -18,
+        "size": 26,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 6.5000139475168055
+    },
+    {
+      "model": "Models/GLB format/coaster-flume-straight-hill-complete.glb",
+      "sha256": "2f17e42b3a37151cd738f194da06f00bc30566e42e1c8c2353a6e5425f3927d5",
+      "placement": {
+        "model": "coaster-flume-straight-hill-complete",
+        "x": 41,
+        "z": 18,
+        "size": 26,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 6.499999999999998
+    },
+    {
+      "model": "Models/GLB format/station.glb",
+      "sha256": "da4664334a6fe7b0c693621debf48412f4caf66ad38d12db8d840db6e6894d26",
+      "placement": {
+        "model": "station",
+        "x": -46,
+        "z": 40,
+        "size": 11,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 7.333333333333333
+    },
+    {
+      "model": "Models/GLB format/coaster-train-front.glb",
+      "sha256": "93ba6d909e281ac8ea9071e1f3b7138a6e806c5f829d520dc42125450ea97b39",
+      "placement": {
+        "model": "coaster-train-front",
+        "x": -46,
+        "z": 39,
+        "size": 3,
+        "yaw": 0,
+        "y": 2.2
+      },
+      "scale": 1.9999999205271435
+    },
+    {
+      "model": "Models/GLB format/ride-entrance.glb",
+      "sha256": "17b2228e5a3416357710e41857fac1a9f842ac8dba0727d6e4e713e0bf58de6f",
+      "placement": {
+        "model": "ride-entrance",
+        "x": -35,
+        "z": 39,
+        "size": 6,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 5.741626800808184
+    },
+    {
+      "model": "Models/GLB format/stall-food.glb",
+      "sha256": "c2598eaec07802394740e77b1248066522caf678e8306cf7ab7c53e7b22e4e43",
+      "placement": {
+        "model": "stall-food",
+        "x": -20,
+        "z": 33,
+        "size": 7,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 5.833333101537502
+    },
+    {
+      "model": "Models/GLB format/stall-drinks.glb",
+      "sha256": "8027c20449276162a78ae0288130b5cae113009f7fddcd45712b90b6fb3f769c",
+      "placement": {
+        "model": "stall-drinks",
+        "x": 20,
+        "z": 33,
+        "size": 7,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 5.833333101537502
+    },
+    {
+      "model": "Models/GLB format/stall-information.glb",
+      "sha256": "7ca3b85e7f1db524f1469ec261998e58d8a317dd92ad467569c7595ff6b2a486",
+      "placement": {
+        "model": "stall-information",
+        "x": -18,
+        "z": 48,
+        "size": 6,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 5.217391142097002
+    },
+    {
+      "model": "Models/GLB format/stall-toilets.glb",
+      "sha256": "7c06bc0d9d4a2823089d093679d2d988930eac92fb07f4255fc922d423b6ba3f",
+      "placement": {
+        "model": "stall-toilets",
+        "x": 18,
+        "z": 48,
+        "size": 6,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 5.660377664046611
+    },
+    {
+      "model": "Models/GLB format/tree-large.glb",
+      "sha256": "e6572eb6e14b404da88909b854734d991878ef278cead6ffd0afa852a4a6d59e",
+      "placement": {
+        "model": "tree-large",
+        "x": -64,
+        "z": -58,
+        "size": 6,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 6.8376073206328
+    },
+    {
+      "model": "Models/GLB format/tree-large.glb",
+      "sha256": "e6572eb6e14b404da88909b854734d991878ef278cead6ffd0afa852a4a6d59e",
+      "placement": {
+        "model": "tree-large",
+        "x": 64,
+        "z": -58,
+        "size": 6,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 6.8376073206328
+    },
+    {
+      "model": "Models/GLB format/tree-large.glb",
+      "sha256": "e6572eb6e14b404da88909b854734d991878ef278cead6ffd0afa852a4a6d59e",
+      "placement": {
+        "model": "tree-large",
+        "x": -64,
+        "z": -38,
+        "size": 6,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 6.8376073206328
+    },
+    {
+      "model": "Models/GLB format/tree-large.glb",
+      "sha256": "e6572eb6e14b404da88909b854734d991878ef278cead6ffd0afa852a4a6d59e",
+      "placement": {
+        "model": "tree-large",
+        "x": 64,
+        "z": -38,
+        "size": 6,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 6.8376073206328
+    },
+    {
+      "model": "Models/GLB format/tree-large.glb",
+      "sha256": "e6572eb6e14b404da88909b854734d991878ef278cead6ffd0afa852a4a6d59e",
+      "placement": {
+        "model": "tree-large",
+        "x": -64,
+        "z": -18,
+        "size": 6,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 6.8376073206328
+    },
+    {
+      "model": "Models/GLB format/tree-large.glb",
+      "sha256": "e6572eb6e14b404da88909b854734d991878ef278cead6ffd0afa852a4a6d59e",
+      "placement": {
+        "model": "tree-large",
+        "x": 64,
+        "z": -18,
+        "size": 6,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 6.8376073206328
+    },
+    {
+      "model": "Models/GLB format/tree-large.glb",
+      "sha256": "e6572eb6e14b404da88909b854734d991878ef278cead6ffd0afa852a4a6d59e",
+      "placement": {
+        "model": "tree-large",
+        "x": -64,
+        "z": 2,
+        "size": 6,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 6.8376073206328
+    },
+    {
+      "model": "Models/GLB format/tree-large.glb",
+      "sha256": "e6572eb6e14b404da88909b854734d991878ef278cead6ffd0afa852a4a6d59e",
+      "placement": {
+        "model": "tree-large",
+        "x": 64,
+        "z": 2,
+        "size": 6,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 6.8376073206328
+    },
+    {
+      "model": "Models/GLB format/tree-large.glb",
+      "sha256": "e6572eb6e14b404da88909b854734d991878ef278cead6ffd0afa852a4a6d59e",
+      "placement": {
+        "model": "tree-large",
+        "x": -64,
+        "z": 22,
+        "size": 6,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 6.8376073206328
+    },
+    {
+      "model": "Models/GLB format/tree-large.glb",
+      "sha256": "e6572eb6e14b404da88909b854734d991878ef278cead6ffd0afa852a4a6d59e",
+      "placement": {
+        "model": "tree-large",
+        "x": 64,
+        "z": 22,
+        "size": 6,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 6.8376073206328
+    },
+    {
+      "model": "Models/GLB format/tree-large.glb",
+      "sha256": "e6572eb6e14b404da88909b854734d991878ef278cead6ffd0afa852a4a6d59e",
+      "placement": {
+        "model": "tree-large",
+        "x": -64,
+        "z": 42,
+        "size": 6,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 6.8376073206328
+    },
+    {
+      "model": "Models/GLB format/tree-large.glb",
+      "sha256": "e6572eb6e14b404da88909b854734d991878ef278cead6ffd0afa852a4a6d59e",
+      "placement": {
+        "model": "tree-large",
+        "x": 64,
+        "z": 42,
+        "size": 6,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 6.8376073206328
+    },
+    {
+      "model": "Models/GLB format/tree-large.glb",
+      "sha256": "e6572eb6e14b404da88909b854734d991878ef278cead6ffd0afa852a4a6d59e",
+      "placement": {
+        "model": "tree-large",
+        "x": -64,
+        "z": 62,
+        "size": 6,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 6.8376073206328
+    },
+    {
+      "model": "Models/GLB format/tree-large.glb",
+      "sha256": "e6572eb6e14b404da88909b854734d991878ef278cead6ffd0afa852a4a6d59e",
+      "placement": {
+        "model": "tree-large",
+        "x": 64,
+        "z": 62,
+        "size": 6,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 6.8376073206328
+    },
+    {
+      "model": "Models/GLB format/tree.glb",
+      "sha256": "72a75b4a86c99bb39605fc1e658e91f24c8e14d8238cf60e84cf066f3b642792",
+      "placement": {
+        "model": "tree",
+        "x": -44,
+        "z": -61,
+        "size": 5,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 5.847953085917131
+    },
+    {
+      "model": "Models/GLB format/tree.glb",
+      "sha256": "72a75b4a86c99bb39605fc1e658e91f24c8e14d8238cf60e84cf066f3b642792",
+      "placement": {
+        "model": "tree",
+        "x": -22,
+        "z": -61,
+        "size": 5,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 5.847953085917131
+    },
+    {
+      "model": "Models/GLB format/tree.glb",
+      "sha256": "72a75b4a86c99bb39605fc1e658e91f24c8e14d8238cf60e84cf066f3b642792",
+      "placement": {
+        "model": "tree",
+        "x": 0,
+        "z": -61,
+        "size": 5,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 5.847953085917131
+    },
+    {
+      "model": "Models/GLB format/tree.glb",
+      "sha256": "72a75b4a86c99bb39605fc1e658e91f24c8e14d8238cf60e84cf066f3b642792",
+      "placement": {
+        "model": "tree",
+        "x": 22,
+        "z": -61,
+        "size": 5,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 5.847953085917131
+    },
+    {
+      "model": "Models/GLB format/tree.glb",
+      "sha256": "72a75b4a86c99bb39605fc1e658e91f24c8e14d8238cf60e84cf066f3b642792",
+      "placement": {
+        "model": "tree",
+        "x": 44,
+        "z": -61,
+        "size": 5,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 5.847953085917131
+    },
+    {
+      "model": "Models/GLB format/bench.glb",
+      "sha256": "186158dfd2cb41896a71e3bc73263be58458e0291456041861ecb3cb189a8461",
+      "placement": {
+        "model": "bench",
+        "x": -35,
+        "z": 58,
+        "size": 4,
+        "yaw": 180,
+        "y": 0
+      },
+      "scale": 4.999999925494195
+    },
+    {
+      "model": "Models/GLB format/flowers.glb",
+      "sha256": "55b401daea0065be2be7ab85b8a80344991107e6681792dca34e685c49496306",
+      "placement": {
+        "model": "flowers",
+        "x": -35,
+        "z": 62,
+        "size": 4,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 5.091312810896064
+    },
+    {
+      "model": "Models/GLB format/bench.glb",
+      "sha256": "186158dfd2cb41896a71e3bc73263be58458e0291456041861ecb3cb189a8461",
+      "placement": {
+        "model": "bench",
+        "x": -12,
+        "z": 58,
+        "size": 4,
+        "yaw": 180,
+        "y": 0
+      },
+      "scale": 4.999999925494195
+    },
+    {
+      "model": "Models/GLB format/flowers.glb",
+      "sha256": "55b401daea0065be2be7ab85b8a80344991107e6681792dca34e685c49496306",
+      "placement": {
+        "model": "flowers",
+        "x": -12,
+        "z": 62,
+        "size": 4,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 5.091312810896064
+    },
+    {
+      "model": "Models/GLB format/bench.glb",
+      "sha256": "186158dfd2cb41896a71e3bc73263be58458e0291456041861ecb3cb189a8461",
+      "placement": {
+        "model": "bench",
+        "x": 12,
+        "z": 58,
+        "size": 4,
+        "yaw": 180,
+        "y": 0
+      },
+      "scale": 4.999999925494195
+    },
+    {
+      "model": "Models/GLB format/flowers.glb",
+      "sha256": "55b401daea0065be2be7ab85b8a80344991107e6681792dca34e685c49496306",
+      "placement": {
+        "model": "flowers",
+        "x": 12,
+        "z": 62,
+        "size": 4,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 5.091312810896064
+    },
+    {
+      "model": "Models/GLB format/bench.glb",
+      "sha256": "186158dfd2cb41896a71e3bc73263be58458e0291456041861ecb3cb189a8461",
+      "placement": {
+        "model": "bench",
+        "x": 35,
+        "z": 58,
+        "size": 4,
+        "yaw": 180,
+        "y": 0
+      },
+      "scale": 4.999999925494195
+    },
+    {
+      "model": "Models/GLB format/flowers.glb",
+      "sha256": "55b401daea0065be2be7ab85b8a80344991107e6681792dca34e685c49496306",
+      "placement": {
+        "model": "flowers",
+        "x": 35,
+        "z": 62,
+        "size": 4,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 5.091312810896064
+    },
+    {
+      "model": "Models/GLB format/ride-exit.glb",
+      "sha256": "322c26ef60d101a7b2f2d398a9ebeb27ce3a40a7b1657d712644a4d0e5576aad",
+      "placement": {
+        "model": "ride-exit",
+        "x": 35,
+        "z": -40,
+        "size": 6,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 5.741626800808184
+    }
+  ]
+}
