@@ -14,7 +14,7 @@ deployment and public empty-catalogue check passed. No application release is
 selected yet. Independent observer follow-up continues on a new branch.
 
 The Practice branch is rebased onto main
-`caab4312e42d9193faa3a0450aaba015b3c6ae5e`, including merged SIM recovery PR #1193,
+`2abfd20bdee39369b3480ed3013074a8dfac3006`, including merged SIM recovery PR #1193,
 regional authoring PRs #1197/#1200, World Library PR #1199 and Snake acceptance/retry changes. Earlier candidate receipts remain historical,
 bound to their recorded source, rather than being relabelled as this revision.
 The unrelated primary checkout and active SIM worktrees are untouched.
@@ -194,6 +194,10 @@ Do not mark “three playable public apps” done on the strength of local fixtu
 
 ### Latest integration checkpoint
 
+- Final rebase includes merged Coaster catalogue #1209 and World return-focus
+  #1211 at main `2abfd20bd`. Browser receipts below retain their earlier
+  `caab4312e` baseline and exact source hashes; they are not relabelled as the
+  latest runtime or public-release qualification.
 - Integrated main `caab4312e`, including SIM catalogue navigation and the Pages
   deployment concurrency repair, without touching SIM's active worktree. Fixed
   the standalone directory's main-game and guide links to retain EN/UK selection.
