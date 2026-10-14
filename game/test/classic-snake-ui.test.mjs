@@ -28,6 +28,7 @@ import { mountGlobalSettingsTools } from '../ui/global-settings-tools.mjs';
 import { attachInstallOfflinePanel } from '../ui/install-offline-panel.mjs';
 import { menuPad } from './helpers/global-tools-fixture.mjs';
 import { mountGlobalSettings } from '../ui/global-settings-view.mjs';
+import { mountBattlefieldGroundControls } from '../ui/battlefield-ground-controls.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
@@ -285,6 +286,7 @@ async function harness({
     },
     attachModalNavigation,
     mountGlobalSettings,
+    mountBattlefieldGroundControls,
     attachThemeFamilyControls({ root, mountEnemyAppearance }) {
       const group = document.createElement('section');
       group.setAttribute('data-theme-controls', '');
@@ -295,12 +297,6 @@ async function harness({
         locale: () => harnessLocale,
       });
       return { dispose: enemies.dispose };
-    },
-    // The browser host injects this dependency into theme-family controls.
-    // Keep the VM harness boundary complete even though its theme stub does
-    // not mount the battlefield-ground picker.
-    mountBattlefieldGroundControls() {
-      return { refresh() {}, dispose() {} };
     },
     mountGlobalSettingsTools: (options) =>
       (tools = sharedTools
