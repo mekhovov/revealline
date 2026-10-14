@@ -19,6 +19,18 @@ Open `http://127.0.0.1:8877/practice/`. Use a new output directory each time: pr
 
 Preflight reports missing runtime files, missing/empty license inventory, invalid descriptions or translations, missing/oversized previews, exact dependencies, file/byte limits and local readiness to bundle. The bundle command then reproduces artifacts twice and runs independent admission. Neither command invents human review evidence.
 
+Before assembly, use the existing bundle tool's read-only capacity mode:
+
+```sh
+node scripts/bundle-optional-practice.mjs --capacity /absolute/path/capacity-input.json
+```
+
+The [capacity review and input recipe](flight-practice-capacity-review-2026-10-14.md)
+explains how to combine a complete core inspection with current/retained candidate
+manifests and an explicit growth reserve. `cannot-fit` exits 1. A successful
+`requires-exact-build` result only means the lower bound did not exceed the guard;
+it does not replace archive admission or the final complete-site inventory.
+
 ## Register an application
 
 1. Create `optional-practice/<id>/index.html`, a manifest, application modules and `README.md`. Use a stable lowercase hyphenated ID; do not rename an installed app to ship an update. Add instructions, asset sources, copyright/license inventory and support information. Offline preparation must pass that ID to the shared installation service.
@@ -122,5 +134,28 @@ Keep the policy’s historical dependencies while releases using them are retain
 ## Recipe verification and remaining qualification
 
 `node --test scripts/test-bundle-optional-practice.mjs` creates a temporary fourth app with real files and a new registry entry, previews all four cards, verifies its launcher route, admits test-only reviewed artifacts, updates, rolls back and retires it. The fixture is cleaned up and never uploaded or added to the real selector.
+
+For the real-browser companion, provide an existing Playwright installation and
+installed Chrome (not added to the runtime packages):
+
+```sh
+PRACTICE_RECIPE_BROWSER_MODULE=/absolute/path/to/playwright/index.mjs \
+PRACTICE_RECIPE_BROWSER_REPORT=/absolute/new/recipe-browser.json \
+  node --test --test-name-pattern='maintainer recipe' scripts/test-bundle-optional-practice.mjs
+```
+
+It uses an isolated browser and the real builder/publisher output: four-card
+preview, one-Play launch, explicit start/pause/retry, two versions with changed
+bytes, offline preparation, all-tabs-closed offline reopening, rollback and
+retirement retaining immutable URLs. The sample alone has a known test credential;
+it uses the ordinary password form, never changes a real package's access gate.
+The report includes browser, baseline commit, manifest/harness hashes, checkpoints,
+a real screenshot and limitations. Synthetic review records and the cloned Gym
+remain **test fixtures**, not source-bound review evidence for a public app.
+
+The [all-three installation observer](optional-installation-observer.md) instead
+accepts admitted frozen candidates and an authorized test password when required.
+Never substitute a sample-fixture success for a real candidate's failed or blocked
+installation observation. Physical devices and human learning remain separate.
 
 See [verification report](flight-practice-verification.md), [English player guide](flight-practice-player.md) and [український посібник](flight-practice-player.uk.md). Phase 1 is **not complete** until the reviewed apps are actually selected on GitHub Pages and required device/human qualification is recorded.

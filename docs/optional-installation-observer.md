@@ -9,7 +9,7 @@ them, allocate a release or grant review approval.
 node scripts/observe-optional-installation.mjs /absolute/path/to/playwright/index.mjs /absolute/path/to/current-frozen-bundle /tmp/new-installation-observation.json /absolute/path/to/previous-frozen-bundle
 ```
 
-The current bundle must contain both `civilian-flight` and `civilian-fpv`, with a
+The current bundle must contain `civilian-flight`, `civilian-fpv`, and `fpv-worlds`, with a
 `/revealline/` installation base. The optional previous bundle must contain
 `civilian-fpv`. Both candidates must pass normal admission, have different versions,
 commits, trees and FPV archives, and preserve the same stable launcher manifest.
@@ -24,7 +24,7 @@ not collide with either candidate version. They are never published releases.
 
 The observer uses installed Chrome, a temporary persistent browser profile and an
 isolated loopback server with production-style headers. It never opens the user's
-normal browser profile. Both test apps are uninstalled and the temporary profile
+normal browser profile. All three test apps are uninstalled and the temporary profile
 removed on completion. Cleanup failures retain that directory and identify it in
 the receipt instead of hiding the failure.
 
@@ -39,15 +39,49 @@ a human flight, learning achievement or physical-radio compatibility.
 The check covers:
 
 - Distinct manifest identities and coexisting prepared caches/worker scopes.
-- Chrome PWA installation, explicit standalone preference and two launched windows.
-- Offline startup and byte-identical exported flight proofs and profile settings.
+- Chrome PWA installation, explicit standalone preference and three launched windows.
+- Closing **every** tab and installed window before reopening all three stable
+  launchers offline. An uncached network probe must fail before each launch.
+- Reopening three new installed standalone windows while still offline, then
+  reaching each app's mounted start screen through the public launcher action.
+- Offline startup and byte-identical exported FPV flight proofs and profile settings.
 - Installation over the admitted previous candidate or the declared path fixture.
 - A truncated dependency rejected without advancing installation pointers.
 - Removal restoring the previous pointer, offline operation and saved settings.
-- Removing/uninstalling the gym while preserving the FPV registration and proof.
+- Removing/uninstalling the gym while preserving FPV registration/proof and the
+  World Studio installation pointer.
 
-Gameplay offline checks run in the browser tab; the standalone windows verify the
-installed launchers and coexistence. A passing report requires browser preparation,
+Password-gated candidates require an authorized test credential in the
+`OPTIONAL_INSTALLATION_PASSWORD` environment variable. The observer enters it
+through the ordinary unlock form; it never changes admitted files, injects an
+unlock record, or records the password. Missing credentials fail immediately with
+an actionable message. Keep credentials out of command arguments and receipts.
+
+The observer follows the current simulator Settings menus: Academy's Help & Extras,
+Progress & Collection, and Controls; Gym's and World's Content & Offline. Launcher
+transitions verify the exact origin, app/version path and English language query;
+the helper also tests Ukrainian routing. It does not click
+hidden controls or directly invoke application functions. Preparation waits up to
+315 seconds, allowing the application's five-minute overall transfer deadline plus
+status rendering. Ordinary browser operations and protocol/cleanup calls are
+bounded to 30 seconds. The unit regression is
+`node --test scripts/test-optional-installation-observer.mjs`.
+
+The receipt's `closedTabsRelaunch` identifies the zero-surviving-page transition;
+each installed app also records its new `offlineWindow`. This is an offline
+**window** relaunch in the same isolated persistent browser process, not an OS
+reboot or browser-process restart. Those remain separate qualification steps.
+Both observer and helper hashes are recorded and rechecked before declaring a pass.
+
+The October 14 three-app extension has helper/contract regressions, but its first
+source-bound attempt against `8718babd1827383a22596c5a0156b280a594929d`
+stopped at the candidate's password gate without an authorized test credential.
+It completed zero preparation checkpoints and cleaned up its isolated profile.
+This is **not** a passing installation observation. Rerun the command with authorized
+access before treating the new three-app browser journey as qualified.
+
+Gameplay offline checks run in the browser tab; standalone windows additionally
+verify the apps' mounted start screens and coexistence. A passing report requires browser preparation,
 OS installation, standalone windows, no captured page errors, unchanged observer
 source and successful cleanup. Failed assertions preserve completed checkpoints
 and their failure message. A distinct-candidate pass covers the listed changed

@@ -5,6 +5,7 @@ import path from 'node:path';
 import { tmpdir } from 'node:os';
 import { pathToFileURL } from 'node:url';
 import { execFileSync } from 'node:child_process';
+import { pbkdf2Sync } from 'node:crypto';
 import { parse } from 'acorn';
 import { buildOptionalPractice } from './build-optional-practice.mjs';
 import { ICON_MASTER } from './brand-icons.mjs';
@@ -83,6 +84,33 @@ test('maintainer recipe adds a temporary fourth app, launches, updates, rolls ba
       );
     }
   const policyName = 'publishing/optional-package-policy.mjs';
+  // Only the unpublished sample gets a known fixture credential. Exercise the
+  // normal password form; never bypass or alter a real package's access gate.
+  const sampleHTML = 'optional-practice/sample-flight/index.html';
+  const sampleSalt = Buffer.from('unpublished-practice-recipe');
+  const sampleVerifier = pbkdf2Sync(
+    'practice-recipe-fixture-only',
+    sampleSalt,
+    150000,
+    32,
+    'sha256',
+  );
+  selected.set(
+    sampleHTML,
+    Buffer.from(
+      selected
+        .get(sampleHTML)
+        .toString()
+        .replace(
+          /(name="revealline-access-salt"\s+content=")[^"]+/,
+          '$1' + sampleSalt.toString('base64url'),
+        )
+        .replace(
+          /(name="revealline-access-verifier"\s+content=")[^"]+/,
+          '$1' + sampleVerifier.toString('base64url'),
+        ),
+    ),
+  );
   selected.set(
     policyName,
     Buffer.from(
@@ -150,7 +178,21 @@ test('maintainer recipe adds a temporary fourth app, launches, updates, rolls ba
   const { frozenOptionalPackageOverlay: overlay, selectRetainedOptionalPackageRelease: rollback } =
     await localImport('publishing/optional-package-promotion.mjs');
   const previous = await make({ packageId: sampleId, version: 'v1.2.2' });
-  const current = await make({ packageId: sampleId, version: 'v1.2.3' });
+  const sampleReadme = path.join(fixture, 'optional-practice/sample-flight/README.md');
+  await writeFile(
+    sampleReadme,
+    Buffer.concat([
+      await readFile(sampleReadme),
+      Buffer.from('\nUnpublished recipe update: verify changed bytes under the next version.\n'),
+    ]),
+  );
+  const current = await make({
+    packageId: sampleId,
+    version: 'v1.2.3',
+    sourceRevision: 'c'.repeat(40),
+    sourceTree: 'd'.repeat(40),
+  });
+  assert.notEqual(previous.package.distribution.sha256, current.package.distribution.sha256);
   previous.release.activePackageIds = [];
   const selector = {
     format: 'revealline-optional-package-publication.v1',
@@ -184,6 +226,22 @@ test('maintainer recipe adds a temporary fourth app, launches, updates, rolls ba
   );
   assert.deepEqual(JSON.parse(retired.get('practice/index.json')).packages, []);
   assert(!retired.has('practice/sample-flight/app/current.json'));
+  if (process.env.PRACTICE_RECIPE_BROWSER_MODULE) {
+    const { observePracticeRecipe } = await import('./observe-practice-recipe.mjs');
+    await observePracticeRecipe({
+      modulePath: process.env.PRACTICE_RECIPE_BROWSER_MODULE,
+      output: process.env.PRACTICE_RECIPE_BROWSER_REPORT,
+      fixture,
+      preview: path.join(fixture, '.cache/preview'),
+      previous: rolled,
+      current: published,
+      retired,
+      sourceRevision: execFileSync('git', ['rev-parse', 'HEAD'], {
+        cwd: root,
+        encoding: 'utf8',
+      }).trim(),
+    });
+  }
   assert(
     !Object.keys(
       (await import('../publishing/optional-package-policy.mjs')).OPTIONAL_PACKAGE_POLICIES,
