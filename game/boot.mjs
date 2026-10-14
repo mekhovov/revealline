@@ -214,6 +214,7 @@
   async function mount() {
     if (mounted) return;
     await host.RevealLineAccess?.ready;
+    await host.RevealLineAccess?.scriptsReady;
     if (mounted) return;
     mounted = true;
     doc.addEventListener('keydown', keydown);
@@ -280,7 +281,7 @@
   }
   host.RevealLineBoot = Object.freeze({ ready, fail, progress, suspendInput });
   host.addEventListener('error', resourceError, true);
-  if (doc.readyState !== 'complete')
+  if (doc.readyState !== 'complete' && !host.RevealLineAccess?.scriptsReady)
     doc.addEventListener('DOMContentLoaded', mount, { once: true });
   else mount();
 })();
