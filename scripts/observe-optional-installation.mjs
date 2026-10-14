@@ -15,6 +15,7 @@ import {
   closeAllPages,
   unlockObservedPage,
   matchesLaunchedAppURL,
+  revealFPVOffline,
 } from './optional-installation-observer-helpers.mjs';
 
 const [
@@ -204,8 +205,11 @@ try {
   }
   async function prepare(id) {
     const adapter = OBSERVED_PACKAGES[id];
-    await revealControl(id, adapter.panel, id === fpv ? 'extras' : 'content');
-    await page.locator(adapter.panel).click();
+    if (id === fpv) await revealFPVOffline(page, () => clickFPV('#help'));
+    else {
+      await revealControl(id, adapter.panel, 'content');
+      await page.locator(adapter.panel).click();
+    }
     await page.locator(adapter.prepare).click();
     const status = page.locator(adapter.status);
     await status
@@ -463,7 +467,7 @@ try {
   const failureFile = site(fpv, failedFixture) + 'optional-practice/civilian-fpv/README.md';
   await put(failureFile, 'Truncated dependency fixture');
   await open(fpv, failedFixture);
-  await clickFPV('#help');
+  await revealFPVOffline(page, () => clickFPV('#help'));
   await page.locator('#install-offline').click();
   await page
     .locator('#transfer-status')
@@ -475,7 +479,7 @@ try {
   assert.equal(failed.keys[keyFor(worlds)], upgraded.keys[keyFor(worlds)]);
   assert.ok(failed.caches.every((name) => !name.includes('/' + site(fpv, failedFixture))));
   await open(fpv);
-  await clickFPV('#help');
+  await revealFPVOffline(page, () => clickFPV('#help'));
   await page.locator('#remove-offline').click();
   await page
     .locator('#transfer-status')

@@ -31,6 +31,14 @@ export const OBSERVED_PACKAGES = Object.freeze({
 export const TRANSFER_TIMEOUT_MS = 315_000;
 export const OPERATION_TIMEOUT_MS = 30_000;
 
+export async function revealFPVOffline(page, openHelp) {
+  if (!(await page.locator('#help-dialog').isVisible())) await openHelp();
+  const summary = page.locator('summary[data-sim-copy="workshopAndOffline"]');
+  if ((await summary.locator('..').getAttribute('open')) === null) await summary.click();
+  await page.locator('#install-offline').waitFor({ state: 'visible' });
+  await page.locator('#remove-offline').waitFor({ state: 'visible' });
+}
+
 export function matchesLaunchedAppURL(actual, expectedEntry, locale = 'en') {
   if (!['en', 'uk'].includes(locale)) return false;
   const target = new URL(expectedEntry);

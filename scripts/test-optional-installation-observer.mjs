@@ -8,6 +8,7 @@ import {
   closeAllPages,
   unlockObservedPage,
   matchesLaunchedAppURL,
+  revealFPVOffline,
 } from './optional-installation-observer-helpers.mjs';
 
 test('installation observer covers all three public app identities and current offline controls', async () => {
@@ -99,6 +100,57 @@ test('bounded operation returns results, preserves errors, and rejects stalls', 
   await assert.rejects(
     boundedOperation('stalled operation', () => new Promise(() => {}), 5),
     /stalled operation timed out/,
+  );
+});
+
+test('Academy offline controls expand the ordinary closed Workshop disclosure in every offline flow', async () => {
+  const markup = await readFile(
+    new URL('../optional-practice/civilian-fpv/index.html', import.meta.url),
+    'utf8',
+  );
+  const disclosure = markup.match(
+    /<details>\s*<summary data-sim-copy="workshopAndOffline">[\s\S]*?<\/details>/,
+  )?.[0];
+  assert.ok(disclosure, 'Workshop & offline is initially a closed disclosure.');
+  for (const id of ['install-offline', 'remove-offline'])
+    assert.ok(disclosure.includes(`id="${id}"`));
+  let helpOpen = false;
+  let disclosureOpen = false;
+  const clicks = [];
+  const page = {
+    locator: (selector) => ({
+      isVisible: async () => helpOpen,
+      locator: () => ({ getAttribute: async () => (disclosureOpen ? '' : null) }),
+      click: async () => {
+        clicks.push(selector);
+        disclosureOpen = true;
+      },
+      waitFor: async ({ state }) => {
+        assert.equal(state, 'visible');
+        assert.equal(
+          helpOpen && disclosureOpen,
+          true,
+          `${selector} must be reachable through public controls.`,
+        );
+      },
+    }),
+  };
+  const openHelp = async () => {
+    clicks.push('#help');
+    helpOpen = true;
+  };
+  await revealFPVOffline(page, openHelp);
+  assert.deepEqual(clicks, ['#help', 'summary[data-sim-copy="workshopAndOffline"]']);
+  await revealFPVOffline(page, openHelp);
+  assert.equal(clicks.length, 2, 'An already-open disclosure must not be toggled closed.');
+  const observer = await readFile(
+    new URL('./observe-optional-installation.mjs', import.meta.url),
+    'utf8',
+  );
+  assert.equal(
+    observer.match(/await revealFPVOffline\(page, \(\) => clickFPV\('#help'\)\)/g)?.length,
+    3,
+    'Preparation, failed download, and removal share the same public disclosure action.',
   );
 });
 

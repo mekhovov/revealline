@@ -164,6 +164,58 @@ remain mandatory. The trial supports further targeted optimization research;
 it does **not** establish that new hosting is mandatory, nor that recompression
 alone will close the 25–50 MB gap.
 
+### Wider bounded audit: 30 largest hosted PNGs
+
+[Machine-readable receipt](flight-practice-publication-20261014/png-capacity-audit.json)
+records the largest 30 hosted PNGs whose local source hashes match the live
+`f0ccfd37` manifest: **90,551,929 input bytes**, **89,316,017 candidate bytes**,
+and **1,235,912 bytes of measured potential savings**. No paths were missing or
+hash-mismatched in this selection. This completed run used Node zlib level 9 with
+the existing PNG row filters, not a claim about every possible PNG encoder.
+Every candidate was decoded by a bounded RGB/RGBA8 decoder and compared with
+the original pixel bytes; IHDR and every non-IDAT chunk also matched exactly.
+Each input/candidate hash, size, method and pixel/header/metadata check is in the
+receipt. Original bytes are retained whenever recompression would grow a file.
+
+Only four files improved: the three textile-light images saved 436,546,
+396,343 and 371,695 bytes, and `windbreak-weave.png` saved 31,328 bytes. The
+other 26 have no measured saving with this method. Six inspected authoring
+originals also appear as exact downloadable originals in external media
+bundles; their parent/offset pins are included in the receipt. None of the
+authoring-original candidates improved.
+
+The four improving files are still **hash-pinned runtime inputs**, not approved
+generated replacements. In particular, the textile bytes are asserted by
+`game/company-campaigns/curriculum-textile-lighting.mjs`, the edition asset
+catalogue, reward data and a retained edition snapshot. The crosswind asset is
+pinned in authored-content descriptors. Substituting these PNGs under unchanged
+hashes would fail the existing integrity contract. No such substitution was
+made. Even if all four gains were compatibly integrated, this measured set
+would leave **at least 23,898,553 bytes** of the modeled retention shortfall,
+before other hosting overhead or growth margin.
+
+Two earlier native-encoder audit attempts did not complete: FFmpeg intermittently
+stalled and hit its explicit 60-second operation timeout (one after 27 images).
+They produced no completed receipt and no images. The second run was stopped
+after another stall. Native encoding is now an explicit optional diagnostic,
+not a prerequisite for the bounded deterministic audit or its tests. The five
+completed native trials above remain valid separate observations.
+
+Reproduce the default audit without installing native tools:
+
+```sh
+node scripts/audit-practice-png-capacity.mjs --out /absolute/new/png-audit.json
+node --test scripts/test-audit-practice-png-capacity.mjs
+```
+
+An installed, responsive FFmpeg can additionally be exercised with
+`--with-ffmpeg`. That environment-dependent diagnostic is not part of the default
+test suite. The five deterministic tests pass without skips: all five PNG row
+filters in RGB and RGBA, exact alpha/pixels, source non-mutation, ancillary
+metadata preservation, checksum/truncation rejection, unsupported-format
+rejection and bounded audit arguments. A new report path is required; neither
+command writes or overwrites image assets.
+
 ## Repeatable CLI recipe
 
 Run the existing no-write inspector from a clean committed checkout with all

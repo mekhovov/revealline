@@ -60,7 +60,9 @@ an actionable message. Keep credentials out of command arguments and receipts.
 The observer follows the current simulator Settings menus: Academy's Help & Extras,
 Progress & Collection, and Controls; Gym's and World's Content & Offline. Launcher
 transitions verify the exact origin, app/version path and English language query;
-the helper also tests Ukrainian routing. It does not click
+the helper also tests Ukrainian routing. Academy's Workshop & offline disclosure
+is expanded through its summary before preparation, failed-download and removal
+checks. It does not click
 hidden controls or directly invoke application functions. Preparation waits up to
 315 seconds, allowing the application's five-minute overall transfer deadline plus
 status rendering. Ordinary browser operations and protocol/cleanup calls are
