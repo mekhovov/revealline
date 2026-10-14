@@ -1,5 +1,9 @@
 import { boundedJSON, dataIdentity, exactKeys, required } from '../data-json.mjs';
 import { createOverflightTerrainFixture, overflightTerrainOpenPoint } from './terrain.mjs';
+import {
+  createOverflightLayoutPresentation,
+  validateOverflightLayoutPresentation,
+} from './world-layout-presentation.mjs';
 
 export const OVERFLIGHT_WORLD_FORMAT = 'OverflightWorldPresentationV1';
 export const OVERFLIGHT_WORLD_REVISION = 1;
@@ -24,6 +28,27 @@ export const OVERFLIGHT_WORLDS = Object.freeze([
     material: 'damaged',
     palette: ['#202c30', '#303c40', '#46504b', '#667367'],
     signatures: ['brace-standoff', 'tank-support'],
+  }),
+  Object.freeze({
+    id: 'river-port',
+    title: { en: 'River Port', uk: 'Річковий порт' },
+    material: 'timber',
+    palette: ['#243234', '#354442', '#58655c', '#8a8970'],
+    signatures: ['convoy-escort', 'courier-standoff'],
+  }),
+  Object.freeze({
+    id: 'chalk-quarry',
+    title: { en: 'Chalk Quarry', uk: 'Крейдяний кар’єр' },
+    material: 'masonry',
+    palette: ['#3b3c31', '#565846', '#797960', '#a2a084'],
+    signatures: ['crossing-front', 'tank-support'],
+  }),
+  Object.freeze({
+    id: 'orchard-strongpoint',
+    title: { en: 'Orchard Strongpoint', uk: 'Садовий опорний пункт' },
+    material: 'earth',
+    palette: ['#2b3024', '#40462f', '#62683c', '#96824c'],
+    signatures: ['shield-support', 'brace-standoff'],
   }),
 ]);
 const byId = new Map(OVERFLIGHT_WORLDS.map((world) => [world.id, world]));
@@ -51,7 +76,9 @@ const landmark = (id, kind, x, y, width, height) => ({ id, kind, x, y, width, he
 export function createOverflightWorldPresentation(
   world = 'field-crossing',
   arena = { width: 2880, height: 1080 },
+  { layout } = {},
 ) {
+  if (layout) return createOverflightLayoutPresentation(byId.get(world), arena, layout);
   required(byId.has(world), 'Unknown FPV Survivals world.');
   const regions = [],
     landmarks = [];
@@ -96,7 +123,7 @@ export function createOverflightWorldPresentation(
       landmarks.push(
         landmark(`loading-${i}`, 'foundation', 230 + i * 430, 245 + (i % 2) * 405, 100, 75),
       );
-  } else {
+  } else if (world === 'relay-ruins') {
     regions.push(
       rect('west-plaza', 'damaged', 80, 90, 780, 850),
       rect('relay-ground', 'concrete', 1670, 160, 1040, 720),
@@ -117,7 +144,30 @@ export function createOverflightWorldPresentation(
       landmarks.push(landmark(`mast-${i}`, 'antenna', 220 + i * 530, i % 2 ? 1000 : 12, 60, 64));
     for (let i = 0; i < 12; i++)
       landmarks.push(landmark(`debris-${i}`, 'rubble', 95 + i * 231, 360 + (i % 2) * 320, 48, 32));
+  } else {
+    const definition = byId.get(world);
+    regions.push(rect('work-ground', definition.material, 20, 130, 2840, 820));
+    for (let i = 0; i < 12; i++)
+      landmarks.push(
+        landmark(
+          `edge-${i}`,
+          world === 'orchard-strongpoint'
+            ? 'tree'
+            : world === 'river-port'
+              ? 'container'
+              : 'rubble',
+          80 + i * 230,
+          i % 2 ? 1008 : 20,
+          64,
+          48,
+        ),
+      );
+    for (let i = 0; i < 6; i++)
+      landmarks.push(
+        landmark(`court-${i}`, 'foundation', 120 + i * 450, 230 + (i % 2) * 450, 160, 100),
+      );
   }
+
   const fit = (entry) => ({
     ...entry,
     x: Math.round((entry.x * arena.width) / 2880),
@@ -136,6 +186,8 @@ export function createOverflightWorldPresentation(
 }
 
 export function validateOverflightWorldPresentation(source, arena) {
+  if (source?.format === 'OverflightWorldPresentationV2')
+    return validateOverflightLayoutPresentation(source, arena, byId);
   const value = boundedJSON(source, {
     maxBytes: 24 * 1024,
     maxNodes: 1400,
@@ -214,11 +266,19 @@ export function applyOverflightWorld(source, world, { encounters = true } = {}) 
   const project = structuredClone(source),
     definition = byId.get(world);
   required(
-    definition && (project.survivorFormat ?? project.format).endsWith('V3'),
+    definition && /V[34]$/.test(project.survivorFormat ?? project.format),
     'Worlds require current combat rules; upgrade a copy of this project first.',
   );
-  project.presentation = createOverflightWorldPresentation(world, project.arena);
+  project.presentation = createOverflightWorldPresentation(world, project.arena, {
+    layout: project.battlefield,
+  });
   if (!encounters) return project;
+  if ((project.survivorFormat ?? project.format).endsWith('V4')) {
+    // The battlefield's authored deck and routes are authoritative in the new rules.
+    // Never replace their coordinated patterns with the legacy two-pattern loop.
+    project.encounterProfile = `${world}.v2`;
+    return project;
+  }
   project.encounterProfile = `${world}.v1`;
   const raid = project.format.startsWith('OverflightHunt');
   project.id = `${raid ? 'raid' : 'survivor'}-${world}`;
@@ -297,7 +357,7 @@ export function applyOverflightWorld(source, world, { encounters = true } = {}) 
 
 export function validateOverflightEncounterProfile(value) {
   required(
-    OVERFLIGHT_WORLDS.some((world) => `${world.id}.v1` === value),
+    OVERFLIGHT_WORLDS.some((world) => [`${world.id}.v1`, `${world.id}.v2`].includes(value)),
     'Unsupported authored world encounter profile.',
   );
   return value;
