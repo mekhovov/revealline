@@ -10,6 +10,8 @@
   "summary": {
     "runs": 12,
     "missions": 2,
+    "setups": 12,
+    "missingSetups": [],
     "missingMissions": [],
     "flaggedRuns": 8,
     "flaggedMissions": [

@@ -9,7 +9,24 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'planter',
           ambient: 'leaves',
-          floor: 'oval',
+          floor: 'authored',
+          floorPlan: {
+            name: 'nursery-flight-lawn',
+            paths: [
+              [
+                [3, 3],
+                [20, 3],
+                [20, 14],
+                [3, 14],
+                [3, 3],
+              ],
+            ],
+            patches: [
+              [2, 2, 20, 1],
+              [2, 15, 20, 1],
+            ],
+            seal: [5, 6, 'leaf'],
+          },
           focus: [6, 6],
           axis: 'horizontal',
           light: 'morning',
@@ -29,7 +46,29 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'planter',
           ambient: 'leaves',
-          floor: 'oval',
+          floor: 'authored',
+          floorPlan: {
+            name: 'diagonal-glasshouse-courts',
+            paths: [
+              [
+                [5, 3],
+                [11, 3],
+                [11, 7],
+                [5, 7],
+              ],
+              [
+                [12, 11],
+                [18, 11],
+                [18, 15],
+                [12, 15],
+              ],
+            ],
+            patches: [
+              [5, 3, 6, 4],
+              [12, 11, 6, 4],
+            ],
+            seal: [19, 5, 'leaf'],
+          },
           focus: [17, 11],
           axis: 'vertical',
           light: 'morning',
@@ -49,7 +88,25 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'planter',
           ambient: 'leaves',
-          floor: 'oval',
+          floor: 'authored',
+          floorPlan: {
+            name: 'irrigation-service-elbow',
+            paths: [
+              [
+                [3, 7],
+                [8, 7],
+                [8, 4],
+                [14, 4],
+              ],
+              [
+                [14, 4],
+                [14, 13],
+                [19, 13],
+              ],
+            ],
+            patches: [[3, 7, 5, 4]],
+            seal: [17, 6, 'valve'],
+          },
           focus: [11, 8],
           axis: 'horizontal',
           light: 'morning',
@@ -69,7 +126,33 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'planter',
           ambient: 'leaves',
-          floor: 'oval',
+          floor: 'authored',
+          floorPlan: {
+            name: 'staggered-seed-beds',
+            paths: [
+              [
+                [4, 3],
+                [9, 3],
+                [9, 7],
+              ],
+              [
+                [10, 8],
+                [18, 8],
+                [18, 11],
+              ],
+              [
+                [14, 12],
+                [20, 12],
+                [20, 15],
+              ],
+            ],
+            patches: [
+              [4, 3, 5, 4],
+              [10, 8, 8, 3],
+              [14, 12, 6, 3],
+            ],
+            seal: [5, 12, 'leaf'],
+          },
           focus: [16, 5],
           axis: 'vertical',
           light: 'late',
@@ -89,7 +172,27 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'planter',
           ambient: 'leaves',
-          floor: 'oval',
+          floor: 'authored',
+          floorPlan: {
+            name: 'parallel-growing-aisles',
+            paths: [
+              [
+                [7, 3],
+                [7, 13],
+                [4, 13],
+              ],
+              [
+                [17, 5],
+                [17, 15],
+                [20, 15],
+              ],
+            ],
+            patches: [
+              [8, 3, 2, 11],
+              [14, 5, 2, 11],
+            ],
+            seal: [20, 4, 'leaf'],
+          },
           focus: [7, 12],
           axis: 'horizontal',
           light: 'late',
@@ -109,7 +212,31 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'planter',
           ambient: 'leaves',
-          floor: 'oval',
+          floor: 'authored',
+          floorPlan: {
+            name: 'nursery-distribution-hub',
+            paths: [
+              [
+                [4, 7],
+                [9, 7],
+                [9, 11],
+                [15, 11],
+                [15, 8],
+                [20, 8],
+              ],
+              [
+                [9, 11],
+                [9, 16],
+                [15, 16],
+              ],
+            ],
+            patches: [
+              [3, 3, 5, 4],
+              [15, 4, 5, 4],
+              [10, 12, 4, 4],
+            ],
+            seal: [5, 13, 'valve'],
+          },
           focus: [12, 9],
           axis: 'vertical',
           light: 'late',
@@ -129,7 +256,27 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'irrigator',
           ambient: 'water',
-          floor: 'elbow',
+          floor: 'authored',
+          floorPlan: {
+            name: 'canal-turning-court',
+            paths: [
+              [
+                [6, 3],
+                [6, 15],
+                [17, 15],
+              ],
+              [
+                [10, 3],
+                [10, 9],
+                [16, 9],
+              ],
+            ],
+            patches: [
+              [7, 4, 2, 9],
+              [7, 11, 9, 3],
+            ],
+            seal: [19, 12, 'valve'],
+          },
           focus: [6, 6],
           axis: 'horizontal',
           light: 'morning',
@@ -149,7 +296,24 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'irrigator',
           ambient: 'water',
-          floor: 'elbow',
+          floor: 'authored',
+          floorPlan: {
+            name: 'reservoir-return',
+            paths: [
+              [
+                [6, 4],
+                [6, 15],
+                [19, 15],
+                [19, 5],
+              ],
+              [
+                [10, 5],
+                [14, 5],
+              ],
+            ],
+            patches: [[7, 11, 11, 3]],
+            seal: [12, 9, 'valve'],
+          },
           focus: [17, 11],
           axis: 'vertical',
           light: 'morning',
@@ -249,7 +413,24 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'pump',
           ambient: 'water',
-          floor: 'islands',
+          floor: 'authored',
+          floorPlan: {
+            name: 'single-pump-causeway',
+            paths: [
+              [
+                [4, 5],
+                [16, 5],
+                [16, 12],
+                [4, 12],
+              ],
+              [
+                [18, 3],
+                [18, 15],
+              ],
+            ],
+            patches: [[8, 5, 8, 6]],
+            seal: [5, 14, 'tide'],
+          },
           focus: [6, 6],
           axis: 'horizontal',
           light: 'morning',
@@ -269,13 +450,35 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'pump',
           ambient: 'water',
-          floor: 'islands',
+          floor: 'authored',
+          floorPlan: {
+            name: 'twin-floodgate-aprons',
+            paths: [
+              [
+                [4, 3],
+                [12, 3],
+                [12, 7],
+                [4, 7],
+              ],
+              [
+                [12, 10],
+                [20, 10],
+                [20, 15],
+                [12, 15],
+              ],
+            ],
+            patches: [
+              [4, 3, 8, 4],
+              [12, 10, 8, 5],
+            ],
+            seal: [6, 13, 'tide'],
+          },
           focus: [17, 11],
           axis: 'vertical',
           light: 'morning',
           landmark: 'split-islands',
           assembly: {
-            family: 'pump',
+            family: 'floodgate',
             landmark: 'pump-beacon',
             axis: 'vertical',
             focus: [17, 11],
@@ -369,13 +572,30 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'container',
           ambient: 'lamps',
-          floor: 'fork',
+          floor: 'authored',
+          floorPlan: {
+            name: 'dispatch-splitting-yard',
+            paths: [
+              [
+                [3, 8],
+                [10, 8],
+                [15, 3],
+              ],
+              [
+                [10, 8],
+                [15, 14],
+                [21, 14],
+              ],
+            ],
+            patches: [[14, 6, 6, 6]],
+            seal: [5, 4, 'freight'],
+          },
           focus: [6, 6],
           axis: 'horizontal',
           light: 'morning',
           landmark: 'forked-chase',
           assembly: {
-            family: 'container',
+            family: 'dispatch',
             landmark: 'dispatch-cabin',
             axis: 'horizontal',
             focus: [6, 6],
@@ -389,13 +609,31 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'container',
           ambient: 'lamps',
-          floor: 'fork',
+          floor: 'authored',
+          floorPlan: {
+            name: 'parallel-loading-strips',
+            paths: [
+              [
+                [3, 5],
+                [21, 5],
+              ],
+              [
+                [3, 13],
+                [21, 13],
+              ],
+            ],
+            patches: [
+              [3, 4, 18, 2],
+              [3, 12, 18, 2],
+            ],
+            seal: [19, 9, 'freight'],
+          },
           focus: [17, 11],
           axis: 'vertical',
           light: 'morning',
           landmark: 'parallel-paths',
           assembly: {
-            family: 'container',
+            family: 'platform',
             landmark: 'dispatch-cabin',
             axis: 'vertical',
             focus: [17, 11],
@@ -729,7 +967,29 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'coolant',
           ambient: 'fan',
-          floor: 'cross',
+          floor: 'authored',
+          floorPlan: {
+            name: 'opposed-coolant-bays',
+            paths: [
+              [
+                [3, 6],
+                [9, 6],
+                [9, 12],
+                [3, 12],
+              ],
+              [
+                [21, 6],
+                [15, 6],
+                [15, 12],
+                [21, 12],
+              ],
+            ],
+            patches: [
+              [3, 6, 6, 6],
+              [15, 6, 6, 6],
+            ],
+            seal: [12, 4, 'valve'],
+          },
           focus: [6, 6],
           axis: 'horizontal',
           light: 'morning',
@@ -749,13 +1009,30 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'coolant',
           ambient: 'fan',
-          floor: 'cross',
+          floor: 'authored',
+          floorPlan: {
+            name: 'pressure-transfer-court',
+            paths: [
+              [
+                [3, 4],
+                [19, 4],
+                [19, 15],
+              ],
+              [
+                [3, 10],
+                [12, 10],
+                [12, 15],
+              ],
+            ],
+            patches: [[13, 11, 7, 4]],
+            seal: [5, 14, 'valve'],
+          },
           focus: [17, 11],
           axis: 'vertical',
           light: 'morning',
           landmark: 'crossing-schedule',
           assembly: {
-            family: 'coolant',
+            family: 'pressure',
             landmark: 'pressure-gauge',
             axis: 'vertical',
             focus: [17, 11],
@@ -849,13 +1126,30 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'terrace',
           ambient: 'leaves',
-          floor: 'terraces',
+          floor: 'authored',
+          floorPlan: {
+            name: 'excavated-survey-spine',
+            paths: [
+              [
+                [5, 3],
+                [5, 14],
+                [10, 14],
+              ],
+              [
+                [19, 3],
+                [19, 14],
+                [14, 14],
+              ],
+            ],
+            patches: [[10, 6, 4, 5]],
+            seal: [12, 3, 'survey'],
+          },
           focus: [6, 6],
           axis: 'horizontal',
           light: 'morning',
           landmark: 'long-opening',
           assembly: {
-            family: 'terrace',
+            family: 'excavation',
             landmark: 'survey-arch',
             axis: 'horizontal',
             focus: [6, 6],
@@ -869,13 +1163,31 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'terrace',
           ambient: 'leaves',
-          floor: 'terraces',
+          floor: 'authored',
+          floorPlan: {
+            name: 'reclaimed-terrace-fork',
+            paths: [
+              [
+                [3, 13],
+                [9, 13],
+                [9, 7],
+                [13, 7],
+              ],
+              [
+                [9, 13],
+                [19, 13],
+                [19, 8],
+              ],
+            ],
+            patches: [[14, 4, 4, 4]],
+            seal: [5, 4, 'survey'],
+          },
           focus: [17, 11],
           axis: 'vertical',
           light: 'morning',
           landmark: 'fork-and-warning',
           assembly: {
-            family: 'terrace',
+            family: 'reclaimer',
             landmark: 'survey-arch',
             axis: 'vertical',
             focus: [17, 11],
@@ -969,13 +1281,35 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'antenna',
           ambient: 'windsock',
-          floor: 'oval',
+          floor: 'authored',
+          floorPlan: {
+            name: 'receiver-calibration-apron',
+            paths: [
+              [
+                [6, 4],
+                [18, 4],
+                [18, 13],
+                [6, 13],
+                [6, 4],
+              ],
+              [
+                [3, 8],
+                [5, 8],
+              ],
+              [
+                [19, 8],
+                [21, 8],
+              ],
+            ],
+            patches: [[8, 5, 8, 7]],
+            seal: [4, 14, 'signal'],
+          },
           focus: [6, 6],
           axis: 'horizontal',
           light: 'morning',
           landmark: 'oval-intercept',
           assembly: {
-            family: 'antenna',
+            family: 'receiver',
             landmark: 'receiver-dish',
             axis: 'horizontal',
             focus: [6, 6],
@@ -989,13 +1323,32 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'antenna',
           ambient: 'windsock',
-          floor: 'oval',
+          floor: 'authored',
+          floorPlan: {
+            name: 'two-shelter-test-ranges',
+            paths: [
+              [
+                [3, 5],
+                [8, 5],
+                [8, 13],
+                [3, 13],
+              ],
+              [
+                [21, 5],
+                [16, 5],
+                [16, 13],
+                [21, 13],
+              ],
+            ],
+            patches: [[10, 3, 4, 12]],
+            seal: [19, 15, 'signal'],
+          },
           focus: [17, 11],
           axis: 'vertical',
           light: 'morning',
           landmark: 'split-yard',
           assembly: {
-            family: 'antenna',
+            family: 'shelter',
             landmark: 'receiver-dish',
             axis: 'vertical',
             focus: [17, 11],

@@ -1,8 +1,8 @@
 # Tactical remaster catalogue review
 
 The official catalogue remains 240 missions across 35 chapters. All 240 now have
-literal construction-family and focal-assembly descriptors. Eight operation
-missions have changed accepted gameplay recipes; 232 retain their established
+literal construction-family and focal-assembly descriptors. Ten operation
+missions have changed accepted gameplay recipes; 230 retain their established
 gameplay while receiving the shared presentation remaster. No new mission names,
 mirrored layouts or larger quotas are counted as additional content.
 
@@ -17,6 +17,8 @@ mirrored layouts or larger quotas are counted as additional content.
 | Silent Parcel      | The antenna changes posts only during recovery, changing the useful cargo approach without moving a live transmission. |
 | Watch the Aim      | A short guard recovery route prevents repeated camping of one safe flank; the new post receives a fresh warning.       |
 | Freight Flank      | The shield uses the cargo aisle, connecting facing, flanking and loaded turning room.                                  |
+| Pressure Elbow     | A committed east-side runner makes holding the plate shortcut an interception decision.                                |
+| Loaded Excavation  | Recessing the far side of marked stone lets erosion open the promised direct delivery passage.                         |
 | Harvest Rendezvous | A committed cross-aisle sprint connects both deliveries to one readable timing decision.                               |
 
 The first six prototype encounter IDs and their Solo/Team modes are exported from
@@ -46,14 +48,15 @@ identity, and renderers must still clip holes and eroded cells.
 
 ## Verification
 
-- 48 accepted winning journals cover the eight revised missions in Solo and Team
+- 54 accepted winning journals cover the nine tactical revisions in Solo and Team
   at normal, slow and fast pace, level seed 17 and hazard seed 17.
+- Six editorial journals verify Loaded Excavation’s revised geometry across all mode/pace setups.
 - A further 12 journals cover the mobile-jammer mission at hazard seeds 73 and
   2026 across the same six mode/pace combinations.
 - The previous Release A/B fixture verification remains intact. Current-record
   capacity tests substitute remastered journals only for changed official
   recipes; old journals are not silently relabelled as new evidence.
-- Original 144-mission review and proof checks remain intact; the eight new
+- Original 144-mission review and proof checks remain intact; the ten new
   revisions are confined to operation chapters.
 - `review-snake-remaster.mjs --check` checks that the review still corresponds to
   the catalogue. `qualify-snake-remaster.mjs --check` verifies retained journals
@@ -65,7 +68,7 @@ optional comparison feedback; none is reported as completed here.
 
 ## Local trace review
 
-`review-snake-traces.mjs` restores all 60 verified journals through the shared
+`review-snake-traces.mjs` restores all 66 verified tactical journals through the shared
 match `onStep` observer and writes `trace-review.json`. It counts every accepted
 catch, including simultaneous Team catches, without relying on capped recent
 event arrays. Ordinary target movement does not reset the no-change interval;
@@ -77,8 +80,9 @@ an encounter/objective change was 21 moves, or 5,880 ms at slow pace, in Team's
 Watch the Aim route. None crossed the initial review thresholds of three catches
 at one cell with at least 50% concentration, or 24 moves / 6,000 ms without change.
 
-These are review signals only. They cover eight revised missions and one winning
-route per setup, not the other 232 missions or all possible player strategies.
+These are review signals only. This tactical subset covers nine revised missions and one
+winning route per setup. The separate `catalogue-trace-review.md` covers all 240
+missions; neither report samples all possible player strategies.
 A result below the thresholds does not establish that a mission is enjoyable.
 The thresholds are explicit in the report and should be reconsidered when
 observed player behaviour supplies better evidence.

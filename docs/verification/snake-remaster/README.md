@@ -1,6 +1,6 @@
 # Tactical Snake remaster — delivery and evidence
 
-This delivery remasters the existing 240-mission catalogue in place. Eight accepted gameplay recipes change; 232 retain their established gameplay. All 240 receive explicit construction-family and focal-assembly descriptors. Recipe review, automated solvability, browser inspection and player enjoyment are separate forms of evidence.
+This delivery remasters the existing 240-mission catalogue in place. Ten accepted gameplay recipes change; 230 retain their established gameplay. All 240 receive explicit construction-family and focal-assembly descriptors. Recipe review, automated solvability, browser inspection and player enjoyment are separate forms of evidence.
 
 ## Implemented
 
@@ -9,7 +9,7 @@ This delivery remasters the existing 240-mission catalogue in place. Eight accep
 - Lively FPV, Toybox, Atmospheric Ruins and Night Arcade material treatments, alongside Game Theme and Retro Field. Creator-owned wall artwork remains authoritative, including images arriving while paused under interference.
 - Stable enemy silhouettes, compact mobile actors, accepted-heading cues, warning/action/recovery presentation, parcel attachments, matching dock fittings, mechanical switches and load/delivery/erosion reactions. Per-step observations preserve reactions during multi-step frames.
 - Successor v6 tactical commitments for runner/refuge/switchback/pair/sprinter/shield/jammer/guard. Authored routes use adjacent cells and bounded current-position decisions. Mobile jammers and guards move only during recovery. The existing shared hazard scheduler remains authoritative; warnings last at least 800 ms.
-- Eight revised operation missions connect interception to cargo, cable-held gates, wrapping, source interception and flanking. See `catalogue-review.md` for each concrete change and `catalogue-review.json` for all 240 briefs.
+- Nine tactical operation missions connect interception to cargo, cable-held gates, wrapping, source interception and flanking. See `catalogue-review.md` for each concrete change and `catalogue-review.json` for all 240 briefs.
 - Jamming conceals actors and incidental position cues. Movement projection, catches, warnings and relay-opening audio do not reveal hidden enemy direction; required warnings remain audible. Pulse and recovery restore ordinary presentation.
 - A fresh official campaign namespace isolates remastered records and unfinished attempts without deleting old bytes, creator content or other modes. Retired official recipes do not silently restore as current attempts. v6 Continue/replay reproduces committed state and hazard seeds.
 - Compact delivery/source acknowledgements use existing HUD space. Shared entry, pause, selector, touch controls, results, final-eight replay/retry, 5.2-second victory celebration and cancellable five-second auto-next remain owned by the existing host.
@@ -17,10 +17,10 @@ This delivery remasters the existing 240-mission catalogue in place. Eight accep
 
 ## Verification
 
-- Eight changed missions: 48 winning journals across Solo/Team and three paces, plus 12 additional jammer journals for hazard seeds 73 and 2026.
+- Ten changed missions: 54 tactical and six geometry-editorial winning journals across Solo/Team and three paces, plus 12 additional jammer journals for hazard seeds 73 and 2026.
 - The full Snake batch initially passed 325 of 326 tests. Its one creator-art arrival regression was fixed; the complete affected renderer/audio follow-up passed 39 tests.
-- Local traces cover all 60 remaster journals: maximum two catches per cell; longest interval without an encounter/objective/state change 21 moves (5,880 ms). Thresholds are review heuristics, not scores for fun.
-- Expanded trace audit restores 1,260 exact-recipe journals across all 240 missions. Every mission has normal Solo/Team evidence; the 192 non-foundation missions cover all six mode/pace combinations. Twenty-nine new foundation journals fill missing coverage. Twelve additional outlier routes show that the largest quiet intervals are avoidable optional chases, without changing recipes or replacing the retained evidence. See `catalogue-trace-review.md` for limits and grading decisions.
+- The initial local trace pass covered 60 remaster journals: maximum two catches per cell; longest interval without an encounter/objective/state change 21 moves (5,880 ms). Thresholds are review heuristics, not scores for fun.
+- Expanded trace audit restores 1,452 exact-recipe journals across all 240 missions and all 1,440 Solo/Team/pace setups, plus 12 alternate jammer-seed runs. The follow-through adds 192 slow/fast foundation journals to the prior 29 foundation supplements. Twelve additional outlier routes remain separate alternative witnesses. All combinations are covered, but a winning journal is not a fair higher-star threshold. See `catalogue-trace-review.md` for limits and grading decisions.
 - Existing catalogue proof suites remain in place. Current record-capacity test covers 576 operation records, using 2,270,011 bytes against the 24 MiB logical budget.
 - Fresh-session/retired-import host regression suite: 89 passing tests. Tactical engine tests cover committed routes, ignored queued inputs, replay tampering, concurrent outcomes and hazard coordination.
 - Renderer/cache tests cover exact occupied cells, eroded geometry, creator artwork, concealed actors, surface bounds and compact identities. Additional retained render surfaces total approximately 15.11 MiB against the 16 MiB budget.
@@ -32,11 +32,26 @@ This delivery remasters the existing 240-mission catalogue in place. Eight accep
 - After normal production unlock, verified direct Retry and mission activation, shared pause actions, Settings returning to Pause without advancing the attempt, automatic final-eight playback/restart, and cancellation through Pause. At 320×568 and 568×320, Retry/Home remain visible while secondary result details scroll. A normal keyboard playthrough of Open Loop completed eight catches in 93 moves (18.6 seconds), showed celebration with direct Next/Retry actions, then Stay here cancelled progression and opened results with three stars and run/lifetime totals of eight. Next launched Twin Islands in one click and retained the lifetime total. Screenshots named `production-*` document these views. Browser console inspection reported no errors. Exact victory timing remains covered by automated host tests; this wall-clock keyboard route is not a physical-device test.
 - `renderer-comparison.json` records same-browser baseline and remaster redraw measurements. The two-board animation comparison measured 120 frames after warm-up: baseline frame-interval p95 9.90 ms and remaster 9.00 ms; draw-cost p95 10.30 ms and 5.20 ms respectively. These are bounded browser measurements on frozen simulation states, not a claim about all phones, active-match FPS or statistically established speedups.
 
+## Latest quality follow-through
+
+Rebased onto `origin/main` at `0e708a45cb5058fdd0e455a873b559bb4ed0a468` (merged PR #1187). This batch closes concrete gaps without treating automated solvability as a whole-catalogue quality sign-off.
+
+- Snake victories reuse existing localized Engineer/Rival route commentary instead of the Capture Guide's picture-reward lines. The shared reaction provider and generated optional runtime remain canonical; no new audio asset is required.
+- Loaded Excavation's one-cell demolition now opens its promised passage through a two-cell-thick structure: the far side starts recessed. The actual crossing changes from 13 to three moves after the full warning, with the outer bypass and cargo goal preserved.
+- Pressure Elbow keeps its three catches but moves the runner along an explicit committed route beyond the cable-held gate. Both changed missions have all six supported winning journals; predecessor recipes remain archived.
+- A source/trace editorial review records keep/revise decisions for 56 missions: six complete world chapters plus eight shortlisted outliers. This is a bounded editorial review, not 56 observed player sessions; see `editorial-pacing-review.md`.
+- Eighteen literal cosmetic floor compositions cover the opening eight boards and representative adjacent pairs across the other five worlds. Joined foundry and harbor structures replace repeated tiny machinery. The shared gallery exposes 72 board/look comparisons. No collision cells, simulation randomness, or additional retained rendering surfaces are introduced.
+- Browser inspection confirmed opening and world-pair floors at the gallery's 320px-equivalent board size, Toybox material variants, and Night Arcade grayscale/collision views. It found and verified the harbor repetition fix. `quality-authored-mobile-scale.png` and `quality-authored-collision-grayscale.png` retain the evidence. This does not claim a fresh physical-device test or all 72 presentations individually reviewed.
+- The updated 18-board gallery measured 216 synchronous redraw samples per path: uncached median 0.50 ms / p95 0.90 ms, cached median 0.10 ms / p95 0.20 ms. Terrain cache was 3.88 of 4 MiB with three retained boards. This is one desktop run, not sustained gameplay FPS or physical-phone qualification.
+- The new proof coverage exposes 379 quiet-interval signals across 98 missions, with no concentrated-catch flags. The increased count comes from testing additional paces; it is not evidence of 121 newly introduced problems. Flags remain review prompts rather than automatic instructions to shorten a mission.
+
 ## Remaining limits and follow-up priorities
 
-1. **P1: physical-device qualification.** Responsive desktop emulation cannot establish touchscreen ergonomics, physical controller behavior, thermal throttling or low-end phone frame times. Run the existing lab/gallery on representative phones and controllers before claiming those devices qualified. The code does not require another approval screen.
-2. **P2: optional player comparison and pacing feedback.** The previously waived study remains optional. Titles-hidden screenshots and winning proofs do not prove world recognition or fun. In particular, retained missions can still warrant shorter quotas or redesigned routes after observed play; the 240-entry review and 1,260 automated routes are not represented as 240 player-tested encounters.
-3. **P2: compatible higher-star calibration.** Changed recipes retain completion and personal-record behavior. No unverified silver/gold budgets are invented for new tactical or variable-schedule setups.
+1. **P1: continue the editorial chapter review.** The latest detailed keep/revise pass covers 56 missions; 184 still need the same explicit reasoning about interception, travel and recovery. Retain purposeful quiet intervals and fix demonstrated repetition rather than shaving every quota. The 240 briefs and 1,452 journals do not establish 240 enjoyable encounters.
+2. **P1: continue composition quality batches.** Eighteen missions received newly authored route-aligned arrangements in this pass. The other 222 still have the earlier descriptors and can repeat chapter motifs; follow the same comparison process before claiming every board visually distinctive.
+3. **P1: physical-device qualification.** Responsive desktop emulation cannot establish touchscreen ergonomics, physical controller behavior, thermal throttling or low-end phone frame times. Run the existing lab/gallery on representative phones and controllers before claiming those devices qualified. This requires available hardware, not another approval screen.
+4. **P2: compatible higher-star calibration.** Changed recipes retain completion and personal records. Do not turn a single successful solver route into silver/gold limits, particularly for variable hazard schedules. Gather compatible route/pace evidence and publish the criteria first.
+5. **P2: optional player comparison and pacing feedback.** The previously waived study remains optional. Titles-hidden screenshots and winning proofs do not prove world recognition or fun and are not a blocker to independent implementation.
 
 ## Original artwork and safety
 
