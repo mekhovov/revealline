@@ -5433,6 +5433,7 @@ const FLIGHT_HUD_STYLE = `
 @media (forced-colors: active) {
   [data-sim-hud][data-hud-component] { --hud-ink: CanvasText; --hud-muted: CanvasText; --hud-bg: Canvas; --hud-accent: Highlight; forced-color-adjust: auto; }
 }
+[data-sim-hud='flight'][data-hud-component][data-hud-status-only='true'] [data-hud-part='card'] { height: auto; min-height: 32px; grid-template-columns: minmax(0, 1fr); grid-template-rows: auto; }
 `;
 
 /** Observer-only flight feedback, shared by Academy and World Studio. */
@@ -5722,6 +5723,7 @@ export function mountFlightHud({
     if (disposed) return;
     feedback = next;
     context = options;
+    root.dataset.hudStatusOnly = String(options.statusOnly === true);
     // Paused practice can retain guidance, but a covering menu or result owns
     // the screen regardless of the simulation/playback state underneath it.
     root.hidden =
@@ -5744,6 +5746,7 @@ export function mountFlightHud({
     );
     explain.title = t('Objective details', 'Умови завдання');
     gauge.hidden = !g;
+    explain.hidden = options.explain === false;
     if (g) paintGauge(g);
     const e = feedback.earned,
       hasEarned = e && Number.isFinite(e.value) && Number.isFinite(e.total) && e.total > 0,
@@ -5779,6 +5782,7 @@ export function mountFlightHud({
         gaugeCheck,
         allChecks.map((check) => [check.id, copy(check.label), check.met, check.valid]),
       ]);
+    checks.hidden = options.statusOnly === true;
     if (signature !== checkSignature) {
       checks.replaceChildren();
       for (const check of displayed) {
@@ -5804,7 +5808,7 @@ export function mountFlightHud({
       }
       checkSignature = signature;
     }
-    details.hidden = preferences.mode !== 'detailed';
+    details.hidden = options.statusOnly === true || preferences.mode !== 'detailed';
     if (!details.hidden) setText(details, numericLine());
     if (dialog.open) {
       setText(dialogTitle, title);

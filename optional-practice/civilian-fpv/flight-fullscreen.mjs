@@ -677,6 +677,7 @@ export function mountFlightComfort({
   }
   function refresh() {
     if (disposed) return;
+    if (best) best.root.hidden = comparison.visible?.() === false;
     const uk = locale() === 'uk';
     const enabled = canChange();
     const selected =
@@ -853,13 +854,18 @@ export function mountFlightPractice({
       state.section,
       state.fullPractice,
       state.checkpoint,
+      state.regional,
       state.rate,
     ]);
     if (key !== last) {
       last = key;
-      title.textContent = uk ? 'Дивіться → спробуйте → повторіть' : 'Watch → Try → Repeat';
+      title.textContent = state.regional
+        ? uk ? 'Вільний політ у регіоні' : 'Regional free flight'
+        : uk ? 'Дивіться → спробуйте → повторіть' : 'Watch → Try → Repeat';
       description.textContent = state.title;
-      note.textContent = state.replay
+      note.textContent = state.regional
+        ? uk ? 'Повторіть завантаження недоступної ділянки або поверніться на старт. Політ залишиться на паузі до ввімкнення керування.' : 'Retry an unavailable area or return to launch. Flight stays paused until you arm.'
+        : state.replay
         ? uk
           ? 'Записані стіки показують приклад. Спроба почнеться з вимкненими двигунами; увімкніть їх, коли будете готові.'
           : 'Recorded sticks show the example. Trying starts disarmed; Arm when you are ready.'
