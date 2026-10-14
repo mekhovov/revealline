@@ -1022,7 +1022,7 @@ function moveEnemies(run, params) {
           y: escorted.y + enemy.escortOffsetY,
         }
       : enemy.route[enemy.routeIndex];
-    const coordinated = !escorted ? overflightMovementTarget(run, enemy, target) : null;
+    const coordinated = !escorted ? overflightMovementTarget(run, enemy, target, speed) : null;
     if (coordinated?.hold) speed = 0;
     if (coordinated?.target) target = coordinated.target;
     if (run.terrain && target && !coordinated?.target)

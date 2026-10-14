@@ -1,0 +1,480 @@
+TAP version 13
+# Subtest: V3 crossing completes its first pass at each boundary; legacy stays unchanged
+ok 1 - V3 crossing completes its first pass at each boundary; legacy stays unchanged
+  ---
+  duration_ms: 321.256333
+  ...
+# Subtest: V3 flank completes its first pass at each boundary; legacy stays unchanged
+ok 2 - V3 flank completes its first pass at each boundary; legacy stays unchanged
+  ---
+  duration_ms: 369.351375
+  ...
+# Subtest: V3 keeps a crossing approach committed until it reaches the boundary
+ok 3 - V3 keeps a crossing approach committed until it reaches the boundary
+  ---
+  duration_ms: 16.954291
+  ...
+# Subtest: completed passes remain deterministic after leaving the boundary
+ok 4 - completed passes remain deterministic after leaving the boundary
+  ---
+  duration_ms: 84.729125
+  ...
+# Subtest: actual Raid bodies use finite velocity and contact semantics in warning escape
+ok 5 - actual Raid bodies use finite velocity and contact semantics in warning escape
+  ---
+  duration_ms: 22.018792
+  ...
+# Subtest: committed motion prediction stops at the end of a leg
+ok 6 - committed motion prediction stops at the end of a leg
+  ---
+  duration_ms: 0.1045
+  ...
+# Subtest: split groups preserve different approach lanes at equal speed and legacy rules stay straight
+ok 7 - split groups preserve different approach lanes at equal speed and legacy rules stay straight
+  ---
+  duration_ms: 145.19975
+  ...
+# Subtest: crosscut announces its snapshot then commits without tracking later player movement
+ok 8 - crosscut announces its snapshot then commits without tracking later player movement
+  ---
+  duration_ms: 18.999334
+  ...
+# Subtest: standoff relocation moves laterally and halts during a real attack warning
+ok 9 - standoff relocation moves laterally and halts during a real attack warning
+  ---
+  duration_ms: 51.08825
+  ...
+# Subtest: a new committed leg cannot take the final warned exit
+ok 10 - a new committed leg cannot take the final warned exit
+  ---
+  duration_ms: 7.726333
+  ...
+# Subtest: actual burst speed cannot close a warned exit on entry or between steering decisions
+ok 11 - actual burst speed cannot close a warned exit on entry or between steering decisions
+  ---
+  duration_ms: 52.819917
+  ...
+# Subtest: Raid convoy reaches a firing stop, warns, recovers and leaves for another stop
+ok 12 - Raid convoy reaches a firing stop, warns, recovers and leaves for another stop
+  ---
+  duration_ms: 363.888
+  ...
+# Subtest: same coordinated inputs preserve deterministic trajectories without consuming gameplay RNG
+ok 13 - same coordinated inputs preserve deterministic trajectories without consuming gameplay RNG
+  ---
+  duration_ms: 156.388916
+  ...
+# Subtest: a timed bent escape is admitted around cover when straight rays are body-blocked
+ok 14 - a timed bent escape is admitted around cover when straight rays are body-blocked
+  ---
+  duration_ms: 2.746542
+  ...
+# Subtest: a shield cannot turn its protected half into the only live warned exit
+ok 15 - a shield cannot turn its protected half into the only live warned exit
+  ---
+  duration_ms: 3.71575
+  ...
+# Subtest: resting against cover still admits an outward escape with the physical hull
+ok 16 - resting against cover still admits an outward escape with the physical hull
+  ---
+  duration_ms: 3.725708
+  ...
+# Subtest: a finite eight-member Raid split pack sends its two coordinated members to opposite sides
+ok 17 - a finite eight-member Raid split pack sends its two coordinated members to opposite sides
+  ---
+  duration_ms: 59.573541
+  ...
+# Subtest: Raid V3 round-trips authored escort links, medal budgets and balance identity without changing old defaults
+ok 18 - Raid V3 round-trips authored escort links, medal budgets and balance identity without changing old defaults
+  ---
+  duration_ms: 319.214375
+  ...
+# Subtest: guarded machinery has a readable rear-half opening; recovery exposes all sides
+ok 19 - guarded machinery has a readable rear-half opening; recovery exposes all sides
+  ---
+  duration_ms: 8.083792
+  ...
+# Subtest: fresh boosted passes can remove two plates in one opening; the same boost cannot repeat after exiting
+ok 20 - fresh boosted passes can remove two plates in one opening; the same boost cannot repeat after exiting
+  ---
+  duration_ms: 72.468375
+  ...
+# Subtest: frontal machinery contact still hurts and width does not expand the rear angle
+ok 21 - frontal machinery contact still hurts and width does not expand the rear angle
+  ---
+  duration_ms: 17.650375
+  ...
+# Subtest: guard interruption opens a shield or brace but never machinery or independent fired projectiles
+ok 22 - guard interruption opens a shield or brace but never machinery or independent fired projectiles
+  ---
+  duration_ms: 8.941792
+  ...
+# Subtest: an objective restores only one shield charge and escorts move with the defended target
+ok 23 - an objective restores only one shield charge and escorts move with the defended target
+  ---
+  duration_ms: 162.293709
+  ...
+# Subtest: Marathon refits preserve eight invested ranks, compatibility and useful choices
+ok 24 - Marathon refits preserve eight invested ranks, compatibility and useful choices
+  ---
+  duration_ms: 238.023042
+  ...
+# Subtest: authored provisional medals and V3 records retain raw/adjusted time in a separate bucket
+ok 25 - authored provisional medals and V3 records retain raw/adjusted time in a separate bucket
+  ---
+  duration_ms: 17.993792
+  ...
+# Subtest: interrupted shields recover their committed facing rather than staying permanently open
+ok 26 - interrupted shields recover their committed facing rather than staying permanently open
+  ---
+  duration_ms: 21.027584
+  ...
+# Subtest: capped Marathon opens native refit drafts and carries the budget to the next contract
+ok 27 - capped Marathon opens native refit drafts and carries the budget to the next contract
+  ---
+  duration_ms: 23.635125
+  ...
+# Subtest: Raid reports actual hull loss for contact, lane, fan and ground result breakdowns
+ok 28 - Raid reports actual hull loss for contact, lane, fan and ground result breakdowns
+  ---
+  duration_ms: 19.53825
+  ...
+# Subtest: Raid starts explicitly and preserves deterministic paused clocks and confirmation gating
+ok 29 - Raid starts explicitly and preserves deterministic paused clocks and confirmation gating
+  ---
+  duration_ms: 37.718292
+  ...
+# Subtest: sweep detects fast crossings even when neither endpoint overlaps, including both moving bodies
+ok 30 - sweep detects fast crossings even when neither endpoint overlaps, including both moving bodies
+  ---
+  duration_ms: 6.62525
+  ...
+# Subtest: exposed contact preserves hull and exactly-once death rewards and remains
+ok 31 - exposed contact preserves hull and exactly-once death rewards and remains
+  ---
+  duration_ms: 26.14675
+  ...
+# Subtest: shield front blocks and rear exposes; guard orientation stays committed during approach
+ok 32 - shield front blocks and rear exposes; guard orientation stays committed during approach
+  ---
+  duration_ms: 12.317708
+  ...
+# Subtest: protection uses the visible pre-movement phase rather than transitioning on collision
+ok 33 - protection uses the visible pre-movement phase rather than transitioning on collision
+  ---
+  duration_ms: 13.630083
+  ...
+# Subtest: arrival warnings give a full harmless interval before contact becomes active
+ok 34 - arrival warnings give a full harmless interval before contact becomes active
+  ---
+  duration_ms: 24.391584
+  ...
+# Subtest: machinery requires boosted passes and cannot lose several segments while overlapping
+ok 35 - machinery requires boosted passes and cannot lose several segments while overlapping
+  ---
+  duration_ms: 22.639875
+  ...
+# Subtest: blocking contact stops attacks against bodies behind a shield
+ok 36 - blocking contact stops attacks against bodies behind a shield
+  ---
+  duration_ms: 8.084417
+  ...
+# Subtest: wider offensive strike does not enlarge damage exposure
+ok 37 - wider offensive strike does not enlarge damage exposure
+  ---
+  duration_ms: 9.183875
+  ...
+# Subtest: independent projectile survives owner death and can damage the player in the same tick
+ok 38 - independent projectile survives owner death and can damage the player in the same tick
+  ---
+  duration_ms: 13.794583
+  ...
+# Subtest: priority warnings are bounded and a dead windup owner does not fire
+ok 39 - priority warnings are bounded and a dead windup owner does not fire
+  ---
+  duration_ms: 14.5445
+  ...
+# Subtest: each boost refunds once even for a full formation; passive recovery and hard floor remain
+ok 40 - each boost refunds once even for a full formation; passive recovery and hard floor remain
+  ---
+  duration_ms: 43.174416
+  ...
+# Subtest: Rush stores until a fresh boost, does not refill during active Rush, and survives damage
+ok 41 - Rush stores until a fresh boost, does not refill during active Rush, and survives damage
+  ---
+  duration_ms: 27.40425
+  ...
+# Subtest: eight choices remain three distinct legal cards and optional choices are awarded once
+ok 42 - eight choices remain three distinct legal cards and optional choices are awarded once
+  ---
+  duration_ms: 7.783125
+  ...
+# Subtest: draft waits for the boost transaction to finish and confirmation cannot trigger a boost
+ok 43 - draft waits for the boost transaction to finish and confirmation cannot trigger a boost
+  ---
+  duration_ms: 27.936583
+  ...
+# Subtest: courier escape starts only after reveal and required targets never expire
+ok 44 - courier escape starts only after reveal and required targets never expire
+  ---
+  duration_ms: 226.384625
+  ...
+# Subtest: replacement preserves the build and finite world and ends after the last airframe
+ok 45 - replacement preserves the build and finite world and ends after the last airframe
+  ---
+  duration_ms: 55.175417
+  ...
+# Subtest: all rank values used by previews are identical to simulation parameters
+ok 46 - all rank values used by previews are identical to simulation parameters
+  ---
+  duration_ms: 15.7755
+  ...
+# Subtest: same compiled seed and inputs produce byte-identical summaries and enemy states
+ok 47 - same compiled seed and inputs produce byte-identical summaries and enemy states
+  ---
+  duration_ms: 1043.249375
+  ...
+# Subtest: initial machinery objectives require a telegraphed attack before their first opening
+ok 48 - initial machinery objectives require a telegraphed attack before their first opening
+  ---
+  duration_ms: 8.913166
+  ...
+# Subtest: one exposed base-kit tank takes exactly three distinct boosted passes
+ok 49 - one exposed base-kit tank takes exactly three distinct boosted passes
+  ---
+  duration_ms: 21.845666
+  ...
+# Subtest: small cosmetic pools can exhaust without losing casualties or rewards
+ok 50 - small cosmetic pools can exhaust without losing casualties or rewards
+  ---
+  duration_ms: 2.871791
+  ...
+# Subtest: an exhausted projectile pool defers shots without corrupting ownership or warning slots
+ok 51 - an exhausted projectile pool defers shots without corrupting ownership or warning slots
+  ---
+  duration_ms: 2.338791
+  ...
+# Subtest: stationary waiting cannot clear required objectives or replenish finite packs
+ok 52 - stationary waiting cannot clear required objectives or replenish finite packs
+  ---
+  duration_ms: 346.144875
+  ...
+# Subtest: the final fractional projectile flight segment collides, without flying past its lifetime
+ok 53 - the final fractional projectile flight segment collides, without flying past its lifetime
+  ---
+  duration_ms: 2.252583
+  ...
+# Subtest: formation-derived edge waypoints remain reachable inside the arena
+ok 54 - formation-derived edge waypoints remain reachable inside the arena
+  ---
+  duration_ms: 3.91275
+  ...
+# Subtest: Raid technical workload sustains actual contact effects and exact populations without a game result
+ok 55 - Raid technical workload sustains actual contact effects and exact populations without a game result
+  ---
+  duration_ms: 2820.89975
+  ...
+# Subtest: boost ranks, Rush and chain expiry obey exact fixed tick durations without floating residue
+ok 56 - boost ranks, Rush and chain expiry obey exact fixed tick durations without floating residue
+  ---
+  duration_ms: 28.72475
+  ...
+# Subtest: lethal independent projectile contact wins chronological precedence over a later prey hit
+ok 57 - lethal independent projectile contact wins chronological precedence over a later prey hit
+  ---
+  duration_ms: 2.097625
+  ...
+# Subtest: a tracked-tank appearance on an authored column objective still grants its guaranteed upgrade
+ok 58 - a tracked-tank appearance on an authored column objective still grants its guaranteed upgrade
+  ---
+  duration_ms: 5.132375
+  ...
+# Subtest: V3 profiles preserve earlier rules and give Relaxed its starting friendly bonus
+ok 59 - V3 profiles preserve earlier rules and give Relaxed its starting friendly bonus
+  ---
+  duration_ms: 28.52475
+  ...
+# Subtest: Echo anchors three rear impacts to release heading while the front stays vulnerable
+ok 60 - Echo anchors three rear impacts to release heading while the front stays vulnerable
+  ---
+  duration_ms: 67.578667
+  ...
+# Subtest: shield recovery keeps progress through hits and adds at most two seconds per cycle
+ok 61 - shield recovery keeps progress through hits and adds at most two seconds per cycle
+  ---
+  duration_ms: 122.548291
+  ...
+# Subtest: stored Overdrive waits for a fresh boost, pauses with gameplay and cannot refresh
+ok 62 - stored Overdrive waits for a fresh boost, pauses with gameplay and cannot refresh
+  ---
+  duration_ms: 122.148792
+  ...
+# Subtest: warning admission rejects body-blocked exits while preserving a real opening
+ok 63 - warning admission rejects body-blocked exits while preserving a real opening
+  ---
+  duration_ms: 30.910875
+  ...
+# Subtest: fired ground danger survives its owner, reserves the threat slot and expires within two seconds
+ok 64 - fired ground danger survives its owner, reserves the threat slot and expires within two seconds
+  ---
+  duration_ms: 119.568917
+  ...
+# Subtest: replacement checks the full fired lane instead of only its aim point
+ok 65 - replacement checks the full fired lane instead of only its aim point
+  ---
+  duration_ms: 15.557083
+  ...
+# Subtest: surviving ranged attackers continue committed cycles during relief without fresh crowds
+ok 66 - surviving ranged attackers continue committed cycles during relief without fresh crowds
+  ---
+  duration_ms: 50.659125
+  ...
+# Subtest: machinery resists slow fields while ordinary pursuit retains its full slowing effect
+ok 67 - machinery resists slow fields while ordinary pursuit retains its full slowing effect
+  ---
+  duration_ms: 7.950125
+  ...
+# Subtest: supply Overdrive requires a deliberate return and cannot replace a stored or active charge
+ok 68 - supply Overdrive requires a deliberate return and cannot replace a stored or active charge
+  ---
+  duration_ms: 9.411708
+  ...
+# Subtest: terrain admission preserves broad connected routes and rejects obstructed experimental layouts
+ok 69 - terrain admission preserves broad connected routes and rejects obstructed experimental layouts
+  ---
+  duration_ms: 41.458084
+  ...
+# Subtest: fast diagonal crossings slide along solid faces and preserve hull
+ok 70 - fast diagonal crossings slide along solid faces and preserve hull
+  ---
+  duration_ms: 2.1265
+  ...
+# Subtest: barriers require two distinct passes or payloads and held contact cannot farm a second hit
+ok 71 - barriers require two distinct passes or payloads and held contact cannot farm a second hit
+  ---
+  duration_ms: 4.063792
+  ...
+# Subtest: navigation routes around permanent cover and keeps a finite shared target cache
+ok 72 - navigation routes around permanent cover and keeps a finite shared target cache
+  ---
+  duration_ms: 46.884416
+  ...
+# Subtest: committed cover clipping is identical for warnings and hits after a barrier breaks
+ok 73 - committed cover clipping is identical for warnings and hits after a barrier breaks
+  ---
+  duration_ms: 0.687125
+  ...
+# Subtest: area damage inspects every visible candidate but cover prevents blast tunnelling
+ok 74 - area damage inspects every visible candidate but cover prevents blast tunnelling
+  ---
+  duration_ms: 20.145292
+  ...
+# Subtest: native Survivor and Raid movement cannot cross cover or damage hull through wall contact
+ok 75 - native Survivor and Raid movement cannot cross cover or damage hull through wall contact
+  ---
+  duration_ms: 126.810333
+  ...
+# Subtest: freight convoy reaches a firing stop before committing, preserves armor and resumes after recovery
+ok 76 - freight convoy reaches a firing stop before committing, preserves armor and resumes after recovery
+  ---
+  duration_ms: 179.322209
+  ...
+# Subtest: warning admission rejects an escape that is geometrically outside danger but behind cover
+ok 77 - warning admission rejects an escape that is geometrically outside danger but behind cover
+  ---
+  duration_ms: 14.165792
+  ...
+# Subtest: native pursuit and authored Raid routes reach the far side of permanent cover
+ok 78 - native pursuit and authored Raid routes reach the far side of permanent cover
+  ---
+  duration_ms: 172.230666
+  ...
+# Subtest: Riy escort following navigates around cover without changing its command clock
+ok 79 - Riy escort following navigates around cover without changing its command clock
+  ---
+  duration_ms: 111.398709
+  ...
+# Subtest: fired Raid projectiles retain their warned cover range after a barrier is destroyed
+ok 80 - fired Raid projectiles retain their warned cover range after a barrier is destroyed
+  ---
+  duration_ms: 58.446625
+  ...
+# Subtest: Raid review approach flanks a visible protected escort without changing simulation state
+ok 81 - Raid review approach flanks a visible protected escort without changing simulation state
+  ---
+  duration_ms: 30.144542
+  ...
+# Subtest: V2 adds explicit editable combat while V1 preserves original durability and capabilities
+ok 82 - V2 adds explicit editable combat while V1 preserves original durability and capabilities
+  ---
+  duration_ms: 96.882375
+  ...
+# Subtest: shield facing, blocked overflow and internal blasts create reliable different approaches
+ok 83 - shield facing, blocked overflow and internal blasts create reliable different approaches
+  ---
+  duration_ms: 26.931417
+  ...
+# Subtest: each tank plate break opens recovery without adding durability or replaying rewards
+ok 84 - each tank plate break opens recovery without adding durability or replaying rewards
+  ---
+  duration_ms: 5.60725
+  ...
+# Subtest: defensive drafts and application reject shield/plating stacks in both modes
+ok 85 - defensive drafts and application reject shield/plating stacks in both modes
+  ---
+  duration_ms: 0.94075
+  ...
+# Subtest: seeded formation decks vary, never repeat, and author bounded relief
+ok 86 - seeded formation decks vary, never repeat, and author bounded relief
+  ---
+  duration_ms: 0.205
+  ...
+# Subtest: relief waits for committed warnings then provides its full interval without new commitments
+ok 87 - relief waits for committed warnings then provides its full interval without new commitments
+  ---
+  duration_ms: 229.935625
+  ...
+# Subtest: fan gaps and temporal warning combinations retain a baseline escape at arena edges
+ok 88 - fan gaps and temporal warning combinations retain a baseline escape at arena edges
+  ---
+  duration_ms: 10.874417
+  ...
+# Subtest: mass clearing earns bounded relief without suppressing every subsequent pressure window
+ok 89 - mass clearing earns bounded relief without suppressing every subsequent pressure window
+  ---
+  duration_ms: 634.361209
+  ...
+# Subtest: cache groups stay finite, coexist, and require a deliberate physical reward entry
+ok 90 - cache groups stay finite, coexist, and require a deliberate physical reward entry
+  ---
+  duration_ms: 6.057542
+  ...
+# Subtest: Raid carriers fire a complete committed fan, while legacy carriers retain one projectile
+ok 91 - Raid carriers fire a complete committed fan, while legacy carriers retain one projectile
+  ---
+  duration_ms: 55.228083
+  ...
+# Subtest: a full guard pool defers the objective until a genuine kill frees a slot
+ok 92 - a full guard pool defers the objective until a genuine kill frees a slot
+  ---
+  duration_ms: 9.330958
+  ...
+# Subtest: V2 pulse charge requires displacement, so tiny loops cannot manufacture full power
+ok 93 - V2 pulse charge requires displacement, so tiny loops cannot manufacture full power
+  ---
+  duration_ms: 54.301084
+  ...
+# Subtest: current caches queue the second guard encounter without losing either reward opportunity
+ok 94 - current caches queue the second guard encounter without losing either reward opportunity
+  ---
+  duration_ms: 11.792958
+  ...
+1..94
+# tests 94
+# suites 0
+# pass 94
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 5543.576417
