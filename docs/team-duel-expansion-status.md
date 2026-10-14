@@ -1,6 +1,6 @@
 # Team and Duel expansion delivery register
 
-Updated 14 October 2026. Implementation is on `codex/team-duel-expansion`, rebased onto `5f126d6105be5708948dbaff6907ca5cd7e15baf`. See the [reviewed plan](team-duel-expansion-plan-2026-10-14.md) and [authoring guide](../authoring/multiplayer-expeditions.md).
+Updated 14 October 2026. Implementation is on `codex/team-duel-expansion`, rebased onto `280ff4d2a35b5854a85d98a8973a47a832af66e6` after an initial rebase onto `5f126d6105be5708948dbaff6907ca5cd7e15baf`. See the [reviewed plan](team-duel-expansion-plan-2026-10-14.md) and [authoring guide](../authoring/multiplayer-expeditions.md).
 
 **Implemented: 96 new Team missions and 72 new Duel missions across twelve families.** All authored missions have reproducible native-runtime clears. Gameplay and focused authoring checks have passed; distribution and external acceptance are accounted for separately below.
 
@@ -42,10 +42,20 @@ Browser screenshots and detailed command logs are local evidence in `.cache/mult
 ## Final check notes
 
 - Formatting, focused lint and whitespace checks passed for the implementation; the final source snapshot helper also passed lint and its regression test.
-- Final source validation passed across 3,108 distribution files and their literal references, with seven existing navigation warnings for routes supplied by the surrounding site.
-- **The full distribution build passed:** version 0.151.1, 3,291 files, expanded package and ZIP. ZIP SHA-256: `843702d50240e78b64e6bafc6c722e74397348187f9d8fc5c06b52e8950291ec`. This is a local, uncommitted build with no published source revision.
+- Post-rebase source validation passed across 3,126 distribution files and their literal references, with seven existing navigation warnings for routes supplied by the surrounding site.
+- **The full distribution build passed:** version 0.151.1, 3,291 files, expanded package and ZIP. ZIP SHA-256: `843702d50240e78b64e6bafc6c722e74397348187f9d8fc5c06b52e8950291ec`. This packaged/offline receipt predates the final 105-commit main rebase. It has no published source revision; it is not relabeled as a build of the eventual PR head. Final-head hosted checks run through the repository workflow.
 - The [distribution verification](research/multiplayer-distribution-verification.json) passed for all 168 missions and 24 chapter groups. It checked required runtime files, referenced pictures, all 24 English/Ukrainian download labels, and exact bytes/hashes for 82 artifact files. The offline core is **71,579,702 bytes (68.3 MiB)**, below the existing 80 MiB budget.
 - Packaged browser discovery shows 110 Team and 312 Duel choices; native controls exercised both packaged Duel boards. The local offline screen downloaded and verified Horizon Harbors (Team and Duel) and Relay Archive (Team), totaling 128.1 MiB including shared runtime and mandatory Solo Starter. With the local server stopped and an independent connection check failing, the download screen reloaded from cache and reported all selected chapters ready offline. Still without the server, Duel reopened, started both boards, and each player banked a cut (0.3%, 3 lives, 70 points). Team reopened Harbor Handoff, accepted both players’ controls, and banked territory; the chooser then prepared and started Partner First Link from Relay Archive, showing its required relay objective. These are partial native browser runs, not complete offline clears of every chapter. The local server was restored afterward.
+
+## Final PR preparation
+
+The final rebase retained upstream’s per-route bootstrap budget and Team rendering updates. Human playtesting is skipped as explicitly requested. Physical-controller, physical-touch and speaker/mono listening cannot be certified from this desktop automation session and remain deferred, not merge prerequisites.
+
+- Post-rebase compiler, environment, discovery, Studio snapshot and offline-destination checks passed **24/24**. The underlying simulation and route fixtures were unchanged by main integration, preserving the earlier 576 Team / 1,296 Duel route evidence.
+- Final Team discovery and media/HUD regressions passed **13/13**. Studio artwork substitution in both advanced finales survives replacement → Undo → Redo → save → reload → export/import while preserving the exact gameplay level and simulation identity. Team preparation feedback now stays in the visible native menu, keeping Cancel focusable and allowing direct mission launch. Cancellation, focus loss and paused replacement retain their existing safeguards; local pack assertions account for the 96 added missions.
+- The compact Team display now retains required relay and sequential-target counts. The live browser launched Expedition Homecoming directly from the start menu and displayed all required objectives at 390 × 844 and 720 × 480 with large, plain text and reduced effects. No browser errors were recorded. Original display preferences and viewport were restored. These are automated browser checks, not human or physical-device playtesting.
+- Expanded appearance/audio/controller/touch cohort: **120/125 passed**. The five failures also reproduced with every changed JavaScript module restored to exact `280ff4d2` bytes through a read-only module overlay, using the same unchanged fixtures/media. The baseline failures are one standalone installed-actor fixture without a browser image decoder, two existing overflow-reader focus expectations, and two soundtrack fixtures pinned to 71 recordings while the catalogue contains 77. No decoder was fabricated, guard disabled, or failing assertion weakened to turn these into passes.
+- Local evidence: `.cache/multiplayer-expansion/post-rebase-core.log`, `final-host-media.log`, `post-rebase-media-controls.log` and `main-baseline-media-controls.log`; final responsive screenshots are `screenshots/final-team-phone.jpg` and `screenshots/final-team-landscape.jpg` in that directory. The baseline run executed only the five failing cases; eighteen unrelated cases were skipped by its name filter.
 
 ## Remaining acceptance and release work
 
@@ -53,6 +63,6 @@ Browser screenshots and detailed command logs are local evidence in `.cache/mult
 2. Physical controller/touch/handheld tests, target-device performance and complete accessibility review. Browser viewport checks cover only the layouts described above.
 3. Actual audio listening with music muted, small speakers and mono. Browser sessions here were muted; event-binding checks are not listening evidence.
 4. Verify installation and complete media recovery on intended physical targets. Test visual/audio substitutions through the respective Studios in those installations; the local packaged browser checks above do not certify every platform.
-5. Stage publication chapter by chapter through the existing publisher, with concrete dependency manifests and acceptance evidence. Nothing has been deployed or published by this work.
+5. Source delivery uses the requested PR for merge. Public deployment belongs to the repository’s existing publisher after merge; no separate publication workflow or version is created here.
 
 Human playtesting is explicitly skipped. The other hardware/listening/publication boundaries remain unverified; they do not prevent the requested source PR. The implementation is available for review and play. Unrelated `.specstory/` and `docs/codex-migration-guide.md` were not changed.
