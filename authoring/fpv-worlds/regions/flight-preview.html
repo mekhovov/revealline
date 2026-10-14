@@ -189,13 +189,19 @@
         <details open>
           <summary>Regional flight · authoring prototype</summary>
           <p>
-            Single-profile development preview. Not a playable SIM release. No
-            scoring or recordings. Region edges stop the preview.
+            Verified geometry development preview. Not a playable SIM release.
+            No scoring or recordings. Region edges stop the preview.
           </p>
           <form>
-            <select id="geometry-profile" aria-label="Verified geometry profile">
+            <select
+              id="geometry-profile"
+              aria-label="Verified geometry profile"
+            >
               <option value="terrain-v1">Terrain cells</option>
               <option value="scenery-v1">Scenery with ground</option>
+              <option value="terrain-scenery-v1">
+                Terrain + companion scenery
+              </option>
             </select>
             <select id="spawn" aria-label="Authored starting position" disabled>
               <option value="">Default authored start</option>
@@ -212,7 +218,10 @@
               <option value="plain">Plain terrain</option>
               <option value="canyon">Canyon sediment</option>
             </select>
-            <select id="surface-quality" aria-label="Terrain appearance quality">
+            <select
+              id="surface-quality"
+              aria-label="Terrain appearance quality"
+            >
               <option value="performance">Performance</option>
               <option value="balanced" selected>Balanced</option>
               <option value="quality">Quality</option>
@@ -222,11 +231,19 @@
               aria-label="Region manifest URL"
               placeholder="Region manifest URL"
               required
-            /><button>Load / restart region</button>
+            />
+            <input
+              id="scenery-manifest"
+              aria-label="Companion scenery manifest URL"
+              placeholder="Companion scenery manifest URL"
+              hidden
+            />
+            <button>Load / restart region</button>
+            <button id="cancel-load" type="button">Cancel loading</button>
           </form>
           <p id="credit">
-            Uses one verified geometry profile at a time. Production host integration
-            and collision qualification remain required.
+            Companion layers load and adopt together. Production host
+            integration and collision qualification remain required.
           </p>
         </details>
       </header>
