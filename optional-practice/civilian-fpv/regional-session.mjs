@@ -1,0 +1,135 @@
+import { attitude } from './math.mjs';
+import { quantizeFlightInput } from './model.mjs';
+import { createRegionalFlightPrototype } from './regional/flight-prototype.mjs';
+import { validateRegionManifest } from './regional/region-manifest.mjs';
+
+/** Explicit review input. This is not a World.v1 course or a catalogue admission. */
+export async function loadRegionalReview({
+  manifestURL,
+  sceneryURL = null,
+  pageURL,
+  fetchImpl = globalThis.fetch,
+  signal,
+}) {
+  const page = new URL(pageURL);
+  async function read(value) {
+    const url = new URL(value, page);
+    if (
+      !['http:', 'https:'].includes(url.protocol) ||
+      url.origin !== page.origin ||
+      url.username ||
+      url.password
+    )
+      throw new TypeError('Regional review sources must be on this site');
+    const response = await fetchImpl(url.href, { signal, credentials: 'omit', redirect: 'error' });
+    if (!response.ok || !response.body) throw new Error('Region manifest download failed');
+    const reader = response.body.getReader(),
+      parts = [];
+    let size = 0;
+    try {
+      while (true) {
+        signal?.throwIfAborted();
+        const { done, value: bytes } = await reader.read();
+        if (done) break;
+        size += bytes.length;
+        if (size > 8 * 1024 * 1024) throw new Error('Region manifest is too large');
+        parts.push(bytes);
+      }
+    } finally {
+      await reader.cancel().catch(() => {});
+      reader.releaseLock();
+    }
+    const bytes = new Uint8Array(size);
+    let offset = 0;
+    for (const part of parts) {
+      bytes.set(part, offset);
+      offset += part.length;
+    }
+    return {
+      manifest: validateRegionManifest(new TextDecoder('utf-8', { fatal: true }).decode(bytes)),
+      source: { baseURL: new URL('.', url).href, fetchImpl },
+    };
+  }
+  const terrain = await read(manifestURL);
+  const scenery = sceneryURL ? await read(sceneryURL) : null;
+  signal?.throwIfAborted();
+  return { ...terrain, scenery, geometryProfile: scenery ? 'terrain-scenery-v1' : 'terrain-v1' };
+}
+
+/** UI metadata is deliberately a different format, never submitted to World validation/proofs. */
+export function regionalReviewEntry(configuration) {
+  const manifest = validateRegionManifest(configuration.manifest),
+    { grid } = manifest;
+  const brief = {
+    en: 'Regional free flight · review · unscored. Loading pauses flight; resume deliberately when ready.',
+    uk: 'Вільний політ у регіоні · перевірка · без заліку. Завантаження зупиняє політ; продовжуйте, коли готові.',
+  };
+  return {
+    id: `regional-review-${manifest.id}`,
+    packIdentity: `regional-review:${manifest.id}:${manifest.revision}`,
+    regional: true,
+    freeFlight: true,
+    configuration: { ...configuration, manifest },
+    course: {
+      format: 'FPVRegionalFlightPresentation.v1',
+      id: manifest.id,
+      locales: Object.fromEntries(
+        ['en', 'uk'].map((locale) => [
+          locale,
+          { title: manifest.title[locale], brief: brief[locale] },
+        ]),
+      ),
+      bounds: {
+        min: { x: grid.minX * 128000, y: grid.floorMm, z: grid.minZ * 128000 },
+        max: {
+          x: (grid.minX + grid.width) * 128000,
+          y: grid.ceilingMm,
+          z: (grid.minZ + grid.depth) * 128000,
+        },
+      },
+      steps: { acro: [], 'self-level': [] },
+      actors: [],
+      obstacles: [],
+      rules: { droneRadius: 220 },
+    },
+  };
+}
+
+/** The production host owns input, menus and arming; this adapter owns only regional state. */
+export function createRegionalSession(configuration) {
+  const runtime = createRegionalFlightPrototype(configuration);
+  let lastInput = { roll: 0, pitch: 0, yaw: 0, throttle: 0 };
+  const snapshot = () => {
+    const state = runtime.snapshot();
+    return {
+      ...state,
+      attitude: attitude(state.orientation),
+      lastInput: { ...lastInput },
+      step: 0,
+      total: 0,
+      hold: 0,
+      events: [],
+      actors: [],
+      projectiles: [],
+      score: 0,
+    };
+  };
+  return Object.freeze({
+    root: runtime.root,
+    snapshot,
+    prepare: runtime.prepare,
+    cancelPreparation: runtime.cancelPreparation,
+    arm: runtime.arm,
+    pause: runtime.pause,
+    dispose: runtime.dispose,
+    step(input) {
+      const axes = Object.fromEntries(
+        ['roll', 'pitch', 'yaw', 'throttle'].map((key) => [key, input[key]]),
+      );
+      const before = runtime.snapshot().ticks;
+      runtime.step(axes);
+      if (runtime.snapshot().ticks > before) lastInput = quantizeFlightInput(axes);
+      return snapshot();
+    },
+  });
+}

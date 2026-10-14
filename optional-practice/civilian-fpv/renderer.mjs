@@ -296,6 +296,7 @@ export function createFlightRenderer({
     rimLight,
     rimLight.target,
   );
+  let regional = null;
   let course = null,
     mode = 'self-level',
     view = 'fpv',
@@ -1485,6 +1486,11 @@ export function createFlightRenderer({
   }
   function setCourse(value, selectedMode = 'self-level', options = {}) {
     if (disposed || renderer.getContext().isContextLost()) return;
+    regional?.root.removeFromParent();
+    regional = null;
+    flightViewFrame.originMm = null;
+    camera.far = 300;
+    camera.updateProjectionMatrix();
     const environment = resolveIndustrialEnvironment(options.industrialEnvironment ?? null);
     const retained = value.world?.themeProfile;
     if (
@@ -2539,6 +2545,7 @@ export function createFlightRenderer({
     if (!disposed && course) huntPresentation?.observe?.(state, machineryPresentationOptions());
   }
   function draw(state, { cameraMode = view, cameraFov = fov, cameraTilt = tilt } = {}) {
+    if (regional) return drawRegional(state, { cameraMode, cameraFov, cameraTilt });
     if (disposed || !course || renderer.getContext().isContextLost()) return false;
     const hunt = course.steps[mode].find((step) => step.type === 'hunt-contact-v1');
     huntPresentation?.update(state, {
@@ -3197,6 +3204,10 @@ export function createFlightRenderer({
     return { detach: () => editor?.detach() };
   }
   function clearSceneResources() {
+    // The regional session owns verified geometry and its asynchronous disposal.
+    // Detach it before disposing renderer-owned aircraft/menu presentation.
+    regional?.root.removeFromParent();
+    regional = null;
     huntPresentation?.dispose();
     huntPresentation = null;
     if (editor) {
@@ -3253,10 +3264,71 @@ export function createFlightRenderer({
   canvas.addEventListener('webglcontextlost', lost);
   setQuality(quality);
   setDrone(droneKind);
+  function setRegional(session, manifest) {
+    if (disposed || renderer.getContext().isContextLost()) return;
+    clearSceneResources();
+    world.userData = {};
+    sceneGeneration++;
+    regional = { root: session.root, chunks: new Map(manifest.chunks.map((row) => [row.id, row])) };
+    scene.add(session.root);
+    scene.background = new THREE.Color(0xb5d3de);
+    scene.fog = null;
+    importedGroundFog = null;
+    scene.environment = null;
+    flightViewFrame.reset();
+    camera.far = 1000;
+    camera.updateProjectionMatrix();
+    setDrone(droneKind);
+    setQuality(quality);
+  }
+  function drawRegional(state, { cameraMode, cameraFov, cameraTilt }) {
+    if (disposed || renderer.getContext().isContextLost()) return false;
+    const rect = canvas.getBoundingClientRect(),
+      width = Math.max(1, Math.round(rect.width)),
+      height = Math.max(1, Math.round(rect.height));
+    if (width !== lastWidth || height !== lastHeight) {
+      renderer.setSize(width, height, false);
+      camera.aspect = width / height;
+      camera.updateProjectionMatrix();
+      lastWidth = width;
+      lastHeight = height;
+    }
+    const loaded =
+      state.terrain.provenance?.chunks
+        ?.map((row) => regional.chunks.get(row.chunkId))
+        .filter(Boolean) ?? [];
+    if (!loaded.length) return false;
+    flightViewFrame.bounds = {
+      min: {
+        x: Math.min(...loaded.map((row) => row.x)) * 128000,
+        y: 0,
+        z: Math.min(...loaded.map((row) => row.z)) * 128000,
+      },
+      max: {
+        x: (Math.max(...loaded.map((row) => row.x)) + 1) * 128000,
+        y: 0,
+        z: (Math.max(...loaded.map((row) => row.z)) + 1) * 128000,
+      },
+    };
+    flightViewFrame.view = cameraMode;
+    flightViewFrame.fov = cameraFov;
+    flightViewFrame.tilt = cameraTilt;
+    flightViewFrame.originMm = state.originMm;
+    flightViewFrame.radiusMm = 220;
+    flightViewFrame.reducedMotion = reducedMotion;
+    flightViewFrame.rotors = droneVisual.rotors;
+    flightViewFrame.draw(state);
+    const p = aircraft.position;
+    sunlight.position.set(p.x - 24, p.y + 36, p.z + 15);
+    sunlight.target.position.copy(p);
+    renderer.render(scene, camera);
+    return !renderer.getContext().isContextLost();
+  }
   return {
     available: true,
     observePresentation,
     setCourse,
+    setRegional,
     setPresentation,
     setQuality,
     setDrone,
@@ -3273,7 +3345,7 @@ export function createFlightRenderer({
       const generation = sceneGeneration,
         presentation = presentationGeneration;
       signal?.throwIfAborted();
-      if (disposed || !course || renderer.getContext().isContextLost()) return false;
+      if (disposed || (!course && !regional) || renderer.getContext().isContextLost()) return false;
       await renderer.compileAsync(scene, camera);
       signal?.throwIfAborted();
       if (
