@@ -4,6 +4,7 @@ import { readFileSync } from 'node:fs';
 import { soloPage, settle } from './helpers/solo-dom.mjs';
 import { managedIndexedDB } from './helpers/managed-idb.mjs';
 import { authoritativeCheckpoint, verifyReplay } from '../replay.mjs';
+import { nativeCaptureSession } from '../capture-presentation-session.mjs';
 
 const pack = JSON.parse(
   readFileSync(new URL('../content/packs/classic-lab.json', import.meta.url)),
@@ -11,11 +12,26 @@ const pack = JSON.parse(
 const frames = (page, count) => {
   for (let i = 0; i < count; i++) page.frame();
 };
+async function start(page) {
+  page.$('start-button').click();
+  // Real actor/environment decoding may continue after picture readiness.
+  // Match the shared CI scheduler allowance; this checks launch ownership and
+  // movement, not a five-second asset-loading performance requirement.
+  await settle(
+    () => page.doc.body.dataset.flightState === 'running',
+    'Explicit Start/Resume waits for the selected flight assets before movement.',
+    { timeoutMs: 20_000 },
+  );
+}
 async function setup(t, index, { stopOnCapture, journey = false, level } = {}) {
   const page = await soloPage(t, {
       search: journey ? '?journey=1' : '?journey=legacy',
       titleScreen: journey,
       journeyIndexedDB: managedIndexedDB().indexedDB,
+      // This fixture immediately installs and selects its own campaign. Its
+      // readiness boundary is that campaign's picture below, not the unused
+      // default mission's asynchronous artwork preparation.
+      waitForPictures: false,
     }),
     candidate = structuredClone(pack);
   candidate.campaigns[0].levels = [level ?? candidate.campaigns[0].levels[index]];
@@ -64,8 +80,7 @@ test('Journey capture stop preserves occupied-region teaching and fresh-directio
     ],
   };
   const page = await setup(t, 0, { stopOnCapture: true, journey: true, level });
-  page.$('start-button').click();
-  await settle(() => page.doc.body.dataset.flightState === 'running');
+  await start(page);
   page.key('ArrowDown');
   page.key('ArrowDown', false);
   for (let frame = 0; frame < 900 && page.rendered.run.claimedCount === 0; frame++) page.frame();
@@ -99,11 +114,7 @@ for (const turnPolicy of ['immediate', 'grid-center'])
   test(`${turnPolicy}: capture stops the actual host before another substep and saved Resume stays stopped`, async (t) => {
     const page = await setup(t, 0, { stopOnCapture: true });
     page.change('turn-select', turnPolicy);
-    page.$('start-button').click();
-    await settle(
-      () => page.doc.body.dataset.flightState === 'running',
-      'Explicit Start/Resume waits for the selected picture before movement.',
-    );
+    await start(page);
     page.key('ArrowDown');
     for (let n = 0; n < 700 && page.rendered.run.claimedCount === 0; n++) frames(page, 1);
     const run = page.rendered.run;
@@ -116,17 +127,15 @@ for (const turnPolicy of ['immediate', 'grid-center'])
     assert.equal(run.player.queuedDirection, null);
     assert.match(page.$('run-message').textContent, /Tap a direction to fly again/);
     page.$('pause-button').click();
-    const saved = JSON.parse(page.storage.getItem('revealline.suspended.dev.v1'));
+    const saved = nativeCaptureSession(
+      JSON.parse(page.storage.getItem('revealline.suspended.dev.v1')),
+    );
     assert.equal(saved.continuation.direction, null);
     assert.equal(verifyReplay(saved.replay).match, true);
     page.$('continue-saved').click();
     await settle(() => !page.$('continue-saved').disabled, 'stopped session restored');
     page.frame(0);
-    page.$('start-button').click();
-    await settle(
-      () => page.doc.body.dataset.flightState === 'running',
-      'Explicit Start/Resume waits for the selected picture before movement.',
-    );
+    await start(page);
     frames(page, 8);
     assert.deepEqual([page.rendered.run.player.x, page.rendered.run.player.y], position);
     page.key('ArrowDown', false);
@@ -139,11 +148,7 @@ for (const turnPolicy of ['immediate', 'grid-center'])
 
 test('actual classic host explains a life pickup, retains timed effects through pause/load, and explicitly resumes saved movement', async (t) => {
   const page = await setup(t, 0);
-  page.$('start-button').click();
-  await settle(
-    () => page.doc.body.dataset.flightState === 'running',
-    'Explicit Start/Resume waits for the selected picture before movement.',
-  );
+  await start(page);
   page.key('ArrowDown');
   page.key('ArrowDown', false);
   for (let n = 0; n < 100 && page.rendered.run.lives === 3; n++) frames(page, 1);
@@ -158,7 +163,9 @@ test('actual classic host explains a life pickup, retains timed effects through 
   page.$('pause-button').click();
   frames(page, 4);
   assert.deepEqual(authoritativeCheckpoint(page.rendered.run), before);
-  const saved = JSON.parse(page.storage.getItem('revealline.suspended.dev.v1'));
+  const saved = nativeCaptureSession(
+    JSON.parse(page.storage.getItem('revealline.suspended.dev.v1')),
+  );
   assert.equal(saved.replay.version, 'xonix-replay.v6');
   assert.equal(verifyReplay(saved.replay).match, true);
   page.$('continue-saved').click();
@@ -167,11 +174,7 @@ test('actual classic host explains a life pickup, retains timed effects through 
   assert.deepEqual(authoritativeCheckpoint(page.rendered.run), before);
   assert.equal(page.rendered.paused, true);
   const y = page.rendered.run.player.y;
-  page.$('start-button').click();
-  await settle(
-    () => page.doc.body.dataset.flightState === 'running',
-    'Explicit Start/Resume waits for the selected picture before movement.',
-  );
+  await start(page);
   frames(page, 4);
   assert.ok(page.rendered.run.player.y > y);
   assert.deepEqual(page.errors, []);
@@ -179,11 +182,7 @@ test('actual classic host explains a life pickup, retains timed effects through 
 
 test('actual classic host exposes lethal-terrain recovery text and clears movement before redeployment', async (t) => {
   const page = await setup(t, 5);
-  page.$('start-button').click();
-  await settle(
-    () => page.doc.body.dataset.flightState === 'running',
-    'Explicit Start/Resume waits for the selected picture before movement.',
-  );
+  await start(page);
   page.key('ArrowDown');
   page.key('ArrowDown', false);
   for (let n = 0; n < 1200 && page.rendered.run.status === 'running'; n++) frames(page, 1);
