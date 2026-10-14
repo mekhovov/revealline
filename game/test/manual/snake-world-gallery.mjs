@@ -41,13 +41,14 @@ async function mount() {
             }),
     };
   });
-  function paint(card, boardStyle = card.style, terrainCache = true) {
+  function paint(card, boardStyle = card.style, terrainCache = true, timeMs = 0) {
     drawClassicBoard(card.canvas, card.run, {
       boardStyle,
       terrainCache,
       boardScene: card.scene,
       chapterId: card.entry.chapterId,
-      reduced: true,
+      reduced: timeMs === 0,
+      flight: { timeMs },
       cssWidth: card.canvas.clientWidth || 288,
     });
     if ($('geometry').checked) {
@@ -111,6 +112,50 @@ async function mount() {
       cache = classicTerrainCacheStats(document);
     $('status').textContent =
       `Same-device synchronous redraw (not frame rate): uncached worlds median ${before.median} ms / p95 ${before.p95} ms; cached worlds median ${after.median} ms / p95 ${after.p95} ms. ${cards.length * 12} samples each. Terrain ${(cache.bytes / 1048576).toFixed(2)} / ${(cache.limit / 1048576).toFixed(0)} MiB, ${cache.entries} retained boards.`;
+  });
+  $('frameBenchmark').addEventListener('click', async () => {
+    // A bounded animation benchmark, not an automated claim about device FPS.
+    // Keep simulation frozen so the baseline and remaster render identical state.
+    const sample = [
+      cards.find((c) => c.scene === 'workshop'),
+      cards.find((c) => c.scene === 'relay'),
+    ].filter(Boolean);
+    const intervals = [],
+      costs = [];
+    const controls = [...document.querySelectorAll('button, select, input')];
+    controls.forEach((control) => {
+      control.disabled = true;
+    });
+    $('status').textContent = 'Measuring 120 frames: dense structures and active interference…';
+    let previous = null,
+      cancelled = false;
+    try {
+      for (let frame = 0; frame < 132; frame++) {
+        const stamp = await new Promise((resolve) => globalThis.requestAnimationFrame(resolve));
+        if (document.hidden) {
+          cancelled = true;
+          break;
+        }
+        const start = performance.now();
+        for (const card of sample) paint(card, card.style, true, stamp);
+        if (frame >= 12) {
+          intervals.push(stamp - previous);
+          costs.push(performance.now() - start);
+        }
+        previous = stamp;
+      }
+      const percentile = (values, fraction) =>
+        values
+          .sort((a, b) => a - b)
+          [Math.min(values.length - 1, Math.floor(values.length * fraction))].toFixed(2);
+      $('status').textContent = cancelled
+        ? 'Frame measurement cancelled when the page became hidden.'
+        : `Two-board animation, frozen simulation: frame intervals median ${percentile(intervals, 0.5)} ms / p95 ${percentile(intervals, 0.95)} ms; draw cost median ${percentile(costs, 0.5)} ms / p95 ${percentile(costs, 0.95)} ms. ${intervals.length} samples after 12 warm-up frames. Browser scheduling and display refresh affect these values.`;
+    } finally {
+      controls.forEach((control) => {
+        control.disabled = false;
+      });
+    }
   });
   render();
 }

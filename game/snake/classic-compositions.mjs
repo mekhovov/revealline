@@ -1,5 +1,6 @@
-/** Authored cosmetic board briefs. Coordinates and motifs never enter recipes,
- * gameplay randomness or collision geometry. See world acceptance report. */
+/** Authored cosmetic board briefs. Geometry never enters simulation recipes.
+ * Focal footprints identify actual connected structures; renderers must still clip
+ * to occupied cells, including holes and later erosion. */
 export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
   Object.fromEntries(
     [
@@ -13,6 +14,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'horizontal',
           light: 'morning',
           landmark: 'open-loop',
+          assembly: {
+            family: 'planter',
+            landmark: 'irrigation-wheel',
+            axis: 'horizontal',
+            focus: [6, 6],
+            footprint: null,
+            anchor: null,
+          },
         },
       ],
       [
@@ -25,6 +34,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'vertical',
           light: 'morning',
           landmark: 'two-landings',
+          assembly: {
+            family: 'glasshouse',
+            landmark: 'irrigation-wheel',
+            axis: 'vertical',
+            focus: [17, 11],
+            footprint: [14, 12, 3, 2],
+            anchor: [15, 12],
+          },
         },
       ],
       [
@@ -37,6 +54,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'horizontal',
           light: 'morning',
           landmark: 'first-baffle',
+          assembly: {
+            family: 'irrigator',
+            landmark: 'irrigation-wheel',
+            axis: 'horizontal',
+            focus: [11, 8],
+            footprint: [5, 8, 2, 2],
+            anchor: [5, 8],
+          },
         },
       ],
       [
@@ -49,6 +74,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'vertical',
           light: 'late',
           landmark: 'offset-docks',
+          assembly: {
+            family: 'planter',
+            landmark: 'irrigation-wheel',
+            axis: 'vertical',
+            focus: [16, 5],
+            footprint: [6, 4, 2, 2],
+            anchor: [6, 4],
+          },
         },
       ],
       [
@@ -61,6 +94,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'horizontal',
           light: 'late',
           landmark: 'room-to-follow',
+          assembly: {
+            family: 'glasshouse',
+            landmark: 'irrigation-wheel',
+            axis: 'horizontal',
+            focus: [7, 12],
+            footprint: null,
+            anchor: null,
+          },
         },
       ],
       [
@@ -73,6 +114,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'vertical',
           light: 'late',
           landmark: 'first-circuit',
+          assembly: {
+            family: 'irrigator',
+            landmark: 'irrigation-wheel',
+            axis: 'vertical',
+            focus: [12, 9],
+            footprint: [11, 13, 2, 2],
+            anchor: [11, 13],
+          },
         },
       ],
       [
@@ -85,6 +134,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'horizontal',
           light: 'morning',
           landmark: 'open-elbow',
+          assembly: {
+            family: 'irrigator',
+            landmark: 'irrigation-wheel',
+            axis: 'horizontal',
+            focus: [6, 6],
+            footprint: [8, 5, 7, 8],
+            anchor: [8, 11],
+          },
         },
       ],
       [
@@ -97,6 +154,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'vertical',
           light: 'morning',
           landmark: 'u-turn-yard',
+          assembly: {
+            family: 'irrigator',
+            landmark: 'irrigation-wheel',
+            axis: 'vertical',
+            focus: [17, 11],
+            footprint: null,
+            anchor: null,
+          },
         },
       ],
       [
@@ -109,6 +174,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'horizontal',
           light: 'morning',
           landmark: 'staggered-elbows',
+          assembly: {
+            family: 'irrigator',
+            landmark: 'irrigation-wheel',
+            axis: 'horizontal',
+            focus: [11, 8],
+            footprint: [12, 8, 4, 7],
+            anchor: [12, 13],
+          },
         },
       ],
       [
@@ -121,6 +194,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'vertical',
           light: 'late',
           landmark: 'turning-pockets',
+          assembly: {
+            family: 'irrigator',
+            landmark: 'irrigation-wheel',
+            axis: 'vertical',
+            focus: [16, 5],
+            footprint: [14, 4, 2, 2],
+            anchor: [14, 4],
+          },
         },
       ],
       [
@@ -133,6 +214,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'horizontal',
           light: 'late',
           landmark: 's-bend',
+          assembly: {
+            family: 'irrigator',
+            landmark: 'irrigation-wheel',
+            axis: 'horizontal',
+            focus: [7, 12],
+            footprint: null,
+            anchor: null,
+          },
         },
       ],
       [
@@ -145,6 +234,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'vertical',
           light: 'late',
           landmark: 'elbow-exchange',
+          assembly: {
+            family: 'irrigator',
+            landmark: 'irrigation-wheel',
+            axis: 'vertical',
+            focus: [12, 9],
+            footprint: [11, 8, 2, 2],
+            anchor: [11, 8],
+          },
         },
       ],
       [
@@ -157,6 +254,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'horizontal',
           light: 'morning',
           landmark: 'long-island',
+          assembly: {
+            family: 'pump',
+            landmark: 'pump-beacon',
+            axis: 'horizontal',
+            focus: [6, 6],
+            footprint: [9, 6, 6, 4],
+            anchor: [9, 6],
+          },
         },
       ],
       [
@@ -169,6 +274,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'vertical',
           light: 'morning',
           landmark: 'split-islands',
+          assembly: {
+            family: 'pump',
+            landmark: 'pump-beacon',
+            axis: 'vertical',
+            focus: [17, 11],
+            footprint: [15, 12, 3, 2],
+            anchor: [16, 12],
+          },
         },
       ],
       [
@@ -181,6 +294,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'horizontal',
           light: 'morning',
           landmark: 'bent-causeway',
+          assembly: {
+            family: 'pump',
+            landmark: 'pump-beacon',
+            axis: 'horizontal',
+            focus: [11, 8],
+            footprint: [7, 7, 6, 7],
+            anchor: [11, 7],
+          },
         },
       ],
       [
@@ -193,6 +314,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'vertical',
           light: 'late',
           landmark: 'three-detours',
+          assembly: {
+            family: 'pump',
+            landmark: 'pump-beacon',
+            axis: 'vertical',
+            focus: [16, 5],
+            footprint: [9, 4, 2, 2],
+            anchor: [9, 4],
+          },
         },
       ],
       [
@@ -205,6 +334,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'horizontal',
           light: 'late',
           landmark: 'inner-or-outer',
+          assembly: {
+            family: 'pump',
+            landmark: 'pump-beacon',
+            axis: 'horizontal',
+            focus: [7, 12],
+            footprint: null,
+            anchor: null,
+          },
         },
       ],
       [
@@ -217,6 +354,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'vertical',
           light: 'late',
           landmark: 'long-circuit',
+          assembly: {
+            family: 'pump',
+            landmark: 'pump-beacon',
+            axis: 'vertical',
+            focus: [12, 9],
+            footprint: [11, 6, 2, 6],
+            anchor: [11, 9],
+          },
         },
       ],
       [
@@ -229,6 +374,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'horizontal',
           light: 'morning',
           landmark: 'forked-chase',
+          assembly: {
+            family: 'container',
+            landmark: 'dispatch-cabin',
+            axis: 'horizontal',
+            focus: [6, 6],
+            footprint: [16, 8, 2, 2],
+            anchor: [16, 8],
+          },
         },
       ],
       [
@@ -241,6 +394,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'vertical',
           light: 'morning',
           landmark: 'parallel-paths',
+          assembly: {
+            family: 'container',
+            landmark: 'dispatch-cabin',
+            axis: 'vertical',
+            focus: [17, 11],
+            footprint: [11, 8, 2, 2],
+            anchor: [11, 8],
+          },
         },
       ],
       [
@@ -253,6 +414,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'horizontal',
           light: 'morning',
           landmark: 'crossroads',
+          assembly: {
+            family: 'container',
+            landmark: 'dispatch-cabin',
+            axis: 'horizontal',
+            focus: [11, 8],
+            footprint: [11, 8, 2, 2],
+            anchor: [11, 8],
+          },
         },
       ],
       [
@@ -265,6 +434,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'vertical',
           light: 'late',
           landmark: 'broken-divider',
+          assembly: {
+            family: 'container',
+            landmark: 'dispatch-cabin',
+            axis: 'vertical',
+            focus: [16, 5],
+            footprint: null,
+            anchor: null,
+          },
         },
       ],
       [
@@ -277,6 +454,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'horizontal',
           light: 'late',
           landmark: 'runner-triangle',
+          assembly: {
+            family: 'container',
+            landmark: 'dispatch-cabin',
+            axis: 'horizontal',
+            focus: [7, 12],
+            footprint: [10, 3, 3, 2],
+            anchor: [10, 3],
+          },
         },
       ],
       [
@@ -289,6 +474,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'vertical',
           light: 'late',
           landmark: 'cutoff-network',
+          assembly: {
+            family: 'container',
+            landmark: 'dispatch-cabin',
+            axis: 'vertical',
+            focus: [12, 9],
+            footprint: null,
+            anchor: null,
+          },
         },
       ],
       [
@@ -301,6 +494,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'horizontal',
           light: 'morning',
           landmark: 'keep-the-tail',
+          assembly: {
+            family: 'floodgate',
+            landmark: 'pump-beacon',
+            axis: 'horizontal',
+            focus: [6, 6],
+            footprint: [11, 8, 2, 2],
+            anchor: [11, 8],
+          },
         },
       ],
       [
@@ -313,6 +514,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'vertical',
           light: 'morning',
           landmark: 'lighten-at-home',
+          assembly: {
+            family: 'floodgate',
+            landmark: 'pump-beacon',
+            axis: 'vertical',
+            focus: [17, 11],
+            footprint: [6, 9, 2, 2],
+            anchor: [6, 9],
+          },
         },
       ],
       [
@@ -325,6 +534,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'horizontal',
           light: 'morning',
           landmark: 'banking-steps',
+          assembly: {
+            family: 'floodgate',
+            landmark: 'pump-beacon',
+            axis: 'horizontal',
+            focus: [11, 8],
+            footprint: [10, 8, 2, 2],
+            anchor: [10, 8],
+          },
         },
       ],
       [
@@ -337,6 +554,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'vertical',
           light: 'late',
           landmark: 'persistent-hub',
+          assembly: {
+            family: 'floodgate',
+            landmark: 'pump-beacon',
+            axis: 'vertical',
+            focus: [16, 5],
+            footprint: [10, 7, 3, 4],
+            anchor: [11, 7],
+          },
         },
       ],
       [
@@ -349,6 +574,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'horizontal',
           light: 'late',
           landmark: 'two-return-rhythm',
+          assembly: {
+            family: 'floodgate',
+            landmark: 'pump-beacon',
+            axis: 'horizontal',
+            focus: [7, 12],
+            footprint: [6, 7, 2, 4],
+            anchor: [6, 9],
+          },
         },
       ],
       [
@@ -361,6 +594,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'vertical',
           light: 'late',
           landmark: 'return-weave',
+          assembly: {
+            family: 'floodgate',
+            landmark: 'pump-beacon',
+            axis: 'vertical',
+            focus: [12, 9],
+            footprint: [18, 4, 2, 2],
+            anchor: [18, 4],
+          },
         },
       ],
       [
@@ -373,6 +614,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'horizontal',
           light: 'morning',
           landmark: 'one-warning',
+          assembly: {
+            family: 'platform',
+            landmark: 'dispatch-cabin',
+            axis: 'horizontal',
+            focus: [6, 6],
+            footprint: [7, 5, 2, 2],
+            anchor: [7, 5],
+          },
         },
       ],
       [
@@ -385,6 +634,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'vertical',
           light: 'morning',
           landmark: 'warning-courtyard',
+          assembly: {
+            family: 'platform',
+            landmark: 'dispatch-cabin',
+            axis: 'vertical',
+            focus: [17, 11],
+            footprint: null,
+            anchor: null,
+          },
         },
       ],
       [
@@ -397,6 +654,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'horizontal',
           light: 'morning',
           landmark: 'crossed-sightlines',
+          assembly: {
+            family: 'platform',
+            landmark: 'dispatch-cabin',
+            axis: 'horizontal',
+            focus: [11, 8],
+            footprint: [6, 13, 2, 2],
+            anchor: [6, 13],
+          },
         },
       ],
       [
@@ -409,6 +674,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'vertical',
           light: 'late',
           landmark: 'screened-approach',
+          assembly: {
+            family: 'platform',
+            landmark: 'dispatch-cabin',
+            axis: 'vertical',
+            focus: [16, 5],
+            footprint: [15, 4, 3, 2],
+            anchor: [16, 4],
+          },
         },
       ],
       [
@@ -421,6 +694,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'horizontal',
           light: 'late',
           landmark: 'guarded-returns',
+          assembly: {
+            family: 'platform',
+            landmark: 'dispatch-cabin',
+            axis: 'horizontal',
+            focus: [7, 12],
+            footprint: [5, 8, 3, 2],
+            anchor: [6, 8],
+          },
         },
       ],
       [
@@ -433,6 +714,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'vertical',
           light: 'late',
           landmark: 'garden-crossfire',
+          assembly: {
+            family: 'platform',
+            landmark: 'dispatch-cabin',
+            axis: 'vertical',
+            focus: [12, 9],
+            footprint: null,
+            anchor: null,
+          },
         },
       ],
       [
@@ -445,6 +734,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'horizontal',
           light: 'morning',
           landmark: 'opposite-arrivals',
+          assembly: {
+            family: 'coolant',
+            landmark: 'pressure-gauge',
+            axis: 'horizontal',
+            focus: [6, 6],
+            footprint: [11, 8, 2, 2],
+            anchor: [11, 8],
+          },
         },
       ],
       [
@@ -457,6 +754,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'vertical',
           light: 'morning',
           landmark: 'crossing-schedule',
+          assembly: {
+            family: 'coolant',
+            landmark: 'pressure-gauge',
+            axis: 'vertical',
+            focus: [17, 11],
+            footprint: [14, 12, 4, 2],
+            anchor: [16, 12],
+          },
         },
       ],
       [
@@ -469,6 +774,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'horizontal',
           light: 'morning',
           landmark: 'paired-loops',
+          assembly: {
+            family: 'coolant',
+            landmark: 'pressure-gauge',
+            axis: 'horizontal',
+            focus: [11, 8],
+            footprint: [11, 8, 2, 2],
+            anchor: [11, 8],
+          },
         },
       ],
       [
@@ -481,6 +794,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'vertical',
           light: 'late',
           landmark: 'shared-detour',
+          assembly: {
+            family: 'coolant',
+            landmark: 'pressure-gauge',
+            axis: 'vertical',
+            focus: [16, 5],
+            footprint: [10, 13, 6, 2],
+            anchor: [14, 13],
+          },
         },
       ],
       [
@@ -493,6 +814,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'horizontal',
           light: 'late',
           landmark: 'support-corridor',
+          assembly: {
+            family: 'coolant',
+            landmark: 'pressure-gauge',
+            axis: 'horizontal',
+            focus: [7, 12],
+            footprint: null,
+            anchor: null,
+          },
         },
       ],
       [
@@ -505,6 +834,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'vertical',
           light: 'late',
           landmark: 'shared-circuit',
+          assembly: {
+            family: 'coolant',
+            landmark: 'pressure-gauge',
+            axis: 'vertical',
+            focus: [12, 9],
+            footprint: [14, 13, 2, 2],
+            anchor: [14, 13],
+          },
         },
       ],
       [
@@ -517,6 +854,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'horizontal',
           light: 'morning',
           landmark: 'long-opening',
+          assembly: {
+            family: 'terrace',
+            landmark: 'survey-arch',
+            axis: 'horizontal',
+            focus: [6, 6],
+            footprint: [11, 7, 2, 3],
+            anchor: [11, 7],
+          },
         },
       ],
       [
@@ -529,6 +874,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'vertical',
           light: 'morning',
           landmark: 'fork-and-warning',
+          assembly: {
+            family: 'terrace',
+            landmark: 'survey-arch',
+            axis: 'vertical',
+            focus: [17, 11],
+            footprint: [15, 5, 2, 2],
+            anchor: [15, 5],
+          },
         },
       ],
       [
@@ -541,6 +894,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'horizontal',
           light: 'morning',
           landmark: 'ordered-islands',
+          assembly: {
+            family: 'terrace',
+            landmark: 'survey-arch',
+            axis: 'horizontal',
+            focus: [11, 8],
+            footprint: [10, 13, 4, 2],
+            anchor: [11, 13],
+          },
         },
       ],
       [
@@ -553,6 +914,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'vertical',
           light: 'late',
           landmark: 'last-shedding-bank',
+          assembly: {
+            family: 'terrace',
+            landmark: 'survey-arch',
+            axis: 'vertical',
+            focus: [16, 5],
+            footprint: [11, 7, 3, 4],
+            anchor: [12, 7],
+          },
         },
       ],
       [
@@ -565,6 +934,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'horizontal',
           light: 'late',
           landmark: 'woven-gauntlet',
+          assembly: {
+            family: 'terrace',
+            landmark: 'survey-arch',
+            axis: 'horizontal',
+            focus: [7, 12],
+            footprint: [7, 13, 5, 2],
+            anchor: [7, 13],
+          },
         },
       ],
       [
@@ -577,6 +954,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'vertical',
           light: 'late',
           landmark: 'final-weave',
+          assembly: {
+            family: 'terrace',
+            landmark: 'survey-arch',
+            axis: 'vertical',
+            focus: [12, 9],
+            footprint: [11, 7, 2, 2],
+            anchor: [11, 7],
+          },
         },
       ],
       [
@@ -589,6 +974,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'horizontal',
           light: 'morning',
           landmark: 'oval-intercept',
+          assembly: {
+            family: 'antenna',
+            landmark: 'receiver-dish',
+            axis: 'horizontal',
+            focus: [6, 6],
+            footprint: [9, 6, 6, 5],
+            anchor: [9, 6],
+          },
         },
       ],
       [
@@ -601,6 +994,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'vertical',
           light: 'morning',
           landmark: 'split-yard',
+          assembly: {
+            family: 'antenna',
+            landmark: 'receiver-dish',
+            axis: 'vertical',
+            focus: [17, 11],
+            footprint: [11, 4, 2, 10],
+            anchor: [11, 11],
+          },
         },
       ],
       [
@@ -613,6 +1014,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'horizontal',
           light: 'morning',
           landmark: 'island-clock',
+          assembly: {
+            family: 'antenna',
+            landmark: 'receiver-dish',
+            axis: 'horizontal',
+            focus: [11, 8],
+            footprint: [10, 7, 4, 4],
+            anchor: [11, 8],
+          },
         },
       ],
       [
@@ -625,6 +1034,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'vertical',
           light: 'late',
           landmark: 'passing-bays',
+          assembly: {
+            family: 'antenna',
+            landmark: 'receiver-dish',
+            axis: 'vertical',
+            focus: [16, 5],
+            footprint: [17, 6, 3, 2],
+            anchor: [17, 6],
+          },
         },
       ],
       [
@@ -637,6 +1054,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'horizontal',
           light: 'late',
           landmark: 'crossroads',
+          assembly: {
+            family: 'antenna',
+            landmark: 'receiver-dish',
+            axis: 'horizontal',
+            focus: [7, 12],
+            footprint: [5, 12, 3, 2],
+            anchor: [6, 12],
+          },
         },
       ],
       [
@@ -649,6 +1074,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'vertical',
           light: 'late',
           landmark: 'inner-shortcut',
+          assembly: {
+            family: 'antenna',
+            landmark: 'receiver-dish',
+            axis: 'vertical',
+            focus: [12, 9],
+            footprint: null,
+            anchor: null,
+          },
         },
       ],
       [
@@ -661,6 +1094,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'horizontal',
           light: 'morning',
           landmark: 'open-intercept',
+          assembly: {
+            family: 'glasshouse',
+            landmark: 'irrigation-wheel',
+            axis: 'horizontal',
+            focus: [6, 6],
+            footprint: [6, 5, 3, 3],
+            anchor: [6, 6],
+          },
         },
       ],
       [
@@ -673,6 +1114,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'vertical',
           light: 'morning',
           landmark: 'blind-corner',
+          assembly: {
+            family: 'glasshouse',
+            landmark: 'irrigation-wheel',
+            axis: 'vertical',
+            focus: [17, 11],
+            footprint: [9, 3, 9, 9],
+            anchor: [16, 10],
+          },
         },
       ],
       [
@@ -685,6 +1134,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'horizontal',
           light: 'morning',
           landmark: 'zigzag-exit',
+          assembly: {
+            family: 'glasshouse',
+            landmark: 'irrigation-wheel',
+            axis: 'horizontal',
+            focus: [11, 8],
+            footprint: [8, 0, 2, 9],
+            anchor: [8, 7],
+          },
         },
       ],
       [
@@ -697,6 +1154,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'vertical',
           light: 'late',
           landmark: 'broken-ring',
+          assembly: {
+            family: 'glasshouse',
+            landmark: 'irrigation-wheel',
+            axis: 'vertical',
+            focus: [16, 5],
+            footprint: null,
+            anchor: null,
+          },
         },
       ],
       [
@@ -709,6 +1174,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'horizontal',
           light: 'late',
           landmark: 'border-cutoff',
+          assembly: {
+            family: 'glasshouse',
+            landmark: 'irrigation-wheel',
+            axis: 'horizontal',
+            focus: [7, 12],
+            footprint: [6, 4, 2, 10],
+            anchor: [6, 12],
+          },
         },
       ],
       [
@@ -721,6 +1194,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'vertical',
           light: 'late',
           landmark: 'three-way-escape',
+          assembly: {
+            family: 'glasshouse',
+            landmark: 'irrigation-wheel',
+            axis: 'vertical',
+            focus: [12, 9],
+            footprint: [15, 8, 9, 2],
+            anchor: [15, 8],
+          },
         },
       ],
       [
@@ -733,6 +1214,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'horizontal',
           light: 'morning',
           landmark: 'first-dash',
+          assembly: {
+            family: 'boiler',
+            landmark: 'pressure-gauge',
+            axis: 'horizontal',
+            focus: [6, 6],
+            footprint: [5, 6, 14, 2],
+            anchor: [6, 6],
+          },
         },
       ],
       [
@@ -745,6 +1234,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'vertical',
           light: 'morning',
           landmark: 'corner-pause',
+          assembly: {
+            family: 'boiler',
+            landmark: 'pressure-gauge',
+            axis: 'vertical',
+            focus: [17, 11],
+            footprint: [8, 4, 10, 8],
+            anchor: [16, 10],
+          },
         },
       ],
       [
@@ -757,6 +1254,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'horizontal',
           light: 'morning',
           landmark: 'alternating-straights',
+          assembly: {
+            family: 'boiler',
+            landmark: 'pressure-gauge',
+            axis: 'horizontal',
+            focus: [11, 8],
+            footprint: [5, 4, 13, 10],
+            anchor: [11, 9],
+          },
         },
       ],
       [
@@ -769,6 +1274,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'vertical',
           light: 'late',
           landmark: 'staggered-cover',
+          assembly: {
+            family: 'boiler',
+            landmark: 'pressure-gauge',
+            axis: 'vertical',
+            focus: [16, 5],
+            footprint: [11, 7, 4, 3],
+            anchor: [13, 7],
+          },
         },
       ],
       [
@@ -781,6 +1294,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'horizontal',
           light: 'late',
           landmark: 'crossing-bursts',
+          assembly: {
+            family: 'boiler',
+            landmark: 'pressure-gauge',
+            axis: 'horizontal',
+            focus: [7, 12],
+            footprint: [5, 11, 4, 3],
+            anchor: [7, 12],
+          },
         },
       ],
       [
@@ -793,6 +1314,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'vertical',
           light: 'late',
           landmark: 'long-way-round',
+          assembly: {
+            family: 'boiler',
+            landmark: 'pressure-gauge',
+            axis: 'vertical',
+            focus: [12, 9],
+            footprint: [11, 5, 2, 13],
+            anchor: [11, 9],
+          },
         },
       ],
       [
@@ -805,6 +1334,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'horizontal',
           light: 'morning',
           landmark: 'first-shutter',
+          assembly: {
+            family: 'pressure',
+            landmark: 'pressure-gauge',
+            axis: 'horizontal',
+            focus: [6, 6],
+            footprint: [10, 4, 2, 4],
+            anchor: [10, 6],
+          },
         },
       ],
       [
@@ -817,6 +1354,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'vertical',
           light: 'morning',
           landmark: 'split-corridor',
+          assembly: {
+            family: 'pressure',
+            landmark: 'pressure-gauge',
+            axis: 'vertical',
+            focus: [17, 11],
+            footprint: [6, 10, 12, 3],
+            anchor: [16, 11],
+          },
         },
       ],
       [
@@ -829,6 +1374,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'horizontal',
           light: 'morning',
           landmark: 'offset-windows',
+          assembly: {
+            family: 'pressure',
+            landmark: 'pressure-gauge',
+            axis: 'horizontal',
+            focus: [11, 8],
+            footprint: [15, 4, 2, 6],
+            anchor: [15, 8],
+          },
         },
       ],
       [
@@ -841,6 +1394,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'vertical',
           light: 'late',
           landmark: 'clockwork-ring',
+          assembly: {
+            family: 'pressure',
+            landmark: 'pressure-gauge',
+            axis: 'vertical',
+            focus: [16, 5],
+            footprint: null,
+            anchor: null,
+          },
         },
       ],
       [
@@ -853,6 +1414,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'horizontal',
           light: 'late',
           landmark: 'boundary-detour',
+          assembly: {
+            family: 'pressure',
+            landmark: 'pressure-gauge',
+            axis: 'horizontal',
+            focus: [7, 12],
+            footprint: [3, 8, 3, 2],
+            anchor: [4, 8],
+          },
         },
       ],
       [
@@ -865,6 +1434,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'vertical',
           light: 'late',
           landmark: 'return-junction',
+          assembly: {
+            family: 'pressure',
+            landmark: 'pressure-gauge',
+            axis: 'vertical',
+            focus: [12, 9],
+            footprint: [11, 8, 2, 2],
+            anchor: [11, 8],
+          },
         },
       ],
       [
@@ -877,6 +1454,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'horizontal',
           light: 'morning',
           landmark: 'first-pulse',
+          assembly: {
+            family: 'dispatch',
+            landmark: 'dispatch-cabin',
+            axis: 'horizontal',
+            focus: [6, 6],
+            footprint: [7, 5, 3, 3],
+            anchor: [7, 6],
+          },
         },
       ],
       [
@@ -889,6 +1474,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'vertical',
           light: 'morning',
           landmark: 'cable-service',
+          assembly: {
+            family: 'dispatch',
+            landmark: 'dispatch-cabin',
+            axis: 'vertical',
+            focus: [17, 11],
+            footprint: [10, 8, 4, 2],
+            anchor: [12, 8],
+          },
         },
       ],
       [
@@ -901,6 +1494,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'horizontal',
           light: 'morning',
           landmark: 'choose-the-detour',
+          assembly: {
+            family: 'dispatch',
+            landmark: 'dispatch-cabin',
+            axis: 'horizontal',
+            focus: [11, 8],
+            footprint: [6, 5, 11, 4],
+            anchor: [11, 5],
+          },
         },
       ],
       [
@@ -913,6 +1514,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'vertical',
           light: 'late',
           landmark: 'courier-crossing',
+          assembly: {
+            family: 'dispatch',
+            landmark: 'dispatch-cabin',
+            axis: 'vertical',
+            focus: [16, 5],
+            footprint: [11, 4, 2, 2],
+            anchor: [11, 4],
+          },
         },
       ],
       [
@@ -925,6 +1534,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'horizontal',
           light: 'late',
           landmark: 'shared-supply',
+          assembly: {
+            family: 'dispatch',
+            landmark: 'dispatch-cabin',
+            axis: 'horizontal',
+            focus: [7, 12],
+            footprint: [5, 5, 4, 7],
+            anchor: [7, 10],
+          },
         },
       ],
       [
@@ -937,6 +1554,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'vertical',
           light: 'late',
           landmark: 'last-offer',
+          assembly: {
+            family: 'dispatch',
+            landmark: 'dispatch-cabin',
+            axis: 'vertical',
+            focus: [12, 9],
+            footprint: [10, 10, 4, 3],
+            anchor: [12, 10],
+          },
         },
       ],
       [
@@ -949,6 +1574,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'horizontal',
           light: 'morning',
           landmark: 'patrol-into-sprint',
+          assembly: {
+            family: 'reclaimer',
+            landmark: 'survey-arch',
+            axis: 'horizontal',
+            focus: [6, 6],
+            footprint: [10, 8, 4, 2],
+            anchor: [10, 8],
+          },
         },
       ],
       [
@@ -961,6 +1594,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'vertical',
           light: 'morning',
           landmark: 'runner-at-the-window',
+          assembly: {
+            family: 'reclaimer',
+            landmark: 'survey-arch',
+            axis: 'vertical',
+            focus: [17, 11],
+            footprint: [12, 8, 2, 2],
+            anchor: [12, 8],
+          },
         },
       ],
       [
@@ -973,6 +1614,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'horizontal',
           light: 'morning',
           landmark: 'border-relay',
+          assembly: {
+            family: 'reclaimer',
+            landmark: 'survey-arch',
+            axis: 'horizontal',
+            focus: [11, 8],
+            footprint: [11, 8, 2, 2],
+            anchor: [11, 8],
+          },
         },
       ],
       [
@@ -985,6 +1634,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'vertical',
           light: 'late',
           landmark: 'forked-interception',
+          assembly: {
+            family: 'reclaimer',
+            landmark: 'survey-arch',
+            axis: 'vertical',
+            focus: [16, 5],
+            footprint: [18, 7, 6, 2],
+            anchor: [18, 7],
+          },
         },
       ],
       [
@@ -997,6 +1654,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'horizontal',
           light: 'late',
           landmark: 'supply-circuit',
+          assembly: {
+            family: 'reclaimer',
+            landmark: 'survey-arch',
+            axis: 'horizontal',
+            focus: [7, 12],
+            footprint: [6, 8, 12, 5],
+            anchor: [7, 11],
+          },
         },
       ],
       [
@@ -1009,6 +1674,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'vertical',
           light: 'late',
           landmark: 'final-airfield',
+          assembly: {
+            family: 'reclaimer',
+            landmark: 'survey-arch',
+            axis: 'vertical',
+            focus: [12, 9],
+            footprint: [10, 7, 3, 2],
+            anchor: [11, 7],
+          },
         },
       ],
       [
@@ -1021,6 +1694,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'horizontal',
           light: 'morning',
           landmark: 'refuge-bays',
+          assembly: {
+            family: 'dock',
+            landmark: 'pump-beacon',
+            axis: 'horizontal',
+            focus: [6, 6],
+            footprint: [7, 5, 3, 3],
+            anchor: [7, 6],
+          },
         },
       ],
       [
@@ -1033,6 +1714,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'vertical',
           light: 'morning',
           landmark: 'switchback-yard',
+          assembly: {
+            family: 'dock',
+            landmark: 'pump-beacon',
+            axis: 'vertical',
+            focus: [17, 11],
+            footprint: [15, 9, 2, 5],
+            anchor: [15, 11],
+          },
         },
       ],
       [
@@ -1045,6 +1734,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'horizontal',
           light: 'morning',
           landmark: 'rendezvous-crossing',
+          assembly: {
+            family: 'dock',
+            landmark: 'pump-beacon',
+            axis: 'horizontal',
+            focus: [11, 8],
+            footprint: [7, 5, 3, 3],
+            anchor: [8, 6],
+          },
         },
       ],
       [
@@ -1057,6 +1754,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'vertical',
           light: 'late',
           landmark: 'cable-cutoff',
+          assembly: {
+            family: 'dock',
+            landmark: 'pump-beacon',
+            axis: 'vertical',
+            focus: [16, 5],
+            footprint: [16, 7, 2, 7],
+            anchor: [16, 7],
+          },
         },
       ],
       [
@@ -1069,6 +1774,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'horizontal',
           light: 'late',
           landmark: 'return-pincer',
+          assembly: {
+            family: 'dock',
+            landmark: 'pump-beacon',
+            axis: 'horizontal',
+            focus: [7, 12],
+            footprint: [5, 8, 3, 2],
+            anchor: [6, 8],
+          },
         },
       ],
       [
@@ -1081,6 +1794,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'vertical',
           light: 'late',
           landmark: 'twin-intercepts',
+          assembly: {
+            family: 'dock',
+            landmark: 'pump-beacon',
+            axis: 'vertical',
+            focus: [12, 9],
+            footprint: [10, 7, 3, 2],
+            anchor: [11, 7],
+          },
         },
       ],
       [
@@ -1093,6 +1814,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'horizontal',
           light: 'morning',
           landmark: 'shield-window',
+          assembly: {
+            family: 'platform',
+            landmark: 'dispatch-cabin',
+            axis: 'horizontal',
+            focus: [6, 6],
+            footprint: [7, 6, 3, 5],
+            anchor: [7, 6],
+          },
         },
       ],
       [
@@ -1105,6 +1834,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'vertical',
           light: 'morning',
           landmark: 'brace-break',
+          assembly: {
+            family: 'platform',
+            landmark: 'dispatch-cabin',
+            axis: 'vertical',
+            focus: [17, 11],
+            footprint: [16, 11, 3, 2],
+            anchor: [17, 11],
+          },
         },
       ],
       [
@@ -1117,6 +1854,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'horizontal',
           light: 'morning',
           landmark: 'shutter-flank',
+          assembly: {
+            family: 'platform',
+            landmark: 'dispatch-cabin',
+            axis: 'horizontal',
+            focus: [11, 8],
+            footprint: [11, 4, 2, 4],
+            anchor: [11, 6],
+          },
         },
       ],
       [
@@ -1129,6 +1874,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'vertical',
           light: 'late',
           landmark: 'frozen-opening',
+          assembly: {
+            family: 'platform',
+            landmark: 'dispatch-cabin',
+            axis: 'vertical',
+            focus: [16, 5],
+            footprint: [11, 6, 2, 2],
+            anchor: [11, 6],
+          },
         },
       ],
       [
@@ -1141,6 +1894,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'horizontal',
           light: 'late',
           landmark: 'supply-flanks',
+          assembly: {
+            family: 'platform',
+            landmark: 'dispatch-cabin',
+            axis: 'horizontal',
+            focus: [7, 12],
+            footprint: [9, 11, 6, 2],
+            anchor: [9, 11],
+          },
         },
       ],
       [
@@ -1153,6 +1914,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'vertical',
           light: 'late',
           landmark: 'living-airfield',
+          assembly: {
+            family: 'platform',
+            landmark: 'dispatch-cabin',
+            axis: 'vertical',
+            focus: [12, 9],
+            footprint: [11, 7, 2, 3],
+            anchor: [11, 8],
+          },
         },
       ],
       [
@@ -1165,6 +1934,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'horizontal',
           light: 'morning',
           landmark: 'signal-check',
+          assembly: {
+            family: 'receiver',
+            landmark: 'receiver-dish',
+            axis: 'horizontal',
+            focus: [6, 6],
+            footprint: [10, 5, 3, 3],
+            anchor: [10, 6],
+          },
         },
       ],
       [
@@ -1177,6 +1954,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'vertical',
           light: 'morning',
           landmark: 'quiet-return',
+          assembly: {
+            family: 'receiver',
+            landmark: 'receiver-dish',
+            axis: 'vertical',
+            focus: [17, 11],
+            footprint: [14, 10, 3, 3],
+            anchor: [15, 11],
+          },
         },
       ],
       [
@@ -1189,6 +1974,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'horizontal',
           light: 'morning',
           landmark: 'lane-window',
+          assembly: {
+            family: 'receiver',
+            landmark: 'receiver-dish',
+            axis: 'horizontal',
+            focus: [11, 8],
+            footprint: [10, 4, 4, 2],
+            anchor: [11, 4],
+          },
         },
       ],
       [
@@ -1201,6 +1994,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'vertical',
           light: 'late',
           landmark: 'two-returns',
+          assembly: {
+            family: 'receiver',
+            landmark: 'receiver-dish',
+            axis: 'vertical',
+            focus: [16, 5],
+            footprint: [9, 4, 2, 3],
+            anchor: [9, 5],
+          },
         },
       ],
       [
@@ -1213,6 +2014,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'horizontal',
           light: 'late',
           landmark: 'relay-key',
+          assembly: {
+            family: 'receiver',
+            landmark: 'receiver-dish',
+            axis: 'horizontal',
+            focus: [7, 12],
+            footprint: [10, 11, 4, 2],
+            anchor: [10, 11],
+          },
         },
       ],
       [
@@ -1225,6 +2034,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'vertical',
           light: 'late',
           landmark: 'linked-courts',
+          assembly: {
+            family: 'receiver',
+            landmark: 'receiver-dish',
+            axis: 'vertical',
+            focus: [12, 9],
+            footprint: [14, 11, 2, 3],
+            anchor: [14, 11],
+          },
         },
       ],
       [
@@ -1237,6 +2054,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'horizontal',
           light: 'night',
           landmark: 'broadcast-check',
+          assembly: {
+            family: 'receiver',
+            landmark: 'receiver-dish',
+            axis: 'horizontal',
+            focus: [5, 8],
+            footprint: [7, 6, 3, 4],
+            anchor: [7, 8],
+          },
         },
       ],
       [
@@ -1249,6 +2074,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'vertical',
           light: 'night',
           landmark: 'quiet-channel',
+          assembly: {
+            family: 'receiver',
+            landmark: 'receiver-dish',
+            axis: 'vertical',
+            focus: [18, 9],
+            footprint: [15, 10, 3, 4],
+            anchor: [16, 10],
+          },
         },
       ],
       [
@@ -1261,6 +2094,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'horizontal',
           light: 'night',
           landmark: 'signal-crossing',
+          assembly: {
+            family: 'receiver',
+            landmark: 'receiver-dish',
+            axis: 'horizontal',
+            focus: [10, 5],
+            footprint: [9, 4, 3, 3],
+            anchor: [10, 5],
+          },
         },
       ],
       [
@@ -1273,6 +2114,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'vertical',
           light: 'night',
           landmark: 'relay-airfield',
+          assembly: {
+            family: 'receiver',
+            landmark: 'receiver-dish',
+            axis: 'vertical',
+            focus: [14, 12],
+            footprint: [14, 11, 3, 3],
+            anchor: [14, 12],
+          },
         },
       ],
       [
@@ -1285,6 +2134,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'horizontal',
           light: 'morning',
           landmark: 'border-watch',
+          assembly: {
+            family: 'terrace',
+            landmark: 'survey-arch',
+            axis: 'horizontal',
+            focus: [6, 6],
+            footprint: [10, 6, 4, 5],
+            anchor: [10, 6],
+          },
         },
       ],
       [
@@ -1297,6 +2154,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'vertical',
           light: 'morning',
           landmark: 'border-cutoff',
+          assembly: {
+            family: 'terrace',
+            landmark: 'survey-arch',
+            axis: 'vertical',
+            focus: [17, 11],
+            footprint: [14, 10, 3, 3],
+            anchor: [15, 11],
+          },
         },
       ],
       [
@@ -1309,6 +2174,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'horizontal',
           light: 'morning',
           landmark: 'contour-orbit',
+          assembly: {
+            family: 'terrace',
+            landmark: 'survey-arch',
+            axis: 'horizontal',
+            focus: [11, 8],
+            footprint: [9, 6, 6, 6],
+            anchor: [11, 8],
+          },
         },
       ],
       [
@@ -1321,6 +2194,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'vertical',
           light: 'late',
           landmark: 'contour-transfer',
+          assembly: {
+            family: 'terrace',
+            landmark: 'survey-arch',
+            axis: 'vertical',
+            focus: [16, 5],
+            footprint: [9, 6, 6, 6],
+            anchor: [13, 6],
+          },
         },
       ],
       [
@@ -1333,6 +2214,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'horizontal',
           light: 'late',
           landmark: 'wake-watch',
+          assembly: {
+            family: 'terrace',
+            landmark: 'survey-arch',
+            axis: 'horizontal',
+            focus: [7, 12],
+            footprint: [10, 5, 3, 4],
+            anchor: [10, 7],
+          },
         },
       ],
       [
@@ -1345,6 +2234,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'vertical',
           light: 'late',
           landmark: 'wake-courtyard',
+          assembly: {
+            family: 'terrace',
+            landmark: 'survey-arch',
+            axis: 'vertical',
+            focus: [12, 9],
+            footprint: [7, 5, 3, 5],
+            anchor: [8, 8],
+          },
         },
       ],
       [
@@ -1357,6 +2254,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'horizontal',
           light: 'morning',
           landmark: 'ricochet-line',
+          assembly: {
+            family: 'shelter',
+            landmark: 'receiver-dish',
+            axis: 'horizontal',
+            focus: [6, 6],
+            footprint: [9, 5, 2, 6],
+            anchor: [9, 6],
+          },
         },
       ],
       [
@@ -1369,6 +2274,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'vertical',
           light: 'morning',
           landmark: 'ricochet-yard',
+          assembly: {
+            family: 'shelter',
+            landmark: 'receiver-dish',
+            axis: 'vertical',
+            focus: [17, 11],
+            footprint: [15, 9, 3, 3],
+            anchor: [16, 10],
+          },
         },
       ],
       [
@@ -1381,6 +2294,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'horizontal',
           light: 'morning',
           landmark: 'open-seam',
+          assembly: {
+            family: 'shelter',
+            landmark: 'receiver-dish',
+            axis: 'horizontal',
+            focus: [11, 8],
+            footprint: null,
+            anchor: null,
+          },
         },
       ],
       [
@@ -1393,6 +2314,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'vertical',
           light: 'late',
           landmark: 'seam-return',
+          assembly: {
+            family: 'shelter',
+            landmark: 'receiver-dish',
+            axis: 'vertical',
+            focus: [16, 5],
+            footprint: [5, 11, 3, 2],
+            anchor: [6, 11],
+          },
         },
       ],
       [
@@ -1405,6 +2334,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'horizontal',
           light: 'late',
           landmark: 'guard-line',
+          assembly: {
+            family: 'shelter',
+            landmark: 'receiver-dish',
+            axis: 'horizontal',
+            focus: [7, 12],
+            footprint: [10, 10, 3, 3],
+            anchor: [10, 11],
+          },
         },
       ],
       [
@@ -1417,6 +2354,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'vertical',
           light: 'late',
           landmark: 'guard-return',
+          assembly: {
+            family: 'shelter',
+            landmark: 'receiver-dish',
+            axis: 'vertical',
+            focus: [12, 9],
+            footprint: [10, 4, 4, 3],
+            anchor: [12, 5],
+          },
         },
       ],
       [
@@ -1429,6 +2374,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'horizontal',
           light: 'night',
           landmark: 'field-links',
+          assembly: {
+            family: 'shelter',
+            landmark: 'receiver-dish',
+            axis: 'horizontal',
+            focus: [5, 8],
+            footprint: [6, 5, 2, 2],
+            anchor: [6, 5],
+          },
         },
       ],
       [
@@ -1441,6 +2394,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'vertical',
           light: 'night',
           landmark: 'field-finale',
+          assembly: {
+            family: 'shelter',
+            landmark: 'receiver-dish',
+            axis: 'vertical',
+            focus: [18, 9],
+            footprint: [13, 11, 4, 3],
+            anchor: [15, 11],
+          },
         },
       ],
       [
@@ -1453,6 +2414,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'horizontal',
           light: 'morning',
           landmark: 'orchard-fork',
+          assembly: {
+            family: 'container',
+            landmark: 'dispatch-cabin',
+            axis: 'horizontal',
+            focus: [6, 6],
+            footprint: [8, 5, 3, 3],
+            anchor: [8, 6],
+          },
         },
       ],
       [
@@ -1465,6 +2434,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'vertical',
           light: 'morning',
           landmark: 'switchback-courts',
+          assembly: {
+            family: 'container',
+            landmark: 'dispatch-cabin',
+            axis: 'vertical',
+            focus: [17, 11],
+            footprint: [14, 7, 4, 6],
+            anchor: [16, 11],
+          },
         },
       ],
       [
@@ -1477,6 +2454,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'horizontal',
           light: 'morning',
           landmark: 'opposite-platforms',
+          assembly: {
+            family: 'container',
+            landmark: 'dispatch-cabin',
+            axis: 'horizontal',
+            focus: [11, 8],
+            footprint: [11, 5, 2, 8],
+            anchor: [11, 8],
+          },
         },
       ],
       [
@@ -1489,6 +2474,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'vertical',
           light: 'late',
           landmark: 'boundary-exchange',
+          assembly: {
+            family: 'container',
+            landmark: 'dispatch-cabin',
+            axis: 'vertical',
+            focus: [16, 5],
+            footprint: [10, 0, 2, 5],
+            anchor: [10, 3],
+          },
         },
       ],
       [
@@ -1501,6 +2494,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'horizontal',
           light: 'late',
           landmark: 'mirror-returns',
+          assembly: {
+            family: 'container',
+            landmark: 'dispatch-cabin',
+            axis: 'horizontal',
+            focus: [7, 12],
+            footprint: [7, 4, 2, 7],
+            anchor: [7, 9],
+          },
         },
       ],
       [
@@ -1513,6 +2514,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'vertical',
           light: 'late',
           landmark: 'inner-outer-transfer',
+          assembly: {
+            family: 'container',
+            landmark: 'dispatch-cabin',
+            axis: 'vertical',
+            focus: [12, 9],
+            footprint: [7, 6, 3, 4],
+            anchor: [8, 8],
+          },
         },
       ],
       [
@@ -1525,6 +2534,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'horizontal',
           light: 'morning',
           landmark: 'shutter-split',
+          assembly: {
+            family: 'pressure',
+            landmark: 'pressure-gauge',
+            axis: 'horizontal',
+            focus: [6, 6],
+            footprint: null,
+            anchor: null,
+          },
         },
       ],
       [
@@ -1537,6 +2554,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'vertical',
           light: 'morning',
           landmark: 'pulse-detour',
+          assembly: {
+            family: 'pressure',
+            landmark: 'pressure-gauge',
+            axis: 'vertical',
+            focus: [17, 11],
+            footprint: [14, 9, 3, 3],
+            anchor: [15, 10],
+          },
         },
       ],
       [
@@ -1549,6 +2574,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'horizontal',
           light: 'morning',
           landmark: 'tail-workshop',
+          assembly: {
+            family: 'pressure',
+            landmark: 'pressure-gauge',
+            axis: 'horizontal',
+            focus: [11, 8],
+            footprint: [8, 4, 2, 6],
+            anchor: [8, 8],
+          },
         },
       ],
       [
@@ -1561,6 +2594,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'vertical',
           light: 'late',
           landmark: 'courier-overpass',
+          assembly: {
+            family: 'pressure',
+            landmark: 'pressure-gauge',
+            axis: 'vertical',
+            focus: [16, 5],
+            footprint: [14, 10, 3, 3],
+            anchor: [15, 10],
+          },
         },
       ],
       [
@@ -1573,6 +2614,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'horizontal',
           light: 'late',
           landmark: 'breaking-bridge',
+          assembly: {
+            family: 'pressure',
+            landmark: 'pressure-gauge',
+            axis: 'horizontal',
+            focus: [7, 12],
+            footprint: [6, 5, 2, 2],
+            anchor: [6, 5],
+          },
         },
       ],
       [
@@ -1585,6 +2634,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'vertical',
           light: 'late',
           landmark: 'clockwork-intercepts',
+          assembly: {
+            family: 'pressure',
+            landmark: 'pressure-gauge',
+            axis: 'vertical',
+            focus: [12, 9],
+            footprint: [4, 5, 2, 3],
+            anchor: [4, 6],
+          },
         },
       ],
       [
@@ -1597,6 +2654,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'horizontal',
           light: 'morning',
           landmark: 'edge-of-reception',
+          assembly: {
+            family: 'antenna',
+            landmark: 'receiver-dish',
+            axis: 'horizontal',
+            focus: [6, 6],
+            footprint: [9, 5, 2, 5],
+            anchor: [9, 6],
+          },
         },
       ],
       [
@@ -1609,6 +2674,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'vertical',
           light: 'morning',
           landmark: 'blind-bend',
+          assembly: {
+            family: 'antenna',
+            landmark: 'receiver-dish',
+            axis: 'vertical',
+            focus: [17, 11],
+            footprint: [14, 8, 5, 2],
+            anchor: [17, 8],
+          },
         },
       ],
       [
@@ -1621,6 +2694,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'horizontal',
           light: 'morning',
           landmark: 'moving-shadow',
+          assembly: {
+            family: 'antenna',
+            landmark: 'receiver-dish',
+            axis: 'horizontal',
+            focus: [11, 8],
+            footprint: [8, 4, 3, 7],
+            anchor: [9, 8],
+          },
         },
       ],
       [
@@ -1633,6 +2714,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'vertical',
           light: 'late',
           landmark: 'quiet-relay',
+          assembly: {
+            family: 'antenna',
+            landmark: 'receiver-dish',
+            axis: 'vertical',
+            focus: [16, 5],
+            footprint: [15, 9, 3, 4],
+            anchor: [16, 9],
+          },
         },
       ],
       [
@@ -1645,6 +2734,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'horizontal',
           light: 'late',
           landmark: 'clear-ground',
+          assembly: {
+            family: 'antenna',
+            landmark: 'receiver-dish',
+            axis: 'horizontal',
+            focus: [7, 12],
+            footprint: [11, 10, 2, 8],
+            anchor: [11, 12],
+          },
         },
       ],
       [
@@ -1657,6 +2754,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'vertical',
           light: 'late',
           landmark: 'radio-chase',
+          assembly: {
+            family: 'antenna',
+            landmark: 'receiver-dish',
+            axis: 'vertical',
+            focus: [12, 9],
+            footprint: [8, 4, 2, 7],
+            anchor: [8, 9],
+          },
         },
       ],
       [
@@ -1669,6 +2774,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'horizontal',
           light: 'morning',
           landmark: 'outpost-circuit',
+          assembly: {
+            family: 'reclaimer',
+            landmark: 'survey-arch',
+            axis: 'horizontal',
+            focus: [6, 6],
+            footprint: [6, 5, 3, 3],
+            anchor: [6, 6],
+          },
         },
       ],
       [
@@ -1681,6 +2794,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'vertical',
           light: 'morning',
           landmark: 'crosswind-gates',
+          assembly: {
+            family: 'reclaimer',
+            landmark: 'survey-arch',
+            axis: 'vertical',
+            focus: [17, 11],
+            footprint: [15, 10, 2, 3],
+            anchor: [15, 11],
+          },
         },
       ],
       [
@@ -1693,6 +2814,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'horizontal',
           light: 'morning',
           landmark: 'relay-islands',
+          assembly: {
+            family: 'reclaimer',
+            landmark: 'survey-arch',
+            axis: 'horizontal',
+            focus: [11, 8],
+            footprint: [7, 5, 3, 4],
+            anchor: [8, 7],
+          },
         },
       ],
       [
@@ -1705,6 +2834,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'vertical',
           light: 'late',
           landmark: 'waking-junction',
+          assembly: {
+            family: 'reclaimer',
+            landmark: 'survey-arch',
+            axis: 'vertical',
+            focus: [16, 5],
+            footprint: [11, 7, 3, 3],
+            anchor: [12, 7],
+          },
         },
       ],
       [
@@ -1717,6 +2854,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'horizontal',
           light: 'late',
           landmark: 'signal-workshop',
+          assembly: {
+            family: 'reclaimer',
+            landmark: 'survey-arch',
+            axis: 'horizontal',
+            focus: [7, 12],
+            footprint: [7, 12, 2, 2],
+            anchor: [7, 12],
+          },
         },
       ],
       [
@@ -1729,6 +2874,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'vertical',
           light: 'late',
           landmark: 'four-routes-home',
+          assembly: {
+            family: 'reclaimer',
+            landmark: 'survey-arch',
+            axis: 'vertical',
+            focus: [12, 9],
+            footprint: [15, 5, 2, 3],
+            anchor: [15, 6],
+          },
         },
       ],
       [
@@ -1741,6 +2894,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'horizontal',
           light: 'morning',
           landmark: 'first-dispatch',
+          assembly: {
+            family: 'dispatch',
+            landmark: 'dispatch-cabin',
+            axis: 'horizontal',
+            focus: [6, 6],
+            footprint: [9, 5, 2, 2],
+            anchor: [9, 5],
+          },
         },
       ],
       [
@@ -1753,6 +2914,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'vertical',
           light: 'morning',
           landmark: 'long-and-short',
+          assembly: {
+            family: 'dispatch',
+            landmark: 'dispatch-cabin',
+            axis: 'vertical',
+            focus: [17, 11],
+            footprint: [17, 6, 2, 4],
+            anchor: [17, 8],
+          },
         },
       ],
       [
@@ -1765,6 +2934,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'horizontal',
           light: 'morning',
           landmark: 'platform-cut',
+          assembly: {
+            family: 'dispatch',
+            landmark: 'dispatch-cabin',
+            axis: 'horizontal',
+            focus: [11, 8],
+            footprint: [8, 6, 3, 2],
+            anchor: [9, 6],
+          },
         },
       ],
       [
@@ -1777,6 +2954,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'vertical',
           light: 'late',
           landmark: 'courier-gap',
+          assembly: {
+            family: 'dispatch',
+            landmark: 'dispatch-cabin',
+            axis: 'vertical',
+            focus: [16, 5],
+            footprint: null,
+            anchor: null,
+          },
         },
       ],
       [
@@ -1789,6 +2974,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'horizontal',
           light: 'late',
           landmark: 'twin-dispatch',
+          assembly: {
+            family: 'dispatch',
+            landmark: 'dispatch-cabin',
+            axis: 'horizontal',
+            focus: [7, 12],
+            footprint: null,
+            anchor: null,
+          },
         },
       ],
       [
@@ -1801,6 +2994,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'vertical',
           light: 'late',
           landmark: 'edge-express',
+          assembly: {
+            family: 'dispatch',
+            landmark: 'dispatch-cabin',
+            axis: 'vertical',
+            focus: [12, 9],
+            footprint: [14, 10, 2, 2],
+            anchor: [14, 10],
+          },
         },
       ],
       [
@@ -1813,6 +3014,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'horizontal',
           light: 'night',
           landmark: 'shutter-transfer',
+          assembly: {
+            family: 'dispatch',
+            landmark: 'dispatch-cabin',
+            axis: 'horizontal',
+            focus: [5, 8],
+            footprint: [9, 5, 2, 2],
+            anchor: [9, 5],
+          },
         },
       ],
       [
@@ -1825,6 +3034,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'vertical',
           light: 'night',
           landmark: 'last-departure',
+          assembly: {
+            family: 'dispatch',
+            landmark: 'dispatch-cabin',
+            axis: 'vertical',
+            focus: [18, 9],
+            footprint: [18, 11, 2, 2],
+            anchor: [18, 11],
+          },
         },
       ],
       [
@@ -1837,6 +3054,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'horizontal',
           light: 'morning',
           landmark: 'first-pressure',
+          assembly: {
+            family: 'pressure',
+            landmark: 'pressure-gauge',
+            axis: 'horizontal',
+            focus: [6, 6],
+            footprint: null,
+            anchor: null,
+          },
         },
       ],
       [
@@ -1849,6 +3074,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'vertical',
           light: 'morning',
           landmark: 'near-and-far',
+          assembly: {
+            family: 'pressure',
+            landmark: 'pressure-gauge',
+            axis: 'vertical',
+            focus: [17, 11],
+            footprint: null,
+            anchor: null,
+          },
         },
       ],
       [
@@ -1861,6 +3094,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'horizontal',
           light: 'morning',
           landmark: 'pressure-elbow',
+          assembly: {
+            family: 'pressure',
+            landmark: 'pressure-gauge',
+            axis: 'horizontal',
+            focus: [11, 8],
+            footprint: null,
+            anchor: null,
+          },
         },
       ],
       [
@@ -1873,6 +3114,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'vertical',
           light: 'late',
           landmark: 'double-pressure',
+          assembly: {
+            family: 'pressure',
+            landmark: 'pressure-gauge',
+            axis: 'vertical',
+            focus: [16, 5],
+            footprint: null,
+            anchor: null,
+          },
         },
       ],
       [
@@ -1885,6 +3134,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'horizontal',
           light: 'late',
           landmark: 'heavy-crossing',
+          assembly: {
+            family: 'pressure',
+            landmark: 'pressure-gauge',
+            axis: 'horizontal',
+            focus: [7, 12],
+            footprint: [13, 10, 2, 4],
+            anchor: [13, 12],
+          },
         },
       ],
       [
@@ -1897,6 +3154,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'vertical',
           light: 'late',
           landmark: 'runner-valve',
+          assembly: {
+            family: 'pressure',
+            landmark: 'pressure-gauge',
+            axis: 'vertical',
+            focus: [12, 9],
+            footprint: [10, 10, 2, 3],
+            anchor: [10, 10],
+          },
         },
       ],
       [
@@ -1909,6 +3174,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'horizontal',
           light: 'night',
           landmark: 'edge-pressure',
+          assembly: {
+            family: 'pressure',
+            landmark: 'pressure-gauge',
+            axis: 'horizontal',
+            focus: [5, 8],
+            footprint: [11, 3, 2, 5],
+            anchor: [11, 6],
+          },
         },
       ],
       [
@@ -1921,6 +3194,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'vertical',
           light: 'night',
           landmark: 'assembly-return',
+          assembly: {
+            family: 'pressure',
+            landmark: 'pressure-gauge',
+            axis: 'vertical',
+            focus: [18, 9],
+            footprint: null,
+            anchor: null,
+          },
         },
       ],
       [
@@ -1933,6 +3214,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'horizontal',
           light: 'morning',
           landmark: 'orchard-post',
+          assembly: {
+            family: 'irrigator',
+            landmark: 'irrigation-wheel',
+            axis: 'horizontal',
+            focus: [6, 6],
+            footprint: [10, 7, 4, 3],
+            anchor: [10, 7],
+          },
         },
       ],
       [
@@ -1945,6 +3234,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'vertical',
           light: 'morning',
           landmark: 'split-delivery',
+          assembly: {
+            family: 'irrigator',
+            landmark: 'irrigation-wheel',
+            axis: 'vertical',
+            focus: [17, 11],
+            footprint: [12, 10, 2, 3],
+            anchor: [12, 11],
+          },
         },
       ],
       [
@@ -1957,6 +3254,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'horizontal',
           light: 'morning',
           landmark: 'glasshouse-elbow',
+          assembly: {
+            family: 'glasshouse',
+            landmark: 'irrigation-wheel',
+            axis: 'horizontal',
+            focus: [11, 8],
+            footprint: [8, 5, 7, 7],
+            anchor: [13, 8],
+          },
         },
       ],
       [
@@ -1969,6 +3274,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'vertical',
           light: 'late',
           landmark: 'two-harvests',
+          assembly: {
+            family: 'irrigator',
+            landmark: 'irrigation-wheel',
+            axis: 'vertical',
+            focus: [16, 5],
+            footprint: [15, 10, 3, 2],
+            anchor: [16, 10],
+          },
         },
       ],
       [
@@ -1981,6 +3294,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'horizontal',
           light: 'late',
           landmark: 'refuge-cargo',
+          assembly: {
+            family: 'planter',
+            landmark: 'irrigation-wheel',
+            axis: 'horizontal',
+            focus: [7, 12],
+            footprint: [7, 6, 2, 5],
+            anchor: [7, 9],
+          },
         },
       ],
       [
@@ -1993,6 +3314,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'vertical',
           light: 'late',
           landmark: 'irrigation-shortcut',
+          assembly: {
+            family: 'irrigator',
+            landmark: 'irrigation-wheel',
+            axis: 'vertical',
+            focus: [12, 9],
+            footprint: null,
+            anchor: null,
+          },
         },
       ],
       [
@@ -2005,6 +3334,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'horizontal',
           light: 'night',
           landmark: 'border-harvest',
+          assembly: {
+            family: 'planter',
+            landmark: 'irrigation-wheel',
+            axis: 'horizontal',
+            focus: [5, 8],
+            footprint: [8, 6, 3, 6],
+            anchor: [8, 8],
+          },
         },
       ],
       [
@@ -2017,6 +3354,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'vertical',
           light: 'night',
           landmark: 'harvest-rendezvous',
+          assembly: {
+            family: 'glasshouse',
+            landmark: 'irrigation-wheel',
+            axis: 'vertical',
+            focus: [18, 9],
+            footprint: [14, 10, 3, 3],
+            anchor: [15, 10],
+          },
         },
       ],
       [
@@ -2029,6 +3374,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'horizontal',
           light: 'morning',
           landmark: 'harbor-clearances',
+          assembly: {
+            family: 'floodgate',
+            landmark: 'pump-beacon',
+            axis: 'horizontal',
+            focus: [6, 6],
+            footprint: [9, 5, 3, 4],
+            anchor: [9, 6],
+          },
         },
       ],
       [
@@ -2041,6 +3394,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'vertical',
           light: 'morning',
           landmark: 'seam-parcels',
+          assembly: {
+            family: 'floodgate',
+            landmark: 'pump-beacon',
+            axis: 'vertical',
+            focus: [17, 11],
+            footprint: [16, 6, 2, 5],
+            anchor: [16, 9],
+          },
         },
       ],
       [
@@ -2053,6 +3414,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'horizontal',
           light: 'morning',
           landmark: 'north-south',
+          assembly: {
+            family: 'floodgate',
+            landmark: 'pump-beacon',
+            axis: 'horizontal',
+            focus: [11, 8],
+            footprint: [7, 6, 10, 2],
+            anchor: [11, 6],
+          },
         },
       ],
       [
@@ -2065,6 +3434,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'vertical',
           light: 'late',
           landmark: 'offset-quays',
+          assembly: {
+            family: 'floodgate',
+            landmark: 'pump-beacon',
+            axis: 'vertical',
+            focus: [16, 5],
+            footprint: [16, 8, 3, 6],
+            anchor: [16, 8],
+          },
         },
       ],
       [
@@ -2077,6 +3454,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'horizontal',
           light: 'late',
           landmark: 'tidal-door',
+          assembly: {
+            family: 'floodgate',
+            landmark: 'pump-beacon',
+            axis: 'horizontal',
+            focus: [7, 12],
+            footprint: [11, 10, 2, 4],
+            anchor: [11, 12],
+          },
         },
       ],
       [
@@ -2089,6 +3474,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'vertical',
           light: 'late',
           landmark: 'quay-dispatch',
+          assembly: {
+            family: 'floodgate',
+            landmark: 'pump-beacon',
+            axis: 'vertical',
+            focus: [12, 9],
+            footprint: [14, 10, 2, 2],
+            anchor: [14, 10],
+          },
         },
       ],
       [
@@ -2101,6 +3494,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'horizontal',
           light: 'night',
           landmark: 'lighten-at-sea',
+          assembly: {
+            family: 'floodgate',
+            landmark: 'pump-beacon',
+            axis: 'horizontal',
+            focus: [5, 8],
+            footprint: [8, 5, 2, 7],
+            anchor: [8, 8],
+          },
         },
       ],
       [
@@ -2113,6 +3514,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'vertical',
           light: 'night',
           landmark: 'horizon-relay',
+          assembly: {
+            family: 'floodgate',
+            landmark: 'pump-beacon',
+            axis: 'vertical',
+            focus: [18, 9],
+            footprint: [15, 9, 3, 4],
+            anchor: [16, 9],
+          },
         },
       ],
       [
@@ -2125,6 +3534,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'horizontal',
           light: 'morning',
           landmark: 'furnace-permit',
+          assembly: {
+            family: 'coolant',
+            landmark: 'pressure-gauge',
+            axis: 'horizontal',
+            focus: [6, 6],
+            footprint: [9, 5, 3, 2],
+            anchor: [9, 5],
+          },
         },
       ],
       [
@@ -2137,6 +3554,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'vertical',
           light: 'morning',
           landmark: 'coolant-cargo',
+          assembly: {
+            family: 'coolant',
+            landmark: 'pressure-gauge',
+            axis: 'vertical',
+            focus: [17, 11],
+            footprint: [10, 10, 2, 3],
+            anchor: [10, 11],
+          },
         },
       ],
       [
@@ -2149,6 +3574,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'horizontal',
           light: 'morning',
           landmark: 'watch-the-aim',
+          assembly: {
+            family: 'boiler',
+            landmark: 'pressure-gauge',
+            axis: 'horizontal',
+            focus: [11, 8],
+            footprint: [8, 6, 3, 2],
+            anchor: [9, 6],
+          },
         },
       ],
       [
@@ -2161,6 +3594,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'vertical',
           light: 'late',
           landmark: 'pressure-flank',
+          assembly: {
+            family: 'coolant',
+            landmark: 'pressure-gauge',
+            axis: 'vertical',
+            focus: [16, 5],
+            footprint: [16, 5, 2, 2],
+            anchor: [16, 5],
+          },
         },
       ],
       [
@@ -2173,6 +3614,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'horizontal',
           light: 'late',
           landmark: 'crossing-orders',
+          assembly: {
+            family: 'coolant',
+            landmark: 'pressure-gauge',
+            axis: 'horizontal',
+            focus: [7, 12],
+            footprint: [7, 5, 2, 2],
+            anchor: [7, 5],
+          },
         },
       ],
       [
@@ -2185,6 +3634,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'vertical',
           light: 'late',
           landmark: 'guarded-transfer',
+          assembly: {
+            family: 'pressure',
+            landmark: 'pressure-gauge',
+            axis: 'vertical',
+            focus: [12, 9],
+            footprint: [14, 11, 2, 2],
+            anchor: [14, 11],
+          },
         },
       ],
       [
@@ -2197,6 +3654,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'horizontal',
           light: 'night',
           landmark: 'furnace-switch',
+          assembly: {
+            family: 'coolant',
+            landmark: 'pressure-gauge',
+            axis: 'horizontal',
+            focus: [5, 8],
+            footprint: null,
+            anchor: null,
+          },
         },
       ],
       [
@@ -2209,6 +3674,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'vertical',
           light: 'night',
           landmark: 'works-clearance',
+          assembly: {
+            family: 'coolant',
+            landmark: 'pressure-gauge',
+            axis: 'vertical',
+            focus: [18, 9],
+            footprint: [15, 11, 3, 2],
+            anchor: [16, 11],
+          },
         },
       ],
       [
@@ -2221,6 +3694,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'horizontal',
           light: 'morning',
           landmark: 'dock-permission',
+          assembly: {
+            family: 'pump',
+            landmark: 'pump-beacon',
+            axis: 'horizontal',
+            focus: [6, 6],
+            footprint: [9, 6, 5, 3],
+            anchor: [9, 6],
+          },
         },
       ],
       [
@@ -2233,6 +3714,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'vertical',
           light: 'morning',
           landmark: 'two-landings',
+          assembly: {
+            family: 'pump',
+            landmark: 'pump-beacon',
+            axis: 'vertical',
+            focus: [17, 11],
+            footprint: [15, 9, 3, 4],
+            anchor: [16, 11],
+          },
         },
       ],
       [
@@ -2245,6 +3734,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'horizontal',
           light: 'morning',
           landmark: 'pump-return',
+          assembly: {
+            family: 'pump',
+            landmark: 'pump-beacon',
+            axis: 'horizontal',
+            focus: [11, 8],
+            footprint: [11, 4, 2, 4],
+            anchor: [11, 6],
+          },
         },
       ],
       [
@@ -2257,6 +3754,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'vertical',
           light: 'late',
           landmark: 'loading-dispatch',
+          assembly: {
+            family: 'dock',
+            landmark: 'pump-beacon',
+            axis: 'vertical',
+            focus: [16, 5],
+            footprint: [9, 5, 2, 2],
+            anchor: [9, 5],
+          },
         },
       ],
       [
@@ -2269,6 +3774,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'horizontal',
           light: 'late',
           landmark: 'harbor-window',
+          assembly: {
+            family: 'floodgate',
+            landmark: 'pump-beacon',
+            axis: 'horizontal',
+            focus: [7, 12],
+            footprint: [10, 10, 2, 4],
+            anchor: [10, 12],
+          },
         },
       ],
       [
@@ -2281,6 +3794,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'vertical',
           light: 'late',
           landmark: 'relay-load',
+          assembly: {
+            family: 'pump',
+            landmark: 'pump-beacon',
+            axis: 'vertical',
+            focus: [12, 9],
+            footprint: [14, 10, 2, 3],
+            anchor: [14, 10],
+          },
         },
       ],
       [
@@ -2293,6 +3814,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'horizontal',
           light: 'night',
           landmark: 'outbound-inbound',
+          assembly: {
+            family: 'pump',
+            landmark: 'pump-beacon',
+            axis: 'horizontal',
+            focus: [5, 8],
+            footprint: [7, 5, 2, 7],
+            anchor: [7, 8],
+          },
         },
       ],
       [
@@ -2305,6 +3834,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'vertical',
           light: 'night',
           landmark: 'harbor-homecoming',
+          assembly: {
+            family: 'dock',
+            landmark: 'pump-beacon',
+            axis: 'vertical',
+            focus: [18, 9],
+            footprint: [17, 6, 2, 2],
+            anchor: [17, 6],
+          },
         },
       ],
       [
@@ -2317,6 +3854,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'horizontal',
           light: 'morning',
           landmark: 'silent-parcel',
+          assembly: {
+            family: 'receiver',
+            landmark: 'receiver-dish',
+            axis: 'horizontal',
+            focus: [6, 6],
+            footprint: [10, 5, 3, 3],
+            anchor: [10, 6],
+          },
         },
       ],
       [
@@ -2329,6 +3874,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'vertical',
           light: 'morning',
           landmark: 'ridge-reception',
+          assembly: {
+            family: 'shelter',
+            landmark: 'receiver-dish',
+            axis: 'vertical',
+            focus: [17, 11],
+            footprint: [11, 4, 2, 10],
+            anchor: [11, 11],
+          },
         },
       ],
       [
@@ -2341,6 +3894,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'horizontal',
           light: 'morning',
           landmark: 'broadcast-freight',
+          assembly: {
+            family: 'antenna',
+            landmark: 'receiver-dish',
+            axis: 'horizontal',
+            focus: [11, 8],
+            footprint: [7, 6, 3, 4],
+            anchor: [8, 8],
+          },
         },
       ],
       [
@@ -2353,6 +3914,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'vertical',
           light: 'late',
           landmark: 'unseen-dispatch',
+          assembly: {
+            family: 'receiver',
+            landmark: 'receiver-dish',
+            axis: 'vertical',
+            focus: [16, 5],
+            footprint: null,
+            anchor: null,
+          },
         },
       ],
       [
@@ -2365,6 +3934,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'horizontal',
           light: 'late',
           landmark: 'clear-side-channel',
+          assembly: {
+            family: 'receiver',
+            landmark: 'receiver-dish',
+            axis: 'horizontal',
+            focus: [7, 12],
+            footprint: [8, 4, 2, 9],
+            anchor: [8, 11],
+          },
         },
       ],
       [
@@ -2377,6 +3954,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'vertical',
           light: 'late',
           landmark: 'pulse-rendezvous',
+          assembly: {
+            family: 'receiver',
+            landmark: 'receiver-dish',
+            axis: 'vertical',
+            focus: [12, 9],
+            footprint: [8, 7, 8, 2],
+            anchor: [12, 7],
+          },
         },
       ],
       [
@@ -2389,6 +3974,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'horizontal',
           light: 'night',
           landmark: 'receiver-bridge',
+          assembly: {
+            family: 'receiver',
+            landmark: 'receiver-dish',
+            axis: 'horizontal',
+            focus: [5, 8],
+            footprint: null,
+            anchor: null,
+          },
         },
       ],
       [
@@ -2401,6 +3994,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'vertical',
           light: 'night',
           landmark: 'summit-blackbird',
+          assembly: {
+            family: 'receiver',
+            landmark: 'receiver-dish',
+            axis: 'vertical',
+            focus: [18, 9],
+            footprint: [14, 10, 3, 2],
+            anchor: [15, 10],
+          },
         },
       ],
       [
@@ -2413,6 +4014,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'horizontal',
           light: 'morning',
           landmark: 'first-notch',
+          assembly: {
+            family: 'excavation',
+            landmark: 'survey-arch',
+            axis: 'horizontal',
+            focus: [6, 6],
+            footprint: [6, 10, 3, 2],
+            anchor: [6, 10],
+          },
         },
       ],
       [
@@ -2425,6 +4034,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'vertical',
           light: 'morning',
           landmark: 'loaded-excavation',
+          assembly: {
+            family: 'excavation',
+            landmark: 'survey-arch',
+            axis: 'vertical',
+            focus: [17, 11],
+            footprint: [11, 4, 2, 10],
+            anchor: [11, 11],
+          },
         },
       ],
       [
@@ -2437,6 +4054,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'horizontal',
           light: 'morning',
           landmark: 'stepped-masonry',
+          assembly: {
+            family: 'excavation',
+            landmark: 'survey-arch',
+            axis: 'horizontal',
+            focus: [11, 8],
+            footprint: [8, 5, 6, 8],
+            anchor: [12, 8],
+          },
         },
       ],
       [
@@ -2449,6 +4074,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'vertical',
           light: 'late',
           landmark: 'survey-seam',
+          assembly: {
+            family: 'excavation',
+            landmark: 'survey-arch',
+            axis: 'vertical',
+            focus: [16, 5],
+            footprint: null,
+            anchor: null,
+          },
         },
       ],
       [
@@ -2461,6 +4094,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'horizontal',
           light: 'late',
           landmark: 'temporary-permanent',
+          assembly: {
+            family: 'excavation',
+            landmark: 'survey-arch',
+            axis: 'horizontal',
+            focus: [7, 12],
+            footprint: [7, 5, 2, 2],
+            anchor: [7, 5],
+          },
         },
       ],
       [
@@ -2473,6 +4114,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'vertical',
           light: 'late',
           landmark: 'ricochet-quarry',
+          assembly: {
+            family: 'excavation',
+            landmark: 'survey-arch',
+            axis: 'vertical',
+            focus: [12, 9],
+            footprint: [5, 11, 3, 2],
+            anchor: [6, 11],
+          },
         },
       ],
       [
@@ -2485,6 +4134,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'horizontal',
           light: 'night',
           landmark: 'restored-arch',
+          assembly: {
+            family: 'reclaimer',
+            landmark: 'survey-arch',
+            axis: 'horizontal',
+            focus: [5, 8],
+            footprint: null,
+            anchor: null,
+          },
         },
       ],
       [
@@ -2497,6 +4154,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'vertical',
           light: 'night',
           landmark: 'garden-breaches',
+          assembly: {
+            family: 'terrace',
+            landmark: 'survey-arch',
+            axis: 'vertical',
+            focus: [18, 9],
+            footprint: null,
+            anchor: null,
+          },
         },
       ],
       [
@@ -2509,6 +4174,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'horizontal',
           light: 'morning',
           landmark: 'glasshouse-intentions',
+          assembly: {
+            family: 'glasshouse',
+            landmark: 'irrigation-wheel',
+            axis: 'horizontal',
+            focus: [6, 6],
+            footprint: [7, 5, 2, 7],
+            anchor: [7, 6],
+          },
         },
       ],
       [
@@ -2521,6 +4194,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'vertical',
           light: 'morning',
           landmark: 'orchard-forks',
+          assembly: {
+            family: 'glasshouse',
+            landmark: 'irrigation-wheel',
+            axis: 'vertical',
+            focus: [17, 11],
+            footprint: null,
+            anchor: null,
+          },
         },
       ],
       [
@@ -2533,6 +4214,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'horizontal',
           light: 'morning',
           landmark: 'paired-shelters',
+          assembly: {
+            family: 'glasshouse',
+            landmark: 'irrigation-wheel',
+            axis: 'horizontal',
+            focus: [11, 8],
+            footprint: [10, 4, 3, 4],
+            anchor: [11, 6],
+          },
         },
       ],
       [
@@ -2545,6 +4234,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'vertical',
           light: 'late',
           landmark: 'held-hedge',
+          assembly: {
+            family: 'glasshouse',
+            landmark: 'irrigation-wheel',
+            axis: 'vertical',
+            focus: [16, 5],
+            footprint: [6, 5, 3, 2],
+            anchor: [7, 5],
+          },
         },
       ],
       [
@@ -2557,6 +4254,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'horizontal',
           light: 'late',
           landmark: 'seedling-spiral',
+          assembly: {
+            family: 'glasshouse',
+            landmark: 'irrigation-wheel',
+            axis: 'horizontal',
+            focus: [7, 12],
+            footprint: null,
+            anchor: null,
+          },
         },
       ],
       [
@@ -2569,6 +4274,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'vertical',
           light: 'late',
           landmark: 'garden-seam',
+          assembly: {
+            family: 'glasshouse',
+            landmark: 'irrigation-wheel',
+            axis: 'vertical',
+            focus: [12, 9],
+            footprint: [7, 4, 2, 10],
+            anchor: [7, 9],
+          },
         },
       ],
       [
@@ -2581,6 +4294,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'horizontal',
           light: 'night',
           landmark: 'quiet-conservatory',
+          assembly: {
+            family: 'glasshouse',
+            landmark: 'irrigation-wheel',
+            axis: 'horizontal',
+            focus: [5, 8],
+            footprint: [9, 5, 2, 4],
+            anchor: [9, 7],
+          },
         },
       ],
       [
@@ -2593,6 +4314,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'vertical',
           light: 'night',
           landmark: 'three-garden-returns',
+          assembly: {
+            family: 'glasshouse',
+            landmark: 'irrigation-wheel',
+            axis: 'vertical',
+            focus: [18, 9],
+            footprint: [12, 9, 3, 2],
+            anchor: [13, 9],
+          },
         },
       ],
       [
@@ -2605,6 +4334,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'horizontal',
           light: 'morning',
           landmark: 'pulse-loading-bay',
+          assembly: {
+            family: 'container',
+            landmark: 'dispatch-cabin',
+            axis: 'horizontal',
+            focus: [6, 6],
+            footprint: [9, 5, 5, 2],
+            anchor: [9, 5],
+          },
         },
       ],
       [
@@ -2617,6 +4354,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'vertical',
           light: 'morning',
           landmark: 'reel-before-return',
+          assembly: {
+            family: 'container',
+            landmark: 'dispatch-cabin',
+            axis: 'vertical',
+            focus: [17, 11],
+            footprint: null,
+            anchor: null,
+          },
         },
       ],
       [
@@ -2629,6 +4374,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'horizontal',
           light: 'morning',
           landmark: 'cold-window',
+          assembly: {
+            family: 'container',
+            landmark: 'dispatch-cabin',
+            axis: 'horizontal',
+            focus: [11, 8],
+            footprint: [10, 5, 4, 3],
+            anchor: [11, 6],
+          },
         },
       ],
       [
@@ -2641,6 +4394,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'vertical',
           light: 'late',
           landmark: 'radio-spares',
+          assembly: {
+            family: 'container',
+            landmark: 'dispatch-cabin',
+            axis: 'vertical',
+            focus: [16, 5],
+            footprint: [11, 5, 2, 8],
+            anchor: [11, 5],
+          },
         },
       ],
       [
@@ -2653,6 +4414,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'horizontal',
           light: 'late',
           landmark: 'short-cable-long-door',
+          assembly: {
+            family: 'container',
+            landmark: 'dispatch-cabin',
+            axis: 'horizontal',
+            focus: [7, 12],
+            footprint: null,
+            anchor: null,
+          },
         },
       ],
       [
@@ -2665,6 +4434,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'vertical',
           light: 'late',
           landmark: 'freight-flank',
+          assembly: {
+            family: 'platform',
+            landmark: 'dispatch-cabin',
+            axis: 'vertical',
+            focus: [12, 9],
+            footprint: [14, 6, 3, 4],
+            anchor: [14, 8],
+          },
         },
       ],
       [
@@ -2677,6 +4454,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'horizontal',
           light: 'night',
           landmark: 'two-offers-one-route',
+          assembly: {
+            family: 'container',
+            landmark: 'dispatch-cabin',
+            axis: 'horizontal',
+            focus: [5, 8],
+            footprint: [8, 4, 2, 5],
+            anchor: [8, 7],
+          },
         },
       ],
       [
@@ -2689,6 +4474,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'vertical',
           light: 'night',
           landmark: 'last-train-home',
+          assembly: {
+            family: 'dispatch',
+            landmark: 'dispatch-cabin',
+            axis: 'vertical',
+            focus: [18, 9],
+            footprint: [14, 10, 3, 2],
+            anchor: [15, 10],
+          },
         },
       ],
       [
@@ -2701,6 +4494,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'horizontal',
           light: 'morning',
           landmark: 'shared-manifest',
+          assembly: {
+            family: 'shelter',
+            landmark: 'receiver-dish',
+            axis: 'horizontal',
+            focus: [6, 6],
+            footprint: [10, 5, 4, 3],
+            anchor: [10, 6],
+          },
         },
       ],
       [
@@ -2713,6 +4514,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'vertical',
           light: 'morning',
           landmark: 'opposed-levers',
+          assembly: {
+            family: 'shelter',
+            landmark: 'receiver-dish',
+            axis: 'vertical',
+            focus: [17, 11],
+            footprint: null,
+            anchor: null,
+          },
         },
       ],
       [
@@ -2725,6 +4534,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'horizontal',
           light: 'morning',
           landmark: 'two-held-doors',
+          assembly: {
+            family: 'shelter',
+            landmark: 'receiver-dish',
+            axis: 'horizontal',
+            focus: [11, 8],
+            footprint: null,
+            anchor: null,
+          },
         },
       ],
       [
@@ -2737,6 +4554,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'vertical',
           light: 'late',
           landmark: 'opposite-loads',
+          assembly: {
+            family: 'shelter',
+            landmark: 'receiver-dish',
+            axis: 'vertical',
+            focus: [16, 5],
+            footprint: [15, 6, 2, 7],
+            anchor: [15, 6],
+          },
         },
       ],
       [
@@ -2749,6 +4574,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'horizontal',
           light: 'late',
           landmark: 'shared-frequency',
+          assembly: {
+            family: 'shelter',
+            landmark: 'receiver-dish',
+            axis: 'horizontal',
+            focus: [7, 12],
+            footprint: [10, 11, 3, 2],
+            anchor: [10, 11],
+          },
         },
       ],
       [
@@ -2761,6 +4594,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'vertical',
           light: 'late',
           landmark: 'staggered-rendezvous',
+          assembly: {
+            family: 'shelter',
+            landmark: 'receiver-dish',
+            axis: 'vertical',
+            focus: [12, 9],
+            footprint: [14, 10, 3, 3],
+            anchor: [14, 10],
+          },
         },
       ],
       [
@@ -2773,6 +4614,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'horizontal',
           light: 'night',
           landmark: 'relay-partners',
+          assembly: {
+            family: 'shelter',
+            landmark: 'receiver-dish',
+            axis: 'horizontal',
+            focus: [5, 8],
+            footprint: [8, 6, 2, 5],
+            anchor: [8, 8],
+          },
         },
       ],
       [
@@ -2785,6 +4634,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'vertical',
           light: 'night',
           landmark: 'summit-coordination',
+          assembly: {
+            family: 'shelter',
+            landmark: 'receiver-dish',
+            axis: 'vertical',
+            focus: [18, 9],
+            footprint: [14, 10, 2, 3],
+            anchor: [14, 10],
+          },
         },
       ],
       [
@@ -2797,6 +4654,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'horizontal',
           light: 'morning',
           landmark: 'citadel-dispatch',
+          assembly: {
+            family: 'terrace',
+            landmark: 'survey-arch',
+            axis: 'horizontal',
+            focus: [6, 6],
+            footprint: null,
+            anchor: null,
+          },
         },
       ],
       [
@@ -2809,6 +4674,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'vertical',
           light: 'morning',
           landmark: 'stone-cable',
+          assembly: {
+            family: 'terrace',
+            landmark: 'survey-arch',
+            axis: 'vertical',
+            focus: [17, 11],
+            footprint: [7, 5, 2, 2],
+            anchor: [7, 5],
+          },
         },
       ],
       [
@@ -2821,6 +4694,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'horizontal',
           light: 'morning',
           landmark: 'citadel-reception',
+          assembly: {
+            family: 'terrace',
+            landmark: 'survey-arch',
+            axis: 'horizontal',
+            focus: [11, 8],
+            footprint: [8, 5, 2, 7],
+            anchor: [8, 8],
+          },
         },
       ],
       [
@@ -2833,6 +4714,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'vertical',
           light: 'late',
           landmark: 'furnace-terrace',
+          assembly: {
+            family: 'reclaimer',
+            landmark: 'survey-arch',
+            axis: 'vertical',
+            focus: [16, 5],
+            footprint: [14, 10, 3, 2],
+            anchor: [15, 10],
+          },
         },
       ],
       [
@@ -2845,6 +4734,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'horizontal',
           light: 'late',
           landmark: 'border-citadel',
+          assembly: {
+            family: 'terrace',
+            landmark: 'survey-arch',
+            axis: 'horizontal',
+            focus: [7, 12],
+            footprint: [15, 5, 2, 8],
+            anchor: [15, 11],
+          },
         },
       ],
       [
@@ -2857,6 +4754,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'vertical',
           light: 'late',
           landmark: 'garden-machinery',
+          assembly: {
+            family: 'reclaimer',
+            landmark: 'survey-arch',
+            axis: 'vertical',
+            focus: [12, 9],
+            footprint: null,
+            anchor: null,
+          },
         },
       ],
       [
@@ -2869,6 +4774,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'horizontal',
           light: 'night',
           landmark: 'three-court-delivery',
+          assembly: {
+            family: 'terrace',
+            landmark: 'survey-arch',
+            axis: 'horizontal',
+            focus: [5, 8],
+            footprint: [7, 5, 2, 6],
+            anchor: [7, 8],
+          },
         },
       ],
       [
@@ -2881,6 +4794,14 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
           axis: 'vertical',
           light: 'night',
           landmark: 'living-citadel-finale',
+          assembly: {
+            family: 'terrace',
+            landmark: 'survey-arch',
+            axis: 'vertical',
+            focus: [18, 9],
+            footprint: [17, 10, 2, 2],
+            anchor: [17, 10],
+          },
         },
       ],
     ].map(([id, composition]) => [id, Object.freeze(composition)]),

@@ -1,4 +1,5 @@
 import { boundedJSON, canonicalJSON, dataIdentity, exactKeys, required } from '../data-json.mjs';
+import { CLASSIC_SNAKE_OFFICIAL_RECORDS_KEY } from './classic-campaign.mjs';
 import { createProfileRecordBackend } from '../profile-storage.mjs';
 import {
   exportClassicSnakeReplay,
@@ -118,9 +119,13 @@ function proofVerifier(catalogue, recipes, allowArchive) {
       teamwork: clear && mode === 'team' && run.snakes.every((snake) => snake.catches >= 2),
       noSupplies:
         clear &&
-        ['classic-snake-level.v2', 'classic-snake-level.v3', 'classic-snake-level.v4'].includes(
-          level.version,
-        ) &&
+        !level.operation &&
+        [
+          'classic-snake-level.v2',
+          'classic-snake-level.v3',
+          'classic-snake-level.v4',
+          'classic-snake-level.v6',
+        ].includes(level.version) &&
         level.pickups.length > 0 &&
         run.pickupsUsed === 0,
       identity: dataIdentity(witness),
@@ -351,10 +356,12 @@ export function createClassicSnakeRecords({
   const entries = pack ? classicSnakePackageEntries(pack) : CLASSIC_SNAKE_LEVELS;
   const catalogue = new Map(entries.map((entry) => [entry.id, entry])),
     recipes = new Map();
-  const verifier = proofVerifier(catalogue, recipes, !pack),
+  const verifier = proofVerifier(catalogue, recipes, false),
     validate = validator(verifier, catalogue);
   const backend = createProfileRecordBackend({
-    key: pack ? `${FORMAT}/community/${classicSnakePackageIdentity(pack)}` : FORMAT,
+    key: pack
+      ? `${FORMAT}/community/${classicSnakePackageIdentity(pack)}`
+      : CLASSIC_SNAKE_OFFICIAL_RECORDS_KEY,
     empty,
     indexedDB,
     // Replays never execute inside an IndexedDB transaction. Its timeout covers
@@ -500,7 +507,7 @@ export function createClassicSnakeRecords({
       };
     },
     async remember(run, { mode, chapterId, level, match, policy = 'mission', allowClear = true }) {
-      const expected = ownedRecipe(level, catalogue, recipes, !pack);
+      const expected = ownedRecipe(level, catalogue, recipes, false);
       required(
         chapterId === expected.entry.chapterId && typeof allowClear === 'boolean',
         'Snake record chapter differs.',

@@ -1,4 +1,5 @@
 import { classicOperationStatus } from './classic-operation-status.mjs';
+import { CLASSIC_SNAKE_CAMPAIGN_REVISION } from './classic-campaign.mjs';
 import { classicBoardPreferences, isClassicWorldStyle } from './classic-worlds.mjs';
 import { claimProfileWriter } from '../profile-writer.mjs';
 import {
@@ -124,7 +125,10 @@ import {
 } from '../presentation/attempt-appearance.mjs';
 import { classicCatchMarks, drawClassicBoard, drawClassicTarget } from './classic-view.mjs';
 import { advanceClassicFlight } from './classic-flight-art.mjs';
-import { advanceClassicReactionTime } from './classic-world-reactions.mjs';
+import {
+  advanceClassicReactionTime,
+  observeClassicWorldReactions,
+} from './classic-world-reactions.mjs';
 
 const doc = globalThis.document,
   $ = (id) => doc.getElementById(id);
@@ -163,8 +167,10 @@ const CLASSIC_SNAKE_FEATURED = installedContent ? [] : OFFICIAL_FEATURED;
 const survivalEntry = classicSnakeSurvivalEntry(CLASSIC_SNAKE_LEVELS);
 const MODES = ['solo', 'versus', 'team'],
   PRESETS = ['classic', 'pursuit', 'tactical', 'arcade'];
-const SAVE_KEY = `revealline.classic-snake.round.v2${communityIdentity ? `.${communityIdentity}` : ''}`,
-  OLD_SAVE_KEY = communityIdentity ? SAVE_KEY : 'revealline.classic-snake.round.v1';
+const SAVE_KEY = communityIdentity
+    ? `revealline.classic-snake.round.v2.${communityIdentity}`
+    : `revealline.classic-snake.round.${CLASSIC_SNAKE_CAMPAIGN_REVISION}`,
+  OLD_SAVE_KEY = SAVE_KEY;
 const PREF_KEY = 'revealline.classic-snake.presentation.v1',
   SETUP_KEY = 'revealline.classic-snake.setup.v2';
 const SESSION_FORMAT = 'revealline-classic-snake-session.v3';
@@ -712,12 +718,29 @@ function refreshReplayControl() {
       : 'Replay last 8 moves';
   button.setAttribute('aria-pressed', String(playing));
 }
+const playAcknowledgements = new WeakMap();
 function observeStep(event) {
   recentReplay.observe(event);
+  const canvas = boards[event.board]?.canvas;
+  if (canvas) observeClassicWorldReactions(canvas, event.run, match, reactionTimeMs);
   classicAudio.events?.(event.run, {
     board: `snake-${event.board}`,
     placement: boardPlacement(boards[event.board]?.canvas),
   });
+  classicAudio.update(event.run, {
+    mode,
+    board: `snake-${event.board}`,
+    placement: boardPlacement(canvas),
+  });
+  const delivered = event.run.events.some((item) => item.type === 'cargo.delivered');
+  const antenna = event.run.events.some(
+    (item) => item.type === 'target.caught' && item.target.kind === 'jammer',
+  );
+  if (delivered || antenna)
+    playAcknowledgements.set(event.run, {
+      until: event.run.elapsedMs + 1400,
+      kind: delivered ? 'delivery' : 'antenna',
+    });
   const defeats = event.run.events
     .filter((item) => item.type === 'target.caught')
     .map((item) => ({
@@ -1536,7 +1559,10 @@ function failureText(run, boardResult) {
     .join(' ');
 }
 function readyInstruction() {
-  if (runs[0]?.level.operation || runs[0]?.level.version === 'classic-snake-level.v4')
+  if (
+    runs[0]?.level.operation ||
+    ['classic-snake-level.v4', 'classic-snake-level.v6'].includes(runs[0]?.level.version)
+  )
     return entry.description[locale];
   return text(
     runs[0]?.level.targets?.required.some((policy) => ['shield', 'brace'].includes(policy.kind))
@@ -1638,7 +1664,9 @@ function refresh() {
   renderRatings();
   const onboarding = $('snake-onboarding');
   if (onboarding) {
-    const fieldMission = !!runs[0].operation || runs[0].level.version === 'classic-snake-level.v4';
+    const fieldMission =
+      !!runs[0].operation ||
+      ['classic-snake-level.v4', 'classic-snake-level.v6'].includes(runs[0].level.version);
     const signals = runs.map(classicSnakeSignalView);
     const jammer = signals.flatMap((signal) => signal.sources)[0];
     const warning = signals.some((signal) => signal.warning);
@@ -1671,8 +1699,21 @@ function refresh() {
     board.fields.caught.value.textContent =
       format === 'endless' ? String(summary.catches) : `${summary.catches} / ${summary.goal}`;
     board.fields.length.value.textContent = summary.lengths.join(' + ');
-    board.operation.hidden = !run.operation;
-    const operationText = classicOperationStatus(run, locale);
+    const acknowledgement = playAcknowledgements.get(run);
+    const reactionText =
+      acknowledgement && run.elapsedMs < acknowledgement.until
+        ? acknowledgement.kind === 'delivery'
+          ? locale === 'uk'
+            ? 'Посилку доставлено!'
+            : 'Delivery complete!'
+          : locale === 'uk'
+            ? 'Антену перехоплено!'
+            : 'Antenna intercepted!'
+        : '';
+    board.operation.hidden = !run.operation && !reactionText;
+    const operationText = [classicOperationStatus(run, locale), reactionText]
+      .filter(Boolean)
+      .join(' · ');
     if (board.operation.textContent !== operationText) board.operation.textContent = operationText;
     const signal = classicSnakeSignalView(run);
     board.reception.hidden = !signal.sources.length;
@@ -1874,7 +1915,7 @@ function restore(raw, { provenance = 'import' } = {}) {
         'Invalid setup.',
       );
       item = resolveClassicSnakeRecipeEntry(item, source.match?.replays?.[0]?.level, next, {
-        allowArchive: !installedContent,
+        allowArchive: false,
       });
       restored = restoreClassicSnakeMatch(source.match, {
         level: prepareClassicSnakeLevel(item, next),
