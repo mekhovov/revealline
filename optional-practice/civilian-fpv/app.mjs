@@ -454,6 +454,7 @@ export function mountFlightApp({
       typeof win.navigator?.getGamepads === 'function'
         ? () => win.navigator.getGamepads()
         : undefined,
+    onCamera: () => cameraControls?.cycle(),
     onFreeze(reason) {
       flight?.pause();
       audio.pause();
@@ -2288,8 +2289,8 @@ export function mountFlightApp({
         );
       if (source === 'radio')
         return locale === 'uk'
-          ? 'Використовуйте збережені перемикачі ввімкнення та скидання. Налаштуйте їх у «Налаштувати пульт». У меню: крен/тангаж — навігація; утримайте рискання праворуч/ліворуч і поверніть у центр для підтвердження/назад.'
-          : 'Use your saved Arm and Reset switches; assign them in Set up radio. Menus: roll/pitch navigate; hold yaw right/left, then centre to confirm/go back.';
+          ? 'Призначте мотори, скидання, паузу й камеру в «Налаштувати пульт». Камера: увімкніть і вимкніть перемикач. Без вільного перемикача виберіть камеру в меню паузи. У меню: крен/тангаж — навігація; утримайте рискання праворуч/ліворуч і поверніть у центр для підтвердження/назад.'
+          : 'Assign Arm, Reset, Pause and View in Set up radio. View: switch ON, then OFF. Without a spare switch, choose the camera in Pause. Menus: roll/pitch navigate; hold yaw right/left, then centre to confirm/go back.';
       return locale === 'uk'
         ? 'Лівий стік: рискання/газ. Правий: крен/тангаж. Газ зберігається після відпускання. Для ввімкнення натисніть «Продовжити»; камера та пауза — у кутку екрана.'
         : 'Left stick: yaw/throttle. Right: roll/pitch. Throttle stays where you release it. Use Resume to arm; View and Pause stay in the screen corner.';
