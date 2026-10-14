@@ -4279,3 +4279,25 @@ Next: exact-head cloud admission, live feed/host verification, transactional reg
 source preparation, actual collision/render streaming, and representative Canyon
 and Urban authored regions. Physical devices, long sessions and public launch
 remain unclaimed. Protected publication continues independently of development.
+
+
+## 14 October — Catalogue navigation ownership
+
+After catalogue PR #1199 merged, the Explore dialog's queued close event could
+abort the same catalogue after it moved to Library. Closing and immediately
+reopening during an initial metadata request could also leave an empty catalogue
+until Browse was pressed again.
+
+The close handler now deactivates only the catalogue still owned by that surface.
+A newly reopened catalogue remembers its demand for initial metadata until the
+cancelled request settles; it never retries a pack download or flight launch.
+Canonical runtime projection is refreshed. The independent fixture-boundary repair
+is PR #1203 and records its remaining timestamp/focus assertions separately.
+
+Verification: 18/18 actual in-app-browser checks using controlled worker responses,
+including delayed cancellation, re-entry and relocation; 23/23 catalogue transport
+probes; 27/27 existing content, radio, entry and projection checks; scoped lint and
+byte-identical canonical projection. The reusable browser fixture is
+`scripts/fixtures/fpv-catalogue-navigation.html`. It exercises real catalogue DOM
+and focus with controlled downloads, not actual pack validation, physics, native
+controller hardware or offline-package qualification.

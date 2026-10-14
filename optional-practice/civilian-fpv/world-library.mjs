@@ -150,6 +150,7 @@ export function mountWorldLibrary({ el, txt, parent, begin, install, fly }) {
     launching = false,
     closed = false,
     loaded = false,
+    metadataRequested = false,
     epoch = 0,
     rows = [],
     saved = [],
@@ -250,6 +251,7 @@ export function mountWorldLibrary({ el, txt, parent, begin, install, fly }) {
       launchAfter = false,
       restoreFocus = true;
     operation = controller;
+    metadataRequested = false;
     const trackFocus = (event) => {
       if (event.target !== doc.body && !root.contains(event.target)) restoreFocus = false;
     };
@@ -348,6 +350,9 @@ export function mountWorldLibrary({ el, txt, parent, begin, install, fly }) {
         }
       }
     }
+    // A catalogue can reopen before its cancelled worker finishes. Honour only
+    // that new metadata demand; never repeat a pack download or launch intent.
+    if (metadataRequested && !loaded && visible()) void run();
     if (launchAfter && requestEpoch === epoch && !signal.aborted) await launch(row);
   }
   browse.onclick = () => run();
@@ -364,9 +369,16 @@ export function mountWorldLibrary({ el, txt, parent, begin, install, fly }) {
       if (closed) return;
       if (container) container.append(root);
       else home.after(root);
-      if (!loaded && !operation) void run();
+      if (!loaded) {
+        if (!operation) void run();
+        else if (operation.signal.aborted) metadataRequested = true;
+      }
     },
-    deactivate() {
+    deactivate(container = null) {
+      // Dialog close events are queued: the catalogue may already belong to a
+      // different surface by the time its former container reports closing.
+      if (container && !container.contains(root)) return;
+      metadataRequested = false;
       epoch++;
       if (!cancel.disabled) operation?.abort();
     },
@@ -376,6 +388,7 @@ export function mountWorldLibrary({ el, txt, parent, begin, install, fly }) {
     },
     dispose() {
       closed = true;
+      metadataRequested = false;
       epoch++;
       operation?.abort();
       home.remove();
