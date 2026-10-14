@@ -1,6 +1,7 @@
 /** Shared semantic cues; both recorded and offline procedural renditions use
  * these recipes. No context, clock, randomness or actor mutation lives here. */
 import { destructionSoundRecipe } from './destruction-audio.mjs';
+import { worldAmbienceRecipe } from './world-ambience.mjs';
 const FAMILY_PITCH = Object.freeze({
   lookout: 1.1,
   patroller: 0.94,
@@ -22,8 +23,20 @@ const FAMILY_PITCH = Object.freeze({
 // Original material accents reuse the admitted bank. Cadence follows observed
 // movement, never a sprite frame, random choice or simulation mutation.
 const ACTOR_SOUNDS = Object.freeze({
-  runner: Object.freeze({ cadence: 0.32, rate: 1.08, equipment: 'paper', from: 240, to: 150 }),
-  courier: Object.freeze({ cadence: 0.29, rate: 1.19, equipment: 'ratchet', from: 360, to: 210 }),
+  runner: Object.freeze({
+    cadence: 0.32,
+    rate: 1.08,
+    equipment: 'paper',
+    from: 240,
+    to: 150,
+  }),
+  courier: Object.freeze({
+    cadence: 0.29,
+    rate: 1.19,
+    equipment: 'ratchet',
+    from: 360,
+    to: 210,
+  }),
   guard: Object.freeze({
     cadence: 0.41,
     rate: 0.87,
@@ -44,6 +57,43 @@ export function actorSoundProfile(family) {
 }
 export function encounterSoundRecipe(type, details = {}) {
   if (type === 'catch') return destructionSoundRecipe(details);
+  if (type === 'ambience') return worldAmbienceRecipe(details.world);
+  if (type === 'warning-charge') {
+    const progress = Math.max(0, Math.min(1, details.progress ?? 0));
+    return {
+      name: 'warning-charge',
+      procedural: true,
+      gain: 0.18,
+      priority: 5,
+      movement: false,
+      cooldown: 0.16,
+      tone: {
+        from: 660 + progress * 360,
+        to: 740 + progress * 360,
+        duration: 0.055,
+        gain: 0.024,
+        type: 'sine',
+      },
+    };
+  }
+  if (type === 'escort-shot') {
+    const breaker = details.role === 'breaker';
+    return {
+      name: breaker ? 'escort-breaker' : 'escort-sweeper',
+      procedural: true,
+      gain: 0.15,
+      priority: 2,
+      movement: false,
+      cooldown: 0.65,
+      tone: {
+        from: breaker ? 520 : 160,
+        to: breaker ? 180 : 60,
+        duration: breaker ? 0.075 : 0.12,
+        gain: 0.016,
+        type: breaker ? 'triangle' : 'sine',
+      },
+    };
+  }
   const pitch = FAMILY_PITCH[details.family] ?? 1;
   const actor = actorSoundProfile(details.family),
     tracked = details.machine === 'tracked',
@@ -83,7 +133,14 @@ export function encounterSoundRecipe(type, details = {}) {
   return {
     name,
     gain: gain * scale,
-    priority,
+    priority:
+      details.semantic === 'armor-break'
+        ? 4
+        : details.semantic === 'harmful-contact'
+          ? 5
+          : details.semantic === 'friendly-impact'
+            ? 3
+            : priority,
     movement,
     // Loop textures are deliberately sampled as short envelopes for footsteps.
     maxDuration: movement ? duration : null,

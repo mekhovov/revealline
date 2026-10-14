@@ -1,5 +1,6 @@
 import { boundedJSON, dataIdentity, exactKeys, required, stableId } from '../../game/data-json.mjs';
 import { validateIndustrialEnvironmentPin } from '../../game/presentation/industrial-environments.mjs';
+import { SIM_BATTLEFIELD_PROFILES } from './battlefield-ground.mjs';
 
 import {
   BUILTIN_SIM_VISUAL_COLLECTIONS,
@@ -198,6 +199,7 @@ export const THEME_PROFILES = Object.freeze([
       },
     });
   }),
+  ...SIM_BATTLEFIELD_PROFILES,
 ]);
 
 /** Renderer-only selection. It never changes the course's rules or collision data. */

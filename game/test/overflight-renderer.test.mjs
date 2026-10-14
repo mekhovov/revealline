@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { EventEmitter } from 'node:events';
 import {
   overflightAtlasInventory,
+  packOverflightAtlasFrames,
   OVERFLIGHT_ATLAS_BUDGET,
   overflightEnemyFrame,
 } from '../overflight/atlas.mjs';
@@ -99,7 +100,11 @@ test('authored cast preserves mixed wardrobes and explicit cast only selects a r
   assert.match(overflightEnemyFrame(enemy, 0.3, false, 'authored'), /:arcade:/);
   for (const cast of ['tactical', 'rivals', 'arcade'])
     assert.match(overflightEnemyFrame(enemy, 0.3, false, cast), new RegExp(`:${cast}:`));
-  const machinery = Object.freeze({ id: 7, family: 'tracked-tank', wardrobe: 2 });
+  const machinery = Object.freeze({
+    id: 7,
+    family: 'tracked-tank',
+    wardrobe: 2,
+  });
   assert.equal(
     overflightEnemyFrame(machinery, 0.3, false, 'tactical'),
     overflightEnemyFrame(machinery, 0.3, false, 'arcade'),
@@ -125,7 +130,13 @@ test('shared effect composites preserve full danger cues and locate chain endpoi
       (layer) => layer.frame === 'pickup.overflight-impact',
     ),
   );
-  const [line] = overflightEffectLayers({ kind: 'chain', x: 20, y: 40, x2: 100, y2: -20 });
+  const [line] = overflightEffectLayers({
+    kind: 'chain',
+    x: 20,
+    y: 40,
+    x2: 100,
+    y2: -20,
+  });
   const halfX = (Math.cos(line.rotation) * line.width) / 2;
   const halfY = (Math.sin(line.rotation) * line.width) / 2;
   assert.ok(Math.abs(20 + line.dx - halfX - 20) < 1e-10);
@@ -238,11 +249,12 @@ test('a completed independent trial freezes before inspection and ignores subseq
   assert.equal(after.protocol.repetitions, 1);
 });
 
-function fakeEnvironment() {
+function fakeEnvironment({ maxTextureSize } = {}) {
   let paints = 0,
     textureUploads = 0,
     disposedCanvases = 0;
-  const canvases = [],
+  const draws = [],
+    canvases = [],
     images = [];
   const document = {
     readyState: 'complete',
@@ -256,7 +268,13 @@ function fakeEnvironment() {
         {
           canvas,
           globalAlpha: 1,
-          createImageData: (width, height) => ({ data: new Uint8ClampedArray(width * height * 4) }),
+          createImageData: (width, height) => ({
+            data: new Uint8ClampedArray(width * height * 4),
+          }),
+          drawImage(...args) {
+            paints++;
+            draws.push(args);
+          },
         },
         {
           get: (target, key) =>
@@ -282,11 +300,13 @@ function fakeEnvironment() {
       'setVisible',
       'setPosition',
       'setFrame',
+      'setTexture',
       'setRotation',
       'setTint',
     ])
       value[method] = (...args) => {
         value[method.slice(3)] = args;
+        if (method === 'setTexture') value.Frame = [args[1]];
         return value;
       };
     value.setDisplaySize = (width, height) => {
@@ -307,7 +327,9 @@ function fakeEnvironment() {
     Scale: { FIT: 1, CENTER_BOTH: 1 },
     Textures: { FilterMode: { NEAREST: 0 } },
     Renderer: { Events: { LOSE_WEBGL: 'lose', RESTORE_WEBGL: 'restore' } },
-    Core: { Events: { PRE_RENDER: 'pre', POST_RENDER: 'post', DESTROY: 'destroy' } },
+    Core: {
+      Events: { PRE_RENDER: 'pre', POST_RENDER: 'post', DESTROY: 'destroy' },
+    },
     Game: class {
       constructor(config) {
         game = this;
@@ -315,6 +337,11 @@ function fakeEnvironment() {
         this.events = new EventEmitter();
         this.renderer = new EventEmitter();
         this.renderer.type = 2;
+        if (maxTextureSize)
+          this.renderer.gl = {
+            MAX_TEXTURE_SIZE: 0x0d33,
+            getParameter: () => maxTextureSize,
+          };
         this.canvas = { style: {}, width: 960, height: 540 };
         this.scene = {
           game: this,
@@ -324,7 +351,10 @@ function fakeEnvironment() {
               return { add() {}, setFilter() {} };
             },
           },
-          add: { image, tileSprite: (_x, _y, width, height) => image().setSize(width, height) },
+          add: {
+            image,
+            tileSprite: (_x, _y, width, height) => image().setSize(width, height),
+          },
           cameras: {
             main: {
               setBounds() {
@@ -354,6 +384,7 @@ function fakeEnvironment() {
     game: () => game,
     counts: () => ({ paints, textureUploads, disposedCanvases }),
     canvases,
+    draws,
     images,
   };
 }
@@ -384,7 +415,14 @@ test('persistent native remains obey shared settings, preserve live draw counts,
       camera: { x: 1440, y: 540, width: 960, height: 540 },
       airframes: 3,
       airframesRemaining: 2,
-      player: { x: 1440, y: 540, heading: 0, hull: 60, maxHull: 100, shield: 1 },
+      player: {
+        x: 1440,
+        y: 540,
+        heading: 0,
+        hull: 60,
+        maxHull: 100,
+        shield: 1,
+      },
       enemies: Array.from({ length: 700 }, (_, id) => ({
         id,
         active: true,
@@ -462,7 +500,9 @@ test('enemy behavior cues retain phase, rally direction and reward identity with
   globalThis.Phaser = environment.Phaser;
   const appearance = {
     reducedEffects: false,
-    snapshot: { image: (id) => (id.startsWith('player.') ? { image: {} } : null) },
+    snapshot: {
+      image: (id) => (id.startsWith('player.') ? { image: {} } : null),
+    },
   };
   let renderer;
   try {
@@ -480,7 +520,11 @@ test('enemy behavior cues retain phase, rally direction and reward identity with
         { family: 'sprinter', behaviorPhase: 'windup', heading: 0 },
         { family: 'sprinter', behaviorPhase: 'burst', heading: Math.PI / 2 },
         { family: 'radar-truck', behaviorPhase: 'support', supportRadius: 140 },
-        { family: 'relay-warden', behaviorPhase: 'rally-warning', supportRadius: 160 },
+        {
+          family: 'relay-warden',
+          behaviorPhase: 'rally-warning',
+          supportRadius: 160,
+        },
         {
           family: 'relay-warden',
           behaviorPhase: 'rally',
@@ -489,7 +533,11 @@ test('enemy behavior cues retain phase, rally direction and reward identity with
           rallyY: 650,
         },
         { family: 'courier', behaviorPhase: 'pursuit', rewardTarget: true },
-        { family: 'refuge-seeker', behaviorPhase: 'pursuit', rewardTarget: true },
+        {
+          family: 'refuge-seeker',
+          behaviorPhase: 'pursuit',
+          rewardTarget: true,
+        },
       ].map((enemy, id) => ({
         id,
         x: 1100 + id * 80,
@@ -573,7 +621,9 @@ test('renderer submits every visible actor above 64 without texture work, preser
     const renderer = await createOverflightRenderer({
       parent: { ownerDocument: environment.document },
       appearance: {
-        snapshot: { image: (id) => (id.startsWith('player.') ? { image: {} } : null) },
+        snapshot: {
+          image: (id) => (id.startsWith('player.') ? { image: {} } : null),
+        },
         artRevision: 'industrial-roster-v3',
       },
       onContextLost: () => lost++,
@@ -654,7 +704,9 @@ test('diagnostic context restoration uses the extension and cancels its timer on
     const renderer = await createOverflightRenderer({
       parent: { ownerDocument: environment.document },
       appearance: {
-        snapshot: { image: (id) => (id.startsWith('player.') ? { image: {} } : null) },
+        snapshot: {
+          image: (id) => (id.startsWith('player.') ? { image: {} } : null),
+        },
       },
     });
     const native = environment.game().renderer;
@@ -704,7 +756,9 @@ test('normal and reduced-effects renderers preserve identical real-core outcomes
           parent: { ownerDocument: environment.document },
           appearance: {
             reducedEffects,
-            snapshot: { image: (id) => (id.startsWith('player.') ? { image: {} } : null) },
+            snapshot: {
+              image: (id) => (id.startsWith('player.') ? { image: {} } : null),
+            },
           },
         }),
       );
@@ -764,7 +818,9 @@ test('armor detail follows approach distance without changing actor coverage, qu
   globalThis.Phaser = environment.Phaser;
   const appearance = {
     reducedEffects: false,
-    snapshot: { image: (id) => (id.startsWith('player.') ? { image: {} } : null) },
+    snapshot: {
+      image: (id) => (id.startsWith('player.') ? { image: {} } : null),
+    },
   };
   let renderer;
   try {
@@ -831,7 +887,7 @@ test('armor detail follows approach distance without changing actor coverage, qu
   }
 });
 
-test('Riy reuses hero frames for two escorts and retains both roles with reduced effects', async () => {
+test('Riy native attachments distinguish both escort roles with reduced effects', async () => {
   const { createOverflightRiy } = await import('../overflight/riy-core.mjs');
   const environment = fakeEnvironment(),
     prior = globalThis.Phaser;
@@ -859,7 +915,9 @@ test('Riy reuses hero frames for two escorts and retains both roles with reduced
       renderer.present(run);
       assert.equal(escorts().length, 2);
       assert.ok(
-        escorts().every((image) => image.Frame[0].startsWith('hero:') && image.displayWidth === 44),
+        escorts().every(
+          (image) => image.Frame[0].startsWith('escort:') && image.displayWidth === 44,
+        ),
       );
     }
     assert.deepEqual(run.riy, original);
@@ -939,6 +997,327 @@ test('Riy coverage faces rear for Sweeper, forward for Breaker and hides during 
       assert.equal(cues().length, visible.length);
       assert.deepEqual(run.riy, before);
     }
+  } finally {
+    await renderer?.destroy();
+    globalThis.Phaser = prior;
+  }
+});
+
+test('paged atlas packing stays deterministic, non-overlapping and device-bounded', () => {
+  const inventory = overflightAtlasInventory({ maxTextureSize: 512 });
+  assert.ok(inventory.pages.length > 1);
+  assert.deepEqual(inventory, overflightAtlasInventory({ maxTextureSize: 512 }));
+  assert.equal(
+    inventory.spriteRGBABytes,
+    inventory.pages.reduce((sum, page) => sum + page.width * page.height * 4, 0),
+  );
+  assert.equal(inventory.textures, inventory.pages.length + 1);
+  for (const page of inventory.pages) {
+    assert.ok(page.width <= 512 && page.height <= 512);
+    for (let i = 0; i < page.frames.length; i++) {
+      const a = page.frames[i];
+      assert.equal(a.page, page.index);
+      assert.ok(
+        a.x >= 2 &&
+          a.y >= 2 &&
+          a.x + a.width + 2 <= page.width &&
+          a.y + a.height + 2 <= page.height,
+      );
+      for (const b of page.frames.slice(i + 1))
+        assert.ok(
+          a.x + a.width + 4 <= b.x ||
+            b.x + b.width + 4 <= a.x ||
+            a.y + a.height + 4 <= b.y ||
+            b.y + b.height + 4 <= a.y,
+        );
+    }
+  }
+  assert.throws(
+    () =>
+      packOverflightAtlasFrames([{ id: 'too-big', width: 512, height: 32 }], {
+        maxTextureSize: 512,
+      }),
+    /exceeds device/,
+  );
+  assert.throws(
+    () =>
+      packOverflightAtlasFrames(
+        Array.from({ length: 3000 }, (_, id) => ({
+          id,
+          width: 64,
+          height: 64,
+        })),
+      ),
+    /32 MiB/,
+  );
+});
+
+test('low-capability device routes frames across retained pages and releases every canvas', async () => {
+  const environment = fakeEnvironment({ maxTextureSize: 512 }),
+    prior = globalThis.Phaser;
+  globalThis.Phaser = environment.Phaser;
+  let renderer;
+  try {
+    renderer = await createOverflightRenderer({
+      parent: { ownerDocument: environment.document },
+      appearance: { snapshot: { image: () => ({ image: {} }) } },
+    });
+    const run = createOverflightRun(compileOverflightProject(createOverflightProject()), {
+      seed: 23,
+    });
+    startOverflight(run);
+    for (let i = 0; i < 180; i++) stepOverflight(run, { x: 1, y: 0 });
+    renderer.present(run);
+    const info = renderer.stats().atlas;
+    assert.ok(info.pages.length > 1);
+    assert.equal(environment.counts().textureUploads, info.textures);
+    const routed = environment.images
+      .filter((entry) => entry.Texture)
+      .map((entry) => entry.Texture[0]);
+    assert.ok(new Set(routed).size > 1, 'different frame sizes use the appropriate page');
+    const before = environment.counts();
+    environment.game().renderer.emit('lose');
+    environment.game().renderer.emit('restore');
+    renderer.present(run);
+    assert.deepEqual(environment.counts(), before);
+    await renderer.destroy();
+    assert.ok(environment.canvases.every((canvas) => canvas.width === 0 && canvas.height === 0));
+  } finally {
+    await renderer?.destroy();
+    globalThis.Phaser = prior;
+  }
+});
+
+test('world art is prepared in bounded retained tiles once, including failure cleanup', async () => {
+  const { createOverflightWorldPresentation } = await import('../overflight/worlds.mjs');
+  const presentation = createOverflightWorldPresentation('freight-depot');
+  const customMaterial = { width: 32, height: 32 },
+    customRail = { width: 32, height: 32 };
+  const environment = fakeEnvironment(),
+    prior = globalThis.Phaser;
+  globalThis.Phaser = environment.Phaser;
+  let renderer;
+  try {
+    renderer = await createOverflightRenderer({
+      parent: { ownerDocument: environment.document },
+      appearance: {
+        snapshot: {
+          image: (slot) =>
+            slot === 'world.overflight.material.concrete'
+              ? { image: customMaterial }
+              : slot === 'world.overflight.prop.rail'
+                ? { image: customRail }
+                : slot.startsWith('player.')
+                  ? { image: {} }
+                  : null,
+        },
+      },
+      presentation,
+      arena: { width: 2880, height: 1080 },
+    });
+    const stats = renderer.stats();
+    const raw = renderer.stats({ raw: true });
+    assert.deepEqual(raw.atlas, stats.atlas, 'raw timing exports keep the bounded atlas summary');
+    assert.equal(raw.atlas.frames, undefined);
+    assert.ok(raw.atlas.pages.every((page) => !page.frames && page.frameCount > 0));
+    assert.equal(stats.atlas.worldTiles.length, 6);
+    assert.ok(environment.draws.some(([image]) => image === customMaterial));
+    assert.ok(environment.draws.some(([image]) => image === customRail));
+    assert.equal(stats.atlas.worldRGBABytes, 2880 * 1080 * 4);
+    assert.equal(stats.atlas.groundRGBABytes, 0);
+    assert.equal(stats.atlas.retainedCanvasBytes, stats.atlas.baseRGBABytes);
+    assert.ok(stats.atlas.spriteRGBABytes < OVERFLIGHT_ATLAS_BUDGET);
+    assert.equal(environment.images.filter((image) => image.Depth?.[0] === 0).length, 6);
+    const run = createOverflightRun(compileOverflightProject(createOverflightProject()));
+    const baked = environment.counts();
+    renderer.present(run);
+    assert.deepEqual(environment.counts(), baked, 'ground never repaints in live presentation');
+    await renderer.destroy();
+    assert.ok(environment.canvases.every((canvas) => !canvas.width && !canvas.height));
+    await assert.rejects(
+      () =>
+        createOverflightRenderer({
+          parent: { ownerDocument: environment.document },
+          appearance: {},
+        }),
+      /selected native player artwork/,
+    );
+    assert.ok(
+      environment.canvases.every((canvas) => !canvas.width && !canvas.height),
+      'failed preparation releases every allocated page',
+    );
+  } finally {
+    await renderer?.destroy();
+    globalThis.Phaser = prior;
+  }
+});
+
+test('ten world renderer lifecycles preserve reference and stress coverage and release every retained page', async () => {
+  const { createOverflightWorldPresentation } = await import('../overflight/worlds.mjs');
+  const prior = globalThis.Phaser;
+  try {
+    for (let retry = 0; retry < 10; retry++) {
+      const world = ['field-crossing', 'freight-depot', 'relay-ruins'][retry % 3];
+      const environment = fakeEnvironment({ maxTextureSize: retry % 2 ? 512 : 2048 });
+      globalThis.Phaser = environment.Phaser;
+      let renderer;
+      try {
+        renderer = await createOverflightRenderer({
+          parent: { ownerDocument: environment.document },
+          appearance: { snapshot: { image: () => ({ image: {} }) } },
+          presentation: createOverflightWorldPresentation(world),
+          arena: { width: 2880, height: 1080 },
+        });
+        const run = createOverflightRun(
+          compileOverflightProject(createOverflightProject({ rulesVersion: 3, world })),
+          { fixture: retry % 2 ? 'stress' : 'reference' },
+        );
+        startOverflight(run);
+        const prepared = environment.counts();
+        renderer.present(run);
+        const alive = retry % 2 ? 2500 : 1500;
+        const visible = retry % 2 ? 1200 : 700;
+        assert.equal(renderer.stats().counts.alive, alive);
+        assert.equal(renderer.stats().counts.rendered, visible);
+        assert.deepEqual(environment.counts(), prepared);
+        environment.game().renderer.emit('lose');
+        assert.equal(renderer.stats().lost, true);
+        environment.game().renderer.emit('restore');
+        renderer.present(run);
+        assert.equal(renderer.stats().lost, false);
+        assert.equal(renderer.stats().counts.rendered, visible);
+        assert.deepEqual(
+          environment.counts(),
+          prepared,
+          'retained sources do not repaint or upload',
+        );
+        renderer.resetMeasurements();
+        assert.equal(renderer.stats().highWater.visible, 0);
+        renderer.present(run);
+        assert.equal(renderer.stats().counts.rendered, visible);
+        await renderer.destroy();
+        await renderer.destroy();
+        assert.equal(environment.counts().disposedCanvases, 1);
+        assert.ok(environment.canvases.every((canvas) => !canvas.width && !canvas.height));
+        assert.equal(environment.game().renderer.listenerCount('lose'), 0);
+        assert.equal(environment.game().renderer.listenerCount('restore'), 0);
+      } finally {
+        await renderer?.destroy();
+      }
+    }
+  } finally {
+    globalThis.Phaser = prior;
+  }
+});
+
+test('accepted Studio actor images and Motion clips bake once and feed native upgrade previews', async () => {
+  const { createSoldierAnimation } = await import('../presentation/actor-animation.mjs');
+  const { prepareOverflightActorOverrides } = await import('../overflight/actor-overrides.mjs');
+  const descriptor = structuredClone(createSoldierAnimation('review-runner', ['boots', 'torso']));
+  descriptor.rig = 'sprite.v1';
+  descriptor.frames = [
+    {
+      id: 'a',
+      durationMs: 80,
+      stride: 0,
+      breath: 0,
+      accessory: 0,
+      region: { x: 0, y: 0, width: 32, height: 32 },
+    },
+    {
+      id: 'b',
+      durationMs: 160,
+      stride: 0,
+      breath: 0,
+      accessory: 0,
+      region: { x: 32, y: 0, width: 32, height: 32 },
+    },
+  ];
+  for (const clip of Object.keys(descriptor.clips))
+    descriptor.clips[clip] = { frames: ['a', 'b'], loop: true };
+  const soldierImage = { width: 64, height: 32 },
+    machineImage = { width: 64, height: 64 };
+  const soldier = {
+    image: soldierImage,
+    asset: {
+      id: 'review-runner',
+      revision: 2,
+      kind: 'image',
+      animation: descriptor,
+      file: { width: 64, height: 32, sha256: 'a'.repeat(64) },
+    },
+  };
+  const machine = {
+    image: machineImage,
+    asset: {
+      id: 'review-tank',
+      revision: 4,
+      kind: 'image',
+      file: { width: 64, height: 64, sha256: 'b'.repeat(64) },
+    },
+  };
+  const snapshot = {
+    image: (id) =>
+      id.startsWith('player.')
+        ? { image: {} }
+        : id === 'overflight.soldier.runner.tactical'
+          ? soldier
+          : id === 'enemy.eroder'
+            ? machine
+            : null,
+  };
+  const overrides = prepareOverflightActorOverrides(snapshot);
+  const enemy = { id: 0, family: 'runner', wardrobe: 0 };
+  const moving = { state: 'moving', clip: 'move', elapsed: 0 };
+  assert.match(overrides.frame(enemy, 0.079, false, 'authored', moving), /:move:0$/);
+  assert.match(overrides.frame(enemy, 0.08, false, 'authored', moving), /:move:1$/);
+  assert.match(overrides.frame(enemy, 0.24, false, 'authored', moving), /:move:0$/);
+  assert.match(overrides.frame(enemy, 0.12, true, 'authored', moving), /:move:0$/);
+  assert.match(
+    overrides.frame(enemy, 100, false, 'authored', {
+      state: 'preparing',
+      clip: 'anticipation',
+      elapsed: 0.09,
+    }),
+    /:anticipation:1$/,
+  );
+  assert.equal(overrides.frame(enemy, 0, false, 'rivals', moving), null);
+  const environment = fakeEnvironment(),
+    prior = globalThis.Phaser;
+  globalThis.Phaser = environment.Phaser;
+  let renderer;
+  try {
+    renderer = await createOverflightRenderer({
+      parent: { ownerDocument: environment.document },
+      appearance: { snapshot },
+    });
+    assert.ok(environment.draws.some(([image, x]) => image === soldierImage && x === 32));
+    assert.ok(environment.draws.some(([image]) => image === machineImage));
+    assert.equal(renderer.stats().atlas.acceptedActorOverrides.length, 2);
+    assert.equal(renderer.stats().atlas.customActorFrames, 13);
+    const run = createOverflightRun(compileOverflightProject(createOverflightProject()), {
+      fixture: 'reference',
+    });
+    startOverflight(run);
+    const before = structuredClone(run),
+      baked = environment.counts();
+    renderer.present(run);
+    assert.deepEqual(run, before, 'custom appearance does not alter damage or simulation');
+    assert.deepEqual(environment.counts(), baked);
+    const preview = [];
+    const ctx = new Proxy(
+      { drawImage: (...args) => preview.push(args) },
+      {
+        get: (target, key) => target[key] ?? (() => {}),
+      },
+    );
+    renderer.paintPreviewSprite(ctx, 'runner', 10, 10, 20, 0.09);
+    renderer.paintPreviewSprite(ctx, 'machine', 10, 10, 20, 0.09);
+    assert.equal(preview.length, 2, 'custom-only atlas frames also feed upgrade demos');
+    environment.game().renderer.emit('lose');
+    environment.game().renderer.emit('restore');
+    renderer.present(run);
+    assert.deepEqual(environment.counts(), baked);
   } finally {
     await renderer?.destroy();
     globalThis.Phaser = prior;
