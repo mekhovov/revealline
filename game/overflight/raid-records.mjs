@@ -8,26 +8,39 @@ const legacyRules = 'overflight-raid.v1';
 export const OVERFLIGHT_HUNT_RECORDS_FORMAT_V4 = 'overflight-hunt-records.v4';
 export const OVERFLIGHT_HUNT_RECORDS_FORMAT_V3 = 'overflight-hunt-records.v3';
 const versionOf = (run) =>
-  run?.compiled?.format === 'OverflightHuntCompiledV4' ? 4 : run?.compiled?.format === 'OverflightHuntCompiledV3'
-    ? 3
-    : run?.compiled?.format === 'OverflightHuntCompiledV2'
-      ? 2
-      : 1;
+  run?.compiled?.format === 'OverflightHuntCompiledV4'
+    ? 4
+    : run?.compiled?.format === 'OverflightHuntCompiledV3'
+      ? 3
+      : run?.compiled?.format === 'OverflightHuntCompiledV2'
+        ? 2
+        : 1;
 const formatOf = (version) =>
-  version === 4 ? OVERFLIGHT_HUNT_RECORDS_FORMAT_V4 : version === 3
-    ? OVERFLIGHT_HUNT_RECORDS_FORMAT_V3
-    : version === 2
-      ? OVERFLIGHT_HUNT_RECORDS_FORMAT
-      : OVERFLIGHT_HUNT_LEGACY_RECORDS_FORMAT;
+  version === 4
+    ? OVERFLIGHT_HUNT_RECORDS_FORMAT_V4
+    : version === 3
+      ? OVERFLIGHT_HUNT_RECORDS_FORMAT_V3
+      : version === 2
+        ? OVERFLIGHT_HUNT_RECORDS_FORMAT
+        : OVERFLIGHT_HUNT_LEGACY_RECORDS_FORMAT;
 const rulesOf = (version) =>
-  version === 4 ? 'overflight-raid.v4' : version === 3 ? 'overflight-raid.v3' : version === 2 ? OVERFLIGHT_HUNT_RECORD_RULES : legacyRules;
+  version === 4
+    ? 'overflight-raid.v4'
+    : version === 3
+      ? 'overflight-raid.v3'
+      : version === 2
+        ? OVERFLIGHT_HUNT_RECORD_RULES
+        : legacyRules;
 const finite = (value) => Number.isFinite(value) && value >= 0;
 
 export function overflightHuntRecordContext(run) {
   required(
-    ['OverflightHuntCompiledV1', 'OverflightHuntCompiledV2', 'OverflightHuntCompiledV3', 'OverflightHuntCompiledV4'].includes(
-      run?.compiled?.format,
-    ),
+    [
+      'OverflightHuntCompiledV1',
+      'OverflightHuntCompiledV2',
+      'OverflightHuntCompiledV3',
+      'OverflightHuntCompiledV4',
+    ].includes(run?.compiled?.format),
     'Raid records need a compiled hunt.',
   );
   required(/^[a-f0-9]{16}$/.test(run.compiled.projectIdentity), 'Missing Raid content identity.');
@@ -292,7 +305,13 @@ export function createOverflightHuntRecords({
   });
   const coordinated = createRecordStore({ ...options, backend: coordinatedBackend, version: 4 });
   const storeFor = (run) =>
-    versionOf(run) === 4 ? coordinated : versionOf(run) === 3 ? revised : versionOf(run) === 2 ? current : legacy;
+    versionOf(run) === 4
+      ? coordinated
+      : versionOf(run) === 3
+        ? revised
+        : versionOf(run) === 2
+          ? current
+          : legacy;
   return {
     read: (run) => storeFor(run).read(run),
     record: (run) => storeFor(run).record(run),

@@ -11,7 +11,8 @@ export const OVERFLIGHT_COMBAT_CLIPS = Object.freeze({
 export function overflightEnemyPresentation(enemy, time = 0, previous = null, output = {}) {
   const sameActor = previous?.id === enemy.id;
   const phase = enemy.behaviorPhase;
-  const crosscut = ['crosscut', 'crosscut-interceptor'].includes(enemy.movementPreset);
+  const crosscut =
+    enemy.movementPreset === 'crosscut' || enemy.movementPreset === 'crosscut-interceptor';
   const movementWarning = crosscut && enemy.movementPhase === 'preparing';
   const movementAttack = crosscut && enemy.movementPhase === 'committed';
   const armor = enemy.armorSegments ?? enemy.armor ?? 0;

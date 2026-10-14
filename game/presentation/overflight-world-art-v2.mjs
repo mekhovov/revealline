@@ -47,11 +47,19 @@ const familyScene = {
   irrigator: 'orchard',
 };
 
+/** Hosts crop static frames once; Studio may provide the original atlas bitmap. */
+export function overflightWorldSourceFrame(source) {
+  const frame = source.geometry?.frame ?? { x: 0, y: 0, width: 32, height: 32 };
+  const width = source.image?.naturalWidth ?? source.image?.width,
+    height = source.image?.naturalHeight ?? source.image?.height;
+  return width === frame.width && height === frame.height ? { ...frame, x: 0, y: 0 } : frame;
+}
+
 /** Native-sized art preserves authored crop/pivot/occupied bounds. It never
  * stretches a single small source over a whole building or a long path. */
 export function drawOverflightWorldModuleImage(ctx, source, x, y, size = 28) {
   if (!source?.image) return false;
-  const frame = source.geometry?.frame ?? { x: 0, y: 0, width: 32, height: 32 },
+  const frame = overflightWorldSourceFrame(source),
     pivot = source.geometry?.pivot ?? { x: 0.5, y: 0.5 },
     occupied = source.geometry?.occupiedBounds ?? { x: 0, y: 0, width: 1, height: 1 },
     scale = size / Math.max(frame.width, frame.height);
@@ -73,7 +81,7 @@ function material(ctx, region, world, image) {
     custom = image(OVERFLIGHT_WORLD_MATERIAL_SLOTS[region.material]);
   box(ctx, region.variant % 2 ? base : low, region.x, region.y, region.width, region.height);
   if (custom?.image) {
-    const frame = custom.geometry?.frame ?? { x: 0, y: 0, width: 32, height: 32 };
+    const frame = overflightWorldSourceFrame(custom);
     for (let y = 0; y < region.height; y += 32)
       for (let x = 0; x < region.width; x += 32) {
         const width = Math.min(32, region.width - x),
