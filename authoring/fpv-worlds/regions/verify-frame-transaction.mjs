@@ -263,87 +263,95 @@ const body = (state) => ({
   angular: state.angular,
   ticks: state.ticks,
 });
-await check(
-  "flight: cancellation from real root attachment preserves body, frame and retained terrain",
-  async () => {
-    const f = fixture("terrain"),
-      flight = createRegionalFlightPrototype({
-        manifest: f.manifest,
-        source: f.source,
-      });
-    try {
-      await flight.prepare();
-      flight.arm();
-      for (let i = 0; i < 20; i++) flight.step({ throttle: 0.55, roll: 0.03, pitch: 0, yaw: 0 });
-      flight.pause();
-      const before = flight.snapshot(),
-        children = [...flight.root.children],
-        pose = flight.dronePose.position.toArray(),
-        originalAdd = flight.root.add;
-      flight.root.add = function (...items) {
-        const result = originalAdd.apply(this, items);
-        flight.cancelPreparation();
-        return result;
-      };
-      await assert.rejects(
-        flight.prepare(),
-        (error) => error.name === "AbortError",
-      );
-      flight.root.add = originalAdd;
-      const after = flight.snapshot();
-      assert.deepEqual(body(after), body(before));
-      assert.deepEqual(after.originMm, before.originMm);
-      assert.equal(after.recentres, before.recentres);
-      assert.deepEqual(flight.root.children, children);
-      assert.deepEqual(flight.dronePose.position.toArray(), pose);
-      assert.equal(flight.arm(), false);
-      await flight.prepare();
-      assert.deepEqual(body(flight.snapshot()), body(before));
-      assert.equal(flight.snapshot().status, "paused");
-      assert.equal(flight.arm({ throttle: 0.5, roll: 0, pitch: 0, yaw: 0 }), false);
-      assert.equal(flight.arm(), true);
-    } finally {
-      await flight.dispose();
-    }
-  },
-);
-await check(
-  "flight: cancellation in promise handoff leaves adopted origin and geometry consistent",
-  async () => {
-    const f = fixture("terrain"),
-      flight = createRegionalFlightPrototype({
-        manifest: f.manifest,
-        source: f.source,
-      });
-    try {
-      await flight.prepare();
-      const originalAdd = flight.root.add;
-      flight.root.add = function (...items) {
-        const result = originalAdd.apply(this, items);
-        queueMicrotask(() => flight.cancelPreparation());
-        return result;
-      };
-      await assert.rejects(
-        flight.prepare(),
-        (error) => error.name === "AbortError",
-      );
-      flight.root.add = originalAdd;
-      const state = flight.snapshot();
-      assert.deepEqual(state.originMm, state.terrain.provenance.originMm);
-      assert.equal(flight.root.children.length, 3);
-      assert.equal(
-        flight.root.children[2].children.length,
-        state.terrain.provenance.chunks.length,
-      );
-      assert.equal(state.status, "paused");
-      assert.equal(flight.arm(), false);
-      await flight.prepare();
-      assert.equal(flight.snapshot().reason, "prepared");
-    } finally {
-      await flight.dispose();
-    }
-  },
-);
+for (const kind of ["terrain", "scenery"]) {
+  await check(
+    `${kind} flight: cancellation from real root attachment preserves body, frame and retained terrain`,
+    async () => {
+      const f = fixture(kind),
+        flight = createRegionalFlightPrototype({
+          manifest: f.manifest,
+          source: f.source,
+          geometryProfile: `${kind}-v1`,
+        });
+      try {
+        await flight.prepare();
+        flight.arm();
+        for (let i = 0; i < 20; i++)
+          flight.step({ throttle: 0.55, roll: 0.03, pitch: 0, yaw: 0 });
+        flight.pause();
+        const before = flight.snapshot(),
+          children = [...flight.root.children],
+          pose = flight.dronePose.position.toArray(),
+          originalAdd = flight.root.add;
+        flight.root.add = function (...items) {
+          const result = originalAdd.apply(this, items);
+          flight.cancelPreparation();
+          return result;
+        };
+        await assert.rejects(
+          flight.prepare(),
+          (error) => error.name === "AbortError",
+        );
+        flight.root.add = originalAdd;
+        const after = flight.snapshot();
+        assert.deepEqual(body(after), body(before));
+        assert.deepEqual(after.originMm, before.originMm);
+        assert.equal(after.recentres, before.recentres);
+        assert.deepEqual(flight.root.children, children);
+        assert.deepEqual(flight.dronePose.position.toArray(), pose);
+        assert.equal(flight.arm(), false);
+        await flight.prepare();
+        assert.deepEqual(body(flight.snapshot()), body(before));
+        assert.equal(flight.snapshot().status, "paused");
+        assert.equal(
+          flight.arm({ throttle: 0.5, roll: 0, pitch: 0, yaw: 0 }),
+          false,
+        );
+        assert.equal(flight.arm(), true);
+      } finally {
+        await flight.dispose();
+      }
+    },
+  );
+  await check(
+    `${kind} flight: cancellation in promise handoff leaves adopted origin and geometry consistent`,
+    async () => {
+      const f = fixture(kind),
+        flight = createRegionalFlightPrototype({
+          manifest: f.manifest,
+          source: f.source,
+          geometryProfile: `${kind}-v1`,
+        });
+      try {
+        await flight.prepare();
+        const originalAdd = flight.root.add;
+        flight.root.add = function (...items) {
+          const result = originalAdd.apply(this, items);
+          queueMicrotask(() => flight.cancelPreparation());
+          return result;
+        };
+        await assert.rejects(
+          flight.prepare(),
+          (error) => error.name === "AbortError",
+        );
+        flight.root.add = originalAdd;
+        const state = flight.snapshot();
+        assert.deepEqual(state.originMm, state.terrain.provenance.originMm);
+        assert.equal(flight.root.children.length, 3);
+        assert.equal(
+          flight.root.children[2].children.length,
+          state.terrain.provenance.chunks.length,
+        );
+        assert.equal(state.status, "paused");
+        assert.equal(flight.arm(), false);
+        await flight.prepare();
+        assert.equal(flight.snapshot().reason, "prepared");
+      } finally {
+        await flight.dispose();
+      }
+    },
+  );
+}
 console.log(
   JSON.stringify({ checks, physicsChanged: false, playerReady: false }),
 );
