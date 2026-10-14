@@ -26,7 +26,7 @@ The initial old preparation failed because this test harness omitted `site/launc
 
 The first new worker registration also returned an aborted operation before a browser request reached the origin. Independent retrieval returned HTTP 200 and the exact expected worker bytes. The next attempt succeeded without clearing data. Local storage was under pressure, but that is context rather than a proven cause.
 
-The native new home requested its artwork from the arcade root outside the optional package. The asset itself is already pinned locally. [PR #1249](https://github.com/mekhovov/revealline/pull/1249) corrects that URL; this frozen candidate does not contain that later fix. Its rendered/offline artwork acceptance remains pending new packaged bytes.
+The native new home requested its artwork from the arcade root outside the optional package. The asset itself is already pinned locally. [PR #1249](https://github.com/mekhovov/revealline/pull/1249) corrects that URL; this frozen candidate does not contain that later fix. The later exact package now has a separate [native rendered and origin-unavailable artwork receipt](fpv-home-art-package-20261014.md); this original frozen candidate remains unchanged.
 
 The read-only 1 ms timeout / EN-UK inconclusive-warning behavior remains separately recorded in the [mixed-harness receipt](fpv-offline-interruption-20261014.md). This new journey verifies the actual corrected package's normal preparation and recovery behavior.
 
