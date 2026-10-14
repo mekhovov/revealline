@@ -284,7 +284,7 @@ const transition = createContinuousPlayController({
   isCurrent: (identity) => identity === match,
   isActive: pageActive,
   onNext: () => launchNext(),
-  onRetry: () => prepare({ launch: true }),
+  onRetry: retryMission,
 });
 const gamepadState = new Map(),
   gamepadSeats = new Map();
@@ -767,7 +767,7 @@ function installTransitionControls() {
     retry = el('button'),
     home = el('button');
   next.addEventListener('click', launchNext);
-  retry.addEventListener('click', () => prepare({ launch: true }));
+  retry.addEventListener('click', retryMission);
   home.addEventListener('click', () => playShell.open('home'));
   stage.append(next, retry, home);
   $('game').querySelector('.arena').append(stage);
@@ -895,6 +895,11 @@ function relative(player, offset) {
   const directions = ['up', 'right', 'down', 'left'],
     heading = snake.turns.at(-1) ?? snake.direction;
   turn(player, directions[(directions.indexOf(heading) + offset + 4) % 4]);
+}
+function retryMission() {
+  // Retry keeps the accepted artwork, but prepare owns a fresh attempt and
+  // jammer schedule. Every input path must use the same ownership boundary.
+  prepare({ launch: true, retainAppearance: true });
 }
 function prepare({ launch = false, retainAppearance = false, hazardSeed } = {}) {
   ({ format, targetRules } = classicSnakeMissionSettings(entry, settings()));
@@ -2233,7 +2238,7 @@ doc.addEventListener('keydown', (event) => {
     if (result()) {
       if (key === 'p') pause();
       else if (key !== 'r' && result() === 'won' && nextMission()) launchNext();
-      else prepare({ launch: true, retainAppearance: key === 'r' });
+      else retryMission();
     } else if (key !== 'r') {
       if (ready || paused) start();
       else pause();
@@ -2284,8 +2289,9 @@ function pollGamepads() {
       touchModality = 'gamepad';
       applyTouchVisibility();
     }
+    const directionIndex = buttons.slice(0, 4).findIndex((pressed, i) => pressed && !previous[i]);
+    if (result() && directionIndex >= 0) transition.cancel('controller-navigation');
     if (music?.root() || playShell?.topDialog()) {
-      const directionIndex = buttons.slice(0, 4).findIndex((pressed, i) => pressed && !previous[i]);
       const command = {
         direction: directionIndex < 0 ? null : ['up', 'right', 'down', 'left'][directionIndex],
         confirm: !!buttons[5] && !previous[5],
@@ -2303,7 +2309,7 @@ function pollGamepads() {
     }
     if (result() && buttons[5] && !previous[5]) {
       if (result() === 'won' && nextMission()) launchNext();
-      else prepare({ launch: true });
+      else retryMission();
     }
     for (let i = 0; i < 4; i++)
       if (buttons[i] && !previous[i]) {
@@ -2628,9 +2634,9 @@ playShell = mountModePlayShell({
     },
     resultFocus: () => (!$('next').hidden ? $('next') : playShell?.elements.buttons.retry),
     pause: () => pause({ showMenu: false }),
-    start: () => (result() ? prepare({ launch: true }) : start()),
+    start: () => (result() ? retryMission() : start()),
     resume: start,
-    retry: () => prepare({ launch: true, retainAppearance: true }),
+    retry: retryMission,
     skip: () => $('next').click(),
     random: launchRandom,
     canResume: () => !result() && (!ready || (offerSavedContinue && !!savedRound)),
