@@ -83,6 +83,28 @@ during celebration cancels automatic continuation. The full host suite passes
 pass 44. Existing recipe and grading evidence is unchanged. Physical testing
 and player feedback remain deferred; no fresh full-distribution build is claimed.
 
+## Full archive verification completed
+
+The final packaging gap is closed on clean merged main
+`1a2e87d50670f6c4e2c79faf6dd46d9a52479c93`. PRs #1194 and #1196, including
+all their implementation/report commits, are confirmed ancestors. Subsequent
+main changes leave Snake and its shared runtime unchanged; the updated optional
+worker is canonical, and all 14 focused offline dependency checks pass.
+
+The full default game distribution (including archived recipes) built **3,277
+files**, version **0.151.1**. Its ZIP SHA-256 is
+`f7de2ab16a59d899cec1986c91253666353cb9e1d9f9e1eb6641a2a65d1002f5`.
+Archive CRCs, every archived manifest entry, every expanded-file hash and output
+inventory passed. [The receipt](full-archive-validation.json) records exact source,
+command, file count and evidence limits. This supersedes the earlier disk-blocked
+full-build status; historical receipts remain unchanged.
+
+Only the task-owned, marker-checked generated output was removed after verification
+(2,075,953,812 logical bytes). All source, commits and saved data remain intact.
+This verifies the game distribution, not deployment or hosted publication.
+No additional implementation item remains identified by this final audit;
+physical-device and player checks stay deferred and grading extensions optional.
+
 ## Deferred qualification and intentional grading limits
 
 1. **Deferred by request: physical-device qualification.** Responsive desktop emulation cannot establish touchscreen ergonomics, physical controller behavior, thermal throttling or low-end phone frame times. Use the existing lab/gallery on representative phones and controllers before claiming those devices qualified. This does not block the current delivery.
