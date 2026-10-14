@@ -1,0 +1,117 @@
+{
+  "format": "revealline-practice-deployed-capacity-observation.v1",
+  "observedAt": "2026-10-14T12:29:43.510Z",
+  "publicRoot": "https://mekhovov.github.io/revealline/",
+  "deployedSourceRevision": "1a2e87d50670f6c4e2c79faf6dd46d9a52479c93",
+  "ciRun": 38517254013,
+  "ciReceipt": {
+    "format": "revealline-main-pages-receipt.v1",
+    "sourceRevision": "1a2e87d50670f6c4e2c79faf6dd46d9a52479c93",
+    "files": 3204,
+    "bytes": 920119188,
+    "maximumBytes": 950000000
+  },
+  "manifest": {
+    "bytes": 473022,
+    "sha256": "dffbdb7dead00d07f7c6b30913948e41dbc9b8e4910c8d2c7ce3262a58743d45",
+    "payloadBytes": 919638121,
+    "payloadFiles": 3195
+  },
+  "verifiedExtraFiles": [
+    {
+      "path": "practice/index.json",
+      "bytes": 68,
+      "sha256": "57f5644eea5e6cd3671bd26bfcc021ace57104ba078689dcd0fd20ad16f5ff93"
+    },
+    {
+      "path": "practice/details.json",
+      "bytes": 58,
+      "sha256": "f1f03c80d12b07ea6efaae85625502b45bc32f699300e43f74c37e03884bbafc"
+    },
+    {
+      "path": "practice/directory.mjs",
+      "bytes": 3142,
+      "sha256": "229f1ef8fdabedebc9a32eff1ef4e229f0e4c976f6f3a4ce2505ee44b4c95e2d"
+    },
+    {
+      "path": "practice/index.html",
+      "bytes": 3259,
+      "sha256": "d9352aa7537b388459253485b387cb123ef2685e5e7fdb464579498d04ac2b8b"
+    },
+    {
+      "path": "main-deployment.json",
+      "bytes": 303,
+      "sha256": "f0f546d595e0a7f031dc4b5b8c2f5ee770b8b2bdac5ce909b1dc74c6eb32708a"
+    },
+    {
+      "path": "release.json",
+      "bytes": 303,
+      "sha256": "f0f546d595e0a7f031dc4b5b8c2f5ee770b8b2bdac5ce909b1dc74c6eb32708a"
+    },
+    {
+      "path": "releases/index.html",
+      "bytes": 859,
+      "sha256": "542f2753946821014a4bf8b8ad7470d80e5ce63f10b9c37785f72775525e8458"
+    },
+    {
+      "path": ".xonix-build.json",
+      "bytes": 53,
+      "sha256": "d11b193572cbfd5bb927650a35bd1a5387a376160f1177b522ab69f5799177fa"
+    }
+  ],
+  "emptyPracticeBytes": 6527,
+  "deployedBaselineWithoutPractice": 920112661,
+  "candidate": {
+    "sourceRevision": "f3b1b2c88375f27672698ab1d04dffd83369bbad",
+    "sourceTree": "9092dbb1b104b4e8ae4ded1bd8f43da4cb7ceb74",
+    "version": "v0.151.1",
+    "envelopeSha256": "a9c6818a73d1fd07b8d3c97f0e470840e7cd83a5039f9a3263fefc87c35ed95f",
+    "packages": [
+      {
+        "id": "civilian-flight",
+        "version": "v0.151.1",
+        "sourceRevision": "f3b1b2c88375f27672698ab1d04dffd83369bbad",
+        "manifestSha256": "0e95074d445a90c802661159470a419868485a2675f0bfc6c696c17c5c05b5ea",
+        "immutableBytes": 3623466,
+        "stableLauncherBytes": 173376,
+        "pointerBytes": 138
+      },
+      {
+        "id": "civilian-fpv",
+        "version": "v0.151.1",
+        "sourceRevision": "f3b1b2c88375f27672698ab1d04dffd83369bbad",
+        "manifestSha256": "38b7f9ebd20d02ad005ea79f3a4224dd2cbf190febd3943d56f674aab3af24f8",
+        "immutableBytes": 6620570,
+        "stableLauncherBytes": 173687,
+        "pointerBytes": 132
+      },
+      {
+        "id": "fpv-worlds",
+        "version": "v0.151.1",
+        "sourceRevision": "f3b1b2c88375f27672698ab1d04dffd83369bbad",
+        "manifestSha256": "52ce667937240c4012e55574bf95c7b9fea88599af674449165ecc81db2bf9c5",
+        "immutableBytes": 17038215,
+        "stableLauncherBytes": 173897,
+        "pointerBytes": 128
+      }
+    ]
+  },
+  "immutableBytes": 27282251,
+  "activeBytes": 521358,
+  "firstGenerationLowerBound": 947916270,
+  "twoGenerationPlanningLowerBound": 975198521,
+  "minimumReductionRequiredBytes": 25198521,
+  "missingComponents": [
+    "Replacement populated practice/index.json, details.json, directory.mjs and index.html",
+    "Any changes to main build between deployed source and package candidate source"
+  ],
+  "planningReserveNote": "Second generation is a size allowance equal to the measured immutable generation, not another allocated or approved release.",
+  "publicEligible": false,
+  "admissionPerformed": false,
+  "note": "Exact verified deployed baseline and hash-pinned candidate manifest sizes; mixed-source planning only, not complete candidate hosted inventory or default-build inspection.",
+  "deployedBaselineObservedAt": "2026-10-14T12:27:56.067Z",
+  "baselineObservation": {
+    "path": "/tmp/practice-deployed-capacity-1a2e87d50.json",
+    "sha256": "bae3e0d0eb0d4b53bb633ad152021cd25ec1bffdcf72c029a5d0f1c2ef402dce"
+  }
+}
