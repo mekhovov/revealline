@@ -81,7 +81,7 @@ export function createOverflightOperationCards({
   const root = document.createElement('section');
   root.className = 'overflight-operation-grid';
   root.setAttribute('aria-label', text('chooseOperation'));
-  const cards = OVERFLIGHT_OPERATIONS.map((operation) => {
+  const cards = OVERFLIGHT_OPERATIONS.map((operation, index) => {
     const selected = operation.id === current;
     const card = document.createElement(selected ? 'button' : 'a');
     if (selected) card.type = 'button';
@@ -93,8 +93,13 @@ export function createOverflightOperationCards({
     for (const direction of ['left', 'right'])
       card.setAttribute(
         `data-menu-${direction}`,
-        OVERFLIGHT_OPERATIONS.filter(({ id }) => id !== operation.id)
-          .map(({ id }) => `operation-${id}`)
+        Array.from({ length: OVERFLIGHT_OPERATIONS.length - 1 }, (_, offset) =>
+          OVERFLIGHT_OPERATIONS[
+            (index + (direction === 'right' ? 1 : -1) * (offset + 1) + OVERFLIGHT_OPERATIONS.length * 2) %
+              OVERFLIGHT_OPERATIONS.length
+          ].id,
+        )
+          .map((id) => `operation-${id}`)
           .join(' '),
       );
     if (selected) card.setAttribute('aria-current', 'true');
