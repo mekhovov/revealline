@@ -85,7 +85,28 @@ export function drawClassicStructureModule(ctx, wall, scene, options = {}) {
         put('#baca7e', x + 2, y, 2, 2);
         put('#e8b35c', x + 3, y + 4, 2, 2);
       }
-  } else if (['irrigator', 'coolant', 'pump'].includes(m.family)) {
+  } else if (m.family === 'pump') {
+    // One connected pump house, not a control unit stamped on every wall cell.
+    // The single 2×2 landmark below is its focal pump; quieter casing and one
+    // continuous intake trunk let the entire island read at mobile cell sizes.
+    put(night ? '#264b56' : ruin ? '#65766d' : '#789f95', 0, 0, 28, 28);
+    if (m.row >= Math.ceil(m.height / 2))
+      put(night ? '#203d4b' : ruin ? '#55665f' : '#5d817b', 0, 0, 28, 28);
+    if (m.row === 0) put(light, 0, 2, 28, 3);
+    if (m.row === m.height - 1) put(dark, 0, 24, 28, 3);
+    if (m.column === 0) put(metal, 2, 0, 3, 28);
+    if (m.column === m.width - 1) put(dark, 24, 0, 3, 28);
+    const intakeRow = m.landmark ? m.landmarkY - (wall.y - m.row) + 1 : Math.floor(m.height / 2);
+    if (m.row === intakeRow) {
+      put('#36595b', 0, 11, 28, 8);
+      put('#a5c3ae', 0, 11, 28, 2);
+    }
+    if (!m.landmark && m.column === Math.floor(m.width / 2) && m.row === intakeRow) {
+      put(copper, 8, 7, 12, 15);
+      put(dark, 10, 9, 8, 11);
+      put(light, 11, 10, 6, 2);
+    }
+  } else if (['irrigator', 'coolant'].includes(m.family)) {
     put(dark, 2, 2, 24, 24);
     put('#467e77', 0, 10, 28, 8);
     put('#a5c3ae', 0, 10, 28, 2);
@@ -128,17 +149,31 @@ export function drawClassicStructureModule(ctx, wall, scene, options = {}) {
     for (let x = 6; x < 22; x += 4) put(dark, x, 20, 2, 4);
     put('#d8b45c', 22, 18, 3, 4);
   } else if (m.family === 'boiler' || m.family === 'pressure') {
-    put(dark, 2, 2, 24, 24);
-    put(copper, 5, 2, 18, 24);
-    put('#e6b581', 6, 4, 3, 20);
-    put('#7b5442', 21, 5, 2, 18);
-    for (const y of [6, 20]) {
-      put(metal, 3, y, 22, 3);
-      put(light, 3, y, 22, 1);
+    // One joined pressure assembly: quiet sheet metal inside, external ribs
+    // and a single inspection port. Never a tiny boiler repeated in every cell.
+    put(night ? '#513f4e' : ruin ? '#786b56' : '#b77e50', 0, 0, 28, 28);
+    if (m.column === 0) {
+      put('#e6b581', 2, 0, 3, 28);
+      put(metal, 0, 0, 2, 28);
     }
-    put('#303e41', 12, 10, 7, 7);
-    put(light, 13, 11, 5, 5);
-    put('#a65f46', 15, 11, 1, 4);
+    if (m.column === m.width - 1) {
+      put('#7b5442', 23, 0, 3, 28);
+      put(metal, 26, 0, 2, 28);
+    }
+    if (m.row === 0 || m.row === m.height - 1) {
+      const y = m.row === 0 ? 1 : 24;
+      put(metal, 0, y, 28, 3);
+      put(light, 0, y, 28, 1);
+    }
+    if (m.row === Math.floor(m.height / 2)) {
+      put('#8f6145', 0, 13, 28, 2);
+      if (m.family === 'pressure') put(metal, 0, 11, 28, 2);
+      if (m.column === Math.floor(m.width / 2)) {
+        put(dark, 9, 7, 12, 13);
+        put(light, 11, 9, 8, 8);
+        put('#a65f46', 14, 9, 2, 6);
+      }
+    }
   } else if (m.family === 'floodgate') {
     put(dark, 2, 2, 24, 24);
     for (let x = 4; x < 25; x += 5) {
