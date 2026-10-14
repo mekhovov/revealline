@@ -105,24 +105,28 @@
       <p class="note">
         Maps and movement merged through
         <a href="https://github.com/mekhovov/revealline/pull/1215">PR 1215</a>; shared integration,
-        fixes and qualification are in
-        <a href="https://github.com/mekhovov/revealline/pull/1226">PR 1226</a>. Local reference and
-        three timing trials each for Single Drone, Riy and a controlled Raid workload pass. Late-run
-        coverage and gameplay review remain open. Active clips use an automated review pilot;
+        fixes and qualification merged through
+        <a href="https://github.com/mekhovov/revealline/pull/1226">PR 1226</a>. A further qualification
+        follow-up is being prepared. Local reference and
+        three timing trials each for Single Drone, Riy and a controlled Raid workload pass. Three new
+        late Riy trials also pass through tank arrival; broader coverage and gameplay review remain open. Active clips use an automated review pilot;
         no-input follow-ups are labeled separately. They establish visible behavior, not
         ordinary-player difficulty.
       </p>
       <p class="note">
-        <strong>Recorded before the latest progression fix:</strong> the videos and timing trials
-        below precede <code>07ed46625</code>, which changes later built-in upgrade thresholds and
+        <strong>Video source boundary:</strong> these videos and the earlier opening-workload
+        timing trials precede <code>07ed46625</code>, which changes later built-in upgrade thresholds and
         V4 result saving. They show the recorded artwork and behavior, not qualification of the new
-        progression. Each capture retains its own source revision.
+        progression. The separately linked late Riy timings use the corrected source
+        <code>08f5e6e0e</code>. Each capture retains its own source revision.
       </p>
       <nav aria-label="Review materials">
         <a href="art-review/native-worlds.html">Explore all maps and play links</a>
         <a href="../../../fpv-survivals-maps-movement-status.md">Completed and remaining work</a>
         <a href="NATIVE-PERFORMANCE.md">Performance evidence</a>
         <a href="NATIVE-FULL-CONTENT.md">Gameplay and Raid workload timing</a>
+        <a href="NATIVE-LATE-CONTENT.md">Three late Riy timing passes</a>
+        <a href="PROGRESSION-PARITY.md">Current progression and route findings</a>
         <a href="EXPANDED-MATRIX-RESULTS.md">Active and repetitive-input results</a>
         <a href="PILOT-BIAS.md">Build-route and progression findings</a>
       </nav>
@@ -406,9 +410,24 @@
         <a href="native-full-content-summary.json">exact source, viewport and timing windows</a>.
       </p>
       <p>
+        After the progression correction, three separately restarted Riy Fan trials on Receiver
+        Gardens pass at p95 <strong>10.8 / 12.1 / 10.2 ms</strong> on <code>08f5e6e0e</code>.
+        They measure earned gameplay from about 3:30 to 5:28, including a surge and final-tank
+        arrival. Eight periodic samples per trial show 139–973 alive and 93–348 center-visible
+        enemies, with one canvas and stable base atlas storage. These are sampled ranges, not
+        sustained peaks or a full boss victory. See <a href="NATIVE-LATE-CONTENT.md">the late timing
+        report</a>. A single reduced-effects comparison is running and a quiet soak is pending.
+      </p>
+      <p>
+        The <a href="PROGRESSION-PARITY.md">current progression comparison</a> records 47
+        unattended defeats and one unavailable checkpoint, with two active wins and ten losses.
+        Its separate fixed-route Survivor Echo now wins, while Riy Echo loses and retains a
+        91.2-second final-choice collection gap. The earlier outcomes above remain historical.
+      </p>
+      <p>
         Remaining review: Survivor Echo routes, late reward collection, challenge-preset
         readability, complete active/repetitive and normal/reduced-effects comparisons, real
-        soundtrack/warning audibility, and late-run performance coverage. External-device and
+        soundtrack/warning audibility, reduced-effects timing, quiet soak and broader boss/build coverage. External-device and
         five-player trials remain skipped at the user’s direction.
       </p>
       <small
