@@ -4201,3 +4201,9 @@ hardware acceptance and full frozen-package/deployment verification remain open.
 Storage is below 3 GiB; use existing CI admission. Next recommended increment is
 one paused Flight setup group and device-aware/remappable action hints, followed
 by a clearer retry/practice/demo flow. Research proposals are not reported shipped.
+
+Published as [PR #1178](https://github.com/mekhovov/revealline/pull/1178), source
+head `6384164d5`. Cloud admission started in
+[run 38489543945](https://github.com/mekhovov/revealline/actions/runs/38489543945).
+This follow-up is documentation-only. Use the latest exact-head checks before
+merge; source-browser availability is not a public deployment claim.
