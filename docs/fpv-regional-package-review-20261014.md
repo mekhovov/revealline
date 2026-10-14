@@ -2,7 +2,7 @@
 
 The corrected regional host package passed exact archive verification and a bounded native browser flight lifecycle review. Canonical offline preparation completed, the packaged home opened, and the explicit regional review route rendered flight with deliberate arming, camera changes, pause, mode reset and retry.
 
-This does **not** admit regional scenery to the ordinary Library catalogue or install it offline. The unchanged packaged host loaded separately served, pinned terrain/scenery fixtures on the same isolated origin. Full company-edition qualification was still running when this receipt was prepared.
+This does **not** admit regional scenery to the ordinary Library catalogue or install it offline. The unchanged packaged host loaded separately served, pinned terrain/scenery fixtures on the same isolated origin. The subsequent company-edition cloud run completed successfully; its compact metadata was independently retrieved and verified. External release qualification remains separate.
 
 ## Exact package
 
@@ -41,5 +41,5 @@ The [companion receipt](fpv-regional-package-review-20261014.json) records archi
 - The native review used the actual packaged World Studio host, not a substitute renderer harness.
 - `/region` points to the external `urban-mixed-r2` fixture. Its content is not part of the runtime archive and is not promised available offline.
 - Ready offline proves the preparation flow completed. This journey did not stop the origin, restart the browser, or establish all-network offline regional delivery.
-- The broader company-edition candidate job was still running. The successful optional-practice artifact is distinct from whole-game edition qualification.
+- The broader company-edition candidate job subsequently passed all tests, two reproducible builds and original-member admission for 18 editions. Compact artifact11931371956 was independently verified; complete company ZIPs are not retained for PR runs, so this is cloud admission evidence, not independent downloaded full-archive qualification. Public eligibility remains false.
 - Normal Library selection, immutable regional content delivery/admission, full regional offline installation and device/controller performance remain separate work. No general FPS or all-world gameplay claim follows from this bounded lifecycle review.

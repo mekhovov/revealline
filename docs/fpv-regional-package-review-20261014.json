@@ -149,7 +149,7 @@
   },
   "cloudStatus": {
     "optionalPractice": "success",
-    "companyCandidate": "in_progress",
+    "companyCandidate": "success",
     "observedAt": "2026-10-14"
   },
   "correctedFailures": [
@@ -164,9 +164,53 @@
     "Cloud builds and archive verification do not establish native browser offline success, device FPS, regional source offline delivery or public eligibility."
   ],
   "limits": {
-    "fullCompanyEditionQualification": "pending-cloud-candidate-job",
+    "fullCompanyEditionQualification": "cloud-compilation-and-member-admission-passed; external-release-gates-remain",
     "regionalContentOffline": "not-installed-or-claimed",
     "regionalNormalCatalogueEntry": "not-yet-admitted",
     "currentSourceVersusFrozenPackage": "only exact d1a472796d2eed4a195c7e008bee2afcb72caf8c verified"
+  },
+  "companyCapacityReceipt": {
+    "sourceRevision": "d1a472796d2eed4a195c7e008bee2afcb72caf8c",
+    "sourceTree": "28f1598da9a6cd5f4cd87a8068c8102920eac886",
+    "cloudRun": 38638456956,
+    "cloudConclusion": "success",
+    "artifactId": 11931371956,
+    "artifactSHA256": "ccc9ad720d0fd7dc7b3f40f9aa162332e5e72bee843172728e725f98fa0fdb5e",
+    "independentlyVerifiedMetadataPaths": [
+      "candidate-verification.json",
+      "capacity-inventory.json",
+      "editions.json",
+      "manifest-coupa-adventure.json",
+      "manifest-coupa-all.json",
+      "manifest-coupa-culture.json",
+      "manifest-coupa-developers.json",
+      "manifest-coupa-foundations.json",
+      "manifest-coupa-operations.json",
+      "manifest-droneaid-community.json",
+      "manifest-droneaid-nl-careful-handoff.json",
+      "manifest-droneaid-nl-community.json",
+      "manifest-droneaid-nl-makers-together.json",
+      "manifest-droneaid-nl-parts-in-motion.json",
+      "manifest-droneaid-nl-shared-horizon.json",
+      "manifest-droneaid-nl-signals-of-support.json",
+      "manifest-droneaid-nl-workshop-lights.json",
+      "manifest-fpv-learning.json",
+      "manifest-social-drone-ua.json",
+      "manifest-ukraine-culture.json",
+      "manifest-victory-drones.json"
+    ],
+    "cloudEditionCount": 18,
+    "reproducibleBuilds": 2,
+    "cloudOriginalZipMembersVerified": true,
+    "publicEligible": false,
+    "fullCompanyArchiveLocallyRetrieved": false,
+    "boundary": "PR workflow retains compact metadata only; whole-company archive admission evidence is from successful cloud job, not independent downloaded full archive verification.",
+    "requiredExternalQualification": [
+      "human-artwork-and-brand-review",
+      "human-learning-and-pacing-review",
+      "install-offline-upgrade-rollback-matrix",
+      "performance-and-accessibility-review",
+      "downloaded-release-byte-verification"
+    ]
   }
 }
