@@ -1,13 +1,30 @@
 <!doctype html>
-<html lang="en" data-fpv-worlds="true">
+<html lang="en" data-fpv-worlds="true" data-access-state="locked">
   <head>
     <meta charset="utf-8" />
+    <!-- access-gate:start -->
+    <meta name="revealline-access-id" content="revealline" />
+    <meta name="revealline-access-title" content="FPV / LINE" />
+    <meta
+      name="revealline-access-salt"
+      content="bWVraG92b3YuZ2l0aHViLmlvL3JldmVhbGxpbmUvYWNjZXNzL3Yx"
+    />
+    <meta name="revealline-access-verifier" content="fD62nYJ5uj8yGLsEBEAn2Blq8lcesFrR_gdebUswlxg" />
+    <style>
+      html:not([data-access-state='unlocked']) body > :not(#access-gate):not(script) {
+        display: none !important;
+      }
+    </style>
+    <link rel="stylesheet" href="../../game/access-gate.css" />
+    <script src="../../game/access-gate.mjs" defer></script>
+    <!-- access-gate:end -->
+
     <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
     <meta name="theme-color" content="#101b20" />
     <link rel="manifest" href="./app.webmanifest" />
     <title>FPV / LINE · Simulator</title>
     <link rel="stylesheet" href="../civilian-fpv/world-style.css" />
-    <script>
+    <script type="application/x-revealline-locked" data-access-type="">
       document.documentElement.dataset.modeShellPending = 'true';
       const simLoadMessage = (message) => {
         const status = document.getElementById('sim-menu-boot-message');
@@ -28,7 +45,11 @@
         15000,
       );
     </script>
-    <script type="module" src="../civilian-fpv/world-app.mjs"></script>
+    <script
+      src="../civilian-fpv/world-app.mjs"
+      type="application/x-revealline-locked"
+      data-access-type="module"
+    ></script>
   </head>
   <body class="field-kit sim-worlds">
     <section class="sim-menu-boot" role="status">
