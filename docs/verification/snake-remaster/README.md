@@ -72,6 +72,17 @@ This follow-up starts from `460169d79` (merged PR #1191). It proceeds independen
 - The clean **Main Pages production profile** built **3,193 files** from `e80c772b6263180eede1b563ca3c47a08a07c65a`. Distribution SHA-256: `8cf763329515b6d5e77dd97b875a6a2d7b3ff6b30362fafa7b09bcb08984a8e5`; archive checksum and CRC passed. `acceptance-validation.json` retains the receipt. The archive-inclusive full distribution exceeded disk capacity and is not claimed completed for this source; its staging cleaned itself up. Existing historical replay and optional-package tests passed. Only the verified disposable Main Pages output was removed after validation.
 - Disk cleanup removed 1,003,166,747 logical bytes of unchanged, manifest-listed generated copies from an inactive old build. Its source revision was verified in main, hashes were checked before deletion, and manifests, extra files, source checkouts and all Git data were retained. No application profile/cache or working repository was deleted.
 
+## Research and input-parity follow-through
+
+[The refreshed plan](research-plan-refresh.md) records the latest research,
+priorities and exact remaining evidence. The acceptance work in PR #1194 is now
+merged. A separate follow-up fixes two audit findings: all retry inputs preserve
+accepted artwork while renewing jammer schedules, and controller navigation
+during celebration cancels automatic continuation. The full host suite passes
+106 tests; shared-menu/offline/package checks pass 104; focused visual checks
+pass 44. Existing recipe and grading evidence is unchanged. Physical testing
+and player feedback remain deferred; no fresh full-distribution build is claimed.
+
 ## Deferred qualification and intentional grading limits
 
 1. **Deferred by request: physical-device qualification.** Responsive desktop emulation cannot establish touchscreen ergonomics, physical controller behavior, thermal throttling or low-end phone frame times. Use the existing lab/gallery on representative phones and controllers before claiming those devices qualified. This does not block the current delivery.
