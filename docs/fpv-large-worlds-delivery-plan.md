@@ -1,6 +1,6 @@
 # Large authored FPV regions — active delivery plan
 
-Reviewed 14 October 2026; atomic regional ownership and native recovery continuation.
+Reviewed 14 October 2026; paired regional ownership, visual foundations and exact-package recovery.
 The user selected default catalogue visibility, download on Play, optional offline
 storage, and authored regions first. Generation assists authoring; endless runtime
 terrain is deferred. Twelve proposed regions are design targets, not shipped maps.
@@ -37,8 +37,12 @@ terrain is deferred. Twelve proposed regions are design targets, not shipped map
   appearance correction (#1227) is merged. Urban flight through the same verified
   visible/collision geometry merged in #1238; five commanded routes cover doors,
   walls, roofs, a shaft and a cross-cell road. Atomic geometry/body/camera adoption
-  and rollback merged in #1240. Combined terrain/scenery ownership is the next
-  prerequisite; single-profile support does not yet prove a coherent mixed world.
+  and rollback merged in #1240. Combined terrain/scenery ownership merged in #1245:
+  both verified layers stage within combined budgets and adopt together; failure
+  retains the previous pair. #1246 keeps failed/cancelled preparation controls
+  available. Native failed-manifest recovery retained the old scene and a corrected
+  retry returned disarmed. Cached preparation completed too quickly for a new native
+  cancellation observation; automated cancellation evidence remains separate.
   Next: integrate the actual player lifecycle and production collision contracts,
   with atomic origin migration for every live world owner. Regional scenery
   admission, recovery and sustained qualification remain separate requirements.
@@ -54,10 +58,16 @@ terrain is deferred. Twelve proposed regions are design targets, not shipped map
   study #1235 adds optional rock/sand shading and three detail tiers, with exact
   source/geometry/collision parity. Shared resident seam normals merged in #1237
   without changing source heights or collision. Authoring spawn, heading and terrain
-  appearance controls are published in #1241; all three detail choices loaded in the
+  appearance controls merged in #1241; all three detail choices loaded in the
   native browser and restarts remained disarmed. It is a foundation, not finished
   art; coarse silhouettes, unloaded outer borders, landmark composition and sustained
-  rendering measurements remain. Neither is admitted
+  rendering measurements remain. #1244 adds a matching Urban terrain/scenery source
+  pair with clear relief corridors. #1247 adds optional architectural surfaces;
+  #1250 adds bounded authoring lighting and shadows. Native warehouse, parking and
+  atrium views and release/reload passed. These changes establish visual depth and
+  material scale; they do not complete the quality standard. A new immutable loading
+  court composition is under review, with blue/amber landmarks and clear door lines.
+  Neither representative region is admitted
   to the default catalogue before collision, flight and package qualification.
 - **P3:** Tropical Archipelago, Industrial Railway Valley, Coaster Park, Hillside Town;
   then Alpine Highlands, Desert Expedition, Canal City; then Lunar Basin, Castle
@@ -73,25 +83,36 @@ terrain is deferred. Twelve proposed regions are design targets, not shipped map
   with their origin server stopped (#1239). A separate update fixture retained the
   old player and installed world after a 30-second transfer stall and cancellation.
   Slow worker verification exposed a separate false repair warning; a tri-state
-  readiness correction is published in #1242. See [the native receipt](fpv-package-update-20261014.md).
+  readiness correction merged in #1242. Fresh unmodified cloud package qualification
+  is now recorded in #1251: the corrected launcher and both immutable workers
+  hash-verify ready, the actual previous-player link opens, and Reservoir retains
+  all eight challenges and its original digest. With the origin server stopped,
+  both players reopen and the new player runs the installed Reservoir mission.
+  The mutable launcher updates after its old controlled tabs close, as designed.
+  #1249 fixes a separate home artwork URL that escaped the immutable package.
+  Its fresh unchanged cloud artifact installed successfully; the native home artwork
+  remained visible after same-URL reload with its origin server stopped. This closes
+  that bounded artwork case, not all offline/device qualification.
+  See [the native receipt](fpv-package-update-20261014.md).
   Direct mission Start intentionally begins flight after existing readiness gates;
-  catalogue download/Play and recovery remain distinct launch paths. Fresh corrected
-  package admission, network-wide offline, actual quota/eviction, full browser restart
+  catalogue download/Play and recovery remain distinct launch paths. Public admission,
+  network-wide offline, actual quota/eviction, full browser restart
   and device qualification remain open; the bounded cancellation observation does
   not close every interrupted-install scenario.
   D6 extra unit coverage follows; each preceding increment retains functional checks.
 
 ## Next delivery order
 
-1. **P1 — Finish one coherent regional owner.** Stage terrain and scenery together,
-   validate combined budgets and collision support, then adopt both in one frame.
-   Any failure retains the complete previous region and pauses flight. Integrate
-   the production player lifecycle only after this boundary is verified. This avoids
-   visible buildings, collision or the drone origin disagreeing during streaming.
-2. **P4 — Finish honest recovery feedback in parallel.** Distinguish a failed hash
-   check from a verification that could not finish. Preserve usable old installations
-   during updates, then qualify freshly built corrected packages. Do not recommend
-   deleting a player's usable copy merely because a response timed out.
+1. **P1 — Integrate production collision and the player lifecycle.** Paired ownership
+   is merged. Replace the prototype's stop-on-impact behavior with the existing
+   production swept-sphere slide contract, preserving historical replay outcomes;
+   then integrate the real player host and every live owner during origin migration.
+   Prototype geometry, shared air and camera alone do not constitute player admission.
+2. **P4 — Complete package self-containment and broader recovery qualification.**
+   Tri-state readiness and exact corrected-package update/rollback are verified in
+   the bounded browser fixture. Verify the package-local artwork correction, then
+   close actual quota/eviction, browser restart and network-wide offline coverage.
+   Preserve usable installations and player records through every scenario.
 3. **P2 — Compose the representative quality slice in parallel.** Combine authored
    relief and reachable architecture, refine materials and landmarks, and compare
    flight openings across quality tiers. The current Canyon and Urban studies prove
