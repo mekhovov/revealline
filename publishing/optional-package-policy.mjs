@@ -32,10 +32,10 @@ const BASE_OPTIONAL_PACKAGE_POLICIES = Object.freeze({
   'civilian-flight': Object.freeze({
     root: 'optional-practice/civilian-flight/',
     entry: 'optional-practice/civilian-flight/index.html',
-    // The installed archive contains the reviewed launcher (eight files) in
-    // addition to its application closure. Keep a finite envelope while
-    // accounting for that release-only surface.
-    limits: Object.freeze({ files: 80, bytes: 8 * 1024 * 1024 }),
+    // The installed archive includes the reviewed launcher and access gate.
+    // Its complete runtime closure is 81 files; the selected source archive
+    // adds two reviewed templates, so retain an exact finite 83-file envelope.
+    limits: Object.freeze({ files: 83, bytes: 8 * 1024 * 1024 }),
     localFiles: Object.freeze([
       'index.html',
       'app.mjs',
@@ -605,6 +605,8 @@ export const OPTIONAL_PACKAGE_POLICIES = Object.freeze(
         sharedFiles: Object.freeze([
           ...new Set([
             ...policy.sharedFiles,
+            'game/access-gate.mjs',
+            'game/access-gate.css',
             // The legacy civilian-flight archive also hosts the shared SIM
             // presentation. Its theme selector now imports the retained
             // industrial environment catalogue, so that closure must be
@@ -656,6 +658,8 @@ export function optionalRuntimePaths(policy, { launcher = false } = {}) {
           'worker.js',
           'icons/icon-192.png',
           'icons/icon-512.png',
+          'access-gate.mjs',
+          'access-gate.css',
         ].map((name) => 'launcher/' + name)
       : []),
     ...policy.localFiles.map((name) => policy.root + name),

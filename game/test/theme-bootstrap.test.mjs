@@ -331,8 +331,18 @@ test('every production game, authoring and site entry seeds appearance before ot
       tree = parse(html, { sourceCodeLocationInfo: true });
     const scripts = nodes(tree, 'script');
     const bootstrap = scripts.find((node) => attr(node, 'src')?.endsWith('theme-bootstrap.mjs'));
+    const accessGate = scripts.find((node) => attr(node, 'src')?.endsWith('access-gate.mjs'));
     assert.ok(bootstrap, path.relative(root, file));
-    assert.equal(attr(bootstrap, 'type'), undefined, 'bootstrap is synchronous classic code');
+    if (accessGate) {
+      assert.equal(attr(bootstrap, 'type'), 'application/x-revealline-locked');
+      assert.equal(attr(bootstrap, 'data-access-type'), '');
+      assert.ok(
+        accessGate.sourceCodeLocation.startOffset < bootstrap.sourceCodeLocation.startOffset,
+        `${file}: access gate precedes held appearance startup`,
+      );
+    } else {
+      assert.equal(attr(bootstrap, 'type'), undefined, 'bootstrap is synchronous classic code');
+    }
     assert.equal(attr(bootstrap, 'defer'), undefined);
     assert.equal(attr(bootstrap, 'async'), undefined);
     const styles = nodes(tree, 'link').filter((node) => attr(node, 'rel') === 'stylesheet');
@@ -342,7 +352,12 @@ test('every production game, authoring and site entry seeds appearance before ot
     );
     const inlineStyles = library.includes(file) ? nodes(tree, 'style') : [];
     for (const resource of [...scripts, ...styles, ...inlineStyles]) {
-      if (resource === bootstrap) continue;
+      if (
+        resource === bootstrap ||
+        resource === accessGate ||
+        (accessGate && attr(resource, 'href')?.endsWith('access-gate.css'))
+      )
+        continue;
       assert.ok(
         bootstrap.sourceCodeLocation.startOffset < resource.sourceCodeLocation.startOffset,
         `${file}: seed precedes resources`,

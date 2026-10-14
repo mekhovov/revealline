@@ -109,6 +109,7 @@ export function prepareNativeMenus({
       panel.prepend(title);
     }
     panel.dataset.menuLayout = 'vertical';
+    panel.dataset.menuEdgeExit = 'true';
     panels[id] = panel;
   }
   const guides = mountModeGuides({ container: panels.extras, pause: () => {} });
