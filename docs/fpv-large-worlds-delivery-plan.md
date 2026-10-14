@@ -67,7 +67,8 @@ terrain is deferred. Twelve proposed regions are design targets, not shipped map
   Immutable delivery authoring #1283 and atomic regional Library storage #1284
   are merged. A 38-file, 1,455,090-byte Urban pair is pinned to an exact commit;
   every payload is verified and installed revisions remain available for rollback.
-  Normal Library UI is in final source review. Native remote Download → saved Fly,
+  Normal Library UI is published in #1287 after dependent #1293 merged into
+  that feature branch; it is not yet on main. Native remote Download → saved Fly,
   disarmed entry, keyboard flight, camera/reset/mode changes and reload pass.
   EN/UK portrait layout has no horizontal overflow. Six interface scenarios include
   navigation cancelling delayed launch. Exact packaged admission remains pending.
@@ -121,8 +122,13 @@ terrain is deferred. Twelve proposed regions are design targets, not shipped map
   millimetre quantization; no triangles were silently discarded. Runtime texture
   ownership is published in #1287, with native comparison and release/reload.
   CPU texture buffers and GPU mip storage fit inside existing resource ceilings.
-  A bounded Railway slice is next: freight lanes, trestle cutting, maintenance hall
-  and canopy routes. It is not yet a moving-train mission, default world or 4 km region.
+  The bounded Railway route foundation is published in #1290, dependent on #1287
+  in native stack #1292. Its 384×384 m slice contains freight lanes, a trestle
+  cutting, maintenance hall and canopy routes. Matching geometry passes 1,195
+  collision/support queries; native grounded-canopy, hall, freight and release/reload
+  inspection pass. A separate surface pass adds concrete, asphalt, edge lines and
+  ballast without changing collision. Structural detail and final composition remain.
+  It is not yet a moving-train mission, default world or 4 km region.
 - **P3:** Tropical Archipelago, Industrial Railway Valley, Coaster Park, Hillside Town;
   then Alpine Highlands, Desert Expedition, Canal City; then Lunar Basin, Castle
   Valley, Retro Metropolis. Expand Reservoir, Harbor and Festival with new revisions,
@@ -175,7 +181,12 @@ terrain is deferred. Twelve proposed regions are design targets, not shipped map
   network-wide offline, actual quota/eviction, full browser restart
   and device qualification remain open; the bounded cancellation observation does
   not close every interrupted-install scenario.
-  D6 extra unit coverage follows; each preceding increment retains functional checks.
+  Merged #1294 adds 48,000 accepted synthetic flight ticks, seven reversals and
+  37 origin recentres with bounded reported reservations and clean disposal. This
+  represents 960 simulated seconds at 50 Hz, not sustained elapsed-time gameplay.
+  Thirty integrity/recovery cycles also pass. Collider allocation, GPU and physical
+  device observations remain separate. D6 extra unit coverage follows; each preceding
+  increment retains functional checks.
 
 ## Next delivery order
 
@@ -210,9 +221,10 @@ terrain is deferred. Twelve proposed regions are design targets, not shipped map
    observations precede a complete claim. Additional unit coverage follows the
    agreed functional-first order.
 
-The internal drive remains below the 3 GiB heavy-build floor. Source, unfinished
-work, frozen candidates and player storage are preserved; heavy preparation stays
-on the external volume or cloud. A queued PR does not block independent increments.
+The latest internal free-space observation is 4.5 GiB, above the 3 GiB heavy-build
+floor after earlier sub-floor readings. Stability has not been established; heavy
+preparation stays external/cloud. Source, unfinished work, frozen candidates and
+player storage are preserved. A queued PR does not block independent increments.
 
 Target dimensions: dense regions 4×4 km, natural regions 8×8 km, Desert Expedition
 16×16 km. These targets require verification; they are not present runtime claims.
