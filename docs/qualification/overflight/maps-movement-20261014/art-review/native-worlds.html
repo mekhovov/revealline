@@ -122,8 +122,8 @@
       <a id="download" aria-disabled="true">Preparing overview…</a>
     </header>
     <form id="review-server">
-      <label for="review-origin">Play on this server</label>
-      <input id="review-origin" type="url" value="http://127.0.0.1:8911" required />
+      <label for="review-origin">Game site base URL</label>
+      <input id="review-origin" type="url" value="http://127.0.0.1:8911/" required />
       <button type="submit">Update links</button>
       <span id="link-status" role="status"></span>
     </form>
@@ -233,19 +233,23 @@
         const input = document.querySelector('#review-origin');
         const status = document.querySelector('#link-status');
         try {
-          const origin = new URL(input.value);
-          if (!['http:', 'https:'].includes(origin.protocol)) throw Error('Invalid server');
+          const siteBase = new URL(input.value);
+          if (!['http:', 'https:'].includes(siteBase.protocol)) throw Error('Invalid site URL');
+          siteBase.search = '';
+          siteBase.hash = '';
+          if (!siteBase.pathname.endsWith('/')) siteBase.pathname += '/';
+          const gameBase = new URL('game/overflight/', siteBase);
           for (const { link, operation, layout } of launchLinks) {
-            const target = new URL(operation.path, `${origin.origin}/game/overflight/`);
+            const target = new URL(operation.path, gameBase);
             target.searchParams.set('layout', layout);
             target.searchParams.set('lang', 'en');
             target.searchParams.set('seed', '17031991');
             link.href = target.href;
           }
-          input.value = origin.origin;
+          input.value = siteBase.href;
           status.textContent = event ? 'Play links updated.' : '';
         } catch {
-          status.textContent = 'Enter an HTTP or HTTPS server address.';
+          status.textContent = 'Enter an HTTP or HTTPS site base URL, including any path prefix.';
         }
       }
       document.querySelector('#review-server').addEventListener('submit', updateLaunchLinks);
