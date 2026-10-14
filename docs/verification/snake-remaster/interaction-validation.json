@@ -1,0 +1,37 @@
+{
+  "format": "snake-interaction-build-validation.v1",
+  "checkedAt": "2026-10-14T12:43:36.970995+00:00",
+  "sourceRevision": "6cc04df4341555a02689d6f4e64f231d3d1324a3",
+  "sourceCleanAtBuild": true,
+  "command": "node scripts/game-cli.mjs build --out .cache/snake-interaction-build-20261014 --revision 6cc04df4341555a02689d6f4e64f231d3d1324a3",
+  "publicationProfile": null,
+  "scope": "Full default game distribution including archived recipes; not a deployment or hosted-publication admission",
+  "version": "0.151.1",
+  "files": 3277,
+  "manifestPayloadBytes": 1037212259,
+  "archiveBytes": 1038255255,
+  "distributionSha256": "5a2e2f746c8ee3d25b23b5ec5428dc6d9c3703990d331b80c00b298f0d743672",
+  "archiveCrc": "passed",
+  "manifestEntryHashes": "all passed",
+  "expandedEntryHashes": "all passed",
+  "unexpectedOutputFiles": 0,
+  "mergedPullRequests": [1194, 1196, 1202],
+  "checks": {
+    "hostTests": 109,
+    "audioTests": 74,
+    "optionalPackageTests": 16,
+    "failed": 0,
+    "canonicalGeneratedRuntimes": "four checks byte-identical",
+    "lintAndFormatting": "passed",
+    "independentReview": "no blockers"
+  },
+  "priorSourceEvidence": "interaction-review.md records exact focused evidence; no physical/browser listening study claimed",
+  "disposableOutputRemoved": true,
+  "disposableOutputLogicalBytes": 2075954544,
+  "deferredByUser": ["physical-device qualification", "player feedback"],
+  "limits": [
+    "No publication performed",
+    "No additional star thresholds calibrated",
+    "Build correctness does not establish enjoyment or physical-device performance"
+  ]
+}
