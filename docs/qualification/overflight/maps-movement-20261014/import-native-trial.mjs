@@ -21,6 +21,9 @@ const result = JSON.parse(readFileSync(manifest));
 const entry = {
   format: data.format,
   fixture: data.fixture,
+  measureAt: data.measureAt ?? null,
+  scheduledStart: data.renderer?.protocol?.scheduledStart ?? null,
+  reducedEffects: data.renderer?.reducedEffects ?? null,
   sourceRevision,
   file: `native/${name}.json.gz`,
   sha256Raw: createHash('sha256').update(raw).digest('hex'),
