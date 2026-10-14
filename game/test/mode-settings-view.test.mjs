@@ -119,6 +119,12 @@ test('the existing controller adapter traverses optional categories, confirms a 
   controller.handle({ confirm: true });
   assert.equal(f.root.dataset.settingsView, 'panel');
   assert.equal(f.document.activeElement, f.sound);
+  controller.handle({ direction: 'down' });
+  assert.equal(
+    f.document.activeElement,
+    f.close,
+    'The last setting reaches Back instead of trapping focus.',
+  );
   controller.handle({ back: true });
   assert.equal(closed, 0);
   assert.equal(f.document.activeElement, settings.tabs.audio);
@@ -127,3 +133,28 @@ test('the existing controller adapter traverses optional categories, confirms a 
   controller.destroy();
   settings.destroy();
 });
+
+for (const placement of ['header', 'footer']) {
+  test(`Settings panel edges reach ${placement} Back with keyboard and controller`, () => {
+    const f = fixture(1280);
+    if (placement === 'header') f.root.prepend(f.footer);
+    const settings = mount(f);
+    const nav = attachControllerNavigation({
+      document: f.document,
+      keyboard: true,
+      getRoot: () => f.root,
+      getScope: () => 'settings',
+    });
+    settings.tabs.audio.click();
+    // Mimic compact category hiding to keep only the panel and Back active.
+    settings.tabs.audio.parentElement.hidden = true;
+    f.sound.focus();
+    f.sound.emit('keydown', { key: 'ArrowDown' });
+    assert.equal(f.document.activeElement, f.close);
+    f.sound.focus();
+    nav.handle({ direction: 'down' });
+    assert.equal(f.document.activeElement, f.close);
+    nav.destroy();
+    settings.destroy();
+  });
+}

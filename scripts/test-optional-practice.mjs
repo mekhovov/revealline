@@ -29,6 +29,13 @@ test('optional practice archives are reproducible, admitted completely and absen
     entries.has('game/ui/pause-menu.css'),
     'The shared shell keeps its pause layout offline.',
   );
+  for (const stylesheet of [
+    'mode-choice.css',
+    'optional-practice-panel.css',
+    'mode-settings-view.css',
+    'global-settings-view.css',
+  ])
+    assert.ok(entries.has(`game/ui/${stylesheet}`), `${stylesheet} stays in the offline closure`);
   assert.equal(first.manifest.files.length, entries.size - 1);
   for (const file of first.manifest.files) {
     assert.equal(entries.get(file.path).length, file.bytes);
@@ -74,6 +81,24 @@ test('optional practice archives are reproducible, admitted completely and absen
     buildOptionalPractice(root, { engineCommit: 'a'.repeat(40) }),
     /commit and tree/,
   );
+});
+test('release-qualified practice retains the full shared menu stylesheet closure within its limit', async () => {
+  const built = await buildOptionalPractice(root, {
+    engineCommit: 'a'.repeat(40),
+    engineTree: 'b'.repeat(40),
+    basePath: '/revealline/',
+  });
+  assert.equal(built.entries.length, 85);
+  assert.equal(OPTIONAL_PRACTICE_LIMITS.files, 87);
+  for (const stylesheet of [
+    'mode-play-shell.css',
+    'mode-choice.css',
+    'optional-practice-panel.css',
+    'pause-menu.css',
+    'mode-settings-view.css',
+    'global-settings-view.css',
+  ])
+    assert.ok(built.entries.some(({ name }) => name === `game/ui/${stylesheet}`));
 });
 test('an unexpected runtime import fails closed before a package can be published', async (t) => {
   const built = await buildOptionalPractice(root),

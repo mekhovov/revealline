@@ -140,7 +140,8 @@ export function renderModeChoices({
     expanded = true;
     refreshLayout();
     emit('game-mode-visibility-changed');
-    (secondary.find(({ element }) => !element.disabled && !element.hidden)?.element ?? more).focus({
+    const available = secondary.filter(({ element }) => !element.disabled && !element.hidden);
+    (available.find(({ id }) => id === current)?.element ?? available[0]?.element ?? more).focus({
       preventScroll: true,
     });
   };

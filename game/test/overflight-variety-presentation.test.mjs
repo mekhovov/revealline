@@ -115,10 +115,10 @@ test('family home exposes all five operations and preserves operation queries wi
   assert.equal(view.root.children.length, 5);
   const [survivor, riy, raid, timeAttack, marathon] = view.root.children;
   assert.equal(survivor.getAttribute('aria-current'), 'true');
-  assert.equal(raid.href, './raid.html?lang=uk');
-  assert.equal(riy.href, './play.html?operation=riy&lang=uk');
-  assert.equal(timeAttack.href, './raid.html?operation=time-attack&lang=uk');
-  assert.equal(marathon.href, './raid.html?operation=marathon&lang=uk');
+  assert.equal(raid.getAttribute('href'), './raid.html?lang=uk');
+  assert.equal(riy.getAttribute('href'), './play.html?operation=riy&lang=uk');
+  assert.equal(timeAttack.getAttribute('href'), './raid.html?operation=time-attack&lang=uk');
+  assert.equal(marathon.getAttribute('href'), './raid.html?operation=marathon&lang=uk');
   survivor.click();
   for (const card of [riy, raid, timeAttack, marathon]) card.click();
   assert.equal(selected, 1);

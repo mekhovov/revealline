@@ -637,7 +637,7 @@ export function createCouchShell({
       () =>
         `${series ? t('interface:couch.firstClearRound') : t('interface:couch.firstClearRace')} ${match.limitTicks === null ? t('interface:noRaceCountdownIfBothFlightsEndCoverageThenLives') : t('interface:atTheTimeLimitCoverageThenLivesThenScoreDecide')} ${series ? t('interface:firstToTwoRoundWinsTakesTheMatchDrawsAward') : t('interface:oneRaceEndsAfterThisResultRematchPlaysTheSame')}`,
     );
-    if (status === 'ready' && !contentBusy && nativeMenu) nativeMenu.showBrandTitle();
+    if (status === 'ready' && nativeMenu) nativeMenu.showBrandTitle();
     else {
       nativeMenu?.hideBrandTitle();
       setText('race-title', () =>
