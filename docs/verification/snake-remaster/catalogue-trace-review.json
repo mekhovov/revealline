@@ -16,6 +16,9 @@
     "flaggedRuns": 379,
     "flaggedMissions": [
       "classic-operation-loaded-excavation",
+      "classic-field-border-watch",
+      "classic-field-contour-orbit",
+      "classic-field-ricochet-line",
       "classic-operation-near-and-far",
       "classic-operation-double-pressure",
       "classic-operation-heavy-crossing",
@@ -67,12 +70,9 @@
       "classic-pursuit-courier-crossing",
       "classic-field-linked-courts",
       "classic-field-relay-airfield",
-      "classic-field-border-watch",
       "classic-field-border-cutoff",
-      "classic-field-contour-orbit",
       "classic-field-contour-transfer",
       "classic-field-wake-courtyard",
-      "classic-field-ricochet-line",
       "classic-field-ricochet-yard",
       "classic-expedition-opposite-platforms",
       "classic-expedition-mirror-returns",
@@ -2971,6 +2971,860 @@
         "target.spawned": 1,
         "cargo.delivered": 2,
         "operation.stage-completed": 2
+      },
+      "signals": []
+    },
+    {
+      "levelId": "classic-field-border-watch",
+      "source": "editorial-proofs.json",
+      "mode": "solo",
+      "pace": "normal",
+      "board": 0,
+      "steps": 67,
+      "elapsedMs": 13400,
+      "captures": 3,
+      "captureLocations": [
+        {
+          "cell": "22,11",
+          "count": 1
+        },
+        {
+          "cell": "4,16",
+          "count": 1
+        },
+        {
+          "cell": "5,16",
+          "count": 1
+        }
+      ],
+      "maxRepeatedSpot": 1,
+      "captureConcentration": 0.3333333333333333,
+      "longestSameSpotStreak": 1,
+      "maxNoChangeMoves": 22,
+      "maxNoChangeMs": 4400,
+      "meaningfulSteps": 3,
+      "eventCounts": {
+        "target.caught": 3,
+        "target.spawned": 2
+      },
+      "signals": []
+    },
+    {
+      "levelId": "classic-field-border-watch",
+      "source": "editorial-proofs.json",
+      "mode": "solo",
+      "pace": "slow",
+      "board": 0,
+      "steps": 67,
+      "elapsedMs": 18760,
+      "captures": 3,
+      "captureLocations": [
+        {
+          "cell": "22,11",
+          "count": 1
+        },
+        {
+          "cell": "4,16",
+          "count": 1
+        },
+        {
+          "cell": "5,16",
+          "count": 1
+        }
+      ],
+      "maxRepeatedSpot": 1,
+      "captureConcentration": 0.3333333333333333,
+      "longestSameSpotStreak": 1,
+      "maxNoChangeMoves": 22,
+      "maxNoChangeMs": 6160,
+      "meaningfulSteps": 3,
+      "eventCounts": {
+        "target.caught": 3,
+        "target.spawned": 2
+      },
+      "signals": [
+        "long-interval-without-encounter-change"
+      ]
+    },
+    {
+      "levelId": "classic-field-border-watch",
+      "source": "editorial-proofs.json",
+      "mode": "solo",
+      "pace": "fast",
+      "board": 0,
+      "steps": 67,
+      "elapsedMs": 10050,
+      "captures": 3,
+      "captureLocations": [
+        {
+          "cell": "22,11",
+          "count": 1
+        },
+        {
+          "cell": "4,16",
+          "count": 1
+        },
+        {
+          "cell": "5,16",
+          "count": 1
+        }
+      ],
+      "maxRepeatedSpot": 1,
+      "captureConcentration": 0.3333333333333333,
+      "longestSameSpotStreak": 1,
+      "maxNoChangeMoves": 22,
+      "maxNoChangeMs": 3300,
+      "meaningfulSteps": 3,
+      "eventCounts": {
+        "target.caught": 3,
+        "target.spawned": 2
+      },
+      "signals": []
+    },
+    {
+      "levelId": "classic-field-border-watch",
+      "source": "editorial-proofs.json",
+      "mode": "team",
+      "pace": "normal",
+      "board": 0,
+      "steps": 55,
+      "elapsedMs": 11000,
+      "captures": 3,
+      "captureLocations": [
+        {
+          "cell": "22,10",
+          "count": 1
+        },
+        {
+          "cell": "4,16",
+          "count": 1
+        },
+        {
+          "cell": "8,16",
+          "count": 1
+        }
+      ],
+      "maxRepeatedSpot": 1,
+      "captureConcentration": 0.3333333333333333,
+      "longestSameSpotStreak": 1,
+      "maxNoChangeMoves": 23,
+      "maxNoChangeMs": 4600,
+      "meaningfulSteps": 3,
+      "eventCounts": {
+        "target.caught": 3,
+        "target.spawned": 2
+      },
+      "signals": []
+    },
+    {
+      "levelId": "classic-field-border-watch",
+      "source": "editorial-proofs.json",
+      "mode": "team",
+      "pace": "slow",
+      "board": 0,
+      "steps": 55,
+      "elapsedMs": 15400,
+      "captures": 3,
+      "captureLocations": [
+        {
+          "cell": "22,10",
+          "count": 1
+        },
+        {
+          "cell": "4,16",
+          "count": 1
+        },
+        {
+          "cell": "8,16",
+          "count": 1
+        }
+      ],
+      "maxRepeatedSpot": 1,
+      "captureConcentration": 0.3333333333333333,
+      "longestSameSpotStreak": 1,
+      "maxNoChangeMoves": 23,
+      "maxNoChangeMs": 6440,
+      "meaningfulSteps": 3,
+      "eventCounts": {
+        "target.caught": 3,
+        "target.spawned": 2
+      },
+      "signals": [
+        "long-interval-without-encounter-change"
+      ]
+    },
+    {
+      "levelId": "classic-field-border-watch",
+      "source": "editorial-proofs.json",
+      "mode": "team",
+      "pace": "fast",
+      "board": 0,
+      "steps": 55,
+      "elapsedMs": 8250,
+      "captures": 3,
+      "captureLocations": [
+        {
+          "cell": "22,10",
+          "count": 1
+        },
+        {
+          "cell": "4,16",
+          "count": 1
+        },
+        {
+          "cell": "8,16",
+          "count": 1
+        }
+      ],
+      "maxRepeatedSpot": 1,
+      "captureConcentration": 0.3333333333333333,
+      "longestSameSpotStreak": 1,
+      "maxNoChangeMoves": 23,
+      "maxNoChangeMs": 3450,
+      "meaningfulSteps": 3,
+      "eventCounts": {
+        "target.caught": 3,
+        "target.spawned": 2
+      },
+      "signals": []
+    },
+    {
+      "levelId": "classic-field-contour-orbit",
+      "source": "editorial-proofs.json",
+      "mode": "solo",
+      "pace": "normal",
+      "board": 0,
+      "steps": 36,
+      "elapsedMs": 7200,
+      "captures": 3,
+      "captureLocations": [
+        {
+          "cell": "11,12",
+          "count": 1
+        },
+        {
+          "cell": "12,12",
+          "count": 1
+        },
+        {
+          "cell": "8,10",
+          "count": 1
+        }
+      ],
+      "maxRepeatedSpot": 1,
+      "captureConcentration": 0.3333333333333333,
+      "longestSameSpotStreak": 1,
+      "maxNoChangeMoves": 22,
+      "maxNoChangeMs": 4400,
+      "meaningfulSteps": 3,
+      "eventCounts": {
+        "target.caught": 3,
+        "target.spawned": 2
+      },
+      "signals": []
+    },
+    {
+      "levelId": "classic-field-contour-orbit",
+      "source": "editorial-proofs.json",
+      "mode": "solo",
+      "pace": "slow",
+      "board": 0,
+      "steps": 36,
+      "elapsedMs": 10080,
+      "captures": 3,
+      "captureLocations": [
+        {
+          "cell": "11,12",
+          "count": 1
+        },
+        {
+          "cell": "12,12",
+          "count": 1
+        },
+        {
+          "cell": "8,10",
+          "count": 1
+        }
+      ],
+      "maxRepeatedSpot": 1,
+      "captureConcentration": 0.3333333333333333,
+      "longestSameSpotStreak": 1,
+      "maxNoChangeMoves": 22,
+      "maxNoChangeMs": 6160,
+      "meaningfulSteps": 3,
+      "eventCounts": {
+        "target.caught": 3,
+        "target.spawned": 2
+      },
+      "signals": [
+        "long-interval-without-encounter-change"
+      ]
+    },
+    {
+      "levelId": "classic-field-contour-orbit",
+      "source": "editorial-proofs.json",
+      "mode": "solo",
+      "pace": "fast",
+      "board": 0,
+      "steps": 36,
+      "elapsedMs": 5400,
+      "captures": 3,
+      "captureLocations": [
+        {
+          "cell": "11,12",
+          "count": 1
+        },
+        {
+          "cell": "12,12",
+          "count": 1
+        },
+        {
+          "cell": "8,10",
+          "count": 1
+        }
+      ],
+      "maxRepeatedSpot": 1,
+      "captureConcentration": 0.3333333333333333,
+      "longestSameSpotStreak": 1,
+      "maxNoChangeMoves": 22,
+      "maxNoChangeMs": 3300,
+      "meaningfulSteps": 3,
+      "eventCounts": {
+        "target.caught": 3,
+        "target.spawned": 2
+      },
+      "signals": []
+    },
+    {
+      "levelId": "classic-field-contour-orbit",
+      "source": "editorial-proofs.json",
+      "mode": "team",
+      "pace": "normal",
+      "board": 0,
+      "steps": 17,
+      "elapsedMs": 3400,
+      "captures": 3,
+      "captureLocations": [
+        {
+          "cell": "12,12",
+          "count": 1
+        },
+        {
+          "cell": "15,11",
+          "count": 1
+        },
+        {
+          "cell": "8,9",
+          "count": 1
+        }
+      ],
+      "maxRepeatedSpot": 1,
+      "captureConcentration": 0.3333333333333333,
+      "longestSameSpotStreak": 1,
+      "maxNoChangeMoves": 8,
+      "maxNoChangeMs": 1600,
+      "meaningfulSteps": 3,
+      "eventCounts": {
+        "target.caught": 3,
+        "target.spawned": 2
+      },
+      "signals": []
+    },
+    {
+      "levelId": "classic-field-contour-orbit",
+      "source": "editorial-proofs.json",
+      "mode": "team",
+      "pace": "slow",
+      "board": 0,
+      "steps": 17,
+      "elapsedMs": 4760,
+      "captures": 3,
+      "captureLocations": [
+        {
+          "cell": "12,12",
+          "count": 1
+        },
+        {
+          "cell": "15,11",
+          "count": 1
+        },
+        {
+          "cell": "8,9",
+          "count": 1
+        }
+      ],
+      "maxRepeatedSpot": 1,
+      "captureConcentration": 0.3333333333333333,
+      "longestSameSpotStreak": 1,
+      "maxNoChangeMoves": 8,
+      "maxNoChangeMs": 2240,
+      "meaningfulSteps": 3,
+      "eventCounts": {
+        "target.caught": 3,
+        "target.spawned": 2
+      },
+      "signals": []
+    },
+    {
+      "levelId": "classic-field-contour-orbit",
+      "source": "editorial-proofs.json",
+      "mode": "team",
+      "pace": "fast",
+      "board": 0,
+      "steps": 17,
+      "elapsedMs": 2550,
+      "captures": 3,
+      "captureLocations": [
+        {
+          "cell": "12,12",
+          "count": 1
+        },
+        {
+          "cell": "15,11",
+          "count": 1
+        },
+        {
+          "cell": "8,9",
+          "count": 1
+        }
+      ],
+      "maxRepeatedSpot": 1,
+      "captureConcentration": 0.3333333333333333,
+      "longestSameSpotStreak": 1,
+      "maxNoChangeMoves": 8,
+      "maxNoChangeMs": 1200,
+      "meaningfulSteps": 3,
+      "eventCounts": {
+        "target.caught": 3,
+        "target.spawned": 2
+      },
+      "signals": []
+    },
+    {
+      "levelId": "classic-field-wake-watch",
+      "source": "editorial-proofs.json",
+      "mode": "solo",
+      "pace": "normal",
+      "board": 0,
+      "steps": 52,
+      "elapsedMs": 10400,
+      "captures": 3,
+      "captureLocations": [
+        {
+          "cell": "14,16",
+          "count": 1
+        },
+        {
+          "cell": "19,6",
+          "count": 1
+        },
+        {
+          "cell": "21,7",
+          "count": 1
+        }
+      ],
+      "maxRepeatedSpot": 1,
+      "captureConcentration": 0.3333333333333333,
+      "longestSameSpotStreak": 1,
+      "maxNoChangeMoves": 14,
+      "maxNoChangeMs": 2800,
+      "meaningfulSteps": 9,
+      "eventCounts": {
+        "target.warning": 3,
+        "target.caught": 3,
+        "target.spawned": 2
+      },
+      "signals": []
+    },
+    {
+      "levelId": "classic-field-wake-watch",
+      "source": "editorial-proofs.json",
+      "mode": "solo",
+      "pace": "slow",
+      "board": 0,
+      "steps": 52,
+      "elapsedMs": 14560,
+      "captures": 3,
+      "captureLocations": [
+        {
+          "cell": "14,16",
+          "count": 1
+        },
+        {
+          "cell": "19,6",
+          "count": 1
+        },
+        {
+          "cell": "21,7",
+          "count": 1
+        }
+      ],
+      "maxRepeatedSpot": 1,
+      "captureConcentration": 0.3333333333333333,
+      "longestSameSpotStreak": 1,
+      "maxNoChangeMoves": 14,
+      "maxNoChangeMs": 3920,
+      "meaningfulSteps": 9,
+      "eventCounts": {
+        "target.warning": 3,
+        "target.caught": 3,
+        "target.spawned": 2
+      },
+      "signals": []
+    },
+    {
+      "levelId": "classic-field-wake-watch",
+      "source": "editorial-proofs.json",
+      "mode": "solo",
+      "pace": "fast",
+      "board": 0,
+      "steps": 52,
+      "elapsedMs": 7800,
+      "captures": 3,
+      "captureLocations": [
+        {
+          "cell": "14,16",
+          "count": 1
+        },
+        {
+          "cell": "19,6",
+          "count": 1
+        },
+        {
+          "cell": "21,7",
+          "count": 1
+        }
+      ],
+      "maxRepeatedSpot": 1,
+      "captureConcentration": 0.3333333333333333,
+      "longestSameSpotStreak": 1,
+      "maxNoChangeMoves": 14,
+      "maxNoChangeMs": 2100,
+      "meaningfulSteps": 6,
+      "eventCounts": {
+        "target.warning": 3,
+        "target.caught": 3,
+        "target.spawned": 2
+      },
+      "signals": []
+    },
+    {
+      "levelId": "classic-field-wake-watch",
+      "source": "editorial-proofs.json",
+      "mode": "team",
+      "pace": "normal",
+      "board": 0,
+      "steps": 36,
+      "elapsedMs": 7200,
+      "captures": 3,
+      "captureLocations": [
+        {
+          "cell": "14,16",
+          "count": 1
+        },
+        {
+          "cell": "19,6",
+          "count": 1
+        },
+        {
+          "cell": "21,7",
+          "count": 1
+        }
+      ],
+      "maxRepeatedSpot": 1,
+      "captureConcentration": 0.3333333333333333,
+      "longestSameSpotStreak": 1,
+      "maxNoChangeMoves": 7,
+      "maxNoChangeMs": 1400,
+      "meaningfulSteps": 9,
+      "eventCounts": {
+        "target.warning": 3,
+        "target.caught": 3,
+        "target.spawned": 2
+      },
+      "signals": []
+    },
+    {
+      "levelId": "classic-field-wake-watch",
+      "source": "editorial-proofs.json",
+      "mode": "team",
+      "pace": "slow",
+      "board": 0,
+      "steps": 36,
+      "elapsedMs": 10080,
+      "captures": 3,
+      "captureLocations": [
+        {
+          "cell": "14,16",
+          "count": 1
+        },
+        {
+          "cell": "19,6",
+          "count": 1
+        },
+        {
+          "cell": "21,7",
+          "count": 1
+        }
+      ],
+      "maxRepeatedSpot": 1,
+      "captureConcentration": 0.3333333333333333,
+      "longestSameSpotStreak": 1,
+      "maxNoChangeMoves": 7,
+      "maxNoChangeMs": 1960,
+      "meaningfulSteps": 9,
+      "eventCounts": {
+        "target.warning": 3,
+        "target.caught": 3,
+        "target.spawned": 2
+      },
+      "signals": []
+    },
+    {
+      "levelId": "classic-field-wake-watch",
+      "source": "editorial-proofs.json",
+      "mode": "team",
+      "pace": "fast",
+      "board": 0,
+      "steps": 36,
+      "elapsedMs": 5400,
+      "captures": 3,
+      "captureLocations": [
+        {
+          "cell": "14,16",
+          "count": 1
+        },
+        {
+          "cell": "19,6",
+          "count": 1
+        },
+        {
+          "cell": "21,7",
+          "count": 1
+        }
+      ],
+      "maxRepeatedSpot": 1,
+      "captureConcentration": 0.3333333333333333,
+      "longestSameSpotStreak": 1,
+      "maxNoChangeMoves": 7,
+      "maxNoChangeMs": 1050,
+      "meaningfulSteps": 6,
+      "eventCounts": {
+        "target.warning": 3,
+        "target.caught": 3,
+        "target.spawned": 2
+      },
+      "signals": []
+    },
+    {
+      "levelId": "classic-field-ricochet-line",
+      "source": "editorial-proofs.json",
+      "mode": "solo",
+      "pace": "normal",
+      "board": 0,
+      "steps": 53,
+      "elapsedMs": 10600,
+      "captures": 3,
+      "captureLocations": [
+        {
+          "cell": "19,16",
+          "count": 1
+        },
+        {
+          "cell": "20,6",
+          "count": 1
+        },
+        {
+          "cell": "22,7",
+          "count": 1
+        }
+      ],
+      "maxRepeatedSpot": 1,
+      "captureConcentration": 0.3333333333333333,
+      "longestSameSpotStreak": 1,
+      "maxNoChangeMoves": 23,
+      "maxNoChangeMs": 4600,
+      "meaningfulSteps": 3,
+      "eventCounts": {
+        "target.caught": 3,
+        "target.spawned": 2
+      },
+      "signals": []
+    },
+    {
+      "levelId": "classic-field-ricochet-line",
+      "source": "editorial-proofs.json",
+      "mode": "solo",
+      "pace": "slow",
+      "board": 0,
+      "steps": 53,
+      "elapsedMs": 14840,
+      "captures": 3,
+      "captureLocations": [
+        {
+          "cell": "19,16",
+          "count": 1
+        },
+        {
+          "cell": "20,6",
+          "count": 1
+        },
+        {
+          "cell": "22,7",
+          "count": 1
+        }
+      ],
+      "maxRepeatedSpot": 1,
+      "captureConcentration": 0.3333333333333333,
+      "longestSameSpotStreak": 1,
+      "maxNoChangeMoves": 23,
+      "maxNoChangeMs": 6440,
+      "meaningfulSteps": 3,
+      "eventCounts": {
+        "target.caught": 3,
+        "target.spawned": 2
+      },
+      "signals": [
+        "long-interval-without-encounter-change"
+      ]
+    },
+    {
+      "levelId": "classic-field-ricochet-line",
+      "source": "editorial-proofs.json",
+      "mode": "solo",
+      "pace": "fast",
+      "board": 0,
+      "steps": 53,
+      "elapsedMs": 7950,
+      "captures": 3,
+      "captureLocations": [
+        {
+          "cell": "19,16",
+          "count": 1
+        },
+        {
+          "cell": "20,6",
+          "count": 1
+        },
+        {
+          "cell": "22,7",
+          "count": 1
+        }
+      ],
+      "maxRepeatedSpot": 1,
+      "captureConcentration": 0.3333333333333333,
+      "longestSameSpotStreak": 1,
+      "maxNoChangeMoves": 23,
+      "maxNoChangeMs": 3450,
+      "meaningfulSteps": 3,
+      "eventCounts": {
+        "target.caught": 3,
+        "target.spawned": 2
+      },
+      "signals": []
+    },
+    {
+      "levelId": "classic-field-ricochet-line",
+      "source": "editorial-proofs.json",
+      "mode": "team",
+      "pace": "normal",
+      "board": 0,
+      "steps": 38,
+      "elapsedMs": 7600,
+      "captures": 3,
+      "captureLocations": [
+        {
+          "cell": "17,16",
+          "count": 1
+        },
+        {
+          "cell": "21,6",
+          "count": 1
+        },
+        {
+          "cell": "21,7",
+          "count": 1
+        }
+      ],
+      "maxRepeatedSpot": 1,
+      "captureConcentration": 0.3333333333333333,
+      "longestSameSpotStreak": 1,
+      "maxNoChangeMoves": 13,
+      "maxNoChangeMs": 2600,
+      "meaningfulSteps": 3,
+      "eventCounts": {
+        "target.caught": 3,
+        "target.spawned": 2
+      },
+      "signals": []
+    },
+    {
+      "levelId": "classic-field-ricochet-line",
+      "source": "editorial-proofs.json",
+      "mode": "team",
+      "pace": "slow",
+      "board": 0,
+      "steps": 38,
+      "elapsedMs": 10640,
+      "captures": 3,
+      "captureLocations": [
+        {
+          "cell": "17,16",
+          "count": 1
+        },
+        {
+          "cell": "21,6",
+          "count": 1
+        },
+        {
+          "cell": "21,7",
+          "count": 1
+        }
+      ],
+      "maxRepeatedSpot": 1,
+      "captureConcentration": 0.3333333333333333,
+      "longestSameSpotStreak": 1,
+      "maxNoChangeMoves": 13,
+      "maxNoChangeMs": 3640,
+      "meaningfulSteps": 3,
+      "eventCounts": {
+        "target.caught": 3,
+        "target.spawned": 2
+      },
+      "signals": []
+    },
+    {
+      "levelId": "classic-field-ricochet-line",
+      "source": "editorial-proofs.json",
+      "mode": "team",
+      "pace": "fast",
+      "board": 0,
+      "steps": 38,
+      "elapsedMs": 5700,
+      "captures": 3,
+      "captureLocations": [
+        {
+          "cell": "17,16",
+          "count": 1
+        },
+        {
+          "cell": "21,6",
+          "count": 1
+        },
+        {
+          "cell": "21,7",
+          "count": 1
+        }
+      ],
+      "maxRepeatedSpot": 1,
+      "captureConcentration": 0.3333333333333333,
+      "longestSameSpotStreak": 1,
+      "maxNoChangeMoves": 13,
+      "maxNoChangeMs": 1950,
+      "meaningfulSteps": 3,
+      "eventCounts": {
+        "target.caught": 3,
+        "target.spawned": 2
       },
       "signals": []
     },
@@ -41275,292 +42129,6 @@
       "signals": []
     },
     {
-      "levelId": "classic-field-border-watch",
-      "source": "game/test/fixtures/classic-snake-v4-proofs.json",
-      "mode": "solo",
-      "pace": "slow",
-      "board": 0,
-      "steps": 104,
-      "elapsedMs": 29120,
-      "captures": 6,
-      "captureLocations": [
-        {
-          "cell": "1,2",
-          "count": 1
-        },
-        {
-          "cell": "10,1",
-          "count": 1
-        },
-        {
-          "cell": "22,11",
-          "count": 1
-        },
-        {
-          "cell": "3,16",
-          "count": 1
-        },
-        {
-          "cell": "4,16",
-          "count": 1
-        },
-        {
-          "cell": "5,16",
-          "count": 1
-        }
-      ],
-      "maxRepeatedSpot": 1,
-      "captureConcentration": 0.16666666666666666,
-      "longestSameSpotStreak": 1,
-      "maxNoChangeMoves": 22,
-      "maxNoChangeMs": 6160,
-      "meaningfulSteps": 6,
-      "eventCounts": {
-        "target.caught": 6,
-        "target.spawned": 5
-      },
-      "signals": [
-        "long-interval-without-encounter-change"
-      ]
-    },
-    {
-      "levelId": "classic-field-border-watch",
-      "source": "game/test/fixtures/classic-snake-v4-proofs.json",
-      "mode": "solo",
-      "pace": "normal",
-      "board": 0,
-      "steps": 104,
-      "elapsedMs": 20800,
-      "captures": 6,
-      "captureLocations": [
-        {
-          "cell": "1,2",
-          "count": 1
-        },
-        {
-          "cell": "10,1",
-          "count": 1
-        },
-        {
-          "cell": "22,11",
-          "count": 1
-        },
-        {
-          "cell": "3,16",
-          "count": 1
-        },
-        {
-          "cell": "4,16",
-          "count": 1
-        },
-        {
-          "cell": "5,16",
-          "count": 1
-        }
-      ],
-      "maxRepeatedSpot": 1,
-      "captureConcentration": 0.16666666666666666,
-      "longestSameSpotStreak": 1,
-      "maxNoChangeMoves": 22,
-      "maxNoChangeMs": 4400,
-      "meaningfulSteps": 6,
-      "eventCounts": {
-        "target.caught": 6,
-        "target.spawned": 5
-      },
-      "signals": []
-    },
-    {
-      "levelId": "classic-field-border-watch",
-      "source": "game/test/fixtures/classic-snake-v4-proofs.json",
-      "mode": "solo",
-      "pace": "fast",
-      "board": 0,
-      "steps": 104,
-      "elapsedMs": 15600,
-      "captures": 6,
-      "captureLocations": [
-        {
-          "cell": "1,2",
-          "count": 1
-        },
-        {
-          "cell": "10,1",
-          "count": 1
-        },
-        {
-          "cell": "22,11",
-          "count": 1
-        },
-        {
-          "cell": "3,16",
-          "count": 1
-        },
-        {
-          "cell": "4,16",
-          "count": 1
-        },
-        {
-          "cell": "5,16",
-          "count": 1
-        }
-      ],
-      "maxRepeatedSpot": 1,
-      "captureConcentration": 0.16666666666666666,
-      "longestSameSpotStreak": 1,
-      "maxNoChangeMoves": 22,
-      "maxNoChangeMs": 3300,
-      "meaningfulSteps": 6,
-      "eventCounts": {
-        "target.caught": 6,
-        "target.spawned": 5
-      },
-      "signals": []
-    },
-    {
-      "levelId": "classic-field-border-watch",
-      "source": "game/test/fixtures/classic-snake-v4-proofs.json",
-      "mode": "team",
-      "pace": "slow",
-      "board": 0,
-      "steps": 92,
-      "elapsedMs": 25760,
-      "captures": 6,
-      "captureLocations": [
-        {
-          "cell": "1,2",
-          "count": 1
-        },
-        {
-          "cell": "10,1",
-          "count": 1
-        },
-        {
-          "cell": "22,10",
-          "count": 1
-        },
-        {
-          "cell": "3,16",
-          "count": 1
-        },
-        {
-          "cell": "4,16",
-          "count": 1
-        },
-        {
-          "cell": "8,16",
-          "count": 1
-        }
-      ],
-      "maxRepeatedSpot": 1,
-      "captureConcentration": 0.16666666666666666,
-      "longestSameSpotStreak": 1,
-      "maxNoChangeMoves": 23,
-      "maxNoChangeMs": 6440,
-      "meaningfulSteps": 6,
-      "eventCounts": {
-        "target.caught": 6,
-        "target.spawned": 5
-      },
-      "signals": [
-        "long-interval-without-encounter-change"
-      ]
-    },
-    {
-      "levelId": "classic-field-border-watch",
-      "source": "game/test/fixtures/classic-snake-v4-proofs.json",
-      "mode": "team",
-      "pace": "normal",
-      "board": 0,
-      "steps": 92,
-      "elapsedMs": 18400,
-      "captures": 6,
-      "captureLocations": [
-        {
-          "cell": "1,2",
-          "count": 1
-        },
-        {
-          "cell": "10,1",
-          "count": 1
-        },
-        {
-          "cell": "22,10",
-          "count": 1
-        },
-        {
-          "cell": "3,16",
-          "count": 1
-        },
-        {
-          "cell": "4,16",
-          "count": 1
-        },
-        {
-          "cell": "8,16",
-          "count": 1
-        }
-      ],
-      "maxRepeatedSpot": 1,
-      "captureConcentration": 0.16666666666666666,
-      "longestSameSpotStreak": 1,
-      "maxNoChangeMoves": 23,
-      "maxNoChangeMs": 4600,
-      "meaningfulSteps": 6,
-      "eventCounts": {
-        "target.caught": 6,
-        "target.spawned": 5
-      },
-      "signals": []
-    },
-    {
-      "levelId": "classic-field-border-watch",
-      "source": "game/test/fixtures/classic-snake-v4-proofs.json",
-      "mode": "team",
-      "pace": "fast",
-      "board": 0,
-      "steps": 92,
-      "elapsedMs": 13800,
-      "captures": 6,
-      "captureLocations": [
-        {
-          "cell": "1,2",
-          "count": 1
-        },
-        {
-          "cell": "10,1",
-          "count": 1
-        },
-        {
-          "cell": "22,10",
-          "count": 1
-        },
-        {
-          "cell": "3,16",
-          "count": 1
-        },
-        {
-          "cell": "4,16",
-          "count": 1
-        },
-        {
-          "cell": "8,16",
-          "count": 1
-        }
-      ],
-      "maxRepeatedSpot": 1,
-      "captureConcentration": 0.16666666666666666,
-      "longestSameSpotStreak": 1,
-      "maxNoChangeMoves": 23,
-      "maxNoChangeMs": 3450,
-      "meaningfulSteps": 6,
-      "eventCounts": {
-        "target.caught": 6,
-        "target.spawned": 5
-      },
-      "signals": []
-    },
-    {
       "levelId": "classic-field-border-cutoff",
       "source": "game/test/fixtures/classic-snake-v4-proofs.json",
       "mode": "solo",
@@ -41887,290 +42455,6 @@
       "signals": []
     },
     {
-      "levelId": "classic-field-contour-orbit",
-      "source": "game/test/fixtures/classic-snake-v4-proofs.json",
-      "mode": "solo",
-      "pace": "slow",
-      "board": 0,
-      "steps": 66,
-      "elapsedMs": 18480,
-      "captures": 6,
-      "captureLocations": [
-        {
-          "cell": "10,5",
-          "count": 1
-        },
-        {
-          "cell": "11,12",
-          "count": 1
-        },
-        {
-          "cell": "12,12",
-          "count": 1
-        },
-        {
-          "cell": "15,8",
-          "count": 1
-        },
-        {
-          "cell": "8,10",
-          "count": 1
-        },
-        {
-          "cell": "9,12",
-          "count": 1
-        }
-      ],
-      "maxRepeatedSpot": 1,
-      "captureConcentration": 0.16666666666666666,
-      "longestSameSpotStreak": 1,
-      "maxNoChangeMoves": 22,
-      "maxNoChangeMs": 6160,
-      "meaningfulSteps": 6,
-      "eventCounts": {
-        "target.caught": 6,
-        "target.spawned": 5
-      },
-      "signals": [
-        "long-interval-without-encounter-change"
-      ]
-    },
-    {
-      "levelId": "classic-field-contour-orbit",
-      "source": "game/test/fixtures/classic-snake-v4-proofs.json",
-      "mode": "solo",
-      "pace": "normal",
-      "board": 0,
-      "steps": 66,
-      "elapsedMs": 13200,
-      "captures": 6,
-      "captureLocations": [
-        {
-          "cell": "10,5",
-          "count": 1
-        },
-        {
-          "cell": "11,12",
-          "count": 1
-        },
-        {
-          "cell": "12,12",
-          "count": 1
-        },
-        {
-          "cell": "15,8",
-          "count": 1
-        },
-        {
-          "cell": "8,10",
-          "count": 1
-        },
-        {
-          "cell": "9,12",
-          "count": 1
-        }
-      ],
-      "maxRepeatedSpot": 1,
-      "captureConcentration": 0.16666666666666666,
-      "longestSameSpotStreak": 1,
-      "maxNoChangeMoves": 22,
-      "maxNoChangeMs": 4400,
-      "meaningfulSteps": 6,
-      "eventCounts": {
-        "target.caught": 6,
-        "target.spawned": 5
-      },
-      "signals": []
-    },
-    {
-      "levelId": "classic-field-contour-orbit",
-      "source": "game/test/fixtures/classic-snake-v4-proofs.json",
-      "mode": "solo",
-      "pace": "fast",
-      "board": 0,
-      "steps": 66,
-      "elapsedMs": 9900,
-      "captures": 6,
-      "captureLocations": [
-        {
-          "cell": "10,5",
-          "count": 1
-        },
-        {
-          "cell": "11,12",
-          "count": 1
-        },
-        {
-          "cell": "12,12",
-          "count": 1
-        },
-        {
-          "cell": "15,8",
-          "count": 1
-        },
-        {
-          "cell": "8,10",
-          "count": 1
-        },
-        {
-          "cell": "9,12",
-          "count": 1
-        }
-      ],
-      "maxRepeatedSpot": 1,
-      "captureConcentration": 0.16666666666666666,
-      "longestSameSpotStreak": 1,
-      "maxNoChangeMoves": 22,
-      "maxNoChangeMs": 3300,
-      "meaningfulSteps": 6,
-      "eventCounts": {
-        "target.caught": 6,
-        "target.spawned": 5
-      },
-      "signals": []
-    },
-    {
-      "levelId": "classic-field-contour-orbit",
-      "source": "game/test/fixtures/classic-snake-v4-proofs.json",
-      "mode": "team",
-      "pace": "slow",
-      "board": 0,
-      "steps": 43,
-      "elapsedMs": 12040,
-      "captures": 6,
-      "captureLocations": [
-        {
-          "cell": "10,12",
-          "count": 1
-        },
-        {
-          "cell": "12,12",
-          "count": 1
-        },
-        {
-          "cell": "15,11",
-          "count": 1
-        },
-        {
-          "cell": "15,8",
-          "count": 1
-        },
-        {
-          "cell": "8,9",
-          "count": 1
-        },
-        {
-          "cell": "9,5",
-          "count": 1
-        }
-      ],
-      "maxRepeatedSpot": 1,
-      "captureConcentration": 0.16666666666666666,
-      "longestSameSpotStreak": 1,
-      "maxNoChangeMoves": 10,
-      "maxNoChangeMs": 2800,
-      "meaningfulSteps": 6,
-      "eventCounts": {
-        "target.caught": 6,
-        "target.spawned": 5
-      },
-      "signals": []
-    },
-    {
-      "levelId": "classic-field-contour-orbit",
-      "source": "game/test/fixtures/classic-snake-v4-proofs.json",
-      "mode": "team",
-      "pace": "normal",
-      "board": 0,
-      "steps": 43,
-      "elapsedMs": 8600,
-      "captures": 6,
-      "captureLocations": [
-        {
-          "cell": "10,12",
-          "count": 1
-        },
-        {
-          "cell": "12,12",
-          "count": 1
-        },
-        {
-          "cell": "15,11",
-          "count": 1
-        },
-        {
-          "cell": "15,8",
-          "count": 1
-        },
-        {
-          "cell": "8,9",
-          "count": 1
-        },
-        {
-          "cell": "9,5",
-          "count": 1
-        }
-      ],
-      "maxRepeatedSpot": 1,
-      "captureConcentration": 0.16666666666666666,
-      "longestSameSpotStreak": 1,
-      "maxNoChangeMoves": 10,
-      "maxNoChangeMs": 2000,
-      "meaningfulSteps": 6,
-      "eventCounts": {
-        "target.caught": 6,
-        "target.spawned": 5
-      },
-      "signals": []
-    },
-    {
-      "levelId": "classic-field-contour-orbit",
-      "source": "game/test/fixtures/classic-snake-v4-proofs.json",
-      "mode": "team",
-      "pace": "fast",
-      "board": 0,
-      "steps": 43,
-      "elapsedMs": 6450,
-      "captures": 6,
-      "captureLocations": [
-        {
-          "cell": "10,12",
-          "count": 1
-        },
-        {
-          "cell": "12,12",
-          "count": 1
-        },
-        {
-          "cell": "15,11",
-          "count": 1
-        },
-        {
-          "cell": "15,8",
-          "count": 1
-        },
-        {
-          "cell": "8,9",
-          "count": 1
-        },
-        {
-          "cell": "9,5",
-          "count": 1
-        }
-      ],
-      "maxRepeatedSpot": 1,
-      "captureConcentration": 0.16666666666666666,
-      "longestSameSpotStreak": 1,
-      "maxNoChangeMoves": 10,
-      "maxNoChangeMs": 1500,
-      "meaningfulSteps": 6,
-      "eventCounts": {
-        "target.caught": 6,
-        "target.spawned": 5
-      },
-      "signals": []
-    },
-    {
       "levelId": "classic-field-contour-transfer",
       "source": "game/test/fixtures/classic-snake-v4-proofs.json",
       "mode": "solo",
@@ -42493,294 +42777,6 @@
       "eventCounts": {
         "target.caught": 8,
         "target.spawned": 7
-      },
-      "signals": []
-    },
-    {
-      "levelId": "classic-field-wake-watch",
-      "source": "game/test/fixtures/classic-snake-v4-proofs.json",
-      "mode": "solo",
-      "pace": "slow",
-      "board": 0,
-      "steps": 83,
-      "elapsedMs": 23240,
-      "captures": 6,
-      "captureLocations": [
-        {
-          "cell": "10,2",
-          "count": 1
-        },
-        {
-          "cell": "14,16",
-          "count": 1
-        },
-        {
-          "cell": "17,2",
-          "count": 1
-        },
-        {
-          "cell": "19,6",
-          "count": 1
-        },
-        {
-          "cell": "21,7",
-          "count": 1
-        },
-        {
-          "cell": "4,5",
-          "count": 1
-        }
-      ],
-      "maxRepeatedSpot": 1,
-      "captureConcentration": 0.16666666666666666,
-      "longestSameSpotStreak": 1,
-      "maxNoChangeMoves": 14,
-      "maxNoChangeMs": 3920,
-      "meaningfulSteps": 18,
-      "eventCounts": {
-        "target.warning": 6,
-        "target.caught": 6,
-        "target.spawned": 5
-      },
-      "signals": []
-    },
-    {
-      "levelId": "classic-field-wake-watch",
-      "source": "game/test/fixtures/classic-snake-v4-proofs.json",
-      "mode": "solo",
-      "pace": "normal",
-      "board": 0,
-      "steps": 83,
-      "elapsedMs": 16600,
-      "captures": 6,
-      "captureLocations": [
-        {
-          "cell": "10,2",
-          "count": 1
-        },
-        {
-          "cell": "14,16",
-          "count": 1
-        },
-        {
-          "cell": "17,2",
-          "count": 1
-        },
-        {
-          "cell": "19,6",
-          "count": 1
-        },
-        {
-          "cell": "21,7",
-          "count": 1
-        },
-        {
-          "cell": "4,5",
-          "count": 1
-        }
-      ],
-      "maxRepeatedSpot": 1,
-      "captureConcentration": 0.16666666666666666,
-      "longestSameSpotStreak": 1,
-      "maxNoChangeMoves": 14,
-      "maxNoChangeMs": 2800,
-      "meaningfulSteps": 18,
-      "eventCounts": {
-        "target.warning": 6,
-        "target.caught": 6,
-        "target.spawned": 5
-      },
-      "signals": []
-    },
-    {
-      "levelId": "classic-field-wake-watch",
-      "source": "game/test/fixtures/classic-snake-v4-proofs.json",
-      "mode": "solo",
-      "pace": "fast",
-      "board": 0,
-      "steps": 83,
-      "elapsedMs": 12450,
-      "captures": 6,
-      "captureLocations": [
-        {
-          "cell": "10,2",
-          "count": 1
-        },
-        {
-          "cell": "14,16",
-          "count": 1
-        },
-        {
-          "cell": "17,2",
-          "count": 1
-        },
-        {
-          "cell": "19,6",
-          "count": 1
-        },
-        {
-          "cell": "21,7",
-          "count": 1
-        },
-        {
-          "cell": "4,5",
-          "count": 1
-        }
-      ],
-      "maxRepeatedSpot": 1,
-      "captureConcentration": 0.16666666666666666,
-      "longestSameSpotStreak": 1,
-      "maxNoChangeMoves": 14,
-      "maxNoChangeMs": 2100,
-      "meaningfulSteps": 12,
-      "eventCounts": {
-        "target.warning": 6,
-        "target.caught": 6,
-        "target.spawned": 5
-      },
-      "signals": []
-    },
-    {
-      "levelId": "classic-field-wake-watch",
-      "source": "game/test/fixtures/classic-snake-v4-proofs.json",
-      "mode": "team",
-      "pace": "slow",
-      "board": 0,
-      "steps": 63,
-      "elapsedMs": 17640,
-      "captures": 6,
-      "captureLocations": [
-        {
-          "cell": "14,16",
-          "count": 1
-        },
-        {
-          "cell": "17,2",
-          "count": 1
-        },
-        {
-          "cell": "19,6",
-          "count": 1
-        },
-        {
-          "cell": "21,7",
-          "count": 1
-        },
-        {
-          "cell": "4,5",
-          "count": 1
-        },
-        {
-          "cell": "8,2",
-          "count": 1
-        }
-      ],
-      "maxRepeatedSpot": 1,
-      "captureConcentration": 0.16666666666666666,
-      "longestSameSpotStreak": 1,
-      "maxNoChangeMoves": 7,
-      "maxNoChangeMs": 1960,
-      "meaningfulSteps": 18,
-      "eventCounts": {
-        "target.warning": 6,
-        "target.caught": 6,
-        "target.spawned": 5
-      },
-      "signals": []
-    },
-    {
-      "levelId": "classic-field-wake-watch",
-      "source": "game/test/fixtures/classic-snake-v4-proofs.json",
-      "mode": "team",
-      "pace": "normal",
-      "board": 0,
-      "steps": 63,
-      "elapsedMs": 12600,
-      "captures": 6,
-      "captureLocations": [
-        {
-          "cell": "14,16",
-          "count": 1
-        },
-        {
-          "cell": "17,2",
-          "count": 1
-        },
-        {
-          "cell": "19,6",
-          "count": 1
-        },
-        {
-          "cell": "21,7",
-          "count": 1
-        },
-        {
-          "cell": "4,5",
-          "count": 1
-        },
-        {
-          "cell": "8,2",
-          "count": 1
-        }
-      ],
-      "maxRepeatedSpot": 1,
-      "captureConcentration": 0.16666666666666666,
-      "longestSameSpotStreak": 1,
-      "maxNoChangeMoves": 7,
-      "maxNoChangeMs": 1400,
-      "meaningfulSteps": 18,
-      "eventCounts": {
-        "target.warning": 6,
-        "target.caught": 6,
-        "target.spawned": 5
-      },
-      "signals": []
-    },
-    {
-      "levelId": "classic-field-wake-watch",
-      "source": "game/test/fixtures/classic-snake-v4-proofs.json",
-      "mode": "team",
-      "pace": "fast",
-      "board": 0,
-      "steps": 63,
-      "elapsedMs": 9450,
-      "captures": 6,
-      "captureLocations": [
-        {
-          "cell": "14,16",
-          "count": 1
-        },
-        {
-          "cell": "17,2",
-          "count": 1
-        },
-        {
-          "cell": "19,6",
-          "count": 1
-        },
-        {
-          "cell": "21,7",
-          "count": 1
-        },
-        {
-          "cell": "4,5",
-          "count": 1
-        },
-        {
-          "cell": "8,2",
-          "count": 1
-        }
-      ],
-      "maxRepeatedSpot": 1,
-      "captureConcentration": 0.16666666666666666,
-      "longestSameSpotStreak": 1,
-      "maxNoChangeMoves": 7,
-      "maxNoChangeMs": 1050,
-      "meaningfulSteps": 12,
-      "eventCounts": {
-        "target.warning": 6,
-        "target.caught": 6,
-        "target.spawned": 5
       },
       "signals": []
     },
@@ -43119,290 +43115,6 @@
         "target.warning": 4,
         "target.caught": 8,
         "target.spawned": 7
-      },
-      "signals": []
-    },
-    {
-      "levelId": "classic-field-ricochet-line",
-      "source": "game/test/fixtures/classic-snake-v4-proofs.json",
-      "mode": "solo",
-      "pace": "slow",
-      "board": 0,
-      "steps": 83,
-      "elapsedMs": 23240,
-      "captures": 6,
-      "captureLocations": [
-        {
-          "cell": "14,2",
-          "count": 1
-        },
-        {
-          "cell": "18,2",
-          "count": 1
-        },
-        {
-          "cell": "19,16",
-          "count": 1
-        },
-        {
-          "cell": "20,6",
-          "count": 1
-        },
-        {
-          "cell": "22,7",
-          "count": 1
-        },
-        {
-          "cell": "8,5",
-          "count": 1
-        }
-      ],
-      "maxRepeatedSpot": 1,
-      "captureConcentration": 0.16666666666666666,
-      "longestSameSpotStreak": 1,
-      "maxNoChangeMoves": 23,
-      "maxNoChangeMs": 6440,
-      "meaningfulSteps": 6,
-      "eventCounts": {
-        "target.caught": 6,
-        "target.spawned": 5
-      },
-      "signals": [
-        "long-interval-without-encounter-change"
-      ]
-    },
-    {
-      "levelId": "classic-field-ricochet-line",
-      "source": "game/test/fixtures/classic-snake-v4-proofs.json",
-      "mode": "solo",
-      "pace": "normal",
-      "board": 0,
-      "steps": 83,
-      "elapsedMs": 16600,
-      "captures": 6,
-      "captureLocations": [
-        {
-          "cell": "14,2",
-          "count": 1
-        },
-        {
-          "cell": "18,2",
-          "count": 1
-        },
-        {
-          "cell": "19,16",
-          "count": 1
-        },
-        {
-          "cell": "20,6",
-          "count": 1
-        },
-        {
-          "cell": "22,7",
-          "count": 1
-        },
-        {
-          "cell": "8,5",
-          "count": 1
-        }
-      ],
-      "maxRepeatedSpot": 1,
-      "captureConcentration": 0.16666666666666666,
-      "longestSameSpotStreak": 1,
-      "maxNoChangeMoves": 23,
-      "maxNoChangeMs": 4600,
-      "meaningfulSteps": 6,
-      "eventCounts": {
-        "target.caught": 6,
-        "target.spawned": 5
-      },
-      "signals": []
-    },
-    {
-      "levelId": "classic-field-ricochet-line",
-      "source": "game/test/fixtures/classic-snake-v4-proofs.json",
-      "mode": "solo",
-      "pace": "fast",
-      "board": 0,
-      "steps": 83,
-      "elapsedMs": 12450,
-      "captures": 6,
-      "captureLocations": [
-        {
-          "cell": "14,2",
-          "count": 1
-        },
-        {
-          "cell": "18,2",
-          "count": 1
-        },
-        {
-          "cell": "19,16",
-          "count": 1
-        },
-        {
-          "cell": "20,6",
-          "count": 1
-        },
-        {
-          "cell": "22,7",
-          "count": 1
-        },
-        {
-          "cell": "8,5",
-          "count": 1
-        }
-      ],
-      "maxRepeatedSpot": 1,
-      "captureConcentration": 0.16666666666666666,
-      "longestSameSpotStreak": 1,
-      "maxNoChangeMoves": 23,
-      "maxNoChangeMs": 3450,
-      "meaningfulSteps": 6,
-      "eventCounts": {
-        "target.caught": 6,
-        "target.spawned": 5
-      },
-      "signals": []
-    },
-    {
-      "levelId": "classic-field-ricochet-line",
-      "source": "game/test/fixtures/classic-snake-v4-proofs.json",
-      "mode": "team",
-      "pace": "slow",
-      "board": 0,
-      "steps": 63,
-      "elapsedMs": 17640,
-      "captures": 6,
-      "captureLocations": [
-        {
-          "cell": "10,2",
-          "count": 1
-        },
-        {
-          "cell": "17,16",
-          "count": 1
-        },
-        {
-          "cell": "18,2",
-          "count": 1
-        },
-        {
-          "cell": "21,6",
-          "count": 1
-        },
-        {
-          "cell": "21,7",
-          "count": 1
-        },
-        {
-          "cell": "8,5",
-          "count": 1
-        }
-      ],
-      "maxRepeatedSpot": 1,
-      "captureConcentration": 0.16666666666666666,
-      "longestSameSpotStreak": 1,
-      "maxNoChangeMoves": 14,
-      "maxNoChangeMs": 3920,
-      "meaningfulSteps": 6,
-      "eventCounts": {
-        "target.caught": 6,
-        "target.spawned": 5
-      },
-      "signals": []
-    },
-    {
-      "levelId": "classic-field-ricochet-line",
-      "source": "game/test/fixtures/classic-snake-v4-proofs.json",
-      "mode": "team",
-      "pace": "normal",
-      "board": 0,
-      "steps": 63,
-      "elapsedMs": 12600,
-      "captures": 6,
-      "captureLocations": [
-        {
-          "cell": "10,2",
-          "count": 1
-        },
-        {
-          "cell": "17,16",
-          "count": 1
-        },
-        {
-          "cell": "18,2",
-          "count": 1
-        },
-        {
-          "cell": "21,6",
-          "count": 1
-        },
-        {
-          "cell": "21,7",
-          "count": 1
-        },
-        {
-          "cell": "8,5",
-          "count": 1
-        }
-      ],
-      "maxRepeatedSpot": 1,
-      "captureConcentration": 0.16666666666666666,
-      "longestSameSpotStreak": 1,
-      "maxNoChangeMoves": 14,
-      "maxNoChangeMs": 2800,
-      "meaningfulSteps": 6,
-      "eventCounts": {
-        "target.caught": 6,
-        "target.spawned": 5
-      },
-      "signals": []
-    },
-    {
-      "levelId": "classic-field-ricochet-line",
-      "source": "game/test/fixtures/classic-snake-v4-proofs.json",
-      "mode": "team",
-      "pace": "fast",
-      "board": 0,
-      "steps": 63,
-      "elapsedMs": 9450,
-      "captures": 6,
-      "captureLocations": [
-        {
-          "cell": "10,2",
-          "count": 1
-        },
-        {
-          "cell": "17,16",
-          "count": 1
-        },
-        {
-          "cell": "18,2",
-          "count": 1
-        },
-        {
-          "cell": "21,6",
-          "count": 1
-        },
-        {
-          "cell": "21,7",
-          "count": 1
-        },
-        {
-          "cell": "8,5",
-          "count": 1
-        }
-      ],
-      "maxRepeatedSpot": 1,
-      "captureConcentration": 0.16666666666666666,
-      "longestSameSpotStreak": 1,
-      "maxNoChangeMoves": 14,
-      "maxNoChangeMs": 2100,
-      "meaningfulSteps": 6,
-      "eventCounts": {
-        "target.caught": 6,
-        "target.spawned": 5
       },
       "signals": []
     },

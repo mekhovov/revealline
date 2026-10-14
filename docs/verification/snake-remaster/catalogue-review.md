@@ -1,25 +1,26 @@
 # Tactical remaster catalogue review
 
 The official catalogue remains 240 missions across 35 chapters. All 240 now have
-literal construction-family and focal-assembly descriptors. Ten operation
-missions have changed accepted gameplay recipes; 230 retain their established
+literal construction-family and focal-assembly descriptors. Fourteen official
+missions have changed accepted gameplay recipes; 226 retain their established
 gameplay while receiving the shared presentation remaster. No new mission names,
 mirrored layouts or larger quotas are counted as additional content.
 
 ## What changed
 
-| Mission            | Concrete tactical improvement                                                                                          |
-| ------------------ | ---------------------------------------------------------------------------------------------------------------------- |
-| Orchard Post       | An L-shaped runner route around the glasshouse ties the interception to unloading and the short return.                |
-| Runner Valve       | The committed east-side route makes the cable-held shortcut useful for interception.                                   |
-| Refuge Cargo       | A refuge route through the aisle creates a choice between the fixed east dock and the two interception ends.           |
-| North–South        | Complementary pair endpoints make wrapping a deliberate interception shortcut.                                         |
-| Silent Parcel      | The antenna changes posts only during recovery, changing the useful cargo approach without moving a live transmission. |
-| Watch the Aim      | A short guard recovery route prevents repeated camping of one safe flank; the new post receives a fresh warning.       |
-| Freight Flank      | The shield uses the cargo aisle, connecting facing, flanking and loaded turning room.                                  |
-| Pressure Elbow     | A committed east-side runner makes holding the plate shortcut an interception decision.                                |
-| Loaded Excavation  | Recessing the far side of marked stone lets erosion open the promised direct delivery passage.                         |
-| Harvest Rendezvous | A committed cross-aisle sprint connects both deliveries to one readable timing decision.                               |
+| Mission                                                   | Concrete tactical improvement                                                                                                                                            |
+| --------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Orchard Post                                              | An L-shaped runner route around the glasshouse ties the interception to unloading and the short return.                                                                  |
+| Runner Valve                                              | The committed east-side route makes the cable-held shortcut useful for interception.                                                                                     |
+| Refuge Cargo                                              | A refuge route through the aisle creates a choice between the fixed east dock and the two interception ends.                                                             |
+| North–South                                               | Complementary pair endpoints make wrapping a deliberate interception shortcut.                                                                                           |
+| Silent Parcel                                             | The antenna changes posts only during recovery, changing the useful cargo approach without moving a live transmission.                                                   |
+| Watch the Aim                                             | A short guard recovery route prevents repeated camping of one safe flank; the new post receives a fresh warning.                                                         |
+| Freight Flank                                             | The shield uses the cargo aisle, connecting facing, flanking and loaded turning room.                                                                                    |
+| Pressure Elbow                                            | A committed east-side runner makes holding the plate shortcut an interception decision.                                                                                  |
+| Border Watch / Contour Orbit / Wake Watch / Ricochet Line | Each introduction finishes after three distinct demonstrations instead of six repetitions of the same single policy; mixed-policy successors retain their longer quotas. |
+| Loaded Excavation                                         | Recessing the far side of marked stone lets erosion open the promised direct delivery passage.                                                                           |
+| Harvest Rendezvous                                        | A committed cross-aisle sprint connects both deliveries to one readable timing decision.                                                                                 |
 
 The first six prototype encounter IDs and their Solo/Team modes are exported from
 `classic-catalogue-remaster.mjs`. All visual directions use those same accepted
@@ -50,14 +51,13 @@ identity, and renderers must still clip holes and eroded cells.
 
 - 54 accepted winning journals cover the nine tactical revisions in Solo and Team
   at normal, slow and fast pace, level seed 17 and hazard seed 17.
-- Six editorial journals verify Loaded Excavation’s revised geometry across all mode/pace setups.
+- Thirty editorial journals verify Loaded Excavation’s revised geometry and four shortened introductions across all mode/pace setups.
 - A further 12 journals cover the mobile-jammer mission at hazard seeds 73 and
   2026 across the same six mode/pace combinations.
 - The previous Release A/B fixture verification remains intact. Current-record
   capacity tests substitute remastered journals only for changed official
   recipes; old journals are not silently relabelled as new evidence.
-- Original 144-mission review and proof checks remain intact; the ten new
-  revisions are confined to operation chapters.
+- Original 144-mission review and proof checks remain intact; ten operation revisions and four field introductions retain their predecessor recipes in the archive.
 - `review-snake-remaster.mjs --check` checks that the review still corresponds to
   the catalogue. `qualify-snake-remaster.mjs --check` verifies retained journals
   against current accepted recipes.
