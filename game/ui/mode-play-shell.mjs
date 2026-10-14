@@ -195,6 +195,8 @@ export function mountModePlayShell({
   slots = {},
   actions = {},
   services = {},
+  homeLabels = {},
+  homeAction = null,
   wordmarkURL = '',
   artworkURL = '',
   version = '',
@@ -392,6 +394,11 @@ export function mountModePlayShell({
     button('missions', () => open('missions')),
     button('settings', () => open('settings')),
   );
+  let extraHomeAction = null;
+  if (homeAction?.activate && homeAction?.label) {
+    extraHomeAction = button('help', () => homeAction.activate(), false, 'home-extra');
+    buttons.missions.before(extraHomeAction);
+  }
   const utilities = el('div', 'mode-play-utilities native-menu-utilities');
   utilities.setAttribute('role', 'group');
   utilities.append(
@@ -420,11 +427,12 @@ export function mountModePlayShell({
       selectedChoices,
       buttons.primary,
       buttons['home-results'],
+      extraHomeAction,
       buttons.missions,
       buttons.settings,
       buttons.sound,
       buttons.fullscreen,
-    ],
+    ].filter(Boolean),
   });
   cleanups.push(() => landingNavigation.dispose());
   const pauseMenu = content.pause;
@@ -542,6 +550,10 @@ export function mountModePlayShell({
       if (node === buttons.primary)
         value =
           COPY[language][state.phase === 'results' ? 'retry' : resumable() ? 'continue' : 'start'];
+      if (node === buttons.primary && state.phase !== 'results' && !resumable())
+        value = text(homeLabels.start) || value;
+      else if (node === buttons.missions) value = text(homeLabels.missions) || value;
+      else if (node === extraHomeAction) value = text(homeAction.label);
       else if (node === buttons.start)
         value = COPY[language][state.phase === 'paused' ? 'resume' : 'start'];
       else if (node === buttons.pause)
