@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Native world painter review</title>
+    <style>
+      body {
+        margin: 0;
+        background: #101815;
+        color: #e5e6cb;
+        font: 14px monospace;
+      }
+      header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 12px;
+      }
+      h1 {
+        margin: 0 0 4px;
+        font-size: 17px;
+      }
+      p {
+        margin: 0;
+        color: #b5bfae;
+      }
+      a {
+        color: #e8c56d;
+      }
+      #download {
+        border: 1px solid #677159;
+        padding: 10px 12px;
+        white-space: nowrap;
+      }
+      main {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 12px;
+        max-width: 2160px;
+        margin: auto;
+        padding: 0 12px 12px;
+      }
+      figure {
+        margin: 0;
+        min-width: 0;
+        background: #19231d;
+      }
+      figcaption {
+        min-height: 38px;
+        padding: 7px 8px;
+        overflow-wrap: anywhere;
+      }
+      figcaption small {
+        display: block;
+        color: #a6b19e;
+        font-size: 10px;
+        padding-top: 3px;
+      }
+      canvas {
+        display: block;
+        width: 100%;
+        height: auto;
+        image-rendering: pixelated;
+      }
+      @media (max-width: 640px) {
+        main {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+        header {
+          align-items: flex-start;
+          flex-direction: column;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div>
+        <h1>Six worlds · native painter reference</h1>
+        <p>
+          Source artwork review, not gameplay footage. <a href="?crops">Six camera crops</a> ·
+          <a href="?">All 18 layouts</a>
+        </p>
+      </div>
+      <a id="download" aria-disabled="true">Preparing overview…</a>
+    </header>
+    <main></main>
+    <script type="module">
+      import {
+        OVERFLIGHT_BATTLEFIELDS,
+        createOverflightBattlefield,
+      } from '../../../../../game/overflight/battlefields.mjs';
+      import { createOverflightWorldPresentation } from '../../../../../game/overflight/worlds.mjs';
+      import { paintOverflightWorld } from '../../../../../game/presentation/overflight-world-art.mjs';
+      const params = new URL(location.href).searchParams;
+      const crops = params.has('crops');
+      let entries = OVERFLIGHT_BATTLEFIELDS;
+      if (params.has('world'))
+        entries = entries.filter((entry) => entry.world === params.get('world'));
+      if (crops) entries = entries.filter((entry, index) => index % 3 === 1);
+      const canvases = [];
+      for (const entry of entries) {
+        const layout = createOverflightBattlefield(entry.id);
+        const presentation = createOverflightWorldPresentation(entry.world, layout.arena, {
+          layout,
+        });
+        const figure = document.createElement('figure');
+        const caption = document.createElement('figcaption');
+        const detail = document.createElement('small');
+        const canvas = document.createElement('canvas');
+        caption.textContent = entry.title.en;
+        detail.textContent = entry.id;
+        caption.append(detail);
+        canvas.width = crops ? 960 : layout.arena.width;
+        canvas.height = crops ? 540 : layout.arena.height;
+        const ctx = canvas.getContext('2d');
+        ctx.imageSmoothingEnabled = false;
+        if (crops) ctx.translate(-960, -270);
+        paintOverflightWorld(ctx, presentation, layout.arena);
+        figure.append(caption, canvas);
+        document.querySelector('main').append(figure);
+        canvases.push({ canvas, entry });
+      }
+      // Export exactly the displayed painter canvases. No browser capture or asset substitution.
+      const tileWidth = crops ? 960 : 1440;
+      const tileHeight = 540;
+      const captionHeight = 58;
+      const gap = 12;
+      const headerHeight = 58;
+      const columns = Math.min(3, Math.max(1, canvases.length));
+      const overview = document.createElement('canvas');
+      overview.width = columns * (tileWidth + gap) + gap;
+      overview.height =
+        headerHeight +
+        Math.ceil(canvases.length / columns) * (tileHeight + captionHeight + gap) +
+        gap;
+      const output = overview.getContext('2d');
+      output.imageSmoothingEnabled = false;
+      output.fillStyle = '#101815';
+      output.fillRect(0, 0, overview.width, overview.height);
+      output.fillStyle = '#e5e6cb';
+      output.font = '22px monospace';
+      output.fillText('FPV Survivals · native painter reference · not gameplay footage', gap, 35);
+      canvases.forEach(({ canvas, entry }, index) => {
+        const x = gap + (index % columns) * (tileWidth + gap);
+        const y = headerHeight + Math.floor(index / columns) * (tileHeight + captionHeight + gap);
+        output.fillStyle = '#e5e6cb';
+        output.font = '22px monospace';
+        output.fillText(entry.title.en, x + 8, y + 24);
+        output.fillStyle = '#a6b19e';
+        output.font = '15px monospace';
+        output.fillText(entry.id, x + 8, y + 45);
+        output.drawImage(canvas, x, y + captionHeight, tileWidth, tileHeight);
+      });
+      overview.toBlob((blob) => {
+        const download = document.querySelector('#download');
+        if (!blob) {
+          download.textContent = 'PNG export unavailable';
+          return;
+        }
+        download.href = URL.createObjectURL(blob);
+        download.download = crops
+          ? 'fpv-survivals-six-world-crops.png'
+          : 'fpv-survivals-18-layouts.png';
+        download.textContent = 'Download overview PNG';
+        download.removeAttribute('aria-disabled');
+        addEventListener('pagehide', () => URL.revokeObjectURL(download.href), { once: true });
+        document.documentElement.dataset.ready = 'true';
+      }, 'image/png');
+    </script>
+  </body>
+</html>

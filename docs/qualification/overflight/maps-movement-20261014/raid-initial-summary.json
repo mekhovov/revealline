@@ -1,0 +1,284 @@
+{
+  "kind": "Native simulation public-input capability; no rendering, performance or enjoyment claim.",
+  "commit": "295b0120f5ffac048d88ba3182869f9cfaf1de42",
+  "sourceBefore": {
+    "game/overflight/battlefields.mjs": "f543fd618fd3420ed16d20bb4cb4b89d881b789f692dea1dd43d70971a47b1a4",
+    "game/overflight/terrain.mjs": "a9b73f78abfb185d542cbb8fa1ebb3cb5cc40cc7feff0e2ebe2a4b046391e146",
+    "game/overflight/core.mjs": "df69befe5384f6999575dc980d6d8f036fda30da102825e32dc4c0b09770a723",
+    "game/overflight/project.mjs": "63870b8e2bedbe603748608a3dc4f18c22385ed22c5e6ed3fea288da68d7aa9c",
+    "game/overflight/raid-project.mjs": "b2ef93cf727ebda0e541883704a457b22e42c5423c3da346c1eef1e8564cc870",
+    "game/overflight/raid-core.mjs": "9e3c76527c5f5774c3e65ab9843ec86cca3cdd19aad706241df3e6365b6f4b3a",
+    "game/overflight/raid-review-pilot.mjs": "2c1254ccb6762fa19a5909ad64fde32f8c25ad5991bda026f0b66c71e4ec09b2",
+    "game/overflight/raid-variants.mjs": "c63fc24eac3438a86475ca64e8066b29c1414c14847874df6912935ed6dbcebd",
+    "game/overflight/raid-upgrades.mjs": "fc26354fe1a829ba93d23694440f61e09d03f06bdd63bcad003abbadd9792b1d",
+    "game/overflight/motion.mjs": "23e7fe82ede836b66d17d27cdf2f1eb6ae8bb52960a18fe547713fa3a2756153",
+    "game/overflight/coordinated-movement.mjs": "68ff090c229daefb31fb74166d58501a0e662b657d82bd58c9a418c25a50f6e8"
+  },
+  "sourceAfter": {
+    "game/overflight/battlefields.mjs": "f543fd618fd3420ed16d20bb4cb4b89d881b789f692dea1dd43d70971a47b1a4",
+    "game/overflight/terrain.mjs": "a9b73f78abfb185d542cbb8fa1ebb3cb5cc40cc7feff0e2ebe2a4b046391e146",
+    "game/overflight/core.mjs": "df69befe5384f6999575dc980d6d8f036fda30da102825e32dc4c0b09770a723",
+    "game/overflight/project.mjs": "63870b8e2bedbe603748608a3dc4f18c22385ed22c5e6ed3fea288da68d7aa9c",
+    "game/overflight/raid-project.mjs": "b2ef93cf727ebda0e541883704a457b22e42c5423c3da346c1eef1e8564cc870",
+    "game/overflight/raid-core.mjs": "9e3c76527c5f5774c3e65ab9843ec86cca3cdd19aad706241df3e6365b6f4b3a",
+    "game/overflight/raid-review-pilot.mjs": "2c1254ccb6762fa19a5909ad64fde32f8c25ad5991bda026f0b66c71e4ec09b2",
+    "game/overflight/raid-variants.mjs": "c63fc24eac3438a86475ca64e8066b29c1414c14847874df6912935ed6dbcebd",
+    "game/overflight/raid-upgrades.mjs": "fc26354fe1a829ba93d23694440f61e09d03f06bdd63bcad003abbadd9792b1d",
+    "game/overflight/motion.mjs": "23e7fe82ede836b66d17d27cdf2f1eb6ae8bb52960a18fe547713fa3a2756153",
+    "game/overflight/coordinated-movement.mjs": "f58863b4b40c35962a21b521c433b248c4af3a80cc1e964afe292225a15a8bc7"
+  },
+  "sourceStable": false,
+  "settings": {
+    "rules": 4,
+    "seed": 17031991,
+    "difficulty": "standard",
+    "airframes": 3,
+    "limitSeconds": 300
+  },
+  "totals": {
+    "trials": 66,
+    "passed": 51
+  },
+  "failures": [
+    {
+      "layout": "field-crossing-supply-orchard-edge",
+      "route": "objectives",
+      "baseline": false,
+      "variant": null,
+      "seed": 17031991,
+      "policy": "Existing review pilot; ordinary steering, boost and earned card selection only.",
+      "passed": false,
+      "final": {
+        "phase": "playing",
+        "time": 300,
+        "objectives": 6,
+        "layout": "field-crossing-supply-orchard-edge",
+        "contract": 1
+      }
+    },
+    {
+      "layout": "field-crossing-supply-orchard-edge",
+      "route": "packs",
+      "baseline": false,
+      "variant": null,
+      "seed": 17031991,
+      "policy": "Existing review pilot; ordinary steering, boost and earned card selection only.",
+      "passed": false,
+      "final": {
+        "phase": "playing",
+        "time": 300,
+        "objectives": 3,
+        "layout": "field-crossing-supply-orchard-edge",
+        "contract": 1
+      }
+    },
+    {
+      "layout": "relay-ruins-split-compound",
+      "route": "objectives",
+      "baseline": true,
+      "variant": null,
+      "seed": 17031991,
+      "policy": "Technical baseline-kit audit: drafts disabled; ordinary movement, damage and objective rules.",
+      "passed": false,
+      "final": {
+        "phase": "playing",
+        "time": 300,
+        "objectives": 3,
+        "layout": "relay-ruins-split-compound",
+        "contract": 1
+      }
+    },
+    {
+      "layout": "relay-ruins-split-compound",
+      "route": "objectives",
+      "baseline": false,
+      "variant": null,
+      "seed": 17031991,
+      "policy": "Existing review pilot; ordinary steering, boost and earned card selection only.",
+      "passed": false,
+      "final": {
+        "phase": "playing",
+        "time": 300,
+        "objectives": 3,
+        "layout": "relay-ruins-split-compound",
+        "contract": 1
+      }
+    },
+    {
+      "layout": "relay-ruins-split-compound",
+      "route": "packs",
+      "baseline": false,
+      "variant": null,
+      "seed": 17031991,
+      "policy": "Existing review pilot; ordinary steering, boost and earned card selection only.",
+      "passed": false,
+      "final": {
+        "phase": "playing",
+        "time": 300,
+        "objectives": 6,
+        "layout": "relay-ruins-split-compound",
+        "contract": 1
+      }
+    },
+    {
+      "layout": "river-port-twin-docks",
+      "route": "objectives",
+      "baseline": true,
+      "variant": null,
+      "seed": 17031991,
+      "policy": "Technical baseline-kit audit: drafts disabled; ordinary movement, damage and objective rules.",
+      "passed": false,
+      "final": {
+        "phase": "playing",
+        "time": 300,
+        "objectives": 6,
+        "layout": "river-port-twin-docks",
+        "contract": 1
+      }
+    },
+    {
+      "layout": "river-port-twin-docks",
+      "route": "objectives",
+      "baseline": false,
+      "variant": null,
+      "seed": 17031991,
+      "policy": "Existing review pilot; ordinary steering, boost and earned card selection only.",
+      "passed": false,
+      "final": {
+        "phase": "playing",
+        "time": 300,
+        "objectives": 6,
+        "layout": "river-port-twin-docks",
+        "contract": 1
+      }
+    },
+    {
+      "layout": "river-port-twin-docks",
+      "route": "packs",
+      "baseline": false,
+      "variant": null,
+      "seed": 17031991,
+      "policy": "Existing review pilot; ordinary steering, boost and earned card selection only.",
+      "passed": false,
+      "final": {
+        "phase": "playing",
+        "time": 300,
+        "objectives": 6,
+        "layout": "river-port-twin-docks",
+        "contract": 1
+      }
+    },
+    {
+      "layout": "chalk-quarry-haul-switchbacks",
+      "route": "packs",
+      "baseline": false,
+      "variant": null,
+      "seed": 17031991,
+      "policy": "Existing review pilot; ordinary steering, boost and earned card selection only.",
+      "passed": false,
+      "final": {
+        "phase": "playing",
+        "time": 300,
+        "objectives": 3,
+        "layout": "chalk-quarry-haul-switchbacks",
+        "contract": 1
+      }
+    },
+    {
+      "layout": "field-crossing-broken-crossroads",
+      "route": "objectives",
+      "baseline": false,
+      "variant": "marathon",
+      "seed": 17031991,
+      "policy": "Existing review pilot; ordinary steering, boost and earned card selection only.",
+      "passed": false,
+      "final": {
+        "phase": "lost",
+        "time": 30.75,
+        "objectives": 6,
+        "layout": "field-crossing-shelterbelt-gaps",
+        "contract": 2
+      }
+    },
+    {
+      "layout": "freight-depot-shunting-yard",
+      "route": "objectives",
+      "baseline": false,
+      "variant": "marathon",
+      "seed": 17031991,
+      "policy": "Existing review pilot; ordinary steering, boost and earned card selection only.",
+      "passed": false,
+      "final": {
+        "phase": "lost",
+        "time": 18.816666666666666,
+        "objectives": 5,
+        "layout": "freight-depot-dispatch-junction",
+        "contract": 3
+      }
+    },
+    {
+      "layout": "relay-ruins-antenna-court",
+      "route": "objectives",
+      "baseline": false,
+      "variant": "marathon",
+      "seed": 17031991,
+      "policy": "Existing review pilot; ordinary steering, boost and earned card selection only.",
+      "passed": false,
+      "final": {
+        "phase": "playing",
+        "time": 300,
+        "objectives": 3,
+        "layout": "relay-ruins-split-compound",
+        "contract": 2
+      }
+    },
+    {
+      "layout": "river-port-pump-apron",
+      "route": "objectives",
+      "baseline": false,
+      "variant": "marathon",
+      "seed": 17031991,
+      "policy": "Existing review pilot; ordinary steering, boost and earned card selection only.",
+      "passed": false,
+      "final": {
+        "phase": "playing",
+        "time": 300,
+        "objectives": 6,
+        "layout": "river-port-twin-docks",
+        "contract": 2
+      }
+    },
+    {
+      "layout": "chalk-quarry-survey-basin",
+      "route": "objectives",
+      "baseline": false,
+      "variant": "marathon",
+      "seed": 17031991,
+      "policy": "Existing review pilot; ordinary steering, boost and earned card selection only.",
+      "passed": false,
+      "final": {
+        "phase": "lost",
+        "time": 14.516666666666667,
+        "objectives": 5,
+        "layout": "chalk-quarry-haul-switchbacks",
+        "contract": 2
+      }
+    },
+    {
+      "layout": "orchard-strongpoint-harvest-clearing",
+      "route": "objectives",
+      "baseline": false,
+      "variant": "marathon",
+      "seed": 17031991,
+      "policy": "Existing review pilot; ordinary steering, boost and earned card selection only.",
+      "passed": false,
+      "final": {
+        "phase": "lost",
+        "time": 23.166666666666668,
+        "objectives": 6,
+        "layout": "orchard-strongpoint-irrigation-courts",
+        "contract": 4
+      }
+    }
+  ]
+}

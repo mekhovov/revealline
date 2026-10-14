@@ -1323,3 +1323,131 @@ test('accepted Studio actor images and Motion clips bake once and feed native up
     globalThis.Phaser = prior;
   }
 });
+
+test('all eighteen selected-world inventories keep exact texture accounting without multiplying sprite atlases', async () => {
+  const { OVERFLIGHT_BATTLEFIELDS } = await import('../overflight/battlefields.mjs');
+  const { overflightWorldImageSlots } = await import('../presentation/overflight-world-slots.mjs');
+  for (const maxTextureSize of [2048, 512]) {
+    const sprites = overflightAtlasInventory({ maxTextureSize });
+    for (const layout of OVERFLIGHT_BATTLEFIELDS) {
+      const compiled = compileOverflightProject(
+        createOverflightProject({ rulesVersion: 4, layout: layout.id }),
+      );
+      const inventory = overflightAtlasInventory({
+        maxTextureSize,
+        presentation: compiled.presentation,
+        arena: compiled.arena,
+      });
+      assert.equal(compiled.presentation.format, 'OverflightWorldPresentationV2');
+      assert.equal(inventory.frames.length, sprites.frames.length);
+      assert.deepEqual(
+        inventory.pages,
+        sprites.pages,
+        'world artwork does not duplicate actor frames',
+      );
+      assert.equal(inventory.worldTiles.length, maxTextureSize === 2048 ? 6 : 18);
+      assert.equal(inventory.worldRGBABytes, 2880 * 1080 * 4);
+      assert.equal(inventory.groundRGBABytes, 0);
+      assert.equal(inventory.baseRGBABytes, inventory.spriteRGBABytes + inventory.worldRGBABytes);
+      assert.equal(inventory.retainedCanvasBytes, inventory.baseRGBABytes);
+      assert.equal(inventory.preparationScratchBytes, 64 * 64 * 4);
+      assert.ok(inventory.baseRGBABytes < OVERFLIGHT_ATLAS_BUDGET);
+      assert.ok(
+        inventory.worldTiles.every(
+          (tile) => tile.width <= maxTextureSize && tile.height <= maxTextureSize,
+        ),
+      );
+      const slots = overflightWorldImageSlots(compiled.presentation);
+      assert.ok(slots.length > 0 && slots.length < 20, 'one selected kit stays bounded');
+      assert.equal(new Set(slots).size, slots.length);
+    }
+  }
+});
+
+test('ten V4 world lifecycles retain custom panels, recover all pages and release every selected-scene canvas', async () => {
+  const { OVERFLIGHT_BATTLEFIELDS } = await import('../overflight/battlefields.mjs');
+  const { overflightWorldImageSlots } = await import('../presentation/overflight-world-slots.mjs');
+  const prior = globalThis.Phaser;
+  const worlds = new Set();
+  try {
+    for (let retry = 0; retry < 10; retry++) {
+      const layout = OVERFLIGHT_BATTLEFIELDS[(retry * 5) % OVERFLIGHT_BATTLEFIELDS.length];
+      worlds.add(layout.world);
+      const compiled = compileOverflightProject(
+        createOverflightProject({ rulesVersion: 4, layout: layout.id }),
+      );
+      const selected = new Set(overflightWorldImageSlots(compiled.presentation));
+      const worldImages = new Map(
+        [...selected].map((slot) => [slot, { width: 32, height: 32, slot }]),
+      );
+      const used = new Set();
+      const environment = fakeEnvironment({ maxTextureSize: retry % 2 ? 512 : 2048 });
+      globalThis.Phaser = environment.Phaser;
+      let renderer;
+      try {
+        renderer = await createOverflightRenderer({
+          parent: { ownerDocument: environment.document },
+          appearance: {
+            snapshot: {
+              image: (slot) => {
+                if (slot.startsWith('player.')) return { image: {} };
+                if (!slot.startsWith('world.overflight.')) return null;
+                assert.ok(
+                  selected.has(slot),
+                  `${layout.id} requests only its selected scene sources: ${slot}`,
+                );
+                used.add(slot);
+                return { image: worldImages.get(slot) };
+              },
+            },
+          },
+          presentation: compiled.presentation,
+          arena: compiled.arena,
+        });
+        assert.deepEqual(used, selected);
+        assert.ok(
+          environment.draws.some(([image]) => image?.slot?.startsWith('world.overflight.module.')),
+        );
+        const atlas = renderer.stats().atlas;
+        assert.equal(environment.counts().textureUploads, atlas.textures);
+        assert.equal(
+          environment.canvases.reduce((sum, canvas) => sum + canvas.width * canvas.height * 4, 0),
+          atlas.retainedCanvasBytes,
+          'owned retained canvas bytes match the atlas report after scratch cleanup',
+        );
+        const run = createOverflightRun(compiled, { fixture: retry % 2 ? 'stress' : 'reference' });
+        startOverflight(run);
+        const prepared = environment.counts();
+        renderer.present(run);
+        const visible = retry % 2 ? 1200 : 700;
+        assert.equal(renderer.stats().counts.rendered, visible);
+        environment.game().renderer.emit('lose');
+        assert.equal(renderer.stats().lost, true);
+        environment.game().renderer.emit('restore');
+        renderer.present(run);
+        assert.equal(renderer.stats().lost, false);
+        assert.equal(renderer.stats().counts.rendered, visible);
+        renderer.resetMeasurements();
+        renderer.present(run);
+        assert.deepEqual(
+          environment.counts(),
+          prepared,
+          'presentation, recovery and retry reuse prepared pixels',
+        );
+        await renderer.destroy();
+        await renderer.destroy();
+        assert.ok(
+          environment.canvases.every((canvas) => canvas.width === 0 && canvas.height === 0),
+        );
+        assert.equal(environment.counts().disposedCanvases, 1);
+        assert.equal(environment.game().renderer.listenerCount('lose'), 0);
+        assert.equal(environment.game().renderer.listenerCount('restore'), 0);
+      } finally {
+        await renderer?.destroy();
+      }
+    }
+    assert.equal(worlds.size, 6, 'the retry sequence covers every new world kit');
+  } finally {
+    globalThis.Phaser = prior;
+  }
+});
