@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Regional flight · authoring prototype</title>
+    <style>
+      :root {
+        color-scheme: dark;
+        font: 16px system-ui;
+        background: #101922;
+        color: #f6f0df;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+      }
+      main {
+        position: relative;
+        height: 100dvh;
+        overflow: hidden;
+      }
+      canvas {
+        width: 100%;
+        height: 100%;
+        display: block;
+      }
+      header {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        right: 10px;
+        padding: 12px;
+        background: #101922e8;
+        max-width: 650px;
+        border: 1px solid #53636d;
+        border-radius: 8px;
+      }
+      summary {
+        cursor: pointer;
+        font-weight: 700;
+        color: #ffcb71;
+      }
+      form {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+        padding-top: 12px;
+      }
+      input {
+        flex: 1;
+        min-width: 160px;
+      }
+      input,
+      button,
+      select {
+        font: inherit;
+        padding: 9px;
+        border: 1px solid #647c89;
+        border-radius: 4px;
+        background: #182a36;
+        color: inherit;
+      }
+      button {
+        cursor: pointer;
+      }
+      button:focus-visible,
+      input:focus-visible,
+      select:focus-visible {
+        outline: 3px solid #77d8e1;
+      }
+      p {
+        margin: 8px 0;
+        font-size: 14px;
+        line-height: 1.4;
+      }
+      #status {
+        position: absolute;
+        left: 12px;
+        bottom: 12px;
+        background: #101922df;
+        max-width: min(480px, calc(100% - 24px));
+        padding: 12px;
+        border-radius: 6px;
+      }
+      nav {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+      #message {
+        color: #ffcb71;
+      }
+      #credit {
+        opacity: 0.7;
+      }
+      @media (max-height: 500px) {
+        header {
+          max-width: 520px;
+        }
+        p {
+          font-size: 12px;
+        }
+        #status {
+          left: auto;
+          right: 12px;
+          max-width: 330px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <canvas
+        tabindex="0"
+        aria-label="Detached regional terrain flight preview"
+      ></canvas>
+      <header>
+        <details open>
+          <summary>Regional flight · authoring prototype</summary>
+          <p>
+            Terrain-only development preview. Not a playable SIM release. No
+            scoring or recordings. Region edges stop the preview.
+          </p>
+          <form>
+            <input
+              id="manifest"
+              aria-label="Region manifest URL"
+              placeholder="Region manifest URL"
+              required
+            /><button>Load region</button>
+          </form>
+          <p id="credit">
+            Uses verified canonical terrain sources. Production physics
+            unification and flight qualification remain required.
+          </p>
+        </details>
+      </header>
+      <section id="status">
+        <nav>
+          <button id="prepare">Prepare terrain</button
+          ><button id="arm">Arm</button><button id="pause">Pause</button
+          ><button id="reset">Reset</button
+          ><select id="view" aria-label="Camera">
+            <option value="chase">Chase</option>
+            <option value="fpv">FPV</option>
+          </select>
+        </nav>
+        <p id="message" role="status">Load a region manifest to begin.</p>
+        <p>
+          W/S pitch · A/D roll · Q/E yaw · ↑/↓ throttle · Space arm · P pause.
+          Preparation and focus loss pause safely.
+        </p>
+        <p id="telemetry"></p>
+      </section>
+    </main>
+    <script type="module" src="./flight-preview.mjs"></script>
+  </body>
+</html>
