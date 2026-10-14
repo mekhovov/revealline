@@ -1736,12 +1736,12 @@ function refresh() {
         : signal.warning
           ? 'signalWarning'
           : 'signalClear';
-    board.reception.textContent = `⌁ ${text(signalState)}`;
+    const receptionText = `⌁ ${text(signalState)}`;
+    if (board.reception.textContent !== receptionText) board.reception.textContent = receptionText;
     board.reception.dataset.reception = signalState;
-    board.reception.setAttribute(
-      'aria-label',
-      `${text(signalState)}. ${text(signal.sources.some((source) => source.radius !== null) ? 'signalLocalHelp' : 'signalBroadcastHelp')}`,
-    );
+    const receptionLabel = `${text(signalState)}. ${text(signal.sources.some((source) => source.radius !== null) ? 'signalLocalHelp' : 'signalBroadcastHelp')}`;
+    if (board.reception.getAttribute('aria-label') !== receptionLabel)
+      board.reception.setAttribute('aria-label', receptionLabel);
     board.fields.score.value.textContent = String(summary.score);
     board.fields.best.value.textContent = String(
       records.get(run, mode, match.options.policy)?.score ?? 0,
@@ -2305,7 +2305,8 @@ function pollGamepads() {
       continue;
     }
     if (buttons[4] && !previous[4]) {
-      if (ready || paused) start();
+      if (result()) pause();
+      else if (ready || paused) start();
       else pause();
     }
     if (result() && buttons[5] && !previous[5]) {

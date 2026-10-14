@@ -7490,7 +7490,7 @@ export function mountWorldApp({
     },
   });
   missionChooser.elements.list.before(worldCatalogueHost);
-  on(missionChooser.elements.dialog, 'close', () => worldLibrary.deactivate());
+  on(missionChooser.elements.dialog, 'close', () => worldLibrary.deactivate(worldCatalogueHost));
   playShell = mountSimPlayShell({
     document: doc,
     mount: doc.body,
