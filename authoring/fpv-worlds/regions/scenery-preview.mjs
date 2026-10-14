@@ -1,5 +1,6 @@
 import * as THREE from '../../../optional-practice/civilian-fpv/vendor/three.module.js';
 import { createSceneryLighting } from './scenery-lighting.mjs';
+import { createVerifiedMixedWindow } from './verified-mixed-window.mjs';
 import { createVerifiedSceneryWindow } from './verified-scenery-window.mjs';
 import { validateRegionManifest, REGION_LIMITS } from './region-manifest.mjs';
 const canvas = document.querySelector('canvas'),
@@ -17,6 +18,8 @@ const camera = new THREE.PerspectiveCamera(55, 1, 0.1, 1400);
 const views = [
   ['Overview', [192, 4, 192], [460, 320, 480], [192, 0, 192]],
   ['Mill atrium', [64, 4, 64], [64, 34, 112], [64, 9, 64]],
+  ['North loading court', [190, 4, 16], [190, 7, -18], [190, 4, 55]],
+  ['South loading approach', [190, 4, 140], [190, 7, 182], [190, 3, 98]],
   ['Warehouse doors', [190, 4, 50], [190, 5, 5], [190, 5, 75]],
   ['Parking decks', [64, 4, 260], [10, 8, 205], [64, 8, 260]],
   ['Viaduct', [174, 5, 255], [174, 5, 220], [174, 5, 270]],
@@ -56,7 +59,11 @@ async function view(v) {
     camera.position.fromArray(local(v[2]));
     camera.lookAt(...local(v[3]));
     lighting.focus(window.group, local(v[3]), v === views[0]);
-    status.textContent = `${v[0]} · ${result.provenance.chunks.length} verified cells · ${window.group.children.length} matching meshes/colliders · ${result.geometryBytes} geometry bytes · no flight admission`;
+    let meshCount = 0;
+    window.group.traverse((object) => {
+      if (object.isMesh) meshCount++;
+    });
+    status.textContent = `${v[0]} · ${result.provenance.chunks.length} verified cells · ${meshCount} matching meshes/colliders · ${result.geometryBytes} geometry bytes · no flight admission`;
     draw();
   } catch (error) {
     if (!closed) status.textContent = `Preparation stopped: ${error.message}`;
@@ -71,6 +78,31 @@ for (const v of views) {
   button.onclick = () => view(v);
   document.querySelector('#views').append(button);
 }
+async function loadManifest(url, signal) {
+  const response = await fetch(url, { signal });
+  if (!response.ok) throw new Error(`Manifest HTTP ${response.status}`);
+  const reader = response.body.getReader();
+  let total = 0;
+  const parts = [];
+  try {
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      total += value.length;
+      if (total > REGION_LIMITS.jsonBytes) throw new Error('Manifest exceeds allowance');
+      parts.push(value);
+    }
+  } finally {
+    await reader.cancel();
+  }
+  const data = new Uint8Array(total);
+  let offset = 0;
+  for (const part of parts) {
+    data.set(part, offset);
+    offset += part.length;
+  }
+  return validateRegionManifest(new TextDecoder('utf-8', { fatal: true }).decode(data));
+}
 document.querySelector('form').addEventListener('submit', async (event) => {
   event.preventDefault();
   if (busy || closed) return;
@@ -78,35 +110,24 @@ document.querySelector('form').addEventListener('submit', async (event) => {
   controller = new AbortController();
   try {
     const url = new URL(input.value, location.href);
-    const response = await fetch(url, { signal: controller.signal });
-    if (!response.ok) throw new Error(`Manifest HTTP ${response.status}`);
-    const reader = response.body.getReader();
-    let total = 0;
-    const parts = [];
-    try {
-      while (true) {
-        const { done, value } = await reader.read();
-        if (done) break;
-        total += value.length;
-        if (total > REGION_LIMITS.jsonBytes) throw new Error('Manifest exceeds allowance');
-        parts.push(value);
-      }
-    } finally {
-      await reader.cancel();
-    }
-    const data = new Uint8Array(total);
-    let offset = 0;
-    for (const part of parts) {
-      data.set(part, offset);
-      offset += part.length;
-    }
-    const manifest = validateRegionManifest(new TextDecoder('utf-8', { fatal: true }).decode(data));
+    const companion = new URLSearchParams(location.search).get('companion');
+    const companionURL = companion ? new URL(companion, location.href) : null;
+    const [manifest, terrain] = await Promise.all([
+      loadManifest(url, controller.signal),
+      companionURL ? loadManifest(companionURL, controller.signal) : null,
+    ]);
     if (closed) return;
     await window?.dispose();
-    window = createVerifiedSceneryWindow(manifest, {
+    const scenerySource = {
       baseURL: new URL('./', url).href,
       surfaceStyle: new URLSearchParams(location.search).get('surface') ?? 'plain',
-    });
+    };
+    window = terrain
+      ? createVerifiedMixedWindow(terrain, {
+          source: { baseURL: new URL('./', companionURL).href },
+          scenery: { manifest, source: scenerySource },
+        })
+      : createVerifiedSceneryWindow(manifest, scenerySource);
     controls(false);
     await view(views[0]);
   } catch (error) {
