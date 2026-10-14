@@ -23,11 +23,12 @@ node authoring/fpv-worlds/free-worlds/qualify-coaster-geometry.mjs
 ## Verified candidate status
 
 - Pack: 1,201,279 bytes, SHA-256 `a0483ee22fabdc190fc65858c458ed4730297a0179f8ede793383775a7568025`.
-- Valid GLB, editable-project and pack round trips; 65 collision surfaces and 16,730 collision triangles. No import limit changed.
+- Two byte-identical pack builds; valid GLB, editable-project and pack round trips; 65 collision surfaces and 16,730 collision triangles. No import limit changed.
 - Both normal-command discovery flights complete with zero contacts and full health; Self-level 2,452 ticks and Acro 2,479 ticks. Both independent replays match exactly. Proof archives and receipts are adjacent to the pack.
 - Six geometry admission probes verify launch floor support, both 500 mm diameter loop crossings, collision against both top rails, and clear flight above the paved avenue.
 - Browser GLB inspection verified overview composition, ground reference and loop openings using the shipped Three.js loader. This is a model preview, not a substitute for SIM installation/launch acceptance.
-- **Remaining before default catalogue publication:** actual SIM Library install, disarmed launch, camera/mode controls, reload persistence and offline checks. The subagent browser file chooser did not complete, so no installation success is claimed. Physical-device performance and exhaustive off-route collision checks remain unverified.
+- Parent-browser admission imported this exact pack into the actual SIM Library on localhost:9001. Installation succeeded; Fly opened disarmed at 0.0 s with 100 health. FPV, Chase and Overview switched correctly; the overview displayed the loops, paving, stalls and trees. Browser reported no warnings or errors.
+- **Remaining before default catalogue publication:** immutable catalogue identity and protected publication, reload persistence and offline checks. Physical-device performance and exhaustive off-route collision checks remain unverified.
 
 ## Subsequent intake, in priority order
 
