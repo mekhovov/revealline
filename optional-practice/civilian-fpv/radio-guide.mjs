@@ -194,7 +194,7 @@ export function mountRadioGuide({
   switchCard.open = true;
   el(
     'summary',
-    t('Arm & reset · your flight switches', 'Увімкнення й скидання · перемикачі польоту'),
+    t('Arm, reset & view · your flight switches', 'Мотори, скидання й камера · перемикачі польоту'),
     switchCard,
   );
   const switchContent = el('div', undefined, switchCard, 'radio-extra-body');
@@ -571,7 +571,9 @@ export function mountRadioGuide({
     let switchesOff = true;
     try {
       const profile = readProfile(false);
-      switchesOff = ['arm', 'pause', 'reset'].every((action) => !radioSwitch(profile, pad, action));
+      switchesOff = ['arm', 'pause', 'reset', 'camera'].every(
+        (action) => !radioSwitch(profile, pad, action),
+      );
     } catch {
       clearConfirmation();
       return false;
