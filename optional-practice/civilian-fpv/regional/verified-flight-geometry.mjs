@@ -5,17 +5,28 @@ import { createVerifiedMixedWindow } from './verified-mixed-window.mjs';
 
 export function createVerifiedFlightGeometry(
   manifest,
-  { profile = 'terrain-v1', source, scenery: companion = null, budgets } = {},
+  {
+    profile = 'terrain-v1',
+    source,
+    scenery: companion = null,
+    budgets,
+    retainCommitted = false,
+  } = {},
 ) {
   if (profile === 'terrain-scenery-v1')
-    return createVerifiedMixedWindow(manifest, { ...budgets, source, scenery: companion });
+    return createVerifiedMixedWindow(manifest, {
+      ...budgets,
+      source,
+      scenery: companion,
+      retainCommitted,
+    });
   if (companion !== null) throw new TypeError('Scenery companion requires explicit mixed profile');
   if (!['terrain-v1', 'scenery-v1'].includes(profile))
     throw new TypeError('Unsupported regional geometry profile; mixed frames are not admitted');
   const scenery = profile === 'scenery-v1';
   const owner = scenery
-    ? createVerifiedSceneryWindow(manifest, source)
-    : createVerifiedTerrainWindow(manifest, source);
+    ? createVerifiedSceneryWindow(manifest, { ...source, retainCommitted })
+    : createVerifiedTerrainWindow(manifest, { ...source, retainCommitted });
   const snapshot = () => {
     const state = owner.snapshot();
     return {

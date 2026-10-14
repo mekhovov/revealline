@@ -61,8 +61,8 @@ export function regionalReviewEntry(configuration) {
   const manifest = validateRegionManifest(configuration.manifest),
     { grid } = manifest;
   const brief = {
-    en: 'Regional free flight · review · unscored. Loading pauses flight; resume deliberately when ready.',
-    uk: 'Вільний політ у регіоні · перевірка · без заліку. Завантаження зупиняє політ; продовжуйте, коли готові.',
+    en: 'Regional free flight · review · unscored. If terrain is unavailable, flight pauses safely; resume when ready.',
+    uk: 'Вільний політ у регіоні · перевірка · без заліку. Якщо місцевість недоступна, політ безпечно зупиняється; продовжуйте, коли готові.',
   };
   return {
     id: `regional-review-${manifest.id}`,
@@ -97,7 +97,7 @@ export function regionalReviewEntry(configuration) {
 
 /** The production host owns input, menus and arming; this adapter owns only regional state. */
 export function createRegionalSession(configuration) {
-  const runtime = createRegionalFlightPrototype(configuration);
+  const runtime = createRegionalFlightPrototype({ ...configuration, continuous: true });
   let lastInput = { roll: 0, pitch: 0, yaw: 0, throttle: 0 };
   const snapshot = () => {
     const state = runtime.snapshot();
