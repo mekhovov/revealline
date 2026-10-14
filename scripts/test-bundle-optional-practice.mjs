@@ -14,13 +14,16 @@ const root = new URL('../', import.meta.url).pathname;
 test('sparse publication checkouts include the full admitted directory import closure', async (t) => {
   for (const [workflow, entry] of [
     ['fastline-release.yml', 'publishing/fastline-release-publisher.mjs'],
+    ['publish-main-pages.yml', 'scripts/verify-practice-site.mjs'],
   ]) {
     const source = await readFile(path.join(root, '.github/workflows', workflow), 'utf8');
     const blocks = [
       ...source.matchAll(/sparse-checkout: \|\n([\s\S]*?)\n\s*sparse-checkout-cone-mode:/g),
     ];
-    const block = blocks.find((match) =>
-      match[1].includes('publishing/optional-package-promotion.mjs'),
+    const block = blocks.find(
+      (match) =>
+        match[1].includes('publishing/optional-package-promotion.mjs') ||
+        match[1].split('\n').some((line) => line.trim() === 'publishing'),
     );
     assert.ok(block, workflow + ' has its publishing checkout');
     const paths = block[1]
@@ -32,7 +35,7 @@ test('sparse publication checkouts include the full admitted directory import cl
     for (const name of closure.keys())
       assert.ok(
         paths.some(
-          (selected) => selected === name || (selected.endsWith('/') && name.startsWith(selected)),
+          (selected) => selected === name || name.startsWith(selected.replace(/\/$/, '') + '/'),
         ),
         workflow + ' misses ' + name,
       );
@@ -45,7 +48,7 @@ test('sparse publication checkouts include the full admitted directory import cl
     }
     execFileSync(
       process.execPath,
-      ['--input-type=module', '-e', 'await import("./publishing/optional-package-admission.mjs")'],
+      ['--input-type=module', '-e', `await import(${JSON.stringify('./' + entry)})`],
       { cwd: fixture },
     );
   }
