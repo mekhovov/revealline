@@ -64,8 +64,15 @@ The existing installation regression now exercises delayed verification in EN/UK
 the prior rollback link remains visible, repeated Check cannot overlap it, and
 readiness updates after completion. All 15 existing installation/access/navigation
 checks and scoped ESLint/Prettier pass. No new unit-coverage sweep or heavy package
-build ran. The corrected launcher requires fresh package/browser qualification;
-the earlier native observations above are not relabelled as runs of this fix.
+build ran. A subsequent mixed-source launcher observation used source `4c7813e8e` at a
+separate unpinned review page on the same installation root. Both prepared and
+previous links stayed visible during checking, Check was disabled, localized
+checking feedback appeared, and Ready offline returned with both links intact.
+Selecting Open previous practice opened the actual v0.142.4 player. Both frozen
+player trees were rechecked byte-for-byte unchanged. The receipt binds the review
+script/HTML/source hashes and names the coordinator's screenshot. This qualifies
+the corrected launcher interaction in a mixed harness; fresh corrected-package
+admission and native qualification remain pending.
 
 ## Still open
 
