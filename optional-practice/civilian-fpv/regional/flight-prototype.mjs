@@ -8,22 +8,9 @@ import {
   projectContactVelocity,
 } from "../flight-contact.mjs";
 import * as THREE from "../vendor/three.module.js";
-import {
-  Q,
-  isqrt,
-  atan2,
-  sin,
-  cos,
-  multiplyQuaternion,
-} from "../math.mjs";
-import {
-  advanceFlightAir,
-  quantizeFlightInput,
-} from "../model.mjs";
-import {
-  DEFAULT_RESPONSE,
-  validateFlightResponse,
-} from "../radio-profile.mjs";
+import { Q, isqrt, atan2, sin, cos, multiplyQuaternion } from "../math.mjs";
+import { advanceFlightAir, quantizeFlightInput } from "../model.mjs";
+import { DEFAULT_RESPONSE, validateFlightResponse } from "../radio-profile.mjs";
 import {
   validateRegionManifest,
   createRegionPlanner,
@@ -58,10 +45,12 @@ export function createRegionalFlightPrototype({
   initialHeading = 0,
   mode = "self-level",
   response = DEFAULT_RESPONSE,
+  continuous = false,
 } = {}) {
   const manifest = validateRegionManifest(input),
     planner = createRegionPlanner(manifest),
     rates = validateFlightResponse(response);
+  fail(typeof continuous === "boolean", "Invalid continuous flight option");
   fail(
     ["acro", "self-level"].includes(mode),
     "Unsupported prototype flight mode",
@@ -96,6 +85,7 @@ export function createRegionalFlightPrototype({
       source,
       scenery,
       budgets: geometryBudgets,
+      retainCommitted: continuous,
     }),
     root = new THREE.Group(),
     dronePose = new THREE.Object3D(),
@@ -129,6 +119,9 @@ export function createRegionalFlightPrototype({
   let generation = 0,
     disposed = false,
     pending = Promise.resolve();
+  let streamingJob = null,
+    streamingFailure = null,
+    retryAfterTick = 0;
   const live = () => fail(!disposed, "Regional prototype is disposed");
   function updateFrame() {
     const position = {
@@ -157,12 +150,99 @@ export function createRegionalFlightPrototype({
     pendingTargetMm: pendingTarget && { ...pendingTarget },
     terrain: terrain.snapshot(),
     geometryProfile,
+    streaming: {
+      enabled: continuous,
+      pending: Boolean(streamingJob),
+      failure: streamingFailure,
+    },
     model: "regional-authoring-flight-prototype.v1",
     unscored: true,
     playerReady: false,
   });
+  function stopStreaming() {
+    if (!streamingJob) return;
+    generation++;
+    terrain.cancel();
+    streamingJob = null;
+  }
+  function prefetch() {
+    if (
+      !continuous ||
+      streamingJob ||
+      status !== "active" ||
+      body.ticks < retryAfterTick
+    )
+      return;
+    const grid = manifest.grid,
+      target = { ...body.position };
+    for (const key of ["x", "z"]) {
+      const min = grid[key === "x" ? "minX" : "minZ"] * 128000 + RADIUS,
+        max = min + grid[key === "x" ? "width" : "depth"] * 128000 - 2 * RADIUS;
+      // At most one cell ahead; the next 3×3 window still contains the current body.
+      target[key] = Math.max(
+        min,
+        Math.min(
+          max,
+          body.position[key] +
+            Math.max(-96000, Math.min(96000, body.velocity[key] * 3)),
+        ),
+      );
+    }
+    const plan = planner(target);
+    if (plan.blocked || !plan.origin) {
+      streamingFailure = plan.blocked ?? "Background region is unavailable";
+      retryAfterTick = body.ticks + 100;
+      return;
+    }
+    if (AXES.every((key) => plan.origin[key] === origin[key])) return;
+    const token = ++generation,
+      job = { token },
+      previousOrigin = origin,
+      previousRecentres = recentres;
+    let attached = null;
+    const current = () => {
+      if (disposed || token !== generation || status !== "active")
+        throw new DOMException(
+          "Background flight preparation cancelled",
+          "AbortError",
+        );
+    };
+    streamingJob = job;
+    streamingFailure = null;
+    job.promise = terrain
+      .transition(target, null, {
+        readPose() {
+          current();
+          return { positionMm: body.position, radiusMm: RADIUS };
+        },
+        commit({ group, provenance }) {
+          current();
+          origin = { ...provenance.originMm };
+          recentres++;
+          attached = group;
+          root.add(group);
+          updateFrame();
+        },
+        rollback() {
+          attached?.removeFromParent();
+          origin = previousOrigin;
+          recentres = previousRecentres;
+          updateFrame();
+        },
+      })
+      .catch((error) => {
+        if (!disposed && token === generation) {
+          streamingFailure = error.message;
+          retryAfterTick = body.ticks + 100;
+        }
+      })
+      .finally(() => {
+        if (streamingJob === job) streamingJob = null;
+      });
+  }
   function prepare() {
     live();
+    stopStreaming();
     const target = { ...(pendingTarget ?? body.position) },
       token = ++generation;
     status = "paused";
@@ -217,6 +297,8 @@ export function createRegionalFlightPrototype({
           initializeFlightSupport(body, support.ground);
         }
         pendingTarget = null;
+        streamingFailure = null;
+        retryAfterTick = 0;
         reason = "prepared";
         return snapshot();
       } catch (error) {
@@ -252,6 +334,7 @@ export function createRegionalFlightPrototype({
     },
     pause() {
       live();
+      stopStreaming();
       if (status === "active") {
         status = "paused";
         reason = "prepared";
@@ -259,6 +342,7 @@ export function createRegionalFlightPrototype({
     },
     cancelPreparation() {
       live();
+      stopStreaming();
       generation++;
       terrain.cancel();
       status = "paused";
@@ -309,17 +393,19 @@ export function createRegionalFlightPrototype({
         reason = "region-edge";
         return snapshot();
       }
-      const readyChunks = new Set(
-        terrain.snapshot().provenance.chunks.map((chunk) => chunk.chunkId),
-      );
-      if (
-        plan.requiredChunks.some((id) => !readyChunks.has(id)) ||
-        AXES.some((key) => plan.origin[key] !== origin[key])
-      ) {
-        pendingTarget = { ...next.position };
-        status = "paused";
-        reason = "terrain-required";
-        return snapshot();
+      if (!continuous) {
+        const readyChunks = new Set(
+          terrain.snapshot().provenance.chunks.map((chunk) => chunk.chunkId),
+        );
+        if (
+          plan.requiredChunks.some((id) => !readyChunks.has(id)) ||
+          AXES.some((key) => plan.origin[key] !== origin[key])
+        ) {
+          pendingTarget = { ...next.position };
+          status = "paused";
+          reason = "terrain-required";
+          return snapshot();
+        }
       }
       let moved;
       try {
@@ -356,6 +442,7 @@ export function createRegionalFlightPrototype({
       contacts += moved.contacts.length;
       body = next;
       updateFrame();
+      prefetch();
       return snapshot();
     },
     async dispose() {

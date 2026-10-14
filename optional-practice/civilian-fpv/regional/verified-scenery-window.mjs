@@ -1,5 +1,9 @@
 import { validateScenerySurface } from './scenery-surface.mjs';
-import { validateFrameTransaction, adoptVerifiedFrame } from './frame-transaction.mjs';
+import {
+  validateFrameTransaction,
+  adoptVerifiedFrame,
+  readFramePose,
+} from './frame-transaction.mjs';
 /** Exact-source scenery preparation coordinator. Detached authoring resources, never live flight. */
 import { validateRegionManifest, createRegionPlanner } from './region-manifest.mjs';
 import { createRegionSourceWindow } from './source-window.mjs';
@@ -24,6 +28,7 @@ const abortError = () =>
 export function createVerifiedSceneryWindow(
   input,
   {
+    retainCommitted = false,
     baseURL,
     fetchImpl = globalThis.fetch,
     subtle = globalThis.crypto?.subtle,
@@ -35,6 +40,7 @@ export function createVerifiedSceneryWindow(
   } = {},
 ) {
   validateScenerySurface(surfaceStyle);
+  fail(typeof retainCommitted === 'boolean', 'Invalid retained-frame option');
   const manifest = validateRegionManifest(input),
     planner = createRegionPlanner(manifest);
   const assets = new Map(manifest.assets.map((asset) => [asset.id, asset]));
@@ -84,11 +90,13 @@ export function createVerifiedSceneryWindow(
     queue = Promise.resolve(),
     reservedGeometryBytes = 0;
   const committedBytes = () => committed?.snapshot().geometryBytes ?? 0;
+  const queryReady = () =>
+    !disposed && Boolean(committed) && (retainCommitted || state === 'ready');
   function snapshot() {
     const transport = source.snapshot();
     return {
       state,
-      sceneryReady: state === 'ready',
+      sceneryReady: queryReady(),
       flightReady: false,
       failure,
       hasRetainedScenery: Boolean(committed),
@@ -174,6 +182,8 @@ export function createVerifiedSceneryWindow(
         maxGeometryBytes: requiredBytes,
         surfaceStyle,
       });
+      current(token);
+      supportPose = readFramePose(frameTransaction, supportPose, planner);
       current(token);
       if (supportPose) {
         const { positionMm, radiusMm } = supportPose;
@@ -274,23 +284,23 @@ export function createVerifiedSceneryWindow(
     },
     flightSupport(...args) {
       if (disposed) throw new Error('Verified geometry is disposed');
-      return state === 'ready' ? committed.flightSupport(...args) : { status: 'not-ready' };
+      return queryReady() ? committed.flightSupport(...args) : { status: 'not-ready' };
     },
     castMotion(...args) {
       if (disposed) throw new Error('Verified geometry is disposed');
-      return state === 'ready' ? committed.castMotion(...args) : { status: 'not-ready' };
+      return queryReady() ? committed.castMotion(...args) : { status: 'not-ready' };
     },
     support(...args) {
       if (disposed) throw new Error('Verified scenery window is disposed');
-      return state === 'ready' ? committed.support(...args) : { status: 'not-ready' };
+      return queryReady() ? committed.support(...args) : { status: 'not-ready' };
     },
     overlap(...args) {
       if (disposed) throw new Error('Verified scenery window is disposed');
-      return state === 'ready' ? committed.overlap(...args) : { status: 'not-ready' };
+      return queryReady() ? committed.overlap(...args) : { status: 'not-ready' };
     },
     sweep(...args) {
       if (disposed) throw new Error('Verified scenery window is disposed');
-      return state === 'ready' ? committed.sweep(...args) : { status: 'not-ready' };
+      return queryReady() ? committed.sweep(...args) : { status: 'not-ready' };
     },
     cancel() {
       if (disposed) return;

@@ -13,6 +13,7 @@ import { createVerifiedSceneryWindow } from "./verified-scenery-window.mjs";
 import {
   validateFrameTransaction,
   adoptVerifiedFrame,
+  readFramePose,
 } from "./frame-transaction.mjs";
 
 const MiB = 1024 * 1024;
@@ -68,10 +69,12 @@ export function createVerifiedMixedWindow(
   {
     source,
     scenery,
+    retainCommitted = false,
     maxSourceBytes = 32 * MiB,
     maxGeometryBytes = 10 * MiB,
   } = {},
 ) {
+  fail(typeof retainCommitted === "boolean", "Invalid retained-frame option");
   const terrainManifest = validateRegionManifest(terrainInput),
     sceneryManifest = validateRegionManifest(scenery?.manifest);
   fail(
@@ -146,9 +149,11 @@ export function createVerifiedMixedWindow(
     queue = Promise.resolve(),
     reservedSourceBytes = 0,
     reservedGeometryBytes = 0;
+  const queryReady = () =>
+    !disposed && Boolean(committed) && (retainCommitted || state === "ready");
   const snapshot = () => ({
     state,
-    terrainReady: state === "ready",
+    terrainReady: queryReady(),
     flightReady: false,
     hasRetainedTerrain: Boolean(committed),
     geometryProfile: "terrain-scenery-v1",
@@ -230,6 +235,8 @@ export function createVerifiedMixedWindow(
         ),
         "Mixed local origins disagree",
       );
+      supportPose = readFramePose(transaction, supportPose, terrainPlan);
+      current(token);
       if (supportPose) {
         const { positionMm, radiusMm } = supportPose,
           center = { ...positionMm, y: positionMm.y + radiusMm };
@@ -348,7 +355,7 @@ export function createVerifiedMixedWindow(
     },
     flightSupport(...args) {
       if (disposed) throw new Error("Mixed window is disposed");
-      if (state !== "ready") return { status: "not-ready" };
+      if (!queryReady()) return { status: "not-ready" };
       const terrain = committed.terrain.flightSupport(...args),
         scenery = committed.scenery.flightSupport(...args);
       if (
@@ -365,7 +372,7 @@ export function createVerifiedMixedWindow(
     },
     castMotion(...args) {
       if (disposed) throw new Error("Mixed window is disposed");
-      if (state !== "ready") return { status: "not-ready" };
+      if (!queryReady()) return { status: "not-ready" };
       const terrain = committed.terrain.castMotion(...args),
         scenery = committed.scenery.castMotion(...args);
       if (
@@ -379,13 +386,13 @@ export function createVerifiedMixedWindow(
     },
     support(...args) {
       if (disposed) throw new Error("Mixed window is disposed");
-      return state === "ready"
+      return queryReady()
         ? supportPair(committed, ...args)
         : { status: "not-ready" };
     },
     sweep(...args) {
       if (disposed) throw new Error("Mixed window is disposed");
-      return state === "ready"
+      return queryReady()
         ? sweepPair(committed, ...args)
         : { status: "not-ready" };
     },
