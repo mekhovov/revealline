@@ -4279,3 +4279,26 @@ Next: exact-head cloud admission, live feed/host verification, transactional reg
 source preparation, actual collision/render streaming, and representative Canyon
 and Urban authored regions. Physical devices, long sessions and public launch
 remain unclaimed. Protected publication continues independently of development.
+
+
+## 14 October — Optional-world Settings return
+
+Auditing the two host failures exposed an actual keyboard/controller focus bug:
+a download could finish after Settings returned to Cancel, then hide the focused
+Cancel control. Returning to that same visible Cancel now renews its focus lease,
+so completion returns to the enabled Play card. This does not renew the retired
+launch intent, resume flight or repeat any download.
+
+The existing assertions now observe shared modal navigation's deferred close
+handoff and compare the native timestamp inside the accepted presentation save
+envelope. Every other saved simulation/presentation field remains exactly equal;
+valid chronological timestamps are still required.
+
+Verification: all 34 optional-world host checks pass. The final focus change
+passes 20 existing lifetime/Settings checks, including blur, hidden-page, filtering,
+late cancellation and newer-operation ownership. A broader 98-check run passed 97;
+the sole failure was a missing sparse-checkout sentinel fixture. Restoring the
+exact tracked JSON and rerunning the affected first-flight suite passes 14/14.
+No timeout was increased and no assertion about retained gameplay was removed.
+These are modeled DOM/storage checks, not native browser/device or offline-package
+qualification. Source lint and whitespace checks pass.
