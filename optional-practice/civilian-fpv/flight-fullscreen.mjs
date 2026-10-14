@@ -8190,7 +8190,7 @@ export const readSimRadioAudio=sharedGlobalSettings.readSimRadioAudio;
 export const SIM_RADIO_AUDIO_KEY=sharedGlobalSettings.SIM_RADIO_AUDIO_KEY;
 export const attachSimMenuAudioSettings=sharedGlobalSettings.attachSimMenuAudioSettings;
 export const readSimMenuAudio=sharedGlobalSettings.readSimMenuAudio;
-// Canonical source sha256: f57b6147875e5ad9db9477248827813a1044e4492022a091b771626f2490fc96
+// Canonical source sha256: cd6171efbde9c43b39dd76fa726404080ed1b3b8e5fbf1874b465f067f500d7d
 const sharedModeShell=(()=>{
 // Dependency-free presentation shared with bundled simulator builds.
 const GAME_MODE_ORDER=Object.freeze([
@@ -8335,9 +8335,8 @@ if(expanded)return close(true);
 expanded=true;
 refreshLayout();
 emit('game-mode-visibility-changed');
-(
-secondary.find(({element})=> !element.disabled&& !element.hidden)?.element??more
-).focus({
+const available=secondary.filter(({element})=> !element.disabled&& !element.hidden);
+(available.find(({id})=>id===current)?.element??available[0]?.element??more).focus({
 preventScroll:true,
 });
 };
@@ -8710,6 +8709,7 @@ panel.setAttribute('role','tabpanel');
 panel.setAttribute('aria-labelledby',tab.id);
 panel.tabIndex= -1;
 panel.dataset.menuLayout='vertical';
+panel.dataset.menuEdgeExit='true';
 panel.append(heading);
 for(const node of nodes){
 moves.push({node,parent:node.parentNode,next:node.nextSibling});
@@ -8912,7 +8912,12 @@ if(more?.getAttribute('aria-expanded')==='true'){
 const extras=modes.filter((node)=>
 ['snake','overflight','simulator'].includes(node.dataset.gameMode),
 );
-set([more],'down',[...extras,...groups.flat()]);
+// Less sits below the extra row: Up returns there; Down enters the main actions.
+set([more],'up',[
+...extras.filter((node)=>node===selected),
+...extras,
+...groups.toReversed().flat(),
+]);
 }
 };
 refresh();
@@ -9157,12 +9162,22 @@ utilities.append(
 button('sound',()=>actions.toggleSound?.()),
 button('fullscreen',()=>actions.fullscreen?.()),
 );
-home.append(edition,modes,mission,menu,utilities);
+const homeChoices=el('div','mode-play-home-choices');
+move('homeChoices',homeChoices);
+homeChoices.hidden= !slots.homeChoices;
+const choices=[...homeChoices.querySelectorAll('[data-home-choice]')];
+const selectedChoices=[
+...choices.filter((node)=>node.hasAttribute('aria-current')),
+...choices.filter((node)=> !node.hasAttribute('aria-current')),
+];
+home.append(edition,modes,homeChoices,mission,menu,utilities);
 const landingNavigation=wireLandingMenuNavigation({
 modesRoot:modes,
 scopeRoot:dialogs.home,
 steps:[
+selectedChoices,
 buttons.primary,
+buttons['home-results'],
 buttons.missions,
 buttons.settings,
 buttons.sound,
