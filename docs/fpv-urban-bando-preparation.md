@@ -46,6 +46,8 @@ The generator validates glTF and checks fourteen 500 mm diameter sphere sweeps u
 
 The separate verifier reloads the written GLB and collision JSON, checks the recorded hash, compares every transformed visible vertex and triangle against collision, then repeats the sweeps against the loaded artifact. This is representative geometry evidence, not exhaustive flight qualification. See `authoring/fpv-worlds/regions/urban-bando/preparation.json` for the exact generated receipt.
 
+On 14 October 2026, two independent generations produced eleven byte-identical files. The saved-artifact check passed all 78 surfaces and all fourteen sweeps; the GLB validator reported zero errors and zero warnings. Desktop in-app browser inspection of the overview, warehouse doorway and parking-deck views confirmed recognizable openings. An initial dark-material issue was corrected by explicitly setting non-metallic building materials; the repeated warehouse/parking inspection showed distinct brick and concrete surfaces and readable deck gaps. This visual receipt covers geometry and preview readability only, without a device FPS or actual flight claim.
+
 ## Remaining work
 
 1. Admit scenery collision and materials through an explicit regional runtime contract, with spatial ownership, streaming and disposal budgets.
