@@ -39,7 +39,7 @@ if (process.argv[2]) {
       `${layer}/region.json`,
       bytes({
         format: 'FPVRegionManifest.v1',
-        id: layer,
+        id: 'paired-region',
         revision: 'r-one',
         title: { en: layer, uk: layer },
         grid,
@@ -210,6 +210,76 @@ await assert.rejects(
   /grids/,
 );
 checks++;
+// Re-pin both the edited manifest and its descriptor, so rejection proves the
+// pairing contract rather than merely detecting a stale content hash.
+const pairingMutations = [
+  [
+    (m) => {
+      m.id = 'another-region';
+    },
+    /layer identities/,
+  ],
+  [
+    (m) => {
+      m.revision = 'another-revision';
+    },
+    /layer identities/,
+  ],
+  [
+    (m) => {
+      m.chunks[0].id = 'another-cell';
+    },
+    /cell identities/,
+  ],
+];
+if (JSON.parse(contents.get(descriptor.scenery.path)).chunks.length > 1) {
+  pairingMutations.push([
+    (m) => {
+      const [a, b] = m.chunks;
+      [a.x, a.z, b.x, b.z] = [b.x, b.z, a.x, a.z];
+    },
+    /cell identities/,
+  ]);
+}
+for (const [mutate, reason] of pairingMutations) {
+  const altered = structuredClone(descriptor);
+  const manifest = JSON.parse(contents.get(descriptor.scenery.path));
+  mutate(manifest);
+  const manifestBytes = bytes(manifest);
+  const manifestRef = {
+    ...altered.scenery,
+    bytes: manifestBytes.length,
+    sha256: hash(manifestBytes),
+  };
+  altered.scenery = manifestRef;
+  altered.files = altered.files.map((f) => (f.path === manifestRef.path ? manifestRef : f));
+  altered.totalBytes = altered.files.reduce((n, f) => n + f.bytes, 0);
+  const alteredBytes = bytes(altered);
+  const fetched = [];
+  await assert.rejects(
+    prepareRegionalDownload(
+      { ...pin, bytes: alteredBytes.length, sha256: hash(alteredBytes) },
+      {
+        ...baseOptions,
+        fetchImpl: async (input, options) => {
+          const path = new URL(input).pathname.replace('/immutable/', '');
+          fetched.push(path);
+          return path === 'delivery.json'
+            ? new Response(alteredBytes)
+            : path === manifestRef.path
+              ? new Response(manifestBytes)
+              : baseOptions.fetchImpl(input, options);
+        },
+      },
+    ),
+    reason,
+  );
+  assert.deepEqual(
+    new Set(fetched),
+    new Set(['delivery.json', descriptor.terrain.path, descriptor.scenery.path]),
+  );
+  checks += 2;
+}
 await assert.rejects(
   prepareRegionalDownload(pin, {
     ...baseOptions,
