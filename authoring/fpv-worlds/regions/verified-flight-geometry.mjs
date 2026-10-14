@@ -1,8 +1,15 @@
-/** Trusted authoring geometry profiles. Mixed terrain/scenery frames are not admitted. */
+/** Trusted authoring geometry profiles; only verified companion layers may be composed. */
 import { createVerifiedTerrainWindow } from './verified-terrain-window.mjs';
 import { createVerifiedSceneryWindow } from './verified-scenery-window.mjs';
+import { createVerifiedMixedWindow } from './verified-mixed-window.mjs';
 
-export function createVerifiedFlightGeometry(manifest, { profile = 'terrain-v1', source } = {}) {
+export function createVerifiedFlightGeometry(
+  manifest,
+  { profile = 'terrain-v1', source, scenery: companion = null, budgets } = {},
+) {
+  if (profile === 'terrain-scenery-v1')
+    return createVerifiedMixedWindow(manifest, { ...budgets, source, scenery: companion });
+  if (companion !== null) throw new TypeError('Scenery companion requires explicit mixed profile');
   if (!['terrain-v1', 'scenery-v1'].includes(profile))
     throw new TypeError('Unsupported regional geometry profile; mixed frames are not admitted');
   const scenery = profile === 'scenery-v1';

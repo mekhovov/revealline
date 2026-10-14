@@ -2,8 +2,8 @@ import * as THREE from '../../../optional-practice/civilian-fpv/vendor/three.mod
 import RAPIER from '../../../optional-practice/civilian-fpv/vendor/rapier/rapier.mjs';
 import { validateRegionManifest } from './region-manifest.mjs';
 import { compileSceneryCell, validateSceneryCell, sceneryGeometryBytes } from './scenery-cell.mjs';
+import { initWorldRuntime } from '../../../optional-practice/civilian-fpv/world-collision.mjs';
 
-let initialized;
 const fail = (condition, message) => {
   if (!condition) throw new TypeError(message);
 };
@@ -72,8 +72,7 @@ export async function prepareSceneryWindow(
   // Positions, indices and Three-generated normals; excludes engine internals and temporary GLB buffers.
   const geometryBytes = cells.reduce((sum, cell) => sum + sceneryGeometryBytes(cell), 0);
   fail(geometryBytes <= maxGeometryBytes, 'Scenery geometry budget exceeded');
-  initialized ??= RAPIER.init();
-  await initialized;
+  await initWorldRuntime();
   const world = new RAPIER.World({ x: 0, y: 0, z: 0 }),
     group = new THREE.Group(),
     geometries = [];

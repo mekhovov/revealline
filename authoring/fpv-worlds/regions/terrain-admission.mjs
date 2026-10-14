@@ -2,10 +2,13 @@ import * as THREE from "../../../optional-practice/civilian-fpv/vendor/three.mod
 import RAPIER from "../../../optional-practice/civilian-fpv/vendor/rapier/rapier.mjs";
 import { validateRegionManifest } from "./region-manifest.mjs";
 import { compileTerrainCell, validateTerrainSeams } from "./terrain-cell.mjs";
-import { createTerrainSurface, validateTerrainSurface } from "./terrain-surface.mjs";
+import {
+  createTerrainSurface,
+  validateTerrainSurface,
+} from "./terrain-surface.mjs";
 import { createTerrainNormals } from "./terrain-normals.mjs";
+import { initWorldRuntime } from "../../../optional-practice/civilian-fpv/world-collision.mjs";
 
-let initialized;
 const fail = (condition, message) => {
   if (!condition) throw new TypeError(message);
 };
@@ -76,8 +79,7 @@ export async function prepareTerrainWindow(
   // Positions, indices and shared-grid normals; excludes engine internals and temporary GLB buffers.
   const geometryBytes = cells.length * (1089 * 3 * 4 * 2 + 32 * 32 * 6 * 4);
   fail(geometryBytes <= maxGeometryBytes, "Terrain geometry budget exceeded");
-  initialized ??= RAPIER.init();
-  await initialized;
+  await initWorldRuntime();
   const world = new RAPIER.World({ x: 0, y: 0, z: 0 }),
     group = new THREE.Group(),
     geometries = [];
@@ -106,7 +108,10 @@ export async function prepareTerrainWindow(
         new THREE.BufferAttribute(positions, 3),
       );
       geometry.setIndex(new THREE.BufferAttribute(indices, 1));
-      geometry.setAttribute("normal", new THREE.BufferAttribute(normalsFor(cell), 3));
+      geometry.setAttribute(
+        "normal",
+        new THREE.BufferAttribute(normalsFor(cell), 3),
+      );
       const mesh = new THREE.Mesh(geometry, material);
       mesh.name = cell.chunkId;
       const local = {

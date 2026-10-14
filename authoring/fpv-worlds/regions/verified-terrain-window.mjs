@@ -13,7 +13,8 @@ import { compileTerrainCell, validateTerrainCell } from "./terrain-cell.mjs";
 import { prepareTerrainWindow } from "./terrain-admission.mjs";
 import { validateTerrainSurface } from "./terrain-surface.mjs";
 
-const GEOMETRY_BYTES_PER_CELL = 1089 * 3 * 4 * 2 + 32 * 32 * 6 * 4;
+export const TERRAIN_GEOMETRY_BYTES_PER_CELL =
+  1089 * 3 * 4 * 2 + 32 * 32 * 6 * 4;
 const fail = (condition, message) => {
   if (!condition) throw new TypeError(message);
 };
@@ -108,7 +109,7 @@ export function createVerifiedTerrainWindow(
     try {
       current(token);
       const required = plan.requiredChunks;
-      const requiredBytes = required.length * GEOMETRY_BYTES_PER_CELL;
+      const requiredBytes = required.length * TERRAIN_GEOMETRY_BYTES_PER_CELL;
       fail(
         committedBytes() + requiredBytes <= maxGeometryBytes,
         "transition-terrain-geometry-budget",
