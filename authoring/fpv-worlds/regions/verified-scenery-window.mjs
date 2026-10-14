@@ -272,6 +272,10 @@ export function createVerifiedSceneryWindow(
       if (disposed) throw new Error('Verified scenery window is disposed');
       return state === 'ready' ? committed.support(...args) : { status: 'not-ready' };
     },
+    overlap(...args) {
+      if (disposed) throw new Error('Verified scenery window is disposed');
+      return state === 'ready' ? committed.overlap(...args) : { status: 'not-ready' };
+    },
     sweep(...args) {
       if (disposed) throw new Error('Verified scenery window is disposed');
       return state === 'ready' ? committed.sweep(...args) : { status: 'not-ready' };
