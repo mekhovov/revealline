@@ -127,47 +127,32 @@ test('completed-frame trials include explicitly requested native Survivor and Ri
   );
 });
 
-test('native mission lists include the terrain experiment only for the three qualified operations', async () => {
+test('native catalogue exposes all eighteen compiled layouts for all five operations', async () => {
   const { readFile } = await import('node:fs/promises');
   const { runInNewContext } = await import('node:vm');
   const { parse } = await import('acorn');
-  const { createExperimentalOverflightWorldProject } = await import('../overflight/worlds.mjs');
-  const { createOverflightProject, compileOverflightProject } = await import(
-    '../overflight/project.mjs'
-  );
-  const { createOverflightRiyProject, compileOverflightRiyProject } = await import(
-    '../overflight/riy-project.mjs'
-  );
-  const { createOverflightHuntProject, compileOverflightHuntProject } = await import(
-    '../overflight/raid-project.mjs'
-  );
+  const { OVERFLIGHT_BATTLEFIELDS } = await import('../overflight/battlefields.mjs');
+  const { createOverflightProject, compileOverflightProject } = await import('../overflight/project.mjs');
+  const { createOverflightRiyProject, compileOverflightRiyProject } = await import('../overflight/riy-project.mjs');
+  const { OVERFLIGHT_HUNT_MODE } = await import('../overflight/raid-mode.mjs');
+  const { createOverflightRaidVariant } = await import('../overflight/raid-variants.mjs');
   const source = await readFile(new URL('../overflight/app.mjs', import.meta.url), 'utf8');
   const ast = parse(source, { ecmaVersion: 'latest', sourceType: 'module' });
-  const official = ast.body.find(
-    (node) => node.type === 'FunctionDeclaration' && node.id.name === 'officialProjects',
-  );
-  for (const [id, createProject, compile] of [
-    ['overflight', createOverflightProject, compileOverflightProject],
-    ['overflight-riy', createOverflightRiyProject, compileOverflightRiyProject],
-    ['overflight-hunt', createOverflightHuntProject, compileOverflightHuntProject],
-  ]) {
-    for (const operationId of [undefined, 'time-attack', 'marathon']) {
-      const context = {
-        mode: { id, operationId, createProject, encounterSets: ['crossing', 'mixed'] },
-        options: { difficulty: 'standard' },
-        createExperimentalOverflightWorldProject,
-      };
-      const projects = runInNewContext(
-        `(${source.slice(official.start, official.end)})()`,
-        context,
-      );
-      assert.equal(projects.length, operationId ? 2 : 3);
-      const terrain = projects.filter((project) => project.terrain);
-      assert.equal(terrain.length, operationId ? 0 : 1);
-      if (terrain.length) {
-        assert.match(terrain[0].title.en, /Experimental/);
-        assert.equal(compile(terrain[0]).terrain.obstacles.length, 8);
-      }
+  const official = ast.body.find(node => node.type === 'FunctionDeclaration' && node.id.name === 'officialProjects');
+  const modes = [
+    { createProject: options => createOverflightProject({ ...options, rulesVersion: 4 }), compileProject: compileOverflightProject },
+    { createProject: options => createOverflightRiyProject({ ...options, rulesVersion: 4 }), compileProject: compileOverflightRiyProject },
+    OVERFLIGHT_HUNT_MODE,
+    ...['time-attack','marathon'].map(variant => createOverflightRaidVariant(OVERFLIGHT_HUNT_MODE,{variant})),
+  ];
+  for (const mode of modes) {
+    const projects = runInNewContext(`(${source.slice(official.start, official.end)})()`, { mode, OVERFLIGHT_BATTLEFIELDS, options:{difficulty:'standard'} });
+    assert.equal(projects.length, 18);
+    assert.equal(new Set(projects.map(project => project.battlefield.id)).size, 18);
+    for (const project of projects) {
+      const compiled = mode.compileProject(project);
+      assert.equal(compiled.rulesVersion, 4);
+      assert.equal(compiled.terrain.format, 'OverflightTerrainV2');
     }
   }
 });
@@ -745,6 +730,7 @@ test('native Marathon continuation retains its run when next-sortie settings cha
         },
       },
       review: {
+        active: () => false,
         reset: () => {
           calls.reviewReset++;
         },
@@ -908,4 +894,30 @@ test('native Settings initialization preserves operation cards and navigation on
     settingsView.destroy();
     shell.dispose();
   }
+});
+
+test('a selected demonstration remains manual until opt-in, and takeover stops all automation', () => {
+  let piloted = 0, drafted = 0;
+  const playback = createOverflightReviewPlayback({
+    build: 'echo', enabled: false,
+    pilot: () => { piloted++; return { x: -1, y: 0, boost: true }; },
+    selectCard: () => { drafted++; return null; },
+  });
+  const run = { tick: 0, time: 0, phase: 'playing' };
+  const manual = { x: 1, y: 0, boost: false };
+  assert.equal(playback.active(), false);
+  assert.equal(playback.input(run, manual), manual);
+  assert.equal(run.review, undefined);
+  assert.equal(piloted, 0);
+  playback.setEnabled(true);
+  assert.equal(playback.input(run, manual).x, -1);
+  assert.equal(run.review, true);
+  playback.setEnabled(false);
+  assert.equal(playback.input(run, manual), manual);
+  run.phase = 'upgrade';
+  assert.equal(playback.upgrade(run, 100, true), null);
+  assert.equal(drafted, 0);
+  assert.equal(run.review, true, 'taking over cannot erase automated-run provenance');
+  playback.reset();
+  assert.equal(playback.active(), false, 'retry stays under manual control after takeover');
 });
