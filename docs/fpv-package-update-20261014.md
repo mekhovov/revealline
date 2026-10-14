@@ -51,6 +51,16 @@ same-version bytes would not have proved a supported version update.
    scope; active/previous installation pointers remained intact. The diagnostic
    did not register, remove, repair or write any browser storage.
 
+## Upgraded cached reopen
+
+The dedicated 9016 HTTP server was then stopped and its origin refused connections.
+The unchanged new v0.151.1 URL reopened its cached home page; reloading the old
+v0.142.4 URL did the same. In both versions Continue restored the same Reservoir
+flight at 57.2 seconds and the retained pose, with the canvas rendered, flight
+paused and explicit Arm required. The server was restored afterward. The receipt
+names both coordinator screenshots. This is an origin-unavailable cache/recovery
+check, not network-wide offline, browser restart or storage-eviction acceptance.
+
 ## Focused correction and verification
 
 The launcher previously hid both prepared-version links before each potentially
@@ -64,8 +74,15 @@ The existing installation regression now exercises delayed verification in EN/UK
 the prior rollback link remains visible, repeated Check cannot overlap it, and
 readiness updates after completion. All 15 existing installation/access/navigation
 checks and scoped ESLint/Prettier pass. No new unit-coverage sweep or heavy package
-build ran. The corrected launcher requires fresh package/browser qualification;
-the earlier native observations above are not relabelled as runs of this fix.
+build ran. A subsequent mixed-source launcher observation used source `4c7813e8e` at a
+separate unpinned review page on the same installation root. Both prepared and
+previous links stayed visible during checking, Check was disabled, localized
+checking feedback appeared, and Ready offline returned with both links intact.
+Selecting Open previous practice opened the actual v0.142.4 player. Both frozen
+player trees were rechecked byte-for-byte unchanged. The receipt binds the review
+script/HTML/source hashes and names the coordinator's screenshot. This qualifies
+the corrected launcher interaction in a mixed harness; fresh corrected-package
+admission and native qualification remain pending.
 
 ## Still open
 
