@@ -14,6 +14,7 @@ import {
   rerollOverflightHuntUpgrades,
   overflightHuntSummary,
   overflightHuntFixtureInput,
+  overflightHuntBoostRecovery,
 } from './raid-core.mjs';
 import { overflightHuntBuildItems } from './raid-upgrades.mjs';
 import { createOverflightHuntUpgradeCard } from './raid-upgrade-card.mjs';
@@ -27,7 +28,7 @@ import { overflightWorldForEncounterSet } from './worlds.mjs';
 export function createNativeOverflightHuntProject(options = {}) {
   return createOverflightHuntProject({
     ...options,
-    rulesVersion: 3,
+    rulesVersion: options.rulesVersion ?? 4,
     world: options.world ?? overflightWorldForEncounterSet(options.encounterSet ?? 'patrol'),
   });
 }
@@ -215,6 +216,7 @@ export const OVERFLIGHT_HUNT_MODE = Object.freeze({
   exportPackage: exportOverflightHuntPackage,
   text: overflightHuntText,
   createRun: createOverflightHuntRun,
+  boostRecovery: overflightHuntBoostRecovery,
   start: startOverflightHunt,
   step: stepOverflightHunt,
   pause: pauseOverflightHunt,

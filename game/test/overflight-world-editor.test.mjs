@@ -19,6 +19,7 @@ import {
   validateOverflightWorldPresentation,
   createExperimentalOverflightWorldProject,
 } from '../overflight/worlds.mjs';
+import { OVERFLIGHT_WORLD_PROP_SLOTS } from '../presentation/overflight-world-slots.mjs';
 import { paintOverflightMission } from '../overflight/mission-library.mjs';
 
 function harness(project, options = {}) {
@@ -295,3 +296,105 @@ test('terrain preview overlays all eight exact footprints and distinguishes both
   assert.equal(patterns.filter((pattern) => pattern.length > 0).length, 2);
   assert.deepEqual(project.terrain, before);
 });
+
+for (const [name, create, compile] of [
+  ['Single Drone', createOverflightProject, compileOverflightProject],
+  ['Riy', createOverflightRiyProject, compileOverflightRiyProject],
+  ['Raid', createOverflightHuntProject, compileOverflightHuntProject],
+])
+  test(`${name} V2 artwork controls admit all native props and preserve valid texture variants`, () => {
+    const project = create({ rulesVersion: 4, layout: 'freight-depot-loading-loop' }),
+      before = compile(project).projectIdentity,
+      view = harness(project);
+    for (const entry of project.presentation.landmarks) {
+      const control = view.root.querySelector(
+        `[data-world-placement="landmarks:${entry.id}"] [data-world-kind]`,
+      );
+      assert.equal(control.value, entry.kind);
+      assert.ok(
+        control
+          .querySelectorAll('option')
+          .some((option) => option.getAttribute('value') === entry.kind),
+      );
+    }
+    view.root.querySelector('[data-world-add-regions]').emit('click');
+    const added = project.presentation.regions.find((entry) => entry.id === 'custom-regions-1');
+    assert.equal(added.variant, 0);
+    const variant = view.root.querySelector(
+      '[data-world-placement="regions:custom-regions-1"] [data-world-variant]',
+    );
+    variant.value = '3';
+    variant.emit('change');
+    assert.equal(added.variant, 3);
+    assert.doesNotThrow(() => compile(project));
+    view.root.querySelector('[data-world-add-landmarks]').emit('click');
+    const kind = view.root.querySelector(
+      '[data-world-placement="landmarks:custom-landmarks-1"] [data-world-kind]',
+    );
+    assert.deepEqual(
+      kind
+        .querySelectorAll('option')
+        .map((option) => option.getAttribute('value'))
+        .sort(),
+      Object.keys(OVERFLIGHT_WORLD_PROP_SLOTS).sort(),
+    );
+    for (const value of ['pallet', 'bollard', 'glass', 'irrigation']) {
+      kind.value = value;
+      kind.emit('change');
+      assert.equal(
+        project.presentation.landmarks.find((entry) => entry.id === 'custom-landmarks-1').kind,
+        value,
+      );
+      assert.equal(
+        compile(project).projectIdentity,
+        before,
+        'art edits preserve gameplay identity',
+      );
+    }
+  });
+
+test('V2 region additions stop at32 while V1 keeps its admitted64', () => {
+  const project = createOverflightProject({
+    rulesVersion: 4,
+    layout: 'field-crossing-broken-crossroads',
+  });
+  project.presentation.regions = Array.from({ length: 31 }, (_, index) => ({
+    id: `region-${index}`,
+    material: 'earth',
+    variant: index % 4,
+    x: index,
+    y: 10,
+    width: 1,
+    height: 1,
+  }));
+  const view = harness(project);
+  view.root.querySelector('[data-world-add-regions]').emit('click');
+  assert.equal(project.presentation.regions.length, 32);
+  const add = view.root.querySelector('[data-world-add-regions]');
+  assert.equal(add.disabled, true);
+  add.emit('click');
+  assert.equal(project.presentation.regions.length, 32);
+  assert.doesNotThrow(() => compileOverflightProject(project));
+});
+
+for (const [name, create, compile] of [
+  ['Single Drone', createOverflightProject, compileOverflightProject],
+  ['Riy wrapper', createOverflightRiyProject, compileOverflightRiyProject],
+  ['Raid', createOverflightHuntProject, compileOverflightHuntProject],
+])
+  test(`${name} authored battlefields expose layout editing without the legacy encounter override`, () => {
+    const project = create({ rulesVersion: 4, layout: 'field-crossing-broken-crossroads' }),
+      before = structuredClone(project),
+      identity = compile(project).projectIdentity,
+      view = harness(project);
+    assert.equal(view.root.querySelector('[data-world-encounters]'), null);
+    assert.ok(view.root.querySelector('[data-battlefield-apply]'));
+    const select = view.root.querySelector('[data-world-select]');
+    select.value = 'chalk-quarry';
+    select.emit('change');
+    assert.deepEqual(project.encounters, before.encounters);
+    assert.equal(project.encounterProfile, before.encounterProfile);
+    assert.equal(compile(project).projectIdentity, identity);
+    assert.equal(view.root.querySelector('[data-world-encounters]'), null);
+    assert.equal(view.applications(), 0);
+  });

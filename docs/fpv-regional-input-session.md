@@ -79,3 +79,12 @@ only for Touch.
   would not be an atomic flight frame.
 - Streaming/offline recovery, context loss, memory/frame-time/device evidence,
   package admission and public launch remain required before player availability.
+
+## Browser observation after implementation
+
+The desktop in-app browser loaded the actual Canyon review page and verified
+production W throttle (62 ticks, 39%), Space pause, Reset returning to zero ticks
+paused, actual pointer-drag touch input reaching 83%, and flight-mode changes
+pausing. This is a desktop browser/pointer smoke observation, not phone touch or
+physical controller qualification. Controller hardware was unavailable; the
+controller evidence above remains simulated.
