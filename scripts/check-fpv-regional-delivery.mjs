@@ -212,7 +212,7 @@ await assert.rejects(
 checks++;
 // Re-pin both the edited manifest and its descriptor, so rejection proves the
 // pairing contract rather than merely detecting a stale content hash.
-for (const [mutate, reason] of [
+const pairingMutations = [
   [
     (m) => {
       m.id = 'another-region';
@@ -231,7 +231,17 @@ for (const [mutate, reason] of [
     },
     /cell identities/,
   ],
-]) {
+];
+if (JSON.parse(contents.get(descriptor.scenery.path)).chunks.length > 1) {
+  pairingMutations.push([
+    (m) => {
+      const [a, b] = m.chunks;
+      [a.x, a.z, b.x, b.z] = [b.x, b.z, a.x, a.z];
+    },
+    /cell identities/,
+  ]);
+}
+for (const [mutate, reason] of pairingMutations) {
   const altered = structuredClone(descriptor);
   const manifest = JSON.parse(contents.get(descriptor.scenery.path));
   mutate(manifest);
