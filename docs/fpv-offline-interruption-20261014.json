@@ -41,13 +41,32 @@
     "observed": "Launcher transiently reported Needs repair although exact old-worker and launcher-worker verification returned ready:true. Another Check recovered Ready offline.",
     "correctionSource": "5db194727",
     "sourceChecks": 48,
-    "nativeCorrectedBytesVerified": false
+    "nativeMixedHarnessVerified": true,
+    "nativeReview": {
+      "source": "5db194727",
+      "method": "Separate unpinned launcher/context with a visible checkbox reducing actual read-only status timeout to 1 ms; frozen player bytes unchanged.",
+      "observations": [
+        "Normal verification exposed the old prepared action.",
+        "One-millisecond verification showed the English inconclusive warning and retained the known action without repair advice.",
+        "Changing locale to Ukrainian updated warning and links.",
+        "Restoring normal timeout and checking returned Ready then Update available with Check enabled.",
+        "Following the old prepared action opened immutable v0.142.4 with lang=uk and a rendered localized home page."
+      ],
+      "screenshot": "/Volumes/alex/CodexMigrationStaging/fpv-temp/readiness-inconclusive-native.png",
+      "sha256": {
+        "launcherReview": "5b0c10f1c4b54cde976ae28af71395406723bb860e25ab42dc9aed10c04fb847",
+        "contextReview": "ea1e55e632c86a64cfd349bdd8ef13eb07aac6df1871a237c544b8ab7ca8bd9c",
+        "htmlReview": "9caba5a1692e117ac7720fa9dbb6181eff07ceb8d288417756519ce22566694c"
+      }
+    },
+    "nativePackagedUpdateVerified": true,
+    "packageReceipt": "fpv-corrected-package-20261014.json"
   },
   "screenshotNames": ["cancelled-update-retains-old.jpg", "cancelled-update-world-preserved.jpg"],
   "limits": [
     "Controlled origin-local dependency stall, not network-wide offline.",
     "Actual quota/eviction and process restart remain untested.",
-    "The tri-state correction needs native mixed-harness and admitted-package checks.",
+    "The tri-state correction passed mixed-harness checks; the separate corrected-package receipt records bounded native update/recovery. Public release admission remains pending.",
     "No hardware/controller or FPS qualification inferred."
   ]
 }
