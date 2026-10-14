@@ -146,18 +146,15 @@ export function createRegionalFlightPrototype({
     reason = "preparing-terrain";
     const operation = (async () => {
       try {
-        const ready = await terrain.transition(target);
+        const ready = await terrain.transition(target, {
+          positionMm: body.position,
+          radiusMm: RADIUS,
+        });
         if (disposed || token !== generation)
           throw new DOMException(
             "Prototype preparation cancelled",
             "AbortError",
           );
-        const support = terrain.support(centred(body.position), 4000000);
-        fail(
-          support.status === "terrain-hit" &&
-            body.position.y >= support.heightMm - 1,
-          "Prototype pose needs verified terrain support below it",
-        );
         const nextOrigin = ready.provenance.originMm;
         if (AXES.some((key) => nextOrigin[key] !== origin[key])) recentres++;
         // No await between origin, terrain and both pose updates: one complete local frame.
