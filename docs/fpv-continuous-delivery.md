@@ -4378,3 +4378,19 @@ architecture. Canyon is currently 768×768 m authoring terrain, not the planned 
 playable world. Shared production flight-core integration, scene collision, full
 quality art, remaining regions and sustained qualification remain open. Publication
 queues do not block those independent increments.
+
+## 14 October — Public Coaster launch and regional movement
+
+Continuation `codex/fpv-public-qualification-20261014`, from main `f1b24a063`.
+Offline Settings feedback #1219 and localized failure copy #1221 merged; regional
+authoring movement #1220 merged with seven movement/Canyon and twelve verified-source
+scenarios. Browser review verified Arm focuses the preview canvas, throttle responds
+immediately and P pauses. Staged support validation now precedes terrain publication,
+so rejection retains the previous complete frame. Production engine unification and
+host integration remain required before regional player admission.
+
+Actual public Library/Coaster download, paused launch and FPV/Chase/Overview switching
+passed against deployment marker `456f7c3c0716fc2d9bedefc06c78a399457a08e4`.
+This closes the previously unobserved public launch path for that world; it does not
+close full offline/device/performance qualification. Exact details and safe sparse
+checkout space recovery are recorded in `fpv-offline-candidate-20261014.md`.
