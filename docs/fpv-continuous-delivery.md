@@ -4394,3 +4394,24 @@ passed against deployment marker `456f7c3c0716fc2d9bedefc06c78a399457a08e4`.
 This closes the previously unobserved public launch path for that world; it does not
 close full offline/device/performance qualification. Exact details and safe sparse
 checkout space recovery are recorded in `fpv-offline-candidate-20261014.md`.
+
+## 14 October — Shared flight transition
+
+Academy, World Studio and the regional authoring prototype now call one production
+free-air transition; the temporary prototype force port is removed. The shared
+50 Hz clock, integer equations, rounding, model identities and existing host
+collision/landing/arming/scoring policies are preserved. No proof or golden
+expectation was rewritten.
+
+Verification on Node v20.19.5: 51/51 existing flight/boundary/replay/radio/World
+checks; 7/7 regional scenarios including actual Canyon sources; all 154 World
+demonstrations compare equal against pre-extraction main across 312,948 ticks,
+including complete replay states and sampled paths. Scoped source lint and
+whitespace checks pass. The rebased main changed no flight-model equations.
+See `fpv-shared-air-transition.md` for exact commands and evidence limits.
+
+This completes the shared-air prerequisite, not regional player admission.
+Production terrain collision, actual renderer/input lifecycle, all-owner origin
+migration, scenery admission, recovery and sustained device/package qualification
+remain open. The authoring preview stays unscored and `playerReady:false`; terrain
+remains `flightReady:false`. No additional regional world is claimed playable.
