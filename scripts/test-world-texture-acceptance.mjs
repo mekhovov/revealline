@@ -24,6 +24,8 @@ test('texture inspection closes over actual bounded optional-package bytes and t
     'optional-practice/civilian-fpv/world-assets.mjs',
     'optional-practice/civilian-fpv/world-editor.mjs',
     'optional-practice/civilian-fpv/world-content.mjs',
+    'optional-practice/civilian-fpv/regional-session.mjs',
+    'optional-practice/civilian-fpv/regional/flight-prototype.mjs',
     'optional-practice/civilian-fpv/flight-contact.mjs',
     'optional-practice/civilian-fpv/flight-support.mjs',
     'optional-practice/civilian-fpv/vendor/addons/loaders/GLTFLoader.js',
