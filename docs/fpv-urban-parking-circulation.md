@@ -27,4 +27,4 @@ node authoring/fpv-worlds/regions/urban-bando/verify-parking-circulation.mjs /ex
 
 ## Remaining
 
-Native composition review is required before publication. This is a bounded architectural preparation, not a completed playable course, scored challenge, demonstration recording, final art standard or default catalogue admission. Device performance and package/offline qualification remain separate.
+Native approach and upper-turn views show connected ramps, readable open floor entries and the retained shaft, with no console errors. The six-cell window reports 103 matching meshes/colliders and 689,508 geometry bytes. This is a bounded architectural preparation, not a completed playable course, scored challenge, demonstration recording, final art standard or default catalogue admission. Device performance and package/offline qualification remain separate.
