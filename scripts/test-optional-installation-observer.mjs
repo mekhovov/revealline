@@ -121,7 +121,8 @@ test('Academy offline controls expand the ordinary closed Workshop disclosure in
     locator: (selector) => ({
       isVisible: async () => helpOpen,
       locator: () => ({ getAttribute: async () => (disclosureOpen ? '' : null) }),
-      click: async () => {
+      press: async (key) => {
+        assert.equal(key, 'Enter');
         clicks.push(selector);
         disclosureOpen = true;
       },

@@ -579,6 +579,11 @@ try {
     })),
     harnessSha256,
     helperSha256,
+    inputRoute: {
+      academyOfflineDisclosure: 'Native summary keyboard Enter',
+      limitation:
+        'A first pointer press can shift the disclosure layout before mouseup; this observer does not qualify that pointer interaction.',
+    },
     proof: {
       input: 'first frozen demonstration frames under an explicit synthetic practice session',
       sha256: sha(savedProof),
@@ -607,6 +612,11 @@ try {
     transition,
     harnessSha256,
     helperSha256,
+    inputRoute: {
+      academyOfflineDisclosure: 'Native summary keyboard Enter',
+      limitation:
+        'A first pointer press can shift the disclosure layout before mouseup; this observer does not qualify that pointer interaction.',
+    },
     failure: error.message,
     osApps,
     checkpoints,

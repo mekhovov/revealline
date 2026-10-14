@@ -61,7 +61,7 @@ The observer follows the current simulator Settings menus: Academy's Help & Extr
 Progress & Collection, and Controls; Gym's and World's Content & Offline. Launcher
 transitions verify the exact origin, app/version path and English language query;
 the helper also tests Ukrainian routing. Academy's Workshop & offline disclosure
-is expanded through its summary before preparation, failed-download and removal
+is expanded through its summary's native keyboard Enter action before preparation, failed-download and removal
 checks. It does not click
 hidden controls or directly invoke application functions. Preparation waits up to
 315 seconds, allowing the application's five-minute overall transfer deadline plus
@@ -81,6 +81,12 @@ stopped at the candidate's password gate without an authorized test credential.
 It completed zero preparation checkpoints and cleaned up its isolated profile.
 This is **not** a passing installation observation. Rerun the command with authorized
 access before treating the new three-app browser journey as qualified.
+
+An unpublished three-app fixture additionally exposed a pointer-focus layout issue:
+the first pointer press on Academy's Workshop & offline summary can move the dialog
+before mouseup, leaving the disclosure closed. Native keyboard Enter opens it.
+The observer uses and records that keyboard route; it does **not** claim the first
+pointer interaction has passed. Simulator/UI follow-up and device checks remain necessary.
 
 Gameplay offline checks run in the browser tab; standalone windows additionally
 verify the apps' mounted start screens and coexistence. A passing report requires browser preparation,
