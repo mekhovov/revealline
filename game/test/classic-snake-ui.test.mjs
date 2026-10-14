@@ -1155,6 +1155,58 @@ test('Home and backgrounding permanently cancel automatic progression for the co
   }
 });
 
+for (const input of ['dpad', 'stick']) {
+  test(`${input} navigation during celebration cancels the later countdown without rearming it`, async () => {
+    const state = await harness();
+    let now = flyVerifiedRoute(state);
+    const pad = menuPad();
+    state.pads.push(pad);
+    state.frame((now += 50));
+    assert.equal(state.shell.elements.root.dataset.transitionPhase, 'celebration');
+    if (input === 'dpad') pad.buttons[13] = { pressed: true, value: 1 };
+    else pad.axes[1] = 0.8;
+    state.frame((now += 50));
+    pad.buttons[13] = { pressed: false, value: 0 };
+    pad.axes[1] = 0;
+    assert.equal(state.shell.elements.root.dataset.transitionPhase, 'cancelled');
+    assert.equal(state.shell.topDialog(), state.shell.elements.dialogs.results);
+    const cancelledAt = now;
+    while (now < cancelledAt + 11000) state.frame((now += 50));
+    assert.equal(
+      state.created.length,
+      1,
+      'returning the controller to neutral does not rearm Next',
+    );
+    assert.equal(state.shell.elements.root.dataset.transitionPhase, 'cancelled');
+  });
+}
+
+test('controller steering during live play still moves immediately and Confirm launches Next during celebration', async () => {
+  const playing = await harness();
+  const pad = menuPad();
+  playing.pads.push(pad);
+  playing.frame(0);
+  pad.buttons[13] = { pressed: true, value: 1 };
+  playing.frame(50);
+  assert.equal(playing.created[0].snakes[0].turns.at(-1), 'down');
+  playing.frame(200);
+  assert.equal(playing.created[0].snakes[0].direction, 'down');
+  assert.equal(playing.document.body.dataset.playing, 'true');
+
+  const completed = await harness();
+  const now = flyVerifiedRoute(completed);
+  const confirm = menuPad();
+  completed.pads.push(confirm);
+  completed.frame(now + 50);
+  confirm.buttons[0] = { pressed: true, value: 1 };
+  completed.frame(now + 100);
+  assert.equal(
+    new URL(completed.location.href).searchParams.get('level'),
+    'classic-snake-two-landings',
+  );
+  assert.equal(completed.document.body.dataset.playing, 'true');
+});
+
 test('selecting a new library mission launches directly while retaining the older Workshop save', async () => {
   const state = await harness();
   state.start();
@@ -1733,6 +1785,72 @@ for (const mode of ['solo', 'versus', 'team']) {
     assert.equal(restored.drawings.at(-1).options.artRevision, 'industrial-roster-v3');
   });
 }
+
+for (const action of ['automatic', 'keyboard', 'controller', 'continuation-button']) {
+  test(`${action} defeat retry retains accepted artwork while renewing only the hazard schedule`, async () => {
+    const entry = CLASSIC_SNAKE_LEVELS.find((item) => item.id === 'classic-field-signal-check');
+    const state = await harness({ entry });
+    const select = state.document.querySelector('[data-enemy-appearance]');
+    select.value = 'military';
+    select.emit('change');
+    await flush();
+    state.start();
+    const accepted = state.acceptedAppearances.at(-1);
+    select.value = 'authored';
+    select.emit('change');
+    await flush();
+    const previous = state.created[0];
+    state.frame(0);
+    let now = 0;
+    while (previous.status === 'running' && now < 10000) state.frame((now += 50));
+    assert.equal(previous.status, 'lost');
+    if (action === 'automatic') {
+      const lostAt = now;
+      while (state.created.length === 1 && now < lostAt + 3200) state.frame((now += 50));
+    } else if (action === 'keyboard') {
+      state.document.emit('keydown', {
+        target: state.document.querySelector('canvas'),
+        key: 'Enter',
+        code: 'Enter',
+        repeat: false,
+      });
+    } else if (action === 'controller') {
+      const pad = menuPad();
+      state.pads.push(pad);
+      state.frame((now += 50));
+      pad.buttons[0] = { pressed: true, value: 1 };
+      state.frame((now += 50));
+    } else {
+      [...state.document.querySelector('.snake-continuation').children]
+        .find((node) => node.textContent === 'Try again')
+        .click();
+    }
+    assert.equal(state.created.length, 2);
+    assert.equal(state.acceptedAppearances.at(-1), accepted);
+    const next = state.created.at(-1);
+    assert.notEqual(next.hazardSeed, previous.hazardSeed);
+    assert.equal(next.seed, previous.seed);
+    assert.deepEqual(next.level, previous.level);
+    assert.equal(state.document.body.dataset.playing, 'true');
+  });
+}
+
+test('celebration Retry retains accepted artwork and launches the same mission immediately', async () => {
+  const state = await harness();
+  const accepted = state.acceptedAppearances.at(-1);
+  flyVerifiedRoute(state);
+  const select = state.document.querySelector('[data-enemy-appearance]');
+  select.value = 'military';
+  select.emit('change');
+  await flush();
+  [...state.document.querySelector('.snake-continuation').children]
+    .find((node) => node.textContent === 'Try again')
+    .click();
+  assert.equal(state.created.length, 2);
+  assert.equal(state.acceptedAppearances.at(-1), accepted);
+  assert.deepEqual(state.created[1].level, state.created[0].level);
+  assert.equal(state.document.body.dataset.playing, 'true');
+});
 
 test('a forged chapter pin is rejected before replacing the active mission or save', async () => {
   const entry = CLASSIC_SNAKE_LEVELS.find((item) => item.id === 'classic-living-cable-cutoff');
