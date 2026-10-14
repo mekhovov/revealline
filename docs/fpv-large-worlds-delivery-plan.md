@@ -1,6 +1,6 @@
 # Large authored FPV regions — active delivery plan
 
-Reviewed 14 October 2026; shared-air continuation based on main `d317c634b`.
+Reviewed 14 October 2026; regional input, scenery and presentation continuation.
 The user selected default catalogue visibility, download on Play, optional offline
 storage, and authored regions first. Generation assists authoring; endless runtime
 terrain is deferred. Twelve proposed regions are design targets, not shipped maps.
@@ -32,6 +32,10 @@ terrain is deferred. Twelve proposed regions are design targets, not shipped map
   Studio and the prototype now reuse one production transition. All 154 World
   demonstrations retain their replay states/paths across 312,948 ticks; 51 existing
   checks and seven regional scenarios pass. See [the receipt](fpv-shared-air-transition.md).
+  Shared production input/lifecycle (#1230), verified scenery/render-collision windows
+  (#1231), and shared production camera/drone presentation (#1234) are merged. The
+  appearance correction (#1227) is merged. Urban scenery is now visible and queried
+  from the same exact geometry; an existing-authority flight adapter is underway.
   Next: integrate the actual player lifecycle and production collision contracts,
   with atomic origin migration for every live world owner. Regional scenery
   admission, recovery and sustained qualification remain separate requirements.
@@ -43,13 +47,24 @@ terrain is deferred. Twelve proposed regions are design targets, not shipped map
   corridor studies. Materials/scenery and playable integration remain unfinished.
   Urban Bando preparation merged in #1222: a 384×384 m architecture study with
   71 original solids, five licensed props and 78 matching exported collision surfaces.
-  Fourteen opening/solid sweeps pass; materials are still a blockout. Neither is admitted
+  Fourteen opening/solid sweeps pass; materials are still a blockout. Canyon surface
+  study #1235 adds optional rock/sand shading and three detail tiers, with exact
+  source/geometry/collision parity. It is a foundation, not finished art; coarse slopes,
+  seam refinement, landmarks and sustained rendering measurements remain. Neither is admitted
   to the default catalogue before collision, flight and package qualification.
 - **P3:** Tropical Archipelago, Industrial Railway Valley, Coaster Park, Hillside Town;
   then Alpine Highlands, Desert Expedition, Canal City; then Lunar Basin, Castle
   Valley, Retro Metropolis. Expand Reservoir, Harbor and Festival with new revisions,
   keeping old courses and proofs. These are distinct authored regions, not recolours.
 - **P4:** catalogue-wide/offline/performance qualification and protected publication.
+  #1228 verified all 20 exact published packs (15,605,575 bytes), compile/export and
+  modeled storage boundaries. #1232 repaired an existing stale navigation fixture.
+  Native v0.142.4 → v0.151.1 preparation preserved Reservoir r16 and both worker
+  caches; the old player still reads the same installed digest. A launcher refresh
+  temporarily hides recovery actions during validation; repair/verification is open.
+  Direct mission Start intentionally begins flight after existing readiness gates;
+  catalogue download/Play and recovery remain distinct launch paths. Full offline,
+  interruption, quota/eviction, restart and device qualification remain open.
   D6 extra unit coverage follows; each preceding increment retains functional checks.
 
 Target dimensions: dense regions 4×4 km, natural regions 8×8 km, Desert Expedition

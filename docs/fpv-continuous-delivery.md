@@ -4415,3 +4415,35 @@ Production terrain collision, actual renderer/input lifecycle, all-owner origin
 migration, scenery admission, recovery and sustained device/package qualification
 remain open. The authoring preview stays unscored and `playerReady:false`; terrain
 remains `flightReady:false`. No additional regional world is claimed playable.
+
+## 14 October — Regional input, scenery, camera and material increments
+
+Merged independent increments: #1227 shared appearance for the regional preview;
+#1228 exact-source qualification of all 20 published optional packs; #1230 production
+input/lifecycle; #1231 transactional visible scenery and collision; #1232 stale offline
+navigation fixture repair; #1234 production camera and racer presentation. Focused
+Canyon material study #1235 is published from `codex/fpv-canyon-surface-study-20261014`.
+No new native stack was necessary because each dependency merged before its successor.
+The chat's 100-artifact attachment ceiling prevented new attachments; PRs are on GitHub.
+
+Canyon verification: five exact-source surface/physics parity cases, 23 existing
+terrain/source cases and nine shared-theme cases pass. Browser prepared all three
+tiers, viewed Gorge/Basin/Spires, retained terrain on invalid reload, and released/
+reloaded resources. See `fpv-canyon-surface-study.md`. This is original procedural
+material preparation, not finished P2 art, sustained GPU evidence or public admission.
+
+Native package update on dedicated localhost 9016: v0.142.4 prepared offline;
+Reservoir r16 installed with digest `50ffbb0e5da7`, eight courses, and rendered ready.
+v0.151.1 prepared next; the installed world remained selectable and launched. Both
+exact owning workers report ready and active/previous pointers survive. The previous
+player still opens the same Library item. During rechecking, the launcher temporarily
+hides its recovery link; this is under repair, not lost player data. Direct mission
+Start uses deliberately merged automatic launch after readiness; do not revert it
+as an offline regression. No full network-disconnection, quota, browser-restart or
+hardware acceptance is claimed by this sequence.
+
+Next work proceeds in parallel: Urban flight geometry adapter using existing authority;
+regional streaming/recovery integration; launcher recovery action stability; Canyon
+normal/seam/art refinement. Larger public regions, P3 authored worlds and sustained
+package/device qualification remain unfinished. Existing local work, frozen package
+candidates and external source archives remain preserved.
