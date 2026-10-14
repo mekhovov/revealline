@@ -7524,6 +7524,10 @@ export function mountWorldApp({
   missionChooser.elements.list.before(worldBrowser);
   worldBrowser.append(worldCatalogueHost, missionChooser.elements.list);
   on(missionChooser.elements.dialog, 'close', () => worldLibrary.deactivate(worldCatalogueHost));
+  const shellWordmarkURL = new URL(
+    lobbyHeader.querySelector('.wordmark img').getAttribute('src'),
+    win.location.href,
+  ).href;
   playShell = mountSimPlayShell({
     document: doc,
     mount: doc.body,
@@ -7536,13 +7540,9 @@ export function mountWorldApp({
       label: { en: 'Learn to fly', uk: 'Навчитися літати' },
       activate: () => openCatalogueTab('learn'),
     },
-    wordmarkURL: new URL(
-      lobbyHeader.querySelector('.wordmark img').getAttribute('src'),
-      win.location.href,
-    ).href,
-    artworkURL: gameReturn
-      ? new URL(gameReturn.replace(/(\/game\/).*$/, '$1') + 'ui/art/menu-scenes/fpv.webp').href
-      : '',
+    wordmarkURL: shellWordmarkURL,
+    // The arcade return can be outside a standalone package's offline scope.
+    artworkURL: new URL('../../menu-scenes/fpv.webp', shellWordmarkURL).href,
     modeName: () => (locale === 'uk' ? 'FPV SIM · Світи' : 'FPV SIM · Worlds'),
     locale,
     services: {
