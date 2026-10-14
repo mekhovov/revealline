@@ -1601,9 +1601,9 @@
       "authoredIdentity": "969cbeb20361a60a",
       "tunedIdentity": "b2db37f4f3b18900",
       "status": "won",
-      "coverage": 0.6052158273381295,
-      "tick": 6908,
-      "closed": [4, 11],
+      "coverage": 0.6007194244604317,
+      "tick": 5236,
+      "closed": [5, 8],
       "segments": [
         {
           "a": null,
@@ -1612,12 +1612,12 @@
         },
         {
           "a": null,
-          "b": "down",
-          "ticks": 252
+          "b": "up",
+          "ticks": 211
         },
         {
           "a": null,
-          "b": "up",
+          "b": "down",
           "ticks": 462
         },
         {
@@ -1626,122 +1626,87 @@
           "ticks": 252
         },
         {
+          "a": "up",
+          "b": null,
+          "ticks": 462
+        },
+        {
           "a": null,
           "b": "left",
           "ticks": 41
         },
         {
           "a": null,
-          "b": "down",
+          "b": "up",
           "ticks": 462
         },
         {
-          "a": "up",
+          "a": null,
+          "b": "down",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 686
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 136
+        },
+        {
+          "a": "right",
           "b": null,
           "ticks": 41
         },
         {
           "a": "right",
-          "b": null,
-          "ticks": 686
-        },
-        {
-          "a": "left",
-          "b": null,
-          "ticks": 41
-        },
-        {
-          "a": "up",
-          "b": null,
-          "ticks": 530
+          "b": "down",
+          "ticks": 286
         },
         {
           "a": "down",
           "b": null,
-          "ticks": 41
+          "ticks": 82
         },
         {
           "a": "left",
           "b": null,
-          "ticks": 747
+          "ticks": 266
         },
         {
           "a": null,
           "b": "up",
           "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 638
         },
         {
           "a": null,
           "b": "left",
-          "ticks": 794
-        },
-        {
-          "a": null,
-          "b": "right",
           "ticks": 41
         },
         {
           "a": null,
           "b": "up",
-          "ticks": 367
+          "ticks": 475
         },
         {
-          "a": null,
-          "b": "right",
-          "ticks": 41
-        },
-        {
-          "a": null,
-          "b": "down",
-          "ticks": 123
-        },
-        {
-          "a": null,
-          "b": "right",
-          "ticks": 41
-        },
-        {
-          "a": null,
-          "b": "up",
-          "ticks": 123
-        },
-        {
-          "a": null,
-          "b": "down",
-          "ticks": 353
-        },
-        {
-          "a": null,
-          "b": "right",
-          "ticks": 41
-        },
-        {
-          "a": null,
-          "b": "up",
-          "ticks": 353
-        },
-        {
-          "a": null,
-          "b": "right",
-          "ticks": 41
-        },
-        {
-          "a": null,
-          "b": "down",
-          "ticks": 476
-        },
-        {
-          "a": null,
-          "b": "right",
-          "ticks": 41
-        },
-        {
-          "a": null,
-          "b": "up",
-          "ticks": 476
+          "a": "right",
+          "b": null,
+          "ticks": 571
         }
       ],
-      "checkpoint": "3a17244f72256f5ed503eb7f402a75ea74a35b78abb7aa7667f7a63a7e906436"
+      "checkpoint": "8843ad3d37439f6d1a1db8085b36f0a86424da59700d5f66f68802d5e37c254c"
     },
     {
       "missionId": "team-saffron-detour",
@@ -10459,10 +10424,15 @@
       "authoredIdentity": "92c7d3cf0d757fb8",
       "tunedIdentity": "b7f41c0b63e08ac9",
       "status": "won",
-      "coverage": 0.8500224517287831,
-      "tick": 6527,
-      "closed": [9, 4],
+      "coverage": 0.7696452626852268,
+      "tick": 5052,
+      "closed": [8, 2],
       "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 15
+        },
         {
           "a": null,
           "b": null,
@@ -10549,42 +10519,17 @@
           "ticks": 333
         },
         {
-          "a": null,
-          "b": "down",
-          "ticks": 367
-        },
-        {
-          "a": null,
-          "b": "left",
-          "ticks": 41
-        },
-        {
-          "a": null,
-          "b": "up",
-          "ticks": 225
-        },
-        {
-          "a": null,
-          "b": "down",
-          "ticks": 326
+          "a": "right",
+          "b": null,
+          "ticks": 271
         },
         {
           "a": "up",
           "b": null,
-          "ticks": 252
-        },
-        {
-          "a": "right",
-          "b": null,
-          "ticks": 278
-        },
-        {
-          "a": "left",
-          "b": null,
-          "ticks": 598
+          "ticks": 326
         }
       ],
-      "checkpoint": "2c2addfdaae855ff723a7ea5a2a9813dd321368d6e81cb81329d724b35e6b4a5"
+      "checkpoint": "3373ca2e16e96cbaf13924846d0f53250cb26849ecdf62d8b623c43a5cc19314"
     },
     {
       "missionId": "team-cross-court-cover",

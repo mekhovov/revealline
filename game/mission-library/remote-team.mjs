@@ -1,3 +1,4 @@
+import { supplementalTeamSources } from './supplemental-hunt.mjs';
 import { createCandidateTeamHost } from '../content-design/team-host.mjs';
 import { createTeamCulturalSpecialistV2OriginalCandidates } from '../content-design/team-cultural-specialist-v2-originals.mjs';
 import { COOP_STARTER_PACK, coopGoalText } from '../coop/library.mjs';
@@ -30,6 +31,7 @@ export function createRemoteTeamLibrarySources({ launch, difficulty = () => 'sta
   );
   return Object.freeze([
     teamExpeditionLibrarySource({ launch, difficulty }),
+    ...supplementalTeamSources({ launch, difficulty }),
     teamJourneyLibrarySource({
       journey,
       difficulty,

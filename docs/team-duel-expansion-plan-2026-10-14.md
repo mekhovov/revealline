@@ -247,3 +247,7 @@ The full 3,291-file distribution and ZIP build passed. Its package audit verifie
 ## PR delivery instruction — 14 October 2026
 
 The user explicitly requested skipping human playtesting and proceeding with the remaining local checks and a pull request for merge. Human-pair validation is therefore skipped, not passed. Preserve focused correctness, compatibility, Studio/media and artifact-integrity evidence; record unavailable physical-device and audible-speaker qualification separately. Submit source changes through the normal PR workflow without claiming public deployment.
+
+## Authorized follow-up after priority review
+
+The user authorized the remaining source work after reviewing R1–R12. [Follow-up verification](team-duel-expansion-followup-2026-10-14.md) records bounded recovery/support interactions, alternative strategies for all eight pilots, the 48-mission browser sample, full media recovery checks, the five baseline fixture/focus corrections, and six curated Hunt lessons per mode. R1 still depends on final-head hosted checks and normal integration. R8–R11 stay deferred to publication/device/listening work; R12 human playtesting remains waived. Do not interpret the local evidence as a public release or all-platform acceptance.

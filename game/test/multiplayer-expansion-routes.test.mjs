@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
-import { createHash } from 'node:crypto';
+import { assertExpansionCheckpoint } from './helpers/multiplayer-expansion-checkpoint.mjs';
 import { createTeamExpansionCandidates } from '../content-design/multiplayer-expansion.mjs';
 import { compileContentProject, resolveMission } from '../content-design/project.mjs';
 import { applyGameplayTuning, resolveGameplayTuning } from '../gameplay-tuning.mjs';
@@ -51,12 +51,7 @@ for (const difficulty of ['gentle', 'standard', 'expert'])
         );
         assert.equal(run.tick, row.tick);
         assert.equal(run.coverage, row.coverage);
-        if (!reversedRoles)
-          assert.equal(
-            createHash('sha256').update(JSON.stringify(run)).digest('hex'),
-            row.checkpoint,
-            row.missionId,
-          );
+        if (!reversedRoles) assertExpansionCheckpoint('team', run, row, difficulty);
       }
     }
   });

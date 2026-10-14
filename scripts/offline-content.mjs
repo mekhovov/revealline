@@ -69,6 +69,7 @@ export const TEAM_OFFLINE_PROJECT_FACTORIES = Object.freeze(
     ],
     ...CULTURAL_TEAM_OFFLINE_PROJECT_FACTORIES,
     ['multiplayer-expansion', 'createTeamExpansionCandidates', 'team-expedition-v1'],
+    ['team-hunt-training-candidates', 'createTeamHuntTrainingCandidates', 'humanoid-hunt-v1'],
     ['team-timed-originals', 'createTeamTimedOriginalCandidates', 'team-timed-originals'],
     [
       'team-window-spatial-candidates',

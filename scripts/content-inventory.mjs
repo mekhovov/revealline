@@ -108,6 +108,7 @@ export function duplicateGroups(rows, key, { distinct = (row) => row.id } = {}) 
 }
 
 const TEAM_FACTORIES = {
+  'humanoid-hunt-v1': ['team-hunt-training-candidates', 'createTeamHuntTrainingCandidates'],
   'team-expedition-v1': ['multiplayer-expansion', 'createTeamExpansionCandidates'],
   'team-greybox': ['team-journey-candidates', 'createTeamJourneyCandidates', {}],
   'team-originals': ['team-journey-candidates', 'createTeamJourneyCandidates', { artwork: true }],
@@ -150,9 +151,11 @@ export async function loadInventoryTeamRoute(id) {
   const source = (await import(`../game/content-design/${module}.mjs`))[name](options);
   const profileKey = ['team-greybox', 'team-originals'].includes(id)
     ? 'journey'
-    : id === 'team-timed-originals'
-      ? 'team-shared-windows-originals'
-      : id;
+    : id === 'humanoid-hunt-v1'
+      ? 'team-humanoid-hunt-training-v1'
+      : id === 'team-timed-originals'
+        ? 'team-shared-windows-originals'
+        : id;
   return { id, source, profileKey };
 }
 

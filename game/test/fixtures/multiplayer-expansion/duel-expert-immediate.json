@@ -850,8 +850,8 @@
       "authoredIdentity": "f402215869b609f5",
       "tunedIdentity": "219e19fb92afc487",
       "status": "won",
-      "coverage": 0.6154879140555058,
-      "tick": 13069,
+      "coverage": 0.6007162041181737,
+      "tick": 5216,
       "winner": null,
       "reason": "First clear",
       "segments": [
@@ -865,31 +865,15 @@
         },
         {
           "direction": "left",
-          "ticks": 951
+          "ticks": 41
         },
         {
           "direction": "down",
-          "ticks": 109
-        },
-        {
-          "direction": "left",
-          "ticks": 1
-        },
-        {
-          "direction": "right",
-          "ticks": 96
-        },
-        {
-          "direction": "down",
-          "ticks": 360
+          "ticks": 469
         },
         {
           "direction": "up",
           "ticks": 41
-        },
-        {
-          "direction": "right",
-          "ticks": 863
         },
         {
           "direction": "left",
@@ -900,175 +884,83 @@
           "ticks": 35
         },
         {
+          "direction": "left",
+          "ticks": 41
+        },
+        {
+          "direction": "up",
+          "ticks": 204
+        },
+        {
+          "direction": "right",
+          "ticks": 41
+        },
+        {
+          "direction": "up",
+          "ticks": 245
+        },
+        {
+          "direction": "left",
+          "ticks": 41
+        },
+        {
+          "direction": "down",
+          "ticks": 177
+        },
+        {
+          "direction": "left",
+          "ticks": 109
+        },
+        {
+          "direction": "up",
+          "ticks": 198
+        },
+        {
+          "direction": "down",
+          "ticks": 469
+        },
+        {
+          "direction": "left",
+          "ticks": 41
+        },
+        {
+          "direction": "up",
+          "ticks": 448
+        },
+        {
+          "direction": "down",
+          "ticks": 41
+        },
+        {
+          "direction": "left",
+          "ticks": 542
+        },
+        {
+          "direction": "down",
+          "ticks": 414
+        },
+        {
           "direction": "up",
           "ticks": 41
         },
         {
           "direction": "right",
+          "ticks": 109
+        },
+        {
+          "direction": "down",
           "ticks": 42
         },
         {
-          "direction": "left",
-          "ticks": 41
-        },
-        {
-          "direction": "up",
-          "ticks": 407
-        },
-        {
-          "direction": "left",
-          "ticks": 904
-        },
-        {
-          "direction": "down",
-          "ticks": 96
-        },
-        {
-          "direction": "left",
-          "ticks": 21
-        },
-        {
-          "direction": "up",
-          "ticks": 82
-        },
-        {
-          "direction": "right",
-          "ticks": 41
-        },
-        {
-          "direction": "down",
-          "ticks": 82
-        },
-        {
-          "direction": "left",
-          "ticks": 41
-        },
-        {
-          "direction": "right",
-          "ticks": 143
-        },
-        {
-          "direction": "down",
-          "ticks": 313
-        },
-        {
-          "direction": "up",
-          "ticks": 394
-        },
-        {
-          "direction": "right",
-          "ticks": 774
-        },
-        {
-          "direction": "left",
-          "ticks": 869
-        },
-        {
-          "direction": "up",
-          "ticks": 34
-        },
-        {
-          "direction": "down",
-          "ticks": 102
-        },
-        {
           "direction": "up",
           "ticks": 41
         },
         {
           "direction": "right",
-          "ticks": 41
-        },
-        {
-          "direction": "up",
-          "ticks": 14
-        },
-        {
-          "direction": "right",
-          "ticks": 829
-        },
-        {
-          "direction": "left",
-          "ticks": 41
-        },
-        {
-          "direction": "down",
-          "ticks": 381
-        },
-        {
-          "direction": "left",
-          "ticks": 41
-        },
-        {
-          "direction": "down",
-          "ticks": 41
-        },
-        {
-          "direction": "up",
-          "ticks": 408
-        },
-        {
-          "direction": "left",
-          "ticks": 679
-        },
-        {
-          "direction": "down",
-          "ticks": 435
-        },
-        {
-          "direction": "right",
-          "ticks": 41
-        },
-        {
-          "direction": "up",
           "ticks": 421
-        },
-        {
-          "direction": "right",
-          "ticks": 41
-        },
-        {
-          "direction": "down",
-          "ticks": 421
-        },
-        {
-          "direction": "up",
-          "ticks": 41
-        },
-        {
-          "direction": "right",
-          "ticks": 41
-        },
-        {
-          "direction": "up",
-          "ticks": 366
-        },
-        {
-          "direction": "down",
-          "ticks": 367
-        },
-        {
-          "direction": "up",
-          "ticks": 41
-        },
-        {
-          "direction": "right",
-          "ticks": 41
-        },
-        {
-          "direction": "down",
-          "ticks": 55
-        },
-        {
-          "direction": "right",
-          "ticks": 41
-        },
-        {
-          "direction": "up",
-          "ticks": 353
         }
       ],
-      "checkpoint": "3f17ada9b0b74125e4a135a96e98604cdb5e221d188f92ce445b77db66cb1751"
+      "checkpoint": "d735b6a0db563a7893367cc05b7c2e72b1ee242950a772cd15c4b3d849d4ce4d"
     },
     {
       "missionId": "versus-signal-sprint-finale",
