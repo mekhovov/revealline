@@ -1,16 +1,26 @@
 import assert from 'node:assert/strict';
+import { readFile } from 'node:fs/promises';
 import { createServer } from 'node:http';
 
 // This host only routes the authentic immutable outputs of native-offline-server.
 // It never rewrites an application, worker, manifest or response body.
 const port = 8936;
-const upstreamPorts = new Set([8935, 8937]);
-let upstreamPort = 8935;
-let online = true;
-let failedPath = null;
-let requests = 0;
-let rejected = 0;
-const events = [];
+const upstreamPorts = new Set([8935, 8937, 8938]);
+const previous = process.env.OVERFLIGHT_DISPATCHER_RESTORE
+  ? JSON.parse(await readFile(process.env.OVERFLIGHT_DISPATCHER_RESTORE, 'utf8'))
+  : null;
+let upstreamPort = previous?.upstreamPort ?? 8935;
+let online = previous?.online ?? true;
+let failedPath = previous?.failedPath ?? null;
+let requests = previous?.requests ?? 0;
+let rejected = previous?.rejected ?? 0;
+const events = previous?.events ?? [];
+assert.ok(upstreamPorts.has(upstreamPort));
+assert.equal(typeof online, 'boolean');
+assert.ok(failedPath === null || /^\/game\/[a-zA-Z0-9_./-]+\.mjs$/.test(failedPath));
+assert.ok(Number.isSafeInteger(requests) && requests >= 0);
+assert.ok(Number.isSafeInteger(rejected) && rejected >= 0);
+assert.ok(Array.isArray(events) && events.length <= 1000);
 const record = (action, details = {}) => {
   const event = { at: new Date().toISOString(), action, ...details };
   events.push(event);
@@ -54,7 +64,7 @@ const server = createServer(async (req, res) => {
     }
     if (url.pathname === '/_qualification/upstream' && req.method === 'POST') {
       const candidate = Number(url.searchParams.get('port'));
-      assert.ok(upstreamPorts.has(candidate), 'Only the two task-owned generations are allowed.');
+      assert.ok(upstreamPorts.has(candidate), 'Only the task-owned generations are allowed.');
       const generation = await upstreamStatus(candidate);
       upstreamPort = candidate;
       record('generation-selected', {
@@ -105,7 +115,7 @@ await new Promise((resolve, reject) => {
   server.once('error', reject);
   server.listen(port, '127.0.0.1', resolve);
 });
-record('dispatcher-ready', { port, upstreamPort });
+record('dispatcher-ready', { port, upstreamPort, restoredHistory: Boolean(previous) });
 for (const signal of ['SIGINT', 'SIGTERM'])
   process.once(signal, () => {
     server.close();
