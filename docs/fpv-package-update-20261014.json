@@ -139,6 +139,31 @@
       "screenshotName": "update-stable-recovery-controls.jpg",
       "immutablePlayerMembersRecheckedUnchanged": true,
       "limitation": "Mixed source launcher with frozen players; not an admitted corrected package"
+    },
+    {
+      "phase": "upgraded-origin-unavailable-reopen",
+      "reportedBy": "parent /root through native CUA",
+      "origin": "http://127.0.0.1:9016",
+      "serverStoppedPid": 11295,
+      "connectionRefusedBeforeReopen": true,
+      "observations": [
+        {
+          "version": "v0.151.1",
+          "navigation": "Known new URL reopened cached home page",
+          "continue": "Restored Reservoir at 57.2 seconds, retained actual pose, paused, explicit Arm required",
+          "rendered": true,
+          "screenshotName": "upgraded-origin-unavailable.jpg"
+        },
+        {
+          "version": "v0.142.4",
+          "navigation": "Old URL reload reopened cached home page",
+          "continue": "Restored same Reservoir at 57.2 seconds, retained actual pose, paused, explicit Arm required",
+          "rendered": true,
+          "screenshotName": "previous-origin-unavailable.jpg"
+        }
+      ],
+      "serverRestored": true,
+      "limitation": "Own HTTP origin unavailable only; not network-wide offline, browser restart or storage eviction"
     }
   ],
   "completed": false,
