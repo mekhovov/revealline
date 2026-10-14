@@ -297,6 +297,8 @@ export function createRegionalFlightPrototype({
           initializeFlightSupport(body, support.ground);
         }
         pendingTarget = null;
+        streamingFailure = null;
+        retryAfterTick = 0;
         reason = "prepared";
         return snapshot();
       } catch (error) {
