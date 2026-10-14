@@ -10,7 +10,10 @@ import {
   INDUSTRIAL_ARCADE_COLLECTION,
   INDUSTRIAL_ARCADE_PALETTE,
 } from '../presentation/industrial-arcade.mjs';
-import { INDUSTRIAL_BUILTIN_SPRITES } from '../presentation/industrial-arcade-builtins.mjs';
+import {
+  INDUSTRIAL_BUILTIN_SPRITES,
+  INDUSTRIAL_BUILTIN_MACHINERY_GEOMETRY,
+} from '../presentation/industrial-arcade-builtins.mjs';
 import { BoardPainter } from '../ui/render.mjs';
 import { canvasTextFonts } from '../text-face.mjs';
 
@@ -59,7 +62,11 @@ function fixture(hash, slot = 'terrain.wall') {
   hash ??= INDUSTRIAL_BUILTIN_SPRITES[slot][0];
   const image = { width: 16, height: 16 },
     geometry = { frame: { width: 16, height: 16 }, rotors: [] },
-    asset = { id: `${slot}.field-kit`, file: { width: 16, height: 16, sha256: hash } },
+    asset = {
+      id: `${slot}.field-kit`,
+      file: { width: 16, height: 16, sha256: hash },
+      geometry: INDUSTRIAL_BUILTIN_MACHINERY_GEOMETRY[slot],
+    },
     frame = { image, geometry, asset },
     base = Object.freeze({
       source: Object.freeze({ id: 'unchanged' }),
