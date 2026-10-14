@@ -1,6 +1,6 @@
 /** Unscored authoring harness using shared flight air dynamics; terrain collision is provisional. */
 import * as THREE from "../../../optional-practice/civilian-fpv/vendor/three.module.js";
-import { Q } from "../../../optional-practice/civilian-fpv/math.mjs";
+import { Q, atan2, sin, cos, multiplyQuaternion } from "../../../optional-practice/civilian-fpv/math.mjs";
 import {
   advanceFlightAir,
   quantizeFlightInput,
@@ -38,6 +38,7 @@ export function createRegionalFlightPrototype({
   source,
   geometryProfile = "terrain-v1",
   spawnId,
+  initialHeading = 0,
   mode = "self-level",
   response = DEFAULT_RESPONSE,
 } = {}) {
@@ -52,6 +53,25 @@ export function createRegionalFlightPrototype({
     (item) => item.id === (spawnId ?? manifest.spawns[0].id),
   );
   fail(spawn, "Unknown region spawn");
+  fail(
+    initialHeading === "region-centre" ||
+      (Number.isSafeInteger(initialHeading) &&
+        initialHeading >= 0 &&
+        initialHeading < 36000),
+    "Invalid initial regional heading",
+  );
+  const heading =
+    initialHeading === "region-centre"
+      ? atan2(
+          (manifest.grid.minX + manifest.grid.width / 2) * 128000 - spawn.position.x,
+          spawn.position.z - (manifest.grid.minZ + manifest.grid.depth / 2) * 128000,
+        )
+      : initialHeading;
+  const halfHeading = Math.round(-heading / 2);
+  const orientation = multiplyQuaternion(
+    [0, 0, 0, Q],
+    [0, sin(halfHeading), 0, cos(halfHeading)],
+  );
   const terrain = createVerifiedFlightGeometry(manifest, {
       profile: geometryProfile,
       source,
@@ -63,7 +83,7 @@ export function createRegionalFlightPrototype({
   let body = {
     position: { ...spawn.position },
     velocity: zero(),
-    orientation: [0, 0, 0, Q],
+    orientation,
     angular: { roll: 0, pitch: 0, yaw: 0 },
     ticks: 0,
   };

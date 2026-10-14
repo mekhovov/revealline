@@ -197,12 +197,32 @@
               <option value="terrain-v1">Terrain cells</option>
               <option value="scenery-v1">Scenery with ground</option>
             </select>
+            <select id="spawn" aria-label="Authored starting position" disabled>
+              <option value="">Default authored start</option>
+            </select>
+            <select id="heading" aria-label="Initial heading">
+              <option value="region-centre">Face region centre</option>
+              <option value="0">North</option>
+              <option value="9000">East</option>
+              <option value="18000">South</option>
+              <option value="27000">West</option>
+            </select>
+            <select id="surface" aria-label="Terrain appearance">
+              <option value="auto">Authored appearance</option>
+              <option value="plain">Plain terrain</option>
+              <option value="canyon">Canyon sediment</option>
+            </select>
+            <select id="surface-quality" aria-label="Terrain appearance quality">
+              <option value="performance">Performance</option>
+              <option value="balanced" selected>Balanced</option>
+              <option value="quality">Quality</option>
+            </select>
             <input
               id="manifest"
               aria-label="Region manifest URL"
               placeholder="Region manifest URL"
               required
-            /><button>Load region</button>
+            /><button>Load / restart region</button>
           </form>
           <p id="credit">
             Uses one verified geometry profile at a time. Production host integration
