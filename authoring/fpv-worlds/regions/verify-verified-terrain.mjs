@@ -430,6 +430,55 @@ await check(
     });
   },
 );
+await check(
+  "staged support rejection retains the old visual frame and copied pose admission",
+  async () => {
+    await withServer(assetsFor(), async ({ baseURL }) => {
+      const window = createVerifiedTerrainWindow(assetsFor().manifest, {
+        baseURL,
+      });
+      try {
+        const ready = await window.transition(point(0));
+        const previous = window.group,
+          count = previous.children.length;
+        await assert.rejects(
+          window.transition(point(5), {
+            positionMm: point(5),
+            radiusMm: 220,
+          }),
+          /cannot support/,
+        );
+        assert.equal(window.group, previous);
+        assert.equal(previous.children.length, count);
+        assert.deepEqual(window.snapshot().provenance, ready.provenance);
+        assert.equal(window.snapshot().terrainReady, false);
+        assert.equal(
+          window.snapshot().reservedGeometryBytes,
+          ready.geometryBytes,
+        );
+        await assert.rejects(
+          window.transition(point(5), {
+            positionMm: point(5),
+            radiusMm: 2001,
+          }),
+          /Invalid support pose/,
+        );
+        assert.equal(window.group, previous);
+        const supportPose = {
+          positionMm: { ...point(5), y: 40000 },
+          radiusMm: 220,
+        };
+        const pending = window.transition(point(5), supportPose);
+        supportPose.positionMm.y = -9000;
+        const admitted = await pending;
+        assert.equal(admitted.terrainReady, true);
+        assert.equal(previous.children.length, 0);
+      } finally {
+        await window.dispose();
+      }
+    });
+  },
+);
 console.log(
   JSON.stringify({
     checks,

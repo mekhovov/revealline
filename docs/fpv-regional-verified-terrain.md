@@ -30,7 +30,7 @@ content review remain separate requirements before a map can be published.
 
 ## Transactions and ownership
 
-`transition(positionMm)` copies and validates its target before replacing an active
+`transition(positionMm, supportPose?)` copies and validates its target before replacing an active
 request. Invalid targets leave the existing request alone. A successor cancels prior
 source work and waits for its cleanup before preparing new resources. Generation checks
 run after source loading, between bounded cell decodes and after asynchronous engine
@@ -52,6 +52,14 @@ then disposes the previous window. Any failure leaves the previous preview and i
 provenance intact, but readiness stays false until a successful transition. The source
 loader may already have committed new verified bytes when geometry validation fails;
 those bytes are private and never relabel the retained terrain's provenance.
+
+The optional support pose is a copied strict object with integer `positionMm` and a
+`radiusMm` from 1 to 2,000. The movement prototype supplies its current body foot
+position and hull radius. The coordinator checks downward support on staged terrain
+before publishing it or disposing the previous group. A missing or higher supporting
+surface rejects the successor and retains the previous visual frame/provenance with
+readiness disabled. This is a narrow pose admission check, not a caller callback,
+replacement terrain, collision solver or certification that the surrounding hull is clear.
 
 ## Bounded work
 
@@ -75,11 +83,12 @@ made. Missing-neighbour and conservative shape-boundary behaviour is unchanged f
 node authoring/fpv-worlds/regions/verify-verified-terrain.mjs
 ```
 
-Eleven manual scenarios use native fetch against local HTTP plus shipped Three/Rapier:
+Twelve manual scenarios use native fetch against local HTTP plus shipped Three/Rapier:
 exact-source preparation/provenance, malformed JSON/UTF-8/identities, transport hash
 corruption, canonical GLB mismatch, valid-but-discontinuous terrain, retained previews
 on failure, superseded requests, cached-source cancellation, combined-budget failure,
-profile rejection, pending disposal and repeated transitions. These are functional
+profile rejection, pending disposal, repeated transitions and pre-commit support-pose
+rejection/mutation isolation. These are functional
 fixtures, not live player flight, hardware/GPU or license acceptance. Additional unit
 coverage remains in D6.
 
