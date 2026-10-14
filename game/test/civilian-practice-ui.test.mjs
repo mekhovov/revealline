@@ -287,8 +287,6 @@ test('gym reuses neutral controller menu navigation without arming on device joi
   pad.pulse(13);
   assert.equal(f.doc.activeElement, $('gym-shell-action-sound'));
   pad.pulse(13);
-  assert.equal(f.doc.activeElement, $('gym-shell-action-fullscreen'));
-  pad.pulse(13);
   assert.equal(f.doc.activeElement, $('game-mode-simulator'));
   for (const id of [
     'simulator-modes-more',
@@ -358,8 +356,6 @@ test('gym menu keyboard navigation owns arrows and returns from nested help with
   assert.equal(f.doc.activeElement, $('gym-shell-action-settings'));
   arrow();
   assert.equal(f.doc.activeElement, $('gym-shell-action-sound'));
-  arrow();
-  assert.equal(f.doc.activeElement, $('gym-shell-action-fullscreen'));
   arrow();
   assert.equal(f.doc.activeElement, $('game-mode-simulator'));
   for (const id of [

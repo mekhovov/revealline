@@ -10,6 +10,8 @@ import { renderModeChoices } from '../ui/mode-choice-view.mjs';
 function fixture(options = {}) {
   const document = new Document();
   document.documentElement.lang = 'en';
+  document.fullscreenEnabled = options.fullscreenSupported !== false;
+  if (document.fullscreenEnabled) document.documentElement.requestFullscreen = async () => {};
   const source = document.createElement('main');
   document.body.append(source);
   const slots = {};
@@ -472,7 +474,7 @@ test('pause exposes one compact action set, preserves settings, and requires an 
   h.shell.update({ phase: 'playing' });
   h.shell.open('pause');
   assert.equal(h.shell.topDialog().dataset.modeSurface, 'pause');
-  assert.equal(h.shell.elements.modes.parentElement, h.shell.elements.content.home);
+  assert.ok(h.shell.elements.content.home.contains(h.shell.elements.modes));
   h.shell.elements.buttons['pause-settings'].click();
   assert.equal(h.shell.topDialog().dataset.modeSurface, 'settings');
   h.shell.back();
@@ -609,6 +611,25 @@ for (const currentMode of ['solo', 'team', 'versus', 'snake', 'overflight', 'sim
   });
 }
 
+test('unsupported fullscreen is absent on home and pause and the direction cycle skips it', () => {
+  const h = fixture({ withModes: true, fullscreenSupported: false, actions: { fullscreen() {} } });
+  const { buttons, home } = h.shell.elements;
+  assert.equal(buttons.fullscreen.hidden, true);
+  assert.equal(buttons['pause-fullscreen'].hidden, true);
+  const navigation = attachControllerNavigation({
+    document: h.document,
+    keyboard: true,
+    getScope: () => 'home',
+    getRoot: () => home,
+    getDefaultFocus: () => buttons.primary,
+  });
+  buttons.sound.focus();
+  navigation.handle({ direction: 'down' });
+  assert.equal(h.document.activeElement, home.querySelector('[aria-current="page"]'));
+  navigation.destroy();
+  h.shell.dispose();
+});
+
 for (const current of ['overflight', 'overflight-hunt']) {
   for (const input of ['keyboard', 'controller']) {
     test(`${current}: ${input} reaches both operations and every home action without starting play`, () => {
@@ -645,6 +666,11 @@ for (const current of ['overflight', 'overflight-hunt']) {
       };
       const selectedMode = home.querySelector('[aria-current="page"]');
       const selectedOperation = home.querySelector(`#operation-${current}`);
+      assert.equal(
+        home.querySelector('.landing-commands .mode-play-home-choices')?.contains(selectedOperation),
+        true,
+        'Survival operation choices remain in the responsive command column.',
+      );
       const other = home.querySelector(
         `#operation-${current === 'overflight' ? 'overflight-hunt' : 'overflight'}`,
       );
