@@ -476,6 +476,7 @@ const RUNTIME_PACKAGE_POLICIES = Object.freeze({
         'world-catalogue.mjs',
         'world-collision.mjs',
         'flight-contact.mjs',
+        'flight-support.mjs',
         'world-model.mjs',
         'snake-hunt.mjs',
         'snake-hunt-catalogue.mjs',

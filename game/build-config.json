@@ -273,6 +273,7 @@
     "optional-practice/civilian-fpv/world-catalogue.mjs",
     "optional-practice/civilian-fpv/world-collision.mjs",
     "optional-practice/civilian-fpv/flight-contact.mjs",
+    "optional-practice/civilian-fpv/flight-support.mjs",
     "optional-practice/civilian-fpv/world-model.mjs",
     "optional-practice/civilian-fpv/world-content.mjs",
     "optional-practice/civilian-fpv/world-store.mjs",
