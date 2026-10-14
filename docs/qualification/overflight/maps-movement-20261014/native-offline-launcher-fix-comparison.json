@@ -1,0 +1,165 @@
+{
+  "format": "revealline-retained-historical-excerpt.v1",
+  "scope": "Retained historical excerpt after an ownership migration. Original bytes are preserved separately. Historical counts, hashes and approvals inside the excerpt describe the original record only; this derived document is not a release qualification, executable restore plan, or complete original inventory.",
+  "originalSHA256": "8f27474b320f1693b64ddf5f9158c3a69292418cbfc0e85933d7b1bed1ad16f0",
+  "originalGitBlob": "4c56ba27c5c9a599c47903700f843b35c04d5a94",
+  "removedRecordsOrFields": 1,
+  "excerpt": {
+    "observedAt": "2026-10-14T16:26:14.958Z",
+    "previous": {
+      "commit": "4dab801d9ce03b42227e99388b066c378c81ca02",
+      "buildId": "8d1da69f5f02e29e87ac7597ceab0cfa5660bb7c66111683be4c35e77b3d84f0"
+    },
+    "candidate": {
+      "commit": "e914f3bdd8e36b9b78d794da4f1342dcda449e00",
+      "buildId": "a6bc422f1a063bb0f0e2febb14e7a14d6f7c4dafdfe147dac28cbdada6953c0c"
+    },
+    "mandatoryBytesDelta": 331,
+    "changedMandatoryFiles": [
+      {
+        "path": "app/current.json",
+        "bytes": 95,
+        "sha256": "161852f6668ccbc2f98793217b283823892f5de268effa5ebf28a3ce90a66c68"
+      },
+      {
+        "path": "app/service-worker.js",
+        "bytes": 10657,
+        "sha256": "3b2c1fd1a6930818347c76c49c4ad71d12eaebe3f81d408460c286120f8d2d33"
+      },
+      {
+        "path": "game/assets/field-kit/icons/review.html",
+        "bytes": 9234,
+        "sha256": "ea06f392dccff5f86fbd910a518000b5609a76d4827711240108963b000046e4"
+      },
+      {
+        "path": "game/assets/field-kit/sprites/review.html",
+        "bytes": 205968,
+        "sha256": "a14e846a0a01c7b9a36e41ae1219abdc0fb2a57883c451ff9a249efdb6b83f80"
+      },
+      {
+        "path": "game/audio/effects/licenses.html",
+        "bytes": 28014,
+        "sha256": "b0c2db922aff7a09bd932fe67d861ed244a4917740667e241a82ebe3c309c7e5"
+      },
+      {
+        "path": "game/build-info.json",
+        "bytes": 143,
+        "sha256": "ed8c5c06f1599b7db6ed526e093651597af5fc9320aa2797ec0cd64d2d2adde2"
+      },
+      {
+        "path": "game/communities/droneaid-community/index.html",
+        "bytes": 3487,
+        "sha256": "23ed3b75a3530b05b3cb394488209f9142c964c47e2e600d3a1c6e316b6edda3"
+      },
+      {
+        "path": "game/communities/droneaid/index.html",
+        "bytes": 3449,
+        "sha256": "cccd7b299a5ebd0715173740aba8a58ff5b2929c2e0afb980a568b83895c3be9"
+      },
+      {
+        "path": "game/communities/fpv-learning/index.html",
+        "bytes": 3456,
+        "sha256": "8d03b3fe50e278e68e4bd12ae96a68ab76797c8f27b313728191e1e84fc03d49"
+      },
+      {
+        "path": "game/communities/index.html",
+        "bytes": 13055,
+        "sha256": "cb7f0501be8eb686205769925d8688ed43d8f1424832b81e2178ce1de91f6367"
+      },
+      {
+        "path": "game/communities/social-drone-ua/index.html",
+        "bytes": 3471,
+        "sha256": "cf1d1d1e06cce72d1a118d4b0351bf515d3a547854c19bdf5acc031165dc9985"
+      },
+      {
+        "path": "game/communities/ukraine-culture/index.html",
+        "bytes": 3503,
+        "sha256": "16673ca9951c8407b445d5a9b927baa24857aa1e0d16e4a0fc9df83d6bc1f18a"
+      },
+      {
+        "path": "game/communities/victory-drones/index.html",
+        "bytes": 3466,
+        "sha256": "c4f4e22ba70ec67007108c300a4b9e1a75bfe3b5632cf8e805fa137bb53eec9b"
+      },
+      {
+        "path": "game/community/index.html",
+        "bytes": 7326,
+        "sha256": "88dc7bb39b2f448443e82617ff1ad830b3dcb3e531394a1d654297a8eb704c10"
+      },
+      {
+        "path": "game/company.html",
+        "bytes": 7168,
+        "sha256": "860c452d1be792ead495d9a8ad8bba11da2cf27e2fd8593434553d0ff5ec36b2"
+      },
+      {
+        "path": "game/creator/player.html",
+        "bytes": 20258,
+        "sha256": "55cb86a20b383dfea8d86c4b82649b07e012f965dca7e36a73251ceb73093481"
+      },
+      {
+        "path": "game/downloads.html",
+        "bytes": 17318,
+        "sha256": "f30e3723a73c7b60ef51a6e19717b926f20e0dcf03d1d4cbefafa473d7c18e0b"
+      },
+      {
+        "path": "game/index.html",
+        "bytes": 145952,
+        "sha256": "f1888125279e55a498e7826c72e4244b8c92bff278bcb024acedf1eea7d7bab6"
+      },
+      {
+        "path": "game/overflight/play.html",
+        "bytes": 17125,
+        "sha256": "d38fb24063d3d8f94b3f0fc7d6f8b685c69373433fe1ab58b4841785b7247108"
+      },
+      {
+        "path": "game/overflight/raid.html",
+        "bytes": 17964,
+        "sha256": "82d661809a8335ceb0b6b3b98454dd7108bf876e90e60a07275653d60c8d0fe1"
+      },
+      {
+        "path": "game/profile-recovery.html",
+        "bytes": 11820,
+        "sha256": "96d5bd4fbd2b445b9202a93d694a67f819e692cf4998d7cf524c846daab8a7a3"
+      },
+      {
+        "path": "game/replay-theater/index.html",
+        "bytes": 22052,
+        "sha256": "c58a6ad71bbf1aeda0a92d285921817efda3e6569cd3dc393514e33dba63e90f"
+      },
+      {
+        "path": "game/snake/index.html",
+        "bytes": 10998,
+        "sha256": "1094e2f8826b44ebb6d430c5097aa4b1f08804a5e34eb61a3195f0f318813ea1"
+      },
+      {
+        "path": "game/snake/play.html",
+        "bytes": 17697,
+        "sha256": "821737ac585748ef6ce9d4a1e2d60cd07e4423194a3451cd3c8f21af652abded"
+      },
+      {
+        "path": "game/studio/index.html",
+        "bytes": 163563,
+        "sha256": "6875f87596bb70394156f0686b76915c0898906d2a088faaac0c554582a3ea5d"
+      },
+      {
+        "path": "offline-content.json",
+        "bytes": 836069,
+        "sha256": "dc84c0211906497a8f4055ce43cf7e20933d890efc208b3da294efca4a0d1101"
+      }
+    ],
+    "launcherWorker": {
+      "previous": {
+        "path": "app/service-worker.js",
+        "bytes": 10326,
+        "sha256": "1d9c0f2cafab1d482eeaa8943bd0047a7b1138043b8c440853eb7ef168b45139"
+      },
+      "candidate": {
+        "path": "app/service-worker.js",
+        "bytes": 10657,
+        "sha256": "3b2c1fd1a6930818347c76c49c4ad71d12eaebe3f81d408460c286120f8d2d33"
+      },
+      "exactCommittedTemplate": true
+    },
+    "evidence": "Production generation comparison plus exact committed launcher template verification. Native retest is recorded separately by the parent."
+  }
+}

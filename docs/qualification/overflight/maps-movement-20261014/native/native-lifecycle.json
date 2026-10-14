@@ -1,0 +1,16 @@
+{
+  "commit": "3bb1b0dc66ae77baf59d0e89ab9edf257a244d10",
+  "browser": "Codex in-app browser",
+  "date": "2026-10-14",
+  "fixture": "reference",
+  "realContextLoss": 1,
+  "realContextRestore": 1,
+  "explicitResumeRequired": true,
+  "performanceTrialValid": false,
+  "retries": 10,
+  "canvasCountEachRetry": 1,
+  "atlasBaseBytesEachRetry": 28467840,
+  "preparationMsRetained": 93.29999999981374,
+  "failed": false,
+  "caveat": "Retries2-10 sampled visible diagnostic DOM; retry2 snapshot retained prior time16.07s before refresh. Subsequent samples show0.02-0.03s. Resource ownership remained stable; these are lifecycle checks, not cadence trials."
+}

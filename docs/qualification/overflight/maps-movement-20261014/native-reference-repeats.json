@@ -1,0 +1,169 @@
+{
+  "sourceCommit": "3739ca96785095f5b5484f6321a8469370957c48",
+  "combatSourceEquivalentTo": "3bb1b0dc66ae77baf59d0e89ab9edf257a244d10",
+  "conditions": "Production preparation completed; no concurrent agent simulation jobs or active gameplay recording. Other user desktop apps were left intact. This is reduced concurrency, not an isolated-machine or Iris Xe test. Same in-app Chromium, viewport936x1143 DPR2 and960x540backing, master muted, normal effects as earlier failed trials. An initial new warm-up was restarted before measurement to load the recorded integration commit; its incomplete attempt is not a completed trial.",
+  "results": [
+    {
+      "trial": 1,
+      "file": "native/reference-repeat-1.json.gz",
+      "rawSha256": "b7df9e22a3c72dd8523779638e565689e5965ec1b55ec9e11efb1fc38fbb8124",
+      "capturedAt": "2026-10-14T15:25:20.818Z",
+      "valid": true,
+      "invalidReasons": [],
+      "viewport": {
+        "width": 936,
+        "height": 1143,
+        "devicePixelRatio": 2
+      },
+      "protocol": {
+        "arrangement": "One fresh trial with its own warm-up. Three separately restarted trials are required for qualification.",
+        "warmupSeconds": 30,
+        "measurementSeconds": 120,
+        "repetitions": 1,
+        "windows": [
+          {
+            "index": 1,
+            "complete": true,
+            "measuredSeconds": 120.00090000000037,
+            "cadenceMs": {
+              "samples": 14401,
+              "p50": 8.300000000745058,
+              "p95": 9.600000000558794,
+              "p99": 10.5,
+              "worst": 12.899999999441206
+            },
+            "cadenceHz": 120.00743327758337,
+            "slowFraction": 0,
+            "passes": true
+          }
+        ],
+        "acceptance": true,
+        "scope": "This browser run only; target hardware acceptance requires recorded device runs."
+      },
+      "counts": {
+        "alive": 1500,
+        "visible": 700,
+        "rendered": 700,
+        "effects": 3,
+        "pickups": 480,
+        "warnings": 0,
+        "behaviorCues": 185,
+        "remains": 0,
+        "defeats": 0,
+        "quads": 1405
+      },
+      "atlasBaseBytes": 28467840,
+      "lost": false,
+      "rawOverflow": 0,
+      "droppedSeconds": 0
+    },
+    {
+      "trial": 2,
+      "file": "native/reference-repeat-2.json.gz",
+      "rawSha256": "47deac86c5de86d2b21eeb6ea540ec838d03b99d7b1af0d439b6edda39526b17",
+      "capturedAt": "2026-10-14T15:28:56.883Z",
+      "valid": true,
+      "invalidReasons": [],
+      "viewport": {
+        "width": 936,
+        "height": 1143,
+        "devicePixelRatio": 2
+      },
+      "protocol": {
+        "arrangement": "One fresh trial with its own warm-up. Three separately restarted trials are required for qualification.",
+        "warmupSeconds": 30,
+        "measurementSeconds": 120,
+        "repetitions": 1,
+        "windows": [
+          {
+            "index": 1,
+            "complete": true,
+            "measuredSeconds": 119.99910000000055,
+            "cadenceMs": {
+              "samples": 14400,
+              "p50": 8.300000000745058,
+              "p95": 9.800000000745058,
+              "p99": 10.599999999627471,
+              "worst": 11.599999999627471
+            },
+            "cadenceHz": 120.00090000674949,
+            "slowFraction": 0,
+            "passes": true
+          }
+        ],
+        "acceptance": true,
+        "scope": "This browser run only; target hardware acceptance requires recorded device runs."
+      },
+      "counts": {
+        "alive": 1500,
+        "visible": 700,
+        "rendered": 700,
+        "effects": 3,
+        "pickups": 480,
+        "warnings": 0,
+        "behaviorCues": 185,
+        "remains": 0,
+        "defeats": 0,
+        "quads": 1405
+      },
+      "atlasBaseBytes": 28467840,
+      "lost": false,
+      "rawOverflow": 0,
+      "droppedSeconds": 0
+    },
+    {
+      "trial": 3,
+      "file": "native/reference-repeat-3.json.gz",
+      "rawSha256": "f9c4d30b991fbf611c1329470769ce3c878ab596cc807eef9a1762a5def30a36",
+      "capturedAt": "2026-10-14T15:32:22.098Z",
+      "valid": true,
+      "invalidReasons": [],
+      "viewport": {
+        "width": 936,
+        "height": 1143,
+        "devicePixelRatio": 2
+      },
+      "protocol": {
+        "arrangement": "One fresh trial with its own warm-up. Three separately restarted trials are required for qualification.",
+        "warmupSeconds": 30,
+        "measurementSeconds": 120,
+        "repetitions": 1,
+        "windows": [
+          {
+            "index": 1,
+            "complete": true,
+            "measuredSeconds": 119.99939999999852,
+            "cadenceMs": {
+              "samples": 14402,
+              "p50": 8.300000000745058,
+              "p95": 10,
+              "p99": 10.699999999254942,
+              "worst": 12.5
+            },
+            "cadenceHz": 120.01726675300192,
+            "slowFraction": 0,
+            "passes": true
+          }
+        ],
+        "acceptance": true,
+        "scope": "This browser run only; target hardware acceptance requires recorded device runs."
+      },
+      "counts": {
+        "alive": 1500,
+        "visible": 700,
+        "rendered": 700,
+        "effects": 3,
+        "pickups": 480,
+        "warnings": 0,
+        "behaviorCues": 185,
+        "remains": 0,
+        "defeats": 0,
+        "quads": 1405
+      },
+      "atlasBaseBytes": 28467840,
+      "lost": false,
+      "rawOverflow": 0,
+      "droppedSeconds": 0
+    }
+  ]
+}

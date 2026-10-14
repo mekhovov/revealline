@@ -1,0 +1,17 @@
+{
+  "checkedAt": "2026-10-14T15:20:54.913Z",
+  "version": "0.151.1",
+  "origin": "http://127.0.0.1:8936",
+  "scope": "http://127.0.0.1:8936/",
+  "startURL": "http://127.0.0.1:8936/game/",
+  "upstream": 8935,
+  "redirects": false,
+  "source": {
+    "path": "game/ui/battlefield-ground-controls.mjs",
+    "commit": "3bb1b0dc66ae77baf59d0e89ab9edf257a244d10",
+    "sha256": "ee4f1037fcaa9f0036bddf22f81b2b690d43b2451b0d924fa5980a8ffe1920e0",
+    "exactCommittedBytes": true
+  },
+  "evidence": "HTTP and pure installed-edition validator check; actual browser installation remains separate.",
+  "buildId": "b2edbc1dc1578b5a5d1bfe88a99def3d7f7df380dfe52d329bb91d61905f3df6"
+}
