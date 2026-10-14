@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import vm from 'node:vm';
-import { soloPage, settle, memoryStorage } from './helpers/solo-dom.mjs';
+import { soloPage, settle, memoryStorage, clickVisibleSimulator } from './helpers/solo-dom.mjs';
 import { managedIndexedDB } from './helpers/managed-idb.mjs';
 import { editionProviderFixture } from './helpers/edition-provider-fixture.mjs';
 import { openMissionLibrary, activateMissionCard } from './helpers/library-selection.mjs';
@@ -197,7 +197,7 @@ for (const personal of [null, 'tryzub']) {
     };
     destination = undefined;
     page.$('shell-menu').click();
-    page.$('solo-fpv-sim').click();
+    clickVisibleSimulator(page);
     await settle(() => destination);
     assert.equal(destination.searchParams.get('appearanceFamily'), second.family.id);
     assert.equal(destination.searchParams.get('appearanceRevision'), second.family.revision);
@@ -256,7 +256,7 @@ for (const outcome of ['cancel', 'failure']) {
     };
     destination = undefined;
     page.$('shell-menu').click();
-    page.$('solo-fpv-sim').click();
+    clickVisibleSimulator(page);
     await settle(() => destination);
     assert.equal(destination.searchParams.get('appearanceFamily'), first.family.id);
     assert.equal(page.storage.getItem(THEME_PREFERENCES_KEY), null);

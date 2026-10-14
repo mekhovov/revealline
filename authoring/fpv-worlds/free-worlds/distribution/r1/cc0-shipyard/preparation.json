@@ -1,0 +1,147 @@
+{
+  "format": "FPVFreeWorldPreparation.v1",
+  "id": "cc0-shipyard",
+  "title": [
+    "Dry-dock Shipyard",
+    "Верф сухого доку"
+  ],
+  "kit": "pirate-kit",
+  "sourceURL": "https://kenney.nl/assets/pirate-kit",
+  "downloadURL": "https://kenney.nl/media/pages/assets/pirate-kit/e6d4bb1525-1771333093/kenney_pirate-kit.zip",
+  "archiveSha256": "667ed2caf92954ddb98f7b7cede831fe99ab75063c26b25e23d32715bee9c943",
+  "license": "CC0-1.0",
+  "tool": "@gltf-transform 4.5.1",
+  "modelBytes": 337524,
+  "modelSha256": "42229ce5f09782e431b3933599c66750fc01fb1a92552aade4a457437888f02d",
+  "packBytes": 608177,
+  "packSha256": "5b3f2251ff0fcbdfbd645a7f6394b2f13d23f544adc57fe2b8a8ccdcdce14e98",
+  "collisionSurfaces": 30,
+  "collisionTriangles": 6150,
+  "validation": {
+    "numErrors": 0,
+    "numWarnings": 0,
+    "numInfos": 0,
+    "numHints": 0,
+    "messages": [],
+    "truncated": false
+  },
+  "placements": [
+    {
+      "model": "Models/GLB format/ship-large.glb",
+      "sha256": "270fff44a9c97f0f5038b0776f9a9b661961ff2098109a9ce614b645cc5e0d20",
+      "placement": {
+        "model": "ship-large",
+        "x": -25,
+        "z": 0,
+        "size": 23,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 1.7557251397132834
+    },
+    {
+      "model": "Models/GLB format/ship-wreck.glb",
+      "sha256": "0b2cac74f23ffdc3bf5020880126338287a0a0317d6a98ce4250123d8821ad2b",
+      "placement": {
+        "model": "ship-wreck",
+        "x": 24,
+        "z": -15,
+        "size": 20,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 1.8867924698055238
+    },
+    {
+      "model": "Models/GLB format/tower-complete-large.glb",
+      "sha256": "3e65bcb990840a59c0b7c0c1237ba41da5a2b5434cab65d6f904a732d4899eb0",
+      "placement": {
+        "model": "tower-complete-large",
+        "x": -31,
+        "z": -35,
+        "size": 7,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 1.9293977558363042
+    },
+    {
+      "model": "Models/GLB format/tower-watch.glb",
+      "sha256": "0cdba767016b9ee8831084f94357f6b6dd00e2f10c6db41d81f15352dff5c4b4",
+      "placement": {
+        "model": "tower-watch",
+        "x": 31,
+        "z": 30,
+        "size": 8,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 2.623981161756338
+    },
+    {
+      "model": "Models/GLB format/palm-detailed-bend.glb",
+      "sha256": "9bc339e2942d6fba9007caa9fa4301a6a08f4b134511bea65ce236ba2910e7f8",
+      "placement": {
+        "model": "palm-detailed-bend",
+        "x": -27,
+        "z": 30,
+        "size": 10,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 3.109408169203596
+    },
+    {
+      "model": "Models/GLB format/palm-straight.glb",
+      "sha256": "a4101242b8c825280dfb6152900285aacc091203ce7bf9c743579599f1496520",
+      "placement": {
+        "model": "palm-straight",
+        "x": 28,
+        "z": -36,
+        "size": 8,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 3.2146200193503187
+    },
+    {
+      "model": "Models/GLB format/crate.glb",
+      "sha256": "b525674e07c8b83667512a8dd93be0d7684358347d0e64d2bb16b156ac382ed1",
+      "placement": {
+        "model": "crate",
+        "x": -12,
+        "z": 20,
+        "size": 3,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 2.2918257945221647
+    },
+    {
+      "model": "Models/GLB format/barrel.glb",
+      "sha256": "7616dedf7c1023afa6ecd3c52a4609460aae0e582dee14e60ec5e47c1174793b",
+      "placement": {
+        "model": "barrel",
+        "x": 13,
+        "z": 20,
+        "size": 2,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 1.4968959682741012
+    },
+    {
+      "model": "Models/GLB format/boat-row-large.glb",
+      "sha256": "b496c0d5f9053ebc7e9b9a39a4770d5ccaff5510c51b7c72c1b8391442e61d0f",
+      "placement": {
+        "model": "boat-row-large",
+        "x": 20,
+        "z": 20,
+        "size": 8,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 2.8049048840694923
+    }
+  ]
+}

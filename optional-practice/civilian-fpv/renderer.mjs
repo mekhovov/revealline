@@ -343,7 +343,13 @@ export function createFlightRenderer({
     delete group.userData.visuals;
     group.clear();
   }
+  const representedCollisionMeshes = new Map();
+  let importedGroundFog = null;
   function clearImported() {
+    if (importedGroundFog) scene.fog = importedGroundFog;
+    importedGroundFog = null;
+    for (const [object, visible] of representedCollisionMeshes) object.visible = visible;
+    representedCollisionMeshes.clear();
     if (sceneryFallback) sceneryFallback.visible = true;
     if (importedMixer) {
       importedMixer.stopAllAction();
@@ -2444,6 +2450,9 @@ export function createFlightRenderer({
     // A map view frames the arena instead of inheriting a wide FPV lens.
     // Preserve the player's lens and fit narrow portrait views horizontally.
     const mapView = view === 'overview' || view === 'editor';
+    // An overview is outside the flight arena; authored terrain must remain
+    // inspectable there. Restore the exact course fog for FPV and chase.
+    if (importedGroundFog) scene.fog = mapView ? null : importedGroundFog;
     const displayFov = mapView
       ? Math.min(
           120,
@@ -2851,6 +2860,33 @@ export function createFlightRenderer({
         material,
       });
       imported.add(result.scene);
+      // An authored scene may supply artwork for specific canonical collision
+      // surfaces. Keep their physics and support queries; suppress only duplicate
+      // placeholder rendering after successful scene admission. Legacy imports
+      // without this opt-in retain their existing appearance.
+      const visualIds = result.scene.userData?.fpvCollisionVisuals;
+      if (
+        Array.isArray(visualIds) &&
+        visualIds.length <= 256 &&
+        visualIds.every((id) => typeof id === 'string' && id.length <= 80)
+      ) {
+        const represented = new Set(visualIds);
+        world.traverse((object) => {
+          if (
+            object.isMesh &&
+            (represented.has(object.userData.collisionId) ||
+              (result.scene.userData.fpvGroundVisual === true && object.userData.proceduralGround))
+          ) {
+            representedCollisionMeshes.set(object, object.visible);
+            object.visible = false;
+          }
+        });
+        if (result.scene.userData.fpvGroundVisual === true) {
+          if (sceneryFallback) sceneryFallback.visible = false;
+          importedGroundFog = scene.fog;
+        }
+        objectiveVisibility = null;
+      }
       if (
         json.asset?.extras?.fpvScenery === true &&
         ['woodland', 'courtyard', 'container-yard'].includes(course?.environment)

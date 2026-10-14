@@ -15,13 +15,13 @@ const source = (options = {}) =>
 test('Snake exposes every current level in stable chapter sections and binds exact launches', async () => {
   const launched = [],
     library = createMissionLibrary([source({ launch: (...args) => launched.push(args) })]);
-  assert.equal(library.missions.length, 192);
-  assert.equal(new Set(library.missions.map((row) => row.campaignKey)).size, 29);
+  assert.equal(library.missions.length, 240);
+  assert.equal(new Set(library.missions.map((row) => row.campaignKey)).size, 35);
   assert.deepEqual(
     library.missions.map((row) => row.globalLevelNumber),
     entries.map((_, i) => i + 1),
   );
-  for (const mode of ['solo', 'versus', 'team']) assert.equal(library.forMode(mode).length, 192);
+  for (const mode of ['solo', 'versus', 'team']) assert.equal(library.forMode(mode).length, 240);
   const last = library.missions.at(-1);
   await library.launch(last, { mode: 'team' });
   assert.equal(launched[0][0], entries.at(-1));

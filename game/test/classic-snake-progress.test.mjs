@@ -2,6 +2,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
+import { dataIdentity } from '../data-json.mjs';
 import { managedIndexedDB } from './helpers/managed-idb.mjs';
 import { JOURNEY_PROFILE_DATABASE } from '../profile-database.mjs';
 import { CLASSIC_SNAKE_LEVELS } from '../snake/classic-catalogue.mjs';
@@ -204,4 +205,93 @@ test('a full catalogue profile stays verified across reads and updates, and disc
   await reopened.read();
   assert.equal(reopened.diagnostics().cachedProofs, 2);
   assert.equal(reopened.diagnostics().verified, cold.verified);
+});
+
+// Build independent valid zero-move witnesses without performing 2,048 growing
+// database writes. read() below still verifies every resulting witness normally.
+async function fullRowProfile(t, model) {
+  const source = recordsFor(t, model),
+    initial = createClassicSnakeMatch(first.level, { seed: 1 });
+  await source.remember(initial.runs[0], context(initial));
+  const template = Object.values(source.snapshot().rows)[0],
+    profile = source.snapshot();
+  profile.rows = {};
+  for (let seed = 1000; seed < 3048; seed++) {
+    const match = createClassicSnakeMatch(first.level, { seed }),
+      witness = { match: exportClassicSnakeMatch(match), board: 0 },
+      id = dataIdentity(witness),
+      row = { ...template, seed, proofs: { [id]: witness }, scoreProof: id, catchesProof: id };
+    profile.rows[classicRecordKey(match.runs[0], 'solo')] = row;
+  }
+  await seed(model, profile);
+  return profile;
+}
+
+test('the actual 2048-row ceiling preserves existing proofs and returns a verified unsaved result without poisoning later reads', async (t) => {
+  const model = managedIndexedDB(),
+    before = await fullRowProfile(t, model),
+    warnings = [],
+    records = recordsFor(t, model, { onWarning: (error) => warnings.push(error.message) });
+  await records.read();
+  assert.equal(Object.keys(records.snapshot().rows).length, 2048);
+  model.failAnyPutAt = 1;
+  assert.deepEqual(await records.visit(first.id), { saved: false });
+  const optimistic = records.snapshot();
+  // The historic winning seed is outside the filled seed range.
+  const match = wonMatch();
+  assert.ok(!before.rows[classicRecordKey(match.runs[0], 'solo')]);
+  const receipt = await records.remember(match.runs[0], context(match));
+  assert.deepEqual(receipt, { verified: true, saved: false });
+  assert.match(warnings.at(-1), /capacity/);
+  assert.deepEqual(records.snapshot(), optimistic);
+  // A full merge must also preserve the earlier failed-write queue.
+  model.failAnyPutAt = null;
+  await records.read();
+  assert.deepEqual(records.snapshot(), optimistic);
+  const reopened = recordsFor(t, model);
+  await reopened.read();
+  assert.deepEqual(reopened.snapshot().rows, before.rows);
+  assert.equal(reopened.recent().levelId, first.id);
+});
+
+test('the actual 24 MiB serialized-profile boundary remains untouched while a new clear is verified for this session', async (t) => {
+  const model = managedIndexedDB(),
+    source = recordsFor(t, model),
+    match = wonMatch();
+  await source.remember(match.runs[0], context(match));
+  // Valid JSON at the exact byte limit remains readable. Padding exercises the
+  // real external byte boundary without synthesizing unverified proof content.
+  const json = JSON.stringify(source.snapshot()),
+    budget = 24 * 1024 * 1024,
+    boundary = json + ' '.repeat(budget - Buffer.byteLength(json));
+  await seed(model, boundary);
+  const records = recordsFor(t, model);
+  await records.read();
+  assert.equal(records.cleared(first.id), true);
+  const oversized = boundary + ' ';
+  await seed(model, oversized);
+  const writes = model.allPuts.length;
+  const receipt = await records.remember(match.runs[0], context(match));
+  assert.deepEqual(receipt, { verified: true, saved: false });
+  assert.equal(records.cleared(first.id), true);
+  assert.equal(model.allPuts.length, writes, 'oversized disk bytes were not replaced');
+  // Restoring an ordinary valid snapshot permits the retained write to retry.
+  await seed(model, source.snapshot());
+  await records.read();
+  const reopened = recordsFor(t, model);
+  await reopened.read();
+  assert.equal(reopened.cleared(first.id), true);
+});
+
+test('unavailable IndexedDB reports a verified unsaved clear and keeps the session record', async (t) => {
+  const records = createClassicSnakeRecords({ indexedDB: null }),
+    match = wonMatch();
+  t.after(() => records.close());
+  assert.deepEqual(await records.remember(match.runs[0], context(match)), {
+    verified: true,
+    saved: false,
+  });
+  assert.equal(records.cleared(first.id), true);
+  await records.read();
+  assert.equal(records.cleared(first.id), true);
 });

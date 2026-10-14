@@ -1,3 +1,4 @@
+import { resolveClassicSnakeRecipeEntry } from '../game/snake/classic-catalogue-archive.mjs';
 import { readFile, writeFile, mkdir, stat } from 'node:fs/promises';
 import { execFileSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
@@ -242,6 +243,7 @@ export async function verifyPursuitPilotRecording({ pilot, mode, pace, recording
   );
   check(entry, 'Unknown pilot/mode/pace. Prepare the packet for accepted cases.');
   let outcome;
+  let acceptedLevel = entry.level;
   if (entry.family === 'capture' && mode !== 'solo') {
     const replay = snapshotLocalMatchRecording(recording);
     check(
@@ -323,7 +325,16 @@ export async function verifyPursuitPilotRecording({ pilot, mode, pace, recording
         recording.preset === 'classic',
       'Recording metadata or seed differs from the pinned Snake case.',
     );
-    const match = restoreClassicSnakeMatch(recording.match, { level: entry.level });
+    const sourceEntry = CLASSIC_SNAKE_V3_LEVELS.find((candidate) => candidate.id === pilot);
+    const setup = { pace, preset: 'classic', targetRules: 'authored', format: 'campaign' };
+    const accepted = resolveClassicSnakeRecipeEntry(
+      sourceEntry,
+      recording.match?.replays?.[0]?.level,
+      setup,
+      { allowArchive: true },
+    );
+    acceptedLevel = prepareClassicSnakeLevel(accepted, setup);
+    const match = restoreClassicSnakeMatch(recording.match, { level: acceptedLevel });
     check(
       match.options.mode === mode &&
         match.options.seed === entry.seed &&
@@ -378,7 +389,7 @@ export async function verifyPursuitPilotRecording({ pilot, mode, pace, recording
     mode,
     pace,
     seed: entry.seed,
-    recipe: recipe(entry.level),
+    recipe: recipe(acceptedLevel),
     recordingSha256: hash(canonicalJSON(recording)),
     verification:
       outcome.terminalObservationMatch === true

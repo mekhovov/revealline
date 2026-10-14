@@ -47,11 +47,11 @@ export function installPracticeWorker(scope, pins, revision) {
           const { url, bytes: limit, sha256 } = data ?? {},
             index =
               url ===
-              'https://raw.githubusercontent.com/mekhovov/revealline/main/authoring/fpv-worlds/published/ground-motion-v1/index.json';
+              'https://raw.githubusercontent.com/mekhovov/revealline/main/authoring/fpv-worlds/published/free-worlds-v1/index.json';
           if (
             data?.type !== 'world-read' ||
             (index
-              ? limit !== 8192 || sha256 !== undefined
+              ? limit !== 32768 || sha256 !== undefined
               : !Number.isSafeInteger(limit) ||
                 limit <= 0 ||
                 limit > 67108864 ||
