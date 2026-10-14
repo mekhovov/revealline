@@ -3718,9 +3718,11 @@ export function mountWorldApp({
       );
     function setBusy(value) {
       busy = value;
-      for (const b of dialog.querySelectorAll('button')) b.disabled = value;
-      cancel.disabled = committing;
-      confirm.disabled = value || !reviewed;
+      // Keep Cancel focused while loading/exporting: even briefly disabling a
+      // focused native button blurs it before the final enabled state is applied.
+      for (const b of dialog.querySelectorAll('button')) {
+        b.disabled = b === cancel ? committing : b === confirm ? value || !reviewed : value;
+      }
       dialog.setAttribute('aria-busy', String(value));
     }
     async function runExport(action) {
@@ -6096,6 +6098,8 @@ export function mountWorldApp({
       ownsLaunch() &&
       !options.paused &&
       !options.preview &&
+      // Recovery restores a recorded command prefix; wait for deliberate pickup.
+      !options.recover &&
       pauseRevision === playbackPauseRevision &&
       !doc.hidden &&
       (doc.hasFocus?.() ?? true)
