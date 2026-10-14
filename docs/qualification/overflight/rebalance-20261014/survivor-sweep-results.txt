@@ -1,0 +1,61 @@
+- main:
+  - button "Menu"
+  - generic: Survive
+  - button "Pause" [disabled]
+  - region "Survive battlefield":
+    - generic: Hull 20 / 100
+    - progressbar "Hull"
+    - generic: Spare airframes 2
+    - generic: Shield hits 1
+    - generic: Sortie
+    - strong: 05:27
+    - generic: Level 11
+    - generic: 2,568 Cleared
+    - paragraph: Automated review · Fan + shield · no pulse
+    - 'status "Open cache: fly out, then choose one reward. +25 hull, +1 reroll and boost ready, or stored Overdrive: your next fresh boost starts 6 seconds of 25% faster attacks. Overdrive cannot stack or refresh."': Cache open · choose one reward
+    - generic: Saturation Fan 4
+    - generic: Slow field 3
+    - generic: Side burst 3
+    - generic: Recovery shield 1
+    - generic: Boost Ready
+    - generic "Diagnostics"
+  - text: ✓ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄
+  - dialog "Results":
+    - heading "Results" [level=1]
+    - generic: ✦
+    - paragraph: Field cleared
+    - heading "Sortie complete" [level=2]
+    - paragraph: Final target down. This battlefield tells your story.
+    - paragraph: Automated review · Fan + shield · no pulse
+    - term: Cleared
+    - definition: 2,568
+    - term: Time
+    - definition: 05:27
+    - term: Salvage
+    - definition: 3,648
+    - term: Upgrades earned
+    - definition: "10"
+    - term: Hull damage
+    - definition: "80"
+    - generic: ✓ Elite defeated
+    - generic: ✓ Final tank defeated
+    - generic: ✓ Weapon evolved
+    - generic: ✓ No airframes lost
+    - heading "Your build" [level=3]
+    - strong: Saturation Fan
+    - generic: Level 4
+    - strong: Slow field
+    - generic: Level 3
+    - strong: Side burst
+    - generic: Level 3
+    - strong: Recovery shield
+    - generic: Level 1
+    - paragraph: Contact 80
+    - paragraph: Automated review
+    - generic: Engineer — A fine route through a complicated place.
+    - button "Retry same seed"
+    - button "New sortie"
+    - paragraph: Try another combination on the same battlefield.
+    - button "Back"
+    - button "Retry" [active]
+- text: + + + + + + + + +

@@ -1,0 +1,67 @@
+- main:
+  - button "Menu"
+  - generic: Riy · escorts
+  - button "Resume"
+  - region "Survive battlefield":
+    - generic: Hull 60 / 100
+    - progressbar "Hull"
+    - generic: Spare airframes 2
+    - generic: Sortie
+    - strong: 00:22
+    - generic: Level 1
+    - generic: 26 Cleared
+    - generic: Overflight payload 1
+    - generic: Sweeper 1
+    - generic: Breaker 1
+    - generic: Boost Ready
+    - complementary:
+      - strong: Riy · escorts
+      - generic: Sweeper · rear cover / Breaker · forward strikes
+      - generic: Escorts following
+      - button "F · Focus target" [disabled]
+  - text: ⌃ ✓ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄
+- dialog "Choose an upgrade":
+  - banner:
+    - generic: ✦
+    - paragraph: Level reached 2
+    - heading "Choose an upgrade" [level=1]
+    - paragraph: Combat is paused. Compare the patterns, then choose your next upgrade.
+  - 'button "Wide Fan. Combat. Level 1 → 2. Now: A stationary charge dropped behind the drone. Next: Three impacts spread across your flight direction. Visual comparison. NOW: 1 charge · 1 hit; R 48 · 30 dmg · 1.2s. NEXT: 3 charges · 1 hit; R 40 · 30 dmg · 1s" [active]':
+    - generic: Combat · Level 1 → 2
+    - strong: Wide Fan
+    - 'img "Visual comparison. NOW: 1 charge · 1 hit; R 48 · 30 dmg · 1.2s. NEXT: 3 charges · 1 hit; R 40 · 30 dmg · 1s"':
+      - generic: NOW
+      - generic: 1 charge · 1 hit
+      - generic: R 48 · 30 dmg · 1.2s
+      - generic: NEXT
+      - generic: 3 charges · 1 hit
+      - generic: R 40 · 30 dmg · 1s
+    - generic: Three impacts spread across your flight direction
+    - generic: Saturation Fan · 2/4
+  - 'button "Double Pulse. Combat. Level 1 → 2. Now: A stationary charge dropped behind the drone. Next: Two anchored impacts clear your rear trail; turn back to collect salvage. Visual comparison. NOW: 1 charge · 1 hit; R 48 · 30 dmg · 1.2s. NEXT: 1 charge · 2 hits; Rear trail · 40 dmg · 1.3s"':
+    - generic: Combat · Level 1 → 2
+    - strong: Double Pulse
+    - 'img "Visual comparison. NOW: 1 charge · 1 hit; R 48 · 30 dmg · 1.2s. NEXT: 1 charge · 2 hits; Rear trail · 40 dmg · 1.3s"':
+      - generic: NOW
+      - generic: 1 charge · 1 hit
+      - generic: R 48 · 30 dmg · 1.2s
+      - generic: NEXT
+      - generic: 1 charge · 2 hits
+      - generic: Rear trail · 40 dmg · 1.3s
+    - generic: Two anchored impacts clear your rear trail; turn back to collect salvage
+    - generic: Echo Cascade · 2/4
+  - 'button "Recovery shield. Support. Level 0 → 1. Now: Empty slot. Next: Absorb one hit; recover in 10 seconds. Hits briefly delay recovery without resetting progress. Visual comparison. NOW: Empty slot; No effect yet. NEXT: 10s recharge; Absorbs one hit"':
+    - generic: Support · Level 0 → 1
+    - strong: Recovery shield
+    - 'img "Visual comparison. NOW: Empty slot; No effect yet. NEXT: 10s recharge; Absorbs one hit"':
+      - generic: NOW
+      - generic: Empty slot
+      - generic: No effect yet
+      - generic: NEXT
+      - generic: 10s recharge
+      - generic: Absorbs one hit
+    - generic: Absorb one hit; recover in 10 seconds. Hits briefly delay recovery without resetting progress
+  - contentinfo:
+    - button "Reroll"
+    - generic: 2 rerolls left
+- text: + + + + + + + + +
