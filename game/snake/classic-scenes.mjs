@@ -4,6 +4,11 @@ import {
   INDUSTRIAL_ENVIRONMENT_REVISION,
 } from '../presentation/industrial-materials.mjs';
 import { drawMachinerySpecimen } from '../presentation/industrial-machinery.mjs';
+import {
+  classicBattlefieldPalette,
+  classicBattlefieldWorld,
+  drawClassicBattlefield,
+} from './classic-battlefield-art.mjs';
 
 import { resolveClassicWorld } from './classic-worlds.mjs';
 export { CLASSIC_BOARD_SCENES } from './classic-worlds.mjs';
@@ -100,6 +105,7 @@ export function resolveClassicBoardScene(options = {}) {
 }
 export function classicScenePalette(scene, treatment = 'living-circuit') {
   const base = SCENES[resolveClassicBoardScene({ boardScene: scene })];
+  if (treatment === 'fpv-battlefield') return { ...base, ...classicBattlefieldPalette(scene) };
   if (treatment === 'theme')
     return { ...base, field: '#354749', tint: [53, 71, 73], wallTint: [101, 121, 118] };
   if (treatment === 'retro')
@@ -219,6 +225,10 @@ export function drawClassicLivingGround(
   { unit = 28, document, treatment = 'living-circuit', zoning = 'court', composition = {} } = {},
 ) {
   const palette = classicScenePalette(scene, treatment);
+  if (treatment === 'fpv-battlefield') {
+    drawClassicBattlefield(ctx, scene, level.width * unit, level.height * unit);
+    return;
+  }
   ctx.fillStyle = palette.field;
   ctx.fillRect(0, 0, level.width * unit, level.height * unit);
   for (let y = 0; y < level.height; y++)
@@ -751,7 +761,7 @@ export function classicSceneBackdrop(
   const world = resolveClassicWorld({ boardScene: scene, boardStyle: treatment });
   const selected = world.scene;
   treatment = ['theme', 'retro'].includes(world.treatment) ? 'living-circuit' : world.treatment;
-  const key = `${selected}/${treatment}`;
+  const key = `${treatment === 'fpv-battlefield' ? classicBattlefieldWorld(selected) : selected}/${treatment}`;
   if (!backdrops.has(document)) backdrops.set(document, new Map());
   const cache = backdrops.get(document);
   if (cache.has(key)) return cache.get(key);
@@ -765,6 +775,13 @@ export function classicSceneBackdrop(
   // Keep the authored composition coordinates while bounding every decoded
   // CSS image, including previously selected looks retained by the browser.
   ctx.scale(canvas.width / 384, canvas.height / 288);
+  if (treatment === 'fpv-battlefield') {
+    drawClassicBattlefield(ctx, selected, 384, 288, { backdrop: true });
+    const url = canvas.toDataURL('image/png');
+    canvas.width = canvas.height = 1;
+    cache.set(key, url);
+    return url;
+  }
   const material = texture(document, selected, false, 0, treatment);
   rect(ctx, '#172c34', 0, 0, 384, 288);
   if (material)

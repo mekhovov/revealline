@@ -461,3 +461,41 @@ test('V2 pulse charge requires displacement, so tiny loops cannot manufacture fu
   for (let i = 0; i < 45; i++) stepOverflight(run, { x: 1 });
   assert.equal(run.player.pulseCharge, 1);
 });
+
+test('current caches queue the second guard encounter without losing either reward opportunity', () => {
+  const compiled = compileOverflightProject(createOverflightProject({ rulesVersion: 3 }));
+  const run = createOverflightRun(compiled);
+  startOverflight(run);
+  run.time = 220;
+  run.tick = 13200;
+  const update = () =>
+    updateOverflightCaches(
+      run,
+      (options) => spawnOverflightEnemy(run, options),
+      () => {},
+    );
+  const originalRewardCounts = run.caches.map((cache) => cache.rewards.length);
+  update();
+  assert.equal(run.caches[0].state, 'locked');
+  assert.equal(run.caches[1].state, 'dormant');
+  assert.equal(run.caches[1].guardIds.length, 0);
+  const admitted = run.stats.spawned;
+  update();
+  assert.equal(run.stats.spawned, admitted, 'waiting cannot create additional guard packs');
+  const first = run.caches[0];
+  for (const enemy of run.enemies) if (first.guardIds.includes(enemy.id)) enemy.active = false;
+  update();
+  assert.equal(first.state, 'open');
+  assert.equal(run.caches[1].state, 'locked');
+  assert.equal(run.caches.filter((cache) => cache.state === 'locked').length, 1);
+  assert.deepEqual(
+    run.caches.map((cache) => cache.rewards.length),
+    originalRewardCounts,
+  );
+  assert.equal(
+    first.selectedReward,
+    null,
+    'opening a later encounter cannot spend an earlier reward',
+  );
+  assert.equal(run.caches[1].guardIds.length, compiled.combat.supplies.guardCount);
+});

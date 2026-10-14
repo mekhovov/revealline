@@ -17,6 +17,7 @@ export const CLASSIC_BOARD_STYLES = Object.freeze([
   'toybox',
   'atmospheric-ruins',
   'night-arcade',
+  'fpv-battlefield',
 ]);
 export const CLASSIC_BOARD_SCENES = Object.freeze([
   'auto',

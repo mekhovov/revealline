@@ -25,6 +25,11 @@ import {
   addDestructionAudioSlots,
   needsDestructionAudioSlots,
 } from '../../game/presentation/destruction-audio-upgrade.mjs';
+import {
+  addOverflightArtworkSlots,
+  needsOverflightArtworkSlots,
+  OVERFLIGHT_ARTWORK_SLOTS,
+} from '../../game/presentation/overflight-artwork-upgrade.mjs';
 globalThis.RevealLineToolLaunch?.attached();
 import { createDefaultThemeBundle } from '../../game/presentation/catalog.mjs';
 import {
@@ -84,6 +89,16 @@ const destructionAdmissionCopy = (key) =>
     ],
   })[key][getLocale() === 'uk' ? 1 : 0];
 localizedText($('add-destruction-audio'), () => destructionAdmissionCopy('label'));
+const overflightAdmissionCopy = (key) =>
+  ({
+    label: ['Add FPV Survivals artwork slots', 'Додати графіку FPV Survivals'],
+    preparing: ['Adding editable battlefield artwork…', 'Додаємо графіку поля для редагування…'],
+    complete: [
+      'FPV Survivals artwork added to this draft. Existing artwork and animation remain selected. Save a local revision or export to keep this change.',
+      'Графіку FPV Survivals додано до чернетки. Наявну графіку й анімацію збережено. Збережіть локальну версію або експортуйте зміни.',
+    ],
+  })[key][getLocale() === 'uk' ? 1 : 0];
+localizedText($('add-overflight-artwork'), () => overflightAdmissionCopy('label'));
 localizedText($('industrial-art-review'), () =>
   getLocale() === 'uk' ? 'Огляд індустріальної графіки' : 'Industrial art review',
 );
@@ -352,6 +367,7 @@ function refresh() {
       working.document.slots[0].id;
   $('add-team-anchors').disabled = !needsTeamPresentationSlots(working.document);
   $('add-destruction-audio').disabled = !needsDestructionAudioSlots(working.document);
+  $('add-overflight-artwork').disabled = !needsOverflightArtworkSlots(working.document);
   const view = resolved();
   const themes = [...new Map(working.document.themes.map((theme) => [theme.id, theme])).values()];
   $('filter-theme').replaceChildren(
@@ -1347,6 +1363,16 @@ $('add-destruction-audio').onclick = () =>
     $('filter-search').value = 'audio.';
     for (const name of ['screen', 'state', 'kind', 'quality']) $(`filter-${name}`).value = '';
     stage(next, working.assets, destructionAdmissionCopy('complete'));
+    rememberView();
+  });
+$('add-overflight-artwork').onclick = () =>
+  operation(overflightAdmissionCopy('preparing'), () => {
+    requireSettled();
+    const next = addOverflightArtworkSlots(working.document);
+    selected = OVERFLIGHT_ARTWORK_SLOTS[0];
+    $('filter-search').value = 'overflight.';
+    for (const name of ['screen', 'state', 'kind', 'quality']) $(`filter-${name}`).value = '';
+    stage(next, working.assets, overflightAdmissionCopy('complete'));
     rememberView();
   });
 $('undo-draft').onclick = () =>
