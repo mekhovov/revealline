@@ -18,8 +18,14 @@ const box = (c, ink, x, y, w, h) => {
 
 export function classicStructureModule(wall, scene, { structure, composition = {} } = {}) {
   const families = CLASSIC_STRUCTURE_FAMILIES[scene] ?? CLASSIC_STRUCTURE_FAMILIES.quarry;
+  const component = composition.componentAssemblies?.find((group) =>
+    group.cells.some(([x, y]) => x === wall.x && y === wall.y),
+  );
   const requested =
-    composition.assembly?.family ?? aliases[composition.structure] ?? composition.structure;
+    component?.family ??
+    composition.assembly?.family ??
+    aliases[composition.structure] ??
+    composition.structure;
   const bounds = structure ?? { ...wall, width: 1, height: 1 };
   const family = families.includes(requested)
     ? requested
@@ -275,7 +281,7 @@ function drawToyConstruction(ctx, scene, m) {
     freight: ['#d08068', '#e5a084', '#edd4a4'],
     workshop: ['#bd9362', '#dab47b', '#759f9c'],
     harbor: ['#69a3a0', '#90c3b4', '#efd0a3'],
-    relay: ['#859eb3', '#acbdc8', '#edcc8f'],
+    relay: ['#3d506e', '#536d91', '#edcc8f'],
     quarry: ['#8da38a', '#b9c5a4', '#dbbc8a'],
   }[scene] ?? ['#859c99', '#b6c6b1', '#dec492'];
   paint(m.row < Math.ceil(m.height / 2) ? tones[1] : tones[0], 0, 0, 28, 28);
@@ -284,6 +290,24 @@ function drawToyConstruction(ctx, scene, m) {
   if (m.column === m.width - 1) paint('#ab7953', 24, 0, 2, 28);
   if (m.row === 0) paint('#f4ddac', 0, 2, 28, 2);
   if (m.row === m.height - 1) paint('#9e7554', 0, 24, 28, 2);
+  // Alpine enamel must remain distinct from the pale blue tabletop in
+  // grayscale. A single native fitting identifies the structure's role.
+  if (scene === 'relay' && m.width > 1 && m.height > 1) {
+    if (m.family === 'antenna' && m.column === Math.floor(m.width / 2)) {
+      paint('#edcc8f', 12, 0, 4, 28);
+      if (m.row === Math.floor(m.height / 2)) paint('#fff1be', 4, 10, 20, 4);
+    } else if (m.column === Math.floor(m.width / 2) && m.row === Math.floor(m.height / 2)) {
+      if (m.family === 'receiver') {
+        paint('#edcc8f', 5, 7, 18, 15);
+        for (const y of [10, 14, 18]) paint('#314561', 8, y, 12, 2);
+      } else if (m.family === 'shelter') {
+        paint('#edcc8f', 5, 6, 18, 12);
+        paint('#263b58', 7, 8, 14, 8);
+        paint('#edcc8f', 13, 8, 2, 8);
+        paint('#f4ddac', 8, 9, 4, 1);
+      }
+    }
+  }
   if (m.width === 1 || m.height === 1) {
     paint(tones[2], 8, 9, 12, 10);
     paint('#fbefd0', 9, 10, 9, 2);

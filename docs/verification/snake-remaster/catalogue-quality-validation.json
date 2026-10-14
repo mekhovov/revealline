@@ -1,0 +1,66 @@
+{
+  "format": "snake-catalogue-quality-validation.v1",
+  "checkedAt": "2026-10-14T03:36:17.827448+00:00",
+  "sourceRevision": "b2f07266da55ad72df3a6da04318828630fa93aa",
+  "sourceCleanAtBuild": true,
+  "build": {
+    "version": "0.151.1",
+    "files": 3275,
+    "distributionSha256": "eb200d081887ede62ed018d658dd25bf5d2970fd3c7f493ed4beb5ec41f5f787",
+    "archiveIntegrity": "passed",
+    "disposableOutputRemoved": true
+  },
+  "combinedRegression": {
+    "tests": 374,
+    "passed": 374,
+    "failed": 0,
+    "durationMs": 454767.693333,
+    "command": "node --test --test-concurrency=2 game/test/classic-snake-*.test.mjs game/test/journey-reactions.test.mjs game/test/journey-reactions-host.test.mjs scripts/test-snake-catalogue-traces.mjs scripts/test-snake-trace-review.mjs scripts/test-snake-rating-publication.mjs"
+  },
+  "optionalPackageTests": {
+    "tests": 16,
+    "passed": 16,
+    "failed": 0
+  },
+  "checks": [
+    "source lint and formatting",
+    "git diff whitespace",
+    "game validation",
+    "English/Ukrainian localization",
+    "canonical reaction runtime",
+    "canonical play shell",
+    "canonical optional worker",
+    "canonical FPV world visuals",
+    "presentation metadata"
+  ],
+  "qualification": {
+    "missions": 240,
+    "setups": 1440,
+    "journals": 1452,
+    "incompatibleRatingKeys": 2880
+  },
+  "browser": {
+    "viewports": ["desktop", "320x568"],
+    "sampledChapters": ["Cable Foundry", "Escape Lines", "Signal Smugglers", "Living Citadels"],
+    "checks": [
+      "chapter paging 24 to 8 canvases",
+      "chapter change resets page",
+      "no horizontal overflow at 320px",
+      "titles hidden",
+      "grayscale",
+      "collision outlines",
+      "Alpine Toybox contrast correction",
+      "production three-catch Border Watch",
+      "direct Retry",
+      "Pause Choose Mission info completion-only criteria"
+    ],
+    "errors": 0,
+    "physicalDeviceTestPerformed": false
+  },
+  "limits": [
+    "No physical phone/controller/thermal qualification",
+    "Player study optional and waived",
+    "New higher-star budgets intentionally not invented",
+    "Browser samples do not imply 960 individual visual reviews"
+  ]
+}

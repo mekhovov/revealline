@@ -2,12 +2,16 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { CLASSIC_SNAKE_LEVELS } from '../snake/classic-catalogue.mjs';
 import { resolveClassicWorld } from '../snake/classic-worlds.mjs';
-import { drawClassicLivingGround } from '../snake/classic-scenes.mjs';
-import { drawClassicStructureModule } from '../snake/classic-structure-art.mjs';
+import { drawClassicLivingGround, classicScenePalette } from '../snake/classic-scenes.mjs';
+import {
+  drawClassicStructureModule,
+  classicStructureModule,
+  CLASSIC_STRUCTURE_FAMILIES,
+} from '../snake/classic-structure-art.mjs';
 
 const reviewed = CLASSIC_SNAKE_LEVELS.flatMap((entry) => {
   const world = resolveClassicWorld({ levelId: entry.id, chapterId: entry.chapterId });
-  return world.floorPlan ? [{ entry, world }] : [];
+  return world.floorPlan && !world.floorPlan.pattern ? [{ entry, world }] : [];
 });
 const record = () => {
   const calls = [];
@@ -44,7 +48,8 @@ test('authored review covers adjacent pairs in every world with distinct bounded
 });
 
 test('all four looks render actual authored paths as quiet flat paint without changing the level', () => {
-  for (const { entry, world } of reviewed) {
+  for (const entry of CLASSIC_SNAKE_LEVELS) {
+    const world = resolveClassicWorld({ levelId: entry.id, chapterId: entry.chapterId });
     const before = JSON.stringify(entry.level);
     for (const treatment of ['living-circuit', 'toybox', 'atmospheric-ruins', 'night-arcade']) {
       const { ctx, calls } = record();
@@ -123,4 +128,74 @@ test('a harbor pump island has one joined intake row and a single small-structur
     ).length;
   }
   assert.equal(smallPumps, 1, 'thin structures get a single native fitting');
+});
+
+test('all official missions have bounded explicit floor plans and component materials match real wall cells', () => {
+  let completed = 0;
+  for (const entry of CLASSIC_SNAKE_LEVELS) {
+    const world = resolveClassicWorld({ levelId: entry.id, chapterId: entry.chapterId });
+    const plan = world.floorPlan;
+    assert(plan, entry.id);
+    for (const [x, y] of plan.paths.flat()) {
+      assert(x >= 0 && x <= entry.level.width && y >= 0 && y <= entry.level.height, entry.id);
+    }
+    for (const [x, y, w, h] of plan.patches) {
+      assert(
+        x >= 0 &&
+          y >= 0 &&
+          w > 0 &&
+          h > 0 &&
+          x + w <= entry.level.width + 1e-9 &&
+          y + h <= entry.level.height + 1e-9,
+        entry.id,
+      );
+    }
+    if (!world.componentAssemblies) continue; // The 18 previous manual briefs stay untouched.
+    completed++;
+    const used = new Set();
+    const walls = new Set(entry.level.walls.map(({ x, y }) => `${x},${y}`));
+    for (const assembly of world.componentAssemblies) {
+      assert(CLASSIC_STRUCTURE_FAMILIES[world.scene].includes(assembly.family), entry.id);
+      for (const [x, y] of assembly.cells) {
+        const key = `${x},${y}`;
+        assert(walls.has(key), entry.id + ' decoration must be an actual solid cell');
+        assert(!used.has(key), entry.id + ' component cells must have one material owner');
+        used.add(key);
+        // Erosion may split a component and change its bounding box. Material
+        // ownership follows the original surviving cell, not the current box.
+        const module = classicStructureModule({ x, y }, world.scene, {
+          structure: { x, y, width: 1, height: 1 },
+          composition: world,
+        });
+        assert.equal(module.family, assembly.family);
+      }
+    }
+    assert.deepEqual(used, walls, entry.id);
+    assert(plan.intent.length > 10, entry.id + ' retains the specific tactical brief');
+  }
+  assert.equal(completed, 222);
+});
+
+test('Alpine Toybox solids separate from their pale floor in grayscale and retain role fittings', () => {
+  const luminance = (rgb) =>
+    rgb
+      .map((v) => v / 255)
+      .map((v) => (v <= 0.04045 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2))
+      .reduce((sum, v, i) => sum + v * [0.2126, 0.7152, 0.0722][i], 0);
+  const floor = luminance(classicScenePalette('relay', 'toybox').tint);
+  const signatures = new Set();
+  for (const family of ['receiver', 'shelter', 'antenna']) {
+    const { ctx, calls } = record();
+    drawClassicStructureModule(ctx, { x: 1, y: 1 }, 'relay', {
+      treatment: 'toybox',
+      structure: { x: 0, y: 0, width: 3, height: 3 },
+      composition: { assembly: { family, footprint: null } },
+    });
+    const base = calls.find(([op, args]) => op === 'fillRect' && args.join(',') === '0,0,28,28')[3];
+    const rgb = base.match(/[a-f0-9]{2}/gi).map((v) => parseInt(v, 16));
+    const ratio = (floor + 0.05) / (luminance(rgb) + 0.05);
+    assert(ratio >= 2, family + ' painted solid should not merge into floor in grayscale');
+    signatures.add(JSON.stringify(calls));
+  }
+  assert.equal(signatures.size, 3, 'receiver vents, shelter window and antenna mast stay distinct');
 });

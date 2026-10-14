@@ -10,7 +10,10 @@ import {
   mountTouchControlsView,
   mountTouchPresentationSettings,
 } from '../ui/touch-controls-view.mjs';
-import { classicSnakeRatingForRecord } from '../snake/classic-ratings.mjs';
+import {
+  classicSnakeRatingForRecord,
+  classicSnakeRatingCriteriaText,
+} from '../snake/classic-ratings.mjs';
 import {
   createEnemyStats,
   validateEnemyStatsSession,
@@ -250,6 +253,7 @@ async function harness({
     mountEnemyStats,
     createClassicSnakeRatings: () => ({ refresh: async () => {}, close() {} }),
     classicSnakeRatingForRecord,
+    classicSnakeRatingCriteriaText,
     ...replayHelpers,
     ...flowHelpers,
     continuousPlayPreferences: () =>
