@@ -1,4 +1,9 @@
 import * as THREE from "../../../optional-practice/civilian-fpv/vendor/three.module.js";
+import { createFlightViewFrame } from "../../../optional-practice/civilian-fpv/renderer.mjs";
+import {
+  buildDroneVisual,
+  disposeSimVisualGroup,
+} from "../../../optional-practice/civilian-fpv/world-visuals.mjs";
 import { createRegionalFlightPrototype } from "./flight-prototype.mjs";
 import { createRegionalInputSession } from "./shared-input-session.mjs";
 import { keyboardFlightHelp } from "../../../optional-practice/civilian-fpv/input.mjs";
@@ -13,17 +18,49 @@ scene.add(new THREE.HemisphereLight(0xd8efff, 0x6d5941, 2));
 const light = new THREE.DirectionalLight(0xffefcf, 2.5);
 light.position.set(50, 100, 40);
 scene.add(light);
-const camera = new THREE.PerspectiveCamera(78, 1, 0.05, 900);
-const geometry = new THREE.BoxGeometry(0.7, 0.07, 0.08),
-  material = new THREE.MeshStandardMaterial({
-    color: 0xe7d7a4,
-    roughness: 0.7,
-  }),
+const camera = new THREE.PerspectiveCamera(82, 1, 0.035, 900),
   quad = new THREE.Group();
-for (const sign of [-1, 1]) {
-  const arm = new THREE.Mesh(geometry, material);
-  arm.rotation.y = (sign * Math.PI) / 4;
-  quad.add(arm);
+const material = (color, extras = {}) =>
+  new THREE.MeshStandardMaterial({ color, roughness: 0.8, ...extras });
+const mesh = (geometry, paint, parent = quad) => {
+  const value = new THREE.Mesh(geometry, paint);
+  parent.add(value);
+  return value;
+};
+const box = (size, at, color, parent = quad) => {
+  const value = mesh(new THREE.BoxGeometry(...size), material(color), parent);
+  value.position.set(...at);
+  return value;
+};
+const droneVisual = buildDroneVisual({
+  parent: quad,
+  mesh,
+  material,
+  box,
+  kind: "racer",
+  quality: "balanced",
+  maxAnisotropy: renderer.capabilities.getMaxAnisotropy(),
+});
+const flightViewFrame = createFlightViewFrame({ camera, aircraft: quad });
+flightViewFrame.rotors = droneVisual.rotors;
+const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)");
+const localBounds = {
+  min: { x: 0, y: 0, z: 0 },
+  max: { x: 128000, y: 0, z: 128000 },
+};
+flightViewFrame.bounds = localBounds;
+let chunks = new Map();
+function updateViewBounds(state) {
+  const loaded =
+    state?.terrain.provenance?.chunks
+      ?.map((row) => chunks.get(row.chunkId))
+      .filter(Boolean) ?? [];
+  if (!loaded.length) return;
+  localBounds.min.x = Math.min(...loaded.map((row) => row.x)) * 128000;
+  localBounds.min.z = Math.min(...loaded.map((row) => row.z)) * 128000;
+  localBounds.max.x = (Math.max(...loaded.map((row) => row.x)) + 1) * 128000;
+  localBounds.max.z = (Math.max(...loaded.map((row) => row.z)) + 1) * 128000;
+  flightViewFrame.bounds = localBounds;
 }
 let manifestController = null,
   flight = null,
@@ -41,12 +78,14 @@ const session = createRegionalInputSession({
   onFlight(value) {
     flight = value;
     if (value) {
-      value.dronePose.add(quad);
+      value.root.add(quad);
+      flightViewFrame.reset();
       scene.add(value.root);
     }
   },
   onState(state) {
     if (!state || closed) return;
+    updateViewBounds(state);
     if (state.status === "active") {
       message("Authoring flight active");
       canvas.focus();
@@ -62,7 +101,9 @@ const session = createRegionalInputSession({
       );
   },
   onCamera() {
-    $("view").value = $("view").value === "fpv" ? "chase" : "fpv";
+    const modes = ["fpv", "chase", "overview"];
+    $("view").value =
+      modes[(modes.indexOf($("view").value) + 1) % modes.length];
   },
   onError(error) {
     message(`Paused: ${error.message}`);
@@ -120,6 +161,7 @@ document.querySelector("form").addEventListener("submit", async (event) => {
     );
     if (token !== loadingGeneration || closed) return;
     clearTimeout(timeout);
+    chunks = new Map(manifest.chunks.map((chunk) => [chunk.id, chunk]));
     await session.replace({
       manifest,
       mode: $("mode").value,
@@ -170,8 +212,6 @@ addEventListener("resize", resize);
 resize();
 const requested = new URL(location.href).searchParams.get("manifest");
 if (requested) $("manifest").value = requested;
-const look = new THREE.Vector3(),
-  offset = new THREE.Vector3();
 function render() {
   if (closed) return;
   session.advance(performance.now());
@@ -183,17 +223,14 @@ function render() {
       `translate(${controls.roll * 40}px, ${-controls.pitch * 40}px)`;
   }
   if (flight) {
-    const pose = flight.cameraAnchor,
-      fpv = $("view").value === "fpv";
-    quad.visible = !fpv;
-    offset
-      .set(0, fpv ? 0.04 : 3, fpv ? -0.12 : 8)
-      .applyQuaternion(pose.quaternion);
-    camera.position.copy(pose.position).add(offset);
-    look.set(0, 0, -15).applyQuaternion(pose.quaternion).add(pose.position);
-    camera.up.set(0, 1, 0);
-    if (fpv) camera.up.applyQuaternion(pose.quaternion);
-    camera.lookAt(look);
+    const state = flight.snapshot();
+    flightViewFrame.view = $("view").value;
+    flightViewFrame.originMm = state.originMm;
+    flightViewFrame.throttlePermille = Math.round(
+      session.status().controls.throttle * 1000,
+    );
+    flightViewFrame.reducedMotion = reducedMotion.matches;
+    flightViewFrame.draw(state);
     if (performance.now() - hudAt > 125) {
       hudAt = performance.now();
       const state = flight.snapshot();
@@ -213,7 +250,6 @@ addEventListener("pagehide", () => {
   manifestController?.abort();
   loadingGeneration++;
   void session.dispose();
-  geometry.dispose();
-  material.dispose();
+  disposeSimVisualGroup(quad);
   renderer.dispose();
 });
