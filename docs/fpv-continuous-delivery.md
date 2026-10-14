@@ -4280,6 +4280,39 @@ source preparation, actual collision/render streaming, and representative Canyon
 and Urban authored regions. Physical devices, long sessions and public launch
 remain unclaimed. Protected publication continues independently of development.
 
+## 2026-10-14 — Catalogue delivery, Coaster admission and terrain preparation
+
+Latest continuation rebased onto main `2abfd20bdee39369b3480ed3013074a8dfac3006`.
+#1199, #1200, #1203, #1205, #1206, #1207, #1209 and #1211 are merged. No new native
+stack was needed: each dependency had merged before its successor was published.
+All attachment attempts were made; the app rejected additional attachments at its
+existing 100-item limit. Primary-checkout unrelated edits remain untouched.
+
+The live v2 catalogue now lists 20 worlds. Actual local browser Play downloads
+Reservoir and Coaster exact revisions and starts disarmed. Coaster survives reload;
+its bounded practice layout has two fly-through loops, hills, avenues and scenery.
+The published content is not the planned large streamed Coaster region. Six exact
+stored-pack checks and 37 existing offline/content checks passed, alongside 23
+catalogue transport probes. Source browser verification is not offline package
+or public deployment acceptance.
+
+The new catalogue exposed a layout conflict with the chooser action dock. The
+focused correction on `codex/fpv-catalogue-layout-recovered-20261014` puts both
+catalogues in one allocated scrolling row. 25 existing checks and actual EN/UK
+phone/landscape/handheld-sized browser checks pass; see
+`fpv-catalogue-layout-20261014.md`. Source files are committed in a durable workspace
+after temporary folders disappeared; recovery refs and external sources survive.
+
+Regional terrain preparation now verifies matching render/collision triangles,
+seams, support/sweeps and bounded disposal through pinned Three/Rapier. The runtime
+still reports `flightReady: false`. Next: bind terrain to verified source bytes,
+then scenery collision and safe streaming/origin migration/player integration.
+In parallel, prepare the first original Canyon representative and its source
+receipts. Long-session/device/performance, full offline package and public launch
+qualification remain open. Internal free space remains below the stable 3 GiB
+heavy-build floor; use existing cloud artifacts and external storage without
+weakening budgets or removing player/unpublished data.
+
 
 ## 14 October — Catalogue navigation ownership
 
