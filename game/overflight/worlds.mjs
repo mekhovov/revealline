@@ -185,6 +185,151 @@ export function createOverflightWorldPresentation(
   };
 }
 
+/** Cosmetic ground for other modes. Their own walls, gameplay and cameras stay
+ * authoritative. Retain the original three projections; new worlds reuse V2
+ * materials and low props without painting false buildings or collision cover. */
+export function createOverflightGroundPresentation(
+  world = 'field-crossing',
+  arena = { width: 2880, height: 1080 },
+) {
+  const recipes = {
+    'river-port': {
+      regions: [
+        ['concrete', 0, 0, 2880, 1080],
+        ['timber', 80, 100, 760, 880],
+        ['metal', 1860, 220, 940, 640],
+      ],
+      paths: [
+        [
+          'road',
+          72,
+          [
+            [160, 210],
+            [2600, 210],
+            [2600, 870],
+            [600, 870],
+          ],
+        ],
+        [
+          'cable',
+          8,
+          [
+            [850, 540],
+            [1720, 540],
+            [1720, 870],
+          ],
+        ],
+      ],
+      props: ['pipe', 'puddle'],
+    },
+    'chalk-quarry': {
+      regions: [
+        ['masonry', 0, 0, 2880, 1080],
+        ['earth', 100, 700, 2160, 300],
+        ['damaged', 1530, 70, 1260, 370],
+      ],
+      paths: [
+        [
+          'tracks',
+          62,
+          [
+            [160, 850],
+            [900, 290],
+            [1760, 780],
+            [2710, 220],
+          ],
+        ],
+        [
+          'tracks',
+          42,
+          [
+            [170, 240],
+            [1100, 770],
+            [2040, 250],
+          ],
+        ],
+      ],
+      props: ['spoil', 'rubble'],
+    },
+    'orchard-strongpoint': {
+      regions: [
+        ['earth', 0, 0, 2880, 1080],
+        ['timber', 130, 140, 1010, 220],
+        ['damaged', 1730, 260, 1000, 590],
+      ],
+      paths: [
+        [
+          'irrigation',
+          8,
+          [
+            [220, 210],
+            [1540, 210],
+            [1540, 520],
+            [2670, 520],
+          ],
+        ],
+        [
+          'irrigation',
+          8,
+          [
+            [210, 840],
+            [1250, 840],
+            [1250, 550],
+            [350, 550],
+          ],
+        ],
+      ],
+      props: ['irrigation', 'glass'],
+    },
+  };
+  const recipe = recipes[world];
+  if (!recipe) {
+    const legacy = createOverflightWorldPresentation(world, arena);
+    legacy.landmarks = legacy.landmarks.filter(
+      (item) => !['tree', 'container', 'antenna'].includes(item.kind),
+    );
+    return legacy;
+  }
+  const sx = arena.width / 2880,
+    sy = arena.height / 1080;
+  const regions = recipe.regions.map(([material, x, y, width, height], index) => ({
+    id: `ground-${index}`,
+    material,
+    variant: index,
+    x: x * sx,
+    y: y * sy,
+    width: width * sx,
+    height: height * sy,
+  }));
+  const paths = recipe.paths.map(([kind, width, points], index) => ({
+    id: `ground-path-${index}`,
+    kind,
+    width,
+    points: points.map(([x, y]) => ({ x: x * sx, y: y * sy })),
+  }));
+  const landmarks = Array.from({ length: 8 }, (_, index) => ({
+    id: `ground-detail-${index}`,
+    kind: recipe.props[index % 2],
+    x: (240 + index * 325) * sx,
+    y: (index % 2 ? 680 : 350) * sy,
+    width: 40 * sx,
+    height: 28 * sy,
+  }));
+  return validateOverflightWorldPresentation(
+    {
+      format: 'OverflightWorldPresentationV2',
+      world,
+      revision: 2,
+      resource: { id: 'overflight-worlds', revision: 2 },
+      regions,
+      paths,
+      landmarks,
+      assemblies: [],
+    },
+    arena,
+  );
+}
+
 export function validateOverflightWorldPresentation(source, arena) {
   if (source?.format === 'OverflightWorldPresentationV2')
     return validateOverflightLayoutPresentation(source, arena, byId);

@@ -1,4 +1,4 @@
-import { createOverflightWorldPresentation, OVERFLIGHT_WORLDS } from '../overflight/worlds.mjs';
+import { createOverflightGroundPresentation, OVERFLIGHT_WORLDS } from '../overflight/worlds.mjs';
 import { paintOverflightWorld } from './overflight-world-art.mjs';
 import { INDUSTRIAL_BUILTIN_SPRITES } from './industrial-arcade-builtins.mjs';
 
@@ -141,10 +141,7 @@ export function createBattlefieldGroundSurface({
       canvas.width = w;
       canvas.height = h;
       const arena = { width: 2880, height: 1080 },
-        source = createOverflightWorldPresentation(world, arena);
-      source.landmarks = source.landmarks.filter(
-        (item) => !['tree', 'container', 'antenna'].includes(item.kind),
-      );
+        source = createOverflightGroundPresentation(world, arena);
       ctx.save();
       ctx.scale(w / arena.width, h / arena.height);
       paintOverflightWorld(ctx, source, arena);

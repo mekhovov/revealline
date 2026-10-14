@@ -1,6 +1,6 @@
 import {
   OVERFLIGHT_WORLDS,
-  createOverflightWorldPresentation,
+  createOverflightGroundPresentation,
 } from '../../game/overflight/worlds.mjs';
 import { paintOverflightWorld } from '../../game/presentation/overflight-world-art.mjs';
 import { canonicalJSON } from '../../game/data-json.mjs';
@@ -71,16 +71,13 @@ export function applySimBattlefieldGround({
   canvas.width = 1024;
   canvas.height = 384;
   const arena = { width: 2880, height: 1080 },
-    presentation = createOverflightWorldPresentation(id, arena);
-  presentation.landmarks = presentation.landmarks.filter(
-    (item) => !['tree', 'container', 'antenna'].includes(item.kind),
-  );
+    presentation = createOverflightGroundPresentation(id, arena);
   ctx.save();
   ctx.scale(canvas.width / arena.width, canvas.height / arena.height);
   paintOverflightWorld(ctx, presentation, arena);
   ctx.restore();
   const map = new THREE.CanvasTexture(canvas);
-  map.name = `${profile.id}-native-ground-r1`;
+  map.name = `${profile.id}-native-ground-r${presentation.revision}`;
   map.magFilter = THREE.NearestFilter;
   map.minFilter = THREE.NearestFilter;
   map.generateMipmaps = false;

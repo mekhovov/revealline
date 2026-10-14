@@ -1,6 +1,6 @@
 # Coordinated movement and fixed-lane diagnostic
 
-**Source boundary update:** the movement matrices below precede the final effective-speed admission correction. Their recorded hashes and results remain valid for their own source versions; they are not relabeled as qualification of the corrected source. See [active-loss audit](ACTIVE-LOSS-AUDIT.md) and [effective-speed regression output](effective-speed-tests.txt). A final-source matrix comparison remains separate work.
+**Source boundary update:** the broad movement matrices below precede the final effective-speed admission correction. Their recorded hashes and results remain valid for their own source versions; they are not relabeled as qualification of the corrected source. See [active-loss audit](ACTIVE-LOSS-AUDIT.md) and [effective-speed regression output](effective-speed-tests.txt). A separate [ten-case final-source comparison](FINAL-SPEED-FIX.md) on `3bb1b0dc6` completed: four active runs reached 240 seconds and all six unattended policies lost. It is bounded evidence, not a replacement for the broad matrix.
 
 Source checkpoint: `b10ac4cc02a435eead18169674eb0009dbf7b59d` (14 October 2026). Each JSON records the individual simulation source hashes before and after its run. Both final reports have `sourceStable: true`. The machine's temporary workspace disappeared during implementation; source edits were recovered from their exact session history into the persistent worktree, then these final checks were rerun.
 
