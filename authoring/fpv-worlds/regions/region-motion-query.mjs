@@ -1,3 +1,4 @@
+import { flightSupportFromRay } from '../../../optional-practice/civilian-fpv/flight-support.mjs';
 /** Precise, bounded static queries for the shared production contact solver. */
 import RAPIER from '../../../optional-practice/civilian-fpv/vendor/rapier/rapier.mjs';
 const AXES = ['x', 'y', 'z'];
@@ -42,5 +43,52 @@ export function createRegionMotionQuery({ world, local, covers, colliderIds, lay
           },
         }
       : { status: 'motion-clear' };
+  };
+}
+
+/** Exact production support ray with explicit coverage and nearest-hit metadata. */
+export function createRegionFlightSupportQuery({
+  world,
+  local,
+  covers,
+  colliderIds,
+  layer,
+  live,
+  originYMm = 0,
+}) {
+  return (position, radius, drop = 60) => {
+    live();
+    if (
+      !point(position) ||
+      !AXES.every((key) => Number.isSafeInteger(position[key])) ||
+      !Number.isSafeInteger(radius) ||
+      radius <= 0 ||
+      radius > 2000 ||
+      !Number.isSafeInteger(drop) ||
+      drop <= 0 ||
+      drop > 4000000
+    )
+      throw new TypeError('Invalid regional flight support query');
+    if (!covers(position, position, radius)) return { status: 'unknown-cell' };
+    const origin = local({ ...position, y: position.y + radius + 5 });
+    const hit = world.castRayAndGetNormal(
+      new RAPIER.Ray(origin, { x: 0, y: -1, z: 0 }),
+      (radius + drop + 5) / 1000,
+      true,
+    );
+    const ground = flightSupportFromRay(
+      origin.y,
+      radius,
+      hit,
+      hit && layer + ':' + colliderIds.get(hit.collider.handle),
+    );
+    if (ground) ground.y += originYMm;
+    return {
+      status: 'flight-support',
+      // Keep a steep nearest hit, even though it cannot support landing. A mixed
+      // owner must not select a lower floor through that surface.
+      hitDistanceMm: hit ? hit.timeOfImpact * 1000 : null,
+      ground,
+    };
   };
 }
