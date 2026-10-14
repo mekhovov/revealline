@@ -28,6 +28,7 @@ import { attachMenuAudioSettings } from '../ui/menu-audio.mjs';
 import { attachDefeatSoundControls } from '../ui/defeat-sound-controls.mjs';
 import { mountGlobalSettings } from '../ui/global-settings-view.mjs';
 import { attachThemeFamilyControls } from '../ui/theme-family-controls.mjs';
+import { mountBattlefieldGroundControls } from '../ui/battlefield-ground-controls.mjs';
 import {
   getMenuAnimation,
   setMenuAnimation,
@@ -2724,6 +2725,7 @@ attachThemeFamilyControls({
   root: snakeSettingsView.panels.display,
   host: presentation.theme,
   prefix: 'snake-',
+  mountBattlefieldGroundControls,
 });
 const displayBinding = (key) => ({
   get: () => display.snapshot()[key],
