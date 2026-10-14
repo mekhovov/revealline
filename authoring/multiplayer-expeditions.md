@@ -38,7 +38,7 @@ Repository fixtures under `game/test/fixtures/multiplayer-expansion/` contain or
 Run the native gameplay and authoring regressions from the repository root:
 
 ```sh
-node --test game/test/multiplayer-expansion-routes.test.mjs game/test/duel-expansion-routes.test.mjs game/test/coop-expedition-environment.test.mjs game/test/multiplayer-expansion.test.mjs game/test/studio-draft-snapshot.test.mjs
+node --test game/test/multiplayer-expansion-routes.test.mjs game/test/duel-expansion-routes.test.mjs game/test/coop-expedition-environment.test.mjs game/test/multiplayer-expansion.test.mjs game/test/studio-draft-snapshot.test.mjs game/test/multiplayer-expansion-media.test.mjs
 node scripts/localization.mjs check
 node scripts/game-cli.mjs build --out dist/multiplayer-expansion
 ```
