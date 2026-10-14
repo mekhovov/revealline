@@ -29,7 +29,9 @@ node authoring/fpv-worlds/regions/verify-urban-ground.mjs "$URBAN_LOADING_OUTPUT
 node authoring/fpv-worlds/regions/verify-terrain-surface.mjs "$CANYON_OUTPUT"
 ```
 
-On 14 October 2026, eight Urban combinations (plain plus all three appearance qualities, at two origins) preserved identical source, vertices, normals, indices, mesh transforms and all 26 support/sweep results per combination. All nine cells remained at 456,408 terrain geometry bytes. Each owner had one shared material, zero textures, and disposed that material exactly once. GPU compilation and visible quality require the separate native browser receipt.
+On 14 October 2026, eight Urban combinations (plain plus all three appearance qualities, at two origins) preserved identical source, vertices, normals, indices, mesh transforms and all 26 support/sweep results per combination. All nine cells remained at 456,408 terrain geometry bytes. Each owner had one shared material, zero textures, and disposed that material exactly once. All five existing Canyon surface cases passed too.
+
+Native browser review of Balanced compiled without console errors. North remained 6 cells / 78 meshes / 766,608 combined geometry bytes; South remained 9 cells / 111 meshes / 1,044,240 bytes. Concrete joints and restrained apron lines made the north approach clearer; gravel/asphalt distinguished the south approach from the verge. The screenshot `urban-ground-south.png` records the reviewed appearance. The visible loaded-ground edge is an authoring-window boundary, not a qualified playable-world boundary. No device FPS measurement was made.
 
 ## Remaining
 
