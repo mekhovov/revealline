@@ -56,7 +56,7 @@ export function overflightRememberedOperationURL(href, stored) {
   if (!operation) return null;
   const target = new URL(operation.path, source);
   for (const [key, value] of source.searchParams)
-    if (!['family', 'operation', 'prototype'].includes(key)) target.searchParams.set(key, value);
+    if (!['family', 'operation', 'prototype', 'reviewBuild', 'reviewStopAt', 'autoplay', 'fixture', 'benchmark', 'trial'].includes(key)) target.searchParams.set(key, value);
   return target.href;
 }
 

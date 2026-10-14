@@ -27,7 +27,7 @@ import { overflightWorldForEncounterSet } from './worlds.mjs';
 export function createNativeOverflightHuntProject(options = {}) {
   return createOverflightHuntProject({
     ...options,
-    rulesVersion: 3,
+    rulesVersion: options.rulesVersion ?? 4,
     world: options.world ?? overflightWorldForEncounterSet(options.encounterSet ?? 'patrol'),
   });
 }

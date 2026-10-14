@@ -31,18 +31,18 @@ test('native Raid uses current rules at every difficulty without changing legacy
   assert.equal(compileOverflightHuntProject(createOverflightHuntProject()).rulesVersion, 2);
   assert.equal(
     OVERFLIGHT_HUNT_MODE.compileProject(OVERFLIGHT_HUNT_MODE.defaultProject).rulesVersion,
-    3,
+    4,
   );
   for (const difficulty of ['relaxed', 'standard', 'veteran']) {
     const project = OVERFLIGHT_HUNT_MODE.createProject({ difficulty });
     assert.equal(project.difficulty, difficulty);
-    assert.equal(OVERFLIGHT_HUNT_MODE.compileProject(project).rulesVersion, 3);
+    assert.equal(OVERFLIGHT_HUNT_MODE.compileProject(project).rulesVersion, 4);
   }
 });
 
 test('pre-run variant record lookup uses the same revision as its completed run', () => {
   for (const variantId of ['time-attack', 'marathon'])
-    for (const rulesVersion of [2, 3]) {
+    for (const rulesVersion of [2, 3, 4]) {
       const mode = variant(variantId);
       const definition = compileOverflightHuntProject(
         createOverflightHuntProject({ rulesVersion }),

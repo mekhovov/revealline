@@ -1,0 +1,150 @@
+# FPV Survivals — distinct battlefields and coordinated enemy movement
+
+Research and implementation-plan revision, 14 October 2026. This document proposes the next work; it does not claim that the new maps or movement are implemented.
+
+Implementation was authorized after this review. The working branch is now `codex/fpv-survivals-maps-movement`; the existing worlds work was rebased onto main `e0aec7e468d80546c74e5cd2c11224dcdd3aa16b` and retained in PR1192 at `fd8066f1261893a6ad7e8ead1051addb0cef7ebb`. Progress and qualification are tracked separately in `fpv-survivals-maps-movement-status.md`.
+
+**Recommendation: six battlefield themes, three authored layouts each, across all five FPV Survivals operations.** Build one open layout and one layout with wide cover routes first. Prove movement, readability and mode compatibility before expanding to all 18. Preserve the military arcade pixel art, dense crowds, early upgrades and rewarding clears.
+
+The working scope is Single Drone, Riy, Single Raid, Time Attack and Contract Marathon. Other modes can reuse the accepted shared assets through their own presentation systems; their mechanics are not part of this expansion.
+
+**1. Start from the actual source and evidence.**
+
+Local Overflight was inspected at `a033ae5d2891b2ef4f4bb6c32721f1221c9a738e`, with runtime work recorded at `a539ccde4d2390ee74a717a076f43926f46952b2`. PR [1192](https://github.com/mekhovov/revealline/pull/1192) is still draft/open, now based on main, with pushed head `23113ac3441b875b4967c1c63e8fcb7bd91119e2`. The comparison adds newer main work, including Snake structures and regional authoring, without intervening Overflight source changes. Reconcile that pushed head and the then-current main before implementation; preserve local and pushed work.
+
+The audit confirms several causes of the reported repetition:
+
+- Ordinary pursuers aim directly at the player. Crossing/flanking arrivals mostly keep a straight initial vector, then become ordinary pursuit near the player. Local separation prevents exact stacking but does not maintain different approach angles.
+- World presets overwrite much of the seeded encounter deck with two alternating patterns. Variety in the general scheduler is therefore lost in the actual world missions.
+- Ranged units approach or retreat radially and stop at their preferred distance; they lack deliberate lateral relocation between attacks.
+- Raid formations repeat short routes with fixed member offsets. Marathon largely reverses or reflects those same routes.
+- All three existing worlds emphasize a long horizontal road. The terrain format requires exactly six obstacles, two barriers and a straight central corridor; it cannot represent the proposed catalogue faithfully.
+- Custom landmark artwork is stretched across placements, which is unsuitable for larger, detailed structures.
+
+Two issues must precede stronger enemies. First, `reviewBuild=echo` activates an automated pilot and automatic earned-card selection. The supplied review URL is therefore not a manual no-input test. Make autoplay explicitly opt-in, provide a persistent clear label and Take Control action, keep its results separate from personal records, and omit review parameters from normal Home/mission/retry navigation. Explicit diagnostic replay remains available.
+
+Second, the shared body-clear escape check reads Survivor steering fields that Raid actors do not have. Invalid velocity arithmetic can allow a warning despite obstructing bodies. Use one finite, shared motion prediction interface for both actor models, taking committed route segments and each mode's harmful-contact rules into account. Add tests with actual Raid actors, rather than only Survivor-shaped fixtures.
+
+Existing evidence is useful but narrower than this request: the 99-case matrix recorded 24/27 active wins and 0/72 repetitive/unattended wins. Eventual defeat does not establish that the preceding minutes demand interesting decisions. Depot Riy Echo and priority routes also retain unresolved robustness findings. Preserve these cases and investigate them alongside the new movements; do not simply raise global difficulty. See [existing balance evidence](qualification/overflight/worlds-20261014/balance-review.md).
+
+**2. Apply specific lessons from comparable games.**
+
+| Primary reference | Supported lesson | Application here |
+| --- | --- | --- |
+| [Crimsonland developer retrospective](https://blog.playstation.com/2021/03/19/crimsonland-dev-discusses-the-twin-stick-shooters-cult-hit-longevity/) | Crowds form an evolving maze, with routes toward weak spots and powerups. | Make the shape of incoming pressure change; preserve satisfying mass destruction and the space it earns. |
+| [Vampire Survivors: Moonspell](https://store.steampowered.com/app/2230760/Vampire_Survivors_Legacy_of_the_Moonspell/) | Its stage contains several recognizable environments with different challenges and resident enemies. | Give maps distinct landmarks, regions and encounter compositions. Palette changes alone do not count as different layouts. |
+| [Vampire Survivors Adventures FAQ](https://poncle.games/adventures-faq) | Chapters remix existing content with specific setups and winning conditions. | Share quality world assets across operations while authoring different starts, routes and objectives. |
+| [Nova Drift dynamic-wave breakdown](https://blog.novadrift.io/nova-drift-dev-deep-dive-dynamic-waves/) | Formations, compatible enemy pairings, staggered actions and curated encounters create variety; paired waves reduce quantities. | Use a constrained encounter deck with authored teaching beats, role combinations and shared threat budgets. |
+| [Dead Cells level-design breakdown](https://deepnight.net/tutorial/the-level-design-of-dead-cells-a-hybrid-approach/) | Authored structure combined with constrained variation keeps procedural levels coherent. | Author route graphs and landmarks, then vary valid approach sides, spacing and formation choices. |
+| [DRG: Survivor Salt Pits update](https://store.steampowered.com/news/posts/?enddate=1710938631&feed=steam_community_announcements) | Terrain and rolling enemies create new movement problems; the developers also identify enemies hidden behind rocks as a visibility problem. | Pair a small number of distinct behaviors with cover, and keep actors and warnings readable around scenery. |
+| [NIMRODS developer update](https://fiveamp.itch.io/nimrods/devlog/581576/-gear-up-nimrods-major-update-) | Handcrafted terrain, slower but more numerous enemies and distinct timed waves were used together. | Preserve density and learnable beats. Universal speed increases are not the first balancing tool. |
+
+The proposed algorithms below are our adaptations. These references do not establish that Vampire Survivors or Crimsonland use the same steering system, or that our initial tuning will be enjoyable.
+
+The follow-up review adds two implementation checks. [Valve's Left 4 Dead AI presentation](https://cdn.fastly.steamstatic.com/apps/valve/2009/ai_systems_of_l4d_mike_booth.pdf) separates locomotion from behavior and describes path following with look-ahead and local avoidance; apply that separation to shared committed routes and bounded crowd steering. [Nova Drift's development update](https://blog.novadrift.io/nova-drift-upcoming-content/) explicitly reports unfair-feeling offscreen entrances in dense waves; qualify arrival warnings and entry speed independently of pressure scaling. These refinements retain deterministic authored pacing rather than introducing a player-stress director.
+
+**3. Deliver 18 meaningfully different layouts.**
+
+Retain the 2880×1080 world and 960×540 logical camera initially. Different playable routes, landmark silhouettes, material regions, objectives and encounter approaches provide variety within that boundary. Water and cliff faces stay outside playable boundaries in this pass, avoiding a new asymmetric ground/air traversal system.
+
+| World and visual identity | Three layouts | Main tactical difference |
+| --- | --- | --- |
+| **Field Crossing:** olive crops, warm earth, broken asphalt, shelterbelts | Broken Crossroads; Shelterbelt Gaps; Supply Orchard Edge | Open diagonal fronts; connected north/south passages; three courts that encourage returning along a different route. |
+| **Freight Depot:** cool concrete, rusted rails, containers, loading markings | Shunting Yard; Loading Loop; Dispatch Junction | Offset islands and diagonal crossings; a broad circuit with shortcuts; convoy interception across connected yards. |
+| **Relay Ruins:** damaged masonry, damp paving, antenna/cable assemblies | Antenna Court; Split Compound; Receiver Gardens | Several approach bearings; two connected routes around a ruined block; priority threats moving between courts. |
+| **River Port:** perimeter water, weathered timber, concrete quays, pumps | Pump Apron; Twin Docks; Floodgate Yard | Open quay; parallel routes with several cross-connections; guarded approaches around a large gate landmark. |
+| **Chalk Quarry:** pale chalk, ochre haul roads, dark cut faces, conveyors | Survey Basin; Haul Switchbacks; Reclaimer Court | Open basin; broad bends with lateral exits; complete outer circuit with two cross-routes. |
+| **Orchard Strongpoint:** golden foliage, dark trunks, irrigation, broken glasshouses | Harvest Clearing; Irrigation Courts; Glasshouse Ruins | Broken rows around a clearing; alternating grove courts; three connected spaces with modular cover. |
+
+The first layout of each world is predominantly open; the others add wide cover routes. Mandatory passages are at least 240 units wide, with at least two independent routes between major combat courts. Destructible barriers may offer shortcuts, but cannot be the only way to a mandatory objective. Validate those properties with barriers intact and destroyed.
+
+Each world receives two major modular assemblies, four supporting prop families, three quiet ground treatments, mission artwork and restrained ambience. Adapt the existing industrial materials and Snake harbor/quarry/orchard structure components into shared presentation resources. Keep pixel density consistent, construct large landmarks from repeated panels, corners and end caps, and avoid enlarging a small sprite across an entire building.
+
+Ground texture provides large material shapes and sparse detail; it must not compete with enemy silhouettes. Low fly-over decoration and solid cover use different height, shadow and edge treatment. Preserve the drone outline, warning priority, bounded remains and reduced-effects behavior. Cosmetic variation uses its own seed and cannot alter encounters or records.
+
+**4. Replace lane feeding with readable, committed group movement.**
+
+Keep a majority of ordinary pursuers. As an initial composition hypothesis, roughly 70–80% of ordinary arrivals remain straightforward pressure; the remaining groups create different approach problems. Retain current specialist/heavy limits and priority-attack budgets. Keep health, damage, speed and rewards fixed for the first movement comparison so its effect is measurable.
+
+| Movement | Behavior | Player response and fairness |
+| --- | --- | --- |
+| **Split front** | Two groups approach separated anchors, with staggered arrival. They maintain breadth until their final approach. | Choose an opening and change the clearing angle. Do not close every escape at once. |
+| **Committed flank** | A pack moves through an offset waypoint before cutting inward; side and waypoint are selected once per leg. | Reorient or cross behind it. It cannot continuously steer onto the player's unprotected side. |
+| **Crosscut interceptor** | A bounded minority snapshots a short predicted crossing point, visibly prepares, then commits and recovers. | Change direction after reading the commitment. No continuous perfect interception or permanent outrunning. |
+| **Relocating standoff unit** | After recovery, choose a valid lateral firing anchor; stop before warning and aim commitment. | Approach it or move to another court. Shots keep their warned geometry. |
+| **Screen with support** | Guards move to a committed screening position while support occupies another reachable position. | Flank the screen or remove support. No instantly rotating wall that tracks every approach. |
+| **Convoy with firing stops** | An objective travels between authored stops with attached escorts. | Intercept between stops or attack during recovery; preserve valid rear weak points and fresh boosted passes. |
+
+Retain simple pursuit as a teaching and relief pattern. Introduce each new role alone, then combine it. Replace the world-level two-pattern override with an authored deck of compatible combinations and seeded variation. Teaching order, objective dependencies and boss rules stay fixed. Vary approach side, spacing, stagger and eligible route anchors, not arbitrary motion every frame.
+
+Use existing warning floors of 1.4/1.2/1.0 seconds for Relaxed/Standard/Veteran and existing concurrent-threat limits. Newly admitted threats must leave an escape at the slowest supported flight speed without requiring boost. Body motion, cover and active ground patches participate in that check. Relief still reduces new arrivals; existing enemies continue their committed actions. Successful clears must continue buying actual space.
+
+Preserve that escape when a coordinated group chooses a subsequent leg: check the new commitment against active warnings, and defer or select another valid leg if it would close the promised exit. Predicting only the current velocity is insufficient. In cover layouts, measure repeated attack deferrals; the current 24 straight escape rays can reject every attack despite a wide bent route. Add bounded, timed paths through the existing navigation graph when necessary, checking the entire swept route. Representative attacks must remain admissible at representative combat-court positions without sacrificing escape safety.
+
+In Raid, exposed infantry remain vulnerable to one successful contact. Sprinters get a signalled route change followed by catchable recovery; mandatory targets do not flee indefinitely. Packs are finite and cleared routes stay clear. Waiting at one route intersection should miss other opportunities or leave another approach exposed, rather than generate an infinite line of rewards.
+
+No hidden inactivity damage, build-aware counter spawning, universal random zigzagging, instant casualty replacement or automatic damage/armor inflation.
+
+**5. Apply the same battlefield coherently across operations.**
+
+| Operation | Layout adaptation |
+| --- | --- |
+| Single Drone | Authored incoming fronts, salvage-return paths and two existing-budget optional reward opportunities. |
+| Riy | The same navigable world, with approach angles that make rear Sweeper coverage, forward Breaker attacks and deliberate Focus useful. Qualify all three build techniques. |
+| Single Raid | Explicit sector and objective anchors, finite patrol routes, attached escorts and multiple valid attack approaches. Avoid assumptions that sectors are always left/middle/right thirds. |
+| Time Attack | A fixed validated Raid layout and reproducible routes for each seed/rules identity. Retain immediate retry and separate time records. |
+| Contract Marathon | Five explicit contract configurations referencing validated layouts. Preview the next world/layout/composition and recreate terrain per contract. Never reflect actor routes independently of cover. |
+
+Terrain is currently unavailable in Time Attack and Marathon. Keep that protection until the new contracts, navigation and reset tests pass. Do not advertise a layout as supporting an operation before it passes that operation's gate.
+
+Each selected Marathon layout owns a deterministic five-contract sequence within its world: selected layout, the other two layouts, then two authored return compositions. Use the relative layout order A → B → C → B → A; all five contracts retain distinct tactical compositions. Store the sequence with replay identity and preview the next contract before bank/continue. At each transition, release old owned scene textures, prepare the next layout, reset its barriers, preserve carried build/hull/ranks and custom appearance identity, and keep memory bounded across the complete sequence and retry.
+
+Keep one FPV Survivals Home entry. Select Operation, then Select Mission with World and Layout filters/previews; selection returns to Home for Start. The selected operation/world/layout appears in briefing, pause, results and Studios. Existing URLs, imported missions, saves and input navigation remain compatible.
+
+Use the existing supply budget rather than adding another reward economy. Place the two opportunities on alternate, readable approaches; preview their contents and preserve useful-reward checks. Maintain early transformations and measure later salvage earned, reachable and collected separately. Do not compensate for a movement problem by broadly weakening builds.
+
+**6. Extend the shared content system once.**
+
+- Add a versioned battlefield layout definition: stable identity, bounds, cover, sector/route anchors, rewards and allowed approach sectors. Keep presentation separate from gameplay identity.
+- Introduce `OverflightProjectV4`, `OverflightRiyProjectV3` and `OverflightHuntProjectV4` for layout references, coordinated movement and explicit Raid sector anchors. Existing strict schemas and legacy sector behavior remain unchanged. New constructors opt into the new rules; upgraded copies and records carry the new revision.
+- Add `OverflightWorldPresentationV2` for modular assemblies, road/track polylines, material variants and exact shared references, preserving V1 behavior.
+- Add `OverflightTerrainV2`, initially up to 12 axis-aligned footprints including at most four breakable barriers. Several adjacent permanent rectangles may describe one larger landmark; collision and passage validation use their union, not seams between components. Each breakable barrier remains one independently identified rectangle with the existing two-hit state. Replace the mandatory straight center corridor with connectivity, clearance and reachability validation.
+- Add bounded movement profiles to compiled encounter/pack definitions: behavior preset, route/anchor choices, commitment and formation offsets. Native play, Studio preview, animation and warning prediction use these same values and phases.
+- Store the movement/layout revision with gameplay records. Artwork-only changes preserve records. Legacy authored combat remains unchanged; migration creates an explicit upgraded copy.
+- Creator gains World → Layout → Operation authoring, route/cover overlays, connectivity feedback and bounded movement controls. Asset and Motion Studios feed actual runtime preparation, not only metadata slots.
+- Complete Asset Studio admission for all six offered ground-material families, world props and modular panels/caps/corners with exact package dependencies. Preserve accepted crop, pivot and occupied-bound overrides; the current three-material artwork subset must not remain behind the expanded authoring UI.
+
+Keep 60 Hz simulation/contact and staggered 10 Hz ordinary decisions. Compute shared route goals per pack and reuse navigation fields. Avoid per-enemy pathfinding and individually changing offset goals that churn the existing 64-field cache. Test the expanded obstacle count against the real crowd workload.
+
+Prepare only the selected layout, not all 18. Keep deterministic atlas paging, 2048-pixel maximum page edges and the existing 32 MiB base sprite-atlas ceiling. Account for ground textures, decoded sources, staging surfaces and recovery copies separately. Existing stock sprite pages use about 16.0 million RGBA bytes; the selected world's ground textures add about 12.4 million bytes outside that sprite allocation. Measure growth, disposal and restoration. Keep the current offline package budget unless an explicit measured packaging change is reviewed; share source assets across all operations.
+
+**7. Deliver in this order, with review evidence at each gate.**
+
+| Priority / phase | Deliverable | Completion gate and reason |
+| --- | --- | --- |
+| **P0 — trustworthy baseline** | Reconcile source, distinguish autoplay/manual play, reproduce fixed-lane farming, repair Raid motion prediction. | A manual run and deterministic fixture agree about controls and harmful-body escape. Harder enemies must not conceal faulty safety checks. |
+| **P0 — movement proof** | Six movement presets and an authored encounter deck in one open and one greybox cover layout. | Different approaches remain visible, all warnings retain usable exits, fixed-lane cases are recorded, and active sweep/lure/priority builds remain viable. Avoid producing 18 maps around an unproven loop. |
+| **P1 — finished map slice** | Finish Broken Crossroads and Loading Loop art, sound, assets and Creator controls; adapt both to all five operations. | Native gameplay, silhouettes, cover and upgrade demonstrations are readable with full builds; five-operation round-trip works. This sets the quality bar. |
+| **P1 — catalogue expansion** | Complete the remaining 16 layouts and six visual kits, authored formations, objectives, optional reward routes and mission previews. | Each layout has distinct topology and a validated configuration for every advertised operation. No palette-only entries. |
+| **P1 — balance and release qualification** | Full exploit matrix, progression/build review, performance, lifecycle, localization and offline updates. | Evidence tied to a recorded commit, with incomplete or skipped checks clearly identified. |
+| **P2 — broader reuse** | Bring accepted materials and modular assemblies to compatible Solo/Team/Snake/SIM presentation. | Preserve those modes' mechanics and existing art overrides. Do not delay the FPV movement fix for this work. |
+
+Movement and balance changes stay separately measurable. Presentation, Creator tooling and operation adapters can proceed in parallel after the layout/movement interfaces are agreed. Stack PRs only where there is a real dependency.
+
+**8. Evaluate decisions during play, not only wins and losses.**
+
+Preserve the existing unattended regression and add earned-build checkpoints at 60/120/180/240 seconds. Test center, edge, corner and route-intersection positions; eight held headings; straight shuttles; tiny circles; wall-held input; and fixed orbits. Continue draft resolution and replacement airframes automatically. Run the major builds on Standard/Veteran and one/three airframes; Relaxed/custom missions remain outside the unattended-completion gate.
+
+Record longest damage-free farming interval, kills and collected/reachable salvage during it, incoming approach sectors, damage causes and the next meaningful repositioning opportunity. Add a review flag for an unchanged stationary/straight-line policy clearing two consecutive major encounter patterns without hull/shield pressure or abandoning an intended reward/objective. This is a diagnostic flag, not a rule that makes the game damage a stationary player. Review 30/60-second trajectory windows and allow short earned power peaks.
+
+For every new movement, compare the old and new behavior at equal combat budgets. For full sorties, compare active sweep, lure-and-return and priority routes using the same seed and earned build. Retain the unresolved Depot Riy cases. In Raid and its variants, verify finite rewards, objective reachability, catchable runners, baseline-kit completion, multiple legitimate armor passes and no repeatable intersection-farming loop.
+
+Correctness includes deterministic replay; real Raid-body escape; moving/turning swept contacts; fixed warning aim; obstacle sliding; safe replacements; exactly-once deaths/rewards; barrier changes; pause/slow-resume/input transitions; custom appearances; and legacy project compatibility. Visual quality settings must preserve gameplay outcomes.
+
+Retain three two-minute performance trials after 30-second warmup: average at least 59 FPS, p95 at most 18 ms, p99 at most 33.3 ms, and fewer than 1% of frames over 33.3 ms. Include full-content layouts, the separate 1,500-enemy renderer regression, stress, ten retries, context restoration, atlas accounting and a 15-minute soak. Record video separately from timing trials.
+
+Demonstrate author → preview → native play → export/import → offline launch, including fresh installation, upgrading an existing cache and an interrupted update retaining its last usable version. The latter two remain open from the previous release evidence and are not satisfied by a fresh offline launch alone.
+
+Review output contains native before/after map views, trajectory overlays, manual versus automated-run labels, active versus repetitive-play clips, three build techniques, full-build normal/reduced-effects comparisons, audible quiet/dense/boss scenes and the Creator/offline round-trip. Screenshots show artwork; moving footage establishes combat readability.
+
+External Iris Xe/M1 Safari, physical controller/phone and five-player trials remain skipped at the user's direction, not passed. Existing local performance limitations and unreviewed audio mixing remain explicit. Automated evidence establishes correctness and reveals exploits; ordinary-player difficulty, visual appeal and enjoyment still need gameplay review.
