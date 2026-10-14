@@ -1599,8 +1599,7 @@ function renderEncounterGuide() {
 }
 function refresh() {
   if (!match) return;
-  const nextTarget =
-    runs[0].targets?.find((actor) => !actor.bonus) ?? runs[0].targets?.[0] ?? runs[0].target;
+  const nextTarget = runs[0].targets?.find((actor) => actor.role !== 'bonus') ?? runs[0].target;
   if (nextTarget) {
     const guide = actorFieldGuide(
       nextTarget.kind ?? (runs[0].level.targetMovement === 'flee' ? 'runner' : 'still'),
@@ -1693,9 +1692,7 @@ function refresh() {
             ? locale === 'uk'
               ? 'Кожен ворог подовжує хвіст. Плануйте наступний поворот.'
               : 'Every catch grows your tail. Plan your next turn.'
-            : locale === 'uk'
-              ? 'Стрілки / WASD: повертайте до краю поля. Ловіть ворогів.'
-              : 'Arrows / WASD: turn before the edge. Catch the enemies.';
+            : text('firstTurnHelp');
   }
   boards.forEach((board, i) => {
     const run = runs[i],
@@ -1715,8 +1712,12 @@ function refresh() {
             ? 'Антену перехоплено!'
             : 'Antenna intercepted!'
         : '';
-    board.operation.hidden = !run.operation && !reactionText;
-    const operationText = [classicOperationStatus(run, locale), reactionText]
+    const courierText = run.targets?.some((actor) => actor.role === 'bonus')
+      ? text('courierOptional')
+      : '';
+    board.operation.hidden = !run.operation && !reactionText && !courierText;
+    board.operation.parentElement.dataset.status = String(!board.operation.hidden);
+    const operationText = [classicOperationStatus(run, locale), reactionText, courierText]
       .filter(Boolean)
       .join(' · ');
     if (board.operation.textContent !== operationText) board.operation.textContent = operationText;
