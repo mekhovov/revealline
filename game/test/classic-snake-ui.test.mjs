@@ -1181,6 +1181,32 @@ for (const input of ['dpad', 'stick']) {
   });
 }
 
+for (const phase of ['celebration', 'replay']) {
+  test(`controller Menu during ${phase} stops automatic progression and opens results`, async () => {
+    const state = await harness();
+    let now = 0;
+    if (phase === 'celebration') now = flyVerifiedRoute(state);
+    else {
+      state.frame(0);
+      while (state.shell.elements.root.dataset.transitionPhase !== 'replay' && now < 10000)
+        state.frame((now += 50));
+    }
+    const pad = menuPad();
+    state.pads.push(pad);
+    state.frame((now += 50));
+    assert.equal(state.shell.elements.root.dataset.transitionPhase, phase);
+    pad.buttons[9] = { pressed: true, value: 1 };
+    state.frame((now += 50));
+    assert.equal(state.shell.elements.root.dataset.transitionPhase, 'cancelled');
+    assert.equal(state.shell.topDialog(), state.shell.elements.dialogs.results);
+    pad.buttons[9] = { pressed: false, value: 0 };
+    const stoppedAt = now;
+    while (now < stoppedAt + 11000) state.frame((now += 50));
+    assert.equal(state.created.length, 1, 'releasing Menu cannot rearm automatic Next or Retry');
+    assert.equal(state.document.body.dataset.playing, 'false');
+  });
+}
+
 test('controller steering during live play still moves immediately and Confirm launches Next during celebration', async () => {
   const playing = await harness();
   const pad = menuPad();
@@ -1192,6 +1218,13 @@ test('controller steering during live play still moves immediately and Confirm l
   playing.frame(200);
   assert.equal(playing.created[0].snakes[0].direction, 'down');
   assert.equal(playing.document.body.dataset.playing, 'true');
+  pad.buttons[9] = { pressed: true, value: 1 };
+  playing.frame(250);
+  assert.equal(playing.shell.topDialog(), playing.shell.elements.dialogs.pause);
+  assert.equal(playing.document.body.dataset.playing, 'false');
+  const pausedTick = playing.created[0].tick;
+  playing.frame(500);
+  assert.equal(playing.created[0].tick, pausedTick, 'Menu still pauses a live attempt');
 
   const completed = await harness();
   const now = flyVerifiedRoute(completed);
@@ -1941,6 +1974,48 @@ for (const profile of ['local-burst-v1', 'local-burst-v2'])
     assert.equal(label.dataset.reception, 'signalStable');
     assert.equal(run.tick, 0, 'these host checks do not advance the fixture simulation');
   });
+
+test('reception live status writes only changed text and accessible labels', async () => {
+  const state = await receptionHarness('local-burst-v2');
+  const run = state.created[0];
+  receptionFixtureBoard(run);
+  state.frame(0);
+  const [label] = receptionLabels(state);
+  const text = Object.getOwnPropertyDescriptor(Element.prototype, 'textContent');
+  const setAttribute = label.setAttribute;
+  let textWrites = 0;
+  let labelWrites = 0;
+  Object.defineProperty(label, 'textContent', {
+    get() {
+      return text.get.call(this);
+    },
+    set(value) {
+      textWrites++;
+      text.set.call(this, value);
+    },
+  });
+  label.setAttribute = function (name, value) {
+    if (name === 'aria-label') labelWrites++;
+    return setAttribute.call(this, name, value);
+  };
+  for (let now = 1; now <= 5; now++) state.frame(now);
+  assert.deepEqual([textWrites, labelWrites], [0, 0], 'unchanged reception stays quiet');
+  receptionFixtureBoard(run, { inside: true, phase: 'warning' });
+  state.frame(6);
+  assert.deepEqual([textWrites, labelWrites], [1, 1]);
+  assert.match(label.textContent, /warning/i);
+  state.frame(7);
+  assert.deepEqual([textWrites, labelWrites], [1, 1], 'a warning is not rewritten every frame');
+  receptionFixtureBoard(run, { inside: true });
+  state.frame(8);
+  assert.deepEqual([textWrites, labelWrites], [2, 2]);
+  assert.match(label.getAttribute('aria-label'), /Enemies keep moving unseen/);
+  receptionFixtureBoard(run);
+  state.frame(9);
+  assert.deepEqual([textWrites, labelWrites], [3, 3]);
+  assert.match(label.textContent, /Clear reception/);
+  assert.equal(run.tick, 0, 'presentation checks do not change the accepted simulation');
+});
 
 test('Versus reception belongs to each board rather than the most exposed opponent', async () => {
   const state = await receptionHarness('local-burst-v2', 'versus');
