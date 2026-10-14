@@ -66,6 +66,9 @@ export function prepareContentPreview(
     ],
     objectives: (run.objectives ?? []).map(({ id, x, y }) => ({ id, x, y })),
     ...(mode === 'team' ? { spawns: run.players.map(({ id, x, y }) => ({ id, x, y })) } : {}),
+    // Owned initial-state presentation, including resolved perimeter positions.
+    // This is never a live simulation or a substitute Solo environment.
+    ...(run.environment ? { expedition: structuredClone(run.environment) } : {}),
     ...(relays ? { gates: relays.gates, relayTriggers: relays.triggers } : {}),
     ...(manifest.level.directionalFields ? { directionalFields: directionalView(run) } : {}),
   };

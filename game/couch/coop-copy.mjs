@@ -16,12 +16,38 @@ export function coopGoalLabel(level) {
   if (level.hunt?.mode === 'hunt')
     return `${huntText('huntGoal')} ${huntText('targets')}: ${level.hunt.quota}`;
   const goal = captureGoalLabel(level);
+  if (level.environment) {
+    const parts = [goal];
+    if (level.environment.relays.length)
+      parts.push(t('interface:expeditions.allRelays', { count: level.environment.relays.length }));
+    if (level.environment.stages.length)
+      parts.push(t('interface:expeditions.allStages', { count: level.environment.stages.length }));
+    return parts.join(' · ');
+  }
   return level.hunt?.mode === 'capture-quota'
     ? `${goal} · ${huntText('targets')}: ${level.hunt.quota}`
     : goal;
 }
 
 export function coopObjectiveLabel(run) {
+  if (run.environment) {
+    const parts = [captureGoalLabel(run.level)];
+    if (run.environment.relays.length)
+      parts.push(
+        t('interface:expeditions.relayProgress', {
+          done: run.environment.relays.filter((r) => r.open).length,
+          total: run.environment.relays.length,
+        }),
+      );
+    if (run.environment.stages.length)
+      parts.push(
+        t('interface:expeditions.stageProgress', {
+          done: run.environment.stage,
+          total: run.environment.stages.length,
+        }),
+      );
+    return parts.join(' · ');
+  }
   if (run.level.hunt?.mode === 'hunt')
     return `${huntText('targets')}: ${run.hunt.kills}/${run.level.hunt.quota}`;
   const strongholds = run.strongholds.filter((item) => run.level.goal.cores?.includes(item.id));

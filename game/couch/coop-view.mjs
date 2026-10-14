@@ -62,6 +62,7 @@ import { paintMaterialMarker } from '../content-design/material-markers.mjs';
 import { candidateTeamPictureFrame } from './candidate-team-pictures.mjs';
 import { coopBonusView, drawCoopBonuses } from './coop-bonus-view.mjs';
 import { coopBonusActive } from '../coop/timed-bonuses.mjs';
+import { drawCoopExpedition } from '../ui/team-expedition-view.mjs';
 import {
   TEAM_PILOT_SLOTS,
   TEAM_ENEMY_SLOTS,
@@ -576,6 +577,7 @@ export function createCoopPainter(canvas) {
       drawCombatWarnings(ctx, combat, palette, combatOptions);
       drawCombatProjectiles(ctx, combat, palette, combatOptions);
       ctx.restore();
+      drawCoopExpedition(ctx, run, { palette, frames: emitterFrames, anchorFrames: anchors });
       for (const actor of combat?.actors ?? []) {
         if (!bonusSlowed && actor.slowUntil <= run.time) continue;
         ctx.save();
