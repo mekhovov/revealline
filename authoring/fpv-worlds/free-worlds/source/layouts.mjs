@@ -8,6 +8,50 @@ const rows = (names, size, spacing = 22) =>
   ]);
 export const layouts = [
   {
+    kit: 'coaster-kit',
+    id: 'cc0-coaster-park',
+    title: ['Coaster Practice Park', 'Тренувальний парк атракціонів'],
+    ground: [0.24, 0.31, 0.22],
+    locales: {
+      en: {
+        brief:
+          'Lift from the entrance lawn, follow the clear central avenue and return to land. Explore the loops and rides in free flight.',
+        lesson:
+          'An original Kenney CC0 park: twin steel loops, a timber hill, a flume, stalls and tree-lined boundaries. The introductory route stays between the rides; free flight lets you weave around the actual rails and through their openings. Ride models are static scenery. Both flight modes are available.',
+      },
+      uk: {
+        brief:
+          'Злетіть із галявини біля входу, пройдіть вільну центральну алею та поверніться на посадку. У вільному польоті досліджуйте петлі й атракціони.',
+        lesson:
+          'Оригінальний парк із моделей Kenney CC0: дві сталеві петлі, дерев’яна гірка, водний атракціон, кіоски та дерева вздовж меж. Початковий маршрут проходить між атракціонами; у вільному польоті можна огинати рейки й пролітати крізь отвори. Атракціони — нерухомі декорації. Доступні обидва режими польоту.',
+      },
+    },
+    placements: [
+      p('park-entrance', 0, 52, 15),
+      ...[-32, -24, -16, -8, 0, 8, 16, 24, 32].map((z) => p('path-straight', 0, z, 8)),
+      ...[-32, -24, -16, -8, 8, 16, 24, 32].map((x) => p('path-straight', x, 24, 8, 90)),
+      p('coaster-steel-looping', -23, -6, 18, 90),
+      p('coaster-steel-looping', 23, -6, 18, 90),
+      ...[-42, -26, -10, 6, 22, 38].map((z) => p('coaster-steel-straight', -46, z, 16)),
+      p('coaster-wood-straight-hill-complete', 41, -18, 26),
+      p('coaster-flume-straight-hill-complete', 41, 18, 26),
+      p('station', -46, 40, 11),
+      p('coaster-train-front', -46, 39, 3, 0, 2.2),
+      p('ride-entrance', -35, 39, 6),
+      p('stall-food', -20, 33, 7),
+      p('stall-drinks', 20, 33, 7),
+      p('stall-information', -18, 48, 6),
+      p('stall-toilets', 18, 48, 6),
+      ...[-58, -38, -18, 2, 22, 42, 62].flatMap((z) => [
+        p('tree-large', -64, z, 6),
+        p('tree-large', 64, z, 6),
+      ]),
+      ...[-44, -22, 0, 22, 44].map((x) => p('tree', x, -61, 5)),
+      ...[-35, -12, 12, 35].flatMap((x) => [p('bench', x, 58, 4, 180), p('flowers', x, 62, 4)]),
+      p('ride-exit', 35, -40, 6),
+    ],
+  },
+  {
     kit: 'city-kit-industrial',
     id: 'cc0-industrial-yard',
     title: ['Industrial Service Yard', 'Промисловий двір'],
