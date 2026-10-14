@@ -9,7 +9,6 @@ import {
 import {
   DEFAULT_RESPONSE,
   FLIGHT_CONTROLS,
-  responseCurve,
   responseIdentity,
   validateFlightResponse,
 } from './radio-profile.mjs';
@@ -21,13 +20,12 @@ import {
   cos,
   sin,
   multiplyQuaternion,
-  integrateOrientation,
   isqrt,
   mul,
   rotate,
   roundDiv,
 } from './math.mjs';
-import { crossesGate, quantizeFlightInput } from './model.mjs';
+import { advanceFlightAir, FLIGHT_HZ, crossesGate, quantizeFlightInput } from './model.mjs';
 import { createSectorTracker } from './flight-sectors.mjs';
 import { validateThemeProfile } from './world-themes.mjs';
 import {
@@ -64,7 +62,7 @@ import {
 
 export { initWorldRuntime };
 export const WORLD_FLIGHT_MODEL = 'civilian-world-fixed.v2';
-export const WORLD_FLIGHT_HZ = 50;
+export const WORLD_FLIGHT_HZ = FLIGHT_HZ;
 export const WORLD_ACTION_FIRE = 1;
 export const WORLD_MAX_TICKS = 36000;
 export const WORLD_ACTOR_TYPES = Object.freeze(['drone', 'patrol', 'sentry', 'vehicle', 'hazard']);
@@ -1323,35 +1321,8 @@ export function createWorldFlight({
       : null;
     const pendingCatches = [];
     const motions = moveActors();
-    const angles = attitude(state.orientation);
-    for (const key of ['roll', 'pitch', 'yaw']) {
-      const shaped = responseCurve(command[key], rates.expo);
-      const desired =
-        mode === 'self-level' && key !== 'yaw'
-          ? clamp(
-              (roundDiv(shaped * rates.maxTilt * 100, 1000) - angles[key]) * 4,
-              -rates.maxRate * 100,
-              rates.maxRate * 100,
-            )
-          : roundDiv(shaped * rates.maxRate * 100, 1000);
-      const difference = desired - state.angular[key];
-      state.angular[key] += difference
-        ? Math.sign(difference) * Math.max(1, Math.abs(roundDiv(difference, rates.responseTicks)))
-        : 0;
-    }
-    state.orientation = integrateOrientation(state.orientation, state.angular, WORLD_FLIGHT_HZ);
-    const nextAngles = attitude(state.orientation);
-    const thrust = roundDiv(command.throttle * 19620, 1000);
     const delta = {};
-    for (const k of AXES) {
-      const acceleration = mul(nextAngles.up[k], thrust) - (k === 'y' ? 9810 : 0);
-      state.velocity[k] = clamp(
-        roundDiv(state.velocity[k] * 995, 1000) + roundDiv(acceleration, WORLD_FLIGHT_HZ),
-        -30000,
-        30000,
-      );
-      delta[k] = roundDiv(state.velocity[k], WORLD_FLIGHT_HZ);
-    }
+    advanceFlightAir(state, command, mode, rates, delta);
     const impactSpeed = length(state.velocity);
     const tailMotions = (state.hunt?.tail ?? []).map((point, index) => ({
       id: huntTailId(index),
