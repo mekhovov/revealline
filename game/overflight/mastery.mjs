@@ -58,6 +58,7 @@ function contextOf(run) {
     // Mastery follows authored encounters. An independently selected world skin
     // must not create a different achievement history for identical play rules.
     world:
+      run.compiled.battlefield?.world ??
       overflightWorldDefinition(run.compiled.encounterProfile?.replace(/\.v\d+$/, ''))?.id ??
       'legacy',
     mode:

@@ -3381,7 +3381,7 @@ export const createSimFlightAudio = (() => {
     'game/ui/encounter-audio.mjs':
       'ad58592952c55444713911a27df525b2c2d1f2a47c8a909a96597fda85e46dbd',
     'game/ui/world-ambience.mjs':
-      '73c82b71cc64694e6ad6431da4d7f2ebf47efac2c3e64090e2fc551a58bdd791',
+      '95b506a5cd1c34323a2bed5be3444be55ea38ddfc6036903757cccd3c301b260',
     'game/ui/movement-audio.mjs':
       '685d8e458401354028a2cacda0c7b1009b3c1e480a08d4cafce46d8f98b69020',
     'game/ui/dialogue-channel.mjs':
@@ -4055,6 +4055,9 @@ export const createSimFlightAudio = (() => {
       'field-crossing': { filter: 760, air: 0.009, hum: 108, humGain: 0.0015 },
       'freight-depot': { filter: 310, air: 0.006, hum: 61, humGain: 0.0035 },
       'relay-ruins': { filter: 480, air: 0.008, hum: 89, humGain: 0.002 },
+      'river-port': { filter: 570, air: 0.008, hum: 74, humGain: 0.0016 },
+      'chalk-quarry': { filter: 930, air: 0.007, hum: 48, humGain: 0.0022 },
+      'orchard-strongpoint': { filter: 1120, air: 0.006, hum: 123, humGain: 0.0012 },
     });
 
     function worldAmbienceRecipe(world) {

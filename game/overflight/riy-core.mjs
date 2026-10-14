@@ -60,7 +60,7 @@ export function createOverflightRiy(run) {
       apply: applyOverflightRiyUpgrade,
     };
   }
-  return {
+  const state = {
     version,
     rules: run.compiled.riy ?? OVERFLIGHT_RIY_DEFAULTS,
     targetId: null,
@@ -105,6 +105,13 @@ export function createOverflightRiy(run) {
       pending: null,
     })),
   };
+  if (run.terrain)
+    for (const escort of state.escorts)
+      Object.assign(
+        escort,
+        overflightTerrainOpenPoint(run.terrain, escort.x, escort.y, 9, run.compiled.arena),
+      );
+  return state;
 }
 const distance = (a, b) => Math.hypot(a.x - b.x, a.y - b.y);
 function targetScore(enemy, origin) {

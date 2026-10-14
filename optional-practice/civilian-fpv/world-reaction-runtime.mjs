@@ -8,7 +8,7 @@ const sourceHashes={
 'game/ui/audio-master.mjs':'6bf14bc5268c0eff8f38c21c819f398917712fdc2607c33977ac873111d1dca8',
 'game/audio-preferences.mjs':'9212831a3524c9e1ebe8c595783f9f53a112e02e3d51280d775ac103b94a9239',
 'game/ui/encounter-audio.mjs':'ad58592952c55444713911a27df525b2c2d1f2a47c8a909a96597fda85e46dbd',
-'game/ui/world-ambience.mjs':'73c82b71cc64694e6ad6431da4d7f2ebf47efac2c3e64090e2fc551a58bdd791',
+'game/ui/world-ambience.mjs':'95b506a5cd1c34323a2bed5be3444be55ea38ddfc6036903757cccd3c301b260',
 'game/ui/movement-audio.mjs':'685d8e458401354028a2cacda0c7b1009b3c1e480a08d4cafce46d8f98b69020',
 'game/ui/dialogue-channel.mjs':'f4839f3a1634189a03eed6a3096dc595dfc88ee6437277ee82d78de05c300142',
 'optional-practice/civilian-fpv/world-hangar.mjs':
@@ -547,6 +547,9 @@ const WORLDS=Object.freeze({
 'field-crossing':{filter:760,air:0.009,hum:108,humGain:0.0015},
 'freight-depot':{filter:310,air:0.006,hum:61,humGain:0.0035},
 'relay-ruins':{filter:480,air:0.008,hum:89,humGain:0.002},
+'river-port':{filter:570,air:0.008,hum:74,humGain:0.0016},
+'chalk-quarry':{filter:930,air:0.007,hum:48,humGain:0.0022},
+'orchard-strongpoint':{filter:1120,air:0.006,hum:123,humGain:0.0012},
 });
 
 function worldAmbienceRecipe(world){

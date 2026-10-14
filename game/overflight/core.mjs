@@ -1,4 +1,9 @@
 import {
+  assignOverflightMovement,
+  overflightMovementTarget,
+  protectOverflightMovementExit,
+} from './coordinated-movement.mjs';
+import {
   createOverflightTerrain,
   overflightTerrainClear,
   overflightTerrainHit,
@@ -149,9 +154,12 @@ export function createOverflightRun(
   } = {},
 ) {
   if (
-    !['OverflightCompiledV1', 'OverflightCompiledV2', 'OverflightCompiledV3'].includes(
-      compiled?.format,
-    )
+    ![
+      'OverflightCompiledV1',
+      'OverflightCompiledV2',
+      'OverflightCompiledV3',
+      'OverflightCompiledV4',
+    ].includes(compiled?.format)
   )
     throw new TypeError('A compiled Overflight project is required.');
   if (![1, 3].includes(airframes)) throw new RangeError('Choose one or three airframes.');
@@ -404,6 +412,10 @@ export function createOverflightRun(
     _resumePhase: 'playing',
   };
   if (fixture) initializeFixture(run);
+  if (!fixture && run.rulesVersion >= 4 && compiled.battlefield?.courts?.[0]) {
+    run.player.x = compiled.battlefield.courts[0].x;
+    run.player.y = compiled.battlefield.courts[0].y;
+  }
   if (run.terrain)
     Object.assign(
       run.player,
@@ -415,6 +427,8 @@ export function createOverflightRun(
         compiled.arena,
       ),
     );
+  run.player.pulseOriginX = run.player.x;
+  run.player.pulseOriginY = run.player.y;
   camera(run);
   rebuildOverflightGrid(run._grid, run.enemies);
   updatePopulationStats(run);
@@ -617,6 +631,13 @@ export function spawnOverflightEnemy(run, options = {}) {
       enemy,
       overflightTerrainOpenPoint(run.terrain, enemy.x, enemy.y, enemy.radius, run.compiled.arena),
     );
+  assignOverflightMovement(
+    run,
+    enemy,
+    options.movement,
+    options.movementGroup ?? options.pattern ?? 'authored',
+    options.movementMember ?? enemy.id,
+  );
   if (supportFamilies.has(family)) {
     const index = run._supportSources.indexOf(null);
     if (index >= 0) run._supportSources[index] = enemy;
@@ -1125,12 +1146,18 @@ function spawnEncounter(run, encounter, intro = null) {
       }
     }
     const heavy = heavyFamilies.has(family);
+    run._movementSpawnCounts ??= Object.create(null);
+    const member = run._movementSpawnCounts[encounter.id] ?? 0;
+    run._movementSpawnCounts[encounter.id] = member + 1;
     const spawned = spawnOverflightEnemy(run, {
       ...arrivalPoint(run, encounter.pattern, intro),
       family,
       hp: intro ? 30 : encounter.hp * (heavy ? 5 : machineFamilies.has(family) ? 2 : 1),
       speed: intro ? 34 : encounter.speed * (fastFamilies.has(family) ? 1.25 : heavy ? 0.7 : 1),
       pattern: intro ? 'pursuit' : encounter.pattern,
+      movement: intro ? null : encounter.movement,
+      movementGroup: encounter.id,
+      movementMember: member,
       warning: intro ? 1 : encounter.pattern === 'surge' ? 0.9 : 0.65,
     });
     if (intro && spawned) run._riyIntroSpawned[intro.facing]++;
@@ -1168,6 +1195,12 @@ function spawnGoal(run, role) {
     speed: role === 'final' ? 35 : 42,
     warning: 1.2,
     xp: role === 'final' ? 45 : 25,
+    movement:
+      run.rulesVersion >= 4
+        ? run.compiled.encounters.find((item) => item.movement?.preset === 'convoy')?.movement
+        : null,
+    movementGroup: role,
+    movementMember: 0,
   });
   if (!enemy) return false;
   if (role === 'final') {
@@ -1406,6 +1439,20 @@ function moveEnemies(run) {
       dx = (target.x - enemy.x) / length;
       dy = (target.y - enemy.y) / length;
     }
+    const coordinated = overflightMovementTarget(run, enemy, null, speed);
+    if (coordinated) {
+      dx = coordinated.hold ? 0 : coordinated.x;
+      dy = coordinated.hold ? 0 : coordinated.y;
+    }
+    if (run.rulesVersion >= 4) {
+      ({ x: dx, y: dy } = protectOverflightMovementExit(run, enemy, dx, dy, speed));
+      enemy._motionVX = dx * speed;
+      enemy._motionVY = dy * speed;
+      enemy._motionTarget = coordinated?.target ?? null;
+      enemy._motionSeconds = coordinated?.target
+        ? Math.max(0, enemy._coordinated.until - run.time)
+        : undefined;
+    }
     const nextX = enemy.x + dx * speed * OVERFLIGHT_STEP + (enemy.pushX ?? 0),
       nextY = enemy.y + dy * speed * OVERFLIGHT_STEP + (enemy.pushY ?? 0);
     if (
@@ -1453,7 +1500,14 @@ function moveEnemies(run) {
               overflightAttackSpec(enemy, run.player, run.compiled.combat),
             )
           : null;
-      if (attack && (!spec || (visible(run, enemy, -20) && hasOverflightEscape(run, spec)))) {
+      const admitted =
+        attack &&
+        (!spec ||
+          (visible(run, enemy, -20) &&
+            hasOverflightEscape(run, spec, run.rulesVersion >= 4 ? enemy : null)));
+      if (attack && spec && !admitted)
+        run.stats.warningDeferrals = (run.stats.warningDeferrals ?? 0) + 1;
+      if (admitted) {
         Object.assign(attack, {
           active: true,
           stage: 'warning',
@@ -1566,7 +1620,10 @@ function primaryAttack(run) {
 function queuePayload(run, payload) {
   const echo = run._echoes.find((record) => !record.active);
   if (!echo) throw new Error('Primary payload pool is too small for its fire rate.');
-  Object.assign(echo, payload, { active: true, terrainStrike: run._nextTerrainStrike++ });
+  Object.assign(echo, payload, {
+    active: true,
+    terrainStrike: run._nextTerrainStrike++,
+  });
 }
 
 function queuePulse(run, x, y, radius, damage, remaining, push = 0, kind = 'proximity-pulse') {

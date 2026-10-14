@@ -1,4 +1,9 @@
 import {
+  assignOverflightMovement,
+  overflightMovementTarget,
+  protectOverflightMovementExit,
+} from './coordinated-movement.mjs';
+import {
   overflightTerrainClear,
   overflightTerrainHit,
   overflightTerrainOpenPoint,
@@ -11,6 +16,7 @@ import {
   overflightAttackSpec,
   overflightAttackContains,
   hasOverflightEscape,
+  admitOverflightBodyState,
   updateOverflightCaches,
 } from './tactics.mjs';
 import { createOverflightRun, OVERFLIGHT_STEP } from './core.mjs';
@@ -31,6 +37,7 @@ export { OVERFLIGHT_STEP };
 export const OVERFLIGHT_HUNT_RULES = 'overflight-raid.v1';
 export const OVERFLIGHT_HUNT_RULES_V2 = 'overflight-raid.v2';
 export const OVERFLIGHT_HUNT_RULES_V3 = 'overflight-raid.v3';
+export const OVERFLIGHT_HUNT_RULES_V4 = 'overflight-raid.v4';
 const STEP = OVERFLIGHT_STEP;
 const EPS = 1e-9;
 const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
@@ -154,9 +161,12 @@ export function createOverflightHuntRun(
   } = {},
 ) {
   if (
-    !['OverflightHuntCompiledV1', 'OverflightHuntCompiledV2', 'OverflightHuntCompiledV3'].includes(
-      compiled?.format,
-    )
+    ![
+      'OverflightHuntCompiledV1',
+      'OverflightHuntCompiledV2',
+      'OverflightHuntCompiledV3',
+      'OverflightHuntCompiledV4',
+    ].includes(compiled?.format)
   )
     throw new TypeError('A compiled Overflight Hunt project is required.');
   if (![null, 'raid-reference'].includes(fixture)) throw new RangeError('Unknown Raid fixture.');
@@ -177,11 +187,13 @@ export function createOverflightHuntRun(
   );
   run.compiled = compiled;
   run.rules =
-    run.rulesVersion === 3
-      ? OVERFLIGHT_HUNT_RULES_V3
-      : run.rulesVersion === 2
-        ? OVERFLIGHT_HUNT_RULES_V2
-        : OVERFLIGHT_HUNT_RULES;
+    run.rulesVersion >= 4
+      ? OVERFLIGHT_HUNT_RULES_V4
+      : run.rulesVersion === 3
+        ? OVERFLIGHT_HUNT_RULES_V3
+        : run.rulesVersion === 2
+          ? OVERFLIGHT_HUNT_RULES_V2
+          : OVERFLIGHT_HUNT_RULES;
   run.mode = 'raid';
   run.fixture = fixture;
   run.build = createOverflightHuntBuild();
@@ -407,6 +419,14 @@ export function spawnOverflightHuntEnemy(run, options = {}) {
     _beforeHeading: options.heading ?? Math.PI,
     _beforePhase: 'recovery',
   });
+  assignOverflightMovement(
+    run,
+    enemy,
+    options.movement,
+    options.movementGroup ?? options.id ?? options.objectiveId ?? 'authored',
+    options.movementMember ?? 0,
+    options.count ?? Infinity,
+  );
   if (run.terrain) {
     Object.assign(
       enemy,
@@ -444,6 +464,8 @@ function enterSector(run, index) {
         x: pack.x + dx + jitter(),
         y: pack.y + dy + jitter(),
         route,
+        movementGroup: pack.id,
+        movementMember: i,
         ...(pack.escortOf
           ? {
               escortOffsetX:
@@ -717,6 +739,16 @@ function damagePlayer(run, cause = 'contact') {
   return true;
 }
 
+/** Cooldown displayed to players must include the shared minimum between starts,
+ * including when Rush and the one-per-pass refund finish passive recovery early. */
+export function overflightHuntBoostRecovery(run) {
+  const startFloor =
+    Number.isFinite(run.tick) && Number.isFinite(run._boostStartedTick)
+      ? (54 - (run.tick - run._boostStartedTick)) * STEP
+      : 0;
+  return Math.max(0, run.player.boostCooldown ?? 0, startFloor);
+}
+
 function movePlayer(run, input, params) {
   const player = run.player,
     hunt = run.hunt;
@@ -739,12 +771,7 @@ function movePlayer(run, input, params) {
     x /= length;
     y /= length;
   }
-  if (
-    boost &&
-    !run._boostHeld &&
-    player.boostCooldown <= EPS &&
-    run.tick - run._boostStartedTick >= 54
-  ) {
+  if (boost && !run._boostHeld && overflightHuntBoostRecovery(run) <= EPS) {
     if (hunt.rushCharge >= 20 && hunt.rushRemaining <= 0) {
       hunt.rushCharge = 0;
       hunt.rushRemaining = 5;
@@ -835,9 +862,11 @@ function setWarning(run, enemy) {
     spec &&
     (Math.abs(enemy.x - run.camera.x) > run.camera.width / 2 - 20 ||
       Math.abs(enemy.y - run.camera.y) > run.camera.height / 2 - 20 ||
-      !hasOverflightEscape(run, spec))
-  )
+      !hasOverflightEscape(run, spec, run.rulesVersion >= 4 ? enemy : null))
+  ) {
+    run.stats.warningDeferrals = (run.stats.warningDeferrals ?? 0) + 1;
     return false;
+  }
   enemy.behaviorPhase = 'windup';
   enemy.phaseRemaining = spec?.remaining ?? 1.2;
   enemy.heading = Math.atan2(run.player.y - enemy.y, run.player.x - enemy.x);
@@ -883,18 +912,26 @@ function moveEnemies(run, params) {
     if (enemy._beforeWarning > 0) continue;
     const isAttacker = ['brace', 'vehicle'].includes(enemy.behavior);
     const convoy =
-      run.compiled.encounterProfile === 'freight-depot.v1' &&
+      (run.compiled.encounterProfile === 'freight-depot.v1' ||
+        (run.rulesVersion >= 4 && enemy.movementPreset === 'convoy')) &&
       enemy.behavior === 'vehicle' &&
       !!enemy.objectiveId;
     enemy.phaseRemaining -= STEP;
     if (isAttacker) {
-      if (convoy && enemy.behaviorPhase === 'recovery' && enemy.phaseRemaining <= 0) {
-        enemy.behaviorPhase = 'guarding';
-        enemy.convoyArrived = false;
+      if (
+        (convoy || run.rulesVersion >= 4) &&
+        enemy.behaviorPhase === 'recovery' &&
+        enemy.phaseRemaining <= 0
+      ) {
+        if (admitOverflightBodyState(run, enemy, { behaviorPhase: 'guarding' })) {
+          enemy.behaviorPhase = 'guarding';
+          if (convoy) enemy.convoyArrived = false;
+        } else enemy.phaseRemaining = 0.1;
       }
       if (['guarding', 'recovery'].includes(enemy.behaviorPhase) && enemy.phaseRemaining <= 0) {
-        if (distance < 520 && (!convoy || enemy.convoyArrived)) setWarning(run, enemy);
-        else enemy.phaseRemaining = 0.25;
+        if (distance < 520 && (!convoy || enemy.convoyArrived)) {
+          if (!setWarning(run, enemy) && run.rulesVersion >= 4) enemy.phaseRemaining = 0.1;
+        } else enemy.phaseRemaining = 0.25;
       } else if (enemy.behaviorPhase === 'windup' && enemy.phaseRemaining <= 0) {
         enemy.behaviorPhase = 'burst';
         enemy.phaseRemaining = 0.35;
@@ -911,9 +948,12 @@ function moveEnemies(run, params) {
       enemy.attackWarning = enemy.behaviorPhase === 'windup' ? enemy.phaseRemaining : 0;
     } else if (enemy.behavior === 'shield' && enemy.phaseRemaining <= 0) {
       // Commit the shield orientation, giving the player time to flank it.
-      enemy.heading = Math.atan2(run.player.y - enemy.y, run.player.x - enemy.x);
-      if (run.rulesVersion >= 3) enemy.behaviorPhase = 'patrol';
-      enemy.phaseRemaining = run.compiled.combat?.guard.commitSeconds ?? 1.8;
+      const heading = Math.atan2(run.player.y - enemy.y, run.player.x - enemy.x);
+      if (admitOverflightBodyState(run, enemy, { heading, behaviorPhase: 'patrol' })) {
+        enemy.heading = heading;
+        if (run.rulesVersion >= 3) enemy.behaviorPhase = 'patrol';
+        enemy.phaseRemaining = run.compiled.combat?.guard.commitSeconds ?? 1.8;
+      } else enemy.phaseRemaining = 0.1;
     } else if (enemy.behavior === 'sprinter') {
       if (enemy.behaviorPhase === 'patrol' && enemy.phaseRemaining <= 0 && distance < 260) {
         enemy.behaviorPhase = 'windup';
@@ -982,14 +1022,25 @@ function moveEnemies(run, params) {
           y: escorted.y + enemy.escortOffsetY,
         }
       : enemy.route[enemy.routeIndex];
-    if (run.terrain && target)
+    const coordinated = !escorted ? overflightMovementTarget(run, enemy, target, speed) : null;
+    if (coordinated?.hold) speed = 0;
+    if (coordinated?.target) target = coordinated.target;
+    if (run.terrain && target && !coordinated?.target)
       target = overflightTerrainWaypoint(run.terrain, enemy, target, run.compiled.arena);
     if (target && speed) {
       const dx = target.x - enemy.x,
         dy = target.y - enemy.y,
         length = Math.hypot(dx, dy);
       if (length <= speed * STEP + 2) {
-        if (!escorted && target === enemy.route[enemy.routeIndex]) {
+        if (
+          !escorted &&
+          (target === enemy.route[enemy.routeIndex] ||
+            (enemy.movementPreset === 'convoy' &&
+              Math.hypot(
+                target.x - enemy.route[enemy.routeIndex].x,
+                target.y - enemy.route[enemy.routeIndex].y,
+              ) < 1))
+        ) {
           if (convoy) enemy.convoyArrived = true;
           enemy.routeIndex = (enemy.routeIndex + 1) % enemy.route.length;
           enemy.routeRecovery = ['runner', 'courier'].includes(enemy.behavior) ? 0.45 : 0.1;
@@ -997,8 +1048,9 @@ function moveEnemies(run, params) {
         enemy.vx = 0;
         enemy.vy = 0;
       } else {
-        enemy.vx = (dx / length) * speed;
-        enemy.vy = (dy / length) * speed;
+        const exiting = protectOverflightMovementExit(run, enemy, dx / length, dy / length, speed);
+        enemy.vx = exiting.x * speed;
+        enemy.vy = exiting.y * speed;
         moveOverflightThroughTerrain(
           run.terrain,
           enemy,
@@ -1011,6 +1063,14 @@ function moveEnemies(run, params) {
     } else {
       enemy.vx = 0;
       enemy.vy = 0;
+    }
+    if (run.rulesVersion >= 4) {
+      enemy._motionVX = enemy.vx;
+      enemy._motionVY = enemy.vy;
+      enemy._motionTarget = target ?? null;
+      enemy._motionSeconds = coordinated?.target
+        ? Math.max(0, enemy._coordinated.until - run.time)
+        : undefined;
     }
     enemy.contactState = overflightHuntContactState(enemy);
     if (

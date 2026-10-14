@@ -10,7 +10,7 @@ import {
 } from '../studio/raid-preview-mode.mjs';
 
 test('Studio previews all three Raid operations through their native rules without changing draft identity', () => {
-  for (const rulesVersion of [1, 2, 3]) {
+  for (const rulesVersion of [1, 2, 3, 4]) {
     const project = createOverflightHuntProject({ rulesVersion });
     const before = JSON.stringify(project);
     let identity;

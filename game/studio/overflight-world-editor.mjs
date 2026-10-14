@@ -1,4 +1,10 @@
 import {
+  overflightBattlefieldEditor,
+  paintOverflightBattlefieldRoutes,
+} from './overflight-battlefield-editor.mjs';
+import { validateOverflightBattlefieldProject } from '../overflight/battlefields.mjs';
+import { synchronizeOverflightPresentationCover } from '../overflight/world-layout-presentation.mjs';
+import {
   OVERFLIGHT_WORLDS,
   OVERFLIGHT_LANDMARK_KINDS,
   createOverflightWorldPresentation,
@@ -7,6 +13,7 @@ import {
   createExperimentalOverflightWorldProject,
 } from '../overflight/worlds.mjs';
 import { paintOverflightWorld } from '../presentation/overflight-world-art.mjs';
+import { OVERFLIGHT_WORLD_PROP_SLOTS } from '../presentation/overflight-world-slots.mjs';
 import { validateOverflightTerrain, overflightTerrainClear } from '../overflight/terrain.mjs';
 import { validateOverflightSupplyTerrain } from '../overflight/tactics.mjs';
 
@@ -27,6 +34,21 @@ const TITLES = {
   container: ['Perimeter container', 'Контейнер на краю'],
   antenna: ['Perimeter antenna', 'Антена на краю'],
   rubble: ['Low rubble', 'Низькі уламки'],
+  pallet: ['Pallet', 'Піддон'],
+  barrel: ['Barrel', 'Бочка'],
+  cable: ['Cable', 'Кабель'],
+  wheel: ['Wheel', 'Колесо'],
+  puddle: ['Puddle', 'Калюжа'],
+  bollard: ['Dock bollard', 'Причальна тумба'],
+  pipe: ['Pipe', 'Труба'],
+  'timber-stack': ['Timber stack', 'Стос деревини'],
+  spoil: ['Loose spoil', 'Відвал породи'],
+  conveyor: ['Conveyor section', 'Секція конвеєра'],
+  'survey-post': ['Survey marker', 'Геодезичний знак'],
+  crate: ['Crate', 'Ящик'],
+  stump: ['Stump', 'Пень'],
+  irrigation: ['Irrigation pipe', 'Поливна труба'],
+  glass: ['Broken glass', 'Бите скло'],
 };
 const tall = (entry) => ['tree', 'container', 'antenna'].includes(entry.kind);
 
@@ -113,7 +135,7 @@ export function overflightWorldEditor({
   root.append(
     element('legend', words('Battlefield world and decoration', 'Світ і декорації поля бою')),
   );
-  if (!(project.survivorFormat ?? project.format).endsWith('V3')) {
+  if (!/V[34]$/.test(project.survivorFormat ?? project.format)) {
     root.append(
       element(
         'p',
@@ -125,6 +147,9 @@ export function overflightWorldEditor({
     );
     return root;
   }
+  const authoredBattlefield =
+    !!project.battlefield && (project.survivorFormat ?? project.format).endsWith('V4');
+  root.append(overflightBattlefieldEditor({ document, project, locale, onChange, onApply }));
   const label = element('label', words('World appearance', 'Оформлення світу')),
     select = element('select', '', { 'data-world-select': '' }),
     status = element('p', '', { role: 'status', 'data-world-status': '' }),
@@ -149,8 +174,12 @@ export function overflightWorldEditor({
     element(
       'p',
       words(
-        'World selection replaces decoration only. Applying its encounter patterns below changes combat. Tall decoration stays at the perimeter; all interior props are fly-over scenery.',
-        'Вибір світу замінює лише декорації. Окрема дія нижче змінює бойові хвилі. Високі декорації залишаються на краях; над внутрішніми можна вільно літати.',
+        authoredBattlefield
+          ? 'World appearance changes decoration only. Use Battlefield layout and approaches above to change combat. Interior structures follow solid cover; low props are fly-over scenery.'
+          : 'World selection replaces decoration only. Applying its encounter patterns below changes combat. Tall decoration stays at the perimeter; all interior props are fly-over scenery.',
+        authoredBattlefield
+          ? 'Оформлення світу змінює лише декорації. Для зміни бою використовуйте план поля бою та підходи вище. Внутрішні споруди відповідають твердим перешкодам; над низькими декораціями можна літати.'
+          : 'Вибір світу замінює лише декорації. Окрема дія нижче змінює бойові хвилі. Високі декорації залишаються на краях; над внутрішніми можна вільно літати.',
       ),
     ),
     canvas,
@@ -161,7 +190,7 @@ export function overflightWorldEditor({
     type: 'button',
     'data-world-encounters': '',
   });
-  root.append(apply);
+  if (!authoredBattlefield) root.append(apply);
   const report = (message, error = false) => {
     status.textContent = message;
     status.dataset.error = String(error);
@@ -177,6 +206,7 @@ export function overflightWorldEditor({
     ctx.fillRect(0, 0, project.arena.width, project.arena.height);
     if (project.presentation) paintOverflightWorld(ctx, project.presentation, project.arena);
     paintOverflightTerrainLayout(ctx, project.terrain);
+    paintOverflightBattlefieldRoutes(ctx, project.battlefield);
     ctx.restore();
   };
   const changed = () => {
@@ -194,17 +224,27 @@ export function overflightWorldEditor({
   root.append(terrainPanel);
   function renderTerrain() {
     terrainPanel.replaceChildren();
+    const modernTerrain = !!project.battlefield;
     terrainPanel.append(
-      element('legend', words('Experimental cover', 'Експериментальні перешкоди')),
+      element(
+        'legend',
+        modernTerrain
+          ? words('Solid cover and barriers', 'Тверді перешкоди й бар’єри')
+          : words('Experimental cover', 'Експериментальні перешкоди'),
+      ),
       element(
         'p',
         words(
-          allowTerrain
-            ? 'Single Drone, Riy and Single Raid only. Six solid obstacles and two breakable barriers; keep the central passage and gaps at least 240 units wide. Solid outlines are permanent; crossed, dashed outlines break in two hits. These change gameplay records.'
-            : 'Experimental cover is unavailable in Time Attack and Contract Marathon. Switch to Single Raid to edit it, or remove cover to use this operation.',
-          allowTerrain
-            ? 'Лише для одного дрона, Рою та одного Нальоту. Шість перешкод і дві руйнівні перепони; центральний прохід і проміжки — щонайменше 240 одиниць. Суцільні контури постійні; пунктирні з хрестом руйнуються за два удари. Зміни впливають на ігрові рекорди.'
-            : 'Експериментальні перешкоди недоступні в режимах «На час» і «Марафон контрактів». Перейдіть до одного Нальоту для редагування або вилучіть перешкоди.',
+          modernTerrain
+            ? 'Keep both wide routes open. Cover, objectives and formation anchors are validated together; barriers open in two distinct hits.'
+            : allowTerrain
+              ? 'Single Drone, Riy and Single Raid only. Six solid obstacles and two breakable barriers; keep the central passage and gaps at least 240 units wide. Solid outlines are permanent; crossed, dashed outlines break in two hits. These change gameplay records.'
+              : 'Experimental cover is unavailable in Time Attack and Contract Marathon. Switch to Single Raid to edit it, or remove cover to use this operation.',
+          modernTerrain
+            ? 'Зберігайте два широкі шляхи. Перешкоди, цілі й опорні точки строю перевіряються разом; бар’єри руйнуються двома окремими ударами.'
+            : allowTerrain
+              ? 'Лише для одного дрона, Рою та одного Нальоту. Шість перешкод і дві руйнівні перепони; центральний прохід і проміжки — щонайменше 240 одиниць. Суцільні контури постійні; пунктирні з хрестом руйнуються за два удари. Зміни впливають на ігрові рекорди.'
+              : 'Експериментальні перешкоди недоступні в режимах «На час» і «Марафон контрактів». Перейдіть до одного Нальоту для редагування або вилучіть перешкоди.',
         ),
       ),
     );
@@ -280,8 +320,21 @@ export function overflightWorldEditor({
               throw new TypeError(
                 words('Enter a finite coordinate.', 'Введіть скінченну координату.'),
               );
-            validateTerrainDraft({ ...project, terrain: candidate });
+            const next = {
+              ...project,
+              terrain: candidate,
+              ...(project.battlefield
+                ? { battlefield: { ...project.battlefield, terrain: candidate } }
+                : {}),
+            };
+            validateTerrainDraft(next);
+            if (next.battlefield) validateOverflightBattlefieldProject(next);
             project.terrain = candidate;
+            if (project.battlefield) project.battlefield.terrain = structuredClone(candidate);
+            project.presentation = synchronizeOverflightPresentationCover(
+              project.presentation,
+              candidate,
+            );
             onChange();
             report(
               words(
@@ -302,10 +355,20 @@ export function overflightWorldEditor({
     }
     button(
       terrainPanel,
-      words('Remove Experimental cover', 'Вилучити експериментальні перешкоди'),
+      modernTerrain
+        ? words('Clear cover', 'Прибрати перешкоди')
+        : words('Remove Experimental cover', 'Вилучити експериментальні перешкоди'),
       'data-terrain-remove',
       () => {
-        delete project.terrain;
+        if (project.battlefield) {
+          const empty = { ...project.terrain, obstacles: [] };
+          project.terrain = empty;
+          project.battlefield.terrain = structuredClone(empty);
+          project.presentation = synchronizeOverflightPresentationCover(
+            project.presentation,
+            empty,
+          );
+        } else delete project.terrain;
         onChange();
         paint();
         renderTerrain();
@@ -323,12 +386,25 @@ export function overflightWorldEditor({
     apply.disabled = !project.presentation;
     paint();
     if (!project.presentation) return;
-    for (const [group, property, kinds, title] of [
-      ['regions', 'material', MATERIALS, words('Ground material regions', 'Ділянки покриття')],
-      ['landmarks', 'kind', OVERFLIGHT_LANDMARK_KINDS, words('Landmarks', 'Орієнтири')],
+    const modern = project.presentation.format === 'OverflightWorldPresentationV2';
+    for (const [group, property, kinds, title, maximum] of [
+      [
+        'regions',
+        'material',
+        MATERIALS,
+        words('Ground material regions', 'Ділянки покриття'),
+        modern ? 32 : 64,
+      ],
+      [
+        'landmarks',
+        'kind',
+        modern ? Object.keys(OVERFLIGHT_WORLD_PROP_SLOTS) : OVERFLIGHT_LANDMARK_KINDS,
+        words('Landmarks', 'Орієнтири'),
+        64,
+      ],
     ]) {
       const section = element('details', '', { 'data-world-group': group }),
-        summary = element('summary', `${title} · ${project.presentation[group].length}/64`);
+        summary = element('summary', `${title} · ${project.presentation[group].length}/${maximum}`);
       section.open = opened.has(group);
       section.append(summary);
       for (const [index, entry] of project.presentation[group].entries()) {
@@ -351,6 +427,24 @@ export function overflightWorldEditor({
             control.value = entry[control.dataset.worldCoordinate];
         });
         row.append(kind);
+        if (modern && group === 'regions') {
+          const label = element('label', words('Texture variation', 'Варіант текстури')),
+            variant = element('select', '', { 'data-world-variant': '' });
+          for (let value = 0; value < 4; value++)
+            variant.append(element('option', String(value + 1), { value }));
+          variant.value = String(entry.variant);
+          variant.addEventListener('change', () => {
+            const next = Number(variant.value);
+            if (!Number.isInteger(next) || next < 0 || next > 3) {
+              variant.value = String(entry.variant);
+              return;
+            }
+            entry.variant = next;
+            changed();
+          });
+          label.append(variant);
+          row.append(label);
+        }
         for (const [key, en, uk] of [
           ['x', 'X', 'X'],
           ['y', 'Y', 'Y'],
@@ -392,7 +486,7 @@ export function overflightWorldEditor({
         words('Add placement', 'Додати елемент'),
         `data-world-add-${group}`,
         () => {
-          if (project.presentation[group].length >= 64) return;
+          if (project.presentation[group].length >= maximum) return;
           let serial = 1;
           while (
             project.presentation[group].some((entry) => entry.id === `custom-${group}-${serial}`)
@@ -403,6 +497,7 @@ export function overflightWorldEditor({
               {
                 id: `custom-${group}-${serial}`,
                 [property]: kinds[0],
+                ...(modern && group === 'regions' ? { variant: 0 } : {}),
                 x: project.arena.width / 2,
                 y: project.arena.height / 2,
                 width: 120,
@@ -415,13 +510,17 @@ export function overflightWorldEditor({
           render();
         },
       );
-      add.disabled = project.presentation[group].length >= 64;
+      add.disabled = project.presentation[group].length >= maximum;
       layout.append(section);
     }
   }
   select.addEventListener('change', () => {
     if (select.value)
-      project.presentation = createOverflightWorldPresentation(select.value, project.arena);
+      project.presentation = createOverflightWorldPresentation(
+        select.value,
+        project.arena,
+        project.battlefield ? { layout: project.battlefield } : {},
+      );
     else delete project.presentation;
     onChange();
     report(
@@ -433,6 +532,7 @@ export function overflightWorldEditor({
     render();
   });
   apply.addEventListener('click', () => {
+    if (authoredBattlefield) return;
     try {
       const next = applyOverflightWorld(project, project.presentation.world);
       if (next.terrain) validateTerrainDraft(next);

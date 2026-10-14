@@ -47,7 +47,7 @@ export function createOverflightRiyMode(base) {
   const createProject = (options = {}) =>
     createOverflightRiyProject({
       ...options,
-      rulesVersion: 3,
+      rulesVersion: options.rulesVersion ?? 4,
       world: options.world ?? overflightWorldForEncounterSet(options.encounterSet ?? 'front'),
     });
   return {
