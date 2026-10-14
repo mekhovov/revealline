@@ -1,3 +1,7 @@
+import {
+  validateFrameTransaction,
+  adoptVerifiedFrame,
+} from "./frame-transaction.mjs";
 /** Exact-source terrain preparation coordinator. Detached authoring resources, never live flight. */
 import {
   REGION_LIMITS,
@@ -9,7 +13,8 @@ import { compileTerrainCell, validateTerrainCell } from "./terrain-cell.mjs";
 import { prepareTerrainWindow } from "./terrain-admission.mjs";
 import { validateTerrainSurface } from "./terrain-surface.mjs";
 
-const GEOMETRY_BYTES_PER_CELL = 1089 * 3 * 4 * 2 + 32 * 32 * 6 * 4;
+export const TERRAIN_GEOMETRY_BYTES_PER_CELL =
+  1089 * 3 * 4 * 2 + 32 * 32 * 6 * 4;
 const fail = (condition, message) => {
   if (!condition) throw new TypeError(message);
 };
@@ -99,12 +104,12 @@ export function createVerifiedTerrainWindow(
     generation++;
     source.cancel();
   }
-  async function prepare(point, plan, token, supportPose) {
+  async function prepare(point, plan, token, supportPose, frameTransaction) {
     let staged = null;
     try {
       current(token);
       const required = plan.requiredChunks;
-      const requiredBytes = required.length * GEOMETRY_BYTES_PER_CELL;
+      const requiredBytes = required.length * TERRAIN_GEOMETRY_BYTES_PER_CELL;
       fail(
         committedBytes() + requiredBytes <= maxGeometryBytes,
         "transition-terrain-geometry-budget",
@@ -180,10 +185,7 @@ export function createVerifiedTerrainWindow(
           "Staged terrain cannot support the required body pose",
         );
       }
-      const previous = committed;
-      committed = staged;
-      staged = null;
-      provenance = {
+      const nextProvenance = {
         regionId: manifest.id,
         revision: manifest.revision,
         positionMm: { ...point },
@@ -191,10 +193,20 @@ export function createVerifiedTerrainWindow(
         compiler: "FPV regional terrain compiler v1",
         chunks: receipts,
       };
-      previous?.dispose();
+      adoptVerifiedFrame(
+        frameTransaction,
+        { group: staged.group, provenance: structuredClone(nextProvenance) },
+        () => current(token),
+      );
+      // No await or caller callback between host frame adoption and owner publication.
+      const previous = committed;
+      committed = staged;
+      staged = null;
+      provenance = nextProvenance;
       reservedGeometryBytes = committedBytes();
       state = "ready";
       failure = null;
+      previous?.dispose();
       return snapshot();
     } catch (error) {
       if (!disposed && token === generation) {
@@ -212,13 +224,19 @@ export function createVerifiedTerrainWindow(
     get group() {
       return committed?.group ?? null;
     },
-    transition(positionMm, supportPoseInput = null) {
+    transition(
+      positionMm,
+      supportPoseInput = null,
+      frameTransactionInput = null,
+    ) {
       if (disposed)
         return Promise.reject(new Error("Verified terrain window is disposed"));
       const point = { ...positionMm };
       let plan,
+        frameTransaction,
         supportPose = null;
       try {
+        frameTransaction = validateFrameTransaction(frameTransactionInput);
         if (supportPoseInput !== null) {
           fail(
             supportPoseInput &&
@@ -251,7 +269,7 @@ export function createVerifiedTerrainWindow(
       state = "loading";
       failure = null;
       const operation = queue.then(() =>
-        prepare(point, plan, token, supportPose),
+        prepare(point, plan, token, supportPose, frameTransaction),
       );
       queue = operation.catch(() => {});
       return operation;

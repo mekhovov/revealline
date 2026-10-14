@@ -304,20 +304,6 @@ const presentation = createClassicPresentation({
   displayPreferences: display,
   onChange: () => missionChooser?.refresh(),
 });
-const enemyAppearanceControls = mountEnemyAppearanceControls({
-  document: doc,
-  container: $('snake-enemy-appearance'),
-  locale: getLocale,
-  applyMilitary: async () => {
-    await presentation.theme.applyComplete('military-field');
-    renderCopy();
-  },
-  applyAuthored: async () => {
-    await presentation.theme.set({ arcadeArt: 'authored' });
-    renderCopy();
-  },
-});
-onLocaleChange(enemyAppearanceControls.refresh);
 const audioMaster = createAudioMaster(),
   audioPreferences = createAudioPreferences({ audioMaster });
 const sound = new Soundscape({ audioMaster, persistentMusic: true });
@@ -2730,6 +2716,18 @@ attachThemeFamilyControls({
   host: presentation.theme,
   prefix: 'snake-',
   mountBattlefieldGroundControls,
+  mountEnemyAppearance: (options) =>
+    mountEnemyAppearanceControls({
+      ...options,
+      applyMilitary: async () => {
+        await presentation.theme.applyComplete('military-field');
+        renderCopy();
+      },
+      applyAuthored: async () => {
+        await presentation.theme.set({ arcadeArt: 'authored' });
+        renderCopy();
+      },
+    }),
 });
 const displayBinding = (key) => ({
   get: () => display.snapshot()[key],

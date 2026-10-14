@@ -115,6 +115,39 @@ async function prepare() {
 async function reset() {
   if (!busy && !closed) await session.replace();
 }
+async function readManifest(url, signal) {
+  const response = await fetch(url, {
+    signal,
+    credentials: "omit",
+    redirect: "error",
+  });
+  if (!response.ok || !response.body)
+    throw new Error("Manifest download failed");
+  const reader = response.body.getReader(),
+    parts = [];
+  let size = 0;
+  try {
+    while (true) {
+      const { value, done } = await reader.read();
+      if (done) break;
+      size += value.length;
+      if (size > 8 * 1024 * 1024) throw new Error("Manifest is too large");
+      parts.push(value);
+    }
+  } finally {
+    await reader.cancel().catch(() => {});
+    reader.releaseLock();
+  }
+  const bytes = new Uint8Array(size);
+  let offset = 0;
+  for (const part of parts) {
+    bytes.set(part, offset);
+    offset += part.length;
+  }
+  return validateRegionManifest(
+    new TextDecoder("utf-8", { fatal: true }).decode(bytes),
+  );
+}
 document.querySelector("form").addEventListener("submit", async (event) => {
   event.preventDefault();
   if (busy || session.status().busy) return;
@@ -127,46 +160,51 @@ document.querySelector("form").addEventListener("submit", async (event) => {
     manifestController?.abort();
     manifestController = new AbortController();
     timeout = setTimeout(() => manifestController.abort(), 30000);
-    const url = new URL($("manifest").value, location.href),
-      response = await fetch(url, {
-        signal: manifestController.signal,
-        credentials: "omit",
-        redirect: "error",
-      });
-    if (!response.ok || !response.body)
-      throw new Error("Manifest download failed");
-    const reader = response.body.getReader(),
-      parts = [];
-    let size = 0;
-    try {
-      while (true) {
-        const { value, done } = await reader.read();
-        if (done) break;
-        size += value.length;
-        if (size > 8 * 1024 * 1024) throw new Error("Manifest is too large");
-        parts.push(value);
-      }
-    } finally {
-      await reader.cancel().catch(() => {});
-      reader.releaseLock();
+    const url = new URL($("manifest").value, location.href);
+    const manifest = await readManifest(url, manifestController.signal);
+    let scenery = null;
+    if ($("geometry-profile").value === "terrain-scenery-v1") {
+      const companionURL = new URL($("scenery-manifest").value, location.href);
+      scenery = {
+        manifest: await readManifest(companionURL, manifestController.signal),
+        source: { baseURL: new URL(".", companionURL).href },
+      };
     }
-    const bytes = new Uint8Array(size);
-    let offset = 0;
-    for (const part of parts) {
-      bytes.set(part, offset);
-      offset += part.length;
-    }
-    const manifest = validateRegionManifest(
-      new TextDecoder("utf-8", { fatal: true }).decode(bytes),
-    );
     if (token !== loadingGeneration || closed) return;
     clearTimeout(timeout);
     chunks = new Map(manifest.chunks.map((chunk) => [chunk.id, chunk]));
+    const selectedSpawn = $("spawn").value;
+    $("spawn").replaceChildren(
+      ...manifest.spawns.map((spawn) => {
+        const option = document.createElement("option");
+        option.value = spawn.id;
+        option.textContent = spawn.id.replaceAll("-", " ");
+        return option;
+      }),
+    );
+    if (manifest.spawns.some((spawn) => spawn.id === selectedSpawn))
+      $("spawn").value = selectedSpawn;
+    $("spawn").disabled = false;
+    const heading = $("heading").value,
+      surface = $("surface").value;
+    const surfaceStyle =
+      surface === "auto"
+        ? manifest.id === "canyon-badlands-study"
+          ? "canyon"
+          : "plain"
+        : surface;
     await session.replace({
       manifest,
+      spawnId: $("spawn").value,
+      initialHeading: heading === "region-centre" ? heading : Number(heading),
       geometryProfile: $("geometry-profile").value,
+      scenery,
       mode: $("mode").value,
-      source: { baseURL: new URL(".", url).href },
+      source: {
+        baseURL: new URL(".", url).href,
+        surfaceStyle,
+        surfaceQuality: $("surface-quality").value,
+      },
     });
     document.querySelector("details").open = false;
   } catch (error) {
@@ -177,6 +215,14 @@ document.querySelector("form").addEventListener("submit", async (event) => {
     session.block(false);
   }
 });
+$("cancel-load").onclick = () => {
+  loadingGeneration++;
+  manifestController?.abort();
+  session.pause();
+  message(
+    "Loading cancelled. Prepare or load again to continue; flight stays paused.",
+  );
+};
 $("prepare").onclick = prepare;
 $("reset").onclick = reset;
 $("arm").onclick = () => {
@@ -213,9 +259,22 @@ addEventListener("resize", resize);
 resize();
 const requested = new URL(location.href).searchParams.get("manifest");
 if (requested) $("manifest").value = requested;
+const companion = new URL(location.href).searchParams.get("scenery");
+if (companion) $("scenery-manifest").value = companion;
 const profile = new URL(location.href).searchParams.get("profile");
-if (["terrain-v1", "scenery-v1"].includes(profile))
+if (["terrain-v1", "scenery-v1", "terrain-scenery-v1"].includes(profile))
   $("geometry-profile").value = profile;
+function updateSurfaceControls() {
+  const selected = $("geometry-profile").value;
+  const mixed = selected === "terrain-scenery-v1";
+  $("scenery-manifest").hidden = !mixed;
+  $("scenery-manifest").required = mixed;
+  const disabled = selected === "scenery-v1";
+  $("surface").disabled = disabled;
+  $("surface-quality").disabled = disabled;
+}
+$("geometry-profile").addEventListener("change", updateSurfaceControls);
+updateSurfaceControls();
 function render() {
   if (closed) return;
   session.advance(performance.now());

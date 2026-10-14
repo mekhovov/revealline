@@ -12,6 +12,7 @@ export function attachThemeFamilyControls({
   legacyPalette,
   legacyOrnaments,
   mountBattlefieldGroundControls,
+  mountEnemyAppearance = mountEnemyAppearanceControls,
 }) {
   if (!root || !host) return { dispose() {} };
   const group = doc.createElement('section');
@@ -25,7 +26,7 @@ export function attachThemeFamilyControls({
   const heading = doc.createElement('h3');
   text(heading, 'appearance');
   group.append(heading);
-  const enemyAppearance = mountEnemyAppearanceControls({
+  const enemyAppearance = mountEnemyAppearance({
     document: doc,
     container: group,
     locale: getLocale,
