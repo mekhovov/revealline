@@ -81,6 +81,16 @@ jobs:
           rm "$RUNNER_TEMP/main-pages/distribution.zip" \
             "$RUNNER_TEMP/main-pages/distribution.zip.sha256"
 
+      - name: Stage reviewed Flight practice releases (including an explicit empty directory)
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          node scripts/publish-optional-packages.mjs stage-pages \
+            --out "$RUNNER_TEMP/main-pages" \
+            --selector publishing/pages-controller/optional-packages.json \
+            --repository mekhovov/revealline --base-path /revealline/
+
       - name: Add rolling-channel identity metadata
         env:
           BUILD_VERSION: ${{ steps.identity.outputs.build_version }}
@@ -192,6 +202,27 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 12
     steps:
+      - name: Check out the deployed source and selector
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          ref: ${{ needs.build.outputs.source_sha }}
+          fetch-depth: 1
+          filter: blob:none
+          persist-credentials: false
+          sparse-checkout: |
+            scripts
+            publishing
+            game
+            optional-practice
+            package.json
+          sparse-checkout-cone-mode: false
+
+      - name: Set up the matching verification runtime
+        uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
+        with:
+          package-manager-cache: false
+          node-version: 22.22.2
+
       - name: Verify the public root identifies the exact main revision
         env:
           BUILD_VERSION: ${{ needs.build.outputs.build_version }}
@@ -230,3 +261,20 @@ jobs:
           }
           throw lastError;
           NODE
+
+      - name: Verify selected practice versions and every published dependency
+        env:
+          PUBLIC_ROOT: ${{ needs.deploy.outputs.page_url }}
+        run: |
+          set -euo pipefail
+          node scripts/verify-practice-site.mjs "${PUBLIC_ROOT%/}/" \
+            > "$RUNNER_TEMP/practice-site-receipt.json"
+          cat "$RUNNER_TEMP/practice-site-receipt.json"
+
+      - name: Preserve the public practice verification receipt
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
+        with:
+          name: practice-site-receipt-${{ needs.build.outputs.source_sha }}
+          path: ${{ runner.temp }}/practice-site-receipt.json
+          retention-days: 30
+          if-no-files-found: error

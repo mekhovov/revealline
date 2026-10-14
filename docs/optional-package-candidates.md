@@ -11,11 +11,11 @@ node scripts/bundle-optional-practice.mjs --out .cache/optional-candidate-VERSIO
 ```
 
 Omitting the selection preserves the historical `civilian-flight` assisted gym.
-To include the independently registered `civilian-fpv` first-person package, select
-the exact package IDs explicitly:
+To include all three registered applications (Gym, Flight Studio and World Studio),
+select the exact package IDs explicitly:
 
 ```sh
-node scripts/bundle-optional-practice.mjs --out .cache/optional-flight-candidate-VERSION --base-path /revealline/ --packages civilian-flight,civilian-fpv
+node scripts/bundle-optional-practice.mjs --out .cache/optional-flight-candidate-VERSION --base-path /revealline/ --packages civilian-flight,civilian-fpv,fpv-worlds
 ```
 
 Empty, repeated or unregistered IDs fail before compilation. Each selected package
@@ -39,9 +39,12 @@ and shared dependencies; unknown imports, paths and packages fail closed.
 Selected source includes the worker and launcher templates and pruned validator translations.
 Original aggregate locale hashes are recorded, while their unrelated strings do
 not enter the archive. Generated worker, launcher and icon dependencies are listed; vendored
-i18next includes its exact version and license descriptor. The existing separate
-64-file/8-MiB package limits, 64-MiB/2,000-file core limit and 32-MiB edition asset
-limit are unchanged.
+i18next includes its exact version and license descriptor. Limits are separate
+for each package and for the core/edition inventories. Use `--list` and
+`--preflight` for current effective package limits and usage; historical
+qualification reports are not the current policy. See the
+[maintainer guide](flight-practice-maintainer.md) for registration, previews,
+release evidence, publishing and retirement.
 
 The FPV policy admits only Three.js 0.186.1 `three.core.js`, `three.module.js` and
 the MIT license from the [official npm distribution](https://registry.npmjs.org/three/0.186.1).
@@ -93,7 +96,7 @@ operation and verified or unresolved outcome. An ambiguous interruption requires
 fresh draft/asset inspection and explicit recovery review before another POST;
 there is no automatic retry. A deliberately resumed command verifies matching
 originals without replacing them and retains the first delivery receipt unchanged.
-The sole Pages publisher reads the separately pinned optional
+The main Pages workflow (`publish-main-pages.yml`) stages the separately pinned optional
 selector and copies the exact reviewed bytes into `practice/<id>/releases/<version>/site/`.
 A stable `practice/<id>/app/` launcher and explicit manifest ID keep installations
 stable across updates. Its local pointers use package identity plus installation
