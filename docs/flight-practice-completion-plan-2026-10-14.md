@@ -14,7 +14,7 @@ deployment and public empty-catalogue check passed. No application release is
 selected yet. Independent observer follow-up continues on a new branch.
 
 The Practice branch is rebased onto main
-`1a2e87d50670f6c4e2c79faf6dd46d9a52479c93`, including merged SIM recovery PR #1193,
+`e0aec7e468d80546c74e5cd2c11224dcdd3aa16b`, including merged SIM recovery PR #1193,
 regional authoring PRs #1197/#1200, World Library PR #1199 and Snake acceptance/retry changes. Earlier candidate receipts remain historical,
 bound to their recorded source, rather than being relabelled as this revision.
 The unrelated primary checkout and active SIM worktrees are untouched.
@@ -216,6 +216,13 @@ Do not mark “three playable public apps” done on the strength of local fixtu
   no page errors were recorded. Retained [failed receipt](flight-practice-qualification-20261014/controlled-observer-profile-navigation-failed.json)
   is diagnostic only. Repair and recheck that observer navigation before using it
   for real-candidate qualification; the earlier pointer-focus issue also remains.
+- Final review found and fixed a delayed browser-startup cleanup race. Pending
+  acquisition now retains the profile and records cleanup as unverified; late
+  completion cannot overwrite a timeout with success. The final pre-rebase suite
+  passes **314 tests**; **9 focused observer tests** pass after the final rebase.
+  The final main update includes SIM Coaster authoring/content PR #1205 and Snake
+  evidence; it changes no optional-app runtime inputs. Existing frozen build and
+  deployed-capacity receipts retain their original sources, not the new HEAD.
 - A bounded, read-only lossless audit checked 30 images (90,551,929 bytes) and
   measured 1,235,912 bytes of potential savings. This does not close the measured
   retained-version gap. No image bytes, pinned hashes, original-download routes,
