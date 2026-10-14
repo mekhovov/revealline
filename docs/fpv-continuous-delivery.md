@@ -4125,3 +4125,62 @@ post-cleanup 5.3 GiB peak to roughly 2.2 GiB. The safe cleanup and all preserved
 paths remain; the 3 GiB local heavy-build floor is not currently stable. Keep
 large local builds paused and use the existing cloud candidate run. This does
 not invalidate the earlier completed bounded browser check.
+
+## 2026-10-14 — Workshop import guide and free-resource shortlist
+
+Independent `codex/fpv-world-import-guide` from main `0a3e1fb51a8060fd3d3bfaa94956e4ae575bbcbd`.
+Preserved root Overflight edits and qualification branch #1166. Added local EN/UK
+collapsible importing help plus 23 external scene/kit candidates; see
+[workflow, priorities and verification](fpv-world-import-guide.md). No new worlds
+are claimed installed. Explicit isolated HTTPS anchors are navigation; optional
+runtime network dependencies remain forbidden. Three preflights, existing 9/9
+package checks, 11 navigation guard cases, scoped lint and browser layouts pass.
+Full admission stays with CI while local free space is below 3 GiB. Next content
+work is candidate selection, archive/license provenance, preparation, collision,
+course authoring and qualification, without changing existing package limits.
+
+Published as [PR #1169](https://github.com/mekhovov/revealline/pull/1169), implementation
+head `a0b012f564b9c1c0094022e6f2f72d86d51c9242`. Cloud qualification was dispatched
+in [run 38477507774](https://github.com/mekhovov/revealline/actions/runs/38477507774);
+PR-triggered run 38477509680 also started. This checkpoint is docs-only; protected
+checks and publication remain pending. No live availability claim.
+
+## 2026-10-14 — Sixteen prepared CC0 worlds
+
+Independent `codex/fpv-free-world-library` preserves all unrelated root work.
+Prepared Majadroid's assembled House Construction Site and fifteen new practice
+layouts from Kenney kits. All sixteen include collision, spawn, an EN/UK discovery
+course, editable project, source/license receipts and two portable verified flights.
+See [catalogue and remaining conversions](../authoring/fpv-worlds/free-worlds/README.md)
+and [browser evidence](evidence/fpv-free-world-library-20261014/README.md).
+
+The new bounded Library feed retains Reservoir, Festival and Harbor and adds
+sixteen immutable pack rows pinned to asset commit
+`0c05c638bad38a3ae62c4c0a911919bc54f1eb11`. Its 19 rows occupy 8,787 bytes;
+all sixteen pack sizes/hashes match, and an oversized catalogue is rejected.
+The old feed remains unchanged for cached players. Renderer scene metadata
+suppresses duplicate collision placeholders and procedural scenery only when
+represented by imported artwork, restoring them on unload. Map/editor views
+omit fog for these authored-ground scenes; FPV/chase keep course fog and physics.
+
+Completed: sixteen Khronos-valid GLBs and lossless pack/editable round trips;
+32 ordinary-command flights and independent replays, all complete with zero
+contacts and full health; all sixteen final packs imported through Library and
+launched in the source browser, with screenshots and no captured warnings/errors;
+26/26 existing content/runtime checks, changed-source lint and generated projections.
+These are introductory routes, not exhaustive off-route collision or device-FPS
+qualification. Additional unit coverage remains deferred.
+
+Remaining: protected PR checks/full cloud package admission, public deployment
+and public Library installation. Seven Poly Haven candidates require substantial
+conversion/optimization (1.1–3.4 GB Blender scenes; one ~13.2 GB Unreal collection)
+and are explicitly not offered as playable maps. Local free space remains below
+the unchanged stable 3 GiB full-build floor. No core/world/asset limits were raised;
+only catalogue metadata grows to a bounded 32 rows / 32 KiB. No public-live claim.
+
+Published as [PR #1174](https://github.com/mekhovov/revealline/pull/1174).
+All 19 immutable remote catalogue downloads were fetched from GitHub and matched
+the declared size and SHA-256, including the preserved three maps. Cloud candidate
+run [38484966895](https://github.com/mekhovov/revealline/actions/runs/38484966895)
+started on `8600cf3bdaf68956a55343a08aaded56ac755862`; this subsequent checkpoint
+changes documentation only. Read the latest exact-head checks before any merge.

@@ -1,10 +1,15 @@
+import { CLASSIC_MISSION_COMPOSITIONS } from './classic-compositions.mjs';
+import {
+  CLASSIC_SNAKE_OPERATION_CHAPTERS_B,
+  CLASSIC_SNAKE_OPERATION_LEVELS_B,
+} from './classic-catalogue-operations-b.mjs';
 import {
   CLASSIC_SNAKE_OPERATION_CHAPTERS_A,
   CLASSIC_SNAKE_OPERATION_LEVELS_A,
 } from './classic-catalogue-operations-a.mjs';
 /** Cosmetic composition only. Never part of a level recipe, random stream or proof.
  * Shared material/actor providers remain the owners of artwork bytes. */
-export const CLASSIC_WORLD_REVISION = 'snake-worlds-v1';
+export const CLASSIC_WORLD_REVISION = 'snake-worlds-v2';
 export const CLASSIC_BOARD_STYLES = Object.freeze([
   'theme',
   'retro',
@@ -57,15 +62,17 @@ export const CLASSIC_CHAPTER_COMPOSITIONS = Object.freeze(
       `classic-snake-${chapter}`,
       Object.freeze({ scene, mood, zoning }),
     ]),
-    ...CLASSIC_SNAKE_OPERATION_CHAPTERS_A.map((chapter) => [
-      chapter.id,
-      Object.freeze(chapter.composition),
-    ]),
+    ...[...CLASSIC_SNAKE_OPERATION_CHAPTERS_A, ...CLASSIC_SNAKE_OPERATION_CHAPTERS_B].map(
+      (chapter) => [chapter.id, Object.freeze(chapter.composition)],
+    ),
   ]),
 );
 
 const missionCompositions = new Map(
-  CLASSIC_SNAKE_OPERATION_LEVELS_A.map((entry) => [entry.id, entry.composition]),
+  [...CLASSIC_SNAKE_OPERATION_LEVELS_A, ...CLASSIC_SNAKE_OPERATION_LEVELS_B].map((entry) => [
+    entry.id,
+    entry.composition,
+  ]),
 );
 
 export function resolveClassicWorld({
@@ -79,6 +86,15 @@ export function resolveClassicWorld({
     CLASSIC_BOARD_SCENES.includes(boardScene) && boardScene !== 'auto'
       ? boardScene
       : (authored?.scene ?? 'orchard');
+  const sceneKit = {
+    orchard: ['glasshouse', 'leaves'],
+    workshop: ['boiler', 'fan'],
+    relay: ['antenna', 'windsock'],
+    freight: ['container', 'lamps'],
+    harbor: ['pump', 'water'],
+    quarry: ['terrace', 'leaves'],
+  };
+  const explicitScene = boardScene !== 'auto' && scene !== authored?.scene;
   return Object.freeze({
     version: 1,
     revision: CLASSIC_WORLD_REVISION,
@@ -86,6 +102,8 @@ export function resolveClassicWorld({
     treatment: isClassicWorldStyle(boardStyle) ? boardStyle : 'living-circuit',
     composition: authored?.mood ?? 'open-court',
     zoning: authored?.zoning ?? 'court',
+    ...(CLASSIC_MISSION_COMPOSITIONS[levelId] ?? {}),
+    ...(explicitScene ? { structure: sceneKit[scene][0], ambient: sceneKit[scene][1] } : {}),
   });
 }
 

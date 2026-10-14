@@ -68,6 +68,9 @@
       font-size: 1rem;
       margin: 0 0 8px;
     }
+    body[data-gray='true'] canvas {
+      filter: grayscale(1);
+    }
     canvas {
       display: block;
       width: 100%;
@@ -115,6 +118,8 @@
           <option value="hide">Hide for recognition review</option>
         </select></label
       >
+      <label><input type="checkbox" id="gray" />Grayscale</label>
+      <label><input type="checkbox" id="geometry" />Collision outlines</label>
       <button id="benchmark">Measure redraw cost</button>
     </div>
     <p id="status" role="status">Loading the verified jammer recording…</p>

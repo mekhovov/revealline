@@ -3,6 +3,38 @@ import { applyAnalogSignalNoise } from '../ui/analog-signal.mjs';
 export const CLASSIC_SIGNAL_MAX_BLEND = 0.65;
 export const CLASSIC_SIGNAL_MAX_TEAR_CELLS = 0.15;
 const receivers = new WeakMap();
+const receiverOwners = new WeakMap();
+const fallbackOwner = {};
+export const CLASSIC_SIGNAL_RECEIVER_LIMIT = 3;
+export const CLASSIC_SIGNAL_SAMPLE_EDGE = 320;
+const receiverOwner = (canvas) => canvas.ownerDocument ?? fallbackOwner;
+function receiverPool(canvas) {
+  const owner = receiverOwner(canvas);
+  if (!receiverOwners.has(owner)) receiverOwners.set(owner, new Map());
+  return receiverOwners.get(owner);
+}
+function releaseReceiver(canvas, receiver) {
+  receiverPool(canvas).delete(canvas);
+  if (!receiver) return;
+  receiver.surface.width = receiver.surface.height = 1;
+  receiver.terrain = null;
+  receiver.scratch = {};
+  receiver.owner = receiver.terrainOwner = null;
+}
+export function classicSignalCacheStats(owner) {
+  const pool = receiverOwners.get(owner ?? fallbackOwner);
+  return {
+    entries: pool?.size ?? 0,
+    bytes: [...(pool?.values() ?? [])].reduce(
+      (sum, item) =>
+        sum +
+        item.surface.width * item.surface.height * 4 +
+        (item.terrain?.byteLength ?? 0) +
+        Object.values(item.scratch).reduce((bytes, array) => bytes + array.byteLength, 0),
+      0,
+    ),
+  };
+}
 const clamp = (value, lo, hi) => Math.max(lo, Math.min(hi, value));
 const axisDistance = (a, b, size, wrap) => {
   const delta = Math.abs(a - b);
@@ -191,7 +223,17 @@ function createReceiver(canvas) {
 
 function receiverFor(canvas) {
   if (!receivers.has(canvas)) receivers.set(canvas, createReceiver(canvas));
-  return receivers.get(canvas);
+  const receiver = receivers.get(canvas);
+  if (!receiver) return null;
+  const pool = receiverPool(canvas);
+  pool.delete(canvas);
+  while (pool.size >= CLASSIC_SIGNAL_RECEIVER_LIMIT) {
+    const oldest = pool.keys().next().value;
+    releaseReceiver(oldest, pool.get(oldest));
+    receivers.delete(oldest);
+  }
+  pool.set(canvas, receiver);
+  return receiver;
 }
 
 const appearanceKey = (canvas, run, visualKey) =>
@@ -199,7 +241,7 @@ const appearanceKey = (canvas, run, visualKey) =>
 function sampleReceiver(receiver, canvas, run, unit) {
   const width = run.level.width * unit,
     height = run.level.height * unit,
-    ratio = Math.min(1, 320 / width, 320 / height),
+    ratio = Math.min(1, CLASSIC_SIGNAL_SAMPLE_EDGE / width, CLASSIC_SIGNAL_SAMPLE_EDGE / height),
     sampleWidth = Math.max(1, Math.round(width * ratio)),
     sampleHeight = Math.max(1, Math.round(height * ratio));
   if (receiver.surface.width !== sampleWidth || receiver.surface.height !== sampleHeight) {
@@ -234,6 +276,7 @@ export function captureClassicSignalTerrain(canvas, run, { unit = 28, visualKey 
     receiver.terrainKey = key;
     receiver.key = '';
   } catch {
+    releaseReceiver(canvas, receiver);
     receivers.set(canvas, null);
   }
 }
@@ -321,6 +364,7 @@ export function drawClassicSignalInterference(
       receiver.key = key;
     } catch {
       // Readback failures keep a bounded, equally restrictive procedural feed.
+      releaseReceiver(canvas, receiver);
       receivers.set(canvas, null);
       receiver = null;
     }

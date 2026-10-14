@@ -2,9 +2,9 @@ import { boundedJSON, exactKeys, stableId } from '../../game/data-json.mjs';
 import { WORLD_LIMITS, worldSHA256 } from './world-content.mjs';
 
 const origin = 'https://raw.githubusercontent.com/mekhovov/revealline/';
-// This cohort supports ground motion support-v1 and surface-coating-v1.
-// Both older indexes retain their cached-runtime-compatible content.
-const indexURL = origin + 'main/authoring/fpv-worlds/published/ground-motion-v1/index.json';
+// Expanded bounded catalogue with authored collision-visual support.
+// Older feeds remain unchanged for their cached players.
+const indexURL = origin + 'main/authoring/fpv-worlds/published/free-worlds-v1/index.json';
 const check = (condition) => {
   if (!condition) throw new Error('Invalid world download.');
 };
@@ -20,9 +20,9 @@ export function worldImportErrorCopy(error) {
 
 export function worldLibraryIndex(bytes) {
   const value = boundedJSON(new TextDecoder('utf-8', { fatal: true }).decode(bytes), {
-    maxBytes: 8192,
-    maxNodes: 128,
-    maxArray: 4,
+    maxBytes: 32768,
+    maxNodes: 1024,
+    maxArray: 32,
     maxString: 256,
   });
   exactKeys(value, ['format', 'worlds'], 'world library');
@@ -158,7 +158,7 @@ export function mountWorldLibrary({ el, txt, parent, begin, install }) {
       signal.throwIfAborted();
       const bytes = await read(
         row?.url ?? indexURL,
-        row?.bytes ?? 8192,
+        row?.bytes ?? 32768,
         signal,
         (size) => {
           if (row) show(`${size} / ${row.bytes} B`, `${size} / ${row.bytes} B`);
