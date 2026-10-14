@@ -65,7 +65,7 @@ const sourceHashes={
 'game/audio/reactions/actors.mjs':
 '79debf91cafa2e01cd65170037ee483977cbf7d5c3a619ccac9ed400264598b8',
 'optional-practice/civilian-fpv/world-library.mjs':
-'0a97f2d50a06c94ec58627e09c58c09b858d83ec4192ac5cb094af027e55d19e',
+'ecfbd7d1cccb04295a075256078ae8b6c8bbdda714053f9bb7e06dc32b407872',
 'game/audio/reactions/guide-0-en.m4a':
 '58f961f54b52d0dbb58f53f000ca85bba166236126e135dc1f5e89f8f9a94210',
 'game/audio/reactions/guide-0-uk.m4a':
@@ -8009,7 +8009,7 @@ worker.postMessage({type:'world-read',url,bytes,sha256});
 });
 }
 
-function mountWorldLibrary({el,txt,parent,begin,install}){
+function mountWorldLibrary({el,txt,parent,begin,install,fly}){
 const root=el('section'),
 browse=el('button',txt('Browse optional worlds','Оглянути додаткові світи')),
 cancel=el('button',txt('Cancel','Скасувати')),
@@ -8045,12 +8045,29 @@ row.bytes<1048576
 stored=saved.some((item)=>item.id===row.id&&item.sha256===row.sha256),
 download=el(
 'button',
-stored?txt('Saved pack','Пакунок збережено'):txt('Download','Завантажити'),
+stored
+?fly
+?txt('Fly','Летіти')
+:txt('Saved pack','Пакунок збережено')
+:txt('Download','Завантажити'),
 );
 card.dataset.world=row.id;
 download.type='button';
-download.disabled= !!operation||stored;
-download.onclick=()=>run(row);
+download.disabled= !!operation||(stored&& !fly);
+download.onclick=async()=>{
+if(!stored)return run(row);
+download.disabled=true;
+try{
+await fly(row);
+}catch{
+show(
+'This world could not open. Refresh the Library and try again.',
+'Не вдалося відкрити світ. Оновіть бібліотеку та повторіть.',
+);
+}finally{
+if(download.isConnected)download.disabled= !!operation;
+}
+};
 card.append(
 el('strong',txt(...row.title)),
 el(
@@ -8103,8 +8120,8 @@ show('Saving…','Збереження…');
 });
 if(closed)return;
 show(
-'Pack saved. Prepare simulator offline separately. Keep a backup.',
-'Пакунок збережено. Симулятор готується автономно окремо. Зробіть копію.',
+'World ready. Choose Fly to prepare a disarmed flight. Prepare simulator offline separately.',
+'Світ готовий. Натисніть «Летіти», щоб підготувати політ із вимкненими двигунами. Симулятор готується офлайн окремо.',
 );
 }else{
 rows=worldLibraryIndex(bytes);

@@ -8441,7 +8441,7 @@ export const readSimRadioAudio=sharedGlobalSettings.readSimRadioAudio;
 export const SIM_RADIO_AUDIO_KEY=sharedGlobalSettings.SIM_RADIO_AUDIO_KEY;
 export const attachSimMenuAudioSettings=sharedGlobalSettings.attachSimMenuAudioSettings;
 export const readSimMenuAudio=sharedGlobalSettings.readSimMenuAudio;
-// Canonical source sha256: 30251c14cf2829f77d52ab72798dc5be5d77caadccefeffc96948b3818c4fe32
+// Canonical source sha256: b08fd0c6130ef3d998490e62dceb04c30797fe763cbf28cb9677c9634786d08d
 const sharedModeShell=(()=>{
 // Dependency-free presentation shared with bundled simulator builds.
 const GAME_MODE_ORDER=Object.freeze([
@@ -9210,6 +9210,8 @@ locale=doc.documentElement.lang,
 slots={},
 actions={},
 services={},
+homeLabels={},
+homeAction=null,
 wordmarkURL='',
 artworkURL='',
 version='',
@@ -9407,6 +9409,11 @@ button('results',()=>open('results'),false,'home-results'),
 button('missions',()=>open('missions')),
 button('settings',()=>open('settings')),
 );
+let extraHomeAction=null;
+if(homeAction?.activate&&homeAction?.label){
+extraHomeAction=button('help',()=>homeAction.activate(),false,'home-extra');
+buttons.missions.before(extraHomeAction);
+}
 const utilities=el('div','mode-play-utilities native-menu-utilities');
 utilities.setAttribute('role','group');
 utilities.append(
@@ -9435,11 +9442,12 @@ steps:[
 selectedChoices,
 buttons.primary,
 buttons['home-results'],
+extraHomeAction,
 buttons.missions,
 buttons.settings,
 buttons.sound,
 buttons.fullscreen,
-],
+].filter(Boolean),
 });
 cleanups.push(()=>landingNavigation.dispose());
 const pauseMenu=content.pause;
@@ -9563,6 +9571,10 @@ value=
 COPY[language][
 state.phase==='results'?'retry':resumable()?'continue':'start'
 ];
+if(node===buttons.primary&&state.phase!=='results'&& !resumable())
+value=text(homeLabels.start)||value;
+else if(node===buttons.missions)value=text(homeLabels.missions)||value;
+else if(node===extraHomeAction)value=text(homeAction.label);
 else if(node===buttons.start)
 value=COPY[language][state.phase==='paused'?'resume':'start'];
 else if(node===buttons.pause)

@@ -90,7 +90,7 @@ function read(url, bytes, signal, progress, sha256) {
   });
 }
 
-export function mountWorldLibrary({ el, txt, parent, begin, install }) {
+export function mountWorldLibrary({ el, txt, parent, begin, install, fly }) {
   const root = el('section'),
     browse = el('button', txt('Browse optional worlds', 'Оглянути додаткові світи')),
     cancel = el('button', txt('Cancel', 'Скасувати')),
@@ -126,12 +126,29 @@ export function mountWorldLibrary({ el, txt, parent, begin, install }) {
         stored = saved.some((item) => item.id === row.id && item.sha256 === row.sha256),
         download = el(
           'button',
-          stored ? txt('Saved pack', 'Пакунок збережено') : txt('Download', 'Завантажити'),
+          stored
+            ? fly
+              ? txt('Fly', 'Летіти')
+              : txt('Saved pack', 'Пакунок збережено')
+            : txt('Download', 'Завантажити'),
         );
       card.dataset.world = row.id;
       download.type = 'button';
-      download.disabled = !!operation || stored;
-      download.onclick = () => run(row);
+      download.disabled = !!operation || (stored && !fly);
+      download.onclick = async () => {
+        if (!stored) return run(row);
+        download.disabled = true;
+        try {
+          await fly(row);
+        } catch {
+          show(
+            'This world could not open. Refresh the Library and try again.',
+            'Не вдалося відкрити світ. Оновіть бібліотеку та повторіть.',
+          );
+        } finally {
+          if (download.isConnected) download.disabled = !!operation;
+        }
+      };
       card.append(
         el('strong', txt(...row.title)),
         el(
@@ -184,8 +201,8 @@ export function mountWorldLibrary({ el, txt, parent, begin, install }) {
         });
         if (closed) return;
         show(
-          'Pack saved. Prepare simulator offline separately. Keep a backup.',
-          'Пакунок збережено. Симулятор готується автономно окремо. Зробіть копію.',
+          'World ready. Choose Fly to prepare a disarmed flight. Prepare simulator offline separately.',
+          'Світ готовий. Натисніть «Летіти», щоб підготувати політ із вимкненими двигунами. Симулятор готується офлайн окремо.',
         );
       } else {
         rows = worldLibraryIndex(bytes);

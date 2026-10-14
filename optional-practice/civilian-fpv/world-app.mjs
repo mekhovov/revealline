@@ -3558,11 +3558,20 @@ export function mountWorldApp({
       ),
     );
   }
+  async function flyInstalledWorld(record) {
+    // Launch the verified installed revision, never a same-name replacement.
+    const entry = catalogue.find(
+      (candidate) => candidate.projectId === record.id && candidate.packIdentity === `fpv-pack:${record.sha256}`,
+    );
+    if (!entry) throw new Error(txt('This world is no longer installed. Refresh the Library.', 'Цей світ більше не встановлено. Оновіть бібліотеку.'));
+    await startFlight(entry);
+  }
   const worldLibrary = mountWorldLibrary({
     el,
     txt,
     parent: $('installed-packs'),
     begin: () => worldStore.generation(),
+    fly: flyInstalledWorld,
     install: (bytes, row, options) =>
       installExactPack(bytes, `fpv-pack:${row.sha256}`, { ...options, row }),
   });
@@ -4016,6 +4025,7 @@ export function mountWorldApp({
           'small',
           `${record.project.courses.length} ${txt('challenges', 'завдань')} · ${record.sha256.slice(0, 12)}`,
         ),
+        button(txt('Fly', 'Летіти'), () => flyInstalledWorld(record)),
         button(txt('Edit', 'Редагувати'), async () => {
           const full = await worldStore.get(record.id);
           await validateNativeIndustrialCourses(full.project.courses);
@@ -7395,6 +7405,14 @@ export function mountWorldApp({
     document: doc,
     mount: doc.body,
     idPrefix: 'worlds-shell',
+    homeLabels: {
+      start: { en: 'Fly now', uk: 'Летіти' },
+      missions: { en: 'Explore worlds', uk: 'Дослідити світи' },
+    },
+    homeAction: {
+      label: { en: 'Learn to fly', uk: 'Навчитися літати' },
+      activate: () => openCatalogueTab('learn'),
+    },
     wordmarkURL: new URL(
       lobbyHeader.querySelector('.wordmark img').getAttribute('src'),
       win.location.href,
