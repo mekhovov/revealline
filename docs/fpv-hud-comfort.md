@@ -22,3 +22,5 @@ All new text is EN/UK. The settings use native selects and buttons, allowing the
 ## Still to verify before release
 
 Integrated actual-browser layouts and interaction evidence are being collected by the parent delivery task. Include 390 × 844, 844 × 390, 1280 × 800 and desktop with Large/Quiet touch controls, paused preset selection, manual slider customization, preference restoration, unavailable/available ghost states, and both languages. Physical iPhone, Steam Deck and radio qualification is not claimed. Full frozen package admission and publication remain independent release gates; no new unit coverage is claimed (D6 remains deferred).
+
+Interaction review additionally checked asynchronous personal-best updates while a controller is editing the camera select. Pending selections and focused nodes are retained; unchanged labels do not replace their text nodes. A preset sets both FOV and tilt before either canonical change event, so observers never see a partly applied preset. The focused DOM exercise passes these cases and restores a rejected active-flight selection to the real camera values.

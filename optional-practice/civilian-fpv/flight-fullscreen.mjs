@@ -539,6 +539,9 @@ export function mountFlightComfort({
   canChange = () => true,
   comparison,
 }) {
+  const putText = (node, value) => {
+    if (node.textContent !== value) node.textContent = value;
+  };
   const storageKey = 'revealline.fpv.flight-comfort.v1';
   const cameraKey = `${storageKey}.${host}.camera`;
   const read = (key) => {
@@ -601,7 +604,8 @@ export function mountFlightComfort({
   const presets = { learning: [82, 0], 'all-round': [95, 15], racing: [110, 25] };
   let updatingCamera = false,
     disposed = false,
-    previous = '';
+    previous = '',
+    lastCameraSignature = '';
   function applySticks() {
     viewport.dataset.stickSize = preferences.size;
     viewport.dataset.stickOpacity = preferences.opacity;
@@ -633,11 +637,14 @@ export function mountFlightComfort({
     const values = presets[preset.select.value];
     if (!canChange() || !values) {
       previous = '';
+      lastCameraSignature = '';
       return refresh();
     }
     updatingCamera = true;
     [fov, tilt].forEach((control, index) => {
       control.value = String(values[index]);
+    });
+    [fov, tilt].forEach((control) => {
       control.dispatchEvent(new win.Event('input', { bubbles: true }));
       control.dispatchEvent(new win.Event('change', { bubbles: true }));
     });
@@ -690,9 +697,9 @@ export function mountFlightComfort({
     ]);
     if (key === previous) return;
     previous = key;
-    hud.title.textContent = uk ? 'Вигляд стіків' : 'Stick appearance';
-    size.title.textContent = uk ? 'Розмір стіків' : 'Stick size';
-    opacity.title.textContent = uk ? 'Виразність стіків' : 'Stick visibility';
+    putText(hud.title, uk ? 'Вигляд стіків' : 'Stick appearance');
+    putText(size.title, uk ? 'Розмір стіків' : 'Stick size');
+    putText(opacity.title, uk ? 'Виразність стіків' : 'Stick visibility');
     const names = uk
       ? {
           auto: 'Авто · за пристроєм',
@@ -720,29 +727,42 @@ export function mountFlightComfort({
         };
     for (const control of [size, opacity, preset]) {
       control.select.disabled = !enabled;
-      for (const option of control.select.options) option.textContent = names[option.value];
+      for (const option of control.select.options) putText(option, names[option.value]);
     }
-    hudHelp.textContent = uk
-      ? 'Авто зберігає розмір під екран. Сенсорні області лишаються великими. Пауза й ціль завжди видимі; видимість підказок задається окремо.'
-      : 'Auto fits the screen. Touch targets stay large. Pause and your objective stay visible; assistance visibility is controlled separately.';
-    camera.title.textContent = uk ? 'Комфорт камери FPV' : 'FPV camera comfort';
-    preset.title.textContent = uk ? 'Кут огляду / нахил' : 'Field of view / tilt';
-    preset.select.value = selected;
-    cameraHelp.textContent = uk
-      ? 'Навчання: рівний горизонт. Перегони: ширший огляд і нахил для швидкого польоту. Змінюється лише камера; керування й фізика незмінні. Повзунки нижче — для точного налаштування.'
-      : 'Learning gives a level horizon. Racing widens the view and tilts up for faster flight. Only the camera changes; controls and physics stay the same. Use the sliders for finer adjustment.';
+    putText(
+      hudHelp,
+      uk
+        ? 'Авто зберігає розмір під екран. Сенсорні області лишаються великими. Пауза й ціль завжди видимі; видимість підказок задається окремо.'
+        : 'Auto fits the screen. Touch targets stay large. Pause and your objective stay visible; assistance visibility is controlled separately.',
+    );
+    putText(camera.title, uk ? 'Комфорт камери FPV' : 'FPV camera comfort');
+    putText(preset.title, uk ? 'Кут огляду / нахил' : 'Field of view / tilt');
+    const cameraSignature = `${fov.value}:${tilt.value}`;
+    if (cameraSignature !== lastCameraSignature) {
+      preset.select.value = selected;
+      lastCameraSignature = cameraSignature;
+    }
+    putText(
+      cameraHelp,
+      uk
+        ? 'Навчання: рівний горизонт. Перегони: ширший огляд і нахил для швидкого польоту. Змінюється лише камера; керування й фізика незмінні. Повзунки — для точного налаштування.'
+        : 'Learning gives a level horizon. Racing widens the view and tilts up for faster flight. Only the camera changes; controls and physics stay the same. Use the sliders for finer adjustment.',
+    );
     if (best) {
-      best.title.textContent = uk ? 'Ваш найкращий політ' : 'Your best flight';
-      best.status.textContent = status;
-      best.button.textContent = comparison.button.textContent;
+      putText(best.title, uk ? 'Ваш найкращий політ' : 'Your best flight');
+      putText(best.status, status);
+      putText(best.button, comparison.button.textContent);
       best.button.disabled = !enabled || comparison.button.disabled;
       best.button.setAttribute(
         'aria-pressed',
         comparison.button.getAttribute('aria-pressed') ?? 'false',
       );
-      best.help.textContent = uk
-        ? 'Лише перевірений запис того самого завдання, версії світу, режиму й профілю реакції. Вигляд камери не змінює сумісність. Без зіткнень; залік незмінний.'
-        : 'Only a verified recording for the same challenge, world revision, flight mode and response profile. Camera view does not change compatibility. No collision or scoring changes.';
+      putText(
+        best.help,
+        uk
+          ? 'Лише перевірений запис того самого завдання, версії світу, режиму й профілю реакції. Вигляд камери не змінює сумісність. Без зіткнень; залік незмінний.'
+          : 'Only a verified recording for the same challenge, world revision, flight mode and response profile. Camera view does not change compatibility. No collision or scoring changes.',
+      );
     }
   }
   applySticks();
