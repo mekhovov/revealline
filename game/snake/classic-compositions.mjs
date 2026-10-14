@@ -333,7 +333,83 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'irrigator',
           ambient: 'water',
-          floor: 'elbow',
+          floor: 'authored',
+          floorPlan: {
+            name: 'irrigation-court-irrigation',
+            pattern: 'irrigation',
+            paths: [
+              [
+                [11.4, 7.4],
+                [16.6, 7.4],
+                [16.6, 15.6],
+              ],
+              [
+                [6.4, 3.4],
+                [12.6, 3.4],
+                [12.6, 10.6],
+              ],
+              [
+                [9.4, 3.4],
+                [13.6, 3.4],
+                [13.6, 5.6],
+              ],
+              [
+                [9.4, 5.6],
+                [11.29, 5.6],
+              ],
+            ],
+            patches: [
+              [11.4, 7.4, 5.2, 8.2],
+              [6.4, 3.4, 6.2, 7.2],
+              [9.4, 3.4, 4.2, 2.2],
+            ],
+            seal: [11, 7, 'leaf'],
+            intent:
+              'Alternate between the two elbows; the outside route lets your tail clear the middle.',
+          },
+          componentAssemblies: [
+            {
+              family: 'irrigator',
+              cells: [
+                [15, 8],
+                [15, 9],
+                [15, 10],
+                [15, 11],
+                [15, 12],
+                [12, 13],
+                [13, 13],
+                [14, 13],
+                [15, 13],
+                [12, 14],
+                [13, 14],
+                [14, 14],
+                [15, 14],
+              ],
+            },
+            {
+              family: 'glasshouse',
+              cells: [
+                [7, 4],
+                [7, 5],
+                [7, 6],
+                [7, 7],
+                [7, 8],
+                [7, 9],
+                [8, 9],
+                [9, 9],
+                [10, 9],
+                [11, 9],
+              ],
+            },
+            {
+              family: 'planter',
+              cells: [
+                [10, 4],
+                [11, 4],
+                [12, 4],
+              ],
+            },
+          ],
           focus: [11, 8],
           axis: 'horizontal',
           light: 'morning',
@@ -353,7 +429,88 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'irrigator',
           ambient: 'water',
-          floor: 'elbow',
+          floor: 'authored',
+          floorPlan: {
+            name: 'irrigation-court-irrigation',
+            pattern: 'irrigation',
+            paths: [
+              [
+                [6.4, 4.4],
+                [9.6, 4.4],
+                [9.6, 9.6],
+              ],
+              [
+                [17.4, 3.4],
+                [19.6, 3.4],
+                [19.6, 9.6],
+              ],
+              [
+                [13.4, 3.4],
+                [16.6, 3.4],
+                [16.6, 6.6],
+              ],
+            ],
+            patches: [
+              [6.4, 4.4, 3.2, 5.2],
+              [17.4, 3.4, 2.2, 6.2],
+              [13.4, 3.4, 3.2, 3.2],
+            ],
+            seal: [16, 7, 'leaf'],
+            intent:
+              'Three posts create small pockets. Approach them from the wider side. The target changes direction as it flees: cut off its next exit instead of following its trail.',
+          },
+          componentAssemblies: [
+            {
+              family: 'glasshouse',
+              cells: [
+                [7, 5],
+                [8, 5],
+                [7, 6],
+                [8, 6],
+                [7, 7],
+                [8, 7],
+                [7, 8],
+                [8, 8],
+              ],
+            },
+            {
+              family: 'planter',
+              cells: [
+                [18, 4],
+                [18, 5],
+                [18, 6],
+                [18, 7],
+                [18, 8],
+              ],
+            },
+            {
+              family: 'irrigator',
+              cells: [
+                [14, 4],
+                [15, 4],
+                [14, 5],
+                [15, 5],
+              ],
+            },
+            {
+              family: 'planter',
+              cells: [
+                [13, 10],
+                [13, 11],
+                [13, 12],
+                [13, 13],
+              ],
+            },
+            {
+              family: 'glasshouse',
+              cells: [
+                [10, 12],
+                [11, 12],
+                [10, 13],
+                [11, 13],
+              ],
+            },
+          ],
           focus: [16, 5],
           axis: 'vertical',
           light: 'late',
@@ -373,7 +530,92 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'irrigator',
           ambient: 'water',
-          floor: 'elbow',
+          floor: 'authored',
+          floorPlan: {
+            name: 'irrigation-court-irrigation',
+            pattern: 'irrigation',
+            paths: [
+              [
+                [5.4, 4.4],
+                [15.6, 4.4],
+                [15.6, 6.6],
+              ],
+              [
+                [5.4, 6.6],
+                [9.99, 6.6],
+              ],
+              [
+                [9.4, 11.4],
+                [19.6, 11.4],
+                [19.6, 13.6],
+              ],
+              [
+                [9.4, 13.6],
+                [13.99, 13.6],
+              ],
+              [
+                [16.4, 3.4],
+                [19.6, 3.4],
+                [19.6, 5.6],
+              ],
+              [
+                [16.4, 5.6],
+                [17.84, 5.6],
+              ],
+            ],
+            patches: [
+              [5.4, 4.4, 10.2, 2.2],
+              [9.4, 11.4, 10.2, 2.2],
+              [16.4, 3.4, 3.2, 2.2],
+            ],
+            seal: [7, 11, 'leaf'],
+            intent:
+              'The offset bars form an S. Turn early enough to keep your body out of the next gap.',
+          },
+          componentAssemblies: [
+            {
+              family: 'irrigator',
+              cells: [
+                [6, 5],
+                [7, 5],
+                [8, 5],
+                [9, 5],
+                [10, 5],
+                [11, 5],
+                [12, 5],
+                [13, 5],
+                [14, 5],
+              ],
+            },
+            {
+              family: 'planter',
+              cells: [
+                [10, 12],
+                [11, 12],
+                [12, 12],
+                [13, 12],
+                [14, 12],
+                [15, 12],
+                [16, 12],
+                [17, 12],
+                [18, 12],
+              ],
+            },
+            {
+              family: 'planter',
+              cells: [
+                [17, 4],
+                [18, 4],
+              ],
+            },
+            {
+              family: 'planter',
+              cells: [
+                [6, 13],
+                [7, 13],
+              ],
+            },
+          ],
           focus: [7, 12],
           axis: 'horizontal',
           light: 'late',
@@ -393,7 +635,81 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'irrigator',
           ambient: 'water',
-          floor: 'elbow',
+          floor: 'authored',
+          floorPlan: {
+            name: 'irrigation-court-irrigation',
+            pattern: 'irrigation',
+            paths: [
+              [
+                [5.4, 4.4],
+                [10.6, 4.4],
+                [10.6, 12.6],
+              ],
+              [
+                [12.4, 6.4],
+                [18.6, 6.4],
+                [18.6, 14.6],
+              ],
+              [
+                [10.4, 7.4],
+                [13.6, 7.4],
+                [13.6, 10.6],
+              ],
+            ],
+            patches: [
+              [5.4, 4.4, 5.2, 8.2],
+              [12.4, 6.4, 6.2, 8.2],
+              [10.4, 7.4, 3.2, 3.2],
+            ],
+            seal: [14, 9, 'leaf'],
+            intent:
+              'Switch between opposed corners using the wide space around them. The target changes direction as it flees: cut off its next exit instead of following its trail.',
+          },
+          componentAssemblies: [
+            {
+              family: 'glasshouse',
+              cells: [
+                [6, 5],
+                [6, 6],
+                [6, 7],
+                [6, 8],
+                [6, 9],
+                [6, 10],
+                [7, 10],
+                [8, 10],
+                [9, 10],
+                [6, 11],
+                [7, 11],
+                [8, 11],
+                [9, 11],
+              ],
+            },
+            {
+              family: 'glasshouse',
+              cells: [
+                [13, 7],
+                [14, 7],
+                [15, 7],
+                [16, 7],
+                [17, 7],
+                [17, 8],
+                [17, 9],
+                [17, 10],
+                [17, 11],
+                [17, 12],
+                [17, 13],
+              ],
+            },
+            {
+              family: 'irrigator',
+              cells: [
+                [11, 8],
+                [12, 8],
+                [11, 9],
+                [12, 9],
+              ],
+            },
+          ],
           focus: [12, 9],
           axis: 'vertical',
           light: 'late',
@@ -492,7 +808,69 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'pump',
           ambient: 'water',
-          floor: 'islands',
+          floor: 'authored',
+          floorPlan: {
+            name: 'pump-islands-quays',
+            pattern: 'quays',
+            paths: [
+              [
+                [6.1, 6.4],
+                [6.1, 14.6],
+              ],
+              [
+                [13.9, 6.4],
+                [13.9, 14.6],
+              ],
+              [
+                [13.1, 3.4],
+                [13.1, 9.6],
+              ],
+              [
+                [15.9, 3.4],
+                [15.9, 9.6],
+              ],
+            ],
+            patches: [
+              [6.4, 6.4, 7.2, 8.2],
+              [13.4, 3.4, 2.2, 6.2],
+            ],
+            seal: [10, 10, 'tide'],
+            intent: 'Treat the solid L-shaped island as a detour, not a shortcut.',
+          },
+          componentAssemblies: [
+            {
+              family: 'pump',
+              cells: [
+                [7, 7],
+                [8, 7],
+                [9, 7],
+                [10, 7],
+                [11, 7],
+                [12, 7],
+                [7, 8],
+                [8, 8],
+                [9, 8],
+                [10, 8],
+                [11, 8],
+                [12, 8],
+                [12, 9],
+                [12, 10],
+                [12, 11],
+                [12, 12],
+                [12, 13],
+              ],
+            },
+            {
+              family: 'dock',
+              cells: [
+                [14, 4],
+                [14, 5],
+                [14, 6],
+                [14, 7],
+                [14, 8],
+              ],
+            },
+          ],
           focus: [11, 8],
           axis: 'horizontal',
           light: 'morning',
@@ -512,7 +890,113 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'pump',
           ambient: 'water',
-          floor: 'islands',
+          floor: 'authored',
+          floorPlan: {
+            name: 'pump-islands-quays',
+            pattern: 'quays',
+            paths: [
+              [
+                [5.1, 3.4],
+                [5.1, 12.6],
+              ],
+              [
+                [8.9, 3.4],
+                [8.9, 12.6],
+              ],
+              [
+                [10.1, 8.4],
+                [10.1, 15.6],
+              ],
+              [
+                [13.9, 8.4],
+                [13.9, 15.6],
+              ],
+              [
+                [16.1, 3.4],
+                [16.1, 11.6],
+              ],
+              [
+                [18.9, 3.4],
+                [18.9, 11.6],
+              ],
+            ],
+            patches: [
+              [5.4, 3.4, 3.2, 9.2],
+              [10.4, 8.4, 3.2, 7.2],
+              [16.4, 3.4, 2.2, 8.2],
+            ],
+            seal: [15, 5, 'tide'],
+            intent:
+              'Pass alternating ends of the three staggered walls without folding back into your tail. The target changes direction as it flees: cut off its next exit instead of following its trail.',
+          },
+          componentAssemblies: [
+            {
+              family: 'floodgate',
+              cells: [
+                [6, 4],
+                [7, 4],
+                [6, 5],
+                [7, 5],
+                [6, 6],
+                [7, 6],
+                [6, 7],
+                [7, 7],
+                [6, 8],
+                [7, 8],
+                [6, 9],
+                [7, 9],
+                [6, 10],
+                [7, 10],
+                [6, 11],
+                [7, 11],
+              ],
+            },
+            {
+              family: 'floodgate',
+              cells: [
+                [11, 9],
+                [12, 9],
+                [11, 10],
+                [12, 10],
+                [11, 11],
+                [12, 11],
+                [11, 12],
+                [12, 12],
+                [11, 13],
+                [12, 13],
+                [11, 14],
+                [12, 14],
+              ],
+            },
+            {
+              family: 'dock',
+              cells: [
+                [17, 4],
+                [17, 5],
+                [17, 6],
+                [17, 7],
+                [17, 8],
+                [17, 9],
+                [17, 10],
+              ],
+            },
+            {
+              family: 'pump',
+              cells: [
+                [9, 4],
+                [10, 4],
+                [9, 5],
+                [10, 5],
+              ],
+            },
+            {
+              family: 'dock',
+              cells: [
+                [14, 14],
+                [15, 14],
+              ],
+            },
+          ],
           focus: [16, 5],
           axis: 'vertical',
           light: 'late',
@@ -532,7 +1016,86 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'pump',
           ambient: 'water',
-          floor: 'islands',
+          floor: 'authored',
+          floorPlan: {
+            name: 'pump-islands-quays',
+            pattern: 'quays',
+            paths: [
+              [
+                [7.1, 4.4],
+                [7.1, 13.6],
+              ],
+              [
+                [16.9, 4.4],
+                [16.9, 13.6],
+              ],
+              [
+                [8.1, 12.4],
+                [8.1, 14.6],
+              ],
+              [
+                [16.9, 12.4],
+                [16.9, 14.6],
+              ],
+              [
+                [11.1, 8.4],
+                [11.1, 10.6],
+              ],
+              [
+                [14.9, 8.4],
+                [14.9, 10.6],
+              ],
+            ],
+            patches: [
+              [7.4, 4.4, 9.2, 9.2],
+              [8.4, 12.4, 8.2, 2.2],
+              [11.4, 8.4, 3.2, 2.2],
+            ],
+            seal: [6, 12, 'tide'],
+            intent:
+              'The inner courtyard is shorter; the outer loop leaves more room for a long body.',
+          },
+          componentAssemblies: [
+            {
+              family: 'pump',
+              cells: [
+                [8, 5],
+                [9, 5],
+                [10, 5],
+                [11, 5],
+                [12, 5],
+                [13, 5],
+                [14, 5],
+                [15, 5],
+                [8, 6],
+                [8, 7],
+                [8, 8],
+                [8, 9],
+                [8, 10],
+                [8, 11],
+                [8, 12],
+              ],
+            },
+            {
+              family: 'dock',
+              cells: [
+                [9, 13],
+                [10, 13],
+                [11, 13],
+                [12, 13],
+                [13, 13],
+                [14, 13],
+                [15, 13],
+              ],
+            },
+            {
+              family: 'dock',
+              cells: [
+                [12, 9],
+                [13, 9],
+              ],
+            },
+          ],
           focus: [7, 12],
           axis: 'horizontal',
           light: 'late',
@@ -552,7 +1115,92 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'pump',
           ambient: 'water',
-          floor: 'islands',
+          floor: 'authored',
+          floorPlan: {
+            name: 'pump-islands-quays',
+            pattern: 'quays',
+            paths: [
+              [
+                [10.1, 5.4],
+                [10.1, 12.6],
+              ],
+              [
+                [13.9, 5.4],
+                [13.9, 12.6],
+              ],
+              [
+                [5.1, 3.4],
+                [5.1, 5.6],
+              ],
+              [
+                [8.9, 3.4],
+                [8.9, 5.6],
+              ],
+              [
+                [15.1, 3.4],
+                [15.1, 5.6],
+              ],
+              [
+                [18.9, 3.4],
+                [18.9, 5.6],
+              ],
+            ],
+            patches: [
+              [10.4, 5.4, 3.2, 7.2],
+              [5.4, 3.4, 3.2, 2.2],
+              [15.4, 3.4, 3.2, 2.2],
+            ],
+            seal: [14, 9, 'tide'],
+            intent:
+              'Use the corner islands to plan a full circuit around the central block. The target changes direction as it flees: cut off its next exit instead of following its trail.',
+          },
+          componentAssemblies: [
+            {
+              family: 'pump',
+              cells: [
+                [11, 6],
+                [12, 6],
+                [11, 7],
+                [12, 7],
+                [11, 8],
+                [12, 8],
+                [11, 9],
+                [12, 9],
+                [11, 10],
+                [12, 10],
+                [11, 11],
+                [12, 11],
+              ],
+            },
+            {
+              family: 'dock',
+              cells: [
+                [6, 4],
+                [7, 4],
+              ],
+            },
+            {
+              family: 'dock',
+              cells: [
+                [16, 4],
+                [17, 4],
+              ],
+            },
+            {
+              family: 'dock',
+              cells: [
+                [6, 14],
+                [7, 14],
+              ],
+            },
+            {
+              family: 'dock',
+              cells: [
+                [16, 14],
+                [17, 14],
+              ],
+            },
+          ],
           focus: [12, 9],
           axis: 'vertical',
           light: 'late',
@@ -647,7 +1295,116 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'container',
           ambient: 'lamps',
-          floor: 'fork',
+          floor: 'authored',
+          floorPlan: {
+            name: 'loading-bays-loading',
+            pattern: 'loading',
+            paths: [
+              [
+                [7.4, 4.4],
+                [10.6, 4.4],
+              ],
+              [
+                [7.4, 7.6],
+                [10.6, 7.6],
+              ],
+              [
+                [7.4, 4.4],
+                [7.4, 4.9],
+              ],
+              [
+                [10.6, 7.1],
+                [10.6, 7.6],
+              ],
+              [
+                [13.4, 4.4],
+                [16.6, 4.4],
+              ],
+              [
+                [13.4, 7.6],
+                [16.6, 7.6],
+              ],
+              [
+                [13.4, 4.4],
+                [13.4, 4.9],
+              ],
+              [
+                [16.6, 7.1],
+                [16.6, 7.6],
+              ],
+              [
+                [10.4, 7.4],
+                [13.6, 7.4],
+              ],
+              [
+                [10.4, 10.6],
+                [13.6, 10.6],
+              ],
+              [
+                [10.4, 7.4],
+                [10.4, 7.9],
+              ],
+              [
+                [13.6, 10.1],
+                [13.6, 10.6],
+              ],
+            ],
+            patches: [
+              [7.4, 4.4, 3.2, 3.2],
+              [13.4, 4.4, 3.2, 3.2],
+              [10.4, 7.4, 3.2, 3.2],
+            ],
+            seal: [11, 6, 'freight'],
+            intent:
+              'Four blocks leave a central crossing. Approach only while your next exit is clear.',
+          },
+          componentAssemblies: [
+            {
+              family: 'container',
+              cells: [
+                [8, 5],
+                [9, 5],
+                [8, 6],
+                [9, 6],
+              ],
+            },
+            {
+              family: 'container',
+              cells: [
+                [14, 5],
+                [15, 5],
+                [14, 6],
+                [15, 6],
+              ],
+            },
+            {
+              family: 'dispatch',
+              cells: [
+                [11, 8],
+                [12, 8],
+                [11, 9],
+                [12, 9],
+              ],
+            },
+            {
+              family: 'container',
+              cells: [
+                [8, 12],
+                [9, 12],
+                [8, 13],
+                [9, 13],
+              ],
+            },
+            {
+              family: 'container',
+              cells: [
+                [14, 12],
+                [15, 12],
+                [14, 13],
+                [15, 13],
+              ],
+            },
+          ],
           focus: [11, 8],
           axis: 'horizontal',
           light: 'morning',
@@ -667,7 +1424,85 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'container',
           ambient: 'lamps',
-          floor: 'fork',
+          floor: 'authored',
+          floorPlan: {
+            name: 'loading-bays-loading',
+            pattern: 'loading',
+            paths: [
+              [
+                [10.4, 6.4],
+                [12.6, 6.4],
+              ],
+              [
+                [10.4, 11.6],
+                [12.6, 11.6],
+              ],
+              [
+                [10.4, 2.4],
+                [12.6, 2.4],
+              ],
+              [
+                [10.4, 5.6],
+                [12.6, 5.6],
+              ],
+              [
+                [5.4, 8.4],
+                [8.6, 8.4],
+              ],
+              [
+                [5.4, 10.6],
+                [8.6, 10.6],
+              ],
+              [
+                [5.4, 8.4],
+                [5.4, 8.9],
+              ],
+              [
+                [8.6, 10.1],
+                [8.6, 10.6],
+              ],
+            ],
+            patches: [
+              [10.4, 6.4, 2.2, 5.2],
+              [10.4, 2.4, 2.2, 3.2],
+              [5.4, 8.4, 3.2, 2.2],
+            ],
+            seal: [16, 5, 'freight'],
+            intent: 'Use a gap in the divider to shorten the chase without trapping your own body.',
+          },
+          componentAssemblies: [
+            {
+              family: 'dispatch',
+              cells: [
+                [11, 7],
+                [11, 8],
+                [11, 9],
+                [11, 10],
+              ],
+            },
+            {
+              family: 'platform',
+              cells: [
+                [11, 3],
+                [11, 4],
+              ],
+            },
+            {
+              family: 'platform',
+              cells: [
+                [6, 9],
+                [7, 9],
+              ],
+            },
+            {
+              family: 'platform',
+              cells: [
+                [16, 9],
+                [17, 9],
+              ],
+            },
+            { family: 'platform', cells: [[11, 14]] },
+          ],
           focus: [16, 5],
           axis: 'vertical',
           light: 'late',
@@ -687,7 +1522,100 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'container',
           ambient: 'lamps',
-          floor: 'fork',
+          floor: 'authored',
+          floorPlan: {
+            name: 'loading-bays-loading',
+            pattern: 'loading',
+            paths: [
+              [
+                [9.4, 2.4],
+                [13.6, 2.4],
+              ],
+              [
+                [9.4, 5.6],
+                [13.6, 5.6],
+              ],
+              [
+                [9.4, 2.4],
+                [9.4, 2.9],
+              ],
+              [
+                [13.6, 5.1],
+                [13.6, 5.6],
+              ],
+              [
+                [8.4, 6.4],
+                [10.6, 6.4],
+              ],
+              [
+                [8.4, 12.6],
+                [10.6, 12.6],
+              ],
+              [
+                [13.4, 6.4],
+                [15.6, 6.4],
+              ],
+              [
+                [13.4, 12.6],
+                [15.6, 12.6],
+              ],
+            ],
+            patches: [
+              [9.4, 2.4, 4.2, 3.2],
+              [8.4, 6.4, 2.2, 6.2],
+              [13.4, 6.4, 2.2, 6.2],
+            ],
+            seal: [7, 12, 'freight'],
+            intent:
+              'Three islands offer three approaches. Cut across the open side before the runner changes direction.',
+          },
+          componentAssemblies: [
+            {
+              family: 'dispatch',
+              cells: [
+                [10, 3],
+                [11, 3],
+                [12, 3],
+                [10, 4],
+                [11, 4],
+                [12, 4],
+              ],
+            },
+            {
+              family: 'platform',
+              cells: [
+                [9, 7],
+                [9, 8],
+                [9, 9],
+                [9, 10],
+                [9, 11],
+              ],
+            },
+            {
+              family: 'platform',
+              cells: [
+                [14, 7],
+                [14, 8],
+                [14, 9],
+                [14, 10],
+                [14, 11],
+              ],
+            },
+            {
+              family: 'platform',
+              cells: [
+                [6, 14],
+                [7, 14],
+              ],
+            },
+            {
+              family: 'platform',
+              cells: [
+                [16, 14],
+                [17, 14],
+              ],
+            },
+          ],
           focus: [7, 12],
           axis: 'horizontal',
           light: 'late',
@@ -707,7 +1635,98 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'container',
           ambient: 'lamps',
-          floor: 'fork',
+          floor: 'authored',
+          floorPlan: {
+            name: 'loading-bays-loading',
+            pattern: 'loading',
+            paths: [
+              [
+                [6.4, 3.4],
+                [8.6, 3.4],
+              ],
+              [
+                [6.4, 13.6],
+                [8.6, 13.6],
+              ],
+              [
+                [16.4, 3.4],
+                [18.6, 3.4],
+              ],
+              [
+                [16.4, 11.6],
+                [18.6, 11.6],
+              ],
+              [
+                [11.4, 7.4],
+                [13.6, 7.4],
+              ],
+              [
+                [11.4, 15.6],
+                [13.6, 15.6],
+              ],
+            ],
+            patches: [
+              [6.4, 3.4, 2.2, 10.2],
+              [16.4, 3.4, 2.2, 8.2],
+              [11.4, 7.4, 2.2, 8.2],
+            ],
+            seal: [10, 9, 'freight'],
+            intent: 'Choose a bypass through the staggered walls to meet the runner ahead.',
+          },
+          componentAssemblies: [
+            {
+              family: 'dispatch',
+              cells: [
+                [7, 4],
+                [7, 5],
+                [7, 6],
+                [7, 7],
+                [7, 8],
+                [7, 9],
+                [7, 10],
+                [7, 11],
+                [7, 12],
+              ],
+            },
+            {
+              family: 'platform',
+              cells: [
+                [17, 4],
+                [17, 5],
+                [17, 6],
+                [17, 7],
+                [17, 8],
+                [17, 9],
+                [17, 10],
+              ],
+            },
+            {
+              family: 'platform',
+              cells: [
+                [12, 8],
+                [12, 9],
+                [12, 10],
+                [12, 11],
+                [12, 12],
+                [12, 13],
+                [12, 14],
+              ],
+            },
+            {
+              family: 'platform',
+              cells: [
+                [9, 4],
+                [10, 4],
+              ],
+            },
+            {
+              family: 'platform',
+              cells: [
+                [14, 14],
+                [15, 14],
+              ],
+            },
+          ],
           focus: [12, 9],
           axis: 'vertical',
           light: 'late',
@@ -727,7 +1746,95 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'floodgate',
           ambient: 'water',
-          floor: 'seam',
+          floor: 'authored',
+          floorPlan: {
+            name: 'tidal-loops-tidal',
+            pattern: 'tidal',
+            paths: [
+              [
+                [7.1, 4.4],
+                [7.1, 12.6],
+              ],
+              [
+                [9.9, 4.4],
+                [9.9, 12.6],
+              ],
+              [
+                [15.1, 6.4],
+                [15.1, 14.6],
+              ],
+              [
+                [17.9, 6.4],
+                [17.9, 14.6],
+              ],
+              [
+                [10.1, 7.4],
+                [10.1, 10.6],
+              ],
+              [
+                [13.9, 7.4],
+                [13.9, 10.6],
+              ],
+              [
+                [1, 3],
+                [2, 3],
+              ],
+              [
+                [22, 3],
+                [23, 3],
+              ],
+              [
+                [1, 15],
+                [2, 15],
+              ],
+              [
+                [22, 15],
+                [23, 15],
+              ],
+            ],
+            patches: [
+              [7.4, 4.4, 2.2, 8.2],
+              [15.4, 6.4, 2.2, 8.2],
+              [10.4, 7.4, 3.2, 3.2],
+            ],
+            seal: [6, 6, 'tide'],
+            intent: 'All four edges wrap. Cross one to approach the target from the opposite side.',
+          },
+          componentAssemblies: [
+            {
+              family: 'dock',
+              cells: [
+                [8, 5],
+                [8, 6],
+                [8, 7],
+                [8, 8],
+                [8, 9],
+                [8, 10],
+                [8, 11],
+              ],
+            },
+            {
+              family: 'dock',
+              cells: [
+                [16, 7],
+                [16, 8],
+                [16, 9],
+                [16, 10],
+                [16, 11],
+                [16, 12],
+                [16, 13],
+              ],
+            },
+            {
+              family: 'floodgate',
+              cells: [
+                [11, 8],
+                [12, 8],
+                [11, 9],
+                [12, 9],
+              ],
+            },
+          ],
           focus: [6, 6],
           axis: 'horizontal',
           light: 'morning',
@@ -747,7 +1854,91 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'floodgate',
           ambient: 'water',
-          floor: 'seam',
+          floor: 'authored',
+          floorPlan: {
+            name: 'tidal-loops-tidal',
+            pattern: 'tidal',
+            paths: [
+              [
+                [10.1, 4.4],
+                [10.1, 12.6],
+              ],
+              [
+                [12.9, 4.4],
+                [12.9, 12.6],
+              ],
+              [
+                [5.1, 8.4],
+                [5.1, 11.6],
+              ],
+              [
+                [8.9, 8.4],
+                [8.9, 11.6],
+              ],
+              [
+                [15.1, 4.4],
+                [15.1, 6.6],
+              ],
+              [
+                [18.9, 4.4],
+                [18.9, 6.6],
+              ],
+              [
+                [1, 3],
+                [2, 3],
+              ],
+              [
+                [22, 3],
+                [23, 3],
+              ],
+              [
+                [1, 15],
+                [2, 15],
+              ],
+              [
+                [22, 15],
+                [23, 15],
+              ],
+            ],
+            patches: [
+              [10.4, 4.4, 2.2, 8.2],
+              [5.4, 8.4, 3.2, 3.2],
+              [15.4, 4.4, 3.2, 2.2],
+            ],
+            seal: [17, 11, 'tide'],
+            intent:
+              'The two blocks are solid; use the wrapping edge to travel between their outer sides. The target changes direction as it flees: cut off its next exit instead of following its trail.',
+          },
+          componentAssemblies: [
+            {
+              family: 'dock',
+              cells: [
+                [11, 5],
+                [11, 6],
+                [11, 7],
+                [11, 8],
+                [11, 9],
+                [11, 10],
+                [11, 11],
+              ],
+            },
+            {
+              family: 'floodgate',
+              cells: [
+                [6, 9],
+                [7, 9],
+                [6, 10],
+                [7, 10],
+              ],
+            },
+            {
+              family: 'dock',
+              cells: [
+                [16, 5],
+                [17, 5],
+              ],
+            },
+          ],
           focus: [17, 11],
           axis: 'vertical',
           light: 'morning',
@@ -767,7 +1958,97 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'floodgate',
           ambient: 'water',
-          floor: 'seam',
+          floor: 'authored',
+          floorPlan: {
+            name: 'tidal-loops-tidal',
+            pattern: 'tidal',
+            paths: [
+              [
+                [12.1, 4.4],
+                [12.1, 10.6],
+              ],
+              [
+                [14.9, 4.4],
+                [14.9, 10.6],
+              ],
+              [
+                [5.1, 3.4],
+                [5.1, 6.6],
+              ],
+              [
+                [8.9, 3.4],
+                [8.9, 6.6],
+              ],
+              [
+                [9.1, 7.4],
+                [9.1, 10.6],
+              ],
+              [
+                [12.9, 7.4],
+                [12.9, 10.6],
+              ],
+              [
+                [1, 3],
+                [2, 3],
+              ],
+              [
+                [22, 3],
+                [23, 3],
+              ],
+              [
+                [1, 15],
+                [2, 15],
+              ],
+              [
+                [22, 15],
+                [23, 15],
+              ],
+            ],
+            patches: [
+              [12.4, 4.4, 2.2, 6.2],
+              [5.4, 3.4, 3.2, 3.2],
+              [9.4, 7.4, 3.2, 3.2],
+            ],
+            seal: [11, 6, 'tide'],
+            intent: 'Step around the staggered islands, or cross an edge for a wider turn.',
+          },
+          componentAssemblies: [
+            {
+              family: 'dock',
+              cells: [
+                [13, 5],
+                [13, 6],
+                [13, 7],
+                [13, 8],
+                [13, 9],
+              ],
+            },
+            {
+              family: 'pump',
+              cells: [
+                [6, 4],
+                [7, 4],
+                [6, 5],
+                [7, 5],
+              ],
+            },
+            {
+              family: 'floodgate',
+              cells: [
+                [10, 8],
+                [11, 8],
+                [10, 9],
+                [11, 9],
+              ],
+            },
+            {
+              family: 'dock',
+              cells: [
+                [14, 13],
+                [15, 13],
+              ],
+            },
+          ],
           focus: [11, 8],
           axis: 'horizontal',
           light: 'morning',
@@ -787,7 +2068,101 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'floodgate',
           ambient: 'water',
-          floor: 'seam',
+          floor: 'authored',
+          floorPlan: {
+            name: 'tidal-loops-tidal',
+            pattern: 'tidal',
+            paths: [
+              [
+                [9.1, 6.4],
+                [9.1, 11.6],
+              ],
+              [
+                [13.9, 6.4],
+                [13.9, 11.6],
+              ],
+              [
+                [6.1, 3.4],
+                [6.1, 10.6],
+              ],
+              [
+                [8.9, 3.4],
+                [8.9, 10.6],
+              ],
+              [
+                [15.1, 9.4],
+                [15.1, 15.6],
+              ],
+              [
+                [17.9, 9.4],
+                [17.9, 15.6],
+              ],
+              [
+                [1, 3],
+                [2, 3],
+              ],
+              [
+                [22, 3],
+                [23, 3],
+              ],
+              [
+                [1, 15],
+                [2, 15],
+              ],
+              [
+                [22, 15],
+                [23, 15],
+              ],
+            ],
+            patches: [
+              [9.4, 6.4, 4.2, 5.2],
+              [6.4, 3.4, 2.2, 7.2],
+              [15.4, 9.4, 2.2, 6.2],
+            ],
+            seal: [16, 5, 'tide'],
+            intent:
+              'Circle the central block and watch both sides of an edge before wrapping through it. The target changes direction as it flees: cut off its next exit instead of following its trail.',
+          },
+          componentAssemblies: [
+            {
+              family: 'floodgate',
+              cells: [
+                [10, 7],
+                [11, 7],
+                [12, 7],
+                [10, 8],
+                [11, 8],
+                [12, 8],
+                [10, 9],
+                [11, 9],
+                [12, 9],
+                [10, 10],
+                [11, 10],
+                [12, 10],
+              ],
+            },
+            {
+              family: 'dock',
+              cells: [
+                [7, 4],
+                [7, 5],
+                [7, 6],
+                [7, 7],
+                [7, 8],
+                [7, 9],
+              ],
+            },
+            {
+              family: 'dock',
+              cells: [
+                [16, 10],
+                [16, 11],
+                [16, 12],
+                [16, 13],
+                [16, 14],
+              ],
+            },
+          ],
           focus: [16, 5],
           axis: 'vertical',
           light: 'late',
@@ -807,7 +2182,106 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'floodgate',
           ambient: 'water',
-          floor: 'seam',
+          floor: 'authored',
+          floorPlan: {
+            name: 'tidal-loops-tidal',
+            pattern: 'tidal',
+            paths: [
+              [
+                [15.1, 6.4],
+                [15.1, 11.6],
+              ],
+              [
+                [19.9, 6.4],
+                [19.9, 11.6],
+              ],
+              [
+                [10.1, 4.4],
+                [10.1, 14.6],
+              ],
+              [
+                [12.9, 4.4],
+                [12.9, 14.6],
+              ],
+              [
+                [5.1, 6.4],
+                [5.1, 11.6],
+              ],
+              [
+                [8.9, 6.4],
+                [8.9, 11.6],
+              ],
+              [
+                [1, 3],
+                [2, 3],
+              ],
+              [
+                [22, 3],
+                [23, 3],
+              ],
+              [
+                [1, 15],
+                [2, 15],
+              ],
+              [
+                [22, 15],
+                [23, 15],
+              ],
+            ],
+            patches: [
+              [15.4, 6.4, 4.2, 5.2],
+              [10.4, 4.4, 2.2, 10.2],
+              [5.4, 6.4, 3.2, 5.2],
+            ],
+            seal: [7, 12, 'tide'],
+            intent: 'Alternate inside passes with wrapping routes around the two large islands.',
+          },
+          componentAssemblies: [
+            {
+              family: 'pump',
+              cells: [
+                [16, 7],
+                [17, 7],
+                [18, 7],
+                [16, 8],
+                [17, 8],
+                [18, 8],
+                [16, 9],
+                [17, 9],
+                [18, 9],
+                [16, 10],
+                [17, 10],
+                [18, 10],
+              ],
+            },
+            {
+              family: 'dock',
+              cells: [
+                [11, 5],
+                [11, 6],
+                [11, 7],
+                [11, 8],
+                [11, 9],
+                [11, 10],
+                [11, 11],
+                [11, 12],
+                [11, 13],
+              ],
+            },
+            {
+              family: 'floodgate',
+              cells: [
+                [6, 7],
+                [7, 7],
+                [6, 8],
+                [7, 8],
+                [6, 9],
+                [7, 9],
+                [6, 10],
+                [7, 10],
+              ],
+            },
+          ],
           focus: [7, 12],
           axis: 'horizontal',
           light: 'late',
@@ -827,7 +2301,112 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'floodgate',
           ambient: 'water',
-          floor: 'seam',
+          floor: 'authored',
+          floorPlan: {
+            name: 'tidal-loops-tidal',
+            pattern: 'tidal',
+            paths: [
+              [
+                [6.1, 4.4],
+                [6.1, 12.6],
+              ],
+              [
+                [8.9, 4.4],
+                [8.9, 12.6],
+              ],
+              [
+                [14.1, 6.4],
+                [14.1, 14.6],
+              ],
+              [
+                [16.9, 6.4],
+                [16.9, 14.6],
+              ],
+              [
+                [17.1, 3.4],
+                [17.1, 6.6],
+              ],
+              [
+                [20.9, 3.4],
+                [20.9, 6.6],
+              ],
+              [
+                [1, 3],
+                [2, 3],
+              ],
+              [
+                [22, 3],
+                [23, 3],
+              ],
+              [
+                [1, 15],
+                [2, 15],
+              ],
+              [
+                [22, 15],
+                [23, 15],
+              ],
+            ],
+            patches: [
+              [6.4, 4.4, 2.2, 8.2],
+              [14.4, 6.4, 2.2, 8.2],
+              [17.4, 3.4, 3.2, 3.2],
+            ],
+            seal: [12, 9, 'tide'],
+            intent:
+              'Connect the three islands with loops that cross the board boundary. The target changes direction as it flees: cut off its next exit instead of following its trail.',
+          },
+          componentAssemblies: [
+            {
+              family: 'dock',
+              cells: [
+                [7, 5],
+                [7, 6],
+                [7, 7],
+                [7, 8],
+                [7, 9],
+                [7, 10],
+                [7, 11],
+              ],
+            },
+            {
+              family: 'dock',
+              cells: [
+                [15, 7],
+                [15, 8],
+                [15, 9],
+                [15, 10],
+                [15, 11],
+                [15, 12],
+                [15, 13],
+              ],
+            },
+            {
+              family: 'floodgate',
+              cells: [
+                [18, 4],
+                [19, 4],
+                [18, 5],
+                [19, 5],
+              ],
+            },
+            {
+              family: 'pump',
+              cells: [
+                [5, 13],
+                [6, 13],
+                [5, 14],
+                [6, 14],
+              ],
+            },
+            {
+              family: 'dock',
+              cells: [
+                [11, 4],
+                [12, 4],
+              ],
+            },
+          ],
           focus: [12, 9],
           axis: 'vertical',
           light: 'late',
@@ -847,7 +2426,89 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'crane',
           ambient: 'lamps',
-          floor: 'slalom',
+          floor: 'authored',
+          floorPlan: {
+            name: 'shunting-yard-rails',
+            pattern: 'rails',
+            paths: [
+              [
+                [10.4, 6.4],
+                [12.6, 6.4],
+              ],
+              [
+                [10.4, 12.6],
+                [12.6, 12.6],
+              ],
+              [
+                [6.4, 4.4],
+                [9.6, 4.4],
+              ],
+              [
+                [6.4, 7.6],
+                [9.6, 7.6],
+              ],
+              [
+                [6.4, 4.4],
+                [6.4, 4.9],
+              ],
+              [
+                [9.6, 7.1],
+                [9.6, 7.6],
+              ],
+              [
+                [14.4, 12.4],
+                [17.6, 12.4],
+              ],
+              [
+                [14.4, 14.6],
+                [17.6, 14.6],
+              ],
+              [
+                [14.4, 12.4],
+                [14.4, 12.9],
+              ],
+              [
+                [17.6, 14.1],
+                [17.6, 14.6],
+              ],
+            ],
+            patches: [
+              [10.4, 6.4, 2.2, 6.2],
+              [6.4, 4.4, 3.2, 3.2],
+              [14.4, 12.4, 3.2, 2.2],
+            ],
+            seal: [5, 6, 'freight'],
+            intent:
+              'Edges are solid again. Pass the short obstacle and leave space for a second turn.',
+          },
+          componentAssemblies: [
+            {
+              family: 'platform',
+              cells: [
+                [11, 7],
+                [11, 8],
+                [11, 9],
+                [11, 10],
+                [11, 11],
+              ],
+            },
+            {
+              family: 'dispatch',
+              cells: [
+                [7, 5],
+                [8, 5],
+                [7, 6],
+                [8, 6],
+              ],
+            },
+            {
+              family: 'platform',
+              cells: [
+                [15, 13],
+                [16, 13],
+              ],
+            },
+          ],
           focus: [6, 6],
           axis: 'horizontal',
           light: 'morning',
@@ -867,7 +2528,98 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'crane',
           ambient: 'lamps',
-          floor: 'slalom',
+          floor: 'authored',
+          floorPlan: {
+            name: 'shunting-yard-rails',
+            pattern: 'rails',
+            paths: [
+              [
+                [7.4, 4.4],
+                [16.6, 4.4],
+              ],
+              [
+                [7.4, 13.6],
+                [16.6, 13.6],
+              ],
+              [
+                [7.4, 4.4],
+                [7.4, 4.9],
+              ],
+              [
+                [16.6, 13.1],
+                [16.6, 13.6],
+              ],
+              [
+                [14.4, 9.4],
+                [16.6, 9.4],
+              ],
+              [
+                [14.4, 13.6],
+                [16.6, 13.6],
+              ],
+              [
+                [10.4, 8.4],
+                [13.6, 8.4],
+              ],
+              [
+                [10.4, 10.6],
+                [13.6, 10.6],
+              ],
+              [
+                [10.4, 8.4],
+                [10.4, 8.9],
+              ],
+              [
+                [13.6, 10.1],
+                [13.6, 10.6],
+              ],
+            ],
+            patches: [
+              [7.4, 4.4, 9.2, 9.2],
+              [14.4, 9.4, 2.2, 4.2],
+              [10.4, 8.4, 3.2, 2.2],
+            ],
+            seal: [17, 11, 'freight'],
+            intent:
+              'Enter the courtyard through its opening and choose an exit before the body arrives. The target changes direction as it flees: cut off its next exit instead of following its trail.',
+          },
+          componentAssemblies: [
+            {
+              family: 'dispatch',
+              cells: [
+                [8, 5],
+                [9, 5],
+                [10, 5],
+                [11, 5],
+                [12, 5],
+                [13, 5],
+                [14, 5],
+                [15, 5],
+                [8, 6],
+                [8, 7],
+                [8, 8],
+                [8, 9],
+                [8, 10],
+                [8, 11],
+                [8, 12],
+              ],
+            },
+            {
+              family: 'platform',
+              cells: [
+                [15, 10],
+                [15, 11],
+                [15, 12],
+              ],
+            },
+            {
+              family: 'platform',
+              cells: [
+                [11, 9],
+                [12, 9],
+              ],
+            },
+          ],
           focus: [17, 11],
           axis: 'vertical',
           light: 'morning',
@@ -887,7 +2639,94 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'crane',
           ambient: 'lamps',
-          floor: 'slalom',
+          floor: 'authored',
+          floorPlan: {
+            name: 'shunting-yard-rails',
+            pattern: 'rails',
+            paths: [
+              [
+                [8.4, 3.4],
+                [10.6, 3.4],
+              ],
+              [
+                [8.4, 11.6],
+                [10.6, 11.6],
+              ],
+              [
+                [13.4, 8.4],
+                [15.6, 8.4],
+              ],
+              [
+                [13.4, 15.6],
+                [15.6, 15.6],
+              ],
+              [
+                [5.4, 12.4],
+                [8.6, 12.4],
+              ],
+              [
+                [5.4, 15.6],
+                [8.6, 15.6],
+              ],
+              [
+                [5.4, 12.4],
+                [5.4, 12.9],
+              ],
+              [
+                [8.6, 15.1],
+                [8.6, 15.6],
+              ],
+            ],
+            patches: [
+              [8.4, 3.4, 2.2, 8.2],
+              [13.4, 8.4, 2.2, 7.2],
+              [5.4, 12.4, 3.2, 3.2],
+            ],
+            seal: [11, 8, 'freight'],
+            intent:
+              'Offset walls create crossing approaches. Keep the next lane open as speed rises.',
+          },
+          componentAssemblies: [
+            {
+              family: 'platform',
+              cells: [
+                [9, 4],
+                [9, 5],
+                [9, 6],
+                [9, 7],
+                [9, 8],
+                [9, 9],
+                [9, 10],
+              ],
+            },
+            {
+              family: 'platform',
+              cells: [
+                [14, 9],
+                [14, 10],
+                [14, 11],
+                [14, 12],
+                [14, 13],
+                [14, 14],
+              ],
+            },
+            {
+              family: 'dispatch',
+              cells: [
+                [6, 13],
+                [7, 13],
+                [6, 14],
+                [7, 14],
+              ],
+            },
+            {
+              family: 'platform',
+              cells: [
+                [16, 4],
+                [17, 4],
+              ],
+            },
+          ],
           focus: [11, 8],
           axis: 'horizontal',
           light: 'morning',
@@ -907,7 +2746,114 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'crane',
           ambient: 'lamps',
-          floor: 'slalom',
+          floor: 'authored',
+          floorPlan: {
+            name: 'shunting-yard-rails',
+            pattern: 'rails',
+            paths: [
+              [
+                [12.4, 10.4],
+                [18.6, 10.4],
+              ],
+              [
+                [12.4, 13.6],
+                [18.6, 13.6],
+              ],
+              [
+                [12.4, 10.4],
+                [12.4, 10.9],
+              ],
+              [
+                [18.6, 13.1],
+                [18.6, 13.6],
+              ],
+              [
+                [14.4, 3.4],
+                [18.6, 3.4],
+              ],
+              [
+                [14.4, 6.6],
+                [18.6, 6.6],
+              ],
+              [
+                [14.4, 3.4],
+                [14.4, 3.9],
+              ],
+              [
+                [18.6, 6.1],
+                [18.6, 6.6],
+              ],
+              [
+                [6.4, 5.4],
+                [12.6, 5.4],
+              ],
+              [
+                [6.4, 7.6],
+                [12.6, 7.6],
+              ],
+              [
+                [6.4, 5.4],
+                [6.4, 5.9],
+              ],
+              [
+                [12.6, 7.1],
+                [12.6, 7.6],
+              ],
+            ],
+            patches: [
+              [12.4, 10.4, 6.2, 3.2],
+              [14.4, 3.4, 4.2, 3.2],
+              [6.4, 5.4, 6.2, 2.2],
+            ],
+            seal: [16, 7, 'freight'],
+            intent:
+              'The horizontal bars require two turns. Approach from the wide end. The target changes direction as it flees: cut off its next exit instead of following its trail.',
+          },
+          componentAssemblies: [
+            {
+              family: 'container',
+              cells: [
+                [13, 11],
+                [14, 11],
+                [15, 11],
+                [16, 11],
+                [17, 11],
+                [13, 12],
+                [14, 12],
+                [15, 12],
+                [16, 12],
+                [17, 12],
+              ],
+            },
+            {
+              family: 'dispatch',
+              cells: [
+                [15, 4],
+                [16, 4],
+                [17, 4],
+                [15, 5],
+                [16, 5],
+                [17, 5],
+              ],
+            },
+            {
+              family: 'platform',
+              cells: [
+                [7, 6],
+                [8, 6],
+                [9, 6],
+                [10, 6],
+                [11, 6],
+              ],
+            },
+            {
+              family: 'platform',
+              cells: [
+                [7, 13],
+                [8, 13],
+              ],
+            },
+          ],
           focus: [16, 5],
           axis: 'vertical',
           light: 'late',
@@ -927,7 +2873,101 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'crane',
           ambient: 'lamps',
-          floor: 'slalom',
+          floor: 'authored',
+          floorPlan: {
+            name: 'shunting-yard-rails',
+            pattern: 'rails',
+            paths: [
+              [
+                [4.4, 7.4],
+                [8.6, 7.4],
+              ],
+              [
+                [4.4, 10.6],
+                [8.6, 10.6],
+              ],
+              [
+                [4.4, 7.4],
+                [4.4, 7.9],
+              ],
+              [
+                [8.6, 10.1],
+                [8.6, 10.6],
+              ],
+              [
+                [9.4, 3.4],
+                [11.6, 3.4],
+              ],
+              [
+                [9.4, 9.6],
+                [11.6, 9.6],
+              ],
+              [
+                [16.4, 7.4],
+                [19.6, 7.4],
+              ],
+              [
+                [16.4, 10.6],
+                [19.6, 10.6],
+              ],
+              [
+                [16.4, 7.4],
+                [16.4, 7.9],
+              ],
+              [
+                [19.6, 10.1],
+                [19.6, 10.6],
+              ],
+            ],
+            patches: [
+              [4.4, 7.4, 4.2, 3.2],
+              [9.4, 3.4, 2.2, 6.2],
+              [16.4, 7.4, 3.2, 3.2],
+            ],
+            seal: [7, 12, 'freight'],
+            intent: 'Plan both turns before entering the staggered passage between the islands.',
+          },
+          componentAssemblies: [
+            {
+              family: 'dispatch',
+              cells: [
+                [5, 8],
+                [6, 8],
+                [7, 8],
+                [5, 9],
+                [6, 9],
+                [7, 9],
+              ],
+            },
+            {
+              family: 'platform',
+              cells: [
+                [10, 4],
+                [10, 5],
+                [10, 6],
+                [10, 7],
+                [10, 8],
+              ],
+            },
+            {
+              family: 'container',
+              cells: [
+                [17, 8],
+                [18, 8],
+                [17, 9],
+                [18, 9],
+              ],
+            },
+            {
+              family: 'platform',
+              cells: [
+                [13, 11],
+                [13, 12],
+                [13, 13],
+                [13, 14],
+              ],
+            },
+          ],
           focus: [7, 12],
           axis: 'horizontal',
           light: 'late',
@@ -947,7 +2987,97 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'crane',
           ambient: 'lamps',
-          floor: 'slalom',
+          floor: 'authored',
+          floorPlan: {
+            name: 'shunting-yard-rails',
+            pattern: 'rails',
+            paths: [
+              [
+                [7.4, 4.4],
+                [9.6, 4.4],
+              ],
+              [
+                [7.4, 13.6],
+                [9.6, 13.6],
+              ],
+              [
+                [15.4, 4.4],
+                [17.6, 4.4],
+              ],
+              [
+                [15.4, 13.6],
+                [17.6, 13.6],
+              ],
+              [
+                [10.4, 3.4],
+                [14.6, 3.4],
+              ],
+              [
+                [10.4, 5.6],
+                [14.6, 5.6],
+              ],
+              [
+                [10.4, 3.4],
+                [10.4, 3.9],
+              ],
+              [
+                [14.6, 5.1],
+                [14.6, 5.6],
+              ],
+            ],
+            patches: [
+              [7.4, 4.4, 2.2, 9.2],
+              [15.4, 4.4, 2.2, 9.2],
+              [10.4, 3.4, 4.2, 2.2],
+            ],
+            seal: [12, 9, 'freight'],
+            intent:
+              'Weave between the upper and lower islands, using the outer loop when the middle fills. The target changes direction as it flees: cut off its next exit instead of following its trail.',
+          },
+          componentAssemblies: [
+            {
+              family: 'dispatch',
+              cells: [
+                [8, 5],
+                [8, 6],
+                [8, 7],
+                [8, 8],
+                [8, 9],
+                [8, 10],
+                [8, 11],
+                [8, 12],
+              ],
+            },
+            {
+              family: 'platform',
+              cells: [
+                [16, 5],
+                [16, 6],
+                [16, 7],
+                [16, 8],
+                [16, 9],
+                [16, 10],
+                [16, 11],
+                [16, 12],
+              ],
+            },
+            {
+              family: 'platform',
+              cells: [
+                [11, 4],
+                [12, 4],
+                [13, 4],
+              ],
+            },
+            {
+              family: 'platform',
+              cells: [
+                [11, 14],
+                [12, 14],
+                [13, 14],
+              ],
+            },
+          ],
           focus: [12, 9],
           axis: 'vertical',
           light: 'late',
@@ -1046,7 +3176,99 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'coolant',
           ambient: 'fan',
-          floor: 'cross',
+          floor: 'authored',
+          floorPlan: {
+            name: 'assembly-hall-paired',
+            pattern: 'paired',
+            paths: [
+              [
+                [6.4, 5.4],
+                [8.6, 5.4],
+                [8.6, 6],
+              ],
+              [
+                [6.4, 13],
+                [6.4, 13.6],
+                [8.6, 13.6],
+              ],
+              [
+                [15.4, 5.4],
+                [17.6, 5.4],
+                [17.6, 6],
+              ],
+              [
+                [15.4, 13],
+                [15.4, 13.6],
+                [17.6, 13.6],
+              ],
+              [
+                [10.4, 7.4],
+                [13.6, 7.4],
+                [13.6, 8],
+              ],
+              [
+                [10.4, 10],
+                [10.4, 10.6],
+                [13.6, 10.6],
+              ],
+            ],
+            patches: [
+              [6.4, 5.4, 2.2, 8.2],
+              [15.4, 5.4, 2.2, 8.2],
+              [10.4, 7.4, 3.2, 3.2],
+            ],
+            seal: [11, 6, 'valve'],
+            intent: 'Use opposite loops around the islands; meet only when the crossing is free.',
+          },
+          componentAssemblies: [
+            {
+              family: 'pressure',
+              cells: [
+                [7, 6],
+                [7, 7],
+                [7, 8],
+                [7, 9],
+                [7, 10],
+                [7, 11],
+                [7, 12],
+              ],
+            },
+            {
+              family: 'pressure',
+              cells: [
+                [16, 6],
+                [16, 7],
+                [16, 8],
+                [16, 9],
+                [16, 10],
+                [16, 11],
+                [16, 12],
+              ],
+            },
+            {
+              family: 'coolant',
+              cells: [
+                [11, 8],
+                [12, 8],
+                [11, 9],
+                [12, 9],
+              ],
+            },
+            {
+              family: 'pressure',
+              cells: [
+                [5, 4],
+                [6, 4],
+              ],
+            },
+            {
+              family: 'pressure',
+              cells: [
+                [17, 14],
+                [18, 14],
+              ],
+            },
+          ],
           focus: [11, 8],
           axis: 'horizontal',
           light: 'morning',
@@ -1066,7 +3288,96 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'coolant',
           ambient: 'fan',
-          floor: 'cross',
+          floor: 'authored',
+          floorPlan: {
+            name: 'assembly-hall-paired',
+            pattern: 'paired',
+            paths: [
+              [
+                [8.4, 4.4],
+                [16.6, 4.4],
+                [16.6, 5],
+              ],
+              [
+                [8.4, 13],
+                [8.4, 13.6],
+                [16.6, 13.6],
+              ],
+              [
+                [9.4, 12.4],
+                [16.6, 12.4],
+                [16.6, 13],
+              ],
+              [
+                [9.4, 15],
+                [9.4, 15.6],
+                [16.6, 15.6],
+              ],
+              [
+                [11.4, 8.4],
+                [14.6, 8.4],
+                [14.6, 9],
+              ],
+              [
+                [11.4, 10],
+                [11.4, 10.6],
+                [14.6, 10.6],
+              ],
+            ],
+            patches: [
+              [8.4, 4.4, 8.2, 9.2],
+              [9.4, 12.4, 7.2, 3.2],
+              [11.4, 8.4, 3.2, 2.2],
+            ],
+            seal: [17, 5, 'valve'],
+            intent:
+              'The U-shaped detour has a narrow entrance and a broad outside return. The target changes direction as it flees: cut off its next exit instead of following its trail.',
+          },
+          componentAssemblies: [
+            {
+              family: 'boiler',
+              cells: [
+                [9, 5],
+                [10, 5],
+                [11, 5],
+                [12, 5],
+                [13, 5],
+                [14, 5],
+                [15, 5],
+                [9, 6],
+                [9, 7],
+                [9, 8],
+                [9, 9],
+                [9, 10],
+                [9, 11],
+                [9, 12],
+              ],
+            },
+            {
+              family: 'coolant',
+              cells: [
+                [10, 13],
+                [11, 13],
+                [12, 13],
+                [13, 13],
+                [14, 13],
+                [15, 13],
+                [10, 14],
+                [11, 14],
+                [12, 14],
+                [13, 14],
+                [14, 14],
+                [15, 14],
+              ],
+            },
+            {
+              family: 'pressure',
+              cells: [
+                [12, 9],
+                [13, 9],
+              ],
+            },
+          ],
           focus: [16, 5],
           axis: 'vertical',
           light: 'late',
@@ -1086,7 +3397,97 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'coolant',
           ambient: 'fan',
-          floor: 'cross',
+          floor: 'authored',
+          floorPlan: {
+            name: 'assembly-hall-paired',
+            pattern: 'paired',
+            paths: [
+              [
+                [6.4, 3.4],
+                [8.6, 3.4],
+                [8.6, 4],
+              ],
+              [
+                [6.4, 14],
+                [6.4, 14.6],
+                [8.6, 14.6],
+              ],
+              [
+                [15.4, 3.4],
+                [17.6, 3.4],
+                [17.6, 4],
+              ],
+              [
+                [15.4, 14],
+                [15.4, 14.6],
+                [17.6, 14.6],
+              ],
+              [
+                [10.4, 3.4],
+                [13.6, 3.4],
+                [13.6, 4],
+              ],
+              [
+                [10.4, 5],
+                [10.4, 5.6],
+                [13.6, 5.6],
+              ],
+            ],
+            patches: [
+              [6.4, 3.4, 2.2, 11.2],
+              [15.4, 3.4, 2.2, 11.2],
+              [10.4, 3.4, 3.2, 2.2],
+            ],
+            seal: [5, 12, 'valve'],
+            intent:
+              'Choose the upper or lower passage around the walls; avoid a head-on meeting in Team.',
+          },
+          componentAssemblies: [
+            {
+              family: 'coolant',
+              cells: [
+                [7, 4],
+                [7, 5],
+                [7, 6],
+                [7, 7],
+                [7, 8],
+                [7, 9],
+                [7, 10],
+                [7, 11],
+                [7, 12],
+                [7, 13],
+              ],
+            },
+            {
+              family: 'pressure',
+              cells: [
+                [16, 4],
+                [16, 5],
+                [16, 6],
+                [16, 7],
+                [16, 8],
+                [16, 9],
+                [16, 10],
+                [16, 11],
+                [16, 12],
+                [16, 13],
+              ],
+            },
+            {
+              family: 'pressure',
+              cells: [
+                [11, 4],
+                [12, 4],
+              ],
+            },
+            {
+              family: 'pressure',
+              cells: [
+                [11, 14],
+                [12, 14],
+              ],
+            },
+          ],
           focus: [7, 12],
           axis: 'horizontal',
           light: 'late',
@@ -1106,7 +3507,100 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'coolant',
           ambient: 'fan',
-          floor: 'cross',
+          floor: 'authored',
+          floorPlan: {
+            name: 'assembly-hall-paired',
+            pattern: 'paired',
+            paths: [
+              [
+                [15.4, 3.4],
+                [17.6, 3.4],
+                [17.6, 4],
+              ],
+              [
+                [15.4, 10],
+                [15.4, 10.6],
+                [17.6, 10.6],
+              ],
+              [
+                [6.4, 4.4],
+                [8.6, 4.4],
+                [8.6, 5],
+              ],
+              [
+                [6.4, 10],
+                [6.4, 10.6],
+                [8.6, 10.6],
+              ],
+              [
+                [10.4, 9.4],
+                [12.6, 9.4],
+                [12.6, 10],
+              ],
+              [
+                [10.4, 15],
+                [10.4, 15.6],
+                [12.6, 15.6],
+              ],
+            ],
+            patches: [
+              [15.4, 3.4, 2.2, 7.2],
+              [6.4, 4.4, 2.2, 6.2],
+              [10.4, 9.4, 2.2, 6.2],
+            ],
+            seal: [12, 8, 'valve'],
+            intent:
+              'Follow the offset openings as one circuit. Every Team catch grows the snake that caught it. The target changes direction as it flees: cut off its next exit instead of following its trail.',
+          },
+          componentAssemblies: [
+            {
+              family: 'pressure',
+              cells: [
+                [16, 4],
+                [16, 5],
+                [16, 6],
+                [16, 7],
+                [16, 8],
+                [16, 9],
+              ],
+            },
+            {
+              family: 'pressure',
+              cells: [
+                [7, 5],
+                [7, 6],
+                [7, 7],
+                [7, 8],
+                [7, 9],
+              ],
+            },
+            {
+              family: 'pressure',
+              cells: [
+                [11, 10],
+                [11, 11],
+                [11, 12],
+                [11, 13],
+                [11, 14],
+              ],
+            },
+            {
+              family: 'coolant',
+              cells: [
+                [14, 13],
+                [15, 13],
+                [14, 14],
+                [15, 14],
+              ],
+            },
+            {
+              family: 'pressure',
+              cells: [
+                [9, 4],
+                [10, 4],
+              ],
+            },
+          ],
           focus: [12, 9],
           axis: 'vertical',
           light: 'late',
@@ -1201,7 +3695,95 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'terrace',
           ambient: 'leaves',
-          floor: 'terraces',
+          floor: 'authored',
+          floorPlan: {
+            name: 'survey-terraces-terraces',
+            pattern: 'terraces',
+            paths: [
+              [
+                [9.4, 15.6],
+                [9.4, 12.4],
+                [14.6, 12.4],
+              ],
+              [
+                [9.75, 15.6],
+                [9.75, 12.75],
+                [14.6, 12.75],
+              ],
+              [
+                [15.4, 7.6],
+                [15.4, 4.4],
+                [19.6, 4.4],
+              ],
+              [
+                [15.75, 7.6],
+                [15.75, 4.75],
+                [19.6, 4.75],
+              ],
+              [
+                [5.4, 6.6],
+                [5.4, 3.4],
+                [8.6, 3.4],
+              ],
+              [
+                [5.75, 6.6],
+                [5.75, 3.75],
+                [8.6, 3.75],
+              ],
+            ],
+            patches: [
+              [9.4, 12.4, 5.2, 3.2],
+              [15.4, 4.4, 4.2, 3.2],
+              [5.4, 3.4, 3.2, 3.2],
+            ],
+            seal: [10, 8, 'survey'],
+            intent:
+              'This board wraps. Use its connected edges to circle the three islands. The target changes direction as it flees: cut off its next exit instead of following its trail.',
+          },
+          componentAssemblies: [
+            {
+              family: 'reclaimer',
+              cells: [
+                [10, 13],
+                [11, 13],
+                [12, 13],
+                [13, 13],
+                [10, 14],
+                [11, 14],
+                [12, 14],
+                [13, 14],
+              ],
+            },
+            {
+              family: 'excavation',
+              cells: [
+                [16, 5],
+                [17, 5],
+                [18, 5],
+                [16, 6],
+                [17, 6],
+                [18, 6],
+              ],
+            },
+            {
+              family: 'excavation',
+              cells: [
+                [6, 4],
+                [7, 4],
+                [6, 5],
+                [7, 5],
+              ],
+            },
+            {
+              family: 'terrace',
+              cells: [
+                [12, 7],
+                [12, 8],
+                [12, 9],
+                [12, 10],
+              ],
+            },
+          ],
           focus: [11, 8],
           axis: 'horizontal',
           light: 'morning',
@@ -1221,7 +3803,98 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'terrace',
           ambient: 'leaves',
-          floor: 'terraces',
+          floor: 'authored',
+          floorPlan: {
+            name: 'survey-terraces-terraces',
+            pattern: 'terraces',
+            paths: [
+              [
+                [10.4, 11.6],
+                [10.4, 6.4],
+                [14.6, 6.4],
+              ],
+              [
+                [10.75, 11.6],
+                [10.75, 6.75],
+                [14.6, 6.75],
+              ],
+              [
+                [6.4, 13.6],
+                [6.4, 3.4],
+                [8.6, 3.4],
+              ],
+              [
+                [6.75, 13.6],
+                [6.75, 3.75],
+                [8.6, 3.75],
+              ],
+              [
+                [15.4, 15.6],
+                [15.4, 5.4],
+                [17.6, 5.4],
+              ],
+              [
+                [15.75, 15.6],
+                [15.75, 5.75],
+                [17.6, 5.75],
+              ],
+            ],
+            patches: [
+              [10.4, 6.4, 4.2, 5.2],
+              [6.4, 3.4, 2.2, 10.2],
+              [15.4, 5.4, 2.2, 10.2],
+            ],
+            seal: [16, 4, 'survey'],
+            intent:
+              'The large central island leaves two approaches. Choose the one the fleeing target cannot quickly escape.',
+          },
+          componentAssemblies: [
+            {
+              family: 'reclaimer',
+              cells: [
+                [11, 7],
+                [12, 7],
+                [13, 7],
+                [11, 8],
+                [12, 8],
+                [13, 8],
+                [11, 9],
+                [12, 9],
+                [13, 9],
+                [11, 10],
+                [12, 10],
+                [13, 10],
+              ],
+            },
+            {
+              family: 'terrace',
+              cells: [
+                [7, 4],
+                [7, 5],
+                [7, 6],
+                [7, 7],
+                [7, 8],
+                [7, 9],
+                [7, 10],
+                [7, 11],
+                [7, 12],
+              ],
+            },
+            {
+              family: 'terrace',
+              cells: [
+                [16, 6],
+                [16, 7],
+                [16, 8],
+                [16, 9],
+                [16, 10],
+                [16, 11],
+                [16, 12],
+                [16, 13],
+                [16, 14],
+              ],
+            },
+          ],
           focus: [16, 5],
           axis: 'vertical',
           light: 'late',
@@ -1241,7 +3914,107 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'terrace',
           ambient: 'leaves',
-          floor: 'terraces',
+          floor: 'authored',
+          floorPlan: {
+            name: 'survey-terraces-terraces',
+            pattern: 'terraces',
+            paths: [
+              [
+                [5.4, 6.6],
+                [5.4, 3.4],
+                [11.6, 3.4],
+              ],
+              [
+                [5.75, 6.6],
+                [5.75, 3.75],
+                [11.6, 3.75],
+              ],
+              [
+                [6.4, 15.6],
+                [6.4, 12.4],
+                [12.6, 12.4],
+              ],
+              [
+                [6.75, 15.6],
+                [6.75, 12.75],
+                [12.6, 12.75],
+              ],
+              [
+                [12.4, 10.6],
+                [12.4, 8.4],
+                [18.6, 8.4],
+              ],
+              [
+                [12.75, 10.6],
+                [12.75, 8.75],
+                [18.6, 8.75],
+              ],
+            ],
+            patches: [
+              [5.4, 3.4, 6.2, 3.2],
+              [6.4, 12.4, 6.2, 3.2],
+              [12.4, 8.4, 6.2, 2.2],
+            ],
+            seal: [7, 11, 'survey'],
+            intent:
+              'Wrapping edges offer a bypass around the three staggered bars; do not meet your own tail there. The target changes direction as it flees: cut off its next exit instead of following its trail.',
+          },
+          componentAssemblies: [
+            {
+              family: 'excavation',
+              cells: [
+                [6, 4],
+                [7, 4],
+                [8, 4],
+                [9, 4],
+                [10, 4],
+                [6, 5],
+                [7, 5],
+                [8, 5],
+                [9, 5],
+                [10, 5],
+              ],
+            },
+            {
+              family: 'reclaimer',
+              cells: [
+                [7, 13],
+                [8, 13],
+                [9, 13],
+                [10, 13],
+                [11, 13],
+                [7, 14],
+                [8, 14],
+                [9, 14],
+                [10, 14],
+                [11, 14],
+              ],
+            },
+            {
+              family: 'terrace',
+              cells: [
+                [13, 9],
+                [14, 9],
+                [15, 9],
+                [16, 9],
+                [17, 9],
+              ],
+            },
+            {
+              family: 'terrace',
+              cells: [
+                [15, 4],
+                [16, 4],
+              ],
+            },
+            {
+              family: 'terrace',
+              cells: [
+                [8, 9],
+                [9, 9],
+              ],
+            },
+          ],
           focus: [7, 12],
           axis: 'horizontal',
           light: 'late',
@@ -1261,7 +4034,111 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'terrace',
           ambient: 'leaves',
-          floor: 'terraces',
+          floor: 'authored',
+          floorPlan: {
+            name: 'survey-terraces-terraces',
+            pattern: 'terraces',
+            paths: [
+              [
+                [7.4, 10.6],
+                [7.4, 3.4],
+                [9.6, 3.4],
+              ],
+              [
+                [7.75, 10.6],
+                [7.75, 3.75],
+                [9.6, 3.75],
+              ],
+              [
+                [15.4, 14.6],
+                [15.4, 7.4],
+                [17.6, 7.4],
+              ],
+              [
+                [15.75, 14.6],
+                [15.75, 7.75],
+                [17.6, 7.75],
+              ],
+              [
+                [15.4, 5.6],
+                [15.4, 2.4],
+                [18.6, 2.4],
+              ],
+              [
+                [15.75, 5.6],
+                [15.75, 2.75],
+                [18.6, 2.75],
+              ],
+            ],
+            patches: [
+              [7.4, 3.4, 2.2, 7.2],
+              [15.4, 7.4, 2.2, 7.2],
+              [15.4, 2.4, 3.2, 3.2],
+            ],
+            seal: [12, 10, 'survey'],
+            intent:
+              'Solid edges, moving quarry and a long body: connect the staggered openings into your final circuit.',
+          },
+          componentAssemblies: [
+            {
+              family: 'terrace',
+              cells: [
+                [8, 4],
+                [8, 5],
+                [8, 6],
+                [8, 7],
+                [8, 8],
+                [8, 9],
+              ],
+            },
+            {
+              family: 'terrace',
+              cells: [
+                [16, 8],
+                [16, 9],
+                [16, 10],
+                [16, 11],
+                [16, 12],
+                [16, 13],
+              ],
+            },
+            {
+              family: 'excavation',
+              cells: [
+                [16, 3],
+                [17, 3],
+                [16, 4],
+                [17, 4],
+              ],
+            },
+            {
+              family: 'reclaimer',
+              cells: [
+                [11, 7],
+                [12, 7],
+                [11, 8],
+                [12, 8],
+              ],
+            },
+            {
+              family: 'excavation',
+              cells: [
+                [5, 13],
+                [6, 13],
+                [5, 14],
+                [6, 14],
+              ],
+            },
+            {
+              family: 'excavation',
+              cells: [
+                [11, 13],
+                [12, 13],
+                [11, 14],
+                [12, 14],
+              ],
+            },
+          ],
           focus: [12, 9],
           axis: 'vertical',
           light: 'late',
@@ -1362,7 +4239,92 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'antenna',
           ambient: 'windsock',
-          floor: 'oval',
+          floor: 'authored',
+          floorPlan: {
+            name: 'antenna-court-calibration',
+            pattern: 'calibration',
+            paths: [
+              [
+                [9.4, 7.1],
+                [9.4, 6.4],
+                [10.1, 6.4],
+              ],
+              [
+                [13.9, 11.6],
+                [14.6, 11.6],
+                [14.6, 10.9],
+              ],
+              [
+                [4.4, 4.1],
+                [4.4, 3.4],
+                [5.1, 3.4],
+              ],
+              [
+                [6.9, 6.6],
+                [7.6, 6.6],
+                [7.6, 5.9],
+              ],
+              [
+                [16.4, 12.1],
+                [16.4, 11.4],
+                [17.1, 11.4],
+              ],
+              [
+                [18.9, 14.6],
+                [19.6, 14.6],
+                [19.6, 13.9],
+              ],
+            ],
+            patches: [
+              [9.4, 6.4, 5.2, 5.2],
+              [4.4, 3.4, 3.2, 3.2],
+              [16.4, 11.4, 3.2, 3.2],
+            ],
+            seal: [11, 5, 'signal'],
+            intent:
+              'Four approaches meet the island circuit. Cross between the corner blocks. The next patrol returns from the opposite side: change your interception.',
+          },
+          componentAssemblies: [
+            {
+              family: 'receiver',
+              cells: [
+                [10, 7],
+                [11, 7],
+                [12, 7],
+                [13, 7],
+                [10, 8],
+                [11, 8],
+                [12, 8],
+                [13, 8],
+                [10, 9],
+                [11, 9],
+                [12, 9],
+                [13, 9],
+                [10, 10],
+                [11, 10],
+                [12, 10],
+                [13, 10],
+              ],
+            },
+            {
+              family: 'shelter',
+              cells: [
+                [5, 4],
+                [6, 4],
+                [5, 5],
+                [6, 5],
+              ],
+            },
+            {
+              family: 'shelter',
+              cells: [
+                [17, 12],
+                [18, 12],
+                [17, 13],
+                [18, 13],
+              ],
+            },
+          ],
           focus: [11, 8],
           axis: 'horizontal',
           light: 'morning',
@@ -1382,7 +4344,123 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'antenna',
           ambient: 'windsock',
-          floor: 'oval',
+          floor: 'authored',
+          floorPlan: {
+            name: 'antenna-court-calibration',
+            pattern: 'calibration',
+            paths: [
+              [
+                [3.4, 6.1],
+                [3.4, 5.4],
+                [4.1, 5.4],
+              ],
+              [
+                [7.9, 8.6],
+                [8.6, 8.6],
+                [8.6, 7.9],
+              ],
+              [
+                [3.4, 11.1],
+                [3.4, 10.4],
+                [4.1, 10.4],
+              ],
+              [
+                [7.9, 13.6],
+                [8.6, 13.6],
+                [8.6, 12.9],
+              ],
+              [
+                [10.4, 6.1],
+                [10.4, 5.4],
+                [11.1, 5.4],
+              ],
+              [
+                [13.9, 8.6],
+                [14.6, 8.6],
+                [14.6, 7.9],
+              ],
+            ],
+            patches: [
+              [3.4, 5.4, 5.2, 3.2],
+              [3.4, 10.4, 5.2, 3.2],
+              [10.4, 5.4, 4.2, 3.2],
+            ],
+            seal: [16, 4, 'signal'],
+            intent:
+              'Side bays let your tail clear the long patrol lane before you return. The next patrol returns from the opposite side: change your interception.',
+          },
+          componentAssemblies: [
+            {
+              family: 'shelter',
+              cells: [
+                [4, 6],
+                [5, 6],
+                [6, 6],
+                [7, 6],
+                [4, 7],
+                [5, 7],
+                [6, 7],
+                [7, 7],
+              ],
+            },
+            {
+              family: 'shelter',
+              cells: [
+                [4, 11],
+                [5, 11],
+                [6, 11],
+                [7, 11],
+                [4, 12],
+                [5, 12],
+                [6, 12],
+                [7, 12],
+              ],
+            },
+            {
+              family: 'shelter',
+              cells: [
+                [11, 6],
+                [12, 6],
+                [13, 6],
+                [11, 7],
+                [12, 7],
+                [13, 7],
+              ],
+            },
+            {
+              family: 'receiver',
+              cells: [
+                [17, 6],
+                [18, 6],
+                [19, 6],
+                [17, 7],
+                [18, 7],
+                [19, 7],
+              ],
+            },
+            {
+              family: 'shelter',
+              cells: [
+                [11, 11],
+                [12, 11],
+                [13, 11],
+                [11, 12],
+                [12, 12],
+                [13, 12],
+              ],
+            },
+            {
+              family: 'shelter',
+              cells: [
+                [17, 11],
+                [18, 11],
+                [19, 11],
+                [17, 12],
+                [18, 12],
+                [19, 12],
+              ],
+            },
+          ],
           focus: [16, 5],
           axis: 'vertical',
           light: 'late',
@@ -1402,7 +4480,103 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'antenna',
           ambient: 'windsock',
-          floor: 'oval',
+          floor: 'authored',
+          floorPlan: {
+            name: 'antenna-court-calibration',
+            pattern: 'calibration',
+            paths: [
+              [
+                [4.4, 5.1],
+                [4.4, 4.4],
+                [5.1, 4.4],
+              ],
+              [
+                [7.9, 8.6],
+                [8.6, 8.6],
+                [8.6, 7.9],
+              ],
+              [
+                [14.4, 10.1],
+                [14.4, 9.4],
+                [15.1, 9.4],
+              ],
+              [
+                [17.9, 13.6],
+                [18.6, 13.6],
+                [18.6, 12.9],
+              ],
+              [
+                [14.4, 4.1],
+                [14.4, 3.4],
+                [15.1, 3.4],
+              ],
+              [
+                [17.9, 6.6],
+                [18.6, 6.6],
+                [18.6, 5.9],
+              ],
+            ],
+            patches: [
+              [4.4, 4.4, 4.2, 4.2],
+              [14.4, 9.4, 4.2, 4.2],
+              [14.4, 3.4, 4.2, 3.2],
+            ],
+            seal: [7, 10, 'signal'],
+            intent:
+              'The patrol revisits the centre from two loops. Intercept a crossing, then leave. The next patrol returns from the opposite side: change your interception.',
+          },
+          componentAssemblies: [
+            {
+              family: 'shelter',
+              cells: [
+                [5, 5],
+                [6, 5],
+                [7, 5],
+                [5, 6],
+                [6, 6],
+                [7, 6],
+                [5, 7],
+                [6, 7],
+                [7, 7],
+              ],
+            },
+            {
+              family: 'shelter',
+              cells: [
+                [15, 10],
+                [16, 10],
+                [17, 10],
+                [15, 11],
+                [16, 11],
+                [17, 11],
+                [15, 12],
+                [16, 12],
+                [17, 12],
+              ],
+            },
+            {
+              family: 'shelter',
+              cells: [
+                [15, 4],
+                [16, 4],
+                [17, 4],
+                [15, 5],
+                [16, 5],
+                [17, 5],
+              ],
+            },
+            {
+              family: 'receiver',
+              cells: [
+                [5, 12],
+                [6, 12],
+                [7, 12],
+                [5, 13],
+                [6, 13],
+                [7, 13],
+              ],
+            },
+          ],
           focus: [7, 12],
           axis: 'horizontal',
           light: 'late',
@@ -1422,7 +4596,80 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'antenna',
           ambient: 'windsock',
-          floor: 'oval',
+          floor: 'authored',
+          floorPlan: {
+            name: 'antenna-court-calibration',
+            pattern: 'calibration',
+            paths: [
+              [
+                [6.4, 5.1],
+                [6.4, 4.4],
+                [7.1, 4.4],
+              ],
+              [
+                [16.9, 8.6],
+                [17.6, 8.6],
+                [17.6, 7.9],
+              ],
+              [
+                [6.4, 10.1],
+                [6.4, 9.4],
+                [7.1, 9.4],
+              ],
+              [
+                [16.9, 13.6],
+                [17.6, 13.6],
+                [17.6, 12.9],
+              ],
+            ],
+            patches: [
+              [6.4, 4.4, 11.2, 4.2],
+              [6.4, 9.4, 11.2, 4.2],
+            ],
+            seal: [12, 9, 'signal'],
+            intent:
+              'The outside patrol is longer than the broken inner ring. Use its openings. The next patrol returns from the opposite side: change your interception.',
+          },
+          componentAssemblies: [
+            {
+              family: 'receiver',
+              cells: [
+                [7, 5],
+                [8, 5],
+                [9, 5],
+                [10, 5],
+                [11, 5],
+                [12, 5],
+                [13, 5],
+                [14, 5],
+                [15, 5],
+                [16, 5],
+                [7, 6],
+                [16, 6],
+                [7, 7],
+                [16, 7],
+              ],
+            },
+            {
+              family: 'shelter',
+              cells: [
+                [7, 10],
+                [16, 10],
+                [7, 11],
+                [16, 11],
+                [7, 12],
+                [8, 12],
+                [9, 12],
+                [10, 12],
+                [11, 12],
+                [12, 12],
+                [13, 12],
+                [14, 12],
+                [15, 12],
+                [16, 12],
+              ],
+            },
+          ],
           focus: [12, 9],
           axis: 'vertical',
           light: 'late',
@@ -1442,7 +4689,77 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'glasshouse',
           ambient: 'leaves',
-          floor: 'fork',
+          floor: 'authored',
+          floorPlan: {
+            name: 'glasshouse-paths-beds',
+            pattern: 'beds',
+            paths: [
+              [
+                [5.4, 4.4],
+                [9.6, 4.4],
+                [9.6, 8.6],
+              ],
+              [
+                [14.4, 9.4],
+                [19.6, 9.4],
+                [19.6, 12.6],
+              ],
+              [
+                [14.4, 12.6],
+                [16.74, 12.6],
+              ],
+              [
+                [10.4, 12.4],
+                [13.6, 12.4],
+                [13.6, 15.6],
+              ],
+            ],
+            patches: [
+              [5.4, 4.4, 4.2, 4.2],
+              [14.4, 9.4, 5.2, 3.2],
+              [10.4, 12.4, 3.2, 3.2],
+            ],
+            seal: [4, 6, 'leaf'],
+            intent: 'Asymmetric cover changes the runner’s escape. Approach from the open side.',
+          },
+          componentAssemblies: [
+            {
+              family: 'glasshouse',
+              cells: [
+                [6, 5],
+                [7, 5],
+                [8, 5],
+                [6, 6],
+                [7, 6],
+                [8, 6],
+                [6, 7],
+                [7, 7],
+                [8, 7],
+              ],
+            },
+            {
+              family: 'irrigator',
+              cells: [
+                [15, 10],
+                [16, 10],
+                [17, 10],
+                [18, 10],
+                [15, 11],
+                [16, 11],
+                [17, 11],
+                [18, 11],
+              ],
+            },
+            {
+              family: 'irrigator',
+              cells: [
+                [11, 13],
+                [12, 13],
+                [11, 14],
+                [12, 14],
+              ],
+            },
+          ],
           focus: [6, 6],
           axis: 'horizontal',
           light: 'morning',
@@ -1462,7 +4779,85 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'glasshouse',
           ambient: 'leaves',
-          floor: 'fork',
+          floor: 'authored',
+          floorPlan: {
+            name: 'glasshouse-paths-beds',
+            pattern: 'beds',
+            paths: [
+              [
+                [8.4, 2.4],
+                [18.6, 2.4],
+                [18.6, 12.6],
+              ],
+              [
+                [2.4, 12.4],
+                [7.6, 12.4],
+                [7.6, 15.6],
+              ],
+              [
+                [2.4, 15.6],
+                [4.74, 15.6],
+              ],
+            ],
+            patches: [
+              [8.4, 2.4, 10.2, 10.2],
+              [2.4, 12.4, 5.2, 3.2],
+            ],
+            seal: [19, 11, 'leaf'],
+            intent: 'A tall elbow hides the shorter route. Keep the second exit available.',
+          },
+          componentAssemblies: [
+            {
+              family: 'glasshouse',
+              cells: [
+                [9, 3],
+                [10, 3],
+                [9, 4],
+                [10, 4],
+                [9, 5],
+                [10, 5],
+                [9, 6],
+                [10, 6],
+                [9, 7],
+                [10, 7],
+                [9, 8],
+                [10, 8],
+                [9, 9],
+                [10, 9],
+                [9, 10],
+                [10, 10],
+                [11, 10],
+                [12, 10],
+                [13, 10],
+                [14, 10],
+                [15, 10],
+                [16, 10],
+                [17, 10],
+                [9, 11],
+                [10, 11],
+                [11, 11],
+                [12, 11],
+                [13, 11],
+                [14, 11],
+                [15, 11],
+                [16, 11],
+                [17, 11],
+              ],
+            },
+            {
+              family: 'irrigator',
+              cells: [
+                [3, 13],
+                [4, 13],
+                [5, 13],
+                [6, 13],
+                [3, 14],
+                [4, 14],
+                [5, 14],
+                [6, 14],
+              ],
+            },
+          ],
           focus: [17, 11],
           axis: 'vertical',
           light: 'morning',
@@ -1482,7 +4877,98 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'glasshouse',
           ambient: 'leaves',
-          floor: 'fork',
+          floor: 'authored',
+          floorPlan: {
+            name: 'glasshouse-paths-beds',
+            pattern: 'beds',
+            paths: [
+              [
+                [7.4, 1],
+                [10.6, 1],
+                [10.6, 9.6],
+              ],
+              [
+                [14.4, 8.4],
+                [17.6, 8.4],
+                [17.6, 17],
+              ],
+              [
+                [2.4, 10.4],
+                [6.6, 10.4],
+                [6.6, 13.6],
+              ],
+              [
+                [2.4, 13.6],
+                [4.29, 13.6],
+              ],
+            ],
+            patches: [
+              [7.4, 1, 3.2, 8.6],
+              [14.4, 8.4, 3.2, 8.6],
+              [2.4, 10.4, 4.2, 3.2],
+            ],
+            seal: [11, 8, 'leaf'],
+            intent: 'Alternating walls reach opposite edges. Cut through the middle gaps.',
+          },
+          componentAssemblies: [
+            {
+              family: 'glasshouse',
+              cells: [
+                [8, 0],
+                [9, 0],
+                [8, 1],
+                [9, 1],
+                [8, 2],
+                [9, 2],
+                [8, 3],
+                [9, 3],
+                [8, 4],
+                [9, 4],
+                [8, 5],
+                [9, 5],
+                [8, 6],
+                [9, 6],
+                [8, 7],
+                [9, 7],
+                [8, 8],
+                [9, 8],
+              ],
+            },
+            {
+              family: 'irrigator',
+              cells: [
+                [15, 9],
+                [16, 9],
+                [15, 10],
+                [16, 10],
+                [15, 11],
+                [16, 11],
+                [15, 12],
+                [16, 12],
+                [15, 13],
+                [16, 13],
+                [15, 14],
+                [16, 14],
+                [15, 15],
+                [16, 15],
+                [15, 16],
+                [16, 16],
+                [15, 17],
+                [16, 17],
+              ],
+            },
+            {
+              family: 'irrigator',
+              cells: [
+                [3, 11],
+                [4, 11],
+                [5, 11],
+                [3, 12],
+                [4, 12],
+                [5, 12],
+              ],
+            },
+          ],
           focus: [11, 8],
           axis: 'horizontal',
           light: 'morning',
@@ -1502,7 +4988,80 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'glasshouse',
           ambient: 'leaves',
-          floor: 'fork',
+          floor: 'authored',
+          floorPlan: {
+            name: 'glasshouse-paths-beds',
+            pattern: 'beds',
+            paths: [
+              [
+                [6.4, 3.4],
+                [17.6, 3.4],
+                [17.6, 9.6],
+              ],
+              [
+                [6.4, 9.6],
+                [11.44, 9.6],
+              ],
+              [
+                [6.4, 9.4],
+                [17.6, 9.4],
+                [17.6, 14.6],
+              ],
+              [
+                [6.4, 14.6],
+                [11.44, 14.6],
+              ],
+            ],
+            patches: [
+              [6.4, 3.4, 11.2, 6.2],
+              [6.4, 9.4, 11.2, 5.2],
+            ],
+            seal: [18, 5, 'leaf'],
+            intent: 'Two unequal gaps connect inside and outside. Change sides to intercept.',
+          },
+          componentAssemblies: [
+            {
+              family: 'glasshouse',
+              cells: [
+                [7, 4],
+                [8, 4],
+                [9, 4],
+                [10, 4],
+                [11, 4],
+                [12, 4],
+                [13, 4],
+                [14, 4],
+                [15, 4],
+                [16, 4],
+                [7, 5],
+                [16, 5],
+                [7, 6],
+                [16, 6],
+                [7, 7],
+                [7, 8],
+              ],
+            },
+            {
+              family: 'irrigator',
+              cells: [
+                [16, 10],
+                [7, 11],
+                [16, 11],
+                [7, 12],
+                [16, 12],
+                [7, 13],
+                [8, 13],
+                [9, 13],
+                [10, 13],
+                [11, 13],
+                [12, 13],
+                [13, 13],
+                [14, 13],
+                [15, 13],
+                [16, 13],
+              ],
+            },
+          ],
           focus: [16, 5],
           axis: 'vertical',
           light: 'late',
@@ -1522,7 +5081,102 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'glasshouse',
           ambient: 'leaves',
-          floor: 'fork',
+          floor: 'authored',
+          floorPlan: {
+            name: 'glasshouse-paths-beds',
+            pattern: 'beds',
+            paths: [
+              [
+                [5.4, 3.4],
+                [8.6, 3.4],
+                [8.6, 14.6],
+              ],
+              [
+                [17.4, 9.4],
+                [20.6, 9.4],
+                [20.6, 17],
+              ],
+              [
+                [13.4, 1],
+                [16.6, 1],
+                [16.6, 7.6],
+              ],
+            ],
+            patches: [
+              [5.4, 3.4, 3.2, 11.2],
+              [17.4, 9.4, 3.2, 7.6],
+              [13.4, 1, 3.2, 6.6],
+            ],
+            seal: [9, 12, 'leaf'],
+            intent: 'Edges wrap. Cross the border to get ahead of a runner in the offset lanes.',
+          },
+          componentAssemblies: [
+            {
+              family: 'glasshouse',
+              cells: [
+                [6, 4],
+                [7, 4],
+                [6, 5],
+                [7, 5],
+                [6, 6],
+                [7, 6],
+                [6, 7],
+                [7, 7],
+                [6, 8],
+                [7, 8],
+                [6, 9],
+                [7, 9],
+                [6, 10],
+                [7, 10],
+                [6, 11],
+                [7, 11],
+                [6, 12],
+                [7, 12],
+                [6, 13],
+                [7, 13],
+              ],
+            },
+            {
+              family: 'irrigator',
+              cells: [
+                [18, 10],
+                [19, 10],
+                [18, 11],
+                [19, 11],
+                [18, 12],
+                [19, 12],
+                [18, 13],
+                [19, 13],
+                [18, 14],
+                [19, 14],
+                [18, 15],
+                [19, 15],
+                [18, 16],
+                [19, 16],
+                [18, 17],
+                [19, 17],
+              ],
+            },
+            {
+              family: 'irrigator',
+              cells: [
+                [14, 0],
+                [15, 0],
+                [14, 1],
+                [15, 1],
+                [14, 2],
+                [15, 2],
+                [14, 3],
+                [15, 3],
+                [14, 4],
+                [15, 4],
+                [14, 5],
+                [15, 5],
+                [14, 6],
+                [15, 6],
+              ],
+            },
+          ],
           focus: [7, 12],
           axis: 'horizontal',
           light: 'late',
@@ -1542,7 +5196,120 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'glasshouse',
           ambient: 'leaves',
-          floor: 'fork',
+          floor: 'authored',
+          floorPlan: {
+            name: 'glasshouse-paths-beds',
+            pattern: 'beds',
+            paths: [
+              [
+                [14.4, 7.4],
+                [23, 7.4],
+                [23, 10.6],
+              ],
+              [
+                [14.4, 10.6],
+                [18.27, 10.6],
+              ],
+              [
+                [1, 8.4],
+                [7.6, 8.4],
+                [7.6, 11.6],
+              ],
+              [
+                [1, 11.6],
+                [3.97, 11.6],
+              ],
+              [
+                [9.4, 1],
+                [12.6, 1],
+                [12.6, 6.6],
+              ],
+            ],
+            patches: [
+              [14.4, 7.4, 8.6, 3.2],
+              [1, 8.4, 6.6, 3.2],
+              [9.4, 1, 3.2, 5.6],
+            ],
+            seal: [12, 9, 'leaf'],
+            intent:
+              'Three broad junctions offer different escape loops. Turn toward the next exit.',
+          },
+          componentAssemblies: [
+            {
+              family: 'glasshouse',
+              cells: [
+                [15, 8],
+                [16, 8],
+                [17, 8],
+                [18, 8],
+                [19, 8],
+                [20, 8],
+                [21, 8],
+                [22, 8],
+                [23, 8],
+                [15, 9],
+                [16, 9],
+                [17, 9],
+                [18, 9],
+                [19, 9],
+                [20, 9],
+                [21, 9],
+                [22, 9],
+                [23, 9],
+              ],
+            },
+            {
+              family: 'irrigator',
+              cells: [
+                [0, 9],
+                [1, 9],
+                [2, 9],
+                [3, 9],
+                [4, 9],
+                [5, 9],
+                [6, 9],
+                [0, 10],
+                [1, 10],
+                [2, 10],
+                [3, 10],
+                [4, 10],
+                [5, 10],
+                [6, 10],
+              ],
+            },
+            {
+              family: 'irrigator',
+              cells: [
+                [10, 0],
+                [11, 0],
+                [10, 1],
+                [11, 1],
+                [10, 2],
+                [11, 2],
+                [10, 3],
+                [11, 3],
+                [10, 4],
+                [11, 4],
+                [10, 5],
+                [11, 5],
+              ],
+            },
+            {
+              family: 'irrigator',
+              cells: [
+                [11, 13],
+                [12, 13],
+                [11, 14],
+                [12, 14],
+                [11, 15],
+                [12, 15],
+                [11, 16],
+                [12, 16],
+                [11, 17],
+                [12, 17],
+              ],
+            },
+          ],
           focus: [12, 9],
           axis: 'vertical',
           light: 'late',
@@ -1562,7 +5329,99 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'boiler',
           ambient: 'fan',
-          floor: 'slalom',
+          floor: 'authored',
+          floorPlan: {
+            name: 'pressure-room-pressure',
+            pattern: 'pressure',
+            paths: [
+              [
+                [4.4, 5.9],
+                [4.4, 5.4],
+                [19.6, 5.4],
+                [19.6, 8.1],
+              ],
+              [
+                [4.4, 10.9],
+                [4.4, 10.4],
+                [19.6, 10.4],
+                [19.6, 13.1],
+              ],
+            ],
+            patches: [
+              [4.4, 5.4, 15.2, 3.2],
+              [4.4, 10.4, 15.2, 3.2],
+            ],
+            seal: [6, 4, 'valve'],
+            intent: 'Watch the warning in the long straight. The side bays leave room to circle.',
+          },
+          componentAssemblies: [
+            {
+              family: 'boiler',
+              cells: [
+                [5, 6],
+                [6, 6],
+                [7, 6],
+                [8, 6],
+                [9, 6],
+                [10, 6],
+                [11, 6],
+                [12, 6],
+                [13, 6],
+                [14, 6],
+                [15, 6],
+                [16, 6],
+                [17, 6],
+                [18, 6],
+                [5, 7],
+                [6, 7],
+                [7, 7],
+                [8, 7],
+                [9, 7],
+                [10, 7],
+                [11, 7],
+                [12, 7],
+                [13, 7],
+                [14, 7],
+                [15, 7],
+                [16, 7],
+                [17, 7],
+                [18, 7],
+              ],
+            },
+            {
+              family: 'pressure',
+              cells: [
+                [5, 11],
+                [6, 11],
+                [7, 11],
+                [8, 11],
+                [9, 11],
+                [10, 11],
+                [11, 11],
+                [12, 11],
+                [13, 11],
+                [14, 11],
+                [15, 11],
+                [16, 11],
+                [17, 11],
+                [18, 11],
+                [5, 12],
+                [6, 12],
+                [7, 12],
+                [8, 12],
+                [9, 12],
+                [10, 12],
+                [11, 12],
+                [12, 12],
+                [13, 12],
+                [14, 12],
+                [15, 12],
+                [16, 12],
+                [17, 12],
+                [18, 12],
+              ],
+            },
+          ],
           focus: [6, 6],
           axis: 'horizontal',
           light: 'morning',
@@ -1582,7 +5441,82 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'boiler',
           ambient: 'fan',
-          floor: 'slalom',
+          floor: 'authored',
+          floorPlan: {
+            name: 'pressure-room-pressure',
+            pattern: 'pressure',
+            paths: [
+              [
+                [7.4, 3.9],
+                [7.4, 3.4],
+                [18.6, 3.4],
+                [18.6, 12.1],
+              ],
+              [
+                [16.4, 3.9],
+                [16.4, 3.4],
+                [19.6, 3.4],
+                [19.6, 7.1],
+              ],
+            ],
+            patches: [
+              [7.4, 3.4, 11.2, 9.2],
+              [16.4, 3.4, 3.2, 4.2],
+            ],
+            seal: [19, 11, 'valve'],
+            intent:
+              'The large right-angle route gives a second approach during the sprint recovery.',
+          },
+          componentAssemblies: [
+            {
+              family: 'boiler',
+              cells: [
+                [8, 4],
+                [9, 4],
+                [8, 5],
+                [9, 5],
+                [8, 6],
+                [9, 6],
+                [8, 7],
+                [9, 7],
+                [8, 8],
+                [9, 8],
+                [8, 9],
+                [9, 9],
+                [8, 10],
+                [9, 10],
+                [10, 10],
+                [11, 10],
+                [12, 10],
+                [13, 10],
+                [14, 10],
+                [15, 10],
+                [16, 10],
+                [17, 10],
+                [8, 11],
+                [9, 11],
+                [10, 11],
+                [11, 11],
+                [12, 11],
+                [13, 11],
+                [14, 11],
+                [15, 11],
+                [16, 11],
+                [17, 11],
+              ],
+            },
+            {
+              family: 'pressure',
+              cells: [
+                [17, 4],
+                [18, 4],
+                [17, 5],
+                [18, 5],
+                [17, 6],
+                [18, 6],
+              ],
+            },
+          ],
           focus: [17, 11],
           axis: 'vertical',
           light: 'morning',
@@ -1602,7 +5536,92 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'boiler',
           ambient: 'fan',
-          floor: 'slalom',
+          floor: 'authored',
+          floorPlan: {
+            name: 'pressure-room-pressure',
+            pattern: 'pressure',
+            paths: [
+              [
+                [4.4, 3.9],
+                [4.4, 3.4],
+                [18.6, 3.4],
+                [18.6, 14.1],
+              ],
+            ],
+            patches: [[4.4, 3.4, 14.2, 11.2]],
+            seal: [11, 7, 'valve'],
+            intent: 'An S circuit alternates long straights. Leave the inner corner for your tail.',
+          },
+          componentAssemblies: [
+            {
+              family: 'boiler',
+              cells: [
+                [5, 4],
+                [6, 4],
+                [7, 4],
+                [8, 4],
+                [9, 4],
+                [10, 4],
+                [11, 4],
+                [12, 4],
+                [13, 4],
+                [14, 4],
+                [15, 4],
+                [16, 4],
+                [17, 4],
+                [5, 5],
+                [6, 5],
+                [7, 5],
+                [8, 5],
+                [9, 5],
+                [10, 5],
+                [11, 5],
+                [12, 5],
+                [13, 5],
+                [14, 5],
+                [15, 5],
+                [16, 5],
+                [17, 5],
+                [5, 6],
+                [6, 6],
+                [5, 7],
+                [6, 7],
+                [5, 8],
+                [6, 8],
+                [5, 9],
+                [6, 9],
+                [7, 9],
+                [8, 9],
+                [9, 9],
+                [10, 9],
+                [11, 9],
+                [12, 9],
+                [13, 9],
+                [14, 9],
+                [15, 9],
+                [16, 9],
+                [17, 9],
+                [6, 10],
+                [7, 10],
+                [8, 10],
+                [9, 10],
+                [10, 10],
+                [11, 10],
+                [12, 10],
+                [13, 10],
+                [14, 10],
+                [15, 10],
+                [16, 10],
+                [17, 10],
+                [16, 11],
+                [17, 11],
+                [16, 12],
+                [17, 12],
+                [16, 13],
+                [17, 13],
+              ],
+            },
+          ],
           focus: [11, 8],
           axis: 'horizontal',
           light: 'morning',
@@ -1622,7 +5641,100 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'boiler',
           ambient: 'fan',
-          floor: 'slalom',
+          floor: 'authored',
+          floorPlan: {
+            name: 'pressure-room-pressure',
+            pattern: 'pressure',
+            paths: [
+              [
+                [3.4, 3.9],
+                [3.4, 3.4],
+                [8.6, 3.4],
+                [8.6, 7.1],
+              ],
+              [
+                [10.4, 6.9],
+                [10.4, 6.4],
+                [15.6, 6.4],
+                [15.6, 10.1],
+              ],
+              [
+                [17.4, 10.9],
+                [17.4, 10.4],
+                [21.6, 10.4],
+                [21.6, 14.1],
+              ],
+            ],
+            patches: [
+              [3.4, 3.4, 5.2, 4.2],
+              [10.4, 6.4, 5.2, 4.2],
+              [17.4, 10.4, 4.2, 4.2],
+            ],
+            seal: [16, 5, 'valve'],
+            intent:
+              'Offset islands interrupt straight approaches. Use the diagonal spaces between them. Runners alternate with sprinters; check which movement warning applies.',
+          },
+          componentAssemblies: [
+            {
+              family: 'pressure',
+              cells: [
+                [4, 4],
+                [5, 4],
+                [6, 4],
+                [7, 4],
+                [4, 5],
+                [5, 5],
+                [6, 5],
+                [7, 5],
+                [4, 6],
+                [5, 6],
+                [6, 6],
+                [7, 6],
+              ],
+            },
+            {
+              family: 'boiler',
+              cells: [
+                [11, 7],
+                [12, 7],
+                [13, 7],
+                [14, 7],
+                [11, 8],
+                [12, 8],
+                [13, 8],
+                [14, 8],
+                [11, 9],
+                [12, 9],
+                [13, 9],
+                [14, 9],
+              ],
+            },
+            {
+              family: 'pressure',
+              cells: [
+                [18, 11],
+                [19, 11],
+                [20, 11],
+                [18, 12],
+                [19, 12],
+                [20, 12],
+                [18, 13],
+                [19, 13],
+                [20, 13],
+              ],
+            },
+            {
+              family: 'pressure',
+              cells: [
+                [4, 12],
+                [5, 12],
+                [6, 12],
+                [4, 13],
+                [5, 13],
+                [6, 13],
+              ],
+            },
+          ],
           focus: [16, 5],
           axis: 'vertical',
           light: 'late',
@@ -1642,7 +5754,109 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'boiler',
           ambient: 'fan',
-          floor: 'slalom',
+          floor: 'authored',
+          floorPlan: {
+            name: 'pressure-room-pressure',
+            pattern: 'pressure',
+            paths: [
+              [
+                [4.4, 3.9],
+                [4.4, 3.4],
+                [9.6, 3.4],
+                [9.6, 7.1],
+              ],
+              [
+                [14.4, 3.9],
+                [14.4, 3.4],
+                [19.6, 3.4],
+                [19.6, 7.1],
+              ],
+              [
+                [4.4, 10.9],
+                [4.4, 10.4],
+                [9.6, 10.4],
+                [9.6, 14.1],
+              ],
+            ],
+            patches: [
+              [4.4, 3.4, 5.2, 4.2],
+              [14.4, 3.4, 5.2, 4.2],
+              [4.4, 10.4, 5.2, 4.2],
+            ],
+            seal: [7, 9, 'valve'],
+            intent:
+              'Two loops meet at an open crossing. Choose which of the two targets to intercept. Runners alternate with sprinters; check which movement warning applies.',
+          },
+          componentAssemblies: [
+            {
+              family: 'pressure',
+              cells: [
+                [5, 4],
+                [6, 4],
+                [7, 4],
+                [8, 4],
+                [5, 5],
+                [6, 5],
+                [7, 5],
+                [8, 5],
+                [5, 6],
+                [6, 6],
+                [7, 6],
+                [8, 6],
+              ],
+            },
+            {
+              family: 'pressure',
+              cells: [
+                [15, 4],
+                [16, 4],
+                [17, 4],
+                [18, 4],
+                [15, 5],
+                [16, 5],
+                [17, 5],
+                [18, 5],
+                [15, 6],
+                [16, 6],
+                [17, 6],
+                [18, 6],
+              ],
+            },
+            {
+              family: 'boiler',
+              cells: [
+                [5, 11],
+                [6, 11],
+                [7, 11],
+                [8, 11],
+                [5, 12],
+                [6, 12],
+                [7, 12],
+                [8, 12],
+                [5, 13],
+                [6, 13],
+                [7, 13],
+                [8, 13],
+              ],
+            },
+            {
+              family: 'pressure',
+              cells: [
+                [15, 11],
+                [16, 11],
+                [17, 11],
+                [18, 11],
+                [15, 12],
+                [16, 12],
+                [17, 12],
+                [18, 12],
+                [15, 13],
+                [16, 13],
+                [17, 13],
+                [18, 13],
+              ],
+            },
+          ],
           focus: [7, 12],
           axis: 'horizontal',
           light: 'late',
@@ -1662,7 +5876,98 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'boiler',
           ambient: 'fan',
-          floor: 'slalom',
+          floor: 'authored',
+          floorPlan: {
+            name: 'pressure-room-pressure',
+            pattern: 'pressure',
+            paths: [
+              [
+                [10.4, 4.9],
+                [10.4, 4.4],
+                [13.6, 4.4],
+                [13.6, 16.5],
+              ],
+              [
+                [16.4, 4.9],
+                [16.4, 4.4],
+                [21.6, 4.4],
+                [21.6, 7.1],
+              ],
+              [
+                [2.4, 7.9],
+                [2.4, 7.4],
+                [7.6, 7.4],
+                [7.6, 10.1],
+              ],
+            ],
+            patches: [
+              [10.4, 4.4, 3.2, 12.6],
+              [16.4, 4.4, 5.2, 3.2],
+              [2.4, 7.4, 5.2, 3.2],
+            ],
+            seal: [14, 9, 'valve'],
+            intent:
+              'A central barrier reaches the lower edge. Intercept through the broad upper return. Runners alternate with sprinters; check which movement warning applies.',
+          },
+          componentAssemblies: [
+            {
+              family: 'boiler',
+              cells: [
+                [11, 5],
+                [12, 5],
+                [11, 6],
+                [12, 6],
+                [11, 7],
+                [12, 7],
+                [11, 8],
+                [12, 8],
+                [11, 9],
+                [12, 9],
+                [11, 10],
+                [12, 10],
+                [11, 11],
+                [12, 11],
+                [11, 12],
+                [12, 12],
+                [11, 13],
+                [12, 13],
+                [11, 14],
+                [12, 14],
+                [11, 15],
+                [12, 15],
+                [11, 16],
+                [12, 16],
+                [11, 17],
+                [12, 17],
+              ],
+            },
+            {
+              family: 'pressure',
+              cells: [
+                [17, 5],
+                [18, 5],
+                [19, 5],
+                [20, 5],
+                [17, 6],
+                [18, 6],
+                [19, 6],
+                [20, 6],
+              ],
+            },
+            {
+              family: 'pressure',
+              cells: [
+                [3, 8],
+                [4, 8],
+                [5, 8],
+                [6, 8],
+                [3, 9],
+                [4, 9],
+                [5, 9],
+                [6, 9],
+              ],
+            },
+          ],
           focus: [12, 9],
           axis: 'vertical',
           light: 'late',
@@ -1682,7 +5987,59 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'coolant',
           ambient: 'fan',
-          floor: 'ring',
+          floor: 'authored',
+          floorPlan: {
+            name: 'valve-court-service',
+            pattern: 'service',
+            paths: [
+              [
+                [9.4, 3.9],
+                [9.4, 3.4],
+                [12.6, 3.4],
+                [12.6, 8.1],
+              ],
+              [
+                [9.4, 9.9],
+                [9.4, 9.4],
+                [12.6, 9.4],
+                [12.6, 14.1],
+              ],
+            ],
+            patches: [
+              [9.4, 3.4, 3.2, 5.2],
+              [9.4, 9.4, 3.2, 5.2],
+            ],
+            seal: [6, 6, 'valve'],
+            intent: 'The warning marks a closing shortcut. The outside loop always stays open.',
+          },
+          componentAssemblies: [
+            {
+              family: 'pressure',
+              cells: [
+                [10, 4],
+                [11, 4],
+                [10, 5],
+                [11, 5],
+                [10, 6],
+                [11, 6],
+                [10, 7],
+                [11, 7],
+              ],
+            },
+            {
+              family: 'boiler',
+              cells: [
+                [10, 10],
+                [11, 10],
+                [10, 11],
+                [11, 11],
+                [10, 12],
+                [11, 12],
+                [10, 13],
+                [11, 13],
+              ],
+            },
+          ],
           focus: [6, 6],
           axis: 'horizontal',
           light: 'morning',
@@ -1702,7 +6059,95 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'coolant',
           ambient: 'fan',
-          floor: 'ring',
+          floor: 'authored',
+          floorPlan: {
+            name: 'valve-court-service',
+            pattern: 'service',
+            paths: [
+              [
+                [5.4, 4.9],
+                [5.4, 4.4],
+                [18.6, 4.4],
+                [18.6, 8.1],
+              ],
+              [
+                [5.4, 9.9],
+                [5.4, 9.4],
+                [18.6, 9.4],
+                [18.6, 13.1],
+              ],
+            ],
+            patches: [
+              [5.4, 4.4, 13.2, 4.2],
+              [5.4, 9.4, 13.2, 4.2],
+            ],
+            seal: [17, 9, 'valve'],
+            intent: 'The gated middle competes with two unequal permanent routes.',
+          },
+          componentAssemblies: [
+            {
+              family: 'boiler',
+              cells: [
+                [6, 5],
+                [7, 5],
+                [8, 5],
+                [9, 5],
+                [10, 5],
+                [11, 5],
+                [12, 5],
+                [13, 5],
+                [14, 5],
+                [15, 5],
+                [16, 5],
+                [17, 5],
+                [6, 6],
+                [7, 6],
+                [8, 6],
+                [9, 6],
+                [10, 6],
+                [11, 6],
+                [12, 6],
+                [13, 6],
+                [14, 6],
+                [15, 6],
+                [16, 6],
+                [17, 6],
+                [11, 7],
+                [12, 7],
+              ],
+            },
+            {
+              family: 'pressure',
+              cells: [
+                [11, 10],
+                [12, 10],
+                [6, 11],
+                [7, 11],
+                [8, 11],
+                [9, 11],
+                [10, 11],
+                [11, 11],
+                [12, 11],
+                [13, 11],
+                [14, 11],
+                [15, 11],
+                [16, 11],
+                [17, 11],
+                [6, 12],
+                [7, 12],
+                [8, 12],
+                [9, 12],
+                [10, 12],
+                [11, 12],
+                [12, 12],
+                [13, 12],
+                [14, 12],
+                [15, 12],
+                [16, 12],
+                [17, 12],
+              ],
+            },
+          ],
           focus: [17, 11],
           axis: 'vertical',
           light: 'morning',
@@ -1722,7 +6167,93 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'coolant',
           ambient: 'fan',
-          floor: 'ring',
+          floor: 'authored',
+          floorPlan: {
+            name: 'valve-court-service',
+            pattern: 'service',
+            paths: [
+              [
+                [14.4, 3.9],
+                [14.4, 3.4],
+                [17.6, 3.4],
+                [17.6, 10.1],
+              ],
+              [
+                [6.4, 8.9],
+                [6.4, 8.4],
+                [9.6, 8.4],
+                [9.6, 14.1],
+              ],
+              [
+                [6.4, 3.9],
+                [6.4, 3.4],
+                [9.6, 3.4],
+                [9.6, 7.1],
+              ],
+            ],
+            patches: [
+              [14.4, 3.4, 3.2, 7.2],
+              [6.4, 8.4, 3.2, 6.2],
+              [6.4, 3.4, 3.2, 4.2],
+            ],
+            seal: [11, 8, 'valve'],
+            intent:
+              'Two shutters are out of phase. Follow the open detour instead of waiting in place.',
+          },
+          componentAssemblies: [
+            {
+              family: 'pressure',
+              cells: [
+                [15, 4],
+                [16, 4],
+                [15, 5],
+                [16, 5],
+                [15, 6],
+                [16, 6],
+                [15, 7],
+                [16, 7],
+                [15, 8],
+                [16, 8],
+                [15, 9],
+                [16, 9],
+              ],
+            },
+            {
+              family: 'boiler',
+              cells: [
+                [7, 9],
+                [8, 9],
+                [7, 10],
+                [8, 10],
+                [7, 11],
+                [8, 11],
+                [7, 12],
+                [8, 12],
+                [7, 13],
+                [8, 13],
+              ],
+            },
+            {
+              family: 'boiler',
+              cells: [
+                [7, 4],
+                [8, 4],
+                [7, 5],
+                [8, 5],
+                [7, 6],
+                [8, 6],
+              ],
+            },
+            {
+              family: 'boiler',
+              cells: [
+                [15, 12],
+                [16, 12],
+                [15, 13],
+                [16, 13],
+              ],
+            },
+          ],
           focus: [11, 8],
           axis: 'horizontal',
           light: 'morning',
@@ -1742,7 +6273,81 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'coolant',
           ambient: 'fan',
-          floor: 'ring',
+          floor: 'authored',
+          floorPlan: {
+            name: 'valve-court-service',
+            pattern: 'service',
+            paths: [
+              [
+                [12.4, 4.9],
+                [12.4, 4.4],
+                [17.6, 4.4],
+                [17.6, 13.1],
+              ],
+              [
+                [6.4, 4.9],
+                [6.4, 4.4],
+                [11.6, 4.4],
+                [11.6, 8.1],
+              ],
+              [
+                [6.4, 9.9],
+                [6.4, 9.4],
+                [11.6, 9.4],
+                [11.6, 13.1],
+              ],
+            ],
+            patches: [
+              [12.4, 4.4, 5.2, 9.2],
+              [6.4, 4.4, 5.2, 4.2],
+              [6.4, 9.4, 5.2, 4.2],
+            ],
+            seal: [16, 3, 'valve'],
+            intent: 'Timed radial cuts shorten a ring with a permanently open circumference.',
+          },
+          componentAssemblies: [
+            {
+              family: 'pressure',
+              cells: [
+                [13, 5],
+                [14, 5],
+                [15, 5],
+                [16, 5],
+                [16, 6],
+                [16, 7],
+                [16, 8],
+                [16, 9],
+                [16, 10],
+                [16, 11],
+                [13, 12],
+                [14, 12],
+                [15, 12],
+                [16, 12],
+              ],
+            },
+            {
+              family: 'boiler',
+              cells: [
+                [7, 5],
+                [8, 5],
+                [9, 5],
+                [10, 5],
+                [7, 6],
+                [7, 7],
+              ],
+            },
+            {
+              family: 'boiler',
+              cells: [
+                [7, 10],
+                [7, 11],
+                [7, 12],
+                [8, 12],
+                [9, 12],
+                [10, 12],
+              ],
+            },
+          ],
           focus: [16, 5],
           axis: 'vertical',
           light: 'late',
@@ -1762,7 +6367,104 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'coolant',
           ambient: 'fan',
-          floor: 'ring',
+          floor: 'authored',
+          floorPlan: {
+            name: 'valve-court-service',
+            pattern: 'service',
+            paths: [
+              [
+                [10.4, 1.5],
+                [10.4, 1],
+                [13.6, 1],
+                [13.6, 6.1],
+              ],
+              [
+                [10.4, 12.9],
+                [10.4, 12.4],
+                [13.6, 12.4],
+                [13.6, 16.5],
+              ],
+              [
+                [17.4, 5.9],
+                [17.4, 5.4],
+                [21.6, 5.4],
+                [21.6, 8.1],
+              ],
+            ],
+            patches: [
+              [10.4, 1, 3.2, 5.6],
+              [10.4, 12.4, 3.2, 4.6],
+              [17.4, 5.4, 4.2, 3.2],
+            ],
+            seal: [7, 12, 'valve'],
+            intent:
+              'An edge-reaching wall interrupts the old outer circuit. Take the inner return.',
+          },
+          componentAssemblies: [
+            {
+              family: 'boiler',
+              cells: [
+                [11, 0],
+                [12, 0],
+                [11, 1],
+                [12, 1],
+                [11, 2],
+                [12, 2],
+                [11, 3],
+                [12, 3],
+                [11, 4],
+                [12, 4],
+                [11, 5],
+                [12, 5],
+              ],
+            },
+            {
+              family: 'boiler',
+              cells: [
+                [11, 13],
+                [12, 13],
+                [11, 14],
+                [12, 14],
+                [11, 15],
+                [12, 15],
+                [11, 16],
+                [12, 16],
+                [11, 17],
+                [12, 17],
+              ],
+            },
+            {
+              family: 'boiler',
+              cells: [
+                [18, 6],
+                [19, 6],
+                [20, 6],
+                [18, 7],
+                [19, 7],
+                [20, 7],
+              ],
+            },
+            {
+              family: 'pressure',
+              cells: [
+                [3, 8],
+                [4, 8],
+                [5, 8],
+                [3, 9],
+                [4, 9],
+                [5, 9],
+              ],
+            },
+            {
+              family: 'boiler',
+              cells: [
+                [11, 8],
+                [12, 8],
+                [11, 9],
+                [12, 9],
+              ],
+            },
+          ],
           focus: [7, 12],
           axis: 'horizontal',
           light: 'late',
@@ -1782,7 +6484,110 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'coolant',
           ambient: 'fan',
-          floor: 'ring',
+          floor: 'authored',
+          floorPlan: {
+            name: 'valve-court-service',
+            pattern: 'service',
+            paths: [
+              [
+                [4.4, 4.9],
+                [4.4, 4.4],
+                [10.6, 4.4],
+                [10.6, 7.1],
+              ],
+              [
+                [13.4, 4.9],
+                [13.4, 4.4],
+                [19.6, 4.4],
+                [19.6, 7.1],
+              ],
+              [
+                [4.4, 10.9],
+                [4.4, 10.4],
+                [10.6, 10.4],
+                [10.6, 13.1],
+              ],
+            ],
+            patches: [
+              [4.4, 4.4, 6.2, 3.2],
+              [13.4, 4.4, 6.2, 3.2],
+              [4.4, 10.4, 6.2, 3.2],
+            ],
+            seal: [14, 9, 'valve'],
+            intent:
+              'Three junctions and two timed shortcuts reward planning the return before the catch.',
+          },
+          componentAssemblies: [
+            {
+              family: 'boiler',
+              cells: [
+                [5, 5],
+                [6, 5],
+                [7, 5],
+                [8, 5],
+                [9, 5],
+                [5, 6],
+                [6, 6],
+                [7, 6],
+                [8, 6],
+                [9, 6],
+              ],
+            },
+            {
+              family: 'boiler',
+              cells: [
+                [14, 5],
+                [15, 5],
+                [16, 5],
+                [17, 5],
+                [18, 5],
+                [14, 6],
+                [15, 6],
+                [16, 6],
+                [17, 6],
+                [18, 6],
+              ],
+            },
+            {
+              family: 'boiler',
+              cells: [
+                [5, 11],
+                [6, 11],
+                [7, 11],
+                [8, 11],
+                [9, 11],
+                [5, 12],
+                [6, 12],
+                [7, 12],
+                [8, 12],
+                [9, 12],
+              ],
+            },
+            {
+              family: 'boiler',
+              cells: [
+                [14, 11],
+                [15, 11],
+                [16, 11],
+                [17, 11],
+                [18, 11],
+                [14, 12],
+                [15, 12],
+                [16, 12],
+                [17, 12],
+                [18, 12],
+              ],
+            },
+            {
+              family: 'pressure',
+              cells: [
+                [11, 8],
+                [12, 8],
+                [11, 9],
+                [12, 9],
+              ],
+            },
+          ],
           focus: [12, 9],
           axis: 'vertical',
           light: 'late',
@@ -1802,7 +6607,81 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'container',
           ambient: 'lamps',
-          floor: 'bays',
+          floor: 'authored',
+          floorPlan: {
+            name: 'supply-depot-loading',
+            pattern: 'loading',
+            paths: [
+              [
+                [6.4, 4.4],
+                [10.6, 4.4],
+              ],
+              [
+                [6.4, 8.6],
+                [10.6, 8.6],
+              ],
+              [
+                [6.4, 4.4],
+                [6.4, 4.9],
+              ],
+              [
+                [10.6, 8.1],
+                [10.6, 8.6],
+              ],
+              [
+                [14.4, 9.4],
+                [18.6, 9.4],
+              ],
+              [
+                [14.4, 13.6],
+                [18.6, 13.6],
+              ],
+              [
+                [14.4, 9.4],
+                [14.4, 9.9],
+              ],
+              [
+                [18.6, 13.1],
+                [18.6, 13.6],
+              ],
+            ],
+            patches: [
+              [6.4, 4.4, 4.2, 4.2],
+              [14.4, 9.4, 4.2, 4.2],
+            ],
+            seal: [5, 6, 'freight'],
+            intent: 'Touch the pulse in the open bay to pause target movement for eight steps.',
+          },
+          componentAssemblies: [
+            {
+              family: 'dispatch',
+              cells: [
+                [7, 5],
+                [8, 5],
+                [9, 5],
+                [7, 6],
+                [8, 6],
+                [9, 6],
+                [7, 7],
+                [8, 7],
+                [9, 7],
+              ],
+            },
+            {
+              family: 'container',
+              cells: [
+                [15, 10],
+                [16, 10],
+                [17, 10],
+                [15, 11],
+                [16, 11],
+                [17, 11],
+                [15, 12],
+                [16, 12],
+                [17, 12],
+              ],
+            },
+          ],
           focus: [6, 6],
           axis: 'horizontal',
           light: 'morning',
@@ -1822,7 +6701,130 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'container',
           ambient: 'lamps',
-          floor: 'bays',
+          floor: 'authored',
+          floorPlan: {
+            name: 'supply-depot-loading',
+            pattern: 'loading',
+            paths: [
+              [
+                [4.4, 4.4],
+                [19.6, 4.4],
+              ],
+              [
+                [4.4, 10.6],
+                [19.6, 10.6],
+              ],
+              [
+                [4.4, 4.4],
+                [4.4, 4.9],
+              ],
+              [
+                [19.6, 10.1],
+                [19.6, 10.6],
+              ],
+              [
+                [4.4, 7.4],
+                [19.6, 7.4],
+              ],
+              [
+                [4.4, 13.6],
+                [19.6, 13.6],
+              ],
+              [
+                [4.4, 7.4],
+                [4.4, 7.9],
+              ],
+              [
+                [19.6, 13.1],
+                [19.6, 13.6],
+              ],
+              [
+                [9.4, 7.4],
+                [14.6, 7.4],
+              ],
+              [
+                [9.4, 10.6],
+                [14.6, 10.6],
+              ],
+              [
+                [9.4, 7.4],
+                [9.4, 7.9],
+              ],
+              [
+                [14.6, 10.1],
+                [14.6, 10.6],
+              ],
+            ],
+            patches: [
+              [4.4, 4.4, 15.2, 6.2],
+              [4.4, 7.4, 15.2, 6.2],
+              [9.4, 7.4, 5.2, 3.2],
+            ],
+            seal: [16, 10, 'freight'],
+            intent:
+              'The reel removes four tail cells, down to four. Both visual styles use the same rule.',
+          },
+          componentAssemblies: [
+            {
+              family: 'container',
+              cells: [
+                [5, 5],
+                [6, 5],
+                [7, 5],
+                [8, 5],
+                [9, 5],
+                [10, 5],
+                [11, 5],
+                [12, 5],
+                [13, 5],
+                [14, 5],
+                [15, 5],
+                [16, 5],
+                [17, 5],
+                [18, 5],
+                [5, 6],
+                [5, 7],
+                [5, 8],
+                [5, 9],
+              ],
+            },
+            {
+              family: 'container',
+              cells: [
+                [18, 8],
+                [18, 9],
+                [18, 10],
+                [18, 11],
+                [5, 12],
+                [6, 12],
+                [7, 12],
+                [8, 12],
+                [9, 12],
+                [10, 12],
+                [11, 12],
+                [12, 12],
+                [13, 12],
+                [14, 12],
+                [15, 12],
+                [16, 12],
+                [17, 12],
+                [18, 12],
+              ],
+            },
+            {
+              family: 'dispatch',
+              cells: [
+                [10, 8],
+                [11, 8],
+                [12, 8],
+                [13, 8],
+                [10, 9],
+                [11, 9],
+                [12, 9],
+                [13, 9],
+              ],
+            },
+          ],
           focus: [17, 11],
           axis: 'vertical',
           light: 'morning',
@@ -1842,7 +6844,134 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'container',
           ambient: 'lamps',
-          floor: 'bays',
+          floor: 'authored',
+          floorPlan: {
+            name: 'supply-depot-loading',
+            pattern: 'loading',
+            paths: [
+              [
+                [5.4, 4.4],
+                [17.6, 4.4],
+              ],
+              [
+                [5.4, 9.6],
+                [17.6, 9.6],
+              ],
+              [
+                [5.4, 4.4],
+                [5.4, 4.9],
+              ],
+              [
+                [17.6, 9.1],
+                [17.6, 9.6],
+              ],
+              [
+                [5.4, 10.4],
+                [17.6, 10.4],
+              ],
+              [
+                [5.4, 13.6],
+                [17.6, 13.6],
+              ],
+              [
+                [5.4, 10.4],
+                [5.4, 10.9],
+              ],
+              [
+                [17.6, 13.1],
+                [17.6, 13.6],
+              ],
+              [
+                [17.4, 6.4],
+                [20.6, 6.4],
+              ],
+              [
+                [17.4, 11.6],
+                [20.6, 11.6],
+              ],
+            ],
+            patches: [
+              [5.4, 4.4, 12.2, 5.2],
+              [5.4, 10.4, 12.2, 3.2],
+              [17.4, 6.4, 3.2, 5.2],
+            ],
+            seal: [11, 8, 'freight'],
+            intent:
+              'A side supply bay costs a detour. Decide whether space or interception matters now.',
+          },
+          componentAssemblies: [
+            {
+              family: 'dispatch',
+              cells: [
+                [6, 5],
+                [7, 5],
+                [8, 5],
+                [9, 5],
+                [10, 5],
+                [11, 5],
+                [12, 5],
+                [13, 5],
+                [14, 5],
+                [15, 5],
+                [16, 5],
+                [6, 6],
+                [7, 6],
+                [8, 6],
+                [9, 6],
+                [10, 6],
+                [11, 6],
+                [12, 6],
+                [13, 6],
+                [14, 6],
+                [15, 6],
+                [16, 6],
+                [6, 7],
+                [7, 7],
+                [6, 8],
+                [7, 8],
+              ],
+            },
+            {
+              family: 'container',
+              cells: [
+                [6, 11],
+                [7, 11],
+                [8, 11],
+                [9, 11],
+                [10, 11],
+                [11, 11],
+                [12, 11],
+                [13, 11],
+                [14, 11],
+                [15, 11],
+                [16, 11],
+                [6, 12],
+                [7, 12],
+                [8, 12],
+                [9, 12],
+                [10, 12],
+                [11, 12],
+                [12, 12],
+                [13, 12],
+                [14, 12],
+                [15, 12],
+                [16, 12],
+              ],
+            },
+            {
+              family: 'container',
+              cells: [
+                [18, 7],
+                [19, 7],
+                [18, 8],
+                [19, 8],
+                [18, 9],
+                [19, 9],
+                [18, 10],
+                [19, 10],
+              ],
+            },
+          ],
           focus: [11, 8],
           axis: 'horizontal',
           light: 'morning',
@@ -1862,7 +6991,123 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'container',
           ambient: 'lamps',
-          floor: 'bays',
+          floor: 'authored',
+          floorPlan: {
+            name: 'supply-depot-loading',
+            pattern: 'loading',
+            paths: [
+              [
+                [4.4, 4.4],
+                [9.6, 4.4],
+              ],
+              [
+                [4.4, 8.6],
+                [9.6, 8.6],
+              ],
+              [
+                [4.4, 4.4],
+                [4.4, 4.9],
+              ],
+              [
+                [9.6, 8.1],
+                [9.6, 8.6],
+              ],
+              [
+                [14.4, 9.4],
+                [19.6, 9.4],
+              ],
+              [
+                [14.4, 13.6],
+                [19.6, 13.6],
+              ],
+              [
+                [14.4, 9.4],
+                [14.4, 9.9],
+              ],
+              [
+                [19.6, 13.1],
+                [19.6, 13.6],
+              ],
+              [
+                [10.4, 3.4],
+                [13.6, 3.4],
+              ],
+              [
+                [10.4, 6.6],
+                [13.6, 6.6],
+              ],
+              [
+                [10.4, 3.4],
+                [10.4, 3.9],
+              ],
+              [
+                [13.6, 6.1],
+                [13.6, 6.6],
+              ],
+            ],
+            patches: [
+              [4.4, 4.4, 5.2, 4.2],
+              [14.4, 9.4, 5.2, 4.2],
+              [10.4, 3.4, 3.2, 3.2],
+            ],
+            seal: [16, 5, 'freight'],
+            intent:
+              'The courier is optional: 250 points and growth, without required-catch credit. It does not expire.',
+          },
+          componentAssemblies: [
+            {
+              family: 'container',
+              cells: [
+                [5, 5],
+                [6, 5],
+                [7, 5],
+                [8, 5],
+                [5, 6],
+                [6, 6],
+                [7, 6],
+                [8, 6],
+                [5, 7],
+                [6, 7],
+                [7, 7],
+                [8, 7],
+              ],
+            },
+            {
+              family: 'container',
+              cells: [
+                [15, 10],
+                [16, 10],
+                [17, 10],
+                [18, 10],
+                [15, 11],
+                [16, 11],
+                [17, 11],
+                [18, 11],
+                [15, 12],
+                [16, 12],
+                [17, 12],
+                [18, 12],
+              ],
+            },
+            {
+              family: 'dispatch',
+              cells: [
+                [11, 4],
+                [12, 4],
+                [11, 5],
+                [12, 5],
+              ],
+            },
+            {
+              family: 'container',
+              cells: [
+                [11, 12],
+                [12, 12],
+                [11, 13],
+                [12, 13],
+              ],
+            },
+          ],
           focus: [16, 5],
           axis: 'vertical',
           light: 'late',
@@ -1882,7 +7127,134 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'container',
           ambient: 'lamps',
-          floor: 'bays',
+          floor: 'authored',
+          floorPlan: {
+            name: 'supply-depot-loading',
+            pattern: 'loading',
+            paths: [
+              [
+                [4.4, 4.4],
+                [9.6, 4.4],
+              ],
+              [
+                [4.4, 12.6],
+                [9.6, 12.6],
+              ],
+              [
+                [14.4, 4.4],
+                [19.6, 4.4],
+              ],
+              [
+                [14.4, 12.6],
+                [19.6, 12.6],
+              ],
+              [
+                [9.4, 7.4],
+                [14.6, 7.4],
+              ],
+              [
+                [9.4, 10.6],
+                [14.6, 10.6],
+              ],
+              [
+                [9.4, 7.4],
+                [9.4, 7.9],
+              ],
+              [
+                [14.6, 10.1],
+                [14.6, 10.6],
+              ],
+            ],
+            patches: [
+              [4.4, 4.4, 5.2, 8.2],
+              [14.4, 4.4, 5.2, 8.2],
+              [9.4, 7.4, 5.2, 3.2],
+            ],
+            seal: [7, 13, 'freight'],
+            intent:
+              'Two loops meet at a supply junction. In Team, a pulse helps both heads; a reel shortens its collector.',
+          },
+          componentAssemblies: [
+            {
+              family: 'dispatch',
+              cells: [
+                [5, 5],
+                [6, 5],
+                [7, 5],
+                [8, 5],
+                [5, 6],
+                [6, 6],
+                [7, 6],
+                [8, 6],
+                [5, 7],
+                [6, 7],
+                [7, 7],
+                [8, 7],
+                [5, 8],
+                [6, 8],
+                [7, 8],
+                [8, 8],
+                [5, 9],
+                [6, 9],
+                [7, 9],
+                [8, 9],
+                [5, 10],
+                [6, 10],
+                [7, 10],
+                [8, 10],
+                [5, 11],
+                [6, 11],
+                [7, 11],
+                [8, 11],
+              ],
+            },
+            {
+              family: 'container',
+              cells: [
+                [15, 5],
+                [16, 5],
+                [17, 5],
+                [18, 5],
+                [15, 6],
+                [16, 6],
+                [17, 6],
+                [18, 6],
+                [15, 7],
+                [16, 7],
+                [17, 7],
+                [18, 7],
+                [15, 8],
+                [16, 8],
+                [17, 8],
+                [18, 8],
+                [15, 9],
+                [16, 9],
+                [17, 9],
+                [18, 9],
+                [15, 10],
+                [16, 10],
+                [17, 10],
+                [18, 10],
+                [15, 11],
+                [16, 11],
+                [17, 11],
+                [18, 11],
+              ],
+            },
+            {
+              family: 'container',
+              cells: [
+                [10, 8],
+                [11, 8],
+                [12, 8],
+                [13, 8],
+                [10, 9],
+                [11, 9],
+                [12, 9],
+                [13, 9],
+              ],
+            },
+          ],
           focus: [7, 12],
           axis: 'horizontal',
           light: 'late',
@@ -1902,7 +7274,123 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'container',
           ambient: 'lamps',
-          floor: 'bays',
+          floor: 'authored',
+          floorPlan: {
+            name: 'supply-depot-loading',
+            pattern: 'loading',
+            paths: [
+              [
+                [16.4, 3.4],
+                [20.6, 3.4],
+              ],
+              [
+                [16.4, 10.6],
+                [20.6, 10.6],
+              ],
+              [
+                [4.4, 3.4],
+                [8.6, 3.4],
+              ],
+              [
+                [4.4, 8.6],
+                [8.6, 8.6],
+              ],
+              [
+                [9.4, 9.4],
+                [14.6, 9.4],
+              ],
+              [
+                [9.4, 13.6],
+                [14.6, 13.6],
+              ],
+              [
+                [9.4, 9.4],
+                [9.4, 9.9],
+              ],
+              [
+                [14.6, 13.1],
+                [14.6, 13.6],
+              ],
+            ],
+            patches: [
+              [16.4, 3.4, 4.2, 7.2],
+              [4.4, 3.4, 4.2, 5.2],
+              [9.4, 9.4, 5.2, 4.2],
+            ],
+            seal: [12, 8, 'freight'],
+            intent:
+              'Courier offers follow required catches four and eight. Continue the main route if you prefer.',
+          },
+          componentAssemblies: [
+            {
+              family: 'container',
+              cells: [
+                [17, 4],
+                [18, 4],
+                [19, 4],
+                [17, 5],
+                [18, 5],
+                [19, 5],
+                [17, 6],
+                [18, 6],
+                [19, 6],
+                [17, 7],
+                [18, 7],
+                [19, 7],
+                [17, 8],
+                [18, 8],
+                [19, 8],
+                [17, 9],
+                [18, 9],
+                [19, 9],
+              ],
+            },
+            {
+              family: 'container',
+              cells: [
+                [5, 4],
+                [6, 4],
+                [7, 4],
+                [5, 5],
+                [6, 5],
+                [7, 5],
+                [5, 6],
+                [6, 6],
+                [7, 6],
+                [5, 7],
+                [6, 7],
+                [7, 7],
+              ],
+            },
+            {
+              family: 'dispatch',
+              cells: [
+                [10, 10],
+                [11, 10],
+                [12, 10],
+                [13, 10],
+                [10, 11],
+                [11, 11],
+                [12, 11],
+                [13, 11],
+                [10, 12],
+                [11, 12],
+                [12, 12],
+                [13, 12],
+              ],
+            },
+            {
+              family: 'container',
+              cells: [
+                [4, 12],
+                [5, 12],
+                [6, 12],
+                [4, 13],
+                [5, 13],
+                [6, 13],
+              ],
+            },
+          ],
           focus: [12, 9],
           axis: 'vertical',
           light: 'late',
@@ -1922,7 +7410,107 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'masonry',
           ambient: 'leaves',
-          floor: 'cross',
+          floor: 'authored',
+          floorPlan: {
+            name: 'reclaimed-courts-survey',
+            pattern: 'survey',
+            paths: [
+              [
+                [5.4, 10.6],
+                [5.4, 4.4],
+                [18.6, 4.4],
+              ],
+              [
+                [5.75, 10.6],
+                [5.75, 4.75],
+                [18.6, 4.75],
+              ],
+              [
+                [5.4, 13.6],
+                [5.4, 7.4],
+                [18.6, 7.4],
+              ],
+              [
+                [5.75, 13.6],
+                [5.75, 7.75],
+                [18.6, 7.75],
+              ],
+              [
+                [9.4, 10.6],
+                [9.4, 7.4],
+                [14.6, 7.4],
+              ],
+              [
+                [9.75, 10.6],
+                [9.75, 7.75],
+                [14.6, 7.75],
+              ],
+            ],
+            patches: [
+              [5.4, 4.4, 13.2, 6.2],
+              [5.4, 7.4, 13.2, 6.2],
+              [9.4, 7.4, 5.2, 3.2],
+            ],
+            seal: [4, 6, 'survey'],
+            intent: 'Alternate predictable patrols and warned sprints around two nested circuits.',
+          },
+          componentAssemblies: [
+            {
+              family: 'excavation',
+              cells: [
+                [6, 5],
+                [7, 5],
+                [8, 5],
+                [9, 5],
+                [10, 5],
+                [11, 5],
+                [12, 5],
+                [13, 5],
+                [14, 5],
+                [15, 5],
+                [16, 5],
+                [17, 5],
+                [6, 6],
+                [6, 7],
+                [6, 8],
+                [6, 9],
+              ],
+            },
+            {
+              family: 'excavation',
+              cells: [
+                [17, 8],
+                [17, 9],
+                [17, 10],
+                [17, 11],
+                [6, 12],
+                [7, 12],
+                [8, 12],
+                [9, 12],
+                [10, 12],
+                [11, 12],
+                [12, 12],
+                [13, 12],
+                [14, 12],
+                [15, 12],
+                [16, 12],
+                [17, 12],
+              ],
+            },
+            {
+              family: 'reclaimer',
+              cells: [
+                [10, 8],
+                [11, 8],
+                [12, 8],
+                [13, 8],
+                [10, 9],
+                [11, 9],
+                [12, 9],
+                [13, 9],
+              ],
+            },
+          ],
           focus: [6, 6],
           axis: 'horizontal',
           light: 'morning',
@@ -1942,7 +7530,107 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'masonry',
           ambient: 'leaves',
-          floor: 'cross',
+          floor: 'authored',
+          floorPlan: {
+            name: 'reclaimed-courts-survey',
+            pattern: 'survey',
+            paths: [
+              [
+                [6.4, 9.6],
+                [6.4, 3.4],
+                [19.6, 3.4],
+              ],
+              [
+                [6.75, 9.6],
+                [6.75, 3.75],
+                [19.6, 3.75],
+              ],
+              [
+                [6.4, 14.6],
+                [6.4, 9.4],
+                [19.6, 9.4],
+              ],
+              [
+                [6.75, 14.6],
+                [6.75, 9.75],
+                [19.6, 9.75],
+              ],
+              [
+                [11.4, 10.6],
+                [11.4, 7.4],
+                [14.6, 7.4],
+              ],
+              [
+                [11.75, 10.6],
+                [11.75, 7.75],
+                [14.6, 7.75],
+              ],
+            ],
+            patches: [
+              [6.4, 3.4, 13.2, 6.2],
+              [6.4, 9.4, 13.2, 5.2],
+              [11.4, 7.4, 3.2, 3.2],
+            ],
+            seal: [16, 11, 'survey'],
+            intent:
+              'A runner can change direction near the timed shortcut. Leave the long ring open.',
+          },
+          componentAssemblies: [
+            {
+              family: 'excavation',
+              cells: [
+                [7, 4],
+                [8, 4],
+                [9, 4],
+                [10, 4],
+                [11, 4],
+                [12, 4],
+                [13, 4],
+                [14, 4],
+                [15, 4],
+                [16, 4],
+                [17, 4],
+                [18, 4],
+                [7, 5],
+                [18, 5],
+                [7, 6],
+                [18, 6],
+                [7, 7],
+                [7, 8],
+              ],
+            },
+            {
+              family: 'excavation',
+              cells: [
+                [18, 10],
+                [7, 11],
+                [18, 11],
+                [7, 12],
+                [18, 12],
+                [7, 13],
+                [8, 13],
+                [9, 13],
+                [10, 13],
+                [11, 13],
+                [12, 13],
+                [13, 13],
+                [14, 13],
+                [15, 13],
+                [16, 13],
+                [17, 13],
+                [18, 13],
+              ],
+            },
+            {
+              family: 'reclaimer',
+              cells: [
+                [12, 8],
+                [13, 8],
+                [12, 9],
+                [13, 9],
+              ],
+            },
+          ],
           focus: [17, 11],
           axis: 'vertical',
           light: 'morning',
@@ -1962,7 +7650,123 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'masonry',
           ambient: 'leaves',
-          floor: 'cross',
+          floor: 'authored',
+          floorPlan: {
+            name: 'reclaimed-courts-survey',
+            pattern: 'survey',
+            paths: [
+              [
+                [5.4, 13.6],
+                [5.4, 3.4],
+                [8.6, 3.4],
+              ],
+              [
+                [5.75, 13.6],
+                [5.75, 3.75],
+                [8.6, 3.75],
+              ],
+              [
+                [16.4, 17],
+                [16.4, 9.4],
+                [19.6, 9.4],
+              ],
+              [
+                [16.75, 17],
+                [16.75, 9.75],
+                [19.6, 9.75],
+              ],
+              [
+                [13.4, 6.6],
+                [13.4, 1],
+                [16.6, 1],
+              ],
+              [
+                [13.75, 6.6],
+                [13.75, 1.35],
+                [16.6, 1.35],
+              ],
+            ],
+            patches: [
+              [5.4, 3.4, 3.2, 10.2],
+              [16.4, 9.4, 3.2, 7.6],
+              [13.4, 1, 3.2, 5.6],
+            ],
+            seal: [11, 6, 'survey'],
+            intent:
+              'Wrap between offset chicanes. Both targets remain ordinary catchable humanoids.',
+          },
+          componentAssemblies: [
+            {
+              family: 'excavation',
+              cells: [
+                [6, 4],
+                [7, 4],
+                [6, 5],
+                [7, 5],
+                [6, 6],
+                [7, 6],
+                [6, 7],
+                [7, 7],
+                [6, 8],
+                [7, 8],
+                [6, 9],
+                [7, 9],
+                [6, 10],
+                [7, 10],
+                [6, 11],
+                [7, 11],
+                [6, 12],
+                [7, 12],
+              ],
+            },
+            {
+              family: 'excavation',
+              cells: [
+                [17, 10],
+                [18, 10],
+                [17, 11],
+                [18, 11],
+                [17, 12],
+                [18, 12],
+                [17, 13],
+                [18, 13],
+                [17, 14],
+                [18, 14],
+                [17, 15],
+                [18, 15],
+                [17, 16],
+                [18, 16],
+                [17, 17],
+                [18, 17],
+              ],
+            },
+            {
+              family: 'excavation',
+              cells: [
+                [14, 0],
+                [15, 0],
+                [14, 1],
+                [15, 1],
+                [14, 2],
+                [15, 2],
+                [14, 3],
+                [15, 3],
+                [14, 4],
+                [15, 4],
+                [14, 5],
+                [15, 5],
+              ],
+            },
+            {
+              family: 'reclaimer',
+              cells: [
+                [11, 8],
+                [12, 8],
+                [11, 9],
+                [12, 9],
+              ],
+            },
+          ],
           focus: [11, 8],
           axis: 'horizontal',
           light: 'morning',
@@ -1982,7 +7786,136 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'masonry',
           ambient: 'leaves',
-          floor: 'cross',
+          floor: 'authored',
+          floorPlan: {
+            name: 'reclaimed-courts-survey',
+            pattern: 'survey',
+            paths: [
+              [
+                [6.4, 6.6],
+                [6.4, 1],
+                [9.6, 1],
+              ],
+              [
+                [6.75, 6.6],
+                [6.75, 1.35],
+                [9.6, 1.35],
+              ],
+              [
+                [10.4, 12.6],
+                [10.4, 5.4],
+                [13.6, 5.4],
+              ],
+              [
+                [10.75, 12.6],
+                [10.75, 5.75],
+                [13.6, 5.75],
+              ],
+              [
+                [17.4, 9.6],
+                [17.4, 6.4],
+                [23, 6.4],
+              ],
+              [
+                [17.75, 9.6],
+                [17.75, 6.75],
+                [23, 6.75],
+              ],
+            ],
+            patches: [
+              [6.4, 1, 3.2, 5.6],
+              [10.4, 5.4, 3.2, 7.2],
+              [17.4, 6.4, 5.6, 3.2],
+            ],
+            seal: [16, 5, 'survey'],
+            intent:
+              'Two targets share three return routes. Commit only after checking your growing tail.',
+          },
+          componentAssemblies: [
+            {
+              family: 'excavation',
+              cells: [
+                [7, 0],
+                [8, 0],
+                [7, 1],
+                [8, 1],
+                [7, 2],
+                [8, 2],
+                [7, 3],
+                [8, 3],
+                [7, 4],
+                [8, 4],
+                [7, 5],
+                [8, 5],
+              ],
+            },
+            {
+              family: 'excavation',
+              cells: [
+                [11, 6],
+                [12, 6],
+                [11, 7],
+                [12, 7],
+                [11, 8],
+                [12, 8],
+                [11, 9],
+                [12, 9],
+                [11, 10],
+                [12, 10],
+                [11, 11],
+                [12, 11],
+              ],
+            },
+            {
+              family: 'reclaimer',
+              cells: [
+                [18, 7],
+                [19, 7],
+                [20, 7],
+                [21, 7],
+                [22, 7],
+                [23, 7],
+                [18, 8],
+                [19, 8],
+                [20, 8],
+                [21, 8],
+                [22, 8],
+                [23, 8],
+              ],
+            },
+            {
+              family: 'excavation',
+              cells: [
+                [15, 12],
+                [16, 12],
+                [15, 13],
+                [16, 13],
+                [15, 14],
+                [16, 14],
+                [15, 15],
+                [16, 15],
+                [15, 16],
+                [16, 16],
+                [15, 17],
+                [16, 17],
+              ],
+            },
+            {
+              family: 'excavation',
+              cells: [
+                [0, 9],
+                [1, 9],
+                [2, 9],
+                [3, 9],
+                [4, 9],
+                [0, 10],
+                [1, 10],
+                [2, 10],
+                [3, 10],
+                [4, 10],
+              ],
+            },
+          ],
           focus: [16, 5],
           axis: 'vertical',
           light: 'late',
@@ -2002,7 +7935,120 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'masonry',
           ambient: 'leaves',
-          floor: 'cross',
+          floor: 'authored',
+          floorPlan: {
+            name: 'reclaimed-courts-survey',
+            pattern: 'survey',
+            paths: [
+              [
+                [5.4, 13.6],
+                [5.4, 7.4],
+                [18.6, 7.4],
+              ],
+              [
+                [5.75, 13.6],
+                [5.75, 7.75],
+                [18.6, 7.75],
+              ],
+              [
+                [5.4, 9.6],
+                [5.4, 4.4],
+                [10.6, 4.4],
+              ],
+              [
+                [5.75, 9.6],
+                [5.75, 4.75],
+                [10.6, 4.75],
+              ],
+              [
+                [12.4, 7.6],
+                [12.4, 4.4],
+                [18.6, 4.4],
+              ],
+              [
+                [12.75, 7.6],
+                [12.75, 4.75],
+                [18.6, 4.75],
+              ],
+            ],
+            patches: [
+              [5.4, 7.4, 13.2, 6.2],
+              [5.4, 4.4, 5.2, 5.2],
+              [12.4, 4.4, 6.2, 3.2],
+            ],
+            seal: [7, 14, 'survey'],
+            intent:
+              'Supply detours and a yielding shutter share one circuit. The optional courier never blocks completion.',
+          },
+          componentAssemblies: [
+            {
+              family: 'reclaimer',
+              cells: [
+                [16, 8],
+                [17, 8],
+                [16, 9],
+                [17, 9],
+                [16, 10],
+                [17, 10],
+                [6, 11],
+                [7, 11],
+                [8, 11],
+                [9, 11],
+                [10, 11],
+                [11, 11],
+                [12, 11],
+                [13, 11],
+                [14, 11],
+                [15, 11],
+                [16, 11],
+                [17, 11],
+                [6, 12],
+                [7, 12],
+                [8, 12],
+                [9, 12],
+                [10, 12],
+                [11, 12],
+                [12, 12],
+                [13, 12],
+                [14, 12],
+                [15, 12],
+                [16, 12],
+                [17, 12],
+              ],
+            },
+            {
+              family: 'excavation',
+              cells: [
+                [6, 5],
+                [7, 5],
+                [8, 5],
+                [9, 5],
+                [6, 6],
+                [7, 6],
+                [8, 6],
+                [9, 6],
+                [6, 7],
+                [7, 7],
+                [6, 8],
+                [7, 8],
+              ],
+            },
+            {
+              family: 'excavation',
+              cells: [
+                [13, 5],
+                [14, 5],
+                [15, 5],
+                [16, 5],
+                [17, 5],
+                [13, 6],
+                [14, 6],
+                [15, 6],
+                [16, 6],
+                [17, 6],
+              ],
+            },
+          ],
           focus: [7, 12],
           axis: 'horizontal',
           light: 'late',
@@ -2022,7 +8068,128 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'masonry',
           ambient: 'leaves',
-          floor: 'cross',
+          floor: 'authored',
+          floorPlan: {
+            name: 'reclaimed-courts-survey',
+            pattern: 'survey',
+            paths: [
+              [
+                [6.4, 6.6],
+                [6.4, 1],
+                [9.6, 1],
+              ],
+              [
+                [6.75, 6.6],
+                [6.75, 1.35],
+                [9.6, 1.35],
+              ],
+              [
+                [14.4, 17],
+                [14.4, 11.4],
+                [17.6, 11.4],
+              ],
+              [
+                [14.75, 17],
+                [14.75, 11.75],
+                [17.6, 11.75],
+              ],
+              [
+                [14.4, 9.6],
+                [14.4, 3.4],
+                [17.6, 3.4],
+              ],
+              [
+                [14.75, 9.6],
+                [14.75, 3.75],
+                [17.6, 3.75],
+              ],
+            ],
+            patches: [
+              [6.4, 1, 3.2, 5.6],
+              [14.4, 11.4, 3.2, 5.6],
+              [14.4, 3.4, 3.2, 6.2],
+            ],
+            seal: [12, 10, 'survey'],
+            intent:
+              'Three courtyards connect through open bypasses and two shutters. Choose targets and supplies without rushing a closed route.',
+          },
+          componentAssemblies: [
+            {
+              family: 'excavation',
+              cells: [
+                [7, 0],
+                [8, 0],
+                [7, 1],
+                [8, 1],
+                [7, 2],
+                [8, 2],
+                [7, 3],
+                [8, 3],
+                [7, 4],
+                [8, 4],
+                [7, 5],
+                [8, 5],
+              ],
+            },
+            {
+              family: 'excavation',
+              cells: [
+                [15, 12],
+                [16, 12],
+                [15, 13],
+                [16, 13],
+                [15, 14],
+                [16, 14],
+                [15, 15],
+                [16, 15],
+                [15, 16],
+                [16, 16],
+                [15, 17],
+                [16, 17],
+              ],
+            },
+            {
+              family: 'excavation',
+              cells: [
+                [15, 4],
+                [16, 4],
+                [15, 5],
+                [16, 5],
+                [15, 6],
+                [16, 6],
+                [15, 7],
+                [16, 7],
+                [15, 8],
+                [16, 8],
+              ],
+            },
+            {
+              family: 'excavation',
+              cells: [
+                [7, 9],
+                [8, 9],
+                [7, 10],
+                [8, 10],
+                [7, 11],
+                [8, 11],
+                [7, 12],
+                [8, 12],
+                [7, 13],
+                [8, 13],
+              ],
+            },
+            {
+              family: 'reclaimer',
+              cells: [
+                [10, 7],
+                [11, 7],
+                [12, 7],
+                [10, 8],
+                [11, 8],
+                [12, 8],
+              ],
+            },
+          ],
           focus: [12, 9],
           axis: 'vertical',
           light: 'late',
@@ -2042,7 +8209,70 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'pump',
           ambient: 'water',
-          floor: 'islands',
+          floor: 'authored',
+          floorPlan: {
+            name: 'twin-docks-paired',
+            pattern: 'paired',
+            paths: [
+              [
+                [6.4, 4.4],
+                [10.6, 4.4],
+                [10.6, 5],
+              ],
+              [
+                [6.4, 8],
+                [6.4, 8.6],
+                [10.6, 8.6],
+              ],
+              [
+                [14.4, 9.4],
+                [18.6, 9.4],
+                [18.6, 10],
+              ],
+              [
+                [14.4, 13],
+                [14.4, 13.6],
+                [18.6, 13.6],
+              ],
+            ],
+            patches: [
+              [6.4, 4.4, 4.2, 4.2],
+              [14.4, 9.4, 4.2, 4.2],
+            ],
+            seal: [5, 6, 'tide'],
+            intent:
+              'The refuge seeker announces its next bay. Cut across the open middle instead of following it.',
+          },
+          componentAssemblies: [
+            {
+              family: 'pump',
+              cells: [
+                [7, 5],
+                [8, 5],
+                [9, 5],
+                [7, 6],
+                [8, 6],
+                [9, 6],
+                [7, 7],
+                [8, 7],
+                [9, 7],
+              ],
+            },
+            {
+              family: 'floodgate',
+              cells: [
+                [15, 10],
+                [16, 10],
+                [17, 10],
+                [15, 11],
+                [16, 11],
+                [17, 11],
+                [15, 12],
+                [16, 12],
+                [17, 12],
+              ],
+            },
+          ],
           focus: [6, 6],
           axis: 'horizontal',
           light: 'morning',
@@ -2062,7 +8292,94 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'pump',
           ambient: 'water',
-          floor: 'islands',
+          floor: 'authored',
+          floorPlan: {
+            name: 'twin-docks-paired',
+            pattern: 'paired',
+            paths: [
+              [
+                [6.4, 3.4],
+                [9.6, 3.4],
+                [9.6, 4],
+              ],
+              [
+                [6.4, 9],
+                [6.4, 9.6],
+                [9.6, 9.6],
+              ],
+              [
+                [14.4, 8.4],
+                [17.6, 8.4],
+                [17.6, 9],
+              ],
+              [
+                [14.4, 14],
+                [14.4, 14.6],
+                [17.6, 14.6],
+              ],
+              [
+                [10.4, 6.4],
+                [13.6, 6.4],
+                [13.6, 7],
+              ],
+              [
+                [10.4, 10],
+                [10.4, 10.6],
+                [13.6, 10.6],
+              ],
+            ],
+            patches: [
+              [6.4, 3.4, 3.2, 6.2],
+              [14.4, 8.4, 3.2, 6.2],
+              [10.4, 6.4, 3.2, 4.2],
+            ],
+            seal: [18, 11, 'tide'],
+            intent:
+              'The scarf runner signals its next exit before committing. Intercept from the opposite return.',
+          },
+          componentAssemblies: [
+            {
+              family: 'floodgate',
+              cells: [
+                [7, 4],
+                [8, 4],
+                [7, 5],
+                [8, 5],
+                [7, 6],
+                [8, 6],
+                [7, 7],
+                [8, 7],
+                [7, 8],
+                [8, 8],
+              ],
+            },
+            {
+              family: 'pump',
+              cells: [
+                [15, 9],
+                [16, 9],
+                [15, 10],
+                [16, 10],
+                [15, 11],
+                [16, 11],
+                [15, 12],
+                [16, 12],
+                [15, 13],
+                [16, 13],
+              ],
+            },
+            {
+              family: 'floodgate',
+              cells: [
+                [11, 7],
+                [12, 7],
+                [11, 8],
+                [12, 8],
+                [11, 9],
+                [12, 9],
+              ],
+            },
+          ],
           focus: [17, 11],
           axis: 'vertical',
           light: 'morning',
@@ -2082,7 +8399,103 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'pump',
           ambient: 'water',
-          floor: 'islands',
+          floor: 'authored',
+          floorPlan: {
+            name: 'twin-docks-paired',
+            pattern: 'paired',
+            paths: [
+              [
+                [6.4, 4.4],
+                [10.6, 4.4],
+                [10.6, 5],
+              ],
+              [
+                [6.4, 8],
+                [6.4, 8.6],
+                [10.6, 8.6],
+              ],
+              [
+                [13.4, 4.4],
+                [17.6, 4.4],
+                [17.6, 5],
+              ],
+              [
+                [13.4, 8],
+                [13.4, 8.6],
+                [17.6, 8.6],
+              ],
+              [
+                [6.4, 10.4],
+                [10.6, 10.4],
+                [10.6, 11],
+              ],
+              [
+                [6.4, 13],
+                [6.4, 13.6],
+                [10.6, 13.6],
+              ],
+            ],
+            patches: [
+              [6.4, 4.4, 4.2, 4.2],
+              [13.4, 4.4, 4.2, 4.2],
+              [6.4, 10.4, 4.2, 3.2],
+            ],
+            seal: [11, 8, 'tide'],
+            intent:
+              'Two partners seek one meeting place. Each catch counts once; the survivor becomes a runner.',
+          },
+          componentAssemblies: [
+            {
+              family: 'pump',
+              cells: [
+                [7, 5],
+                [8, 5],
+                [9, 5],
+                [7, 6],
+                [8, 6],
+                [9, 6],
+                [7, 7],
+                [8, 7],
+                [9, 7],
+              ],
+            },
+            {
+              family: 'floodgate',
+              cells: [
+                [14, 5],
+                [15, 5],
+                [16, 5],
+                [14, 6],
+                [15, 6],
+                [16, 6],
+                [14, 7],
+                [15, 7],
+                [16, 7],
+              ],
+            },
+            {
+              family: 'floodgate',
+              cells: [
+                [7, 11],
+                [8, 11],
+                [9, 11],
+                [7, 12],
+                [8, 12],
+                [9, 12],
+              ],
+            },
+            {
+              family: 'floodgate',
+              cells: [
+                [14, 11],
+                [15, 11],
+                [16, 11],
+                [14, 12],
+                [15, 12],
+                [16, 12],
+              ],
+            },
+          ],
           focus: [11, 8],
           axis: 'horizontal',
           light: 'morning',
@@ -2102,7 +8515,104 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'pump',
           ambient: 'water',
-          floor: 'islands',
+          floor: 'authored',
+          floorPlan: {
+            name: 'twin-docks-paired',
+            pattern: 'paired',
+            paths: [
+              [
+                [5.4, 3.4],
+                [8.6, 3.4],
+                [8.6, 4],
+              ],
+              [
+                [5.4, 11],
+                [5.4, 11.6],
+                [8.6, 11.6],
+              ],
+              [
+                [15.4, 6.4],
+                [18.6, 6.4],
+                [18.6, 7],
+              ],
+              [
+                [15.4, 14],
+                [15.4, 14.6],
+                [18.6, 14.6],
+              ],
+              [
+                [9.4, 8.4],
+                [14.6, 8.4],
+                [14.6, 9],
+              ],
+              [
+                [9.4, 11],
+                [9.4, 11.6],
+                [14.6, 11.6],
+              ],
+            ],
+            patches: [
+              [5.4, 3.4, 3.2, 8.2],
+              [15.4, 6.4, 3.2, 8.2],
+              [9.4, 8.4, 5.2, 3.2],
+            ],
+            seal: [16, 5, 'tide'],
+            intent:
+              'Two offset passages turn your cable into a temporary barrier. Leave a return lane before herding the prey.',
+          },
+          componentAssemblies: [
+            {
+              family: 'floodgate',
+              cells: [
+                [6, 4],
+                [7, 4],
+                [6, 5],
+                [7, 5],
+                [6, 6],
+                [7, 6],
+                [6, 7],
+                [7, 7],
+                [6, 8],
+                [7, 8],
+                [6, 9],
+                [7, 9],
+                [6, 10],
+                [7, 10],
+              ],
+            },
+            {
+              family: 'pump',
+              cells: [
+                [16, 7],
+                [17, 7],
+                [16, 8],
+                [17, 8],
+                [16, 9],
+                [17, 9],
+                [16, 10],
+                [17, 10],
+                [16, 11],
+                [17, 11],
+                [16, 12],
+                [17, 12],
+                [16, 13],
+                [17, 13],
+              ],
+            },
+            {
+              family: 'floodgate',
+              cells: [
+                [10, 9],
+                [11, 9],
+                [12, 9],
+                [13, 9],
+                [10, 10],
+                [11, 10],
+                [12, 10],
+                [13, 10],
+              ],
+            },
+          ],
           focus: [16, 5],
           axis: 'vertical',
           light: 'late',
@@ -2122,7 +8632,100 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'pump',
           ambient: 'water',
-          floor: 'islands',
+          floor: 'authored',
+          floorPlan: {
+            name: 'twin-docks-paired',
+            pattern: 'paired',
+            paths: [
+              [
+                [10.4, 3.4],
+                [13.6, 3.4],
+                [13.6, 4],
+              ],
+              [
+                [10.4, 14],
+                [10.4, 14.6],
+                [13.6, 14.6],
+              ],
+              [
+                [4.4, 7.4],
+                [8.6, 7.4],
+                [8.6, 8],
+              ],
+              [
+                [4.4, 10],
+                [4.4, 10.6],
+                [8.6, 10.6],
+              ],
+              [
+                [15.4, 7.4],
+                [19.6, 7.4],
+                [19.6, 8],
+              ],
+              [
+                [15.4, 10],
+                [15.4, 10.6],
+                [19.6, 10.6],
+              ],
+            ],
+            patches: [
+              [10.4, 3.4, 3.2, 11.2],
+              [4.4, 7.4, 4.2, 3.2],
+              [15.4, 7.4, 4.2, 3.2],
+            ],
+            seal: [7, 12, 'tide'],
+            intent:
+              'Pair goals alternate across the long divider. In Team, use separate returns and keep both cables clear.',
+          },
+          componentAssemblies: [
+            {
+              family: 'floodgate',
+              cells: [
+                [11, 4],
+                [12, 4],
+                [11, 5],
+                [12, 5],
+                [11, 6],
+                [12, 6],
+                [11, 7],
+                [12, 7],
+                [11, 8],
+                [12, 8],
+                [11, 9],
+                [12, 9],
+                [11, 10],
+                [12, 10],
+                [11, 11],
+                [12, 11],
+                [11, 12],
+                [12, 12],
+                [11, 13],
+                [12, 13],
+              ],
+            },
+            {
+              family: 'pump',
+              cells: [
+                [5, 8],
+                [6, 8],
+                [7, 8],
+                [5, 9],
+                [6, 9],
+                [7, 9],
+              ],
+            },
+            {
+              family: 'floodgate',
+              cells: [
+                [16, 8],
+                [17, 8],
+                [18, 8],
+                [16, 9],
+                [17, 9],
+                [18, 9],
+              ],
+            },
+          ],
           focus: [7, 12],
           axis: 'horizontal',
           light: 'late',
@@ -2142,7 +8745,112 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'pump',
           ambient: 'water',
-          floor: 'islands',
+          floor: 'authored',
+          floorPlan: {
+            name: 'twin-docks-paired',
+            pattern: 'paired',
+            paths: [
+              [
+                [5.4, 3.4],
+                [8.6, 3.4],
+                [8.6, 4],
+              ],
+              [
+                [5.4, 9],
+                [5.4, 9.6],
+                [8.6, 9.6],
+              ],
+              [
+                [14.4, 8.4],
+                [17.6, 8.4],
+                [17.6, 9],
+              ],
+              [
+                [14.4, 14],
+                [14.4, 14.6],
+                [17.6, 14.6],
+              ],
+              [
+                [9.4, 6.4],
+                [13.6, 6.4],
+                [13.6, 7],
+              ],
+              [
+                [9.4, 9],
+                [9.4, 9.6],
+                [13.6, 9.6],
+              ],
+            ],
+            patches: [
+              [5.4, 3.4, 3.2, 6.2],
+              [14.4, 8.4, 3.2, 6.2],
+              [9.4, 6.4, 4.2, 3.2],
+            ],
+            seal: [12, 10, 'tide'],
+            intent:
+              'Refuge seekers, runners and switchbacks share three courtyards. Choose a different approach for each intention.',
+          },
+          componentAssemblies: [
+            {
+              family: 'floodgate',
+              cells: [
+                [6, 4],
+                [7, 4],
+                [6, 5],
+                [7, 5],
+                [6, 6],
+                [7, 6],
+                [6, 7],
+                [7, 7],
+                [6, 8],
+                [7, 8],
+              ],
+            },
+            {
+              family: 'floodgate',
+              cells: [
+                [15, 9],
+                [16, 9],
+                [15, 10],
+                [16, 10],
+                [15, 11],
+                [16, 11],
+                [15, 12],
+                [16, 12],
+                [15, 13],
+                [16, 13],
+              ],
+            },
+            {
+              family: 'pump',
+              cells: [
+                [10, 7],
+                [11, 7],
+                [12, 7],
+                [10, 8],
+                [11, 8],
+                [12, 8],
+              ],
+            },
+            {
+              family: 'floodgate',
+              cells: [
+                [15, 4],
+                [16, 4],
+                [15, 5],
+                [16, 5],
+              ],
+            },
+            {
+              family: 'floodgate',
+              cells: [
+                [6, 12],
+                [7, 12],
+                [6, 13],
+                [7, 13],
+              ],
+            },
+          ],
           focus: [12, 9],
           axis: 'vertical',
           light: 'late',
@@ -2162,7 +8870,78 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'crane',
           ambient: 'lamps',
-          floor: 'ring',
+          floor: 'authored',
+          floorPlan: {
+            name: 'shutter-yard-rails',
+            pattern: 'rails',
+            paths: [
+              [
+                [6.4, 5.4],
+                [10.6, 5.4],
+              ],
+              [
+                [6.4, 11.6],
+                [10.6, 11.6],
+              ],
+              [
+                [14.4, 5.4],
+                [18.6, 5.4],
+              ],
+              [
+                [14.4, 11.6],
+                [18.6, 11.6],
+              ],
+            ],
+            patches: [
+              [6.4, 5.4, 4.2, 6.2],
+              [14.4, 5.4, 4.2, 6.2],
+            ],
+            seal: [5, 6, 'freight'],
+            intent:
+              'Specialist: the marked shield front is fatal. Catch from the side or rear; a warned turn keeps its old facing until complete.',
+          },
+          componentAssemblies: [
+            {
+              family: 'dispatch',
+              cells: [
+                [7, 6],
+                [8, 6],
+                [9, 6],
+                [7, 7],
+                [8, 7],
+                [9, 7],
+                [7, 8],
+                [8, 8],
+                [9, 8],
+                [7, 9],
+                [8, 9],
+                [9, 9],
+                [7, 10],
+                [8, 10],
+                [9, 10],
+              ],
+            },
+            {
+              family: 'container',
+              cells: [
+                [15, 6],
+                [16, 6],
+                [17, 6],
+                [15, 7],
+                [16, 7],
+                [17, 7],
+                [15, 8],
+                [16, 8],
+                [17, 8],
+                [15, 9],
+                [16, 9],
+                [17, 9],
+                [15, 10],
+                [16, 10],
+                [17, 10],
+              ],
+            },
+          ],
           focus: [6, 6],
           axis: 'horizontal',
           light: 'morning',
@@ -2182,7 +8961,136 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'crane',
           ambient: 'lamps',
-          floor: 'ring',
+          floor: 'authored',
+          floorPlan: {
+            name: 'shutter-yard-rails',
+            pattern: 'rails',
+            paths: [
+              [
+                [4.4, 4.4],
+                [19.6, 4.4],
+              ],
+              [
+                [4.4, 7.6],
+                [19.6, 7.6],
+              ],
+              [
+                [4.4, 4.4],
+                [4.4, 4.9],
+              ],
+              [
+                [19.6, 7.1],
+                [19.6, 7.6],
+              ],
+              [
+                [4.4, 10.4],
+                [13.6, 10.4],
+              ],
+              [
+                [4.4, 13.6],
+                [13.6, 13.6],
+              ],
+              [
+                [4.4, 10.4],
+                [4.4, 10.9],
+              ],
+              [
+                [13.6, 13.1],
+                [13.6, 13.6],
+              ],
+              [
+                [15.4, 10.4],
+                [19.6, 10.4],
+              ],
+              [
+                [15.4, 13.6],
+                [19.6, 13.6],
+              ],
+              [
+                [15.4, 10.4],
+                [15.4, 10.9],
+              ],
+              [
+                [19.6, 13.1],
+                [19.6, 13.6],
+              ],
+            ],
+            patches: [
+              [4.4, 4.4, 15.2, 3.2],
+              [4.4, 10.4, 9.2, 3.2],
+              [15.4, 10.4, 4.2, 3.2],
+            ],
+            seal: [17, 9, 'freight'],
+            intent:
+              'Specialist: warning and burst are protected. Catch during the long recovery, when the armor visibly opens.',
+          },
+          componentAssemblies: [
+            {
+              family: 'container',
+              cells: [
+                [5, 5],
+                [6, 5],
+                [7, 5],
+                [8, 5],
+                [9, 5],
+                [10, 5],
+                [11, 5],
+                [12, 5],
+                [13, 5],
+                [14, 5],
+                [15, 5],
+                [16, 5],
+                [17, 5],
+                [18, 5],
+                [5, 6],
+                [6, 6],
+                [7, 6],
+                [8, 6],
+                [9, 6],
+                [10, 6],
+                [11, 6],
+                [12, 6],
+                [13, 6],
+                [14, 6],
+                [15, 6],
+                [16, 6],
+                [17, 6],
+                [18, 6],
+              ],
+            },
+            {
+              family: 'container',
+              cells: [
+                [5, 11],
+                [6, 11],
+                [7, 11],
+                [8, 11],
+                [9, 11],
+                [10, 11],
+                [11, 11],
+                [12, 11],
+                [5, 12],
+                [6, 12],
+                [7, 12],
+                [8, 12],
+                [9, 12],
+                [10, 12],
+                [11, 12],
+                [12, 12],
+              ],
+            },
+            {
+              family: 'dispatch',
+              cells: [
+                [16, 11],
+                [17, 11],
+                [18, 11],
+                [16, 12],
+                [17, 12],
+                [18, 12],
+              ],
+            },
+          ],
           focus: [17, 11],
           axis: 'vertical',
           light: 'morning',
@@ -2202,7 +9110,99 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'crane',
           ambient: 'lamps',
-          floor: 'ring',
+          floor: 'authored',
+          floorPlan: {
+            name: 'shutter-yard-rails',
+            pattern: 'rails',
+            paths: [
+              [
+                [10.4, 3.4],
+                [13.6, 3.4],
+              ],
+              [
+                [10.4, 8.6],
+                [13.6, 8.6],
+              ],
+              [
+                [10.4, 9.4],
+                [13.6, 9.4],
+              ],
+              [
+                [10.4, 14.6],
+                [13.6, 14.6],
+              ],
+              [
+                [4.4, 7.4],
+                [7.6, 7.4],
+              ],
+              [
+                [4.4, 10.6],
+                [7.6, 10.6],
+              ],
+              [
+                [4.4, 7.4],
+                [4.4, 7.9],
+              ],
+              [
+                [7.6, 10.1],
+                [7.6, 10.6],
+              ],
+            ],
+            patches: [
+              [10.4, 3.4, 3.2, 5.2],
+              [10.4, 9.4, 3.2, 5.2],
+              [4.4, 7.4, 3.2, 3.2],
+            ],
+            seal: [9, 8, 'freight'],
+            intent:
+              'The center shortcut opens beside the shield. Take the permanent outer return when either danger blocks the approach.',
+          },
+          componentAssemblies: [
+            {
+              family: 'dispatch',
+              cells: [
+                [11, 4],
+                [12, 4],
+                [11, 5],
+                [12, 5],
+                [11, 6],
+                [12, 6],
+                [11, 7],
+                [12, 7],
+              ],
+            },
+            {
+              family: 'container',
+              cells: [
+                [11, 10],
+                [12, 10],
+                [11, 11],
+                [12, 11],
+                [11, 12],
+                [12, 12],
+                [11, 13],
+                [12, 13],
+              ],
+            },
+            {
+              family: 'container',
+              cells: [
+                [5, 8],
+                [6, 8],
+                [5, 9],
+                [6, 9],
+              ],
+            },
+            {
+              family: 'container',
+              cells: [
+                [17, 8],
+                [18, 8],
+                [17, 9],
+                [18, 9],
+              ],
+            },
+          ],
           focus: [11, 8],
           axis: 'horizontal',
           light: 'morning',
@@ -2222,7 +9222,114 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'crane',
           ambient: 'lamps',
-          floor: 'ring',
+          floor: 'authored',
+          floorPlan: {
+            name: 'shutter-yard-rails',
+            pattern: 'rails',
+            paths: [
+              [
+                [5.4, 4.4],
+                [10.6, 4.4],
+              ],
+              [
+                [5.4, 8.6],
+                [10.6, 8.6],
+              ],
+              [
+                [5.4, 4.4],
+                [5.4, 4.9],
+              ],
+              [
+                [10.6, 8.1],
+                [10.6, 8.6],
+              ],
+              [
+                [13.4, 9.4],
+                [18.6, 9.4],
+              ],
+              [
+                [13.4, 13.6],
+                [18.6, 13.6],
+              ],
+              [
+                [13.4, 9.4],
+                [13.4, 9.9],
+              ],
+              [
+                [18.6, 13.1],
+                [18.6, 13.6],
+              ],
+              [
+                [10.4, 5.4],
+                [13.6, 5.4],
+              ],
+              [
+                [10.4, 8.6],
+                [13.6, 8.6],
+              ],
+              [
+                [10.4, 5.4],
+                [10.4, 5.9],
+              ],
+              [
+                [13.6, 8.1],
+                [13.6, 8.6],
+              ],
+            ],
+            patches: [
+              [5.4, 4.4, 5.2, 4.2],
+              [13.4, 9.4, 5.2, 4.2],
+              [10.4, 5.4, 3.2, 3.2],
+            ],
+            seal: [16, 5, 'freight'],
+            intent:
+              'Pulse freezes the current armor state, not just movement. Collect it during recovery to extend the safe catch window.',
+          },
+          componentAssemblies: [
+            {
+              family: 'container',
+              cells: [
+                [6, 5],
+                [7, 5],
+                [8, 5],
+                [9, 5],
+                [6, 6],
+                [7, 6],
+                [8, 6],
+                [9, 6],
+                [6, 7],
+                [7, 7],
+                [8, 7],
+                [9, 7],
+              ],
+            },
+            {
+              family: 'container',
+              cells: [
+                [14, 10],
+                [15, 10],
+                [16, 10],
+                [17, 10],
+                [14, 11],
+                [15, 11],
+                [16, 11],
+                [17, 11],
+                [14, 12],
+                [15, 12],
+                [16, 12],
+                [17, 12],
+              ],
+            },
+            {
+              family: 'dispatch',
+              cells: [
+                [11, 6],
+                [12, 6],
+                [11, 7],
+                [12, 7],
+              ],
+            },
+          ],
           focus: [16, 5],
           axis: 'vertical',
           light: 'late',
@@ -2242,7 +9349,118 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'crane',
           ambient: 'lamps',
-          floor: 'ring',
+          floor: 'authored',
+          floorPlan: {
+            name: 'shutter-yard-rails',
+            pattern: 'rails',
+            paths: [
+              [
+                [8.4, 10.4],
+                [15.6, 10.4],
+              ],
+              [
+                [8.4, 13.6],
+                [15.6, 13.6],
+              ],
+              [
+                [8.4, 10.4],
+                [8.4, 10.9],
+              ],
+              [
+                [15.6, 13.1],
+                [15.6, 13.6],
+              ],
+              [
+                [4.4, 5.4],
+                [10.6, 5.4],
+              ],
+              [
+                [4.4, 8.6],
+                [10.6, 8.6],
+              ],
+              [
+                [4.4, 5.4],
+                [4.4, 5.9],
+              ],
+              [
+                [10.6, 8.1],
+                [10.6, 8.6],
+              ],
+              [
+                [13.4, 5.4],
+                [19.6, 5.4],
+              ],
+              [
+                [13.4, 8.6],
+                [19.6, 8.6],
+              ],
+              [
+                [13.4, 5.4],
+                [13.4, 5.9],
+              ],
+              [
+                [19.6, 8.1],
+                [19.6, 8.6],
+              ],
+            ],
+            patches: [
+              [8.4, 10.4, 7.2, 3.2],
+              [4.4, 5.4, 6.2, 3.2],
+              [13.4, 5.4, 6.2, 3.2],
+            ],
+            seal: [7, 12, 'freight'],
+            intent:
+              'Refuge goals and shield flanks compete with supply detours. Reel frees space, but cannot undo a collision.',
+          },
+          componentAssemblies: [
+            {
+              family: 'dispatch',
+              cells: [
+                [9, 11],
+                [10, 11],
+                [11, 11],
+                [12, 11],
+                [13, 11],
+                [14, 11],
+                [9, 12],
+                [10, 12],
+                [11, 12],
+                [12, 12],
+                [13, 12],
+                [14, 12],
+              ],
+            },
+            {
+              family: 'container',
+              cells: [
+                [5, 6],
+                [6, 6],
+                [7, 6],
+                [8, 6],
+                [9, 6],
+                [5, 7],
+                [6, 7],
+                [7, 7],
+                [8, 7],
+                [9, 7],
+              ],
+            },
+            {
+              family: 'container',
+              cells: [
+                [14, 6],
+                [15, 6],
+                [16, 6],
+                [17, 6],
+                [18, 6],
+                [14, 7],
+                [15, 7],
+                [16, 7],
+                [17, 7],
+                [18, 7],
+              ],
+            },
+          ],
           focus: [7, 12],
           axis: 'horizontal',
           light: 'late',
@@ -2262,7 +9480,106 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'crane',
           ambient: 'lamps',
-          floor: 'ring',
+          floor: 'authored',
+          floorPlan: {
+            name: 'shutter-yard-rails',
+            pattern: 'rails',
+            paths: [
+              [
+                [14.4, 3.4],
+                [17.6, 3.4],
+              ],
+              [
+                [14.4, 10.6],
+                [17.6, 10.6],
+              ],
+              [
+                [6.4, 9.4],
+                [9.6, 9.4],
+              ],
+              [
+                [6.4, 14.6],
+                [9.6, 14.6],
+              ],
+              [
+                [6.4, 3.4],
+                [9.6, 3.4],
+              ],
+              [
+                [6.4, 7.6],
+                [9.6, 7.6],
+              ],
+            ],
+            patches: [
+              [14.4, 3.4, 3.2, 7.2],
+              [6.4, 9.4, 3.2, 5.2],
+              [6.4, 3.4, 3.2, 4.2],
+            ],
+            seal: [12, 11, 'freight'],
+            intent:
+              'Two timed crossings link specialist and ordinary prey. Read each silhouette, choose a safe return, then commit.',
+          },
+          componentAssemblies: [
+            {
+              family: 'container',
+              cells: [
+                [15, 4],
+                [16, 4],
+                [15, 5],
+                [16, 5],
+                [15, 6],
+                [16, 6],
+                [15, 7],
+                [16, 7],
+                [15, 8],
+                [16, 8],
+                [15, 9],
+                [16, 9],
+              ],
+            },
+            {
+              family: 'container',
+              cells: [
+                [7, 10],
+                [8, 10],
+                [7, 11],
+                [8, 11],
+                [7, 12],
+                [8, 12],
+                [7, 13],
+                [8, 13],
+              ],
+            },
+            {
+              family: 'container',
+              cells: [
+                [7, 4],
+                [8, 4],
+                [7, 5],
+                [8, 5],
+                [7, 6],
+                [8, 6],
+              ],
+            },
+            {
+              family: 'dispatch',
+              cells: [
+                [11, 7],
+                [12, 7],
+                [11, 8],
+                [12, 8],
+                [11, 9],
+                [12, 9],
+              ],
+            },
+            {
+              family: 'platform',
+              cells: [
+                [15, 13],
+                [16, 13],
+              ],
+            },
+          ],
           focus: [12, 9],
           axis: 'vertical',
           light: 'late',
@@ -2282,7 +9599,43 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'antenna',
           ambient: 'windsock',
-          floor: 'cross',
+          floor: 'authored',
+          floorPlan: {
+            name: 'receiver-array-calibration',
+            pattern: 'calibration',
+            paths: [
+              [
+                [9.4, 5.1],
+                [9.4, 4.4],
+                [10.1, 4.4],
+              ],
+              [
+                [12.9, 8.6],
+                [13.6, 8.6],
+                [13.6, 7.9],
+              ],
+            ],
+            patches: [[9.4, 4.4, 4.2, 4.2]],
+            seal: [6, 6, 'signal'],
+            intent:
+              'Two antennas teach local reception. Enemies disappear during a burst; skirt the circle or catch the source at its beacon.',
+          },
+          componentAssemblies: [
+            {
+              family: 'receiver',
+              cells: [
+                [10, 5],
+                [11, 5],
+                [12, 5],
+                [10, 6],
+                [11, 6],
+                [12, 6],
+                [10, 7],
+                [11, 7],
+                [12, 7],
+              ],
+            },
+          ],
           focus: [6, 6],
           axis: 'horizontal',
           light: 'morning',
@@ -2302,7 +9655,71 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'antenna',
           ambient: 'windsock',
-          floor: 'cross',
+          floor: 'authored',
+          floorPlan: {
+            name: 'receiver-array-calibration',
+            pattern: 'calibration',
+            paths: [
+              [
+                [7.4, 4.1],
+                [7.4, 3.4],
+                [8.1, 3.4],
+              ],
+              [
+                [9.9, 9.6],
+                [10.6, 9.6],
+                [10.6, 8.9],
+              ],
+              [
+                [13.4, 10.1],
+                [13.4, 9.4],
+                [14.1, 9.4],
+              ],
+              [
+                [16.9, 13.6],
+                [17.6, 13.6],
+                [17.6, 12.9],
+              ],
+            ],
+            patches: [
+              [7.4, 3.4, 3.2, 6.2],
+              [13.4, 9.4, 4.2, 4.2],
+            ],
+            seal: [18, 11, 'signal'],
+            intent:
+              'Prey keeps arriving while the antenna survives. Read its route before the warning ends, leave coverage, or take the long approach to the beacon.',
+          },
+          componentAssemblies: [
+            {
+              family: 'shelter',
+              cells: [
+                [8, 4],
+                [9, 4],
+                [8, 5],
+                [9, 5],
+                [8, 6],
+                [9, 6],
+                [8, 7],
+                [9, 7],
+                [8, 8],
+                [9, 8],
+              ],
+            },
+            {
+              family: 'receiver',
+              cells: [
+                [14, 10],
+                [15, 10],
+                [16, 10],
+                [14, 11],
+                [15, 11],
+                [16, 11],
+                [14, 12],
+                [15, 12],
+                [16, 12],
+              ],
+            },
+          ],
           focus: [17, 11],
           axis: 'vertical',
           light: 'morning',
@@ -2322,7 +9739,42 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'antenna',
           ambient: 'windsock',
-          floor: 'cross',
+          floor: 'authored',
+          floorPlan: {
+            name: 'receiver-array-calibration',
+            pattern: 'calibration',
+            paths: [
+              [
+                [9.4, 4.1],
+                [9.4, 3.4],
+                [10.1, 3.4],
+              ],
+              [
+                [13.9, 6.6],
+                [14.6, 6.6],
+                [14.6, 5.9],
+              ],
+            ],
+            patches: [[9.4, 3.4, 5.2, 3.2]],
+            seal: [11, 8, 'signal'],
+            intent:
+              'Three different crossings teach horizontal and vertical warnings. Use the recovery window or a permanent end bypass.',
+          },
+          componentAssemblies: [
+            {
+              family: 'receiver',
+              cells: [
+                [10, 4],
+                [11, 4],
+                [12, 4],
+                [13, 4],
+                [10, 5],
+                [11, 5],
+                [12, 5],
+                [13, 5],
+              ],
+            },
+          ],
           focus: [11, 8],
           axis: 'horizontal',
           light: 'morning',
@@ -2342,7 +9794,66 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'antenna',
           ambient: 'windsock',
-          floor: 'cross',
+          floor: 'authored',
+          floorPlan: {
+            name: 'receiver-array-calibration',
+            pattern: 'calibration',
+            paths: [
+              [
+                [13.4, 10.1],
+                [13.4, 9.4],
+                [14.1, 9.4],
+              ],
+              [
+                [15.9, 14.6],
+                [16.6, 14.6],
+                [16.6, 13.9],
+              ],
+              [
+                [8.4, 4.1],
+                [8.4, 3.4],
+                [9.1, 3.4],
+              ],
+              [
+                [10.9, 7.6],
+                [11.6, 7.6],
+                [11.6, 6.9],
+              ],
+            ],
+            patches: [
+              [13.4, 9.4, 3.2, 5.2],
+              [8.4, 3.4, 3.2, 4.2],
+            ],
+            seal: [16, 5, 'signal'],
+            intent:
+              'A moving target changes which lane return is useful. Cross during recovery; only the head is vulnerable.',
+          },
+          componentAssemblies: [
+            {
+              family: 'shelter',
+              cells: [
+                [14, 10],
+                [15, 10],
+                [14, 11],
+                [15, 11],
+                [14, 12],
+                [15, 12],
+                [14, 13],
+                [15, 13],
+              ],
+            },
+            {
+              family: 'receiver',
+              cells: [
+                [9, 4],
+                [10, 4],
+                [9, 5],
+                [10, 5],
+                [9, 6],
+                [10, 6],
+              ],
+            },
+          ],
           focus: [16, 5],
           axis: 'vertical',
           light: 'late',
@@ -2362,7 +9873,68 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'antenna',
           ambient: 'windsock',
-          floor: 'cross',
+          floor: 'authored',
+          floorPlan: {
+            name: 'receiver-array-calibration',
+            pattern: 'calibration',
+            paths: [
+              [
+                [9.4, 4.1],
+                [9.4, 3.4],
+                [10.1, 3.4],
+              ],
+              [
+                [13.9, 6.6],
+                [14.6, 6.6],
+                [14.6, 5.9],
+              ],
+              [
+                [9.4, 11.1],
+                [9.4, 10.4],
+                [10.1, 10.4],
+              ],
+              [
+                [13.9, 13.6],
+                [14.6, 13.6],
+                [14.6, 12.9],
+              ],
+            ],
+            patches: [
+              [9.4, 3.4, 5.2, 3.2],
+              [9.4, 10.4, 5.2, 3.2],
+            ],
+            seal: [7, 12, 'signal'],
+            intent:
+              'Touch both diamond relays, then catch the opened sentinel. Relays do not grow your cable; the opening stays available.',
+          },
+          componentAssemblies: [
+            {
+              family: 'shelter',
+              cells: [
+                [10, 4],
+                [11, 4],
+                [12, 4],
+                [13, 4],
+                [10, 5],
+                [11, 5],
+                [12, 5],
+                [13, 5],
+              ],
+            },
+            {
+              family: 'receiver',
+              cells: [
+                [10, 11],
+                [11, 11],
+                [12, 11],
+                [13, 11],
+                [10, 12],
+                [11, 12],
+                [12, 12],
+                [13, 12],
+              ],
+            },
+          ],
           focus: [7, 12],
           axis: 'horizontal',
           light: 'late',
@@ -2382,7 +9954,84 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'antenna',
           ambient: 'windsock',
-          floor: 'cross',
+          floor: 'authored',
+          floorPlan: {
+            name: 'receiver-array-calibration',
+            pattern: 'calibration',
+            paths: [
+              [
+                [7.4, 4.1],
+                [7.4, 3.4],
+                [8.1, 3.4],
+              ],
+              [
+                [9.9, 7.6],
+                [10.6, 7.6],
+                [10.6, 6.9],
+              ],
+              [
+                [13.4, 11.1],
+                [13.4, 10.4],
+                [14.1, 10.4],
+              ],
+              [
+                [15.9, 14.6],
+                [16.6, 14.6],
+                [16.6, 13.9],
+              ],
+              [
+                [3.4, 11.1],
+                [3.4, 10.4],
+                [4.1, 10.4],
+              ],
+              [
+                [5.9, 13.6],
+                [6.6, 13.6],
+                [6.6, 12.9],
+              ],
+            ],
+            patches: [
+              [7.4, 3.4, 3.2, 4.2],
+              [13.4, 10.4, 3.2, 4.2],
+              [3.4, 10.4, 3.2, 3.2],
+            ],
+            seal: [12, 9, 'signal'],
+            intent:
+              'Visit the two courts before approaching the locked core. Leave a clear route back to the center.',
+          },
+          componentAssemblies: [
+            {
+              family: 'shelter',
+              cells: [
+                [8, 4],
+                [9, 4],
+                [8, 5],
+                [9, 5],
+                [8, 6],
+                [9, 6],
+              ],
+            },
+            {
+              family: 'receiver',
+              cells: [
+                [14, 11],
+                [15, 11],
+                [14, 12],
+                [15, 12],
+                [14, 13],
+                [15, 13],
+              ],
+            },
+            {
+              family: 'shelter',
+              cells: [
+                [4, 11],
+                [5, 11],
+                [4, 12],
+                [5, 12],
+              ],
+            },
+          ],
           focus: [12, 9],
           axis: 'vertical',
           light: 'late',
@@ -2402,7 +10051,46 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'antenna',
           ambient: 'windsock',
-          floor: 'cross',
+          floor: 'authored',
+          floorPlan: {
+            name: 'receiver-array-calibration',
+            pattern: 'calibration',
+            paths: [
+              [
+                [6.4, 6.1],
+                [6.4, 5.4],
+                [7.1, 5.4],
+              ],
+              [
+                [9.9, 10.6],
+                [10.6, 10.6],
+                [10.6, 9.9],
+              ],
+            ],
+            patches: [[6.4, 5.4, 4.2, 5.2]],
+            seal: [5, 8, 'signal'],
+            intent:
+              'Visit three different broadcast posts. Bursts hide enemy bodies across the board; each antenna beacon still marks a source you can catch.',
+          },
+          componentAssemblies: [
+            {
+              family: 'receiver',
+              cells: [
+                [7, 6],
+                [8, 6],
+                [9, 6],
+                [7, 7],
+                [8, 7],
+                [9, 7],
+                [7, 8],
+                [8, 8],
+                [9, 8],
+                [7, 9],
+                [8, 9],
+                [9, 9],
+              ],
+            },
+          ],
           focus: [5, 8],
           axis: 'horizontal',
           light: 'night',
@@ -2422,7 +10110,73 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'antenna',
           ambient: 'windsock',
-          floor: 'cross',
+          floor: 'authored',
+          floorPlan: {
+            name: 'receiver-array-calibration',
+            pattern: 'calibration',
+            paths: [
+              [
+                [14.4, 10.1],
+                [14.4, 9.4],
+                [15.1, 9.4],
+              ],
+              [
+                [17.9, 14.6],
+                [18.6, 14.6],
+                [18.6, 13.9],
+              ],
+              [
+                [5.4, 4.1],
+                [5.4, 3.4],
+                [6.1, 3.4],
+              ],
+              [
+                [8.9, 7.6],
+                [9.6, 7.6],
+                [9.6, 6.9],
+              ],
+            ],
+            patches: [
+              [14.4, 9.4, 4.2, 5.2],
+              [5.4, 3.4, 4.2, 4.2],
+            ],
+            seal: [18, 8, 'signal'],
+            intent:
+              'Prey keeps moving and can turn unseen during broadcast. Plan from the clear feed, follow a beacon, or intercept before the next warning.',
+          },
+          componentAssemblies: [
+            {
+              family: 'receiver',
+              cells: [
+                [15, 10],
+                [16, 10],
+                [17, 10],
+                [15, 11],
+                [16, 11],
+                [17, 11],
+                [15, 12],
+                [16, 12],
+                [17, 12],
+                [15, 13],
+                [16, 13],
+                [17, 13],
+              ],
+            },
+            {
+              family: 'shelter',
+              cells: [
+                [6, 4],
+                [7, 4],
+                [8, 4],
+                [6, 5],
+                [7, 5],
+                [8, 5],
+                [6, 6],
+                [7, 6],
+                [8, 6],
+              ],
+            },
+          ],
           focus: [18, 9],
           axis: 'vertical',
           light: 'night',
@@ -2442,7 +10196,70 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'antenna',
           ambient: 'windsock',
-          floor: 'cross',
+          floor: 'authored',
+          floorPlan: {
+            name: 'receiver-array-calibration',
+            pattern: 'calibration',
+            paths: [
+              [
+                [8.4, 4.1],
+                [8.4, 3.4],
+                [9.1, 3.4],
+              ],
+              [
+                [11.9, 7.6],
+                [12.6, 7.6],
+                [12.6, 6.9],
+              ],
+              [
+                [12.4, 11.1],
+                [12.4, 10.4],
+                [13.1, 10.4],
+              ],
+              [
+                [15.9, 14.6],
+                [16.6, 14.6],
+                [16.6, 13.9],
+              ],
+            ],
+            patches: [
+              [8.4, 3.4, 4.2, 4.2],
+              [12.4, 10.4, 4.2, 4.2],
+            ],
+            seal: [10, 2, 'signal'],
+            intent:
+              'Each source and lane has a different approach. Moving prey disappears during interference; new lane attacks wait for clear reception and a full warning.',
+          },
+          componentAssemblies: [
+            {
+              family: 'receiver',
+              cells: [
+                [9, 4],
+                [10, 4],
+                [11, 4],
+                [9, 5],
+                [10, 5],
+                [11, 5],
+                [9, 6],
+                [10, 6],
+                [11, 6],
+              ],
+            },
+            {
+              family: 'shelter',
+              cells: [
+                [13, 11],
+                [14, 11],
+                [15, 11],
+                [13, 12],
+                [14, 12],
+                [15, 12],
+                [13, 13],
+                [14, 13],
+                [15, 13],
+              ],
+            },
+          ],
           focus: [10, 5],
           axis: 'horizontal',
           light: 'night',
@@ -2462,7 +10279,67 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'antenna',
           ambient: 'windsock',
-          floor: 'cross',
+          floor: 'authored',
+          floorPlan: {
+            name: 'receiver-array-calibration',
+            pattern: 'calibration',
+            paths: [
+              [
+                [13.4, 11.1],
+                [13.4, 10.4],
+                [14.1, 10.4],
+              ],
+              [
+                [16.9, 14.6],
+                [17.6, 14.6],
+                [17.6, 13.9],
+              ],
+              [
+                [7.4, 4.1],
+                [7.4, 3.4],
+                [8.1, 3.4],
+              ],
+              [
+                [9.9, 7.6],
+                [10.6, 7.6],
+                [10.6, 6.9],
+              ],
+            ],
+            patches: [
+              [13.4, 10.4, 4.2, 4.2],
+              [7.4, 3.4, 3.2, 4.2],
+            ],
+            seal: [12, 12, 'signal'],
+            intent:
+              'Two cores use different relay pairs. Clear the broadcast beacon or plan the pad route before enemies disappear; openings stay available.',
+          },
+          componentAssemblies: [
+            {
+              family: 'receiver',
+              cells: [
+                [14, 11],
+                [15, 11],
+                [16, 11],
+                [14, 12],
+                [15, 12],
+                [16, 12],
+                [14, 13],
+                [15, 13],
+                [16, 13],
+              ],
+            },
+            {
+              family: 'shelter',
+              cells: [
+                [8, 4],
+                [9, 4],
+                [8, 5],
+                [9, 5],
+                [8, 6],
+                [9, 6],
+              ],
+            },
+          ],
           focus: [14, 12],
           axis: 'vertical',
           light: 'night',
@@ -2482,7 +10359,54 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'terrace',
           ambient: 'leaves',
-          floor: 'ring',
+          floor: 'authored',
+          floorPlan: {
+            name: 'perimeter-gardens-perimeter',
+            pattern: 'perimeter',
+            paths: [
+              [
+                [9.4, 11.6],
+                [9.4, 5.4],
+                [14.6, 5.4],
+              ],
+              [
+                [9.75, 11.6],
+                [9.75, 5.75],
+                [14.6, 5.75],
+              ],
+            ],
+            patches: [[9.4, 5.4, 5.2, 6.2]],
+            seal: [6, 6, 'survey'],
+            intent:
+              'The patrol follows the outer circuit. Cut across the empty interior to intercept it.',
+          },
+          componentAssemblies: [
+            {
+              family: 'excavation',
+              cells: [
+                [10, 6],
+                [11, 6],
+                [12, 6],
+                [13, 6],
+                [10, 7],
+                [11, 7],
+                [12, 7],
+                [13, 7],
+                [10, 8],
+                [11, 8],
+                [12, 8],
+                [13, 8],
+                [10, 9],
+                [11, 9],
+                [12, 9],
+                [13, 9],
+                [10, 10],
+                [11, 10],
+                [12, 10],
+                [13, 10],
+              ],
+            },
+          ],
           focus: [6, 6],
           axis: 'horizontal',
           light: 'morning',
@@ -2502,7 +10426,70 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'terrace',
           ambient: 'leaves',
-          floor: 'ring',
+          floor: 'authored',
+          floorPlan: {
+            name: 'perimeter-gardens-perimeter',
+            pattern: 'perimeter',
+            paths: [
+              [
+                [6.4, 8.6],
+                [6.4, 4.4],
+                [10.6, 4.4],
+              ],
+              [
+                [6.75, 8.6],
+                [6.75, 4.75],
+                [10.6, 4.75],
+              ],
+              [
+                [13.4, 13.6],
+                [13.4, 9.4],
+                [17.6, 9.4],
+              ],
+              [
+                [13.75, 13.6],
+                [13.75, 9.75],
+                [17.6, 9.75],
+              ],
+            ],
+            patches: [
+              [6.4, 4.4, 4.2, 4.2],
+              [13.4, 9.4, 4.2, 4.2],
+            ],
+            seal: [18, 11, 'survey'],
+            intent:
+              'Alternate perimeter interceptions with open-field catches. Leave your outer return clear.',
+          },
+          componentAssemblies: [
+            {
+              family: 'reclaimer',
+              cells: [
+                [7, 5],
+                [8, 5],
+                [9, 5],
+                [7, 6],
+                [8, 6],
+                [9, 6],
+                [7, 7],
+                [8, 7],
+                [9, 7],
+              ],
+            },
+            {
+              family: 'excavation',
+              cells: [
+                [14, 10],
+                [15, 10],
+                [16, 10],
+                [14, 11],
+                [15, 11],
+                [16, 11],
+                [14, 12],
+                [15, 12],
+                [16, 12],
+              ],
+            },
+          ],
           focus: [17, 11],
           axis: 'vertical',
           light: 'morning',
@@ -2522,7 +10509,70 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'terrace',
           ambient: 'leaves',
-          floor: 'ring',
+          floor: 'authored',
+          floorPlan: {
+            name: 'perimeter-gardens-perimeter',
+            pattern: 'perimeter',
+            paths: [
+              [
+                [8.4, 12.6],
+                [8.4, 5.4],
+                [15.6, 5.4],
+              ],
+              [
+                [8.75, 12.6],
+                [8.75, 5.75],
+                [15.6, 5.75],
+              ],
+            ],
+            patches: [[8.4, 5.4, 7.2, 7.2]],
+            seal: [11, 4, 'survey'],
+            intent:
+              'The crawler circles the island. Wait at the next corner instead of following its heels.',
+          },
+          componentAssemblies: [
+            {
+              family: 'excavation',
+              cells: [
+                [9, 6],
+                [10, 6],
+                [11, 6],
+                [12, 6],
+                [13, 6],
+                [14, 6],
+                [9, 7],
+                [10, 7],
+                [11, 7],
+                [12, 7],
+                [13, 7],
+                [14, 7],
+                [9, 8],
+                [10, 8],
+                [11, 8],
+                [12, 8],
+                [13, 8],
+                [14, 8],
+                [9, 9],
+                [10, 9],
+                [11, 9],
+                [12, 9],
+                [13, 9],
+                [14, 9],
+                [9, 10],
+                [10, 10],
+                [11, 10],
+                [12, 10],
+                [13, 10],
+                [14, 10],
+                [9, 11],
+                [10, 11],
+                [11, 11],
+                [12, 11],
+                [13, 11],
+                [14, 11],
+              ],
+            },
+          ],
           focus: [11, 8],
           axis: 'horizontal',
           light: 'morning',
@@ -2542,7 +10592,94 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'terrace',
           ambient: 'leaves',
-          floor: 'ring',
+          floor: 'authored',
+          floorPlan: {
+            name: 'perimeter-gardens-perimeter',
+            pattern: 'perimeter',
+            paths: [
+              [
+                [8.4, 12.6],
+                [8.4, 5.4],
+                [15.6, 5.4],
+              ],
+              [
+                [8.75, 12.6],
+                [8.75, 5.75],
+                [15.6, 5.75],
+              ],
+              [
+                [2.4, 8.6],
+                [2.4, 4.4],
+                [5.6, 4.4],
+              ],
+              [
+                [2.75, 8.6],
+                [2.75, 4.75],
+                [5.6, 4.75],
+              ],
+            ],
+            patches: [
+              [8.4, 5.4, 7.2, 7.2],
+              [2.4, 4.4, 3.2, 4.2],
+            ],
+            seal: [16, 5, 'survey'],
+            intent:
+              'Inner and outer circuits require different shortcuts. Both patrols yield when your cable blocks their next cell.',
+          },
+          componentAssemblies: [
+            {
+              family: 'excavation',
+              cells: [
+                [9, 6],
+                [10, 6],
+                [11, 6],
+                [12, 6],
+                [13, 6],
+                [14, 6],
+                [9, 7],
+                [10, 7],
+                [11, 7],
+                [12, 7],
+                [13, 7],
+                [14, 7],
+                [9, 8],
+                [10, 8],
+                [11, 8],
+                [12, 8],
+                [13, 8],
+                [14, 8],
+                [9, 9],
+                [10, 9],
+                [11, 9],
+                [12, 9],
+                [13, 9],
+                [14, 9],
+                [9, 10],
+                [10, 10],
+                [11, 10],
+                [12, 10],
+                [13, 10],
+                [14, 10],
+                [9, 11],
+                [10, 11],
+                [11, 11],
+                [12, 11],
+                [13, 11],
+                [14, 11],
+              ],
+            },
+            {
+              family: 'reclaimer',
+              cells: [
+                [3, 5],
+                [4, 5],
+                [3, 6],
+                [4, 6],
+                [3, 7],
+                [4, 7],
+              ],
+            },
+          ],
           focus: [16, 5],
           axis: 'vertical',
           light: 'late',
@@ -2562,7 +10699,46 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'terrace',
           ambient: 'leaves',
-          floor: 'ring',
+          floor: 'authored',
+          floorPlan: {
+            name: 'perimeter-gardens-perimeter',
+            pattern: 'perimeter',
+            paths: [
+              [
+                [9.4, 9.6],
+                [9.4, 4.4],
+                [13.6, 4.4],
+              ],
+              [
+                [9.75, 9.6],
+                [9.75, 4.75],
+                [13.6, 4.75],
+              ],
+            ],
+            patches: [[9.4, 4.4, 4.2, 5.2]],
+            seal: [7, 12, 'survey'],
+            intent:
+              'The dormant rover warns when you approach, then follows your position. Its body is always safe to catch.',
+          },
+          componentAssemblies: [
+            {
+              family: 'excavation',
+              cells: [
+                [10, 5],
+                [11, 5],
+                [12, 5],
+                [10, 6],
+                [11, 6],
+                [12, 6],
+                [10, 7],
+                [11, 7],
+                [12, 7],
+                [10, 8],
+                [11, 8],
+                [12, 8],
+              ],
+            },
+          ],
           focus: [7, 12],
           axis: 'horizontal',
           light: 'late',
@@ -2582,7 +10758,77 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'terrace',
           ambient: 'leaves',
-          floor: 'ring',
+          floor: 'authored',
+          floorPlan: {
+            name: 'perimeter-gardens-perimeter',
+            pattern: 'perimeter',
+            paths: [
+              [
+                [6.4, 10.6],
+                [6.4, 4.4],
+                [10.6, 4.4],
+              ],
+              [
+                [6.75, 10.6],
+                [6.75, 4.75],
+                [10.6, 4.75],
+              ],
+              [
+                [14.4, 13.6],
+                [14.4, 7.4],
+                [17.6, 7.4],
+              ],
+              [
+                [14.75, 13.6],
+                [14.75, 7.75],
+                [17.6, 7.75],
+              ],
+            ],
+            patches: [
+              [6.4, 4.4, 4.2, 6.2],
+              [14.4, 7.4, 3.2, 6.2],
+            ],
+            seal: [12, 9, 'survey'],
+            intent:
+              'Wake the rover from an open approach, then meet the outer patrol on a different return.',
+          },
+          componentAssemblies: [
+            {
+              family: 'excavation',
+              cells: [
+                [7, 5],
+                [8, 5],
+                [9, 5],
+                [7, 6],
+                [8, 6],
+                [9, 6],
+                [7, 7],
+                [8, 7],
+                [9, 7],
+                [7, 8],
+                [8, 8],
+                [9, 8],
+                [7, 9],
+                [8, 9],
+                [9, 9],
+              ],
+            },
+            {
+              family: 'reclaimer',
+              cells: [
+                [15, 8],
+                [16, 8],
+                [15, 9],
+                [16, 9],
+                [15, 10],
+                [16, 10],
+                [15, 11],
+                [16, 11],
+                [15, 12],
+                [16, 12],
+              ],
+            },
+          ],
           focus: [12, 9],
           axis: 'vertical',
           light: 'late',
@@ -2602,7 +10848,46 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'shelter',
           ambient: 'windsock',
-          floor: 'terraces',
+          floor: 'authored',
+          floorPlan: {
+            name: 'summit-station-summit',
+            pattern: 'summit',
+            paths: [
+              [
+                [8.4, 5.1],
+                [8.4, 4.4],
+                [9.1, 4.4],
+              ],
+              [
+                [10.9, 11.6],
+                [11.6, 11.6],
+                [11.6, 10.9],
+              ],
+            ],
+            patches: [[8.4, 4.4, 3.2, 7.2]],
+            seal: [6, 6, 'signal'],
+            intent:
+              'This target reflects when blocked. Predict the return along its straight instead of chasing it.',
+          },
+          componentAssemblies: [
+            {
+              family: 'receiver',
+              cells: [
+                [9, 5],
+                [10, 5],
+                [9, 6],
+                [10, 6],
+                [9, 7],
+                [10, 7],
+                [9, 8],
+                [10, 8],
+                [9, 9],
+                [10, 9],
+                [9, 10],
+                [10, 10],
+              ],
+            },
+          ],
           focus: [6, 6],
           axis: 'horizontal',
           light: 'morning',
@@ -2622,7 +10907,71 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'shelter',
           ambient: 'windsock',
-          floor: 'terraces',
+          floor: 'authored',
+          floorPlan: {
+            name: 'summit-station-summit',
+            pattern: 'summit',
+            paths: [
+              [
+                [6.4, 5.1],
+                [6.4, 4.4],
+                [7.1, 4.4],
+              ],
+              [
+                [8.9, 10.6],
+                [9.6, 10.6],
+                [9.6, 9.9],
+              ],
+              [
+                [14.4, 9.1],
+                [14.4, 8.4],
+                [15.1, 8.4],
+              ],
+              [
+                [17.9, 12.6],
+                [18.6, 12.6],
+                [18.6, 11.9],
+              ],
+            ],
+            patches: [
+              [6.4, 4.4, 3.2, 6.2],
+              [14.4, 8.4, 4.2, 4.2],
+            ],
+            seal: [19, 11, 'signal'],
+            intent:
+              'Use island corners to intercept reflected routes while the rover announces its approach.',
+          },
+          componentAssemblies: [
+            {
+              family: 'shelter',
+              cells: [
+                [7, 5],
+                [8, 5],
+                [7, 6],
+                [8, 6],
+                [7, 7],
+                [8, 7],
+                [7, 8],
+                [8, 8],
+                [7, 9],
+                [8, 9],
+              ],
+            },
+            {
+              family: 'receiver',
+              cells: [
+                [15, 9],
+                [16, 9],
+                [17, 9],
+                [15, 10],
+                [16, 10],
+                [17, 10],
+                [15, 11],
+                [16, 11],
+                [17, 11],
+              ],
+            },
+          ],
           focus: [17, 11],
           axis: 'vertical',
           light: 'morning',
@@ -2642,7 +10991,39 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'shelter',
           ambient: 'windsock',
-          floor: 'terraces',
+          floor: 'authored',
+          floorPlan: {
+            name: 'summit-station-summit',
+            pattern: 'summit',
+            paths: [
+              [
+                [11.4, 6.1],
+                [11.4, 5.4],
+                [12.1, 5.4],
+              ],
+              [
+                [12.9, 11.6],
+                [13.6, 11.6],
+                [13.6, 10.9],
+              ],
+            ],
+            patches: [[11.4, 5.4, 2.2, 6.2]],
+            seal: [10, 8, 'signal'],
+            intent:
+              'Let one eroder open the marked shortcut, then intercept the runner. The permanent outside route remains available.',
+          },
+          componentAssemblies: [
+            {
+              family: 'receiver',
+              cells: [
+                [12, 6],
+                [12, 7],
+                [12, 8],
+                [12, 9],
+                [12, 10],
+              ],
+            },
+          ],
           focus: [11, 8],
           axis: 'horizontal',
           light: 'morning',
@@ -2662,7 +11043,66 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'shelter',
           ambient: 'windsock',
-          floor: 'terraces',
+          floor: 'authored',
+          floorPlan: {
+            name: 'summit-station-summit',
+            pattern: 'summit',
+            paths: [
+              [
+                [11.4, 5.1],
+                [11.4, 4.4],
+                [12.1, 4.4],
+              ],
+              [
+                [12.9, 13.6],
+                [13.6, 13.6],
+                [13.6, 12.9],
+              ],
+              [
+                [4.4, 11.1],
+                [4.4, 10.4],
+                [5.1, 10.4],
+              ],
+              [
+                [7.9, 13.6],
+                [8.6, 13.6],
+                [8.6, 12.9],
+              ],
+            ],
+            patches: [
+              [11.4, 4.4, 2.2, 9.2],
+              [4.4, 10.4, 4.2, 3.2],
+            ],
+            seal: [16, 5, 'signal'],
+            intent:
+              'Two different marked notches change the return route. Intercept moving prey through an opening or keep the longer bypass.',
+          },
+          componentAssemblies: [
+            {
+              family: 'antenna',
+              cells: [
+                [12, 5],
+                [12, 6],
+                [12, 7],
+                [12, 8],
+                [12, 9],
+                [12, 10],
+                [12, 11],
+                [12, 12],
+              ],
+            },
+            {
+              family: 'receiver',
+              cells: [
+                [5, 11],
+                [6, 11],
+                [7, 11],
+                [5, 12],
+                [6, 12],
+                [7, 12],
+              ],
+            },
+          ],
           focus: [16, 5],
           axis: 'vertical',
           light: 'late',
@@ -2682,7 +11122,70 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'shelter',
           ambient: 'windsock',
-          floor: 'terraces',
+          floor: 'authored',
+          floorPlan: {
+            name: 'summit-station-summit',
+            pattern: 'summit',
+            paths: [
+              [
+                [9.4, 4.1],
+                [9.4, 3.4],
+                [10.1, 3.4],
+              ],
+              [
+                [12.9, 7.6],
+                [13.6, 7.6],
+                [13.6, 6.9],
+              ],
+              [
+                [9.4, 10.1],
+                [9.4, 9.4],
+                [10.1, 9.4],
+              ],
+              [
+                [12.9, 13.6],
+                [13.6, 13.6],
+                [13.6, 12.9],
+              ],
+            ],
+            patches: [
+              [9.4, 3.4, 4.2, 4.2],
+              [9.4, 9.4, 4.2, 4.2],
+            ],
+            seal: [7, 12, 'signal'],
+            intent:
+              'Three guards face different approaches. Cross behind a departing shot and catch each post from the side.',
+          },
+          componentAssemblies: [
+            {
+              family: 'shelter',
+              cells: [
+                [10, 4],
+                [11, 4],
+                [12, 4],
+                [10, 5],
+                [11, 5],
+                [12, 5],
+                [10, 6],
+                [11, 6],
+                [12, 6],
+              ],
+            },
+            {
+              family: 'receiver',
+              cells: [
+                [10, 10],
+                [11, 10],
+                [12, 10],
+                [10, 11],
+                [11, 11],
+                [12, 11],
+                [10, 12],
+                [11, 12],
+                [12, 12],
+              ],
+            },
+          ],
           focus: [7, 12],
           axis: 'horizontal',
           light: 'late',
@@ -2702,7 +11205,73 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'shelter',
           ambient: 'windsock',
-          floor: 'terraces',
+          floor: 'authored',
+          floorPlan: {
+            name: 'summit-station-summit',
+            pattern: 'summit',
+            paths: [
+              [
+                [9.4, 4.1],
+                [9.4, 3.4],
+                [10.1, 3.4],
+              ],
+              [
+                [13.9, 7.6],
+                [14.6, 7.6],
+                [14.6, 6.9],
+              ],
+              [
+                [7.4, 11.1],
+                [7.4, 10.4],
+                [8.1, 10.4],
+              ],
+              [
+                [10.9, 14.6],
+                [11.6, 14.6],
+                [11.6, 13.9],
+              ],
+            ],
+            patches: [
+              [9.4, 3.4, 5.2, 4.2],
+              [7.4, 10.4, 4.2, 4.2],
+            ],
+            seal: [12, 9, 'signal'],
+            intent:
+              'Rovers share the approaches to three different guards. Choose a safe flank while keeping your next interception open.',
+          },
+          componentAssemblies: [
+            {
+              family: 'receiver',
+              cells: [
+                [10, 4],
+                [11, 4],
+                [12, 4],
+                [13, 4],
+                [10, 5],
+                [11, 5],
+                [12, 5],
+                [13, 5],
+                [10, 6],
+                [11, 6],
+                [12, 6],
+                [13, 6],
+              ],
+            },
+            {
+              family: 'shelter',
+              cells: [
+                [8, 11],
+                [9, 11],
+                [10, 11],
+                [8, 12],
+                [9, 12],
+                [10, 12],
+                [8, 13],
+                [9, 13],
+                [10, 13],
+              ],
+            },
+          ],
           focus: [12, 9],
           axis: 'vertical',
           light: 'late',
@@ -2722,7 +11291,61 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'shelter',
           ambient: 'windsock',
-          floor: 'terraces',
+          floor: 'authored',
+          floorPlan: {
+            name: 'summit-station-summit',
+            pattern: 'summit',
+            paths: [
+              [
+                [11.4, 6.1],
+                [11.4, 5.4],
+                [12.1, 5.4],
+              ],
+              [
+                [12.9, 11.6],
+                [13.6, 11.6],
+                [13.6, 10.9],
+              ],
+              [
+                [5.4, 5.1],
+                [5.4, 4.4],
+                [6.1, 4.4],
+              ],
+              [
+                [7.9, 7.6],
+                [8.6, 7.6],
+                [8.6, 6.9],
+              ],
+            ],
+            patches: [
+              [11.4, 5.4, 2.2, 6.2],
+              [5.4, 4.4, 3.2, 3.2],
+            ],
+            seal: [5, 8, 'signal'],
+            intent:
+              'Open two different routes while moving prey shares local interference. The antenna beacon and attack warnings remain visible when enemies disappear.',
+          },
+          componentAssemblies: [
+            {
+              family: 'antenna',
+              cells: [
+                [12, 6],
+                [12, 7],
+                [12, 8],
+                [12, 9],
+                [12, 10],
+              ],
+            },
+            {
+              family: 'receiver',
+              cells: [
+                [6, 5],
+                [7, 5],
+                [6, 6],
+                [7, 6],
+              ],
+            },
+          ],
           focus: [5, 8],
           axis: 'horizontal',
           light: 'night',
@@ -2742,7 +11365,90 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'shelter',
           ambient: 'windsock',
-          floor: 'terraces',
+          floor: 'authored',
+          floorPlan: {
+            name: 'summit-station-summit',
+            pattern: 'summit',
+            paths: [
+              [
+                [12.4, 11.1],
+                [12.4, 10.4],
+                [13.1, 10.4],
+              ],
+              [
+                [16.9, 14.6],
+                [17.6, 14.6],
+                [17.6, 13.9],
+              ],
+              [
+                [8.4, 5.1],
+                [8.4, 4.4],
+                [9.1, 4.4],
+              ],
+              [
+                [11.9, 7.6],
+                [12.6, 7.6],
+                [12.6, 6.9],
+              ],
+              [
+                [3.4, 11.1],
+                [3.4, 10.4],
+                [4.1, 10.4],
+              ],
+              [
+                [5.9, 13.6],
+                [6.6, 13.6],
+                [6.6, 12.9],
+              ],
+            ],
+            patches: [
+              [12.4, 10.4, 5.2, 4.2],
+              [8.4, 4.4, 4.2, 3.2],
+              [3.4, 10.4, 3.2, 3.2],
+            ],
+            seal: [18, 9, 'signal'],
+            intent:
+              'Eight encounters use distinct posts, relay pairs and lane directions. Take Reel when the growing cable makes the short return harder.',
+          },
+          componentAssemblies: [
+            {
+              family: 'receiver',
+              cells: [
+                [13, 11],
+                [14, 11],
+                [15, 11],
+                [16, 11],
+                [13, 12],
+                [14, 12],
+                [15, 12],
+                [16, 12],
+                [13, 13],
+                [14, 13],
+                [15, 13],
+                [16, 13],
+              ],
+            },
+            {
+              family: 'shelter',
+              cells: [
+                [9, 5],
+                [10, 5],
+                [11, 5],
+                [9, 6],
+                [10, 6],
+                [11, 6],
+              ],
+            },
+            {
+              family: 'shelter',
+              cells: [
+                [4, 11],
+                [5, 11],
+                [4, 12],
+                [5, 12],
+              ],
+            },
+          ],
           focus: [18, 9],
           axis: 'vertical',
           light: 'night',
@@ -2762,7 +11468,82 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'container',
           ambient: 'lamps',
-          floor: 'fork',
+          floor: 'authored',
+          floorPlan: {
+            name: 'crossing-platforms-rails',
+            pattern: 'rails',
+            paths: [
+              [
+                [7.4, 4.4],
+                [11.6, 4.4],
+              ],
+              [
+                [7.4, 8.6],
+                [11.6, 8.6],
+              ],
+              [
+                [7.4, 4.4],
+                [7.4, 4.9],
+              ],
+              [
+                [11.6, 8.1],
+                [11.6, 8.6],
+              ],
+              [
+                [14.4, 9.4],
+                [18.6, 9.4],
+              ],
+              [
+                [14.4, 13.6],
+                [18.6, 13.6],
+              ],
+              [
+                [14.4, 9.4],
+                [14.4, 9.9],
+              ],
+              [
+                [18.6, 13.1],
+                [18.6, 13.6],
+              ],
+            ],
+            patches: [
+              [7.4, 4.4, 4.2, 4.2],
+              [14.4, 9.4, 4.2, 4.2],
+            ],
+            seal: [6, 6, 'freight'],
+            intent:
+              'Cut across one island circuit or intercept the runner. Leave the other side free for your return.',
+          },
+          componentAssemblies: [
+            {
+              family: 'dispatch',
+              cells: [
+                [8, 5],
+                [9, 5],
+                [10, 5],
+                [8, 6],
+                [9, 6],
+                [10, 6],
+                [8, 7],
+                [9, 7],
+                [10, 7],
+              ],
+            },
+            {
+              family: 'container',
+              cells: [
+                [15, 10],
+                [16, 10],
+                [17, 10],
+                [15, 11],
+                [16, 11],
+                [17, 11],
+                [15, 12],
+                [16, 12],
+                [17, 12],
+              ],
+            },
+          ],
           focus: [6, 6],
           axis: 'horizontal',
           light: 'morning',
@@ -2782,7 +11563,80 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'container',
           ambient: 'lamps',
-          floor: 'fork',
+          floor: 'authored',
+          floorPlan: {
+            name: 'crossing-platforms-rails',
+            pattern: 'rails',
+            paths: [
+              [
+                [5.4, 4.4],
+                [10.6, 4.4],
+              ],
+              [
+                [5.4, 11.6],
+                [10.6, 11.6],
+              ],
+              [
+                [13.4, 6.4],
+                [18.6, 6.4],
+              ],
+              [
+                [13.4, 13.6],
+                [18.6, 13.6],
+              ],
+            ],
+            patches: [
+              [5.4, 4.4, 5.2, 7.2],
+              [13.4, 6.4, 5.2, 7.2],
+            ],
+            seal: [19, 11, 'freight'],
+            intent:
+              'Read the announced bay before entering a court. The open middle offers a second interception.',
+          },
+          componentAssemblies: [
+            {
+              family: 'container',
+              cells: [
+                [6, 5],
+                [7, 5],
+                [6, 6],
+                [7, 6],
+                [6, 7],
+                [7, 7],
+                [6, 8],
+                [7, 8],
+                [6, 9],
+                [7, 9],
+                [8, 9],
+                [9, 9],
+                [6, 10],
+                [7, 10],
+                [8, 10],
+                [9, 10],
+              ],
+            },
+            {
+              family: 'dispatch',
+              cells: [
+                [14, 7],
+                [15, 7],
+                [16, 7],
+                [17, 7],
+                [14, 8],
+                [15, 8],
+                [16, 8],
+                [17, 8],
+                [16, 9],
+                [17, 9],
+                [16, 10],
+                [17, 10],
+                [16, 11],
+                [17, 11],
+                [16, 12],
+                [17, 12],
+              ],
+            },
+          ],
           focus: [17, 11],
           axis: 'vertical',
           light: 'morning',
@@ -2802,7 +11656,106 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'container',
           ambient: 'lamps',
-          floor: 'fork',
+          floor: 'authored',
+          floorPlan: {
+            name: 'crossing-platforms-rails',
+            pattern: 'rails',
+            paths: [
+              [
+                [10.4, 4.4],
+                [13.6, 4.4],
+              ],
+              [
+                [10.4, 13.6],
+                [13.6, 13.6],
+              ],
+              [
+                [4.4, 7.4],
+                [8.6, 7.4],
+              ],
+              [
+                [4.4, 10.6],
+                [8.6, 10.6],
+              ],
+              [
+                [4.4, 7.4],
+                [4.4, 7.9],
+              ],
+              [
+                [8.6, 10.1],
+                [8.6, 10.6],
+              ],
+              [
+                [15.4, 7.4],
+                [19.6, 7.4],
+              ],
+              [
+                [15.4, 10.6],
+                [19.6, 10.6],
+              ],
+              [
+                [15.4, 7.4],
+                [15.4, 7.9],
+              ],
+              [
+                [19.6, 10.1],
+                [19.6, 10.6],
+              ],
+            ],
+            patches: [
+              [10.4, 4.4, 3.2, 9.2],
+              [4.4, 7.4, 4.2, 3.2],
+              [15.4, 7.4, 4.2, 3.2],
+            ],
+            seal: [9, 8, 'freight'],
+            intent:
+              'Meet the partners at either end of the divider. After the first catch, plan for the survivor’s escape.',
+          },
+          componentAssemblies: [
+            {
+              family: 'dispatch',
+              cells: [
+                [11, 5],
+                [12, 5],
+                [11, 6],
+                [12, 6],
+                [11, 7],
+                [12, 7],
+                [11, 8],
+                [12, 8],
+                [11, 9],
+                [12, 9],
+                [11, 10],
+                [12, 10],
+                [11, 11],
+                [12, 11],
+                [11, 12],
+                [12, 12],
+              ],
+            },
+            {
+              family: 'container',
+              cells: [
+                [5, 8],
+                [6, 8],
+                [7, 8],
+                [5, 9],
+                [6, 9],
+                [7, 9],
+              ],
+            },
+            {
+              family: 'container',
+              cells: [
+                [16, 8],
+                [17, 8],
+                [18, 8],
+                [16, 9],
+                [17, 9],
+                [18, 9],
+              ],
+            },
+          ],
           focus: [11, 8],
           axis: 'horizontal',
           light: 'morning',
@@ -2822,7 +11775,68 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'container',
           ambient: 'lamps',
-          floor: 'fork',
+          floor: 'authored',
+          floorPlan: {
+            name: 'crossing-platforms-rails',
+            pattern: 'rails',
+            paths: [
+              [
+                [9.4, 1],
+                [12.6, 1],
+              ],
+              [
+                [9.4, 5.6],
+                [12.6, 5.6],
+              ],
+              [
+                [13.4, 12.4],
+                [16.6, 12.4],
+              ],
+              [
+                [13.4, 17],
+                [16.6, 17],
+              ],
+            ],
+            patches: [
+              [9.4, 1, 3.2, 4.6],
+              [13.4, 12.4, 3.2, 4.6],
+            ],
+            seal: [16, 5, 'freight'],
+            intent:
+              'Cross an edge to get ahead of the runner, or meet the short patrol circuit. Your cable also returns across the seam.',
+          },
+          componentAssemblies: [
+            {
+              family: 'dispatch',
+              cells: [
+                [10, 0],
+                [11, 0],
+                [10, 1],
+                [11, 1],
+                [10, 2],
+                [11, 2],
+                [10, 3],
+                [11, 3],
+                [10, 4],
+                [11, 4],
+              ],
+            },
+            {
+              family: 'container',
+              cells: [
+                [14, 13],
+                [15, 13],
+                [14, 14],
+                [15, 14],
+                [14, 15],
+                [15, 15],
+                [14, 16],
+                [15, 16],
+                [14, 17],
+                [15, 17],
+              ],
+            },
+          ],
           focus: [16, 5],
           axis: 'vertical',
           light: 'late',
@@ -2842,7 +11856,106 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'container',
           ambient: 'lamps',
-          floor: 'fork',
+          floor: 'authored',
+          floorPlan: {
+            name: 'crossing-platforms-rails',
+            pattern: 'rails',
+            paths: [
+              [
+                [6.4, 3.4],
+                [9.6, 3.4],
+              ],
+              [
+                [6.4, 11.6],
+                [9.6, 11.6],
+              ],
+              [
+                [13.4, 8.4],
+                [19.6, 8.4],
+              ],
+              [
+                [13.4, 11.6],
+                [19.6, 11.6],
+              ],
+              [
+                [13.4, 8.4],
+                [13.4, 8.9],
+              ],
+              [
+                [19.6, 11.1],
+                [19.6, 11.6],
+              ],
+              [
+                [14.4, 3.4],
+                [17.6, 3.4],
+              ],
+              [
+                [14.4, 6.6],
+                [17.6, 6.6],
+              ],
+              [
+                [14.4, 3.4],
+                [14.4, 3.9],
+              ],
+              [
+                [17.6, 6.1],
+                [17.6, 6.6],
+              ],
+            ],
+            patches: [
+              [6.4, 3.4, 3.2, 8.2],
+              [13.4, 8.4, 6.2, 3.2],
+              [14.4, 3.4, 3.2, 3.2],
+            ],
+            seal: [7, 12, 'freight'],
+            intent:
+              'Predict the reflected return while another target announces its next corner. Choose the approach that leaves your tail room.',
+          },
+          componentAssemblies: [
+            {
+              family: 'dispatch',
+              cells: [
+                [7, 4],
+                [8, 4],
+                [7, 5],
+                [8, 5],
+                [7, 6],
+                [8, 6],
+                [7, 7],
+                [8, 7],
+                [7, 8],
+                [8, 8],
+                [7, 9],
+                [8, 9],
+                [7, 10],
+                [8, 10],
+              ],
+            },
+            {
+              family: 'container',
+              cells: [
+                [14, 9],
+                [15, 9],
+                [16, 9],
+                [17, 9],
+                [18, 9],
+                [14, 10],
+                [15, 10],
+                [16, 10],
+                [17, 10],
+                [18, 10],
+              ],
+            },
+            {
+              family: 'container',
+              cells: [
+                [15, 4],
+                [16, 4],
+                [15, 5],
+                [16, 5],
+              ],
+            },
+          ],
           focus: [7, 12],
           axis: 'horizontal',
           light: 'late',
@@ -2862,7 +11975,72 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'container',
           ambient: 'lamps',
-          floor: 'fork',
+          floor: 'authored',
+          floorPlan: {
+            name: 'crossing-platforms-rails',
+            pattern: 'rails',
+            paths: [
+              [
+                [6.4, 5.4],
+                [10.6, 5.4],
+              ],
+              [
+                [6.4, 10.6],
+                [10.6, 10.6],
+              ],
+              [
+                [14.4, 5.4],
+                [18.6, 5.4],
+              ],
+              [
+                [14.4, 10.6],
+                [18.6, 10.6],
+              ],
+            ],
+            patches: [
+              [6.4, 5.4, 4.2, 5.2],
+              [14.4, 5.4, 4.2, 5.2],
+            ],
+            seal: [12, 9, 'freight'],
+            intent:
+              'Two moving circuits share a timed crossing. Intercept the nearer target or take the always-open outside return.',
+          },
+          componentAssemblies: [
+            {
+              family: 'dispatch',
+              cells: [
+                [7, 6],
+                [8, 6],
+                [9, 6],
+                [7, 7],
+                [8, 7],
+                [9, 7],
+                [7, 8],
+                [8, 8],
+                [9, 8],
+                [7, 9],
+                [8, 9],
+                [9, 9],
+              ],
+            },
+            {
+              family: 'container',
+              cells: [
+                [15, 6],
+                [16, 6],
+                [17, 6],
+                [15, 7],
+                [16, 7],
+                [17, 7],
+                [15, 8],
+                [16, 8],
+                [17, 8],
+                [15, 9],
+                [16, 9],
+                [17, 9],
+              ],
+            },
+          ],
           focus: [12, 9],
           axis: 'vertical',
           light: 'late',
@@ -2882,7 +12060,54 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'boiler',
           ambient: 'fan',
-          floor: 'elbow',
+          floor: 'authored',
+          floorPlan: {
+            name: 'service-works-service',
+            pattern: 'service',
+            paths: [
+              [
+                [10.4, 2.9],
+                [10.4, 2.4],
+                [12.6, 2.4],
+                [12.6, 8.1],
+              ],
+              [
+                [10.4, 9.9],
+                [10.4, 9.4],
+                [12.6, 9.4],
+                [12.6, 15.1],
+              ],
+            ],
+            patches: [
+              [10.4, 2.4, 2.2, 6.2],
+              [10.4, 9.4, 2.2, 6.2],
+            ],
+            seal: [6, 6, 'valve'],
+            intent:
+              'Take the brief middle opening or begin the longer return before the sprinter accelerates.',
+          },
+          componentAssemblies: [
+            {
+              family: 'pressure',
+              cells: [
+                [11, 3],
+                [11, 4],
+                [11, 5],
+                [11, 6],
+                [11, 7],
+              ],
+            },
+            {
+              family: 'coolant',
+              cells: [
+                [11, 10],
+                [11, 11],
+                [11, 12],
+                [11, 13],
+                [11, 14],
+              ],
+            },
+          ],
           focus: [6, 6],
           axis: 'horizontal',
           light: 'morning',
@@ -2902,7 +12127,78 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'boiler',
           ambient: 'fan',
-          floor: 'elbow',
+          floor: 'authored',
+          floorPlan: {
+            name: 'service-works-service',
+            pattern: 'service',
+            paths: [
+              [
+                [5.4, 4.9],
+                [5.4, 4.4],
+                [9.6, 4.4],
+                [9.6, 8.1],
+              ],
+              [
+                [13.4, 8.9],
+                [13.4, 8.4],
+                [17.6, 8.4],
+                [17.6, 12.1],
+              ],
+              [
+                [17.4, 3.9],
+                [17.4, 3.4],
+                [20.6, 3.4],
+                [20.6, 6.1],
+              ],
+            ],
+            patches: [
+              [5.4, 4.4, 4.2, 4.2],
+              [13.4, 8.4, 4.2, 4.2],
+              [17.4, 3.4, 3.2, 3.2],
+            ],
+            seal: [18, 11, 'valve'],
+            intent:
+              'The Pulse supply is off the shortest route. Spend the detour to freeze an interception, or keep chasing.',
+          },
+          componentAssemblies: [
+            {
+              family: 'boiler',
+              cells: [
+                [6, 5],
+                [7, 5],
+                [8, 5],
+                [6, 6],
+                [7, 6],
+                [8, 6],
+                [6, 7],
+                [7, 7],
+                [8, 7],
+              ],
+            },
+            {
+              family: 'pressure',
+              cells: [
+                [14, 9],
+                [15, 9],
+                [16, 9],
+                [14, 10],
+                [15, 10],
+                [16, 10],
+                [14, 11],
+                [15, 11],
+                [16, 11],
+              ],
+            },
+            {
+              family: 'boiler',
+              cells: [
+                [18, 4],
+                [19, 4],
+                [18, 5],
+                [19, 5],
+              ],
+            },
+          ],
           focus: [17, 11],
           axis: 'vertical',
           light: 'morning',
@@ -2922,7 +12218,80 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'boiler',
           ambient: 'fan',
-          floor: 'elbow',
+          floor: 'authored',
+          floorPlan: {
+            name: 'service-works-service',
+            pattern: 'service',
+            paths: [
+              [
+                [7.4, 3.9],
+                [7.4, 3.4],
+                [10.6, 3.4],
+                [10.6, 10.1],
+              ],
+              [
+                [13.4, 7.9],
+                [13.4, 7.4],
+                [16.6, 7.4],
+                [16.6, 13.1],
+              ],
+              [
+                [10.4, 10.9],
+                [10.4, 10.4],
+                [12.6, 10.4],
+                [12.6, 13.1],
+              ],
+            ],
+            patches: [
+              [7.4, 3.4, 3.2, 7.2],
+              [13.4, 7.4, 3.2, 6.2],
+              [10.4, 10.4, 2.2, 3.2],
+            ],
+            seal: [11, 8, 'valve'],
+            intent:
+              'Keep both turning yards open as your cable grows. Reel makes the inner shortcut usable again; catch braced prey during rest.',
+          },
+          componentAssemblies: [
+            {
+              family: 'pressure',
+              cells: [
+                [8, 4],
+                [9, 4],
+                [8, 5],
+                [9, 5],
+                [8, 6],
+                [9, 6],
+                [8, 7],
+                [9, 7],
+                [8, 8],
+                [9, 8],
+                [8, 9],
+                [9, 9],
+              ],
+            },
+            {
+              family: 'boiler',
+              cells: [
+                [14, 8],
+                [15, 8],
+                [14, 9],
+                [15, 9],
+                [14, 10],
+                [15, 10],
+                [14, 11],
+                [15, 11],
+                [14, 12],
+                [15, 12],
+              ],
+            },
+            {
+              family: 'coolant',
+              cells: [
+                [11, 11],
+                [11, 12],
+              ],
+            },
+          ],
           focus: [11, 8],
           axis: 'horizontal',
           light: 'morning',
@@ -2942,7 +12311,65 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'boiler',
           ambient: 'fan',
-          floor: 'elbow',
+          floor: 'authored',
+          floorPlan: {
+            name: 'service-works-service',
+            pattern: 'service',
+            paths: [
+              [
+                [7.4, 3.9],
+                [7.4, 3.4],
+                [11.6, 3.4],
+                [11.6, 8.1],
+              ],
+              [
+                [13.4, 9.9],
+                [13.4, 9.4],
+                [17.6, 9.4],
+                [17.6, 13.1],
+              ],
+            ],
+            patches: [
+              [7.4, 3.4, 4.2, 5.2],
+              [13.4, 9.4, 4.2, 4.2],
+            ],
+            seal: [16, 5, 'valve'],
+            intent:
+              'Couriers cross the outer route after four and eight catches. Take their optional detour without closing your next return.',
+          },
+          componentAssemblies: [
+            {
+              family: 'boiler',
+              cells: [
+                [8, 4],
+                [9, 4],
+                [10, 4],
+                [8, 5],
+                [9, 5],
+                [10, 5],
+                [8, 6],
+                [9, 6],
+                [10, 6],
+                [8, 7],
+                [9, 7],
+                [10, 7],
+              ],
+            },
+            {
+              family: 'pressure',
+              cells: [
+                [14, 10],
+                [15, 10],
+                [16, 10],
+                [14, 11],
+                [15, 11],
+                [16, 11],
+                [14, 12],
+                [15, 12],
+                [16, 12],
+              ],
+            },
+          ],
           focus: [16, 5],
           axis: 'vertical',
           light: 'late',
@@ -2962,7 +12389,58 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'boiler',
           ambient: 'fan',
-          floor: 'elbow',
+          floor: 'authored',
+          floorPlan: {
+            name: 'service-works-service',
+            pattern: 'service',
+            paths: [
+              [
+                [11.4, 3.9],
+                [11.4, 3.4],
+                [13.6, 3.4],
+                [13.6, 14.1],
+              ],
+              [
+                [5.4, 4.9],
+                [5.4, 4.4],
+                [8.6, 4.4],
+                [8.6, 7.1],
+              ],
+            ],
+            patches: [
+              [11.4, 3.4, 2.2, 11.2],
+              [5.4, 4.4, 3.2, 3.2],
+            ],
+            seal: [7, 12, 'valve'],
+            intent:
+              'Each eroder opens a different marked notch. Let the shortcut form before catching it, or keep the permanent long way around.',
+          },
+          componentAssemblies: [
+            {
+              family: 'coolant',
+              cells: [
+                [12, 4],
+                [12, 5],
+                [12, 6],
+                [12, 7],
+                [12, 8],
+                [12, 9],
+                [12, 10],
+                [12, 11],
+                [12, 12],
+                [12, 13],
+              ],
+            },
+            {
+              family: 'pressure',
+              cells: [
+                [6, 5],
+                [7, 5],
+                [6, 6],
+                [7, 6],
+              ],
+            },
+          ],
           focus: [7, 12],
           axis: 'horizontal',
           light: 'late',
@@ -2982,7 +12460,70 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'boiler',
           ambient: 'fan',
-          floor: 'elbow',
+          floor: 'authored',
+          floorPlan: {
+            name: 'service-works-service',
+            pattern: 'service',
+            paths: [
+              [
+                [3.4, 4.9],
+                [3.4, 4.4],
+                [6.6, 4.4],
+                [6.6, 8.1],
+              ],
+              [
+                [10.4, 3.9],
+                [10.4, 3.4],
+                [12.6, 3.4],
+                [12.6, 8.1],
+              ],
+              [
+                [10.4, 9.9],
+                [10.4, 9.4],
+                [12.6, 9.4],
+                [12.6, 14.1],
+              ],
+            ],
+            patches: [
+              [3.4, 4.4, 3.2, 4.2],
+              [10.4, 3.4, 2.2, 5.2],
+              [10.4, 9.4, 2.2, 5.2],
+            ],
+            seal: [13, 9, 'valve'],
+            intent:
+              'Read two alternating openings. Flank the shield through one yard, then preserve a different route for the growing cable.',
+          },
+          componentAssemblies: [
+            {
+              family: 'pressure',
+              cells: [
+                [4, 5],
+                [5, 5],
+                [4, 6],
+                [5, 6],
+                [4, 7],
+                [5, 7],
+              ],
+            },
+            {
+              family: 'coolant',
+              cells: [
+                [11, 4],
+                [11, 5],
+                [11, 6],
+                [11, 7],
+              ],
+            },
+            {
+              family: 'coolant',
+              cells: [
+                [11, 10],
+                [11, 11],
+                [11, 12],
+                [11, 13],
+              ],
+            },
+          ],
           focus: [12, 9],
           axis: 'vertical',
           light: 'late',
@@ -3002,7 +12543,76 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'antenna',
           ambient: 'windsock',
-          floor: 'seam',
+          floor: 'authored',
+          floorPlan: {
+            name: 'listening-post-listening',
+            pattern: 'listening',
+            paths: [
+              [
+                [8.4, 5.1],
+                [8.4, 4.4],
+                [9.1, 4.4],
+              ],
+              [
+                [10.9, 10.6],
+                [11.6, 10.6],
+                [11.6, 9.9],
+              ],
+              [
+                [14.4, 11.1],
+                [14.4, 10.4],
+                [15.1, 10.4],
+              ],
+              [
+                [17.9, 13.6],
+                [18.6, 13.6],
+                [18.6, 12.9],
+              ],
+              [
+                [2, 2],
+                [7, 2],
+              ],
+              [
+                [17, 16],
+                [22, 16],
+              ],
+            ],
+            patches: [
+              [8.4, 4.4, 3.2, 6.2],
+              [14.4, 10.4, 4.2, 3.2],
+            ],
+            seal: [6, 6, 'signal'],
+            intent:
+              'The runner keeps moving when interference hides it. Skirt the six-cell circle for a clear approach, or follow the antenna beacon to end the burst.',
+          },
+          componentAssemblies: [
+            {
+              family: 'receiver',
+              cells: [
+                [9, 5],
+                [10, 5],
+                [9, 6],
+                [10, 6],
+                [9, 7],
+                [10, 7],
+                [9, 8],
+                [10, 8],
+                [9, 9],
+                [10, 9],
+              ],
+            },
+            {
+              family: 'shelter',
+              cells: [
+                [15, 11],
+                [16, 11],
+                [17, 11],
+                [15, 12],
+                [16, 12],
+                [17, 12],
+              ],
+            },
+          ],
           focus: [6, 6],
           axis: 'horizontal',
           light: 'morning',
@@ -3022,7 +12632,84 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'antenna',
           ambient: 'windsock',
-          floor: 'seam',
+          floor: 'authored',
+          floorPlan: {
+            name: 'listening-post-listening',
+            pattern: 'listening',
+            paths: [
+              [
+                [6.4, 5.1],
+                [6.4, 4.4],
+                [7.1, 4.4],
+              ],
+              [
+                [8.9, 12.6],
+                [9.6, 12.6],
+                [9.6, 11.9],
+              ],
+              [
+                [13.4, 8.1],
+                [13.4, 7.4],
+                [14.1, 7.4],
+              ],
+              [
+                [18.9, 10.6],
+                [19.6, 10.6],
+                [19.6, 9.9],
+              ],
+              [
+                [2, 2],
+                [7, 2],
+              ],
+              [
+                [17, 16],
+                [22, 16],
+              ],
+            ],
+            patches: [
+              [6.4, 4.4, 3.2, 8.2],
+              [13.4, 7.4, 6.2, 3.2],
+            ],
+            seal: [17, 11, 'signal'],
+            intent:
+              'Read the prey’s next bay before the warning ends. It can turn unseen; the long clear flank is a different interception.',
+          },
+          componentAssemblies: [
+            {
+              family: 'shelter',
+              cells: [
+                [7, 5],
+                [8, 5],
+                [7, 6],
+                [8, 6],
+                [7, 7],
+                [8, 7],
+                [7, 8],
+                [8, 8],
+                [7, 9],
+                [8, 9],
+                [7, 10],
+                [8, 10],
+                [7, 11],
+                [8, 11],
+              ],
+            },
+            {
+              family: 'receiver',
+              cells: [
+                [14, 8],
+                [15, 8],
+                [16, 8],
+                [17, 8],
+                [18, 8],
+                [14, 9],
+                [15, 9],
+                [16, 9],
+                [17, 9],
+                [18, 9],
+              ],
+            },
+          ],
           focus: [17, 11],
           axis: 'vertical',
           light: 'morning',
@@ -3042,7 +12729,89 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'antenna',
           ambient: 'windsock',
-          floor: 'seam',
+          floor: 'authored',
+          floorPlan: {
+            name: 'listening-post-listening',
+            pattern: 'listening',
+            paths: [
+              [
+                [7.4, 4.1],
+                [7.4, 3.4],
+                [8.1, 3.4],
+              ],
+              [
+                [10.9, 11.6],
+                [11.6, 11.6],
+                [11.6, 10.9],
+              ],
+              [
+                [14.4, 10.1],
+                [14.4, 9.4],
+                [15.1, 9.4],
+              ],
+              [
+                [18.9, 12.6],
+                [19.6, 12.6],
+                [19.6, 11.9],
+              ],
+              [
+                [2, 2],
+                [7, 2],
+              ],
+              [
+                [17, 16],
+                [22, 16],
+              ],
+            ],
+            patches: [
+              [7.4, 3.4, 4.2, 8.2],
+              [14.4, 9.4, 5.2, 3.2],
+            ],
+            seal: [12, 8, 'signal'],
+            intent:
+              'Broadcast hides moving enemies across the board. Remember the patrol’s route, take its next cut, or catch the antenna at its beacon.',
+          },
+          componentAssemblies: [
+            {
+              family: 'receiver',
+              cells: [
+                [8, 4],
+                [9, 4],
+                [10, 4],
+                [8, 5],
+                [9, 5],
+                [10, 5],
+                [8, 6],
+                [9, 6],
+                [10, 6],
+                [8, 7],
+                [9, 7],
+                [10, 7],
+                [8, 8],
+                [9, 8],
+                [10, 8],
+                [8, 9],
+                [9, 9],
+                [10, 9],
+                [8, 10],
+                [9, 10],
+                [10, 10],
+              ],
+            },
+            {
+              family: 'shelter',
+              cells: [
+                [15, 10],
+                [16, 10],
+                [17, 10],
+                [18, 10],
+                [15, 11],
+                [16, 11],
+                [17, 11],
+                [18, 11],
+              ],
+            },
+          ],
           focus: [11, 8],
           axis: 'horizontal',
           light: 'morning',
@@ -3062,7 +12831,84 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'antenna',
           ambient: 'windsock',
-          floor: 'seam',
+          floor: 'authored',
+          floorPlan: {
+            name: 'listening-post-listening',
+            pattern: 'listening',
+            paths: [
+              [
+                [6.4, 5.1],
+                [6.4, 4.4],
+                [7.1, 4.4],
+              ],
+              [
+                [9.9, 9.6],
+                [10.6, 9.6],
+                [10.6, 8.9],
+              ],
+              [
+                [14.4, 9.1],
+                [14.4, 8.4],
+                [15.1, 8.4],
+              ],
+              [
+                [17.9, 13.6],
+                [18.6, 13.6],
+                [18.6, 12.9],
+              ],
+              [
+                [2, 2],
+                [7, 2],
+              ],
+              [
+                [17, 16],
+                [22, 16],
+              ],
+            ],
+            patches: [
+              [6.4, 4.4, 4.2, 5.2],
+              [14.4, 8.4, 4.2, 5.2],
+            ],
+            seal: [16, 5, 'signal'],
+            intent:
+              'Disable the beacon first, or reach the two marked relay pads through a broadcast burst. The opened core stays available.',
+          },
+          componentAssemblies: [
+            {
+              family: 'shelter',
+              cells: [
+                [7, 5],
+                [8, 5],
+                [9, 5],
+                [7, 6],
+                [8, 6],
+                [9, 6],
+                [7, 7],
+                [8, 7],
+                [9, 7],
+                [7, 8],
+                [8, 8],
+                [9, 8],
+              ],
+            },
+            {
+              family: 'receiver',
+              cells: [
+                [15, 9],
+                [16, 9],
+                [17, 9],
+                [15, 10],
+                [16, 10],
+                [17, 10],
+                [15, 11],
+                [16, 11],
+                [17, 11],
+                [15, 12],
+                [16, 12],
+                [17, 12],
+              ],
+            },
+          ],
           focus: [16, 5],
           axis: 'vertical',
           light: 'late',
@@ -3082,7 +12928,88 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'antenna',
           ambient: 'windsock',
-          floor: 'seam',
+          floor: 'authored',
+          floorPlan: {
+            name: 'listening-post-listening',
+            pattern: 'listening',
+            paths: [
+              [
+                [10.4, 10.1],
+                [10.4, 9.4],
+                [11.1, 9.4],
+              ],
+              [
+                [12.9, 17],
+                [13.6, 17],
+                [13.6, 16.3],
+              ],
+              [
+                [10.4, 1.7],
+                [10.4, 1],
+                [11.1, 1],
+              ],
+              [
+                [12.9, 6.6],
+                [13.6, 6.6],
+                [13.6, 5.9],
+              ],
+              [
+                [2, 2],
+                [7, 2],
+              ],
+              [
+                [17, 16],
+                [22, 16],
+              ],
+            ],
+            patches: [
+              [10.4, 9.4, 3.2, 7.6],
+              [10.4, 1, 3.2, 5.6],
+            ],
+            seal: [7, 12, 'signal'],
+            intent:
+              'Coverage also wraps across an edge. Leave the circle to reveal moving prey, or use Pulse for a stable short approach.',
+          },
+          componentAssemblies: [
+            {
+              family: 'receiver',
+              cells: [
+                [11, 10],
+                [12, 10],
+                [11, 11],
+                [12, 11],
+                [11, 12],
+                [12, 12],
+                [11, 13],
+                [12, 13],
+                [11, 14],
+                [12, 14],
+                [11, 15],
+                [12, 15],
+                [11, 16],
+                [12, 16],
+                [11, 17],
+                [12, 17],
+              ],
+            },
+            {
+              family: 'shelter',
+              cells: [
+                [11, 0],
+                [12, 0],
+                [11, 1],
+                [12, 1],
+                [11, 2],
+                [12, 2],
+                [11, 3],
+                [12, 3],
+                [11, 4],
+                [12, 4],
+                [11, 5],
+                [12, 5],
+              ],
+            },
+          ],
           focus: [7, 12],
           axis: 'horizontal',
           light: 'late',
@@ -3102,7 +13029,84 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'antenna',
           ambient: 'windsock',
-          floor: 'seam',
+          floor: 'authored',
+          floorPlan: {
+            name: 'listening-post-listening',
+            pattern: 'listening',
+            paths: [
+              [
+                [7.4, 4.1],
+                [7.4, 3.4],
+                [8.1, 3.4],
+              ],
+              [
+                [9.9, 11.6],
+                [10.6, 11.6],
+                [10.6, 10.9],
+              ],
+              [
+                [14.4, 9.1],
+                [14.4, 8.4],
+                [15.1, 8.4],
+              ],
+              [
+                [16.9, 14.6],
+                [17.6, 14.6],
+                [17.6, 13.9],
+              ],
+              [
+                [2, 2],
+                [7, 2],
+              ],
+              [
+                [17, 16],
+                [22, 16],
+              ],
+            ],
+            patches: [
+              [7.4, 3.4, 3.2, 8.2],
+              [14.4, 8.4, 3.2, 6.2],
+            ],
+            seal: [12, 9, 'signal'],
+            intent:
+              'Three different beacons interrupt the chase. Remove a source, keep an interception, or shorten the cable before the next crossing.',
+          },
+          componentAssemblies: [
+            {
+              family: 'receiver',
+              cells: [
+                [8, 4],
+                [9, 4],
+                [8, 5],
+                [9, 5],
+                [8, 6],
+                [9, 6],
+                [8, 7],
+                [9, 7],
+                [8, 8],
+                [9, 8],
+                [8, 9],
+                [9, 9],
+                [8, 10],
+                [9, 10],
+              ],
+            },
+            {
+              family: 'shelter',
+              cells: [
+                [15, 9],
+                [16, 9],
+                [15, 10],
+                [16, 10],
+                [15, 11],
+                [16, 11],
+                [15, 12],
+                [16, 12],
+                [15, 13],
+                [16, 13],
+              ],
+            },
+          ],
           focus: [12, 9],
           axis: 'vertical',
           light: 'late',
@@ -3122,7 +13126,95 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'masonry',
           ambient: 'leaves',
-          floor: 'islands',
+          floor: 'authored',
+          floorPlan: {
+            name: 'expedition-courts-survey',
+            pattern: 'survey',
+            paths: [
+              [
+                [5.4, 8.6],
+                [5.4, 4.4],
+                [9.6, 4.4],
+              ],
+              [
+                [5.75, 8.6],
+                [5.75, 4.75],
+                [9.6, 4.75],
+              ],
+              [
+                [14.4, 8.6],
+                [14.4, 4.4],
+                [18.6, 4.4],
+              ],
+              [
+                [14.75, 8.6],
+                [14.75, 4.75],
+                [18.6, 4.75],
+              ],
+              [
+                [9.4, 13.6],
+                [9.4, 9.4],
+                [13.6, 9.4],
+              ],
+              [
+                [9.75, 13.6],
+                [9.75, 9.75],
+                [13.6, 9.75],
+              ],
+            ],
+            patches: [
+              [5.4, 4.4, 4.2, 4.2],
+              [14.4, 4.4, 4.2, 4.2],
+              [9.4, 9.4, 4.2, 4.2],
+            ],
+            seal: [4, 6, 'survey'],
+            intent:
+              'Every outpost faces a different approach. Cross behind a departing shot and keep a route toward the moving prey.',
+          },
+          componentAssemblies: [
+            {
+              family: 'reclaimer',
+              cells: [
+                [6, 5],
+                [7, 5],
+                [8, 5],
+                [6, 6],
+                [7, 6],
+                [8, 6],
+                [6, 7],
+                [7, 7],
+                [8, 7],
+              ],
+            },
+            {
+              family: 'excavation',
+              cells: [
+                [15, 5],
+                [16, 5],
+                [17, 5],
+                [15, 6],
+                [16, 6],
+                [17, 6],
+                [15, 7],
+                [16, 7],
+                [17, 7],
+              ],
+            },
+            {
+              family: 'excavation',
+              cells: [
+                [10, 10],
+                [11, 10],
+                [12, 10],
+                [10, 11],
+                [11, 11],
+                [12, 11],
+                [10, 12],
+                [11, 12],
+                [12, 12],
+              ],
+            },
+          ],
           focus: [6, 6],
           axis: 'horizontal',
           light: 'morning',
@@ -3142,7 +13234,64 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'masonry',
           ambient: 'leaves',
-          floor: 'islands',
+          floor: 'authored',
+          floorPlan: {
+            name: 'expedition-courts-survey',
+            pattern: 'survey',
+            paths: [
+              [
+                [6.4, 7.6],
+                [6.4, 3.4],
+                [9.6, 3.4],
+              ],
+              [
+                [6.75, 7.6],
+                [6.75, 3.75],
+                [9.6, 3.75],
+              ],
+              [
+                [14.4, 13.6],
+                [14.4, 9.4],
+                [17.6, 9.4],
+              ],
+              [
+                [14.75, 13.6],
+                [14.75, 9.75],
+                [17.6, 9.75],
+              ],
+            ],
+            patches: [
+              [6.4, 3.4, 3.2, 4.2],
+              [14.4, 9.4, 3.2, 4.2],
+            ],
+            seal: [18, 11, 'survey'],
+            intent:
+              'Horizontal and vertical lanes change the useful crossing. Follow their warnings or choose an end bypass; only the head is vulnerable.',
+          },
+          componentAssemblies: [
+            {
+              family: 'excavation',
+              cells: [
+                [7, 4],
+                [8, 4],
+                [7, 5],
+                [8, 5],
+                [7, 6],
+                [8, 6],
+              ],
+            },
+            {
+              family: 'reclaimer',
+              cells: [
+                [15, 10],
+                [16, 10],
+                [15, 11],
+                [16, 11],
+                [15, 12],
+                [16, 12],
+              ],
+            },
+          ],
           focus: [17, 11],
           axis: 'vertical',
           light: 'morning',
@@ -3162,7 +13311,95 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'masonry',
           ambient: 'leaves',
-          floor: 'islands',
+          floor: 'authored',
+          floorPlan: {
+            name: 'expedition-courts-survey',
+            pattern: 'survey',
+            paths: [
+              [
+                [6.4, 9.6],
+                [6.4, 4.4],
+                [10.6, 4.4],
+              ],
+              [
+                [6.75, 9.6],
+                [6.75, 4.75],
+                [10.6, 4.75],
+              ],
+              [
+                [13.4, 13.6],
+                [13.4, 9.4],
+                [17.6, 9.4],
+              ],
+              [
+                [13.75, 13.6],
+                [13.75, 9.75],
+                [17.6, 9.75],
+              ],
+              [
+                [12.4, 6.6],
+                [12.4, 3.4],
+                [16.6, 3.4],
+              ],
+              [
+                [12.75, 6.6],
+                [12.75, 3.75],
+                [16.6, 3.75],
+              ],
+            ],
+            patches: [
+              [6.4, 4.4, 4.2, 5.2],
+              [13.4, 9.4, 4.2, 4.2],
+              [12.4, 3.4, 4.2, 3.2],
+            ],
+            seal: [11, 8, 'survey'],
+            intent:
+              'Two cores have different relay pairs. Pick the next pad route before your cable fills the shorter return.',
+          },
+          componentAssemblies: [
+            {
+              family: 'reclaimer',
+              cells: [
+                [7, 5],
+                [8, 5],
+                [9, 5],
+                [7, 6],
+                [8, 6],
+                [9, 6],
+                [7, 7],
+                [8, 7],
+                [9, 7],
+                [7, 8],
+                [8, 8],
+                [9, 8],
+              ],
+            },
+            {
+              family: 'excavation',
+              cells: [
+                [14, 10],
+                [15, 10],
+                [16, 10],
+                [14, 11],
+                [15, 11],
+                [16, 11],
+                [14, 12],
+                [15, 12],
+                [16, 12],
+              ],
+            },
+            {
+              family: 'excavation',
+              cells: [
+                [13, 4],
+                [14, 4],
+                [15, 4],
+                [13, 5],
+                [14, 5],
+                [15, 5],
+              ],
+            },
+          ],
           focus: [11, 8],
           axis: 'horizontal',
           light: 'morning',
@@ -3182,7 +13419,95 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'masonry',
           ambient: 'leaves',
-          floor: 'islands',
+          floor: 'authored',
+          floorPlan: {
+            name: 'expedition-courts-survey',
+            pattern: 'survey',
+            paths: [
+              [
+                [4.4, 11.6],
+                [4.4, 4.4],
+                [7.6, 4.4],
+              ],
+              [
+                [4.75, 11.6],
+                [4.75, 4.75],
+                [7.6, 4.75],
+              ],
+              [
+                [10.4, 10.6],
+                [10.4, 6.4],
+                [14.6, 6.4],
+              ],
+              [
+                [10.75, 10.6],
+                [10.75, 6.75],
+                [14.6, 6.75],
+              ],
+              [
+                [15.4, 12.6],
+                [15.4, 9.4],
+                [19.6, 9.4],
+              ],
+              [
+                [15.75, 12.6],
+                [15.75, 9.75],
+                [19.6, 9.75],
+              ],
+            ],
+            patches: [
+              [4.4, 4.4, 3.2, 7.2],
+              [10.4, 6.4, 4.2, 4.2],
+              [15.4, 9.4, 4.2, 3.2],
+            ],
+            seal: [16, 5, 'survey'],
+            intent:
+              'Wake the rover from the route you want it to take. Then choose a shield flank or the next contour interception.',
+          },
+          componentAssemblies: [
+            {
+              family: 'excavation',
+              cells: [
+                [5, 5],
+                [6, 5],
+                [5, 6],
+                [6, 6],
+                [5, 7],
+                [6, 7],
+                [5, 8],
+                [6, 8],
+                [5, 9],
+                [6, 9],
+                [5, 10],
+                [6, 10],
+              ],
+            },
+            {
+              family: 'reclaimer',
+              cells: [
+                [11, 7],
+                [12, 7],
+                [13, 7],
+                [11, 8],
+                [12, 8],
+                [13, 8],
+                [11, 9],
+                [12, 9],
+                [13, 9],
+              ],
+            },
+            {
+              family: 'excavation',
+              cells: [
+                [16, 10],
+                [17, 10],
+                [18, 10],
+                [16, 11],
+                [17, 11],
+                [18, 11],
+              ],
+            },
+          ],
           focus: [16, 5],
           axis: 'vertical',
           light: 'late',
@@ -3202,7 +13527,80 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'masonry',
           ambient: 'leaves',
-          floor: 'islands',
+          floor: 'authored',
+          floorPlan: {
+            name: 'expedition-courts-survey',
+            pattern: 'survey',
+            paths: [
+              [
+                [11.4, 8.6],
+                [11.4, 3.4],
+                [13.6, 3.4],
+              ],
+              [
+                [11.75, 8.6],
+                [11.75, 3.75],
+                [13.6, 3.75],
+              ],
+              [
+                [11.4, 14.6],
+                [11.4, 9.4],
+                [13.6, 9.4],
+              ],
+              [
+                [11.75, 14.6],
+                [11.75, 9.75],
+                [13.6, 9.75],
+              ],
+              [
+                [6.4, 14.6],
+                [6.4, 11.4],
+                [9.6, 11.4],
+              ],
+              [
+                [6.75, 14.6],
+                [6.75, 11.75],
+                [9.6, 11.75],
+              ],
+            ],
+            patches: [
+              [11.4, 3.4, 2.2, 5.2],
+              [11.4, 9.4, 2.2, 5.2],
+              [6.4, 11.4, 3.2, 3.2],
+            ],
+            seal: [7, 10, 'survey'],
+            intent:
+              'Open a new route, restore reception at the beacon, or catch prey before it crosses the workshop. Each specialist appears at a different post.',
+          },
+          componentAssemblies: [
+            {
+              family: 'terrace',
+              cells: [
+                [12, 4],
+                [12, 5],
+                [12, 6],
+                [12, 7],
+              ],
+            },
+            {
+              family: 'terrace',
+              cells: [
+                [12, 10],
+                [12, 11],
+                [12, 12],
+                [12, 13],
+              ],
+            },
+            {
+              family: 'reclaimer',
+              cells: [
+                [7, 12],
+                [8, 12],
+                [7, 13],
+                [8, 13],
+              ],
+            },
+          ],
           focus: [7, 12],
           axis: 'horizontal',
           light: 'late',
@@ -3222,7 +13620,97 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'masonry',
           ambient: 'leaves',
-          floor: 'islands',
+          floor: 'authored',
+          floorPlan: {
+            name: 'expedition-courts-survey',
+            pattern: 'survey',
+            paths: [
+              [
+                [6.4, 8.6],
+                [6.4, 4.4],
+                [9.6, 4.4],
+              ],
+              [
+                [6.75, 8.6],
+                [6.75, 4.75],
+                [9.6, 4.75],
+              ],
+              [
+                [14.4, 8.6],
+                [14.4, 4.4],
+                [17.6, 4.4],
+              ],
+              [
+                [14.75, 8.6],
+                [14.75, 4.75],
+                [17.6, 4.75],
+              ],
+              [
+                [6.4, 14.6],
+                [6.4, 10.4],
+                [9.6, 10.4],
+              ],
+              [
+                [6.75, 14.6],
+                [6.75, 10.75],
+                [9.6, 10.75],
+              ],
+            ],
+            patches: [
+              [6.4, 4.4, 3.2, 4.2],
+              [14.4, 4.4, 3.2, 4.2],
+              [6.4, 10.4, 3.2, 4.2],
+            ],
+            seal: [12, 9, 'survey'],
+            intent:
+              'Eight different encounters change the best way home. Keep an outside return while the shutters, broadcast and relay reward shorter routes.',
+          },
+          componentAssemblies: [
+            {
+              family: 'excavation',
+              cells: [
+                [7, 5],
+                [8, 5],
+                [7, 6],
+                [8, 6],
+                [7, 7],
+                [8, 7],
+              ],
+            },
+            {
+              family: 'reclaimer',
+              cells: [
+                [15, 5],
+                [16, 5],
+                [15, 6],
+                [16, 6],
+                [15, 7],
+                [16, 7],
+              ],
+            },
+            {
+              family: 'excavation',
+              cells: [
+                [7, 11],
+                [8, 11],
+                [7, 12],
+                [8, 12],
+                [7, 13],
+                [8, 13],
+              ],
+            },
+            {
+              family: 'excavation',
+              cells: [
+                [15, 11],
+                [16, 11],
+                [15, 12],
+                [16, 12],
+                [15, 13],
+                [16, 13],
+              ],
+            },
+          ],
           focus: [12, 9],
           axis: 'vertical',
           light: 'late',
@@ -3242,7 +13730,80 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'crane',
           ambient: 'lamps',
-          floor: 'bays',
+          floor: 'authored',
+          floorPlan: {
+            name: 'dispatch-platforms-dispatch',
+            pattern: 'dispatch',
+            paths: [
+              [
+                [8.4, 4.4],
+                [11.6, 4.4],
+              ],
+              [
+                [8.4, 7.6],
+                [11.6, 7.6],
+              ],
+              [
+                [8.4, 4.4],
+                [8.4, 4.9],
+              ],
+              [
+                [11.6, 7.1],
+                [11.6, 7.6],
+              ],
+              [
+                [13.4, 9.4],
+                [16.6, 9.4],
+              ],
+              [
+                [13.4, 12.6],
+                [16.6, 12.6],
+              ],
+              [
+                [13.4, 9.4],
+                [13.4, 9.9],
+              ],
+              [
+                [16.6, 12.1],
+                [16.6, 12.6],
+              ],
+              [
+                [5, 9.5],
+                [7, 9.5],
+              ],
+              [
+                [18, 7.5],
+                [20, 7.5],
+              ],
+            ],
+            patches: [
+              [8.4, 4.4, 3.2, 3.2],
+              [13.4, 9.4, 3.2, 3.2],
+            ],
+            seal: [6, 5, 'freight'],
+            intent:
+              'Touch a lever. Its number selects the patrol’s next departure at the diamond. Cut across the selected loop to intercept.',
+          },
+          componentAssemblies: [
+            {
+              family: 'dispatch',
+              cells: [
+                [9, 5],
+                [10, 5],
+                [9, 6],
+                [10, 6],
+              ],
+            },
+            {
+              family: 'container',
+              cells: [
+                [14, 10],
+                [15, 10],
+                [14, 11],
+                [15, 11],
+              ],
+            },
+          ],
           focus: [6, 6],
           axis: 'horizontal',
           light: 'morning',
@@ -3262,7 +13823,88 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'crane',
           ambient: 'lamps',
-          floor: 'bays',
+          floor: 'authored',
+          floorPlan: {
+            name: 'dispatch-platforms-dispatch',
+            pattern: 'dispatch',
+            paths: [
+              [
+                [16.4, 5.4],
+                [19.6, 5.4],
+              ],
+              [
+                [16.4, 10.6],
+                [19.6, 10.6],
+              ],
+              [
+                [5.4, 6.4],
+                [10.6, 6.4],
+              ],
+              [
+                [5.4, 8.6],
+                [10.6, 8.6],
+              ],
+              [
+                [5.4, 6.4],
+                [5.4, 6.9],
+              ],
+              [
+                [10.6, 8.1],
+                [10.6, 8.6],
+              ],
+              [
+                [11.4, 9.4],
+                [13.6, 9.4],
+              ],
+              [
+                [11.4, 12.6],
+                [13.6, 12.6],
+              ],
+              [
+                [5, 10.5],
+                [7, 10.5],
+              ],
+            ],
+            patches: [
+              [16.4, 5.4, 3.2, 5.2],
+              [5.4, 6.4, 5.2, 2.2],
+              [11.4, 9.4, 2.2, 3.2],
+            ],
+            seal: [17, 11, 'freight'],
+            intent:
+              'A wide upper loop and a tall lower loop meet at one junction. Choose the departure that leaves room for your return.',
+          },
+          componentAssemblies: [
+            {
+              family: 'dispatch',
+              cells: [
+                [17, 6],
+                [18, 6],
+                [17, 7],
+                [18, 7],
+                [17, 8],
+                [18, 8],
+                [17, 9],
+                [18, 9],
+              ],
+            },
+            {
+              family: 'platform',
+              cells: [
+                [6, 7],
+                [7, 7],
+                [8, 7],
+                [9, 7],
+              ],
+            },
+            {
+              family: 'platform',
+              cells: [
+                [12, 10],
+                [12, 11],
+              ],
+            },
+          ],
           focus: [17, 11],
           axis: 'vertical',
           light: 'morning',
@@ -3282,7 +13924,98 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'crane',
           ambient: 'lamps',
-          floor: 'bays',
+          floor: 'authored',
+          floorPlan: {
+            name: 'dispatch-platforms-dispatch',
+            pattern: 'dispatch',
+            paths: [
+              [
+                [7.4, 5.4],
+                [11.6, 5.4],
+              ],
+              [
+                [7.4, 8.6],
+                [11.6, 8.6],
+              ],
+              [
+                [7.4, 5.4],
+                [7.4, 5.9],
+              ],
+              [
+                [11.6, 8.1],
+                [11.6, 8.6],
+              ],
+              [
+                [3.4, 5.4],
+                [5.6, 5.4],
+              ],
+              [
+                [3.4, 9.6],
+                [5.6, 9.6],
+              ],
+              [
+                [13.4, 9.4],
+                [17.6, 9.4],
+              ],
+              [
+                [13.4, 11.6],
+                [17.6, 11.6],
+              ],
+              [
+                [13.4, 9.4],
+                [13.4, 9.9],
+              ],
+              [
+                [17.6, 11.1],
+                [17.6, 11.6],
+              ],
+              [
+                [2, 10.5],
+                [4, 10.5],
+              ],
+              [
+                [20, 9.5],
+                [22, 9.5],
+              ],
+            ],
+            patches: [
+              [7.4, 5.4, 4.2, 3.2],
+              [3.4, 5.4, 2.2, 4.2],
+              [13.4, 9.4, 4.2, 2.2],
+            ],
+            seal: [12, 8, 'freight'],
+            intent:
+              'The patrol takes the platform edge. Cross the clear centre before its next lap instead of following its tail.',
+          },
+          componentAssemblies: [
+            {
+              family: 'dispatch',
+              cells: [
+                [8, 6],
+                [9, 6],
+                [10, 6],
+                [8, 7],
+                [9, 7],
+                [10, 7],
+              ],
+            },
+            {
+              family: 'platform',
+              cells: [
+                [4, 6],
+                [4, 7],
+                [4, 8],
+              ],
+            },
+            {
+              family: 'platform',
+              cells: [
+                [14, 10],
+                [15, 10],
+                [16, 10],
+              ],
+            },
+          ],
           focus: [11, 8],
           axis: 'horizontal',
           light: 'morning',
@@ -3302,7 +14035,89 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'crane',
           ambient: 'lamps',
-          floor: 'bays',
+          floor: 'authored',
+          floorPlan: {
+            name: 'dispatch-platforms-dispatch',
+            pattern: 'dispatch',
+            paths: [
+              [
+                [18.4, 4.4],
+                [20.6, 4.4],
+              ],
+              [
+                [18.4, 8.6],
+                [20.6, 8.6],
+              ],
+              [
+                [8.4, 5.4],
+                [11.6, 5.4],
+              ],
+              [
+                [8.4, 7.6],
+                [11.6, 7.6],
+              ],
+              [
+                [8.4, 5.4],
+                [8.4, 5.9],
+              ],
+              [
+                [11.6, 7.1],
+                [11.6, 7.6],
+              ],
+              [
+                [13.4, 9.4],
+                [16.6, 9.4],
+              ],
+              [
+                [13.4, 11.6],
+                [16.6, 11.6],
+              ],
+              [
+                [13.4, 9.4],
+                [13.4, 9.9],
+              ],
+              [
+                [16.6, 11.1],
+                [16.6, 11.6],
+              ],
+              [
+                [4, 11.5],
+                [6, 11.5],
+              ],
+            ],
+            patches: [
+              [18.4, 4.4, 2.2, 4.2],
+              [8.4, 5.4, 3.2, 2.2],
+              [13.4, 9.4, 3.2, 2.2],
+            ],
+            seal: [16, 5, 'freight'],
+            intent:
+              'Redirect the patrol while a runner changes the useful interception. Clear both before crossing the upper rendezvous.',
+          },
+          componentAssemblies: [
+            {
+              family: 'dispatch',
+              cells: [
+                [19, 5],
+                [19, 6],
+                [19, 7],
+              ],
+            },
+            {
+              family: 'platform',
+              cells: [
+                [9, 6],
+                [10, 6],
+              ],
+            },
+            {
+              family: 'platform',
+              cells: [
+                [14, 10],
+                [15, 10],
+              ],
+            },
+          ],
           focus: [16, 5],
           axis: 'vertical',
           light: 'late',
@@ -3322,7 +14137,83 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'crane',
           ambient: 'lamps',
-          floor: 'bays',
+          floor: 'authored',
+          floorPlan: {
+            name: 'dispatch-platforms-dispatch',
+            pattern: 'dispatch',
+            paths: [
+              [
+                [5.4, 5.4],
+                [7.6, 5.4],
+              ],
+              [
+                [5.4, 7.6],
+                [7.6, 7.6],
+              ],
+              [
+                [5.4, 5.4],
+                [5.4, 5.9],
+              ],
+              [
+                [7.6, 7.1],
+                [7.6, 7.6],
+              ],
+              [
+                [14.4, 5.4],
+                [16.6, 5.4],
+              ],
+              [
+                [14.4, 7.6],
+                [16.6, 7.6],
+              ],
+              [
+                [14.4, 5.4],
+                [14.4, 5.9],
+              ],
+              [
+                [16.6, 7.1],
+                [16.6, 7.6],
+              ],
+              [
+                [9.4, 9.4],
+                [11.6, 9.4],
+              ],
+              [
+                [9.4, 11.6],
+                [11.6, 11.6],
+              ],
+              [
+                [9.4, 9.4],
+                [9.4, 9.9],
+              ],
+              [
+                [11.6, 11.1],
+                [11.6, 11.6],
+              ],
+              [
+                [2, 9.5],
+                [4, 9.5],
+              ],
+              [
+                [20, 9.5],
+                [22, 9.5],
+              ],
+            ],
+            patches: [
+              [5.4, 5.4, 2.2, 2.2],
+              [14.4, 5.4, 2.2, 2.2],
+              [9.4, 9.4, 2.2, 2.2],
+            ],
+            seal: [7, 12, 'freight'],
+            intent:
+              'Each lever owns a different junction. Redirect both patrols, then reserve one crossing for the growing cable.',
+          },
+          componentAssemblies: [
+            { family: 'dispatch', cells: [[6, 6]] },
+            { family: 'platform', cells: [[15, 6]] },
+            { family: 'platform', cells: [[10, 10]] },
+            { family: 'platform', cells: [[19, 10]] },
+          ],
           focus: [7, 12],
           axis: 'horizontal',
           light: 'late',
@@ -3342,7 +14233,98 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'crane',
           ambient: 'lamps',
-          floor: 'bays',
+          floor: 'authored',
+          floorPlan: {
+            name: 'dispatch-platforms-dispatch',
+            pattern: 'dispatch',
+            paths: [
+              [
+                [7.4, 4.4],
+                [10.6, 4.4],
+              ],
+              [
+                [7.4, 7.6],
+                [10.6, 7.6],
+              ],
+              [
+                [7.4, 4.4],
+                [7.4, 4.9],
+              ],
+              [
+                [10.6, 7.1],
+                [10.6, 7.6],
+              ],
+              [
+                [3.4, 9.4],
+                [5.6, 9.4],
+              ],
+              [
+                [3.4, 14.6],
+                [5.6, 14.6],
+              ],
+              [
+                [13.4, 9.4],
+                [16.6, 9.4],
+              ],
+              [
+                [13.4, 12.6],
+                [16.6, 12.6],
+              ],
+              [
+                [13.4, 9.4],
+                [13.4, 9.9],
+              ],
+              [
+                [16.6, 12.1],
+                [16.6, 12.6],
+              ],
+              [
+                [1, 9.5],
+                [3, 9.5],
+              ],
+              [
+                [20, 9.5],
+                [22, 9.5],
+              ],
+            ],
+            patches: [
+              [7.4, 4.4, 3.2, 3.2],
+              [3.4, 9.4, 2.2, 5.2],
+              [13.4, 9.4, 3.2, 3.2],
+            ],
+            seal: [12, 9, 'freight'],
+            intent:
+              'Wrap from the distant lever to the opposite approach. The patrol stays on its marked track; only your approach uses the edge.',
+          },
+          componentAssemblies: [
+            {
+              family: 'container',
+              cells: [
+                [8, 5],
+                [9, 5],
+                [8, 6],
+                [9, 6],
+              ],
+            },
+            {
+              family: 'platform',
+              cells: [
+                [4, 10],
+                [4, 11],
+                [4, 12],
+                [4, 13],
+              ],
+            },
+            {
+              family: 'dispatch',
+              cells: [
+                [14, 10],
+                [15, 10],
+                [14, 11],
+                [15, 11],
+              ],
+            },
+          ],
           focus: [12, 9],
           axis: 'vertical',
           light: 'late',
@@ -3362,7 +14344,100 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'crane',
           ambient: 'lamps',
-          floor: 'bays',
+          floor: 'authored',
+          floorPlan: {
+            name: 'dispatch-platforms-dispatch',
+            pattern: 'dispatch',
+            paths: [
+              [
+                [8.4, 4.4],
+                [11.6, 4.4],
+              ],
+              [
+                [8.4, 7.6],
+                [11.6, 7.6],
+              ],
+              [
+                [8.4, 4.4],
+                [8.4, 4.9],
+              ],
+              [
+                [11.6, 7.1],
+                [11.6, 7.6],
+              ],
+              [
+                [13.4, 9.4],
+                [16.6, 9.4],
+              ],
+              [
+                [13.4, 12.6],
+                [16.6, 12.6],
+              ],
+              [
+                [13.4, 9.4],
+                [13.4, 9.9],
+              ],
+              [
+                [16.6, 12.1],
+                [16.6, 12.6],
+              ],
+              [
+                [17.4, 9.4],
+                [19.6, 9.4],
+              ],
+              [
+                [17.4, 13.6],
+                [19.6, 13.6],
+              ],
+              [
+                [4, 9.5],
+                [6, 9.5],
+              ],
+            ],
+            patches: [
+              [8.4, 4.4, 3.2, 3.2],
+              [13.4, 9.4, 3.2, 3.2],
+              [17.4, 9.4, 2.2, 4.2],
+            ],
+            seal: [4, 6, 'freight'],
+            intent:
+              'Route the patrol before entering the shutter court. A broad outer bypass remains available when the centre closes.',
+          },
+          componentAssemblies: [
+            {
+              family: 'dispatch',
+              cells: [
+                [9, 5],
+                [10, 5],
+                [9, 6],
+                [10, 6],
+              ],
+            },
+            {
+              family: 'container',
+              cells: [
+                [14, 10],
+                [15, 10],
+                [14, 11],
+                [15, 11],
+              ],
+            },
+            {
+              family: 'platform',
+              cells: [
+                [18, 10],
+                [18, 11],
+                [18, 12],
+              ],
+            },
+            {
+              family: 'platform',
+              cells: [
+                [18, 5],
+                [18, 6],
+              ],
+            },
+          ],
           focus: [5, 8],
           axis: 'horizontal',
           light: 'night',
@@ -3382,7 +14457,104 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'crane',
           ambient: 'lamps',
-          floor: 'bays',
+          floor: 'authored',
+          floorPlan: {
+            name: 'dispatch-platforms-dispatch',
+            pattern: 'dispatch',
+            paths: [
+              [
+                [7.4, 4.4],
+                [10.6, 4.4],
+              ],
+              [
+                [7.4, 7.6],
+                [10.6, 7.6],
+              ],
+              [
+                [7.4, 4.4],
+                [7.4, 4.9],
+              ],
+              [
+                [10.6, 7.1],
+                [10.6, 7.6],
+              ],
+              [
+                [17.4, 10.4],
+                [20.6, 10.4],
+              ],
+              [
+                [17.4, 13.6],
+                [20.6, 13.6],
+              ],
+              [
+                [17.4, 10.4],
+                [17.4, 10.9],
+              ],
+              [
+                [20.6, 13.1],
+                [20.6, 13.6],
+              ],
+              [
+                [12.4, 8.4],
+                [15.6, 8.4],
+              ],
+              [
+                [12.4, 10.6],
+                [15.6, 10.6],
+              ],
+              [
+                [12.4, 8.4],
+                [12.4, 8.9],
+              ],
+              [
+                [15.6, 10.1],
+                [15.6, 10.6],
+              ],
+              [
+                [3, 9.5],
+                [5, 9.5],
+              ],
+              [
+                [19, 9.5],
+                [21, 9.5],
+              ],
+            ],
+            patches: [
+              [7.4, 4.4, 3.2, 3.2],
+              [17.4, 10.4, 3.2, 3.2],
+              [12.4, 8.4, 3.2, 2.2],
+            ],
+            seal: [18, 9, 'freight'],
+            intent:
+              'Complete an upper interception, then change the dispatch again for the lower return. The second stage uses the same longer cable.',
+          },
+          componentAssemblies: [
+            {
+              family: 'container',
+              cells: [
+                [8, 5],
+                [9, 5],
+                [8, 6],
+                [9, 6],
+              ],
+            },
+            {
+              family: 'dispatch',
+              cells: [
+                [18, 11],
+                [19, 11],
+                [18, 12],
+                [19, 12],
+              ],
+            },
+            {
+              family: 'platform',
+              cells: [
+                [13, 9],
+                [14, 9],
+              ],
+            },
+          ],
           focus: [18, 9],
           axis: 'vertical',
           light: 'night',
@@ -3402,7 +14574,53 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'boiler',
           ambient: 'fan',
-          floor: 'cross',
+          floor: 'authored',
+          floorPlan: {
+            name: 'cable-assembly-service',
+            pattern: 'service',
+            paths: [
+              [
+                [9.4, 8.9],
+                [9.4, 8.4],
+                [11.6, 8.4],
+                [11.6, 14.1],
+              ],
+              [
+                [9.4, 3.9],
+                [9.4, 3.4],
+                [11.6, 3.4],
+                [11.6, 8.1],
+              ],
+            ],
+            patches: [
+              [9.4, 8.4, 2.2, 6.2],
+              [9.4, 3.4, 2.2, 5.2],
+            ],
+            seal: [6, 6, 'valve'],
+            intent:
+              'Hold the striped pad with your cable and cross the shortcut. The outer route stays open, and an occupied gate yields.',
+          },
+          componentAssemblies: [
+            {
+              family: 'pressure',
+              cells: [
+                [10, 9],
+                [10, 10],
+                [10, 11],
+                [10, 12],
+                [10, 13],
+              ],
+            },
+            {
+              family: 'coolant',
+              cells: [
+                [10, 4],
+                [10, 5],
+                [10, 6],
+                [10, 7],
+              ],
+            },
+          ],
           focus: [6, 6],
           axis: 'horizontal',
           light: 'morning',
@@ -3422,7 +14640,52 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'boiler',
           ambient: 'fan',
-          floor: 'cross',
+          floor: 'authored',
+          floorPlan: {
+            name: 'cable-assembly-service',
+            pattern: 'service',
+            paths: [
+              [
+                [11.4, 3.9],
+                [11.4, 3.4],
+                [13.6, 3.4],
+                [13.6, 8.1],
+              ],
+              [
+                [11.4, 9.9],
+                [11.4, 9.4],
+                [13.6, 9.4],
+                [13.6, 14.1],
+              ],
+            ],
+            patches: [
+              [11.4, 3.4, 2.2, 5.2],
+              [11.4, 9.4, 2.2, 5.2],
+            ],
+            seal: [17, 11, 'valve'],
+            intent:
+              'Two pads control one gate. Decide whether to hold it on approach or use the far pad for a quick return.',
+          },
+          componentAssemblies: [
+            {
+              family: 'pressure',
+              cells: [
+                [12, 4],
+                [12, 5],
+                [12, 6],
+                [12, 7],
+              ],
+            },
+            {
+              family: 'coolant',
+              cells: [
+                [12, 10],
+                [12, 11],
+                [12, 12],
+                [12, 13],
+              ],
+            },
+          ],
           focus: [17, 11],
           axis: 'vertical',
           light: 'morning',
@@ -3442,7 +14705,56 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'boiler',
           ambient: 'fan',
-          floor: 'cross',
+          floor: 'authored',
+          floorPlan: {
+            name: 'cable-assembly-service',
+            pattern: 'service',
+            paths: [
+              [
+                [8.4, 4.9],
+                [8.4, 4.4],
+                [14.6, 4.4],
+                [14.6, 10.1],
+              ],
+              [
+                [12.4, 10.9],
+                [12.4, 10.4],
+                [14.6, 10.4],
+                [14.6, 14.1],
+              ],
+            ],
+            patches: [
+              [8.4, 4.4, 6.2, 6.2],
+              [12.4, 10.4, 2.2, 4.2],
+            ],
+            seal: [11, 8, 'valve'],
+            intent:
+              'The runner commits along the east side of the elbow. Hold the shortcut with your cable to intercept its next endpoint, or take the permanent outer approach.',
+          },
+          componentAssemblies: [
+            {
+              family: 'pressure',
+              cells: [
+                [9, 5],
+                [10, 5],
+                [11, 5],
+                [12, 5],
+                [13, 5],
+                [13, 6],
+                [13, 7],
+                [13, 8],
+                [13, 9],
+              ],
+            },
+            {
+              family: 'coolant',
+              cells: [
+                [13, 11],
+                [13, 12],
+                [13, 13],
+              ],
+            },
+          ],
           focus: [11, 8],
           axis: 'horizontal',
           light: 'morning',
@@ -3462,7 +14774,75 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'boiler',
           ambient: 'fan',
-          floor: 'cross',
+          floor: 'authored',
+          floorPlan: {
+            name: 'cable-assembly-service',
+            pattern: 'service',
+            paths: [
+              [
+                [15.4, 3.9],
+                [15.4, 3.4],
+                [17.6, 3.4],
+                [17.6, 8.1],
+              ],
+              [
+                [7.4, 8.9],
+                [7.4, 8.4],
+                [9.6, 8.4],
+                [9.6, 13.1],
+              ],
+              [
+                [7.4, 4.9],
+                [7.4, 4.4],
+                [9.6, 4.4],
+                [9.6, 8.1],
+              ],
+            ],
+            patches: [
+              [15.4, 3.4, 2.2, 5.2],
+              [7.4, 8.4, 2.2, 5.2],
+              [7.4, 4.4, 2.2, 4.2],
+            ],
+            seal: [14, 5, 'valve'],
+            intent:
+              'Open two independent shortcuts. Their pads share no timer; choose which side to secure before crossing the central court.',
+          },
+          componentAssemblies: [
+            {
+              family: 'pressure',
+              cells: [
+                [16, 4],
+                [16, 5],
+                [16, 6],
+                [16, 7],
+              ],
+            },
+            {
+              family: 'coolant',
+              cells: [
+                [8, 9],
+                [8, 10],
+                [8, 11],
+                [8, 12],
+              ],
+            },
+            {
+              family: 'coolant',
+              cells: [
+                [8, 5],
+                [8, 6],
+                [8, 7],
+              ],
+            },
+            {
+              family: 'coolant',
+              cells: [
+                [16, 10],
+                [16, 11],
+                [16, 12],
+              ],
+            },
+          ],
           focus: [16, 5],
           axis: 'vertical',
           light: 'late',
@@ -3482,7 +14862,64 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'boiler',
           ambient: 'fan',
-          floor: 'cross',
+          floor: 'authored',
+          floorPlan: {
+            name: 'cable-assembly-service',
+            pattern: 'service',
+            paths: [
+              [
+                [12.4, 9.9],
+                [12.4, 9.4],
+                [15.6, 9.4],
+                [15.6, 14.1],
+              ],
+              [
+                [12.4, 3.9],
+                [12.4, 3.4],
+                [15.6, 3.4],
+                [15.6, 7.1],
+              ],
+              [
+                [18, 10],
+                [18, 7],
+                [21, 7],
+              ],
+            ],
+            patches: [
+              [12.4, 9.4, 3.2, 5.2],
+              [12.4, 3.4, 3.2, 4.2],
+              [18, 7, 3, 3],
+            ],
+            seal: [7, 12, 'valve'],
+            intent:
+              'Collect both parcels before unloading beyond the gate. Added length can hold the plate longer, but narrows your turn.',
+          },
+          componentAssemblies: [
+            {
+              family: 'pressure',
+              cells: [
+                [13, 10],
+                [14, 10],
+                [13, 11],
+                [14, 11],
+                [13, 12],
+                [14, 12],
+                [13, 13],
+                [14, 13],
+              ],
+            },
+            {
+              family: 'boiler',
+              cells: [
+                [13, 4],
+                [14, 4],
+                [13, 5],
+                [14, 5],
+                [13, 6],
+                [14, 6],
+              ],
+            },
+          ],
           focus: [7, 12],
           axis: 'horizontal',
           light: 'late',
@@ -3502,7 +14939,74 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'boiler',
           ambient: 'fan',
-          floor: 'cross',
+          floor: 'authored',
+          floorPlan: {
+            name: 'cable-assembly-service',
+            pattern: 'service',
+            paths: [
+              [
+                [9.4, 4.9],
+                [9.4, 4.4],
+                [12.6, 4.4],
+                [12.6, 8.1],
+              ],
+              [
+                [15.4, 5.9],
+                [15.4, 5.4],
+                [19.6, 5.4],
+                [19.6, 8.1],
+              ],
+              [
+                [9.4, 9.9],
+                [9.4, 9.4],
+                [12.6, 9.4],
+                [12.6, 13.1],
+              ],
+            ],
+            patches: [
+              [9.4, 4.4, 3.2, 4.2],
+              [15.4, 5.4, 4.2, 3.2],
+              [9.4, 9.4, 3.2, 4.2],
+            ],
+            seal: [13, 8, 'valve'],
+            intent:
+              'The switchback commits around the valve’s east side. Hold the shortcut with your cable to intercept, or meet its return outside the machinery.',
+          },
+          componentAssemblies: [
+            {
+              family: 'boiler',
+              cells: [
+                [10, 5],
+                [11, 5],
+                [10, 6],
+                [11, 6],
+                [10, 7],
+                [11, 7],
+              ],
+            },
+            {
+              family: 'boiler',
+              cells: [
+                [16, 6],
+                [17, 6],
+                [18, 6],
+                [16, 7],
+                [17, 7],
+                [18, 7],
+              ],
+            },
+            {
+              family: 'pressure',
+              cells: [
+                [10, 10],
+                [11, 10],
+                [10, 11],
+                [11, 11],
+                [10, 12],
+                [11, 12],
+              ],
+            },
+          ],
           focus: [12, 9],
           axis: 'vertical',
           light: 'late',
@@ -3522,7 +15026,64 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'boiler',
           ambient: 'fan',
-          floor: 'cross',
+          floor: 'authored',
+          floorPlan: {
+            name: 'cable-assembly-service',
+            pattern: 'service',
+            paths: [
+              [
+                [10.4, 2.9],
+                [10.4, 2.4],
+                [13.6, 2.4],
+                [13.6, 8.1],
+              ],
+              [
+                [10.4, 9.9],
+                [10.4, 9.4],
+                [13.6, 9.4],
+                [13.6, 15.1],
+              ],
+            ],
+            patches: [
+              [10.4, 2.4, 3.2, 6.2],
+              [10.4, 9.4, 3.2, 6.2],
+            ],
+            seal: [5, 7, 'valve'],
+            intent:
+              'The closed gate is not your only crossing. Wrap around the board to reach the far pad and reopen the direct route.',
+          },
+          componentAssemblies: [
+            {
+              family: 'pressure',
+              cells: [
+                [11, 3],
+                [12, 3],
+                [11, 4],
+                [12, 4],
+                [11, 5],
+                [12, 5],
+                [11, 6],
+                [12, 6],
+                [11, 7],
+                [12, 7],
+              ],
+            },
+            {
+              family: 'boiler',
+              cells: [
+                [11, 10],
+                [12, 10],
+                [11, 11],
+                [12, 11],
+                [11, 12],
+                [12, 12],
+                [11, 13],
+                [12, 13],
+                [11, 14],
+                [12, 14],
+              ],
+            },
+          ],
           focus: [5, 8],
           axis: 'horizontal',
           light: 'night',
@@ -3542,7 +15103,88 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'boiler',
           ambient: 'fan',
-          floor: 'cross',
+          floor: 'authored',
+          floorPlan: {
+            name: 'cable-assembly-service',
+            pattern: 'service',
+            paths: [
+              [
+                [15.4, 8.9],
+                [15.4, 8.4],
+                [17.6, 8.4],
+                [17.6, 14.1],
+              ],
+              [
+                [7.4, 3.9],
+                [7.4, 3.4],
+                [9.6, 3.4],
+                [9.6, 8.1],
+              ],
+              [
+                [15.4, 3.9],
+                [15.4, 3.4],
+                [17.6, 3.4],
+                [17.6, 7.1],
+              ],
+              [
+                [3, 14],
+                [3, 11],
+                [6, 11],
+              ],
+              [
+                [19, 7],
+                [19, 4],
+                [22, 4],
+              ],
+            ],
+            patches: [
+              [15.4, 8.4, 2.2, 6.2],
+              [7.4, 3.4, 2.2, 5.2],
+              [15.4, 3.4, 2.2, 4.2],
+              [3, 11, 3, 3],
+              [19, 4, 3, 3],
+            ],
+            seal: [18, 10, 'valve'],
+            intent:
+              'Deliver to opposite sides of two gates, then regroup in the centre. In Team, either cable can hold a pad for the other pilot.',
+          },
+          componentAssemblies: [
+            {
+              family: 'pressure',
+              cells: [
+                [16, 9],
+                [16, 10],
+                [16, 11],
+                [16, 12],
+                [16, 13],
+              ],
+            },
+            {
+              family: 'coolant',
+              cells: [
+                [8, 4],
+                [8, 5],
+                [8, 6],
+                [8, 7],
+              ],
+            },
+            {
+              family: 'coolant',
+              cells: [
+                [16, 4],
+                [16, 5],
+                [16, 6],
+              ],
+            },
+            {
+              family: 'coolant',
+              cells: [
+                [8, 10],
+                [8, 11],
+                [8, 12],
+              ],
+            },
+          ],
           focus: [18, 9],
           axis: 'vertical',
           light: 'night',
@@ -3562,7 +15204,53 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'irrigator',
           ambient: 'leaves',
-          floor: 'rows',
+          floor: 'authored',
+          floorPlan: {
+            name: 'glasshouse-deliveries-delivery',
+            pattern: 'delivery',
+            paths: [
+              [
+                [9.4, 6.4],
+                [14.6, 6.4],
+                [14.6, 10.6],
+              ],
+              [
+                [9.4, 10.6],
+                [11.74, 10.6],
+              ],
+              [
+                [17, 14],
+                [17, 11],
+                [20, 11],
+              ],
+            ],
+            patches: [
+              [9.4, 6.4, 5.2, 4.2],
+              [17, 11, 3, 3],
+            ],
+            seal: [6, 6, 'leaf'],
+            intent:
+              'Carry two parcels to dock A. The runner commits around the glasshouse’s open side: unload, then cut across to its next corner.',
+          },
+          componentAssemblies: [
+            {
+              family: 'glasshouse',
+              cells: [
+                [10, 7],
+                [11, 7],
+                [12, 7],
+                [13, 7],
+                [10, 8],
+                [11, 8],
+                [12, 8],
+                [13, 8],
+                [10, 9],
+                [11, 9],
+                [12, 9],
+                [13, 9],
+              ],
+            },
+          ],
           focus: [6, 6],
           axis: 'horizontal',
           light: 'morning',
@@ -3582,7 +15270,66 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'irrigator',
           ambient: 'leaves',
-          floor: 'rows',
+          floor: 'authored',
+          floorPlan: {
+            name: 'glasshouse-deliveries-delivery',
+            pattern: 'delivery',
+            paths: [
+              [
+                [9.4, 4.4],
+                [12.6, 4.4],
+                [12.6, 8.6],
+              ],
+              [
+                [11.4, 9.4],
+                [14.6, 9.4],
+                [14.6, 13.6],
+              ],
+              [
+                [3, 16],
+                [3, 13],
+                [6, 13],
+              ],
+              [
+                [19, 5],
+                [19, 2],
+                [22, 2],
+              ],
+            ],
+            patches: [
+              [9.4, 4.4, 3.2, 4.2],
+              [11.4, 9.4, 3.2, 4.2],
+              [3, 13, 3, 3],
+              [19, 2, 3, 3],
+            ],
+            seal: [17, 11, 'leaf'],
+            intent:
+              'Two docks take different parcels. Choose a loop that matches the letters without folding the cable across your return.',
+          },
+          componentAssemblies: [
+            {
+              family: 'irrigator',
+              cells: [
+                [10, 5],
+                [11, 5],
+                [10, 6],
+                [11, 6],
+                [10, 7],
+                [11, 7],
+              ],
+            },
+            {
+              family: 'glasshouse',
+              cells: [
+                [12, 10],
+                [13, 10],
+                [12, 11],
+                [13, 11],
+                [12, 12],
+                [13, 12],
+              ],
+            },
+          ],
           focus: [17, 11],
           axis: 'vertical',
           light: 'morning',
@@ -3602,7 +15349,61 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'irrigator',
           ambient: 'leaves',
-          floor: 'rows',
+          floor: 'authored',
+          floorPlan: {
+            name: 'glasshouse-deliveries-delivery',
+            pattern: 'delivery',
+            paths: [
+              [
+                [7.4, 4.4],
+                [15.6, 4.4],
+                [15.6, 12.6],
+              ],
+              [
+                [9, 12],
+                [9, 9],
+                [12, 9],
+              ],
+            ],
+            patches: [
+              [7.4, 4.4, 8.2, 8.2],
+              [9, 9, 3, 3],
+            ],
+            seal: [11, 8, 'leaf'],
+            intent:
+              'Load outside the glasshouse, unload before the narrow elbow, then pursue the runner around its open side.',
+          },
+          componentAssemblies: [
+            {
+              family: 'glasshouse',
+              cells: [
+                [8, 5],
+                [9, 5],
+                [10, 5],
+                [11, 5],
+                [12, 5],
+                [13, 5],
+                [14, 5],
+                [8, 6],
+                [9, 6],
+                [10, 6],
+                [11, 6],
+                [12, 6],
+                [13, 6],
+                [14, 6],
+                [13, 7],
+                [14, 7],
+                [13, 8],
+                [14, 8],
+                [13, 9],
+                [14, 9],
+                [13, 10],
+                [14, 10],
+                [13, 11],
+                [14, 11],
+              ],
+            },
+          ],
           focus: [11, 8],
           axis: 'horizontal',
           light: 'morning',
@@ -3622,7 +15423,74 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'irrigator',
           ambient: 'leaves',
-          floor: 'rows',
+          floor: 'authored',
+          floorPlan: {
+            name: 'glasshouse-deliveries-delivery',
+            pattern: 'delivery',
+            paths: [
+              [
+                [7.4, 5.4],
+                [11.6, 5.4],
+                [11.6, 8.6],
+              ],
+              [
+                [7.4, 8.6],
+                [9.29, 8.6],
+              ],
+              [
+                [14.4, 9.4],
+                [18.6, 9.4],
+                [18.6, 12.6],
+              ],
+              [
+                [14.4, 12.6],
+                [16.29, 12.6],
+              ],
+              [
+                [19, 9],
+                [19, 6],
+                [22, 6],
+              ],
+              [
+                [3, 16],
+                [3, 13],
+                [6, 13],
+              ],
+            ],
+            patches: [
+              [7.4, 5.4, 4.2, 3.2],
+              [14.4, 9.4, 4.2, 3.2],
+              [19, 6, 3, 3],
+              [3, 13, 3, 3],
+            ],
+            seal: [16, 5, 'leaf'],
+            intent:
+              'Only the current harvest is collectable. Finish the north delivery before the southern parcels activate on the same growing route.',
+          },
+          componentAssemblies: [
+            {
+              family: 'irrigator',
+              cells: [
+                [8, 6],
+                [9, 6],
+                [10, 6],
+                [8, 7],
+                [9, 7],
+                [10, 7],
+              ],
+            },
+            {
+              family: 'glasshouse',
+              cells: [
+                [15, 10],
+                [16, 10],
+                [17, 10],
+                [15, 11],
+                [16, 11],
+                [17, 11],
+              ],
+            },
+          ],
           focus: [16, 5],
           axis: 'vertical',
           light: 'late',
@@ -3642,7 +15510,68 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'irrigator',
           ambient: 'leaves',
-          floor: 'rows',
+          floor: 'authored',
+          floorPlan: {
+            name: 'glasshouse-deliveries-delivery',
+            pattern: 'delivery',
+            paths: [
+              [
+                [6.4, 5.4],
+                [9.6, 5.4],
+                [9.6, 11.6],
+              ],
+              [
+                [14.4, 5.4],
+                [17.6, 5.4],
+                [17.6, 11.6],
+              ],
+              [
+                [19, 11],
+                [19, 8],
+                [22, 8],
+              ],
+            ],
+            patches: [
+              [6.4, 5.4, 3.2, 6.2],
+              [14.4, 5.4, 3.2, 6.2],
+              [19, 8, 3, 3],
+            ],
+            seal: [7, 12, 'leaf'],
+            intent:
+              'The refuge seeker commits through the aisle between the two glasshouses. Deliver outside the east wall, then choose which end of the aisle to intercept.',
+          },
+          componentAssemblies: [
+            {
+              family: 'glasshouse',
+              cells: [
+                [7, 6],
+                [8, 6],
+                [7, 7],
+                [8, 7],
+                [7, 8],
+                [8, 8],
+                [7, 9],
+                [8, 9],
+                [7, 10],
+                [8, 10],
+              ],
+            },
+            {
+              family: 'irrigator',
+              cells: [
+                [15, 6],
+                [16, 6],
+                [15, 7],
+                [16, 7],
+                [15, 8],
+                [16, 8],
+                [15, 9],
+                [16, 9],
+                [15, 10],
+                [16, 10],
+              ],
+            },
+          ],
           focus: [7, 12],
           axis: 'horizontal',
           light: 'late',
@@ -3662,7 +15591,55 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'irrigator',
           ambient: 'leaves',
-          floor: 'rows',
+          floor: 'authored',
+          floorPlan: {
+            name: 'glasshouse-deliveries-delivery',
+            pattern: 'delivery',
+            paths: [
+              [
+                [11.4, 9.4],
+                [13.6, 9.4],
+                [13.6, 14.6],
+              ],
+              [
+                [11.4, 4.4],
+                [13.6, 4.4],
+                [13.6, 8.6],
+              ],
+              [
+                [17, 11],
+                [17, 8],
+                [20, 8],
+              ],
+            ],
+            patches: [
+              [11.4, 9.4, 2.2, 5.2],
+              [11.4, 4.4, 2.2, 4.2],
+              [17, 8, 3, 3],
+            ],
+            seal: [14, 9, 'leaf'],
+            intent:
+              'The loaded cable holds an irrigation gate. Deliver beyond it, then decide whether your shortened return should use the bypass.',
+          },
+          componentAssemblies: [
+            {
+              family: 'glasshouse',
+              cells: [
+                [12, 10],
+                [12, 11],
+                [12, 12],
+                [12, 13],
+              ],
+            },
+            {
+              family: 'planter',
+              cells: [
+                [12, 5],
+                [12, 6],
+                [12, 7],
+              ],
+            },
+          ],
           focus: [12, 9],
           axis: 'vertical',
           light: 'late',
@@ -3682,7 +15659,72 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'irrigator',
           ambient: 'leaves',
-          floor: 'rows',
+          floor: 'authored',
+          floorPlan: {
+            name: 'glasshouse-deliveries-delivery',
+            pattern: 'delivery',
+            paths: [
+              [
+                [7.4, 5.4],
+                [11.6, 5.4],
+                [11.6, 12.6],
+              ],
+              [
+                [14.4, 5.4],
+                [17.6, 5.4],
+                [17.6, 9.6],
+              ],
+              [
+                [11, 6],
+                [11, 3],
+                [14, 3],
+              ],
+            ],
+            patches: [
+              [7.4, 5.4, 4.2, 7.2],
+              [14.4, 5.4, 3.2, 4.2],
+              [11, 3, 3, 3],
+            ],
+            seal: [5, 8, 'leaf'],
+            intent:
+              'Parcels lie on opposite edges. Wrapping can shorten the delivery, but your own cable still follows through the boundary.',
+          },
+          componentAssemblies: [
+            {
+              family: 'glasshouse',
+              cells: [
+                [8, 6],
+                [9, 6],
+                [10, 6],
+                [8, 7],
+                [9, 7],
+                [10, 7],
+                [8, 8],
+                [9, 8],
+                [10, 8],
+                [8, 9],
+                [9, 9],
+                [10, 9],
+                [8, 10],
+                [9, 10],
+                [10, 10],
+                [8, 11],
+                [9, 11],
+                [10, 11],
+              ],
+            },
+            {
+              family: 'irrigator',
+              cells: [
+                [15, 6],
+                [16, 6],
+                [15, 7],
+                [16, 7],
+                [15, 8],
+                [16, 8],
+              ],
+            },
+          ],
           focus: [5, 8],
           axis: 'horizontal',
           light: 'night',
@@ -3702,7 +15744,89 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'irrigator',
           ambient: 'leaves',
-          floor: 'rows',
+          floor: 'authored',
+          floorPlan: {
+            name: 'glasshouse-deliveries-delivery',
+            pattern: 'delivery',
+            paths: [
+              [
+                [6.4, 4.4],
+                [10.6, 4.4],
+                [10.6, 8.6],
+              ],
+              [
+                [13.4, 9.4],
+                [17.6, 9.4],
+                [17.6, 13.6],
+              ],
+              [
+                [11.4, 4.4],
+                [14.6, 4.4],
+                [14.6, 6.6],
+              ],
+              [
+                [11.4, 6.6],
+                [12.84, 6.6],
+              ],
+              [
+                [11, 16],
+                [11, 13],
+                [14, 13],
+              ],
+              [
+                [11, 5],
+                [11, 2],
+                [14, 2],
+              ],
+            ],
+            patches: [
+              [6.4, 4.4, 4.2, 4.2],
+              [13.4, 9.4, 4.2, 4.2],
+              [11.4, 4.4, 3.2, 2.2],
+              [11, 13, 3, 3],
+              [11, 2, 3, 3],
+            ],
+            seal: [18, 9, 'leaf'],
+            intent:
+              'Deliver the north and south harvests before meeting in the centre. The sprinter commits across the clear aisle: bait its burst, then cross during recovery.',
+          },
+          componentAssemblies: [
+            {
+              family: 'irrigator',
+              cells: [
+                [7, 5],
+                [8, 5],
+                [9, 5],
+                [7, 6],
+                [8, 6],
+                [9, 6],
+                [7, 7],
+                [8, 7],
+                [9, 7],
+              ],
+            },
+            {
+              family: 'glasshouse',
+              cells: [
+                [14, 10],
+                [15, 10],
+                [16, 10],
+                [14, 11],
+                [15, 11],
+                [16, 11],
+                [14, 12],
+                [15, 12],
+                [16, 12],
+              ],
+            },
+            {
+              family: 'planter',
+              cells: [
+                [12, 5],
+                [13, 5],
+              ],
+            },
+          ],
           focus: [18, 9],
           axis: 'vertical',
           light: 'night',
@@ -3722,7 +15846,85 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'floodgate',
           ambient: 'water',
-          floor: 'seam',
+          floor: 'authored',
+          floorPlan: {
+            name: 'tidal-rendezvous-tidal',
+            pattern: 'tidal',
+            paths: [
+              [
+                [8.1, 4.4],
+                [8.1, 9.6],
+              ],
+              [
+                [12.9, 4.4],
+                [12.9, 9.6],
+              ],
+              [
+                [14.1, 9.4],
+                [14.1, 13.6],
+              ],
+              [
+                [18.9, 9.4],
+                [18.9, 13.6],
+              ],
+              [
+                [1, 3],
+                [2, 3],
+              ],
+              [
+                [22, 3],
+                [23, 3],
+              ],
+              [
+                [1, 15],
+                [2, 15],
+              ],
+              [
+                [22, 15],
+                [23, 15],
+              ],
+            ],
+            patches: [
+              [8.4, 4.4, 4.2, 5.2],
+              [14.4, 9.4, 4.2, 4.2],
+            ],
+            seal: [6, 6, 'tide'],
+            intent:
+              'Catch, cross the harbour, then catch again. Use the wrapping edge to approach each extraction from a different side.',
+          },
+          componentAssemblies: [
+            {
+              family: 'pump',
+              cells: [
+                [9, 5],
+                [10, 5],
+                [11, 5],
+                [9, 6],
+                [10, 6],
+                [11, 6],
+                [9, 7],
+                [10, 7],
+                [11, 7],
+                [9, 8],
+                [10, 8],
+                [11, 8],
+              ],
+            },
+            {
+              family: 'floodgate',
+              cells: [
+                [15, 10],
+                [16, 10],
+                [17, 10],
+                [15, 11],
+                [16, 11],
+                [17, 11],
+                [15, 12],
+                [16, 12],
+                [17, 12],
+              ],
+            },
+          ],
           focus: [6, 6],
           axis: 'horizontal',
           light: 'morning',
@@ -3742,7 +15944,96 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'floodgate',
           ambient: 'water',
-          floor: 'seam',
+          floor: 'authored',
+          floorPlan: {
+            name: 'tidal-rendezvous-tidal',
+            pattern: 'tidal',
+            paths: [
+              [
+                [5.1, 5.4],
+                [5.1, 11.6],
+              ],
+              [
+                [8.9, 5.4],
+                [8.9, 11.6],
+              ],
+              [
+                [15.1, 5.4],
+                [15.1, 11.6],
+              ],
+              [
+                [18.9, 5.4],
+                [18.9, 11.6],
+              ],
+              [
+                [21, 7],
+                [21, 4],
+                [23, 4],
+              ],
+              [
+                [1, 14],
+                [1, 11],
+                [3, 11],
+              ],
+              [
+                [1, 3],
+                [2, 3],
+              ],
+              [
+                [22, 3],
+                [23, 3],
+              ],
+              [
+                [1, 15],
+                [2, 15],
+              ],
+              [
+                [22, 15],
+                [23, 15],
+              ],
+            ],
+            patches: [
+              [5.4, 5.4, 3.2, 6.2],
+              [15.4, 5.4, 3.2, 6.2],
+              [21, 4, 2, 3],
+              [1, 11, 2, 3],
+            ],
+            seal: [17, 12, 'tide'],
+            intent:
+              'The docks sit across the edge from their parcels. A short delivery leaves you facing the longer final interception.',
+          },
+          componentAssemblies: [
+            {
+              family: 'floodgate',
+              cells: [
+                [6, 6],
+                [7, 6],
+                [6, 7],
+                [7, 7],
+                [6, 8],
+                [7, 8],
+                [6, 9],
+                [7, 9],
+                [6, 10],
+                [7, 10],
+              ],
+            },
+            {
+              family: 'pump',
+              cells: [
+                [16, 6],
+                [17, 6],
+                [16, 7],
+                [17, 7],
+                [16, 8],
+                [17, 8],
+                [16, 9],
+                [17, 9],
+                [16, 10],
+                [17, 10],
+              ],
+            },
+          ],
           focus: [17, 11],
           axis: 'vertical',
           light: 'morning',
@@ -3762,7 +16053,96 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'floodgate',
           ambient: 'water',
-          floor: 'seam',
+          floor: 'authored',
+          floorPlan: {
+            name: 'tidal-rendezvous-tidal',
+            pattern: 'tidal',
+            paths: [
+              [
+                [6.1, 5.4],
+                [6.1, 8.6],
+              ],
+              [
+                [17.9, 5.4],
+                [17.9, 8.6],
+              ],
+              [
+                [9.1, 10.4],
+                [9.1, 14.6],
+              ],
+              [
+                [14.9, 10.4],
+                [14.9, 14.6],
+              ],
+              [
+                [1, 3],
+                [2, 3],
+              ],
+              [
+                [22, 3],
+                [23, 3],
+              ],
+              [
+                [1, 15],
+                [2, 15],
+              ],
+              [
+                [22, 15],
+                [23, 15],
+              ],
+            ],
+            patches: [
+              [6.4, 5.4, 11.2, 3.2],
+              [9.4, 10.4, 5.2, 4.2],
+            ],
+            seal: [11, 9, 'tide'],
+            intent:
+              'The pair takes opposite approaches around the long quay. Cross the wrapping edge to intercept one end, then reserve the other return for the survivor.',
+          },
+          componentAssemblies: [
+            {
+              family: 'pump',
+              cells: [
+                [7, 6],
+                [8, 6],
+                [9, 6],
+                [10, 6],
+                [11, 6],
+                [12, 6],
+                [13, 6],
+                [14, 6],
+                [15, 6],
+                [16, 6],
+                [7, 7],
+                [8, 7],
+                [9, 7],
+                [10, 7],
+                [11, 7],
+                [12, 7],
+                [13, 7],
+                [14, 7],
+                [15, 7],
+                [16, 7],
+              ],
+            },
+            {
+              family: 'floodgate',
+              cells: [
+                [10, 11],
+                [11, 11],
+                [12, 11],
+                [13, 11],
+                [10, 12],
+                [11, 12],
+                [12, 12],
+                [13, 12],
+                [10, 13],
+                [11, 13],
+                [12, 13],
+                [13, 13],
+              ],
+            },
+          ],
           focus: [11, 8],
           axis: 'horizontal',
           light: 'morning',
@@ -3782,7 +16162,103 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'floodgate',
           ambient: 'water',
-          floor: 'seam',
+          floor: 'authored',
+          floorPlan: {
+            name: 'tidal-rendezvous-tidal',
+            pattern: 'tidal',
+            paths: [
+              [
+                [4.1, 3.4],
+                [4.1, 11.6],
+              ],
+              [
+                [8.9, 3.4],
+                [8.9, 11.6],
+              ],
+              [
+                [15.1, 7.4],
+                [15.1, 14.6],
+              ],
+              [
+                [19.9, 7.4],
+                [19.9, 14.6],
+              ],
+              [
+                [1, 3],
+                [2, 3],
+              ],
+              [
+                [22, 3],
+                [23, 3],
+              ],
+              [
+                [1, 15],
+                [2, 15],
+              ],
+              [
+                [22, 15],
+                [23, 15],
+              ],
+            ],
+            patches: [
+              [4.4, 3.4, 4.2, 8.2],
+              [15.4, 7.4, 4.2, 7.2],
+            ],
+            seal: [16, 5, 'tide'],
+            intent:
+              'The quays block a straight chase. Intercept a changing refuge from the opposite edge, then use the open central waterline.',
+          },
+          componentAssemblies: [
+            {
+              family: 'floodgate',
+              cells: [
+                [5, 4],
+                [6, 4],
+                [7, 4],
+                [5, 5],
+                [6, 5],
+                [7, 5],
+                [5, 6],
+                [6, 6],
+                [7, 6],
+                [5, 7],
+                [6, 7],
+                [7, 7],
+                [5, 8],
+                [6, 8],
+                [7, 8],
+                [5, 9],
+                [6, 9],
+                [7, 9],
+                [5, 10],
+                [6, 10],
+                [7, 10],
+              ],
+            },
+            {
+              family: 'pump',
+              cells: [
+                [16, 8],
+                [17, 8],
+                [18, 8],
+                [16, 9],
+                [17, 9],
+                [18, 9],
+                [16, 10],
+                [17, 10],
+                [18, 10],
+                [16, 11],
+                [17, 11],
+                [18, 11],
+                [16, 12],
+                [17, 12],
+                [18, 12],
+                [16, 13],
+                [17, 13],
+                [18, 13],
+              ],
+            },
+          ],
           focus: [16, 5],
           axis: 'vertical',
           light: 'late',
@@ -3802,7 +16278,80 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'floodgate',
           ambient: 'water',
-          floor: 'seam',
+          floor: 'authored',
+          floorPlan: {
+            name: 'tidal-rendezvous-tidal',
+            pattern: 'tidal',
+            paths: [
+              [
+                [10.1, 3.4],
+                [10.1, 8.6],
+              ],
+              [
+                [13.9, 3.4],
+                [13.9, 8.6],
+              ],
+              [
+                [10.1, 9.4],
+                [10.1, 14.6],
+              ],
+              [
+                [13.9, 9.4],
+                [13.9, 14.6],
+              ],
+              [
+                [1, 3],
+                [2, 3],
+              ],
+              [
+                [22, 3],
+                [23, 3],
+              ],
+              [
+                [1, 15],
+                [2, 15],
+              ],
+              [
+                [22, 15],
+                [23, 15],
+              ],
+            ],
+            patches: [
+              [10.4, 3.4, 3.2, 5.2],
+              [10.4, 9.4, 3.2, 5.2],
+            ],
+            seal: [7, 12, 'tide'],
+            intent:
+              'An occupied pad opens a middle crossing. Compare that route with a wrap around the edge before committing your cable.',
+          },
+          componentAssemblies: [
+            {
+              family: 'floodgate',
+              cells: [
+                [11, 4],
+                [12, 4],
+                [11, 5],
+                [12, 5],
+                [11, 6],
+                [12, 6],
+                [11, 7],
+                [12, 7],
+              ],
+            },
+            {
+              family: 'pump',
+              cells: [
+                [11, 10],
+                [12, 10],
+                [11, 11],
+                [12, 11],
+                [11, 12],
+                [12, 12],
+                [11, 13],
+                [12, 13],
+              ],
+            },
+          ],
           focus: [7, 12],
           axis: 'horizontal',
           light: 'late',
@@ -3822,7 +16371,89 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'floodgate',
           ambient: 'water',
-          floor: 'seam',
+          floor: 'authored',
+          floorPlan: {
+            name: 'tidal-rendezvous-tidal',
+            pattern: 'tidal',
+            paths: [
+              [
+                [8.1, 4.4],
+                [8.1, 7.6],
+              ],
+              [
+                [11.9, 4.4],
+                [11.9, 7.6],
+              ],
+              [
+                [13.1, 9.4],
+                [13.1, 12.6],
+              ],
+              [
+                [16.9, 9.4],
+                [16.9, 12.6],
+              ],
+              [
+                [4.1, 10.4],
+                [4.1, 14.6],
+              ],
+              [
+                [6.9, 10.4],
+                [6.9, 14.6],
+              ],
+              [
+                [1, 3],
+                [2, 3],
+              ],
+              [
+                [22, 3],
+                [23, 3],
+              ],
+              [
+                [1, 15],
+                [2, 15],
+              ],
+              [
+                [22, 15],
+                [23, 15],
+              ],
+            ],
+            patches: [
+              [8.4, 4.4, 3.2, 3.2],
+              [13.4, 9.4, 3.2, 3.2],
+              [4.4, 10.4, 2.2, 4.2],
+            ],
+            seal: [12, 9, 'tide'],
+            intent:
+              'Reach either lever through the edge, then intercept on the selected quay loop. The junction itself never wraps.',
+          },
+          componentAssemblies: [
+            {
+              family: 'floodgate',
+              cells: [
+                [9, 5],
+                [10, 5],
+                [9, 6],
+                [10, 6],
+              ],
+            },
+            {
+              family: 'pump',
+              cells: [
+                [14, 10],
+                [15, 10],
+                [14, 11],
+                [15, 11],
+              ],
+            },
+            {
+              family: 'dock',
+              cells: [
+                [5, 11],
+                [5, 12],
+                [5, 13],
+              ],
+            },
+          ],
           focus: [12, 9],
           axis: 'vertical',
           light: 'late',
@@ -3842,7 +16473,104 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'floodgate',
           ambient: 'water',
-          floor: 'seam',
+          floor: 'authored',
+          floorPlan: {
+            name: 'tidal-rendezvous-tidal',
+            pattern: 'tidal',
+            paths: [
+              [
+                [7.1, 4.4],
+                [7.1, 12.6],
+              ],
+              [
+                [10.9, 4.4],
+                [10.9, 12.6],
+              ],
+              [
+                [14.1, 5.4],
+                [14.1, 13.6],
+              ],
+              [
+                [17.9, 5.4],
+                [17.9, 13.6],
+              ],
+              [
+                [20, 8],
+                [20, 5],
+                [23, 5],
+              ],
+              [
+                [2, 13],
+                [2, 10],
+                [5, 10],
+              ],
+              [
+                [1, 3],
+                [2, 3],
+              ],
+              [
+                [22, 3],
+                [23, 3],
+              ],
+              [
+                [1, 15],
+                [2, 15],
+              ],
+              [
+                [22, 15],
+                [23, 15],
+              ],
+            ],
+            patches: [
+              [7.4, 4.4, 3.2, 8.2],
+              [14.4, 5.4, 3.2, 8.2],
+              [20, 5, 3, 3],
+              [2, 10, 3, 3],
+            ],
+            seal: [5, 8, 'tide'],
+            intent:
+              'Collect the near load, deliver across the seam, then collect the far load. Each delivery opens space for the next tight return.',
+          },
+          componentAssemblies: [
+            {
+              family: 'pump',
+              cells: [
+                [8, 5],
+                [9, 5],
+                [8, 6],
+                [9, 6],
+                [8, 7],
+                [9, 7],
+                [8, 8],
+                [9, 8],
+                [8, 9],
+                [9, 9],
+                [8, 10],
+                [9, 10],
+                [8, 11],
+                [9, 11],
+              ],
+            },
+            {
+              family: 'floodgate',
+              cells: [
+                [15, 6],
+                [16, 6],
+                [15, 7],
+                [16, 7],
+                [15, 8],
+                [16, 8],
+                [15, 9],
+                [16, 9],
+                [15, 10],
+                [16, 10],
+                [15, 11],
+                [16, 11],
+                [15, 12],
+                [16, 12],
+              ],
+            },
+          ],
           focus: [5, 8],
           axis: 'horizontal',
           light: 'night',
@@ -3862,7 +16590,108 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'floodgate',
           ambient: 'water',
-          floor: 'seam',
+          floor: 'authored',
+          floorPlan: {
+            name: 'tidal-rendezvous-tidal',
+            pattern: 'tidal',
+            paths: [
+              [
+                [5.1, 4.4],
+                [5.1, 9.6],
+              ],
+              [
+                [9.9, 4.4],
+                [9.9, 9.6],
+              ],
+              [
+                [14.1, 8.4],
+                [14.1, 13.6],
+              ],
+              [
+                [18.9, 8.4],
+                [18.9, 13.6],
+              ],
+              [
+                [10.1, 6.4],
+                [10.1, 10.6],
+              ],
+              [
+                [13.9, 6.4],
+                [13.9, 10.6],
+              ],
+              [
+                [1, 3],
+                [2, 3],
+              ],
+              [
+                [22, 3],
+                [23, 3],
+              ],
+              [
+                [1, 15],
+                [2, 15],
+              ],
+              [
+                [22, 15],
+                [23, 15],
+              ],
+            ],
+            patches: [
+              [5.4, 4.4, 4.2, 5.2],
+              [14.4, 8.4, 4.2, 5.2],
+              [10.4, 6.4, 3.2, 4.2],
+            ],
+            seal: [19, 9, 'tide'],
+            intent:
+              'Three arrows alternate the useful edge. Keep one lane free for the partner and one for the cable you carried through the previous crossing.',
+          },
+          componentAssemblies: [
+            {
+              family: 'floodgate',
+              cells: [
+                [6, 5],
+                [7, 5],
+                [8, 5],
+                [6, 6],
+                [7, 6],
+                [8, 6],
+                [6, 7],
+                [7, 7],
+                [8, 7],
+                [6, 8],
+                [7, 8],
+                [8, 8],
+              ],
+            },
+            {
+              family: 'pump',
+              cells: [
+                [15, 9],
+                [16, 9],
+                [17, 9],
+                [15, 10],
+                [16, 10],
+                [17, 10],
+                [15, 11],
+                [16, 11],
+                [17, 11],
+                [15, 12],
+                [16, 12],
+                [17, 12],
+              ],
+            },
+            {
+              family: 'floodgate',
+              cells: [
+                [11, 7],
+                [12, 7],
+                [11, 8],
+                [12, 8],
+                [11, 9],
+                [12, 9],
+              ],
+            },
+          ],
           focus: [18, 9],
           axis: 'vertical',
           light: 'night',
@@ -3882,7 +16711,56 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'coolant',
           ambient: 'fan',
-          floor: 'ring',
+          floor: 'authored',
+          floorPlan: {
+            name: 'furnace-courts-pressure',
+            pattern: 'pressure',
+            paths: [
+              [
+                [8.4, 4.9],
+                [8.4, 4.4],
+                [12.6, 4.4],
+                [12.6, 7.1],
+              ],
+              [
+                [14.4, 9.9],
+                [14.4, 9.4],
+                [18.6, 9.4],
+                [18.6, 12.1],
+              ],
+            ],
+            patches: [
+              [8.4, 4.4, 4.2, 3.2],
+              [14.4, 9.4, 4.2, 3.2],
+            ],
+            seal: [6, 6, 'valve'],
+            intent:
+              'Clear the first runner before crossing the furnace lane. The emitter is catchable; the outside route avoids its marked attack.',
+          },
+          componentAssemblies: [
+            {
+              family: 'boiler',
+              cells: [
+                [9, 5],
+                [10, 5],
+                [11, 5],
+                [9, 6],
+                [10, 6],
+                [11, 6],
+              ],
+            },
+            {
+              family: 'pressure',
+              cells: [
+                [15, 10],
+                [16, 10],
+                [17, 10],
+                [15, 11],
+                [16, 11],
+                [17, 11],
+              ],
+            },
+          ],
           focus: [6, 6],
           axis: 'horizontal',
           light: 'morning',
@@ -3902,7 +16780,60 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'coolant',
           ambient: 'fan',
-          floor: 'ring',
+          floor: 'authored',
+          floorPlan: {
+            name: 'furnace-courts-pressure',
+            pattern: 'pressure',
+            paths: [
+              [
+                [9.4, 9.9],
+                [9.4, 9.4],
+                [12.6, 9.4],
+                [12.6, 13.1],
+              ],
+              [
+                [9.4, 4.9],
+                [9.4, 4.4],
+                [12.6, 4.4],
+                [12.6, 7.1],
+              ],
+              [
+                [18, 14],
+                [18, 11],
+                [21, 11],
+              ],
+            ],
+            patches: [
+              [9.4, 9.4, 3.2, 4.2],
+              [9.4, 4.4, 3.2, 3.2],
+              [18, 11, 3, 3],
+            ],
+            seal: [17, 11, 'valve'],
+            intent:
+              'Take coolant around the marked lane to its dock. Deliver before taking the final runner so your cable is shorter during pursuit.',
+          },
+          componentAssemblies: [
+            {
+              family: 'boiler',
+              cells: [
+                [10, 10],
+                [11, 10],
+                [10, 11],
+                [11, 11],
+                [10, 12],
+                [11, 12],
+              ],
+            },
+            {
+              family: 'pressure',
+              cells: [
+                [10, 5],
+                [11, 5],
+                [10, 6],
+                [11, 6],
+              ],
+            },
+          ],
           focus: [17, 11],
           axis: 'vertical',
           light: 'morning',
@@ -3922,7 +16853,56 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'coolant',
           ambient: 'fan',
-          floor: 'ring',
+          floor: 'authored',
+          floorPlan: {
+            name: 'furnace-courts-pressure',
+            pattern: 'pressure',
+            paths: [
+              [
+                [7.4, 5.9],
+                [7.4, 5.4],
+                [11.6, 5.4],
+                [11.6, 8.1],
+              ],
+              [
+                [14.4, 9.9],
+                [14.4, 9.4],
+                [18.6, 9.4],
+                [18.6, 12.1],
+              ],
+            ],
+            patches: [
+              [7.4, 5.4, 4.2, 3.2],
+              [14.4, 9.4, 4.2, 3.2],
+            ],
+            seal: [12, 8, 'valve'],
+            intent:
+              'The guard changes posts only after its shot clears. Read the fresh aim warning before crossing, then use the opposite return for the next clearance.',
+          },
+          componentAssemblies: [
+            {
+              family: 'boiler',
+              cells: [
+                [8, 6],
+                [9, 6],
+                [10, 6],
+                [8, 7],
+                [9, 7],
+                [10, 7],
+              ],
+            },
+            {
+              family: 'pressure',
+              cells: [
+                [15, 10],
+                [16, 10],
+                [17, 10],
+                [15, 11],
+                [16, 11],
+                [17, 11],
+              ],
+            },
+          ],
           focus: [11, 8],
           axis: 'horizontal',
           light: 'morning',
@@ -3942,7 +16922,67 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'coolant',
           ambient: 'fan',
-          floor: 'ring',
+          floor: 'authored',
+          floorPlan: {
+            name: 'furnace-courts-pressure',
+            pattern: 'pressure',
+            paths: [
+              [
+                [15.4, 4.9],
+                [15.4, 4.4],
+                [18.6, 4.4],
+                [18.6, 7.1],
+              ],
+              [
+                [9.4, 9.9],
+                [9.4, 9.4],
+                [11.6, 9.4],
+                [11.6, 14.1],
+              ],
+              [
+                [9.4, 3.9],
+                [9.4, 3.4],
+                [11.6, 3.4],
+                [11.6, 7.1],
+              ],
+            ],
+            patches: [
+              [15.4, 4.4, 3.2, 3.2],
+              [9.4, 9.4, 2.2, 5.2],
+              [9.4, 3.4, 2.2, 4.2],
+            ],
+            seal: [16, 3, 'valve'],
+            intent:
+              'The pressure shortcut approaches the lane from its flank. Hold it with the cable or take the permanent bypass during a warning.',
+          },
+          componentAssemblies: [
+            {
+              family: 'boiler',
+              cells: [
+                [16, 5],
+                [17, 5],
+                [16, 6],
+                [17, 6],
+              ],
+            },
+            {
+              family: 'coolant',
+              cells: [
+                [10, 10],
+                [10, 11],
+                [10, 12],
+                [10, 13],
+              ],
+            },
+            {
+              family: 'coolant',
+              cells: [
+                [10, 4],
+                [10, 5],
+                [10, 6],
+              ],
+            },
+          ],
           focus: [16, 5],
           axis: 'vertical',
           light: 'late',
@@ -3962,7 +17002,52 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'coolant',
           ambient: 'fan',
-          floor: 'ring',
+          floor: 'authored',
+          floorPlan: {
+            name: 'furnace-courts-pressure',
+            pattern: 'pressure',
+            paths: [
+              [
+                [6.4, 4.9],
+                [6.4, 4.4],
+                [9.6, 4.4],
+                [9.6, 7.1],
+              ],
+              [
+                [14.4, 10.9],
+                [14.4, 10.4],
+                [17.6, 10.4],
+                [17.6, 13.1],
+              ],
+            ],
+            patches: [
+              [6.4, 4.4, 3.2, 3.2],
+              [14.4, 10.4, 3.2, 3.2],
+            ],
+            seal: [7, 12, 'valve'],
+            intent:
+              'One lane attacks across, the next attacks down. Each clearance changes which side is safe to approach.',
+          },
+          componentAssemblies: [
+            {
+              family: 'boiler',
+              cells: [
+                [7, 5],
+                [8, 5],
+                [7, 6],
+                [8, 6],
+              ],
+            },
+            {
+              family: 'pressure',
+              cells: [
+                [15, 11],
+                [16, 11],
+                [15, 12],
+                [16, 12],
+              ],
+            },
+          ],
           focus: [7, 12],
           axis: 'horizontal',
           light: 'late',
@@ -3982,7 +17067,64 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'coolant',
           ambient: 'fan',
-          floor: 'ring',
+          floor: 'authored',
+          floorPlan: {
+            name: 'furnace-courts-pressure',
+            pattern: 'pressure',
+            paths: [
+              [
+                [8.4, 4.9],
+                [8.4, 4.4],
+                [11.6, 4.4],
+                [11.6, 7.1],
+              ],
+              [
+                [13.4, 10.9],
+                [13.4, 10.4],
+                [16.6, 10.4],
+                [16.6, 13.1],
+              ],
+              [
+                [18, 7],
+                [18, 4],
+                [21, 4],
+              ],
+              [
+                [4, 14],
+                [4, 11],
+                [7, 11],
+              ],
+            ],
+            patches: [
+              [8.4, 4.4, 3.2, 3.2],
+              [13.4, 10.4, 3.2, 3.2],
+              [18, 4, 3, 3],
+              [4, 11, 3, 3],
+            ],
+            seal: [12, 9, 'valve'],
+            intent:
+              'Deliver to two sides of the guard. Cargo does not absorb shots; watch the aim marker and choose a return with room for the longer cable.',
+          },
+          componentAssemblies: [
+            {
+              family: 'pressure',
+              cells: [
+                [9, 5],
+                [10, 5],
+                [9, 6],
+                [10, 6],
+              ],
+            },
+            {
+              family: 'boiler',
+              cells: [
+                [14, 11],
+                [15, 11],
+                [14, 12],
+                [15, 12],
+              ],
+            },
+          ],
           focus: [12, 9],
           axis: 'vertical',
           light: 'late',
@@ -4002,7 +17144,51 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'coolant',
           ambient: 'fan',
-          floor: 'ring',
+          floor: 'authored',
+          floorPlan: {
+            name: 'furnace-courts-pressure',
+            pattern: 'pressure',
+            paths: [
+              [
+                [17.4, 4.9],
+                [17.4, 4.4],
+                [19.6, 4.4],
+                [19.6, 8.1],
+              ],
+              [
+                [9.4, 5.9],
+                [9.4, 5.4],
+                [11.6, 5.4],
+                [11.6, 7.1],
+              ],
+              [
+                [13.4, 9.9],
+                [13.4, 9.4],
+                [15.6, 9.4],
+                [15.6, 11.1],
+              ],
+            ],
+            patches: [
+              [17.4, 4.4, 2.2, 4.2],
+              [9.4, 5.4, 2.2, 2.2],
+              [13.4, 9.4, 2.2, 2.2],
+            ],
+            seal: [4, 7, 'valve'],
+            intent:
+              'Redirect the patrol away from the marked firing approach. Its track stays safe to touch; the guard’s projectile does not.',
+          },
+          componentAssemblies: [
+            {
+              family: 'boiler',
+              cells: [
+                [18, 5],
+                [18, 6],
+                [18, 7],
+              ],
+            },
+            { family: 'coolant', cells: [[10, 6]] },
+            { family: 'coolant', cells: [[14, 10]] },
+          ],
           focus: [5, 8],
           axis: 'horizontal',
           light: 'night',
@@ -4022,7 +17208,76 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'coolant',
           ambient: 'fan',
-          floor: 'ring',
+          floor: 'authored',
+          floorPlan: {
+            name: 'furnace-courts-pressure',
+            pattern: 'pressure',
+            paths: [
+              [
+                [6.4, 4.9],
+                [6.4, 4.4],
+                [10.6, 4.4],
+                [10.6, 7.1],
+              ],
+              [
+                [14.4, 10.9],
+                [14.4, 10.4],
+                [18.6, 10.4],
+                [18.6, 13.1],
+              ],
+              [
+                [10.4, 5.9],
+                [10.4, 5.4],
+                [13.6, 5.4],
+                [13.6, 7.1],
+              ],
+              [
+                [11, 15],
+                [11, 12],
+                [14, 12],
+              ],
+            ],
+            patches: [
+              [6.4, 4.4, 4.2, 3.2],
+              [14.4, 10.4, 4.2, 3.2],
+              [10.4, 5.4, 3.2, 2.2],
+              [11, 12, 3, 3],
+            ],
+            seal: [18, 8, 'valve'],
+            intent:
+              'Carry the coolant, clear the two warned posts, then extract at the loading bay. Each stage keeps the same cable and accepted hazard timing.',
+          },
+          componentAssemblies: [
+            {
+              family: 'pressure',
+              cells: [
+                [7, 5],
+                [8, 5],
+                [9, 5],
+                [7, 6],
+                [8, 6],
+                [9, 6],
+              ],
+            },
+            {
+              family: 'boiler',
+              cells: [
+                [15, 11],
+                [16, 11],
+                [17, 11],
+                [15, 12],
+                [16, 12],
+                [17, 12],
+              ],
+            },
+            {
+              family: 'coolant',
+              cells: [
+                [11, 6],
+                [12, 6],
+              ],
+            },
+          ],
           focus: [18, 9],
           axis: 'vertical',
           light: 'night',
@@ -4042,7 +17297,55 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'pump',
           ambient: 'water',
-          floor: 'islands',
+          floor: 'authored',
+          floorPlan: {
+            name: 'pump-station-circuit-quays',
+            pattern: 'quays',
+            paths: [
+              [
+                [8.1, 5.4],
+                [8.1, 9.6],
+              ],
+              [
+                [14.9, 5.4],
+                [14.9, 9.6],
+              ],
+              [
+                [17, 6],
+                [17, 3],
+                [20, 3],
+              ],
+            ],
+            patches: [
+              [8.4, 5.4, 6.2, 4.2],
+              [17, 3, 3, 3],
+            ],
+            seal: [6, 6, 'tide'],
+            intent:
+              'Complete the dock delivery, then open the extraction by catching the runner. The arrow announces when both requirements are met.',
+          },
+          componentAssemblies: [
+            {
+              family: 'pump',
+              cells: [
+                [9, 6],
+                [10, 6],
+                [11, 6],
+                [12, 6],
+                [13, 6],
+                [9, 7],
+                [10, 7],
+                [11, 7],
+                [12, 7],
+                [13, 7],
+                [9, 8],
+                [10, 8],
+                [11, 8],
+                [12, 8],
+                [13, 8],
+              ],
+            },
+          ],
           focus: [6, 6],
           axis: 'horizontal',
           light: 'morning',
@@ -4062,7 +17365,84 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'pump',
           ambient: 'water',
-          floor: 'islands',
+          floor: 'authored',
+          floorPlan: {
+            name: 'pump-station-circuit-quays',
+            pattern: 'quays',
+            paths: [
+              [
+                [6.1, 4.4],
+                [6.1, 9.6],
+              ],
+              [
+                [10.9, 4.4],
+                [10.9, 9.6],
+              ],
+              [
+                [14.1, 8.4],
+                [14.1, 13.6],
+              ],
+              [
+                [18.9, 8.4],
+                [18.9, 13.6],
+              ],
+              [
+                [17, 15],
+                [17, 12],
+                [20, 12],
+              ],
+              [
+                [4, 6],
+                [4, 3],
+                [7, 3],
+              ],
+            ],
+            patches: [
+              [6.4, 4.4, 4.2, 5.2],
+              [14.4, 8.4, 4.2, 5.2],
+              [17, 12, 3, 3],
+              [4, 3, 3, 3],
+            ],
+            seal: [19, 11, 'tide'],
+            intent:
+              'The first landing activates the second delivery. Use the open channel between pump islands for your longer return.',
+          },
+          componentAssemblies: [
+            {
+              family: 'floodgate',
+              cells: [
+                [7, 5],
+                [8, 5],
+                [9, 5],
+                [7, 6],
+                [8, 6],
+                [9, 6],
+                [7, 7],
+                [8, 7],
+                [9, 7],
+                [7, 8],
+                [8, 8],
+                [9, 8],
+              ],
+            },
+            {
+              family: 'pump',
+              cells: [
+                [15, 9],
+                [16, 9],
+                [17, 9],
+                [15, 10],
+                [16, 10],
+                [17, 10],
+                [15, 11],
+                [16, 11],
+                [17, 11],
+                [15, 12],
+                [16, 12],
+                [17, 12],
+              ],
+            },
+          ],
           focus: [17, 11],
           axis: 'vertical',
           light: 'morning',
@@ -4082,7 +17462,70 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'pump',
           ambient: 'water',
-          floor: 'islands',
+          floor: 'authored',
+          floorPlan: {
+            name: 'pump-station-circuit-quays',
+            pattern: 'quays',
+            paths: [
+              [
+                [10.1, 3.4],
+                [10.1, 8.6],
+              ],
+              [
+                [13.9, 3.4],
+                [13.9, 8.6],
+              ],
+              [
+                [10.1, 9.4],
+                [10.1, 14.6],
+              ],
+              [
+                [13.9, 9.4],
+                [13.9, 14.6],
+              ],
+              [
+                [18, 11],
+                [18, 8],
+                [21, 8],
+              ],
+            ],
+            patches: [
+              [10.4, 3.4, 3.2, 5.2],
+              [10.4, 9.4, 3.2, 5.2],
+              [18, 8, 3, 3],
+            ],
+            seal: [9, 7, 'tide'],
+            intent:
+              'Hold the pump gate, unload beyond it, then extract through the other side. Either Team pilot may reach the final arrow after shared delivery.',
+          },
+          componentAssemblies: [
+            {
+              family: 'pump',
+              cells: [
+                [11, 4],
+                [12, 4],
+                [11, 5],
+                [12, 5],
+                [11, 6],
+                [12, 6],
+                [11, 7],
+                [12, 7],
+              ],
+            },
+            {
+              family: 'floodgate',
+              cells: [
+                [11, 10],
+                [12, 10],
+                [11, 11],
+                [12, 11],
+                [11, 12],
+                [12, 12],
+                [11, 13],
+                [12, 13],
+              ],
+            },
+          ],
           focus: [11, 8],
           axis: 'horizontal',
           light: 'morning',
@@ -4102,7 +17545,62 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'pump',
           ambient: 'water',
-          floor: 'islands',
+          floor: 'authored',
+          floorPlan: {
+            name: 'pump-station-circuit-quays',
+            pattern: 'quays',
+            paths: [
+              [
+                [8.1, 4.4],
+                [8.1, 7.6],
+              ],
+              [
+                [11.9, 4.4],
+                [11.9, 7.6],
+              ],
+              [
+                [13.1, 9.4],
+                [13.1, 12.6],
+              ],
+              [
+                [16.9, 9.4],
+                [16.9, 12.6],
+              ],
+              [
+                [19, 7],
+                [19, 4],
+                [22, 4],
+              ],
+            ],
+            patches: [
+              [8.4, 4.4, 3.2, 3.2],
+              [13.4, 9.4, 3.2, 3.2],
+              [19, 4, 3, 3],
+            ],
+            seal: [16, 5, 'tide'],
+            intent:
+              'Choose the patrol’s branch before collecting its clearance. Deliver two parcels and finish at the opposite loading bay.',
+          },
+          componentAssemblies: [
+            {
+              family: 'pump',
+              cells: [
+                [9, 5],
+                [10, 5],
+                [9, 6],
+                [10, 6],
+              ],
+            },
+            {
+              family: 'floodgate',
+              cells: [
+                [14, 10],
+                [15, 10],
+                [14, 11],
+                [15, 11],
+              ],
+            },
+          ],
           focus: [16, 5],
           axis: 'vertical',
           light: 'late',
@@ -4122,7 +17620,70 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'pump',
           ambient: 'water',
-          floor: 'islands',
+          floor: 'authored',
+          floorPlan: {
+            name: 'pump-station-circuit-quays',
+            pattern: 'quays',
+            paths: [
+              [
+                [9.1, 3.4],
+                [9.1, 8.6],
+              ],
+              [
+                [12.9, 3.4],
+                [12.9, 8.6],
+              ],
+              [
+                [9.1, 9.4],
+                [9.1, 14.6],
+              ],
+              [
+                [12.9, 9.4],
+                [12.9, 14.6],
+              ],
+              [
+                [17, 11],
+                [17, 8],
+                [20, 8],
+              ],
+            ],
+            patches: [
+              [9.4, 3.4, 3.2, 5.2],
+              [9.4, 9.4, 3.2, 5.2],
+              [17, 8, 3, 3],
+            ],
+            seal: [7, 12, 'tide'],
+            intent:
+              'A shutter changes the middle approach while you deliver. The edge wraps, so waiting is a choice rather than the only route.',
+          },
+          componentAssemblies: [
+            {
+              family: 'floodgate',
+              cells: [
+                [10, 4],
+                [11, 4],
+                [10, 5],
+                [11, 5],
+                [10, 6],
+                [11, 6],
+                [10, 7],
+                [11, 7],
+              ],
+            },
+            {
+              family: 'pump',
+              cells: [
+                [10, 10],
+                [11, 10],
+                [10, 11],
+                [11, 11],
+                [10, 12],
+                [11, 12],
+                [10, 13],
+                [11, 13],
+              ],
+            },
+          ],
           focus: [7, 12],
           axis: 'horizontal',
           light: 'late',
@@ -4142,7 +17703,66 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'pump',
           ambient: 'water',
-          floor: 'islands',
+          floor: 'authored',
+          floorPlan: {
+            name: 'pump-station-circuit-quays',
+            pattern: 'quays',
+            paths: [
+              [
+                [8.1, 4.4],
+                [8.1, 8.6],
+              ],
+              [
+                [11.9, 4.4],
+                [11.9, 8.6],
+              ],
+              [
+                [13.1, 9.4],
+                [13.1, 13.6],
+              ],
+              [
+                [16.9, 9.4],
+                [16.9, 13.6],
+              ],
+              [
+                [11, 16],
+                [11, 13],
+                [14, 13],
+              ],
+            ],
+            patches: [
+              [8.4, 4.4, 3.2, 4.2],
+              [13.4, 9.4, 3.2, 4.2],
+              [11, 13, 3, 3],
+            ],
+            seal: [12, 9, 'tide'],
+            intent:
+              'Touch both linked relay pads to catch the shielded post, then complete the delivery. Relay switches and parcels never count as enemy catches.',
+          },
+          componentAssemblies: [
+            {
+              family: 'floodgate',
+              cells: [
+                [9, 5],
+                [10, 5],
+                [9, 6],
+                [10, 6],
+                [9, 7],
+                [10, 7],
+              ],
+            },
+            {
+              family: 'pump',
+              cells: [
+                [14, 10],
+                [15, 10],
+                [14, 11],
+                [15, 11],
+                [14, 12],
+                [15, 12],
+              ],
+            },
+          ],
           focus: [12, 9],
           axis: 'vertical',
           light: 'late',
@@ -4162,7 +17782,88 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'pump',
           ambient: 'water',
-          floor: 'islands',
+          floor: 'authored',
+          floorPlan: {
+            name: 'pump-station-circuit-quays',
+            pattern: 'quays',
+            paths: [
+              [
+                [6.1, 4.4],
+                [6.1, 12.6],
+              ],
+              [
+                [9.9, 4.4],
+                [9.9, 12.6],
+              ],
+              [
+                [15.1, 5.4],
+                [15.1, 13.6],
+              ],
+              [
+                [18.9, 5.4],
+                [18.9, 13.6],
+              ],
+              [
+                [19, 6],
+                [19, 3],
+                [22, 3],
+              ],
+              [
+                [3, 15],
+                [3, 12],
+                [6, 12],
+              ],
+            ],
+            patches: [
+              [6.4, 4.4, 3.2, 8.2],
+              [15.4, 5.4, 3.2, 8.2],
+              [19, 3, 3, 3],
+              [3, 12, 3, 3],
+            ],
+            seal: [5, 8, 'tide'],
+            intent:
+              'Deliver one load before the return cargo activates. A moving pair keeps the central crossing busy; reserve an exit before turning.',
+          },
+          componentAssemblies: [
+            {
+              family: 'pump',
+              cells: [
+                [7, 5],
+                [8, 5],
+                [7, 6],
+                [8, 6],
+                [7, 7],
+                [8, 7],
+                [7, 8],
+                [8, 8],
+                [7, 9],
+                [8, 9],
+                [7, 10],
+                [8, 10],
+                [7, 11],
+                [8, 11],
+              ],
+            },
+            {
+              family: 'floodgate',
+              cells: [
+                [16, 6],
+                [17, 6],
+                [16, 7],
+                [17, 7],
+                [16, 8],
+                [17, 8],
+                [16, 9],
+                [17, 9],
+                [16, 10],
+                [17, 10],
+                [16, 11],
+                [17, 11],
+                [16, 12],
+                [17, 12],
+              ],
+            },
+          ],
           focus: [5, 8],
           axis: 'horizontal',
           light: 'night',
@@ -4182,7 +17883,99 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'pump',
           ambient: 'water',
-          floor: 'islands',
+          floor: 'authored',
+          floorPlan: {
+            name: 'pump-station-circuit-quays',
+            pattern: 'quays',
+            paths: [
+              [
+                [10.1, 4.4],
+                [10.1, 8.6],
+              ],
+              [
+                [13.9, 4.4],
+                [13.9, 8.6],
+              ],
+              [
+                [10.1, 9.4],
+                [10.1, 13.6],
+              ],
+              [
+                [13.9, 9.4],
+                [13.9, 13.6],
+              ],
+              [
+                [16.1, 5.4],
+                [16.1, 8.6],
+              ],
+              [
+                [19.9, 5.4],
+                [19.9, 8.6],
+              ],
+              [
+                [19, 11],
+                [19, 8],
+                [22, 8],
+              ],
+              [
+                [3, 10],
+                [3, 7],
+                [6, 7],
+              ],
+            ],
+            patches: [
+              [10.4, 4.4, 3.2, 4.2],
+              [10.4, 9.4, 3.2, 4.2],
+              [16.4, 5.4, 3.2, 3.2],
+              [19, 8, 3, 3],
+              [3, 7, 3, 3],
+            ],
+            seal: [18, 10, 'tide'],
+            intent:
+              'Two cargo stages share a pressure shortcut. Finish the last pursuit, then bring either Team pilot home without crossing the partner’s cable.',
+          },
+          componentAssemblies: [
+            {
+              family: 'floodgate',
+              cells: [
+                [11, 5],
+                [12, 5],
+                [11, 6],
+                [12, 6],
+                [11, 7],
+                [12, 7],
+              ],
+            },
+            {
+              family: 'floodgate',
+              cells: [
+                [11, 10],
+                [12, 10],
+                [11, 11],
+                [12, 11],
+                [11, 12],
+                [12, 12],
+              ],
+            },
+            {
+              family: 'pump',
+              cells: [
+                [17, 6],
+                [18, 6],
+                [17, 7],
+                [18, 7],
+              ],
+            },
+            {
+              family: 'floodgate',
+              cells: [
+                [6, 9],
+                [7, 9],
+                [6, 10],
+                [7, 10],
+              ],
+            },
+          ],
           focus: [18, 9],
           axis: 'vertical',
           light: 'night',
@@ -4202,7 +17995,84 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'antenna',
           ambient: 'windsock',
-          floor: 'terraces',
+          floor: 'authored',
+          floorPlan: {
+            name: 'summit-listening-posts-listening',
+            pattern: 'listening',
+            paths: [
+              [
+                [9.4, 5.1],
+                [9.4, 4.4],
+                [10.1, 4.4],
+              ],
+              [
+                [12.9, 8.6],
+                [13.6, 8.6],
+                [13.6, 7.9],
+              ],
+              [
+                [9.4, 11.1],
+                [9.4, 10.4],
+                [10.1, 10.4],
+              ],
+              [
+                [12.9, 14.6],
+                [13.6, 14.6],
+                [13.6, 13.9],
+              ],
+              [
+                [3, 15],
+                [3, 12],
+                [6, 12],
+              ],
+              [
+                [2, 2],
+                [7, 2],
+              ],
+              [
+                [17, 16],
+                [22, 16],
+              ],
+            ],
+            patches: [
+              [9.4, 4.4, 4.2, 4.2],
+              [9.4, 10.4, 4.2, 4.2],
+              [3, 12, 3, 3],
+            ],
+            seal: [6, 6, 'signal'],
+            intent:
+              'The antenna changes posts only while reception is clear. Catch it during recovery or carry the parcels outside its circle; every new burst still warns first.',
+          },
+          componentAssemblies: [
+            {
+              family: 'receiver',
+              cells: [
+                [10, 5],
+                [11, 5],
+                [12, 5],
+                [10, 6],
+                [11, 6],
+                [12, 6],
+                [10, 7],
+                [11, 7],
+                [12, 7],
+              ],
+            },
+            {
+              family: 'shelter',
+              cells: [
+                [10, 11],
+                [11, 11],
+                [12, 11],
+                [10, 12],
+                [11, 12],
+                [12, 12],
+                [10, 13],
+                [11, 13],
+                [12, 13],
+              ],
+            },
+          ],
           focus: [6, 6],
           axis: 'horizontal',
           light: 'morning',
@@ -4222,7 +18092,86 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'antenna',
           ambient: 'windsock',
-          floor: 'terraces',
+          floor: 'authored',
+          floorPlan: {
+            name: 'summit-listening-posts-listening',
+            pattern: 'listening',
+            paths: [
+              [
+                [10.4, 4.1],
+                [10.4, 3.4],
+                [11.1, 3.4],
+              ],
+              [
+                [12.9, 14.6],
+                [13.6, 14.6],
+                [13.6, 13.9],
+              ],
+              [
+                [4.4, 10.1],
+                [4.4, 9.4],
+                [5.1, 9.4],
+              ],
+              [
+                [7.9, 12.6],
+                [8.6, 12.6],
+                [8.6, 11.9],
+              ],
+              [
+                [2, 2],
+                [7, 2],
+              ],
+              [
+                [17, 16],
+                [22, 16],
+              ],
+            ],
+            patches: [
+              [10.4, 3.4, 3.2, 11.2],
+              [4.4, 9.4, 4.2, 3.2],
+            ],
+            seal: [17, 11, 'signal'],
+            intent:
+              'A narrow central ridge separates two antennas. Clear the near source, use the opposite flank, then take the moving target to the summit exit.',
+          },
+          componentAssemblies: [
+            {
+              family: 'receiver',
+              cells: [
+                [11, 4],
+                [12, 4],
+                [11, 5],
+                [12, 5],
+                [11, 6],
+                [12, 6],
+                [11, 7],
+                [12, 7],
+                [11, 8],
+                [12, 8],
+                [11, 9],
+                [12, 9],
+                [11, 10],
+                [12, 10],
+                [11, 11],
+                [12, 11],
+                [11, 12],
+                [12, 12],
+                [11, 13],
+                [12, 13],
+              ],
+            },
+            {
+              family: 'shelter',
+              cells: [
+                [5, 10],
+                [6, 10],
+                [7, 10],
+                [5, 11],
+                [6, 11],
+                [7, 11],
+              ],
+            },
+          ],
           focus: [17, 11],
           axis: 'vertical',
           light: 'morning',
@@ -4242,7 +18191,90 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'antenna',
           ambient: 'windsock',
-          floor: 'terraces',
+          floor: 'authored',
+          floorPlan: {
+            name: 'summit-listening-posts-listening',
+            pattern: 'listening',
+            paths: [
+              [
+                [6.4, 6.1],
+                [6.4, 5.4],
+                [7.1, 5.4],
+              ],
+              [
+                [9.9, 10.6],
+                [10.6, 10.6],
+                [10.6, 9.9],
+              ],
+              [
+                [14.4, 7.1],
+                [14.4, 6.4],
+                [15.1, 6.4],
+              ],
+              [
+                [17.9, 11.6],
+                [18.6, 11.6],
+                [18.6, 10.9],
+              ],
+              [
+                [11, 16],
+                [11, 13],
+                [14, 13],
+              ],
+              [
+                [2, 2],
+                [7, 2],
+              ],
+              [
+                [17, 16],
+                [22, 16],
+              ],
+            ],
+            patches: [
+              [6.4, 5.4, 4.2, 5.2],
+              [14.4, 6.4, 4.2, 5.2],
+              [11, 13, 3, 3],
+            ],
+            seal: [11, 8, 'signal'],
+            intent:
+              'Broadcast can hide the runner anywhere. Load two parcels on opposite sides; restore reception or memorize the broad return to their shared dock.',
+          },
+          componentAssemblies: [
+            {
+              family: 'receiver',
+              cells: [
+                [7, 6],
+                [8, 6],
+                [9, 6],
+                [7, 7],
+                [8, 7],
+                [9, 7],
+                [7, 8],
+                [8, 8],
+                [9, 8],
+                [7, 9],
+                [8, 9],
+                [9, 9],
+              ],
+            },
+            {
+              family: 'shelter',
+              cells: [
+                [15, 7],
+                [16, 7],
+                [17, 7],
+                [15, 8],
+                [16, 8],
+                [17, 8],
+                [15, 9],
+                [16, 9],
+                [17, 9],
+                [15, 10],
+                [16, 10],
+                [17, 10],
+              ],
+            },
+          ],
           focus: [11, 8],
           axis: 'horizontal',
           light: 'morning',
@@ -4262,7 +18294,64 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'antenna',
           ambient: 'windsock',
-          floor: 'terraces',
+          floor: 'authored',
+          floorPlan: {
+            name: 'summit-listening-posts-listening',
+            pattern: 'listening',
+            paths: [
+              [
+                [8.4, 6.1],
+                [8.4, 5.4],
+                [9.1, 5.4],
+              ],
+              [
+                [10.9, 7.6],
+                [11.6, 7.6],
+                [11.6, 6.9],
+              ],
+              [
+                [13.4, 10.1],
+                [13.4, 9.4],
+                [14.1, 9.4],
+              ],
+              [
+                [15.9, 11.6],
+                [16.6, 11.6],
+                [16.6, 10.9],
+              ],
+              [
+                [2, 2],
+                [7, 2],
+              ],
+              [
+                [17, 16],
+                [22, 16],
+              ],
+            ],
+            patches: [
+              [8.4, 5.4, 3.2, 2.2],
+              [13.4, 9.4, 3.2, 2.2],
+            ],
+            seal: [16, 5, 'signal'],
+            intent:
+              'Select the patrol’s next branch before broadcast hides it. The switch and junction stay readable; catch the source if you lose the route.',
+          },
+          componentAssemblies: [
+            {
+              family: 'receiver',
+              cells: [
+                [9, 6],
+                [10, 6],
+              ],
+            },
+            {
+              family: 'antenna',
+              cells: [
+                [14, 10],
+                [15, 10],
+              ],
+            },
+          ],
           focus: [16, 5],
           axis: 'vertical',
           light: 'late',
@@ -4282,7 +18371,106 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'antenna',
           ambient: 'windsock',
-          floor: 'terraces',
+          floor: 'authored',
+          floorPlan: {
+            name: 'summit-listening-posts-listening',
+            pattern: 'listening',
+            paths: [
+              [
+                [7.4, 4.1],
+                [7.4, 3.4],
+                [8.1, 3.4],
+              ],
+              [
+                [9.9, 13.6],
+                [10.6, 13.6],
+                [10.6, 12.9],
+              ],
+              [
+                [14.4, 6.1],
+                [14.4, 5.4],
+                [15.1, 5.4],
+              ],
+              [
+                [16.9, 14.6],
+                [17.6, 14.6],
+                [17.6, 13.9],
+              ],
+              [
+                [20, 7],
+                [20, 4],
+                [23, 4],
+              ],
+              [
+                [2, 14],
+                [2, 11],
+                [5, 11],
+              ],
+              [
+                [2, 2],
+                [7, 2],
+              ],
+              [
+                [17, 16],
+                [22, 16],
+              ],
+            ],
+            patches: [
+              [7.4, 3.4, 3.2, 10.2],
+              [14.4, 5.4, 3.2, 9.2],
+              [20, 4, 3, 3],
+              [2, 11, 3, 3],
+            ],
+            seal: [6, 12, 'signal'],
+            intent:
+              'The clear wrapping edge is shorter than the covered middle. Carry one delivery across the seam, then approach a different local source from outside its circle.',
+          },
+          componentAssemblies: [
+            {
+              family: 'receiver',
+              cells: [
+                [8, 4],
+                [9, 4],
+                [8, 5],
+                [9, 5],
+                [8, 6],
+                [9, 6],
+                [8, 7],
+                [9, 7],
+                [8, 8],
+                [9, 8],
+                [8, 9],
+                [9, 9],
+                [8, 10],
+                [9, 10],
+                [8, 11],
+                [9, 11],
+                [8, 12],
+                [9, 12],
+              ],
+            },
+            {
+              family: 'shelter',
+              cells: [
+                [15, 6],
+                [16, 6],
+                [15, 7],
+                [16, 7],
+                [15, 8],
+                [16, 8],
+                [15, 9],
+                [16, 9],
+                [15, 10],
+                [16, 10],
+                [15, 11],
+                [16, 11],
+                [15, 12],
+                [16, 12],
+                [15, 13],
+                [16, 13],
+              ],
+            },
+          ],
           focus: [7, 12],
           axis: 'horizontal',
           light: 'late',
@@ -4302,7 +18490,88 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'antenna',
           ambient: 'windsock',
-          floor: 'terraces',
+          floor: 'authored',
+          floorPlan: {
+            name: 'summit-listening-posts-listening',
+            pattern: 'listening',
+            paths: [
+              [
+                [7.4, 7.1],
+                [7.4, 6.4],
+                [8.1, 6.4],
+              ],
+              [
+                [15.9, 9.6],
+                [16.6, 9.6],
+                [16.6, 8.9],
+              ],
+              [
+                [4.4, 11.1],
+                [4.4, 10.4],
+                [5.1, 10.4],
+              ],
+              [
+                [6.9, 14.6],
+                [7.6, 14.6],
+                [7.6, 13.9],
+              ],
+              [
+                [3, 15],
+                [3, 12],
+                [6, 12],
+              ],
+              [
+                [2, 2],
+                [7, 2],
+              ],
+              [
+                [17, 16],
+                [22, 16],
+              ],
+            ],
+            patches: [
+              [7.4, 6.4, 9.2, 3.2],
+              [4.4, 10.4, 3.2, 4.2],
+              [3, 12, 3, 3],
+            ],
+            seal: [11, 10, 'signal'],
+            intent:
+              'One catch releases Pulse in a side bay. Use it to carry both parcels through broadcast, or eliminate the antenna and save the detour.',
+          },
+          componentAssemblies: [
+            {
+              family: 'receiver',
+              cells: [
+                [8, 7],
+                [9, 7],
+                [10, 7],
+                [11, 7],
+                [12, 7],
+                [13, 7],
+                [14, 7],
+                [15, 7],
+                [8, 8],
+                [9, 8],
+                [10, 8],
+                [11, 8],
+                [12, 8],
+                [13, 8],
+                [14, 8],
+                [15, 8],
+              ],
+            },
+            {
+              family: 'shelter',
+              cells: [
+                [5, 11],
+                [6, 11],
+                [5, 12],
+                [6, 12],
+                [5, 13],
+                [6, 13],
+              ],
+            },
+          ],
           focus: [12, 9],
           axis: 'vertical',
           light: 'late',
@@ -4322,7 +18591,69 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'antenna',
           ambient: 'windsock',
-          floor: 'terraces',
+          floor: 'authored',
+          floorPlan: {
+            name: 'summit-listening-posts-listening',
+            pattern: 'listening',
+            paths: [
+              [
+                [11.4, 9.1],
+                [11.4, 8.4],
+                [12.1, 8.4],
+              ],
+              [
+                [12.9, 14.6],
+                [13.6, 14.6],
+                [13.6, 13.9],
+              ],
+              [
+                [11.4, 4.1],
+                [11.4, 3.4],
+                [12.1, 3.4],
+              ],
+              [
+                [12.9, 8.6],
+                [13.6, 8.6],
+                [13.6, 7.9],
+              ],
+              [
+                [2, 2],
+                [7, 2],
+              ],
+              [
+                [17, 16],
+                [22, 16],
+              ],
+            ],
+            patches: [
+              [11.4, 8.4, 2.2, 6.2],
+              [11.4, 3.4, 2.2, 5.2],
+            ],
+            seal: [5, 7, 'signal'],
+            intent:
+              'Your cable holds the receiver shortcut open. During the burst the gate remains visible, so trust the marked route while choosing which unseen prey to intercept.',
+          },
+          componentAssemblies: [
+            {
+              family: 'receiver',
+              cells: [
+                [12, 9],
+                [12, 10],
+                [12, 11],
+                [12, 12],
+                [12, 13],
+              ],
+            },
+            {
+              family: 'antenna',
+              cells: [
+                [12, 4],
+                [12, 5],
+                [12, 6],
+                [12, 7],
+              ],
+            },
+          ],
           focus: [5, 8],
           axis: 'horizontal',
           light: 'night',
@@ -4342,7 +18673,84 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'antenna',
           ambient: 'windsock',
-          floor: 'terraces',
+          floor: 'authored',
+          floorPlan: {
+            name: 'summit-listening-posts-listening',
+            pattern: 'listening',
+            paths: [
+              [
+                [8.4, 5.1],
+                [8.4, 4.4],
+                [9.1, 4.4],
+              ],
+              [
+                [10.9, 8.6],
+                [11.6, 8.6],
+                [11.6, 7.9],
+              ],
+              [
+                [13.4, 10.1],
+                [13.4, 9.4],
+                [14.1, 9.4],
+              ],
+              [
+                [16.9, 12.6],
+                [17.6, 12.6],
+                [17.6, 11.9],
+              ],
+              [
+                [3, 16],
+                [3, 13],
+                [6, 13],
+              ],
+              [
+                [18, 5],
+                [18, 2],
+                [21, 2],
+              ],
+              [
+                [2, 2],
+                [7, 2],
+              ],
+              [
+                [17, 16],
+                [22, 16],
+              ],
+            ],
+            patches: [
+              [8.4, 4.4, 3.2, 4.2],
+              [13.4, 9.4, 4.2, 3.2],
+              [3, 13, 3, 3],
+              [18, 2, 3, 3],
+            ],
+            seal: [18, 9, 'signal'],
+            intent:
+              'A local approach becomes a broadcast return. The lane cannot newly arm during interference; use its visible recovery to finish the second delivery.',
+          },
+          componentAssemblies: [
+            {
+              family: 'shelter',
+              cells: [
+                [9, 5],
+                [10, 5],
+                [9, 6],
+                [10, 6],
+                [9, 7],
+                [10, 7],
+              ],
+            },
+            {
+              family: 'receiver',
+              cells: [
+                [14, 10],
+                [15, 10],
+                [16, 10],
+                [14, 11],
+                [15, 11],
+                [16, 11],
+              ],
+            },
+          ],
           focus: [18, 9],
           axis: 'vertical',
           light: 'night',
@@ -4362,7 +18770,66 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'masonry',
           ambient: 'leaves',
-          floor: 'elbow',
+          floor: 'authored',
+          floorPlan: {
+            name: 'excavation-terraces-excavation',
+            pattern: 'excavation',
+            paths: [
+              [
+                [11.4, 13.6],
+                [11.4, 4.4],
+                [13.6, 4.4],
+              ],
+              [
+                [11.75, 13.6],
+                [11.75, 4.75],
+                [13.6, 4.75],
+              ],
+              [
+                [5.4, 12.6],
+                [5.4, 9.4],
+                [9.6, 9.4],
+              ],
+              [
+                [5.75, 12.6],
+                [5.75, 9.75],
+                [9.6, 9.75],
+              ],
+            ],
+            patches: [
+              [11.4, 4.4, 2.2, 9.2],
+              [5.4, 9.4, 4.2, 3.2],
+            ],
+            seal: [7, 6, 'survey'],
+            intent:
+              'The marked stone can break open, but the outer path is always safe. Choose whether to wait for the shortcut before catching its eroder.',
+          },
+          componentAssemblies: [
+            {
+              family: 'terrace',
+              cells: [
+                [12, 5],
+                [12, 6],
+                [12, 7],
+                [12, 8],
+                [12, 9],
+                [12, 10],
+                [12, 11],
+                [12, 12],
+              ],
+            },
+            {
+              family: 'excavation',
+              cells: [
+                [6, 10],
+                [7, 10],
+                [8, 10],
+                [6, 11],
+                [7, 11],
+                [8, 11],
+              ],
+            },
+          ],
           focus: [6, 6],
           axis: 'horizontal',
           light: 'morning',
@@ -4382,7 +18849,61 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'masonry',
           ambient: 'leaves',
-          floor: 'elbow',
+          floor: 'authored',
+          floorPlan: {
+            name: 'excavation-terraces-excavation',
+            pattern: 'excavation',
+            paths: [
+              [
+                [10.4, 14.6],
+                [10.4, 3.4],
+                [13.6, 3.4],
+              ],
+              [
+                [10.75, 14.6],
+                [10.75, 3.75],
+                [13.6, 3.75],
+              ],
+              [
+                [18, 11],
+                [18, 8],
+                [21, 8],
+              ],
+            ],
+            patches: [
+              [10.4, 3.4, 3.2, 11.2],
+              [18, 8, 3, 3],
+            ],
+            seal: [17, 11, 'survey'],
+            intent:
+              'Load before approaching the marked stone. Its far side is already recessed: let demolition open the remaining cell for a direct delivery, or take the always-open outer route.',
+          },
+          componentAssemblies: [
+            {
+              family: 'excavation',
+              cells: [
+                [11, 4],
+                [12, 4],
+                [11, 5],
+                [12, 5],
+                [11, 6],
+                [12, 6],
+                [11, 7],
+                [12, 7],
+                [11, 8],
+                [11, 9],
+                [12, 9],
+                [11, 10],
+                [12, 10],
+                [11, 11],
+                [12, 11],
+                [11, 12],
+                [12, 12],
+                [11, 13],
+                [12, 13],
+              ],
+            },
+          ],
           focus: [17, 11],
           axis: 'vertical',
           light: 'morning',
@@ -4402,7 +18923,60 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'masonry',
           ambient: 'leaves',
-          floor: 'elbow',
+          floor: 'authored',
+          floorPlan: {
+            name: 'excavation-terraces-excavation',
+            pattern: 'excavation',
+            paths: [
+              [
+                [7.4, 13.6],
+                [7.4, 4.4],
+                [14.6, 4.4],
+              ],
+              [
+                [7.75, 13.6],
+                [7.75, 4.75],
+                [14.6, 4.75],
+              ],
+            ],
+            patches: [[7.4, 4.4, 7.2, 9.2]],
+            seal: [10, 8, 'survey'],
+            intent:
+              'Two breaks alter different corners of a stepped island. Follow the runner around its end rather than expecting either opening to be ready.',
+          },
+          componentAssemblies: [
+            {
+              family: 'excavation',
+              cells: [
+                [10, 5],
+                [11, 5],
+                [12, 5],
+                [13, 5],
+                [10, 6],
+                [11, 6],
+                [12, 6],
+                [13, 6],
+                [12, 7],
+                [13, 7],
+                [12, 8],
+                [13, 8],
+                [12, 9],
+                [13, 9],
+                [12, 10],
+                [13, 10],
+                [8, 11],
+                [9, 11],
+                [10, 11],
+                [11, 11],
+                [12, 11],
+                [13, 11],
+                [8, 12],
+                [9, 12],
+                [10, 12],
+                [11, 12],
+              ],
+            },
+          ],
           focus: [11, 8],
           axis: 'horizontal',
           light: 'morning',
@@ -4422,7 +18996,78 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'masonry',
           ambient: 'leaves',
-          floor: 'elbow',
+          floor: 'authored',
+          floorPlan: {
+            name: 'excavation-terraces-excavation',
+            pattern: 'excavation',
+            paths: [
+              [
+                [7.4, 14.6],
+                [7.4, 3.4],
+                [9.6, 3.4],
+              ],
+              [
+                [7.75, 14.6],
+                [7.75, 3.75],
+                [9.6, 3.75],
+              ],
+              [
+                [15.4, 14.6],
+                [15.4, 3.4],
+                [17.6, 3.4],
+              ],
+              [
+                [15.75, 14.6],
+                [15.75, 3.75],
+                [17.6, 3.75],
+              ],
+              [
+                [11, 15],
+                [11, 12],
+                [14, 12],
+              ],
+            ],
+            patches: [
+              [7.4, 3.4, 2.2, 11.2],
+              [15.4, 3.4, 2.2, 11.2],
+              [11, 12, 3, 3],
+            ],
+            seal: [14, 5, 'survey'],
+            intent:
+              'Wrapping offers an immediate detour; demolition offers a later central cut. Choose a different route for the loaded return.',
+          },
+          componentAssemblies: [
+            {
+              family: 'excavation',
+              cells: [
+                [8, 4],
+                [8, 5],
+                [8, 6],
+                [8, 7],
+                [8, 8],
+                [8, 9],
+                [8, 10],
+                [8, 11],
+                [8, 12],
+                [8, 13],
+              ],
+            },
+            {
+              family: 'terrace',
+              cells: [
+                [16, 4],
+                [16, 5],
+                [16, 6],
+                [16, 7],
+                [16, 8],
+                [16, 9],
+                [16, 10],
+                [16, 11],
+                [16, 12],
+                [16, 13],
+              ],
+            },
+          ],
           focus: [16, 5],
           axis: 'vertical',
           light: 'late',
@@ -4442,7 +19087,81 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'masonry',
           ambient: 'leaves',
-          floor: 'elbow',
+          floor: 'authored',
+          floorPlan: {
+            name: 'excavation-terraces-excavation',
+            pattern: 'excavation',
+            paths: [
+              [
+                [11.4, 14.6],
+                [11.4, 8.4],
+                [13.6, 8.4],
+              ],
+              [
+                [11.75, 14.6],
+                [11.75, 8.75],
+                [13.6, 8.75],
+              ],
+              [
+                [11.4, 8.6],
+                [11.4, 3.4],
+                [13.6, 3.4],
+              ],
+              [
+                [11.75, 8.6],
+                [11.75, 3.75],
+                [13.6, 3.75],
+              ],
+              [
+                [6.4, 7.6],
+                [6.4, 4.4],
+                [9.6, 4.4],
+              ],
+              [
+                [6.75, 7.6],
+                [6.75, 4.75],
+                [9.6, 4.75],
+              ],
+            ],
+            patches: [
+              [11.4, 8.4, 2.2, 6.2],
+              [11.4, 3.4, 2.2, 5.2],
+              [6.4, 4.4, 3.2, 3.2],
+            ],
+            seal: [7, 12, 'survey'],
+            intent:
+              'The plate opens a temporary doorway; the eroder opens a permanent notch elsewhere. Release the cable route only after choosing your return.',
+          },
+          componentAssemblies: [
+            {
+              family: 'terrace',
+              cells: [
+                [12, 9],
+                [12, 10],
+                [12, 11],
+                [12, 12],
+                [12, 13],
+              ],
+            },
+            {
+              family: 'terrace',
+              cells: [
+                [12, 4],
+                [12, 5],
+                [12, 6],
+                [12, 7],
+              ],
+            },
+            {
+              family: 'excavation',
+              cells: [
+                [7, 5],
+                [8, 5],
+                [7, 6],
+                [8, 6],
+              ],
+            },
+          ],
           focus: [7, 12],
           axis: 'horizontal',
           light: 'late',
@@ -4462,7 +19181,83 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'masonry',
           ambient: 'leaves',
-          floor: 'elbow',
+          floor: 'authored',
+          floorPlan: {
+            name: 'excavation-terraces-excavation',
+            pattern: 'excavation',
+            paths: [
+              [
+                [7.4, 13.6],
+                [7.4, 5.4],
+                [15.6, 5.4],
+              ],
+              [
+                [7.75, 13.6],
+                [7.75, 5.75],
+                [15.6, 5.75],
+              ],
+              [
+                [4.4, 13.6],
+                [4.4, 10.4],
+                [8.6, 10.4],
+              ],
+              [
+                [4.75, 13.6],
+                [4.75, 10.75],
+                [8.6, 10.75],
+              ],
+              [
+                [18, 6],
+                [18, 3],
+                [21, 3],
+              ],
+              [
+                [3, 16],
+                [3, 13],
+                [6, 13],
+              ],
+            ],
+            patches: [
+              [7.4, 5.4, 8.2, 8.2],
+              [4.4, 10.4, 4.2, 3.2],
+              [18, 3, 3, 3],
+              [3, 13, 3, 3],
+            ],
+            seal: [12, 9, 'survey'],
+            intent:
+              'A reflected hunter changes its route when a marked barrier disappears. Keep the open outer arc for your second delivery.',
+          },
+          componentAssemblies: [
+            {
+              family: 'reclaimer',
+              cells: [
+                [8, 6],
+                [9, 6],
+                [10, 6],
+                [11, 6],
+                [12, 6],
+                [13, 6],
+                [14, 6],
+                [14, 7],
+                [14, 8],
+                [14, 9],
+                [14, 10],
+                [14, 11],
+                [14, 12],
+              ],
+            },
+            {
+              family: 'excavation',
+              cells: [
+                [5, 11],
+                [6, 11],
+                [7, 11],
+                [5, 12],
+                [6, 12],
+                [7, 12],
+              ],
+            },
+          ],
           focus: [12, 9],
           axis: 'vertical',
           light: 'late',
@@ -4482,7 +19277,65 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'masonry',
           ambient: 'leaves',
-          floor: 'elbow',
+          floor: 'authored',
+          floorPlan: {
+            name: 'excavation-terraces-excavation',
+            pattern: 'excavation',
+            paths: [
+              [
+                [7.4, 13.6],
+                [7.4, 4.4],
+                [17.6, 4.4],
+              ],
+              [
+                [7.75, 13.6],
+                [7.75, 4.75],
+                [17.6, 4.75],
+              ],
+              [
+                [11, 16],
+                [11, 13],
+                [14, 13],
+              ],
+            ],
+            patches: [
+              [7.4, 4.4, 10.2, 9.2],
+              [11, 13, 3, 3],
+            ],
+            seal: [5, 8, 'survey'],
+            intent:
+              'Visit both relay pads around the arch before catching its core. The side demolition helps the cargo return but is never required for escape.',
+          },
+          componentAssemblies: [
+            {
+              family: 'excavation',
+              cells: [
+                [8, 5],
+                [9, 5],
+                [10, 5],
+                [11, 5],
+                [12, 5],
+                [13, 5],
+                [14, 5],
+                [15, 5],
+                [16, 5],
+                [8, 6],
+                [16, 6],
+                [8, 7],
+                [16, 7],
+                [8, 8],
+                [16, 8],
+                [8, 9],
+                [16, 9],
+                [8, 10],
+                [16, 10],
+                [8, 11],
+                [16, 11],
+                [8, 12],
+                [16, 12],
+              ],
+            },
+          ],
           focus: [5, 8],
           axis: 'horizontal',
           light: 'night',
@@ -4502,7 +19355,87 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'masonry',
           ambient: 'leaves',
-          floor: 'elbow',
+          floor: 'authored',
+          floorPlan: {
+            name: 'excavation-terraces-excavation',
+            pattern: 'excavation',
+            paths: [
+              [
+                [9.4, 11.6],
+                [9.4, 9.4],
+                [15.6, 9.4],
+              ],
+              [
+                [9.75, 11.6],
+                [9.75, 9.75],
+                [15.6, 9.75],
+              ],
+              [
+                [6.4, 7.6],
+                [6.4, 5.4],
+                [11.6, 5.4],
+              ],
+              [
+                [6.75, 7.6],
+                [6.75, 5.75],
+                [11.6, 5.75],
+              ],
+              [
+                [12.4, 7.6],
+                [12.4, 5.4],
+                [17.6, 5.4],
+              ],
+              [
+                [12.75, 7.6],
+                [12.75, 5.75],
+                [17.6, 5.75],
+              ],
+              [
+                [11, 15],
+                [11, 12],
+                [14, 12],
+              ],
+            ],
+            patches: [
+              [9.4, 9.4, 6.2, 2.2],
+              [6.4, 5.4, 5.2, 2.2],
+              [12.4, 5.4, 5.2, 2.2],
+              [11, 12, 3, 3],
+            ],
+            seal: [18, 9, 'survey'],
+            intent:
+              'Three distinct notches and moving prey change the useful approach between stages. Clear the northern terrace, make the delivery, then leave through the south.',
+          },
+          componentAssemblies: [
+            {
+              family: 'excavation',
+              cells: [
+                [10, 10],
+                [11, 10],
+                [12, 10],
+                [13, 10],
+                [14, 10],
+              ],
+            },
+            {
+              family: 'terrace',
+              cells: [
+                [7, 6],
+                [8, 6],
+                [9, 6],
+                [10, 6],
+              ],
+            },
+            {
+              family: 'terrace',
+              cells: [
+                [13, 6],
+                [14, 6],
+                [15, 6],
+                [16, 6],
+              ],
+            },
+          ],
           focus: [18, 9],
           axis: 'vertical',
           light: 'night',
@@ -4522,7 +19455,70 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'glasshouse',
           ambient: 'leaves',
-          floor: 'ring',
+          floor: 'authored',
+          floorPlan: {
+            name: 'conservatory-courts-beds',
+            pattern: 'beds',
+            paths: [
+              [
+                [6.4, 4.4],
+                [9.6, 4.4],
+                [9.6, 12.6],
+              ],
+              [
+                [14.4, 4.4],
+                [17.6, 4.4],
+                [17.6, 12.6],
+              ],
+            ],
+            patches: [
+              [6.4, 4.4, 3.2, 8.2],
+              [14.4, 4.4, 3.2, 8.2],
+            ],
+            seal: [5, 6, 'leaf'],
+            intent:
+              'The seeker marks its next refuge across the glasshouse. Cut through the central aisle, then return outside before your cable fills it.',
+          },
+          componentAssemblies: [
+            {
+              family: 'glasshouse',
+              cells: [
+                [7, 5],
+                [8, 5],
+                [7, 6],
+                [8, 6],
+                [7, 7],
+                [8, 7],
+                [7, 8],
+                [8, 8],
+                [7, 9],
+                [8, 9],
+                [7, 10],
+                [8, 10],
+                [7, 11],
+                [8, 11],
+              ],
+            },
+            {
+              family: 'irrigator',
+              cells: [
+                [15, 5],
+                [16, 5],
+                [15, 6],
+                [16, 6],
+                [15, 7],
+                [16, 7],
+                [15, 8],
+                [16, 8],
+                [15, 9],
+                [16, 9],
+                [15, 10],
+                [16, 10],
+                [15, 11],
+                [16, 11],
+              ],
+            },
+          ],
           focus: [6, 6],
           axis: 'horizontal',
           light: 'morning',
@@ -4542,7 +19538,57 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'glasshouse',
           ambient: 'leaves',
-          floor: 'ring',
+          floor: 'authored',
+          floorPlan: {
+            name: 'conservatory-courts-beds',
+            pattern: 'beds',
+            paths: [
+              [
+                [7.4, 5.4],
+                [16.6, 5.4],
+                [16.6, 13.6],
+              ],
+              [
+                [7.4, 13.6],
+                [11.54, 13.6],
+              ],
+              [
+                [11, 13],
+                [11, 10],
+                [14, 10],
+              ],
+            ],
+            patches: [
+              [7.4, 5.4, 9.2, 8.2],
+              [11, 10, 3, 3],
+            ],
+            seal: [17, 11, 'leaf'],
+            intent:
+              'A refuge seeker and a switchback announce different exits. Deliver to the middle dock before choosing which fork to intercept next.',
+          },
+          componentAssemblies: [
+            {
+              family: 'glasshouse',
+              cells: [
+                [8, 6],
+                [9, 6],
+                [10, 6],
+                [11, 6],
+                [12, 6],
+                [13, 6],
+                [14, 6],
+                [15, 6],
+                [8, 7],
+                [15, 7],
+                [8, 8],
+                [15, 8],
+                [8, 9],
+                [8, 10],
+                [8, 11],
+                [8, 12],
+              ],
+            },
+          ],
           focus: [17, 11],
           axis: 'vertical',
           light: 'morning',
@@ -4562,7 +19608,81 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'glasshouse',
           ambient: 'leaves',
-          floor: 'ring',
+          floor: 'authored',
+          floorPlan: {
+            name: 'conservatory-courts-beds',
+            pattern: 'beds',
+            paths: [
+              [
+                [9.4, 3.4],
+                [13.6, 3.4],
+                [13.6, 8.6],
+              ],
+              [
+                [9.4, 9.4],
+                [13.6, 9.4],
+                [13.6, 14.6],
+              ],
+              [
+                [4.4, 7.4],
+                [7.6, 7.4],
+                [7.6, 10.6],
+              ],
+            ],
+            patches: [
+              [9.4, 3.4, 4.2, 5.2],
+              [9.4, 9.4, 4.2, 5.2],
+              [4.4, 7.4, 3.2, 3.2],
+            ],
+            seal: [8, 8, 'leaf'],
+            intent:
+              'Two partners seek one shelter; catching the first changes the survivor’s behavior. Rendezvous on the other side after each pair.',
+          },
+          componentAssemblies: [
+            {
+              family: 'glasshouse',
+              cells: [
+                [10, 4],
+                [11, 4],
+                [12, 4],
+                [10, 5],
+                [11, 5],
+                [12, 5],
+                [10, 6],
+                [11, 6],
+                [12, 6],
+                [10, 7],
+                [11, 7],
+                [12, 7],
+              ],
+            },
+            {
+              family: 'irrigator',
+              cells: [
+                [10, 10],
+                [11, 10],
+                [12, 10],
+                [10, 11],
+                [11, 11],
+                [12, 11],
+                [10, 12],
+                [11, 12],
+                [12, 12],
+                [10, 13],
+                [11, 13],
+                [12, 13],
+              ],
+            },
+            {
+              family: 'irrigator',
+              cells: [
+                [5, 8],
+                [6, 8],
+                [5, 9],
+                [6, 9],
+              ],
+            },
+          ],
           focus: [11, 8],
           axis: 'horizontal',
           light: 'morning',
@@ -4582,7 +19702,72 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'glasshouse',
           ambient: 'leaves',
-          floor: 'ring',
+          floor: 'authored',
+          floorPlan: {
+            name: 'conservatory-courts-beds',
+            pattern: 'beds',
+            paths: [
+              [
+                [5.4, 4.4],
+                [9.6, 4.4],
+                [9.6, 7.6],
+              ],
+              [
+                [5.4, 7.6],
+                [7.29, 7.6],
+              ],
+              [
+                [11.4, 8.4],
+                [13.6, 8.4],
+                [13.6, 14.6],
+              ],
+              [
+                [11.4, 3.4],
+                [13.6, 3.4],
+                [13.6, 8.6],
+              ],
+            ],
+            patches: [
+              [5.4, 4.4, 4.2, 3.2],
+              [11.4, 8.4, 2.2, 6.2],
+              [11.4, 3.4, 2.2, 5.2],
+            ],
+            seal: [16, 5, 'leaf'],
+            intent:
+              'Hold the hedge doorway with your cable while the seeker changes bays. The outer garden remains open if your tail releases the plate.',
+          },
+          componentAssemblies: [
+            {
+              family: 'glasshouse',
+              cells: [
+                [6, 5],
+                [7, 5],
+                [8, 5],
+                [6, 6],
+                [7, 6],
+                [8, 6],
+              ],
+            },
+            {
+              family: 'planter',
+              cells: [
+                [12, 9],
+                [12, 10],
+                [12, 11],
+                [12, 12],
+                [12, 13],
+              ],
+            },
+            {
+              family: 'planter',
+              cells: [
+                [12, 4],
+                [12, 5],
+                [12, 6],
+                [12, 7],
+              ],
+            },
+          ],
           focus: [16, 5],
           axis: 'vertical',
           light: 'late',
@@ -4602,7 +19787,82 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'glasshouse',
           ambient: 'leaves',
-          floor: 'ring',
+          floor: 'authored',
+          floorPlan: {
+            name: 'conservatory-courts-beds',
+            pattern: 'beds',
+            paths: [
+              [
+                [6.4, 4.4],
+                [16.6, 4.4],
+                [16.6, 12.6],
+              ],
+              [
+                [6.4, 12.6],
+                [10.99, 12.6],
+              ],
+              [
+                [10.4, 8.4],
+                [18.6, 8.4],
+                [18.6, 14.6],
+              ],
+              [
+                [10.4, 14.6],
+                [14.09, 14.6],
+              ],
+              [
+                [19, 16],
+                [19, 13],
+                [22, 13],
+              ],
+            ],
+            patches: [
+              [6.4, 4.4, 10.2, 8.2],
+              [10.4, 8.4, 8.2, 6.2],
+              [19, 13, 3, 3],
+            ],
+            seal: [7, 13, 'leaf'],
+            intent:
+              'Two open-ended elbows offer a short inward delivery and a broad outward escape. The refuge intention may favor the opposite loop.',
+          },
+          componentAssemblies: [
+            {
+              family: 'glasshouse',
+              cells: [
+                [7, 5],
+                [8, 5],
+                [9, 5],
+                [10, 5],
+                [11, 5],
+                [12, 5],
+                [13, 5],
+                [14, 5],
+                [15, 5],
+                [7, 6],
+                [7, 7],
+                [7, 8],
+                [7, 9],
+                [7, 10],
+                [7, 11],
+              ],
+            },
+            {
+              family: 'irrigator',
+              cells: [
+                [11, 9],
+                [12, 9],
+                [13, 9],
+                [14, 9],
+                [15, 9],
+                [16, 9],
+                [17, 9],
+                [17, 10],
+                [17, 11],
+                [17, 12],
+                [17, 13],
+              ],
+            },
+          ],
           focus: [7, 12],
           axis: 'horizontal',
           light: 'late',
@@ -4622,7 +19882,88 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'glasshouse',
           ambient: 'leaves',
-          floor: 'ring',
+          floor: 'authored',
+          floorPlan: {
+            name: 'conservatory-courts-beds',
+            pattern: 'beds',
+            paths: [
+              [
+                [6.4, 3.4],
+                [9.6, 3.4],
+                [9.6, 14.6],
+              ],
+              [
+                [15.4, 5.4],
+                [18.6, 5.4],
+                [18.6, 13.6],
+              ],
+              [
+                [20, 8],
+                [20, 5],
+                [23, 5],
+              ],
+              [
+                [2, 15],
+                [2, 12],
+                [5, 12],
+              ],
+            ],
+            patches: [
+              [6.4, 3.4, 3.2, 11.2],
+              [15.4, 5.4, 3.2, 8.2],
+              [20, 5, 3, 3],
+              [2, 12, 3, 3],
+            ],
+            seal: [11, 7, 'leaf'],
+            intent:
+              'Read the destination across a wrapping edge. A cross-board delivery is short, but the cable arriving behind you can block the obvious interception.',
+          },
+          componentAssemblies: [
+            {
+              family: 'glasshouse',
+              cells: [
+                [7, 4],
+                [8, 4],
+                [7, 5],
+                [8, 5],
+                [7, 6],
+                [8, 6],
+                [7, 7],
+                [8, 7],
+                [7, 8],
+                [8, 8],
+                [7, 9],
+                [8, 9],
+                [7, 10],
+                [8, 10],
+                [7, 11],
+                [8, 11],
+                [7, 12],
+                [8, 12],
+                [7, 13],
+                [8, 13],
+              ],
+            },
+            {
+              family: 'irrigator',
+              cells: [
+                [16, 6],
+                [17, 6],
+                [16, 7],
+                [17, 7],
+                [16, 8],
+                [17, 8],
+                [16, 9],
+                [17, 9],
+                [16, 10],
+                [17, 10],
+                [16, 11],
+                [17, 11],
+                [16, 12],
+                [17, 12],
+              ],
+            },
+          ],
           focus: [12, 9],
           axis: 'vertical',
           light: 'late',
@@ -4642,7 +19983,66 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'glasshouse',
           ambient: 'leaves',
-          floor: 'ring',
+          floor: 'authored',
+          floorPlan: {
+            name: 'conservatory-courts-beds',
+            pattern: 'beds',
+            paths: [
+              [
+                [8.4, 4.4],
+                [11.6, 4.4],
+                [11.6, 9.6],
+              ],
+              [
+                [13.4, 9.4],
+                [17.6, 9.4],
+                [17.6, 12.6],
+              ],
+              [
+                [13.4, 12.6],
+                [15.29, 12.6],
+              ],
+              [
+                [3, 14],
+                [3, 11],
+                [6, 11],
+              ],
+            ],
+            patches: [
+              [8.4, 4.4, 3.2, 5.2],
+              [13.4, 9.4, 4.2, 3.2],
+              [3, 11, 3, 3],
+            ],
+            seal: [5, 8, 'leaf'],
+            intent:
+              'Local interference hides a seeker after its destination warning. Leave the circle to confirm the route, or take the source beacon on the way to the dock.',
+          },
+          componentAssemblies: [
+            {
+              family: 'glasshouse',
+              cells: [
+                [9, 5],
+                [10, 5],
+                [9, 6],
+                [10, 6],
+                [9, 7],
+                [10, 7],
+                [9, 8],
+                [10, 8],
+              ],
+            },
+            {
+              family: 'irrigator',
+              cells: [
+                [14, 10],
+                [15, 10],
+                [16, 10],
+                [14, 11],
+                [15, 11],
+                [16, 11],
+              ],
+            },
+          ],
           focus: [5, 8],
           axis: 'horizontal',
           light: 'night',
@@ -4662,7 +20062,97 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'glasshouse',
           ambient: 'leaves',
-          floor: 'ring',
+          floor: 'authored',
+          floorPlan: {
+            name: 'conservatory-courts-beds',
+            pattern: 'beds',
+            paths: [
+              [
+                [6.4, 4.4],
+                [9.6, 4.4],
+                [9.6, 11.6],
+              ],
+              [
+                [11.4, 8.4],
+                [15.6, 8.4],
+                [15.6, 11.6],
+              ],
+              [
+                [11.4, 11.6],
+                [13.29, 11.6],
+              ],
+              [
+                [16.4, 3.4],
+                [18.6, 3.4],
+                [18.6, 8.6],
+              ],
+              [
+                [10, 15],
+                [10, 12],
+                [13, 12],
+              ],
+              [
+                [19, 6],
+                [19, 3],
+                [22, 3],
+              ],
+              [
+                [3, 15],
+                [3, 12],
+                [6, 12],
+              ],
+            ],
+            patches: [
+              [6.4, 4.4, 3.2, 7.2],
+              [11.4, 8.4, 4.2, 3.2],
+              [16.4, 3.4, 2.2, 5.2],
+              [10, 12, 3, 3],
+              [19, 3, 3, 3],
+              [3, 12, 3, 3],
+            ],
+            seal: [18, 9, 'leaf'],
+            intent:
+              'Deliver into three different courts. Each stage releases a new parcel; refuge, switchback and sprinting prey demand different interceptions between docks.',
+          },
+          componentAssemblies: [
+            {
+              family: 'irrigator',
+              cells: [
+                [7, 5],
+                [8, 5],
+                [7, 6],
+                [8, 6],
+                [7, 7],
+                [8, 7],
+                [7, 8],
+                [8, 8],
+                [7, 9],
+                [8, 9],
+                [7, 10],
+                [8, 10],
+              ],
+            },
+            {
+              family: 'glasshouse',
+              cells: [
+                [12, 9],
+                [13, 9],
+                [14, 9],
+                [12, 10],
+                [13, 10],
+                [14, 10],
+              ],
+            },
+            {
+              family: 'planter',
+              cells: [
+                [17, 4],
+                [17, 5],
+                [17, 6],
+                [17, 7],
+              ],
+            },
+          ],
           focus: [18, 9],
           axis: 'vertical',
           light: 'night',
@@ -4682,7 +20172,90 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'container',
           ambient: 'lamps',
-          floor: 'bays',
+          floor: 'authored',
+          floorPlan: {
+            name: 'supply-crane-bays-loading',
+            pattern: 'loading',
+            paths: [
+              [
+                [8.4, 4.4],
+                [14.6, 4.4],
+              ],
+              [
+                [8.4, 7.6],
+                [14.6, 7.6],
+              ],
+              [
+                [8.4, 4.4],
+                [8.4, 4.9],
+              ],
+              [
+                [14.6, 7.1],
+                [14.6, 7.6],
+              ],
+              [
+                [8.4, 10.4],
+                [14.6, 10.4],
+              ],
+              [
+                [8.4, 13.6],
+                [14.6, 13.6],
+              ],
+              [
+                [8.4, 10.4],
+                [8.4, 10.9],
+              ],
+              [
+                [14.6, 13.1],
+                [14.6, 13.6],
+              ],
+              [
+                [18, 10],
+                [18, 7],
+                [21, 7],
+              ],
+            ],
+            patches: [
+              [8.4, 4.4, 6.2, 3.2],
+              [8.4, 10.4, 6.2, 3.2],
+              [18, 7, 3, 3],
+            ],
+            seal: [6, 6, 'freight'],
+            intent:
+              'The first catch releases Pulse off the delivery line. Take it to freeze the runner while loaded, or use the clear outside return.',
+          },
+          componentAssemblies: [
+            {
+              family: 'dispatch',
+              cells: [
+                [9, 5],
+                [10, 5],
+                [11, 5],
+                [12, 5],
+                [13, 5],
+                [9, 6],
+                [10, 6],
+                [11, 6],
+                [12, 6],
+                [13, 6],
+              ],
+            },
+            {
+              family: 'container',
+              cells: [
+                [9, 11],
+                [10, 11],
+                [11, 11],
+                [12, 11],
+                [13, 11],
+                [9, 12],
+                [10, 12],
+                [11, 12],
+                [12, 12],
+                [13, 12],
+              ],
+            },
+          ],
           focus: [6, 6],
           axis: 'horizontal',
           light: 'morning',
@@ -4702,7 +20275,69 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'container',
           ambient: 'lamps',
-          floor: 'bays',
+          floor: 'authored',
+          floorPlan: {
+            name: 'supply-crane-bays-loading',
+            pattern: 'loading',
+            paths: [
+              [
+                [7.4, 4.4],
+                [17.6, 4.4],
+              ],
+              [
+                [7.4, 13.6],
+                [17.6, 13.6],
+              ],
+              [
+                [7.4, 4.4],
+                [7.4, 4.9],
+              ],
+              [
+                [17.6, 13.1],
+                [17.6, 13.6],
+              ],
+              [
+                [19, 7],
+                [19, 4],
+                [22, 4],
+              ],
+            ],
+            patches: [
+              [7.4, 4.4, 10.2, 9.2],
+              [19, 4, 3, 3],
+            ],
+            seal: [18, 11, 'freight'],
+            intent:
+              'Cargo length and catch growth share the narrow return. Reel removes ordinary tail but preserves carried parcels; unload before taking the tight inner corner.',
+          },
+          componentAssemblies: [
+            {
+              family: 'dispatch',
+              cells: [
+                [8, 5],
+                [8, 6],
+                [8, 7],
+                [16, 7],
+                [8, 8],
+                [16, 8],
+                [8, 9],
+                [16, 9],
+                [8, 10],
+                [16, 10],
+                [8, 11],
+                [16, 11],
+                [8, 12],
+                [9, 12],
+                [10, 12],
+                [11, 12],
+                [12, 12],
+                [13, 12],
+                [14, 12],
+                [15, 12],
+                [16, 12],
+              ],
+            },
+          ],
           focus: [17, 11],
           axis: 'vertical',
           light: 'morning',
@@ -4722,7 +20357,90 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'container',
           ambient: 'lamps',
-          floor: 'bays',
+          floor: 'authored',
+          floorPlan: {
+            name: 'supply-crane-bays-loading',
+            pattern: 'loading',
+            paths: [
+              [
+                [9.4, 4.4],
+                [14.6, 4.4],
+              ],
+              [
+                [9.4, 8.6],
+                [14.6, 8.6],
+              ],
+              [
+                [9.4, 4.4],
+                [9.4, 4.9],
+              ],
+              [
+                [14.6, 8.1],
+                [14.6, 8.6],
+              ],
+              [
+                [9.4, 10.4],
+                [14.6, 10.4],
+              ],
+              [
+                [9.4, 13.6],
+                [14.6, 13.6],
+              ],
+              [
+                [9.4, 10.4],
+                [9.4, 10.9],
+              ],
+              [
+                [14.6, 13.1],
+                [14.6, 13.6],
+              ],
+              [
+                [11, 11],
+                [11, 8],
+                [14, 8],
+              ],
+            ],
+            patches: [
+              [9.4, 4.4, 5.2, 4.2],
+              [9.4, 10.4, 5.2, 3.2],
+              [11, 8, 3, 3],
+            ],
+            seal: [9, 9, 'freight'],
+            intent:
+              'Pulse can hold a braced enemy in its current state. Collect it during recovery; delivery remains possible around the other side if its armor is closed.',
+          },
+          componentAssemblies: [
+            {
+              family: 'dispatch',
+              cells: [
+                [10, 5],
+                [11, 5],
+                [12, 5],
+                [13, 5],
+                [10, 6],
+                [11, 6],
+                [12, 6],
+                [13, 6],
+                [10, 7],
+                [11, 7],
+                [12, 7],
+                [13, 7],
+              ],
+            },
+            {
+              family: 'container',
+              cells: [
+                [10, 11],
+                [11, 11],
+                [12, 11],
+                [13, 11],
+                [10, 12],
+                [11, 12],
+                [12, 12],
+                [13, 12],
+              ],
+            },
+          ],
           focus: [11, 8],
           axis: 'horizontal',
           light: 'morning',
@@ -4742,7 +20460,84 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'container',
           ambient: 'lamps',
-          floor: 'bays',
+          floor: 'authored',
+          floorPlan: {
+            name: 'supply-crane-bays-loading',
+            pattern: 'loading',
+            paths: [
+              [
+                [10.4, 4.4],
+                [13.6, 4.4],
+              ],
+              [
+                [10.4, 13.6],
+                [13.6, 13.6],
+              ],
+              [
+                [4.4, 9.4],
+                [8.6, 9.4],
+              ],
+              [
+                [4.4, 12.6],
+                [8.6, 12.6],
+              ],
+              [
+                [4.4, 9.4],
+                [4.4, 9.9],
+              ],
+              [
+                [8.6, 12.1],
+                [8.6, 12.6],
+              ],
+              [
+                [3, 15],
+                [3, 12],
+                [6, 12],
+              ],
+            ],
+            patches: [
+              [10.4, 4.4, 3.2, 9.2],
+              [4.4, 9.4, 4.2, 3.2],
+              [3, 12, 3, 3],
+            ],
+            seal: [16, 5, 'freight'],
+            intent:
+              'Pulse competes with a direct antenna interception. Restore reception before approaching the switchback, then unload on the clear west side.',
+          },
+          componentAssemblies: [
+            {
+              family: 'dispatch',
+              cells: [
+                [11, 5],
+                [12, 5],
+                [11, 6],
+                [12, 6],
+                [11, 7],
+                [12, 7],
+                [11, 8],
+                [12, 8],
+                [11, 9],
+                [12, 9],
+                [11, 10],
+                [12, 10],
+                [11, 11],
+                [12, 11],
+                [11, 12],
+                [12, 12],
+              ],
+            },
+            {
+              family: 'container',
+              cells: [
+                [5, 10],
+                [6, 10],
+                [7, 10],
+                [5, 11],
+                [6, 11],
+                [7, 11],
+              ],
+            },
+          ],
           focus: [16, 5],
           axis: 'vertical',
           light: 'late',
@@ -4762,7 +20557,69 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'container',
           ambient: 'lamps',
-          floor: 'bays',
+          floor: 'authored',
+          floorPlan: {
+            name: 'supply-crane-bays-loading',
+            pattern: 'loading',
+            paths: [
+              [
+                [11.4, 8.4],
+                [13.6, 8.4],
+              ],
+              [
+                [11.4, 14.6],
+                [13.6, 14.6],
+              ],
+              [
+                [11.4, 3.4],
+                [13.6, 3.4],
+              ],
+              [
+                [11.4, 8.6],
+                [13.6, 8.6],
+              ],
+              [
+                [18, 6],
+                [18, 3],
+                [21, 3],
+              ],
+              [
+                [3, 15],
+                [3, 12],
+                [6, 12],
+              ],
+            ],
+            patches: [
+              [11.4, 8.4, 2.2, 6.2],
+              [11.4, 3.4, 2.2, 5.2],
+              [18, 3, 3, 3],
+              [3, 12, 3, 3],
+            ],
+            seal: [7, 12, 'freight'],
+            intent:
+              'Reel frees turning space but can release a cable-held doorway sooner. Choose the bypass before collecting the supply, then carry the second parcel back.',
+          },
+          componentAssemblies: [
+            {
+              family: 'dispatch',
+              cells: [
+                [12, 9],
+                [12, 10],
+                [12, 11],
+                [12, 12],
+                [12, 13],
+              ],
+            },
+            {
+              family: 'platform',
+              cells: [
+                [12, 4],
+                [12, 5],
+                [12, 6],
+                [12, 7],
+              ],
+            },
+          ],
           focus: [7, 12],
           axis: 'horizontal',
           light: 'late',
@@ -4782,7 +20639,78 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'container',
           ambient: 'lamps',
-          floor: 'bays',
+          floor: 'authored',
+          floorPlan: {
+            name: 'supply-crane-bays-loading',
+            pattern: 'loading',
+            paths: [
+              [
+                [6.4, 5.4],
+                [10.6, 5.4],
+              ],
+              [
+                [6.4, 10.6],
+                [10.6, 10.6],
+              ],
+              [
+                [13.4, 5.4],
+                [17.6, 5.4],
+              ],
+              [
+                [13.4, 10.6],
+                [17.6, 10.6],
+              ],
+              [
+                [11, 14],
+                [11, 11],
+                [14, 11],
+              ],
+            ],
+            patches: [
+              [6.4, 5.4, 4.2, 5.2],
+              [13.4, 5.4, 4.2, 5.2],
+              [11, 11, 3, 3],
+            ],
+            seal: [12, 9, 'freight'],
+            intent:
+              'The shield commits along the gap between freight bays. Approach its side, then carry the load around a wider return before unloading at the southern dock.',
+          },
+          componentAssemblies: [
+            {
+              family: 'container',
+              cells: [
+                [7, 6],
+                [8, 6],
+                [9, 6],
+                [7, 7],
+                [8, 7],
+                [9, 7],
+                [7, 8],
+                [8, 8],
+                [9, 8],
+                [7, 9],
+                [8, 9],
+                [9, 9],
+              ],
+            },
+            {
+              family: 'dispatch',
+              cells: [
+                [14, 6],
+                [15, 6],
+                [16, 6],
+                [14, 7],
+                [15, 7],
+                [16, 7],
+                [14, 8],
+                [15, 8],
+                [16, 8],
+                [14, 9],
+                [15, 9],
+                [16, 9],
+              ],
+            },
+          ],
           focus: [12, 9],
           axis: 'vertical',
           light: 'late',
@@ -4802,7 +20730,80 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'container',
           ambient: 'lamps',
-          floor: 'bays',
+          floor: 'authored',
+          floorPlan: {
+            name: 'supply-crane-bays-loading',
+            pattern: 'loading',
+            paths: [
+              [
+                [7.4, 3.4],
+                [10.6, 3.4],
+              ],
+              [
+                [7.4, 9.6],
+                [10.6, 9.6],
+              ],
+              [
+                [13.4, 8.4],
+                [16.6, 8.4],
+              ],
+              [
+                [13.4, 14.6],
+                [16.6, 14.6],
+              ],
+              [
+                [18, 5],
+                [18, 2],
+                [21, 2],
+              ],
+              [
+                [3, 16],
+                [3, 13],
+                [6, 13],
+              ],
+            ],
+            patches: [
+              [7.4, 3.4, 3.2, 6.2],
+              [13.4, 8.4, 3.2, 6.2],
+              [18, 2, 3, 3],
+              [3, 13, 3, 3],
+            ],
+            seal: [5, 8, 'freight'],
+            intent:
+              'A Pulse offer follows the first catch; Reel follows the third. Their opposite bays pull you away from staged deliveries, so decide which detour still matters.',
+          },
+          componentAssemblies: [
+            {
+              family: 'dispatch',
+              cells: [
+                [8, 4],
+                [9, 4],
+                [8, 5],
+                [9, 5],
+                [8, 6],
+                [9, 6],
+                [8, 7],
+                [9, 7],
+                [8, 8],
+                [9, 8],
+              ],
+            },
+            {
+              family: 'container',
+              cells: [
+                [14, 9],
+                [15, 9],
+                [14, 10],
+                [15, 10],
+                [14, 11],
+                [15, 11],
+                [14, 12],
+                [15, 12],
+                [14, 13],
+                [15, 13],
+              ],
+            },
+          ],
           focus: [5, 8],
           axis: 'horizontal',
           light: 'night',
@@ -4822,7 +20823,80 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'container',
           ambient: 'lamps',
-          floor: 'bays',
+          floor: 'authored',
+          floorPlan: {
+            name: 'supply-crane-bays-loading',
+            pattern: 'loading',
+            paths: [
+              [
+                [8.4, 4.4],
+                [11.6, 4.4],
+              ],
+              [
+                [8.4, 8.6],
+                [11.6, 8.6],
+              ],
+              [
+                [13.4, 9.4],
+                [17.6, 9.4],
+              ],
+              [
+                [13.4, 12.6],
+                [17.6, 12.6],
+              ],
+              [
+                [13.4, 9.4],
+                [13.4, 9.9],
+              ],
+              [
+                [17.6, 12.1],
+                [17.6, 12.6],
+              ],
+              [
+                [6, 15],
+                [6, 12],
+                [9, 12],
+              ],
+              [
+                [18, 5],
+                [18, 2],
+                [21, 2],
+              ],
+            ],
+            patches: [
+              [8.4, 4.4, 3.2, 4.2],
+              [13.4, 9.4, 4.2, 3.2],
+              [6, 12, 3, 3],
+              [18, 2, 3, 3],
+            ],
+            seal: [18, 9, 'freight'],
+            intent:
+              'The freight finale links a warned lane, a broadcast source and two supply detours. Finish the west delivery before the east parcel becomes available.',
+          },
+          componentAssemblies: [
+            {
+              family: 'container',
+              cells: [
+                [9, 5],
+                [10, 5],
+                [9, 6],
+                [10, 6],
+                [9, 7],
+                [10, 7],
+              ],
+            },
+            {
+              family: 'dispatch',
+              cells: [
+                [14, 10],
+                [15, 10],
+                [16, 10],
+                [14, 11],
+                [15, 11],
+                [16, 11],
+              ],
+            },
+          ],
           focus: [18, 9],
           axis: 'vertical',
           light: 'night',
@@ -4842,7 +20916,88 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'shelter',
           ambient: 'windsock',
-          floor: 'cross',
+          floor: 'authored',
+          floorPlan: {
+            name: 'paired-observatory-courts-paired',
+            pattern: 'paired',
+            paths: [
+              [
+                [9.4, 4.4],
+                [14.6, 4.4],
+                [14.6, 5],
+              ],
+              [
+                [9.4, 8],
+                [9.4, 8.6],
+                [14.6, 8.6],
+              ],
+              [
+                [9.4, 9.4],
+                [14.6, 9.4],
+                [14.6, 10],
+              ],
+              [
+                [9.4, 13],
+                [9.4, 13.6],
+                [14.6, 13.6],
+              ],
+              [
+                [4, 15],
+                [4, 12],
+                [7, 12],
+              ],
+              [
+                [18, 6],
+                [18, 3],
+                [21, 3],
+              ],
+            ],
+            patches: [
+              [9.4, 4.4, 5.2, 4.2],
+              [9.4, 9.4, 5.2, 4.2],
+              [4, 12, 3, 3],
+              [18, 3, 3, 3],
+            ],
+            seal: [6, 6, 'signal'],
+            intent:
+              'Two docks accept different parcels. In Team, each carrier can take a flank; either head may finish the central extraction after both deliveries.',
+          },
+          componentAssemblies: [
+            {
+              family: 'receiver',
+              cells: [
+                [10, 5],
+                [11, 5],
+                [12, 5],
+                [13, 5],
+                [10, 6],
+                [11, 6],
+                [12, 6],
+                [13, 6],
+                [10, 7],
+                [11, 7],
+                [12, 7],
+                [13, 7],
+              ],
+            },
+            {
+              family: 'shelter',
+              cells: [
+                [10, 10],
+                [11, 10],
+                [12, 10],
+                [13, 10],
+                [10, 11],
+                [11, 11],
+                [12, 11],
+                [13, 11],
+                [10, 12],
+                [11, 12],
+                [12, 12],
+                [13, 12],
+              ],
+            },
+          ],
           focus: [6, 6],
           axis: 'horizontal',
           light: 'morning',
@@ -4862,7 +21017,56 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'shelter',
           ambient: 'windsock',
-          floor: 'cross',
+          floor: 'authored',
+          floorPlan: {
+            name: 'paired-observatory-courts-paired',
+            pattern: 'paired',
+            paths: [
+              [
+                [8.4, 5.4],
+                [11.6, 5.4],
+                [11.6, 6],
+              ],
+              [
+                [8.4, 7],
+                [8.4, 7.6],
+                [11.6, 7.6],
+              ],
+              [
+                [13.4, 9.4],
+                [16.6, 9.4],
+                [16.6, 10],
+              ],
+              [
+                [13.4, 11],
+                [13.4, 11.6],
+                [16.6, 11.6],
+              ],
+            ],
+            patches: [
+              [8.4, 5.4, 3.2, 2.2],
+              [13.4, 9.4, 3.2, 2.2],
+            ],
+            seal: [17, 11, 'signal'],
+            intent:
+              'Two levers control one departure. Simultaneous Team contact toggles once; coordinate the next patrol branch before leaving for opposite rendezvous points.',
+          },
+          componentAssemblies: [
+            {
+              family: 'receiver',
+              cells: [
+                [9, 6],
+                [10, 6],
+              ],
+            },
+            {
+              family: 'antenna',
+              cells: [
+                [14, 10],
+                [15, 10],
+              ],
+            },
+          ],
           focus: [17, 11],
           axis: 'vertical',
           light: 'morning',
@@ -4882,7 +21086,91 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'shelter',
           ambient: 'windsock',
-          floor: 'cross',
+          floor: 'authored',
+          floorPlan: {
+            name: 'paired-observatory-courts-paired',
+            pattern: 'paired',
+            paths: [
+              [
+                [9.4, 8.4],
+                [11.6, 8.4],
+                [11.6, 9],
+              ],
+              [
+                [9.4, 14],
+                [9.4, 14.6],
+                [11.6, 14.6],
+              ],
+              [
+                [13.4, 8.4],
+                [15.6, 8.4],
+                [15.6, 9],
+              ],
+              [
+                [13.4, 14],
+                [13.4, 14.6],
+                [15.6, 14.6],
+              ],
+              [
+                [9.4, 3.4],
+                [11.6, 3.4],
+                [11.6, 4],
+              ],
+              [
+                [9.4, 8],
+                [9.4, 8.6],
+                [11.6, 8.6],
+              ],
+            ],
+            patches: [
+              [9.4, 8.4, 2.2, 6.2],
+              [13.4, 8.4, 2.2, 6.2],
+              [9.4, 3.4, 2.2, 5.2],
+            ],
+            seal: [12, 8, 'signal'],
+            intent:
+              'Each plate controls a different door. Visit both during the operation; Team can hold them together, while Solo can use the permanently open ends.',
+          },
+          componentAssemblies: [
+            {
+              family: 'receiver',
+              cells: [
+                [10, 9],
+                [10, 10],
+                [10, 11],
+                [10, 12],
+                [10, 13],
+              ],
+            },
+            {
+              family: 'antenna',
+              cells: [
+                [14, 9],
+                [14, 10],
+                [14, 11],
+                [14, 12],
+                [14, 13],
+              ],
+            },
+            {
+              family: 'antenna',
+              cells: [
+                [10, 4],
+                [10, 5],
+                [10, 6],
+                [10, 7],
+              ],
+            },
+            {
+              family: 'antenna',
+              cells: [
+                [14, 4],
+                [14, 5],
+                [14, 6],
+                [14, 7],
+              ],
+            },
+          ],
           focus: [11, 8],
           axis: 'horizontal',
           light: 'morning',
@@ -4902,7 +21190,92 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'shelter',
           ambient: 'windsock',
-          floor: 'cross',
+          floor: 'authored',
+          floorPlan: {
+            name: 'paired-observatory-courts-paired',
+            pattern: 'paired',
+            paths: [
+              [
+                [7.4, 4.4],
+                [10.6, 4.4],
+                [10.6, 5],
+              ],
+              [
+                [7.4, 12],
+                [7.4, 12.6],
+                [10.6, 12.6],
+              ],
+              [
+                [14.4, 5.4],
+                [17.6, 5.4],
+                [17.6, 6],
+              ],
+              [
+                [14.4, 13],
+                [14.4, 13.6],
+                [17.6, 13.6],
+              ],
+              [
+                [19, 10],
+                [19, 7],
+                [22, 7],
+              ],
+              [
+                [3, 11],
+                [3, 8],
+                [6, 8],
+              ],
+            ],
+            patches: [
+              [7.4, 4.4, 3.2, 8.2],
+              [14.4, 5.4, 3.2, 8.2],
+              [19, 7, 3, 3],
+              [3, 8, 3, 3],
+            ],
+            seal: [16, 4, 'signal'],
+            intent:
+              'Four parcels cross two docks. Share the turning yards rather than the same center lane; unloading one carrier does not shorten the other cable.',
+          },
+          componentAssemblies: [
+            {
+              family: 'shelter',
+              cells: [
+                [8, 5],
+                [9, 5],
+                [8, 6],
+                [9, 6],
+                [8, 7],
+                [9, 7],
+                [8, 8],
+                [9, 8],
+                [8, 9],
+                [9, 9],
+                [8, 10],
+                [9, 10],
+                [8, 11],
+                [9, 11],
+              ],
+            },
+            {
+              family: 'receiver',
+              cells: [
+                [15, 6],
+                [16, 6],
+                [15, 7],
+                [16, 7],
+                [15, 8],
+                [16, 8],
+                [15, 9],
+                [16, 9],
+                [15, 10],
+                [16, 10],
+                [15, 11],
+                [16, 11],
+                [15, 12],
+                [16, 12],
+              ],
+            },
+          ],
           focus: [16, 5],
           axis: 'vertical',
           light: 'late',
@@ -4922,7 +21295,76 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'shelter',
           ambient: 'windsock',
-          floor: 'cross',
+          floor: 'authored',
+          floorPlan: {
+            name: 'paired-observatory-courts-paired',
+            pattern: 'paired',
+            paths: [
+              [
+                [9.4, 4.4],
+                [13.6, 4.4],
+                [13.6, 5],
+              ],
+              [
+                [9.4, 9],
+                [9.4, 9.6],
+                [13.6, 9.6],
+              ],
+              [
+                [9.4, 10.4],
+                [13.6, 10.4],
+                [13.6, 11],
+              ],
+              [
+                [9.4, 13],
+                [9.4, 13.6],
+                [13.6, 13.6],
+              ],
+              [
+                [19, 15],
+                [19, 12],
+                [22, 12],
+              ],
+            ],
+            patches: [
+              [9.4, 4.4, 4.2, 5.2],
+              [9.4, 10.4, 4.2, 3.2],
+              [19, 12, 3, 3],
+            ],
+            seal: [7, 12, 'signal'],
+            intent:
+              'Either Team head can activate the local circle on the shared feed. Keep one approach clear while the other carries the parcels toward the antenna.',
+          },
+          componentAssemblies: [
+            {
+              family: 'shelter',
+              cells: [
+                [10, 5],
+                [11, 5],
+                [12, 5],
+                [10, 6],
+                [11, 6],
+                [12, 6],
+                [10, 7],
+                [11, 7],
+                [12, 7],
+                [10, 8],
+                [11, 8],
+                [12, 8],
+              ],
+            },
+            {
+              family: 'receiver',
+              cells: [
+                [10, 11],
+                [11, 11],
+                [12, 11],
+                [10, 12],
+                [11, 12],
+                [12, 12],
+              ],
+            },
+          ],
           focus: [7, 12],
           axis: 'horizontal',
           light: 'late',
@@ -4942,7 +21384,89 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'shelter',
           ambient: 'windsock',
-          floor: 'cross',
+          floor: 'authored',
+          floorPlan: {
+            name: 'paired-observatory-courts-paired',
+            pattern: 'paired',
+            paths: [
+              [
+                [7.4, 4.4],
+                [11.6, 4.4],
+                [11.6, 5],
+              ],
+              [
+                [7.4, 8],
+                [7.4, 8.6],
+                [11.6, 8.6],
+              ],
+              [
+                [13.4, 9.4],
+                [17.6, 9.4],
+                [17.6, 10],
+              ],
+              [
+                [13.4, 13],
+                [13.4, 13.6],
+                [17.6, 13.6],
+              ],
+              [
+                [11.4, 6.4],
+                [13.6, 6.4],
+                [13.6, 7],
+              ],
+              [
+                [11.4, 10],
+                [11.4, 10.6],
+                [13.6, 10.6],
+              ],
+            ],
+            patches: [
+              [7.4, 4.4, 4.2, 4.2],
+              [13.4, 9.4, 4.2, 4.2],
+              [11.4, 6.4, 2.2, 4.2],
+            ],
+            seal: [10, 9, 'signal'],
+            intent:
+              'Three stage exits alternate corners without resetting the board. A partner can arrive as the final requirement completes; no forced second entry is needed.',
+          },
+          componentAssemblies: [
+            {
+              family: 'shelter',
+              cells: [
+                [8, 5],
+                [9, 5],
+                [10, 5],
+                [8, 6],
+                [9, 6],
+                [10, 6],
+                [8, 7],
+                [9, 7],
+                [10, 7],
+              ],
+            },
+            {
+              family: 'receiver',
+              cells: [
+                [14, 10],
+                [15, 10],
+                [16, 10],
+                [14, 11],
+                [15, 11],
+                [16, 11],
+                [14, 12],
+                [15, 12],
+                [16, 12],
+              ],
+            },
+            {
+              family: 'antenna',
+              cells: [
+                [12, 7],
+                [12, 8],
+                [12, 9],
+              ],
+            },
+          ],
           focus: [12, 9],
           axis: 'vertical',
           light: 'late',
@@ -4962,7 +21486,84 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'shelter',
           ambient: 'windsock',
-          floor: 'cross',
+          floor: 'authored',
+          floorPlan: {
+            name: 'paired-observatory-courts-paired',
+            pattern: 'paired',
+            paths: [
+              [
+                [7.4, 5.4],
+                [10.6, 5.4],
+                [10.6, 6],
+              ],
+              [
+                [7.4, 11],
+                [7.4, 11.6],
+                [10.6, 11.6],
+              ],
+              [
+                [14.4, 5.4],
+                [17.6, 5.4],
+                [17.6, 6],
+              ],
+              [
+                [14.4, 11],
+                [14.4, 11.6],
+                [17.6, 11.6],
+              ],
+              [
+                [11, 15],
+                [11, 12],
+                [14, 12],
+              ],
+              [
+                [11, 6],
+                [11, 3],
+                [14, 3],
+              ],
+            ],
+            patches: [
+              [7.4, 5.4, 3.2, 6.2],
+              [14.4, 5.4, 3.2, 6.2],
+              [11, 12, 3, 3],
+              [11, 3, 3, 3],
+            ],
+            seal: [5, 8, 'signal'],
+            intent:
+              'Split the two relay pads or visit them on one long loop. The shield stays open, leaving time for both parcel deliveries before extraction.',
+          },
+          componentAssemblies: [
+            {
+              family: 'receiver',
+              cells: [
+                [8, 6],
+                [9, 6],
+                [8, 7],
+                [9, 7],
+                [8, 8],
+                [9, 8],
+                [8, 9],
+                [9, 9],
+                [8, 10],
+                [9, 10],
+              ],
+            },
+            {
+              family: 'shelter',
+              cells: [
+                [15, 6],
+                [16, 6],
+                [15, 7],
+                [16, 7],
+                [15, 8],
+                [16, 8],
+                [15, 9],
+                [16, 9],
+                [15, 10],
+                [16, 10],
+              ],
+            },
+          ],
           focus: [5, 8],
           axis: 'horizontal',
           light: 'night',
@@ -4982,7 +21583,76 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'shelter',
           ambient: 'windsock',
-          floor: 'cross',
+          floor: 'authored',
+          floorPlan: {
+            name: 'paired-observatory-courts-paired',
+            pattern: 'paired',
+            paths: [
+              [
+                [8.4, 4.4],
+                [11.6, 4.4],
+                [11.6, 5],
+              ],
+              [
+                [8.4, 8],
+                [8.4, 8.6],
+                [11.6, 8.6],
+              ],
+              [
+                [13.4, 9.4],
+                [16.6, 9.4],
+                [16.6, 10],
+              ],
+              [
+                [13.4, 13],
+                [13.4, 13.6],
+                [16.6, 13.6],
+              ],
+              [
+                [4, 15],
+                [4, 12],
+                [7, 12],
+              ],
+              [
+                [18, 6],
+                [18, 3],
+                [21, 3],
+              ],
+            ],
+            patches: [
+              [8.4, 4.4, 3.2, 4.2],
+              [13.4, 9.4, 3.2, 4.2],
+              [4, 12, 3, 3],
+              [18, 3, 3, 3],
+            ],
+            seal: [18, 9, 'signal'],
+            intent:
+              'Opposite warning lanes, shared cargo and switching prey divide attention. Deliver into each safe yard before the final central rendezvous.',
+          },
+          componentAssemblies: [
+            {
+              family: 'shelter',
+              cells: [
+                [9, 5],
+                [10, 5],
+                [9, 6],
+                [10, 6],
+                [9, 7],
+                [10, 7],
+              ],
+            },
+            {
+              family: 'receiver',
+              cells: [
+                [14, 10],
+                [15, 10],
+                [14, 11],
+                [15, 11],
+                [14, 12],
+                [15, 12],
+              ],
+            },
+          ],
           focus: [18, 9],
           axis: 'vertical',
           light: 'night',
@@ -5002,7 +21672,62 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'terrace',
           ambient: 'leaves',
-          floor: 'terraces',
+          floor: 'authored',
+          floorPlan: {
+            name: 'reclaimed-citadel-terraces',
+            pattern: 'terraces',
+            paths: [
+              [
+                [8.4, 7.6],
+                [8.4, 5.4],
+                [11.6, 5.4],
+              ],
+              [
+                [8.75, 7.6],
+                [8.75, 5.75],
+                [11.6, 5.75],
+              ],
+              [
+                [13.4, 11.6],
+                [13.4, 9.4],
+                [16.6, 9.4],
+              ],
+              [
+                [13.75, 11.6],
+                [13.75, 9.75],
+                [16.6, 9.75],
+              ],
+              [
+                [4, 15],
+                [4, 12],
+                [7, 12],
+              ],
+            ],
+            patches: [
+              [8.4, 5.4, 3.2, 2.2],
+              [13.4, 9.4, 3.2, 2.2],
+              [4, 12, 3, 3],
+            ],
+            seal: [6, 6, 'survey'],
+            intent:
+              'Select a patrol route through the reclaimed machine court. Deliver after the first interception, then choose an exit across the remaining loop.',
+          },
+          componentAssemblies: [
+            {
+              family: 'reclaimer',
+              cells: [
+                [9, 6],
+                [10, 6],
+              ],
+            },
+            {
+              family: 'terrace',
+              cells: [
+                [14, 10],
+                [15, 10],
+              ],
+            },
+          ],
           focus: [6, 6],
           axis: 'horizontal',
           light: 'morning',
@@ -5022,7 +21747,87 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'terrace',
           ambient: 'leaves',
-          floor: 'terraces',
+          floor: 'authored',
+          floorPlan: {
+            name: 'reclaimed-citadel-terraces',
+            pattern: 'terraces',
+            paths: [
+              [
+                [11.4, 14.6],
+                [11.4, 8.4],
+                [13.6, 8.4],
+              ],
+              [
+                [11.75, 14.6],
+                [11.75, 8.75],
+                [13.6, 8.75],
+              ],
+              [
+                [11.4, 8.6],
+                [11.4, 3.4],
+                [13.6, 3.4],
+              ],
+              [
+                [11.75, 8.6],
+                [11.75, 3.75],
+                [13.6, 3.75],
+              ],
+              [
+                [6.4, 7.6],
+                [6.4, 4.4],
+                [9.6, 4.4],
+              ],
+              [
+                [6.75, 7.6],
+                [6.75, 4.75],
+                [9.6, 4.75],
+              ],
+              [
+                [18, 6],
+                [18, 3],
+                [21, 3],
+              ],
+            ],
+            patches: [
+              [11.4, 8.4, 2.2, 6.2],
+              [11.4, 3.4, 2.2, 5.2],
+              [6.4, 4.4, 3.2, 3.2],
+              [18, 3, 3, 3],
+            ],
+            seal: [17, 11, 'survey'],
+            intent:
+              'A held door and an eroded notch offer two different short routes. Carry the cargo through one and reserve the other for the long cable’s return.',
+          },
+          componentAssemblies: [
+            {
+              family: 'terrace',
+              cells: [
+                [12, 9],
+                [12, 10],
+                [12, 11],
+                [12, 12],
+                [12, 13],
+              ],
+            },
+            {
+              family: 'terrace',
+              cells: [
+                [12, 4],
+                [12, 5],
+                [12, 6],
+                [12, 7],
+              ],
+            },
+            {
+              family: 'reclaimer',
+              cells: [
+                [7, 5],
+                [8, 5],
+                [7, 6],
+                [8, 6],
+              ],
+            },
+          ],
           focus: [17, 11],
           axis: 'vertical',
           light: 'morning',
@@ -5042,7 +21847,80 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'terrace',
           ambient: 'leaves',
-          floor: 'terraces',
+          floor: 'authored',
+          floorPlan: {
+            name: 'reclaimed-citadel-terraces',
+            pattern: 'terraces',
+            paths: [
+              [
+                [7.4, 12.6],
+                [7.4, 4.4],
+                [10.6, 4.4],
+              ],
+              [
+                [7.75, 12.6],
+                [7.75, 4.75],
+                [10.6, 4.75],
+              ],
+              [
+                [14.4, 12.6],
+                [14.4, 4.4],
+                [17.6, 4.4],
+              ],
+              [
+                [14.75, 12.6],
+                [14.75, 4.75],
+                [17.6, 4.75],
+              ],
+            ],
+            patches: [
+              [7.4, 4.4, 3.2, 8.2],
+              [14.4, 4.4, 3.2, 8.2],
+            ],
+            seal: [11, 8, 'survey'],
+            intent:
+              'Broadcast and a relay core divide the approach. You can restore the image first or follow the visible relay pads while the moving prey remains hidden.',
+          },
+          componentAssemblies: [
+            {
+              family: 'reclaimer',
+              cells: [
+                [8, 5],
+                [9, 5],
+                [8, 6],
+                [9, 6],
+                [8, 7],
+                [9, 7],
+                [8, 8],
+                [9, 8],
+                [8, 9],
+                [9, 9],
+                [8, 10],
+                [9, 10],
+                [8, 11],
+                [9, 11],
+              ],
+            },
+            {
+              family: 'excavation',
+              cells: [
+                [15, 5],
+                [16, 5],
+                [15, 6],
+                [16, 6],
+                [15, 7],
+                [16, 7],
+                [15, 8],
+                [16, 8],
+                [15, 9],
+                [16, 9],
+                [15, 10],
+                [16, 10],
+                [15, 11],
+                [16, 11],
+              ],
+            },
+          ],
           focus: [11, 8],
           axis: 'horizontal',
           light: 'morning',
@@ -5062,7 +21940,76 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'terrace',
           ambient: 'leaves',
-          floor: 'terraces',
+          floor: 'authored',
+          floorPlan: {
+            name: 'reclaimed-citadel-terraces',
+            pattern: 'terraces',
+            paths: [
+              [
+                [8.4, 8.6],
+                [8.4, 4.4],
+                [11.6, 4.4],
+              ],
+              [
+                [8.75, 8.6],
+                [8.75, 4.75],
+                [11.6, 4.75],
+              ],
+              [
+                [13.4, 12.6],
+                [13.4, 9.4],
+                [17.6, 9.4],
+              ],
+              [
+                [13.75, 12.6],
+                [13.75, 9.75],
+                [17.6, 9.75],
+              ],
+              [
+                [5, 15],
+                [5, 12],
+                [8, 12],
+              ],
+              [
+                [18, 5],
+                [18, 2],
+                [21, 2],
+              ],
+            ],
+            patches: [
+              [8.4, 4.4, 3.2, 4.2],
+              [13.4, 9.4, 4.2, 3.2],
+              [5, 12, 3, 3],
+              [18, 2, 3, 3],
+            ],
+            seal: [16, 5, 'survey'],
+            intent:
+              'A projectile guard and lane own different approaches to the terrace. Use their existing warnings to deliver two parcels; the outside corners stay available.',
+          },
+          componentAssemblies: [
+            {
+              family: 'excavation',
+              cells: [
+                [9, 5],
+                [10, 5],
+                [9, 6],
+                [10, 6],
+                [9, 7],
+                [10, 7],
+              ],
+            },
+            {
+              family: 'reclaimer',
+              cells: [
+                [14, 10],
+                [15, 10],
+                [16, 10],
+                [14, 11],
+                [15, 11],
+                [16, 11],
+              ],
+            },
+          ],
           focus: [16, 5],
           axis: 'vertical',
           light: 'late',
@@ -5082,7 +22029,84 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'terrace',
           ambient: 'leaves',
-          floor: 'terraces',
+          floor: 'authored',
+          floorPlan: {
+            name: 'reclaimed-citadel-terraces',
+            pattern: 'terraces',
+            paths: [
+              [
+                [14.4, 13.6],
+                [14.4, 4.4],
+                [17.6, 4.4],
+              ],
+              [
+                [14.75, 13.6],
+                [14.75, 4.75],
+                [17.6, 4.75],
+              ],
+              [
+                [7.4, 14.6],
+                [7.4, 3.4],
+                [9.6, 3.4],
+              ],
+              [
+                [7.75, 14.6],
+                [7.75, 3.75],
+                [9.6, 3.75],
+              ],
+              [
+                [11, 15],
+                [11, 12],
+                [14, 12],
+              ],
+            ],
+            patches: [
+              [14.4, 4.4, 3.2, 9.2],
+              [7.4, 3.4, 2.2, 11.2],
+              [11, 12, 3, 3],
+            ],
+            seal: [6, 12, 'survey'],
+            intent:
+              'Wrapping, reflected prey and a changing stone cut create three ways across. Choose the one your carried parcels and trailing cable still fit through.',
+          },
+          componentAssemblies: [
+            {
+              family: 'reclaimer',
+              cells: [
+                [15, 5],
+                [16, 5],
+                [15, 6],
+                [16, 6],
+                [15, 7],
+                [16, 7],
+                [15, 8],
+                [16, 8],
+                [15, 9],
+                [16, 9],
+                [15, 10],
+                [16, 10],
+                [15, 11],
+                [16, 11],
+                [15, 12],
+                [16, 12],
+              ],
+            },
+            {
+              family: 'terrace',
+              cells: [
+                [8, 4],
+                [8, 5],
+                [8, 6],
+                [8, 7],
+                [8, 8],
+                [8, 9],
+                [8, 10],
+                [8, 11],
+                [8, 12],
+                [8, 13],
+              ],
+            },
+          ],
           focus: [7, 12],
           axis: 'horizontal',
           light: 'late',
@@ -5102,7 +22126,81 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'terrace',
           ambient: 'leaves',
-          floor: 'terraces',
+          floor: 'authored',
+          floorPlan: {
+            name: 'reclaimed-citadel-terraces',
+            pattern: 'terraces',
+            paths: [
+              [
+                [8.4, 7.6],
+                [8.4, 5.4],
+                [11.6, 5.4],
+              ],
+              [
+                [8.75, 7.6],
+                [8.75, 5.75],
+                [11.6, 5.75],
+              ],
+              [
+                [5.4, 12.6],
+                [5.4, 9.4],
+                [7.6, 9.4],
+              ],
+              [
+                [5.75, 12.6],
+                [5.75, 9.75],
+                [7.6, 9.75],
+              ],
+              [
+                [13.4, 11.6],
+                [13.4, 9.4],
+                [16.6, 9.4],
+              ],
+              [
+                [13.75, 11.6],
+                [13.75, 9.75],
+                [16.6, 9.75],
+              ],
+            ],
+            patches: [
+              [8.4, 5.4, 3.2, 2.2],
+              [5.4, 9.4, 2.2, 3.2],
+              [13.4, 9.4, 3.2, 2.2],
+            ],
+            seal: [12, 9, 'survey'],
+            intent:
+              'Patrol dispatch and a cable-held side gate are independent. Open one route while planning the other; neither activation changes enemy contact rules.',
+          },
+          componentAssemblies: [
+            {
+              family: 'reclaimer',
+              cells: [
+                [9, 6],
+                [10, 6],
+              ],
+            },
+            {
+              family: 'terrace',
+              cells: [
+                [6, 10],
+                [6, 11],
+              ],
+            },
+            {
+              family: 'terrace',
+              cells: [
+                [14, 10],
+                [15, 10],
+              ],
+            },
+            {
+              family: 'terrace',
+              cells: [
+                [6, 13],
+                [6, 14],
+              ],
+            },
+          ],
           focus: [12, 9],
           axis: 'vertical',
           light: 'late',
@@ -5122,7 +22220,108 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'terrace',
           ambient: 'leaves',
-          floor: 'terraces',
+          floor: 'authored',
+          floorPlan: {
+            name: 'reclaimed-citadel-terraces',
+            pattern: 'terraces',
+            paths: [
+              [
+                [6.4, 11.6],
+                [6.4, 4.4],
+                [9.6, 4.4],
+              ],
+              [
+                [6.75, 11.6],
+                [6.75, 4.75],
+                [9.6, 4.75],
+              ],
+              [
+                [11.4, 11.6],
+                [11.4, 8.4],
+                [15.6, 8.4],
+              ],
+              [
+                [11.75, 11.6],
+                [11.75, 8.75],
+                [15.6, 8.75],
+              ],
+              [
+                [16.4, 9.6],
+                [16.4, 4.4],
+                [18.6, 4.4],
+              ],
+              [
+                [16.75, 9.6],
+                [16.75, 4.75],
+                [18.6, 4.75],
+              ],
+              [
+                [10, 15],
+                [10, 12],
+                [13, 12],
+              ],
+              [
+                [19, 6],
+                [19, 3],
+                [22, 3],
+              ],
+              [
+                [3, 15],
+                [3, 12],
+                [6, 12],
+              ],
+            ],
+            patches: [
+              [6.4, 4.4, 3.2, 7.2],
+              [11.4, 8.4, 4.2, 3.2],
+              [16.4, 4.4, 2.2, 5.2],
+              [10, 12, 3, 3],
+              [19, 3, 3, 3],
+              [3, 12, 3, 3],
+            ],
+            seal: [5, 8, 'survey'],
+            intent:
+              'Each dock completes a different stage: clear a local antenna, flank armor, then carry the last parcel past a guard. Supplies remain optional.',
+          },
+          componentAssemblies: [
+            {
+              family: 'reclaimer',
+              cells: [
+                [7, 5],
+                [8, 5],
+                [7, 6],
+                [8, 6],
+                [7, 7],
+                [8, 7],
+                [7, 8],
+                [8, 8],
+                [7, 9],
+                [8, 9],
+                [7, 10],
+                [8, 10],
+              ],
+            },
+            {
+              family: 'excavation',
+              cells: [
+                [12, 9],
+                [13, 9],
+                [14, 9],
+                [12, 10],
+                [13, 10],
+                [14, 10],
+              ],
+            },
+            {
+              family: 'terrace',
+              cells: [
+                [17, 5],
+                [17, 6],
+                [17, 7],
+                [17, 8],
+              ],
+            },
+          ],
           focus: [5, 8],
           axis: 'horizontal',
           light: 'night',
@@ -5142,7 +22341,102 @@ export const CLASSIC_MISSION_COMPOSITIONS = Object.freeze(
         {
           structure: 'terrace',
           ambient: 'leaves',
-          floor: 'terraces',
+          floor: 'authored',
+          floorPlan: {
+            name: 'reclaimed-citadel-terraces',
+            pattern: 'terraces',
+            paths: [
+              [
+                [11.4, 14.6],
+                [11.4, 8.4],
+                [13.6, 8.4],
+              ],
+              [
+                [11.75, 14.6],
+                [11.75, 8.75],
+                [13.6, 8.75],
+              ],
+              [
+                [11.4, 8.6],
+                [11.4, 3.4],
+                [13.6, 3.4],
+              ],
+              [
+                [11.75, 8.6],
+                [11.75, 3.75],
+                [13.6, 3.75],
+              ],
+              [
+                [6.4, 7.6],
+                [6.4, 4.4],
+                [9.6, 4.4],
+              ],
+              [
+                [6.75, 7.6],
+                [6.75, 4.75],
+                [9.6, 4.75],
+              ],
+              [
+                [18, 10],
+                [18, 7],
+                [21, 7],
+              ],
+              [
+                [3, 16],
+                [3, 13],
+                [6, 13],
+              ],
+            ],
+            patches: [
+              [11.4, 8.4, 2.2, 6.2],
+              [11.4, 3.4, 2.2, 5.2],
+              [6.4, 4.4, 3.2, 3.2],
+              [18, 7, 3, 3],
+              [3, 13, 3, 3],
+            ],
+            seal: [17, 7, 'survey'],
+            intent:
+              'Restore reception, deliver across a held door, then choose the last extraction around a warned lane. Four specialist approaches replace repeated catches at one post.',
+          },
+          componentAssemblies: [
+            {
+              family: 'terrace',
+              cells: [
+                [12, 9],
+                [12, 10],
+                [12, 11],
+                [12, 12],
+                [12, 13],
+              ],
+            },
+            {
+              family: 'terrace',
+              cells: [
+                [12, 4],
+                [12, 5],
+                [12, 6],
+                [12, 7],
+              ],
+            },
+            {
+              family: 'excavation',
+              cells: [
+                [7, 5],
+                [8, 5],
+                [7, 6],
+                [8, 6],
+              ],
+            },
+            {
+              family: 'reclaimer',
+              cells: [
+                [17, 10],
+                [18, 10],
+                [17, 11],
+                [18, 11],
+              ],
+            },
+          ],
           focus: [18, 9],
           axis: 'vertical',
           light: 'night',

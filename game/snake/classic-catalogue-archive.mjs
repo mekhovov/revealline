@@ -1,3 +1,4 @@
+import { CLASSIC_SNAKE_V4_LEVELS } from './classic-catalogue-v4.mjs';
 import { CLASSIC_SNAKE_PURSUIT_V1_ARCHIVED_LEVELS } from './classic-catalogue-pursuit-v1-archive.mjs';
 import { CLASSIC_SNAKE_OPERATION_LEVELS_A } from './classic-catalogue-operations-a.mjs';
 import { CLASSIC_SNAKE_OPERATION_LEVELS_B } from './classic-catalogue-operations-b.mjs';
@@ -697,6 +698,14 @@ export const CLASSIC_SNAKE_ARCHIVED_LEVELS = freeze([
   ...CLASSIC_SNAKE_LOCAL_V1_ARCHIVED_LEVELS,
   ...CLASSIC_SNAKE_FOUNDATION_V1_ARCHIVED_LEVELS,
   ...CLASSIC_SNAKE_FIELD_V3_ARCHIVED_LEVELS,
+  ...CLASSIC_SNAKE_V4_LEVELS.filter((entry) =>
+    [
+      'classic-field-border-watch',
+      'classic-field-contour-orbit',
+      'classic-field-wake-watch',
+      'classic-field-ricochet-line',
+    ].includes(entry.id),
+  ),
   ...[...CLASSIC_SNAKE_OPERATION_LEVELS_A, ...CLASSIC_SNAKE_OPERATION_LEVELS_B].filter((entry) =>
     ['classic-operation-pressure-elbow', 'classic-operation-loaded-excavation'].includes(entry.id),
   ),

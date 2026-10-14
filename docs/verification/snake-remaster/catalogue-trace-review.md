@@ -52,7 +52,8 @@ optional-detour decision without evidence of a gameplay defect. Other modest
 quiet signals remain review material; no claim is made that 98 missions have all
 been player-tested or that zero concentration flags proves variety.
 
-The follow-through also admits the two newly revised operation recipes. Pressure
+The follow-through admits two revised operation recipes and four shortened
+single-policy field introductions. Pressure
 Elbow’s committed-route proofs stay below the initial quiet-interval thresholds.
 Loaded Excavation’s Solo route still has a 26-move interval (7.28 seconds at slow
 pace); Team’s maximum is 16 moves. That modest signal stays visible even though
@@ -60,6 +61,17 @@ the geometry correction makes the promised demolition passage usable. Fixing a
 concrete route defect does not imply that every tracing heuristic should vanish.
 
 ## Higher-star assessment
+
+The exact-setup audit in `grading-review.json` covers all 1,440 current
+Solo/Team/pace setups at seed 17: 375 retain published fixed budgets and 1,065
+are completion-only, including 180 variable-condition setups. Another 2,880
+checks confirm that changing seed or recipe cannot inherit higher grades.
+The shared EN/UK criteria state this policy before play and in results.
+
+The legacy budget regenerator now accepts only already published identities and
+unchanged thresholds/reference values. It rejects new single-witness additions
+and missing published evidence before writing. All 585 historical published rows
+remain unchanged; their presence does not make retired recipes current.
 
 The nine tactical revisions remain **completion-only**. Their 54 primary
 journals supply one automated winning route per mode/pace setup. Pace variants
@@ -69,8 +81,9 @@ justify choosing fair silver/gold budgets. Silent Parcel also varies its jammer
 schedule; its additional seeds establish replayable completions, not a universal
 performance threshold.
 
-The six Loaded Excavation editorial journals verify its revised passage at every
-mode/pace setup and likewise do not establish performance budgets.
+Thirty editorial journals verify Loaded Excavation’s revised passage and the
+four shortened single-policy field introductions at every mode/pace setup. They
+likewise do not establish performance budgets.
 
 The alternate retained-mission routes and foundation gap journals are likewise
 qualification evidence only. They are not fed automatically into the older

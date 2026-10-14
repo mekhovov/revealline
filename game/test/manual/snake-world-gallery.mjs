@@ -1,5 +1,6 @@
 import { classicTerrainCacheStats } from '../../snake/classic-terrain-cache.mjs';
-import { CLASSIC_SNAKE_LEVELS } from '../../snake/classic-catalogue.mjs';
+import { snakeReviewPage } from './snake-review-pages.mjs';
+import { CLASSIC_SNAKE_LEVELS, CLASSIC_SNAKE_CHAPTERS } from '../../snake/classic-catalogue.mjs';
 import { createClassicSnake, classicSnakeUsesVariableHazards } from '../../snake/classic-core.mjs';
 import { drawClassicBoard } from '../../snake/classic-view.mjs';
 import { CLASSIC_BOARD_STYLES, resolveClassicWorld } from '../../snake/classic-worlds.mjs';
@@ -30,25 +31,28 @@ const { document } = globalThis;
 const $ = (id) => document.getElementById(id);
 const cards = [];
 async function mount() {
-  const { proofs } = await (await fetch('../fixtures/classic-snake-v4-proofs.json')).json();
-  const driver = createSnakeVisualFixture(selectSnakeVisualProof(proofs));
-  seekSnakeVisualScenario(driver);
+  let driver;
+  if (!authoredReview) {
+    const { proofs } = await (await fetch('../fixtures/classic-snake-v4-proofs.json')).json();
+    driver = createSnakeVisualFixture(selectSnakeVisualProof(proofs));
+    seekSnakeVisualScenario(driver);
+  }
   const entries = cases.map(([name, id, scene, mode]) => {
     const entry = CLASSIC_SNAKE_LEVELS.find((item) => item.id === id);
-    return {
-      name,
-      scene,
-      entry,
-      run:
-        scene === 'relay' && !authoredReview
-          ? driver.match.runs[0]
-          : createClassicSnake(entry.level, {
-              mode,
-              seed: 17,
-              ...(classicSnakeUsesVariableHazards(entry.level) ? { hazardSeed: 17 } : {}),
-            }),
-    };
+    return { name, scene, entry, chapterId: entry.chapterId, mode };
   });
+  let pageIndex = 0;
+  $('chapter-control').hidden = !authoredReview;
+  $('page-controls').hidden = !authoredReview;
+  if (authoredReview)
+    for (const chapter of CLASSIC_SNAKE_CHAPTERS) {
+      const count = entries.filter((item) => item.chapterId === chapter.id).length;
+      if (!count) continue;
+      const option = document.createElement('option');
+      option.value = chapter.id;
+      option.textContent = `${chapter.title.en} · ${count} missions`;
+      $('chapter').append(option);
+    }
   function paint(card, boardStyle = card.style, terrainCache = true, timeMs = 0) {
     drawClassicBoard(card.canvas, card.run, {
       boardStyle,
@@ -77,7 +81,21 @@ async function mount() {
     document.body.dataset.width = $('width').value;
     document.body.dataset.labels = $('labels').value;
     document.body.dataset.gray = String($('gray').checked);
-    for (const { name, scene, entry, run } of entries)
+    const page = snakeReviewPage(entries, { chapterId: $('chapter').value, page: pageIndex });
+    pageIndex = page.page;
+    $('previous').disabled = page.page === 0;
+    $('next').disabled = page.page + 1 >= page.pages;
+    $('page-summary').textContent =
+      `Missions ${page.start + 1}–${page.start + page.entries.length} of ${page.total} · Page ${page.page + 1} / ${page.pages}`;
+    for (const { name, scene, entry, mode } of page.entries) {
+      const run =
+        scene === 'relay' && !authoredReview
+          ? driver.match.runs[0]
+          : createClassicSnake(entry.level, {
+              mode,
+              seed: 17,
+              ...(classicSnakeUsesVariableHazards(entry.level) ? { hazardSeed: 17 } : {}),
+            });
       for (const [index, style] of CLASSIC_BOARD_STYLES.slice(2).entries()) {
         if ($('look').value !== 'all' && $('look').value !== style) continue;
         const article = document.createElement('article'),
@@ -94,10 +112,24 @@ async function mount() {
         cards.push(card);
         paint(card);
       }
-    $('status').textContent = `${cards.length} boards · same gameplay geometry across every look.`;
+    }
+    $('status').textContent =
+      `${cards.length} visible boards · same gameplay geometry across every look. ${authoredReview ? 'Six missions per page keep this comparison bounded.' : ''}`;
   }
   for (const id of ['look', 'width', 'labels', 'gray', 'geometry'])
     $(id).addEventListener('change', render);
+  $('chapter').addEventListener('change', () => {
+    pageIndex = 0;
+    render();
+  });
+  $('previous').addEventListener('click', () => {
+    pageIndex--;
+    render();
+  });
+  $('next').addEventListener('click', () => {
+    pageIndex++;
+    render();
+  });
   $('benchmark').addEventListener('click', () => {
     const measure = (cached) => {
       const samples = [];
@@ -124,17 +156,19 @@ async function mount() {
   $('frameBenchmark').addEventListener('click', async () => {
     // A bounded animation benchmark, not an automated claim about device FPS.
     // Keep simulation frozen so the baseline and remaster render identical state.
-    const sample = [
-      cards.find((c) => c.scene === 'workshop'),
-      cards.find((c) => c.scene === 'relay'),
-    ].filter(Boolean);
+    const sample = authoredReview
+      ? [cards[0], cards.find((card) => card.entry.id !== cards[0]?.entry.id)].filter(Boolean)
+      : [cards.find((c) => c.scene === 'workshop'), cards.find((c) => c.scene === 'relay')].filter(
+          Boolean,
+        );
     const intervals = [],
       costs = [];
     const controls = [...document.querySelectorAll('button, select, input')];
+    const disabledBefore = controls.map((control) => control.disabled);
     controls.forEach((control) => {
       control.disabled = true;
     });
-    $('status').textContent = 'Measuring 120 frames: dense structures and active interference…';
+    $('status').textContent = `Measuring 120 frames across ${sample.length} visible boards…`;
     let previous = null,
       cancelled = false;
     try {
@@ -160,8 +194,8 @@ async function mount() {
         ? 'Frame measurement cancelled when the page became hidden.'
         : `Two-board animation, frozen simulation: frame intervals median ${percentile(intervals, 0.5)} ms / p95 ${percentile(intervals, 0.95)} ms; draw cost median ${percentile(costs, 0.5)} ms / p95 ${percentile(costs, 0.95)} ms. ${intervals.length} samples after 12 warm-up frames. Browser scheduling and display refresh affect these values.`;
     } finally {
-      controls.forEach((control) => {
-        control.disabled = false;
+      controls.forEach((control, index) => {
+        control.disabled = disabledBefore[index];
       });
     }
   });

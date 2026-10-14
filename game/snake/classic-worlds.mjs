@@ -9,7 +9,7 @@ import {
 } from './classic-catalogue-operations-a.mjs';
 /** Cosmetic composition only. Never part of a level recipe, random stream or proof.
  * Shared material/actor providers remain the owners of artwork bytes. */
-export const CLASSIC_WORLD_REVISION = 'snake-worlds-v4';
+export const CLASSIC_WORLD_REVISION = 'snake-worlds-v5';
 export const CLASSIC_BOARD_STYLES = Object.freeze([
   'theme',
   'retro',
