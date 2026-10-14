@@ -1,3 +1,4 @@
+import { drawClassicStructureModule } from './classic-structure-art.mjs';
 import {
   industrialMaterialPixels,
   INDUSTRIAL_ENVIRONMENT_REVISION,
@@ -99,13 +100,27 @@ export function resolveClassicBoardScene(options = {}) {
 }
 export function classicScenePalette(scene, treatment = 'living-circuit') {
   const base = SCENES[resolveClassicBoardScene({ boardScene: scene })];
+  if (treatment === 'theme')
+    return { ...base, field: '#354749', tint: [53, 71, 73], wallTint: [101, 121, 118] };
+  if (treatment === 'retro')
+    return { ...base, field: '#283b34', tint: [40, 59, 52], wallTint: [125, 144, 112] };
   if (treatment === 'toybox')
     return {
       ...base,
       wall: 'timber',
       wallTint: base.wallTint.map((v) => Math.min(220, v + 26)),
-      tint: base.tint.map((v) => v + 15),
-      grid: '#444b44',
+      material: 'timber',
+      field: '#99ae8b',
+      tint: {
+        orchard: [153, 174, 139],
+        freight: [168, 143, 112],
+        workshop: [132, 164, 172],
+        harbor: [140, 179, 178],
+        relay: [159, 169, 186],
+        quarry: [151, 164, 144],
+      }[scene] ?? [153, 174, 139],
+      grid: '#73846d',
+      muted: '#506759',
     };
   if (treatment === 'atmospheric-ruins')
     return {
@@ -169,7 +184,12 @@ function texture(owner, scene, wall, variant, treatment = 'living-circuit') {
   if (!surfaces.has(owner)) surfaces.set(owner, new Map());
   const cache = surfaces.get(owner),
     key = `${scene}/${wall}/${variant}/${treatment}`;
-  if (cache.has(key)) return cache.get(key);
+  if (cache.has(key)) {
+    const value = cache.get(key);
+    cache.delete(key);
+    cache.set(key, value);
+    return value;
+  }
   const canvas = canvasFactory(owner)(),
     pixels = classicSceneMaterial(scene, { wall, variant, treatment });
   if (!canvas) return null;
@@ -181,6 +201,13 @@ function texture(owner, scene, wall, variant, treatment = 'living-circuit') {
   image.data.set(pixels.rgba);
   context.putImageData(image, 0, 0);
   cache.set(key, canvas);
+  // All six appearances share the same bounded material surface allowance.
+  while (cache.size > 192) {
+    const oldest = cache.keys().next().value;
+    const released = cache.get(oldest);
+    cache.delete(oldest);
+    released.width = released.height = 1;
+  }
   return canvas;
 }
 
@@ -216,8 +243,102 @@ export function drawClassicLivingGround(
         ctx.globalAlpha = 1;
       }
     }
+  drawFloorIdentity(ctx, level, scene, treatment, palette, unit);
   drawAuthoredFloorLight(ctx, level, unit, composition);
   drawFloorComposition(ctx, level, palette, unit, composition, treatment);
+}
+
+// Flat printed/stained surface details give even obstacle-free lessons identity.
+// They have no bevel, shadow or solid outline; every cell remains fully playable.
+function drawFloorIdentity(ctx, level, scene, treatment, palette, unit) {
+  const width = level.width * unit,
+    height = level.height * unit,
+    toy = treatment === 'toybox';
+  ctx.save();
+  ctx.beginPath();
+  ctx.rect(0, 0, width, height);
+  ctx.clip();
+  ctx.strokeStyle = toy ? '#eadbb1' : palette.accent;
+  ctx.fillStyle = ctx.strokeStyle;
+  ctx.globalAlpha = toy ? 0.24 : 0.1;
+  ctx.lineWidth = unit * 0.035;
+  if (toy) {
+    // Enamel mat on a miniature tabletop: broad soft tiles and painted stitching.
+    ctx.fillStyle = '#f6edc4';
+    ctx.globalAlpha = 0.055;
+    for (let y = 0; y < level.height; y += 4)
+      for (let x = 0; x < level.width; x += 4)
+        if ((x + y) % 8 === 0) ctx.fillRect(x * unit, y * unit, 4 * unit, 4 * unit);
+    ctx.globalAlpha = 0.23;
+    ctx.strokeStyle = '#f1e8bc';
+    ctx.setLineDash([unit * 0.22, unit * 0.24]);
+    ctx.strokeRect(unit * 0.2, unit * 0.2, width - unit * 0.4, height - unit * 0.4);
+    ctx.setLineDash([]);
+  } else {
+    ctx.fillStyle = palette.accent;
+    ctx.globalAlpha = 0.09;
+    for (let x = 2; x < level.width - 1; x += 3) {
+      ctx.fillRect(x * unit, unit * 0.12, unit * 0.45, unit * 0.09);
+      ctx.fillRect(x * unit, height - unit * 0.21, unit * 0.45, unit * 0.09);
+    }
+  }
+  // A world-specific flat maker's mark replaces a generic diamond on open boards.
+  ctx.translate(width / 2, height / 2);
+  ctx.scale(unit, unit);
+  ctx.globalAlpha = toy ? 0.13 : 0.1;
+  ctx.fillStyle = toy ? '#f9efc8' : palette.accent;
+  ctx.strokeStyle = ctx.fillStyle;
+  ctx.lineWidth = 0.055;
+  if (scene === 'orchard') {
+    ctx.beginPath();
+    ctx.ellipse(-0.85, -0.45, 1.1, 0.45, 0.55, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.beginPath();
+    ctx.ellipse(0.85, -0.45, 1.1, 0.45, -0.55, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.fillRect(-0.06, -0.3, 0.12, 2.1);
+  } else if (scene === 'harbor') {
+    for (let y = -1; y <= 1; y++) {
+      ctx.beginPath();
+      ctx.moveTo(-2, y);
+      ctx.bezierCurveTo(-0.6, y - 0.7, 0.6, y + 0.7, 2, y);
+      ctx.stroke();
+    }
+  } else if (scene === 'relay') {
+    for (const radius of [0.8, 1.4, 2]) {
+      ctx.beginPath();
+      ctx.arc(0, 0, radius, Math.PI * 1.15, Math.PI * 1.85);
+      ctx.stroke();
+    }
+    ctx.fillRect(-0.08, -0.7, 0.16, 2);
+    ctx.fillRect(-0.7, 1.2, 1.4, 0.12);
+  } else if (scene === 'workshop') {
+    ctx.beginPath();
+    ctx.arc(0, 0, 1.6, 0, Math.PI * 2);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(0, 0);
+    ctx.lineTo(0.9, -0.8);
+    ctx.stroke();
+    ctx.fillRect(-0.2, -0.2, 0.4, 0.4);
+  } else if (scene === 'freight') {
+    for (const x of [-1, 0, 1]) {
+      ctx.beginPath();
+      ctx.moveTo(x - 0.4, -0.9);
+      ctx.lineTo(x + 0.4, 0);
+      ctx.lineTo(x - 0.4, 0.9);
+      ctx.stroke();
+    }
+  } else {
+    for (const n of [0, 0.6, 1.2]) {
+      ctx.beginPath();
+      ctx.moveTo(-2 + n, 1.4 - n);
+      ctx.lineTo(1.7, 1.4 - n);
+      ctx.lineTo(1.7, -1.4);
+      ctx.stroke();
+    }
+  }
+  ctx.restore();
 }
 
 /** Static illumination stays beneath the grid, walls and actors. It supplies
@@ -452,80 +573,13 @@ export function drawClassicLivingWall(
   ctx.beginPath();
   ctx.rect(0, 0, 28, 28);
   ctx.clip();
-  if (structure) {
-    ctx.translate((structure.x - wall.x) * 28, (structure.y - wall.y) * 28);
-    ctx.scale(structure.width, structure.height);
-  }
-  if (scene === 'orchard') {
-    rect(ctx, '#425a49', 5, 5, 18, 18);
-    rect(ctx, '#77917a', 7, 7, 6, 14);
-    rect(ctx, '#8da189', 15, 7, 6, 14);
-    rect(ctx, '#c3b47f', 5, 13, 18, 2);
-  } else if (scene === 'freight') {
-    for (let at = 5; at < 24; at += 5) {
-      rect(ctx, '#7b4036', at, 4, 2, 20);
-      rect(ctx, '#d89872', at + 2, 4, 1, 20);
-    }
-    if (bottom) rect(ctx, '#ead0a0', 7, 20, 11, 3);
-  } else if (scene === 'workshop') {
-    rect(ctx, '#4b5550', 4, 6, 20, 16);
-    rect(ctx, '#c58a5a', 7, 4, 14, 20);
-    rect(ctx, '#e7b47a', 8, 6, 2, 16);
-    rect(ctx, '#547e78', 4, 11, 20, 5);
-    rect(ctx, '#a1c5af', 5, 11, 18, 1);
-  } else if (scene === 'relay') {
-    rect(ctx, '#526375', 5, 5, 18, 18);
-    rect(ctx, '#c3c4ae', 7, 7, 14, 8);
-    for (let at = 8; at < 22; at += 4) rect(ctx, '#384451', at, 18, 2, 4);
-    rect(ctx, '#d7a961', 19, 5, 4, 5);
-  } else if (scene === 'harbor') {
-    rect(ctx, '#467970', 5, 5, 18, 18);
-    rect(ctx, '#a2c9b3', 8, 7, 12, 3);
-    for (let at = 12; at < 22; at += 4) rect(ctx, '#244b4c', 8, at, 12, 2);
-    rect(ctx, '#d68d75', 4, 4, 4, 4);
-  } else {
-    rect(ctx, '#454f51', 4, 12, 20, 2);
-    rect(ctx, '#b2b9a5', 4, 5, 20, 2);
-    rect(ctx, '#414e4a', 13, 5, 2, 7);
-    rect(ctx, '#414e4a', 8, 14, 2, 9);
-    rect(ctx, '#758657', 18, 17, 6, 6);
-  }
-  drawStructureDetails(ctx, composition.structure, treatment);
-  if (treatment === 'toybox') {
-    // Enamel face within a timber frame and four oversized recessed fittings.
-    rect(ctx, '#dfc291', 3, 3, 22, 2);
-    rect(ctx, '#674831', 3, 23, 22, 2);
-    for (const [a, b] of [
-      [4, 4],
-      [21, 4],
-      [4, 21],
-      [21, 21],
-    ]) {
-      rect(ctx, '#efd7a4', a, b, 3, 3);
-      rect(ctx, '#745638', a + 1, b + 1, 1, 1);
-    }
-  } else if (treatment === 'atmospheric-ruins') {
-    ctx.globalAlpha = 0.38;
-    rect(ctx, '#34494a', 3, 3, 22, 22);
-    ctx.globalAlpha = 1;
-    for (const [a, b] of [
-      [12, 3],
-      [11, 7],
-      [14, 11],
-      [13, 15],
-    ])
-      rect(ctx, '#283b39', a, b, 2, 5);
-    rect(ctx, '#638258', 3, 18, 5, 6);
-    rect(ctx, '#9aaa6a', 5, 20, 2, 3);
-  } else if (treatment === 'night-arcade') {
-    ctx.globalAlpha = 0.76;
-    rect(ctx, '#172a3b', 3, 3, 22, 22);
-    ctx.globalAlpha = 1;
-    rect(ctx, p.accent, 6, 6, 16, 1);
-    rect(ctx, p.accent, 6, 7, 1, 9);
-    rect(ctx, '#7cbdc9', 16, 15, 6, 2);
-    rect(ctx, '#7cbdc9', 21, 11, 1, 10);
-  }
+  drawClassicStructureModule(ctx, wall, scene, {
+    structure,
+    composition,
+    occupied,
+    treatment,
+    palette: p,
+  });
   ctx.restore();
   const rim = treatment === 'night-arcade' ? p.accent : '#293b38';
   // A continuous rim, rather than a pile of separately outlined tiles.
@@ -534,65 +588,6 @@ export function drawClassicLivingWall(
   if (bottom) rect(ctx, rim, 0, 25, 28, 3);
   if (right) rect(ctx, rim, 26, 0, 2, 28);
   ctx.restore();
-}
-
-function drawStructureDetails(ctx, kind, treatment) {
-  const light = treatment === 'night-arcade' ? '#86ded8' : '#e5c18b';
-  if (kind === 'planter') {
-    rect(ctx, '#644a30', 3, 3, 22, 22);
-    rect(ctx, '#2b4634', 5, 5, 18, 18);
-    for (let y = 7; y < 23; y += 5)
-      for (let x = 7; x < 23; x += 5) {
-        rect(ctx, '#74925b', x, y, 3, 3);
-        rect(ctx, '#e3b655', x, y, 1, 1);
-      }
-  } else if (kind === 'irrigator' || kind === 'coolant') {
-    rect(ctx, '#294e50', 4, 4, 20, 20);
-    for (let y = 6; y < 24; y += 6) {
-      rect(ctx, '#7aaba5', 5, y, 18, 3);
-      rect(ctx, '#c8ddd0', 5, y, 18, 1);
-    }
-    rect(ctx, light, 4, 12, 5, 5);
-  } else if (kind === 'crane') {
-    rect(ctx, '#233841', 4, 4, 20, 20);
-    rect(ctx, '#b98c4b', 5, 5, 18, 4);
-    rect(ctx, '#b98c4b', 5, 5, 4, 18);
-    rect(ctx, '#4f6269', 12, 12, 11, 11);
-    for (let n = 0; n < 4; n++) rect(ctx, light, 13 + n * 2, 13 + n * 2, 2, 2);
-  } else if (kind === 'antenna') {
-    rect(ctx, '#263c54', 4, 4, 20, 20);
-    rect(ctx, '#b6c4b8', 12, 4, 4, 20);
-    rect(ctx, '#a0b6b6', 4, 12, 20, 4);
-    rect(ctx, light, 9, 9, 10, 10);
-    rect(ctx, '#475866', 11, 11, 6, 6);
-  } else if (kind === 'shelter') {
-    rect(ctx, '#d3d1b9', 4, 4, 20, 20);
-    rect(ctx, '#718491', 6, 6, 16, 10);
-    rect(ctx, '#293b52', 8, 8, 12, 6);
-    rect(ctx, light, 11, 19, 6, 4);
-  } else if (kind === 'floodgate') {
-    rect(ctx, '#284e50', 4, 4, 20, 20);
-    for (let x = 6; x < 24; x += 4) rect(ctx, '#adc2ae', x, 5, 2, 18);
-    rect(ctx, '#cc957d', 4, 12, 20, 3);
-  } else if (kind === 'terrace') {
-    rect(ctx, '#bbc1a6', 3, 3, 22, 22);
-    rect(ctx, '#586758', 5, 5, 18, 18);
-    rect(ctx, '#9fa991', 7, 7, 14, 14);
-    rect(ctx, '#43534b', 9, 9, 10, 10);
-    rect(ctx, '#839564', 11, 11, 6, 6);
-  }
-  if (treatment === 'toybox') {
-    // Painted shaped corner blocks, not just a colour transform.
-    for (const [x, y] of [
-      [2, 2],
-      [20, 2],
-      [2, 20],
-      [20, 20],
-    ]) {
-      rect(ctx, '#d99757', x, y, 6, 6);
-      rect(ctx, '#fff0bc', x + 1, y + 1, 4, 1);
-    }
-  }
 }
 
 function rect(ctx, color, x, y, w, h) {
@@ -651,7 +646,7 @@ export function classicSceneBackdrop(
   if (!document || typeof document !== 'object') return null;
   const world = resolveClassicWorld({ boardScene: scene, boardStyle: treatment });
   const selected = world.scene;
-  treatment = world.treatment;
+  treatment = ['theme', 'retro'].includes(world.treatment) ? 'living-circuit' : world.treatment;
   const key = `${selected}/${treatment}`;
   if (!backdrops.has(document)) backdrops.set(document, new Map());
   const cache = backdrops.get(document);

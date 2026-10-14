@@ -9,7 +9,7 @@ import {
 } from './classic-catalogue-operations-a.mjs';
 /** Cosmetic composition only. Never part of a level recipe, random stream or proof.
  * Shared material/actor providers remain the owners of artwork bytes. */
-export const CLASSIC_WORLD_REVISION = 'snake-worlds-v2';
+export const CLASSIC_WORLD_REVISION = 'snake-worlds-v3';
 export const CLASSIC_BOARD_STYLES = Object.freeze([
   'theme',
   'retro',
@@ -96,10 +96,13 @@ export function resolveClassicWorld({
   };
   const explicitScene = boardScene !== 'auto' && scene !== authored?.scene;
   return Object.freeze({
-    version: 1,
+    version: 2,
+    structureRevision: 'modular-dioramas-v1',
+    actorSet: 'snake-tactical-silhouettes-v1',
+    reactions: 'material-consequences-v1',
     revision: CLASSIC_WORLD_REVISION,
     scene,
-    treatment: isClassicWorldStyle(boardStyle) ? boardStyle : 'living-circuit',
+    treatment: CLASSIC_BOARD_STYLES.includes(boardStyle) ? boardStyle : 'living-circuit',
     composition: authored?.mood ?? 'open-court',
     zoning: authored?.zoning ?? 'court',
     ...(CLASSIC_MISSION_COMPOSITIONS[levelId] ?? {}),

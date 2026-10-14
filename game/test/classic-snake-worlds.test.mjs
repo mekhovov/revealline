@@ -201,10 +201,9 @@ test('authored morning, late and night light uses distinct quiet floor treatment
   assert.equal(bands(late, '#e5a078').length, 8);
   assert.equal(bands(morning, '#ffe9b8')[0][2], 0, 'morning enters from the starting edge');
   assert.ok(bands(late, '#e5a078')[0][2] > 0, 'late light enters from the opposite edge');
-  assert.equal(night.filter(([op]) => op === 'ellipse').length, 4);
+  const lightEllipses = (calls) =>
+    calls.filter(([op, x, y]) => op === 'ellipse' && x === 6 * 28 && y === 7 * 28);
+  assert.equal(lightEllipses(night).length, 4);
   assert.ok(night.some(([op, x, y]) => op === 'ellipse' && x === 6 * 28 && y === 7 * 28));
-  assert.deepEqual(
-    draws(undefined).filter(([op]) => op === 'ellipse'),
-    [],
-  );
+  assert.deepEqual(lightEllipses(draws(undefined)), []);
 });

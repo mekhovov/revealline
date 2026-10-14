@@ -810,6 +810,13 @@ test('paused receiver refreshes when asynchronous wall artwork becomes available
     sampled + 2,
     'asset arrival refreshes both terrain and live receiver',
   );
+  assert.equal(
+    receiver.calls.filter(([method, image]) => method === 'drawImage' && image === wall).length,
+    run.level.walls.length,
+    'unlabelled creator images replace procedural wall art when they arrive',
+  );
+  drawClassicBoard(receiver.canvas, run, { presentation, reduced: true });
+  assert.equal(receiver.sampled, sampled + 2, 'settled creator artwork remains cached');
 });
 
 test('leaving an explicit original-comparison fixture cannot reuse its enemy-bearing receiver', () => {
