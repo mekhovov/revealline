@@ -3,6 +3,7 @@ import {
   validateFrameTransaction,
   adoptVerifiedFrame,
   readFramePose,
+  prepareVerifiedFrame,
 } from './frame-transaction.mjs';
 /** Exact-source scenery preparation coordinator. Detached authoring resources, never live flight. */
 import { validateRegionManifest, createRegionPlanner } from './region-manifest.mjs';
@@ -183,6 +184,8 @@ export function createVerifiedSceneryWindow(
         surfaceStyle,
       });
       current(token);
+      if (frameTransaction?.prepare)
+        await prepareVerifiedFrame(frameTransaction, staged.group, () => current(token));
       supportPose = readFramePose(frameTransaction, supportPose, planner);
       current(token);
       if (supportPose) {

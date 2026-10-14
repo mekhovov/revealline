@@ -102,6 +102,51 @@ for (const [kind, create] of [
   ["scenery", createVerifiedSceneryWindow],
 ]) {
   await check(
+    `${kind}: renderer preparation precedes adoption and cancellation retains old queries`,
+    async () => {
+      const f = fixture(kind),
+        window = create(f.manifest, { ...f.source, retainCommitted: true });
+      let release, entered, candidate;
+      const started = new Promise((resolve) => {
+        entered = resolve;
+      });
+      const delayed = new Promise((resolve) => {
+        release = resolve;
+      });
+      try {
+        await window.transition(point(0));
+        const old = window.group;
+        const transition = window.transition(point(1), null, {
+          async prepare({ group }) {
+            candidate = group;
+            entered();
+            await delayed;
+          },
+          commit() {
+            assert.fail("cancelled preparation committed");
+          },
+          rollback() {},
+        });
+        await started;
+        assert.equal(candidate.parent, null);
+        assert.equal(window.group, old);
+        assert.equal(window.support(point(0), 4000000).status, `${kind}-hit`);
+        window.cancel();
+        release();
+        await assert.rejects(transition, { name: "AbortError" });
+        assert.equal(window.group, old);
+        assert.equal(candidate.children.length, 0);
+        assert.equal(
+          window.snapshot().reservedGeometryBytes,
+          window.snapshot().geometryBytes,
+        );
+      } finally {
+        release?.();
+        await window.dispose();
+      }
+    },
+  );
+  await check(
     `${kind}: failed adoption retains old owner and visible frame; retry replaces once`,
     async () => {
       const f = fixture(kind),

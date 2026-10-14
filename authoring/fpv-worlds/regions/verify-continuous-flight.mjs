@@ -366,4 +366,186 @@ await check(
     assert.equal(window.snapshot().reservedGeometryBytes, 0);
   },
 );
+await check(
+  'detached asynchronous preparation keeps old queries live and validates the final pose',
+  async () => {
+    const f = fixture(),
+      window = create(f, { retainCommitted: true });
+    let release,
+      entered,
+      candidate,
+      committed = 0,
+      pose = point(1);
+    const started = new Promise((resolve) => {
+      entered = resolve;
+    });
+    const delayed = new Promise((resolve) => {
+      release = resolve;
+    });
+    try {
+      await window.transition(point(0));
+      const old = window.group,
+        before = window.snapshot().provenance;
+      const preparing = window.transition(point(1), null, {
+        async prepare({ group }) {
+          candidate = group;
+          assert.equal(group.parent, null);
+          assert.equal(group.children.length, 2);
+          entered();
+          await delayed;
+        },
+        readPose: () => ({ positionMm: pose, radiusMm: 220 }),
+        commit() {
+          committed++;
+        },
+        rollback() {},
+      });
+      await started;
+      assert.equal(window.group, old);
+      assert.equal(window.snapshot().terrainReady, true);
+      assert.equal(window.support(point(0), 4000000).status, 'terrain-hit');
+      pose = point(5);
+      release();
+      await assert.rejects(preparing, /support required body pose/);
+      assert.equal(committed, 0);
+      assert.deepEqual(window.snapshot().provenance, before);
+      assert.equal(candidate.children.length, 0);
+      assert.equal(window.snapshot().reservedGeometryBytes, window.snapshot().geometryBytes);
+    } finally {
+      release?.();
+      await window.dispose();
+    }
+  },
+);
+await check('failed renderer preparation cannot publish a verified mixed candidate', async () => {
+  const f = fixture(),
+    window = create(f, { retainCommitted: true });
+  try {
+    await window.transition(point(0));
+    const old = window.group;
+    await assert.rejects(
+      window.transition(point(1), null, {
+        async prepare() {
+          throw new Error('shader rejected');
+        },
+        commit() {
+          assert.fail('failed candidate adopted');
+        },
+        rollback() {},
+      }),
+      /shader rejected/,
+    );
+    assert.equal(window.group, old);
+    assert.equal(window.snapshot().terrainReady, true);
+    assert.equal(window.snapshot().reservedGeometryBytes, window.snapshot().geometryBytes);
+    await assert.rejects(
+      window.transition(point(1), null, {
+        async prepare() {
+          return { replacement: true };
+        },
+        commit() {
+          assert.fail('replacement adopted');
+        },
+        rollback() {},
+      }),
+      /must not replace/,
+    );
+  } finally {
+    await window.dispose();
+  }
+});
+await check(
+  'pause aborts background graphics preparation without losing the active frame',
+  async () => {
+    const f = fixture();
+    let hold = false,
+      entered = false,
+      aborted = false;
+    const flight = createRegionalFlightPrototype({
+      ...configuration(f),
+      prepareFrame: async (group, { signal }) => {
+        assert.equal(group.parent, null);
+        if (!hold) return;
+        entered = true;
+        await new Promise((resolve, reject) =>
+          signal.addEventListener(
+            'abort',
+            () => {
+              aborted = true;
+              reject(signal.reason);
+            },
+            { once: true },
+          ),
+        );
+      },
+    });
+    try {
+      await flight.prepare();
+      hold = true;
+      assert(flight.arm());
+      for (let i = 0; i < 1000 && !entered; i++) {
+        assert.equal(
+          flight.step({ ...neutral, throttle: i < 100 ? 0.9 : 0.55, roll: i < 100 ? 0 : 0.65 })
+            .status,
+          'active',
+        );
+        await turn();
+      }
+      assert(entered);
+      for (let i = 0; i < 20; i++) {
+        assert.equal(flight.step({ ...neutral, throttle: 0.55, roll: 0.65 }).status, 'active');
+        await turn();
+      }
+      const before = flight.snapshot(),
+        root = [...flight.root.children];
+      flight.pause();
+      for (let i = 0; i < 10; i++) await turn();
+      assert(aborted);
+      assert.equal(flight.snapshot().status, 'paused');
+      assert.deepEqual(body(flight.snapshot()), body(before));
+      assert.deepEqual(flight.root.children, root);
+      assert.equal(
+        flight.snapshot().terrain.reservedGeometryBytes,
+        flight.snapshot().terrain.geometryBytes,
+      );
+    } finally {
+      await flight.dispose();
+    }
+  },
+);
+await check(
+  'cancel and disposal abort initial preparation and release its staged resources',
+  async () => {
+    for (const action of ['cancelPreparation', 'dispose']) {
+      const f = fixture();
+      let entered, signal;
+      const started = new Promise((resolve) => {
+        entered = resolve;
+      });
+      const flight = createRegionalFlightPrototype({
+        ...configuration(f),
+        prepareFrame: async (group, options) => {
+          signal = options.signal;
+          entered();
+          await new Promise((resolve, reject) =>
+            signal.addEventListener('abort', () => reject(signal.reason), { once: true }),
+          );
+        },
+      });
+      const preparing = flight.prepare();
+      const rejected = assert.rejects(preparing, { name: 'AbortError' });
+      await started;
+      await flight[action]();
+      await rejected;
+      assert(signal.aborted);
+      if (action !== 'dispose') {
+        assert.equal(flight.snapshot().ticks, 0);
+        assert.equal(flight.snapshot().status, 'paused');
+        assert.equal(flight.arm(), false);
+        await flight.dispose();
+      }
+      assert.equal(flight.root.children.length, 0);
+    }
+  },
+);
 console.log(`PASS ${checks}/${checks} continuous regional checks`);
