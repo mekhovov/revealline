@@ -4,6 +4,7 @@ import { Document } from './helpers/couch-dom.mjs';
 import { mountModePlayShell } from '../ui/mode-play-shell.mjs';
 import { attachModalNavigation } from '../ui/modal-navigation.mjs';
 import { attachControllerNavigation } from '../ui/controller-navigation.mjs';
+import { createOverflightOperationCards } from '../overflight/operation-view.mjs';
 import { renderModeChoices } from '../ui/mode-choice-view.mjs';
 
 function fixture(options = {}) {
@@ -39,6 +40,7 @@ function fixture(options = {}) {
     );
     renderModeChoices({ root: slots.modes, current: options.currentMode ?? 'snake', actions });
   }
+  if (options.homeChoices) slots.homeChoices = options.homeChoices(document);
   const calls = [];
   const actions = Object.fromEntries(
     ['pause', 'start', 'resume', 'retry', 'continue', 'toggleSound'].map((name) => [
@@ -555,13 +557,26 @@ for (const currentMode of ['solo', 'team', 'versus', 'snake', 'overflight', 'sim
     more.focus();
     navigation.handle({ confirm: true });
     assert.equal(more.getAttribute('aria-expanded'), 'true');
-    assert.equal(h.document.activeElement.dataset.gameMode, 'snake');
+    assert.equal(
+      h.document.activeElement.dataset.gameMode,
+      ['snake', 'overflight', 'simulator'].includes(currentMode) ? currentMode : 'snake',
+    );
+    home.querySelector('[data-game-mode="snake"]').focus();
     for (const name of ['overflight', 'simulator']) {
       navigation.handle({ direction: 'right' });
       assert.equal(h.document.activeElement.dataset.gameMode, name);
     }
     navigation.handle({ direction: 'right' });
     assert.equal(h.document.activeElement, more);
+    navigation.handle({ direction: 'down' });
+    assert.equal(h.document.activeElement, h.shell.elements.buttons.primary);
+    more.focus();
+    navigation.handle({ direction: 'up' });
+    assert.equal(
+      h.document.activeElement.dataset.gameMode,
+      ['snake', 'overflight', 'simulator'].includes(currentMode) ? currentMode : 'snake',
+    );
+    more.focus();
     navigation.handle({ direction: 'right' });
     assert.equal(h.document.activeElement.dataset.gameMode, 'solo');
     navigation.handle({ back: true });
@@ -611,6 +626,147 @@ test('unsupported fullscreen is absent on home and pause and the direction cycle
   buttons.sound.focus();
   navigation.handle({ direction: 'down' });
   assert.equal(h.document.activeElement, home.querySelector('[aria-current="page"]'));
+  navigation.destroy();
+  h.shell.dispose();
+});
+
+for (const current of ['overflight', 'overflight-hunt']) {
+  for (const input of ['keyboard', 'controller']) {
+    test(`${current}: ${input} reaches both operations and every home action without starting play`, () => {
+      let chosen = 0;
+      const h = fixture({
+        withModes: true,
+        currentMode: 'overflight',
+        actions: { fullscreen() {} },
+        homeChoices(document) {
+          return createOverflightOperationCards({
+            document,
+            current,
+            text: (key) => key,
+            destination: (path) => path + '?lang=uk',
+            onSelect: () => chosen++,
+            onLeave() {},
+          }).root;
+        },
+      });
+      const home = h.shell.elements.home;
+      const navigation = attachControllerNavigation({
+        document: h.document,
+        keyboard: true,
+        getScope: () => 'home',
+        getRoot: () => home,
+        onBack: () => h.shell.back(),
+      });
+      const move = (direction) => {
+        if (input === 'keyboard')
+          h.document.activeElement.emit('keydown', {
+            key: `Arrow${direction[0].toUpperCase()}${direction.slice(1)}`,
+          });
+        else navigation.handle({ direction });
+      };
+      const selectedMode = home.querySelector('[aria-current="page"]');
+      const selectedOperation = home.querySelector(`#operation-${current}`);
+      assert.equal(
+        home.querySelector('.landing-commands .mode-play-home-choices')?.contains(selectedOperation),
+        true,
+        'Survival operation choices remain in the responsive command column.',
+      );
+      const other = home.querySelector(
+        `#operation-${current === 'overflight' ? 'overflight-hunt' : 'overflight'}`,
+      );
+      selectedMode.focus();
+      const cycle = [
+        selectedOperation,
+        ...['primary', 'missions', 'settings', 'sound', 'fullscreen'].map(
+          (id) => h.shell.elements.buttons[id],
+        ),
+        selectedMode,
+      ];
+      for (const expected of cycle) {
+        move('down');
+        assert.equal(h.document.activeElement, expected);
+      }
+      for (const expected of cycle.slice(0, -1).reverse().concat(selectedMode)) {
+        move('up');
+        assert.equal(h.document.activeElement, expected);
+      }
+      move('down');
+      move('right');
+      assert.equal(h.document.activeElement, other);
+      move('left');
+      assert.equal(h.document.activeElement, selectedOperation);
+      assert.equal(chosen, 0);
+      navigation.handle({ confirm: true });
+      assert.equal(chosen, 1);
+      assert.deepEqual(h.calls, [], 'Navigation and choosing missions do not launch play.');
+      assert.equal(h.shell.elements.dialogs.settings.contains(selectedOperation), false);
+      assert.equal(
+        other.getAttribute('href'),
+        (current === 'overflight' ? './raid.html' : './play.html') + '?lang=uk',
+      );
+      navigation.destroy();
+      h.shell.dispose();
+    });
+  }
+}
+
+for (const currentMode of ['solo', 'team', 'versus', 'snake', 'overflight', 'simulator']) {
+  test(`${currentMode}: keyboard follows the home loop in both directions after disclosure changes`, () => {
+    const h = fixture({ withModes: true, currentMode, actions: { fullscreen() {} } });
+    const home = h.shell.elements.home;
+    const navigation = attachControllerNavigation({
+      document: h.document,
+      keyboard: true,
+      getScope: () => 'home',
+      getRoot: () => home,
+      onBack: () => h.shell.back(),
+    });
+    const selected = home.querySelector('[aria-current="page"]');
+    const more = home.querySelector('[data-mode-more]');
+    for (const expanded of [true, false]) {
+      if ((more.getAttribute('aria-expanded') === 'true') !== expanded) more.click();
+      const anchor = selected.hidden ? more : selected;
+      anchor.focus();
+      const steps = ['primary', 'missions', 'settings', 'sound', 'fullscreen'].map(
+        (name) => h.shell.elements.buttons[name],
+      );
+      for (const expected of [...steps, anchor]) {
+        h.document.activeElement.emit('keydown', { key: 'ArrowDown' });
+        assert.equal(h.document.activeElement.id, expected.id);
+      }
+      for (const expected of [...steps.toReversed(), anchor]) {
+        h.document.activeElement.emit('keydown', { key: 'ArrowUp' });
+        assert.equal(h.document.activeElement.id, expected.id);
+      }
+      assert.deepEqual(h.calls, []);
+    }
+    navigation.destroy();
+    h.shell.dispose();
+  });
+}
+
+test('completed runs keep the visible Results home action in the directional path', () => {
+  const h = fixture({ withModes: true });
+  const navigation = attachControllerNavigation({
+    document: h.document,
+    keyboard: true,
+    getScope: () => 'home',
+    getRoot: () => h.shell.elements.home,
+  });
+  h.shell.update({ phase: 'results' });
+  const { primary, missions, 'home-results': results } = h.shell.elements.buttons;
+  assert.equal(results.hidden, false);
+  primary.focus();
+  navigation.handle({ direction: 'down' });
+  assert.equal(h.document.activeElement, results);
+  navigation.handle({ direction: 'down' });
+  assert.equal(h.document.activeElement, missions);
+  h.document.activeElement.emit('keydown', { key: 'ArrowUp' });
+  assert.equal(h.document.activeElement, results);
+  h.shell.update({ phase: 'ready' });
+  primary.focus();
+  navigation.handle({ direction: 'down' });
+  assert.equal(h.document.activeElement, missions, 'Hidden Results must be skipped.');
   navigation.destroy();
   h.shell.dispose();
 });
