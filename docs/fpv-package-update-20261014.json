@@ -124,13 +124,54 @@
       "pointers": "Both active and previous references intact",
       "latency": "Native hash verification took several seconds; no exact duration measured",
       "interpretation": "No lost cache/data observed. Link disappearance is not evidence of package loss."
+    },
+    {
+      "phase": "corrected-launcher-mixed-harness",
+      "reportedBy": "parent /root through native CUA",
+      "launcherSourceRevision": "4c7813e8e",
+      "launcherSourceSha256": "6f5a76bda079f54c46ea6df4a13130002654ef46b4840e02aecbd08bf3889584",
+      "reviewScriptSha256": "13a6cabbea739a7584d9cb2476e0980948f5eabb040295c2d4e872346695230a",
+      "reviewHtmlSha256": "b584911388dcaf5cf729cb67e8e1268216b410ed7660914a951c827a44353804",
+      "beforeCheck": "Prepared and previous links visible",
+      "duringCheck": "Check disabled; Checking prepared versions displayed; both launch links retained",
+      "afterCheck": "Ready offline; both launch links retained",
+      "rollback": "Open previous practice successfully opened actual v0.142.4 player",
+      "screenshotName": "update-stable-recovery-controls.jpg",
+      "immutablePlayerMembersRecheckedUnchanged": true,
+      "limitation": "Mixed source launcher with frozen players; not an admitted corrected package"
+    },
+    {
+      "phase": "upgraded-origin-unavailable-reopen",
+      "reportedBy": "parent /root through native CUA",
+      "origin": "http://127.0.0.1:9016",
+      "serverStoppedPid": 11295,
+      "connectionRefusedBeforeReopen": true,
+      "observations": [
+        {
+          "version": "v0.151.1",
+          "navigation": "Known new URL reopened cached home page",
+          "continue": "Restored Reservoir at 57.2 seconds, retained actual pose, paused, explicit Arm required",
+          "rendered": true,
+          "screenshotName": "upgraded-origin-unavailable.jpg"
+        },
+        {
+          "version": "v0.142.4",
+          "navigation": "Old URL reload reopened cached home page",
+          "continue": "Restored same Reservoir at 57.2 seconds, retained actual pose, paused, explicit Arm required",
+          "rendered": true,
+          "screenshotName": "previous-origin-unavailable.jpg"
+        }
+      ],
+      "serverRestored": true,
+      "limitation": "Own HTTP origin unavailable only; not network-wide offline, browser restart or storage eviction"
     }
   ],
   "completed": false,
   "limitations": [
-    "Native update and old-version data survival observed; launcher Previous disappearance under investigation",
+    "Corrected mixed-source launcher verified; fresh corrected-package admission and browser qualification pending",
     "Candidates remain non-public; no publication admission override",
     "No network-wide offline, browser restart, real quota/eviction or target-device qualification",
     "Frozen 9012 installation untouched"
-  ]
+  ],
+  "mixedLauncherQualificationPassed": true
 }
