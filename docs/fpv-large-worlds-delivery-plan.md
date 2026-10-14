@@ -1,6 +1,6 @@
 # Large authored FPV regions — active delivery plan
 
-Reviewed 14 October 2026; regional input, scenery and presentation continuation.
+Reviewed 14 October 2026; atomic regional ownership and native recovery continuation.
 The user selected default catalogue visibility, download on Play, optional offline
 storage, and authored regions first. Generation assists authoring; endless runtime
 terrain is deferred. Twelve proposed regions are design targets, not shipped maps.
@@ -34,8 +34,11 @@ terrain is deferred. Twelve proposed regions are design targets, not shipped map
   checks and seven regional scenarios pass. See [the receipt](fpv-shared-air-transition.md).
   Shared production input/lifecycle (#1230), verified scenery/render-collision windows
   (#1231), and shared production camera/drone presentation (#1234) are merged. The
-  appearance correction (#1227) is merged. Urban scenery is now visible and queried
-  from the same exact geometry; an existing-authority flight adapter is underway.
+  appearance correction (#1227) is merged. Urban flight through the same verified
+  visible/collision geometry merged in #1238; five commanded routes cover doors,
+  walls, roofs, a shaft and a cross-cell road. Atomic geometry/body/camera adoption
+  and rollback merged in #1240. Combined terrain/scenery ownership is the next
+  prerequisite; single-profile support does not yet prove a coherent mixed world.
   Next: integrate the actual player lifecycle and production collision contracts,
   with atomic origin migration for every live world owner. Regional scenery
   admission, recovery and sustained qualification remain separate requirements.
@@ -49,8 +52,12 @@ terrain is deferred. Twelve proposed regions are design targets, not shipped map
   71 original solids, five licensed props and 78 matching exported collision surfaces.
   Fourteen opening/solid sweeps pass; materials are still a blockout. Canyon surface
   study #1235 adds optional rock/sand shading and three detail tiers, with exact
-  source/geometry/collision parity. It is a foundation, not finished art; coarse slopes,
-  seam refinement, landmarks and sustained rendering measurements remain. Neither is admitted
+  source/geometry/collision parity. Shared resident seam normals merged in #1237
+  without changing source heights or collision. Authoring spawn, heading and terrain
+  appearance controls are published in #1241; all three detail choices loaded in the
+  native browser and restarts remained disarmed. It is a foundation, not finished
+  art; coarse silhouettes, unloaded outer borders, landmark composition and sustained
+  rendering measurements remain. Neither is admitted
   to the default catalogue before collision, flight and package qualification.
 - **P3:** Tropical Archipelago, Industrial Railway Valley, Coaster Park, Hillside Town;
   then Alpine Highlands, Desert Expedition, Canal City; then Lunar Basin, Castle
@@ -60,12 +67,46 @@ terrain is deferred. Twelve proposed regions are design targets, not shipped map
   #1228 verified all 20 exact published packs (15,605,575 bytes), compile/export and
   modeled storage boundaries. #1232 repaired an existing stale navigation fixture.
   Native v0.142.4 → v0.151.1 preparation preserved Reservoir r16 and both worker
-  caches; the old player still reads the same installed digest. A launcher refresh
-  temporarily hides recovery actions during validation; repair/verification is open.
+  caches; the old player still reads the same installed digest. Recovery-action
+  retention merged in #1236; the corrected launcher was verified in a mixed-source
+  review harness. Both frozen players reopened the same paused Reservoir flight
+  with their origin server stopped (#1239). A separate update fixture retained the
+  old player and installed world after a 30-second transfer stall and cancellation.
+  Slow worker verification exposed a separate false repair warning; a tri-state
+  readiness correction is published in #1242. See [the native receipt](fpv-package-update-20261014.md).
   Direct mission Start intentionally begins flight after existing readiness gates;
-  catalogue download/Play and recovery remain distinct launch paths. Full offline,
-  interruption, quota/eviction, restart and device qualification remain open.
+  catalogue download/Play and recovery remain distinct launch paths. Fresh corrected
+  package admission, network-wide offline, actual quota/eviction, full browser restart
+  and device qualification remain open; the bounded cancellation observation does
+  not close every interrupted-install scenario.
   D6 extra unit coverage follows; each preceding increment retains functional checks.
+
+## Next delivery order
+
+1. **P1 — Finish one coherent regional owner.** Stage terrain and scenery together,
+   validate combined budgets and collision support, then adopt both in one frame.
+   Any failure retains the complete previous region and pauses flight. Integrate
+   the production player lifecycle only after this boundary is verified. This avoids
+   visible buildings, collision or the drone origin disagreeing during streaming.
+2. **P4 — Finish honest recovery feedback in parallel.** Distinguish a failed hash
+   check from a verification that could not finish. Preserve usable old installations
+   during updates, then qualify freshly built corrected packages. Do not recommend
+   deleting a player's usable copy merely because a response timed out.
+3. **P2 — Compose the representative quality slice in parallel.** Combine authored
+   relief and reachable architecture, refine materials and landmarks, and compare
+   flight openings across quality tiers. The current Canyon and Urban studies prove
+   source/collision preparation, not the final visual quality standard.
+4. **P3 — Expand one qualified region at a time.** Reuse the accepted ownership and
+   art contracts for Tropical, Railway, Coaster and Hillside before later batches.
+   Quantity must not outrun actual playable, reachable and recoverable content.
+5. **P4 / D6 — Close release and sustained qualification.** Fresh packages, long
+   flights, responsive layouts, offline failure recovery and named-device/controller
+   observations precede a complete claim. Additional unit coverage follows the
+   agreed functional-first order.
+
+The internal drive remains below the 3 GiB heavy-build floor. Source, unfinished
+work, frozen candidates and player storage are preserved; heavy preparation stays
+on the external volume or cloud. A queued PR does not block independent increments.
 
 Target dimensions: dense regions 4×4 km, natural regions 8×8 km, Desert Expedition
 16×16 km. These targets require verification; they are not present runtime claims.
