@@ -31,6 +31,8 @@ node authoring/fpv-worlds/regions/canyon-badlands/verify-landmarks.mjs /external
 
 The optional inspection page accepts the new pair using `views=canyon`, `ground=canyon` and the existing lighting profile. No promoted runtime modules are changed.
 
+Native browser comparison at 1280 × 800 confirmed softer Gorge ridge teeth with the drainage path retained. The Ridge crown remains grounded and its arch opening clear. Release removes live scenery/collision. This is a bounded relief improvement; periodic horizontal bands and some triangular lighting remain visible.
+
 ## Still unfinished
 
 The periodic terrain bands and broad material treatment are unchanged. Some sharp ridge profiles remain at 4 m resolution. This revision does not establish the final representative art standard, increase world extent, add mission gameplay or qualify player/offline delivery. Canonical material changes must follow the coordinated runtime-module promotion; there is no parallel authoring-only shader fork.
