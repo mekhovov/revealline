@@ -1,6 +1,6 @@
 # Large authored FPV regions — active delivery plan
 
-Reviewed 14 October 2026 against main `595421060c718295611a8441fbe8dba1c3da88e4`.
+Reviewed 14 October 2026; continuation rebased onto main `2abfd20bdee39369b3480ed3013074a8dfac3006`.
 The user selected default catalogue visibility, download on Play, optional offline
 storage, and authored regions first. Generation assists authoring; endless runtime
 terrain is deferred. Twelve proposed regions are design targets, not shipped maps.
@@ -12,10 +12,16 @@ terrain is deferred. Twelve proposed regions are design targets, not shipped map
   setup, radio View, stick comfort and Watch/Try/Repeat are merged in stack #1180.
   Integrated recovery/Creator reliability PR #1193 merged. Physical hardware and
   current public deployment acceptance remain separate from implementation.
-- **P0, in progress:** default catalogue discovery, Play/download/disarmed launch,
-  bounded pagination, and exact asset-source intake. This makes existing maps easier
-  to reach and allows more maps without a larger core download.
-- **P1, in progress:** separate regional manifest and bounded residency planning.
+- **P0, implemented with qualification continuing:** default catalogue discovery,
+  Play/download/disarmed launch and bounded pagination merged in #1199. Navigation
+  and Settings-return focus corrections merged in #1206/#1211. Coaster Practice
+  Park content and catalogue admission merged in #1205/#1209, making 20 optional
+  worlds. It is a bounded 160×160 m practice layout, not the large Coaster region.
+  The catalogue/dock layout correction is verified separately. Exact source intake
+  continues per asset, with packaged offline and public launch qualification open.
+- **P1, in progress:** regional manifest/residency planning (#1197), transactional
+  verified source windows (#1200), and detached terrain/Three/Rapier preparation
+  (#1207) are merged. Verified-source-to-terrain binding is the next increment.
   Existing World coordinates stop at ±100 m. Real regional flight additionally
   needs terrain/collision streaming, origin shifting, render preparation and recovery.
   Authoring validation alone does not deliver huge playable maps.
