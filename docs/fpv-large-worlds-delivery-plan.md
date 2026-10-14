@@ -20,20 +20,25 @@ terrain is deferred. Twelve proposed regions are design targets, not shipped map
   The catalogue/dock layout correction merged in #1214. An unchanged cloud candidate
   passed cached startup and installed Coaster launch with its origin server stopped;
   see [the bounded evidence](fpv-offline-candidate-20261014.md). Full network-wide
-  offline, device and public launch qualification remain open. Settings completion
-  feedback is the next focused usability correction.
+  offline and device qualification remain open. Public catalogue download and
+  disarmed Coaster launch with all three camera views are now observed. Settings
+  operation feedback and localized failure corrections merged in #1219/#1221.
 - **P1, in progress:** regional manifest/residency planning (#1197), transactional
   verified source windows (#1200), and detached terrain/Three/Rapier preparation
-  (#1207), plus verified-source-to-terrain binding (#1213), are merged. The next
-  increment is an isolated unscored authoring flight prototype with safe cell
+  (#1207), plus verified-source-to-terrain binding (#1213), are merged. The
+  isolated unscored authoring flight prototype merged in #1220 with safe cell
   crossings, origin shifts and paused recovery; it is not default player admission.
+  Next: replace its temporary free-air equations with the existing shared production
+  transition, preserving historical replay/proof outcomes, then integrate player lifecycle.
   Existing World coordinates stop at ±100 m. Real regional flight additionally
   needs terrain/collision streaming, origin shifting, render preparation and recovery.
   Authoring validation alone does not deliver huge playable maps.
 - **P2:** Canyon Badlands preparation merged in #1216: a 768×768 m representative,
   36 matching render/collision cells, six districts, twelve landmarks and three
   corridor studies. Materials/scenery and playable integration remain unfinished.
-  Urban Bando architecture preparation proceeds independently. Neither is admitted
+  Urban Bando preparation merged in #1222: a 384×384 m architecture study with
+  71 original solids, five licensed props and 78 matching exported collision surfaces.
+  Fourteen opening/solid sweeps pass; materials are still a blockout. Neither is admitted
   to the default catalogue before collision, flight and package qualification.
 - **P3:** Tropical Archipelago, Industrial Railway Valley, Coaster Park, Hillside Town;
   then Alpine Highlands, Desert Expedition, Canal City; then Lunar Basin, Castle
