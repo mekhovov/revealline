@@ -526,6 +526,239 @@ export function mountFlightSetup({
   };
 }
 
+/** Shared, optional display preferences. No input, physics or scoring ownership. */
+export function mountFlightComfort({
+  document: doc,
+  window: win,
+  panels,
+  viewport,
+  fov,
+  tilt,
+  host,
+  locale = () => 'en',
+  canChange = () => true,
+  comparison,
+}) {
+  const storageKey = 'revealline.fpv.flight-comfort.v1';
+  const cameraKey = `${storageKey}.${host}.camera`;
+  const read = (key) => {
+    try {
+      return JSON.parse(win.localStorage?.getItem(key) ?? 'null');
+    } catch {
+      return null;
+    }
+  };
+  const save = (key, value) => {
+    try {
+      win.localStorage?.setItem(key, JSON.stringify(value));
+    } catch {
+      /* Cosmetic preferences remain usable when storage is unavailable. */
+    }
+  };
+  const saved = read(storageKey);
+  const preferences = {
+    size: ['auto', 'compact', 'large'].includes(saved?.size) ? saved.size : 'auto',
+    opacity: ['quiet', 'balanced', 'strong'].includes(saved?.opacity) ? saved.opacity : 'balanced',
+  };
+  const roots = [],
+    listeners = [];
+  const listen = (node, event, callback) => {
+    node.addEventListener(event, callback);
+    listeners.push(() => node.removeEventListener(event, callback));
+  };
+  const group = (panel) => {
+    const root = doc.createElement('fieldset');
+    root.className = 'sim-flight-comfort';
+    const title = doc.createElement('legend');
+    root.append(title);
+    panel.append(root);
+    roots.push(root);
+    return { root, title };
+  };
+  const choice = (root, key, values) => {
+    const label = doc.createElement('label');
+    const title = doc.createElement('span');
+    const select = doc.createElement('select');
+    select.dataset.flightComfort = key;
+    for (const value of values) {
+      const option = doc.createElement('option');
+      option.value = value;
+      select.append(option);
+    }
+    label.append(title, select);
+    root.append(label);
+    return { title, select };
+  };
+  const hud = group(panels.accessibility);
+  const size = choice(hud.root, 'size', ['auto', 'compact', 'large']);
+  const opacity = choice(hud.root, 'opacity', ['quiet', 'balanced', 'strong']);
+  const hudHelp = doc.createElement('small');
+  hud.root.append(hudHelp);
+  const camera = group(panels.display);
+  const preset = choice(camera.root, 'camera', ['custom', 'learning', 'all-round', 'racing']);
+  const cameraHelp = doc.createElement('small');
+  camera.root.append(cameraHelp);
+  const presets = { learning: [82, 0], 'all-round': [95, 15], racing: [110, 25] };
+  let updatingCamera = false,
+    disposed = false,
+    previous = '';
+  function applySticks() {
+    viewport.dataset.stickSize = preferences.size;
+    viewport.dataset.stickOpacity = preferences.opacity;
+    size.select.value = preferences.size;
+    opacity.select.value = preferences.opacity;
+  }
+  for (const [key, control] of [
+    ['size', size],
+    ['opacity', opacity],
+  ]) {
+    listen(control.select, 'change', () => {
+      if (!canChange()) return applySticks();
+      preferences[key] = control.select.value;
+      applySticks();
+      save(storageKey, preferences);
+    });
+  }
+  function cameraChanged() {
+    if (updatingCamera) return;
+    // Manual values remain authoritative; presets never silently re-apply.
+    save(cameraKey, { fov: Number(fov.value), tilt: Number(tilt.value) });
+    refresh();
+  }
+  listen(fov, 'input', cameraChanged);
+  listen(tilt, 'input', cameraChanged);
+  listen(fov, 'change', cameraChanged);
+  listen(tilt, 'change', cameraChanged);
+  listen(preset.select, 'change', () => {
+    const values = presets[preset.select.value];
+    if (!canChange() || !values) {
+      previous = '';
+      return refresh();
+    }
+    updatingCamera = true;
+    [fov, tilt].forEach((control, index) => {
+      control.value = String(values[index]);
+      control.dispatchEvent(new win.Event('input', { bubbles: true }));
+      control.dispatchEvent(new win.Event('change', { bubbles: true }));
+    });
+    updatingCamera = false;
+    cameraChanged();
+  });
+  const rememberedCamera = read(cameraKey);
+  if (
+    rememberedCamera &&
+    Number.isFinite(rememberedCamera.fov) &&
+    Number.isFinite(rememberedCamera.tilt)
+  ) {
+    fov.value = String(Math.max(Number(fov.min), Math.min(Number(fov.max), rememberedCamera.fov)));
+    tilt.value = String(
+      Math.max(Number(tilt.min), Math.min(Number(tilt.max), rememberedCamera.tilt)),
+    );
+  }
+  let best;
+  if (comparison) {
+    best = group(comparison.root);
+    best.status = doc.createElement('p');
+    best.button = doc.createElement('button');
+    best.button.type = 'button';
+    best.help = doc.createElement('small');
+    best.root.append(best.status, best.button, best.help);
+    listen(best.button, 'click', () => {
+      if (canChange() && !comparison.button.disabled) comparison.button.click();
+      refresh();
+    });
+  }
+  function refresh() {
+    if (disposed) return;
+    const uk = locale() === 'uk';
+    const enabled = canChange();
+    const selected =
+      Object.keys(presets).find(
+        (key) => presets[key][0] === Number(fov.value) && presets[key][1] === Number(tilt.value),
+      ) ?? 'custom';
+    const status = comparison?.status() ?? '';
+    const key = JSON.stringify([
+      uk,
+      enabled,
+      selected,
+      fov.value,
+      tilt.value,
+      status,
+      comparison?.button.textContent,
+      comparison?.button.disabled,
+      comparison?.button.getAttribute('aria-pressed'),
+    ]);
+    if (key === previous) return;
+    previous = key;
+    hud.title.textContent = uk ? 'Вигляд стіків' : 'Stick appearance';
+    size.title.textContent = uk ? 'Розмір стіків' : 'Stick size';
+    opacity.title.textContent = uk ? 'Виразність стіків' : 'Stick visibility';
+    const names = uk
+      ? {
+          auto: 'Авто · за пристроєм',
+          compact: 'Компактні',
+          large: 'Великі',
+          quiet: 'Тихі',
+          balanced: 'Збалансовані',
+          strong: 'Контрастні',
+          custom: 'Власні',
+          learning: 'Навчання · 82° / 0°',
+          'all-round': 'Універсальний · 95° / 15°',
+          racing: 'Перегони · 110° / 25°',
+        }
+      : {
+          auto: 'Auto · fit device',
+          compact: 'Compact',
+          large: 'Large',
+          quiet: 'Quiet',
+          balanced: 'Balanced',
+          strong: 'Strong',
+          custom: 'Custom',
+          learning: 'Learning · 82° / 0°',
+          'all-round': 'All-round · 95° / 15°',
+          racing: 'Racing · 110° / 25°',
+        };
+    for (const control of [size, opacity, preset]) {
+      control.select.disabled = !enabled;
+      for (const option of control.select.options) option.textContent = names[option.value];
+    }
+    hudHelp.textContent = uk
+      ? 'Авто зберігає розмір під екран. Сенсорні області лишаються великими. Пауза й ціль завжди видимі; видимість підказок задається окремо.'
+      : 'Auto fits the screen. Touch targets stay large. Pause and your objective stay visible; assistance visibility is controlled separately.';
+    camera.title.textContent = uk ? 'Комфорт камери FPV' : 'FPV camera comfort';
+    preset.title.textContent = uk ? 'Кут огляду / нахил' : 'Field of view / tilt';
+    preset.select.value = selected;
+    cameraHelp.textContent = uk
+      ? 'Навчання: рівний горизонт. Перегони: ширший огляд і нахил для швидкого польоту. Змінюється лише камера; керування й фізика незмінні. Повзунки нижче — для точного налаштування.'
+      : 'Learning gives a level horizon. Racing widens the view and tilts up for faster flight. Only the camera changes; controls and physics stay the same. Use the sliders for finer adjustment.';
+    if (best) {
+      best.title.textContent = uk ? 'Ваш найкращий політ' : 'Your best flight';
+      best.status.textContent = status;
+      best.button.textContent = comparison.button.textContent;
+      best.button.disabled = !enabled || comparison.button.disabled;
+      best.button.setAttribute(
+        'aria-pressed',
+        comparison.button.getAttribute('aria-pressed') ?? 'false',
+      );
+      best.help.textContent = uk
+        ? 'Лише перевірений запис того самого завдання, версії світу, режиму й профілю реакції. Вигляд камери не змінює сумісність. Без зіткнень; залік незмінний.'
+        : 'Only a verified recording for the same challenge, world revision, flight mode and response profile. Camera view does not change compatibility. No collision or scoring changes.';
+    }
+  }
+  applySticks();
+  refresh();
+  return {
+    refresh,
+    dispose() {
+      disposed = true;
+      listeners.forEach((remove) => remove());
+      roots.forEach((root) => root.remove());
+      delete viewport.dataset.stickSize;
+      delete viewport.dataset.stickOpacity;
+    },
+  };
+}
+
 // BEGIN GENERATED SHARED MODE SHELL
 import*as simGlobalI18n from'../../game/i18n/index.mjs';
 import*as simGlobalThemes from'../../game/presentation/theme-system.mjs';
