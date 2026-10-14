@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {
   CLASSIC_STRUCTURE_FAMILIES,
+  CLASSIC_STRUCTURE_REVISION,
   classicStructureModule,
 } from '../snake/classic-structure-art.mjs';
 import {
@@ -121,7 +122,7 @@ test('cargo has four repeatable non-colour destination silhouettes and descripto
   ]) {
     const world = resolveClassicWorld({ boardStyle: treatment });
     assert.equal(world.treatment, treatment);
-    assert.equal(world.structureRevision, 'modular-dioramas-v1');
+    assert.equal(world.structureRevision, CLASSIC_STRUCTURE_REVISION);
   }
 });
 
