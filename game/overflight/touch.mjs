@@ -37,6 +37,7 @@ export function createOverflightTouch({
     assistiveClickTimer = null,
     modality = win.matchMedia?.('(any-pointer: coarse)').matches ? 'touch' : 'keyboard';
   const pointers = new Set();
+  const actionPointers = new Set();
   const keys = new Set();
   const view = mountTouchControlsView({
     document: doc,
@@ -86,6 +87,7 @@ export function createOverflightTouch({
     releaseBoost();
     if (forgetPointers) {
       pointers.clear();
+      actionPointers.clear();
       keys.clear();
     }
   }
@@ -125,6 +127,7 @@ export function createOverflightTouch({
         preferences.snapshot().mode !== 'dpad' &&
         ['touch', 'pen'].includes(event.pointerType);
       if (onControl || onArena) pointers.add(event.pointerId);
+      if (view.actionButton.contains(event.target)) actionPointers.add(event.pointerId);
     },
     true,
   );
@@ -151,6 +154,7 @@ export function createOverflightTouch({
   });
   const release = (event) => {
     pointers.delete(event.pointerId);
+    actionPointers.delete(event.pointerId);
     if (boostPointer !== event.pointerId) return;
     releaseBoost();
     if (event.type === 'pointercancel') onInterrupt();
@@ -236,6 +240,10 @@ export function createOverflightTouch({
         neutral: pointers.size === 0 && keys.size === 0 && controlKey === null,
       };
     },
+    // Steering ownership never blocks a fresh Boost. A held action still must
+    // physically release even if a modal cleared its logical state.
+    actionsNeutral: () =>
+      actionPointers.size === 0 && keys.size === 0 && controlKey?.direction !== 'boost',
     clear,
     refresh,
     refreshCopy() {

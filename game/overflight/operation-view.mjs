@@ -93,14 +93,11 @@ export function createOverflightOperationCards({
     for (const direction of ['left', 'right'])
       card.setAttribute(
         `data-menu-${direction}`,
-        Array.from({ length: OVERFLIGHT_OPERATIONS.length - 1 }, (_, offset) =>
-          OVERFLIGHT_OPERATIONS[
-            (index + (direction === 'right' ? 1 : -1) * (offset + 1) + OVERFLIGHT_OPERATIONS.length * 2) %
-              OVERFLIGHT_OPERATIONS.length
-          ].id,
-        )
-          .map((id) => `operation-${id}`)
-          .join(' '),
+        Array.from({ length: OVERFLIGHT_OPERATIONS.length - 1 }, (_, offset) => {
+          const step = (offset + 1) * (direction === 'left' ? -1 : 1);
+          const next = (index + step + OVERFLIGHT_OPERATIONS.length) % OVERFLIGHT_OPERATIONS.length;
+          return `operation-${OVERFLIGHT_OPERATIONS[next].id}`;
+        }).join(' '),
       );
     if (selected) card.setAttribute('aria-current', 'true');
     const canvas = document.createElement('canvas');

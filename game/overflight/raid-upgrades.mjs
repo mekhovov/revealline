@@ -232,3 +232,159 @@ export function applyOverflightHuntUpgrade(build, offer, allowedModules = HUNT_U
   build.hunt[legal.system] = legal.rank;
   return true;
 }
+
+export function overflightHuntInvestedRanks(build) {
+  return HUNT_UPGRADE_IDS.reduce((sum, id) => sum + overflightHuntUpgradeRank(build, id), 0);
+}
+
+/** Same-rank exchanges keep campaign power bounded while later contracts still
+ * offer a different approach. The source and destination are explicit cards. */
+export function legalOverflightHuntRefits(run) {
+  const build = run.build,
+    allowed = run.compiled.upgrades.modules;
+  const cards = [];
+  for (const from of HUNT_UPGRADE_IDS) {
+    const fromRank = overflightHuntUpgradeRank(build, from);
+    if (!fromRank) continue;
+    for (const to of allowed) {
+      const toRank = overflightHuntUpgradeRank(build, to);
+      if (from === to || toRank >= 2) continue;
+      const transferred = toRank === 0 ? fromRank : 1;
+      const next = structuredClone(build);
+      next.hunt[from] -= transferred;
+      next.hunt[to] += transferred;
+      if (next.hunt.plating && next.hunt['recovery-shield']) continue;
+      const fromTitle = definitions[from].title,
+        toTitle = definitions[to].title;
+      cards.push({
+        id: `refit:${from}:${to}:${transferred}`,
+        system: to,
+        kind: 'refit',
+        direction: definitions[to].direction,
+        rank: toRank + transferred,
+        currentRank: toRank,
+        fromSystem: from,
+        fromRank,
+        fromNextRank: fromRank - transferred,
+        transferred,
+        title: text(`${fromTitle.en} → ${toTitle.en}`, `${fromTitle.uk} → ${toTitle.uk}`),
+        current: text(
+          `${fromTitle.en} ${fromRank} · ${toTitle.en} ${toRank}`,
+          `${fromTitle.uk} ${fromRank} · ${toTitle.uk} ${toRank}`,
+        ),
+        next: text(
+          `${fromTitle.en} ${fromRank - transferred} · ${toTitle.en} ${toRank + transferred}. Same total power; a new approach.`,
+          `${fromTitle.uk} ${fromRank - transferred} · ${toTitle.uk} ${toRank + transferred}. Та сама загальна сила; новий підхід.`,
+        ),
+        description: definitions[to].descriptions[toRank + transferred],
+        evolution: null,
+      });
+    }
+  }
+  return cards;
+}
+
+export function draftOverflightHuntRefits(run, random, previousIds = []) {
+  const cards = legalOverflightHuntRefits(run);
+  for (let i = cards.length - 1; i > 0; i--) {
+    const j = Math.floor(random() * (i + 1));
+    [cards[i], cards[j]] = [cards[j], cards[i]];
+  }
+  cards.sort((a, b) => Number(previousIds.includes(a.id)) - Number(previousIds.includes(b.id)));
+  const field =
+    run.player.hull < run.player.maxHull
+      ? {
+          system: 'field-repair',
+          amount: Math.min(15, run.player.maxHull - run.player.hull),
+          title: text('Field repair', 'Польовий ремонт'),
+          current: text(`${run.player.hull} hull`, `${run.player.hull} міцності`),
+          next: text(
+            'Restore up to 15 hull; keep this build.',
+            'Відновіть до 15 міцності; збережіть збірку.',
+          ),
+        }
+      : run.progression.rerolls < (run.compiled.combat?.supplies.rerollCap ?? 2)
+        ? {
+            system: 'field-reroll',
+            amount: 1,
+            title: text('Recalibrate', 'Переналаштувати'),
+            current: text(
+              `${run.progression.rerolls} rerolls`,
+              `${run.progression.rerolls} перевиборів`,
+            ),
+            next: text(
+              'Gain one reroll; keep this build.',
+              'Отримайте один перевибір; збережіть збірку.',
+            ),
+          }
+        : {
+            system: 'field-score',
+            amount: 500,
+            title: text('Keep the build', 'Зберегти збірку'),
+            current: text('Ready for the next approach', 'Готові до наступного підходу'),
+            next: text(
+              'Gain 500 score without changing your build.',
+              'Отримайте 500 очок без зміни збірки.',
+            ),
+          };
+  return [
+    ...cards.slice(0, 2),
+    {
+      ...field,
+      id: field.system,
+      kind: 'field',
+      rank: 0,
+      currentRank: 0,
+      evolution: null,
+    },
+  ];
+}
+
+export function applyOverflightHuntRefit(run, offer) {
+  if (offer.kind === 'refit') {
+    const legal = legalOverflightHuntRefits(run).find((card) => card.id === offer.id);
+    if (!legal) return false;
+    run.build.hunt[legal.fromSystem] = legal.fromNextRank;
+    run.build.hunt[legal.system] = legal.rank;
+    run.player.shield = Math.min(
+      run.player.shield,
+      overflightHuntParameters(run.build).shieldCapacity,
+    );
+    return true;
+  }
+  if (offer.kind !== 'field') return false;
+  if (offer.system === 'field-repair' && run.player.hull < run.player.maxHull) {
+    run.player.hull = Math.min(run.player.maxHull, run.player.hull + 15);
+  } else if (
+    offer.system === 'field-reroll' &&
+    run.progression.rerolls < (run.compiled.combat?.supplies.rerollCap ?? 2)
+  ) {
+    run.progression.rerolls++;
+  } else if (offer.system === 'field-score') run.hunt.score += 500;
+  else return false;
+  return true;
+}
+
+export function describeOverflightHuntOffer(offer, run) {
+  if (run.rulesVersion < 3) return offer;
+  const next = {
+    ...offer,
+    rulesVersion: run.rulesVersion,
+    baseExposure: run.compiled.combat.machinery.exposureSeconds,
+  };
+  if (offer.kind === 'combat' && offer.system === 'recovery-shield') {
+    next.next = text(
+      `Hold ${offer.rank} shield charge${offer.rank === 1 ? '' : 's'}; each objective restores one charge.`,
+      `Місткість екрана: ${offer.rank}; кожна ціль відновлює один заряд.`,
+    );
+    next.description = next.next;
+  }
+  if (offer.kind === 'combat' && offer.system === 'guard-interrupt') {
+    next.next = text(
+      `First boosted kill disrupts one shield or uncommitted brace within ${offer.rank === 1 ? 110 : 150} units. Machinery and fired shots remain dangerous.`,
+      `Перше знищення ривком зриває один щит або підготовку піхоти в радіусі ${offer.rank === 1 ? 110 : 150}. Техніка та випущені снаряди залишаються небезпечними.`,
+    );
+    next.description = next.next;
+  }
+  return next;
+}

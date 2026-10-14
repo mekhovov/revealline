@@ -1,5 +1,9 @@
+import { visitOverflightGrid } from './grid.mjs';
+import { OVERFLIGHT_FLIGHT_PROFILES } from './flight-profile.mjs';
+const slowestEscapeSpeed =
+  Math.min(...Object.values(OVERFLIGHT_FLIGHT_PROFILES).map((profile) => profile.speed)) * 0.9;
 /** Shared, deterministic combat rules for Overflight V2. No renderer or clock owner. */
-export const OVERFLIGHT_DIFFICULTIES = Object.freeze(['standard', 'veteran']);
+export const OVERFLIGHT_DIFFICULTIES = Object.freeze(['relaxed', 'standard', 'veteran']);
 export function seededOverflightRandom(seed) {
   let state = seed >>> 0 || 1;
   return () => {
@@ -9,7 +13,7 @@ export function seededOverflightRandom(seed) {
     return (state >>> 0) / 0x100000000;
   };
 }
-export function overflightFormationSchedule(seed, difficulty, encounterSet) {
+export function overflightFormationSchedule(seed, difficulty, encounterSet, rulesVersion = 2) {
   const random = seededOverflightRandom(seed ^ 0x6d2b79f5);
   const patterns =
     encounterSet === 'crossing'
@@ -30,7 +34,8 @@ export function overflightFormationSchedule(seed, difficulty, encounterSet) {
       }
       if (deck[0] === last) [deck[0], deck[1]] = [deck[1], deck[0]];
     }
-    const pattern = start === 0 && difficulty === 'standard' ? 'pursuit' : deck.shift();
+    const pattern =
+      start === 0 && (difficulty === 'standard' || rulesVersion >= 3) ? 'pursuit' : deck.shift();
     last = pattern;
     const duration = 30 + Math.floor(random() * 16);
     const end = Math.min(360, start + duration);
@@ -50,7 +55,11 @@ export function applyOverflightGuard(enemy, damage, origin) {
     return { damage, blocked: 0, broken: false };
   const blocked = Math.min(enemy.guardIntegrity, damage * (enemy.guardAbsorption ?? 0.75));
   enemy.guardIntegrity = Math.max(0, enemy.guardIntegrity - blocked);
-  return { damage: damage - blocked, blocked, broken: enemy.guardIntegrity === 0 };
+  return {
+    damage: damage - blocked,
+    blocked,
+    broken: enemy.guardIntegrity === 0,
+  };
 }
 export function overflightArmoredDamage(amount, rank) {
   return Math.max(1, Math.ceil(amount * (1 - Math.min(2, Math.max(0, rank)) * 0.1)));
@@ -95,6 +104,33 @@ export function overflightAttackContains(attack, x, y, radius = 9) {
 }
 /** Admit only if a baseline-speed straight escape remains inside the arena.
  * Existing committed geometry participates; boost availability never matters. */
+function bodyClearPath(run, endX, endY, seconds) {
+  const dx = endX - run.player.x,
+    dy = endY - run.player.y;
+  let clear = true;
+  visitOverflightGrid(
+    run._grid,
+    (run.player.x + endX) / 2,
+    (run.player.y + endY) / 2,
+    Math.hypot(dx, dy) / 2 + 160 * seconds + run._maxEnemyRadius + run.player.radius,
+    (enemy) => {
+      if (!clear || enemy.warning > seconds) return;
+      // Conservative relative sweep against the currently committed motion.
+      const factor = (enemy.behaviorPhase === 'burst' ? 2 : 1) * enemy.speed;
+      const vx = (enemy.behaviorPhase === 'burst' ? enemy._burstX : enemy.steeringX) * factor;
+      const vy = (enemy.behaviorPhase === 'burst' ? enemy._burstY : enemy.steeringY) * factor;
+      const rx = run.player.x - enemy.x,
+        ry = run.player.y - enemy.y;
+      const sx = dx - vx * seconds,
+        sy = dy - vy * seconds;
+      const t = Math.max(0, Math.min(1, -(rx * sx + ry * sy) / (sx * sx + sy * sy || 1)));
+      if ((rx + sx * t) ** 2 + (ry + sy * t) ** 2 < (enemy.radius + run.player.radius + 2) ** 2)
+        clear = false;
+    },
+  );
+  return clear;
+}
+
 export function hasOverflightEscape(run, candidate) {
   const attacks = run.priorityAttacks.filter((a) => a.active).concat(candidate);
   for (let i = 0; i < 24; i++) {
@@ -102,7 +138,12 @@ export function hasOverflightEscape(run, candidate) {
     // Test each impact at its own time: the earliest warning must not mask a
     // later fan, and a new warning must never retarget after admission.
     const safe = attacks.every((attack) => {
-      const distance = Math.min(180, Math.max(0, attack.remaining) * 160);
+      const speed = run.rulesVersion >= 3 ? slowestEscapeSpeed : 160;
+      const travelSeconds =
+        attack.stage === 'active'
+          ? Math.min(candidate.remaining, attack.remaining)
+          : Math.max(0, attack.remaining);
+      const distance = Math.min(180, travelSeconds * speed);
       const x = run.player.x + Math.cos(angle) * distance;
       const y = run.player.y + Math.sin(angle) * distance;
       if (
@@ -112,14 +153,30 @@ export function hasOverflightEscape(run, candidate) {
         y > run.compiled.arena.height - 18
       )
         return false;
-      return !overflightAttackContains(attack, x, y, run.player.radius + 8);
+      if (overflightAttackContains(attack, x, y, run.player.radius + 8)) return false;
+      if (run.rulesVersion >= 3) {
+        if (!bodyClearPath(run, x, y, travelSeconds)) return false;
+        if (attack.stage === 'active') {
+          for (let sample = 0; sample <= 8; sample++)
+            if (
+              overflightAttackContains(
+                attack,
+                run.player.x + ((x - run.player.x) * sample) / 8,
+                run.player.y + ((y - run.player.y) * sample) / 8,
+                run.player.radius + 8,
+              )
+            )
+              return false;
+        }
+      }
+      return true;
     });
     if (safe) return true;
   }
   return false;
 }
 export function createOverflightCaches(compiled) {
-  if (compiled.rulesVersion !== 2 || !compiled.combat?.supplies.enabled) return [];
+  if (compiled.rulesVersion < 2 || !compiled.combat?.supplies.enabled) return [];
   return compiled.props.slice(0, 2).map((prop, index) => ({
     id: prop.id,
     x: prop.x,
@@ -132,6 +189,18 @@ export function createOverflightCaches(compiled) {
     selectedReward: null,
     armed: false,
     rewards: [
+      ...(compiled.rulesVersion >= 3 &&
+      compiled.combat.supplies.overdrive &&
+      !compiled.sourceFormat?.startsWith('OverflightHunt')
+        ? [
+            {
+              id: 'overdrive',
+              x: Math.max(28, Math.min(compiled.arena.width - 28, prop.x)),
+              y: Math.max(28, Math.min(compiled.arena.height - 28, prop.y + 52)),
+              enabled: true,
+            },
+          ]
+        : []),
       {
         id: 'repair',
         x: Math.max(28, Math.min(compiled.arena.width - 116, prop.x - 44)),
@@ -149,7 +218,7 @@ export function createOverflightCaches(compiled) {
 }
 /** Finite physical rewards: no magnet, clock, modal or input binding. */
 export function updateOverflightCaches(run, spawn, notify) {
-  if (run.fixture || run.rulesVersion !== 2 || run.phase !== 'playing') return;
+  if (run.fixture || run.rulesVersion < 2 || run.phase !== 'playing') return;
   for (const cache of run.caches) {
     const due = run.hunt ? run.hunt.sector >= cache.sector : run.time >= cache.trigger;
     if (cache.state === 'dormant' && due) cache.state = 'locked';
@@ -169,8 +238,14 @@ export function updateOverflightCaches(run, spawn, notify) {
           behavior: 'patrol',
           pattern: 'pursuit',
           route: [
-            { x: cache.x + Math.cos(angle) * 80, y: cache.y + Math.sin(angle) * 80 },
-            { x: cache.x - Math.cos(angle) * 80, y: cache.y - Math.sin(angle) * 80 },
+            {
+              x: cache.x + Math.cos(angle) * 80,
+              y: cache.y + Math.sin(angle) * 80,
+            },
+            {
+              x: cache.x - Math.cos(angle) * 80,
+              y: cache.y - Math.sin(angle) * 80,
+            },
           ],
         });
         if (!enemy) break;
@@ -189,8 +264,11 @@ export function updateOverflightCaches(run, spawn, notify) {
       }
     }
     if (cache.state !== 'open') continue;
-    cache.rewards[0].enabled = run.player.hull < run.player.maxHull;
-    cache.rewards[1].enabled =
+    cache.rewards.find((r) => r.id === 'repair').enabled = run.player.hull < run.player.maxHull;
+    const overdrive = cache.rewards.find((r) => r.id === 'overdrive');
+    if (overdrive)
+      overdrive.enabled = !run.hunt && !run.player.overdriveReady && !run.player.overdriveRemaining;
+    cache.rewards.find((r) => r.id === 'recalibrate').enabled =
       run.progression.rerolls < run.compiled.combat.supplies.rerollCap ||
       run.player.boostCooldown > 0;
     // Require leaving the reward area after opening before deliberately flying
@@ -210,7 +288,10 @@ export function updateOverflightCaches(run, spawn, notify) {
           run.player.maxHull,
           run.player.hull + run.compiled.combat.supplies.repairHull,
         );
-      else {
+      else if (reward.id === 'overdrive') {
+        run.player.overdriveReady = true;
+        run._boostHeld = true;
+      } else {
         run.progression.rerolls = Math.min(
           run.compiled.combat.supplies.rerollCap,
           run.progression.rerolls + 1,

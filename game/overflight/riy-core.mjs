@@ -1,29 +1,69 @@
 /** C1 escort proof. The leader, upgrades, collisions, rewards and clock stay in
  * the ordinary Survivor simulation. Escorts are support equipment, not airframes. */
-import { damageOverflightArea } from './core.mjs';
+import { damageOverflightArea, damageOverflightEnemy } from './core.mjs';
 import { visitOverflightGrid } from './grid.mjs';
 import { OVERFLIGHT_RIY_DEFAULTS } from './riy-project.mjs';
+import {
+  createOverflightRiyBuild,
+  overflightRiyEscortParameters,
+  draftOverflightRiyUpgrades,
+  applyOverflightRiyUpgrade,
+} from './riy-upgrades.mjs';
 
 export const OVERFLIGHT_RIY_RULES = OVERFLIGHT_RIY_DEFAULTS;
 
 export function createOverflightRiy(run) {
+  const version = run.compiled.riyVersion ?? 1;
+  if (version === 2) {
+    run.build.escorts = createOverflightRiyBuild();
+    run.build.combat = [];
+    run.upgradePolicy = {
+      draft: draftOverflightRiyUpgrades,
+      apply: applyOverflightRiyUpgrade,
+    };
+  }
   return {
+    version,
     rules: run.compiled.riy ?? OVERFLIGHT_RIY_DEFAULTS,
     targetId: null,
     focusRemaining: 0,
     cooldown: 0,
     commands: 0,
+    candidateId: null,
+    phase: 'follow',
+    approachRemaining: 0,
+    trails: Array.from({ length: 8 }, () => ({
+      active: false,
+      x: 0,
+      y: 0,
+      radius: 0,
+      remaining: 0,
+      clock: 0,
+      slowMultiplier: 1,
+    })),
     airframesLost: run.stats.airframesLost,
     escorts: (run.compiled.riy ?? OVERFLIGHT_RIY_DEFAULTS).escorts.map((config, index) => ({
       ...config,
-      x: run.player.x + config.forward,
-      y: run.player.y + config.lateral,
+      x:
+        run.player.x +
+        (version === 2
+          ? Math.cos(run.player.heading) * config.forward -
+            Math.sin(run.player.heading) * config.lateral
+          : config.forward),
+      y:
+        run.player.y +
+        (version === 2
+          ? Math.sin(run.player.heading) * config.forward +
+            Math.cos(run.player.heading) * config.lateral
+          : config.lateral),
       heading: run.player.heading,
+      formationHeading: run.player.heading,
       cooldown: index ? 0.8 : 0.3,
       beamRemaining: 0,
       targetX: 0,
       targetY: 0,
       shots: 0,
+      pending: null,
     })),
   };
 }
@@ -64,7 +104,7 @@ export function overflightRiyTarget(run) {
 }
 
 /** Called once after an accepted 60 Hz gameplay step, never on paused frames. */
-export function stepOverflightRiy(run, { focus = false } = {}) {
+function stepLegacyOverflightRiy(run, { focus = false } = {}) {
   const state = run.riy;
   if (!state || run.phase !== 'playing') return;
   const rules = state.rules;
@@ -155,4 +195,261 @@ export function stepOverflightRiy(run, { focus = false } = {}) {
     // Shared exact queries retain armor, deaths, remains, salvage and sound rules.
     damageOverflightArea(run, target.x, target.y, escort.radius, escort.damage, { origin: escort });
   }
+}
+
+const activeEnemy = (run, id) =>
+  run.enemies.find((enemy) => enemy.active && enemy.id === id) ?? null;
+const clamp = (value, low, high) => Math.max(low, Math.min(high, value));
+
+export function overflightRiyInFollowArc(escort, enemy) {
+  const axis = escort.formationHeading + (escort.role === 'sweeper' ? Math.PI : 0);
+  const dx = enemy.x - escort.x,
+    dy = enemy.y - escort.y;
+  const length = Math.hypot(dx, dy);
+  return (
+    length <= escort.attackRange &&
+    (length === 0 ||
+      (dx * Math.cos(axis) + dy * Math.sin(axis)) / length >=
+        Math.cos((escort.followArc * Math.PI) / 360) - 1e-12)
+  );
+}
+
+function releaseFocus(state) {
+  state.targetId = null;
+  state.focusRemaining = 0;
+  state.approachRemaining = 0;
+  state.phase = 'returning';
+}
+
+function applyShot(run, escort, target, settings, burst = false) {
+  if (!target?.active || target.warning > 0) return;
+  escort.heading = Math.atan2(target.y - escort.y, target.x - escort.x);
+  escort.targetX = target.x;
+  escort.targetY = target.y;
+  escort.beamRemaining = 0.12;
+  escort.shots++;
+  if (escort.role === 'sweeper') {
+    damageOverflightArea(run, target.x, target.y, settings.radius, settings.damage, {
+      origin: escort,
+    });
+    if (settings.trailRadius > 0) {
+      const trail = run.riy.trails.find((entry) => !entry.active);
+      if (!trail) throw new Error('Riy trail pool is too small for the authored fire rate.');
+      Object.assign(trail, {
+        active: true,
+        x: escort.x - Math.cos(escort.formationHeading) * 20,
+        y: escort.y - Math.sin(escort.formationHeading) * 20,
+        radius: settings.trailRadius,
+        remaining: settings.trailDuration,
+        clock: 0,
+        slowMultiplier: settings.trailSlow,
+      });
+    }
+  } else if (settings.chainTargets > 1) {
+    const targets = [target];
+    while (targets.length < settings.chainTargets) {
+      const origin = targets.at(-1);
+      let next = null,
+        best = Infinity;
+      visitOverflightGrid(run._grid, origin.x, origin.y, settings.chainRange, (enemy) => {
+        const separation = distance(origin, enemy);
+        if (
+          !enemy.active ||
+          enemy.warning > 0 ||
+          targets.includes(enemy) ||
+          separation > settings.chainRange
+        )
+          return;
+        if (separation < best || (separation === best && enemy.id < next.id)) {
+          next = enemy;
+          best = separation;
+        }
+      });
+      if (!next) break;
+      targets.push(next);
+    }
+    const damage = settings.damage / targets.length;
+    let origin = escort;
+    for (const victim of targets) {
+      damageOverflightEnemy(run, victim, damage, origin);
+      origin = { x: victim.x, y: victim.y };
+    }
+  } else {
+    damageOverflightEnemy(run, target, settings.damage, escort);
+    if (!burst && settings.burstCount > 1)
+      escort.pending = {
+        targetId: target.id,
+        remaining: settings.burstDelay,
+        damage: settings.damage,
+      };
+  }
+}
+
+function stepSquad(run, focus) {
+  const state = run.riy,
+    rules = state.rules,
+    dt = 1 / 60;
+  const attackDt = dt * (run.attackRate ?? 1);
+  state.cooldown = Math.max(0, state.cooldown - dt);
+  if (state.phase === 'approach')
+    state.approachRemaining = Math.max(0, state.approachRemaining - dt);
+  if (state.phase === 'engaged') state.focusRemaining = Math.max(0, state.focusRemaining - dt);
+  if (state.airframesLost !== run.stats.airframesLost) {
+    releaseFocus(state);
+    state.airframesLost = run.stats.airframesLost;
+    for (const escort of state.escorts) {
+      escort.x = run.player.x;
+      escort.y = run.player.y;
+      escort.beamRemaining = 0;
+      escort.pending = null;
+    }
+  }
+  const candidate = overflightRiyTarget(run);
+  state.candidateId = state.cooldown === 0 ? (candidate?.id ?? null) : null;
+  if (focus && state.cooldown === 0 && candidate) {
+    state.targetId = candidate.id;
+    state.approachRemaining = rules.approachSeconds;
+    state.focusRemaining = 0;
+    state.phase = 'approach';
+    state.cooldown = rules.commandCooldown;
+    state.commands++;
+    state.candidateId = null;
+    run.events.push({ type: 'system', count: 1 });
+  }
+  let target = activeEnemy(run, state.targetId);
+  if (
+    target &&
+    (distance(target, run.player) > rules.leash ||
+      (state.phase === 'approach' && state.approachRemaining === 0) ||
+      (state.phase === 'engaged' && state.focusRemaining === 0))
+  )
+    target = null;
+  if (!target && state.targetId !== null) releaseFocus(state);
+  let returned = true;
+  for (const escort of state.escorts) {
+    if (run.phase !== 'playing') break;
+    const upgrade = run.build.escorts.find((entry) => entry.role === escort.role);
+    const config = rules.escorts.find((entry) => entry.role === escort.role);
+    const settings = overflightRiyEscortParameters(config, upgrade);
+    Object.assign(escort, settings);
+    escort.cooldown = Math.max(0, escort.cooldown - attackDt);
+    escort.beamRemaining = Math.max(0, escort.beamRemaining - dt);
+    const heading = target
+      ? Math.atan2(target.y - run.player.y, target.x - run.player.x)
+      : run.player.heading;
+    escort.formationHeading = heading;
+    escort.heading = heading;
+    const forward = target ? rules.focusForward : escort.forward;
+    const anchor = target ?? run.player;
+    const goalX = clamp(
+      anchor.x + Math.cos(heading) * forward - Math.sin(heading) * escort.lateral,
+      18,
+      run.compiled.arena.width - 18,
+    );
+    const goalY = clamp(
+      anchor.y + Math.sin(heading) * forward + Math.cos(heading) * escort.lateral,
+      18,
+      run.compiled.arena.height - 18,
+    );
+    const dx = goalX - escort.x,
+      dy = goalY - escort.y,
+      length = Math.hypot(dx, dy);
+    const movement = Math.min(length, rules.escortSpeed * dt);
+    if (length > 0) {
+      escort.x += (dx / length) * movement;
+      escort.y += (dy / length) * movement;
+    }
+    if (length - movement > 4) returned = false;
+    if (target && state.phase === 'approach' && distance(escort, target) <= settings.attackRange) {
+      state.phase = 'engaged';
+      state.approachRemaining = 0;
+      state.focusRemaining = rules.focusSeconds;
+    }
+    if (escort.pending) {
+      escort.pending.remaining -= attackDt;
+      if (escort.pending.remaining <= 0) {
+        const pendingTarget = activeEnemy(run, escort.pending.targetId);
+        if (
+          pendingTarget &&
+          distance(escort, pendingTarget) <= settings.attackRange &&
+          (target?.id === pendingTarget.id || overflightRiyInFollowArc(escort, pendingTarget))
+        )
+          applyShot(
+            run,
+            escort,
+            pendingTarget,
+            { ...settings, damage: escort.pending.damage },
+            true,
+          );
+        escort.pending = null;
+      }
+    }
+    let shotTarget = target;
+    if (!shotTarget) {
+      let best = Infinity;
+      visitOverflightGrid(run._grid, escort.x, escort.y, settings.attackRange, (enemy) => {
+        if (!enemy.active || enemy.warning > 0 || !overflightRiyInFollowArc(escort, enemy)) return;
+        const score =
+          escort.role === 'breaker' ? targetScore(enemy, escort) : distance(enemy, escort);
+        if (score < best || (score === best && enemy.id < shotTarget.id)) {
+          shotTarget = enemy;
+          best = score;
+        }
+      });
+    }
+    if (
+      !shotTarget?.active ||
+      escort.cooldown > 0 ||
+      distance(escort, shotTarget) > settings.attackRange
+    )
+      continue;
+    escort.cooldown = settings.interval;
+    applyShot(run, escort, shotTarget, settings);
+  }
+  if (!target && returned && state.phase === 'returning') state.phase = 'follow';
+  for (const trail of state.trails) {
+    if (!trail.active) continue;
+    trail.remaining -= dt;
+    trail.clock -= dt;
+    if (trail.clock <= 0) {
+      damageOverflightArea(run, trail.x, trail.y, trail.radius, 0, {
+        slow: 0.2,
+        slowMultiplier: trail.slowMultiplier,
+      });
+      trail.clock = 0.1;
+    }
+    if (trail.remaining <= 0) trail.active = false;
+  }
+}
+
+/** Both revisions run on the accepted gameplay clock; legacy behavior is untouched. */
+export function stepOverflightRiy(run, { focus = false } = {}) {
+  if (!run.riy || run.phase !== 'playing') return;
+  if (run.riy.version !== 2) return stepLegacyOverflightRiy(run, { focus });
+  stepSquad(run, focus);
+}
+
+export function overflightRiyPresentation(run) {
+  const state = run.riy;
+  if (!state) return null;
+  const candidate = state.cooldown === 0 ? overflightRiyTarget(run) : null;
+  return {
+    phase: state.phase,
+    candidate: candidate
+      ? {
+          id: candidate.id,
+          family: candidate.family,
+          x: candidate.x,
+          y: candidate.y,
+          radius: candidate.radius,
+        }
+      : null,
+    focusRemaining: state.focusRemaining,
+    cooldown: state.cooldown,
+    escorts: state.escorts.map((escort) => ({
+      ...escort,
+      arcRadians: ((escort.followArc ?? 360) * Math.PI) / 180,
+      range: escort.attackRange ?? state.rules.attackRange,
+    })),
+  };
 }

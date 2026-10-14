@@ -1,18 +1,57 @@
 import { dataIdentity } from '../data-json.mjs';
 import { createOverflightHuntRecords } from './raid-records.mjs';
-import { legalOverflightHuntUpgrades, applyOverflightHuntUpgrade } from './raid-upgrades.mjs';
+import {
+  legalOverflightHuntUpgrades,
+  applyOverflightHuntUpgrade,
+  overflightHuntInvestedRanks,
+} from './raid-upgrades.mjs';
 
 export const OVERFLIGHT_RAID_VARIANTS = Object.freeze(['time-attack', 'marathon']);
 export const OVERFLIGHT_MARATHON_CONTRACTS = 5;
-export const OVERFLIGHT_TIME_MEDALS = Object.freeze({ gold: 90, silver: 150, bronze: 240 });
+export const OVERFLIGHT_TIME_MEDALS = Object.freeze({
+  gold: 90,
+  silver: 150,
+  bronze: 240,
+});
+export const OVERFLIGHT_MARATHON_TACTICS = Object.freeze([
+  {
+    id: 'opening',
+    en: 'Read the formation · familiar patrol routes',
+    uk: 'Прочитайте стрій · знайомі патрульні маршрути',
+  },
+  {
+    id: 'crossing',
+    en: 'Crossing columns · alternating packs reverse their route',
+    uk: 'Колони навхрест · черговані групи змінюють напрямок',
+  },
+  {
+    id: 'screen',
+    en: 'Flank screen · escorts change their guarded approach',
+    uk: 'Захист флангу · супровід змінює захищений підхід',
+  },
+  {
+    id: 'counterflow',
+    en: 'Counterflow · reflected interception routes',
+    uk: 'Зустрічний потік · віддзеркалені маршрути перехоплення',
+  },
+  {
+    id: 'combined',
+    en: 'Combined command · crossed routes and shifted escorts',
+    uk: 'Спільне командування · перехресні маршрути та зміщений супровід',
+  },
+]);
+export function overflightMarathonNextContract(run, locale = 'en') {
+  const next = run.raidVariant?.contract;
+  return next < 5 ? OVERFLIGHT_MARATHON_TACTICS[next][locale === 'uk' ? 'uk' : 'en'] : null;
+}
 const words = {
   en: {
     'time-attack': 'Survive: Time Attack',
     marathon: 'Survive: Contract Marathon',
     timeBrief:
-      'Finish the objectives quickly and cleanly. Every hull point lost adds 0.25 seconds to your medal time. Gold 1:30 · Silver 2:30 · Bronze 4:00. Same-seed retry repeats the route.',
+      'Finish the objectives quickly and cleanly. Every hull point lost adds 0.25 seconds to your medal time. Medal targets are authored per sortie; initial targets are provisional. Same-seed retry repeats the route.',
     marathonBrief:
-      'Clear a contract, then bank your score or risk it on the next. Five contracts become faster and offer smaller repairs. Hull, airframes and upgrades carry forward. Losing all airframes loses every unbanked point.',
+      'Clear a contract, then bank your score or risk it on the next. Five contracts change their approaches and offer smaller repairs. Hull, airframes and upgrades carry forward. Revised sorties cap your build at eight invested ranks; later refits exchange equal ranks or offer field rewards. Losing all airframes loses every unbanked point.',
     adjusted: 'Medal time',
     penalty: 'Damage penalty',
     gold: 'Gold',
@@ -41,9 +80,9 @@ const words = {
     'time-attack': 'Вижити: На час',
     marathon: 'Вижити: Марафон контрактів',
     timeBrief:
-      'Швидко й чисто виконайте цілі. Кожна втрачена одиниця корпусу додає 0,25 секунди до залікового часу. Золото 1:30 · Срібло 2:30 · Бронза 4:00. Повтор із тим самим зерном зберігає маршрут.',
+      'Швидко й чисто виконайте цілі. Кожна втрачена одиниця корпусу додає 0,25 секунди до залікового часу. Цілі медалей задаються для вильоту; початкові цілі попередні. Повтор із тим самим зерном зберігає маршрут.',
     marathonBrief:
-      'Виконайте контракт і заберіть очки або ризикніть у наступному. П’ять контрактів стають швидшими, а ремонт — меншим. Корпус, апарати й покращення зберігаються. Втрата всіх апаратів забирає всі незбережені очки.',
+      'Виконайте контракт і заберіть очки або ризикніть у наступному. П’ять контрактів змінюють підходи, а ремонт стає меншим. Корпус, апарати й покращення зберігаються. В оновлених вильотах збірка містить до восьми рангів; далі можна обміняти рівні ранги або взяти польову винагороду. Втрата всіх апаратів забирає всі незбережені очки.',
     adjusted: 'Заліковий час',
     penalty: 'Штраф за шкоду',
     gold: 'Золото',
@@ -79,6 +118,7 @@ export function overflightRaidMedalTime(seconds) {
 export function overflightTimeAttackResult(run) {
   const penalty = run.stats.damageTaken * 0.25;
   const adjustedTime = run.time + penalty;
+  const budgets = run.compiled?.medalBudgets ?? OVERFLIGHT_TIME_MEDALS;
   return {
     rawTime: run.time,
     penalty,
@@ -86,9 +126,8 @@ export function overflightTimeAttackResult(run) {
     medal:
       run.phase !== 'won'
         ? 'failed'
-        : (Object.keys(OVERFLIGHT_TIME_MEDALS).find(
-            (id) => adjustedTime <= OVERFLIGHT_TIME_MEDALS[id],
-          ) ?? 'unranked'),
+        : (Object.keys(OVERFLIGHT_TIME_MEDALS).find((id) => adjustedTime <= budgets[id]) ??
+          'unranked'),
     clean: run.phase === 'won' && run.stats.damageTaken === 0,
   };
 }
@@ -113,9 +152,34 @@ export function overflightMarathonProject(source, contract, seed) {
   project.seed = seed;
   for (const encounter of project.encounters) {
     for (const pack of encounter.packs) pack.speed = Math.min(140, pack.speed + (contract - 1) * 8);
-    for (const actor of [...encounter.packs, ...encounter.objectives]) {
+    for (const [index, actor] of [...encounter.packs, ...encounter.objectives].entries()) {
       const offset = (contract - 1) % actor.route.length;
       actor.route = [...actor.route.slice(offset), ...actor.route.slice(0, offset)];
+      if (project.format === 'OverflightHuntProjectV3' && !actor.escortOf) {
+        if ([2, 5].includes(contract) && index % 2) actor.route.reverse();
+        if ([4, 5].includes(contract))
+          actor.route = actor.route.map((point) => ({
+            ...point,
+            y: project.arena.height - point.y,
+          }));
+      }
+    }
+    if (project.format === 'OverflightHuntProjectV3') {
+      for (const [index, wing] of encounter.packs.filter((pack) => pack.escortOf).entries()) {
+        const target = encounter.objectives.find((actor) => actor.id === wing.escortOf);
+        let dx = wing.x - target.x,
+          dy = wing.y - target.y;
+        if ([3, 5].includes(contract)) {
+          dx = index ? 72 : -72;
+          dy = index ? -68 : 68;
+        }
+        wing.x = target.x + dx;
+        wing.y = target.y + dy;
+        wing.route = target.route.map((point) => ({
+          x: point.x + dx,
+          y: point.y + dy,
+        }));
+      }
     }
   }
   if (project.combat) {
@@ -165,7 +229,7 @@ export function overflightRaidVariantRecord(run) {
     compiled: {
       ...run.compiled,
       projectIdentity: dataIdentity({
-        rules: `overflight-${state.id}.v1`,
+        rules: `overflight-${state.id}.v${state.rules ?? 1}`,
         project: state.baseIdentity,
       }),
     },
@@ -173,8 +237,10 @@ export function overflightRaidVariantRecord(run) {
     stats: { ...run.stats },
     hunt: { ...run.hunt },
   };
-  if (state.id === 'time-attack') result.time = overflightTimeAttackResult(run).adjustedTime;
-  else {
+  if (state.id === 'time-attack') {
+    result.rawTime = run.time;
+    result.time = overflightTimeAttackResult(run).adjustedTime;
+  } else {
     result.time = state.totalTime;
     result.hunt.score = state.status === 'banked' ? state.escrow : 0;
     result.hunt.bestChain = state.bestChain;
@@ -206,7 +272,7 @@ export function createOverflightRaidVariant(base, { variant } = {}) {
       const run = base.createRun(compiled, options);
       run.raidVariant = {
         id: variant,
-        rules: 1,
+        rules: compiled.rulesVersion >= 3 ? 2 : 1,
         seed: run.seed,
         baseIdentity: compiled.projectIdentity,
         source: sourceOf(compiled),
@@ -220,11 +286,13 @@ export function createOverflightRaidVariant(base, { variant } = {}) {
         bestChain: 0,
         totals: Object.fromEntries(summedStats.map((key) => [key, 0])),
       };
+      if (variant === 'marathon' && run.rulesVersion >= 3) run.hunt.refitBudget = 8;
       return run;
     },
     step(run, input) {
       if (
         variant === 'marathon' &&
+        !run.hunt.refitBudget &&
         legalOverflightHuntUpgrades(run.build, run.compiled.upgrades.modules).length < 3
       )
         run.progression.maxChoices = run.progression.choices;
@@ -232,7 +300,7 @@ export function createOverflightRaidVariant(base, { variant } = {}) {
       settle(run);
     },
     choose(run, id) {
-      if (variant === 'marathon' && run.phase === 'upgrade') {
+      if (variant === 'marathon' && !run.hunt.refitBudget && run.phase === 'upgrade') {
         const offer = run.offers.find((card) => card.id === id);
         const nextBuild = structuredClone(run.build);
         if (
@@ -264,8 +332,12 @@ export function createOverflightRaidVariant(base, { variant } = {}) {
       const contract = state.contract + 1;
       const seed = (state.seed + (contract - 1) * 104729) >>> 0 || 1;
       const project = overflightMarathonProject(state.source, contract, seed);
-      const next = base.createRun(base.compileProject(project), { ...state.options, seed });
+      const next = base.createRun(base.compileProject(project), {
+        ...state.options,
+        seed,
+      });
       next.build = structuredClone(run.build);
+      if (run.hunt.refitBudget) next.hunt.refitBudget = run.hunt.refitBudget;
       next.airframesRemaining = run.airframesRemaining;
       next.player.hull = run.player.hull;
       next.player.shield = run.player.shield;
@@ -289,7 +361,7 @@ export function createOverflightRaidVariant(base, { variant } = {}) {
         compiled: {
           ...run.compiled,
           projectIdentity: dataIdentity({
-            rules: `overflight-${variant}.v1`,
+            rules: `overflight-${variant}.v${run.raidVariant?.rules ?? 1}`,
             project: run.raidVariant?.baseIdentity ?? run.compiled.projectIdentity,
           }),
         },
@@ -336,7 +408,11 @@ export function createOverflightRaidVariant(base, { variant } = {}) {
       const state = run.raidVariant,
         text = copy(document.documentElement.lang);
       // Base UI is reused, but only the variant snapshot may enter records.
-      base.renderResults({ ...context, formatTime, run: { ...run, review: true } });
+      base.renderResults({
+        ...context,
+        formatTime,
+        run: { ...run, review: true },
+      });
       const $ = (id) => document.getElementById(id);
       const stat = (label, value) => {
         const row = document.createElement('div');
@@ -350,9 +426,21 @@ export function createOverflightRaidVariant(base, { variant } = {}) {
       };
       if (variant === 'time-attack') {
         const result = overflightTimeAttackResult(run);
+        if (run.compiled.medalBudgets?.provisional)
+          stat(
+            document.documentElement.lang === 'uk' ? 'Цілі медалей' : 'Medal targets',
+            document.documentElement.lang === 'uk' ? 'Попередні' : 'Provisional',
+          );
         $('result-kicker').textContent = text[result.medal];
         stat(text.adjusted, formatTime(result.adjustedTime));
         stat(text.penalty, `+${result.penalty.toFixed(2)}s`);
+        const budgets = run.compiled.medalBudgets ?? OVERFLIGHT_TIME_MEDALS;
+        stat(
+          document.documentElement.lang === 'uk'
+            ? 'Золото · Срібло · Бронза'
+            : 'Gold · Silver · Bronze',
+          `${formatTime(budgets.gold)} · ${formatTime(budgets.silver)} · ${formatTime(budgets.bronze)}`,
+        );
         if (result.clean) $('result-message').textContent = text.clean;
       } else {
         $('result-kicker').textContent = `${text.contract} ${state.contract}/5`;
@@ -373,6 +461,16 @@ export function createOverflightRaidVariant(base, { variant } = {}) {
         );
         stat(text.elapsed, formatTime(state.totalTime));
         stat(text.multiplier, `×${multiplier(state.contract)}`);
+        if (run.hunt.refitBudget)
+          stat(
+            document.documentElement.lang === 'uk' ? 'Ранги збірки' : 'Build ranks',
+            `${overflightHuntInvestedRanks(run.build)}/${run.hunt.refitBudget}`,
+          );
+        if (state.status === 'decision' && run.rulesVersion >= 3)
+          stat(
+            document.documentElement.lang === 'uk' ? 'Наступний контракт' : 'Next contract',
+            overflightMarathonNextContract(run, document.documentElement.lang),
+          );
       }
       if (actions) {
         actions.bank.hidden = actions.next.hidden =

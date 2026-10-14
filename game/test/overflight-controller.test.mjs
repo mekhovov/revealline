@@ -234,7 +234,10 @@ test('preference loading uses the native release/edition key without writes and 
   const window = environment(data);
   window.location.href =
     'https://example.org/editions/droneaid/releases/v1.2.3/site/game/overflight/play.html';
-  window.fetch = async () => ({ ok: true, json: async () => ({ version: '1.2.3' }) });
+  window.fetch = async () => ({
+    ok: true,
+    json: async () => ({ version: '1.2.3' }),
+  });
   const loaded = await loadOverflightControllerPreferences({ window });
   assert.equal(loaded.profileKey, key);
   assert.equal(loaded.enabled, true);
@@ -245,7 +248,9 @@ test('preference loading uses the native release/edition key without writes and 
   assert.equal(window.writes(), 0);
   const source = environment();
   source.fetch = async () => ({ ok: false });
-  const defaults = await loadOverflightControllerPreferences({ window: source });
+  const defaults = await loadOverflightControllerPreferences({
+    window: source,
+  });
   assert.equal(defaults.profileKey, 'revealline.library.dev.v1');
   assert.equal(defaults.bindings, null);
   assert.equal(defaults.enabled, true);
@@ -292,4 +297,21 @@ test('Riy focus follows the remapped shared Ability button and requires fresh pr
   f.sample();
   f.pad.buttons[6].value = 1;
   assert.equal(f.sample().focus, true);
+});
+
+test('held stick resumes immediately but Boost and Focus need fresh releases after a menu', (t) => {
+  const f = fixture(t);
+  f.sample();
+  f.pad.axes[0] = 0.8;
+  f.pad.buttons[7].value = 1;
+  assert.equal(f.sample().boost, true);
+  f.sample('menu:upgrade');
+  const resumed = f.sample('flight');
+  assert.equal(resumed.x, 0.8);
+  assert.equal(resumed.boost, false);
+  assert.equal(resumed.actionsNeutral, false);
+  f.pad.buttons[7].value = 0;
+  assert.equal(f.sample().actionsNeutral, true);
+  f.pad.buttons[7].value = 1;
+  assert.equal(f.sample().boost, true, 'a fresh action works without recentering the stick');
 });

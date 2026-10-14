@@ -8,6 +8,7 @@ import {
 import { upgradeOverflightProjectCopy } from './project-upgrade.mjs';
 
 export const OVERFLIGHT_RIY_PROJECT_FORMAT = 'OverflightRiyProjectV1';
+export const OVERFLIGHT_RIY_PROJECT_FORMAT_V2 = 'OverflightRiyProjectV2';
 export const OVERFLIGHT_RIY_MAX_BYTES = OVERFLIGHT_PROJECT_MAX_BYTES + 4096;
 const freeze = (value) => {
   if (value && typeof value === 'object') {
@@ -61,6 +62,41 @@ export const OVERFLIGHT_RIY_ESCORT_FIELDS = Object.freeze([
   ['radius', 1, 60, 1, 'Impact radius', 'Радіус удару'],
   ['interval', 0.5, 4, 0.1, 'Attack interval (seconds)', 'Інтервал атак (с)'],
 ]);
+export const OVERFLIGHT_RIY_FIELDS_V2 = Object.freeze([
+  ...OVERFLIGHT_RIY_FIELDS.filter(([key]) => !['attackRange', 'defendRange'].includes(key)),
+  [
+    'approachSeconds',
+    0.5,
+    2,
+    0.25,
+    'Maximum focus approach (seconds)',
+    'Максимальний захід у фокусі (с)',
+  ],
+]);
+export const OVERFLIGHT_RIY_ESCORT_FIELDS_V2 = Object.freeze([
+  ...OVERFLIGHT_RIY_ESCORT_FIELDS,
+  ['followArc', 60, 180, 5, 'Follow firing arc (degrees)', 'Сектор вогню в строю (градуси)'],
+  ['attackRange', 80, 220, 5, 'Attack range', 'Дальність атаки'],
+]);
+function upgradedSettings(source) {
+  const { attackRange, defendRange: _defendRange, ...shared } = structuredClone(source);
+  return {
+    ...shared,
+    approachSeconds: 2,
+    intro: [
+      { facing: 'rear', start: 0, end: 12, count: 18 },
+      { facing: 'front', start: 12, end: 30, count: 36 },
+    ],
+    commandCooldown: Math.max(shared.commandCooldown, shared.focusSeconds + 2),
+    escorts: source.escorts.map((escort) => ({
+      ...escort,
+      followArc: escort.role === 'sweeper' ? 140 : 120,
+      attackRange:
+        escort.role === 'sweeper' ? Math.max(80, attackRange) : Math.min(220, attackRange + 60),
+    })),
+  };
+}
+export const OVERFLIGHT_RIY_DEFAULTS_V2 = freeze(upgradedSettings(OVERFLIGHT_RIY_DEFAULTS));
 function numericFields(value, fields) {
   for (const [key, min, max] of fields)
     required(
@@ -68,32 +104,66 @@ function numericFields(value, fields) {
       `Riy ${key} must be between ${min} and ${max}.`,
     );
 }
-export function validateOverflightRiySettings(source) {
+export function validateOverflightRiySettings(source, version = 1) {
   const value = boundedJSON(source, {
     maxBytes: 4096,
     maxDepth: 4,
     maxArray: 2,
     maxNodes: 100,
   });
-  exactKeys(value, [...OVERFLIGHT_RIY_FIELDS.map(([key]) => key), 'escorts'], 'Riy settings');
-  numericFields(value, OVERFLIGHT_RIY_FIELDS);
+  const fields = version === 2 ? OVERFLIGHT_RIY_FIELDS_V2 : OVERFLIGHT_RIY_FIELDS;
+  const escortFields =
+    version === 2 ? OVERFLIGHT_RIY_ESCORT_FIELDS_V2 : OVERFLIGHT_RIY_ESCORT_FIELDS;
+  exactKeys(
+    value,
+    [...fields.map(([key]) => key), 'escorts', ...(version === 2 ? ['intro'] : [])],
+    'Riy settings',
+  );
+  if (version === 2) {
+    required(
+      Array.isArray(value.intro) && value.intro.length === 2,
+      'Riy introduction needs rear then front packs.',
+    );
+    for (const [index, pack] of value.intro.entries()) {
+      exactKeys(pack, ['facing', 'start', 'end', 'count'], 'Riy introduction pack');
+      required(
+        pack.facing === (index ? 'front' : 'rear'),
+        'Riy introduction teaches rear then front coverage.',
+      );
+      required(
+        Number.isFinite(pack.start) &&
+          Number.isFinite(pack.end) &&
+          pack.start === (index ? value.intro[0].end : 0) &&
+          pack.end - pack.start >= 5 &&
+          pack.end - pack.start <= 20 &&
+          pack.end <= 30,
+        'Riy introduction packs must connect within the first 30 seconds.',
+      );
+      required(
+        Number.isInteger(pack.count) && pack.count >= 4 && pack.count <= 48,
+        'Riy introduction pack needs four to 48 infantry.',
+      );
+    }
+  }
+  numericFields(value, fields);
   required(value.leash >= value.focusRange, 'Riy recall distance must cover focus range.');
   required(
-    value.commandCooldown >= value.focusSeconds,
+    value.commandCooldown >= value.focusSeconds + (version === 2 ? value.approachSeconds : 0),
     'Riy command cooldown must cover focus duration.',
   );
-  required(
-    value.defendRange <= value.attackRange,
-    'Riy follow targeting range must not exceed attack range.',
-  );
+  if (version === 1)
+    required(
+      value.defendRange <= value.attackRange,
+      'Riy follow targeting range must not exceed attack range.',
+    );
   required(
     Array.isArray(value.escorts) && value.escorts.length === 2,
     'Riy needs exactly two escorts.',
   );
   for (const escort of value.escorts) {
-    exactKeys(escort, ['role', ...OVERFLIGHT_RIY_ESCORT_FIELDS.map(([key]) => key)], 'Riy escort');
+    exactKeys(escort, ['role', ...escortFields.map(([key]) => key)], 'Riy escort');
     required(['sweeper', 'breaker'].includes(escort.role), 'Unsupported Riy escort role.');
-    numericFields(escort, OVERFLIGHT_RIY_ESCORT_FIELDS);
+    numericFields(escort, escortFields);
   }
   required(
     new Set(value.escorts.map(({ role }) => role)).size === 2,
@@ -114,13 +184,18 @@ export function overflightRiySurvivorProject(source) {
 }
 export function createOverflightRiyProject(options = {}) {
   const base = createOverflightProject(options);
+  const v2 = base.format === 'OverflightProjectV3';
+  if (v2)
+    base.upgrades.modules = base.upgrades.modules.filter((id) =>
+      ['primary', 'scanner', 'shield', 'plating'].includes(id),
+    );
   return {
     ...base,
     id: `riy-${base.id}`,
     title: { en: `Riy · ${base.title.en}`, uk: `Рій · ${base.title.uk}` },
     survivorFormat: base.format,
-    format: OVERFLIGHT_RIY_PROJECT_FORMAT,
-    riy: structuredClone(OVERFLIGHT_RIY_DEFAULTS),
+    format: v2 ? OVERFLIGHT_RIY_PROJECT_FORMAT_V2 : OVERFLIGHT_RIY_PROJECT_FORMAT,
+    riy: structuredClone(v2 ? OVERFLIGHT_RIY_DEFAULTS_V2 : OVERFLIGHT_RIY_DEFAULTS),
   };
 }
 export function validateOverflightRiyProject(source) {
@@ -130,12 +205,27 @@ export function validateOverflightRiyProject(source) {
     maxArray: 128,
     maxDepth: 12,
   });
-  required(project.format === OVERFLIGHT_RIY_PROJECT_FORMAT, 'Unsupported Riy project version.');
+  required(
+    [OVERFLIGHT_RIY_PROJECT_FORMAT, OVERFLIGHT_RIY_PROJECT_FORMAT_V2].includes(project.format),
+    'Unsupported Riy project version.',
+  );
+  const v2 = project.format === OVERFLIGHT_RIY_PROJECT_FORMAT_V2;
+  required(
+    v2
+      ? project.survivorFormat === 'OverflightProjectV3'
+      : ['OverflightProjectV1', 'OverflightProjectV2'].includes(project.survivorFormat),
+    'Riy project and Survivor rules versions do not match.',
+  );
   const base = validateOverflightProject(overflightRiySurvivorProject(project));
-  const riy = validateOverflightRiySettings(project.riy);
+  if (v2)
+    required(
+      base.upgrades.modules.every((id) => ['primary', 'scanner', 'shield', 'plating'].includes(id)),
+      'Riy squad slots belong to the escorts.',
+    );
+  const riy = validateOverflightRiySettings(project.riy, v2 ? 2 : 1);
   return freeze({
     ...base,
-    format: OVERFLIGHT_RIY_PROJECT_FORMAT,
+    format: project.format,
     survivorFormat: base.format,
     riy,
   });
@@ -147,16 +237,25 @@ export function compileOverflightRiyProject(source) {
     ...base,
     sourceFormat: project.format,
     projectIdentity: dataIdentity(project),
+    riyVersion: project.format === OVERFLIGHT_RIY_PROJECT_FORMAT_V2 ? 2 : 1,
     riy: project.riy,
   });
 }
 export function upgradeOverflightRiyProjectCopy(source, options) {
   const project = validateOverflightRiyProject(source);
   const base = upgradeOverflightProjectCopy(overflightRiySurvivorProject(project), options);
+  const v2 = base.format === 'OverflightProjectV3';
+  if (v2)
+    base.upgrades.modules = base.upgrades.modules.filter((id) =>
+      ['primary', 'scanner', 'shield', 'plating'].includes(id),
+    );
   return {
     ...base,
-    format: OVERFLIGHT_RIY_PROJECT_FORMAT,
+    format: v2 ? OVERFLIGHT_RIY_PROJECT_FORMAT_V2 : OVERFLIGHT_RIY_PROJECT_FORMAT,
     survivorFormat: base.format,
-    riy: structuredClone(project.riy),
+    riy:
+      v2 && project.format === OVERFLIGHT_RIY_PROJECT_FORMAT
+        ? upgradedSettings(project.riy)
+        : structuredClone(project.riy),
   };
 }

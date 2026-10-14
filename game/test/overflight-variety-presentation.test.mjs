@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { Document } from './helpers/couch-dom.mjs';
+import { overflightCacheHint } from '../overflight/copy.mjs';
 import { createMissionLibrary } from '../mission-library/library.mjs';
 import { createOverflightProject, compileOverflightProject } from '../overflight/project.mjs';
 import {
@@ -238,4 +239,41 @@ test('distant armor stays compact without losing state, while approaches and pri
     'shield facing remains explicit at every distance',
   );
   assert.deepEqual(enemy, before);
+});
+
+test('mission discovery labels Relaxed V3 encounters in both native languages', () => {
+  const entry = { project: createOverflightProject({ rulesVersion: 3, difficulty: 'relaxed' }) };
+  for (const [locale, label] of [
+    ['en', 'Relaxed'],
+    ['uk', 'Спокійна'],
+  ]) {
+    const source = overflightMissionSource({
+      id: 'official',
+      entries: [entry],
+      mode,
+      locale: () => locale,
+      launch() {},
+    });
+    assert.ok(source.describe(entry).name.includes(label));
+    assert.ok(source.details(entry).challenge.includes(label));
+    assert.equal(source.availability(entry).state, 'ready');
+  }
+});
+
+test('cache instructions explain stored V3 Overdrive without changing legacy or Raid rewards', () => {
+  const v3 = compileOverflightProject(createOverflightProject({ rulesVersion: 3 }));
+  const legacy = compileOverflightProject(createOverflightProject());
+  const raid = compileOverflightHuntProject(createOverflightHuntProject({ rulesVersion: 3 }));
+  assert.match(overflightCacheHint(v3), /stored Overdrive.*next fresh boost.*6 seconds.*25%/);
+  assert.match(overflightCacheHint(v3, 'uk'), /запас форсажу.*6 секунд.*25%/);
+  assert.match(overflightCacheHint(v3), new RegExp(`\\+${v3.combat.supplies.repairHull} hull`));
+  assert.doesNotMatch(overflightCacheHint(legacy), /Overdrive/);
+  assert.doesNotMatch(overflightCacheHint(raid), /Overdrive/);
+  assert.doesNotMatch(
+    overflightCacheHint({
+      ...v3,
+      combat: { supplies: { ...v3.combat.supplies, overdrive: false } },
+    }),
+    /Overdrive/,
+  );
 });

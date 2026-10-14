@@ -633,9 +633,9 @@ test('unsupported fullscreen is absent on home and pause and the direction cycle
   h.shell.dispose();
 });
 
-for (const current of ['overflight', 'overflight-hunt']) {
+for (const current of OVERFLIGHT_OPERATIONS.map(({ id }) => id)) {
   for (const input of ['keyboard', 'controller']) {
-    test(`${current}: ${input} reaches both operations and every home action without starting play`, () => {
+    test(`${current}: ${input} reaches all five operations and every home action without starting play`, () => {
       let chosen = 0;
       const h = fixture({
         withModes: true,
@@ -646,7 +646,7 @@ for (const current of ['overflight', 'overflight-hunt']) {
             document,
             current,
             text: (key) => key,
-            destination: (path) => path + '?lang=uk',
+            destination: (path) => path + (path.includes('?') ? '&' : '?') + 'lang=uk',
             onSelect: () => chosen++,
             onLeave() {},
           }).root;
@@ -670,13 +670,16 @@ for (const current of ['overflight', 'overflight-hunt']) {
       const selectedMode = home.querySelector('[aria-current="page"]');
       const selectedOperation = home.querySelector(`#operation-${current}`);
       assert.equal(
-        home.querySelector('.landing-commands .mode-play-home-choices')?.contains(selectedOperation),
+        home
+          .querySelector('.landing-commands .mode-play-home-choices')
+          ?.contains(selectedOperation),
         true,
         'Survival operation choices remain in the responsive command column.',
       );
-      const other = home.querySelector(
-        `#operation-${current === 'overflight' ? 'overflight-hunt' : 'overflight'}`,
+      const operations = OVERFLIGHT_OPERATIONS.map(({ id }) =>
+        home.querySelector(`#operation-${id}`),
       );
+      const selectedIndex = operations.indexOf(selectedOperation);
       selectedMode.focus();
       const cycle = [
         selectedOperation,
@@ -694,28 +697,32 @@ for (const current of ['overflight', 'overflight-hunt']) {
         assert.equal(h.document.activeElement, expected);
       }
       move('down');
-      const selectedIndex = OVERFLIGHT_OPERATIONS.findIndex(({ id }) => id === current);
-      for (let offset = 1; offset <= OVERFLIGHT_OPERATIONS.length; offset++) {
-        move('right');
-        const next = OVERFLIGHT_OPERATIONS[(selectedIndex + offset) % OVERFLIGHT_OPERATIONS.length];
-        assert.equal(h.document.activeElement, home.querySelector(`#operation-${next.id}`));
+      for (const direction of ['right', 'left']) {
+        for (let step = 1; step <= operations.length; step++) {
+          move(direction);
+          const index =
+            (selectedIndex + step * (direction === 'right' ? 1 : -1) + operations.length) %
+            operations.length;
+          assert.equal(
+            h.document.activeElement,
+            operations[index],
+            `${direction} reaches ${operations[index].id}`,
+          );
+        }
       }
-      move('left');
-      const previous = OVERFLIGHT_OPERATIONS[
-        (selectedIndex - 1 + OVERFLIGHT_OPERATIONS.length) % OVERFLIGHT_OPERATIONS.length
-      ];
-      assert.equal(h.document.activeElement, home.querySelector(`#operation-${previous.id}`));
-      move('right');
       assert.equal(h.document.activeElement, selectedOperation);
       assert.equal(chosen, 0);
       navigation.handle({ confirm: true });
       assert.equal(chosen, 1);
       assert.deepEqual(h.calls, [], 'Navigation and choosing missions do not launch play.');
       assert.equal(h.shell.elements.dialogs.settings.contains(selectedOperation), false);
-      assert.equal(
-        other.getAttribute('href'),
-        (current === 'overflight' ? './raid.html' : './play.html') + '?lang=uk',
-      );
+      for (const { id, path } of OVERFLIGHT_OPERATIONS) {
+        if (id === current) continue;
+        assert.equal(
+          home.querySelector(`#operation-${id}`).getAttribute('href'),
+          path + (path.includes('?') ? '&' : '?') + 'lang=uk',
+        );
+      }
       navigation.destroy();
       h.shell.dispose();
     });
