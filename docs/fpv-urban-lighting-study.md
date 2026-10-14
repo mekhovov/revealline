@@ -35,3 +35,12 @@ measurement or public-player performance acceptance is claimed.
 The larger quality slice still needs landmark composition, environment density,
 closer review of surface scale and sustained player/device testing. Lighting is
 not a substitute for those tasks.
+
+## Native review — 14 October 2026
+
+Warehouse, Parking and Mill views rendered without browser console errors. Shadows
+made the openings and decks visibly deeper. Geometry counts stayed unchanged:
+Warehouse 71 meshes / 243,516 bytes; Parking 46 / 49,224; Mill 59 / 60,144. Release
+showed the empty view and no live scenery/collision; Load restored the Overview
+with nine cells, 104 meshes and 371,364 geometry bytes. This remains a visual and
+lifecycle receipt, not measured physical-device performance or final art acceptance.
