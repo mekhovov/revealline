@@ -416,7 +416,12 @@
         arrival. Eight periodic samples per trial show 139–973 alive and 93–348 center-visible
         enemies, with one canvas and stable base atlas storage. These are sampled ranges, not
         sustained peaks or a full boss victory. See <a href="NATIVE-LATE-CONTENT.md">the late timing
-        report</a>. A single reduced-effects comparison is running and a quiet soak is pending.
+        report</a>. One reduced-effects comparison also passes at p95 <strong>10.3 ms</strong>
+        and p99 <strong>11.3 ms</strong>, with no interval above 33.3 ms. At the same 328.2-second
+        tick its full gameplay summary matches normal trial 2 except appearance. Sampled
+        populations match; effects peak at 32 versus 60 and sprite allocation at 1,740 versus
+        1,843. This is one comparison, not three reduced-effects trials. Normal settings were
+        restored. The quiet soak is still in progress; no final result is claimed.
       </p>
       <p>
         The <a href="PROGRESSION-PARITY.md">current progression comparison</a> records 47
@@ -425,10 +430,11 @@
         91.2-second final-choice collection gap. The earlier outcomes above remain historical.
       </p>
       <p>
-        Remaining review: Survivor Echo routes, late reward collection, challenge-preset
-        readability, complete active/repetitive and normal/reduced-effects comparisons, real
-        soundtrack/warning audibility, reduced-effects timing, quiet soak and broader boss/build coverage. External-device and
-        five-player trials remain skipped at the user’s direction.
+        Remaining local checks: finish the quiet soak and reconcile/test the latest main
+        integration. Review judgments include late reward collection, Riy Echo approaches,
+        challenge readability, visual appeal and real soundtrack/warning balance. The recorded
+        scenarios do not certify every build or boss victory. External-device and five-player
+        trials remain skipped at the user’s direction.
       </p>
       <small
         >Capture settings and SHA-256 hashes:
