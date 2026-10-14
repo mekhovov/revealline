@@ -5448,6 +5448,7 @@ export function mountWorldApp({
     // therefore cannot resume a flight simply because the tab regained focus.
     if (
       sceneReady &&
+      (!current.regional || flight.snapshot().reason === 'prepared') &&
       !ghostLookup &&
       !replayProof &&
       $('flight-source').value === 'radio' &&
@@ -5695,10 +5696,25 @@ export function mountWorldApp({
     await ready;
     await initWorldRuntime();
     if (disposed || token !== flightToken) return;
-    await flight?.dispose?.();
-    if (disposed || token !== flightToken) return;
+    // Validate paired sources before releasing a usable previous flight.
+    const nextFlight = createRegionalSession({
+      ...entry.configuration,
+      mode: options.mode ?? $('flight-mode').value,
+      response,
+      initialHeading: 'region-centre',
+    });
+    try {
+      await flight?.dispose?.();
+    } catch (error) {
+      await nextFlight.dispose();
+      throw error;
+    }
+    if (disposed || token !== flightToken) {
+      await nextFlight.dispose();
+      return;
+    }
     regionalPreparing = null;
-    flight = null;
+    flight = nextFlight;
     current = entry;
     recorder = null;
     checkpointRequest = checkpointSession = replayProof = playingPlaylist = null;
@@ -5759,12 +5775,6 @@ export function mountWorldApp({
     });
     if (!renderer.available || !renderer.setRegional)
       throw new Error('Regional rendering is unavailable');
-    flight = createRegionalSession({
-      ...entry.configuration,
-      mode: $('flight-mode').value,
-      response,
-      initialHeading: 'region-centre',
-    });
     renderer.setRegional(flight, entry.configuration.manifest);
     renderer.setQuality($('flight-quality').value);
     renderer.setDrone($('drone-look').value);
