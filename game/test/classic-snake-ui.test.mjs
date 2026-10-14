@@ -1155,6 +1155,58 @@ test('Home and backgrounding permanently cancel automatic progression for the co
   }
 });
 
+for (const input of ['dpad', 'stick']) {
+  test(`${input} navigation during celebration cancels the later countdown without rearming it`, async () => {
+    const state = await harness();
+    let now = flyVerifiedRoute(state);
+    const pad = menuPad();
+    state.pads.push(pad);
+    state.frame((now += 50));
+    assert.equal(state.shell.elements.root.dataset.transitionPhase, 'celebration');
+    if (input === 'dpad') pad.buttons[13] = { pressed: true, value: 1 };
+    else pad.axes[1] = 0.8;
+    state.frame((now += 50));
+    pad.buttons[13] = { pressed: false, value: 0 };
+    pad.axes[1] = 0;
+    assert.equal(state.shell.elements.root.dataset.transitionPhase, 'cancelled');
+    assert.equal(state.shell.topDialog(), state.shell.elements.dialogs.results);
+    const cancelledAt = now;
+    while (now < cancelledAt + 11000) state.frame((now += 50));
+    assert.equal(
+      state.created.length,
+      1,
+      'returning the controller to neutral does not rearm Next',
+    );
+    assert.equal(state.shell.elements.root.dataset.transitionPhase, 'cancelled');
+  });
+}
+
+test('controller steering during live play still moves immediately and Confirm launches Next during celebration', async () => {
+  const playing = await harness();
+  const pad = menuPad();
+  playing.pads.push(pad);
+  playing.frame(0);
+  pad.buttons[13] = { pressed: true, value: 1 };
+  playing.frame(50);
+  assert.equal(playing.created[0].snakes[0].turns.at(-1), 'down');
+  playing.frame(200);
+  assert.equal(playing.created[0].snakes[0].direction, 'down');
+  assert.equal(playing.document.body.dataset.playing, 'true');
+
+  const completed = await harness();
+  const now = flyVerifiedRoute(completed);
+  const confirm = menuPad();
+  completed.pads.push(confirm);
+  completed.frame(now + 50);
+  confirm.buttons[0] = { pressed: true, value: 1 };
+  completed.frame(now + 100);
+  assert.equal(
+    new URL(completed.location.href).searchParams.get('level'),
+    'classic-snake-two-landings',
+  );
+  assert.equal(completed.document.body.dataset.playing, 'true');
+});
+
 test('selecting a new library mission launches directly while retaining the older Workshop save', async () => {
   const state = await harness();
   state.start();
@@ -1734,6 +1786,72 @@ for (const mode of ['solo', 'versus', 'team']) {
   });
 }
 
+for (const action of ['automatic', 'keyboard', 'controller', 'continuation-button']) {
+  test(`${action} defeat retry retains accepted artwork while renewing only the hazard schedule`, async () => {
+    const entry = CLASSIC_SNAKE_LEVELS.find((item) => item.id === 'classic-field-signal-check');
+    const state = await harness({ entry });
+    const select = state.document.querySelector('[data-enemy-appearance]');
+    select.value = 'military';
+    select.emit('change');
+    await flush();
+    state.start();
+    const accepted = state.acceptedAppearances.at(-1);
+    select.value = 'authored';
+    select.emit('change');
+    await flush();
+    const previous = state.created[0];
+    state.frame(0);
+    let now = 0;
+    while (previous.status === 'running' && now < 10000) state.frame((now += 50));
+    assert.equal(previous.status, 'lost');
+    if (action === 'automatic') {
+      const lostAt = now;
+      while (state.created.length === 1 && now < lostAt + 3200) state.frame((now += 50));
+    } else if (action === 'keyboard') {
+      state.document.emit('keydown', {
+        target: state.document.querySelector('canvas'),
+        key: 'Enter',
+        code: 'Enter',
+        repeat: false,
+      });
+    } else if (action === 'controller') {
+      const pad = menuPad();
+      state.pads.push(pad);
+      state.frame((now += 50));
+      pad.buttons[0] = { pressed: true, value: 1 };
+      state.frame((now += 50));
+    } else {
+      [...state.document.querySelector('.snake-continuation').children]
+        .find((node) => node.textContent === 'Try again')
+        .click();
+    }
+    assert.equal(state.created.length, 2);
+    assert.equal(state.acceptedAppearances.at(-1), accepted);
+    const next = state.created.at(-1);
+    assert.notEqual(next.hazardSeed, previous.hazardSeed);
+    assert.equal(next.seed, previous.seed);
+    assert.deepEqual(next.level, previous.level);
+    assert.equal(state.document.body.dataset.playing, 'true');
+  });
+}
+
+test('celebration Retry retains accepted artwork and launches the same mission immediately', async () => {
+  const state = await harness();
+  const accepted = state.acceptedAppearances.at(-1);
+  flyVerifiedRoute(state);
+  const select = state.document.querySelector('[data-enemy-appearance]');
+  select.value = 'military';
+  select.emit('change');
+  await flush();
+  [...state.document.querySelector('.snake-continuation').children]
+    .find((node) => node.textContent === 'Try again')
+    .click();
+  assert.equal(state.created.length, 2);
+  assert.equal(state.acceptedAppearances.at(-1), accepted);
+  assert.deepEqual(state.created[1].level, state.created[0].level);
+  assert.equal(state.document.body.dataset.playing, 'true');
+});
+
 test('a forged chapter pin is rejected before replacing the active mission or save', async () => {
   const entry = CLASSIC_SNAKE_LEVELS.find((item) => item.id === 'classic-living-cable-cutoff');
   const state = await harness({ entry });
@@ -2142,4 +2260,127 @@ test('a verified session-only clear keeps its stars and localized visible saving
     assert.equal(state.created.length, 2);
     assert.equal(state.$('result-save-notice').hidden, true);
   }
+});
+
+for (const locale of ['en', 'uk'])
+  for (const mode of ['solo', 'team', 'versus'])
+    test(`${locale}/${mode} an older optional courier never replaces the required-target HUD after a catch`, async () => {
+      const { proofs } = JSON.parse(
+        await readFile(
+          new URL(
+            '../../docs/verification/snake-remaster/outlier-alternative-proofs.json',
+            import.meta.url,
+          ),
+          'utf8',
+        ),
+      );
+      const proof = proofs.find(
+        (p) =>
+          p.levelId === 'classic-expedition-courier-overpass' &&
+          p.mode === (mode === 'team' ? 'team' : 'solo') &&
+          p.pace === 'normal',
+      );
+      const entry = CLASSIC_SNAKE_LEVELS.find((e) => e.id === proof.levelId);
+      const state = await harness({ entry, mode, query: `&lang=${locale}` });
+      const run = state.created[0];
+      let cursor = 0;
+      while (run.status === 'running' && !(run.catches > 4 && run.targets[0]?.role === 'bonus')) {
+        while (proof.replay.turns[cursor]?.tick === run.tick) {
+          const turn = proof.replay.turns[cursor++];
+          assert.ok(core.queueClassicSnakeTurn(run, turn.playerId, turn.direction));
+        }
+        core.stepClassicSnake(run);
+      }
+      assert.equal(run.status, 'running');
+      assert.equal(
+        run.targets[0].role,
+        'bonus',
+        'an earlier courier survives the required interception',
+      );
+      assert.equal(run.targets[0].kind, 'courier');
+      const requiredTarget = run.targets.find((actor) => actor.role === 'required');
+      assert.ok(requiredTarget, 'ordinary mission progress remains available');
+      const before = core.exportClassicSnakeReplay(run);
+      state.frame(0);
+      assert.equal(
+        state.$('target-style').textContent,
+        actorFieldGuide(requiredTarget.kind, locale).name,
+      );
+      const cue = state.document.querySelector('.snake-operation-status');
+      assert.equal(cue.hidden, false);
+      assert.equal(cue.textContent, CLASSIC_COPY[locale].courierOptional);
+      assert.equal(
+        cue.parentElement.dataset.operation,
+        'false',
+        'a courier does not convert a catch-quota mission into a staged operation',
+      );
+      const quota = cue.parentElement.querySelector('[data-stat="caught"]');
+      assert.equal(quota.hidden, false);
+      assert.equal(quota.querySelector('b').textContent, `${run.catches} / ${run.level.goal}`);
+      assert.equal(
+        cue.parentElement.dataset.status,
+        'true',
+        'the existing full-width wrapping row is enabled',
+      );
+      if (mode === 'versus')
+        assert.equal(
+          state.document.querySelectorAll('.snake-operation-status')[1].hidden,
+          true,
+          'the opponent has no courier cue',
+        );
+      assert.deepEqual(
+        core.exportClassicSnakeReplay(run),
+        before,
+        'the objective cue does not alter the attempt',
+      );
+      // Finish this accepted recording without chasing its bonus; the cue retires
+      // with the actor and cannot leave a stale objective on the result board.
+      while (run.status === 'running') {
+        while (proof.replay.turns[cursor]?.tick === run.tick) {
+          const turn = proof.replay.turns[cursor++];
+          assert.ok(core.queueClassicSnakeTurn(run, turn.playerId, turn.direction));
+        }
+        core.stepClassicSnake(run);
+      }
+      assert.equal(run.status, 'won');
+      if (mode !== 'team') assert.equal(run.bonusCatches, 0);
+      state.shell.open('pause');
+      assert.equal(cue.hidden, true);
+    });
+
+for (const locale of ['en', 'uk'])
+  test(`${locale} the opening turn cue applies to touch and controller without requiring a keyboard`, async () => {
+    const state = await harness({ query: `&lang=${locale}` });
+    state.frame(0);
+    const cue = state.$('snake-onboarding');
+    assert.equal(cue.hidden, false);
+    assert.equal(cue.textContent, CLASSIC_COPY[locale].firstTurnHelp);
+    assert.doesNotMatch(cue.textContent, /WASD|Arrows/);
+    assert.equal(state.created[0].tick, 0);
+  });
+
+test('transient status wrapping never inherits the operation-only rule that hides the catch quota', async () => {
+  const css = await readFile(new URL('../snake/classic.css', import.meta.url), 'utf8');
+  const rules = [...css.matchAll(/([^{}]+)\{([^{}]*)\}/g)].map((match) => ({
+    selector: match[1],
+    body: match[2],
+  }));
+  const statusRules = rules.filter((rule) => rule.selector.includes("[data-status='true']"));
+  assert.equal(statusRules.length, 1);
+  assert.match(statusRules[0].body, /flex-wrap:\s*wrap/);
+  assert.doesNotMatch(statusRules[0].body, /display:\s*none/);
+  assert.ok(
+    rules.some(
+      (rule) =>
+        rule.selector.includes("[data-operation='true'] [data-stat='caught']") &&
+        /display:\s*none/.test(rule.body),
+    ),
+  );
+  assert.ok(
+    !rules.some(
+      (rule) =>
+        rule.selector.includes('data-status') && rule.selector.includes("[data-stat='caught']"),
+    ),
+    'only staged operation objectives replace the ordinary quota',
+  );
 });

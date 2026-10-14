@@ -170,6 +170,11 @@ if (process.argv[1] && import.meta.url === pathToFileURL(path.resolve(process.ar
         2,
       ),
     );
+  } else if (process.argv.length === 4 && process.argv[2] === '--capacity') {
+    const { practiceCapacityFromConfig } = await import('./practice-capacity.mjs');
+    const report = await practiceCapacityFromConfig(process.argv[3]);
+    console.log(JSON.stringify(report, null, 2));
+    if (report.verdict === 'cannot-fit') process.exitCode = 1;
   } else if (process.argv.length === 4 && process.argv[2] === '--verify-site') {
     const selector = JSON.parse(
       await fs.readFile(

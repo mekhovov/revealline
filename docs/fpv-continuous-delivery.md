@@ -4232,3 +4232,50 @@ Storage: hash-verified 1,310 source files were relocated to `/Volumes/alex/Codex
 Next: complete frozen qualification on the committed final candidate and record results; let exact-head protected checks/reviews run, then use protected native-stack publication. At the last check #1188 CI was queued/running. Physical-device qualification and D6 remain unclaimed. Public deployment identity and actual launch must be verified before describing this increment as live.
 
 Frozen candidate `63cda2f18d56b4b7ca938832e765dfa711729879` now passes all three package admissions, committed-input validation, ZIP validation and two byte-identical builds. Flight 85 files / 3,618,121 bytes; Academy 91 / 6,614,749; Worlds 126 / 17,025,929, under unchanged limits. Receipt: `docs/evidence/fpv-ux-parallel-20261014/package-admission.json`. Output is preserved at `/Volumes/alex/CodexMigrationStaging/fpv-ux-20261014/qualified-final-ux`. This subsequent receipt change is documentation-only. Final browser EN/UK switching has no new errors; earlier captured stale-selection error predates the fix. Protected CI/public deployment and physical-device acceptance remain open. No new runtime feature remains in this six-item recommendation increment.
+
+
+## 2026-10-14 — Main rebase and integrated qualification continuation
+
+Rebased the four local UX branches onto `0e708a45c` with recovery refs and nine identical range-diff patches. All135 existing integration checks and canonical projections passed. A fresh frozen candidate on `6acc57d2b288abed26c745d40c1b97439440d04a` passed allthree admissions, committed inputs, ZIP members and two byte-identical builds.
+
+The atomic push was safely rejected by explicit per-branch leases because GitHub concurrently merged #1184 and #1185 and cascaded #1186/#1188. No newer remote commit was overwritten. Development accepted the native remote history and rebased onto updated main `d22397939`; its `1189e3d9a` tree is exactly identical to the fresh admitted candidate (`461d0bb52d3183688e634a497abd9599b4b88c50`). Original candidate identities remain unchanged. Continue independent work on `codex/fpv-integrated-reliability-20261014`; do not manually retarget native stack members.
+
+Performance audit found historical fixtures pinned to obsolete102-member players; existing shadow preparation and stick-width caching fixes are already present. The next increment uses a manifest-derived exact-player observation with no runtime overlays, bounded visible/focused windows and explicit callback-gap limitations. Reliability baseline passes56 existing checks. The current source graph requires223 modules/17,233,260 bytes: only the two manual Creator fixture limits were reviewed to256 modules/20MiB; per-file6MiB and all production budgets remain unchanged. Actual browser qualification and subsequent publication evidence follow below.
+
+
+## 2026-10-14 — Integrated reliability completed on latest main
+
+Native stack **#1180 is fully merged** (#1178, #1179, #1184, #1185, #1186, #1188). The independent `codex/fpv-integrated-reliability-20261014` branch is based on main `8b20276815da2684ac76872ae868fce4318dc471`, preserving the latest Snake and bottom-positioned menu updates. Recovery refs retain previous local histories; no newer remote work was overwritten.
+
+Completed: removal-review Cancel focus; current-row localized completion labels; interrupted-flight restoration that remains paused until deliberate Arm/Resume. Visible Creator and recovery fixtures now follow shared menus and native child storage through the unchanged access gate. Actual browser checks pass 66/66 tracking and 90/90 recovery, including exact-revision restoration, rollback and record preservation. Failed receipts are retained. Existing checks pass 135 on the latest-main rebase, 107 Library/projection checks for the label fix, and 55 focused checks after the recovery fix.
+
+Final runtime candidate `28450a208030c34098bd2e2b59f6a2237d55284e` passed all three package admissions, committed inputs, ZIP verification and two identical builds. Evidence: `docs/evidence/fpv-integrated-continuation-20261014/`; detailed scope/limits: `docs/fpv-integrated-reliability-20261014.md`. The observation tool now detects incomplete callback coverage; two 60-second and one 30-second stationary launch observations are scheduling evidence only, not hardware FPS or moving-flight performance qualification.
+
+Next: protected publication of this independent PR; moving replay and reload/memory measurements; the combined unchanged-package offline recovery journey; representative art and Canals; then D6. Physical-device and novice acceptance remain unverified/nonblocking. No public live claim until public marker plus actual player launch verifies deployment.
+
+Publication: **PR #1193** (https://github.com/mekhovov/revealline/pull/1193) is open against main on `codex/fpv-integrated-reliability-20261014`, milestone v0.150.0. No new native stack is needed for this independent increment. Protected checks are running; no merge or live availability is claimed. Chat attachment was attempted but the app rejected it at its existing 100-attachment limit. Source, recovery refs and failed diagnostic receipts remain preserved.
+
+## 2026-10-14 — Default world catalogue and regional foundations
+
+Reconciled main at `595421060`; #1193 and native stack #1180 are merged. New
+independent catalogue branch is `codex/fpv-world-catalogue-20261014`. Updated
+priorities and researched source candidates are in `fpv-large-worlds-delivery-plan.md`.
+The regional manifest/residency foundation was published as #1197 and has now
+merged. Source-window loading continues separately; no huge playable-region claim.
+
+Catalogue increment adds Explore/Library discovery, Play-to-download and exact
+installed revision launch, EN/UK search, cancellation-safe navigation and bounded
+v2 pages. Existing v1 feed and all package/recording budgets remain unchanged.
+23 parser/worker scenarios, 15 browser UI contract scenarios, 27 existing focused
+checks and canonical projections pass. Actual integrated host displays the new
+section; its v2 bootstrap is unavailable until this feed merges. A broader existing
+installed-host fixture remains red on an unhandled presentation/runtime.json request;
+33 other installation/offline checks passed. Do not count this as full qualification.
+
+Internal storage is approximately 1.3 GiB, below the 3 GiB heavy-build floor.
+External storage holds new asset preparation and regional work. Coaster Practice
+Park is undergoing flight/collision/visual admission; no unverified row is added.
+Next: exact-head cloud admission, live feed/host verification, transactional region
+source preparation, actual collision/render streaming, and representative Canyon
+and Urban authored regions. Physical devices, long sessions and public launch
+remain unclaimed. Protected publication continues independently of development.

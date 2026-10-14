@@ -6,7 +6,34 @@ import os from 'node:os';
 import { spawnSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import { optionalPackageFixture } from '../publishing/optional-package-fixture.mjs';
+import { verifyPracticeSite } from './verify-practice-site.mjs';
 const cli = new URL('publish-optional-packages.mjs', import.meta.url).pathname;
+test('the production main workflow stages practice before capacity and verifies the deployed selector', async () => {
+  const source = await fs.readFile(
+    new URL('../.github/workflows/publish-main-pages.yml', import.meta.url),
+    'utf8',
+  );
+  const build = source.split('\n  build:')[1].split('\n  deploy:')[0];
+  const stage = build.indexOf('node scripts/publish-optional-packages.mjs stage-pages');
+  assert.ok(stage > build.indexOf('node scripts/game-cli.mjs build'));
+  assert.ok(stage < build.indexOf('id: inventory'));
+  assert.ok(build.indexOf('id: inventory') < build.indexOf('actions/upload-pages-artifact@'));
+  const step = build.slice(
+    build.lastIndexOf('      - name:', stage),
+    build.indexOf('\n      - name:', stage),
+  );
+  assert.doesNotMatch(step, /\bif:|continue-on-error/);
+  assert.match(step, /GH_TOKEN: \$\{\{ github.token \}\}/);
+  assert.match(step, /--out "\$RUNNER_TEMP\/main-pages"/);
+  assert.match(step, /--selector publishing\/pages-controller\/optional-packages.json/);
+  assert.match(step, /--repository mekhovov\/revealline --base-path \/revealline\//);
+  const verify = source.split('\n  verify:')[1];
+  assert.match(verify, /needs: \[build, deploy\]/);
+  assert.match(verify, /ref: \$\{\{ needs.build.outputs.source_sha \}\}/);
+  assert.match(verify, /PUBLIC_ROOT: \$\{\{ needs.deploy.outputs.page_url \}\}/);
+  assert.match(verify, /node scripts\/verify-practice-site.mjs "\$\{PUBLIC_ROOT%\/\}\/"/);
+  assert.doesNotMatch(verify, /continue-on-error|\|\| true/);
+});
 test('main Pages staging emits an explicit empty catalogue without GitHub and refuses replacement', async (t) => {
   const directory = await fs.mkdtemp(path.join(os.tmpdir(), 'practice-main-pages-'));
   t.after(() => fs.rm(directory, { recursive: true, force: true }));
@@ -180,6 +207,66 @@ test('optional CLI verifies local originals without GitHub and stages only downl
   assert.ok(
     calls.every((args) => args[0] === 'api' && !args.includes('--method') && !args.includes('-X')),
   );
+});
+
+test('main Pages stages reviewed originals and public verification rejects stale versions or changed bytes', async (t) => {
+  const f = await fixture(t);
+  await fs.writeFile(
+    f.selectorPath,
+    JSON.stringify({
+      format: 'revealline-optional-package-publication.v1',
+      releases: [f.candidate.release],
+    }),
+  );
+  const output = path.join(f.directory, 'site');
+  await fs.mkdir(output);
+  const result = spawnSync(
+    process.execPath,
+    [
+      cli,
+      'stage-pages',
+      '--out',
+      output,
+      '--selector',
+      f.selectorPath,
+      '--repository',
+      'mekhovov/revealline',
+      '--base-path',
+      '/revealline/',
+    ],
+    {
+      encoding: 'utf8',
+      env: {
+        ...process.env,
+        PATH: f.directory + path.delimiter + process.env.PATH,
+        OPTIONAL_CALLS: f.callsPath,
+        OPTIONAL_RESPONSES: f.responsePath,
+      },
+    },
+  );
+  assert.equal(result.status, 0, result.stderr);
+  const fetcher = async (url) => {
+    try {
+      return new Response(
+        await fs.readFile(path.join(output, new URL(url).pathname.slice('/revealline/'.length))),
+      );
+    } catch {
+      return new Response('', { status: 404 });
+    }
+  };
+  const options = {
+    baseURL: 'https://example.test/revealline/',
+    expectedIds: ['civilian-flight'],
+    expectedVersions: { 'civilian-flight': 'v1.2.3' },
+    fetcher,
+  };
+  assert.equal((await verifyPracticeSite(options)).checked.length, 1);
+  await assert.rejects(
+    verifyPracticeSite({ ...options, expectedVersions: { 'civilian-flight': 'v1.2.4' } }),
+    /selected package versions/,
+  );
+  await fs.writeFile(path.join(output, 'practice/civilian-flight/app/index.html'), 'tampered');
+  await assert.rejects(verifyPracticeSite(options), /Stable launcher differs/);
 });
 
 test('optional selector remains unchanged after foreign tags, changed downloads or concurrent edits', async (t) => {

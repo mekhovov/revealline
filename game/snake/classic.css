@@ -918,7 +918,8 @@ body:is(
   display: none;
 }
 
-.board-stats[data-operation='true'] {
+.board-stats[data-operation='true'],
+.board-stats[data-status='true'] {
   flex-wrap: wrap;
 }
 .board-stats[data-operation='true'] [data-stat='caught'] {
