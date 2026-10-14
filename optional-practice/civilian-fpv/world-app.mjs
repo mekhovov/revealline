@@ -1728,6 +1728,8 @@ export function mountWorldApp({
       heading?.focus({ preventScroll: true });
       win.scrollTo(0, 0);
     }
+    worldLibrary.deactivate();
+    if (id === 'packs') worldLibrary.open();
     if (id === 'creator') ensureSpatialEditor();
   }
   function paintLanguage() {
@@ -2962,6 +2964,9 @@ export function mountWorldApp({
     missionLaunchGeneration++;
     pauseFlight();
     missionChooser.open();
+    worldLibrary.deactivate();
+    worldCatalogueHost.hidden = section === 'learn';
+    if (section !== 'learn') worldLibrary.open(worldCatalogueHost);
     if (section === 'learn') {
       const complete = completedKeys();
       const next =
@@ -7348,6 +7353,7 @@ export function mountWorldApp({
   missionLibrary = createSimMissionLibrary();
   const missionTools = el('div', undefined, 'dialog-actions');
   const selectedTools = el('div', undefined, 'dialog-actions');
+  const worldCatalogueHost = el('section', undefined, 'world-catalogue-host');
   const randomMission = button(txt('Random flight', 'Випадковий політ'), async () => {
     missionChooser.close();
     await startRandomFlight();
@@ -7483,6 +7489,8 @@ export function mountWorldApp({
       );
     },
   });
+  missionChooser.elements.list.before(worldCatalogueHost);
+  on(missionChooser.elements.dialog, 'close', () => worldLibrary.deactivate());
   playShell = mountSimPlayShell({
     document: doc,
     mount: doc.body,
@@ -7554,7 +7562,10 @@ export function mountWorldApp({
         paintLessonReturn(surface);
         if (flight?.snapshot().status === 'active') pauseFlight();
         if (flight) updateHUD(flight.snapshot());
-        if (surface !== 'missions') missionChooser.close();
+        if (surface !== 'missions') {
+          missionChooser.close();
+          worldLibrary.deactivate();
+        }
         if (surface === 'results') {
           // Keep the native result actions and async verification in place.
           playShell.enterPlay();
