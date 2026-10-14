@@ -3593,6 +3593,7 @@ pause and continue worked; the captured ordinary flight reached 30.8 seconds.
 This is public installation/launch evidence, not a manual course completion,
 new recording, hardware or sustained performance claim. The compatible Library
 cohort must copy the eligible Reservoir row and retain both older feeds.
+
 ### 5 October — Stick geometry observation qualified; publication held
 
 The separate Worlds display-only candidate `34ddde3ed0416f0e90aae8170101bd6a6c8d08e2`
@@ -3632,6 +3633,7 @@ auto-merge enrollment; fresh protected checks/publication remain separate. The
 first Library row #1094 and combined/endurance evidence #1096 remain independently
 tracked. This checkpoint does not finish broader D1 performance/physical-device
 acceptance, D5's remaining worlds, or deferred D6 coverage.
+
 ### 5 October — Public21826 and imported catalogue truthfulness
 
 Matching public deployment/build markers now identify main 21826c460e80. The
@@ -4012,7 +4014,6 @@ evidence, and keep heavy qualification stopped until the stable floor is met.
 This checkpoint changes documentation only; current runtime and package input
 identities remain unchanged.
 
-
 ## 13 October — Rebase and cumulative Library repair
 
 Rebased onto current main `fba236ef80bd0310ae3b9c33fd7c26b1529b245c` (already
@@ -4038,7 +4039,6 @@ pack bytes and does not claim new device, FPS, offline or unit coverage.
 Next: finish the public Library journey, then current-main integrated
 performance/reliability verification. Preserve the approved order of content
 work and defer Canals until the shared quality/delivery path is qualified.
-
 
 ## 13 October — Public Library delivery verified
 
@@ -4069,7 +4069,6 @@ longer representative performance windows, preserving historical evidence and
 reporting exact tested identities. Qualify the shared quality standard before
 Canals production; D6 remains the final coverage/release phase. This public UI
 check does not claim new offline recovery, hardware FPS or physical-radio results.
-
 
 ## 13 October — Current-main admission, Creator and stopped-origin flight
 
@@ -4208,7 +4207,6 @@ head `6384164d5`. Cloud admission started in
 This follow-up is documentation-only. Use the latest exact-head checks before
 merge; source-browser availability is not a public deployment claim.
 
-
 ### 14 October 2026 — paused Flight setup candidate
 
 Continued the approved quick-camera recommendations on `codex/fpv-pause-flight-setup`, based on frozen #1178 head `4e3ad7c9f8fd6ebcc2fd9cca877c03ce76d3dd06`. Shared paused setup and device hints are implemented in both hosts; canonical mode/input handlers, recording identity and explicit arming remain authoritative. Mode switches keep the pause menu; radio return restores its opener. Phone camera choices now share one row, with Resume first. No active-flight overlay was added.
@@ -4217,9 +4215,7 @@ All 123 existing radio/control/shell/flight/appearance checks passed, along with
 
 Next independent increment: shared Retry / Practise section / Watch example flow. Remaining recommendation order is in `docs/fpv-quick-camera-and-ux.md`. Preserve ready camera/setup candidates and keep next-item edits on a separate branch.
 
-
 Publication: focused **PR #1179** (`b476fca3e7834bb304b32ab5daeebd0a79a9aa2f`) is published above **#1178** in new native stack **#1180**, rooted on main. GitHub confirmed the remote head despite a local disk-full error writing upstream tracking metadata; repair that metadata when storage permits. No public availability claim. App attachment was attempted but rejected by the existing 100-attachment limit. A further 62,623,386 bytes of hash-verified, re-downloadable Kenney ZIP caches were removed; extracted sources, download manifests, committed assets and player storage remain intact. Final formatting-only source preflight passed again; receipt refreshed below. Do not treat these source preflights as frozen bundle qualification.
-
 
 ## 2026-10-14 — Parallel usability recommendations implemented
 
@@ -4233,7 +4229,6 @@ Next: complete frozen qualification on the committed final candidate and record 
 
 Frozen candidate `63cda2f18d56b4b7ca938832e765dfa711729879` now passes all three package admissions, committed-input validation, ZIP validation and two byte-identical builds. Flight 85 files / 3,618,121 bytes; Academy 91 / 6,614,749; Worlds 126 / 17,025,929, under unchanged limits. Receipt: `docs/evidence/fpv-ux-parallel-20261014/package-admission.json`. Output is preserved at `/Volumes/alex/CodexMigrationStaging/fpv-ux-20261014/qualified-final-ux`. This subsequent receipt change is documentation-only. Final browser EN/UK switching has no new errors; earlier captured stale-selection error predates the fix. Protected CI/public deployment and physical-device acceptance remain open. No new runtime feature remains in this six-item recommendation increment.
 
-
 ## 2026-10-14 — Main rebase and integrated qualification continuation
 
 Rebased the four local UX branches onto `0e708a45c` with recovery refs and nine identical range-diff patches. All135 existing integration checks and canonical projections passed. A fresh frozen candidate on `6acc57d2b288abed26c745d40c1b97439440d04a` passed allthree admissions, committed inputs, ZIP members and two byte-identical builds.
@@ -4241,7 +4236,6 @@ Rebased the four local UX branches onto `0e708a45c` with recovery refs and nine 
 The atomic push was safely rejected by explicit per-branch leases because GitHub concurrently merged #1184 and #1185 and cascaded #1186/#1188. No newer remote commit was overwritten. Development accepted the native remote history and rebased onto updated main `d22397939`; its `1189e3d9a` tree is exactly identical to the fresh admitted candidate (`461d0bb52d3183688e634a497abd9599b4b88c50`). Original candidate identities remain unchanged. Continue independent work on `codex/fpv-integrated-reliability-20261014`; do not manually retarget native stack members.
 
 Performance audit found historical fixtures pinned to obsolete102-member players; existing shadow preparation and stick-width caching fixes are already present. The next increment uses a manifest-derived exact-player observation with no runtime overlays, bounded visible/focused windows and explicit callback-gap limitations. Reliability baseline passes56 existing checks. The current source graph requires223 modules/17,233,260 bytes: only the two manual Creator fixture limits were reviewed to256 modules/20MiB; per-file6MiB and all production budgets remain unchanged. Actual browser qualification and subsequent publication evidence follow below.
-
 
 ## 2026-10-14 — Integrated reliability completed on latest main
 
@@ -4312,7 +4306,6 @@ receipts. Long-session/device/performance, full offline package and public launc
 qualification remain open. Internal free space remains below the stable 3 GiB
 heavy-build floor; use existing cloud artifacts and external storage without
 weakening budgets or removing player/unpublished data.
-
 
 ## 14 October — Catalogue navigation ownership
 
@@ -4447,3 +4440,49 @@ regional streaming/recovery integration; launcher recovery action stability; Can
 normal/seam/art refinement. Larger public regions, P3 authored worlds and sustained
 package/device qualification remain unfinished. Existing local work, frozen package
 candidates and external source archives remain preserved.
+
+## 14 October — Atomic regional frame and recovery checkpoint
+
+Current coordinator branch: `codex/fpv-delivery-checkpoint-external-20261014`,
+based on main `2c95bfcb` in an external docs-only worktree. Preserve the unrelated
+untracked Worlds verification worker in the internal source checkout. #1235 Canyon
+surfaces and #1237 resident seam normals merged. #1238 adds verified Urban geometry
+to the shared flight authority; #1240 makes geometry, body origin and camera adoption
+synchronous with rollback. #1241 publishes reviewable authoring spawn/heading/material
+controls and remains under protected checks at this checkpoint. Dependencies have
+merged before successors so no new native stack is necessary yet.
+
+Coordinator browser verification of #1241: Canyon Balanced/basin loaded 202,848
+geometry bytes, Quality/mesa 304,272 and Performance/shelf 202,848. Each restart
+returned 0 ticks and 0% throttle with deliberate Arm required; FPV camera selection
+was retained. A deliberate 1,048-tick flight/pause changed to FPV without arming.
+No browser console errors were observed. Different starting windows explain the
+geometry byte counts; they are not evidence that quality settings change collision.
+No sustained FPS or final-art acceptance is claimed.
+
+#1236 fixes disappearing recovery actions. Its separate corrected-launcher harness
+kept both links visible while checking and opened the actual previous player. #1239
+records origin-unavailable cached reopen of both frozen players, each restoring the
+same Reservoir flight at 57.2 seconds paused. In separate localhost 9017, a delayed
+new dependency caused the existing 30-second stalled-download error. An explicit
+cancel during active transfer also retained the old launch action; the server log
+confirmed the delayed dependency request. After cancellation, the old worker still
+hash-verified ready and the old Library retained Reservoir r16, eight challenges
+and digest `50ffbb0e5da7`. This is bounded interruption evidence, not fresh-package
+or every quota/restart scenario qualification.
+
+A separate observed issue is corrected for review in #1242: a slow readiness
+response was reported as missing files despite subsequent exact worker readiness.
+The fix distinguishes unknown verification from actual corruption and avoids
+instructing users to remove usable copies. Catalogue/recovery work continues
+independently of the combined terrain/scenery owner and representative art fixture.
+Main regional player admission, authored expansions, sustained performance and
+device qualification remain unfinished. See `fpv-large-worlds-delivery-plan.md`
+for the current order.
+
+Internal free space reached zero during an attempted documentation update. An
+immediate Git/size audit confirmed both tracked documents were unchanged and the
+unrelated untracked worker remained present. Documentation work moved to an
+external sparse worktree with an external Git store. No source, local commits,
+player storage or unfinished work was deleted. Heavy local builds remain paused
+below the 3 GiB stable free-space floor; independent checks and publication continue.
