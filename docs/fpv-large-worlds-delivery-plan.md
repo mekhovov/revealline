@@ -48,11 +48,21 @@ terrain is deferred. Twelve proposed regions are design targets, not shipped map
   ticks; 384 historical contact comparisons, 51 existing tests, 57 regional checks
   and five Urban flight routes pass. #1257 merges shared production support/landing
   response: 297 historical support queries and the same 154 demonstration replays
-  retain their outcomes. Actual player-host integration is in source review, with
-  normal input/camera/pause ownership and explicit unscored regional sessions;
-  it is not yet a qualified catalogue or package admission.
-  Next: integrate the actual player lifecycle and production collision contracts,
-  with atomic origin migration for every live world owner. Regional scenery
+  retain their outcomes. Actual player-host integration merged in #1267, with
+  normal input/camera/pause ownership and explicit unscored regional sessions.
+  Native keyboard/touch flight, camera and mode changes, portrait layout and
+  boundary Resume → Retry recovery were observed; retries remain disarmed.
+  Package qualification exposed stale count assertions and missing regional modules
+  in the main distribution builder. Correction #1269 is merged. Its unchanged cloud
+  artifact passes exact archive checks; native preparation, actual launcher/home,
+  regional arming, keyboard input, camera/mode changes and disarmed Retry now pass.
+  The regional source remains a separately identified same-origin test fixture,
+  not installed/offline content or default catalogue admission.
+  Continuous staging is published in #1273 with four verified cell crossings.
+  Next: prepare staged renderer resources while the current window remains playable,
+  then adopt it atomically so normal cell crossings do not require re-arming.
+  Explicit paused recovery remains necessary when required data is unavailable.
+  Regional scenery
   admission, recovery and sustained qualification remain separate requirements.
   Existing World coordinates stop at ±100 m. Real regional flight additionally
   needs terrain/collision streaming, origin shifting, render preparation and recovery.
@@ -79,6 +89,14 @@ terrain is deferred. Twelve proposed regions are design targets, not shipped map
   authored ducts, hangers, roof trusses and entrance canopies. Native
   interior/roof views and release/reload passed; existing surfaces remain unchanged,
   with six new matching render/collision surfaces verified separately.
+  #1266 adds 27 licensed Canyon rock formations in a bounded 384×384 m subset,
+  with matching render/collision sources, 2,247 clear corridor sweeps and native
+  gap/gorge/ridge inspection. One buried crown formation was corrected before
+  acceptance. The terrain still needs silhouette and surface refinement; the
+  first broader drainage revision was rejected after native review because it
+  changed substantial relief without adequately fixing the jagged ridge. Targeted
+  original-drainage rounding merged in #1271; the repeating-band material correction
+  passes native three-preset inspection and release/reload, published in #1274.
   Neither representative region is admitted
   to the default catalogue before collision, flight and package qualification.
 - **P3:** Tropical Archipelago, Industrial Railway Valley, Coaster Park, Hillside Town;
@@ -117,6 +135,16 @@ terrain is deferred. Twelve proposed regions are design targets, not shipped map
   same-length, one-byte-corrupted update response: the previous player and Reservoir
   remain usable, then a valid retry opens the new player and the installed world
   disarmed. Frozen package files were not modified.
+  #1270 records nine longer synthetic motion workloads on the same frozen source:
+  1,230 physics ticks and 1,200 measured render frames per run, with 400 frames
+  each in FPV, Chase and Overview. All final physics states match the independent
+  reference, with zero terminal resets. Combined model/draw CPU p95 was 0.6–1.1 ms;
+  registered graphics resources returned to zero after disposal. These deliberately
+  run one physics tick per rendered frame, not real time; they do not prove
+  sustained player FPS, GPU memory reclamation or physical-device performance.
+  Corrected regional host #1269 also passes bounded native exact-package review
+  recorded in merged #1272;
+  this does not qualify regional content distribution or offline source residency.
   See [the native receipt](fpv-package-update-20261014.md).
   Direct mission Start intentionally begins flight after existing readiness gates;
   catalogue download/Play and recovery remain distinct launch paths. Public admission,
@@ -127,11 +155,13 @@ terrain is deferred. Twelve proposed regions are design targets, not shipped map
 
 ## Next delivery order
 
-1. **P1 — Integrate production collision and the player lifecycle.** Paired ownership
+1. **P1 — Complete continuous regional flight and player admission.** Paired ownership
    and the production swept-sphere slide contract are merged with historical replay
-   parity; shared support/ground response is now merged. Finish the real player
-   host integration and every live owner during origin migration, then qualify
-   the exact package closure before admitting a region to players.
+   parity; shared support/ground response and explicit player-host review are merged.
+   Continuous prefetch/adoption is implemented in #1273. Finish staged renderer
+   preparation, immutable regional delivery and exact host-package qualification
+   before admitting a region to players. Normal cell crossings must remain active; unloaded or failed
+   transitions must preserve the previous usable window and pause safely.
    Prototype geometry, shared air and camera alone do not constitute player admission.
 2. **P4 — Complete package self-containment and broader recovery qualification.**
    Tri-state readiness and exact corrected-package update/rollback are verified in
