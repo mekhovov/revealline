@@ -8,7 +8,14 @@ import {
   createOverflightHuntProject,
   compileOverflightHuntProject,
 } from '../overflight/raid-project.mjs';
-import { overflightMissionSource, paintOverflightMission } from '../overflight/mission-library.mjs';
+import {
+  overflightMissionSource,
+  overflightPlayableMissionDefinitions,
+  paintOverflightMission,
+} from '../overflight/mission-library.mjs';
+import { OVERFLIGHT_HUNT_MODE } from '../overflight/raid-mode.mjs';
+import { createOverflightRaidVariant } from '../overflight/raid-variants.mjs';
+import { createExperimentalOverflightWorldProject } from '../overflight/worlds.mjs';
 import {
   createOverflightOperationCards,
   createOverflightRunChangeDialog,
@@ -76,6 +83,66 @@ test('official and installed encounters retain exact compiler identities and own
   assert.equal(launched, entry);
   assert.throws(() => library.launch(a, { mode: 'team' }));
   library.dispose();
+});
+
+test('installed experimental Raid remains discoverable but unavailable in open-arena variants', async () => {
+  const terrain = createExperimentalOverflightWorldProject(OVERFLIGHT_HUNT_MODE.createProject);
+  const current = OVERFLIGHT_HUNT_MODE.createProject();
+  const legacy = createOverflightHuntProject({ rulesVersion: 2 });
+  assert.equal(overflightPlayableMissionDefinitions(OVERFLIGHT_HUNT_MODE, [terrain]).length, 1);
+  for (const variant of ['time-attack', 'marathon']) {
+    const operation = createOverflightRaidVariant(OVERFLIGHT_HUNT_MODE, { variant });
+    const entries = [terrain, current, legacy].map((project, index) => ({
+      identity: `community:installed-${index}`,
+      project,
+    }));
+    const progressRead = [],
+      launched = [];
+    const source = overflightMissionSource({
+      id: 'installed',
+      entries,
+      mode: operation,
+      installed: true,
+      progress(entry) {
+        operation.compileProject(entry.project);
+        progressRead.push(entry);
+        return { state: 'completed', bestStars: null };
+      },
+      launch: (entry) => launched.push(entry),
+    });
+    const library = createMissionLibrary([source]);
+    assert.equal(
+      library.missions.length,
+      3,
+      'incompatible packages do not hide any installed rows',
+    );
+    const [blocked, playable, old] = library.missions;
+    assert.equal(
+      JSON.parse(blocked.id).at(-1),
+      compileOverflightHuntProject(terrain).projectIdentity,
+    );
+    assert.match(library.presentation(blocked).name, /Experimental/);
+    assert.equal(library.availability(blocked, 'solo').state, 'unavailable');
+    assert.match(library.availability(blocked, 'solo').reason, /requires open arenas/);
+    assert.deepEqual(library.progressState(blocked, 'solo'), { state: 'new', bestStars: null });
+    assert.equal(progressRead.length, 0, 'unsupported rows never compile through progress lookup');
+    assert.throws(() => library.launch(blocked, { mode: 'solo' }));
+    assert.equal(launched.length, 0);
+    for (const row of [playable, old]) {
+      assert.equal(library.availability(row, 'solo').state, 'ready');
+      assert.equal(library.progressState(row, 'solo').state, 'completed');
+      await library.launch(row, { mode: 'solo' });
+    }
+    assert.deepEqual(launched, entries.slice(1));
+    assert.deepEqual(
+      overflightPlayableMissionDefinitions(operation, [terrain, current, legacy]).map(
+        (project) => project.projectIdentity,
+      ),
+      [current, legacy].map((project) => compileOverflightHuntProject(project).projectIdentity),
+      'pre-run record queries include supported current and legacy projects only',
+    );
+    library.dispose();
+  }
 });
 
 test('different authored schedules produce different diagrams without mutating projects', () => {

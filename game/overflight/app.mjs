@@ -5,7 +5,12 @@ import { overflightFlightProfile, overflightFlightProfileHint } from './flight-p
 import { createMissionLibrary } from '../mission-library/library.mjs';
 import { attachMissionLibraryChooser } from '../ui/mission-library-chooser.mjs';
 import { createMissionLibrarySessionState } from '../mission-library/handoff.mjs';
-import { overflightMissionSource, paintOverflightMission } from './mission-library.mjs';
+import {
+  overflightMissionSource,
+  paintOverflightMission,
+  overflightMissionSupport,
+  overflightPlayableMissionDefinitions,
+} from './mission-library.mjs';
 import {
   createOverflightOperationCards,
   createOverflightRunChangeDialog,
@@ -1820,15 +1825,17 @@ async function openMissionLibrary() {
   await refreshMissions();
   if (records) {
     const ticket = ++progressEpoch;
-    const candidates = [...officialProjects(), ...installed.map((entry) => entry.project)];
+    const candidates = overflightPlayableMissionDefinitions(mode, [
+      ...officialProjects(),
+      ...installed.map((entry) => entry.project),
+    ]);
     const results = await Promise.all(
-      candidates.map(async (candidate) => {
-        const definition = mode.compileProject(candidate);
+      candidates.map(async (definition) => {
         const recordQuery = {
           compiled: definition,
           seed: definition.seed,
           ...options,
-          difficulty: candidate.difficulty ?? 'standard',
+          difficulty: definition.difficulty ?? 'standard',
           flight: overflightFlightProfile(options.characterId, options.flightTraits),
         };
         const saved = await records.read(mode.recordQuery?.(recordQuery) ?? recordQuery);
@@ -1856,9 +1863,13 @@ function renderMissions() {
   community.replaceChildren();
   if (!installed.length) community.append(el('p', text('noInstalled')));
   for (const entry of installed) {
+    const support = overflightMissionSupport(mode, entry.project);
     const button = el('button', local(entry.title));
     button.type = 'button';
+    button.disabled = !support.compiled;
+    if (support.reason) button.title = support.reason;
     button.addEventListener('click', async () => {
+      if (!support.compiled) return;
       if (!(await confirmSortieChange())) return;
       void prepare({ nextProject: entry.project, nextSeed: entry.project.seed })
         .then((accepted) => {
@@ -1901,6 +1912,7 @@ function renderMissions() {
       }
     });
     row.append(button, exportButton, removeButton);
+    if (support.reason) row.append(el('p', support.reason, 'micro-note'));
     if (entry.communityOwned) {
       const owner = el('a', text('communityEncounterOwner'));
       owner.href = `../community/store.html?lang=${getLocale()}`;

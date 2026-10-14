@@ -24,6 +24,68 @@ import { DEFAULT_OVERFLIGHT_PROJECT, compileOverflightProject } from '../overfli
 import { OVERFLIGHT_COPY } from '../overflight/copy.mjs';
 import { createOverflightReviewRecorder } from '../overflight/review-recorder.mjs';
 
+test('native variant mission picker queries progress only for supported installed projects', async () => {
+  const { readFile } = await import('node:fs/promises');
+  const { runInNewContext } = await import('node:vm');
+  const { parse } = await import('acorn');
+  const { OVERFLIGHT_HUNT_MODE } = await import('../overflight/raid-mode.mjs');
+  const { createOverflightRaidVariant } = await import('../overflight/raid-variants.mjs');
+  const { createExperimentalOverflightWorldProject } = await import('../overflight/worlds.mjs');
+  const { overflightPlayableMissionDefinitions } = await import(
+    '../overflight/mission-library.mjs'
+  );
+  const source = await readFile(new URL('../overflight/app.mjs', import.meta.url), 'utf8');
+  const ast = parse(source, { ecmaVersion: 'latest', sourceType: 'module' });
+  const declaration = ast.body.find(
+    (node) => node.type === 'FunctionDeclaration' && node.id.name === 'openMissionLibrary',
+  );
+  const experimental = createExperimentalOverflightWorldProject(OVERFLIGHT_HUNT_MODE.createProject);
+  const open = OVERFLIGHT_HUNT_MODE.createProject();
+  for (const variant of ['time-attack', 'marathon']) {
+    let refreshed = 0;
+    const queries = [];
+    const mode = createOverflightRaidVariant(OVERFLIGHT_HUNT_MODE, { variant });
+    const context = {
+      mode,
+      pause() {},
+      missionRegistry: {},
+      missionChooser: {
+        open() {},
+        refresh() {
+          refreshed++;
+        },
+      },
+      doc: { activeElement: {} },
+      refreshMissions: async () => {},
+      records: {
+        async read(query) {
+          queries.push(query);
+          return { fastestClear: { time: 30 } };
+        },
+      },
+      progressEpoch: 0,
+      officialProjects: () => [],
+      installed: [experimental, open].map((project) => ({ project })),
+      options: {},
+      retired: false,
+      overflightPlayableMissionDefinitions,
+      overflightFlightProfile: () => ({}),
+    };
+    await runInNewContext(
+      `${source.slice(declaration.start, declaration.end)}; openMissionLibrary()`,
+      context,
+    );
+    assert.equal(queries.length, 1);
+    assert.equal(queries[0].compiled.id, open.id);
+    assert.equal(refreshed, 1);
+    assert.equal(context.missionProgress.size, 1);
+    assert.equal(
+      context.missionProgress.get(mode.compileProject(open).projectIdentity).state,
+      'completed',
+    );
+  }
+});
+
 test('completed-frame trials include explicitly requested native Survivor and Riy review builds', async () => {
   const { readFile } = await import('node:fs/promises');
   const { runInNewContext } = await import('node:vm');
