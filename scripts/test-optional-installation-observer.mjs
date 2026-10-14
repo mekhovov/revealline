@@ -12,7 +12,38 @@ import {
   revealFPVOffline,
   activateOfflineAction,
   OBSERVATION_TIMEOUT_MS,
+  trackObservedResource,
+  resourceCleanupIssues,
 } from './optional-installation-observer-helpers.mjs';
+
+test('timed-out startup retains resource ownership and a late close failure cannot imply cleanup', async () => {
+  const state = { pending: new Set(), errors: [] };
+  let finishLaunch;
+  const launch = new Promise((resolve) => {
+    finishLaunch = resolve;
+  });
+  const acquisition = trackObservedResource(state, 'Browser', async () => {
+    await launch;
+    throw new Error('Late close failed');
+  });
+  const eventualFailure = acquisition.catch((error) => error);
+  await assert.rejects(
+    boundedOperation('Journey', () => acquisition, 2),
+    /timed out/,
+  );
+  const recordedAtCleanup = resourceCleanupIssues(state);
+  assert.equal(recordedAtCleanup.length, 1);
+  assert.match(recordedAtCleanup[0].error, /pending; profile retained/);
+  finishLaunch();
+  assert.match((await eventualFailure).message, /Late close failed/);
+  assert.equal(state.pending.size, 0);
+  assert.match(resourceCleanupIssues(state)[0].error, /Late close failed/);
+  // The already-written receipt remains conservatively unverified, never clean.
+  assert.match(recordedAtCleanup[0].error, /profile retained/);
+  const clean = { pending: new Set(), errors: [] };
+  assert.equal(await trackObservedResource(clean, 'Browser', async () => 42), 42);
+  assert.deepEqual(resourceCleanupIssues(clean), []);
+});
 
 test('offline action requires fresh observable work, native Enter and a fresh terminal status', async () => {
   async function exercise({
