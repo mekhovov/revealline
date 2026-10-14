@@ -295,6 +295,71 @@ test('launcher keeps missing-file repair and removal visible after checking an a
   }
 });
 
+test('launcher distinguishes unfinished verification from missing files without inventing readiness', async () => {
+  for (const [locale, unfinished] of [
+    ['en', /Offline verification could not finish/],
+    ['uk', /Не вдалося завершити офлайн-перевірку/],
+  ]) {
+    const storage = memory();
+    recordOptionalInstallation({ packageId, storage, location: locationFor('v1.2.2') });
+    recordOptionalInstallation({ packageId, storage, location: locationFor('v1.2.3') });
+    const saved = storage.getItem(optionalInstallationKey(packageId, root));
+    const current = {
+      id: packageId,
+      version: 'v1.2.3',
+      scope: '../releases/v1.2.3/site/',
+      entry: 'optional-practice/civilian-flight/index.html',
+    };
+    let status = 'unknown',
+      missingPrevious = false;
+    const f = launcher(async () => new Response(JSON.stringify(current)), '?lang=' + locale, {
+      storage,
+      offlineReady: async (base) => ({
+        status: missingPrevious && base.href.includes('/v1.2.2/') ? 'unavailable' : status,
+      }),
+    });
+    await f.ready;
+    assert.match(f.elements.status.textContent, unfinished);
+    assert.equal(
+      f.elements.open.hidden,
+      true,
+      'An unknown initial check cannot certify a saved pointer',
+    );
+    assert.equal(f.elements.previous.hidden, true);
+    status = 'ready';
+    await f.elements.check.onclick();
+    const active = f.elements.open.href,
+      previous = f.elements.previous.href;
+    assert.equal(f.elements.open.hidden, false);
+    assert.equal(f.elements.previous.hidden, false);
+    status = 'unknown';
+    await f.elements.check.onclick();
+    assert.match(f.elements.status.textContent, unfinished);
+    assert.equal(
+      f.elements.open.hidden,
+      false,
+      'An inconclusive recheck retains the known prepared action',
+    );
+    assert.equal(f.elements.previous.hidden, false);
+    assert.equal(f.elements.open.href, active);
+    assert.equal(f.elements.previous.href, previous);
+    missingPrevious = true;
+    await f.elements.check.onclick();
+    assert.equal(
+      f.elements.previous.hidden,
+      true,
+      'Confirmed missing files still remove the broken action',
+    );
+    assert.equal(f.elements.open.hidden, false);
+    assert.match(f.elements.status.textContent, /Needs repair|Потрібне відновлення/);
+    assert.equal(
+      storage.getItem(optionalInstallationKey(packageId, root)),
+      saved,
+      'Verification does not mutate saved versions',
+    );
+  }
+});
+
 test('stable launcher keeps locale and appearance on auto-play and verified offline fallback', async () => {
   const current = {
     id: packageId,

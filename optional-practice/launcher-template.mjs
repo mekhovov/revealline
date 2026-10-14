@@ -24,6 +24,8 @@ export function installOptionalLauncher(
       error: 'This version is unavailable. Previously prepared practice remains available.',
       offline: 'Ready offline',
       checking: 'Checking prepared versions…',
+      unverified:
+        'Offline verification could not finish. Check again. Your saved versions have not been removed.',
       repair:
         'Needs repair: a saved installation has missing files or no owning worker. Remove this offline copy, then download it again.',
       available: 'Available online. Choose Download for offline use to prepare this version.',
@@ -53,6 +55,8 @@ export function installOptionalLauncher(
       error: 'Ця версія недоступна. Раніше підготовлена практика залишається доступною.',
       offline: 'Готово офлайн',
       checking: 'Перевірка підготовлених версій…',
+      unverified:
+        'Не вдалося завершити офлайн-перевірку. Перевірте ще раз. Збережені версії не видалено.',
       repair:
         'Потрібне відновлення: у збереженій версії бракує файлів або власного воркера. Видаліть цю офлайн-копію, потім завантажте її знову.',
       available:
@@ -82,6 +86,8 @@ export function installOptionalLauncher(
     available = null,
     repairReference = null,
     launcherReady = false,
+    verificationUnknown = false,
+    verificationUnavailable = false,
     stateKey = 'status';
   const entryURL = (value) => {
     const url = new URL(value.entry, value.scope);
@@ -146,12 +152,19 @@ export function installOptionalLauncher(
   }
   const validate = (value) =>
     validateOptionalInstallationReference(value, { packageId, root, baseURL: location.href });
+  const readiness = async (base) => {
+    const result = await inspectOptionalOffline?.(base, { detailed: true });
+    if (result === true) return 'ready';
+    if (result === false) return 'unavailable';
+    return ['ready', 'unavailable'].includes(result?.status) ? result.status : 'unknown';
+  };
   let restoreRevision = 0;
   async function restore() {
     const revision = ++restoreRevision;
     let nextPrepared = null,
       nextRepair = null,
       nextLauncherReady = false,
+      nextUnknown = false,
       nextState = available ? 'available' : 'status';
     const links = new Map();
     // Keep the last verified actions visible while checking. Publish one complete
@@ -168,10 +181,17 @@ export function installOptionalLauncher(
       ])
         if (state[key]) {
           const value = validate(state[key]);
-          const ready = await inspectOptionalOffline?.(
-            new URL('./', new URL(value.entry, value.scope)),
-          );
-          if (!ready) {
+          const ready = await readiness(new URL('./', new URL(value.entry, value.scope)));
+          if (ready === 'unknown') {
+            nextUnknown = true;
+            const href = entryURL(value);
+            if (!$(element).hidden && $(element).href === href) {
+              links.set(element, href);
+              if (key === 'active') nextPrepared = value;
+            }
+            continue;
+          }
+          if (ready === 'unavailable') {
             nextState = 'repair';
             nextRepair ??= value;
             continue;
@@ -189,14 +209,18 @@ export function installOptionalLauncher(
       nextState = 'error';
     }
     if (nextPrepared) {
-      nextLauncherReady = await inspectOptionalOffline?.(new URL('./', location.href));
-      if (!nextLauncherReady) nextState = 'repair';
+      const ready = await readiness(new URL('./', location.href));
+      nextLauncherReady = ready === 'ready';
+      if (ready === 'unknown') nextUnknown = true;
+      else if (!nextLauncherReady) nextState = 'repair';
     }
     if (revision !== restoreRevision) return;
     prepared = nextPrepared;
     repairReference = nextRepair;
     launcherReady = nextLauncherReady;
-    stateKey = nextState;
+    verificationUnknown = nextUnknown;
+    verificationUnavailable = nextState === 'repair';
+    stateKey = nextUnknown && !verificationUnavailable ? 'unverified' : nextState;
     for (const element of ['open', 'previous']) {
       const href = links.get(element);
       if (href) $(element).href = href;
@@ -265,9 +289,10 @@ export function installOptionalLauncher(
       available = value;
       $('prepare').href = entryURL(value);
       $('prepare').hidden = false;
-      stateKey =
-        repairReference || (prepared && !launcherReady)
-          ? 'repair'
+      stateKey = verificationUnavailable
+        ? 'repair'
+        : verificationUnknown
+          ? 'unverified'
           : prepared
             ? prepared.version !== value.version
               ? 'update'
@@ -277,13 +302,15 @@ export function installOptionalLauncher(
       if (play) location.assign(entryURL(value));
     } catch {
       if (!hidden) {
-        stateKey = repairReference
+        stateKey = verificationUnavailable
           ? 'repair'
-          : prepared
-            ? launcherReady
-              ? 'offline'
-              : 'repair'
-            : 'error';
+          : verificationUnknown
+            ? 'unverified'
+            : prepared
+              ? launcherReady
+                ? 'offline'
+                : 'repair'
+              : 'error';
         render();
         if (play && prepared) location.assign(entryURL(prepared));
       }
