@@ -7,6 +7,15 @@ import assert from 'node:assert/strict';
 import { readEditionZip } from '../publishing/edition-zip.mjs';
 import { validateOptionalPackageAdmission } from '../publishing/optional-package-admission.mjs';
 import { startServer } from './game-cli.mjs';
+import {
+  OBSERVED_PACKAGES,
+  TRANSFER_TIMEOUT_MS,
+  OPERATION_TIMEOUT_MS,
+  boundedOperation,
+  closeAllPages,
+  unlockObservedPage,
+  matchesLaunchedAppURL,
+} from './optional-installation-observer-helpers.mjs';
 
 const [
   modulePath,
@@ -38,6 +47,8 @@ const previous = previousBundlePath ? await admitBundle(previousBundlePath) : nu
 const version = envelope.version,
   fpv = 'civilian-fpv',
   gym = 'civilian-flight',
+  worlds = 'fpv-worlds',
+  packageIds = Object.keys(OBSERVED_PACKAGES),
   priorVersion = previous?.envelope.version ?? 'v0.0.0',
   failedFixture = 'v0.0.1';
 assert.ok(
@@ -66,6 +77,9 @@ if (previous) {
 }
 const { chromium } = await import(pathToFileURL(path.resolve(modulePath)).href);
 const harnessSha256 = sha(await readFile(fileURLToPath(import.meta.url)));
+const helperURL = new URL('./optional-installation-observer-helpers.mjs', import.meta.url);
+const helperSha256 = sha(await readFile(helperURL));
+const password = process.env.OPTIONAL_INSTALLATION_PASSWORD;
 const transition = {
   kind: previous ? 'distinct-frozen-candidates' : 'same-payload-path-fixture',
   fromVersion: priorVersion,
@@ -117,7 +131,7 @@ async function stageLauncher(id, files = entries.get(id)) {
     if (name.startsWith('launcher/')) await put(relativeRoot(id) + 'app/' + name.slice(9), bytes);
 }
 try {
-  for (const id of [fpv, gym]) {
+  for (const id of packageIds) {
     const item = envelope.packages.find((row) => row.id === id);
     assert.ok(item, `Frozen bundle must include ${id}.`);
     entries.set(id, readEditionZip(admittedBytes.get(item.distribution.path)));
@@ -149,33 +163,58 @@ try {
   await stage(fpv, failedFixture);
   await pointer(fpv, priorVersion);
   await pointer(gym, version);
+  await pointer(worlds, version);
   await put('.xonix-build.json', JSON.stringify({ tool: 'xonix-game-cli', formatVersion: 1 }));
   served = await startServer({ root, port: 0 });
   context = await chromium.launchPersistentContext(profile, {
     channel: 'chrome',
     headless: true,
+    locale: 'en-US',
     viewport: { width: 1280, height: 900 },
   });
-  const page = context.pages()[0] ?? (await context.newPage());
+  context.setDefaultTimeout(OPERATION_TIMEOUT_MS);
+  context.setDefaultNavigationTimeout(OPERATION_TIMEOUT_MS);
+  context.on('page', (newPage) => newPage.on('pageerror', (error) => errors.push(error.message)));
+  let page = context.pages()[0] ?? (await context.newPage());
   page.on('pageerror', (error) => errors.push(error.message));
   cdp = await context.newCDPSession(page);
+  const send = (method, parameters) => boundedOperation(method, () => cdp.send(method, parameters));
   const url = (name) => new URL(name, served.url).href;
+  async function revealControl(id, selector, category = 'extras') {
+    if (await page.locator(selector).isVisible()) return;
+    const prefix = OBSERVED_PACKAGES[id].settingsPrefix;
+    const tab = page.locator(`#${prefix}-settings-tab-${category}`);
+    if (!(await tab.isVisible())) await page.locator(`#${prefix}-shell-action-settings`).click();
+    await tab.click();
+  }
+  async function clickFPV(selector, category = 'extras') {
+    await revealControl(fpv, selector, category);
+    await page.locator(selector).click();
+  }
   async function open(id, selected = version) {
     await page.goto(url(entry(id, selected)));
-    await page.locator('#help').waitFor();
+    await unlockObservedPage(page, password);
+    const selector = OBSERVED_PACKAGES[id].mounted;
+    await page.locator(selector).waitFor();
     // Wait for the ordinary application mount, not merely the static HTML.
     await page.waitForFunction(
-      () => globalThis.document.getElementById('help').textContent.trim().length > 0,
+      (selector) => globalThis.document.querySelector(selector)?.textContent.trim().length > 0,
+      selector,
     );
   }
   async function prepare(id) {
-    await page.locator('#help').click();
-    await page.locator(id === fpv ? '#install-offline' : '#offline').click();
-    const status = page.locator(id === fpv ? '#transfer-status' : '#package-status');
+    const adapter = OBSERVED_PACKAGES[id];
+    await revealControl(id, adapter.panel, id === fpv ? 'extras' : 'content');
+    await page.locator(adapter.panel).click();
+    await page.locator(adapter.prepare).click();
+    const status = page.locator(adapter.status);
     await status
-      .filter({ hasText: /ready offline|ready for offline|prepared offline/i })
-      .waitFor({ timeout: 20000 });
-    await page.locator(id === fpv ? '[data-close="help-dialog"]' : '#close-help').click();
+      .filter({
+        hasText:
+          /ready offline|ready for offline|prepared offline|offline runtime preparation completed/i,
+      })
+      .waitFor({ state: 'attached', timeout: TRANSFER_TIMEOUT_MS });
+    await page.locator(adapter.close).click();
   }
   async function inspect(label) {
     const state = await page.evaluate(async () => ({
@@ -196,7 +235,7 @@ try {
     `revealline.optional-installed.${id}.${encodeURIComponent('/' + relativeRoot(id))}.v1`;
   const installed = (state, id) => JSON.parse(state.keys[keyFor(id)]);
   async function exportedProof() {
-    await page.locator('#notebook-button').click();
+    await clickFPV('#notebook-button', 'data');
     await page
       .getByRole('button', {
         name: 'Export verified flight proofs',
@@ -210,7 +249,7 @@ try {
     return value;
   }
   async function exportedProfiles() {
-    await page.locator('#setup').click();
+    await clickFPV('#setup', 'controls');
     await page.getByRole('button', { name: 'Export profiles', exact: true }).click();
     const value = await page
       .getByRole('textbox', { name: 'Profile JSON', exact: true })
@@ -227,7 +266,7 @@ try {
   );
   const proof = structuredClone(demonstrations.FLIGHT_DEMONSTRATIONS[0]);
   proof.session = 'practice';
-  await page.locator('#notebook-button').click();
+  await clickFPV('#notebook-button', 'data');
   await page.getByRole('textbox', { name: 'Flight proof backup JSON', exact: true }).fill(
     JSON.stringify({
       format: 'FlightProofBackup.v1',
@@ -289,7 +328,7 @@ try {
       responseTicks: 10,
     },
   };
-  await page.locator('#setup').click();
+  await clickFPV('#setup', 'controls');
   await page
     .getByRole('textbox', { name: 'Profile JSON', exact: true })
     .fill(JSON.stringify(profileFixture));
@@ -299,10 +338,13 @@ try {
   assert.deepEqual(JSON.parse(savedProfiles), profileFixture);
   await open(gym);
   await prepare(gym);
-  const both = await inspect('both-prepared');
+  await open(worlds);
+  await prepare(worlds);
+  const both = await inspect('all-three-prepared');
   assert.equal(installed(both, fpv).active.version, priorVersion);
   assert.equal(installed(both, gym).active.version, version);
-  for (const id of [fpv, gym]) {
+  assert.equal(installed(both, worlds).active.version, version);
+  for (const id of packageIds) {
     const manifestId = url(manifests.get(id).id),
       installUrlOrBundleUrl = url(relativeRoot(id) + 'app/');
     await page.goto(installUrlOrBundleUrl);
@@ -312,15 +354,15 @@ try {
     const app = { id, manifestId, installed: false };
     osApps.push(app);
     try {
-      await cdp.send('PWA.install', { manifestId, installUrlOrBundleUrl });
+      await send('PWA.install', { manifestId, installUrlOrBundleUrl });
       app.installed = true;
-      app.state = await cdp.send('PWA.getOsAppState', { manifestId });
-      await cdp.send('PWA.changeAppUserSettings', {
+      app.state = await send('PWA.getOsAppState', { manifestId });
+      await send('PWA.changeAppUserSettings', {
         manifestId,
         displayMode: 'standalone',
       });
       const pendingWindow = context.waitForEvent('page', { timeout: 10000 }).catch(() => null);
-      app.launch = await cdp.send('PWA.launch', { manifestId });
+      app.launch = await send('PWA.launch', { manifestId });
       const appWindow = await pendingWindow;
       assert.ok(appWindow, 'PWA.launch must create its app window.');
       appWindows.set(id, appWindow);
@@ -336,19 +378,76 @@ try {
     }
   }
   await context.setOffline(true);
+  const closedPageCount = await closeAllPages(context);
+  page = await context.newPage();
+  cdp = await context.newCDPSession(page);
+  for (const id of packageIds) {
+    await page.goto(url(relativeRoot(id) + 'app/'));
+    const networkUnavailable = await page.evaluate(async () => {
+      try {
+        await globalThis.fetch('/offline-network-probe-unowned-by-any-worker', {
+          cache: 'no-store',
+        });
+        return false;
+      } catch {
+        return true;
+      }
+    });
+    assert.equal(
+      networkUnavailable,
+      true,
+      'An uncached network probe must fail during offline relaunch.',
+    );
+    await page.locator('#open').click();
+    await page.waitForURL((observed) =>
+      matchesLaunchedAppURL(observed, url(entry(id, id === fpv ? priorVersion : version))),
+    );
+    await unlockObservedPage(page, password);
+    await page.locator(OBSERVED_PACKAGES[id].mounted).waitFor();
+  }
+  const closedTabsRelaunch = {
+    passed: true,
+    closedPageCount,
+    packages: packageIds,
+    networkProbeFailed: true,
+  };
+  await inspect('all-three-relaunched-offline-after-all-windows-closed');
+  // Reopen installed windows while still offline. These are new windows, not
+  // surviving documents whose in-memory modules could hide missing cache files.
+  for (const app of osApps.filter((row) => row.installed)) {
+    const pendingWindow = context
+      .waitForEvent('page', { timeout: OPERATION_TIMEOUT_MS })
+      .catch(() => null);
+    app.offlineLaunch = await send('PWA.launch', { manifestId: app.manifestId });
+    const appWindow = await pendingWindow;
+    assert.ok(appWindow, 'Offline PWA.launch must create a new app window.');
+    appWindows.set(app.id, appWindow);
+    await appWindow.waitForLoadState('domcontentloaded');
+    await appWindow.locator('#open').click();
+    await appWindow.waitForURL((observed) =>
+      matchesLaunchedAppURL(observed, url(entry(app.id, app.id === fpv ? priorVersion : version))),
+    );
+    await unlockObservedPage(appWindow, password);
+    await appWindow.locator(OBSERVED_PACKAGES[app.id].mounted).waitFor();
+    app.offlineWindow = await appWindow.evaluate(() => ({
+      standalone: globalThis.matchMedia('(display-mode: standalone)').matches,
+      url: globalThis.location.href,
+    }));
+    assert.equal(app.offlineWindow.standalone, true);
+  }
   await open(gym);
   await open(fpv, priorVersion);
   assert.equal(await exportedProof(), savedProof);
   assert.equal(await exportedProfiles(), savedProfiles);
-  await inspect('both-open-offline');
+  await inspect('all-three-open-offline');
   await context.setOffline(false);
   await stageLauncher(fpv);
   await pointer(fpv, version);
   await page.goto(url(relativeRoot(fpv) + 'app/'));
   await page.locator('#check').click();
   await page.locator('#prepare').click();
-  await page.waitForURL(url(entry(fpv)));
-  assert.equal(page.url(), url(entry(fpv)));
+  await page.waitForURL((observed) => matchesLaunchedAppURL(observed, url(entry(fpv))));
+  assert.ok(matchesLaunchedAppURL(page.url(), url(entry(fpv))));
   await prepare(fpv);
   assert.equal(await exportedProof(), savedProof);
   assert.equal(await exportedProfiles(), savedProfiles);
@@ -360,21 +459,23 @@ try {
   assert.equal(installed(upgraded, fpv).active.version, version);
   assert.equal(installed(upgraded, fpv).previous.version, priorVersion);
   assert.equal(upgraded.keys[keyFor(gym)], both.keys[keyFor(gym)]);
+  assert.equal(upgraded.keys[keyFor(worlds)], both.keys[keyFor(worlds)]);
   const failureFile = site(fpv, failedFixture) + 'optional-practice/civilian-fpv/README.md';
   await put(failureFile, 'Truncated dependency fixture');
   await open(fpv, failedFixture);
-  await page.locator('#help').click();
+  await clickFPV('#help');
   await page.locator('#install-offline').click();
   await page
     .locator('#transfer-status')
     .filter({ hasText: /verification failed|timed out/ })
-    .waitFor({ timeout: 20000 });
+    .waitFor({ timeout: TRANSFER_TIMEOUT_MS });
   const failed = await inspect('failed-install-preserves-pointers');
   assert.equal(failed.keys[keyFor(fpv)], upgraded.keys[keyFor(fpv)]);
   assert.equal(failed.keys[keyFor(gym)], upgraded.keys[keyFor(gym)]);
+  assert.equal(failed.keys[keyFor(worlds)], upgraded.keys[keyFor(worlds)]);
   assert.ok(failed.caches.every((name) => !name.includes('/' + site(fpv, failedFixture))));
   await open(fpv);
-  await page.locator('#help').click();
+  await clickFPV('#help');
   await page.locator('#remove-offline').click();
   await page
     .locator('#transfer-status')
@@ -383,24 +484,28 @@ try {
   const rolledBack = await inspect('candidate-removed-retained-path-restored');
   assert.equal(installed(rolledBack, fpv).active.version, priorVersion);
   assert.equal(rolledBack.keys[keyFor(gym)], both.keys[keyFor(gym)]);
+  assert.equal(rolledBack.keys[keyFor(worlds)], both.keys[keyFor(worlds)]);
   await context.setOffline(true);
   await page.goto(url(relativeRoot(fpv) + 'app/'));
   await page.locator('#open').click();
-  await page.waitForURL(url(entry(fpv, priorVersion)));
-  assert.equal(page.url(), url(entry(fpv, priorVersion)));
+  await page.waitForURL((observed) =>
+    matchesLaunchedAppURL(observed, url(entry(fpv, priorVersion))),
+  );
+  assert.ok(matchesLaunchedAppURL(page.url(), url(entry(fpv, priorVersion))));
   assert.equal(await exportedProof(), savedProof);
   assert.equal(await exportedProfiles(), savedProfiles);
   await open(gym);
   await inspect('rollback-and-other-package-work-offline');
   await context.setOffline(false);
-  await page.locator('#help').click();
+  await revealControl(gym, '#remove-offline', 'content');
   await page.locator('#remove-offline').click();
   await page
     .locator('#package-status')
     .filter({ hasText: /removed/i })
     .waitFor();
-  const afterGymRemoval = await inspect('gym-cache-removal-preserves-fpv');
+  const afterGymRemoval = await inspect('gym-cache-removal-preserves-fpv-and-worlds');
   assert.equal(afterGymRemoval.keys[keyFor(fpv)], rolledBack.keys[keyFor(fpv)]);
+  assert.equal(afterGymRemoval.keys[keyFor(worlds)], rolledBack.keys[keyFor(worlds)]);
   assert.deepEqual(
     afterGymRemoval.caches.filter((name) => name.includes('/practice/civilian-fpv/')),
     rolledBack.caches.filter((name) => name.includes('/practice/civilian-fpv/')),
@@ -408,9 +513,9 @@ try {
   const installedGym = osApps.find((item) => item.id === gym && item.installed);
   const installedFPV = osApps.find((item) => item.id === fpv && item.installed);
   if (installedGym && installedFPV) {
-    await cdp.send('PWA.uninstall', { manifestId: installedGym.manifestId });
+    await send('PWA.uninstall', { manifestId: installedGym.manifestId });
     installedGym.uninstalled = true;
-    installedFPV.afterOtherUninstall = await cdp.send('PWA.getOsAppState', {
+    installedFPV.afterOtherUninstall = await send('PWA.getOsAppState', {
       manifestId: installedFPV.manifestId,
     });
     assert.equal(appWindows.get(fpv)?.isClosed(), false);
@@ -431,10 +536,14 @@ try {
   )
     ? 'passed'
     : 'unverified';
-  const standaloneWindowStatus = osApps.every((app) => app.window?.standalone)
+  const standaloneWindowStatus = osApps.every(
+    (app) => app.window?.standalone && app.offlineWindow?.standalone,
+  )
     ? 'passed'
     : 'unverified';
-  const harnessStable = harnessSha256 === sha(await readFile(fileURLToPath(import.meta.url)));
+  const harnessStable =
+    harnessSha256 === sha(await readFile(fileURLToPath(import.meta.url))) &&
+    helperSha256 === sha(await readFile(helperURL));
   report = {
     format: 'OptionalInstallationObservation.v1',
     passed:
@@ -445,11 +554,12 @@ try {
     browserPreparationPassed: true,
     osInstallationStatus,
     standaloneWindowStatus,
+    closedTabsRelaunch,
     harnessStable,
     createdAt: new Date().toISOString(),
     browser: context.browser()?.version() ?? 'Chrome persistent context',
     scope:
-      'Isolated local persistent Chrome profile, admitted frozen runtime bytes and ordinary offline/profile/backup UI. ' +
+      'All three apps in an isolated local persistent Chrome profile, admitted frozen runtime bytes and ordinary offline/profile/backup UI. All tabs/windows close before offline launcher and standalone app reopening; the browser process is not restarted. ' +
       (previous
         ? 'Two distinct frozen candidates with original versions and source bindings; changed files are listed. '
         : 'v0.0.0 holds the same candidate payload at an alternate path. ') +
@@ -464,6 +574,7 @@ try {
       manifest,
     })),
     harnessSha256,
+    helperSha256,
     proof: {
       input: 'first frozen demonstration frames under an explicit synthetic practice session',
       sha256: sha(savedProof),
@@ -491,6 +602,7 @@ try {
     artifacts: envelope.packages,
     transition,
     harnessSha256,
+    helperSha256,
     failure: error.message,
     osApps,
     checkpoints,
@@ -501,18 +613,31 @@ try {
   try {
     for (const app of osApps.filter((row) => row.installed && !row.uninstalled)) {
       try {
-        await cdp.send('PWA.uninstall', { manifestId: app.manifestId });
+        await boundedOperation('PWA.uninstall cleanup', () =>
+          cdp.send('PWA.uninstall', { manifestId: app.manifestId }),
+        );
         app.uninstalled = true;
       } catch (error) {
         cleanupErrors.push({ id: app.id, error: error.message });
       }
     }
-    await context?.close();
+    if (context) await boundedOperation('Browser cleanup', () => context.close());
   } catch (error) {
     cleanupErrors.push({ error: error.message });
   } finally {
     try {
-      if (served) await new Promise((resolve) => served.server.close(resolve));
+      if (served) {
+        served.server.closeIdleConnections?.();
+        try {
+          await boundedOperation(
+            'Local server cleanup',
+            () => new Promise((resolve) => served.server.close(resolve)),
+          );
+        } catch (error) {
+          served.server.closeAllConnections?.();
+          cleanupErrors.push({ error: error.message });
+        }
+      }
     } finally {
       if (!cleanupErrors.length) await rm(work, { recursive: true, force: true });
     }
