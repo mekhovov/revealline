@@ -4,7 +4,7 @@ Original evidence date: 2026-10-02. Workstream: discovery, launchers, offline se
 
 ## Current continuation — 2026-10-14
 
-The original implementation was merged in PR #930. Its branch has no unique commits relative to main; the isolated continuation branch was rebased onto `5f126d6105be5708948dbaff6907ca5cd7e15baf`. No shared SIM checkout or simulator mechanics were changed.
+The original implementation was merged in PR #930. Its branch has no unique commits relative to main; the isolated continuation branch was first rebased onto `5f126d6105be5708948dbaff6907ca5cd7e15baf`, then onto `595421060c718295611a8441fbe8dba1c3da88e4` after SIM's recovery fix merged. No shared SIM checkout or simulator mechanics were changed by this workstream.
 
 A later deployment-workflow replacement dropped optional staging. At this audit, production identified source `460169d79f17fca76a7ee5902caf129c6a7bd729`, while `/revealline/practice/index.json` returned HTTP 404. The committed selector still contained no releases. These are two distinct gaps: repairing staging produces a usable **empty** directory; reviewed release selection is still required to list playable packages.
 
