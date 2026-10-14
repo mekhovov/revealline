@@ -41,3 +41,38 @@ export const INDUSTRIAL_BUILTIN_SPRITES = Object.freeze({
   'terrain.slow': ['544551f875b2fd52c41dbbd384d6710a80fb23d744ae8a9bca3353cd23752a48'],
   'terrain.wall': ['326d159fab7ab655e40c493e5e3ae27713157b419788134f23363ef222ad27db'],
 });
+
+// Authored geometry from the same published field-kit rasters above. A geometry
+// edit is a custom appearance even when the PNG and asset id remain unchanged.
+const machineGeometry = (edge, x, y, width, height) =>
+  Object.freeze({
+    frame: Object.freeze({ x: 0, y: 0, width: edge, height: edge }),
+    pivot: Object.freeze({ x: 0.5, y: 0.5 }),
+    occupiedBounds: Object.freeze({ x, y, width, height }),
+    rotorAnchors: Object.freeze([]),
+    nineSlice: null,
+  });
+export const INDUSTRIAL_BUILTIN_MACHINERY_GEOMETRY = Object.freeze({
+  'enemy.border-patrol': machineGeometry(32, 6 / 32, 5 / 32, 21 / 32, 23 / 32),
+  'enemy.bouncer': machineGeometry(32, 5 / 32, 3 / 32, 22 / 32, 25 / 32),
+  'enemy.claimed-rover': machineGeometry(32, 5 / 32, 5 / 32, 22 / 32, 23 / 32),
+  'enemy.contour-patrol': machineGeometry(32, 5 / 32, 5 / 32, 22 / 32, 23 / 32),
+  'enemy.eroder': machineGeometry(32, 4 / 32, 5 / 32, 24 / 32, 23 / 32),
+  'enemy.relay-sentinel': machineGeometry(64, 6 / 64, 4 / 64, 48 / 64, 54 / 64),
+});
+
+/** Compare authored asset geometry, not the adapter's derived paint bounds. */
+export function hasCustomIndustrialMachineryGeometry(asset, slot) {
+  const expected = INDUSTRIAL_BUILTIN_MACHINERY_GEOMETRY[slot];
+  if (!expected) return false;
+  const geometry = asset?.geometry;
+  return (
+    !geometry ||
+    ['frame', 'pivot', 'occupiedBounds'].some((field) =>
+      Object.entries(expected[field]).some(([key, value]) => geometry[field]?.[key] !== value),
+    ) ||
+    geometry.nineSlice !== null ||
+    !Array.isArray(geometry.rotorAnchors) ||
+    geometry.rotorAnchors.length !== 0
+  );
+}
