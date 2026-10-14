@@ -1,17 +1,12 @@
-/** Temporary unscored authoring flight harness. Not a production physics implementation. */
+/** Unscored authoring harness using shared flight air dynamics; terrain collision is provisional. */
 import * as THREE from "../../../optional-practice/civilian-fpv/vendor/three.module.js";
+import { Q } from "../../../optional-practice/civilian-fpv/math.mjs";
 import {
-  Q,
-  attitude,
-  clamp,
-  integrateOrientation,
-  mul,
-  roundDiv,
-} from "../../../optional-practice/civilian-fpv/math.mjs";
-import { quantizeFlightInput } from "../../../optional-practice/civilian-fpv/model.mjs";
+  advanceFlightAir,
+  quantizeFlightInput,
+} from "../../../optional-practice/civilian-fpv/model.mjs";
 import {
   DEFAULT_RESPONSE,
-  responseCurve,
   validateFlightResponse,
 } from "../../../optional-practice/civilian-fpv/radio-profile.mjs";
 import {
@@ -21,7 +16,6 @@ import {
 import { createVerifiedTerrainWindow } from "./verified-terrain-window.mjs";
 
 const AXES = ["x", "y", "z"],
-  HZ = 50,
   RADIUS = 220;
 const fail = (value, message) => {
   if (!value) throw new TypeError(message);
@@ -29,38 +23,12 @@ const fail = (value, message) => {
 const zero = () => ({ x: 0, y: 0, z: 0 });
 const neutral = () => ({ roll: 0, pitch: 0, yaw: 0, throttle: 0 });
 
-/** Temporary port of existing free-air equations; production integration must share one core. */
+// The authority receives a copied candidate: rejected terrain never mutates the committed body.
 function candidateStep(state, command, mode, rates) {
   const next = structuredClone(state),
-    angles = attitude(state.orientation);
-  for (const key of ["roll", "pitch", "yaw"]) {
-    const shaped = responseCurve(command[key], rates.expo);
-    const desired =
-      mode === "self-level" && key !== "yaw"
-        ? clamp(
-            (roundDiv(shaped * rates.maxTilt * 100, 1000) - angles[key]) * 4,
-            -rates.maxRate * 100,
-            rates.maxRate * 100,
-          )
-        : roundDiv(shaped * rates.maxRate * 100, 1000);
-    const difference = desired - next.angular[key];
-    next.angular[key] += difference
-      ? Math.sign(difference) *
-        Math.max(1, Math.abs(roundDiv(difference, rates.responseTicks)))
-      : 0;
-  }
-  next.orientation = integrateOrientation(state.orientation, next.angular, HZ);
-  const up = attitude(next.orientation).up,
-    thrust = roundDiv(command.throttle * 19620, 1000);
-  for (const key of AXES) {
-    const acceleration = mul(up[key], thrust) - (key === "y" ? 9810 : 0);
-    next.velocity[key] = clamp(
-      roundDiv(state.velocity[key] * 995, 1000) + roundDiv(acceleration, HZ),
-      -30000,
-      30000,
-    );
-    next.position[key] = state.position[key] + roundDiv(next.velocity[key], HZ);
-  }
+    displacement = {};
+  advanceFlightAir(next, command, mode, rates, displacement);
+  for (const axis of AXES) next.position[axis] += displacement[axis];
   next.ticks++;
   return next;
 }

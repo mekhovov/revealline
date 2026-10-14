@@ -5,7 +5,8 @@ moving flight body and two camera views. It does **not** make regional maps
 available in the player catalogue. `playerReady` remains false, terrain
 `flightReady` remains false, and the separate model identity is
 `regional-authoring-flight-prototype.v1`. No recordings, rewards, challenges,
-scoring or existing physics files are changed.
+scoring or production collision policies are changed. The subsequent shared-air
+extraction reuses the production equations without changing historical results.
 
 ## What can be reviewed
 
@@ -65,22 +66,25 @@ prototype root. Readiness never arms the drone: throttle must be down and
 rotation controls centred explicitly. No hidden scoring or qualification path
 exists.
 
-## Temporary physics boundary
+## Shared physics boundary
 
-The current production model does not expose its free-air transition as a
-reusable body adapter. This prototype therefore reuses immutable rotation,
-response shaping and input quantisation helpers but temporarily ports the small
-free-air force transition. **That port is not the production direction.** A
-shared transition core must replace it before player integration; original model
-identities and replay/proof behaviour must be retained with parity evidence.
+The prototype, Academy and World Studio flight models now call the same
+`advanceFlightAir` transition in `civilian-fpv/model.mjs`. The temporary force
+port from the first prototype has been removed. Integer equations, operation
+rounding and historical model identities are preserved; each production host still
+owns validation, collision, boundaries, tick progression, lesson acceptance and
+recording authority.
 
 The manual verifier compares every position delta, velocity, angular rate and
-quaternion against the existing `createFlight` model for Acro and self-level,
-with neutral and mixed rotation plus changing throttle, across four 80-tick
-traces. This proves those sampled free-air traces only. Collision deliberately
-uses a conservative sphere stop, zeroing velocity at contact. It does not
-implement production sliding, landing acceptance, pre-impact speed, damage,
-obstacles, actors or motor dynamics. It is not collision parity.
+quaternion against the full existing `createFlight` host for Acro and
+self-level, with neutral and mixed rotation plus changing throttle, across four
+80-tick traces. The historical demonstration/checkpoint fixtures separately
+guard against both hosts drifting together.
+
+Collision deliberately uses a conservative sphere stop, zeroing velocity at
+contact. It does not implement production sliding, landing acceptance,
+pre-impact speed, damage, obstacles, actors or motor dynamics. Sharing the
+free-air transition is not collision parity or production player integration.
 
 Origin migration currently covers terrain, the drone pose and the camera anchor
 because those are the only live objects in this harness. A production
@@ -133,8 +137,9 @@ remains in D6.
 
 ## Remaining before actual regional free flight
 
-1. Extract and reuse the existing production transition/collision contracts
-   without changing legacy recordings, course identities or scoring.
+1. Integrate production collision contracts with regional terrain without
+   changing legacy recordings, course identities or scoring. The free-air
+   transition is shared.
 2. Integrate bounded terrain preparation with the real player renderer/input
    lifecycle; atomically relocate every live world owner and resume only under
    explicit safe rules.
@@ -145,5 +150,5 @@ remains in D6.
    release/package qualification.
 5. Only then enable regional catalogue entries and describe them as playable.
    The 3 GiB stable free-space floor still applies to full package
-   qualification; this authoring graph does not change existing player/offline
-   packages.
+   qualification. The authoring preview stays outside player packages; shared
+   model changes follow normal player release qualification.
