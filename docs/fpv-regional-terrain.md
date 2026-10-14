@@ -61,11 +61,12 @@ arrays before allocation. The limit cannot be raised through this API. At 25 cel
 those arrays total 1,267,800 bytes. This is **not** a GPU or browser-memory measurement:
 Rapier internals, object overhead, temporary GLB compilation and GPU copies are separate.
 
-Inputs are authored collision objects, not untrusted downloaded assets. Preparation
-does not verify the manifest's source hashes or a separately supplied GLB. The source
-loader must verify source bytes; a future asset decoder must bind those exact verified
-bytes to terrain/scenery preparation before player admission. This stage derives both
-its render and collision meshes directly from the same validated height lattice.
+This low-level preparation function accepts authored collision objects and does not
+verify source hashes or a separately supplied GLB. For downloaded terrain, use the
+[verified terrain coordinator](fpv-regional-verified-terrain.md), which privately loads
+exact hashed source bytes, validates collision JSON and requires its paired GLB to equal
+the canonical compiler output. Both paths remain detached authoring preparation and
+never grant player admission.
 
 ## Verification and next work
 
@@ -83,7 +84,7 @@ The compiler checks do not substitute for a GLB viewer, production scenery inspe
 actual GPU allocation measurements or player flight verification. Further unit-suite
 coverage remains in D6.
 
-Next: connect verified source bytes to bounded decoded resources; admit scenery
+Next: extend verified terrain preparation to scenery; admit scenery
 collision; prepare/release terrain and scenery atomically around the player; migrate
 all live state at origin changes; create the unscored regional host; qualify collision,
 rendering, offline recovery and continuous flight before publishing a regional map.
