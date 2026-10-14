@@ -2,7 +2,12 @@ import { createRegionMotionQuery, createRegionFlightSupportQuery } from './regio
 import * as THREE from '../vendor/three.module.js';
 import RAPIER from '../vendor/rapier/rapier.mjs';
 import { validateRegionManifest } from './region-manifest.mjs';
-import { compileSceneryCell, validateSceneryCell, sceneryGeometryBytes } from './scenery-cell.mjs';
+import {
+  validateScenerySource,
+  scenerySourceCell,
+  compileScenerySource,
+  scenerySourceResources,
+} from './indexed-scenery-cell.mjs';
 import { initWorldRuntime } from '../world-collision.mjs';
 
 import { createScenerySurface, validateScenerySurface } from './scenery-surface.mjs';
@@ -15,6 +20,48 @@ const integerPosition = (position) =>
   ['x', 'y', 'z'].every(
     (axis) => Number.isSafeInteger(position[axis]) && Math.abs(position[axis]) <= 100000000,
   );
+
+function createIndexedTexture(source) {
+  const indices = atob(source.indicesBase64),
+    pixels = new Uint8Array(indices.length * 4);
+  for (let i = 0; i < indices.length; i++) {
+    const palette = indices.charCodeAt(i) * 3;
+    pixels[i * 4] = source.paletteRgb[palette];
+    pixels[i * 4 + 1] = source.paletteRgb[palette + 1];
+    pixels[i * 4 + 2] = source.paletteRgb[palette + 2];
+    pixels[i * 4 + 3] = 255;
+  }
+  const texture = new THREE.DataTexture(
+    pixels,
+    source.width,
+    source.height,
+    THREE.RGBAFormat,
+    THREE.UnsignedByteType,
+  );
+  const filters = new Map([
+    [9728, THREE.NearestFilter],
+    [9729, THREE.LinearFilter],
+    [9984, THREE.NearestMipmapNearestFilter],
+    [9985, THREE.LinearMipmapNearestFilter],
+    [9986, THREE.NearestMipmapLinearFilter],
+    [9987, THREE.LinearMipmapLinearFilter],
+  ]);
+  const wraps = new Map([
+    [33071, THREE.ClampToEdgeWrapping],
+    [33648, THREE.MirroredRepeatWrapping],
+    [10497, THREE.RepeatWrapping],
+  ]);
+  texture.colorSpace = THREE.SRGBColorSpace;
+  texture.flipY = false;
+  texture.generateMipmaps = source.minFilter >= 9984;
+  texture.magFilter = filters.get(source.magFilter);
+  texture.minFilter = filters.get(source.minFilter);
+  texture.wrapS = wraps.get(source.wrapS);
+  texture.wrapT = wraps.get(source.wrapT);
+  texture.name = source.id;
+  texture.needsUpdate = true;
+  return texture;
+}
 
 /** Detached authoring preview and isolated scenery query world. Never attaches to the SIM. */
 export async function prepareSceneryWindow(
@@ -33,7 +80,8 @@ export async function prepareSceneryWindow(
   );
   validateScenerySurface(surfaceStyle);
   const manifest = validateRegionManifest(manifestInput),
-    cells = cellsInput.map(validateSceneryCell);
+    sources = cellsInput.map(validateScenerySource),
+    cells = sources.map(scenerySourceCell);
   fail(integerPosition(originMm), 'Invalid local origin');
   originMm = Object.freeze({ ...originMm });
   fail(
@@ -79,14 +127,15 @@ export async function prepareSceneryWindow(
     'Required scenery missing',
   );
   // Positions, indices and Three-generated normals; excludes engine internals and temporary GLB buffers.
-  const geometryBytes = cells.reduce((sum, cell) => sum + sceneryGeometryBytes(cell), 0);
-  fail(geometryBytes <= maxGeometryBytes, 'Scenery geometry budget exceeded');
+  const { geometryBytes, textureBytes, resourceBytes } = scenerySourceResources(sources);
+  fail(resourceBytes <= maxGeometryBytes, 'Scenery geometry/texture budget exceeded');
   await initWorldRuntime();
   const world = new RAPIER.World({ x: 0, y: 0, z: 0 }),
     group = new THREE.Group(),
     geometries = [];
   const materials = [],
-    byColor = new Map();
+    byColor = new Map(),
+    textures = new Map();
   const colliderIds = new Map();
   let disposed = false;
   function dispose() {
@@ -96,27 +145,49 @@ export async function prepareSceneryWindow(
     group.clear();
     for (const geometry of geometries) geometry.dispose();
     for (const material of materials) material.dispose();
+    for (const texture of textures.values()) texture.dispose();
+    textures.clear();
+    for (const material of materials) material.map = null;
+    geometries.length = 0;
+    materials.length = 0;
     world.free();
     byColor.clear();
     colliderIds.clear();
     byCell.clear();
   }
   try {
-    for (const cell of cells) {
-      for (const surface of compileSceneryCell(cell).surfaces) {
+    for (const source of sources) {
+      const cell = scenerySourceCell(source);
+      for (const surface of compileScenerySource(source).surfaces) {
         const { positions, indices } = surface;
-        const key = surface.color.join(',');
+        const textureKey = surface.textureKey ?? '';
+        const key = surface.color.join(',') + textureKey;
         let material = byColor.get(key);
         if (!material) {
-          material = createScenerySurface({ style: surfaceStyle, color: surface.color, originMm });
-          byColor.set(key, material);
+          material = createScenerySurface({
+            style: surface.texture ? 'plain' : surfaceStyle,
+            color: surface.color,
+            originMm,
+          });
           materials.push(material);
+          if (surface.texture) {
+            let texture = textures.get(textureKey);
+            if (!texture) {
+              texture = createIndexedTexture(surface.texture);
+              textures.set(textureKey, texture);
+            }
+            material.map = texture;
+          }
+          byColor.set(key, material);
         }
         const geometry = new THREE.BufferGeometry();
         geometries.push(geometry);
         geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
         geometry.setIndex(new THREE.BufferAttribute(indices, 1));
-        geometry.computeVertexNormals();
+        if (surface.normals)
+          geometry.setAttribute('normal', new THREE.BufferAttribute(surface.normals, 3));
+        else geometry.computeVertexNormals();
+        if (surface.uvs) geometry.setAttribute('uv', new THREE.BufferAttribute(surface.uvs, 2));
         const mesh = new THREE.Mesh(geometry, material);
         mesh.name = cell.chunkId;
         const local = {
@@ -180,6 +251,9 @@ export async function prepareSceneryWindow(
       disposed,
       cells: disposed ? 0 : cells.length,
       geometryBytes: disposed ? 0 : geometryBytes,
+      textureBytes: disposed ? 0 : textureBytes,
+      resourceBytes: disposed ? 0 : resourceBytes,
+      textures: textures.size,
       meshes: disposed ? 0 : geometries.length,
       colliders: colliderIds.size,
       materials: disposed ? 0 : materials.length,
