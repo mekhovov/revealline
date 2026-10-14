@@ -90,6 +90,62 @@ test('mastery follows completed actions, preserves earned flags and compares the
   assert.doesNotThrow(() => validateOverflightMastery(resultState));
 });
 
+test('all six battlefield worlds persist mastery across reopened stores and retain legacy entries', async () => {
+  const worlds = [
+    'field-crossing',
+    'freight-depot',
+    'relay-ruins',
+    'river-port',
+    'chalk-quarry',
+    'orchard-strongpoint',
+  ];
+  const backend = memory();
+  const makeRun = (world) => {
+    const result = createOverflightRun(
+      compileOverflightProject(createOverflightProject({ rulesVersion: 4, world, seed: 17 })),
+      { airframes: 3 },
+    );
+    result.phase = 'won';
+    result.time = 360;
+    result.stats.cachesClaimed = 1;
+    return result;
+  };
+  const firstStore = createOverflightMastery({ backend });
+  assert.equal((await firstStore.record(run())).durable, true, 'old rules remain writable');
+  for (const world of worlds) {
+    const saved = await firstStore.record(makeRun(world));
+    assert.equal(saved.context.world, world);
+    assert.equal(saved.durable, true, `${world} achievement must reach profile storage`);
+    assert.deepEqual(saved.achieved, { complete: true, intact: true, technique: true });
+  }
+  firstStore.dispose();
+  const reopened = createOverflightMastery({ backend });
+  for (const world of worlds) {
+    const replay = makeRun(world);
+    replay.phase = 'lost';
+    replay.time = 250;
+    replay.airframesRemaining = 0;
+    replay.stats.cachesClaimed = 0;
+    const saved = await reopened.record(replay);
+    assert.equal(saved.durable, true);
+    assert.equal(saved.previous.time, 360, `${world} must recover its prior run after reopening`);
+    assert.deepEqual(saved.achieved, { complete: true, intact: true, technique: true });
+  }
+  const state = await backend.read();
+  assert.equal(Object.keys(validateOverflightMastery(state).entries).length, 7);
+  const unknown = structuredClone(Object.values(state.entries)[0]);
+  unknown.context.world = 'unknown-world';
+  assert.throws(
+    () =>
+      validateOverflightMastery({
+        format: OVERFLIGHT_MASTERY_FORMAT,
+        entries: { [dataIdentity(unknown.context)]: unknown },
+      }),
+    /Invalid mastery world/,
+  );
+  reopened.dispose();
+});
+
 test('Riy requires reached attack range and Raid requires an earned chain, not selected upgrades', () => {
   const squad = run();
   squad.riy = { commands: 8, engagements: 2 };

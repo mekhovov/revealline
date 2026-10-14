@@ -131,7 +131,7 @@ export function validateOverflightMastery(source) {
     );
     exactKeys(entry.context, ['world', 'mode', 'rules'], 'World mastery context');
     required(
-      ['field-crossing', 'freight-depot', 'relay-ruins', 'legacy'].includes(entry.context.world),
+      entry.context.world === 'legacy' || !!overflightWorldDefinition(entry.context.world),
       'Invalid mastery world.',
     );
     required(

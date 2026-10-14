@@ -22,6 +22,7 @@ import { Document } from './helpers/couch-dom.mjs';
 
 test('SIM Creator explicitly exposes exact world profiles while existing and customized profiles remain unchanged', () => {
   assert.equal(THEME_PROFILES[0].id, 'academy');
+  assert.equal(SIM_BATTLEFIELD_PROFILES.length, 6);
   const html = readFileSync(
     new URL('../../optional-practice/fpv-worlds/index.html', import.meta.url),
     'utf8',
