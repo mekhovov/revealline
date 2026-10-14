@@ -33,6 +33,8 @@ On 14 October 2026, eight Urban combinations (plain plus all three appearance qu
 
 Native browser review of Balanced compiled without console errors. North remained 6 cells / 78 meshes / 766,608 combined geometry bytes; South remained 9 cells / 111 meshes / 1,044,240 bytes. Concrete joints and restrained apron lines made the north approach clearer; gravel/asphalt distinguished the south approach from the verge. The screenshot `urban-ground-south.png` records the reviewed appearance. The visible loaded-ground edge is an authoring-window boundary, not a qualified playable-world boundary. No device FPS measurement was made.
 
+Native Release reported no live scenery or collision; Load restored Overview at 9 cells / 111 meshes / 1,044,240 geometry bytes. The source parity suite passed again after rebasing onto main `e4a90960f7`.
+
 ## Remaining
 
 This improves surface readability; it does not complete environment art. Sparse district composition, architectural detail and the wider regional-player admission/package/performance work remain separate. No source world or course is silently upgraded to a playable catalogue entry by selecting this appearance.
