@@ -75,8 +75,8 @@ terrain is deferred. Twelve proposed regions are design targets, not shipped map
   atrium views and release/reload passed. These changes establish visual depth and
   material scale; they do not complete the quality standard. Loading-court
   composition #1255 and optional ground surfaces #1258 are merged: blue/amber
-  landmarks, clear door lines, concrete aprons, gravel and asphalt. #1263 adds
-  authored ducts, hangers, roof trusses and entrance canopies for review. Native
+  landmarks, clear door lines, concrete aprons, gravel and asphalt. #1263 merges
+  authored ducts, hangers, roof trusses and entrance canopies. Native
   interior/roof views and release/reload passed; existing surfaces remain unchanged,
   with six new matching render/collision surfaces verified separately.
   Neither representative region is admitted
@@ -113,7 +113,10 @@ terrain is deferred. Twelve proposed regions are design targets, not shipped map
   120 measured frames. Callback CPU p95 was 0.6–1.2 ms; animation cadence p95
   was 8.8–9.2 ms. These static disarmed observations exclude GPU completion and
   do not establish sustained gameplay FPS or physical-device performance. An
-  initial zero-viewport sample was rejected.
+  initial zero-viewport sample was rejected. #1264 verifies rejection of a
+  same-length, one-byte-corrupted update response: the previous player and Reservoir
+  remain usable, then a valid retry opens the new player and the installed world
+  disarmed. Frozen package files were not modified.
   See [the native receipt](fpv-package-update-20261014.md).
   Direct mission Start intentionally begins flight after existing readiness gates;
   catalogue download/Play and recovery remain distinct launch paths. Public admission,
@@ -132,9 +135,9 @@ terrain is deferred. Twelve proposed regions are design targets, not shipped map
    Prototype geometry, shared air and camera alone do not constitute player admission.
 2. **P4 — Complete package self-containment and broader recovery qualification.**
    Tri-state readiness and exact corrected-package update/rollback are verified in
-   the bounded browser fixture. Package-local artwork is also verified. Complete
-   integrity-rejection recovery, then close actual quota/eviction, browser restart
-   and network-wide offline coverage.
+   the bounded browser fixture. Package-local artwork and integrity-rejection
+   recovery are verified. Close actual quota/eviction, browser restart and
+   network-wide offline coverage; qualify the regional host package separately.
    Preserve usable installations and player records through every scenario.
 3. **P2 — Compose the representative quality slice in parallel.** Combine authored
    relief and reachable architecture, refine materials and landmarks, and compare

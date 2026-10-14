@@ -4549,8 +4549,8 @@ on current main in the external docs-only checkout. #1255 loading courts, #1257
 shared support/landing response, #1258 optional ground surfaces, #1256 native
 20-world static render evidence, #1260 all-course lifecycle evidence and #1261
 bounded rendering measurements have merged. Dependencies cleared before successors;
-no native stack or manual retargeting was required. #1263 adds the next focused
-industrial-hall composition for review.
+no native stack or manual retargeting was required. #1263 industrial-hall
+composition and #1264 integrity-rejection evidence have also merged.
 
 All 41 exact catalogue courses pass launch/pause/reset checks in both modes
 (82 cases). This does not claim all-course native gameplay completion. Nine native
@@ -4578,3 +4578,13 @@ standard. Further regions, sustained/device qualification and D6 remain open.
 Internal storage remains below the heavy-build floor. Source, unfinished changes,
 commits, frozen packages and browser data are preserved. External builds and
 independent publication continue.
+
+On a separate origin, native UI prepared the exact previous player and installed
+Reservoir r16 with eight challenges and digest `50ffbb0e5da7`. One new dependency
+HTTP response was changed by a single byte without changing its length. The update
+was rejected; the actual previous-player link still opened and its Library retained
+the same world. Removing the response fault let the unchanged new package prepare
+successfully, keeping both recovery links. Its actual home opened and catalogue
+Play loaded Reservoir disarmed at zero seconds. Frozen files and player storage
+were not modified. This bounded integrity scenario does not prove quota eviction,
+full browser restart or all network failures.
