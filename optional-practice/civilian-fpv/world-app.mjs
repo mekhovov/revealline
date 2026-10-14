@@ -106,6 +106,7 @@ import { importEditableZip } from './world-zip.mjs';
 import { openWorldStore } from './world-store.mjs';
 import { mountPracticeOfflineControls } from './offline.mjs';
 import { mountWorldLibrary, worldImportErrorCopy } from './world-reaction-runtime.mjs';
+import { mountRegionalLibrary } from './regional-library.mjs';
 import { dataIdentity } from '../../game/data-json.mjs';
 import { runtimeActorArtRevision } from '../../game/hunt/preferences.mjs';
 import {
@@ -141,6 +142,7 @@ import { createWorldAudio } from './world-reaction-runtime.mjs';
 import {
   loadRegionalReview,
   regionalReviewEntry,
+  regionalLibraryEntry,
   createRegionalSession,
 } from './regional-session.mjs';
 import { mountWorldHuntReactions } from './world-reaction-runtime.mjs';
@@ -1735,7 +1737,11 @@ export function mountWorldApp({
       win.scrollTo(0, 0);
     }
     worldLibrary.deactivate();
-    if (id === 'packs') worldLibrary.open();
+    regionalLibrary.deactivate();
+    if (id === 'packs') {
+      worldLibrary.open();
+      regionalLibrary.open();
+    }
     if (id === 'creator') ensureSpatialEditor();
   }
   function paintRuntimeOfflineStatus() {
@@ -3011,8 +3017,12 @@ export function mountWorldApp({
     pauseFlight();
     missionChooser.open();
     worldLibrary.deactivate();
+    regionalLibrary.deactivate();
     worldCatalogueHost.hidden = section === 'learn';
-    if (section !== 'learn') worldLibrary.open(worldCatalogueHost);
+    if (section !== 'learn') {
+      worldLibrary.open(worldCatalogueHost);
+      regionalLibrary.open(worldCatalogueHost);
+    }
     if (section === 'learn') {
       const complete = completedKeys();
       const next =
@@ -3636,6 +3646,22 @@ export function mountWorldApp({
     fly: flyInstalledWorld,
     install: (bytes, row, options) =>
       installExactPack(bytes, `fpv-pack:${row.sha256}`, { ...options, row }),
+  });
+  const regionalLibrary = mountRegionalLibrary({
+    el,
+    txt,
+    parent: $('installed-packs'),
+    window: win,
+    fly: (configuration, record, { isCurrent }) => {
+      const generation = ++missionLaunchGeneration;
+      return startRegionalFlight(
+        regionalLibraryEntry(configuration, { sha256: record.sha256 }),
+        {
+          canAdopt: isCurrent,
+          isCurrent: () => !doc.hidden && generation === missionLaunchGeneration,
+        },
+      );
+    },
   });
   on(restorePackInput, 'change', async (event) => {
     const file = event.target.files[0],
@@ -5689,13 +5715,17 @@ export function mountWorldApp({
   }
   async function startRegionalFlight(entry, options = {}) {
     const token = ++flightToken;
+    const ownsLaunch = () =>
+      !disposed && token === flightToken && options.isCurrent?.() !== false;
+    const canAdopt = () => ownsLaunch() && options.canAdopt?.() !== false;
     industrialPreparation?.abort();
     checkpointPreparation?.abort();
     abortSectorLookup();
     pauseFlight();
     await ready;
+    if (!canAdopt()) return;
     await initWorldRuntime();
-    if (disposed || token !== flightToken) return;
+    if (!canAdopt()) return;
     // Validate paired sources before releasing a usable previous flight.
     const nextFlight = createRegionalSession({
       ...entry.configuration,
@@ -5710,7 +5740,7 @@ export function mountWorldApp({
       await nextFlight.dispose();
       throw error;
     }
-    if (disposed || token !== flightToken) {
+    if (!canAdopt()) {
       await nextFlight.dispose();
       return;
     }
@@ -5749,10 +5779,9 @@ export function mountWorldApp({
     lastTime = null;
     accumulator = 0;
     $('flight-title').textContent = label(entry);
-    $('flight-collection').textContent = txt(
-      'REGIONAL REVIEW · UNSCORED',
-      'ПЕРЕВІРКА РЕГІОНУ · БЕЗ ЗАЛІКУ',
-    );
+    $('flight-collection').textContent = entry.regionalReview
+      ? txt('REGIONAL REVIEW · UNSCORED', 'ПЕРЕВІРКА РЕГІОНУ · БЕЗ ЗАЛІКУ')
+      : txt('REGIONAL FREE FLIGHT · UNSCORED', 'ВІЛЬНИЙ ПОЛІТ У РЕГІОНІ · БЕЗ ЗАЛІКУ');
     $('flight-brief').textContent = $('flight-menu-brief').textContent =
       entry.course.locales[locale].brief;
     $('flight-status').textContent = txt('Preparing region…', 'Підготовка регіону…');
@@ -5787,7 +5816,7 @@ export function mountWorldApp({
     input.select($('flight-source').value);
     restoreRadio();
     await prepareRegionalFlight();
-    if (disposed || token !== flightToken) return;
+    if (!ownsLaunch()) return;
     paintInput(flight.snapshot());
     updateHUD(flight.snapshot());
     $('world-viewport').focus();
@@ -6623,6 +6652,7 @@ export function mountWorldApp({
     renderPacks();
     paintLessonReturn();
     worldLibrary.refresh();
+    regionalLibrary.refresh();
     missionChooser?.refresh();
   });
   on($('play-playlist'), 'click', () => flySequence(playlistValue()));
@@ -7738,7 +7768,10 @@ export function mountWorldApp({
   const worldBrowser = el('div', undefined, 'world-catalogue-browser');
   missionChooser.elements.list.before(worldBrowser);
   worldBrowser.append(worldCatalogueHost, missionChooser.elements.list);
-  on(missionChooser.elements.dialog, 'close', () => worldLibrary.deactivate(worldCatalogueHost));
+  on(missionChooser.elements.dialog, 'close', () => {
+    worldLibrary.deactivate(worldCatalogueHost);
+    regionalLibrary.deactivate(worldCatalogueHost);
+  });
   const shellWordmarkURL = new URL(
     lobbyHeader.querySelector('.wordmark img').getAttribute('src'),
     win.location.href,
@@ -7815,6 +7848,7 @@ export function mountWorldApp({
         if (surface !== 'missions') {
           missionChooser.close();
           worldLibrary.deactivate();
+          regionalLibrary.deactivate();
         }
         if (surface === 'results') {
           // Keep the native result actions and async verification in place.
@@ -8274,6 +8308,7 @@ export function mountWorldApp({
         missionLibrary.dispose();
         runtimeOffline.dispose();
         worldLibrary.dispose();
+        regionalLibrary.dispose();
         proofImport?.abort();
         packRemovalReview?.close();
         restorePackIdentity = null;
