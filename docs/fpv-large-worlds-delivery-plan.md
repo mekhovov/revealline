@@ -1,6 +1,6 @@
 # Large authored FPV regions — active delivery plan
 
-Reviewed 14 October 2026; continuation based on main `01abc1e3a`.
+Reviewed 14 October 2026; shared-air continuation based on main `d317c634b`.
 The user selected default catalogue visibility, download on Play, optional offline
 storage, and authored regions first. Generation assists authoring; endless runtime
 terrain is deferred. Twelve proposed regions are design targets, not shipped maps.
@@ -28,8 +28,13 @@ terrain is deferred. Twelve proposed regions are design targets, not shipped map
   (#1207), plus verified-source-to-terrain binding (#1213), are merged. The
   isolated unscored authoring flight prototype merged in #1220 with safe cell
   crossings, origin shifts and paused recovery; it is not default player admission.
-  Next: replace its temporary free-air equations with the existing shared production
-  transition, preserving historical replay/proof outcomes, then integrate player lifecycle.
+  The shared-air increment is implemented and verified for review: Academy, World
+  Studio and the prototype now reuse one production transition. All 154 World
+  demonstrations retain their replay states/paths across 312,948 ticks; 51 existing
+  checks and seven regional scenarios pass. See [the receipt](fpv-shared-air-transition.md).
+  Next: integrate the actual player lifecycle and production collision contracts,
+  with atomic origin migration for every live world owner. Regional scenery
+  admission, recovery and sustained qualification remain separate requirements.
   Existing World coordinates stop at ±100 m. Real regional flight additionally
   needs terrain/collision streaming, origin shifting, render preparation and recovery.
   Authoring validation alone does not deliver huge playable maps.
