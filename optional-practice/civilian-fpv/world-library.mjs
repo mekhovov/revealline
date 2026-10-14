@@ -114,6 +114,8 @@ export function mountWorldLibrary({ el, txt, parent, begin, install, fly }) {
     browse.textContent = txt('Browse optional worlds', 'Оглянути додаткові світи');
     cancel.textContent = txt('Cancel', 'Скасувати');
     message.textContent = txt(...notice);
+    const active = parent.ownerDocument.activeElement;
+    const focusedWorld = active?.closest?.('[data-world]')?.dataset.world;
     browse.disabled = !!operation;
     cancel.hidden = !operation;
     cards.replaceChildren();
@@ -136,15 +138,17 @@ export function mountWorldLibrary({ el, txt, parent, begin, install, fly }) {
       download.type = 'button';
       download.disabled = !!operation || (stored && !fly);
       download.onclick = async () => {
+        if (closed || operation) return;
         if (!stored) return run(row);
         download.disabled = true;
         try {
           await fly(row);
         } catch {
-          show(
-            'This world could not open. Refresh the Library and try again.',
-            'Не вдалося відкрити світ. Оновіть бібліотеку та повторіть.',
-          );
+          if (!closed)
+            show(
+              'This world could not open. Refresh the Library and try again.',
+              'Не вдалося відкрити світ. Оновіть бібліотеку та повторіть.',
+            );
         } finally {
           if (download.isConnected) download.disabled = !!operation;
         }
@@ -158,6 +162,7 @@ export function mountWorldLibrary({ el, txt, parent, begin, install, fly }) {
         download,
       );
       cards.append(card);
+      if (focusedWorld === row.id && !download.disabled) download.focus();
     }
   }
   async function run(row) {
@@ -166,8 +171,15 @@ export function mountWorldLibrary({ el, txt, parent, begin, install, fly }) {
       signal = controller.signal;
     let committed = false;
     operation = controller;
+    const doc = parent.ownerDocument;
+    let restoreFocus = true;
+    const trackFocus = (event) => {
+      if (event.target !== doc.body && !root.contains(event.target)) restoreFocus = false;
+    };
+    doc.addEventListener('focusin', trackFocus);
     cancel.disabled = false;
     paint();
+    cancel.focus();
     show('Loading…', 'Завантаження…');
     const timer = setTimeout(() => controller.abort(), 120000);
     try {
@@ -229,7 +241,16 @@ export function mountWorldLibrary({ el, txt, parent, begin, install, fly }) {
     } finally {
       clearTimeout(timer);
       operation = null;
-      if (!closed) paint();
+      doc.removeEventListener('focusin', trackFocus);
+      if (!closed) {
+        const restore =
+          restoreFocus && (doc.activeElement === doc.body || root.contains(doc.activeElement));
+        paint();
+        if (restore) {
+          const card = [...cards.children].find((node) => node.dataset.world === row?.id);
+          (card?.querySelector('button') ?? browse).focus();
+        }
+      }
     }
   }
   browse.onclick = () => run();

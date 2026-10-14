@@ -3564,7 +3564,7 @@ export function mountWorldApp({
       (candidate) => candidate.projectId === record.id && candidate.packIdentity === `fpv-pack:${record.sha256}`,
     );
     if (!entry) throw new Error(txt('This world is no longer installed. Refresh the Library.', 'Цей світ більше не встановлено. Оновіть бібліотеку.'));
-    await startFlight(entry);
+    await startFlight(entry, { paused: true });
   }
   const worldLibrary = mountWorldLibrary({
     el,

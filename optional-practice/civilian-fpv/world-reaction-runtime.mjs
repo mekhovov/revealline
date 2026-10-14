@@ -65,7 +65,7 @@ const sourceHashes={
 'game/audio/reactions/actors.mjs':
 '79debf91cafa2e01cd65170037ee483977cbf7d5c3a619ccac9ed400264598b8',
 'optional-practice/civilian-fpv/world-library.mjs':
-'ecfbd7d1cccb04295a075256078ae8b6c8bbdda714053f9bb7e06dc32b407872',
+'3894836b86a1a16f85b79703d69bae1553141e61933bd53578129e49f764d413',
 'game/audio/reactions/guide-0-en.m4a':
 '58f961f54b52d0dbb58f53f000ca85bba166236126e135dc1f5e89f8f9a94210',
 'game/audio/reactions/guide-0-uk.m4a':
@@ -8033,6 +8033,8 @@ function paint(){
 browse.textContent=txt('Browse optional worlds','Оглянути додаткові світи');
 cancel.textContent=txt('Cancel','Скасувати');
 message.textContent=txt(...notice);
+const active=parent.ownerDocument.activeElement;
+const focusedWorld=active?.closest?.('[data-world]')?.dataset.world;
 browse.disabled= !!operation;
 cancel.hidden= !operation;
 cards.replaceChildren();
@@ -8055,11 +8057,13 @@ card.dataset.world=row.id;
 download.type='button';
 download.disabled= !!operation||(stored&& !fly);
 download.onclick=async()=>{
+if(closed||operation)return;
 if(!stored)return run(row);
 download.disabled=true;
 try{
 await fly(row);
 }catch{
+if(!closed)
 show(
 'This world could not open. Refresh the Library and try again.',
 'Не вдалося відкрити світ. Оновіть бібліотеку та повторіть.',
@@ -8077,6 +8081,7 @@ el(
 download,
 );
 cards.append(card);
+if(focusedWorld===row.id&& !download.disabled)download.focus();
 }
 }
 async function run(row){
@@ -8085,8 +8090,15 @@ const controller=new AbortController(),
 signal=controller.signal;
 let committed=false;
 operation=controller;
+const doc=parent.ownerDocument;
+let restoreFocus=true;
+const trackFocus=(event)=>{
+if(event.target!==doc.body&& !root.contains(event.target))restoreFocus=false;
+};
+doc.addEventListener('focusin',trackFocus);
 cancel.disabled=false;
 paint();
+cancel.focus();
 show('Loading…','Завантаження…');
 const timer=setTimeout(()=>controller.abort(),120000);
 try{
@@ -8142,7 +8154,16 @@ show('Download or save failed. Try again.','Завантаження чи збе
 }finally{
 clearTimeout(timer);
 operation=null;
-if(!closed)paint();
+doc.removeEventListener('focusin',trackFocus);
+if(!closed){
+const restore=
+restoreFocus&&(doc.activeElement===doc.body||root.contains(doc.activeElement));
+paint();
+if(restore){
+const card=[...cards.children].find((node)=>node.dataset.world===row?.id);
+(card?.querySelector('button')??browse).focus();
+}
+}
 }
 }
 browse.onclick=()=>run();
