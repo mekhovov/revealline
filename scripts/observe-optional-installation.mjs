@@ -19,6 +19,8 @@ import {
   unlockObservedPage,
   matchesLaunchedAppURL,
   revealFPVOffline,
+  revealFPVProfiles,
+  expectedImportedProfileExport,
 } from './optional-installation-observer-helpers.mjs';
 
 const [
@@ -281,7 +283,7 @@ try {
             name: 'Export verified flight proofs',
             exact: true,
           })
-          .click();
+          .press('Enter');
         const value = await page
           .getByRole('textbox', { name: 'Flight proof backup JSON', exact: true })
           .inputValue();
@@ -289,8 +291,8 @@ try {
         return value;
       }
       async function exportedProfiles() {
-        await clickFPV('#setup', 'controls');
-        await page.getByRole('button', { name: 'Export profiles', exact: true }).click();
+        await revealFPVProfiles(page, () => clickFPV('#setup', 'controls'));
+        await page.getByRole('button', { name: 'Export profiles', exact: true }).press('Enter');
         const value = await page
           .getByRole('textbox', { name: 'Profile JSON', exact: true })
           .inputValue();
@@ -318,7 +320,9 @@ try {
           attempts: [proof],
         }),
       );
-      await page.getByRole('button', { name: 'Import and reverify proofs', exact: true }).click();
+      await page
+        .getByRole('button', { name: 'Import and reverify proofs', exact: true })
+        .press('Enter');
       await page
         .locator('#flight-notebook')
         .getByRole('status')
@@ -372,14 +376,18 @@ try {
           responseTicks: 10,
         },
       };
-      await clickFPV('#setup', 'controls');
+      await revealFPVProfiles(page, () => clickFPV('#setup', 'controls'));
       await page
         .getByRole('textbox', { name: 'Profile JSON', exact: true })
         .fill(JSON.stringify(profileFixture));
-      await page.getByRole('button', { name: 'Import profiles', exact: true }).click();
+      await page.getByRole('button', { name: 'Import profiles', exact: true }).press('Enter');
       await page.locator('[data-close="setup-dialog"]').click();
       const savedProfiles = await exportedProfiles();
-      assert.deepEqual(JSON.parse(savedProfiles), profileFixture);
+      const importedProfiles = JSON.parse(savedProfiles);
+      assert.deepEqual(
+        importedProfiles,
+        expectedImportedProfileExport(importedProfiles.format, profileFixture),
+      );
       await open(gym);
       await prepare(gym);
       await open(worlds);
@@ -630,6 +638,8 @@ try {
         helperSha256,
         inputRoute: {
           academyOfflineDisclosure: 'Native summary keyboard Enter',
+          academyProfileTransfer: 'Native summary and import/export button keyboard Enter',
+          academyProofTransfer: 'Native import/export button keyboard Enter',
           offlineActions: 'Native button keyboard Enter with fresh status/progress observation',
           limitation:
             'A first pointer press can shift the disclosure layout before mouseup; this observer does not qualify that pointer interaction.',
@@ -667,6 +677,8 @@ try {
     helperSha256,
     inputRoute: {
       academyOfflineDisclosure: 'Native summary keyboard Enter',
+      academyProfileTransfer: 'Native summary and import/export button keyboard Enter',
+      academyProofTransfer: 'Native import/export button keyboard Enter',
       offlineActions: 'Native button keyboard Enter with fresh status/progress observation',
       limitation:
         'A first pointer press can shift the disclosure layout before mouseup; this observer does not qualify that pointer interaction.',
