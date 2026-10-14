@@ -9,6 +9,7 @@ import {
   initWorldRuntime,
   replayWorldFlight,
   worldStateIdentity,
+  WORLD_FLIGHT_MODEL,
 } from '../../../optional-practice/civilian-fpv/world-model.mjs';
 import {
   exportProofParts,
@@ -92,7 +93,7 @@ await fs.writeFile(
     {
       format: 'FPVFreeWorldFlights.v1',
       verifiedAt: new Date().toISOString(),
-      runtime: 'unchanged current main 0a3e1fb',
+      runtime: WORLD_FLIGHT_MODEL,
       checks: receipt,
       limitations: [
         'Content commands/replay verification; browser installation and visual inspection are separate.',
