@@ -110,6 +110,57 @@ test('status cancellation owns lookup and reply lifetime without cancelling a pl
   assert.deepEqual(f.messages, [], 'A late lookup never opens a port or cancels the flight');
 });
 
+test('detailed readiness distinguishes missing dependencies from an inconclusive worker check', async () => {
+  const f = fixture();
+  assert.deepEqual(
+    await inspectOptionalOffline(f.base, { navigator: f.navigator, detailed: true }),
+    { status: 'unavailable' },
+  );
+  f.activate();
+  for (const [reply, expected] of [
+    [true, 'ready'],
+    [false, 'unavailable'],
+    ['invalid', 'unknown'],
+  ]) {
+    const pending = inspectOptionalOffline(f.base, { navigator: f.navigator, detailed: true });
+    await waitFor(() => f.ports.length === 1);
+    f.reply(reply);
+    assert.deepEqual(await pending, { status: expected });
+  }
+  const lookup = deferred();
+  assert.deepEqual(
+    await inspectOptionalOffline(f.base, {
+      navigator: { serviceWorker: { getRegistration: () => lookup.promise } },
+      detailed: true,
+      timeoutMs: 1,
+    }),
+    { status: 'unknown' },
+  );
+  lookup.resolve(f.registration);
+  await new Promise((resolve) => setImmediate(resolve));
+  assert.equal(f.ports.length, 0, 'A timed-out lookup never opens a late status port');
+  assert.deepEqual(
+    await inspectOptionalOffline(f.base, {
+      navigator: {
+        serviceWorker: {
+          getRegistration: async () => {
+            throw new Error('Transient lookup failure');
+          },
+        },
+      },
+      detailed: true,
+    }),
+    { status: 'unknown' },
+  );
+  const legacy = inspectOptionalOffline(f.base, { navigator: f.navigator });
+  await waitFor(() => f.ports.length === 1);
+  f.reply(false);
+  assert.equal(await legacy, false, 'Existing boolean callers retain their fail-closed contract');
+  assert.equal(f.registrations(), 0);
+  assert.equal(f.unregisters(), 0);
+  assert.equal(f.values.size, 0);
+});
+
 test('cancelling initial verification never records a late successful installation', async () => {
   const f = fixture(),
     abort = new AbortController();
