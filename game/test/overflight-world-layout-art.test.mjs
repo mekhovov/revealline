@@ -209,3 +209,32 @@ test('cosmetic world selection preserves topology and synchronizing cover preser
   assert.ok(!slots.includes('world.overflight.module.floodgate-panel'));
   assert.ok(slots.length < OVERFLIGHT_WORLD_IMAGE_SLOTS.length);
 });
+
+test('host-cropped world frames and original Studio atlases draw the same authored pixels', () => {
+  const geometry = {
+      frame: { x: 16, y: 32, width: 32, height: 32 },
+      pivot: { x: 0.5, y: 0.5 },
+      occupiedBounds: { x: 0.25, y: 0.25, width: 0.5, height: 0.5 },
+    },
+    atlas = { width: 64, height: 96 },
+    cropped = { width: 32, height: 32 },
+    ctx = context();
+  drawOverflightWorldModuleImage(ctx, { image: atlas, geometry }, 100, 100);
+  drawOverflightWorldModuleImage(ctx, { image: cropped, geometry }, 100, 100);
+  assert.deepEqual(ctx.images[0].slice(1, 5), [24, 40, 16, 16]);
+  assert.deepEqual(ctx.images[1].slice(1, 5), [8, 8, 16, 16]);
+  assert.deepEqual(ctx.images[0].slice(5), ctx.images[1].slice(5));
+  for (const layout of [null, createOverflightBattlefield('field-crossing-broken-crossroads')]) {
+    const source = createOverflightWorldPresentation('field-crossing', arena, { layout }),
+      output = context();
+    paintOverflightWorld(output, source, arena, { image: () => ({ image: cropped, geometry }) });
+    assert.ok(output.images.length > 0);
+    for (const args of output.images) {
+      assert.ok(args[1] >= 0 && args[2] >= 0);
+      assert.ok(
+        args[1] + args[3] <= 32 && args[2] + args[4] <= 32,
+        'source rectangle stays inside cropped bitmap',
+      );
+    }
+  }
+});

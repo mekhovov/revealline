@@ -1,4 +1,8 @@
-import { OVERFLIGHT_BATTLEFIELDS, applyOverflightBattlefield, overflightBattlefieldDefinition } from './battlefields.mjs';
+import {
+  OVERFLIGHT_BATTLEFIELDS,
+  applyOverflightBattlefield,
+  overflightBattlefieldDefinition,
+} from './battlefields.mjs';
 import { createOverflightWorldPresentation } from './worlds.mjs';
 import { dataIdentity } from '../data-json.mjs';
 import { createOverflightHuntRecords } from './raid-records.mjs';
@@ -47,7 +51,9 @@ export function overflightMarathonNextContract(run, locale = 'en') {
   if (!(next < 5)) return null;
   const language = locale === 'uk' ? 'uk' : 'en';
   const layout = overflightBattlefieldDefinition(run.raidVariant.sequence?.[next]);
-  return [layout?.title[language], OVERFLIGHT_MARATHON_TACTICS[next][language]].filter(Boolean).join(' · ');
+  return [layout?.title[language], OVERFLIGHT_MARATHON_TACTICS[next][language]]
+    .filter(Boolean)
+    .join(' · ');
 }
 const words = {
   en: {
@@ -153,18 +159,28 @@ function sourceOf(compiled) {
 
 export function overflightMarathonSequence(source) {
   if (!source.battlefield) return null;
-  const layouts = OVERFLIGHT_BATTLEFIELDS.filter(entry => entry.world === source.battlefield.world);
-  const first = layouts.findIndex(entry => entry.id === source.battlefield.id);
-  if (first < 0 || layouts.length !== 3) throw new TypeError('Marathon needs an authored three-layout world.');
-  return [0, 1, 2, 1, 0].map(offset => layouts[(first + offset) % 3].id);
+  const layouts = OVERFLIGHT_BATTLEFIELDS.filter(
+    (entry) => entry.world === source.battlefield.world,
+  );
+  const first = layouts.findIndex((entry) => entry.id === source.battlefield.id);
+  if (first < 0 || layouts.length !== 3)
+    throw new TypeError('Marathon needs an authored three-layout world.');
+  return [0, 1, 2, 1, 0].map((offset) => layouts[(first + offset) % 3].id);
 }
 
 export function overflightMarathonProject(source, contract, seed) {
   if (!Number.isInteger(contract) || contract < 1 || contract > OVERFLIGHT_MARATHON_CONTRACTS)
     throw new RangeError('Invalid Marathon contract.');
   const sequence = overflightMarathonSequence(source);
-  const project = sequence ? applyOverflightBattlefield(source, sequence[contract - 1]) : structuredClone(source);
-  if (sequence) project.presentation = createOverflightWorldPresentation(project.battlefield.world, project.arena, { layout: project.battlefield });
+  const project = sequence
+    ? applyOverflightBattlefield(source, sequence[contract - 1])
+    : structuredClone(source);
+  if (sequence)
+    project.presentation = createOverflightWorldPresentation(
+      project.battlefield.world,
+      project.arena,
+      { layout: project.battlefield },
+    );
   project.seed = seed;
   for (const encounter of project.encounters) {
     for (const pack of encounter.packs) pack.speed = Math.min(140, pack.speed + (contract - 1) * 8);
@@ -288,7 +304,14 @@ export function createOverflightRaidVariant(base, { variant } = {}) {
     fixtures: [],
     compileProject(project) {
       const compiled = base.compileProject(project);
-      if (compiled.terrain && !(compiled.rulesVersion >= 4 && compiled.battlefield && compiled.terrain.format === 'OverflightTerrainV2'))
+      if (
+        compiled.terrain &&
+        !(
+          compiled.rulesVersion >= 4 &&
+          compiled.battlefield &&
+          compiled.terrain.format === 'OverflightTerrainV2'
+        )
+      )
         throw new TypeError(
           'Experimental terrain is available in Single Raid only; this variant requires open arenas.',
         );
@@ -302,7 +325,14 @@ export function createOverflightRaidVariant(base, { variant } = {}) {
       return base.text(locale, key);
     },
     createRun(compiled, options = {}) {
-      if (compiled.terrain && !(compiled.rulesVersion >= 4 && compiled.battlefield && compiled.terrain.format === 'OverflightTerrainV2'))
+      if (
+        compiled.terrain &&
+        !(
+          compiled.rulesVersion >= 4 &&
+          compiled.battlefield &&
+          compiled.terrain.format === 'OverflightTerrainV2'
+        )
+      )
         throw new TypeError(
           'Experimental terrain is available in Single Raid only; this variant requires open arenas.',
         );
