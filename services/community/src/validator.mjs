@@ -195,7 +195,7 @@ export function createCreatorPackageValidator({
             assets: inspected.prepared.assets?.size ?? inspected.prepared.assets?.length ?? 0,
           },
         };
-      if (['classic', 'overflight'].includes(inspected.family))
+      if (['classic', 'overflight', 'overflight-hunt', 'overflight-riy'].includes(inspected.family))
         return {
           accepted: true,
           report: {

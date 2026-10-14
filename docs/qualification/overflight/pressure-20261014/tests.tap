@@ -1,0 +1,125 @@
+TAP version 13
+# Subtest: evolved Fan clears late pursuers only inside a deliberately overlapped pass, without pulse
+ok 1 - evolved Fan clears late pursuers only inside a deliberately overlapped pass, without pulse
+  ---
+  duration_ms: 12.974667
+  ...
+# Subtest: no-pulse policies reject pulse and the wrong support, even when no preferred draft remains
+ok 2 - no-pulse policies reject pulse and the wrong support, even when no preferred draft remains
+  ---
+  duration_ms: 3.555083
+  ...
+# Subtest: audit probes wait for two pulse ranks and only return ordinary inputs
+ok 3 - audit probes wait for two pulse ranks and only return ordinary inputs
+  ---
+  duration_ms: 2.33075
+  ...
+# Subtest: both primary branches have an earned no-pulse completion route and retain the intended support
+ok 4 - both primary branches have an earned no-pulse completion route and retain the intended support
+  ---
+  duration_ms: 7371.294833
+  ...
+# Subtest: fixed small-circle and wall input cannot turn early pulse ranks into a free sortie
+ok 5 - fixed small-circle and wall input cannot turn early pulse ranks into a free sortie
+  ---
+  duration_ms: 654.015416
+  ...
+# Subtest: native and Studio compilation are identical, immutable and isolated from draft edits
+ok 6 - native and Studio compilation are identical, immutable and isolated from draft edits
+  ---
+  duration_ms: 3.980709
+  ...
+# Subtest: three encounter sets cover every admitted soldier and machinery family
+ok 7 - three encounter sets cover every admitted soldier and machinery family
+  ---
+  duration_ms: 2.753958
+  ...
+# Subtest: reject ambiguous schedules, unsupported resources, malformed thresholds and executable data
+ok 8 - reject ambiguous schedules, unsupported resources, malformed thresholds and executable data
+  ---
+  duration_ms: 4.212292
+  ...
+# Subtest: export → fresh-profile import → native compile preserves exact content and dependency closure
+ok 9 - export → fresh-profile import → native compile preserves exact content and dependency closure
+  ---
+  duration_ms: 12.785417
+  ...
+# Subtest: native launch retains same-build scope and removes arbitrary caller state
+ok 10 - native launch retains same-build scope and removes arbitrary caller state
+  ---
+  duration_ms: 0.875333
+  ...
+# Subtest: Raid review approach flanks a visible protected escort without changing simulation state
+ok 11 - Raid review approach flanks a visible protected escort without changing simulation state
+  ---
+  duration_ms: 9.01225
+  ...
+# Subtest: V2 adds explicit editable combat while V1 preserves original durability and capabilities
+ok 12 - V2 adds explicit editable combat while V1 preserves original durability and capabilities
+  ---
+  duration_ms: 16.852416
+  ...
+# Subtest: shield facing, blocked overflow and internal blasts create reliable different approaches
+ok 13 - shield facing, blocked overflow and internal blasts create reliable different approaches
+  ---
+  duration_ms: 6.295833
+  ...
+# Subtest: each tank plate break opens recovery without adding durability or replaying rewards
+ok 14 - each tank plate break opens recovery without adding durability or replaying rewards
+  ---
+  duration_ms: 3.665625
+  ...
+# Subtest: defensive drafts and application reject shield/plating stacks in both modes
+ok 15 - defensive drafts and application reject shield/plating stacks in both modes
+  ---
+  duration_ms: 0.729375
+  ...
+# Subtest: seeded formation decks vary, never repeat, and author bounded relief
+ok 16 - seeded formation decks vary, never repeat, and author bounded relief
+  ---
+  duration_ms: 0.186542
+  ...
+# Subtest: relief waits for committed warnings then provides its full interval without new commitments
+ok 17 - relief waits for committed warnings then provides its full interval without new commitments
+  ---
+  duration_ms: 36.130459
+  ...
+# Subtest: fan gaps and temporal warning combinations retain a baseline escape at arena edges
+ok 18 - fan gaps and temporal warning combinations retain a baseline escape at arena edges
+  ---
+  duration_ms: 3.955208
+  ...
+# Subtest: mass clearing earns bounded relief without suppressing every subsequent pressure window
+ok 19 - mass clearing earns bounded relief without suppressing every subsequent pressure window
+  ---
+  duration_ms: 207.490125
+  ...
+# Subtest: cache groups stay finite, coexist, and require a deliberate physical reward entry
+ok 20 - cache groups stay finite, coexist, and require a deliberate physical reward entry
+  ---
+  duration_ms: 4.0705
+  ...
+# Subtest: Raid carriers fire a complete committed fan, while legacy carriers retain one projectile
+ok 21 - Raid carriers fire a complete committed fan, while legacy carriers retain one projectile
+  ---
+  duration_ms: 25.919791
+  ...
+# Subtest: a full guard pool defers the objective until a genuine kill frees a slot
+ok 22 - a full guard pool defers the objective until a genuine kill frees a slot
+  ---
+  duration_ms: 5.673709
+  ...
+# Subtest: V2 pulse charge requires displacement, so tiny loops cannot manufacture full power
+ok 23 - V2 pulse charge requires displacement, so tiny loops cannot manufacture full power
+  ---
+  duration_ms: 20.131625
+  ...
+1..23
+# tests 23
+# suites 0
+# pass 23
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 8232.187166

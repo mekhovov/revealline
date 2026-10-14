@@ -5,7 +5,7 @@ export const OVERFLIGHT_STEP_SECONDS = 1 / 60;
 export function overflightSortieProject(mode, project, { seed, difficulty, authored = false }) {
   if (
     authored ||
-    project.format.endsWith('V1') ||
+    (project.survivorFormat ?? project.format).endsWith('V1') ||
     (project.seed === seed && project.difficulty === difficulty)
   )
     return project;
@@ -118,13 +118,24 @@ export function createOverflightInputGate() {
     release() {
       blocked = true;
     },
-    sample({ x = 0, y = 0, boost = false, neutral = x === 0 && y === 0 && !boost } = {}) {
+    sample({
+      x = 0,
+      y = 0,
+      boost = false,
+      focus = false,
+      neutral = x === 0 && y === 0 && !boost && !focus,
+    } = {}) {
       if (blocked) {
         if (neutral) blocked = false;
         return { x: 0, y: 0, boost: false };
       }
       const length = Math.hypot(x, y);
-      return { x: length > 1 ? x / length : x, y: length > 1 ? y / length : y, boost: !!boost };
+      return {
+        x: length > 1 ? x / length : x,
+        y: length > 1 ? y / length : y,
+        boost: !!boost,
+        ...(focus ? { focus: true } : {}),
+      };
     },
     blocked: () => blocked,
   };
@@ -192,12 +203,12 @@ export function createOverflightContextGuard({ pause, release }) {
 }
 
 /** Only the same-origin embedding Studio may replace an accepted project. */
-export function overflightPreviewRequest(event, { window, parent, origin }) {
+export function overflightPreviewRequest(event, { window, parent, origin, modeId = 'overflight' }) {
   if (
     parent === window ||
     event.source !== parent ||
     event.origin !== origin ||
-    event.data?.type !== 'overflight:preview' ||
+    event.data?.type !== `${modeId}:preview` ||
     event.data.version !== 1
   )
     return null;

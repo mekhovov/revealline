@@ -2,6 +2,7 @@ import { overflightCombatEditor } from './overflight-combat-editor.mjs';
 import { upgradeOverflightProjectCopy } from '../overflight/project-upgrade.mjs';
 import {
   createOverflightHuntProject,
+  overflightHuntMinimumPackSize,
   validateOverflightHuntProject,
   compileOverflightHuntProject,
   OVERFLIGHT_HUNT_UPGRADES,
@@ -489,7 +490,14 @@ function render() {
   numeric(actorFields, 'X', actor, 'x', 40, draft.arena.width - 40, 1, map);
   numeric(actorFields, 'Y', actor, 'y', 40, draft.arena.height - 40, 1, map);
   if (selected.kind === 'packs') {
-    numeric(actorFields, words('Finite population', 'Скінченна кількість'), actor, 'count', 6, 20);
+    numeric(
+      actorFields,
+      words('Finite population', 'Скінченна кількість'),
+      actor,
+      'count',
+      overflightHuntMinimumPackSize(draft.format, actor.behavior),
+      20,
+    );
     numeric(actorFields, words('Spacing', 'Відстань'), actor, 'spacing', 16, 40);
     numeric(actorFields, words('Speed', 'Швидкість'), actor, 'speed', 30, 140);
   } else

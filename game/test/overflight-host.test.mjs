@@ -481,3 +481,125 @@ test('oversize and unsupported review capture fail without retaining chunks or a
   assert.equal(h.timers.size, 0);
   recorder.dispose();
 });
+
+test('native Marathon continuation retains its run when next-sortie settings change', async () => {
+  const { readFile } = await import('node:fs/promises');
+  const { runInNewContext } = await import('node:vm');
+  const { parse } = await import('acorn');
+  const { overflightFlightProfile } = await import('../overflight/flight-profile.mjs');
+  const source = await readFile(new URL('../overflight/app.mjs', import.meta.url), 'utf8');
+  const ast = parse(source, { ecmaVersion: 'latest', sourceType: 'module' });
+  const start = ast.body.find(
+    (node) => node.type === 'FunctionDeclaration' && node.id.name === 'start',
+  );
+  const installation = ast.body
+    .filter((node) => node.type === 'VariableDeclaration')
+    .flatMap((node) => node.declarations)
+    .find((node) => node.id.name === 'disposeModeActions');
+  const call = installation.init.expression ?? installation.init;
+  const continuation = call.arguments[0].properties.find(
+    (node) => node.key.name === 'onContinueContract',
+  ).value;
+  const fixture = () => {
+    const original = {
+      phase: 'ready',
+      airframes: 3,
+      airframesRemaining: 2,
+      slowResume: true,
+      flight: overflightFlightProfile('carrier', true),
+      player: { hull: 37, maxHull: 120 },
+      build: { hunt: { 'boost-duration': 2 } },
+      raidVariant: { contract: 2, escrow: 1000 },
+    };
+    const calls = { create: 0, prepare: 0, entered: 0, reviewReset: 0 };
+    const noop = () => {};
+    const context = {
+      run: original,
+      renderer: {},
+      preparing: false,
+      runtimeFailed: false,
+      retired: false,
+      contextGuard: { blocked: () => false },
+      preparationIdentity: { characterId: 'carrier' },
+      options: { characterId: 'interceptor', flightTraits: true, airframes: 1, slowResume: false },
+      compiled: {},
+      seed: 42,
+      fixture: null,
+      reviewBuild: null,
+      resultRun: original,
+      overflightFlightProfile,
+      mode: {
+        createRun(_compiled, options) {
+          calls.create++;
+          return {
+            phase: 'ready',
+            airframes: options.airframes,
+            slowResume: options.slowResume,
+            flight: overflightFlightProfile(options.characterId, options.flightTraits),
+          };
+        },
+        start: (run) => {
+          run.phase = 'playing';
+        },
+      },
+      prepare: async () => {
+        calls.prepare++;
+      },
+      releaseInput: noop,
+      syncUpgrade: noop,
+      showStatus: noop,
+      updateShell: noop,
+      music: { start: noop },
+      sound: { enable: () => Promise.resolve(), pause: noop },
+      commentator: { resume: noop, prepare: noop },
+      audio: { prepare: noop, start: noop, update: noop },
+      shell: {
+        enterPlay: () => {
+          calls.entered++;
+        },
+      },
+      review: {
+        reset: () => {
+          calls.reviewReset++;
+        },
+      },
+    };
+    // Execute production functions, including their call connection. No copied
+    // start/continue decision logic or DOM-source substring assumptions.
+    runInNewContext(
+      `${source.slice(start.start, start.end)}\nglobalThis.begin = start;\nglobalThis.continueContract = (${source.slice(continuation.start, continuation.end)});`,
+      context,
+    );
+    return { context, original, calls };
+  };
+  const continued = fixture();
+  continued.context.continueContract();
+  assert.equal(continued.context.run, continued.original);
+  assert.equal(continued.calls.create, 0);
+  assert.equal(continued.calls.prepare, 0);
+  assert.equal(continued.calls.entered, 1);
+  assert.equal(continued.calls.reviewReset, 1);
+  assert.equal(continued.original.phase, 'playing');
+  assert.equal(continued.original.player.hull, 37);
+  assert.equal(continued.original.player.maxHull, 120);
+  assert.equal(continued.original.airframesRemaining, 2);
+  assert.equal(continued.original.raidVariant.contract, 2);
+  assert.equal(continued.original.raidVariant.escrow, 1000);
+  assert.equal(continued.original.build.hunt['boost-duration'], 2);
+
+  const changedOptions = fixture();
+  changedOptions.context.options.characterId = 'carrier';
+  changedOptions.context.begin();
+  assert.equal(changedOptions.calls.create, 1);
+  assert.notEqual(changedOptions.context.run, changedOptions.original);
+  assert.equal(changedOptions.context.run.airframes, 1);
+  assert.equal(changedOptions.context.run.slowResume, false);
+  assert.equal(changedOptions.context.run.phase, 'playing');
+
+  const changedAppearance = fixture();
+  changedAppearance.context.begin();
+  assert.equal(changedAppearance.calls.prepare, 1);
+  assert.equal(changedAppearance.calls.create, 0);
+  assert.equal(changedAppearance.original.phase, 'ready');
+  await Promise.resolve();
+});

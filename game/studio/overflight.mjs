@@ -1,16 +1,19 @@
+import * as riyProjects from '../overflight/riy-project.mjs';
+import * as riyPackages from '../overflight/riy-community.mjs';
+import { overflightRiyEditor } from './riy-editor.mjs';
 import { overflightCombatEditor } from './overflight-combat-editor.mjs';
-import { upgradeOverflightProjectCopy } from '../overflight/project-upgrade.mjs';
+import { upgradeOverflightProjectCopy as survivorUpgradeOverflightProjectCopy } from '../overflight/project-upgrade.mjs';
 import {
-  createOverflightProject,
-  validateOverflightProject,
-  compileOverflightProject,
+  createOverflightProject as survivorCreateOverflightProject,
+  validateOverflightProject as survivorValidateOverflightProject,
+  compileOverflightProject as survivorCompileOverflightProject,
   OVERFLIGHT_MODULES,
 } from '../overflight/project.mjs';
 import {
-  createOverflightPackage,
-  createOverflightLibrary,
-  importOverflightPackage,
-  exportOverflightPackage,
+  createOverflightPackage as survivorCreateOverflightPackage,
+  createOverflightLibrary as survivorCreateOverflightLibrary,
+  importOverflightPackage as survivorImportOverflightPackage,
+  exportOverflightPackage as survivorExportOverflightPackage,
 } from '../overflight/community.mjs';
 import { createProfileRecordBackend } from '../profile-storage.mjs';
 import { boundedJSON, exactKeys } from '../data-json.mjs';
@@ -23,6 +26,33 @@ import {
 } from './overflight-labels.mjs';
 
 const params = new URL(location.href).searchParams;
+const riy = params.get('operation') === 'riy';
+const modeId = riy ? 'overflight-riy' : 'overflight';
+const createOverflightProject = riy
+  ? riyProjects.createOverflightRiyProject
+  : survivorCreateOverflightProject;
+const validateOverflightProject = riy
+  ? riyProjects.validateOverflightRiyProject
+  : survivorValidateOverflightProject;
+const compileOverflightProject = riy
+  ? riyProjects.compileOverflightRiyProject
+  : survivorCompileOverflightProject;
+const upgradeOverflightProjectCopy = riy
+  ? riyProjects.upgradeOverflightRiyProjectCopy
+  : survivorUpgradeOverflightProjectCopy;
+const createOverflightPackage = riy
+  ? riyPackages.createOverflightRiyPackage
+  : survivorCreateOverflightPackage;
+const createOverflightLibrary = riy
+  ? riyPackages.createOverflightRiyLibrary
+  : survivorCreateOverflightLibrary;
+const importOverflightPackage = riy
+  ? riyPackages.importOverflightRiyPackage
+  : survivorImportOverflightPackage;
+const exportOverflightPackage = riy
+  ? riyPackages.exportOverflightRiyPackage
+  : survivorExportOverflightPackage;
+
 if (['en', 'uk'].includes(params.get('lang'))) setLocale(params.get('lang'), { persist: false });
 const locale = getLocale() === 'uk' ? 'uk' : 'en';
 document.documentElement.lang = locale;
@@ -48,7 +78,11 @@ nav.append(
   link('../community/store.html', 'Community packages', 'Пакети спільноти'),
   link('../../authoring/asset-studio/', 'Asset Studio', 'Майстерня ресурсів'),
   link('../../authoring/motion-lab/#overflight-motion-study', 'Motion Lab', 'Лабораторія руху'),
-  link('../overflight/play.html', 'Play Overflight', 'Грати в Проліт'),
+  link(
+    riy ? '../overflight/play.html?operation=riy' : '../overflight/play.html',
+    riy ? 'Play Riy' : 'Play Overflight',
+    riy ? 'Грати в Рій' : 'Грати в Проліт',
+  ),
 );
 const status = element('p', '', { id: 'of-status', role: 'status' });
 const report = (message, error = false) => {
@@ -82,7 +116,7 @@ let draft = createOverflightProject(),
   previewReady = false;
 const library = createOverflightLibrary();
 const drafts = createProfileRecordBackend({
-  key: 'overflight-studio-draft.v1',
+  key: `${modeId}-studio-draft.v1`,
   empty: () => ({ project: null }),
   validate(source) {
     const value = boundedJSON(source, {
@@ -105,7 +139,10 @@ const preview = element('iframe', '', {
   title: words('Native Overflight preview', 'Ігровий перегляд Прольоту'),
   allow: 'gamepad; fullscreen',
   src: nativeArtReviewURL(
-    new URL(`../overflight/play.html?studio=overflight&lang=${locale}`, location.href).href,
+    new URL(
+      `../overflight/play.html?studio=${modeId}&lang=${locale}${riy ? '&operation=riy' : ''}`,
+      location.href,
+    ).href,
     location.href,
   ),
 });
@@ -145,7 +182,7 @@ function sendPreview() {
   previewIdentity = compiled.projectIdentity;
   preview.contentWindow.postMessage(
     {
-      type: 'overflight:preview',
+      type: `${modeId}:preview`,
       version: 1,
       requestId: ++previewRequest,
       project: structuredClone(draft),
@@ -161,7 +198,7 @@ const onMessage = (event) => {
     event.data?.version !== 1
   )
     return;
-  if (event.data.type === 'overflight:ready') {
+  if (event.data.type === `${modeId}:ready`) {
     previewReady = true;
     try {
       sendPreview();
@@ -170,7 +207,7 @@ const onMessage = (event) => {
     }
   }
   if (
-    event.data.type === 'overflight:accepted' &&
+    event.data.type === `${modeId}:accepted` &&
     event.data.requestId === previewRequest &&
     event.data.projectIdentity === previewIdentity
   )
@@ -180,7 +217,7 @@ const onMessage = (event) => {
         'Ігровий перегляд готовий. Натисніть «Почати» внизу.',
       ),
     );
-  if (event.data.type === 'overflight:error' && event.data.requestId === previewRequest)
+  if (event.data.type === `${modeId}:error` && event.data.requestId === previewRequest)
     report(String(event.data.message ?? 'Preview failed'), true);
 };
 window.addEventListener('message', onMessage);
@@ -401,11 +438,25 @@ function renderEditor() {
   );
   editor.append(
     general,
-    overflightCombatEditor({ document, project: draft, locale, onChange: refreshSource }),
+    overflightCombatEditor({
+      document,
+      project: draft,
+      locale,
+      onChange: refreshSource,
+    }),
     encounters,
     progression,
     placement,
   );
+  if (riy)
+    editor.append(
+      overflightRiyEditor({
+        document,
+        project: draft,
+        locale,
+        onChange: refreshSource,
+      }),
+    );
   refreshSource();
 }
 const packageText = element('textarea', '', {
@@ -422,7 +473,9 @@ packageExport.append(
   packageText,
 );
 const actions = element('div', '', { class: 'of-actions' });
-const preset = element('select', '', { 'aria-label': words('Encounter set', 'Набір хвиль') });
+const preset = element('select', '', {
+  'aria-label': words('Encounter set', 'Набір хвиль'),
+});
 for (const [id, en, uk] of [
   ['front', 'Breakthrough', 'Прорив'],
   ['crossing', 'Crosswinds', 'Бічний вітер'],
@@ -450,7 +503,9 @@ file.addEventListener(
 actions.append(
   preset,
   button(words('Make updated copy', 'Створити оновлену копію'), () => {
-    draft = upgradeOverflightProjectCopy(draft, { difficulty: draft.difficulty ?? 'standard' });
+    draft = upgradeOverflightProjectCopy(draft, {
+      difficulty: draft.difficulty ?? 'standard',
+    });
     renderEditor();
     check();
   }),
@@ -480,12 +535,16 @@ actions.append(
     if (disposed || startedAt !== revision) return;
     const url = new URL(overflightLaunchURL(location.href, locale));
     url.searchParams.set('community', identity);
+    if (riy) url.searchParams.set('operation', 'riy');
     location.href = url.href;
   }),
   button(words('Export package', 'Експорт пакета'), async () => {
     const blob = exportOverflightPackage(createOverflightPackage(draft)),
       url = URL.createObjectURL(blob),
-      download = element('a', '', { href: url, download: `${draft.id}.overflight.json` });
+      download = element('a', '', {
+        href: url,
+        download: `${draft.id}.${modeId}.json`,
+      });
     packageText.value = await blob.text();
     packageExport.hidden = false;
     packageExport.open = true;
@@ -524,7 +583,10 @@ const workspace = element('div', '', { class: 'of-workspace' });
 workspace.append(editingPanel, previewPanel);
 root.replaceChildren(
   nav,
-  element('h1', words('Overflight Studio', 'Майстерня Прольоту')),
+  element(
+    'h1',
+    riy ? words('Riy Studio', 'Майстерня Рою') : words('Overflight Studio', 'Майстерня Прольоту'),
+  ),
   element(
     'p',
     words(

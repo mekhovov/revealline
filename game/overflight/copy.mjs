@@ -1,7 +1,18 @@
 export const OVERFLIGHT_COPY = Object.freeze({
   en: {
     chooseOperation: 'Choose your operation',
+    timeAttackOperation: 'Time Attack',
+    timeAttackOperationHelp: 'Race the same route. Clean attacks earn a better medal time.',
+    marathonOperation: 'Contract Marathon',
+    marathonOperationHelp:
+      'Bank your score or risk another contract. Hull and upgrades carry forward.',
+    escortCommands: 'Focus commands',
+    escortShots: 'Escort attacks',
     survivorOperation: 'Survivor',
+    riyOperation: 'Riy',
+    riyOperationHelp: 'Lead Sweeper and Breaker escorts; focus their attacks on priority targets.',
+    flightTraits:
+      'Character handling · Interceptor is faster with less hull; Carrier is tougher but slower',
     raidOperation: 'Raid',
     survivorOperationHelp: 'Fly through the swarm. Grow your arsenal. Survive the final surge.',
     raidOperationHelp: 'Read the formation. Strike through targets. Chain your next approach.',
@@ -37,7 +48,7 @@ export const OVERFLIGHT_COPY = Object.freeze({
     characterLocked:
       'Airframe locked for this sortie. Choose another drone before starting a new sortie.',
     characterHint:
-      'Your look, your flight. All airframes share the same handling and upgrades for now.',
+      'Choose your appearance. Enable character handling for the Interceptor or Heavy carrier tradeoff; other frames stay balanced.',
     battlefieldEffects: 'Battlefield effects',
     keepRemains: 'Keep enemy remains on the battlefield',
     remainsHint:
@@ -149,7 +160,7 @@ export const OVERFLIGHT_COPY = Object.freeze({
     recordClip: 'Record 20-second battlefield clip',
     downloadClip: 'Download battlefield clip',
     clipLimit:
-      'Silent canvas only. HUD and upgrade cards are not recorded; combat may pause during choices. Use browser or system screen recording for the complete interface.',
+      'Records the battlefield and enabled game effects/voices. HUD, upgrade cards and external music tracks are excluded. Combat may pause during choices.',
     clip_idle: 'Recording is optional and excludes the sortie from performance qualification.',
     clip_recording: 'Recording the battlefield for 20 seconds…',
     clip_ready: 'Battlefield clip ready. Open Diagnostics to review or download it.',
@@ -175,7 +186,17 @@ export const OVERFLIGHT_COPY = Object.freeze({
   },
   uk: {
     chooseOperation: 'Оберіть операцію',
+    timeAttackOperation: 'На час',
+    timeAttackOperationHelp: 'Вдосконалюйте маршрут. Чисті атаки дають кращий заліковий час.',
+    marathonOperation: 'Марафон контрактів',
+    marathonOperationHelp: 'Заберіть очки або ризикніть ще раз. Корпус і покращення зберігаються.',
+    escortCommands: 'Команди фокуса',
+    escortShots: 'Атаки супроводу',
     survivorOperation: 'Виживання',
+    riyOperation: 'Рій',
+    riyOperationHelp: 'Ведіть Зачисника та Пробійника; зосереджуйте атаки на пріоритетних цілях.',
+    flightTraits:
+      'Поведінка дрона · Перехоплювач швидший із легшим корпусом; Носій міцніший, але повільніший',
     raidOperation: 'Наліт',
     survivorOperationHelp:
       'Пролітайте крізь натовп. Розвивайте озброєння. Витримайте останню хвилю.',
@@ -212,7 +233,7 @@ export const OVERFLIGHT_COPY = Object.freeze({
     characterLocked:
       'Дрон закріплено за цим вильотом. Інший можна обрати перед початком нового вильоту.',
     characterHint:
-      'Ваш вигляд, ваш політ. Поки що всі дрони мають однакове керування та покращення.',
+      'Оберіть вигляд. Увімкніть поведінку Перехоплювача або Важкого носія; решта дронів збалансовані.',
     battlefieldEffects: 'Ефекти поля бою',
     keepRemains: 'Залишати рештки ворогів на полі бою',
     remainsHint:
@@ -330,7 +351,7 @@ export const OVERFLIGHT_COPY = Object.freeze({
     recordClip: 'Записати 20 секунд поля бою',
     downloadClip: 'Завантажити запис поля бою',
     clipLimit:
-      'Беззвучний запис лише поля бою. Інтерфейс і картки покращень не записуються; під час вибору бій може зупинятися. Для повного інтерфейсу використайте запис екрана браузером або системою.',
+      'Запис поля бою з увімкненими ефектами й голосами гри. HUD, картки покращень і зовнішня музика не записуються. Під час вибору бій може зупинятися.',
     clip_idle: 'Запис необов’язковий і виключає цей виліт з оцінювання продуктивності.',
     clip_recording: 'Записуємо 20 секунд поля бою…',
     clip_ready: 'Запис поля бою готовий. Відкрийте діагностику для перегляду або завантаження.',
