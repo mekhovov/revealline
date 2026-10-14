@@ -51,7 +51,12 @@ export function overflightOperationContext(id, text) {
 /** Only the generic family entry restores a choice; old explicit URLs stay exact. */
 export function overflightRememberedOperationURL(href, stored) {
   const source = new URL(href);
-  if (source.searchParams.get('family') !== '1') return null;
+  if (
+    source.searchParams.get('family') !== '1' ||
+    !source.pathname.endsWith('/overflight/play.html') ||
+    ['community', 'studio', 'operation', 'prototype'].some((key) => source.searchParams.has(key))
+  )
+    return null;
   const operation = OVERFLIGHT_OPERATIONS.find(({ id }) => id === stored);
   if (!operation) return null;
   const target = new URL(operation.path, source);
