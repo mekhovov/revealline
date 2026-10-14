@@ -183,16 +183,20 @@
     <main>
       <canvas
         tabindex="0"
-        aria-label="Detached regional terrain flight preview"
+        aria-label="Detached regional flight preview"
       ></canvas>
       <header>
         <details open>
           <summary>Regional flight · authoring prototype</summary>
           <p>
-            Terrain-only development preview. Not a playable SIM release. No
+            Single-profile development preview. Not a playable SIM release. No
             scoring or recordings. Region edges stop the preview.
           </p>
           <form>
+            <select id="geometry-profile" aria-label="Verified geometry profile">
+              <option value="terrain-v1">Terrain cells</option>
+              <option value="scenery-v1">Scenery with ground</option>
+            </select>
             <input
               id="manifest"
               aria-label="Region manifest URL"
@@ -201,14 +205,14 @@
             /><button>Load region</button>
           </form>
           <p id="credit">
-            Uses verified canonical terrain sources. Production host integration
-            and terrain collision qualification remain required.
+            Uses one verified geometry profile at a time. Production host integration
+            and collision qualification remain required.
           </p>
         </details>
       </header>
       <section id="status">
         <nav>
-          <button id="prepare">Prepare terrain</button
+          <button id="prepare">Prepare region</button
           ><button id="arm">Arm</button><button id="pause">Pause</button
           ><button id="reset">Reset</button
           ><select id="source" aria-label="Controls">
