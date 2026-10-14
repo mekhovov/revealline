@@ -6896,16 +6896,17 @@ export function mountWorldApp({
   }
   function practiceState() {
     const state = flight?.snapshot(),
-      mode = $('flight-mode').value;
+      mode = $('flight-mode').value,
+      demonstration = current && demonstrationFor(current, mode),
+      canPractise = Boolean(current && !current.legacy && !current.freeFlight && !modePractice);
+    // A live recorder has not been verified yet. Only accepted replay/checkpoint
+    // state or a matching authored example can advertise a recorded section.
+    const recordedEntry = checkpointSession
+      ? ['checkpoint', 'section-replay'].includes(checkpointSession.kind) &&
+        checkpointRequest?.proof
+      : replayProof || demonstration;
     const section =
-      current &&
-      !current.legacy &&
-      !current.freeFlight &&
-      !modePractice &&
-      (checkpointRequest?.proof ||
-        replayProof ||
-        demonstrationFor(current, mode) ||
-        (recorder && state?.ticks > 0))
+      canPractise && recordedEntry
         ? Math.min((checkpointSession?.index ?? state.step) + 1, current.course.steps[mode].length)
         : null;
     return {
@@ -6916,8 +6917,9 @@ export function mountWorldApp({
       replay: Boolean(replayProof),
       rate: replayRate,
       section,
-      checkpoint: Boolean(checkpointSession),
-      watch: Boolean(current && demonstrationFor(current, mode)),
+      fullPractice: canPractise && !section,
+      checkpoint: Boolean(section && checkpointSession),
+      watch: Boolean(demonstration),
     };
   }
   async function practiceAction(action) {
@@ -6927,15 +6929,13 @@ export function mountWorldApp({
       camera = $('flight-camera').value;
     const options = { lessonCamera: camera, paused: true };
     if (action === 'practice' || (action === 'try' && checkpointSession)) {
-      const proof =
-        checkpointRequest?.proof ??
-        replayProof ??
-        demonstrationFor(entry, selected.mode) ??
-        recorder?.export();
-      if (!selected.section || !proof) return;
+      if (!selected.section && !selected.fullPractice) return;
+      const proof = selected.section
+        ? checkpointRequest?.proof ?? replayProof ?? demonstrationFor(entry, selected.mode)
+        : null;
       options.checkpoint = {
         mode: selected.mode,
-        index: selected.section - 1,
+        index: selected.section ? selected.section - 1 : 0,
         proof,
         watch: false,
       };

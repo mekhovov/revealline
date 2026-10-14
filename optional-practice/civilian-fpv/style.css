@@ -6539,7 +6539,7 @@ html body.sim-academy #academy-replay-outcome:not([hidden]) {
   border: 1px solid #657987;
 }
 
-html body [data-sim-practice='true'] [data-mode-action='pause-restart'] {
-  display: none;
+html body .shared-pause-menu[data-sim-practice='true'] [data-mode-action='pause-restart'] {
+  display: none !important;
 }
 /* END SHARED SIM FULLSCREEN */
