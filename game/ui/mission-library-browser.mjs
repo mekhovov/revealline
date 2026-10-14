@@ -888,7 +888,7 @@ export function attachMissionLibraryBrowser({
               : t('interface:missionLibrary.notCompleted');
         const ownerProgress =
           progressState.state === 'completed' && progressState.bestStars === null
-            ? library.progress(row, modeFilter.value)
+            ? currentProgress()
             : '';
         return `${card.number.textContent} · ${displayName(row)} · ${display().campaignTitle} · ${card.campaignPosition.textContent} · ${progressLabel}${ownerProgress ? ` · ${ownerProgress}` : ''}`;
       });

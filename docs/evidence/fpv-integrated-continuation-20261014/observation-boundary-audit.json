@@ -1,0 +1,22 @@
+[
+  {
+    "title": "The long hunt",
+    "start": 432651.90000000596,
+    "end": 492653.5,
+    "firstCallback": 432653.2,
+    "lastCallback": 492646.2,
+    "leadingMs": 1.299999994051177,
+    "trailingMs": 7.2999999999883585,
+    "scope": "Derived from raw retained native RAF samples; not a rerun with the hardened observer."
+  },
+  {
+    "title": "Final circuit",
+    "start": 595510.6999999881,
+    "end": 655514.599999994,
+    "firstCallback": 595503.9,
+    "lastCallback": 655511.4,
+    "leadingMs": 0,
+    "trailingMs": 3.1999999940162525,
+    "scope": "Derived from raw retained native RAF samples; not a rerun with the hardened observer."
+  }
+]
