@@ -23,6 +23,7 @@ import {
   mountFlightFullscreen,
   mountFlightCameraControls,
   mountFlightSetup,
+  mountFlightComfort,
   attachSimMissionLibraryChooser,
   createSimMissionLibrary,
   createSimContinuousPlayController,
@@ -170,6 +171,7 @@ export function mountFlightApp({
     playShell = null,
     cameraControls = null,
     flightSetup = null,
+    flightComfort = null,
     modeSettingsView = null,
     globalSettingsView = null,
     globalTools = null,
@@ -915,6 +917,7 @@ export function mountFlightApp({
     presentation.refresh();
     playShell?.setLocale(locale);
     modeSettingsView?.refresh(locale);
+    flightComfort?.refresh();
     globalSettingsView?.refresh(locale);
     globalTools?.refresh();
     modes.refresh?.();
@@ -994,6 +997,7 @@ export function mountFlightApp({
     }
     cameraControls?.refresh();
     flightSetup?.refresh();
+    flightComfort?.refresh();
     renderer.draw?.(state, {
       cameraMode: $('camera').value || 'fpv',
       cameraFov: Number($('camera-fov').value) || 82,
@@ -2110,6 +2114,17 @@ export function mountFlightApp({
       extras: [$('help'), shellSettings.querySelector('[data-sim-copy="optionsPause"]')],
     },
   });
+  flightComfort = mountFlightComfort({
+    document: doc,
+    window: win,
+    panels: modeSettingsView.panels,
+    viewport: $('viewport'),
+    fov: $('camera-fov'),
+    tilt: $('camera-tilt'),
+    host: 'academy',
+    locale: () => locale,
+    canChange: () => !flight || flight.snapshot().status !== 'active' || playShell.blocksPlay(),
+  });
   const globalThemeControls = attachSimThemeFamilyControls({
     document: doc,
     root: modeSettingsView.panels.display,
@@ -2332,6 +2347,7 @@ export function mountFlightApp({
       missionChooser.destroy();
       missionLibrary.dispose();
       watchMission.onclick = null;
+      flightComfort?.dispose();
       flightSetup?.dispose();
       cameraControls?.dispose();
       playShell?.dispose();
