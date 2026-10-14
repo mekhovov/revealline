@@ -20,9 +20,13 @@ The previous status helper returned the same false value for a timeout, lookup e
 
 All 48 focused existing/extended installation, lifecycle, controls, access and navigation checks pass, including EN/UK initial unknown, ready-to-unknown retention, and confirmed failure alongside unknown. Scoped lint, formatting and whitespace checks pass. This verifies source changes, not new packaged bytes.
 
+## Native corrected-launcher check
+
+A separate review launcher/context from source 5db194727 used the same 9017 installation root and unchanged frozen players. A visible harness checkbox reduced the actual read-only status timeout to 1 ms. Normal verification first established the old prepared action. The deliberately short check then showed the English inconclusive warning and retained that action, without claiming new readiness or recommending repair. Switching to Ukrainian updated both warning and links. Restoring the normal timeout and checking returned Ready then Update available, with Check enabled and the old action retained. Following it opened the actual v0.142.4 player with Ukrainian locale and rendered home screen. The receipt binds review script/context/HTML hashes and screenshot. This is native mixed-harness evidence, not admission of a freshly packaged release.
+
 ## Remaining qualification
 
-- Native verification of the tri-state correction and a freshly admitted package.
+- Verification using a freshly admitted corrected package.
 - Actual quota/eviction, full browser process restart and network-wide outages.
 - Hardware/controller and sustained rendering performance.
 
