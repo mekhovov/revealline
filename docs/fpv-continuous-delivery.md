@@ -4486,3 +4486,55 @@ unrelated untracked worker remained present. Documentation work moved to an
 external sparse worktree with an external Git store. No source, local commits,
 player storage or unfinished work was deleted. Heavy local builds remain paused
 below the 3 GiB stable free-space floor; independent checks and publication continue.
+
+## 14 October — Paired regions and corrected package qualification
+
+Coordinator branch: `codex/fpv-delivery-checkpoint-qualified-20261014`, based on
+current main in the external docs-only checkout. #1244 paired Urban source relief,
+#1245 combined terrain/scenery ownership, #1246 preparation recovery, #1247 optional
+architectural materials, #1249 package-local home artwork, #1250 bounded authoring
+lighting and #1251 exact-package recovery evidence have merged. Dependencies merged
+before successors; no new native stack or manual member retargeting was needed.
+
+The combined owner stages verified terrain and scenery against joint budgets before
+one frame adoption. Native authoring flight loaded both layers at 260,472 geometry
+bytes, zero ticks and zero throttle. A missing companion manifest retained the old
+scene and left the form open with a paused error; correcting the URL restored a
+disarmed region. Fast cached preparation prevented a fresh native cancellation
+observation, so the earlier bounded/automated cancellation evidence is not inflated.
+
+Warehouse, parking and atrium material/lighting views retain their geometry counts
+and show clearer openings, slab edges and shadows. Release reports no live scenery
+or collision and Load restores the nine-cell overview. A new immutable loading-court
+composition is being reviewed with seven licensed container landmarks and clear
+approach corridors. These are authored quality foundations, not finished regional
+art or default catalogue admission.
+
+Fresh corrected cloud artifact 11916098235 from run 38608388073 at source
+`f14366940379bdbd46ead268f92c1aa160d80ca5` was installed through native UI on a
+separate local origin. Exact new, previous and mutable-launcher workers reported
+ready. The corrected mutable worker activates after old launcher-controlled tabs
+close; a simple reload alone does not necessarily activate it. Both usable recovery
+links remained present while checking. The actual previous link opened v0.142.4,
+whose Library retained Reservoir r16, eight challenges and digest `50ffbb0e5da7`.
+The corrected v0.151.1 catalogue Play rendered Reservoir disarmed at zero seconds.
+With that origin server stopped and transport refusal confirmed, both immutable
+players reopened; the new player ran the installed Shoreline mission through its
+explicit mission-card start, then was paused. The server was restored. This is
+bounded same-browser origin-unavailable evidence, not network-wide offline,
+browser-restart, quota eviction or physical-device qualification.
+
+The native journey exposed a separate home image request outside the immutable
+package. #1249 resolves it from the package-local wordmark. Its new exact cloud
+artifact 11919610810 from run 38615162179 at source
+`25d086cbd580de5dc5b745ce088af283434df5ae` installed successfully on another fresh
+origin. The native hangar/orchard home artwork remained visible after that origin
+server stopped and the same URL reloaded. The server was restored afterward;
+frozen earlier candidates remain unchanged. Main regional host integration, production
+collision parity, sustained performance, remaining region batches and D6 remain
+open. The current next steps are recorded in `fpv-large-worlds-delivery-plan.md`.
+
+Source, local commits, unfinished changes, frozen candidates and player storage
+remain preserved. A separate agent reclaimed only its own clean tracked history
+directories through sparse checkout, with a recovery receipt; heavy builds still
+use external storage/cloud while internal free space is below the 3 GiB floor.
