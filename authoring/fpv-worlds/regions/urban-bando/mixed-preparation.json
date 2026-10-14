@@ -1,0 +1,156 @@
+{
+  "format": "FPVUrbanMixedPreparation.v1",
+  "id": "urban-earthworks-study",
+  "revision": "mixed-r1",
+  "actualSizeM": [
+    384,
+    384
+  ],
+  "sourceManifestSHA256": "2ec9d40b89d8514de57fc85aa32ff59e3955c2a90e488a4b02782d60440b307e",
+  "sourceProvenanceSHA256": "27562e2c7d4a85127b56cd2eb6bb10540e2915e03d106236001c69222b87d0f3",
+  "sourceSceneSHA256": "33f3f260df3e0f6b87f204728152d281ef9cbe3f44b51209dc73f8114bf7dbb9",
+  "licenseReceipt": "authoring/fpv-worlds/assets/kenney/city-industrial/provenance.json",
+  "licenseReceiptSHA256": "68ec564541de04d76afd571df44cd7e90557cdb351feebc97ac6be5b57b78373",
+  "bundledLicense": "License.txt",
+  "bundledLicenseSHA256": "60a8c5c31191256ec9779dc18745dea6d69c46f4b29703459ce064c1765a59ea",
+  "terrainManifestSHA256": "d0ec271c419a4b2032e359e5e8106e8089a10f26dd5e0251536629e3fa35f25f",
+  "sceneryManifestSHA256": "d0794c442362dcf95885ef7db417e8d3480db179a2dce2d0f026b65cf075de17",
+  "cellsPerProfile": 9,
+  "assets": 36,
+  "sourceBytes": 1443452,
+  "removedGroundTriangles": 76,
+  "retainedArchitectureTriangles": 4345,
+  "terrainTriangles": 18432,
+  "maximumTerrainHeightMm": 6000,
+  "earthworks": [
+    {
+      "id": "mill-ridge",
+      "centre": [
+        80,
+        140
+      ],
+      "radii": [
+        36,
+        20
+      ],
+      "heightM": 6
+    },
+    {
+      "id": "yard-ridge",
+      "centre": [
+        290,
+        140
+      ],
+      "radii": [
+        48,
+        24
+      ],
+      "heightM": 4
+    },
+    {
+      "id": "service-berm",
+      "centre": [
+        170,
+        200
+      ],
+      "radii": [
+        36,
+        14
+      ],
+      "heightM": 2.5
+    }
+  ],
+  "routes": [
+    {
+      "id": "service-road",
+      "title": {
+        "en": "Open service road",
+        "uk": "Відкрита службова дорога"
+      },
+      "halfWidthM": 2,
+      "points": [
+        [
+          120,
+          4,
+          180
+        ],
+        [
+          270,
+          4,
+          180
+        ]
+      ]
+    },
+    {
+      "id": "ridge-loading-hall",
+      "title": {
+        "en": "Ridge to loading hall",
+        "uk": "Від пагорба до вантажного залу"
+      },
+      "halfWidthM": 2,
+      "points": [
+        [
+          290,
+          10,
+          180
+        ],
+        [
+          290,
+          10,
+          140
+        ],
+        [
+          190,
+          12,
+          140
+        ],
+        [
+          190,
+          4,
+          108
+        ],
+        [
+          190,
+          4,
+          20
+        ]
+      ]
+    },
+    {
+      "id": "mill-ridge-approach",
+      "title": {
+        "en": "Mill ridge approach",
+        "uk": "Підхід до цеху через пагорб"
+      },
+      "halfWidthM": 2,
+      "points": [
+        [
+          64,
+          10,
+          180
+        ],
+        [
+          80,
+          10,
+          140
+        ],
+        [
+          64,
+          12,
+          110
+        ],
+        [
+          64,
+          12,
+          64
+        ]
+      ]
+    }
+  ],
+  "flightReady": false,
+  "limitations": [
+    "Bounded geometry/material study, not a default player region",
+    "Route sweeps are geometry checks, not recorded or scored demonstrations",
+    "Combined-owner flight, recovery and package/device qualification remain required"
+  ]
+}
