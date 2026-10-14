@@ -102,3 +102,12 @@ node --test game/test/classic-snake-ui.test.mjs
 node --test --test-concurrency=2 game/test/classic-snake-worlds.test.mjs game/test/classic-snake-world-cache.test.mjs game/test/classic-snake-signal-rendering.test.mjs game/test/classic-snake-remaster-art.test.mjs
 node --test --test-concurrency=2 game/test/mode-play-shell.test.mjs game/test/mission-library-browser.test.mjs game/test/mission-library-compact.test.mjs game/test/mission-library-classic-source.test.mjs game/test/sim-mission-library-projection.test.mjs scripts/test-offline-core-closure.mjs scripts/test-optional-practice.mjs scripts/test-optional-fpv-package.mjs
 ```
+
+Final validation on implementation commit `4e27c7ca0` also passed English/Ukrainian
+localization (13,029 messages, 9,026 references), all four canonical generated
+runtime checks, presentation metadata, and game validation. Game validation
+accepted 3,095 files and literal references; it retained seven navigation warnings
+for deployment-owned app, diagnostics, releases, privacy and credits routes. No
+new browser playthrough or distribution build is claimed for these host-only
+fixes. [PR #1196](https://github.com/mekhovov/revealline/pull/1196) contains the
+implementation and report.
