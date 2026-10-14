@@ -4,8 +4,11 @@ import {
   createOverflightWorldPresentation,
   applyOverflightWorld,
   validateOverflightWorldPresentation,
+  createExperimentalOverflightWorldProject,
 } from '../overflight/worlds.mjs';
 import { paintOverflightWorld } from '../presentation/overflight-world-art.mjs';
+import { validateOverflightTerrain, overflightTerrainClear } from '../overflight/terrain.mjs';
+import { validateOverflightSupplyTerrain } from '../overflight/tactics.mjs';
 
 const MATERIALS = ['earth', 'concrete', 'damaged', 'timber', 'masonry', 'metal'];
 const TITLES = {
@@ -26,6 +29,44 @@ const TITLES = {
   rubble: ['Low rubble', 'Низькі уламки'],
 };
 const tall = (entry) => ['tree', 'container', 'antenna'].includes(entry.kind);
+
+export function paintOverflightTerrainLayout(ctx, terrain) {
+  if (!terrain) return;
+  ctx.save();
+  ctx.lineWidth = 5;
+  for (const obstacle of terrain.obstacles) {
+    const { x, y, width, height, breakable } = obstacle;
+    ctx.fillStyle = breakable ? '#75552e' : '#34454a';
+    ctx.strokeStyle = breakable ? '#f4c765' : '#d2dad6';
+    ctx.fillRect(x, y, width, height);
+    ctx.setLineDash(breakable ? [12, 8] : []);
+    ctx.strokeRect(x, y, width, height);
+    if (breakable) {
+      ctx.beginPath();
+      ctx.moveTo(x + 8, y + 8);
+      ctx.lineTo(x + width - 8, y + height - 8);
+      ctx.moveTo(x + width - 8, y + 8);
+      ctx.lineTo(x + 8, y + height - 8);
+      ctx.stroke();
+    }
+  }
+  ctx.restore();
+}
+
+function validateTerrainDraft(project) {
+  validateOverflightTerrain(project.terrain, project.arena);
+  validateOverflightSupplyTerrain(project);
+  if (project.format.startsWith('OverflightHunt'))
+    for (const encounter of project.encounters)
+      for (const point of [
+        encounter.entry,
+        ...encounter.objectives,
+        ...encounter.packs,
+        ...[...encounter.objectives, ...encounter.packs].flatMap((actor) => actor.route),
+      ])
+        if (!overflightTerrainClear(project.terrain, point.x, point.y, point.x, point.y, 28))
+          throw new TypeError('Keep objectives, packs and route points clear of cover.');
+}
 
 /** Keep placement controls in the admitted footprint. Tall scenery is decoration
  * at the edge, never a deceptive obstacle in the open-arena flight corridor. */
@@ -59,6 +100,7 @@ export function overflightWorldEditor({
   onChange,
   onApply = () => {},
   fieldsClass = 'of-fields',
+  allowTerrain = true,
 }) {
   const words = (en, uk) => (locale === 'uk' ? uk : en);
   const element = (tag, text = '', attributes = {}) => {
@@ -125,13 +167,16 @@ export function overflightWorldEditor({
     status.dataset.error = String(error);
   };
   const paint = () => {
-    canvas.hidden = !project.presentation;
+    canvas.hidden = !project.presentation && !project.terrain;
     const ctx = canvas.getContext?.('2d');
-    if (!ctx || !project.presentation) return;
+    if (!ctx || canvas.hidden) return;
     ctx.clearRect(0, 0, 720, 270);
     ctx.save();
     ctx.scale(720 / project.arena.width, 270 / project.arena.height);
-    paintOverflightWorld(ctx, project.presentation, project.arena);
+    ctx.fillStyle = '#11251f';
+    ctx.fillRect(0, 0, project.arena.width, project.arena.height);
+    if (project.presentation) paintOverflightWorld(ctx, project.presentation, project.arena);
+    paintOverflightTerrainLayout(ctx, project.terrain);
     ctx.restore();
   };
   const changed = () => {
@@ -145,6 +190,129 @@ export function overflightWorldEditor({
     parent.append(node);
     return node;
   };
+  const terrainPanel = element('fieldset', '', { 'data-terrain-editor': '' });
+  root.append(terrainPanel);
+  function renderTerrain() {
+    terrainPanel.replaceChildren();
+    terrainPanel.append(
+      element('legend', words('Experimental cover', 'Експериментальні перешкоди')),
+      element(
+        'p',
+        words(
+          allowTerrain
+            ? 'Single Drone, Riy and Single Raid only. Six solid obstacles and two breakable barriers; keep the central passage and gaps at least 240 units wide. Solid outlines are permanent; crossed, dashed outlines break in two hits. These change gameplay records.'
+            : 'Experimental cover is unavailable in Time Attack and Contract Marathon. Switch to Single Raid to edit it, or remove cover to use this operation.',
+          allowTerrain
+            ? 'Лише для одного дрона, Рою та одного Нальоту. Шість перешкод і дві руйнівні перепони; центральний прохід і проміжки — щонайменше 240 одиниць. Суцільні контури постійні; пунктирні з хрестом руйнуються за два удари. Зміни впливають на ігрові рекорди.'
+            : 'Експериментальні перешкоди недоступні в режимах «На час» і «Марафон контрактів». Перейдіть до одного Нальоту для редагування або вилучіть перешкоди.',
+        ),
+      ),
+    );
+    if (!project.terrain) {
+      const add = button(
+        terrainPanel,
+        words('Add Experimental depot cover', 'Додати експериментальні перешкоди депо'),
+        'data-terrain-add',
+        () => {
+          if (!allowTerrain) return;
+          try {
+            const next = createExperimentalOverflightWorldProject(() => structuredClone(project));
+            validateTerrainDraft(next);
+            project.terrain = next.terrain;
+            project.encounters = next.encounters;
+            onChange();
+            report(
+              words(
+                'Experimental cover added. Raid targets and routes were adjusted for clearance; other authored settings are preserved.',
+                'Експериментальні перешкоди додано. Цілі й маршрути Нальоту зміщено для вільного проходу; інші авторські налаштування збережено.',
+              ),
+            );
+            paint();
+            renderTerrain();
+            onApply();
+          } catch (error) {
+            report(error.message, true);
+          }
+        },
+      );
+      add.disabled = !allowTerrain || project.arena.width < 2880 || project.arena.height < 1080;
+      terrainPanel.append(
+        element(
+          'p',
+          words(
+            'Adding cover requires at least 2880 × 1080. Raid targets and routes move only as needed for clearance.',
+            'Для перешкод потрібна арена від 2880 × 1080. Цілі й маршрути Нальоту зміщуються лише для вільного проходу.',
+          ),
+        ),
+      );
+      return;
+    }
+    for (const [index, obstacle] of project.terrain.obstacles.entries()) {
+      const row = element('div', '', { class: fieldsClass, 'data-terrain-obstacle': obstacle.id });
+      row.append(
+        element(
+          'strong',
+          `${obstacle.id} · ${obstacle.breakable ? words('Breakable · 2 hits', 'Руйнується · 2 удари') : words('Permanent', 'Постійна')}`,
+        ),
+      );
+      for (const [key, en, uk] of [
+        ['x', 'X', 'X'],
+        ['y', 'Y', 'Y'],
+        ['width', 'Width', 'Ширина'],
+        ['height', 'Height', 'Висота'],
+      ]) {
+        const label = element('label', words(en, uk)),
+          input = element('input', '', {
+            type: 'number',
+            min: ['x', 'y'].includes(key) ? 90 : 32,
+            max: (['x', 'width'].includes(key) ? project.arena.width : project.arena.height) - 90,
+            step: 1,
+            'data-terrain-coordinate': key,
+          });
+        input.value = obstacle[key];
+        input.disabled = !allowTerrain;
+        input.addEventListener('change', () => {
+          if (!allowTerrain) return;
+          const candidate = structuredClone(project.terrain);
+          candidate.obstacles[index][key] = Number(input.value);
+          try {
+            if (!input.value.trim() || !Number.isFinite(Number(input.value)))
+              throw new TypeError(
+                words('Enter a finite coordinate.', 'Введіть скінченну координату.'),
+              );
+            validateTerrainDraft({ ...project, terrain: candidate });
+            project.terrain = candidate;
+            onChange();
+            report(
+              words(
+                'Cover updated. Passage, objective and reward clearance remain valid.',
+                'Перешкоди оновлено. Проходи, цілі й винагороди залишаються доступними.',
+              ),
+            );
+            paint();
+          } catch (error) {
+            input.value = project.terrain.obstacles[index][key];
+            report(error.message, true);
+          }
+        });
+        label.append(input);
+        row.append(label);
+      }
+      terrainPanel.append(row);
+    }
+    button(
+      terrainPanel,
+      words('Remove Experimental cover', 'Вилучити експериментальні перешкоди'),
+      'data-terrain-remove',
+      () => {
+        delete project.terrain;
+        onChange();
+        paint();
+        renderTerrain();
+        onApply();
+      },
+    );
+  }
   function render() {
     const opened = new Set(
       [...layout.querySelectorAll('[data-world-group]')]
@@ -267,6 +435,7 @@ export function overflightWorldEditor({
   apply.addEventListener('click', () => {
     try {
       const next = applyOverflightWorld(project, project.presentation.world);
+      if (next.terrain) validateTerrainDraft(next);
       // Keep the author's title, ID, settings, resources and placement edits.
       project.encounters = next.encounters;
       project.encounterProfile = next.encounterProfile;
@@ -283,5 +452,6 @@ export function overflightWorldEditor({
     }
   });
   render();
+  renderTerrain();
   return root;
 }
