@@ -101,7 +101,10 @@ document.querySelector('form').addEventListener('submit', async (event) => {
     const manifest = validateRegionManifest(new TextDecoder('utf-8', { fatal: true }).decode(data));
     if (closed) return;
     await window?.dispose();
-    window = createVerifiedSceneryWindow(manifest, { baseURL: new URL('./', url).href });
+    window = createVerifiedSceneryWindow(manifest, {
+      baseURL: new URL('./', url).href,
+      surfaceStyle: new URLSearchParams(location.search).get('surface') ?? 'plain',
+    });
     controls(false);
     await view(views[0]);
   } catch (error) {
