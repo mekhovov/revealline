@@ -1,0 +1,10 @@
+{
+  "status": "test-host configuration failure; not a production regression",
+  "observedCommit": "3bb1b0dc66ae77baf59d0e89ab9edf257a244d10",
+  "rejectedVersion": "0.151.1-overflight-offline-review",
+  "nativeInstallerMessage": "The installed edition is outside this app.",
+  "cause": "The build CLI permits labels but the installed-edition validator requires a numeric semantic version.",
+  "correction": "The qualification host now reads the actual project build-config version (0.151.1) and asserts installed-edition syntax before calling the unchanged complete production preparation. No validator bypass or generated-byte rewrite.",
+  "firstBuildId": "6724c962720d3ece674930374f3203a23d40569cfc2ed41c11f162df6433abab",
+  "firstBuildReport": "native-offline-build-rejected-harness-version.json"
+}
