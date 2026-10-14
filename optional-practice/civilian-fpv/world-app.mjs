@@ -7489,7 +7489,11 @@ export function mountWorldApp({
       );
     },
   });
-  missionChooser.elements.list.before(worldCatalogueHost);
+  // Keep both catalogues inside the chooser's one allocated scrolling row.
+  // An unassigned grid child would create an implicit row beneath the action dock.
+  const worldBrowser = el('div', undefined, 'world-catalogue-browser');
+  missionChooser.elements.list.before(worldBrowser);
+  worldBrowser.append(worldCatalogueHost, missionChooser.elements.list);
   on(missionChooser.elements.dialog, 'close', () => worldLibrary.deactivate(worldCatalogueHost));
   playShell = mountSimPlayShell({
     document: doc,
