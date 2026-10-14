@@ -92,11 +92,11 @@ const session = createRegionalInputSession({
     } else
       message(
         session.status().busy
-          ? "Preparing verified terrain…"
+          ? "Preparing verified region…"
           : state.reason === "prepared"
-            ? "Terrain ready. Arm deliberately to fly."
+            ? "Region ready. Arm deliberately to fly."
             : state.reason === "preparing-terrain"
-              ? "Preparing verified terrain…"
+              ? "Preparing verified region…"
               : `Paused: ${state.reason}`,
       );
   },
@@ -164,6 +164,7 @@ document.querySelector("form").addEventListener("submit", async (event) => {
     chunks = new Map(manifest.chunks.map((chunk) => [chunk.id, chunk]));
     await session.replace({
       manifest,
+      geometryProfile: $("geometry-profile").value,
       mode: $("mode").value,
       source: { baseURL: new URL(".", url).href },
     });
@@ -182,7 +183,7 @@ $("arm").onclick = () => {
   if (busy || closed) return;
   if (!session.arm())
     message(
-      "Prepare terrain, centre the controls and release controller buttons before arming.",
+      "Prepare the region, centre the controls and release controller buttons before arming.",
     );
 };
 $("pause").onclick = () => session.pause();
@@ -212,6 +213,9 @@ addEventListener("resize", resize);
 resize();
 const requested = new URL(location.href).searchParams.get("manifest");
 if (requested) $("manifest").value = requested;
+const profile = new URL(location.href).searchParams.get("profile");
+if (["terrain-v1", "scenery-v1"].includes(profile))
+  $("geometry-profile").value = profile;
 function render() {
   if (closed) return;
   session.advance(performance.now());

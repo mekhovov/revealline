@@ -22,6 +22,16 @@ profile recorded in both the body snapshot and geometry snapshot. Source hash,
 canonical triangle equality, support-pose checks and allocation ceilings remain
 owned by the verified preparation pipeline.
 
+## Authoring preview
+
+In `authoring/fpv-worlds/regions/flight-preview.html`, choose **Scenery with
+ground**, enter the generated Urban `region.json` URL and load. Preparation stays
+paused until deliberate arming. FPV, Chase and Loaded area use the shared production
+view framing and aircraft. `?profile=scenery-v1&manifest=<local-region-url>` selects
+the same explicit profile; it never bypasses source or geometry validation. Reset
+retains the selected profile through the existing input session. Terrain remains
+the default; mixed profiles are not offered.
+
 ## Verification
 
 The controlled Urban flight verifier uses the exact generated r2 sources and native
