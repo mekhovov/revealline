@@ -272,6 +272,10 @@ export function createVerifiedSceneryWindow(
       queue = operation.catch(() => {});
       return operation;
     },
+    castMotion(...args) {
+      if (disposed) throw new Error('Verified geometry is disposed');
+      return state === 'ready' ? committed.castMotion(...args) : { status: 'not-ready' };
+    },
     support(...args) {
       if (disposed) throw new Error('Verified scenery window is disposed');
       return state === 'ready' ? committed.support(...args) : { status: 'not-ready' };

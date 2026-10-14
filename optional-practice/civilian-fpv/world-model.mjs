@@ -1,3 +1,4 @@
+import { projectContactVelocity } from './flight-contact.mjs';
 import {
   boundedJSON,
   canonicalJSON,
@@ -1370,9 +1371,7 @@ export function createWorldFlight({
       // Only an accepted opt-in catch retains its incoming momentum. Keep the
       // swept contact position and all other hull/support responses unchanged.
       if (!momentumCatch || !caught) {
-        if (hit.moving) state.velocity = { x: 0, y: 0, z: 0 };
-        else if (into < 0)
-          for (const k of AXES) state.velocity[k] -= roundDiv(hit.normal[k] * into, Q);
+        state.velocity = projectContactVelocity(state.velocity, hit, into);
       }
       const hard = hit.moving || hit.normal.y < 866025 || impactSpeed > 1500;
       if (hard) {

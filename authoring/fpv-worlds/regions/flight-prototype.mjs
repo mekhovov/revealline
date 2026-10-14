@@ -1,6 +1,16 @@
-/** Unscored authoring harness using shared flight air dynamics; terrain collision is provisional. */
+/** Unscored authoring harness using shared air/contact movement; host admission remains provisional. */
+import {
+  moveFlightSphere,
+  projectContactVelocity,
+} from "../../../optional-practice/civilian-fpv/flight-contact.mjs";
 import * as THREE from "../../../optional-practice/civilian-fpv/vendor/three.module.js";
-import { Q, atan2, sin, cos, multiplyQuaternion } from "../../../optional-practice/civilian-fpv/math.mjs";
+import {
+  Q,
+  atan2,
+  sin,
+  cos,
+  multiplyQuaternion,
+} from "../../../optional-practice/civilian-fpv/math.mjs";
 import {
   advanceFlightAir,
   quantizeFlightInput,
@@ -65,8 +75,10 @@ export function createRegionalFlightPrototype({
   const heading =
     initialHeading === "region-centre"
       ? atan2(
-          (manifest.grid.minX + manifest.grid.width / 2) * 128000 - spawn.position.x,
-          spawn.position.z - (manifest.grid.minZ + manifest.grid.depth / 2) * 128000,
+          (manifest.grid.minX + manifest.grid.width / 2) * 128000 -
+            spawn.position.x,
+          spawn.position.z -
+            (manifest.grid.minZ + manifest.grid.depth / 2) * 128000,
         )
       : initialHeading;
   const halfHeading = Math.round(-heading / 2);
@@ -84,6 +96,14 @@ export function createRegionalFlightPrototype({
     dronePose = new THREE.Object3D(),
     cameraAnchor = new THREE.Object3D();
   root.add(dronePose, cameraAnchor);
+  const unavailableMotion = Symbol("regional motion unavailable");
+  const staticSweep = (from, delta, radius) => {
+    const result = terrain.castMotion(from, delta, radius);
+    if (result.status === "motion-hit") return result.hit;
+    if (result.status === "motion-clear") return null;
+    throw unavailableMotion;
+  };
+  const noMovingGeometry = () => null;
   let body = {
     position: { ...spawn.position },
     velocity: zero(),
@@ -132,9 +152,6 @@ export function createRegionalFlightPrototype({
     unscored: true,
     playerReady: false,
   });
-  function centred(point) {
-    return { ...point, y: point.y + RADIUS };
-  }
   function prepare() {
     live();
     const target = { ...(pendingTarget ?? body.position) },
@@ -283,30 +300,29 @@ export function createRegionalFlightPrototype({
         reason = "terrain-required";
         return snapshot();
       }
-      const hit = terrain.sweep(
-        centred(body.position),
-        centred(next.position),
-        RADIUS,
-      );
-      if (!["terrain-clear", "terrain-hit"].includes(hit.status)) {
+      let moved;
+      try {
+        const delta = Object.fromEntries(
+          AXES.map((key) => [key, next.position[key] - body.position[key]]),
+        );
+        moved = moveFlightSphere(
+          body.position,
+          delta,
+          RADIUS,
+          [],
+          staticSweep,
+          noMovingGeometry,
+        );
+      } catch (error) {
+        if (error !== unavailableMotion) throw error;
         pendingTarget = { ...next.position };
         status = "paused";
         reason = "terrain-required";
         return snapshot();
       }
-      if (hit.status === "terrain-hit") {
-        const displacement = Math.hypot(
-          ...AXES.map((key) => next.position[key] - body.position[key]),
-        );
-        const fraction = Math.max(
-          0,
-          hit.fraction - 2 / Math.max(displacement, 1),
-        );
-        for (const key of AXES)
-          next.position[key] =
-            body.position[key] +
-            Math.trunc((next.position[key] - body.position[key]) * fraction);
-        next.velocity = zero();
+      next.position = moved.position;
+      for (const hit of moved.contacts) {
+        next.velocity = projectContactVelocity(next.velocity, hit);
         contacts++;
       }
       body = next;
