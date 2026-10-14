@@ -4184,3 +4184,26 @@ the declared size and SHA-256, including the preserved three maps. Cloud candida
 run [38484966895](https://github.com/mekhovov/revealline/actions/runs/38484966895)
 started on `8600cf3bdaf68956a55343a08aaded56ac755862`; this subsequent checkpoint
 changes documentation only. Read the latest exact-head checks before any merge.
+
+## 2026-10-14 — Direct camera switching
+
+Independent `codex/fpv-quick-camera` from main `548bf3e93`; free-world PR #1174 is
+merged. Both SIM hosts now share a small View button, V shortcut, standard Gamepad
+R3 action and explicit FPV/Chase/Overview choices in Pause. Radio/D-pad use existing
+menu navigation. No input ownership, arming, physics, course or replay change.
+See [implementation, evidence and prioritized research recommendations](fpv-quick-camera-and-ux.md).
+
+Actual source browser checks cover both hosts, paused selection, keyboard/pointer,
+EN/UK, phone/handheld viewport sizes and full-window fallback. Controlled R3
+signals preserve active throttle/rotation and reject stale held actions. Existing
+checks pass 123/123; all three source preflights and projections pass. Physical
+hardware acceptance and full frozen-package/deployment verification remain open.
+Storage is below 3 GiB; use existing CI admission. Next recommended increment is
+one paused Flight setup group and device-aware/remappable action hints, followed
+by a clearer retry/practice/demo flow. Research proposals are not reported shipped.
+
+Published as [PR #1178](https://github.com/mekhovov/revealline/pull/1178), source
+head `6384164d5`. Cloud admission started in
+[run 38489543945](https://github.com/mekhovov/revealline/actions/runs/38489543945).
+This follow-up is documentation-only. Use the latest exact-head checks before
+merge; source-browser availability is not a public deployment claim.

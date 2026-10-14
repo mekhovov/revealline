@@ -3171,15 +3171,10 @@ body.mode-play-page {
   }
 }
 
-
 .sim-shell-loading {
   align-self: center;
   justify-self: center;
 }
-
-
-
-
 
 /* The shared bar occupies real layout space above native instruments/controls. */
 html body.sim-academy .mode-play-stage {
@@ -6231,14 +6226,14 @@ html
   body
   :is(.mode-play-shell, #flight-dialog):has([data-sim-hud-active='true'])
   > .mode-play-bar
-  > :not([data-mode-action='pause']) {
+  > :not([data-mode-action='pause']):not([data-mode-action='camera']) {
   display: none !important;
 }
 html
   body
   :is(.mode-play-shell, #flight-dialog):has([data-sim-hud-active='true'])
   > .mode-play-bar
-  [data-mode-action='pause'] {
+  :is([data-mode-action='pause'], [data-mode-action='camera']) {
   min-height: 44px !important;
   min-width: 44px !important;
   margin: 0 !important;
@@ -6305,5 +6300,37 @@ html body.sim-worlds #flight-dialog.learning-replay > #world-replay-controls lab
 html body.sim-worlds #flight-dialog.learning-replay > #world-replay-controls label {
   margin: 0 !important;
   padding: 0 !important;
+}
+
+/* Camera remains a compact flight action rather than a themed menu panel. */
+html body .mode-play-bar {
+  gap: 8px;
+}
+html body .mode-play-bar .sim-camera-quick[hidden] {
+  display: none !important;
+}
+html body .mode-play-bar .sim-camera-quick {
+  min-height: 44px;
+  max-width: 150px;
+}
+html body .sim-camera-choices {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0 0 16px;
+  padding: 8px;
+  border: 1px solid var(--fk-line);
+  min-width: 0;
+}
+html body .sim-camera-choices[hidden] {
+  display: none;
+}
+html body .sim-camera-choices button {
+  min-height: 44px;
+  flex: 1 1 auto;
+}
+html body .sim-camera-choices small {
+  flex-basis: 100%;
+  color: var(--fk-muted);
 }
 /* END SHARED SIM FULLSCREEN */
