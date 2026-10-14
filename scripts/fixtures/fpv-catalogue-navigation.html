@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="en">
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width" /><title>
+    Catalogue Play verification</title
+  ><link rel="stylesheet" href="../../optional-practice/civilian-fpv/world-style.css" /><style>
+    body {
+      background: #101c25;
+      color: #eee;
+      font: 18px system-ui;
+      margin: 16px;
+    }
+    button,
+    input {
+      padding: 10px;
+      background: #223644;
+      color: #eee;
+      border: 1px solid #758b97;
+      border-radius: 4px;
+    }
+    h2 {
+      font-size: 22px;
+    }
+    #receipt {
+      white-space: pre-wrap;
+      font: 14px monospace;
+    }
+    #fixture {
+      max-width: 1000px;
+    }
+  </style>
+  <h1>Catalogue Play verification</h1>
+  <p id="receipt">Running…</p>
+  <main id="fixture">
+    <h2>Installed worlds</h2>
+    <div id="installed"></div>
+  </main>
+  <script type="module">
+    import { mountWorldLibrary } from '../../optional-practice/civilian-fpv/world-library.mjs';
+    import { worldSHA256 } from '../../optional-practice/civilian-fpv/world-content.mjs';
+    const receipt = document.querySelector('#receipt'),
+      results = [];
+    const bytes = new Uint8Array([1, 2, 3]),
+      sha256 = await worldSHA256(bytes);
+    const row = {
+      id: 'canyon',
+      title: ['Canyon', 'Каньйон'],
+      revision: 'r1',
+      commit: 'a'.repeat(40),
+      path: 'authoring/fpv-worlds/published/free-worlds-v1/canyon.rlpack',
+      sha256,
+      bytes: 3,
+      courses: 1,
+    };
+    const second = { ...row, id: 'city', title: ['City', 'Місто'] };
+    const pageBytes = new TextEncoder().encode(
+      JSON.stringify({ format: 'FPVWorldLibrary.v2', worlds: [second], next: null }),
+    );
+    const next = {
+      commit: 'b'.repeat(40),
+      path: 'authoring/fpv-worlds/published/free-worlds-v2/page-2.json',
+      sha256: await worldSHA256(pageBytes),
+      bytes: pageBytes.length,
+    };
+    let cancelDelay = 0;
+    let requests = [],
+      index = { format: 'FPVWorldLibrary.v2', worlds: [row], next },
+      delay = 0,
+      locale = 'en',
+      failSave = false;
+    class WorkerMock {
+      postMessage(data) {
+        if (data.type === 'world-cancel') {
+          clearTimeout(this.timer);
+          this.timer = setTimeout(
+            () => this.onmessage({ data: { type: 'world-error' } }),
+            cancelDelay,
+          );
+          return;
+        }
+        requests.push(data.url);
+        this.timer = setTimeout(
+          () =>
+            this.onmessage({
+              data: {
+                type: 'world-done',
+                bytes: data.url.endsWith('.rlpack')
+                  ? bytes
+                  : data.url.endsWith('page-2.json')
+                    ? pageBytes
+                    : new TextEncoder().encode(JSON.stringify(index)),
+              },
+            }),
+          delay,
+        );
+      }
+      terminate() {
+        clearTimeout(this.timer);
+      }
+    }
+    window.Worker = WorkerMock;
+    const el = (tag, text, cls) => {
+      const node = document.createElement(tag);
+      if (text !== undefined) node.textContent = text;
+      if (cls) node.className = cls;
+      return node;
+    };
+    let installed = [],
+      flown = [],
+      generation = 0;
+    const mount = mountWorldLibrary({
+      el,
+      txt: (en, uk) => (locale === 'uk' ? uk : en),
+      parent: document.querySelector('#installed'),
+      begin: async () => generation,
+      install: async (data, row, options) => {
+        if (failSave) throw Error('quota');
+        options.signal.throwIfAborted();
+        options.commit();
+        installed.push(row);
+        options.saved();
+        mount.refresh(installed);
+      },
+      fly: async (row) => {
+        flown.push(row);
+      },
+    });
+    const settle = () => new Promise((resolve) => setTimeout(resolve, 35));
+    const assert = (ok, label) => {
+      results.push(`${ok ? 'PASS' : 'FAIL'} ${label}`);
+      if (!ok) throw Error(label);
+    };
+    const play = (id) => document.querySelector(`[data-world="${id}"] button`);
+    const named = (text) =>
+      [...document.querySelectorAll('button')].find((node) => node.textContent === text);
+    try {
+      assert(requests.length === 0, 'mount does not fetch metadata or assets');
+      mount.open();
+      await settle();
+      assert(
+        requests.length === 1 && requests[0].endsWith('index.json'),
+        'opening catalogue loads only metadata',
+      );
+      assert(play('canyon')?.textContent === 'Play', 'one Play action available');
+      play('canyon').click();
+      await settle();
+      assert(installed.length === 1 && flown.length === 1, 'Play installs then launches once');
+      assert(flown[0].sha256 === sha256, 'launch uses exact verified revision');
+      const count = requests.length;
+      play('canyon').click();
+      await settle();
+      assert(
+        requests.length === count && flown.length === 2,
+        'installed exact revision reuses bytes',
+      );
+      named('Load more worlds').click();
+      await settle();
+      assert(play('canyon') && play('city'), 'next page appends without losing prior rows');
+      assert(named('Load more worlds').hidden, 'last page hides continuation');
+      const search = document.querySelector('input');
+      search.value = 'city';
+      search.dispatchEvent(new Event('input'));
+      assert(!play('canyon') && play('city'), 'search filters visible cards');
+      search.value = '';
+      search.dispatchEvent(new Event('input'));
+      locale = 'uk';
+      mount.refresh();
+      assert(play('city').textContent === 'Грати', 'locale refresh translates action');
+      locale = 'en';
+      mount.refresh();
+      delay = 100;
+      play('city').click();
+      named('Cancel').click();
+      await settle();
+      assert(
+        installed.length === 1 && flown.length === 2,
+        'cancellation never installs or launches',
+      );
+      play('city').click();
+      mount.deactivate();
+      await settle();
+      assert(installed.length === 1 && flown.length === 2, 'navigation cancels launch intent');
+      delay = 0;
+      failSave = true;
+      play('city').click();
+      await settle();
+      assert(
+        installed.length === 1 && flown.length === 2,
+        'failed save retains previous installs without launch',
+      );
+      failSave = false;
+      index = {
+        format: 'FPVWorldLibrary.v2',
+        worlds: [row],
+        next: { ...next, sha256: '0'.repeat(64) },
+      };
+      named('Refresh worlds').click();
+      await settle();
+      named('Load more worlds').click();
+      await settle();
+      assert(play('canyon') && !play('city'), 'invalid page integrity leaves prior rows intact');
+      index = { format: 'FPVWorldLibrary.v2', worlds: [row, second], next: null };
+      named('Refresh worlds').click();
+      await settle();
+      assert(
+        !document.querySelector('#optional-world-library').hidden,
+        'catalogue remains usable after failures',
+      );
+      mount.dispose();
+      const explore = el('section'),
+        library = el('section');
+      document.querySelector('#fixture').append(explore, library);
+      const raced = mountWorldLibrary({
+        el,
+        txt: (en) => en,
+        parent: document.querySelector('#installed'),
+        begin: async () => 0,
+        install: async () => {},
+        fly: async () => {
+          throw Error('unexpected launch');
+        },
+      });
+      delay = 80;
+      cancelDelay = 20;
+      const initial = requests.length;
+      raced.open(explore);
+      raced.deactivate();
+      raced.open(library);
+      raced.deactivate(explore);
+      await new Promise((resolve) => setTimeout(resolve, 160));
+      assert(
+        requests.length === initial + 2,
+        'reopen while aborted metadata settles retries exactly once',
+      );
+      assert(
+        library.querySelector('[data-world="canyon"] button')?.disabled === false,
+        'late old-surface close leaves moved catalogue usable',
+      );
+      // A delayed close from the old container must not cancel a new active request.
+      raced.dispose();
+      const relocated = mountWorldLibrary({
+        el,
+        txt: (en) => en,
+        parent: document.querySelector('#installed'),
+        begin: async () => 0,
+        install: async () => {},
+        fly: async () => {
+          throw Error('unexpected launch');
+        },
+      });
+      const beforeRelocate = requests.length;
+      relocated.open(explore);
+      relocated.open(library);
+      relocated.deactivate(explore);
+      await new Promise((resolve) => setTimeout(resolve, 120));
+      assert(
+        requests.length === beforeRelocate + 1 && library.querySelector('[data-world="city"]'),
+        'relocation keeps ongoing metadata request without duplicate fetch',
+      );
+      receipt.textContent = `${results.length}/${results.length} passed\n` + results.join('\n');
+    } catch (error) {
+      receipt.textContent = results.join('\n') + '\nERROR ' + error.stack;
+    }
+  </script>
+</html>
