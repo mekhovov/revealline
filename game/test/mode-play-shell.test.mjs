@@ -4,7 +4,10 @@ import { Document } from './helpers/couch-dom.mjs';
 import { mountModePlayShell } from '../ui/mode-play-shell.mjs';
 import { attachModalNavigation } from '../ui/modal-navigation.mjs';
 import { attachControllerNavigation } from '../ui/controller-navigation.mjs';
-import { createOverflightOperationCards } from '../overflight/operation-view.mjs';
+import {
+  OVERFLIGHT_OPERATIONS,
+  createOverflightOperationCards,
+} from '../overflight/operation-view.mjs';
 import { renderModeChoices } from '../ui/mode-choice-view.mjs';
 
 function fixture(options = {}) {
@@ -691,9 +694,18 @@ for (const current of ['overflight', 'overflight-hunt']) {
         assert.equal(h.document.activeElement, expected);
       }
       move('down');
-      move('right');
-      assert.equal(h.document.activeElement, other);
+      const selectedIndex = OVERFLIGHT_OPERATIONS.findIndex(({ id }) => id === current);
+      for (let offset = 1; offset <= OVERFLIGHT_OPERATIONS.length; offset++) {
+        move('right');
+        const next = OVERFLIGHT_OPERATIONS[(selectedIndex + offset) % OVERFLIGHT_OPERATIONS.length];
+        assert.equal(h.document.activeElement, home.querySelector(`#operation-${next.id}`));
+      }
       move('left');
+      const previous = OVERFLIGHT_OPERATIONS[
+        (selectedIndex - 1 + OVERFLIGHT_OPERATIONS.length) % OVERFLIGHT_OPERATIONS.length
+      ];
+      assert.equal(h.document.activeElement, home.querySelector(`#operation-${previous.id}`));
+      move('right');
       assert.equal(h.document.activeElement, selectedOperation);
       assert.equal(chosen, 0);
       navigation.handle({ confirm: true });

@@ -4207,3 +4207,15 @@ head `6384164d5`. Cloud admission started in
 [run 38489543945](https://github.com/mekhovov/revealline/actions/runs/38489543945).
 This follow-up is documentation-only. Use the latest exact-head checks before
 merge; source-browser availability is not a public deployment claim.
+
+
+### 14 October 2026 — paused Flight setup candidate
+
+Continued the approved quick-camera recommendations on `codex/fpv-pause-flight-setup`, based on frozen #1178 head `4e3ad7c9f8fd6ebcc2fd9cca877c03ce76d3dd06`. Shared paused setup and device hints are implemented in both hosts; canonical mode/input handlers, recording identity and explicit arming remain authoritative. Mode switches keep the pause menu; radio return restores its opener. Phone camera choices now share one row, with Resume first. No active-flight overlay was added.
+
+All 123 existing radio/control/shell/flight/appearance checks passed, along with scoped lint, projection checks and package source preflight. Actual browser verification covers both hosts, EN/UK, radio-dialog return, disconnected-controller setup access, input/mode/camera changes and portrait/landscape/handheld viewport sizes. Full local packages remain blocked by storage (observed 0–573 MiB); the 297 MiB disposable Blender installer was unmounted and removed without touching source, archives, commits or browser storage. CI/public deployment and physical device acceptance are not claimed. Screenshots and preflight evidence accompany the candidate; PR/stack identity will be recorded after publication.
+
+Next independent increment: shared Retry / Practise section / Watch example flow. Remaining recommendation order is in `docs/fpv-quick-camera-and-ux.md`. Preserve ready camera/setup candidates and keep next-item edits on a separate branch.
+
+
+Publication: focused **PR #1179** (`b476fca3e7834bb304b32ab5daeebd0a79a9aa2f`) is published above **#1178** in new native stack **#1180**, rooted on main. GitHub confirmed the remote head despite a local disk-full error writing upstream tracking metadata; repair that metadata when storage permits. No public availability claim. App attachment was attempted but rejected by the existing 100-attachment limit. A further 62,623,386 bytes of hash-verified, re-downloadable Kenney ZIP caches were removed; extracted sources, download manifests, committed assets and player storage remain intact. Final formatting-only source preflight passed again; receipt refreshed below. Do not treat these source preflights as frozen bundle qualification.
