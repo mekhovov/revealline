@@ -99,3 +99,10 @@ available; a new build should be described by its own source if performed.
 No recipes, geometry, quotas, objectives, grading budgets or original assets
 change in this follow-up. Further music layers, new hints and additional grades
 remain optional future design work, not missing requirements of this release.
+
+## Final packaging receipt
+
+Fresh clean full default distribution: **3,277 files**, source `6cc04df4341555a02689d6f4e64f231d3d1324a3`, ZIP SHA-256 `5a2e2f746c8ee3d25b23b5ec5428dc6d9c3703990d331b80c00b298f0d743672`. Archive CRC, every archived/expanded manifest hash, and exact output inventory pass. The verified task-owned output was removed afterward; `interaction-validation.json` retains the receipt. This is packaging verification, not deployment.
+
+All three identified corrections are complete. Physical-device and player
+qualification remain deferred; optional future design ideas are not release blockers.

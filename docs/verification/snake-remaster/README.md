@@ -113,8 +113,10 @@ feedback/input priorities. Its audit found three edge cases: controller Menu
 did not stop terminal playback, unchanged reception status was repeatedly
 rewritten, and globally enabled voices could override Snake's jammed-catch
 silence request. All are corrected, with 109 host, 74 audio and 16 package tests
-passing. No new simulation or grading rules are introduced. Historical build
-receipts retain their exact source attribution.
+passing. A fresh full default build at `6cc04df43` verifies all 3,277 files and
+archive/expanded hashes; `interaction-validation.json` retains the receipt.
+No new simulation or grading rules are introduced. Historical build receipts
+retain their exact source attribution.
 
 ## Deferred qualification and intentional grading limits
 
