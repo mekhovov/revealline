@@ -1361,6 +1361,7 @@ roughness:1,
 }),
 );
 ground.rotation.x= -Math.PI/2;
+ground.userData.proceduralGround=true;
 ground.userData.materialRole=natural?'grass':'concrete';
 ground.position.set(cx,min.y-0.01,cz);
 ground.receiveShadow=true;

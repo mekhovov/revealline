@@ -1,0 +1,108 @@
+{
+  "format": "FPVFreeWorldPreparation.v1",
+  "id": "cc0-rock-grotto",
+  "title": [
+    "Rock Grotto",
+    "Скелястий грот"
+  ],
+  "kit": "modular-cave-kit",
+  "sourceURL": "https://kenney.nl/assets/modular-cave-kit",
+  "downloadURL": "https://kenney.nl/media/pages/assets/modular-cave-kit/37ec3cb12d-1783667097/kenney_modular-cave-kit_1.0.zip",
+  "archiveSha256": "48f37a6d4f241124cd7da17da1c6d4ed1bf1820bb149dcb233fbd5ebdd8ba996",
+  "license": "CC0-1.0",
+  "tool": "@gltf-transform 4.5.1",
+  "modelBytes": 933484,
+  "modelSha256": "6e0a9df2c4ff887aca791338b87df0e5ecdc3136f22392e5c2bcd55099740d43",
+  "packBytes": 1433783,
+  "packSha256": "8f4809f5f07d625046ec58f810fca9d52d14ad177b5564f16f0ee73da187a2f5",
+  "collisionSurfaces": 6,
+  "collisionTriangles": 13920,
+  "validation": {
+    "numErrors": 0,
+    "numWarnings": 0,
+    "numInfos": 0,
+    "numHints": 0,
+    "messages": [],
+    "truncated": false
+  },
+  "placements": [
+    {
+      "model": "Models/GLB format/room-large.glb",
+      "sha256": "d8275e37ce565eb700815cb666b77d3519d4ade0227aaff86f586d811ebfb11f",
+      "placement": {
+        "model": "room-large",
+        "x": -27,
+        "z": 0,
+        "size": 24,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 1.1860944604580412
+    },
+    {
+      "model": "Models/GLB format/room-small.glb",
+      "sha256": "4daea8fe363bd33284d48020fdad77861ebc77ad121815d4b3b672b88564909a",
+      "placement": {
+        "model": "room-small",
+        "x": 25,
+        "z": -17,
+        "size": 22,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 1.8333332604832149
+    },
+    {
+      "model": "Models/GLB format/corridor-wide.glb",
+      "sha256": "9335541bc1934039c27e5346d7e7318de338714303c8409e37ac4a301bf2c10b",
+      "placement": {
+        "model": "corridor-wide",
+        "x": -27,
+        "z": -20,
+        "size": 10,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 1.2144060623945216
+    },
+    {
+      "model": "Models/GLB format/gate-rock.glb",
+      "sha256": "02a81649c50d6683bee1782ba0ed618bdbadd6ae6bbbc9875a822bae8ba3c693",
+      "placement": {
+        "model": "gate-rock",
+        "x": 25,
+        "z": 18,
+        "size": 12,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 3
+    },
+    {
+      "model": "Models/GLB format/template-wall-corner.glb",
+      "sha256": "4ceeeec7aab1383b671d2bbdf1f3d2728c45f3ab6af09e578dc0fd9c5c9206d5",
+      "placement": {
+        "model": "template-wall-corner",
+        "x": -24,
+        "z": 30,
+        "size": 8,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 8
+    },
+    {
+      "model": "Models/GLB format/template-wall.glb",
+      "sha256": "b51cd5a1e1a7612c7cb8673148407bb73ec71dc5cd1900e8376889b068af9069",
+      "placement": {
+        "model": "template-wall",
+        "x": 25,
+        "z": -36,
+        "size": 8,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 2
+    }
+  ]
+}

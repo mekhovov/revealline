@@ -1,3 +1,4 @@
+import { CLASSIC_SNAKE_PURSUIT_V1_ARCHIVED_LEVELS } from '../snake/classic-catalogue-pursuit-v1-archive.mjs';
 import { classicOperationStatus } from '../snake/classic-operation-status.mjs';
 import { OPERATION_PROTOTYPES } from './manual/snake-operation-recipes.mjs';
 import { classicBoardPreferences, isClassicWorldStyle } from '../snake/classic-worlds.mjs';
@@ -75,6 +76,7 @@ import { snakeStudioReturnHref } from '../ui/content-studio-navigation.mjs';
 import { fpvWorldLaunchURL, appearanceLaunchURL, nativeArtReviewURL } from '../fpv-entry.mjs';
 import { CLASSIC_COPY } from '../snake/classic-copy.mjs';
 import { advanceClassicFlight } from '../snake/classic-flight-art.mjs';
+import { advanceClassicReactionTime } from '../snake/classic-world-reactions.mjs';
 import { t } from '../i18n/index.mjs';
 import { mountEnemyAppearanceControls } from '../ui/enemy-appearance-controls.mjs';
 import { prepareClassicEnvironments } from '../snake/classic-environment.mjs';
@@ -124,9 +126,11 @@ async function harness({
   query = '',
   cosmetics = null,
   savedRound = null,
+  recordReceipt = { verified: true, saved: true },
   catalogue = CLASSIC_SNAKE_LEVELS,
 } = {}) {
   const document = new Document();
+  let harnessLocale = 'en';
   document.hasFocus = () => focused;
   const writerClaims = [];
   document.createElement = (tag) => {
@@ -385,9 +389,11 @@ async function harness({
     screen: { orientation: new Events() },
     navigator: { getGamepads: () => pads },
     setTimeout,
-    getLocale: () => 'en',
+    getLocale: () => harnessLocale,
     t,
-    setLocale() {},
+    setLocale(value) {
+      harnessLocale = value;
+    },
     onLocaleChange() {},
     createDestructionPreferences: () =>
       createDestructionPreferences({
@@ -463,7 +469,9 @@ async function harness({
     createClassicSnakeRecords: () => ({
       async read() {},
       async visit() {},
-      async remember() {},
+      async remember() {
+        return recordReceipt;
+      },
       chapter: () => 0,
       cleared: () => false,
       get: () => null,
@@ -476,6 +484,7 @@ async function harness({
     },
     drawClassicTarget() {},
     advanceClassicFlight,
+    advanceClassicReactionTime,
     boundedJSON,
     exactKeys,
     required,
@@ -1176,8 +1185,8 @@ test('the Snake library shows all missions and filters without changing the paus
   state.frame(200);
   state.shell.open('missions');
   const before = state.created.map((run) => core.exportClassicSnakeReplay(run));
-  assert.equal(state.$('journey-cards').children.length, 192);
-  assert.equal(state.$('journey-campaign-rail').children.length, 29);
+  assert.equal(state.$('journey-cards').children.length, 240);
+  assert.equal(state.$('journey-campaign-rail').children.length, 35);
   const first = libraryCard(state, CLASSIC_SNAKE_LEVELS[0].id);
   state.$('journey-search').value = 'Quiet Channel';
   state.$('journey-search').emit('input');
@@ -2071,3 +2080,53 @@ for (const mode of ['solo', 'team', 'versus']) {
     assert.deepEqual(state.created.at(-1).level.operation, entry.level.operation);
   });
 }
+
+for (const mode of ['solo', 'versus', 'team'])
+  test(`${mode} restores the original chapter artwork owner with a retained recipe`, async () => {
+    const old = CLASSIC_SNAKE_PURSUIT_V1_ARCHIVED_LEVELS.find(
+      (e) => e.id === 'classic-living-cable-cutoff',
+    );
+    const original = await harness({ entry: old, mode, catalogue: [old] });
+    const select = original.document.querySelector('[data-enemy-appearance]');
+    select.value = 'military';
+    select.emit('change');
+    await flush();
+    original.start();
+    original.window.emit('blur');
+    const saved = JSON.parse(original.storage.get('revealline.classic-snake.round.v2'));
+    assert.ok(saved.appearance.environmentPin);
+    assert.equal(saved.match.replays[0].level.revision, '1');
+    const restored = await harness({
+      entry: CLASSIC_SNAKE_LEVELS.find((e) => e.id === old.id),
+      mode,
+    });
+    await importSession(restored.$, saved);
+    assert.equal(restored.$('save-status').textContent, CLASSIC_COPY.en.loaded);
+    assert.deepEqual(
+      snapshotAttemptAppearance(restored.acceptedAppearances.at(-1)),
+      saved.appearance,
+    );
+    restored.window.emit('blur');
+    assert.equal(
+      JSON.parse(restored.storage.get('revealline.classic-snake.round.v2')).match.replays[0].level
+        .revision,
+      '1',
+    );
+  });
+
+test('a verified session-only clear keeps its stars and localized visible saving notice without blocking Retry', async () => {
+  for (const locale of ['en', 'uk']) {
+    const state = await harness({
+      query: `&lang=${locale}`,
+      recordReceipt: { verified: true, saved: false },
+    });
+    flyVerifiedRoute(state);
+    await flush();
+    assert.equal(state.$('snake-stars').textContent, '★★★');
+    assert.equal(state.$('result-save-notice').hidden, false);
+    assert.equal(state.$('result-save-notice').textContent, CLASSIC_COPY[locale].verifiedNotSaved);
+    state.shell.elements.buttons.retry.click();
+    assert.equal(state.created.length, 2);
+    assert.equal(state.$('result-save-notice').hidden, true);
+  }
+});

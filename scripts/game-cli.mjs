@@ -868,6 +868,12 @@ export async function addOfflineEntries(
     );
     injected.push(entry);
   }
+  if (
+    entries
+      .find((entry) => entry.name === 'game/index.html')
+      ?.bytes.includes('revealline-access-id')
+  )
+    (await import('./access-pages.mjs')).protectPageEntries(entries);
   // Hash a canonical placeholder form, including the optional HTML descriptors.
   // Final build IDs and their derived catalogue hashes cannot hash themselves.
   refreshCatalogue();
@@ -1047,6 +1053,12 @@ export async function prepareBuildProject({
   };
   replace('game/build-info.json', json(info));
   addPublicEntries(entries, info);
+  if (
+    entries
+      .find((entry) => entry.name === 'game/index.html')
+      ?.bytes.includes('revealline-access-id')
+  )
+    (await import('./access-pages.mjs')).protectPageEntries(entries);
   await addOfflineEntries(
     root,
     entries,
