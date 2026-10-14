@@ -1,6 +1,6 @@
 # Large authored FPV regions — active delivery plan
 
-Reviewed 14 October 2026; paired regional ownership, visual foundations and exact-package recovery.
+Reviewed 15 October 2026; continuous regional flight, verified Library delivery and preserved asset textures.
 The user selected default catalogue visibility, download on Play, optional offline
 storage, and authored regions first. Generation assists authoring; endless runtime
 terrain is deferred. Twelve proposed regions are design targets, not shipped maps.
@@ -58,10 +58,21 @@ terrain is deferred. Twelve proposed regions are design targets, not shipped map
   regional arming, keyboard input, camera/mode changes and disarmed Retry now pass.
   The regional source remains a separately identified same-origin test fixture,
   not installed/offline content or default catalogue admission.
-  Continuous staging is published in #1273 with four verified cell crossings.
-  Next: prepare staged renderer resources while the current window remains playable,
-  then adopt it atomically so normal cell crossings do not require re-arming.
-  Explicit paused recovery remains necessary when required data is unavailable.
+  Continuous staging #1273 and renderer preparation #1282 are merged. Four
+  verified cell crossings retain conservative reference states. Staged shader
+  compilation and bounded GPU uploads precede adoption, with cancellation,
+  renderer-state restoration and a final live-pose guard. Native preparation,
+  neighbour staging, cancellation retaining the prior window, and release passed.
+  Normal prepared crossings stay active; unavailable required data pauses safely.
+  Immutable delivery authoring #1283 and atomic regional Library storage #1284
+  are merged. A 38-file, 1,455,090-byte Urban pair is pinned to an exact commit;
+  every payload is verified and installed revisions remain available for rollback.
+  Normal Library UI is in final source review. Native remote Download → saved Fly,
+  disarmed entry, keyboard flight, camera/reset/mode changes and reload pass.
+  EN/UK portrait layout has no horizontal overflow. Six interface scenarios include
+  navigation cancelling delayed launch. Exact packaged admission remains pending.
+  The first card is a 384×384 m architectural preview, not finished art or a
+  multi-kilometre region. Ready/paused header compaction is a focused next item.
   Regional scenery
   admission, recovery and sustained qualification remain separate requirements.
   Existing World coordinates stop at ±100 m. Real regional flight additionally
@@ -99,6 +110,19 @@ terrain is deferred. Twelve proposed regions are design targets, not shipped map
   passes native three-preset inspection and release/reload, published in #1274.
   Neither representative region is admitted
   to the default catalogue before collision, flight and package qualification.
+  Urban parking routes #1277 are merged: three ramps and a landing preserve
+  existing surfaces, with seven new matching collision surfaces and 490 route
+  queries. Native approach/upper views and release/reload passed. Canyon sediment
+  #1274 removes repeating surface bands across all three presets. These improve
+  source studies; the pinned player preview has not silently acquired them.
+- **P3 current increment:** Railway CC0 intake #1280 and exact indexed texture
+  contract #1285 are merged. Tank, straight track and flatbed preserve palette
+  pixels, UVs and normals. Three originals remain preserved but blocked by current
+  millimetre quantization; no triangles were silently discarded. Runtime texture
+  ownership is published in #1287, with native comparison and release/reload.
+  CPU texture buffers and GPU mip storage fit inside existing resource ceilings.
+  A bounded Railway slice is next: freight lanes, trestle cutting, maintenance hall
+  and canopy routes. It is not yet a moving-train mission, default world or 4 km region.
 - **P3:** Tropical Archipelago, Industrial Railway Valley, Coaster Park, Hillside Town;
   then Alpine Highlands, Desert Expedition, Canal City; then Lunar Basin, Castle
   Valley, Retro Metropolis. Expand Reservoir, Harbor and Festival with new revisions,
@@ -155,20 +179,25 @@ terrain is deferred. Twelve proposed regions are design targets, not shipped map
 
 ## Next delivery order
 
-1. **P1 — Complete continuous regional flight and player admission.** Paired ownership
-   and the production swept-sphere slide contract are merged with historical replay
-   parity; shared support/ground response and explicit player-host review are merged.
-   Continuous prefetch/adoption is implemented in #1273. Finish staged renderer
-   preparation, immutable regional delivery and exact host-package qualification
-   before admitting a region to players. Normal cell crossings must remain active; unloaded or failed
-   transitions must preserve the previous usable window and pause safely.
-   Prototype geometry, shared air and camera alone do not constitute player admission.
+1. **P1 — Finish regional Library admission and quiet flight presentation.**
+   Shared physics, collision/support, camera/input, continuous staging and renderer
+   preparation are merged. Publish Download → Fly, reconcile the exact module
+   closure with texture support, and qualify an unchanged package. Keep ready/paused
+   controls compact and prevent delayed navigation from taking over the screen.
+   Preserve preview labelling until representative art passes.
 2. **P4 — Complete package self-containment and broader recovery qualification.**
    Tri-state readiness and exact corrected-package update/rollback are verified in
    the bounded browser fixture. Package-local artwork and integrity-rejection
    recovery are verified. Close actual quota/eviction, browser restart and
    network-wide offline coverage; qualify the regional host package separately.
    Preserve usable installations and player records through every scenario.
+   #1275 verifies company closure and 164 course/mode lifecycle cases across two
+   packages. #1278 records exact continuous-host launch; #1286 records successful
+   offline preparation retry after an earlier registration abort, retaining both
+   observations. Cause is unknown and stopped-origin coverage for that candidate
+   remains open. #1281 verifies isolated modeled quota failure, rollback and page
+   reload. Regional storage also passes corrupt-update rejection, retained revisions,
+   rollback, stale-removal rejection and page reload with real authored assets.
 3. **P2 — Compose the representative quality slice in parallel.** Combine authored
    relief and reachable architecture, refine materials and landmarks, and compare
    flight openings across quality tiers. The current Canyon and Urban studies prove
