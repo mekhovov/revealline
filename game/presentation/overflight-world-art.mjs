@@ -1,3 +1,4 @@
+import { paintOverflightWorldV2 } from './overflight-world-art-v2.mjs';
 import {
   industrialMaterialPixels,
   INDUSTRIAL_ENVIRONMENT_REVISION,
@@ -34,6 +35,8 @@ export function paintOverflightWorld(
 ) {
   const world = overflightWorldDefinition(presentation?.world);
   if (!world) return false;
+  if (presentation.format === 'OverflightWorldPresentationV2')
+    return paintOverflightWorldV2(ctx, presentation, arena, world, { scale, image });
   const [base, low, mid, high] = world.palette;
   ctx.save();
   ctx.scale(scale, scale);
