@@ -1,0 +1,43 @@
+{
+  "schema": "OverflightPilotBiasConfigV1",
+  "expectedRuntimeCommit": "ed46c2b72e1735940acd70337f4ca5826506b1cc",
+  "sourceProvenance": "expanded-earned-provenance.json",
+  "originalConfig": "expanded-earned-config.json",
+  "originalEvidence": "expanded-earned-final.json.gz",
+  "maxSimulationSeconds": 720,
+  "traceEverySeconds": 1,
+  "wallBudgetSeconds": 900,
+  "cases": [
+    {
+      "id": "survivor-echo-figure-eight",
+      "originalIndex": 8,
+      "route": "figure-eight",
+      "focusPolicy": "normal"
+    },
+    {
+      "id": "survivor-systems-tight",
+      "originalIndex": 4,
+      "route": "tight",
+      "focusPolicy": "normal"
+    },
+    {
+      "id": "riy-echo-figure-eight",
+      "originalIndex": 7,
+      "route": "figure-eight",
+      "focusPolicy": "normal"
+    },
+    { "id": "riy-systems-tight", "originalIndex": 3, "route": "tight", "focusPolicy": "normal" },
+    {
+      "id": "riy-echo-priority-focus",
+      "originalIndex": 7,
+      "route": "figure-eight",
+      "focusPolicy": "priority"
+    },
+    {
+      "id": "riy-systems-priority-focus",
+      "originalIndex": 3,
+      "route": "tight",
+      "focusPolicy": "priority"
+    }
+  ]
+}

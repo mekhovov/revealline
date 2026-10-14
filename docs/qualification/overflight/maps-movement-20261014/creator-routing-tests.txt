@@ -1,0 +1,170 @@
+TAP version 13
+# Subtest: SIM launch carries only a bounded cosmetic default without changing the return route
+ok 1 - SIM launch carries only a bounded cosmetic default without changing the return route
+  ---
+  duration_ms: 2.238375
+  ...
+# Subtest: bundled FPV launches and returns to the exact game entry across source, hosted and native roots
+ok 2 - bundled FPV launches and returns to the exact game entry across source, hosted and native roots
+  ---
+  duration_ms: 0.639167
+  ...
+# Subtest: FPV return refuses foreign origins, credentials and unrelated paths
+ok 3 - FPV return refuses foreign origins, credentials and unrelated paths
+  ---
+  duration_ms: 0.179125
+  ...
+# Subtest: regular game build includes the simulator and all policy dependencies without an optional download
+ok 4 - regular game build includes the simulator and all policy dependencies without an optional download
+  ---
+  duration_ms: 3.277875
+  ...
+# Subtest: bundled FPV renderer vendor dependencies stay in the offline core
+ok 5 - bundled FPV renderer vendor dependencies stay in the offline core
+  ---
+  duration_ms: 0.9875
+  ...
+# Subtest: World SIM returns to the actual arcade mode, query and community without browser history
+ok 6 - World SIM returns to the actual arcade mode, query and community without browser history
+  ---
+  duration_ms: 3.534583
+  ...
+# Subtest: Snake launch keeps the selected seats and bounded cosmetics within the current build
+ok 7 - Snake launch keeps the selected seats and bounded cosmetics within the current build
+  ---
+  duration_ms: 0.695417
+  ...
+# Subtest: Survivor and Raid keep same-build Snake and exact SIM return routes
+ok 8 - Survivor and Raid keep same-build Snake and exact SIM return routes
+  ---
+  duration_ms: 0.425917
+  ...
+# Subtest: overflight: all 18 authored maps retain compiled rules through export and fresh native profile import
+ok 9 - overflight: all 18 authored maps retain compiled rules through export and fresh native profile import
+  ---
+  duration_ms: 715.406166
+  ...
+# Subtest: overflight-riy: all 18 authored maps retain compiled rules through export and fresh native profile import
+ok 10 - overflight-riy: all 18 authored maps retain compiled rules through export and fresh native profile import
+  ---
+  duration_ms: 1110.0175
+  ...
+# Subtest: overflight-hunt: all 18 authored maps retain compiled rules through export and fresh native profile import
+ok 11 - overflight-hunt: all 18 authored maps retain compiled rules through export and fresh native profile import
+  ---
+  duration_ms: 1468.458291
+  ...
+# Subtest: V4 Marathon rotates all five layouts with carried resources, fresh terrain and a reproducible retry
+ok 12 - V4 Marathon rotates all five layouts with carried resources, fresh terrain and a reproducible retry
+  ---
+  duration_ms: 516.503
+  ...
+# Subtest: overflight rules 1: Creator-installed project opens its own native library for every remembered operation
+ok 13 - overflight rules 1: Creator-installed project opens its own native library for every remembered operation
+  ---
+  duration_ms: 54.028834
+  ...
+# Subtest: overflight rules 4: Creator-installed project opens its own native library for every remembered operation
+ok 14 - overflight rules 4: Creator-installed project opens its own native library for every remembered operation
+  ---
+  duration_ms: 95.95925
+  ...
+# Subtest: overflight-riy rules 1: Creator-installed project opens its own native library for every remembered operation
+ok 15 - overflight-riy rules 1: Creator-installed project opens its own native library for every remembered operation
+  ---
+  duration_ms: 56.853459
+  ...
+# Subtest: overflight-riy rules 4: Creator-installed project opens its own native library for every remembered operation
+ok 16 - overflight-riy rules 4: Creator-installed project opens its own native library for every remembered operation
+  ---
+  duration_ms: 150.063291
+  ...
+# Subtest: overflight-hunt rules 1: Creator-installed project opens its own native library for every remembered operation
+ok 17 - overflight-hunt rules 1: Creator-installed project opens its own native library for every remembered operation
+  ---
+  duration_ms: 163.155292
+  ...
+# Subtest: overflight-hunt rules 4: Creator-installed project opens its own native library for every remembered operation
+ok 18 - overflight-hunt rules 4: Creator-installed project opens its own native library for every remembered operation
+  ---
+  duration_ms: 431.921917
+  ...
+# Subtest: explicit preview and legacy operation links beat family restoration, while generic Home still restores it
+ok 19 - explicit preview and legacy operation links beat family restoration, while generic Home still restores it
+  ---
+  duration_ms: 0.85725
+  ...
+# Subtest: official and installed encounters retain exact compiler identities and owner launches
+ok 20 - official and installed encounters retain exact compiler identities and owner launches
+  ---
+  duration_ms: 6.726708
+  ...
+# Subtest: installed experimental Raid remains discoverable but unavailable in open-arena variants
+ok 21 - installed experimental Raid remains discoverable but unavailable in open-arena variants
+  ---
+  duration_ms: 71.381375
+  ...
+# Subtest: different authored schedules produce different diagrams without mutating projects
+ok 22 - different authored schedules produce different diagrams without mutating projects
+  ---
+  duration_ms: 2.387833
+  ...
+# Subtest: family home exposes all five operations and preserves operation queries with locale
+ok 23 - family home exposes all five operations and preserves operation queries with locale
+  ---
+  duration_ms: 2.091292
+  ...
+# Subtest: only a generic family entry restores a valid saved operation while keeping appearance and locale
+ok 24 - only a generic family entry restores a valid saved operation while keeping appearance and locale
+  ---
+  duration_ms: 0.621375
+  ...
+# Subtest: changing a live sortie requires explicit end, supports cancel and releases confirmation input
+ok 25 - changing a live sortie requires explicit end, supports cancel and releases confirmation input
+  ---
+  duration_ms: 0.6725
+  ...
+# Subtest: committed fan and lane warnings match each damaging ray and full half-width
+ok 26 - committed fan and lane warnings match each damaging ray and full half-width
+  ---
+  duration_ms: 0.279
+  ...
+# Subtest: guard facing, damage and armor opening remain geometrically distinct
+ok 27 - guard facing, damage and armor opening remain geometrically distinct
+  ---
+  duration_ms: 0.188667
+  ...
+# Subtest: open cache shows two physical choices with distinct glyphs and disabled state
+ok 28 - open cache shows two physical choices with distinct glyphs and disabled state
+  ---
+  duration_ms: 0.221792
+  ...
+# Subtest: distant armor stays compact without losing state, while approaches and priority targets stay detailed
+ok 29 - distant armor stays compact without losing state, while approaches and priority targets stay detailed
+  ---
+  duration_ms: 0.643208
+  ...
+# Subtest: mission discovery labels Relaxed V3 encounters in both native languages
+ok 30 - mission discovery labels Relaxed V3 encounters in both native languages
+  ---
+  duration_ms: 1.496041
+  ...
+# Subtest: cache instructions explain stored V3 Overdrive without changing legacy or Raid rewards
+ok 31 - cache instructions explain stored V3 Overdrive without changing legacy or Raid rewards
+  ---
+  duration_ms: 2.783084
+  ...
+# Subtest: all eighteen battlefields register in six localized campaign groups
+ok 32 - all eighteen battlefields register in six localized campaign groups
+  ---
+  duration_ms: 67.376917
+  ...
+1..32
+# tests 32
+# suites 0
+# pass 32
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 4226.49275

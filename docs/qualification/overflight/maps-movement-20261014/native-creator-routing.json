@@ -1,0 +1,52 @@
+{
+  "schema": "OverflightCreatorRoutingQualificationV1",
+  "recordedDate": "2026-10-14",
+  "oldNativeSourceRevision": "3bb1b0dc66ae77baf59d0e89ab9edf257a244d10",
+  "oldNativeEvidence": "native-offline-browser.json",
+  "origin": "http://127.0.0.1:8936",
+  "package": "native/creator-glasshouse-package.json",
+  "title": "Review \u00b7 Glasshouse Routes",
+  "compiledIdentity": "12c9251df37ee67e",
+  "installedIdentity": "784aaf99b3089951",
+  "oldNativeFlow": {
+    "savedOperation": "marathon",
+    "stepsPassed": [
+      "fresh-origin import of earlier export",
+      "validate same project identity",
+      "native preview advanced to 17 seconds and 14 clears",
+      "install package"
+    ],
+    "creatorDestination": "http://127.0.0.1:8936/game/overflight/play.html?family=1&lang=en&community=784aaf99b3089951",
+    "unexpectedRedirect": "http://127.0.0.1:8936/game/overflight/raid.html?operation=marathon&lang=en&community=784aaf99b3089951",
+    "failure": "This Raid package is not installed",
+    "status": "failed; retained",
+    "manualCorrectURL": {
+      "status": "passed bounded offline continuation",
+      "observed": "17 seconds, 15 clears and an earned animated draft with origin requests denied",
+      "boundary": "Explicit correct URL demonstrates stored package and asset closure; it does not repair the failed Install and play flow."
+    }
+  },
+  "sourceFix": {
+    "commitPrefix": "4dab801d9",
+    "file": "game/overflight/operation-view.mjs",
+    "rule": "Restore saved operation only for generic /overflight/play.html?family=1 without community, studio, operation or legacy prototype context.",
+    "persistence": "No preference reset or change to normal storage behavior.",
+    "exactReproductionAfterFix": "No redirect for the same Survivor community URL with Marathon saved.",
+    "tests": {
+      "file": "creator-routing-tests.txt",
+      "sha256": "db658f5922098d8dc3c10e3dbded5c2915e528d0258de73ed92e2b6788421bf9",
+      "passed": 32,
+      "failed": 0,
+      "scope": "Real native package export/import/install/load for legacy/current Survivor, Riy and Raid; all five operations versus every saved choice; explicit preview and prototype links; generic Home restoration."
+    },
+    "lintAndFormatting": "passed"
+  },
+  "newNativeValidation": {
+    "status": "pending",
+    "reason": "Authentic updated production generation is preparing; the fixed normal Creator UI flow has not yet been rerun."
+  },
+  "boundaries": [
+    "Source regressions are not a native UI pass.",
+    "Earlier failure and manual-correct-URL observation remain separate from the new source fix."
+  ]
+}

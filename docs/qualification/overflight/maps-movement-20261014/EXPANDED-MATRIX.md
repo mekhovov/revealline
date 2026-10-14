@@ -1,6 +1,6 @@
 # Expanded final-source earned checkpoint review
 
-**Status: candidate-bound and prepared; no simulations started.** Run only after the parent confirms that native performance trials have finished. This is a bounded diagnostic extension, not a change to runtime mechanics or an enjoyment assessment.
+**Status: executed after the parent’s go; see [results](EXPANDED-MATRIX-RESULTS.md).** The full batch completed in 159.45 seconds; the preparation protocol below is retained. This is a bounded diagnostic extension, not a change to runtime mechanics or an enjoyment assessment.
 
 ## Scope and coverage
 
