@@ -49,7 +49,7 @@ const sourceHashes={
 'a9128e8139a965abc49e4327e56f8edb57fa3dab1c870caecc36292db0866496',
 'game/journey/reaction-recording-format.mjs':
 'cdcd3da4bf5ab6c13190968cd1d286bcae070a005e879e9d291db92a31fef0f4',
-'game/journey/reactions.mjs':'34668e7517f3c510505e53a2e9872cf29f92ba7269238919144ec84cce6ee062',
+'game/journey/reactions.mjs':'5a467624ad95e59b30f6a339bfa7f66f82a3060356925adb5c85f9c7db7c459d',
 'game/journey/campaign-feedback.mjs':
 '7b9b1df9c7cee0e7a6ac3d632ef53874e287054306c614453b37c767523b784e',
 'game/hunt/actor-reactions.mjs':'6abddc59bb89ded4622004bd362d23b86313a71e142744f98e750895493fe652',
@@ -4974,7 +4974,7 @@ if(authored)return Object.freeze(authored);
 const speaker=
 context.mode==='versus'
 ?'rival'
-:context.mode==='team'
+:context.mode==='team'||context.presentation==='snake'
 ?'engineer'
 :context.encounter===true
 ?'sentinel'
