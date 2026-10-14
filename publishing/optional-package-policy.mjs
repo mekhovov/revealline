@@ -601,9 +601,10 @@ export const OPTIONAL_PACKAGE_POLICIES = Object.freeze(
         ]),
         limits: Object.freeze({
           ...policy.limits,
-          // Eight exact shared battlefield modules extend each 3D package;
-          // existing byte budgets and the remaining dependency boundary stay fixed.
-          files: id === 'civilian-fpv' ? 104 : id === 'fpv-worlds' ? 136 : policy.limits.files,
+          // The reviewed FPV Worlds source closure is 138 files after admitting
+          // flight-contact and flight-support. Keep the 20 MiB byte budget and
+          // the exact dependency boundary enforced by package admission.
+          files: id === 'civilian-fpv' ? 104 : id === 'fpv-worlds' ? 138 : policy.limits.files,
           bytes: id === 'fpv-worlds' ? 20 * 1024 * 1024 : policy.limits.bytes,
         }),
         localFiles: Object.freeze([
