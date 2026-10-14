@@ -148,7 +148,12 @@ export function wireLandingMenuNavigation({
       const extras = modes.filter((node) =>
         ['snake', 'overflight', 'simulator'].includes(node.dataset.gameMode),
       );
-      set([more], 'down', [...extras, ...groups.flat()]);
+      // Less sits below the extra row: Up returns there; Down enters the main actions.
+      set([more], 'up', [
+        ...extras.filter((node) => node === selected),
+        ...extras,
+        ...groups.toReversed().flat(),
+      ]);
     }
   };
   refresh();
@@ -393,11 +398,33 @@ export function mountModePlayShell({
     button('sound', () => actions.toggleSound?.()),
     button('fullscreen', () => actions.fullscreen?.()),
   );
-  home.append(edition, modes, mission, menu, utilities);
+  const homeChoices = el('div', 'mode-play-home-choices');
+  move('homeChoices', homeChoices);
+  homeChoices.hidden = !slots.homeChoices;
+  const choices = [...homeChoices.querySelectorAll('[data-home-choice]')];
+  const selectedChoices = [
+    ...choices.filter((node) => node.hasAttribute('aria-current')),
+    ...choices.filter((node) => !node.hasAttribute('aria-current')),
+  ];
+  const layout = el('div', 'landing-layout');
+  const identity = el('div', 'landing-identity');
+  const commands = el('div', 'landing-commands');
+  identity.append(dialogs.home.querySelector('.mode-play-dialog-head'), edition, modes);
+  commands.append(homeChoices, mission, menu, utilities);
+  layout.append(identity, commands);
+  home.append(layout);
   const landingNavigation = wireLandingMenuNavigation({
     modesRoot: modes,
     scopeRoot: dialogs.home,
-    steps: [buttons.primary, buttons.missions, buttons.settings, buttons.sound, buttons.fullscreen],
+    steps: [
+      selectedChoices,
+      buttons.primary,
+      buttons['home-results'],
+      buttons.missions,
+      buttons.settings,
+      buttons.sound,
+      buttons.fullscreen,
+    ],
   });
   cleanups.push(() => landingNavigation.dispose());
   const pauseMenu = content.pause;
@@ -478,7 +505,11 @@ export function mountModePlayShell({
     if (services.attachFullscreen) {
       control.setAttribute('data-fullscreen-label', '');
       cleanups.push(services.attachFullscreen(control, doc, { escapeRoot }));
-    } else control.hidden = !actions.fullscreen;
+    } else
+      control.hidden =
+        !actions.fullscreen ||
+        !doc.fullscreenEnabled ||
+        typeof doc.documentElement?.requestFullscreen !== 'function';
   }
   buttons.sound.hidden = !actions.toggleSound;
   function resumable() {

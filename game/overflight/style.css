@@ -1113,6 +1113,26 @@ button:disabled {
 .overflight-operation-card small {
   color: var(--fk-accent, #f4c765);
 }
+/* Keep the operation choice visible alongside the shared home actions. */
+.mode-play-home-choices .overflight-operation-card {
+  grid-template-columns: 24px minmax(0, 1fr);
+  align-content: start;
+  align-items: center;
+  gap: 6px;
+  padding: 8px;
+}
+.mode-play-home-choices .overflight-operation-card canvas {
+  height: 32px;
+}
+.mode-play-home-choices .overflight-operation-card strong {
+  font-size: clamp(0.75rem, 3.5vw, 0.9rem);
+  overflow-wrap: normal;
+}
+.mode-play-home-choices .overflight-operation-card :is(span, small) {
+  grid-column: 1 / -1;
+  font-size: 0.75rem;
+  line-height: 1.3;
+}
 .overflight-role-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));

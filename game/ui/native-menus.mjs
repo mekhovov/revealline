@@ -109,6 +109,7 @@ export function prepareNativeMenus({
       panel.prepend(title);
     }
     panel.dataset.menuLayout = 'vertical';
+    panel.dataset.menuEdgeExit = 'true';
     panels[id] = panel;
   }
   const guides = mountModeGuides({ container: panels.extras, pause: () => {} });
@@ -199,6 +200,8 @@ export function prepareNativeMenus({
     if ($('race-optional-setup')) $('race-optional-setup').open = true;
     moveId('race-journey-pictures', panels.data);
     moveId('race-journey-save', panels.data);
+    move(root.querySelector('.enemy-stats'), panels.data);
+    moveId('race-presentation-status', panels.content);
     moveId('race-music-menu-now-playing', panels.audio);
     const title = $('race-title');
     title?.removeAttribute('data-i18n-rich');
@@ -314,6 +317,31 @@ export function prepareNativeMenus({
     landingFullscreen.setAttribute('data-fullscreen-label', '');
     landingFullscreen.removeAttribute('data-i18n');
   }
+  // Give every host the same real boxes. In particular, avoid display:contents
+  // inside a painted dialog: WebKit can drop its descendants from compositing.
+  const layout = make('div', 'landing-layout');
+  const identity = make('div', 'landing-identity');
+  const commands = make('div', 'landing-commands');
+  layout.append(identity, commands);
+  root.prepend(layout);
+  move(brandTitle, identity);
+  moveId(
+    mode === 'solo'
+      ? 'shell-title-modes'
+      : mode === 'versus'
+        ? 'race-mode-choices'
+        : 'coop-lobby-modes',
+    identity,
+  );
+  move(actions, commands);
+  move(utilities, commands);
+  if (mode === 'versus') moveId('race-preparation', commands);
+  for (const id of mode === 'solo'
+    ? ['shell-featured-status', 'shell-flight-status', 'shell-flight-cancel']
+    : mode === 'team'
+      ? ['coop-selection-status', 'coop-boot-slot']
+      : [])
+    moveId(id, commands);
   const settingsFullscreen = mode === 'solo' ? null : make('button');
   if (settingsFullscreen) {
     if (!settingsFullscreen.id) settingsFullscreen.id = `${prefix}-fullscreen`;

@@ -1093,6 +1093,7 @@ test('Collection resets its return label from Settings to a direct paused-flight
     h.$('shell-featured'),
     'The title Start control owns its actual flight preparation.',
   );
+  await startPreparedFlight(h);
   assert.equal(h.doc.body.dataset.flightState, 'running');
   h.key('ArrowDown');
   h.key('ArrowDown', false);
