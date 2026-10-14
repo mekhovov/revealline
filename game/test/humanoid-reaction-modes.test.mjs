@@ -163,7 +163,10 @@ test('Classic Snake solo/team/versus catches share the selector; machinery follo
     humanoid: false,
     machine: 'tracked',
   });
-  assert.equal(classicTargetIdentity('lane', 'theme').humanoid, true);
+  assert.deepEqual(
+    classicTargetIdentity('lane', 'theme'),
+    classicTargetIdentity('lane', 'living-circuit'),
+  );
 });
 
 test('the shared preference applies to direct multiplayer encounters and cannot be bypassed by event facts', async (t) => {

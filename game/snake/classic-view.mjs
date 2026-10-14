@@ -402,11 +402,15 @@ export function drawClassicBoard(
   const visibleWalls = walls.filter(({ x, y }) => !removed.has(`${x},${y}`));
   const occupied = new Set(visibleWalls.map(({ x, y }) => `${x},${y}`));
   const wallAsset = presentation?.asset?.('terrain.wall')?.asset;
-  const creatorWall =
-    wallAsset &&
-    (wallAsset.id !== 'terrain.wall.field-kit' ||
-      !INDUSTRIAL_BUILTIN_SPRITES['terrain.wall'].includes(wallAsset.file?.sha256));
-  const structuredTerrain = !retro && !creatorWall && (living || Boolean(wallAsset));
+  const wallImage = presentation?.image?.('terrain.wall');
+  // An image-only provider is also creator-owned. Only positively identified
+  // built-in art may be replaced by the procedural construction kit.
+  const creatorWall = wallAsset
+    ? wallAsset.id !== 'terrain.wall.field-kit' ||
+      !INDUSTRIAL_BUILTIN_SPRITES['terrain.wall'].includes(wallAsset.file?.sha256)
+    : Boolean(wallImage);
+  const structuredTerrain =
+    !retro && !creatorWall && (living || boardStyle === 'theme' || Boolean(wallAsset));
   const structures = structuredTerrain ? classicWallStructures(visibleWalls) : null;
   const terrainKey = JSON.stringify([
     run.level.id,
@@ -557,6 +561,7 @@ export function drawClassicBoard(
         cast,
         boardStyle,
         artRevision,
+        cssUnit: (cssWidth ?? canvas.clientWidth ?? run.level.width * UNIT) / run.level.width,
         direction:
           target.kind === 'still' || (target.kind === 'sprinter' && target.phase === 'rest')
             ? undefined
@@ -611,7 +616,7 @@ export function drawClassicBoard(
     treatment: signalTreatment,
     visualKey: signalVisualKey,
   });
-  drawClassicOperation(ctx, run, { unit: UNIT, palette });
+  drawClassicOperation(ctx, run, { unit: UNIT, palette, boardStyle });
   drawClassicWorldReactions(ctx, run, worldEffects, world, {
     unit: UNIT,
     palette,
