@@ -1,0 +1,34 @@
+{
+  "schema": "OverflightNativeOfflineBrowserV1",
+  "sourceRevision": "3bb1b0dc66ae77baf59d0e89ab9edf257a244d10",
+  "buildId": "b2edbc1dc1578b5a5d1bfe88a99def3d7f7df380dfe52d329bb91d61905f3df6",
+  "origin": "http://127.0.0.1:8936",
+  "browser": "Codex in-app Chromium155",
+  "actions": [
+    {
+      "at": "2026-10-14T15:39:00Z",
+      "kind": "fresh-install",
+      "selected": [
+        "Solo Starter",
+        "Survive \u00b7 all Overflight operations",
+        "Snake \u00b7 Classic"
+      ],
+      "displayedSizeMiB": 106.2,
+      "observed": [
+        "Selected chapters ready offline",
+        "Survive \u00b7 all Overflight operations: Ready offline",
+        "Snake \u00b7 Classic: Ready offline",
+        "0.0 MiB remain",
+        "Offline setup complete",
+        "Your selected game is verified and ready offline. Recorded soundtracks remain optional."
+      ],
+      "status": "passed",
+      "timePrecision": "minute",
+      "method": "Native Settings \u2192 Content & Offline \u2192 Install & offline play; genuine production output, unchanged installer/worker, CUA UI interaction."
+    }
+  ],
+  "boundaries": [
+    "Browser cache installation; OS icon installation unsupported/unverified in this browser.",
+    "Network-denied launches and existing-cache update/recovery not yet run."
+  ]
+}

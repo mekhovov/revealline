@@ -5,11 +5,17 @@ import { execFileSync } from 'node:child_process';
 import { writeFile } from 'node:fs/promises';
 import { extname } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { prepareBuildProject, PREVIEW_SECURITY_HEADERS } from '../../../../scripts/game-cli.mjs';
+import {
+  prepareBuildProject,
+  readBuildConfig,
+  PREVIEW_SECURITY_HEADERS,
+} from '../../../../scripts/game-cli.mjs';
 
 const root = fileURLToPath(new URL('../../../../', import.meta.url));
 const port = Number(process.env.OVERFLIGHT_OFFLINE_PORT ?? 8935);
 assert.ok(Number.isInteger(port) && port > 1024 && port < 65536);
+const reportName = process.env.OVERFLIGHT_OFFLINE_REPORT ?? 'native-offline-build.json';
+assert.match(reportName, /^[a-z0-9][a-z0-9.-]*\.json$/);
 const hash = (bytes) => createHash('sha256').update(bytes).digest('hex');
 const observedCommit = execFileSync('git', ['rev-parse', 'HEAD'], {
   cwd: root,
@@ -39,12 +45,14 @@ const requireFrozenSources = () => {
   );
 };
 requireFrozenSources();
+const { version } = await readBuildConfig(root);
+assert.match(version, /^v?\d+\.\d+\.\d+$/, 'Use the installable production project version.');
 console.log(
   'Preparing authentic production entries in memory; no expanded site or ZIP will be written.',
 );
 const prepared = await prepareBuildProject({
   root,
-  version: '0.151.1-overflight-offline-review',
+  version,
   sourceRevision: observedCommit,
   publicationProfile: 'main-pages',
 });
@@ -94,7 +102,7 @@ const report = {
   url: `http://127.0.0.1:${port}/game/overflight/play.html?lang=en`,
 };
 await writeFile(
-  new URL('./native-offline-build.json', import.meta.url),
+  new URL(`./${reportName}`, import.meta.url),
   `${JSON.stringify(report, null, 2)}\n`,
 );
 const mime = {
