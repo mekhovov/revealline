@@ -1185,3 +1185,28 @@ button:disabled {
     font-size: 0.7rem;
   }
 }
+/* C1 review controls share the native shell and stay outside hostile warning geometry. */
+.overflight-riy-controls {
+  position: absolute;
+  z-index: 3;
+  top: 72px;
+  left: 12px;
+  display: grid;
+  gap: 4px;
+  max-width: min(310px, calc(100% - 24px));
+  padding: 8px 10px;
+  background: rgb(10 24 21 / 90%);
+  color: #eef0d9;
+  font:
+    12px/1.3 system-ui,
+    sans-serif;
+  pointer-events: none;
+}
+.overflight-riy-controls small {
+  max-width: 28ch;
+}
+.overflight-riy-controls button {
+  min-height: 44px;
+  pointer-events: auto;
+  touch-action: manipulation;
+}
