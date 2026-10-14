@@ -2283,6 +2283,16 @@ if(id)result.id=id;
 if(text!==undefined)localizedText(result,()=>text);
 return result;
 };
+// Locale refresh also visits connected DOM in a closed chooser. An owner can
+// replace its rows before that view is rebuilt, so text bindings must resolve
+// current presentation by identity rather than retain retired row authority.
+const livePresentation=({id,name,campaignTitle,edition,hook})=>{
+const fallback={name,campaignTitle,edition,hook};
+return()=>{
+const current=library.find(id);
+return current?(library.presentation?.(current)??current):fallback;
+};
+};
 const dialog=node('dialog','journey-chooser');
 let retuneOrigin=null;
 dialog.className='journey-chooser mission-library-chooser';
@@ -2499,11 +2509,13 @@ for(const row of library.forMode(modeFilter.value))
 if(
 (!collection.value||row.collection===collection.value)&&
 (!lifecycle.value||row.lifecycle===lifecycle.value)
-)
+){
+const presentation=livePresentation(row);
 choices.set(row.campaignKey,()=>{
-const display=library.presentation?.(row)??row;
+const display=presentation();
 return`${display.campaignTitle} · ${display.edition}`;
 });
+}
 campaign.replaceChildren(
 option(localizedMessage('interface:allCampaigns'),''),
 ...[...choices].map(([key,title])=>option(title,key)),
@@ -2865,7 +2877,7 @@ preview,
 check,
 }=view;
 button.dataset.missionId=row.id;
-const display=()=>library.presentation?.(row)??row;
+const display=livePresentation(row);
 localizedText(campaignHeading,()=>display().campaignTitle);
 localizedText(name,()=>display().name);
 localizedText(campaignName,()=>display().campaignTitle);
@@ -2950,8 +2962,9 @@ count:0,
 for(const row of railRows)campaignChoices.get(row.campaignKey).count++;
 const shortcuts=[...campaignChoices].map(([key,info])=>{
 const shortcut=node('button');
+const presentation=livePresentation(info.row);
 localizedText(shortcut,()=>{
-const display=library.presentation?.(info.row)??info.row;
+const display=presentation();
 return`${display.campaignTitle} · ${t('common:counts.missions',{count:info.count})}`;
 });
 shortcut.type='button';
@@ -2959,7 +2972,7 @@ shortcut.className='journey-campaign-shortcut';
 shortcut.dataset.campaignKey=key;
 shortcut.setAttribute('aria-pressed','false');
 localizedAttribute(shortcut,'title',()=>{
-const display=library.presentation?.(info.row)??info.row;
+const display=presentation();
 return display.edition;
 });
 shortcut.onclick=()=>{
@@ -2983,7 +2996,7 @@ campaignRail.replaceChildren(...shortcuts);
 campaignRail.hidden=shortcuts.length<2;
 let previousCampaign=null;
 const buttons=matches.map((row)=>{
-const display=()=>library.presentation?.(row)??row;
+const display=livePresentation(row);
 let card=cards.get(row.id);
 if(card?.row!==row){
 if(card)hidePreview(card);
@@ -3013,13 +3026,26 @@ progressState.state==='completed'
 :t('interface:missionLibrary.completedStars',{stars:progressState.bestStars})
 :t('interface:missionLibrary.notCompleted'),
 );
-const details=library.details(row,modeFilter.value);
-localizedText(card.rules,()=>library.details(row,modeFilter.value).challenge);
+const details=library.details(row,modeFilter.value),
+rowId=row.id;
+const currentDetails=()=>{
+const current=library.find(rowId);
+return current?.modes.includes(modeFilter.value)
+?library.details(current,modeFilter.value)
+:details;
+};
+const currentProgress=()=>{
+const current=library.find(rowId);
+return current?.modes.includes(modeFilter.value)
+?library.progress(current,modeFilter.value)
+:'';
+};
+localizedText(card.rules,()=>currentDetails().challenge);
 card.rules.hidden= !details.challenge;
-localizedText(card.route,()=>library.details(row,modeFilter.value).route);
+localizedText(card.route,()=>currentDetails().route);
 card.route.hidden= !details.route;
 localizedText(card.mastery,()=>{
-const mastery=library.details(row,modeFilter.value).mastery;
+const mastery=currentDetails().mastery;
 return mastery
 ?t('interface:missionLibrary.optionalChallenge',{challenge:mastery})
 :'';
@@ -3037,7 +3063,7 @@ card.campaignHeading.hidden=previousCampaign===row.campaignKey;
 localizedText(card.progress,()=>
 card.completion?.state==='unavailable'
 ?card.completion.reason
-:library.progress(row,modeFilter.value)||
+:currentProgress()||
 (progressState.state==='completed'&&progressState.bestStars===null
 ?t('interface:missionLibrary.completedStarsUnknown')
 :''),
