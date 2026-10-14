@@ -6472,4 +6472,74 @@ html
   min-width: 88px;
   min-height: 88px;
 }
+
+/* Paused practice tools stay outside the active flight view. */
+html body .sim-flight-practice {
+  margin-block: 16px;
+  padding-block: 12px;
+  border-top: 1px solid #657987;
+}
+html body .sim-flight-practice h2 {
+  font-size: 1.05rem;
+  margin: 0 0 8px;
+}
+html body .sim-practice-overview {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+html body .sim-practice-overview p {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+html body .sim-practice-preview {
+  width: 96px;
+  flex: 0 0 96px;
+  color: #a4dcf4;
+}
+html body .sim-practice-preview svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+html body .sim-practice-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-block: 12px;
+}
+html body .sim-flight-practice :is(button, select) {
+  min-height: 44px;
+  min-width: 44px;
+  max-width: 100%;
+}
+html body .sim-flight-practice label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-block: 8px;
+}
+html body .sim-flight-practice small {
+  display: block;
+  line-height: 1.45;
+}
+html body .sim-flight-practice [hidden] {
+  display: none !important;
+}
+html body.sim-academy #academy-replay-outcome:not([hidden]) {
+  position: absolute;
+  inset: 10% 8% auto;
+  max-height: 80%;
+  overflow: auto;
+  z-index: 12;
+  padding: 16px;
+  background: #101923f5;
+  color: #f5f3e8;
+  border: 1px solid #657987;
+}
+
+html body [data-sim-practice='true'] [data-mode-action='pause-restart'] {
+  display: none;
+}
 /* END SHARED SIM FULLSCREEN */

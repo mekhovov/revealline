@@ -51,6 +51,7 @@ import {
   mountFlightCameraControls,
   mountFlightSetup,
   mountFlightComfort,
+  mountFlightPractice,
   attachSimMissionLibraryChooser,
   createSimMissionLibrary,
   createSimContinuousPlayController,
@@ -1003,6 +1004,7 @@ export function mountWorldApp({
     cameraControls = null,
     flightSetup = null,
     flightComfort = null,
+    practiceFlow = null,
     modeSettingsView = null,
     globalSettingsView = null,
     globalTools = null,
@@ -1327,7 +1329,12 @@ export function mountWorldApp({
           'Немає демонстрації для цієї версії завдання.',
         ),
       );
-    return startFlight(entry, { preview: true, replayProof: proof, demonstration: true });
+    return startFlight(entry, {
+      preview: true,
+      replayProof: proof,
+      demonstration: true,
+      lessonCamera: current?.id === entry.id ? $('flight-camera').value : undefined,
+    });
   }
   const stepName = (step) => {
     const names = {
@@ -5139,8 +5146,12 @@ export function mountWorldApp({
         );
         resultDetails.append(suggestion);
       }
+      const practiceActions = el('section', undefined, 'sim-flight-practice');
+      practiceActions.append(
+        el('h3', txt('Watch → Try → Repeat', 'Дивіться → спробуйте → повторіть')),
+      );
       if (!entry.legacy)
-        resultDetails.append(
+        practiceActions.append(
           button(txt('Watch this section', 'Переглянути цю ділянку'), () =>
             startFlight(entry, {
               checkpoint: {
@@ -5165,6 +5176,13 @@ export function mountWorldApp({
               }),
           ),
         );
+      if (demonstrationFor(entry, proof.mode))
+        practiceActions.append(
+          button(txt('Watch example', 'Переглянути приклад'), () =>
+            watchDemonstration(entry, proof.mode),
+          ),
+        );
+      $('result-panel').append(practiceActions);
       const resultActions = el('div', undefined, 'button-row');
       resultActions.append(
         button(txt('Fly again', 'Летіти ще раз'), () => $('world-retry').click(), 'primary'),
@@ -5209,8 +5227,8 @@ export function mountWorldApp({
       if (!isPreview && !entry.beginner && !completedPlaylist)
         $('result-panel').append(randomFlightControl(entry.world, true));
       presentation.resume();
-      resultDetails.append(
-        button(txt('Watch verified flight', 'Переглянути перевірений політ'), () =>
+      practiceActions.append(
+        button(txt('Watch your flight', 'Переглянути свій політ'), () =>
           startFlight(entry, { preview: true, replayProof: proof }),
         ),
       );
@@ -5290,11 +5308,7 @@ export function mountWorldApp({
           'Перегляд не змінює ваші результати, медалі чи поступ у добірці.',
         ),
       ),
-      button(
-        txt('Fly this challenge', 'Виконати це завдання'),
-        () => startFlight(current),
-        'primary',
-      ),
+      button(txt('Try it yourself', 'Спробувати самому'), () => practiceAction('try'), 'primary'),
       button(txt('Watch again', 'Переглянути ще раз'), () =>
         startFlight(current, {
           preview: true,
@@ -5312,6 +5326,7 @@ export function mountWorldApp({
     cameraControls?.refresh();
     flightSetup?.refresh();
     flightComfort?.refresh();
+    practiceFlow?.refresh();
     return renderer?.draw?.(state, {
       cameraMode: $('flight-camera').value,
       cameraFov: Number($('world-fov').value),
@@ -5546,6 +5561,9 @@ export function mountWorldApp({
       'Практика із самовирівнюванням · без заліку. Для цих маневрів потрібен Acro.',
     );
   async function startFlight(entry, options = {}) {
+    const requestedCamera =
+      options.lessonCamera ??
+      (options.checkpoint && current?.id === entry.id ? $('flight-camera').value : null);
     enemyGuide.close();
     if (disposed) return;
     if (
@@ -5695,7 +5713,7 @@ export function mountWorldApp({
       learningResponse ??= { ...response };
       response = { ...DEFAULT_RESPONSE };
       $('flight-camera').value =
-        options.lessonCamera ?? (requestedMode === 'acro' ? 'fpv' : learning.camera);
+        requestedCamera ?? (requestedMode === 'acro' ? 'fpv' : learning.camera);
       beginnerCoach.open(learning, {
         mode: requestedMode,
         keyboardPreset: $('flight-keyboard-preset').value,
@@ -5712,6 +5730,8 @@ export function mountWorldApp({
       beginnerCoach.close();
       restoreLearningPreferences();
     }
+    if (['fpv', 'chase', 'overview'].includes(requestedCamera))
+      $('flight-camera').value = requestedCamera;
     $('flight-dialog').classList.toggle('learning-flight', Boolean(learning));
     preview =
       Boolean(entry.freeFlight) ||
@@ -6870,8 +6890,61 @@ export function mountWorldApp({
       replayProof,
       checkpoint: checkpointRequest,
       demonstration: replayKind === 'demonstration',
+      lessonCamera: $('flight-camera').value,
       paused,
     });
+  }
+  function practiceState() {
+    const state = flight?.snapshot(),
+      mode = $('flight-mode').value;
+    const section =
+      current &&
+      !current.legacy &&
+      !current.freeFlight &&
+      !modePractice &&
+      (checkpointRequest?.proof ||
+        replayProof ||
+        demonstrationFor(current, mode) ||
+        (recorder && state?.ticks > 0))
+        ? Math.min((checkpointSession?.index ?? state.step) + 1, current.course.steps[mode].length)
+        : null;
+    return {
+      available: Boolean(current && flight && sceneReady),
+      course: current?.course,
+      mode,
+      title: current ? label(current) : '',
+      replay: Boolean(replayProof),
+      rate: replayRate,
+      section,
+      checkpoint: Boolean(checkpointSession),
+      watch: Boolean(current && demonstrationFor(current, mode)),
+    };
+  }
+  async function practiceAction(action) {
+    if (!sceneReady || !current || !flight) return;
+    const selected = practiceState(),
+      entry = current,
+      camera = $('flight-camera').value;
+    const options = { lessonCamera: camera, paused: true };
+    if (action === 'practice' || (action === 'try' && checkpointSession)) {
+      const proof =
+        checkpointRequest?.proof ??
+        replayProof ??
+        demonstrationFor(entry, selected.mode) ??
+        recorder?.export();
+      if (!selected.section || !proof) return;
+      options.checkpoint = {
+        mode: selected.mode,
+        index: selected.section - 1,
+        proof,
+        watch: false,
+      };
+    }
+    playShell.enterPlay();
+    if (action === 'retry') return retryFlight({ paused: true });
+    if (action === 'repeat') return retryFlight();
+    if (action === 'watch') return watchDemonstration(entry);
+    return startFlight(entry, options);
   }
   on($('world-retry'), 'click', () => retryFlight());
   on($('world-watch-demo'), 'click', () => current && watchDemonstration(current));
@@ -6886,7 +6959,7 @@ export function mountWorldApp({
     savePreferences();
     return startFlight(catalogue.find((entry) => entry.legacy && entry.id === 'flight-01'));
   });
-  on($('fly-after-replay'), 'click', () => current && startFlight(current));
+  on($('fly-after-replay'), 'click', () => current && practiceAction('try'));
   on($('world-replay-rate'), 'change', () => {
     const selected = Number($('world-replay-rate').value);
     if (![0.25, 0.5, 1].includes(selected)) return;
@@ -7557,6 +7630,20 @@ export function mountWorldApp({
     },
   });
 
+  practiceFlow = mountFlightPractice({
+    document: doc,
+    container: playShell.elements.content.pause,
+    locale: () => locale,
+    visible: () => playShell.elements.dialogs.pause.open,
+    read: practiceState,
+    rates: [0.25, 0.5, 1],
+    act: (action) => practiceAction(action).catch(reportError),
+    setRate(value) {
+      $('world-replay-rate').value = String(value);
+      $('world-replay-rate').dispatchEvent(new win.Event('change', { bubbles: true }));
+    },
+  });
+
   const extraTools = el('details', undefined, 'mission-library-setup');
   extraTools.dataset.simMissionTools = '';
   extraTools.append(
@@ -7977,6 +8064,7 @@ export function mountWorldApp({
           // audio and editor owners have all retired.
           flightComfort?.dispose();
           flightSetup?.dispose();
+          practiceFlow?.dispose();
           cameraControls?.dispose();
           playShell?.dispose();
         } finally {
