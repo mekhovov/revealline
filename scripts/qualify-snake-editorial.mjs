@@ -1,4 +1,4 @@
-/** Exact Solo/Team/pace witnesses for geometry-only editorial revisions. */
+/** Exact Solo/Team/pace witnesses for editorial pacing and geometry revisions. */
 import { readFile, writeFile } from 'node:fs/promises';
 import { CLASSIC_SNAKE_LEVELS } from '../game/snake/classic-catalogue.mjs';
 import { CLASSIC_EDITORIAL_REVISIONS } from '../game/snake/classic-catalogue-remaster.mjs';
