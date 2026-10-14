@@ -5,10 +5,17 @@ import { CLASSIC_SNAKE_LEVELS } from '../snake/classic-catalogue.mjs';
 import { CLASSIC_SNAKE_RATING_CALIBRATIONS } from '../snake/classic-rating-calibrations.mjs';
 import {
   classicSnakeRatingForRecord,
+  classicSnakeRatingCriteriaText,
   createClassicSnakeRatings,
   CLASSIC_SNAKE_RATINGS_FORMAT,
   CLASSIC_SNAKE_RATING_REVISION,
 } from '../snake/classic-ratings.mjs';
+import { prepareClassicSnakeLevel } from '../snake/classic-setup.mjs';
+import { dataIdentity } from '../data-json.mjs';
+import {
+  CLASSIC_REMASTER_REVISIONS,
+  CLASSIC_EDITORIAL_REVISIONS,
+} from '../snake/classic-catalogue-remaster.mjs';
 import { createClassicSnakeRecords } from '../snake/classic-records.mjs';
 import {
   restoreClassicSnakeLegacyMatch,
@@ -148,4 +155,78 @@ test('denied IndexedDB getters preserve playable records and ratings without boo
     if (previous) Object.defineProperty(globalThis, 'indexedDB', previous);
     else delete globalThis.indexedDB;
   }
+});
+
+test('criteria publish exact move budgets or an explicit completion-only policy in both languages', () => {
+  const sample = CLASSIC_SNAKE_RATING_CALIBRATIONS.find(
+    (r) => r.levelId === 'classic-snake-open-loop' && r.mode === 'solo' && r.pace === 'normal',
+  );
+  for (const locale of ['en', 'uk']) {
+    const setup = {
+      seed: sample.seed,
+      levelIdentity: sample.levelIdentity,
+      mode: sample.mode,
+      locale,
+    };
+    const calibrated = classicSnakeRatingCriteriaText(setup);
+    assert.ok(calibrated.includes(`★★ ≤ ${sample.silverMoves}`));
+    assert.ok(calibrated.includes(`★★★ ≤ ${sample.goldMoves}`));
+    const otherSeed = classicSnakeRatingCriteriaText({ ...setup, seed: 18 });
+    const changedRecipe = classicSnakeRatingCriteriaText({
+      ...setup,
+      levelIdentity: 'revised-recipe',
+    });
+    assert.equal(otherSeed, changedRecipe);
+    assert.match(
+      otherSeed,
+      locale === 'en'
+        ? /one completion star.*silver and gold are unavailable/
+        : /одна зірка.*срібної чи золотої оцінки немає/,
+    );
+    const variable = classicSnakeRatingCriteriaText({ ...setup, variableConditions: true });
+    assert.match(
+      variable,
+      locale === 'en'
+        ? /changes each attempt.*variable conditions/
+        : /з кожною спробою.*змінних умов/,
+    );
+    assert.ok(!variable.includes('★★'));
+    for (const context of [{ mode: 'versus' }, { format: 'endless' }])
+      assert.match(
+        classicSnakeRatingCriteriaText({ ...setup, ...context }),
+        locale === 'en' ? /no mission stars/ : /немає зірок/,
+      );
+  }
+});
+
+test('every changed official recipe and pace stays completion-only even for an exceptional move count', () => {
+  const revised = { ...CLASSIC_REMASTER_REVISIONS, ...CLASSIC_EDITORIAL_REVISIONS };
+  for (const entry of CLASSIC_SNAKE_LEVELS.filter((entry) => revised[entry.id]))
+    for (const pace of ['normal', 'slow', 'fast'])
+      for (const mode of ['solo', 'team']) {
+        const level = prepareClassicSnakeLevel(entry, { pace });
+        const grade = classicSnakeRatingForRecord({
+          clear: true,
+          policy: 'mission',
+          mode,
+          seed: 17,
+          levelIdentity: dataIdentity(level),
+          fewestMoves: 1,
+        });
+        assert.equal(grade.stars, 1, `${entry.id}/${mode}/${pace}`);
+        assert.equal(grade.calibrated, false);
+        assert.equal(grade.goldMoves, null);
+        assert.equal(grade.silverMoves, null);
+      }
+  const sample = CLASSIC_SNAKE_RATING_CALIBRATIONS[0];
+  assert.equal(
+    classicSnakeRatingForRecord({
+      key: sample.key,
+      clear: true,
+      policy: 'mission',
+      completionOnly: true,
+      fewestMoves: 1,
+    }).stars,
+    1,
+  );
 });

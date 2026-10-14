@@ -1,6 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
+import { CLASSIC_EDITORIAL_REVISIONS } from '../snake/classic-catalogue-remaster.mjs';
+import { CLASSIC_SNAKE_V4_LEVELS } from '../snake/classic-catalogue-v4.mjs';
 import { CLASSIC_SNAKE_LEVELS } from '../snake/classic-catalogue.mjs';
 import { CLASSIC_SNAKE_OPERATION_LEVELS_B } from '../snake/classic-catalogue-operations-b.mjs';
 import { classicSnakeRecipeEntries } from '../snake/classic-catalogue-archive.mjs';
@@ -98,20 +100,64 @@ test('both editorial predecessor recipes remain explicit archive entries', () =>
     assert.equal(classicSnakeRecipeEntries(entry).length, 1);
   }
 });
-test('all six revised excavation Solo/Team/pace journals verify against its accepted geometry', async () => {
+test('every editorial revision has current Solo/Team/pace winning journals', async () => {
   const { proofs } = JSON.parse(
     await readFile(
       new URL('../../docs/verification/snake-remaster/editorial-proofs.json', import.meta.url),
       'utf8',
     ),
   );
-  assert.equal(proofs.length, 6);
+  assert.equal(proofs.length, Object.keys(CLASSIC_EDITORIAL_REVISIONS).length * 6);
   const seen = new Set();
   for (const proof of proofs) {
     const entry = CLASSIC_SNAKE_LEVELS.find((e) => e.id === proof.levelId);
     const level = prepareClassicSnakeLevel(entry, { pace: proof.pace });
     assert.equal(restoreClassicSnakeReplay(proof.replay, { level }).status, 'won');
-    seen.add(`${proof.mode}/${proof.pace}`);
+    seen.add(`${proof.levelId}/${proof.mode}/${proof.pace}`);
   }
-  assert.equal(seen.size, 6);
+  assert.equal(seen.size, proofs.length);
+});
+
+test('four field introductions end after three reads while retaining their mixed mastery successors', () => {
+  for (const [intro, next] of [
+    ['border-watch', 'border-cutoff'],
+    ['contour-orbit', 'contour-transfer'],
+    ['wake-watch', 'wake-courtyard'],
+    ['ricochet-line', 'ricochet-yard'],
+  ]) {
+    const current = CLASSIC_SNAKE_LEVELS.find((e) => e.id === `classic-field-${intro}`);
+    const prior = CLASSIC_SNAKE_V4_LEVELS.find((e) => e.id === current.id);
+    assert.equal(prior.level.goal, 6);
+    assert.equal(current.level.goal, 3);
+    assert.deepEqual(
+      { ...current.level, goal: prior.level.goal, revision: prior.level.revision },
+      prior.level,
+    );
+    assert.equal(current.level.targets.required.length, 1);
+    assert.ok(
+      classicSnakeRecipeEntries(current, { allowArchive: true }).some(
+        (e) => e.level === prior.level,
+      ),
+    );
+    const mastery = CLASSIC_SNAKE_LEVELS.find((e) => e.id === `classic-field-${next}`);
+    assert.equal(mastery.level.goal, 8);
+    assert.equal(mastery.level.targets.required.length, 2);
+  }
+});
+
+test('the two authored editorial reviews cover the accepted 240-mission catalogue without gaps or duplicate rows', async () => {
+  const directory = new URL('../../docs/verification/snake-remaster/', import.meta.url);
+  const prior = await readFile(new URL('editorial-pacing-review.md', directory), 'utf8');
+  const remaining = await readFile(new URL('editorial-catalogue-completion.md', directory), 'utf8');
+  const rowIds = (text) =>
+    [...text.matchAll(/^\| ([a-z][a-z0-9-]+) +\| (?:Keep|Revise)/gm)].map((match) => match[1]);
+  const priorIds = rowIds(prior).map((id) =>
+    id.startsWith('classic-') ? id : `classic-operation-${id}`,
+  );
+  const remainingIds = rowIds(remaining);
+  assert.equal(priorIds.length, 56);
+  assert.equal(remainingIds.length, 184);
+  const reviewed = [...priorIds, ...remainingIds];
+  assert.equal(new Set(reviewed).size, 240);
+  assert.deepEqual(reviewed.sort(), CLASSIC_SNAKE_LEVELS.map((e) => e.id).sort());
 });
