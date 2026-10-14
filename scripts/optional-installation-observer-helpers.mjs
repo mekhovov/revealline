@@ -32,6 +32,30 @@ export const TRANSFER_TIMEOUT_MS = 315_000;
 export const OPERATION_TIMEOUT_MS = 30_000;
 export const OBSERVATION_TIMEOUT_MS = 600_000;
 
+// Ownership outlives a timed-out Promise.race. Pending or failed acquisition
+// means cleanup must retain the profile instead of claiming it was removed.
+export async function trackObservedResource(state, name, operation) {
+  state.pending.add(name);
+  try {
+    return await operation();
+  } catch (error) {
+    state.errors.push({ resource: name, error: error.message });
+    throw error;
+  } finally {
+    state.pending.delete(name);
+  }
+}
+
+export function resourceCleanupIssues(state) {
+  return [
+    ...state.errors,
+    ...[...state.pending].map((resource) => ({
+      resource,
+      error: 'Resource startup or late cleanup is still pending; profile retained.',
+    })),
+  ];
+}
+
 export async function activateOfflineAction(page, { button, status, expected }) {
   // Observe DOM changes only; never clear app statuses or invoke app functions.
   // A previously displayed "Ready offline" must not satisfy a new operation.
