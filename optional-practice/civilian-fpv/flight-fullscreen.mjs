@@ -8119,6 +8119,7 @@ host,
 prefix='',
 legacyPalette,
 legacyOrnaments,
+mountBattlefieldGroundControls,
 }){
 if(!root|| !host)return{dispose(){}};
 const group=doc.createElement('section');
@@ -8140,6 +8141,14 @@ applyMilitary:()=>host.applyComplete('military-field'),
 applyAuthored:()=>host.set({arcadeArt:'authored'}),
 });
 release.push(enemyAppearance.dispose,onLocaleChange(enemyAppearance.refresh));
+if(mountBattlefieldGroundControls){
+const battlefield=mountBattlefieldGroundControls({
+document:doc,
+container:group,
+locale:getLocale,
+});
+release.push(battlefield.dispose,onLocaleChange(battlefield.refresh));
+}
 const row=(key,parent=group)=>{
 const label=doc.createElement('label'),
 title=doc.createElement('span');
@@ -8920,7 +8929,7 @@ export const readSimRadioAudio=sharedGlobalSettings.readSimRadioAudio;
 export const SIM_RADIO_AUDIO_KEY=sharedGlobalSettings.SIM_RADIO_AUDIO_KEY;
 export const attachSimMenuAudioSettings=sharedGlobalSettings.attachSimMenuAudioSettings;
 export const readSimMenuAudio=sharedGlobalSettings.readSimMenuAudio;
-// Canonical source sha256: b08fd0c6130ef3d998490e62dceb04c30797fe763cbf28cb9677c9634786d08d
+// Canonical source sha256: ae95dfe2089b140a16907a10c0f3ebaa8c5f119064851a8b852e329dd4fa62f5
 const sharedModeShell=(()=>{
 // Dependency-free presentation shared with bundled simulator builds.
 const GAME_MODE_ORDER=Object.freeze([
@@ -8937,7 +8946,7 @@ solo:'Solo',
 team:'Team',
 versus:'Duel',
 snake:'Snake',
-overflight:'Survive',
+overflight:'FPV Survivals',
 simulator:'SIM',
 mode:'Game mode',
 more:'More',
@@ -8948,7 +8957,7 @@ solo:'Соло',
 team:'Разом',
 versus:'Дуель',
 snake:'Змійка',
-overflight:'Вижити',
+overflight:'FPV Survivals',
 simulator:'SIM',
 mode:'Режим гри',
 more:'Ще',
