@@ -1,6 +1,6 @@
 # Direct camera access and the next SIM usability pass
 
-14 October 2026. The camera change is implemented; the recommendations below are proposals, not shipped features.
+14 October 2026. The camera and paused Flight setup increments are implemented. The remaining recommendations are tracked below.
 
 ## Implemented
 
@@ -38,3 +38,20 @@ These are product recommendations inferred from the linked references, not claim
 - 42 existing radio/control/shared-shell checks and 81 existing flight/UI/appearance checks passed (123 total). Scoped lint, projection checks and all three package source preflights passed. Additional unit coverage remains deferred.
 - Source preflight: Academy 87 files / 6,532,971 offline bytes; Worlds 122 files / 16,934,045 offline bytes. Limits unchanged. Full frozen-package admission and public deployment remain CI/publication gates while local disk space is below the stable 3 GiB floor.
 - Evidence screenshots and source-preflight receipt: `docs/evidence/fpv-quick-camera-20261014/`. Browser console warning/error captures were empty for both tested hosts.
+
+
+## Paused Flight setup increment — 14 October 2026
+
+Completed: one shared Flight setup section in Worlds and Academy, immediately after Resume. Flight mode, active input, three camera choices and radio setup are available without navigating Settings categories. A pre-arm Flight setup shortcut also appears when Pause is unavailable, including when a selected controller is disconnected. It disappears during active flight. Device-specific help expands on demand; it reuses canonical keyboard/controller instructions and explains the existing radio Arm/Reset setup and menu fallback.
+
+Mode changes retain the pause menu and start the existing disarmed attempt. Worlds input changes retain paused progression; Academy retains its existing new-attempt behavior and says so explicitly. Camera preserves the attempt. Radio setup returns keyboard focus to its paused opener. Pending controller/radio select edits are not overwritten by frame refresh; rejected changes during loading restore the real selection. Replay-disabled controls follow their canonical disabled states.
+
+Verified in actual source browsers: both hosts, EN/UK, mode/input/camera changes, disconnected controller pre-arm access, radio open/close and focus return. Measured 390×844 portrait, 844×390 landscape and 1280×800 handheld-sized viewports across the two hosts: no horizontal document overflow, 44px minimum setup/camera targets. No physical radio/Steam Deck/iPhone acceptance claim. Existing 123 control/radio/shell/flight/appearance checks pass; scoped lint, canonical projections, diff checks and all three source preflights pass. Full frozen-package admission stays with CI because free space fluctuates below the stable 3 GiB floor. Additional unit coverage remains deferred to D6.
+
+Remaining order:
+1. P1: unify Retry / Practise section / Watch example presentation; retain proof compatibility and explicit arming.
+2. P1: extend remappable non-flight actions where missing (especially View). Arm, Reset and Pause radio assignment already exist; do not replace their calibrated ownership or fresh-release rules.
+3. P2: primary Fly / Learn / Explore entry and Download → Fly Library flow.
+4. P2: stick size/opacity and device-aware HUD preferences.
+5. P2: Watch → Try → Repeat lesson flow and targeted practice.
+6. P3: camera comfort presets and compatible personal-best comparison.

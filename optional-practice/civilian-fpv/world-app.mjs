@@ -49,6 +49,7 @@ import { mountRadioSetup } from './radio-setup.mjs';
 import {
   mountFlightFullscreen,
   mountFlightCameraControls,
+  mountFlightSetup,
   attachSimMissionLibraryChooser,
   createSimMissionLibrary,
   createSimContinuousPlayController,
@@ -999,6 +1000,7 @@ export function mountWorldApp({
     closing = null,
     playShell = null,
     cameraControls = null,
+    flightSetup = null,
     modeSettingsView = null,
     globalSettingsView = null,
     globalTools = null,
@@ -5294,6 +5296,7 @@ export function mountWorldApp({
   }
   function drawFlight(state) {
     cameraControls?.refresh();
+    flightSetup?.refresh();
     return renderer?.draw?.(state, {
       cameraMode: $('flight-camera').value,
       cameraFov: Number($('world-fov').value),
@@ -6937,6 +6940,7 @@ export function mountWorldApp({
   });
   on($('flight-mode'), 'change', () => {
     const selectedMode = $('flight-mode').value;
+    const preserveFocus = Boolean(playShell?.elements.dialogs.pause.open);
     // Selecting another flight mode starts a new attempt. Only this explicit
     // action releases the mode-specific overlay; Retry keeps its accepted pin.
     // An explicit player choice ends the temporary demonstration-mode override.
@@ -6952,6 +6956,7 @@ export function mountWorldApp({
       const proof = hasSection ? demonstrationFor(current, selectedMode) : null;
       return startFlight(proof ? demonstrationEntry(modeEntry) : modeEntry, {
         paused: true,
+        preserveFocus,
         checkpoint: {
           ...checkpointRequest,
           mode: selectedMode,
@@ -6965,14 +6970,15 @@ export function mountWorldApp({
       return startFlight(
         proof ? demonstrationEntry(modeEntry) : modeEntry,
         proof
-          ? { preview: true, replayProof: proof, demonstration: true, paused: true }
-          : { paused: true },
+          ? { preview: true, replayProof: proof, demonstration: true, paused: true, preserveFocus }
+          : { paused: true, preserveFocus },
       );
     }
     if (current && $('flight-dialog').open)
       return startFlight(modeEntry, {
         preview: preview && !modePractice,
         paused: true,
+        preserveFocus,
         playlist: playingPlaylist,
         index: playlistIndex,
       });
@@ -7168,7 +7174,9 @@ export function mountWorldApp({
     radioSetup = null;
     $('world-radio-dialog').close();
     pauseFlight();
-    if ($('sim-settings').open) $('radio-setup-button').focus();
+    if (playShell?.elements.dialogs.pause.open)
+      playShell.elements.content.pause.querySelector('[data-flight-setup="radio"]')?.focus();
+    else if ($('sim-settings').open) $('radio-setup-button').focus();
     else if ($('flight-dialog').open) $('world-viewport').focus();
     else $('lobby-radio').focus();
   }
@@ -7494,6 +7502,36 @@ export function mountWorldApp({
       !flightMenuOpen() &&
       !doc.querySelector('dialog[open]:not(#flight-dialog)') &&
       !immersive.snapshot().toolsOpen,
+  });
+
+  flightSetup = mountFlightSetup({
+    document: doc,
+    window: win,
+    shell: playShell,
+    mode: $('flight-mode'),
+    source: $('flight-source'),
+    radioButton: $('radio-setup-button'),
+    camera: cameraControls,
+    locale: () => locale,
+    available: () => Boolean(flight && sceneReady),
+    inputRestarts: false,
+    inputHint: () => {
+      const source = $('flight-source').value;
+      if (source === 'controller') return gamepadHelp();
+      if (source === 'keyboard')
+        return (
+          keyboardFlightHelp($('flight-keyboard-preset').value, locale) +
+          ' · V / R3: ' +
+          (locale === 'uk' ? 'камера' : 'camera')
+        );
+      if (source === 'radio')
+        return locale === 'uk'
+          ? 'Використовуйте збережені перемикачі ввімкнення та скидання. Налаштуйте їх у «Налаштувати пульт». У меню: крен/тангаж — навігація; утримайте рискання праворуч/ліворуч і поверніть у центр для підтвердження/назад.'
+          : 'Use your saved Arm and Reset switches; assign them in Set up radio. Menus: roll/pitch navigate; hold yaw right/left, then centre to confirm/go back.';
+      return locale === 'uk'
+        ? 'Лівий стік: рискання/газ. Правий: крен/тангаж. Газ зберігається після відпускання. Для ввімкнення натисніть «Продовжити»; камера та пауза — у кутку екрана.'
+        : 'Left stick: yaw/throttle. Right: roll/pitch. Throttle stays where you release it. Use Resume to arm; View and Pause stay in the screen corner.';
+    },
   });
 
   const extraTools = el('details', undefined, 'mission-library-setup');
@@ -7898,6 +7936,7 @@ export function mountWorldApp({
           spatialEditor?.dispose();
           // Keep reparented controls available until their input, hints,
           // audio and editor owners have all retired.
+          flightSetup?.dispose();
           cameraControls?.dispose();
           playShell?.dispose();
         } finally {
