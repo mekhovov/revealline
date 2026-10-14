@@ -3,6 +3,7 @@ import RAPIER from "../../../optional-practice/civilian-fpv/vendor/rapier/rapier
 import { validateRegionManifest } from "./region-manifest.mjs";
 import { compileTerrainCell, validateTerrainSeams } from "./terrain-cell.mjs";
 import { createTerrainSurface, validateTerrainSurface } from "./terrain-surface.mjs";
+import { createTerrainNormals } from "./terrain-normals.mjs";
 
 let initialized;
 const fail = (condition, message) => {
@@ -72,7 +73,7 @@ export async function prepareTerrainWindow(
     requiredChunkIds.every((id) => suppliedIds.has(id)),
     "Required terrain missing",
   );
-  // Positions, indices and Three-generated normals; excludes engine internals and temporary GLB buffers.
+  // Positions, indices and shared-grid normals; excludes engine internals and temporary GLB buffers.
   const geometryBytes = cells.length * (1089 * 3 * 4 * 2 + 32 * 32 * 6 * 4);
   fail(geometryBytes <= maxGeometryBytes, "Terrain geometry budget exceeded");
   initialized ??= RAPIER.init();
@@ -95,6 +96,7 @@ export async function prepareTerrainWindow(
     byCell.clear();
   }
   try {
+    const normalsFor = createTerrainNormals(cells);
     for (const cell of cells) {
       const { positions, indices } = compileTerrainCell(cell);
       const geometry = new THREE.BufferGeometry();
@@ -104,7 +106,7 @@ export async function prepareTerrainWindow(
         new THREE.BufferAttribute(positions, 3),
       );
       geometry.setIndex(new THREE.BufferAttribute(indices, 1));
-      geometry.computeVertexNormals();
+      geometry.setAttribute("normal", new THREE.BufferAttribute(normalsFor(cell), 3));
       const mesh = new THREE.Mesh(geometry, material);
       mesh.name = cell.chunkId;
       const local = {
