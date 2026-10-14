@@ -1,6 +1,6 @@
-# Imported mission missing after an offline update — unresolved
+# Imported mission missing after an offline update — unexplained, not reproduced
 
-14 October 2026. This is a read-only source diagnosis, not a persistence pass. No browser storage was inspected or changed, and no runtime fix is proposed without a reproducible cause.
+14 October 2026. The source diagnosis was read-only; no runtime fix was proposed without a reproducible cause. The subsequent native browser checks below passed their bounded persistence cases. They do not relabel the original observation as passed.
 
 ## Observed failure
 
@@ -18,22 +18,25 @@ Reimporting the same exported package after the update produces the same compile
 
 All ten audited persistence/update source files are byte-identical between the two tested commits. The [source hash inventory](native-package-persistence-source.json) records previous, candidate and current hashes separately. The current launcher-worker template has a later, separate edit; it is not silently treated as the previously tested generation.
 
-| Key file | SHA-256 at both tested commits |
-| --- | --- |
-| `game/profile-database.mjs` | `6a843fc68c3d639ca6d3bac8c77228eccf21cd72a525872245bd5cbbd9d68a1c` |
-| `game/profile-storage.mjs` | `7f0e6cc3a957ddc00a032d41e8bea782907b901f714708de5385667fe5fbbaec` |
+| Key file                                    | SHA-256 at both tested commits                                     |
+| ------------------------------------------- | ------------------------------------------------------------------ |
+| `game/profile-database.mjs`                 | `6a843fc68c3d639ca6d3bac8c77228eccf21cd72a525872245bd5cbbd9d68a1c` |
+| `game/profile-storage.mjs`                  | `7f0e6cc3a957ddc00a032d41e8bea782907b901f714708de5385667fe5fbbaec` |
 | `game/community/native-project-library.mjs` | `c454eb37c5be2139f48b1d6d7a59f59b1910ec769838dbbab74d95109a335dc3` |
-| `game/overflight/community.mjs` | `feb70c8fb50b64cd26eff23ee5b19eb120960c3cf4e79b7379bb39f5c44e625a` |
+| `game/overflight/community.mjs`             | `feb70c8fb50b64cd26eff23ee5b19eb120960c3cf4e79b7379bb39f5c44e625a` |
 
-## Limits and next verification
+## Native reproduction results
+
+The later `4dab → e914` update on 8936 retained the reimported mission after Creator was closed and the mission was reopened independently before updating. It remained playable under origin denial after the update. See the [original browser receipt](native-offline-browser.json).
+
+The original `3bb → 4dab` transition was then repeated on the fresh, independent `http://127.0.0.1:8940` origin using the same immutable production generations and exact exported package. Through the native UI, the reviewer installed `3bb`, imported the package, explicitly selected **Save draft**, and selected **Install and play**. Studio was closed and the installed mission reopened correctly in a separate tab before the update. The update was deliberately interrupted by denying the changed mandatory `battlefield-ground-controls.mjs` resource. With all origin requests subsequently denied, the old installed custom mission still reached 17 gameplay seconds, 15 kills and a normal upgrade draft.
+
+After clearing the fault, the native updater verified and selected `4dab`. With all origin requests denied again, fresh navigation to the same community identity reopened the correct title and reached the same bounded gameplay checkpoint **without reimport or reinstall**. The [reproduction receipt](native-offline-retention-repro.json) records the exact package hash, generations, actions and dispatcher timestamps. The origin was restored online at `2026-10-14T17:02:05.028Z`.
+
+This repeat did not reproduce the earlier absence. Explicit Save draft and Studio closure/reopening are sequence differences; neither is established as the cause of the earlier observation or a requirement for installed-package persistence. No storage migration or speculative fix was added.
+
+## Remaining limits
 
 Source inspection rules out an intended version migration, an in-memory installation fallback and deletion on ordinary tab closure. It does not distinguish an external browser/profile storage boundary, eviction, an explicit removal elsewhere, or another unobserved event. None is claimed as the cause. The code's “profile” wording does not itself establish which browser storage context was used.
 
-Retain this failure and test the reinstalled package through the next authentic update:
-
-1. On the same browser surface and exact `127.0.0.1:8936` origin, verify the installed mission through normal mission selection and a fresh explicit community navigation before updating. Record the full URL and selected operation.
-2. Perform the ordinary production update, then repeat both paths without importing or installing the package again.
-3. Repeat the explicit launch with origin resources unavailable. Keep the same package identity and source-generation evidence.
-4. If the missing installation reproduces, preserve the state and narrow the storage-context/transaction cause before proposing a fix. If it does not reproduce, report that later update as passing its bounded check while keeping this earlier observation unresolved.
-
-The later routing pass and a future successful update must not be used to relabel this original persistence failure as passed.
+The original 8936 absence remains unexplained and unreproduced. The two later checks establish retention only for their recorded package, origin and sequence. If the missing installation occurs again, preserve that state and narrow its storage-context or transaction cause before proposing a fix. The later routing pass and successful update repetitions must not relabel the original observation as passed.

@@ -4,7 +4,8 @@ import { createServer } from 'node:http';
 
 // This host only routes the authentic immutable outputs of native-offline-server.
 // It never rewrites an application, worker, manifest or response body.
-const port = 8936;
+const port = Number(process.env.OVERFLIGHT_DISPATCHER_PORT ?? 8936);
+assert.ok(Number.isInteger(port) && port > 1024 && port < 65536);
 const upstreamPorts = new Set([8935, 8937, 8938]);
 const previous = process.env.OVERFLIGHT_DISPATCHER_RESTORE
   ? JSON.parse(await readFile(process.env.OVERFLIGHT_DISPATCHER_RESTORE, 'utf8'))
