@@ -4696,3 +4696,44 @@ sustained bounded streaming and compose reachable Railway routes. Multi-kilometr
 regions, long native flights, final art acceptance and D6 remain incomplete. Byte
 ceilings and player data protections stay in force. PR attachment attempts continue
 to hit the chat's 100-identity limit; unrelated attachments were not removed.
+
+## 15 October — combined regional admission and Railway routes
+
+Coordinator branch: `codex/fpv-regional-admission-checkpoint-20261015`. Native
+stack **#1292** contains #1287 → #1290. #1293 merged into its feature base #1287,
+not main; preserve the resulting combined texture and Library implementation.
+The parent at `9e43fc7f8c12fda0a0475e04b50ac93943d9d5ee` now carries both changes
+and its title/report reflects that scope. Do not request auto-merge on non-main
+dependent PRs: an unprotected feature base can merge immediately. Stack-managed
+child synchronization preserves parent identity; no manual member retargeting.
+
+The combined optional-practice cloud job passed in run `38653769049`; the full
+company build and native unchanged-package review remain pending at this checkpoint.
+Expected inventories are 146 runtime source entries, 157 runtime ZIP members and
+159 source ZIP members. This candidate predates merged #1291 pairing parity; final
+admission must include that correction and exact current checks. Native source UI
+Home → Explore worlds → saved regional Fly opens disarmed. Six interface scenarios
+cover delayed navigation, installation and reviewed removal. Ready/paused compact
+header work proceeds independently.
+
+Merged #1291 requires terrain/scenery identity, revision and cell-coordinate parity
+in authoring and runtime checks; valid pinned Urban bytes remain unchanged. Merged
+#1294 records 48,000 accepted ticks, seven reversals, 37 origin recentres and 30
+integrity/recovery cycles. At 50 Hz this is 960 seconds of simulated flight, not
+elapsed player/device performance. Reported scene/resource reservations return to
+zero; collider-allocation, GPU and physical-device qualification remain open.
+
+Railway #1290 publishes a bounded route foundation: 384×384 m, nine cells, four
+safe spawns, seven four-metre flight corridors and 1,195 collision/support queries.
+Native hall, grounded station canopy and freight views pass, as does release/reload.
+A separate preserved ground-style change gives the hall concrete, the freight lane
+asphalt with quiet edge lines, and track shoulders ballast. Native hall/freight
+appearance passes; three-preset and final reload review continue after stack sync.
+This remains source study work, not finished art or default player admission.
+
+Next gates: exact combined Library package, compact ready/paused flight layout,
+independent archive import-closure checking, and Railway structural composition.
+Large-region expansion and full P4/D6 qualification remain open. No byte limits
+were raised, user storage cleared, or unrelated local work removed. The latest
+space reading is 4.5 GiB internal and 187 GiB external; no cleanup was performed in
+this checkpoint and heavy work stays external until the internal floor is stable.
