@@ -1,3 +1,4 @@
+import { earlierFlightHit } from "../../../optional-practice/civilian-fpv/flight-contact.mjs";
 /** Atomic terrain/scenery composition for unscored authoring, never World.v1. */
 import { Group } from "../../../optional-practice/civilian-fpv/vendor/three.module.js";
 import {
@@ -344,6 +345,20 @@ export function createVerifiedMixedWindow(
       );
       queue = operation.catch(() => {});
       return operation;
+    },
+    castMotion(...args) {
+      if (disposed) throw new Error("Mixed window is disposed");
+      if (state !== "ready") return { status: "not-ready" };
+      const terrain = committed.terrain.castMotion(...args),
+        scenery = committed.scenery.castMotion(...args);
+      if (
+        ![terrain, scenery].every((result) =>
+          ["motion-hit", "motion-clear"].includes(result.status),
+        )
+      )
+        return { status: "unknown-cell" };
+      const hit = earlierFlightHit(terrain.hit, scenery.hit);
+      return hit ? { status: "motion-hit", hit } : { status: "motion-clear" };
     },
     support(...args) {
       if (disposed) throw new Error("Mixed window is disposed");
