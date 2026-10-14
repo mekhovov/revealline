@@ -40,12 +40,20 @@ test('the required exact-head source gate remains independent of hosted deployme
   assert.doesNotMatch(source, /release-train-boundary\.mjs public|public Pages|Main Pages/u);
 });
 
-test('auto-merge wakes only from the exact-head source gate', async () => {
+test('auto-merge wakes from PR validation, never hosted deployment', async () => {
   const source = await fs.readFile(
     new URL('../.github/workflows/fastline-auto-merge.yml', import.meta.url),
     'utf8',
   );
-  assert.match(source, /workflows: \[Validate source for continuous main\]/u);
+  for (const name of [
+    'Validate source for continuous main',
+    'Appearance preview',
+    'Industrial feature verification',
+    'Company edition candidates',
+    'Assemble full-test release evidence',
+    'Community hosted acceptance',
+    'Community MinIO recovery',
+  ]) assert.ok(source.includes(`- ${name}`), name);
   assert.doesNotMatch(source, /Build and deploy GitHub Pages|github-pages/u);
 });
 
