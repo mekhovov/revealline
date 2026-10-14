@@ -4,6 +4,8 @@ import { validateRegionManifest } from './region-manifest.mjs';
 import { compileSceneryCell, validateSceneryCell, sceneryGeometryBytes } from './scenery-cell.mjs';
 import { initWorldRuntime } from '../../../optional-practice/civilian-fpv/world-collision.mjs';
 
+import { createScenerySurface, validateScenerySurface } from './scenery-surface.mjs';
+
 const fail = (condition, message) => {
   if (!condition) throw new TypeError(message);
 };
@@ -17,12 +19,18 @@ const integerPosition = (position) =>
 export async function prepareSceneryWindow(
   manifestInput,
   cellsInput,
-  { requiredChunkIds, originMm = { x: 0, y: 0, z: 0 }, maxGeometryBytes = 8 * 1024 * 1024 } = {},
+  {
+    requiredChunkIds,
+    originMm = { x: 0, y: 0, z: 0 },
+    maxGeometryBytes = 8 * 1024 * 1024,
+    surfaceStyle = 'plain',
+  } = {},
 ) {
   fail(
     Array.isArray(cellsInput) && cellsInput.length > 0 && cellsInput.length <= 25,
     'Scenery needs 1–25 cells',
   );
+  validateScenerySurface(surfaceStyle);
   const manifest = validateRegionManifest(manifestInput),
     cells = cellsInput.map(validateSceneryCell);
   fail(integerPosition(originMm), 'Invalid local origin');
@@ -99,12 +107,7 @@ export async function prepareSceneryWindow(
         const key = surface.color.join(',');
         let material = byColor.get(key);
         if (!material) {
-          material = new THREE.MeshStandardMaterial({
-            color: new THREE.Color().setRGB(...surface.color),
-            roughness: 1,
-            metalness: 0,
-            side: THREE.DoubleSide,
-          });
+          material = createScenerySurface({ style: surfaceStyle, color: surface.color, originMm });
           byColor.set(key, material);
           materials.push(material);
         }

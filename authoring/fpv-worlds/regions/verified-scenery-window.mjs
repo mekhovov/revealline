@@ -1,3 +1,4 @@
+import { validateScenerySurface } from './scenery-surface.mjs';
 import { validateFrameTransaction, adoptVerifiedFrame } from './frame-transaction.mjs';
 /** Exact-source scenery preparation coordinator. Detached authoring resources, never live flight. */
 import { validateRegionManifest, createRegionPlanner } from './region-manifest.mjs';
@@ -30,8 +31,10 @@ export function createVerifiedSceneryWindow(
     concurrency = 2,
     timeoutMs = 120000,
     maxGeometryBytes = 8 * 1024 * 1024,
+    surfaceStyle = 'plain',
   } = {},
 ) {
+  validateScenerySurface(surfaceStyle);
   const manifest = validateRegionManifest(input),
     planner = createRegionPlanner(manifest);
   const assets = new Map(manifest.assets.map((asset) => [asset.id, asset]));
@@ -169,6 +172,7 @@ export function createVerifiedSceneryWindow(
         requiredChunkIds: required,
         originMm: plan.origin,
         maxGeometryBytes: requiredBytes,
+        surfaceStyle,
       });
       current(token);
       if (supportPose) {
