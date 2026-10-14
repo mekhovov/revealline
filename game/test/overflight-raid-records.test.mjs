@@ -197,3 +197,25 @@ test('V2 records write durably beside untouched legacy history and isolate diffi
   assert.equal((await reopened.read(revised)).fastestClear.time, 90);
   assert.equal((await reopened.read(run())).fastestClear.time, 200);
 });
+
+test('V4 records have an independent durable bucket and never overwrite V3 results', async () => {
+  const records = createOverflightHuntRecords({
+    revisedBackend: memory('overflight-hunt-records.v3'),
+    coordinatedBackend: memory('overflight-hunt-records.v4'),
+  });
+  const modern = run({
+    compiled: { format: 'OverflightHuntCompiledV4', projectIdentity: '1234567890abcdef' },
+    difficulty: 'standard',
+  });
+  const earlier = run({
+    compiled: { ...modern.compiled, format: 'OverflightHuntCompiledV3' },
+    difficulty: 'standard',
+  });
+  const saved = await records.record(modern);
+  assert.equal(saved.durable, true);
+  assert.equal((await records.read(earlier)).bestScore, null);
+  await records.record({ ...earlier, time: 150 });
+  assert.equal((await records.read(modern)).fastestClear.time, 200);
+  assert.equal((await records.read(earlier)).fastestClear.time, 150);
+  records.dispose();
+});

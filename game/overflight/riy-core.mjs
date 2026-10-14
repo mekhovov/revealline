@@ -105,8 +105,12 @@ export function createOverflightRiy(run) {
       pending: null,
     })),
   };
-  if (run.terrain) for (const escort of state.escorts)
-    Object.assign(escort, overflightTerrainOpenPoint(run.terrain, escort.x, escort.y, 9, run.compiled.arena));
+  if (run.terrain)
+    for (const escort of state.escorts)
+      Object.assign(
+        escort,
+        overflightTerrainOpenPoint(run.terrain, escort.x, escort.y, 9, run.compiled.arena),
+      );
   return state;
 }
 const distance = (a, b) => Math.hypot(a.x - b.x, a.y - b.y);

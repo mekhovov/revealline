@@ -1,0 +1,23 @@
+<!doctype html><meta charset="utf-8"><title>Native world painter review</title>
+<style>body{margin:0;background:#101815;color:#e5e6cb;font:16px monospace}main{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;max-width:2160px}figure{margin:0}figcaption{height:26px;padding:4px 8px}canvas{display:block;width:100%;height:auto;image-rendering:pixelated}.crops main{grid-template-columns:repeat(3,960px)}.crops canvas{width:960px;height:540px}</style>
+<main></main><script type="module">
+import {OVERFLIGHT_BATTLEFIELDS, createOverflightBattlefield} from '../../../../../game/overflight/battlefields.mjs';
+import {createOverflightWorldPresentation} from '../../../../../game/overflight/worlds.mjs';
+import {paintOverflightWorld} from '../../../../../game/presentation/overflight-world-art.mjs';
+const params=new URL(location.href).searchParams,crops=params.has('crops');
+if(crops)document.body.classList.add('crops');
+let entries=OVERFLIGHT_BATTLEFIELDS;
+if(params.has('world'))entries=entries.filter(entry=>entry.world===params.get('world')); 
+if(crops)entries=entries.filter((entry,index)=>index%3===1);
+for(const entry of entries){
+ const layout=createOverflightBattlefield(entry.id),p=createOverflightWorldPresentation(entry.world,layout.arena,{layout});
+ const figure=document.createElement('figure'),caption=document.createElement('figcaption'),canvas=document.createElement('canvas');
+ caption.textContent=entry.title.en+' · '+entry.id;
+ canvas.width=crops?960:layout.arena.width;canvas.height=crops?540:layout.arena.height;
+ const ctx=canvas.getContext('2d');ctx.imageSmoothingEnabled=false;
+ if(crops)ctx.translate(-960,-270);
+ paintOverflightWorld(ctx,p,layout.arena);
+ figure.append(caption,canvas);document.querySelector('main').append(figure);
+}
+document.documentElement.dataset.ready='true';
+</script>

@@ -56,7 +56,20 @@ export function overflightRememberedOperationURL(href, stored) {
   if (!operation) return null;
   const target = new URL(operation.path, source);
   for (const [key, value] of source.searchParams)
-    if (!['family', 'operation', 'prototype', 'reviewBuild', 'reviewStopAt', 'autoplay', 'fixture', 'benchmark', 'trial'].includes(key)) target.searchParams.set(key, value);
+    if (
+      ![
+        'family',
+        'operation',
+        'prototype',
+        'reviewBuild',
+        'reviewStopAt',
+        'autoplay',
+        'fixture',
+        'benchmark',
+        'trial',
+      ].includes(key)
+    )
+      target.searchParams.set(key, value);
   return target.href;
 }
 
@@ -159,7 +172,7 @@ export function createOverflightOperationCards({
       }
     });
     groups.find(({ id }) => id === operation.group).section.append(card);
-    return { operation, title, detail, status, selected };
+    return { operation, card, title, detail, status, selected };
   });
   return {
     root,
@@ -175,7 +188,8 @@ export function createOverflightOperationCards({
             paintSprite,
           );
       }
-      for (const { operation, title, detail, status, selected } of cards) {
+      for (const { operation, card, title, detail, status, selected } of cards) {
+        if (!selected) card.setAttribute('href', destination(operation.path));
         title.textContent = text(operation.key);
         detail.textContent = text(operation.detail);
         status.textContent = text(selected ? 'selectedOperation' : 'switchOperation');

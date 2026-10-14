@@ -281,7 +281,11 @@ const persistOptions = () => {
 };
 let seed = Number(params.get('seed'));
 if (!Number.isSafeInteger(seed) || seed < 1 || seed > 0xffffffff) seed = mode.defaultProject.seed;
-let project = mode.createProject({ seed, difficulty: options.difficulty, ...(params.get('layout') ? { layout: params.get('layout') } : {}) });
+let project = mode.createProject({
+  seed,
+  difficulty: options.difficulty,
+  ...(params.get('layout') ? { layout: params.get('layout') } : {}),
+});
 let compiled = mode.compileProject(project);
 let run = null,
   renderer = null,
@@ -379,7 +383,10 @@ const theme = installThemeHost({
 const artwork = createPresentationHost({ profile: 'board', document: doc });
 const artAbort = new AbortController();
 let artWorldKey = JSON.stringify(overflightWorldImageSlots(compiled.presentation));
-const artReady = artwork.load({ signal: artAbort.signal, worldImageSlots: JSON.parse(artWorldKey) });
+const artReady = artwork.load({
+  signal: artAbort.signal,
+  worldImageSlots: JSON.parse(artWorldKey),
+});
 const arcade = createArcadeAdapter({
   reviewRevision: compiled.resources.actorArtRevision,
 });
@@ -454,7 +461,9 @@ function phaseForShell() {
 function reviewLabel() {
   return reviewBuild
     ? [
-        text(review.active() ? 'automatedReview' : run?.review ? 'reviewTakenOver' : 'reviewManual'),
+        text(
+          review.active() ? 'automatedReview' : run?.review ? 'reviewTakenOver' : 'reviewManual',
+        ),
         text(`reviewBuild_${reviewBuild}`),
         reviewStopAt !== null
           ? text('reviewStopAt').replace('{seconds}', String(reviewStopAt))
@@ -1465,6 +1474,12 @@ function destination(path) {
     win.location.href,
   );
 }
+function operationDestination(path) {
+  const target = new URL(destination(path));
+  if (project.battlefield && !selectedInstalled && !studio)
+    target.searchParams.set('layout', (run?.raidVariant?.source ?? project).battlefield.id);
+  return target.href;
+}
 const modeActions = {};
 for (const [key, path] of [
   ['solo', '../index.html'],
@@ -1512,12 +1527,12 @@ operationCards = createOverflightOperationCards({
   document: doc,
   current: mode.operationId ?? mode.id,
   text,
-  destination,
+  destination: operationDestination,
   onSelect: (operation, event) => {
     if (event?.metaKey || event?.ctrlKey || event?.shiftKey || event?.altKey) return;
     event?.preventDefault();
     void confirmSortieChange().then((accepted) => {
-      if (accepted) win.location.assign(destination(operation.path));
+      if (accepted) win.location.assign(operationDestination(operation.path));
     });
   },
 });
@@ -1602,19 +1617,19 @@ if (reviewBuild) {
     });
   }
   for (const parent of [$('overflight-game'), $('upgrade-dialog')?.querySelector('footer')]) {
-  if (!parent) continue;
-  const take = el('button', '', parent === $('overflight-game') ? 'overflight-take-control' : '');
-  take.type = 'button';
-  take.dataset.copy = 'takeControl';
-  take.dataset.reviewAction = 'take';
-  parent.append(take);
-  listen(take, 'click', () => {
-    review.setEnabled(false);
-    releaseInput();
-    refreshCopy();
-    if (run.phase === 'upgrade') syncUpgrade();
-    else $('render-host').focus({ preventScroll: true });
-  });
+    if (!parent) continue;
+    const take = el('button', '', parent === $('overflight-game') ? 'overflight-take-control' : '');
+    take.type = 'button';
+    take.dataset.copy = 'takeControl';
+    take.dataset.reviewAction = 'take';
+    parent.append(take);
+    listen(take, 'click', () => {
+      review.setEnabled(false);
+      releaseInput();
+      refreshCopy();
+      if (run.phase === 'upgrade') syncUpgrade(true);
+      else $('render-host').focus({ preventScroll: true });
+    });
   }
   const manual = el('a');
   manual.dataset.copy = 'manualRetry';
@@ -1733,7 +1748,12 @@ const disposeModeActions = mode.installActions?.({
     if (run.compiled?.battlefield && mode.projectForRun) {
       const retainedRun = run;
       resultRun = null;
-      void prepare({ nextProject: mode.projectForRun(run), nextSeed: run.seed, retainedRun, launch: true }).catch(() => {});
+      void prepare({
+        nextProject: mode.projectForRun(run),
+        nextSeed: run.seed,
+        retainedRun,
+        launch: true,
+      }).catch(() => {});
       return;
     }
     resultRun = null;

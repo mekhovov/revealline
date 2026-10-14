@@ -132,23 +132,41 @@ test('native catalogue exposes all eighteen compiled layouts for all five operat
   const { runInNewContext } = await import('node:vm');
   const { parse } = await import('acorn');
   const { OVERFLIGHT_BATTLEFIELDS } = await import('../overflight/battlefields.mjs');
-  const { createOverflightProject, compileOverflightProject } = await import('../overflight/project.mjs');
-  const { createOverflightRiyProject, compileOverflightRiyProject } = await import('../overflight/riy-project.mjs');
+  const { createOverflightProject, compileOverflightProject } = await import(
+    '../overflight/project.mjs'
+  );
+  const { createOverflightRiyProject, compileOverflightRiyProject } = await import(
+    '../overflight/riy-project.mjs'
+  );
   const { OVERFLIGHT_HUNT_MODE } = await import('../overflight/raid-mode.mjs');
   const { createOverflightRaidVariant } = await import('../overflight/raid-variants.mjs');
   const source = await readFile(new URL('../overflight/app.mjs', import.meta.url), 'utf8');
   const ast = parse(source, { ecmaVersion: 'latest', sourceType: 'module' });
-  const official = ast.body.find(node => node.type === 'FunctionDeclaration' && node.id.name === 'officialProjects');
+  const official = ast.body.find(
+    (node) => node.type === 'FunctionDeclaration' && node.id.name === 'officialProjects',
+  );
   const modes = [
-    { createProject: options => createOverflightProject({ ...options, rulesVersion: 4 }), compileProject: compileOverflightProject },
-    { createProject: options => createOverflightRiyProject({ ...options, rulesVersion: 4 }), compileProject: compileOverflightRiyProject },
+    {
+      createProject: (options) => createOverflightProject({ ...options, rulesVersion: 4 }),
+      compileProject: compileOverflightProject,
+    },
+    {
+      createProject: (options) => createOverflightRiyProject({ ...options, rulesVersion: 4 }),
+      compileProject: compileOverflightRiyProject,
+    },
     OVERFLIGHT_HUNT_MODE,
-    ...['time-attack','marathon'].map(variant => createOverflightRaidVariant(OVERFLIGHT_HUNT_MODE,{variant})),
+    ...['time-attack', 'marathon'].map((variant) =>
+      createOverflightRaidVariant(OVERFLIGHT_HUNT_MODE, { variant }),
+    ),
   ];
   for (const mode of modes) {
-    const projects = runInNewContext(`(${source.slice(official.start, official.end)})()`, { mode, OVERFLIGHT_BATTLEFIELDS, options:{difficulty:'standard'} });
+    const projects = runInNewContext(`(${source.slice(official.start, official.end)})()`, {
+      mode,
+      OVERFLIGHT_BATTLEFIELDS,
+      options: { difficulty: 'standard' },
+    });
     assert.equal(projects.length, 18);
-    assert.equal(new Set(projects.map(project => project.battlefield.id)).size, 18);
+    assert.equal(new Set(projects.map((project) => project.battlefield.id)).size, 18);
     for (const project of projects) {
       const compiled = mode.compileProject(project);
       assert.equal(compiled.rulesVersion, 4);
@@ -897,11 +915,19 @@ test('native Settings initialization preserves operation cards and navigation on
 });
 
 test('a selected demonstration remains manual until opt-in, and takeover stops all automation', () => {
-  let piloted = 0, drafted = 0;
+  let piloted = 0,
+    drafted = 0;
   const playback = createOverflightReviewPlayback({
-    build: 'echo', enabled: false,
-    pilot: () => { piloted++; return { x: -1, y: 0, boost: true }; },
-    selectCard: () => { drafted++; return null; },
+    build: 'echo',
+    enabled: false,
+    pilot: () => {
+      piloted++;
+      return { x: -1, y: 0, boost: true };
+    },
+    selectCard: () => {
+      drafted++;
+      return null;
+    },
   });
   const run = { tick: 0, time: 0, phase: 'playing' };
   const manual = { x: 1, y: 0, boost: false };

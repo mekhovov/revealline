@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { OVERFLIGHT_BATTLEFIELDS } from '../overflight/battlefields.mjs';
 import { Document } from './helpers/couch-dom.mjs';
 import { overflightCacheHint } from '../overflight/copy.mjs';
 import { createMissionLibrary } from '../mission-library/library.mjs';
@@ -176,12 +177,13 @@ test('family home exposes all five operations and preserves operation queries wi
     return node;
   };
   let selected = 0,
-    left = 0;
+    left = 0,
+    layout = '';
   const view = createOverflightOperationCards({
     document,
     current: 'overflight',
     text: (key) => key,
-    destination: (path) => `${path}${path.includes('?') ? '&' : '?'}lang=uk`,
+    destination: (path) => `${path}${path.includes('?') ? '&' : '?'}lang=uk${layout}`,
     onSelect: () => selected++,
     onLeave: () => left++,
   });
@@ -199,6 +201,9 @@ test('family home exposes all five operations and preserves operation queries wi
   for (const card of [riy, raid, timeAttack, marathon]) card.click();
   assert.equal(selected, 4);
   assert.equal(left, 4);
+  layout = '&layout=river-port-twin-docks';
+  view.refresh();
+  assert.equal(raid.getAttribute('href'), './raid.html?lang=uk&layout=river-port-twin-docks');
 });
 
 test('only a generic family entry restores a valid saved operation while keeping appearance and locale', () => {
@@ -429,4 +434,30 @@ test('cache instructions explain stored V3 Overdrive without changing legacy or 
     }),
     /Overdrive/,
   );
+});
+
+test('all eighteen battlefields register in six localized campaign groups', () => {
+  const entries = OVERFLIGHT_BATTLEFIELDS.map(({ id }) => ({
+    project: createOverflightProject({ rulesVersion: 4, layout: id }),
+  }));
+  for (const locale of ['en', 'uk']) {
+    const source = overflightMissionSource({
+      id: 'official',
+      entries,
+      mode,
+      locale: () => locale,
+      launch() {},
+    });
+    const library = createMissionLibrary([source]);
+    assert.equal(library.missions.length, 18);
+    const campaigns = new Set(library.missions.map((row) => row.campaignKey));
+    assert.equal(campaigns.size, 6);
+    for (const row of library.missions) {
+      assert.equal(row.campaignLevelCount, 3);
+      assert.ok(row.levelIndex >= 0 && row.levelIndex < 3);
+      assert.equal(library.availability(row, 'solo').state, 'ready');
+      assert.deepEqual(row.tags, ['Classic', 'FPV', 'Arcade']);
+    }
+    library.dispose();
+  }
 });

@@ -1,4 +1,5 @@
 import { overflightHuntContactState } from './raid-core.mjs';
+import { overflightTerrainWaypoint } from './terrain.mjs';
 
 const preferences = {
   sweeper: ['strike-width', 'slow-wake', 'rush-charge'],
@@ -109,8 +110,14 @@ export function createOverflightHuntReviewPilot({ route = 'objectives', build = 
         attack = false;
         break;
       }
-      const dx = goalX - p.x,
-        dy = goalY - p.y,
+      // Review automation must use the same visible cover as a human pilot.
+      // This only changes submitted steering, never actor positions or combat.
+      const waypoint = run.terrain
+        ? overflightTerrainWaypoint(run.terrain, p, { x: goalX, y: goalY }, run.compiled.arena)
+        : { x: goalX, y: goalY };
+      if (waypoint.x !== goalX || waypoint.y !== goalY) attack = false;
+      const dx = waypoint.x - p.x,
+        dy = waypoint.y - p.y,
         length = Math.hypot(dx, dy) || 1;
       const boost = attack && d < 88 && d > 10 && p.boostCooldown <= 0 && !previousBoost;
       previousBoost = boost;
