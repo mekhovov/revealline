@@ -25,21 +25,55 @@ for (const sign of [-1, 1]) {
   arm.rotation.y = (sign * Math.PI) / 4;
   quad.add(arm);
 }
-let manifestController = null, flight = null, busy = false, hudAt = 0, loadingGeneration = 0, closed = false;
-function message(value) { $("message").textContent = value; }
+let manifestController = null,
+  flight = null,
+  busy = false,
+  hudAt = 0,
+  loadingGeneration = 0,
+  closed = false;
+function message(value) {
+  $("message").textContent = value;
+}
 const session = createRegionalInputSession({
-  window, document, createFlight: createRegionalFlightPrototype,
-  onFlight(value) { flight = value; if (value) { value.dronePose.add(quad); scene.add(value.root); } },
+  window,
+  document,
+  createFlight: createRegionalFlightPrototype,
+  onFlight(value) {
+    flight = value;
+    if (value) {
+      value.dronePose.add(quad);
+      scene.add(value.root);
+    }
+  },
   onState(state) {
     if (!state || closed) return;
-    if (state.status === "active") { message("Authoring flight active"); canvas.focus(); }
-    else message(session.status().busy ? "Preparing verified terrain…" : state.reason === "prepared" ? "Terrain ready. Arm deliberately to fly." : state.reason === "preparing-terrain" ? "Preparing verified terrain…" : `Paused: ${state.reason}`);
+    if (state.status === "active") {
+      message("Authoring flight active");
+      canvas.focus();
+    } else
+      message(
+        session.status().busy
+          ? "Preparing verified terrain…"
+          : state.reason === "prepared"
+            ? "Terrain ready. Arm deliberately to fly."
+            : state.reason === "preparing-terrain"
+              ? "Preparing verified terrain…"
+              : `Paused: ${state.reason}`,
+      );
   },
-  onCamera() { $("view").value = $("view").value === "fpv" ? "chase" : "fpv"; },
-  onError(error) { message(`Paused: ${error.message}`); },
+  onCamera() {
+    $("view").value = $("view").value === "fpv" ? "chase" : "fpv";
+  },
+  onError(error) {
+    message(`Paused: ${error.message}`);
+  },
 });
-async function prepare() { if (!busy) await session.prepare(); }
-async function reset() { if (!busy && !closed) await session.replace(); }
+async function prepare() {
+  if (!busy) await session.prepare();
+}
+async function reset() {
+  if (!busy && !closed) await session.replace();
+}
 document.querySelector("form").addEventListener("submit", async (event) => {
   event.preventDefault();
   if (busy || session.status().busy) return;
@@ -86,7 +120,11 @@ document.querySelector("form").addEventListener("submit", async (event) => {
     );
     if (token !== loadingGeneration || closed) return;
     clearTimeout(timeout);
-    await session.replace({ manifest, mode: $("mode").value, source: { baseURL: new URL(".", url).href } });
+    await session.replace({
+      manifest,
+      mode: $("mode").value,
+      source: { baseURL: new URL(".", url).href },
+    });
     document.querySelector("details").open = false;
   } catch (error) {
     message(`Paused: ${error.message}`);
@@ -100,13 +138,26 @@ $("prepare").onclick = prepare;
 $("reset").onclick = reset;
 $("arm").onclick = () => {
   if (busy || closed) return;
-  if (!session.arm()) message("Prepare terrain, centre the controls and release controller buttons before arming.");
+  if (!session.arm())
+    message(
+      "Prepare terrain, centre the controls and release controller buttons before arming.",
+    );
 };
 $("pause").onclick = () => session.pause();
-$("source").onchange = () => { session.select($("source").value); $("touch-controls").hidden = $("source").value !== "touch"; };
+$("source").onchange = () => {
+  session.select($("source").value);
+  document.body.dataset.input = $("source").value;
+  $("touch-controls").hidden = $("source").value !== "touch";
+  canvas.focus();
+};
 $("mode").onchange = () => session.setMode($("mode").value);
-session.bindStick($("left-stick"), "left"); session.bindStick($("right-stick"), "right");
-document.querySelector("header").addEventListener("focusin", () => session.pause());
+canvas.focus();
+$("view").onchange = () => canvas.focus();
+session.bindStick($("left-stick"), "left");
+session.bindStick($("right-stick"), "right");
+document
+  .querySelector("header")
+  .addEventListener("focusin", () => session.pause());
 $("keyboard-help").textContent = keyboardFlightHelp("two-stick");
 function resize() {
   const width = canvas.clientWidth,
@@ -124,6 +175,13 @@ const look = new THREE.Vector3(),
 function render() {
   if (closed) return;
   session.advance(performance.now());
+  if ($("source").value === "touch") {
+    const controls = session.status().controls;
+    $("left-stick").querySelector("i").style.transform =
+      `translate(${controls.yaw * 40}px, ${(0.5 - controls.throttle) * 80}px)`;
+    $("right-stick").querySelector("i").style.transform =
+      `translate(${controls.roll * 40}px, ${-controls.pitch * 40}px)`;
+  }
   if (flight) {
     const pose = flight.cameraAnchor,
       fpv = $("view").value === "fpv";
