@@ -401,6 +401,6 @@ console.log(
     runtime: process.version,
     playerReady: false,
     limitations:
-      "Temporary authoring physics port; force parity only before collision. No scored proof, production integrator, GPU/FPS or player qualification.",
+      "Shared production air transition; terrain collision remains provisional. No scored proof, production integrator, GPU/FPS or player qualification.",
   }),
 );
