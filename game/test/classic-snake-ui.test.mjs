@@ -2143,3 +2143,126 @@ test('a verified session-only clear keeps its stars and localized visible saving
     assert.equal(state.$('result-save-notice').hidden, true);
   }
 });
+
+for (const locale of ['en', 'uk'])
+  for (const mode of ['solo', 'team', 'versus'])
+    test(`${locale}/${mode} an older optional courier never replaces the required-target HUD after a catch`, async () => {
+      const { proofs } = JSON.parse(
+        await readFile(
+          new URL(
+            '../../docs/verification/snake-remaster/outlier-alternative-proofs.json',
+            import.meta.url,
+          ),
+          'utf8',
+        ),
+      );
+      const proof = proofs.find(
+        (p) =>
+          p.levelId === 'classic-expedition-courier-overpass' &&
+          p.mode === (mode === 'team' ? 'team' : 'solo') &&
+          p.pace === 'normal',
+      );
+      const entry = CLASSIC_SNAKE_LEVELS.find((e) => e.id === proof.levelId);
+      const state = await harness({ entry, mode, query: `&lang=${locale}` });
+      const run = state.created[0];
+      let cursor = 0;
+      while (run.status === 'running' && !(run.catches > 4 && run.targets[0]?.role === 'bonus')) {
+        while (proof.replay.turns[cursor]?.tick === run.tick) {
+          const turn = proof.replay.turns[cursor++];
+          assert.ok(core.queueClassicSnakeTurn(run, turn.playerId, turn.direction));
+        }
+        core.stepClassicSnake(run);
+      }
+      assert.equal(run.status, 'running');
+      assert.equal(
+        run.targets[0].role,
+        'bonus',
+        'an earlier courier survives the required interception',
+      );
+      assert.equal(run.targets[0].kind, 'courier');
+      const requiredTarget = run.targets.find((actor) => actor.role === 'required');
+      assert.ok(requiredTarget, 'ordinary mission progress remains available');
+      const before = core.exportClassicSnakeReplay(run);
+      state.frame(0);
+      assert.equal(
+        state.$('target-style').textContent,
+        actorFieldGuide(requiredTarget.kind, locale).name,
+      );
+      const cue = state.document.querySelector('.snake-operation-status');
+      assert.equal(cue.hidden, false);
+      assert.equal(cue.textContent, CLASSIC_COPY[locale].courierOptional);
+      assert.equal(
+        cue.parentElement.dataset.operation,
+        'false',
+        'a courier does not convert a catch-quota mission into a staged operation',
+      );
+      const quota = cue.parentElement.querySelector('[data-stat="caught"]');
+      assert.equal(quota.hidden, false);
+      assert.equal(quota.querySelector('b').textContent, `${run.catches} / ${run.level.goal}`);
+      assert.equal(
+        cue.parentElement.dataset.status,
+        'true',
+        'the existing full-width wrapping row is enabled',
+      );
+      if (mode === 'versus')
+        assert.equal(
+          state.document.querySelectorAll('.snake-operation-status')[1].hidden,
+          true,
+          'the opponent has no courier cue',
+        );
+      assert.deepEqual(
+        core.exportClassicSnakeReplay(run),
+        before,
+        'the objective cue does not alter the attempt',
+      );
+      // Finish this accepted recording without chasing its bonus; the cue retires
+      // with the actor and cannot leave a stale objective on the result board.
+      while (run.status === 'running') {
+        while (proof.replay.turns[cursor]?.tick === run.tick) {
+          const turn = proof.replay.turns[cursor++];
+          assert.ok(core.queueClassicSnakeTurn(run, turn.playerId, turn.direction));
+        }
+        core.stepClassicSnake(run);
+      }
+      assert.equal(run.status, 'won');
+      if (mode !== 'team') assert.equal(run.bonusCatches, 0);
+      state.shell.open('pause');
+      assert.equal(cue.hidden, true);
+    });
+
+for (const locale of ['en', 'uk'])
+  test(`${locale} the opening turn cue applies to touch and controller without requiring a keyboard`, async () => {
+    const state = await harness({ query: `&lang=${locale}` });
+    state.frame(0);
+    const cue = state.$('snake-onboarding');
+    assert.equal(cue.hidden, false);
+    assert.equal(cue.textContent, CLASSIC_COPY[locale].firstTurnHelp);
+    assert.doesNotMatch(cue.textContent, /WASD|Arrows/);
+    assert.equal(state.created[0].tick, 0);
+  });
+
+test('transient status wrapping never inherits the operation-only rule that hides the catch quota', async () => {
+  const css = await readFile(new URL('../snake/classic.css', import.meta.url), 'utf8');
+  const rules = [...css.matchAll(/([^{}]+)\{([^{}]*)\}/g)].map((match) => ({
+    selector: match[1],
+    body: match[2],
+  }));
+  const statusRules = rules.filter((rule) => rule.selector.includes("[data-status='true']"));
+  assert.equal(statusRules.length, 1);
+  assert.match(statusRules[0].body, /flex-wrap:\s*wrap/);
+  assert.doesNotMatch(statusRules[0].body, /display:\s*none/);
+  assert.ok(
+    rules.some(
+      (rule) =>
+        rule.selector.includes("[data-operation='true'] [data-stat='caught']") &&
+        /display:\s*none/.test(rule.body),
+    ),
+  );
+  assert.ok(
+    !rules.some(
+      (rule) =>
+        rule.selector.includes('data-status') && rule.selector.includes("[data-stat='caught']"),
+    ),
+    'only staged operation objectives replace the ordinary quota',
+  );
+});
