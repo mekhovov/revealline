@@ -11,7 +11,10 @@ import {
 import { militaryFieldPixels } from '../presentation/military-field-art.mjs';
 import { createActorPresentation, drawPresentedActor } from '../ui/actor-presentation.mjs';
 import { createArcadeAdapter, getArcadeCollection } from '../presentation/industrial-arcade.mjs';
-import { INDUSTRIAL_BUILTIN_SPRITES } from '../presentation/industrial-arcade-builtins.mjs';
+import {
+  INDUSTRIAL_BUILTIN_SPRITES,
+  INDUSTRIAL_BUILTIN_MACHINERY_GEOMETRY,
+} from '../presentation/industrial-arcade-builtins.mjs';
 import { prepareCoopMaterialSample } from '../couch/coop-terrain-trail.mjs';
 import { createSnakeHuntPresentation } from '../../optional-practice/civilian-fpv/snake-hunt-presentation.mjs';
 import { createIndustrialMachineryBatch } from '../../scripts/produce-industrial-machinery.mjs';
@@ -159,7 +162,11 @@ test('v3 shared adapter keeps Company art and the player while exposing admitted
         pivot: { x: 0.5, y: 0.5 },
         rotors: [{ x: 0.1 }],
       },
-      asset: { id: `${slot}.field-kit`, file: { width: 32, height: 32, sha256: hash } },
+      asset: {
+        id: `${slot}.field-kit`,
+        file: { width: 32, height: 32, sha256: hash },
+        geometry: INDUSTRIAL_BUILTIN_MACHINERY_GEOMETRY[slot],
+      },
     }),
     frames = {
       'terrain.slow': frame('terrain.slow'),

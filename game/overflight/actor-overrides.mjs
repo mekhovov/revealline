@@ -1,5 +1,8 @@
 import { validateActorAnimation } from '../presentation/actor-animation.mjs';
-import { INDUSTRIAL_BUILTIN_SPRITES } from '../presentation/industrial-arcade-builtins.mjs';
+import {
+  INDUSTRIAL_BUILTIN_SPRITES,
+  hasCustomIndustrialMachineryGeometry,
+} from '../presentation/industrial-arcade-builtins.mjs';
 import {
   OVERFLIGHT_ACTOR_SLOTS,
   OVERFLIGHT_MACHINERY_ALIASES,
@@ -15,7 +18,8 @@ function acceptedImage(snapshot, slot, alias = false) {
     !source.asset.animation &&
     !source.geometry?.animation &&
     source.asset.id === `${slot}.field-kit` &&
-    INDUSTRIAL_BUILTIN_SPRITES[slot]?.includes(source.asset.file?.sha256)
+    INDUSTRIAL_BUILTIN_SPRITES[slot]?.includes(source.asset.file?.sha256) &&
+    !hasCustomIndustrialMachineryGeometry(source.asset, slot)
   )
     return null;
   return source;
