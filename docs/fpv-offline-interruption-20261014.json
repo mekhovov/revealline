@@ -42,7 +42,6 @@
     "correctionSource": "5db194727",
     "sourceChecks": 48,
     "nativeMixedHarnessVerified": true,
-    "nativeAdmittedPackageVerified": false,
     "nativeReview": {
       "source": "5db194727",
       "method": "Separate unpinned launcher/context with a visible checkbox reducing actual read-only status timeout to 1 ms; frozen player bytes unchanged.",
@@ -59,13 +58,15 @@
         "contextReview": "ea1e55e632c86a64cfd349bdd8ef13eb07aac6df1871a237c544b8ab7ca8bd9c",
         "htmlReview": "9caba5a1692e117ac7720fa9dbb6181eff07ceb8d288417756519ce22566694c"
       }
-    }
+    },
+    "nativePackagedUpdateVerified": true,
+    "packageReceipt": "fpv-corrected-package-20261014.json"
   },
   "screenshotNames": ["cancelled-update-retains-old.jpg", "cancelled-update-world-preserved.jpg"],
   "limits": [
     "Controlled origin-local dependency stall, not network-wide offline.",
     "Actual quota/eviction and process restart remain untested.",
-    "The tri-state correction passed native mixed-harness checks; freshly admitted package checks remain pending.",
+    "The tri-state correction passed mixed-harness checks; the separate corrected-package receipt records bounded native update/recovery. Public release admission remains pending.",
     "No hardware/controller or FPS qualification inferred."
   ]
 }

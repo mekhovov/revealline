@@ -67,12 +67,33 @@
     "productFailureClaim": false
   },
   "nativeJourney": {
-    "status": "pending",
+    "status": "passed-bounded-update-and-origin-unavailable-reopen",
+    "originUnavailableReopenVerified": true,
+    "networkWideOfflineVerified": false,
+    "browserRestartVerified": false,
     "observations": [
-      "After the documented fixture correction, old v0.142.4 reported Ready offline and opened its player.",
-      "Old Library installed Mountain Reservoir r16 with eight challenges and digest 50ffbb0e5da7.",
-      "Only the canonical mutable launcher and current pointer switched to corrected v0.151.1 source f14366940; old player files remained unchanged."
-    ]
+      "Old v0.142.4 reported Ready offline after the documented harness omission was corrected; its actual player opened.",
+      "Old Library installed Mountain Reservoir r16 with eight challenges and unchanged digest 50ffbb0e5da7.",
+      "Only the canonical mutable launcher/current pointer switched to corrected v0.151.1 source f14366940; immutable old/new player bytes remained unchanged.",
+      "The first corrected-new registration aborted before a browser request for its worker reached the server. The exact worker remained HTTP 200 with the expected hash; no cause was asserted. A retry succeeded without clearing browser storage.",
+      "New Download reported Ready offline and retained prepared and previous launch links.",
+      "After all app-scoped tabs were left and a fresh canonical launcher opened, exact read-only checks returned new runtime 4b1e3f55\u2026 ready at 17103485 bytes, old runtime 923f3914\u2026 ready at 15779904 bytes, and corrected launcher ecadb5fe\u2026 ready at 168491 bytes.",
+      "Canonical Check retained both actions while disabled.",
+      "New-player catalogue Play Mountain Reservoir rendered the actual scene at 0.0 seconds, motors off, with Arm enabled; all eight installed challenges remained.",
+      "The canonical previous-version action opened actual v0.142.4. Its Library retained all eight Reservoir challenges and digest 50ffbb0e5da7.",
+      "The isolated 9018 server was stopped and a transport probe refused connection. Reloading the exact new URL opened its cached home. Explore -> Reservoir -> Custom Shoreline loaded the actual scene and deliberate mission-card Play started a run, observed at 22.9 seconds before explicit Pause.",
+      "With the origin still unavailable, the exact old #packs URL reloaded Library and retained all eight Reservoir challenges and the same digest.",
+      "The dedicated server was restored and HTTP 200 confirmed. No browser caches, worlds or recordings were removed."
+    ],
+    "screenshots": [
+      "/Volumes/alex/CodexMigrationStaging/fpv-temp/corrected-reservoir-disarmed.png",
+      "/Volumes/alex/CodexMigrationStaging/fpv-temp/corrected-rollback-library.png",
+      "/Volumes/alex/CodexMigrationStaging/fpv-temp/corrected-reservoir-origin-unavailable.png"
+    ],
+    "launcherRevision": "ecadb5fefda6b5ef0e6927549b4ad000bed676851017700a12add3720d264925",
+    "launcherReadyBytes": 168491,
+    "runtimeReadyBytes": 17103485,
+    "knownArtworkFollowup": "https://github.com/mekhovov/revealline/pull/1249"
   },
   "cloudChecks": {
     "run": 38608388073,

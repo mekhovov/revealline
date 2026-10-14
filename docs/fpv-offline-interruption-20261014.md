@@ -26,7 +26,7 @@ A separate review launcher/context from source 5db194727 used the same 9017 inst
 
 ## Remaining qualification
 
-- Verification using a freshly admitted corrected package.
+- The separate [corrected-package journey](fpv-corrected-package-20261014.md) now covers packaged update and recovery; its documented limits still apply.
 - Actual quota/eviction, full browser process restart and network-wide outages.
 - Hardware/controller and sustained rendering performance.
 
