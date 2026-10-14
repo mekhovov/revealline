@@ -31,6 +31,8 @@ Six existing Hunt lessons are admitted in each mode. Native candidate hosts vali
 
 The fresh browser lists **116 current Team / 318 current Duel missions**. Pursuit prototypes and Snake Hunt are not silently admitted. This adds discoverability to existing lessons; it is separate from the 168 newly authored expedition missions.
 
+The Team discovery retention test counts 116 current missions plus two imported routes both before and after playing a built-in arena. Its previous 110-mission expectation was reproduced as stale after Hunt admission and corrected; all ten discovery-host cases pass with the expanded library.
+
 ## Creator recovery — R4
 
 The recovery fixture replaces terrain, both Team pilots' normal/cutting compact/detailed slots, the Duel Scout, and a sound binding with existing project media under new candidate identities. Original PNGs are fully decoded, and original sound bytes are hashed; no new production or listening approval is created.

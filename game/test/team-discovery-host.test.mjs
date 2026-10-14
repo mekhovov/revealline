@@ -292,12 +292,12 @@ test('an opened local Team pack stays discoverable after playing a built-in aren
   });
   await f.selectFile(JSON.stringify(pack));
   await open(f);
-  assert.equal(cards(f).length, 112, '110 current missions and two local routes');
+  assert.equal(cards(f).length, 118, '116 current missions and two local routes');
   enter(f, card(f, 'First Connection'));
   await started(f, 'First Connection');
   f.tap('Escape');
   await open(f, true);
-  assert.equal(cards(f).length, 112, 'Playing a built-in arena retains both local routes');
+  assert.equal(cards(f).length, 118, 'Playing a built-in arena retains both local routes');
   enter(f, card(f, 'Local route 2'));
   await waitFor(() => f.$('coop-discard-dialog').open);
   enter(f, f.$('coop-discard-confirm'));
