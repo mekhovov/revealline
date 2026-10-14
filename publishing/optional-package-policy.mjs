@@ -35,7 +35,9 @@ const BASE_OPTIONAL_PACKAGE_POLICIES = Object.freeze({
     // The installed archive contains the reviewed launcher (eight files) in
     // addition to its application closure. Keep a finite envelope while
     // accounting for that release-only surface.
-    limits: Object.freeze({ files: 80, bytes: 8 * 1024 * 1024 }),
+    // The release-qualified archive has 81 files with the shared menu CSS;
+    // its source archive adds two original templates and one inventory record.
+    limits: Object.freeze({ files: 83, bytes: 8 * 1024 * 1024 }),
     localFiles: Object.freeze([
       'index.html',
       'app.mjs',
@@ -52,7 +54,11 @@ const BASE_OPTIONAL_PACKAGE_POLICIES = Object.freeze({
     sharedFiles: Object.freeze([
       'game/ui/mode-play-shell.mjs',
       'game/ui/mode-play-shell.css',
+      'game/ui/mode-choice.css',
+      'game/ui/optional-practice-panel.css',
       'game/ui/pause-menu.css',
+      'game/ui/mode-settings-view.css',
+      'game/ui/global-settings-view.css',
       'game/ui/native-menu-icons.mjs',
       'optional-practice/civilian-fpv/input.mjs',
       'optional-practice/civilian-fpv/radio-profile.mjs',
