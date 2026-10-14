@@ -2193,6 +2193,14 @@ for (const locale of ['en', 'uk'])
       assert.equal(cue.textContent, CLASSIC_COPY[locale].courierOptional);
       assert.equal(
         cue.parentElement.dataset.operation,
+        'false',
+        'a courier does not convert a catch-quota mission into a staged operation',
+      );
+      const quota = cue.parentElement.querySelector('[data-stat="caught"]');
+      assert.equal(quota.hidden, false);
+      assert.equal(quota.querySelector('b').textContent, `${run.catches} / ${run.level.goal}`);
+      assert.equal(
+        cue.parentElement.dataset.status,
         'true',
         'the existing full-width wrapping row is enabled',
       );
@@ -2232,3 +2240,29 @@ for (const locale of ['en', 'uk'])
     assert.doesNotMatch(cue.textContent, /WASD|Arrows/);
     assert.equal(state.created[0].tick, 0);
   });
+
+test('transient status wrapping never inherits the operation-only rule that hides the catch quota', async () => {
+  const css = await readFile(new URL('../snake/classic.css', import.meta.url), 'utf8');
+  const rules = [...css.matchAll(/([^{}]+)\{([^{}]*)\}/g)].map((match) => ({
+    selector: match[1],
+    body: match[2],
+  }));
+  const statusRules = rules.filter((rule) => rule.selector.includes("[data-status='true']"));
+  assert.equal(statusRules.length, 1);
+  assert.match(statusRules[0].body, /flex-wrap:\s*wrap/);
+  assert.doesNotMatch(statusRules[0].body, /display:\s*none/);
+  assert.ok(
+    rules.some(
+      (rule) =>
+        rule.selector.includes("[data-operation='true'] [data-stat='caught']") &&
+        /display:\s*none/.test(rule.body),
+    ),
+  );
+  assert.ok(
+    !rules.some(
+      (rule) =>
+        rule.selector.includes('data-status') && rule.selector.includes("[data-stat='caught']"),
+    ),
+    'only staged operation objectives replace the ordinary quota',
+  );
+});

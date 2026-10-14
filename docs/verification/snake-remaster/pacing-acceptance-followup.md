@@ -20,7 +20,10 @@ not count as a required catch. This is a short English/Ukrainian line in the
 existing wrapping row, not a new panel. It retires with the actor and cannot show
 on a Versus opponent's board merely because the first board has a courier. This
 also enables the existing full-width wrapping layout when a transient status is
-present on a mission without operation stages.
+present on a mission without operation stages. A separate `data-status` flag
+controls wrapping; `data-operation` continues to describe actual staged
+objectives, so a courier cannot hide the required-catch counter. A CSS contract
+check and host counter assertions cover that distinction.
 
 Six host regressions follow actual accepted Courier Overpass journals until a
 required catch leaves an older bonus first: Solo, Team and separate Versus boards
