@@ -55,17 +55,19 @@ async function fixture(t) {
   return { root, directory, out: path.join(directory, 'dist') };
 }
 
-test('published FPV contact module is included in main and optional package inputs', async () => {
+test('published FPV contact and support modules are included in main and optional package inputs', async () => {
   const root = fileURLToPath(new URL('../', import.meta.url));
-  const name = 'optional-practice/civilian-fpv/flight-contact.mjs';
   const config = JSON.parse(await fs.readFile(path.join(root, 'game/build-config.json'), 'utf8'));
   const { OPTIONAL_PACKAGE_POLICIES } = await import('../publishing/optional-package-policy.mjs');
-  assert.ok(config.include.includes(name), 'main distribution must include flight contact');
-  assert.ok(
-    OPTIONAL_PACKAGE_POLICIES['fpv-worlds'].sharedFiles.includes(name),
-    'installed FPV package must include flight contact',
-  );
-  assert.ok((await fs.stat(path.join(root, name))).isFile());
+  for (const module of ['flight-contact.mjs', 'flight-support.mjs']) {
+    const name = `optional-practice/civilian-fpv/${module}`;
+    assert.ok(config.include.includes(name), `main distribution must include ${module}`);
+    assert.ok(
+      OPTIONAL_PACKAGE_POLICIES['fpv-worlds'].sharedFiles.includes(name),
+      `installed FPV package must include ${module}`,
+    );
+    assert.ok((await fs.stat(path.join(root, name))).isFile());
+  }
 });
 
 test('build binds the same release version into Solo, Versus and Team landing HTML', async (t) => {
