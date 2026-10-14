@@ -28,7 +28,10 @@ node authoring/fpv-worlds/free-worlds/qualify-coaster-geometry.mjs
 - Six geometry admission probes verify launch floor support, both 500 mm diameter loop crossings, collision against both top rails, and clear flight above the paved avenue.
 - Browser GLB inspection verified overview composition, ground reference and loop openings using the shipped Three.js loader. This is a model preview, not a substitute for SIM installation/launch acceptance.
 - Parent-browser admission imported this exact pack into the actual SIM Library on localhost:9001. Installation succeeded; Fly opened disarmed at 0.0 s with 100 health. FPV, Chase and Overview switched correctly; the overview displayed the loops, paving, stalls and trees. Browser reported no warnings or errors.
-- **Remaining before default catalogue publication:** immutable catalogue identity and protected publication, reload persistence and offline checks. Physical-device performance and exhaustive off-route collision checks remain unverified.
+- **Catalogue admission prepared:** the v2 feed adds this world at immutable commit `f1b6373996a53c84bca77b485e73630ffe6b00c7`; all legacy v1 rows and their exact asset identities remain unchanged. The bounded catalogue probe passes 23 cases with 20 v2 worlds.
+- Retained-content check with network disabled passed: exact pack install, store close/reopen, scene/course resolution, byte-identical export and corrupt replacement rollback. This uses controlled IndexedDB in Node, not a native-browser service-worker offline launch. Existing world-content and optional-offline lifecycle regression suites pass 37/37.
+- Browser reload persistence passed on localhost:9001: Library retained exact hash `a0483ee22fab…`; Fly resolved the stored scene with twin loops, timber hills, avenue, stalls and trees. It remained disarmed, throttle 0%, 100 health and 0.0 s, with no console warnings or errors.
+- **Remaining qualification:** protected catalogue publication, full packaged offline launch, physical-device performance and exhaustive off-route collision checks.
 
 ## Subsequent intake, in priority order
 
