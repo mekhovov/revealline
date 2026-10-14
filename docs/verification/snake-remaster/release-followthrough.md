@@ -80,10 +80,11 @@ not represented by that older public revision.
 - 7/7 optional-practice and 4/4 optional-distribution tests.
 - Targeted source lint, formatting, whitespace and canonical shared play-shell
   checks pass. No shared generated runtime needs editing.
-- The repository-wide localization recheck was stopped after approximately eight
-  minutes without a result; no fresh whole-repository localization pass is claimed.
-  This batch changes no translation keys or message copy. Its four new localized
-  host regressions pass in English and Ukrainian.
+- The repository-wide localization recheck completed successfully: English and
+  Ukrainian, 13,029 messages and 9,026 references. Its result arrived while a stop
+  request was being sent after approximately eight minutes; the collected output
+  confirms validation completed. This supersedes the provisional incomplete-check
+  note. This batch changes no translation keys or message copy.
 - Independent review identified the duplicated structure revision, now corrected;
   it found no other blocker in the creator-art, cache or localized-state paths.
 
