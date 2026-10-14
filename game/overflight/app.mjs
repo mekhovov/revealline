@@ -56,6 +56,7 @@ import {
   selectedArcadeCollection,
 } from '../presentation/industrial-arcade.mjs';
 import { attachThemeFamilyControls } from '../ui/theme-family-controls.mjs';
+import { mountBattlefieldGroundControls } from '../ui/battlefield-ground-controls.mjs';
 import { attachEncounterDisplayControls } from '../ui/encounter-display-controls.mjs';
 import { createDisplayPreferences } from '../display-preferences.mjs';
 import { sharedActorAppearance } from '../hunt/preferences.mjs';
@@ -1966,6 +1967,7 @@ const themeControls = attachThemeFamilyControls({
   root: $('overflight-appearance'),
   host: theme,
   prefix: 'overflight-',
+  mountBattlefieldGroundControls,
 });
 const encounterDisplay = attachEncounterDisplayControls({
   document: doc,
