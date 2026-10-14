@@ -44,4 +44,6 @@ The existing transaction budgets are unchanged, including retained and staged re
 
 ## Remaining quality work
 
-Native overview and trestle review established a distinct, readable under-bridge route. The composition is still an architectural blockout: uniform green terrain, sparse yards and simple bridge structure remain obvious. The next representative pass should add coherent ballast/gravel/concrete, structural bridge detail and useful yard landmarks while preserving or requalifying the measured corridors. Sustained real flights, device performance and delivery/offline qualification remain separate gates under the representative art standard.
+Native overview and trestle review established a distinct, readable under-bridge route. Final r3 inspection confirmed the grounded station canopy, open maintenance hall and textured freight carriages without console errors. Release removed live scenery/collision; Load restored nine cells, 58 matching meshes/colliders and 1,233,144 geometry bytes. These are bounded desktop authoring observations, not device FPS or player qualification.
+
+The composition is still an architectural blockout: uniform green terrain (including the hall floor), sparse yards and simple bridge structure remain obvious. The next representative pass should add coherent ballast/gravel/concrete, structural bridge detail and useful yard landmarks while preserving or requalifying the measured corridors. Sustained real flights, device performance and delivery/offline qualification remain separate gates under the representative art standard.
