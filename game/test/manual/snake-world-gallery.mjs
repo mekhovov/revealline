@@ -2,21 +2,29 @@ import { classicTerrainCacheStats } from '../../snake/classic-terrain-cache.mjs'
 import { CLASSIC_SNAKE_LEVELS } from '../../snake/classic-catalogue.mjs';
 import { createClassicSnake, classicSnakeUsesVariableHazards } from '../../snake/classic-core.mjs';
 import { drawClassicBoard } from '../../snake/classic-view.mjs';
-import { CLASSIC_BOARD_STYLES } from '../../snake/classic-worlds.mjs';
+import { CLASSIC_BOARD_STYLES, resolveClassicWorld } from '../../snake/classic-worlds.mjs';
 import {
   selectSnakeVisualProof,
   createSnakeVisualFixture,
   seekSnakeVisualScenario,
 } from './snake-visual-fixture.mjs';
 
-const cases = [
-  ['Open · Orchard Research Station', 'classic-snake-open-loop', 'orchard', 'solo'],
-  ['Dense · Copper Foundry', 'classic-pursuit-crossing-bursts', 'workshop', 'solo'],
-  ['Wrapping · Tidal Relay Harbor', 'classic-snake-keep-the-tail', 'harbor', 'solo'],
-  ['Jammer · Alpine Observatory', 'classic-field-quiet-return', 'relay', 'solo'],
-  ['Shutters · Freight Switchyard', 'classic-pursuit-first-shutter', 'freight', 'solo'],
-  ['Team · Basalt Gardens', 'classic-field-linked-courts', 'quarry', 'team'],
-];
+const authoredReview = new URLSearchParams(globalThis.location.search).get('review') === 'authored';
+const cases = authoredReview
+  ? CLASSIC_SNAKE_LEVELS.flatMap((entry) => {
+      const world = resolveClassicWorld({ levelId: entry.id, chapterId: entry.chapterId });
+      return world.floorPlan
+        ? [[`${world.scene} · ${world.floorPlan.name}`, entry.id, world.scene, 'solo']]
+        : [];
+    })
+  : [
+      ['Open · Orchard Research Station', 'classic-snake-open-loop', 'orchard', 'solo'],
+      ['Dense · Copper Foundry', 'classic-pursuit-crossing-bursts', 'workshop', 'solo'],
+      ['Wrapping · Tidal Relay Harbor', 'classic-snake-keep-the-tail', 'harbor', 'solo'],
+      ['Jammer · Alpine Observatory', 'classic-field-quiet-return', 'relay', 'solo'],
+      ['Shutters · Freight Switchyard', 'classic-pursuit-first-shutter', 'freight', 'solo'],
+      ['Team · Basalt Gardens', 'classic-field-linked-courts', 'quarry', 'team'],
+    ];
 const names = ['Lively FPV', 'Toybox', 'Atmospheric Ruins', 'Night Arcade'];
 const { document } = globalThis;
 const $ = (id) => document.getElementById(id);
@@ -32,7 +40,7 @@ async function mount() {
       scene,
       entry,
       run:
-        scene === 'relay'
+        scene === 'relay' && !authoredReview
           ? driver.match.runs[0]
           : createClassicSnake(entry.level, {
               mode,
@@ -45,7 +53,7 @@ async function mount() {
     drawClassicBoard(card.canvas, card.run, {
       boardStyle,
       terrainCache,
-      boardScene: card.scene,
+      boardScene: authoredReview ? 'auto' : card.scene,
       chapterId: card.entry.chapterId,
       reduced: timeMs === 0,
       flight: { timeMs },

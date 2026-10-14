@@ -1,4 +1,6 @@
 import { CLASSIC_SNAKE_PURSUIT_V1_ARCHIVED_LEVELS } from './classic-catalogue-pursuit-v1-archive.mjs';
+import { CLASSIC_SNAKE_OPERATION_LEVELS_A } from './classic-catalogue-operations-a.mjs';
+import { CLASSIC_SNAKE_OPERATION_LEVELS_B } from './classic-catalogue-operations-b.mjs';
 // Frozen official recipes. IDs alone never admit a recording.
 import { CLASSIC_SNAKE_LOCAL_V1_ARCHIVED_LEVELS } from './classic-catalogue-signal-v1-archive.mjs';
 import { CLASSIC_SNAKE_FOUNDATION_V1_ARCHIVED_LEVELS } from './classic-catalogue-foundation-v1-archive.mjs';
@@ -695,6 +697,9 @@ export const CLASSIC_SNAKE_ARCHIVED_LEVELS = freeze([
   ...CLASSIC_SNAKE_LOCAL_V1_ARCHIVED_LEVELS,
   ...CLASSIC_SNAKE_FOUNDATION_V1_ARCHIVED_LEVELS,
   ...CLASSIC_SNAKE_FIELD_V3_ARCHIVED_LEVELS,
+  ...[...CLASSIC_SNAKE_OPERATION_LEVELS_A, ...CLASSIC_SNAKE_OPERATION_LEVELS_B].filter((entry) =>
+    ['classic-operation-pressure-elbow', 'classic-operation-loaded-excavation'].includes(entry.id),
+  ),
 ]);
 
 /** Archive authority belongs only to the built-in catalogue, never an installed pack. */
