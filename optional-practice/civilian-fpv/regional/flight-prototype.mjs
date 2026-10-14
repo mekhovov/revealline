@@ -46,11 +46,16 @@ export function createRegionalFlightPrototype({
   mode = "self-level",
   response = DEFAULT_RESPONSE,
   continuous = false,
+  prepareFrame = null,
 } = {}) {
   const manifest = validateRegionManifest(input),
     planner = createRegionPlanner(manifest),
     rates = validateFlightResponse(response);
   fail(typeof continuous === "boolean", "Invalid continuous flight option");
+  fail(
+    prepareFrame === null || typeof prepareFrame === "function",
+    "Invalid frame preparation",
+  );
   fail(
     ["acro", "self-level"].includes(mode),
     "Unsupported prototype flight mode",
@@ -121,7 +126,8 @@ export function createRegionalFlightPrototype({
     pending = Promise.resolve();
   let streamingJob = null,
     streamingFailure = null,
-    retryAfterTick = 0;
+    retryAfterTick = 0,
+    preparationController = null;
   const live = () => fail(!disposed, "Regional prototype is disposed");
   function updateFrame() {
     const position = {
@@ -162,6 +168,7 @@ export function createRegionalFlightPrototype({
   function stopStreaming() {
     if (!streamingJob) return;
     generation++;
+    streamingJob.controller.abort();
     terrain.cancel();
     streamingJob = null;
   }
@@ -196,7 +203,7 @@ export function createRegionalFlightPrototype({
     }
     if (AXES.every((key) => plan.origin[key] === origin[key])) return;
     const token = ++generation,
-      job = { token },
+      job = { token, controller: new AbortController() },
       previousOrigin = origin,
       previousRecentres = recentres;
     let attached = null;
@@ -211,6 +218,13 @@ export function createRegionalFlightPrototype({
     streamingFailure = null;
     job.promise = terrain
       .transition(target, null, {
+        ...(prepareFrame
+          ? {
+              async prepare({ group }) {
+                await prepareFrame(group, { signal: job.controller.signal });
+              },
+            }
+          : {}),
         readPose() {
           current();
           return { positionMm: body.position, radiusMm: RADIUS };
@@ -243,6 +257,9 @@ export function createRegionalFlightPrototype({
   function prepare() {
     live();
     stopStreaming();
+    preparationController?.abort();
+    const controller = new AbortController();
+    preparationController = controller;
     const target = { ...(pendingTarget ?? body.position) },
       token = ++generation;
     status = "paused";
@@ -259,6 +276,13 @@ export function createRegionalFlightPrototype({
             radiusMm: RADIUS,
           },
           {
+            ...(prepareFrame
+              ? {
+                  async prepare({ group }) {
+                    await prepareFrame(group, { signal: controller.signal });
+                  },
+                }
+              : {}),
             commit({ group, provenance }) {
               if (disposed || token !== generation)
                 throw new DOMException(
@@ -307,6 +331,8 @@ export function createRegionalFlightPrototype({
           reason = "terrain-error";
         }
         throw error;
+      } finally {
+        if (preparationController === controller) preparationController = null;
       }
     })();
     pending = operation.catch(() => {});
@@ -343,6 +369,7 @@ export function createRegionalFlightPrototype({
     cancelPreparation() {
       live();
       stopStreaming();
+      preparationController?.abort();
       generation++;
       terrain.cancel();
       status = "paused";
@@ -448,6 +475,8 @@ export function createRegionalFlightPrototype({
     async dispose() {
       if (!disposed) {
         disposed = true;
+        preparationController?.abort();
+        streamingJob?.controller.abort();
         generation++;
         status = "disposed";
         reason = null;

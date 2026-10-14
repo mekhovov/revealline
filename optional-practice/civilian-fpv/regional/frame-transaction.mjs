@@ -4,7 +4,7 @@ export function validateFrameTransaction(value) {
   if (
     !value ||
     Object.keys(value).some(
-      (key) => !["commit", "rollback", "readPose"].includes(key),
+      (key) => !["commit", "rollback", "readPose", "prepare"].includes(key),
     ) ||
     !["commit", "rollback"].every(
       (key) =>
@@ -14,7 +14,8 @@ export function validateFrameTransaction(value) {
     ) ||
     (Object.hasOwn(value, "readPose") &&
       (typeof value.readPose !== "function" ||
-        value.readPose.constructor.name !== "Function"))
+        value.readPose.constructor.name !== "Function")) ||
+    (Object.hasOwn(value, "prepare") && typeof value.prepare !== "function")
   )
     throw new TypeError(
       "Frame transaction needs synchronous commit and rollback functions",
@@ -23,8 +24,19 @@ export function validateFrameTransaction(value) {
   return Object.freeze({
     commit: value.commit,
     rollback: value.rollback,
-    readPose: value.readPose,
+    ...(value.readPose ? { readPose: value.readPose } : {}),
+    ...(value.prepare ? { prepare: value.prepare } : {}),
   });
+}
+
+/** Detached presentation preparation may await; source ownership has not committed yet. */
+export async function prepareVerifiedFrame(transaction, group, current) {
+  current();
+  if ((await transaction.prepare({ group })) !== undefined)
+    throw new TypeError(
+      "Frame preparation must not replace the verified candidate",
+    );
+  current();
 }
 
 /** Read only at the final synchronous adoption boundary, after all asynchronous preparation. */

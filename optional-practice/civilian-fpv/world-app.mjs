@@ -5702,6 +5702,7 @@ export function mountWorldApp({
       mode: options.mode ?? $('flight-mode').value,
       response,
       initialHeading: 'region-centre',
+      prepareFrame: (group, options) => renderer.prepareRegionalFrame(group, options),
     });
     try {
       await flight?.dispose?.();

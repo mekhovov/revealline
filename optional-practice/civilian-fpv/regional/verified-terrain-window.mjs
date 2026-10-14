@@ -2,6 +2,7 @@ import {
   validateFrameTransaction,
   adoptVerifiedFrame,
   readFramePose,
+  prepareVerifiedFrame,
 } from "./frame-transaction.mjs";
 /** Exact-source terrain preparation coordinator. Detached authoring resources, never live flight. */
 import {
@@ -178,6 +179,10 @@ export function createVerifiedTerrainWindow(
         surfaceQuality,
       });
       current(token);
+      if (frameTransaction?.prepare)
+        await prepareVerifiedFrame(frameTransaction, staged.group, () =>
+          current(token),
+        );
       supportPose = readFramePose(frameTransaction, supportPose, planner);
       current(token);
       if (supportPose) {
