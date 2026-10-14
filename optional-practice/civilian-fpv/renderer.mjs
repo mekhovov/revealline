@@ -123,6 +123,117 @@ export function configureWorldGLTFLoader(loader, { onImageError = () => {} } = {
     });
 }
 
+/** Shared presentation only. Hosts supply admitted bounds and poses; no physics or ownership. */
+export function createFlightViewFrame({ camera, aircraft }) {
+  const framePosition = new THREE.Vector3(),
+    frameRotation = new THREE.Quaternion(),
+    cameraOffset = new THREE.Vector3(),
+    cameraTiltRotation = new THREE.Quaternion(),
+    cameraTiltAxis = new THREE.Vector3(1, 0, 0);
+  let rotorTick = null,
+    rotorPhase = 0;
+  // Mutable configuration is retained by the host: no per-frame option/pose copies.
+  const frame = {
+    view: 'fpv',
+    fov: 82,
+    tilt: 0,
+    radiusMm: 220,
+    reducedMotion: false,
+    bounds: null,
+    originMm: null,
+    throttlePermille: null,
+    rotors: [],
+    editorCamera: { yaw: 0.65, pitch: 0.72, distance: null },
+    reset() {
+      rotorTick = null;
+      rotorPhase = 0;
+    },
+    get rotorPhase() {
+      return rotorPhase;
+    },
+    draw(state) {
+      const { view, fov, tilt, reducedMotion, bounds, editorCamera } = frame;
+      const mapView = view === 'overview' || view === 'editor';
+      const displayFov = mapView
+        ? Math.min(
+            120,
+            (2 * Math.atan(Math.tan((58 * Math.PI) / 360) / Math.min(1, camera.aspect)) * 180) /
+              Math.PI,
+          )
+        : fov;
+      if (camera.fov !== displayFov) {
+        camera.fov = displayFov;
+        camera.updateProjectionMatrix();
+      }
+      const position = framePosition.set(
+        (state.position.x - (frame.originMm?.x ?? 0)) / 1000,
+        (state.position.y - (frame.originMm?.y ?? 0)) / 1000 + frame.radiusMm / 1000,
+        (state.position.z - (frame.originMm?.z ?? 0)) / 1000,
+      );
+      const rotation = frameRotation
+        .set(
+          state.orientation[0] / 1000000,
+          state.orientation[1] / 1000000,
+          state.orientation[2] / 1000000,
+          state.orientation[3] / 1000000,
+        )
+        .normalize();
+      aircraft.position.copy(position);
+      aircraft.quaternion.copy(rotation);
+      aircraft.scale.setScalar(frame.radiusMm / 220);
+      aircraft.visible = view !== 'fpv';
+      // Integrate only elapsed simulation ticks. Changing throttle changes angular
+      // speed without reinterpreting the entire flight's already elapsed phase.
+      if (rotorTick === null || state.ticks < rotorTick) rotorPhase = 0;
+      else if (!reducedMotion && state.ticks > rotorTick) {
+        const rate =
+          0.12 +
+          Math.max(
+            0,
+            Math.min(1, (frame.throttlePermille ?? state.lastInput?.throttle ?? 0) / 1000),
+          ) *
+            0.74;
+        rotorPhase = (rotorPhase + (state.ticks - rotorTick) * rate) % (Math.PI * 2);
+      }
+      rotorTick = state.ticks;
+      for (const [index, rotor] of frame.rotors.entries())
+        rotor.rotation.y = rotorPhase * (index === 0 || index === 3 ? -1 : 1);
+      if (view === 'fpv') {
+        camera.position.copy(position);
+        camera.quaternion
+          .copy(rotation)
+          .multiply(cameraTiltRotation.setFromAxisAngle(cameraTiltAxis, (tilt * Math.PI) / 180));
+      } else if (view === 'chase') {
+        camera.position
+          .copy(position)
+          .add(cameraOffset.set(0, 1.35, 3.2).applyQuaternion(rotation));
+        camera.up.set(0, 1, 0);
+        camera.lookAt(position);
+      } else {
+        const cx = (bounds.max.x + bounds.min.x) / 2000 - (frame.originMm?.x ?? 0) / 1000,
+          cz = (bounds.max.z + bounds.min.z) / 2000 - (frame.originMm?.z ?? 0) / 1000;
+        const extent = Math.max(bounds.max.x - bounds.min.x, bounds.max.z - bounds.min.z) / 1000;
+        if (view === 'editor') {
+          const distance = editorCamera.distance ?? extent * 1.35;
+          camera.position.set(
+            cx + Math.sin(editorCamera.yaw) * Math.cos(editorCamera.pitch) * distance,
+            Math.sin(editorCamera.pitch) * distance - (frame.originMm?.y ?? 0) / 1000,
+            cz + Math.cos(editorCamera.yaw) * Math.cos(editorCamera.pitch) * distance,
+          );
+        } else
+          camera.position.set(
+            cx + extent * 0.55,
+            extent * 0.8 - (frame.originMm?.y ?? 0) / 1000,
+            cz + extent * 0.65,
+          );
+        camera.up.set(0, 1, 0);
+        camera.lookAt(cx, -(frame.originMm?.y ?? 0) / 1000, cz);
+      }
+    },
+  };
+  return Object.seal(frame);
+}
+
 /** Presentation only. All world/actor positions are canonical millimetres.
  * Decorative structures remain outside the course; criteria are holograms. */
 export function createFlightRenderer({
@@ -205,8 +316,6 @@ export function createFlightRenderer({
     sceneGeneration = 0,
     contextGeneration = 0,
     presentationGeneration = 0,
-    rotorTick = null,
-    rotorPhase = 0,
     importGeneration = 0,
     importedMixer = null,
     importedClips = [],
@@ -251,12 +360,8 @@ export function createFlightRenderer({
     garageDetailMaterials = new Map(),
     stadiumDetailMaterials = new Map(),
     qualityDetails = [];
-  const framePosition = new THREE.Vector3(),
-    frameRotation = new THREE.Quaternion(),
-    cameraOffset = new THREE.Vector3(),
-    cameraTiltRotation = new THREE.Quaternion(),
-    cameraTiltAxis = new THREE.Vector3(1, 0, 0),
-    pulseTransform = new THREE.Matrix4();
+  const flightViewFrame = createFlightViewFrame({ camera, aircraft });
+  const pulseTransform = new THREE.Matrix4();
   const labelPosition = new THREE.Vector3();
   const texturesOf = (paint) => Object.values(paint ?? {}).filter((value) => value?.isTexture);
   function ownShadowMaterial(item) {
@@ -484,7 +589,7 @@ export function createFlightRenderer({
       }
     }
     for (const [index, rotor] of droneVisual.rotors.entries())
-      rotor.rotation.y = rotorPhase * (index === 0 || index === 3 ? -1 : 1);
+      rotor.rotation.y = flightViewFrame.rotorPhase * (index === 0 || index === 3 ? -1 : 1);
     setSurfaceQuality(materials, quality, renderer.capabilities.getMaxAnisotropy());
   }
   function setPresentation(value) {
@@ -1408,8 +1513,7 @@ export function createFlightRenderer({
     activePresentation = pendingPresentation;
     sceneGeneration++;
     presentationGeneration++;
-    rotorTick = null;
-    rotorPhase = 0;
+    flightViewFrame.reset();
     setGhost([]);
     editor?.detach();
     course = value;
@@ -2461,72 +2565,15 @@ export function createFlightRenderer({
     // An overview is outside the flight arena; authored terrain must remain
     // inspectable there. Restore the exact course fog for FPV and chase.
     if (importedGroundFog) scene.fog = mapView ? null : importedGroundFog;
-    const displayFov = mapView
-      ? Math.min(
-          120,
-          (2 * Math.atan(Math.tan((58 * Math.PI) / 360) / Math.min(1, camera.aspect)) * 180) /
-            Math.PI,
-        )
-      : fov;
-    if (camera.fov !== displayFov) {
-      camera.fov = displayFov;
-      camera.updateProjectionMatrix();
-    }
-    const position = framePosition.set(
-      state.position.x / 1000,
-      state.position.y / 1000 + (course.rules?.droneRadius ?? 220) / 1000,
-      state.position.z / 1000,
-    );
-    const rotation = frameRotation
-      .set(
-        state.orientation[0] / 1000000,
-        state.orientation[1] / 1000000,
-        state.orientation[2] / 1000000,
-        state.orientation[3] / 1000000,
-      )
-      .normalize();
-    aircraft.position.copy(position);
-    aircraft.quaternion.copy(rotation);
-    aircraft.scale.setScalar((course.rules?.droneRadius ?? 220) / 220);
-    aircraft.visible = view !== 'fpv';
-    // Integrate only elapsed simulation ticks. Changing throttle changes angular
-    // speed without reinterpreting the entire flight's already elapsed phase.
-    if (rotorTick === null || state.ticks < rotorTick) rotorPhase = 0;
-    else if (!reducedMotion && state.ticks > rotorTick) {
-      const rate = 0.12 + Math.max(0, Math.min(1, (state.lastInput?.throttle ?? 0) / 1000)) * 0.74;
-      rotorPhase = (rotorPhase + (state.ticks - rotorTick) * rate) % (Math.PI * 2);
-    }
-    rotorTick = state.ticks;
-    for (const [index, rotor] of droneVisual.rotors.entries())
-      rotor.rotation.y = rotorPhase * (index === 0 || index === 3 ? -1 : 1);
-    if (view === 'fpv') {
-      camera.position.copy(position);
-      camera.quaternion
-        .copy(rotation)
-        .multiply(cameraTiltRotation.setFromAxisAngle(cameraTiltAxis, (tilt * Math.PI) / 180));
-    } else if (view === 'chase') {
-      camera.position.copy(position).add(cameraOffset.set(0, 1.35, 3.2).applyQuaternion(rotation));
-      camera.up.set(0, 1, 0);
-      camera.lookAt(position);
-    } else {
-      const cx = (course.bounds.max.x + course.bounds.min.x) / 2000,
-        cz = (course.bounds.max.z + course.bounds.min.z) / 2000;
-      const extent =
-        Math.max(
-          course.bounds.max.x - course.bounds.min.x,
-          course.bounds.max.z - course.bounds.min.z,
-        ) / 1000;
-      if (view === 'editor') {
-        const distance = editorCamera.distance ?? extent * 1.35;
-        camera.position.set(
-          cx + Math.sin(editorCamera.yaw) * Math.cos(editorCamera.pitch) * distance,
-          Math.sin(editorCamera.pitch) * distance,
-          cz + Math.cos(editorCamera.yaw) * Math.cos(editorCamera.pitch) * distance,
-        );
-      } else camera.position.set(cx + extent * 0.55, extent * 0.8, cz + extent * 0.65);
-      camera.up.set(0, 1, 0);
-      camera.lookAt(cx, 0, cz);
-    }
+    flightViewFrame.view = view;
+    flightViewFrame.fov = fov;
+    flightViewFrame.tilt = tilt;
+    flightViewFrame.radiusMm = course.rules?.droneRadius ?? 220;
+    flightViewFrame.bounds = course.bounds;
+    flightViewFrame.editorCamera = editorCamera;
+    flightViewFrame.reducedMotion = reducedMotion;
+    flightViewFrame.rotors = droneVisual.rotors;
+    flightViewFrame.draw(state);
     if (currentStep !== state.step) {
       currentStep = state.step;
       for (const row of goalRows) {
