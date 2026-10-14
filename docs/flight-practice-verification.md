@@ -1,6 +1,18 @@
 # Flight practice verification and release handoff
 
-Date: 2026-10-02. Workstream: discovery, launchers, offline services, package publishing and help. **Implementation evidence is not a public-release approval. Phase 1 remains open until reviewed packages are selected on GitHub Pages and the device/human gates below pass.**
+Original evidence date: 2026-10-02. Workstream: discovery, launchers, offline services, package publishing and help. **Implementation evidence is not a public-release approval. Phase 1 remains open until reviewed packages are selected on GitHub Pages and the device/human gates below pass.**
+
+## Current continuation — 2026-10-14
+
+The original implementation was merged in PR #930. Its branch has no unique commits relative to main; the isolated continuation branch was first rebased onto `5f126d6105be5708948dbaff6907ca5cd7e15baf`, then onto `595421060c718295611a8441fbe8dba1c3da88e4` after SIM's recovery fix merged. No shared SIM checkout or simulator mechanics were changed by this workstream.
+
+A later deployment-workflow replacement dropped optional staging. At this audit, production identified source `460169d79f17fca76a7ee5902caf129c6a7bd729`, while `/revealline/practice/index.json` returned HTTP 404. The committed selector still contained no releases. These are two distinct gaps: repairing staging produces a usable **empty** directory; reviewed release selection is still required to list playable packages.
+
+This continuation restores staging in the current `publish-main-pages.yml`, before the complete-site capacity check, and adds a public practice verification receipt. Verification uses the deployed selector, rejects stale package versions even when IDs match, and checks every pinned dependency and stable launcher copy. Regression tests cover the actual workflow wiring, sparse verifier import closure, empty staging, selected synthetic-release staging, stale versions and tampering. Synthetic release reviews remain test-only.
+
+The Oct 2 results below are retained as historical evidence, not qualification of the current SIM runtime. The old temporary candidate path is not a durable release artifact. Automated tests are required again under the current repository policy. Current source-bound build/test results and remaining gates are recorded in [the continuation report](flight-practice-continuation-2026-10-14.md).
+
+## Historical evidence — 2026-10-02
 
 ## Original failure and integration
 

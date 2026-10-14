@@ -6,11 +6,13 @@ import { loadOptionalPracticeCatalog } from '../game/optional-practice-catalog.m
 import { loadPracticeDetails } from '../game/optional-practice-details.mjs';
 import { validateOptionalInstallationReference } from '../optional-practice/install-context.mjs';
 import { OPTIONAL_PACKAGE_POLICIES } from '../publishing/optional-package-policy.mjs';
+import { validateOptionalPackagePublication } from '../publishing/optional-package-promotion.mjs';
 
 /** Post-publication byte check. Missing catalogue is a release failure, not empty. */
 export async function verifyPracticeSite({
   baseURL,
   expectedIds,
+  expectedVersions,
   fetcher = globalThis.fetch,
 } = {}) {
   const base = new URL(baseURL);
@@ -34,6 +36,8 @@ export async function verifyPracticeSite({
     JSON.stringify([...expectedIds].sort())
   )
     throw new Error('Published catalogue differs from the selected package IDs.');
+  if (expectedVersions && packages.some((item) => expectedVersions[item.id] !== item.version))
+    throw new Error('Published catalogue differs from the selected package versions.');
   const { details } = await loadPracticeDetails(indexURL, packages, {
     fetcher,
     signal: AbortSignal.timeout(30000),
@@ -63,6 +67,10 @@ export async function verifyPracticeSite({
     }
     return Buffer.concat(chunks);
   }
+  // The player-facing directory must exist even when no releases are selected.
+  for (const name of ['index.html', 'directory.mjs'])
+    if (!(await read(new URL(name, indexURL).href, 128 * 1024)).length)
+      throw new Error('Published practice directory is empty: ' + name);
   const checked = [];
   for (const item of packages) {
     const policy = OPTIONAL_PACKAGE_POLICIES[item.id];
@@ -125,10 +133,12 @@ export async function verifyPracticeSite({
 if (process.argv[1] && import.meta.url === pathToFileURL(path.resolve(process.argv[1])).href) {
   if (process.argv.length !== 3)
     throw new Error('Usage: node scripts/verify-practice-site.mjs SITE_ROOT_URL');
-  const selector = JSON.parse(
-    await readFile(
-      new URL('../publishing/pages-controller/optional-packages.json', import.meta.url),
-      'utf8',
+  const selector = validateOptionalPackagePublication(
+    JSON.parse(
+      await readFile(
+        new URL('../publishing/pages-controller/optional-packages.json', import.meta.url),
+        'utf8',
+      ),
     ),
   );
   console.log(
@@ -136,6 +146,11 @@ if (process.argv[1] && import.meta.url === pathToFileURL(path.resolve(process.ar
       await verifyPracticeSite({
         baseURL: process.argv[2],
         expectedIds: selector.releases.flatMap((release) => release.activePackageIds),
+        expectedVersions: Object.fromEntries(
+          selector.releases.flatMap((release) =>
+            release.activePackageIds.map((id) => [id, release.version]),
+          ),
+        ),
       }),
       null,
       2,

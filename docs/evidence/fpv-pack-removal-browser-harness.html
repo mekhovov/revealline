@@ -166,6 +166,15 @@
           }),
         ],
       ]);
+      // Reuse only this origin's existing access authorization. SIM state stays
+      // isolated; the normal access gate still verifies the token itself.
+      try {
+        const accessKey = 'revealline.access.revealline.v1';
+        const accessToken = localStorage.getItem(accessKey);
+        if (accessToken) memory.set(accessKey, accessToken);
+      } catch {
+        // The ordinary gate remains available when storage cannot be read.
+      }
       window.fixtureStorage = {
         getItem(k) {
           if (faults.playlistUnavailable && k === 'revealline.fpv.playlists.v1')
@@ -198,6 +207,37 @@
         node.focus({ preventScroll: true });
         node.click();
       };
+      // Reach legacy tools through the visible shared mission chooser, as a player does.
+      // Hidden Settings destinations can change panel state without opening their shell.
+      async function openTools(tab) {
+        const settings = d.getElementById('sim-settings');
+        for (let step = 0; settings?.open && step < 2; step++) {
+          click(d.getElementById('close-sim-settings'));
+          await wait(0);
+        }
+        if (settings?.open) throw Error('Settings did not return to the tool surface');
+        const visible = (node) => node && node.getClientRects().length > 0;
+        const panel = () => d.getElementById(tab);
+        if (visible(panel()) && !panel().hidden) return;
+        const missions = d.getElementById('worlds-shell-missions-dialog');
+        if (missions?.open) {
+          click(missions.querySelector('[data-mode-action="missions-back"]'));
+          await until(() => !missions.open, 'close previous tool surface');
+        }
+        const tools = () => q('[data-sim-mission-tools]');
+        if (!visible(tools())) {
+          const explore = q('#worlds-shell-home-dialog [data-mode-action="missions"]');
+          if (!visible(explore)) throw Error('Visible Explore worlds navigation is unavailable');
+          click(explore);
+          await until(() => visible(tools()), 'shared mission chooser');
+        }
+        if (!tools().open) click(tools().querySelector('summary'));
+        const destination = q(`[data-sim-mission-tool="${tab}"]`);
+        if (!visible(destination))
+          throw Error('Visible SIM tools destination is unavailable: ' + tab);
+        click(destination);
+        await until(() => visible(panel()) && !panel().hidden, 'visible ' + tab + ' tool surface');
+      }
       const set = (node, value) => {
         if (!node) throw Error('Missing public field');
         node.value = String(value);
@@ -228,7 +268,7 @@
         };
       }
       async function review(id = packs[0].project.id) {
-        click(q('[data-tab="packs"]'));
+        await openTools('packs');
         click(q(`[data-remove-pack="${id}"]`));
         await until(
           () =>
@@ -263,7 +303,30 @@
         await wait(0);
         await until(() => !input.value, 'restoration file processed');
       }
+      async function openRecords() {
+        const settings = d.getElementById('sim-settings');
+        if (!settings.open) {
+          const missions = d.getElementById('worlds-shell-missions-dialog');
+          if (missions?.open) {
+            click(missions.querySelector('[data-mode-action="missions-back"]'));
+            await until(() => !missions.open, 'return to home for collection settings');
+          }
+          const settingsButton = q('#worlds-shell-home-dialog [data-mode-action="settings"]');
+          if (!settingsButton?.getClientRects().length)
+            throw Error('Visible Settings navigation is unavailable');
+          click(settingsButton);
+          await until(() => settings.open, 'open Settings');
+        }
+        click(d.getElementById('worlds-settings-tab-data'));
+        const records = d.getElementById('proof-records').closest('details');
+        if (!records.open) click(records.querySelector('summary'));
+        await until(
+          () => q('#proof-records').getClientRects().length > 0,
+          'visible recorded flights',
+        );
+      }
       async function restore(expected, actual = expected) {
+        await openRecords();
         const restoreButton = [
           ...d.querySelectorAll(`[data-restore-pack="fpv-pack:${expected.sha256}"]`),
         ].find((node) => node.getClientRects().length > 0);
@@ -542,7 +605,7 @@
         app = w.fixtureApp;
         await bounded(app.ready, 'host ready');
         w.focus();
-        click(q('[data-tab="packs"]'));
+        await openTools('packs');
         must(
           !!row('removal-target') && !!row('removal-unrelated'),
           'Actual library displays target and unrelated packs',
@@ -558,10 +621,44 @@
         baseline = await retained();
         progress('Review, Cancel and dialog-cancel preserve data and focus');
         const beforeReview = await libraryState();
+        const focusTrace = [];
+        const describeFocus = (node) => ({
+          tag: node?.tagName,
+          id: node?.id,
+          disabled: node?.disabled,
+          connected: node?.isConnected,
+        });
+        const focusEvent = (event) => {
+          if (focusTrace.length < 48)
+            focusTrace.push({
+              type: event.type,
+              target: describeFocus(event.target),
+              related: describeFocus(event.relatedTarget),
+            });
+        };
+        d.addEventListener('focusin', focusEvent, true);
+        d.addEventListener('focusout', focusEvent, true);
         await review();
+        d.removeEventListener('focusin', focusEvent, true);
+        d.removeEventListener('focusout', focusEvent, true);
         must(
           d.activeElement === d.getElementById('pack-removal-cancel'),
           'Cancel receives safe initial focus',
+          {
+            activeElement: {
+              tag: d.activeElement?.tagName,
+              id: d.activeElement?.id,
+              disabled: d.activeElement?.disabled,
+            },
+            cancelDisabled: d.getElementById('pack-removal-cancel')?.disabled,
+            reviewBusy: dialog()?.getAttribute('aria-busy'),
+            hostFocused: d.hasFocus(),
+            focusTrace,
+            cancelRect: d.getElementById('pack-removal-cancel')?.getBoundingClientRect().toJSON(),
+            cancelVisibility: w.getComputedStyle(d.getElementById('pack-removal-cancel'))
+              .visibility,
+            openDialogs: [...d.querySelectorAll('dialog[open]')].map((node) => node.id),
+          },
         );
         must(
           dialog().querySelectorAll('[data-revision]').length === 2,
@@ -851,7 +948,7 @@
             !!q(`[data-restore-pack="${proofs[0].packIdentity}"]`),
           'Missing exact session revision disables Resume and offers installation',
         );
-        click(q('[data-tab="playlists"]'));
+        await openTools('playlists');
         const savedPlaylistTile = [...d.querySelectorAll('#saved-playlists .playlist-tile')].find(
           (node) => node.textContent.includes(playlist.title.en),
         );
@@ -870,7 +967,7 @@
           frame.style.width = width + 'px';
           frame.style.height = height + 'px';
           set(d.getElementById('world-language'), locale);
-          click(q('[data-tab="packs"]'));
+          await openRecords();
           await wait(50);
           must(
             d.documentElement.scrollWidth <= d.documentElement.clientWidth + 1,
@@ -1047,7 +1144,7 @@
         await until(() => !d.getElementById('flight-dialog').open, 'close recovered flight');
         progress('Closing host while review prepares cannot remove a pack');
         const beforeDispose = await libraryState();
-        click(q('[data-tab="packs"]'));
+        await openTools('packs');
         click(q('[data-remove-pack="removal-target"]'));
         const old = app;
         app = null;

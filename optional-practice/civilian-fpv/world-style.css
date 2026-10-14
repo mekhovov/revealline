@@ -4713,3 +4713,62 @@
     align-content: center;
   }
 }
+
+/* Downloadable worlds remain available in the normal map browser without
+   crowding the mission list or changing the flight HUD. */
+.world-catalogue {
+  min-width: 0;
+  margin-block: 12px;
+  padding: 12px;
+  border: 1px solid var(--fk-line, #536570);
+  border-radius: 8px;
+}
+.world-catalogue h2 {
+  margin: 0 0 8px;
+}
+.world-catalogue p {
+  font-size: 0.9rem;
+}
+.world-catalogue .button-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.world-catalogue input {
+  min-width: 0;
+  flex: 1 1 180px;
+}
+.world-catalogue button {
+  min-height: 44px;
+}
+.world-catalogue-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
+  gap: 12px;
+  max-height: 320px;
+  overflow: auto;
+  padding: 4px;
+  scroll-padding: 8px;
+}
+.world-catalogue-card {
+  min-width: 0;
+  padding: 12px;
+  border: 1px solid var(--fk-line, #536570);
+  border-radius: 6px;
+  overflow-wrap: anywhere;
+}
+.world-catalogue-card p {
+  margin-block: 8px;
+}
+.world-catalogue-card button {
+  width: 100%;
+}
+.world-catalogue-host {
+  grid-column: 1 / -1;
+  min-width: 0;
+}
+@media (max-height: 500px) {
+  .world-catalogue-cards {
+    max-height: 180px;
+  }
+}

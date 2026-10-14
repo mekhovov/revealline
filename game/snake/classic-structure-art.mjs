@@ -147,13 +147,26 @@ export function drawClassicStructureModule(ctx, wall, scene, options = {}) {
     put(dark, 2, 2, 2, 2);
     put(dark, 23, 23, 2, 2);
   } else if (['dispatch', 'shelter', 'receiver'].includes(m.family)) {
-    put(m.family === 'dispatch' ? copper : light, 2, 2, 24, 24);
-    put(dark, 5, 5, 18, 11);
-    put('#6f99a1', 7, 6, 14, 8);
-    put(light, 8, 7, 5, 2);
-    put(metal, 13, 5, 2, 11);
-    for (let x = 6; x < 22; x += 4) put(dark, x, 20, 2, 4);
-    put('#d8b45c', 22, 18, 3, 4);
+    put(m.family === 'dispatch' ? copper : light, 0, 0, 28, 28);
+    if (m.row === 0) put(metal, 0, 2, 28, 3);
+    if (m.row === m.height - 1) put(dark, 0, 24, 28, 3);
+    const centerColumn = m.column === Math.floor(m.width / 2);
+    const centerRow = m.row === Math.floor(m.height / 2);
+    if (m.family === 'receiver') {
+      // Receiver louvres are a single equipment bank, not a row of windows.
+      if (centerColumn && centerRow) {
+        put(dark, 4, 5, 20, 17);
+        for (const y of [8, 13, 18]) put(metal, 7, y, 14, 2);
+        put('#d8b45c', 22, 18, 2, 3);
+      }
+    } else if (centerRow) {
+      // One connected cabin facade follows the real component width.
+      put(dark, 0, 6, 28, 13);
+      put('#6f99a1', 0, 8, 28, 8);
+      put(light, 3, 9, 9, 2);
+      if (centerColumn) put(metal, 12, 6, 3, 13);
+      if (m.family === 'dispatch') put('#d8b45c', 0, 20, 28, 3);
+    }
   } else if (m.family === 'boiler' || m.family === 'pressure') {
     // One joined pressure assembly: quiet sheet metal inside, external ribs
     // and a single inspection port. Never a tiny boiler repeated in every cell.
@@ -290,6 +303,7 @@ function drawToyConstruction(ctx, scene, m) {
   if (m.column === m.width - 1) paint('#ab7953', 24, 0, 2, 28);
   if (m.row === 0) paint('#f4ddac', 0, 2, 28, 2);
   if (m.row === m.height - 1) paint('#9e7554', 0, 24, 28, 2);
+  if (m.width > 1 && m.height > 1) drawToyFamily(ctx, m);
   // Alpine enamel must remain distinct from the pale blue tabletop in
   // grayscale. A single native fitting identifies the structure's role.
   if (scene === 'relay' && m.width > 1 && m.height > 1) {
@@ -317,6 +331,100 @@ function drawToyConstruction(ctx, scene, m) {
       paint('#526e49', 8, 8, 12, 12);
       paint('#a4bf76', 10, 9, 8, 4);
     } else paint('#8a7557', 12, 14, 4, 3);
+  }
+}
+
+/** Broad construction cues preserve family identity in the toy treatment.
+ * Each part stays at native cell scale; one focal fitting replaces tile stamps. */
+function drawToyFamily(ctx, m) {
+  const put = (ink, x, y, w, h) => box(ctx, ink, x, y, w, h);
+  const midColumn = m.column === Math.floor(m.width / 2);
+  const midRow = m.row === Math.floor(m.height / 2);
+  const focal = midColumn && midRow;
+  if (m.family === 'glasshouse') {
+    put('#477b7b', 0, 5, 28, 17);
+    put('#a2ccba', 1, 6, 26, 13);
+    if (midColumn) put('#f7dfad', 12, 5, 4, 17);
+    if (m.row === 0) put('#d7ebce', 3, 7, 18, 2);
+  } else if (m.family === 'planter') {
+    put('#5d7950', 0, 5, 28, 18);
+    put('#3e5c41', 0, 19, 28, 4);
+    if (m.row === 0 || m.row === m.height - 1) {
+      put('#9fba6a', 3, 7, 20, 9);
+      put('#d4d891', 5, 7, 13, 2);
+    }
+  } else if (['irrigator', 'coolant', 'pump'].includes(m.family)) {
+    if (midRow) {
+      put('#497e7c', 0, 8, 28, 12);
+      put('#b4d6bc', 0, 9, 28, 3);
+    }
+    if (focal) {
+      put('#efc18b', 8, 5, 13, 18);
+      put('#476a70', 10, 8, 9, 11);
+      if (m.family === 'irrigator') put('#f9e3b5', 12, 7, 3, 14);
+      else if (m.family === 'coolant') put('#c9e4ce', 10, 13, 9, 3);
+      else {
+        put('#ead7a8', 12, 9, 6, 2);
+        put('#ead7a8', 12, 14, 6, 2);
+      }
+    }
+  } else if (m.family === 'container') {
+    put('#ac655a', 10, 0, 3, 28);
+    put('#f6c69b', 13, 0, 2, 28);
+    if (m.column === m.width - 1 && midRow) put('#f8deb1', 20, 10, 6, 3);
+  } else if (['platform', 'dock'].includes(m.family)) {
+    for (const y of [7, 17]) {
+      put('#a77c59', 0, y, 28, 2);
+      put('#f0d59f', 0, y + 2, 28, 2);
+    }
+    if (focal && m.family === 'dock') {
+      put('#557c79', 9, 8, 10, 12);
+      put('#e4ae87', 11, 8, 6, 3);
+    }
+  } else if (m.family === 'dispatch') {
+    if (midRow) {
+      put('#6e7d78', 0, 7, 28, 13);
+      put('#a7c2b1', 0, 8, 28, 8);
+      if (midColumn) put('#f6ddac', 12, 7, 4, 13);
+    }
+  } else if (m.family === 'boiler') {
+    if (midRow) {
+      put('#976346', 0, 8, 28, 3);
+      put('#edcb98', 0, 11, 28, 3);
+    }
+    if (focal) {
+      put('#997349', 8, 5, 14, 18);
+      put('#f6e1b8', 10, 7, 10, 12);
+      put('#896147', 14, 8, 2, 7);
+    }
+  } else if (m.family === 'pressure') {
+    if (midColumn) {
+      put('#827e66', 11, 0, 5, 28);
+      put('#ede0ad', 11, 0, 2, 28);
+    }
+    if (focal) put('#e5c490', 5, 11, 18, 5);
+  } else if (m.family === 'floodgate') {
+    put('#497e7e', 7, 0, 4, 28);
+    put('#d4dfbb', 11, 0, 3, 28);
+    if (midRow) put('#d59a78', 0, 10, 28, 6);
+  } else if (m.family === 'terrace') {
+    put('#dde0b4', 0, 6, 28, 3);
+    put('#6d8c5c', 0, 19, 28, 5);
+    if (m.row === m.height - 1) put('#aac881', 3, 18, 19, 5);
+  } else if (m.family === 'excavation') {
+    if (midRow) put('#7b846c', 0, 9, 28, 11);
+    if (focal) {
+      put('#d5c89d', 6, 7, 17, 14);
+      put('#7d8d71', 10, 11, 9, 10);
+      put('#e9dbb0', 7, 7, 15, 3);
+    }
+  } else if (m.family === 'reclaimer') {
+    if (focal) {
+      put('#4e7469', 5, 5, 18, 18);
+      put('#deb48a', 6, 10, 17, 5);
+      put('#b4cab0', 10, 6, 5, 17);
+      put('#385648', 15, 16, 7, 6);
+    }
   }
 }
 
