@@ -101,6 +101,10 @@ import { libraryMissionId } from '../mission-library/library.mjs';
 import { librarySuccessor, retainedLibraryMission } from '../mission-library/continuous-next.mjs';
 import { trackMissionLibraryOpening } from '../mission-library/opening-intent.mjs';
 import { journeyLibrarySource } from '../mission-library/journey-source.mjs';
+import {
+  duelExpeditionLibrarySources,
+  retainedJourneyFromExpeditions,
+} from '../mission-library/multiplayer-expeditions.mjs';
 import { combineJourneyLibrarySources } from '../mission-library/cross-mode-journey.mjs';
 import {
   journeyMissionDetails,
@@ -3448,11 +3452,13 @@ try {
           optionalCampaignIds: route.optionalCampaignIds,
         });
       const { createCandidateSoloHost } = await import('../content-design/solo-host.mjs');
-      librarySoloPreview = createCandidateSoloHost(route.source, {
-        themes: libraryThemes,
-        corePackIds: route.corePackIds,
-        optionalCampaignIds: route.optionalCampaignIds,
-      });
+      librarySoloPreview = route.source.missions.some((mission) => mission.modes.includes('solo'))
+        ? createCandidateSoloHost(route.source, {
+            themes: libraryThemes,
+            corePackIds: route.corePackIds,
+            optionalCampaignIds: route.optionalCampaignIds,
+          })
+        : null;
       const profile = journeyProfile || createJourneyProfileStore({ profileKey: route.profileKey });
       if (!journeyProfile) await profile.load();
       const { createRemoteTeamLibrarySources } = await import('../mission-library/remote-team.mjs');
@@ -3554,39 +3560,59 @@ try {
                 },
               }),
             },
-            {
-              mode: 'solo',
-              source: journeyLibrarySource({
-                editionId: route.id,
-                edition: route.id === DEFAULT_JOURNEY_ROUTES.versus ? 'New Journey' : route.label,
-                catalog: librarySoloPreview.catalog,
-                profile,
-                details: (mission) =>
-                  journeyMissionDetails(
-                    librarySoloPreview
-                      .select(
-                        mission,
-                        (journeyPreferences || browsingJourneyPreferences).snapshot().difficulty,
-                      )
-                      ?.manifests.find((item) => item.missionId === mission.levelId),
-                  ),
-                tags: (mission) =>
-                  authoredJourneyMissionTags(
-                    mission,
-                    librarySoloPreview
-                      .select(mission, 'standard')
-                      ?.manifests.find((item) => item.missionId === mission.levelId),
-                  ),
-                card: (mission) =>
-                  librarySoloPreview.card(
-                    mission,
-                    (journeyPreferences || browsingJourneyPreferences).snapshot().difficulty,
-                  ),
-                launch: (_mission, context) => departLibraryMission(context),
-              }),
-            },
+            ...(librarySoloPreview
+              ? [
+                  {
+                    mode: 'solo',
+                    source: journeyLibrarySource({
+                      editionId: route.id,
+                      edition:
+                        route.id === DEFAULT_JOURNEY_ROUTES.versus ? 'New Journey' : route.label,
+                      catalog: librarySoloPreview.catalog,
+                      profile,
+                      details: (mission) =>
+                        journeyMissionDetails(
+                          librarySoloPreview
+                            .select(
+                              mission,
+                              (journeyPreferences || browsingJourneyPreferences).snapshot()
+                                .difficulty,
+                            )
+                            ?.manifests.find((item) => item.missionId === mission.levelId),
+                        ),
+                      tags: (mission) =>
+                        authoredJourneyMissionTags(
+                          mission,
+                          librarySoloPreview
+                            .select(mission, 'standard')
+                            ?.manifests.find((item) => item.missionId === mission.levelId),
+                        ),
+                      card: (mission) =>
+                        librarySoloPreview.card(
+                          mission,
+                          (journeyPreferences || browsingJourneyPreferences).snapshot().difficulty,
+                        ),
+                      launch: (_mission, context) => departLibraryMission(context),
+                    }),
+                  },
+                ]
+              : []),
           ]),
           ...spatialEditionOwner.sources,
+          ...(await retainedJourneyFromExpeditions({
+            themes: originalThemes,
+            activeRouteId: route.id,
+            difficulty: () =>
+              (journeyPreferences || browsingJourneyPreferences).snapshot().difficulty,
+            launch: departLibraryMission,
+          })),
+          ...duelExpeditionLibrarySources({
+            themes: originalThemes,
+            activeRouteId: route.id,
+            difficulty: () =>
+              (journeyPreferences || browsingJourneyPreferences).snapshot().difficulty,
+            launch: departLibraryMission,
+          }),
           ...teamSources,
         ],
         compatibility: ({ entry, level }) => {

@@ -1,5 +1,19 @@
 import { validatePursuitGoals } from '../hunt/pursuit-goals.mjs';
 import {
+  isExpeditionLevel,
+  inheritedExpeditionLevel,
+  validateExpeditionEnvironment,
+  initializeExpedition,
+  expeditionSpeed,
+  expeditionRetainedTargets,
+  expeditionFieldSources,
+  expeditionGoalSatisfied,
+  captureExpedition,
+  tickExpedition,
+  expeditionPatrolContacts,
+  advanceExpeditionPatrols,
+} from './expedition-environment.mjs';
+import {
   isTeamRunningLevel,
   TEAM_PURSUIT_LEVEL_VERSION,
   TEAM_PURSUIT_V2_LEVEL_VERSION,
@@ -154,6 +168,17 @@ function buildGrid(level) {
 
 /** Validate before adopting content; the engine owns its copy and never changes the caller's level. */
 export function validateCoopLevel(level) {
+  if (isExpeditionLevel(level)) {
+    try {
+      const inherited = inheritedExpeditionLevel(level);
+      const validation = validateCoopLevel(inherited);
+      if (!validation.valid) return validation;
+      validateExpeditionEnvironment(level, buildGrid(inherited));
+      return { valid: true, errors: [] };
+    } catch (error) {
+      return { valid: false, errors: [error.message] };
+    }
+  }
   if (Object.getOwnPropertyDescriptor(level ?? {}, 'version')?.value === TEAM_SNAKE_LEVEL_VERSION) {
     try {
       const base = snakeBaseLevel(level);
@@ -611,6 +636,7 @@ export function createCoop(
     needsNeutral: [false, false],
   };
   initializeThreats(run);
+  initializeExpedition(run);
   initializeCoopCombat(run);
   initializeSnake(run);
   if (hasTeamRoamers(owned)) initializeCoopRoamers(run);
@@ -722,7 +748,8 @@ function movement(run, commands, stopped) {
         : run.rules.moveSpeed *
           (command.boost ? run.rules.boostMultiplier : 1) *
           coopBonusPlayerFactor(run, player) *
-          coopTerrainSpeed(run, player);
+          coopTerrainSpeed(run, player) *
+          expeditionSpeed(run, player);
     return { x: axis.x * speed, y: axis.y * speed };
   });
 }
@@ -911,7 +938,7 @@ function goalReached(run) {
     : run.level.goal.cores.every((id) =>
         run.strongholds.some((stronghold) => stronghold.id === id && stronghold.defeated),
       );
-  return huntObjectiveSatisfied(run.level.hunt, run.hunt, ordinary);
+  return expeditionGoalSatisfied(run) && huntObjectiveSatisfied(run.level.hunt, run.hunt, ordinary);
 }
 
 function completeRecoveryAndGoal(run, commands, stopped) {
@@ -935,7 +962,7 @@ function flood(run, secured, retainedCores) {
       queue.push(index);
     }
   }
-  for (const index of retainedCores)
+  for (const index of [...retainedCores, ...expeditionFieldSources(run)])
     if (run.cells[index] === FIELD && !retained[index]) {
       retained[index] = 1;
       queue.push(index);
@@ -962,6 +989,7 @@ function capture(run, closers, commands, stopped, joint = false) {
       .filter((stronghold) => stronghold.shielded)
       .map((stronghold) => strongholdIndex(run, stronghold.core)),
   );
+  for (const index of expeditionRetainedTargets(run)) retainedCores.add(index);
   const contributions = closers.map(
     (player) =>
       new Set(
@@ -1027,6 +1055,7 @@ function capture(run, closers, commands, stopped, joint = false) {
   }
   run.claimedCount += secured.size;
   run.coverage = run.claimedCount / run.totalClaimable;
+  captureExpedition(run, emit);
   captureCoopCombat(
     run,
     closers.map((player) => player.id),
@@ -1075,7 +1104,7 @@ function capture(run, closers, commands, stopped, joint = false) {
   }
   const credits = Math.floor((run.claimedCount * 50 + EPS) / run.totalClaimable);
   const earned = credits - run.team.captureCredits;
-  run.team.captureCredits = credits;
+  run.team.captureCredits = run.environment ? Math.max(run.team.captureCredits, credits) : credits;
   if (run.config.advancedCooperation && earned > 0) {
     for (const player of run.players)
       player.support.readyAt = Math.max(run.time, player.support.readyAt - earned * 2);
@@ -1118,7 +1147,9 @@ function capture(run, closers, commands, stopped, joint = false) {
 }
 
 function hazards(run, velocities, horizon, actors = run.enemies) {
-  const contacts = [];
+  const contacts = coopBonusActive(run, 'enemy-freeze')
+    ? []
+    : expeditionPatrolContacts(run, velocities, horizon);
   for (const player of run.players) {
     const material = coopTerrainContact(run, player, velocities[player.id], horizon);
     if (material) contacts.push(material);
@@ -1174,6 +1205,7 @@ export function stepCoop(run, commands, dt = FIXED_DT) {
   updateCoopTimedBonuses(run);
   beginCoopCombatTick(run);
   const stopped = new Set();
+  tickExpedition(run, emit, { frozen: coopBonusActive(run, 'enemy-freeze') });
   updateThreatClocks(run, emit, {
     suppressImpacts: coopBonusActive(run, 'enemy-freeze'),
   });
@@ -1289,6 +1321,7 @@ export function stepCoop(run, commands, dt = FIXED_DT) {
       enemy.x += actors[index].vx * elapsed;
       enemy.y += actors[index].vy * elapsed;
     }
+    advanceExpeditionPatrols(run, elapsed);
     advanceCoopCombat(run, combatPlans, elapsed);
     const expiredImpacts = advanceImpacts(impactPlans, elapsed);
     run.time += elapsed;
@@ -1374,7 +1407,7 @@ export function stepCoop(run, commands, dt = FIXED_DT) {
       if (due(contact.time))
         knockDown(run, run.players[contact.player], 'snake-body', commands, contact.id);
     for (const contact of hits)
-      if (contact.cause === 'lethal-terrain')
+      if (contact.cause === 'lethal-terrain' || contact.cause === 'perimeter-patrol')
         knockDown(run, run.players[contact.player], contact.cause, commands);
       else if (
         run.enemies.some(

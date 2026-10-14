@@ -102,6 +102,8 @@ export function eventCue(event) {
       'team.recovery': 'respawn',
       'enemy.commit': 'attack',
       'impact.launched': 'warning',
+      'emitter.warning': 'warning',
+      'environment.eroded': 'erosion',
       'impact.intercepted': 'deploy',
       'impact.cleared': 'neutralized',
       'enemy.recovery': 'cancel',
