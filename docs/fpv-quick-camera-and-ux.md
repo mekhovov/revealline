@@ -48,10 +48,30 @@ Mode changes retain the pause menu and start the existing disarmed attempt. Worl
 
 Verified in actual source browsers: both hosts, EN/UK, mode/input/camera changes, disconnected controller pre-arm access, radio open/close and focus return. Measured 390×844 portrait, 844×390 landscape and 1280×800 handheld-sized viewports across the two hosts: no horizontal document overflow, 44px minimum setup/camera targets. No physical radio/Steam Deck/iPhone acceptance claim. Existing 123 control/radio/shell/flight/appearance checks pass; scoped lint, canonical projections, diff checks and all three source preflights pass. Full frozen-package admission stays with CI because free space fluctuates below the stable 3 GiB floor. Additional unit coverage remains deferred to D6.
 
-Remaining order:
+Implementation order (all six completed in the parallel increment below):
 1. P1: unify Retry / Practise section / Watch example presentation; retain proof compatibility and explicit arming.
 2. P1: extend remappable non-flight actions where missing (especially View). Arm, Reset and Pause radio assignment already exist; do not replace their calibrated ownership or fresh-release rules.
 3. P2: primary Fly / Learn / Explore entry and Download → Fly Library flow.
 4. P2: stick size/opacity and device-aware HUD preferences.
 5. P2: Watch → Try → Repeat lesson flow and targeted practice.
 6. P3: camera comfort presets and compatible personal-best comparison.
+
+
+## Parallel recommendations delivered — 14 October 2026
+
+All six recommendations above now have implemented candidates in native stack #1180:
+
+| PR | Implemented | Remaining release evidence |
+|---|---|---|
+| [#1184](https://github.com/mekhovov/revealline/pull/1184) | Fly / Learn / Explore entry; exact installed-world Download → Fly; retained action focus; disarmed preparation | Protected CI and deployment |
+| [#1185](https://github.com/mekhovov/revealline/pull/1185) | Shared stick size/opacity; three explicit camera presets; compatible personal-best access | Physical-device acceptance; protected CI and deployment |
+| [#1186](https://github.com/mekhovov/revealline/pull/1186) | Learn/remove/persist/share radio View; fresh-release and conflict rules | Physical-radio acceptance; protected CI and deployment |
+| [#1188](https://github.com/mekhovov/revealline/pull/1188) | Paused Retry / Watch / Practice; slow examples; disarmed Try; verified checkpoint practice versus clearly labelled full-route practice | Frozen-package qualification; protected CI and deployment |
+
+The current implementation scope is complete. This does not close the larger art/content roadmap, D6 unit coverage or unmeasured hardware qualification. Publication is separate from implementation; no new public-live claim is made here.
+
+Integrated validation: 135 existing control/radio/shell/flight/appearance checks pass after incorporating parent `3162f03df`. Actual browser interactions cover both SIM hosts, EN/UK, installed-world download and disarmed launch, keyboard home navigation, radio setup return, retry, example playback, ½-speed playback, disarmed Try, camera presets and shared stick preferences. Phone portrait (390×844), short landscape (844×390) and Academy handheld size (1280×800) have no measured horizontal overflow. Large touch sticks measured about 125 CSS px at both phone viewports. Controlled adapter exercises cover radio release, conflict, focus and reconnect; these are not physical radio/Steam Deck/iPhone results.
+
+Evidence: `docs/evidence/fpv-ux-parallel-20261014/`. Remaining work is qualification, exact-head protected checks and deployment verification. Preserve all ready branches while those external gates run.
+
+Frozen qualification completed on `63cda2f18`: all three package admissions, committed inputs, ZIP members and two byte-identical builds pass under unchanged limits. The retained receipt is in the evidence folder. Public availability still requires protected publication and public deployment identity/launch verification.

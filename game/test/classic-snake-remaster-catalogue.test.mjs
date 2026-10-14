@@ -5,6 +5,7 @@ import { CLASSIC_SNAKE_LEVELS } from '../snake/classic-catalogue.mjs';
 import {
   CLASSIC_REMASTER_PROTOTYPES,
   CLASSIC_REMASTER_REVISIONS,
+  CLASSIC_EDITORIAL_REVISIONS,
 } from '../snake/classic-catalogue-remaster.mjs';
 import { CLASSIC_MISSION_COMPOSITIONS } from '../snake/classic-compositions.mjs';
 import { CLASSIC_CHAPTER_COMPOSITIONS } from '../snake/classic-worlds.mjs';
@@ -59,7 +60,10 @@ test('240 briefs describe actual accepted missions and concrete adjacent differe
     ),
   );
   assert.equal(report.missions.length, 240);
-  assert.equal(report.revised, Object.keys(CLASSIC_REMASTER_REVISIONS).length);
+  assert.equal(
+    report.revised,
+    Object.keys({ ...CLASSIC_REMASTER_REVISIONS, ...CLASSIC_EDITORIAL_REVISIONS }).length,
+  );
   for (const entry of CLASSIC_SNAKE_LEVELS) {
     const brief = report.missions.find((m) => m.id === entry.id);
     assert.equal(brief.centralDecision, entry.description.en);

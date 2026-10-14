@@ -145,7 +145,7 @@ export function journeyResultReaction(context, locale = 'en') {
   const speaker =
     context.mode === 'versus'
       ? 'rival'
-      : context.mode === 'team'
+      : context.mode === 'team' || context.presentation === 'snake'
         ? 'engineer'
         : context.encounter === true
           ? 'sentinel'

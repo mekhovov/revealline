@@ -3,6 +3,13 @@ const line = (x, y, dx, dy, length) =>
   Array.from({ length }, (_, n) => ({ x: x + dx * n, y: y + dy * n }));
 const route = (...legs) => legs.flat();
 export const CLASSIC_REMASTER_REVISIONS = Object.freeze({
+  'classic-operation-pressure-elbow': {
+    tactics: [{ policyIndex: 0, route: line(14, 6, 0, 1, 8) }],
+    en: 'The runner commits along the east side of the elbow. Hold the shortcut with your cable to intercept its next endpoint, or take the permanent outer approach.',
+    uk: 'Бігун рухається вздовж східного боку вигину. Утримуйте зріз кабелем для перехоплення біля наступного кінця маршруту або йдіть постійним зовнішнім обходом.',
+    reason:
+      'Keep all three catches, but put their committed route beyond the pressure door: the pad now changes an interception decision rather than merely satisfying an unrelated visit counter.',
+  },
   'classic-operation-orchard-post': {
     tactics: [{ policyIndex: 0, route: route(line(6, 5, 1, 0, 12), line(17, 6, 0, 1, 6)) }],
     en: 'Carry two parcels to dock A. The runner commits around the glasshouse’s open side: unload, then cut across to its next corner.',
@@ -61,6 +68,16 @@ export const CLASSIC_REMASTER_REVISIONS = Object.freeze({
   },
 });
 
+export const CLASSIC_EDITORIAL_REVISIONS = Object.freeze({
+  'classic-operation-loaded-excavation': {
+    removeWalls: [{ x: 12, y: 8 }],
+    en: 'Load before approaching the marked stone. Its far side is already recessed: let demolition open the remaining cell for a direct delivery, or take the always-open outer route.',
+    uk: 'Завантажтеся перед підходом до позначеного каменю. За ним уже є заглиблення: дочекайтеся руйнування останньої клітинки для прямої доставки або скористайтеся постійним зовнішнім обходом.',
+    reason:
+      'The original two-cell-thick wall stayed sealed after its sole marked cell broke. A far-side recess makes the promised demolition shortcut real while retaining the loaded outer bypass.',
+  },
+});
+
 export const CLASSIC_REMASTER_PROTOTYPES = Object.freeze([
   { id: 'open', levelId: 'classic-snake-open-loop', mode: 'solo' },
   { id: 'dense', levelId: 'classic-pursuit-crossing-bursts', mode: 'solo' },
@@ -71,6 +88,19 @@ export const CLASSIC_REMASTER_PROTOTYPES = Object.freeze([
 ]);
 
 export function remasterClassicSnakeEntry(entry) {
+  const editorial = CLASSIC_EDITORIAL_REVISIONS[entry.id];
+  if (editorial)
+    return {
+      ...entry,
+      description: { en: editorial.en, uk: editorial.uk },
+      level: {
+        ...entry.level,
+        revision: 'editorial-pacing-1',
+        walls: entry.level.walls.filter(
+          (wall) => !editorial.removeWalls.some((cell) => cell.x === wall.x && cell.y === wall.y),
+        ),
+      },
+    };
   const revision = CLASSIC_REMASTER_REVISIONS[entry.id];
   if (!revision) return entry;
   return {

@@ -71,7 +71,10 @@ test('archived admission accepts only exact retired official recipes and prepare
   );
   for (const previous of CLASSIC_SNAKE_ARCHIVED_LEVELS) {
     const current = CLASSIC_SNAKE_LEVELS.find((entry) => entry.id === previous.id);
-    assert.ok(Number(current.level.revision) > Number(previous.level.revision));
+    assert.notEqual(current.level.revision, previous.level.revision);
+    // Named campaign revisions are opaque identities, not numeric counters.
+    if ([current, previous].every((entry) => Number.isFinite(Number(entry.level.revision))))
+      assert.ok(Number(current.level.revision) > Number(previous.level.revision));
     assert.equal(classicSnakeRecipeEntries(current).length, 1);
     assert.equal(
       classicSnakeRecipeEntries(current, { allowArchive: true }).length,
@@ -88,7 +91,10 @@ test('archived admission accepts only exact retired official recipes and prepare
         () => resolveClassicSnakeRecipeEntry(current, level, setup),
         /catalogue definition/,
       );
-      level.goal--;
+      // Operations bind the final cumulative stage to their goal. A changed
+      // named revision stays schema-valid but must not inherit archive authority.
+      if (level.operation) level.revision += '-tampered';
+      else level.goal--;
       assert.throws(
         () => resolveClassicSnakeRecipeEntry(current, level, setup, { allowArchive: true }),
         /catalogue definition/,

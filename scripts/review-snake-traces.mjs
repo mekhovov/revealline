@@ -34,6 +34,14 @@ for (const filename of files) {
   candidates.push(...proofs.map((proof) => ({ ...proof, source: filename })));
 }
 if (catalogue) {
+  // Editorial geometry revisions have their own qualification journals; retain
+  // the original fixture recipes as historical evidence instead of overwriting them.
+  const { proofs: editorialProofs } = JSON.parse(
+    await readFile(new URL('editorial-proofs.json', directory), 'utf8'),
+  );
+  candidates.push(
+    ...editorialProofs.map((proof) => ({ ...proof, source: 'editorial-proofs.json' })),
+  );
   const fixtureRoot = new URL('../game/test/fixtures/', import.meta.url);
   for (const filename of [
     'classic-snake-operations-a-proofs.json',
@@ -116,6 +124,16 @@ for (const proof of candidates) {
   });
 }
 const covered = new Set(runs.map((r) => r.levelId));
+const coveredSetups = new Set(runs.map((r) => `${r.levelId}/${r.mode}/${r.pace}`));
+const missingSetups = catalogue
+  ? CLASSIC_SNAKE_LEVELS.flatMap((entry) =>
+      ['solo', 'team'].flatMap((mode) =>
+        ['normal', 'slow', 'fast'].map((pace) => `${entry.id}/${mode}/${pace}`),
+      ),
+    ).filter((setup) => !coveredSetups.has(setup))
+  : [];
+if (catalogue)
+  assert.deepEqual(missingSetups, [], 'Catalogue trace requires every supported mode/pace setup.');
 const comparisons = [];
 if (outliers) {
   const baseline = JSON.parse(
@@ -153,6 +171,8 @@ const report = {
   summary: {
     runs: runs.length,
     missions: covered.size,
+    setups: coveredSetups.size,
+    missingSetups,
     missingMissions: catalogue
       ? CLASSIC_SNAKE_LEVELS.filter((e) => !covered.has(e.id)).map((e) => e.id)
       : [],

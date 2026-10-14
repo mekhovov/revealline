@@ -2,8 +2,8 @@
   "format": "classic-snake-remaster-review.v1",
   "scope": "240 official missions; deterministic recipe review plus authored tactical revision rationales. This is not a player study.",
   "prototypes": 18,
-  "retained": 232,
-  "revised": 8,
+  "retained": 230,
+  "revised": 10,
   "missions": [
     {
       "id": "classic-snake-open-loop",
@@ -24,7 +24,7 @@
         ],
         "footprint": null,
         "anchor": null,
-        "floor": "oval",
+        "floor": "authored",
         "light": "morning"
       },
       "differenceFromPrevious": "The obstacle-free introduction teaches one turn, one catch and the growing cable before any structure or special enemy.",
@@ -66,7 +66,7 @@
           15,
           12
         ],
-        "floor": "oval",
+        "floor": "authored",
         "light": "morning"
       },
       "differenceFromPrevious": "walls: 0 → 12. 12 solid cells differ from classic-snake-open-loop; this mission asks: Pass either side of the two islands.",
@@ -108,7 +108,7 @@
           5,
           8
         ],
-        "floor": "oval",
+        "floor": "authored",
         "light": "morning"
       },
       "differenceFromPrevious": "walls: 12 → 10; catches: 8 → 9. 10 solid cells differ from classic-snake-two-landings; this mission asks: Round the short wall in open space; leave its narrow corner until your tail has passed..",
@@ -150,7 +150,7 @@
           6,
           4
         ],
-        "floor": "oval",
+        "floor": "authored",
         "light": "late"
       },
       "differenceFromPrevious": "Same encounter vocabulary, different authored route. 10 solid cells differ from classic-snake-first-baffle; this mission asks: Choose a different side of the offset blocks for the next catch..",
@@ -184,7 +184,7 @@
         ],
         "footprint": null,
         "anchor": null,
-        "floor": "oval",
+        "floor": "authored",
         "light": "late"
       },
       "differenceFromPrevious": "walls: 10 → 15; catches: 9 → 10. 14 solid cells differ from classic-snake-offset-docks; this mission asks: The parallel walls split the middle.",
@@ -226,7 +226,7 @@
           11,
           13
         ],
-        "floor": "oval",
+        "floor": "authored",
         "light": "late"
       },
       "differenceFromPrevious": "walls: 15 → 17. 15 solid cells differ from classic-snake-room-to-follow; this mission asks: Link the gaps between three islands into a loop around the central wall..",
@@ -268,7 +268,7 @@
           8,
           11
         ],
-        "floor": "elbow",
+        "floor": "authored",
         "light": "morning"
       },
       "differenceFromPrevious": "walls: 17 → 24; catches: 10 → 8. 20 solid cells differ from classic-snake-first-circuit; this mission asks: Enter the elbow from its open side, then turn outside its corner..",
@@ -302,7 +302,7 @@
         ],
         "footprint": null,
         "anchor": null,
-        "floor": "elbow",
+        "floor": "authored",
         "light": "morning"
       },
       "differenceFromPrevious": "walls: 24 → 23; families: stationary prey → runner. 9 solid cells differ from classic-snake-open-elbow; this mission asks: The U-shaped wall rewards a planned exit.",
@@ -504,7 +504,7 @@
           9,
           6
         ],
-        "floor": "islands",
+        "floor": "authored",
         "light": "morning"
       },
       "differenceFromPrevious": "walls: 28 → 24; families: runner → stationary prey; catches: 10 → 8. 18 solid cells differ from classic-snake-elbow-exchange; this mission asks: Circle the large island and choose which end offers a clear return..",
@@ -529,7 +529,7 @@
       "pressure": "10 accepted catches; runner.",
       "recovery": "Terrain leaves a 3×3 turning area centred at (5,2); check the open ends of the solid structures before returning. This is static route evidence, not a guarantee against a moving target, hazard or cable.",
       "focalArrangement": {
-        "family": "pump",
+        "family": "floodgate",
         "landmark": "pump-beacon",
         "axis": "vertical",
         "focus": [
@@ -546,11 +546,11 @@
           16,
           12
         ],
-        "floor": "islands",
+        "floor": "authored",
         "light": "morning"
       },
       "differenceFromPrevious": "walls: 24 → 15; families: stationary prey → runner; catches: 8 → 10. 13 solid cells differ from classic-snake-long-island; this mission asks: The middle wall separates two islands.",
-      "rationale": "Retain the authored decision: The middle wall separates two islands. Compare the central gap with the outer circuit. The target changes direction as it flees: cut off its next exit instead of following its trail. Improve its pump construction and pump-beacon focal assembly without adding collision cells.",
+      "rationale": "Retain the authored decision: The middle wall separates two islands. Compare the central gap with the outer circuit. The target changes direction as it flees: cut off its next exit instead of following its trail. Improve its floodgate construction and pump-beacon focal assembly without adding collision cells.",
       "measurements": {
         "walls": 15,
         "families": "runner",
@@ -731,7 +731,7 @@
       "pressure": "12 accepted catches; runner.",
       "recovery": "Terrain leaves a 3×3 turning area centred at (5,2); check the open ends of the solid structures before returning. This is static route evidence, not a guarantee against a moving target, hazard or cable.",
       "focalArrangement": {
-        "family": "container",
+        "family": "dispatch",
         "landmark": "dispatch-cabin",
         "axis": "horizontal",
         "focus": [
@@ -748,11 +748,11 @@
           16,
           8
         ],
-        "floor": "fork",
+        "floor": "authored",
         "light": "morning"
       },
       "differenceFromPrevious": "walls: 20 → 17. 11 solid cells differ from classic-snake-long-circuit; this mission asks: The target flees one square at a time.",
-      "rationale": "Retain the authored decision: The target flees one square at a time. Use the fork to approach from the other side. Improve its container construction and dispatch-cabin focal assembly without adding collision cells.",
+      "rationale": "Retain the authored decision: The target flees one square at a time. Use the fork to approach from the other side. Improve its dispatch construction and dispatch-cabin focal assembly without adding collision cells.",
       "measurements": {
         "walls": 17,
         "families": "runner",
@@ -773,7 +773,7 @@
       "pressure": "12 accepted catches; runner.",
       "recovery": "Terrain leaves a 3×3 turning area centred at (5,2); check the open ends of the solid structures before returning. This is static route evidence, not a guarantee against a moving target, hazard or cable.",
       "focalArrangement": {
-        "family": "container",
+        "family": "platform",
         "landmark": "dispatch-cabin",
         "axis": "vertical",
         "focus": [
@@ -790,11 +790,11 @@
           11,
           8
         ],
-        "floor": "fork",
+        "floor": "authored",
         "light": "morning"
       },
       "differenceFromPrevious": "walls: 17 → 24. 21 solid cells differ from classic-snake-forked-chase; this mission asks: Intercept the runner at an open end of the parallel lanes..",
-      "rationale": "Retain the authored decision: Intercept the runner at an open end of the parallel lanes. Improve its container construction and dispatch-cabin focal assembly without adding collision cells.",
+      "rationale": "Retain the authored decision: Intercept the runner at an open end of the parallel lanes. Improve its platform construction and dispatch-cabin focal assembly without adding collision cells.",
       "measurements": {
         "walls": 24,
         "families": "runner",
@@ -1472,7 +1472,7 @@
           11,
           8
         ],
-        "floor": "cross",
+        "floor": "authored",
         "light": "morning"
       },
       "differenceFromPrevious": "walls: 22 → 20; families: runner → stationary prey; catches: 14 → 12. 20 solid cells differ from classic-snake-garden-crossfire; this mission asks: The two lanes suit opposite approaches.",
@@ -1497,7 +1497,7 @@
       "pressure": "14 accepted catches; runner.",
       "recovery": "Terrain leaves a 3×3 turning area centred at (5,2); check the open ends of the solid structures before returning. This is static route evidence, not a guarantee against a moving target, hazard or cable.",
       "focalArrangement": {
-        "family": "coolant",
+        "family": "pressure",
         "landmark": "pressure-gauge",
         "axis": "vertical",
         "focus": [
@@ -1514,11 +1514,11 @@
           16,
           12
         ],
-        "floor": "cross",
+        "floor": "authored",
         "light": "morning"
       },
       "differenceFromPrevious": "walls: 20 → 26; families: stationary prey → runner; catches: 12 → 14. 20 solid cells differ from classic-snake-opposite-arrivals; this mission asks: Four bars frame the crossing.",
-      "rationale": "Retain the authored decision: Four bars frame the crossing. In Team, take turns using the central lane. The target changes direction as it flees: cut off its next exit instead of following its trail. Improve its coolant construction and pressure-gauge focal assembly without adding collision cells.",
+      "rationale": "Retain the authored decision: Four bars frame the crossing. In Team, take turns using the central lane. The target changes direction as it flees: cut off its next exit instead of following its trail. Improve its pressure construction and pressure-gauge focal assembly without adding collision cells.",
       "measurements": {
         "walls": 26,
         "families": "runner",
@@ -1699,7 +1699,7 @@
       "pressure": "14 accepted catches; runner.",
       "recovery": "Terrain leaves a 3×3 turning area centred at (5,2); check the open ends of the solid structures before returning. This is static route evidence, not a guarantee against a moving target, hazard or cable.",
       "focalArrangement": {
-        "family": "terrace",
+        "family": "excavation",
         "landmark": "survey-arch",
         "axis": "horizontal",
         "focus": [
@@ -1716,11 +1716,11 @@
           11,
           7
         ],
-        "floor": "terraces",
+        "floor": "authored",
         "light": "morning"
       },
       "differenceFromPrevious": "walls: 22 → 24. 18 solid cells differ from classic-snake-shared-circuit; this mission asks: Build a long body around the central island while keeping both end passages clear.",
-      "rationale": "Retain the authored decision: Build a long body around the central island while keeping both end passages clear. The target changes direction as it flees: cut off its next exit instead of following its trail. Improve its terrace construction and survey-arch focal assembly without adding collision cells.",
+      "rationale": "Retain the authored decision: Build a long body around the central island while keeping both end passages clear. The target changes direction as it flees: cut off its next exit instead of following its trail. Improve its excavation construction and survey-arch focal assembly without adding collision cells.",
       "measurements": {
         "walls": 24,
         "families": "runner",
@@ -1741,7 +1741,7 @@
       "pressure": "18 accepted catches; runner.",
       "recovery": "Terrain leaves a 3×3 turning area centred at (5,2); check the open ends of the solid structures before returning. This is static route evidence, not a guarantee against a moving target, hazard or cable.",
       "focalArrangement": {
-        "family": "terrace",
+        "family": "reclaimer",
         "landmark": "survey-arch",
         "axis": "vertical",
         "focus": [
@@ -1758,11 +1758,11 @@
           15,
           5
         ],
-        "floor": "terraces",
+        "floor": "authored",
         "light": "morning"
       },
       "differenceFromPrevious": "walls: 24 → 21; catches: 14 → 18. 15 solid cells differ from classic-snake-long-opening; this mission asks: Intercept the fleeing target at the fork, then make a wide return around your body..",
-      "rationale": "Retain the authored decision: Intercept the fleeing target at the fork, then make a wide return around your body. Improve its terrace construction and survey-arch focal assembly without adding collision cells.",
+      "rationale": "Retain the authored decision: Intercept the fleeing target at the fork, then make a wide return around your body. Improve its reclaimer construction and survey-arch focal assembly without adding collision cells.",
       "measurements": {
         "walls": 21,
         "families": "runner",
@@ -1951,7 +1951,7 @@
       "pressure": "3 accepted catches; patroller.",
       "recovery": "Terrain leaves a 3×3 turning area centred at (5,2); check the open ends of the solid structures before returning. This is static route evidence, not a guarantee against a moving target, hazard or cable.",
       "focalArrangement": {
-        "family": "antenna",
+        "family": "receiver",
         "landmark": "receiver-dish",
         "axis": "horizontal",
         "focus": [
@@ -1968,11 +1968,11 @@
           9,
           6
         ],
-        "floor": "oval",
+        "floor": "authored",
         "light": "morning"
       },
       "differenceFromPrevious": "walls: 28 → 30; families: runner → patroller; catches: 20 → 3. 26 solid cells differ from classic-snake-final-weave; this mission asks: Cut across the open side of the island instead of following the patrol..",
-      "rationale": "Retain the authored decision: Cut across the open side of the island instead of following the patrol. Improve its antenna construction and receiver-dish focal assembly without adding collision cells.",
+      "rationale": "Retain the authored decision: Cut across the open side of the island instead of following the patrol. Improve its receiver construction and receiver-dish focal assembly without adding collision cells.",
       "measurements": {
         "walls": 30,
         "families": "patroller",
@@ -1993,7 +1993,7 @@
       "pressure": "4 accepted catches; patroller.",
       "recovery": "Terrain leaves a 3×3 turning area centred at (5,2); check the open ends of the solid structures before returning. This is static route evidence, not a guarantee against a moving target, hazard or cable.",
       "focalArrangement": {
-        "family": "antenna",
+        "family": "shelter",
         "landmark": "receiver-dish",
         "axis": "vertical",
         "focus": [
@@ -2010,11 +2010,11 @@
           11,
           11
         ],
-        "floor": "oval",
+        "floor": "authored",
         "light": "morning"
       },
       "differenceFromPrevious": "walls: 30 → 26; catches: 3 → 4. 16 solid cells differ from classic-pursuit-oval-intercept; this mission asks: The divider has two ends.",
-      "rationale": "Retain the authored decision: The divider has two ends. Choose the nearer return before the patrol rounds it. Improve its antenna construction and receiver-dish focal assembly without adding collision cells.",
+      "rationale": "Retain the authored decision: The divider has two ends. Choose the nearer return before the patrol rounds it. Improve its shelter construction and receiver-dish focal assembly without adding collision cells.",
       "measurements": {
         "walls": 26,
         "families": "patroller",
@@ -6325,10 +6325,10 @@
       "id": "classic-operation-pressure-elbow",
       "chapter": "classic-snake-cable-foundry",
       "world": "workshop",
-      "disposition": "retain-gameplay-remaster-presentation",
-      "centralDecision": "The pad sits before an elbow. Leave a cable segment on it while turning toward the gate; circling outside is safer when long.",
-      "opening": "From (5,2), read the spawned runner and choose an approach around 12 occupied cells before the first catch.",
-      "pressure": "3 accepted catches; runner. elbow: 2 catches, exit (18,7); clear: 3 catches, exit (5,13).",
+      "disposition": "revise-gameplay",
+      "centralDecision": "The runner commits along the east side of the elbow. Hold the shortcut with your cable to intercept its next endpoint, or take the permanent outer approach.",
+      "opening": "From (5,2), prepare an approach toward (14,6) at the committed route endpoint. Opening clearance: elbow.",
+      "pressure": "3 accepted catches; runner. elbow: 2 catches, exit (18,7); clear: 3 catches, exit (5,13). Committed route: (14,6), (14,7), (14,8), (14,9), (14,10), (14,11), (14,12), (14,13).",
       "recovery": "Terrain leaves a 3×3 turning area centred at (5,13); check the open ends of the solid structures before returning. This is static route evidence, not a guarantee against a moving target, hazard or cable.",
       "focalArrangement": {
         "family": "pressure",
@@ -6343,8 +6343,8 @@
         "floor": "cross",
         "light": "morning"
       },
-      "differenceFromPrevious": "walls: 8 → 12. 11 solid cells differ from classic-operation-near-and-far; this mission asks: The pad sits before an elbow.",
-      "rationale": "Retain the authored decision: The pad sits before an elbow. Leave a cable segment on it while turning toward the gate; circling outside is safer when long. Improve its pressure construction and pressure-gauge focal assembly without adding collision cells.",
+      "differenceFromPrevious": "walls: 8 → 12. 11 solid cells differ from classic-operation-near-and-far; this mission asks: The runner commits along the east side of the elbow.",
+      "rationale": "Keep all three catches, but put their committed route beyond the pressure door: the pad now changes an interception decision rather than merely satisfying an unrelated visit counter.",
       "measurements": {
         "walls": 12,
         "families": "runner",
@@ -8243,8 +8243,8 @@
       "id": "classic-operation-loaded-excavation",
       "chapter": "classic-snake-breaking-ground",
       "world": "quarry",
-      "disposition": "retain-gameplay-remaster-presentation",
-      "centralDecision": "Loading lengthens the cable before the stone passage opens. Deliver around the wide end, or use the new notch after the warning.",
+      "disposition": "revise-gameplay",
+      "centralDecision": "Load before approaching the marked stone. Its far side is already recessed: let demolition open the remaining cell for a direct delivery, or take the always-open outer route.",
       "opening": "From (5,2), prepare an approach toward (6,5) for the first active parcel. Opening clearance: load.",
       "pressure": "3 accepted catches; eroder, refuge, runner. load: 1 catches, deliveries a/b; survey: 3 catches, exit (4,14). Fixed approaches: eroder at (10,8).",
       "recovery": "Terrain leaves a 3×3 turning area centred at (4,14); check the open ends of the solid structures before returning. This is static route evidence, not a guarantee against a moving target, hazard or cable.",
@@ -8269,10 +8269,10 @@
         "floor": "elbow",
         "light": "morning"
       },
-      "differenceFromPrevious": "walls: 14 → 20; families: eroder/runner → eroder/refuge/runner; catches: 2 → 3; cargo: 0 → 2. 12 solid cells differ from classic-operation-first-notch; this mission asks: Loading lengthens the cable before the stone passage opens.",
-      "rationale": "Retain the authored decision: Loading lengthens the cable before the stone passage opens. Deliver around the wide end, or use the new notch after the warning. Improve its excavation construction and survey-arch focal assembly without adding collision cells.",
+      "differenceFromPrevious": "walls: 14 → 19; families: eroder/runner → eroder/refuge/runner; catches: 2 → 3; cargo: 0 → 2. 12 solid cells differ from classic-operation-first-notch; this mission asks: Load before approaching the marked stone.",
+      "rationale": "The original two-cell-thick wall stayed sealed after its sole marked cell broke. A far-side recess makes the promised demolition shortcut real while retaining the loaded outer bypass.",
       "measurements": {
-        "walls": 20,
+        "walls": 19,
         "families": "eroder/refuge/runner",
         "catches": 3,
         "stages": 2,
@@ -8311,7 +8311,7 @@
         "floor": "elbow",
         "light": "morning"
       },
-      "differenceFromPrevious": "walls: 20 → 26; families: eroder/refuge/runner → eroder/runner/switchback; catches: 3 → 4; cargo: 2 → 0. 15 solid cells differ from classic-operation-loaded-excavation; this mission asks: Two breaks alter different corners of a stepped island.",
+      "differenceFromPrevious": "walls: 19 → 26; families: eroder/refuge/runner → eroder/runner/switchback; catches: 3 → 4; cargo: 2 → 0. 16 solid cells differ from classic-operation-loaded-excavation; this mission asks: Two breaks alter different corners of a stepped island.",
       "rationale": "Retain the authored decision: Two breaks alter different corners of a stepped island. Follow the runner around its end rather than expecting either opening to be ready. Improve its excavation construction and survey-arch focal assembly without adding collision cells.",
       "measurements": {
         "walls": 26,

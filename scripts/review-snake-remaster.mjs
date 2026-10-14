@@ -1,9 +1,13 @@
 /** Reproducible catalogue evidence, not an automated claim that a mission is fun. */
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { CLASSIC_SNAKE_LEVELS as levels } from '../game/snake/classic-catalogue.mjs';
-import { CLASSIC_REMASTER_REVISIONS } from '../game/snake/classic-catalogue-remaster.mjs';
+import {
+  CLASSIC_REMASTER_REVISIONS,
+  CLASSIC_EDITORIAL_REVISIONS,
+} from '../game/snake/classic-catalogue-remaster.mjs';
 import { CLASSIC_MISSION_COMPOSITIONS } from '../game/snake/classic-compositions.mjs';
 import { CLASSIC_CHAPTER_COMPOSITIONS } from '../game/snake/classic-worlds.mjs';
+const revisions = { ...CLASSIC_REMASTER_REVISIONS, ...CLASSIC_EDITORIAL_REVISIONS };
 const point = (p) => `(${p.x},${p.y})`;
 const list = (cells) => cells.map(point).join(', ');
 const key = (p) => `${p.x},${p.y}`;
@@ -73,9 +77,7 @@ const missions = levels.map((entry, index) => {
     id: entry.id,
     chapter: entry.chapterId,
     world: CLASSIC_CHAPTER_COMPOSITIONS[entry.chapterId].scene,
-    disposition: CLASSIC_REMASTER_REVISIONS[entry.id]
-      ? 'revise-gameplay'
-      : 'retain-gameplay-remaster-presentation',
+    disposition: revisions[entry.id] ? 'revise-gameplay' : 'retain-gameplay-remaster-presentation',
     centralDecision: entry.description.en,
     opening: initial
       ? `From ${point(level.spawns[0])}, prepare an approach toward ${point(initial)}${firstObject ? ' for the first active parcel' : route ? ' at the committed route endpoint' : ' at the first fixed source'}. ${firstStage ? `Opening clearance: ${firstStage.id}.` : ''}`
@@ -91,7 +93,7 @@ const missions = levels.map((entry, index) => {
       ? `${changes.length ? changes.join('; ') : 'Same encounter vocabulary, different authored route'}. ${nextGeometry} solid cells differ from ${previous.id}; this mission asks: ${entry.description.en.split('. ')[0]}.`
       : 'The obstacle-free introduction teaches one turn, one catch and the growing cable before any structure or special enemy.',
     rationale:
-      CLASSIC_REMASTER_REVISIONS[entry.id]?.reason ??
+      revisions[entry.id]?.reason ??
       `Retain the authored decision: ${entry.description.en} Improve its ${composition.assembly.family} construction and ${composition.assembly.landmark} focal assembly without adding collision cells.`,
     measurements: current,
   };
@@ -116,5 +118,5 @@ if (process.argv.includes('--check')) {
   await writeFile(file, text);
 }
 console.log(
-  `Reviewed ${missions.length} recipes: ${report.revised} tactical revisions, ${report.retained} retained gameplay decisions, all compositions remastered.`,
+  `Reviewed ${missions.length} recipes: ${report.revised} gameplay revisions, ${report.retained} retained gameplay decisions, all compositions remastered.`,
 );

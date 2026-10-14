@@ -3089,6 +3089,7 @@ html body .mode-play-home:has(.landing-layout) .mode-play-content {
   max-width: none;
   padding: 0;
   overflow: visible;
+  margin-top: auto;
 }
 html body .landing-layout {
   position: relative;
@@ -3099,7 +3100,13 @@ html body .landing-layout {
   gap: 20px;
   flex: none;
   width: min(100%, 510px);
-  margin: clamp(0px, 4vh, 32px) auto 24px;
+  margin: 0 auto;
+}
+/* Auto margins use spare height for the animated scene above the menu.
+   When the menu is taller than the viewport they collapse to zero, preserving
+   top-reachable scrolling instead of clipping controls with end alignment. */
+html body .native-landing > .landing-layout {
+  margin-top: auto;
 }
 html body .landing-layout :is(.landing-identity, .landing-commands) {
   display: flex;
@@ -3181,7 +3188,7 @@ html body .native-landing:has(.landing-layout) .native-menu-footer {
   inset: auto;
   flex: none;
   width: 100%;
-  margin-top: auto;
+  margin-top: 0;
   padding-top: 16px;
   font-size: 12px;
 }
@@ -3191,6 +3198,10 @@ html body .native-landing:has(.landing-layout) > :is(.home-content, .menu-copy) 
   width: 100%;
   margin: 0;
   padding: 0;
+}
+html body .native-landing:has(.landing-layout) > .home-content {
+  order: -1;
+  flex: none;
 }
 body[data-couch-status='paused'] #race-main .landing-layout {
   display: block;
@@ -3206,8 +3217,7 @@ body[data-couch-status='paused'] #race-main .landing-layout .native-menu-utiliti
     width: min(100%, 1120px);
     grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
     gap: clamp(20px, 4vw, 56px);
-    margin-block: 0 16px;
-    align-items: center;
+    align-items: end;
   }
   html body .landing-layout :is(.fpv-line-wordmark, .mode-play-wordmark img) {
     max-height: 72px;
@@ -3255,11 +3265,6 @@ html body .landing-identity .mode-play-dialog-head {
 html body[data-text-size='large'] .landing-layout .game-mode-choice > :is(a, button) {
   font-size: 20px;
   white-space: normal;
-}
-@media (orientation: landscape) and (min-height: 600px) {
-  html body .landing-layout {
-    margin-block: clamp(24px, 15vh, 180px) 24px;
-  }
 }
 /* END SHARED MODE SHELL */
 
@@ -3569,4 +3574,74 @@ html
   height: max(88px, min(var(--sim-touch-stick-size), 32vw, 32vh)) !important;
   min-width: 88px;
   min-height: 88px;
+}
+
+/* Paused practice tools stay outside the active flight view. */
+html body .sim-flight-practice {
+  margin-block: 16px;
+  padding-block: 12px;
+  border-top: 1px solid #657987;
+}
+html body .sim-flight-practice h2 {
+  font-size: 1.05rem;
+  margin: 0 0 8px;
+}
+html body .sim-practice-overview {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+html body .sim-practice-overview p {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+html body .sim-practice-preview {
+  width: 96px;
+  flex: 0 0 96px;
+  color: #a4dcf4;
+}
+html body .sim-practice-preview svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+html body .sim-practice-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-block: 12px;
+}
+html body .sim-flight-practice :is(button, select) {
+  min-height: 44px;
+  min-width: 44px;
+  max-width: 100%;
+}
+html body .sim-flight-practice label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-block: 8px;
+}
+html body .sim-flight-practice small {
+  display: block;
+  line-height: 1.45;
+}
+html body .sim-flight-practice [hidden] {
+  display: none !important;
+}
+html body.sim-academy #academy-replay-outcome:not([hidden]) {
+  position: absolute;
+  inset: 10% 8% auto;
+  max-height: 80%;
+  overflow: auto;
+  z-index: 12;
+  padding: 16px;
+  background: #101923f5;
+  color: #f5f3e8;
+  border: 1px solid #657987;
+}
+
+html body .shared-pause-menu[data-sim-practice='true'] [data-mode-action='pause-restart'] {
+  display: none !important;
 }

@@ -2,16 +2,18 @@
 
 ## Coverage
 
-The expanded audit restores **1,260 exact-recipe winning journals covering all
-240 official missions** through the existing match `onStep` observer. It includes
-Solo and Team at normal pace for every mission. The 192 non-foundation missions
-have all six mode/pace combinations; the 48 retained foundation missions have
-normal-pace evidence, not a claimed slow/fast matrix. Twelve additional journals
-exercise the revised mobile jammer's alternate schedules.
+The expanded audit restores **1,452 exact-recipe winning journals covering all
+240 official missions** through the existing match `onStep` observer. Every
+mission has all six Solo/Team × normal/slow/fast setups: **1,440 distinct setups**.
+Twelve additional journals exercise the revised mobile jammer's alternate
+schedules. The generator rejects missing supported setups before writing a report.
 
-Twenty-nine new normal-pace journals fill retained foundation gaps: Team Open
-Loop and both modes for 14 other missions. No recipe, quota, collision geometry,
-grading threshold or simulation behaviour changed to obtain them.
+The retained foundation supplement now contains **221 verified journals**:
+29 earlier normal-pace gaps and all 192 slow/fast Solo/Team combinations for the
+48 foundation missions. Existing normal-pace source journals remain authoritative.
+Each new journal is generated against its exact prepared pace recipe and restored
+to a verified win; no journal is merely relabeled. No recipe, quota, collision
+geometry, grading threshold or simulation behaviour changed to obtain them.
 
 Historical documents are admitted only when their recipe exactly matches the
 current selected mission and pace. Duplicate mode/pace/seed/schedule setups are
@@ -19,7 +21,7 @@ counted once. The report keeps the originating file for each admitted route.
 
 ## Findings and decisions
 
-There are **258 quiet-interval signals across 97 missions** and **zero capture
+There are **379 quiet-interval signals across 98 missions** and **zero capture
 concentration signals** in the sampled routes. A quiet interval means no discrete
 encounter/objective change; it does not mean that the player has no steering or
 interception decisions. Crossing the board, routing a long cable, carrying cargo
@@ -47,18 +49,28 @@ remain in the baseline audit; the alternatives are reported separately in
 choices, not compulsory waits or repeated mandatory catches. Reducing quotas or
 changing enemy behaviour solely to accommodate the older pilot would erase the
 optional-detour decision without evidence of a gameplay defect. Other modest
-quiet signals remain review material; no claim is made that 97 missions have all
+quiet signals remain review material; no claim is made that 98 missions have all
 been player-tested or that zero concentration flags proves variety.
+
+The follow-through also admits the two newly revised operation recipes. Pressure
+Elbow’s committed-route proofs stay below the initial quiet-interval thresholds.
+Loaded Excavation’s Solo route still has a 26-move interval (7.28 seconds at slow
+pace); Team’s maximum is 16 moves. That modest signal stays visible even though
+the geometry correction makes the promised demolition passage usable. Fixing a
+concrete route defect does not imply that every tracing heuristic should vanish.
 
 ## Higher-star assessment
 
-The eight tactical revisions remain **completion-only**. Their 48 primary
+The nine tactical revisions remain **completion-only**. Their 54 primary
 journals supply one automated winning route per mode/pace setup. Pace variants
 usually share the same decisions; they are not independent calibration samples.
-Seven missions use deterministic schedules, but the available evidence does not
+Eight missions use deterministic schedules, but the available evidence does not
 justify choosing fair silver/gold budgets. Silent Parcel also varies its jammer
 schedule; its additional seeds establish replayable completions, not a universal
 performance threshold.
+
+The six Loaded Excavation editorial journals verify its revised passage at every
+mode/pace setup and likewise do not establish performance budgets.
 
 The alternate retained-mission routes and foundation gap journals are likewise
 qualification evidence only. They are not fed automatically into the older

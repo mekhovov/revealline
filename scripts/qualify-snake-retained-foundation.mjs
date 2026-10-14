@@ -26,33 +26,34 @@ try {
 for (const entry of CLASSIC_SNAKE_LEVELS.filter(
   (e) => e.level.version === 'classic-snake-level.v1',
 ))
-  for (const mode of ['solo', 'team']) {
-    const level = prepareClassicSnakeLevel(entry, { pace: 'normal' });
-    const prior = [...existing, ...proofs.map((p) => p.replay)].find(
-      (p) =>
-        p.level.id === entry.id &&
-        p.mode === mode &&
-        p.seed === 17 &&
-        canonicalJSON(p.level) === canonicalJSON(level),
-    );
-    if (prior && restoreClassicSnakeReplay(prior, { level }).status === 'won') continue;
-    if (process.argv.includes('--check'))
-      throw new Error(`Missing current foundation proof ${entry.id}/${mode}`);
-    const replay = proveClassicSnakeV4(level, {
-      mode,
-      seed: 17,
-      maxSteps: 1800,
-      maxBacktracks: 32,
-    });
-    if (restoreClassicSnakeReplay(replay, { level }).status !== 'won')
-      throw new Error(`Invalid proof ${entry.id}/${mode}`);
-    proofs.push({ levelId: entry.id, mode, pace: 'normal', replay });
-    await writeFile(
-      output,
-      JSON.stringify({ format: 'classic-snake-retained-foundation-proofs.v1', proofs }) + '\n',
-    );
-    console.log(`${entry.id}/${mode}: ${replay.steps}`);
-  }
+  for (const mode of ['solo', 'team'])
+    for (const pace of ['normal', 'slow', 'fast']) {
+      const level = prepareClassicSnakeLevel(entry, { pace });
+      const prior = [...existing, ...proofs.map((p) => p.replay)].find(
+        (p) =>
+          p.level.id === entry.id &&
+          p.mode === mode &&
+          p.seed === 17 &&
+          canonicalJSON(p.level) === canonicalJSON(level),
+      );
+      if (prior && restoreClassicSnakeReplay(prior, { level }).status === 'won') continue;
+      if (process.argv.includes('--check'))
+        throw new Error(`Missing current foundation proof ${entry.id}/${mode}/${pace}`);
+      const replay = proveClassicSnakeV4(level, {
+        mode,
+        seed: 17,
+        maxSteps: 1800,
+        maxBacktracks: 32,
+      });
+      if (restoreClassicSnakeReplay(replay, { level }).status !== 'won')
+        throw new Error(`Invalid proof ${entry.id}/${mode}/${pace}`);
+      proofs.push({ levelId: entry.id, mode, pace, replay });
+      await writeFile(
+        output,
+        JSON.stringify({ format: 'classic-snake-retained-foundation-proofs.v1', proofs }) + '\n',
+      );
+      console.log(`${entry.id}/${mode}/${pace}: ${replay.steps}`);
+    }
 console.log(
-  `All 48 retained foundation missions have normal Solo/Team evidence; ${proofs.length} gap journals retained.`,
+  `All 48 retained foundation missions have normal/slow/fast Solo/Team evidence; ${proofs.length} gap journals retained.`,
 );

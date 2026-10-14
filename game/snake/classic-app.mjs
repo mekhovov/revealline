@@ -603,6 +603,7 @@ function finish() {
   });
   reactions.result({
     owned: true,
+    presentation: 'snake',
     mode,
     outcome: competitive
       ? result() === 'draw'
