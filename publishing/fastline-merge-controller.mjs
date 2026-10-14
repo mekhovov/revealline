@@ -96,7 +96,16 @@ export function asynchronousMergeRequest(headSha) {
     sha: headSha,
     merge_method: "merge",
     merge_action: "default",
+    bypass_rules: false,
   };
+}
+
+export function isStackOnlyMergeError(error) {
+  return (
+    error?.status === 403 &&
+    error?.data?.message ===
+      "Merging stacked PRs via this endpoint is not supported. Use the asynchronous merge endpoint instead."
+  );
 }
 
 // Pull-request merges made with the workflow token do not emit a second
@@ -427,22 +436,29 @@ async function main() {
     if (!merged)
       throw new Error("GitHub did not accept the declared stack merge.");
   } else if (decision.action === "merge") {
-    const result = await github(
-      `/repos/${owner}/${repository}/pulls/${number}/merge`,
-      {
-        method: "PUT",
-        body: JSON.stringify({
-          sha: observedHeadSha,
-          merge_method: "merge",
-        }),
-        headers: { "content-type": "application/json" },
-      },
-    );
-    if (!result?.merged)
-      throw new Error(
-        result?.message || "GitHub rejected the exact-head merge.",
+    try {
+      const result = await github(
+        `/repos/${owner}/${repository}/pulls/${number}/merge`,
+        {
+          method: "PUT",
+          body: JSON.stringify({
+            sha: observedHeadSha,
+            merge_method: "merge",
+          }),
+          headers: { "content-type": "application/json" },
+        },
       );
-    merged = true;
+      if (!result?.merged)
+        throw new Error(
+          result?.message || "GitHub rejected the exact-head merge.",
+        );
+      merged = true;
+    } catch (error) {
+      if (!isStackOnlyMergeError(error)) throw error;
+      merged = await mergeStack(owner, repository, pullRequest, observedHeadSha);
+      if (!merged)
+        throw new Error("GitHub did not accept the exact-head stack merge.");
+    }
   } else if (decision.action === "arm" || decision.action === "disarm")
     await setAutoMerge(pullRequest, decision.action, observedHeadSha);
   if (merged) {
