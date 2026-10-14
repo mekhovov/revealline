@@ -923,6 +923,17 @@ export function createFlightMenuNavigation({
         command(event.key === 'Escape' ? 'back' : (directions[event.key] ?? 'confirm'));
       return;
     }
+    const settingField = event.target?.closest?.('select,input');
+    const directionalSetting =
+      settingField?.closest?.('.native-settings') &&
+      (settingField.tagName === 'SELECT' ||
+        ['range', 'checkbox', 'radio'].includes(settingField.type));
+    if (directionalSetting && (directions[event.key] || ['Enter', ' '].includes(event.key))) {
+      event.preventDefault();
+      event.stopPropagation();
+      if (!event.repeat) command(directions[event.key] ?? 'confirm');
+      return;
+    }
     if (textEntry(event.target) || ['SELECT', 'INPUT'].includes(event.target?.tagName)) return;
     if (directions[event.key] || event.key === 'Escape') {
       event.preventDefault();

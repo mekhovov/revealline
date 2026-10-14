@@ -69,5 +69,13 @@ export function menuGroupNeighbor(items, current, direction) {
   // A stacked responsive layout may have no neighbor in the requested axis.
   // Orthogonal movement can still exit to the adjacent section in document order.
   const edge = movement < 0 ? members[0] : members.at(-1);
-  return items[items.indexOf(edge) + movement] || current;
+  const adjacent = items[items.indexOf(edge) + movement];
+  if (adjacent) return adjacent;
+  // Settings may put Back in a header above the panel. At its far edge,
+  // wrap to an outside control instead of trapping focus on the last field.
+  if (group.getAttribute('data-menu-edge-exit') === 'true') {
+    const outside = items.filter((item) => !group.contains(item));
+    return (movement > 0 ? outside[0] : outside.at(-1)) || current;
+  }
+  return current;
 }
