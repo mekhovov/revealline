@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { readFile } from 'node:fs/promises';
 import { mountModeSettings } from '../ui/mode-settings-view.mjs';
 import { attachSettingsPanels, settingsTabOwnsKey } from '../ui/settings-panels.mjs';
 import { attachControllerNavigation } from '../ui/controller-navigation.mjs';
@@ -158,3 +159,12 @@ for (const placement of ['header', 'footer']) {
     settings.destroy();
   });
 }
+
+test('nested settings selects can shrink beneath their longest native option', async () => {
+  const css = await readFile(new URL('../ui/mode-settings-view.css', import.meta.url), 'utf8');
+  assert.match(
+    css,
+    /\.mode-settings-view \.field-kit-settings-panel select\s*\{\s*min-width:\s*0;/,
+    'A moved Snake disclosure must not retain the intrinsic width of its localized cast option.',
+  );
+});
