@@ -1,0 +1,101 @@
+{
+  "status": "passed",
+  "sourceCheckpoint": "30e0d94b453bc0739971d48b9766a3127c64ab20",
+  "regionalModuleSHA256": {
+    "region-motion-query.mjs": "3535bb7d5263c0995516b6d061c21d3a72d1607fffc03fe58a908c344937b02f",
+    "flight-prototype.mjs": "249477bf8aa8ccc1b592f34f19bf1cc8cf7a8f63bf86e6e636460e258d39698b",
+    "terrain-admission.mjs": "8df0336c210179bb3bfb59b5e404c1f32990e1fca3a0a5fefc8367c261be10d3",
+    "source-window.mjs": "1f526af80c16a32975e713e61a7f2d42e3454782bb5800ebc6aa6f0bd9f9f8dc",
+    "scenery-cell.mjs": "e321686a2d9b749d004a5f65b9a09f960a1de8a675adf080d461886e02521d29",
+    "terrain-surface.mjs": "91af864e7b5937f6338f2160f5f6b13dc677508f9a315d13666288014ac50ff1",
+    "verified-terrain-window.mjs": "83290151cd8205c6c3d78a98b98ae6edf2e2c1b46dad012e9550509b59c3f0cc",
+    "terrain-normals.mjs": "386e43b3e9381c3c8e6406798075c68730cd397ff88058daf6ca85bdd37ca68e",
+    "region-manifest.mjs": "1969b2398e9abfdbe262f0e9c6f33e7a8e885f0e2ee52816e9c0b5a6fb071310",
+    "urban-ground-surface.mjs": "845f9f68859f6d90e77e65cbbb66fd2832d7d2e51eed41dcd696bfe37a9f74b3",
+    "frame-transaction.mjs": "814223148f8d43f72c67920ef60962e6ac340b389dac8aabc741cc2e64905d16",
+    "indexed-scenery-cell.mjs": "c5b5c1ca0f51534763ea4121b4f983c14cf73e666748b9e00ab5f8f804edcf09",
+    "verified-flight-geometry.mjs": "10c5d0e17ecba326fe8d4b06785ef3913b8814eb4c91d9ca2aeebea0a2b5bacf",
+    "terrain-cell.mjs": "efbc4e450394953b00ac3cca59a3fb3d79521430a30be405e3aed4b8df7eebd6",
+    "verified-mixed-window.mjs": "89a66c2149ec7194ba425894b3826396f61e0fda527bc378ed78ae80138b6556",
+    "scenery-surface.mjs": "20d44eb74c0e84e62ce4e496851fd4a1f7d81958ea4de85c254592e659bb0630",
+    "scenery-admission.mjs": "7a6481e1289a189f9b02c6effc07c92f89b16fb8b0f3e078d1f588a4aeafafa9",
+    "verified-scenery-window.mjs": "fb5311176c9aa6ccd53f9793135aa2b19900f57644189d1c2fa11fdcd4b89d95"
+  },
+  "ticks": 48000,
+  "fixedStepHz": 50,
+  "simulatedSeconds": 960.0,
+  "reversals": 7,
+  "recentres": 37,
+  "contacts": 0,
+  "maximumExposedResources": {
+    "geometryBytes": 152856,
+    "sourceBytes": 127308,
+    "reservedGeometryBytes": 8693600,
+    "reservedSourceBytes": 254616,
+    "meshes": 9,
+    "geometries": 9,
+    "materials": 2,
+    "chunks": 3
+  },
+  "disposedResources": {
+    "state": "disposed",
+    "terrainReady": false,
+    "flightReady": false,
+    "hasRetainedTerrain": false,
+    "geometryProfile": "terrain-scenery-v1",
+    "geometryBytes": 0,
+    "textureBytes": 0,
+    "resourceBytes": 0,
+    "sourceBytes": 0,
+    "reservedSourceBytes": 0,
+    "reservedGeometryBytes": 0,
+    "provenance": null,
+    "failure": null
+  },
+  "failureRecovery": {
+    "status": "pass",
+    "failedThenRecoveredTransitions": 30,
+    "maxGeometry": 101904,
+    "maxSource": 84872,
+    "disposed": {
+      "state": "disposed",
+      "terrainReady": false,
+      "flightReady": false,
+      "hasRetainedTerrain": false,
+      "geometryProfile": "terrain-scenery-v1",
+      "geometryBytes": 0,
+      "textureBytes": 0,
+      "resourceBytes": 0,
+      "sourceBytes": 0,
+      "reservedSourceBytes": 0,
+      "reservedGeometryBytes": 0,
+      "provenance": null,
+      "failure": null
+    },
+    "scope": "Synthetic verified mixed-window integrity failure and recovery. No native renderer, storage or real network outage."
+  },
+  "files": {
+    "regional-sustained.mjs": {
+      "sha256": "c7e5a6e49dc189b5e50d9656569aa5f41545fc84a56ffbd9f66f8a0ca3be3fe9",
+      "bytes": 7852
+    },
+    "regional-repeated-recovery.mjs": {
+      "sha256": "c043602456afcfac7c1d2bd82e4c94b7bc67c53e71a1fc39843dd9f2bc4f92df",
+      "bytes": 6662
+    },
+    "regional-sustained-output.jsonl": {
+      "sha256": "770fd8abcc793a5f943e3492bb88b9ebc9e20933aa1ac52110f2a6752769b859",
+      "bytes": 5427
+    },
+    "regional-repeated-recovery.json": {
+      "sha256": "98950d13b39947742b102f1973bfcd0d8427628b39bdf20ce8db054352d98f9a",
+      "bytes": 510
+    }
+  },
+  "limits": [
+    "Synthetic Node workload with generated six-cell scene and deterministic feedback inputs",
+    "No rendered frames, GPU memory, browser FPS, physical device or wall-clock sustained-session qualification",
+    "Collider allocation counts are not exposed by this public snapshot and were not measured",
+    "No player storage modified"
+  ]
+}
