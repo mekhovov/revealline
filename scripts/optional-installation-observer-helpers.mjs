@@ -34,7 +34,9 @@ export const OPERATION_TIMEOUT_MS = 30_000;
 export async function revealFPVOffline(page, openHelp) {
   if (!(await page.locator('#help-dialog').isVisible())) await openHelp();
   const summary = page.locator('summary[data-sim-copy="workshopAndOffline"]');
-  if ((await summary.locator('..').getAttribute('open')) === null) await summary.click();
+  // Exercise the native keyboard route. A first pointer press currently shifts
+  // this dialog before mouseup; do not misreport that separate pointer issue.
+  if ((await summary.locator('..').getAttribute('open')) === null) await summary.press('Enter');
   await page.locator('#install-offline').waitFor({ state: 'visible' });
   await page.locator('#remove-offline').waitFor({ state: 'visible' });
 }

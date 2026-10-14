@@ -8,12 +8,13 @@ mechanics. Implementation and public release are separate completion states.
 
 PR #930 delivered the directory, descriptors, stable launchers, shared offline
 installation and guides. PR #1195 restores practice staging in the replacement
-main Pages workflow and verifies the deployed selection. The latter is still
-under review; its merge is not a prerequisite for independent local work.
+main Pages workflow and verifies the deployed selection. It merged on 14 October
+as `7c98f1619`; deployment verification remains separate. Follow-on PR #1198 now
+targets main directly, so neither implementation lane waits for the old stack.
 
 The Practice branch is rebased onto main
-`f0ccfd37dbb432728997e42f44262aa851538e79`, including merged SIM recovery PR #1193
-and Snake acceptance PR #1194. Earlier candidate receipts remain historical,
+`184a2458c336c43ed0638c3b8ae981a05c1e54a6`, including merged SIM recovery PR #1193,
+regional authoring PRs #1197/#1200 and Snake acceptance/retry changes. Earlier candidate receipts remain historical,
 bound to their recorded source, rather than being relabelled as this revision.
 The unrelated primary checkout and active SIM worktrees are untouched.
 
@@ -185,3 +186,20 @@ The plan's current recommendation is to finish these independent improvements,
 keep the publication repair moving through normal review, and resolve the
 measured content-delivery decision before claiming a sustainable public release.
 Do not mark “three playable public apps” done on the strength of local fixtures.
+
+### Latest integration checkpoint
+
+- #1195 is merged; #1198 is rebased onto `184a2458c` and targets main. The latest
+  main deployment is still running at this checkpoint; `/practice/index.json`
+  still returns 404, so deployed recovery is not yet marked passed.
+- A bounded, read-only lossless audit checked 30 images (90,551,929 bytes) and
+  measured 1,235,912 bytes of potential savings. This does not close the measured
+  retained-version gap. No image bytes, pinned hashes, original-download routes,
+  retained versions or size guards were changed. The audit has five regressions,
+  including rejecting transparency semantics it cannot preserve.
+- Directory introduction text now supports arbitrary catalogue counts rather than
+  promising exactly three apps; a 0/3/4-card regression covers the maintainer recipe.
+- Controlled three-app testing found an Academy first-pointer focus/layout issue
+  on the Workshop disclosure. The native keyboard route is usable; observation
+  records that route and does not claim pointer qualification. SIM/UI follow-up
+  remains required. These controlled packages are not the actual release candidate.
