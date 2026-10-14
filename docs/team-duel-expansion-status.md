@@ -1,6 +1,6 @@
 # Team and Duel expansion delivery register
 
-Updated 14 October 2026. Implementation is on `codex/team-duel-expansion`, rebased onto `280ff4d2a35b5854a85d98a8973a47a832af66e6` after an initial rebase onto `5f126d6105be5708948dbaff6907ca5cd7e15baf`. See the [reviewed plan](team-duel-expansion-plan-2026-10-14.md) and [authoring guide](../authoring/multiplayer-expeditions.md).
+Updated 14 October 2026. Implementation is on `codex/team-duel-expansion`, rebased onto `1cffdfa45cc719aaff8b5e74436837c51d46d1be` after earlier integrations of `280ff4d2a35b5854a85d98a8973a47a832af66e6` and `5f126d6105be5708948dbaff6907ca5cd7e15baf`. The final two upstream commits only update the regional FPV authoring preview's shared appearance. See the [reviewed plan](team-duel-expansion-plan-2026-10-14.md) and [authoring guide](../authoring/multiplayer-expeditions.md).
 
 **Implemented: 96 new Team missions and 72 new Duel missions across twelve families.** All authored missions have reproducible native-runtime clears. Gameplay and focused authoring checks have passed; distribution and external acceptance are accounted for separately below.
 
