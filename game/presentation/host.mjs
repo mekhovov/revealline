@@ -283,7 +283,7 @@ export function createPresentationHost({
   // Actor-only leases deliberately omit DOM authority, but still share their
   // page's image ownership and budget with the ordinary presentation host.
   const actorPool = pageActorArtPool(document ?? globalThis.document);
-  const loadsSlot = (id, asset) =>
+  const profileLoadsSlot = (id, asset) =>
     profile === 'full'
       ? visibleSlot(id, asset) &&
         !(
@@ -518,8 +518,28 @@ export function createPresentationHost({
         pictureReads.delete(controller);
       }
     },
-    async load({ signal, onStatus = () => {}, expectedManifestSha256 = null } = {}) {
+    async load({
+      signal,
+      onStatus = () => {},
+      expectedManifestSha256 = null,
+      worldImageSlots = null,
+    } = {}) {
       required(!closed, 'Presentation host is closed.');
+      required(
+        worldImageSlots === null ||
+          (Array.isArray(worldImageSlots) &&
+            worldImageSlots.every((slot) => OVERFLIGHT_WORLD_IMAGE_SLOTS.includes(slot))),
+        'Use registered battlefield image slots.',
+      );
+      // The optional board selection is captured per load, including concurrent
+      // preparation. Full/actor hosts retain their established vocabulary.
+      const selectedWorldSlots = worldImageSlots === null ? null : new Set(worldImageSlots),
+        loadsSlot = (id, asset) =>
+          profileLoadsSlot(id, asset) &&
+          (profile !== 'board' ||
+            selectedWorldSlots === null ||
+            !OVERFLIGHT_WORLD_IMAGE_SLOTS.includes(id) ||
+            selectedWorldSlots.has(id));
       required(
         expectedManifestSha256 === null ||
           (typeof expectedManifestSha256 === 'string' &&

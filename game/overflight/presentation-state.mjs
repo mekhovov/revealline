@@ -11,6 +11,9 @@ export const OVERFLIGHT_COMBAT_CLIPS = Object.freeze({
 export function overflightEnemyPresentation(enemy, time = 0, previous = null, output = {}) {
   const sameActor = previous?.id === enemy.id;
   const phase = enemy.behaviorPhase;
+  const crosscut = ['crosscut', 'crosscut-interceptor'].includes(enemy.movementPreset);
+  const movementWarning = crosscut && enemy.movementPhase === 'preparing';
+  const movementAttack = crosscut && enemy.movementPhase === 'committed';
   const armor = enemy.armorSegments ?? enemy.armor ?? 0;
   const guard = enemy.guardIntegrity ?? 0;
   const armorBroken =
@@ -19,9 +22,9 @@ export function overflightEnemyPresentation(enemy, time = 0, previous = null, ou
   const armorUntil = armorBroken ? time + 0.25 : sameActor ? previous.armorUntil : -Infinity;
   const staggerUntil = damaged ? time + 0.12 : sameActor ? previous.staggerUntil : -Infinity;
   let state = 'moving';
-  if (phase === 'windup' || phase === 'rally-warning' || enemy.attackWarning > 0)
+  if (phase === 'windup' || phase === 'rally-warning' || enemy.attackWarning > 0 || movementWarning)
     state = 'preparing';
-  else if (phase === 'burst' || phase === 'firing') state = 'attacking';
+  else if (phase === 'burst' || phase === 'firing' || movementAttack) state = 'attacking';
   else if (armorUntil > time) state = 'armor-break';
   else if (staggerUntil > time) state = 'stagger';
   else if (phase === 'recovery' || enemy.exposureRemaining > 0) state = 'exposed';
@@ -40,14 +43,18 @@ export function overflightEnemyPresentation(enemy, time = 0, previous = null, ou
   output.heading =
     enemy.maxGuardIntegrity > 0 && enemy.guardIntegrity > 0
       ? (enemy.guardHeading ?? enemy.heading ?? 0)
-      : (enemy.heading ?? 0);
+      : (movementWarning || movementAttack) && Number.isFinite(enemy.movementFacing)
+        ? enemy.movementFacing
+        : (enemy.heading ?? 0);
   output.remaining = Math.max(
     0,
     state === 'preparing'
-      ? enemy.attackWarning || enemy.phaseRemaining || 0
+      ? enemy.attackWarning ||
+          (movementWarning ? enemy.movementRemaining : enemy.phaseRemaining) ||
+          0
       : state === 'exposed'
         ? enemy.exposureRemaining || enemy.phaseRemaining || 0
-        : enemy.phaseRemaining || 0,
+        : (movementAttack ? enemy.movementRemaining : enemy.phaseRemaining) || 0,
   );
   return output;
 }
