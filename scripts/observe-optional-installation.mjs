@@ -12,6 +12,8 @@ import {
   OPERATION_TIMEOUT_MS,
   OBSERVATION_TIMEOUT_MS,
   activateOfflineAction,
+  trackObservedResource,
+  resourceCleanupIssues,
   boundedOperation,
   closeAllPages,
   unlockObservedPage,
@@ -105,6 +107,7 @@ const entries = new Map(),
   errors = [],
   osApps = [];
 let served, context, cdp, report;
+const acquiringResources = { pending: new Set(), errors: [] };
 const observationDeadline = Date.now() + OBSERVATION_TIMEOUT_MS;
 function requireObservationTime() {
   if (Date.now() >= observationDeadline)
@@ -177,23 +180,33 @@ try {
       await pointer(worlds, version);
       await put('.xonix-build.json', JSON.stringify({ tool: 'xonix-game-cli', formatVersion: 1 }));
       requireObservationTime();
-      served = await startServer({ root, port: 0 });
-      if (Date.now() >= observationDeadline) {
-        served.server.closeAllConnections?.();
-        served.server.close();
-        requireObservationTime();
-      }
-      const launchedContext = await chromium.launchPersistentContext(profile, {
-        channel: 'chrome',
-        headless: true,
-        locale: 'en-US',
-        viewport: { width: 1280, height: 900 },
+      await trackObservedResource(acquiringResources, 'Local server', async () => {
+        served = await startServer({ root, port: 0 });
+        if (Date.now() >= observationDeadline) {
+          served.server.closeAllConnections?.();
+          await boundedOperation(
+            'Late server cleanup',
+            () =>
+              new Promise((resolve, reject) =>
+                served.server.close((error) => (error ? reject(error) : resolve())),
+              ),
+          );
+          requireObservationTime();
+        }
       });
-      if (Date.now() >= observationDeadline) {
-        await boundedOperation('Late browser cleanup', () => launchedContext.close());
-        requireObservationTime();
-      }
-      context = launchedContext;
+      await trackObservedResource(acquiringResources, 'Browser', async () => {
+        const launchedContext = await chromium.launchPersistentContext(profile, {
+          channel: 'chrome',
+          headless: true,
+          locale: 'en-US',
+          viewport: { width: 1280, height: 900 },
+        });
+        if (Date.now() >= observationDeadline) {
+          await boundedOperation('Late browser cleanup', () => launchedContext.close());
+          requireObservationTime();
+        }
+        context = launchedContext;
+      });
       context.setDefaultTimeout(OPERATION_TIMEOUT_MS);
       context.setDefaultNavigationTimeout(OPERATION_TIMEOUT_MS);
       context.on('page', (newPage) =>
@@ -694,6 +707,7 @@ try {
         }
       }
     } finally {
+      cleanupErrors.push(...resourceCleanupIssues(acquiringResources));
       if (!cleanupErrors.length) await rm(work, { recursive: true, force: true });
     }
   }
