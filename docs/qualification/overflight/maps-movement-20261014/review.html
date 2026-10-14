@@ -103,20 +103,30 @@
         Riy, Single Raid, Time Attack and Contract Marathon share the same map library.
       </p>
       <p class="note">
-        Maps and movement are in
+        Maps and movement merged through
         <a href="https://github.com/mekhovov/revealline/pull/1215">PR 1215</a>; shared integration,
-        fixes and qualification are in
-        <a href="https://github.com/mekhovov/revealline/pull/1226">PR 1226</a>. Local reference and
-        three timing trials each for Single Drone, Riy and a controlled Raid workload pass. Late-run
-        coverage and gameplay review remain open. Active clips use an automated review pilot;
+        fixes and qualification merged through
+        <a href="https://github.com/mekhovov/revealline/pull/1226">PR 1226</a>. The final local qualification follow-up is
+        <a href="https://github.com/mekhovov/revealline/pull/1248">PR 1248</a>. Local reference and
+        three timing trials each for Single Drone, Riy and a controlled Raid workload pass. Three new
+        late Riy trials also pass through tank arrival; broader coverage and gameplay review remain open. Active clips use an automated review pilot;
         no-input follow-ups are labeled separately. They establish visible behavior, not
         ordinary-player difficulty.
+      </p>
+      <p class="note">
+        <strong>Video source boundary:</strong> these videos and the earlier opening-workload
+        timing trials precede <code>07ed46625</code>, which changes later built-in upgrade thresholds and
+        V4 result saving. They show the recorded artwork and behavior, not qualification of the new
+        progression. The separately linked late Riy timings use the corrected source
+        <code>08f5e6e0e</code>. Each capture retains its own source revision.
       </p>
       <nav aria-label="Review materials">
         <a href="art-review/native-worlds.html">Explore all maps and play links</a>
         <a href="../../../fpv-survivals-maps-movement-status.md">Completed and remaining work</a>
         <a href="NATIVE-PERFORMANCE.md">Performance evidence</a>
         <a href="NATIVE-FULL-CONTENT.md">Gameplay and Raid workload timing</a>
+        <a href="NATIVE-LATE-CONTENT.md">Three late Riy timing passes</a>
+        <a href="PROGRESSION-PARITY.md">Current progression and route findings</a>
         <a href="EXPANDED-MATRIX-RESULTS.md">Active and repetitive-input results</a>
         <a href="PILOT-BIAS.md">Build-route and progression findings</a>
       </nav>
@@ -139,6 +149,59 @@
           all five operation links.
         </figcaption>
       </figure>
+    </section>
+    <section>
+      <h2>Normal and reduced effects during one run</h2>
+      <p>
+        Haul Switchbacks, seed 17031991, Single Drone Fan, source <code>3a1e1f7d9</code> before
+        the progression fix. These muted 20-second segments come from one continuous earned run
+        with the automated pilot. Reduced effects was selected through shared Settings while
+        paused; normal effects was restored afterward.
+      </p>
+      <div class="clips">
+        <figure>
+          <video controls preload="none" poster="native/quarry-fan-mid-normal.png"
+            src="native/quarry-fan-mid-normal.webm"></video>
+          <figcaption>
+            <h3>Normal · starts at 2:39</h3>
+            Fan rank 4, Slow Field rank 3 and Side Burst rank 1.
+          </figcaption>
+        </figure>
+        <figure>
+          <video controls preload="none" poster="native/quarry-fan-mid-reduced.png"
+            src="native/quarry-fan-mid-reduced.webm"></video>
+          <figcaption>
+            <h3>Reduced · starts at 3:24</h3>
+            Fan rank 4, Slow Field rank 3 and Side Burst rank 2.
+          </figcaption>
+        </figure>
+      </div>
+      <p class="note">
+        The enemy state, positions and Side Burst rank differ. This shows the available effects
+        treatments in native combat; it is not an identical-state visual or performance comparison.
+        <a href="native/quarry-effects-comparison.json">Settings and recording hashes</a>.
+      </p>
+    </section>
+    <section>
+      <h2>Dense combat effects and voices</h2>
+      <p>
+        The same pre-fix Quarry Fan run, around 4:14 on <code>3a1e1f7d9</code>, with Fan rank 4,
+        Slow Field rank 3 and Side Burst rank 3. Master sound is enabled and normal effects restored.
+      </p>
+      <figure>
+        <video controls preload="none" poster="native/quarry-fan-dense-audio.png"
+          src="native/quarry-fan-dense-audio.webm"></video>
+        <figcaption>
+          <a href="native/quarry-fan-dense-audio.mp3">Listen to the effects/voices sample</a> ·
+          <a href="native/quarry-fan-dense-audio.json">Capture settings and audio measurement</a>.
+        </figcaption>
+      </figure>
+      <p class="note">
+        The recording is non-silent: measured mean −47.5 dB and peak −29.2 dB. It excludes external
+        soundtrack, HUD and upgrade cards. A Now playing label does not prove recorded music.
+        Warning audibility, reaction repetition and the complete music/effects mix still need
+        listening review; these volume measurements do not establish sound quality.
+      </p>
     </section>
     <section>
       <h2>Late-combat comparison on one map</h2>
@@ -347,10 +410,38 @@
         <a href="native-full-content-summary.json">exact source, viewport and timing windows</a>.
       </p>
       <p>
-        Remaining review: Survivor Echo routes, late reward collection, challenge-preset
-        readability, complete active/repetitive and normal/reduced-effects comparisons, real
-        soundtrack/warning audibility, and late-run performance coverage. External-device and
-        five-player trials remain skipped at the user’s direction.
+        After the progression correction, three separately restarted Riy Fan trials on Receiver
+        Gardens pass at p95 <strong>10.8 / 12.1 / 10.2 ms</strong> on <code>08f5e6e0e</code>.
+        They measure earned gameplay from about 3:30 to 5:28, including a surge and final-tank
+        arrival. Eight periodic samples per trial show 139–973 alive and 93–348 center-visible
+        enemies, with one canvas and stable base atlas storage. These are sampled ranges, not
+        sustained peaks or a full boss victory. See <a href="NATIVE-LATE-CONTENT.md">the late timing
+        report</a>. One reduced-effects comparison also passes at p95 <strong>10.3 ms</strong>
+        and p99 <strong>11.3 ms</strong>, with no interval above 33.3 ms. At the same 328.2-second
+        tick its full gameplay summary matches normal trial 2 except appearance. Sampled
+        populations match; effects peak at 32 versus 60 and sprite allocation at 1,740 versus
+        1,843. This is one comparison, not three reduced-effects trials. Normal settings were
+        restored. The quiet reference soak also passes on <code>08f5e6e0e</code>: 15 measured minutes,
+        <strong>118.8989 FPS</strong>, p95 <strong>9.7 ms</strong>, p99 <strong>10.6 ms</strong>,
+        worst 154.6 ms and 0.2373632% of intervals above 33.3 ms. All 62 samples retain one canvas
+        and fixed atlas storage; there is no dropped time, context loss or raw overflow. Stalls,
+        including those during disk-pressure cleanup, remain included. The
+        <a href="SOAK.md">soak report</a> preserves the original failed attempt too.
+      </p>
+      <p>
+        The <a href="PROGRESSION-PARITY.md">current progression comparison</a> records 47
+        unattended defeats and one unavailable checkpoint, with two active wins and ten losses.
+        Its separate fixed-route Survivor Echo now wins, while Riy Echo loses and retains a
+        91.2-second final-choice collection gap. The earlier outcomes above remain historical.
+      </p>
+      <p>
+        Latest main is merged at <code>7819c81a0</code> without changing Overflight runtime;
+        the recorded measurements retain <code>08f5e6e0e</code>. All <strong>90 focused integration
+        tests</strong> pass with zero skipped. The planned local checks are complete within
+        their recorded scope; <a href="https://github.com/mekhovov/revealline/pull/1248">PR 1248</a> contains the follow-up. Review judgments include late reward collection, Riy Echo approaches,
+        challenge readability, visual appeal and real soundtrack/warning balance. The recorded
+        scenarios do not certify every build or boss victory. External-device and five-player
+        trials remain skipped at the user’s direction.
       </p>
       <small
         >Capture settings and SHA-256 hashes:

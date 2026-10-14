@@ -1,0 +1,627 @@
+{
+  "schema": "OverflightExpandedEarnedMatrixPlanV1",
+  "simulationStarted": false,
+  "claim": "Balanced rotating dimension coverage; not exhaustive Cartesian or complete pairwise combinatorial coverage.",
+  "expectedRuntimeCommit": "e708ce99f0fc930406c15233d89d5598360b366d",
+  "sourceProvenanceFile": "progression-parity-provenance.json",
+  "fullCoverage": {
+    "baselines": 12,
+    "branches": 48,
+    "worlds": {
+      "field-crossing": 2,
+      "freight-depot": 2,
+      "relay-ruins": 2,
+      "river-port": 2,
+      "chalk-quarry": 2,
+      "orchard-strongpoint": 2
+    },
+    "modes": {
+      "survivor": 6,
+      "riy": 6
+    },
+    "builds": {
+      "fan": 4,
+      "echo": 4,
+      "systems": 4
+    },
+    "seeds": {
+      "101303": 4,
+      "202604": 4,
+      "303907": 4
+    },
+    "difficulty": {
+      "standard": 6,
+      "veteran": 6
+    },
+    "airframes": {
+      "1": 6,
+      "3": 6
+    },
+    "buildByMode": {
+      "survivor/fan": 2,
+      "riy/echo": 2,
+      "survivor/echo": 2,
+      "riy/systems": 2,
+      "survivor/systems": 2,
+      "riy/fan": 2
+    },
+    "difficultyByAirframes": {
+      "standard/3": 3,
+      "veteran/1": 3,
+      "veteran/3": 3,
+      "standard/1": 3
+    },
+    "policies": {
+      "park": 4,
+      "heading-0": 4,
+      "heading-1": 4,
+      "heading-2": 4,
+      "heading-3": 4,
+      "heading-4": 4,
+      "heading-5": 4,
+      "heading-6": 4,
+      "heading-7": 4,
+      "straight-shuttle": 3,
+      "tiny-circle": 3,
+      "wall": 3,
+      "orbit": 3
+    },
+    "policyByMode": {
+      "survivor/park": 2,
+      "survivor/heading-0": 3,
+      "survivor/heading-1": 2,
+      "survivor/heading-2": 3,
+      "riy/heading-3": 2,
+      "riy/heading-4": 3,
+      "riy/heading-5": 2,
+      "riy/heading-6": 3,
+      "survivor/heading-7": 2,
+      "survivor/straight-shuttle": 2,
+      "survivor/tiny-circle": 1,
+      "survivor/wall": 2,
+      "riy/orbit": 2,
+      "riy/park": 2,
+      "riy/heading-0": 1,
+      "riy/heading-1": 2,
+      "survivor/heading-3": 2,
+      "survivor/heading-4": 1,
+      "survivor/heading-5": 2,
+      "riy/heading-7": 2,
+      "riy/straight-shuttle": 1,
+      "riy/tiny-circle": 2,
+      "survivor/orbit": 1,
+      "riy/heading-2": 1,
+      "survivor/heading-6": 1,
+      "riy/wall": 1
+    },
+    "policyByCheckpoint": {
+      "60/park": 1,
+      "120/heading-0": 1,
+      "180/heading-1": 1,
+      "240/heading-2": 1,
+      "60/heading-3": 1,
+      "120/heading-4": 1,
+      "180/heading-5": 1,
+      "240/heading-6": 1,
+      "60/heading-7": 1,
+      "120/straight-shuttle": 1,
+      "180/tiny-circle": 1,
+      "240/wall": 1,
+      "60/orbit": 1,
+      "120/park": 1,
+      "180/heading-0": 1,
+      "240/heading-1": 1,
+      "60/heading-2": 1,
+      "120/heading-3": 1,
+      "180/heading-4": 1,
+      "240/heading-5": 1,
+      "60/heading-6": 1,
+      "120/heading-7": 1,
+      "180/straight-shuttle": 1,
+      "240/tiny-circle": 1,
+      "60/wall": 1,
+      "120/orbit": 1,
+      "180/park": 1,
+      "240/heading-0": 1,
+      "60/heading-1": 1,
+      "120/heading-2": 1,
+      "180/heading-3": 1,
+      "240/heading-4": 1,
+      "60/heading-5": 1,
+      "120/heading-6": 1,
+      "180/heading-7": 1,
+      "240/straight-shuttle": 1,
+      "60/tiny-circle": 1,
+      "120/wall": 1,
+      "180/orbit": 1,
+      "240/park": 1,
+      "60/heading-0": 1,
+      "120/heading-1": 1,
+      "180/heading-2": 1,
+      "240/heading-3": 1,
+      "60/heading-4": 1,
+      "120/heading-5": 1,
+      "180/heading-6": 1,
+      "240/heading-7": 1
+    }
+  },
+  "selectedCoverage": {
+    "baselines": 12,
+    "branches": 48,
+    "worlds": {
+      "field-crossing": 2,
+      "freight-depot": 2,
+      "relay-ruins": 2,
+      "river-port": 2,
+      "chalk-quarry": 2,
+      "orchard-strongpoint": 2
+    },
+    "modes": {
+      "survivor": 6,
+      "riy": 6
+    },
+    "builds": {
+      "fan": 4,
+      "echo": 4,
+      "systems": 4
+    },
+    "seeds": {
+      "101303": 4,
+      "202604": 4,
+      "303907": 4
+    },
+    "difficulty": {
+      "standard": 6,
+      "veteran": 6
+    },
+    "airframes": {
+      "1": 6,
+      "3": 6
+    },
+    "buildByMode": {
+      "survivor/fan": 2,
+      "riy/echo": 2,
+      "survivor/echo": 2,
+      "riy/systems": 2,
+      "survivor/systems": 2,
+      "riy/fan": 2
+    },
+    "difficultyByAirframes": {
+      "standard/3": 3,
+      "veteran/1": 3,
+      "veteran/3": 3,
+      "standard/1": 3
+    },
+    "policies": {
+      "park": 4,
+      "heading-0": 4,
+      "heading-1": 4,
+      "heading-2": 4,
+      "heading-3": 4,
+      "heading-4": 4,
+      "heading-5": 4,
+      "heading-6": 4,
+      "heading-7": 4,
+      "straight-shuttle": 3,
+      "tiny-circle": 3,
+      "wall": 3,
+      "orbit": 3
+    },
+    "policyByMode": {
+      "survivor/park": 2,
+      "survivor/heading-0": 3,
+      "survivor/heading-1": 2,
+      "survivor/heading-2": 3,
+      "riy/heading-3": 2,
+      "riy/heading-4": 3,
+      "riy/heading-5": 2,
+      "riy/heading-6": 3,
+      "survivor/heading-7": 2,
+      "survivor/straight-shuttle": 2,
+      "survivor/tiny-circle": 1,
+      "survivor/wall": 2,
+      "riy/orbit": 2,
+      "riy/park": 2,
+      "riy/heading-0": 1,
+      "riy/heading-1": 2,
+      "survivor/heading-3": 2,
+      "survivor/heading-4": 1,
+      "survivor/heading-5": 2,
+      "riy/heading-7": 2,
+      "riy/straight-shuttle": 1,
+      "riy/tiny-circle": 2,
+      "survivor/orbit": 1,
+      "riy/heading-2": 1,
+      "survivor/heading-6": 1,
+      "riy/wall": 1
+    },
+    "policyByCheckpoint": {
+      "60/park": 1,
+      "120/heading-0": 1,
+      "180/heading-1": 1,
+      "240/heading-2": 1,
+      "60/heading-3": 1,
+      "120/heading-4": 1,
+      "180/heading-5": 1,
+      "240/heading-6": 1,
+      "60/heading-7": 1,
+      "120/straight-shuttle": 1,
+      "180/tiny-circle": 1,
+      "240/wall": 1,
+      "60/orbit": 1,
+      "120/park": 1,
+      "180/heading-0": 1,
+      "240/heading-1": 1,
+      "60/heading-2": 1,
+      "120/heading-3": 1,
+      "180/heading-4": 1,
+      "240/heading-5": 1,
+      "60/heading-6": 1,
+      "120/heading-7": 1,
+      "180/straight-shuttle": 1,
+      "240/tiny-circle": 1,
+      "60/wall": 1,
+      "120/orbit": 1,
+      "180/park": 1,
+      "240/heading-0": 1,
+      "60/heading-1": 1,
+      "120/heading-2": 1,
+      "180/heading-3": 1,
+      "240/heading-4": 1,
+      "60/heading-5": 1,
+      "120/heading-6": 1,
+      "180/heading-7": 1,
+      "240/straight-shuttle": 1,
+      "60/tiny-circle": 1,
+      "120/wall": 1,
+      "180/orbit": 1,
+      "240/park": 1,
+      "60/heading-0": 1,
+      "120/heading-1": 1,
+      "180/heading-2": 1,
+      "240/heading-3": 1,
+      "60/heading-4": 1,
+      "120/heading-5": 1,
+      "180/heading-6": 1,
+      "240/heading-7": 1
+    }
+  },
+  "selected": [
+    {
+      "index": 0,
+      "world": "field-crossing",
+      "layout": "field-crossing-shelterbelt-gaps",
+      "mode": "survivor",
+      "seed": 101303,
+      "build": "fan",
+      "difficulty": "standard",
+      "airframes": 3,
+      "branches": [
+        {
+          "checkpoint": 60,
+          "policy": "park"
+        },
+        {
+          "checkpoint": 120,
+          "policy": "heading-0"
+        },
+        {
+          "checkpoint": 180,
+          "policy": "heading-1"
+        },
+        {
+          "checkpoint": 240,
+          "policy": "heading-2"
+        }
+      ]
+    },
+    {
+      "index": 1,
+      "world": "field-crossing",
+      "layout": "field-crossing-supply-orchard-edge",
+      "mode": "riy",
+      "seed": 303907,
+      "build": "echo",
+      "difficulty": "veteran",
+      "airframes": 1,
+      "branches": [
+        {
+          "checkpoint": 60,
+          "policy": "heading-3"
+        },
+        {
+          "checkpoint": 120,
+          "policy": "heading-4"
+        },
+        {
+          "checkpoint": 180,
+          "policy": "heading-5"
+        },
+        {
+          "checkpoint": 240,
+          "policy": "heading-6"
+        }
+      ]
+    },
+    {
+      "index": 2,
+      "world": "freight-depot",
+      "layout": "freight-depot-dispatch-junction",
+      "mode": "survivor",
+      "seed": 202604,
+      "build": "echo",
+      "difficulty": "veteran",
+      "airframes": 3,
+      "branches": [
+        {
+          "checkpoint": 60,
+          "policy": "heading-7"
+        },
+        {
+          "checkpoint": 120,
+          "policy": "straight-shuttle"
+        },
+        {
+          "checkpoint": 180,
+          "policy": "tiny-circle"
+        },
+        {
+          "checkpoint": 240,
+          "policy": "wall"
+        }
+      ]
+    },
+    {
+      "index": 3,
+      "world": "freight-depot",
+      "layout": "freight-depot-loading-loop",
+      "mode": "riy",
+      "seed": 101303,
+      "build": "systems",
+      "difficulty": "standard",
+      "airframes": 1,
+      "branches": [
+        {
+          "checkpoint": 60,
+          "policy": "orbit"
+        },
+        {
+          "checkpoint": 120,
+          "policy": "park"
+        },
+        {
+          "checkpoint": 180,
+          "policy": "heading-0"
+        },
+        {
+          "checkpoint": 240,
+          "policy": "heading-1"
+        }
+      ]
+    },
+    {
+      "index": 4,
+      "world": "relay-ruins",
+      "layout": "relay-ruins-split-compound",
+      "mode": "survivor",
+      "seed": 303907,
+      "build": "systems",
+      "difficulty": "standard",
+      "airframes": 1,
+      "branches": [
+        {
+          "checkpoint": 60,
+          "policy": "heading-2"
+        },
+        {
+          "checkpoint": 120,
+          "policy": "heading-3"
+        },
+        {
+          "checkpoint": 180,
+          "policy": "heading-4"
+        },
+        {
+          "checkpoint": 240,
+          "policy": "heading-5"
+        }
+      ]
+    },
+    {
+      "index": 5,
+      "world": "relay-ruins",
+      "layout": "relay-ruins-receiver-gardens",
+      "mode": "riy",
+      "seed": 202604,
+      "build": "fan",
+      "difficulty": "veteran",
+      "airframes": 3,
+      "branches": [
+        {
+          "checkpoint": 60,
+          "policy": "heading-6"
+        },
+        {
+          "checkpoint": 120,
+          "policy": "heading-7"
+        },
+        {
+          "checkpoint": 180,
+          "policy": "straight-shuttle"
+        },
+        {
+          "checkpoint": 240,
+          "policy": "tiny-circle"
+        }
+      ]
+    },
+    {
+      "index": 6,
+      "world": "river-port",
+      "layout": "river-port-floodgate-yard",
+      "mode": "survivor",
+      "seed": 101303,
+      "build": "fan",
+      "difficulty": "veteran",
+      "airframes": 1,
+      "branches": [
+        {
+          "checkpoint": 60,
+          "policy": "wall"
+        },
+        {
+          "checkpoint": 120,
+          "policy": "orbit"
+        },
+        {
+          "checkpoint": 180,
+          "policy": "park"
+        },
+        {
+          "checkpoint": 240,
+          "policy": "heading-0"
+        }
+      ]
+    },
+    {
+      "index": 7,
+      "world": "river-port",
+      "layout": "river-port-twin-docks",
+      "mode": "riy",
+      "seed": 303907,
+      "build": "echo",
+      "difficulty": "standard",
+      "airframes": 3,
+      "branches": [
+        {
+          "checkpoint": 60,
+          "policy": "heading-1"
+        },
+        {
+          "checkpoint": 120,
+          "policy": "heading-2"
+        },
+        {
+          "checkpoint": 180,
+          "policy": "heading-3"
+        },
+        {
+          "checkpoint": 240,
+          "policy": "heading-4"
+        }
+      ]
+    },
+    {
+      "index": 8,
+      "world": "chalk-quarry",
+      "layout": "chalk-quarry-haul-switchbacks",
+      "mode": "survivor",
+      "seed": 202604,
+      "build": "echo",
+      "difficulty": "standard",
+      "airframes": 3,
+      "branches": [
+        {
+          "checkpoint": 60,
+          "policy": "heading-5"
+        },
+        {
+          "checkpoint": 120,
+          "policy": "heading-6"
+        },
+        {
+          "checkpoint": 180,
+          "policy": "heading-7"
+        },
+        {
+          "checkpoint": 240,
+          "policy": "straight-shuttle"
+        }
+      ]
+    },
+    {
+      "index": 9,
+      "world": "chalk-quarry",
+      "layout": "chalk-quarry-reclaimer-court",
+      "mode": "riy",
+      "seed": 101303,
+      "build": "systems",
+      "difficulty": "veteran",
+      "airframes": 1,
+      "branches": [
+        {
+          "checkpoint": 60,
+          "policy": "tiny-circle"
+        },
+        {
+          "checkpoint": 120,
+          "policy": "wall"
+        },
+        {
+          "checkpoint": 180,
+          "policy": "orbit"
+        },
+        {
+          "checkpoint": 240,
+          "policy": "park"
+        }
+      ]
+    },
+    {
+      "index": 10,
+      "world": "orchard-strongpoint",
+      "layout": "orchard-strongpoint-glasshouse-ruins",
+      "mode": "survivor",
+      "seed": 303907,
+      "build": "systems",
+      "difficulty": "veteran",
+      "airframes": 3,
+      "branches": [
+        {
+          "checkpoint": 60,
+          "policy": "heading-0"
+        },
+        {
+          "checkpoint": 120,
+          "policy": "heading-1"
+        },
+        {
+          "checkpoint": 180,
+          "policy": "heading-2"
+        },
+        {
+          "checkpoint": 240,
+          "policy": "heading-3"
+        }
+      ]
+    },
+    {
+      "index": 11,
+      "world": "orchard-strongpoint",
+      "layout": "orchard-strongpoint-irrigation-courts",
+      "mode": "riy",
+      "seed": 202604,
+      "build": "fan",
+      "difficulty": "standard",
+      "airframes": 1,
+      "branches": [
+        {
+          "checkpoint": 60,
+          "policy": "heading-4"
+        },
+        {
+          "checkpoint": 120,
+          "policy": "heading-5"
+        },
+        {
+          "checkpoint": 180,
+          "policy": "heading-6"
+        },
+        {
+          "checkpoint": 240,
+          "policy": "heading-7"
+        }
+      ]
+    }
+  ]
+}
