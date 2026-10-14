@@ -113,16 +113,17 @@
   },
   "native": {
     "onlineLifecycle": "passed-bounded-native-review",
-    "offlinePreparation": "failed-first-attempt-service-worker-registration-aborted",
+    "offlinePreparation": "first-attempt-aborted-manual-retry-ready-offline",
     "offlineCause": "unproven",
-    "offlineReadyVerified": false,
+    "offlineReadyVerified": true,
     "observations": [
       "First canonical offline preparation failed immediately with ServiceWorker registration operation aborted. No Ready offline claim.",
       "Actual Play available version link opened the packaged Home online.",
       "Explicit regional entry rendered paused at3m,zero speed and zero throttle.",
       "Deliberate arm and W1700ms plus Shift+Up2000ms produced visible flight at3.8m,+3.1m/s vertical,1.2m/s drift.",
       "V switched to Chase; Space paused at the retained pose; P opened the shared menu.",
-      "Selecting Acro reset to3m,zero speed and throttle,then Ready to arm(disarmed). No error logs during online flight were observed."
+      "Selecting Acro reset to3m,zero speed and throttle,then Ready to arm(disarmed). No error logs during online flight were observed.",
+      "2026-10-15: one manual retry on the same unchanged exact source/origin reached Ready offline; actual Open prepared practice link opened SIM Home. No storage cleanup, code change or browser restart. Original abort cause remains unknown."
     ],
     "serverEvidence": [
       "Before the failure investigation, canonical HTML/app/context/current returned200/304 and no browser worker request appeared. Only favicon.ico was404.",
@@ -136,6 +137,11 @@
       "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/regional-continuous-package-ready.png",
       "bytes": 51678,
       "sha256": "08aff8bd354498187fde8d83eb1166774b563ea036acd0d3a6c9e1c6fc0fc0ea"
+    },
+    "retryScreenshot": {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/continuous-offline-ready-retry.png",
+      "bytes": 77332,
+      "sha256": "6abdfe48822867c4a86c59a135e2d77c35bcf4f413d6453f7d31300d84b12ba8"
     }
   },
   "catalogueLifecycle": {
@@ -145,5 +151,10 @@
     "failures": 0,
     "receipt": "fpv-package-lifecycle-followup-20261014.json"
   },
-  "boundary": "Exact optional artifact and online native lifecycle only; separate external region fixture, no offline success, no inferred seam crossing, no catalogue admission or device performance claim."
+  "boundary": "Exact optional artifact, online native lifecycle and successful preparation retry. No stopped-origin reload for this candidate, external regional source offline installation, inferred seam crossing, catalogue admission or device performance claim.",
+  "cloudConclusion": {
+    "optionalPractice": "success",
+    "companyCandidate": "success",
+    "run": 38642048693
+  }
 }

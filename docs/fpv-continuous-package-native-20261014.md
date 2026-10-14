@@ -1,10 +1,10 @@
-# Continuous-host package: online lifecycle passed, offline attempt unresolved
+# Continuous-host package: online lifecycle and preparation retry passed
 
-Exact source `f5411438367b5bf3cadefdad55a775e6a8f0c2c6` passed independent archive verification and a bounded online native flight review. Its first offline preparation attempt **failed** with an aborted service-worker registration. That failure remains unresolved; online success does not establish offline readiness.
+Exact source `f5411438367b5bf3cadefdad55a775e6a8f0c2c6` passed independent archive verification and a bounded online native flight review. Its first offline preparation attempt **failed** with an aborted service-worker registration. On 2026-10-15, one manual retry reached Ready offline and its actual Open prepared practice link opened SIM Home. The original abort cause remains unknown; no code, browser storage or process state was reset to obtain the retry.
 
 ## Immutable identity
 
-- [Cloud run38642048693](https://github.com/mekhovov/revealline/actions/runs/38642048693), successful optional-practice job; [artifact11929909579](https://github.com/mekhovov/revealline/actions/runs/38642048693/artifacts/11929909579).
+- [Cloud run38642048693](https://github.com/mekhovov/revealline/actions/runs/38642048693), successful optional-practice and company candidate jobs; [artifact11929909579](https://github.com/mekhovov/revealline/actions/runs/38642048693/artifacts/11929909579).
 - Source tree `b714b52dce239e3a653b193bd5b0a6c4c93d4f40`; Worlds revision `81ae2dc1403c0b3f8309503c70fb644a23917d59308b198e02460063717debf8`.
 - All15artifact checksums and every member of all6runtime/source archives independently verified. Worlds runtime:154files/17,309,023bytes; source:156files/17,351,614bytes. Limits remain156files/20MiB.
 - Two reproducible builds and committed input binding verified. Public eligibility remains false.
@@ -21,4 +21,4 @@ The [companion receipt](fpv-continuous-package-native-20261014.json) records exa
 
 ## Remaining boundaries
 
-Offline preparation must be retried and qualified independently. No regional source offline installation, browser restart, general network-offline availability, real-device FPS or public catalogue admission is claimed. Native visible flight does not expose exact cell coordinates; no seam crossing is inferred from timed keyboard input. Exact continuous-crossing evidence remains the separate [functional streaming checks](fpv-regional-continuous-streaming.md).
+Preparation succeeded on manual retry, but this candidate has not received a stopped-origin reload check. The initial failure remains recorded above; success does not explain its cause. No regional source offline installation, browser restart, general network-offline availability, real-device FPS or public catalogue admission is claimed. Native visible flight does not expose exact cell coordinates; no seam crossing is inferred from timed keyboard input. Exact continuous-crossing evidence remains the separate [functional streaming checks](fpv-regional-continuous-streaming.md).
