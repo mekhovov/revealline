@@ -14,7 +14,7 @@ deployment and public empty-catalogue check passed. No application release is
 selected yet. Independent observer follow-up continues on a new branch.
 
 The Practice branch is rebased onto main
-`e0aec7e468d80546c74e5cd2c11224dcdd3aa16b`, including merged SIM recovery PR #1193,
+`2abfd20bdee39369b3480ed3013074a8dfac3006`, including merged SIM recovery PR #1193,
 regional authoring PRs #1197/#1200, World Library PR #1199 and Snake acceptance/retry changes. Earlier candidate receipts remain historical,
 bound to their recorded source, rather than being relabelled as this revision.
 The unrelated primary checkout and active SIM worktrees are untouched.
@@ -29,15 +29,15 @@ arbitrary destination or executable query parameter.
 
 ## What is already implemented
 
-| Area                | Implemented                                                                                                                                      | Remaining proof or refinement                                                                              |
-| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------- |
-| Discovery           | Three descriptor-driven cards, gameplay previews, purposes, inputs, requirements, versions/sizes, EN/UK, Play/details                            | Public selection still empty; verify current browser focus/layout and real released bytes                  |
-| Compatibility       | v1 index retained, bounded revision-keyed details, safe routes, metadata fallback                                                                | Repeat current public compatibility checks after deployment                                                |
-| Failure handling    | Dated last-known catalogue, empty/failure states, retry/navigation                                                                               | Exercise current interrupted/offline requests in browser                                                   |
-| Offline preparation | Hash/dependency/worker readiness, progress/cancel, inactivity and overall bounds, previous version retention, scoped removal; all-three observer | Authorized real-candidate installation/recovery observation and physical/browser matrix remain             |
-| Publishing          | Three-app reproducibility/admission, existing publisher/selector; repaired main workflow deployed and empty catalogue verified                   | Full retained-site capacity and reviewed release selection remain                                          |
-| Guides              | Corrected EN/UK player HTML/repository help, maintainer descriptor/preflight/preview/release recipe and parity tests                             | Follow guides from scratch on the qualified real candidate and collect current screenshots/device evidence |
-| Fourth app          | Automated registration and six-checkpoint real-browser launch/start/pause/retry, installation/update/offline reopen/rollback/retirement          | Complete for the unpublished fixture; does not qualify the three real apps and must never be published     |
+| Area                | Implemented                                                                                                                                                         | Remaining proof or refinement                                                                              |
+| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
+| Discovery           | Three descriptor-driven cards, gameplay previews, purposes, inputs, requirements, versions/sizes, EN/UK, Play/details; component browser focus/layout checks passed | Public selection still empty; qualify full-shell behavior and real released bytes                          |
+| Compatibility       | v1 index retained, bounded revision-keyed details, safe routes, metadata fallback                                                                                   | Repeat current public compatibility checks after deployment                                                |
+| Failure handling    | Dated last-known catalogue, empty/failure states, retry/navigation; component browser failure/cache/retry checks passed                                             | Full-shell and released-package offline checks remain                                                      |
+| Offline preparation | Hash/dependency/worker readiness, progress/cancel, inactivity and overall bounds, previous version retention, scoped removal; all-three observer                    | Authorized real-candidate installation/recovery observation and physical/browser matrix remain             |
+| Publishing          | Three-app reproducibility/admission, existing publisher/selector; repaired main workflow deployed and empty catalogue verified                                      | Full retained-site capacity and reviewed release selection remain                                          |
+| Guides              | Corrected EN/UK player HTML/repository help, maintainer descriptor/preflight/preview/release recipe and parity tests                                                | Follow guides from scratch on the qualified real candidate and collect current screenshots/device evidence |
+| Fourth app          | Automated registration and six-checkpoint real-browser launch/start/pause/retry, installation/update/offline reopen/rollback/retirement                             | Complete for the unpublished fixture; does not qualify the three real apps and must never be published     |
 
 Prior 290/290 practice and 37/37 SIM recovery checks are useful recorded evidence,
 not automatic approval of a later source. See the
@@ -119,6 +119,10 @@ an already published optional release.
    immutable content to a supported distribution path with explicit CORS, integrity,
    offline, ownership, bandwidth and retention contracts. This can create sustainable
    room but is not a small Practice fix and must not be chosen implicitly.
+   The [capacity decision proposal](flight-practice-capacity-decision-2026-10-14.md)
+   compares options, recommends evaluating a dedicated same-origin project target
+   only with owner approval, and spells out v1 launcher, installation identity,
+   quota, worker scope and rollback requirements. No target is provisioned.
 3. **Not recommended: remove content, omit the prior version or raise the guard.**
    These change user-visible guarantees or conceal the host limit. They require
    an explicit product decision and are not part of this implementation.
@@ -190,6 +194,36 @@ Do not mark “three playable public apps” done on the strength of local fixtu
 
 ### Latest integration checkpoint
 
+- Final rebase includes merged Coaster catalogue #1209 and World return-focus
+  #1211 at main `2abfd20bd`. Browser receipts below retain their earlier
+  `caab4312e` baseline and exact source hashes; they are not relabelled as the
+  latest runtime or public-release qualification.
+- Integrated main `caab4312e`, including SIM catalogue navigation and the Pages
+  deployment concurrency repair, without touching SIM's active worktree. Fixed
+  the standalone directory's main-game and guide links to retain EN/UK selection.
+  [Component browser observations](flight-practice-directory-observation-2026-10-14.md)
+  cover keyboard focus, narrow/reflow layout, reduced motion, empty/error/cache
+  states, basic-metadata fallback and retry. They do not qualify the whole game
+  shell, native browser zoom, screen readers or physical controllers.
+- Repaired the observer's current profile-transfer disclosure and native keyboard
+  actions; full v1/v2 profile export comparisons remain strict. The refreshed
+  [controlled three-app observation](flight-practice-qualification-20261014/controlled-three-app-caab4312e.json)
+  passed **eight checkpoints**: preparation, installed windows, genuine offline
+  launcher/window reopening after closing every window, profile/proof retention,
+  failed-install preservation, same-payload path update/rollback and scoped
+  removal. Cleanup passed with no page errors. Its
+  [build provenance](flight-practice-qualification-20261014/controlled-build-caab4312e.json)
+  records the copied test-only password metadata/version and baseline. This is
+  not unchanged-release qualification, distinct-payload migration, browser-process
+  restart, pointer-input or human-flight evidence.
+- The [capacity decision proposal](flight-practice-capacity-decision-2026-10-14.md)
+  makes the next owner decision explicit. No new infrastructure, content removal,
+  retention reduction, guard increase or public selection is implemented.
+- Current continuation regression run: **317 passed, 0 failed, 0 skipped**;
+  **21 focused directory/observer tests** also passed. Lint and whitespace checks
+  passed. Independent review found no actionable issues in the locale fix or
+  transfer adapter. The live practice verifier still reports a valid empty
+  catalogue; no three-app public-play claim follows from these local checks.
 - #1195 and #1198 are merged. Deployment [38517254013](https://github.com/mekhovov/revealline/actions/runs/38517254013)
   passed for `1a2e87d50`; `/practice/index.json` returns the valid v1 empty
   catalogue. The exact-source deployed-site receipt records **920,119,188 bytes**
@@ -214,8 +248,8 @@ Do not mark “three playable public apps” done on the strength of local fixtu
   offline preparation and proof import/export, then failed locating **Profile JSON**
   after Setup navigation. No all-three checkpoint passed; cleanup succeeded and
   no page errors were recorded. Retained [failed receipt](flight-practice-qualification-20261014/controlled-observer-profile-navigation-failed.json)
-  is diagnostic only. Repair and recheck that observer navigation before using it
-  for real-candidate qualification; the earlier pointer-focus issue also remains.
+  is diagnostic only. The later controlled run below repairs and rechecks this
+  navigation; the earlier pointer-focus issue remains unqualified.
 - Final review found and fixed a delayed browser-startup cleanup race. Pending
   acquisition now retains the profile and records cleanup as unverified; late
   completion cannot overwrite a timeout with success. The final pre-rebase suite

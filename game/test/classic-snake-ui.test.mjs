@@ -2017,6 +2017,74 @@ test('reception live status writes only changed text and accessible labels', asy
   assert.equal(run.tick, 0, 'presentation checks do not change the accepted simulation');
 });
 
+// Observe writes in the lightweight DOM fixture; this does not model an actual
+// screen reader's announcement queue.
+function observeLiveStatusWrites(node) {
+  const text = Object.getOwnPropertyDescriptor(Element.prototype, 'textContent');
+  const setAttribute = node.setAttribute;
+  const writes = { text: 0, label: 0 };
+  Object.defineProperty(node, 'textContent', {
+    get() {
+      return text.get.call(this);
+    },
+    set(value) {
+      writes.text++;
+      text.set.call(this, value);
+    },
+  });
+  node.setAttribute = function (name, value) {
+    if (name === 'aria-label') writes.label++;
+    return setAttribute.call(this, name, value);
+  };
+  return writes;
+}
+
+for (const locale of ['en', 'uk']) {
+  test(`${locale} pause announcements update only when their message changes`, async () => {
+    const state = await harness({ query: `&lang=${locale}` });
+    state.window.emit('blur');
+    const announcement = state.$('announcement');
+    assert.equal(announcement.getAttribute('role'), 'status');
+    assert.equal(announcement.textContent, CLASSIC_COPY[locale].paused);
+    const writes = observeLiveStatusWrites(announcement);
+    for (let now = 0; now < 5; now++) state.frame(now);
+    assert.equal(writes.text, 0, 'unchanged pause status stays quiet');
+    state.start();
+    assert.equal(announcement.textContent, '');
+    assert.equal(writes.text, 1, 'resume clears the old pause announcement once');
+    state.window.emit('blur');
+    assert.equal(announcement.textContent, CLASSIC_COPY[locale].paused);
+    assert.equal(writes.text, 2, 'a new pause is still announced');
+    for (let now = 5; now < 10; now++) state.frame(now);
+    assert.equal(writes.text, 2);
+  });
+
+  test(`${locale} completed grade and session-only saving status stay quiet between changes`, async () => {
+    const state = await harness({
+      query: `&lang=${locale}`,
+      recordReceipt: { verified: true, saved: false },
+    });
+    const now = flyVerifiedRoute(state);
+    await flush();
+    const stars = state.$('snake-stars');
+    const notice = state.$('result-save-notice');
+    assert.equal(stars.textContent, '★★★');
+    assert.equal(notice.textContent, CLASSIC_COPY[locale].verifiedNotSaved);
+    const starsWrites = observeLiveStatusWrites(stars);
+    const noticeWrites = observeLiveStatusWrites(notice);
+    const outcomeWrites = observeLiveStatusWrites(state.$('announcement'));
+    state.window.emit('blur');
+    for (let offset = 1; offset <= 6; offset++) state.frame(now + offset * 1000);
+    assert.deepEqual(starsWrites, { text: 0, label: 0 });
+    assert.equal(noticeWrites.text, 0);
+    assert.equal(outcomeWrites.text, 0);
+    state.shell.elements.buttons.retry.click();
+    assert.equal(notice.hidden, true);
+    assert.equal(notice.textContent, '');
+    assert.equal(noticeWrites.text, 1, 'retry clears the previous save failure once');
+  });
+}
+
 test('Versus reception belongs to each board rather than the most exposed opponent', async () => {
   const state = await receptionHarness('local-burst-v2', 'versus');
   const [left, right] = state.created;

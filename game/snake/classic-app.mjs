@@ -1650,7 +1650,7 @@ function refresh() {
     outcome === 'p1' || outcome === 'p2'
       ? text('winner', { player: outcome === 'p1' ? 1 : 2 })
       : text(outcome ?? (ready ? 'ready' : 'paused'));
-  $('announcement').textContent =
+  const announcement =
     outcome === 'lost'
       ? failureText(runs[0], match.boardResults[0]) || title
       : outcome
@@ -1660,6 +1660,7 @@ function refresh() {
           : paused
             ? text('paused')
             : '';
+  if ($('announcement').textContent !== announcement) $('announcement').textContent = announcement;
   $('result-detail').textContent =
     $('announcement').textContent +
     (!nextMission() && outcome === 'won' && mode !== 'versus'
@@ -1793,7 +1794,9 @@ function ratingCriteriaText(run, displayMode = mode) {
 function renderRatings() {
   if (!$('snake-stars')) return;
   $('result-save-notice').hidden = unsavedOutcome !== match || !result();
-  $('result-save-notice').textContent = unsavedOutcome === match ? text('verifiedNotSaved') : '';
+  const saveNotice = unsavedOutcome === match ? text('verifiedNotSaved') : '';
+  if ($('result-save-notice').textContent !== saveNotice)
+    $('result-save-notice').textContent = saveNotice;
   const eligible = format === 'campaign' && mode !== 'versus';
   const grade =
     eligible && verifiedOutcome === match
@@ -1808,7 +1811,7 @@ function renderRatings() {
         })
       : null;
   $('snake-stars').hidden = !eligible || result() !== 'won';
-  $('snake-stars').textContent =
+  const starsText =
     liveProvenance === 'import'
       ? locale === 'uk'
         ? 'Запис · без нових нагород'
@@ -1818,10 +1821,10 @@ function renderRatings() {
         : locale === 'uk'
           ? 'Перевірка результату…'
           : 'Verifying completion…';
-  $('snake-stars').setAttribute(
-    'aria-label',
-    grade?.stars ? `${grade.stars} / 3` : $('snake-stars').textContent,
-  );
+  if ($('snake-stars').textContent !== starsText) $('snake-stars').textContent = starsText;
+  const starsLabel = grade?.stars ? `${grade.stars} / 3` : starsText;
+  if ($('snake-stars').getAttribute('aria-label') !== starsLabel)
+    $('snake-stars').setAttribute('aria-label', starsLabel);
   $('snake-rating-criteria').textContent = ratingCriteriaText(runs[0]);
 }
 function restore(raw, { provenance = 'import' } = {}) {

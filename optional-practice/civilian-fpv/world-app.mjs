@@ -1010,7 +1010,8 @@ export function mountWorldApp({
     globalTools = null,
     missionChooser = null,
     missionLibrary = null,
-    missionLaunchGeneration = 0;
+    missionLaunchGeneration = 0,
+    runtimeOfflineFeedback = null;
   let entries = [],
     playlistId = unique('playlist'),
     playlistDraft = null,
@@ -1732,7 +1733,39 @@ export function mountWorldApp({
     if (id === 'packs') worldLibrary.open();
     if (id === 'creator') ensureSpatialEditor();
   }
+  function paintRuntimeOfflineStatus() {
+    const messages = {
+      preparing: [
+        'Preparing simulator files for offline use…',
+        'Підготовка файлів для автономного запуску…',
+      ],
+      removing: ['Removing offline simulator files…', 'Прибирання автономних файлів симулятора…'],
+      ready: ['Offline runtime preparation completed.', 'Підготовку автономного запуску завершено.'],
+      removed: [
+        'Offline simulator files removed. Installed worlds and flight records are kept.',
+        'Автономні файли симулятора прибрано. Встановлені світи й записи польотів збережено.',
+      ],
+      cancelled: ['Offline download cancelled.', 'Автономне завантаження скасовано.'],
+      unavailable: [
+        'Offline installation needs a secure browser with service-worker support.',
+        'Для автономного встановлення потрібен захищений браузер із підтримкою сервісних воркерів.',
+      ],
+    };
+    const text = !runtimeOfflineFeedback
+      ? ''
+      : messages[runtimeOfflineFeedback.kind]
+        ? txt(...messages[runtimeOfflineFeedback.kind])
+        : runtimeOfflineFeedback.error;
+    // Both panels report the same completed operation; button presence is not readiness evidence.
+    for (const id of ['runtime-offline-status', 'settings-runtime-offline-status']) {
+      const node = $(id);
+      if (!node) continue;
+      if (node.textContent !== text) node.textContent = text;
+      node.hidden = !text;
+    }
+  }
   function paintLanguage() {
+    paintRuntimeOfflineStatus();
     enemyStatsViews.forEach((view) => view.refresh());
     const toolNames = {
       learn: txt('Flight School', 'Льотна школа'),
@@ -6626,6 +6659,11 @@ export function mountWorldApp({
           'Постійне сховище не надано. Експортуйте пакунки та записи.',
         );
   });
+  const settingsRuntimeOfflineStatus = doc.createElement('p');
+  settingsRuntimeOfflineStatus.id = 'settings-runtime-offline-status';
+  settingsRuntimeOfflineStatus.setAttribute('role', 'status');
+  settingsRuntimeOfflineStatus.setAttribute('aria-live', 'polite');
+  settingsRuntimeOfflineStatus.hidden = true;
   const runtimeOffline = mountPracticeOfflineControls({
     prepareButton: $('prepare-runtime'),
     removeButton: $('remove-runtime'),
@@ -6635,32 +6673,14 @@ export function mountWorldApp({
     packageId: 'fpv-worlds',
     onStatus(kind, error) {
       if (disposed) return;
-      const messages = {
-        preparing: [
-          'Preparing simulator files for offline use…',
-          'Підготовка файлів для автономного запуску…',
-        ],
-        removing: ['Removing offline simulator files…', 'Прибирання автономних файлів симулятора…'],
-        ready: [
-          'Offline runtime preparation completed.',
-          'Підготовку автономного запуску завершено.',
-        ],
-        removed: [
-          'Offline simulator files removed. Installed worlds and flight records are kept.',
-          'Автономні файли симулятора прибрано. Встановлені світи й записи польотів збережено.',
-        ],
-        cancelled: ['Offline download cancelled.', 'Автономне завантаження скасовано.'],
-      };
-      $('runtime-offline-status').textContent = messages[kind]
-        ? txt(...messages[kind])
-        : String(error?.message ?? error);
+      runtimeOfflineFeedback = { kind, error: String(error?.message ?? error ?? '') };
+      paintRuntimeOfflineStatus();
     },
   });
-  if (!runtimeOffline.available)
-    $('runtime-offline-status').textContent = txt(
-      'Offline installation needs a secure browser with service-worker support.',
-      'Для автономного встановлення потрібен захищений браузер із підтримкою сервісних воркерів.',
-    );
+  if (!runtimeOffline.available) {
+    runtimeOfflineFeedback = { kind: 'unavailable' };
+    paintRuntimeOfflineStatus();
+  }
   on($('world-flight-menu'), 'click', () => setFlightMenu(true));
   on($('world-flight-close-menu'), 'click', () => setFlightMenu(false));
   on($('world-flight-resume'), 'click', () => $('world-arm').click());
@@ -7752,6 +7772,7 @@ export function mountWorldApp({
         doc.querySelector('[data-tab="creator"]'),
         doc.querySelector('[data-tab="packs"]'),
         $('prepare-runtime'),
+        settingsRuntimeOfflineStatus,
         $('persistent-storage'),
       ],
       extras: [

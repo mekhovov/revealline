@@ -120,6 +120,13 @@ retain their exact source attribution.
 
 ## Deferred qualification and intentional grading limits
 
+The [release follow-through](release-followthrough.md) confirms PR #1208 is merged
+and its Snake/audio modules are published at an observed main revision. It also
+records 72 additional alternate-look board comparisons, the Night Arcade roof
+contrast correction, and change-only pause/result/saving announcements with
+113 passing host tests. That public observation covers #1208; the new corrections
+are separately delivered and are not claimed live before their own deployment.
+
 1. **Deferred by request: physical-device qualification.** Responsive desktop emulation cannot establish touchscreen ergonomics, physical controller behavior, thermal throttling or low-end phone frame times. Use the existing lab/gallery on representative phones and controllers before claiming those devices qualified. This does not block the current delivery.
 2. **Optional: additional silver/gold calibration.** Completion stars and personal records are the accepted finished policy for uncalibrated and variable-condition setups. Higher grades require compatible independent evidence and a fairness policy; a single solver route is insufficient. This is not an undisclosed unlock task for players.
 3. **Deferred by request: player comparison and pacing feedback.** Editorial review, titles-hidden screenshots and winning proofs do not prove recognition or enjoyment. No new player study or approval wait is required for this delivery.
