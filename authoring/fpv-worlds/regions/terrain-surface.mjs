@@ -1,9 +1,10 @@
 /** Original, bounded authoring surface study. Colour/roughness only; never moves vertices. */
 import * as THREE from '../../../optional-practice/civilian-fpv/vendor/three.module.js';
+import { createUrbanGroundSurface } from './urban-ground-surface.mjs';
 
 export function validateTerrainSurface(style = 'plain', quality = 'balanced') {
   if (
-    !['plain', 'canyon'].includes(style) ||
+    !['plain', 'canyon', 'urban'].includes(style) ||
     !['performance', 'balanced', 'quality'].includes(quality)
   )
     throw new TypeError('Unknown regional terrain surface profile');
@@ -35,6 +36,7 @@ export function createTerrainSurface({ style = 'plain', quality = 'balanced', or
     )
   )
     throw new TypeError('Terrain surface needs a bounded integer origin');
+  if (style === 'urban') return createUrbanGroundSurface({ quality, originMm });
   const material = new THREE.MeshStandardMaterial({
     color: style === 'plain' ? 0x687647 : 0xffffff,
     roughness: 1,

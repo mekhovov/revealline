@@ -124,7 +124,11 @@ document.querySelector('form').addEventListener('submit', async (event) => {
     };
     window = terrain
       ? createVerifiedMixedWindow(terrain, {
-          source: { baseURL: new URL('./', companionURL).href },
+          source: {
+            baseURL: new URL('./', companionURL).href,
+            surfaceStyle: new URLSearchParams(location.search).get('ground') ?? 'plain',
+            surfaceQuality: new URLSearchParams(location.search).get('quality') ?? 'balanced',
+          },
           scenery: { manifest, source: scenerySource },
         })
       : createVerifiedSceneryWindow(manifest, scenerySource);
