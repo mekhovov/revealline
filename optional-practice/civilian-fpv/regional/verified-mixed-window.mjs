@@ -14,6 +14,7 @@ import {
   validateFrameTransaction,
   adoptVerifiedFrame,
   readFramePose,
+  prepareVerifiedFrame,
 } from "./frame-transaction.mjs";
 
 const MiB = 1024 * 1024;
@@ -235,6 +236,11 @@ export function createVerifiedMixedWindow(
         ),
         "Mixed local origins disagree",
       );
+      pair.group.add(pair.terrain.group, pair.scenery.group);
+      if (transaction?.prepare)
+        await prepareVerifiedFrame(transaction, pair.group, () =>
+          current(token),
+        );
       supportPose = readFramePose(transaction, supportPose, terrainPlan);
       current(token);
       if (supportPose) {
@@ -252,7 +258,6 @@ export function createVerifiedMixedWindow(
           "Mixed scenery intersects required body pose",
         );
       }
-      pair.group.add(pair.terrain.group, pair.scenery.group);
       const buildingReceipts = new Map(
         buildings.provenance.chunks.map((chunk) => [chunk.chunkId, chunk]),
       );
