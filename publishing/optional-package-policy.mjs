@@ -32,10 +32,11 @@ const BASE_OPTIONAL_PACKAGE_POLICIES = Object.freeze({
   'civilian-flight': Object.freeze({
     root: 'optional-practice/civilian-flight/',
     entry: 'optional-practice/civilian-flight/index.html',
-    // The installed archive includes the reviewed launcher and access gate.
-    // Its complete runtime closure is 81 files; the selected source archive
-    // adds two reviewed templates, so retain an exact finite 83-file envelope.
-    limits: Object.freeze({ files: 83, bytes: 8 * 1024 * 1024 }),
+    // The installed archive includes the reviewed launcher, access gate and
+    // shared menu CSS closure. The access-gated runtime has 85 files; the
+    // selected source archive adds two reviewed templates within this finite
+    // envelope.
+    limits: Object.freeze({ files: 87, bytes: 8 * 1024 * 1024 }),
     localFiles: Object.freeze([
       'index.html',
       'app.mjs',
@@ -52,7 +53,11 @@ const BASE_OPTIONAL_PACKAGE_POLICIES = Object.freeze({
     sharedFiles: Object.freeze([
       'game/ui/mode-play-shell.mjs',
       'game/ui/mode-play-shell.css',
+      'game/ui/mode-choice.css',
+      'game/ui/optional-practice-panel.css',
       'game/ui/pause-menu.css',
+      'game/ui/mode-settings-view.css',
+      'game/ui/global-settings-view.css',
       'game/ui/native-menu-icons.mjs',
       'optional-practice/civilian-fpv/input.mjs',
       'optional-practice/civilian-fpv/radio-profile.mjs',
