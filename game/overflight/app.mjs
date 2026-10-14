@@ -1210,6 +1210,16 @@ modeChoices = mountModeChoices({
   guidesContainer: $('overflight-help'),
   pause: () => pause({ menu: false }),
 });
+operationCards = createOverflightOperationCards({
+  document: doc,
+  current: mode.id,
+  text,
+  destination,
+  onSelect: () => {
+    void openMissionLibrary();
+  },
+  onLeave: () => pause({ menu: false }),
+});
 shell = mountModePlayShell({
   document: doc,
   mount: $('overflight-shell'),
@@ -1223,6 +1233,7 @@ shell = mountModePlayShell({
       .concat([
         ['play', $('overflight-game')],
         ['modes', $('overflight-mode-links')],
+        ['homeChoices', operationCards.root],
       ]),
   ),
   services: { attachModalNavigation, attachFullscreen, setMenuIcon, settingsPanelBack },
@@ -1366,18 +1377,6 @@ if ($('survivor-same-seed')) {
     void prepare({ nextSeed: bytes[0] || 1, launch: true }).catch(() => {});
   });
 }
-operationCards = createOverflightOperationCards({
-  document: doc,
-  current: mode.id,
-  text,
-  destination,
-  onSelect: () => {
-    void openMissionLibrary();
-  },
-  onLeave: () => pause({ menu: false }),
-});
-// Raid is an operation within Survive, not another landing destination.
-$('overflight-settings').prepend(operationCards.root);
 function refreshOperationView() {
   const paint = renderer?.paintPreviewSprite;
   operationCards?.refresh(paint);
