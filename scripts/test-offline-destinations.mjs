@@ -150,13 +150,21 @@ test('worker bootstrap mapping gates only exact optional source routes and keeps
   assert.equal(rows.length, journeys.length * 2 - 1);
   assert.equal(rows.filter((row) => row.path === 'game/index.html').length, journeys.length - 1);
   assert(!rows.some((row) => row.path === 'game/index.html' && row.routeId === route.id));
+  const maxRowBytes = 160;
   for (const row of rows) {
     assert(AUTHORED_JOURNEY_ROUTE_IDS.includes(row.routeId));
     assert.deepEqual(row.files, [`game/content-design/runtime/${row.routeId}.json`]);
     assert.equal(Object.keys(row).length, 3);
+    assert(
+      Buffer.byteLength(JSON.stringify(row)) <= maxRowBytes,
+      `bootstrap row stays bounded: ${row.path}/${row.routeId}`,
+    );
   }
+  // Two brackets and the commas between route rows. Growth follows the explicit
+  // route catalogue, never the number of missions contained by those routes.
+  const arrayBytes = 2 + Math.max(0, rows.length - 1);
   assert(
-    JSON.stringify(rows).length < 12000,
+    Buffer.byteLength(JSON.stringify(rows)) <= rows.length * maxRowBytes + arrayBytes,
     'bootstrap metadata stays bounded independently of the mission table',
   );
 });
