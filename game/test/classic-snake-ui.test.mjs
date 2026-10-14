@@ -177,6 +177,7 @@ async function harness({
   if (cosmetics) storage.set('revealline.classic-snake.presentation.v1', JSON.stringify(cosmetics));
   const created = [],
     drawings = [],
+    previewDrawings = [],
     celebrations = [],
     resultReactions = [],
     scheduledFrames = [],
@@ -274,18 +275,26 @@ async function harness({
     createMissionLibrary,
     createMissionLibrarySessionState,
     classicSnakeLibrarySource,
-    renderClassicSnakeLibraryPreview,
+    renderClassicSnakeLibraryPreview(options) {
+      previewDrawings.push({ ...options.appearance });
+      return renderClassicSnakeLibraryPreview(options);
+    },
     mountModePlayShell(options) {
       shell = mountModePlayShell(options);
       return shell;
     },
     attachModalNavigation,
     mountGlobalSettings,
-    attachThemeFamilyControls({ root }) {
+    attachThemeFamilyControls({ root, mountEnemyAppearance }) {
       const group = document.createElement('section');
       group.setAttribute('data-theme-controls', '');
       root.append(group);
-      return { dispose() {} };
+      const enemies = mountEnemyAppearance({
+        document,
+        container: group,
+        locale: () => harnessLocale,
+      });
+      return { dispose: enemies.dispose };
     },
     // The browser host injects this dependency into theme-family controls.
     // Keep the VM harness boundary complete even though its theme stub does
@@ -554,6 +563,7 @@ async function harness({
     },
     created,
     drawings,
+    previewDrawings,
     celebrations,
     resultReactions,
     artworkSelections,
@@ -919,6 +929,67 @@ test('Living Circuit links override cosmetics and changing paused scenes preserv
     'orchard',
   );
   assert.equal(state.document.body.dataset.playing, 'false');
+});
+
+test('Snake settings have one canonical enemy appearance selector inside shared appearance controls', async () => {
+  const state = await harness();
+  state.shell.open('settings');
+  const selectors = state.document.querySelectorAll('[data-enemy-appearance]');
+  assert.equal(selectors.length, 1);
+  assert.ok(selectors[0].closest('[data-theme-controls]'));
+  assert.equal(state.$('snake-enemy-appearance'), null);
+});
+
+test('Battlefield appearance refreshes reopened mission previews and result replay without replacing the attempt', async () => {
+  const state = await harness({
+    query: '&board=fpv-battlefield&scene=freight',
+    cosmetics: { boardStyle: 'retro', boardScene: 'orchard' },
+  });
+  assert.equal(state.document.body.dataset.boardStyle, 'fpv-battlefield');
+  state.shell.open('missions');
+  assert.ok(state.previewDrawings.length > 0);
+  assert.ok(state.previewDrawings.every((options) => options.boardStyle === 'fpv-battlefield'));
+  assert.ok(state.previewDrawings.every((options) => options.boardScene === 'freight'));
+  state.$('journey-back').click();
+  state.shell.open('settings');
+  state.$('board-style').value = 'night-arcade';
+  state.$('board-style').emit('change');
+  state.$('board-scene').value = 'relay';
+  state.$('board-scene').emit('change');
+  const previousPreviews = state.previewDrawings.length;
+  state.shell.open('missions');
+  assert.ok(state.previewDrawings.length > previousPreviews);
+  assert.ok(
+    state.previewDrawings
+      .slice(previousPreviews)
+      .every((options) => options.boardStyle === 'night-arcade' && options.boardScene === 'relay'),
+    'reopened cached mission cards use the newly selected appearance',
+  );
+  state.$('journey-back').click();
+  await importSession(state.$, clearedSession());
+  const before = core.exportClassicSnakeReplay(state.created.at(-1));
+  state.shell.openHome();
+  state.shell.open('settings');
+  state.$('board-style').value = 'fpv-battlefield';
+  state.$('board-style').emit('change');
+  state.$('board-scene').value = 'harbor';
+  state.$('board-scene').emit('change');
+  state.shell.openHome();
+  state.shell.elements.buttons['home-results'].click();
+  state.frame(0);
+  state.frame(240);
+  const preview = state.drawings
+    .filter((item) => item.canvas.classList.contains('snake-result-board'))
+    .at(-1);
+  assert.equal(preview.options.boardStyle, 'fpv-battlefield');
+  assert.equal(preview.options.boardScene, 'harbor');
+  assert.deepEqual(core.exportClassicSnakeReplay(state.created.at(-1)), before);
+  assert.equal(state.document.body.dataset.playing, 'false');
+  const saved = JSON.parse(state.storage.get('revealline.classic-snake.presentation.v1'));
+  const restored = await harness({ cosmetics: saved });
+  restored.frame(0);
+  assert.equal(restored.drawings.at(-1).options.boardStyle, 'fpv-battlefield');
+  assert.equal(restored.drawings.at(-1).options.boardScene, 'harbor');
 });
 
 test('saved Living Circuit cosmetics apply when no explicit scene is linked', async () => {
@@ -2310,7 +2381,7 @@ test('Snake reveals shared controls for real touch on hybrid devices and hides t
   );
 });
 
-for (const worldStyle of ['toybox', 'atmospheric-ruins', 'night-arcade']) {
+for (const worldStyle of ['toybox', 'atmospheric-ruins', 'night-arcade', 'fpv-battlefield']) {
   test(`${worldStyle} changes paused scenery without a new attempt`, async () => {
     const state = await harness({ query: `&board=${worldStyle}&scene=harbor` });
     state.shell.open('settings');

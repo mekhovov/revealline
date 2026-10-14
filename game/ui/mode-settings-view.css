@@ -199,6 +199,11 @@ body .mode-settings-view[open] [data-settings-back][data-menu-icon]::before {
   min-height: 44px;
 }
 
+/* Native option labels must not widen a nested grid label on compact screens. */
+.mode-settings-view .field-kit-settings-panel select {
+  min-width: 0;
+}
+
 .mode-settings-view :is(button, select, input, summary, a):focus-visible {
   outline: 3px solid var(--field-kit-focus, #a8eaf0);
   outline-offset: 2px;
