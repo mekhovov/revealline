@@ -14,10 +14,13 @@ export const INDEXED_SCENERY_LIMITS = Object.freeze({
   dimension: 512,
   decodedTextureBytes: 1398100,
 });
+const validatedSources = new WeakSet();
+const textureKeys = new WeakMap();
 
 /** Stable content key, including sampler: equal IDs alone never alias distinct images. */
 export function indexedTextureKey(texture) {
-  return JSON.stringify([
+  if (textureKeys.has(texture)) return textureKeys.get(texture);
+  const key = JSON.stringify([
     texture.width,
     texture.height,
     texture.paletteRgb,
@@ -27,6 +30,9 @@ export function indexedTextureKey(texture) {
     texture.wrapS,
     texture.wrapT,
   ]);
+  if (Object.isFrozen(texture) && Object.isFrozen(texture.paletteRgb))
+    textureKeys.set(texture, key);
+  return key;
 }
 
 export function validateScenerySource(input) {
@@ -56,7 +62,8 @@ export function scenerySourceResources(sources) {
     }
   }
   const textureBytes = [...textures.values()].reduce(
-    (sum, texture) => sum + indexedTextureBytes(texture),
+    // DataTexture retains CPU base pixels alongside its GPU mip chain.
+    (sum, texture) => sum + texture.width * texture.height * 4 + indexedTextureBytes(texture),
     0,
   );
   return { geometryBytes, textureBytes, resourceBytes: geometryBytes + textureBytes, textures };
@@ -113,6 +120,7 @@ export function indexedTextureBytes(texture) {
 }
 
 export function validateIndexedSceneryCell(input) {
+  if (input && typeof input === 'object' && validatedSources.has(input)) return input;
   const json = typeof input === 'string' ? input : JSON.stringify(input);
   fail(
     typeof json === 'string' &&
@@ -177,10 +185,8 @@ export function validateIndexedSceneryCell(input) {
     decoded.length === texture.width * texture.height && btoa(decoded) === texture.indicesBase64,
     'Noncanonical palette index encoding',
   );
-  fail(
-    [...decoded].every((v) => v.charCodeAt(0) < texture.paletteRgb.length / 3),
-    'Palette index out of range',
-  );
+  for (let i = 0; i < decoded.length; i++)
+    fail(decoded.charCodeAt(i) < texture.paletteRgb.length / 3, 'Palette index out of range');
   fail(
     [9728, 9729].includes(texture.magFilter) &&
       [9728, 9729, 9984, 9985, 9986, 9987].includes(texture.minFilter) &&
@@ -238,7 +244,9 @@ export function validateIndexedSceneryCell(input) {
   Object.freeze(texture);
   Object.freeze(source.textures);
   Object.freeze(source.bindings);
-  return Object.freeze({ ...source, cell });
+  const result = Object.freeze({ ...source, cell });
+  validatedSources.add(result);
+  return result;
 }
 
 const join = (parts) => {
