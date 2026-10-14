@@ -7,18 +7,24 @@ import { prepareClassicSnakeLevel } from '../game/snake/classic-setup.mjs';
 import { classicSnakeRatingForRecord } from '../game/snake/classic-ratings.mjs';
 const root = new URL('../docs/verification/snake-remaster/', import.meta.url);
 const read = async (name) => JSON.parse(await readFile(new URL(name, root), 'utf8'));
-test('trace coverage includes accepted normal Solo and Team routes for every current mission', async () => {
+test('trace coverage includes all accepted pace/mode routes for every current mission', async () => {
   const report = await read('catalogue-trace-review.json');
   assert.deepEqual(report.summary.missingMissions, []);
   const seen = new Set(report.runs.map((r) => `${r.levelId}/${r.mode}/${r.pace}`));
   for (const entry of CLASSIC_SNAKE_LEVELS)
-    for (const mode of ['solo', 'team']) assert.ok(seen.has(`${entry.id}/${mode}/normal`));
+    for (const mode of ['solo', 'team'])
+      for (const pace of ['normal', 'slow', 'fast'])
+        assert.ok(seen.has(`${entry.id}/${mode}/${pace}`));
+  assert.equal(seen.size, 1440);
+  assert.deepEqual(report.summary.missingSetups, []);
+  assert.equal(report.summary.setups, 1440);
   assert.equal(new Set(report.runs.map((r) => r.levelId)).size, 240);
   assert.ok(report.runs.every((r) => r.source && r.steps > 0));
 });
 test('new foundation evidence verifies against unchanged current recipes', async () => {
   const { proofs } = await read('retained-foundation-proofs.json');
-  assert.equal(proofs.length, 29);
+  assert.equal(proofs.length, 221);
+  assert.equal(proofs.filter((p) => p.pace !== 'normal').length, 192);
   for (const p of proofs) {
     const entry = CLASSIC_SNAKE_LEVELS.find((e) => e.id === p.levelId),
       level = prepareClassicSnakeLevel(entry, { pace: p.pace });

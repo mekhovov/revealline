@@ -246,7 +246,7 @@ export function drawClassicLivingGround(
               : zoning === 'bays'
                 ? x % 6 < 3 && y % 6 < 3
                 : x > 2 && x < level.width - 3 && (y === 2 || y === level.height - 3);
-      if (marked) {
+      if (marked && !composition.floorPlan) {
         ctx.globalAlpha = 0.07;
         ctx.fillStyle = palette.accent;
         ctx.fillRect(x * unit, y * unit, unit, unit);
@@ -391,9 +391,113 @@ function drawAuthoredFloorLight(ctx, level, unit, world) {
   ctx.restore();
 }
 
+/** Literal floor paint in board coordinates. No raised edges, collision-like
+ * outlines, simulation state, or retained surfaces. These broad aprons support
+ * the existing structure arrangement even at mobile size. */
+function drawAuthoredFloorPlan(ctx, level, palette, unit, plan, treatment) {
+  ctx.save();
+  ctx.beginPath();
+  ctx.rect(0, 0, level.width * unit, level.height * unit);
+  ctx.clip();
+  ctx.scale(unit, unit);
+  ctx.fillStyle = palette.accent;
+  ctx.strokeStyle = palette.accent;
+  ctx.globalAlpha = treatment === 'night-arcade' ? 0.075 : 0.055;
+  for (const patch of plan.patches ?? []) ctx.fillRect(...patch);
+  ctx.lineWidth = treatment === 'toybox' ? 0.1 : 0.055;
+  ctx.globalAlpha = treatment === 'night-arcade' ? 0.19 : 0.14;
+  if (treatment === 'atmospheric-ruins') ctx.setLineDash([0.7, 0.18, 0.14, 0.18]);
+  const path = (points) => {
+    ctx.beginPath();
+    points.forEach(([x, y], i) => (i ? ctx.lineTo(x, y) : ctx.moveTo(x, y)));
+    ctx.stroke();
+  };
+  for (const points of plan.paths ?? []) path(points);
+  ctx.setLineDash([]);
+  const [x, y, mark] = plan.seal;
+  ctx.translate(x, y);
+  // World-specific painted station insignia; deliberately no square frame.
+  // Their scale and low contrast cannot be mistaken for a parcel or enemy.
+  ctx.lineWidth = 0.09;
+  ctx.globalAlpha = 0.18;
+  if (mark === 'leaf') {
+    path([
+      [0, 1.1],
+      [0, -1.1],
+    ]);
+    path([
+      [0, 0.4],
+      [-0.8, 0],
+      [-0.8, -0.5],
+      [0, -0.1],
+      [0.8, -0.7],
+      [0.8, -1.1],
+      [0, -0.5],
+    ]);
+  } else if (mark === 'tide') {
+    for (const y of [-0.6, 0, 0.6])
+      path([
+        [-1.2, y],
+        [-0.6, y - 0.25],
+        [0, y],
+        [0.6, y - 0.25],
+        [1.2, y],
+      ]);
+  } else if (mark === 'signal') {
+    path([
+      [0, 1],
+      [0, -0.5],
+      [-0.45, -1],
+      [0.45, -1],
+      [0, -0.5],
+    ]);
+    for (const s of [-1, 1])
+      path([
+        [s * 0.75, -0.9],
+        [s * 1.1, -0.35],
+        [s * 0.75, 0.2],
+      ]);
+  } else if (mark === 'valve') {
+    ctx.beginPath();
+    ctx.arc(0, 0, 0.9, 0, Math.PI * 2);
+    ctx.stroke();
+    path([
+      [-0.65, -0.65],
+      [0.65, 0.65],
+    ]);
+    path([
+      [-0.65, 0.65],
+      [0.65, -0.65],
+    ]);
+  } else if (mark === 'freight') {
+    for (const x of [-0.65, 0.2])
+      path([
+        [x - 0.4, -0.75],
+        [x + 0.35, 0],
+        [x - 0.4, 0.75],
+      ]);
+  } else if (mark === 'survey') {
+    path([
+      [-1, 0.7],
+      [0, -1],
+      [1, 0.7],
+      [-1, 0.7],
+    ]);
+    path([
+      [0, 0.3],
+      [0, 1.1],
+    ]);
+  }
+  ctx.restore();
+}
+
 // Flat, low-contrast inlays identify a place without suggesting solid geometry.
 // The focal position is authored; wall silhouettes always cover this floor layer.
 function drawFloorComposition(ctx, level, palette, unit, world, treatment) {
+  if (world.floorPlan) {
+    drawAuthoredFloorPlan(ctx, level, palette, unit, world.floorPlan, treatment);
+    return;
+  }
   const [fx, fy] = world.focus ?? [level.width / 2, level.height / 2];
   const vertical = world.axis === 'vertical';
   ctx.save();

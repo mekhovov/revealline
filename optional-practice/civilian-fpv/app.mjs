@@ -24,6 +24,7 @@ import {
   mountFlightCameraControls,
   mountFlightSetup,
   mountFlightComfort,
+  mountFlightPractice,
   attachSimMissionLibraryChooser,
   createSimMissionLibrary,
   createSimContinuousPlayController,
@@ -172,6 +173,8 @@ export function mountFlightApp({
     cameraControls = null,
     flightSetup = null,
     flightComfort = null,
+    practiceFlow = null,
+    replayPracticeFlow = null,
     modeSettingsView = null,
     globalSettingsView = null,
     globalTools = null,
@@ -454,6 +457,7 @@ export function mountFlightApp({
       typeof win.navigator?.getGamepads === 'function'
         ? () => win.navigator.getGamepads()
         : undefined,
+    onCamera: () => cameraControls?.cycle(),
     onFreeze(reason) {
       flight?.pause();
       audio.pause();
@@ -580,6 +584,14 @@ export function mountFlightApp({
   const resultMissionActions = doc.createElement('div');
   resultMissionActions.className = 'button-row continuous-result-actions';
   resultMissionActions.append($('next'), $('retry'), $('review'));
+  const watchResult = doc.createElement('button');
+  watchResult.type = 'button';
+  watchResult.dataset.practiceAction = 'watch';
+  watchResult.addEventListener('click', () => {
+    continuousPlay.cancel('watch');
+    $('watch').click();
+  });
+  resultMissionActions.append(watchResult);
   const resultChoices = [
     ['random', ['Random level', 'Випадковий рівень']],
     ['missions', ['Choose mission', 'Вибрати місію']],
@@ -958,6 +970,10 @@ export function mountFlightApp({
     // A recording can end before its objective; exhausting its commands is a
     // presentation result, never a simulated completion or resumable flight.
     const replayEnded = !!replay && replay.at >= replay.proof.frames.length;
+    watchResult.textContent = locale === 'uk' ? 'Переглянути приклад' : 'Watch example';
+    watchResult.hidden =
+      Boolean(authoringCourse) ||
+      !demonstrations.some((proof) => proof.course === courses[selected].id && proof.mode === mode);
     const terminal = ['complete', 'expired'].includes(state.status) || replayEnded;
     // Playback retains the recorded model's status when its presentation clock
     // pauses. The shared menu must follow that clock, not the live-flight model.
@@ -998,6 +1014,8 @@ export function mountFlightApp({
     cameraControls?.refresh();
     flightSetup?.refresh();
     flightComfort?.refresh();
+    practiceFlow?.refresh();
+    replayPracticeFlow?.refresh();
     renderer.draw?.(state, {
       cameraMode: $('camera').value || 'fpv',
       cameraFov: Number($('camera-fov').value) || 82,
@@ -2288,11 +2306,69 @@ export function mountFlightApp({
         );
       if (source === 'radio')
         return locale === 'uk'
-          ? 'Використовуйте збережені перемикачі ввімкнення та скидання. Налаштуйте їх у «Налаштувати пульт». У меню: крен/тангаж — навігація; утримайте рискання праворуч/ліворуч і поверніть у центр для підтвердження/назад.'
-          : 'Use your saved Arm and Reset switches; assign them in Set up radio. Menus: roll/pitch navigate; hold yaw right/left, then centre to confirm/go back.';
+          ? 'Призначте мотори, скидання, паузу й камеру в «Налаштувати пульт». Камера: увімкніть і вимкніть перемикач. Без вільного перемикача виберіть камеру в меню паузи. У меню: крен/тангаж — навігація; утримайте рискання праворуч/ліворуч і поверніть у центр для підтвердження/назад.'
+          : 'Assign Arm, Reset, Pause and View in Set up radio. View: switch ON, then OFF. Without a spare switch, choose the camera in Pause. Menus: roll/pitch navigate; hold yaw right/left, then centre to confirm/go back.';
       return locale === 'uk'
         ? 'Лівий стік: рискання/газ. Правий: крен/тангаж. Газ зберігається після відпускання. Для ввімкнення натисніть «Продовжити»; камера та пауза — у кутку екрана.'
         : 'Left stick: yaw/throttle. Right: roll/pitch. Throttle stays where you release it. Use Resume to arm; View and Pause stay in the screen corner.';
+    },
+  });
+
+  function practiceState() {
+    return {
+      available: Boolean(flight && sceneReady && !reviewAbort),
+      title: currentCourse().locales[locale].title,
+      course: currentCourse(),
+      mode,
+      replay: Boolean(replay),
+      rate: replayRate,
+      watch:
+        !authoringCourse &&
+        demonstrations.some(
+          (proof) => proof.course === courses[selected].id && proof.mode === mode,
+        ),
+      section: null,
+    };
+  }
+  function practiceAction(action) {
+    if (!sceneReady || reviewAbort) return;
+    const recording = replay && academyRecording(replay.proof, replay.presentation);
+    const kind = replay?.kind;
+    playShell.enterPlay();
+    if (action === 'watch') {
+      const proof = demonstrations.find(
+        (item) => item.course === courses[selected].id && item.mode === mode,
+      );
+      if (proof) void review(proof, 'demonstration').catch(() => {});
+    } else if (action === 'repeat' && recording) void review(recording, kind).catch(() => {});
+    else reset(selected, mode, action === 'try' ? null : authoringCourse);
+  }
+  const practiceOptions = {
+    document: doc,
+    locale: () => locale,
+    read: practiceState,
+    act: practiceAction,
+    setRate(value) {
+      $('replay-rate').value = String(value);
+      $('replay-rate').dispatchEvent(new win.Event('change', { bubbles: true }));
+    },
+  };
+  practiceFlow = mountFlightPractice({
+    ...practiceOptions,
+    container: playShell.elements.content.pause,
+    visible: () => playShell.elements.dialogs.pause.open,
+  });
+  const replayOutcome = doc.createElement('section');
+  replayOutcome.id = 'academy-replay-outcome';
+  replayOutcome.hidden = true;
+  $('viewport').append(replayOutcome);
+  replayPracticeFlow = mountFlightPractice({
+    ...practiceOptions,
+    container: replayOutcome,
+    visible: () => {
+      const ended = Boolean(replay && replay.at >= replay.proof.frames.length);
+      replayOutcome.hidden = !ended;
+      return ended;
     },
   });
 
@@ -2349,6 +2425,8 @@ export function mountFlightApp({
       watchMission.onclick = null;
       flightComfort?.dispose();
       flightSetup?.dispose();
+      practiceFlow?.dispose();
+      replayPracticeFlow?.dispose();
       cameraControls?.dispose();
       playShell?.dispose();
       menuNavigation.dispose();
