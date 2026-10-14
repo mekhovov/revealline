@@ -55,7 +55,9 @@ export function createRegionalFlightPrototype({
   fail(spawn, "Unknown region spawn");
   fail(
     initialHeading === "region-centre" ||
-      (Number.isSafeInteger(initialHeading) && initialHeading >= 0 && initialHeading < 36000),
+      (Number.isSafeInteger(initialHeading) &&
+        initialHeading >= 0 &&
+        initialHeading < 36000),
     "Invalid initial regional heading",
   );
   const heading =
@@ -70,7 +72,10 @@ export function createRegionalFlightPrototype({
     [0, 0, 0, Q],
     [0, sin(halfHeading), 0, cos(halfHeading)],
   );
-  const terrain = createVerifiedFlightGeometry(manifest, { profile: geometryProfile, source }),
+  const terrain = createVerifiedFlightGeometry(manifest, {
+      profile: geometryProfile,
+      source,
+    }),
     root = new THREE.Group(),
     dronePose = new THREE.Object3D(),
     cameraAnchor = new THREE.Object3D();
@@ -134,21 +139,47 @@ export function createRegionalFlightPrototype({
     reason = "preparing-terrain";
     const operation = (async () => {
       try {
-        const ready = await terrain.transition(target, {
-          positionMm: body.position,
-          radiusMm: RADIUS,
-        });
-        if (disposed || token !== generation)
+        const previousOrigin = origin,
+          previousRecentres = recentres;
+        let attached = null;
+        await terrain.transition(
+          target,
+          {
+            positionMm: body.position,
+            radiusMm: RADIUS,
+          },
+          {
+            commit({ group, provenance }) {
+              if (disposed || token !== generation)
+                throw new DOMException(
+                  "Prototype preparation cancelled",
+                  "AbortError",
+                );
+              const nextOrigin = provenance.originMm;
+              if (AXES.some((key) => nextOrigin[key] !== origin[key]))
+                recentres++;
+              origin = { ...nextOrigin };
+              attached = group;
+              root.add(group);
+              updateFrame();
+            },
+            rollback() {
+              attached?.removeFromParent();
+              origin = previousOrigin;
+              recentres = previousRecentres;
+              updateFrame();
+            },
+          },
+        );
+        if (
+          disposed ||
+          token !== generation ||
+          !terrain.snapshot().terrainReady
+        )
           throw new DOMException(
             "Prototype preparation cancelled",
             "AbortError",
           );
-        const nextOrigin = ready.provenance.originMm;
-        if (AXES.some((key) => nextOrigin[key] !== origin[key])) recentres++;
-        // No await between origin, terrain and both pose updates: one complete local frame.
-        origin = { ...nextOrigin };
-        root.add(terrain.group);
-        updateFrame();
         pendingTarget = null;
         reason = "prepared";
         return snapshot();

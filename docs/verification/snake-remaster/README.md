@@ -131,6 +131,18 @@ are separately delivered and are not claimed live before their own deployment.
 2. **Optional: additional silver/gold calibration.** Completion stars and personal records are the accepted finished policy for uncalibrated and variable-condition setups. Higher grades require compatible independent evidence and a fairness policy; a single solver route is insufficient. This is not an undisclosed unlock task for players.
 3. **Deferred by request: player comparison and pacing feedback.** Editorial review, titles-hidden screenshots and winning proofs do not prove recognition or enjoyment. No new player study or approval wait is required for this delivery.
 
+## Latest-main appearance integration
+
+The [appearance integration review](appearance-integration-review.md) checks the
+newer shared Battlefield controls on main `07cf04c40`. It consolidates Snake's
+duplicated enemy preset into the shared Appearance section and corrects compact
+settings overflow found at 320px. Coverage preserves the accepted attempt and
+artwork across appearance changes, replay, mission previews and saved cosmetics.
+English/Ukrainian browser observations are recorded separately from deferred
+physical-device qualification. VoiceOver listening is skipped by explicit user
+request and is not an acceptance gate for this delivery. Higher-grade expansion
+remains optional; no new gameplay or mission content is needed for this fix.
+
 ## Original artwork and safety
 
 New structure, pose and material artwork is editable original drawing code in the existing presentation system; no third-party game sprites were copied. Existing shared artwork/audio provenance remains authoritative. Cosmetic state does not consume gameplay randomness or enter gameplay recipe identity.

@@ -962,10 +962,19 @@
 
 .theme-family-controls {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  min-width: 0;
   gap: 10px;
   margin-block: 16px;
   padding-block: 12px;
   border-block: 1px solid var(--fk-line, #737c69);
+}
+/* Native select options must not widen the grid's implicit min-content track.
+   Keep help text and nested controls inside narrow settings panels. */
+.theme-family-controls > * {
+  min-width: 0;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 .theme-family-controls > h4 {
   margin: 2px 0 0;
@@ -982,7 +991,9 @@
   min-height: var(--iw-target, 44px);
 }
 .theme-family-controls select {
+  min-width: 0;
   max-width: 100%;
+  box-sizing: border-box;
 }
 .theme-family-controls [role='status']:empty {
   display: none;
