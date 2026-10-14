@@ -4530,8 +4530,11 @@ artifact 11919610810 from run 38615162179 at source
 `25d086cbd580de5dc5b745ce088af283434df5ae` installed successfully on another fresh
 origin. The native hangar/orchard home artwork remained visible after that origin
 server stopped and the same URL reloaded. The server was restored afterward;
-frozen earlier candidates remain unchanged. Main regional host integration, production
-collision parity, sustained performance, remaining region batches and D6 remain
+frozen earlier candidates remain unchanged. #1253 subsequently merged production
+swept-sphere movement reuse: all 154 historical demonstrations (312,948 ticks),
+384 contact comparisons, 51 existing tests, 57 regional checks and five Urban routes
+pass. Broader CI still runs separately. Main regional host integration, support/
+landing policy, sustained performance, remaining region batches and D6 remain
 open. The current next steps are recorded in `fpv-large-worlds-delivery-plan.md`.
 
 Source, local commits, unfinished changes, frozen candidates and player storage
