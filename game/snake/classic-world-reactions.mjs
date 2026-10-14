@@ -88,14 +88,41 @@ export function drawClassicWorldReactions(
       const py = distance < a ? y : y + Math.sign(endY - y) * (distance - a);
       ctx.fillRect(px - 2, py - 2, 4, 4);
     } else if (['load', 'delivery'].includes(effect.kind)) {
-      const size = unit * (0.28 + t * 0.17);
+      const size = unit * (0.23 + t * 0.15);
       ctx.strokeRect(x - size, y - size, size * 2, size * 2);
       if (effect.kind === 'delivery') {
         // Parcel transfers into the dock; it does not linger as a solid object.
         const s = unit * 0.22 * (1 - t);
         ctx.fillRect(x - s, y - s, s * 2, s * 2);
+        // Receiving lamps acknowledge the accepted parcel transfer.
+        ctx.fillStyle = palette.safe;
+        for (const side of [-1, 1])
+          ctx.fillRect(x + side * unit * 0.36 - 1, y - unit * 0.2, 2, unit * 0.35);
+      } else {
+        ctx.fillStyle = '#ddc693';
+        ctx.fillRect(x - unit * 0.2, y - unit * 0.18, unit * 0.4, 2);
+        ctx.fillRect(x - unit * 0.2, y + unit * 0.18, unit * 0.4, 2);
       }
     } else {
+      const material = {
+        orchard: '#b4c688',
+        freight: '#d1a078',
+        workshop: '#dca373',
+        harbor: '#a3ccbd',
+        relay: '#d8d8b4',
+        quarry: '#a1b499',
+      };
+      ctx.fillStyle =
+        effect.kind === 'erosion' ? (material[world.scene] ?? '#bac2a8') : palette.accent;
+      if (effect.kind === 'catch' && t < 0.45) {
+        const reach = unit * (0.15 + t * 0.5);
+        ctx.beginPath();
+        ctx.moveTo(x - reach, y);
+        ctx.lineTo(x + reach, y);
+        ctx.moveTo(x, y - reach);
+        ctx.lineTo(x, y + reach);
+        ctx.stroke();
+      }
       // Fragments stay in their accepted cell and cannot masquerade as hazards.
       for (const [dx, dy] of [
         [-1, -1],
@@ -104,7 +131,12 @@ export function drawClassicWorldReactions(
         [1, 1],
       ]) {
         const radius = unit * (0.1 + t * 0.28);
-        ctx.fillRect(x + dx * radius - 1, y + dy * radius - 1, 2, 2);
+        ctx.fillRect(
+          x + dx * radius - 1,
+          y + dy * radius - 1,
+          effect.kind === 'erosion' ? 3 : 2,
+          2,
+        );
       }
     }
   }

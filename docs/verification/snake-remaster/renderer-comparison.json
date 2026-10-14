@@ -1,0 +1,11 @@
+{
+  "baselineRevision": "da6eacfe1",
+  "baseline": "Same-device synchronous redraw (not frame rate): uncached worlds median 0.50 ms / p95 0.80 ms; cached worlds median 0.10 ms / p95 0.20 ms. 288 samples each. Terrain 3.88 / 4 MiB, 3 retained boards.",
+  "remaster": "Same-device synchronous redraw (not frame rate): uncached worlds median 0.50 ms / p95 0.80 ms; cached worlds median 0.10 ms / p95 0.20 ms. 288 samples each. Terrain 3.88 / 4 MiB, 3 retained boards.",
+  "scope": "Same browser, viewport and 24-board gallery; synchronous draw duration, not GPU frame-time or mobile hardware qualification.",
+  "frames": {
+    "baseline": "Two-board animation, frozen simulation: frame intervals median 8.30 ms / p95 9.90 ms; draw cost median 0.50 ms / p95 10.30 ms. 120 samples after 12 warm-up frames. Browser scheduling and display refresh affect these values.",
+    "remaster": "Two-board animation, frozen simulation: frame intervals median 8.30 ms / p95 9.00 ms; draw cost median 0.50 ms / p95 5.20 ms. 120 samples after 12 warm-up frames. Browser scheduling and display refresh affect these values.",
+    "harness": "Identical current gallery harness on baseline and remaster render modules; 2 boards, 120 samples, 12 warmup frames, frozen gameplay with animated dense terrain and active interference."
+  }
+}

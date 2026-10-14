@@ -1,3 +1,4 @@
+import { remasterClassicSnakeEntry } from './classic-catalogue-remaster.mjs';
 import {
   CLASSIC_SNAKE_OPERATION_CHAPTERS_B,
   CLASSIC_SNAKE_OPERATION_LEVELS_B,
@@ -794,14 +795,16 @@ export const CLASSIC_SNAKE_CHAPTERS = freeze([
   ...CLASSIC_SNAKE_OPERATION_CHAPTERS_A,
   ...CLASSIC_SNAKE_OPERATION_CHAPTERS_B,
 ]);
-export const CLASSIC_SNAKE_LEVELS = freeze([
-  ...FOUNDATION_LEVELS,
-  ...CLASSIC_SNAKE_V2_LEVELS,
-  ...CLASSIC_SNAKE_V3_LEVELS,
-  ...CLASSIC_SNAKE_V4_LEVELS,
-  ...CLASSIC_SNAKE_OPERATION_LEVELS_A,
-  ...CLASSIC_SNAKE_OPERATION_LEVELS_B,
-]);
+export const CLASSIC_SNAKE_LEVELS = freeze(
+  [
+    ...FOUNDATION_LEVELS,
+    ...CLASSIC_SNAKE_V2_LEVELS,
+    ...CLASSIC_SNAKE_V3_LEVELS,
+    ...CLASSIC_SNAKE_V4_LEVELS,
+    ...CLASSIC_SNAKE_OPERATION_LEVELS_A,
+    ...CLASSIC_SNAKE_OPERATION_LEVELS_B,
+  ].map(remasterClassicSnakeEntry),
+);
 export const CLASSIC_SNAKE_CAMPAIGNS = freeze([
   {
     id: 'classic-continuous-operations-b-v1',

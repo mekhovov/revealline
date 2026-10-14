@@ -1,5 +1,5 @@
 /** Presentation identity shared by Classic's painter and sound adapter. The
- * board style changes these specialist silhouettes, never their gameplay. */
+ * equipment silhouette is stable across appearances, including restrained/retro. */
 const MACHINE_FAMILIES = Object.freeze({
   jammer: 'radar-truck',
   lane: 'tracked-tank',
@@ -12,8 +12,8 @@ const MACHINE_FAMILIES = Object.freeze({
   guard: 'tracked-tank',
 });
 
-export function classicTargetIdentity(kind, boardStyle = 'theme') {
-  const machinery = boardStyle === 'living-circuit' && MACHINE_FAMILIES[kind];
+export function classicTargetIdentity(kind, _boardStyle = 'theme') {
+  const machinery = MACHINE_FAMILIES[kind];
   return machinery
     ? {
         family: machinery,
