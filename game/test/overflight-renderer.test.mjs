@@ -23,6 +23,9 @@ import {
   startOverflight,
   stepOverflight,
   chooseOverflightUpgrade,
+  dropOverflightSalvage,
+  pauseOverflight,
+  resumeOverflight,
   overflightSummary,
 } from '../overflight/core.mjs';
 
@@ -256,11 +259,13 @@ function fakeEnvironment({ maxTextureSize } = {}) {
   const draws = [],
     canvases = [],
     images = [];
+  const documentEvents = new EventEmitter();
   const document = {
     readyState: 'complete',
     hidden: false,
-    addEventListener() {},
-    removeEventListener() {},
+    addEventListener: (name, listener) => documentEvents.on(name, listener),
+    removeEventListener: (name, listener) => documentEvents.off(name, listener),
+    dispatchEvent: (event) => documentEvents.emit(event.type, event),
     createElement(tag) {
       assert.equal(tag, 'canvas');
       const canvas = { style: {}, width: 0, height: 0 };
@@ -388,6 +393,141 @@ function fakeEnvironment({ maxTextureSize } = {}) {
     images,
   };
 }
+
+test('real earned drafts retain complete render intervals while manual lifecycle interruptions invalidate', async (t) => {
+  const prior = globalThis.Phaser;
+  let now = 0;
+  t.mock.method(performance, 'now', () => now);
+  try {
+    for (const condition of [
+      'normal',
+      'foreground-stall',
+      'manual-pause',
+      'hidden',
+      'context-loss',
+    ]) {
+      const environment = fakeEnvironment();
+      globalThis.Phaser = environment.Phaser;
+      now = 0;
+      const run = createOverflightRun(
+        compileOverflightProject(createOverflightProject({ rulesVersion: 4, seed: 17031991 })),
+      );
+      startOverflight(run);
+      let nextAction = null;
+      const renderer = await createOverflightRenderer({
+        parent: { ownerDocument: environment.document },
+        appearance: {
+          snapshot: { image: (id) => (id.startsWith('player.') ? { image: {} } : null) },
+        },
+        onContextLost: () => pauseOverflight(run),
+        onFrame() {
+          nextAction?.();
+          renderer.present(run);
+        },
+      });
+      try {
+        renderer.resetMeasurements({
+          warmupSeconds: 0,
+          measurementSeconds: 1,
+          repetitions: 1,
+          stopAtEnd: true,
+        });
+        const frame = (delta = 16, action = null) => {
+          now += delta;
+          nextAction = action;
+          environment.game().config.scene.update();
+          environment.game().events.emit('pre');
+          environment.game().events.emit('post');
+          nextAction = null;
+        };
+        frame(0);
+        frame(16, () => stepOverflight(run));
+        frame(16, () => {
+          dropOverflightSalvage(run, run.player.x, run.player.y, run.progression.nextThreshold);
+          stepOverflight(run);
+          assert.equal(run.phase, 'upgrade', 'real salvage collection must open the draft');
+          // Simulate foreground card/preparation work inside the phase-changing
+          // host callback, not an inactive gap or a fabricated benchmark sample.
+          if (condition === 'foreground-stall') now += 220;
+        });
+        const draftTime = run.time;
+        for (let index = 0; index < 10; index++) frame();
+        assert.equal(run.time, draftTime, 'rendering the draft cannot advance simulation');
+
+        if (condition === 'manual-pause') {
+          frame(16, () => assert.ok(pauseOverflight(run)));
+          assert.equal(run.phase, 'paused');
+          frame(100);
+          frame(16, () => assert.ok(resumeOverflight(run)));
+          assert.equal(run.phase, 'upgrade', 'manual resume returns to the interrupted draft');
+        } else if (condition === 'hidden') {
+          environment.document.hidden = true;
+          environment.document.dispatchEvent({ type: 'visibilitychange' });
+          frame(100);
+          environment.document.hidden = false;
+          environment.document.dispatchEvent({ type: 'visibilitychange' });
+          frame();
+        } else if (condition === 'context-loss') {
+          environment.game().renderer.emit('lose');
+          frame(100);
+          environment.game().renderer.emit('restore');
+          frame(16, () => assert.ok(resumeOverflight(run)));
+        }
+
+        frame(16, () => {
+          assert.ok(chooseOverflightUpgrade(run, run.offers[0].id));
+          assert.equal(run.phase, 'playing');
+        });
+        for (let index = 0; index < 100 && !renderer.measurementComplete(); index++)
+          frame(16, () => stepOverflight(run));
+        const report = renderer.stats({ raw: true });
+        const window = report.protocol.windows[0];
+        assert.equal(window.complete, true, condition);
+        assert.ok(window.phaseCoverage.upgrade.samples >= 11, condition);
+        assert.ok(window.phaseCoverage.playing.samples > 0, condition);
+        assert.ok(
+          Math.abs(
+            Object.values(window.phaseCoverage).reduce((sum, phase) => sum + phase.seconds, 0) -
+              window.measuredSeconds,
+          ) < 1e-9,
+          'phase time accounts for the complete measured window',
+        );
+        assert.ok(report.rawIntervals.some((sample) => sample.phase === 'upgrade'));
+        if (condition === 'normal' || condition === 'foreground-stall') {
+          assert.equal(report.valid, true, condition);
+          assert.deepEqual(report.invalidReasons, [], condition);
+          assert.equal(report.protocol.acceptance, condition === 'normal');
+          assert.ok(Math.abs(report.measuredSeconds - now / 1000) < 1e-9);
+          if (condition === 'foreground-stall') {
+            assert.ok(
+              report.rawIntervals.some(
+                (sample) => sample.phase === 'upgrade' && sample.intervalMs === 236,
+              ),
+            );
+            assert.equal(window.cadenceMs.worst, 236);
+            assert.ok(window.slowFraction > 0, 'foreground stall must remain in acceptance');
+          }
+        } else {
+          assert.equal(report.valid, false, condition);
+          assert.equal(report.protocol.acceptance, false, condition);
+          assert.ok(
+            report.invalidReasons.includes(
+              condition === 'manual-pause'
+                ? 'interrupted'
+                : condition === 'context-loss'
+                  ? 'context-lost'
+                  : 'hidden',
+            ),
+          );
+        }
+      } finally {
+        await renderer.destroy();
+      }
+    }
+  } finally {
+    globalThis.Phaser = prior;
+  }
+});
 
 test('persistent native remains obey shared settings, preserve live draw counts, and survive recovery without new texture work', async () => {
   const environment = fakeEnvironment(),
