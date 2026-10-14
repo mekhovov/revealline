@@ -1,0 +1,496 @@
+{
+  "format": "FPVNativeRenderMeasurement.v1",
+  "sourceRevision": "25d086cbd580de5dc5b745ce088af283434df5ae",
+  "rawEvidence": {
+    "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/native-render-measurements-20261014.json",
+    "bytes": 14724,
+    "sha256": "ddbbddc1ba3da967da20a8ee00c5908bfa9cf243932876b824e25baf61966962"
+  },
+  "harness": {
+    "sourceRevision": "25d086cbd580de5dc5b745ce088af283434df5ae",
+    "files": {
+      "index.html": "3c58e5c9d5a41254e07be15ed8d2134439e2a02384433b2e27bf8c485db8c3da",
+      "review.mjs": "aebdd851720b132ddcfcdefd06a0b50b26ef19e331f90551bd083ae97fc9ecf1"
+    },
+    "scope": "Explicit30warmup+120measured staticdisarmedframes; drawCPU andrAFcadence separate; noFPSclaim",
+    "priorNativeRenderReceipt": "review-receipt.json retains initial audited harness hashes",
+    "invalidInitialMeasurement": {
+      "world": "mountain-reservoir",
+      "quality": "balanced",
+      "reason": "Native window.innerWidth/innerHeight reported zero; not accepted or published as performance baseline.",
+      "correction": "Use positive visualViewport/window/documentElement basis plus canvasCSS/backing dimensions; reject zero/change/hidden/contextloss"
+    }
+  },
+  "measurements": [
+    {
+      "world": "mountain-reservoir",
+      "revision": "r16",
+      "packSHA256": "50ffbb0e5da7dec94862a8f2ca85cfeb60542d3fe9f86bd3c4e288dfa0a2e554",
+      "course": "mountain-reservoir-01",
+      "camera": "overview",
+      "quality": "balanced",
+      "sourceRevision": "25d086cbd580de5dc5b745ce088af283434df5ae",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36",
+      "viewport": {
+        "width": 1280,
+        "height": 800,
+        "basis": "visualViewport",
+        "dpr": 1,
+        "canvasCSS": {
+          "width": 1280,
+          "height": 520
+        },
+        "canvasBacking": {
+          "width": 1280,
+          "height": 520
+        },
+        "windowReported": {
+          "width": 1280,
+          "height": 800
+        },
+        "documentRoot": {
+          "width": 1280,
+          "height": 800
+        }
+      },
+      "contextLost": false,
+      "warmupFrames": 30,
+      "measuredFrames": 120,
+      "drawCallbackCPU": {
+        "count": 120,
+        "meanMs": 0.8858333335568508,
+        "p50Ms": 0.8999999985098839,
+        "p95Ms": 1,
+        "maxMs": 1.1000000014901161
+      },
+      "requestAnimationFrameCadence": {
+        "count": 120,
+        "meanMs": 8.33833333333332,
+        "p50Ms": 8.30000000000291,
+        "p95Ms": 9.200000000000728,
+        "maxMs": 9.400000000001455
+      },
+      "flightStatus": "disarmed",
+      "ticks": 0,
+      "scope": "Static disarmed renderer; cadence is not a gameplay FPS or device guarantee. CPU duration excludes asynchronous GPU completion."
+    },
+    {
+      "world": "mountain-reservoir",
+      "revision": "r16",
+      "packSHA256": "50ffbb0e5da7dec94862a8f2ca85cfeb60542d3fe9f86bd3c4e288dfa0a2e554",
+      "course": "mountain-reservoir-01",
+      "camera": "overview",
+      "quality": "low",
+      "sourceRevision": "25d086cbd580de5dc5b745ce088af283434df5ae",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36",
+      "viewport": {
+        "width": 1280,
+        "height": 800,
+        "basis": "visualViewport",
+        "dpr": 1,
+        "canvasCSS": {
+          "width": 1280,
+          "height": 520
+        },
+        "canvasBacking": {
+          "width": 1280,
+          "height": 520
+        },
+        "windowReported": {
+          "width": 1280,
+          "height": 800
+        },
+        "documentRoot": {
+          "width": 1280,
+          "height": 800
+        }
+      },
+      "contextLost": false,
+      "warmupFrames": 30,
+      "measuredFrames": 120,
+      "drawCallbackCPU": {
+        "count": 120,
+        "meanMs": 0.6133333332526187,
+        "p50Ms": 0.6000000014901161,
+        "p95Ms": 0.8000000007450581,
+        "maxMs": 0.8000000007450581
+      },
+      "requestAnimationFrameCadence": {
+        "count": 120,
+        "meanMs": 8.332499999999952,
+        "p50Ms": 8.30000000000291,
+        "p95Ms": 9.19999999999709,
+        "maxMs": 9.30000000000291
+      },
+      "flightStatus": "disarmed",
+      "ticks": 0,
+      "scope": "Static disarmed renderer; cadence is not a gameplay FPS or device guarantee. CPU duration excludes asynchronous GPU completion."
+    },
+    {
+      "world": "mountain-reservoir",
+      "revision": "r16",
+      "packSHA256": "50ffbb0e5da7dec94862a8f2ca85cfeb60542d3fe9f86bd3c4e288dfa0a2e554",
+      "course": "mountain-reservoir-01",
+      "camera": "overview",
+      "quality": "high",
+      "sourceRevision": "25d086cbd580de5dc5b745ce088af283434df5ae",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36",
+      "viewport": {
+        "width": 1280,
+        "height": 800,
+        "basis": "visualViewport",
+        "dpr": 1,
+        "canvasCSS": {
+          "width": 1280,
+          "height": 520
+        },
+        "canvasBacking": {
+          "width": 1280,
+          "height": 520
+        },
+        "windowReported": {
+          "width": 1280,
+          "height": 800
+        },
+        "documentRoot": {
+          "width": 1280,
+          "height": 800
+        }
+      },
+      "contextLost": false,
+      "warmupFrames": 30,
+      "measuredFrames": 120,
+      "drawCallbackCPU": {
+        "count": 120,
+        "meanMs": 1.0616666664679846,
+        "p50Ms": 1.0999999977648258,
+        "p95Ms": 1.199999999254942,
+        "maxMs": 1.300000000745058
+      },
+      "requestAnimationFrameCadence": {
+        "count": 120,
+        "meanMs": 8.332499999999952,
+        "p50Ms": 8.30000000000291,
+        "p95Ms": 9,
+        "maxMs": 9.30000000000291
+      },
+      "flightStatus": "disarmed",
+      "ticks": 0,
+      "scope": "Static disarmed renderer; cadence is not a gameplay FPS or device guarantee. CPU duration excludes asynchronous GPU completion."
+    },
+    {
+      "world": "harbor-docks",
+      "revision": "r4",
+      "packSHA256": "d5bf4b9bb6829c04dbe1bb398893e5243cefc1f9acf018bf153a2012c8cf49b6",
+      "course": "harbor-docks-01",
+      "camera": "overview",
+      "quality": "high",
+      "sourceRevision": "25d086cbd580de5dc5b745ce088af283434df5ae",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36",
+      "viewport": {
+        "width": 1280,
+        "height": 800,
+        "basis": "visualViewport",
+        "dpr": 1,
+        "canvasCSS": {
+          "width": 1280,
+          "height": 520
+        },
+        "canvasBacking": {
+          "width": 1280,
+          "height": 520
+        },
+        "windowReported": {
+          "width": 1280,
+          "height": 800
+        },
+        "documentRoot": {
+          "width": 1280,
+          "height": 800
+        }
+      },
+      "contextLost": false,
+      "warmupFrames": 30,
+      "measuredFrames": 120,
+      "drawCallbackCPU": {
+        "count": 120,
+        "meanMs": 0.9516666665983696,
+        "p50Ms": 1,
+        "p95Ms": 1.1000000014901161,
+        "maxMs": 1.2000000029802322
+      },
+      "requestAnimationFrameCadence": {
+        "count": 120,
+        "meanMs": 8.335000000000097,
+        "p50Ms": 8.300000000017462,
+        "p95Ms": 9,
+        "maxMs": 9.200000000011642
+      },
+      "flightStatus": "disarmed",
+      "ticks": 0,
+      "scope": "Static disarmed renderer; cadence is not a gameplay FPS or device guarantee. CPU duration excludes asynchronous GPU completion."
+    },
+    {
+      "world": "harbor-docks",
+      "revision": "r4",
+      "packSHA256": "d5bf4b9bb6829c04dbe1bb398893e5243cefc1f9acf018bf153a2012c8cf49b6",
+      "course": "harbor-docks-01",
+      "camera": "overview",
+      "quality": "balanced",
+      "sourceRevision": "25d086cbd580de5dc5b745ce088af283434df5ae",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36",
+      "viewport": {
+        "width": 1280,
+        "height": 800,
+        "basis": "visualViewport",
+        "dpr": 1,
+        "canvasCSS": {
+          "width": 1280,
+          "height": 520
+        },
+        "canvasBacking": {
+          "width": 1280,
+          "height": 520
+        },
+        "windowReported": {
+          "width": 1280,
+          "height": 800
+        },
+        "documentRoot": {
+          "width": 1280,
+          "height": 800
+        }
+      },
+      "contextLost": false,
+      "warmupFrames": 30,
+      "measuredFrames": 120,
+      "drawCallbackCPU": {
+        "count": 120,
+        "meanMs": 0.7924999998571972,
+        "p50Ms": 0.8000000007450581,
+        "p95Ms": 1,
+        "maxMs": 1
+      },
+      "requestAnimationFrameCadence": {
+        "count": 120,
+        "meanMs": 8.3375,
+        "p50Ms": 8.300000000017462,
+        "p95Ms": 9,
+        "maxMs": 9.200000000011642
+      },
+      "flightStatus": "disarmed",
+      "ticks": 0,
+      "scope": "Static disarmed renderer; cadence is not a gameplay FPS or device guarantee. CPU duration excludes asynchronous GPU completion."
+    },
+    {
+      "world": "harbor-docks",
+      "revision": "r4",
+      "packSHA256": "d5bf4b9bb6829c04dbe1bb398893e5243cefc1f9acf018bf153a2012c8cf49b6",
+      "course": "harbor-docks-01",
+      "camera": "overview",
+      "quality": "low",
+      "sourceRevision": "25d086cbd580de5dc5b745ce088af283434df5ae",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36",
+      "viewport": {
+        "width": 1280,
+        "height": 800,
+        "basis": "visualViewport",
+        "dpr": 1,
+        "canvasCSS": {
+          "width": 1280,
+          "height": 520
+        },
+        "canvasBacking": {
+          "width": 1280,
+          "height": 520
+        },
+        "windowReported": {
+          "width": 1280,
+          "height": 800
+        },
+        "documentRoot": {
+          "width": 1280,
+          "height": 800
+        }
+      },
+      "contextLost": false,
+      "warmupFrames": 30,
+      "measuredFrames": 120,
+      "drawCallbackCPU": {
+        "count": 120,
+        "meanMs": 0.5466666665549079,
+        "p50Ms": 0.5999999977648258,
+        "p95Ms": 0.6999999992549419,
+        "maxMs": 0.7000000029802322
+      },
+      "requestAnimationFrameCadence": {
+        "count": 120,
+        "meanMs": 8.333333333333334,
+        "p50Ms": 8.300000000017462,
+        "p95Ms": 9,
+        "maxMs": 9.39999999999418
+      },
+      "flightStatus": "disarmed",
+      "ticks": 0,
+      "scope": "Static disarmed renderer; cadence is not a gameplay FPS or device guarantee. CPU duration excludes asynchronous GPU completion."
+    },
+    {
+      "world": "cc0-coaster-park",
+      "revision": "r1",
+      "packSHA256": "a0483ee22fabdc190fc65858c458ed4730297a0179f8ede793383775a7568025",
+      "course": "cc0-coaster-park-route",
+      "camera": "overview",
+      "quality": "low",
+      "sourceRevision": "25d086cbd580de5dc5b745ce088af283434df5ae",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36",
+      "viewport": {
+        "width": 1280,
+        "height": 800,
+        "basis": "visualViewport",
+        "dpr": 1,
+        "canvasCSS": {
+          "width": 1280,
+          "height": 520
+        },
+        "canvasBacking": {
+          "width": 1280,
+          "height": 520
+        },
+        "windowReported": {
+          "width": 1280,
+          "height": 800
+        },
+        "documentRoot": {
+          "width": 1280,
+          "height": 800
+        }
+      },
+      "contextLost": false,
+      "warmupFrames": 30,
+      "measuredFrames": 120,
+      "drawCallbackCPU": {
+        "count": 120,
+        "meanMs": 0.4441666666418314,
+        "p50Ms": 0.4000000022351742,
+        "p95Ms": 0.5999999977648258,
+        "maxMs": 0.6000000014901161
+      },
+      "requestAnimationFrameCadence": {
+        "count": 120,
+        "meanMs": 8.332499999999952,
+        "p50Ms": 8.300000000017462,
+        "p95Ms": 8.799999999988358,
+        "maxMs": 9.199999999982538
+      },
+      "flightStatus": "disarmed",
+      "ticks": 0,
+      "scope": "Static disarmed renderer; cadence is not a gameplay FPS or device guarantee. CPU duration excludes asynchronous GPU completion."
+    },
+    {
+      "world": "cc0-coaster-park",
+      "revision": "r1",
+      "packSHA256": "a0483ee22fabdc190fc65858c458ed4730297a0179f8ede793383775a7568025",
+      "course": "cc0-coaster-park-route",
+      "camera": "overview",
+      "quality": "balanced",
+      "sourceRevision": "25d086cbd580de5dc5b745ce088af283434df5ae",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36",
+      "viewport": {
+        "width": 1280,
+        "height": 800,
+        "basis": "visualViewport",
+        "dpr": 1,
+        "canvasCSS": {
+          "width": 1280,
+          "height": 520
+        },
+        "canvasBacking": {
+          "width": 1280,
+          "height": 520
+        },
+        "windowReported": {
+          "width": 1280,
+          "height": 800
+        },
+        "documentRoot": {
+          "width": 1280,
+          "height": 800
+        }
+      },
+      "contextLost": false,
+      "warmupFrames": 30,
+      "measuredFrames": 120,
+      "drawCallbackCPU": {
+        "count": 120,
+        "meanMs": 0.5541666665424904,
+        "p50Ms": 0.5999999977648258,
+        "p95Ms": 0.6999999992549419,
+        "maxMs": 0.8000000007450581
+      },
+      "requestAnimationFrameCadence": {
+        "count": 120,
+        "meanMs": 8.334166666666714,
+        "p50Ms": 8.300000000017462,
+        "p95Ms": 8.89999999999418,
+        "maxMs": 9.300000000017462
+      },
+      "flightStatus": "disarmed",
+      "ticks": 0,
+      "scope": "Static disarmed renderer; cadence is not a gameplay FPS or device guarantee. CPU duration excludes asynchronous GPU completion."
+    },
+    {
+      "world": "cc0-coaster-park",
+      "revision": "r1",
+      "packSHA256": "a0483ee22fabdc190fc65858c458ed4730297a0179f8ede793383775a7568025",
+      "course": "cc0-coaster-park-route",
+      "camera": "overview",
+      "quality": "high",
+      "sourceRevision": "25d086cbd580de5dc5b745ce088af283434df5ae",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36",
+      "viewport": {
+        "width": 1280,
+        "height": 800,
+        "basis": "visualViewport",
+        "dpr": 1,
+        "canvasCSS": {
+          "width": 1280,
+          "height": 520
+        },
+        "canvasBacking": {
+          "width": 1280,
+          "height": 520
+        },
+        "windowReported": {
+          "width": 1280,
+          "height": 800
+        },
+        "documentRoot": {
+          "width": 1280,
+          "height": 800
+        }
+      },
+      "contextLost": false,
+      "warmupFrames": 30,
+      "measuredFrames": 120,
+      "drawCallbackCPU": {
+        "count": 120,
+        "meanMs": 0.5683333334202568,
+        "p50Ms": 0.5999999977648258,
+        "p95Ms": 0.6999999992549419,
+        "maxMs": 0.8000000007450581
+      },
+      "requestAnimationFrameCadence": {
+        "count": 120,
+        "meanMs": 8.341666666666667,
+        "p50Ms": 8.300000000017462,
+        "p95Ms": 9.199999999982538,
+        "maxMs": 9.299999999988358
+      },
+      "flightStatus": "disarmed",
+      "ticks": 0,
+      "scope": "Static disarmed renderer; cadence is not a gameplay FPS or device guarantee. CPU duration excludes asynchronous GPU completion."
+    }
+  ],
+  "scope": "Three worlds, first course, overview, static disarmed 30 warmup/120 frames. Not gameplay FPS. Invalid initial zero viewport sample excluded.",
+  "acceptance": "Bounded observed static rendering callback timing and animation-frame cadence only; no before/after speedup, gameplay FPS, device performance or GPU-completion claim"
+}
