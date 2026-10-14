@@ -9,6 +9,8 @@ export function overflightSortieProject(mode, project, { seed, difficulty, autho
     (project.seed === seed && project.difficulty === difficulty)
   )
     return project;
+  if (project.battlefield)
+    return mode.createProject({ layout: project.battlefield.id, world: project.battlefield.world, seed, difficulty });
   const encounterSet = mode.encounterSets.find(
     (set) => mode.createProject({ encounterSet: set }).id === project.id,
   );
@@ -225,8 +227,9 @@ export function overflightReviewStopAt(value, { build, diagnostics = false } = {
     : null;
 }
 
-export function createOverflightReviewPlayback({ build, pilot, selectCard, stopAt = null }) {
+export function createOverflightReviewPlayback({ build, pilot, selectCard, stopAt = null, enabled = true }) {
   const stopSeconds = overflightReviewStopAt(stopAt, { build, diagnostics: true });
+  let automatic = !!build && enabled;
   let stopped = false;
   let lastTick = null,
     input = { x: 0, y: 0, boost: false },
@@ -234,6 +237,13 @@ export function createOverflightReviewPlayback({ build, pilot, selectCard, stopA
   const offerIdentity = (run) =>
     `${run.progression.choices}:${run.progression.rerolls}:${run.offers.map((offer) => offer.id).join('|')}`;
   return {
+    active: () => automatic,
+    setEnabled(value) {
+      automatic = !!build && value === true;
+      pending = null;
+      lastTick = null;
+      input = { x: 0, y: 0, boost: false };
+    },
     reset() {
       lastTick = null;
       input = { x: 0, y: 0, boost: false };
@@ -241,7 +251,8 @@ export function createOverflightReviewPlayback({ build, pilot, selectCard, stopA
       stopped = false;
     },
     input(run, manual) {
-      if (!build) return manual;
+      if (!automatic) return manual;
+      run.review = true;
       if (stopSeconds !== null && run.time >= stopSeconds) stopped = true;
       if (stopped) return { x: 0, y: 0, boost: false, focus: false };
       if (lastTick === null || run.tick < lastTick || run.tick - lastTick >= 6) {
@@ -251,7 +262,7 @@ export function createOverflightReviewPlayback({ build, pilot, selectCard, stopA
       return input;
     },
     upgrade(run, now, visible) {
-      if (!build || run.phase !== 'upgrade') {
+      if (!automatic || run.phase !== 'upgrade') {
         pending = null;
         return null;
       }

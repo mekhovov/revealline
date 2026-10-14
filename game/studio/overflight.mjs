@@ -108,7 +108,7 @@ const field = (parent, title, input) => {
   parent.append(label);
   return input;
 };
-let draft = createOverflightProject({ rulesVersion: 3 }),
+let draft = createOverflightProject({ rulesVersion: 4 }),
   revision = 0,
   importGeneration = 0,
   previewRequest = 0,
@@ -388,7 +388,7 @@ function renderEditor() {
     // Directional escort branches replace these standalone weapons in Riy V2.
     if (
       riy &&
-      draft.format === 'OverflightRiyProjectV2' &&
+      ['OverflightRiyProjectV2', 'OverflightRiyProjectV3'].includes(draft.format) &&
       ['slow-field', 'proximity-pulse', 'side-burst'].includes(id)
     )
       continue;
@@ -520,7 +520,7 @@ actions.append(
   button(words('Make updated copy', 'Створити оновлену копію'), () => {
     draft = upgradeOverflightProjectCopy(draft, {
       difficulty: draft.difficulty ?? 'standard',
-      rulesVersion: 3,
+      rulesVersion: 4,
     });
     renderEditor();
     check();
@@ -528,7 +528,7 @@ actions.append(
   button(words('Use encounter set', 'Застосувати набір хвиль'), () => {
     draft = createOverflightProject({
       encounterSet: preset.value,
-      rulesVersion: 3,
+      rulesVersion: 4,
     });
     renderEditor();
     check();

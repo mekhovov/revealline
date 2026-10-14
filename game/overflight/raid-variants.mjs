@@ -1,3 +1,5 @@
+import { OVERFLIGHT_BATTLEFIELDS, applyOverflightBattlefield, overflightBattlefieldDefinition } from './battlefields.mjs';
+import { createOverflightWorldPresentation } from './worlds.mjs';
 import { dataIdentity } from '../data-json.mjs';
 import { createOverflightHuntRecords } from './raid-records.mjs';
 import {
@@ -42,7 +44,10 @@ export const OVERFLIGHT_MARATHON_TACTICS = Object.freeze([
 ]);
 export function overflightMarathonNextContract(run, locale = 'en') {
   const next = run.raidVariant?.contract;
-  return next < 5 ? OVERFLIGHT_MARATHON_TACTICS[next][locale === 'uk' ? 'uk' : 'en'] : null;
+  if (!(next < 5)) return null;
+  const language = locale === 'uk' ? 'uk' : 'en';
+  const layout = overflightBattlefieldDefinition(run.raidVariant.sequence?.[next]);
+  return [layout?.title[language], OVERFLIGHT_MARATHON_TACTICS[next][language]].filter(Boolean).join(' · ');
 }
 const words = {
   en: {
@@ -146,16 +151,32 @@ function sourceOf(compiled) {
   return project;
 }
 
+export function overflightMarathonSequence(source) {
+  if (!source.battlefield) return null;
+  const layouts = OVERFLIGHT_BATTLEFIELDS.filter(entry => entry.world === source.battlefield.world);
+  const first = layouts.findIndex(entry => entry.id === source.battlefield.id);
+  if (first < 0 || layouts.length !== 3) throw new TypeError('Marathon needs an authored three-layout world.');
+  return [0, 1, 2, 1, 0].map(offset => layouts[(first + offset) % 3].id);
+}
+
 export function overflightMarathonProject(source, contract, seed) {
   if (!Number.isInteger(contract) || contract < 1 || contract > OVERFLIGHT_MARATHON_CONTRACTS)
     throw new RangeError('Invalid Marathon contract.');
-  const project = structuredClone(source);
+  const sequence = overflightMarathonSequence(source);
+  const project = sequence ? applyOverflightBattlefield(source, sequence[contract - 1]) : structuredClone(source);
+  if (sequence) project.presentation = createOverflightWorldPresentation(project.battlefield.world, project.arena, { layout: project.battlefield });
   project.seed = seed;
   for (const encounter of project.encounters) {
     for (const pack of encounter.packs) pack.speed = Math.min(140, pack.speed + (contract - 1) * 8);
     for (const [index, actor] of [...encounter.packs, ...encounter.objectives].entries()) {
+      if (project.format === 'OverflightHuntProjectV4' && actor.escortOf) continue;
       const offset = (contract - 1) % actor.route.length;
       actor.route = [...actor.route.slice(offset), ...actor.route.slice(0, offset)];
+      if (project.format === 'OverflightHuntProjectV4' && actor.movement) {
+        // Route order varies within the authored geometry; never reflect cover independently.
+        if ([2, 5].includes(contract) && index % 2) actor.route.reverse();
+        actor.movement.anchors = structuredClone(actor.route);
+      }
       if (project.format === 'OverflightHuntProjectV3' && !actor.escortOf) {
         if ([2, 5].includes(contract) && index % 2) actor.route.reverse();
         if ([4, 5].includes(contract))
@@ -165,12 +186,12 @@ export function overflightMarathonProject(source, contract, seed) {
           }));
       }
     }
-    if (project.format === 'OverflightHuntProjectV3') {
+    if (['OverflightHuntProjectV3', 'OverflightHuntProjectV4'].includes(project.format)) {
       for (const [index, wing] of encounter.packs.filter((pack) => pack.escortOf).entries()) {
         const target = encounter.objectives.find((actor) => actor.id === wing.escortOf);
         let dx = wing.x - target.x,
           dy = wing.y - target.y;
-        if ([3, 5].includes(contract)) {
+        if (project.format === 'OverflightHuntProjectV3' && [3, 5].includes(contract)) {
           dx = index ? 72 : -72;
           dy = index ? -68 : 68;
         }
@@ -180,6 +201,7 @@ export function overflightMarathonProject(source, contract, seed) {
           x: point.x + dx,
           y: point.y + dy,
         }));
+        if (wing.movement) wing.movement.anchors = structuredClone(wing.route);
       }
     }
   }
@@ -266,12 +288,13 @@ export function createOverflightRaidVariant(base, { variant } = {}) {
     fixtures: [],
     compileProject(project) {
       const compiled = base.compileProject(project);
-      if (compiled.terrain)
+      if (compiled.terrain && !(compiled.rulesVersion >= 4 && compiled.battlefield && compiled.terrain.format === 'OverflightTerrainV2'))
         throw new TypeError(
           'Experimental terrain is available in Single Raid only; this variant requires open arenas.',
         );
       return compiled;
     },
+    projectForRun: (run) => sourceOf(run.compiled),
     text(locale, key) {
       if (key === 'title') return copy(locale)[variant];
       if (key === 'briefing')
@@ -279,14 +302,15 @@ export function createOverflightRaidVariant(base, { variant } = {}) {
       return base.text(locale, key);
     },
     createRun(compiled, options = {}) {
-      if (compiled.terrain)
+      if (compiled.terrain && !(compiled.rulesVersion >= 4 && compiled.battlefield && compiled.terrain.format === 'OverflightTerrainV2'))
         throw new TypeError(
           'Experimental terrain is available in Single Raid only; this variant requires open arenas.',
         );
       const run = base.createRun(compiled, options);
       run.raidVariant = {
         id: variant,
-        rules: compiled.rulesVersion >= 3 ? 2 : 1,
+        rules: compiled.rulesVersion >= 4 ? 3 : compiled.rulesVersion >= 3 ? 2 : 1,
+        sequence: overflightMarathonSequence(sourceOf(compiled)),
         seed: run.seed,
         baseIdentity: compiled.projectIdentity,
         source: sourceOf(compiled),
@@ -375,7 +399,7 @@ export function createOverflightRaidVariant(base, { variant } = {}) {
         compiled: {
           ...run.compiled,
           projectIdentity: dataIdentity({
-            rules: `overflight-${variant}.v${run.raidVariant?.rules ?? (run.compiled.rulesVersion >= 3 ? 2 : 1)}`,
+            rules: `overflight-${variant}.v${run.raidVariant?.rules ?? (run.compiled.rulesVersion >= 4 ? 3 : run.compiled.rulesVersion >= 3 ? 2 : 1)}`,
             project: run.raidVariant?.baseIdentity ?? run.compiled.projectIdentity,
           }),
         },

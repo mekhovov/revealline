@@ -1,5 +1,5 @@
 import { paintOverflightWorld } from '../presentation/overflight-world-art.mjs';
-import { overflightGameplayIdentity } from './worlds.mjs';
+import { overflightGameplayIdentity, overflightWorldDefinition } from './worlds.mjs';
 
 /** Installed packages can be valid in one family operation but not another. */
 export function overflightMissionSupport(mode, project) {
@@ -45,9 +45,10 @@ export function overflightMissionSource({
       standard: ['Standard', 'Стандарт'],
       veteran: ['Veteran', 'Ветеран'],
     }[project.difficulty ?? 'standard'] ?? ['Standard', 'Стандарт'];
-    return `${difficulty[uk ? 1 : 0]} · ${(project.survivorFormat ?? project.format).endsWith('V1') ? (uk ? 'Класичні правила' : 'Legacy rules') : title()}`;
+    const worldName = local(overflightWorldDefinition(project.battlefield?.world)?.title);
+    return `${worldName ? `${worldName} · ` : ''}${difficulty[uk ? 1 : 0]} · ${(project.survivorFormat ?? project.format).endsWith('V1') ? (uk ? 'Класичні правила' : 'Legacy rules') : title()}`;
   };
-  const name = (entry) => `${local(entry.project.title)} · ${detail(entry).split(' · ')[0]}`;
+  const name = (entry) => local(entry.project.title);
   return {
     id,
     editionId: mode.id,
@@ -61,8 +62,8 @@ export function overflightMissionSource({
         // Discovery precedes operation availability checks. Valid installed
         // packages keep a stable row even when this operation rejects a capability.
         revision: overflightGameplayIdentity(entry.project),
-        campaignKey: mode.id,
-        campaignTitle: title(),
+        campaignKey: entry.project.battlefield ? `${mode.id}:${entry.project.battlefield.world}` : mode.id,
+        campaignTitle: entry.project.battlefield ? local(overflightWorldDefinition(entry.project.battlefield.world)?.title) : title(),
         name: name(entry),
         levelIndex: entries.indexOf(entry),
         campaignLevelCount: entries.length,
@@ -73,13 +74,13 @@ export function overflightMissionSource({
             }
           : {}),
         modes: ['solo'],
-        tags: ['FPV', 'Arcade'],
+        tags: ['FPV', 'Arcade', ...(entry.project.battlefield ? [local(overflightWorldDefinition(entry.project.battlefield.world)?.title)] : [])],
         hook: detail(entry),
       };
     },
     presentation: (entry) => ({
       name: name(entry),
-      campaignTitle: title(),
+      campaignTitle: entry.project.battlefield ? local(overflightWorldDefinition(entry.project.battlefield.world)?.title) : title(),
       edition: 'Overflight',
       hook: detail(entry),
     }),
@@ -122,7 +123,7 @@ export function paintOverflightMission(context, diagram, paintSprite = () => {})
   }
   context.strokeStyle = '#2d493b';
   context.lineWidth = 1;
-  for (const x of [960, 1920]) {
+  for (const x of project.battlefield ? [] : [960, 1920]) {
     context.beginPath();
     context.moveTo(x * scaleX, 0);
     context.lineTo(x * scaleX, 132);

@@ -181,6 +181,11 @@ export const OVERFLIGHT_COPY = Object.freeze({
     nextUpgrade: 'Another upgrade is ready',
     fixture: 'Engineering fixture',
     automatedReview: 'Automated review',
+    reviewManual: 'Manual control · optional demonstration available',
+    reviewTakenOver: 'Manual control · assisted run, no personal records',
+    startAutoplay: 'Start automated demonstration',
+    takeControl: 'Take control',
+    manualRetry: 'Start a manual sortie',
     recordClip: 'Record 20-second battlefield clip',
     downloadClip: 'Download battlefield clip',
     clipLimit:
@@ -396,6 +401,11 @@ export const OVERFLIGHT_COPY = Object.freeze({
     nextUpgrade: 'Готове ще одне покращення',
     fixture: 'Інженерна перевірка',
     automatedReview: 'Автоматизований перегляд',
+    reviewManual: 'Ручне керування · доступна демонстрація',
+    reviewTakenOver: 'Ручне керування · виліт із допомогою, без рекордів',
+    startAutoplay: 'Почати автоматичну демонстрацію',
+    takeControl: 'Взяти керування',
+    manualRetry: 'Почати ручний виліт',
     recordClip: 'Записати 20 секунд поля бою',
     downloadClip: 'Завантажити запис поля бою',
     clipLimit:
