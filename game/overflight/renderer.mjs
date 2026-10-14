@@ -193,7 +193,12 @@ export async function createOverflightRenderer({
   };
   const postRender = () => {
     const now = performance.now();
-    benchmark.frame(now, frameActive && !lost && !destroyed && !document.hidden, current?.phase);
+    benchmark.frame(
+      now,
+      frameActive && !lost && !destroyed && !document.hidden,
+      current?.phase,
+      current?.time,
+    );
     if (frameActive) benchmark.submission(presentMs + Math.max(0, now - renderStarted), now);
   };
   try {

@@ -72,6 +72,7 @@ export function overflightRememberedOperationURL(href, stored) {
         'fixture',
         'benchmark',
         'trial',
+        'measureAt',
       ].includes(key)
     )
       target.searchParams.set(key, value);
