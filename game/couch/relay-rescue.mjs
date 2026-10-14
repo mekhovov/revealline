@@ -86,6 +86,7 @@ import { mountModeChoices } from '../ui/mode-choice.mjs';
 import { prepareNativeMenus } from '../ui/native-menus.mjs';
 import { authoredTeamReturn } from '../ui/authored-mode-routes.mjs';
 import { resolveJourneyRequest } from '../content-design/default-entry.mjs';
+import { teamExpeditionLibrarySource } from '../mission-library/multiplayer-expeditions.mjs';
 import { attachOfflineModeNavigation } from '../ui/offline-tool-navigation.mjs';
 import { offlineAvailability } from '../offline.mjs';
 import {
@@ -4529,6 +4530,14 @@ export function bootCoop({
   function getTeamLibrary() {
     if (!missionLibrary) {
       missionLibrary = createMissionLibrary();
+      if (libraryEdition !== 'team-expedition-v1')
+        registerTeamSource(
+          teamExpeditionLibrarySource({
+            difficulty: libraryDifficulty,
+            launch: launchRemoteTeamRow,
+          }),
+          () => null,
+        );
       if (candidateJourney)
         registerTeamSource(
           teamJourneyLibrarySource({
@@ -4589,7 +4598,8 @@ export function bootCoop({
     return missionLibrary;
   }
   async function includeCurrentTeamJourney() {
-    if (candidateJourney || libraryRemoteJourney) return;
+    if ((candidateJourney && libraryEdition !== 'team-expedition-v1') || libraryRemoteJourney)
+      return;
     libraryRemotePending ??= Promise.all([
       import('../content-design/team-host.mjs'),
       import('../content-design/team-cultural-specialist-v2-originals.mjs'),
@@ -5223,6 +5233,7 @@ export function bootCoop({
     );
     generation++;
     startCoop(run);
+    libraryStatus('');
     beginInstalledTeamAttempt(run, selection, briefing?.restored, {
       // Starting an already prepared core clears its held controls before its
       // save owners exist. Retain that same release in their initial journals.
@@ -5784,6 +5795,8 @@ export function bootCoop({
       actorFamilies: pursuitRoster(run.level).map((actor) => actor.family),
       board: 'team',
       danger:
+        run.environment?.emitters.some((source) => source.phase === 'warning') ||
+        run.environment?.erosion.some((source) => source.warning.length > 0) ||
         run.combatPatrols?.actors.some((actor) => actor.alive && actor.phase === 'warning') ||
         run.combatPatrols?.projectiles.length > 0 ||
         run.players.some((player) => player.status === 'downed') ||
@@ -5904,9 +5917,23 @@ export function bootCoop({
         announce(() => t('interface:team.bothCraftBack', { cause: cause ? `${cause} ` : '' }));
       }
       if (event.type === 'shield.disabled')
-        announce(t('interface:bothAnchorsSecuredNowCaptureTheExposedCoreInA'));
+        announce(
+          t(
+            run.environment
+              ? 'interface:expeditions.pathOpened'
+              : 'interface:bothAnchorsSecuredNowCaptureTheExposedCoreInA',
+          ),
+        );
       if (event.type === 'core.defeated')
-        announce(t('interface:strongholdDefeatedItsEmitterAndTravellingSparksAreGone'));
+        announce(
+          t(
+            run.environment
+              ? 'interface:expeditions.sourceDisabled'
+              : 'interface:strongholdDefeatedItsEmitterAndTravellingSparksAreGone',
+          ),
+        );
+      if (event.type === 'emitter.warning' && run.environment)
+        announce(t('interface:expeditions.warning'));
       if (event.type === 'support.pulse') {
         if (event.interceptedImpacts?.length)
           announce(() => t('interface:team.sparkIntercepted', { player: names()[event.player] }));
@@ -7355,6 +7382,7 @@ try {
   let candidateEntry;
   if (
     [
+      'team-expedition-v1',
       'humanoid-hunt-v1',
       'pursuit-pilots-v1',
       'pursuit-campaigns-v1',
@@ -7372,6 +7400,7 @@ try {
   ) {
     const { createTeamGreyboxEntry } = await import('../content-design/team-entry.mjs');
     candidateEntry = await createTeamGreyboxEntry({
+      expedition: journeyRequest === 'team-expedition-v1',
       huntTraining: journeyRequest === 'humanoid-hunt-v1',
       pursuitPilots: journeyRequest === 'pursuit-pilots-v1',
       pursuitCampaigns: journeyRequest === 'pursuit-campaigns-v1',

@@ -114,20 +114,29 @@ export function buildOfflineDestinations({ journeys, teamProjects, classicIndex,
 
 /** The worker needs only optional bootstrap files, never the large mission table. */
 export function buildNavigationBootstraps({ journeys, currentRouteId }) {
-  return journeys.flatMap(({ route, descriptor }) => [
-    ...(route.id === currentRouteId
-      ? []
-      : [
-          {
-            path: 'game/index.html',
-            routeId: route.id,
-            files: [`game/content-design/${descriptor.path}`],
-          },
-        ]),
-    {
-      path: 'game/couch/index.html',
-      routeId: route.id,
-      files: [`game/content-design/${descriptor.path}`],
-    },
-  ]);
+  return journeys.flatMap(({ route, descriptor }) => {
+    const modes = route.source
+      ? new Set(route.source.missions.flatMap((mission) => mission.modes))
+      : new Set(['solo', 'versus']);
+    return [
+      ...(route.id === currentRouteId || !modes.has('solo')
+        ? []
+        : [
+            {
+              path: 'game/index.html',
+              routeId: route.id,
+              files: [`game/content-design/${descriptor.path}`],
+            },
+          ]),
+      ...(modes.has('versus')
+        ? [
+            {
+              path: 'game/couch/index.html',
+              routeId: route.id,
+              files: [`game/content-design/${descriptor.path}`],
+            },
+          ]
+        : []),
+    ];
+  });
 }
