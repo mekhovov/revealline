@@ -4254,3 +4254,28 @@ Final runtime candidate `28450a208030c34098bd2e2b59f6a2237d55284e` passed all th
 Next: protected publication of this independent PR; moving replay and reload/memory measurements; the combined unchanged-package offline recovery journey; representative art and Canals; then D6. Physical-device and novice acceptance remain unverified/nonblocking. No public live claim until public marker plus actual player launch verifies deployment.
 
 Publication: **PR #1193** (https://github.com/mekhovov/revealline/pull/1193) is open against main on `codex/fpv-integrated-reliability-20261014`, milestone v0.150.0. No new native stack is needed for this independent increment. Protected checks are running; no merge or live availability is claimed. Chat attachment was attempted but the app rejected it at its existing 100-attachment limit. Source, recovery refs and failed diagnostic receipts remain preserved.
+
+## 2026-10-14 — Default world catalogue and regional foundations
+
+Reconciled main at `595421060`; #1193 and native stack #1180 are merged. New
+independent catalogue branch is `codex/fpv-world-catalogue-20261014`. Updated
+priorities and researched source candidates are in `fpv-large-worlds-delivery-plan.md`.
+The regional manifest/residency foundation was published as #1197 and has now
+merged. Source-window loading continues separately; no huge playable-region claim.
+
+Catalogue increment adds Explore/Library discovery, Play-to-download and exact
+installed revision launch, EN/UK search, cancellation-safe navigation and bounded
+v2 pages. Existing v1 feed and all package/recording budgets remain unchanged.
+23 parser/worker scenarios, 15 browser UI contract scenarios, 27 existing focused
+checks and canonical projections pass. Actual integrated host displays the new
+section; its v2 bootstrap is unavailable until this feed merges. A broader existing
+installed-host fixture remains red on an unhandled presentation/runtime.json request;
+33 other installation/offline checks passed. Do not count this as full qualification.
+
+Internal storage is approximately 1.3 GiB, below the 3 GiB heavy-build floor.
+External storage holds new asset preparation and regional work. Coaster Practice
+Park is undergoing flight/collision/visual admission; no unverified row is added.
+Next: exact-head cloud admission, live feed/host verification, transactional region
+source preparation, actual collision/render streaming, and representative Canyon
+and Urban authored regions. Physical devices, long sessions and public launch
+remain unclaimed. Protected publication continues independently of development.
