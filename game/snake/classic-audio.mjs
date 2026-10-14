@@ -5,6 +5,7 @@ import {
 } from '../ui/destruction-audio.mjs';
 import { screenPan } from '../ui/feedback-cues.mjs';
 import { classicTargetIdentity } from './classic-target-identity.mjs';
+import { classicSnakeSignalView } from './classic-core-v4.mjs';
 
 /** Presentation adapter only. The shared mixer owns samples, priority, movement
  * limits, master mute and pause. Replayed/imported history never emits old SFX. */
@@ -18,19 +19,28 @@ export function createClassicAudio(
     if ((eventSteps.get(run) ?? -1) >= run.tick) return;
     eventSteps.set(run, run.tick);
     if (!active) return;
+    const reception = classicSnakeSignalView(run);
+    const concealed = reception.active && !reception.suppressed;
     for (const event of run.events ?? []) {
       if (event.tick !== run.tick) continue;
       const cue = {
         'target.warning': 'warning',
         'relay.collected': 'supply',
         'target.opened': 'objective',
+        'cargo.collected': 'supply',
+        'cargo.delivered': 'objective',
       }[event.type];
       if (!cue) continue;
       const source = event.target ?? event.relay;
       sound.encounter(cue, {
         family: source?.kind,
         board,
-        pan: screenPan(source?.x ?? run.level.width / 2, run.level.width, placement),
+        // Hidden actors cannot reveal a direction through their incidental cues.
+        // Required warnings remain audible without localizing their source.
+        pan:
+          concealed && event.type.startsWith('target.')
+            ? 0
+            : screenPan(source?.x ?? run.level.width / 2, run.level.width, placement),
       });
     }
   }
@@ -51,6 +61,8 @@ export function createClassicAudio(
       states.set(run, state);
     }
     const projected = state.projection;
+    const reception = classicSnakeSignalView(run);
+    const concealed = reception.active && !reception.suppressed;
     Object.assign(projected, {
       tick: run.tick,
       status: run.status,
@@ -64,22 +76,26 @@ export function createClassicAudio(
         bodyId: 'fpv-scout-v1',
         status: snake.alive ? 'active' : 'dead',
       })),
-      enemies: (run.targets ?? (run.target ? [run.target] : [])).map((target) => {
-        const identity = classicTargetIdentity(target.kind, getBoardStyle());
-        return {
-          ...target,
-          ...identity,
-          bodyId: identity.humanoid ? 'humanoid' : identity.family,
-          // Pulse is frozen simulation state, not an audio/animation timer.
-          frozenUntil: run.pulseTicks > 0 ? Infinity : 0,
-        };
-      }),
+      enemies: (concealed ? [] : (run.targets ?? (run.target ? [run.target] : []))).map(
+        (target) => {
+          const identity = classicTargetIdentity(target.kind, getBoardStyle());
+          return {
+            ...target,
+            ...identity,
+            bodyId: identity.humanoid ? 'humanoid' : identity.family,
+            // Pulse is frozen simulation state, not an audio/animation timer.
+            frozenUntil: run.pulseTicks > 0 ? Infinity : 0,
+          };
+        },
+      ),
     });
     if (active && run.tick > state.tick) {
       const catchCount = run.catches + (run.bonusCatches ?? 0);
       if (catchCount > state.catches) {
         const latest = run.recentCatches?.at(-1);
-        const pan = screenPan(latest?.x ?? run.level.width / 2, run.level.width, placement);
+        const pan = concealed
+          ? 0
+          : screenPan(latest?.x ?? run.level.width / 2, run.level.width, placement);
         sound.event?.({ type: 'pickup.collected', board, pan, feedback: true, tick: run.tick });
         const categories = new Set();
         // Several co-op catches may land in one step. Retain each material, not
@@ -96,8 +112,10 @@ export function createClassicAudio(
             ...identity,
             board,
             brutal: getDestruction().brutal,
-            vocals: getDestruction().vocals,
-            pan: screenPan(caught?.x ?? run.level.width / 2, run.level.width, placement),
+            vocals: concealed ? false : getDestruction().vocals,
+            pan: concealed
+              ? 0
+              : screenPan(caught?.x ?? run.level.width / 2, run.level.width, placement),
           });
         }
       }

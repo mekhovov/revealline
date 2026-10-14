@@ -97,88 +97,35 @@ test('archived admission accepts only exact retired official recipes and prepare
   }
 });
 
-test('all 24 retired local-v1 routes preserve exact checkpoints and completion-only records', async (t) => {
+test('fresh campaign rejects retired proofs without removing their engine replay support', async (t) => {
   const model = managedIndexedDB();
   const records = createClassicSnakeRecords({ indexedDB: model.indexedDB });
-  const replayed = [];
-  assert.equal(localV1.proofs.length, 24);
-  for (const { replay, pace } of localV1.proofs) {
-    assert.ok(
-      replay.level.targets.required.some((target) => target.signalProfile === 'local-burst-v1'),
-    );
+  const ratings = createClassicSnakeRatings({ records, indexedDB: model.indexedDB });
+  t.after(() => {
+    records.close();
+    ratings.close();
+  });
+  for (const { replay } of [...localV1.proofs, ...archive.proofs]) {
     const restored = restoreClassicSnakeReplay(replay);
     assert.equal(restored.status, 'won');
     assert.deepEqual(exportClassicSnakeReplay(restored), replay);
-    const current = CLASSIC_SNAKE_LEVELS.find((entry) => entry.id === replay.level.id);
-    const archived = resolveClassicSnakeRecipeEntry(
-      current,
-      replay.level,
-      { pace },
-      { allowArchive: true },
-    );
-    assert.equal(archived.level.revision, '2');
-    assert.throws(
-      () => resolveClassicSnakeRecipeEntry(current, replay.level, { pace }),
-      /catalogue definition/,
-    );
-    const match = verifiedMatch(replay);
-    await records.remember(match.runs[0], {
-      mode: replay.mode,
-      chapterId: archived.chapterId,
-      level: replay.level,
-      match: exportClassicSnakeMatch(match),
-    });
-    assert.equal(records.get(match.runs[0], replay.mode).rating.stars, 1);
-    assert.equal(records.get(match.runs[0], replay.mode).rating.calibrated, false);
-    replayed.push(match);
   }
-  const before = records.snapshot();
-  records.close();
-  const reloaded = createClassicSnakeRecords({ indexedDB: model.indexedDB });
-  const ratings = createClassicSnakeRatings({ records: reloaded, indexedDB: model.indexedDB });
-  t.after(() => {
-    reloaded.close();
-    ratings.close();
-  });
-  await reloaded.read();
-  await ratings.refresh();
-  assert.deepEqual(reloaded.snapshot(), before);
-  for (const match of replayed)
-    assert.equal(ratings.get(match.runs[0], match.options.mode).stars, 1);
-});
-
-test('all thirty historical fixed-schedule grades remain verified after reload', async (t) => {
-  const model = managedIndexedDB();
-  const records = createClassicSnakeRecords({ indexedDB: model.indexedDB });
-  const replayed = [];
-  assert.equal(archive.proofs.length, 30);
-  for (const { replay } of archive.proofs) {
+  for (const { replay } of [localV1.proofs[0], archive.proofs[0]]) {
     const match = verifiedMatch(replay);
     const entry = CLASSIC_SNAKE_ARCHIVED_LEVELS.find((item) => item.id === replay.level.id);
-    await records.remember(match.runs[0], {
-      mode: replay.mode,
-      chapterId: entry.chapterId,
-      level: replay.level,
-      match: exportClassicSnakeMatch(match),
-    });
-    assert.equal(records.get(match.runs[0], replay.mode).rating.stars, 3);
-    replayed.push(match);
+    await assert.rejects(
+      records.remember(match.runs[0], {
+        mode: replay.mode,
+        chapterId: entry.chapterId,
+        level: replay.level,
+        match: exportClassicSnakeMatch(match),
+      }),
+      /catalogue definition/,
+    );
   }
-  const before = records.snapshot();
-  records.close();
-  const restored = createClassicSnakeRecords({ indexedDB: model.indexedDB });
-  const ratings = createClassicSnakeRatings({ records: restored, indexedDB: model.indexedDB });
-  t.after(() => {
-    restored.close();
-    ratings.close();
-  });
-  await restored.read();
   await ratings.refresh();
-  for (const match of replayed) {
-    assert.equal(restored.get(match.runs[0], match.options.mode).rating.stars, 3);
-    assert.equal(ratings.get(match.runs[0], match.options.mode).stars, 3);
-  }
-  assert.deepEqual(restored.snapshot(), before, 'Existing proof records are not rewritten.');
+  assert.deepEqual(records.snapshot().rows, {});
+  assert.deepEqual(ratings.snapshot().best, {});
 });
 
 test('an installed package cannot inherit official archive authority from a source ID', async (t) => {

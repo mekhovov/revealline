@@ -269,15 +269,10 @@ body.mode-play-page {
   }
 }
 
-
 .sim-shell-loading {
   align-self: center;
   justify-self: center;
 }
-
-
-
-
 
 /* The shared bar occupies real layout space above native instruments/controls. */
 html body.sim-academy .mode-play-stage {
@@ -3329,14 +3324,14 @@ html
   body
   :is(.mode-play-shell, #flight-dialog):has([data-sim-hud-active='true'])
   > .mode-play-bar
-  > :not([data-mode-action='pause']) {
+  > :not([data-mode-action='pause']):not([data-mode-action='camera']) {
   display: none !important;
 }
 html
   body
   :is(.mode-play-shell, #flight-dialog):has([data-sim-hud-active='true'])
   > .mode-play-bar
-  [data-mode-action='pause'] {
+  :is([data-mode-action='pause'], [data-mode-action='camera']) {
   min-height: 44px !important;
   min-width: 44px !important;
   margin: 0 !important;
@@ -3403,4 +3398,175 @@ html body.sim-worlds #flight-dialog.learning-replay > #world-replay-controls lab
 html body.sim-worlds #flight-dialog.learning-replay > #world-replay-controls label {
   margin: 0 !important;
   padding: 0 !important;
+}
+
+/* Camera remains a compact flight action rather than a themed menu panel. */
+html body .mode-play-bar {
+  gap: 8px;
+}
+html body .mode-play-bar .sim-camera-quick[hidden] {
+  display: none !important;
+}
+html body .mode-play-bar .sim-camera-quick {
+  min-height: 44px;
+  max-width: 150px;
+}
+html body .sim-camera-choices {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0 0 16px;
+  padding: 8px;
+  border: 1px solid var(--fk-line);
+  min-width: 0;
+}
+html body .sim-camera-choices[hidden] {
+  display: none;
+}
+html body .sim-camera-choices button {
+  min-height: 44px;
+  flex: 1 1 auto;
+}
+html body .sim-camera-choices small {
+  flex-basis: 100%;
+  color: var(--fk-muted);
+}
+
+/* Quick setup is a paused surface, never another in-flight overlay. */
+.sim-flight-setup {
+  margin-bottom: 16px;
+  min-width: 0;
+}
+.sim-flight-setup > h2 {
+  margin: 0 0 8px;
+  font-size: 1.15em;
+}
+.sim-flight-setup-rows {
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  gap: 10px;
+  align-items: end;
+}
+.sim-flight-setup-rows label {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+}
+.sim-flight-setup-rows :is(select, button) {
+  min-height: 44px;
+  max-width: 100%;
+  width: 100%;
+}
+.sim-flight-setup > small {
+  display: block;
+  margin: 8px 0 12px;
+  color: var(--fk-muted, #afbdc6);
+}
+.sim-flight-setup details {
+  margin-top: 8px;
+}
+.sim-flight-setup summary {
+  min-height: 44px;
+  display: list-item;
+  align-content: center;
+  cursor: pointer;
+}
+.sim-flight-setup details p {
+  max-width: 65ch;
+  margin: 8px 0;
+}
+@media (max-width: 560px) {
+  .sim-flight-setup-rows {
+    grid-template-columns: 1fr 1fr;
+  }
+  .sim-flight-setup-rows > button {
+    grid-column: 1 / -1;
+  }
+}
+
+html body .sim-flight-setup .sim-camera-choices {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+html body .sim-flight-setup .sim-camera-choices > button {
+  min-width: 0;
+  padding: 8px;
+  width: 100%;
+}
+.sim-flight-setup .sim-camera-choices > small {
+  grid-column: 1 / -1;
+}
+
+/* Optional HUD styling remains independent of menu textures and input hit areas. */
+html body .sim-flight-comfort {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  min-width: 0;
+  margin: 12px 0;
+  padding: 12px;
+  border: 1px solid var(--sim-border, #465b6a);
+}
+html body .sim-flight-comfort label {
+  display: grid;
+  flex: 1 1 180px;
+  min-width: 0;
+  gap: 6px;
+}
+html body .sim-flight-comfort :is(select, button) {
+  min-height: 44px;
+  max-width: 100%;
+}
+html body .sim-flight-comfort :is(small, p) {
+  flex: 1 0 100%;
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+html body :is(#viewport, #world-viewport)[data-stick-size='compact'] {
+  --sim-monitor-stick-size: 64px;
+  --sim-touch-stick-size: 104px;
+}
+html body :is(#viewport, #world-viewport)[data-stick-size='large'] {
+  --sim-monitor-stick-size: 112px;
+  --sim-touch-stick-size: 144px;
+}
+html body :is(#viewport, #world-viewport)[data-stick-opacity='quiet'] {
+  --sim-stick-alpha: 0.5;
+}
+html body :is(#viewport, #world-viewport)[data-stick-opacity='balanced'] {
+  --sim-stick-alpha: 0.8;
+}
+html body :is(#viewport, #world-viewport)[data-stick-opacity='strong'] {
+  --sim-stick-alpha: 1;
+}
+html body #viewport #sticks > div,
+html body #viewport #touch-controls .touch-stick,
+html body #world-viewport .world-touch .touch-stick {
+  opacity: var(--sim-stick-alpha, 1);
+}
+html body #viewport:is([data-stick-size='compact'], [data-stick-size='large']) #sticks > div,
+html
+  body
+  #world-viewport:is([data-stick-size='compact'], [data-stick-size='large'])
+  .world-touch:not(.touch-active)
+  .touch-stick {
+  width: min(var(--sim-monitor-stick-size), 20vw, 28vh) !important;
+  height: min(var(--sim-monitor-stick-size), 20vw, 28vh) !important;
+  min-width: 44px;
+  min-height: 44px;
+}
+html
+  body
+  #viewport:is([data-stick-size='compact'], [data-stick-size='large'])
+  #touch-controls
+  .touch-stick,
+html
+  body
+  #world-viewport:is([data-stick-size='compact'], [data-stick-size='large'])
+  .world-touch.touch-active
+  .touch-stick {
+  width: max(88px, min(var(--sim-touch-stick-size), 32vw, 32vh)) !important;
+  height: max(88px, min(var(--sim-touch-stick-size), 32vw, 32vh)) !important;
+  min-width: 88px;
+  min-height: 88px;
 }

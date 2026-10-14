@@ -21,6 +21,9 @@ import { restoreVerifiedRadio } from './radio-session.mjs';
 import { mountRadioSetup } from './radio-setup.mjs';
 import {
   mountFlightFullscreen,
+  mountFlightCameraControls,
+  mountFlightSetup,
+  mountFlightComfort,
   attachSimMissionLibraryChooser,
   createSimMissionLibrary,
   createSimContinuousPlayController,
@@ -166,6 +169,9 @@ export function mountFlightApp({
     lastRadioDiscovery = -Infinity,
     message = null,
     playShell = null,
+    cameraControls = null,
+    flightSetup = null,
+    flightComfort = null,
     modeSettingsView = null,
     globalSettingsView = null,
     globalTools = null,
@@ -391,8 +397,8 @@ export function mountFlightApp({
   }
   const gamepadHelp = () =>
     locale === 'uk'
-      ? 'A — увімкнути / продовжити · Y — скинути · Menu / B — пауза. Лівий стік: поворот і зміна газу; правий: нахил. Відпустіть лівий стік, щоб утримувати газ. D-pad — нахил, LB/RB — поворот, LT/RT — менше/більше газу.'
-      : 'A / Cross: arm · Y / Triangle: reset · Menu / B: pause. Left stick: yaw and throttle adjustment; right: tilt. Release the left stick to hold throttle. D-pad: tilt, LB/RB: yaw, LT/RT: less/more throttle. Steam Input: use a Gamepad layout.';
+      ? 'A — увімкнути / продовжити · Y — скинути · Menu / B — пауза · R3 — камера. Лівий стік: поворот і зміна газу; правий: нахил. Відпустіть лівий стік, щоб утримувати газ. D-pad — нахил, LB/RB — поворот, LT/RT — менше/більше газу.'
+      : 'A / Cross: arm · Y / Triangle: reset · Menu / B: pause · R3: camera. Left stick: yaw and throttle adjustment; right: tilt. Release the left stick to hold throttle. D-pad: tilt, LB/RB: yaw, LT/RT: less/more throttle. Steam Input: use a Gamepad layout.';
   function gamepadScope() {
     if (
       replay ||
@@ -439,7 +445,8 @@ export function mountFlightApp({
       } else if (action === 'reset') {
         setFlightMenu(false);
         reset();
-      } else if (action === 'pause' || action === 'back') setFlightMenu(true);
+      } else if (action === 'camera') cameraControls?.cycle();
+      else if (action === 'pause' || action === 'back') setFlightMenu(true);
     }
   }
   const radio = createRadioRuntime({
@@ -910,6 +917,7 @@ export function mountFlightApp({
     presentation.refresh();
     playShell?.setLocale(locale);
     modeSettingsView?.refresh(locale);
+    flightComfort?.refresh();
     globalSettingsView?.refresh(locale);
     globalTools?.refresh();
     modes.refresh?.();
@@ -987,6 +995,9 @@ export function mountFlightApp({
       $('academy-controller-hint').textContent = gamepadHelp();
       $('academy-controller-hint').hidden = input.owner() !== 'controller';
     }
+    cameraControls?.refresh();
+    flightSetup?.refresh();
+    flightComfort?.refresh();
     renderer.draw?.(state, {
       cameraMode: $('camera').value || 'fpv',
       cameraFov: Number($('camera-fov').value) || 82,
@@ -2103,6 +2114,17 @@ export function mountFlightApp({
       extras: [$('help'), shellSettings.querySelector('[data-sim-copy="optionsPause"]')],
     },
   });
+  flightComfort = mountFlightComfort({
+    document: doc,
+    window: win,
+    panels: modeSettingsView.panels,
+    viewport: $('viewport'),
+    fov: $('camera-fov'),
+    tilt: $('camera-tilt'),
+    host: 'academy',
+    locale: () => locale,
+    canChange: () => !flight || flight.snapshot().status !== 'active' || playShell.blocksPlay(),
+  });
   const globalThemeControls = attachSimThemeFamilyControls({
     document: doc,
     root: modeSettingsView.panels.display,
@@ -2224,6 +2246,56 @@ export function mountFlightApp({
   $('academy-close-options').dataset.settingsBack = '';
   listen($('academy-close-options'), 'click', () => playShell.back());
 
+  cameraControls = mountFlightCameraControls({
+    document: doc,
+    window: win,
+    shell: playShell,
+    select: $('camera'),
+    viewport: $('viewport'),
+    locale: () => locale,
+    available: () =>
+      Boolean(
+        sceneReady &&
+          flight &&
+          !['complete', 'expired', 'destroyed'].includes(flight.snapshot().status),
+      ),
+    canShortcut: () =>
+      !playShell.blocksPlay() &&
+      !modalOpen() &&
+      !flightMenuOpen() &&
+      !immersive.snapshot().toolsOpen,
+  });
+
+  flightSetup = mountFlightSetup({
+    document: doc,
+    window: win,
+    shell: playShell,
+    mode: $('mode'),
+    source: $('input-source'),
+    radioButton: $('setup'),
+    camera: cameraControls,
+    locale: () => locale,
+    available: () => Boolean(flight && sceneReady),
+    inputRestarts: true,
+    inputHint: () => {
+      const source = $('input-source').value;
+      if (source === 'controller') return gamepadHelp();
+      if (source === 'keyboard')
+        return (
+          keyboardFlightHelp($('keyboard-preset').value, locale) +
+          ' · V / R3: ' +
+          (locale === 'uk' ? 'камера' : 'camera')
+        );
+      if (source === 'radio')
+        return locale === 'uk'
+          ? 'Використовуйте збережені перемикачі ввімкнення та скидання. Налаштуйте їх у «Налаштувати пульт». У меню: крен/тангаж — навігація; утримайте рискання праворуч/ліворуч і поверніть у центр для підтвердження/назад.'
+          : 'Use your saved Arm and Reset switches; assign them in Set up radio. Menus: roll/pitch navigate; hold yaw right/left, then centre to confirm/go back.';
+      return locale === 'uk'
+        ? 'Лівий стік: рискання/газ. Правий: крен/тангаж. Газ зберігається після відпускання. Для ввімкнення натисніть «Продовжити»; камера та пауза — у кутку екрана.'
+        : 'Left stick: yaw/throttle. Right: roll/pitch. Throttle stays where you release it. Use Resume to arm; View and Pause stay in the screen corner.';
+    },
+  });
+
   // Existing renderer preparation remains asynchronous; Play enters its native
   // disarmed scene, where Arm becomes available as soon as assets are ready.
   reset();
@@ -2275,6 +2347,9 @@ export function mountFlightApp({
       missionChooser.destroy();
       missionLibrary.dispose();
       watchMission.onclick = null;
+      flightComfort?.dispose();
+      flightSetup?.dispose();
+      cameraControls?.dispose();
       playShell?.dispose();
       menuNavigation.dispose();
       menuHint.remove();

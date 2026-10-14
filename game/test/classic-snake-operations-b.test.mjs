@@ -24,6 +24,12 @@ const proofs = JSON.parse(
     'utf8',
   ),
 ).proofs;
+const tacticalProofs = JSON.parse(
+  await readFile(
+    new URL('../../docs/verification/snake-remaster/tactical-proofs.json', import.meta.url),
+    'utf8',
+  ),
+).proofs;
 
 test('Release B contains six ordered chapters of eight finite, distinctly authored operations', () => {
   assert.equal(entries.length, 48);
@@ -77,6 +83,10 @@ test('all 288 Release B Solo/Team/pace winning journals verify against current r
   }
 });
 function play(proof) {
+  proof =
+    tacticalProofs.find(
+      (p) => p.levelId === proof.levelId && p.mode === proof.mode && p.pace === proof.pace,
+    ) ?? proof;
   const entry = CLASSIC_SNAKE_LEVELS.find((e) => e.id === proof.levelId),
     level = prepareClassicSnakeLevel(entry, { pace: proof.pace });
   const match = createClassicSnakeMatch(level, {

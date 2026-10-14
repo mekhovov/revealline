@@ -1,4 +1,5 @@
-import { CLASSIC_SNAKE_PURSUIT_V1_ARCHIVED_LEVELS } from '../snake/classic-catalogue-pursuit-v1-archive.mjs';
+import { CLASSIC_SNAKE_CAMPAIGN_REVISION } from '../snake/classic-campaign.mjs';
+const SAVE_KEY = `revealline.classic-snake.round.${CLASSIC_SNAKE_CAMPAIGN_REVISION}`;
 import { classicOperationStatus } from '../snake/classic-operation-status.mjs';
 import { OPERATION_PROTOTYPES } from './manual/snake-operation-recipes.mjs';
 import { classicBoardPreferences, isClassicWorldStyle } from '../snake/classic-worlds.mjs';
@@ -76,7 +77,10 @@ import { snakeStudioReturnHref } from '../ui/content-studio-navigation.mjs';
 import { fpvWorldLaunchURL, appearanceLaunchURL, nativeArtReviewURL } from '../fpv-entry.mjs';
 import { CLASSIC_COPY } from '../snake/classic-copy.mjs';
 import { advanceClassicFlight } from '../snake/classic-flight-art.mjs';
-import { advanceClassicReactionTime } from '../snake/classic-world-reactions.mjs';
+import {
+  advanceClassicReactionTime,
+  observeClassicWorldReactions,
+} from '../snake/classic-world-reactions.mjs';
 import { t } from '../i18n/index.mjs';
 import { mountEnemyAppearanceControls } from '../ui/enemy-appearance-controls.mjs';
 import { prepareClassicEnvironments } from '../snake/classic-environment.mjs';
@@ -126,6 +130,7 @@ async function harness({
   query = '',
   cosmetics = null,
   savedRound = null,
+  legacySavedRound = null,
   recordReceipt = { verified: true, saved: true },
   catalogue = CLASSIC_SNAKE_LEVELS,
 } = {}) {
@@ -163,7 +168,9 @@ async function harness({
   const pads = [];
   let tools, offlinePanel, offlineOptions;
   const storage = new Map();
-  if (savedRound) storage.set('revealline.classic-snake.round.v2', JSON.stringify(savedRound));
+  if (savedRound) storage.set(SAVE_KEY, JSON.stringify(savedRound));
+  if (legacySavedRound)
+    storage.set('revealline.classic-snake.round.v2', JSON.stringify(legacySavedRound));
   if (cosmetics) storage.set('revealline.classic-snake.presentation.v1', JSON.stringify(cosmetics));
   const created = [],
     drawings = [],
@@ -196,6 +203,7 @@ async function harness({
     appearanceActions = [],
     acceptedAppearances = [];
   const context = createContext({
+    CLASSIC_SNAKE_CAMPAIGN_REVISION,
     classicBoardPreferences,
     isClassicWorldStyle,
     resolveClassicBoardScene,
@@ -485,6 +493,7 @@ async function harness({
     drawClassicTarget() {},
     advanceClassicFlight,
     advanceClassicReactionTime,
+    observeClassicWorldReactions,
     boundedJSON,
     exactKeys,
     required,
@@ -1016,12 +1025,12 @@ test('unfocused direct entry waits for the player and BFCache return reacquires 
   state.window.emit('pagehide', { persisted: true });
   await flush();
   assert.equal(firstWriter.writable, false);
-  const savedBefore = JSON.parse(state.storage.get('revealline.classic-snake.round.v2'));
+  const savedBefore = JSON.parse(state.storage.get(SAVE_KEY));
   state.window.emit('pageshow', { persisted: true });
   await flush();
   assert.equal(state.writerClaims.length, 2);
   assert.equal(state.writerClaims[1].writable, true);
-  const savedAfter = JSON.parse(state.storage.get('revealline.classic-snake.round.v2'));
+  const savedAfter = JSON.parse(state.storage.get(SAVE_KEY));
   assert.notEqual(savedAfter.statistics.attemptId, savedBefore.statistics.attemptId);
   assert.deepEqual(savedAfter.statistics.counts, savedBefore.statistics.counts);
   assert.deepEqual(savedAfter.match, savedBefore.match, 'ownership recovery preserves the board');
@@ -1142,14 +1151,14 @@ test('selecting a new library mission launches directly while retaining the olde
   state.frame(0);
   state.frame(100);
   state.shell.open('missions');
-  const priorSave = state.storage.get('revealline.classic-snake.round.v2');
+  const priorSave = state.storage.get(SAVE_KEY);
   assert.equal(JSON.parse(priorSave).levelId, CLASSIC_SNAKE_LEVELS[0].id);
   const selected = CLASSIC_SNAKE_LEVELS[1];
   libraryCard(state, selected.id).click();
   await flush();
   assert.equal(state.shell.topDialog(), null);
   assert.equal(state.document.body.dataset.playing, 'true');
-  assert.equal(state.storage.get('revealline.classic-snake.round.v2'), priorSave);
+  assert.equal(state.storage.get(SAVE_KEY), priorSave);
   assert.equal(new URL(state.location.href).searchParams.get('level'), selected.id);
   state.shell.elements.buttons.start.click();
   assert.equal(state.document.body.dataset.playing, 'true');
@@ -1305,7 +1314,7 @@ test('results replay the last eight moves automatically without hiding actions o
   assert.ok(footer.contains(state.$('next')));
   assert.ok(footer.contains(state.shell.elements.buttons.retry));
   assert.equal(state.$('review').getAttribute('aria-pressed'), 'true');
-  const saved = state.storage.get('revealline.classic-snake.round.v2');
+  const saved = state.storage.get(SAVE_KEY);
   const replay = () =>
     state.drawings.filter((item) => item.canvas.classList.contains('snake-result-board')).at(-1);
   state.frame(0);
@@ -1319,7 +1328,7 @@ test('results replay the last eight moves automatically without hiding actions o
   state.frame(720);
   assert.equal(replay().run.tick, pausedTick, 'Pause replay freezes only the preview');
   assert.equal(state.document.body.dataset.playing, 'false');
-  assert.equal(state.storage.get('revealline.classic-snake.round.v2'), saved);
+  assert.equal(state.storage.get(SAVE_KEY), saved);
   state.shell.openHome();
   state.shell.elements.buttons['home-results'].click();
   assert.equal(
@@ -1389,32 +1398,29 @@ function archivedSession({ tamper = false, profiled = false } = {}) {
 
 for (const action of ['Continue', 'Import'])
   for (const profiled of [false, true]) {
-    test(`${action} admits exact archived ${profiled ? 'local-v1' : 'unprofiled'} jammer recipes and Retry preserves their setup`, async () => {
+    test(`${action} rejects retired ${profiled ? 'local-v1' : 'unprofiled'} recipes in the fresh campaign`, async () => {
       const session = archivedSession({ profiled });
       const state = await harness({ savedRound: action === 'Continue' ? session : null });
       if (action === 'Continue') state.$('continue').click();
       else await importSession(state.$, session);
-      assert.equal(state.$('save-status').textContent, CLASSIC_COPY.en.loaded);
-      assert.equal(state.document.body.dataset.playing, 'true');
-      state.frame(0);
-      const restored = state.drawings.at(-1).run;
-      assert.equal(restored.tick, 2);
-      assert.equal(restored.seed, 71);
-      assert.deepEqual(core.exportClassicSnakeReplay(restored), session.match.replays[0]);
+      assert.equal(state.$('save-status').textContent, CLASSIC_COPY.en.invalid);
       state.retry();
-      const retry = state.created.at(-1);
-      assert.deepEqual(retry.level, restored.level);
-      if (profiled) {
-        assert.equal(restored.hazardSeed, 17);
-        assert.ok(Number.isSafeInteger(retry.hazardSeed));
-        assert.ok(
-          retry.level.targets.required.some((target) => target.signalProfile === 'local-burst-v1'),
-        );
-      } else assert.equal(retry.hazardSeed, undefined);
-      assert.equal(retry.seed, 71);
-      assert.equal(retry.tick, 0);
+      assert.equal(state.created.at(-1).level.id, CLASSIC_SNAKE_LEVELS[0].id);
+      assert.notDeepEqual(state.created.at(-1).level, session.match.replays[0].level);
     });
   }
+
+test('fresh campaign ignores the old Continue channel and preserves its original bytes', async () => {
+  const session = archivedSession();
+  const state = await harness({ legacySavedRound: session });
+  const oldKey = 'revealline.classic-snake.round.v2';
+  const before = state.storage.get(oldKey);
+  assert.equal(state.$('continue').hidden, true);
+  state.start();
+  state.frame(0);
+  assert.equal(state.storage.get(oldKey), before);
+  assert.ok(state.storage.has(SAVE_KEY));
+});
 
 test('a self-consistent same-ID old recipe cannot bypass exact archived admission', async () => {
   const state = await harness();
@@ -1483,7 +1489,7 @@ test('a V2 round saves its accepted timeline and Continue launches directly', as
   state.frame(0);
   state.frame(core.classicSnakeSummary(state.created[0]).stepMs);
   state.window.emit('blur');
-  const saved = JSON.parse(state.storage.get('revealline.classic-snake.round.v2'));
+  const saved = JSON.parse(state.storage.get(SAVE_KEY));
   assert.equal(saved.format, 'revealline-classic-snake-session.v3');
   assert.equal(saved.appearance.environmentPin, null);
   assert.equal(saved.match.turns.length, 1);
@@ -1511,7 +1517,7 @@ test('a valid match cannot be imported under a different host seat arrangement',
   const state = await harness({ entry });
   state.start();
   state.window.emit('blur');
-  const saved = JSON.parse(state.storage.get('revealline.classic-snake.round.v2'));
+  const saved = JSON.parse(state.storage.get(SAVE_KEY));
   saved.mode = 'team';
   const imported = await harness({ entry });
   await importSession(imported.$, saved);
@@ -1694,7 +1700,7 @@ for (const mode of ['solo', 'versus', 'team']) {
     await flush();
     state.start();
     state.window.emit('blur');
-    const key = 'revealline.classic-snake.round.v2';
+    const key = SAVE_KEY;
     const saved = JSON.parse(state.storage.get(key));
     assert.equal(saved.format, 'revealline-classic-snake-session.v3');
     assert.ok(saved.appearance.environmentPin);
@@ -1727,7 +1733,7 @@ test('a forged chapter pin is rejected before replacing the active mission or sa
   await flush();
   state.start();
   state.window.emit('blur');
-  const key = 'revealline.classic-snake.round.v2';
+  const key = SAVE_KEY;
   const prior = state.storage.get(key),
     saved = JSON.parse(prior);
   saved.appearance.environmentPin.appearanceSha256 = '0'.repeat(64);
@@ -2082,10 +2088,8 @@ for (const mode of ['solo', 'team', 'versus']) {
 }
 
 for (const mode of ['solo', 'versus', 'team'])
-  test(`${mode} restores the original chapter artwork owner with a retained recipe`, async () => {
-    const old = CLASSIC_SNAKE_PURSUIT_V1_ARCHIVED_LEVELS.find(
-      (e) => e.id === 'classic-living-cable-cutoff',
-    );
+  test(`${mode} restores accepted chapter artwork with an exact current campaign recipe`, async () => {
+    const old = CLASSIC_SNAKE_LEVELS.find((e) => e.id === 'classic-living-cable-cutoff');
     const original = await harness({ entry: old, mode, catalogue: [old] });
     const select = original.document.querySelector('[data-enemy-appearance]');
     select.value = 'military';
@@ -2093,9 +2097,9 @@ for (const mode of ['solo', 'versus', 'team'])
     await flush();
     original.start();
     original.window.emit('blur');
-    const saved = JSON.parse(original.storage.get('revealline.classic-snake.round.v2'));
+    const saved = JSON.parse(original.storage.get(SAVE_KEY));
     assert.ok(saved.appearance.environmentPin);
-    assert.equal(saved.match.replays[0].level.revision, '1');
+    assert.equal(saved.match.replays[0].level.revision, old.level.revision);
     const restored = await harness({
       entry: CLASSIC_SNAKE_LEVELS.find((e) => e.id === old.id),
       mode,
@@ -2108,9 +2112,8 @@ for (const mode of ['solo', 'versus', 'team'])
     );
     restored.window.emit('blur');
     assert.equal(
-      JSON.parse(restored.storage.get('revealline.classic-snake.round.v2')).match.replays[0].level
-        .revision,
-      '1',
+      JSON.parse(restored.storage.get(SAVE_KEY)).match.replays[0].level.revision,
+      old.level.revision,
     );
   });
 

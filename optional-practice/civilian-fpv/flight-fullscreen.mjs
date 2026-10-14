@@ -270,6 +270,515 @@ export function createSimModeLinks({
   return nav;
 }
 
+/** Cosmetic camera access shared by both SIM hosts. Never changes flight ownership. */
+export function mountFlightCameraControls({
+  document: doc,
+  window: win,
+  shell,
+  select,
+  viewport,
+  locale = () => 'en',
+  available = () => true,
+  canShortcut = () => true,
+}) {
+  const modes = ['fpv', 'chase', 'overview'];
+  const labels = () =>
+    locale() === 'uk' ? ['FPV', 'За дроном', 'Огляд'] : ['FPV', 'Chase', 'Overview'];
+  const quick = doc.createElement('button');
+  quick.type = 'button';
+  quick.className = 'sim-camera-quick';
+  quick.dataset.modeAction = 'camera';
+  quick.setAttribute('aria-keyshortcuts', 'V');
+  shell.elements.buttons.pause.before(quick);
+  const group = doc.createElement('fieldset');
+  group.className = 'sim-camera-choices';
+  const legend = doc.createElement('legend');
+  group.append(legend);
+  const choices = modes.map((mode) => {
+    const button = doc.createElement('button');
+    button.type = 'button';
+    button.dataset.cameraView = mode;
+    button.addEventListener('click', () => change(mode));
+    group.append(button);
+    return button;
+  });
+  const hint = doc.createElement('small');
+  group.append(hint);
+  shell.elements.content.pause.prepend(group);
+  let previous = '',
+    disposed = false;
+  function change(mode) {
+    if (disposed || !available() || !modes.includes(mode)) return;
+    select.value = mode;
+    select.dispatchEvent(new win.Event('change', { bubbles: true }));
+    refresh();
+  }
+  function cycle() {
+    if (!canShortcut() || !available() || disposed) return;
+    change(modes[(modes.indexOf(select.value) + 1) % modes.length]);
+    viewport.focus({ preventScroll: true });
+  }
+  function refresh() {
+    if (disposed) return;
+    const uk = locale() === 'uk',
+      enabled = available();
+    const key = `${uk}:${select.value}:${enabled}:${Boolean(shell.topDialog())}`;
+    if (previous === key) return;
+    previous = key;
+    const names = labels(),
+      name = names[modes.indexOf(select.value)] ?? names[0];
+    quick.textContent = `${uk ? 'Вид' : 'View'}: ${name}`;
+    quick.title = uk ? 'Змінити камеру · V / R3' : 'Change camera · V / R3';
+    quick.setAttribute('aria-label', `${quick.title} · ${name}`);
+    quick.hidden = !enabled || Boolean(shell.topDialog());
+    group.hidden = !enabled;
+    legend.textContent = uk ? 'Камера' : 'Camera view';
+    hint.textContent = uk
+      ? 'V · R3 — натисніть правий стік. Пульт: оберіть вид у цьому меню.'
+      : 'V · R3: click the right stick. Radio: choose a view in this menu.';
+    choices.forEach((button, index) => {
+      button.textContent = names[index];
+      button.setAttribute('aria-pressed', String(modes[index] === select.value));
+    });
+  }
+  function keydown(event) {
+    if (
+      event.code !== 'KeyV' ||
+      event.defaultPrevented ||
+      event.repeat ||
+      event.isComposing ||
+      event.ctrlKey ||
+      event.metaKey ||
+      event.altKey ||
+      event.shiftKey ||
+      doc.hidden ||
+      doc.hasFocus?.() === false ||
+      /^(INPUT|TEXTAREA|SELECT)$/.test(event.target?.tagName) ||
+      event.target?.isContentEditable ||
+      !canShortcut() ||
+      !available()
+    )
+      return;
+    event.preventDefault();
+    cycle();
+  }
+  quick.addEventListener('click', cycle);
+  select.addEventListener('change', refresh);
+  win.addEventListener('keydown', keydown);
+  refresh();
+  return {
+    cycle,
+    refresh,
+    element: group,
+    dispose() {
+      disposed = true;
+      win.removeEventListener('keydown', keydown);
+      select.removeEventListener('change', refresh);
+      quick.removeEventListener('click', cycle);
+      quick.remove();
+      group.remove();
+    },
+  };
+}
+
+/** Paused shortcuts forward to the canonical controls and their safety rules. */
+export function mountFlightSetup({
+  document: doc,
+  window: win,
+  shell,
+  mode,
+  source,
+  radioButton,
+  camera,
+  locale = () => 'en',
+  available = () => true,
+  inputHint = () => '',
+  inputRestarts = false,
+}) {
+  const quick = doc.createElement('button');
+  quick.type = 'button';
+  quick.className = 'sim-camera-quick';
+  quick.dataset.modeAction = 'flight-setup';
+  const openSetup = () => shell.open('pause');
+  quick.addEventListener('click', openSetup);
+  shell.elements.buttons.pause.before(quick);
+  const root = doc.createElement('section');
+  root.className = 'sim-flight-setup';
+  const title = doc.createElement('h2');
+  const rows = doc.createElement('div');
+  rows.className = 'sim-flight-setup-rows';
+  const note = doc.createElement('small');
+  const radio = doc.createElement('button');
+  radio.type = 'button';
+  radio.dataset.flightSetup = 'radio';
+  const help = doc.createElement('details');
+  const summary = doc.createElement('summary');
+  const hint = doc.createElement('p');
+  help.append(summary, hint);
+  root.append(title, rows, note, camera.element, help);
+  const resume = shell.elements.content.pause.querySelector('.pause-command-primary');
+  if (resume) resume.after(root);
+  else shell.elements.content.pause.prepend(root);
+  const bindings = [
+    ['mode', mode],
+    ['source', source],
+  ].map(([key, canonical]) => {
+    const label = doc.createElement('label');
+    const text = doc.createElement('span');
+    const select = doc.createElement('select');
+    select.dataset.flightSetup = key;
+    label.append(text, select);
+    rows.append(label);
+    const binding = { key, canonical, text, select, signature: '', value: undefined };
+    const change = () => {
+      if (!available() || canonical.disabled) {
+        select.value = canonical.value;
+        return refresh();
+      }
+      if (
+        ![...canonical.options].some((option) => option.value === select.value && !option.disabled)
+      )
+        return refresh();
+      if (canonical.value === select.value) return;
+      canonical.value = select.value;
+      canonical.dispatchEvent(new win.Event('change', { bubbles: true }));
+      refresh();
+    };
+    select.addEventListener('change', change);
+    canonical.addEventListener('change', refresh);
+    binding.dispose = () => {
+      select.removeEventListener('change', change);
+      canonical.removeEventListener('change', refresh);
+    };
+    return binding;
+  });
+  rows.append(radio);
+  const openRadio = () => {
+    if (available() && !radioButton.disabled) radioButton.click();
+  };
+  radio.addEventListener('click', openRadio);
+  let lastLocale, lastHint;
+  function refresh() {
+    const uk = locale() === 'uk';
+    quick.hidden =
+      !available() || !shell.elements.buttons.pause.disabled || Boolean(shell.topDialog());
+    const quickLabel = uk ? 'Налаштування польоту' : 'Flight setup';
+    if (quick.textContent !== quickLabel) quick.textContent = quickLabel;
+    if (!shell.elements.dialogs.pause.open) return;
+    root.hidden = !available();
+    radio.disabled = radioButton.disabled;
+    if (lastLocale !== uk) {
+      lastLocale = uk;
+      title.textContent = uk ? 'Налаштування польоту' : 'Flight setup';
+      note.textContent = inputRestarts
+        ? uk
+          ? 'Зміна режиму або керування починає нову спробу на паузі. Камера зберігає спробу.'
+          : 'Changing mode or input starts a new paused attempt. Camera keeps this attempt.'
+        : uk
+          ? 'Зміна режиму починає нову спробу на паузі. Зміна керування залишає політ на паузі.'
+          : 'Changing mode starts a new paused attempt. Changing input keeps flight paused.';
+      radio.textContent = uk ? 'Налаштувати пульт' : 'Set up radio';
+      summary.textContent = uk ? 'Керування для вашого пристрою' : 'Your device controls';
+      bindings[0].text.textContent = uk ? 'Режим польоту' : 'Flight mode';
+      bindings[1].text.textContent = uk ? 'Керування' : 'Controls';
+    }
+    for (const binding of bindings) {
+      const { canonical, select } = binding;
+      const signature = JSON.stringify(
+        [...canonical.options].map((option) => [option.value, option.textContent, option.disabled]),
+      );
+      if (signature !== binding.signature) {
+        binding.signature = signature;
+        select.replaceChildren(
+          ...[...canonical.options].map((option) => {
+            const copy = doc.createElement('option');
+            copy.value = option.value;
+            copy.textContent = option.textContent;
+            copy.disabled = option.disabled;
+            return copy;
+          }),
+        );
+        binding.value = undefined;
+      }
+      select.disabled = canonical.disabled;
+      // Do not overwrite a controller/radio menu selection before Confirm.
+      if (binding.value !== canonical.value) {
+        binding.value = canonical.value;
+        select.value = canonical.value;
+      }
+    }
+    const nextHint = inputHint();
+    if (lastHint !== nextHint) {
+      lastHint = nextHint;
+      hint.textContent = nextHint;
+    }
+  }
+  refresh();
+  return {
+    refresh,
+    dispose() {
+      bindings.forEach((binding) => binding.dispose());
+      radio.removeEventListener('click', openRadio);
+      quick.removeEventListener('click', openSetup);
+      quick.remove();
+      root.remove();
+    },
+  };
+}
+
+/** Shared, optional display preferences. No input, physics or scoring ownership. */
+export function mountFlightComfort({
+  document: doc,
+  window: win,
+  panels,
+  viewport,
+  fov,
+  tilt,
+  host,
+  locale = () => 'en',
+  canChange = () => true,
+  comparison,
+}) {
+  const putText = (node, value) => {
+    if (node.textContent !== value) node.textContent = value;
+  };
+  const storageKey = 'revealline.fpv.flight-comfort.v1';
+  const cameraKey = `${storageKey}.${host}.camera`;
+  const read = (key) => {
+    try {
+      return JSON.parse(win.localStorage?.getItem(key) ?? 'null');
+    } catch {
+      return null;
+    }
+  };
+  const save = (key, value) => {
+    try {
+      win.localStorage?.setItem(key, JSON.stringify(value));
+    } catch {
+      /* Cosmetic preferences remain usable when storage is unavailable. */
+    }
+  };
+  const saved = read(storageKey);
+  const preferences = {
+    size: ['auto', 'compact', 'large'].includes(saved?.size) ? saved.size : 'auto',
+    opacity: ['quiet', 'balanced', 'strong'].includes(saved?.opacity) ? saved.opacity : 'balanced',
+  };
+  const roots = [],
+    listeners = [];
+  const listen = (node, event, callback) => {
+    node.addEventListener(event, callback);
+    listeners.push(() => node.removeEventListener(event, callback));
+  };
+  const group = (panel) => {
+    const root = doc.createElement('fieldset');
+    root.className = 'sim-flight-comfort';
+    const title = doc.createElement('legend');
+    root.append(title);
+    panel.append(root);
+    roots.push(root);
+    return { root, title };
+  };
+  const choice = (root, key, values) => {
+    const label = doc.createElement('label');
+    const title = doc.createElement('span');
+    const select = doc.createElement('select');
+    select.dataset.flightComfort = key;
+    for (const value of values) {
+      const option = doc.createElement('option');
+      option.value = value;
+      select.append(option);
+    }
+    label.append(title, select);
+    root.append(label);
+    return { title, select };
+  };
+  const hud = group(panels.accessibility);
+  const size = choice(hud.root, 'size', ['auto', 'compact', 'large']);
+  const opacity = choice(hud.root, 'opacity', ['quiet', 'balanced', 'strong']);
+  const hudHelp = doc.createElement('small');
+  hud.root.append(hudHelp);
+  const camera = group(panels.display);
+  const preset = choice(camera.root, 'camera', ['custom', 'learning', 'all-round', 'racing']);
+  const cameraHelp = doc.createElement('small');
+  camera.root.append(cameraHelp);
+  const presets = { learning: [82, 0], 'all-round': [95, 15], racing: [110, 25] };
+  let updatingCamera = false,
+    disposed = false,
+    previous = '',
+    lastCameraSignature = '';
+  function applySticks() {
+    viewport.dataset.stickSize = preferences.size;
+    viewport.dataset.stickOpacity = preferences.opacity;
+    size.select.value = preferences.size;
+    opacity.select.value = preferences.opacity;
+  }
+  for (const [key, control] of [
+    ['size', size],
+    ['opacity', opacity],
+  ]) {
+    listen(control.select, 'change', () => {
+      if (!canChange()) return applySticks();
+      preferences[key] = control.select.value;
+      applySticks();
+      save(storageKey, preferences);
+    });
+  }
+  function cameraChanged() {
+    if (updatingCamera) return;
+    // Manual values remain authoritative; presets never silently re-apply.
+    save(cameraKey, { fov: Number(fov.value), tilt: Number(tilt.value) });
+    refresh();
+  }
+  listen(fov, 'input', cameraChanged);
+  listen(tilt, 'input', cameraChanged);
+  listen(fov, 'change', cameraChanged);
+  listen(tilt, 'change', cameraChanged);
+  listen(preset.select, 'change', () => {
+    const values = presets[preset.select.value];
+    if (!canChange() || !values) {
+      previous = '';
+      lastCameraSignature = '';
+      return refresh();
+    }
+    updatingCamera = true;
+    [fov, tilt].forEach((control, index) => {
+      control.value = String(values[index]);
+    });
+    [fov, tilt].forEach((control) => {
+      control.dispatchEvent(new win.Event('input', { bubbles: true }));
+      control.dispatchEvent(new win.Event('change', { bubbles: true }));
+    });
+    updatingCamera = false;
+    cameraChanged();
+  });
+  const rememberedCamera = read(cameraKey);
+  if (
+    rememberedCamera &&
+    Number.isFinite(rememberedCamera.fov) &&
+    Number.isFinite(rememberedCamera.tilt)
+  ) {
+    fov.value = String(Math.max(Number(fov.min), Math.min(Number(fov.max), rememberedCamera.fov)));
+    tilt.value = String(
+      Math.max(Number(tilt.min), Math.min(Number(tilt.max), rememberedCamera.tilt)),
+    );
+  }
+  let best;
+  if (comparison) {
+    best = group(comparison.root);
+    best.status = doc.createElement('p');
+    best.button = doc.createElement('button');
+    best.button.type = 'button';
+    best.help = doc.createElement('small');
+    best.root.append(best.status, best.button, best.help);
+    listen(best.button, 'click', () => {
+      if (canChange() && !comparison.button.disabled) comparison.button.click();
+      refresh();
+    });
+  }
+  function refresh() {
+    if (disposed) return;
+    const uk = locale() === 'uk';
+    const enabled = canChange();
+    const selected =
+      Object.keys(presets).find(
+        (key) => presets[key][0] === Number(fov.value) && presets[key][1] === Number(tilt.value),
+      ) ?? 'custom';
+    const status = comparison?.status() ?? '';
+    const key = JSON.stringify([
+      uk,
+      enabled,
+      selected,
+      fov.value,
+      tilt.value,
+      status,
+      comparison?.button.textContent,
+      comparison?.button.disabled,
+      comparison?.button.getAttribute('aria-pressed'),
+    ]);
+    if (key === previous) return;
+    previous = key;
+    putText(hud.title, uk ? 'Вигляд стіків' : 'Stick appearance');
+    putText(size.title, uk ? 'Розмір стіків' : 'Stick size');
+    putText(opacity.title, uk ? 'Виразність стіків' : 'Stick visibility');
+    const names = uk
+      ? {
+          auto: 'Авто · за пристроєм',
+          compact: 'Компактні',
+          large: 'Великі',
+          quiet: 'Тихі',
+          balanced: 'Збалансовані',
+          strong: 'Контрастні',
+          custom: 'Власні',
+          learning: 'Навчання · 82° / 0°',
+          'all-round': 'Універсальний · 95° / 15°',
+          racing: 'Перегони · 110° / 25°',
+        }
+      : {
+          auto: 'Auto · fit device',
+          compact: 'Compact',
+          large: 'Large',
+          quiet: 'Quiet',
+          balanced: 'Balanced',
+          strong: 'Strong',
+          custom: 'Custom',
+          learning: 'Learning · 82° / 0°',
+          'all-round': 'All-round · 95° / 15°',
+          racing: 'Racing · 110° / 25°',
+        };
+    for (const control of [size, opacity, preset]) {
+      control.select.disabled = !enabled;
+      for (const option of control.select.options) putText(option, names[option.value]);
+    }
+    putText(
+      hudHelp,
+      uk
+        ? 'Авто зберігає розмір під екран. Сенсорні області лишаються великими. Пауза й ціль завжди видимі; видимість підказок задається окремо.'
+        : 'Auto fits the screen. Touch targets stay large. Pause and your objective stay visible; assistance visibility is controlled separately.',
+    );
+    putText(camera.title, uk ? 'Комфорт камери FPV' : 'FPV camera comfort');
+    putText(preset.title, uk ? 'Кут огляду / нахил' : 'Field of view / tilt');
+    const cameraSignature = `${fov.value}:${tilt.value}`;
+    if (cameraSignature !== lastCameraSignature) {
+      preset.select.value = selected;
+      lastCameraSignature = cameraSignature;
+    }
+    putText(
+      cameraHelp,
+      uk
+        ? 'Навчання: рівний горизонт. Перегони: ширший огляд і нахил для швидкого польоту. Змінюється лише камера; керування й фізика незмінні. Повзунки — для точного налаштування.'
+        : 'Learning gives a level horizon. Racing widens the view and tilts up for faster flight. Only the camera changes; controls and physics stay the same. Use the sliders for finer adjustment.',
+    );
+    if (best) {
+      putText(best.title, uk ? 'Ваш найкращий політ' : 'Your best flight');
+      putText(best.status, status);
+      putText(best.button, comparison.button.textContent);
+      best.button.disabled = !enabled || comparison.button.disabled;
+      best.button.setAttribute(
+        'aria-pressed',
+        comparison.button.getAttribute('aria-pressed') ?? 'false',
+      );
+      putText(
+        best.help,
+        uk
+          ? 'Лише перевірений запис того самого завдання, версії світу, режиму й профілю реакції. Вигляд камери не змінює сумісність. Без зіткнень; залік незмінний.'
+          : 'Only a verified recording for the same challenge, world revision, flight mode and response profile. Camera view does not change compatibility. No collision or scoring changes.',
+      );
+    }
+  }
+  applySticks();
+  refresh();
+  return {
+    refresh,
+    dispose() {
+      disposed = true;
+      listeners.forEach((remove) => remove());
+      roots.forEach((root) => root.remove());
+      delete viewport.dataset.stickSize;
+      delete viewport.dataset.stickOpacity;
+    },
+  };
+}
+
 // BEGIN GENERATED SHARED MODE SHELL
 import*as simGlobalI18n from'../../game/i18n/index.mjs';
 import*as simGlobalThemes from'../../game/presentation/theme-system.mjs';
@@ -8185,7 +8694,7 @@ export const readSimRadioAudio=sharedGlobalSettings.readSimRadioAudio;
 export const SIM_RADIO_AUDIO_KEY=sharedGlobalSettings.SIM_RADIO_AUDIO_KEY;
 export const attachSimMenuAudioSettings=sharedGlobalSettings.attachSimMenuAudioSettings;
 export const readSimMenuAudio=sharedGlobalSettings.readSimMenuAudio;
-// Canonical source sha256: 30251c14cf2829f77d52ab72798dc5be5d77caadccefeffc96948b3818c4fe32
+// Canonical source sha256: b08fd0c6130ef3d998490e62dceb04c30797fe763cbf28cb9677c9634786d08d
 const sharedModeShell=(()=>{
 // Dependency-free presentation shared with bundled simulator builds.
 const GAME_MODE_ORDER=Object.freeze([
@@ -8954,6 +9463,8 @@ locale=doc.documentElement.lang,
 slots={},
 actions={},
 services={},
+homeLabels={},
+homeAction=null,
 wordmarkURL='',
 artworkURL='',
 version='',
@@ -9151,6 +9662,11 @@ button('results',()=>open('results'),false,'home-results'),
 button('missions',()=>open('missions')),
 button('settings',()=>open('settings')),
 );
+let extraHomeAction=null;
+if(homeAction?.activate&&homeAction?.label){
+extraHomeAction=button('help',()=>homeAction.activate(),false,'home-extra');
+buttons.missions.before(extraHomeAction);
+}
 const utilities=el('div','mode-play-utilities native-menu-utilities');
 utilities.setAttribute('role','group');
 utilities.append(
@@ -9179,11 +9695,12 @@ steps:[
 selectedChoices,
 buttons.primary,
 buttons['home-results'],
+extraHomeAction,
 buttons.missions,
 buttons.settings,
 buttons.sound,
 buttons.fullscreen,
-],
+].filter(Boolean),
 });
 cleanups.push(()=>landingNavigation.dispose());
 const pauseMenu=content.pause;
@@ -9307,6 +9824,10 @@ value=
 COPY[language][
 state.phase==='results'?'retry':resumable()?'continue':'start'
 ];
+if(node===buttons.primary&&state.phase!=='results'&& !resumable())
+value=text(homeLabels.start)||value;
+else if(node===buttons.missions)value=text(homeLabels.missions)||value;
+else if(node===extraHomeAction)value=text(homeAction.label);
 else if(node===buttons.start)
 value=COPY[language][state.phase==='paused'?'resume':'start'];
 else if(node===buttons.pause)

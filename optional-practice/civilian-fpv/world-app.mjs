@@ -48,6 +48,9 @@ import { restoreVerifiedRadio } from './radio-session.mjs';
 import { mountRadioSetup } from './radio-setup.mjs';
 import {
   mountFlightFullscreen,
+  mountFlightCameraControls,
+  mountFlightSetup,
+  mountFlightComfort,
   attachSimMissionLibraryChooser,
   createSimMissionLibrary,
   createSimContinuousPlayController,
@@ -997,6 +1000,9 @@ export function mountWorldApp({
     disposed = false,
     closing = null,
     playShell = null,
+    cameraControls = null,
+    flightSetup = null,
+    flightComfort = null,
     modeSettingsView = null,
     globalSettingsView = null,
     globalTools = null,
@@ -1733,6 +1739,7 @@ export function mountWorldApp({
     if (toolsSummary) toolsSummary.textContent = txt('SIM tools', 'Інструменти SIM');
     playShell?.setLocale(locale);
     modeSettingsView?.refresh(locale);
+    flightComfort?.refresh();
     globalSettingsView?.refresh(locale);
     globalTools?.refresh();
     shellModes.refresh?.();
@@ -1909,8 +1916,8 @@ export function mountWorldApp({
   }
   const gamepadHelp = () =>
     txt(
-      'A / Cross: arm · Y / Triangle: reset · Menu / B: pause. Left stick: yaw and throttle adjustment; centre to hold throttle. Right stick / D-pad: tilt. LB/RB: yaw · LT/RT: less/more throttle · X/Square: fire. Steam Input: use a Gamepad layout.',
-      'A / Cross: увімкнути · Y / Triangle: скинути · Menu / B: пауза. Лівий стік: поворот і зміна газу; центр утримує газ. Правий стік / D-pad: нахил. LB/RB: поворот · LT/RT: менше/більше газу · X/Square: вогонь. Steam Input: розкладка Gamepad.',
+      'A / Cross: arm · Y / Triangle: reset · Menu / B: pause · R3: camera. Left stick: yaw and throttle adjustment; centre to hold throttle. Right stick / D-pad: tilt. LB/RB: yaw · LT/RT: less/more throttle · X/Square: fire. Steam Input: use a Gamepad layout.',
+      'A / Cross: увімкнути · Y / Triangle: скинути · Menu / B: пауза · R3: камера. Лівий стік: поворот і зміна газу; центр утримує газ. Правий стік / D-pad: нахил. LB/RB: поворот · LT/RT: менше/більше газу · X/Square: вогонь. Steam Input: розкладка Gamepad.',
     );
   function gamepadScope() {
     if (
@@ -1962,7 +1969,8 @@ export function mountWorldApp({
       } else if (action === 'reset') {
         setFlightMenu(false);
         $('world-retry').click();
-      } else if (action === 'pause' || action === 'back') setFlightMenu(true);
+      } else if (action === 'camera') cameraControls?.cycle();
+      else if (action === 'pause' || action === 'back') setFlightMenu(true);
     }
   }
   input.bindStick($('world-left-stick'), 'left');
@@ -3553,11 +3561,20 @@ export function mountWorldApp({
       ),
     );
   }
+  async function flyInstalledWorld(record) {
+    // Launch the verified installed revision, never a same-name replacement.
+    const entry = catalogue.find(
+      (candidate) => candidate.projectId === record.id && candidate.packIdentity === `fpv-pack:${record.sha256}`,
+    );
+    if (!entry) throw new Error(txt('This world is no longer installed. Refresh the Library.', 'Цей світ більше не встановлено. Оновіть бібліотеку.'));
+    await startFlight(entry, { paused: true });
+  }
   const worldLibrary = mountWorldLibrary({
     el,
     txt,
     parent: $('installed-packs'),
     begin: () => worldStore.generation(),
+    fly: flyInstalledWorld,
     install: (bytes, row, options) =>
       installExactPack(bytes, `fpv-pack:${row.sha256}`, { ...options, row }),
   });
@@ -4011,6 +4028,7 @@ export function mountWorldApp({
           'small',
           `${record.project.courses.length} ${txt('challenges', 'завдань')} · ${record.sha256.slice(0, 12)}`,
         ),
+        button(txt('Fly', 'Летіти'), () => flyInstalledWorld(record)),
         button(txt('Edit', 'Редагувати'), async () => {
           const full = await worldStore.get(record.id);
           await validateNativeIndustrialCourses(full.project.courses);
@@ -5290,6 +5308,9 @@ export function mountWorldApp({
     );
   }
   function drawFlight(state) {
+    cameraControls?.refresh();
+    flightSetup?.refresh();
+    flightComfort?.refresh();
     return renderer?.draw?.(state, {
       cameraMode: $('flight-camera').value,
       cameraFov: Number($('world-fov').value),
@@ -6933,6 +6954,7 @@ export function mountWorldApp({
   });
   on($('flight-mode'), 'change', () => {
     const selectedMode = $('flight-mode').value;
+    const preserveFocus = Boolean(playShell?.elements.dialogs.pause.open);
     // Selecting another flight mode starts a new attempt. Only this explicit
     // action releases the mode-specific overlay; Retry keeps its accepted pin.
     // An explicit player choice ends the temporary demonstration-mode override.
@@ -6948,6 +6970,7 @@ export function mountWorldApp({
       const proof = hasSection ? demonstrationFor(current, selectedMode) : null;
       return startFlight(proof ? demonstrationEntry(modeEntry) : modeEntry, {
         paused: true,
+        preserveFocus,
         checkpoint: {
           ...checkpointRequest,
           mode: selectedMode,
@@ -6961,14 +6984,15 @@ export function mountWorldApp({
       return startFlight(
         proof ? demonstrationEntry(modeEntry) : modeEntry,
         proof
-          ? { preview: true, replayProof: proof, demonstration: true, paused: true }
-          : { paused: true },
+          ? { preview: true, replayProof: proof, demonstration: true, paused: true, preserveFocus }
+          : { paused: true, preserveFocus },
       );
     }
     if (current && $('flight-dialog').open)
       return startFlight(modeEntry, {
         preview: preview && !modePractice,
         paused: true,
+        preserveFocus,
         playlist: playingPlaylist,
         index: playlistIndex,
       });
@@ -7164,7 +7188,9 @@ export function mountWorldApp({
     radioSetup = null;
     $('world-radio-dialog').close();
     pauseFlight();
-    if ($('sim-settings').open) $('radio-setup-button').focus();
+    if (playShell?.elements.dialogs.pause.open)
+      playShell.elements.content.pause.querySelector('[data-flight-setup="radio"]')?.focus();
+    else if ($('sim-settings').open) $('radio-setup-button').focus();
     else if ($('flight-dialog').open) $('world-viewport').focus();
     else $('lobby-radio').focus();
   }
@@ -7383,6 +7409,14 @@ export function mountWorldApp({
     document: doc,
     mount: doc.body,
     idPrefix: 'worlds-shell',
+    homeLabels: {
+      start: { en: 'Fly now', uk: 'Летіти' },
+      missions: { en: 'Explore worlds', uk: 'Дослідити світи' },
+    },
+    homeAction: {
+      label: { en: 'Learn to fly', uk: 'Навчитися літати' },
+      activate: () => openCatalogueTab('learn'),
+    },
     wordmarkURL: new URL(
       lobbyHeader.querySelector('.wordmark img').getAttribute('src'),
       win.location.href,
@@ -7475,6 +7509,53 @@ export function mountWorldApp({
     initial: 'home',
     focusPlay: () => $('world-viewport').focus(),
   });
+  cameraControls = mountFlightCameraControls({
+    document: doc,
+    window: win,
+    shell: playShell,
+    select: $('flight-camera'),
+    viewport: $('world-viewport'),
+    locale: () => locale,
+    available: () => Boolean(sceneReady && flight && !finished && !terminal(flight.snapshot())),
+    canShortcut: () =>
+      !playShell.blocksPlay() &&
+      $('flight-dialog').open &&
+      !beginnerCoach.blocksArm() &&
+      !flightMenuOpen() &&
+      !doc.querySelector('dialog[open]:not(#flight-dialog)') &&
+      !immersive.snapshot().toolsOpen,
+  });
+
+  flightSetup = mountFlightSetup({
+    document: doc,
+    window: win,
+    shell: playShell,
+    mode: $('flight-mode'),
+    source: $('flight-source'),
+    radioButton: $('radio-setup-button'),
+    camera: cameraControls,
+    locale: () => locale,
+    available: () => Boolean(flight && sceneReady),
+    inputRestarts: false,
+    inputHint: () => {
+      const source = $('flight-source').value;
+      if (source === 'controller') return gamepadHelp();
+      if (source === 'keyboard')
+        return (
+          keyboardFlightHelp($('flight-keyboard-preset').value, locale) +
+          ' · V / R3: ' +
+          (locale === 'uk' ? 'камера' : 'camera')
+        );
+      if (source === 'radio')
+        return locale === 'uk'
+          ? 'Використовуйте збережені перемикачі ввімкнення та скидання. Налаштуйте їх у «Налаштувати пульт». У меню: крен/тангаж — навігація; утримайте рискання праворуч/ліворуч і поверніть у центр для підтвердження/назад.'
+          : 'Use your saved Arm and Reset switches; assign them in Set up radio. Menus: roll/pitch navigate; hold yaw right/left, then centre to confirm/go back.';
+      return locale === 'uk'
+        ? 'Лівий стік: рискання/газ. Правий: крен/тангаж. Газ зберігається після відпускання. Для ввімкнення натисніть «Продовжити»; камера та пауза — у кутку екрана.'
+        : 'Left stick: yaw/throttle. Right: roll/pitch. Throttle stays where you release it. Use Resume to arm; View and Pause stay in the screen corner.';
+    },
+  });
+
   const extraTools = el('details', undefined, 'mission-library-setup');
   extraTools.dataset.simMissionTools = '';
   extraTools.append(
@@ -7573,6 +7654,22 @@ export function mountWorldApp({
         settingsContent.querySelector('[data-i18n="settingsHelp"]'),
         settingsContent.querySelector('[data-i18n="settingsPaused"]'),
       ],
+    },
+  });
+  flightComfort = mountFlightComfort({
+    document: doc,
+    window: win,
+    panels: modeSettingsView.panels,
+    viewport: $('world-viewport'),
+    fov: $('world-fov'),
+    tilt: $('world-tilt'),
+    host: 'worlds',
+    locale: () => locale,
+    canChange: () => !flight || flight.snapshot().status !== 'active' || playShell.blocksPlay(),
+    comparison: {
+      root: playShell.elements.content.pause,
+      button: ghostButton,
+      status: () => $('sector-reference').textContent,
     },
   });
   const globalThemeControls = attachSimThemeFamilyControls({
@@ -7877,6 +7974,9 @@ export function mountWorldApp({
           spatialEditor?.dispose();
           // Keep reparented controls available until their input, hints,
           // audio and editor owners have all retired.
+          flightComfort?.dispose();
+          flightSetup?.dispose();
+          cameraControls?.dispose();
           playShell?.dispose();
         } finally {
           try {

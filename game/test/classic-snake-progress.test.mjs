@@ -15,7 +15,7 @@ import {
 } from '../snake/classic-match.mjs';
 import { classicRecordKey, createClassicSnakeRecords } from '../snake/classic-records.mjs';
 
-const key = 'classic-snake-progress.proof.v2';
+import { CLASSIC_SNAKE_OFFICIAL_RECORDS_KEY as key } from '../snake/classic-campaign.mjs';
 const first = CLASSIC_SNAKE_LEVELS[0];
 const replay = JSON.parse(
   await readFile(
@@ -43,7 +43,7 @@ function recordsFor(t, model, options = {}) {
   t.after(() => records.close());
   return records;
 }
-async function seed(model, value) {
+async function seed(model, value, storageKey = key) {
   await new Promise((resolve, reject) => {
     const request = model.indexedDB.open(JOURNEY_PROFILE_DATABASE, 1);
     request.onupgradeneeded = () => request.result.createObjectStore('profiles');
@@ -51,7 +51,7 @@ async function seed(model, value) {
     request.onsuccess = () => {
       const db = request.result,
         tx = db.transaction('profiles', 'readwrite');
-      tx.objectStore('profiles').put(value, key);
+      tx.objectStore('profiles').put(value, storageKey);
       tx.oncomplete = () => {
         db.close();
         resolve();
@@ -63,6 +63,25 @@ async function seed(model, value) {
     };
   });
 }
+
+test('fresh official campaign leaves old and unrelated progress bytes untouched', async (t) => {
+  const model = managedIndexedDB();
+  const oldKey = 'classic-snake-progress.proof.v2';
+  const old = { format: 'old-campaign', keep: ['original proof bytes'] };
+  const other = { keep: ['another game mode'] };
+  await seed(model, old, oldKey);
+  await seed(model, other, 'another-mode');
+  const records = recordsFor(t, model);
+  await records.read();
+  assert.equal(records.ratingScope, key);
+  assert.deepEqual(records.snapshot().rows, {});
+  const match = wonMatch();
+  await records.remember(match.runs[0], context(match));
+  const stored = model.contents().get('profiles');
+  assert.deepEqual(stored.get(oldKey), old);
+  assert.deepEqual(stored.get('another-mode'), other);
+  assert.ok(Object.keys(stored.get(key).rows).length > 0);
+});
 
 test('score and survival duels never share their best-score bucket', () => {
   const level = prepareClassicSnakeLevel(first, { format: 'endless' });
