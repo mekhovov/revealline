@@ -109,6 +109,10 @@ test('overall observation deadline encloses the journey but preserves report and
   assert.match(source, /},\s*OBSERVATION_TIMEOUT_MS,?\s*\);\s*} catch \(error\)/);
   assert.match(source, /} finally \{\s*const cleanupErrors/);
   assert.match(source, /await writeFile\(output, JSON.stringify\(report/);
+  assert.match(
+    source,
+    /sha\(await readFile\(helperURL\)\);\s*\/\/[^\n]*\n\s*requireObservationTime\(\);\s*report =/,
+  );
 });
 
 test('installation observer covers all three public app identities and current offline controls', async () => {

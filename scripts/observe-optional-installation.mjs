@@ -582,6 +582,8 @@ try {
       const harnessStable =
         harnessSha256 === sha(await readFile(fileURLToPath(import.meta.url))) &&
         helperSha256 === sha(await readFile(helperURL));
+      // A late hash read must not replace the timeout failure during cleanup.
+      requireObservationTime();
       report = {
         format: 'OptionalInstallationObservation.v1',
         passed:
