@@ -210,6 +210,12 @@
       // Reach legacy tools through the visible shared mission chooser, as a player does.
       // Hidden Settings destinations can change panel state without opening their shell.
       async function openTools(tab) {
+        const settings = d.getElementById('sim-settings');
+        for (let step = 0; settings?.open && step < 2; step++) {
+          click(d.getElementById('close-sim-settings'));
+          await wait(0);
+        }
+        if (settings?.open) throw Error('Settings did not return to the tool surface');
         const visible = (node) => node && node.getClientRects().length > 0;
         const panel = () => d.getElementById(tab);
         if (visible(panel()) && !panel().hidden) return;
@@ -298,9 +304,22 @@
         await until(() => !input.value, 'restoration file processed');
       }
       async function openRecords() {
-        await openTools('packs');
-        const records = q('#packs .sim-records');
-        if (!records?.open) click(records?.querySelector('summary'));
+        const settings = d.getElementById('sim-settings');
+        if (!settings.open) {
+          const missions = d.getElementById('worlds-shell-missions-dialog');
+          if (missions?.open) {
+            click(missions.querySelector('[data-mode-action="missions-back"]'));
+            await until(() => !missions.open, 'return to home for collection settings');
+          }
+          const settingsButton = q('#worlds-shell-home-dialog [data-mode-action="settings"]');
+          if (!settingsButton?.getClientRects().length)
+            throw Error('Visible Settings navigation is unavailable');
+          click(settingsButton);
+          await until(() => settings.open, 'open Settings');
+        }
+        click(d.getElementById('worlds-settings-tab-data'));
+        const records = d.getElementById('proof-records').closest('details');
+        if (!records.open) click(records.querySelector('summary'));
         await until(
           () => q('#proof-records').getClientRects().length > 0,
           'visible recorded flights',

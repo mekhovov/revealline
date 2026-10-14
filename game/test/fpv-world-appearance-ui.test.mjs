@@ -526,7 +526,7 @@ test('World recovery retains its saved theme and drone while new appearance choi
   h.$('sim-appearance-world').emit('change');
   assert.equal(h.app.snapshot().appearance.accepted.drone, 'utility');
   assert.equal(h.app.snapshot().appearance.pending, true);
-  assert.equal(h.app.snapshot().state.status, 'active');
+  assert.equal(h.app.snapshot().state.status, 'paused');
   assert.equal(h.rendered.at(-1).course, prepared);
 });
 
