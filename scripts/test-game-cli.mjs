@@ -70,6 +70,20 @@ test('published FPV contact and support modules are included in main and optiona
   }
 });
 
+test('published regional review modules match the installed FPV source closure', async () => {
+  const root = fileURLToPath(new URL('../', import.meta.url));
+  const config = JSON.parse(await fs.readFile(path.join(root, 'game/build-config.json'), 'utf8'));
+  const { OPTIONAL_PACKAGE_POLICIES } = await import('../publishing/optional-package-policy.mjs');
+  const regional = OPTIONAL_PACKAGE_POLICIES['fpv-worlds'].sharedFiles.filter(
+    (name) => name.endsWith('/regional-session.mjs') || name.includes('/civilian-fpv/regional/'),
+  );
+  assert.equal(regional.length, 18, 'the reviewed regional source closure is exact');
+  for (const name of regional) {
+    assert.ok(config.include.includes(name), `main distribution must include ${name}`);
+    assert.ok((await fs.stat(path.join(root, name))).isFile());
+  }
+});
+
 test('build binds the same release version into Solo, Versus and Team landing HTML', async (t) => {
   const { root, out } = await fixture(t);
   await fs.mkdir(path.join(root, 'game/couch'));
