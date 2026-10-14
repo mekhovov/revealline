@@ -27,6 +27,10 @@ isolated loopback server with production-style headers. It never opens the user'
 normal browser profile. All three test apps are uninstalled and the temporary profile
 removed on completion. Cleanup failures retain that directory and identify it in
 the receipt instead of hiding the failure.
+Pending browser/server startup also retains the directory as unverified cleanup:
+a resource that resolves after the observation deadline cannot silently recreate
+a supposedly deleted profile. Delayed-start and late-close-failure regressions
+cover that ownership boundary.
 
 The public UI prepares each package offline and imports one explicitly scripted,
 replay-verified FPV attempt. No database records, reward receipts or completion flags
