@@ -198,6 +198,24 @@ Do not mark “three playable public apps” done on the strength of local fixtu
 - After integration of SIM World Library, the full practice suite again passes
   **311 tests**, plus **3 main Pages profile tests**; all three package preflights
   pass. Existing actual candidate receipts remain bound to `99d3dc41e`.
+- Subsequent observer startup/deadline regressions bring the full practice suite
+  to **313 passed, 0 failed, 0 skipped**. All three real packages reproduce twice
+  and pass admission at `f3b1b2c88375f27672698ab1d04dffd83369bbad`, with SIM World
+  Library included. This is still a non-public development candidate, not an
+  allocated release. See [build receipt](flight-practice-qualification-20261014/build-f3b1b2c88.json).
+- [Updated capacity evidence](flight-practice-qualification-20261014/deployed-capacity-f3b1b2c88.json)
+  reconciles the exact deployed baseline and subtracts the replaced empty
+  directory. The fresh candidate plus active launchers/pointers gives a
+  **947,916,270-byte lower bound**; a comparable retained generation brings that
+  to **975,198,521 bytes**, at least **25,198,521 bytes over** the guard. Replacement
+  populated-directory bytes and a final combined-site inventory remain additional.
+  Deployed/candidate source identities stay explicit; the reserve is not a release.
+- The controlled historical-fixture observation progressed through native-keyboard
+  offline preparation and proof import/export, then failed locating **Profile JSON**
+  after Setup navigation. No all-three checkpoint passed; cleanup succeeded and
+  no page errors were recorded. Retained [failed receipt](flight-practice-qualification-20261014/controlled-observer-profile-navigation-failed.json)
+  is diagnostic only. Repair and recheck that observer navigation before using it
+  for real-candidate qualification; the earlier pointer-focus issue also remains.
 - A bounded, read-only lossless audit checked 30 images (90,551,929 bytes) and
   measured 1,235,912 bytes of potential savings. This does not close the measured
   retained-version gap. No image bytes, pinned hashes, original-download routes,
