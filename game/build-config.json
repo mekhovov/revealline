@@ -256,6 +256,7 @@
     "optional-practice/civilian-fpv/world-app.mjs",
     "optional-practice/civilian-fpv/regional-session.mjs",
     "optional-practice/civilian-fpv/regional-delivery.mjs",
+    "optional-practice/civilian-fpv/regional-library.mjs",
     "optional-practice/civilian-fpv/regional/flight-prototype.mjs",
     "optional-practice/civilian-fpv/regional/frame-transaction.mjs",
     "optional-practice/civilian-fpv/regional/indexed-scenery-cell.mjs",
