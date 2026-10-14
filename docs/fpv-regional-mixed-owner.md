@@ -78,6 +78,21 @@ The original free-air parity, retained-frame cancellation and input ownership
 checks remain applicable. These are local functional observations, not hardware,
 GPU performance or package qualification.
 
+Browser review of the real paired Urban study loaded both layers (260,472 bytes
+at the mill-court start), then exercised Arm, 93 commanded throttle ticks, Pause,
+FPV view, and Reset to zero ticks/disarmed. An invalid companion manifest left
+the existing scene visible. Cancelling an explicit Load/restart after session
+replacement left a paused empty new session; **Prepare** recovered both layers
+at zero ticks/disarmed. That explicit restart path deliberately replaces the
+session and is not evidence of same-owner streamed-frame retention. The latter
+is covered by the functional corruption/cancellation scenarios above.
+
+The cancellation feedback follow-up keeps setup open on cancellation or failed
+preparation, ignores stale completion when deciding whether to collapse it, and
+restates the paused recovery action after pending work settles. No unexpected
+arming or console errors were observed in the browser review; the expected
+missing-manifest network response was not counted as a renderer error.
+
 ## Review entry and remaining work
 
 The authoring flight preview adds an explicit **Terrain + companion scenery**

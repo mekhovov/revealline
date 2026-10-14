@@ -193,7 +193,7 @@ document.querySelector("form").addEventListener("submit", async (event) => {
           ? "canyon"
           : "plain"
         : surface;
-    await session.replace({
+    const prepared = await session.replace({
       manifest,
       spawnId: $("spawn").value,
       initialHeading: heading === "region-centre" ? heading : Number(heading),
@@ -206,19 +206,31 @@ document.querySelector("form").addEventListener("submit", async (event) => {
         surfaceQuality: $("surface-quality").value,
       },
     });
-    document.querySelector("details").open = false;
+    if (token !== loadingGeneration || closed) {
+      session.pause();
+      return;
+    }
+    document.querySelector("details").open = !prepared;
   } catch (error) {
+    document.querySelector("details").open = true;
     message(`Paused: ${error.message}`);
   } finally {
     clearTimeout(timeout);
     busy = false;
     session.block(false);
+    if (token !== loadingGeneration && !closed) {
+      document.querySelector("details").open = true;
+      message(
+        "Loading cancelled. Prepare or load again to continue; flight stays paused.",
+      );
+    }
   }
 });
 $("cancel-load").onclick = () => {
   loadingGeneration++;
   manifestController?.abort();
   session.pause();
+  document.querySelector("details").open = true;
   message(
     "Loading cancelled. Prepare or load again to continue; flight stays paused.",
   );
