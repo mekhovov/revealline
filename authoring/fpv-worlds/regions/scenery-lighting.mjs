@@ -17,7 +17,7 @@ export function createSceneryLighting(scene, renderer, style = 'plain') {
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
     renderer.toneMappingExposure = 1;
     renderer.shadowMap.enabled = true;
-    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    renderer.shadowMap.type = THREE.PCFShadowMap;
     sun.castShadow = false;
     sun.shadow.mapSize.set(1024, 1024);
     sun.shadow.bias = -0.0002;
