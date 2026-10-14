@@ -8,12 +8,12 @@ on:
 permissions:
   contents: read
 
-# Deployment is deliberately separate from pull-request admission.  Each main
-# merge publishes the newest exact main snapshot, while a newer merge can
-# replace an unfinished older snapshot without delaying the merge queue.
+# Deployment is separate from pull-request admission. Let an active publication
+# finish so rapid main merges cannot starve Pages; GitHub retains only the newest
+# pending run, which publishes after the active one.
 concurrency:
   group: pages-production
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 env:
   # GitHub Pages has a published-site capacity limit. This guards deployment

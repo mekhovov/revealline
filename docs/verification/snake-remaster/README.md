@@ -105,6 +105,19 @@ This verifies the game distribution, not deployment or hosted publication.
 No additional implementation item remains identified by this final audit;
 physical-device and player checks stay deferred and grading extensions optional.
 
+## Interaction review follow-through
+
+[The interaction review](interaction-review.md) adds developer examples from
+Rytmos, Lost in Play and Donkey Kong Bananza and translates them into bounded
+feedback/input priorities. Its audit found three edge cases: controller Menu
+did not stop terminal playback, unchanged reception status was repeatedly
+rewritten, and globally enabled voices could override Snake's jammed-catch
+silence request. All are corrected, with 109 host, 74 audio and 16 package tests
+passing. A fresh full default build at `6cc04df43` verifies all 3,277 files and
+archive/expanded hashes; `interaction-validation.json` retains the receipt.
+No new simulation or grading rules are introduced. Historical build receipts
+retain their exact source attribution.
+
 ## Deferred qualification and intentional grading limits
 
 1. **Deferred by request: physical-device qualification.** Responsive desktop emulation cannot establish touchscreen ergonomics, physical controller behavior, thermal throttling or low-end phone frame times. Use the existing lab/gallery on representative phones and controllers before claiming those devices qualified. This does not block the current delivery.

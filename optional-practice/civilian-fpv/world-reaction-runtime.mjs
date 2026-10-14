@@ -66,7 +66,7 @@ const sourceHashes={
 'game/audio/reactions/actors.mjs':
 '79debf91cafa2e01cd65170037ee483977cbf7d5c3a619ccac9ed400264598b8',
 'optional-practice/civilian-fpv/world-library.mjs':
-'866257e9e9baad2dbf1805fab598eef29da80cc1f0e4a93e15a15df7616f9cac',
+'945812ac21d3883f90deb5ac33448bce9c514bb9afb4607318f1ba74c0900055',
 'game/audio/reactions/guide-0-en.m4a':
 '58f961f54b52d0dbb58f53f000ca85bba166236126e135dc1f5e89f8f9a94210',
 'game/audio/reactions/guide-0-uk.m4a':
@@ -8167,6 +8167,7 @@ let operation=null,
 launching=false,
 closed=false,
 loaded=false,
+metadataRequested=false,
 epoch=0,
 rows=[],
 saved=[],
@@ -8264,6 +8265,7 @@ let committed=false,
 launchAfter=false,
 restoreFocus=true;
 operation=controller;
+metadataRequested=false;
 const trackFocus=(event)=>{
 if(event.target!==doc.body&& !root.contains(event.target))restoreFocus=false;
 };
@@ -8359,6 +8361,9 @@ const card=[...cards.children].find((node)=>node.dataset.world===row?.id);
 }
 }
 }
+// A catalogue can reopen before its cancelled worker finishes. Honour only
+// that new metadata demand; never repeat a pack download or launch intent.
+if(metadataRequested&& !loaded&&visible())void run();
 if(launchAfter&&requestEpoch===epoch&& !signal.aborted)await launch(row);
 }
 browse.onclick=()=>run();
@@ -8375,9 +8380,16 @@ open(container=null){
 if(closed)return;
 if(container)container.append(root);
 else home.after(root);
-if(!loaded&& !operation)void run();
+if(!loaded){
+if(!operation)void run();
+else if(operation.signal.aborted)metadataRequested=true;
+}
 },
-deactivate(){
+deactivate(container=null){
+// Dialog close events are queued: the catalogue may already belong to a
+// different surface by the time its former container reports closing.
+if(container&& !container.contains(root))return;
+metadataRequested=false;
 epoch++;
 if(!cancel.disabled)operation?.abort();
 },
@@ -8387,6 +8399,7 @@ if(!closed)paint();
 },
 dispose(){
 closed=true;
+metadataRequested=false;
 epoch++;
 operation?.abort();
 home.remove();

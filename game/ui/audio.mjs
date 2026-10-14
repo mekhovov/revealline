@@ -741,7 +741,12 @@ export class Soundscape {
     if (voices.some((voice) => voice.radio || voice.dialogue || voice.priority >= 5)) return false;
     const name = this.humanReactions.request(
       c.currentTime,
-      { ...details, vocals: this.readDestruction?.()?.vocals ?? details.vocals },
+      {
+        ...details,
+        // Either the player's opt-out or a host concealment rule may veto a
+        // voice. Enabling the global preference must not undo jamming silence.
+        vocals: details.vocals !== false && this.readDestruction?.()?.vocals !== false,
+      },
       voices.filter((voice) => voice.humanReaction).length,
     );
     if (!name) return false;
