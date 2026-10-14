@@ -1,4 +1,5 @@
-import { boundedJSON, dataIdentity, exactKeys, required } from '../data-json.mjs';
+import { overflightGameplayIdentity } from './worlds.mjs';
+import { boundedJSON, exactKeys, required } from '../data-json.mjs';
 import {
   createOverflightProject,
   validateOverflightProject,
@@ -236,7 +237,7 @@ export function compileOverflightRiyProject(source) {
   return freeze({
     ...base,
     sourceFormat: project.format,
-    projectIdentity: dataIdentity(project),
+    projectIdentity: overflightGameplayIdentity(project),
     riyVersion: project.format === OVERFLIGHT_RIY_PROJECT_FORMAT_V2 ? 2 : 1,
     riy: project.riy,
   });

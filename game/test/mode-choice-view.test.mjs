@@ -47,7 +47,7 @@ for (const current of GAME_MODE_ORDER) {
     if (view.more.getAttribute('aria-expanded') === 'true')
       assert.equal(actions.simulator.dataset.menuRight.split(' ')[0], view.more.id);
     assert.equal(actions.versus.querySelector('strong').textContent, 'Дуель');
-    assert.equal(actions.overflight.querySelector('strong').textContent, 'Вижити');
+    assert.equal(actions.overflight.querySelector('strong').textContent, 'FPV Survivals');
     assert.equal(actions.overflight.querySelector('.game-mode-badge').textContent, 'beta');
     assert.equal(actions.snake.hidden, ['solo', 'team', 'versus'].includes(current));
     view.dispose();

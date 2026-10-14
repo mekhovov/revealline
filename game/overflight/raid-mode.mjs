@@ -1,8 +1,4 @@
-import {
-  DEFAULT_OVERFLIGHT_HUNT_PROJECT,
-  createOverflightHuntProject,
-  compileOverflightHuntProject,
-} from './raid-project.mjs';
+import { createOverflightHuntProject, compileOverflightHuntProject } from './raid-project.mjs';
 import {
   createOverflightHuntLibrary,
   createOverflightHuntPackage,
@@ -24,6 +20,17 @@ import { createOverflightHuntUpgradeCard } from './raid-upgrade-card.mjs';
 import { overflightHuntText } from './raid-copy.mjs';
 import { createOverflightHuntRecords } from './raid-records.mjs';
 import { createOverflightHuntReviewPilot } from './raid-review-pilot.mjs';
+import { overflightWorldForEncounterSet } from './worlds.mjs';
+
+// Native sorties opt into current rules; imported projects and the raw authoring
+// constructor retain their authored/legacy rules and identities.
+export function createNativeOverflightHuntProject(options = {}) {
+  return createOverflightHuntProject({
+    ...options,
+    rulesVersion: 3,
+    world: options.world ?? overflightWorldForEncounterSet(options.encounterSet ?? 'patrol'),
+  });
+}
 
 const recordOwners = new WeakMap();
 const announcedHUD = new WeakMap();
@@ -89,7 +96,12 @@ export function updateOverflightHuntHUD({ run, compiled, document, text, local }
     `${(hunt.objectivesCompleted / Math.max(1, hunt.objectives.length)) * 100}%`;
   // Announce milestones only; the ten-Hz score/timer updates must never flood
   // assistive technology. The complete instruments remain available to inspect.
-  const milestone = { sector: hunt.sector, objectives: hunt.objectivesCompleted, ready, active };
+  const milestone = {
+    sector: hunt.sector,
+    objectives: hunt.objectivesCompleted,
+    ready,
+    active,
+  };
   const previous = announcedHUD.get(run),
     status = $('raid-event-status');
   if (!previous && status) status.textContent = '';
@@ -194,10 +206,10 @@ export const OVERFLIGHT_HUNT_MODE = Object.freeze({
   id: 'overflight-hunt',
   fixtures: ['raid-reference'],
   fixtureInput: overflightHuntFixtureInput,
-  name: { en: 'Survive: Raid', uk: 'Вижити: Наліт' },
-  defaultProject: DEFAULT_OVERFLIGHT_HUNT_PROJECT,
+  name: { en: 'Single Raid', uk: 'Один наліт' },
+  defaultProject: createNativeOverflightHuntProject(),
   compileProject: compileOverflightHuntProject,
-  createProject: createOverflightHuntProject,
+  createProject: createNativeOverflightHuntProject,
   createLibrary: createOverflightHuntLibrary,
   createPackage: createOverflightHuntPackage,
   exportPackage: exportOverflightHuntPackage,
@@ -221,7 +233,12 @@ export const OVERFLIGHT_HUNT_MODE = Object.freeze({
   encounterSets: ['patrol', 'crossing', 'mixed'],
   studioPath: '../studio/raid.html',
   previewRequest: overflightHuntPreviewRequest,
-  reviewBuilds: { sweeper: true, pursuer: true, breaker: true, objectives: true },
+  reviewBuilds: {
+    sweeper: true,
+    pursuer: true,
+    breaker: true,
+    objectives: true,
+  },
   pilot: (run, build) => reviewPilot(run, build).input(run),
   selectCard: (run, build) => reviewPilot(run, build).choose(run),
   moduleIcons: {

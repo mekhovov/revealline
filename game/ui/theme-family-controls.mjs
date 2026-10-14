@@ -2,6 +2,7 @@ import { t, localizedText, localizedAttribute, getLocale, onLocaleChange } from 
 import { BUILTIN_THEME_FAMILIES, resolvePresentation } from '../presentation/theme-system.mjs';
 import { mountThemeMaterialPreview } from './theme-material-preview.mjs';
 import { mountEnemyAppearanceControls } from './enemy-appearance-controls.mjs';
+import { mountBattlefieldGroundControls } from './battlefield-ground-controls.mjs';
 
 /** One immediate appearance choice; the host owns atomic loads and flight boundaries. */
 export function attachThemeFamilyControls({
@@ -32,6 +33,12 @@ export function attachThemeFamilyControls({
     applyAuthored: () => host.set({ arcadeArt: 'authored' }),
   });
   release.push(enemyAppearance.dispose, onLocaleChange(enemyAppearance.refresh));
+  const battlefield = mountBattlefieldGroundControls({
+    document: doc,
+    container: group,
+    locale: getLocale,
+  });
+  release.push(battlefield.dispose, onLocaleChange(battlefield.refresh));
   const row = (key, parent = group) => {
     const label = doc.createElement('label'),
       title = doc.createElement('span');

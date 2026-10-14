@@ -126,7 +126,9 @@ export function overflightAttackLayers(attack) {
   }
   const heading = attack.heading ?? 0,
     length = attack.length ?? 200;
-  const ray = (angle) => {
+  const ray = (angle, rayIndex = 0) => {
+    const rayLength = attack.rayLengths?.[rayIndex] ?? length;
+    if (rayLength <= 0) return;
     const half = attack.radius ?? 8;
     for (const side of [-1, 1]) {
       const x = originX - Math.sin(angle) * half * side,
@@ -134,9 +136,9 @@ export function overflightAttackLayers(attack) {
       layers.push(
         layer(
           'bar',
-          x + (Math.cos(angle) * length) / 2,
-          y + (Math.sin(angle) * length) / 2,
-          length,
+          x + (Math.cos(angle) * rayLength) / 2,
+          y + (Math.sin(angle) * rayLength) / 2,
+          rayLength,
           2,
           DANGER,
           0.9,
@@ -147,8 +149,8 @@ export function overflightAttackLayers(attack) {
     layers.push(
       layer(
         'arrow',
-        originX + Math.cos(angle) * length,
-        originY + Math.sin(angle) * length,
+        originX + Math.cos(angle) * rayLength,
+        originY + Math.sin(angle) * rayLength,
         14,
         14,
         DANGER,
@@ -159,8 +161,8 @@ export function overflightAttackLayers(attack) {
   };
   if (attack.kind === 'lane') ray(heading);
   else
-    for (const offset of [-(attack.spread ?? 0.32), 0, attack.spread ?? 0.32])
-      ray(heading + offset);
+    for (const [index, offset] of [-(attack.spread ?? 0.32), 0, attack.spread ?? 0.32].entries())
+      ray(heading + offset, index);
   return layers;
 }
 

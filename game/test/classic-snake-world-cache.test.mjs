@@ -186,7 +186,7 @@ test('terminal cosmetic reactions expire while the completed drone stays frozen'
 });
 
 test('aggregate terrain, decoded backgrounds, material and receiver pixels stay below 16 MiB', () => {
-  const decoded = 24 * CLASSIC_BACKDROP_SIZE.width * CLASSIC_BACKDROP_SIZE.height * 4;
+  const decoded = 27 * CLASSIC_BACKDROP_SIZE.width * CLASSIC_BACKDROP_SIZE.height * 4;
   const tiles = 192 * 32 * 32 * 4;
   // Each receiver keeps one surface, current terrain, and three reusable pixel buffers.
   const receivers = CLASSIC_SIGNAL_RECEIVER_LIMIT * CLASSIC_SIGNAL_SAMPLE_EDGE ** 2 * 4 * 5;

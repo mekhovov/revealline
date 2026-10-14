@@ -29,6 +29,7 @@ import {
   resolveSimThemeProfile,
   resolveSimEffects,
 } from './world-themes.mjs';
+import { applySimBattlefieldGround } from './battlefield-ground.mjs';
 import {
   configureSimTextureSampling,
   createWorkshopMaterials,
@@ -1445,6 +1446,13 @@ export function createFlightRenderer({
       maxAnisotropy: renderer.capabilities.getMaxAnisotropy(),
       reviewRevision: machineryRevision,
       industrialEnvironment: environment,
+    });
+    applySimBattlefieldGround({
+      world,
+      profile: surroundings.profile,
+      environment,
+      THREE,
+      document: canvas.ownerDocument,
     });
     register(world);
     const theme = surroundings.theme;

@@ -1,3 +1,5 @@
+import { paintOverflightWorld } from '../presentation/overflight-world-art.mjs';
+
 /** Read-only discovery. The mode/compiler and installed owner retain authority. */
 export function overflightMissionSource({
   id,
@@ -91,6 +93,12 @@ export function paintOverflightMission(context, diagram, paintSprite = () => {})
   context.clearRect(0, 0, 320, 132);
   context.fillStyle = '#11251f';
   context.fillRect(0, 0, 320, 132);
+  if (project.presentation) {
+    context.save();
+    context.scale(scaleX, scaleY);
+    paintOverflightWorld(context, project.presentation, project.arena);
+    context.restore();
+  }
   context.strokeStyle = '#2d493b';
   context.lineWidth = 1;
   for (const x of [960, 1920]) {

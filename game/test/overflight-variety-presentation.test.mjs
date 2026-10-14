@@ -9,7 +9,11 @@ import {
   compileOverflightHuntProject,
 } from '../overflight/raid-project.mjs';
 import { overflightMissionSource, paintOverflightMission } from '../overflight/mission-library.mjs';
-import { createOverflightOperationCards } from '../overflight/operation-view.mjs';
+import {
+  createOverflightOperationCards,
+  createOverflightRunChangeDialog,
+  overflightRememberedOperationURL,
+} from '../overflight/operation-view.mjs';
 import {
   overflightTacticalEnemyLayers,
   overflightAttackLayers,
@@ -89,7 +93,10 @@ test('different authored schedules produce different diagrams without mutating p
   const hunt = createOverflightHuntProject();
   assert.doesNotThrow(() => compileOverflightHuntProject(hunt));
   assert.doesNotThrow(() =>
-    paintOverflightMission(context().value, { operation: 'overflight-hunt', project: hunt }),
+    paintOverflightMission(context().value, {
+      operation: 'overflight-hunt',
+      project: hunt,
+    }),
   );
 });
 
@@ -112,17 +119,62 @@ test('family home exposes all five operations and preserves operation queries wi
     onLeave: () => left++,
   });
   view.refresh();
-  assert.equal(view.root.children.length, 5);
-  const [survivor, riy, raid, timeAttack, marathon] = view.root.children;
+  assert.equal(view.root.children.length, 2, 'two groups contain all five operation choices');
+  const [survivor, riy, raid, timeAttack, marathon] =
+    view.root.querySelectorAll('[data-home-choice]');
   assert.equal(survivor.getAttribute('aria-current'), 'true');
   assert.equal(raid.getAttribute('href'), './raid.html?lang=uk');
   assert.equal(riy.getAttribute('href'), './play.html?operation=riy&lang=uk');
   assert.equal(timeAttack.getAttribute('href'), './raid.html?operation=time-attack&lang=uk');
   assert.equal(marathon.getAttribute('href'), './raid.html?operation=marathon&lang=uk');
   survivor.click();
+  assert.equal(selected, 0, 'the selected operation is a no-op, not a mission launch');
   for (const card of [riy, raid, timeAttack, marathon]) card.click();
-  assert.equal(selected, 1);
+  assert.equal(selected, 4);
   assert.equal(left, 4);
+});
+
+test('only a generic family entry restores a valid saved operation while keeping appearance and locale', () => {
+  const base = 'https://example.test/game/overflight/play.html';
+  assert.equal(overflightRememberedOperationURL(base, 'marathon'), null);
+  assert.equal(overflightRememberedOperationURL(`${base}?family=1`, 'deleted-operation'), null);
+  const destination = new URL(
+    overflightRememberedOperationURL(`${base}?family=1&lang=uk&appearance=accepted`, 'marathon'),
+  );
+  assert.equal(destination.pathname, '/game/overflight/raid.html');
+  assert.equal(destination.searchParams.get('operation'), 'marathon');
+  assert.equal(destination.searchParams.get('lang'), 'uk');
+  assert.equal(destination.searchParams.get('appearance'), 'accepted');
+  assert.equal(destination.searchParams.has('family'), false);
+});
+
+test('changing a live sortie requires explicit end, supports cancel and releases confirmation input', async () => {
+  const document = new Document();
+  let released = 0;
+  const change = createOverflightRunChangeDialog({
+    document,
+    text: (key) => key,
+    releaseInput: () => released++,
+  });
+  const cancelled = change.ask();
+  assert.equal(change.root.open, true);
+  assert.equal(document.activeElement.id, 'overflight-change-cancel');
+  assert.equal(
+    await change.ask(),
+    false,
+    'a second mutation cannot steal an existing confirmation',
+  );
+  change.root.querySelector('#overflight-change-cancel').click();
+  assert.equal(await cancelled, false);
+  const accepted = change.ask();
+  change.root.querySelector('#overflight-change-accept').click();
+  assert.equal(await accepted, true);
+  const back = change.ask();
+  change.root.emit('cancel');
+  assert.equal(await back, false);
+  assert.equal(change.root.open, false);
+  assert.ok(released >= 3);
+  change.dispose();
 });
 
 test('committed fan and lane warnings match each damaging ray and full half-width', () => {
@@ -146,7 +198,12 @@ test('committed fan and lane warnings match each damaging ray and full half-widt
     assert.ok(Math.abs(arrow.y - (50 + Math.sin(angle) * 620)) < 1e-10);
   }
   assert.equal(overflightAttackLayers({ ...attack, kind: 'lane' }).length, 3);
-  const [ground] = overflightAttackLayers({ kind: 'ground', x: 70, y: 80, radius: 45 });
+  const [ground] = overflightAttackLayers({
+    kind: 'ground',
+    x: 70,
+    y: 80,
+    radius: 45,
+  });
   assert.equal(ground.frame, 'ring');
   assert.equal(ground.width, 90);
 });
@@ -165,7 +222,13 @@ test('guard facing, damage and armor opening remain geometrically distinct', () 
   const broken = overflightTacticalEnemyLayers({ ...enemy, guardIntegrity: 0 });
   assert.ok(broken.length < guarded.length);
   assert.ok(broken.some((layer) => layer.frame === 'arrow'));
-  const armor = { x: 10, y: 20, armor: 80, maxArmor: 100, exposureRemaining: 0 };
+  const armor = {
+    x: 10,
+    y: 20,
+    armor: 80,
+    maxArmor: 100,
+    exposureRemaining: 0,
+  };
   assert.equal(
     overflightTacticalEnemyLayers(armor).filter((layer) => layer.frame === 'arrow').length,
     0,
@@ -195,7 +258,13 @@ test('open cache shows two physical choices with distinct glyphs and disabled st
 });
 
 test('distant armor stays compact without losing state, while approaches and priority targets stay detailed', () => {
-  const enemy = { x: 500, y: 200, maxArmor: 100, armor: 50, exposureRemaining: 0 };
+  const enemy = {
+    x: 500,
+    y: 200,
+    maxArmor: 100,
+    armor: 50,
+    exposureRemaining: 0,
+  };
   const before = structuredClone(enemy);
   const full = overflightTacticalEnemyLayers(enemy, 32);
   const near = overflightTacticalEnemyLayers(enemy, 32, { x: 400, y: 200 });
@@ -221,18 +290,30 @@ test('distant armor stays compact without losing state, while approaches and pri
     { objectiveId: 'required' },
   ])
     assert.deepEqual(
-      overflightTacticalEnemyLayers({ ...enemy, ...priority }, 32, { x: 100, y: 200 }),
+      overflightTacticalEnemyLayers({ ...enemy, ...priority }, 32, {
+        x: 100,
+        y: 200,
+      }),
       full,
     );
   for (const state of [{ exposureRemaining: 3 }, { armor: 0 }]) {
-    const open = overflightTacticalEnemyLayers({ ...enemy, ...state }, 32, { x: 100, y: 200 });
+    const open = overflightTacticalEnemyLayers({ ...enemy, ...state }, 32, {
+      x: 100,
+      y: 200,
+    });
     assert.equal(
       open.filter((cue) => cue.frame === 'arrow').length,
       2,
       'opening still has geometry in addition to color',
     );
   }
-  const guard = { ...enemy, maxArmor: 0, maxGuardIntegrity: 50, guardIntegrity: 30, heading: 1 };
+  const guard = {
+    ...enemy,
+    maxArmor: 0,
+    maxGuardIntegrity: 50,
+    guardIntegrity: 30,
+    heading: 1,
+  };
   assert.deepEqual(
     overflightTacticalEnemyLayers(guard, 24, { x: 0, y: 0 }),
     overflightTacticalEnemyLayers(guard, 24),
@@ -242,7 +323,12 @@ test('distant armor stays compact without losing state, while approaches and pri
 });
 
 test('mission discovery labels Relaxed V3 encounters in both native languages', () => {
-  const entry = { project: createOverflightProject({ rulesVersion: 3, difficulty: 'relaxed' }) };
+  const entry = {
+    project: createOverflightProject({
+      rulesVersion: 3,
+      difficulty: 'relaxed',
+    }),
+  };
   for (const [locale, label] of [
     ['en', 'Relaxed'],
     ['uk', 'Спокійна'],

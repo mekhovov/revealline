@@ -8,6 +8,8 @@ import {
   TEAM_CORE_SLOTS,
 } from './team-runtime-slots.mjs';
 import { ASSET_SLOTS } from './catalog.mjs';
+import { OVERFLIGHT_WORLD_IMAGE_SLOTS } from './overflight-world-slots.mjs';
+import { OVERFLIGHT_ACTOR_SLOT_IDS } from './overflight-actor-slots.mjs';
 import { boundedJSON, canonicalJSON, exactKeys, required, stableId } from '../data-json.mjs';
 import { inspectImageDataUrl } from '../content.mjs';
 import {
@@ -33,16 +35,21 @@ export const COMPILED_PRESENTATION_FORMAT = 'revealline-compiled-presentation.v1
 export const PRESENTATION_DECODE_PIXELS = 16 * 1024 * 1024;
 // Fixed renderer vocabulary, never an uploaded prefix or arbitrary slot filter.
 export const ACTOR_PRESENTATION_SLOTS = Object.freeze([
-  ...ASSET_SLOTS.filter((slot) =>
-    slot.recipes.some((recipe) =>
-      ['actor.player.v1', 'actor.rotors.v1', 'actor.enemy.v1'].includes(recipe),
-    ),
+  ...ASSET_SLOTS.filter(
+    (slot) =>
+      !OVERFLIGHT_ACTOR_SLOT_IDS.includes(slot.id) &&
+      slot.recipes.some((recipe) =>
+        ['actor.player.v1', 'actor.rotors.v1', 'actor.enemy.v1'].includes(recipe),
+      ),
   ).map((slot) => slot.id),
   ...TEAM_PILOT_SLOTS,
   ...TEAM_ENEMY_SLOTS,
   ...TEAM_CORE_SLOTS,
 ]);
-const actorSlots = new Set(ACTOR_PRESENTATION_SLOTS);
+// Historical Solo/Duel actor leases have a fixed required vocabulary. Optional
+// Survivals artwork is admitted by board/full hosts without extending that lease.
+const leasedActorSlots = new Set(ACTOR_PRESENTATION_SLOTS);
+const actorSlots = new Set([...ACTOR_PRESENTATION_SLOTS, ...OVERFLIGHT_ACTOR_SLOT_IDS]);
 const extensions = {
   'image/png': 'png',
   'image/jpeg': 'jpg',
@@ -197,7 +204,9 @@ const visibleSlot = (id, asset) =>
   asset.kind === 'font' ||
   (asset.kind === 'image' &&
     (/^(ui|icon|hud|reward|control|screen|player|enemy|terrain|pickup)\./.test(id) ||
-      isTeamRuntimeImageSlot(id)));
+      isTeamRuntimeImageSlot(id) ||
+      actorSlots.has(id) ||
+      OVERFLIGHT_WORLD_IMAGE_SLOTS.includes(id)));
 const controlIcons = {
   settings: '#shell-settings, #settings-button, #shell-options',
   play: '#shell-featured, #shell-continue, #shell-deploy, #start-button, #soundtrack-play, #race-start',
@@ -281,7 +290,9 @@ export function createPresentationHost({
           (id === 'screen.title.background' || id === 'screen.title.portrait') &&
           (skipTitleArtwork || document?.querySelector?.('.native-landing'))
         )
-      : (actorSlots.has(id) || (profile === 'board' && /^(terrain|pickup)\./.test(id))) &&
+      : ((profile === 'actors' ? leasedActorSlots : actorSlots).has(id) ||
+          (profile === 'board' &&
+            (/^(terrain|pickup)\./.test(id) || OVERFLIGHT_WORLD_IMAGE_SLOTS.includes(id)))) &&
         asset.kind === 'image';
   const manifestPath = presentationManifestPath(retainedManifestSha256);
   const base = new URL(baseURL);

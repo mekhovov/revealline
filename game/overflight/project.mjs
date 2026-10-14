@@ -1,16 +1,21 @@
+import { validateOverflightTerrain } from './terrain.mjs';
+import {
+  applyOverflightWorld,
+  validateOverflightEncounterProfile,
+  validateOverflightWorldPresentation,
+  overflightGameplayIdentity,
+  overflightPresentationIdentity,
+} from './worlds.mjs';
 import {
   createOverflightCombatProfile,
   validateOverflightCombatProfile,
 } from './combat-profile.mjs';
-import { overflightFormationSchedule, OVERFLIGHT_DIFFICULTIES } from './tactics.mjs';
 import {
-  boundedJSON,
-  canonicalJSON,
-  dataIdentity,
-  exactKeys,
-  required,
-  stableId,
-} from '../data-json.mjs';
+  overflightFormationSchedule,
+  OVERFLIGHT_DIFFICULTIES,
+  validateOverflightSupplyTerrain,
+} from './tactics.mjs';
+import { boundedJSON, canonicalJSON, exactKeys, required, stableId } from '../data-json.mjs';
 
 export const OVERFLIGHT_PROJECT_FORMAT = 'OverflightProjectV1';
 export const OVERFLIGHT_COMPILED_FORMAT = 'OverflightCompiledV1';
@@ -90,6 +95,7 @@ const encounterFamilies = {
   ],
 };
 export function createOverflightProject({
+  world = null,
   encounterSet = 'front',
   seed = 17031991,
   difficulty = 'standard',
@@ -192,7 +198,7 @@ export function createOverflightProject({
         });
     }
   }
-  return {
+  const project = {
     format: legacy
       ? OVERFLIGHT_PROJECT_FORMAT
       : rulesVersion >= 3
@@ -233,6 +239,7 @@ export function createOverflightProject({
       { id: 'case-east', x: 1920, y: 760, kind: 'supply-case' },
     ],
   };
+  return world ? applyOverflightWorld(project, world) : project;
 }
 export const DEFAULT_OVERFLIGHT_PROJECT = freeze(createOverflightProject());
 function number(value, min, max, label, integer = false) {
@@ -274,6 +281,9 @@ export function validateOverflightProject(source) {
       'goals',
       'resources',
       'props',
+      ...(project.presentation !== undefined ? ['presentation'] : []),
+      ...(project.encounterProfile !== undefined ? ['encounterProfile'] : []),
+      ...(project.terrain !== undefined ? ['terrain'] : []),
       ...([OVERFLIGHT_PROJECT_FORMAT_V2, OVERFLIGHT_PROJECT_FORMAT_V3].includes(project.format)
         ? ['difficulty', 'combat']
         : []),
@@ -416,6 +426,19 @@ export function validateOverflightProject(source) {
     number(prop.x, 0, project.arena.width, 'prop x');
     number(prop.y, 0, project.arena.height, 'prop y');
   }
+  if (project.terrain !== undefined) {
+    required(v3, 'Experimental terrain requires current rules.');
+    project.terrain = validateOverflightTerrain(project.terrain, project.arena);
+    validateOverflightSupplyTerrain(project);
+  }
+  if (project.encounterProfile !== undefined) {
+    required(v3, 'Authored world encounters require current rules.');
+    validateOverflightEncounterProfile(project.encounterProfile);
+  }
+  if (project.presentation !== undefined) {
+    required(v3, 'World presentation requires current rules.');
+    project.presentation = validateOverflightWorldPresentation(project.presentation, project.arena);
+  }
   return freeze(project);
 }
 export function compileOverflightProject(source) {
@@ -436,7 +459,8 @@ export function compileOverflightProject(source) {
           : 1,
     difficulty: project.difficulty ?? 'standard',
     combat: project.combat ?? null,
-    projectIdentity: dataIdentity(project),
+    projectIdentity: overflightGameplayIdentity(project),
+    visualIdentity: overflightPresentationIdentity(project),
     sourceFormat: project.format,
   });
 }

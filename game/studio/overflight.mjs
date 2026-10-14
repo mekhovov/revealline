@@ -2,6 +2,7 @@ import * as riyProjects from '../overflight/riy-project.mjs';
 import * as riyPackages from '../overflight/riy-community.mjs';
 import { overflightRiyEditor } from './riy-editor.mjs';
 import { overflightCombatEditor } from './overflight-combat-editor.mjs';
+import { overflightWorldEditor } from './overflight-world-editor.mjs';
 import { upgradeOverflightProjectCopy as survivorUpgradeOverflightProjectCopy } from '../overflight/project-upgrade.mjs';
 import {
   createOverflightProject as survivorCreateOverflightProject,
@@ -445,6 +446,13 @@ function renderEditor() {
   );
   editor.append(
     general,
+    overflightWorldEditor({
+      document,
+      project: draft,
+      locale,
+      onChange: refreshSource,
+      onApply: renderEditor,
+    }),
     overflightCombatEditor({
       document,
       project: draft,

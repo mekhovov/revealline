@@ -46,8 +46,8 @@ export function overflightMarathonNextContract(run, locale = 'en') {
 }
 const words = {
   en: {
-    'time-attack': 'Survive: Time Attack',
-    marathon: 'Survive: Contract Marathon',
+    'time-attack': 'Time Attack',
+    marathon: 'Contract Marathon',
     timeBrief:
       'Finish the objectives quickly and cleanly. Every hull point lost adds 0.25 seconds to your medal time. Medal targets are authored per sortie; initial targets are provisional. Same-seed retry repeats the route.',
     marathonBrief:
@@ -77,8 +77,8 @@ const words = {
     elapsed: 'Total flight time',
   },
   uk: {
-    'time-attack': 'Вижити: На час',
-    marathon: 'Вижити: Марафон контрактів',
+    'time-attack': 'На час',
+    marathon: 'Марафон контрактів',
     timeBrief:
       'Швидко й чисто виконайте цілі. Кожна втрачена одиниця корпусу додає 0,25 секунди до залікового часу. Цілі медалей задаються для вильоту; початкові цілі попередні. Повтор із тим самим зерном зберігає маршрут.',
     marathonBrief:
@@ -137,6 +137,7 @@ function sourceOf(compiled) {
   project.format = project.sourceFormat;
   delete project.sourceFormat;
   delete project.projectIdentity;
+  delete project.visualIdentity;
   delete project.rulesVersion;
   if (project.format === 'OverflightHuntProjectV1') {
     delete project.difficulty;
@@ -260,8 +261,17 @@ export function createOverflightRaidVariant(base, { variant } = {}) {
   const mode = {
     ...base,
     operationId: variant,
+    studioPath: `../studio/raid.html?operation=${variant}`,
     name: { en: words.en[variant], uk: words.uk[variant] },
     fixtures: [],
+    compileProject(project) {
+      const compiled = base.compileProject(project);
+      if (compiled.terrain)
+        throw new TypeError(
+          'Experimental terrain is available in Single Raid only; this variant requires open arenas.',
+        );
+      return compiled;
+    },
     text(locale, key) {
       if (key === 'title') return copy(locale)[variant];
       if (key === 'briefing')
@@ -269,6 +279,10 @@ export function createOverflightRaidVariant(base, { variant } = {}) {
       return base.text(locale, key);
     },
     createRun(compiled, options = {}) {
+      if (compiled.terrain)
+        throw new TypeError(
+          'Experimental terrain is available in Single Raid only; this variant requires open arenas.',
+        );
       const run = base.createRun(compiled, options);
       run.raidVariant = {
         id: variant,
@@ -361,7 +375,7 @@ export function createOverflightRaidVariant(base, { variant } = {}) {
         compiled: {
           ...run.compiled,
           projectIdentity: dataIdentity({
-            rules: `overflight-${variant}.v${run.raidVariant?.rules ?? 1}`,
+            rules: `overflight-${variant}.v${run.raidVariant?.rules ?? (run.compiled.rulesVersion >= 3 ? 2 : 1)}`,
             project: run.raidVariant?.baseIdentity ?? run.compiled.projectIdentity,
           }),
         },

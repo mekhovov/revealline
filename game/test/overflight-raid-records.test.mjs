@@ -144,7 +144,7 @@ test('Raid cues are distinct, spatial, bounded per tick and use shared destructi
   audio.update(state);
   assert.deepEqual(
     heard.map((entry) => entry.cue),
-    ['catch', 'blocked', 'reel', 'notice', 'pulse'],
+    ['blocked', 'reel', 'catch', 'notice', 'pulse'],
   );
   assert.ok(heard.every((entry) => entry.options.brutal && entry.options.pan > 0));
 });

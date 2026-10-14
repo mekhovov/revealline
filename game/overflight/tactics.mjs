@@ -1,5 +1,6 @@
+import { overflightTerrainClear } from './terrain.mjs';
 import { visitOverflightGrid } from './grid.mjs';
-import { OVERFLIGHT_FLIGHT_PROFILES } from './flight-profile.mjs';
+import { OVERFLIGHT_FLIGHT_PROFILES, OVERFLIGHT_PLAYER_RADIUS } from './flight-profile.mjs';
 const slowestEscapeSpeed =
   Math.min(...Object.values(OVERFLIGHT_FLIGHT_PROFILES).map((profile) => profile.speed)) * 0.9;
 /** Shared, deterministic combat rules for Overflight V2. No renderer or clock owner. */
@@ -92,12 +93,12 @@ export function overflightAttackContains(attack, x, y, radius = 9) {
   const dx = x - attack.originX,
     dy = y - attack.originY;
   const angles = attack.kind === 'fan' ? [-attack.spread, 0, attack.spread] : [0];
-  return angles.some((offset) => {
+  return angles.some((offset, index) => {
     const angle = attack.heading + offset;
     const along = dx * Math.cos(angle) + dy * Math.sin(angle);
     return (
       along >= -radius &&
-      along <= attack.length + radius &&
+      along <= (attack.rayLengths?.[index] ?? attack.length) + radius &&
       Math.abs(-dx * Math.sin(angle) + dy * Math.cos(angle)) <= attack.radius + radius
     );
   });
@@ -105,6 +106,17 @@ export function overflightAttackContains(attack, x, y, radius = 9) {
 /** Admit only if a baseline-speed straight escape remains inside the arena.
  * Existing committed geometry participates; boost availability never matters. */
 function bodyClearPath(run, endX, endY, seconds) {
+  if (
+    !overflightTerrainClear(
+      run.terrain,
+      run.player.x,
+      run.player.y,
+      endX,
+      endY,
+      run.player.radius + 2,
+    )
+  )
+    return false;
   const dx = endX - run.player.x,
     dy = endY - run.player.y;
   let clear = true;
@@ -216,15 +228,48 @@ export function createOverflightCaches(compiled) {
     ],
   }));
 }
+
+/** Authoring must not promise supplies hidden inside solid experimental cover.
+ * Reuse native cache positions, including all available reward offsets. */
+export function validateOverflightSupplyTerrain(project) {
+  if (!project.terrain) return;
+  const caches = createOverflightCaches({
+    ...project,
+    rulesVersion: 3,
+    sourceFormat: project.format,
+  });
+  for (const cache of caches)
+    for (const point of [cache, ...cache.rewards])
+      if (
+        !overflightTerrainClear(
+          project.terrain,
+          point.x,
+          point.y,
+          point.x,
+          point.y,
+          OVERFLIGHT_PLAYER_RADIUS,
+        )
+      )
+        throw new TypeError(
+          `Supply case ${cache.id} and every reward need drone clearance from experimental terrain.`,
+        );
+}
 /** Finite physical rewards: no magnet, clock, modal or input binding. */
 export function updateOverflightCaches(run, spawn, notify) {
   if (run.fixture || run.rulesVersion < 2 || run.phase !== 'playing') return;
   for (const cache of run.caches) {
     const due = run.hunt ? run.hunt.sector >= cache.sector : run.time >= cache.trigger;
-    if (cache.state === 'dormant' && due) cache.state = 'locked';
+    if (
+      cache.state === 'dormant' &&
+      due &&
+      (run.rulesVersion < 3 ||
+        !run.caches.some((other) => other !== cache && other.state === 'locked'))
+    )
+      cache.state = 'locked';
     if (cache.state === 'locked') {
-      // An authored finite ordinary pack stays finite and does not reserve scarce
-      // specialist slots or prevent the other independent cache appearing.
+      // A finite ordinary guard pack does not reserve scarce specialist slots.
+      // Current rules admit the next opportunity only after this pack is cleared;
+      // opened rewards can remain available without delaying the next encounter.
       while (cache.guardIds.length < cache.guardTarget) {
         const i = cache.guardIds.length,
           angle = (i * Math.PI * 2) / cache.guardTarget;
