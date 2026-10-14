@@ -229,7 +229,14 @@ test('actual FPV application, native notebook and installation launcher close in
   }
   assert.equal(OPTIONAL_PACKAGE_POLICIES['civilian-fpv'].limits.files, 104);
   assert.ok(admission.packages[0].bytes <= 8 * 1024 * 1024);
-  for (const name of ['notebook.mjs', 'studio.mjs', 'radio-setup.mjs', 'vendor/three.core.js'])
+  for (const name of [
+    'notebook.mjs',
+    'studio.mjs',
+    'radio-setup.mjs',
+    'flight-contact.mjs',
+    'flight-support.mjs',
+    'vendor/three.core.js',
+  ])
     assert.ok(
       first.entries.some((entry) => entry.name === `optional-practice/civilian-fpv/${name}`),
     );
