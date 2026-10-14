@@ -419,7 +419,7 @@ function moveNewTarget(run, target, policy, distances) {
   target.heading = OPPOSITE[target.heading];
   return null;
 }
-function advanceSpecials(run, jammedOnEntry = run.signal.jammed) {
+function advanceSpecials(run, jammedOnEntry = run.signal.jammed, rules) {
   const walls = effectiveWalls(run);
   run.projectiles = run.projectiles
     .map((shot) => ({ ...shot, ...shotDestination(run, shot) }))
@@ -451,7 +451,10 @@ function advanceSpecials(run, jammedOnEntry = run.signal.jammed) {
     const jammed = run.targets.some(
       (actor) => actor.kind === 'jammer' && actor.phase === 'jamming',
     );
-    if (['lane', 'guard'].includes(target.kind) && (jammed || jammedOnEntry)) {
+    if (
+      ['lane', 'guard'].includes(target.kind) &&
+      (jammed || jammedOnEntry || rules?.holdSpecial?.(run))
+    ) {
       if (target.phase === 'warning') target.phaseTicks = warningTicks(run);
       continue;
     }
@@ -814,7 +817,9 @@ function spawn(run, role, rules) {
   const pairGroup = p.kind === 'pair' ? `pair-${Math.floor(serial / 2)}` : null;
   if (pairGroup && run.targets.length && !run.targets.some((t) => t.pairGroup === pairGroup))
     return false; // A survivor must be caught before the next pair can begin.
-  const candidates = p.at ? [p.at] : (p.path ?? geometry(run.level).cells),
+  const candidates =
+      rules?.targetCells?.(run, policyIndex, role) ??
+      (p.at ? [p.at] : (p.path ?? geometry(run.level).cells)),
     occupied = blocked(run);
   for (const cell of rules?.reservedCells?.(run) ?? []) occupied.add(key(cell));
   const stream = bonus ? 'bonusRandom' : 'random',
@@ -1133,9 +1138,12 @@ function moveTargets(run, rules) {
   for (const t of run.targets) {
     const p = policyFor(run, t);
     t.age++;
-    if (p.kind === 'still' || FIXED_KINDS.includes(p.kind)) continue;
+    const tactical = rules?.moveTarget?.(run, t, p);
+    if (!tactical && (p.kind === 'still' || FIXED_KINDS.includes(p.kind))) continue;
     let next = null;
-    if (['rover', 'ricochet'].includes(p.kind)) {
+    if (tactical) {
+      next = tactical.next;
+    } else if (['rover', 'ricochet'].includes(p.kind)) {
       next = moveNewTarget(run, t, p, distances);
     } else if (['refuge', 'switchback', 'pair'].includes(p.kind)) {
       next = moveGoalTarget(run, t, p, distances);
@@ -1153,7 +1161,7 @@ function moveTargets(run, rules) {
         }
         t.heading = fleeDirection(run, t, distances) ?? t.heading;
         t.phase = 'warning';
-        t.phaseTicks = 4;
+        t.phaseTicks = rules?.warningTicks?.(run) ?? 4;
         run.events.push({ type: 'target.warning', tick: run.tick, target: structuredClone(t) });
         continue;
       }
@@ -1442,7 +1450,7 @@ export function stepClassicSnakeV4(run, rules) {
       retireLocalSignalOutsideCoverage(run, target);
   syncSignal(run);
   moveTargets(run, rules);
-  if (!pausedTargets) advanceSpecials(run, run.signal.jammed || localSignalOnEntry);
+  if (!pausedTargets) advanceSpecials(run, run.signal.jammed || localSignalOnEntry, rules);
   syncShutters(run, true);
   refill(run, rules);
   if (run.status === 'running' && run.tick === MAX_STEPS) finish(run, 'lost', 'step-limit');
