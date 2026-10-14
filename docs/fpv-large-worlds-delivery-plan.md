@@ -46,8 +46,11 @@ terrain is deferred. Twelve proposed regions are design targets, not shipped map
   #1253 now reuses the production swept-sphere movement/slide solver. All 154
   historical World demonstrations retain identical states/paths across 312,948
   ticks; 384 historical contact comparisons, 51 existing tests, 57 regional checks
-  and five Urban flight routes pass. Production support/landing policy and actual
-  host admission remain open; shared contact movement alone does not close them.
+  and five Urban flight routes pass. #1257 merges shared production support/landing
+  response: 297 historical support queries and the same 154 demonstration replays
+  retain their outcomes. Actual player-host integration is in source review, with
+  normal input/camera/pause ownership and explicit unscored regional sessions;
+  it is not yet a qualified catalogue or package admission.
   Next: integrate the actual player lifecycle and production collision contracts,
   with atomic origin migration for every live world owner. Regional scenery
   admission, recovery and sustained qualification remain separate requirements.
@@ -70,8 +73,12 @@ terrain is deferred. Twelve proposed regions are design targets, not shipped map
   pair with clear relief corridors. #1247 adds optional architectural surfaces;
   #1250 adds bounded authoring lighting and shadows. Native warehouse, parking and
   atrium views and release/reload passed. These changes establish visual depth and
-  material scale; they do not complete the quality standard. A new immutable loading
-  court composition is under review, with blue/amber landmarks and clear door lines.
+  material scale; they do not complete the quality standard. Loading-court
+  composition #1255 and optional ground surfaces #1258 are merged: blue/amber
+  landmarks, clear door lines, concrete aprons, gravel and asphalt. #1263 adds
+  authored ducts, hangers, roof trusses and entrance canopies for review. Native
+  interior/roof views and release/reload passed; existing surfaces remain unchanged,
+  with six new matching render/collision surfaces verified separately.
   Neither representative region is admitted
   to the default catalogue before collision, flight and package qualification.
 - **P3:** Tropical Archipelago, Industrial Railway Valley, Coaster Park, Hillside Town;
@@ -98,6 +105,15 @@ terrain is deferred. Twelve proposed regions are design targets, not shipped map
   Its fresh unchanged cloud artifact installed successfully; the native home artwork
   remained visible after same-URL reload with its origin server stopped. This closes
   that bounded artwork case, not all offline/device qualification.
+  #1256 records native static rendering of all 20 packs; #1260 checks all 41
+  courses in both flight modes (82 lifecycle cases). Disarmed catalogue admission,
+  deliberate mission start and paused mode changes remain distinct contracts.
+  #1261 records nine native rendering samples across Reservoir, Harbor and Coaster
+  at three quality tiers: 1280×800 viewport, 1280×520 canvas, DPR 1, 30 warmup and
+  120 measured frames. Callback CPU p95 was 0.6–1.2 ms; animation cadence p95
+  was 8.8–9.2 ms. These static disarmed observations exclude GPU completion and
+  do not establish sustained gameplay FPS or physical-device performance. An
+  initial zero-viewport sample was rejected.
   See [the native receipt](fpv-package-update-20261014.md).
   Direct mission Start intentionally begins flight after existing readiness gates;
   catalogue download/Play and recovery remain distinct launch paths. Public admission,
@@ -110,13 +126,15 @@ terrain is deferred. Twelve proposed regions are design targets, not shipped map
 
 1. **P1 — Integrate production collision and the player lifecycle.** Paired ownership
    and the production swept-sphere slide contract are merged with historical replay
-   parity. Reuse the remaining support/ground response policy, then integrate the
-   real player host and every live owner during origin migration.
+   parity; shared support/ground response is now merged. Finish the real player
+   host integration and every live owner during origin migration, then qualify
+   the exact package closure before admitting a region to players.
    Prototype geometry, shared air and camera alone do not constitute player admission.
 2. **P4 — Complete package self-containment and broader recovery qualification.**
    Tri-state readiness and exact corrected-package update/rollback are verified in
-   the bounded browser fixture. Verify the package-local artwork correction, then
-   close actual quota/eviction, browser restart and network-wide offline coverage.
+   the bounded browser fixture. Package-local artwork is also verified. Complete
+   integrity-rejection recovery, then close actual quota/eviction, browser restart
+   and network-wide offline coverage.
    Preserve usable installations and player records through every scenario.
 3. **P2 — Compose the representative quality slice in parallel.** Combine authored
    relief and reachable architecture, refine materials and landmarks, and compare
