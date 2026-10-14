@@ -43,14 +43,15 @@
     "test:industrial": "node scripts/verify-industrial-features.mjs"
   },
   "dependencies": {
-    "mediabunny": "1.59.1",
     "i18next": "26.4.2",
+    "mediabunny": "1.59.1",
     "phaser": "4.2.1"
   },
   "devDependencies": {
     "acorn": "8.18.0",
     "eslint": "10.10.0",
     "globals": "17.12.0",
+    "jpeg-js": "0.4.4",
     "lz-string": "1.5.0",
     "parse5": "8.0.1",
     "prettier": "3.6.2"
