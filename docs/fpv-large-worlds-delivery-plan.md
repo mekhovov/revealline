@@ -43,6 +43,11 @@ terrain is deferred. Twelve proposed regions are design targets, not shipped map
   available. Native failed-manifest recovery retained the old scene and a corrected
   retry returned disarmed. Cached preparation completed too quickly for a new native
   cancellation observation; automated cancellation evidence remains separate.
+  #1253 now reuses the production swept-sphere movement/slide solver. All 154
+  historical World demonstrations retain identical states/paths across 312,948
+  ticks; 384 historical contact comparisons, 51 existing tests, 57 regional checks
+  and five Urban flight routes pass. Production support/landing policy and actual
+  host admission remain open; shared contact movement alone does not close them.
   Next: integrate the actual player lifecycle and production collision contracts,
   with atomic origin migration for every live world owner. Regional scenery
   admission, recovery and sustained qualification remain separate requirements.
@@ -104,9 +109,9 @@ terrain is deferred. Twelve proposed regions are design targets, not shipped map
 ## Next delivery order
 
 1. **P1 — Integrate production collision and the player lifecycle.** Paired ownership
-   is merged. Replace the prototype's stop-on-impact behavior with the existing
-   production swept-sphere slide contract, preserving historical replay outcomes;
-   then integrate the real player host and every live owner during origin migration.
+   and the production swept-sphere slide contract are merged with historical replay
+   parity. Reuse the remaining support/ground response policy, then integrate the
+   real player host and every live owner during origin migration.
    Prototype geometry, shared air and camera alone do not constitute player admission.
 2. **P4 — Complete package self-containment and broader recovery qualification.**
    Tri-state readiness and exact corrected-package update/rollback are verified in
