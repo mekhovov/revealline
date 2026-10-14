@@ -50,6 +50,7 @@ import {
   mountFlightFullscreen,
   mountFlightCameraControls,
   mountFlightSetup,
+  mountFlightComfort,
   attachSimMissionLibraryChooser,
   createSimMissionLibrary,
   createSimContinuousPlayController,
@@ -1001,6 +1002,7 @@ export function mountWorldApp({
     playShell = null,
     cameraControls = null,
     flightSetup = null,
+    flightComfort = null,
     modeSettingsView = null,
     globalSettingsView = null,
     globalTools = null,
@@ -1737,6 +1739,7 @@ export function mountWorldApp({
     if (toolsSummary) toolsSummary.textContent = txt('SIM tools', 'Інструменти SIM');
     playShell?.setLocale(locale);
     modeSettingsView?.refresh(locale);
+    flightComfort?.refresh();
     globalSettingsView?.refresh(locale);
     globalTools?.refresh();
     shellModes.refresh?.();
@@ -5307,6 +5310,7 @@ export function mountWorldApp({
   function drawFlight(state) {
     cameraControls?.refresh();
     flightSetup?.refresh();
+    flightComfort?.refresh();
     return renderer?.draw?.(state, {
       cameraMode: $('flight-camera').value,
       cameraFov: Number($('world-fov').value),
@@ -7652,6 +7656,22 @@ export function mountWorldApp({
       ],
     },
   });
+  flightComfort = mountFlightComfort({
+    document: doc,
+    window: win,
+    panels: modeSettingsView.panels,
+    viewport: $('world-viewport'),
+    fov: $('world-fov'),
+    tilt: $('world-tilt'),
+    host: 'worlds',
+    locale: () => locale,
+    canChange: () => !flight || flight.snapshot().status !== 'active' || playShell.blocksPlay(),
+    comparison: {
+      root: playShell.elements.content.pause,
+      button: ghostButton,
+      status: () => $('sector-reference').textContent,
+    },
+  });
   const globalThemeControls = attachSimThemeFamilyControls({
     document: doc,
     root: modeSettingsView.panels.display,
@@ -7954,6 +7974,7 @@ export function mountWorldApp({
           spatialEditor?.dispose();
           // Keep reparented controls available until their input, hints,
           // audio and editor owners have all retired.
+          flightComfort?.dispose();
           flightSetup?.dispose();
           cameraControls?.dispose();
           playShell?.dispose();
