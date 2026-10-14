@@ -270,6 +270,116 @@ export function createSimModeLinks({
   return nav;
 }
 
+/** Cosmetic camera access shared by both SIM hosts. Never changes flight ownership. */
+export function mountFlightCameraControls({
+  document: doc,
+  window: win,
+  shell,
+  select,
+  viewport,
+  locale = () => 'en',
+  available = () => true,
+  canShortcut = () => true,
+}) {
+  const modes = ['fpv', 'chase', 'overview'];
+  const labels = () =>
+    locale() === 'uk' ? ['FPV', 'За дроном', 'Огляд'] : ['FPV', 'Chase', 'Overview'];
+  const quick = doc.createElement('button');
+  quick.type = 'button';
+  quick.className = 'sim-camera-quick';
+  quick.dataset.modeAction = 'camera';
+  quick.setAttribute('aria-keyshortcuts', 'V');
+  shell.elements.buttons.pause.before(quick);
+  const group = doc.createElement('fieldset');
+  group.className = 'sim-camera-choices';
+  const legend = doc.createElement('legend');
+  group.append(legend);
+  const choices = modes.map((mode) => {
+    const button = doc.createElement('button');
+    button.type = 'button';
+    button.dataset.cameraView = mode;
+    button.addEventListener('click', () => change(mode));
+    group.append(button);
+    return button;
+  });
+  const hint = doc.createElement('small');
+  group.append(hint);
+  shell.elements.content.pause.prepend(group);
+  let previous = '',
+    disposed = false;
+  function change(mode) {
+    if (disposed || !available() || !modes.includes(mode)) return;
+    select.value = mode;
+    select.dispatchEvent(new win.Event('change', { bubbles: true }));
+    refresh();
+  }
+  function cycle() {
+    if (!canShortcut() || !available() || disposed) return;
+    change(modes[(modes.indexOf(select.value) + 1) % modes.length]);
+    viewport.focus({ preventScroll: true });
+  }
+  function refresh() {
+    if (disposed) return;
+    const uk = locale() === 'uk',
+      enabled = available();
+    const key = `${uk}:${select.value}:${enabled}:${Boolean(shell.topDialog())}`;
+    if (previous === key) return;
+    previous = key;
+    const names = labels(),
+      name = names[modes.indexOf(select.value)] ?? names[0];
+    quick.textContent = `${uk ? 'Вид' : 'View'}: ${name}`;
+    quick.title = uk ? 'Змінити камеру · V / R3' : 'Change camera · V / R3';
+    quick.setAttribute('aria-label', `${quick.title} · ${name}`);
+    quick.hidden = !enabled || Boolean(shell.topDialog());
+    group.hidden = !enabled;
+    legend.textContent = uk ? 'Камера' : 'Camera view';
+    hint.textContent = uk
+      ? 'V · R3 — натисніть правий стік. Пульт: оберіть вид у цьому меню.'
+      : 'V · R3: click the right stick. Radio: choose a view in this menu.';
+    choices.forEach((button, index) => {
+      button.textContent = names[index];
+      button.setAttribute('aria-pressed', String(modes[index] === select.value));
+    });
+  }
+  function keydown(event) {
+    if (
+      event.code !== 'KeyV' ||
+      event.defaultPrevented ||
+      event.repeat ||
+      event.isComposing ||
+      event.ctrlKey ||
+      event.metaKey ||
+      event.altKey ||
+      event.shiftKey ||
+      doc.hidden ||
+      doc.hasFocus?.() === false ||
+      /^(INPUT|TEXTAREA|SELECT)$/.test(event.target?.tagName) ||
+      event.target?.isContentEditable ||
+      !canShortcut() ||
+      !available()
+    )
+      return;
+    event.preventDefault();
+    cycle();
+  }
+  quick.addEventListener('click', cycle);
+  select.addEventListener('change', refresh);
+  win.addEventListener('keydown', keydown);
+  refresh();
+  return {
+    cycle,
+    refresh,
+    dispose() {
+      disposed = true;
+      win.removeEventListener('keydown', keydown);
+      select.removeEventListener('change', refresh);
+      quick.removeEventListener('click', cycle);
+      quick.remove();
+      group.remove();
+    },
+  };
+}
+
 // BEGIN GENERATED SHARED MODE SHELL
 import*as simGlobalI18n from'../../game/i18n/index.mjs';
 import*as simGlobalThemes from'../../game/presentation/theme-system.mjs';

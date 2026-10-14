@@ -48,6 +48,7 @@ import { restoreVerifiedRadio } from './radio-session.mjs';
 import { mountRadioSetup } from './radio-setup.mjs';
 import {
   mountFlightFullscreen,
+  mountFlightCameraControls,
   attachSimMissionLibraryChooser,
   createSimMissionLibrary,
   createSimContinuousPlayController,
@@ -997,6 +998,7 @@ export function mountWorldApp({
     disposed = false,
     closing = null,
     playShell = null,
+    cameraControls = null,
     modeSettingsView = null,
     globalSettingsView = null,
     globalTools = null,
@@ -1909,8 +1911,8 @@ export function mountWorldApp({
   }
   const gamepadHelp = () =>
     txt(
-      'A / Cross: arm · Y / Triangle: reset · Menu / B: pause. Left stick: yaw and throttle adjustment; centre to hold throttle. Right stick / D-pad: tilt. LB/RB: yaw · LT/RT: less/more throttle · X/Square: fire. Steam Input: use a Gamepad layout.',
-      'A / Cross: увімкнути · Y / Triangle: скинути · Menu / B: пауза. Лівий стік: поворот і зміна газу; центр утримує газ. Правий стік / D-pad: нахил. LB/RB: поворот · LT/RT: менше/більше газу · X/Square: вогонь. Steam Input: розкладка Gamepad.',
+      'A / Cross: arm · Y / Triangle: reset · Menu / B: pause · R3: camera. Left stick: yaw and throttle adjustment; centre to hold throttle. Right stick / D-pad: tilt. LB/RB: yaw · LT/RT: less/more throttle · X/Square: fire. Steam Input: use a Gamepad layout.',
+      'A / Cross: увімкнути · Y / Triangle: скинути · Menu / B: пауза · R3: камера. Лівий стік: поворот і зміна газу; центр утримує газ. Правий стік / D-pad: нахил. LB/RB: поворот · LT/RT: менше/більше газу · X/Square: вогонь. Steam Input: розкладка Gamepad.',
     );
   function gamepadScope() {
     if (
@@ -1962,7 +1964,8 @@ export function mountWorldApp({
       } else if (action === 'reset') {
         setFlightMenu(false);
         $('world-retry').click();
-      } else if (action === 'pause' || action === 'back') setFlightMenu(true);
+      } else if (action === 'camera') cameraControls?.cycle();
+      else if (action === 'pause' || action === 'back') setFlightMenu(true);
     }
   }
   input.bindStick($('world-left-stick'), 'left');
@@ -5290,6 +5293,7 @@ export function mountWorldApp({
     );
   }
   function drawFlight(state) {
+    cameraControls?.refresh();
     return renderer?.draw?.(state, {
       cameraMode: $('flight-camera').value,
       cameraFov: Number($('world-fov').value),
@@ -7475,6 +7479,23 @@ export function mountWorldApp({
     initial: 'home',
     focusPlay: () => $('world-viewport').focus(),
   });
+  cameraControls = mountFlightCameraControls({
+    document: doc,
+    window: win,
+    shell: playShell,
+    select: $('flight-camera'),
+    viewport: $('world-viewport'),
+    locale: () => locale,
+    available: () => Boolean(sceneReady && flight && !finished && !terminal(flight.snapshot())),
+    canShortcut: () =>
+      !playShell.blocksPlay() &&
+      $('flight-dialog').open &&
+      !beginnerCoach.blocksArm() &&
+      !flightMenuOpen() &&
+      !doc.querySelector('dialog[open]:not(#flight-dialog)') &&
+      !immersive.snapshot().toolsOpen,
+  });
+
   const extraTools = el('details', undefined, 'mission-library-setup');
   extraTools.dataset.simMissionTools = '';
   extraTools.append(
@@ -7877,6 +7898,7 @@ export function mountWorldApp({
           spatialEditor?.dispose();
           // Keep reparented controls available until their input, hints,
           // audio and editor owners have all retired.
+          cameraControls?.dispose();
           playShell?.dispose();
         } finally {
           try {
