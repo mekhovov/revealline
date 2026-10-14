@@ -52,7 +52,10 @@ export function createRegionalFlightPrototype({
     (item) => item.id === (spawnId ?? manifest.spawns[0].id),
   );
   fail(spawn, "Unknown region spawn");
-  const terrain = createVerifiedFlightGeometry(manifest, { profile: geometryProfile, source }),
+  const terrain = createVerifiedFlightGeometry(manifest, {
+      profile: geometryProfile,
+      source,
+    }),
     root = new THREE.Group(),
     dronePose = new THREE.Object3D(),
     cameraAnchor = new THREE.Object3D();
@@ -148,7 +151,11 @@ export function createRegionalFlightPrototype({
             },
           },
         );
-        if (disposed || token !== generation || !terrain.snapshot().terrainReady)
+        if (
+          disposed ||
+          token !== generation ||
+          !terrain.snapshot().terrainReady
+        )
           throw new DOMException(
             "Prototype preparation cancelled",
             "AbortError",
