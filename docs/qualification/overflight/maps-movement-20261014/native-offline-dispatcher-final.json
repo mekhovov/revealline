@@ -1,0 +1,176 @@
+{
+  "evidence": "Stable origin forwarding unmodified authentic production generations.",
+  "origin": "http://127.0.0.1:8936",
+  "upstreamPort": 8938,
+  "online": true,
+  "failedPath": null,
+  "requests": 4755,
+  "rejected": 188,
+  "generation": {
+    "evidence": "Unmodified prepareBuildProject output served from memory. No handcrafted cache manifest, bypassed validation, ZIP or site staging. Browser qualification is separate and uses the ordinary installed-app UI. Origin-unavailable mode returns503 for every build resource; the control endpoint remains available only to this localhost test host.",
+    "createdAt": "2026-10-14T16:24:34.021Z",
+    "observedCommit": "e914f3bdd8e36b9b78d794da4f1342dcda449e00",
+    "sourceRevision": "e914f3bdd8e36b9b78d794da4f1342dcda449e00",
+    "sourceChanges": [
+      "M authoring/fpv-worlds/regions/flight-preview.html",
+      " M docs/qualification/overflight/maps-movement-20261014/native-full-content-summary.json",
+      " M docs/qualification/overflight/maps-movement-20261014/native-offline-browser.json",
+      " M docs/qualification/overflight/maps-movement-20261014/native-offline-dispatcher.mjs",
+      "?? docs/qualification/overflight/maps-movement-20261014/launcher-update-client-probe.json",
+      "?? docs/qualification/overflight/maps-movement-20261014/native-offline-build-upgrade.json",
+      "?? docs/qualification/overflight/maps-movement-20261014/native-offline-generation-comparison.json",
+      "?? docs/qualification/overflight/maps-movement-20261014/native-offline-upgrade-b12d4a-interrupted.json",
+      "?? docs/qualification/overflight/maps-movement-20261014/native-package-persistence-investigation.md",
+      "?? docs/qualification/overflight/maps-movement-20261014/native-package-persistence-source.json",
+      "?? docs/qualification/overflight/maps-movement-20261014/native/full-riy-trial-1.json.gz",
+      "?? docs/qualification/overflight/maps-movement-20261014/native/full-riy-trial-2.json.gz"
+    ],
+    "version": "0.151.1",
+    "buildId": "a6bc422f1a063bb0f0e2febb14e7a14d6f7c4dafdfe147dac28cbdada6953c0c",
+    "offlineFiles": 1673,
+    "offlineBytes": 66191296,
+    "hostedFiles": 3220,
+    "hostedBytes": 920423756,
+    "manifestSha256": "8cf63e09c500c0fcb4e2b2f4cdc00abc4a7a66a66308b3351108e9e24cd058cc",
+    "required": [
+      {
+        "path": "game/overflight/battlefields.mjs",
+        "bytes": 23483,
+        "sha256": "f543fd618fd3420ed16d20bb4cb4b89d881b789f692dea1dd43d70971a47b1a4"
+      },
+      {
+        "path": "game/overflight/coordinated-movement.mjs",
+        "bytes": 10388,
+        "sha256": "16bed958751f89d37ed1bfb3b0c3dbd34110929add1ed45a31b157e9de7a83f0"
+      },
+      {
+        "path": "game/overflight/motion.mjs",
+        "bytes": 2361,
+        "sha256": "23e7fe82ede836b66d17d27cdf2f1eb6ae8bb52960a18fe547713fa3a2756153"
+      },
+      {
+        "path": "game/overflight/play.html",
+        "bytes": 17125,
+        "sha256": "d38fb24063d3d8f94b3f0fc7d6f8b685c69373433fe1ab58b4841785b7247108"
+      },
+      {
+        "path": "game/overflight/raid-mode.mjs",
+        "bytes": 10024,
+        "sha256": "3c8ccf0643d7a7aebd5c46e6016d6a616ed3c12acf982205e102328cce043437"
+      },
+      {
+        "path": "game/overflight/raid-variants.mjs",
+        "bytes": 24767,
+        "sha256": "c63fc24eac3438a86475ca64e8066b29c1414c14847874df6912935ed6dbcebd"
+      },
+      {
+        "path": "game/overflight/raid.html",
+        "bytes": 17964,
+        "sha256": "82d661809a8335ceb0b6b3b98454dd7108bf876e90e60a07275653d60c8d0fe1"
+      },
+      {
+        "path": "game/overflight/riy-mode.mjs",
+        "bytes": 8740,
+        "sha256": "c71aec90e4bed54160b2b61990d3ee9e5f9b4bc5e50e3188176d6c35c58740f8"
+      },
+      {
+        "path": "game/presentation/overflight-world-art-v2.mjs",
+        "bytes": 19404,
+        "sha256": "91ab2d86a97cde769b5e8f183c799c5363cbb7e34a364156017753c4cc779b83"
+      }
+    ],
+    "url": "http://127.0.0.1:8938/game/overflight/play.html?lang=en",
+    "online": true,
+    "requests": 217,
+    "rejected": 0
+  },
+  "events": [
+    {
+      "at": "2026-10-14T15:16:26.078Z",
+      "action": "dispatcher-ready",
+      "port": 8936,
+      "upstreamPort": 8935
+    },
+    {
+      "at": "2026-10-14T15:45:07.231Z",
+      "action": "origin-network",
+      "online": false
+    },
+    {
+      "at": "2026-10-14T15:50:01.484Z",
+      "action": "origin-network",
+      "online": true
+    },
+    {
+      "at": "2026-10-14T15:51:01.099Z",
+      "action": "origin-network",
+      "online": false
+    },
+    {
+      "at": "2026-10-14T16:06:21.460Z",
+      "action": "candidate-resource-fault",
+      "failedPath": "/game/ui/battlefield-ground-controls.mjs"
+    },
+    {
+      "at": "2026-10-14T16:06:21.521Z",
+      "action": "generation-selected",
+      "upstreamPort": 8937,
+      "buildId": "8d1da69f5f02e29e87ac7597ceab0cfa5660bb7c66111683be4c35e77b3d84f0",
+      "commit": "4dab801d9ce03b42227e99388b066c378c81ca02"
+    },
+    {
+      "at": "2026-10-14T16:06:21.579Z",
+      "action": "origin-network",
+      "online": true
+    },
+    {
+      "at": "2026-10-14T16:08:05.276Z",
+      "action": "origin-network",
+      "online": false
+    },
+    {
+      "at": "2026-10-14T16:15:29.705Z",
+      "action": "origin-network",
+      "online": true
+    },
+    {
+      "at": "2026-10-14T16:15:29.718Z",
+      "action": "candidate-resource-fault",
+      "failedPath": null
+    },
+    {
+      "at": "2026-10-14T16:21:38.920Z",
+      "action": "origin-network",
+      "online": false
+    },
+    {
+      "at": "2026-10-14T16:25:34.592Z",
+      "action": "dispatcher-ready",
+      "port": 8936,
+      "upstreamPort": 8937,
+      "restoredHistory": true
+    },
+    {
+      "at": "2026-10-14T16:26:11.339Z",
+      "action": "generation-selected",
+      "upstreamPort": 8938,
+      "buildId": "a6bc422f1a063bb0f0e2febb14e7a14d6f7c4dafdfe147dac28cbdada6953c0c",
+      "commit": "e914f3bdd8e36b9b78d794da4f1342dcda449e00"
+    },
+    {
+      "at": "2026-10-14T16:26:11.351Z",
+      "action": "origin-network",
+      "online": true
+    },
+    {
+      "at": "2026-10-14T16:27:23.688Z",
+      "action": "origin-network",
+      "online": false
+    },
+    {
+      "at": "2026-10-14T16:29:40.406Z",
+      "action": "origin-network",
+      "online": true
+    }
+  ]
+}
