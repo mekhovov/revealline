@@ -10,7 +10,7 @@ assert.match(name ?? '', /^[a-z0-9-]+$/);
 assert.ok(operation && layout && ['1', '2', '3'].includes(trial));
 const raw = readFileSync(path);
 const data = JSON.parse(raw);
-assert.equal(data.format, 'OverflightMeasurementsV1');
+assert.ok(['OverflightMeasurementsV1', 'OverflightHuntMeasurementsV1'].includes(data.format));
 assert.equal(data.benchmarkTrial, trial);
 assert.equal(data.clipCaptureUsed, false);
 const target = new URL(`./native/${name}.json.gz`, import.meta.url);
@@ -19,6 +19,8 @@ writeFileSync(target, gzipSync(raw, { mtime: 0 }));
 const manifest = new URL('./native-full-content-summary.json', import.meta.url);
 const result = JSON.parse(readFileSync(manifest));
 const entry = {
+  format: data.format,
+  fixture: data.fixture,
   sourceRevision,
   file: `native/${name}.json.gz`,
   sha256Raw: createHash('sha256').update(raw).digest('hex'),
