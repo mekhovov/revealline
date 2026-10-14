@@ -8,11 +8,15 @@ import { compileSceneryCell } from '../scenery-cell.mjs';
 import { compileTerrainCell, validateTerrainSeams } from '../terrain-cell.mjs';
 import { createVerifiedMixedWindow } from '../verified-mixed-window.mjs';
 import { createRegionalFlightPrototype } from '../flight-prototype.mjs';
-import { surfaceMm } from './design.mjs';
+import { surfaceMm as originalSurfaceMm } from './design.mjs';
+import { reliefSurfaceMm } from './relief-design.mjs';
 import { routes } from './landmarks.mjs';
 
-const [parent, output] = process.argv.slice(2);
+const [parent, output, variant] = process.argv.slice(2);
 assert(parent && output, 'Provide original Canyon terrain and generated landmark directories');
+assert(variant === undefined || variant === 'relief', 'Unknown verification profile');
+const relief = variant === 'relief';
+const surfaceMm = relief ? reliefSurfaceMm : originalSurfaceMm;
 const sha = (b) => createHash('sha256').update(b).digest('hex');
 const receipt = JSON.parse(await readFile(resolve(output, 'preparation.json')));
 const manifests = {},
@@ -22,6 +26,11 @@ const manifests = {},
 let canonicalGLBs = 0;
 for (const profile of ['terrain', 'scenery']) {
   const manifestBytes = await readFile(resolve(output, profile, 'region.json'));
+  if (relief)
+    assert.equal(
+      sha(await readFile(resolve(parent, profile, 'region.json'))),
+      receipt[`parent${profile === 'terrain' ? 'Terrain' : 'Scenery'}ManifestSHA256`],
+    );
   assert.equal(sha(manifestBytes), receipt[`${profile}ManifestSHA256`]);
   manifests[profile] = JSON.parse(manifestBytes);
   const bodies = new Map();
@@ -33,12 +42,51 @@ for (const profile of ['terrain', 'scenery']) {
     assert.equal(sha(bytes), asset.sha256);
     assert.equal(bytes.length, asset.bytes);
     bodies.set('/' + asset.path, bytes);
-    if (profile === 'terrain')
+    if (profile === 'terrain' && !relief)
       assert.deepEqual(
         bytes,
         await readFile(resolve(parent, asset.path)),
         'Terrain remains byte-identical',
       );
+    if (asset.kind === 'collision' && relief) {
+      const previous = JSON.parse(await readFile(resolve(parent, profile, asset.path)));
+      const current = JSON.parse(bytes);
+      for (const field of ['format', 'chunkId', 'x', 'z', 'cellSizeMm'])
+        assert.deepEqual(current[field], previous[field]);
+      if (profile === 'terrain') {
+        assert.equal(current.samples, previous.samples);
+        current.heightsMm.forEach((height, i) =>
+          assert.equal(
+            height,
+            reliefSurfaceMm(
+              current.x * 128 + (i % 33) * 4,
+              current.z * 128 + Math.floor(i / 33) * 4,
+            ),
+          ),
+        );
+      } else {
+        assert.equal(current.surfaces.length, previous.surfaces.length);
+        for (const surface of current.surfaces) {
+          const old = previous.surfaces.find((s) => s.id === surface.id);
+          assert(old);
+          assert.deepEqual(surface.indices, old.indices);
+          assert.deepEqual(surface.color, old.color);
+          const object = receipt.objects.find((o) => surface.id.startsWith(o.id + '-band-'));
+          assert(object);
+          assert.equal(surface.positionsMm.length, old.positionsMm.length);
+          surface.positionsMm.forEach((v, i) =>
+            assert.equal(
+              v,
+              old.positionsMm[i] +
+                (i % 3 === 1
+                  ? object.baseMm - object.priorBaseMm
+                  : (object.center[i % 3 === 0 ? 0 : 1] - object.priorCenter[i % 3 === 0 ? 0 : 1]) *
+                    1000),
+            ),
+          );
+        }
+      }
+    }
     if (asset.kind === 'collision')
       cells[profile].set(asset.id.replace(/-collision$/, ''), JSON.parse(bytes));
   }
@@ -170,7 +218,8 @@ try {
       {
         passed: true,
         canonicalGLBs,
-        byteIdenticalTerrainAssets: 18,
+        byteIdenticalTerrainAssets: relief ? 0 : 18,
+        requalifiedRelief: relief,
         routeSweeps,
         rockHits,
         grounded,
