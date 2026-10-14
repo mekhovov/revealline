@@ -48,7 +48,10 @@ export function overflightMissionSource({
     const worldName = local(overflightWorldDefinition(project.battlefield?.world)?.title);
     return `${worldName ? `${worldName} · ` : ''}${difficulty[uk ? 1 : 0]} · ${(project.survivorFormat ?? project.format).endsWith('V1') ? (uk ? 'Класичні правила' : 'Legacy rules') : title()}`;
   };
-  const name = (entry) => local(entry.project.title);
+  const name = (entry) =>
+    entry.project.battlefield
+      ? local(entry.project.title)
+      : `${local(entry.project.title)} · ${detail(entry).split(' · ')[0]}`;
   return {
     id,
     editionId: mode.id,
@@ -57,16 +60,25 @@ export function overflightMissionSource({
     automaticContinuation: false,
     entries,
     describe(entry) {
+      const campaignEntries = entry.project.battlefield
+        ? entries.filter(
+            (value) => value.project.battlefield?.world === entry.project.battlefield.world,
+          )
+        : entries.filter((value) => !value.project.battlefield);
       return {
         id: entry.identity ?? entry.project.id,
         // Discovery precedes operation availability checks. Valid installed
         // packages keep a stable row even when this operation rejects a capability.
         revision: overflightGameplayIdentity(entry.project),
-        campaignKey: entry.project.battlefield ? `${mode.id}:${entry.project.battlefield.world}` : mode.id,
-        campaignTitle: entry.project.battlefield ? local(overflightWorldDefinition(entry.project.battlefield.world)?.title) : title(),
+        campaignKey: entry.project.battlefield
+          ? `${mode.id}:${entry.project.battlefield.world}`
+          : mode.id,
+        campaignTitle: entry.project.battlefield
+          ? local(overflightWorldDefinition(entry.project.battlefield.world)?.title)
+          : title(),
         name: name(entry),
-        levelIndex: entries.indexOf(entry),
-        campaignLevelCount: entries.length,
+        levelIndex: campaignEntries.indexOf(entry),
+        campaignLevelCount: campaignEntries.length,
         ...(!installed
           ? {
               canonicalLevelKey: `${mode.id}:${entry.project.id}`,
@@ -74,13 +86,16 @@ export function overflightMissionSource({
             }
           : {}),
         modes: ['solo'],
-        tags: ['FPV', 'Arcade', ...(entry.project.battlefield ? [local(overflightWorldDefinition(entry.project.battlefield.world)?.title)] : [])],
+        // Worlds are campaign groups; registry tags use the shared fixed vocabulary.
+        tags: ['FPV', 'Arcade'],
         hook: detail(entry),
       };
     },
     presentation: (entry) => ({
       name: name(entry),
-      campaignTitle: entry.project.battlefield ? local(overflightWorldDefinition(entry.project.battlefield.world)?.title) : title(),
+      campaignTitle: entry.project.battlefield
+        ? local(overflightWorldDefinition(entry.project.battlefield.world)?.title)
+        : title(),
       edition: 'Overflight',
       hook: detail(entry),
     }),

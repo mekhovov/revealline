@@ -10,7 +10,12 @@ export function overflightSortieProject(mode, project, { seed, difficulty, autho
   )
     return project;
   if (project.battlefield)
-    return mode.createProject({ layout: project.battlefield.id, world: project.battlefield.world, seed, difficulty });
+    return mode.createProject({
+      layout: project.battlefield.id,
+      world: project.battlefield.world,
+      seed,
+      difficulty,
+    });
   const encounterSet = mode.encounterSets.find(
     (set) => mode.createProject({ encounterSet: set }).id === project.id,
   );
@@ -227,7 +232,13 @@ export function overflightReviewStopAt(value, { build, diagnostics = false } = {
     : null;
 }
 
-export function createOverflightReviewPlayback({ build, pilot, selectCard, stopAt = null, enabled = true }) {
+export function createOverflightReviewPlayback({
+  build,
+  pilot,
+  selectCard,
+  stopAt = null,
+  enabled = true,
+}) {
   const stopSeconds = overflightReviewStopAt(stopAt, { build, diagnostics: true });
   let automatic = !!build && enabled;
   let stopped = false;
