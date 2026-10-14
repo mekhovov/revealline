@@ -39,6 +39,12 @@ The hardened observer also completed one 30-second stationary Castle Courtyard d
 
 The visible recovery journey then demonstrated a safety regression: restoring an interrupted flight reconstructed its paused command prefix, but the newer automatic-start path clicked Arm afterward. Restored flights are now excluded from automatic start and require deliberate pickup. The failed 82/83 receipt is retained; the fixed candidate passes all 90 browser checks, including exact revision restoration, transaction abort, cancellation, preserved records and deliberate recovery pickup. The existing recovery appearance assertion now expects paused; 55 focused World regressions pass. No additional D6 test suite was introduced.
 
+## Final candidate
+
+Rebased onto latest main `8b20276815da2684ac76872ae868fce4318dc471`, including the bottom-positioned shared menus. Final runtime `28450a208030c34098bd2e2b59f6a2237d55284e` / tree `2c6396c60cd320d4581e951021beaa7c62da8a2c` passes all three package admissions, committed-input and ZIP validation, and two identical builds. These remain non-public candidates. Final source browser runs pass Creator tracking 66/66 and pack recovery 90/90. The recovery fix was then covered by 55 existing focused checks; the preceding main rebase passed all 135 integration checks.
+
+The final unchanged admitted World player was staged from verified package members and launched in the actual browser. Continue restored the existing Castle Courtyard discovery flight at 99.5 seconds and remained paused, showing Resume/Arm and the retained pose. No automatic arming occurred. This is a local admitted-player check, not a public deployment or offline-update qualification.
+
 ## Remaining priorities
 
 1. Publish the verified reliability fixes independently of the merged UX stack; retain exact-head checks and normal protection.
