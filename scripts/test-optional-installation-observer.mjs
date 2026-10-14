@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
+import { runInNewContext } from 'node:vm';
 import {
   OBSERVED_PACKAGES,
   TRANSFER_TIMEOUT_MS,
@@ -9,7 +10,106 @@ import {
   unlockObservedPage,
   matchesLaunchedAppURL,
   revealFPVOffline,
+  activateOfflineAction,
+  OBSERVATION_TIMEOUT_MS,
 } from './optional-installation-observer-helpers.mjs';
+
+test('offline action requires fresh observable work, native Enter and a fresh terminal status', async () => {
+  async function exercise({
+    initial = '',
+    changes = ['Preparing…', 'Ready offline'],
+    expected = /ready offline/i,
+    progressOnly = false,
+    stillBusy = false,
+  }) {
+    const node = { textContent: initial, contains: () => false };
+    let observer,
+      disconnected = false;
+    const environment = {
+      document: {
+        body: {},
+        querySelector: (selector) =>
+          selector === '#status'
+            ? node
+            : selector === '#prepare'
+              ? { disabled: stillBusy }
+              : stillBusy
+                ? {}
+                : null,
+      },
+      MutationObserver: class {
+        constructor(callback) {
+          observer = callback;
+        }
+        observe() {}
+        disconnect() {
+          disconnected = true;
+        }
+      },
+    };
+    // Keep the witness in one isolated browser-like global between evaluations.
+    const browser = { ...environment };
+    const invoke = (fn, input) => {
+      browser.input = input;
+      return runInNewContext(`(${fn.toString()})(input)`, browser);
+    };
+    const emit = (text) => {
+      node.textContent = text;
+      observer([{ target: node, addedNodes: [] }]);
+    };
+    const page = {
+      evaluate: async (fn, input) => invoke(fn, input),
+      locator: () => ({
+        press: async (key) => {
+          assert.equal(key, 'Enter');
+          if (progressOnly)
+            observer([{ target: {}, addedNodes: [{ nodeType: 1, matches: () => true }] }]);
+          else if (changes.length) emit(changes[0]);
+        },
+      }),
+      waitForFunction: async (fn, input, options) => {
+        assert.ok([30_000, TRANSFER_TIMEOUT_MS].includes(options.timeout));
+        if (options.timeout === TRANSFER_TIMEOUT_MS && changes.length > 1) emit(changes[1]);
+        if (!invoke(fn, input)) throw new Error('No fresh observed transition');
+      },
+    };
+    try {
+      await activateOfflineAction(page, { button: '#prepare', status: '#status', expected });
+    } finally {
+      assert.equal(disconnected, true);
+      assert.equal(browser.__optionalInstallationWitness, undefined);
+    }
+  }
+  await exercise({});
+  await exercise({ changes: ['Ready offline'] });
+  await exercise({ progressOnly: true });
+  await exercise({ initial: 'Ready offline', changes: ['Preparing…', 'Ready offline'] });
+  await assert.rejects(exercise({ initial: 'Ready offline', changes: [] }), /No fresh/);
+  await assert.rejects(exercise({ stillBusy: true }), /No fresh/);
+  await assert.rejects(
+    exercise({ changes: ['Preparing…', 'Storage quota denied'] }),
+    /Offline action failed/,
+  );
+  await exercise({
+    changes: ['Preparing…', 'Verification failed'],
+    expected: /verification failed/i,
+  });
+});
+
+test('overall observation deadline encloses the journey but preserves report and cleanup', async () => {
+  assert.equal(OBSERVATION_TIMEOUT_MS, 600_000);
+  const source = await readFile(
+    new URL('./observe-optional-installation.mjs', import.meta.url),
+    'utf8',
+  );
+  assert.match(
+    source,
+    /try \{\s*await boundedOperation\(\s*'Complete installation observation',\s*async \(\) => \{/,
+  );
+  assert.match(source, /},\s*OBSERVATION_TIMEOUT_MS,?\s*\);\s*} catch \(error\)/);
+  assert.match(source, /} finally \{\s*const cleanupErrors/);
+  assert.match(source, /await writeFile\(output, JSON.stringify\(report/);
+});
 
 test('installation observer covers all three public app identities and current offline controls', async () => {
   assert.deepEqual(Object.keys(OBSERVED_PACKAGES), [
