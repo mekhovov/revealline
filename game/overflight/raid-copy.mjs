@@ -6,7 +6,7 @@ export const OVERFLIGHT_HUNT_COPY = Object.freeze({
     preparing: 'Preparing Raid…',
     briefing:
       'Your flight is your weapon. Sweep exposed enemies, flank shields and boost through open armor. Hunt the marked targets to complete the Raid.',
-    help: 'Touch exposed infantry to destroy them. Shields protect the front; strike the side or rear. Braced troops and vehicles open after their attack. Boost through open machinery once per pass. Your first successful hit each boost refunds part of its cooldown. Twenty kills store Rush: your next boost activates five seconds of faster recovery and double score. Objectives win the Raid; ordinary packs earn score and optional upgrades.',
+    help: 'Touch exposed infantry to destroy them. Shields protect the front; strike the side or rear. Braced troops open after their attack. Follow the marked weak points on machinery and boost through once per fresh pass; recovery gives a broader opening. Your first successful hit each boost refunds part of its cooldown. Twenty kills store Rush: your next boost activates five seconds of faster recovery and double score. Objectives win the Raid; ordinary packs earn score and optional upgrades.',
     contactExposed: 'OPEN → touch to destroy',
     contactGuarded: 'SHIELD → flank or wait for recovery',
     contactHeavy: 'OPEN ARMOR → boost through',
@@ -59,7 +59,7 @@ export const OVERFLIGHT_HUNT_COPY = Object.freeze({
     preparing: 'Готуємо «Наліт»…',
     briefing:
       'Політ — ваша зброя. Змітайте відкритих ворогів, обходьте щити та прискорюйтесь крізь відкриту броню. Знищіть позначені цілі, щоб завершити наліт.',
-    help: 'Доторкніться до відкритої піхоти, щоб знищити її. Щити захищають спереду — атакуйте збоку або ззаду. Укріплені бійці й техніка відкриваються після атаки. Прискорюйтесь крізь відкриту техніку один раз за проліт. Перше влучання під час прискорення частково відновлює його. Двадцять знищень готують натиск: наступне прискорення дає п’ять секунд швидшого відновлення й подвійних очок. Цілі завершують наліт; звичайні групи дають очки та додаткові покращення.',
+    help: 'Доторкніться до відкритої піхоти, щоб знищити її. Щити захищають спереду — атакуйте збоку або ззаду. Укріплені бійці відкриваються після атаки. Атакуйте позначені слабкі місця техніки новим ривком за кожен проліт; відновлення дає ширше відкриття. Перше влучання під час прискорення частково відновлює його. Двадцять знищень готують натиск: наступне прискорення дає п’ять секунд швидшого відновлення й подвійних очок. Цілі завершують наліт; звичайні групи дають очки та додаткові покращення.',
     contactExposed: 'ВІДКРИТО → торкніться й знищіть',
     contactGuarded: 'ЩИТ → обійдіть або дочекайтесь відкриття',
     contactHeavy: 'ВІДКРИТА БРОНЯ → прискорюйтесь наскрізь',

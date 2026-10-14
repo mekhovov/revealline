@@ -5,12 +5,28 @@ export const OVERFLIGHT_HUNT_RECORDS_FORMAT = 'overflight-hunt-records.v2';
 export const OVERFLIGHT_HUNT_LEGACY_RECORDS_FORMAT = 'overflight-hunt-records.v1';
 export const OVERFLIGHT_HUNT_RECORD_RULES = 'overflight-raid.v2';
 const legacyRules = 'overflight-raid.v1';
-const versionOf = (run) => (run?.compiled?.format === 'OverflightHuntCompiledV2' ? 2 : 1);
+export const OVERFLIGHT_HUNT_RECORDS_FORMAT_V3 = 'overflight-hunt-records.v3';
+const versionOf = (run) =>
+  run?.compiled?.format === 'OverflightHuntCompiledV3'
+    ? 3
+    : run?.compiled?.format === 'OverflightHuntCompiledV2'
+      ? 2
+      : 1;
+const formatOf = (version) =>
+  version === 3
+    ? OVERFLIGHT_HUNT_RECORDS_FORMAT_V3
+    : version === 2
+      ? OVERFLIGHT_HUNT_RECORDS_FORMAT
+      : OVERFLIGHT_HUNT_LEGACY_RECORDS_FORMAT;
+const rulesOf = (version) =>
+  version === 3 ? 'overflight-raid.v3' : version === 2 ? OVERFLIGHT_HUNT_RECORD_RULES : legacyRules;
 const finite = (value) => Number.isFinite(value) && value >= 0;
 
 export function overflightHuntRecordContext(run) {
   required(
-    ['OverflightHuntCompiledV1', 'OverflightHuntCompiledV2'].includes(run?.compiled?.format),
+    ['OverflightHuntCompiledV1', 'OverflightHuntCompiledV2', 'OverflightHuntCompiledV3'].includes(
+      run?.compiled?.format,
+    ),
     'Raid records need a compiled hunt.',
   );
   required(/^[a-f0-9]{16}$/.test(run.compiled.projectIdentity), 'Missing Raid content identity.');
@@ -23,7 +39,7 @@ export function overflightHuntRecordContext(run) {
     'Invalid Raid settings.',
   );
   return {
-    rules: versionOf(run) === 2 ? OVERFLIGHT_HUNT_RECORD_RULES : legacyRules,
+    rules: rulesOf(versionOf(run)),
     project:
       run.flight && run.flight.id !== 'balanced'
         ? dataIdentity({
@@ -35,13 +51,13 @@ export function overflightHuntRecordContext(run) {
     seed: run.seed,
     airframes: run.airframes,
     slowResume: run.slowResume,
-    ...(versionOf(run) === 2
+    ...(versionOf(run) >= 2
       ? { difficulty: run.difficulty ?? run.compiled.difficulty ?? 'standard' }
       : {}),
   };
 }
 
-function validateResult(result) {
+function validateResult(result, version = 2) {
   if (result === null) return;
   exactKeys(
     result,
@@ -54,6 +70,7 @@ function validateResult(result) {
       'damageTaken',
       'couriersCaught',
       'couriersEscaped',
+      ...(version >= 3 ? ['rawTime', 'adjustedTime'] : []),
     ],
     'Raid record',
   );
@@ -66,13 +83,13 @@ function validateResult(result) {
     'damageTaken',
     'couriersCaught',
     'couriersEscaped',
+    ...(version >= 3 ? ['rawTime', 'adjustedTime'] : []),
   ])
     required(finite(result[key]), `Invalid Raid record ${key}.`);
 }
 
 function validateRecords(source, version) {
-  const format =
-    version === 2 ? OVERFLIGHT_HUNT_RECORDS_FORMAT : OVERFLIGHT_HUNT_LEGACY_RECORDS_FORMAT;
+  const format = formatOf(version);
   const state = boundedJSON(source, {
     maxBytes: 256 * 1024,
     maxNodes: 18000,
@@ -97,14 +114,11 @@ function validateRecords(source, version) {
         'seed',
         'airframes',
         'slowResume',
-        ...(version === 2 ? ['difficulty'] : []),
+        ...(version >= 2 ? ['difficulty'] : []),
       ],
       'Raid record context',
     );
-    required(
-      entry.context.rules === (version === 2 ? OVERFLIGHT_HUNT_RECORD_RULES : legacyRules),
-      'Unsupported Raid record rules.',
-    );
+    required(entry.context.rules === rulesOf(version), 'Unsupported Raid record rules.');
     required(/^[a-f0-9]{16}$/.test(entry.context.project), 'Invalid Raid project identity.');
     required(
       Number.isSafeInteger(entry.context.seed) &&
@@ -116,13 +130,16 @@ function validateRecords(source, version) {
       [1, 3].includes(entry.context.airframes) && typeof entry.context.slowResume === 'boolean',
       'Invalid Raid record settings.',
     );
-    if (version === 2)
+    if (version >= 2)
       required(
-        ['standard', 'veteran'].includes(entry.context.difficulty),
+        (version === 3 ? ['relaxed', 'standard', 'veteran'] : ['standard', 'veteran']).includes(
+          entry.context.difficulty,
+        ),
         'Invalid Raid difficulty.',
       );
     required(dataIdentity(entry.context) === key, 'Raid record identity differs.');
-    for (const field of ['fastestClear', 'bestScore', 'last']) validateResult(entry[field]);
+    for (const field of ['fastestClear', 'bestScore', 'last'])
+      validateResult(entry[field], version);
     required(
       entry.fastestClear === null || entry.fastestClear.outcome === 'won',
       'A failed Raid cannot be a fastest clear.',
@@ -141,16 +158,16 @@ function resultOf(run) {
     damageTaken: run.stats.damageTaken,
     couriersCaught: run.hunt.couriersCaught,
     couriersEscaped: run.hunt.couriersEscaped,
+    ...(versionOf(run) >= 3 ? { rawTime: run.rawTime ?? run.time, adjustedTime: run.time } : {}),
   };
-  validateResult(result);
+  validateResult(result, versionOf(run));
   return result;
 }
 
 /** The existing profile database owns persistence; cosmetic appearance never
  * separates competitive records. Failed writes retain a clearly session-only result. */
 function createRecordStore({ backend, version, ...options }) {
-  const format =
-    version === 2 ? OVERFLIGHT_HUNT_RECORDS_FORMAT : OVERFLIGHT_HUNT_LEGACY_RECORDS_FORMAT;
+  const format = formatOf(version);
   const validate = (source) => validateRecords(source, version);
   const empty = () => ({ format, entries: {} });
   const store =
@@ -164,7 +181,12 @@ function createRecordStore({ backend, version, ...options }) {
   const session = new Map();
   const known = new Map();
   let closed = false;
-  const contextEntry = (context) => ({ context, fastestClear: null, bestScore: null, last: null });
+  const contextEntry = (context) => ({
+    context,
+    fastestClear: null,
+    bestScore: null,
+    last: null,
+  });
   const combine = (previous, context, result) => {
     const entry = structuredClone(previous ?? contextEntry(context));
     if (!result) return entry;
@@ -184,7 +206,11 @@ function createRecordStore({ backend, version, ...options }) {
       entry.fastestClear = result;
     return entry;
   };
-  const project = (entry, durable, error = '') => ({ ...structuredClone(entry), durable, error });
+  const project = (entry, durable, error = '') => ({
+    ...structuredClone(entry),
+    durable,
+    error,
+  });
   const merge = (saved, pending, context) => {
     let entry = saved ?? contextEntry(context);
     for (const result of [pending?.bestScore, pending?.fastestClear, pending?.last])
@@ -245,16 +271,32 @@ function createRecordStore({ backend, version, ...options }) {
 
 /** Rules revisions have independent durable buckets. Loading a revised sortie never
  * rewrites old history, and historical projects can still read their exact records. */
-export function createOverflightHuntRecords({ backend, legacyBackend, ...options } = {}) {
+export function createOverflightHuntRecords({
+  backend,
+  legacyBackend,
+  revisedBackend,
+  ...options
+} = {}) {
   const current = createRecordStore({ ...options, backend, version: 2 });
-  const legacy = createRecordStore({ ...options, backend: legacyBackend ?? backend, version: 1 });
-  const storeFor = (run) => (versionOf(run) === 2 ? current : legacy);
+  const legacy = createRecordStore({
+    ...options,
+    backend: legacyBackend ?? backend,
+    version: 1,
+  });
+  const revised = createRecordStore({
+    ...options,
+    backend: revisedBackend,
+    version: 3,
+  });
+  const storeFor = (run) =>
+    versionOf(run) === 3 ? revised : versionOf(run) === 2 ? current : legacy;
   return {
     read: (run) => storeFor(run).read(run),
     record: (run) => storeFor(run).record(run),
     dispose() {
       current.dispose();
       legacy.dispose();
+      revised.dispose();
     },
   };
 }

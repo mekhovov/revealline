@@ -103,11 +103,15 @@ export function createOverflightController({
     // This mode has a momentary dash; a continuous-flight toggle is not a dash.
     boostMode: 'hold',
   });
+  let actionsArmed = false,
+    pauseHeld = false;
   function reset() {
     stickActive = false;
     rawState = new Map();
     confirmActive = false;
     abilityHeld = false;
+    actionsArmed = false;
+    pauseHeld = false;
   }
   function clear() {
     reset();
@@ -120,6 +124,7 @@ export function createOverflightController({
       boost: false,
       pause: false,
       neutral: true,
+      actionsNeutral: true,
       disconnected: false,
       ui: emptyUI(),
     };
@@ -138,7 +143,41 @@ export function createOverflightController({
     output.neutral = frame.assigned
       ? frame.confirmSnapshot.neutral
       : !['waiting-neutral', 'ready-to-join'].includes(frame.status.code);
-    if (frame.status.code !== 'connected') return output;
+    const pad = Array.from(sampledPads).find(
+      (candidate) => candidate?.index === frame.assigned?.index,
+    );
+    let mapped = null;
+    if (pad && pad.mapping !== 'standard') {
+      const profile = radio.rawProfile(pad.index);
+      mapped = profile ? mapProfile(profile, pad, rawState) : null;
+    }
+    const physical =
+      pad?.mapping === 'standard'
+        ? {
+            boost: pressed(pad.buttons[bindings.flight.buttons.boost]),
+            action: pressed(pad.buttons[bindings.flight.buttons.ability]),
+            pause:
+              pressed(pad.buttons[bindings.flight.buttons.pause]) ||
+              pressed(pad.buttons[bindings.flight.buttons.hangar]) ||
+              pressed(pad.buttons[bindings.flight.buttons.stop]),
+            confirm: pressed(pad.buttons[bindings.menu.buttons.confirm]) || frame.confirmHeld,
+          }
+        : {
+            boost: mapped?.flight?.boost === true,
+            action: mapped?.flight?.ability === true || mapped?.flight?.action === true,
+            pause:
+              mapped?.flight?.pause === true ||
+              mapped?.flight?.hangar === true ||
+              mapped?.flight?.stop === true,
+            confirm: mapped?.menu?.confirm === true || frame.confirmHeld,
+          };
+    output.actionsNeutral =
+      !physical.boost && !physical.action && !physical.pause && !physical.confirm;
+    const armed = actionsArmed;
+    if (output.actionsNeutral) actionsArmed = true;
+    const pauseEdge = physical.pause && !pauseHeld && armed;
+    pauseHeld = physical.pause;
+    if (!['connected', 'waiting-neutral'].includes(frame.status.code) || !pad) return output;
     if (scope !== 'flight') {
       output.ui = {
         direction: frame.ui.direction,
@@ -153,10 +192,8 @@ export function createOverflightController({
           : frame.confirmHeld && (confirmActive || frame.ui.confirm);
       return output;
     }
-    output.pause = frame.flight.pause || frame.flight.hangar;
+    output.pause = frame.flight.pause || frame.flight.hangar || pauseEdge;
     if (output.pause || frame.flight.stop) return output;
-    const pad = Array.from(sampledPads).find((pad) => pad?.index === frame.assigned?.index);
-    if (!pad) return output;
     if (pad.mapping === 'standard') {
       const stick = sampleControllerStick(bindings, 'flight', pad.axes, stickActive);
       stickActive = stick.active;
@@ -169,7 +206,6 @@ export function createOverflightController({
       output.y = y || (stick.active ? stick.y : 0);
     } else {
       const profile = radio.rawProfile(pad.index);
-      const mapped = mapProfile(profile, pad, rawState);
       rawState = mapped.state;
       if (!mapped.valid) return output;
       const strength = (action) =>
@@ -191,9 +227,9 @@ export function createOverflightController({
       output.x = strength('right') - strength('left');
       output.y = strength('down') - strength('up');
     }
-    output.boost = frame.flight.boost;
-    output.focus = frame.flight.action && !abilityHeld;
-    abilityHeld = !!frame.flight.action;
+    output.boost = armed && physical.boost;
+    output.focus = armed && physical.action && !abilityHeld;
+    abilityHeld = !!physical.action;
     return output;
   }
   return {

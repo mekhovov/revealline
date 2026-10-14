@@ -110,8 +110,7 @@ export function createOverflightClock({ maxSteps = 15 } = {}) {
   };
 }
 
-/** Modal confirmation, focus recovery and a newly connected controller must
- * reach neutral before gameplay may consume their next physical input. */
+/** Modal actions must be released; steering stays responsive during that release. */
 export function createOverflightInputGate() {
   let blocked = true;
   return {
@@ -123,19 +122,19 @@ export function createOverflightInputGate() {
       y = 0,
       boost = false,
       focus = false,
-      neutral = x === 0 && y === 0 && !boost && !focus,
+      neutral = !boost && !focus,
+      actionsNeutral = neutral,
     } = {}) {
-      if (blocked) {
-        if (neutral) blocked = false;
-        return { x: 0, y: 0, boost: false };
-      }
       const length = Math.hypot(x, y);
-      return {
+      const movement = {
         x: length > 1 ? x / length : x,
         y: length > 1 ? y / length : y,
-        boost: !!boost,
-        ...(focus ? { focus: true } : {}),
       };
+      if (blocked) {
+        if (actionsNeutral) blocked = false;
+        return { ...movement, boost: false };
+      }
+      return { ...movement, boost: !!boost, ...(focus ? { focus: true } : {}) };
     },
     blocked: () => blocked,
   };
@@ -219,7 +218,16 @@ export function overflightPreviewRequest(event, { window, parent, origin, modeId
 
 /** Review playback supplies ordinary inputs and accepts only earned cards. The
  * native host still owns Start, pause/recovery, fixed steps and card application. */
-export function createOverflightReviewPlayback({ build, pilot, selectCard }) {
+export function overflightReviewStopAt(value, { build, diagnostics = false } = {}) {
+  const seconds = Number(value);
+  return build && diagnostics && Number.isFinite(seconds) && seconds >= 120 && seconds <= 240
+    ? seconds
+    : null;
+}
+
+export function createOverflightReviewPlayback({ build, pilot, selectCard, stopAt = null }) {
+  const stopSeconds = overflightReviewStopAt(stopAt, { build, diagnostics: true });
+  let stopped = false;
   let lastTick = null,
     input = { x: 0, y: 0, boost: false },
     pending = null;
@@ -230,9 +238,12 @@ export function createOverflightReviewPlayback({ build, pilot, selectCard }) {
       lastTick = null;
       input = { x: 0, y: 0, boost: false };
       pending = null;
+      stopped = false;
     },
     input(run, manual) {
       if (!build) return manual;
+      if (stopSeconds !== null && run.time >= stopSeconds) stopped = true;
+      if (stopped) return { x: 0, y: 0, boost: false, focus: false };
       if (lastTick === null || run.tick < lastTick || run.tick - lastTick >= 6) {
         input = pilot(run, 'tight');
         lastTick = run.tick;
@@ -254,7 +265,12 @@ export function createOverflightReviewPlayback({ build, pilot, selectCard }) {
         const selected = selectCard(run, build);
         if (!selected) return { blocked: true, selectedId: null, choiceId: null };
         if (!run.offers.some((offer) => offer.id === selected.id)) return null;
-        pending = { identity: offerIdentity(run), id: selected.id, elapsed: 0, last: now };
+        pending = {
+          identity: offerIdentity(run),
+          id: selected.id,
+          elapsed: 0,
+          last: now,
+        };
       } else {
         if (pending.last !== null) pending.elapsed += Math.max(0, now - pending.last);
         pending.last = now;

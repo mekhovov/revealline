@@ -23,6 +23,15 @@ const valueKey = {
   plating: 'armorReduction',
 };
 export function overflightHuntPreviewModel(offer) {
+  if (offer.kind === 'field') return { field: offer.system, amount: offer.amount };
+  if (offer.kind === 'refit')
+    return {
+      system: offer.system,
+      beforeSystem: offer.fromSystem,
+      before: overflightHuntUpgradeParameters(offer.fromSystem, offer.fromRank),
+      after: overflightHuntUpgradeParameters(offer.system, offer.rank),
+      baseExposure: offer.baseExposure,
+    };
   if (
     !HUNT_UPGRADE_IDS.includes(offer.system) ||
     ![1, 2].includes(offer.rank) ||
@@ -31,18 +40,19 @@ export function overflightHuntPreviewModel(offer) {
     throw new RangeError('Raid preview needs a legal next upgrade rank.');
   return {
     system: offer.system,
+    baseExposure: offer.baseExposure,
     before: overflightHuntUpgradeParameters(offer.system, offer.rank - 1),
     after: overflightHuntUpgradeParameters(offer.system, offer.rank),
   };
 }
-export function overflightHuntPreviewCaption(system, parameters, locale = 'en') {
+export function overflightHuntPreviewCaption(system, parameters, locale = 'en', baseExposure = 3) {
   const uk = locale === 'uk',
     value = parameters[valueKey[system]];
   if (system === 'strike-width')
     return `${Math.round(value * 100)}% · ${uk ? 'ширина удару' : 'strike width'}`;
   if (system === 'rush-charge') return `+${value} · ${uk ? 'за 3 цілі' : 'per 3-target pass'}`;
   if (system === 'heavy-exposure')
-    return `${3 + value}s · ${uk ? 'відкрита броня' : 'armor opening'}`;
+    return `${baseExposure + value}s · ${uk ? 'відкрита броня' : 'armor opening'}`;
   if (system === 'guard-interrupt')
     return value
       ? `${value} · ${uk ? 'радіус зриву' : 'interrupt reach'}`
@@ -73,6 +83,31 @@ export function paintOverflightHuntPreview(
   const still = reducedEffects,
     cycle = still ? 0.58 : (time % 3) / 3;
   context.clearRect(0, 0, 320, 154);
+  if (model.field) {
+    context.fillStyle = palette.ground;
+    context.fillRect(0, 0, 320, 154);
+    paintSprite(context, 'drone', 160, 64, 56, still ? 0 : time);
+    context.fillStyle = palette.open;
+    context.font = 'bold 20px system-ui';
+    context.textAlign = 'center';
+    const uk = locale === 'uk';
+    const label =
+      model.field === 'field-repair'
+        ? uk
+          ? 'міцності'
+          : 'hull'
+        : model.field === 'field-reroll'
+          ? uk
+            ? 'перевибір'
+            : 'reroll'
+          : uk
+            ? 'очок'
+            : 'score';
+    context.globalAlpha = still ? 1 : 0.65 + Math.sin(cycle * Math.PI) * 0.35;
+    context.fillText(`+${model.amount} ${label}`, 160, 127);
+    context.globalAlpha = 1;
+    return;
+  }
   for (const [index, params] of [model.before, model.after].entries()) {
     const offset = index * 164,
       width = 156;
@@ -105,7 +140,7 @@ export function paintOverflightHuntPreview(
       line(x - 8, y - 1, 16, 2, palette.gold);
       line(x - 1, y - 8, 2, 16, palette.gold);
     };
-    const system = model.system;
+    const system = index === 0 && model.beforeSystem ? model.beforeSystem : model.system;
     let x = 24 + cycle * 105;
     if (system === 'strike-width') {
       const half = 12 * params.strikeWidth;
@@ -158,7 +193,12 @@ export function paintOverflightHuntPreview(
       native('drone', x - 8, 73, 43);
       line(84, 44, 2, 49, palette.open);
       line(129, 44, 2, 49, palette.open);
-      bar(Math.max(0, 1 - (still ? 2 : cycle * 5) / (3 + params.heavyExposureBonus)));
+      bar(
+        Math.max(
+          0,
+          1 - (still ? 2 : cycle * 5) / ((model.baseExposure ?? 3) + params.heavyExposureBonus),
+        ),
+      );
     } else if (system === 'guard-interrupt') {
       native('enemy', 60, 70, 24);
       native('shield', 117, 59, 28);
@@ -200,7 +240,12 @@ export function paintOverflightHuntPreview(
     context.fillStyle = palette.light;
     context.textAlign = 'center';
     context.font = '10px system-ui';
-    context.fillText(overflightHuntPreviewCaption(system, params, locale), 78, 139, 144);
+    context.fillText(
+      overflightHuntPreviewCaption(system, params, locale, model.baseExposure ?? 3),
+      78,
+      139,
+      144,
+    );
     context.restore();
   }
 }
@@ -232,7 +277,19 @@ export function createOverflightHuntUpgradeCard({
     names = node('span', '', 'upgrade-names');
   if (moduleIcon) heading.append(moduleIcon(offer.system));
   names.append(
-    node('span', `${text('combatModule')} · ${offer.currentRank} → ${offer.rank}`, 'upgrade-kind'),
+    node(
+      'span',
+      offer.kind === 'refit'
+        ? locale === 'uk'
+          ? 'Перебудова · ті самі ранги'
+          : 'Refit · same rank budget'
+        : offer.kind === 'field'
+          ? locale === 'uk'
+            ? 'Польова винагорода'
+            : 'Field reward'
+          : `${text('combatModule')} · ${offer.currentRank} → ${offer.rank}`,
+      'upgrade-kind',
+    ),
     node('strong', local(offer.title), 'upgrade-title'),
   );
   heading.append(names);
@@ -243,9 +300,16 @@ export function createOverflightHuntUpgradeCard({
   canvas.setAttribute('aria-hidden', 'true');
   const context = canvas.getContext('2d');
   button.paintPreview = (time = 0) =>
-    paintOverflightHuntPreview(context, model, { time, locale, reducedEffects, paintSprite });
+    paintOverflightHuntPreview(context, model, {
+      time,
+      locale,
+      reducedEffects,
+      paintSprite,
+    });
   button.paintPreview();
-  const comparison = `${text('current')}: ${overflightHuntPreviewCaption(model.system, model.before, locale)}. ${text('next')}: ${overflightHuntPreviewCaption(model.system, model.after, locale)}`;
+  const comparison = model.field
+    ? `${local(offer.current)} → ${local(offer.next)}`
+    : `${text('current')}: ${overflightHuntPreviewCaption(model.beforeSystem ?? model.system, model.before, locale, model.baseExposure ?? 3)}. ${text('next')}: ${overflightHuntPreviewCaption(model.system, model.after, locale, model.baseExposure ?? 3)}`;
   button.append(heading, canvas, node('span', local(offer.next), 'upgrade-description'));
   button.setAttribute(
     'aria-label',

@@ -108,8 +108,22 @@ export function overflightAttackLayers(attack) {
   const layers = [],
     originX = attack.originX ?? attack.x,
     originY = attack.originY ?? attack.y;
-  if (!['lane', 'fan'].includes(attack.kind))
-    return [layer('ring', attack.x, attack.y, attack.radius * 2, attack.radius * 2, DANGER, 0.85)];
+  if (!['lane', 'fan'].includes(attack.kind)) {
+    const result = [
+      layer('ring', attack.x, attack.y, attack.radius * 2, attack.radius * 2, DANGER, 0.85),
+    ];
+    if (attack.kind === 'ground' && attack.stage === 'active') {
+      // A solid cross-hatched patch differs from its outline-only warning even
+      // without color or animation. The drawing stays inside damage geometry.
+      for (const fraction of [-0.6, -0.3, 0, 0.3, 0.6]) {
+        const offset = attack.radius * fraction;
+        const width = Math.sqrt(Math.max(0, attack.radius ** 2 - offset ** 2)) * 2;
+        result.push(layer('bar', attack.x, attack.y + offset, width, 3, DANGER, 0.55));
+      }
+      result.push(layer('bar', attack.x, attack.y, 4, attack.radius * 1.5, DANGER, 0.9));
+    }
+    return result;
+  }
   const heading = attack.heading ?? 0,
     length = attack.length ?? 200;
   const ray = (angle) => {
@@ -159,6 +173,9 @@ export function overflightCacheLayers(cache) {
     if (repair) {
       layers.push(layer('bar', reward.x, reward.y, 17, 4, tint));
       layers.push(layer('bar', reward.x, reward.y, 4, 17, tint));
+    } else if (reward.id === 'overdrive') {
+      for (const offset of [-7, 0, 7])
+        layers.push(layer('arrow', reward.x + offset, reward.y, 12, 12, tint, 1, -Math.PI / 2));
     } else {
       layers.push(layer('arrow', reward.x, reward.y - 4, 14, 14, tint));
       layers.push(layer('arrow', reward.x, reward.y + 5, 14, 14, tint, 1, Math.PI));

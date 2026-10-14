@@ -396,3 +396,29 @@ for (const [name, project, compile, create, start, step, pause, resume] of [
     assert.equal(run.stats.boostsUsed, 2);
   });
 }
+
+test('the native action gate allows immediate touch steering without requiring the movement finger to release', (t) => {
+  const f = fixture(t),
+    gate = createOverflightInputGate();
+  const sample = () =>
+    gate.sample({ ...f.input.sample(), actionsNeutral: f.input.actionsNeutral() });
+  f.pointer(f.surface, 'pointerdown', 100, 100, 1);
+  f.pointer(f.surface, 'pointermove', 156, 100, 1);
+  assert.equal(sample().x, 1);
+  assert.equal(gate.blocked(), false);
+  f.pointer(f.boost, 'pointerdown', 20, 20, 2);
+  assert.equal(sample().boost, true);
+  f.active(false);
+  gate.release();
+  f.active(true);
+  assert.equal(f.input.actionsNeutral(), false, 'Clearing logical input is not releasing Boost.');
+  f.pointer(f.surface, 'pointerdown', 100, 100, 3);
+  f.pointer(f.surface, 'pointermove', 156, 100, 3);
+  assert.equal(sample().x, 1, 'A new steering gesture works while the old action is still held.');
+  assert.equal(gate.blocked(), true);
+  f.pointer(f.win, 'pointerup', 0, 0, 2);
+  assert.equal(sample().boost, false);
+  assert.equal(gate.blocked(), false, 'Only the Boost finger needed to release.');
+  f.pointer(f.boost, 'pointerdown', 20, 20, 4);
+  assert.equal(sample().boost, true);
+});
