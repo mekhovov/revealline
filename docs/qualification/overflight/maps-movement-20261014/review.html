@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FPV Survivals — battlefield review</title>
+<style>
+  :root { color-scheme: dark; font: 16px/1.55 system-ui,sans-serif; background:#101815; color:#e7ebdc }
+  body { max-width:1180px; margin:auto; padding:28px 20px 60px }
+  h1 { font-size:clamp(26px,4vw,44px); line-height:1.15; margin:10px 0 16px }
+  h2 { margin:0 0 8px; font-size:23px }
+  p { max-width:80ch; margin:10px 0 18px }
+  a { color:#edc77c; text-underline-offset:4px }
+  .eyebrow { color:#bbcab7; letter-spacing:.12em; text-transform:uppercase; font-size:12px }
+  .note { border-left:3px solid #d4a759; padding:10px 16px; background:#20271d }
+  nav { display:flex; flex-wrap:wrap; gap:10px 24px; margin:24px 0 }
+  section { margin:36px 0; padding-top:24px; border-top:1px solid #3b493c }
+  video,img { display:block; width:100%; height:auto; background:#080e0c; image-rendering:pixelated }
+  figure { margin:20px 0; background:#1b261e }
+  figcaption { padding:14px 18px; color:#c2ccbd }
+  code { font-size:.9em }
+  .clips { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,440px),1fr)); gap:24px }
+  .clips figure { margin:0 }
+  .clips h3 { color:#f1ddaf; margin:0 0 8px }
+  li { margin:8px 0 }
+  small { color:#b4c0af }
+</style>
+<body>
+<header>
+  <div class="eyebrow">Native gameplay · 14 October 2026</div>
+  <h1>Six worlds. Eighteen routes.<br>One FPV Survivals family.</h1>
+  <p>Review the battlefield shapes, different attack patterns and enemy approaches. Single Drone, Riy, Single Raid, Time Attack and Contract Marathon share the same map library.</p>
+  <p class="note">Implementation is available in <a href="https://github.com/mekhovov/revealline/pull/1215">PR 1215</a>, stacked on the worlds foundation. Performance qualification remains open. These clips are automated review runs; they establish visible behavior, not ordinary-player difficulty.</p>
+  <nav aria-label="Review materials">
+    <a href="art-review/native-worlds.html">Explore all maps and play links</a>
+    <a href="../../../fpv-survivals-maps-movement-status.md">Completed and remaining work</a>
+    <a href="NATIVE-PERFORMANCE.md">Performance evidence</a>
+    <a href="FINAL-SPEED-FIX.md">Active and unattended comparison</a>
+  </nav>
+</header>
+<section>
+  <h2>Distinct layouts, shared visual language</h2>
+  <p>Open courts, connected loops and wide cover routes change approach angles. Scenery uses the runtime painter and shared materials. The overview is a map-art reference; the moving clips below show combat.</p>
+  <figure><a href="native/eighteen-layouts.png"><img src="native/eighteen-layouts.png" alt="Overview of eighteen battlefield layouts across fields, depot, ruins, port, quarry and orchard"></a><figcaption>Native map painter output. Open the map browser for each layout’s tactical description and all five operation links.</figcaption></figure>
+</section>
+<section>
+  <h2>Builds in motion</h2>
+  <p>Look for the route each build encourages: broad passes, returning through a rear trail, or controlling nearby crowds while attacking the flanks. Recordings intentionally exclude the menu and HUD; review controls remain visible in the playable versions.</p>
+  <div class="clips">
+    <figure>
+      <video controls preload="none" poster="native/quarry-combat.png" src="native/quarry-fan-audio.webm"></video>
+      <figcaption><h3>Fan · Haul Switchbacks</h3>Broad sweeping coverage around quarry bends. Earlier capture at source <code>58e223b7d</code>; subsequent movement and recovery fixes are not represented here. Native effects audio is included; external music is excluded.</figcaption>
+    </figure>
+    <figure>
+      <video controls preload="none" poster="native/depot-riy-echo.png" src="native/depot-riy-echo.webm"></video>
+      <figcaption><h3>Riy Echo · Loading Loop</h3>Rear impacts and escort coverage reward a return approach. Source <code>3bb1b0dc6</code>, seed 17031991, around 100 seconds into the run. Audio settings changed during review; this is not a qualified sound-mix sample.</figcaption>
+    </figure>
+    <figure>
+      <video controls preload="none" poster="native/river-port-systems.png" src="native/river-port-systems.webm"></video>
+      <figcaption><h3>Systems · Floodgate Yard</h3>Pulse control and side attacks against changing fronts. Source <code>3bb1b0dc6</code>, seed 17031991, around 132 seconds. Master audio was muted. This automated run later lost at 5:50 after earning ten choices.</figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>What to judge next</h2>
+  <ul>
+    <li>Can you distinguish solid cover from low scenery and find another route under pressure?</li>
+    <li>Do enemy approach changes make you reconsider your heading while successful clearing still buys space?</li>
+    <li>Do Fan, Echo and priority attacks lead to different decisions rather than the same orbit?</li>
+    <li>Can you read hostile warnings through a complete upgraded build?</li>
+  </ul>
+  <p>The final bounded regression recorded four active runs reaching four minutes and six unattended defeats. Three initial native reference timing trials missed the 18 ms p95 requirement; their full samples are retained. External-device and five-player trials remain skipped at the user’s direction.</p>
+  <small>Capture settings and SHA-256 hashes: <a href="native/native-review.json">media provenance</a>. No gameplay, enjoyment or performance claim is inferred solely from this gallery.</small>
+</section>
+</body>
+</html>

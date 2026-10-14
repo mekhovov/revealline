@@ -63,6 +63,46 @@
     "creator-glasshouse-package.json": {
       "bytes": 13778,
       "sha256": "95d240803506401538f7363ff97d8d957c9bfd540ebc48277b96283f9577cece"
+    },
+    "depot-riy-echo.png": {
+      "bytes": 213821,
+      "sha256": "807a721d6bce1330e88729523caee42b4d148fa8af3ead5e67b8d15d8bddd662"
+    },
+    "depot-riy-echo.webm": {
+      "bytes": 4893160,
+      "sha256": "eac9ebc30ee2998de69c125ebb105824c0f5301655152b31236d69399124a5f3"
+    },
+    "river-port-systems.png": {
+      "bytes": 220529,
+      "sha256": "e22118d40b458939127e62ef2dc65a0124761288b0b1c76b2233017ddce77ea0"
+    },
+    "river-port-systems.webm": {
+      "bytes": 4162567,
+      "sha256": "3b04b2be593fc04d0076d2ef897f65522a2fbcd1d4f48e5c2e6a29e3deb5f7eb"
     }
+  },
+  "frozenRuntimeCommit": "3bb1b0dc66ae77baf59d0e89ab9edf257a244d10",
+  "depotEchoClip": {
+    "layout": "freight-depot-loading-loop",
+    "operation": "Riy",
+    "reviewBuild": "echo",
+    "seed": 17031991,
+    "automated": true,
+    "startTimeApproxSeconds": 100,
+    "durationSeconds": 20,
+    "audio": "SFX track present; user mute/music settings may have changed during review. Audible mix quality remains unqualified.",
+    "performanceInvalidated": true
+  },
+  "riverSystemsClip": {
+    "layout": "river-port-floodgate-yard",
+    "operation": "Single Drone",
+    "reviewBuild": "systems",
+    "seed": 17031991,
+    "automated": true,
+    "startTimeApproxSeconds": 132,
+    "durationSeconds": 20,
+    "audio": "Audio track present; master muted. Not audible-mix evidence.",
+    "performanceInvalidated": true,
+    "laterOutcome": "Lost at350seconds after10upgrades;3191cleared;300contactdamage. Automated review, no records."
   }
 }
