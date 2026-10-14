@@ -1,3 +1,4 @@
+import { createRegionMotionQuery } from "./region-motion-query.mjs";
 import * as THREE from "../../../optional-practice/civilian-fpv/vendor/three.module.js";
 import RAPIER from "../../../optional-practice/civilian-fpv/vendor/rapier/rapier.mjs";
 import { validateRegionManifest } from "./region-manifest.mjs";
@@ -155,6 +156,14 @@ export async function prepareTerrainWindow(
     return true;
   }
   return Object.freeze({
+    castMotion: createRegionMotionQuery({
+      world,
+      local,
+      covers,
+      colliderIds,
+      layer: "terrain",
+      live,
+    }),
     group,
     snapshot: () => ({
       terrainPrepared: !disposed,
