@@ -1,0 +1,46 @@
+TAP version 13
+# Subtest: every destination uses one complete approval group and explicit runtime dependency
+ok 1 - every destination uses one complete approval group and explicit runtime dependency
+  ---
+  duration_ms: 1.385625
+  ...
+# Subtest: Team lifecycle keeps cultural-v2 current and superseded editions archived
+ok 2 - Team lifecycle keeps cultural-v2 current and superseded editions archived
+  ---
+  duration_ms: 544.966458
+  ...
+# Subtest: authored destination selection keeps exact opaque owner IDs
+ok 3 - authored destination selection keeps exact opaque owner IDs
+  ---
+  duration_ms: 1.932333
+  ...
+# Subtest: worker bootstrap mapping gates only exact optional source routes and keeps current Solo core
+not ok 4 - worker bootstrap mapping gates only exact optional source routes and keeps current Solo core
+  ---
+  duration_ms: 1.246833
+  location: '/private/tmp/revealline-main-offline-baseline-5agdpa6o/scripts/test-offline-destinations.mjs:144:1'
+  failureType: 'testCodeFailure'
+  error: 'bootstrap metadata stays bounded independently of the mission table'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (file:///private/tmp/revealline-main-offline-baseline-5agdpa6o/scripts/test-offline-destinations.mjs:158:3)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+1..4
+# tests 4
+# suites 0
+# pass 3
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 5045.826542

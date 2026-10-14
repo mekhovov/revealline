@@ -20,6 +20,7 @@ const included = new Set([
   'game/audio-preferences.mjs',
   'game/audio/dialogue-mix.mjs',
   'game/ui/encounter-audio.mjs',
+  'game/ui/world-ambience.mjs',
   'game/ui/destruction-audio.mjs',
   'game/ui/human-reaction-policy.mjs',
   'game/ui/destruction-level.mjs',

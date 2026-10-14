@@ -1,0 +1,30 @@
+TAP version 13
+# Subtest: every standalone SIM selector includes exact shared battlefield bytes without the combat runtime
+ok 1 - every standalone SIM selector includes exact shared battlefield bytes without the combat runtime
+  ---
+  duration_ms: 2375.45
+  ...
+# Subtest: final bundled SIM caches pin the full battlefield closure and still reject missing or foreign imports
+ok 2 - final bundled SIM caches pin the full battlefield closure and still reject missing or foreign imports
+  ---
+  duration_ms: 2647.791209
+  ...
+# Subtest: texture inspection closes over actual bounded optional-package bytes and the retained GLB
+ok 3 - texture inspection closes over actual bounded optional-package bytes and the retained GLB
+  ---
+  duration_ms: 2061.129084
+  ...
+# Subtest: texture acceptance output names cannot escape the isolated fixture directory
+ok 4 - texture acceptance output names cannot escape the isolated fixture directory
+  ---
+  duration_ms: 0.653917
+  ...
+1..4
+# tests 4
+# suites 0
+# pass 4
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 5406.489

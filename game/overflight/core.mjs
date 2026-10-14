@@ -1,4 +1,14 @@
-import { overflightFlightProfile } from './flight-profile.mjs';
+import {
+  createOverflightTerrain,
+  overflightTerrainClear,
+  overflightTerrainHit,
+  overflightTerrainOpenPoint,
+  overflightTerrainWaypoint,
+  moveOverflightThroughTerrain,
+  damageOverflightTerrain,
+  constrainOverflightTerrainAttack,
+} from './terrain.mjs';
+import { overflightFlightProfile, OVERFLIGHT_PLAYER_RADIUS } from './flight-profile.mjs';
 import {
   applyOverflightGuard,
   overflightArmoredDamage,
@@ -156,6 +166,8 @@ export function createOverflightRun(
   const projectileCapacity = compiled.resources?.pools?.projectiles ?? 512;
   const run = {
     compiled,
+    terrain: fixture ? null : createOverflightTerrain(compiled.terrain, compiled.arena),
+    _nextTerrainStrike: 1,
     flight,
     rulesVersion: compiled.rulesVersion ?? (compiled.format.endsWith('V2') ? 2 : 1),
     difficulty: compiled.difficulty ?? 'standard',
@@ -176,7 +188,7 @@ export function createOverflightRun(
       heading: -Math.PI / 2,
       vx: 0,
       vy: 0,
-      radius: 9,
+      radius: OVERFLIGHT_PLAYER_RADIUS,
       hull: flight.maxHull,
       maxHull: flight.maxHull,
       boostRemaining: 0,
@@ -392,6 +404,17 @@ export function createOverflightRun(
     _resumePhase: 'playing',
   };
   if (fixture) initializeFixture(run);
+  if (run.terrain)
+    Object.assign(
+      run.player,
+      overflightTerrainOpenPoint(
+        run.terrain,
+        run.player.x,
+        run.player.y,
+        run.player.radius,
+        compiled.arena,
+      ),
+    );
   camera(run);
   rebuildOverflightGrid(run._grid, run.enemies);
   updatePopulationStats(run);
@@ -589,6 +612,11 @@ export function spawnOverflightEnemy(run, options = {}) {
     _rallySteeringX: 0,
     _rallySteeringY: 0,
   });
+  if (run.terrain)
+    Object.assign(
+      enemy,
+      overflightTerrainOpenPoint(run.terrain, enemy.x, enemy.y, enemy.radius, run.compiled.arena),
+    );
   if (supportFamilies.has(family)) {
     const index = run._supportSources.indexOf(null);
     if (index >= 0) run._supportSources[index] = enemy;
@@ -692,18 +720,27 @@ export function damageOverflightArea(
   y,
   radius,
   damage,
-  { push = 0, slow = 0, slowMultiplier = 0.55, fieldDamageInterval = 0, origin = null } = {},
+  {
+    push = 0,
+    slow = 0,
+    slowMultiplier = 0.55,
+    fieldDamageInterval = 0,
+    origin = null,
+    terrainStrike = null,
+  } = {},
 ) {
   if (![x, y, radius, damage].every(Number.isFinite) || radius < 0 || damage < 0)
     throw new RangeError('Invalid area attack.');
   if (origin && ![origin.x, origin.y].every(Number.isFinite))
     throw new RangeError('Invalid attack origin.');
+  if (origin && !overflightTerrainClear(run.terrain, origin.x, origin.y, x, y)) return 0;
   let hit = 0;
   const candidates = visitOverflightGrid(run._grid, x, y, radius + run._maxEnemyRadius, (enemy) => {
     if (enemy.warning > 0 || run.phase === 'won' || run.phase === 'lost') return;
     const dx = enemy.x - x,
       dy = enemy.y - y;
     if (dx * dx + dy * dy > (radius + enemy.radius) ** 2) return;
+    if (!overflightTerrainClear(run.terrain, x, y, enemy.x, enemy.y)) return;
     hit++;
     if (slow) {
       enemy.slowUntil = Math.max(enemy.slowUntil, run.tick + Math.ceil(slow * 60));
@@ -726,12 +763,17 @@ export function damageOverflightArea(
     damageEnemy(run, enemy, damage, origin ?? { x, y });
   });
   run.stats.collisionCandidates += candidates;
+  if (damageOverflightTerrain(run.terrain, x, y, radius, terrainStrike)) {
+    sound(run, 'impact', 1, run.terrain.lastImpact);
+    effect(run, 'impact', run.terrain.lastImpact.x, run.terrain.lastImpact.y, 24);
+  }
   return hit;
 }
 
 function damageEnemy(run, enemy, damage, origin = run.player) {
   if (
     !enemy.active ||
+    !overflightTerrainClear(run.terrain, origin.x, origin.y, enemy.x, enemy.y) ||
     enemy.warning > 0 ||
     run.phase === 'won' ||
     run.phase === 'lost' ||
@@ -803,6 +845,7 @@ function safeHandoff(run) {
       index < 9
         ? clamp(player.y + (index ? Math.sin(angle) * 120 : 0), 20, run.compiled.arena.height - 20)
         : run.compiled.arena.height * ((Math.floor((index - 9) / 4) + 0.5) / 3);
+    if (!overflightTerrainClear(run.terrain, x, y, x, y, player.radius + 20)) continue;
     let score = 0;
     visitOverflightGrid(run._grid, x, y, 80, (enemy) => {
       if ((enemy.x - x) ** 2 + (enemy.y - y) ** 2 < 80 ** 2) score++;
@@ -948,6 +991,20 @@ function movePlayer(run, input) {
       player.radius,
       run.compiled.arena.height - player.radius,
     );
+  }
+  if (run.terrain) {
+    const strikes = run.terrain.strikes;
+    const x = player.x,
+      y = player.y;
+    player.x = beforeX;
+    player.y = beforeY;
+    moveOverflightThroughTerrain(run.terrain, player, x, y, {
+      boostToken: player.boostRemaining > 0 ? run._boostStartedTick : null,
+    });
+    if (run.terrain.strikes > strikes) {
+      sound(run, 'impact', 1, run.terrain.lastImpact);
+      effect(run, 'impact', run.terrain.lastImpact.x, run.terrain.lastImpact.y, 24);
+    }
   }
   const pulse = moduleParameters(
     run,
@@ -1342,6 +1399,13 @@ function moveEnemies(run) {
       behaviorSpeed *
       (supported ? 1.08 : 1) *
       (enemy.slowUntil > run.tick ? enemy.slowMultiplier : 1);
+    if (run.terrain && !bursting && speed && (dx || dy)) {
+      const intended = { x: enemy.x + dx * 240, y: enemy.y + dy * 240 };
+      const target = overflightTerrainWaypoint(run.terrain, enemy, intended, run.compiled.arena);
+      const length = Math.hypot(target.x - enemy.x, target.y - enemy.y) || 1;
+      dx = (target.x - enemy.x) / length;
+      dy = (target.y - enemy.y) / length;
+    }
     const nextX = enemy.x + dx * speed * OVERFLIGHT_STEP + (enemy.pushX ?? 0),
       nextY = enemy.y + dy * speed * OVERFLIGHT_STEP + (enemy.pushY ?? 0);
     if (
@@ -1358,8 +1422,12 @@ function moveEnemies(run) {
       // A sprinter's already-committed burst still completes before turning.
       enemy._approachComplete = true;
     }
-    enemy.x = clamp(nextX, enemy.radius, run.compiled.arena.width - enemy.radius);
-    enemy.y = clamp(nextY, enemy.radius, run.compiled.arena.height - enemy.radius);
+    moveOverflightThroughTerrain(
+      run.terrain,
+      enemy,
+      clamp(nextX, enemy.radius, run.compiled.arena.width - enemy.radius),
+      clamp(nextY, enemy.radius, run.compiled.arena.height - enemy.radius),
+    );
     enemy.pushX = 0;
     enemy.pushY = 0;
     if (dx || dy) enemy.heading = Math.atan2(dy, dx);
@@ -1380,7 +1448,10 @@ function moveEnemies(run) {
       const attack = run.priorityAttacks.find((record) => !record.active);
       const spec =
         run.rulesVersion >= 2 && !run.fixture
-          ? overflightAttackSpec(enemy, run.player, run.compiled.combat)
+          ? constrainOverflightTerrainAttack(
+              run.terrain,
+              overflightAttackSpec(enemy, run.player, run.compiled.combat),
+            )
           : null;
       if (attack && (!spec || (visible(run, enemy, -20) && hasOverflightEscape(run, spec)))) {
         Object.assign(attack, {
@@ -1495,7 +1566,7 @@ function primaryAttack(run) {
 function queuePayload(run, payload) {
   const echo = run._echoes.find((record) => !record.active);
   if (!echo) throw new Error('Primary payload pool is too small for its fire rate.');
-  Object.assign(echo, payload, { active: true });
+  Object.assign(echo, payload, { active: true, terrainStrike: run._nextTerrainStrike++ });
 }
 
 function queuePulse(run, x, y, radius, damage, remaining, push = 0, kind = 'proximity-pulse') {
@@ -1574,6 +1645,19 @@ function advanceProjectiles(run) {
     projectile.x += projectile.vx * OVERFLIGHT_STEP;
     projectile.y += projectile.vy * OVERFLIGHT_STEP;
     projectile.remaining -= OVERFLIGHT_STEP;
+    const wall = overflightTerrainHit(
+      run.terrain,
+      oldX,
+      oldY,
+      projectile.x,
+      projectile.y,
+      projectile.radius,
+    );
+    if (wall) {
+      projectile.x = oldX + (projectile.x - oldX) * wall.t;
+      projectile.y = oldY + (projectile.y - oldY) * wall.t;
+      projectile.remaining = 0;
+    }
     const segmentLength = Math.hypot(projectile.x - oldX, projectile.y - oldY);
     let nearest = null,
       nearestDistance = Infinity;
@@ -1757,7 +1841,9 @@ function weapons(run) {
       const offset = (index - (echo.count - 1) / 2) * echo.spacing;
       const x = echo.x - Math.sin(echo.heading) * offset,
         y = echo.y + Math.cos(echo.heading) * offset;
-      damageOverflightArea(run, x, y, echo.radius, echo.damage);
+      damageOverflightArea(run, x, y, echo.radius, echo.damage, {
+        terrainStrike: echo.terrainStrike,
+      });
       effect(run, echo.kind, x, y, echo.radius, 0.35);
       if (run.phase !== 'playing') return;
     }

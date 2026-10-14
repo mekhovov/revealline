@@ -33,10 +33,10 @@ const BASE_OPTIONAL_PACKAGE_POLICIES = Object.freeze({
     root: 'optional-practice/civilian-flight/',
     entry: 'optional-practice/civilian-flight/index.html',
     // The installed archive includes the reviewed launcher, access gate and
-    // shared menu CSS closure. The access-gated runtime has 85 files; the
+    // shared menu CSS, battlefield artwork and ambience closure. The runtime has 91 files; the
     // selected source archive adds two reviewed templates within this finite
     // envelope.
-    limits: Object.freeze({ files: 87, bytes: 8 * 1024 * 1024 }),
+    limits: Object.freeze({ files: 93, bytes: 8 * 1024 * 1024 }),
     localFiles: Object.freeze([
       'index.html',
       'app.mjs',
@@ -75,6 +75,7 @@ const BASE_OPTIONAL_PACKAGE_POLICIES = Object.freeze({
       'game/audio/dialogue-mix.mjs',
       'game/ui/destruction-audio.mjs',
       'game/ui/encounter-audio.mjs',
+      'game/ui/world-ambience.mjs',
       'game/ui/movement-audio.mjs',
       'game/ui/dialogue-channel.mjs',
       'optional-practice/install-context.mjs',
@@ -598,7 +599,9 @@ export const OPTIONAL_PACKAGE_POLICIES = Object.freeze(
         ]),
         limits: Object.freeze({
           ...policy.limits,
-          files: id === 'civilian-fpv' ? 96 : id === 'fpv-worlds' ? 128 : policy.limits.files,
+          // Five exact shared battlefield modules extend each 3D package;
+          // existing byte budgets and the remaining dependency boundary stay fixed.
+          files: id === 'civilian-fpv' ? 101 : id === 'fpv-worlds' ? 133 : policy.limits.files,
           bytes: id === 'fpv-worlds' ? 20 * 1024 * 1024 : policy.limits.bytes,
         }),
         localFiles: Object.freeze([
@@ -627,6 +630,14 @@ export const OPTIONAL_PACKAGE_POLICIES = Object.freeze(
                   'game/hunt/industrial-soldier-kit.mjs',
                   'optional-practice/civilian-fpv/industrial-soldiers.mjs',
                   'optional-practice/civilian-fpv/industrial-vehicles.mjs',
+                  // All three applications import the SIM profile catalogue.
+                  // Its optional battlefield presets share the native painter,
+                  // not the Overflight simulation, renderer or Creator app.
+                  'optional-practice/civilian-fpv/battlefield-ground.mjs',
+                  'game/overflight/worlds.mjs',
+                  'game/overflight/terrain.mjs',
+                  'game/presentation/overflight-world-art.mjs',
+                  'game/presentation/overflight-world-slots.mjs',
                 ]
               : []),
             'optional-practice/guide.mjs',

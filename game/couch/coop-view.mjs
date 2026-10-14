@@ -1,4 +1,10 @@
 import { requireAcceptedAttemptAppearance } from '../presentation/attempt-appearance.mjs';
+import {
+  sharedBattlefieldGround,
+  createBattlefieldGroundSurface,
+  battlefieldGroundAllowed,
+  paintBattlefieldGroundSpan,
+} from '../presentation/battlefield-ground.mjs';
 import { canvasInterfaceFonts } from '../presentation/theme-system.mjs';
 import { coopCombatView } from '../coop/combat-patrols.mjs';
 import { teamPictureArenaLevel } from '../coop/picture-source.mjs';
@@ -133,7 +139,8 @@ function prepareActorAppearance(snapshot) {
 
 /** Draw the authoritative board once. Rendering never advances game state. */
 export function createCoopPainter(canvas) {
-  const arcadeAdapter = createArcadeAdapter(),
+  const battlefieldGround = createBattlefieldGroundSurface(),
+    arcadeAdapter = createArcadeAdapter(),
     runAcceptedAppearances = new WeakMap(),
     runCollections = new WeakMap(),
     runArtRevisions = new WeakMap();
@@ -254,6 +261,15 @@ export function createCoopPainter(canvas) {
     combatPresentation.setArtRevision(artRevision);
     destruction.setArtRevision(artRevision);
     const selectedArt = arcadeAdapter.resolve(presentation, runCollections.get(run) ?? null);
+    const ground = battlefieldGround.prepare(
+      sharedBattlefieldGround().snapshot().world,
+      run.width * 16,
+      run.height * 16,
+      battlefieldGroundAllowed({
+        environmentPin: runAcceptedAppearances.get(run)?.environmentPin,
+        presentation,
+      }),
+    );
     if (selectedArt !== artSnapshot) prepareArt(selectedArt);
     const cueScale = coopCueScale(canvas.clientWidth, run.width, textSize);
     if (actorAppearance !== null && !['fpv', 'campaign'].includes(actorAppearance?.style))
@@ -458,6 +474,27 @@ export function createCoopPainter(canvas) {
         // cells and score intact while retiring the live arena's concealment/cues.
         if (run.status === 'won') return;
       }
+      if (ground)
+        for (let y = 0; y < run.height; y++) {
+          let start = -1;
+          for (let x = 0; x <= run.width; x++) {
+            const covered = x < run.width && run.cells[y * run.width + x] === 0;
+            if (covered && start < 0) start = x;
+            if (!covered && start >= 0) {
+              paintBattlefieldGroundSpan(
+                ctx,
+                ground,
+                start,
+                y,
+                x - start,
+                1,
+                run.width,
+                run.height,
+              );
+              start = -1;
+            }
+          }
+        }
       for (let y = 0; y < run.height; y++) {
         for (let x = 0; x < run.width; x++) {
           const cell = run.cells[y * run.width + x];
@@ -482,8 +519,8 @@ export function createCoopPainter(canvas) {
               ctx.fill();
             }
           } else {
-            if (picture?.image) {
-              // Required picture concealment is opaque black in every theme.
+            if (!ground && picture?.image) {
+              // Without explicit decorative ground, keep the original opaque concealment.
               ctx.fillStyle = '#000000';
               ctx.fillRect(x, y, 1, 1);
             }
@@ -1164,6 +1201,7 @@ export function createCoopPainter(canvas) {
         runCollections.set(run, selectedArcadeCollection(arcadeProvider()));
     },
     dispose() {
+      battlefieldGround.clear();
       actors.reset();
       destruction.reset();
       arcadeAdapter.clear();

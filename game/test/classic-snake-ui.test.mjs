@@ -287,6 +287,12 @@ async function harness({
       root.append(group);
       return { dispose() {} };
     },
+    // The browser host injects this dependency into theme-family controls.
+    // Keep the VM harness boundary complete even though its theme stub does
+    // not mount the battlefield-ground picker.
+    mountBattlefieldGroundControls() {
+      return { refresh() {}, dispose() {} };
+    },
     mountGlobalSettingsTools: (options) =>
       (tools = sharedTools
         ? mountGlobalSettingsTools(options)
