@@ -685,3 +685,78 @@ test('review stop immediately releases all actions, survives replacements, and k
   assert.equal(review.input({ tick: 0, time: 0 }).boost, true);
   assert.equal(pilotCalls, 2);
 });
+
+test('native Settings initialization preserves operation cards and navigation on Home', async () => {
+  const { readFile } = await import('node:fs/promises');
+  const { runInNewContext } = await import('node:vm');
+  const { parse } = await import('acorn');
+  const { Document } = await import('./helpers/couch-dom.mjs');
+  const { mountModePlayShell } = await import('../ui/mode-play-shell.mjs');
+  const { mountModeSettings } = await import('../ui/mode-settings-view.mjs');
+  const { attachSettingsPanels } = await import('../ui/settings-panels.mjs');
+  const { createOverflightOperationCards } = await import('../overflight/operation-view.mjs');
+  const source = await readFile(new URL('../overflight/app.mjs', import.meta.url), 'utf8');
+  const ast = parse(source, { ecmaVersion: 'latest', sourceType: 'module' });
+  const settings = ast.body.find(
+    (node) =>
+      node.type === 'ExpressionStatement' &&
+      node.expression.type === 'AssignmentExpression' &&
+      node.expression.left.name === 'settingsView',
+  ).expression.right;
+  for (const current of ['overflight', 'overflight-riy', 'overflight-hunt']) {
+    const document = new Document();
+    const nodes = new Map();
+    const get = (id) => {
+      if (!nodes.has(id)) {
+        const node = document.createElement('section');
+        node.id = id;
+        document.body.append(node);
+        nodes.set(id, node);
+      }
+      return nodes.get(id);
+    };
+    const operationCards = createOverflightOperationCards({
+      document,
+      current,
+      text: (key) => key,
+      destination: (path) => path,
+      onSelect() {},
+      onLeave() {},
+    });
+    const shell = mountModePlayShell({
+      document,
+      slots: { homeChoices: operationCards.root, settings: get('overflight-settings') },
+    });
+    const settingsView = runInNewContext(source.slice(settings.start, settings.end), {
+      mountModeSettings,
+      settingsRoot: shell.elements.dialogs.settings,
+      shell,
+      operationCards,
+      getLocale: () => 'en',
+      setMenuIcon() {},
+      attachSettingsPanels,
+      $: get,
+      field: get,
+      el: (tag) => document.createElement(tag),
+      touchSettings: get('touch-settings'),
+      audioCues: get('audio-cues'),
+      offlineSettings: get('offline-settings'),
+    });
+    const cards = operationCards.root.querySelectorAll('[data-home-choice]');
+    assert.equal(cards.length, 5);
+    for (const card of cards) {
+      assert.equal(
+        shell.elements.home.contains(card),
+        true,
+        `${current}: ${card.id} stays on Home`,
+      );
+      assert.equal(shell.elements.dialogs.settings.contains(card), false);
+    }
+    assert.equal(settingsView.panels.gameplay.contains(get('difficulty')), true);
+    shell.open('settings');
+    shell.back();
+    assert.equal(shell.elements.home.contains(operationCards.root), true);
+    settingsView.destroy();
+    shell.dispose();
+  }
+});

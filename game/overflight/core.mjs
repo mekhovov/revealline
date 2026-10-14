@@ -553,6 +553,7 @@ export function spawnOverflightEnemy(run, options = {}) {
           : 96
         : (options.speed ?? 40),
     pattern: options.pattern ?? 'pursuit',
+    _approachComplete: false,
     vx: Math.cos(heading),
     vy: Math.sin(heading),
     steeringX: Math.cos(heading),
@@ -1268,7 +1269,11 @@ function moveEnemies(run) {
       const targetX = run.player.x - enemy.x,
         targetY = run.player.y - enemy.y;
       distance = Math.hypot(targetX, targetY) || 1;
-      if (['crossing', 'flank'].includes(enemy.pattern) && distance > 120) {
+      if (
+        ['crossing', 'flank'].includes(enemy.pattern) &&
+        !(run.rulesVersion >= 3 && enemy._approachComplete) &&
+        distance > 120
+      ) {
         enemy.steeringX = enemy.vx;
         enemy.steeringY = enemy.vy;
       } else {
@@ -1337,16 +1342,24 @@ function moveEnemies(run) {
       behaviorSpeed *
       (supported ? 1.08 : 1) *
       (enemy.slowUntil > run.tick ? enemy.slowMultiplier : 1);
-    enemy.x = clamp(
-      enemy.x + dx * speed * OVERFLIGHT_STEP + (enemy.pushX ?? 0),
-      enemy.radius,
-      run.compiled.arena.width - enemy.radius,
-    );
-    enemy.y = clamp(
-      enemy.y + dy * speed * OVERFLIGHT_STEP + (enemy.pushY ?? 0),
-      enemy.radius,
-      run.compiled.arena.height - enemy.radius,
-    );
+    const nextX = enemy.x + dx * speed * OVERFLIGHT_STEP + (enemy.pushX ?? 0),
+      nextY = enemy.y + dy * speed * OVERFLIGHT_STEP + (enemy.pushY ?? 0);
+    if (
+      run.rulesVersion >= 3 &&
+      !run.fixture &&
+      ['crossing', 'flank'].includes(enemy.pattern) &&
+      (nextX < enemy.radius ||
+        nextY < enemy.radius ||
+        nextX > run.compiled.arena.width - enemy.radius ||
+        nextY > run.compiled.arena.height - enemy.radius)
+    ) {
+      // A committed crossing ends at the world edge. The next ordinary steering
+      // update starts pursuit; surviving packs never accumulate against clamps.
+      // A sprinter's already-committed burst still completes before turning.
+      enemy._approachComplete = true;
+    }
+    enemy.x = clamp(nextX, enemy.radius, run.compiled.arena.width - enemy.radius);
+    enemy.y = clamp(nextY, enemy.radius, run.compiled.arena.height - enemy.radius);
     enemy.pushX = 0;
     enemy.pushY = 0;
     if (dx || dy) enemy.heading = Math.atan2(dy, dx);

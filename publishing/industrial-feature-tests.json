@@ -39,6 +39,7 @@
         "game/test/overflight-raid-variants.test.mjs",
         "game/test/overflight-records.test.mjs",
         "game/test/overflight-rebalance.test.mjs",
+        "game/test/overflight-boundary.test.mjs",
         "game/test/overflight-riy-squad.test.mjs",
         "game/test/overflight-raid-balance.test.mjs"
       ]

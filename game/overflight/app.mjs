@@ -1816,7 +1816,6 @@ settingsView = mountModeSettings({
   attachPanels: attachSettingsPanels,
   groups: {
     gameplay: [
-      operationCards.root,
       $('open-flight-deck'),
       field('difficulty'),
       $('difficulty-help'),
