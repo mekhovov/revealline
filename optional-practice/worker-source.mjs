@@ -45,22 +45,29 @@ export function installPracticeWorker(scope, pins, revision) {
       void (async () => {
         try {
           const { url, bytes: limit, sha256 } = data ?? {},
-            index =
-              url ===
-              'https://raw.githubusercontent.com/mekhovov/revealline/main/authoring/fpv-worlds/published/free-worlds-v1/index.json';
+            index = [
+              'https://raw.githubusercontent.com/mekhovov/revealline/main/authoring/fpv-worlds/published/free-worlds-v1/index.json',
+              'https://raw.githubusercontent.com/mekhovov/revealline/main/authoring/fpv-worlds/published/free-worlds-v2/index.json',
+            ].includes(url),
+            page =
+              typeof url === 'string' &&
+              /^https:\/\/raw\.githubusercontent\.com\/mekhovov\/revealline\/[a-f0-9]{40}\/authoring\/fpv-worlds\/published\/free-worlds-v2\/[a-z0-9_-]+\.json$/.test(
+                url,
+              );
           if (
             data?.type !== 'world-read' ||
             (index
               ? limit !== 32768 || sha256 !== undefined
               : !Number.isSafeInteger(limit) ||
                 limit <= 0 ||
-                limit > 67108864 ||
+                limit > (page ? 32768 : 67108864) ||
                 typeof sha256 !== 'string' ||
                 !/^[a-f0-9]{64}$/.test(sha256) ||
                 typeof url !== 'string' ||
-                !/^https:\/\/raw\.githubusercontent\.com\/mekhovov\/revealline\/[a-f0-9]{40}\/authoring\/fpv-worlds\/(?:[a-z0-9_-]+\/)+[a-z0-9_-]+(?:\.[a-z0-9_-]+)*\.rlpack$/.test(
-                  url,
-                ))
+                (!page &&
+                  !/^https:\/\/raw\.githubusercontent\.com\/mekhovov\/revealline\/[a-f0-9]{40}\/authoring\/fpv-worlds\/(?:[a-z0-9_-]+\/)+[a-z0-9_-]+(?:\.[a-z0-9_-]+)*\.rlpack$/.test(
+                    url,
+                  )))
           )
             throw new Error('Invalid world request');
           let loaded = 0;
