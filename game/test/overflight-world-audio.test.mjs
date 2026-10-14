@@ -209,6 +209,45 @@ test('armor changes reserve a short foreground window before later destruction r
   assert.equal(sound.humanReaction({ family: 'runner', vocals: true }), true);
 });
 
+test('cross-frame friendly impacts cannot mask player damage and each impact channel remains bounded', async (t) => {
+  const { soundscape: sound, context } = audioHarness();
+  t.after(() => sound.dispose());
+  await sound.enable();
+  for (const name of Object.keys(EFFECT_BANK))
+    sound.feedbackDirector.buffers.set(name, { duration: 0.5 });
+  const audio = createOverflightAudio(sound),
+    state = run();
+  delete state.compiled.presentation;
+  state.events = [{ type: 'impact' }];
+  audio.update(state);
+  assert.ok([...sound.voices].some((voice) => voice.priority === 3));
+  assert.equal(sound.humanReaction({ family: 'runner', vocals: true }), true);
+  assert.ok([...sound.voices].some((voice) => voice.humanReaction));
+
+  context.currentTime += 1 / 60;
+  state.tick++;
+  state.events = [{ type: 'damage' }];
+  audio.update(state);
+  assert.ok([...sound.voices].some((voice) => voice.priority === 5));
+  assert.ok([...sound.voices].every((voice) => !voice.humanReaction || voice.ended));
+  assert.equal(sound.humanReaction({ family: 'runner', vocals: true }), false);
+  assert.equal(sound.encounter('impact', { board: 'overflight' }), false);
+  assert.equal(
+    sound.encounter('impact', { board: 'overflight', semantic: 'friendly-impact' }),
+    false,
+  );
+  for (const semantic of ['player-damage', 'custom-1', 'custom-2'])
+    assert.equal(sound.encounter('impact', { board: 'overflight', semantic }), false);
+
+  context.currentTime += 0.13;
+  assert.equal(sound.encounter('impact', { board: 'overflight' }), true);
+  assert.equal(
+    sound.encounter('impact', { board: 'overflight', semantic: 'friendly-impact' }),
+    true,
+  );
+  assert.equal(sound.encounter('impact', { board: 'overflight' }), false);
+});
+
 test('native adapter admits damage and armor ahead of ordinary impacts while Classic remains independent of gore', () => {
   const heard = [];
   const audio = createOverflightAudio(
