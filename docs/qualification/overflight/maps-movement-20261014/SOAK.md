@@ -1,5 +1,22 @@
 # Fifteen-minute reference soak
 
+## Current-source repeat: passed
+
+The separately restarted repeat on runtime `08f5e6e0ee93ae13955321c6a187e5f1148eef84` completed its 30-second warm-up and 900-second measurement. It is valid and passes all cadence thresholds: **118.90 FPS, p95 9.7 ms, p99 10.6 ms, 0.2374% of intervals above 33.3 ms**. All 107,009 intervals remain, including the worst 154.6 ms stall. The assigned interval duration is 899.9999 seconds and the protocol marks the window complete. Capture time: 2026-10-14 18:10:18 UTC.
+
+The normal-effects reference retained 1,500 simulated / 700 visible enemies. Hardware/browser/backing conditions remain M4 Pro, macOS 26.7.1, Codex Chromium 155, 936×1143 CSS pixels/DPR2 and 960×540 backing. Task CPU test workers and temporary production hosts were stopped; no video recording ran. Other desktop activity was not isolated. Disk filled during this attempt, blocking a documentation commit; only byte-verified temporary download duplicates already preserved on GitHub were removed. Light evidence and Git work continued. These conditions and stalls are included, not excluded or attributed to a proven cause.
+
+Across all 62 periodic resource samples from 0–915.03 gameplay seconds, canvas ownership stays at one and base atlas storage at **28,467,840 bytes**. Pool capacities remain 2,500 enemies / 2,048 pickups / 512 effects. Allocated sprites grow from 1,355 to **1,843**, the same terminal value. Context losses/restorations, dropped simulation time and raw overflow are zero. Heap-used samples range from 54,688,930 to 124,654,380 bytes; these observations are not retained-object leak proof.
+
+- [Complete repeat raw capture](native/reference-soak-repeat-08f5.json.gz)
+- [Repeat summary with every resource sample](SOAK-REPEAT-SUMMARY.json)
+- Decompressed raw SHA-256: `bb395e844f735e3b28cc08e4f26a9ad115b311ec7d8b5097b97081f8b3ea7a94`
+- [Verified duplicate-download preservation receipt](temporary-download-deduplication.json)
+
+This one repeat passes the local reference-workload gate. It does not erase the original failed cadence result below, establish causation for the difference, qualify other devices, or prove every gameplay build and layout. The three independent earned late-content trials are reported separately in [late-content timing](NATIVE-LATE-CONTENT.md).
+
+## Original retained attempt
+
 **Lifecycle completed; performance did not pass.** The frozen runtime at `3bb1b0dc66ae77baf59d0e89ab9edf257a244d10` completed the 30-second warm-up and 900-second measurement window without a crash, context loss, simulation-time drop or raw-sample overflow. Its measured p95 cadence was **22.60 ms**, above the unchanged 18 ms target.
 
 Evidence was captured at 2026-10-14 15:12:00 UTC in the Codex in-app Chromium browser. The reference workload retained 1,500 simulated and 700 center-visible enemies, a 960×540 backing canvas, and viewport 936×1143 at reported device-pixel ratio 2. Background build activity and other desktop work were present; these observations are retained rather than excluded from the result. No video recording was active. External reference hardware was not tested.
