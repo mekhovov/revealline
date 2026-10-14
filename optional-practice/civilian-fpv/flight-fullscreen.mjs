@@ -851,6 +851,7 @@ export function mountFlightPractice({
       state.replay,
       state.watch,
       state.section,
+      state.fullPractice,
       state.checkpoint,
       state.rate,
     ]);
@@ -866,15 +867,27 @@ export function mountFlightPractice({
           ? uk
             ? 'Тренування ділянки відновлює записаний вхід і не змінює результати. Нова спроба потребує ввімкнення двигунів.'
             : 'Section practice restores its recorded entry without changing records. A new attempt waits for Arm.'
-          : uk
-            ? 'Перегляньте приклад, потім спробуйте весь маршрут. Нова спроба потребує ввімкнення двигунів.'
-            : 'Watch the example, then try the full route. A new attempt waits for Arm.';
+          : state.fullPractice
+            ? uk
+              ? 'Тренування всього маршруту починається зі старту без заліку й збереження запису. Увімкніть двигуни, коли будете готові.'
+              : 'Full-route practice starts at launch without score or saved recordings. Arm when you are ready.'
+            : state.watch
+              ? uk
+                ? 'Перегляньте приклад, потім спробуйте весь маршрут. Нова спроба потребує ввімкнення двигунів.'
+                : 'Watch the example, then try the full route. A new attempt waits for Arm.'
+              : uk
+                ? 'Повторна спроба повертає на старт. Увімкніть двигуни, коли будете готові.'
+                : 'Retry returns to launch. Arm when you are ready.';
       const labels = {
         retry: uk ? 'Ще раз' : 'Retry',
         watch: uk ? 'Переглянути приклад' : 'Watch example',
-        practice: uk
-          ? `Тренувати ділянку ${state.section ?? ''}`
-          : `Practise section ${state.section ?? ''}`,
+        practice: state.section
+          ? uk
+            ? `Тренувати ділянку ${state.section}`
+            : `Practise section ${state.section}`
+          : uk
+            ? 'Тренувати весь маршрут'
+            : 'Practise full route',
         try: uk
           ? state.checkpoint
             ? 'Спробувати цю ділянку'
@@ -888,12 +901,12 @@ export function mountFlightPractice({
         button.textContent = labels[action];
         button.hidden = state.replay
           ? action === 'practice'
-            ? !state.section
+            ? !(state.section || state.fullPractice)
             : !['try', 'repeat'].includes(action)
           : action === 'watch'
             ? !state.watch
             : action === 'practice'
-              ? !state.section
+              ? !(state.section || state.fullPractice)
               : action !== 'retry';
       }
       speedLabel.hidden = !state.replay;
@@ -932,18 +945,16 @@ export function mountFlightPractice({
       });
       const points = [
         course.spawn,
-        ...(course.steps?.[state.mode] ?? [])
-          .slice(0, 64)
-          .map((step) =>
-            step.min && step.max
-              ? { x: (step.min.x + step.max.x) / 2, z: (step.min.z + step.max.z) / 2 }
-              : step.type === 'gate'
-                ? {
-                    x: step.axis === 'x' ? step.at : (step.minSide + step.maxSide) / 2,
-                    z: step.axis === 'z' ? step.at : (step.minSide + step.maxSide) / 2,
-                  }
-                : null,
-          ),
+        ...(course.steps?.[state.mode] ?? []).slice(0, 64).map((step) =>
+          step.min && step.max
+            ? { x: (step.min.x + step.max.x) / 2, z: (step.min.z + step.max.z) / 2 }
+            : step.type === 'gate'
+              ? {
+                  x: step.axis === 'x' ? step.at : (step.minSide + step.maxSide) / 2,
+                  z: step.axis === 'z' ? step.at : (step.minSide + step.maxSide) / 2,
+                }
+              : null,
+        ),
       ].filter((point) => point && Number.isFinite(point.x) && Number.isFinite(point.z));
       for (const [index, point] of points.entries())
         add('circle', {
