@@ -508,7 +508,7 @@ export function drawClassicBoard(
     drawClassicWorldEquipment(ctx, run, world, {
       unit: UNIT,
       palette,
-      timeMs: visualTimeMs,
+      timeMs: reactionTimeMs,
       reduced,
     });
   drawClassicOperationLinks(ctx, run, { unit: UNIT, palette });
