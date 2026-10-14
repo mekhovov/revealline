@@ -1,0 +1,265 @@
+TAP version 13
+# Subtest: combat sprite states follow accepted state and preserve fixed aiming in both visual settings
+ok 1 - combat sprite states follow accepted state and preserve fixed aiming in both visual settings
+  ---
+  duration_ms: 10.28575
+  ...
+# Subtest: damage presentation freezes with gameplay time, does not mask warnings, and resets for pooled actors
+ok 2 - damage presentation freezes with gameplay time, does not mask warnings, and resets for pooled actors
+  ---
+  duration_ms: 1.296958
+  ...
+# Subtest: all native families, wardrobes and motion poses fit two audited textures
+ok 3 - all native families, wardrobes and motion poses fit two audited textures
+  ---
+  duration_ms: 7.655417
+  ...
+# Subtest: field equipment is deterministic, original bounded pixel data with distinct silhouettes
+ok 4 - field equipment is deterministic, original bounded pixel data with distinct silhouettes
+  ---
+  duration_ms: 2.656041
+  ...
+# Subtest: native family gait timing and reduced effects preserve meaningful danger cues
+ok 5 - native family gait timing and reduced effects preserve meaningful danger cues
+  ---
+  duration_ms: 0.523834
+  ...
+# Subtest: authored cast preserves mixed wardrobes and explicit cast only selects a rendered wardrobe
+ok 6 - authored cast preserves mixed wardrobes and explicit cast only selects a rendered wardrobe
+  ---
+  duration_ms: 1.099458
+  ...
+# Subtest: shared effect composites preserve full danger cues and locate chain endpoints in world space
+ok 7 - shared effect composites preserve full danger cues and locate chain endpoints in world space
+  ---
+  duration_ms: 0.946333
+  ...
+# Subtest: cadence retains foreground stalls, excludes known pauses, and exports bounded ordered samples
+ok 8 - cadence retains foreground stalls, excludes known pauses, and exports bounded ordered samples
+  ---
+  duration_ms: 2.154583
+  ...
+# Subtest: benchmark gates remain strict and cannot accept an incomplete protocol
+ok 9 - benchmark gates remain strict and cannot accept an incomplete protocol
+  ---
+  duration_ms: 0.805875
+  ...
+# Subtest: 120 Hz full protocol retains all three measured windows beyond 36000 samples
+ok 10 - 120 Hz full protocol retains all three measured windows beyond 36000 samples
+  ---
+  duration_ms: 19.326542
+  ...
+# Subtest: a paused or hidden trial cannot pass even when its retained cadence is fast
+ok 11 - a paused or hidden trial cannot pass even when its retained cadence is fast
+  ---
+  duration_ms: 0.667708
+  ...
+# Subtest: a completed independent trial freezes before inspection and ignores subsequent pauses
+ok 12 - a completed independent trial freezes before inspection and ignores subsequent pauses
+  ---
+  duration_ms: 0.54975
+  ...
+# Subtest: persistent native remains obey shared settings, preserve live draw counts, and survive recovery without new texture work
+ok 13 - persistent native remains obey shared settings, preserve live draw counts, and survive recovery without new texture work
+  ---
+  duration_ms: 94.546834
+  ...
+# Subtest: enemy behavior cues retain phase, rally direction and reward identity with reduced effects
+ok 14 - enemy behavior cues retain phase, rally direction and reward identity with reduced effects
+  ---
+  duration_ms: 58.405042
+  ...
+# Subtest: renderer submits every visible actor above 64 without texture work, preserves simulation, restores and disposes
+ok 15 - renderer submits every visible actor above 64 without texture work, preserves simulation, restores and disposes
+  ---
+  duration_ms: 57.109041
+  ...
+# Subtest: diagnostic context restoration uses the extension and cancels its timer on destroy
+ok 16 - diagnostic context restoration uses the extension and cancels its timer on destroy
+  ---
+  duration_ms: 521.580125
+  ...
+# Subtest: normal and reduced-effects renderers preserve identical real-core outcomes over 600 ticks
+ok 17 - normal and reduced-effects renderers preserve identical real-core outcomes over 600 ticks
+  ---
+  duration_ms: 342.6475
+  ...
+# Subtest: armor detail follows approach distance without changing actor coverage, quality cues or simulation
+ok 18 - armor detail follows approach distance without changing actor coverage, quality cues or simulation
+  ---
+  duration_ms: 26.84575
+  ...
+# Subtest: Riy native attachments distinguish both escort roles with reduced effects
+ok 19 - Riy native attachments distinguish both escort roles with reduced effects
+  ---
+  duration_ms: 35.648
+  ...
+# Subtest: Riy coverage faces rear for Sweeper, forward for Breaker and hides during Focus
+ok 20 - Riy coverage faces rear for Sweeper, forward for Breaker and hides during Focus
+  ---
+  duration_ms: 42.591375
+  ...
+# Subtest: paged atlas packing stays deterministic, non-overlapping and device-bounded
+ok 21 - paged atlas packing stays deterministic, non-overlapping and device-bounded
+  ---
+  duration_ms: 14.949041
+  ...
+# Subtest: low-capability device routes frames across retained pages and releases every canvas
+ok 22 - low-capability device routes frames across retained pages and releases every canvas
+  ---
+  duration_ms: 39.747042
+  ...
+# Subtest: world art is prepared in bounded retained tiles once, including failure cleanup
+ok 23 - world art is prepared in bounded retained tiles once, including failure cleanup
+  ---
+  duration_ms: 32.251209
+  ...
+# Subtest: ten world renderer lifecycles preserve reference and stress coverage and release every retained page
+ok 24 - ten world renderer lifecycles preserve reference and stress coverage and release every retained page
+  ---
+  duration_ms: 495.099041
+  ...
+# Subtest: accepted Studio actor images and Motion clips bake once and feed native upgrade previews
+ok 25 - accepted Studio actor images and Motion clips bake once and feed native upgrade previews
+  ---
+  duration_ms: 88.216
+  ...
+# Subtest: terrain admission preserves broad connected routes and rejects obstructed experimental layouts
+ok 26 - terrain admission preserves broad connected routes and rejects obstructed experimental layouts
+  ---
+  duration_ms: 18.048042
+  ...
+# Subtest: fast diagonal crossings slide along solid faces and preserve hull
+ok 27 - fast diagonal crossings slide along solid faces and preserve hull
+  ---
+  duration_ms: 0.760792
+  ...
+# Subtest: barriers require two distinct passes or payloads and held contact cannot farm a second hit
+ok 28 - barriers require two distinct passes or payloads and held contact cannot farm a second hit
+  ---
+  duration_ms: 0.449333
+  ...
+# Subtest: navigation routes around permanent cover and keeps a finite shared target cache
+ok 29 - navigation routes around permanent cover and keeps a finite shared target cache
+  ---
+  duration_ms: 30.265083
+  ...
+# Subtest: committed cover clipping is identical for warnings and hits after a barrier breaks
+ok 30 - committed cover clipping is identical for warnings and hits after a barrier breaks
+  ---
+  duration_ms: 0.50875
+  ...
+# Subtest: area damage inspects every visible candidate but cover prevents blast tunnelling
+ok 31 - area damage inspects every visible candidate but cover prevents blast tunnelling
+  ---
+  duration_ms: 14.016083
+  ...
+# Subtest: native Survivor and Raid movement cannot cross cover or damage hull through wall contact
+ok 32 - native Survivor and Raid movement cannot cross cover or damage hull through wall contact
+  ---
+  duration_ms: 53.913667
+  ...
+# Subtest: freight convoy reaches a firing stop before committing, preserves armor and resumes after recovery
+ok 33 - freight convoy reaches a firing stop before committing, preserves armor and resumes after recovery
+  ---
+  duration_ms: 61.743334
+  ...
+# Subtest: warning admission rejects an escape that is geometrically outside danger but behind cover
+ok 34 - warning admission rejects an escape that is geometrically outside danger but behind cover
+  ---
+  duration_ms: 4.124583
+  ...
+# Subtest: native pursuit and authored Raid routes reach the far side of permanent cover
+ok 35 - native pursuit and authored Raid routes reach the far side of permanent cover
+  ---
+  duration_ms: 84.977125
+  ...
+# Subtest: Riy escort following navigates around cover without changing its command clock
+ok 36 - Riy escort following navigates around cover without changing its command clock
+  ---
+  duration_ms: 45.883583
+  ...
+# Subtest: fired Raid projectiles retain their warned cover range after a barrier is destroyed
+ok 37 - fired Raid projectiles retain their warned cover range after a barrier is destroyed
+  ---
+  duration_ms: 23.301875
+  ...
+# Subtest: Raid review approach flanks a visible protected escort without changing simulation state
+ok 38 - Raid review approach flanks a visible protected escort without changing simulation state
+  ---
+  duration_ms: 19.663833
+  ...
+# Subtest: V2 adds explicit editable combat while V1 preserves original durability and capabilities
+ok 39 - V2 adds explicit editable combat while V1 preserves original durability and capabilities
+  ---
+  duration_ms: 46.468334
+  ...
+# Subtest: shield facing, blocked overflow and internal blasts create reliable different approaches
+ok 40 - shield facing, blocked overflow and internal blasts create reliable different approaches
+  ---
+  duration_ms: 8.842333
+  ...
+# Subtest: each tank plate break opens recovery without adding durability or replaying rewards
+ok 41 - each tank plate break opens recovery without adding durability or replaying rewards
+  ---
+  duration_ms: 6.672917
+  ...
+# Subtest: defensive drafts and application reject shield/plating stacks in both modes
+ok 42 - defensive drafts and application reject shield/plating stacks in both modes
+  ---
+  duration_ms: 1.830209
+  ...
+# Subtest: seeded formation decks vary, never repeat, and author bounded relief
+ok 43 - seeded formation decks vary, never repeat, and author bounded relief
+  ---
+  duration_ms: 0.316792
+  ...
+# Subtest: relief waits for committed warnings then provides its full interval without new commitments
+ok 44 - relief waits for committed warnings then provides its full interval without new commitments
+  ---
+  duration_ms: 69.387
+  ...
+# Subtest: fan gaps and temporal warning combinations retain a baseline escape at arena edges
+ok 45 - fan gaps and temporal warning combinations retain a baseline escape at arena edges
+  ---
+  duration_ms: 14.186
+  ...
+# Subtest: mass clearing earns bounded relief without suppressing every subsequent pressure window
+ok 46 - mass clearing earns bounded relief without suppressing every subsequent pressure window
+  ---
+  duration_ms: 352.613083
+  ...
+# Subtest: cache groups stay finite, coexist, and require a deliberate physical reward entry
+ok 47 - cache groups stay finite, coexist, and require a deliberate physical reward entry
+  ---
+  duration_ms: 4.148166
+  ...
+# Subtest: Raid carriers fire a complete committed fan, while legacy carriers retain one projectile
+ok 48 - Raid carriers fire a complete committed fan, while legacy carriers retain one projectile
+  ---
+  duration_ms: 36.191375
+  ...
+# Subtest: a full guard pool defers the objective until a genuine kill frees a slot
+ok 49 - a full guard pool defers the objective until a genuine kill frees a slot
+  ---
+  duration_ms: 7.160041
+  ...
+# Subtest: V2 pulse charge requires displacement, so tiny loops cannot manufacture full power
+ok 50 - V2 pulse charge requires displacement, so tiny loops cannot manufacture full power
+  ---
+  duration_ms: 26.521917
+  ...
+# Subtest: current caches queue the second guard encounter without losing either reward opportunity
+ok 51 - current caches queue the second guard encounter without losing either reward opportunity
+  ---
+  duration_ms: 4.566833
+  ...
+1..51
+# tests 51
+# suites 0
+# pass 51
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2373.518042

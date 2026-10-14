@@ -1,0 +1,49 @@
+{
+  "baseCommit": "29e3bd4a831834c55b8ecf14a204b14784252f38",
+  "workingTree": "uncommitted richer-world implementation; see implementation commit containing this report",
+  "recordedOn": "2026-10-14",
+  "url": "http://127.0.0.1:8899/game/overflight/play.html?operation=riy&lang=en&reviewBuild=fan-shield",
+  "seed": 17031991,
+  "world": "field-crossing",
+  "operation": "riy",
+  "reviewBuild": "fan-shield",
+  "difficulty": "standard",
+  "airframes": 3,
+  "character": "interceptor",
+  "characterHandling": true,
+  "audio": {
+    "master": 0.65,
+    "effects": 0.7,
+    "movement": 0.5,
+    "defeatSounds": "reactions",
+    "spokenCommentator": false,
+    "tap": "shared post-master effects/voices; external HTMLMediaElement music excluded"
+  },
+  "files": [
+    {
+      "path": "riy-field-opening-audio.webm",
+      "bytes": 3736102,
+      "sha256": "dc2f0b79364f4a617c253913860e3c0537646f6a66340a52d4dee3c81b4db216"
+    },
+    {
+      "path": "riy-field-developing-audio.webm",
+      "bytes": 3987429,
+      "sha256": "bd3902fc1cefdcbc6f726a41c2f3cc794dc94dcea8c6ff637809d409215542b2"
+    },
+    {
+      "path": "riy-field-approach-audio.webm",
+      "bytes": 4323627,
+      "sha256": "b5a6feb2a94c50c742ce3e63ccc87c221109baf10c5cacc73c4d65478a1a8605"
+    },
+    {
+      "path": "riy-field-elite-audio.webm",
+      "bytes": 4373501,
+      "sha256": "521336d606425f5d4453811124c1cd4533ebfa0235433a62ac226a8113655215"
+    },
+    {
+      "path": "riy-opening-elite-listening-plus24db.mp3",
+      "bytes": 800204,
+      "sha256": "ac0f9973b693190c78dd9882ff0adf5b81e3d3af7770db4b21a4ab0712f8c5f4"
+    }
+  ]
+}
