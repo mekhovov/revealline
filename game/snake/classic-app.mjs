@@ -112,7 +112,11 @@ import {
   CLASSIC_PACES,
   classicSnakeSurvivalEntry,
 } from './classic-setup.mjs';
-import { createClassicSnakeRatings, classicSnakeRatingForRecord } from './classic-ratings.mjs';
+import {
+  createClassicSnakeRatings,
+  classicSnakeRatingForRecord,
+  classicSnakeRatingCriteriaText,
+} from './classic-ratings.mjs';
 import { createClassicSnakeRecords } from './classic-records.mjs';
 import { resolveClassicSnakeRecipeEntry } from './classic-catalogue-archive.mjs';
 import { createClassicPresentation } from './classic-presentation.mjs';
@@ -1770,28 +1774,14 @@ function refresh() {
   });
 }
 function ratingCriteriaText(run, displayMode = mode) {
-  const eligible = format === 'campaign' && displayMode !== 'versus';
-  const criteria = classicSnakeRatingForRecord({
-    clear: eligible,
-    policy: 'mission',
-    mode: displayMode,
+  return classicSnakeRatingCriteriaText({
     seed: run.seed,
     levelIdentity: run.levelIdentity,
-    completionOnly: classicSnakeUsesVariableHazards(run.level),
+    mode: displayMode,
+    format,
+    locale,
+    variableConditions: classicSnakeUsesVariableHazards(run.level),
   });
-  return !eligible
-    ? locale === 'uk'
-      ? 'Рекорди цієї гри зберігаються без оцінки зірками.'
-      : 'This game keeps personal records without mission stars.'
-    : classicSnakeUsesVariableHazards(run.level)
-      ? text('variableSignalRecord')
-      : criteria.calibrated
-        ? locale === 'uk'
-          ? `★ Завершити · ★★ ≤ ${criteria.silverMoves} ходів · ★★★ ≤ ${criteria.goldMoves} ходів`
-          : `★ Complete · ★★ ≤ ${criteria.silverMoves} moves · ★★★ ≤ ${criteria.goldMoves} moves`
-        : locale === 'uk'
-          ? '★ За перевірене завершення. Вищі оцінки потребують калібрування цього набору.'
-          : '★ For a verified clear. Higher grades await calibration for this setup.';
 }
 function renderRatings() {
   if (!$('snake-stars')) return;

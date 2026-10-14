@@ -50,6 +50,41 @@ export function classicSnakeRatingForRecord(row) {
   };
 }
 
+/** Shared player-facing criteria, available before play and on results. The
+ * same exact-setup lookup drives both the promise and the awarded grade. */
+export function classicSnakeRatingCriteriaText({
+  seed,
+  levelIdentity,
+  mode = 'solo',
+  format = 'campaign',
+  variableConditions = false,
+  locale = 'en',
+} = {}) {
+  const uk = locale === 'uk';
+  if (format !== 'campaign' || mode === 'versus')
+    return uk
+      ? 'Особисті рекорди зберігаються. У цій грі немає зірок за місію.'
+      : 'Personal bests are saved. This game has no mission stars.';
+  if (variableConditions)
+    return uk
+      ? '★ За перевірене завершення. Перешкоди змінюються з кожною спробою, тому тут немає срібної чи золотої оцінки. Особисті рекорди зберігаються за змінних умов.'
+      : '★ For a verified clear. Interference changes each attempt, so silver and gold are unavailable here. Personal bests are saved under variable conditions.';
+  const criteria = classicSnakeRatingForRecord({
+    clear: true,
+    policy: 'mission',
+    mode,
+    seed,
+    levelIdentity,
+  });
+  if (criteria.calibrated)
+    return uk
+      ? `★ Завершити · ★★ ≤ ${criteria.silverMoves} ходів · ★★★ ≤ ${criteria.goldMoves} ходів`
+      : `★ Complete · ★★ ≤ ${criteria.silverMoves} moves · ★★★ ≤ ${criteria.goldMoves} moves`;
+  return uk
+    ? '★ За перевірене завершення. Для цього набору доступна одна зірка та особисті рекорди; срібної чи золотої оцінки немає.'
+    : '★ For a verified clear. This setup offers one completion star and personal bests; silver and gold are unavailable.';
+}
+
 function availableDatabase() {
   try {
     return globalThis.indexedDB;
