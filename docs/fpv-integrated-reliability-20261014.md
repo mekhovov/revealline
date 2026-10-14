@@ -37,9 +37,11 @@ The completed-card accessibility label now reads progress from the current Libra
 
 The hardened observer also completed one 30-second stationary Castle Courtyard discovery window against the admitted `cdbe38ff` player: 3,578 callback intervals, median 8.3 ms, p95 9.2 ms, p99 9.4 ms, maximum 108.6 ms, with 6.9 ms trailing boundary coverage. The same limitations above apply.
 
+The visible recovery journey then demonstrated a safety regression: restoring an interrupted flight reconstructed its paused command prefix, but the newer automatic-start path clicked Arm afterward. Restored flights are now excluded from automatic start and require deliberate pickup. The failed 82/83 receipt is retained; the fixed candidate passes all 90 browser checks, including exact revision restoration, transaction abort, cancellation, preserved records and deliberate recovery pickup. The existing recovery appearance assertion now expects paused; 55 focused World regressions pass. No additional D6 test suite was introduced.
+
 ## Remaining priorities
 
-1. Complete current Creator reimport, exact restoration and interrupted-transaction browser checks; publish any demonstrated runtime fix independently of the prior UX queue.
+1. Publish the verified reliability fixes independently of the merged UX stack; retain exact-head checks and normal protection.
 2. Capture moving replay windows, repeated loading/unloading and measured renderer/memory behavior on the named target devices. Do not extrapolate these stationary callback observations to those budgets.
 3. Finish the combined native-package/offline recovery journey. Source fixtures with isolated storage and scripted controls remain distinct from an unchanged admitted-player installation journey.
 4. Continue the representative art standard and Canals, with the remaining licensed-resource candidates reviewed individually. No new scenery is included here.

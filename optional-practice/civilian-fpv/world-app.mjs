@@ -6098,6 +6098,8 @@ export function mountWorldApp({
       ownsLaunch() &&
       !options.paused &&
       !options.preview &&
+      // Recovery restores a recorded command prefix; wait for deliberate pickup.
+      !options.recover &&
       pauseRevision === playbackPauseRevision &&
       !doc.hidden &&
       (doc.hasFocus?.() ?? true)
