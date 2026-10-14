@@ -1,6 +1,7 @@
 import { boundedJSON, exactKeys, required } from '../data-json.mjs';
 
 export const OVERFLIGHT_TERRAIN_FORMAT = 'OverflightTerrainV1';
+export const OVERFLIGHT_TERRAIN_FORMAT_V2 = 'OverflightTerrainV2';
 const clamp = (v, low, high) => Math.max(low, Math.min(high, v));
 const solid = (obstacle) => obstacle.active !== false;
 
@@ -29,6 +30,8 @@ export function createOverflightTerrainFixture(arena = { width: 2880, height: 10
 }
 
 export function validateOverflightTerrain(source, arena) {
+  if (source?.format === OVERFLIGHT_TERRAIN_FORMAT_V2)
+    return validateOverflightTerrainV2(source, arena);
   const value = boundedJSON(source, { maxBytes: 8192, maxNodes: 160, maxArray: 8, maxDepth: 4 });
   exactKeys(value, ['format', 'id', 'experimental', 'obstacles'], 'Experimental terrain');
   required(
@@ -78,6 +81,84 @@ export function validateOverflightTerrain(source, arena) {
         'Terrain passages between obstacles must remain at least 240 units wide.',
       );
     }
+  }
+  return value;
+}
+
+/** V2 permits connected wide routes instead of requiring a straight middle lane.
+ * Footprints that touch are one permanent assembly, never narrow fake passages. */
+function validateOverflightTerrainV2(source, arena) {
+  const value = boundedJSON(source, { maxBytes: 12288, maxNodes: 240, maxArray: 12, maxDepth: 4 });
+  exactKeys(value, ['format', 'id', 'experimental', 'obstacles'], 'Battlefield terrain');
+  required(
+    value.experimental === false && /^[a-z0-9-]{1,80}$/.test(value.id),
+    'Invalid battlefield terrain identity.',
+  );
+  required(
+    arena.width === 2880 && arena.height === 1080,
+    'Battlefields require the authored 2880×1080 arena.',
+  );
+  required(
+    Array.isArray(value.obstacles) &&
+      value.obstacles.length <= 12 &&
+      value.obstacles.filter((o) => o.breakable).length <= 4,
+    'Battlefield terrain permits twelve footprints and four barriers.',
+  );
+  const ids = new Set();
+  for (const item of value.obstacles) {
+    exactKeys(item, ['id', 'x', 'y', 'width', 'height', 'breakable'], 'Battlefield obstacle');
+    required(
+      typeof item.id === 'string' && /^[a-z0-9-]{1,64}$/.test(item.id) && !ids.has(item.id),
+      'Obstacle identities must be unique.',
+    );
+    ids.add(item.id);
+    required(
+      typeof item.breakable === 'boolean' &&
+        ['x', 'y', 'width', 'height'].every((k) => Number.isFinite(item[k])) &&
+        item.width >= 32 &&
+        item.height >= 32 &&
+        item.x >= 240 &&
+        item.y >= 240 &&
+        item.x + item.width <= arena.width - 240 &&
+        item.y + item.height <= arena.height - 240,
+      'Cover must preserve the 240-unit perimeter routes.',
+    );
+    for (const other of value.obstacles) {
+      if (other === item) continue;
+      const gx = Math.max(item.x - other.x - other.width, other.x - item.x - item.width);
+      const gy = Math.max(item.y - other.y - other.height, other.y - item.y - item.height);
+      const joined =
+        !item.breakable && !other.breakable && ((gx === 0 && gy <= 0) || (gy === 0 && gx <= 0));
+      required(
+        gx >= 240 || gy >= 240 || joined,
+        'Cover passages need 240 units; only permanent assembly footprints may touch.',
+      );
+    }
+  }
+  const remaining = new Set(value.obstacles);
+  while (remaining.size) {
+    const group = [remaining.values().next().value];
+    remaining.delete(group[0]);
+    for (let at = 0; at < group.length; at++)
+      for (const candidate of remaining) {
+        const a = group[at];
+        const gx = Math.max(a.x - candidate.x - candidate.width, candidate.x - a.x - a.width);
+        const gy = Math.max(a.y - candidate.y - candidate.height, candidate.y - a.y - a.height);
+        if (gx <= 0 && gy <= 0) {
+          group.push(candidate);
+          remaining.delete(candidate);
+        }
+      }
+    const left = Math.min(...group.map((o) => o.x)),
+      top = Math.min(...group.map((o) => o.y));
+    const right = Math.max(...group.map((o) => o.x + o.width)),
+      bottom = Math.max(...group.map((o) => o.y + o.height));
+    required(
+      Math.abs(
+        group.reduce((area, o) => area + o.width * o.height, 0) - (right - left) * (bottom - top),
+      ) < 1e-6,
+      'Touching cover must fill one rectangular assembly; concave pockets need a future terrain capability.',
+    );
   }
   return value;
 }
@@ -327,7 +408,8 @@ export function overflightTerrainWaypoint(terrain, actor, target, arena) {
           p.x >= radius &&
           p.y >= radius &&
           p.x <= arena.width - radius &&
-          p.y <= arena.height - radius,
+          p.y <= arena.height - radius &&
+          overflightTerrainClear(terrain, p.x, p.y, p.x, p.y, radius),
       );
     const edges = points.map((a) =>
       points.map((b) =>

@@ -431,16 +431,21 @@ export async function createOverflightRenderer({
         // Body-local marks communicate behavior without painting hundreds of
         // attack-range circles. These state cues remain in both quality
         // settings and never depend on cosmetic animation or flashing.
-        if (phase === 'windup' || phase === 'burst') {
-          const heading = enemy.heading ?? 0,
+        const crosscut =
+          enemy.movementPreset === 'crosscut' || enemy.movementPreset === 'crosscut-interceptor';
+        const preparingMovement = crosscut && enemy.movementPhase === 'preparing';
+        const committedMovement = crosscut && enemy.movementPhase === 'committed';
+        if (phase === 'windup' || phase === 'burst' || preparingMovement || committedMovement) {
+          const heading =
+              preparingMovement || committedMovement ? state.heading : (enemy.heading ?? 0),
             distance = size * 0.55;
           pools.status.take(
             'arrow',
             enemy.x + Math.cos(heading) * distance,
             enemy.y + Math.sin(heading) * distance,
-            phase === 'windup' ? 16 : 24,
-            phase === 'windup' ? 16 : 24,
-            phase === 'windup' ? colors.amber : colors.danger,
+            phase === 'windup' || preparingMovement ? 16 : 24,
+            phase === 'windup' || preparingMovement ? 16 : 24,
+            phase === 'windup' || preparingMovement ? colors.amber : colors.danger,
             1,
             heading,
           );
@@ -581,6 +586,14 @@ export async function createOverflightRenderer({
       );
     }
     for (const obstacle of run.terrain?.obstacles ?? []) {
+      // V2 permanent cover is baked from the shared modular art at preparation.
+      // Breakable barriers remain dynamic and keep their damage-state marks.
+      if (
+        !obstacle.breakable &&
+        run.compiled?.presentation?.format === 'OverflightWorldPresentationV2' &&
+        run.compiled.presentation.assemblies.some((item) => item.coverId === obstacle.id)
+      )
+        continue;
       const x = obstacle.x + obstacle.width / 2,
         y = obstacle.y + obstacle.height / 2;
       if (!insideOverflightCamera(x, y, camera, Math.max(obstacle.width, obstacle.height)))

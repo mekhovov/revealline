@@ -425,12 +425,19 @@ for (const id of OVERFLIGHT_WORLD_IMAGE_SLOTS)
     {
       required: false,
       alpha: 'either',
-      requirements: [
-        'Optional decorative world source. The native material or landmark remains when no image is selected.',
-        'Never imply damaging terrain, slowing terrain or a solid interior wall. Collision belongs to the authored mission.',
-        'Use restrained pixel clusters. Preserve readable player silhouettes, rewards and hostile warnings.',
-        'Material images tile on a 32-pixel grid. Landmark images fit the authored decorative footprint.',
-      ],
+      requirements: id.includes('.module.')
+        ? [
+            'Optional joined battlefield module; each panel is repeated at native pixel density, never stretched over a building.',
+            'Panels, edge caps and corner trims share the world kit. Keep frame crop, pivot and occupied bounds intentional.',
+            'Solid-looking interior assemblies must match authored permanent cover. A source image never creates collision.',
+            'Keep danger marks, warning geometry and damage-state overlays separate from decorative pixels.',
+          ]
+        : [
+            'Optional decorative world source. The native material or landmark remains when no image is selected.',
+            'Never imply damaging terrain, slowing terrain or a solid interior wall. Collision belongs to the authored mission.',
+            'Use restrained pixel clusters. Preserve readable player silhouettes, rewards and hostile warnings.',
+            'Material images tile on a 32-pixel grid. Landmark images fit the authored decorative footprint.',
+          ],
     },
   );
 for (const actor of OVERFLIGHT_ACTOR_SLOTS)

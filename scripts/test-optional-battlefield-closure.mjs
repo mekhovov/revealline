@@ -15,6 +15,9 @@ const battlefieldFiles = [
   'game/overflight/terrain.mjs',
   'game/presentation/overflight-world-art.mjs',
   'game/presentation/overflight-world-slots.mjs',
+  'game/overflight/world-layout-presentation.mjs',
+  'game/presentation/overflight-world-art-v2.mjs',
+  'game/snake/classic-structure-art.mjs',
 ];
 const hash = (bytes) => createHash('sha256').update(bytes).digest('hex');
 

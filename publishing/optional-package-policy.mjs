@@ -33,10 +33,10 @@ const BASE_OPTIONAL_PACKAGE_POLICIES = Object.freeze({
     root: 'optional-practice/civilian-flight/',
     entry: 'optional-practice/civilian-flight/index.html',
     // The installed archive includes the reviewed launcher, access gate and
-    // shared menu CSS, battlefield artwork and ambience closure. The runtime has 91 files; the
+    // shared menu CSS, battlefield artwork and ambience closure. The runtime has 94 files; the
     // selected source archive adds two reviewed templates within this finite
     // envelope.
-    limits: Object.freeze({ files: 93, bytes: 8 * 1024 * 1024 }),
+    limits: Object.freeze({ files: 96, bytes: 8 * 1024 * 1024 }),
     localFiles: Object.freeze([
       'index.html',
       'app.mjs',
@@ -599,9 +599,9 @@ export const OPTIONAL_PACKAGE_POLICIES = Object.freeze(
         ]),
         limits: Object.freeze({
           ...policy.limits,
-          // Five exact shared battlefield modules extend each 3D package;
+          // Eight exact shared battlefield modules extend each 3D package;
           // existing byte budgets and the remaining dependency boundary stay fixed.
-          files: id === 'civilian-fpv' ? 101 : id === 'fpv-worlds' ? 133 : policy.limits.files,
+          files: id === 'civilian-fpv' ? 104 : id === 'fpv-worlds' ? 136 : policy.limits.files,
           bytes: id === 'fpv-worlds' ? 20 * 1024 * 1024 : policy.limits.bytes,
         }),
         localFiles: Object.freeze([
@@ -638,6 +638,9 @@ export const OPTIONAL_PACKAGE_POLICIES = Object.freeze(
                   'game/overflight/terrain.mjs',
                   'game/presentation/overflight-world-art.mjs',
                   'game/presentation/overflight-world-slots.mjs',
+                  'game/overflight/world-layout-presentation.mjs',
+                  'game/presentation/overflight-world-art-v2.mjs',
+                  'game/snake/classic-structure-art.mjs',
                 ]
               : []),
             'optional-practice/guide.mjs',
