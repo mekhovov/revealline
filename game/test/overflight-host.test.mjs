@@ -24,6 +24,154 @@ import { DEFAULT_OVERFLIGHT_PROJECT, compileOverflightProject } from '../overfli
 import { OVERFLIGHT_COPY } from '../overflight/copy.mjs';
 import { createOverflightReviewRecorder } from '../overflight/review-recorder.mjs';
 
+test('native variant mission picker queries progress only for supported installed projects', async () => {
+  const { readFile } = await import('node:fs/promises');
+  const { runInNewContext } = await import('node:vm');
+  const { parse } = await import('acorn');
+  const { OVERFLIGHT_HUNT_MODE } = await import('../overflight/raid-mode.mjs');
+  const { createOverflightRaidVariant } = await import('../overflight/raid-variants.mjs');
+  const { createExperimentalOverflightWorldProject } = await import('../overflight/worlds.mjs');
+  const { overflightPlayableMissionDefinitions } = await import(
+    '../overflight/mission-library.mjs'
+  );
+  const source = await readFile(new URL('../overflight/app.mjs', import.meta.url), 'utf8');
+  const ast = parse(source, { ecmaVersion: 'latest', sourceType: 'module' });
+  const declaration = ast.body.find(
+    (node) => node.type === 'FunctionDeclaration' && node.id.name === 'openMissionLibrary',
+  );
+  const experimental = createExperimentalOverflightWorldProject(OVERFLIGHT_HUNT_MODE.createProject);
+  const open = OVERFLIGHT_HUNT_MODE.createProject();
+  for (const variant of ['time-attack', 'marathon']) {
+    let refreshed = 0;
+    const queries = [];
+    const mode = createOverflightRaidVariant(OVERFLIGHT_HUNT_MODE, { variant });
+    const context = {
+      mode,
+      pause() {},
+      missionRegistry: {},
+      missionChooser: {
+        open() {},
+        refresh() {
+          refreshed++;
+        },
+      },
+      doc: { activeElement: {} },
+      refreshMissions: async () => {},
+      records: {
+        async read(query) {
+          queries.push(query);
+          return { fastestClear: { time: 30 } };
+        },
+      },
+      progressEpoch: 0,
+      officialProjects: () => [],
+      installed: [experimental, open].map((project) => ({ project })),
+      options: {},
+      retired: false,
+      overflightPlayableMissionDefinitions,
+      overflightFlightProfile: () => ({}),
+    };
+    await runInNewContext(
+      `${source.slice(declaration.start, declaration.end)}; openMissionLibrary()`,
+      context,
+    );
+    assert.equal(queries.length, 1);
+    assert.equal(queries[0].compiled.id, open.id);
+    assert.equal(refreshed, 1);
+    assert.equal(context.missionProgress.size, 1);
+    assert.equal(
+      context.missionProgress.get(mode.compileProject(open).projectIdentity).state,
+      'completed',
+    );
+  }
+});
+
+test('completed-frame trials include explicitly requested native Survivor and Riy review builds', async () => {
+  const { readFile } = await import('node:fs/promises');
+  const { runInNewContext } = await import('node:vm');
+  const { parse } = await import('acorn');
+  const source = await readFile(new URL('../overflight/app.mjs', import.meta.url), 'utf8');
+  const ast = parse(source, { ecmaVersion: 'latest', sourceType: 'module' });
+  const declarations = ast.body
+    .filter((node) => node.type === 'VariableDeclaration')
+    .flatMap((node) => node.declarations);
+  const trial = declarations.find((node) => node.id.name === 'benchmarkTrial').init;
+  const protocol = declarations.find((node) => node.id.name === 'benchmarkProtocol').init;
+  const evaluate = (id, query, reviewBuild = null, fixture = null) => {
+    const context = { mode: { id }, params: new URLSearchParams(query), reviewBuild, fixture };
+    context.benchmarkTrial = runInNewContext(source.slice(trial.start, trial.end), context);
+    return JSON.parse(
+      JSON.stringify({
+        trial: context.benchmarkTrial,
+        protocol: runInNewContext(source.slice(protocol.start, protocol.end), context),
+      }),
+    );
+  };
+  for (const id of ['overflight', 'overflight-riy', 'overflight-hunt']) {
+    for (const trial of ['1', '2', '3']) {
+      assert.deepEqual(evaluate(id, `benchmark=1&trial=${trial}`, 'fan-shield'), {
+        trial,
+        protocol: { warmupSeconds: 30, measurementSeconds: 120, repetitions: 1, stopAtEnd: true },
+      });
+    }
+    assert.equal(evaluate(id, 'trial=1', 'fan-shield').trial, null);
+    assert.equal(evaluate(id, 'benchmark=1&trial=unrecognized', 'fan-shield').trial, null);
+  }
+  assert.equal(evaluate('overflight', 'benchmark=1&trial=1').trial, null);
+  assert.equal(evaluate('overflight-riy', 'benchmark=1&trial=1').trial, null);
+  assert.equal(evaluate('overflight-hunt', 'benchmark=1&trial=1').trial, '1');
+  assert.equal(evaluate('overflight', 'trial=2', null, 'reference').trial, '2');
+  assert.equal(
+    evaluate('overflight-riy', 'benchmark=1&trial=soak', 'fan-shield').protocol.measurementSeconds,
+    900,
+  );
+});
+
+test('native mission lists include the terrain experiment only for the three qualified operations', async () => {
+  const { readFile } = await import('node:fs/promises');
+  const { runInNewContext } = await import('node:vm');
+  const { parse } = await import('acorn');
+  const { createExperimentalOverflightWorldProject } = await import('../overflight/worlds.mjs');
+  const { createOverflightProject, compileOverflightProject } = await import(
+    '../overflight/project.mjs'
+  );
+  const { createOverflightRiyProject, compileOverflightRiyProject } = await import(
+    '../overflight/riy-project.mjs'
+  );
+  const { createOverflightHuntProject, compileOverflightHuntProject } = await import(
+    '../overflight/raid-project.mjs'
+  );
+  const source = await readFile(new URL('../overflight/app.mjs', import.meta.url), 'utf8');
+  const ast = parse(source, { ecmaVersion: 'latest', sourceType: 'module' });
+  const official = ast.body.find(
+    (node) => node.type === 'FunctionDeclaration' && node.id.name === 'officialProjects',
+  );
+  for (const [id, createProject, compile] of [
+    ['overflight', createOverflightProject, compileOverflightProject],
+    ['overflight-riy', createOverflightRiyProject, compileOverflightRiyProject],
+    ['overflight-hunt', createOverflightHuntProject, compileOverflightHuntProject],
+  ]) {
+    for (const operationId of [undefined, 'time-attack', 'marathon']) {
+      const context = {
+        mode: { id, operationId, createProject, encounterSets: ['crossing', 'mixed'] },
+        options: { difficulty: 'standard' },
+        createExperimentalOverflightWorldProject,
+      };
+      const projects = runInNewContext(
+        `(${source.slice(official.start, official.end)})()`,
+        context,
+      );
+      assert.equal(projects.length, operationId ? 2 : 3);
+      const terrain = projects.filter((project) => project.terrain);
+      assert.equal(terrain.length, operationId ? 0 : 1);
+      if (terrain.length) {
+        assert.match(terrain[0].title.en, /Experimental/);
+        assert.equal(compile(terrain[0]).terrain.obstacles.length, 8);
+      }
+    }
+  }
+});
+
 test('one fixed clock scales every simulation system and keeps paused time out of the run', () => {
   const clock = createOverflightClock();
   const observed = [];
@@ -563,6 +711,7 @@ test('native Marathon continuation retains its run when next-sortie settings cha
       seed: 42,
       fixture: null,
       reviewBuild: null,
+      studio: false,
       resultRun: original,
       overflightFlightProfile,
       mode: {

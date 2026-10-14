@@ -1,0 +1,32 @@
+{
+  "kind": "mock-renderer-and-deterministic-engine-tests",
+  "capturedAt": "2026-10-14T03:41:13.639586+00:00",
+  "commit": "29e3bd4a831834c55b8ecf14a204b14784252f38",
+  "sourceBindings": {
+    "game/overflight/atlas.mjs": "3c9b45f73960f5e8076c238c43694d332a90f15a18fcac4b0e683b20e4283348",
+    "game/overflight/renderer.mjs": "b244ad57f49afb8c9db659e1781056ce9f59da1c80091f26159f44b1d066ce6b",
+    "game/overflight/presentation-state.mjs": "9fb0661ffde65e8a0404f4e98f16913563be18efbbe38aec82496bdc9affc655",
+    "game/overflight/core.mjs": "c7e76d7260849e184415a1ef7a2111ce19f05fc674366645c1b2e5a633cd61bb",
+    "game/overflight/raid-core.mjs": "908a52df499f30138cafe2fbaa23718c242c3f5c6e7f186d0ca409c1c86719cd",
+    "game/overflight/tactics.mjs": "1f3eded8742fd2988608c8f3b5d6500f0e60a5e5f782ab6ed66c204ca612e120",
+    "game/overflight/tactical-view.mjs": "2f1c7705fe594513478c8ee89af9032a19f561865a6fb98111de2927273e9a04",
+    "game/overflight/riy-core.mjs": "d357d3c874a4d31dfdbe5f37581592756b06c59ad07dec2155c17b08954b6f69",
+    "game/overflight/terrain.mjs": "0a1cef102e82badeb0c032e1e15e8c0997d2d59b03267063726018397b39e857",
+    "game/test/overflight-renderer.test.mjs": "23312dfacdaf1f7770e80cd5f54d71d793cc6655c9b38d67cb56d946a7ad53e5",
+    "game/test/overflight-presentation-state.test.mjs": "2fcfa9d0340374d8846b56b0e40c827160fa3d253f326851921027b1cc3f4c02",
+    "game/test/overflight-terrain.test.mjs": "942812fc88852371a9e080702bbf1842793c79b896c3476b5574b6940342802b",
+    "game/test/overflight-variety-core.test.mjs": "bb442c9a5e4eebb802efb2398f9637f6455eb4600db6b99d7f1f03fa560de74c",
+    "game/presentation/overflight-actor-slots.mjs": "91c4ba5f19cc249298215eebf9c6de1edecb16ff917eab409d4c2c13ffe782ac",
+    "game/overflight/actor-overrides.mjs": "77121b8e5d9b690c49ab5ea9b7f9e1c5b057fcd5382ef18a228824ddb1dfee25",
+    "game/presentation/overflight-world-art.mjs": "c903158727b56b439edb612fa2df058fc523a69b2caf606fe63c93776475fc75",
+    "game/presentation/overflight-world-slots.mjs": "80da2897d53a5670ac0397152e1c14e2eb10e2a9c9a9cc6a66bdbf65f52ec557"
+  },
+  "command": "node --test game/test/overflight-renderer.test.mjs game/test/overflight-variety-core.test.mjs game/test/overflight-presentation-state.test.mjs game/test/overflight-terrain.test.mjs",
+  "result": {
+    "tests": 51,
+    "passed": 51,
+    "failed": 0
+  },
+  "evidenceBoundaries": "Renderer uses a deterministic mock Phaser/canvas environment. Checks ten lifecycle cycles, reference/stress draw-list completeness, retained-page routing, event wiring and disposal. It does not establish native WebGL recovery, garbage collection or completed-render cadence. Terrain and simulation tests exercise actual engine rules.",
+  "additionalCoverage": "Accepted sprite animation clip timing, native upgrade-preview reuse, wardrobe selection, custom machinery alias, accepted world material and prop images, no per-frame rasterization."
+}

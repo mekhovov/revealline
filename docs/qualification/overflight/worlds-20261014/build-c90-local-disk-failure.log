@@ -1,0 +1,15 @@
+node:internal/fs/promises:742
+      (await PromisePrototypeThen(
+       ^
+
+Error: ENOSPC: no space left on device, write
+    at async write (node:internal/fs/promises:742:8)
+    at async writeFileHandle (node:internal/fs/promises:499:7)
+    at async buildProject (file:///private/tmp/revealline-overflight-riy-20261013/scripts/game-cli.mjs:1145:5)
+    at async file:///private/tmp/revealline-overflight-riy-20261013/[eval1]:1:193 {
+  errno: -28,
+  code: 'ENOSPC',
+  syscall: 'write'
+}
+
+Node.js v20.19.5

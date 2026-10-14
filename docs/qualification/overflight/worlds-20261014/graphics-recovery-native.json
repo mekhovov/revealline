@@ -1,0 +1,245 @@
+{
+  "url": "http://127.0.0.1:8903/game/overflight/play.html?reviewBuild=fan-shield&diagnostics=1&lang=en",
+  "stats": {
+    "phase": "playing",
+    "time": 225.77,
+    "renderer": "Phaser 4.2.1 WebGL",
+    "logicalWidth": 960,
+    "logicalHeight": 540,
+    "backingWidth": 960,
+    "backingHeight": 540,
+    "atlas": {
+      "width": 2040,
+      "height": 1964,
+      "maxTextureSize": 2048,
+      "spriteRGBABytes": 16026240,
+      "pages": [
+        {
+          "index": 0,
+          "width": 2040,
+          "height": 1964,
+          "frameCount": 1327
+        }
+      ],
+      "textures": 7,
+      "worldRGBABytes": 12441600,
+      "worldTiles": [
+        {
+          "index": 0,
+          "x": 0,
+          "y": 0,
+          "width": 960,
+          "height": 540
+        },
+        {
+          "index": 1,
+          "x": 960,
+          "y": 0,
+          "width": 960,
+          "height": 540
+        },
+        {
+          "index": 2,
+          "x": 1920,
+          "y": 0,
+          "width": 960,
+          "height": 540
+        },
+        {
+          "index": 3,
+          "x": 0,
+          "y": 540,
+          "width": 960,
+          "height": 540
+        },
+        {
+          "index": 4,
+          "x": 960,
+          "y": 540,
+          "width": 960,
+          "height": 540
+        },
+        {
+          "index": 5,
+          "x": 1920,
+          "y": 540,
+          "width": 960,
+          "height": 540
+        }
+      ],
+      "baseRGBABytes": 28467840,
+      "groundRGBABytes": 0,
+      "groundTileEdge": 256,
+      "retainedCanvasBytes": 28467840,
+      "preparationScratchBytes": 16384,
+      "customActorFrames": 0,
+      "acceptedActorOverrides": [],
+      "combatStateFrames": 420,
+      "escortFrames": 24,
+      "soldierFrames": 216,
+      "machineryFrames": 36,
+      "heroFrames": 12,
+      "equipmentFrames": 13,
+      "remainsFrames": 120,
+      "defeatFrames": 480,
+      "frameCount": 1327
+    },
+    "heroArtwork": {
+      "assetId": "player.scout.detailed.field-kit",
+      "playerSlot": "player.scout.detailed",
+      "rotorCount": 4,
+      "visibleDiameter": 34,
+      "bakedFrameSize": 64,
+      "rotorFrames": 12,
+      "rotorRadii": [
+        9.254350728498977,
+        9.254350728498977,
+        9.254350728498977,
+        9.254350728498977
+      ],
+      "paintedWidth": 44.06833680237608,
+      "paintedHeight": 44.06833680237608
+    },
+    "counts": {
+      "alive": 225,
+      "visible": 170,
+      "rendered": 197,
+      "effects": 11,
+      "pickups": 20,
+      "warnings": 5,
+      "behaviorCues": 28,
+      "remains": 320,
+      "defeats": 9,
+      "quads": 627
+    },
+    "allocatedSprites": 1129,
+    "remains": {
+      "stored": 1024,
+      "capacity": 1024,
+      "sequence": 1557,
+      "evicted": 533,
+      "missed": 0,
+      "limits": {
+        "capacity": 1024,
+        "visible": 320,
+        "moving": 24,
+        "settleSeconds": 0.34
+      }
+    },
+    "destruction": {
+      "showRemains": true,
+      "brutal": false,
+      "blood": true
+    },
+    "fixture": null,
+    "reducedEffects": false,
+    "preparationMs": 150.5,
+    "contextLosses": 1,
+    "contextRestores": 1,
+    "contextRecoveryTests": 1,
+    "lost": false,
+    "failed": false,
+    "valid": false,
+    "invalidReasons": [
+      "interrupted",
+      "context-lost",
+      "context-restored"
+    ],
+    "cadenceMs": {
+      "samples": 27175,
+      "p50": 8.299999982118607,
+      "p95": 10.699999988079071,
+      "p99": 14.5,
+      "worst": 91.40000000596046
+    },
+    "submissionMs": {
+      "samples": 27188,
+      "p50": 0.5,
+      "p95": 0.800000011920929,
+      "p99": 1.0999999940395355,
+      "worst": 3.800000011920929
+    },
+    "cadenceHz": 118.85626811001495,
+    "measuredIntervals": 27175,
+    "measuredSeconds": 228.6374999999702,
+    "retainedIntervals": 27175,
+    "sampleCapacity": 120000,
+    "submissionTotalMs": 12834.30000025034,
+    "over33Ms": 25,
+    "over50Ms": 8,
+    "over100Ms": 0,
+    "exclusions": {
+      "context-lost": 1,
+      "context-restored": 1
+    },
+    "highWater": {
+      "alive": 381,
+      "visible": 301,
+      "rendered": 314,
+      "effects": 150,
+      "pickups": 195
+    },
+    "protocol": {
+      "arrangement": "One warm-up followed by consecutive windows of the same fixture; not separate restarted trials.",
+      "warmupSeconds": 30,
+      "measurementSeconds": 120,
+      "repetitions": 3,
+      "windows": [
+        {
+          "index": 1,
+          "complete": true,
+          "measuredSeconds": 120.00209999996424,
+          "cadenceMs": {
+            "samples": 14207,
+            "p50": 8.299999982118607,
+            "p95": 10.799999982118607,
+            "p99": 14.599999994039536,
+            "worst": 91.40000000596046
+          },
+          "cadenceHz": 118.3895948487921,
+          "slowFraction": 0.0013373689026536214,
+          "passes": true
+        },
+        {
+          "index": 2,
+          "complete": false,
+          "measuredSeconds": 78.62990000000596,
+          "cadenceMs": {
+            "samples": 9411,
+            "p50": 8.300000011920929,
+            "p95": 10.400000005960464,
+            "p99": 14,
+            "worst": 30.799999982118607
+          },
+          "cadenceHz": 119.68729452789952,
+          "slowFraction": 0,
+          "passes": null
+        },
+        {
+          "index": 3,
+          "complete": false,
+          "measuredSeconds": 0,
+          "cadenceMs": {
+            "samples": 0,
+            "p50": null,
+            "p95": null,
+            "p99": null,
+            "worst": null
+          },
+          "cadenceHz": null,
+          "slowFraction": null,
+          "passes": null
+        }
+      ],
+      "acceptance": null,
+      "scope": "This browser run only; target hardware acceptance requires recorded device runs."
+    },
+    "clock": {
+      "steps": 13546,
+      "droppedSeconds": 0,
+      "accumulator": 0.011916666666666683
+    },
+    "longFrames": 7,
+    "trialValid": false
+  }
+}

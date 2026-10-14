@@ -1,16 +1,17 @@
+import { validateOverflightTerrain } from './terrain.mjs';
+import {
+  applyOverflightWorld,
+  validateOverflightEncounterProfile,
+  validateOverflightWorldPresentation,
+  overflightGameplayIdentity,
+  overflightPresentationIdentity,
+} from './worlds.mjs';
 import {
   createOverflightCombatProfile,
   validateOverflightCombatProfile,
 } from './combat-profile.mjs';
-import { seededOverflightRandom } from './tactics.mjs';
-import {
-  boundedJSON,
-  canonicalJSON,
-  dataIdentity,
-  exactKeys,
-  required,
-  stableId,
-} from '../data-json.mjs';
+import { seededOverflightRandom, validateOverflightSupplyTerrain } from './tactics.mjs';
+import { boundedJSON, canonicalJSON, exactKeys, required, stableId } from '../data-json.mjs';
 import { OVERFLIGHT_RESOURCES, OVERFLIGHT_SOLDIERS, OVERFLIGHT_MACHINERY } from './project.mjs';
 
 export const OVERFLIGHT_HUNT_PROJECT_FORMAT = 'OverflightHuntProjectV1';
@@ -111,6 +112,7 @@ export function overflightHuntMinimumPackSize(format, behavior) {
 
 /** Finite encounter populations: advancing a sector never replaces casualties. */
 export function createOverflightHuntProject({
+  world = null,
   encounterSet = 'patrol',
   seed = 17031991,
   difficulty = 'standard',
@@ -296,7 +298,7 @@ export function createOverflightHuntProject({
     }
     return encounter;
   });
-  return {
+  const project = {
     format: legacy
       ? OVERFLIGHT_HUNT_PROJECT_FORMAT
       : v3
@@ -355,6 +357,7 @@ export function createOverflightHuntProject({
       },
     ],
   };
+  return world ? applyOverflightWorld(project, world) : project;
 }
 export const DEFAULT_OVERFLIGHT_HUNT_PROJECT = freeze(createOverflightHuntProject());
 function fields(value, keys, label) {
@@ -446,6 +449,9 @@ export function validateOverflightHuntProject(source) {
       'upgrades',
       'resources',
       'props',
+      ...(project.presentation !== undefined ? ['presentation'] : []),
+      ...(project.encounterProfile !== undefined ? ['encounterProfile'] : []),
+      ...(project.terrain !== undefined ? ['terrain'] : []),
       ...([OVERFLIGHT_HUNT_PROJECT_FORMAT_V2, OVERFLIGHT_HUNT_PROJECT_FORMAT_V3].includes(
         project.format,
       )
@@ -720,6 +726,19 @@ export function validateOverflightHuntProject(source) {
     required(prop.kind === 'supply-case', 'Unsupported Raid prop.');
     location({ x: prop.x, y: prop.y }, 'Supply case');
   }
+  if (project.terrain !== undefined) {
+    required(v3, 'Experimental terrain requires current rules.');
+    project.terrain = validateOverflightTerrain(project.terrain, project.arena);
+    validateOverflightSupplyTerrain(project);
+  }
+  if (project.encounterProfile !== undefined) {
+    required(v3, 'Authored world encounters require current rules.');
+    validateOverflightEncounterProfile(project.encounterProfile);
+  }
+  if (project.presentation !== undefined) {
+    required(v3, 'World presentation requires current rules.');
+    project.presentation = validateOverflightWorldPresentation(project.presentation, project.arena);
+  }
   return freeze(project);
 }
 export function compileOverflightHuntProject(source) {
@@ -740,7 +759,8 @@ export function compileOverflightHuntProject(source) {
           : 1,
     difficulty: project.difficulty ?? 'standard',
     combat: project.combat ?? null,
-    projectIdentity: dataIdentity(project),
+    projectIdentity: overflightGameplayIdentity(project),
+    visualIdentity: overflightPresentationIdentity(project),
     sourceFormat: project.format,
   });
 }

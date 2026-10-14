@@ -1,3 +1,22 @@
+import { paintOverflightWorld } from '../presentation/overflight-world-art.mjs';
+import { overflightGameplayIdentity } from './worlds.mjs';
+
+/** Installed packages can be valid in one family operation but not another. */
+export function overflightMissionSupport(mode, project) {
+  try {
+    return { compiled: mode.compileProject(project), reason: null };
+  } catch (error) {
+    return { compiled: null, reason: error.message };
+  }
+}
+
+export function overflightPlayableMissionDefinitions(mode, projects) {
+  return projects.flatMap((project) => {
+    const { compiled } = overflightMissionSupport(mode, project);
+    return compiled ? [compiled] : [];
+  });
+}
+
 /** Read-only discovery. The mode/compiler and installed owner retain authority. */
 export function overflightMissionSource({
   id,
@@ -39,7 +58,9 @@ export function overflightMissionSource({
     describe(entry) {
       return {
         id: entry.identity ?? entry.project.id,
-        revision: mode.compileProject(entry.project).projectIdentity,
+        // Discovery precedes operation availability checks. Valid installed
+        // packages keep a stable row even when this operation rejects a capability.
+        revision: overflightGameplayIdentity(entry.project),
         campaignKey: mode.id,
         campaignTitle: title(),
         name: name(entry),
@@ -64,14 +85,16 @@ export function overflightMissionSource({
     }),
     details: (entry) => ({ challenge: detail(entry), route: mode.text(locale(), 'briefing') }),
     availability(entry) {
-      try {
-        mode.compileProject(entry.project);
-        return { state: 'ready' };
-      } catch (error) {
-        return { state: 'unavailable', reason: error.message };
-      }
+      const support = overflightMissionSupport(mode, entry.project);
+      return support.compiled
+        ? { state: 'ready' }
+        : { state: 'unavailable', reason: support.reason };
     },
-    progressState: (entry) => progress(entry) ?? { state: 'new', bestStars: null },
+    progressState: (entry) =>
+      (overflightMissionSupport(mode, entry.project).compiled ? progress(entry) : null) ?? {
+        state: 'new',
+        bestStars: null,
+      },
     card: (entry) => ({
       kind: 'overflight',
       width: 320,
@@ -91,6 +114,12 @@ export function paintOverflightMission(context, diagram, paintSprite = () => {})
   context.clearRect(0, 0, 320, 132);
   context.fillStyle = '#11251f';
   context.fillRect(0, 0, 320, 132);
+  if (project.presentation) {
+    context.save();
+    context.scale(scaleX, scaleY);
+    paintOverflightWorld(context, project.presentation, project.arena);
+    context.restore();
+  }
   context.strokeStyle = '#2d493b';
   context.lineWidth = 1;
   for (const x of [960, 1920]) {

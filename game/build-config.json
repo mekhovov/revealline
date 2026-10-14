@@ -188,6 +188,7 @@
     "optional-practice/civilian-fpv/index.html",
     "optional-practice/civilian-fpv/app.mjs",
     "optional-practice/civilian-fpv/renderer.mjs",
+    "optional-practice/civilian-fpv/battlefield-ground.mjs",
     "optional-practice/civilian-fpv/industrial-vehicles.mjs",
     "optional-practice/civilian-fpv/industrial-soldiers.mjs",
     "optional-practice/civilian-fpv/input.mjs",

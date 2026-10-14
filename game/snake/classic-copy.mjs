@@ -18,6 +18,7 @@ export const CLASSIC_COPY = {
       'This board uses the selected target remix. The accepted roster and objective are shown above; the field guide explains each target.',
     boardAppearance: 'Board appearance',
     'living-circuit': 'Lively FPV · Living Circuit',
+    'fpv-battlefield': 'FPV Survivals battlefield',
     toybox: 'Toybox',
     'atmospheric-ruins': 'Atmospheric Ruins',
     'night-arcade': 'Night Arcade',
@@ -193,6 +194,7 @@ export const CLASSIC_COPY = {
   },
   uk: {
     'living-circuit': 'Жвавий FPV · Живий контур',
+    'fpv-battlefield': 'Поле бою FPV Survivals',
     toybox: 'Іграшковий світ',
     'atmospheric-ruins': 'Атмосферні руїни',
     'night-arcade': 'Нічна аркада',

@@ -1,4 +1,12 @@
 import {
+  overflightTerrainClear,
+  overflightTerrainHit,
+  overflightTerrainOpenPoint,
+  overflightTerrainWaypoint,
+  moveOverflightThroughTerrain,
+  constrainOverflightTerrainAttack,
+} from './terrain.mjs';
+import {
   overflightArmoredDamage,
   overflightAttackSpec,
   overflightAttackContains,
@@ -239,6 +247,17 @@ export function createOverflightHuntRun(
   run._wakeIndex = 0;
   const entry = compiled.encounters[0]?.entry;
   if (entry) Object.assign(run.player, { x: entry.x, y: entry.y });
+  if (run.terrain)
+    Object.assign(
+      run.player,
+      overflightTerrainOpenPoint(
+        run.terrain,
+        run.player.x,
+        run.player.y,
+        run.player.radius,
+        compiled.arena,
+      ),
+    );
   enterSector(run, 0);
   if (fixture) initializeFixture(run);
   updateCamera(run);
@@ -360,6 +379,7 @@ export function spawnOverflightHuntEnemy(run, options = {}) {
     routeIndex: 0,
     routeRecovery: 0,
     routeDirection: 1,
+    convoyArrived: false,
     slowUntil: 0,
     slowMultiplier: 1,
     markUntil: 0,
@@ -387,6 +407,17 @@ export function spawnOverflightHuntEnemy(run, options = {}) {
     _beforeHeading: options.heading ?? Math.PI,
     _beforePhase: 'recovery',
   });
+  if (run.terrain) {
+    Object.assign(
+      enemy,
+      overflightTerrainOpenPoint(run.terrain, enemy.x, enemy.y, enemy.radius, run.compiled.arena),
+    );
+    enemy.prevX = enemy.x;
+    enemy.prevY = enemy.y;
+    enemy.route = enemy.route.map((point) =>
+      overflightTerrainOpenPoint(run.terrain, point.x, point.y, enemy.radius, run.compiled.arena),
+    );
+  }
   run._maxEnemyRadius = Math.max(run._maxEnemyRadius, enemy.radius);
   run.stats.spawned++;
   return enemy;
@@ -631,6 +662,7 @@ function replaceAirframe(run) {
     for (let col = 0; col < 17; col++) {
       const x = 60 + (col * (run.compiled.arena.width - 120)) / 16;
       const y = 60 + (row * (run.compiled.arena.height - 120)) / 6;
+      if (!overflightTerrainClear(run.terrain, x, y, x, y, run.player.radius + 20)) continue;
       let clearance = 400;
       for (const enemy of run.enemies)
         if (enemy.active)
@@ -641,6 +673,9 @@ function replaceAirframe(run) {
             clearance,
             Math.hypot(x - projectile.x, y - projectile.y) - projectile.radius,
           );
+      for (const warning of run.priorityAttacks)
+        if (warning.active && overflightAttackContains(warning, x, y, run.player.radius + 20))
+          clearance = Math.min(clearance, -200);
       const score = clearance - Math.hypot(x - run.player.x, y - run.player.y) * 0.035;
       if (score > bestClearance) {
         bestClearance = score;
@@ -744,6 +779,20 @@ function movePlayer(run, input, params) {
     player.radius,
     run.compiled.arena.height - player.radius,
   );
+  if (run.terrain) {
+    const strikes = run.terrain.strikes;
+    const x = player.x,
+      y = player.y;
+    player.x = player.prevX;
+    player.y = player.prevY;
+    moveOverflightThroughTerrain(run.terrain, player, x, y, {
+      boostToken: player.boostRemaining > 0 ? run._boostStartedTick : null,
+    });
+    if (run.terrain.strikes > strikes) {
+      sound(run, 'impact', run.terrain.lastImpact);
+      effect(run, 'impact', run.terrain.lastImpact.x, run.terrain.lastImpact.y, 24);
+    }
+  }
   if (run.fixture) {
     // Keep measurable offscreen partitions on both sides of the camera.
     player.x = clamp(
@@ -777,7 +826,10 @@ function setWarning(run, enemy) {
   if (!warning) return false;
   const spec =
     run.rulesVersion >= 2 && !run.fixture
-      ? overflightAttackSpec(enemy, run.player, run.compiled.combat)
+      ? constrainOverflightTerrainAttack(
+          run.terrain,
+          overflightAttackSpec(enemy, run.player, run.compiled.combat),
+        )
       : null;
   if (
     spec &&
@@ -830,10 +882,18 @@ function moveEnemies(run, params) {
     enemy.warning = Math.max(0, enemy.warning - STEP);
     if (enemy._beforeWarning > 0) continue;
     const isAttacker = ['brace', 'vehicle'].includes(enemy.behavior);
+    const convoy =
+      run.compiled.encounterProfile === 'freight-depot.v1' &&
+      enemy.behavior === 'vehicle' &&
+      !!enemy.objectiveId;
     enemy.phaseRemaining -= STEP;
     if (isAttacker) {
+      if (convoy && enemy.behaviorPhase === 'recovery' && enemy.phaseRemaining <= 0) {
+        enemy.behaviorPhase = 'guarding';
+        enemy.convoyArrived = false;
+      }
       if (['guarding', 'recovery'].includes(enemy.behaviorPhase) && enemy.phaseRemaining <= 0) {
-        if (distance < 520) setWarning(run, enemy);
+        if (distance < 520 && (!convoy || enemy.convoyArrived)) setWarning(run, enemy);
         else enemy.phaseRemaining = 0.25;
       } else if (enemy.behaviorPhase === 'windup' && enemy.phaseRemaining <= 0) {
         enemy.behaviorPhase = 'burst';
@@ -894,6 +954,7 @@ function moveEnemies(run, params) {
       : null;
     const stationary =
       (isAttacker && ['windup', 'burst'].includes(enemy.behaviorPhase)) ||
+      (convoy && (enemy.behaviorPhase === 'recovery' || enemy.convoyArrived)) ||
       (enemy.behavior === 'shield' && !escorted) ||
       enemy.behaviorPhase === 'windup';
     let speed = enemy.speed;
@@ -915,18 +976,21 @@ function moveEnemies(run, params) {
       enemy.routeRecovery -= STEP;
       speed = 0;
     }
-    const target = escorted
+    let target = escorted
       ? {
           x: escorted.x + enemy.escortOffsetX,
           y: escorted.y + enemy.escortOffsetY,
         }
       : enemy.route[enemy.routeIndex];
+    if (run.terrain && target)
+      target = overflightTerrainWaypoint(run.terrain, enemy, target, run.compiled.arena);
     if (target && speed) {
       const dx = target.x - enemy.x,
         dy = target.y - enemy.y,
         length = Math.hypot(dx, dy);
       if (length <= speed * STEP + 2) {
-        if (!escorted) {
+        if (!escorted && target === enemy.route[enemy.routeIndex]) {
+          if (convoy) enemy.convoyArrived = true;
           enemy.routeIndex = (enemy.routeIndex + 1) % enemy.route.length;
           enemy.routeRecovery = ['runner', 'courier'].includes(enemy.behavior) ? 0.45 : 0.1;
         }
@@ -935,17 +999,14 @@ function moveEnemies(run, params) {
       } else {
         enemy.vx = (dx / length) * speed;
         enemy.vy = (dy / length) * speed;
-        enemy.x = clamp(
-          enemy.x + enemy.vx * STEP,
-          enemy.radius,
-          run.compiled.arena.width - enemy.radius,
+        moveOverflightThroughTerrain(
+          run.terrain,
+          enemy,
+          clamp(enemy.x + enemy.vx * STEP, enemy.radius, run.compiled.arena.width - enemy.radius),
+          clamp(enemy.y + enemy.vy * STEP, enemy.radius, run.compiled.arena.height - enemy.radius),
         );
-        enemy.y = clamp(
-          enemy.y + enemy.vy * STEP,
-          enemy.radius,
-          run.compiled.arena.height - enemy.radius,
-        );
-        if (!isAttacker && enemy.behavior !== 'shield') enemy.heading = Math.atan2(dy, dx);
+        if ((!isAttacker && enemy.behavior !== 'shield') || (convoy && !enemy.convoyArrived))
+          enemy.heading = Math.atan2(dy, dx);
       }
     } else {
       enemy.vx = 0;
@@ -986,7 +1047,9 @@ function firePending(run) {
       run.stats.projectileDeferrals++;
       continue;
     }
-    for (const offset of offsets) {
+    for (const [rayIndex, offset] of offsets.entries()) {
+      const reach = spec?.rayLengths?.[rayIndex];
+      if (reach !== undefined && reach <= enemy.radius + 5) continue;
       const slot = run._projectileFree.pop();
       const heading = enemy.heading + offset;
       const projectile = run.projectiles[slot];
@@ -1001,7 +1064,7 @@ function firePending(run) {
         vx: Math.cos(heading) * 230,
         vy: Math.sin(heading) * 230,
         radius: 5,
-        remaining: 2.8,
+        remaining: reach === undefined ? 2.8 : Math.min(2.8, (reach - enemy.radius - 5) / 230),
         damage: 20,
         _slot: slot,
       });
@@ -1049,6 +1112,20 @@ function age(run) {
       projectile.x += projectile.vx * duration;
       projectile.y += projectile.vy * duration;
       projectile.remaining = Math.max(0, projectile.remaining - STEP);
+      const hit = overflightTerrainHit(
+        run.terrain,
+        projectile.prevX,
+        projectile.prevY,
+        projectile.x,
+        projectile.y,
+        projectile.radius,
+      );
+      if (hit) {
+        projectile.x = projectile.prevX + (projectile.x - projectile.prevX) * hit.t;
+        projectile.y = projectile.prevY + (projectile.y - projectile.prevY) * hit.t;
+        projectile._endTime *= hit.t;
+        projectile.remaining = 0;
+      }
       // The last active segment still collides; retire after the transaction.
     }
 }
@@ -1101,6 +1178,7 @@ function collectContacts(run, params, from, x, y, endX, endY) {
       py = y + (endY - y) * t;
     const ex = sx + (enemy.x - sx) * t,
       ey = sy + (enemy.y - sy) * t;
+    if (!overflightTerrainClear(run.terrain, px, py, ex, ey)) return;
     const state = contactAt(enemy, px, py, ex, ey);
     if (state === 'guarded' || state === 'machinery-guarded')
       t = overflightHuntSweep(

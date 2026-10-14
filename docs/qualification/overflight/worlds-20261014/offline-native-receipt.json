@@ -1,0 +1,64 @@
+{
+  "builtSource": "dece9da68922743c73dc6cc2697a0aa9783b5326",
+  "runtimeSource": "a539ccde4d2390ee74a717a076f43926f46952b2",
+  "edition": "0.151.1",
+  "origin": "http://127.0.0.1:8907",
+  "packageSelection": [
+    "required Solo Starter",
+    "all Overflight operations",
+    "Snake Classic"
+  ],
+  "uiDownloadMiB": 111.0,
+  "installationStatus": "Your selected game is verified and ready offline. Recorded soundtracks remain optional.",
+  "serverStopped": true,
+  "directHTTPRequestExitCode": 7,
+  "sourceFallback": false,
+  "soundEnabled": false,
+  "settings": "Built-in Field Crossing, Standard, three airframes, Scout; Snake Open Loop defaults",
+  "operations": [
+    {
+      "name": "Single Drone",
+      "seconds": 9,
+      "cleared": 3,
+      "state": "paused"
+    },
+    {
+      "name": "Riy",
+      "seconds": 22,
+      "cleared": 26,
+      "state": "upgrade selection with animated comparison cards"
+    },
+    {
+      "name": "Single Raid",
+      "seconds": 8,
+      "cleared": 6,
+      "state": "paused"
+    },
+    {
+      "name": "Time Attack",
+      "seconds": 11,
+      "cleared": 6,
+      "state": "paused",
+      "medalTimeSeconds": 16
+    },
+    {
+      "name": "Contract Marathon",
+      "seconds": 7,
+      "cleared": 6,
+      "state": "paused",
+      "contract": 1,
+      "atRisk": 1600
+    },
+    {
+      "name": "Snake",
+      "seconds": 1,
+      "state": "normal wall-collision result and final-eight-moves replay"
+    }
+  ],
+  "limits": [
+    "Fresh origin, not a new browser profile or OS app installation",
+    "Smoke launches, not full offline completions",
+    "No native update/interruption exercise",
+    "Sound off during offline smoke; prior recordings cover native effects separately"
+  ]
+}
