@@ -7,7 +7,8 @@ const sourceHashes={
 'game/ui/audio-output.mjs':'dc1b2776407d0b6649b0d15c5c721bd59384d7e38a2e61087961ff7a37bd86c1',
 'game/ui/audio-master.mjs':'6bf14bc5268c0eff8f38c21c819f398917712fdc2607c33977ac873111d1dca8',
 'game/audio-preferences.mjs':'9212831a3524c9e1ebe8c595783f9f53a112e02e3d51280d775ac103b94a9239',
-'game/ui/encounter-audio.mjs':'3e9d6fff44aadd5a31e4c61daa4de22b58c4383f406e7ce7de1a3910434b1608',
+'game/ui/encounter-audio.mjs':'ad58592952c55444713911a27df525b2c2d1f2a47c8a909a96597fda85e46dbd',
+'game/ui/world-ambience.mjs':'73c82b71cc64694e6ad6431da4d7f2ebf47efac2c3e64090e2fc551a58bdd791',
 'game/ui/movement-audio.mjs':'685d8e458401354028a2cacda0c7b1009b3c1e480a08d4cafce46d8f98b69020',
 'game/ui/dialogue-channel.mjs':'f4839f3a1634189a03eed6a3096dc595dfc88ee6437277ee82d78de05c300142',
 'optional-practice/civilian-fpv/world-hangar.mjs':
@@ -539,10 +540,54 @@ AUDIO_PREFERENCES_KEY:AUDIO_PREFERENCES_KEY,
 createAudioPreferences:createAudioPreferences,
 };
 })();
+modules['game/ui/world-ambience.mjs']=(()=>{
+/** Shared, original atmosphere recipes. They use the existing SFX owner and
+ * require no decoded files, independent context or background scheduler. */
+const WORLDS=Object.freeze({
+'field-crossing':{filter:760,air:0.009,hum:108,humGain:0.0015},
+'freight-depot':{filter:310,air:0.006,hum:61,humGain:0.0035},
+'relay-ruins':{filter:480,air:0.008,hum:89,humGain:0.002},
+});
+
+function worldAmbienceRecipe(world){
+const profile=WORLDS[world];
+if(!profile)return null;
+return{
+name:`ambience-${world}`,
+procedural:true,
+ambience:true,
+gain:1,
+priority:0,
+movement:false,
+cooldown:1.25,
+tone:{
+kind:'snare',
+from:profile.filter,
+to:profile.filter,
+filterFrequency:profile.filter,
+duration:1.75,
+gain:profile.air,
+type:'sine',
+},
+layers:[
+{
+from:profile.hum,
+to:profile.hum*0.985,
+duration:1.7,
+gain:profile.humGain,
+type:'sine',
+},
+],
+};
+}
+
+return{worldAmbienceRecipe:worldAmbienceRecipe};
+})();
 modules['game/ui/encounter-audio.mjs']=(()=>{
 /** Shared semantic cues; both recorded and offline procedural renditions use
  * these recipes. No context, clock, randomness or actor mutation lives here. */
 const destructionSoundRecipe=external4['destructionSoundRecipe'];
+const worldAmbienceRecipe=modules['game/ui/world-ambience.mjs']['worldAmbienceRecipe'];
 const FAMILY_PITCH=Object.freeze({
 lookout:1.1,
 patroller:0.94,
@@ -564,8 +609,20 @@ brace:0.68,
 // Original material accents reuse the admitted bank. Cadence follows observed
 // movement, never a sprite frame, random choice or simulation mutation.
 const ACTOR_SOUNDS=Object.freeze({
-runner:Object.freeze({cadence:0.32,rate:1.08,equipment:'paper',from:240,to:150}),
-courier:Object.freeze({cadence:0.29,rate:1.19,equipment:'ratchet',from:360,to:210}),
+runner:Object.freeze({
+cadence:0.32,
+rate:1.08,
+equipment:'paper',
+from:240,
+to:150,
+}),
+courier:Object.freeze({
+cadence:0.29,
+rate:1.19,
+equipment:'ratchet',
+from:360,
+to:210,
+}),
 guard:Object.freeze({
 cadence:0.41,
 rate:0.87,
@@ -586,6 +643,43 @@ return ACTOR_SOUNDS[family==='shield-bearer'?'shield':family]??ACTOR_SOUNDS.runn
 }
 function encounterSoundRecipe(type,details={}){
 if(type==='catch')return destructionSoundRecipe(details);
+if(type==='ambience')return worldAmbienceRecipe(details.world);
+if(type==='warning-charge'){
+const progress=Math.max(0,Math.min(1,details.progress??0));
+return{
+name:'warning-charge',
+procedural:true,
+gain:0.18,
+priority:5,
+movement:false,
+cooldown:0.16,
+tone:{
+from:660+progress*360,
+to:740+progress*360,
+duration:0.055,
+gain:0.024,
+type:'sine',
+},
+};
+}
+if(type==='escort-shot'){
+const breaker=details.role==='breaker';
+return{
+name:breaker?'escort-breaker':'escort-sweeper',
+procedural:true,
+gain:0.15,
+priority:2,
+movement:false,
+cooldown:0.65,
+tone:{
+from:breaker?520:160,
+to:breaker?180:60,
+duration:breaker?0.075:0.12,
+gain:0.016,
+type:breaker?'triangle':'sine',
+},
+};
+}
 const pitch=FAMILY_PITCH[details.family]??1;
 const actor=actorSoundProfile(details.family),
 tracked=details.machine==='tracked',
@@ -623,7 +717,14 @@ const movement=['step','equipment','drive'].includes(type);
 return{
 name,
 gain:gain*scale,
-priority,
+priority:
+details.semantic==='armor-break'
+?4
+:details.semantic==='harmful-contact'
+?5
+:details.semantic==='friendly-impact'
+?3
+:priority,
 movement,
 // Loop textures are deliberately sampled as short envelopes for footsteps.
 maxDuration:movement?duration:null,
