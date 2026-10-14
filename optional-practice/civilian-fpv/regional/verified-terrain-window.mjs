@@ -1,6 +1,7 @@
 import {
   validateFrameTransaction,
   adoptVerifiedFrame,
+  readFramePose,
 } from "./frame-transaction.mjs";
 /** Exact-source terrain preparation coordinator. Detached authoring resources, never live flight. */
 import {
@@ -28,6 +29,7 @@ const abortError = () =>
 export function createVerifiedTerrainWindow(
   input,
   {
+    retainCommitted = false,
     baseURL,
     fetchImpl = globalThis.fetch,
     subtle = globalThis.crypto?.subtle,
@@ -39,6 +41,7 @@ export function createVerifiedTerrainWindow(
     surfaceQuality = "balanced",
   } = {},
 ) {
+  fail(typeof retainCommitted === "boolean", "Invalid retained-frame option");
   const manifest = validateRegionManifest(input),
     planner = createRegionPlanner(manifest);
   validateTerrainSurface(surfaceStyle, surfaceQuality);
@@ -82,11 +85,13 @@ export function createVerifiedTerrainWindow(
     queue = Promise.resolve(),
     reservedGeometryBytes = 0;
   const committedBytes = () => committed?.snapshot().geometryBytes ?? 0;
+  const queryReady = () =>
+    !disposed && Boolean(committed) && (retainCommitted || state === "ready");
   function snapshot() {
     const transport = source.snapshot();
     return {
       state,
-      terrainReady: state === "ready",
+      terrainReady: queryReady(),
       flightReady: false,
       failure,
       hasRetainedTerrain: Boolean(committed),
@@ -172,6 +177,8 @@ export function createVerifiedTerrainWindow(
         surfaceStyle,
         surfaceQuality,
       });
+      current(token);
+      supportPose = readFramePose(frameTransaction, supportPose, planner);
       current(token);
       if (supportPose) {
         const { positionMm, radiusMm } = supportPose;
@@ -276,27 +283,25 @@ export function createVerifiedTerrainWindow(
     },
     flightSupport(...args) {
       if (disposed) throw new Error("Verified geometry is disposed");
-      return state === "ready"
+      return queryReady()
         ? committed.flightSupport(...args)
         : { status: "not-ready" };
     },
     castMotion(...args) {
       if (disposed) throw new Error("Verified geometry is disposed");
-      return state === "ready"
+      return queryReady()
         ? committed.castMotion(...args)
         : { status: "not-ready" };
     },
     support(...args) {
       if (disposed) throw new Error("Verified terrain window is disposed");
-      return state === "ready"
+      return queryReady()
         ? committed.support(...args)
         : { status: "not-ready" };
     },
     sweep(...args) {
       if (disposed) throw new Error("Verified terrain window is disposed");
-      return state === "ready"
-        ? committed.sweep(...args)
-        : { status: "not-ready" };
+      return queryReady() ? committed.sweep(...args) : { status: "not-ready" };
     },
     cancel() {
       if (disposed) return;
