@@ -876,3 +876,71 @@ test('Riy reuses hero frames for two escorts and retains both roles with reduced
     globalThis.Phaser = prior;
   }
 });
+
+test('Riy coverage faces rear for Sweeper, forward for Breaker and hides during Focus', async () => {
+  const { createOverflightRiyProject, compileOverflightRiyProject } = await import(
+    '../overflight/riy-project.mjs'
+  );
+  const { createOverflightRiy } = await import('../overflight/riy-core.mjs');
+  const environment = fakeEnvironment(),
+    prior = globalThis.Phaser;
+  globalThis.Phaser = environment.Phaser;
+  const appearance = {
+    reducedEffects: false,
+    playerSlot: 'player.scout.detailed',
+    snapshot: { image: () => ({ image: {}, asset: { id: 'accepted-scout' } }) },
+  };
+  let renderer;
+  try {
+    renderer = await createOverflightRenderer({
+      parent: { ownerDocument: environment.document },
+      appearance,
+    });
+    const run = createOverflightRun(
+      compileOverflightRiyProject(createOverflightRiyProject({ rulesVersion: 3 })),
+    );
+    startOverflight(run);
+    run.riy = createOverflightRiy(run);
+    for (const escort of run.riy.escorts) {
+      escort.formationHeading = 0;
+      escort.followArc = 120;
+      escort.heading = Math.PI / 2;
+    }
+    const cues = () =>
+      environment.images.filter(
+        (image) =>
+          image.Depth?.[0] === 65 &&
+          image.Visible?.[0] &&
+          image.Frame?.[0] === 'bar' &&
+          image.displayWidth === 12 &&
+          image.displayHeight === 2,
+      );
+    for (const phase of ['follow', 'approach', 'engaged', 'returning']) {
+      run.riy.phase = phase;
+      const before = structuredClone(run.riy);
+      renderer.present(run);
+      const visible = cues();
+      if (['approach', 'engaged'].includes(phase)) assert.equal(visible.length, 0);
+      else {
+        assert.equal(visible.length, 4);
+        for (const [index, escort] of run.riy.escorts.entries()) {
+          const roleCues = visible.slice(index * 2, index * 2 + 2);
+          assert.ok(
+            roleCues.every((image) =>
+              escort.role === 'sweeper'
+                ? image.Position[0] < escort.x
+                : image.Position[0] > escort.x,
+            ),
+          );
+        }
+      }
+      appearance.reducedEffects = true;
+      renderer.present(run);
+      assert.equal(cues().length, visible.length);
+      assert.deepEqual(run.riy, before);
+    }
+  } finally {
+    await renderer?.destroy();
+    globalThis.Phaser = prior;
+  }
+});

@@ -1,3 +1,4 @@
+import { createOverflightRecords } from './records.mjs';
 import { overflightFlightProfile, overflightFlightProfileHint } from './flight-profile.mjs';
 import { createMissionLibrary } from '../mission-library/library.mjs';
 import { attachMissionLibraryChooser } from '../ui/mission-library-chooser.mjs';
@@ -45,11 +46,7 @@ import { createAudioPreferences } from '../audio-preferences.mjs';
 import { Soundscape } from '../ui/audio.mjs';
 import { attachCouchMusicHost } from '../couch/couch-music-host.mjs';
 import { getLocale, setLocale, onLocaleChange, localizedText, t } from '../i18n/index.mjs';
-import {
-  DEFAULT_OVERFLIGHT_PROJECT,
-  createOverflightProject,
-  compileOverflightProject,
-} from './project.mjs';
+import { createOverflightProject, compileOverflightProject } from './project.mjs';
 import {
   createOverflightLibrary,
   createOverflightPackage,
@@ -86,6 +83,7 @@ import {
   createOverflightContextGuard,
   overflightPreviewRequest,
   createOverflightReviewPlayback,
+  overflightReviewStopAt,
   createOverflightKeyboardState,
   createOverflightJSONPages,
   overflightSortieProject,
@@ -94,7 +92,7 @@ import { createOverflightAudio, overflightMusicContext } from './audio.mjs';
 import { createOverflightTouch } from './touch.mjs';
 import { createOverflightCommentator } from './commentator.mjs';
 import { attachOverflightStudioLinks } from './studio-links.mjs';
-import { overflightText, localizedOverflight } from './copy.mjs';
+import { overflightText, localizedOverflight, overflightCacheHint } from './copy.mjs';
 import { createOverflightController, loadOverflightControllerPreferences } from './controller.mjs';
 import {
   DEFAULT_OVERFLIGHT_CHARACTER,
@@ -116,9 +114,10 @@ let mode =
     : {
         id: 'overflight',
         name: { en: 'Survive', uk: 'Вижити' },
-        defaultProject: DEFAULT_OVERFLIGHT_PROJECT,
+        defaultProject: createOverflightProject({ rulesVersion: 3 }),
         compileProject: compileOverflightProject,
-        createProject: createOverflightProject,
+        createProject: (options = {}) => createOverflightProject({ ...options, rulesVersion: 3 }),
+        createRecords: createOverflightRecords,
         createLibrary: createOverflightLibrary,
         createPackage: createOverflightPackage,
         exportPackage: exportOverflightPackage,
@@ -135,7 +134,10 @@ let mode =
         createCard: createOverflightUpgradeCard,
         encounterSets: ['front', 'crossing', 'mixed'],
         studioPath: '../studio/overflight.html',
-        reviewBuilds: { ...QUALIFICATION_BUILDS, ...NO_PULSE_QUALIFICATION_BUILDS },
+        reviewBuilds: {
+          ...QUALIFICATION_BUILDS,
+          ...NO_PULSE_QUALIFICATION_BUILDS,
+        },
         pilot: (run) => pilot(run, 'tight'),
         selectCard,
         previewRequest: overflightPreviewRequest,
@@ -150,6 +152,7 @@ if (mode.id === 'overflight-hunt' && ['time-attack', 'marathon'].includes(params
     variant: params.get('operation'),
   });
 const records = mode.createRecords?.();
+const resultRecordPromises = new WeakMap();
 if (['en', 'uk'].includes(params.get('lang'))) setLocale(params.get('lang'), { persist: false });
 const text = (key) => mode.text(getLocale(), key);
 const local = (value) => localizedOverflight(value, getLocale());
@@ -165,6 +168,10 @@ const diagnostics =
   params.get('benchmark') === '1' ||
   !!fixture ||
   !!reviewBuild;
+const reviewStopAt = overflightReviewStopAt(params.get('reviewStopAt'), {
+  build: reviewBuild,
+  diagnostics,
+});
 const benchmarkTrial =
   (fixture || (mode.id === 'overflight-hunt' && params.get('benchmark') === '1')) &&
   ['1', '2', '3', 'soak'].includes(params.get('trial'))
@@ -180,6 +187,7 @@ const benchmarkProtocol = benchmarkTrial
   : {};
 const review = createOverflightReviewPlayback({
   build: reviewBuild,
+  stopAt: reviewStopAt,
   pilot: (run) => mode.pilot(run, reviewBuild),
   selectCard: mode.selectCard,
 });
@@ -196,7 +204,9 @@ try {
   const saved = JSON.parse(win.localStorage.getItem(OPTION_KEY) ?? 'null');
   if (saved && [1, 3].includes(saved.airframes) && typeof saved.slowResume === 'boolean')
     options = {
-      difficulty: saved.difficulty === 'veteran' ? 'veteran' : 'standard',
+      difficulty: ['relaxed', 'standard', 'veteran'].includes(saved.difficulty)
+        ? saved.difficulty
+        : 'standard',
       airframes: saved.airframes,
       slowResume: saved.slowResume,
       characterId: normalizeOverflightCharacterId(saved.characterId),
@@ -283,7 +293,10 @@ const clipRecorder = reviewBuild
     })
   : null;
 const rendererOwner = createOverflightRendererOwner();
-const contextGuard = createOverflightContextGuard({ pause, release: releaseInput });
+const contextGuard = createOverflightContextGuard({
+  pause,
+  release: releaseInput,
+});
 const cleanup = [];
 const clock = createOverflightClock();
 const inputGate = createOverflightInputGate();
@@ -315,7 +328,9 @@ const theme = installThemeHost({
 const artwork = createPresentationHost({ profile: 'board', document: doc });
 const artAbort = new AbortController();
 const artReady = artwork.load({ signal: artAbort.signal });
-const arcade = createArcadeAdapter({ reviewRevision: compiled.resources.actorArtRevision });
+const arcade = createArcadeAdapter({
+  reviewRevision: compiled.resources.actorArtRevision,
+});
 const castPreferences = sharedActorAppearance();
 const audioMaster = createAudioMaster();
 const audioPreferences = createAudioPreferences({ audioMaster, window: win });
@@ -374,7 +389,17 @@ function phaseForShell() {
         : 'ready';
 }
 function reviewLabel() {
-  return reviewBuild ? `${text('automatedReview')} · ${text(`reviewBuild_${reviewBuild}`)}` : '';
+  return reviewBuild
+    ? [
+        text('automatedReview'),
+        text(`reviewBuild_${reviewBuild}`),
+        reviewStopAt !== null
+          ? text('reviewStopAt').replace('{seconds}', String(reviewStopAt))
+          : '',
+      ]
+        .filter(Boolean)
+        .join(' · ')
+    : '';
 }
 function updateShell() {
   touchInput?.refresh();
@@ -557,16 +582,21 @@ function updateHUD() {
     cacheHintKey = openCaches;
     $('hud-cache').hidden = !openCaches;
     $('hud-cache').textContent = openCaches ? text('cacheReady') : '';
-    $('hud-cache').title = text('cacheHint').replace(
-      '30',
-      String(compiled.combat?.supplies.repairHull ?? 30),
-    );
+    $('hud-cache').title = overflightCacheHint(compiled, getLocale());
   }
   $('hud-level').textContent = `${text('level')} ${run.progression.choices + 1}`;
   const cooldown = Math.max(0, run.player.boostCooldown ?? 0);
   touchInput?.updateBoost({ cooldown, readyLabel: text('ready') });
-  $('hud-boost').textContent =
-    `${text('boost')} ${cooldown > 0 ? `${cooldown.toFixed(1)}s` : text('ready')}`;
+  $('hud-boost').textContent = [
+    `${text('boost')} ${cooldown > 0 ? `${cooldown.toFixed(1)}s` : text('ready')}`,
+    run.player.overdriveRemaining > 0
+      ? `${text('overdrive')} ${run.player.overdriveRemaining.toFixed(1)}s`
+      : run.player.overdriveReady
+        ? text('overdriveReady')
+        : '',
+  ]
+    .filter(Boolean)
+    .join(' · ');
   const label = buildLabel();
   if (label !== hudBuildKey) {
     hudBuildKey = label;
@@ -647,7 +677,15 @@ function rewardToast(offer) {
 }
 function result() {
   if (mode.renderResults) {
-    mode.renderResults({ run, document: doc, text, local, formatTime, moduleIcon, records });
+    mode.renderResults({
+      run,
+      document: doc,
+      text,
+      local,
+      formatTime,
+      moduleIcon,
+      records,
+    });
     updateShell();
     shell.open('results');
     return;
@@ -664,6 +702,7 @@ function result() {
     ['elapsed', formatTime(run.time)],
     ['salvage', summary.stats.xpCollected],
     ['upgradesEarned', summary.stats.upgradesChosen],
+    ['damageTaken', summary.stats.damageTaken],
     ...(run.riy
       ? [
           ['escortCommands', run.riy.commands],
@@ -695,6 +734,48 @@ function result() {
       el('span', `${text('level')} ${item.rank}`),
     );
     $('result-build').append(badge);
+  }
+  let causes = $('result-damage-causes');
+  if (!causes) {
+    causes = el('p', '', 'overflight-result-causes');
+    causes.id = 'result-damage-causes';
+    $('result-build').after(causes);
+  }
+  causes.textContent = Object.entries(summary.stats.damageCauses ?? {})
+    .filter(([, amount]) => amount > 0)
+    .map(
+      ([cause, amount]) =>
+        `${text(`damage_${cause}`)} ${Number(amount).toLocaleString(getLocale(), { maximumFractionDigits: 1 })}`,
+    )
+    .join(' · ');
+  causes.hidden = !causes.textContent;
+  let personal = $('survivor-records');
+  if (!personal) {
+    personal = el('p', '', 'overflight-result-records');
+    personal.id = 'survivor-records';
+    causes.after(personal);
+  }
+  if (run.review || run.fixture) personal.textContent = text('automatedReview');
+  else if (records) {
+    if (!resultRecordPromises.has(run)) resultRecordPromises.set(run, records.record(run));
+    const completedRun = run;
+    void resultRecordPromises
+      .get(run)
+      .then((record) => {
+        if (retired || run !== completedRun) return;
+        personal.textContent = [
+          text(record.durable ? 'savedRecords' : 'sessionRecords'),
+          record.fastestClear
+            ? `${text('fastestClear')} ${formatTime(record.fastestClear.time)}`
+            : '',
+          record.bestScore ? `${text('mostCleared')} ${record.bestScore.kills}` : '',
+        ]
+          .filter(Boolean)
+          .join(' · ');
+      })
+      .catch(() => {
+        if (run === completedRun) personal.textContent = text('sessionRecords');
+      });
   }
   // Locale changes may refresh labels; only a newly completed run earns the reveal.
   if (resultRun !== run) {
@@ -744,6 +825,9 @@ function syncUpgrade(force = false) {
           offer,
           build: run.build,
           player: run.player,
+          compiled,
+          rulesVersion: run.rulesVersion,
+          riySettings: run.riy?.rules,
           locale: getLocale(),
           reducedEffects: display.snapshot().effectiveReducedEffects,
           disabled: !!reviewBuild,
@@ -954,6 +1038,7 @@ const gameplayKeys = new Set([
   'KeyS',
   'KeyD',
   'Space',
+  'KeyF',
 ]);
 function readInput() {
   // The shared downloads iframe owns its controller while focused. Its parent
@@ -987,13 +1072,23 @@ function readInput() {
     : Number(held.has('KeyS') || held.has('ArrowDown')) -
       Number(held.has('KeyW') || held.has('ArrowUp'));
   const boost = (!editing && held.has('Space')) || axes.boost;
-  const touch = touchInput?.sample() ?? { x: 0, y: 0, boost: false, neutral: true };
+  const touch = touchInput?.sample() ?? {
+    x: 0,
+    y: 0,
+    boost: false,
+    neutral: true,
+  };
   const sampled = inputGate.sample({
     x: keyX || axes.x || touch.x,
     y: keyY || axes.y || touch.y,
     boost: boost || touch.boost,
     focus: !modal && axes.focus === true,
     neutral: !held.size && axes.neutral && touch.neutral,
+    actionsNeutral:
+      !held.has('Space') &&
+      !held.has('KeyF') &&
+      (axes.actionsNeutral ?? axes.neutral) &&
+      (touchInput?.actionsNeutral() ?? touch.neutral),
   });
   if (sampled.focus) mode.requestFocus?.();
   return sampled;
@@ -1003,6 +1098,7 @@ function reviewIdentity() {
     ? {
         automated: true,
         build: reviewBuild,
+        stopAt: reviewStopAt,
         route:
           mode.id === 'overflight-hunt'
             ? reviewBuild === 'objectives'
@@ -1016,7 +1112,11 @@ function reviewIdentity() {
 }
 function sortieSummary() {
   return run
-    ? { ...mode.summary(run), appearance: preparationIdentity, review: reviewIdentity() }
+    ? {
+        ...mode.summary(run),
+        appearance: preparationIdentity,
+        review: reviewIdentity(),
+      }
     : null;
 }
 function measurement({ raw = false } = {}) {
@@ -1411,7 +1511,11 @@ const disposeModeActions = mode.installActions?.({
     start({ retainRun: true });
   },
   canAct: () =>
-    run?.phase === 'playing' && !activeModal() && !contextGuard.blocked() && !doc.hidden,
+    run?.phase === 'playing' &&
+    !activeModal() &&
+    !inputGate.blocked() &&
+    !contextGuard.blocked() &&
+    !doc.hidden,
 });
 if (typeof disposeModeActions === 'function') cleanup.push(disposeModeActions);
 if ($('survivor-same-seed')) {
@@ -1446,11 +1550,8 @@ function refreshOperationView() {
     }
   }
   for (const hint of doc.querySelectorAll('[data-copy="cacheHint"]')) {
-    hint.hidden = compiled.rulesVersion !== 2 || !compiled.combat?.supplies.enabled;
-    hint.textContent = text('cacheHint').replace(
-      '30',
-      String(compiled.combat?.supplies.repairHull ?? 30),
-    );
+    hint.hidden = compiled.rulesVersion < 2 || !compiled.combat?.supplies.enabled;
+    hint.textContent = overflightCacheHint(compiled, getLocale());
   }
   $('difficulty').disabled = selectedInstalled || studio || preparing;
   $('difficulty-help').textContent = text(
@@ -1463,7 +1564,10 @@ function refreshMissionSources() {
     [
       'official',
       mode.encounterSets.map((encounterSet) => ({
-        project: mode.createProject({ encounterSet, difficulty: options.difficulty }),
+        project: mode.createProject({
+          encounterSet,
+          difficulty: options.difficulty,
+        }),
       })),
       false,
     ],
@@ -1524,7 +1628,10 @@ async function openMissionLibrary() {
         const owner = run;
         return { isCurrent: () => !retired && run === owner };
       },
-      goalPreferenceOptions: { editionId: mode.id, getStorage: () => win.localStorage },
+      goalPreferenceOptions: {
+        editionId: mode.id,
+        getStorage: () => win.localStorage,
+      },
       renderPreview: ({ container, diagram, document }) => {
         const canvas = document.createElement('canvas');
         canvas.width = 320;
@@ -1709,7 +1816,6 @@ settingsView = mountModeSettings({
   attachPanels: attachSettingsPanels,
   groups: {
     gameplay: [
-      operationCards.root,
       $('open-flight-deck'),
       field('difficulty'),
       $('difficulty-help'),
@@ -1813,7 +1919,11 @@ for (const [id, event, fn] of [
             (set) => mode.createProject({ encounterSet: set }).id === project.id,
           ) ?? mode.encounterSets[0];
         void prepare({
-          nextProject: mode.createProject({ encounterSet, seed, difficulty: options.difficulty }),
+          nextProject: mode.createProject({
+            encounterSet,
+            seed,
+            difficulty: options.difficulty,
+          }),
         }).catch(() => {});
       }
     },
@@ -2034,7 +2144,10 @@ listen(win, 'message', async (event) => {
         projectIdentity: compiled.projectIdentity,
       });
   } catch (error) {
-    acknowledge('error', { requestId: request.requestId, message: error.message });
+    acknowledge('error', {
+      requestId: request.requestId,
+      message: error.message,
+    });
   }
 });
 async function dispose() {
@@ -2099,8 +2212,13 @@ $('review-clip-controls').hidden = !reviewBuild;
 $('overflight-shell').hidden = false;
 refreshCopy();
 try {
-  const controllerPreferences = await loadOverflightControllerPreferences({ window: win });
-  controller = createOverflightController({ window: win, ...controllerPreferences });
+  const controllerPreferences = await loadOverflightControllerPreferences({
+    window: win,
+  });
+  controller = createOverflightController({
+    window: win,
+    ...controllerPreferences,
+  });
   if (controllerPreferences.warning) showStatus(controllerPreferences.warning);
   listen(win, 'storage', async (event) => {
     if (event.key !== null && event.key !== controllerPreferences.profileKey) return;

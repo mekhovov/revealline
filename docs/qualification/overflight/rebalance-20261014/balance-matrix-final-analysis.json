@@ -1,0 +1,3709 @@
+{
+  "format": "OverflightFinalBalanceAnalysisV1",
+  "sourceCommit": "ca03d7d7d84dcf50bbab6d2734a6d09097e27ed6",
+  "coverage": {
+    "configurations": 48,
+    "configurationResults": 48,
+    "routeResults": 236,
+    "earlyFailures": 1
+  },
+  "repeatedSubsetOutcomesVerifiedUnchanged": 40,
+  "activeWins": 19,
+  "unattendedOrRepetitiveWins": 0,
+  "unattendedOrRepetitiveOutcomes": 188,
+  "groups": [
+    {
+      "mode": "survivor",
+      "build": "fan-shield",
+      "configurations": 6,
+      "activeWins": 6,
+      "earlyFailures": 0,
+      "standardWins": 3,
+      "veteranWins": 3,
+      "firstChoice": {
+        "min": 15.45,
+        "median": 16.96,
+        "max": 19.25
+      },
+      "evolution": {
+        "min": 39.85,
+        "median": 64.93,
+        "max": 70.57
+      },
+      "completeDrafts": 6,
+      "tenthChoice": {
+        "min": 244.03,
+        "median": 252.5,
+        "max": 274.65
+      },
+      "largestChoiceGap": {
+        "seconds": 72.48,
+        "from": {
+          "time": 171.88333333333333,
+          "id": "side-burst:1"
+        },
+        "to": {
+          "time": 244.36666666666667,
+          "id": "side-burst:2"
+        }
+      },
+      "peakVisible": {
+        "min": 373,
+        "median": 432,
+        "max": 869
+      },
+      "peakAlive": {
+        "min": 520,
+        "median": 628.5,
+        "max": 1130
+      },
+      "shieldBlocks": {
+        "min": 0,
+        "median": 2.5,
+        "max": 4
+      },
+      "damageCauses": {
+        "contact": 400,
+        "lane": 20,
+        "fan": 20,
+        "ground": 0
+      },
+      "spawnDeferred": 0
+    },
+    {
+      "mode": "survivor",
+      "build": "echo",
+      "configurations": 6,
+      "activeWins": 0,
+      "earlyFailures": 0,
+      "standardWins": 0,
+      "veteranWins": 0,
+      "firstChoice": {
+        "min": 15.45,
+        "median": 16.96,
+        "max": 19.25
+      },
+      "evolution": {
+        "min": 41.45,
+        "median": 72.79,
+        "max": 77.33
+      },
+      "completeDrafts": 2,
+      "tenthChoice": {
+        "min": 254.25,
+        "median": 259.33,
+        "max": 264.4
+      },
+      "largestChoiceGap": {
+        "seconds": 69.08,
+        "from": {
+          "time": 125.5,
+          "id": "shield:1"
+        },
+        "to": {
+          "time": 194.58333333333334,
+          "id": "proximity-pulse:1"
+        }
+      },
+      "peakVisible": {
+        "min": 248,
+        "median": 447.5,
+        "max": 603
+      },
+      "peakAlive": {
+        "min": 311,
+        "median": 752.5,
+        "max": 1045
+      },
+      "shieldBlocks": {
+        "min": 0,
+        "median": 3,
+        "max": 5
+      },
+      "damageCauses": {
+        "contact": 940,
+        "lane": 40,
+        "fan": 0,
+        "ground": 20
+      },
+      "spawnDeferred": 0
+    },
+    {
+      "mode": "survivor",
+      "build": "echo-shield",
+      "configurations": 6,
+      "activeWins": 2,
+      "earlyFailures": 0,
+      "standardWins": 1,
+      "veteranWins": 1,
+      "firstChoice": {
+        "min": 15.45,
+        "median": 16.96,
+        "max": 19.25
+      },
+      "evolution": {
+        "min": 41.45,
+        "median": 72.79,
+        "max": 82
+      },
+      "completeDrafts": 5,
+      "tenthChoice": {
+        "min": 259.73,
+        "median": 316,
+        "max": 351.38
+      },
+      "largestChoiceGap": {
+        "seconds": 126.68,
+        "from": {
+          "time": 196.9,
+          "id": "side-burst:1"
+        },
+        "to": {
+          "time": 323.5833333333333,
+          "id": "side-burst:2"
+        }
+      },
+      "peakVisible": {
+        "min": 478,
+        "median": 734.5,
+        "max": 1005
+      },
+      "peakAlive": {
+        "min": 662,
+        "median": 869.5,
+        "max": 1242
+      },
+      "shieldBlocks": {
+        "min": 0,
+        "median": 2,
+        "max": 6
+      },
+      "damageCauses": {
+        "contact": 1120,
+        "lane": 0,
+        "fan": 0,
+        "ground": 0
+      },
+      "spawnDeferred": 0
+    },
+    {
+      "mode": "survivor",
+      "build": "systems",
+      "configurations": 6,
+      "activeWins": 1,
+      "earlyFailures": 0,
+      "standardWins": 1,
+      "veteranWins": 0,
+      "firstChoice": {
+        "min": 15.45,
+        "median": 16.96,
+        "max": 19.25
+      },
+      "evolution": null,
+      "completeDrafts": 5,
+      "tenthChoice": {
+        "min": 234.53,
+        "median": 246.03,
+        "max": 265.55
+      },
+      "largestChoiceGap": {
+        "seconds": 64.6,
+        "from": {
+          "time": 178.25,
+          "id": "scanner:1"
+        },
+        "to": {
+          "time": 242.85,
+          "id": "scanner:2"
+        }
+      },
+      "peakVisible": {
+        "min": 252,
+        "median": 417.5,
+        "max": 566
+      },
+      "peakAlive": {
+        "min": 386,
+        "median": 575.5,
+        "max": 797
+      },
+      "shieldBlocks": {
+        "min": 0,
+        "median": 0,
+        "max": 0
+      },
+      "damageCauses": {
+        "contact": 925,
+        "lane": 20,
+        "fan": 0,
+        "ground": 20
+      },
+      "spawnDeferred": 0
+    },
+    {
+      "mode": "riy",
+      "build": "fan-shield",
+      "configurations": 6,
+      "activeWins": 4,
+      "earlyFailures": 0,
+      "standardWins": 2,
+      "veteranWins": 2,
+      "firstChoice": {
+        "min": 18.68,
+        "median": 19.52,
+        "max": 19.88
+      },
+      "evolution": {
+        "min": 64.5,
+        "median": 79.97,
+        "max": 93.72
+      },
+      "completeDrafts": 6,
+      "tenthChoice": {
+        "min": 237.62,
+        "median": 267.02,
+        "max": 293.62
+      },
+      "largestChoiceGap": {
+        "seconds": 70.72,
+        "from": {
+          "time": 181.73333333333332,
+          "id": "shield:1"
+        },
+        "to": {
+          "time": 252.45,
+          "id": "shield:2"
+        }
+      },
+      "peakVisible": {
+        "min": 360,
+        "median": 419,
+        "max": 630
+      },
+      "peakAlive": {
+        "min": 574,
+        "median": 651,
+        "max": 964
+      },
+      "shieldBlocks": {
+        "min": 2,
+        "median": 4,
+        "max": 7
+      },
+      "damageCauses": {
+        "contact": 540,
+        "lane": 40,
+        "fan": 0,
+        "ground": 0
+      },
+      "spawnDeferred": 0
+    },
+    {
+      "mode": "riy",
+      "build": "echo",
+      "configurations": 6,
+      "activeWins": 1,
+      "earlyFailures": 1,
+      "standardWins": 1,
+      "veteranWins": 0,
+      "firstChoice": {
+        "min": 18.68,
+        "median": 19.52,
+        "max": 19.88
+      },
+      "evolution": {
+        "min": 71.45,
+        "median": 83.25,
+        "max": 101.25
+      },
+      "completeDrafts": 2,
+      "tenthChoice": {
+        "min": 284.22,
+        "median": 287.83,
+        "max": 291.43
+      },
+      "largestChoiceGap": {
+        "seconds": 62.02,
+        "from": {
+          "time": 130.96666666666667,
+          "id": "riy-sweeper:trail:3"
+        },
+        "to": {
+          "time": 192.98333333333332,
+          "id": "shield:1"
+        }
+      },
+      "peakVisible": {
+        "min": 292,
+        "median": 443,
+        "max": 846
+      },
+      "peakAlive": {
+        "min": 567,
+        "median": 651,
+        "max": 1123
+      },
+      "shieldBlocks": {
+        "min": 1,
+        "median": 3,
+        "max": 7
+      },
+      "damageCauses": {
+        "contact": 840,
+        "lane": 0,
+        "fan": 0,
+        "ground": 0
+      },
+      "spawnDeferred": 0
+    },
+    {
+      "mode": "riy",
+      "build": "echo-shield",
+      "configurations": 6,
+      "activeWins": 1,
+      "earlyFailures": 0,
+      "standardWins": 0,
+      "veteranWins": 1,
+      "firstChoice": {
+        "min": 18.68,
+        "median": 19.52,
+        "max": 19.88
+      },
+      "evolution": {
+        "min": 71.45,
+        "median": 83.25,
+        "max": 101.25
+      },
+      "completeDrafts": 3,
+      "tenthChoice": {
+        "min": 284.22,
+        "median": 287.1,
+        "max": 352.7
+      },
+      "largestChoiceGap": {
+        "seconds": 102.38,
+        "from": {
+          "time": 198.1,
+          "id": "shield:1"
+        },
+        "to": {
+          "time": 300.48333333333335,
+          "id": "shield:2"
+        }
+      },
+      "peakVisible": {
+        "min": 601,
+        "median": 751,
+        "max": 906
+      },
+      "peakAlive": {
+        "min": 766,
+        "median": 960.5,
+        "max": 1096
+      },
+      "shieldBlocks": {
+        "min": 1,
+        "median": 4,
+        "max": 9
+      },
+      "damageCauses": {
+        "contact": 1390,
+        "lane": 0,
+        "fan": 0,
+        "ground": 0
+      },
+      "spawnDeferred": 0
+    },
+    {
+      "mode": "riy",
+      "build": "systems",
+      "configurations": 6,
+      "activeWins": 4,
+      "earlyFailures": 0,
+      "standardWins": 2,
+      "veteranWins": 2,
+      "firstChoice": {
+        "min": 18.68,
+        "median": 19.52,
+        "max": 19.88
+      },
+      "evolution": {
+        "min": 65.58,
+        "median": 80.7,
+        "max": 91.18
+      },
+      "completeDrafts": 5,
+      "tenthChoice": {
+        "min": 233.48,
+        "median": 244.13,
+        "max": 266.58
+      },
+      "largestChoiceGap": {
+        "seconds": 62.57,
+        "from": {
+          "time": 177.98333333333332,
+          "id": "scanner:1"
+        },
+        "to": {
+          "time": 240.55,
+          "id": "scanner:2"
+        }
+      },
+      "peakVisible": {
+        "min": 234,
+        "median": 424.5,
+        "max": 487
+      },
+      "peakAlive": {
+        "min": 321,
+        "median": 652.5,
+        "max": 833
+      },
+      "shieldBlocks": {
+        "min": 0,
+        "median": 0,
+        "max": 0
+      },
+      "damageCauses": {
+        "contact": 840,
+        "lane": 0,
+        "fan": 20,
+        "ground": 0
+      },
+      "spawnDeferred": 0
+    }
+  ],
+  "rows": [
+    {
+      "mode": "survivor",
+      "build": "fan-shield",
+      "encounterSet": "front",
+      "difficulty": "standard",
+      "airframes": 3,
+      "seed": 17031991,
+      "earlyFailure": false,
+      "outcome": "won",
+      "time": 334.28,
+      "checkpoint": 120,
+      "firstChoice": 19.25,
+      "evolution": 67.08333333333333,
+      "choices": 10,
+      "tenthChoice": 251.61666666666667,
+      "largestChoiceGap": {
+        "seconds": 60.58,
+        "from": {
+          "time": 168.3,
+          "id": "side-burst:2"
+        },
+        "to": {
+          "time": 228.88333333333333,
+          "id": "side-burst:3"
+        }
+      },
+      "peakVisible": 379,
+      "peakAlive": 611,
+      "spawnDeferred": 0,
+      "damageTaken": 20,
+      "damageCauses": {
+        "contact": 20,
+        "lane": 0,
+        "fan": 0,
+        "ground": 0
+      },
+      "shieldBlocks": 0,
+      "xpEarned": 5077,
+      "xpCollected": 3923,
+      "xpOnGround": 1154,
+      "armorSegmentsBroken": 418,
+      "boostsUsed": 52,
+      "finalBuild": {
+        "primary": {
+          "rank": 4,
+          "branch": "wide",
+          "evolved": true
+        },
+        "combat": [
+          {
+            "id": "slow-field",
+            "rank": 3
+          },
+          {
+            "id": "side-burst",
+            "rank": 3
+          }
+        ],
+        "support": {
+          "id": "shield",
+          "rank": 1
+        },
+        "reinforcement": 0,
+        "repair": 0
+      }
+    },
+    {
+      "mode": "survivor",
+      "build": "fan-shield",
+      "encounterSet": "front",
+      "difficulty": "veteran",
+      "airframes": 3,
+      "seed": 17031991,
+      "earlyFailure": false,
+      "outcome": "won",
+      "time": 373.38,
+      "checkpoint": 180,
+      "firstChoice": 17.166666666666668,
+      "evolution": 63.61666666666667,
+      "choices": 10,
+      "tenthChoice": 246.1,
+      "largestChoiceGap": {
+        "seconds": 48.72,
+        "from": {
+          "time": 155.9,
+          "id": "side-burst:2"
+        },
+        "to": {
+          "time": 204.61666666666667,
+          "id": "side-burst:3"
+        }
+      },
+      "peakVisible": 869,
+      "peakAlive": 1130,
+      "spawnDeferred": 0,
+      "damageTaken": 220,
+      "damageCauses": {
+        "contact": 180,
+        "lane": 20,
+        "fan": 20,
+        "ground": 0
+      },
+      "shieldBlocks": 3,
+      "xpEarned": 6787,
+      "xpCollected": 4718,
+      "xpOnGround": 2069,
+      "armorSegmentsBroken": 557,
+      "boostsUsed": 69,
+      "finalBuild": {
+        "primary": {
+          "rank": 4,
+          "branch": "wide",
+          "evolved": true
+        },
+        "combat": [
+          {
+            "id": "slow-field",
+            "rank": 3
+          },
+          {
+            "id": "side-burst",
+            "rank": 3
+          }
+        ],
+        "support": {
+          "id": "shield",
+          "rank": 1
+        },
+        "reinforcement": 0,
+        "repair": 0
+      }
+    },
+    {
+      "mode": "survivor",
+      "build": "fan-shield",
+      "encounterSet": "crossing",
+      "difficulty": "standard",
+      "airframes": 1,
+      "seed": 42,
+      "earlyFailure": false,
+      "outcome": "won",
+      "time": 373.73,
+      "checkpoint": 240,
+      "firstChoice": 16.75,
+      "evolution": 70.56666666666666,
+      "choices": 10,
+      "tenthChoice": 253.38333333333333,
+      "largestChoiceGap": {
+        "seconds": 43,
+        "from": {
+          "time": 140.16666666666666,
+          "id": "slow-field:2"
+        },
+        "to": {
+          "time": 183.16666666666666,
+          "id": "slow-field:3"
+        }
+      },
+      "peakVisible": 373,
+      "peakAlive": 646,
+      "spawnDeferred": 0,
+      "damageTaken": 60,
+      "damageCauses": {
+        "contact": 60,
+        "lane": 0,
+        "fan": 0,
+        "ground": 0
+      },
+      "shieldBlocks": 4,
+      "xpEarned": 5260,
+      "xpCollected": 4785,
+      "xpOnGround": 475,
+      "armorSegmentsBroken": 389,
+      "boostsUsed": 70,
+      "finalBuild": {
+        "primary": {
+          "rank": 4,
+          "branch": "wide",
+          "evolved": true
+        },
+        "combat": [
+          {
+            "id": "slow-field",
+            "rank": 3
+          },
+          {
+            "id": "side-burst",
+            "rank": 3
+          }
+        ],
+        "support": {
+          "id": "shield",
+          "rank": 1
+        },
+        "reinforcement": 0,
+        "repair": 0
+      }
+    },
+    {
+      "mode": "survivor",
+      "build": "fan-shield",
+      "encounterSet": "crossing",
+      "difficulty": "veteran",
+      "airframes": 1,
+      "seed": 42,
+      "earlyFailure": false,
+      "outcome": "won",
+      "time": 381.5,
+      "checkpoint": 120,
+      "firstChoice": 15.45,
+      "evolution": 66.25,
+      "choices": 10,
+      "tenthChoice": 244.03333333333333,
+      "largestChoiceGap": {
+        "seconds": 53.07,
+        "from": {
+          "time": 112.71666666666667,
+          "id": "slow-field:2"
+        },
+        "to": {
+          "time": 165.78333333333333,
+          "id": "slow-field:3"
+        }
+      },
+      "peakVisible": 402,
+      "peakAlive": 520,
+      "spawnDeferred": 0,
+      "damageTaken": 60,
+      "damageCauses": {
+        "contact": 60,
+        "lane": 0,
+        "fan": 0,
+        "ground": 0
+      },
+      "shieldBlocks": 2,
+      "xpEarned": 6351,
+      "xpCollected": 5781,
+      "xpOnGround": 570,
+      "armorSegmentsBroken": 545,
+      "boostsUsed": 58,
+      "finalBuild": {
+        "primary": {
+          "rank": 4,
+          "branch": "wide",
+          "evolved": true
+        },
+        "combat": [
+          {
+            "id": "slow-field",
+            "rank": 3
+          },
+          {
+            "id": "side-burst",
+            "rank": 3
+          }
+        ],
+        "support": {
+          "id": "shield",
+          "rank": 1
+        },
+        "reinforcement": 0,
+        "repair": 0
+      }
+    },
+    {
+      "mode": "survivor",
+      "build": "fan-shield",
+      "encounterSet": "mixed",
+      "difficulty": "standard",
+      "airframes": 3,
+      "seed": 7,
+      "earlyFailure": false,
+      "outcome": "won",
+      "time": 361.43,
+      "checkpoint": 180,
+      "firstChoice": 17.483333333333334,
+      "evolution": 47.21666666666667,
+      "choices": 10,
+      "tenthChoice": 274.65,
+      "largestChoiceGap": {
+        "seconds": 72.48,
+        "from": {
+          "time": 171.88333333333333,
+          "id": "side-burst:1"
+        },
+        "to": {
+          "time": 244.36666666666667,
+          "id": "side-burst:2"
+        }
+      },
+      "peakVisible": 462,
+      "peakAlive": 591,
+      "spawnDeferred": 0,
+      "damageTaken": 0,
+      "damageCauses": {
+        "contact": 0,
+        "lane": 0,
+        "fan": 0,
+        "ground": 0
+      },
+      "shieldBlocks": 3,
+      "xpEarned": 5307,
+      "xpCollected": 4339,
+      "xpOnGround": 968,
+      "armorSegmentsBroken": 488,
+      "boostsUsed": 54,
+      "finalBuild": {
+        "primary": {
+          "rank": 4,
+          "branch": "wide",
+          "evolved": true
+        },
+        "combat": [
+          {
+            "id": "slow-field",
+            "rank": 3
+          },
+          {
+            "id": "side-burst",
+            "rank": 3
+          }
+        ],
+        "support": {
+          "id": "shield",
+          "rank": 1
+        },
+        "reinforcement": 0,
+        "repair": 0
+      }
+    },
+    {
+      "mode": "survivor",
+      "build": "fan-shield",
+      "encounterSet": "mixed",
+      "difficulty": "veteran",
+      "airframes": 3,
+      "seed": 7,
+      "earlyFailure": false,
+      "outcome": "won",
+      "time": 358.53,
+      "checkpoint": 240,
+      "firstChoice": 15.75,
+      "evolution": 39.85,
+      "choices": 10,
+      "tenthChoice": 265.85,
+      "largestChoiceGap": {
+        "seconds": 64.72,
+        "from": {
+          "time": 163.03333333333333,
+          "id": "side-burst:1"
+        },
+        "to": {
+          "time": 227.75,
+          "id": "side-burst:2"
+        }
+      },
+      "peakVisible": 515,
+      "peakAlive": 690,
+      "spawnDeferred": 0,
+      "damageTaken": 80,
+      "damageCauses": {
+        "contact": 80,
+        "lane": 0,
+        "fan": 0,
+        "ground": 0
+      },
+      "shieldBlocks": 2,
+      "xpEarned": 6295,
+      "xpCollected": 4878,
+      "xpOnGround": 1417,
+      "armorSegmentsBroken": 563,
+      "boostsUsed": 58,
+      "finalBuild": {
+        "primary": {
+          "rank": 4,
+          "branch": "wide",
+          "evolved": true
+        },
+        "combat": [
+          {
+            "id": "slow-field",
+            "rank": 3
+          },
+          {
+            "id": "side-burst",
+            "rank": 3
+          }
+        ],
+        "support": {
+          "id": "shield",
+          "rank": 1
+        },
+        "reinforcement": 0,
+        "repair": 0
+      }
+    },
+    {
+      "mode": "survivor",
+      "build": "echo",
+      "encounterSet": "front",
+      "difficulty": "standard",
+      "airframes": 1,
+      "seed": 17031991,
+      "earlyFailure": false,
+      "outcome": "lost",
+      "time": 230.47,
+      "checkpoint": 120,
+      "firstChoice": 19.25,
+      "evolution": 74.35,
+      "choices": 8,
+      "tenthChoice": null,
+      "largestChoiceGap": {
+        "seconds": 37.75,
+        "from": {
+          "time": 74.35,
+          "id": "primary:double:4"
+        },
+        "to": {
+          "time": 112.1,
+          "id": "proximity-pulse:1"
+        }
+      },
+      "peakVisible": 419,
+      "peakAlive": 576,
+      "spawnDeferred": 0,
+      "damageTaken": 100,
+      "damageCauses": {
+        "contact": 80,
+        "lane": 20,
+        "fan": 0,
+        "ground": 0
+      },
+      "shieldBlocks": 0,
+      "xpEarned": 2026,
+      "xpCollected": 1504,
+      "xpOnGround": 522,
+      "armorSegmentsBroken": 120,
+      "boostsUsed": 36,
+      "finalBuild": {
+        "primary": {
+          "rank": 4,
+          "branch": "double",
+          "evolved": true
+        },
+        "combat": [
+          {
+            "id": "slow-field",
+            "rank": 3
+          },
+          {
+            "id": "proximity-pulse",
+            "rank": 2
+          }
+        ],
+        "support": null,
+        "reinforcement": 0,
+        "repair": 0
+      }
+    },
+    {
+      "mode": "survivor",
+      "build": "echo",
+      "encounterSet": "front",
+      "difficulty": "veteran",
+      "airframes": 1,
+      "seed": 17031991,
+      "earlyFailure": false,
+      "outcome": "lost",
+      "time": 204.62,
+      "checkpoint": 180,
+      "firstChoice": 17.166666666666668,
+      "evolution": 71.23333333333333,
+      "choices": 8,
+      "tenthChoice": null,
+      "largestChoiceGap": {
+        "seconds": 44.8,
+        "from": {
+          "time": 97.25,
+          "id": "proximity-pulse:1"
+        },
+        "to": {
+          "time": 142.05,
+          "id": "slow-field:3"
+        }
+      },
+      "peakVisible": 248,
+      "peakAlive": 311,
+      "spawnDeferred": 0,
+      "damageTaken": 100,
+      "damageCauses": {
+        "contact": 80,
+        "lane": 20,
+        "fan": 0,
+        "ground": 0
+      },
+      "shieldBlocks": 0,
+      "xpEarned": 1826,
+      "xpCollected": 1440,
+      "xpOnGround": 386,
+      "armorSegmentsBroken": 146,
+      "boostsUsed": 35,
+      "finalBuild": {
+        "primary": {
+          "rank": 4,
+          "branch": "double",
+          "evolved": true
+        },
+        "combat": [
+          {
+            "id": "slow-field",
+            "rank": 3
+          },
+          {
+            "id": "proximity-pulse",
+            "rank": 2
+          }
+        ],
+        "support": null,
+        "reinforcement": 0,
+        "repair": 0
+      }
+    },
+    {
+      "mode": "survivor",
+      "build": "echo",
+      "encounterSet": "crossing",
+      "difficulty": "standard",
+      "airframes": 3,
+      "seed": 42,
+      "earlyFailure": false,
+      "outcome": "lost",
+      "time": 349.58,
+      "checkpoint": 240,
+      "firstChoice": 16.75,
+      "evolution": 77.33333333333333,
+      "choices": 10,
+      "tenthChoice": 264.4,
+      "largestChoiceGap": {
+        "seconds": 55.23,
+        "from": {
+          "time": 186.15,
+          "id": "slow-field:3"
+        },
+        "to": {
+          "time": 241.38333333333333,
+          "id": "proximity-pulse:3"
+        }
+      },
+      "peakVisible": 603,
+      "peakAlive": 747,
+      "spawnDeferred": 0,
+      "damageTaken": 300,
+      "damageCauses": {
+        "contact": 300,
+        "lane": 0,
+        "fan": 0,
+        "ground": 0
+      },
+      "shieldBlocks": 5,
+      "xpEarned": 4564,
+      "xpCollected": 4138,
+      "xpOnGround": 426,
+      "armorSegmentsBroken": 397,
+      "boostsUsed": 54,
+      "finalBuild": {
+        "primary": {
+          "rank": 4,
+          "branch": "double",
+          "evolved": true
+        },
+        "combat": [
+          {
+            "id": "slow-field",
+            "rank": 3
+          },
+          {
+            "id": "proximity-pulse",
+            "rank": 3
+          }
+        ],
+        "support": {
+          "id": "shield",
+          "rank": 1
+        },
+        "reinforcement": 0,
+        "repair": 0
+      }
+    },
+    {
+      "mode": "survivor",
+      "build": "echo",
+      "encounterSet": "crossing",
+      "difficulty": "veteran",
+      "airframes": 3,
+      "seed": 42,
+      "earlyFailure": false,
+      "outcome": "lost",
+      "time": 337.32,
+      "checkpoint": 120,
+      "firstChoice": 15.45,
+      "evolution": 76.31666666666666,
+      "choices": 10,
+      "tenthChoice": 254.25,
+      "largestChoiceGap": {
+        "seconds": 56.85,
+        "from": {
+          "time": 122.66666666666667,
+          "id": "slow-field:2"
+        },
+        "to": {
+          "time": 179.51666666666668,
+          "id": "slow-field:3"
+        }
+      },
+      "peakVisible": 496,
+      "peakAlive": 775,
+      "spawnDeferred": 0,
+      "damageTaken": 300,
+      "damageCauses": {
+        "contact": 280,
+        "lane": 0,
+        "fan": 0,
+        "ground": 20
+      },
+      "shieldBlocks": 3,
+      "xpEarned": 4856,
+      "xpCollected": 3594,
+      "xpOnGround": 1262,
+      "armorSegmentsBroken": 424,
+      "boostsUsed": 51,
+      "finalBuild": {
+        "primary": {
+          "rank": 4,
+          "branch": "double",
+          "evolved": true
+        },
+        "combat": [
+          {
+            "id": "slow-field",
+            "rank": 3
+          },
+          {
+            "id": "proximity-pulse",
+            "rank": 3
+          }
+        ],
+        "support": {
+          "id": "shield",
+          "rank": 1
+        },
+        "reinforcement": 0,
+        "repair": 0
+      }
+    },
+    {
+      "mode": "survivor",
+      "build": "echo",
+      "encounterSet": "mixed",
+      "difficulty": "standard",
+      "airframes": 1,
+      "seed": 7,
+      "earlyFailure": false,
+      "outcome": "lost",
+      "time": 250.05,
+      "checkpoint": 180,
+      "firstChoice": 17.483333333333334,
+      "evolution": 47.733333333333334,
+      "choices": 8,
+      "tenthChoice": null,
+      "largestChoiceGap": {
+        "seconds": 58.88,
+        "from": {
+          "time": 138.01666666666668,
+          "id": "shield:1"
+        },
+        "to": {
+          "time": 196.9,
+          "id": "proximity-pulse:1"
+        }
+      },
+      "peakVisible": 411,
+      "peakAlive": 758,
+      "spawnDeferred": 0,
+      "damageTaken": 100,
+      "damageCauses": {
+        "contact": 100,
+        "lane": 0,
+        "fan": 0,
+        "ground": 0
+      },
+      "shieldBlocks": 3,
+      "xpEarned": 1744,
+      "xpCollected": 1405,
+      "xpOnGround": 339,
+      "armorSegmentsBroken": 332,
+      "boostsUsed": 43,
+      "finalBuild": {
+        "primary": {
+          "rank": 4,
+          "branch": "double",
+          "evolved": true
+        },
+        "combat": [
+          {
+            "id": "slow-field",
+            "rank": 3
+          },
+          {
+            "id": "proximity-pulse",
+            "rank": 1
+          }
+        ],
+        "support": {
+          "id": "shield",
+          "rank": 1
+        },
+        "reinforcement": 0,
+        "repair": 0
+      }
+    },
+    {
+      "mode": "survivor",
+      "build": "echo",
+      "encounterSet": "mixed",
+      "difficulty": "veteran",
+      "airframes": 1,
+      "seed": 7,
+      "earlyFailure": false,
+      "outcome": "lost",
+      "time": 244.12,
+      "checkpoint": 240,
+      "firstChoice": 15.75,
+      "evolution": 41.45,
+      "choices": 8,
+      "tenthChoice": null,
+      "largestChoiceGap": {
+        "seconds": 69.08,
+        "from": {
+          "time": 125.5,
+          "id": "shield:1"
+        },
+        "to": {
+          "time": 194.58333333333334,
+          "id": "proximity-pulse:1"
+        }
+      },
+      "peakVisible": 476,
+      "peakAlive": 1045,
+      "spawnDeferred": 0,
+      "damageTaken": 100,
+      "damageCauses": {
+        "contact": 100,
+        "lane": 0,
+        "fan": 0,
+        "ground": 0
+      },
+      "shieldBlocks": 4,
+      "xpEarned": 1778,
+      "xpCollected": 1379,
+      "xpOnGround": 399,
+      "armorSegmentsBroken": 266,
+      "boostsUsed": 41,
+      "finalBuild": {
+        "primary": {
+          "rank": 4,
+          "branch": "double",
+          "evolved": true
+        },
+        "combat": [
+          {
+            "id": "slow-field",
+            "rank": 3
+          },
+          {
+            "id": "proximity-pulse",
+            "rank": 1
+          }
+        ],
+        "support": {
+          "id": "shield",
+          "rank": 1
+        },
+        "reinforcement": 0,
+        "repair": 0
+      }
+    },
+    {
+      "mode": "survivor",
+      "build": "echo-shield",
+      "encounterSet": "front",
+      "difficulty": "standard",
+      "airframes": 3,
+      "seed": 17031991,
+      "earlyFailure": false,
+      "outcome": "lost",
+      "time": 366.15,
+      "checkpoint": 120,
+      "firstChoice": 19.25,
+      "evolution": 74.35,
+      "choices": 10,
+      "tenthChoice": 316,
+      "largestChoiceGap": {
+        "seconds": 77.1,
+        "from": {
+          "time": 189.18333333333334,
+          "id": "side-burst:2"
+        },
+        "to": {
+          "time": 266.28333333333336,
+          "id": "side-burst:3"
+        }
+      },
+      "peakVisible": 506,
+      "peakAlive": 870,
+      "spawnDeferred": 0,
+      "damageTaken": 300,
+      "damageCauses": {
+        "contact": 300,
+        "lane": 0,
+        "fan": 0,
+        "ground": 0
+      },
+      "shieldBlocks": 1,
+      "xpEarned": 5516,
+      "xpCollected": 3051,
+      "xpOnGround": 2465,
+      "armorSegmentsBroken": 430,
+      "boostsUsed": 59,
+      "finalBuild": {
+        "primary": {
+          "rank": 4,
+          "branch": "double",
+          "evolved": true
+        },
+        "combat": [
+          {
+            "id": "slow-field",
+            "rank": 3
+          },
+          {
+            "id": "side-burst",
+            "rank": 3
+          }
+        ],
+        "support": {
+          "id": "shield",
+          "rank": 1
+        },
+        "reinforcement": 0,
+        "repair": 0
+      }
+    },
+    {
+      "mode": "survivor",
+      "build": "echo-shield",
+      "encounterSet": "front",
+      "difficulty": "veteran",
+      "airframes": 3,
+      "seed": 17031991,
+      "earlyFailure": false,
+      "outcome": "lost",
+      "time": 296.72,
+      "checkpoint": 180,
+      "firstChoice": 17.166666666666668,
+      "evolution": 71.23333333333333,
+      "choices": 10,
+      "tenthChoice": 259.73333333333335,
+      "largestChoiceGap": {
+        "seconds": 60.43,
+        "from": {
+          "time": 174.85,
+          "id": "side-burst:2"
+        },
+        "to": {
+          "time": 235.28333333333333,
+          "id": "side-burst:3"
+        }
+      },
+      "peakVisible": 804,
+      "peakAlive": 869,
+      "spawnDeferred": 0,
+      "damageTaken": 300,
+      "damageCauses": {
+        "contact": 300,
+        "lane": 0,
+        "fan": 0,
+        "ground": 0
+      },
+      "shieldBlocks": 1,
+      "xpEarned": 4642,
+      "xpCollected": 3555,
+      "xpOnGround": 1087,
+      "armorSegmentsBroken": 231,
+      "boostsUsed": 51,
+      "finalBuild": {
+        "primary": {
+          "rank": 4,
+          "branch": "double",
+          "evolved": true
+        },
+        "combat": [
+          {
+            "id": "slow-field",
+            "rank": 3
+          },
+          {
+            "id": "side-burst",
+            "rank": 3
+          }
+        ],
+        "support": {
+          "id": "shield",
+          "rank": 1
+        },
+        "reinforcement": 0,
+        "repair": 0
+      }
+    },
+    {
+      "mode": "survivor",
+      "build": "echo-shield",
+      "encounterSet": "crossing",
+      "difficulty": "standard",
+      "airframes": 1,
+      "seed": 42,
+      "earlyFailure": false,
+      "outcome": "lost",
+      "time": 347.28,
+      "checkpoint": 240,
+      "firstChoice": 16.75,
+      "evolution": 78.61666666666666,
+      "choices": 10,
+      "tenthChoice": 277.1333333333333,
+      "largestChoiceGap": {
+        "seconds": 54.07,
+        "from": {
+          "time": 186.8,
+          "id": "slow-field:3"
+        },
+        "to": {
+          "time": 240.86666666666667,
+          "id": "side-burst:3"
+        }
+      },
+      "peakVisible": 478,
+      "peakAlive": 662,
+      "spawnDeferred": 0,
+      "damageTaken": 100,
+      "damageCauses": {
+        "contact": 100,
+        "lane": 0,
+        "fan": 0,
+        "ground": 0
+      },
+      "shieldBlocks": 3,
+      "xpEarned": 4618,
+      "xpCollected": 3505,
+      "xpOnGround": 1113,
+      "armorSegmentsBroken": 397,
+      "boostsUsed": 56,
+      "finalBuild": {
+        "primary": {
+          "rank": 4,
+          "branch": "double",
+          "evolved": true
+        },
+        "combat": [
+          {
+            "id": "slow-field",
+            "rank": 3
+          },
+          {
+            "id": "side-burst",
+            "rank": 3
+          }
+        ],
+        "support": {
+          "id": "shield",
+          "rank": 1
+        },
+        "reinforcement": 0,
+        "repair": 0
+      }
+    },
+    {
+      "mode": "survivor",
+      "build": "echo-shield",
+      "encounterSet": "crossing",
+      "difficulty": "veteran",
+      "airframes": 1,
+      "seed": 42,
+      "earlyFailure": false,
+      "outcome": "lost",
+      "time": 251.47,
+      "checkpoint": 120,
+      "firstChoice": 15.45,
+      "evolution": 82,
+      "choices": 9,
+      "tenthChoice": null,
+      "largestChoiceGap": {
+        "seconds": 58.3,
+        "from": {
+          "time": 124.03333333333333,
+          "id": "slow-field:2"
+        },
+        "to": {
+          "time": 182.33333333333334,
+          "id": "slow-field:3"
+        }
+      },
+      "peakVisible": 665,
+      "peakAlive": 691,
+      "spawnDeferred": 0,
+      "damageTaken": 100,
+      "damageCauses": {
+        "contact": 100,
+        "lane": 0,
+        "fan": 0,
+        "ground": 0
+      },
+      "shieldBlocks": 0,
+      "xpEarned": 2827,
+      "xpCollected": 1985,
+      "xpOnGround": 842,
+      "armorSegmentsBroken": 287,
+      "boostsUsed": 36,
+      "finalBuild": {
+        "primary": {
+          "rank": 4,
+          "branch": "double",
+          "evolved": true
+        },
+        "combat": [
+          {
+            "id": "slow-field",
+            "rank": 3
+          },
+          {
+            "id": "side-burst",
+            "rank": 3
+          }
+        ],
+        "support": null,
+        "reinforcement": 0,
+        "repair": 0
+      }
+    },
+    {
+      "mode": "survivor",
+      "build": "echo-shield",
+      "encounterSet": "mixed",
+      "difficulty": "standard",
+      "airframes": 3,
+      "seed": 7,
+      "earlyFailure": false,
+      "outcome": "won",
+      "time": 388.67,
+      "checkpoint": 180,
+      "firstChoice": 17.483333333333334,
+      "evolution": 47.733333333333334,
+      "choices": 10,
+      "tenthChoice": 351.3833333333333,
+      "largestChoiceGap": {
+        "seconds": 126.68,
+        "from": {
+          "time": 196.9,
+          "id": "side-burst:1"
+        },
+        "to": {
+          "time": 323.5833333333333,
+          "id": "side-burst:2"
+        }
+      },
+      "peakVisible": 905,
+      "peakAlive": 1071,
+      "spawnDeferred": 0,
+      "damageTaken": 140,
+      "damageCauses": {
+        "contact": 140,
+        "lane": 0,
+        "fan": 0,
+        "ground": 0
+      },
+      "shieldBlocks": 5,
+      "xpEarned": 5482,
+      "xpCollected": 3862,
+      "xpOnGround": 1620,
+      "armorSegmentsBroken": 504,
+      "boostsUsed": 59,
+      "finalBuild": {
+        "primary": {
+          "rank": 4,
+          "branch": "double",
+          "evolved": true
+        },
+        "combat": [
+          {
+            "id": "slow-field",
+            "rank": 3
+          },
+          {
+            "id": "side-burst",
+            "rank": 3
+          }
+        ],
+        "support": {
+          "id": "shield",
+          "rank": 1
+        },
+        "reinforcement": 0,
+        "repair": 0
+      }
+    },
+    {
+      "mode": "survivor",
+      "build": "echo-shield",
+      "encounterSet": "mixed",
+      "difficulty": "veteran",
+      "airframes": 3,
+      "seed": 7,
+      "earlyFailure": false,
+      "outcome": "won",
+      "time": 396.12,
+      "checkpoint": 240,
+      "firstChoice": 15.75,
+      "evolution": 41.45,
+      "choices": 10,
+      "tenthChoice": 321.23333333333335,
+      "largestChoiceGap": {
+        "seconds": 116.93,
+        "from": {
+          "time": 194.58333333333334,
+          "id": "side-burst:1"
+        },
+        "to": {
+          "time": 311.51666666666665,
+          "id": "side-burst:2"
+        }
+      },
+      "peakVisible": 1005,
+      "peakAlive": 1242,
+      "spawnDeferred": 0,
+      "damageTaken": 180,
+      "damageCauses": {
+        "contact": 180,
+        "lane": 0,
+        "fan": 0,
+        "ground": 0
+      },
+      "shieldBlocks": 6,
+      "xpEarned": 6804,
+      "xpCollected": 3796,
+      "xpOnGround": 3008,
+      "armorSegmentsBroken": 556,
+      "boostsUsed": 61,
+      "finalBuild": {
+        "primary": {
+          "rank": 4,
+          "branch": "double",
+          "evolved": true
+        },
+        "combat": [
+          {
+            "id": "slow-field",
+            "rank": 3
+          },
+          {
+            "id": "side-burst",
+            "rank": 3
+          }
+        ],
+        "support": {
+          "id": "shield",
+          "rank": 1
+        },
+        "reinforcement": 0,
+        "repair": 0
+      }
+    },
+    {
+      "mode": "survivor",
+      "build": "systems",
+      "encounterSet": "front",
+      "difficulty": "standard",
+      "airframes": 1,
+      "seed": 17031991,
+      "earlyFailure": false,
+      "outcome": "lost",
+      "time": 280.7,
+      "checkpoint": 120,
+      "firstChoice": 19.25,
+      "evolution": null,
+      "choices": 10,
+      "tenthChoice": 238.81666666666666,
+      "largestChoiceGap": {
+        "seconds": 38.5,
+        "from": {
+          "time": 66.4,
+          "id": "side-burst:1"
+        },
+        "to": {
+          "time": 104.9,
+          "id": "side-burst:2"
+        }
+      },
+      "peakVisible": 367,
+      "peakAlive": 502,
+      "spawnDeferred": 0,
+      "damageTaken": 100,
+      "damageCauses": {
+        "contact": 80,
+        "lane": 20,
+        "fan": 0,
+        "ground": 0
+      },
+      "shieldBlocks": 0,
+      "xpEarned": 3653,
+      "xpCollected": 3651,
+      "xpOnGround": 2,
+      "armorSegmentsBroken": 192,
+      "boostsUsed": 56,
+      "finalBuild": {
+        "primary": {
+          "rank": 2,
+          "branch": "double",
+          "evolved": false
+        },
+        "combat": [
+          {
+            "id": "proximity-pulse",
+            "rank": 3
+          },
+          {
+            "id": "side-burst",
+            "rank": 3
+          }
+        ],
+        "support": {
+          "id": "scanner",
+          "rank": 3
+        },
+        "reinforcement": 0,
+        "repair": 0
+      }
+    },
+    {
+      "mode": "survivor",
+      "build": "systems",
+      "encounterSet": "front",
+      "difficulty": "veteran",
+      "airframes": 1,
+      "seed": 17031991,
+      "earlyFailure": false,
+      "outcome": "lost",
+      "time": 205.2,
+      "checkpoint": 180,
+      "firstChoice": 17.166666666666668,
+      "evolution": null,
+      "choices": 9,
+      "tenthChoice": null,
+      "largestChoiceGap": {
+        "seconds": 51.05,
+        "from": {
+          "time": 59.833333333333336,
+          "id": "side-burst:1"
+        },
+        "to": {
+          "time": 110.88333333333334,
+          "id": "side-burst:2"
+        }
+      },
+      "peakVisible": 252,
+      "peakAlive": 386,
+      "spawnDeferred": 0,
+      "damageTaken": 100,
+      "damageCauses": {
+        "contact": 100,
+        "lane": 0,
+        "fan": 0,
+        "ground": 0
+      },
+      "shieldBlocks": 0,
+      "xpEarned": 1926,
+      "xpCollected": 1819,
+      "xpOnGround": 107,
+      "armorSegmentsBroken": 133,
+      "boostsUsed": 43,
+      "finalBuild": {
+        "primary": {
+          "rank": 2,
+          "branch": "double",
+          "evolved": false
+        },
+        "combat": [
+          {
+            "id": "proximity-pulse",
+            "rank": 3
+          },
+          {
+            "id": "side-burst",
+            "rank": 3
+          }
+        ],
+        "support": {
+          "id": "scanner",
+          "rank": 2
+        },
+        "reinforcement": 0,
+        "repair": 0
+      }
+    },
+    {
+      "mode": "survivor",
+      "build": "systems",
+      "encounterSet": "crossing",
+      "difficulty": "standard",
+      "airframes": 3,
+      "seed": 42,
+      "earlyFailure": false,
+      "outcome": "won",
+      "time": 393.03,
+      "checkpoint": 240,
+      "firstChoice": 16.75,
+      "evolution": null,
+      "choices": 10,
+      "tenthChoice": 246.03333333333333,
+      "largestChoiceGap": {
+        "seconds": 46.8,
+        "from": {
+          "time": 105.08333333333333,
+          "id": "side-burst:2"
+        },
+        "to": {
+          "time": 151.88333333333333,
+          "id": "side-burst:3"
+        }
+      },
+      "peakVisible": 566,
+      "peakAlive": 794,
+      "spawnDeferred": 0,
+      "damageTaken": 265,
+      "damageCauses": {
+        "contact": 265,
+        "lane": 0,
+        "fan": 0,
+        "ground": 0
+      },
+      "shieldBlocks": 0,
+      "xpEarned": 5473,
+      "xpCollected": 5297,
+      "xpOnGround": 176,
+      "armorSegmentsBroken": 453,
+      "boostsUsed": 88,
+      "finalBuild": {
+        "primary": {
+          "rank": 2,
+          "branch": "double",
+          "evolved": false
+        },
+        "combat": [
+          {
+            "id": "side-burst",
+            "rank": 3
+          },
+          {
+            "id": "proximity-pulse",
+            "rank": 3
+          }
+        ],
+        "support": {
+          "id": "scanner",
+          "rank": 3
+        },
+        "reinforcement": 0,
+        "repair": 0
+      }
+    },
+    {
+      "mode": "survivor",
+      "build": "systems",
+      "encounterSet": "crossing",
+      "difficulty": "veteran",
+      "airframes": 3,
+      "seed": 42,
+      "earlyFailure": false,
+      "outcome": "lost",
+      "time": 317.68,
+      "checkpoint": 120,
+      "firstChoice": 15.45,
+      "evolution": null,
+      "choices": 10,
+      "tenthChoice": 234.53333333333333,
+      "largestChoiceGap": {
+        "seconds": 44.68,
+        "from": {
+          "time": 125.11666666666666,
+          "id": "side-burst:3"
+        },
+        "to": {
+          "time": 169.8,
+          "id": "proximity-pulse:2"
+        }
+      },
+      "peakVisible": 444,
+      "peakAlive": 797,
+      "spawnDeferred": 0,
+      "damageTaken": 300,
+      "damageCauses": {
+        "contact": 300,
+        "lane": 0,
+        "fan": 0,
+        "ground": 0
+      },
+      "shieldBlocks": 0,
+      "xpEarned": 4552,
+      "xpCollected": 4476,
+      "xpOnGround": 76,
+      "armorSegmentsBroken": 381,
+      "boostsUsed": 70,
+      "finalBuild": {
+        "primary": {
+          "rank": 2,
+          "branch": "double",
+          "evolved": false
+        },
+        "combat": [
+          {
+            "id": "side-burst",
+            "rank": 3
+          },
+          {
+            "id": "proximity-pulse",
+            "rank": 3
+          }
+        ],
+        "support": {
+          "id": "scanner",
+          "rank": 3
+        },
+        "reinforcement": 0,
+        "repair": 0
+      }
+    },
+    {
+      "mode": "survivor",
+      "build": "systems",
+      "encounterSet": "mixed",
+      "difficulty": "standard",
+      "airframes": 1,
+      "seed": 7,
+      "earlyFailure": false,
+      "outcome": "lost",
+      "time": 324.87,
+      "checkpoint": 180,
+      "firstChoice": 17.483333333333334,
+      "evolution": null,
+      "choices": 10,
+      "tenthChoice": 265.55,
+      "largestChoiceGap": {
+        "seconds": 64.6,
+        "from": {
+          "time": 178.25,
+          "id": "scanner:1"
+        },
+        "to": {
+          "time": 242.85,
+          "id": "scanner:2"
+        }
+      },
+      "peakVisible": 391,
+      "peakAlive": 465,
+      "spawnDeferred": 0,
+      "damageTaken": 100,
+      "damageCauses": {
+        "contact": 100,
+        "lane": 0,
+        "fan": 0,
+        "ground": 0
+      },
+      "shieldBlocks": 0,
+      "xpEarned": 4572,
+      "xpCollected": 4530,
+      "xpOnGround": 42,
+      "armorSegmentsBroken": 459,
+      "boostsUsed": 61,
+      "finalBuild": {
+        "primary": {
+          "rank": 2,
+          "branch": "double",
+          "evolved": false
+        },
+        "combat": [
+          {
+            "id": "proximity-pulse",
+            "rank": 3
+          },
+          {
+            "id": "side-burst",
+            "rank": 3
+          }
+        ],
+        "support": {
+          "id": "scanner",
+          "rank": 3
+        },
+        "reinforcement": 0,
+        "repair": 0
+      }
+    },
+    {
+      "mode": "survivor",
+      "build": "systems",
+      "encounterSet": "mixed",
+      "difficulty": "veteran",
+      "airframes": 1,
+      "seed": 7,
+      "earlyFailure": false,
+      "outcome": "lost",
+      "time": 344.12,
+      "checkpoint": 240,
+      "firstChoice": 15.75,
+      "evolution": null,
+      "choices": 10,
+      "tenthChoice": 254.53333333333333,
+      "largestChoiceGap": {
+        "seconds": 54.07,
+        "from": {
+          "time": 116.81666666666666,
+          "id": "side-burst:3"
+        },
+        "to": {
+          "time": 170.88333333333333,
+          "id": "scanner:1"
+        }
+      },
+      "peakVisible": 515,
+      "peakAlive": 649,
+      "spawnDeferred": 0,
+      "damageTaken": 100,
+      "damageCauses": {
+        "contact": 80,
+        "lane": 0,
+        "fan": 0,
+        "ground": 20
+      },
+      "shieldBlocks": 0,
+      "xpEarned": 5478,
+      "xpCollected": 5410,
+      "xpOnGround": 68,
+      "armorSegmentsBroken": 534,
+      "boostsUsed": 66,
+      "finalBuild": {
+        "primary": {
+          "rank": 2,
+          "branch": "double",
+          "evolved": false
+        },
+        "combat": [
+          {
+            "id": "proximity-pulse",
+            "rank": 3
+          },
+          {
+            "id": "side-burst",
+            "rank": 3
+          }
+        ],
+        "support": {
+          "id": "scanner",
+          "rank": 3
+        },
+        "reinforcement": 0,
+        "repair": 0
+      }
+    },
+    {
+      "mode": "riy",
+      "build": "fan-shield",
+      "encounterSet": "front",
+      "difficulty": "standard",
+      "airframes": 3,
+      "seed": 17031991,
+      "earlyFailure": false,
+      "outcome": "won",
+      "time": 363.7,
+      "checkpoint": 120,
+      "firstChoice": 19.883333333333333,
+      "evolution": 82.16666666666667,
+      "choices": 10,
+      "tenthChoice": 261.71666666666664,
+      "largestChoiceGap": {
+        "seconds": 43.63,
+        "from": {
+          "time": 139.95,
+          "id": "shield:1"
+        },
+        "to": {
+          "time": 183.58333333333334,
+          "id": "riy-breaker:burst:3"
+        }
+      },
+      "peakVisible": 419,
+      "peakAlive": 592,
+      "spawnDeferred": 0,
+      "damageTaken": 20,
+      "damageCauses": {
+        "contact": 20,
+        "lane": 0,
+        "fan": 0,
+        "ground": 0
+      },
+      "shieldBlocks": 6,
+      "xpEarned": 5180,
+      "xpCollected": 4341,
+      "xpOnGround": 839,
+      "armorSegmentsBroken": 446,
+      "boostsUsed": 66,
+      "finalBuild": {
+        "primary": {
+          "rank": 4,
+          "branch": "wide",
+          "evolved": true
+        },
+        "combat": [],
+        "support": {
+          "id": "shield",
+          "rank": 3
+        },
+        "reinforcement": 0,
+        "repair": 0,
+        "escorts": [
+          {
+            "role": "sweeper",
+            "rank": 3,
+            "branch": "broad"
+          },
+          {
+            "role": "breaker",
+            "rank": 3,
+            "branch": "burst"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "riy",
+      "build": "fan-shield",
+      "encounterSet": "front",
+      "difficulty": "veteran",
+      "airframes": 3,
+      "seed": 17031991,
+      "earlyFailure": false,
+      "outcome": "won",
+      "time": 392.08,
+      "checkpoint": 180,
+      "firstChoice": 19.883333333333333,
+      "evolution": 64.5,
+      "choices": 10,
+      "tenthChoice": 272.3333333333333,
+      "largestChoiceGap": {
+        "seconds": 55.4,
+        "from": {
+          "time": 216.93333333333334,
+          "id": "shield:2"
+        },
+        "to": {
+          "time": 272.3333333333333,
+          "id": "shield:3"
+        }
+      },
+      "peakVisible": 489,
+      "peakAlive": 964,
+      "spawnDeferred": 0,
+      "damageTaken": 180,
+      "damageCauses": {
+        "contact": 180,
+        "lane": 0,
+        "fan": 0,
+        "ground": 0
+      },
+      "shieldBlocks": 7,
+      "xpEarned": 7008,
+      "xpCollected": 4652,
+      "xpOnGround": 2356,
+      "armorSegmentsBroken": 547,
+      "boostsUsed": 72,
+      "finalBuild": {
+        "primary": {
+          "rank": 4,
+          "branch": "wide",
+          "evolved": true
+        },
+        "combat": [],
+        "support": {
+          "id": "shield",
+          "rank": 3
+        },
+        "reinforcement": 0,
+        "repair": 0,
+        "escorts": [
+          {
+            "role": "sweeper",
+            "rank": 3,
+            "branch": "broad"
+          },
+          {
+            "role": "breaker",
+            "rank": 3,
+            "branch": "burst"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "riy",
+      "build": "fan-shield",
+      "encounterSet": "crossing",
+      "difficulty": "standard",
+      "airframes": 1,
+      "seed": 42,
+      "earlyFailure": false,
+      "outcome": "lost",
+      "time": 325.77,
+      "checkpoint": 240,
+      "firstChoice": 19.516666666666666,
+      "evolution": 77.78333333333333,
+      "choices": 10,
+      "tenthChoice": 251.4,
+      "largestChoiceGap": {
+        "seconds": 56.65,
+        "from": {
+          "time": 96.86666666666666,
+          "id": "riy-breaker:burst:3"
+        },
+        "to": {
+          "time": 153.51666666666668,
+          "id": "riy-sweeper:broad:3"
+        }
+      },
+      "peakVisible": 360,
+      "peakAlive": 685,
+      "spawnDeferred": 0,
+      "damageTaken": 100,
+      "damageCauses": {
+        "contact": 80,
+        "lane": 20,
+        "fan": 0,
+        "ground": 0
+      },
+      "shieldBlocks": 3,
+      "xpEarned": 4156,
+      "xpCollected": 3767,
+      "xpOnGround": 389,
+      "armorSegmentsBroken": 458,
+      "boostsUsed": 71,
+      "finalBuild": {
+        "primary": {
+          "rank": 4,
+          "branch": "wide",
+          "evolved": true
+        },
+        "combat": [],
+        "support": {
+          "id": "shield",
+          "rank": 3
+        },
+        "reinforcement": 0,
+        "repair": 0,
+        "escorts": [
+          {
+            "role": "sweeper",
+            "rank": 3,
+            "branch": "broad"
+          },
+          {
+            "role": "breaker",
+            "rank": 3,
+            "branch": "burst"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "riy",
+      "build": "fan-shield",
+      "encounterSet": "crossing",
+      "difficulty": "veteran",
+      "airframes": 1,
+      "seed": 42,
+      "earlyFailure": false,
+      "outcome": "lost",
+      "time": 346.97,
+      "checkpoint": 120,
+      "firstChoice": 19.516666666666666,
+      "evolution": 71.45,
+      "choices": 10,
+      "tenthChoice": 237.61666666666667,
+      "largestChoiceGap": {
+        "seconds": 45.45,
+        "from": {
+          "time": 169.98333333333332,
+          "id": "shield:1"
+        },
+        "to": {
+          "time": 215.43333333333334,
+          "id": "shield:2"
+        }
+      },
+      "peakVisible": 368,
+      "peakAlive": 617,
+      "spawnDeferred": 0,
+      "damageTaken": 100,
+      "damageCauses": {
+        "contact": 80,
+        "lane": 20,
+        "fan": 0,
+        "ground": 0
+      },
+      "shieldBlocks": 5,
+      "xpEarned": 5129,
+      "xpCollected": 4468,
+      "xpOnGround": 661,
+      "armorSegmentsBroken": 445,
+      "boostsUsed": 63,
+      "finalBuild": {
+        "primary": {
+          "rank": 4,
+          "branch": "wide",
+          "evolved": true
+        },
+        "combat": [],
+        "support": {
+          "id": "shield",
+          "rank": 3
+        },
+        "reinforcement": 0,
+        "repair": 0,
+        "escorts": [
+          {
+            "role": "sweeper",
+            "rank": 3,
+            "branch": "broad"
+          },
+          {
+            "role": "breaker",
+            "rank": 3,
+            "branch": "burst"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "riy",
+      "build": "fan-shield",
+      "encounterSet": "mixed",
+      "difficulty": "standard",
+      "airframes": 3,
+      "seed": 7,
+      "earlyFailure": false,
+      "outcome": "won",
+      "time": 370.78,
+      "checkpoint": 180,
+      "firstChoice": 18.683333333333334,
+      "evolution": 93.71666666666667,
+      "choices": 10,
+      "tenthChoice": 293.6166666666667,
+      "largestChoiceGap": {
+        "seconds": 68.83,
+        "from": {
+          "time": 192.68333333333334,
+          "id": "shield:1"
+        },
+        "to": {
+          "time": 261.51666666666665,
+          "id": "shield:2"
+        }
+      },
+      "peakVisible": 419,
+      "peakAlive": 574,
+      "spawnDeferred": 0,
+      "damageTaken": 60,
+      "damageCauses": {
+        "contact": 60,
+        "lane": 0,
+        "fan": 0,
+        "ground": 0
+      },
+      "shieldBlocks": 2,
+      "xpEarned": 5463,
+      "xpCollected": 4263,
+      "xpOnGround": 1200,
+      "armorSegmentsBroken": 421,
+      "boostsUsed": 67,
+      "finalBuild": {
+        "primary": {
+          "rank": 4,
+          "branch": "wide",
+          "evolved": true
+        },
+        "combat": [],
+        "support": {
+          "id": "shield",
+          "rank": 3
+        },
+        "reinforcement": 0,
+        "repair": 0,
+        "escorts": [
+          {
+            "role": "sweeper",
+            "rank": 3,
+            "branch": "broad"
+          },
+          {
+            "role": "breaker",
+            "rank": 3,
+            "branch": "burst"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "riy",
+      "build": "fan-shield",
+      "encounterSet": "mixed",
+      "difficulty": "veteran",
+      "airframes": 3,
+      "seed": 7,
+      "earlyFailure": false,
+      "outcome": "won",
+      "time": 328.53,
+      "checkpoint": 240,
+      "firstChoice": 18.683333333333334,
+      "evolution": 88.13333333333334,
+      "choices": 10,
+      "tenthChoice": 284.3666666666667,
+      "largestChoiceGap": {
+        "seconds": 70.72,
+        "from": {
+          "time": 181.73333333333332,
+          "id": "shield:1"
+        },
+        "to": {
+          "time": 252.45,
+          "id": "shield:2"
+        }
+      },
+      "peakVisible": 630,
+      "peakAlive": 862,
+      "spawnDeferred": 0,
+      "damageTaken": 120,
+      "damageCauses": {
+        "contact": 120,
+        "lane": 0,
+        "fan": 0,
+        "ground": 0
+      },
+      "shieldBlocks": 3,
+      "xpEarned": 5202,
+      "xpCollected": 4214,
+      "xpOnGround": 988,
+      "armorSegmentsBroken": 553,
+      "boostsUsed": 56,
+      "finalBuild": {
+        "primary": {
+          "rank": 4,
+          "branch": "wide",
+          "evolved": true
+        },
+        "combat": [],
+        "support": {
+          "id": "shield",
+          "rank": 3
+        },
+        "reinforcement": 0,
+        "repair": 0,
+        "escorts": [
+          {
+            "role": "sweeper",
+            "rank": 3,
+            "branch": "broad"
+          },
+          {
+            "role": "breaker",
+            "rank": 3,
+            "branch": "burst"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "riy",
+      "build": "echo",
+      "encounterSet": "front",
+      "difficulty": "standard",
+      "airframes": 1,
+      "seed": 17031991,
+      "earlyFailure": false,
+      "outcome": "lost",
+      "time": 215.67,
+      "checkpoint": 120,
+      "firstChoice": 19.883333333333333,
+      "evolution": 85.31666666666666,
+      "choices": 8,
+      "tenthChoice": null,
+      "largestChoiceGap": {
+        "seconds": 53.3,
+        "from": {
+          "time": 153.51666666666668,
+          "id": "shield:1"
+        },
+        "to": {
+          "time": 206.81666666666666,
+          "id": "riy-breaker:burst:3"
+        }
+      },
+      "peakVisible": 389,
+      "peakAlive": 571,
+      "spawnDeferred": 0,
+      "damageTaken": 100,
+      "damageCauses": {
+        "contact": 100,
+        "lane": 0,
+        "fan": 0,
+        "ground": 0
+      },
+      "shieldBlocks": 3,
+      "xpEarned": 1771,
+      "xpCollected": 1227,
+      "xpOnGround": 544,
+      "armorSegmentsBroken": 123,
+      "boostsUsed": 43,
+      "finalBuild": {
+        "primary": {
+          "rank": 4,
+          "branch": "double",
+          "evolved": true
+        },
+        "combat": [],
+        "support": {
+          "id": "shield",
+          "rank": 1
+        },
+        "reinforcement": 0,
+        "repair": 0,
+        "escorts": [
+          {
+            "role": "sweeper",
+            "rank": 3,
+            "branch": "trail"
+          },
+          {
+            "role": "breaker",
+            "rank": 3,
+            "branch": "burst"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "riy",
+      "build": "echo",
+      "encounterSet": "front",
+      "difficulty": "veteran",
+      "airframes": 1,
+      "seed": 17031991,
+      "earlyFailure": false,
+      "outcome": "lost",
+      "time": 231.52,
+      "checkpoint": 180,
+      "firstChoice": 19.883333333333333,
+      "evolution": 71.45,
+      "choices": 8,
+      "tenthChoice": null,
+      "largestChoiceGap": {
+        "seconds": 49.73,
+        "from": {
+          "time": 71.45,
+          "id": "primary:double:4"
+        },
+        "to": {
+          "time": 121.18333333333334,
+          "id": "riy-sweeper:trail:3"
+        }
+      },
+      "peakVisible": 497,
+      "peakAlive": 644,
+      "spawnDeferred": 0,
+      "damageTaken": 100,
+      "damageCauses": {
+        "contact": 100,
+        "lane": 0,
+        "fan": 0,
+        "ground": 0
+      },
+      "shieldBlocks": 3,
+      "xpEarned": 2243,
+      "xpCollected": 1360,
+      "xpOnGround": 883,
+      "armorSegmentsBroken": 150,
+      "boostsUsed": 50,
+      "finalBuild": {
+        "primary": {
+          "rank": 4,
+          "branch": "double",
+          "evolved": true
+        },
+        "combat": [],
+        "support": {
+          "id": "shield",
+          "rank": 1
+        },
+        "reinforcement": 0,
+        "repair": 0,
+        "escorts": [
+          {
+            "role": "sweeper",
+            "rank": 3,
+            "branch": "trail"
+          },
+          {
+            "role": "breaker",
+            "rank": 3,
+            "branch": "burst"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "riy",
+      "build": "echo",
+      "encounterSet": "crossing",
+      "difficulty": "standard",
+      "airframes": 3,
+      "seed": 42,
+      "earlyFailure": false,
+      "outcome": "won",
+      "time": 412,
+      "checkpoint": 240,
+      "firstChoice": 19.516666666666666,
+      "evolution": 81.18333333333334,
+      "choices": 10,
+      "tenthChoice": 284.21666666666664,
+      "largestChoiceGap": {
+        "seconds": 55.63,
+        "from": {
+          "time": 197.45,
+          "id": "shield:1"
+        },
+        "to": {
+          "time": 253.08333333333334,
+          "id": "shield:2"
+        }
+      },
+      "peakVisible": 601,
+      "peakAlive": 957,
+      "spawnDeferred": 0,
+      "damageTaken": 140,
+      "damageCauses": {
+        "contact": 140,
+        "lane": 0,
+        "fan": 0,
+        "ground": 0
+      },
+      "shieldBlocks": 5,
+      "xpEarned": 5169,
+      "xpCollected": 3822,
+      "xpOnGround": 1347,
+      "armorSegmentsBroken": 417,
+      "boostsUsed": 65,
+      "finalBuild": {
+        "primary": {
+          "rank": 4,
+          "branch": "double",
+          "evolved": true
+        },
+        "combat": [],
+        "support": {
+          "id": "shield",
+          "rank": 3
+        },
+        "reinforcement": 0,
+        "repair": 0,
+        "escorts": [
+          {
+            "role": "sweeper",
+            "rank": 3,
+            "branch": "trail"
+          },
+          {
+            "role": "breaker",
+            "rank": 3,
+            "branch": "burst"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "riy",
+      "build": "echo",
+      "encounterSet": "crossing",
+      "difficulty": "veteran",
+      "airframes": 3,
+      "seed": 42,
+      "earlyFailure": false,
+      "outcome": "lost",
+      "time": 350.87,
+      "checkpoint": 120,
+      "firstChoice": 19.516666666666666,
+      "evolution": 75.78333333333333,
+      "choices": 10,
+      "tenthChoice": 291.43333333333334,
+      "largestChoiceGap": {
+        "seconds": 62.02,
+        "from": {
+          "time": 130.96666666666667,
+          "id": "riy-sweeper:trail:3"
+        },
+        "to": {
+          "time": 192.98333333333332,
+          "id": "shield:1"
+        }
+      },
+      "peakVisible": 846,
+      "peakAlive": 1123,
+      "spawnDeferred": 0,
+      "damageTaken": 300,
+      "damageCauses": {
+        "contact": 300,
+        "lane": 0,
+        "fan": 0,
+        "ground": 0
+      },
+      "shieldBlocks": 7,
+      "xpEarned": 5020,
+      "xpCollected": 3647,
+      "xpOnGround": 1373,
+      "armorSegmentsBroken": 479,
+      "boostsUsed": 67,
+      "finalBuild": {
+        "primary": {
+          "rank": 4,
+          "branch": "double",
+          "evolved": true
+        },
+        "combat": [],
+        "support": {
+          "id": "shield",
+          "rank": 3
+        },
+        "reinforcement": 0,
+        "repair": 0,
+        "escorts": [
+          {
+            "role": "sweeper",
+            "rank": 3,
+            "branch": "trail"
+          },
+          {
+            "role": "breaker",
+            "rank": 3,
+            "branch": "burst"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "riy",
+      "build": "echo",
+      "encounterSet": "mixed",
+      "difficulty": "standard",
+      "airframes": 1,
+      "seed": 7,
+      "earlyFailure": false,
+      "outcome": "lost",
+      "time": 236.85,
+      "checkpoint": 180,
+      "firstChoice": 18.683333333333334,
+      "evolution": 97.28333333333333,
+      "choices": 8,
+      "tenthChoice": null,
+      "largestChoiceGap": {
+        "seconds": 60.72,
+        "from": {
+          "time": 111.18333333333334,
+          "id": "riy-sweeper:trail:3"
+        },
+        "to": {
+          "time": 171.9,
+          "id": "riy-breaker:burst:3"
+        }
+      },
+      "peakVisible": 335,
+      "peakAlive": 658,
+      "spawnDeferred": 0,
+      "damageTaken": 100,
+      "damageCauses": {
+        "contact": 100,
+        "lane": 0,
+        "fan": 0,
+        "ground": 0
+      },
+      "shieldBlocks": 1,
+      "xpEarned": 1417,
+      "xpCollected": 1176,
+      "xpOnGround": 241,
+      "armorSegmentsBroken": 223,
+      "boostsUsed": 44,
+      "finalBuild": {
+        "primary": {
+          "rank": 4,
+          "branch": "double",
+          "evolved": true
+        },
+        "combat": [],
+        "support": {
+          "id": "shield",
+          "rank": 1
+        },
+        "reinforcement": 0,
+        "repair": 0,
+        "escorts": [
+          {
+            "role": "sweeper",
+            "rank": 3,
+            "branch": "trail"
+          },
+          {
+            "role": "breaker",
+            "rank": 3,
+            "branch": "burst"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "riy",
+      "build": "echo",
+      "encounterSet": "mixed",
+      "difficulty": "veteran",
+      "airframes": 1,
+      "seed": 7,
+      "earlyFailure": true,
+      "outcome": "lost",
+      "time": 224.12,
+      "checkpoint": 240,
+      "firstChoice": 18.683333333333334,
+      "evolution": 101.25,
+      "choices": 8,
+      "tenthChoice": null,
+      "largestChoiceGap": {
+        "seconds": 47.92,
+        "from": {
+          "time": 111.4,
+          "id": "riy-sweeper:trail:3"
+        },
+        "to": {
+          "time": 159.31666666666666,
+          "id": "riy-breaker:burst:3"
+        }
+      },
+      "peakVisible": 292,
+      "peakAlive": 567,
+      "spawnDeferred": 0,
+      "damageTaken": 100,
+      "damageCauses": {
+        "contact": 100,
+        "lane": 0,
+        "fan": 0,
+        "ground": 0
+      },
+      "shieldBlocks": 1,
+      "xpEarned": 1545,
+      "xpCollected": 1284,
+      "xpOnGround": 261,
+      "armorSegmentsBroken": 212,
+      "boostsUsed": 37,
+      "finalBuild": {
+        "primary": {
+          "rank": 4,
+          "branch": "double",
+          "evolved": true
+        },
+        "combat": [],
+        "support": {
+          "id": "shield",
+          "rank": 1
+        },
+        "reinforcement": 0,
+        "repair": 0,
+        "escorts": [
+          {
+            "role": "sweeper",
+            "rank": 3,
+            "branch": "trail"
+          },
+          {
+            "role": "breaker",
+            "rank": 3,
+            "branch": "burst"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "riy",
+      "build": "echo-shield",
+      "encounterSet": "front",
+      "difficulty": "standard",
+      "airframes": 3,
+      "seed": 17031991,
+      "earlyFailure": false,
+      "outcome": "lost",
+      "time": 369.77,
+      "checkpoint": 120,
+      "firstChoice": 19.883333333333333,
+      "evolution": 85.31666666666666,
+      "choices": 10,
+      "tenthChoice": 287.1,
+      "largestChoiceGap": {
+        "seconds": 53.3,
+        "from": {
+          "time": 153.51666666666668,
+          "id": "shield:1"
+        },
+        "to": {
+          "time": 206.81666666666666,
+          "id": "riy-breaker:burst:3"
+        }
+      },
+      "peakVisible": 771,
+      "peakAlive": 945,
+      "spawnDeferred": 0,
+      "damageTaken": 300,
+      "damageCauses": {
+        "contact": 300,
+        "lane": 0,
+        "fan": 0,
+        "ground": 0
+      },
+      "shieldBlocks": 9,
+      "xpEarned": 5509,
+      "xpCollected": 3232,
+      "xpOnGround": 2277,
+      "armorSegmentsBroken": 429,
+      "boostsUsed": 71,
+      "finalBuild": {
+        "primary": {
+          "rank": 4,
+          "branch": "double",
+          "evolved": true
+        },
+        "combat": [],
+        "support": {
+          "id": "shield",
+          "rank": 3
+        },
+        "reinforcement": 0,
+        "repair": 0,
+        "escorts": [
+          {
+            "role": "sweeper",
+            "rank": 3,
+            "branch": "trail"
+          },
+          {
+            "role": "breaker",
+            "rank": 3,
+            "branch": "burst"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "riy",
+      "build": "echo-shield",
+      "encounterSet": "front",
+      "difficulty": "veteran",
+      "airframes": 3,
+      "seed": 17031991,
+      "earlyFailure": false,
+      "outcome": "lost",
+      "time": 324.55,
+      "checkpoint": 180,
+      "firstChoice": 19.883333333333333,
+      "evolution": 71.45,
+      "choices": 9,
+      "tenthChoice": null,
+      "largestChoiceGap": {
+        "seconds": 96.13,
+        "from": {
+          "time": 182.23333333333332,
+          "id": "riy-breaker:burst:3"
+        },
+        "to": {
+          "time": 278.3666666666667,
+          "id": "shield:2"
+        }
+      },
+      "peakVisible": 731,
+      "peakAlive": 1096,
+      "spawnDeferred": 0,
+      "damageTaken": 315,
+      "damageCauses": {
+        "contact": 315,
+        "lane": 0,
+        "fan": 0,
+        "ground": 0
+      },
+      "shieldBlocks": 8,
+      "xpEarned": 4829,
+      "xpCollected": 2144,
+      "xpOnGround": 2685,
+      "armorSegmentsBroken": 300,
+      "boostsUsed": 65,
+      "finalBuild": {
+        "primary": {
+          "rank": 4,
+          "branch": "double",
+          "evolved": true
+        },
+        "combat": [],
+        "support": {
+          "id": "shield",
+          "rank": 2
+        },
+        "reinforcement": 0,
+        "repair": 0,
+        "escorts": [
+          {
+            "role": "sweeper",
+            "rank": 3,
+            "branch": "trail"
+          },
+          {
+            "role": "breaker",
+            "rank": 3,
+            "branch": "burst"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "riy",
+      "build": "echo-shield",
+      "encounterSet": "crossing",
+      "difficulty": "standard",
+      "airframes": 1,
+      "seed": 42,
+      "earlyFailure": false,
+      "outcome": "lost",
+      "time": 316.18,
+      "checkpoint": 240,
+      "firstChoice": 19.516666666666666,
+      "evolution": 81.18333333333334,
+      "choices": 10,
+      "tenthChoice": 284.21666666666664,
+      "largestChoiceGap": {
+        "seconds": 55.63,
+        "from": {
+          "time": 197.45,
+          "id": "shield:1"
+        },
+        "to": {
+          "time": 253.08333333333334,
+          "id": "shield:2"
+        }
+      },
+      "peakVisible": 601,
+      "peakAlive": 766,
+      "spawnDeferred": 0,
+      "damageTaken": 100,
+      "damageCauses": {
+        "contact": 100,
+        "lane": 0,
+        "fan": 0,
+        "ground": 0
+      },
+      "shieldBlocks": 1,
+      "xpEarned": 3552,
+      "xpCollected": 2800,
+      "xpOnGround": 752,
+      "armorSegmentsBroken": 344,
+      "boostsUsed": 48,
+      "finalBuild": {
+        "primary": {
+          "rank": 4,
+          "branch": "double",
+          "evolved": true
+        },
+        "combat": [],
+        "support": {
+          "id": "shield",
+          "rank": 3
+        },
+        "reinforcement": 0,
+        "repair": 0,
+        "escorts": [
+          {
+            "role": "sweeper",
+            "rank": 3,
+            "branch": "trail"
+          },
+          {
+            "role": "breaker",
+            "rank": 3,
+            "branch": "burst"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "riy",
+      "build": "echo-shield",
+      "encounterSet": "crossing",
+      "difficulty": "veteran",
+      "airframes": 1,
+      "seed": 42,
+      "earlyFailure": false,
+      "outcome": "lost",
+      "time": 286.85,
+      "checkpoint": 120,
+      "firstChoice": 19.516666666666666,
+      "evolution": 75.78333333333333,
+      "choices": 9,
+      "tenthChoice": null,
+      "largestChoiceGap": {
+        "seconds": 62.02,
+        "from": {
+          "time": 130.96666666666667,
+          "id": "riy-sweeper:trail:3"
+        },
+        "to": {
+          "time": 192.98333333333332,
+          "id": "shield:1"
+        }
+      },
+      "peakVisible": 846,
+      "peakAlive": 887,
+      "spawnDeferred": 0,
+      "damageTaken": 100,
+      "damageCauses": {
+        "contact": 100,
+        "lane": 0,
+        "fan": 0,
+        "ground": 0
+      },
+      "shieldBlocks": 3,
+      "xpEarned": 3531,
+      "xpCollected": 2084,
+      "xpOnGround": 1447,
+      "armorSegmentsBroken": 312,
+      "boostsUsed": 52,
+      "finalBuild": {
+        "primary": {
+          "rank": 4,
+          "branch": "double",
+          "evolved": true
+        },
+        "combat": [],
+        "support": {
+          "id": "shield",
+          "rank": 2
+        },
+        "reinforcement": 0,
+        "repair": 0,
+        "escorts": [
+          {
+            "role": "sweeper",
+            "rank": 3,
+            "branch": "trail"
+          },
+          {
+            "role": "breaker",
+            "rank": 3,
+            "branch": "burst"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "riy",
+      "build": "echo-shield",
+      "encounterSet": "mixed",
+      "difficulty": "standard",
+      "airframes": 3,
+      "seed": 7,
+      "earlyFailure": false,
+      "outcome": "lost",
+      "time": 272.47,
+      "checkpoint": 180,
+      "firstChoice": 18.683333333333334,
+      "evolution": 97.28333333333333,
+      "choices": 8,
+      "tenthChoice": null,
+      "largestChoiceGap": {
+        "seconds": 60.72,
+        "from": {
+          "time": 111.18333333333334,
+          "id": "riy-sweeper:trail:3"
+        },
+        "to": {
+          "time": 171.9,
+          "id": "riy-breaker:burst:3"
+        }
+      },
+      "peakVisible": 627,
+      "peakAlive": 976,
+      "spawnDeferred": 0,
+      "damageTaken": 300,
+      "damageCauses": {
+        "contact": 300,
+        "lane": 0,
+        "fan": 0,
+        "ground": 0
+      },
+      "shieldBlocks": 3,
+      "xpEarned": 1736,
+      "xpCollected": 1295,
+      "xpOnGround": 441,
+      "armorSegmentsBroken": 314,
+      "boostsUsed": 51,
+      "finalBuild": {
+        "primary": {
+          "rank": 4,
+          "branch": "double",
+          "evolved": true
+        },
+        "combat": [],
+        "support": {
+          "id": "shield",
+          "rank": 1
+        },
+        "reinforcement": 0,
+        "repair": 0,
+        "escorts": [
+          {
+            "role": "sweeper",
+            "rank": 3,
+            "branch": "trail"
+          },
+          {
+            "role": "breaker",
+            "rank": 3,
+            "branch": "burst"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "riy",
+      "build": "echo-shield",
+      "encounterSet": "mixed",
+      "difficulty": "veteran",
+      "airframes": 3,
+      "seed": 7,
+      "earlyFailure": false,
+      "outcome": "won",
+      "time": 420.58,
+      "checkpoint": 240,
+      "firstChoice": 18.683333333333334,
+      "evolution": 101.25,
+      "choices": 10,
+      "tenthChoice": 352.7,
+      "largestChoiceGap": {
+        "seconds": 102.38,
+        "from": {
+          "time": 198.1,
+          "id": "shield:1"
+        },
+        "to": {
+          "time": 300.48333333333335,
+          "id": "shield:2"
+        }
+      },
+      "peakVisible": 906,
+      "peakAlive": 1053,
+      "spawnDeferred": 0,
+      "damageTaken": 275,
+      "damageCauses": {
+        "contact": 275,
+        "lane": 0,
+        "fan": 0,
+        "ground": 0
+      },
+      "shieldBlocks": 5,
+      "xpEarned": 6273,
+      "xpCollected": 3495,
+      "xpOnGround": 2778,
+      "armorSegmentsBroken": 528,
+      "boostsUsed": 61,
+      "finalBuild": {
+        "primary": {
+          "rank": 4,
+          "branch": "double",
+          "evolved": true
+        },
+        "combat": [],
+        "support": {
+          "id": "shield",
+          "rank": 3
+        },
+        "reinforcement": 0,
+        "repair": 0,
+        "escorts": [
+          {
+            "role": "sweeper",
+            "rank": 3,
+            "branch": "trail"
+          },
+          {
+            "role": "breaker",
+            "rank": 3,
+            "branch": "burst"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "riy",
+      "build": "systems",
+      "encounterSet": "front",
+      "difficulty": "standard",
+      "airframes": 1,
+      "seed": 17031991,
+      "earlyFailure": false,
+      "outcome": "lost",
+      "time": 208.78,
+      "checkpoint": 120,
+      "firstChoice": 19.883333333333333,
+      "evolution": 85.15,
+      "choices": 8,
+      "tenthChoice": null,
+      "largestChoiceGap": {
+        "seconds": 38.73,
+        "from": {
+          "time": 149.25,
+          "id": "scanner:1"
+        },
+        "to": {
+          "time": 187.98333333333332,
+          "id": "riy-breaker:chain:3"
+        }
+      },
+      "peakVisible": 234,
+      "peakAlive": 321,
+      "spawnDeferred": 0,
+      "damageTaken": 100,
+      "damageCauses": {
+        "contact": 100,
+        "lane": 0,
+        "fan": 0,
+        "ground": 0
+      },
+      "shieldBlocks": 0,
+      "xpEarned": 1587,
+      "xpCollected": 1508,
+      "xpOnGround": 79,
+      "armorSegmentsBroken": 124,
+      "boostsUsed": 46,
+      "finalBuild": {
+        "primary": {
+          "rank": 4,
+          "branch": "wide",
+          "evolved": true
+        },
+        "combat": [],
+        "support": {
+          "id": "scanner",
+          "rank": 1
+        },
+        "reinforcement": 0,
+        "repair": 0,
+        "escorts": [
+          {
+            "role": "sweeper",
+            "rank": 3,
+            "branch": "broad"
+          },
+          {
+            "role": "breaker",
+            "rank": 3,
+            "branch": "chain"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "riy",
+      "build": "systems",
+      "encounterSet": "front",
+      "difficulty": "veteran",
+      "airframes": 1,
+      "seed": 17031991,
+      "earlyFailure": false,
+      "outcome": "won",
+      "time": 333.38,
+      "checkpoint": 180,
+      "firstChoice": 19.883333333333333,
+      "evolution": 65.58333333333333,
+      "choices": 10,
+      "tenthChoice": 234.23333333333332,
+      "largestChoiceGap": {
+        "seconds": 42.5,
+        "from": {
+          "time": 159.43333333333334,
+          "id": "riy-breaker:chain:3"
+        },
+        "to": {
+          "time": 201.93333333333334,
+          "id": "scanner:2"
+        }
+      },
+      "peakVisible": 404,
+      "peakAlive": 524,
+      "spawnDeferred": 0,
+      "damageTaken": 80,
+      "damageCauses": {
+        "contact": 80,
+        "lane": 0,
+        "fan": 0,
+        "ground": 0
+      },
+      "shieldBlocks": 0,
+      "xpEarned": 5652,
+      "xpCollected": 5390,
+      "xpOnGround": 262,
+      "armorSegmentsBroken": 432,
+      "boostsUsed": 73,
+      "finalBuild": {
+        "primary": {
+          "rank": 4,
+          "branch": "wide",
+          "evolved": true
+        },
+        "combat": [],
+        "support": {
+          "id": "scanner",
+          "rank": 3
+        },
+        "reinforcement": 0,
+        "repair": 0,
+        "escorts": [
+          {
+            "role": "sweeper",
+            "rank": 3,
+            "branch": "broad"
+          },
+          {
+            "role": "breaker",
+            "rank": 3,
+            "branch": "chain"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "riy",
+      "build": "systems",
+      "encounterSet": "crossing",
+      "difficulty": "standard",
+      "airframes": 3,
+      "seed": 42,
+      "earlyFailure": false,
+      "outcome": "won",
+      "time": 375.58,
+      "checkpoint": 240,
+      "firstChoice": 19.516666666666666,
+      "evolution": 76.25,
+      "choices": 10,
+      "tenthChoice": 244.13333333333333,
+      "largestChoiceGap": {
+        "seconds": 54.7,
+        "from": {
+          "time": 100.48333333333333,
+          "id": "riy-breaker:chain:3"
+        },
+        "to": {
+          "time": 155.18333333333334,
+          "id": "riy-sweeper:broad:3"
+        }
+      },
+      "peakVisible": 427,
+      "peakAlive": 681,
+      "spawnDeferred": 0,
+      "damageTaken": 260,
+      "damageCauses": {
+        "contact": 260,
+        "lane": 0,
+        "fan": 0,
+        "ground": 0
+      },
+      "shieldBlocks": 0,
+      "xpEarned": 5369,
+      "xpCollected": 5058,
+      "xpOnGround": 311,
+      "armorSegmentsBroken": 511,
+      "boostsUsed": 83,
+      "finalBuild": {
+        "primary": {
+          "rank": 4,
+          "branch": "wide",
+          "evolved": true
+        },
+        "combat": [],
+        "support": {
+          "id": "scanner",
+          "rank": 3
+        },
+        "reinforcement": 0,
+        "repair": 0,
+        "escorts": [
+          {
+            "role": "sweeper",
+            "rank": 3,
+            "branch": "broad"
+          },
+          {
+            "role": "breaker",
+            "rank": 3,
+            "branch": "chain"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "riy",
+      "build": "systems",
+      "encounterSet": "crossing",
+      "difficulty": "veteran",
+      "airframes": 3,
+      "seed": 42,
+      "earlyFailure": false,
+      "outcome": "lost",
+      "time": 340.62,
+      "checkpoint": 120,
+      "firstChoice": 19.516666666666666,
+      "evolution": 70.51666666666667,
+      "choices": 10,
+      "tenthChoice": 233.48333333333332,
+      "largestChoiceGap": {
+        "seconds": 44.48,
+        "from": {
+          "time": 126.96666666666667,
+          "id": "riy-sweeper:broad:3"
+        },
+        "to": {
+          "time": 171.45,
+          "id": "scanner:1"
+        }
+      },
+      "peakVisible": 422,
+      "peakAlive": 833,
+      "spawnDeferred": 0,
+      "damageTaken": 300,
+      "damageCauses": {
+        "contact": 280,
+        "lane": 0,
+        "fan": 20,
+        "ground": 0
+      },
+      "shieldBlocks": 0,
+      "xpEarned": 4947,
+      "xpCollected": 4738,
+      "xpOnGround": 209,
+      "armorSegmentsBroken": 429,
+      "boostsUsed": 73,
+      "finalBuild": {
+        "primary": {
+          "rank": 4,
+          "branch": "wide",
+          "evolved": true
+        },
+        "combat": [],
+        "support": {
+          "id": "scanner",
+          "rank": 3
+        },
+        "reinforcement": 0,
+        "repair": 0,
+        "escorts": [
+          {
+            "role": "sweeper",
+            "rank": 3,
+            "branch": "broad"
+          },
+          {
+            "role": "breaker",
+            "rank": 3,
+            "branch": "chain"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "riy",
+      "build": "systems",
+      "encounterSet": "mixed",
+      "difficulty": "standard",
+      "airframes": 1,
+      "seed": 7,
+      "earlyFailure": false,
+      "outcome": "won",
+      "time": 321.63,
+      "checkpoint": 180,
+      "firstChoice": 18.683333333333334,
+      "evolution": 91.18333333333334,
+      "choices": 10,
+      "tenthChoice": 260.1,
+      "largestChoiceGap": {
+        "seconds": 62.57,
+        "from": {
+          "time": 177.98333333333332,
+          "id": "scanner:1"
+        },
+        "to": {
+          "time": 240.55,
+          "id": "scanner:2"
+        }
+      },
+      "peakVisible": 486,
+      "peakAlive": 715,
+      "spawnDeferred": 0,
+      "damageTaken": 40,
+      "damageCauses": {
+        "contact": 40,
+        "lane": 0,
+        "fan": 0,
+        "ground": 0
+      },
+      "shieldBlocks": 0,
+      "xpEarned": 4531,
+      "xpCollected": 4206,
+      "xpOnGround": 325,
+      "armorSegmentsBroken": 524,
+      "boostsUsed": 61,
+      "finalBuild": {
+        "primary": {
+          "rank": 4,
+          "branch": "wide",
+          "evolved": true
+        },
+        "combat": [],
+        "support": {
+          "id": "scanner",
+          "rank": 3
+        },
+        "reinforcement": 0,
+        "repair": 0,
+        "escorts": [
+          {
+            "role": "sweeper",
+            "rank": 3,
+            "branch": "broad"
+          },
+          {
+            "role": "breaker",
+            "rank": 3,
+            "branch": "chain"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "riy",
+      "build": "systems",
+      "encounterSet": "mixed",
+      "difficulty": "veteran",
+      "airframes": 1,
+      "seed": 7,
+      "earlyFailure": false,
+      "outcome": "won",
+      "time": 321.13,
+      "checkpoint": 240,
+      "firstChoice": 18.683333333333334,
+      "evolution": 87.53333333333333,
+      "choices": 10,
+      "tenthChoice": 266.5833333333333,
+      "largestChoiceGap": {
+        "seconds": 52.3,
+        "from": {
+          "time": 176.8,
+          "id": "scanner:1"
+        },
+        "to": {
+          "time": 229.1,
+          "id": "scanner:2"
+        }
+      },
+      "peakVisible": 487,
+      "peakAlive": 624,
+      "spawnDeferred": 0,
+      "damageTaken": 80,
+      "damageCauses": {
+        "contact": 80,
+        "lane": 0,
+        "fan": 0,
+        "ground": 0
+      },
+      "shieldBlocks": 0,
+      "xpEarned": 5067,
+      "xpCollected": 4954,
+      "xpOnGround": 113,
+      "armorSegmentsBroken": 545,
+      "boostsUsed": 66,
+      "finalBuild": {
+        "primary": {
+          "rank": 4,
+          "branch": "wide",
+          "evolved": true
+        },
+        "combat": [],
+        "support": {
+          "id": "scanner",
+          "rank": 3
+        },
+        "reinforcement": 0,
+        "repair": 0,
+        "escorts": [
+          {
+            "role": "sweeper",
+            "rank": 3,
+            "branch": "broad"
+          },
+          {
+            "role": "breaker",
+            "rank": 3,
+            "branch": "chain"
+          }
+        ]
+      }
+    }
+  ]
+}

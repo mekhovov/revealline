@@ -1,0 +1,44 @@
+{
+  "initialFailure": "Absent tracked sparse-checkout input docs/content-production-register.md",
+  "action": "Hydrated only absent configured build inputs from the Git index using exclusive creation; no existing files changed",
+  "firstPass": [
+    "docs/content-production-register.md",
+    "docs/company-editions-playtest.md",
+    "docs/couch-installed-chapters.md",
+    "docs/flight-controls.md",
+    "docs/verification/round-47/couch-native-shell.md",
+    "docs/story-workshop-authoring.md",
+    "docs/feature-delivery-workflow.md",
+    "docs/fpv-redesign-design.md",
+    "docs/fpv-typography.md"
+  ],
+  "remainingPaths": [
+    "docs/asset-studio.md",
+    "docs/field-kit-icons.md",
+    "docs/field-kit-production.md",
+    "docs/field-kit-reveals.md",
+    "docs/field-kit-sprites.md",
+    "docs/field-kit-surfaces.md",
+    "docs/field-kit-title-v2.md",
+    "docs/fpv-reveal-art-audit.md",
+    "docs/presentation-audio-and-ui.md",
+    "docs/presentation-runtime.md",
+    "docs/presentation-system.md",
+    "docs/verification/fpv-redesign/baseline/README.md",
+    "docs/verification/fpv-redesign/baseline/briefing-phone.jpg",
+    "docs/verification/fpv-redesign/baseline/flight-desktop.jpg",
+    "docs/verification/fpv-redesign/baseline/inventory.json",
+    "docs/verification/fpv-redesign/baseline/missions-desktop.jpg",
+    "docs/verification/fpv-redesign/baseline/missions-phone.jpg",
+    "docs/verification/fpv-redesign/baseline/pause-desktop.jpg",
+    "docs/verification/fpv-redesign/baseline/settings-desktop.jpg",
+    "docs/verification/fpv-redesign/baseline/title-desktop.jpg",
+    "docs/verification/fpv-redesign/baseline/title-phone.jpg"
+  ],
+  "remainingBytes": 523567,
+  "indirectSoundtrackEvidence": [
+    "docs/verification/music-publication-2026-09-21/rights-audit.json",
+    "docs/verification/music-publication-2026-09-21/public-delivery.json"
+  ],
+  "soundtrackRecovery": "After a later preparation failure identified two indirect sparse inputs, checkout-index restored only those absent files. Initial hydration was blocked by ENOSPC; it succeeded after safe capacity recovery. No existing file was overwritten."
+}

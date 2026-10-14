@@ -83,8 +83,11 @@ const moduleParameters = Object.freeze({
   ),
 });
 
-export function overflightModuleParameters(id, rank) {
-  return moduleParameters[id]?.[rank - 1] ?? null;
+export function overflightModuleParameters(id, rank, rulesVersion = 2) {
+  const result = moduleParameters[id]?.[rank - 1] ?? null;
+  return rulesVersion >= 3 && id === 'shield' && result
+    ? { ...result, recharge: [10, 8, 6][rank - 1] }
+    : result;
 }
 
 export function createOverflightBuild() {
@@ -103,7 +106,7 @@ export function overflightModuleRank(build, id) {
   return build.combat.find((module) => module.id === id)?.rank ?? 0;
 }
 
-export function overflightPayload(build) {
+export function overflightPayload(build, rulesVersion = 2) {
   const rank = build.primary.rank;
   if (build.primary.branch === 'wide') {
     return {
@@ -121,13 +124,21 @@ export function overflightPayload(build) {
     return {
       cooldown: rank === 4 ? 1.1 : 1.3,
       damage: [0, 0, 40, 52, 65][rank],
-      radius: 44 + (rank - 2) * 8,
+      radius: rulesVersion >= 3 ? 44 : 44 + (rank - 2) * 8,
+      ...(rulesVersion >= 3 ? { rearOffsets: [56, 108, 160], echoRadii: [44, 52, 60] } : {}),
       count: 1,
       spacing: 0,
       echoes: rank === 4 ? 2 : 1,
     };
   }
-  return { cooldown: 1.2, damage: 30, radius: 48, count: 1, spacing: 0, echoes: 0 };
+  return {
+    cooldown: 1.2,
+    damage: 30,
+    radius: 48,
+    count: 1,
+    spacing: 0,
+    echoes: 0,
+  };
 }
 
 export function overflightBuildItems(build) {
@@ -141,12 +152,18 @@ export function overflightBuildItems(build) {
       rank: module.rank,
     })),
     ...(build.support
-      ? [{ id: build.support.id, title: names[build.support.id], rank: build.support.rank }]
+      ? [
+          {
+            id: build.support.id,
+            title: names[build.support.id],
+            rank: build.support.rank,
+          },
+        ]
       : []),
   ];
 }
 
-function primaryOffer(branch, rank) {
+function primaryOffer(branch, rank, rulesVersion = 2) {
   const evolved = rank === 4;
   const title = evolved ? evolutions[branch] : names[branch];
   const current =
@@ -158,7 +175,7 @@ function primaryOffer(branch, rank) {
       : branch === 'wide'
         ? localized('Three overlapping impact areas', 'Три зони ураження, що перекриваються')
         : localized('One impact followed by an echo', 'Удар і відкладене відлуння');
-  const next =
+  let next =
     branch === 'wide'
       ? rank === 2
         ? localized(
@@ -185,6 +202,23 @@ function primaryOffer(branch, rank) {
               'Three expanding pulses clear a moving crowd',
               'Три розширювані імпульси розчищають натовп',
             );
+  if (rulesVersion >= 3 && branch === 'double') {
+    next =
+      rank === 2
+        ? localized(
+            'Two anchored impacts clear your rear trail; turn back to collect salvage',
+            'Два закріплені удари розчищають слід позаду; поверніться за трофеями',
+          )
+        : rank === 3
+          ? localized(
+              'Stronger rear impacts reward a lure-and-return route',
+              'Потужніші удари позаду винагороджують виманювання й повернення',
+            )
+          : localized(
+              'Three rear impacts reach farther behind; your forward approach stays exposed',
+              'Три удари дістають далі позаду; передній напрямок лишається відкритим',
+            );
+  }
   return {
     id: `primary:${branch}:${rank}`,
     kind: evolved ? 'evolution' : 'combat',
@@ -201,7 +235,7 @@ function primaryOffer(branch, rank) {
   };
 }
 
-function moduleOffer(id, rank) {
+function moduleOffer(id, rank, rulesVersion = 2) {
   const descriptions = {
     'slow-field': [
       localized(
@@ -278,6 +312,21 @@ function moduleOffer(id, rank) {
       ),
     ],
   };
+  if (rulesVersion >= 3)
+    descriptions.shield = [
+      localized(
+        'Absorb one hit; recover in 10 seconds. Hits briefly delay recovery without resetting progress',
+        'Поглинайте удар; відновлення за 10 секунд. Удари ненадовго затримують його без скидання поступу',
+      ),
+      localized(
+        'Recover in 8 seconds; at most 2 seconds of extra delay per charge',
+        'Відновлення за 8 секунд; щонайбільше 2 секунди додаткової затримки на заряд',
+      ),
+      localized(
+        'Recover in 6 seconds; boosting leaves a protective departure pulse',
+        'Відновлення за 6 секунд; прискорення залишає захисний імпульс',
+      ),
+    ];
   const next = descriptions[id][rank - 1];
   return {
     id: `${id}:${rank}`,
@@ -293,7 +342,7 @@ function moduleOffer(id, rank) {
   };
 }
 
-function utilityOffers(build) {
+export function utilityOffers(build) {
   // A valid project may expose only the primary module. These distinct choices
   // keep drafts useful without granting a capability the project did not admit.
   return [
@@ -345,29 +394,40 @@ function utilityOffers(build) {
   ];
 }
 
-export function legalOverflightUpgrades(build, allowedModules) {
+export function legalOverflightUpgrades(build, allowedModules, rulesVersion = 2) {
   const allowed = new Set(allowedModules);
   const candidates = [];
   if (allowed.has('primary') && build.primary.rank < 4) {
-    if (!build.primary.branch) candidates.push(primaryOffer('wide', 2), primaryOffer('double', 2));
-    else candidates.push(primaryOffer(build.primary.branch, build.primary.rank + 1));
+    if (!build.primary.branch)
+      candidates.push(
+        primaryOffer('wide', 2, rulesVersion),
+        primaryOffer('double', 2, rulesVersion),
+      );
+    else candidates.push(primaryOffer(build.primary.branch, build.primary.rank + 1, rulesVersion));
   }
   for (const id of combatSystems) {
     if (!allowed.has(id)) continue;
     const rank = overflightModuleRank(build, id);
-    if (rank < 3 && (rank || build.combat.length < 2)) candidates.push(moduleOffer(id, rank + 1));
+    if (rank < 3 && (rank || build.combat.length < 2))
+      candidates.push(moduleOffer(id, rank + 1, rulesVersion));
   }
   for (const id of supportSystems) {
     if (!allowed.has(id)) continue;
     const rank = overflightModuleRank(build, id);
     if (rank < (id === 'plating' ? 2 : 3) && (!build.support || build.support.id === id))
-      candidates.push(moduleOffer(id, rank + 1));
+      candidates.push(moduleOffer(id, rank + 1, rulesVersion));
   }
   return candidates;
 }
 
-export function draftOverflightUpgrades(build, allowedModules, random, previousIds = []) {
-  const legal = legalOverflightUpgrades(build, allowedModules);
+export function draftOverflightUpgrades(
+  build,
+  allowedModules,
+  random,
+  previousIds = [],
+  rulesVersion = 2,
+) {
+  const legal = legalOverflightUpgrades(build, allowedModules, rulesVersion);
   const guaranteed = legal.filter(
     (offer) =>
       offer.kind === 'evolution' || (build.primary.rank === 1 && offer.system === 'primary'),
@@ -393,7 +453,7 @@ export function draftOverflightUpgrades(build, allowedModules, random, previousI
   return offers;
 }
 
-export function applyOverflightUpgrade(build, offer, allowedModules) {
+export function applyOverflightUpgrade(build, offer, allowedModules, rulesVersion = 2) {
   if (!offer || typeof offer.id !== 'string') return false;
   if (offer.kind === 'utility') {
     const legal = utilityOffers(build).find((candidate) => candidate.id === offer.id);
@@ -402,12 +462,16 @@ export function applyOverflightUpgrade(build, offer, allowedModules) {
     if (offer.system === 'repair') build.repair++;
     return true;
   }
-  const legal = legalOverflightUpgrades(build, allowedModules).find(
+  const legal = legalOverflightUpgrades(build, allowedModules, rulesVersion).find(
     (candidate) => candidate.id === offer.id,
   );
   if (!legal) return false;
   if (legal.system === 'primary') {
-    build.primary = { rank: legal.rank, branch: legal.branch, evolved: legal.rank === 4 };
+    build.primary = {
+      rank: legal.rank,
+      branch: legal.branch,
+      evolved: legal.rank === 4,
+    };
   } else if (legal.kind === 'support') {
     build.support = { id: legal.system, rank: legal.rank };
   } else {

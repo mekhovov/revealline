@@ -8,6 +8,7 @@ import {
   createOverflightContextGuard,
   overflightPreviewRequest,
   createOverflightReviewPlayback,
+  overflightReviewStopAt,
   createOverflightKeyboardState,
   createOverflightJSONPages,
 } from '../overflight/host-loop.mjs';
@@ -57,19 +58,27 @@ test('an upgrade stops catch-up on that exact step and a hitch never requests au
   assert.equal(steps, 2);
 });
 
-test('modal and controller inputs stay blocked until a physical neutral observation', () => {
+test('modal actions wait for release while held steering stays responsive', () => {
   const gate = createOverflightInputGate();
   assert.deepEqual(gate.sample({ x: 1, boost: true, neutral: false }), {
+    x: 1,
+    y: 0,
+    boost: false,
+  });
+  assert.deepEqual(gate.sample({ neutral: true }), {
     x: 0,
     y: 0,
     boost: false,
   });
-  assert.deepEqual(gate.sample({ neutral: true }), { x: 0, y: 0, boost: false });
   const direction = gate.sample({ x: 1, y: 1, boost: true, neutral: false });
   assert.ok(Math.abs(Math.hypot(direction.x, direction.y) - 1) < 1e-10);
   assert.equal(direction.boost, true);
   gate.release();
-  assert.equal(gate.sample({ x: 1, neutral: false }).x, 0);
+  assert.equal(gate.sample({ x: 1, neutral: false }).x, 1);
+  assert.equal(gate.blocked(), true);
+  gate.sample({ x: 1, actionsNeutral: true });
+  assert.equal(gate.blocked(), false);
+  assert.equal(gate.sample({ x: 1, boost: true }).boost, true);
 });
 
 test('keyboard focus loss forgets missed keyup but rejects repeats until a fresh press', () => {
@@ -92,7 +101,10 @@ test('keyboard focus loss forgets missed keyup but rejects repeats until a fresh
 
 test('raw measurement pages stay bounded and reconstruct the complete untruncated receipt', () => {
   const snapshot = {
-    frames: Array.from({ length: 2000 }, (_, tick) => ({ tick, milliseconds: 1000 / 60 })),
+    frames: Array.from({ length: 2000 }, (_, tick) => ({
+      tick,
+      milliseconds: 1000 / 60,
+    })),
   };
   const pages = createOverflightJSONPages(snapshot, 4096);
   const chunks = Array.from({ length: pages.count }, (_, index) => pages.page(index));
@@ -104,7 +116,10 @@ test('raw measurement pages stay bounded and reconstruct the complete untruncate
 
 test('the shared audio adapter emits bounded semantic cues once per tick', () => {
   const heard = [];
-  const sound = { encounter: (...args) => heard.push(args), feedbackDirector: { reset() {} } };
+  const sound = {
+    encounter: (...args) => heard.push(args),
+    feedbackDirector: { reset() {} },
+  };
   const audio = createOverflightAudio(sound);
   const run = {
     tick: 4,
@@ -181,7 +196,11 @@ test('ten retries keep one renderer and context restoration requires explicit re
     guard.restore();
     assert.equal(guard.blocked(), false);
     assert.equal(run.phase, 'paused');
-    assert.equal(gate.sample({ x: 1 }).x, 0);
+    assert.deepEqual(gate.sample({ x: 1, boost: true }), {
+      x: 1,
+      y: 0,
+      boost: false,
+    });
     resumeOverflight(run);
     assert.equal(run.phase, 'playing');
   }
@@ -194,7 +213,9 @@ test('ten retries keep one renderer and context restoration requires explicit re
 test('appearance replacement retires the old atlas first and teardown retires a pending renderer', async () => {
   const owner = createOverflightRendererOwner();
   const events = [];
-  await owner.acquire('first', async () => ({ destroy: async () => events.push('destroy-first') }));
+  await owner.acquire('first', async () => ({
+    destroy: async () => events.push('destroy-first'),
+  }));
   await owner.acquire('second', async () => {
     events.push('create-second');
     return { destroy: async () => events.push('destroy-second') };
@@ -311,7 +332,11 @@ test('explicit review playback uses ordinary input at 10 Hz while the host keeps
   const run = { tick: 0 };
   const step = (dt) => {
     assert.equal(dt, 1 / 60);
-    assert.deepEqual(review.input(run, { x: 1 }), { x: 0.5, y: -0.25, boost: false });
+    assert.deepEqual(review.input(run, { x: 1 }), {
+      x: 0.5,
+      y: -0.25,
+      boost: false,
+    });
     run.tick++;
   };
   clock.advance(0, true, step);
@@ -347,7 +372,10 @@ test('review upgrades show legally rerolled offers for 1.5 visible seconds and n
   });
   assert.equal(review.upgrade(run, 0, false), null);
   assert.equal(selections, 0);
-  assert.deepEqual(review.upgrade(run, 10, true), { selectedId: 'rerolled', choiceId: null });
+  assert.deepEqual(review.upgrade(run, 10, true), {
+    selectedId: 'rerolled',
+    choiceId: null,
+  });
   assert.equal(review.upgrade(run, 510, true).choiceId, null);
   assert.equal(review.upgrade(run, 600, false), null);
   assert.equal(review.upgrade(run, 10000, true).choiceId, null);
@@ -452,7 +480,9 @@ test('review capture is silent, bounded to 20 seconds, and releases tracks, time
   assert.equal(recorder.record(h.canvas), true);
   assert.equal(h.instances[0].interval, 250);
   assert.equal(recorder.record(h.canvas), false, 'only one capture can be active');
-  h.instances[0].ondataavailable({ data: new Blob(['battlefield'], { type: 'video/webm' }) });
+  h.instances[0].ondataavailable({
+    data: new Blob(['battlefield'], { type: 'video/webm' }),
+  });
   const timer = [...h.timers.values()][0];
   assert.equal(timer.milliseconds, 20000);
   timer.fn();
@@ -474,7 +504,9 @@ test('oversize and unsupported review capture fail without retaining chunks or a
   assert.equal(recorder.record({}), false);
   assert.equal(recorder.snapshot().phase, 'unsupported');
   recorder.record(h.canvas);
-  h.instances[0].ondataavailable({ data: new Blob([new Uint8Array(16 * 1024 * 1024 + 1)]) });
+  h.instances[0].ondataavailable({
+    data: new Blob([new Uint8Array(16 * 1024 * 1024 + 1)]),
+  });
   assert.equal(recorder.snapshot().phase, 'tooLarge');
   assert.equal(h.captured.length, 0);
   assert.equal(h.stopped(), 1);
@@ -521,7 +553,12 @@ test('native Marathon continuation retains its run when next-sortie settings cha
       retired: false,
       contextGuard: { blocked: () => false },
       preparationIdentity: { characterId: 'carrier' },
-      options: { characterId: 'interceptor', flightTraits: true, airframes: 1, slowResume: false },
+      options: {
+        characterId: 'interceptor',
+        flightTraits: true,
+        airframes: 1,
+        slowResume: false,
+      },
       compiled: {},
       seed: 42,
       fixture: null,
@@ -602,4 +639,124 @@ test('native Marathon continuation retains its run when next-sortie settings cha
   assert.equal(changedAppearance.calls.create, 0);
   assert.equal(changedAppearance.original.phase, 'ready');
   await Promise.resolve();
+});
+
+test('review stop checkpoints are bounded and require an explicit diagnostic build', () => {
+  for (const value of [null, '', 'bad', Infinity, -1, 119.99, 240.01])
+    assert.equal(overflightReviewStopAt(value, { build: 'echo', diagnostics: true }), null);
+  for (const value of [120, '180', 240])
+    assert.equal(
+      overflightReviewStopAt(value, { build: 'echo', diagnostics: true }),
+      Number(value),
+    );
+  assert.equal(overflightReviewStopAt(180, { build: null, diagnostics: true }), null);
+  assert.equal(overflightReviewStopAt(180, { build: 'echo', diagnostics: false }), null);
+});
+
+test('review stop immediately releases all actions, survives replacements, and keeps earned drafts', () => {
+  let pilotCalls = 0;
+  const review = createOverflightReviewPlayback({
+    build: 'echo',
+    stopAt: 180,
+    pilot() {
+      pilotCalls++;
+      return { x: 1, y: -1, boost: true, focus: true };
+    },
+    selectCard: (run) => run.offers[0],
+  });
+  assert.equal(review.input({ tick: 100, time: 179.99 }).boost, true);
+  const neutral = { x: 0, y: 0, boost: false, focus: false };
+  assert.deepEqual(review.input({ tick: 101, time: 180 }), neutral);
+  assert.deepEqual(review.input({ tick: 102, time: 181, player: { airframes: 2 } }), neutral);
+  assert.deepEqual(
+    review.input({ tick: 1, time: 0 }),
+    neutral,
+    'only explicit retry resets the stop',
+  );
+  assert.equal(pilotCalls, 1);
+  const run = {
+    phase: 'upgrade',
+    progression: { choices: 2, rerolls: 1 },
+    offers: [{ id: 'earned' }],
+  };
+  assert.equal(review.upgrade(run, 100, true).choiceId, null);
+  assert.equal(review.upgrade(run, 1600, true).choiceId, 'earned');
+  review.reset();
+  assert.equal(review.input({ tick: 0, time: 0 }).boost, true);
+  assert.equal(pilotCalls, 2);
+});
+
+test('native Settings initialization preserves operation cards and navigation on Home', async () => {
+  const { readFile } = await import('node:fs/promises');
+  const { runInNewContext } = await import('node:vm');
+  const { parse } = await import('acorn');
+  const { Document } = await import('./helpers/couch-dom.mjs');
+  const { mountModePlayShell } = await import('../ui/mode-play-shell.mjs');
+  const { mountModeSettings } = await import('../ui/mode-settings-view.mjs');
+  const { attachSettingsPanels } = await import('../ui/settings-panels.mjs');
+  const { createOverflightOperationCards } = await import('../overflight/operation-view.mjs');
+  const source = await readFile(new URL('../overflight/app.mjs', import.meta.url), 'utf8');
+  const ast = parse(source, { ecmaVersion: 'latest', sourceType: 'module' });
+  const settings = ast.body.find(
+    (node) =>
+      node.type === 'ExpressionStatement' &&
+      node.expression.type === 'AssignmentExpression' &&
+      node.expression.left.name === 'settingsView',
+  ).expression.right;
+  for (const current of ['overflight', 'overflight-riy', 'overflight-hunt']) {
+    const document = new Document();
+    const nodes = new Map();
+    const get = (id) => {
+      if (!nodes.has(id)) {
+        const node = document.createElement('section');
+        node.id = id;
+        document.body.append(node);
+        nodes.set(id, node);
+      }
+      return nodes.get(id);
+    };
+    const operationCards = createOverflightOperationCards({
+      document,
+      current,
+      text: (key) => key,
+      destination: (path) => path,
+      onSelect() {},
+      onLeave() {},
+    });
+    const shell = mountModePlayShell({
+      document,
+      slots: { homeChoices: operationCards.root, settings: get('overflight-settings') },
+    });
+    const settingsView = runInNewContext(source.slice(settings.start, settings.end), {
+      mountModeSettings,
+      settingsRoot: shell.elements.dialogs.settings,
+      shell,
+      operationCards,
+      getLocale: () => 'en',
+      setMenuIcon() {},
+      attachSettingsPanels,
+      $: get,
+      field: get,
+      el: (tag) => document.createElement(tag),
+      touchSettings: get('touch-settings'),
+      audioCues: get('audio-cues'),
+      offlineSettings: get('offline-settings'),
+    });
+    const cards = operationCards.root.querySelectorAll('[data-home-choice]');
+    assert.equal(cards.length, 5);
+    for (const card of cards) {
+      assert.equal(
+        shell.elements.home.contains(card),
+        true,
+        `${current}: ${card.id} stays on Home`,
+      );
+      assert.equal(shell.elements.dialogs.settings.contains(card), false);
+    }
+    assert.equal(settingsView.panels.gameplay.contains(get('difficulty')), true);
+    shell.open('settings');
+    shell.back();
+    assert.equal(shell.elements.home.contains(operationCards.root), true);
+    settingsView.destroy();
+    shell.dispose();
+  }
 });

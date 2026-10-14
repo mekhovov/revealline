@@ -44,6 +44,10 @@ const weaponIds = ['primary', 'slow-field', 'proximity-pulse', 'side-burst', 'sc
 const wrap = (value, min, max) =>
   min + ((((value - min) % (max - min)) + (max - min)) % (max - min));
 
+function moduleParameters(run, id, rank) {
+  return overflightModuleParameters(id, rank, run.rulesVersion);
+}
+
 function random(run, key = '_randomState') {
   let value = run[key];
   value ^= value << 13;
@@ -104,7 +108,17 @@ function effect(run, kind, x, y, radius, life = 0.28, extra = null) {
   }
   const index = run._effectFree.pop();
   const record = run.effects[index];
-  Object.assign(record, { active: true, kind, x, y, radius, age: 0, life, x2: x, y2: y });
+  Object.assign(record, {
+    active: true,
+    kind,
+    x,
+    y,
+    radius,
+    age: 0,
+    life,
+    x2: x,
+    y2: y,
+  });
   if (extra) Object.assign(record, extra);
   return record;
 }
@@ -124,7 +138,11 @@ export function createOverflightRun(
     flightTraits = false,
   } = {},
 ) {
-  if (!['OverflightCompiledV1', 'OverflightCompiledV2'].includes(compiled?.format))
+  if (
+    !['OverflightCompiledV1', 'OverflightCompiledV2', 'OverflightCompiledV3'].includes(
+      compiled?.format,
+    )
+  )
     throw new TypeError('A compiled Overflight project is required.');
   if (![1, 3].includes(airframes)) throw new RangeError('Choose one or three airframes.');
   if (!Number.isSafeInteger(seed) || seed < 1 || seed > 0xffffffff)
@@ -169,6 +187,10 @@ export function createOverflightRun(
       pulseOriginX: compiled.arena.width / 2,
       pulseOriginY: compiled.arena.height / 2,
       shieldCooldown: 0,
+      shieldPause: 0,
+      shieldPauseAdded: 0,
+      overdriveReady: false,
+      overdriveRemaining: 0,
       armorReduction: 0,
     },
     camera: {
@@ -293,6 +315,8 @@ export function createOverflightRun(
       priorityAttacks: 0,
       damageDealt: 0,
       damageTaken: 0,
+      damageCauses: { contact: 0, lane: 0, fan: 0, ground: 0 },
+      shieldBlocks: 0,
       xpEarned: 0,
       xpCollected: 0,
       xpOnGround: 0,
@@ -334,6 +358,7 @@ export function createOverflightRun(
     _clearWindowKills: 0,
     _encounterIndex: 0,
     _boostHeld: false,
+    attackRate: 1,
     _cooldowns: {
       primary: 0.2,
       'slow-field': 0,
@@ -461,7 +486,7 @@ export function spawnOverflightEnemy(run, options = {}) {
   const specialist =
     options.specialist ??
     (specialistFamilies.has(family) ||
-      (run.rulesVersion === 2 && !run.fixture && family === 'shield-bearer'));
+      (run.rulesVersion >= 2 && !run.fixture && family === 'shield-bearer'));
   if (
     (heavy && run.stats.heaviesAlive >= run.compiled.population.heavies) ||
     (specialist && run.stats.specialistsAlive >= run.compiled.population.specialists)
@@ -472,7 +497,7 @@ export function spawnOverflightEnemy(run, options = {}) {
   const slot = run._enemyFree.pop();
   const enemy = run.enemies[slot];
   const hp = options.hp ?? 30;
-  const tactics = run.rulesVersion === 2 && !run.fixture;
+  const tactics = run.rulesVersion >= 2 && !run.fixture;
   const armor =
     tactics && machineFamilies.has(family) ? hp * run.compiled.combat.machinery.plateFraction : 0;
   const x = clamp(options.x ?? run.player.x + 300, 0, run.compiled.arena.width);
@@ -518,8 +543,17 @@ export function spawnOverflightEnemy(run, options = {}) {
     heavy,
     specialist,
     role: options.role ?? 'common',
-    speed: options.speed ?? 40,
+    speed:
+      run.rulesVersion >= 3 &&
+      !run.fixture &&
+      options.pattern === 'flank' &&
+      fastFamilies.has(family)
+        ? family === 'sprinter'
+          ? 72
+          : 96
+        : (options.speed ?? 40),
     pattern: options.pattern ?? 'pursuit',
+    _approachComplete: false,
     vx: Math.cos(heading),
     vy: Math.sin(heading),
     steeringX: Math.cos(heading),
@@ -535,6 +569,7 @@ export function spawnOverflightEnemy(run, options = {}) {
     attackY: y,
     attackRadius: 0,
     attackCooldown: 3 + random(run) * 4,
+    attackAdmissionTick: 0,
     xp:
       options.xp ??
       (heavy ? 8 : specialist ? 4 : family === 'courier' ? 3 : family === 'refuge-seeker' ? 2 : 1),
@@ -576,7 +611,12 @@ function retireEnemy(run, enemy) {
   const sourceIndex = run._supportSources.indexOf(enemy);
   if (sourceIndex >= 0) run._supportSources[sourceIndex] = null;
   for (const attack of run.priorityAttacks) {
-    if (attack.active && attack.owner === enemy.id) attack.active = false;
+    if (
+      attack.active &&
+      attack.owner === enemy.id &&
+      !(run.rulesVersion >= 3 && attack.stage === 'active')
+    )
+      attack.active = false;
   }
   enemy.attackWarning = 0;
   return true;
@@ -667,7 +707,10 @@ export function damageOverflightArea(
     hit++;
     if (slow) {
       enemy.slowUntil = Math.max(enemy.slowUntil, run.tick + Math.ceil(slow * 60));
-      enemy.slowMultiplier = slowMultiplier;
+      enemy.slowMultiplier =
+        run.rulesVersion >= 3 && machineFamilies.has(enemy.family)
+          ? Math.max(0.75, slowMultiplier)
+          : slowMultiplier;
     }
     // Store impulse for next movement update so later attacks query the same grid.
     if (push) {
@@ -697,14 +740,17 @@ function damageEnemy(run, enemy, damage, origin = run.player) {
     return false;
   const markMultiplier =
     enemy.markUntil > run.tick
-      ? (overflightModuleParameters('scanner', overflightModuleRank(run.build, 'scanner'))
+      ? (moduleParameters(run, 'scanner', overflightModuleRank(run.build, 'scanner'))
           ?.damageMultiplier ?? 1)
       : 1;
   let incoming =
     damage *
+    (run.rulesVersion >= 3 && !run.hunt && !run.fixture
+      ? run.compiled.combat.friendlyDamageMultiplier
+      : 1) *
     markMultiplier *
     (enemy.exposureRemaining > 0 ? run.compiled.combat.machinery.exposedMultiplier : 1);
-  if (run.rulesVersion === 2 && !run.fixture) {
+  if (run.rulesVersion >= 2 && !run.fixture) {
     const guard = applyOverflightGuard(enemy, incoming, origin);
     incoming = guard.damage;
     run.stats.guardDamageBlocked = (run.stats.guardDamageBlocked ?? 0) + guard.blocked;
@@ -727,7 +773,7 @@ function damageEnemy(run, enemy, damage, origin = run.player) {
         enemy.attackWarning = 0;
         enemy.attackCooldown = enemy.exposureRemaining;
         for (const attack of run.priorityAttacks)
-          if (attack.owner === enemy.id) attack.active = false;
+          if (attack.owner === enemy.id && attack.stage !== 'active') attack.active = false;
         sound(run, 'armor-break', 1, enemy);
         effect(run, 'impact', enemy.x, enemy.y, enemy.radius + 10);
       }
@@ -762,8 +808,7 @@ function safeHandoff(run) {
       if ((enemy.x - x) ** 2 + (enemy.y - y) ** 2 < 80 ** 2) score++;
     });
     for (const attack of run.priorityAttacks) {
-      if (attack.active && (attack.x - x) ** 2 + (attack.y - y) ** 2 < (attack.radius + 20) ** 2)
-        score += 50;
+      if (attack.active && overflightAttackContains(attack, x, y, player.radius + 20)) score += 50;
     }
     if (score < bestScore) {
       bestScore = score;
@@ -775,7 +820,7 @@ function safeHandoff(run) {
   player.y = bestY;
   player.vx = 0;
   player.vy = 0;
-  if (run.rulesVersion === 2) {
+  if (run.rulesVersion >= 2) {
     player.pulseOriginX = player.x;
     player.pulseOriginY = player.y;
     player.pulseCharge = 0;
@@ -783,23 +828,32 @@ function safeHandoff(run) {
   camera(run);
 }
 
-function damagePlayer(run, amount) {
+function damagePlayer(run, amount, cause = 'contact') {
   const player = run.player;
   if (run.fixture || player.invulnerable > 0 || run.phase !== 'playing') return false;
   if (player.shield > 0) {
     player.shield = 0;
     const rank = overflightModuleRank(run.build, 'shield');
-    player.shieldCooldown = overflightModuleParameters('shield', rank).recharge;
+    player.shieldCooldown = moduleParameters(run, 'shield', rank).recharge;
+    player.shieldPause = 0;
+    player.shieldPauseAdded = 0;
+    run.stats.shieldBlocks++;
     player.invulnerable = 0.75;
     effect(run, 'shield', player.x, player.y, 30, 0.3);
     sound(run, 'shield');
     return true;
   }
-  const rank = run.rulesVersion === 2 ? overflightModuleRank(run.build, 'plating') : 0;
+  const rank = run.rulesVersion >= 2 ? overflightModuleRank(run.build, 'plating') : 0;
   player.armorReduction = rank * 0.1;
   const actual = Math.min(player.hull, rank ? overflightArmoredDamage(amount, rank) : amount);
   player.hull -= actual;
   run.stats.damageTaken += actual;
+  run.stats.damageCauses[cause] = (run.stats.damageCauses[cause] ?? 0) + actual;
+  if (run.rulesVersion >= 3 && player.shieldCooldown > 0 && player.shieldPauseAdded < 2) {
+    const extra = Math.min(1, 2 - player.shieldPauseAdded);
+    player.shieldPause += extra;
+    player.shieldPauseAdded += extra;
+  }
   player.invulnerable = 0.75;
   sound(run, 'hit', actual);
   if (player.hull > 0) return true;
@@ -827,10 +881,13 @@ function movePlayer(run, input) {
   player.boostRemaining = Math.max(0, player.boostRemaining - OVERFLIGHT_STEP);
   player.boostCooldown = Math.max(0, player.boostCooldown - OVERFLIGHT_STEP);
   player.invulnerable = Math.max(0, player.invulnerable - OVERFLIGHT_STEP);
-  if (player.shieldCooldown > 0) {
+  if (player.shieldPause > 0)
+    player.shieldPause = Math.max(0, player.shieldPause - OVERFLIGHT_STEP);
+  else if (player.shieldCooldown > 0) {
     player.shieldCooldown = Math.max(0, player.shieldCooldown - OVERFLIGHT_STEP);
     if (!player.shieldCooldown && overflightModuleRank(run.build, 'shield')) player.shield = 1;
   }
+  player.overdriveRemaining = Math.max(0, player.overdriveRemaining - OVERFLIGHT_STEP);
   const boost = input.boost === true;
   let x = Number.isFinite(input.x) ? input.x : 0;
   let y = Number.isFinite(input.y) ? input.y : 0;
@@ -843,14 +900,19 @@ function movePlayer(run, input) {
     boost &&
     !run._boostHeld &&
     !player.boostCooldown &&
-    (run.rulesVersion !== 2 || run.tick - run._boostStartedTick >= 54)
+    (run.rulesVersion < 2 || run.tick - run._boostStartedTick >= 54)
   ) {
+    if (run.rulesVersion >= 3 && player.overdriveReady) {
+      player.overdriveReady = false;
+      player.overdriveRemaining = 6;
+      sound(run, 'evolution');
+    }
     player.boostRemaining = 0.3;
     run._boostStartedTick = run.tick;
     player.boostCooldown = 2.5;
     if (overflightModuleRank(run.build, 'shield') === 3) {
       // Resolve after the movement/grid pass, at the departure position.
-      const shield = overflightModuleParameters('shield', 3);
+      const shield = moduleParameters(run, 'shield', 3);
       queuePulse(
         run,
         player.x,
@@ -865,6 +927,7 @@ function movePlayer(run, input) {
     run.stats.boostsUsed++;
     sound(run, 'boost');
   }
+  run.attackRate = player.overdriveRemaining > 0 ? 1.25 : 1;
   run._boostHeld = boost;
   if (magnitude > 0.05) player.heading = Math.atan2(y, x);
   const speed = player.boostRemaining > 0 ? run.flight.boostSpeed : run.flight.speed;
@@ -886,7 +949,8 @@ function movePlayer(run, input) {
       run.compiled.arena.height - player.radius,
     );
   }
-  const pulse = overflightModuleParameters(
+  const pulse = moduleParameters(
+    run,
     'proximity-pulse',
     overflightModuleRank(run.build, 'proximity-pulse'),
   );
@@ -895,7 +959,7 @@ function movePlayer(run, input) {
     // direction into a wall, replacement placement and fixture wraps cannot.
     player.pulseCharge = Math.min(
       1,
-      run.rulesVersion === 2
+      run.rulesVersion >= 2
         ? Math.hypot(player.x - player.pulseOriginX, player.y - player.pulseOriginY) /
             pulse.chargeDistance
         : player.pulseCharge +
@@ -915,7 +979,24 @@ function currentEncounter(run) {
   return encounter && run.time >= encounter.start ? encounter : null;
 }
 
-function arrivalPoint(run, pattern = 'pursuit') {
+function arrivalPoint(run, pattern = 'pursuit', intro = null) {
+  if (intro) {
+    const heading = run.player.heading + (intro.facing === 'rear' ? Math.PI : 0);
+    const distance = 190 + random(run) * 35;
+    const spread = (random(run) * 2 - 1) * 55;
+    return {
+      x: clamp(
+        run.player.x + Math.cos(heading) * distance - Math.sin(heading) * spread,
+        20,
+        run.compiled.arena.width - 20,
+      ),
+      y: clamp(
+        run.player.y + Math.sin(heading) * distance + Math.cos(heading) * spread,
+        20,
+        run.compiled.arena.height - 20,
+      ),
+    };
+  }
   const halfWidth = run.camera.width / 2 + 30;
   const halfHeight = run.camera.height / 2 + 30;
   const edge =
@@ -945,24 +1026,41 @@ function arrivalPoint(run, pattern = 'pursuit') {
   };
 }
 
-function spawnEncounter(run, encounter) {
+function riyIntroduction(run) {
+  if (run.compiled.riyVersion !== 2) return null;
+  return (
+    run.compiled.riy.intro.find((pack) => run.time >= pack.start && run.time < pack.end) ?? null
+  );
+}
+
+function spawnEncounter(run, encounter, intro = null) {
   if (!encounter || run.fixture) return;
-  run._spawnCredit = Math.min(2, run._spawnCredit + encounter.spawnPerSecond * OVERFLIGHT_STEP);
+  if (intro) {
+    run._riyIntroSpawned ??= { rear: 0, front: 0 };
+    const due = Math.min(
+      intro.count,
+      Math.floor(((run.time - intro.start) / (intro.end - intro.start)) * intro.count) + 1,
+    );
+    run._spawnCredit = Math.min(2, Math.max(0, due - run._riyIntroSpawned[intro.facing]));
+  } else
+    run._spawnCredit = Math.min(2, run._spawnCredit + encounter.spawnPerSecond * OVERFLIGHT_STEP);
   while (run._spawnCredit >= 1) {
     run._spawnCredit--;
-    let family = encounter.families[Math.floor(random(run) * encounter.families.length)];
+    let family = intro
+      ? 'patroller'
+      : encounter.families[Math.floor(random(run) * encounter.families.length)];
     // Reserve one heavy slot for a goal; use a native common family at the cap.
     const heavyLimit = Math.max(0, run.compiled.population.heavies - 1);
     if (
       (heavyFamilies.has(family) && run.stats.heaviesAlive >= heavyLimit) ||
-      ((specialistFamilies.has(family) || (run.rulesVersion === 2 && family === 'shield-bearer')) &&
+      ((specialistFamilies.has(family) || (run.rulesVersion >= 2 && family === 'shield-bearer')) &&
         run.stats.specialistsAlive >= run.compiled.population.specialists)
     ) {
       family = encounter.families.find(
         (id) =>
           !heavyFamilies.has(id) &&
           !specialistFamilies.has(id) &&
-          (run.rulesVersion !== 2 || id !== 'shield-bearer'),
+          (run.rulesVersion < 2 || id !== 'shield-bearer'),
       );
       if (!family) {
         run.stats.spawnDeferred++;
@@ -970,14 +1068,15 @@ function spawnEncounter(run, encounter) {
       }
     }
     const heavy = heavyFamilies.has(family);
-    spawnOverflightEnemy(run, {
-      ...arrivalPoint(run, encounter.pattern),
+    const spawned = spawnOverflightEnemy(run, {
+      ...arrivalPoint(run, encounter.pattern, intro),
       family,
-      hp: encounter.hp * (heavy ? 5 : machineFamilies.has(family) ? 2 : 1),
-      speed: encounter.speed * (fastFamilies.has(family) ? 1.25 : heavy ? 0.7 : 1),
-      pattern: encounter.pattern,
-      warning: encounter.pattern === 'surge' ? 0.9 : 0.65,
+      hp: intro ? 30 : encounter.hp * (heavy ? 5 : machineFamilies.has(family) ? 2 : 1),
+      speed: intro ? 34 : encounter.speed * (fastFamilies.has(family) ? 1.25 : heavy ? 0.7 : 1),
+      pattern: intro ? 'pursuit' : encounter.pattern,
+      warning: intro ? 1 : encounter.pattern === 'surge' ? 0.9 : 0.65,
     });
+    if (intro && spawned) run._riyIntroSpawned[intro.facing]++;
   }
 }
 
@@ -1027,13 +1126,20 @@ function director(run) {
   const encounter = currentEncounter(run);
   run.encounter = encounter?.id ?? null;
   run.pressure = encounter?.pattern ?? 'relief';
-  if (run.rulesVersion === 2) {
+  const intro = riyIntroduction(run);
+  if (intro && encounter) {
+    run.pressure = 'pursuit';
+    spawnEncounter(run, encounter, intro);
+  } else if (run.rulesVersion >= 2) {
     if (run._lastEncounter !== encounter?.id) {
       run._spawnCredit = 0;
       run._lastEncounter = encounter?.id;
       if (encounter?.pattern === 'relief') run._pacingReleasePending = true;
     }
-    if (run._pacingReleasePending && !run.priorityAttacks.some((attack) => attack.active)) {
+    if (
+      run._pacingReleasePending &&
+      (run.rulesVersion >= 3 || !run.priorityAttacks.some((attack) => attack.active))
+    ) {
       run._reliefUntil = Math.max(
         run._reliefUntil,
         run.time + run.compiled.combat.pacing.reliefSeconds,
@@ -1131,7 +1237,7 @@ function moveEnemies(run) {
     enemy.warning = Math.max(0, enemy.warning - OVERFLIGHT_STEP);
     if (enemy.warning > 0) continue;
     const behaviorTick = enemy._behaviorAge++;
-    if (run.rulesVersion === 2 && !run.fixture) {
+    if (run.rulesVersion >= 2 && !run.fixture) {
       enemy.exposureRemaining = Math.max(0, enemy.exposureRemaining - OVERFLIGHT_STEP);
       enemy.guardCommitRemaining -= OVERFLIGHT_STEP;
       if (enemy.guardIntegrity > 0 && enemy.guardCommitRemaining <= 0) {
@@ -1163,7 +1269,11 @@ function moveEnemies(run) {
       const targetX = run.player.x - enemy.x,
         targetY = run.player.y - enemy.y;
       distance = Math.hypot(targetX, targetY) || 1;
-      if (['crossing', 'flank'].includes(enemy.pattern) && distance > 120) {
+      if (
+        ['crossing', 'flank'].includes(enemy.pattern) &&
+        !(run.rulesVersion >= 3 && enemy._approachComplete) &&
+        distance > 120
+      ) {
         enemy.steeringX = enemy.vx;
         enemy.steeringY = enemy.vy;
       } else {
@@ -1171,6 +1281,23 @@ function moveEnemies(run) {
         enemy.steeringY = targetY / distance;
       }
       if (!enemy.heavy && !enemy.specialist && enemy.role === 'common') supportSteering(run, enemy);
+    }
+    const standoff =
+      run.rulesVersion >= 3 &&
+      !run.fixture &&
+      ['brace-trooper', 'armored-carrier', 'tracked-tank'].includes(enemy.family);
+    if (standoff) {
+      const band = run.compiled.combat.threats;
+      const sign =
+        enemy.attackWarning > 0 || enemy.exposureRemaining > 0
+          ? 0
+          : distance < band.standoffMin
+            ? -0.65
+            : distance > band.standoffMax
+              ? 1
+              : 0;
+      enemy.steeringX = ((run.player.x - enemy.x) / distance) * sign;
+      enemy.steeringY = ((run.player.y - enemy.y) / distance) * sign;
     }
     let dx = enemy.steeringX,
       dy = enemy.steeringY;
@@ -1188,7 +1315,7 @@ function moveEnemies(run) {
     // limits the independent exact collision/damage queries.
     const cell = overflightGridCell(run._grid, enemy.x, enemy.y);
     const count = run._grid.counts[cell];
-    if (count > 3 && !bursting) {
+    if (count > 3 && !bursting && !standoff) {
       let sx = enemy.x - run._grid.sumX[cell] / count;
       let sy = enemy.y - run._grid.sumY[cell] / count;
       let length = Math.hypot(sx, sy);
@@ -1203,45 +1330,62 @@ function moveEnemies(run) {
     }
     const radar = run._supportSources[enemy._radarSlot];
     const supported = radar?.id === enemy._radarId;
-    const behaviorSpeed = bursting ? 2 : enemy.behaviorPhase === 'windup' ? 0.5 : 1;
+    const behaviorSpeed = bursting
+      ? run.rulesVersion >= 3
+        ? Math.min(2, 144 / enemy.speed)
+        : 2
+      : enemy.behaviorPhase === 'windup'
+        ? 0.5
+        : 1;
     const speed =
       enemy.speed *
       behaviorSpeed *
       (supported ? 1.08 : 1) *
       (enemy.slowUntil > run.tick ? enemy.slowMultiplier : 1);
-    enemy.x = clamp(
-      enemy.x + dx * speed * OVERFLIGHT_STEP + (enemy.pushX ?? 0),
-      enemy.radius,
-      run.compiled.arena.width - enemy.radius,
-    );
-    enemy.y = clamp(
-      enemy.y + dy * speed * OVERFLIGHT_STEP + (enemy.pushY ?? 0),
-      enemy.radius,
-      run.compiled.arena.height - enemy.radius,
-    );
+    const nextX = enemy.x + dx * speed * OVERFLIGHT_STEP + (enemy.pushX ?? 0),
+      nextY = enemy.y + dy * speed * OVERFLIGHT_STEP + (enemy.pushY ?? 0);
+    if (
+      run.rulesVersion >= 3 &&
+      !run.fixture &&
+      ['crossing', 'flank'].includes(enemy.pattern) &&
+      (nextX < enemy.radius ||
+        nextY < enemy.radius ||
+        nextX > run.compiled.arena.width - enemy.radius ||
+        nextY > run.compiled.arena.height - enemy.radius)
+    ) {
+      // A committed crossing ends at the world edge. The next ordinary steering
+      // update starts pursuit; surviving packs never accumulate against clamps.
+      // A sprinter's already-committed burst still completes before turning.
+      enemy._approachComplete = true;
+    }
+    enemy.x = clamp(nextX, enemy.radius, run.compiled.arena.width - enemy.radius);
+    enemy.y = clamp(nextY, enemy.radius, run.compiled.arena.height - enemy.radius);
     enemy.pushX = 0;
     enemy.pushY = 0;
-    enemy.heading = Math.atan2(dy, dx);
+    if (dx || dy) enemy.heading = Math.atan2(dy, dx);
     if (run.fixture) wrapFixtureEnemy(run, enemy);
     enemy.attackCooldown = Math.max(0, enemy.attackCooldown - OVERFLIGHT_STEP);
     if (
       (enemy.family === 'brace-trooper' ||
         enemy.role !== 'common' ||
-        (run.rulesVersion === 2 && ['armored-carrier', 'tracked-tank'].includes(enemy.family))) &&
+        (run.rulesVersion >= 2 && ['armored-carrier', 'tracked-tank'].includes(enemy.family))) &&
       !enemy.attackCooldown &&
+      (run.rulesVersion < 3 || run.tick >= enemy.attackAdmissionTick) &&
       !(enemy.exposureRemaining > 0) &&
       (run.rulesVersion !== 2 || run.pressure !== 'relief') &&
       distance < 330 &&
-      distance > 55
+      (run.rulesVersion >= 3 || distance > 55)
     ) {
+      if (run.rulesVersion >= 3) enemy.attackAdmissionTick = run.tick + 6;
       const attack = run.priorityAttacks.find((record) => !record.active);
       const spec =
-        run.rulesVersion === 2 && !run.fixture
+        run.rulesVersion >= 2 && !run.fixture
           ? overflightAttackSpec(enemy, run.player, run.compiled.combat)
           : null;
       if (attack && (!spec || (visible(run, enemy, -20) && hasOverflightEscape(run, spec)))) {
         Object.assign(attack, {
           active: true,
+          stage: 'warning',
           owner: enemy.id,
           x: run.player.x,
           y: run.player.y,
@@ -1270,19 +1414,32 @@ function resolveThreats(run) {
   for (const attack of run.priorityAttacks) {
     if (!attack.active) continue;
     const owner = run.enemies.find((enemy) => enemy.active && enemy.id === attack.owner);
-    if (!owner) {
+    // Fired ground danger persists independently; killing an owner cancels only preparation.
+    if (!owner && attack.stage !== 'active') {
       attack.active = false;
       continue;
     }
     attack.remaining = Math.max(0, attack.remaining - OVERFLIGHT_STEP);
+    if (attack.stage === 'active') {
+      if (!attack.remaining) {
+        attack.active = false;
+        continue;
+      }
+      if (overflightAttackContains(attack, run.player.x, run.player.y, run.player.radius))
+        damagePlayer(run, attack.damage, attack.kind ?? 'ground');
+      continue;
+    }
     owner.attackWarning = attack.remaining;
     if (attack.remaining > 0) continue;
-    attack.active = false;
     effect(run, 'hostile-impact', attack.x, attack.y, attack.radius, 0.35);
-    if (run.rulesVersion === 2 && owner.maxArmor > 0)
+    if (run.rulesVersion >= 2 && owner.maxArmor > 0)
       owner.exposureRemaining = run.compiled.combat.machinery.exposureSeconds;
     if (overflightAttackContains(attack, run.player.x, run.player.y, run.player.radius))
-      damagePlayer(run, attack.damage);
+      damagePlayer(run, attack.damage, attack.kind ?? 'ground');
+    if (run.rulesVersion >= 3 && attack.kind === 'ground' && run.phase === 'playing') {
+      attack.stage = 'active';
+      attack.remaining = run.compiled.combat.threats.groundLifetime;
+    } else attack.active = false;
   }
   if (run.player.invulnerable > 0) return;
   run.stats.collisionCandidates += visitOverflightGrid(
@@ -1299,10 +1456,10 @@ function resolveThreats(run) {
 }
 
 function primaryAttack(run) {
-  const payload = overflightPayload(run.build);
+  const payload = overflightPayload(run.build, run.rulesVersion);
   const heading = run.player.heading;
-  const x = run.player.x - Math.cos(heading) * 28;
-  const y = run.player.y - Math.sin(heading) * 28;
+  const x = run.player.x - Math.cos(heading) * (payload.rearOffsets?.[0] ?? 28);
+  const y = run.player.y - Math.sin(heading) * (payload.rearOffsets?.[0] ?? 28);
   queuePayload(run, {
     x,
     y,
@@ -1316,7 +1473,13 @@ function primaryAttack(run) {
     queuePayload(run, {
       x,
       y,
-      radius: payload.radius + (index + 1) * 27,
+      ...(payload.rearOffsets
+        ? {
+            x: run.player.x - Math.cos(heading) * payload.rearOffsets[index + 1],
+            y: run.player.y - Math.sin(heading) * payload.rearOffsets[index + 1],
+          }
+        : {}),
+      radius: payload.echoRadii?.[index + 1] ?? payload.radius + (index + 1) * 27,
       damage: payload.damage * (index ? 0.75 : 0.85),
       remaining: 0.45 + (index + 1) * 0.2,
       count: 1,
@@ -1338,11 +1501,20 @@ function queuePayload(run, payload) {
 function queuePulse(run, x, y, radius, damage, remaining, push = 0, kind = 'proximity-pulse') {
   const pulse = run._pulses.find((record) => !record.active);
   if (!pulse) throw new Error('Pulse pool is too small for its fire rate.');
-  Object.assign(pulse, { active: true, x, y, radius, damage, remaining, push, kind });
+  Object.assign(pulse, {
+    active: true,
+    x,
+    y,
+    radius,
+    damage,
+    remaining,
+    push,
+    kind,
+  });
 }
 
 function launchSideBurst(run, rank) {
-  const settings = overflightModuleParameters('side-burst', rank);
+  const settings = moduleParameters(run, 'side-burst', rank);
   // The full launch is deferred if the finite pool cannot admit both shots.
   // No projectile or its eventual damage is silently discarded.
   if (run._projectileFree.length < 2) {
@@ -1461,7 +1633,7 @@ function advanceProjectiles(run) {
 function scanner(run) {
   const rank = overflightModuleRank(run.build, 'scanner');
   if (!rank || run._cooldowns.scanner > 0) return;
-  const settings = overflightModuleParameters('scanner', rank);
+  const settings = moduleParameters(run, 'scanner', rank);
   let target = null,
     score = -Infinity;
   visitOverflightGrid(run._grid, run.player.x, run.player.y, settings.targetRadius, (enemy) => {
@@ -1515,7 +1687,7 @@ function automaticSystems(run) {
   for (const module of run.build.combat) {
     if (run._cooldowns[module.id] > 0) continue;
     const { id, rank } = module;
-    const settings = overflightModuleParameters(id, rank);
+    const settings = moduleParameters(run, id, rank);
     const player = run.player;
     if (id === 'proximity-pulse') {
       // The technical fixture exercises full effects continuously while its
@@ -1573,7 +1745,7 @@ function automaticSystems(run) {
 
 function weapons(run) {
   for (const key of weaponIds)
-    run._cooldowns[key] = Math.max(0, run._cooldowns[key] - OVERFLIGHT_STEP);
+    run._cooldowns[key] = Math.max(0, run._cooldowns[key] - OVERFLIGHT_STEP * run.attackRate);
   scanner(run);
   if (run.phase !== 'playing') return;
   for (const echo of run._echoes) {
@@ -1597,7 +1769,9 @@ function weapons(run) {
     pulse.remaining -= OVERFLIGHT_STEP;
     if (pulse.remaining > 0) continue;
     pulse.active = false;
-    damageOverflightArea(run, pulse.x, pulse.y, pulse.radius, pulse.damage, { push: pulse.push });
+    damageOverflightArea(run, pulse.x, pulse.y, pulse.radius, pulse.damage, {
+      push: pulse.push,
+    });
     effect(run, pulse.kind, pulse.x, pulse.y, pulse.radius, 0.4);
     if (run.phase !== 'playing') return;
   }
@@ -1635,8 +1809,7 @@ function collectPickup(run, pickup, index) {
 function collectSalvage(run, forcedRadius = 0) {
   if (run.fixture) return;
   const rank = overflightModuleRank(run.build, 'scanner');
-  const radius =
-    forcedRadius || overflightModuleParameters('scanner', rank)?.collectionRadius || 62;
+  const radius = forcedRadius || moduleParameters(run, 'scanner', rank)?.collectionRadius || 62;
   for (let index = 0; index < run.pickups.length; index++) {
     const pickup = run.pickups[index];
     if (!pickup.active) continue;
@@ -1654,8 +1827,12 @@ function offerUpgrade(run) {
   )
     return;
   if (run.progression.xp < run.progression.nextThreshold) return;
-  run.offers = draftOverflightUpgrades(run.build, run.compiled.upgrades.modules, () =>
-    random(run, '_draftRandomState'),
+  run.offers = (run.upgradePolicy?.draft ?? draftOverflightUpgrades)(
+    run.build,
+    run.compiled.upgrades.modules,
+    () => random(run, '_draftRandomState'),
+    [],
+    run.rulesVersion,
   );
   run.phase = 'upgrade';
   sound(run, 'upgrade-ready');
@@ -1664,10 +1841,22 @@ function offerUpgrade(run) {
 export function chooseOverflightUpgrade(run, id) {
   if (run.phase !== 'upgrade') return false;
   const offer = run.offers.find((candidate) => candidate.id === id);
-  if (!offer || !applyOverflightUpgrade(run.build, offer, run.compiled.upgrades.modules))
+  if (
+    !offer ||
+    !(run.upgradePolicy?.apply ?? applyOverflightUpgrade)(
+      run.build,
+      offer,
+      run.compiled.upgrades.modules,
+      run.rulesVersion,
+    )
+  )
     return false;
   run.events.length = 0;
-  run.progression.history.push({ id: offer.id, time: run.time, tick: run.tick });
+  run.progression.history.push({
+    id: offer.id,
+    time: run.time,
+    tick: run.tick,
+  });
   run.progression.choices++;
   run.stats.upgradesChosen++;
   run.progression.nextThreshold = run.compiled.upgrades.thresholds[run.progression.choices] ?? null;
@@ -1680,7 +1869,9 @@ export function chooseOverflightUpgrade(run, id) {
   }
   if (offer.system === 'repair') {
     run.player.hull = Math.min(run.player.maxHull, run.player.hull + 35);
-    damageOverflightArea(run, run.player.x, run.player.y, 100, 20, { push: 35 });
+    damageOverflightArea(run, run.player.x, run.player.y, 100, 20, {
+      push: 35,
+    });
     effect(run, 'shield', run.player.x, run.player.y, 100, 0.4);
   }
   if (offer.system === 'recovery') {
@@ -1702,11 +1893,12 @@ export function chooseOverflightUpgrade(run, id) {
 export function rerollOverflightUpgrades(run) {
   if (run.phase !== 'upgrade' || run.progression.rerolls <= 0) return false;
   const previous = run.offers.map((offer) => offer.id);
-  run.offers = draftOverflightUpgrades(
+  run.offers = (run.upgradePolicy?.draft ?? draftOverflightUpgrades)(
     run.build,
     run.compiled.upgrades.modules,
     () => random(run, '_draftRandomState'),
     previous,
+    run.rulesVersion,
   );
   run.progression.rerolls--;
   run.stats.rerollsUsed++;
@@ -1937,3 +2129,6 @@ export function overflightSummary(run) {
     goals: { ...run.goals },
   };
 }
+
+// Exact-target path for bounded escort beams/chains; shares all guard, armor and reward semantics.
+export { damageEnemy as damageOverflightEnemy };

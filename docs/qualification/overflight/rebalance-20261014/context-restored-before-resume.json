@@ -1,0 +1,175 @@
+{
+  "phase": "playing",
+  "time": 187.1,
+  "renderer": "Phaser 4.2.1 WebGL",
+  "logicalWidth": 960,
+  "logicalHeight": 540,
+  "backingWidth": 960,
+  "backingHeight": 540,
+  "atlas": {
+    "width": 2040,
+    "height": 2040,
+    "textures": 2,
+    "baseRGBABytes": 16908544,
+    "retainedCanvasBytes": 16908544,
+    "soldierFrames": 216,
+    "machineryFrames": 36,
+    "heroFrames": 12,
+    "equipmentFrames": 13,
+    "remainsFrames": 120,
+    "defeatFrames": 480,
+    "frameCount": 883
+  },
+  "heroArtwork": {
+    "assetId": "player.interceptor.detailed.field-kit",
+    "playerSlot": "player.interceptor.detailed",
+    "rotorCount": 4,
+    "visibleDiameter": 34,
+    "bakedFrameSize": 64,
+    "rotorFrames": 12,
+    "rotorRadii": [
+      9.254350728498977,
+      9.254350728498977,
+      9.254350728498977,
+      9.254350728498977
+    ],
+    "paintedWidth": 44.06833680237608,
+    "paintedHeight": 44.06833680237608
+  },
+  "counts": {
+    "alive": 327,
+    "visible": 157,
+    "rendered": 176,
+    "effects": 4,
+    "pickups": 4,
+    "warnings": 20,
+    "behaviorCues": 85,
+    "remains": 320,
+    "defeats": 0,
+    "quads": 658
+  },
+  "allocatedSprites": 937,
+  "remains": {
+    "stored": 670,
+    "capacity": 1024,
+    "sequence": 670,
+    "evicted": 0,
+    "missed": 0,
+    "limits": {
+      "capacity": 1024,
+      "visible": 320,
+      "moving": 24,
+      "settleSeconds": 0.34
+    }
+  },
+  "destruction": {
+    "showRemains": true,
+    "brutal": false,
+    "blood": true
+  },
+  "fixture": null,
+  "reducedEffects": false,
+  "preparationMs": 39.900000005960464,
+  "contextLosses": 0,
+  "contextRestores": 0,
+  "contextRecoveryTests": 0,
+  "lost": false,
+  "failed": false,
+  "valid": false,
+  "invalidReasons": [
+    "interrupted"
+  ],
+  "cadenceMs": {
+    "samples": 22694,
+    "p50": 8.300000011920929,
+    "p95": 9.800000011920929,
+    "p99": 12.300000011920929,
+    "worst": 49.099999994039536
+  },
+  "submissionMs": {
+    "samples": 22702,
+    "p50": 0.4000000059604645,
+    "p95": 0.800000011920929,
+    "p99": 0.9000000059604645,
+    "worst": 1.5999999642372131
+  },
+  "cadenceHz": 119.99388768245649,
+  "measuredIntervals": 22694,
+  "measuredSeconds": 189.12630000001192,
+  "retainedIntervals": 22694,
+  "sampleCapacity": 120000,
+  "submissionTotalMs": 9602.200003832579,
+  "over33Ms": 4,
+  "over50Ms": 0,
+  "over100Ms": 0,
+  "exclusions": {},
+  "highWater": {
+    "alive": 327,
+    "visible": 167,
+    "rendered": 183,
+    "effects": 72,
+    "pickups": 84
+  },
+  "protocol": {
+    "arrangement": "One warm-up followed by consecutive windows of the same fixture; not separate restarted trials.",
+    "warmupSeconds": 30,
+    "measurementSeconds": 120,
+    "repetitions": 3,
+    "windows": [
+      {
+        "index": 1,
+        "complete": true,
+        "measuredSeconds": 119.99539999997616,
+        "cadenceMs": {
+          "samples": 14401,
+          "p50": 8.300000011920929,
+          "p95": 9.900000005960464,
+          "p99": 11.900000005960464,
+          "worst": 48.69999998807907
+        },
+        "cadenceHz": 120.01293382915397,
+        "slowFraction": 0.00006943962224845496,
+        "passes": true
+      },
+      {
+        "index": 2,
+        "complete": false,
+        "measuredSeconds": 39.12590000003576,
+        "cadenceMs": {
+          "samples": 4692,
+          "p50": 8.300000011920929,
+          "p95": 9.5,
+          "p99": 10,
+          "worst": 40.599999994039536
+        },
+        "cadenceHz": 119.92056412748873,
+        "slowFraction": 0.00021312872975277067,
+        "passes": null
+      },
+      {
+        "index": 3,
+        "complete": false,
+        "measuredSeconds": 0,
+        "cadenceMs": {
+          "samples": 0,
+          "p50": null,
+          "p95": null,
+          "p99": null,
+          "worst": null
+        },
+        "cadenceHz": null,
+        "slowFraction": null,
+        "passes": null
+      }
+    ],
+    "acceptance": null,
+    "scope": "This browser run only; target hardware acceptance requires recorded device runs."
+  },
+  "clock": {
+    "steps": 11226,
+    "droppedSeconds": 0,
+    "accumulator": 0.010316666672627445
+  },
+  "longFrames": 0,
+  "trialValid": true
+}

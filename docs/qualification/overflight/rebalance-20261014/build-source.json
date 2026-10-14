@@ -1,0 +1,1384 @@
+{
+  "sourceRevision": null,
+  "before": [
+    {
+      "path": "game/community/account.mjs",
+      "sha256": "cdb0429e7f9f688a697b9a4660e11a54535cce5ad0387cabc1537dc6efa86fc3"
+    },
+    {
+      "path": "game/community/classic-installed.mjs",
+      "sha256": "9b8c72764a10b0379baaadd351b9a8bb3e5bfe7980509bda09cc87bfc5561a98"
+    },
+    {
+      "path": "game/community/client.mjs",
+      "sha256": "90213bfc09487a1839940bee364b58e8e15b101f497aa5a9bb43f0dfbf603307"
+    },
+    {
+      "path": "game/community/community.css",
+      "sha256": "39e391aaa17fa95450412c95ba1a1070c8844ab25ade27acba41314344e1de32"
+    },
+    {
+      "path": "game/community/directory.css",
+      "sha256": "d12d90f8a6ebbe0c30db571d6a048e36f86c88988742d964ab8dbd76ddcac31d"
+    },
+    {
+      "path": "game/community/download-store.mjs",
+      "sha256": "1f5e691e9924c329e4a1fdc83ad3af996ed8bdca71a75085d4f2652a2527befb"
+    },
+    {
+      "path": "game/community/index.html",
+      "sha256": "c2ce7a22b4ccc3622456415066ed389ffc22f85c0d09575f35fd9aeaf67526f3"
+    },
+    {
+      "path": "game/community/library.mjs",
+      "sha256": "c524493e860678814f60b41728c2532a987231c98ca3a4abf5aa4abc9008d188"
+    },
+    {
+      "path": "game/community/moderation-page.mjs",
+      "sha256": "1457d0d4d04abdec83de99f146664dbeaa5b77cfc071a91aa00cac0e77f29666"
+    },
+    {
+      "path": "game/community/moderation.html",
+      "sha256": "a4a106ad9ea7793323c504f5fd328e1713bf7dd1cdb4a727744a1277f276af59"
+    },
+    {
+      "path": "game/community/moderator.mjs",
+      "sha256": "a22d59d6ce8311bbd0f571aff39249b333f481be0d93b135f64fcf65b35e7123"
+    },
+    {
+      "path": "game/community/native-installed.mjs",
+      "sha256": "5387319d5b57bab41f335ed3c7aef3c77825551c74c3760eccd17ffd200225e1"
+    },
+    {
+      "path": "game/community/native-project-library.mjs",
+      "sha256": "c454eb37c5be2139f48b1d6d7a59f59b1910ec769838dbbab74d95109a335dc3"
+    },
+    {
+      "path": "game/community/package-family.mjs",
+      "sha256": "cb03192f2717a52e7e87ac2789fc2e41bdc663f84311ec1c6d8a8f33d9beaf25"
+    },
+    {
+      "path": "game/community/page.mjs",
+      "sha256": "60351bd024c3aa953541e41a2491b570a9964d0e6b6136b39165846bad62ea0f"
+    },
+    {
+      "path": "game/community/publisher.mjs",
+      "sha256": "ad5ebf044a121620cbd82a590942027883a0f8998c59bbe498de1fc117754ab2"
+    },
+    {
+      "path": "game/community/README.md",
+      "sha256": "579945fc575b3a7a76faa45af28332db77d60d20fb02f309ca5103767589a2b7"
+    },
+    {
+      "path": "game/community/redirect.mjs",
+      "sha256": "92a3a28310702d2104a70c1b401f2aae291058badc4aa180c68876f042299789"
+    },
+    {
+      "path": "game/community/state.mjs",
+      "sha256": "3a68bd986e0760d7a71a15cd41f60732090361ace4372b633f6522f17b3f1c62"
+    },
+    {
+      "path": "game/community/store.html",
+      "sha256": "9f12a79969b43d3befc235cd959ff4f824ef088ab782f55cbcc0810a2da62644"
+    },
+    {
+      "path": "game/community/tus-upload.mjs",
+      "sha256": "8b2e82c667bdb981a9a582bda9f6f02c19fd27b3a767ad689a23202c032e65ab"
+    },
+    {
+      "path": "game/i18n/bootstrap.mjs",
+      "sha256": "242e4791b2202d2644b91df5aa76355019890525af774ee2e795c937988b0395"
+    },
+    {
+      "path": "game/i18n/catalogs.mjs",
+      "sha256": "4b30c5c22604ee6a2a6fbac4d6531eaab14f8f65df5b79403e38f67340d3e761"
+    },
+    {
+      "path": "game/i18n/content-registry.mjs",
+      "sha256": "d483a3fceb7e1437c029451b13d58591a4086c2ee96ed7f394e9760e4bdd5aab"
+    },
+    {
+      "path": "game/i18n/content.mjs",
+      "sha256": "b0209ce9196aba97f7f2fdbeccaa458ca2d9d2de9411b663e8c3688b5df0577f"
+    },
+    {
+      "path": "game/i18n/index.mjs",
+      "sha256": "29f40a6d92826ced1eb53283ed32e342ac6e95920abbf8d549f2d78e65b48d07"
+    },
+    {
+      "path": "game/i18n/style.css",
+      "sha256": "2f833fa2af7da9995e9dee3924ea5fdc3ea2b6a14f7e8b19508a9dc9ca1e07e3"
+    },
+    {
+      "path": "game/locales/en/common.json",
+      "sha256": "6d7bf9f3c21ca773720b2fbc649f931aaa05b5c8266d1cbb578340431d869baf"
+    },
+    {
+      "path": "game/locales/en/content.json",
+      "sha256": "df2f21db6ba1ff499c8e046cfc14dd3ef91ac80beca2a05b8dada2f02b7cf36c"
+    },
+    {
+      "path": "game/locales/en/controllerEditor.json",
+      "sha256": "06f358748b851b2df2c792fd11e417abad740c8ace2620f494360e2dae01ceb1"
+    },
+    {
+      "path": "game/locales/en/demo.json",
+      "sha256": "370cb89196e648beca432f32157378e35693cc3f1777977b7b573169900d2679"
+    },
+    {
+      "path": "game/locales/en/errors.json",
+      "sha256": "c9ae30690d8379d685117b74b62517e580c980b3501c9b42d562037cdc0c04db"
+    },
+    {
+      "path": "game/locales/en/gameplay.json",
+      "sha256": "6eafee1047f19fb94b91c6a3c018247acc1dff6620cfd3349e01370c2d421d89"
+    },
+    {
+      "path": "game/locales/en/interface.json",
+      "sha256": "38fb47bc83bb6ee1c16d435ab5bbd51aa3c6aac0f475a2af1f16ee79d413548c"
+    },
+    {
+      "path": "game/locales/en/tools.json",
+      "sha256": "c2ec5896e4bf46dd9769eda1d7f0281020def32d19b8e3026824f52e7ef2887a"
+    },
+    {
+      "path": "game/locales/en/website.json",
+      "sha256": "cc58f40ebff9b9478fe437451829d529be24e568c7a0bc0d7612a0d37813ab49"
+    },
+    {
+      "path": "game/locales/uk/common.json",
+      "sha256": "f421990db77fe85f0f2e6466db6989772278d788d5b5924a9abbc0430f740915"
+    },
+    {
+      "path": "game/locales/uk/content.json",
+      "sha256": "3f0e6a98c8a2cb958d1e1b2cc63767cbd70205d6722d3ed0b56925932690c2c3"
+    },
+    {
+      "path": "game/locales/uk/controllerEditor.json",
+      "sha256": "72e4367f58da4e117969c2de9f82ac9ad7a4bcf18cf4c8e4ffa8022f861f72fa"
+    },
+    {
+      "path": "game/locales/uk/demo.json",
+      "sha256": "6a8005a6b74fe8cfd1e2aa2a1ccc10b7c4b621d2ab9a5c155fbf9c4a63c5b641"
+    },
+    {
+      "path": "game/locales/uk/errors.json",
+      "sha256": "e77e08aa64b2e472c87e2234be8a38783e4744a88a189b58930b26ae78b2c772"
+    },
+    {
+      "path": "game/locales/uk/gameplay.json",
+      "sha256": "e92a2eab9b8219a9d1de4dfb91ae7e48c592301fd02ef8a73efca26833280753"
+    },
+    {
+      "path": "game/locales/uk/interface.json",
+      "sha256": "d19b855cf24a0f9b891d9be3e404e4af34685ffcc74ed4f49dd281aa1355b1c8"
+    },
+    {
+      "path": "game/locales/uk/tools.json",
+      "sha256": "3b3f52a83a0b7026fd9d61fa9f0c679d263cc0d08f2eb63aaddb131e15566471"
+    },
+    {
+      "path": "game/locales/uk/website.json",
+      "sha256": "2a22c9f31d8365208c7e1f5616f6a560d0cd8839087e0de0e57f0611d6c98ef9"
+    },
+    {
+      "path": "game/overflight/app.mjs",
+      "sha256": "02dc6876d3116704c181f07f64fc1f5d129781665204064cafce07ccab587f40"
+    },
+    {
+      "path": "game/overflight/atlas.mjs",
+      "sha256": "b72b83e5da3364c2bf1d7a57aaa6f5fe9af3bf48d70b771076d443b94fa3aa91"
+    },
+    {
+      "path": "game/overflight/audio.mjs",
+      "sha256": "1da9dd93821b5786e178461bd4487fd89309c9ccab356086e744b540021dfe60"
+    },
+    {
+      "path": "game/overflight/benchmark.mjs",
+      "sha256": "2dae427c7d79c90a7bb2e1a1c569ef2e5c2490fc261d60b178cb1ef74d7b2bbb"
+    },
+    {
+      "path": "game/overflight/characters.mjs",
+      "sha256": "6ff7d134078195e3d8a71253a479c278da5ff5c026fb65c35d007716eae0bf53"
+    },
+    {
+      "path": "game/overflight/combat-profile.mjs",
+      "sha256": "7c6fa4401df0811ce2d4ba338ef509c0cff8cb212b35e39fab38a600bb2c6185"
+    },
+    {
+      "path": "game/overflight/commentator.mjs",
+      "sha256": "ee31d38b48baab1c2718c8f8af48fa952b3bc99abc8e0ad594458f02330e8035"
+    },
+    {
+      "path": "game/overflight/community.mjs",
+      "sha256": "f40bff9047fe98a8bf96f92b65af411383d4f88fa607849250c8be697d50a040"
+    },
+    {
+      "path": "game/overflight/controller.mjs",
+      "sha256": "1c40d72ea039e67c43400994f63a93cd2584a6f10568997ff091b0b763d00708"
+    },
+    {
+      "path": "game/overflight/copy.mjs",
+      "sha256": "35b9918ee329fc52ae0c6b49aa4a46170ac42fc4fdb10b7f681e3453230dbd0e"
+    },
+    {
+      "path": "game/overflight/core.mjs",
+      "sha256": "256ece10c86a0246912285f3aa94440f853f957a2ef35de99e747214a8843e95"
+    },
+    {
+      "path": "game/overflight/defeat-feed.mjs",
+      "sha256": "8c8415abfecff6728c95c751e9bd0f346dbe649f1e7c12387ebb2cd386d500c8"
+    },
+    {
+      "path": "game/overflight/flight-profile.mjs",
+      "sha256": "09bea1f13dba163bfd1cffdc339a1352c54af0c1a961c8f701cc1df0d9b96d33"
+    },
+    {
+      "path": "game/overflight/grid.mjs",
+      "sha256": "ef130a7f9594bff6af374fe252bb8aafdc7e86762bb8ef60107914654f21dd30"
+    },
+    {
+      "path": "game/overflight/host-loop.mjs",
+      "sha256": "96117f1ee25a0abd51ac3b2e1f5b6272ac222ba0aa14f55190c677a429e05363"
+    },
+    {
+      "path": "game/overflight/mission-library.mjs",
+      "sha256": "bdc53a4dec07a0a0f5bb83ba0942284538f727083c2d4763fdaa4ab54c6ada8c"
+    },
+    {
+      "path": "game/overflight/operation-view.mjs",
+      "sha256": "c6f3f89299ad8b47016fb526e082bddb65784e7c57c630d292ba95d164a45ce6"
+    },
+    {
+      "path": "game/overflight/play.html",
+      "sha256": "23d3d328c8916cbe6c4b908b8a3f6a7c80f02de4c370e94595735df1ed9bf505"
+    },
+    {
+      "path": "game/overflight/project-upgrade.mjs",
+      "sha256": "e2e035947954a1bd501aee1a935cb93d8f2e36dc25ffbece3b6d3ec9845cf397"
+    },
+    {
+      "path": "game/overflight/project.mjs",
+      "sha256": "178d7eb95b821083aed4b899da1a543d6bacc1847b3cf0296ef58c64f9d1bda1"
+    },
+    {
+      "path": "game/overflight/raid-community.mjs",
+      "sha256": "c03108195d5031cc3d7ed1b473b6091ca8bdb54ec0c9b4c3efdbf6815db7e7fc"
+    },
+    {
+      "path": "game/overflight/raid-copy.mjs",
+      "sha256": "cb33242e5b980d0d3184fe0e6016c29ef2b886d7839dca006ad85972744f518b"
+    },
+    {
+      "path": "game/overflight/raid-core.mjs",
+      "sha256": "921da747f3bb6745779143fb6476936d5b732da95e4da3191f9e152c102505bf"
+    },
+    {
+      "path": "game/overflight/raid-mode.mjs",
+      "sha256": "087d299d42f7c84bc8f882a856bb78e9a3673903802532d2c20070d1d3beddb6"
+    },
+    {
+      "path": "game/overflight/raid-project.mjs",
+      "sha256": "661e62c9a13f7bb5b5f1add32e46b766d27e37f754f919bcd7ac6f915691e1b1"
+    },
+    {
+      "path": "game/overflight/raid-records.mjs",
+      "sha256": "aad5ceee3ca6c0438b67703cb59bbc3f57906026d5f2de56ead1385619c9707a"
+    },
+    {
+      "path": "game/overflight/raid-render-cues.mjs",
+      "sha256": "dcc2c62a3ccd2dc7cdf35b3c741135336b6b96e4697a84ac06a92c3ef6ae2c14"
+    },
+    {
+      "path": "game/overflight/raid-review-pilot.mjs",
+      "sha256": "2c1254ccb6762fa19a5909ad64fde32f8c25ad5991bda026f0b66c71e4ec09b2"
+    },
+    {
+      "path": "game/overflight/raid-upgrade-card.mjs",
+      "sha256": "cdc5cf5fa1b0886db7917d02729962e94a2d32ca7b4bec74992871dfad81f2e6"
+    },
+    {
+      "path": "game/overflight/raid-upgrades.mjs",
+      "sha256": "fc26354fe1a829ba93d23694440f61e09d03f06bdd63bcad003abbadd9792b1d"
+    },
+    {
+      "path": "game/overflight/raid-variants.mjs",
+      "sha256": "6112c8dfe3e7f5ffd9b8c2a064136f970461fbbfcc03b76a51cd8eff0de29369"
+    },
+    {
+      "path": "game/overflight/raid.html",
+      "sha256": "89ea8c4bfd4e7c947951eb0bf8c5c9c966744bd77a20440c652fdf5707bd83bc"
+    },
+    {
+      "path": "game/overflight/reactions.mjs",
+      "sha256": "f400c252a6597b4497303517a8bf0d482be67f42b6a7d650f71fa0736c8172d9"
+    },
+    {
+      "path": "game/overflight/records.mjs",
+      "sha256": "591f61880b0f8b51f833924138e44628fa7161fe459d314e4fa9f13b9edacd30"
+    },
+    {
+      "path": "game/overflight/remains.mjs",
+      "sha256": "ac7d24fb6fd8351ebcb6e83141c7dbaf3ca8000689baaac7d93ec97d19bc282a"
+    },
+    {
+      "path": "game/overflight/renderer.mjs",
+      "sha256": "f026adcfcf2f53cad29ab5c15684517189b1f7b30d021ace2a8c256b46098507"
+    },
+    {
+      "path": "game/overflight/review-pilot.mjs",
+      "sha256": "02f6662b96f2385a0bb7f1a65941808037cf3c88753bc55dade0b5ef2c476349"
+    },
+    {
+      "path": "game/overflight/review-recorder.mjs",
+      "sha256": "b7f5727b366f57b939994e441efca5907176d46aabad8fe611627d3b39c6118a"
+    },
+    {
+      "path": "game/overflight/riy-community.mjs",
+      "sha256": "cc894e3a2705b43c8c6a23e0db7c6df9035d302932b75b26cce098fb4dcb735b"
+    },
+    {
+      "path": "game/overflight/riy-core.mjs",
+      "sha256": "6260a932b7e3d8a2c0c224c4c6489426412a5eac52482b8aed16e14513a10a5a"
+    },
+    {
+      "path": "game/overflight/riy-mode.mjs",
+      "sha256": "1a336f3836eb2f3a34fd72ecfd6dd6b8bf04261519d3a9bb2bb93cc2a23a90bd"
+    },
+    {
+      "path": "game/overflight/riy-project.mjs",
+      "sha256": "11a08442ab12c3235cacd6946116bfc239e7daa27b695bd1cb1021a17db959e8"
+    },
+    {
+      "path": "game/overflight/riy-upgrades.mjs",
+      "sha256": "807c1deed2aba6691b6f893a1a4ae26a5450d2ded91584af538b9f9e347a4dcd"
+    },
+    {
+      "path": "game/overflight/studio-links.mjs",
+      "sha256": "d52c8b4b588825f123480a7f16689584ef066d8b5163f20f56d307ffcd204f5b"
+    },
+    {
+      "path": "game/overflight/style.css",
+      "sha256": "dc987df41cefc1dea16af1eba83b0a80dc115d6d780a946b5a8bad2966dbdb4a"
+    },
+    {
+      "path": "game/overflight/tactical-view.mjs",
+      "sha256": "9482751acba16e375288d7a1da6195c9a86cfbe8a4303022d536393db94cf35c"
+    },
+    {
+      "path": "game/overflight/tactics.mjs",
+      "sha256": "b6c957ff0ca67d3282e64aca1f85a87c7d05321afa8f20a04d944c85450bb097"
+    },
+    {
+      "path": "game/overflight/touch.mjs",
+      "sha256": "0cec09564dde5c8bd5d69f367063b715dac8be56474561a0422d31f12146480c"
+    },
+    {
+      "path": "game/overflight/trial-report.mjs",
+      "sha256": "96b147f2eb125d23a973de62285164651dfcc98f33e0b89066858c1869cf173b"
+    },
+    {
+      "path": "game/overflight/upgrade-card.mjs",
+      "sha256": "4958e02da2a6a622a121b576320153a20d7a6703eff74c808d34f7ae2b690647"
+    },
+    {
+      "path": "game/overflight/upgrade-preview.mjs",
+      "sha256": "bb93d9c8068a551a86120c089cdb0a55ba692cc40935ec56267a9948f4227c90"
+    },
+    {
+      "path": "game/overflight/upgrades.mjs",
+      "sha256": "1236ffde41c7c79b6ddd0f49e42a5ede1279756549e9361a6f25263c178145ee"
+    },
+    {
+      "path": "game/studio/acceptance-inspector.mjs",
+      "sha256": "a519f389eb9fe04d1dae35bceb9890da9c6899c72d568539fe72561704e5dd76"
+    },
+    {
+      "path": "game/studio/action-focus.mjs",
+      "sha256": "d5ee9a39c4575e6b10bca9a6818a4336640c4118fe003a18413fc96f060c25b8"
+    },
+    {
+      "path": "game/studio/actor-copy.mjs",
+      "sha256": "2f6a4f43dbc788744b7c3898b3ccd3162fd6d28900279bf5ee4953e7d5a2ebcb"
+    },
+    {
+      "path": "game/studio/actor-editor.mjs",
+      "sha256": "340646b17af2ccb72e276ace9bfab3e97c85e82a0623aa70051edbee3d7ca5c0"
+    },
+    {
+      "path": "game/studio/asset-reward-editor.mjs",
+      "sha256": "4febe00c26a131cb7434c9b40cd15976fad399a3f24ebff5cc7a1ecb79293dd3"
+    },
+    {
+      "path": "game/studio/audio-group-editor.mjs",
+      "sha256": "aee39f20c01fb840885896b349208c90d527c4b32de2c3171ca3ba61ee1adb84"
+    },
+    {
+      "path": "game/studio/audio-reward-editor.mjs",
+      "sha256": "1948590dec2c9c771940ca6dca40fbf5017417fffb40a7b48f05101a50159823"
+    },
+    {
+      "path": "game/studio/board-state.mjs",
+      "sha256": "2cd20842f014f2e800adb5a234d91f04c3a1bcc1bfab00dee2d8d984e2bcfdd9"
+    },
+    {
+      "path": "game/studio/bonus-editor.mjs",
+      "sha256": "72cd18734e9db6d6941e19c284c296005f14679da0c49d2b17db4b29ff3f403c"
+    },
+    {
+      "path": "game/studio/campaign-feedback-editor.mjs",
+      "sha256": "da305ffb67bbda84e1cc7ad0efaa99f3b09f2893804a84505dc4d07d06f3c09a"
+    },
+    {
+      "path": "game/studio/candidate-library.mjs",
+      "sha256": "009f3c033956441ffdb3d971b8cb4abab5ab073fcacea3f5339b372237860f5c"
+    },
+    {
+      "path": "game/studio/combat-editor.mjs",
+      "sha256": "fb76fa1aa133301c1171545d29f70e6c133d43b93f3113dc4d9456deba53dfbe"
+    },
+    {
+      "path": "game/studio/cosmetic-reward-editor.mjs",
+      "sha256": "7f8b1864bf983f7d55bd9c67beab4b624c545ba543e7b7931f0f15047de35250"
+    },
+    {
+      "path": "game/studio/difficulty-view.mjs",
+      "sha256": "03cf4af9ed73f2eb75074523aec1b7b12d8d4d0fef8ac81d1a89ec3476703561"
+    },
+    {
+      "path": "game/studio/directional-editor.mjs",
+      "sha256": "465ed473a55a0d524408732c11c3e129611fe4d2898e462b8cbcb8c02428d8b2"
+    },
+    {
+      "path": "game/studio/discovery-editor.mjs",
+      "sha256": "def81ef6c56d712339846abb566ec8324fc1a56a8b7c770959cd69a8ebd223f7"
+    },
+    {
+      "path": "game/studio/edit-context.mjs",
+      "sha256": "649f8d75e69e80998deaf4fd10181f88db0d989329ff0713d7f214d5e7f173e6"
+    },
+    {
+      "path": "game/studio/editor-copy.mjs",
+      "sha256": "8608e4ba0af4c76a82945381d2fcc7fc6e6f886a619106441aa3366943dbe022"
+    },
+    {
+      "path": "game/studio/encounter-editor.mjs",
+      "sha256": "990c569c89603500075baeae7892086b79294a637f49d36127ee329d9b057e75"
+    },
+    {
+      "path": "game/studio/exploration-diagram-editor.mjs",
+      "sha256": "f4923205be9c8ab65325595a09d74a4c4857fe6ddf6af2daeea521a0bfaabfae"
+    },
+    {
+      "path": "game/studio/exploration-editor.mjs",
+      "sha256": "eede83d38633f8199748b4929784ae3ed7b9fc10937ad699c688c3786b359225"
+    },
+    {
+      "path": "game/studio/exploration-example.mjs",
+      "sha256": "fdaf9d0fdd964e940d365b31e040d2aaa5b16d5cebe03b7c51023dcdfb569f82"
+    },
+    {
+      "path": "game/studio/exploration-guided-editor.mjs",
+      "sha256": "11e25a7f7fdb28c36ab9c9aaf1f17238166dc875763026613ef238fa4db27d5e"
+    },
+    {
+      "path": "game/studio/exploration-image-preview.mjs",
+      "sha256": "781269d89c8a40d8547094b5378849f0806a92238b8cab165015e4ac93b579c7"
+    },
+    {
+      "path": "game/studio/form-focus.mjs",
+      "sha256": "f1a641ceeec630af9d4c0b4c4eecd746d627f3b432207a531b54513fa9c9a4c1"
+    },
+    {
+      "path": "game/studio/geometry-editor.mjs",
+      "sha256": "4012e7424583366a27a912b852f59676746d596b0e0b741f5c59cad3b3c86c79"
+    },
+    {
+      "path": "game/studio/guided-fields.mjs",
+      "sha256": "1da8950484bd5a8f9764423efc02f391d1a5a0b4f1dc0f62cf1ba40865dd8f48"
+    },
+    {
+      "path": "game/studio/hunt-editor.mjs",
+      "sha256": "fac994f12393bb611c52cf9f7bc3a15ac55d17c3c9add21255ddc1e3a72ac14f"
+    },
+    {
+      "path": "game/studio/image-workbench.mjs",
+      "sha256": "996214ba07cde10495f7596979645c46270dc7ca597b1527ac67be69a740ecc8"
+    },
+    {
+      "path": "game/studio/index.html",
+      "sha256": "b0176e83791847812e7f7ae013a4b82632dbcc35ebac7bed55ef69e090bc55eb"
+    },
+    {
+      "path": "game/studio/inspection-copy.mjs",
+      "sha256": "96af2db3ed824f63ce0c39e70a1db62685d1f740dbdf0b91ea3ef35a1082179f"
+    },
+    {
+      "path": "game/studio/learning-profile-editor.mjs",
+      "sha256": "3a19701352e416d5a26e132eb1dc4420915c37b1a572a4e6b8f85f3dc35fb7ea"
+    },
+    {
+      "path": "game/studio/mastery-reward-editor.mjs",
+      "sha256": "793481fa588694d3006298315f33c53bdd44fea16f9e744cb11ec0caf1c873ee"
+    },
+    {
+      "path": "game/studio/media-reward-editor.mjs",
+      "sha256": "958a5db085269143dee0ff401984d5e270712c411bfd419dcd41886c472d1019"
+    },
+    {
+      "path": "game/studio/objective-editor.mjs",
+      "sha256": "a5af4a298ef57b057b9d7c2665b504b2f48ac8be73d62c0c55e0ad3465ff1c45"
+    },
+    {
+      "path": "game/studio/overflight-combat-editor.mjs",
+      "sha256": "10d040576505e5794c62396cb1b94b734d461544763325a9a8b16a7606300b01"
+    },
+    {
+      "path": "game/studio/overflight-labels.mjs",
+      "sha256": "04fa0310424165f4ea02597f70ad84a2fbd90e4d0edc03e595b125de89b7f9fc"
+    },
+    {
+      "path": "game/studio/overflight.css",
+      "sha256": "0d84728c6cdb29878b7549ca66e9226de98b5f6da2dbbd2d8cc89299e7c0c32d"
+    },
+    {
+      "path": "game/studio/overflight.html",
+      "sha256": "dffbecf67b7166114b54a5d5425c02893a20596ad30678421d14a19a9cb77dba"
+    },
+    {
+      "path": "game/studio/overflight.mjs",
+      "sha256": "29662e4b8c58b773571a53d66e642285692232081b97d0a38daf48547dd187af"
+    },
+    {
+      "path": "game/studio/pacing-inspector.mjs",
+      "sha256": "20963f1490b5d8d6bfac657aa1d0690f032a644fd08e43e0e997209c3689a5ae"
+    },
+    {
+      "path": "game/studio/preview-copy.mjs",
+      "sha256": "bb87a09f497033b00acf16fce22aa46be6ac9a3ae5a4a215a6112dea8b7b4c8b"
+    },
+    {
+      "path": "game/studio/preview-readiness.mjs",
+      "sha256": "210a19ccea6be61da8d0e4a5a65c302c2fa8432113f495f2becbe3270b098d3e"
+    },
+    {
+      "path": "game/studio/pursuit-editor.mjs",
+      "sha256": "ad14e04739e085015c593bd9edb085045a5dd11543f7bad7e5d103c608c73a55"
+    },
+    {
+      "path": "game/studio/raid.css",
+      "sha256": "ba49af1ac7ef964c7cc42562aece9b1f39581afe374a695fa2ec78c326c7cc9c"
+    },
+    {
+      "path": "game/studio/raid.html",
+      "sha256": "b697240dafaf18774e08566170cf0a79c6ce7517f3a0be188afa6c881af6a817"
+    },
+    {
+      "path": "game/studio/raid.mjs",
+      "sha256": "40be2cde432346d2d7355b0d759c27e3f327366c4034ef1bc98ea049ede01ea2"
+    },
+    {
+      "path": "game/studio/reaction-voice-editor.mjs",
+      "sha256": "1a0e814b3380e51ae21e967ca6a6cddc88fa87a6a82957dc8f81f8a87642b2c9"
+    },
+    {
+      "path": "game/studio/real-world-reference.mjs",
+      "sha256": "59ddaa182a464a106b10a7ff0afeae605b2428437b5e725f05f3b2152832abc6"
+    },
+    {
+      "path": "game/studio/relay-editor.mjs",
+      "sha256": "055260e019d51bfb45e7a331bf28a67d6c487037d12fd24e6a09174a2fdbde97"
+    },
+    {
+      "path": "game/studio/resource-reward-editor.mjs",
+      "sha256": "11f724da73805a1eca5b73ef77c8860d393dc9f4a6e5c8b4fb6465069619214f"
+    },
+    {
+      "path": "game/studio/reward-asset-export.mjs",
+      "sha256": "d1b7757d61a605d9dce6ecbd1b116275eaab49a7e98fcef9bd5d05d1133b276f"
+    },
+    {
+      "path": "game/studio/reward-audio.mjs",
+      "sha256": "34ff636222e947304ad5ef9a5406dda6fd754e476076e6118cff0343f9a2b1e2"
+    },
+    {
+      "path": "game/studio/reward-cosmetic-preview.mjs",
+      "sha256": "7ed4e472674ca3f558353e12e9b5bfb5708b49054ed9e51888e1000925536d42"
+    },
+    {
+      "path": "game/studio/reward-media-preview.mjs",
+      "sha256": "d2fd22ec4d21fe5126db333b61cc113cffbd079b598fdf5933231e12730dc6fa"
+    },
+    {
+      "path": "game/studio/reward-print-preview.mjs",
+      "sha256": "c4039352e2b8e8f43b88739e8de11aa205bfc25c1dddced54f51f2017c09a90a"
+    },
+    {
+      "path": "game/studio/reward-teaser-preview.mjs",
+      "sha256": "1504fa2ad701de31ef7297172bcefc01f33aaf1160da97adb0a314d35b1f1158"
+    },
+    {
+      "path": "game/studio/reward-video-export.mjs",
+      "sha256": "def8b5b88e6f9aa3fd1611d3a3dd8b794bdf39add70a7bce4a1bf6ef40bf96b3"
+    },
+    {
+      "path": "game/studio/riy-editor.mjs",
+      "sha256": "0b335c74199583fff5e42b7d8d0356499f1c1ea0c77f2ccf5f135d15997b6585"
+    },
+    {
+      "path": "game/studio/snake-play-launch.mjs",
+      "sha256": "9070bcb8a068b644c62141e75181f5e24e2fdf56adc2ac937c4e1627c71ea9f8"
+    },
+    {
+      "path": "game/studio/snake-preview-panel.mjs",
+      "sha256": "3219215f1400c30afdc7a114954a26d53e5bccda5d83467e039329bd0756766b"
+    },
+    {
+      "path": "game/studio/snake-preview.mjs",
+      "sha256": "6ff6a19abea8350d8666cdf38b4b902162af0afa72afa9904a3962b54400c56e"
+    },
+    {
+      "path": "game/studio/snake-storage-lifecycle.mjs",
+      "sha256": "dd1a08e44b30170d313ba42900525c29675391b60a1ad66abf9f4b22858809fb"
+    },
+    {
+      "path": "game/studio/snake.css",
+      "sha256": "2a0343a8ddb08cfad8b96a815a36f27e28a3eb8279b9415ecd53d6f07273c08d"
+    },
+    {
+      "path": "game/studio/snake.html",
+      "sha256": "4bf2e8647fb1d740bb1fb45b1c702d5753c5936de1c3cf7152f3dceab892f35f"
+    },
+    {
+      "path": "game/studio/snake.mjs",
+      "sha256": "add123840318faa07ab9465efa1bcaddd00be03aaa000d098d82e2d07c269434"
+    },
+    {
+      "path": "game/studio/source-discard.mjs",
+      "sha256": "2f6eecfe13a62f0f73d70635bd9de3bc230a232239503e86044f0214ae3dbf71"
+    },
+    {
+      "path": "game/studio/spatial-editions.mjs",
+      "sha256": "b94c112d3db3a24d081f6c2b584c1ccc1901bcc114217f3ba6b395570e3747f8"
+    },
+    {
+      "path": "game/studio/structure-copy.mjs",
+      "sha256": "42948f16943459730f4e517d9b82ff1ba852d567d559b62691f251c63e1c3349"
+    },
+    {
+      "path": "game/studio/studio.css",
+      "sha256": "942797b87b8c3c272cbf44dfea1164dab55be7eb3b47763580bb69cecdef274c"
+    },
+    {
+      "path": "game/studio/studio.mjs",
+      "sha256": "deef7efe9b2f224ddc80ae288e1cf53dc509b77878cd533f41287475c4982ac9"
+    },
+    {
+      "path": "game/studio/teaser-reward-editor.mjs",
+      "sha256": "eb38b7e3970b86c15245c374aa1ffff15e61a3552725fd06f5ce9a4b0256587f"
+    },
+    {
+      "path": "game/studio/timed-bonus-editor.mjs",
+      "sha256": "a502177978c62845ab58086a1dff1dbb1366ab06ea8aa0570d8fbea99bbf3cd9"
+    },
+    {
+      "path": "game/studio/trace-recovery.mjs",
+      "sha256": "b78fd4193e2bd650a5d7b8205b30a5606f809b7db55fb998bc9172d3b417220f"
+    },
+    {
+      "path": "game/studio/video-reward-editor.mjs",
+      "sha256": "b8732d4994039f3b912cdd58701b5486bdc56e7235d243d1089d6bae72009f8e"
+    }
+  ],
+  "after": [
+    {
+      "path": "game/community/account.mjs",
+      "sha256": "cdb0429e7f9f688a697b9a4660e11a54535cce5ad0387cabc1537dc6efa86fc3"
+    },
+    {
+      "path": "game/community/classic-installed.mjs",
+      "sha256": "9b8c72764a10b0379baaadd351b9a8bb3e5bfe7980509bda09cc87bfc5561a98"
+    },
+    {
+      "path": "game/community/client.mjs",
+      "sha256": "90213bfc09487a1839940bee364b58e8e15b101f497aa5a9bb43f0dfbf603307"
+    },
+    {
+      "path": "game/community/community.css",
+      "sha256": "39e391aaa17fa95450412c95ba1a1070c8844ab25ade27acba41314344e1de32"
+    },
+    {
+      "path": "game/community/directory.css",
+      "sha256": "d12d90f8a6ebbe0c30db571d6a048e36f86c88988742d964ab8dbd76ddcac31d"
+    },
+    {
+      "path": "game/community/download-store.mjs",
+      "sha256": "1f5e691e9924c329e4a1fdc83ad3af996ed8bdca71a75085d4f2652a2527befb"
+    },
+    {
+      "path": "game/community/index.html",
+      "sha256": "c2ce7a22b4ccc3622456415066ed389ffc22f85c0d09575f35fd9aeaf67526f3"
+    },
+    {
+      "path": "game/community/library.mjs",
+      "sha256": "c524493e860678814f60b41728c2532a987231c98ca3a4abf5aa4abc9008d188"
+    },
+    {
+      "path": "game/community/moderation-page.mjs",
+      "sha256": "1457d0d4d04abdec83de99f146664dbeaa5b77cfc071a91aa00cac0e77f29666"
+    },
+    {
+      "path": "game/community/moderation.html",
+      "sha256": "a4a106ad9ea7793323c504f5fd328e1713bf7dd1cdb4a727744a1277f276af59"
+    },
+    {
+      "path": "game/community/moderator.mjs",
+      "sha256": "a22d59d6ce8311bbd0f571aff39249b333f481be0d93b135f64fcf65b35e7123"
+    },
+    {
+      "path": "game/community/native-installed.mjs",
+      "sha256": "5387319d5b57bab41f335ed3c7aef3c77825551c74c3760eccd17ffd200225e1"
+    },
+    {
+      "path": "game/community/native-project-library.mjs",
+      "sha256": "c454eb37c5be2139f48b1d6d7a59f59b1910ec769838dbbab74d95109a335dc3"
+    },
+    {
+      "path": "game/community/package-family.mjs",
+      "sha256": "cb03192f2717a52e7e87ac2789fc2e41bdc663f84311ec1c6d8a8f33d9beaf25"
+    },
+    {
+      "path": "game/community/page.mjs",
+      "sha256": "60351bd024c3aa953541e41a2491b570a9964d0e6b6136b39165846bad62ea0f"
+    },
+    {
+      "path": "game/community/publisher.mjs",
+      "sha256": "ad5ebf044a121620cbd82a590942027883a0f8998c59bbe498de1fc117754ab2"
+    },
+    {
+      "path": "game/community/README.md",
+      "sha256": "579945fc575b3a7a76faa45af28332db77d60d20fb02f309ca5103767589a2b7"
+    },
+    {
+      "path": "game/community/redirect.mjs",
+      "sha256": "92a3a28310702d2104a70c1b401f2aae291058badc4aa180c68876f042299789"
+    },
+    {
+      "path": "game/community/state.mjs",
+      "sha256": "3a68bd986e0760d7a71a15cd41f60732090361ace4372b633f6522f17b3f1c62"
+    },
+    {
+      "path": "game/community/store.html",
+      "sha256": "9f12a79969b43d3befc235cd959ff4f824ef088ab782f55cbcc0810a2da62644"
+    },
+    {
+      "path": "game/community/tus-upload.mjs",
+      "sha256": "8b2e82c667bdb981a9a582bda9f6f02c19fd27b3a767ad689a23202c032e65ab"
+    },
+    {
+      "path": "game/i18n/bootstrap.mjs",
+      "sha256": "242e4791b2202d2644b91df5aa76355019890525af774ee2e795c937988b0395"
+    },
+    {
+      "path": "game/i18n/catalogs.mjs",
+      "sha256": "4b30c5c22604ee6a2a6fbac4d6531eaab14f8f65df5b79403e38f67340d3e761"
+    },
+    {
+      "path": "game/i18n/content-registry.mjs",
+      "sha256": "d483a3fceb7e1437c029451b13d58591a4086c2ee96ed7f394e9760e4bdd5aab"
+    },
+    {
+      "path": "game/i18n/content.mjs",
+      "sha256": "b0209ce9196aba97f7f2fdbeccaa458ca2d9d2de9411b663e8c3688b5df0577f"
+    },
+    {
+      "path": "game/i18n/index.mjs",
+      "sha256": "29f40a6d92826ced1eb53283ed32e342ac6e95920abbf8d549f2d78e65b48d07"
+    },
+    {
+      "path": "game/i18n/style.css",
+      "sha256": "2f833fa2af7da9995e9dee3924ea5fdc3ea2b6a14f7e8b19508a9dc9ca1e07e3"
+    },
+    {
+      "path": "game/locales/en/common.json",
+      "sha256": "6d7bf9f3c21ca773720b2fbc649f931aaa05b5c8266d1cbb578340431d869baf"
+    },
+    {
+      "path": "game/locales/en/content.json",
+      "sha256": "df2f21db6ba1ff499c8e046cfc14dd3ef91ac80beca2a05b8dada2f02b7cf36c"
+    },
+    {
+      "path": "game/locales/en/controllerEditor.json",
+      "sha256": "06f358748b851b2df2c792fd11e417abad740c8ace2620f494360e2dae01ceb1"
+    },
+    {
+      "path": "game/locales/en/demo.json",
+      "sha256": "370cb89196e648beca432f32157378e35693cc3f1777977b7b573169900d2679"
+    },
+    {
+      "path": "game/locales/en/errors.json",
+      "sha256": "c9ae30690d8379d685117b74b62517e580c980b3501c9b42d562037cdc0c04db"
+    },
+    {
+      "path": "game/locales/en/gameplay.json",
+      "sha256": "6eafee1047f19fb94b91c6a3c018247acc1dff6620cfd3349e01370c2d421d89"
+    },
+    {
+      "path": "game/locales/en/interface.json",
+      "sha256": "38fb47bc83bb6ee1c16d435ab5bbd51aa3c6aac0f475a2af1f16ee79d413548c"
+    },
+    {
+      "path": "game/locales/en/tools.json",
+      "sha256": "c2ec5896e4bf46dd9769eda1d7f0281020def32d19b8e3026824f52e7ef2887a"
+    },
+    {
+      "path": "game/locales/en/website.json",
+      "sha256": "cc58f40ebff9b9478fe437451829d529be24e568c7a0bc0d7612a0d37813ab49"
+    },
+    {
+      "path": "game/locales/uk/common.json",
+      "sha256": "f421990db77fe85f0f2e6466db6989772278d788d5b5924a9abbc0430f740915"
+    },
+    {
+      "path": "game/locales/uk/content.json",
+      "sha256": "3f0e6a98c8a2cb958d1e1b2cc63767cbd70205d6722d3ed0b56925932690c2c3"
+    },
+    {
+      "path": "game/locales/uk/controllerEditor.json",
+      "sha256": "72e4367f58da4e117969c2de9f82ac9ad7a4bcf18cf4c8e4ffa8022f861f72fa"
+    },
+    {
+      "path": "game/locales/uk/demo.json",
+      "sha256": "6a8005a6b74fe8cfd1e2aa2a1ccc10b7c4b621d2ab9a5c155fbf9c4a63c5b641"
+    },
+    {
+      "path": "game/locales/uk/errors.json",
+      "sha256": "e77e08aa64b2e472c87e2234be8a38783e4744a88a189b58930b26ae78b2c772"
+    },
+    {
+      "path": "game/locales/uk/gameplay.json",
+      "sha256": "e92a2eab9b8219a9d1de4dfb91ae7e48c592301fd02ef8a73efca26833280753"
+    },
+    {
+      "path": "game/locales/uk/interface.json",
+      "sha256": "d19b855cf24a0f9b891d9be3e404e4af34685ffcc74ed4f49dd281aa1355b1c8"
+    },
+    {
+      "path": "game/locales/uk/tools.json",
+      "sha256": "3b3f52a83a0b7026fd9d61fa9f0c679d263cc0d08f2eb63aaddb131e15566471"
+    },
+    {
+      "path": "game/locales/uk/website.json",
+      "sha256": "2a22c9f31d8365208c7e1f5616f6a560d0cd8839087e0de0e57f0611d6c98ef9"
+    },
+    {
+      "path": "game/overflight/app.mjs",
+      "sha256": "02dc6876d3116704c181f07f64fc1f5d129781665204064cafce07ccab587f40"
+    },
+    {
+      "path": "game/overflight/atlas.mjs",
+      "sha256": "b72b83e5da3364c2bf1d7a57aaa6f5fe9af3bf48d70b771076d443b94fa3aa91"
+    },
+    {
+      "path": "game/overflight/audio.mjs",
+      "sha256": "1da9dd93821b5786e178461bd4487fd89309c9ccab356086e744b540021dfe60"
+    },
+    {
+      "path": "game/overflight/benchmark.mjs",
+      "sha256": "2dae427c7d79c90a7bb2e1a1c569ef2e5c2490fc261d60b178cb1ef74d7b2bbb"
+    },
+    {
+      "path": "game/overflight/characters.mjs",
+      "sha256": "6ff7d134078195e3d8a71253a479c278da5ff5c026fb65c35d007716eae0bf53"
+    },
+    {
+      "path": "game/overflight/combat-profile.mjs",
+      "sha256": "7c6fa4401df0811ce2d4ba338ef509c0cff8cb212b35e39fab38a600bb2c6185"
+    },
+    {
+      "path": "game/overflight/commentator.mjs",
+      "sha256": "ee31d38b48baab1c2718c8f8af48fa952b3bc99abc8e0ad594458f02330e8035"
+    },
+    {
+      "path": "game/overflight/community.mjs",
+      "sha256": "f40bff9047fe98a8bf96f92b65af411383d4f88fa607849250c8be697d50a040"
+    },
+    {
+      "path": "game/overflight/controller.mjs",
+      "sha256": "1c40d72ea039e67c43400994f63a93cd2584a6f10568997ff091b0b763d00708"
+    },
+    {
+      "path": "game/overflight/copy.mjs",
+      "sha256": "35b9918ee329fc52ae0c6b49aa4a46170ac42fc4fdb10b7f681e3453230dbd0e"
+    },
+    {
+      "path": "game/overflight/core.mjs",
+      "sha256": "256ece10c86a0246912285f3aa94440f853f957a2ef35de99e747214a8843e95"
+    },
+    {
+      "path": "game/overflight/defeat-feed.mjs",
+      "sha256": "8c8415abfecff6728c95c751e9bd0f346dbe649f1e7c12387ebb2cd386d500c8"
+    },
+    {
+      "path": "game/overflight/flight-profile.mjs",
+      "sha256": "09bea1f13dba163bfd1cffdc339a1352c54af0c1a961c8f701cc1df0d9b96d33"
+    },
+    {
+      "path": "game/overflight/grid.mjs",
+      "sha256": "ef130a7f9594bff6af374fe252bb8aafdc7e86762bb8ef60107914654f21dd30"
+    },
+    {
+      "path": "game/overflight/host-loop.mjs",
+      "sha256": "96117f1ee25a0abd51ac3b2e1f5b6272ac222ba0aa14f55190c677a429e05363"
+    },
+    {
+      "path": "game/overflight/mission-library.mjs",
+      "sha256": "bdc53a4dec07a0a0f5bb83ba0942284538f727083c2d4763fdaa4ab54c6ada8c"
+    },
+    {
+      "path": "game/overflight/operation-view.mjs",
+      "sha256": "c6f3f89299ad8b47016fb526e082bddb65784e7c57c630d292ba95d164a45ce6"
+    },
+    {
+      "path": "game/overflight/play.html",
+      "sha256": "23d3d328c8916cbe6c4b908b8a3f6a7c80f02de4c370e94595735df1ed9bf505"
+    },
+    {
+      "path": "game/overflight/project-upgrade.mjs",
+      "sha256": "e2e035947954a1bd501aee1a935cb93d8f2e36dc25ffbece3b6d3ec9845cf397"
+    },
+    {
+      "path": "game/overflight/project.mjs",
+      "sha256": "178d7eb95b821083aed4b899da1a543d6bacc1847b3cf0296ef58c64f9d1bda1"
+    },
+    {
+      "path": "game/overflight/raid-community.mjs",
+      "sha256": "c03108195d5031cc3d7ed1b473b6091ca8bdb54ec0c9b4c3efdbf6815db7e7fc"
+    },
+    {
+      "path": "game/overflight/raid-copy.mjs",
+      "sha256": "cb33242e5b980d0d3184fe0e6016c29ef2b886d7839dca006ad85972744f518b"
+    },
+    {
+      "path": "game/overflight/raid-core.mjs",
+      "sha256": "921da747f3bb6745779143fb6476936d5b732da95e4da3191f9e152c102505bf"
+    },
+    {
+      "path": "game/overflight/raid-mode.mjs",
+      "sha256": "087d299d42f7c84bc8f882a856bb78e9a3673903802532d2c20070d1d3beddb6"
+    },
+    {
+      "path": "game/overflight/raid-project.mjs",
+      "sha256": "661e62c9a13f7bb5b5f1add32e46b766d27e37f754f919bcd7ac6f915691e1b1"
+    },
+    {
+      "path": "game/overflight/raid-records.mjs",
+      "sha256": "aad5ceee3ca6c0438b67703cb59bbc3f57906026d5f2de56ead1385619c9707a"
+    },
+    {
+      "path": "game/overflight/raid-render-cues.mjs",
+      "sha256": "dcc2c62a3ccd2dc7cdf35b3c741135336b6b96e4697a84ac06a92c3ef6ae2c14"
+    },
+    {
+      "path": "game/overflight/raid-review-pilot.mjs",
+      "sha256": "2c1254ccb6762fa19a5909ad64fde32f8c25ad5991bda026f0b66c71e4ec09b2"
+    },
+    {
+      "path": "game/overflight/raid-upgrade-card.mjs",
+      "sha256": "cdc5cf5fa1b0886db7917d02729962e94a2d32ca7b4bec74992871dfad81f2e6"
+    },
+    {
+      "path": "game/overflight/raid-upgrades.mjs",
+      "sha256": "fc26354fe1a829ba93d23694440f61e09d03f06bdd63bcad003abbadd9792b1d"
+    },
+    {
+      "path": "game/overflight/raid-variants.mjs",
+      "sha256": "6112c8dfe3e7f5ffd9b8c2a064136f970461fbbfcc03b76a51cd8eff0de29369"
+    },
+    {
+      "path": "game/overflight/raid.html",
+      "sha256": "89ea8c4bfd4e7c947951eb0bf8c5c9c966744bd77a20440c652fdf5707bd83bc"
+    },
+    {
+      "path": "game/overflight/reactions.mjs",
+      "sha256": "f400c252a6597b4497303517a8bf0d482be67f42b6a7d650f71fa0736c8172d9"
+    },
+    {
+      "path": "game/overflight/records.mjs",
+      "sha256": "591f61880b0f8b51f833924138e44628fa7161fe459d314e4fa9f13b9edacd30"
+    },
+    {
+      "path": "game/overflight/remains.mjs",
+      "sha256": "ac7d24fb6fd8351ebcb6e83141c7dbaf3ca8000689baaac7d93ec97d19bc282a"
+    },
+    {
+      "path": "game/overflight/renderer.mjs",
+      "sha256": "f026adcfcf2f53cad29ab5c15684517189b1f7b30d021ace2a8c256b46098507"
+    },
+    {
+      "path": "game/overflight/review-pilot.mjs",
+      "sha256": "02f6662b96f2385a0bb7f1a65941808037cf3c88753bc55dade0b5ef2c476349"
+    },
+    {
+      "path": "game/overflight/review-recorder.mjs",
+      "sha256": "b7f5727b366f57b939994e441efca5907176d46aabad8fe611627d3b39c6118a"
+    },
+    {
+      "path": "game/overflight/riy-community.mjs",
+      "sha256": "cc894e3a2705b43c8c6a23e0db7c6df9035d302932b75b26cce098fb4dcb735b"
+    },
+    {
+      "path": "game/overflight/riy-core.mjs",
+      "sha256": "6260a932b7e3d8a2c0c224c4c6489426412a5eac52482b8aed16e14513a10a5a"
+    },
+    {
+      "path": "game/overflight/riy-mode.mjs",
+      "sha256": "1a336f3836eb2f3a34fd72ecfd6dd6b8bf04261519d3a9bb2bb93cc2a23a90bd"
+    },
+    {
+      "path": "game/overflight/riy-project.mjs",
+      "sha256": "11a08442ab12c3235cacd6946116bfc239e7daa27b695bd1cb1021a17db959e8"
+    },
+    {
+      "path": "game/overflight/riy-upgrades.mjs",
+      "sha256": "807c1deed2aba6691b6f893a1a4ae26a5450d2ded91584af538b9f9e347a4dcd"
+    },
+    {
+      "path": "game/overflight/studio-links.mjs",
+      "sha256": "d52c8b4b588825f123480a7f16689584ef066d8b5163f20f56d307ffcd204f5b"
+    },
+    {
+      "path": "game/overflight/style.css",
+      "sha256": "dc987df41cefc1dea16af1eba83b0a80dc115d6d780a946b5a8bad2966dbdb4a"
+    },
+    {
+      "path": "game/overflight/tactical-view.mjs",
+      "sha256": "9482751acba16e375288d7a1da6195c9a86cfbe8a4303022d536393db94cf35c"
+    },
+    {
+      "path": "game/overflight/tactics.mjs",
+      "sha256": "b6c957ff0ca67d3282e64aca1f85a87c7d05321afa8f20a04d944c85450bb097"
+    },
+    {
+      "path": "game/overflight/touch.mjs",
+      "sha256": "0cec09564dde5c8bd5d69f367063b715dac8be56474561a0422d31f12146480c"
+    },
+    {
+      "path": "game/overflight/trial-report.mjs",
+      "sha256": "96b147f2eb125d23a973de62285164651dfcc98f33e0b89066858c1869cf173b"
+    },
+    {
+      "path": "game/overflight/upgrade-card.mjs",
+      "sha256": "4958e02da2a6a622a121b576320153a20d7a6703eff74c808d34f7ae2b690647"
+    },
+    {
+      "path": "game/overflight/upgrade-preview.mjs",
+      "sha256": "bb93d9c8068a551a86120c089cdb0a55ba692cc40935ec56267a9948f4227c90"
+    },
+    {
+      "path": "game/overflight/upgrades.mjs",
+      "sha256": "1236ffde41c7c79b6ddd0f49e42a5ede1279756549e9361a6f25263c178145ee"
+    },
+    {
+      "path": "game/studio/acceptance-inspector.mjs",
+      "sha256": "a519f389eb9fe04d1dae35bceb9890da9c6899c72d568539fe72561704e5dd76"
+    },
+    {
+      "path": "game/studio/action-focus.mjs",
+      "sha256": "d5ee9a39c4575e6b10bca9a6818a4336640c4118fe003a18413fc96f060c25b8"
+    },
+    {
+      "path": "game/studio/actor-copy.mjs",
+      "sha256": "2f6a4f43dbc788744b7c3898b3ccd3162fd6d28900279bf5ee4953e7d5a2ebcb"
+    },
+    {
+      "path": "game/studio/actor-editor.mjs",
+      "sha256": "340646b17af2ccb72e276ace9bfab3e97c85e82a0623aa70051edbee3d7ca5c0"
+    },
+    {
+      "path": "game/studio/asset-reward-editor.mjs",
+      "sha256": "4febe00c26a131cb7434c9b40cd15976fad399a3f24ebff5cc7a1ecb79293dd3"
+    },
+    {
+      "path": "game/studio/audio-group-editor.mjs",
+      "sha256": "aee39f20c01fb840885896b349208c90d527c4b32de2c3171ca3ba61ee1adb84"
+    },
+    {
+      "path": "game/studio/audio-reward-editor.mjs",
+      "sha256": "1948590dec2c9c771940ca6dca40fbf5017417fffb40a7b48f05101a50159823"
+    },
+    {
+      "path": "game/studio/board-state.mjs",
+      "sha256": "2cd20842f014f2e800adb5a234d91f04c3a1bcc1bfab00dee2d8d984e2bcfdd9"
+    },
+    {
+      "path": "game/studio/bonus-editor.mjs",
+      "sha256": "72cd18734e9db6d6941e19c284c296005f14679da0c49d2b17db4b29ff3f403c"
+    },
+    {
+      "path": "game/studio/campaign-feedback-editor.mjs",
+      "sha256": "da305ffb67bbda84e1cc7ad0efaa99f3b09f2893804a84505dc4d07d06f3c09a"
+    },
+    {
+      "path": "game/studio/candidate-library.mjs",
+      "sha256": "009f3c033956441ffdb3d971b8cb4abab5ab073fcacea3f5339b372237860f5c"
+    },
+    {
+      "path": "game/studio/combat-editor.mjs",
+      "sha256": "fb76fa1aa133301c1171545d29f70e6c133d43b93f3113dc4d9456deba53dfbe"
+    },
+    {
+      "path": "game/studio/cosmetic-reward-editor.mjs",
+      "sha256": "7f8b1864bf983f7d55bd9c67beab4b624c545ba543e7b7931f0f15047de35250"
+    },
+    {
+      "path": "game/studio/difficulty-view.mjs",
+      "sha256": "03cf4af9ed73f2eb75074523aec1b7b12d8d4d0fef8ac81d1a89ec3476703561"
+    },
+    {
+      "path": "game/studio/directional-editor.mjs",
+      "sha256": "465ed473a55a0d524408732c11c3e129611fe4d2898e462b8cbcb8c02428d8b2"
+    },
+    {
+      "path": "game/studio/discovery-editor.mjs",
+      "sha256": "def81ef6c56d712339846abb566ec8324fc1a56a8b7c770959cd69a8ebd223f7"
+    },
+    {
+      "path": "game/studio/edit-context.mjs",
+      "sha256": "649f8d75e69e80998deaf4fd10181f88db0d989329ff0713d7f214d5e7f173e6"
+    },
+    {
+      "path": "game/studio/editor-copy.mjs",
+      "sha256": "8608e4ba0af4c76a82945381d2fcc7fc6e6f886a619106441aa3366943dbe022"
+    },
+    {
+      "path": "game/studio/encounter-editor.mjs",
+      "sha256": "990c569c89603500075baeae7892086b79294a637f49d36127ee329d9b057e75"
+    },
+    {
+      "path": "game/studio/exploration-diagram-editor.mjs",
+      "sha256": "f4923205be9c8ab65325595a09d74a4c4857fe6ddf6af2daeea521a0bfaabfae"
+    },
+    {
+      "path": "game/studio/exploration-editor.mjs",
+      "sha256": "eede83d38633f8199748b4929784ae3ed7b9fc10937ad699c688c3786b359225"
+    },
+    {
+      "path": "game/studio/exploration-example.mjs",
+      "sha256": "fdaf9d0fdd964e940d365b31e040d2aaa5b16d5cebe03b7c51023dcdfb569f82"
+    },
+    {
+      "path": "game/studio/exploration-guided-editor.mjs",
+      "sha256": "11e25a7f7fdb28c36ab9c9aaf1f17238166dc875763026613ef238fa4db27d5e"
+    },
+    {
+      "path": "game/studio/exploration-image-preview.mjs",
+      "sha256": "781269d89c8a40d8547094b5378849f0806a92238b8cab165015e4ac93b579c7"
+    },
+    {
+      "path": "game/studio/form-focus.mjs",
+      "sha256": "f1a641ceeec630af9d4c0b4c4eecd746d627f3b432207a531b54513fa9c9a4c1"
+    },
+    {
+      "path": "game/studio/geometry-editor.mjs",
+      "sha256": "4012e7424583366a27a912b852f59676746d596b0e0b741f5c59cad3b3c86c79"
+    },
+    {
+      "path": "game/studio/guided-fields.mjs",
+      "sha256": "1da8950484bd5a8f9764423efc02f391d1a5a0b4f1dc0f62cf1ba40865dd8f48"
+    },
+    {
+      "path": "game/studio/hunt-editor.mjs",
+      "sha256": "fac994f12393bb611c52cf9f7bc3a15ac55d17c3c9add21255ddc1e3a72ac14f"
+    },
+    {
+      "path": "game/studio/image-workbench.mjs",
+      "sha256": "996214ba07cde10495f7596979645c46270dc7ca597b1527ac67be69a740ecc8"
+    },
+    {
+      "path": "game/studio/index.html",
+      "sha256": "b0176e83791847812e7f7ae013a4b82632dbcc35ebac7bed55ef69e090bc55eb"
+    },
+    {
+      "path": "game/studio/inspection-copy.mjs",
+      "sha256": "96af2db3ed824f63ce0c39e70a1db62685d1f740dbdf0b91ea3ef35a1082179f"
+    },
+    {
+      "path": "game/studio/learning-profile-editor.mjs",
+      "sha256": "3a19701352e416d5a26e132eb1dc4420915c37b1a572a4e6b8f85f3dc35fb7ea"
+    },
+    {
+      "path": "game/studio/mastery-reward-editor.mjs",
+      "sha256": "793481fa588694d3006298315f33c53bdd44fea16f9e744cb11ec0caf1c873ee"
+    },
+    {
+      "path": "game/studio/media-reward-editor.mjs",
+      "sha256": "958a5db085269143dee0ff401984d5e270712c411bfd419dcd41886c472d1019"
+    },
+    {
+      "path": "game/studio/objective-editor.mjs",
+      "sha256": "a5af4a298ef57b057b9d7c2665b504b2f48ac8be73d62c0c55e0ad3465ff1c45"
+    },
+    {
+      "path": "game/studio/overflight-combat-editor.mjs",
+      "sha256": "10d040576505e5794c62396cb1b94b734d461544763325a9a8b16a7606300b01"
+    },
+    {
+      "path": "game/studio/overflight-labels.mjs",
+      "sha256": "04fa0310424165f4ea02597f70ad84a2fbd90e4d0edc03e595b125de89b7f9fc"
+    },
+    {
+      "path": "game/studio/overflight.css",
+      "sha256": "0d84728c6cdb29878b7549ca66e9226de98b5f6da2dbbd2d8cc89299e7c0c32d"
+    },
+    {
+      "path": "game/studio/overflight.html",
+      "sha256": "dffbecf67b7166114b54a5d5425c02893a20596ad30678421d14a19a9cb77dba"
+    },
+    {
+      "path": "game/studio/overflight.mjs",
+      "sha256": "29662e4b8c58b773571a53d66e642285692232081b97d0a38daf48547dd187af"
+    },
+    {
+      "path": "game/studio/pacing-inspector.mjs",
+      "sha256": "20963f1490b5d8d6bfac657aa1d0690f032a644fd08e43e0e997209c3689a5ae"
+    },
+    {
+      "path": "game/studio/preview-copy.mjs",
+      "sha256": "bb87a09f497033b00acf16fce22aa46be6ac9a3ae5a4a215a6112dea8b7b4c8b"
+    },
+    {
+      "path": "game/studio/preview-readiness.mjs",
+      "sha256": "210a19ccea6be61da8d0e4a5a65c302c2fa8432113f495f2becbe3270b098d3e"
+    },
+    {
+      "path": "game/studio/pursuit-editor.mjs",
+      "sha256": "ad14e04739e085015c593bd9edb085045a5dd11543f7bad7e5d103c608c73a55"
+    },
+    {
+      "path": "game/studio/raid.css",
+      "sha256": "ba49af1ac7ef964c7cc42562aece9b1f39581afe374a695fa2ec78c326c7cc9c"
+    },
+    {
+      "path": "game/studio/raid.html",
+      "sha256": "b697240dafaf18774e08566170cf0a79c6ce7517f3a0be188afa6c881af6a817"
+    },
+    {
+      "path": "game/studio/raid.mjs",
+      "sha256": "40be2cde432346d2d7355b0d759c27e3f327366c4034ef1bc98ea049ede01ea2"
+    },
+    {
+      "path": "game/studio/reaction-voice-editor.mjs",
+      "sha256": "1a0e814b3380e51ae21e967ca6a6cddc88fa87a6a82957dc8f81f8a87642b2c9"
+    },
+    {
+      "path": "game/studio/real-world-reference.mjs",
+      "sha256": "59ddaa182a464a106b10a7ff0afeae605b2428437b5e725f05f3b2152832abc6"
+    },
+    {
+      "path": "game/studio/relay-editor.mjs",
+      "sha256": "055260e019d51bfb45e7a331bf28a67d6c487037d12fd24e6a09174a2fdbde97"
+    },
+    {
+      "path": "game/studio/resource-reward-editor.mjs",
+      "sha256": "11f724da73805a1eca5b73ef77c8860d393dc9f4a6e5c8b4fb6465069619214f"
+    },
+    {
+      "path": "game/studio/reward-asset-export.mjs",
+      "sha256": "d1b7757d61a605d9dce6ecbd1b116275eaab49a7e98fcef9bd5d05d1133b276f"
+    },
+    {
+      "path": "game/studio/reward-audio.mjs",
+      "sha256": "34ff636222e947304ad5ef9a5406dda6fd754e476076e6118cff0343f9a2b1e2"
+    },
+    {
+      "path": "game/studio/reward-cosmetic-preview.mjs",
+      "sha256": "7ed4e472674ca3f558353e12e9b5bfb5708b49054ed9e51888e1000925536d42"
+    },
+    {
+      "path": "game/studio/reward-media-preview.mjs",
+      "sha256": "d2fd22ec4d21fe5126db333b61cc113cffbd079b598fdf5933231e12730dc6fa"
+    },
+    {
+      "path": "game/studio/reward-print-preview.mjs",
+      "sha256": "c4039352e2b8e8f43b88739e8de11aa205bfc25c1dddced54f51f2017c09a90a"
+    },
+    {
+      "path": "game/studio/reward-teaser-preview.mjs",
+      "sha256": "1504fa2ad701de31ef7297172bcefc01f33aaf1160da97adb0a314d35b1f1158"
+    },
+    {
+      "path": "game/studio/reward-video-export.mjs",
+      "sha256": "def8b5b88e6f9aa3fd1611d3a3dd8b794bdf39add70a7bce4a1bf6ef40bf96b3"
+    },
+    {
+      "path": "game/studio/riy-editor.mjs",
+      "sha256": "0b335c74199583fff5e42b7d8d0356499f1c1ea0c77f2ccf5f135d15997b6585"
+    },
+    {
+      "path": "game/studio/snake-play-launch.mjs",
+      "sha256": "9070bcb8a068b644c62141e75181f5e24e2fdf56adc2ac937c4e1627c71ea9f8"
+    },
+    {
+      "path": "game/studio/snake-preview-panel.mjs",
+      "sha256": "3219215f1400c30afdc7a114954a26d53e5bccda5d83467e039329bd0756766b"
+    },
+    {
+      "path": "game/studio/snake-preview.mjs",
+      "sha256": "6ff6a19abea8350d8666cdf38b4b902162af0afa72afa9904a3962b54400c56e"
+    },
+    {
+      "path": "game/studio/snake-storage-lifecycle.mjs",
+      "sha256": "dd1a08e44b30170d313ba42900525c29675391b60a1ad66abf9f4b22858809fb"
+    },
+    {
+      "path": "game/studio/snake.css",
+      "sha256": "2a0343a8ddb08cfad8b96a815a36f27e28a3eb8279b9415ecd53d6f07273c08d"
+    },
+    {
+      "path": "game/studio/snake.html",
+      "sha256": "4bf2e8647fb1d740bb1fb45b1c702d5753c5936de1c3cf7152f3dceab892f35f"
+    },
+    {
+      "path": "game/studio/snake.mjs",
+      "sha256": "add123840318faa07ab9465efa1bcaddd00be03aaa000d098d82e2d07c269434"
+    },
+    {
+      "path": "game/studio/source-discard.mjs",
+      "sha256": "2f6eecfe13a62f0f73d70635bd9de3bc230a232239503e86044f0214ae3dbf71"
+    },
+    {
+      "path": "game/studio/spatial-editions.mjs",
+      "sha256": "b94c112d3db3a24d081f6c2b584c1ccc1901bcc114217f3ba6b395570e3747f8"
+    },
+    {
+      "path": "game/studio/structure-copy.mjs",
+      "sha256": "42948f16943459730f4e517d9b82ff1ba852d567d559b62691f251c63e1c3349"
+    },
+    {
+      "path": "game/studio/studio.css",
+      "sha256": "942797b87b8c3c272cbf44dfea1164dab55be7eb3b47763580bb69cecdef274c"
+    },
+    {
+      "path": "game/studio/studio.mjs",
+      "sha256": "deef7efe9b2f224ddc80ae288e1cf53dc509b77878cd533f41287475c4982ac9"
+    },
+    {
+      "path": "game/studio/teaser-reward-editor.mjs",
+      "sha256": "eb38b7e3970b86c15245c374aa1ffff15e61a3552725fd06f5ce9a4b0256587f"
+    },
+    {
+      "path": "game/studio/timed-bonus-editor.mjs",
+      "sha256": "a502177978c62845ab58086a1dff1dbb1366ab06ea8aa0570d8fbea99bbf3cd9"
+    },
+    {
+      "path": "game/studio/trace-recovery.mjs",
+      "sha256": "b78fd4193e2bd650a5d7b8205b30a5606f809b7db55fb998bc9172d3b417220f"
+    },
+    {
+      "path": "game/studio/video-reward-editor.mjs",
+      "sha256": "b8732d4994039f3b912cdd58701b5486bdc56e7235d243d1089d6bae72009f8e"
+    }
+  ],
+  "changedDuringPreparation": []
+}

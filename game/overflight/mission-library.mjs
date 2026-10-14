@@ -21,8 +21,12 @@ export function overflightMissionSource({
   const detail = (entry) => {
     const project = entry.project;
     const uk = locale() === 'uk';
-    const veteran = project.difficulty === 'veteran';
-    return `${uk ? (veteran ? 'Ветеран' : 'Стандарт') : veteran ? 'Veteran' : 'Standard'} · ${(project.survivorFormat ?? project.format).endsWith('V1') ? (uk ? 'Класичні правила' : 'Legacy rules') : title()}`;
+    const difficulty = {
+      relaxed: ['Relaxed', 'Спокійна'],
+      standard: ['Standard', 'Стандарт'],
+      veteran: ['Veteran', 'Ветеран'],
+    }[project.difficulty ?? 'standard'] ?? ['Standard', 'Стандарт'];
+    return `${difficulty[uk ? 1 : 0]} · ${(project.survivorFormat ?? project.format).endsWith('V1') ? (uk ? 'Класичні правила' : 'Legacy rules') : title()}`;
   };
   const name = (entry) => `${local(entry.project.title)} · ${detail(entry).split(' · ')[0]}`;
   return {

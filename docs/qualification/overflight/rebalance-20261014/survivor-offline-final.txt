@@ -1,0 +1,30 @@
+- main:
+  - button "Menu"
+  - generic: Survive
+  - button "Resume"
+  - region "Survive battlefield":
+    - generic: Hull 60 / 100
+    - progressbar "Hull"
+    - generic: Spare airframes 2
+    - generic: Sortie
+    - strong: 00:16
+    - generic: Level 1
+    - generic: 12 Cleared
+    - generic: Overflight payload 1
+    - generic: Boost Ready
+    - status: Paused · use Resume
+  - text: ⌃
+  - dialog "Pause":
+    - heading "Pause" [level=1]
+    - button "Resume" [active]
+    - heading "Missions" [level=3]
+    - button "Restart"
+    - button "Choose"
+    - heading "Sound" [level=3]
+    - 'button "Sound: off"'
+    - heading "Settings" [level=3]
+    - button "Settings"
+    - button "Enter fullscreen": Full screen
+    - button "Home"
+  - text: ✓ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄
+- text: + + + + + + + + +

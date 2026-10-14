@@ -6,6 +6,17 @@ export const OVERFLIGHT_COPY = Object.freeze({
     marathonOperation: 'Contract Marathon',
     marathonOperationHelp:
       'Bank your score or risk another contract. Hull and upgrades carry forward.',
+    overdrive: 'Overdrive',
+    overdriveReady: 'Overdrive ready · boost to use',
+    damageTaken: 'Hull damage',
+    damage_contact: 'Contact',
+    damage_lane: 'Aimed fire',
+    damage_fan: 'Spread fire',
+    damage_ground: 'Ground attack',
+    savedRecords: 'Personal records saved',
+    sessionRecords: 'Session records · storage unavailable',
+    fastestClear: 'Fastest clear',
+    mostCleared: 'Most cleared',
     escortCommands: 'Focus commands',
     escortShots: 'Escort attacks',
     survivorOperation: 'Survivor',
@@ -19,10 +30,11 @@ export const OVERFLIGHT_COPY = Object.freeze({
     selectEncounter: 'Choose an encounter →',
     switchOperation: 'Open operation →',
     difficulty: 'Operation difficulty',
+    difficultyRelaxed: 'Relaxed',
     difficultyStandard: 'Standard',
     difficultyVeteran: 'Veteran',
     difficultyHelp:
-      'Veteran changes formations and pressure. Your records stay separate. Applies to the next official sortie.',
+      'Relaxed gives more warning; Standard tests your routes; Veteran increases pressure. Records stay separate. Applies to the next official sortie.',
     authoredDifficulty: 'Installed encounters keep their authored difficulty and rules.',
     legacyRules: 'Legacy rules',
     readTheField: 'Read the battlefield',
@@ -35,6 +47,9 @@ export const OVERFLIGHT_COPY = Object.freeze({
       'Watch the warning, then use the recovery opening. Raid needs a fresh boosted pass.',
     cacheHint:
       'Open cache: fly out, then choose one reward. +30 hull or +1 reroll and boost ready.',
+    cacheHintOverdrive:
+      'Open cache: fly out, then choose one reward. +30 hull, +1 reroll and boost ready, or stored Overdrive: your next fresh boost starts 6 seconds of 25% faster attacks. Overdrive cannot stack or refresh.',
+    reviewStopAt: 'Controls stop at {seconds}s',
     cacheReady: 'Cache open · choose one reward',
     armorProtection: 'Plating',
     shieldHits: 'Shield hits',
@@ -190,6 +205,17 @@ export const OVERFLIGHT_COPY = Object.freeze({
     timeAttackOperationHelp: 'Вдосконалюйте маршрут. Чисті атаки дають кращий заліковий час.',
     marathonOperation: 'Марафон контрактів',
     marathonOperationHelp: 'Заберіть очки або ризикніть ще раз. Корпус і покращення зберігаються.',
+    overdrive: 'Форсаж зброї',
+    overdriveReady: 'Форсаж готовий · прискортеся для запуску',
+    damageTaken: 'Шкода корпусу',
+    damage_contact: 'Зіткнення',
+    damage_lane: 'Прицільний вогонь',
+    damage_fan: 'Віяловий вогонь',
+    damage_ground: 'Удар по землі',
+    savedRecords: 'Особисті рекорди збережено',
+    sessionRecords: 'Рекорди сеансу · сховище недоступне',
+    fastestClear: 'Найшвидше проходження',
+    mostCleared: 'Найбільше знищено',
     escortCommands: 'Команди фокуса',
     escortShots: 'Атаки супроводу',
     survivorOperation: 'Виживання',
@@ -204,10 +230,11 @@ export const OVERFLIGHT_COPY = Object.freeze({
     selectEncounter: 'Вибрати поле →',
     switchOperation: 'Відкрити операцію →',
     difficulty: 'Складність операції',
+    difficultyRelaxed: 'Спокійна',
     difficultyStandard: 'Стандарт',
     difficultyVeteran: 'Ветеран',
     difficultyHelp:
-      'Ветеран змінює стрій і тиск ворогів. Рекорди зберігаються окремо. Для наступного офіційного вильоту.',
+      'Спокійна дає більше часу на реакцію; Стандарт перевіряє маршрути; Ветеран посилює тиск. Рекорди окремі. Для наступного офіційного вильоту.',
     authoredDifficulty: 'Встановлені поля зберігають авторські складність і правила.',
     legacyRules: 'Класичні правила',
     readTheField: 'Читайте поле бою',
@@ -220,6 +247,9 @@ export const OVERFLIGHT_COPY = Object.freeze({
       'Стежте за попередженням, атакуйте під час відновлення. У нальоті потрібен новий проліт із прискоренням.',
     cacheHint:
       'Відкрита схованка: відлетіть і поверніться за однією нагородою. +30 міцності або +1 заміна й готовий ривок.',
+    cacheHintOverdrive:
+      'Відкрита схованка: відлетіть і поверніться за однією нагородою. +30 міцності, +1 заміна й готовий ривок або запас форсажу: нове натискання ривка вмикає на 6 секунд атаки на 25% швидше. Форсаж не накопичується й не подовжується.',
+    reviewStopAt: 'Керування зупиниться на {seconds} с',
     cacheReady: 'Схованка відкрита · оберіть нагороду',
     armorProtection: 'Броня',
     shieldHits: 'Захищених ударів',
@@ -375,4 +405,15 @@ export const overflightText = (locale, key) =>
 export function localizedOverflight(value, locale = 'en') {
   if (value === null || value === undefined) return '';
   return typeof value === 'object' ? (value[locale] ?? value.en ?? '') : String(value);
+}
+
+export function overflightCacheHint(compiled, locale = 'en') {
+  const hasOverdrive =
+    compiled.rulesVersion >= 3 &&
+    compiled.combat?.supplies.overdrive &&
+    !compiled.sourceFormat?.startsWith('OverflightHunt');
+  return overflightText(locale, hasOverdrive ? 'cacheHintOverdrive' : 'cacheHint').replace(
+    '30',
+    String(compiled.combat?.supplies.repairHull ?? 30),
+  );
 }

@@ -93,7 +93,11 @@ test('comparison models preserve actual current build and share runtime weapon t
       });
       const next = structuredClone(build);
       assert.ok(applyOverflightUpgrade(next, offer, modules));
-      assert.deepEqual(model.after, { ...overflightPayload(next), rank: offer.rank, delay: 0.45 });
+      assert.deepEqual(model.after, {
+        ...overflightPayload(next),
+        rank: offer.rank,
+        delay: 0.45,
+      });
     } else if (offer.kind !== 'utility') {
       assert.deepEqual(model.before, {
         ...overflightModuleParameters(offer.system, offer.rank - 1),
@@ -111,7 +115,10 @@ test('comparison models preserve actual current build and share runtime weapon t
 test('reduced effects keeps all comparison geometry without running CSS animations', () => {
   for (const { offer, build } of examples()) {
     const animated = overflightUpgradePreview(offer, { build });
-    const reduced = overflightUpgradePreview(offer, { build, reducedEffects: true });
+    const reduced = overflightUpgradePreview(offer, {
+      build,
+      reducedEffects: true,
+    });
     assert.doesNotMatch(reduced, /@keyframes|animation:|<style>/, offer.id);
     const shapes = (markup) =>
       walk(parseFragment(markup)).filter((node) =>
@@ -160,7 +167,12 @@ test('utility previews use current hull, scanner collection and capped healing',
 test('preview rejects unknown systems, ranks and untrusted SVG scope input', () => {
   assert.throws(() => overflightUpgradePreview({ system: '<script>', rank: 1 }), /Unsupported/);
   assert.throws(
-    () => overflightUpgradePreview({ system: 'primary', branch: '" onload="alert(1)', rank: 2 }),
+    () =>
+      overflightUpgradePreview({
+        system: 'primary',
+        branch: '" onload="alert(1)',
+        rank: 2,
+      }),
     /valid primary/,
   );
   assert.throws(() => overflightUpgradePreview({ system: 'shield', rank: 4 }), /valid module/);
@@ -169,7 +181,71 @@ test('preview rejects unknown systems, ranks and untrusted SVG scope input', () 
     /positive rank/,
   );
   assert.doesNotMatch(
-    overflightUpgradePreview({ system: 'repair', rank: 1, branch: '" onload="alert(1)' }),
+    overflightUpgradePreview({
+      system: 'repair',
+      rank: 1,
+      branch: '" onload="alert(1)',
+    }),
     /onload|alert/,
+  );
+});
+
+test('V3 Echo demonstrates a rear trail while legacy previews retain concentric geometry', () => {
+  const offer = { system: 'primary', branch: 'double', rank: 4 };
+  const modern = overflightUpgradePreviewModel(offer, { rulesVersion: 3 });
+  const legacy = overflightUpgradePreviewModel(offer);
+  assert.deepEqual(modern.after.rearOffsets, [56, 108, 160]);
+  assert.deepEqual(modern.after.echoRadii, [44, 52, 60]);
+  assert.equal(legacy.after.rearOffsets, undefined);
+  const markup = overflightUpgradePreview(offer, { rulesVersion: 3 });
+  assert.match(markup, /Rear trail/);
+  assert.doesNotMatch(markup, /NaN|undefined|Infinity/);
+});
+
+test('Riy previews preserve authored escort geometry and independently show all four branches', async () => {
+  const { OVERFLIGHT_RIY_DEFAULTS_V2 } = await import('../overflight/riy-project.mjs');
+  const { overflightRiyEscortParameters } = await import('../overflight/riy-upgrades.mjs');
+  const settings = structuredClone(OVERFLIGHT_RIY_DEFAULTS_V2);
+  settings.escorts[0].damage = 19;
+  for (const [role, branches] of [
+    ['sweeper', ['broad', 'trail']],
+    ['breaker', ['burst', 'chain']],
+  ]) {
+    for (const branch of branches) {
+      const offer = {
+        system: `riy-${role}`,
+        role,
+        branch,
+        rank: 2,
+        currentRank: 1,
+      };
+      const model = overflightUpgradePreviewModel(offer, {
+        riySettings: settings,
+      });
+      const config = settings.escorts.find((entry) => entry.role === role);
+      assert.deepEqual(
+        model.before,
+        overflightRiyEscortParameters(config, { rank: 1, branch: null }),
+      );
+      assert.deepEqual(model.after, overflightRiyEscortParameters(config, { rank: 2, branch }));
+      for (const locale of ['en', 'uk']) {
+        const markup = overflightUpgradePreview(offer, {
+          riySettings: settings,
+          locale,
+          reducedEffects: true,
+        });
+        assert.doesNotMatch(markup, /NaN|undefined|Infinity|@keyframes/);
+        assert.match(markup, /<path/);
+      }
+    }
+  }
+  assert.throws(
+    () =>
+      overflightUpgradePreview({
+        system: 'riy-sweeper',
+        branch: '" onload="alert(1)',
+        rank: 2,
+      }),
+    /valid escort/,
   );
 });

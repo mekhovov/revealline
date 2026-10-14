@@ -7,6 +7,8 @@ export function createOverflightUpgradeCard({
   offer,
   build,
   player,
+  rulesVersion = 2,
+  riySettings,
   locale = 'en',
   reducedEffects = false,
   disabled = false,
@@ -46,7 +48,14 @@ export function createOverflightUpgradeCard({
   );
   heading.append(names);
   const preview = node('span', '', 'upgrade-preview');
-  preview.innerHTML = overflightUpgradePreview(offer, { locale, build, player, reducedEffects });
+  preview.innerHTML = overflightUpgradePreview(offer, {
+    locale,
+    build,
+    player,
+    reducedEffects,
+    rulesVersion,
+    riySettings,
+  });
   const next = local(offer.next ?? offer.description);
   button.append(heading, preview, node('span', next, 'upgrade-description'));
   if (offer.evolution) {

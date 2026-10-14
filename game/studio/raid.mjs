@@ -34,7 +34,10 @@ const element = (tag, text = '', attributes = {}) => {
 };
 const root = document.querySelector('#raid-studio');
 const status = element('p', '', { id: 'raid-status', role: 'status' });
-const previewStatus = element('p', '', { id: 'raid-preview-status', role: 'status' });
+const previewStatus = element('p', '', {
+  id: 'raid-preview-status',
+  role: 'status',
+});
 const reportPreview = (text, error = false) => {
   previewStatus.textContent = text;
   previewStatus.dataset.error = String(error);
@@ -78,7 +81,7 @@ for (const [path, en, uk] of [
   ['../../authoring/motion-lab/#overflight-motion-study', 'Motion Lab', 'Лабораторія руху'],
 ])
   nav.append(element('a', words(en, uk), { href: scopedURL(path) }));
-let draft = createOverflightHuntProject(),
+let draft = createOverflightHuntProject({ rulesVersion: 3 }),
   sector = 0,
   selected = { kind: 'objectives', index: 0 },
   revision = 0,
@@ -115,7 +118,29 @@ const preview = element('iframe', '', {
   allow: 'gamepad; fullscreen',
   src: scopedURL(`../overflight/raid.html?studio=overflight-hunt`),
 });
+const objectivePositions = new WeakMap();
+function syncEscorts() {
+  for (const encounter of draft.encounters) {
+    for (const target of encounter.objectives) {
+      const before = objectivePositions.get(target);
+      for (const wing of encounter.packs.filter((pack) => pack.escortOf === target.id)) {
+        if (before) {
+          wing.x += target.x - before.x;
+          wing.y += target.y - before.y;
+        }
+        const dx = wing.x - target.x,
+          dy = wing.y - target.y;
+        wing.route = target.route.map((point) => ({
+          x: point.x + dx,
+          y: point.y + dy,
+        }));
+      }
+      objectivePositions.set(target, { x: target.x, y: target.y });
+    }
+  }
+}
 const touch = () => {
+  syncEscorts();
   revision++;
   source.value = JSON.stringify(draft, null, 2);
 };
@@ -238,6 +263,25 @@ function render() {
       touch();
     });
   }
+  if (draft.medalBudgets) {
+    for (const [key, en, uk] of [
+      ['gold', 'Gold target (s)', 'Ціль золота (с)'],
+      ['silver', 'Silver target (s)', 'Ціль срібла (с)'],
+      ['bronze', 'Bronze target (s)', 'Ціль бронзи (с)'],
+    ])
+      numeric(generalFields, words(en, uk), draft.medalBudgets, key, 10, 3600);
+    const provisional = element('input', '', { type: 'checkbox' });
+    provisional.checked = draft.medalBudgets.provisional;
+    field(
+      generalFields,
+      words('Medal targets are provisional', 'Цілі медалей попередні'),
+      provisional,
+    );
+    provisional.addEventListener('change', () => {
+      draft.medalBudgets.provisional = provisional.checked;
+      touch();
+    });
+  }
   numeric(generalFields, words('Seed', 'Зерно'), draft, 'seed', 1, 4294967295);
   numeric(generalFields, words('World width', 'Ширина світу'), draft.arena, 'width', 2880, 5760);
   numeric(generalFields, words('World height', 'Висота світу'), draft.arena, 'height', 1080, 2160);
@@ -334,7 +378,7 @@ function render() {
               'stroke-dasharray': '14 10',
             });
             svg.append(line);
-            actor.route.forEach((p, index) => {
+            (actor.escortOf ? [] : actor.route).forEach((p, index) => {
               const handle = svgElement('circle', {
                 cx: p.x,
                 cy: p.y,
@@ -421,9 +465,12 @@ function render() {
   svg.addEventListener('pointerup', finish);
   svg.addEventListener('pointercancel', finish);
   svg.addEventListener('keydown', (event) => {
-    const delta = { ArrowLeft: [-1, 0], ArrowRight: [1, 0], ArrowUp: [0, -1], ArrowDown: [0, 1] }[
-      event.key
-    ];
+    const delta = {
+      ArrowLeft: [-1, 0],
+      ArrowRight: [1, 0],
+      ArrowUp: [0, -1],
+      ArrowDown: [0, 1],
+    }[event.key];
     const selectOnly = ['Enter', ' '].includes(event.key);
     if (!delta && !selectOnly) return;
     const key = event.target.getAttribute('data-actor'),
@@ -483,6 +530,7 @@ function render() {
         ),
     (value) => {
       actor.behavior = value;
+      if (!['shield', 'brace'].includes(value)) delete actor.escortOf;
       touch();
       render();
     },
@@ -490,6 +538,34 @@ function render() {
   numeric(actorFields, 'X', actor, 'x', 40, draft.arena.width - 40, 1, map);
   numeric(actorFields, 'Y', actor, 'y', 40, draft.arena.height - 40, 1, map);
   if (selected.kind === 'packs') {
+    if (draft.balanceRevision && ['shield', 'brace'].includes(actor.behavior)) {
+      selectField(
+        actorFields,
+        words('Defended objective', 'Ціль під охороною'),
+        actor.escortOf ?? '',
+        [
+          {
+            value: '',
+            label: words('Independent route', 'Незалежний маршрут'),
+          },
+          ...encounter.objectives.map((target) => ({
+            value: target.id,
+            label: target.id,
+          })),
+        ],
+        (id) => {
+          if (!id) delete actor.escortOf;
+          else {
+            const target = encounter.objectives.find((candidate) => candidate.id === id);
+            actor.escortOf = id;
+            actor.x = target.x - 72;
+            actor.y = target.y - 68;
+          }
+          touch();
+          render();
+        },
+      );
+    }
     numeric(
       actorFields,
       words('Finite population', 'Скінченна кількість'),
@@ -512,7 +588,17 @@ function render() {
       ),
     );
   inspector.append(element('h2', words('Committed route', 'Маршрут руху')));
-  actor.route.forEach((p, index) => {
+  if (actor.escortOf)
+    inspector.append(
+      element(
+        'p',
+        words(
+          'Route follows the defended objective. Move this wing to change its offset.',
+          'Маршрут прямує за ціллю. Рухайте групу, щоб змінити її відступ.',
+        ),
+      ),
+    );
+  (actor.escortOf ? [] : actor.route).forEach((p, index) => {
     const row = element('div', '', { class: 'raid-route-row' });
     numeric(row, `X${index + 1}`, p, 'x', 40, draft.arena.width - 40, 1, map);
     numeric(row, `Y${index + 1}`, p, 'y', 40, draft.arena.height - 40, 1, map);
@@ -527,11 +613,14 @@ function render() {
   });
   const add = button(words('Add route point', 'Додати точку маршруту'), () => {
     const last = actor.route.at(-1);
-    actor.route.push({ x: Math.min(draft.arena.width - 40, last.x + 60), y: last.y });
+    actor.route.push({
+      x: Math.min(draft.arena.width - 40, last.x + 60),
+      y: last.y,
+    });
     touch();
     render();
   });
-  add.disabled = actor.route.length >= 8;
+  add.disabled = !!actor.escortOf || actor.route.length >= 8;
   inspector.append(add);
   workspace.append(mapPanel, inspector);
   const upgrades = element('fieldset'),
@@ -654,11 +743,12 @@ toolbar.append(
       upgradeOverflightProjectCopy(draft, {
         hunt: true,
         difficulty: draft.difficulty ?? 'standard',
+        rulesVersion: 3,
       }),
     ),
   ),
   button(words('New from preset', 'Новий зі зразка'), () =>
-    replaceProject(createOverflightHuntProject({ encounterSet: preset })),
+    replaceProject(createOverflightHuntProject({ encounterSet: preset, rulesVersion: 3 })),
   ),
   button(words('Validate', 'Перевірити'), check),
   button(words('Preview', 'Перегляд'), sendPreview),
@@ -700,7 +790,11 @@ toolbar.append(
     );
   }),
 );
-const file = element('input', '', { type: 'file', accept: '.json,application/json', hidden: '' });
+const file = element('input', '', {
+  type: 'file',
+  accept: '.json,application/json',
+  hidden: '',
+});
 file.addEventListener(
   'change',
   guarded(async () => {
