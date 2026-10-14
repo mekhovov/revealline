@@ -39,66 +39,78 @@ test('SIM Creator explicitly exposes exact world profiles while existing and cus
   assert.equal(simBattlefieldWorld(THEME_PROFILES[0]), null);
 });
 
-test('native 3D world consumes shared battlefield pixels only for opted-in authored floors, with unchanged geometry and bounded owned texture', () => {
-  const document = new Document(),
-    course = structuredClone(FLIGHT_COURSES[0]);
-  const create = document.createElement.bind(document);
-  document.createElement = (tag) => {
-    const node = create(tag);
-    if (tag === 'canvas') node.close = undefined; // HTMLCanvasElement has no dialog close().
-    return node;
-  };
-  course.world = { ...course.world, theme: SIM_BATTLEFIELD_PROFILES[0].id };
-  const world = new THREE.Group(),
-    material = (color, props = {}) => new THREE.MeshStandardMaterial({ color, ...props });
-  const mesh = (geometry, paint, parent = world) => {
-    const item = new THREE.Mesh(geometry, paint);
-    parent.add(item);
-    return item;
-  };
-  const box = (size, at, color, parent = world) => {
-    const item = mesh(new THREE.BoxGeometry(...size), material(color), parent);
-    item.position.set(...at);
-    return item;
-  };
-  const before = JSON.stringify(course),
-    result = buildWorldVisuals({ course, world, mesh, material, box });
-  assert.equal(result.profile.id, 'fpv-field-crossing');
-  const geometry = [];
-  world.traverse((item) => {
-    if (item.geometry)
-      geometry.push([item, item.geometry, item.position.toArray(), item.rotation.toArray()]);
+for (const profile of SIM_BATTLEFIELD_PROFILES)
+  test(`native 3D world consumes ${profile.id} pixels only for opted-in floors, with unchanged geometry and bounded owned texture`, () => {
+    const document = new Document(),
+      course = structuredClone(FLIGHT_COURSES[0]);
+    const create = document.createElement.bind(document);
+    document.createElement = (tag) => {
+      const node = create(tag);
+      if (tag === 'canvas') node.close = undefined; // HTMLCanvasElement has no dialog close().
+      return node;
+    };
+    course.world = { ...course.world, theme: profile.id };
+    const world = new THREE.Group(),
+      material = (color, props = {}) => new THREE.MeshStandardMaterial({ color, ...props });
+    const mesh = (geometry, paint, parent = world) => {
+      const item = new THREE.Mesh(geometry, paint);
+      parent.add(item);
+      return item;
+    };
+    const box = (size, at, color, parent = world) => {
+      const item = mesh(new THREE.BoxGeometry(...size), material(color), parent);
+      item.position.set(...at);
+      return item;
+    };
+    const before = JSON.stringify(course),
+      result = buildWorldVisuals({ course, world, mesh, material, box });
+    assert.equal(result.profile.id, profile.id);
+    const geometry = [];
+    world.traverse((item) => {
+      if (item.geometry)
+        geometry.push([item, item.geometry, item.position.toArray(), item.rotation.toArray()]);
+    });
+    const floor = geometry.find(([item]) => item.userData.proceduralGround)[0],
+      old = floor.material.map;
+    let retired = 0;
+    old.addEventListener('dispose', () => retired++);
+    assert.equal(
+      applySimBattlefieldGround({
+        world,
+        profile: result.profile,
+        environment: {},
+        THREE,
+        document,
+      }),
+      false,
+    );
+    assert.equal(floor.material.map, old, 'accepted environment pins remain authoritative');
+    assert.equal(
+      applySimBattlefieldGround({ world, profile: result.profile, THREE, document }),
+      true,
+    );
+    const map = floor.material.map;
+    assert.equal(retired, 1);
+    const revision = ['fpv-field-crossing', 'fpv-freight-depot', 'fpv-relay-ruins'].includes(
+      profile.id,
+    )
+      ? 1
+      : 2;
+    assert.equal(map.name, `${profile.id}-native-ground-r${revision}`);
+    assert.equal(map.image.width * map.image.height * 4, 1572864);
+    assert.equal(map.generateMipmaps, false);
+    assert.equal(map.minFilter, THREE.NearestFilter);
+    for (const [item, source, position, rotation] of geometry) {
+      assert.equal(item.geometry, source);
+      assert.deepEqual(item.position.toArray(), position);
+      assert.deepEqual(item.rotation.toArray(), rotation);
+    }
+    assert.equal(JSON.stringify(course), before);
+    let released = 0;
+    map.addEventListener('dispose', () => released++);
+    disposeSimVisualGroup(world);
+    assert.equal(released, 1);
   });
-  const floor = geometry.find(([item]) => item.userData.proceduralGround)[0],
-    old = floor.material.map;
-  let retired = 0;
-  old.addEventListener('dispose', () => retired++);
-  assert.equal(
-    applySimBattlefieldGround({ world, profile: result.profile, environment: {}, THREE, document }),
-    false,
-  );
-  assert.equal(floor.material.map, old, 'accepted environment pins remain authoritative');
-  assert.equal(
-    applySimBattlefieldGround({ world, profile: result.profile, THREE, document }),
-    true,
-  );
-  const map = floor.material.map;
-  assert.equal(retired, 1);
-  assert.equal(map.name, 'fpv-field-crossing-native-ground-r1');
-  assert.equal(map.image.width * map.image.height * 4, 1572864);
-  assert.equal(map.generateMipmaps, false);
-  assert.equal(map.minFilter, THREE.NearestFilter);
-  for (const [item, source, position, rotation] of geometry) {
-    assert.equal(item.geometry, source);
-    assert.deepEqual(item.position.toArray(), position);
-    assert.deepEqual(item.rotation.toArray(), rotation);
-  }
-  assert.equal(JSON.stringify(course), before);
-  let released = 0;
-  map.addEventListener('dispose', () => released++);
-  disposeSimVisualGroup(world);
-  assert.equal(released, 1);
-});
 
 test('saved authored profile round-trips independently from collection defaults', () => {
   for (const profile of SIM_BATTLEFIELD_PROFILES) {

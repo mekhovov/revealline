@@ -8,6 +8,12 @@ import {
   createBattlefieldGroundSurface,
   battlefieldGroundAllowed,
 } from '../presentation/battlefield-ground.mjs';
+import {
+  createOverflightGroundPresentation,
+  createOverflightWorldPresentation,
+  validateOverflightWorldPresentation,
+} from '../overflight/worlds.mjs';
+import { dataIdentity } from '../data-json.mjs';
 import { mountBattlefieldGroundControls } from '../ui/battlefield-ground-controls.mjs';
 import { BoardPainter } from '../ui/render.mjs';
 import { createCoopPainter } from '../couch/coop-view.mjs';
@@ -205,4 +211,62 @@ test('Team native painter reuses the same world with bounded span draws below it
   assert.deepEqual(run, before);
   painter.dispose();
   assert.equal(ground.width, 0);
+});
+
+test('shared ground preserves original scenes and reuses distinct low V2 composition for new worlds', () => {
+  const arena = { width: 2880, height: 1080 };
+  for (const world of ['field-crossing', 'freight-depot', 'relay-ruins']) {
+    const original = createOverflightWorldPresentation(world, arena);
+    original.landmarks = original.landmarks.filter(
+      (entry) => !['tree', 'container', 'antenna'].includes(entry.kind),
+    );
+    assert.deepEqual(createOverflightGroundPresentation(world, arena), original);
+  }
+  const compositions = new Set(),
+    drawings = new Set();
+  for (const world of ['river-port', 'chalk-quarry', 'orchard-strongpoint']) {
+    const source = createOverflightGroundPresentation(world, arena);
+    assert.doesNotThrow(() => validateOverflightWorldPresentation(source, arena));
+    assert.equal(source.format, 'OverflightWorldPresentationV2');
+    assert.deepEqual(source.resource, { id: 'overflight-worlds', revision: 2 });
+    assert.deepEqual(source.assemblies, [], 'decorative ground must never suggest solid cover');
+    assert.ok(
+      source.landmarks.every((item) =>
+        ['pipe', 'puddle', 'spoil', 'rubble', 'irrigation', 'glass'].includes(item.kind),
+      ),
+    );
+    assert.equal(source.regions.length, 3);
+    assert.equal(source.paths.length, 2);
+    compositions.add(
+      dataIdentity({ regions: source.regions, paths: source.paths, landmarks: source.landmarks }),
+    );
+    const rectangles = [];
+    const context = {
+      save() {},
+      restore() {},
+      scale() {},
+      beginPath() {},
+      rect() {},
+      clip() {},
+      fillRect(...args) {
+        rectangles.push(args);
+      },
+    };
+    const canvas = { width: 0, height: 0, getContext: () => context };
+    const surface = createBattlefieldGroundSurface({ canvasFactory: () => canvas });
+    assert.equal(surface.prepare(world, 960, 540), canvas);
+    assert.ok(rectangles.length > 100);
+    drawings.add(dataIdentity(rectangles)); // Actual drawn geometry, ignoring palette colors.
+    const count = rectangles.length;
+    surface.prepare(world, 960, 540);
+    assert.equal(
+      rectangles.length,
+      count,
+      'selected-world art is cached, never repainted per frame',
+    );
+    surface.clear();
+    assert.equal(canvas.width, 0);
+  }
+  assert.equal(compositions.size, 3, 'new choices have different paths/material regions/props');
+  assert.equal(drawings.size, 3, 'new choices cannot be recolors of identical geometry');
 });
