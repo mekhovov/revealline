@@ -19,6 +19,7 @@ import {
 import { frozenOptionalPackageOverlay } from '../../publishing/optional-package-promotion.mjs';
 import { verifyPracticeSite } from '../../scripts/verify-practice-site.mjs';
 import { mountPracticeNavigation } from '../../optional-practice/navigation.mjs';
+import { practiceDirectoryHTML } from '../../publishing/practice-directory.mjs';
 
 const id = 'civilian-flight',
   indexURL = 'https://example.test/practice/index.json';
@@ -39,6 +40,24 @@ const detail = {
   offlineBytes: 2000,
 };
 const metadata = { format: 'revealline-practice-details.v1', packages: [detail] };
+
+test('directory introduction stays accurate for empty and extended catalogues', () => {
+  for (const count of [0, 3, 4]) {
+    const html = practiceDirectoryHTML(
+      Array.from({ length: count }, (_, i) => ({
+        ...entry,
+        id: `sample-${i}`,
+        name: `Sample ${i}`,
+        href: `sample-${i}/app/`,
+      })),
+      [],
+    );
+    assert.equal((html.match(/<article>/g) ?? []).length, count);
+    assert.match(html, /Choose a practice app/);
+    assert.match(html, /Виберіть застосунок для практики/);
+    assert.doesNotMatch(html, /Three ways|Три способи/);
+  }
+});
 
 test('standard-controller menu edges move visible focus and activate once, never repeat a held confirm', () => {
   const doc = new Document();
