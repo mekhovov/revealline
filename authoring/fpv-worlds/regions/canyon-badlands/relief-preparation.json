@@ -10,9 +10,9 @@
     768
   ],
   "parentTerrainManifestSHA256": "2ac0b427f15eb370385320b5d65a8cdd2964814e4f323506fee027948bb01e51",
-  "terrainManifestSHA256": "2f8d45ce06be1b494a3a86b5745e94dd7a0ea03ca163cf21b12717028a500ec0",
-  "sceneryManifestSHA256": "31d45940011751e94ab40b57b5337dd7adb7e6f36a365c3328e07f2768bbb659",
-  "sourceBytes": 1161663,
+  "terrainManifestSHA256": "9fad494a6dc1e974695e9fa218b99e74f1676d2589303c7ececea8728b106239",
+  "sceneryManifestSHA256": "a72ba600c11eba60486b645ca40967802498deb28e46dece02b10b3f04e0c30f",
+  "sourceBytes": 1161742,
   "cells": 9,
   "assets": 36,
   "byteIdenticalTerrainAssets": 0,
@@ -223,8 +223,8 @@
       ],
       "requestedWidthM": 38,
       "requestedHeightM": 32,
-      "baseMm": 68104,
-      "topMm": 100104,
+      "baseMm": 68112,
+      "topMm": 100112,
       "boundsMm": [
         [
           325619,
@@ -251,8 +251,8 @@
       ],
       "requestedWidthM": 8,
       "requestedHeightM": 8,
-      "baseMm": 24549,
-      "topMm": 32549,
+      "baseMm": 29045,
+      "topMm": 37045,
       "boundsMm": [
         [
           288083,
@@ -279,8 +279,8 @@
       ],
       "requestedWidthM": 18,
       "requestedHeightM": 6,
-      "baseMm": 69906,
-      "topMm": 75906,
+      "baseMm": 69910,
+      "topMm": 75910,
       "boundsMm": [
         [
           333156,
@@ -307,8 +307,8 @@
       ],
       "requestedWidthM": 24,
       "requestedHeightM": 28,
-      "baseMm": 5200,
-      "topMm": 33200,
+      "baseMm": 5210,
+      "topMm": 33210,
       "boundsMm": [
         [
           78021,
@@ -363,8 +363,8 @@
       ],
       "requestedWidthM": 6,
       "requestedHeightM": 4,
-      "baseMm": 5200,
-      "topMm": 9200,
+      "baseMm": 5203,
+      "topMm": 9203,
       "boundsMm": [
         [
           82712,
@@ -391,8 +391,8 @@
       ],
       "requestedWidthM": 24,
       "requestedHeightM": 25,
-      "baseMm": 5176,
-      "topMm": 30176,
+      "baseMm": 5200,
+      "topMm": 30200,
       "boundsMm": [
         [
           181967,
@@ -419,8 +419,8 @@
       ],
       "requestedWidthM": 7,
       "requestedHeightM": 4,
-      "baseMm": 9675,
-      "topMm": 13675,
+      "baseMm": 9678,
+      "topMm": 13678,
       "boundsMm": [
         [
           214621,
@@ -447,8 +447,8 @@
       ],
       "requestedWidthM": 5,
       "requestedHeightM": 4,
-      "baseMm": 9725,
-      "topMm": 13725,
+      "baseMm": 9803,
+      "topMm": 13803,
       "boundsMm": [
         [
           208071,
@@ -475,8 +475,8 @@
       ],
       "requestedWidthM": 37,
       "requestedHeightM": 31,
-      "baseMm": 66411,
-      "topMm": 97411,
+      "baseMm": 72069,
+      "topMm": 103069,
       "boundsMm": [
         [
           312756,
@@ -503,8 +503,8 @@
       ],
       "requestedWidthM": 8,
       "requestedHeightM": 10,
-      "baseMm": 68854,
-      "topMm": 78854,
+      "baseMm": 72712,
+      "topMm": 82712,
       "boundsMm": [
         [
           300602,
@@ -531,8 +531,8 @@
       ],
       "requestedWidthM": 6,
       "requestedHeightM": 4,
-      "baseMm": 74372,
-      "topMm": 78372,
+      "baseMm": 74370,
+      "topMm": 78370,
       "boundsMm": [
         [
           345722,
@@ -559,8 +559,8 @@
       ],
       "requestedWidthM": 40,
       "requestedHeightM": 31,
-      "baseMm": 65787,
-      "topMm": 96787,
+      "baseMm": 65798,
+      "topMm": 96798,
       "boundsMm": [
         [
           58599,
@@ -587,8 +587,8 @@
       ],
       "requestedWidthM": 8,
       "requestedHeightM": 5,
-      "baseMm": 65304,
-      "topMm": 70304,
+      "baseMm": 65315,
+      "topMm": 70315,
       "boundsMm": [
         [
           98996,
@@ -615,8 +615,8 @@
       ],
       "requestedWidthM": 7,
       "requestedHeightM": 8,
-      "baseMm": 67747,
-      "topMm": 75747,
+      "baseMm": 67755,
+      "topMm": 75755,
       "boundsMm": [
         [
           55641,
@@ -643,8 +643,8 @@
       ],
       "requestedWidthM": 14,
       "requestedHeightM": 35,
-      "baseMm": 10025,
-      "topMm": 45025,
+      "baseMm": 11881,
+      "topMm": 46881,
       "boundsMm": [
         [
           177689,
@@ -699,8 +699,8 @@
       ],
       "requestedWidthM": 6,
       "requestedHeightM": 4,
-      "baseMm": 9975,
-      "topMm": 13975,
+      "baseMm": 10088,
+      "topMm": 14088,
       "boundsMm": [
         [
           192982,
@@ -722,21 +722,21 @@
       "id": "south-saddle",
       "sourceNode": "Rock_Formations_9",
       "center": [
-        351,
-        326
+        329,
+        342
       ],
       "requestedWidthM": 25,
       "requestedHeightM": 27,
-      "baseMm": 76008,
-      "topMm": 103008,
+      "baseMm": 55084,
+      "topMm": 82084,
       "boundsMm": [
         [
-          338961,
-          360831
+          316961,
+          338831
         ],
         [
-          313759,
-          339004
+          329759,
+          355004
         ]
       ],
       "triangles": 182,
@@ -755,8 +755,8 @@
       ],
       "requestedWidthM": 9,
       "requestedHeightM": 9,
-      "baseMm": 76657,
-      "topMm": 85657,
+      "baseMm": 76652,
+      "topMm": 85652,
       "boundsMm": [
         [
           343573,
@@ -783,8 +783,8 @@
       ],
       "requestedWidthM": 6,
       "requestedHeightM": 4,
-      "baseMm": 77040,
-      "topMm": 81040,
+      "baseMm": 77034,
+      "topMm": 81034,
       "boundsMm": [
         [
           347313,
@@ -891,9 +891,9 @@
   "relief": {
     "originalSourcePreserved": true,
     "originalMeshTopologyPreserved": true,
-    "sourceHeightChanges": 4088,
-    "maximumRaiseMm": 3209,
-    "maximumLowerMm": 39793,
+    "sourceHeightChanges": 7425,
+    "maximumRaiseMm": 3032,
+    "maximumLowerMm": 9165,
     "profileComparison": {
       "original": {
         "samples": 18050,
@@ -903,12 +903,12 @@
       },
       "revised": {
         "samples": 18050,
-        "maximumDegrees": 118.801,
-        "meanDegrees": 2.268,
-        "hingesOver30Degrees": 210
+        "maximumDegrees": 62.363,
+        "meanDegrees": 2.241,
+        "hingesOver30Degrees": 32
       }
     },
-    "sceneryChange": "Vertical grounding plus one explicit south-saddle plateau relocation; mesh topology, dimensions and colours preserved",
+    "sceneryChange": "Vertical grounding only; horizontal positions, mesh topology, dimensions and colours preserved",
     "surfaceMaterial": "Unchanged; periodic strata remain a separate appearance issue"
   }
 }

@@ -54,6 +54,10 @@ for (const asset of layers.terrain.manifest.assets.filter((a) => a.kind === 'col
   );
 }
 validateTerrainSeams(terrainCells);
+assert(
+  changes.every((change) => Math.abs(change) <= 10000),
+  'Relief exceeds the 10 m study bound',
+);
 function profileHinges(heights) {
   let maximum = 0,
     total = 0,
@@ -91,11 +95,9 @@ assert(
 );
 const objects = [];
 for (const object of parent.objects) {
-  // The widened drainage cut reaches the old saddle footprint. Move only that formation
-  // onto the adjacent plateau; its triangle topology and dimensions remain unchanged.
-  const offset = object.id === 'south-saddle' ? [22, -16] : [0, 0];
-  const center = object.center.map((v, i) => v + offset[i]);
-  const boundsMm = object.boundsMm.map((bounds, i) => bounds.map((v) => v + offset[i] * 1000));
+  // Keep authored horizontal composition; re-seat each formation on the revised ground.
+  const center = [...object.center];
+  const boundsMm = object.boundsMm.map((bounds) => [...bounds]);
   let min = Infinity;
   for (
     let x = Math.floor(boundsMm[0][0] / 4000) * 4;
@@ -113,9 +115,7 @@ for (const object of parent.objects) {
   const path = `canyon-${Math.floor(object.center[0] / 128)}-${Math.floor(object.center[1] / 128)}.json`;
   const cell = JSON.parse(layers.scenery.bodies.get(path));
   for (const surface of cell.surfaces.filter((s) => s.id.startsWith(object.id + '-band-')))
-    surface.positionsMm = surface.positionsMm.map(
-      (v, i) => v + (i % 3 === 1 ? shift : offset[i % 3 === 0 ? 0 : 1] * 1000),
-    );
+    surface.positionsMm = surface.positionsMm.map((v, i) => v + (i % 3 === 1 ? shift : 0));
   layers.scenery.bodies.set(path, json(cell));
   objects.push({
     ...object,
@@ -174,7 +174,7 @@ const receipt = {
     maximumLowerMm: -Math.min(...changes),
     profileComparison,
     sceneryChange:
-      'Vertical grounding plus one explicit south-saddle plateau relocation; mesh topology, dimensions and colours preserved',
+      'Vertical grounding only; horizontal positions, mesh topology, dimensions and colours preserved',
     surfaceMaterial: 'Unchanged; periodic strata remain a separate appearance issue',
   },
   flightReady: false,
