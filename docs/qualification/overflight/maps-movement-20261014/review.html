@@ -421,7 +421,12 @@
         tick its full gameplay summary matches normal trial 2 except appearance. Sampled
         populations match; effects peak at 32 versus 60 and sprite allocation at 1,740 versus
         1,843. This is one comparison, not three reduced-effects trials. Normal settings were
-        restored. The quiet soak is still in progress; no final result is claimed.
+        restored. The quiet reference soak also passes on <code>08f5e6e0e</code>: 15 measured minutes,
+        <strong>118.8989 FPS</strong>, p95 <strong>9.7 ms</strong>, p99 <strong>10.6 ms</strong>,
+        worst 154.6 ms and 0.2373632% of intervals above 33.3 ms. All 62 samples retain one canvas
+        and fixed atlas storage; there is no dropped time, context loss or raw overflow. Stalls,
+        including those during disk-pressure cleanup, remain included. The
+        <a href="SOAK.md">soak report</a> preserves the original failed attempt too.
       </p>
       <p>
         The <a href="PROGRESSION-PARITY.md">current progression comparison</a> records 47
@@ -430,8 +435,10 @@
         91.2-second final-choice collection gap. The earlier outcomes above remain historical.
       </p>
       <p>
-        Remaining local checks: finish the quiet soak and reconcile/test the latest main
-        integration. Review judgments include late reward collection, Riy Echo approaches,
+        Latest main is merged at <code>7819c81a0</code> without changing Overflight runtime;
+        the recorded measurements retain <code>08f5e6e0e</code>. All <strong>90 focused integration
+        tests</strong> pass with zero skipped. The planned local checks are complete within
+        their recorded scope; follow-up publication remains. Review judgments include late reward collection, Riy Echo approaches,
         challenge readability, visual appeal and real soundtrack/warning balance. The recorded
         scenarios do not certify every build or boss victory. External-device and five-player
         trials remain skipped at the user’s direction.
