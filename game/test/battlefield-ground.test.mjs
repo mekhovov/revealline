@@ -59,7 +59,7 @@ test('ground is opt-in and preserves unsupported stored versions instead of over
   assert.match(storage.getItem(BATTLEFIELD_GROUND_KEY), /FutureGroundV2/);
 });
 
-test('shared appearance controls expose three worlds with clear mode scope, localization and cleanup', (t) => {
+test('shared appearance controls expose six named worlds with clear mode scope, localization and cleanup', (t) => {
   const doc = new Document(),
     storage = memoryStorage(),
     prefs = createBattlefieldGroundPreferences({ getStorage: () => storage });
@@ -75,7 +75,31 @@ test('shared appearance controls expose three worlds with clear mode scope, loca
     prefs.dispose();
   });
   const select = doc.querySelector('[data-battlefield-ground]');
-  assert.equal(select.options.length, 4);
+  const labels = {
+    en: [
+      'Original ground',
+      'FPV · Field Crossing',
+      'FPV · Freight Depot',
+      'FPV · Relay Ruins',
+      'FPV · River Port',
+      'FPV · Chalk Quarry',
+      'FPV · Orchard Strongpoint',
+    ],
+    uk: [
+      'Початкове покриття',
+      'FPV · Польова переправа',
+      'FPV · Вантажне депо',
+      'FPV · Руїни ретранслятора',
+      'FPV · Річковий порт',
+      'FPV · Крейдяний кар’єр',
+      'FPV · Садовий опорний пункт',
+    ],
+  };
+  assert.equal(select.options.length, 7);
+  assert.deepEqual(
+    [...select.options].map((option) => option.textContent),
+    labels.en,
+  );
   assert.match(doc.body.textContent, /Solo, Duel and Team/);
   assert.equal(storage.writes.length, 0);
   select.value = 'field-crossing';
@@ -83,7 +107,16 @@ test('shared appearance controls expose three worlds with clear mode scope, loca
   assert.equal(prefs.snapshot().world, 'field-crossing');
   locale = 'uk';
   controls.refresh();
-  assert.match(doc.body.textContent, /Польова переправа/);
+  assert.deepEqual(
+    [...select.options].map((option) => option.textContent),
+    labels.uk,
+  );
+  for (const world of ['river-port', 'chalk-quarry', 'orchard-strongpoint']) {
+    select.value = world;
+    select.dispatchEvent({ type: 'change' });
+    assert.equal(prefs.snapshot().world, world);
+    assert.equal(JSON.parse(storage.getItem(BATTLEFIELD_GROUND_KEY)).world, world);
+  }
   controls.dispose();
   assert.equal(doc.querySelector('[data-battlefield-ground]'), null);
 });
