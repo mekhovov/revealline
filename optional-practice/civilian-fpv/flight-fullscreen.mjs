@@ -779,6 +779,195 @@ export function mountFlightComfort({
   };
 }
 
+/** A paused Watch → Try → Repeat entry point. Hosts retain all simulation authority. */
+export function mountFlightPractice({
+  document: doc,
+  container,
+  locale = () => 'en',
+  visible = () => true,
+  read,
+  act,
+  setRate,
+  rates = [0.5, 1],
+}) {
+  const root = doc.createElement('section');
+  root.className = 'sim-flight-practice';
+  const title = doc.createElement('h2');
+  const overview = doc.createElement('div');
+  overview.className = 'sim-practice-overview';
+  const picture = doc.createElement('div');
+  picture.className = 'sim-practice-preview';
+  picture.setAttribute('aria-hidden', 'true');
+  const description = doc.createElement('p');
+  const note = doc.createElement('small');
+  const actions = doc.createElement('div');
+  actions.className = 'sim-practice-actions';
+  const speedLabel = doc.createElement('label');
+  const speedText = doc.createElement('span');
+  const speed = doc.createElement('select');
+  speed.dataset.practiceRate = '';
+  for (const value of rates) {
+    const option = doc.createElement('option');
+    option.value = String(value);
+    speed.append(option);
+  }
+  speedLabel.append(speedText, speed);
+  overview.append(picture, description);
+  root.append(title, overview, actions, speedLabel, note);
+  const setup = container.querySelector('.sim-flight-setup');
+  if (setup) setup.after(root);
+  else container.append(root);
+  const buttons = ['retry', 'watch', 'practice', 'try', 'repeat'].map((action) => {
+    const button = doc.createElement('button');
+    button.type = 'button';
+    button.dataset.practiceAction = action;
+    const click = () => {
+      if (button.disabled || button.hidden || !visible() || !read()?.available) return;
+      return act(action);
+    };
+    button.addEventListener('click', click);
+    actions.append(button);
+    return { action, button, click };
+  });
+  const changeRate = () => {
+    if (visible() && read()?.replay && rates.includes(Number(speed.value)))
+      setRate?.(Number(speed.value));
+  };
+  speed.addEventListener('change', changeRate);
+  let last = '',
+    previewCourse = null,
+    previewMode = null;
+  function refresh() {
+    root.hidden = !visible();
+    if (root.hidden) return;
+    const state = read();
+    root.hidden = !state?.available;
+    container.dataset.simPractice = String(!root.hidden);
+    if (root.hidden) return;
+    const uk = locale() === 'uk';
+    const key = JSON.stringify([
+      uk,
+      state.title,
+      state.replay,
+      state.watch,
+      state.section,
+      state.checkpoint,
+      state.rate,
+    ]);
+    if (key !== last) {
+      last = key;
+      title.textContent = uk ? 'Дивіться → спробуйте → повторіть' : 'Watch → Try → Repeat';
+      description.textContent = state.title;
+      note.textContent = state.replay
+        ? uk
+          ? 'Записані стіки показують приклад. Спроба почнеться з вимкненими двигунами; увімкніть їх, коли будете готові.'
+          : 'Recorded sticks show the example. Trying starts disarmed; Arm when you are ready.'
+        : state.section
+          ? uk
+            ? 'Тренування ділянки відновлює записаний вхід і не змінює результати. Нова спроба потребує ввімкнення двигунів.'
+            : 'Section practice restores its recorded entry without changing records. A new attempt waits for Arm.'
+          : uk
+            ? 'Перегляньте приклад, потім спробуйте весь маршрут. Нова спроба потребує ввімкнення двигунів.'
+            : 'Watch the example, then try the full route. A new attempt waits for Arm.';
+      const labels = {
+        retry: uk ? 'Ще раз' : 'Retry',
+        watch: uk ? 'Переглянути приклад' : 'Watch example',
+        practice: uk
+          ? `Тренувати ділянку ${state.section ?? ''}`
+          : `Practise section ${state.section ?? ''}`,
+        try: uk
+          ? state.checkpoint
+            ? 'Спробувати цю ділянку'
+            : 'Спробувати самому'
+          : state.checkpoint
+            ? 'Try this section'
+            : 'Try it yourself',
+        repeat: uk ? 'Переглянути ще раз' : 'Watch again',
+      };
+      for (const { action, button } of buttons) {
+        button.textContent = labels[action];
+        button.hidden = state.replay
+          ? action === 'practice'
+            ? !state.section
+            : !['try', 'repeat'].includes(action)
+          : action === 'watch'
+            ? !state.watch
+            : action === 'practice'
+              ? !state.section
+              : action !== 'retry';
+      }
+      speedLabel.hidden = !state.replay;
+      speedText.textContent = uk ? 'Швидкість прикладу' : 'Example speed';
+      rates.forEach((rate, index) => {
+        const pace = rate === 1 ? (uk ? 'Звичайно' : 'Normal') : uk ? 'Повільно' : 'Slow';
+        speed.options[index].textContent =
+          `${pace} · ${rate === 0.25 ? '¼' : rate === 0.5 ? '½' : '1'}×`;
+      });
+      speed.value = String(state.rate);
+    }
+    if (state.course !== previewCourse || state.mode !== previewMode) {
+      previewCourse = state.course;
+      previewMode = state.mode;
+      picture.replaceChildren();
+      const course = state.course;
+      if (!course?.bounds || !doc.createElementNS) return;
+      const svg = doc.createElementNS('http://www.w3.org/2000/svg', 'svg');
+      svg.setAttribute('viewBox', '0 0 160 96');
+      const min = course.bounds.min,
+        max = course.bounds.max;
+      const add = (tag, values) => {
+        const node = doc.createElementNS(svg.namespaceURI, tag);
+        for (const [name, value] of Object.entries(values)) node.setAttribute(name, String(value));
+        svg.append(node);
+      };
+      add('rect', {
+        x: 2,
+        y: 2,
+        width: 156,
+        height: 92,
+        rx: 6,
+        fill: 'none',
+        stroke: 'currentColor',
+        opacity: 0.4,
+      });
+      const points = [
+        course.spawn,
+        ...(course.steps?.[state.mode] ?? [])
+          .slice(0, 64)
+          .map((step) =>
+            step.min && step.max
+              ? { x: (step.min.x + step.max.x) / 2, z: (step.min.z + step.max.z) / 2 }
+              : step.type === 'gate'
+                ? {
+                    x: step.axis === 'x' ? step.at : (step.minSide + step.maxSide) / 2,
+                    z: step.axis === 'z' ? step.at : (step.minSide + step.maxSide) / 2,
+                  }
+                : null,
+          ),
+      ].filter((point) => point && Number.isFinite(point.x) && Number.isFinite(point.z));
+      for (const [index, point] of points.entries())
+        add('circle', {
+          cx: 10 + 140 * Math.max(0, Math.min(1, (point.x - min.x) / Math.max(1, max.x - min.x))),
+          cy: 10 + 76 * Math.max(0, Math.min(1, (point.z - min.z) / Math.max(1, max.z - min.z))),
+          r: index ? 3 : 5,
+          fill: index ? 'var(--sim-accent, #f3bd57)' : 'currentColor',
+        });
+      picture.append(svg);
+    }
+  }
+  refresh();
+  return {
+    element: root,
+    refresh,
+    dispose() {
+      for (const { button, click } of buttons) button.removeEventListener('click', click);
+      speed.removeEventListener('change', changeRate);
+      delete container.dataset.simPractice;
+      root.remove();
+    },
+  };
+}
+
 // BEGIN GENERATED SHARED MODE SHELL
 import*as simGlobalI18n from'../../game/i18n/index.mjs';
 import*as simGlobalThemes from'../../game/presentation/theme-system.mjs';
