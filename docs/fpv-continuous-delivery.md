@@ -4588,3 +4588,58 @@ successfully, keeping both recovery links. Its actual home opened and catalogue
 Play loaded Reservoir disarmed at zero seconds. Frozen files and player storage
 were not modified. This bounded integrity scenario does not prove quota eviction,
 full browser restart or all network failures.
+
+## 14 October — regional host, Canyon and moving-flight checkpoint
+
+Coordinator branch: `codex/fpv-regional-motion-checkpoint-20261014`, from current
+main in the external docs checkout. #1266 licensed Canyon landmarks and #1267
+shared regional player-host review are merged. Host review uses normal input,
+camera, pause and setup ownership, with explicit unscored regional sessions.
+Native keyboard and touch flight, camera/mode changes, 390×844 layout and boundary
+recovery were observed. At the ceiling, Resume opens the shared pause menu; Retry
+returns to the launch pose with zero speed/throttle and stays disarmed.
+
+The first host cloud qualification caught stale Academy file-count assertions
+and missing regional modules in the main distribution builder. Merged follow-up #1269
+corrects both; merged receipt #1272 records exact package and native evidence. Its optional-package cloud check and all six exact archive member
+checks pass. Native first-attempt preparation reports Ready offline; its actual
+launcher link opens Home. The packaged regional review starts disarmed, responds
+to deliberate keyboard arming/input and camera switching, and returns disarmed
+after mode change and Retry. The separate regional fixture is not claimed installed
+or available offline. Exact structural counts
+are 143 runtime paths, 153 manifest dependencies, 154 runtime ZIP members and 156
+source ZIP members. The Worlds file limit is 156; the 20 MiB byte limit is unchanged.
+The source host review does not establish default regional catalogue admission.
+
+Nine longer native synthetic motion workloads are recorded in #1270. Reservoir,
+Harbor and Coaster each ran all three presets with 1,230 physics ticks and 1,200
+measured frames, including 400 frames per camera. All final states match the
+independent reference and no terminal reset occurred. Combined model/draw CPU p95
+was 0.6–1.1 ms. Registered geometry/material/texture counts returned to zero after
+disposal; the retained internal renderer texture counter is documented separately.
+One physics tick per render frame is deliberate and not real-time flight; these
+observations do not establish hardware FPS, GPU completion or leak-free memory.
+
+Canyon's 27 licensed formations retain clear gaps and matching collision. Native
+review found and corrected a buried ridge formation and a poorly framed preview.
+A broad drainage rewrite was rejected because it changed substantial relief while
+leaving the jagged skyline. A targeted rounding revision instead preserves original
+drainage and rock horizontal positions, with fresh route/support checks. The targeted relief is merged in #1271. Native inspection of the next material
+revision across all three presets removes repeating surface bands; Performance
+release/reload restores nine cells, 90 meshes/colliders and 673,464 geometry bytes
+without console errors. Its focused PR is #1274. Neither source
+study is final art acceptance.
+
+Next independent lanes: continuous bounded terrain prefetch/adoption so ordinary
+cell crossings remain active; exact host-package qualification; Canyon surface
+refinement. Default player admission follows those gates, before later large regions.
+The shared external Git object index was updated without deleting objects, commits,
+source or player data. Primary checkout unrelated files remain untouched; heavy
+work stays external/cloud while internal storage is below the 3 GiB floor.
+
+Continuous window staging is published in #1273 (`f5411438367b`): 2,200
+accepted ticks across four cell crossings match the conservative physics reference.
+Delayed/corrupt sources, live-pose rejection and cancellation are verified. Native
+9032 review confirms deliberate keyboard lift/forward movement, retained pause
+pose and disarmed boundary reset; it does not establish an exact observed cell
+crossing. Renderer preparation and immutable regional delivery remain next gates.
