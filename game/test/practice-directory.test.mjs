@@ -19,7 +19,10 @@ import {
 import { frozenOptionalPackageOverlay } from '../../publishing/optional-package-promotion.mjs';
 import { verifyPracticeSite } from '../../scripts/verify-practice-site.mjs';
 import { mountPracticeNavigation } from '../../optional-practice/navigation.mjs';
-import { practiceDirectoryHTML } from '../../publishing/practice-directory.mjs';
+import {
+  practiceDirectoryHTML,
+  PRACTICE_DIRECTORY_SCRIPT,
+} from '../../publishing/practice-directory.mjs';
 
 const id = 'civilian-flight',
   indexURL = 'https://example.test/practice/index.json';
@@ -40,6 +43,38 @@ const detail = {
   offlineBytes: 2000,
 };
 const metadata = { format: 'revealline-practice-details.v1', packages: [detail] };
+
+test('standalone directory preserves selected locale for main game, guide and package links', () => {
+  const html = practiceDirectoryHTML([entry], [detail]);
+  assert.match(html, /<a data-locale href="\.\.\/game\/"/);
+  assert.match(html, /<a data-locale href="\.\.\/optional-practice\/civilian-fpv\/guide.html"/);
+  const links = [
+    { href: 'https://example.test/game/' },
+    { href: 'https://example.test/optional-practice/civilian-fpv/guide.html' },
+    { href: 'https://example.test/practice/civilian-flight/app/?action=play&lang=en' },
+  ];
+  const select = {};
+  const document = {
+    hidden: true,
+    documentElement: {},
+    getElementById: () => select,
+    querySelectorAll: (selector) => (selector === '[data-launch], [data-locale]' ? links : []),
+  };
+  runInNewContext(PRACTICE_DIRECTORY_SCRIPT, {
+    document,
+    location: { href: 'https://example.test/practice/?lang=uk' },
+    URL,
+    addEventListener() {},
+    setTimeout() {},
+  });
+  for (const locale of ['uk', 'en']) {
+    select.value = locale;
+    select.onchange();
+    assert.equal(document.documentElement.lang, locale);
+    for (const link of links) assert.equal(new URL(link.href).searchParams.get('lang'), locale);
+    assert.equal(new URL(links[2].href).searchParams.get('action'), 'play');
+  }
+});
 
 test('directory introduction stays accurate for empty and extended catalogues', () => {
   for (const count of [0, 3, 4]) {

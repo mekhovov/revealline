@@ -66,7 +66,19 @@ Progress & Collection, and Controls; Gym's and World's Content & Offline. Launch
 transitions verify the exact origin, app/version path and English language query;
 the helper also tests Ukrainian routing. Academy's Workshop & offline disclosure
 is expanded through its summary's native keyboard Enter action before preparation, failed-download and removal
-checks. It does not click
+checks. Radio Setup's **Back up or import a profile** disclosure is likewise expanded
+before importing a profile and before every subsequent export; closing Setup recreates
+that editor with its transfer tools collapsed. The adapter checks actual visibility
+and leaves already-open disclosures open. Profile import/export uses native button
+Enter; a current-runtime controlled diagnostic confirmed a first pointer click can
+leave the export empty while Enter produces the profile JSON. The initial export
+must match every fixture field, including the retained radios array in the current
+`FlightProfiles.v2` library (older `FlightProfiles.v1` exports remain supported).
+Proof import/export also uses native Enter: in the full current controlled journey,
+the first pointer export after offline reopening left the textarea empty rather
+than producing even an empty-attempt JSON backup. Later exports must remain
+byte-identical through offline use, update and rollback.
+Unknown export formats fail instead of silently dropping fields. It does not click
 hidden controls or directly invoke application functions. Offline preparation and
 removal also use native button Enter. A read-only DOM witness requires fresh status
 or progress activity within 30 seconds, then a fresh terminal status; stale success
@@ -98,6 +110,25 @@ The observer uses and records that keyboard route; it does **not** claim the fir
 pointer interaction has passed. Simulator/UI follow-up and device checks remain necessary.
 This controlled fixture predates the later October 14 SIM world-catalogue/shared-worker
 changes and is only an observer-adapter diagnostic, not current runtime qualification.
+
+A refreshed, unpublished fixture built from baseline
+`caab4312e42d9193faa3a0450aaba015b3c6ae5e` completed all eight checkpoints on Chrome
+155.0.8059.40 on October 14. Its own frozen commit is
+`7997fd5c1144bfa9ae5922a9c619b44644c4cab9`; only copied password metadata and the
+development version were changed for ordinary-form test access. All three apps
+prepared, all four open tabs/windows closed, the uncached network probe failed,
+and all three launchers reopened offline both in tabs and installed standalone
+windows. Profile-library and proof exports remained byte-identical through the
+same-payload path update, rejected damaged dependency, rollback and scoped gym
+removal. No page errors occurred; observer/helper hashes remained unchanged and
+all test applications/profile were removed successfully.
+
+This is a passing **controlled observer regression**, not qualification of the
+unchanged release candidate, distinct-version schema migration, a browser-process
+restart, physical input or public deployment. Real-package qualification still
+requires authorized access and the release's original frozen bytes. The first
+pointer interactions described above remain unqualified; the passing run records
+native keyboard transfer actions explicitly.
 
 Gameplay offline checks run in the browser tab; standalone windows additionally
 verify the apps' mounted start screens and coexistence. A passing report requires browser preparation,
