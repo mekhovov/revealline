@@ -29,7 +29,7 @@ const fetchResponse = async (path) =>
 function openSoloResult(page) {
   const checkpoint = authoritativeCheckpoint(page.rendered.run);
   assert.equal(page.rendered.run.status, 'won');
-  assert.equal(page.$('journey-reactions').hidden, true);
+  assert.equal(page.$('game-overlay').hidden, true);
   // Let the real reward presentation reveal its visible result control.
   for (let i = 0; i < 100 && page.$('show-result').hidden; i++) page.frame(100);
   assert.equal(page.$('show-result').hidden, false);
