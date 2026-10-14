@@ -256,4 +256,15 @@ test('an intentionally empty publication emits a catalogue, and a missing public
     fetcher: async (url) => new Response(output.get(new URL(url).pathname.slice(1))),
   });
   assert.deepEqual(result.checked, []);
+  await assert.rejects(
+    verifyPracticeSite({
+      baseURL: 'https://example.test/',
+      expectedIds: [],
+      fetcher: async (url) =>
+        url.endsWith('/index.html')
+          ? new Response('', { status: 404 })
+          : new Response(output.get(new URL(url).pathname.slice(1))),
+    }),
+    /Published asset unavailable/,
+  );
 });
