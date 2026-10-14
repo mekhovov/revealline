@@ -369,6 +369,7 @@ export function mountFlightCameraControls({
   return {
     cycle,
     refresh,
+    element: group,
     dispose() {
       disposed = true;
       win.removeEventListener('keydown', keydown);
@@ -376,6 +377,151 @@ export function mountFlightCameraControls({
       quick.removeEventListener('click', cycle);
       quick.remove();
       group.remove();
+    },
+  };
+}
+
+/** Paused shortcuts forward to the canonical controls and their safety rules. */
+export function mountFlightSetup({
+  document: doc,
+  window: win,
+  shell,
+  mode,
+  source,
+  radioButton,
+  camera,
+  locale = () => 'en',
+  available = () => true,
+  inputHint = () => '',
+  inputRestarts = false,
+}) {
+  const quick = doc.createElement('button');
+  quick.type = 'button';
+  quick.className = 'sim-camera-quick';
+  quick.dataset.modeAction = 'flight-setup';
+  const openSetup = () => shell.open('pause');
+  quick.addEventListener('click', openSetup);
+  shell.elements.buttons.pause.before(quick);
+  const root = doc.createElement('section');
+  root.className = 'sim-flight-setup';
+  const title = doc.createElement('h2');
+  const rows = doc.createElement('div');
+  rows.className = 'sim-flight-setup-rows';
+  const note = doc.createElement('small');
+  const radio = doc.createElement('button');
+  radio.type = 'button';
+  radio.dataset.flightSetup = 'radio';
+  const help = doc.createElement('details');
+  const summary = doc.createElement('summary');
+  const hint = doc.createElement('p');
+  help.append(summary, hint);
+  root.append(title, rows, note, camera.element, help);
+  const resume = shell.elements.content.pause.querySelector('.pause-command-primary');
+  if (resume) resume.after(root);
+  else shell.elements.content.pause.prepend(root);
+  const bindings = [
+    ['mode', mode],
+    ['source', source],
+  ].map(([key, canonical]) => {
+    const label = doc.createElement('label');
+    const text = doc.createElement('span');
+    const select = doc.createElement('select');
+    select.dataset.flightSetup = key;
+    label.append(text, select);
+    rows.append(label);
+    const binding = { key, canonical, text, select, signature: '', value: undefined };
+    const change = () => {
+      if (!available() || canonical.disabled) {
+        select.value = canonical.value;
+        return refresh();
+      }
+      if (
+        ![...canonical.options].some((option) => option.value === select.value && !option.disabled)
+      )
+        return refresh();
+      if (canonical.value === select.value) return;
+      canonical.value = select.value;
+      canonical.dispatchEvent(new win.Event('change', { bubbles: true }));
+      refresh();
+    };
+    select.addEventListener('change', change);
+    canonical.addEventListener('change', refresh);
+    binding.dispose = () => {
+      select.removeEventListener('change', change);
+      canonical.removeEventListener('change', refresh);
+    };
+    return binding;
+  });
+  rows.append(radio);
+  const openRadio = () => {
+    if (available() && !radioButton.disabled) radioButton.click();
+  };
+  radio.addEventListener('click', openRadio);
+  let lastLocale, lastHint;
+  function refresh() {
+    const uk = locale() === 'uk';
+    quick.hidden =
+      !available() || !shell.elements.buttons.pause.disabled || Boolean(shell.topDialog());
+    const quickLabel = uk ? 'Налаштування польоту' : 'Flight setup';
+    if (quick.textContent !== quickLabel) quick.textContent = quickLabel;
+    if (!shell.elements.dialogs.pause.open) return;
+    root.hidden = !available();
+    radio.disabled = radioButton.disabled;
+    if (lastLocale !== uk) {
+      lastLocale = uk;
+      title.textContent = uk ? 'Налаштування польоту' : 'Flight setup';
+      note.textContent = inputRestarts
+        ? uk
+          ? 'Зміна режиму або керування починає нову спробу на паузі. Камера зберігає спробу.'
+          : 'Changing mode or input starts a new paused attempt. Camera keeps this attempt.'
+        : uk
+          ? 'Зміна режиму починає нову спробу на паузі. Зміна керування залишає політ на паузі.'
+          : 'Changing mode starts a new paused attempt. Changing input keeps flight paused.';
+      radio.textContent = uk ? 'Налаштувати пульт' : 'Set up radio';
+      summary.textContent = uk ? 'Керування для вашого пристрою' : 'Your device controls';
+      bindings[0].text.textContent = uk ? 'Режим польоту' : 'Flight mode';
+      bindings[1].text.textContent = uk ? 'Керування' : 'Controls';
+    }
+    for (const binding of bindings) {
+      const { canonical, select } = binding;
+      const signature = JSON.stringify(
+        [...canonical.options].map((option) => [option.value, option.textContent, option.disabled]),
+      );
+      if (signature !== binding.signature) {
+        binding.signature = signature;
+        select.replaceChildren(
+          ...[...canonical.options].map((option) => {
+            const copy = doc.createElement('option');
+            copy.value = option.value;
+            copy.textContent = option.textContent;
+            copy.disabled = option.disabled;
+            return copy;
+          }),
+        );
+        binding.value = undefined;
+      }
+      select.disabled = canonical.disabled;
+      // Do not overwrite a controller/radio menu selection before Confirm.
+      if (binding.value !== canonical.value) {
+        binding.value = canonical.value;
+        select.value = canonical.value;
+      }
+    }
+    const nextHint = inputHint();
+    if (lastHint !== nextHint) {
+      lastHint = nextHint;
+      hint.textContent = nextHint;
+    }
+  }
+  refresh();
+  return {
+    refresh,
+    dispose() {
+      bindings.forEach((binding) => binding.dispose());
+      radio.removeEventListener('click', openRadio);
+      quick.removeEventListener('click', openSetup);
+      quick.remove();
+      root.remove();
     },
   };
 }

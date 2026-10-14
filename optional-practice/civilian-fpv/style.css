@@ -6147,4 +6147,69 @@ html body .sim-camera-choices small {
   flex-basis: 100%;
   color: var(--fk-muted);
 }
+
+/* Quick setup is a paused surface, never another in-flight overlay. */
+.sim-flight-setup {
+  margin-bottom: 16px;
+  min-width: 0;
+}
+.sim-flight-setup > h2 {
+  margin: 0 0 8px;
+  font-size: 1.15em;
+}
+.sim-flight-setup-rows {
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  gap: 10px;
+  align-items: end;
+}
+.sim-flight-setup-rows label {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+}
+.sim-flight-setup-rows :is(select, button) {
+  min-height: 44px;
+  max-width: 100%;
+  width: 100%;
+}
+.sim-flight-setup > small {
+  display: block;
+  margin: 8px 0 12px;
+  color: var(--fk-muted, #afbdc6);
+}
+.sim-flight-setup details {
+  margin-top: 8px;
+}
+.sim-flight-setup summary {
+  min-height: 44px;
+  display: list-item;
+  align-content: center;
+  cursor: pointer;
+}
+.sim-flight-setup details p {
+  max-width: 65ch;
+  margin: 8px 0;
+}
+@media (max-width: 560px) {
+  .sim-flight-setup-rows {
+    grid-template-columns: 1fr 1fr;
+  }
+  .sim-flight-setup-rows > button {
+    grid-column: 1 / -1;
+  }
+}
+
+html body .sim-flight-setup .sim-camera-choices {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+html body .sim-flight-setup .sim-camera-choices > button {
+  min-width: 0;
+  padding: 8px;
+  width: 100%;
+}
+.sim-flight-setup .sim-camera-choices > small {
+  grid-column: 1 / -1;
+}
 /* END SHARED SIM FULLSCREEN */
