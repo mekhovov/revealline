@@ -2,9 +2,17 @@ name: Fastline exact-head auto-merge
 
 on:
   workflow_run:
-    # Wake when the exact-head source gate completes, including a failure that
-    # must disarm an earlier auto-merge decision.
-    workflows: [Validate source for continuous main]
+    # Reconcile when any PR validation workflow completes, including a failure
+    # that must disarm an earlier decision. The controller also waits for every
+    # non-waived exact-head check already registered on the commit.
+    workflows:
+      - Validate source for continuous main
+      - Appearance preview
+      - Industrial feature verification
+      - Company edition candidates
+      - Assemble full-test release evidence
+      - Community hosted acceptance
+      - Community MinIO recovery
     types: [completed]
   pull_request:
     branches: [main]
