@@ -103,7 +103,7 @@
         Riy, Single Raid, Time Attack and Contract Marathon share the same map library.
       </p>
       <p class="note">
-        Maps and movement are in
+        Maps and movement merged through
         <a href="https://github.com/mekhovov/revealline/pull/1215">PR 1215</a>; shared integration,
         fixes and qualification are in
         <a href="https://github.com/mekhovov/revealline/pull/1226">PR 1226</a>. Local reference and
@@ -111,6 +111,12 @@
         coverage and gameplay review remain open. Active clips use an automated review pilot;
         no-input follow-ups are labeled separately. They establish visible behavior, not
         ordinary-player difficulty.
+      </p>
+      <p class="note">
+        <strong>Recorded before the latest progression fix:</strong> the videos and timing trials
+        below precede <code>07ed46625</code>, which changes later built-in upgrade thresholds and
+        V4 result saving. They show the recorded artwork and behavior, not qualification of the new
+        progression. Each capture retains its own source revision.
       </p>
       <nav aria-label="Review materials">
         <a href="art-review/native-worlds.html">Explore all maps and play links</a>
@@ -139,6 +145,59 @@
           all five operation links.
         </figcaption>
       </figure>
+    </section>
+    <section>
+      <h2>Normal and reduced effects during one run</h2>
+      <p>
+        Haul Switchbacks, seed 17031991, Single Drone Fan, source <code>3a1e1f7d9</code> before
+        the progression fix. These muted 20-second segments come from one continuous earned run
+        with the automated pilot. Reduced effects was selected through shared Settings while
+        paused; normal effects was restored afterward.
+      </p>
+      <div class="clips">
+        <figure>
+          <video controls preload="none" poster="native/quarry-fan-mid-normal.png"
+            src="native/quarry-fan-mid-normal.webm"></video>
+          <figcaption>
+            <h3>Normal · starts at 2:39</h3>
+            Fan rank 4, Slow Field rank 3 and Side Burst rank 1.
+          </figcaption>
+        </figure>
+        <figure>
+          <video controls preload="none" poster="native/quarry-fan-mid-reduced.png"
+            src="native/quarry-fan-mid-reduced.webm"></video>
+          <figcaption>
+            <h3>Reduced · starts at 3:24</h3>
+            Fan rank 4, Slow Field rank 3 and Side Burst rank 2.
+          </figcaption>
+        </figure>
+      </div>
+      <p class="note">
+        The enemy state, positions and Side Burst rank differ. This shows the available effects
+        treatments in native combat; it is not an identical-state visual or performance comparison.
+        <a href="native/quarry-effects-comparison.json">Settings and recording hashes</a>.
+      </p>
+    </section>
+    <section>
+      <h2>Dense combat effects and voices</h2>
+      <p>
+        The same pre-fix Quarry Fan run, around 4:14 on <code>3a1e1f7d9</code>, with Fan rank 4,
+        Slow Field rank 3 and Side Burst rank 3. Master sound is enabled and normal effects restored.
+      </p>
+      <figure>
+        <video controls preload="none" poster="native/quarry-fan-dense-audio.png"
+          src="native/quarry-fan-dense-audio.webm"></video>
+        <figcaption>
+          <a href="native/quarry-fan-dense-audio.mp3">Listen to the effects/voices sample</a> ·
+          <a href="native/quarry-fan-dense-audio.json">Capture settings and audio measurement</a>.
+        </figcaption>
+      </figure>
+      <p class="note">
+        The recording is non-silent: measured mean −47.5 dB and peak −29.2 dB. It excludes external
+        soundtrack, HUD and upgrade cards. A Now playing label does not prove recorded music.
+        Warning audibility, reaction repetition and the complete music/effects mix still need
+        listening review; these volume measurements do not establish sound quality.
+      </p>
     </section>
     <section>
       <h2>Late-combat comparison on one map</h2>
