@@ -10,6 +10,8 @@ import {
   unlockObservedPage,
   matchesLaunchedAppURL,
   revealFPVOffline,
+  revealFPVProfiles,
+  expectedImportedProfileExport,
   activateOfflineAction,
   OBSERVATION_TIMEOUT_MS,
   trackObservedResource,
@@ -288,6 +290,81 @@ test('Academy offline controls expand the ordinary closed Workshop disclosure in
     3,
     'Preparation, failed download, and removal share the same public disclosure action.',
   );
+});
+
+test('profile import and every export open the ordinary transfer disclosure without toggling it closed', async () => {
+  let setupOpen = false;
+  let transferOpen = false;
+  const actions = [];
+  const page = {
+    locator: (selector) => ({
+      isVisible: async () => setupOpen,
+      filter: ({ hasText }) => {
+        assert.ok(hasText.test('Back up or import a profile'));
+        return {
+          locator: () => ({ getAttribute: async () => (transferOpen ? '' : null) }),
+          press: async (key) => {
+            assert.equal(key, 'Enter');
+            actions.push(selector);
+            transferOpen = true;
+          },
+        };
+      },
+    }),
+    getByRole: (role, options) => ({
+      waitFor: async ({ state }) => {
+        assert.equal(role, 'textbox');
+        assert.deepEqual(options, { name: 'Profile JSON', exact: true });
+        assert.equal(state, 'visible');
+        assert.ok(setupOpen && transferOpen);
+      },
+    }),
+  };
+  const openSetup = async () => {
+    actions.push('#setup');
+    setupOpen = true;
+  };
+  await revealFPVProfiles(page, openSetup);
+  await revealFPVProfiles(page, openSetup);
+  assert.deepEqual(actions, ['#setup', '#setup-dialog summary']);
+  // Closing Setup destroys its radio editor, so the next visit is collapsed again.
+  setupOpen = transferOpen = false;
+  await revealFPVProfiles(page, openSetup);
+  assert.equal(actions.length, 4);
+  const guide = await readFile(
+    new URL('../optional-practice/civilian-fpv/radio-guide.mjs', import.meta.url),
+    'utf8',
+  );
+  assert.ok(guide.includes("transfer: t('Back up or import a profile'"));
+  const observer = await readFile(
+    new URL('./observe-optional-installation.mjs', import.meta.url),
+    'utf8',
+  );
+  assert.equal(
+    observer.match(/await revealFPVProfiles\(page, \(\) => clickFPV\('#setup', 'controls'\)\)/g)
+      ?.length,
+    2,
+  );
+});
+
+test('profile export expectations preserve the entire legacy fixture and current radio library', () => {
+  const fixture = {
+    format: 'FlightProfiles.v1',
+    radio: { id: 'fixture', verified: false },
+    response: { id: 'response' },
+  };
+  assert.deepEqual(expectedImportedProfileExport('FlightProfiles.v1', fixture), fixture);
+  const library = expectedImportedProfileExport('FlightProfiles.v2', fixture);
+  assert.deepEqual(library, { ...fixture, format: 'FlightProfiles.v2', radios: [fixture.radio] });
+  assert.equal(fixture.format, 'FlightProfiles.v1');
+  assert.throws(() => expectedImportedProfileExport('FlightProfiles.v99', fixture), /Unsupported/);
+  for (const damaged of [
+    { ...library, radios: [] },
+    { ...library, radio: { ...fixture.radio, verified: true } },
+    { ...library, response: { id: 'changed' } },
+    { ...library, extra: 'unexpected' },
+  ])
+    assert.notDeepEqual(damaged, library);
 });
 
 test('offline restart closes every page and rejects surviving windows', async () => {
