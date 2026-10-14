@@ -947,13 +947,19 @@ test('Motion HTML adopts reading policy before held app startup with one explici
   const theme = h.scripts.find(
     (script) => script.attrs.src === '../../game/presentation/theme-bootstrap.mjs',
   );
+  const accessGate = h.scripts.find((script) => script.attrs.src === '../../game/access-gate.mjs');
   assert.ok(
     theme && theme.offset < h.entries[0].offset,
     'Shared theme markers precede reading setup',
   );
+  assert.ok(accessGate && accessGate.offset < theme.offset, 'Access gate precedes app startup');
   assert.ok(
     h.entries[0].offset <
-      Math.min(...h.scripts.filter((s) => s !== h.entries[0] && s !== theme).map((s) => s.offset)),
+      Math.min(
+        ...h.scripts
+          .filter((s) => s !== h.entries[0] && s !== theme && s !== accessGate)
+          .map((s) => s.offset),
+      ),
   );
   policy(h, 'plain', 'large', 'full');
   assert.equal(h.doc.querySelectorAll('[data-field-kit-text-size]').length, 0);

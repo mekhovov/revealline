@@ -33,6 +33,7 @@
         "game/test/team-running-enemies.test.mjs",
         "game/test/classic-snake-legacy-seeds.test.mjs",
         "game/test/overflight-core.test.mjs",
+        "game/test/overflight-riy.test.mjs",
         "game/test/overflight-balance.test.mjs"
       ]
     },
