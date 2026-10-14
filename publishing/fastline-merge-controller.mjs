@@ -12,6 +12,31 @@ import {
 } from "./admission-binding.mjs";
 
 const STACK_MERGE_LABEL = "fastline-stack-merge";
+// release-ready records the selected source policy. These jobs are deliberately
+// skipped when that policy waives a full suite; a skip is never a test pass.
+const POLICY_SKIPPED_JOBS = new Set(["focused", "test", "build"]);
+
+export function exactHeadCheckBlocker(checkRuns = [], headSha) {
+  const latest = new Map();
+  for (const check of checkRuns) {
+    // The controller cannot wait for its own currently running reconcile job.
+    if (check.name === "reconcile") continue;
+    if (check.head_sha && check.head_sha !== headSha)
+      return `${check.name} belongs to a different head`;
+    const previous = latest.get(check.name);
+    if (!previous || check.id > previous.id) latest.set(check.name, check);
+  }
+  for (const check of latest.values()) {
+    if (check.status !== "completed")
+      return `${check.name} is ${check.status || "pending"} on the exact head`;
+    if (
+      check.conclusion !== "success" &&
+      !(check.conclusion === "skipped" && POLICY_SKIPPED_JOBS.has(check.name))
+    )
+      return `${check.name} concluded ${check.conclusion || "without a result"} on the exact head`;
+  }
+  return null;
+}
 
 export function dependencyNumbers(body = "") {
   return [
@@ -23,6 +48,8 @@ export function decideMergeAction({
   pullRequest,
   observedHeadSha,
   requiredCheck,
+  checkRuns = [],
+  checkInventoryComplete = true,
   dependencies = [],
 }) {
   const labels = new Set(
@@ -45,6 +72,10 @@ export function decideMergeAction({
       return "release-ready is not successful on the exact head";
     if (requiredCheck.admissionMatches !== true)
       return "source or admission metadata changed since the successful gate";
+    if (!checkInventoryComplete)
+      return "exact-head check inventory is incomplete";
+    const checkBlocker = exactHeadCheckBlocker(checkRuns, observedHeadSha);
+    if (checkBlocker) return checkBlocker;
     if (
       pullRequest.mergeable === false ||
       pullRequest.mergeable_state === "dirty"
@@ -383,6 +414,8 @@ async function main() {
     pullRequest,
     observedHeadSha,
     requiredCheck,
+    checkRuns: checks.check_runs,
+    checkInventoryComplete: checks.total_count <= checks.check_runs.length,
     dependencies,
   });
   await appendSummary([
