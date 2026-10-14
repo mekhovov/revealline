@@ -1716,7 +1716,7 @@ function refresh() {
       ? text('courierOptional')
       : '';
     board.operation.hidden = !run.operation && !reactionText && !courierText;
-    board.operation.parentElement.dataset.operation = String(!board.operation.hidden);
+    board.operation.parentElement.dataset.status = String(!board.operation.hidden);
     const operationText = [classicOperationStatus(run, locale), reactionText, courierText]
       .filter(Boolean)
       .join(' · ');
