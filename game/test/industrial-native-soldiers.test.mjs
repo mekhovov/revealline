@@ -68,6 +68,7 @@ async function nativeRendererFixture(
   // Exercise production dispatch, bindings, materials and ownership. Only the
   // browser renderer, surrounding environment and unrelated drone are modeled.
   const create = vm.runInNewContext(`${source}; createFlightRenderer`, {
+    applySimBattlefieldGround,
     ...visuals,
     ...themes,
     ...soldiers,
@@ -732,3 +733,4 @@ test('production renderer accepts saved artwork at course boundaries and honors 
     assert.equal(renderer.resources().registered.materials, 0);
   }
 });
+import { applySimBattlefieldGround } from '../../optional-practice/civilian-fpv/battlefield-ground.mjs';

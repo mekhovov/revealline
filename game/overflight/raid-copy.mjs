@@ -2,7 +2,7 @@ import { overflightText } from './copy.mjs';
 
 export const OVERFLIGHT_HUNT_COPY = Object.freeze({
   en: {
-    title: 'Survive: Raid',
+    title: 'Single Raid',
     preparing: 'Preparing Raid…',
     briefing:
       'Your flight is your weapon. Sweep exposed enemies, flank shields and boost through open armor. Hunt the marked targets to complete the Raid.',
@@ -55,7 +55,7 @@ export const OVERFLIGHT_HUNT_COPY = Object.freeze({
     reviewBuild_objectives: 'Objective route',
   },
   uk: {
-    title: 'Вижити: Наліт',
+    title: 'Один наліт',
     preparing: 'Готуємо «Наліт»…',
     briefing:
       'Політ — ваша зброя. Змітайте відкритих ворогів, обходьте щити та прискорюйтесь крізь відкриту броню. Знищіть позначені цілі, щоб завершити наліт.',

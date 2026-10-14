@@ -248,6 +248,7 @@ test('Focus begins its three seconds on arrival, never resets fire cadence, and 
   assert.equal(run.riy.focusRemaining, 0);
   for (let i = 0; i < 119 && run.riy.phase === 'approach'; i++) stepOverflightRiy(run);
   assert.equal(run.riy.phase, 'engaged');
+  assert.equal(run.riy.engagements, 1, 'only reaching attack range counts as an engagement');
   assert.equal(run.riy.focusRemaining, 3);
   assert.equal(s.shots + b.shots, 0, 'command must not reset existing cooldowns');
   const failed = quiet();
@@ -258,6 +259,7 @@ test('Focus begins its three seconds on arrival, never resets fire cadence, and 
   for (let i = 0; i < 122; i++) stepOverflightRiy(failed, { focus: i === 0 });
   assert.equal(failed.riy.targetId, null);
   assert.equal(failed.riy.commands, 1);
+  assert.equal(failed.riy.engagements, 0, 'a timed-out approach cannot earn Focus mastery');
   assert.ok(failed.riy.cooldown > 3);
 });
 

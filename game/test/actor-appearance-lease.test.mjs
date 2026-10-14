@@ -5,6 +5,7 @@ import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { createPresentationHost, ACTOR_PRESENTATION_SLOTS } from '../presentation/host.mjs';
 import { hashPresentationBytes } from '../presentation/bundle.mjs';
+import { OVERFLIGHT_ACTOR_SLOT_IDS } from '../presentation/overflight-actor-slots.mjs';
 import {
   ACTOR_APPEARANCE_RELEASES,
   ACTOR_APPEARANCE_REQUIRED_SLOTS,
@@ -173,6 +174,10 @@ test('approved actor registry binds exact accepted compiled62 bytes, not a curre
   assert.equal(ACTOR_APPEARANCE_REQUIRED_SLOTS.solo.length, 28);
   assert.equal(ACTOR_APPEARANCE_REQUIRED_SLOTS.versus.length, 28);
   assert.equal(ACTOR_APPEARANCE_REQUIRED_SLOTS.team.length, 39);
+  for (const slot of OVERFLIGHT_ACTOR_SLOT_IDS) {
+    assert.ok(!ACTOR_PRESENTATION_SLOTS.includes(slot));
+    assert.ok(!ACTOR_APPEARANCE_REQUIRED_SLOTS.solo.includes(slot));
+  }
 });
 
 test('fixed actors loader uses the existing verified image path and has no other presentation authority', async () => {
