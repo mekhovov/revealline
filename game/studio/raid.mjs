@@ -105,7 +105,7 @@ function refreshOperationContext() {
   }
 }
 refreshOperationContext();
-let draft = createOverflightHuntProject({ rulesVersion: 3, world: 'field-crossing' }),
+let draft = createOverflightHuntProject({ rulesVersion: 4, world: 'field-crossing' }),
   sector = 0,
   selected = { kind: 'objectives', index: 0 },
   revision = 0,
@@ -740,7 +740,7 @@ function render() {
       },
       onApply: render,
       fieldsClass: 'raid-fields',
-      allowTerrain: previewOperation === 'overflight-hunt',
+      allowTerrain: previewOperation === 'overflight-hunt' || !!draft.battlefield,
     }),
     overflightCombatEditor({
       document,
@@ -827,7 +827,7 @@ toolbar.append(
       upgradeOverflightProjectCopy(draft, {
         hunt: true,
         difficulty: draft.difficulty ?? 'standard',
-        rulesVersion: 3,
+        rulesVersion: 4,
       }),
     ),
   ),
@@ -835,7 +835,7 @@ toolbar.append(
     replaceProject(
       createOverflightHuntProject({
         encounterSet: preset,
-        rulesVersion: 3,
+        rulesVersion: 4,
         world: overflightWorldForEncounterSet(preset),
       }),
     ),

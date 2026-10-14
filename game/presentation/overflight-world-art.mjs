@@ -1,3 +1,4 @@
+import { paintOverflightWorldV2, overflightWorldSourceFrame } from './overflight-world-art-v2.mjs';
 import {
   industrialMaterialPixels,
   INDUSTRIAL_ENVIRONMENT_REVISION,
@@ -34,6 +35,8 @@ export function paintOverflightWorld(
 ) {
   const world = overflightWorldDefinition(presentation?.world);
   if (!world) return false;
+  if (presentation.format === 'OverflightWorldPresentationV2')
+    return paintOverflightWorldV2(ctx, presentation, arena, world, { scale, image });
   const [base, low, mid, high] = world.palette;
   ctx.save();
   ctx.scale(scale, scale);
@@ -41,7 +44,7 @@ export function paintOverflightWorld(
   for (const region of presentation.regions) {
     const customMaterial = image(OVERFLIGHT_WORLD_MATERIAL_SLOTS[region.material]);
     if (customMaterial?.image) {
-      const frame = customMaterial.geometry?.frame ?? { x: 0, y: 0, width: 32, height: 32 };
+      const frame = overflightWorldSourceFrame(customMaterial);
       for (let y = 0; y < region.height; y += 32)
         for (let x = 0; x < region.width; x += 32) {
           const w = Math.min(32, region.width - x),
@@ -106,7 +109,7 @@ export function paintOverflightWorld(
     const { kind, x, y, width: w, height: h } = item;
     const customProp = image(OVERFLIGHT_WORLD_PROP_SLOTS[kind]);
     if (customProp?.image) {
-      const frame = customProp.geometry?.frame ?? { x: 0, y: 0, width: 32, height: 32 };
+      const frame = overflightWorldSourceFrame(customProp);
       ctx.drawImage(customProp.image, frame.x, frame.y, frame.width, frame.height, x, y, w, h);
       continue;
     }

@@ -5,7 +5,7 @@ export const OVERFLIGHT_RECORDS_FORMAT = 'overflight-survivor-records.v1';
 const finite = (value) => Number.isFinite(value) && value >= 0;
 export function overflightRecordContext(run) {
   required(
-    /^OverflightCompiledV[123]$/.test(run?.compiled?.format ?? ''),
+    /^OverflightCompiledV[1234]$/.test(run?.compiled?.format ?? ''),
     'Survivor records need a compiled sortie.',
   );
   required(/^[a-f0-9]{16}$/.test(run.compiled.projectIdentity), 'Missing sortie identity.');

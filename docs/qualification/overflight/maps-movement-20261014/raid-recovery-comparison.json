@@ -1,0 +1,2128 @@
+{
+  "kind": "Same public-input pilot with terrain routing; then use actual boost start readiness. No balance changes.",
+  "before": {
+    "file": "raid-final.json.gz",
+    "sourceStable": true,
+    "trials": 66,
+    "won": 60,
+    "damage": 6554,
+    "baselineWins": 18,
+    "marathonWins": 0
+  },
+  "after": {
+    "file": "raid-recovery.json.gz",
+    "sourceStable": true,
+    "trials": 66,
+    "won": 66,
+    "damage": 1694,
+    "baselineWins": 18,
+    "marathonWins": 6
+  },
+  "changedSources": [
+    "game/overflight/raid-core.mjs",
+    "game/overflight/raid-review-pilot.mjs",
+    "game/overflight/raid-mode.mjs"
+  ],
+  "marathons": [
+    {
+      "world": "field-crossing-broken-crossroads",
+      "contracts": [
+        {
+          "layout": "field-crossing-broken-crossroads",
+          "seed": 17031991,
+          "seconds": 18.7,
+          "damage": 0,
+          "airframesRemaining": 3,
+          "choices": [
+            {
+              "id": "plating:1",
+              "time": 1.0166666666666666,
+              "tick": 61
+            },
+            {
+              "id": "chain-window:1",
+              "time": 2.6666666666666665,
+              "tick": 160
+            },
+            {
+              "id": "boost-cooldown:1",
+              "time": 3.466666666666667,
+              "tick": 208
+            },
+            {
+              "id": "boost-cooldown:2",
+              "time": 3.95,
+              "tick": 237
+            },
+            {
+              "id": "boost-duration:1",
+              "time": 7.85,
+              "tick": 471
+            },
+            {
+              "id": "boost-duration:2",
+              "time": 9.533333333333333,
+              "tick": 572
+            },
+            {
+              "id": "chain-window:2",
+              "time": 11.6,
+              "tick": 696
+            },
+            {
+              "id": "guard-interrupt:1",
+              "time": 14.9,
+              "tick": 894
+            }
+          ]
+        },
+        {
+          "layout": "field-crossing-shelterbelt-gaps",
+          "seed": 17136720,
+          "seconds": 22.433333333333334,
+          "damage": 54,
+          "airframesRemaining": 3,
+          "choices": [
+            {
+              "id": "plating:1",
+              "time": 1.0166666666666666,
+              "tick": 61
+            },
+            {
+              "id": "chain-window:1",
+              "time": 2.6666666666666665,
+              "tick": 160
+            },
+            {
+              "id": "boost-cooldown:1",
+              "time": 3.466666666666667,
+              "tick": 208
+            },
+            {
+              "id": "boost-cooldown:2",
+              "time": 3.95,
+              "tick": 237
+            },
+            {
+              "id": "boost-duration:1",
+              "time": 7.85,
+              "tick": 471
+            },
+            {
+              "id": "boost-duration:2",
+              "time": 9.533333333333333,
+              "tick": 572
+            },
+            {
+              "id": "chain-window:2",
+              "time": 11.6,
+              "tick": 696
+            },
+            {
+              "id": "guard-interrupt:1",
+              "time": 14.9,
+              "tick": 894
+            },
+            {
+              "id": "field-reroll",
+              "time": 3.9,
+              "tick": 234
+            },
+            {
+              "id": "field-repair",
+              "time": 15.7,
+              "tick": 942
+            }
+          ]
+        },
+        {
+          "layout": "field-crossing-supply-orchard-edge",
+          "seed": 17241449,
+          "seconds": 26.516666666666666,
+          "damage": 94,
+          "airframesRemaining": 2,
+          "choices": [
+            {
+              "id": "plating:1",
+              "time": 1.0166666666666666,
+              "tick": 61
+            },
+            {
+              "id": "chain-window:1",
+              "time": 2.6666666666666665,
+              "tick": 160
+            },
+            {
+              "id": "boost-cooldown:1",
+              "time": 3.466666666666667,
+              "tick": 208
+            },
+            {
+              "id": "boost-cooldown:2",
+              "time": 3.95,
+              "tick": 237
+            },
+            {
+              "id": "boost-duration:1",
+              "time": 7.85,
+              "tick": 471
+            },
+            {
+              "id": "boost-duration:2",
+              "time": 9.533333333333333,
+              "tick": 572
+            },
+            {
+              "id": "chain-window:2",
+              "time": 11.6,
+              "tick": 696
+            },
+            {
+              "id": "guard-interrupt:1",
+              "time": 14.9,
+              "tick": 894
+            },
+            {
+              "id": "field-reroll",
+              "time": 3.9,
+              "tick": 234
+            },
+            {
+              "id": "field-repair",
+              "time": 15.7,
+              "tick": 942
+            },
+            {
+              "id": "field-repair",
+              "time": 3.9,
+              "tick": 234
+            },
+            {
+              "id": "field-repair",
+              "time": 18.05,
+              "tick": 1083
+            }
+          ]
+        },
+        {
+          "layout": "field-crossing-shelterbelt-gaps",
+          "seed": 17346178,
+          "seconds": 18.883333333333333,
+          "damage": 18,
+          "airframesRemaining": 2,
+          "choices": [
+            {
+              "id": "plating:1",
+              "time": 1.0166666666666666,
+              "tick": 61
+            },
+            {
+              "id": "chain-window:1",
+              "time": 2.6666666666666665,
+              "tick": 160
+            },
+            {
+              "id": "boost-cooldown:1",
+              "time": 3.466666666666667,
+              "tick": 208
+            },
+            {
+              "id": "boost-cooldown:2",
+              "time": 3.95,
+              "tick": 237
+            },
+            {
+              "id": "boost-duration:1",
+              "time": 7.85,
+              "tick": 471
+            },
+            {
+              "id": "boost-duration:2",
+              "time": 9.533333333333333,
+              "tick": 572
+            },
+            {
+              "id": "chain-window:2",
+              "time": 11.6,
+              "tick": 696
+            },
+            {
+              "id": "guard-interrupt:1",
+              "time": 14.9,
+              "tick": 894
+            },
+            {
+              "id": "field-reroll",
+              "time": 3.9,
+              "tick": 234
+            },
+            {
+              "id": "field-repair",
+              "time": 15.7,
+              "tick": 942
+            },
+            {
+              "id": "field-repair",
+              "time": 3.9,
+              "tick": 234
+            },
+            {
+              "id": "field-repair",
+              "time": 18.05,
+              "tick": 1083
+            },
+            {
+              "id": "field-repair",
+              "time": 3.9,
+              "tick": 234
+            },
+            {
+              "id": "field-repair",
+              "time": 11.633333333333333,
+              "tick": 698
+            }
+          ]
+        },
+        {
+          "layout": "field-crossing-broken-crossroads",
+          "seed": 17450907,
+          "seconds": 17.716666666666665,
+          "damage": 0,
+          "airframesRemaining": 2,
+          "choices": [
+            {
+              "id": "plating:1",
+              "time": 1.0166666666666666,
+              "tick": 61
+            },
+            {
+              "id": "chain-window:1",
+              "time": 2.6666666666666665,
+              "tick": 160
+            },
+            {
+              "id": "boost-cooldown:1",
+              "time": 3.466666666666667,
+              "tick": 208
+            },
+            {
+              "id": "boost-cooldown:2",
+              "time": 3.95,
+              "tick": 237
+            },
+            {
+              "id": "boost-duration:1",
+              "time": 7.85,
+              "tick": 471
+            },
+            {
+              "id": "boost-duration:2",
+              "time": 9.533333333333333,
+              "tick": 572
+            },
+            {
+              "id": "chain-window:2",
+              "time": 11.6,
+              "tick": 696
+            },
+            {
+              "id": "guard-interrupt:1",
+              "time": 14.9,
+              "tick": 894
+            },
+            {
+              "id": "field-reroll",
+              "time": 3.9,
+              "tick": 234
+            },
+            {
+              "id": "field-repair",
+              "time": 15.7,
+              "tick": 942
+            },
+            {
+              "id": "field-repair",
+              "time": 3.9,
+              "tick": 234
+            },
+            {
+              "id": "field-repair",
+              "time": 18.05,
+              "tick": 1083
+            },
+            {
+              "id": "field-repair",
+              "time": 3.9,
+              "tick": 234
+            },
+            {
+              "id": "field-repair",
+              "time": 11.633333333333333,
+              "tick": 698
+            },
+            {
+              "id": "field-repair",
+              "time": 4.65,
+              "tick": 279
+            },
+            {
+              "id": "field-score",
+              "time": 10.533333333333333,
+              "tick": 632
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "world": "freight-depot-shunting-yard",
+      "contracts": [
+        {
+          "layout": "freight-depot-shunting-yard",
+          "seed": 17031991,
+          "seconds": 18.7,
+          "damage": 0,
+          "airframesRemaining": 3,
+          "choices": [
+            {
+              "id": "plating:1",
+              "time": 1.0166666666666666,
+              "tick": 61
+            },
+            {
+              "id": "chain-window:1",
+              "time": 2.6666666666666665,
+              "tick": 160
+            },
+            {
+              "id": "boost-cooldown:1",
+              "time": 3.4833333333333334,
+              "tick": 209
+            },
+            {
+              "id": "boost-cooldown:2",
+              "time": 3.966666666666667,
+              "tick": 238
+            },
+            {
+              "id": "boost-duration:1",
+              "time": 7.866666666666666,
+              "tick": 472
+            },
+            {
+              "id": "boost-duration:2",
+              "time": 8.933333333333334,
+              "tick": 536
+            },
+            {
+              "id": "chain-window:2",
+              "time": 9.616666666666667,
+              "tick": 577
+            },
+            {
+              "id": "guard-interrupt:1",
+              "time": 11.6,
+              "tick": 696
+            }
+          ]
+        },
+        {
+          "layout": "freight-depot-loading-loop",
+          "seed": 17136720,
+          "seconds": 19.65,
+          "damage": 18,
+          "airframesRemaining": 3,
+          "choices": [
+            {
+              "id": "plating:1",
+              "time": 1.0166666666666666,
+              "tick": 61
+            },
+            {
+              "id": "chain-window:1",
+              "time": 2.6666666666666665,
+              "tick": 160
+            },
+            {
+              "id": "boost-cooldown:1",
+              "time": 3.4833333333333334,
+              "tick": 209
+            },
+            {
+              "id": "boost-cooldown:2",
+              "time": 3.966666666666667,
+              "tick": 238
+            },
+            {
+              "id": "boost-duration:1",
+              "time": 7.866666666666666,
+              "tick": 472
+            },
+            {
+              "id": "boost-duration:2",
+              "time": 8.933333333333334,
+              "tick": 536
+            },
+            {
+              "id": "chain-window:2",
+              "time": 9.616666666666667,
+              "tick": 577
+            },
+            {
+              "id": "guard-interrupt:1",
+              "time": 11.6,
+              "tick": 696
+            },
+            {
+              "id": "field-reroll",
+              "time": 3.9,
+              "tick": 234
+            },
+            {
+              "id": "field-repair",
+              "time": 12.35,
+              "tick": 741
+            }
+          ]
+        },
+        {
+          "layout": "freight-depot-dispatch-junction",
+          "seed": 17241449,
+          "seconds": 19.833333333333332,
+          "damage": 0,
+          "airframesRemaining": 3,
+          "choices": [
+            {
+              "id": "plating:1",
+              "time": 1.0166666666666666,
+              "tick": 61
+            },
+            {
+              "id": "chain-window:1",
+              "time": 2.6666666666666665,
+              "tick": 160
+            },
+            {
+              "id": "boost-cooldown:1",
+              "time": 3.4833333333333334,
+              "tick": 209
+            },
+            {
+              "id": "boost-cooldown:2",
+              "time": 3.966666666666667,
+              "tick": 238
+            },
+            {
+              "id": "boost-duration:1",
+              "time": 7.866666666666666,
+              "tick": 472
+            },
+            {
+              "id": "boost-duration:2",
+              "time": 8.933333333333334,
+              "tick": 536
+            },
+            {
+              "id": "chain-window:2",
+              "time": 9.616666666666667,
+              "tick": 577
+            },
+            {
+              "id": "guard-interrupt:1",
+              "time": 11.6,
+              "tick": 696
+            },
+            {
+              "id": "field-reroll",
+              "time": 3.9,
+              "tick": 234
+            },
+            {
+              "id": "field-repair",
+              "time": 12.35,
+              "tick": 741
+            },
+            {
+              "id": "field-repair",
+              "time": 5.45,
+              "tick": 327
+            },
+            {
+              "id": "field-score",
+              "time": 13.25,
+              "tick": 795
+            }
+          ]
+        },
+        {
+          "layout": "freight-depot-loading-loop",
+          "seed": 17346178,
+          "seconds": 18.233333333333334,
+          "damage": 0,
+          "airframesRemaining": 3,
+          "choices": [
+            {
+              "id": "plating:1",
+              "time": 1.0166666666666666,
+              "tick": 61
+            },
+            {
+              "id": "chain-window:1",
+              "time": 2.6666666666666665,
+              "tick": 160
+            },
+            {
+              "id": "boost-cooldown:1",
+              "time": 3.4833333333333334,
+              "tick": 209
+            },
+            {
+              "id": "boost-cooldown:2",
+              "time": 3.966666666666667,
+              "tick": 238
+            },
+            {
+              "id": "boost-duration:1",
+              "time": 7.866666666666666,
+              "tick": 472
+            },
+            {
+              "id": "boost-duration:2",
+              "time": 8.933333333333334,
+              "tick": 536
+            },
+            {
+              "id": "chain-window:2",
+              "time": 9.616666666666667,
+              "tick": 577
+            },
+            {
+              "id": "guard-interrupt:1",
+              "time": 11.6,
+              "tick": 696
+            },
+            {
+              "id": "field-reroll",
+              "time": 3.9,
+              "tick": 234
+            },
+            {
+              "id": "field-repair",
+              "time": 12.35,
+              "tick": 741
+            },
+            {
+              "id": "field-repair",
+              "time": 5.45,
+              "tick": 327
+            },
+            {
+              "id": "field-score",
+              "time": 13.25,
+              "tick": 795
+            },
+            {
+              "id": "field-score",
+              "time": 3.9,
+              "tick": 234
+            },
+            {
+              "id": "field-score",
+              "time": 11.45,
+              "tick": 687
+            }
+          ]
+        },
+        {
+          "layout": "freight-depot-shunting-yard",
+          "seed": 17450907,
+          "seconds": 28.1,
+          "damage": 100,
+          "airframesRemaining": 2,
+          "choices": [
+            {
+              "id": "plating:1",
+              "time": 1.0166666666666666,
+              "tick": 61
+            },
+            {
+              "id": "chain-window:1",
+              "time": 2.6666666666666665,
+              "tick": 160
+            },
+            {
+              "id": "boost-cooldown:1",
+              "time": 3.4833333333333334,
+              "tick": 209
+            },
+            {
+              "id": "boost-cooldown:2",
+              "time": 3.966666666666667,
+              "tick": 238
+            },
+            {
+              "id": "boost-duration:1",
+              "time": 7.866666666666666,
+              "tick": 472
+            },
+            {
+              "id": "boost-duration:2",
+              "time": 8.933333333333334,
+              "tick": 536
+            },
+            {
+              "id": "chain-window:2",
+              "time": 9.616666666666667,
+              "tick": 577
+            },
+            {
+              "id": "guard-interrupt:1",
+              "time": 11.6,
+              "tick": 696
+            },
+            {
+              "id": "field-reroll",
+              "time": 3.9,
+              "tick": 234
+            },
+            {
+              "id": "field-repair",
+              "time": 12.35,
+              "tick": 741
+            },
+            {
+              "id": "field-repair",
+              "time": 5.45,
+              "tick": 327
+            },
+            {
+              "id": "field-score",
+              "time": 13.25,
+              "tick": 795
+            },
+            {
+              "id": "field-score",
+              "time": 3.9,
+              "tick": 234
+            },
+            {
+              "id": "field-score",
+              "time": 11.45,
+              "tick": 687
+            },
+            {
+              "id": "field-score",
+              "time": 4.65,
+              "tick": 279
+            },
+            {
+              "id": "field-score",
+              "time": 19.616666666666667,
+              "tick": 1177
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "world": "relay-ruins-antenna-court",
+      "contracts": [
+        {
+          "layout": "relay-ruins-antenna-court",
+          "seed": 17031991,
+          "seconds": 18.766666666666666,
+          "damage": 0,
+          "airframesRemaining": 3,
+          "choices": [
+            {
+              "id": "plating:1",
+              "time": 1.0166666666666666,
+              "tick": 61
+            },
+            {
+              "id": "chain-window:1",
+              "time": 2.6666666666666665,
+              "tick": 160
+            },
+            {
+              "id": "boost-cooldown:1",
+              "time": 3.466666666666667,
+              "tick": 208
+            },
+            {
+              "id": "boost-cooldown:2",
+              "time": 3.966666666666667,
+              "tick": 238
+            },
+            {
+              "id": "boost-duration:1",
+              "time": 7.85,
+              "tick": 471
+            },
+            {
+              "id": "boost-duration:2",
+              "time": 9.516666666666667,
+              "tick": 571
+            },
+            {
+              "id": "chain-window:2",
+              "time": 11.633333333333333,
+              "tick": 698
+            },
+            {
+              "id": "guard-interrupt:1",
+              "time": 14.833333333333334,
+              "tick": 890
+            }
+          ]
+        },
+        {
+          "layout": "relay-ruins-split-compound",
+          "seed": 17136720,
+          "seconds": 19.5,
+          "damage": 18,
+          "airframesRemaining": 3,
+          "choices": [
+            {
+              "id": "plating:1",
+              "time": 1.0166666666666666,
+              "tick": 61
+            },
+            {
+              "id": "chain-window:1",
+              "time": 2.6666666666666665,
+              "tick": 160
+            },
+            {
+              "id": "boost-cooldown:1",
+              "time": 3.466666666666667,
+              "tick": 208
+            },
+            {
+              "id": "boost-cooldown:2",
+              "time": 3.966666666666667,
+              "tick": 238
+            },
+            {
+              "id": "boost-duration:1",
+              "time": 7.85,
+              "tick": 471
+            },
+            {
+              "id": "boost-duration:2",
+              "time": 9.516666666666667,
+              "tick": 571
+            },
+            {
+              "id": "chain-window:2",
+              "time": 11.633333333333333,
+              "tick": 698
+            },
+            {
+              "id": "guard-interrupt:1",
+              "time": 14.833333333333334,
+              "tick": 890
+            },
+            {
+              "id": "field-reroll",
+              "time": 4.3,
+              "tick": 258
+            },
+            {
+              "id": "field-repair",
+              "time": 12.2,
+              "tick": 732
+            }
+          ]
+        },
+        {
+          "layout": "relay-ruins-receiver-gardens",
+          "seed": 17241449,
+          "seconds": 26.916666666666668,
+          "damage": 118,
+          "airframesRemaining": 2,
+          "choices": [
+            {
+              "id": "plating:1",
+              "time": 1.0166666666666666,
+              "tick": 61
+            },
+            {
+              "id": "chain-window:1",
+              "time": 2.6666666666666665,
+              "tick": 160
+            },
+            {
+              "id": "boost-cooldown:1",
+              "time": 3.466666666666667,
+              "tick": 208
+            },
+            {
+              "id": "boost-cooldown:2",
+              "time": 3.966666666666667,
+              "tick": 238
+            },
+            {
+              "id": "boost-duration:1",
+              "time": 7.85,
+              "tick": 471
+            },
+            {
+              "id": "boost-duration:2",
+              "time": 9.516666666666667,
+              "tick": 571
+            },
+            {
+              "id": "chain-window:2",
+              "time": 11.633333333333333,
+              "tick": 698
+            },
+            {
+              "id": "guard-interrupt:1",
+              "time": 14.833333333333334,
+              "tick": 890
+            },
+            {
+              "id": "field-reroll",
+              "time": 4.3,
+              "tick": 258
+            },
+            {
+              "id": "field-repair",
+              "time": 12.2,
+              "tick": 732
+            },
+            {
+              "id": "field-repair",
+              "time": 3.9,
+              "tick": 234
+            },
+            {
+              "id": "field-repair",
+              "time": 19.066666666666666,
+              "tick": 1144
+            }
+          ]
+        },
+        {
+          "layout": "relay-ruins-split-compound",
+          "seed": 17346178,
+          "seconds": 37.95,
+          "damage": 154,
+          "airframesRemaining": 1,
+          "choices": [
+            {
+              "id": "plating:1",
+              "time": 1.0166666666666666,
+              "tick": 61
+            },
+            {
+              "id": "chain-window:1",
+              "time": 2.6666666666666665,
+              "tick": 160
+            },
+            {
+              "id": "boost-cooldown:1",
+              "time": 3.466666666666667,
+              "tick": 208
+            },
+            {
+              "id": "boost-cooldown:2",
+              "time": 3.966666666666667,
+              "tick": 238
+            },
+            {
+              "id": "boost-duration:1",
+              "time": 7.85,
+              "tick": 471
+            },
+            {
+              "id": "boost-duration:2",
+              "time": 9.516666666666667,
+              "tick": 571
+            },
+            {
+              "id": "chain-window:2",
+              "time": 11.633333333333333,
+              "tick": 698
+            },
+            {
+              "id": "guard-interrupt:1",
+              "time": 14.833333333333334,
+              "tick": 890
+            },
+            {
+              "id": "field-reroll",
+              "time": 4.3,
+              "tick": 258
+            },
+            {
+              "id": "field-repair",
+              "time": 12.2,
+              "tick": 732
+            },
+            {
+              "id": "field-repair",
+              "time": 3.9,
+              "tick": 234
+            },
+            {
+              "id": "field-repair",
+              "time": 19.066666666666666,
+              "tick": 1144
+            },
+            {
+              "id": "field-repair",
+              "time": 4.383333333333334,
+              "tick": 263
+            },
+            {
+              "id": "field-repair",
+              "time": 27.216666666666665,
+              "tick": 1633
+            }
+          ]
+        },
+        {
+          "layout": "relay-ruins-antenna-court",
+          "seed": 17450907,
+          "seconds": 18.616666666666667,
+          "damage": 0,
+          "airframesRemaining": 1,
+          "choices": [
+            {
+              "id": "plating:1",
+              "time": 1.0166666666666666,
+              "tick": 61
+            },
+            {
+              "id": "chain-window:1",
+              "time": 2.6666666666666665,
+              "tick": 160
+            },
+            {
+              "id": "boost-cooldown:1",
+              "time": 3.466666666666667,
+              "tick": 208
+            },
+            {
+              "id": "boost-cooldown:2",
+              "time": 3.966666666666667,
+              "tick": 238
+            },
+            {
+              "id": "boost-duration:1",
+              "time": 7.85,
+              "tick": 471
+            },
+            {
+              "id": "boost-duration:2",
+              "time": 9.516666666666667,
+              "tick": 571
+            },
+            {
+              "id": "chain-window:2",
+              "time": 11.633333333333333,
+              "tick": 698
+            },
+            {
+              "id": "guard-interrupt:1",
+              "time": 14.833333333333334,
+              "tick": 890
+            },
+            {
+              "id": "field-reroll",
+              "time": 4.3,
+              "tick": 258
+            },
+            {
+              "id": "field-repair",
+              "time": 12.2,
+              "tick": 732
+            },
+            {
+              "id": "field-repair",
+              "time": 3.9,
+              "tick": 234
+            },
+            {
+              "id": "field-repair",
+              "time": 19.066666666666666,
+              "tick": 1144
+            },
+            {
+              "id": "field-repair",
+              "time": 4.383333333333334,
+              "tick": 263
+            },
+            {
+              "id": "field-repair",
+              "time": 27.216666666666665,
+              "tick": 1633
+            },
+            {
+              "id": "field-repair",
+              "time": 4.65,
+              "tick": 279
+            },
+            {
+              "id": "field-repair",
+              "time": 11.616666666666667,
+              "tick": 697
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "world": "river-port-pump-apron",
+      "contracts": [
+        {
+          "layout": "river-port-pump-apron",
+          "seed": 17031991,
+          "seconds": 18.733333333333334,
+          "damage": 0,
+          "airframesRemaining": 3,
+          "choices": [
+            {
+              "id": "plating:1",
+              "time": 1.0166666666666666,
+              "tick": 61
+            },
+            {
+              "id": "chain-window:1",
+              "time": 2.6666666666666665,
+              "tick": 160
+            },
+            {
+              "id": "boost-cooldown:1",
+              "time": 3.4833333333333334,
+              "tick": 209
+            },
+            {
+              "id": "boost-cooldown:2",
+              "time": 3.966666666666667,
+              "tick": 238
+            },
+            {
+              "id": "boost-duration:1",
+              "time": 7.85,
+              "tick": 471
+            },
+            {
+              "id": "boost-duration:2",
+              "time": 9.55,
+              "tick": 573
+            },
+            {
+              "id": "chain-window:2",
+              "time": 11.616666666666667,
+              "tick": 697
+            },
+            {
+              "id": "guard-interrupt:1",
+              "time": 14.183333333333334,
+              "tick": 851
+            }
+          ]
+        },
+        {
+          "layout": "river-port-twin-docks",
+          "seed": 17136720,
+          "seconds": 20.616666666666667,
+          "damage": 0,
+          "airframesRemaining": 3,
+          "choices": [
+            {
+              "id": "plating:1",
+              "time": 1.0166666666666666,
+              "tick": 61
+            },
+            {
+              "id": "chain-window:1",
+              "time": 2.6666666666666665,
+              "tick": 160
+            },
+            {
+              "id": "boost-cooldown:1",
+              "time": 3.4833333333333334,
+              "tick": 209
+            },
+            {
+              "id": "boost-cooldown:2",
+              "time": 3.966666666666667,
+              "tick": 238
+            },
+            {
+              "id": "boost-duration:1",
+              "time": 7.85,
+              "tick": 471
+            },
+            {
+              "id": "boost-duration:2",
+              "time": 9.55,
+              "tick": 573
+            },
+            {
+              "id": "chain-window:2",
+              "time": 11.616666666666667,
+              "tick": 697
+            },
+            {
+              "id": "guard-interrupt:1",
+              "time": 14.183333333333334,
+              "tick": 851
+            },
+            {
+              "id": "field-reroll",
+              "time": 4.566666666666666,
+              "tick": 274
+            },
+            {
+              "id": "field-score",
+              "time": 11.8,
+              "tick": 708
+            }
+          ]
+        },
+        {
+          "layout": "river-port-floodgate-yard",
+          "seed": 17241449,
+          "seconds": 20.733333333333334,
+          "damage": 18,
+          "airframesRemaining": 3,
+          "choices": [
+            {
+              "id": "plating:1",
+              "time": 1.0166666666666666,
+              "tick": 61
+            },
+            {
+              "id": "chain-window:1",
+              "time": 2.6666666666666665,
+              "tick": 160
+            },
+            {
+              "id": "boost-cooldown:1",
+              "time": 3.4833333333333334,
+              "tick": 209
+            },
+            {
+              "id": "boost-cooldown:2",
+              "time": 3.966666666666667,
+              "tick": 238
+            },
+            {
+              "id": "boost-duration:1",
+              "time": 7.85,
+              "tick": 471
+            },
+            {
+              "id": "boost-duration:2",
+              "time": 9.55,
+              "tick": 573
+            },
+            {
+              "id": "chain-window:2",
+              "time": 11.616666666666667,
+              "tick": 697
+            },
+            {
+              "id": "guard-interrupt:1",
+              "time": 14.183333333333334,
+              "tick": 851
+            },
+            {
+              "id": "field-reroll",
+              "time": 4.566666666666666,
+              "tick": 274
+            },
+            {
+              "id": "field-score",
+              "time": 11.8,
+              "tick": 708
+            },
+            {
+              "id": "field-score",
+              "time": 4.566666666666666,
+              "tick": 274
+            },
+            {
+              "id": "field-repair",
+              "time": 13.4,
+              "tick": 804
+            }
+          ]
+        },
+        {
+          "layout": "river-port-twin-docks",
+          "seed": 17346178,
+          "seconds": 20.3,
+          "damage": 18,
+          "airframesRemaining": 3,
+          "choices": [
+            {
+              "id": "plating:1",
+              "time": 1.0166666666666666,
+              "tick": 61
+            },
+            {
+              "id": "chain-window:1",
+              "time": 2.6666666666666665,
+              "tick": 160
+            },
+            {
+              "id": "boost-cooldown:1",
+              "time": 3.4833333333333334,
+              "tick": 209
+            },
+            {
+              "id": "boost-cooldown:2",
+              "time": 3.966666666666667,
+              "tick": 238
+            },
+            {
+              "id": "boost-duration:1",
+              "time": 7.85,
+              "tick": 471
+            },
+            {
+              "id": "boost-duration:2",
+              "time": 9.55,
+              "tick": 573
+            },
+            {
+              "id": "chain-window:2",
+              "time": 11.616666666666667,
+              "tick": 697
+            },
+            {
+              "id": "guard-interrupt:1",
+              "time": 14.183333333333334,
+              "tick": 851
+            },
+            {
+              "id": "field-reroll",
+              "time": 4.566666666666666,
+              "tick": 274
+            },
+            {
+              "id": "field-score",
+              "time": 11.8,
+              "tick": 708
+            },
+            {
+              "id": "field-score",
+              "time": 4.566666666666666,
+              "tick": 274
+            },
+            {
+              "id": "field-repair",
+              "time": 13.4,
+              "tick": 804
+            },
+            {
+              "id": "field-repair",
+              "time": 4.566666666666666,
+              "tick": 274
+            },
+            {
+              "id": "field-repair",
+              "time": 12.5,
+              "tick": 750
+            }
+          ]
+        },
+        {
+          "layout": "river-port-pump-apron",
+          "seed": 17450907,
+          "seconds": 18.566666666666666,
+          "damage": 0,
+          "airframesRemaining": 3,
+          "choices": [
+            {
+              "id": "plating:1",
+              "time": 1.0166666666666666,
+              "tick": 61
+            },
+            {
+              "id": "chain-window:1",
+              "time": 2.6666666666666665,
+              "tick": 160
+            },
+            {
+              "id": "boost-cooldown:1",
+              "time": 3.4833333333333334,
+              "tick": 209
+            },
+            {
+              "id": "boost-cooldown:2",
+              "time": 3.966666666666667,
+              "tick": 238
+            },
+            {
+              "id": "boost-duration:1",
+              "time": 7.85,
+              "tick": 471
+            },
+            {
+              "id": "boost-duration:2",
+              "time": 9.55,
+              "tick": 573
+            },
+            {
+              "id": "chain-window:2",
+              "time": 11.616666666666667,
+              "tick": 697
+            },
+            {
+              "id": "guard-interrupt:1",
+              "time": 14.183333333333334,
+              "tick": 851
+            },
+            {
+              "id": "field-reroll",
+              "time": 4.566666666666666,
+              "tick": 274
+            },
+            {
+              "id": "field-score",
+              "time": 11.8,
+              "tick": 708
+            },
+            {
+              "id": "field-score",
+              "time": 4.566666666666666,
+              "tick": 274
+            },
+            {
+              "id": "field-repair",
+              "time": 13.4,
+              "tick": 804
+            },
+            {
+              "id": "field-repair",
+              "time": 4.566666666666666,
+              "tick": 274
+            },
+            {
+              "id": "field-repair",
+              "time": 12.5,
+              "tick": 750
+            },
+            {
+              "id": "field-repair",
+              "time": 4.65,
+              "tick": 279
+            },
+            {
+              "id": "field-score",
+              "time": 11.583333333333334,
+              "tick": 695
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "world": "chalk-quarry-survey-basin",
+      "contracts": [
+        {
+          "layout": "chalk-quarry-survey-basin",
+          "seed": 17031991,
+          "seconds": 18.416666666666668,
+          "damage": 0,
+          "airframesRemaining": 3,
+          "choices": [
+            {
+              "id": "plating:1",
+              "time": 1.0166666666666666,
+              "tick": 61
+            },
+            {
+              "id": "chain-window:1",
+              "time": 2.6666666666666665,
+              "tick": 160
+            },
+            {
+              "id": "boost-cooldown:1",
+              "time": 3.466666666666667,
+              "tick": 208
+            },
+            {
+              "id": "boost-cooldown:2",
+              "time": 3.95,
+              "tick": 237
+            },
+            {
+              "id": "boost-duration:1",
+              "time": 7.883333333333334,
+              "tick": 473
+            },
+            {
+              "id": "boost-duration:2",
+              "time": 9.566666666666666,
+              "tick": 574
+            },
+            {
+              "id": "chain-window:2",
+              "time": 11.616666666666667,
+              "tick": 697
+            },
+            {
+              "id": "guard-interrupt:1",
+              "time": 14.966666666666667,
+              "tick": 898
+            }
+          ]
+        },
+        {
+          "layout": "chalk-quarry-haul-switchbacks",
+          "seed": 17136720,
+          "seconds": 19.533333333333335,
+          "damage": 36,
+          "airframesRemaining": 3,
+          "choices": [
+            {
+              "id": "plating:1",
+              "time": 1.0166666666666666,
+              "tick": 61
+            },
+            {
+              "id": "chain-window:1",
+              "time": 2.6666666666666665,
+              "tick": 160
+            },
+            {
+              "id": "boost-cooldown:1",
+              "time": 3.466666666666667,
+              "tick": 208
+            },
+            {
+              "id": "boost-cooldown:2",
+              "time": 3.95,
+              "tick": 237
+            },
+            {
+              "id": "boost-duration:1",
+              "time": 7.883333333333334,
+              "tick": 473
+            },
+            {
+              "id": "boost-duration:2",
+              "time": 9.566666666666666,
+              "tick": 574
+            },
+            {
+              "id": "chain-window:2",
+              "time": 11.616666666666667,
+              "tick": 697
+            },
+            {
+              "id": "guard-interrupt:1",
+              "time": 14.966666666666667,
+              "tick": 898
+            },
+            {
+              "id": "field-reroll",
+              "time": 3.9,
+              "tick": 234
+            },
+            {
+              "id": "field-repair",
+              "time": 12.35,
+              "tick": 741
+            }
+          ]
+        },
+        {
+          "layout": "chalk-quarry-reclaimer-court",
+          "seed": 17241449,
+          "seconds": 19.483333333333334,
+          "damage": 18,
+          "airframesRemaining": 3,
+          "choices": [
+            {
+              "id": "plating:1",
+              "time": 1.0166666666666666,
+              "tick": 61
+            },
+            {
+              "id": "chain-window:1",
+              "time": 2.6666666666666665,
+              "tick": 160
+            },
+            {
+              "id": "boost-cooldown:1",
+              "time": 3.466666666666667,
+              "tick": 208
+            },
+            {
+              "id": "boost-cooldown:2",
+              "time": 3.95,
+              "tick": 237
+            },
+            {
+              "id": "boost-duration:1",
+              "time": 7.883333333333334,
+              "tick": 473
+            },
+            {
+              "id": "boost-duration:2",
+              "time": 9.566666666666666,
+              "tick": 574
+            },
+            {
+              "id": "chain-window:2",
+              "time": 11.616666666666667,
+              "tick": 697
+            },
+            {
+              "id": "guard-interrupt:1",
+              "time": 14.966666666666667,
+              "tick": 898
+            },
+            {
+              "id": "field-reroll",
+              "time": 3.9,
+              "tick": 234
+            },
+            {
+              "id": "field-repair",
+              "time": 12.35,
+              "tick": 741
+            },
+            {
+              "id": "field-repair",
+              "time": 3.9,
+              "tick": 234
+            },
+            {
+              "id": "field-repair",
+              "time": 12.5,
+              "tick": 750
+            }
+          ]
+        },
+        {
+          "layout": "chalk-quarry-haul-switchbacks",
+          "seed": 17346178,
+          "seconds": 18.933333333333334,
+          "damage": 0,
+          "airframesRemaining": 3,
+          "choices": [
+            {
+              "id": "plating:1",
+              "time": 1.0166666666666666,
+              "tick": 61
+            },
+            {
+              "id": "chain-window:1",
+              "time": 2.6666666666666665,
+              "tick": 160
+            },
+            {
+              "id": "boost-cooldown:1",
+              "time": 3.466666666666667,
+              "tick": 208
+            },
+            {
+              "id": "boost-cooldown:2",
+              "time": 3.95,
+              "tick": 237
+            },
+            {
+              "id": "boost-duration:1",
+              "time": 7.883333333333334,
+              "tick": 473
+            },
+            {
+              "id": "boost-duration:2",
+              "time": 9.566666666666666,
+              "tick": 574
+            },
+            {
+              "id": "chain-window:2",
+              "time": 11.616666666666667,
+              "tick": 697
+            },
+            {
+              "id": "guard-interrupt:1",
+              "time": 14.966666666666667,
+              "tick": 898
+            },
+            {
+              "id": "field-reroll",
+              "time": 3.9,
+              "tick": 234
+            },
+            {
+              "id": "field-repair",
+              "time": 12.35,
+              "tick": 741
+            },
+            {
+              "id": "field-repair",
+              "time": 3.9,
+              "tick": 234
+            },
+            {
+              "id": "field-repair",
+              "time": 12.5,
+              "tick": 750
+            },
+            {
+              "id": "field-repair",
+              "time": 3.9,
+              "tick": 234
+            },
+            {
+              "id": "field-score",
+              "time": 11.45,
+              "tick": 687
+            }
+          ]
+        },
+        {
+          "layout": "chalk-quarry-survey-basin",
+          "seed": 17450907,
+          "seconds": 17.75,
+          "damage": 0,
+          "airframesRemaining": 3,
+          "choices": [
+            {
+              "id": "plating:1",
+              "time": 1.0166666666666666,
+              "tick": 61
+            },
+            {
+              "id": "chain-window:1",
+              "time": 2.6666666666666665,
+              "tick": 160
+            },
+            {
+              "id": "boost-cooldown:1",
+              "time": 3.466666666666667,
+              "tick": 208
+            },
+            {
+              "id": "boost-cooldown:2",
+              "time": 3.95,
+              "tick": 237
+            },
+            {
+              "id": "boost-duration:1",
+              "time": 7.883333333333334,
+              "tick": 473
+            },
+            {
+              "id": "boost-duration:2",
+              "time": 9.566666666666666,
+              "tick": 574
+            },
+            {
+              "id": "chain-window:2",
+              "time": 11.616666666666667,
+              "tick": 697
+            },
+            {
+              "id": "guard-interrupt:1",
+              "time": 14.966666666666667,
+              "tick": 898
+            },
+            {
+              "id": "field-reroll",
+              "time": 3.9,
+              "tick": 234
+            },
+            {
+              "id": "field-repair",
+              "time": 12.35,
+              "tick": 741
+            },
+            {
+              "id": "field-repair",
+              "time": 3.9,
+              "tick": 234
+            },
+            {
+              "id": "field-repair",
+              "time": 12.5,
+              "tick": 750
+            },
+            {
+              "id": "field-repair",
+              "time": 3.9,
+              "tick": 234
+            },
+            {
+              "id": "field-score",
+              "time": 11.45,
+              "tick": 687
+            },
+            {
+              "id": "field-score",
+              "time": 4.65,
+              "tick": 279
+            },
+            {
+              "id": "field-score",
+              "time": 10.55,
+              "tick": 633
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "world": "orchard-strongpoint-harvest-clearing",
+      "contracts": [
+        {
+          "layout": "orchard-strongpoint-harvest-clearing",
+          "seed": 17031991,
+          "seconds": 18.6,
+          "damage": 0,
+          "airframesRemaining": 3,
+          "choices": [
+            {
+              "id": "plating:1",
+              "time": 1.0166666666666666,
+              "tick": 61
+            },
+            {
+              "id": "chain-window:1",
+              "time": 2.6666666666666665,
+              "tick": 160
+            },
+            {
+              "id": "boost-cooldown:1",
+              "time": 3.466666666666667,
+              "tick": 208
+            },
+            {
+              "id": "boost-cooldown:2",
+              "time": 3.95,
+              "tick": 237
+            },
+            {
+              "id": "boost-duration:1",
+              "time": 7.833333333333333,
+              "tick": 470
+            },
+            {
+              "id": "boost-duration:2",
+              "time": 9.533333333333333,
+              "tick": 572
+            },
+            {
+              "id": "chain-window:2",
+              "time": 11.6,
+              "tick": 696
+            },
+            {
+              "id": "guard-interrupt:1",
+              "time": 15.666666666666666,
+              "tick": 940
+            }
+          ]
+        },
+        {
+          "layout": "orchard-strongpoint-irrigation-courts",
+          "seed": 17136720,
+          "seconds": 19.683333333333334,
+          "damage": 54,
+          "airframesRemaining": 3,
+          "choices": [
+            {
+              "id": "plating:1",
+              "time": 1.0166666666666666,
+              "tick": 61
+            },
+            {
+              "id": "chain-window:1",
+              "time": 2.6666666666666665,
+              "tick": 160
+            },
+            {
+              "id": "boost-cooldown:1",
+              "time": 3.466666666666667,
+              "tick": 208
+            },
+            {
+              "id": "boost-cooldown:2",
+              "time": 3.95,
+              "tick": 237
+            },
+            {
+              "id": "boost-duration:1",
+              "time": 7.833333333333333,
+              "tick": 470
+            },
+            {
+              "id": "boost-duration:2",
+              "time": 9.533333333333333,
+              "tick": 572
+            },
+            {
+              "id": "chain-window:2",
+              "time": 11.6,
+              "tick": 696
+            },
+            {
+              "id": "guard-interrupt:1",
+              "time": 15.666666666666666,
+              "tick": 940
+            },
+            {
+              "id": "field-reroll",
+              "time": 4.083333333333333,
+              "tick": 245
+            },
+            {
+              "id": "field-repair",
+              "time": 11.016666666666667,
+              "tick": 661
+            }
+          ]
+        },
+        {
+          "layout": "orchard-strongpoint-glasshouse-ruins",
+          "seed": 17241449,
+          "seconds": 28.6,
+          "damage": 94,
+          "airframesRemaining": 2,
+          "choices": [
+            {
+              "id": "plating:1",
+              "time": 1.0166666666666666,
+              "tick": 61
+            },
+            {
+              "id": "chain-window:1",
+              "time": 2.6666666666666665,
+              "tick": 160
+            },
+            {
+              "id": "boost-cooldown:1",
+              "time": 3.466666666666667,
+              "tick": 208
+            },
+            {
+              "id": "boost-cooldown:2",
+              "time": 3.95,
+              "tick": 237
+            },
+            {
+              "id": "boost-duration:1",
+              "time": 7.833333333333333,
+              "tick": 470
+            },
+            {
+              "id": "boost-duration:2",
+              "time": 9.533333333333333,
+              "tick": 572
+            },
+            {
+              "id": "chain-window:2",
+              "time": 11.6,
+              "tick": 696
+            },
+            {
+              "id": "guard-interrupt:1",
+              "time": 15.666666666666666,
+              "tick": 940
+            },
+            {
+              "id": "field-reroll",
+              "time": 4.083333333333333,
+              "tick": 245
+            },
+            {
+              "id": "field-repair",
+              "time": 11.016666666666667,
+              "tick": 661
+            },
+            {
+              "id": "field-repair",
+              "time": 5.35,
+              "tick": 321
+            },
+            {
+              "id": "field-repair",
+              "time": 21.216666666666665,
+              "tick": 1273
+            }
+          ]
+        },
+        {
+          "layout": "orchard-strongpoint-irrigation-courts",
+          "seed": 17346178,
+          "seconds": 18.35,
+          "damage": 0,
+          "airframesRemaining": 2,
+          "choices": [
+            {
+              "id": "plating:1",
+              "time": 1.0166666666666666,
+              "tick": 61
+            },
+            {
+              "id": "chain-window:1",
+              "time": 2.6666666666666665,
+              "tick": 160
+            },
+            {
+              "id": "boost-cooldown:1",
+              "time": 3.466666666666667,
+              "tick": 208
+            },
+            {
+              "id": "boost-cooldown:2",
+              "time": 3.95,
+              "tick": 237
+            },
+            {
+              "id": "boost-duration:1",
+              "time": 7.833333333333333,
+              "tick": 470
+            },
+            {
+              "id": "boost-duration:2",
+              "time": 9.533333333333333,
+              "tick": 572
+            },
+            {
+              "id": "chain-window:2",
+              "time": 11.6,
+              "tick": 696
+            },
+            {
+              "id": "guard-interrupt:1",
+              "time": 15.666666666666666,
+              "tick": 940
+            },
+            {
+              "id": "field-reroll",
+              "time": 4.083333333333333,
+              "tick": 245
+            },
+            {
+              "id": "field-repair",
+              "time": 11.016666666666667,
+              "tick": 661
+            },
+            {
+              "id": "field-repair",
+              "time": 5.35,
+              "tick": 321
+            },
+            {
+              "id": "field-repair",
+              "time": 21.216666666666665,
+              "tick": 1273
+            },
+            {
+              "id": "field-repair",
+              "time": 4.083333333333333,
+              "tick": 245
+            },
+            {
+              "id": "field-score",
+              "time": 11.55,
+              "tick": 693
+            }
+          ]
+        },
+        {
+          "layout": "orchard-strongpoint-harvest-clearing",
+          "seed": 17450907,
+          "seconds": 18.716666666666665,
+          "damage": 0,
+          "airframesRemaining": 2,
+          "choices": [
+            {
+              "id": "plating:1",
+              "time": 1.0166666666666666,
+              "tick": 61
+            },
+            {
+              "id": "chain-window:1",
+              "time": 2.6666666666666665,
+              "tick": 160
+            },
+            {
+              "id": "boost-cooldown:1",
+              "time": 3.466666666666667,
+              "tick": 208
+            },
+            {
+              "id": "boost-cooldown:2",
+              "time": 3.95,
+              "tick": 237
+            },
+            {
+              "id": "boost-duration:1",
+              "time": 7.833333333333333,
+              "tick": 470
+            },
+            {
+              "id": "boost-duration:2",
+              "time": 9.533333333333333,
+              "tick": 572
+            },
+            {
+              "id": "chain-window:2",
+              "time": 11.6,
+              "tick": 696
+            },
+            {
+              "id": "guard-interrupt:1",
+              "time": 15.666666666666666,
+              "tick": 940
+            },
+            {
+              "id": "field-reroll",
+              "time": 4.083333333333333,
+              "tick": 245
+            },
+            {
+              "id": "field-repair",
+              "time": 11.016666666666667,
+              "tick": 661
+            },
+            {
+              "id": "field-repair",
+              "time": 5.35,
+              "tick": 321
+            },
+            {
+              "id": "field-repair",
+              "time": 21.216666666666665,
+              "tick": 1273
+            },
+            {
+              "id": "field-repair",
+              "time": 4.083333333333333,
+              "tick": 245
+            },
+            {
+              "id": "field-score",
+              "time": 11.55,
+              "tick": 693
+            },
+            {
+              "id": "field-score",
+              "time": 4.65,
+              "tick": 279
+            },
+            {
+              "id": "field-score",
+              "time": 11.583333333333334,
+              "tick": 695
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
