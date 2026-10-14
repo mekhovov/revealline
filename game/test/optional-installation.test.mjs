@@ -161,7 +161,8 @@ function launcher(fetcher, query = '', { storage = memory(), offlineReady = fals
     URL,
     optionalInstallationKey,
     validateOptionalInstallationReference,
-    inspectOptionalOffline: async () => offlineReady,
+    inspectOptionalOffline: async (base) =>
+      typeof offlineReady === 'function' ? offlineReady(base) : offlineReady,
     setTimeout(callback) {
       timers.set(callback, callback);
       return callback;
@@ -242,6 +243,55 @@ test('launcher keeps missing-file repair and removal visible after checking an a
       assert.equal(f.elements.remove.hidden, false);
       assert.equal(f.elements.open.hidden, true);
     }
+    recordOptionalInstallation({ packageId, storage, location: locationFor('v1.2.2') });
+    recordOptionalInstallation({ packageId, storage, location: locationFor('v1.2.3') });
+    let hold,
+      release,
+      failedPrevious = false,
+      reads = 0;
+    const retained = launcher(
+      async () => new Response(JSON.stringify(current)),
+      '?lang=' + locale,
+      {
+        storage,
+        offlineReady: async (base) => {
+          reads++;
+          if (failedPrevious && base.href.includes('/v1.2.2/')) return false;
+          return hold ? new Promise((resolve) => (release = resolve)) : true;
+        },
+      },
+    );
+    await retained.ready;
+    assert.equal(retained.elements.previous.hidden, false);
+    const previous = retained.elements.previous.href;
+    hold = true;
+    const pending = retained.elements.check.onclick();
+    await waitFor(() => release);
+    const inFlightReads = reads;
+    await retained.elements.check.onclick();
+    assert.equal(reads, inFlightReads, 'Repeated Check cannot overlap a pending hash verification');
+    assert.equal(retained.elements.check.disabled, true);
+    assert.equal(
+      retained.elements.previous.hidden,
+      false,
+      'Previously verified rollback stays visible',
+    );
+    assert.equal(retained.elements.previous.href, previous);
+    assert.match(retained.elements.status.textContent, /Checking prepared|Перевірка підготовлених/);
+    hold = false;
+    release(true);
+    await pending;
+    assert.equal(retained.elements.previous.hidden, false);
+    assert.equal(retained.elements.check.disabled, false);
+    failedPrevious = true;
+    await retained.elements.check.onclick();
+    assert.equal(
+      retained.elements.previous.hidden,
+      true,
+      'A newly failed check removes the stale action',
+    );
+    assert.equal(retained.elements.open.hidden, false, 'The ready active version remains usable');
+    assert.match(retained.elements.status.textContent, instructions);
   }
 });
 
