@@ -407,7 +407,7 @@ const audio = createOverflightAudio(sound, {
   getDestruction: () => encounterDisplay.snapshot(),
   presentation: {
     async readAudio(slot, settings) {
-      await artReady;
+      await worldSources.settled();
       return [
         'audio.pickup',
         'audio.confirm',

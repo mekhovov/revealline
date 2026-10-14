@@ -115,6 +115,42 @@ test('disposal drains loading work without admitting its consumer or later reque
     source.queue.use(['A'], () => {}),
     /closed/,
   );
+  await assert.rejects(source.queue.settled(), /closed/);
+});
+
+test('accepted audio reads wait for preparation and recover after the initial source load fails', async () => {
+  const bake = deferred();
+  const source = sources({ ready: Promise.reject(Error('initial decode failed')) });
+  const app = await readFile(new URL('../overflight/app.mjs', import.meta.url), 'utf8');
+  const audio = parse(app, { ecmaVersion: 'latest', sourceType: 'module' })
+    .body.flatMap((node) => node.declarations ?? [])
+    .find((node) => node.id.name === 'audio');
+  const presentation = audio.init.arguments[1].properties.find(
+    (node) => node.key.name === 'presentation',
+  );
+  const method = presentation.value.properties.find((node) => node.key.name === 'readAudio');
+  const reads = [];
+  const readAudio = runInNewContext(`({${app.slice(method.start, method.end)}}).readAudio`, {
+    worldSources: source.queue,
+    artwork: {
+      readAudio(slot) {
+        reads.push([slot, source.current().world]);
+        return 'custom audio bytes';
+      },
+    },
+    DESTRUCTION_CUES: ['destroy-human'],
+    HUMAN_REACTION_CUES: [],
+  });
+  const prepared = source.queue.use(['B'], async () => bake.promise);
+  const audioBytes = readAudio('audio.destroy-human');
+  await flush();
+  assert.deepEqual(reads, [], 'Custom audio must not read while source preparation is pending.');
+  bake.resolve();
+  await prepared;
+  assert.equal(await audioBytes, 'custom audio bytes');
+  assert.deepEqual(reads, [['audio.destroy-human', 'B']]);
+  assert.equal(await readAudio('unsupported.slot'), null);
+  await source.queue.dispose();
 });
 
 async function nativePreparationFixture({ wait = new Map(), bake = null } = {}) {
