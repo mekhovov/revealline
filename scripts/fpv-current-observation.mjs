@@ -15,6 +15,7 @@ const receipt = {
     'No flushed caches or isolated hardware workload; browser-reported identity does not qualify a device.',
     'Only public DOM status is sampled at 4 Hz. No per-frame full app snapshots or physics writes.',
     'Player error listeners attach after native load; earlier startup errors are not captured.',
+    'Callback coverage requires first and last callbacks within 250 ms of the window boundaries, matching the public-state polling cadence. Longer censored boundaries invalidate completion; their durations remain visible.',
     'Focus/visibility loss, pause, changed task/settings and native navigation stop the window. Incomplete runs remain exportable.',
   ],
 };
@@ -129,7 +130,7 @@ function finish(reason, complete = false) {
   run.end = child?.performance.now() ?? null;
   run.elapsedMs = run.start !== undefined ? run.end - run.start : 0;
   run.reason = reason;
-  run.complete = complete;
+  run.requestedWindowElapsed = complete;
   run.after = snapshot();
   run.finishedAt = new Date().toISOString();
   for (const observer of observers) {
@@ -137,7 +138,33 @@ function finish(reason, complete = false) {
     observer.disconnect();
   }
   observers = [];
-  run.valid = complete && !run.dropped && run.gaps.length > 0 && run.elapsedMs >= run.requestedMs;
+  const first = run.firstCallbackAt ?? null,
+    last = run.lastCallbackAt ?? null,
+    boundaryLimitMs = 250;
+  const leadingMs = first === null ? null : Math.max(0, first - run.start),
+    trailingMs = last === null ? null : Math.max(0, run.end - last);
+  // Boundary intervals are censored observations, never invented RAF samples.
+  // This is observation coverage, not a frame-rate or performance pass threshold.
+  const covered =
+    first !== null &&
+    last !== null &&
+    run.gaps.length > 0 &&
+    leadingMs <= boundaryLimitMs &&
+    trailingMs <= boundaryLimitMs;
+  run.callbackCoverage = {
+    boundaryLimitMs,
+    firstCallbackAt: first,
+    lastCallbackAt: last,
+    leadingCensoredMs: leadingMs,
+    trailingCensoredMs: trailingMs,
+    observedSpanMs: first === null || last === null ? 0 : Math.max(0, last - first),
+    withoutCallbacksMs: first === null ? run.elapsedMs : null,
+    complete: covered,
+  };
+  run.complete = complete && covered;
+  run.valid = run.complete && !run.dropped && run.elapsedMs >= run.requestedMs;
+  if (complete && !covered)
+    run.reason = 'Requested window elapsed with incomplete callback coverage';
   const sorted = run.gaps.map((item) => item.intervalMs).sort((a, b) => a - b);
   const quantile = (fraction) => sorted[Math.floor((sorted.length - 1) * fraction)] ?? null;
   run.callbackGaps = {
@@ -149,9 +176,14 @@ function finish(reason, complete = false) {
   };
   buttons();
   output();
-  $('status').textContent = complete
-    ? 'Window finished. Inspect and export the receipt; no device FPS claim.'
-    : `Stopped: ${reason}. Partial evidence retained.`;
+  const coverageSummary =
+    ` Callback coverage: ${covered ? 'complete' : 'incomplete'}; ` +
+    `leading ${leadingMs === null ? 'unknown' : leadingMs.toFixed(1)} ms, ` +
+    `trailing ${trailingMs === null ? 'unknown' : trailingMs.toFixed(1)} ms (250 ms boundary limit).`;
+  $('status').textContent =
+    (run.complete
+      ? 'Window finished. Inspect and export the receipt; no device FPS claim.'
+      : `Stopped: ${run.reason}. Partial evidence retained.`) + coverageSummary;
 }
 function start(run, before) {
   pending = null;
@@ -182,9 +214,13 @@ function start(run, before) {
       run.observerSupport[type] = String(error);
     }
   }
+  run.firstCallbackAt = null;
+  run.lastCallbackAt = null;
   let last;
   const tick = (timestamp) => {
     if (active !== run) return;
+    if (run.firstCallbackAt === null) run.firstCallbackAt = timestamp;
+    run.lastCallbackAt = timestamp;
     if (last !== undefined)
       cap(run.gaps, { at: timestamp, intervalMs: timestamp - last }, 24000, run);
     last = timestamp;

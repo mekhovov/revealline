@@ -177,6 +177,31 @@
       };
       const button = (root, pattern) =>
         [...root.querySelectorAll('button')].find((n) => pattern.test(n.textContent));
+      // Reach legacy tools through the visible shared mission chooser, as a player does.
+      // Hidden Settings destinations can change panel state without opening their shell.
+      async function openTools(tab) {
+        const visible = (node) => node && node.getClientRects().length > 0;
+        const panel = () => d.getElementById(tab);
+        if (visible(panel()) && !panel().hidden) return;
+        const missions = d.getElementById('worlds-shell-missions-dialog');
+        if (missions?.open) {
+          click(missions.querySelector('[data-mode-action="missions-back"]'));
+          await until(() => !missions.open, 'close previous tool surface');
+        }
+        const tools = () => q('[data-sim-mission-tools]');
+        if (!visible(tools())) {
+          const explore = q('#worlds-shell-home-dialog [data-mode-action="missions"]');
+          if (!visible(explore)) throw Error('Visible Explore worlds navigation is unavailable');
+          click(explore);
+          await until(() => visible(tools()), 'shared mission chooser');
+        }
+        if (!tools().open) click(tools().querySelector('summary'));
+        const destination = q(`[data-sim-mission-tool="${tab}"]`);
+        if (!visible(destination))
+          throw Error('Visible SIM tools destination is unavailable: ' + tab);
+        click(destination);
+        await until(() => visible(panel()) && !panel().hidden, 'visible ' + tab + ' tool surface');
+      }
       const set = (node, value) => {
         if (!node) throw Error('Missing public input');
         node.value = String(value);
@@ -415,7 +440,7 @@
           'Exact current authored catalogue retained before fixture import',
           { expected: originalCatalogueSize, actual: app.snapshot().catalogue },
         );
-        click(q('[data-tab="creator"]'));
+        await openTools('creator');
         set(d.getElementById('asset-author'), 'RevealLine functional qualification');
         set(d.getElementById('asset-source'), 'Original triangle and semantic markers');
         set(d.getElementById('asset-license'), 'original');
@@ -687,7 +712,7 @@
           installedStore.close();
         }
         progress('External source reimport preserves locally authored tracking');
-        click(q('[data-tab="creator"]'));
+        await openTools('creator');
         await upload('import-world', sourceGLB(1), 'tracking-original.glb');
         await until(() => d.getElementById('reimport-review')?.open, 'reimport review');
         eq(course(), authored, 'Reimport preview does not mutate draft');
@@ -859,7 +884,7 @@
         if (manual) {
           click(d.getElementById('leave-flight'));
           await until(() => !d.getElementById('flight-dialog').open, 'close manual preview');
-          click(q('[data-tab="creator"]'));
+          await openTools('creator');
           $('status').textContent = 'Verified Workshop ready for manual inspection';
           manualCleanup = cleanup;
         } else await cleanup();

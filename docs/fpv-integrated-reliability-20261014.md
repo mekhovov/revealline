@@ -25,7 +25,17 @@ Run `node scripts/prepare-fpv-current-observation.mjs STAGED_PLAYER STAGING_RECE
 
 The isolated source fixtures now contain 223 modules / 17,233,260 bytes. Their obsolete 192-module / 13 MiB bounds prevented execution. The reviewed fixture-only ceilings are now 256 modules / 20 MiB; the 6 MiB per-file limit and all shipped package budgets remain unchanged.
 
-The tracking fixture is being reconciled with intended current behavior: each invalid edit must produce its own diagnostic, pack installation preserves the open draft, and opening the installed version requires an explicit Edit action. Initial failed receipts are retained. They are not reported as successful runs.
+The tracking fixture now follows intended current behavior: each invalid edit must produce its own diagnostic, pack installation preserves the open draft, and opening the installed version requires an explicit Edit action. Native IndexedDB requests originate in the child player, avoiding cross-realm plain-object validation failures. Both fixtures reuse only existing origin access authorization in isolated memory and wait for the unchanged access gate to verify it; no credential is recorded. Shared menus own navigation. Initial failed receipts are retained and are not reported as successful runs.
+
+The removal review now assigns each button its final enabled state once. Cancel stays enabled while loading/exporting, but is disabled during a committed removal. This avoids transiently disabling and blurring the safe focused action. The strict visible Cancel-focus check remains.
+
+After the complete native UX stack #1180 merged, the continuation was rebased onto main `8cef2b9fee1e822a8681c94a0dbb5cf9dc6ad654`, preserving the newly merged Snake and shared reaction changes. Candidate `cdbe38ff4561db4a0710d7994d0ef4934b552e0a` passed another 135 existing integration checks, canonical projections, and fresh admission for all three packages with two identical builds. The World package has 126 members / 17,026,125 unpacked bytes. A subsequent focused Library fix changes these bytes and requires fresh admission before publication.
+
+Observer review added a 250 ms boundary-coverage requirement, separate from performance. First/last callbacks and censored leading/trailing durations are recorded; a window with only an early callback followed by a long stall is incomplete. Four focused reproductions covered early-only callbacks, normal callbacks, delayed first callback and no callbacks. This is manual tool verification, not new D6 unit coverage. A separate audit of the original two receipts found trailing gaps of 7.3 ms and 3.2 ms; the original receipts are not relabelled as runs of the hardened tool.
+
+The completed-card accessibility label now reads progress from the current Library row after a source or language refresh. A retired-row read interrupted Ukrainian rendering in the removal/restoration journey. Launch identity validation is unchanged. The canonical change and generated SIM projection passed 107 existing Library/projected-host checks.
+
+The hardened observer also completed one 30-second stationary Castle Courtyard discovery window against the admitted `cdbe38ff` player: 3,578 callback intervals, median 8.3 ms, p95 9.2 ms, p99 9.4 ms, maximum 108.6 ms, with 6.9 ms trailing boundary coverage. The same limitations above apply.
 
 ## Remaining priorities
 
