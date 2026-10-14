@@ -1,0 +1,103 @@
+{
+  "sourceRevision": "f14366940379bdbd46ead268f92c1aa160d80ca5",
+  "sourceTree": "8afd90898842cbb9e1dacf8e3fc6ea0b66916809",
+  "version": "v0.151.1",
+  "publicEligible": false,
+  "reproducibleBuilds": 2,
+  "committedInputsVerified": true,
+  "revision": "4b1e3f558bcb585cdbd2082f4655b4237e498eaf2d9d53c8def8b1e8746cf921",
+  "cloudRun": 38608388073,
+  "githubArtifactId": 11916098235,
+  "topLevelChecksumsVerified": 15,
+  "worldsMembersVerified": 133,
+  "worldsBytes": 17128519,
+  "browserOfflineVerified": false,
+  "files": {
+    "github-artifact.zip": {
+      "bytes": 22910044,
+      "sha256": "47932489accf6ae709a44d33762e8c62594711fd2222def8b7b18d9d8604e6e8"
+    },
+    "distribution-optional-fpv-worlds.zip": {
+      "bytes": 17173778,
+      "sha256": "120b3d2abe2eb52975d55f9c7b872c061bef6a712f50a7e9ac501126325c92c0"
+    },
+    "manifest-optional-fpv-worlds.json": {
+      "bytes": 24295,
+      "sha256": "7e4aed1395f6a40419e8a6e2f4b924d1ab5db5037cf5a90aa897a5a3e422a4cd"
+    }
+  },
+  "artifactURL": "https://github.com/mekhovov/revealline/actions/runs/38608388073/artifacts/11916098235",
+  "origin": "http://127.0.0.1:9018",
+  "installationRoot": "/revealline/practice/fpv-worlds/",
+  "baseline": {
+    "sourceRevision": "b309f8232ab38b27fe4081466d550f22c63673d3",
+    "sourceTree": "6309f853ae5db6697cdd3271d726898e4e84385c",
+    "version": "v0.142.4",
+    "revision": "923f391477e06ecba67b129fb83f47952c8b8fb958be349e6742bfc1e4a08199",
+    "cloudRun": 37455244806,
+    "githubArtifactId": 11409047096,
+    "publicEligible": false,
+    "reproducibleBuilds": 2,
+    "committedInputsVerified": true,
+    "topLevelChecksumsVerified": 15,
+    "worldsMembersVerified": 112,
+    "worldsBytes": 15822040,
+    "browserOfflineVerified": false,
+    "files": {
+      "github-artifact.zip": {
+        "bytes": 16048581,
+        "sha256": "5c6c7cbf5ba30ca09fe277e5455bfb3ff1b23fe40ef90d8738e03b575b1a0743"
+      },
+      "distribution-optional-fpv-worlds.zip": {
+        "bytes": 15839786,
+        "sha256": "26953687a9d700c456a151116b36a53e2a2582cbadfb6636cbbe98f9024522e3"
+      },
+      "manifest-optional-fpv-worlds.json": {
+        "bytes": 20541,
+        "sha256": "7dd3b60aff57cf7c2e0cb2c1640fec89d4f929714a157c346b786d20b4f4f44c"
+      }
+    }
+  },
+  "method": "Separate fresh origin with unchanged cloud-built old/new packages and canonical mutable launcher; no mixed-source override or injected timeout.",
+  "fixtureCorrection": {
+    "initialFailure": "Runtime dependency site/launcher/app.mjs omitted during initial fixture extraction; exact old worker refused preparation on HTTP 404",
+    "correction": "Every original member restored and byte-checked against frozen ZIPs before retry",
+    "oldZipMembers": 112,
+    "newZipMembers": 134,
+    "productFailureClaim": false
+  },
+  "nativeJourney": {
+    "status": "passed-bounded-update-and-origin-unavailable-reopen",
+    "originUnavailableReopenVerified": true,
+    "networkWideOfflineVerified": false,
+    "browserRestartVerified": false,
+    "observations": [
+      "Old v0.142.4 reported Ready offline after the documented harness omission was corrected; its actual player opened.",
+      "Old Library installed Mountain Reservoir r16 with eight challenges and unchanged digest 50ffbb0e5da7.",
+      "Only the canonical mutable launcher/current pointer switched to corrected v0.151.1 source f14366940; immutable old/new player bytes remained unchanged.",
+      "The first corrected-new registration aborted before a browser request for its worker reached the server. The exact worker remained HTTP 200 with the expected hash; no cause was asserted. A retry succeeded without clearing browser storage.",
+      "New Download reported Ready offline and retained prepared and previous launch links.",
+      "After all app-scoped tabs were left and a fresh canonical launcher opened, exact read-only checks returned new runtime 4b1e3f55\u2026 ready at 17103485 bytes, old runtime 923f3914\u2026 ready at 15779904 bytes, and corrected launcher ecadb5fe\u2026 ready at 168491 bytes.",
+      "Canonical Check retained both actions while disabled.",
+      "New-player catalogue Play Mountain Reservoir rendered the actual scene at 0.0 seconds, motors off, with Arm enabled; all eight installed challenges remained.",
+      "The canonical previous-version action opened actual v0.142.4. Its Library retained all eight Reservoir challenges and digest 50ffbb0e5da7.",
+      "The isolated 9018 server was stopped and a transport probe refused connection. Reloading the exact new URL opened its cached home. Explore -> Reservoir -> Custom Shoreline loaded the actual scene and deliberate mission-card Play started a run, observed at 22.9 seconds before explicit Pause.",
+      "With the origin still unavailable, the exact old #packs URL reloaded Library and retained all eight Reservoir challenges and the same digest.",
+      "The dedicated server was restored and HTTP 200 confirmed. No browser caches, worlds or recordings were removed."
+    ],
+    "screenshots": [
+      "/Volumes/alex/CodexMigrationStaging/fpv-temp/corrected-reservoir-disarmed.png",
+      "/Volumes/alex/CodexMigrationStaging/fpv-temp/corrected-rollback-library.png",
+      "/Volumes/alex/CodexMigrationStaging/fpv-temp/corrected-reservoir-origin-unavailable.png"
+    ],
+    "launcherRevision": "ecadb5fefda6b5ef0e6927549b4ad000bed676851017700a12add3720d264925",
+    "launcherReadyBytes": 168491,
+    "runtimeReadyBytes": 17103485,
+    "knownArtworkFollowup": "https://github.com/mekhovov/revealline/pull/1249"
+  },
+  "cloudChecks": {
+    "run": 38608388073,
+    "optionalPractice": "success",
+    "companyCandidate": "success"
+  }
+}
