@@ -107,14 +107,16 @@
         <a href="https://github.com/mekhovov/revealline/pull/1215">PR 1215</a>; shared integration,
         fixes and qualification are in
         <a href="https://github.com/mekhovov/revealline/pull/1226">PR 1226</a>. Local reference and
-        three full-content Survivor timing trials pass. Broader performance and gameplay review
-        remain open. These clips use an automated review pilot; they establish visible behavior, not
+        three timing trials each for Single Drone, Riy and a controlled Raid workload pass. Late-run
+        coverage and gameplay review remain open. Active clips use an automated review pilot;
+        no-input follow-ups are labeled separately. They establish visible behavior, not
         ordinary-player difficulty.
       </p>
       <nav aria-label="Review materials">
         <a href="art-review/native-worlds.html">Explore all maps and play links</a>
         <a href="../../../fpv-survivals-maps-movement-status.md">Completed and remaining work</a>
         <a href="NATIVE-PERFORMANCE.md">Performance evidence</a>
+        <a href="NATIVE-FULL-CONTENT.md">Gameplay and Raid workload timing</a>
         <a href="EXPANDED-MATRIX-RESULTS.md">Active and repetitive-input results</a>
         <a href="PILOT-BIAS.md">Build-route and progression findings</a>
       </nav>
@@ -166,6 +168,32 @@
         airframes. Cleared enemies rose from 874 to 1,049. This was observed in the native
         HUD/results; <strong>no follow-up video was saved</strong>. It is not a side-by-side
         recording or proof about every build.
+      </p>
+    </section>
+    <section>
+      <h2>Recorded no-input follow-up: Riy Echo</h2>
+      <p>
+        Loading Loop, seed 17031991, source <code>0b1aa412d</code>. After the third timing trial,
+        the reviewer pressed Take Control around 2:19 and gave no steering, boost or Focus. The run
+        started this follow-up with <strong>20 hull and three airframes</strong>; all were lost by
+        2:30, with cleared enemies increasing from 445 to 464.
+      </p>
+      <figure>
+        <video
+          controls
+          preload="none"
+          poster="native/depot-riy-echo-unattended.png"
+          src="native/depot-riy-echo-unattended.webm"
+        ></video>
+        <figcaption>
+          Separate 20-second recording, including replacement airframes. Battlefield only; HUD and
+          cards are excluded and master audio was muted.
+          <a href="native/depot-riy-echo-unattended.json">Settings and observed outcome</a>.
+        </figcaption>
+      </figure>
+      <p class="note">
+        This is a low-hull follow-up, not a full-health mature-build comparison or proof that every
+        stationary build loses. The outcome was observed through the native HUD/results.
       </p>
     </section>
     <section>
@@ -250,24 +278,26 @@
         challenge losses into passes.
       </p>
       <p>
-        Three native Survivor trials pass at p95 <strong>9.5 / 10.2 / 9.7 ms</strong>, including
-        about eight seconds of upgrade-card rendering in each measured window. The third retains a
-        123.4 ms foreground stall; its long-frame fraction still passes. These use one Quarry layout
-        and build. The original failed reference trials and failed soak p95 remain preserved; they
-        are not discarded by later passes. See
-        <a href="native-full-content-summary.json">the exact source, viewport and timing windows</a
-        >.
+        Three trials each pass for native Single Drone at p95 <strong>9.5–10.2 ms</strong>, Riy at
+        <strong>9.5–10.5 ms</strong> and the controlled Raid workload at
+        <strong>9.6–10.3 ms</strong>. Survivor and Riy cover opening-to-elite play with earned
+        upgrades and include draft rendering; Raid uses a sustained 403-actor engineering fixture
+        with 200 visible actors, not an ordinary sortie. The third Survivor trial retains a
+        123.4 ms foreground stall. The original failed reference trials and failed soak p95 remain
+        preserved. See <a href="NATIVE-FULL-CONTENT.md">the timing report and its limits</a> and
+        <a href="native-full-content-summary.json">exact source, viewport and timing windows</a>.
       </p>
       <p>
         Remaining review: Survivor Echo routes, late reward collection, challenge-preset
         readability, complete active/repetitive and normal/reduced-effects comparisons, real
-        soundtrack/warning audibility, and broader operation performance. External-device and
+        soundtrack/warning audibility, and late-run performance coverage. External-device and
         five-player trials remain skipped at the user’s direction.
       </p>
       <small
         >Capture settings and SHA-256 hashes:
         <a href="native/native-review.json">earlier media provenance</a> and
-        <a href="native/active-unattended-review.json">latest Quarry capture</a>. No gameplay,
+        <a href="native/active-unattended-review.json">latest Quarry capture</a>, plus
+        <a href="native/depot-riy-echo-unattended.json">Riy no-input follow-up</a>. No gameplay,
         enjoyment or performance claim is inferred solely from this gallery.</small
       >
     </section>
