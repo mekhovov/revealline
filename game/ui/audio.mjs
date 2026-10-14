@@ -788,7 +788,14 @@ export class Soundscape {
     )
       return false;
     const board = details.board ?? 'solo',
-      key = `encounter:${board}:${recipe.category ?? type}`;
+      // Friendly clearing must not reserve the player's damage cue on the next
+      // frame. Keep exactly two bounded impact channels; arbitrary semantics
+      // cannot create additional cooldown buckets.
+      cooldownType =
+        type === 'impact' && details.semantic === 'friendly-impact'
+          ? 'friendly-impact'
+          : (recipe.category ?? type),
+      key = `encounter:${board}:${cooldownType}`;
     if (
       c.currentTime - (this.recentEvents.get(key) ?? -Infinity) <
       (recipe.cooldown ??
