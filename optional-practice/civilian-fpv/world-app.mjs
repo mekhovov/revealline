@@ -4726,6 +4726,7 @@ export function mountWorldApp({
           : state.status === 'active'
             ? 'playing'
             : state.status,
+      pauseOpensMenu: Boolean(current?.regional),
       missionName: $('flight-title').textContent,
       summary: $('flight-menu-brief').textContent,
       canResume: !playbackEnded && ['paused', 'disarmed'].includes(state.status),
