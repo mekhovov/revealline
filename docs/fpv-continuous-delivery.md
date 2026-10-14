@@ -4643,3 +4643,56 @@ Delayed/corrupt sources, live-pose rejection and cancellation are verified. Nati
 9032 review confirms deliberate keyboard lift/forward movement, retained pause
 pose and disarmed boundary reset; it does not establish an exact observed cell
 crossing. Renderer preparation and immutable regional delivery remain next gates.
+
+## 15 October — regional Library and texture checkpoint
+
+Coordinator branch: `codex/fpv-library-quality-checkpoint-20261015`, external docs
+checkout based on main. Delivery, player UI and Railway art lanes continue while
+protected publication runs. Unrelated edits remain untouched; heavy work stays
+external/cloud below the internal 3 GiB free-space floor.
+
+Merged #1282 prepares renderer resources before adoption. Native initial/neighbour
+staging, cancellation retaining the prior scene and release pass. The frame count
+covers the whole preparation operation, not shader CPU work alone; this does not
+establish sustained GPU/device FPS.
+
+Merged #1283 publishes delivery authoring and an immutable Urban preview bundle:
+commit `9d97e70c18729c3f399b90610380274e50d7d0df`, descriptor 6,615 bytes, SHA-256
+`1ba27d2242d61d61c0552564d75baa5f3e313e63a78c2ef434f63cdc7dbab94c`.
+The 38 files total 1,455,090 bytes. #1288 rejects malformed UTF-8 before creating
+output; the valid bundle stays unchanged. This is a 384×384 m architectural preview.
+Source art improvements remain separate until a new revision is pinned.
+
+Merged #1284 adds verified download, separate atomic storage, retained rollback
+and reverified cache-only loading. Native isolated real assets passed install,
+corrupt update rejection, valid update, rollback, stale removal rejection and page
+reload. No actual quota exhaustion, browser-process restart or network-wide offline
+claim follows. #1281 records separate modeled World store transaction-failure
+recovery. #1275 records company qualification and 164 course/mode lifecycle cases.
+#1286 preserves an initial exact-package registration abort and a later unchanged
+successful retry: Ready offline and actual prepared-player link reach Home. No
+storage cleanup or code change occurred between attempts; cause is unknown and
+stopped-origin retry proof remains open.
+
+Normal Library UI is in final source review on 9042. Real remote Download → saved
+Fly opens disarmed at 3 m with zero input. Keyboard flight, pause, Chase view, reset
+and Acro change pass; reset/mode change stay disarmed. Reload retains review-r1;
+removal review followed by Keep preserves it. EN/UK 390×844 has no horizontal
+overflow. Six interface checks pass, including delayed-host navigation cancellation.
+Review fixed stale cancellation text and delayed launch ownership. The old source
+catalogue worker 404 is separate; immutable package qualification must cover its
+generated worker. Ready/paused header height remains a focused mobile correction.
+
+Merged #1277 adds measured Urban parking ramps; #1274 improves Canyon sediment.
+Merged #1280/#1285 retain licensed Railway source and exact palette/UV/normal
+conversion. Runtime ownership #1287 is published: native comparison retains
+appearance, Release disposes and Load recreates with 77,496 geometry bytes and
+2,446,676 texture bytes (CPU RGBA plus GPU mip chain). This bounded proof is not
+finished environment acceptance. Three sources remain preserved but unadmitted
+because their geometry collapses at current quantization.
+
+Next: qualify Library in the exact package, compact the flight header, exercise
+sustained bounded streaming and compose reachable Railway routes. Multi-kilometre
+regions, long native flights, final art acceptance and D6 remain incomplete. Byte
+ceilings and player data protections stay in force. PR attachment attempts continue
+to hit the chat's 100-identity limit; unrelated attachments were not removed.
