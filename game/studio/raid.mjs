@@ -356,6 +356,21 @@ function render() {
   });
   const map = () => {
     svg.replaceChildren();
+    for (const obstacle of draft.terrain?.obstacles ?? [])
+      svg.append(
+        svgElement('rect', {
+          x: obstacle.x,
+          y: obstacle.y,
+          width: obstacle.width,
+          height: obstacle.height,
+          fill: obstacle.breakable ? '#75552e' : '#34454a',
+          stroke: obstacle.breakable ? '#f4c765' : '#d2dad6',
+          'stroke-width': 5,
+          'stroke-dasharray': obstacle.breakable ? '12 8' : 'none',
+          'data-terrain-footprint': obstacle.id,
+          'aria-label': `${obstacle.id} · ${obstacle.breakable ? words('Breakable', 'Руйнується') : words('Permanent', 'Постійна')}`,
+        }),
+      );
     draft.encounters.forEach((part) => {
       const tint = part.sector === sector ? '#f0c364' : '#586b60';
       svg.append(
@@ -719,9 +734,13 @@ function render() {
       document,
       project: draft,
       locale,
-      onChange: touch,
+      onChange: () => {
+        touch();
+        map();
+      },
       onApply: render,
       fieldsClass: 'raid-fields',
+      allowTerrain: previewOperation === 'overflight-hunt',
     }),
     overflightCombatEditor({
       document,
@@ -781,6 +800,7 @@ operationSelect.addEventListener('change', () => {
   else url.searchParams.set('operation', previewOperation);
   history.replaceState(null, '', url.href);
   preview.src = scopedURL(raidStudioRuntimePath(previewOperation, { studio: true }));
+  render();
   reportPreview(
     words(
       'Preparing the selected operation. The project is unchanged.',

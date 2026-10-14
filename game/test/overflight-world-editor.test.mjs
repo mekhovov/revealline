@@ -4,6 +4,7 @@ import { Document } from './helpers/couch-dom.mjs';
 import {
   overflightWorldEditor,
   fitOverflightWorldPlacement,
+  paintOverflightTerrainLayout,
 } from '../studio/overflight-world-editor.mjs';
 import { createOverflightProject, compileOverflightProject } from '../overflight/project.mjs';
 import {
@@ -14,10 +15,13 @@ import {
   createOverflightHuntProject,
   compileOverflightHuntProject,
 } from '../overflight/raid-project.mjs';
-import { validateOverflightWorldPresentation } from '../overflight/worlds.mjs';
+import {
+  validateOverflightWorldPresentation,
+  createExperimentalOverflightWorldProject,
+} from '../overflight/worlds.mjs';
 import { paintOverflightMission } from '../overflight/mission-library.mjs';
 
-function harness(project) {
+function harness(project, options = {}) {
   const document = new Document();
   let changes = 0,
     applications = 0;
@@ -27,6 +31,7 @@ function harness(project) {
     locale: 'en',
     onChange: () => changes++,
     onApply: () => applications++,
+    ...options,
   });
   document.body.append(root);
   return { root, document, changes: () => changes, applications: () => applications };
@@ -165,4 +170,128 @@ test('mission thumbnails paint native world appearance without changing combat p
     signatures.push(JSON.stringify(calls));
   }
   assert.equal(new Set(signatures).size, 3);
+});
+
+for (const [name, create, compile] of [
+  ['Single Drone', createOverflightProject, compileOverflightProject],
+  ['Riy', createOverflightRiyProject, compileOverflightRiyProject],
+  ['Raid', createOverflightHuntProject, compileOverflightHuntProject],
+])
+  test(`${name} guided terrain preserves author settings, admits valid footprints and rejects blocked passages`, () => {
+    const project = create({ rulesVersion: 3, world: 'field-crossing' });
+    const before = structuredClone(project),
+      originalIdentity = compile(project).projectIdentity,
+      view = harness(project);
+    view.root.querySelector('[data-terrain-add]').emit('click');
+    assert.equal(project.terrain.obstacles.length, 8);
+    assert.equal(project.terrain.obstacles.filter((item) => item.breakable).length, 2);
+    assert.equal(view.root.querySelectorAll('[data-terrain-coordinate]').length, 32);
+    for (const key of ['id', 'title', 'combat', 'presentation', 'upgrades', 'resources'])
+      assert.deepEqual(project[key], before[key]);
+    assert.notEqual(compile(project).projectIdentity, originalIdentity);
+    const first = view.root.querySelector('[data-terrain-obstacle="west-cover"]');
+    const width = first.querySelector('[data-terrain-coordinate="width"]');
+    width.value = '160';
+    width.emit('change');
+    assert.equal(project.terrain.obstacles[0].width, 160);
+    assert.doesNotThrow(() => compile(project));
+    const accepted = structuredClone(project),
+      changes = view.changes(),
+      y = first.querySelector('[data-terrain-coordinate="y"]');
+    for (const value of ['510', 'NaN', '']) {
+      y.value = value;
+      y.emit('change');
+      assert.deepEqual(project, accepted);
+      assert.equal(view.changes(), changes);
+      assert.equal(view.root.querySelector('[data-world-status]').dataset.error, 'true');
+    }
+    view.root.querySelector('[data-terrain-remove]').emit('click');
+    assert.equal(project.terrain, undefined);
+    assert.equal(view.root.querySelectorAll('[data-terrain-coordinate]').length, 0);
+    assert.doesNotThrow(() => compile(project));
+  });
+
+test('guided cover changes reject inaccessible rewards and Raid route points atomically', () => {
+  for (const create of [createOverflightProject, createOverflightHuntProject]) {
+    const project = createExperimentalOverflightWorldProject(create);
+    if (create === createOverflightProject) Object.assign(project.props[0], { x: 482, y: 350 });
+    else
+      project.encounters[0].objectives[0].route = [
+        { x: 1350, y: 240 },
+        { x: 1400, y: 240 },
+      ];
+    (create === createOverflightProject ? compileOverflightProject : compileOverflightHuntProject)(
+      project,
+    );
+    const view = harness(project),
+      before = structuredClone(project),
+      fields = view.root.querySelector(
+        `[data-terrain-obstacle="${create === createOverflightProject ? 'west-cover' : 'middle-cover'}"]`,
+      );
+    if (create === createOverflightProject) {
+      // Growing downward preserves passage gaps but covers the repair reward.
+      const height = fields.querySelector('[data-terrain-coordinate="height"]');
+      height.value = '180';
+      height.emit('change');
+    } else {
+      // A clear obstacle edit must still keep the authored route markers clear.
+      const width = fields.querySelector('[data-terrain-coordinate="width"]');
+      width.value = '200';
+      width.emit('change');
+    }
+    assert.deepEqual(project, before);
+    assert.equal(view.changes(), 0);
+    assert.equal(view.root.querySelector('[data-world-status]').dataset.error, 'true');
+    assert.match(
+      view.root.querySelector('[data-world-status]').textContent,
+      create === createOverflightProject ? /reward need drone clearance/ : /route points clear/,
+    );
+  }
+});
+
+test('Time Attack and Marathon retain imported terrain visibly but allow only its explicit removal', () => {
+  for (const operation of ['time-attack', 'marathon']) {
+    const project = createExperimentalOverflightWorldProject(createOverflightHuntProject),
+      before = structuredClone(project),
+      view = harness(project, { allowTerrain: false });
+    const inputs = view.root.querySelectorAll('[data-terrain-coordinate]');
+    assert.equal(inputs.length, 32, operation);
+    assert.ok(inputs.every((input) => input.disabled));
+    inputs[0].value = '300';
+    inputs[0].emit('change');
+    assert.deepEqual(project, before);
+    assert.match(view.root.textContent, /unavailable in Time Attack and Contract Marathon/);
+    view.root.querySelector('[data-terrain-remove]').emit('click');
+    assert.equal(project.terrain, undefined);
+    assert.equal(view.root.querySelector('[data-terrain-add]').disabled, true);
+    view.root.querySelector('[data-terrain-add]').emit('click');
+    assert.equal(project.terrain, undefined);
+  }
+});
+
+test('terrain preview overlays all eight exact footprints and distinguishes both breakable barriers', () => {
+  const project = createExperimentalOverflightWorldProject(createOverflightProject),
+    before = structuredClone(project.terrain),
+    fills = [],
+    outlines = [],
+    patterns = [];
+  const ctx = new Proxy(
+    {
+      fillRect: (...args) => fills.push(args),
+      strokeRect: (...args) => outlines.push(args),
+      setLineDash: (pattern) => patterns.push(pattern),
+    },
+    { get: (target, key) => target[key] ?? (() => {}) },
+  );
+  paintOverflightTerrainLayout(ctx, project.terrain);
+  const expected = project.terrain.obstacles.map(({ x, y, width, height }) => [
+    x,
+    y,
+    width,
+    height,
+  ]);
+  assert.deepEqual(fills, expected);
+  assert.deepEqual(outlines, expected);
+  assert.equal(patterns.filter((pattern) => pattern.length > 0).length, 2);
+  assert.deepEqual(project.terrain, before);
 });
