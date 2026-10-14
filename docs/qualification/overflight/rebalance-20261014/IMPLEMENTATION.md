@@ -28,9 +28,13 @@ All source paths below are repository-relative. Test names refer to `game/test/`
 
 The final independent review confirmed the renderer cue mismatch above; it did not establish another high-impact simulation, versioning or record-partition defect. This is a review result, not proof that all defects or balance issues are absent.
 
+## Supported burst speed qualification
+
+A minimal V3 real-step check measured a flank sprinter at **144 units/s without support** and **155.52 units/s with the existing radar support bonus (+8%)**, with a unit heading and no knockback. The plan's 144 value describes the base burst; radar support remains a visible priority-target benefit. Cell-centroid separation is explicitly disabled during a burst, so dense crowds do not amplify that burst vector. Knockback remains a separate displacement. No tuning changed for this qualification check.
+
 ## Evidence boundaries and remaining review
 
-The primary task is still assembling native gameplay comparisons, complete creator/offline demonstrations and local performance/lifecycle receipts. Some captures already exist in this directory; their presence alone is not a claim that every acceptance gate passed. Review the final qualification report and exact source hashes before treating those gates as complete. In particular, native sound/readability and the difference between active and unattended mature builds need the corresponding recordings.
+Implementation and local qualification are recorded in [the final report](README.md): native active/unattended clips, three restarted performance trials, and Creator export/import/native/offline checks. Balance acceptance remains partial: the preserved Echo + Pulse attempts do not establish a completion route, late upgrade gaps need review, and some crowd peaks exceed the intended composition envelope. Captures preserve master mute and therefore do not qualify audio quality. Earlier soak/retry/context evidence predates the final boundary/menu correction and is identified as such.
 
 The unavailable Iris Xe/Windows reference laptop, M1 Safari, physical controller/phone and five-player formative sessions were explicitly waived by the user. They remain **skipped, not passed**. Automated pilots and state-reading route matrices establish reachability and regression behavior, not human enjoyment, a calibrated difficulty gradient or valid medal timings. Time Attack defaults remain provisional. The preserved Raid Marathon failure and interrupted/superseded balance receipts remain available rather than being excluded from the report.
 

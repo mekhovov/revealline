@@ -1,0 +1,100 @@
+- main:
+  - button "Menu"
+  - generic: Riy · escorts
+  - button "Pause" [disabled]
+  - region "Survive battlefield":
+    - generic: Hull 0 / 80
+    - progressbar "Hull"
+    - generic: Spare airframes 0
+    - generic: Sortie
+    - strong: 02:12
+    - generic: Level 7
+    - generic: 396 Cleared
+    - paragraph: Automated review · Echo build · Controls stop at 120s
+    - 'status "Open cache: fly out, then choose one reward. +25 hull, +1 reroll and boost ready, or stored Overdrive: your next fresh boost starts 6 seconds of 25% faster attacks. Overdrive cannot stack or refresh."': Cache open · choose one reward
+    - generic: Echo Cascade 4
+    - generic: Slowing trail 3
+    - generic: Breaker burst 2
+    - generic: Boost Ready
+    - generic "Diagnostics"
+    - complementary:
+      - strong: Riy · escorts
+      - generic: Sweeper · rear cover / Breaker · forward strikes
+      - generic: Escorts following
+      - button "F · Focus target" [disabled]
+  - dialog "FPV / LINE":
+    - heading "FPV / LINE" [level=1]:
+      - img "FPV / LINE"
+    - navigation "Choose game mode":
+      - navigation "Game mode":
+        - link "1P Solo":
+          - /url: http://127.0.0.1:8899/game/index.html?lang=en
+          - strong: Solo
+          - generic: 1P
+        - link "2P Team":
+          - /url: http://127.0.0.1:8899/game/couch/relay-rescue.html?lang=en
+          - strong: Team
+          - generic: 2P
+        - link "2P Duel":
+          - /url: http://127.0.0.1:8899/game/couch/?lang=en
+          - strong: Duel
+          - generic: 2P
+        - link "Snake":
+          - /url: http://127.0.0.1:8899/game/snake/play.html?mode=solo&lang=en
+          - strong: Snake
+        - button "Survive beta":
+          - strong: Survive
+          - generic: beta
+        - button "SIM beta":
+          - strong: SIM
+          - generic: beta
+        - button "Less" [expanded]:
+          - strong: Less
+    - paragraph: Riy · Overflight · Breakthrough
+    - navigation "Main menu":
+      - button "Retry"
+      - button "Results"
+      - button "Select Mission"
+      - button "Settings"
+    - group "Settings":
+      - 'button "Sound: off"'
+      - button "Enter fullscreen": Full screen
+  - text: ✓ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄
+  - dialog "Results":
+    - heading "Results" [level=1]
+    - generic: ✦
+    - paragraph: Signal lost
+    - heading "Sortie ended" [level=2]
+    - paragraph: Every pass made a difference. Take what you learned into the next sortie.
+    - paragraph: Automated review · Echo build · Controls stop at 120s
+    - term: Cleared
+    - definition: "396"
+    - term: Time
+    - definition: 02:12
+    - term: Salvage
+    - definition: "490"
+    - term: Upgrades earned
+    - definition: "6"
+    - term: Hull damage
+    - definition: "240"
+    - term: Focus commands
+    - definition: "12"
+    - term: Escort attacks
+    - definition: "169"
+    - generic: ✓ Weapon evolved
+    - heading "Your build" [level=3]
+    - strong: Echo Cascade
+    - generic: Level 4
+    - strong: Slowing trail
+    - generic: Level 3
+    - strong: Breaker burst
+    - generic: Level 2
+    - paragraph: Contact 220 · Aimed fire 20
+    - paragraph: Automated review
+    - generic: Engineer — No airframes remain. The sortie is over.
+    - button "Retry same seed"
+    - button "New sortie"
+    - paragraph: Try another combination on the same battlefield.
+    - button "Back"
+    - button "Retry" [active]
+- text: + + + + + + + + +
