@@ -5991,6 +5991,7 @@ html body .mode-play-home:has(.landing-layout) .mode-play-content {
   max-width: none;
   padding: 0;
   overflow: visible;
+  margin-top: auto;
 }
 html body .landing-layout {
   position: relative;
@@ -6001,7 +6002,13 @@ html body .landing-layout {
   gap: 20px;
   flex: none;
   width: min(100%, 510px);
-  margin: clamp(0px, 4vh, 32px) auto 24px;
+  margin: 0 auto;
+}
+/* Auto margins use spare height for the animated scene above the menu.
+   When the menu is taller than the viewport they collapse to zero, preserving
+   top-reachable scrolling instead of clipping controls with end alignment. */
+html body .native-landing > .landing-layout {
+  margin-top: auto;
 }
 html body .landing-layout :is(.landing-identity, .landing-commands) {
   display: flex;
@@ -6083,7 +6090,7 @@ html body .native-landing:has(.landing-layout) .native-menu-footer {
   inset: auto;
   flex: none;
   width: 100%;
-  margin-top: auto;
+  margin-top: 0;
   padding-top: 16px;
   font-size: 12px;
 }
@@ -6093,6 +6100,10 @@ html body .native-landing:has(.landing-layout) > :is(.home-content, .menu-copy) 
   width: 100%;
   margin: 0;
   padding: 0;
+}
+html body .native-landing:has(.landing-layout) > .home-content {
+  order: -1;
+  flex: none;
 }
 body[data-couch-status='paused'] #race-main .landing-layout {
   display: block;
@@ -6108,8 +6119,7 @@ body[data-couch-status='paused'] #race-main .landing-layout .native-menu-utiliti
     width: min(100%, 1120px);
     grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
     gap: clamp(20px, 4vw, 56px);
-    margin-block: 0 16px;
-    align-items: center;
+    align-items: end;
   }
   html body .landing-layout :is(.fpv-line-wordmark, .mode-play-wordmark img) {
     max-height: 72px;
@@ -6157,11 +6167,6 @@ html body .landing-identity .mode-play-dialog-head {
 html body[data-text-size='large'] .landing-layout .game-mode-choice > :is(a, button) {
   font-size: 20px;
   white-space: normal;
-}
-@media (orientation: landscape) and (min-height: 600px) {
-  html body .landing-layout {
-    margin-block: clamp(24px, 15vh, 180px) 24px;
-  }
 }
 /* END SHARED MODE SHELL */
 
