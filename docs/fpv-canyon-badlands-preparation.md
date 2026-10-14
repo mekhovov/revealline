@@ -16,7 +16,7 @@ Three preliminary corridor studies exercise different pilot tasks:
 
 These are geometric route studies, not completed lessons, gate objectives, demonstrations or proof recordings. The checker samples centre and both corridor edges at intervals no larger than one metre, against the actual prepared triangle lattice. It does not claim continuous swept-volume clearance or successful pilot flight.
 
-The preparation produces 36 cells, 72 scene/collision assets, 73,728 terrain triangles and 1,625,685 source bytes. All 60 shared edges match exactly. Terrain elevation spans 6–155.728 m. The existing terrain compiler creates each visible GLB and collider from the same 4 m lattice; no separate decorative terrain can hide a collision discrepancy.
+The preparation produces 36 cells, 72 scene/collision assets, 73,728 terrain triangles and 1,625,685 source bytes. All 60 shared edges match exactly. Independent prepared-artifact verification passes 72 asset hashes, 36 canonical scene comparisons and 4,074 corridor samples. The existing terrain admission verifier also passes all 11 scenarios on the rebased main. Terrain elevation spans 6–155.728 m. The existing terrain compiler creates each visible GLB and collider from the same 4 m lattice; no separate decorative terrain can hide a collision discrepancy.
 
 ## Reproduction and review
 
