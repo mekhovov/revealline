@@ -67,3 +67,34 @@ PRs #1213 (verified terrain binding), #1214 (catalogue scrolling layout) and #12
 `01abc1e3a` during this receipt. The public deployment marker reports
 `0bd7888594b1e64f2e21518c248cd72d01f47758`; the actual public SIM was not launched
 as part of this observation.
+
+## Follow-up: public launch and safe workspace reduction
+
+Later on 14 October the public marker advanced to
+`456f7c3c0716fc2d9bedefc06c78a399457a08e4`. The actual public SIM at
+`https://mekhovov.github.io/revealline/optional-practice/fpv-worlds/index.html?lang=en#packs`
+was then opened in the Codex in-app browser. All 20 catalogue rows were visible.
+Play on Coaster Practice Park downloaded and rendered its scene, with motors off,
+health 100 and time 0.0 s. The camera control switched FPV → Chase → Overview;
+the session remained paused. This confirms that public launch path at the observed
+deployment, not every world, all hardware or sustained gameplay.
+Screenshot: `~/.codex/visualizations/fpv-catalogue-20261014/coaster-public-launch.jpg`.
+
+Internal disk exhaustion interrupted small Git writes despite using the external
+volume for packages. The task's clean, already-pushed checkout was reduced with
+Git sparse checkout, excluding archived publication evidence, verification/research
+documents and content-design files. This recovered approximately 1.1 GiB; Git status
+retained only the known untracked source-verification worker. No other checkout,
+unpublished change, commit, recovery ref or browser/player storage was removed.
+An earlier external archival copy was stopped before its verification/removal stage;
+its partial copy is retained and is not claimed as a complete backup. Free space
+briefly reached 3.2 GiB but remained variable, so this does not waive the stable
+3 GiB heavy-build floor.
+
+The merged #1219/#1221 feedback was separately checked against the current source
+preview. Its deliberately non-installable development worker produced the expected
+failure, now visible beside Prepare in Settings in Ukrainian. Changing language to
+English repainted that same result without another installation attempt or a false
+success. The original Ukrainian preference was restored. This is a failure/locale
+browser check of the new UI; the successful offline operation above remains evidence
+for the unchanged earlier cloud candidate.
