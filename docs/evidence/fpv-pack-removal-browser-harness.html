@@ -166,6 +166,15 @@
           }),
         ],
       ]);
+      // Reuse only this origin's existing access authorization. SIM state stays
+      // isolated; the normal access gate still verifies the token itself.
+      try {
+        const accessKey = 'revealline.access.revealline.v1';
+        const accessToken = localStorage.getItem(accessKey);
+        if (accessToken) memory.set(accessKey, accessToken);
+      } catch {
+        // The ordinary gate remains available when storage cannot be read.
+      }
       window.fixtureStorage = {
         getItem(k) {
           if (faults.playlistUnavailable && k === 'revealline.fpv.playlists.v1')
@@ -558,10 +567,44 @@
         baseline = await retained();
         progress('Review, Cancel and dialog-cancel preserve data and focus');
         const beforeReview = await libraryState();
+        const focusTrace = [];
+        const describeFocus = (node) => ({
+          tag: node?.tagName,
+          id: node?.id,
+          disabled: node?.disabled,
+          connected: node?.isConnected,
+        });
+        const focusEvent = (event) => {
+          if (focusTrace.length < 48)
+            focusTrace.push({
+              type: event.type,
+              target: describeFocus(event.target),
+              related: describeFocus(event.relatedTarget),
+            });
+        };
+        d.addEventListener('focusin', focusEvent, true);
+        d.addEventListener('focusout', focusEvent, true);
         await review();
+        d.removeEventListener('focusin', focusEvent, true);
+        d.removeEventListener('focusout', focusEvent, true);
         must(
           d.activeElement === d.getElementById('pack-removal-cancel'),
           'Cancel receives safe initial focus',
+          {
+            activeElement: {
+              tag: d.activeElement?.tagName,
+              id: d.activeElement?.id,
+              disabled: d.activeElement?.disabled,
+            },
+            cancelDisabled: d.getElementById('pack-removal-cancel')?.disabled,
+            reviewBusy: dialog()?.getAttribute('aria-busy'),
+            hostFocused: d.hasFocus(),
+            focusTrace,
+            cancelRect: d.getElementById('pack-removal-cancel')?.getBoundingClientRect().toJSON(),
+            cancelVisibility: w.getComputedStyle(d.getElementById('pack-removal-cancel'))
+              .visibility,
+            openDialogs: [...d.querySelectorAll('dialog[open]')].map((node) => node.id),
+          },
         );
         must(
           dialog().querySelectorAll('[data-revision]').length === 2,
