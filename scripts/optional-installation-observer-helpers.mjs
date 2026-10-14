@@ -30,6 +30,73 @@ export const OBSERVED_PACKAGES = Object.freeze({
 // UI to settle rather than reinstating the observer's old 20-second deadline.
 export const TRANSFER_TIMEOUT_MS = 315_000;
 export const OPERATION_TIMEOUT_MS = 30_000;
+export const OBSERVATION_TIMEOUT_MS = 600_000;
+
+export async function activateOfflineAction(page, { button, status, expected }) {
+  // Observe DOM changes only; never clear app statuses or invoke app functions.
+  // A previously displayed "Ready offline" must not satisfy a new operation.
+  await page.evaluate(
+    ({ status }) => {
+      const node = globalThis.document.querySelector(status);
+      if (!node) throw new Error('Offline status is missing.');
+      const witness = { statusChanged: false, progressShown: false };
+      witness.observer = new globalThis.MutationObserver((records) => {
+        for (const record of records) {
+          if (record.target === node || node.contains(record.target)) witness.statusChanged = true;
+          for (const added of record.addedNodes)
+            if (
+              added.nodeType === 1 &&
+              (added.matches('[data-optional-offline-progress]') ||
+                added.querySelector('[data-optional-offline-progress]'))
+            )
+              witness.progressShown = true;
+        }
+      });
+      witness.observer.observe(globalThis.document.body, {
+        childList: true,
+        characterData: true,
+        subtree: true,
+      });
+      globalThis.__optionalInstallationWitness = witness;
+    },
+    { status },
+  );
+  try {
+    await page.locator(button).press('Enter');
+    await page.waitForFunction(
+      () => {
+        const witness = globalThis.__optionalInstallationWitness;
+        return witness?.statusChanged || witness?.progressShown;
+      },
+      null,
+      { timeout: OPERATION_TIMEOUT_MS },
+    );
+    await page.waitForFunction(
+      ({ button, status, expected }) => {
+        const witness = globalThis.__optionalInstallationWitness;
+        if (!witness?.statusChanged) return false;
+        const text = globalThis.document.querySelector(status)?.textContent ?? '';
+        if (new RegExp(expected, 'i').test(text))
+          return (
+            !globalThis.document.querySelector(button)?.disabled &&
+            !globalThis.document.querySelector('[data-optional-offline-progress]')
+          );
+        if (/failed|timed out|cancelled|denied|quota|not available|not supported/i.test(text))
+          throw new Error(`Offline action failed: ${text}`);
+        return false;
+      },
+      { button, status, expected: expected.source },
+      { timeout: TRANSFER_TIMEOUT_MS },
+    );
+  } finally {
+    await page
+      .evaluate(() => {
+        globalThis.__optionalInstallationWitness?.observer.disconnect();
+        delete globalThis.__optionalInstallationWitness;
+      })
+      .catch(() => {});
+  }
+}
 
 export async function revealFPVOffline(page, openHelp) {
   if (!(await page.locator('#help-dialog').isVisible())) await openHelp();
