@@ -97,6 +97,7 @@ import {
   overflightSummary,
 } from './core.mjs';
 import { createOverflightRenderer } from './renderer.mjs';
+import { overflightBenchmarkMeasureAt } from './benchmark.mjs';
 import {
   createOverflightClock,
   createOverflightInputGate,
@@ -228,12 +229,14 @@ const benchmarkTrial =
   ['1', '2', '3', 'soak'].includes(params.get('trial'))
     ? params.get('trial')
     : null;
+const measureAt = overflightBenchmarkMeasureAt(params, { fixture, reviewBuild });
 const benchmarkProtocol = benchmarkTrial
   ? {
       warmupSeconds: 30,
       measurementSeconds: benchmarkTrial === 'soak' ? 900 : 120,
       repetitions: 1,
       stopAtEnd: true,
+      ...(measureAt !== null ? { measureAt } : {}),
     }
   : {};
 const review = createOverflightReviewPlayback({
@@ -1272,6 +1275,7 @@ function measurement({ raw = false } = {}) {
     capturedAt: new Date().toISOString(),
     fixture,
     benchmarkTrial,
+    measureAt,
     prototype: mode.prototype ?? null,
     review: reviewIdentity(),
     clipCaptureUsed,
@@ -1636,7 +1640,15 @@ if (reviewBuild) {
   const manual = el('a');
   manual.dataset.copy = 'manualRetry';
   const clean = new URL(win.location.href);
-  for (const key of ['reviewBuild', 'reviewStopAt', 'autoplay', 'benchmark', 'trial', 'fixture'])
+  for (const key of [
+    'reviewBuild',
+    'reviewStopAt',
+    'autoplay',
+    'benchmark',
+    'trial',
+    'fixture',
+    'measureAt',
+  ])
     clean.searchParams.delete(key);
   manual.href = clean.href;
   shell.elements.content.briefing.append(manual);

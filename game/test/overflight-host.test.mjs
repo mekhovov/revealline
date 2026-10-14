@@ -90,16 +90,25 @@ test('completed-frame trials include explicitly requested native Survivor and Ri
   const { readFile } = await import('node:fs/promises');
   const { runInNewContext } = await import('node:vm');
   const { parse } = await import('acorn');
+  const { overflightBenchmarkMeasureAt } = await import('../overflight/benchmark.mjs');
   const source = await readFile(new URL('../overflight/app.mjs', import.meta.url), 'utf8');
   const ast = parse(source, { ecmaVersion: 'latest', sourceType: 'module' });
   const declarations = ast.body
     .filter((node) => node.type === 'VariableDeclaration')
     .flatMap((node) => node.declarations);
   const trial = declarations.find((node) => node.id.name === 'benchmarkTrial').init;
+  const measureAt = declarations.find((node) => node.id.name === 'measureAt').init;
   const protocol = declarations.find((node) => node.id.name === 'benchmarkProtocol').init;
   const evaluate = (id, query, reviewBuild = null, fixture = null) => {
-    const context = { mode: { id }, params: new URLSearchParams(query), reviewBuild, fixture };
+    const context = {
+      mode: { id },
+      params: new URLSearchParams(query),
+      reviewBuild,
+      fixture,
+      overflightBenchmarkMeasureAt,
+    };
     context.benchmarkTrial = runInNewContext(source.slice(trial.start, trial.end), context);
+    context.measureAt = runInNewContext(source.slice(measureAt.start, measureAt.end), context);
     return JSON.parse(
       JSON.stringify({
         trial: context.benchmarkTrial,
@@ -124,6 +133,11 @@ test('completed-frame trials include explicitly requested native Survivor and Ri
   assert.equal(
     evaluate('overflight-riy', 'benchmark=1&trial=soak', 'fan-shield').protocol.measurementSeconds,
     900,
+  );
+  assert.equal(
+    evaluate('overflight-riy', 'benchmark=1&trial=1&measureAt=240', 'fan-shield').protocol
+      .measureAt,
+    240,
   );
 });
 

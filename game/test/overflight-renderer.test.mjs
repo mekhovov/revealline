@@ -27,6 +27,8 @@ import {
   pauseOverflight,
   resumeOverflight,
   overflightSummary,
+  spawnOverflightEnemy,
+  damageOverflightEnemy,
 } from '../overflight/core.mjs';
 
 test('all native families, wardrobes and motion poses fit two audited textures', () => {
@@ -399,13 +401,13 @@ test('real earned drafts retain complete render intervals while manual lifecycle
   let now = 0;
   t.mock.method(performance, 'now', () => now);
   try {
-    for (const condition of [
+    for (const { condition, measureAt } of [
       'normal',
       'foreground-stall',
       'manual-pause',
       'hidden',
       'context-loss',
-    ]) {
+    ].flatMap((condition) => [null, 0.02].map((measureAt) => ({ condition, measureAt })))) {
       const environment = fakeEnvironment();
       globalThis.Phaser = environment.Phaser;
       now = 0;
@@ -431,6 +433,7 @@ test('real earned drafts retain complete render intervals while manual lifecycle
           measurementSeconds: 1,
           repetitions: 1,
           stopAtEnd: true,
+          measureAt,
         });
         const frame = (delta = 16, action = null) => {
           now += delta;
@@ -442,6 +445,12 @@ test('real earned drafts retain complete render intervals while manual lifecycle
         };
         frame(0);
         frame(16, () => stepOverflight(run));
+        if (measureAt !== null) {
+          const pending = renderer.stats({ raw: true });
+          assert.equal(pending.protocol.scheduledStart.pending, true);
+          assert.equal(pending.measuredIntervals, 0);
+          assert.equal(pending.rawSubmission.length, 0);
+        }
         frame(16, () => {
           dropOverflightSalvage(run, run.player.x, run.player.y, run.progression.nextThreshold);
           stepOverflight(run);
@@ -451,6 +460,8 @@ test('real earned drafts retain complete render intervals while manual lifecycle
           if (condition === 'foreground-stall') now += 220;
         });
         const draftTime = run.time;
+        if (measureAt !== null)
+          assert.equal(renderer.stats().protocol.scheduledStart.actualGameplaySeconds, draftTime);
         for (let index = 0; index < 10; index++) frame();
         assert.equal(run.time, draftTime, 'rendering the draft cannot advance simulation');
 
@@ -497,7 +508,8 @@ test('real earned drafts retain complete render intervals while manual lifecycle
           assert.equal(report.valid, true, condition);
           assert.deepEqual(report.invalidReasons, [], condition);
           assert.equal(report.protocol.acceptance, condition === 'normal');
-          assert.ok(Math.abs(report.measuredSeconds - now / 1000) < 1e-9);
+          const pendingWallMs = measureAt === null ? 0 : 16;
+          assert.ok(Math.abs(report.measuredSeconds - (now - pendingWallMs) / 1000) < 1e-9);
           if (condition === 'foreground-stall') {
             assert.ok(
               report.rawIntervals.some(
@@ -525,6 +537,63 @@ test('real earned drafts retain complete render intervals while manual lifecycle
       }
     }
   } finally {
+    globalThis.Phaser = prior;
+  }
+});
+
+test('arming a late renderer window preserves earned remains, live simulation and prepared resources', async (t) => {
+  const prior = globalThis.Phaser;
+  const environment = fakeEnvironment();
+  globalThis.Phaser = environment.Phaser;
+  let now = 0,
+    renderer,
+    afterStep;
+  t.mock.method(performance, 'now', () => now);
+  const run = createOverflightRun(
+    compileOverflightProject(createOverflightProject({ rulesVersion: 4 })),
+  );
+  startOverflight(run);
+  const victim = spawnOverflightEnemy(run, {
+    family: 'patroller',
+    x: run.player.x + 80,
+    y: run.player.y,
+    warning: 0,
+  });
+  damageOverflightEnemy(run, victim, 1000);
+  assert.equal(run.stats.kills, 1);
+  try {
+    renderer = await createOverflightRenderer({
+      parent: { ownerDocument: environment.document },
+      appearance: {
+        destruction: { showRemains: true, brutal: true, blood: true },
+        snapshot: { image: (id) => (id.startsWith('player.') ? { image: {} } : null) },
+      },
+      onFrame() {
+        stepOverflight(run);
+        afterStep = structuredClone(run);
+        renderer.present(run);
+      },
+    });
+    renderer.resetMeasurements({ measureAt: 0.05, repetitions: 1, stopAtEnd: true });
+    const prepared = environment.counts();
+    for (let index = 0; index < 4; index++) {
+      now += 16;
+      environment.game().config.scene.update();
+      environment.game().events.emit('pre');
+      environment.game().events.emit('post');
+      assert.deepEqual(run, afterStep, 'Completed render cannot seek or modify the simulation.');
+      assert.equal(renderer.stats().remains.stored, 1);
+      assert.equal(renderer.stats().protocol.scheduledStart.pending, index < 2);
+      assert.deepEqual(
+        environment.counts(),
+        prepared,
+        'Arming cannot repaint or upload prepared art.',
+      );
+    }
+    assert.equal(renderer.stats().protocol.scheduledStart.actualGameplaySeconds, 0.05);
+    assert.equal(run.stats.kills, 1);
+  } finally {
+    await renderer?.destroy();
     globalThis.Phaser = prior;
   }
 });

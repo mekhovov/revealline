@@ -1,0 +1,30 @@
+{
+  "format": "OverflightFinalIntegrationV1",
+  "commit": "7819c81a0b809a408085d682fb7676511bd9220a",
+  "integratedMain": "68794767535103470516c022f3fbde5396b3f0a9",
+  "passed": 90,
+  "failed": 0,
+  "skipped": 0,
+  "durationMs": 4653.006792,
+  "suiteFiles": [
+    "overflight-late-benchmark.test.mjs",
+    "overflight-renderer.test.mjs",
+    "overflight-riy-project.test.mjs",
+    "overflight-battlefield-progression.test.mjs",
+    "overflight-records.test.mjs",
+    "optional-installation.test.mjs",
+    "optional-offline-lifecycle.test.mjs",
+    "mode-settings-view.test.mjs"
+  ],
+  "testInvocation": "node --test --test-concurrency=2 (eight files under game/test)",
+  "tap": "final-integration.tap.gz",
+  "tapRawSha256": "9fbd429d910326c3c5658f998c5ebd1653c65ba109271759d46a3e132f72d475",
+  "eslint": {
+    "result": "pass",
+    "implementation": "existing local eslint through node",
+    "scope": "Changed Overflight runtime, Riy editor and runtime test files"
+  },
+  "diffCheck": "pass",
+  "nativeEvidenceRuntime": "08f5e6e0ee93ae13955321c6a187e5f1148eef84",
+  "nativeBoundary": "Earlier captures retain their recorded source; integrated main changes do not retroactively retag them. Manual family Home reloaded successfully after the merge with Standard/three airframes/Scout, normal effects and master mute."
+}
