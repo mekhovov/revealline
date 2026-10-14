@@ -16,6 +16,9 @@ export const OVERFLIGHT_PROJECT_FORMAT = 'OverflightProjectV1';
 export const OVERFLIGHT_COMPILED_FORMAT = 'OverflightCompiledV1';
 export const OVERFLIGHT_PROJECT_FORMAT_V2 = 'OverflightProjectV2';
 export const OVERFLIGHT_COMPILED_FORMAT_V2 = 'OverflightCompiledV2';
+export const OVERFLIGHT_PROJECT_FORMAT_V3 = 'OverflightProjectV3';
+export const OVERFLIGHT_COMPILED_FORMAT_V3 = 'OverflightCompiledV3';
+export const OVERFLIGHT_BALANCE_REVISION = 'overflight-balance.v3';
 export const OVERFLIGHT_PROJECT_MAX_BYTES = 128 * 1024;
 export const OVERFLIGHT_SOLDIERS = Object.freeze([
   'lookout',
@@ -91,8 +94,12 @@ export function createOverflightProject({
   seed = 17031991,
   difficulty = 'standard',
   legacy = false,
+  rulesVersion = 2,
 } = {}) {
-  required(OVERFLIGHT_DIFFICULTIES.includes(difficulty), 'Unknown difficulty.');
+  required(
+    OVERFLIGHT_DIFFICULTIES.includes(difficulty) && (rulesVersion >= 3 || difficulty !== 'relaxed'),
+    'Unknown difficulty.',
+  );
   required(Object.hasOwn(encounterFamilies, encounterSet), 'Unknown Overflight encounter set.');
   const groups = encounterFamilies[encounterSet];
   const encounters = [];
@@ -132,6 +139,7 @@ export function createOverflightProject({
       seed,
       difficulty,
       encounterSet,
+      rulesVersion,
     ).entries()) {
       const rate = Math.min(
         40,
@@ -140,7 +148,7 @@ export function createOverflightProject({
       );
       const end = Math.max(
         window.start + 1,
-        window.end - createOverflightCombatProfile(difficulty).pacing.reliefSeconds,
+        window.end - createOverflightCombatProfile(difficulty, rulesVersion).pacing.reliefSeconds,
       );
       const gatheringFront = window.start >= 180;
       const lateFront = window.start >= 240;
@@ -152,14 +160,21 @@ export function createOverflightProject({
         // jump. Slower fronts gather between clearing passes; flankers still
         // intercept faster than crossing packs. The director retains authored
         // and earned relief rather than replacing casualties to meet a quota.
-        spawnPerSecond: lateFront ? 40 : gatheringFront ? 36 : rate,
-        speed: gatheringFront
-          ? window.pattern === 'flank'
-            ? 38
-            : window.pattern === 'crossing'
-              ? 34
-              : 32
-          : Math.min(78, 38 + index * 4 + (difficulty === 'veteran' ? 8 : 0)),
+        spawnPerSecond:
+          (lateFront ? 40 : gatheringFront ? 36 : rate) *
+          (rulesVersion >= 3 && window.pattern !== 'pursuit' ? 0.85 : 1),
+        speed:
+          rulesVersion >= 3 && gatheringFront
+            ? window.pattern === 'armored'
+              ? 40
+              : 54 + (index % 3) * 4
+            : gatheringFront
+              ? window.pattern === 'flank'
+                ? 38
+                : window.pattern === 'crossing'
+                  ? 34
+                  : 32
+              : Math.min(78, 38 + index * 4 + (difficulty === 'veteran' ? 8 : 0)),
         hp: lateFront ? 120 : gatheringFront ? 90 : index < 3 ? 30 : index < 6 ? 45 : 60,
         families: families[window.pattern],
         pattern: window.pattern,
@@ -178,8 +193,18 @@ export function createOverflightProject({
     }
   }
   return {
-    format: legacy ? OVERFLIGHT_PROJECT_FORMAT : OVERFLIGHT_PROJECT_FORMAT_V2,
-    ...(!legacy ? { difficulty, combat: createOverflightCombatProfile(difficulty) } : {}),
+    format: legacy
+      ? OVERFLIGHT_PROJECT_FORMAT
+      : rulesVersion >= 3
+        ? OVERFLIGHT_PROJECT_FORMAT_V3
+        : OVERFLIGHT_PROJECT_FORMAT_V2,
+    ...(!legacy && rulesVersion >= 3 ? { balanceRevision: OVERFLIGHT_BALANCE_REVISION } : {}),
+    ...(!legacy
+      ? {
+          difficulty,
+          combat: createOverflightCombatProfile(difficulty, rulesVersion),
+        }
+      : {}),
     id: `overflight-${encounterSet}`,
     title: {
       en: `Overflight · ${encounterSet === 'front' ? 'Breakthrough' : encounterSet === 'crossing' ? 'Crosswinds' : 'Convergence'}`,
@@ -188,7 +213,12 @@ export function createOverflightProject({
     seed,
     arena: { width: 2880, height: 1080, cameraWidth: 960, cameraHeight: 540 },
     duration: 360,
-    population: { capacity: 2500, specialists: 8, heavies: 4, priorityAttacks: 2 },
+    population: {
+      capacity: 2500,
+      specialists: 8,
+      heavies: 4,
+      priorityAttacks: 2,
+    },
     encounters,
     upgrades: {
       choices: 10,
@@ -244,18 +274,35 @@ export function validateOverflightProject(source) {
       'goals',
       'resources',
       'props',
-      ...(project.format === OVERFLIGHT_PROJECT_FORMAT_V2 ? ['difficulty', 'combat'] : []),
+      ...([OVERFLIGHT_PROJECT_FORMAT_V2, OVERFLIGHT_PROJECT_FORMAT_V3].includes(project.format)
+        ? ['difficulty', 'combat']
+        : []),
+      ...(project.format === OVERFLIGHT_PROJECT_FORMAT_V3 ? ['balanceRevision'] : []),
     ],
     'Overflight project',
   );
   required(
-    [OVERFLIGHT_PROJECT_FORMAT, OVERFLIGHT_PROJECT_FORMAT_V2].includes(project.format),
+    [
+      OVERFLIGHT_PROJECT_FORMAT,
+      OVERFLIGHT_PROJECT_FORMAT_V2,
+      OVERFLIGHT_PROJECT_FORMAT_V3,
+    ].includes(project.format),
     'Unsupported Overflight project version.',
   );
-  const v2 = project.format === OVERFLIGHT_PROJECT_FORMAT_V2;
+  const v3 = project.format === OVERFLIGHT_PROJECT_FORMAT_V3;
+  const v2 = v3 || project.format === OVERFLIGHT_PROJECT_FORMAT_V2;
+  if (v3)
+    required(
+      project.balanceRevision === OVERFLIGHT_BALANCE_REVISION,
+      'Unsupported balance revision.',
+    );
   if (v2) {
-    required(OVERFLIGHT_DIFFICULTIES.includes(project.difficulty), 'Unknown difficulty.');
-    validateOverflightCombatProfile(project.combat);
+    required(
+      OVERFLIGHT_DIFFICULTIES.includes(project.difficulty) &&
+        (v3 || project.difficulty !== 'relaxed'),
+      'Unknown difficulty.',
+    );
+    validateOverflightCombatProfile(project.combat, v3 ? 3 : 2);
   }
   required(stableId(project.id), 'Invalid Overflight project ID.');
   fields(project.title, ['en', 'uk'], 'Project title');
@@ -376,10 +423,17 @@ export function compileOverflightProject(source) {
   return freeze({
     ...project,
     format:
-      project.format === OVERFLIGHT_PROJECT_FORMAT_V2
-        ? OVERFLIGHT_COMPILED_FORMAT_V2
-        : OVERFLIGHT_COMPILED_FORMAT,
-    rulesVersion: project.format === OVERFLIGHT_PROJECT_FORMAT_V2 ? 2 : 1,
+      project.format === OVERFLIGHT_PROJECT_FORMAT_V3
+        ? OVERFLIGHT_COMPILED_FORMAT_V3
+        : project.format === OVERFLIGHT_PROJECT_FORMAT_V2
+          ? OVERFLIGHT_COMPILED_FORMAT_V2
+          : OVERFLIGHT_COMPILED_FORMAT,
+    rulesVersion:
+      project.format === OVERFLIGHT_PROJECT_FORMAT_V3
+        ? 3
+        : project.format === OVERFLIGHT_PROJECT_FORMAT_V2
+          ? 2
+          : 1,
     difficulty: project.difficulty ?? 'standard',
     combat: project.combat ?? null,
     projectIdentity: dataIdentity(project),

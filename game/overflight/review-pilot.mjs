@@ -1,6 +1,7 @@
 /** Explicit review-demo pilot only. Never enabled by an ordinary game start. */
 import { rerollOverflightUpgrades } from './core.mjs';
 import { overflightAttackContains } from './tactics.mjs';
+import { overflightPayload } from './upgrades.mjs';
 
 export const QUALIFICATION_BUILDS = Object.freeze({
   fan: ['primary:wide', 'proximity-pulse', 'side-burst', 'scanner'],
@@ -101,6 +102,7 @@ export function createOverflightAuditPilot(route) {
  * It pursues salvage, skirts the boss, and compares short movement candidates to
  * avoid nearby bodies/visible committed attack geometry. It cannot alter the simulation. */
 export function pilot(run, route = 'tight') {
+  if (run.rulesVersion >= 3) return directionalPilot(run, route);
   const player = run.player;
   const arena = run.compiled.arena;
   const phase = run.time * (route === 'tight' ? 0.55 : 0.32);
@@ -170,4 +172,137 @@ export function pilot(run, route = 'tight') {
   }
   if (best < -100 && player.boostCooldown === 0) input.boost = true;
   return input;
+}
+
+/** V3 review route: ordinary steering, deliberate boosts and visible warnings.
+ * Relative sweeps account for committed flank/burst paths instead of assuming
+ * every body pursues the pilot. This is still a local, imperfect flight policy.
+ */
+function directionalPilot(run, route) {
+  const p = run.player,
+    arena = run.compiled.arena;
+  const horizon = 0.5;
+  const phase = run.time * (route === 'tight' ? 0.4 : 0.25);
+  let goalX = arena.width / 2 + Math.cos(phase) * 240;
+  let goalY = arena.height / 2 + Math.sin(phase * (route === 'figure-eight' ? 2 : 1)) * 210;
+  let bestPickup = Infinity;
+  for (const pickup of run.pickups) {
+    if (!pickup.active) continue;
+    const distance = Math.hypot(pickup.x - p.x, pickup.y - p.y);
+    const value = distance / Math.min(3, Math.sqrt(pickup.value));
+    if (distance > 45 && distance < 550 && value < bestPickup) {
+      bestPickup = value;
+      goalX = pickup.x;
+      goalY = pickup.y;
+    }
+  }
+  const final = run.enemies.find((enemy) => enemy.active && enemy.role === 'final');
+  const payload = overflightPayload(run.build, 3);
+  if (final) {
+    const angle = Math.atan2(p.y - final.y, p.x - final.x) + 0.7;
+    const radius = run.build.primary.branch === 'double' ? 120 : 85;
+    goalX = final.x + Math.cos(angle) * radius;
+    goalY = final.y + Math.sin(angle) * radius;
+  }
+  const enemies = run.enemies
+    .filter(
+      (enemy) =>
+        enemy.active &&
+        enemy.warning < horizon &&
+        Math.abs(enemy.x - p.x) < 260 &&
+        Math.abs(enemy.y - p.y) < 260,
+    )
+    .map((enemy) => {
+      const burst = enemy.behaviorPhase === 'burst';
+      const speed =
+        enemy.speed *
+        (burst ? Math.min(2, 144 / enemy.speed) : enemy.behaviorPhase === 'windup' ? 0.5 : 1) *
+        (enemy.slowUntil > run.tick ? enemy.slowMultiplier : 1);
+      return {
+        enemy,
+        vx: (burst ? enemy._burstX : enemy.steeringX) * speed,
+        vy: (burst ? enemy._burstY : enemy.steeringY) * speed,
+      };
+    });
+  let best = -Infinity,
+    chosen = { x: 0, y: 0, boost: false };
+  const before = Math.hypot(goalX - p.x, goalY - p.y);
+  const boostOptions = p.boostCooldown === 0 && !run._boostHeld ? [false, true] : [false];
+  for (const boost of boostOptions)
+    for (const magnitude of [0.65, 1])
+      for (let index = 0; index < 24; index++) {
+        const angle = (index * Math.PI) / 12,
+          ux = Math.cos(angle),
+          uy = Math.sin(angle);
+        const boostSeconds = boost ? 0.3 : Math.min(horizon, p.boostRemaining);
+        const distanceAt = (seconds) =>
+          magnitude *
+          (run.flight.boostSpeed * Math.min(boostSeconds, seconds) +
+            run.flight.speed * Math.max(0, seconds - boostSeconds));
+        const distance = distanceAt(horizon),
+          x = p.x + ux * distance,
+          y = p.y + uy * distance;
+        if (x < 28 || y < 28 || x > arena.width - 28 || y > arena.height - 28) continue;
+        let score = (before - Math.hypot(goalX - x, goalY - y)) * 0.8 - (boost ? 24 : 0);
+        for (const { enemy, vx, vy } of enemies) {
+          // Two segments represent the boost ending before the prediction horizon.
+          const split = boostSeconds > 0 && boostSeconds < horizon ? boostSeconds : horizon / 2;
+          let from = 0;
+          for (const to of [split, horizon]) {
+            const rx = p.x + ux * distanceAt(from) - enemy.x - vx * from;
+            const ry = p.y + uy * distanceAt(from) - enemy.y - vy * from;
+            const sx = ux * (distanceAt(to) - distanceAt(from)) - vx * (to - from);
+            const sy = uy * (distanceAt(to) - distanceAt(from)) - vy * (to - from);
+            const t = Math.max(0, Math.min(1, -(rx * sx + ry * sy) / (sx * sx + sy * sy || 1)));
+            const nearest = Math.hypot(rx + sx * t, ry + sy * t);
+            const safety = p.radius + enemy.radius + 6;
+            if (nearest < safety) score -= 280 + (safety - nearest) * 20;
+            else if (nearest < safety + 25) score -= (safety + 25 - nearest) * 0.65;
+            from = to;
+          }
+        }
+        for (const attack of run.priorityAttacks) {
+          if (!attack.active) continue;
+          for (const seconds of [0.1, 0.2, 0.3, 0.4, 0.5]) {
+            const imminent =
+              attack.stage === 'active'
+                ? seconds <= attack.remaining
+                : Math.abs(seconds - attack.remaining) < 0.11;
+            if (
+              overflightAttackContains(
+                attack,
+                p.x + ux * distanceAt(seconds),
+                p.y + uy * distanceAt(seconds),
+                p.radius + 8,
+              )
+            )
+              score -= imminent ? 350 : 8;
+          }
+        }
+        // A rear weapon needs an exit pass. Reward an actual release footprint on
+        // the boss, never proximity to a fictional concentric damage aura.
+        if (final && run._cooldowns.primary < horizon) {
+          const release = Math.max(0, run._cooldowns.primary);
+          const px = p.x + ux * distanceAt(release),
+            py = p.y + uy * distanceAt(release);
+          const centers = payload.rearOffsets?.slice(0, payload.echoes + 1) ?? [28];
+          for (const [impact, rear] of centers.entries())
+            for (let charge = 0; charge < payload.count; charge++) {
+              const side = (charge - (payload.count - 1) / 2) * payload.spacing;
+              const cx = px - ux * rear - uy * side,
+                cy = py - uy * rear + ux * side;
+              const radius = payload.echoRadii?.[impact] ?? payload.radius;
+              if (Math.hypot(cx - final.x, cy - final.y) < radius + final.radius * 0.6) score += 22;
+            }
+        }
+        score -=
+          (Math.abs(ux * run.flight.speed * magnitude - p.vx) +
+            Math.abs(uy * run.flight.speed * magnitude - p.vy)) *
+          0.012;
+        if (score > best) {
+          best = score;
+          chosen = { x: ux * magnitude, y: uy * magnitude, boost };
+        }
+      }
+  return chosen;
 }

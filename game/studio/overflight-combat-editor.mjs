@@ -1,4 +1,7 @@
-import { OVERFLIGHT_COMBAT_FIELDS } from '../overflight/combat-profile.mjs';
+import {
+  OVERFLIGHT_COMBAT_FIELDS,
+  OVERFLIGHT_COMBAT_V3_FIELDS,
+} from '../overflight/combat-profile.mjs';
 
 /** Shared controls edit the exact profile compiled by native Survivor and Raid. */
 export function overflightCombatEditor({
@@ -30,8 +33,10 @@ export function overflightCombatEditor({
     label.append(input);
     fields.append(label);
   };
+  const modern = (project.survivorFormat ?? project.format).endsWith('V3');
   const difficulty = document.createElement('select');
   for (const [id, en, uk] of [
+    ...(modern ? [['relaxed', 'Relaxed', 'Спокійна']] : []),
     ['standard', 'Standard', 'Звичайна'],
     ['veteran', 'Veteran', 'Ветеран'],
   ]) {
@@ -54,15 +59,47 @@ export function overflightCombatEditor({
     onChange();
   });
   field(words('Guarded supply cases', 'Ящики під охороною'), enabled);
-  const hunt = project.format === 'OverflightHuntProjectV2';
-  for (const [section, key, min, max, step, en, uk] of OVERFLIGHT_COMBAT_FIELDS) {
+  const hunt = project.format.startsWith('OverflightHuntProject');
+  if (modern && !hunt) {
+    const overdrive = document.createElement('input');
+    overdrive.type = 'checkbox';
+    overdrive.checked = project.combat.supplies.overdrive;
+    overdrive.addEventListener('change', () => {
+      project.combat.supplies.overdrive = overdrive.checked;
+      onChange();
+    });
+    field(words('Stored Overdrive supply reward', 'Нагорода запасеним форсажем'), overdrive);
+    if (!hunt) {
+      const bonus = document.createElement('select');
+      for (const [value, en, uk] of [
+        [1, 'Standard damage', 'Звичайна шкода'],
+        [1.15, '+15% friendly damage', '+15% шкоди гравця'],
+      ]) {
+        const option = document.createElement('option');
+        option.value = value;
+        option.textContent = words(en, uk);
+        bonus.append(option);
+      }
+      bonus.value = project.combat.friendlyDamageMultiplier;
+      bonus.addEventListener('change', () => {
+        project.combat.friendlyDamageMultiplier = Number(bonus.value);
+        onChange();
+      });
+      field(words('Friendly damage', 'Шкода гравця'), bonus);
+    }
+  }
+  for (const [section, key, min, max, step, en, uk] of [
+    ...OVERFLIGHT_COMBAT_FIELDS,
+    ...(modern ? OVERFLIGHT_COMBAT_V3_FIELDS : []),
+  ]) {
     // Raid uses contact states and authored finite packs. Numeric absorption,
     // hull partitioning and timed spawn relief belong to Survivor only.
     if (
       hunt &&
       ((section === 'guard' && key !== 'commitSeconds') ||
         (section === 'machinery' && key !== 'exposureSeconds') ||
-        section === 'pacing')
+        section === 'pacing' ||
+        section === 'threats')
     )
       continue;
     const input = document.createElement('input');
@@ -77,6 +114,11 @@ export function overflightCombatEditor({
     });
     field(words(en, uk), input);
   }
-  root.append(fields);
+  const guidance = document.createElement('p');
+  guidance.textContent = words(
+    'Difficulty labels this custom encounter. The values above set its balance; changing the label preserves your tuning.',
+    'Складність позначає цей власний сценарій. Значення вище визначають баланс; зміна позначки зберігає ваші налаштування.',
+  );
+  root.append(fields, guidance);
   return root;
 }

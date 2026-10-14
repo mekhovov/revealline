@@ -1,3 +1,5 @@
+import { overflightRiyEscortParameters } from './riy-upgrades.mjs';
+import { OVERFLIGHT_RIY_DEFAULTS_V2 } from './riy-project.mjs';
 import { overflightModuleParameters, overflightPayload } from './upgrades.mjs';
 
 // These are explanatory diagrams, not another game simulation. Weapon geometry
@@ -13,6 +15,8 @@ const systems = new Set([
   'reinforce',
   'repair',
   'recovery',
+  'riy-sweeper',
+  'riy-breaker',
 ]);
 const escape = (value) =>
   String(value).replace(
@@ -29,7 +33,10 @@ const escape = (value) =>
 const number = (value) => Number(Number(value).toFixed(2));
 const choose = (locale, en, uk) => (locale === 'uk' ? uk : en);
 
-export function overflightUpgradePreviewModel(offer, { build, player } = {}) {
+export function overflightUpgradePreviewModel(
+  offer,
+  { build, player, rulesVersion = 2, riySettings } = {},
+) {
   if (!systems.has(offer.system)) throw new Error(`Unsupported upgrade preview: ${offer.system}`);
   const rank = Number(offer.rank);
   if (!Number.isInteger(rank) || rank < 1)
@@ -45,15 +52,37 @@ export function overflightUpgradePreviewModel(offer, { build, player } = {}) {
   )
     throw new Error('An upgrade preview needs a valid module rank.');
   let before, after;
-  if (offer.system === 'primary') {
+  if (offer.system.startsWith('riy-')) {
+    const role = offer.system.slice(4);
+    const branches = role === 'sweeper' ? ['broad', 'trail'] : ['burst', 'chain'];
+    if (rank < 2 || !branches.includes(offer.branch) || (offer.role && offer.role !== role))
+      throw new Error('Riy preview needs a valid escort branch and rank.');
+    const config = (riySettings ?? OVERFLIGHT_RIY_DEFAULTS_V2).escorts.find(
+      (entry) => entry.role === role,
+    );
+    if (!config) throw new Error('Riy preview needs an authored escort.');
+    const current = build?.escorts?.find((entry) => entry.role === role) ?? {
+      rank: offer.currentRank ?? rank - 1,
+      branch: rank === 2 ? null : offer.branch,
+    };
+    before = overflightRiyEscortParameters(config, current);
+    after = overflightRiyEscortParameters(config, {
+      rank,
+      branch: offer.branch,
+    });
+  } else if (offer.system === 'primary') {
     const current = build?.primary ?? {
       rank: rank - 1,
       branch: rank === 2 ? null : offer.branch,
       evolved: false,
     };
-    before = { ...overflightPayload({ primary: current }), rank: current.rank, delay: 0.45 };
+    before = {
+      ...overflightPayload({ primary: current }, rulesVersion),
+      rank: current.rank,
+      delay: 0.45,
+    };
     after = {
-      ...overflightPayload({ primary: { rank, branch: offer.branch } }),
+      ...overflightPayload({ primary: { rank, branch: offer.branch } }, rulesVersion),
       rank,
       delay: 0.45,
     };
@@ -82,12 +111,18 @@ export function overflightUpgradePreviewModel(offer, { build, player } = {}) {
     }
   } else {
     const currentRank = offer.currentRank ?? rank - 1;
-    before = { ...overflightModuleParameters(offer.system, currentRank), rank: currentRank };
-    after = { ...overflightModuleParameters(offer.system, rank), rank };
+    before = {
+      ...overflightModuleParameters(offer.system, currentRank, rulesVersion),
+      rank: currentRank,
+    };
+    after = {
+      ...overflightModuleParameters(offer.system, rank, rulesVersion),
+      rank,
+    };
   }
   return {
     system: offer.system,
-    branch: offer.system === 'primary' ? offer.branch : null,
+    branch: offer.system === 'primary' || offer.system.startsWith('riy-') ? offer.branch : null,
     before,
     after,
   };
@@ -95,6 +130,17 @@ export function overflightUpgradePreviewModel(offer, { build, player } = {}) {
 
 function caption(system, state, locale) {
   const word = (en, uk) => choose(locale, en, uk);
+  if (system.startsWith('riy-'))
+    return [
+      `${number(state.damage)} ${word('dmg', 'шк.')} · ${state.interval}${word('s', 'с')} · ${state.followArc}°`,
+      state.trailDuration
+        ? `${word('Slow trail', 'Слід')} ${state.trailDuration}${word('s', 'с')}`
+        : state.chainTargets > 1
+          ? `${word('Split across', 'Розподіл на')} ${state.chainTargets}`
+          : state.burstCount > 1
+            ? `${state.burstCount} ${word('hits per target', 'удари по цілі')}`
+            : `${word('R', 'Р')} ${number(state.radius)} · ${word('range', 'дальність')} ${state.attackRange}`,
+    ];
   if (system === 'plating')
     return [
       `${Math.round((state.damageReduction ?? 0) * 100)}% ${word('less damage', 'менше шкоди')}`,
@@ -105,7 +151,9 @@ function caption(system, state, locale) {
   if (system === 'primary')
     return [
       `${state.count} ${word(state.count === 1 ? 'charge' : 'charges', state.count === 1 ? 'заряд' : state.count === 3 ? 'заряди' : 'зарядів')} · ${1 + state.echoes} ${word('hit', 'удар')}${state.echoes ? word('s', 'и') : ''}`,
-      `${word('R', 'Р')} ${state.radius} · ${state.damage} ${word('dmg', 'шк.')} · ${state.cooldown}${word('s', 'с')}`,
+      state.rearOffsets
+        ? `${word('Rear trail', 'Слід позаду')} · ${state.damage} ${word('dmg', 'шк.')} · ${state.cooldown}${word('s', 'с')}`
+        : `${word('R', 'Р')} ${state.radius} · ${state.damage} ${word('dmg', 'шк.')} · ${state.cooldown}${word('s', 'с')}`,
     ];
   if (system === 'proximity-pulse')
     return [
@@ -188,7 +236,7 @@ function scene(model, state, id, reducedEffects) {
   };
   if (system === 'primary') {
     const scale = 0.2;
-    const centre = 62;
+    const centre = state.rearOffsets ? 106 - state.rearOffsets[0] * scale : 62;
     for (let index = 0; index < state.count; index++) {
       const y = 66 + (index - (state.count - 1) / 2) * state.spacing * scale;
       body += circle(centre, y, state.radius * scale, '#efbd70');
@@ -205,16 +253,16 @@ function scene(model, state, id, reducedEffects) {
     }
     for (let index = 1; index <= state.echoes; index++) {
       body += circle(
-        centre,
+        state.rearOffsets ? 106 - state.rearOffsets[index] * scale : centre,
         66,
-        (state.radius + index * 27) * scale,
+        (state.echoRadii?.[index] ?? state.radius + index * 27) * scale,
         '#ed9a7c',
         'stroke-dasharray="2 3"',
       );
       body += flash(
-        centre,
+        state.rearOffsets ? 106 - state.rearOffsets[index] * scale : centre,
         66,
-        (state.radius + index * 27) * scale,
+        (state.echoRadii?.[index] ?? state.radius + index * 27) * scale,
         '#ffd5ab',
         state.delay + index * 0.2,
         state.cooldown,
@@ -224,6 +272,31 @@ function scene(model, state, id, reducedEffects) {
     body += soldier(37, 53) + soldier(41, 79) + arrow(76, 66, 117, 66);
     body += `<g opacity=".3">${drone(67.6, 66)}</g>`;
     body += `<g ${animate('flight', state.cooldown, `0%{transform:translateX(-29.4px)}100%{transform:translateX(${number(-29.4 + 36 * state.cooldown)}px)}`)}>${drone(97, 66)}</g>`;
+  } else if (system.startsWith('riy-')) {
+    const rear = system === 'riy-sweeper';
+    const startX = rear ? 91 : 54,
+      endX = rear ? 35 : 112;
+    body += drone(77, 95) + drone(startX, 62) + arrow(startX, 62, endX, 62);
+    body += soldier(endX, 62) + soldier(endX, 86) + soldier(endX + (rear ? 18 : -18), 39);
+    const arc = (state.followArc * Math.PI) / 180;
+    const heading = rear ? Math.PI : 0;
+    for (const side of [-1, 1])
+      body += `<path d="M${startX} 62l${number(Math.cos(heading + (side * arc) / 2) * 36)} ${number(Math.sin(heading + (side * arc) / 2) * 36)}" stroke="#6e9988" stroke-dasharray="2 3"/>`;
+    body += flash(
+      endX,
+      62,
+      Math.max(3, state.radius * 0.35),
+      rear ? '#a4dfb2' : '#f1bf73',
+      0.2,
+      state.interval,
+      'escort',
+    );
+    if (state.burstCount > 1) body += flash(endX, 62, 9, '#fff0a4', 0.38, state.interval, 'burst');
+    if (state.chainTargets > 1)
+      body += `<path d="M${endX} 62v24l${rear ? 18 : -18} -47" fill="none" stroke="#9fe1d6" stroke-dasharray="3 2"/>`;
+    if (state.trailDuration)
+      for (let i = 0; i < 3; i++)
+        body += circle(endX + i * 13, 75, state.trailRadius * 0.3, '#8fd0a8', 'opacity=".45"');
   } else if (system === 'proximity-pulse' || system === 'slow-field') {
     body += arrow(81, 67, 120, 67) + `<g opacity=".28">${drone(65, 67)}</g>` + drone(109, 67);
     body += soldier(40, 49) + soldier(38, 81) + soldier(72, 95);
@@ -357,9 +430,14 @@ function scene(model, state, id, reducedEffects) {
 
 export function overflightUpgradePreview(
   offer,
-  { locale = 'en', build, player, reducedEffects = false } = {},
+  { locale = 'en', build, player, reducedEffects = false, rulesVersion = 2, riySettings } = {},
 ) {
-  const model = overflightUpgradePreviewModel(offer, { build, player });
+  const model = overflightUpgradePreviewModel(offer, {
+    build,
+    player,
+    rulesVersion,
+    riySettings,
+  });
   const scope = `of-preview-${model.system}-${model.branch ?? 'base'}-${model.after.rank}`;
   let styles = '',
     panels = '';

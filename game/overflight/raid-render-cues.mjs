@@ -2,6 +2,14 @@ import { overflightHuntParameters } from './raid-upgrades.mjs';
 const OPEN = 0x9aebda,
   GUARDED = 0xf9a275,
   OBJECTIVE = 0xf4c765;
+export function overflightHuntWeakPoint(enemy) {
+  if (!(enemy.huntRulesVersion >= 3) || !(enemy.maxArmorSegments > 0)) return null;
+  return {
+    heading: (enemy.heading ?? 0) + Math.PI,
+    arc: enemy.behaviorPhase === 'recovery' ? Math.PI * 2 : Math.PI,
+    exposed: true,
+  };
+}
 /** Same structural cues in both quality modes: facing plates, open brackets,
  * discrete armor and objective chevrons. Colors supplement the geometry. */
 export function overflightHuntEnemyLayers(enemy, size = 24) {
@@ -32,7 +40,17 @@ export function overflightHuntEnemyLayers(enemy, size = 24) {
         heading,
       );
   } else if (enemy.contactState && !enemy.maxGuardIntegrity) {
-    if (protectedState) {
+    if (protectedState && enemy.huntRulesVersion >= 3 && enemy.maxArmorSegments > 0) {
+      add(
+        'bar',
+        Math.cos(heading) * size * 0.5,
+        Math.sin(heading) * size * 0.5,
+        4,
+        size * 0.8,
+        GUARDED,
+        heading,
+      );
+    } else if (protectedState) {
       add('bar', 0, size * 0.4, size * 0.7, 3, GUARDED);
       add('bar', 0, -size * 0.4, size * 0.7, 3, GUARDED);
     } else if (enemy.maxArmorSegments > 0) {
@@ -41,6 +59,35 @@ export function overflightHuntEnemyLayers(enemy, size = 24) {
         add('arrow', side * size * 0.82, 0, 12, 12, OPEN, side === -1 ? 0 : Math.PI);
       }
     }
+  }
+  const weakPoint = overflightHuntWeakPoint(enemy);
+  if (weakPoint) {
+    const rear = weakPoint.heading;
+    const openAngles =
+      weakPoint.arc === Math.PI * 2
+        ? [0, Math.PI / 2, Math.PI, -Math.PI / 2]
+        : [rear - Math.PI / 3, rear, rear + Math.PI / 3];
+    for (const angle of openAngles) {
+      add(
+        'bar',
+        Math.cos(angle) * size * 0.57,
+        Math.sin(angle) * size * 0.57,
+        3,
+        size * 0.25,
+        OPEN,
+        angle,
+      );
+    }
+    if (weakPoint.arc === Math.PI)
+      add(
+        'arrow',
+        Math.cos(rear) * size * 0.86,
+        Math.sin(rear) * size * 0.86,
+        12,
+        12,
+        OPEN,
+        rear + Math.PI,
+      );
   }
   if (enemy.maxArmorSegments > 0) {
     const total = Math.min(3, enemy.maxArmorSegments);

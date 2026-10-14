@@ -56,7 +56,9 @@ function imagePool(scene, key, depth) {
     take(frame, x, y, width, height = width, tint = 0xffffff, alpha = 1, rotation = 0) {
       let entry = images[used];
       if (!entry)
-        images[used] = entry = { image: scene.add.image(0, 0, key, frame).setDepth(depth) };
+        images[used] = entry = {
+          image: scene.add.image(0, 0, key, frame).setDepth(depth),
+        };
       const image = entry.image,
         changed = entry.frame !== frame;
       if (changed) image.setFrame(frame);
@@ -282,7 +284,10 @@ export async function createOverflightRenderer({
   function danger(x, y, radius, camera, time, arrival = false) {
     const tint = arrival ? colors.amber : colors.danger;
     if (insideOverflightCamera(x, y, camera, radius)) {
-      for (const layer of overflightEffectLayers({ kind: arrival ? 'arrival' : 'warning', radius }))
+      for (const layer of overflightEffectLayers({
+        kind: arrival ? 'arrival' : 'warning',
+        radius,
+      }))
         pools.warnings.take(
           layer.frame,
           x + layer.dx,
@@ -452,7 +457,7 @@ export async function createOverflightRenderer({
               cue.rotation ?? 0,
             );
         }
-        if (enemy.maxGuardIntegrity > 0 || enemy.maxArmor > 0)
+        if (!run.hunt && (enemy.maxGuardIntegrity > 0 || enemy.maxArmor > 0))
           for (const cue of overflightTacticalEnemyLayers(
             enemy,
             size,
@@ -521,7 +526,7 @@ export async function createOverflightRenderer({
     }
     for (const attack of run.priorityAttacks ?? []) {
       if (!attack.active) continue;
-      if (['lane', 'fan'].includes(attack.kind)) {
+      if (['lane', 'fan'].includes(attack.kind) || attack.stage === 'active') {
         for (const cue of overflightAttackLayers(attack))
           pools.warnings.take(
             cue.frame,
@@ -575,7 +580,10 @@ export async function createOverflightRenderer({
         continue;
       }
       if (!insideOverflightCamera(effect.x, effect.y, camera, radius + 20)) continue;
-      for (const layer of overflightEffectLayers({ ...effect, reducedEffects: reduced }))
+      for (const layer of overflightEffectLayers({
+        ...effect,
+        reducedEffects: reduced,
+      }))
         (layer.priority ? pools.warnings : pools.effects).take(
           layer.frame,
           effect.x + layer.dx,
@@ -602,6 +610,19 @@ export async function createOverflightRenderer({
         );
       else if (projectile.hostile) danger(projectile.x, projectile.y, 7, camera, run.time);
     }
+    for (const trail of run.riy?.trails ?? []) {
+      if (!trail.active || !insideOverflightCamera(trail.x, trail.y, camera, trail.radius))
+        continue;
+      pools.effects.take(
+        'ring',
+        trail.x,
+        trail.y,
+        trail.radius * 2,
+        trail.radius * 2,
+        colors.cyan,
+        0.35,
+      );
+    }
     for (const escort of run.riy?.escorts ?? []) {
       const tint = escort.role === 'sweeper' ? colors.cyan : colors.amber;
       pools.escorts.take(
@@ -622,6 +643,39 @@ export async function createOverflightRenderer({
         3,
         tint,
       );
+      if (run.riy?.rules?.followArc || escort.followArc) {
+        const arc = ((escort.followArc ?? 120) * Math.PI) / 180;
+        const facing =
+          (escort.formationHeading ?? escort.heading) + (escort.role === 'sweeper' ? Math.PI : 0);
+        const phase = run.riy.phase;
+        const cueTint =
+          phase === 'returning' ? colors.white : phase === 'engaged' ? colors.amber : tint;
+        // Focus attacks use target access rather than the follow coverage arc.
+        for (const side of ['approach', 'engaged'].includes(phase) ? [] : [-1, 1]) {
+          const angle = facing + (side * arc) / 2;
+          pools.status.take(
+            'bar',
+            escort.x + Math.cos(angle) * 29,
+            escort.y + Math.sin(angle) * 29,
+            12,
+            2,
+            cueTint,
+            0.8,
+            angle,
+          );
+        }
+        if (phase === 'approach' || phase === 'returning')
+          pools.status.take(
+            'arrow',
+            escort.x,
+            escort.y - 24,
+            9,
+            9,
+            cueTint,
+            0.9,
+            phase === 'returning' ? Math.PI : 0,
+          );
+      }
       if (escort.beamRemaining > 0) {
         const dx = escort.targetX - escort.x,
           dy = escort.targetY - escort.y;
@@ -637,14 +691,16 @@ export async function createOverflightRenderer({
         );
       }
     }
+    const targetId = run.riy?.targetId ?? run.riy?.candidateId;
     const riyTarget =
-      run.riy?.targetId &&
-      run.enemies.find((enemy) => enemy.active && enemy.id === run.riy.targetId);
+      targetId && run.enemies.find((enemy) => enemy.active && enemy.id === targetId);
     if (riyTarget) {
       const size = riyTarget.radius + 9;
+      const focused = run.riy?.targetId === riyTarget.id;
+      const tint = focused ? colors.amber : colors.cyan;
       for (const side of [-1, 1]) {
-        pools.status.take('bar', riyTarget.x + side * size, riyTarget.y, 2, 16, colors.amber);
-        pools.status.take('bar', riyTarget.x, riyTarget.y + side * size, 16, 2, colors.amber);
+        pools.status.take('bar', riyTarget.x + side * size, riyTarget.y, 2, focused ? 16 : 9, tint);
+        pools.status.take('bar', riyTarget.x, riyTarget.y + side * size, focused ? 16 : 9, 2, tint);
       }
     }
     const player = run.player;
@@ -761,7 +817,11 @@ export async function createOverflightRenderer({
           : kind === 'machine'
             ? 'machine:tracked-tank:0'
             : overflightEnemyFrame(
-                { id: 0, family: kind === 'shield' ? 'shield-bearer' : 'runner', wardrobe: 0 },
+                {
+                  id: 0,
+                  family: kind === 'shield' ? 'shield-bearer' : 'runner',
+                  wardrobe: 0,
+                },
                 time,
                 appearance.reducedEffects,
                 appearance.cast,

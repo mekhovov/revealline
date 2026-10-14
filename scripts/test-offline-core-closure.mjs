@@ -625,7 +625,16 @@ test('Riy operation keeps its dynamic runtime and authored package graph in offl
   );
   // The query selects the operation; it must not need a separate cached document.
   const core = selectOfflineCore(files, new Set());
-  for (const name of ['riy-mode', 'riy-core', 'riy-project', 'riy-community'])
+  for (const name of [
+    'riy-mode',
+    'riy-core',
+    'riy-project',
+    'riy-community',
+    'riy-upgrades',
+    'records',
+    'upgrade-preview',
+    'combat-profile',
+  ])
     assert.ok(
       core.retained.has(`game/overflight/${name}.mjs`),
       `${name} is needed before an offline Riy launch`,

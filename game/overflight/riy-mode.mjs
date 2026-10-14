@@ -6,26 +6,33 @@ import {
 } from './riy-community.mjs';
 import { overflightPreviewRequest } from './host-loop.mjs';
 import { createOverflightRiy, stepOverflightRiy, overflightRiyTarget } from './riy-core.mjs';
+import { overflightRiyBuildItems } from './riy-upgrades.mjs';
 
 const copy = {
   en: {
     title: 'Riy · escorts',
     briefing:
-      'Lead two escorts through the swarm. Sweeper clears nearby packs; Breaker delivers concentrated hits. Press F, the controller Ability button, or Focus target to send both toward a visible priority target briefly. Move closer to create a new attack angle. Escorts are support equipment; your hull and airframes remain the risk.',
+      'Lead two escorts through the swarm. Sweeper covers your rear; Breaker fires ahead. Your squad shares the two combat slots: choose clearing or control for Sweeper, and bursts or linked strikes for Breaker. Press F, the controller Ability button, or Focus target to send both toward the marked priority target, leaving your formation uncovered until they return.',
     focus: 'F · Focus target',
     locked: 'Focusing priority target',
+    approach: 'Escorts approaching target',
+    returning: 'Escorts returning to formation',
     following: 'Escorts following',
     roles: 'Sweeper · wide cover  /  Breaker · concentrated hits',
+    squadRoles: 'Sweeper · rear cover  /  Breaker · forward strikes',
     cooldown: 'Focus ready in',
   },
   uk: {
     title: 'Рій · супровід',
     briefing:
-      'Ведіть два дрони супроводу крізь натовп. Зачисник атакує групи поруч, Пробійник завдає зосереджених ударів. Натисніть F, кнопку здібності на контролері або «Зосередити вогонь», щоб ненадовго спрямувати обох на видиму пріоритетну ціль. Зближуйтеся для нового кута атаки. Супровід — це допоміжне обладнання; ризикуєте своїм корпусом і запасними дронами.',
+      'Ведіть два дрони супроводу крізь натовп. Зачисник прикриває тил, Пробійник стріляє вперед. Супровід займає два бойові слоти: оберіть зачищення або сповільнення для Зачисника, залпи або ланцюгові удари для Пробійника. Натисніть F, кнопку здібності на контролері або «Зосередити вогонь», щоб спрямувати обох на позначену ціль, залишивши стрій без прикриття до їхнього повернення.',
     focus: 'F · Зосередити вогонь',
     locked: 'Атака пріоритетної цілі',
+    approach: 'Супровід наближається до цілі',
+    returning: 'Супровід повертається у стрій',
     following: 'Супровід у строю',
     roles: 'Зачисник · групові атаки  /  Пробійник · зосереджені удари',
+    squadRoles: 'Зачисник · прикриття тилу  /  Пробійник · удари вперед',
     cooldown: 'Команда через',
   },
 };
@@ -36,12 +43,40 @@ export function createOverflightRiyMode(base) {
   let queued = false,
     controls = null;
   const label = (locale, key) => (copy[locale] ?? copy.en)[key];
+  const createProject = (options = {}) =>
+    createOverflightRiyProject({ rulesVersion: 3, ...options });
   return {
     ...base,
     name: { en: 'Riy · escorts', uk: 'Рій · супровід' },
     id: 'overflight-riy',
-    defaultProject: createOverflightRiyProject(),
-    createProject: createOverflightRiyProject,
+    defaultProject: createProject(),
+    createProject,
+    moduleIcons: {
+      ...base.moduleIcons,
+      'riy-sweeper': 'side-burst',
+      'riy-breaker': 'scanner',
+    },
+    buildItems: (build) => [...(base.buildItems?.(build) ?? []), ...overflightRiyBuildItems(build)],
+    selectCard(run, direction = 'fan') {
+      if (run.riy?.version !== 2) return base.selectCard(run, direction);
+      const control = direction.startsWith('echo'),
+        chain = direction === 'systems';
+      const wanted = [
+        `primary:${control ? 'double' : 'wide'}`,
+        `riy-sweeper:${control ? 'trail' : 'broad'}`,
+        `riy-breaker:${chain ? 'chain' : 'burst'}`,
+        chain || direction.endsWith('scanner') ? 'scanner' : 'shield',
+      ];
+      const score = (offer) => {
+        const index = wanted.findIndex((prefix) => offer.id.startsWith(prefix));
+        if (index < 0) return offer.kind === 'utility' ? 40 : 50;
+        if (offer.kind === 'evolution') return -2;
+        if (offer.system.startsWith('riy-') && offer.rank === 2 && run.build.primary.branch)
+          return -1;
+        return index * 5;
+      };
+      return [...run.offers].sort((a, b) => score(a) - score(b))[0];
+    },
     compileProject: compileOverflightRiyProject,
     createLibrary: createOverflightRiyLibrary,
     createPackage: createOverflightRiyPackage,
@@ -80,7 +115,11 @@ export function createOverflightRiyMode(base) {
         ...base.summary(run),
         operation: 'overflight-riy',
         escortCommands: run.riy.commands,
-        escortShots: run.riy.escorts.map(({ role, shots }) => ({ role, shots })),
+        escortShots: run.riy.escorts.map(({ role, shots }) => ({
+          role,
+          shots,
+        })),
+        escortUpgrades: run.build.escorts?.map((item) => ({ ...item })) ?? [],
       };
     },
     requestFocus() {
@@ -96,15 +135,20 @@ export function createOverflightRiyMode(base) {
       if (!controls) return;
       const state = run.riy;
       controls.title.textContent = label(locale, 'title');
-      controls.roles.textContent = label(locale, 'roles');
+      controls.roles.textContent = label(locale, state.version === 2 ? 'squadRoles' : 'roles');
       controls.button.textContent = label(locale, 'focus');
-      controls.button.disabled = run.phase !== 'playing' || state.cooldown > 0;
+      controls.button.disabled =
+        run.phase !== 'playing' || state.cooldown > 0 || !overflightRiyTarget(run);
       controls.status.textContent =
-        state.focusRemaining > 0
-          ? label(locale, 'locked')
-          : state.cooldown > 0
-            ? `${label(locale, 'cooldown')} ${state.cooldown.toFixed(1)}s`
-            : label(locale, 'following');
+        state.phase === 'approach'
+          ? label(locale, 'approach')
+          : state.focusRemaining > 0
+            ? label(locale, 'locked')
+            : state.phase === 'returning'
+              ? label(locale, 'returning')
+              : state.cooldown > 0
+                ? `${label(locale, 'cooldown')} ${state.cooldown.toFixed(1)}s`
+                : label(locale, 'following');
     },
     installActions({ document, getRun, canAct }) {
       const root = document.createElement('aside');
