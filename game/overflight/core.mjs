@@ -642,10 +642,12 @@ export function damageOverflightArea(
   y,
   radius,
   damage,
-  { push = 0, slow = 0, slowMultiplier = 0.55, fieldDamageInterval = 0 } = {},
+  { push = 0, slow = 0, slowMultiplier = 0.55, fieldDamageInterval = 0, origin = null } = {},
 ) {
   if (![x, y, radius, damage].every(Number.isFinite) || radius < 0 || damage < 0)
     throw new RangeError('Invalid area attack.');
+  if (origin && ![origin.x, origin.y].every(Number.isFinite))
+    throw new RangeError('Invalid attack origin.');
   let hit = 0;
   const candidates = visitOverflightGrid(run._grid, x, y, radius + run._maxEnemyRadius, (enemy) => {
     if (enemy.warning > 0 || run.phase === 'won' || run.phase === 'lost') return;
@@ -668,7 +670,7 @@ export function damageOverflightArea(
     if (fieldDamageInterval && enemy.fieldDamageUntil > run.tick) return;
     if (fieldDamageInterval)
       enemy.fieldDamageUntil = run.tick + Math.ceil(fieldDamageInterval * 60);
-    damageEnemy(run, enemy, damage, { x, y });
+    damageEnemy(run, enemy, damage, origin ?? { x, y });
   });
   run.stats.collisionCandidates += candidates;
   return hit;
