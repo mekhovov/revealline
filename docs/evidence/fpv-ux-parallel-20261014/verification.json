@@ -46,7 +46,8 @@
       "Academy replay end Try requires Arm",
       "paused camera preset updates canonical sliders",
       "shared Large Quiet preferences",
-      "full-route practice distinguished from verified sections"
+      "full-route practice distinguished from verified sections",
+      "final EN/UK locale refresh creates no new console errors"
     ]
   },
   "notClaimed": [
@@ -67,7 +68,18 @@
     ],
     "status": "protected checks pending"
   },
-  "packageAdmission": "pending committed final candidate",
+  "packageAdmission": {
+    "sourceRevision": "63cda2f18d56b4b7ca938832e765dfa711729879",
+    "packages": [
+      "civilian-flight",
+      "civilian-fpv",
+      "fpv-worlds"
+    ],
+    "reproducibleBuilds": 2,
+    "committedInputsVerified": true,
+    "zipMembersVerified": true,
+    "publicEligible": false
+  },
   "chooserLocaleRegression": {
     "passed": 101,
     "failed": 0,
