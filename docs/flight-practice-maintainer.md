@@ -23,7 +23,7 @@ Preflight reports missing runtime files, missing/empty license inventory, invali
 
 1. Create `optional-practice/<id>/index.html`, a manifest, application modules and `README.md`. Use a stable lowercase hyphenated ID; do not rename an installed app to ship an update. Add instructions, asset sources, copyright/license inventory and support information. Offline preparation must pass that ID to the shared installation service.
 2. Add an explicit entry to `publishing/optional-package-policy.mjs`. Declare every runtime file in `localFiles` or `sharedFiles`, the existing worker/launcher templates, locale inputs, licenses and any vendor hashes. Choose justified file and byte limits. No remote imports, arbitrary app fetches or archive-declared expansions of executable dependencies are allowed. Reuse `optional-practice/worker-template.mjs` for new packages. Add dependencies to the core build only if the application is also intentionally bundled there. Apps reusing `sim-presentation.mjs` must explicitly opt into its reviewed `coreOnlyImports` entry for the literal shared settings-tools link; those tools stay in the core game and are not added to the optional archive.
-3. Add `package-info.json`, `preview.png` and `guide.html`. The policy adds these discovery files, shared guide/navigation helpers and generated launcher files to each registered app. Account for **both runtime and source archives, including generated manifests**. Current complete limits: Gym 64 files/8 MiB; Flight Studio 72/8 MiB; World Studio 104/16 MiB. File allowances include the new guide and navigation, not extra simulator mechanics.
+3. Add `package-info.json`, `preview.png` and `guide.html`. The policy adds these discovery files, shared guide/navigation helpers and generated launcher files to each registered app. Account for **both runtime and source archives, including generated manifests**. Run `--list` and `--preflight` to obtain the current effective limits and actual usage from `publishing/optional-package-policy.mjs`; do not reuse numbers from older qualification reports. The effective registry includes shared-file adjustments after the base policies. A larger simulator needs an explicit reviewed policy change, not a bypass of admission.
 4. Capture a real gameplay PNG, at most 300,000 bytes; avoid menus alone, synthetic artwork and private imported content. Record provenance/license information in the package README. Copy the bilingual package guide pattern, keeping current app-specific first-flight instructions accurate.
 5. Supply this exact bounded descriptor shape, with every copy field in both languages:
 
@@ -65,7 +65,9 @@ node scripts/bundle-optional-practice.mjs --out .cache/practice-candidate \
   --base-path /revealline/ --packages civilian-flight,civilian-fpv,fpv-worlds
 ```
 
-The source checkout must be clean and committed. The output includes distribution/source ZIPs, exact inventories, `optional-packages.json`, a verification report and a **pending** review template. CI repeats this for all three real apps, including World Studio. Run the focused tests even when repository CI policy explicitly waives broader suites; waived tests are not passed tests.
+The source checkout must be clean and committed. The output includes distribution/source ZIPs, exact inventories, `optional-packages.json`, a verification report and a **pending** review template. CI repeats this for all three real apps, including World Studio. Automated suites are required by the current `publishing/test-policy.json`; historical waiver receipts are not current passes.
+
+When SIM is changing concurrently, build from a recorded, merged commit in an isolated checkout. Do not package its uncommitted work or copy files from an active SIM worktree. Rebase the publishing changes after accepted SIM fixes land and reproduce the final candidate again. A newer candidate must receive its own source-bound evidence; an older passing runtime does not qualify it automatically.
 
 Complete every existing review gate with real, source-bound evidence: automated validation; content accuracy; assets/licenses; keyboard/controller accessibility; installed isolation; update/rollback; same-device performance; human learning/pacing. Record browser/device, source SHA, package hashes, steps, screenshots, results and limitations. A synthetic fixture’s review is never release evidence.
 
@@ -88,13 +90,15 @@ node scripts/publish-optional-packages.mjs sync-selector \
   --selector publishing/pages-controller/optional-packages.json
 ```
 
-Review and commit the selector through the normal main-branch process. `deploy-main-pages.yml` now calls the **existing** optional publisher’s `stage-pages` command after building main and before checking the complete 950,000,000-byte hosted budget. Frozen Pages assembly uses the same overlay. No selected releases produces an explicit empty `practice/index.json`, not a missing file. The post-deployment job reads the selected catalogue, pointers, manifests and every hashed dependency, including stable launcher copies:
+Review and commit the selector through the normal main-branch process. The production workflow is **`.github/workflows/publish-main-pages.yml`** (not the retired `deploy-main-pages.yml`). It calls the existing optional publisher's `stage-pages` command after building main and before checking the complete 950,000,000-byte hosted budget. Frozen Pages assembly uses the same overlay. No selected releases produces an explicit empty `practice/index.json`, not a missing file. Staging has read-only release access and does not create or publish a release. The post-deployment job checks out the exact deployed source/selector, checks the selected package IDs **and versions**, then reads pointers, manifests and every hashed dependency, including stable launcher copies:
 
 ```sh
 node scripts/bundle-optional-practice.mjs --verify-site https://mekhovov.github.io/revealline/
 ```
 
 A missing catalogue, missing details, mismatched selector or changed asset fails this check. A successful byte check still does not prove device controls or a human learning outcome.
+
+The Actions run retains `practice-site-receipt-SOURCE_SHA` alongside the main-site capacity receipt for 30 days. Copy required qualification receipts into the durable release evidence inventory before that retention expires. A green main identity check alone does not prove that Flight practice was deployed. An explicit empty catalogue proves discovery is reachable, not that the three apps have been released.
 
 ## Update, retirement and rollback
 
