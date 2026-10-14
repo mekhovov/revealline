@@ -1,5 +1,7 @@
 import * as THREE from "../../../optional-practice/civilian-fpv/vendor/three.module.js";
 import { createRegionalFlightPrototype } from "./flight-prototype.mjs";
+import { createRegionalInputSession } from "./shared-input-session.mjs";
+import { keyboardFlightHelp } from "../../../optional-practice/civilian-fpv/input.mjs";
 import { validateRegionManifest } from "./region-manifest.mjs";
 const $ = (id) => document.getElementById(id),
   canvas = document.querySelector("canvas");
@@ -11,8 +13,7 @@ scene.add(new THREE.HemisphereLight(0xd8efff, 0x6d5941, 2));
 const light = new THREE.DirectionalLight(0xffefcf, 2.5);
 light.position.set(50, 100, 40);
 scene.add(light);
-const camera = new THREE.PerspectiveCamera(78, 1, 0.05, 900),
-  clock = new THREE.Clock();
+const camera = new THREE.PerspectiveCamera(78, 1, 0.05, 900);
 const geometry = new THREE.BoxGeometry(0.7, 0.07, 0.08),
   material = new THREE.MeshStandardMaterial({
     color: 0xe7d7a4,
@@ -24,69 +25,61 @@ for (const sign of [-1, 1]) {
   arm.rotation.y = (sign * Math.PI) / 4;
   quad.add(arm);
 }
-let manifestController = null;
-let flight = null,
-  config = null,
+let manifestController = null,
+  flight = null,
   busy = false,
-  throttle = 0,
-  accumulator = 0,
   hudAt = 0,
   loadingGeneration = 0,
   closed = false;
-const held = new Set(),
-  input = () => ({
-    roll: Number(held.has("KeyD")) - Number(held.has("KeyA")),
-    pitch: Number(held.has("KeyW")) - Number(held.has("KeyS")),
-    yaw: Number(held.has("KeyE")) - Number(held.has("KeyQ")),
-    throttle,
-  });
 function message(value) {
   $("message").textContent = value;
 }
-async function prepare() {
-  if (!flight || busy) return;
-  busy = true;
-  throttle = 0;
-  held.clear();
-  message("Preparing verified terrain…");
-  try {
-    await flight.prepare();
-    message("Terrain ready. Arm deliberately to fly.");
-  } catch (error) {
+const session = createRegionalInputSession({
+  window,
+  document,
+  createFlight: createRegionalFlightPrototype,
+  onFlight(value) {
+    flight = value;
+    if (value) {
+      value.dronePose.add(quad);
+      scene.add(value.root);
+    }
+  },
+  onState(state) {
+    if (!state || closed) return;
+    if (state.status === "active") {
+      message("Authoring flight active");
+      canvas.focus();
+    } else
+      message(
+        session.status().busy
+          ? "Preparing verified terrain…"
+          : state.reason === "prepared"
+            ? "Terrain ready. Arm deliberately to fly."
+            : state.reason === "preparing-terrain"
+              ? "Preparing verified terrain…"
+              : `Paused: ${state.reason}`,
+      );
+  },
+  onCamera() {
+    $("view").value = $("view").value === "fpv" ? "chase" : "fpv";
+  },
+  onError(error) {
     message(`Paused: ${error.message}`);
-  } finally {
-    busy = false;
-  }
+  },
+});
+async function prepare() {
+  if (!busy) await session.prepare();
 }
 async function reset() {
-  if (!config || busy || closed) return;
-  busy = true;
-  try {
-    const previous = flight;
-    flight = null;
-    await previous?.dispose();
-    if (closed) return;
-    throttle = 0;
-    held.clear();
-    accumulator = 0;
-    flight = createRegionalFlightPrototype(config);
-    flight.dronePose.add(quad);
-    scene.add(flight.root);
-    message("Preparing verified terrain…");
-    await flight.prepare();
-    if (!closed) message("Terrain ready. Arm deliberately to fly.");
-  } catch (error) {
-    if (!closed) message(`Paused: ${error.message}`);
-  } finally {
-    busy = false;
-  }
+  if (!busy && !closed) await session.replace();
 }
 document.querySelector("form").addEventListener("submit", async (event) => {
   event.preventDefault();
-  if (busy) return;
+  if (busy || session.status().busy) return;
   const token = ++loadingGeneration;
   busy = true;
-  flight?.pause();
+  session.block(true);
   message("Loading bounded region manifest…");
   let timeout;
   try {
@@ -127,73 +120,45 @@ document.querySelector("form").addEventListener("submit", async (event) => {
     );
     if (token !== loadingGeneration || closed) return;
     clearTimeout(timeout);
-    config = { manifest, source: { baseURL: new URL(".", url).href } };
-    busy = false;
-    await reset();
+    await session.replace({
+      manifest,
+      mode: $("mode").value,
+      source: { baseURL: new URL(".", url).href },
+    });
     document.querySelector("details").open = false;
   } catch (error) {
     message(`Paused: ${error.message}`);
   } finally {
     clearTimeout(timeout);
     busy = false;
+    session.block(false);
   }
 });
 $("prepare").onclick = prepare;
 $("reset").onclick = reset;
 $("arm").onclick = () => {
   if (busy || closed) return;
-  if (flight?.arm(input())) {
-    message("Authoring flight active");
-    canvas.focus();
-  } else
+  if (!session.arm())
     message(
-      "Set throttle down, centre rotation controls and prepare terrain before arming.",
+      "Prepare terrain, centre the controls and release controller buttons before arming.",
     );
 };
-$("pause").onclick = () => {
-  if (closed) return;
-  flight?.pause();
-  held.clear();
-  message("Paused. Arm to continue.");
+$("pause").onclick = () => session.pause();
+$("source").onchange = () => {
+  session.select($("source").value);
+  document.body.dataset.input = $("source").value;
+  $("touch-controls").hidden = $("source").value !== "touch";
+  canvas.focus();
 };
-addEventListener("keydown", (event) => {
-  if (
-    event.target instanceof HTMLInputElement ||
-    event.target instanceof HTMLSelectElement ||
-    event.target instanceof HTMLButtonElement
-  )
-    return;
-  if (
-    [
-      "KeyW",
-      "KeyS",
-      "KeyA",
-      "KeyD",
-      "KeyQ",
-      "KeyE",
-      "ArrowUp",
-      "ArrowDown",
-      "Space",
-      "KeyP",
-    ].includes(event.code)
-  )
-    event.preventDefault();
-  if (event.code === "Space" && !event.repeat) $("arm").click();
-  else if (event.code === "KeyP") $("pause").click();
-  else held.add(event.code);
-});
-addEventListener("keyup", (event) => held.delete(event.code));
-addEventListener("blur", () => {
-  held.clear();
-  flight?.pause();
-});
-document.addEventListener("visibilitychange", () => {
-  if (document.hidden) {
-    held.clear();
-    flight?.pause();
-    accumulator = 0;
-  }
-});
+$("mode").onchange = () => session.setMode($("mode").value);
+canvas.focus();
+$("view").onchange = () => canvas.focus();
+session.bindStick($("left-stick"), "left");
+session.bindStick($("right-stick"), "right");
+document
+  .querySelector("header")
+  .addEventListener("focusin", () => session.pause());
+$("keyboard-help").textContent = keyboardFlightHelp("two-stick");
 function resize() {
   const width = canvas.clientWidth,
     height = canvas.clientHeight;
@@ -209,30 +174,13 @@ const look = new THREE.Vector3(),
   offset = new THREE.Vector3();
 function render() {
   if (closed) return;
-  const delta = Math.min(clock.getDelta(), 0.1);
-  accumulator += delta;
-  while (accumulator >= 0.02) {
-    accumulator -= 0.02;
-    if (flight && !busy) {
-      throttle = Math.max(
-        0,
-        Math.min(
-          1,
-          throttle +
-            0.008 *
-              (Number(held.has("ArrowUp")) - Number(held.has("ArrowDown"))),
-        ),
-      );
-    }
-    if (flight?.snapshot().status === "active") {
-      const state = flight.step(input());
-      if (state.status !== "active")
-        message(
-          state.reason === "terrain-required"
-            ? "Paused at region transition. Prepare terrain, then arm."
-            : `Paused: ${state.reason}`,
-        );
-    }
+  session.advance(performance.now());
+  if ($("source").value === "touch") {
+    const controls = session.status().controls;
+    $("left-stick").querySelector("i").style.transform =
+      `translate(${controls.yaw * 40}px, ${(0.5 - controls.throttle) * 80}px)`;
+    $("right-stick").querySelector("i").style.transform =
+      `translate(${controls.roll * 40}px, ${-controls.pitch * 40}px)`;
   }
   if (flight) {
     const pose = flight.cameraAnchor,
@@ -250,7 +198,7 @@ function render() {
       hudAt = performance.now();
       const state = flight.snapshot();
       $("telemetry").textContent =
-        `${state.ticks} ticks · throttle ${Math.round(throttle * 100)}% · ${state.recentres} local frames · ${state.terrain.geometryBytes} geometry bytes`;
+        `${state.ticks} ticks · throttle ${Math.round(session.status().controls.throttle * 100)}% · ${state.recentres} local frames · ${state.terrain.geometryBytes} geometry bytes`;
     }
   } else {
     camera.position.set(0, 12, 25);
@@ -264,9 +212,7 @@ addEventListener("pagehide", () => {
   closed = true;
   manifestController?.abort();
   loadingGeneration++;
-  const previous = flight;
-  flight = null;
-  previous?.dispose();
+  void session.dispose();
   geometry.dispose();
   material.dispose();
   renderer.dispose();
