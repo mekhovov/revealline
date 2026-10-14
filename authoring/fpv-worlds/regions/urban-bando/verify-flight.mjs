@@ -4,6 +4,7 @@ import { readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { createServer } from 'node:http';
 import { createRegionalFlightPrototype } from '../flight-prototype.mjs';
+import { attitude, rotate, Q } from '../../../../optional-practice/civilian-fpv/math.mjs';
 
 const output = process.argv[2];
 assert(output, 'Provide generated regional Urban directory');
@@ -76,6 +77,37 @@ function altitude(state, height) {
   );
 }
 try {
+  for (const initialHeading of [-1, 36000, 0.5, NaN, 'south', null])
+    assert.throws(
+      () =>
+        createRegionalFlightPrototype({
+          manifest,
+          source,
+          geometryProfile: 'scenery-v1',
+          initialHeading,
+        }),
+      /Invalid initial regional heading/,
+    );
+  for (const initialHeading of [0, 9000, 18000, 27000, 'region-centre']) {
+    flight = createRegionalFlightPrototype({
+      manifest,
+      source,
+      geometryProfile: 'scenery-v1',
+      initialHeading,
+    });
+    const state = flight.snapshot(),
+      angles = attitude(state.orientation);
+    assert.equal(angles.pitch, 0);
+    assert.equal(angles.roll, 0);
+    assert.equal(state.status, 'paused');
+    assert.equal(state.ticks, 0);
+    assert.deepEqual(state.position, manifest.spawns[0].position);
+    if (initialHeading === 'region-centre') {
+      const forward = rotate(state.orientation, { x: 0, y: 0, z: -Q });
+      assert(forward.x > 0 && forward.z > 0, 'Urban start must face into the region');
+    } else assert.equal((angles.yaw + 36000) % 36000, initialHeading);
+    await flight.dispose();
+  }
   assert.throws(
     () => createRegionalFlightPrototype({ manifest, source, geometryProfile: 'mixed' }),
     /Unsupported regional geometry profile/,

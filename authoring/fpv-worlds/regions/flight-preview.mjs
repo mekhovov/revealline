@@ -162,11 +162,35 @@ document.querySelector("form").addEventListener("submit", async (event) => {
     if (token !== loadingGeneration || closed) return;
     clearTimeout(timeout);
     chunks = new Map(manifest.chunks.map((chunk) => [chunk.id, chunk]));
+    const selectedSpawn = $("spawn").value;
+    $("spawn").replaceChildren(
+      ...manifest.spawns.map((spawn) => {
+        const option = document.createElement("option");
+        option.value = spawn.id;
+        option.textContent = spawn.id.replaceAll("-", " ");
+        return option;
+      }),
+    );
+    if (manifest.spawns.some((spawn) => spawn.id === selectedSpawn))
+      $("spawn").value = selectedSpawn;
+    $("spawn").disabled = false;
+    const heading = $("heading").value,
+      surface = $("surface").value;
+    const surfaceStyle =
+      surface === "auto"
+        ? manifest.id === "canyon-badlands-study" ? "canyon" : "plain"
+        : surface;
     await session.replace({
       manifest,
+      spawnId: $("spawn").value,
+      initialHeading: heading === "region-centre" ? heading : Number(heading),
       geometryProfile: $("geometry-profile").value,
       mode: $("mode").value,
-      source: { baseURL: new URL(".", url).href },
+      source: {
+        baseURL: new URL(".", url).href,
+        surfaceStyle,
+        surfaceQuality: $("surface-quality").value,
+      },
     });
     document.querySelector("details").open = false;
   } catch (error) {
@@ -216,6 +240,13 @@ if (requested) $("manifest").value = requested;
 const profile = new URL(location.href).searchParams.get("profile");
 if (["terrain-v1", "scenery-v1"].includes(profile))
   $("geometry-profile").value = profile;
+function updateSurfaceControls() {
+  const disabled = $("geometry-profile").value !== "terrain-v1";
+  $("surface").disabled = disabled;
+  $("surface-quality").disabled = disabled;
+}
+$("geometry-profile").addEventListener("change", updateSurfaceControls);
+updateSurfaceControls();
 function render() {
   if (closed) return;
   session.advance(performance.now());
