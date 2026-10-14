@@ -15,7 +15,7 @@ const lighting = createSceneryLighting(
   new URLSearchParams(location.search).get('lighting') ?? 'plain',
 );
 const camera = new THREE.PerspectiveCamera(55, 1, 0.1, 1400);
-const views = [
+const urbanViews = [
   ['Overview', [192, 4, 192], [460, 320, 480], [192, 0, 192]],
   ['Mill atrium', [64, 4, 64], [64, 34, 112], [64, 9, 64]],
   ['North loading court', [190, 4, 16], [190, 7, -18], [190, 4, 55]],
@@ -27,6 +27,16 @@ const views = [
   ['Viaduct', [174, 5, 255], [174, 5, 220], [174, 5, 270]],
   ['Tower court', [320, 5, 250], [270, 28, 220], [320, 15, 260]],
 ];
+const canyonViews = [
+  ['Canyon overview', [192, 34, 192], [500, 350, 500], [192, 42, 192]],
+  ['Arrival landmarks', [110, 16, 100], [108, 13, 150], [145, 20, 100]],
+  ['Twin spire gap', [162, 18, 104], [162, 18, 60], [162, 18, 124]],
+  ['Gorge entry', [215, 34, 230], [250, 35, 184], [194, 34, 240]],
+  ['Needle bend', [210, 34, 300], [231, 34, 268], [184, 32, 302]],
+  ['Ridge crown', [345, 90, 65], [375, 120, 123], [345, 85, 65]],
+];
+const views =
+  new URLSearchParams(location.search).get('views') === 'canyon' ? canyonViews : urbanViews;
 let window = null,
   busy = false,
   closed = false,
