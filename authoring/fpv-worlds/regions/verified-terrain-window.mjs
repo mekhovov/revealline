@@ -95,7 +95,7 @@ export function createVerifiedTerrainWindow(
     generation++;
     source.cancel();
   }
-  async function prepare(point, plan, token) {
+  async function prepare(point, plan, token, supportPose) {
     let staged = null;
     try {
       current(token);
@@ -162,6 +162,18 @@ export function createVerifiedTerrainWindow(
         maxGeometryBytes: requiredBytes,
       });
       current(token);
+      if (supportPose) {
+        const { positionMm, radiusMm } = supportPose;
+        const support = staged.support(
+          { ...positionMm, y: positionMm.y + radiusMm },
+          4000000,
+        );
+        fail(
+          support.status === "terrain-hit" &&
+            positionMm.y >= support.heightMm - 1,
+          "Staged terrain cannot support the required body pose",
+        );
+      }
       const previous = committed;
       committed = staged;
       staged = null;
@@ -194,12 +206,35 @@ export function createVerifiedTerrainWindow(
     get group() {
       return committed?.group ?? null;
     },
-    transition(positionMm) {
+    transition(positionMm, supportPoseInput = null) {
       if (disposed)
         return Promise.reject(new Error("Verified terrain window is disposed"));
       const point = { ...positionMm };
-      let plan;
+      let plan,
+        supportPose = null;
       try {
+        if (supportPoseInput !== null) {
+          fail(
+            supportPoseInput &&
+              Object.keys(supportPoseInput).length === 2 &&
+              Object.hasOwn(supportPoseInput, "positionMm") &&
+              Object.hasOwn(supportPoseInput, "radiusMm"),
+            "Invalid support pose",
+          );
+          const p = supportPoseInput.positionMm,
+            radiusMm = supportPoseInput.radiusMm;
+          fail(
+            p &&
+              Object.keys(p).length === 3 &&
+              ["x", "y", "z"].every((key) => Number.isSafeInteger(p[key])) &&
+              Number.isSafeInteger(radiusMm) &&
+              radiusMm > 0 &&
+              radiusMm <= 2000,
+            "Invalid support pose",
+          );
+          planner(p);
+          supportPose = { positionMm: { ...p }, radiusMm };
+        }
         plan = planner(point, { maxSourceBytes });
         if (plan.blocked) throw new Error(plan.blocked);
       } catch (error) {
@@ -209,7 +244,9 @@ export function createVerifiedTerrainWindow(
       const token = generation;
       state = "loading";
       failure = null;
-      const operation = queue.then(() => prepare(point, plan, token));
+      const operation = queue.then(() =>
+        prepare(point, plan, token, supportPose),
+      );
       queue = operation.catch(() => {});
       return operation;
     },

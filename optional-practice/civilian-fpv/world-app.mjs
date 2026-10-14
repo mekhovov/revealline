@@ -1746,6 +1746,14 @@ export function mountWorldApp({
         'Автономні файли симулятора прибрано. Встановлені світи й записи польотів збережено.',
       ],
       cancelled: ['Offline download cancelled.', 'Автономне завантаження скасовано.'],
+      error: [
+        'Offline preparation failed. Keep this tab open and try again with a packaged simulator.',
+        'Не вдалося підготувати автономний запуск. Залиште цю вкладку відкритою та повторіть спробу в пакунку симулятора.',
+      ],
+      removeFailed: [
+        'Could not remove offline simulator files. Please try again.',
+        'Не вдалося прибрати автономні файли симулятора. Спробуйте ще раз.',
+      ],
       unavailable: [
         'Offline installation needs a secure browser with service-worker support.',
         'Для автономного встановлення потрібен захищений браузер із підтримкою сервісних воркерів.',
@@ -1755,7 +1763,7 @@ export function mountWorldApp({
       ? ''
       : messages[runtimeOfflineFeedback.kind]
         ? txt(...messages[runtimeOfflineFeedback.kind])
-        : runtimeOfflineFeedback.error;
+        : txt(...messages.error);
     // Both panels report the same completed operation; button presence is not readiness evidence.
     for (const id of ['runtime-offline-status', 'settings-runtime-offline-status']) {
       const node = $(id);
@@ -6671,9 +6679,10 @@ export function mountWorldApp({
     window: win,
     storage,
     packageId: 'fpv-worlds',
-    onStatus(kind, error) {
+    onStatus(kind) {
       if (disposed) return;
-      runtimeOfflineFeedback = { kind, error: String(error?.message ?? error ?? '') };
+      const failure = runtimeOfflineFeedback?.kind === 'removing' ? 'removeFailed' : 'error';
+      runtimeOfflineFeedback = { kind: kind === 'error' ? failure : kind };
       paintRuntimeOfflineStatus();
     },
   });
