@@ -4356,3 +4356,25 @@ exact tracked JSON and rerunning the affected first-flight suite passes 14/14.
 No timeout was increased and no assertion about retained gameplay was removed.
 These are modeled DOM/storage checks, not native browser/device or offline-package
 qualification. Source lint and whitespace checks pass.
+
+## 14 October — Cached player qualification and regional continuation
+
+Current continuation: `codex/fpv-offline-qualification-20261014`, based on main
+`01abc1e3a`. PR #1213 verified source/terrain binding, #1214 catalogue layout and
+#1216 Canyon preparation have merged. Recovery refs, external sources and unrelated
+local edits remain preserved; no temporary worktree metadata was pruned.
+
+The exact PR #1211 cloud artifact passed all 15 retrieved checksums and 126 package
+members. Actual browser preparation completed; after stopping its dedicated origin
+server, the cached player reopened and the installed Coaster world launched in FPV,
+disarmed with health 100 and time 0.0 s. Catalogue failure retained installed content.
+The server was restored. See `fpv-offline-candidate-20261014.md` for exact revisions,
+sequence and limits. This is origin-unavailable evidence, not full airplane-mode,
+update/rollback, hardware or public-release acceptance.
+
+Next independent work: truthful offline completion status in Settings; regional
+authoring flight/cell crossing with deliberate recovery; Urban Bando representative
+architecture. Canyon is currently 768×768 m authoring terrain, not the planned 8 km
+playable world. Shared production flight-core integration, scene collision, full
+quality art, remaining regions and sustained qualification remain open. Publication
+queues do not block those independent increments.

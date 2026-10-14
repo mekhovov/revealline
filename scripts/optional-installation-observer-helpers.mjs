@@ -132,6 +132,26 @@ export async function revealFPVOffline(page, openHelp) {
   await page.locator('#remove-offline').waitFor({ state: 'visible' });
 }
 
+export async function revealFPVProfiles(page, openSetup) {
+  if (!(await page.locator('#setup-dialog').isVisible())) await openSetup();
+  const summary = page
+    .locator('#setup-dialog summary')
+    .filter({ hasText: /^Back up or import a profile$/ });
+  // Radio setup deliberately keeps transfer tools collapsed. Use its ordinary
+  // disclosure instead of forcing hidden fields or changing application state.
+  if ((await summary.locator('..').getAttribute('open')) === null) await summary.press('Enter');
+  await page
+    .getByRole('textbox', { name: 'Profile JSON', exact: true })
+    .waitFor({ state: 'visible' });
+}
+
+export function expectedImportedProfileExport(format, fixture) {
+  if (format === 'FlightProfiles.v1') return fixture;
+  if (format === 'FlightProfiles.v2')
+    return { ...fixture, format, radios: fixture.radio ? [fixture.radio] : [] };
+  throw new Error(`Unsupported observed profile export format: ${format}`);
+}
+
 export function matchesLaunchedAppURL(actual, expectedEntry, locale = 'en') {
   if (!['en', 'uk'].includes(locale)) return false;
   const target = new URL(expectedEntry);
