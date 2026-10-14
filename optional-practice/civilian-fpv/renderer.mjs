@@ -256,11 +256,7 @@ export function createFlightRenderer({
       powerPreference: 'high-performance',
     });
   } catch {
-    return {
-      available: false,
-      resources: () => ({ available: false }),
-      dispose() {},
-    };
+    return { available: false, resources: () => ({ available: false }), dispose() {} };
   }
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
@@ -392,11 +388,7 @@ export function createFlightRenderer({
         if (paint) materials.add(paint);
     });
   const material = (color, extras = {}) => {
-    const value = new THREE.MeshStandardMaterial({
-      color,
-      roughness: 0.8,
-      ...extras,
-    });
+    const value = new THREE.MeshStandardMaterial({ color, roughness: 0.8, ...extras });
     materials.add(value);
     return value;
   };
@@ -641,15 +633,7 @@ export function createFlightRenderer({
       const badge = label(String(index + 1).padStart(2, '0'), '#ffca76', group, 0.48, true);
       if (badge) badge.position.y = 0.92;
       group.visible = false;
-      goalRows.push({
-        group,
-        paint,
-        light,
-        marker,
-        badge,
-        index,
-        actorId: step.actorId,
-      });
+      goalRows.push({ group, paint, light, marker, badge, index, actorId: step.actorId });
       return;
     }
     if (step.type === 'gate') {
@@ -2049,9 +2033,7 @@ export function createFlightRenderer({
             ? armor
             : key === 'pants'
               ? trousers
-              : material(huntAppearance.palette[key] ?? key, {
-                  roughness: 0.87,
-                }),
+              : material(huntAppearance.palette[key] ?? key, { roughness: 0.87 }),
         ]),
       );
       group.userData.ownedMaterials.push(...Object.values(paints));
@@ -2112,9 +2094,7 @@ export function createFlightRenderer({
         [0, height * 0.87, 0],
       );
       if (huntTarget) {
-        const trim = material(huntAppearance.palette.light, {
-          roughness: 0.85,
-        });
+        const trim = material(huntAppearance.palette.light, { roughness: 0.85 });
         const skin = material(huntAppearance.palette.skin, { roughness: 0.9 });
         // Original common family accessories and palettes, adapted to native
         // 3D meshes. They never alter the existing capsule collision proxy.
@@ -2372,11 +2352,7 @@ export function createFlightRenderer({
       const color = key === 'player' ? effectPalette.playerPulse : effectPalette.hostilePulse;
       batch = new THREE.InstancedMesh(
         new THREE.SphereGeometry(0.055, 6, 4),
-        material(color, {
-          emissive: color,
-          emissiveIntensity: 1.4,
-          roughness: 0.2,
-        }),
+        material(color, { emissive: color, emissiveIntensity: 1.4, roughness: 0.2 }),
         64,
       );
       batch.name = `projectile-pool-${key}`;
@@ -2699,11 +2675,7 @@ export function createFlightRenderer({
     );
     pathLine = new THREE.Line(
       new THREE.BufferGeometry().setFromPoints(points),
-      new THREE.LineBasicMaterial({
-        color: effectPalette.trail,
-        transparent: true,
-        opacity: 0.65,
-      }),
+      new THREE.LineBasicMaterial({ color: effectPalette.trail, transparent: true, opacity: 0.65 }),
     );
     scene.add(pathLine);
   }
@@ -3073,16 +3045,8 @@ export function createFlightRenderer({
         add(
           { kind: 'criterion', index },
           step.axis === 'z'
-            ? {
-                x: (step.minSide + step.maxSide) / 2,
-                y: (step.minY + step.maxY) / 2,
-                z: step.at,
-              }
-            : {
-                x: step.at,
-                y: (step.minY + step.maxY) / 2,
-                z: (step.minSide + step.maxSide) / 2,
-              },
+            ? { x: (step.minSide + step.maxSide) / 2, y: (step.minY + step.maxY) / 2, z: step.at }
+            : { x: step.at, y: (step.minY + step.maxY) / 2, z: (step.minSide + step.maxSide) / 2 },
         );
       else if (
         ['hold', 'land', 'rotation-v1', 'attitude-v1', 'path-v1', 'crossing-v1'].includes(
@@ -3580,11 +3544,7 @@ export function createFlightRenderer({
         .applyQuaternion(aircraft.quaternion)
         .add(aircraft.position)
         .project(camera);
-      return {
-        x: (point.x + 1) / 2,
-        y: (1 - point.y) / 2,
-        visible: point.z >= -1 && point.z <= 1,
-      };
+      return { x: (point.x + 1) / 2, y: (1 - point.y) / 2, visible: point.z >= -1 && point.z <= 1 };
     },
     detachTransform: () => editor?.detach(),
     setSceneAnimation(name) {
