@@ -27,6 +27,10 @@ isolated loopback server with production-style headers. It never opens the user'
 normal browser profile. All three test apps are uninstalled and the temporary profile
 removed on completion. Cleanup failures retain that directory and identify it in
 the receipt instead of hiding the failure.
+Pending browser/server startup also retains the directory as unverified cleanup:
+a resource that resolves after the observation deadline cannot silently recreate
+a supposedly deleted profile. Delayed-start and late-close-failure regressions
+cover that ownership boundary.
 
 The public UI prepares each package offline and imports one explicitly scripted,
 replay-verified FPV attempt. No database records, reward receipts or completion flags
@@ -63,10 +67,15 @@ transitions verify the exact origin, app/version path and English language query
 the helper also tests Ukrainian routing. Academy's Workshop & offline disclosure
 is expanded through its summary's native keyboard Enter action before preparation, failed-download and removal
 checks. It does not click
-hidden controls or directly invoke application functions. Preparation waits up to
+hidden controls or directly invoke application functions. Offline preparation and
+removal also use native button Enter. A read-only DOM witness requires fresh status
+or progress activity within 30 seconds, then a fresh terminal status; stale success
+text cannot pass a new action. Error statuses fail promptly. Preparation waits up to
 315 seconds, allowing the application's five-minute overall transfer deadline plus
 status rendering. Ordinary browser operations and protocol/cleanup calls are
-bounded to 30 seconds. The unit regression is
+bounded to 30 seconds. The complete staging/browser journey has a ten-minute deadline;
+failure still enters the independently bounded cleanup and writes a failure receipt.
+Bundle admission happens before that deadline. The unit regression is
 `node --test scripts/test-optional-installation-observer.mjs`.
 
 The receipt's `closedTabsRelaunch` identifies the zero-surviving-page transition;
@@ -87,6 +96,8 @@ the first pointer press on Academy's Workshop & offline summary can move the dia
 before mouseup, leaving the disclosure closed. Native keyboard Enter opens it.
 The observer uses and records that keyboard route; it does **not** claim the first
 pointer interaction has passed. Simulator/UI follow-up and device checks remain necessary.
+This controlled fixture predates the later October 14 SIM world-catalogue/shared-worker
+changes and is only an observer-adapter diagnostic, not current runtime qualification.
 
 Gameplay offline checks run in the browser tab; standalone windows additionally
 verify the apps' mounted start screens and coexistence. A passing report requires browser preparation,
