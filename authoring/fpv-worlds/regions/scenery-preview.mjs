@@ -37,8 +37,18 @@ const canyonViews = [
   ['Needle bend', [210, 34, 300], [231, 34, 268], [184, 32, 302]],
   ['Ridge crown', [345, 90, 65], [375, 120, 123], [345, 85, 65]],
 ];
+const railwayViews = [
+  ['Railway overview', [192, 30, 192], [500, 280, 500], [192, 10, 192]],
+  ['Trestle crossing', [192, 4, 160], [145, 7, 160], [205, 10, 176]],
+  ['Freight yard', [250, 19, 64], [250, 22, 24], [250, 18, 90]],
+  ['Maintenance hall', [300, 20, 64], [300, 20, 26], [300, 20, 80]],
+  ['Station canopy', [166, 19, 64], [166, 19, 20], [166, 19, 88]],
+  ['Cutting traverse', [192, 0, 180], [40, 2, 180], [240, 3, 180]],
+];
 const views =
-  new URLSearchParams(location.search).get('views') === 'canyon' ? canyonViews : urbanViews;
+  { canyon: canyonViews, railway: railwayViews }[
+    new URLSearchParams(location.search).get('views')
+  ] ?? urbanViews;
 let window = null,
   busy = false,
   closed = false,
