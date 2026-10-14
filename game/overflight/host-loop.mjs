@@ -221,6 +221,11 @@ export function createOverflightWorldSourceQueue({ ready, initialSlots, load, cu
       tail = operation.catch(() => {});
       return operation;
     },
+    async settled() {
+      await tail;
+      if (closed) throw new Error('Overflight world source queue is closed.');
+      return current();
+    },
     async dispose() {
       closed = true;
       await tail;
