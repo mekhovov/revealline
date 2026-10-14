@@ -78,9 +78,10 @@ data, commits or local assets were deleted for this pass.
 
 - Physical touchscreen/controller/performance qualification remains deferred.
 - Player recognition, pacing and enjoyment feedback remains deferred.
-- Actual spoken screen-reader behavior is unverified. VoiceOver did not become
-  available through the desktop control surface; accessible labels, focus and
-  automated change-only announcement coverage are separate evidence.
+- VoiceOver listening is skipped by explicit user request. It is not a remaining
+  acceptance gate for this delivery. Spoken screen-reader behavior remains
+  unverified; accessible labels, focus and automated change-only announcement
+  coverage are separate evidence.
 - Additional silver/gold thresholds remain optional. The existing 375 graded
   setups and 1,065 completion-only setups are unchanged; the prior evidence does
   not justify inventing more thresholds.
