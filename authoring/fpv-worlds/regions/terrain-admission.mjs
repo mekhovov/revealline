@@ -2,6 +2,7 @@ import * as THREE from "../../../optional-practice/civilian-fpv/vendor/three.mod
 import RAPIER from "../../../optional-practice/civilian-fpv/vendor/rapier/rapier.mjs";
 import { validateRegionManifest } from "./region-manifest.mjs";
 import { compileTerrainCell, validateTerrainSeams } from "./terrain-cell.mjs";
+import { createTerrainSurface, validateTerrainSurface } from "./terrain-surface.mjs";
 
 let initialized;
 const fail = (condition, message) => {
@@ -23,10 +24,13 @@ export async function prepareTerrainWindow(
     requiredChunkIds,
     originMm = { x: 0, y: 0, z: 0 },
     maxGeometryBytes = 2 * 1024 * 1024,
+    surfaceStyle = "plain",
+    surfaceQuality = "balanced",
   } = {},
 ) {
   const manifest = validateRegionManifest(manifestInput),
     cells = validateTerrainSeams(cellsInput);
+  const surface = validateTerrainSurface(surfaceStyle, surfaceQuality);
   fail(integerPosition(originMm), "Invalid local origin");
   originMm = Object.freeze({ ...originMm });
   fail(
@@ -76,10 +80,7 @@ export async function prepareTerrainWindow(
   const world = new RAPIER.World({ x: 0, y: 0, z: 0 }),
     group = new THREE.Group(),
     geometries = [];
-  const material = new THREE.MeshStandardMaterial({
-    color: 0x687647,
-    roughness: 1,
-  });
+  const material = createTerrainSurface({ ...surface, originMm });
   const colliderIds = new Map();
   let disposed = false;
   function dispose() {
@@ -154,6 +155,7 @@ export async function prepareTerrainWindow(
       disposed,
       cells: disposed ? 0 : cells.length,
       geometryBytes: disposed ? 0 : geometryBytes,
+      surface,
     }),
     support(positionMm, maxDropMm = 10000) {
       live();
