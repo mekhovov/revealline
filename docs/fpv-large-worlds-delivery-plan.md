@@ -1,6 +1,6 @@
 # Large authored FPV regions — active delivery plan
 
-Reviewed 14 October 2026; continuation rebased onto main `2abfd20bdee39369b3480ed3013074a8dfac3006`.
+Reviewed 14 October 2026; continuation based on main `01abc1e3a`.
 The user selected default catalogue visibility, download on Play, optional offline
 storage, and authored regions first. Generation assists authoring; endless runtime
 terrain is deferred. Twelve proposed regions are design targets, not shipped maps.
@@ -17,16 +17,24 @@ terrain is deferred. Twelve proposed regions are design targets, not shipped map
   and Settings-return focus corrections merged in #1206/#1211. Coaster Practice
   Park content and catalogue admission merged in #1205/#1209, making 20 optional
   worlds. It is a bounded 160×160 m practice layout, not the large Coaster region.
-  The catalogue/dock layout correction is verified separately. Exact source intake
-  continues per asset, with packaged offline and public launch qualification open.
+  The catalogue/dock layout correction merged in #1214. An unchanged cloud candidate
+  passed cached startup and installed Coaster launch with its origin server stopped;
+  see [the bounded evidence](fpv-offline-candidate-20261014.md). Full network-wide
+  offline, device and public launch qualification remain open. Settings completion
+  feedback is the next focused usability correction.
 - **P1, in progress:** regional manifest/residency planning (#1197), transactional
   verified source windows (#1200), and detached terrain/Three/Rapier preparation
-  (#1207) are merged. Verified-source-to-terrain binding is the next increment.
+  (#1207), plus verified-source-to-terrain binding (#1213), are merged. The next
+  increment is an isolated unscored authoring flight prototype with safe cell
+  crossings, origin shifts and paused recovery; it is not default player admission.
   Existing World coordinates stop at ±100 m. Real regional flight additionally
   needs terrain/collision streaming, origin shifting, render preparation and recovery.
   Authoring validation alone does not deliver huge playable maps.
-- **P2:** Canyon Badlands and Urban Bando District establish terrain and architecture
-  quality. No default catalogue row before collision, flight and package qualification.
+- **P2:** Canyon Badlands preparation merged in #1216: a 768×768 m representative,
+  36 matching render/collision cells, six districts, twelve landmarks and three
+  corridor studies. Materials/scenery and playable integration remain unfinished.
+  Urban Bando architecture preparation proceeds independently. Neither is admitted
+  to the default catalogue before collision, flight and package qualification.
 - **P3:** Tropical Archipelago, Industrial Railway Valley, Coaster Park, Hillside Town;
   then Alpine Highlands, Desert Expedition, Canal City; then Lunar Basin, Castle
   Valley, Retro Metropolis. Expand Reservoir, Harbor and Festival with new revisions,
