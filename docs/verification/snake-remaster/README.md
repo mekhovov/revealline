@@ -139,7 +139,8 @@ duplicated enemy preset into the shared Appearance section and corrects compact
 settings overflow found at 320px. Coverage preserves the accepted attempt and
 artwork across appearance changes, replay, mission previews and saved cosmetics.
 English/Ukrainian browser observations are recorded separately from deferred
-physical-device and spoken screen-reader qualification. Higher-grade expansion
+physical-device qualification. VoiceOver listening is skipped by explicit user
+request and is not an acceptance gate for this delivery. Higher-grade expansion
 remains optional; no new gameplay or mission content is needed for this fix.
 
 ## Original artwork and safety
