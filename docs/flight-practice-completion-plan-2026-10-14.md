@@ -28,15 +28,15 @@ arbitrary destination or executable query parameter.
 
 ## What is already implemented
 
-| Area                | Implemented                                                                                                                  | Remaining proof or refinement                                                                                     |
-| ------------------- | ---------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
-| Discovery           | Three descriptor-driven cards, gameplay previews, purposes, inputs, requirements, versions/sizes, EN/UK, Play/details        | Public selection still empty; verify current browser focus/layout and real released bytes                         |
-| Compatibility       | v1 index retained, bounded revision-keyed details, safe routes, metadata fallback                                            | Repeat current public compatibility checks after deployment                                                       |
-| Failure handling    | Dated last-known catalogue, empty/failure states, retry/navigation                                                           | Exercise current interrupted/offline requests in browser                                                          |
-| Offline preparation | Hash/dependency/worker readiness, progress/cancel, inactivity and overall bounds, previous version retention, scoped removal | Extend installed-app observer to World Studio and closed-window offline relaunch; physical/browser matrix remains |
-| Publishing          | Three-app reproducibility/admission, existing publisher/selector, explicit empty overlay                                     | Main workflow repair must deploy; full retained-site capacity and reviewed release selection remain               |
-| Guides              | EN/UK player HTML/repository help, maintainer descriptor/preflight/preview/release recipe                                    | Correct drift against current SIM menus, follow guides from scratch, collect current screenshots                  |
-| Fourth app          | Automated registration, four-card preview, admission, update/rollback/retirement                                             | Add real browser launch/installation/lifecycle observation; never publish sample                                  |
+| Area                | Implemented                                                                                                                                      | Remaining proof or refinement                                                                              |
+| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------- |
+| Discovery           | Three descriptor-driven cards, gameplay previews, purposes, inputs, requirements, versions/sizes, EN/UK, Play/details                            | Public selection still empty; verify current browser focus/layout and real released bytes                  |
+| Compatibility       | v1 index retained, bounded revision-keyed details, safe routes, metadata fallback                                                                | Repeat current public compatibility checks after deployment                                                |
+| Failure handling    | Dated last-known catalogue, empty/failure states, retry/navigation                                                                               | Exercise current interrupted/offline requests in browser                                                   |
+| Offline preparation | Hash/dependency/worker readiness, progress/cancel, inactivity and overall bounds, previous version retention, scoped removal; all-three observer | Authorized real-candidate installation/recovery observation and physical/browser matrix remain             |
+| Publishing          | Three-app reproducibility/admission, existing publisher/selector, explicit empty overlay                                                         | Main workflow repair must deploy; full retained-site capacity and reviewed release selection remain        |
+| Guides              | Corrected EN/UK player HTML/repository help, maintainer descriptor/preflight/preview/release recipe and parity tests                             | Follow guides from scratch on the qualified real candidate and collect current screenshots/device evidence |
+| Fourth app          | Automated registration and six-checkpoint real-browser launch/start/pause/retry, installation/update/offline reopen/rollback/retirement          | Complete for the unpublished fixture; does not qualify the three real apps and must never be published     |
 
 Prior 290/290 practice and 37/37 SIM recovery checks are useful recorded evidence,
 not automatic approval of a later source. See the
@@ -203,3 +203,19 @@ Do not mark “three playable public apps” done on the strength of local fixtu
   on the Workshop disclosure. The native keyboard route is usable; observation
   records that route and does not claim pointer qualification. SIM/UI follow-up
   remains required. These controlled packages are not the actual release candidate.
+- At committed revision `99d3dc41e08b420f2b430ef1875b309983be8f38`, all three
+  actual packages passed two byte-reproducible builds, committed-input checks and
+  ZIP admission. The development version remains `v0.151.1`; no release version
+  was allocated and `publicEligible` remains false. Full practice regressions:
+  **311 passed, 0 failed, 0 skipped**; main Pages profile **3 passed**.
+- The actual `99d3dc41e` browser attempt again stopped at the normal password gate,
+  with zero preparation checkpoints and successful cleanup. An authorized test
+  credential is still needed; a controlled-fixture result cannot replace it.
+- The exact-source core inspection was stopped under local resource pressure
+  after free internal storage fell below 200 MiB. It produced no complete report
+  and supplies no new capacity approval. The prior measured lower bound remains
+  historical; rerun the full inspection on a sufficiently provisioned machine.
+- SIM World Library PR #1199 has subsequently landed on main. It is an application
+  content catalogue, not a replacement for the Flight practice application
+  directory. Integrate it through the final rebase and preserve exact source
+  identities; qualification receipts do not automatically transfer to newer code.
