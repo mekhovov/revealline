@@ -57,20 +57,66 @@ export function createClassicTargetFacing() {
  * the player a resting enemy is about to attack or predicts a future decision. */
 export function classicTargetPose(options = {}, fallback = 0) {
   const phase = options.phase ?? options.tactical?.phase;
-  const warning = ['warning', 'windup', 'prepare', 'primed'].includes(phase);
-  const recovering = ['rest', 'recovery', 'waiting', 'dormant'].includes(phase);
-  const active = ['active', 'locked', 'burst', 'dash'].includes(phase);
-  const staticPose = options.frozen || options.reducedEffects || recovering || warning;
+  const warning = ['warning', 'turning', 'windup', 'prepare', 'primed'].includes(phase);
+  const mobileRecovery =
+    ['jammer', 'guard'].includes(options.kind) &&
+    phase === 'rest' &&
+    options.tactical &&
+    !options.tactical.stationary;
+  const blocked = phase === 'blocked' || options.state === 'blocked';
+  const recovering =
+    !mobileRecovery &&
+    ['rest', 'recovery', 'recovering', 'waiting', 'dormant', 'open'].includes(phase);
+  const active = ['active', 'locked', 'burst', 'dash', 'jamming'].includes(phase);
+  const stationaryAction = active && ['jammer', 'lane', 'guard', 'relay'].includes(options.kind);
+  const idle = options.kind === 'still' || phase === 'dormant' || phase === 'waiting';
+  const staticPose =
+    options.frozen ||
+    options.reducedEffects ||
+    options.paused ||
+    recovering ||
+    warning ||
+    blocked ||
+    idle ||
+    stationaryAction;
+  const clip = warning
+    ? 'anticipation'
+    : blocked
+      ? 'blocked'
+      : idle || stationaryAction
+        ? 'idle'
+        : recovering
+          ? 'recovery'
+          : 'move';
   return {
     warning,
     recovering,
     active,
+    blocked,
+    clip,
+    animationState: warning
+      ? 'notice'
+      : blocked
+        ? 'blocked'
+        : recovering
+          ? 'recover'
+          : idle || stationaryAction
+            ? 'idle'
+            : options.state,
     stride: staticPose
       ? 0
       : Number.isFinite(options.timeMs)
         ? Math.floor(options.timeMs / (active ? 70 : 115)) % 6
         : fallback,
-    stance: warning ? 'prepare' : active ? 'action' : recovering ? 'recover' : 'travel',
+    stance: warning
+      ? 'prepare'
+      : blocked
+        ? 'blocked'
+        : active
+          ? 'action'
+          : recovering || idle
+            ? 'recover'
+            : 'travel',
   };
 }
 
@@ -103,12 +149,13 @@ function drawSpecialistEquipment(ctx, x, y, size, options, state) {
   ctx.scale(size / 28, size / 28);
   ctx.rotate(ANGLES[options.heading] ?? 0);
   if (options.kind === 'jammer' || options.kind === 'relay') {
-    // Broad antenna crown and rear transmitter distinguish emitters from prey.
-    r('#142a30', -9, -11, 18, 5);
-    r(ink, -8, -10, 16, 2);
+    // Antenna retracts at rest; preparation deploys the full fixed silhouette.
+    const mastWidth = state.recovering ? 10 : 16;
+    r('#142a30', -mastWidth / 2 - 1, -11, mastWidth + 2, 5);
+    r(ink, -mastWidth / 2, -10, mastWidth, 2);
     r(body, -1, -10, 2, 17);
-    r(ink, -6, -12, 2, 6);
-    r(ink, 4, -12, 2, 6);
+    r(ink, state.recovering ? -4 : -6, state.recovering ? -10 : -12, 2, state.recovering ? 3 : 6);
+    r(ink, state.recovering ? 2 : 4, state.recovering ? -10 : -12, 2, state.recovering ? 3 : 6);
     r('#233b42', -6, 4, 12, 7);
     r(body, -4, 5, 8, 5);
     r(state.warning || state.active ? ink : '#597f75', -2, 6, 4, 2);
@@ -117,18 +164,20 @@ function drawSpecialistEquipment(ctx, x, y, size, options, state) {
       r(ink, 7, -3, 2, 12);
     }
   } else if (options.kind === 'lane' || options.kind === 'guard') {
-    r('#142a30', -4, -12, 8, 12);
-    r(body, -3, -12, 6, 10);
-    r(ink, -2, -11, 4, 2);
-    r('#142a30', -1, -9, 2, 6);
+    const muzzle = state.recovering ? -7 : state.active ? -10 : -12;
+    r('#142a30', -4, muzzle, 8, 12);
+    r(body, -3, muzzle, 6, 10);
+    r(ink, -2, muzzle + 1, 4, 2);
+    r('#142a30', -1, muzzle + 3, 2, 6);
     if (state.warning) {
       r(ink, -10, -7, 3, 2);
       r(ink, 7, -7, 3, 2);
     }
   } else if (options.kind === 'eroder') {
-    r('#263938', -10, -11, 20, 6);
-    r(body, -9, -11, 18, 3);
-    for (const a of [-8, -3, 2, 7]) r(ink, a, -12, 2, 5);
+    const blade = state.recovering ? -7 : -11;
+    r('#263938', -10, blade, 20, 6);
+    r(body, -9, blade, 18, 3);
+    for (const a of [-8, -3, 2, 7]) r(ink, a, blade - 1, 2, 5);
   } else if (options.kind === 'rover') {
     r('#253e3a', -8, 2, 16, 8);
     r(body, -7, 3, 14, 5);
@@ -173,13 +222,15 @@ export function drawClassicTarget(ctx, x, y, size, pose = 0, options = {}) {
       frame: {
         travelPhase: pose / 8,
         phase: pose / 3,
-        reduced: options.frozen || options.reducedEffects,
+        reduced: options.frozen || options.reducedEffects || options.paused,
       },
     });
   else
     drawHuntActor(ctx, x, y, size, pose, {
       ...options,
       detail: (options.cssUnit ?? size) < 18 ? 'compact' : options.detail,
+      animationClip: options.animationClip ?? state.clip,
+      state: state.animationState,
       ...(options.kind === 'guard' ? { armed: true } : {}),
       ...(families[options.kind] ? { family: families[options.kind] } : {}),
     });
