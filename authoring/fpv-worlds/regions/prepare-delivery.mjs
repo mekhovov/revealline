@@ -58,7 +58,9 @@ export async function prepareRegionalDelivery({ source, output, id, revision, ti
     const relative = `${layer}/region.json`;
     reserve(relative);
     const item = await read(relative, 8 * 1024 * 1024);
-    const manifest = validateRegionManifest(item.bytes.toString('utf8'));
+    const manifest = validateRegionManifest(
+      new TextDecoder('utf-8', { fatal: true }).decode(item.bytes),
+    );
     for (const asset of manifest.assets) {
       const assetPath = `${layer}/${asset.path}`;
       reserve(assetPath);
