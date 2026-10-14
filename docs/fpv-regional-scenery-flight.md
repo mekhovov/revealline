@@ -32,6 +32,20 @@ the same explicit profile; it never bypasses source or geometry validation. Rese
 retains the selected profile through the existing input session. Terrain remains
 the default; mixed profiles are not offered.
 
+The preview now offers every authored spawn after the first manifest load. Choose
+a start and **Load / restart region** to apply it safely. New preview loads face
+the region centre by default, with explicit North/East/South/West alternatives;
+the underlying constructor still defaults to north. `initialHeading` accepts
+integer centidegrees or `region-centre` and uses the shared fixed-point rotation
+helpers. It changes only the initial authoring pose, not flight dynamics or source
+geometry. Reset retains the chosen spawn, heading and appearance.
+
+For terrain, **Authored appearance** chooses the Canyon study material only for
+the known `canyon-badlands-study` identity; other regions stay plain. Plain/Canyon
+and Performance/Balanced/Quality overrides pass into the existing verified terrain
+source options. These appearance controls are disabled for the scenery profile.
+No manifest, source hashes, collision triangles or runtime default materials change.
+
 ## Verification
 
 The controlled Urban flight verifier uses the exact generated r2 sources and native

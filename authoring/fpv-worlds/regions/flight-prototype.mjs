@@ -1,6 +1,6 @@
 /** Unscored authoring harness using shared flight air dynamics; terrain collision is provisional. */
 import * as THREE from "../../../optional-practice/civilian-fpv/vendor/three.module.js";
-import { Q } from "../../../optional-practice/civilian-fpv/math.mjs";
+import { Q, atan2, sin, cos, multiplyQuaternion } from "../../../optional-practice/civilian-fpv/math.mjs";
 import {
   advanceFlightAir,
   quantizeFlightInput,
@@ -37,7 +37,10 @@ export function createRegionalFlightPrototype({
   manifest: input,
   source,
   geometryProfile = "terrain-v1",
+  scenery = null,
+  geometryBudgets,
   spawnId,
+  initialHeading = 0,
   mode = "self-level",
   response = DEFAULT_RESPONSE,
 } = {}) {
@@ -52,7 +55,31 @@ export function createRegionalFlightPrototype({
     (item) => item.id === (spawnId ?? manifest.spawns[0].id),
   );
   fail(spawn, "Unknown region spawn");
-  const terrain = createVerifiedFlightGeometry(manifest, { profile: geometryProfile, source }),
+  fail(
+    initialHeading === "region-centre" ||
+      (Number.isSafeInteger(initialHeading) &&
+        initialHeading >= 0 &&
+        initialHeading < 36000),
+    "Invalid initial regional heading",
+  );
+  const heading =
+    initialHeading === "region-centre"
+      ? atan2(
+          (manifest.grid.minX + manifest.grid.width / 2) * 128000 - spawn.position.x,
+          spawn.position.z - (manifest.grid.minZ + manifest.grid.depth / 2) * 128000,
+        )
+      : initialHeading;
+  const halfHeading = Math.round(-heading / 2);
+  const orientation = multiplyQuaternion(
+    [0, 0, 0, Q],
+    [0, sin(halfHeading), 0, cos(halfHeading)],
+  );
+  const terrain = createVerifiedFlightGeometry(manifest, {
+      profile: geometryProfile,
+      source,
+      scenery,
+      budgets: geometryBudgets,
+    }),
     root = new THREE.Group(),
     dronePose = new THREE.Object3D(),
     cameraAnchor = new THREE.Object3D();
@@ -60,7 +87,7 @@ export function createRegionalFlightPrototype({
   let body = {
     position: { ...spawn.position },
     velocity: zero(),
-    orientation: [0, 0, 0, Q],
+    orientation,
     angular: { roll: 0, pitch: 0, yaw: 0 },
     ticks: 0,
   };
@@ -116,21 +143,47 @@ export function createRegionalFlightPrototype({
     reason = "preparing-terrain";
     const operation = (async () => {
       try {
-        const ready = await terrain.transition(target, {
-          positionMm: body.position,
-          radiusMm: RADIUS,
-        });
-        if (disposed || token !== generation)
+        const previousOrigin = origin,
+          previousRecentres = recentres;
+        let attached = null;
+        await terrain.transition(
+          target,
+          {
+            positionMm: body.position,
+            radiusMm: RADIUS,
+          },
+          {
+            commit({ group, provenance }) {
+              if (disposed || token !== generation)
+                throw new DOMException(
+                  "Prototype preparation cancelled",
+                  "AbortError",
+                );
+              const nextOrigin = provenance.originMm;
+              if (AXES.some((key) => nextOrigin[key] !== origin[key]))
+                recentres++;
+              origin = { ...nextOrigin };
+              attached = group;
+              root.add(group);
+              updateFrame();
+            },
+            rollback() {
+              attached?.removeFromParent();
+              origin = previousOrigin;
+              recentres = previousRecentres;
+              updateFrame();
+            },
+          },
+        );
+        if (
+          disposed ||
+          token !== generation ||
+          !terrain.snapshot().terrainReady
+        )
           throw new DOMException(
             "Prototype preparation cancelled",
             "AbortError",
           );
-        const nextOrigin = ready.provenance.originMm;
-        if (AXES.some((key) => nextOrigin[key] !== origin[key])) recentres++;
-        // No await between origin, terrain and both pose updates: one complete local frame.
-        origin = { ...nextOrigin };
-        root.add(terrain.group);
-        updateFrame();
         pendingTarget = null;
         reason = "prepared";
         return snapshot();

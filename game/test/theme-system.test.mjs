@@ -665,3 +665,26 @@ test('Canvas consumes interface fonts independently from authored arcade artwork
   assert.equal(canvasInterfaceFonts(resolved), fonts);
   assert.equal(Object.isFrozen(fonts), true);
 });
+
+test('shared appearance bounds native option widths and nested help within compact panels', () => {
+  const rules = surfaceRules();
+  const group = rules.find((rule) => rule.selector === '.theme-family-controls');
+  assert.equal(
+    group.properties['grid-template-columns'],
+    'minmax(0, 1fr)',
+    'A long native option cannot impose its min-content width on the grid track.',
+  );
+  assert.equal(group.properties['min-width'], '0');
+  const children = rules.find((rule) => rule.selector === '.theme-family-controls > *');
+  assert.equal(
+    children.properties['min-width'],
+    '0',
+    'Enemy and ground picker wrappers may shrink with the available panel.',
+  );
+  assert.equal(children.properties['max-width'], '100%');
+  assert.equal(children.properties['box-sizing'], 'border-box');
+  const select = rules.find((rule) => rule.selector === '.theme-family-controls select');
+  assert.equal(select.properties['min-width'], '0');
+  assert.equal(select.properties['max-width'], '100%');
+  assert.equal(select.properties['box-sizing'], 'border-box');
+});
