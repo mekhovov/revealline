@@ -14,6 +14,7 @@ import {
   rerollOverflightHuntUpgrades,
   overflightHuntSummary,
   overflightHuntFixtureInput,
+  overflightHuntBoostRecovery,
 } from './raid-core.mjs';
 import { overflightHuntBuildItems } from './raid-upgrades.mjs';
 import { createOverflightHuntUpgradeCard } from './raid-upgrade-card.mjs';
@@ -215,6 +216,7 @@ export const OVERFLIGHT_HUNT_MODE = Object.freeze({
   exportPackage: exportOverflightHuntPackage,
   text: overflightHuntText,
   createRun: createOverflightHuntRun,
+  boostRecovery: overflightHuntBoostRecovery,
   start: startOverflightHunt,
   step: stepOverflightHunt,
   pause: pauseOverflightHunt,

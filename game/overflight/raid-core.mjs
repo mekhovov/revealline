@@ -739,6 +739,16 @@ function damagePlayer(run, cause = 'contact') {
   return true;
 }
 
+/** Cooldown displayed to players must include the shared minimum between starts,
+ * including when Rush and the one-per-pass refund finish passive recovery early. */
+export function overflightHuntBoostRecovery(run) {
+  const startFloor =
+    Number.isFinite(run.tick) && Number.isFinite(run._boostStartedTick)
+      ? (54 - (run.tick - run._boostStartedTick)) * STEP
+      : 0;
+  return Math.max(0, run.player.boostCooldown ?? 0, startFloor);
+}
+
 function movePlayer(run, input, params) {
   const player = run.player,
     hunt = run.hunt;
@@ -761,12 +771,7 @@ function movePlayer(run, input, params) {
     x /= length;
     y /= length;
   }
-  if (
-    boost &&
-    !run._boostHeld &&
-    player.boostCooldown <= EPS &&
-    run.tick - run._boostStartedTick >= 54
-  ) {
+  if (boost && !run._boostHeld && overflightHuntBoostRecovery(run) <= EPS) {
     if (hunt.rushCharge >= 20 && hunt.rushRemaining <= 0) {
       hunt.rushCharge = 0;
       hunt.rushRemaining = 5;

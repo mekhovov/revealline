@@ -191,6 +191,43 @@ export function createOverflightRendererOwner() {
   };
 }
 
+/** Keep decoded world sources alive until their async atlas preparation finishes.
+ * Every request is queued, including A→B→A while B is still loading. */
+export function createOverflightWorldSourceQueue({ ready, initialSlots, load, current }) {
+  const keyOf = (slots) => JSON.stringify([...new Set(slots)].sort());
+  let acceptedKey = null,
+    closed = false;
+  let tail = Promise.resolve(ready).then(
+    () => {
+      acceptedKey = keyOf(initialSlots);
+    },
+    () => {},
+  );
+  return {
+    use(slots, consume) {
+      const requestedSlots = [...slots];
+      const requestedKey = keyOf(requestedSlots);
+      const operation = tail.then(async () => {
+        if (closed) throw new Error('Overflight world source queue is closed.');
+        if (requestedKey !== acceptedKey) {
+          await load(requestedSlots);
+          // Loading changes the presentation host even if its app request became
+          // obsolete. Record the actual accepted sources before serving another.
+          acceptedKey = requestedKey;
+        }
+        if (closed) throw new Error('Overflight world source queue is closed.');
+        return consume(current());
+      });
+      tail = operation.catch(() => {});
+      return operation;
+    },
+    async dispose() {
+      closed = true;
+      await tail;
+    },
+  };
+}
+
 /** Restoration only re-enables an explicit Start/Resume. It never starts play. */
 export function createOverflightContextGuard({ pause, release }) {
   let lost = false;

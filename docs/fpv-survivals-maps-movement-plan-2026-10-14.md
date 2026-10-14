@@ -2,7 +2,7 @@
 
 Research and implementation-plan revision, 14 October 2026. This document proposes the next work; it does not claim that the new maps or movement are implemented.
 
-Implementation was authorized after this review. The working branch is now `codex/fpv-survivals-maps-movement`; the existing worlds work was rebased onto main `e0aec7e468d80546c74e5cd2c11224dcdd3aa16b` and retained in PR1192 at `fd8066f1261893a6ad7e8ead1051addb0cef7ebb`. Progress and qualification are tracked separately in `fpv-survivals-maps-movement-status.md`.
+Implementation is in progress on `codex/fpv-survivals-maps-recovered`, in a persistent managed worktree. The expansion was rebased onto the latest pushed worlds work and main `4c8c762bd56ffef6b7f3720d61a39978d4c66361`; PR1192's preserved dependency head is `6e16bd5b9`. The current progress and qualification limits are tracked in [implementation status](fpv-survivals-maps-movement-status.md).
 
 **Recommendation: six battlefield themes, three authored layouts each, across all five FPV Survivals operations.** Build one open layout and one layout with wide cover routes first. Prove movement, readability and mode compatibility before expanding to all 18. Preserve the military arcade pixel art, dense crowds, early upgrades and rewarding clears.
 

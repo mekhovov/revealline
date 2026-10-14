@@ -11,7 +11,7 @@ The final bounded comparison covers Broken Crossroads and Loading Loop, Single D
 - All twenty fixed-heading/shuttle cases lost at 138.08–173.63 seconds. Their longest safe intervals were 2.73–22.30 seconds.
 - Successful active clearing still buys relief: one active Loading Loop case had the full 120-second observation window without damage/shield consumption. This is not classified as a balance failure merely because it was successful.
 
-Reports: [active/park](fixed-lane-initial.json), [fixed headings/shuttle](fixed-lane-headings.json). The traces include position, heading, kills, damage, shields, salvage earned/collected, direct-path reachable salvage, nearby approach sectors and attack/motion deferrals.
+Reports: [active/park](fixed-lane-initial.json.gz), [fixed headings/shuttle](fixed-lane-headings.json.gz). The traces include position, heading, kills, damage, shields, salvage earned/collected, direct-path reachable salvage, nearby approach sectors and attack/motion deferrals.
 
 ## A reproduced exploit and its fix
 
@@ -19,7 +19,7 @@ Before the final cover-clearance fix, Loading Loop / Riy / held south input stop
 
 Warning admission now uses the physical hull for terrain sweeps. It still checks harmful bodies, full attack geometry and the slowest supported flight speed. The same input loses at 147.95 seconds, with a longest safe interval of 6.22 seconds. This fixes an inadmissible-attack loop without changing health, damage, movement speed or rewards.
 
-The before-fix evidence is retained in [the original heading comparison](fixed-lane-headings-before-cover-fix.json). It is historical evidence, not the final source result. The final comparison also includes a finite split-pack correction: the first two coordinated members take opposite sides, rather than both taking the same side of a six-member indexing pattern.
+The before-fix evidence is retained in [the original heading comparison](fixed-lane-headings-before-cover-fix.json.gz). It is historical evidence, not the final source result. The final comparison also includes a finite split-pack correction: the first two coordinated members take opposite sides, rather than both taking the same side of a six-member indexing pattern.
 
 ## Correctness coverage
 
@@ -36,7 +36,7 @@ The focused suite covers 93 tests across coordinated movement, core Survivor/Rai
 - Timed bent escapes around cover.
 - A hull resting against cover retaining a legal outward escape.
 
-See [test output](movement-tests.log). Source lint passed for all owned movement and diagnostic files.
+See [test output](movement-tests.txt). Source lint passed for all owned movement and diagnostic files.
 
 ## Evidence boundaries and remaining work
 
@@ -44,4 +44,27 @@ This is a bounded 120–240-second diagnostic, not full-sortie qualification. It
 
 Direct-path reachable salvage is a deliberately conservative metric; a pickup reachable through a bent route can be counted as blocked. The review pilot is a correctness instrument, not an ordinary-player difficulty model. Crosscut preparation timing at distant arrivals still needs native review: its bounded commitment can finish before reaching the player. No speed increase was added to conceal this.
 
-Run the default eight-case diagnostic with `node docs/qualification/overflight/maps-movement-20261014/fixed-lane-probe.mjs report.json`; add `--lanes` for the twenty heading/shuttle cases or `--extended` for all available policies. Run from the repository root and keep simulation sources unchanged during measurement.
+Run the default eight-case diagnostic with `node docs/qualification/overflight/maps-movement-20261014/fixed-lane-probe.mjs report.json.gz`; add `--lanes` for the twenty heading/shuttle cases or `--extended` for all available policies. Run from the repository root and keep simulation sources unchanged during measurement.
+
+Raw JSON evidence is stored as lossless gzip; decompression reproduces the original report bytes.
+
+## Expanded earned-checkpoint matrix — initial instrument
+
+[The retained complete matrix](earned-matrix-initial.json.gz) covers 36 earned baselines: the first layout of every world, Survivor/Riy and three seeds. Fan/Echo/Systems, Standard/Veteran and one/three airframes use the explicit balanced rotation in the probe. Each available baseline branches at 120, 180 and 240 seconds into a rotating park, shuttle or tiny-circle policy. Branches continue through loss/win, with a 720-second cap counted as inconclusive. This is pairwise dimension coverage, not every combination.
+
+Initial result: **13 active wins, 23 active losses; 91 unattended losses, 17 unavailable checkpoints, no unattended wins or caps.** The longest safe unattended interval was 29.67 seconds. All initial source hashes remained stable. A missing checkpoint is not a pass.
+
+| World | Active wins / six | Available unattended losses | Unavailable checkpoints |
+| --- | ---: | ---: | ---: |
+| field-crossing | 3 | 18 | 0 |
+| freight-depot | 1 | 13 | 5 |
+| relay-ruins | 2 | 17 | 1 |
+| river-port | 2 | 9 | 9 |
+| chalk-quarry | 3 | 17 | 1 |
+| orchard-strongpoint | 2 | 17 | 1 |
+
+These active losses cannot all be blamed on automation. The Shunting Yard / Echo / Veteran / one-airframe baseline had a 0.63-second wall hold without damage, but died from contact while moving in open ground at 119.23 seconds; its [exact input/position trace](pilot-wall-failure.json.gz) is retained.
+
+The review pilot nevertheless had two independent defects: it could plan paths through solid cover and predicted V4 coordinated enemies from obsolete pursuit steering. A clean obstacle fixture reproduced ten seconds of wall holding and no salvage; the corrected policy collected the same salvage in 1.88 seconds with no blocked choices. A moving-body fixture also verifies actual-velocity avoidance. The correction changes only review automation, not gameplay rules. The 23 failed configurations and their associated branches are being rerun separately; their initial outcomes remain above.
+
+[Probe source](earned-checkpoint-matrix.mjs) supports `--part=0/2` for a deterministic batch and `--cases=6,7` to rerun exact case IDs. Reports are lossless `.json.gz`. The fixture tests are in `game/test/overflight-review-pilot-terrain.test.mjs`; [combined pilot/movement test output](pilot-and-movement-tests.txt) records 14 passing tests.
