@@ -1204,6 +1204,15 @@ export function bootCoop({
         tools.append(help, settings, sound);
       }
     }
+    // Native landing hides the legacy lobby tools. Admission must keep its
+    // cancel action visible and focusable after the mission chooser closes.
+    const discoveryDestination =
+      !paused && $('coop-menu').classList.contains('native-landing')
+        ? $('coop-menu').querySelector('.native-menu-actions')
+        : tools;
+    for (const id of ['coop-discovery-status', 'coop-discovery-cancel']) {
+      if ($(id).parentNode !== discoveryDestination) discoveryDestination.append($(id));
+    }
     // Failed saves are operational recovery, so Pause and Results keep their
     // live actions visible. The lobby gives them a stable home under Data.
     const recoveryDestination = paused ? tools : $('coop-settings-panel-data');
@@ -2190,7 +2199,13 @@ export function bootCoop({
     const strongholds = run.strongholds.filter((item) => run.level.goal.cores?.includes(item.id));
     const stronghold = strongholds.find((item) => !item.defeated);
     $('coop-objective').dataset.kind =
-      run.level.hunt?.mode === 'hunt' ? 'hunt' : stronghold ? 'stronghold' : 'coverage';
+      run.level.hunt?.mode === 'hunt'
+        ? 'hunt'
+        : stronghold
+          ? 'stronghold'
+          : run.environment?.relays.length || run.environment?.stages.length
+            ? 'expedition'
+            : 'coverage';
     localizedText($('coop-objective'), () => coopObjectiveLabel(run));
     const finished = run.status === 'won' || run.status === 'lost';
     const groundContext = coopGroundContext(run.level);
