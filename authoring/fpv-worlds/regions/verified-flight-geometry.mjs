@@ -40,6 +40,9 @@ export function createVerifiedFlightGeometry(
       await owner.transition(...args);
       return snapshot();
     },
+    flightSupport(...args) {
+      return owner.flightSupport(...args);
+    },
     castMotion(...args) {
       return owner.castMotion(...args);
     },

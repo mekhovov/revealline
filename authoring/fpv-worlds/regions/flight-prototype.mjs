@@ -1,3 +1,7 @@
+import {
+  applyFlightSupport,
+  initializeFlightSupport,
+} from "../../../optional-practice/civilian-fpv/flight-support.mjs";
 /** Unscored authoring harness using shared air/contact movement; host admission remains provisional. */
 import {
   moveFlightSphere,
@@ -6,6 +10,7 @@ import {
 import * as THREE from "../../../optional-practice/civilian-fpv/vendor/three.module.js";
 import {
   Q,
+  isqrt,
   atan2,
   sin,
   cos,
@@ -110,6 +115,10 @@ export function createRegionalFlightPrototype({
     orientation,
     angular: { roll: 0, pitch: 0, yaw: 0 },
     ticks: 0,
+    grounded: false,
+    support: null,
+    landingSpeed: 0,
+    landingTilt: 0,
   };
   let status = "paused",
     reason = "terrain-required",
@@ -201,6 +210,12 @@ export function createRegionalFlightPrototype({
             "Prototype preparation cancelled",
             "AbortError",
           );
+        if (body.ticks === 0) {
+          const support = terrain.flightSupport(body.position, RADIUS, 5);
+          if (support.status !== "flight-support")
+            throw new Error("Verified spawn support is unavailable");
+          initializeFlightSupport(body, support.ground);
+        }
         pendingTarget = null;
         reason = "prepared";
         return snapshot();
@@ -268,6 +283,12 @@ export function createRegionalFlightPrototype({
         return snapshot();
       }
       const next = candidateStep(body, command, mode, rates);
+      const impactSpeed = isqrt(
+        AXES.reduce(
+          (sum, key) => sum + next.velocity[key] * next.velocity[key],
+          0,
+        ),
+      );
       const grid = manifest.grid;
       if (
         next.position.x - RADIUS < grid.minX * 128000 ||
@@ -323,8 +344,16 @@ export function createRegionalFlightPrototype({
       next.position = moved.position;
       for (const hit of moved.contacts) {
         next.velocity = projectContactVelocity(next.velocity, hit);
-        contacts++;
       }
+      const support = terrain.flightSupport(next.position, RADIUS, 60);
+      if (support.status !== "flight-support") {
+        pendingTarget = { ...next.position };
+        status = "paused";
+        reason = "terrain-required";
+        return snapshot();
+      }
+      applyFlightSupport(next, support.ground, body.grounded, impactSpeed);
+      contacts += moved.contacts.length;
       body = next;
       updateFrame();
       return snapshot();
