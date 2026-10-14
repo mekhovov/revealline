@@ -144,6 +144,7 @@ function render() {
               fpv: 'FPV SIM',
               overflight: getLocale() === 'uk' ? 'Проліт' : 'Overflight',
               'overflight-hunt': getLocale() === 'uk' ? 'Проліт: Наліт' : 'Overflight: Raid',
+              'overflight-riy': getLocale() === 'uk' ? 'Проліт: Рій' : 'Overflight: Riy',
             })[edition.family],
           'badge',
         ),
@@ -161,7 +162,7 @@ function render() {
       card.append(
         text(
           'p',
-          ['overflight', 'overflight-hunt'].includes(edition.family)
+          ['overflight', 'overflight-hunt', 'overflight-riy'].includes(edition.family)
             ? () =>
                 getLocale() === 'uk'
                   ? 'Локальна копія Studio також використовує цей виліт. Вивантаження видання збереже її.'
@@ -185,7 +186,9 @@ function render() {
             localizedAttribute(
               image,
               'alt',
-              localizedMessage('interface:community.catalogPreview', { title: edition.title }),
+              localizedMessage('interface:community.catalogPreview', {
+                title: edition.title,
+              }),
             );
             preview.replaceChildren(image);
           },
@@ -224,7 +227,7 @@ function render() {
               await refresh({ reset: true });
               status(
                 review.localCopyRetained &&
-                  ['overflight', 'overflight-hunt'].includes(edition.family)
+                  ['overflight', 'overflight-hunt', 'overflight-riy'].includes(edition.family)
                   ? () =>
                       getLocale() === 'uk'
                         ? 'Видання вивантажено. Локальну копію та пакет відновлення збережено.'
@@ -272,10 +275,16 @@ function render() {
                 : 'interface:community.downloadAndInstall',
           ),
           async () => {
-            status(localizedMessage('interface:community.downloading', { title: edition.title }));
+            status(
+              localizedMessage('interface:community.downloading', {
+                title: edition.title,
+              }),
+            );
             await library.install(edition, { offline: edition.offloaded });
             status(
-              localizedMessage('interface:community.installedOffline', { title: edition.title }),
+              localizedMessage('interface:community.installedOffline', {
+                title: edition.title,
+              }),
             );
             await refresh({ reset: true });
           },
@@ -285,7 +294,9 @@ function render() {
     localizedAttribute(
       reportReason,
       'aria-label',
-      localizedMessage('interface:community.reportReasonFor', { title: edition.title }),
+      localizedMessage('interface:community.reportReasonFor', {
+        title: edition.title,
+      }),
     );
     for (const [value, key] of [
       ['broken', 'brokenContent'],
@@ -335,10 +346,16 @@ async function refresh({ reset = true } = {}) {
     nextCursor = result.nextCursor;
     $('more').hidden = !nextCursor;
     render();
-    status(localizedMessage('interface:community.editionsShown', { count: rows.length }));
+    status(
+      localizedMessage('interface:community.editionsShown', {
+        count: rows.length,
+      }),
+    );
   } catch (error) {
     status(
-      localizedMessage('interface:community.catalogUnavailable', { error: error.message }),
+      localizedMessage('interface:community.catalogUnavailable', {
+        error: error.message,
+      }),
       true,
     );
   }
@@ -388,7 +405,9 @@ $('publish').onclick = async () => {
     submissionId = result.id;
     localizedText(
       $('publish-status'),
-      localizedMessage('interface:community.submissionStatus', { status: result.status }),
+      localizedMessage('interface:community.submissionStatus', {
+        status: result.status,
+      }),
     );
     if (['queued', 'validating'].includes(result.status)) scheduleSubmissionCheck();
   } catch (error) {
@@ -419,7 +438,9 @@ async function checkSubmission() {
   } catch (error) {
     localizedText(
       $('publish-status'),
-      localizedMessage('interface:community.submissionRefreshFailed', { error: error.message }),
+      localizedMessage('interface:community.submissionRefreshFailed', {
+        error: error.message,
+      }),
     );
   }
 }
@@ -429,7 +450,9 @@ $('publish-unlist').onclick = async () => {
     const current = await publisher.unlist();
     localizedText(
       $('publish-status'),
-      localizedMessage('interface:community.editionStatus', { status: current.status }),
+      localizedMessage('interface:community.editionStatus', {
+        status: current.status,
+      }),
     );
     $('publish-unlist').hidden = true;
   } catch (error) {

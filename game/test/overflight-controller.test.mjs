@@ -277,3 +277,19 @@ test('adopting changed preferences and clearing input do not turn held controls 
   assert.deepEqual(vector(f.sample()), zero);
   assert.equal(f.reads(), reads);
 });
+
+test('Riy focus follows the remapped shared Ability button and requires fresh presses after menus', (t) => {
+  const bindings = resolveControllerBindings();
+  bindings.flight.buttons.ability = 6;
+  const f = fixture(t, { bindings });
+  f.sample();
+  f.pad.buttons[6].value = 1;
+  assert.equal(f.sample().focus, true);
+  assert.equal(f.sample().focus, false);
+  f.sample('menu:settings');
+  assert.ok(!f.sample().focus);
+  f.pad.buttons[6].value = 0;
+  f.sample();
+  f.pad.buttons[6].value = 1;
+  assert.equal(f.sample().focus, true);
+});

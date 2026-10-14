@@ -142,19 +142,25 @@ export function createOverflightProject({
         window.start + 1,
         window.end - createOverflightCombatProfile(difficulty).pacing.reliefSeconds,
       );
+      const gatheringFront = window.start >= 180;
+      const lateFront = window.start >= 240;
       encounters.push({
         id: `formation-${index + 1}`,
         start: window.start,
         end,
-        // Late formations build a dense front that rewards overlapping passes.
-        // Keep their movement below the earlier interceptors: density supplies
-        // pressure without turning the whole crowd into fast pursuit specialists.
-        spawnPerSecond: window.start >= 240 ? 40 : rate,
-        speed:
-          window.start >= 240
-            ? 36
-            : Math.min(78, 38 + index * 4 + (difficulty === 'veteran' ? 8 : 0)),
-        hp: window.start >= 240 ? 120 : index < 3 ? 30 : index < 6 ? 45 : 60,
+        // Build the crowd before the final tank instead of an abrupt last-minute
+        // jump. Slower fronts gather between clearing passes; flankers still
+        // intercept faster than crossing packs. The director retains authored
+        // and earned relief rather than replacing casualties to meet a quota.
+        spawnPerSecond: lateFront ? 40 : gatheringFront ? 36 : rate,
+        speed: gatheringFront
+          ? window.pattern === 'flank'
+            ? 38
+            : window.pattern === 'crossing'
+              ? 34
+              : 32
+          : Math.min(78, 38 + index * 4 + (difficulty === 'veteran' ? 8 : 0)),
+        hp: lateFront ? 120 : gatheringFront ? 90 : index < 3 ? 30 : index < 6 ? 45 : 60,
         families: families[window.pattern],
         pattern: window.pattern,
       });

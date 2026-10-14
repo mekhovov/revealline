@@ -1,0 +1,60 @@
+TAP version 13
+# Subtest: gore, optional reactions, actor identity and crowd admission are independent
+ok 1 - gore, optional reactions, actor identity and crowd admission are independent
+  ---
+  duration_ms: 0.679
+  ...
+# Subtest: shuffle plays distinct performances and never repeats across bag boundaries or retries
+ok 2 - shuffle plays distinct performances and never repeats across bag boundaries or retries
+  ---
+  duration_ms: 0.202708
+  ...
+# Subtest: old destruction settings keep gore choice and gain an independent persistent vocal toggle
+ok 3 - old destruction settings keep gore choice and gain an independent persistent vocal toggle
+  ---
+  duration_ms: 1.286291
+  ...
+# Subtest: native vocal layers obey SFX/style, warning priority, two-voice budget and Pause ownership
+ok 4 - native vocal layers obey SFX/style, warning priority, two-voice budget and Pause ownership
+  ---
+  duration_ms: 15.117375
+  ...
+# Subtest: native launch and retry use the shared ESC bank once; rotor ownership is singular and released
+ok 5 - native launch and retry use the shared ESC bank once; rotor ownership is singular and released
+  ---
+  duration_ms: 4.737417
+  ...
+# Subtest: first-activation ESC fallback follows master gates and does not replay after decoding
+ok 6 - first-activation ESC fallback follows master gates and does not replay after decoding # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.084917
+  ...
+# Subtest: all eight Studio slots are optional, exact recordings are bounded and sources carry CC0 provenance
+ok 7 - all eight Studio slots are optional, exact recordings are bounded and sources carry CC0 provenance # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.049041
+  ...
+# Subtest: published vocal replacements use the same slot, attenuation and owned lifecycle
+ok 8 - published vocal replacements use the same slot, attenuation and owned lifecycle # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.095625
+  ...
+# Subtest: missing recordings keep the impact and never create a synthetic or deferred human voice
+ok 9 - missing recordings keep the impact and never create a synthetic or deferred human voice # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.095125
+  ...
+# Subtest: optional native practice decodes compact reactions once and owns pause/warning cleanup
+ok 10 - optional native practice decodes compact reactions once and owns pause/warning cleanup # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.092584
+  ...
+1..10
+# tests 10
+# suites 0
+# pass 5
+# fail 0
+# cancelled 0
+# skipped 5
+# todo 0
+# duration_ms 237.469584

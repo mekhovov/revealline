@@ -6,7 +6,7 @@ import { editionOfflinePackageId } from '../game/editions/offline-package-id.mjs
 const NATIVE_EXPERIENCES = Object.freeze([
   {
     id: 'extras:overflight',
-    title: 'Overflight · Survivor and Raid',
+    title: 'Survive · all Overflight operations',
     titleKey: 'interface:downloads.overflight',
     entries: ['game/overflight/play.html', 'game/overflight/raid.html'],
   },

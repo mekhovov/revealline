@@ -24,7 +24,14 @@ export function overflightHuntRecordContext(run) {
   );
   return {
     rules: versionOf(run) === 2 ? OVERFLIGHT_HUNT_RECORD_RULES : legacyRules,
-    project: run.compiled.projectIdentity,
+    project:
+      run.flight && run.flight.id !== 'balanced'
+        ? dataIdentity({
+            project: run.compiled.projectIdentity,
+            flight: run.flight,
+            rules: 'overflight-flight.v1',
+          })
+        : run.compiled.projectIdentity,
     seed: run.seed,
     airframes: run.airframes,
     slowResume: run.slowResume,

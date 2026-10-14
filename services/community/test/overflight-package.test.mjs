@@ -1,3 +1,7 @@
+import { createOverflightRiyProject } from '../../../game/overflight/riy-project.mjs';
+import { createOverflightRiyPackage } from '../../../game/overflight/riy-community.mjs';
+import { createOverflightHuntProject } from '../../../game/overflight/raid-project.mjs';
+import { createOverflightHuntPackage } from '../../../game/overflight/raid-community.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
@@ -73,3 +77,17 @@ test('existing native families retain their catalogue preview capability', () =>
     assert.equal(toPublicEdition({ validationReport: { family } }).previewAvailable, true);
   assert.equal(typeof readCreatorPreview, 'function');
 });
+
+for (const [family, make] of [
+  ['overflight-riy', () => createOverflightRiyPackage(createOverflightRiyProject())],
+  ['overflight-hunt', () => createOverflightHuntPackage(createOverflightHuntProject())],
+])
+  test(`service preserves ${family} admission and public family without claiming a fabricated preview`, async () => {
+    const result = await submit(make());
+    assert.equal(result.accepted, true);
+    assert.equal(result.report.family, family);
+    assert.equal(result.report.replay, 'not-play-qualified');
+    assert.equal(result.report.media, 'shared-runtime-assets');
+    assert.equal(toPublicEdition({ validationReport: result.report }).family, family);
+    assert.equal(toPublicEdition({ validationReport: result.report }).previewAvailable, false);
+  });

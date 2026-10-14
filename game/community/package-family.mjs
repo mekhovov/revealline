@@ -1,3 +1,8 @@
+import {
+  OVERFLIGHT_RIY_PACKAGE_FORMAT,
+  importOverflightRiyPackage,
+  overflightRiyPackageIdentity,
+} from '../overflight/riy-community.mjs';
 import { required } from '../data-json.mjs';
 import { importCreatorBundle } from '../creator/bundle.mjs';
 import { creatorSHA256, ownCreatorBlob } from '../creator/bytes.mjs';
@@ -85,9 +90,22 @@ export async function inspectCommunityPackage(source, options = {}) {
   const bytes = await blob.arrayBuffer();
   new TextDecoder('utf-8', { fatal: true }).decode(bytes);
   const json = JSON.parse(new TextDecoder('utf-8', { fatal: true }).decode(bytes));
-  if ([OVERFLIGHT_PACKAGE_FORMAT, OVERFLIGHT_HUNT_PACKAGE_FORMAT].includes(json?.format)) {
+  if (
+    [
+      OVERFLIGHT_PACKAGE_FORMAT,
+      OVERFLIGHT_HUNT_PACKAGE_FORMAT,
+      OVERFLIGHT_RIY_PACKAGE_FORMAT,
+    ].includes(json?.format)
+  ) {
     const raid = json.format === OVERFLIGHT_HUNT_PACKAGE_FORMAT;
-    const pack = await (raid ? importOverflightHuntPackage : importOverflightPackage)(blob),
+    const riy = json.format === OVERFLIGHT_RIY_PACKAGE_FORMAT;
+    const pack = await (
+        riy
+          ? importOverflightRiyPackage
+          : raid
+            ? importOverflightHuntPackage
+            : importOverflightPackage
+      )(blob),
       text = await blob.text(),
       editionId = await creatorSHA256(bytes);
     required(
@@ -95,11 +113,15 @@ export async function inspectCommunityPackage(source, options = {}) {
       'Overflight packages must use plain UTF-8 without a byte-order marker.',
     );
     return {
-      family: raid ? 'overflight-hunt' : 'overflight',
+      family: riy ? 'overflight-riy' : raid ? 'overflight-hunt' : 'overflight',
       pack,
       text,
       editionId,
-      runtimeIdentity: (raid ? overflightHuntPackageIdentity : overflightPackageIdentity)(pack),
+      runtimeIdentity: (riy
+        ? overflightRiyPackageIdentity
+        : raid
+          ? overflightHuntPackageIdentity
+          : overflightPackageIdentity)(pack),
       title: pack.project.title.en,
       missions: 1,
     };

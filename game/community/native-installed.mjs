@@ -1,3 +1,4 @@
+import { createOverflightRiyLibrary } from '../overflight/riy-community.mjs';
 import { required } from '../data-json.mjs';
 import { creatorSHA256 } from '../creator/bytes.mjs';
 import { createInstalledTeamCampaignStore } from '../creator/team-installed.mjs';
@@ -11,6 +12,7 @@ export function createCommunityNativeInstalled({ indexedDB = globalThis.indexedD
   const team = createInstalledTeamCampaignStore({ indexedDB });
   const projects = {
     overflight: createOverflightLibrary({ indexedDB }),
+    'overflight-riy': createOverflightRiyLibrary({ indexedDB }),
     'overflight-hunt': createOverflightHuntLibrary({ indexedDB }),
   };
   const projectLibrary = (family) => (Object.hasOwn(projects, family) ? projects[family] : null);
@@ -31,7 +33,9 @@ export function createCommunityNativeInstalled({ indexedDB = globalThis.indexedD
     }
     required(linked.family === 'fpv', 'Unsupported native Community family.');
     const store = await world(),
-      revision = await store.get(linked.runtimeIdentity, { sha256: linked.creatorEditionId });
+      revision = await store.get(linked.runtimeIdentity, {
+        sha256: linked.creatorEditionId,
+      });
     return revision ? { installed: true, offloaded: false, manifestRetained: true } : null;
   }
   async function exported(linked) {
@@ -122,7 +126,9 @@ export function createCommunityNativeInstalled({ indexedDB = globalThis.indexedD
     async offload(review) {
       if (projectLibrary(review.family)) await projectLibrary(review.family).offloadEdition(review);
       else if (review.family === 'team')
-        await team.offloadEdition(review.editionId, { expectedGeneration: review.generation });
+        await team.offloadEdition(review.editionId, {
+          expectedGeneration: review.generation,
+        });
       else {
         required(review.family === 'fpv', 'Unsupported native Community family.');
         await (

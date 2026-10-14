@@ -52,13 +52,19 @@ const validate = (source) => {
     );
     required(
       item.family === undefined ||
-        ['creator', 'classic', 'team', 'fpv', 'overflight', 'overflight-hunt'].includes(
-          item.family,
-        ),
+        [
+          'creator',
+          'classic',
+          'team',
+          'fpv',
+          'overflight',
+          'overflight-hunt',
+          'overflight-riy',
+        ].includes(item.family),
       'Unknown installed content family.',
     );
     required(
-      !['classic', 'overflight', 'overflight-hunt'].includes(item.family) ||
+      !['classic', 'overflight', 'overflight-hunt', 'overflight-riy'].includes(item.family) ||
         /^[a-f0-9]{16}$/.test(item.runtimeIdentity),
       'Native content identity is invalid.',
     );
