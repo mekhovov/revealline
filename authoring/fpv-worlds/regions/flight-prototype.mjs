@@ -37,6 +37,8 @@ export function createRegionalFlightPrototype({
   manifest: input,
   source,
   geometryProfile = "terrain-v1",
+  scenery = null,
+  geometryBudgets,
   spawnId,
   initialHeading = 0,
   mode = "self-level",
@@ -75,6 +77,8 @@ export function createRegionalFlightPrototype({
   const terrain = createVerifiedFlightGeometry(manifest, {
       profile: geometryProfile,
       source,
+      scenery,
+      budgets: geometryBudgets,
     }),
     root = new THREE.Group(),
     dronePose = new THREE.Object3D(),
