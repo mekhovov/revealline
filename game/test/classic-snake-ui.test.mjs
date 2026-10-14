@@ -28,6 +28,7 @@ import { mountGlobalSettingsTools } from '../ui/global-settings-tools.mjs';
 import { attachInstallOfflinePanel } from '../ui/install-offline-panel.mjs';
 import { menuPad } from './helpers/global-tools-fixture.mjs';
 import { mountGlobalSettings } from '../ui/global-settings-view.mjs';
+import { mountBattlefieldGroundControls } from '../ui/battlefield-ground-controls.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
@@ -281,6 +282,7 @@ async function harness({
     },
     attachModalNavigation,
     mountGlobalSettings,
+    mountBattlefieldGroundControls,
     attachThemeFamilyControls({ root }) {
       const group = document.createElement('section');
       group.setAttribute('data-theme-controls', '');
