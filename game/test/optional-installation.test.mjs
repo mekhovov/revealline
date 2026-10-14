@@ -254,8 +254,9 @@ test('launcher keeps missing-file repair and removal visible after checking an a
       '?lang=' + locale,
       {
         storage,
-        offlineReady: async () => {
+        offlineReady: async (base) => {
           reads++;
+          if (failedPrevious && base.href.includes('/v1.2.2/')) return false;
           return hold ? new Promise((resolve) => (release = resolve)) : true;
         },
       },
