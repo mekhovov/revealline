@@ -1,4 +1,4 @@
-/** Original, metre-scale Urban study surfacing. No textures, displacement or collision changes. */
+/** Original, metre-scale industrial study surfacing. No textures, displacement or collision changes. */
 import * as THREE from '../vendor/three.module.js';
 
 const functions = `
@@ -17,7 +17,53 @@ float urbanGroundNoise(vec2 p) {
 }
 `;
 
-export function createUrbanGroundSurface({ quality, originMm }) {
+function railwayColour(quality) {
+  return `
+vec2 urbanP = vUrbanGroundPoint.xz;
+// Only the actual 14 m yard plateau carries industrial surfacing. The cutting stays natural.
+float railwayPlateau = 1.0 - smoothstep(0.15, 0.8, abs(vUrbanGroundPoint.y - 14.0));
+float railwayYardDistance = min(urbanGroundRect(urbanP, vec2(250,70),vec2(110,42)),
+                               urbanGroundRect(urbanP, vec2(250,304),vec2(94,40)));
+float railwayYard = (1.0 - smoothstep(-0.5, 3.0, railwayYardDistance)) * railwayPlateau;
+float railwayFloorDistance = min(urbanGroundRect(urbanP,vec2(300,70),vec2(20.5,29)),
+                                urbanGroundRect(urbanP,vec2(166,66),vec2(14,38)));
+float urbanConcrete = (1.0 - smoothstep(-0.15,0.35,railwayFloorDistance)) * railwayPlateau;
+float railwayLaneDistance = min(urbanGroundRect(urbanP,vec2(250,70),vec2(8,42)),
+                               urbanGroundRect(urbanP,vec2(250,304),vec2(8,40)));
+float railwayRoad = (1.0 - smoothstep(-0.25,0.4,railwayLaneDistance)) * railwayPlateau;
+float railwayTrackDistance = min(abs(urbanP.x-234.0),abs(urbanP.x-266.0));
+float railwayTrackLength = max(1.0-smoothstep(34.0,37.0,abs(urbanP.y-70.0)),
+                              1.0-smoothstep(34.0,37.0,abs(urbanP.y-302.0)));
+float railwayBallast = (1.0-smoothstep(2.7,4.2,railwayTrackDistance))*railwayTrackLength*railwayPlateau;
+float railwayCut = 1.0-smoothstep(-6.8,-3.0,vUrbanGroundPoint.y);
+vec3 urbanGroundTint = mix(urbanGroundVerge,urbanGroundGravel*0.85,railwayCut*0.7);
+urbanGroundTint = mix(urbanGroundTint,urbanGroundGravel,railwayYard);
+urbanGroundTint = mix(urbanGroundTint,urbanGroundAsphalt,railwayRoad);
+urbanGroundTint = mix(urbanGroundTint,urbanGroundGravel*0.70,railwayBallast);
+urbanGroundTint = mix(urbanGroundTint,urbanGroundConcrete,urbanConcrete);
+float urbanPixel = max(max(fwidth(urbanP.x),fwidth(urbanP.y)),0.001);
+vec2 railwayJointDistance = abs(mod(urbanP+2.0,4.0)-2.0);
+float railwayJoint = (1.0-smoothstep(0.015,0.015+urbanPixel,min(railwayJointDistance.x,railwayJointDistance.y)))
+                     *(1.0-smoothstep(0.05,0.35,urbanPixel));
+urbanGroundTint *= 1.0-railwayJoint*urbanConcrete*0.25;
+// Lane-edge marks frame the clear route; no painted obstacle or misleading completion target.
+float railwayEdge = (1.0-smoothstep(0.08,0.08+urbanPixel,abs(abs(urbanP.x-250.0)-7.4)))
+                    *(1.0-smoothstep(0.12,0.6,urbanPixel));
+urbanGroundTint = mix(urbanGroundTint,urbanGroundPaint,railwayEdge*railwayRoad*0.75);
+${
+  quality === 'performance'
+    ? ''
+    : `
+float railwayBroad = urbanGroundNoise(urbanP*0.09);
+float railwayNear = 1.0-smoothstep(0.05,0.7,urbanPixel);
+float railwayGrain = urbanGroundNoise(urbanP*5.0)-0.5;
+urbanGroundTint *= 0.87+railwayBroad*0.26+railwayGrain*railwayNear*mix(0.19,0.06,urbanConcrete);
+${quality === 'quality' ? 'urbanGroundTint *= 1.0+(urbanGroundNoise(urbanP*17.0)-0.5)*railwayNear*railwayBallast*0.14;' : ''}`
+}
+diffuseColor.rgb *= urbanGroundTint;`;
+}
+
+function createGroundSurface({ quality, originMm, railway = false }) {
   const material = new THREE.MeshStandardMaterial({ color: 0xffffff, metalness: 0, roughness: 1 });
   const uniforms = {
     urbanGroundOrigin: {
@@ -29,8 +75,9 @@ export function createUrbanGroundSurface({ quality, originMm }) {
     urbanGroundAsphalt: { value: new THREE.Color(0x454d50) },
     urbanGroundPaint: { value: new THREE.Color(0xbba24e) },
   };
-  material.name = `Urban courts and verges · ${quality}`;
-  material.customProgramCacheKey = () => `fpv-urban-ground-v1-${quality}`;
+  material.name = `${railway ? 'Railway yards and cutting' : 'Urban courts and verges'} · ${quality}`;
+  material.customProgramCacheKey = () =>
+    `fpv-${railway ? 'railway' : 'urban'}-ground-v1-${quality}`;
   material.onBeforeCompile = (shader) => {
     Object.assign(shader.uniforms, uniforms);
     shader.vertexShader = shader.vertexShader
@@ -55,7 +102,9 @@ ${functions}`,
     );
     shader.fragmentShader = shader.fragmentShader.replace(
       '#include <color_fragment>',
-      `#include <color_fragment>
+      railway
+        ? '#include <color_fragment>\n' + railwayColour(quality)
+        : `#include <color_fragment>
 vec2 urbanP = vUrbanGroundPoint.xz;
 // Authored district footprints follow the exact original architecture, in global metres.
 float urbanCourtDistance = urbanGroundRect(urbanP, vec2(190,64), vec2(58,62));
@@ -103,4 +152,12 @@ diffuseColor.rgb *= urbanGroundTint;`,
     );
   };
   return material;
+}
+
+export function createUrbanGroundSurface(options) {
+  return createGroundSurface(options);
+}
+
+export function createRailwayGroundSurface(options) {
+  return createGroundSurface({ ...options, railway: true });
 }
