@@ -1,4 +1,5 @@
 import * as THREE from '../../../optional-practice/civilian-fpv/vendor/three.module.js';
+import { createSceneryLighting } from './scenery-lighting.mjs';
 import { createVerifiedSceneryWindow } from './verified-scenery-window.mjs';
 import { validateRegionManifest, REGION_LIMITS } from './region-manifest.mjs';
 const canvas = document.querySelector('canvas'),
@@ -7,11 +8,11 @@ const canvas = document.querySelector('canvas'),
 const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
 renderer.setPixelRatio(Math.min(devicePixelRatio, 1.5));
 const scene = new THREE.Scene();
-scene.background = new THREE.Color('#bfd0d4');
-scene.add(new THREE.HemisphereLight(0xc7e7fa, 0x6c5845, 2));
-const light = new THREE.DirectionalLight(0xffe9c3, 2);
-light.position.set(100, 300, 80);
-scene.add(light);
+const lighting = createSceneryLighting(
+  scene,
+  renderer,
+  new URLSearchParams(location.search).get('lighting') ?? 'plain',
+);
 const camera = new THREE.PerspectiveCamera(55, 1, 0.1, 1400);
 const views = [
   ['Overview', [192, 4, 192], [460, 320, 480], [192, 0, 192]],
@@ -54,6 +55,7 @@ async function view(v) {
     const local = (p) => [p[0] - origin.x / 1000, p[1] - origin.y / 1000, p[2] - origin.z / 1000];
     camera.position.fromArray(local(v[2]));
     camera.lookAt(...local(v[3]));
+    lighting.focus(window.group, local(v[3]), v === views[0]);
     status.textContent = `${v[0]} · ${result.provenance.chunks.length} verified cells · ${window.group.children.length} matching meshes/colliders · ${result.geometryBytes} geometry bytes · no flight admission`;
     draw();
   } catch (error) {
@@ -101,7 +103,10 @@ document.querySelector('form').addEventListener('submit', async (event) => {
     const manifest = validateRegionManifest(new TextDecoder('utf-8', { fatal: true }).decode(data));
     if (closed) return;
     await window?.dispose();
-    window = createVerifiedSceneryWindow(manifest, { baseURL: new URL('./', url).href });
+    window = createVerifiedSceneryWindow(manifest, {
+      baseURL: new URL('./', url).href,
+      surfaceStyle: new URLSearchParams(location.search).get('surface') ?? 'plain',
+    });
     controls(false);
     await view(views[0]);
   } catch (error) {
@@ -116,6 +121,7 @@ document.querySelector('#release').onclick = async () => {
   controls(true);
   await window?.dispose();
   window = null;
+  lighting.release();
   status.textContent = 'Resources released; no live scenery or collision.';
   draw();
   controls(false);
@@ -126,6 +132,7 @@ addEventListener('pagehide', () => {
   closed = true;
   controller?.abort();
   window?.dispose();
+  lighting.dispose();
   renderer.dispose();
 });
 if (input.value) document.querySelector('form').requestSubmit();
