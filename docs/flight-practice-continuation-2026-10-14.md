@@ -9,10 +9,11 @@ was left untouched. SIM owns flight mechanics, controls, training and rendering;
 this change only owns publication wiring, its verification and maintainer help.
 
 SIM PR #1193 handles deliberate arming after recovery and Library progress/language.
-It was still open when this continuation was prepared. Do not release an older
-candidate as though it contains that safety fix. Rebase onto the merged fix and
-reproduce the final candidate before qualification. Active SIM worktrees and their
-uncommitted files are not release inputs.
+It merged while this continuation was being verified. The branch was rebased
+again onto `595421060c718295611a8441fbe8dba1c3da88e4`, and all three packages were
+rebuilt from the combined committed source. No active SIM worktree or uncommitted
+file was copied. The local recovery branch
+`codex/flight-practice-publication-before-sim-20261014` retains the pre-rebase head.
 
 ## Changes
 
@@ -53,6 +54,20 @@ Production CI pins Node 22.22.2; a local pass is not that CI result.
   `/Volumes/alex/CodexMigrationStaging/flight-practice-publication.sMOWmR/candidate`.
   Gym uses 85/87 files, Flight Studio 91/96, World Studio 126/128. Upcoming SIM
   dependencies need explicit allowance and admission; no limit was relaxed here.
+- **Superseding SIM-integrated candidate:** source
+  `8718babd1827383a22596c5a0156b280a594929d`, tree
+  `d273f838502df900215e50c9b7e33275b45c8c20`. All three apps again passed two
+  reproducible builds and independent source/ZIP admission. The full practice
+  suite again passed **290/290**, and the SIM World Studio appearance/recovery
+  suite passed **37/37**. The latter initially could not start until its separate
+  locked authoring dependencies were installed; that setup failure is not a
+  simulator regression. [Current receipt](flight-practice-publication-20261014/with-sim/optional-candidate-verification.json)
+  and [current hashes](flight-practice-publication-20261014/with-sim/optional-packages.json)
+  are retained. Output: the same external directory's `candidate-with-sim/`.
+  The earlier candidate is historical; neither candidate is approved for release.
+- The real publisher staged an explicit empty selector and the public verifier
+  passed over local HTTP. No browser UI or installed-app claim is inferred from
+  this transport check.
 - Complete main-site build/capacity verification: pending while this report is
   being updated. Initial local attempts stopped before a build due to an
   abbreviated revision argument and omitted tracked documentation in the sparse
@@ -71,8 +86,9 @@ At the initial live check, `main-deployment.json` identified
 1. Merge this publication repair through normal checks; verify that the empty
    directory is actually reachable on Pages. This fixes the missing endpoint,
    not the absence of reviewed releases.
-2. Include accepted SIM safety changes in a new, clean, committed-source candidate
-   for all three apps. Record exact source/tree, artifact hashes and limitations.
+2. Use the SIM-integrated candidate as the current technical baseline. If more
+   accepted SIM changes land before the release source is frozen, reproduce all
+   three packages again and bind review evidence to that exact release source.
 3. Complete source-bound player, installed/offline, update/rollback, preservation,
    input/accessibility, performance and human-learning evidence required by the
    existing admission policy. Reuse SIM evidence only when its source and scope
