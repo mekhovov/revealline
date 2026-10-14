@@ -223,7 +223,7 @@ function acceptOperation(run, plans) {
     run.events.push({ type: 'operation.stage-completed', tick: run.tick, stageId: stage.id });
   }
 }
-const rules = {
+export const CLASSIC_SNAKE_V5_RULES = {
   targetPath: operationTargetPath,
   reservedCells: (run) => objectCells(run.level.operation),
   grows: (run, plan) =>
@@ -232,10 +232,11 @@ const rules = {
   tailFloor: (run, snake) => Math.max(4, 4 + cargoFor(run, snake).length - snake.pendingGrowth),
   complete: (run) => run.operation.stage === run.level.operation.stages.length,
 };
-export function createClassicSnakeV5(source, options = {}) {
+export function createClassicSnakeV5(source, options = {}, successorRules = {}) {
   const level = freeze(validateClassicSnakeLevelV5(source));
   const run = createClassicSnakeV4(baseLevel(level), options, {
-    ...rules,
+    ...CLASSIC_SNAKE_V5_RULES,
+    ...successorRules,
     reservedCells: () => objectCells(level.operation),
   });
   run.version = CLASSIC_SNAKE_V5_CORE;
@@ -251,7 +252,7 @@ export function createClassicSnakeV5(source, options = {}) {
   return run;
 }
 export const queueClassicSnakeTurnV5 = queueClassicSnakeTurnV4;
-export const stepClassicSnakeV5 = (run) => stepClassicSnakeV4(run, rules);
+export const stepClassicSnakeV5 = (run) => stepClassicSnakeV4(run, CLASSIC_SNAKE_V5_RULES);
 export function classicSnakeSummaryV5(run) {
   return {
     ...classicSnakeSummaryV4(run),
