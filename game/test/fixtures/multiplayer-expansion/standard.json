@@ -1,0 +1,9273 @@
+{
+  "kind": "rehearsed-core-routes-not-human-review",
+  "rows": [
+    {
+      "missionId": "team-harbor-handoff",
+      "difficulty": "standard",
+      "authoredIdentity": "de8fdc83f42abd1d",
+      "tunedIdentity": "b7b9cadb76e5445b",
+      "status": "won",
+      "coverage": 0.5652753108348135,
+      "tick": 3556,
+      "closed": [7, 2],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 360
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 75
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 462
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 68
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 41
+        },
+        {
+          "a": "down",
+          "b": "right",
+          "ticks": 82
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 312
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 109
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 645
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 150
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 109
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 598
+        }
+      ],
+      "checkpoint": "4b1b14cc5028ca50938d0948e7aa11cb1d9ac16a0f9fdbaa0e819c083ae2f1b3"
+    },
+    {
+      "missionId": "team-tidal-ladder",
+      "difficulty": "standard",
+      "authoredIdentity": "e8bd07f543f19d89",
+      "tunedIdentity": "6ff29fab618dc57b",
+      "status": "won",
+      "coverage": 0.6184615384615385,
+      "tick": 3487,
+      "closed": [5, 2],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 224
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 951
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 89
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 340
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 754
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 747
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 258
+        }
+      ],
+      "checkpoint": "ed1b1b38c25beb8fb221c3a53d8a480eb04b6b474196f331669450309165cea7"
+    },
+    {
+      "missionId": "team-split-ferry",
+      "difficulty": "standard",
+      "authoredIdentity": "f58806d7fe82ced0",
+      "tunedIdentity": "51fd8ace6a751388",
+      "status": "won",
+      "coverage": 0.6700091157702825,
+      "tick": 2712,
+      "closed": [2, 3],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 618
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 951
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 116
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 245
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 740
+        }
+      ],
+      "checkpoint": "c4988e8bcc91edb349b248bbe752b0b03411376f45e03f694d366d9b6f989c1a"
+    },
+    {
+      "missionId": "team-three-pier-pact",
+      "difficulty": "standard",
+      "authoredIdentity": "610b23c2d74e0484",
+      "tunedIdentity": "cf8fa0f7c874c0b9",
+      "status": "won",
+      "coverage": 0.6328718177757927,
+      "tick": 5630,
+      "closed": [6, 7],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 333
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 462
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 157
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 645
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 272
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 421
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": "up",
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": "right",
+          "ticks": 115
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 483
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 367
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 415
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 353
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 408
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 408
+        }
+      ],
+      "checkpoint": "20680dd9f885ee84f7c7832d1284a43f7965e5410d05d610aa4174a445b7a9ec"
+    },
+    {
+      "missionId": "team-lighthouse-loop",
+      "difficulty": "standard",
+      "authoredIdentity": "ff9b879f82548565",
+      "tunedIdentity": "e956d76655134e5a",
+      "status": "won",
+      "coverage": 0.6152458276950834,
+      "tick": 4507,
+      "closed": [7, 2],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 360
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 347
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 462
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 700
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 666
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 380
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 367
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 557
+        }
+      ],
+      "checkpoint": "9cb250844b405ceb5781c9f5751be694271f85095b7b63164661d8fe85919023"
+    },
+    {
+      "missionId": "team-reserve-anchorage",
+      "difficulty": "standard",
+      "authoredIdentity": "54d29d697a44b08a",
+      "tunedIdentity": "90d2bf50dacb73ff",
+      "status": "won",
+      "coverage": 0.6282628262826283,
+      "tick": 5127,
+      "closed": [7, 5],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 279
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 462
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 238
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 462
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 659
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 421
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 82
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 109
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 326
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 659
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 313
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 367
+        }
+      ],
+      "checkpoint": "0be59a029b8da8bd387e9cf8cf478882cd82a7be08f1dee3a970e52f6c29a709"
+    },
+    {
+      "missionId": "team-breakwater-exchange",
+      "difficulty": "standard",
+      "authoredIdentity": "f5bb95e8f810720d",
+      "tunedIdentity": "caa0e6f1a57db632",
+      "status": "won",
+      "coverage": 0.9075067024128687,
+      "tick": 4274,
+      "closed": [2, 7],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 374
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 143
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 747
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 360
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 353
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 706
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 312
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 652
+        }
+      ],
+      "checkpoint": "23cd99dfc33ad0c801434f200fde242d8b6f34dd0db95956ef3a56fffec105ce"
+    },
+    {
+      "missionId": "team-harbor-homecoming",
+      "difficulty": "standard",
+      "authoredIdentity": "84db5d5de2efb755",
+      "tunedIdentity": "5fb53b54ca29885a",
+      "status": "won",
+      "coverage": 0.6795104261106074,
+      "tick": 5547,
+      "closed": [9, 5],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 102
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 102
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 462
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 700
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 699
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 367
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 367
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 353
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 353
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 258
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 41
+        },
+        {
+          "a": "down",
+          "b": "up",
+          "ticks": 96
+        },
+        {
+          "a": "left",
+          "b": "up",
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": "up",
+          "ticks": 237
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 116
+        }
+      ],
+      "checkpoint": "7566bac5e94dd2968d6d3b8737e77e634f2a86c843119b781bb5824b3fb1d3bf"
+    },
+    {
+      "missionId": "team-garden-exchange",
+      "difficulty": "standard",
+      "authoredIdentity": "d97ff5d3c524f828",
+      "tunedIdentity": "4217155b98d1bed0",
+      "status": "won",
+      "coverage": 0.5845804988662131,
+      "tick": 4119,
+      "closed": [5, 4],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 224
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 238
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 462
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 686
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 686
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 367
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 367
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 421
+        }
+      ],
+      "checkpoint": "7a2d49f2b7be8fd6e01b68b09147da9e133f3d9d694f16d71834998dfb592041"
+    },
+    {
+      "missionId": "team-terrace-trade",
+      "difficulty": "standard",
+      "authoredIdentity": "8aba6364e6aaa804",
+      "tunedIdentity": "8c6374a99b72bdf9",
+      "status": "won",
+      "coverage": 0.8839681133746679,
+      "tick": 4978,
+      "closed": [7, 5],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 360
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 462
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 143
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 978
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 781
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 326
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 320
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 96
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 408
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 82
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 394
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 381
+        }
+      ],
+      "checkpoint": "eadb196d126a7a0ad6925000a91baa73b0073ed71a391ac4391ef6f55b1b1852"
+    },
+    {
+      "missionId": "team-orchard-bypass",
+      "difficulty": "standard",
+      "authoredIdentity": "c63f97fb127fb87a",
+      "tunedIdentity": "d22db9ef96987858",
+      "status": "won",
+      "coverage": 0.7455516014234875,
+      "tick": 4582,
+      "closed": [4, 6],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 238
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 462
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 224
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "right",
+          "b": "up",
+          "ticks": 41
+        },
+        {
+          "a": "right",
+          "b": "left",
+          "ticks": 700
+        },
+        {
+          "a": "right",
+          "b": "right",
+          "ticks": 41
+        },
+        {
+          "a": "right",
+          "b": "up",
+          "ticks": 19
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 402
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 652
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 109
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 442
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 367
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 299
+        }
+      ],
+      "checkpoint": "ea5f1e88e05e1739a80bb4b7021e459240c3e250e535009523ed8c7a3c304cd6"
+    },
+    {
+      "missionId": "team-woven-walkways",
+      "difficulty": "standard",
+      "authoredIdentity": "1d4cc87ee4fad6d6",
+      "tunedIdentity": "2ea3d7c906ccfeb9",
+      "status": "won",
+      "coverage": 0.6918267083519428,
+      "tick": 3868,
+      "closed": [6, 2],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 360
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 347
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 462
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 109
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 577
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 109
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 421
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 109
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 408
+        }
+      ],
+      "checkpoint": "fcd78afd46167126d434ddc7e6e4e4ea8e14ac46d304d20faacb62e6eaa366d6"
+    },
+    {
+      "missionId": "team-glasshouse-corners",
+      "difficulty": "standard",
+      "authoredIdentity": "7616e4e1dc628160",
+      "tunedIdentity": "40cbe63cae675c59",
+      "status": "won",
+      "coverage": 0.6030881017257039,
+      "tick": 5209,
+      "closed": [6, 2],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 795
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 951
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 143
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 951
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 109
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 238
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 231
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 258
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 123
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 164
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 355
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 767
+        }
+      ],
+      "checkpoint": "fc2f3fd30f653b505d9994e84fc1ebd38a7002b8b698780bd1d17380ecab8d5a"
+    },
+    {
+      "missionId": "team-rain-channel",
+      "difficulty": "standard",
+      "authoredIdentity": "8f0ea8bffc95ab19",
+      "tunedIdentity": "cf7b116315e8e4cf",
+      "status": "won",
+      "coverage": 0.8475719424460432,
+      "tick": 5779,
+      "closed": [10, 3],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 252
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 462
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 211
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 686
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 421
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 788
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 835
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 367
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 123
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 272
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 489
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 462
+        }
+      ],
+      "checkpoint": "5f1a1642a810f1d829f35e23aa68d391be6d353a60f0d325b556101af716a177"
+    },
+    {
+      "missionId": "team-saffron-detour",
+      "difficulty": "standard",
+      "authoredIdentity": "e372d80a713c7e88",
+      "tunedIdentity": "fe7e5f550a328cad",
+      "status": "won",
+      "coverage": 0.6391246092005359,
+      "tick": 3596,
+      "closed": [3, 5],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 129
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 116
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 462
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 109
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 543
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 123
+        },
+        {
+          "a": "right",
+          "b": "left",
+          "ticks": 41
+        },
+        {
+          "a": "right",
+          "b": "up",
+          "ticks": 516
+        },
+        {
+          "a": "right",
+          "b": "down",
+          "ticks": 26
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 15
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 523
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 109
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 421
+        }
+      ],
+      "checkpoint": "d68de6456d9966ab33900b9858898358cd1dc363a20f8b0002ec6dec708290c6"
+    },
+    {
+      "missionId": "team-garden-reunion",
+      "difficulty": "standard",
+      "authoredIdentity": "b6d9ac14085860cf",
+      "tunedIdentity": "fec777ec8790b4ff",
+      "status": "won",
+      "coverage": 0.6531264262893656,
+      "tick": 4786,
+      "closed": [7, 7],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 102
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 102
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 801
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 442
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 82
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 211
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 285
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 367
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 760
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 150
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 28
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 394
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 68
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 367
+        }
+      ],
+      "checkpoint": "762c7e2c219d9fd29e33cf6d8c401b2d7babd01f186389edaf4c73d72571d459"
+    },
+    {
+      "missionId": "team-switchyard-rendezvous",
+      "difficulty": "standard",
+      "authoredIdentity": "4a12106a8e22bcce",
+      "tunedIdentity": "447e934fcd961d6b",
+      "status": "won",
+      "coverage": 0.9706959706959707,
+      "tick": 6704,
+      "closed": [8, 10],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 116
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 129
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 360
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 326
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 326
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": "left",
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": "down",
+          "ticks": 360
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 705
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 435
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 435
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 123
+        },
+        {
+          "a": "down",
+          "b": "left",
+          "ticks": 41
+        },
+        {
+          "a": "down",
+          "b": "up",
+          "ticks": 312
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 14
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": "up",
+          "ticks": 109
+        },
+        {
+          "a": "up",
+          "b": "left",
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": "down",
+          "ticks": 285
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 150
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 435
+        }
+      ],
+      "checkpoint": "4f06f77af7d53ab155934522378d94254317e9137dc8b8168b6d432786a13b4a"
+    },
+    {
+      "missionId": "team-elbow-exchange",
+      "difficulty": "standard",
+      "authoredIdentity": "d2c4011d0032e92f",
+      "tunedIdentity": "0371b628039e78d4",
+      "status": "won",
+      "coverage": 0.623069936421435,
+      "tick": 4342,
+      "closed": [7, 2],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 360
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 129
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 822
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 951
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 815
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 136
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 421
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 271
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 231
+        }
+      ],
+      "checkpoint": "20d108037312682a39a11dcadad96fc21737ab446668a830e44f70db19e33f4c"
+    },
+    {
+      "missionId": "team-three-chamber-call",
+      "difficulty": "standard",
+      "authoredIdentity": "dd68b85c91085c65",
+      "tunedIdentity": "c2276ac9ce63a738",
+      "status": "won",
+      "coverage": 0.6345802919708029,
+      "tick": 3557,
+      "closed": [7, 3],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 116
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 102
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 462
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 313
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 462
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 279
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 272
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 462
+        }
+      ],
+      "checkpoint": "5978bb77843b1397759dabcee67997f47d456410a7cf1a28e7fdcd875b6e9f2b"
+    },
+    {
+      "missionId": "team-switchback-service",
+      "difficulty": "standard",
+      "authoredIdentity": "f1516d52bd7f4bb4",
+      "tunedIdentity": "c4fe365e0e011f32",
+      "status": "won",
+      "coverage": 0.6201901312811227,
+      "tick": 5051,
+      "closed": [4, 6],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 822
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 951
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 116
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 353
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 204
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 788
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 150
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 319
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 747
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 123
+        },
+        {
+          "a": "right",
+          "b": "left",
+          "ticks": 41
+        },
+        {
+          "a": "right",
+          "b": "down",
+          "ticks": 272
+        }
+      ],
+      "checkpoint": "300dfcb576ca58f6d0c0392d849cad3ad7673be973f014c7bcd12a79a09544bf"
+    },
+    {
+      "missionId": "team-open-circuit",
+      "difficulty": "standard",
+      "authoredIdentity": "65c67626da48a8cb",
+      "tunedIdentity": "4b6ad16e0bfc2296",
+      "status": "won",
+      "coverage": 0.8787878787878788,
+      "tick": 1415,
+      "closed": [2, 2],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 252
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 462
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 238
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 462
+        }
+      ],
+      "checkpoint": "81eff2d337bd15a135410f585bd7f6cc22ed4a2857c579f4f4e99c288c7dc519"
+    },
+    {
+      "missionId": "team-offset-terminals",
+      "difficulty": "standard",
+      "authoredIdentity": "49b4e16c3e50020b",
+      "tunedIdentity": "107b0fd8d50c0438",
+      "status": "won",
+      "coverage": 0.606549815498155,
+      "tick": 4595,
+      "closed": [7, 5],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 333
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 347
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 82
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 672
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 713
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 380
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 367
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 367
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 81
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 41
+        }
+      ],
+      "checkpoint": "62874c04b27ecd4dd05d00fe3c21b6ba321bef8a083dd8a7240a6e534b76da05"
+    },
+    {
+      "missionId": "team-courtyard-signal",
+      "difficulty": "standard",
+      "authoredIdentity": "d5c4dc1c79fa3187",
+      "tunedIdentity": "e7bb01a5792a7ad7",
+      "status": "won",
+      "coverage": 0.8075695394436845,
+      "tick": 4196,
+      "closed": [6, 2],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 360
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 462
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 102
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 727
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 421
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 679
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 410
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 408
+        }
+      ],
+      "checkpoint": "1daed14ca9a6bcda33e75b799dc95fd58e2bd7828d7ae3b6782fe662eb17f650"
+    },
+    {
+      "missionId": "team-night-junction",
+      "difficulty": "standard",
+      "authoredIdentity": "06352f24d5db46c2",
+      "tunedIdentity": "be08921688fa3e5f",
+      "status": "won",
+      "coverage": 0.7029053420805998,
+      "tick": 3639,
+      "closed": [9, 2],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 333
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 462
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 116
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 299
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 306
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 204
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 245
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 340
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 204
+        }
+      ],
+      "checkpoint": "817b8fb0ceeaf3b09036ed097221bf54560335ffd919e36d61671343588ec92a"
+    },
+    {
+      "missionId": "team-dockside-wake",
+      "difficulty": "standard",
+      "authoredIdentity": "508541db3bf4f420",
+      "tunedIdentity": "d7084340fbb408c9",
+      "status": "won",
+      "coverage": 0.5939086294416244,
+      "tick": 6108,
+      "closed": [11, 3],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 347
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 462
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 224
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 129
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 340
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 808
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 82
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 719
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 367
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 367
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 82
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 747
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 41
+        },
+        {
+          "a": "down",
+          "b": "up",
+          "ticks": 258
+        },
+        {
+          "a": "up",
+          "b": "up",
+          "ticks": 129
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 158
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 355
+        }
+      ],
+      "checkpoint": "0b0f4babcfe2e28b3e1b9890600bc3df671ce33d933f9f46a709b2e156d9c377"
+    },
+    {
+      "missionId": "team-dry-dock-promise",
+      "difficulty": "standard",
+      "authoredIdentity": "594f0ddec18646ff",
+      "tunedIdentity": "31ce82209cecffb9",
+      "status": "won",
+      "coverage": 0.609009009009009,
+      "tick": 4208,
+      "closed": [7, 2],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 360
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 462
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 116
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 788
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 360
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 353
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 747
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 82
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 394
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 299
+        }
+      ],
+      "checkpoint": "4b28b616a1cf117872cdfc72ea861dd2d154753424d56cde6bf2b9306c5ae698"
+    },
+    {
+      "missionId": "team-cargo-islands",
+      "difficulty": "standard",
+      "authoredIdentity": "dde194c5683dc721",
+      "tunedIdentity": "2fcd84e830244bb6",
+      "status": "won",
+      "coverage": 0.606491774121832,
+      "tick": 4637,
+      "closed": [3, 8],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 211
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 197
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 462
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 686
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 686
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 164
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "down",
+          "b": "up",
+          "ticks": 41
+        },
+        {
+          "a": "down",
+          "b": "right",
+          "ticks": 387
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 34
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": "right",
+          "ticks": 258
+        },
+        {
+          "a": "up",
+          "b": "left",
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": "up",
+          "ticks": 136
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 190
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 313
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 81
+        }
+      ],
+      "checkpoint": "637a669465787f5e14e38d164964574c9a800d8bc466fb89555de346ababc45c"
+    },
+    {
+      "missionId": "team-crane-alley",
+      "difficulty": "standard",
+      "authoredIdentity": "f123092d0b97f16b",
+      "tunedIdentity": "48b93ef55d9319ff",
+      "status": "won",
+      "coverage": 0.7352941176470589,
+      "tick": 5298,
+      "closed": [6, 4],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 116
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 102
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 462
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 109
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 123
+        },
+        {
+          "a": "right",
+          "b": "left",
+          "ticks": 41
+        },
+        {
+          "a": "right",
+          "b": "down",
+          "ticks": 462
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 620
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 564
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 123
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 109
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 408
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 410
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 191
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 410
+        }
+      ],
+      "checkpoint": "e50ed36d7b6ff8c016d79cad11aa052c10904cedbe0cfd6f068e76d39348049c"
+    },
+    {
+      "missionId": "team-twin-reserves",
+      "difficulty": "standard",
+      "authoredIdentity": "3d3a04a775d2e98e",
+      "tunedIdentity": "c5b94914b70e9028",
+      "status": "won",
+      "coverage": 0.6160550458715597,
+      "tick": 5376,
+      "closed": [9, 3],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 224
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 659
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 788
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 326
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 822
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 320
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 313
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 231
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 41
+        },
+        {
+          "a": "down",
+          "b": "up",
+          "ticks": 82
+        },
+        {
+          "a": "right",
+          "b": "up",
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": "up",
+          "ticks": 264
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 49
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 313
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 328
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 328
+        }
+      ],
+      "checkpoint": "498983c16fb89ae902c2d6685ef8fb540156a64618b4ab7758b22ec6ba026337"
+    },
+    {
+      "missionId": "team-loading-bay-loop",
+      "difficulty": "standard",
+      "authoredIdentity": "8b565f6dbae1ba4b",
+      "tunedIdentity": "19f00f5218a5c06b",
+      "status": "won",
+      "coverage": 0.6098003629764065,
+      "tick": 3175,
+      "closed": [5, 3],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 347
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 462
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 224
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 204
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": "up",
+          "ticks": 258
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 632
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 462
+        }
+      ],
+      "checkpoint": "44a4df4c7bd9138bd7c4d747372bda7e44fe94c562776b7f31c6d36196c965fe"
+    },
+    {
+      "missionId": "team-night-shift-crossing",
+      "difficulty": "standard",
+      "authoredIdentity": "0bb25911c576940d",
+      "tunedIdentity": "f13435ed1678cd72",
+      "status": "won",
+      "coverage": 0.6141479099678456,
+      "tick": 5917,
+      "closed": [4, 9],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 347
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 347
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 462
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 68
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 462
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 577
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 205
+        },
+        {
+          "a": "up",
+          "b": "down",
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": "left",
+          "ticks": 196
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 422
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 394
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 381
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 381
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 381
+        }
+      ],
+      "checkpoint": "eef16423415c5c0c510ead69484841e9b2a3d07bf842704ae9d97af748439df9"
+    },
+    {
+      "missionId": "team-all-hands-home",
+      "difficulty": "standard",
+      "authoredIdentity": "5b75e08782fc59aa",
+      "tunedIdentity": "bf7b6142ef75f529",
+      "status": "won",
+      "coverage": 0.9903802107191938,
+      "tick": 4526,
+      "closed": [4, 8],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 102
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 102
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 462
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 740
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 740
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 109
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 367
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 353
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 489
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 353
+        }
+      ],
+      "checkpoint": "fd9bd912ce0ff79b617b64ba53d9ac382536f82092f1730d3a8d69aeb132c619"
+    },
+    {
+      "missionId": "team-glass-escort",
+      "difficulty": "standard",
+      "authoredIdentity": "1519ed51d394cdde",
+      "tunedIdentity": "0ad262790b75e9d1",
+      "status": "won",
+      "coverage": 0.6764444444444444,
+      "tick": 4418,
+      "closed": [5, 4],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 238
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 462
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 713
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 842
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 279
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 272
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 462
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 272
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 672
+        }
+      ],
+      "checkpoint": "d0ba390e63cd49f06f98d9662232126dce0804d1d29d67f1c6af5a03b5cd030a"
+    },
+    {
+      "missionId": "team-two-return-windows",
+      "difficulty": "standard",
+      "authoredIdentity": "0341962a451c7220",
+      "tunedIdentity": "44d67688084f83c8",
+      "status": "won",
+      "coverage": 0.8897424310890194,
+      "tick": 5444,
+      "closed": [3, 9],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 347
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 462
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 102
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 659
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 421
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 611
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 367
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 693
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 258
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 312
+        }
+      ],
+      "checkpoint": "9b0ef0105fb53c2ecdf4417610f124c708f248a923fb94326f4ef07da7551aa7"
+    },
+    {
+      "missionId": "team-prism-pocket",
+      "difficulty": "standard",
+      "authoredIdentity": "1e85301522a18f1c",
+      "tunedIdentity": "d0250b28e2ddde74",
+      "status": "won",
+      "coverage": 0.8813405797101449,
+      "tick": 4187,
+      "closed": [5, 3],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 360
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 374
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 462
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 700
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 666
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 380
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 618
+        }
+      ],
+      "checkpoint": "56e791d78782af188f10846b4f46d6a859c4780570450050eee4a4ac6f61b543"
+    },
+    {
+      "missionId": "team-quiet-side-passage",
+      "difficulty": "standard",
+      "authoredIdentity": "624487df2196b933",
+      "tunedIdentity": "9cde5c42f154274b",
+      "status": "won",
+      "coverage": 0.6545536114849708,
+      "tick": 5310,
+      "closed": [11, 3],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 238
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 238
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 462
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 672
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 82
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 82
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 326
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 408
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 543
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 367
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 177
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 41
+        }
+      ],
+      "checkpoint": "1769f59decf272f50738a6fcdcdd38e1feeb90fcec00b65ac092b0c758e0c2a6"
+    },
+    {
+      "missionId": "team-refraction-steps",
+      "difficulty": "standard",
+      "authoredIdentity": "5ed328bbfdcf59a4",
+      "tunedIdentity": "9398f25ca629969e",
+      "status": "won",
+      "coverage": 0.6819407008086253,
+      "tick": 5155,
+      "closed": [7, 5],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 360
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 462
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 89
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": "up",
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": "left",
+          "ticks": 387
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 299
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 191
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 252
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 421
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 130
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 163
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 82
+        },
+        {
+          "a": "up",
+          "b": "down",
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": "right",
+          "ticks": 292
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 346
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 415
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 516
+        }
+      ],
+      "checkpoint": "e1b4c84c1c2e7193432945c6391631fff22e0ee3bc28d67521ab73c2c6f68f6a"
+    },
+    {
+      "missionId": "team-shared-afterimage",
+      "difficulty": "standard",
+      "authoredIdentity": "a8acf2df34143996",
+      "tunedIdentity": "3f1decfa7fa386a2",
+      "status": "won",
+      "coverage": 0.6690647482014388,
+      "tick": 6444,
+      "closed": [8, 5],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 333
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 462
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 591
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 347
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 109
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 795
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 693
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 734
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 421
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 299
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 639
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 271
+        }
+      ],
+      "checkpoint": "9cb76e9e2fbe9e034f529e83328342c357440167aa7bc384b3926b9b6eb0c93a"
+    },
+    {
+      "missionId": "team-lens-reserve",
+      "difficulty": "standard",
+      "authoredIdentity": "6fd7d4482ab82c91",
+      "tunedIdentity": "132f4008e2f58842",
+      "status": "won",
+      "coverage": 0.8151528982199908,
+      "tick": 6219,
+      "closed": [8, 4],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 360
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 672
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 347
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 788
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 421
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 68
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 781
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 340
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 258
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 164
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 123
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 369
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 537
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 241
+        }
+      ],
+      "checkpoint": "53cd2dbd1ec9e01bfbca2026eccf5c9ec5047f0f18cbf3cf9ce9c7081ddfc2ee"
+    },
+    {
+      "missionId": "team-observatory-accord",
+      "difficulty": "standard",
+      "authoredIdentity": "6a9716ea6cd57dfd",
+      "tunedIdentity": "208cc3c5c069f4db",
+      "status": "won",
+      "coverage": 0.6882701962574167,
+      "tick": 5807,
+      "closed": [8, 5],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 238
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 347
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 462
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 727
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 727
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 367
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 367
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 353
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 353
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 353
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 353
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 328
+        }
+      ],
+      "checkpoint": "04321d42e3b0422f6a4e0548d01c82d395b8366a430f5596e1869052c4340661"
+    },
+    {
+      "missionId": "team-first-warning-shift",
+      "difficulty": "standard",
+      "authoredIdentity": "eea56645ae4ea0bb",
+      "tunedIdentity": "24b0a9567c286623",
+      "status": "won",
+      "coverage": 1,
+      "tick": 3317,
+      "closed": [3, 4],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 224
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 347
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 96
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 462
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 591
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 590
+        }
+      ],
+      "checkpoint": "e7d77177c13ef946cef0f00e2ba2b106ff4dd6f3ee9ab655431769e6c6b2e6e5"
+    },
+    {
+      "missionId": "team-column-partners",
+      "difficulty": "standard",
+      "authoredIdentity": "353fd9bd735a63cb",
+      "tunedIdentity": "39db46c5d5f31c86",
+      "status": "won",
+      "coverage": 1,
+      "tick": 2260,
+      "closed": [4, 3],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 347
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 89
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 462
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 14
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 82
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 340
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": "right",
+          "ticks": 136
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 245
+        }
+      ],
+      "checkpoint": "8164abb221869e35cf11b8f69ed1390352b88700270cfbdb28c325f394ad0c6c"
+    },
+    {
+      "missionId": "team-kiln-crossing",
+      "difficulty": "standard",
+      "authoredIdentity": "8cf4acb33dc70bee",
+      "tunedIdentity": "3b5bdb79e5467e6d",
+      "status": "won",
+      "coverage": 0.6748188405797102,
+      "tick": 3411,
+      "closed": [2, 5],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 333
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 462
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 102
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 713
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 367
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 421
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 170
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 339
+        }
+      ],
+      "checkpoint": "e3ef98e5bd1321a872a0b3db85a9f0c469a570143fb89b4d1b2f24fef20fc0ee"
+    },
+    {
+      "missionId": "team-staggered-furnaces",
+      "difficulty": "standard",
+      "authoredIdentity": "73865e5bd338ddbf",
+      "tunedIdentity": "c0e8abda1de7417a",
+      "status": "won",
+      "coverage": 1,
+      "tick": 2204,
+      "closed": [3, 3],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 224
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 197
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 462
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 96
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 89
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 211
+        }
+      ],
+      "checkpoint": "af13358beeddb7299b9e1d456483f67b3eacda270f92c4be60bc51384212dbe5"
+    },
+    {
+      "missionId": "team-cooling-apron",
+      "difficulty": "standard",
+      "authoredIdentity": "3a4cc540a1af685f",
+      "tunedIdentity": "9e31dc6352f754a0",
+      "status": "won",
+      "coverage": 0.660857908847185,
+      "tick": 2896,
+      "closed": [4, 2],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 360
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 360
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 462
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 279
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 292
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 598
+        }
+      ],
+      "checkpoint": "ab0013d06d61d1b6484ff09e5925f37cff24f6667a3561cd301adc0b1692a8e6"
+    },
+    {
+      "missionId": "team-offshift-rescue",
+      "difficulty": "standard",
+      "authoredIdentity": "dfe7468c97521435",
+      "tunedIdentity": "7f8648d2d569fde2",
+      "status": "won",
+      "coverage": 0.644014401440144,
+      "tick": 4137,
+      "closed": [6, 4],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 347
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 116
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 462
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 238
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 184
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 238
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 116
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 218
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 82
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 462
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 246
+        },
+        {
+          "a": "up",
+          "b": "left",
+          "ticks": 6
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 35
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 462
+        }
+      ],
+      "checkpoint": "9ad615747256d2879c825980ed582392a9ada0a51b2356871c6fbf423493b241"
+    },
+    {
+      "missionId": "team-foundry-handshake",
+      "difficulty": "standard",
+      "authoredIdentity": "68bfd999ead18f43",
+      "tunedIdentity": "fe95f02d0bf75f0a",
+      "status": "won",
+      "coverage": 0.6843307446322522,
+      "tick": 4595,
+      "closed": [6, 5],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 238
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 360
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 462
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 387
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 170
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 75
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 82
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 468
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 476
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 367
+        }
+      ],
+      "checkpoint": "e08e82222fd2295306a5dc40ffc54eee163a9eacb46a672a287bde5337923b55"
+    },
+    {
+      "missionId": "team-partner-first-link",
+      "difficulty": "standard",
+      "authoredIdentity": "5c0ff1e784a973ea",
+      "tunedIdentity": "66c26cda48afa88b",
+      "status": "won",
+      "coverage": 0.6595838866755201,
+      "tick": 5701,
+      "closed": [6, 6],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 6
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 808
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 951
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 116
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 353
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 204
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 360
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 150
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 353
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 353
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 665
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 123
+        },
+        {
+          "a": "up",
+          "b": "left",
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": "up",
+          "ticks": 264
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 89
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 618
+        }
+      ],
+      "checkpoint": "6f980a654d54c60b334ee45ac1c0fec3fbe3df094ae0d76d142f648646e5c146"
+    },
+    {
+      "missionId": "team-archive-exchange",
+      "difficulty": "standard",
+      "authoredIdentity": "d378c59084bb9f55",
+      "tunedIdentity": "48b5b5ca15d47c1d",
+      "status": "won",
+      "coverage": 0.7520143240823635,
+      "tick": 2836,
+      "closed": [2, 3],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 347
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 238
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 347
+        },
+        {
+          "a": "up",
+          "b": "down",
+          "ticks": 122
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 130
+        },
+        {
+          "a": "up",
+          "b": "left",
+          "ticks": 217
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 469
+        }
+      ],
+      "checkpoint": "73d3dc317be6c9e50598d4d575da907ca5d1b0f4f6a6bb7ad8db536086dc13c9"
+    },
+    {
+      "missionId": "team-two-keys-two-shores",
+      "difficulty": "standard",
+      "authoredIdentity": "ead05273a41134c9",
+      "tunedIdentity": "0c7bb1a0a207ba0d",
+      "status": "won",
+      "coverage": 1,
+      "tick": 2335,
+      "closed": [2, 3],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 238
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 102
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 462
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 109
+        },
+        {
+          "a": "right",
+          "b": "up",
+          "ticks": 41
+        },
+        {
+          "a": "left",
+          "b": "up",
+          "ticks": 41
+        },
+        {
+          "a": "right",
+          "b": "up",
+          "ticks": 27
+        },
+        {
+          "a": "right",
+          "b": "down",
+          "ticks": 8
+        },
+        {
+          "a": "left",
+          "b": "down",
+          "ticks": 9
+        },
+        {
+          "a": "left",
+          "b": "up",
+          "ticks": 21
+        },
+        {
+          "a": "left",
+          "b": "down",
+          "ticks": 12
+        },
+        {
+          "a": "right",
+          "b": "down",
+          "ticks": 34
+        },
+        {
+          "a": "up",
+          "b": "down",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 727
+        }
+      ],
+      "checkpoint": "c571fe4c7bc92d7f5e00439be7f43df4cfc72a3572aab2dd008e2bfd15edfd2e"
+    },
+    {
+      "missionId": "team-vault-bypass",
+      "difficulty": "standard",
+      "authoredIdentity": "322ba58685475a92",
+      "tunedIdentity": "6a5b74986e14d60f",
+      "status": "won",
+      "coverage": 1,
+      "tick": 2659,
+      "closed": [3, 4],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 374
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 102
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 462
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 28
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 55
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 109
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 563
+        }
+      ],
+      "checkpoint": "27c1c8647535a710b193c88c9bfb55c45883e65beb8842dd3a3c5afcfd88b89a"
+    },
+    {
+      "missionId": "team-lower-shelf-pact",
+      "difficulty": "standard",
+      "authoredIdentity": "bcc8b706cc42260e",
+      "tunedIdentity": "71f7aa5a772112d2",
+      "status": "won",
+      "coverage": 0.7521290900941282,
+      "tick": 3996,
+      "closed": [5, 2],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 333
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 462
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 347
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 367
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 109
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 361
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 367
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 197
+        },
+        {
+          "a": "down",
+          "b": "up",
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": "up",
+          "ticks": 41
+        },
+        {
+          "a": "right",
+          "b": "up",
+          "ticks": 41
+        },
+        {
+          "a": "left",
+          "b": "up",
+          "ticks": 346
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 59
+        }
+      ],
+      "checkpoint": "7462ff4002ce28515603cf6ee87bbe95d46aff076cb90c8cb73e0cbde3c2d06f"
+    },
+    {
+      "missionId": "team-dispatch-priority",
+      "difficulty": "standard",
+      "authoredIdentity": "9343fd808abaf5f2",
+      "tunedIdentity": "76b0eceb74a07cf5",
+      "status": "won",
+      "coverage": 0.9525101763907734,
+      "tick": 4070,
+      "closed": [6, 2],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 238
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 265
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 462
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 204
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 62
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 509
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 482
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 400
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 482
+        }
+      ],
+      "checkpoint": "648b9cc561d51c42fd19bd5e9498053d5702e102e9bc1eafc11ec2e75b69756b"
+    },
+    {
+      "missionId": "team-archive-home-route",
+      "difficulty": "standard",
+      "authoredIdentity": "4b18f83006b8e6d8",
+      "tunedIdentity": "6c9b29820150ddce",
+      "status": "won",
+      "coverage": 1,
+      "tick": 3712,
+      "closed": [8, 2],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 360
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 347
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 462
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 347
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 157
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 115
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 231
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 163
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 231
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 374
+        },
+        {
+          "a": "up",
+          "b": "down",
+          "ticks": 95
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 367
+        }
+      ],
+      "checkpoint": "a99736280629fb89a73b5907b0d8962ee7f596ed659cf36e5fc8f47fa69e657f"
+    },
+    {
+      "missionId": "team-tailwind-delivery",
+      "difficulty": "standard",
+      "authoredIdentity": "66f64df0f1da8027",
+      "tunedIdentity": "babd9b5c9948693d",
+      "status": "won",
+      "coverage": 0.8841220698805838,
+      "tick": 1265,
+      "closed": [2, 2],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 224
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 116
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 462
+        }
+      ],
+      "checkpoint": "ac759c36742116b39e89c51e568e26f77e105ec7415957c634551526a50e4419"
+    },
+    {
+      "missionId": "team-against-the-breeze",
+      "difficulty": "standard",
+      "authoredIdentity": "8d4074575e1b98c1",
+      "tunedIdentity": "c099576ad28468c5",
+      "status": "won",
+      "coverage": 1,
+      "tick": 708,
+      "closed": [1, 1],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 347
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 360
+        }
+      ],
+      "checkpoint": "2d916d7c16505368b9d513696f25796c35f54ba7906fb1b0c863a0dc9a6de790"
+    },
+    {
+      "missionId": "team-compass-couriers",
+      "difficulty": "standard",
+      "authoredIdentity": "0b7ae0f104ec228c",
+      "tunedIdentity": "2ca267d67548cf89",
+      "status": "won",
+      "coverage": 0.8962221210741921,
+      "tick": 1387,
+      "closed": [2, 2],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 102
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 360
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 462
+        }
+      ],
+      "checkpoint": "af4a5191ee88d3ceb41ca2e4a39e1b98f1e434920db5ce8a5e83c31f555e8b1e"
+    },
+    {
+      "missionId": "team-windbreak-promise",
+      "difficulty": "standard",
+      "authoredIdentity": "1063b07056dfd3ba",
+      "tunedIdentity": "98ff108623596bba",
+      "status": "won",
+      "coverage": 0.9329758713136729,
+      "tick": 2814,
+      "closed": [3, 3],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 224
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 211
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 462
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 686
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 686
+        }
+      ],
+      "checkpoint": "7122bdb88dd8927fb3afd7fa6aeadc42d654459cb7c7dd4dad23b94a43466d8a"
+    },
+    {
+      "missionId": "team-sideways-survey",
+      "difficulty": "standard",
+      "authoredIdentity": "22c9618af7b78002",
+      "tunedIdentity": "d7ffd97580a3154f",
+      "status": "won",
+      "coverage": 0.6861868573983013,
+      "tick": 6169,
+      "closed": [6, 7],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 360
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 102
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 462
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "right",
+          "b": "left",
+          "ticks": 41
+        },
+        {
+          "a": "right",
+          "b": "up",
+          "ticks": 326
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "right",
+          "b": "up",
+          "ticks": 136
+        },
+        {
+          "a": "right",
+          "b": "left",
+          "ticks": 41
+        },
+        {
+          "a": "right",
+          "b": "down",
+          "ticks": 162
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 300
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 781
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": "left",
+          "ticks": 7
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 34
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 408
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 469
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 369
+        },
+        {
+          "a": "up",
+          "b": "left",
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": "down",
+          "ticks": 59
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 349
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 82
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 469
+        }
+      ],
+      "checkpoint": "b62a9fba78d9ff13aa8c4750b843f68e303d389964f320520303cc4e3d1211fc"
+    },
+    {
+      "missionId": "team-two-long-waves",
+      "difficulty": "standard",
+      "authoredIdentity": "62c5f81a99b34f2c",
+      "tunedIdentity": "8f01dc334ab29e7a",
+      "status": "won",
+      "coverage": 0.6699595868881904,
+      "tick": 5642,
+      "closed": [5, 7],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 360
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 347
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 462
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 727
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 727
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 367
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 421
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 367
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 204
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 299
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 611
+        }
+      ],
+      "checkpoint": "66ccb4572e3c7df2ccc3b3c0528fed3e7dabd251abe2d0744bd575f7b8295431"
+    },
+    {
+      "missionId": "team-survey-return",
+      "difficulty": "standard",
+      "authoredIdentity": "128c90fb83a61cf5",
+      "tunedIdentity": "336b088f22a73e50",
+      "status": "won",
+      "coverage": 0.9620424762765477,
+      "tick": 4929,
+      "closed": [11, 2],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 347
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 102
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 462
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 686
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 421
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 408
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 408
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 68
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 340
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 408
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 205
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 121
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 203
+        }
+      ],
+      "checkpoint": "13b74d3a37b951083aba91a0004b76d667ccd9f151ab33fcd9fa096460928f04"
+    },
+    {
+      "missionId": "team-highland-reunion",
+      "difficulty": "standard",
+      "authoredIdentity": "9dec8a21619060c5",
+      "tunedIdentity": "3c103cb49b1d38c2",
+      "status": "won",
+      "coverage": 1,
+      "tick": 585,
+      "closed": [1, 1],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 360
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 224
+        }
+      ],
+      "checkpoint": "0142075b18473069c7b43d976154b626139daaa8b30a08b823e2d9bbe4c6a08e"
+    },
+    {
+      "missionId": "team-watchpost-welcome",
+      "difficulty": "standard",
+      "authoredIdentity": "57cdfa7c163a72c1",
+      "tunedIdentity": "6423b7eeb0018ad4",
+      "status": "won",
+      "coverage": 1,
+      "tick": 613,
+      "closed": [1, 1],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 360
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 252
+        }
+      ],
+      "checkpoint": "02397125f14e8a4a04a4018b7360bc2ada2d0ab1cafb4018b94f3ed888b276be"
+    },
+    {
+      "missionId": "team-two-patrol-crossings",
+      "difficulty": "standard",
+      "authoredIdentity": "d1bfae4dac215845",
+      "tunedIdentity": "81fcf984bafca5c5",
+      "status": "won",
+      "coverage": 0.9663827879874496,
+      "tick": 3026,
+      "closed": [5, 2],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 347
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 89
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 462
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 659
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 421
+        }
+      ],
+      "checkpoint": "310cdc00fd1b731d796dd42c50cf128f97e4acb88f1041b3c87fe5a01c3971e3"
+    },
+    {
+      "missionId": "team-inside-the-watch",
+      "difficulty": "standard",
+      "authoredIdentity": "2dc06fd195c20692",
+      "tunedIdentity": "1f1fa8e1083e5d91",
+      "status": "won",
+      "coverage": 0.6698070883804397,
+      "tick": 5294,
+      "closed": [10, 2],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 224
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 211
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 462
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 713
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 421
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 408
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 408
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 583
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 367
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 353
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 353
+        }
+      ],
+      "checkpoint": "8741b12d70fd9123a13770ac8288dc09d32a3e25effc1a498539f92334fa2c3d"
+    },
+    {
+      "missionId": "team-beacon-stair",
+      "difficulty": "standard",
+      "authoredIdentity": "ff5b2dbca95a69db",
+      "tunedIdentity": "47f580fc086ffe2b",
+      "status": "won",
+      "coverage": 1,
+      "tick": 721,
+      "closed": [1, 1],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 360
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 360
+        }
+      ],
+      "checkpoint": "102296ee44f12194e2740213b9d9bddd9c78484712c40bd20d6eea7c13f39aed"
+    },
+    {
+      "missionId": "team-patrol-between-piers",
+      "difficulty": "standard",
+      "authoredIdentity": "0b6ec67408267361",
+      "tunedIdentity": "2bb2f2c69c077b40",
+      "status": "won",
+      "coverage": 0.8008968609865471,
+      "tick": 1952,
+      "closed": [3, 2],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 360
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 347
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "down",
+          "b": "down",
+          "ticks": 421
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 700
+        }
+      ],
+      "checkpoint": "f407c614d87a7ac34d493dec5edd9a8b982586c80d44d512fbabc99e2cbefe8d"
+    },
+    {
+      "missionId": "team-unwatched-passage",
+      "difficulty": "standard",
+      "authoredIdentity": "3577e8fe5c96ae96",
+      "tunedIdentity": "79da0174ccb2bbeb",
+      "status": "won",
+      "coverage": 0.896551724137931,
+      "tick": 1428,
+      "closed": [2, 2],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 292
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 211
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 462
+        }
+      ],
+      "checkpoint": "0665eb771d08a764e4d6b4fd9c8a243101bcb757bc4bd4bf50b76b341f32e335"
+    },
+    {
+      "missionId": "team-return-behind-me",
+      "difficulty": "standard",
+      "authoredIdentity": "17a1a914e883cd02",
+      "tunedIdentity": "3c287bdb930a09f9",
+      "status": "won",
+      "coverage": 0.6692624828218049,
+      "tick": 4578,
+      "closed": [4, 8],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 360
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 116
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 313
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 109
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 150
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": "left",
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": "down",
+          "ticks": 387
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 75
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 340
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "right",
+          "b": "down",
+          "ticks": 123
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 469
+        }
+      ],
+      "checkpoint": "78236b6745fa4aa9cd6d1ec9286cf3a9ca7cca5454d71670024d0d02698525d4"
+    },
+    {
+      "missionId": "team-watchtower-accord",
+      "difficulty": "standard",
+      "authoredIdentity": "8b8f6e256b7ff3e5",
+      "tunedIdentity": "f2256ac708733775",
+      "status": "won",
+      "coverage": 0.812299219825608,
+      "tick": 4761,
+      "closed": [8, 6],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 252
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 360
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 462
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "right",
+          "b": "left",
+          "ticks": 41
+        },
+        {
+          "a": "right",
+          "b": "up",
+          "ticks": 462
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 136
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 136
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 88
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "down",
+          "b": "left",
+          "ticks": 421
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 82
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": "down",
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": "right",
+          "ticks": 68
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 456
+        }
+      ],
+      "checkpoint": "f3c2f3eba2a13fad8dee6c833a3639eec499ad6df6b727d970b8837fe7de2a2f"
+    },
+    {
+      "missionId": "team-permanent-promise",
+      "difficulty": "standard",
+      "authoredIdentity": "858f6a4118c65f4d",
+      "tunedIdentity": "e4943e347280d8b5",
+      "status": "won",
+      "coverage": 0.6747895436420026,
+      "tick": 6350,
+      "closed": [12, 3],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 795
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 951
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 265
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 367
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 374
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 367
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 367
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 340
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 651
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 639
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 204
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 28
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 286
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 428
+        }
+      ],
+      "checkpoint": "ae4028da1d72613ba9be9ebc7f9ec1b2ba775cf360efd698e14717c13a445432"
+    },
+    {
+      "missionId": "team-two-stable-shores",
+      "difficulty": "standard",
+      "authoredIdentity": "4117502c356d04b7",
+      "tunedIdentity": "1cda6d036946fdc7",
+      "status": "won",
+      "coverage": 0.8216845878136201,
+      "tick": 5019,
+      "closed": [9, 6],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 347
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 238
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 116
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 109
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 109
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 82
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 339
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 381
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 645
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 421
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 408
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 163
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 408
+        }
+      ],
+      "checkpoint": "5cd4e076967ade7eeffbabaea10c52b72153857242b572ff6e714e5342b1db4c"
+    },
+    {
+      "missionId": "team-faultline-detour",
+      "difficulty": "standard",
+      "authoredIdentity": "58e1f4820828c17e",
+      "tunedIdentity": "f1492a2e0a03a6df",
+      "status": "won",
+      "coverage": 0.7038703870387039,
+      "tick": 5328,
+      "closed": [10, 3],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 224
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 265
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 462
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 204
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 727
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 204
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 408
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 645
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 367
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 353
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 407
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 353
+        }
+      ],
+      "checkpoint": "a5d4c94d7d563b44e2ab2790abb090c926832f9a240a981398a702d40420c9ad"
+    },
+    {
+      "missionId": "team-repair-landing",
+      "difficulty": "standard",
+      "authoredIdentity": "b41a824a5467588f",
+      "tunedIdentity": "e0a99b071c9e2ae7",
+      "status": "won",
+      "coverage": 0.689873417721519,
+      "tick": 4438,
+      "closed": [7, 2],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 822
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 951
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 102
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 353
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 191
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 360
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 639
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 625
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 271
+        }
+      ],
+      "checkpoint": "fe8aa79bb9e6e28a9777f848511329483a00c46739a6994315d6eaa25a53567a"
+    },
+    {
+      "missionId": "team-stone-before-silk",
+      "difficulty": "standard",
+      "authoredIdentity": "1149b2295c6ac5aa",
+      "tunedIdentity": "6fdea8219a1e3c72",
+      "status": "won",
+      "coverage": 0.6840449438202247,
+      "tick": 6875,
+      "closed": [16, 4],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 360
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 116
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 462
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 381
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 279
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 82
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 313
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 340
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 150
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 421
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 570
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 340
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 516
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 557
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 41
+        },
+        {
+          "a": "right",
+          "b": "up",
+          "ticks": 231
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 41
+        },
+        {
+          "a": "right",
+          "b": "up",
+          "ticks": 156
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 130
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 285
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 272
+        }
+      ],
+      "checkpoint": "7c8d66a60c0b41ebb8fa71990fea63e193fefef82a8935ed414f27ad21a94db2"
+    },
+    {
+      "missionId": "team-protected-anchorage",
+      "difficulty": "standard",
+      "authoredIdentity": "411c7dbca75bf453",
+      "tunedIdentity": "4e30f36e6dfabcf6",
+      "status": "won",
+      "coverage": 0.7140263277349069,
+      "tick": 4085,
+      "closed": [9, 2],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 238
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 224
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 462
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 272
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 713
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 272
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 665
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 231
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 190
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 41
+        },
+        {
+          "a": "down",
+          "b": "up",
+          "ticks": 191
+        }
+      ],
+      "checkpoint": "a773edd4744008ad5e7957e9a6bf110d73f49471525471d7589f3de8d57476f8"
+    },
+    {
+      "missionId": "team-fault-relay-service",
+      "difficulty": "standard",
+      "authoredIdentity": "6af795ba5b03226f",
+      "tunedIdentity": "81c32e6142e9dfcc",
+      "status": "won",
+      "coverage": 0.9724896836313618,
+      "tick": 3663,
+      "closed": [6, 7],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 374
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 116
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 89
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 157
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 89
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 231
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "right",
+          "b": "up",
+          "ticks": 231
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 177
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 266
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 286
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 272
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 286
+        }
+      ],
+      "checkpoint": "da2c19a6800ea3bb3af8c677e7e752a02f64f5c80c768b69df1a92aa4f38833b"
+    },
+    {
+      "missionId": "team-coastal-repair-pact",
+      "difficulty": "standard",
+      "authoredIdentity": "9135007b91c4a051",
+      "tunedIdentity": "b445d63708a269f8",
+      "status": "won",
+      "coverage": 0.7746672785681505,
+      "tick": 4883,
+      "closed": [10, 3],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 238
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 347
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 462
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 700
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 421
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 408
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 82
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 367
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 258
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": "up",
+          "ticks": 150
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 700
+        }
+      ],
+      "checkpoint": "0f789e62d4d41bae9edeedf85c1b5f750cc3a81d4e0d2f1745a9ee5145421fd2"
+    },
+    {
+      "missionId": "team-first-numbered-watch",
+      "difficulty": "standard",
+      "authoredIdentity": "035cdcd405837923",
+      "tunedIdentity": "fe1d99e80eb33a1c",
+      "status": "won",
+      "coverage": 0.8030973451327433,
+      "tick": 4575,
+      "closed": [6, 4],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 360
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 347
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 204
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 347
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 265
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 258
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 109
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 605
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 353
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 170
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 204
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 428
+        }
+      ],
+      "checkpoint": "2fc1993283d883f2e0fb85c269a8e31fc03924d4e2dfed22697a241eadbc53a3"
+    },
+    {
+      "missionId": "team-citadel-handoff",
+      "difficulty": "standard",
+      "authoredIdentity": "ff2870baf4d65954",
+      "tunedIdentity": "5b3ae30031d02ce4",
+      "status": "won",
+      "coverage": 0.9780858676207513,
+      "tick": 3984,
+      "closed": [2, 6],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 347
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 224
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 109
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 367
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 333
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 361
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 265
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 129
+        }
+      ],
+      "checkpoint": "162a87e4ee4e68263685bb3ef6dfd6a1904a98d39c170d9c595c940b3c7dc72a"
+    },
+    {
+      "missionId": "team-three-watch-stations",
+      "difficulty": "standard",
+      "authoredIdentity": "665ca582d1dace0d",
+      "tunedIdentity": "f9279521c74dff7a",
+      "status": "won",
+      "coverage": 0.7216726618705036,
+      "tick": 3657,
+      "closed": [4, 4],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 238
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 211
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 462
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 96
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 67
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 123
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 149
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 462
+        }
+      ],
+      "checkpoint": "cdc831a31f31d4530dc8a702035483f7e14b636a164e201627d979ececc84cf6"
+    },
+    {
+      "missionId": "team-quiet-court-signal",
+      "difficulty": "standard",
+      "authoredIdentity": "76dddd2172f072b7",
+      "tunedIdentity": "895999a8f0d8308b",
+      "status": "won",
+      "coverage": 0.9069557362240289,
+      "tick": 4072,
+      "closed": [4, 4],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 808
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 951
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 265
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 367
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 224
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 374
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 14
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 367
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 204
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 299
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 198
+        }
+      ],
+      "checkpoint": "d48bf694c953b091e855c016993a68268ad2aeb34de8d146328816de62e8ca3b"
+    },
+    {
+      "missionId": "team-vault-relay-watch",
+      "difficulty": "standard",
+      "authoredIdentity": "7dac782ad88d5067",
+      "tunedIdentity": "1c2493e87ad9c63e",
+      "status": "won",
+      "coverage": 0.820835204310732,
+      "tick": 4897,
+      "closed": [8, 4],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 360
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 347
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 462
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 367
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 279
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 367
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 320
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 136
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 55
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 326
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 136
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 266
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 211
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 258
+        }
+      ],
+      "checkpoint": "2f4fa621e422d5715cf1c2e108f6eadca816c6e8fa1f8290090bd2777972275a"
+    },
+    {
+      "missionId": "team-cross-court-cover",
+      "difficulty": "standard",
+      "authoredIdentity": "6c7cd11a69f9ba76",
+      "tunedIdentity": "89866e3785438c84",
+      "status": "won",
+      "coverage": 0.6681797548797095,
+      "tick": 3949,
+      "closed": [5, 4],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 238
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 238
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 462
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 82
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 82
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 462
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 14
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 325
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 109
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 88
+        }
+      ],
+      "checkpoint": "9b78c958b295ebcd37a2797644e20247934bd315adcc6d8224b2ccb3e72ebbe0"
+    },
+    {
+      "missionId": "team-numbered-return",
+      "difficulty": "standard",
+      "authoredIdentity": "b76a502e8bda529d",
+      "tunedIdentity": "adbf448956a7f51f",
+      "status": "won",
+      "coverage": 0.7227813357731016,
+      "tick": 4182,
+      "closed": [3, 8],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 347
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 102
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 204
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 360
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 204
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 265
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 245
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 55
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 245
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 224
+        }
+      ],
+      "checkpoint": "955b5d4ee7efcbef17f8da95ac077f7f2337778e7d18898201d073fcf54a7d3c"
+    },
+    {
+      "missionId": "team-citadel-shared-crown",
+      "difficulty": "standard",
+      "authoredIdentity": "834745a81bd324aa",
+      "tunedIdentity": "116ba7b77b2857e5",
+      "status": "won",
+      "coverage": 0.9423076923076923,
+      "tick": 4906,
+      "closed": [8, 5],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 347
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 462
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 238
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 89
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 157
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 89
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 89
+        },
+        {
+          "a": "left",
+          "b": "up",
+          "ticks": 129
+        },
+        {
+          "a": "up",
+          "b": "up",
+          "ticks": 204
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 49
+        },
+        {
+          "a": "up",
+          "b": "down",
+          "ticks": 102
+        },
+        {
+          "a": "up",
+          "b": "left",
+          "ticks": 129
+        },
+        {
+          "a": "up",
+          "b": "up",
+          "ticks": 34
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 157
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 462
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 272
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 333
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 374
+        },
+        {
+          "a": "right",
+          "b": "up",
+          "ticks": 95
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 170
+        }
+      ],
+      "checkpoint": "d30cb39f3ea17e11a5a2939f8aae0b5737fea87b67f53155f342e85a8f2fbced"
+    },
+    {
+      "missionId": "team-polar-link-exchange",
+      "difficulty": "standard",
+      "authoredIdentity": "099ec58809ced3e3",
+      "tunedIdentity": "f4b4e135b3e6f7b3",
+      "status": "won",
+      "coverage": 0.9131590607000443,
+      "tick": 3207,
+      "closed": [2, 5],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 170
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 908
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 265
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 367
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 367
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 191
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 468
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 238
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 191
+        }
+      ],
+      "checkpoint": "0a8d24717b0342e74917750395a903ba980921a91d9eb2c5788043c0bd450935"
+    },
+    {
+      "missionId": "team-afterglow-watch",
+      "difficulty": "standard",
+      "authoredIdentity": "5a2e8453a52d403d",
+      "tunedIdentity": "60cf814062683574",
+      "status": "won",
+      "coverage": 0.8299015219337511,
+      "tick": 4346,
+      "closed": [7, 3],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 347
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 224
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 123
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 462
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 82
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": "up",
+          "ticks": 381
+        },
+        {
+          "a": "down",
+          "b": "up",
+          "ticks": 41
+        },
+        {
+          "a": "right",
+          "b": "up",
+          "ticks": 6
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 503
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 421
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 164
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 503
+        }
+      ],
+      "checkpoint": "f6bbee0b86ee3638ad840e0d994864a86ed67f29ccbdebb7f74a515b10544e15"
+    },
+    {
+      "missionId": "team-frozen-relay-promise",
+      "difficulty": "standard",
+      "authoredIdentity": "b9fae381c2716f76",
+      "tunedIdentity": "3dd47f1e2b24c5e4",
+      "status": "won",
+      "coverage": 0.6690615177368657,
+      "tick": 5533,
+      "closed": [2, 10],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 224
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 265
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 713
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 204
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 421
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 204
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 164
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 204
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 550
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 68
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 333
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 489
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 306
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 381
+        }
+      ],
+      "checkpoint": "f15eff84e6af0af54a15f84e7f600262edf35eb9ea8b6dd49d87f6a1e4d9f6f7"
+    },
+    {
+      "missionId": "team-compass-night-shift",
+      "difficulty": "standard",
+      "authoredIdentity": "64fc09dfca5f6754",
+      "tunedIdentity": "71cfe07d22580e39",
+      "status": "won",
+      "coverage": 1,
+      "tick": 3571,
+      "closed": [4, 4],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 157
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 905
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 252
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 353
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 713
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 360
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": "left",
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": "up",
+          "ticks": 68
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 116
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 564
+        }
+      ],
+      "checkpoint": "f243872be0d367bd4f00078f18e4cb5e592bde410d3404ab038ea81c72db4b3b"
+    },
+    {
+      "missionId": "team-three-polar-stations",
+      "difficulty": "standard",
+      "authoredIdentity": "daca5b73ad135e4a",
+      "tunedIdentity": "877d8e4747f68ddb",
+      "status": "won",
+      "coverage": 0.8325101032779524,
+      "tick": 4638,
+      "closed": [8, 2],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 360
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 347
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 462
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 374
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 279
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 88
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 109
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 272
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 639
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 320
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 353
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 252
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 320
+        }
+      ],
+      "checkpoint": "027e9f8c32e049c387fb16b0fbe3ac028083e1337550256ccf58beb5f7c3ac8e"
+    },
+    {
+      "missionId": "team-shelter-in-the-lights",
+      "difficulty": "standard",
+      "authoredIdentity": "84f99e16c1faf9fe",
+      "tunedIdentity": "1b125f00eb184f87",
+      "status": "won",
+      "coverage": 0.7024456521739131,
+      "tick": 3326,
+      "closed": [5, 4],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 238
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 224
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 96
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 462
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 89
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 238
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 89
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 462
+        }
+      ],
+      "checkpoint": "a56e6b00ba946c79261b01e94f36fa22e6967cbfa118e31425fac72dbb7511ae"
+    },
+    {
+      "missionId": "team-aurora-repair-watch",
+      "difficulty": "standard",
+      "authoredIdentity": "8c58297dea429e10",
+      "tunedIdentity": "cb9eedb72fd15814",
+      "status": "won",
+      "coverage": 0.6850753080785029,
+      "tick": 4694,
+      "closed": [7, 2],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 347
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 360
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 462
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 700
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 421
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 408
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 123
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 246
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 455
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 340
+        }
+      ],
+      "checkpoint": "656e3b9c4a42b5a1e8f64f9604e0633efe46419f3eb3927e16770048ca2ede3a"
+    },
+    {
+      "missionId": "team-expedition-homecoming",
+      "difficulty": "standard",
+      "authoredIdentity": "1b85cf9e58d854c1",
+      "tunedIdentity": "1ce236f5eaa38ee8",
+      "status": "won",
+      "coverage": 0.9926739926739927,
+      "tick": 10411,
+      "closed": [10, 12],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 347
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 462
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 238
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 89
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 157
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 129
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 123
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 218
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 109
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 320
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 109
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 109
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 340
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 109
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 204
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 109
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 191
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 109
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 122
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 374
+        },
+        {
+          "a": "up",
+          "b": "up",
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": "left",
+          "ticks": 428
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 143
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 591
+        },
+        {
+          "a": "right",
+          "b": "right",
+          "ticks": 163
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 489
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 747
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 469
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 585
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 408
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 367
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 163
+        }
+      ],
+      "checkpoint": "a246513cf93356c64b64add0668ad3a9c9b99e278be115a1beb383a1e8354368"
+    },
+    {
+      "missionId": "team-rail-before-fire",
+      "difficulty": "standard",
+      "authoredIdentity": "8f86313b4531c7d5",
+      "tunedIdentity": "8e29274d09ee0a45",
+      "status": "won",
+      "coverage": 0.7455459113750571,
+      "tick": 4372,
+      "closed": [6, 4],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 347
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 116
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 462
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 591
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 313
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 109
+        },
+        {
+          "a": "up",
+          "b": "right",
+          "ticks": 82
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 298
+        }
+      ],
+      "checkpoint": "91197a116582a8ac5c554ed32c9b75e145297539e00382d57b27da88eaa7a28c"
+    },
+    {
+      "missionId": "team-hidden-court-delivery",
+      "difficulty": "standard",
+      "authoredIdentity": "fdc657766169b650",
+      "tunedIdentity": "1af8b3018981011f",
+      "status": "won",
+      "coverage": 0.7577528089887641,
+      "tick": 4091,
+      "closed": [4, 6],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 102
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 102
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 109
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 563
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 109
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 421
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 109
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 292
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 353
+        }
+      ],
+      "checkpoint": "76e5c81c7bff3a0a330ad35f9a1662a2d51239d5421cda42fb757e3bee6d0978"
+    }
+  ]
+}

@@ -1,4 +1,4 @@
-import test from 'node:test';
+import nodeTest from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { webcrypto } from 'node:crypto';
@@ -8,6 +8,8 @@ import { managedIndexedDB } from './helpers/managed-idb.mjs';
 import { createExternalChapterPointerStore } from '../external-chapter-pointer.mjs';
 import { PACK_LIBRARY_VERSION } from '../packs.mjs';
 import { pngBytes } from './helpers/media-fixtures.mjs';
+import { JPEGImage } from './helpers/jpeg-image.mjs';
+const test = (name, run) => nodeTest(name, { timeout: 180000 }, run);
 
 const recipe = JSON.parse(
   await readFile(new URL('../content/packs/night-shift.json', import.meta.url)),
@@ -73,6 +75,34 @@ async function fixture(t, packs = []) {
     nativeVisibility: true,
     capturePaint: true,
     beforeImport({ install }) {
+      // Keep the Team drawable fixture for its lazy PNG originals. Downloaded
+      // Classic JPEGs cross a separate full pixel decoder with their real size.
+      const TeamImage = globalThis.Image;
+      install('Image', {
+        value: class extends TeamImage {
+          set src(value) {
+            if (!value.startsWith('data:image/jpeg;base64,')) {
+              this.jpeg = null;
+              super.src = value;
+              return;
+            }
+            const jpeg = (this.jpeg = new JPEGImage());
+            jpeg.onload = () => {
+              this.naturalWidth = jpeg.naturalWidth;
+              this.naturalHeight = jpeg.naturalHeight;
+              this.onload?.();
+            };
+            jpeg.onerror = () => this.onerror?.();
+            jpeg.src = value;
+          }
+          get src() {
+            return this.jpeg?.src ?? super.src;
+          }
+          decode() {
+            return this.jpeg ? this.jpeg.decode() : super.decode();
+          }
+        },
+      });
       install('crypto', { value: webcrypto });
       install('indexedDB', { value: indexedDB });
       install('localStorage', { value: storage });
@@ -100,13 +130,42 @@ async function fixture(t, packs = []) {
 const settle = (predicate) => waitFor(predicate, { timeoutMs: 15000 });
 const cards = (f) => [...f.$('journey-cards').querySelectorAll('.journey-card')];
 async function open(f, paused = false) {
-  f.$(paused ? 'coop-discovery-paused' : 'coop-discovery-open').focus();
-  f.tap('Enter');
-  await settle(() => f.$('journey-chooser')?.open);
-  f.$('journey-mode').focus();
-  f.$('journey-mode').value = 'solo';
-  f.$('journey-mode').emit('change');
-  await settle(() => cards(f).length >= 201);
+  const opener = f.$(paused ? 'coop-discovery-paused' : 'coop-discovery-open');
+  const handler = opener.onclick;
+  let preparation;
+  opener.onclick = function (event) {
+    return (preparation = handler.call(this, event));
+  };
+  try {
+    opener.focus();
+    f.tap('Enter');
+    await preparation;
+  } finally {
+    opener.onclick = handler;
+  }
+  assert.equal(f.$('journey-chooser').open, true);
+  const select = f.$('journey-mode');
+  const listeners = select.listeners.get('change');
+  const pending = [];
+  select.listeners.set(
+    'change',
+    new Set(
+      [...listeners].map((listener) => (event) => {
+        const result = listener(event);
+        if (result?.then) pending.push(result);
+        return result;
+      }),
+    ),
+  );
+  try {
+    select.focus();
+    select.value = 'solo';
+    select.emit('change');
+    await Promise.all(pending);
+  } finally {
+    select.listeners.set('change', listeners);
+  }
+  assert.match(f.$('coop-library-remote-status').textContent, /All missions loaded/);
 }
 function collection(f, value) {
   f.$('journey-collection').value = value;
@@ -118,7 +177,9 @@ test('actual Team library browses same-ID Custom artwork with no decodes and han
   const f = await fixture(t, [custom]);
   const before = await f.pointer.snapshot();
   await open(f);
-  assert.equal(cards(f).length, 288);
+  // 91 current Journey + 149 current Classic + three installed Custom rows.
+  // Original-rules Classic counterparts remain under Archive.
+  assert.equal(cards(f).length, 243);
   assert.match(f.$('coop-library-remote-status').textContent, /All missions loaded/);
   const rows = collection(f, 'Custom');
   assert.equal(rows.length, 3);

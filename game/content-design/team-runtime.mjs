@@ -15,10 +15,55 @@ import { huntTargetKind, HUNT_RUNNER_TURN_TICKS } from '../hunt/rules.mjs';
 import { compileActor, freezeDesign } from './catalogs.mjs';
 import { inspectRuntimeTopology } from './diagnostics.mjs';
 import { TEAM_MISSION_FORMATS, teamRoleQualified } from './team-qualification.mjs';
+import { EXPEDITION_LEVEL, EXPEDITION_RULESET } from '../coop/expedition-version.mjs';
 
 /** Explicit Team qualification, not an automatic Solo-to-Team conversion.
  * Unsupported mechanics fail closed until their Team semantics are implemented. */
 export function resolveTeamMission(project, mission, map, difficulty) {
+  if (mission.team.format === 'TeamMissionV10') {
+    exactKeys(
+      mission.team,
+      ['format', 'spawnIds', 'supportRoles', 'environment'],
+      'Team expedition mission',
+    );
+    const { environment, ...team } = mission.team;
+    const base = resolveTeamMission(
+      project,
+      { ...mission, team: { ...team, format: 'TeamMissionV6' } },
+      map,
+      difficulty,
+    );
+    const level = {
+      ...structuredClone(base.level),
+      version: EXPEDITION_LEVEL,
+      environment: structuredClone(environment),
+    };
+    const validation = validateCoopLevel(level);
+    required(validation.valid, validation.errors.join(' '));
+    const topology = inspectRuntimeTopology(
+      createCoop(level, { seed: 1 }),
+      level,
+      map.geometry,
+      level.spawns,
+    );
+    const { id: _id, name: _name, revision: _revision, ...simulation } = level;
+    return freezeDesign({
+      ...base,
+      level,
+      topology,
+      diagnostics: [
+        ...map.geometry.diagnostics,
+        ...topology.diagnostics,
+        { severity: 'warning', code: 'team-candidate-not-playtested' },
+      ],
+      simulationIdentity: dataIdentity({
+        ruleset: EXPEDITION_RULESET,
+        policy: project.policy.id,
+        difficulty,
+        level: simulation,
+      }),
+    });
+  }
   const stronghold = mission.team.format === 'TeamMissionV9';
   exactKeys(
     mission.team,
