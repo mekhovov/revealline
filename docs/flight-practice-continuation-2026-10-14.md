@@ -68,10 +68,23 @@ Production CI pins Node 22.22.2; a local pass is not that CI result.
 - The real publisher staged an explicit empty selector and the public verifier
   passed over local HTTP. No browser UI or installed-app claim is inferred from
   this transport check.
-- Complete main-site build/capacity verification: pending while this report is
-  being updated. Initial local attempts stopped before a build due to an
-  abbreviated revision argument and omitted tracked documentation in the sparse
-  checkout. The retry uses a full SHA and complete tracked checkout.
+- Complete assembled-site verification: **not completed locally**. Initial
+  attempts stopped before a build due to an abbreviated revision argument and
+  omitted tracked documentation. The full-SHA retry prepared the earlier
+  `449344bcb` snapshot but was deliberately stopped after roughly 30 minutes of
+  slow network-volume assembly. This is neither a capacity pass nor an assertion
+  failure. Its hidden partial staging directory is not a deployable artifact.
+- The repository's no-write build inspection completed for rebased source
+  `b13d3adac4001fadc2b31622c4197c6eba560abd`; see the capacity finding below.
+  At this head, CI's `optional-practice` and `focused` jobs passed; the separate
+  candidate build was still running at observation. Final deployment verification
+  remains required.
+- The local disk subsequently exhausted writable space. Only this worktree's
+  freshly installed root/authoring dependencies were removed (reinstallable with
+  `npm ci` and `npm ci --prefix authoring/fpv-worlds`), and tracked historical
+  evidence directories were omitted using sparse checkout again. No source,
+  candidate, user worktree, selector or review evidence was deleted. Free space
+  recovered to about 1.4 GiB at the check.
 - Physical devices, screen readers, installed-app OS restart, human learning and
   performance qualification: not performed by this publication change.
 - No release allocated, uploaded, published or selected. No existing review gate
@@ -81,22 +94,55 @@ At the initial live check, `main-deployment.json` identified
 `460169d79f17fca76a7ee5902caf129c6a7bd729`, and `practice/index.json` returned HTTP
 404. This repair is not publicly effective until its reviewed merge deploys.
 
+## New release blocker: retained-version capacity
+
+[Sizing receipt](flight-practice-publication-20261014/capacity-preflight.json),
+using decimal bytes and the existing **950,000,000-byte** deployment guard:
+
+| Prepared or modeled payload | Bytes |
+| --- | ---: |
+| Current main payload including its manifest | 920,089,874 |
+| Explicit empty practice directory | 6,512 |
+| Main plus one version of all three apps, lower bound | 947,349,762 |
+| Main plus two comparable three-app generations, lower bound | 974,609,441 |
+
+The package totals are independently admitted expanded archive bytes, not ZIP
+download sizes. Additional stable launcher copies, catalogue and final publication
+metadata are excluded from these lower bounds. The older development candidate
+models previous-version cost; no previous optional release has been approved or
+published. Core and current package source revisions differ only by documentation.
+
+A first three-app release has **less than 2,650,238 bytes** left before those
+additional files. Two comparable retained generations already exceed the guard
+by **at least 24,609,441 bytes**. Therefore package admission alone cannot establish
+that the planned retained-version update/rollback path fits the complete host.
+
+Prioritize a capacity-focused packaging review before claiming Phase 1 complete.
+Reduce the hosted footprint with meaningful margin while preserving player content
+and retained-version guarantees, or obtain an explicit hosting/retention design
+decision. Do not silently remove game assets, discard rollback URLs, raise the
+guard, or mistake a development size model for publication approval. No such
+change is included in this infrastructure repair.
+
 ## Remaining order
 
 1. Merge this publication repair through normal checks; verify that the empty
    directory is actually reachable on Pages. This fixes the missing endpoint,
    not the absence of reviewed releases.
-2. Use the SIM-integrated candidate as the current technical baseline. If more
+2. **P0: resolve complete-host capacity for current and retained packages.** The
+   empty-directory repair fits separately; a sustainable three-app release needs
+   the capacity decision above and an exact assembled-site inventory.
+3. Use the SIM-integrated candidate as the current technical baseline. If more
    accepted SIM changes land before the release source is frozen, reproduce all
    three packages again and bind review evidence to that exact release source.
-3. Complete source-bound player, installed/offline, update/rollback, preservation,
+4. Complete source-bound player, installed/offline, update/rollback, preservation,
    input/accessibility, performance and human-learning evidence required by the
    existing admission policy. Reuse SIM evidence only when its source and scope
    genuinely match; do not substitute old or synthetic fixture receipts.
-4. Through the existing release owner/process, allocate the correct version,
+5. Through the existing release owner/process, allocate the correct version,
    upload/download-verify originals, publish and commit the reviewed selector.
    Confirm all three public one-Play journeys and genuine offline relaunches.
-5. Extend the fourth-package recipe from its automated registration/update/
+6. Extend the fourth-package recipe from its automated registration/update/
    retirement fixture to a real browser journey, without publishing the sample.
    Continue wider device and first-time-player testing after the baseline release.
 
