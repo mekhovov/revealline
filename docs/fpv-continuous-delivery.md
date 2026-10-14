@@ -4184,3 +4184,38 @@ the declared size and SHA-256, including the preserved three maps. Cloud candida
 run [38484966895](https://github.com/mekhovov/revealline/actions/runs/38484966895)
 started on `8600cf3bdaf68956a55343a08aaded56ac755862`; this subsequent checkpoint
 changes documentation only. Read the latest exact-head checks before any merge.
+
+## 2026-10-14 — Direct camera switching
+
+Independent `codex/fpv-quick-camera` from main `548bf3e93`; free-world PR #1174 is
+merged. Both SIM hosts now share a small View button, V shortcut, standard Gamepad
+R3 action and explicit FPV/Chase/Overview choices in Pause. Radio/D-pad use existing
+menu navigation. No input ownership, arming, physics, course or replay change.
+See [implementation, evidence and prioritized research recommendations](fpv-quick-camera-and-ux.md).
+
+Actual source browser checks cover both hosts, paused selection, keyboard/pointer,
+EN/UK, phone/handheld viewport sizes and full-window fallback. Controlled R3
+signals preserve active throttle/rotation and reject stale held actions. Existing
+checks pass 123/123; all three source preflights and projections pass. Physical
+hardware acceptance and full frozen-package/deployment verification remain open.
+Storage is below 3 GiB; use existing CI admission. Next recommended increment is
+one paused Flight setup group and device-aware/remappable action hints, followed
+by a clearer retry/practice/demo flow. Research proposals are not reported shipped.
+
+Published as [PR #1178](https://github.com/mekhovov/revealline/pull/1178), source
+head `6384164d5`. Cloud admission started in
+[run 38489543945](https://github.com/mekhovov/revealline/actions/runs/38489543945).
+This follow-up is documentation-only. Use the latest exact-head checks before
+merge; source-browser availability is not a public deployment claim.
+
+
+### 14 October 2026 — paused Flight setup candidate
+
+Continued the approved quick-camera recommendations on `codex/fpv-pause-flight-setup`, based on frozen #1178 head `4e3ad7c9f8fd6ebcc2fd9cca877c03ce76d3dd06`. Shared paused setup and device hints are implemented in both hosts; canonical mode/input handlers, recording identity and explicit arming remain authoritative. Mode switches keep the pause menu; radio return restores its opener. Phone camera choices now share one row, with Resume first. No active-flight overlay was added.
+
+All 123 existing radio/control/shell/flight/appearance checks passed, along with scoped lint, projection checks and package source preflight. Actual browser verification covers both hosts, EN/UK, radio-dialog return, disconnected-controller setup access, input/mode/camera changes and portrait/landscape/handheld viewport sizes. Full local packages remain blocked by storage (observed 0–573 MiB); the 297 MiB disposable Blender installer was unmounted and removed without touching source, archives, commits or browser storage. CI/public deployment and physical device acceptance are not claimed. Screenshots and preflight evidence accompany the candidate; PR/stack identity will be recorded after publication.
+
+Next independent increment: shared Retry / Practise section / Watch example flow. Remaining recommendation order is in `docs/fpv-quick-camera-and-ux.md`. Preserve ready camera/setup candidates and keep next-item edits on a separate branch.
+
+
+Publication: focused **PR #1179** (`b476fca3e7834bb304b32ab5daeebd0a79a9aa2f`) is published above **#1178** in new native stack **#1180**, rooted on main. GitHub confirmed the remote head despite a local disk-full error writing upstream tracking metadata; repair that metadata when storage permits. No public availability claim. App attachment was attempted but rejected by the existing 100-attachment limit. A further 62,623,386 bytes of hash-verified, re-downloadable Kenney ZIP caches were removed; extracted sources, download manifests, committed assets and player storage remain intact. Final formatting-only source preflight passed again; receipt refreshed below. Do not treat these source preflights as frozen bundle qualification.

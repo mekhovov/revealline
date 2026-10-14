@@ -298,12 +298,13 @@ export function createFlightGamepad({
   window: win = globalThis.window,
   document: doc = globalThis.document,
 } = {}) {
-  const mappedButtons = [0, 1, 2, 3, 4, 5, 6, 7, 9, 12, 13, 14, 15];
+  const mappedButtons = [0, 1, 2, 3, 4, 5, 6, 7, 9, 11, 12, 13, 14, 15];
   const actionButtons = new Map([
     [0, 'arm'],
     [1, 'back'],
     [3, 'reset'],
     [9, 'pause'],
+    [11, 'camera'],
   ]);
   let scope = 'blocked',
     ready = false,
@@ -466,7 +467,8 @@ export function createFlightGamepad({
           if (heldActions.length) clear('neutral');
           else if (action !== 'arm' || (scope === 'ready' && centred && released)) {
             if (action !== 'arm' || scope === 'ready') actions.push(action);
-            if (action !== 'arm') clear(action === 'reset' ? 'reset' : 'neutral');
+            if (action !== 'arm' && action !== 'camera')
+              clear(action === 'reset' ? 'reset' : 'neutral');
           }
         }
       } else if (heldActions.length) pending = heldActions[0];

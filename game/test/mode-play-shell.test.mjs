@@ -5,8 +5,8 @@ import { mountModePlayShell } from '../ui/mode-play-shell.mjs';
 import { attachModalNavigation } from '../ui/modal-navigation.mjs';
 import { attachControllerNavigation } from '../ui/controller-navigation.mjs';
 import {
-  createOverflightOperationCards,
   OVERFLIGHT_OPERATIONS,
+  createOverflightOperationCards,
 } from '../overflight/operation-view.mjs';
 import { renderModeChoices } from '../ui/mode-choice-view.mjs';
 

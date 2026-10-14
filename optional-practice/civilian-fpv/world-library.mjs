@@ -90,7 +90,7 @@ function read(url, bytes, signal, progress, sha256) {
   });
 }
 
-export function mountWorldLibrary({ el, txt, parent, begin, install }) {
+export function mountWorldLibrary({ el, txt, parent, begin, install, fly }) {
   const root = el('section'),
     browse = el('button', txt('Browse optional worlds', 'Оглянути додаткові світи')),
     cancel = el('button', txt('Cancel', 'Скасувати')),
@@ -114,6 +114,8 @@ export function mountWorldLibrary({ el, txt, parent, begin, install }) {
     browse.textContent = txt('Browse optional worlds', 'Оглянути додаткові світи');
     cancel.textContent = txt('Cancel', 'Скасувати');
     message.textContent = txt(...notice);
+    const active = parent.ownerDocument.activeElement;
+    const focusedWorld = active?.closest?.('[data-world]')?.dataset.world;
     browse.disabled = !!operation;
     cancel.hidden = !operation;
     cards.replaceChildren();
@@ -126,12 +128,31 @@ export function mountWorldLibrary({ el, txt, parent, begin, install }) {
         stored = saved.some((item) => item.id === row.id && item.sha256 === row.sha256),
         download = el(
           'button',
-          stored ? txt('Saved pack', 'Пакунок збережено') : txt('Download', 'Завантажити'),
+          stored
+            ? fly
+              ? txt('Fly', 'Летіти')
+              : txt('Saved pack', 'Пакунок збережено')
+            : txt('Download', 'Завантажити'),
         );
       card.dataset.world = row.id;
       download.type = 'button';
-      download.disabled = !!operation || stored;
-      download.onclick = () => run(row);
+      download.disabled = !!operation || (stored && !fly);
+      download.onclick = async () => {
+        if (closed || operation) return;
+        if (!stored) return run(row);
+        download.disabled = true;
+        try {
+          await fly(row);
+        } catch {
+          if (!closed)
+            show(
+              'This world could not open. Refresh the Library and try again.',
+              'Не вдалося відкрити світ. Оновіть бібліотеку та повторіть.',
+            );
+        } finally {
+          if (download.isConnected) download.disabled = !!operation;
+        }
+      };
       card.append(
         el('strong', txt(...row.title)),
         el(
@@ -141,6 +162,7 @@ export function mountWorldLibrary({ el, txt, parent, begin, install }) {
         download,
       );
       cards.append(card);
+      if (focusedWorld === row.id && !download.disabled) download.focus();
     }
   }
   async function run(row) {
@@ -149,8 +171,15 @@ export function mountWorldLibrary({ el, txt, parent, begin, install }) {
       signal = controller.signal;
     let committed = false;
     operation = controller;
+    const doc = parent.ownerDocument;
+    let restoreFocus = true;
+    const trackFocus = (event) => {
+      if (event.target !== doc.body && !root.contains(event.target)) restoreFocus = false;
+    };
+    doc.addEventListener('focusin', trackFocus);
     cancel.disabled = false;
     paint();
+    cancel.focus();
     show('Loading…', 'Завантаження…');
     const timer = setTimeout(() => controller.abort(), 120000);
     try {
@@ -184,8 +213,8 @@ export function mountWorldLibrary({ el, txt, parent, begin, install }) {
         });
         if (closed) return;
         show(
-          'Pack saved. Prepare simulator offline separately. Keep a backup.',
-          'Пакунок збережено. Симулятор готується автономно окремо. Зробіть копію.',
+          'World ready. Choose Fly to prepare a disarmed flight. Prepare simulator offline separately.',
+          'Світ готовий. Натисніть «Летіти», щоб підготувати політ із вимкненими двигунами. Симулятор готується офлайн окремо.',
         );
       } else {
         rows = worldLibraryIndex(bytes);
@@ -212,7 +241,16 @@ export function mountWorldLibrary({ el, txt, parent, begin, install }) {
     } finally {
       clearTimeout(timer);
       operation = null;
-      if (!closed) paint();
+      doc.removeEventListener('focusin', trackFocus);
+      if (!closed) {
+        const restore =
+          restoreFocus && (doc.activeElement === doc.body || root.contains(doc.activeElement));
+        paint();
+        if (restore) {
+          const card = [...cards.children].find((node) => node.dataset.world === row?.id);
+          (card?.querySelector('button') ?? browse).focus();
+        }
+      }
     }
   }
   browse.onclick = () => run();
