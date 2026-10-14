@@ -1,0 +1,531 @@
+{
+  "complete": true,
+  "sourceStable": true,
+  "expectedRuntimeCommit": "ed46c2b72e1735940acd70337f4ca5826506b1cc",
+  "startHead": "4dab801d9ce03b42227e99388b066c378c81ca02",
+  "endHead": "4dab801d9ce03b42227e99388b066c378c81ca02",
+  "wallSeconds": 21.345661500000002,
+  "rawSHA256": "e6f0d772c7cc41976cd020be2b70f01c48fbdd4c68095d982927fd3a4e1ea8d5",
+  "schema": "OverflightSystemsAirframesSummaryV1",
+  "cases": [
+    {
+      "id": "survivor-systems-default-airframes",
+      "originalIndex": 4,
+      "mode": "survivor",
+      "build": "systems",
+      "difficulty": "standard",
+      "seed": 303907,
+      "layout": "relay-ruins-split-compound",
+      "airframes": 3,
+      "route": "systems",
+      "focusPolicy": "normal",
+      "phase": "won",
+      "time": 361.78333333333336,
+      "goals": {
+        "eliteSpawned": true,
+        "eliteDefeated": true,
+        "finalSpawned": true,
+        "finalDefeated": true,
+        "finalId": 2756
+      },
+      "finalBuild": {
+        "primary": {
+          "rank": 2,
+          "branch": "double",
+          "evolved": false
+        },
+        "combat": [
+          {
+            "id": "proximity-pulse",
+            "rank": 3
+          },
+          {
+            "id": "side-burst",
+            "rank": 3
+          }
+        ],
+        "support": {
+          "id": "scanner",
+          "rank": 3
+        },
+        "reinforcement": 0,
+        "repair": 0
+      },
+      "firstLifeComparison": {
+        "firstReplacementAt": 304.6333333333333,
+        "originalDefeatAt": 304.6333333333333,
+        "sameFirstLifeDuration": true,
+        "sameEarnedChoicePrefix": true,
+        "choicesThroughOriginalDefeat": [
+          {
+            "id": "primary:double:2",
+            "time": 24.683333333333334,
+            "tick": 1481
+          },
+          {
+            "id": "proximity-pulse:1",
+            "time": 36.733333333333334,
+            "tick": 2204
+          },
+          {
+            "id": "proximity-pulse:2",
+            "time": 51.1,
+            "tick": 3066
+          },
+          {
+            "id": "proximity-pulse:3",
+            "time": 64.88333333333334,
+            "tick": 3893
+          },
+          {
+            "id": "side-burst:1",
+            "time": 76.11666666666666,
+            "tick": 4567
+          },
+          {
+            "id": "side-burst:2",
+            "time": 103.7,
+            "tick": 6222
+          },
+          {
+            "id": "side-burst:3",
+            "time": 133.23333333333332,
+            "tick": 7994
+          },
+          {
+            "id": "scanner:1",
+            "time": 181.63333333333333,
+            "tick": 10898
+          },
+          {
+            "id": "scanner:2",
+            "time": 228.7,
+            "tick": 13722
+          },
+          {
+            "id": "scanner:3",
+            "time": 275.26666666666665,
+            "tick": 16516
+          }
+        ]
+      },
+      "originalPhase": "lost",
+      "originalTime": 304.6333333333333,
+      "choices": 10,
+      "choiceHistory": [
+        {
+          "id": "primary:double:2",
+          "time": 24.683333333333334,
+          "tick": 1481
+        },
+        {
+          "id": "proximity-pulse:1",
+          "time": 36.733333333333334,
+          "tick": 2204
+        },
+        {
+          "id": "proximity-pulse:2",
+          "time": 51.1,
+          "tick": 3066
+        },
+        {
+          "id": "proximity-pulse:3",
+          "time": 64.88333333333334,
+          "tick": 3893
+        },
+        {
+          "id": "side-burst:1",
+          "time": 76.11666666666666,
+          "tick": 4567
+        },
+        {
+          "id": "side-burst:2",
+          "time": 103.7,
+          "tick": 6222
+        },
+        {
+          "id": "side-burst:3",
+          "time": 133.23333333333332,
+          "tick": 7994
+        },
+        {
+          "id": "scanner:1",
+          "time": 181.63333333333333,
+          "tick": 10898
+        },
+        {
+          "id": "scanner:2",
+          "time": 228.7,
+          "tick": 13722
+        },
+        {
+          "id": "scanner:3",
+          "time": 275.26666666666665,
+          "tick": 16516
+        }
+      ],
+      "largestChoiceGap": 48.400000000000006,
+      "finalProgression": {
+        "choices": 10,
+        "earned": 4799,
+        "collected": 4698,
+        "onGround": 101,
+        "directReachable": 100,
+        "nearby": 83,
+        "nextThreshold": null,
+        "deficit": null,
+        "secondsSinceDraft": 86.51666666666671
+      },
+      "finalPlayer": {
+        "x": 1390.5084634148498,
+        "y": 346.437918438251,
+        "heading": 2.0943951023931957,
+        "hull": 60,
+        "lives": 2
+      },
+      "damageCauses": {
+        "contact": 140,
+        "lane": 0,
+        "fan": 0,
+        "ground": 0
+      },
+      "salvageConserved": true,
+      "targets": [
+        {
+          "id": 475,
+          "role": "elite",
+          "first": 120,
+          "samples": 41,
+          "near300": 21,
+          "near300LOS": 21,
+          "minHP": 22,
+          "minArmor": 0,
+          "last": 160,
+          "lastState": {
+            "id": 475,
+            "family": "tracked-tank",
+            "role": "elite",
+            "x": 1582.4568301916745,
+            "y": 136.17103727827498,
+            "hp": 22,
+            "maxHp": 504,
+            "armor": 0,
+            "maxArmor": 216,
+            "armorSegments": 0,
+            "exposureRemaining": 0.6833333333333412,
+            "attackWarning": 0,
+            "spawnWarning": 0,
+            "marked": false,
+            "markUntil": 0,
+            "distance": 66.02389845920442,
+            "lineOfSight": true,
+            "directApproachClear": true,
+            "pendingFootprints": []
+          }
+        },
+        {
+          "id": 2756,
+          "role": "final",
+          "first": 300,
+          "samples": 62,
+          "near300": 48,
+          "near300LOS": 48,
+          "minHP": 177.3922422697107,
+          "minArmor": 0,
+          "last": 361,
+          "lastState": {
+            "id": 2756,
+            "family": "tracked-tank",
+            "role": "final",
+            "x": 1300.2129065968154,
+            "y": 293.13863209847426,
+            "hp": 177.3922422697107,
+            "maxHp": 3500,
+            "armor": 0,
+            "maxArmor": 1500,
+            "armorSegments": 0,
+            "exposureRemaining": 2.3833333333333373,
+            "attackWarning": 0,
+            "spawnWarning": 0,
+            "marked": true,
+            "markUntil": 21745,
+            "distance": 103.95349857871845,
+            "lineOfSight": true,
+            "directApproachClear": true,
+            "pendingFootprints": [
+              {
+                "index": 0,
+                "overlapsCurrentBody": false,
+                "lineOfSight": true
+              },
+              {
+                "index": 1,
+                "overlapsCurrentBody": false,
+                "lineOfSight": true
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "riy-systems-default-airframes",
+      "originalIndex": 3,
+      "mode": "riy",
+      "build": "systems",
+      "difficulty": "standard",
+      "seed": 101303,
+      "layout": "freight-depot-loading-loop",
+      "airframes": 3,
+      "route": "systems",
+      "focusPolicy": "normal",
+      "phase": "won",
+      "time": 326.8833333333333,
+      "goals": {
+        "eliteSpawned": true,
+        "eliteDefeated": true,
+        "finalSpawned": true,
+        "finalDefeated": true,
+        "finalId": 2844
+      },
+      "finalBuild": {
+        "primary": {
+          "rank": 4,
+          "branch": "wide",
+          "evolved": true
+        },
+        "combat": [],
+        "support": {
+          "id": "scanner",
+          "rank": 3
+        },
+        "reinforcement": 0,
+        "repair": 0,
+        "escorts": [
+          {
+            "role": "sweeper",
+            "rank": 3,
+            "branch": "broad"
+          },
+          {
+            "role": "breaker",
+            "rank": 3,
+            "branch": "chain"
+          }
+        ]
+      },
+      "firstLifeComparison": {
+        "firstReplacementAt": 248.06666666666666,
+        "originalDefeatAt": 248.06666666666666,
+        "sameFirstLifeDuration": true,
+        "sameEarnedChoicePrefix": true,
+        "choicesThroughOriginalDefeat": [
+          {
+            "id": "primary:wide:2",
+            "time": 16.283333333333335,
+            "tick": 977
+          },
+          {
+            "id": "riy-sweeper:broad:2",
+            "time": 33.233333333333334,
+            "tick": 1994
+          },
+          {
+            "id": "riy-breaker:chain:2",
+            "time": 51.35,
+            "tick": 3081
+          },
+          {
+            "id": "primary:wide:3",
+            "time": 63.483333333333334,
+            "tick": 3809
+          },
+          {
+            "id": "primary:wide:4",
+            "time": 85.78333333333333,
+            "tick": 5147
+          },
+          {
+            "id": "riy-sweeper:broad:3",
+            "time": 98.23333333333333,
+            "tick": 5894
+          },
+          {
+            "id": "riy-breaker:chain:3",
+            "time": 124.75,
+            "tick": 7485
+          },
+          {
+            "id": "scanner:1",
+            "time": 166.15,
+            "tick": 9969
+          },
+          {
+            "id": "scanner:2",
+            "time": 217,
+            "tick": 13020
+          }
+        ]
+      },
+      "originalPhase": "lost",
+      "originalTime": 248.06666666666666,
+      "choices": 10,
+      "choiceHistory": [
+        {
+          "id": "primary:wide:2",
+          "time": 16.283333333333335,
+          "tick": 977
+        },
+        {
+          "id": "riy-sweeper:broad:2",
+          "time": 33.233333333333334,
+          "tick": 1994
+        },
+        {
+          "id": "riy-breaker:chain:2",
+          "time": 51.35,
+          "tick": 3081
+        },
+        {
+          "id": "primary:wide:3",
+          "time": 63.483333333333334,
+          "tick": 3809
+        },
+        {
+          "id": "primary:wide:4",
+          "time": 85.78333333333333,
+          "tick": 5147
+        },
+        {
+          "id": "riy-sweeper:broad:3",
+          "time": 98.23333333333333,
+          "tick": 5894
+        },
+        {
+          "id": "riy-breaker:chain:3",
+          "time": 124.75,
+          "tick": 7485
+        },
+        {
+          "id": "scanner:1",
+          "time": 166.15,
+          "tick": 9969
+        },
+        {
+          "id": "scanner:2",
+          "time": 217,
+          "tick": 13020
+        },
+        {
+          "id": "scanner:3",
+          "time": 260.78333333333336,
+          "tick": 15647
+        }
+      ],
+      "largestChoiceGap": 50.849999999999994,
+      "finalProgression": {
+        "choices": 10,
+        "earned": 4113,
+        "collected": 3755,
+        "onGround": 358,
+        "directReachable": 314,
+        "nearby": 104,
+        "nextThreshold": null,
+        "deficit": null,
+        "secondsSinceDraft": 66.09999999999997
+      },
+      "finalPlayer": {
+        "x": 427.6929149066947,
+        "y": 228.4174393264684,
+        "heading": -2.879793265790644,
+        "hull": 100,
+        "lives": 1
+      },
+      "damageCauses": {
+        "contact": 180,
+        "lane": 0,
+        "fan": 20,
+        "ground": 0
+      },
+      "salvageConserved": true,
+      "targets": [
+        {
+          "id": 454,
+          "role": "elite",
+          "first": 120,
+          "samples": 25,
+          "near300": 12,
+          "near300LOS": 12,
+          "minHP": 134.99999999999991,
+          "minArmor": 0,
+          "last": 144,
+          "lastState": {
+            "id": 454,
+            "family": "tracked-tank",
+            "role": "elite",
+            "x": 1959.8930843348905,
+            "y": 254.0199460103309,
+            "hp": 134.99999999999991,
+            "maxHp": 504,
+            "armor": 0,
+            "maxArmor": 216,
+            "armorSegments": 0,
+            "exposureRemaining": 0.3333333333333407,
+            "attackWarning": 0,
+            "spawnWarning": 0,
+            "marked": false,
+            "markUntil": 0,
+            "distance": 76.09935923281517,
+            "lineOfSight": true,
+            "directApproachClear": true,
+            "pendingFootprints": [
+              {
+                "index": 0,
+                "overlapsCurrentBody": false,
+                "lineOfSight": true
+              }
+            ]
+          }
+        },
+        {
+          "id": 2844,
+          "role": "final",
+          "first": 300,
+          "samples": 27,
+          "near300": 25,
+          "near300LOS": 25,
+          "minHP": 315.70999999999924,
+          "minArmor": 0,
+          "last": 326,
+          "lastState": {
+            "id": 2844,
+            "family": "tracked-tank",
+            "role": "final",
+            "x": 353.03602825308394,
+            "y": 293.7948153853107,
+            "hp": 315.70999999999924,
+            "maxHp": 3500,
+            "armor": 0,
+            "maxArmor": 1500,
+            "armorSegments": 0,
+            "exposureRemaining": 0,
+            "attackWarning": 0.24999999999999922,
+            "spawnWarning": 0,
+            "marked": true,
+            "markUntil": 19652,
+            "distance": 73.2080930291283,
+            "lineOfSight": true,
+            "directApproachClear": true,
+            "pendingFootprints": [
+              {
+                "index": 0,
+                "overlapsCurrentBody": false,
+                "lineOfSight": true
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

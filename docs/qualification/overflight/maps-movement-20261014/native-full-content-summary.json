@@ -1,0 +1,843 @@
+{
+  "schema": "OverflightNativeFullContentQualificationV1",
+  "conditions": {
+    "hardware": "Apple M4 Pro/macOS26.7.1/CodexChromium155",
+    "viewport": "936×1143CSS,DPR2; requested1920×1080 override didnotchangeactualreportedviewport",
+    "backing": "960×540",
+    "quality": "normal",
+    "audio": "mastermuted",
+    "recording": false,
+    "trials": "Each fresh restart30s warmup+120s completed rendering including normal draftwalltime",
+    "background": "Otherdesktopappsopen; normal production preparation mayrun concurrently; foreground stalls retained; no isolated-machineclaim"
+  },
+  "runs": [
+    {
+      "sourceRevision": "b12d4a1346786ba38bd707e008110a549a1bea7e",
+      "file": "native/full-survivor-trial-1.json.gz",
+      "sha256Raw": "c3d3800b06429e64620c2b512ecfe77d5dffcd4c6581a71c290c551927c1b764",
+      "capturedAt": "2026-10-14T15:54:39.965Z",
+      "operation": "Single Drone",
+      "layout": "chalk-quarry-haul-switchbacks",
+      "trial": 1,
+      "valid": true,
+      "invalidReasons": [],
+      "window": {
+        "index": 1,
+        "complete": true,
+        "measuredSeconds": 120.00009999999963,
+        "phaseCoverage": {
+          "playing": {
+            "samples": 13437,
+            "seconds": 111.9746999999987
+          },
+          "upgrade": {
+            "samples": 961,
+            "seconds": 8.025400000000365
+          },
+          "other": {
+            "samples": 0,
+            "seconds": 0
+          }
+        },
+        "cadenceMs": {
+          "samples": 14398,
+          "p50": 8.300000000745058,
+          "p95": 9.5,
+          "p99": 10.5,
+          "worst": 17.09999999962747
+        },
+        "cadenceHz": 119.98323334730591,
+        "slowFraction": 0,
+        "passes": true
+      },
+      "summary": {
+        "flight": {
+          "id": "balanced",
+          "speed": 180,
+          "boostSpeed": 330,
+          "maxHull": 100
+        },
+        "format": "OverflightRunSummaryV1",
+        "projectId": "survivor-chalk-quarry-haul-switchbacks",
+        "projectIdentity": "616b18b39fd279b5",
+        "seed": 17031991,
+        "phase": "upgrade",
+        "outcome": "incomplete",
+        "reason": null,
+        "fixture": null,
+        "fixtureWorkload": null,
+        "time": 138.73333333333332,
+        "tick": 8324,
+        "airframes": 3,
+        "airframesRemaining": 3,
+        "stats": {
+          "kills": 547,
+          "spawned": 630,
+          "enemiesAlive": 83,
+          "enemiesVisible": 54,
+          "peakAlive": 101,
+          "peakVisible": 69,
+          "heaviesAlive": 1,
+          "specialistsAlive": 8,
+          "priorityAttacks": 2,
+          "damageDealt": 20985,
+          "damageTaken": 20,
+          "damageCauses": {
+            "contact": 20,
+            "lane": 0,
+            "fan": 0,
+            "ground": 0
+          },
+          "shieldBlocks": 0,
+          "xpEarned": 803,
+          "xpCollected": 752,
+          "xpOnGround": 51,
+          "pickupsAlive": 36,
+          "pickupMerges": 0,
+          "boostsUsed": 24,
+          "airframesLost": 0,
+          "upgradesChosen": 6,
+          "rerollsUsed": 1,
+          "droppedVisualEffects": 0,
+          "collisionCandidates": 18295,
+          "hits": 799,
+          "retired": 0,
+          "spawnDeferred": 0,
+          "fixtureDefeats": 0,
+          "projectileDeferrals": 0,
+          "guardDamageBlocked": 0,
+          "armorSegmentsBroken": 64,
+          "warningDeferrals": 43
+        },
+        "build": {
+          "primary": {
+            "rank": 4,
+            "branch": "wide",
+            "evolved": true
+          },
+          "combat": [
+            {
+              "id": "slow-field",
+              "rank": 3
+            }
+          ],
+          "support": null,
+          "reinforcement": 0,
+          "repair": 0
+        },
+        "upgrades": [
+          {
+            "id": "primary:wide:2",
+            "time": 18.066666666666666,
+            "tick": 1084
+          },
+          {
+            "id": "slow-field:1",
+            "time": 28.683333333333334,
+            "tick": 1721
+          },
+          {
+            "id": "slow-field:2",
+            "time": 46.85,
+            "tick": 2811
+          },
+          {
+            "id": "primary:wide:3",
+            "time": 59.93333333333333,
+            "tick": 3596
+          },
+          {
+            "id": "primary:wide:4",
+            "time": 67.25,
+            "tick": 4035
+          },
+          {
+            "id": "slow-field:3",
+            "time": 106.9,
+            "tick": 6414
+          }
+        ],
+        "goals": {
+          "eliteSpawned": true,
+          "eliteDefeated": false,
+          "finalSpawned": false,
+          "finalDefeated": false,
+          "finalId": null
+        },
+        "appearance": {
+          "projectIdentity": "616b18b39fd279b5",
+          "manifestSha256": "b1123620aa68398dd8131aafa23f29bd686224bb9e50bf86ceeeef94752a1ef3",
+          "presentation": {
+            "id": "field-kit",
+            "revision": 104
+          },
+          "themeIdentity": "9670af00f1ea5378",
+          "familyId": "industrial-workshop",
+          "familyRevision": "r3",
+          "interfaceId": "industrial-workshop",
+          "interfaceRevision": "r3",
+          "arcade": {
+            "id": "industrial-workshop",
+            "revision": "r2"
+          },
+          "actorArtRevision": "industrial-roster-v3",
+          "equipment": {
+            "id": "overflight-field-kit",
+            "revision": 1
+          },
+          "materialStyle": "steel",
+          "materialVariant": "steel",
+          "characterId": "scout",
+          "playerSlot": "player.scout.detailed",
+          "cast": "authored",
+          "visualIdentity": "f910e9a1b740854f"
+        },
+        "review": {
+          "automated": true,
+          "build": "fan-shield",
+          "stopAt": null,
+          "route": "tight",
+          "inputHz": 10,
+          "upgradeDelayMs": 1500
+        }
+      },
+      "resourceHighWater": {
+        "alive": 101,
+        "visible": 69,
+        "rendered": 72,
+        "effects": 48,
+        "pickups": 36
+      }
+    },
+    {
+      "sourceRevision": "4dab801d9ce03b42227e99388b066c378c81ca02",
+      "file": "native/full-survivor-trial-2.json.gz",
+      "sha256Raw": "f93fdcf88a6b4485eb74978acb9eab444a8b760826d7890e62614cbf8af64f22",
+      "capturedAt": "2026-10-14T15:59:02.673Z",
+      "operation": "Single Drone",
+      "layout": "chalk-quarry-haul-switchbacks",
+      "trial": 2,
+      "valid": true,
+      "invalidReasons": [],
+      "window": {
+        "index": 1,
+        "complete": true,
+        "measuredSeconds": 120.00359999999962,
+        "phaseCoverage": {
+          "playing": {
+            "samples": 13458,
+            "seconds": 111.96379999999992
+          },
+          "upgrade": {
+            "samples": 963,
+            "seconds": 8.039799999998865
+          },
+          "other": {
+            "samples": 0,
+            "seconds": 0
+          }
+        },
+        "cadenceMs": {
+          "samples": 14421,
+          "p50": 8.300000000745058,
+          "p95": 10.200000001117587,
+          "p99": 12.5,
+          "worst": 18.5
+        },
+        "cadenceHz": 120.17139485815463,
+        "slowFraction": 0,
+        "passes": true
+      },
+      "viewport": {
+        "width": 936,
+        "height": 1143,
+        "devicePixelRatio": 2
+      },
+      "summary": {
+        "flight": {
+          "id": "balanced",
+          "speed": 180,
+          "boostSpeed": 330,
+          "maxHull": 100
+        },
+        "format": "OverflightRunSummaryV1",
+        "projectId": "survivor-chalk-quarry-haul-switchbacks",
+        "projectIdentity": "616b18b39fd279b5",
+        "seed": 17031991,
+        "phase": "upgrade",
+        "outcome": "incomplete",
+        "reason": null,
+        "fixture": null,
+        "fixtureWorkload": null,
+        "time": 138.73333333333332,
+        "tick": 8324,
+        "airframes": 3,
+        "airframesRemaining": 3,
+        "stats": {
+          "kills": 547,
+          "spawned": 630,
+          "enemiesAlive": 83,
+          "enemiesVisible": 54,
+          "peakAlive": 101,
+          "peakVisible": 69,
+          "heaviesAlive": 1,
+          "specialistsAlive": 8,
+          "priorityAttacks": 2,
+          "damageDealt": 20985,
+          "damageTaken": 20,
+          "damageCauses": {
+            "contact": 20,
+            "lane": 0,
+            "fan": 0,
+            "ground": 0
+          },
+          "shieldBlocks": 0,
+          "xpEarned": 803,
+          "xpCollected": 752,
+          "xpOnGround": 51,
+          "pickupsAlive": 36,
+          "pickupMerges": 0,
+          "boostsUsed": 24,
+          "airframesLost": 0,
+          "upgradesChosen": 6,
+          "rerollsUsed": 1,
+          "droppedVisualEffects": 0,
+          "collisionCandidates": 18295,
+          "hits": 799,
+          "retired": 0,
+          "spawnDeferred": 0,
+          "fixtureDefeats": 0,
+          "projectileDeferrals": 0,
+          "guardDamageBlocked": 0,
+          "armorSegmentsBroken": 64,
+          "warningDeferrals": 43
+        },
+        "build": {
+          "primary": {
+            "rank": 4,
+            "branch": "wide",
+            "evolved": true
+          },
+          "combat": [
+            {
+              "id": "slow-field",
+              "rank": 3
+            }
+          ],
+          "support": null,
+          "reinforcement": 0,
+          "repair": 0
+        },
+        "upgrades": [
+          {
+            "id": "primary:wide:2",
+            "time": 18.066666666666666,
+            "tick": 1084
+          },
+          {
+            "id": "slow-field:1",
+            "time": 28.683333333333334,
+            "tick": 1721
+          },
+          {
+            "id": "slow-field:2",
+            "time": 46.85,
+            "tick": 2811
+          },
+          {
+            "id": "primary:wide:3",
+            "time": 59.93333333333333,
+            "tick": 3596
+          },
+          {
+            "id": "primary:wide:4",
+            "time": 67.25,
+            "tick": 4035
+          },
+          {
+            "id": "slow-field:3",
+            "time": 106.9,
+            "tick": 6414
+          }
+        ],
+        "goals": {
+          "eliteSpawned": true,
+          "eliteDefeated": false,
+          "finalSpawned": false,
+          "finalDefeated": false,
+          "finalId": null
+        },
+        "appearance": {
+          "projectIdentity": "616b18b39fd279b5",
+          "manifestSha256": "b1123620aa68398dd8131aafa23f29bd686224bb9e50bf86ceeeef94752a1ef3",
+          "presentation": {
+            "id": "field-kit",
+            "revision": 104
+          },
+          "themeIdentity": "9670af00f1ea5378",
+          "familyId": "industrial-workshop",
+          "familyRevision": "r3",
+          "interfaceId": "industrial-workshop",
+          "interfaceRevision": "r3",
+          "arcade": {
+            "id": "industrial-workshop",
+            "revision": "r2"
+          },
+          "actorArtRevision": "industrial-roster-v3",
+          "equipment": {
+            "id": "overflight-field-kit",
+            "revision": 1
+          },
+          "materialStyle": "steel",
+          "materialVariant": "steel",
+          "characterId": "scout",
+          "playerSlot": "player.scout.detailed",
+          "cast": "authored",
+          "visualIdentity": "f910e9a1b740854f"
+        },
+        "review": {
+          "automated": true,
+          "build": "fan-shield",
+          "stopAt": null,
+          "route": "tight",
+          "inputHz": 10,
+          "upgradeDelayMs": 1500
+        }
+      },
+      "resourceHighWater": {
+        "alive": 101,
+        "visible": 69,
+        "rendered": 72,
+        "effects": 48,
+        "pickups": 36
+      }
+    },
+    {
+      "sourceRevision": "4dab801d9ce03b42227e99388b066c378c81ca02",
+      "file": "native/full-survivor-trial-3.json.gz",
+      "sha256Raw": "228349a77f983f372420f48e105103fdcdfdc386722abcfd2b425f6ce4b45d7b",
+      "capturedAt": "2026-10-14T16:02:06.462Z",
+      "operation": "Single Drone",
+      "layout": "chalk-quarry-haul-switchbacks",
+      "trial": 3,
+      "valid": true,
+      "invalidReasons": [],
+      "window": {
+        "index": 1,
+        "complete": true,
+        "measuredSeconds": 119.99609999999963,
+        "phaseCoverage": {
+          "playing": {
+            "samples": 13497,
+            "seconds": 111.9523
+          },
+          "upgrade": {
+            "samples": 967,
+            "seconds": 8.043799999998864
+          },
+          "other": {
+            "samples": 0,
+            "seconds": 0
+          }
+        },
+        "cadenceMs": {
+          "samples": 14464,
+          "p50": 8.300000000745058,
+          "p95": 9.700000001117587,
+          "p99": 12,
+          "worst": 123.40000000037253
+        },
+        "cadenceHz": 120.53725079398451,
+        "slowFraction": 0.00048396017699115044,
+        "passes": true
+      },
+      "viewport": {
+        "width": 936,
+        "height": 1143,
+        "devicePixelRatio": 2
+      },
+      "summary": {
+        "flight": {
+          "id": "balanced",
+          "speed": 180,
+          "boostSpeed": 330,
+          "maxHull": 100
+        },
+        "format": "OverflightRunSummaryV1",
+        "projectId": "survivor-chalk-quarry-haul-switchbacks",
+        "projectIdentity": "616b18b39fd279b5",
+        "seed": 17031991,
+        "phase": "upgrade",
+        "outcome": "incomplete",
+        "reason": null,
+        "fixture": null,
+        "fixtureWorkload": null,
+        "time": 138.73333333333332,
+        "tick": 8324,
+        "airframes": 3,
+        "airframesRemaining": 3,
+        "stats": {
+          "kills": 547,
+          "spawned": 630,
+          "enemiesAlive": 83,
+          "enemiesVisible": 54,
+          "peakAlive": 101,
+          "peakVisible": 69,
+          "heaviesAlive": 1,
+          "specialistsAlive": 8,
+          "priorityAttacks": 2,
+          "damageDealt": 20985,
+          "damageTaken": 20,
+          "damageCauses": {
+            "contact": 20,
+            "lane": 0,
+            "fan": 0,
+            "ground": 0
+          },
+          "shieldBlocks": 0,
+          "xpEarned": 803,
+          "xpCollected": 752,
+          "xpOnGround": 51,
+          "pickupsAlive": 36,
+          "pickupMerges": 0,
+          "boostsUsed": 24,
+          "airframesLost": 0,
+          "upgradesChosen": 6,
+          "rerollsUsed": 1,
+          "droppedVisualEffects": 0,
+          "collisionCandidates": 18295,
+          "hits": 799,
+          "retired": 0,
+          "spawnDeferred": 0,
+          "fixtureDefeats": 0,
+          "projectileDeferrals": 0,
+          "guardDamageBlocked": 0,
+          "armorSegmentsBroken": 64,
+          "warningDeferrals": 43
+        },
+        "build": {
+          "primary": {
+            "rank": 4,
+            "branch": "wide",
+            "evolved": true
+          },
+          "combat": [
+            {
+              "id": "slow-field",
+              "rank": 3
+            }
+          ],
+          "support": null,
+          "reinforcement": 0,
+          "repair": 0
+        },
+        "upgrades": [
+          {
+            "id": "primary:wide:2",
+            "time": 18.066666666666666,
+            "tick": 1084
+          },
+          {
+            "id": "slow-field:1",
+            "time": 28.683333333333334,
+            "tick": 1721
+          },
+          {
+            "id": "slow-field:2",
+            "time": 46.85,
+            "tick": 2811
+          },
+          {
+            "id": "primary:wide:3",
+            "time": 59.93333333333333,
+            "tick": 3596
+          },
+          {
+            "id": "primary:wide:4",
+            "time": 67.25,
+            "tick": 4035
+          },
+          {
+            "id": "slow-field:3",
+            "time": 106.9,
+            "tick": 6414
+          }
+        ],
+        "goals": {
+          "eliteSpawned": true,
+          "eliteDefeated": false,
+          "finalSpawned": false,
+          "finalDefeated": false,
+          "finalId": null
+        },
+        "appearance": {
+          "projectIdentity": "616b18b39fd279b5",
+          "manifestSha256": "b1123620aa68398dd8131aafa23f29bd686224bb9e50bf86ceeeef94752a1ef3",
+          "presentation": {
+            "id": "field-kit",
+            "revision": 104
+          },
+          "themeIdentity": "9670af00f1ea5378",
+          "familyId": "industrial-workshop",
+          "familyRevision": "r3",
+          "interfaceId": "industrial-workshop",
+          "interfaceRevision": "r3",
+          "arcade": {
+            "id": "industrial-workshop",
+            "revision": "r2"
+          },
+          "actorArtRevision": "industrial-roster-v3",
+          "equipment": {
+            "id": "overflight-field-kit",
+            "revision": 1
+          },
+          "materialStyle": "steel",
+          "materialVariant": "steel",
+          "characterId": "scout",
+          "playerSlot": "player.scout.detailed",
+          "cast": "authored",
+          "visualIdentity": "f910e9a1b740854f"
+        },
+        "review": {
+          "automated": true,
+          "build": "fan-shield",
+          "stopAt": null,
+          "route": "tight",
+          "inputHz": 10,
+          "upgradeDelayMs": 1500
+        }
+      },
+      "resourceHighWater": {
+        "alive": 101,
+        "visible": 69,
+        "rendered": 72,
+        "effects": 48,
+        "pickups": 36
+      }
+    },
+    {
+      "sourceRevision": "4dab801d9ce03b42227e99388b066c378c81ca02",
+      "file": "native/full-riy-trial-1.json.gz",
+      "sha256Raw": "700fbee6168590eed86b4733cab0570107f808dd2d98aff61be06f2df51d8a2b",
+      "capturedAt": "2026-10-14T16:20:31.815Z",
+      "operation": "Riy",
+      "layout": "freight-depot-loading-loop",
+      "trial": 1,
+      "valid": true,
+      "invalidReasons": [],
+      "window": {
+        "index": 1,
+        "complete": true,
+        "measuredSeconds": 120.00539999999852,
+        "phaseCoverage": {
+          "playing": {
+            "samples": 13564,
+            "seconds": 112.48839999999825
+          },
+          "upgrade": {
+            "samples": 900,
+            "seconds": 7.516999999999989
+          },
+          "other": {
+            "samples": 0,
+            "seconds": 0
+          }
+        },
+        "cadenceMs": {
+          "samples": 14464,
+          "p50": 8.299999998882413,
+          "p95": 10.099999999627471,
+          "p99": 12.800000000745058,
+          "worst": 58
+        },
+        "cadenceHz": 120.52790957740385,
+        "slowFraction": 0.00048396017699115044,
+        "passes": true
+      },
+      "viewport": {
+        "width": 936,
+        "height": 1143,
+        "devicePixelRatio": 2
+      },
+      "summary": {
+        "flight": {
+          "id": "balanced",
+          "speed": 180,
+          "boostSpeed": 330,
+          "maxHull": 100
+        },
+        "format": "OverflightRunSummaryV1",
+        "projectId": "riy-survivor-freight-depot-loading-loop",
+        "projectIdentity": "7b35283aef479c94",
+        "seed": 17031991,
+        "phase": "playing",
+        "outcome": "incomplete",
+        "reason": null,
+        "fixture": null,
+        "fixtureWorkload": null,
+        "time": 139.21666666666667,
+        "tick": 8353,
+        "airframes": 3,
+        "airframesRemaining": 3,
+        "stats": {
+          "kills": 441,
+          "spawned": 590,
+          "enemiesAlive": 149,
+          "enemiesVisible": 63,
+          "peakAlive": 165,
+          "peakVisible": 106,
+          "heaviesAlive": 1,
+          "specialistsAlive": 7,
+          "priorityAttacks": 0,
+          "damageDealt": 17401.2,
+          "damageTaken": 80,
+          "damageCauses": {
+            "contact": 80,
+            "lane": 0,
+            "fan": 0,
+            "ground": 0
+          },
+          "shieldBlocks": 0,
+          "xpEarned": 676,
+          "xpCollected": 573,
+          "xpOnGround": 103,
+          "pickupsAlive": 61,
+          "pickupMerges": 0,
+          "boostsUsed": 31,
+          "airframesLost": 0,
+          "upgradesChosen": 6,
+          "rerollsUsed": 0,
+          "droppedVisualEffects": 0,
+          "collisionCandidates": 43037,
+          "hits": 1759,
+          "retired": 0,
+          "spawnDeferred": 0,
+          "fixtureDefeats": 0,
+          "projectileDeferrals": 0,
+          "guardDamageBlocked": 0,
+          "armorSegmentsBroken": 59,
+          "warningDeferrals": 91,
+          "motionDeferrals": 39
+        },
+        "build": {
+          "primary": {
+            "rank": 4,
+            "branch": "double",
+            "evolved": true
+          },
+          "combat": [],
+          "support": null,
+          "reinforcement": 0,
+          "repair": 0
+        },
+        "upgrades": [
+          {
+            "id": "primary:double:2",
+            "time": 22.816666666666666,
+            "tick": 1369
+          },
+          {
+            "id": "riy-sweeper:trail:2",
+            "time": 42.68333333333333,
+            "tick": 2561
+          },
+          {
+            "id": "riy-breaker:burst:2",
+            "time": 58.88333333333333,
+            "tick": 3533
+          },
+          {
+            "id": "primary:double:3",
+            "time": 71.08333333333333,
+            "tick": 4265
+          },
+          {
+            "id": "primary:double:4",
+            "time": 96.28333333333333,
+            "tick": 5777
+          },
+          {
+            "id": "riy-sweeper:trail:3",
+            "time": 129.16666666666666,
+            "tick": 7750
+          }
+        ],
+        "goals": {
+          "eliteSpawned": true,
+          "eliteDefeated": false,
+          "finalSpawned": false,
+          "finalDefeated": false,
+          "finalId": null
+        },
+        "operation": "overflight-riy",
+        "escortCommands": 16,
+        "escortEngagements": 16,
+        "escortShots": [
+          {
+            "role": "sweeper",
+            "shots": 102
+          },
+          {
+            "role": "breaker",
+            "shots": 81
+          }
+        ],
+        "escortUpgrades": [
+          {
+            "role": "sweeper",
+            "rank": 3,
+            "branch": "trail"
+          },
+          {
+            "role": "breaker",
+            "rank": 2,
+            "branch": "burst"
+          }
+        ],
+        "appearance": {
+          "projectIdentity": "7b35283aef479c94",
+          "manifestSha256": "b1123620aa68398dd8131aafa23f29bd686224bb9e50bf86ceeeef94752a1ef3",
+          "presentation": {
+            "id": "field-kit",
+            "revision": 104
+          },
+          "themeIdentity": "9670af00f1ea5378",
+          "familyId": "industrial-workshop",
+          "familyRevision": "r3",
+          "interfaceId": "industrial-workshop",
+          "interfaceRevision": "r3",
+          "arcade": {
+            "id": "industrial-workshop",
+            "revision": "r2"
+          },
+          "actorArtRevision": "industrial-roster-v3",
+          "equipment": {
+            "id": "overflight-field-kit",
+            "revision": 1
+          },
+          "materialStyle": "steel",
+          "materialVariant": "steel",
+          "characterId": "scout",
+          "playerSlot": "player.scout.detailed",
+          "cast": "authored",
+          "visualIdentity": "f17fbcbbdc5d4666"
+        },
+        "review": {
+          "automated": true,
+          "build": "echo",
+          "stopAt": null,
+          "route": "tight",
+          "inputHz": 10,
+          "upgradeDelayMs": 1500
+        }
+      },
+      "resourceHighWater": {
+        "alive": 165,
+        "visible": 106,
+        "rendered": 109,
+        "effects": 39,
+        "pickups": 46
+      }
+    }
+  ]
+}

@@ -55,3 +55,7 @@ Some attractive explanations are not supported by these fixtures. All three capt
 4. **Change only the demonstrated hot path, then repeat the same comparison.** For example, redundant HUD writes, open-panel statistics sorting or event allocation should be optimized only if measured. Do not reduce enemy density, weaken simulation, omit warnings or infer a renderer regression from unrelated CPU contention.
 
 No cause has been conclusively assigned yet. The immediate evidence gap is whole-frame attribution, not a demonstrated shortage of simulation throughput.
+
+## Later measurement correction
+
+The quieter three-trial reference repeat subsequently passed; [NATIVE-PERFORMANCE.md](NATIVE-PERFORMANCE.md) preserves both conditions without assigning a cause to the earlier failures. A separate full-content run exposed an upgrade-phase measurement bug, corrected in [UPGRADE-RENDER-CLOCK.md](UPGRADE-RENDER-CLOCK.md). New renderer intervals include ordinary draft wall-time and expose phase coverage. The host/simulation arrays remain gameplay-only, so the equal-index CPU join used for the original no-draft fixture must not be reused for full-content captures with drafts. This does not change the cadence thresholds or remove foreground stalls.
