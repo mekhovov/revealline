@@ -1,6 +1,6 @@
 {
   "format": "classic-snake-trace-review.v1",
-  "scope": "60 verified winning remaster journals; one automated route per setup, not all player strategies.",
+  "scope": "60 verified winning remaster journals; retained evidence must match the current recipe exactly. One route per setup, not all player strategies.",
   "definitions": {
     "captureConcentration": "Largest capture count at one cell divided by all accepted captures, including bonuses.",
     "maxRepeatedSpot": "Largest total number of captures at one cell; longestSameSpotStreak separately counts consecutive captures.",
@@ -9,12 +9,15 @@
   },
   "summary": {
     "runs": 60,
+    "missions": 8,
+    "missingMissions": [],
     "flaggedRuns": 0,
     "flaggedMissions": []
   },
   "runs": [
     {
       "levelId": "classic-operation-runner-valve",
+      "source": "tactical-proofs.json",
       "mode": "solo",
       "pace": "normal",
       "board": 0,
@@ -58,6 +61,7 @@
     },
     {
       "levelId": "classic-operation-runner-valve",
+      "source": "tactical-proofs.json",
       "mode": "solo",
       "pace": "slow",
       "board": 0,
@@ -101,6 +105,7 @@
     },
     {
       "levelId": "classic-operation-runner-valve",
+      "source": "tactical-proofs.json",
       "mode": "solo",
       "pace": "fast",
       "board": 0,
@@ -144,6 +149,7 @@
     },
     {
       "levelId": "classic-operation-runner-valve",
+      "source": "tactical-proofs.json",
       "mode": "team",
       "pace": "normal",
       "board": 0,
@@ -187,6 +193,7 @@
     },
     {
       "levelId": "classic-operation-runner-valve",
+      "source": "tactical-proofs.json",
       "mode": "team",
       "pace": "slow",
       "board": 0,
@@ -230,6 +237,7 @@
     },
     {
       "levelId": "classic-operation-runner-valve",
+      "source": "tactical-proofs.json",
       "mode": "team",
       "pace": "fast",
       "board": 0,
@@ -273,6 +281,7 @@
     },
     {
       "levelId": "classic-operation-orchard-post",
+      "source": "tactical-proofs.json",
       "mode": "solo",
       "pace": "normal",
       "board": 0,
@@ -307,6 +316,7 @@
     },
     {
       "levelId": "classic-operation-orchard-post",
+      "source": "tactical-proofs.json",
       "mode": "solo",
       "pace": "slow",
       "board": 0,
@@ -341,6 +351,7 @@
     },
     {
       "levelId": "classic-operation-orchard-post",
+      "source": "tactical-proofs.json",
       "mode": "solo",
       "pace": "fast",
       "board": 0,
@@ -375,6 +386,7 @@
     },
     {
       "levelId": "classic-operation-orchard-post",
+      "source": "tactical-proofs.json",
       "mode": "team",
       "pace": "normal",
       "board": 0,
@@ -409,6 +421,7 @@
     },
     {
       "levelId": "classic-operation-orchard-post",
+      "source": "tactical-proofs.json",
       "mode": "team",
       "pace": "slow",
       "board": 0,
@@ -443,6 +456,7 @@
     },
     {
       "levelId": "classic-operation-orchard-post",
+      "source": "tactical-proofs.json",
       "mode": "team",
       "pace": "fast",
       "board": 0,
@@ -477,6 +491,7 @@
     },
     {
       "levelId": "classic-operation-refuge-cargo",
+      "source": "tactical-proofs.json",
       "mode": "solo",
       "pace": "normal",
       "board": 0,
@@ -519,6 +534,7 @@
     },
     {
       "levelId": "classic-operation-refuge-cargo",
+      "source": "tactical-proofs.json",
       "mode": "solo",
       "pace": "slow",
       "board": 0,
@@ -561,6 +577,7 @@
     },
     {
       "levelId": "classic-operation-refuge-cargo",
+      "source": "tactical-proofs.json",
       "mode": "solo",
       "pace": "fast",
       "board": 0,
@@ -599,6 +616,7 @@
     },
     {
       "levelId": "classic-operation-refuge-cargo",
+      "source": "tactical-proofs.json",
       "mode": "team",
       "pace": "normal",
       "board": 0,
@@ -641,6 +659,7 @@
     },
     {
       "levelId": "classic-operation-refuge-cargo",
+      "source": "tactical-proofs.json",
       "mode": "team",
       "pace": "slow",
       "board": 0,
@@ -683,6 +702,7 @@
     },
     {
       "levelId": "classic-operation-refuge-cargo",
+      "source": "tactical-proofs.json",
       "mode": "team",
       "pace": "fast",
       "board": 0,
@@ -725,6 +745,7 @@
     },
     {
       "levelId": "classic-operation-harvest-rendezvous",
+      "source": "tactical-proofs.json",
       "mode": "solo",
       "pace": "normal",
       "board": 0,
@@ -771,6 +792,7 @@
     },
     {
       "levelId": "classic-operation-harvest-rendezvous",
+      "source": "tactical-proofs.json",
       "mode": "solo",
       "pace": "slow",
       "board": 0,
@@ -817,6 +839,7 @@
     },
     {
       "levelId": "classic-operation-harvest-rendezvous",
+      "source": "tactical-proofs.json",
       "mode": "solo",
       "pace": "fast",
       "board": 0,
@@ -863,6 +886,7 @@
     },
     {
       "levelId": "classic-operation-harvest-rendezvous",
+      "source": "tactical-proofs.json",
       "mode": "team",
       "pace": "normal",
       "board": 0,
@@ -909,6 +933,7 @@
     },
     {
       "levelId": "classic-operation-harvest-rendezvous",
+      "source": "tactical-proofs.json",
       "mode": "team",
       "pace": "slow",
       "board": 0,
@@ -955,6 +980,7 @@
     },
     {
       "levelId": "classic-operation-harvest-rendezvous",
+      "source": "tactical-proofs.json",
       "mode": "team",
       "pace": "fast",
       "board": 0,
@@ -1001,6 +1027,7 @@
     },
     {
       "levelId": "classic-operation-north-south",
+      "source": "tactical-proofs.json",
       "mode": "solo",
       "pace": "normal",
       "board": 0,
@@ -1041,6 +1068,7 @@
     },
     {
       "levelId": "classic-operation-north-south",
+      "source": "tactical-proofs.json",
       "mode": "solo",
       "pace": "slow",
       "board": 0,
@@ -1081,6 +1109,7 @@
     },
     {
       "levelId": "classic-operation-north-south",
+      "source": "tactical-proofs.json",
       "mode": "solo",
       "pace": "fast",
       "board": 0,
@@ -1121,6 +1150,7 @@
     },
     {
       "levelId": "classic-operation-north-south",
+      "source": "tactical-proofs.json",
       "mode": "team",
       "pace": "normal",
       "board": 0,
@@ -1161,6 +1191,7 @@
     },
     {
       "levelId": "classic-operation-north-south",
+      "source": "tactical-proofs.json",
       "mode": "team",
       "pace": "slow",
       "board": 0,
@@ -1201,6 +1232,7 @@
     },
     {
       "levelId": "classic-operation-north-south",
+      "source": "tactical-proofs.json",
       "mode": "team",
       "pace": "fast",
       "board": 0,
@@ -1241,6 +1273,7 @@
     },
     {
       "levelId": "classic-operation-watch-the-aim",
+      "source": "tactical-proofs.json",
       "mode": "solo",
       "pace": "normal",
       "board": 0,
@@ -1281,6 +1314,7 @@
     },
     {
       "levelId": "classic-operation-watch-the-aim",
+      "source": "tactical-proofs.json",
       "mode": "solo",
       "pace": "slow",
       "board": 0,
@@ -1321,6 +1355,7 @@
     },
     {
       "levelId": "classic-operation-watch-the-aim",
+      "source": "tactical-proofs.json",
       "mode": "solo",
       "pace": "fast",
       "board": 0,
@@ -1361,6 +1396,7 @@
     },
     {
       "levelId": "classic-operation-watch-the-aim",
+      "source": "tactical-proofs.json",
       "mode": "team",
       "pace": "normal",
       "board": 0,
@@ -1401,6 +1437,7 @@
     },
     {
       "levelId": "classic-operation-watch-the-aim",
+      "source": "tactical-proofs.json",
       "mode": "team",
       "pace": "slow",
       "board": 0,
@@ -1441,6 +1478,7 @@
     },
     {
       "levelId": "classic-operation-watch-the-aim",
+      "source": "tactical-proofs.json",
       "mode": "team",
       "pace": "fast",
       "board": 0,
@@ -1481,6 +1519,7 @@
     },
     {
       "levelId": "classic-operation-silent-parcel",
+      "source": "tactical-proofs.json",
       "mode": "solo",
       "pace": "normal",
       "hazardSeed": 17,
@@ -1515,6 +1554,7 @@
     },
     {
       "levelId": "classic-operation-silent-parcel",
+      "source": "tactical-proofs.json",
       "mode": "solo",
       "pace": "slow",
       "hazardSeed": 17,
@@ -1549,6 +1589,7 @@
     },
     {
       "levelId": "classic-operation-silent-parcel",
+      "source": "tactical-proofs.json",
       "mode": "solo",
       "pace": "fast",
       "hazardSeed": 17,
@@ -1583,6 +1624,7 @@
     },
     {
       "levelId": "classic-operation-silent-parcel",
+      "source": "tactical-proofs.json",
       "mode": "team",
       "pace": "normal",
       "hazardSeed": 17,
@@ -1617,6 +1659,7 @@
     },
     {
       "levelId": "classic-operation-silent-parcel",
+      "source": "tactical-proofs.json",
       "mode": "team",
       "pace": "slow",
       "hazardSeed": 17,
@@ -1651,6 +1694,7 @@
     },
     {
       "levelId": "classic-operation-silent-parcel",
+      "source": "tactical-proofs.json",
       "mode": "team",
       "pace": "fast",
       "hazardSeed": 17,
@@ -1685,6 +1729,7 @@
     },
     {
       "levelId": "classic-operation-freight-flank",
+      "source": "tactical-proofs.json",
       "mode": "solo",
       "pace": "normal",
       "board": 0,
@@ -1724,6 +1769,7 @@
     },
     {
       "levelId": "classic-operation-freight-flank",
+      "source": "tactical-proofs.json",
       "mode": "solo",
       "pace": "slow",
       "board": 0,
@@ -1763,6 +1809,7 @@
     },
     {
       "levelId": "classic-operation-freight-flank",
+      "source": "tactical-proofs.json",
       "mode": "solo",
       "pace": "fast",
       "board": 0,
@@ -1802,6 +1849,7 @@
     },
     {
       "levelId": "classic-operation-freight-flank",
+      "source": "tactical-proofs.json",
       "mode": "team",
       "pace": "normal",
       "board": 0,
@@ -1841,6 +1889,7 @@
     },
     {
       "levelId": "classic-operation-freight-flank",
+      "source": "tactical-proofs.json",
       "mode": "team",
       "pace": "slow",
       "board": 0,
@@ -1880,6 +1929,7 @@
     },
     {
       "levelId": "classic-operation-freight-flank",
+      "source": "tactical-proofs.json",
       "mode": "team",
       "pace": "fast",
       "board": 0,
@@ -1919,6 +1969,7 @@
     },
     {
       "levelId": "classic-operation-silent-parcel",
+      "source": "tactical-proofs-hazards-73.json",
       "mode": "solo",
       "pace": "normal",
       "hazardSeed": 73,
@@ -1953,6 +2004,7 @@
     },
     {
       "levelId": "classic-operation-silent-parcel",
+      "source": "tactical-proofs-hazards-73.json",
       "mode": "solo",
       "pace": "slow",
       "hazardSeed": 73,
@@ -1987,6 +2039,7 @@
     },
     {
       "levelId": "classic-operation-silent-parcel",
+      "source": "tactical-proofs-hazards-73.json",
       "mode": "solo",
       "pace": "fast",
       "hazardSeed": 73,
@@ -2021,6 +2074,7 @@
     },
     {
       "levelId": "classic-operation-silent-parcel",
+      "source": "tactical-proofs-hazards-73.json",
       "mode": "team",
       "pace": "normal",
       "hazardSeed": 73,
@@ -2055,6 +2109,7 @@
     },
     {
       "levelId": "classic-operation-silent-parcel",
+      "source": "tactical-proofs-hazards-73.json",
       "mode": "team",
       "pace": "slow",
       "hazardSeed": 73,
@@ -2089,6 +2144,7 @@
     },
     {
       "levelId": "classic-operation-silent-parcel",
+      "source": "tactical-proofs-hazards-73.json",
       "mode": "team",
       "pace": "fast",
       "hazardSeed": 73,
@@ -2123,6 +2179,7 @@
     },
     {
       "levelId": "classic-operation-silent-parcel",
+      "source": "tactical-proofs-hazards-2026.json",
       "mode": "solo",
       "pace": "normal",
       "hazardSeed": 2026,
@@ -2157,6 +2214,7 @@
     },
     {
       "levelId": "classic-operation-silent-parcel",
+      "source": "tactical-proofs-hazards-2026.json",
       "mode": "solo",
       "pace": "slow",
       "hazardSeed": 2026,
@@ -2191,6 +2249,7 @@
     },
     {
       "levelId": "classic-operation-silent-parcel",
+      "source": "tactical-proofs-hazards-2026.json",
       "mode": "solo",
       "pace": "fast",
       "hazardSeed": 2026,
@@ -2225,6 +2284,7 @@
     },
     {
       "levelId": "classic-operation-silent-parcel",
+      "source": "tactical-proofs-hazards-2026.json",
       "mode": "team",
       "pace": "normal",
       "hazardSeed": 2026,
@@ -2259,6 +2319,7 @@
     },
     {
       "levelId": "classic-operation-silent-parcel",
+      "source": "tactical-proofs-hazards-2026.json",
       "mode": "team",
       "pace": "slow",
       "hazardSeed": 2026,
@@ -2293,6 +2354,7 @@
     },
     {
       "levelId": "classic-operation-silent-parcel",
+      "source": "tactical-proofs-hazards-2026.json",
       "mode": "team",
       "pace": "fast",
       "hazardSeed": 2026,
