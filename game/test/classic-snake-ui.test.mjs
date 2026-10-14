@@ -175,6 +175,7 @@ async function harness({
   const created = [],
     drawings = [],
     celebrations = [],
+    resultReactions = [],
     scheduledFrames = [],
     optionalEntries = [];
   const display = {
@@ -372,7 +373,9 @@ async function harness({
       resume() {},
       prepare() {},
       events() {},
-      result() {},
+      result(context) {
+        resultReactions.push(context);
+      },
     }),
     document,
     URL,
@@ -542,6 +545,7 @@ async function harness({
     created,
     drawings,
     celebrations,
+    resultReactions,
     artworkSelections,
     acceptedAppearances,
     appearanceActions,
@@ -1100,6 +1104,8 @@ test('victory keeps full celebration then countdown; Next during celebration lau
   const state = await harness();
   let now = flyVerifiedRoute(state);
   assert.equal(state.celebrations.length, 1);
+  assert.equal(state.resultReactions.length, 1);
+  assert.equal(state.resultReactions[0].presentation, 'snake');
   assert.equal(state.shell.topDialog(), null);
   for (let elapsed = 50; elapsed < celebrationMs; elapsed += 50) state.frame(now + elapsed);
   assert.equal(state.shell.topDialog(), null, 'the full celebration remains visible');

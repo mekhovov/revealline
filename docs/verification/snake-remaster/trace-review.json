@@ -1,6 +1,6 @@
 {
   "format": "classic-snake-trace-review.v1",
-  "scope": "60 verified winning remaster journals; retained evidence must match the current recipe exactly. One route per setup, not all player strategies.",
+  "scope": "66 verified winning remaster journals; retained evidence must match the current recipe exactly. One route per setup, not all player strategies.",
   "definitions": {
     "captureConcentration": "Largest capture count at one cell divided by all accepted captures, including bonuses.",
     "maxRepeatedSpot": "Largest total number of captures at one cell; longestSameSpotStreak separately counts consecutive captures.",
@@ -8,8 +8,10 @@
     "signals": "Review concentrated captures at >=3 catches and >=50% concentration; review no-change intervals at >=24 moves or >=6000ms. Heuristics only, not difficulty or enjoyment scores."
   },
   "summary": {
-    "runs": 60,
-    "missions": 8,
+    "runs": 66,
+    "missions": 9,
+    "setups": 54,
+    "missingSetups": [],
     "missingMissions": [],
     "flaggedRuns": 0,
     "flaggedMissions": []
@@ -1964,6 +1966,246 @@
         "operation.stage-completed": 2,
         "cargo.collected": 2,
         "cargo.delivered": 2
+      },
+      "signals": []
+    },
+    {
+      "levelId": "classic-operation-pressure-elbow",
+      "source": "tactical-proofs.json",
+      "mode": "solo",
+      "pace": "normal",
+      "board": 0,
+      "steps": 45,
+      "elapsedMs": 9000,
+      "captures": 3,
+      "captureLocations": [
+        {
+          "cell": "14,7",
+          "count": 1
+        },
+        {
+          "cell": "14,8",
+          "count": 1
+        },
+        {
+          "cell": "14,9",
+          "count": 1
+        }
+      ],
+      "maxRepeatedSpot": 1,
+      "captureConcentration": 0.3333333333333333,
+      "longestSameSpotStreak": 1,
+      "maxNoChangeMoves": 20,
+      "maxNoChangeMs": 4000,
+      "meaningfulSteps": 11,
+      "eventCounts": {
+        "target.warning": 1,
+        "plate.activated": 1,
+        "plate.released": 1,
+        "target.caught": 3,
+        "target.spawned": 2,
+        "plate.gate-closed": 1,
+        "operation.stage-completed": 2
+      },
+      "signals": []
+    },
+    {
+      "levelId": "classic-operation-pressure-elbow",
+      "source": "tactical-proofs.json",
+      "mode": "solo",
+      "pace": "slow",
+      "board": 0,
+      "steps": 45,
+      "elapsedMs": 12600,
+      "captures": 3,
+      "captureLocations": [
+        {
+          "cell": "14,7",
+          "count": 1
+        },
+        {
+          "cell": "14,8",
+          "count": 1
+        },
+        {
+          "cell": "14,9",
+          "count": 1
+        }
+      ],
+      "maxRepeatedSpot": 1,
+      "captureConcentration": 0.3333333333333333,
+      "longestSameSpotStreak": 1,
+      "maxNoChangeMoves": 20,
+      "maxNoChangeMs": 5600,
+      "meaningfulSteps": 11,
+      "eventCounts": {
+        "target.warning": 1,
+        "plate.activated": 1,
+        "plate.released": 1,
+        "target.caught": 3,
+        "target.spawned": 2,
+        "plate.gate-closed": 1,
+        "operation.stage-completed": 2
+      },
+      "signals": []
+    },
+    {
+      "levelId": "classic-operation-pressure-elbow",
+      "source": "tactical-proofs.json",
+      "mode": "solo",
+      "pace": "fast",
+      "board": 0,
+      "steps": 53,
+      "elapsedMs": 7950,
+      "captures": 3,
+      "captureLocations": [
+        {
+          "cell": "14,11",
+          "count": 1
+        },
+        {
+          "cell": "14,7",
+          "count": 1
+        },
+        {
+          "cell": "14,8",
+          "count": 1
+        }
+      ],
+      "maxRepeatedSpot": 1,
+      "captureConcentration": 0.3333333333333333,
+      "longestSameSpotStreak": 1,
+      "maxNoChangeMoves": 20,
+      "maxNoChangeMs": 3000,
+      "meaningfulSteps": 14,
+      "eventCounts": {
+        "target.warning": 2,
+        "plate.activated": 1,
+        "plate.released": 1,
+        "target.caught": 3,
+        "target.spawned": 2,
+        "plate.gate-closed": 1,
+        "operation.stage-completed": 2
+      },
+      "signals": []
+    },
+    {
+      "levelId": "classic-operation-pressure-elbow",
+      "source": "tactical-proofs.json",
+      "mode": "team",
+      "pace": "normal",
+      "board": 0,
+      "steps": 35,
+      "elapsedMs": 7000,
+      "captures": 3,
+      "captureLocations": [
+        {
+          "cell": "14,7",
+          "count": 1
+        },
+        {
+          "cell": "14,8",
+          "count": 1
+        },
+        {
+          "cell": "14,9",
+          "count": 1
+        }
+      ],
+      "maxRepeatedSpot": 1,
+      "captureConcentration": 0.3333333333333333,
+      "longestSameSpotStreak": 1,
+      "maxNoChangeMoves": 10,
+      "maxNoChangeMs": 2000,
+      "meaningfulSteps": 11,
+      "eventCounts": {
+        "target.warning": 1,
+        "plate.activated": 1,
+        "plate.released": 1,
+        "target.caught": 3,
+        "target.spawned": 2,
+        "plate.gate-closed": 1,
+        "operation.stage-completed": 2
+      },
+      "signals": []
+    },
+    {
+      "levelId": "classic-operation-pressure-elbow",
+      "source": "tactical-proofs.json",
+      "mode": "team",
+      "pace": "slow",
+      "board": 0,
+      "steps": 35,
+      "elapsedMs": 9800,
+      "captures": 3,
+      "captureLocations": [
+        {
+          "cell": "14,7",
+          "count": 1
+        },
+        {
+          "cell": "14,8",
+          "count": 1
+        },
+        {
+          "cell": "14,9",
+          "count": 1
+        }
+      ],
+      "maxRepeatedSpot": 1,
+      "captureConcentration": 0.3333333333333333,
+      "longestSameSpotStreak": 1,
+      "maxNoChangeMoves": 10,
+      "maxNoChangeMs": 2800,
+      "meaningfulSteps": 11,
+      "eventCounts": {
+        "target.warning": 1,
+        "plate.activated": 1,
+        "plate.released": 1,
+        "target.caught": 3,
+        "target.spawned": 2,
+        "plate.gate-closed": 1,
+        "operation.stage-completed": 2
+      },
+      "signals": []
+    },
+    {
+      "levelId": "classic-operation-pressure-elbow",
+      "source": "tactical-proofs.json",
+      "mode": "team",
+      "pace": "fast",
+      "board": 0,
+      "steps": 39,
+      "elapsedMs": 5850,
+      "captures": 3,
+      "captureLocations": [
+        {
+          "cell": "14,7",
+          "count": 1
+        },
+        {
+          "cell": "14,8",
+          "count": 1
+        },
+        {
+          "cell": "14,9",
+          "count": 1
+        }
+      ],
+      "maxRepeatedSpot": 1,
+      "captureConcentration": 0.3333333333333333,
+      "longestSameSpotStreak": 1,
+      "maxNoChangeMoves": 12,
+      "maxNoChangeMs": 1800,
+      "meaningfulSteps": 11,
+      "eventCounts": {
+        "target.warning": 1,
+        "plate.activated": 1,
+        "plate.released": 1,
+        "target.caught": 3,
+        "target.spawned": 2,
+        "plate.gate-closed": 1,
+        "operation.stage-completed": 2
       },
       "signals": []
     },
