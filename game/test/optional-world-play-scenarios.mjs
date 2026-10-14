@@ -200,6 +200,16 @@ async function setup(
   let holdBody = null;
   globalThis.fetch = async (url, options) => {
     if (!String(url).startsWith('http')) return fetchBefore(url, options);
+    // Presentation manifests and their authenticated image assets belong to
+    // soloPage's existing local-file boundary, not optional-pack transport.
+    // Keep this wrapper strict for every other HTTP request and count only
+    // optional catalogue/pack reads in the no-redownload assertions below.
+    const requestURL = new URL(String(url));
+    if (
+      requestURL.origin === 'http://localhost' &&
+      requestURL.pathname.startsWith('/game/presentation/')
+    )
+      return fetchBefore(url, options);
     requests.push(String(url));
     if (String(url).endsWith('game/content/optional-worlds.json'))
       return new Response(JSON.stringify(optional));
