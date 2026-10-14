@@ -8,12 +8,13 @@ import {
 /** Exact-source scenery preparation coordinator. Detached authoring resources, never live flight. */
 import { validateRegionManifest, createRegionPlanner } from './region-manifest.mjs';
 import { createRegionSourceWindow } from './source-window.mjs';
+import { SCENERY_LIMITS } from './scenery-cell.mjs';
 import {
-  compileSceneryCell,
-  validateSceneryCell,
-  sceneryGeometryBytes,
-  SCENERY_LIMITS,
-} from './scenery-cell.mjs';
+  validateScenerySource,
+  scenerySourceCell,
+  compileScenerySource,
+  scenerySourceResources,
+} from './indexed-scenery-cell.mjs';
 import { prepareSceneryWindow } from './scenery-admission.mjs';
 
 const fail = (condition, message) => {
@@ -90,7 +91,7 @@ export function createVerifiedSceneryWindow(
   let generation = 0,
     queue = Promise.resolve(),
     reservedGeometryBytes = 0;
-  const committedBytes = () => committed?.snapshot().geometryBytes ?? 0;
+  const committedBytes = () => committed?.snapshot().resourceBytes ?? 0;
   const queryReady = () =>
     !disposed && Boolean(committed) && (retainCommitted || state === 'ready');
   function snapshot() {
@@ -101,7 +102,9 @@ export function createVerifiedSceneryWindow(
       flightReady: false,
       failure,
       hasRetainedScenery: Boolean(committed),
-      geometryBytes: committedBytes(),
+      geometryBytes: committed?.snapshot().geometryBytes ?? 0,
+      textureBytes: committed?.snapshot().textureBytes ?? 0,
+      resourceBytes: committedBytes(),
       reservedGeometryBytes,
       sourceBytes: transport.sourceBytes,
       reservedSourceBytes: transport.reservedSourceBytes,
@@ -137,27 +140,28 @@ export function createVerifiedSceneryWindow(
           scene = declared.find((asset) => asset.kind === 'scene');
         // Copies are owned by this operation; no asset buffers or cell objects are exposed to callers.
         const collisionBytes = source.copyAsset(collision.id);
-        const cell = validateSceneryCell(
+        const cellSource = validateScenerySource(
           new TextDecoder('utf-8', { fatal: true }).decode(collisionBytes),
         );
+        const cell = scenerySourceCell(cellSource);
+        cells.push(cellSource);
         fail(
           cell.chunkId === chunk.id && cell.x === chunk.x && cell.z === chunk.z,
           'Verified collision identity does not match its declared chunk',
         );
-        requiredBytes += sceneryGeometryBytes(cell);
+        requiredBytes = scenerySourceResources(cells).resourceBytes;
         fail(
           committedBytes() + requiredBytes <= maxGeometryBytes,
           'transition-scenery-geometry-budget',
         );
         reservedGeometryBytes = committedBytes() + requiredBytes;
         const sceneBytes = source.copyAsset(scene.id),
-          compiled = compileSceneryCell(cell);
+          compiled = compileScenerySource(cellSource);
         fail(
           sceneBytes.length === compiled.glb.length &&
             sceneBytes.every((byte, i) => byte === compiled.glb[i]),
           'Verified scene differs from canonical scenery collision surface',
         );
-        cells.push(cell);
         receipts.push({
           chunkId,
           collision: {
@@ -206,7 +210,9 @@ export function createVerifiedSceneryWindow(
         revision: manifest.revision,
         positionMm: { ...point },
         originMm: { ...plan.origin },
-        compiler: 'FPV regional scenery compiler v1',
+        compiler: cells.some((cell) => cell.format === 'FPVRegionIndexedScenery.v1')
+          ? 'FPV indexed scenery compiler v1'
+          : 'FPV regional scenery compiler v1',
         chunks: receipts,
       };
       adoptVerifiedFrame(
