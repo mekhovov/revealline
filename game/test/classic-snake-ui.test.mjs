@@ -2143,3 +2143,92 @@ test('a verified session-only clear keeps its stars and localized visible saving
     assert.equal(state.$('result-save-notice').hidden, true);
   }
 });
+
+for (const locale of ['en', 'uk'])
+  for (const mode of ['solo', 'team', 'versus'])
+    test(`${locale}/${mode} an older optional courier never replaces the required-target HUD after a catch`, async () => {
+      const { proofs } = JSON.parse(
+        await readFile(
+          new URL(
+            '../../docs/verification/snake-remaster/outlier-alternative-proofs.json',
+            import.meta.url,
+          ),
+          'utf8',
+        ),
+      );
+      const proof = proofs.find(
+        (p) =>
+          p.levelId === 'classic-expedition-courier-overpass' &&
+          p.mode === (mode === 'team' ? 'team' : 'solo') &&
+          p.pace === 'normal',
+      );
+      const entry = CLASSIC_SNAKE_LEVELS.find((e) => e.id === proof.levelId);
+      const state = await harness({ entry, mode, query: `&lang=${locale}` });
+      const run = state.created[0];
+      let cursor = 0;
+      while (run.status === 'running' && !(run.catches > 4 && run.targets[0]?.role === 'bonus')) {
+        while (proof.replay.turns[cursor]?.tick === run.tick) {
+          const turn = proof.replay.turns[cursor++];
+          assert.ok(core.queueClassicSnakeTurn(run, turn.playerId, turn.direction));
+        }
+        core.stepClassicSnake(run);
+      }
+      assert.equal(run.status, 'running');
+      assert.equal(
+        run.targets[0].role,
+        'bonus',
+        'an earlier courier survives the required interception',
+      );
+      assert.equal(run.targets[0].kind, 'courier');
+      const requiredTarget = run.targets.find((actor) => actor.role === 'required');
+      assert.ok(requiredTarget, 'ordinary mission progress remains available');
+      const before = core.exportClassicSnakeReplay(run);
+      state.frame(0);
+      assert.equal(
+        state.$('target-style').textContent,
+        actorFieldGuide(requiredTarget.kind, locale).name,
+      );
+      const cue = state.document.querySelector('.snake-operation-status');
+      assert.equal(cue.hidden, false);
+      assert.equal(cue.textContent, CLASSIC_COPY[locale].courierOptional);
+      assert.equal(
+        cue.parentElement.dataset.operation,
+        'true',
+        'the existing full-width wrapping row is enabled',
+      );
+      if (mode === 'versus')
+        assert.equal(
+          state.document.querySelectorAll('.snake-operation-status')[1].hidden,
+          true,
+          'the opponent has no courier cue',
+        );
+      assert.deepEqual(
+        core.exportClassicSnakeReplay(run),
+        before,
+        'the objective cue does not alter the attempt',
+      );
+      // Finish this accepted recording without chasing its bonus; the cue retires
+      // with the actor and cannot leave a stale objective on the result board.
+      while (run.status === 'running') {
+        while (proof.replay.turns[cursor]?.tick === run.tick) {
+          const turn = proof.replay.turns[cursor++];
+          assert.ok(core.queueClassicSnakeTurn(run, turn.playerId, turn.direction));
+        }
+        core.stepClassicSnake(run);
+      }
+      assert.equal(run.status, 'won');
+      if (mode !== 'team') assert.equal(run.bonusCatches, 0);
+      state.shell.open('pause');
+      assert.equal(cue.hidden, true);
+    });
+
+for (const locale of ['en', 'uk'])
+  test(`${locale} the opening turn cue applies to touch and controller without requiring a keyboard`, async () => {
+    const state = await harness({ query: `&lang=${locale}` });
+    state.frame(0);
+    const cue = state.$('snake-onboarding');
+    assert.equal(cue.hidden, false);
+    assert.equal(cue.textContent, CLASSIC_COPY[locale].firstTurnHelp);
+    assert.doesNotMatch(cue.textContent, /WASD|Arrows/);
+    assert.equal(state.created[0].tick, 0);
+  });
