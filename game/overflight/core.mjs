@@ -1439,7 +1439,7 @@ function moveEnemies(run) {
       dx = (target.x - enemy.x) / length;
       dy = (target.y - enemy.y) / length;
     }
-    const coordinated = overflightMovementTarget(run, enemy);
+    const coordinated = overflightMovementTarget(run, enemy, null, speed);
     if (coordinated) {
       dx = coordinated.hold ? 0 : coordinated.x;
       dy = coordinated.hold ? 0 : coordinated.y;

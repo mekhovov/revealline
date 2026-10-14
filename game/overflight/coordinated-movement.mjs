@@ -133,7 +133,7 @@ function nextTarget(run, enemy, state, fallback) {
 /** Returns a committed world target/hold, or null to retain ordinary behavior.
  * Called at 10 Hz for ordinary actors. Waypoint changes are fresh commitments
  * and pass the same live-warning check as a new approach leg. */
-export function overflightMovementTarget(run, enemy, fallback = null) {
+export function overflightMovementTarget(run, enemy, fallback = null, speed = enemy.speed) {
   const state = enemy._coordinated;
   if (!state || state.finished) return null;
   const now = run.time;
@@ -150,6 +150,27 @@ export function overflightMovementTarget(run, enemy, fallback = null) {
     enemy.movementPhase = 'holding';
     state.output = { hold: true };
     return state.output;
+  }
+  // Burst, support and slow transitions can change a committed leg between
+  // ordinary steering decisions. Admit the velocity the simulation will use,
+  // without allowing that transition to close an existing warned escape.
+  if (state.output?.target && state.admittedSpeed !== speed) {
+    if (
+      (state.speedRetryAt ?? 0) > now ||
+      !admitOverflightMotion(run, enemy, {
+        x: state.output.x * speed,
+        y: state.output.y * speed,
+        target: state.output.target,
+        seconds: Math.max(0, state.until - now),
+      })
+    ) {
+      if ((state.speedRetryAt ?? 0) <= now) state.speedRetryAt = now + 0.1;
+      enemy.movementPhase = 'holding';
+      return { hold: true };
+    }
+    state.admittedSpeed = speed;
+    state.speedRetryAt = 0;
+    enemy.movementPhase = state.phase;
   }
   if (state.nextDecision > now) return state.output;
   state.nextDecision = now + 0.1;
@@ -222,8 +243,8 @@ export function overflightMovementTarget(run, enemy, fallback = null) {
   ) {
     if (
       !admitOverflightMotion(run, enemy, {
-        x: x * enemy.speed,
-        y: y * enemy.speed,
+        x: x * speed,
+        y: y * speed,
         target,
         seconds: Math.max(0, state.until - now),
       })
@@ -236,6 +257,7 @@ export function overflightMovementTarget(run, enemy, fallback = null) {
     }
   }
   state.output = { target, x, y };
+  state.admittedSpeed = speed;
   enemy.movementPhase = state.phase;
   enemy.movementFacing = Math.atan2(y, x);
   enemy.movementRemaining = Math.max(0, state.until - now);

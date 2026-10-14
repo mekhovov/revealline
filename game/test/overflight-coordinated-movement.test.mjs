@@ -25,6 +25,7 @@ import {
   admitOverflightBodyState,
 } from '../overflight/tactics.mjs';
 import { overflightEnemyVelocity, overflightMotionLeg } from '../overflight/motion.mjs';
+import { overflightMovementTarget } from '../overflight/coordinated-movement.mjs';
 
 const profile = (preset) => ({
   preset,
@@ -190,6 +191,59 @@ test('a new committed leg cannot take the final warned exit', () => {
     true,
     'rejected hypothetical motion never leaks into runtime',
   );
+});
+
+test('actual burst speed cannot close a warned exit on entry or between steering decisions', () => {
+  for (const alreadyCommitted of [false, true]) {
+    const run = quiet();
+    let owner;
+    for (let i = 2; i < 23; i++) {
+      const blocker = body(run, {
+        x: 1200 + Math.cos((i * Math.PI) / 12) * 70,
+        y: 540 + Math.sin((i * Math.PI) / 12) * 70,
+        speed: 0,
+        radius: 8,
+      });
+      owner ??= blocker;
+    }
+    Object.assign(run.priorityAttacks[0], {
+      active: true,
+      owner: owner.id,
+      stage: 'warning',
+      kind: 'ground',
+      x: 1200,
+      y: 540,
+      radius: 45,
+      remaining: 1.2,
+    });
+    const target = { x: 1250, y: 540 };
+    const sprinter = body(run, {
+      family: 'sprinter',
+      x: 1250,
+      y: 478,
+      speed: 60,
+      radius: 8,
+      movement: { ...profile('committed-flank'), anchors: [target] },
+      movementMember: 0,
+    });
+    rebuildOverflightGrid(run._grid, run.enemies);
+    assert.equal(admitOverflightMotion(run, sprinter, { x: 0, y: 60, target }), true);
+    assert.equal(admitOverflightMotion(run, sprinter, { x: 0, y: 120, target }), false);
+    if (alreadyCommitted) {
+      assert.ok(overflightMovementTarget(run, sprinter, null, 60).target);
+      assert.ok(sprinter._coordinated.nextDecision > run.time + 1 / 60);
+    }
+    sprinter._behaviorAge = 60;
+    const before = { x: sprinter.x, y: sprinter.y };
+    advance(run, 1);
+    assert.equal(sprinter.behaviorPhase, 'burst');
+    assert.equal(sprinter.movementPhase, 'holding');
+    assert.deepEqual({ x: sprinter.x, y: sprinter.y }, before);
+    assert.equal(hasOverflightEscape(run), true);
+    run.priorityAttacks[0].active = false;
+    advance(run, 8);
+    assert.ok(sprinter.y > before.y, 'the existing burst resumes once its route is safe');
+  }
 });
 
 test('Raid convoy reaches a firing stop, warns, recovers and leaves for another stop', () => {
