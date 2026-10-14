@@ -56,6 +56,17 @@ await assert.rejects(
   prepareRegionalDelivery({ ...options, source: altered, output: path.join(scratch, 'bad-path') }),
 );
 await writeFile(manifestPath, original);
+const invalidUtf8 = Buffer.from(original);
+const titleIndex = invalidUtf8.indexOf(Buffer.from(manifest.title.en));
+assert(titleIndex >= 0, 'Fixture has a manifest title');
+invalidUtf8[titleIndex] = 0xff;
+await writeFile(manifestPath, invalidUtf8);
+await assert.rejects(
+  prepareRegionalDelivery({ ...options, source: altered, output: path.join(scratch, 'bad-utf8') }),
+  /encoded data|encoding/i,
+);
+await assert.rejects(stat(path.join(scratch, 'bad-utf8')), /ENOENT/);
+await writeFile(manifestPath, original);
 const existing = path.join(scratch, 'existing');
 await mkdir(existing);
 await writeFile(path.join(existing, 'preserve.txt'), 'unfinished user work');
@@ -78,6 +89,7 @@ console.log(
         'paired spawn mismatch rejected',
         'traversal rejected',
         'unrelated output preserved',
+        'invalid UTF-8 rejected before output',
       ],
     },
     null,

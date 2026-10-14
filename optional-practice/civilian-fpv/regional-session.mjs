@@ -57,17 +57,27 @@ export async function loadRegionalReview({
 }
 
 /** UI metadata is deliberately a different format, never submitted to World validation/proofs. */
-export function regionalReviewEntry(configuration) {
+export function regionalReviewEntry(configuration, { installedIdentity = null } = {}) {
   const manifest = validateRegionManifest(configuration.manifest),
     { grid } = manifest;
-  const brief = {
-    en: 'Regional free flight · review · unscored. If terrain is unavailable, flight pauses safely; resume when ready.',
-    uk: 'Вільний політ у регіоні · перевірка · без заліку. Якщо місцевість недоступна, політ безпечно зупиняється; продовжуйте, коли готові.',
-  };
+  const brief = installedIdentity
+    ? {
+        en: 'Regional free flight · unscored. Scenery is saved on this device. If a required area is unavailable, flight pauses safely; retry when ready.',
+        uk: 'Вільний політ у регіоні · без заліку. Місцевість збережено на пристрої. Якщо потрібна ділянка недоступна, політ безпечно зупиняється; повторіть, коли будете готові.',
+      }
+    : {
+        en: 'Regional free flight · review · unscored. If terrain is unavailable, flight pauses safely; resume when ready.',
+        uk: 'Вільний політ у регіоні · перевірка · без заліку. Якщо місцевість недоступна, політ безпечно зупиняється; продовжуйте, коли готові.',
+      };
   return {
-    id: `regional-review-${manifest.id}`,
-    packIdentity: `regional-review:${manifest.id}:${manifest.revision}`,
+    id: installedIdentity
+      ? `regional-${manifest.id}-${installedIdentity.slice(0, 12)}`
+      : `regional-review-${manifest.id}`,
+    packIdentity: installedIdentity
+      ? `regional-installed:${installedIdentity}`
+      : `regional-review:${manifest.id}:${manifest.revision}`,
     regional: true,
+    regionalReview: !installedIdentity,
     freeFlight: true,
     configuration: { ...configuration, manifest },
     course: {
@@ -93,6 +103,13 @@ export function regionalReviewEntry(configuration) {
       rules: { droneRadius: 220 },
     },
   };
+}
+
+/** Only verified installed descriptor identities enter the ordinary regional Library. */
+export function regionalLibraryEntry(configuration, { sha256 } = {}) {
+  if (typeof sha256 !== 'string' || !/^[a-f0-9]{64}$/.test(sha256))
+    throw new TypeError('Installed regional identity is required');
+  return regionalReviewEntry(configuration, { installedIdentity: sha256 });
 }
 
 /** The production host owns input, menus and arming; this adapter owns only regional state. */

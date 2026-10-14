@@ -4,6 +4,7 @@ import path from 'node:path';
 import {
   loadRegionalReview,
   regionalReviewEntry,
+  regionalLibraryEntry,
   createRegionalSession,
 } from '../../../optional-practice/civilian-fpv/regional-session.mjs';
 
@@ -26,6 +27,12 @@ const options = {
 };
 const configuration = await loadRegionalReview(options);
 const entry = regionalReviewEntry(configuration);
+const installedEntry = regionalLibraryEntry(configuration, { sha256: 'a'.repeat(64) });
+assert.equal(installedEntry.regionalReview, false);
+assert.equal(installedEntry.packIdentity, `regional-installed:${'a'.repeat(64)}`);
+assert.equal(installedEntry.course.steps.acro.length, 0);
+assert.match(installedEntry.course.locales.en.brief, /saved on this device/);
+assert.throws(() => regionalLibraryEntry(configuration), /identity is required/);
 assert.equal(entry.course.format, 'FPVRegionalFlightPresentation.v1');
 assert.equal(entry.course.locales.en.title, configuration.manifest.title.en);
 assert.equal(entry.freeFlight, true);
