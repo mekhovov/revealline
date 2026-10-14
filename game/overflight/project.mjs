@@ -265,6 +265,9 @@ export function createOverflightProject({
       OVERFLIGHT_BATTLEFIELDS.find((entry) => entry.world === (world ?? 'field-crossing'))?.id;
     required(chosen, 'Choose a known battlefield layout.');
     const result = applyOverflightBattlefield(project, chosen);
+    // New battlefield sorties retain the accepted world pacing. Keep this in the
+    // constructor: compiling, importing or changing an authored layout must not retune it.
+    result.upgrades.thresholds = [12, 45, 100, 180, 300, 480, 700, 1000, 1400, 1900];
     result.presentation = createOverflightWorldPresentation(
       result.battlefield.world,
       result.arena,
