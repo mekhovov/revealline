@@ -6,6 +6,7 @@ import {
   asynchronousMergeResult,
   decideMergeAction,
   dependencyNumbers,
+  isStackOnlyMergeError,
   mainPagesDispatchRequest,
 } from "./fastline-merge-controller.mjs";
 
@@ -137,6 +138,7 @@ test("stacked merge payload and polling results remain exact and fail closed", (
     sha: SHA,
     merge_method: "merge",
     merge_action: "default",
+    bypass_rules: false,
   });
   assert.throws(() => asynchronousMergeRequest("main"), /exact 40-character/);
   assert.deepEqual(
@@ -157,6 +159,24 @@ test("stacked merge payload and polling results remain exact and fail closed", (
     }),
     { done: true, merged: false, reason: "blocked" },
   );
+});
+
+test("only GitHub's stack-only endpoint rejection switches merge APIs", () => {
+  assert.equal(
+    isStackOnlyMergeError({
+      status: 403,
+      data: {
+        message:
+          "Merging stacked PRs via this endpoint is not supported. Use the asynchronous merge endpoint instead.",
+      },
+    }),
+    true,
+  );
+  for (const error of [
+    { status: 403, data: { message: "Branch protection denied merge." } },
+    { status: 403, data: { message: "Resource not accessible by integration" } },
+    { status: 409, data: { message: "Conflict" } },
+  ]) assert.equal(isStackOnlyMergeError(error), false);
 });
 
 test("a controller-owned merge dispatches the rolling Pages workflow from main", () => {
