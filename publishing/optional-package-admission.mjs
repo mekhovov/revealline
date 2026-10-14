@@ -368,6 +368,8 @@ export async function validateOptionalPackageAdmission(envelope, { read } = {}) 
       'app.webmanifest',
       'icons/icon-192.png',
       'icons/icon-512.png',
+      'access-gate.mjs',
+      'access-gate.css',
     ];
     const launcherPins = launcherNames.map((name) =>
       editionDescriptor(name, runtime.get('launcher/' + name)),

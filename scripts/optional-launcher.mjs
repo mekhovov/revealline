@@ -1,3 +1,4 @@
+import { protectPageHTML } from './access-pages.mjs';
 import { installOptionalLauncher } from '../optional-practice/launcher-template.mjs';
 import { installPracticeWorker } from '../optional-practice/civilian-flight/worker-template.mjs';
 import { createHash } from 'node:crypto';
@@ -57,6 +58,22 @@ export function buildOptionalLauncher({
       entries.get(`optional-practice/${packageId}/icons/icon-${size}.png`),
     ]),
   ]);
+  const page = entries.get(`optional-practice/${packageId}/index.html`)?.toString();
+  if (page?.includes('access-gate:start')) {
+    launcher.set(
+      'index.html',
+      Buffer.from(
+        protectPageHTML(
+          launcher.get('index.html').toString(),
+          'launcher/index.html',
+          page,
+          'launcher',
+        ),
+      ),
+    );
+  }
+  for (const file of ['access-gate.mjs', 'access-gate.css'])
+    launcher.set(file, entries.get(`game/${file}`));
   const pins = [...launcher].map(([path, bytes]) => ({
     path,
     bytes: bytes.length,

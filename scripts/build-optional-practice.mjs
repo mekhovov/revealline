@@ -397,10 +397,10 @@ export async function buildOptionalPractice(
   const ordered = [...entries]
     .sort(([a], [b]) => a.localeCompare(b))
     .map(([name, bytes]) => ({ name, bytes }));
+  const outputBytes = ordered.reduce((total, file) => total + file.bytes.length, 0);
   requireValid(
-    ordered.length <= limits.files &&
-      ordered.reduce((total, file) => total + file.bytes.length, 0) <= limits.bytes,
-    'Complete optional output exceeds package limits',
+    ordered.length <= limits.files && outputBytes <= limits.bytes,
+    `Complete optional output exceeds package limits: ${packageId} has ${ordered.length}/${limits.files} files and ${outputBytes}/${limits.bytes} bytes`,
   );
   return { manifest, entries: ordered, zip: createZip(ordered), inputs };
 }
