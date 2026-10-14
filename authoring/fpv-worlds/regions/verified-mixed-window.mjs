@@ -346,6 +346,23 @@ export function createVerifiedMixedWindow(
       queue = operation.catch(() => {});
       return operation;
     },
+    flightSupport(...args) {
+      if (disposed) throw new Error("Mixed window is disposed");
+      if (state !== "ready") return { status: "not-ready" };
+      const terrain = committed.terrain.flightSupport(...args),
+        scenery = committed.scenery.flightSupport(...args);
+      if (
+        ![terrain, scenery].every(
+          (result) => result.status === "flight-support",
+        )
+      )
+        return { status: "unknown-cell" };
+      return scenery.hitDistanceMm !== null &&
+        (terrain.hitDistanceMm === null ||
+          scenery.hitDistanceMm < terrain.hitDistanceMm)
+        ? scenery
+        : terrain;
+    },
     castMotion(...args) {
       if (disposed) throw new Error("Mixed window is disposed");
       if (state !== "ready") return { status: "not-ready" };

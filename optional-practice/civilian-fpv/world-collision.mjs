@@ -1,3 +1,4 @@
+import { flightSupportFromRay } from './flight-support.mjs';
 import { moveFlightSphere, earlierFlightHit as earlier } from './flight-contact.mjs';
 import RAPIER from './vendor/rapier/rapier.mjs';
 
@@ -176,13 +177,7 @@ export function createWorldCollision(course) {
       undefined,
       staticOnly,
     );
-    if (!hit || hit.normal.y < 0.8660254) return null;
-    const surface = origin.y * 1000 - hit.timeOfImpact * 1000;
-    return {
-      id: staticIds.get(hit.collider.handle),
-      y: Math.ceil(surface + radius / hit.normal.y - radius),
-      normal: normal(hit.normal),
-    };
+    return flightSupportFromRay(origin.y, radius, hit, hit && staticIds.get(hit.collider.handle));
   }
   return {
     support,
