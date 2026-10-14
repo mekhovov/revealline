@@ -49,9 +49,12 @@ function distribution(values) {
   };
 }
 
+const renderPhaseNames = ['playing', 'upgrade', 'other'];
+
 /** Raw render cadence and CPU submission are deliberately distinct. Long
- * foreground intervals are retained. Only known lifecycle/modal gaps rebase
- * sampling; an overloaded foreground frame is never trimmed as an outlier. */
+ * foreground intervals, including ordinary upgrade drafts, are retained. Only
+ * known lifecycle/manual-pause gaps rebase sampling and invalidate an unfinished
+ * trial; an overloaded foreground frame is never trimmed as an outlier. */
 export function createOverflightBenchmark({
   capacity = 120000,
   warmupSeconds = 30,
@@ -73,7 +76,8 @@ export function createOverflightBenchmark({
     submission = new Float64Array(capacity);
   const frameTimes = new Float64Array(capacity),
     submissionTimes = new Float64Array(capacity),
-    windows = new Int16Array(capacity).fill(-1);
+    windows = new Int16Array(capacity).fill(-1),
+    renderPhases = new Uint8Array(capacity);
   const windowCounts = new Uint32Array(repetitions);
   let count = 0,
     cpuCount = 0,
@@ -91,7 +95,7 @@ export function createOverflightBenchmark({
   const complete = () => elapsed / 1000 >= warmupSeconds + measurementSeconds * repetitions;
   return {
     complete,
-    frame(nowMs, active = true) {
+    frame(nowMs, active = true, phase = 'playing') {
       if (!Number.isFinite(nowMs)) return;
       if (stopAtEnd && complete()) return;
       if (!active && enabled && count > 0 && !complete()) invalidReasons.add('interrupted');
@@ -100,6 +104,7 @@ export function createOverflightBenchmark({
         const at = count % capacity;
         cadence[at] = delta;
         frameTimes[at] = nowMs;
+        renderPhases[at] = phase === 'playing' ? 0 : phase === 'upgrade' ? 1 : 2;
         const window = Math.floor((elapsed / 1000 - warmupSeconds) / measurementSeconds);
         windows[at] = window >= 0 && window < repetitions ? window : -1;
         if (windows[at] >= 0) windowCounts[windows[at]]++;
@@ -134,7 +139,16 @@ export function createOverflightBenchmark({
       const retained = Math.min(count, capacity);
       const reports = Array.from({ length: repetitions }, (_, index) => {
         const samples = [];
-        for (let at = 0; at < retained; at++) if (windows[at] === index) samples.push(cadence[at]);
+        const phaseCoverage = Object.fromEntries(
+          renderPhaseNames.map((phase) => [phase, { samples: 0, seconds: 0 }]),
+        );
+        for (let at = 0; at < retained; at++)
+          if (windows[at] === index) {
+            samples.push(cadence[at]);
+            const coverage = phaseCoverage[renderPhaseNames[renderPhases[at]]];
+            coverage.samples++;
+            coverage.seconds += cadence[at] / 1000;
+          }
         const measuredMs = samples.reduce((sum, ms) => sum + ms, 0);
         const cadenceMs = distribution(samples);
         const cadenceHz = measuredMs > 0 ? (samples.length * 1000) / measuredMs : null;
@@ -149,6 +163,7 @@ export function createOverflightBenchmark({
           index: index + 1,
           complete,
           measuredSeconds: measuredMs / 1000,
+          phaseCoverage,
           cadenceMs,
           cadenceHz,
           slowFraction,
@@ -184,6 +199,10 @@ export function createOverflightBenchmark({
           warmupSeconds,
           measurementSeconds,
           repetitions,
+          renderClock:
+            'Foreground rendering continues through ordinary upgrade drafts; draft wall-time is included while the simulation is paused.',
+          phaseAttribution:
+            'Intervals are labelled by the run phase at completed render; transition intervals include work leading into that phase.',
           windows: reports,
           acceptance: reports.every((report) => report.complete)
             ? invalidReasons.size === 0 &&
@@ -201,6 +220,7 @@ export function createOverflightBenchmark({
             endMs: frameTimes[at],
             intervalMs: cadence[at],
             window: windows[at] < 0 ? null : windows[at] + 1,
+            phase: renderPhaseNames[renderPhases[at]],
           };
         });
         result.rawSubmission = Array.from({ length: Math.min(cpuCount, capacity) }, (_, index) => {

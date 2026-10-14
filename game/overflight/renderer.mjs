@@ -193,7 +193,7 @@ export async function createOverflightRenderer({
   };
   const postRender = () => {
     const now = performance.now();
-    benchmark.frame(now, frameActive && !lost && !destroyed && !document.hidden);
+    benchmark.frame(now, frameActive && !lost && !destroyed && !document.hidden, current?.phase);
     if (frameActive) benchmark.submission(presentMs + Math.max(0, now - renderStarted), now);
   };
   try {
@@ -288,13 +288,19 @@ export async function createOverflightRenderer({
             frameActive = false;
             return;
           }
-          frameActive = current?.phase === 'playing' && !document.hidden;
           presentMs = 0;
           try {
             onFrame(performance.now());
           } catch (error) {
             fail(error);
           }
+          // A normal draft pauses simulation, not foreground rendering. Decide
+          // after the host transition so card work and its complete render interval
+          // remain measured; manual pause, hidden state and failures still interrupt.
+          frameActive =
+            (current?.phase === 'playing' || current?.phase === 'upgrade') &&
+            !document.hidden &&
+            !failed;
         },
       },
     });
