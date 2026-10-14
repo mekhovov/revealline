@@ -34,6 +34,8 @@ their own source revision; they are not presented as fresh results for later edi
 
 ## External evidence and intentional limits
 
+The final acceptance follow-up adds `browser-acceptance-followup.md` (all 240 Lively FPV starting boards and bounded alternate-look/mobile samples), `visual-acceptance-polish.md` (construction-family corrections), `pacing-acceptance-followup.md` (optional-courier clarity and route evidence), and `rating-calibration-followthrough.md` (no unsupported higher-grade publication). The latest combined suite passes 390 tests. Physical testing and waiting for player feedback are now explicitly deferred by user request; they are not implementation blockers or claimed completed observations.
+
 1. **Physical devices — unverified, P1 external follow-up.** No physical-device test was performed in this run. Responsive desktop emulation
    covers layout, not thumb reach, touch latency, hardware disconnect behaviour,
    thermal throttling or low-end frame-time distributions. Run the same lab and
