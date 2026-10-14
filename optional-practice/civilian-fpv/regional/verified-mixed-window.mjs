@@ -25,7 +25,8 @@ const cancelled = () =>
   new DOMException("Mixed region preparation cancelled", "AbortError");
 const pointCopy = (point) => ({ x: point.x, y: point.y, z: point.z });
 const sum = (pair, field) =>
-  pair ? pair.terrain.snapshot()[field] + pair.scenery.snapshot()[field] : 0;
+  pair ? (pair.terrain.snapshot()[field] ?? 0) + (pair.scenery.snapshot()[field] ?? 0) : 0;
+const residentBytes = (pair) => sum(pair, "geometryBytes") + sum(pair, "textureBytes");
 function supportPair(pair, ...args) {
   const terrain = pair.terrain.support(...args),
     scenery = pair.scenery.support(...args);
@@ -159,6 +160,8 @@ export function createVerifiedMixedWindow(
     hasRetainedTerrain: Boolean(committed),
     geometryProfile: "terrain-scenery-v1",
     geometryBytes: sum(committed, "geometryBytes"),
+    textureBytes: sum(committed, "textureBytes"),
+    resourceBytes: residentBytes(committed),
     sourceBytes: sum(committed, "sourceBytes"),
     reservedSourceBytes,
     reservedGeometryBytes,
@@ -188,13 +191,13 @@ export function createVerifiedMixedWindow(
       );
       const sceneryGeometry = Math.min(
         8 * MiB,
-        maxGeometryBytes - sum(committed, "geometryBytes") - terrainGeometry,
+        maxGeometryBytes - residentBytes(committed) - terrainGeometry,
       );
       fail(sceneryGeometry > 0, "mixed-transition-geometry-budget");
       reservedSourceBytes =
         sum(committed, "sourceBytes") + terrainSource + scenerySource;
       reservedGeometryBytes =
-        sum(committed, "geometryBytes") + terrainGeometry + sceneryGeometry;
+        residentBytes(committed) + terrainGeometry + sceneryGeometry;
       pair = { terrain: null, scenery: null, group: new Group() };
       staging = pair;
       // Fresh private owners cannot replace either visible committed layer on their own.
@@ -299,7 +302,7 @@ export function createVerifiedMixedWindow(
       await disposePair(pair);
       if (staging === pair) staging = null;
       reservedSourceBytes = sum(committed, "sourceBytes");
-      reservedGeometryBytes = sum(committed, "geometryBytes");
+      reservedGeometryBytes = residentBytes(committed);
     }
   }
   return Object.freeze({
