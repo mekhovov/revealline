@@ -88,7 +88,9 @@ test('launcher health detects eviction without fetching and repair verifies only
 test('installed launch preserves only opted-in controller diagnostics and its selected edition', async () => {
   const source = (await readFile(new URL('../offline/app.mjs', import.meta.url), 'utf8'))
     .replace(/import \{[\s\S]*?\} from '\.\/installed-app\.mjs';/, '')
-    .replace(/import \{[^;]*\} from '\.\/i18n\/index\.mjs';/, '');
+    .replace(/import \{[^;]*\} from '\.\/i18n\/index\.mjs';/, '')
+    .replace(/import \{[^;]*\} from '\.\/ui\/launcher-navigation\.mjs';/, '')
+    .replace(/import \{[^;]*\} from '\.\/edition-context\.mjs';/, '');
   for (const query of ['?controllerTrace=1&journey=untrusted', '?controllerTrace=0', '']) {
     const elements = new Map(),
       replacements = [],
@@ -109,6 +111,8 @@ test('installed launch preserves only opted-in controller diagnostics and its se
         replace: (url) => replacements.push(url),
       },
       URL,
+      attachLauncherNavigation: () => {},
+      editionIdFromLocation: () => null,
       readInstalledState: () => ({ active: selected }),
       validateInstalledEdition: (edition) => edition,
       installedPresentation: () => true,
