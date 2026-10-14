@@ -4541,3 +4541,50 @@ Source, local commits, unfinished changes, frozen candidates and player storage
 remain preserved. A separate agent reclaimed only its own clean tracked history
 directories through sparse checkout, with a recovery receipt; heavy builds still
 use external storage/cloud while internal free space is below the 3 GiB floor.
+
+## 14 October — Shared support, catalogue lifecycle and rendering evidence
+
+Coordinator branch: `codex/fpv-regional-qualified-checkpoint-20261014`, rebased
+on current main in the external docs-only checkout. #1255 loading courts, #1257
+shared support/landing response, #1258 optional ground surfaces, #1256 native
+20-world static render evidence, #1260 all-course lifecycle evidence and #1261
+bounded rendering measurements have merged. Dependencies cleared before successors;
+no native stack or manual retargeting was required. #1263 industrial-hall
+composition and #1264 integrity-rejection evidence have also merged.
+
+All 41 exact catalogue courses pass launch/pause/reset checks in both modes
+(82 cases). This does not claim all-course native gameplay completion. Nine native
+static samples cover Reservoir, Harbor and Coaster across three quality tiers.
+The valid viewport is 1280×800, canvas 1280×520, DPR 1; each sample uses 30 warmup
+and 120 measured frames. CPU callback p95 is 0.6–1.2 ms and frame-callback cadence
+p95 is 8.8–9.2 ms. GPU work, sustained flight and hardware targets remain unmeasured.
+A zero-size initial viewport was caught and excluded before publication.
+
+Shared support checks retain 297 historical query outcomes and all 154 recorded
+World flights across 312,948 ticks. Production-host regional integration is now in
+source review: normal menu/input/camera/pause ownership, explicit unscored session,
+disarmed preparation/retry/mode changes and no World.v1 proof extension. Native
+review confirmed deliberate arming and keyboard response; irrelevant goal/score
+widgets were identified for correction before acceptance. Exact package closure
+and regional public admission remain unfinished.
+
+The hall composition keeps 102 existing surfaces and 18 terrain assets unchanged
+and adds six authored render/collision surfaces (936 triangles). Native interior
+and roof-frame inspection shows open approach lines, ducts and roof gaps; release
+and reload restore all nine cells and 117 meshes/colliders at 1,093,680 geometry
+bytes. This is a representative art increment, not completion of the regional art
+standard. Further regions, sustained/device qualification and D6 remain open.
+
+Internal storage remains below the heavy-build floor. Source, unfinished changes,
+commits, frozen packages and browser data are preserved. External builds and
+independent publication continue.
+
+On a separate origin, native UI prepared the exact previous player and installed
+Reservoir r16 with eight challenges and digest `50ffbb0e5da7`. One new dependency
+HTTP response was changed by a single byte without changing its length. The update
+was rejected; the actual previous-player link still opened and its Library retained
+the same world. Removing the response fault let the unchanged new package prepare
+successfully, keeping both recovery links. Its actual home opened and catalogue
+Play loaded Reservoir disarmed at zero seconds. Frozen files and player storage
+were not modified. This bounded integrity scenario does not prove quota eviction,
+full browser restart or all network failures.
