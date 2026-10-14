@@ -100,6 +100,8 @@ A missing catalogue, missing details, mismatched selector or changed asset fails
 
 The Actions run retains `practice-site-receipt-SOURCE_SHA` alongside the main-site capacity receipt for 30 days. Copy required qualification receipts into the durable release evidence inventory before that retention expires. A green main identity check alone does not prove that Flight practice was deployed. An explicit empty catalogue proves discovery is reachable, not that the three apps have been released.
 
+**Budget retained versions, not only the active package ZIPs.** Pages hosts expanded package files, stable launcher copies, directory assets and every retained release alongside the main game. Per-package admission is not a complete-host capacity pass. The [2026-10-14 continuation](flight-practice-continuation-2026-10-14.md) found that two comparable three-app generations plus the then-current main payload exceeded the 950,000,000-byte guard by at least 24.6 MB, before all publication overhead. Resolve that footprint/retention decision before release; do not drop rollback URLs or raise the guard merely to pass deployment.
+
 ## Update, retirement and rollback
 
 - Ship changes under a new immutable release URL; retain the prior reviewed release in the selector. Never replace bytes under an existing version.
