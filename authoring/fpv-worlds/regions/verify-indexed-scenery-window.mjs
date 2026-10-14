@@ -92,8 +92,8 @@ await check(
       );
     try {
       assert.equal(textured.snapshot().textures, 1);
-      assert.equal(textured.snapshot().textureBytes, 1398100);
-      assert.equal(textured.snapshot().resourceBytes, textured.snapshot().geometryBytes + 1398100);
+      assert.equal(textured.snapshot().textureBytes, 2446676);
+      assert.equal(textured.snapshot().resourceBytes, textured.snapshot().geometryBytes + 2446676);
       const texture = textured.group.children[0].material.map;
       assert.equal(texture.colorSpace, THREE.SRGBColorSpace);
       assert.equal(texture.flipY, false);
@@ -140,15 +140,15 @@ await check(
     const owner = createVerifiedSceneryWindow(manifest, {
       ...sourceOptions,
       retainCommitted: true,
-      maxGeometryBytes: 2 * 1024 * 1024,
+      maxGeometryBytes: 3 * 1024 * 1024,
     });
     try {
       const ready = await owner.transition(point(0));
-      assert.equal(ready.textureBytes, 1398100);
+      assert.equal(ready.textureBytes, 2446676);
       const retained = owner.group;
       await assert.rejects(owner.transition(point(4)), /transition-scenery-geometry-budget/);
       assert.equal(owner.group, retained);
-      assert.equal(owner.snapshot().textureBytes, 1398100);
+      assert.equal(owner.snapshot().textureBytes, 2446676);
     } finally {
       await owner.dispose();
     }
@@ -160,7 +160,7 @@ await check(
     const owner = createVerifiedSceneryWindow(manifest, {
       ...sourceOptions,
       retainCommitted: true,
-      maxGeometryBytes: 4 * 1024 * 1024,
+      maxGeometryBytes: 6 * 1024 * 1024,
     });
     try {
       await owner.transition(point(0));
@@ -188,7 +188,7 @@ await check(
       assert.equal(owner.group, retained);
       await owner.transition(point(4));
       assert.equal(oldDisposed, 1);
-      assert.equal(owner.snapshot().textureBytes, 1398100);
+      assert.equal(owner.snapshot().textureBytes, 2446676);
     } finally {
       await owner.dispose();
     }
@@ -200,7 +200,7 @@ await check(
     const owner = createVerifiedSceneryWindow(manifest, {
       ...sourceOptions,
       retainCommitted: true,
-      maxGeometryBytes: 4 * 1024 * 1024,
+      maxGeometryBytes: 6 * 1024 * 1024,
     });
     try {
       await owner.transition(point(0));
@@ -271,7 +271,7 @@ await check(
     }
     const owner = createVerifiedMixedWindow(terrainManifest, {
       retainCommitted: true,
-      maxGeometryBytes: 2 * 1024 * 1024,
+      maxGeometryBytes: 3 * 1024 * 1024,
       source: {
         baseURL: 'https://terrain.example/',
         fetchImpl: async (url) => new Response(terrainBodies.get(new URL(url).pathname.slice(1))),
@@ -280,8 +280,8 @@ await check(
     });
     try {
       const ready = await owner.transition(point(0));
-      assert.equal(ready.textureBytes, 1398100);
-      assert.equal(ready.resourceBytes, ready.geometryBytes + 1398100);
+      assert.equal(ready.textureBytes, 2446676);
+      assert.equal(ready.resourceBytes, ready.geometryBytes + 2446676);
       const retained = owner.group,
         support = owner.support(point(0));
       await assert.rejects(owner.transition(point(4)), /budget/);
@@ -299,5 +299,5 @@ if (process.argv[2]) {
   for (const [path, bytes] of bodies) await writeFile(resolve(output, path), bytes);
 }
 console.log(
-  JSON.stringify({ checks, requests, textureBytesPerWindow: 1398100, defaultAdmission: false }),
+  JSON.stringify({ checks, requests, textureBytesPerWindow: 2446676, defaultAdmission: false }),
 );
