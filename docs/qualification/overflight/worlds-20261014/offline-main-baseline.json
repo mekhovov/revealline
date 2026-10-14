@@ -1,0 +1,296 @@
+{
+  "commit": "460169d79f17fca76a7ee5902caf129c6a7bd729",
+  "routes": 50,
+  "rows": 99,
+  "characters": 12065,
+  "utf8Bytes": 12065,
+  "maximumRowBytes": 131,
+  "uniqueKeys": 99,
+  "rowsWithExactlyThreeKeys": true,
+  "currentSoloOmitted": true,
+  "routeSizes": [
+    {
+      "id": "opening",
+      "rows": 2,
+      "bytes": 207
+    },
+    {
+      "id": "humanoid-hunt-v1",
+      "rows": 2,
+      "bytes": 243
+    },
+    {
+      "id": "pursuit-pilots-v1",
+      "rows": 2,
+      "bytes": 247
+    },
+    {
+      "id": "pursuit-campaigns-v1",
+      "rows": 2,
+      "bytes": 259
+    },
+    {
+      "id": "snake-hunt-v1",
+      "rows": 2,
+      "bytes": 231
+    },
+    {
+      "id": "authored",
+      "rows": 2,
+      "bytes": 211
+    },
+    {
+      "id": "whole-originals",
+      "rows": 2,
+      "bytes": 239
+    },
+    {
+      "id": "whole-originals-v2",
+      "rows": 2,
+      "bytes": 251
+    },
+    {
+      "id": "whole-originals-v3",
+      "rows": 2,
+      "bytes": 251
+    },
+    {
+      "id": "whole-originals-v4",
+      "rows": 2,
+      "bytes": 251
+    },
+    {
+      "id": "whole-spatial-v1",
+      "rows": 2,
+      "bytes": 243
+    },
+    {
+      "id": "whole-spatial-v2",
+      "rows": 2,
+      "bytes": 243
+    },
+    {
+      "id": "whole-spatial-v3",
+      "rows": 2,
+      "bytes": 243
+    },
+    {
+      "id": "whole-spatial-v4",
+      "rows": 2,
+      "bytes": 243
+    },
+    {
+      "id": "whole-spatial-v5",
+      "rows": 2,
+      "bytes": 243
+    },
+    {
+      "id": "whole-spatial-v6",
+      "rows": 2,
+      "bytes": 243
+    },
+    {
+      "id": "whole-spatial-v7",
+      "rows": 2,
+      "bytes": 243
+    },
+    {
+      "id": "whole-spatial-v8",
+      "rows": 2,
+      "bytes": 243
+    },
+    {
+      "id": "whole-spatial-v9",
+      "rows": 2,
+      "bytes": 243
+    },
+    {
+      "id": "whole-spatial-v10",
+      "rows": 2,
+      "bytes": 247
+    },
+    {
+      "id": "whole-spatial-v11",
+      "rows": 1,
+      "bytes": 127
+    },
+    {
+      "id": "whole-spatial-v12",
+      "rows": 2,
+      "bytes": 247
+    },
+    {
+      "id": "whole-spatial-v13",
+      "rows": 2,
+      "bytes": 247
+    },
+    {
+      "id": "whole-spatial-v14",
+      "rows": 2,
+      "bytes": 247
+    },
+    {
+      "id": "whole-spatial-v15",
+      "rows": 2,
+      "bytes": 247
+    },
+    {
+      "id": "whole-spatial-v16",
+      "rows": 2,
+      "bytes": 247
+    },
+    {
+      "id": "whole-spatial-v17",
+      "rows": 2,
+      "bytes": 247
+    },
+    {
+      "id": "whole-spatial-v18",
+      "rows": 2,
+      "bytes": 247
+    },
+    {
+      "id": "whole-spatial-v19",
+      "rows": 2,
+      "bytes": 247
+    },
+    {
+      "id": "whole-spatial-v20",
+      "rows": 2,
+      "bytes": 247
+    },
+    {
+      "id": "whole-spatial-v21",
+      "rows": 2,
+      "bytes": 247
+    },
+    {
+      "id": "whole-spatial-v22",
+      "rows": 2,
+      "bytes": 247
+    },
+    {
+      "id": "whole-spatial-v23",
+      "rows": 2,
+      "bytes": 247
+    },
+    {
+      "id": "whole-spatial-v24",
+      "rows": 2,
+      "bytes": 247
+    },
+    {
+      "id": "whole-spatial-v25",
+      "rows": 2,
+      "bytes": 247
+    },
+    {
+      "id": "whole-spatial-v26",
+      "rows": 2,
+      "bytes": 247
+    },
+    {
+      "id": "whole-spatial-v27",
+      "rows": 2,
+      "bytes": 247
+    },
+    {
+      "id": "whole-spatial-v28",
+      "rows": 2,
+      "bytes": 247
+    },
+    {
+      "id": "whole-spatial-v29",
+      "rows": 2,
+      "bytes": 247
+    },
+    {
+      "id": "whole-spatial-v30",
+      "rows": 2,
+      "bytes": 247
+    },
+    {
+      "id": "whole-spatial-v31",
+      "rows": 2,
+      "bytes": 247
+    },
+    {
+      "id": "whole-spatial-v32",
+      "rows": 2,
+      "bytes": 247
+    },
+    {
+      "id": "whole-spatial-v33",
+      "rows": 2,
+      "bytes": 247
+    },
+    {
+      "id": "whole-spatial-v34",
+      "rows": 2,
+      "bytes": 247
+    },
+    {
+      "id": "whole-spatial-v35",
+      "rows": 2,
+      "bytes": 247
+    },
+    {
+      "id": "whole-spatial-v36",
+      "rows": 2,
+      "bytes": 247
+    },
+    {
+      "id": "whole-spatial-v37",
+      "rows": 2,
+      "bytes": 247
+    },
+    {
+      "id": "whole-spatial-v38",
+      "rows": 2,
+      "bytes": 247
+    },
+    {
+      "id": "whole-ornament-v1",
+      "rows": 2,
+      "bytes": 247
+    },
+    {
+      "id": "whole-ornament-v2",
+      "rows": 2,
+      "bytes": 247
+    }
+  ],
+  "sourceHashes": {
+    "scripts/test-offline-destinations.mjs": "48e6be619c24c8ec1a314d142271ccde7c9faf73c91dca684b4022ea3e7a44b9",
+    "scripts/offline-destinations.mjs": "d9a1651caa489a98bd37199fd28f61c0a6a0e498b2dec3d4272284a1a094757e",
+    "game/content-design/mode-href.mjs": "ace6d2fa951956ec9d4f109af2842d548d6313403ea188e448efc317e55e12e1"
+  },
+  "fixture": "/private/tmp/revealline-main-offline-baseline-5agdpa6o",
+  "dependencies": "Existing node_modules reused; package.json and package-lock.json have no diff versus origin/main",
+  "originalTest": {
+    "path": "scripts/test-offline-destinations.mjs",
+    "exitCode": 1,
+    "passed": 3,
+    "failed": 1,
+    "failure": "bootstrap metadata stays bounded independently of the mission table"
+  },
+  "workerTest": {
+    "path": "game/test/offline.test.mjs",
+    "passed": 62,
+    "failed": 0
+  },
+  "exactMainBlobs": {
+    "scripts/test-offline-destinations.mjs": {
+      "gitBlob": "1e1dbc1b658c83d663da5c6ee8d412c92d4ab359",
+      "identical": true
+    },
+    "scripts/offline-destinations.mjs": {
+      "gitBlob": "f1b95b4f4eb38f1dc7db5acea95e5c8be1c8d73d",
+      "identical": true
+    },
+    "game/content-design/mode-href.mjs": {
+      "gitBlob": "1b52b187495b1c59c53e2e2828c17a4fe771b173",
+      "identical": true
+    }
+  }
+}
