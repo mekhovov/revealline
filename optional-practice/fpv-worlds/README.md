@@ -48,8 +48,11 @@ recomputed locally. Browser storage can be evicted, so keep exported backups.
 World assets and the executable application are separate installations. A pack
 in IndexedDB alone is not proof that the application can start offline.
 
-The original package keeps its 8 MiB / 64-file policy. `fpv-worlds` has a separate
-16 MiB / 96-file executable allowance, including the pinned JS/WASM dependency.
+Each executable package has its own reviewed size/file limits, including pinned
+JS/WASM dependencies. Run the existing package preflight and inspect its
+`limits` report for the current effective allowances; do not infer limits from
+historical verification receipts. See the
+[maintainer workflow](../../docs/flight-practice-maintainer.md).
 It remains outside the main game's mandatory offline cache. Generated builds
 provide an exact-byte worker; the raw source preview has no generated worker.
 Vendor provenance and licenses accompany the executable closure. The bundled scenery includes original procedural artwork and selected Kenney
@@ -59,8 +62,10 @@ while playing.
 ## Qualification status
 
 Focused runtime, content pipeline, library and legacy compatibility tests are
-part of this change. This does not restore or satisfy the repository-wide
-release gate, which is currently waived by `publishing/test-policy.json`.
+part of this change. They do not by themselves satisfy the repository-wide
+release gate. The current `publishing/test-policy.json` requires test evidence;
+historical waiver receipts are not current passes. A release still needs the
+source-bound checks and review evidence required by the publishing workflow.
 
 Remaining release work includes the full set of mode-specific demonstrations,
 unfamiliar-player and medal tuning, external asset curation/art polish, measured
