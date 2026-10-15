@@ -1,5 +1,14 @@
 # Flight practice: completion plan and priority review
 
+16 October continuation: [HUD repair and qualification](flight-practice-hud-qualification-2026-10-16.md)
+makes the existing guidance controls reachable in both FPV apps and verifies four
+EN/UK settings/reload/visible stationary-HUD journeys. Matching guides are updated.
+The first genuine FPV exercise probe failed at the unchanged deadline; its
+observer-only ground-clearance correction passes a reproduced model regression,
+but corrected native completion/export/replay remains unrun. Local free disk is
+below 1 GiB, so additional browser batches need a safe space margin. No hosting
+or review gate is waived. Historical FPV DOM telemetry is not visible-HUD proof.
+
 Visibility audit correction: the historical ten-case first-flight matrix uses
 hidden legacy DOM telemetry for its eight FPV cases. Native launch/mode/pause/retry
 and DOM-state results remain evidence, but visible FPV instrument feedback is not

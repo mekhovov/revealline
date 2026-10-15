@@ -1,0 +1,461 @@
+TAP version 13
+# Subtest: SIM world selection freezes on first arm and applies queued preference only on reset
+ok 1 - SIM world selection freezes on first arm and applies queued preference only on reset
+  ---
+  duration_ms: 230.515292
+  ...
+# Subtest: a superseded appearance preparation cannot arm or overwrite the newer flight appearance
+ok 2 - a superseded appearance preparation cannot arm or overwrite the newer flight appearance
+  ---
+  duration_ms: 126.274791
+  ...
+# Subtest: unavailable recorded appearance remains visible after graphics preparation without altering its proof
+ok 3 - unavailable recorded appearance remains visible after graphics preparation without altering its proof
+  ---
+  duration_ms: 191.967958
+  ...
+# Subtest: native optional shell lists twelve drills, uses exclusive keyboard input, and neutralizes blur/dialog/reset
+ok 4 - native optional shell lists twelve drills, uses exclusive keyboard input, and neutralizes blur/dialog/reset
+  ---
+  duration_ms: 632.353459
+  ...
+# Subtest: synthetic USB samples drive the real shell/model to one verified practice completion; reviewing and demonstrations never deliver evidence
+ok 5 - synthetic USB samples drive the real shell/model to one verified practice completion; reviewing and demonstrations never deliver evidence
+  ---
+  duration_ms: 4518.067583
+  ...
+# Subtest: radio switch edges while blurred or hidden cannot rearm; return requires a fresh visible OFF then ON
+ok 6 - radio switch edges while blurred or hidden cannot rearm; return requires a fresh visible OFF then ON
+  ---
+  duration_ms: 260.543166
+  ...
+# Subtest: immediate Retry preserves the completed proof while notebook verification yields
+ok 7 - immediate Retry preserves the completed proof while notebook verification yields
+  ---
+  duration_ms: 1647.493709
+  ...
+# Subtest: Controls camera chooser and toolbar stay synchronized for the narrow layout
+ok 8 - Controls camera chooser and toolbar stay synchronized for the narrow layout
+  ---
+  duration_ms: 134.223041
+  ...
+# Subtest: Studio preview runs the actual course as authoring and never reaches the notebook earning callback
+ok 9 - Studio preview runs the actual course as authoring and never reaches the notebook earning callback
+  ---
+  duration_ms: 1172.190625
+  ...
+# Subtest: radio loss pauses instead of borrowing keyboard and reset drops old throttle pickup
+ok 10 - radio loss pauses instead of borrowing keyboard and reset drops old throttle pickup
+  ---
+  duration_ms: 206.3025
+  ...
+# Subtest: graphics failure leaves readable choices and never advances; context loss freezes an existing attempt
+ok 11 - graphics failure leaves readable choices and never advances; context loss freezes an existing attempt
+  ---
+  duration_ms: 327.840625
+  ...
+# Subtest: replay owns a verified clone, rejects forged course data and cannot be used as a practice source
+ok 12 - replay owns a verified clone, rejects forged course data and cannot be used as a practice source
+  ---
+  duration_ms: 200.904125
+  ...
+# Subtest: Academy shared menu resumes paused playback without restarting or granting practice evidence
+ok 13 - Academy shared menu resumes paused playback without restarting or granting practice evidence
+  ---
+  duration_ms: 254.809416
+  ...
+# Subtest: Academy exhausted unfinished playback offers Results instead of a nonfunctional Continue
+ok 14 - Academy exhausted unfinished playback offers Results instead of a nonfunctional Continue
+  ---
+  duration_ms: 243.934167
+  ...
+# Subtest: touch release holds throttle, centers yaw, and cancellation clears all input and listener ownership
+ok 15 - touch release holds throttle, centers yaw, and cancellation clears all input and listener ownership
+  ---
+  duration_ms: 0.539334
+  ...
+# Subtest: full-length replay admission yields through the shared verifier and cannot earn a practice receipt
+ok 16 - full-length replay admission yields through the shared verifier and cannot earn a practice receipt
+  ---
+  duration_ms: 1596.657459
+  ...
+# Subtest: pending review aborts on reset, input change, dialog close and disposal without late playback
+ok 17 - pending review aborts on reset, input change, dialog close and disposal without late playback
+  ---
+  duration_ms: 568.746541
+  ...
+# Subtest: closing a replay import during file reading prevents verification and late playback
+ok 18 - closing a replay import during file reading prevents verification and late playback
+  ---
+  duration_ms: 119.682208
+  ...
+# Subtest: actual renderer detects unavailable WebGL without allocating a running fallback simulation
+ok 19 - actual renderer detects unavailable WebGL without allocating a running fallback simulation
+  ---
+  duration_ms: 2.380708
+  ...
+# Subtest: disposing releases generated course callbacks; retained old buttons are inert and unrelated host content remains
+ok 20 - disposing releases generated course callbacks; retained old buttons are inert and unrelated host content remains
+  ---
+  duration_ms: 117.586084
+  ...
+# Subtest: stale queued animation timestamps cannot advance after a long execution gap; explicit resume keeps input ownership
+ok 21 - stale queued animation timestamps cannot advance after a long execution gap; explicit resume keeps input ownership
+  ---
+  duration_ms: 862.267666
+  ...
+# Subtest: cached Back restore preserves paused flight and requires explicit resume without duplicate frames
+ok 22 - cached Back restore preserves paused flight and requires explicit resume without duplicate frames
+  ---
+  duration_ms: 155.302917
+  ...
+# Subtest: cached radio restore requires a fresh arm edge and matching control pickup
+ok 23 - cached radio restore requires a fresh arm edge and matching control pickup
+  ---
+  duration_ms: 201.54225
+  ...
+# Subtest: game return keeps scoped offline controls available and serializes preparation/removal
+ok 24 - game return keeps scoped offline controls available and serializes preparation/removal
+  ---
+  duration_ms: 116.703542
+  ...
+# Subtest: disposing Academy cancels an owned offline verification and releases its progress panel
+ok 25 - disposing Academy cancels an owned offline verification and releases its progress panel
+  ---
+  duration_ms: 99.382083
+  ...
+# Subtest: unavailable offline capability stays explanatory and a failed prepare never reports ready
+ok 26 - unavailable offline capability stays explanatory and a failed prepare never reports ready
+  ---
+  duration_ms: 292.591458
+  ...
+# Subtest: ordinary unload disposes permanently and a late pageshow cannot revive it
+ok 27 - ordinary unload disposes permanently and a late pageshow cannot revive it
+  ---
+  duration_ms: 117.744208
+  ...
+# Subtest: selecting USB radio restores saved axis arm and button reset after reload
+ok 28 - selecting USB radio restores saved axis arm and button reset after reload
+  ---
+  duration_ms: 193.037042
+  ...
+# Subtest: tested TX15 default loads without saved calibration and does not auto-arm
+ok 29 - tested TX15 default loads without saved calibration and does not auto-arm
+  ---
+  duration_ms: 140.219041
+  ...
+# Subtest: TX15 default does not match an unrelated joystick
+ok 30 - TX15 default does not match an unrelated joystick
+  ---
+  duration_ms: 157.640667
+  ...
+# Subtest: camera focus preserves global pause for keyboard, touch and radio owners without resuming held input
+ok 31 - camera focus preserves global pause for keyboard, touch and radio owners without resuming held input
+  ---
+  duration_ms: 1074.627625
+  ...
+# Subtest: pause shortcuts release local controls but preserve text, dialogs and modified browser keys
+ok 32 - pause shortcuts release local controls but preserve text, dialogs and modified browser keys
+  ---
+  duration_ms: 0.538416
+  ...
+# Subtest: Academy title focus loss before flight initialization keeps the menu usable and disarmed
+ok 33 - Academy title focus loss before flight initialization keeps the menu usable and disarmed
+  ---
+  duration_ms: 129.615416
+  ...
+# Subtest: Academy shell keeps menu input out of native flight and requires explicit Start
+ok 34 - Academy shell keeps menu input out of native flight and requires explicit Start
+  ---
+  duration_ms: 171.799042
+  ...
+# Subtest: Academy native tool dialogs retain instructions across blur and focus
+    # Subtest: help-dialog
+    ok 1 - help-dialog
+      ---
+      duration_ms: 155.344042
+      ...
+    # Subtest: notebook-dialog
+    ok 2 - notebook-dialog
+      ---
+      duration_ms: 181.947291
+      ...
+    1..2
+ok 35 - Academy native tool dialogs retain instructions across blur and focus
+  ---
+  duration_ms: 337.78025
+  ...
+# Subtest: Academy existing HUD guidance controls are reachable in Accessibility in EN and UK
+ok 36 - Academy existing HUD guidance controls are reachable in Accessibility in EN and UK
+  ---
+  duration_ms: 234.078208
+  ...
+# Subtest: Academy categories retain every authored preference control and restore nested dialog focus
+ok 37 - Academy categories retain every authored preference control and restore nested dialog focus
+  ---
+  duration_ms: 192.768833
+  ...
+# Subtest: Academy global settings bind canonical records without startup writes or duplicate fields
+ok 38 - Academy global settings bind canonical records without startup writes or duplicate fields
+  ---
+  duration_ms: 345.902792
+  ...
+# Subtest: Academy shared tool iframe retains D-pad focus and controller Back restores paused Settings
+ok 39 - Academy shared tool iframe retains D-pad focus and controller Back restores paused Settings
+  ---
+  duration_ms: 230.710583
+  ...
+# Subtest: fresh Ukrainian Academy launch localizes shared Appearance and cue controls before any language change
+ok 40 - fresh Ukrainian Academy launch localizes shared Appearance and cue controls before any language change
+  ---
+  duration_ms: 120.797708
+  ...
+# Subtest: Academy flight feedback and shared menu sound retain separate sliders and preference records
+ok 41 - Academy flight feedback and shared menu sound retain separate sliders and preference records
+  ---
+  duration_ms: 107.538917
+  ...
+# Subtest: Academy result shortcuts choose once and launch a random prepared lesson directly
+ok 42 - Academy result shortcuts choose once and launch a random prepared lesson directly
+  ---
+  duration_ms: 136.727375
+  ...
+# Subtest: Academy cancels an imminent auto-next before a stalled animation timestamp
+ok 43 - Academy cancels an imminent auto-next before a stalled animation timestamp
+  ---
+  duration_ms: 2903.779166
+  ...
+# Subtest: Academy cancels an imminent auto-next before a stalled callback execution
+ok 44 - Academy cancels an imminent auto-next before a stalled callback execution
+  ---
+  duration_ms: 2946.403208
+  ...
+# Subtest: Academy shared library shows every course, previews the selected flight mode, and launches once
+ok 45 - Academy shared library shows every course, previews the selected flight mode, and launches once
+  ---
+  duration_ms: 157.815416
+  ...
+# Subtest: Academy mission library owns controller navigation and isolated pinned goals
+ok 46 - Academy mission library owns controller navigation and isolated pinned goals
+  ---
+  duration_ms: 185.758958
+  ...
+# Subtest: World random flight from the shared chooser follows displayed filters, preserves mode and avoids repeats
+ok 47 - World random flight from the shared chooser follows displayed filters, preserves mode and avoids repeats
+  ---
+  duration_ms: 10233.280417
+  ...
+# Subtest: World random flight includes the active installed revision and excludes retained archived courses
+ok 48 - World random flight includes the active installed revision and excludes retained archived courses
+  ---
+  duration_ms: 826.484792
+  ...
+# Subtest: World ordinary results offer a filtered random next flight through unarmed preparation
+ok 49 - World ordinary results offer a filtered random next flight through unarmed preparation
+  ---
+  duration_ms: 1474.402167
+  ...
+# Subtest: World disposal retires menu and renderer owners before their reparented controls disappear
+ok 50 - World disposal retires menu and renderer owners before their reparented controls disappear
+  ---
+  duration_ms: 749.514375
+  ...
+# Subtest: World Reset unapplied fields discards Hunt and pursuit drafts without changing the accepted course
+ok 51 - World Reset unapplied fields discards Hunt and pursuit drafts without changing the accepted course
+  ---
+  duration_ms: 839.593708
+  ...
+# Subtest: World app prepares a pinned appearance and queues drone/theme changes after arming
+ok 52 - World app prepares a pinned appearance and queues drone/theme changes after arming
+  ---
+  duration_ms: 1349.280833
+  ...
+# Subtest: World route thumbnails share selected palettes without modifying source geometry or authored scene references
+ok 53 - World route thumbnails share selected palettes without modifying source geometry or authored scene references
+  ---
+  duration_ms: 310.533
+  ...
+# Subtest: World recovery retains its saved theme and drone while new appearance choices remain queued
+ok 54 - World recovery retains its saved theme and drone while new appearance choices remain queued
+  ---
+  duration_ms: 501.264125
+  ...
+# Subtest: World replay visibly falls back from an unavailable pinned revision (legacy environment) without changing its record
+ok 55 - World replay visibly falls back from an unavailable pinned revision (legacy environment) without changing its record
+  ---
+  duration_ms: 625.57975
+  ...
+# Subtest: World replay visibly falls back from an unavailable pinned revision (saved authored profile) without changing its record
+ok 56 - World replay visibly falls back from an unavailable pinned revision (saved authored profile) without changing its record
+  ---
+  duration_ms: 440.336333
+  ...
+# Subtest: World pre-arm appearance refresh keeps focus on the control the player is using
+ok 57 - World pre-arm appearance refresh keeps focus on the control the player is using
+  ---
+  duration_ms: 450.762333
+  ...
+# Subtest: World title retains connected catalogue nodes and transfers the common bar into native flight
+ok 58 - World title retains connected catalogue nodes and transfers the common bar into native flight
+  ---
+  duration_ms: 623.361584
+  ...
+# Subtest: World keyboard and native pause actions open the same shared menu without resuming on Back
+ok 59 - World keyboard and native pause actions open the same shared menu without resuming on Back
+  ---
+  duration_ms: 499.686791
+  ...
+# Subtest: World language refresh preserves native mission ownership and menu phase without another animation frame
+ok 60 - World language refresh preserves native mission ownership and menu phase without another animation frame
+  ---
+  duration_ms: 816.397958
+  ...
+# Subtest: World terminal preview offers Retry and prepares a fresh disarmed attempt
+ok 61 - World terminal preview offers Retry and prepares a fresh disarmed attempt
+  ---
+  duration_ms: 527.641291
+  ...
+# Subtest: World native HUD details retain instructions across blur and focus
+ok 62 - World native HUD details retain instructions across blur and focus
+  ---
+  duration_ms: 433.186875
+  ...
+# Subtest: World menu Back dismisses the visible surface without closing its paused native flight
+ok 63 - World menu Back dismisses the visible surface without closing its paused native flight
+  ---
+  duration_ms: 415.81125
+  ...
+# Subtest: World native Hunt guide remains reachable from the shared pause menu without consuming controls or changing the flight
+ok 64 - World native Hunt guide remains reachable from the shared pause menu without consuming controls or changing the flight
+  ---
+  duration_ms: 523.563208
+  ...
+# Subtest: World exhausted unfinished playback keeps native Results reachable without Continue
+ok 65 - World exhausted unfinished playback keeps native Results reachable without Continue
+  ---
+  duration_ms: 581.721042
+  ...
+# Subtest: World exhausted section playback keeps native Results reachable without Continue
+ok 66 - World exhausted section playback keeps native Results reachable without Continue
+  ---
+  duration_ms: 741.468834
+  ...
+# Subtest: native industrial Start and Retry retain source-authenticated art while the next attempt uses changed preferences
+ok 67 - native industrial Start and Retry retain source-authenticated art while the next attempt uses changed preferences
+  ---
+  duration_ms: 649.065375
+  ...
+# Subtest: native host rejects changed retained source before replacing the active renderer
+ok 68 - native host rejects changed retained source before replacing the active renderer
+  ---
+  duration_ms: 446.738
+  ...
+# Subtest: Studio imports exact retained Acro appearance, exports it, and explicitly detaches on creator-theme change
+ok 69 - Studio imports exact retained Acro appearance, exports it, and explicitly detaches on creator-theme change
+  ---
+  duration_ms: 494.222666
+  ...
+# Subtest: an explicit native mode change prepares a new mode pin while Retry keeps that pin
+ok 70 - an explicit native mode change prepares a new mode pin while Retry keeps that pin
+  ---
+  duration_ms: 579.10825
+  ...
+# Subtest: World categories retain every authored preference and restore Home and Pause openers
+ok 71 - World categories retain every authored preference and restore Home and Pause openers
+  ---
+  duration_ms: 611.211625
+  ...
+# Subtest: Worlds existing HUD guidance controls are reachable in Accessibility in EN and UK
+ok 72 - Worlds existing HUD guidance controls are reachable in Accessibility in EN and UK
+  ---
+  duration_ms: 803.782916
+  ...
+# Subtest: World Library records shortcut reaches the existing localized controls and keyboard Back restores its opener
+ok 73 - World Library records shortcut reaches the existing localized controls and keyboard Back restores its opener
+  ---
+  duration_ms: 811.02025
+  ...
+# Subtest: World Library records controller confirmation cannot activate backup or resume its paused flight
+ok 74 - World Library records controller confirmation cannot activate backup or resume its paused flight
+  ---
+  duration_ms: 899.764667
+  ...
+# Subtest: World Library records refuses a foreign settings target and a disposed shortcut cannot reopen the host
+ok 75 - World Library records refuses a foreign settings target and a disposed shortcut cannot reopen the host
+  ---
+  duration_ms: 623.401834
+  ...
+# Subtest: Worlds uses shared display and master settings ahead of old SIM-local preferences
+ok 76 - Worlds uses shared display and master settings ahead of old SIM-local preferences
+  ---
+  duration_ms: 491.234709
+  ...
+# Subtest: World shared tools keep iframe focus through D-pad and return to paused Settings on controller Back
+ok 77 - World shared tools keep iframe focus through D-pad and return to paused Settings on controller Back
+  ---
+  duration_ms: 584.971375
+  ...
+# Subtest: fresh Ukrainian World launch localizes shared Appearance and cue controls immediately
+ok 78 - fresh Ukrainian World launch localizes shared Appearance and cue controls immediately
+  ---
+  duration_ms: 429.976416
+  ...
+# Subtest: World flight feedback and shared menu sound retain separate sliders and preference records
+ok 79 - World flight feedback and shared menu sound retain separate sliders and preference records
+  ---
+  duration_ms: 386.057625
+  ...
+# Subtest: World result shortcuts are immediately available while the result is being verified
+ok 80 - World result shortcuts are immediately available while the result is being verified
+  ---
+  duration_ms: 580.109666
+  ...
+# Subtest: World defeat focuses Retry and verification preserves the connected action row and chosen focus
+ok 81 - World defeat focuses Retry and verification preserves the connected action row and chosen focus
+  ---
+  duration_ms: 535.467041
+  ...
+# Subtest: World results embed one compact live statistics disclosure without replacing verified actions
+ok 82 - World results embed one compact live statistics disclosure without replacing verified actions
+  ---
+  duration_ms: 1129.243625
+  ...
+# Subtest: Worlds and School share one complete scrollable library with direct native launches
+ok 83 - Worlds and School share one complete scrollable library with direct native launches
+  ---
+  duration_ms: 1166.9315
+  ...
+# Subtest: World route preview uses the selected Acro route and changes no course geometry
+ok 84 - World route preview uses the selected Acro route and changes no course geometry
+  ---
+  duration_ms: 383.63275
+  ...
+# Subtest: World mission library owns controller navigation and isolated pinned goals
+ok 85 - World mission library owns controller navigation and isolated pinned goals
+  ---
+  duration_ms: 560.957792
+  ...
+# Subtest: World mission launch cannot steal Home focus after deferred scene preparation
+ok 86 - World mission launch cannot steal Home focus after deferred scene preparation
+  ---
+  duration_ms: 671.980042
+  ...
+# Subtest: World Hunt schemes expose actual targets, patrols and collision footprints without inventing an unordered route
+ok 87 - World Hunt schemes expose actual targets, patrols and collision footprints without inventing an unordered route
+  ---
+  duration_ms: 307.744875
+  ...
+# Subtest: World shared chooser remains usable when native scene loading fails
+ok 88 - World shared chooser remains usable when native scene loading fails
+  ---
+  duration_ms: 699.642917
+  ...
+1..88
+# tests 90
+# suites 0
+# pass 90
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 62389.82825
