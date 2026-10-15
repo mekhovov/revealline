@@ -1,0 +1,231 @@
+{
+  "passed": true,
+  "actualCommandedRoutes": 14,
+  "records": [
+    {
+      "mode": "self-level",
+      "route": "under-trestle",
+      "ticks": 1205,
+      "position": {
+        "x": 224693,
+        "y": 3875,
+        "z": 160000
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0,
+      "maxHeightErrorM": 0.125
+    },
+    {
+      "mode": "self-level",
+      "route": "above-bridge-deck",
+      "ticks": 1705,
+      "position": {
+        "x": 192000,
+        "y": 21875,
+        "z": 228693
+      },
+      "contacts": 0,
+      "recentres": 2,
+      "maxCrossTrackM": 0,
+      "maxHeightErrorM": 0.125
+    },
+    {
+      "mode": "self-level",
+      "route": "north-freight-lane",
+      "ticks": 1305,
+      "position": {
+        "x": 250000,
+        "y": 18875,
+        "z": 108693
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0,
+      "maxHeightErrorM": 0.125
+    },
+    {
+      "mode": "self-level",
+      "route": "station-canopy",
+      "ticks": 1305,
+      "position": {
+        "x": 166000,
+        "y": 18875,
+        "z": 104693
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0,
+      "maxHeightErrorM": 0.125
+    },
+    {
+      "mode": "self-level",
+      "route": "maintenance-hall",
+      "ticks": 1305,
+      "position": {
+        "x": 300000,
+        "y": 19875,
+        "z": 108693
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0,
+      "maxHeightErrorM": 0.125
+    },
+    {
+      "mode": "self-level",
+      "route": "cutting-traverse",
+      "ticks": 4791,
+      "position": {
+        "x": 352688,
+        "y": -125,
+        "z": 180000
+      },
+      "contacts": 0,
+      "recentres": 3,
+      "maxCrossTrackM": 0,
+      "maxHeightErrorM": 0.125
+    },
+    {
+      "mode": "self-level",
+      "route": "field-recovery",
+      "ticks": 1191,
+      "position": {
+        "x": 80000,
+        "y": 7875,
+        "z": 336688
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0,
+      "maxHeightErrorM": 0.125
+    },
+    {
+      "mode": "acro",
+      "route": "under-trestle",
+      "ticks": 1205,
+      "position": {
+        "x": 224693,
+        "y": 3875,
+        "z": 160000
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0,
+      "maxHeightErrorM": 0.125
+    },
+    {
+      "mode": "acro",
+      "route": "above-bridge-deck",
+      "ticks": 1705,
+      "position": {
+        "x": 192000,
+        "y": 21875,
+        "z": 228692
+      },
+      "contacts": 0,
+      "recentres": 2,
+      "maxCrossTrackM": 0,
+      "maxHeightErrorM": 0.125
+    },
+    {
+      "mode": "acro",
+      "route": "north-freight-lane",
+      "ticks": 1305,
+      "position": {
+        "x": 250000,
+        "y": 18875,
+        "z": 108692
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0,
+      "maxHeightErrorM": 0.125
+    },
+    {
+      "mode": "acro",
+      "route": "station-canopy",
+      "ticks": 1305,
+      "position": {
+        "x": 166000,
+        "y": 18875,
+        "z": 104692
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0,
+      "maxHeightErrorM": 0.125
+    },
+    {
+      "mode": "acro",
+      "route": "maintenance-hall",
+      "ticks": 1305,
+      "position": {
+        "x": 300000,
+        "y": 19875,
+        "z": 108692
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0,
+      "maxHeightErrorM": 0.125
+    },
+    {
+      "mode": "acro",
+      "route": "cutting-traverse",
+      "ticks": 4791,
+      "position": {
+        "x": 352689,
+        "y": -125,
+        "z": 180000
+      },
+      "contacts": 0,
+      "recentres": 3,
+      "maxCrossTrackM": 0,
+      "maxHeightErrorM": 0.125
+    },
+    {
+      "mode": "acro",
+      "route": "field-recovery",
+      "ticks": 1191,
+      "position": {
+        "x": 80000,
+        "y": 7875,
+        "z": 336688
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0,
+      "maxHeightErrorM": 0.125
+    }
+  ],
+  "authoredStarts": 8,
+  "actualWallContacts": [
+    {
+      "mode": "self-level",
+      "ticks": 129,
+      "position": {
+        "x": 279478,
+        "y": 19875,
+        "z": 70000
+      },
+      "contacts": 1
+    },
+    {
+      "mode": "acro",
+      "ticks": 129,
+      "position": {
+        "x": 279478,
+        "y": 19875,
+        "z": 70000
+      },
+      "contacts": 1
+    }
+  ],
+  "sourcePins": {
+    "terrain": "ed0ea8d9a7dcde8453fd89186c1e8f1982c122e91deee8cc3b33daa6fba5980c",
+    "scenery": "1cfd2659a7bf1429a47d2652274d437204ffebc3f2ed5bc7a7d48a8959c59f3d"
+  },
+  "playerReady": false,
+  "claim": "Production regional-session controlled command evidence; not native player/device FPS evidence."
+}
