@@ -5,6 +5,32 @@ The user selected default catalogue visibility, download on Play, optional offli
 storage, and authored regions first. Generation assists authoring; endless runtime
 terrain is deferred. Twelve proposed regions are design targets, not shipped maps.
 
+## 15 October — preserved scheduling failure; sustained acceptance still open
+
+The fresh visible-commanded Urban segment started at 14:53:27.762Z but
+**invalidated** after 659.5013 real seconds / 32,925 ticks. Its frame interval
+reached 997.4 ms, exceeding the unchanged 250 ms gate. The report records a blur
+while the document remained visible shortly before the gap. That timing does not
+prove the cause. It completed one circuit, seven accepted waypoints, six cell
+crossings and zero contacts; owned collision/geometry/reservation/cache resources
+released to zero. No two-hour pass is claimed. The earlier strict-focus failure,
+smoke and all frozen candidates remain separate evidence.
+
+The [complete negative report](fpv-authored-urban-visible-invalid-framegap-20261015.json)
+is preserved. Browser animation scheduling can change in background contexts
+([MDN](https://developer.mozilla.org/en-US/docs/Web/API/Window/requestAnimationFrame),
+[Electron](https://www.electronjs.org/docs/latest/api/browser-window)); host
+scheduling is a hypothesis to investigate, not a diagnosed simulator defect or a
+reason to relax the gate. A fresh full-duration foreground observation is required.
+There is currently no active elapsed segment; normal serial native gates continue.
+
+Corrected Lunar source #1452/#1455/#1460/#1464 has merged. Immutable corrected
+#1470 remains a separate delivery gate. Material #1462, preview #1467, Alpine
+headings #1468 and retained-download recovery continue independently. Library
+edition labels #1465 have merged; their remaining broader CI tails stay tracked.
+Final art, real offline/restart/device qualification, D6 and public launch remain
+open. No production behavior, acceptance threshold or package budget changes here.
+
 ## 15 October — corrected Alpine admission and bounded Lunar qualification
 
 This checkpoint supersedes earlier status below. The full roadmap remains **open**.

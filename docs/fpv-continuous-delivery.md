@@ -5091,3 +5091,14 @@ its actual report before any completed claim. The current private handoff has ex
 identity and operational instructions. Latest large-worlds checkpoint and receipts
 record passed and remaining gates. Internal free space 1.8 GiB is below the 3 GiB
 floor; heavy work stays external/cloud, source and player data untouched.
+
+## 15 October — frame-gap result preserved without a pass
+
+The visible-commanded Urban attempt invalidated after 659.5013 real seconds when
+a 997.4 ms frame interval exceeded the unchanged 250 ms gate. One circuit and
+zero contacts do not substitute for the two-hour workload. The complete report is
+committed as `fpv-authored-urban-visible-invalid-framegap-20261015.json`; earlier
+negative and smoke reports remain intact. No elapsed segment is currently running.
+Corrected Lunar source is merged; immutable delivery, material and Library admission
+remain separate. Native Alpine heading verification and retained-copy recovery
+continue independently while browser scheduling is investigated.
