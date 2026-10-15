@@ -33,6 +33,17 @@ Team victory and Next remain open. A twelve-image campaign passed actual downloa
 two ordinary Solo wins, Next and reload onto the third mission. Fifty images passed preparation,
 approval, actual download and installation as a fifty-mission edition.
 
+The [pacing and recovery follow-up](creator-pacing-recovery-acceptance-2026-10-15.md) fixes Balanced
+variety skipping three families because the item position was counted twice. A rebuilt twelve-image
+browser review now covers all six families and both variants. Keyboard Cancel, checkpoint reload
+and deliberate resume passed. Duplicate filenames remained distinct; a corrupt image blocked
+approval until explicitly excluded, and the exported pack retained exactly the three approved items.
+The fifty-mission download also passed import, separate approval, installation, a Solo win and reload
+onto mission two on another storage origin, retaining unrelated existing editions. A separate origin
+is not a clean physical browser profile.
+An oversized 24-image campaign also passed explicit 9/9/6 splitting and three actual downloads.
+Every part stayed below 24 MiB, and their manifests retained all 24 missions in order.
+
 The current `.github/workflows/publish-main-pages.yml` already publishes protected main. Reuse it;
 do not add a second publisher or restore retired archive workflows. The retired Pages playbook is
 stale relative to that active workflow and the user's current hosting choice. A successful source
@@ -77,7 +88,8 @@ container conversion, not native browser decoding or an installed campaign win.
    Solo multi-mission Next/reload now passed. Team mission admission was fixed and start/control/
    restart checked; complete Team victory/Next and cross-browser cases.
 2. **Useful generated gameplay:** review a small sample for obstacle/enemy pressure and repetition.
-   Six families and twelve bounded variants remain implemented. Automated routes establish exact
+   Six families and twelve bounded variants remain implemented; corrected Balanced variety now
+   exercises all six in the ordinary twelve-image review. Automated routes establish exact
    feasibility; they cannot grant human enjoyment or balance approval. Scope additional variants
    only from observed shortcomings.
 3. **Representative storage pressure:** exercise a large video and batch, cancellation, export and
@@ -90,7 +102,9 @@ container conversion, not native browser decoding or an installed campaign win.
    The follow-up browser check now passed actual 50 MB inspection, cancellation/retry, custom frame
    and playback range, export, installation and completion. Twelve-image download/install and Solo
    continuation now pass; fifty-image generation/download/install passed. Browser peak memory,
-   fresh-profile large-batch transfer/cancellation and quota/failure recovery remain open.
+   fresh-profile large-batch transfer and browser quota/failure recovery remain open.
+   Real package-capacity splitting/export passed with all 24 selected missions retained.
+   Keyboard batch cancellation/reload/resume and duplicate/corrupt-input exclusion now passed.
    Do not fill the user's disk or damage existing player data to manufacture a quota result.
 4. **Desktop compatibility:** prioritize the built-in browser, then available desktop Safari/Firefox
    environments. Record actual versions/formats and outcomes. Browser availability, permissions
@@ -120,11 +134,11 @@ evidence into speculative feature work, skip tests, silently raise limits or cla
 These are planning estimates, not promised completion dates. They exclude fixes discovered during
 acceptance and time spent waiting for CI or access.
 
-| Work                                                  | Estimated hands-on effort                                    | Dependency / consequence if deferred                                                                                                                                       |
-| ----------------------------------------------------- | ------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Current creator journey and generated-gameplay review | Half to one day on one fixed build                           | Single-image, Studio history, Duel and Solo continuation passed. Team start/restart passed after a binding correction; Team win/Next and human balance review remain.      |
-| Desktop browser matrix                                | One to two days for a bounded Chromium/Firefox/Safari matrix | Available desktop browser sessions and codecs; no broader support claim before the actual runs.                                                                            |
-| Large-video browser storage and recovery              | Half to one day                                              | Single-video and 12/50-image generation/download/install passed; fresh-profile batch transfer, cancellation, quota failure and peak-memory limits remain unverified.       |
-| Static release batch                                  | CI/deployment queue dependent                                | Protected-source checks and deployed identity verification; a merged PR is not a successful Pages deployment.                                                              |
-| Public-store pilot, moderation and restore            | One to two days of acceptance after setup                    | Backend host, email delivery, test accounts, operator and isolated recovery target; Pages alone cannot enable public submissions. Setup is not estimated before selection. |
-| AWS-specific qualification                            | Half to one day after scoped access, only if selected        | Deferred; a filesystem-backed host does not need AWS.                                                                                                                      |
+| Work                                                  | Estimated hands-on effort                                    | Dependency / consequence if deferred                                                                                                                                                                           |
+| ----------------------------------------------------- | ------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Current creator journey and generated-gameplay review | Half to one day on one fixed build                           | Single-image, Studio history, Duel and Solo continuation passed. Team start/restart passed after a binding correction; Team win/Next and human balance review remain.                                          |
+| Desktop browser matrix                                | One to two days for a bounded Chromium/Firefox/Safari matrix | Available desktop browser sessions and codecs; no broader support claim before the actual runs.                                                                                                                |
+| Large-video browser storage and recovery              | Half to one day                                              | Single-video, 12/50-image creation, separate-origin transfer and keyboard cancellation/reload passed. Package-capacity splitting passed; real quota failure, physical-profile transfer and peak memory remain. |
+| Static release batch                                  | CI/deployment queue dependent                                | Protected-source checks and deployed identity verification; a merged PR is not a successful Pages deployment.                                                                                                  |
+| Public-store pilot, moderation and restore            | One to two days of acceptance after setup                    | Backend host, email delivery, test accounts, operator and isolated recovery target; Pages alone cannot enable public submissions. Setup is not estimated before selection.                                     |
+| AWS-specific qualification                            | Half to one day after scoped access, only if selected        | Deferred; a filesystem-backed host does not need AWS.                                                                                                                                                          |
