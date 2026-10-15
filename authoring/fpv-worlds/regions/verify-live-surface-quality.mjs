@@ -1,9 +1,15 @@
 import assert from 'node:assert/strict';
+import { readFile } from 'node:fs/promises';
+import vm from 'node:vm';
 import * as THREE from '../../../optional-practice/civilian-fpv/vendor/three.module.js';
-import {
-  createTerrainSurface,
-  setRegionalSurfaceQuality,
-} from '../../../optional-practice/civilian-fpv/regional/terrain-surface.mjs';
+import { createTerrainSurface } from '../../../optional-practice/civilian-fpv/regional/terrain-surface.mjs';
+
+// Raw shared renderer imports use the real classic-script translation bootstrap.
+vm.runInNewContext(
+  await readFile(new URL('../../../game/vendor/i18next-26.4.2.min.js', import.meta.url), 'utf8'),
+  { globalThis },
+);
+const { setRegionalSurfaceQuality } = await import('../../../optional-practice/civilian-fpv/renderer.mjs');
 
 function shaderOf(material) {
   const shader = {
