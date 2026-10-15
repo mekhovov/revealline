@@ -23,9 +23,30 @@ export const DESERT_EXPEDITION_LIBRARY_PIN = Object.freeze({
   },
 });
 
+export const DESERT_LANDMARKS_LIBRARY_PIN = Object.freeze({
+  id: 'desert-expedition-study',
+  title: {
+    en: 'Desert Expedition — rock routes',
+    uk: 'Пустельна експедиція — маршрути серед скель',
+  },
+  description: {
+    en: '16.384 × 16.384 km · six close-range rock practice areas · unscored free flight. Weave between windstones, pass through a natural arch, climb the escarpment ribs and orbit the mesa crown. Early composition study; the wider terrain remains sparse.',
+    uk: '16,384 × 16,384 км · шість невеликих зон для практики серед скель · вільний політ без заліку. Маневруйте між каменями, пролітайте крізь природну арку, піднімайтеся між скельними ребрами й облітайте вершину плато. Раннє дослідження композиції; решта ландшафту ще малонаповнена.',
+  },
+  bytes: 48164518,
+  appearance: { terrain: 'desert' },
+  pin: {
+    url: 'https://raw.githubusercontent.com/mekhovov/revealline/6cbd5efd0e5138431bdb29023b8eb696765168e7/authoring/fpv-worlds/regions/desert-expedition/delivery-landmarks-r1/delivery.json',
+    bytes: 329271,
+    sha256: 'fed1f7d18bfe3163cbb52b8b7ecd174a777b89a45ac962c181bd8ca11b727ea7',
+  },
+});
+
 // Original, reviewed sources are pinned to an immutable published commit.
 export const REGIONAL_LIBRARY_PINS = Object.freeze([
-  ...(REGION_CELL_SIZES_MM.includes(512000) ? [DESERT_EXPEDITION_LIBRARY_PIN] : []),
+  ...(REGION_CELL_SIZES_MM.includes(512000)
+    ? [DESERT_LANDMARKS_LIBRARY_PIN, DESERT_EXPEDITION_LIBRARY_PIN]
+    : []),
   {
     id: 'tropical-coastal-districts',
     title: {
@@ -402,7 +423,11 @@ export function mountRegionalLibrary({
       })),
       ...records
         .filter((row) => !offered.has(row.sha256))
-        .map((saved) => ({ id: saved.id, title: saved.descriptor.title, saved })),
+        .map((saved) => ({
+          id: saved.id,
+          title: saved.descriptor.title,
+          saved,
+        })),
     ];
     for (const row of rows) {
       const saved = row.saved,
@@ -429,12 +454,21 @@ export function mountRegionalLibrary({
         play.dataset.regionAction = 'fly';
         play.setAttribute('aria-label', `${txt('Fly', 'Летіти')}: ${title(name)}`);
         const remove = action(
-          txt('Remove saved region', 'Вилучити збережений регіон'),
+          txt('Remove this version', 'Вилучити цю версію'),
           () => run('review-remove', row),
           Boolean(operation),
         );
         remove.dataset.regionAction = 'remove';
         buttons.append(play, remove);
+        if (records.filter((record) => record.id === row.id).length > 1) {
+          const removeAll = action(
+            txt('Remove all versions', 'Вилучити всі версії'),
+            () => run('review-remove-all', row),
+            Boolean(operation),
+          );
+          removeAll.dataset.regionAction = 'remove-all';
+          buttons.append(removeAll);
+        }
       } else {
         const download = action(
           txt('Download region', 'Завантажити регіон'),
@@ -450,14 +484,21 @@ export function mountRegionalLibrary({
         card.append(
           el(
             'p',
-            txt(
-              `Remove all ${removal.revisions.length} saved revision(s) of this region (${size(removal.bytes)})? You can download available revisions again.`,
-              `Вилучити всі збережені версії цього регіону (${removal.revisions.length}; ${size(removal.bytes)})? Доступні версії можна завантажити знову.`,
-            ),
+            removal.scope === 'revision'
+              ? txt(
+                  `Remove version ${removal.revision} (${size(removal.bytes)})? Other saved versions and saved places are kept. This version must be downloaded again before a new flight.`,
+                  `Вилучити версію ${removal.revision} (${size(removal.bytes)})? Інші збережені версії та місця залишаться. Для нового польоту цю версію потрібно буде завантажити знову.`,
+                )
+              : txt(
+                  `Remove all ${removal.revisions.length} saved revision(s) of this region (${size(removal.bytes)})? You can download available revisions again.`,
+                  `Вилучити всі збережені версії цього регіону (${removal.revisions.length}; ${size(removal.bytes)})? Доступні версії можна завантажити знову.`,
+                ),
           ),
         );
         const confirm = action(
-          txt('Remove these downloads', 'Вилучити ці завантаження'),
+          removal.scope === 'revision'
+            ? txt('Remove this download', 'Вилучити це завантаження')
+            : txt('Remove these downloads', 'Вилучити ці завантаження'),
           () => run('remove', row),
           Boolean(operation),
         );
@@ -552,19 +593,39 @@ export function mountRegionalLibrary({
           await fly(applyRegionalAppearance(configuration, row.saved, pins), row.saved, {
             isCurrent: () => requestEpoch === epoch && visible() && !signal.aborted,
           });
-      } else if (kind === 'review-remove') {
-        const reviewed = await waitFor(store.removalSnapshot(row.id), signal);
+      } else if (kind === 'review-remove' || kind === 'review-remove-all') {
+        const scope = kind === 'review-remove' ? 'revision' : 'all';
+        const reviewed = await waitFor(
+          store.removalSnapshot(row.id, scope === 'revision' ? { sha256: row.saved.sha256 } : {}),
+          signal,
+        );
         if (!reviewed) throw new Error('Regional revision is no longer installed');
-        removal = { ...reviewed, viewHash: row.saved.sha256 };
+        removal = { ...reviewed, scope, viewHash: row.saved.sha256 };
         signal.throwIfAborted();
       } else if (kind === 'remove') {
-        if (!removal || removal.id !== row.id) throw new Error('Review removal again');
+        if (!removal || removal.id !== row.id || removal.viewHash !== row.saved.sha256)
+          throw new Error('Review removal again');
         cancel.disabled = true;
-        await store.remove(row.id, { expectedGeneration: removal.generation });
+        const scope = removal.scope;
+        if (scope === 'revision')
+          await store.removeRevision(row.id, removal.sha256, {
+            expectedGeneration: removal.generation,
+          });
+        else
+          await store.remove(row.id, {
+            expectedGeneration: removal.generation,
+          });
         committed = true;
         removal = null;
         records = await waitFor(store.list({ includeRevisions: true }), signal);
-        show('Saved region removed.', 'Збережений регіон вилучено.');
+        show(
+          scope === 'revision'
+            ? 'Saved version removed. Other versions and saved places are kept.'
+            : 'Saved region removed.',
+          scope === 'revision'
+            ? 'Збережену версію вилучено. Інші версії та збережені місця залишилися.'
+            : 'Збережений регіон вилучено.',
+        );
       } else {
         records = await waitFor(store.list({ includeRevisions: true }), signal);
         removal = null;
@@ -605,7 +666,7 @@ export function mountRegionalLibrary({
           const card = [...cards.children].find((item) => item.dataset.regionKey === hash);
           (
             card?.querySelector(
-              kind === 'review-remove' ? '[data-region-action="confirm-remove"]' : 'button',
+              kind.startsWith('review-remove') ? '[data-region-action="confirm-remove"]' : 'button',
             ) ?? refresh
           ).focus();
         }
