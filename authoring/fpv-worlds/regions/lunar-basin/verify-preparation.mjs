@@ -11,7 +11,9 @@ import { createVerifiedMixedWindow } from '../verified-mixed-window.mjs';
 import { sampledHeight } from './relief.mjs';
 assert(process.argv[2]);
 const root = resolve(process.argv[2]);
-const prep = JSON.parse(await readFile(resolve(root, 'preparation.json')));
+const prep = JSON.parse(
+  await readFile(process.argv[3] ? resolve(process.argv[3]) : resolve(root, 'preparation.json')),
+);
 const hash = (x) => createHash('sha256').update(x).digest('hex');
 const manifests = {},
   sources = {},
@@ -91,12 +93,16 @@ try {
       const a = route.points[i - 1],
         b = route.points[i],
         length = Math.hypot(b[0] - a[0], b[2] - a[2]);
-      for (const side of [-1, 0, 1]) {
+      for (const side of length ? [-1, 0, 1] : [0]) {
         const p = (t) =>
           mm([
-            a[0] + (b[0] - a[0]) * t - ((b[2] - a[2]) / length) * route.halfWidth * side,
+            a[0] +
+              (b[0] - a[0]) * t -
+              (length ? ((b[2] - a[2]) / length) * route.halfWidth * side : 0),
             a[1] + (b[1] - a[1]) * t,
-            a[2] + (b[2] - a[2]) * t + ((b[0] - a[0]) / length) * route.halfWidth * side,
+            a[2] +
+              (b[2] - a[2]) * t +
+              (length ? ((b[0] - a[0]) / length) * route.halfWidth * side : 0),
           ]);
         const from = p(0),
           to = p(1);
