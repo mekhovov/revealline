@@ -25,4 +25,6 @@ The paired source is 5,675,931 bytes. Full-window geometry is 1,280,664 bytes, a
 
 The authoring preview exposes **Bridge structure** and **Workshop frames** camera presets; use `views=railway&lighting=urban&ground=railway` with both manifests. The prior [ground presentation](fpv-railway-yard-surface.md) passed native Balanced, Performance and Quality inspection. Quality release/reload returned nine cells, 58 meshes and 1,233,144 geometry bytes for the unchanged pilot fixture, without console errors; this is not an FPS measurement.
 
+Native inspection passes the trestle’s readable bracing and open central route. The first hall material was too dark under the roof; the corrected pale frames and blue services are readable without washing out the walls. Release reports no live scenery/collision; reload restores nine cells, 65 meshes and 1,280,664 geometry bytes. No console errors were observed. This is bounded visual/resource-lifecycle evidence; actual commanded flight is the next separate qualification.
+
 This remains a stylized composition study. Detailed environment dressing, convincing terrain/vegetation composition, sustained flight and device performance, complete player delivery and final representative-art acceptance remain open. It is not a new default playable world, a moving-train feature or a 4 km map.
