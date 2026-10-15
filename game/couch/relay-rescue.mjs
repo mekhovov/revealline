@@ -2664,7 +2664,10 @@ export function bootCoop({
         ...(artworkSource ? { artworkSource } : {}),
       },
       lease: teamMedia
-        ? createCreatorTeamMediaPictureLease(teamMedia, { decodeImage: decodeCoopPicture })
+        ? createCreatorTeamMediaPictureLease(teamMedia, {
+            decodeImage: decodeCoopPicture,
+            getSnapshot: presentationPage.current,
+          })
         : journeyRow?.background && !artworkSource
           ? createCandidateTeamPictures({
               row: journeyRow,
