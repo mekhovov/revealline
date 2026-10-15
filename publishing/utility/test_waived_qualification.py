@@ -1,5 +1,8 @@
 """Temporary waiver admission tests; historical qualification fixtures stay unchanged."""
 import copy
+import json
+from pathlib import Path
+import subprocess
 import unittest
 from unittest.mock import patch
 
@@ -73,6 +76,36 @@ def fixture():
 
 def archive(value, originals):
     return legacy.EvidenceTests().evidence(value['source'], originals)[0]
+
+
+class PolicyCompatibilityTests(unittest.TestCase):
+    def test_python_matches_current_javascript_policy_profiles_without_granting_new_waivers(self):
+        root = Path(__file__).resolve().parents[2]
+        current = json.loads((root / 'publishing/test-policy.json').read_bytes())
+        _, _, _, historic, _, _ = fixture()
+        self.assertEqual(current['mode'], 'required')
+        self.assertEqual(current['authorization'], utility.RESTORATION_AUTHORIZATION)
+        accepted = [historic, dict(historic, mode='required'), current]
+        rejected = [dict(current, mode='waived'), dict(current, authorization='explicit-user-request-20261005'),
+                    dict(current, authorization=''), dict(current, mode='optional'),
+                    dict(current, scope='all-checks'), dict(current, reason=' '),
+                    dict(current, restoration=''), dict(current, extra=True),
+                    dict(current, reason=2), dict(current, restoration='x' * 2001), None, [], {}]
+        values = accepted + rejected
+        module = (root / 'publishing/test-policy.mjs').as_uri()
+        code = ('import {parseTestPolicy} from ' + json.dumps(module) + ';'
+                "let input='';for await(const chunk of process.stdin)input+=chunk;"
+                'console.log(JSON.stringify(JSON.parse(input).map(value=>{try{parseTestPolicy(value);return true;}catch{return false;}})));')
+        actual = json.loads(subprocess.check_output(['node', '--input-type=module', '-e', code],
+                                                   input=encoded(values), timeout=30))
+        self.assertEqual(actual, [True] * len(accepted) + [False] * len(rejected))
+        for value, valid in zip(values, actual):
+            with self.subTest(value=value):
+                if valid:
+                    self.assertEqual(utility.test_policy(encoded(value)), value)
+                else:
+                    with self.assertRaises(ValueError):
+                        utility.test_policy(encoded(value))
 
 
 class WaiverTests(unittest.TestCase):
@@ -162,8 +195,10 @@ class WaiverTests(unittest.TestCase):
             def get(self, _path): return next(self.rows)
         self.assertEqual(utility.artifact_authority(API(), value, encoded(policy)), item)
         with self.assertRaises(ValueError): utility.artifact_authority(API(), value)
-        required = dict(policy, mode='required')
-        with self.assertRaises(ValueError): utility.artifact_authority(API(), value, encoded(required))
+        for authorization in (utility.WAIVER_AUTHORIZATION, utility.RESTORATION_AUTHORIZATION):
+            required = dict(policy, mode='required', authorization=authorization)
+            with self.subTest(authorization=authorization), self.assertRaisesRegex(ValueError, 'successful source/freeze job missing'):
+                utility.artifact_authority(API(), value, encoded(required))
 
     def test_committed_policy_missing_preserves_legacy_and_oversize_refuses_before_read(self):
         value, _, _, policy, _, _ = fixture()
