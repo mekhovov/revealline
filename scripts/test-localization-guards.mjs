@@ -190,6 +190,54 @@ test('HTML template contents and all namespace markers are extracted', () => {
   assert.deepEqual(keys(report), ['demo:ready', 'controllerEditor:done']);
 });
 
+test('local dictionary HTML markers remain reviewable without becoming canonical keys', () => {
+  const report = inspectTranslationSource(
+    `<button data-i18n="beginLearning">Learn</button>
+    <template><span data-i18n-title="settingsHelp"></span></template>
+    <span data-i18n="common:plain"></span>`,
+    'optional-practice/fpv-worlds/index.html',
+    resources,
+  );
+  assert.deepEqual(keys(report), ['common:plain']);
+  assert.deepEqual(
+    report.unverified.map(({ kind, key, line }) => ({ kind, key, line })),
+    [
+      { kind: 'unqualified-marker', key: 'beginLearning', line: 1 },
+      { kind: 'unqualified-marker', key: 'settingsHelp', line: 2 },
+    ],
+  );
+});
+
+test('local dictionary selectors and markup do not impersonate canonical translator calls', () => {
+  const report = inspect(`
+    const t = (key) => dictionary[key];
+    t('beginLearning');
+    const selector = '[data-i18n="settingsHelp"]';
+    const templateSelector = \`[data-i18n="settingsPaused"]\`;
+    const markup = \`<span data-i18n="audioMixHelp"></span>\`;
+  `);
+  assert.deepEqual(keys(report), []);
+  assert.deepEqual(
+    report.unverified.map(({ key }) => key),
+    ['settingsHelp', 'settingsPaused', 'audioMixHelp'],
+  );
+  assert.equal(report.issues.length, 0);
+});
+
+test('unknown and malformed qualified markers still fail the canonical reference gate', () => {
+  for (const file of ['game/a.html', 'game/a.mjs']) {
+    const markup =
+      '<span data-i18n="demo:missing"></span><span data-i18n-title="unknown:title"></span><span data-i18n="common:bad key"></span>';
+    const after = file.endsWith('.html') ? markup : `const markup = ${JSON.stringify(markup)};`;
+    const report = inspectCopyChanges('', after, file, resources, resources);
+    assert.deepEqual(
+      report.errors.filter(({ kind }) => kind === 'unknown-key').map(({ key }) => key),
+      ['demo:missing', 'unknown:title', 'common:bad key'],
+    );
+    assert.equal(report.unverified.length, 0);
+  }
+});
+
 test('source policy includes maintained optional/native/classic and reviewed library UI', () => {
   for (const file of [
     'game/tool.js',

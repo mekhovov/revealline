@@ -127,7 +127,11 @@ to exempt owned product prose or a whole directory. Message strings that look
 like comments do not create exceptions.
 
 Exit success means there are no new provable failures. A
-`passed-with-manual-review` status still has dynamic calls requiring evidence;
+`passed-with-manual-review` status still has items requiring evidence, including
+dynamic calls and unqualified `data-i18n` markers. Some optional surfaces own
+local dictionaries with these markers; confirm that ownership and runtime
+behavior instead of treating them as shared catalog references. Namespaced
+markers and calls to the shared translator still require valid catalog keys;
 even `passed` is not full runtime or translation acceptance. The explicit-base
 check is a separate command, not an implicit addition to every build or existing
 CI job. A release lane should invoke it with its actual reviewed base.
