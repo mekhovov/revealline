@@ -211,7 +211,12 @@
         "game/test/workshop-return.test.mjs",
         "game/test/content-studio-navigation.test.mjs",
         "game/test/couch-departure.test.mjs",
-        "game/test/title-mode-departure-host.test.mjs",
+        "game/test/title-mode-departure-host.test.mjs"
+      ]
+    },
+    {
+      "id": "mission-library",
+      "files": [
         "game/test/mission-library-solo-host.test.mjs",
         "game/test/solo-result-continuation-host.test.mjs"
       ]

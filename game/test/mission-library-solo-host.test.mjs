@@ -600,8 +600,12 @@ test('Solo mode filter exposes the same qualified Journey identities in Versus w
   assert.deepEqual(p.errors, []);
 });
 
-for (const collection of ['Journey', 'Classic'])
-  test(`Solo Team filter hands an exact ${collection} mission to its Team host`, async (t) => {
+for (const [collection, route] of [
+  ['Journey', 'team-cultural-specialist-originals-2'],
+  ['Journey', 'team-expedition-v1'],
+  ['Classic', 'legacy'],
+])
+  test(`Solo Team filter hands an exact ${collection} mission from ${route} to its Team host`, async (t) => {
     const p = await soloPage(t, { titleScreen: true });
     await open(p);
     p.$('journey-mode').value = 'team';
@@ -609,18 +613,18 @@ for (const collection of ['Journey', 'Classic'])
     const cards = [...p.$('journey-cards').children];
     assert.equal(cards.length, 116);
     assert.equal(new Set(cards.map((card) => card.dataset.missionId)).size, 116);
-    const target = cards.find((card) =>
-      card.querySelector('.journey-card-tags').textContent.includes(collection),
+    const target = cards.find(
+      (card) =>
+        card.querySelector('.journey-card-tags').textContent.includes(collection) &&
+        (route === 'legacy' || JSON.parse(card.dataset.missionId)[1] === route),
     );
+    assert.ok(target, `The ${route} edition remains selectable.`);
     assertReadyCard(target);
     target.click();
     await settle(() => globalThis.location.href.includes('library-mission='));
     const destination = new URL(globalThis.location.href);
     assert.equal(destination.pathname, '/game/couch/relay-rescue.html');
-    assert.equal(
-      destination.searchParams.get('journey'),
-      collection === 'Journey' ? 'team-cultural-specialist-originals-2' : 'legacy',
-    );
+    assert.equal(destination.searchParams.get('journey'), route);
     assert.equal(destination.searchParams.get('library-mission'), target.dataset.missionId);
     assert.deepEqual(p.errors, []);
   });
