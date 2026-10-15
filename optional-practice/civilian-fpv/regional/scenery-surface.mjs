@@ -3,16 +3,34 @@ import * as THREE from '../vendor/three.module.js';
 
 export function validateScenerySurface(style = 'plain', quality = 'balanced') {
   if (
-    !['plain', 'urban', 'tropical-settlement-water'].includes(style) ||
+    !['plain', 'urban', 'tropical-settlement-water', 'alpine-overlays'].includes(style) ||
     !['performance', 'balanced', 'quality'].includes(quality)
   )
     throw new TypeError('Unknown scenery surface profile');
   return style;
 }
 
-/** Only the authored visual sea plane opts in; licensed prop materials stay untouched. */
+/** Only explicitly matched original visual surfaces opt in; licensed props stay untouched. */
 export function sceneryMaterialStyle(style, surface) {
   validateScenerySurface(style);
+  if (style === 'alpine-overlays') {
+    const texture = surface.texture;
+    const overlay =
+      surface.collision === 'visual-only' &&
+      surface.alphaMode === 'OPAQUE' &&
+      surface.doubleSided === true &&
+      !surface.colors &&
+      texture?.width === 1 &&
+      texture.height === 1 &&
+      texture.rgbaBase64 === '/////w==' &&
+      [
+        [0.9, 0.94, 0.96], // Original terrain-following snow.
+        [0.48, 0.51, 0.52], // Scree.
+        [0.12, 0.42, 0.48], // Meltwater ribbon, not the separate reservoir plane.
+        [0.29, 0.29, 0.27], // Road apron.
+      ].some((palette) => palette.every((value, i) => surface.color[i] === value));
+    return overlay ? style : 'plain';
+  }
   if (style !== 'tropical-settlement-water') return surface.texture ? 'plain' : style;
   const texture = surface.texture;
   const sea =
@@ -141,6 +159,15 @@ export function createScenerySurface({
     metalness: 0,
     side: THREE.DoubleSide,
   });
+  if (style === 'alpine-overlays') {
+    // Bounded decal-style depth bias avoids coplanar terrain fighting without lifting
+    // authored vertices or disabling ordinary depth occlusion behind real structures.
+    material.name = 'Alpine terrain overlay';
+    material.polygonOffset = true;
+    material.polygonOffsetFactor = -1;
+    material.polygonOffsetUnits = -1;
+    return material;
+  }
   if (style === 'tropical-settlement-water') return coastalWater(material, quality, originMm);
   const kind = urbanSurfaceKind(color);
   if (style === 'plain' || !kind) return material;
