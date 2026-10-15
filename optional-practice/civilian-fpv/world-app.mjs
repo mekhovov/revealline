@@ -4746,6 +4746,10 @@ export function mountWorldApp({
       );
       controls.select.replaceChildren();
       const names = {
+        'lower-square': ['Lower square', 'Нижня площа'],
+        'middle-courtyard': ['Middle courtyard', 'Середнє подвір’я'],
+        'upper-terrace': ['Upper terrace', 'Верхня тераса'],
+        'elevated-pad': ['Elevated pad', 'Піднятий майданчик'],
         'covered-harbour': ['Covered harbour', 'Крита гавань'],
         'lagoon-piers': ['Lagoon piers', 'Пірси лагуни'],
         'reef-rocks': ['Reef rocks', 'Прибережні скелі'],

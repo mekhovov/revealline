@@ -64,8 +64,17 @@ const railwayExpanseViews = [
   ['Foundry yard', [2048, 76, 3200], [1960, 78, 3090], [2070, 80, 3240]],
   ['Timber sidings', [3456, 72, 3200], [3427, 69, 3110], [3427, 70, 3280]],
 ];
+const coasterViews = [
+  ['Arrival gardens', [384, 14, 384], [285, 50, 485], [384, 13, 384]],
+  ['Loop meadow', [1280, 14, 384], [1330, 35, 485], [1408, 18, 448]],
+  ['Ridge station', [1664, 14, 640], [1565, 55, 745], [1664, 18, 640]],
+  ['Service courts', [1408, 14, 1408], [1300, 42, 1500], [1408, 15, 1408]],
+  ['Woodland promenade', [640, 14, 1664], [545, 35, 1760], [640, 13, 1664]],
+  ['River gardens', [384, 14, 1152], [285, 40, 1250], [384, 13, 1152]],
+];
 const views =
   {
+    'coaster-gardens': coasterViews,
     canyon: canyonViews,
     'canyon-districts': canyonDistrictViews,
     railway: railwayViews,
@@ -179,7 +188,11 @@ document.querySelector('form').addEventListener('submit', async (event) => {
         })
       : createVerifiedSceneryWindow(manifest, scenerySource);
     controls(false);
-    await view(views[0]);
+    const requestedView = new URLSearchParams(location.search).get('view');
+    const selected = views.find(
+      (row) => row[0].toLowerCase().replaceAll(' ', '-') === requestedView,
+    );
+    await view(selected ?? views[0]);
   } catch (error) {
     if (!closed) status.textContent = `Preparation stopped: ${error.message}`;
   } finally {

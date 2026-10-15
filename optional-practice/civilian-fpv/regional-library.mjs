@@ -4,6 +4,24 @@ import { validateTerrainSurface } from './regional/terrain-surface.mjs';
 // Original, reviewed sources are pinned to an immutable published commit.
 export const REGIONAL_LIBRARY_PINS = Object.freeze([
   {
+    id: 'hillside-town-study',
+    title: {
+      en: 'Hillside Town — terraces and courtyards',
+      uk: 'Містечко на схилі — тераси та подвір’я',
+    },
+    description: {
+      en: '384 × 384 m · three terraces, graded streets, open doorways and an elevated pad · unscored free flight. Choose one of four starting points. Early town study with original building-kit materials.',
+      uk: '384 × 384 м · три тераси, похилі вулиці, відкриті дверні проходи й піднятий майданчик · вільний політ без заліку. Виберіть одну з чотирьох стартових точок. Ранній огляд містечка з оригінальними матеріалами набору будівель.',
+    },
+    bytes: 8352486,
+    appearance: { terrain: 'plain' },
+    pin: {
+      url: 'https://raw.githubusercontent.com/mekhovov/revealline/0cdeca133c5f0f10a3a0d1c2b8c8a2361ce8b8a1/authoring/fpv-worlds/regions/hillside-town/delivery-town-r2/delivery.json',
+      bytes: 6558,
+      sha256: 'de1dc4726724bf4851e5976191585e04205f81ba3b83f14442e0c94f18b907d9',
+    },
+  },
+  {
     id: 'tropical-coastal-districts',
     title: {
       en: 'Tropical coast — six flight districts',

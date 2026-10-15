@@ -33,6 +33,7 @@ for (const style of [
   'tropical',
   'tropical-settlement',
   'desert',
+  'hillside-town',
 ]) {
   profiles++;
   const originMm = { x: 128000, y: 0, z: 256000 };

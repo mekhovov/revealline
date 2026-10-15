@@ -2,6 +2,7 @@
 import * as THREE from '../vendor/three.module.js';
 import { createUrbanGroundSurface, createRailwayGroundSurface } from './urban-ground-surface.mjs';
 import { createRailwayExpanseGround } from './railway-expanse-ground.mjs';
+import { createHillsideGroundSurface } from './hillside-ground-surface.mjs';
 
 export function validateTerrainSurface(style = 'plain', quality = 'balanced') {
   if (
@@ -14,6 +15,7 @@ export function validateTerrainSurface(style = 'plain', quality = 'balanced') {
       'railway-expanse',
       'tropical-settlement',
       'desert',
+      'hillside-town',
     ].includes(style) ||
     !['performance', 'balanced', 'quality'].includes(quality)
   )
@@ -46,6 +48,7 @@ export function createTerrainSurface({ style = 'plain', quality = 'balanced', or
     )
   )
     throw new TypeError('Terrain surface needs a bounded integer origin');
+  if (style === 'hillside-town') return createHillsideGroundSurface({ quality, originMm });
   if (style === 'urban') return createUrbanGroundSurface({ quality, originMm });
   if (style === 'tropical' || style === 'tropical-settlement')
     return createTropicalGroundSurface({
