@@ -143,6 +143,18 @@ physical-device qualification. VoiceOver listening is skipped by explicit user
 request and is not an acceptance gate for this delivery. Higher-grade expansion
 remains optional; no new gameplay or mission content is needed for this fix.
 
+## Public interaction closure — 15 October 2026
+
+PR #1233 is merged and included in a successful public deployment. The
+[public release check](public-release-check-20261015.md) closes the remaining
+recommended desktop public-site follow-up: direct entry and mission activation,
+shared settings, appearance changes, fixture-assisted victory/results/Next,
+cancelled auto-next, an observed 2.93-second ordinary defeat/replay/retry, normal
+reload, and English/Ukrainian compact layouts. Exact deployment/module evidence,
+screenshots and the visible transition trace are retained alongside the report.
+No runtime defect was identified. Physical devices and player feedback remain
+deferred; VoiceOver remains skipped; higher-grade expansion remains optional.
+
 ## Original artwork and safety
 
 New structure, pose and material artwork is editable original drawing code in the existing presentation system; no third-party game sprites were copied. Existing shared artwork/audio provenance remains authoritative. Cosmetic state does not consume gameplay randomness or enter gameplay recipe identity.

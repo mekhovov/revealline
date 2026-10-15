@@ -76,6 +76,14 @@ function createGroundSurface({ quality, originMm, railway = false }) {
     urbanGroundPaint: { value: new THREE.Color(0xbba24e) },
   };
   material.name = `${railway ? 'Railway yards and cutting' : 'Urban courts and verges'} · ${quality}`;
+  material.userData.setRegionalSurfaceQuality = (next) => {
+    if (!['performance', 'balanced', 'quality'].includes(next))
+      throw new TypeError('Unknown regional ground quality');
+    if (next === quality) return;
+    quality = next;
+    material.name = `${railway ? 'Railway yards and cutting' : 'Urban courts and verges'} · ${quality}`;
+    material.needsUpdate = true;
+  };
   material.customProgramCacheKey = () =>
     `fpv-${railway ? 'railway' : 'urban'}-ground-v1-${quality}`;
   material.onBeforeCompile = (shader) => {
