@@ -4796,3 +4796,33 @@ kept arming disabled; Menu showed populated Regional free flight, Retry and star
 points while unavailable flight setup stayed hidden. Retry rebuilt the scene and kept
 the menu open with zero input. Deliberate Resume and keyboard flight worked, followed
 by a safe pause. This closes the observed source UI gap, not its later package gate.
+
+## 15 October 2026 — independent delivery lanes continue
+
+Active plan branch: `codex/fpv-large-worlds-progress-20261015`, based on main
+`62bf80d85123d4ab60543c3a71377ced5b35b38a`. No primary checkout edits were included.
+UI stack #1305 completed: #1313/#1314/#1318 report merged at that main commit.
+The cold-preparation guard was read from the actual main source before #1316
+was marked Ready. Art stack #1292 retains #1306 → #1310 → #1316 → #1320; native
+stack tooling owns its bases. No feature-base automatic merge or manual retarget.
+
+Urban review-r2 remains pinned to merged immutable bundle `622fade3`; browser
+normal Library download, first disarmed Fly, deliberate flight and reload passed.
+Historical review-r1 was installed alongside it through the actual Library/store,
+then both exact revisions were selected and read after reload. Existing saved data
+was not removed. Canyon source/bundle #1317 is merged; #1320 is its separate Library
+admission. Snapshot reuse #1321 is independent against main. Tropical intake #1315
+is authoring-only; bounded material support and coastal assembly proceed separately.
+
+Exact frozen source `c2e18b4bb9b0efd27bae9a795a06c415fa4291f9`, World package
+`7348eeecdbb1f38e87ebccad3c0c22e456c04d8e3dda3900611648359f534289`, passed native
+real graphics loss/restoration: arming disabled, explanatory menu retained, explicit
+Retry rebuilt while paused, and deliberate Resume plus keyboard input restored
+flight. Receipt #1318 records this bounded package evidence; it does not claim
+network-wide outage coverage or current public deployment acceptance.
+
+Next root work is normal Canyon Library acceptance and fresh combined-package
+qualification. Parallel lanes own Tropical materials/coastal composition and
+performance/favourite locations. The multi-kilometre worlds, sustained device
+qualification and D6 remain open. Preserve source, recovery refs, frozen candidates
+and browser storage; heavy outputs remain external/cloud.
