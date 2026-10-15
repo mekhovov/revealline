@@ -108,6 +108,7 @@ import {
   overflightPreviewRequest,
   createOverflightReviewPlayback,
   overflightReviewStopAt,
+  overflightReviewControls,
   createOverflightKeyboardState,
   createOverflightJSONPages,
   overflightSortieProject,
@@ -181,7 +182,7 @@ let mode =
           ...QUALIFICATION_BUILDS,
           ...NO_PULSE_QUALIFICATION_BUILDS,
         },
-        pilot: (run) => pilot(run, 'tight'),
+        pilot: (run, route = 'tight') => pilot(run, route),
         selectCard,
         previewRequest: overflightPreviewRequest,
       };
@@ -224,6 +225,11 @@ const reviewStopAt = overflightReviewStopAt(params.get('reviewStopAt'), {
   build: reviewBuild,
   diagnostics,
 });
+const reviewControls = overflightReviewControls({
+  mode: mode.id,
+  build: reviewBuild,
+  route: params.get('reviewRoute'),
+});
 const benchmarkTrial =
   (fixture ||
     ((mode.id === 'overflight-hunt' || reviewBuild) && params.get('benchmark') === '1')) &&
@@ -244,7 +250,8 @@ const review = createOverflightReviewPlayback({
   build: reviewBuild,
   enabled: params.get('autoplay') === '1',
   stopAt: reviewStopAt,
-  pilot: (run) => mode.pilot(run, reviewBuild),
+  route: reviewControls.pilotArgument,
+  pilot: (run, route) => mode.pilot(run, route),
   selectCard: mode.selectCard,
 });
 const studio = params.get('studio') === mode.id && win.parent !== win;
@@ -1241,12 +1248,7 @@ function reviewIdentity() {
         automated: true,
         build: reviewBuild,
         stopAt: reviewStopAt,
-        route:
-          mode.id === 'overflight-hunt'
-            ? reviewBuild === 'objectives'
-              ? 'objectives'
-              : 'packs'
-            : 'tight',
+        route: reviewControls.route,
         inputHz: 10,
         upgradeDelayMs: 1500,
       }
@@ -1644,6 +1646,7 @@ if (reviewBuild) {
   for (const key of [
     'reviewBuild',
     'reviewStopAt',
+    'reviewRoute',
     'autoplay',
     'benchmark',
     'trial',
