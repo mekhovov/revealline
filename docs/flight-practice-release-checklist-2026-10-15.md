@@ -182,8 +182,13 @@ contains no claim of device/human/public acceptance.
 
 ### C2 — Directory → first flight → pause → retry, every app
 
-Progress: the new `8cf5fe46d` candidate passes ten EN/UK public-control
-motion/pause/retry cases: Gym, Academy Self-level/Acro and Worlds Self-level/Acro.
+Progress: the `8cf5fe46d` candidate's ten EN/UK public-control
+motion/pause/retry cases cover Gym, Academy Self-level/Acro and Worlds Self-level/Acro.
+A later visibility audit found that the eight FPV cases used hidden legacy DOM
+telemetry: their native navigation and DOM-state checks pass, but player-visible
+FPV measurements remain unverified. Do not relabel these historical receipts as
+visible-HUD acceptance. The original files are preserved; maintained-HUD reruns
+are required.
 It also passes two native Gym lift-and-land exercises with observed ordered
 checkpoints, completion screenshots, actual UI exports and independent frozen
 package replay. See the [source-bound player-flow report](flight-practice-player-flow-2026-10-15.md).
