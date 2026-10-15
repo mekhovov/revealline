@@ -67,13 +67,17 @@ terrain is deferred. Twelve proposed regions are design targets, not shipped map
   Immutable delivery authoring #1283 and atomic regional Library storage #1284
   are merged. A 38-file, 1,455,090-byte Urban pair is pinned to an exact commit;
   every payload is verified and installed revisions remain available for rollback.
-  Normal Library UI is published in #1287 after dependent #1293 merged into
-  that feature branch; it is not yet on main. Native remote Download → saved Fly,
-  disarmed entry, keyboard flight, camera/reset/mode changes and reload pass.
-  EN/UK portrait layout has no horizontal overflow. Six interface scenarios include
-  navigation cancelling delayed launch. Exact packaged admission remains pending.
-  The first card is a 384×384 m architectural preview, not finished art or a
-  multi-kilometre region. Ready/paused header compaction is a focused next item.
+  Normal Library UI and preserved indexed textures merged in #1287. Native remote
+  Download → saved Fly, disarmed entry, keyboard flight, camera/reset/mode changes
+  and reload pass. EN/UK portrait layout has no horizontal overflow. Six interface
+  scenarios include navigation cancelling delayed launch. The exact combined-main
+  candidate `c3368bb` passes optional package checks and native Prepare → Ready
+  offline → Download → saved Fly. With its origin server stopped, the same player
+  reopens and flies the installed revision; this is not network-wide offline or
+  physical-device acceptance. The first card remains a 384×384 m architectural
+  preview. Compact ready/paused Menu/View controls (#1296) and direct paused-menu
+  starting-point selection (#1304) are published in separate native UI stack #1305.
+  Both have native portrait/landscape evidence; graphics-loss recovery follows.
   Regional scenery
   admission, recovery and sustained qualification remain separate requirements.
   Existing World coordinates stop at ±100 m. Real regional flight additionally
@@ -120,20 +124,38 @@ terrain is deferred. Twelve proposed regions are design targets, not shipped map
   contract #1285 are merged. Tank, straight track and flatbed preserve palette
   pixels, UVs and normals. Three originals remain preserved but blocked by current
   millimetre quantization; no triangles were silently discarded. Runtime texture
-  ownership is published in #1287, with native comparison and release/reload.
+  ownership merged in #1287, with native comparison and release/reload.
   CPU texture buffers and GPU mip storage fit inside existing resource ceilings.
-  The bounded Railway route foundation is published in #1290, dependent on #1287
-  in native stack #1292. Its 384×384 m slice contains freight lanes, a trestle
+  The bounded Railway route foundation #1290 is merged. Remaining dependent art
+  increments retain native stack #1292. Its 384×384 m slice contains freight lanes, a trestle
   cutting, maintenance hall and canopy routes. Matching geometry passes 1,195
   collision/support queries; native grounded-canopy, hall, freight and release/reload
-  inspection pass. A separate surface pass adds concrete, asphalt, edge lines and
-  ballast without changing collision. Structural detail and final composition remain.
-  It is not yet a moving-train mission, default world or 4 km region.
+  inspection pass. Surface pass #1298 adds concrete, asphalt, edge lines and ballast
+  without changing collision. Structural detail #1301 adds readable trestle bracing,
+  hall roof ties and service furniture; native bridge/hall and release/reload pass.
+  Actual commanded-flight verification #1302 covers seven routes in both Self-level
+  and Acro, eight authored starts and deliberate solid-wall contacts. Immutable
+  source delivery #1303 is merged: 38 payload files, 5,684,606 bytes, strict v1
+  descriptor and retained CC0 provenance. Trusted Library pin/appearance #1306 is
+  published; normal-host native admission and release verification are still open.
+  Final composition, moving subjects and 4 km expansion remain. None is implied by
+  the bounded preview or a passed route check.
 - **P3:** Tropical Archipelago, Industrial Railway Valley, Coaster Park, Hillside Town;
   then Alpine Highlands, Desert Expedition, Canal City; then Lunar Basin, Castle
   Valley, Retro Metropolis. Expand Reservoir, Harbor and Festival with new revisions,
   keeping old courses and proofs. These are distinct authored regions, not recolours.
 - **P4:** catalogue-wide/offline/performance qualification and protected publication.
+  Independent archive import closure (#1297) and explicit physics ownership counts
+  (#1300) are merged. A 360,000-tick workload represents 7,200 simulated seconds,
+  with 53 reversals and 269 recentres; peak four query worlds / 18 colliders / zero
+  rigid bodies, and zero after disposal. This does not replace the planned elapsed
+  two-hour browser/device session. Exact combined-main package qualification runs
+  at fixed `c3368bb` in run38658148642; all six archive inventories/hashes/budgets
+  and three import graphs pass. Both optional and broader company jobs completed successfully.
+  Real WebGL loss/restoration pauses the frozen regional player and requires an
+  explicit restart before deliberate arming. Clear recovery guidance and a direct
+  menu path now pass native source review, including populated controls after loss.
+  Publication and exact-package qualification of that follow-up remain separate.
   #1228 verified all 20 exact published packs (15,605,575 bytes), compile/export and
   modeled storage boundaries. #1232 repaired an existing stale navigation fixture.
   Native v0.142.4 → v0.151.1 preparation preserved Reservoir r16 and both worker
