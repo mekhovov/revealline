@@ -18,15 +18,19 @@ populated world or claim hours of tested play.
 
 ## Safe capability and appearance gates
 
-This branch was rebased onto main `39b2eeee74f0ca3332fa2f8b047aba55e64c1382`,
-which includes merged capability #1372 and its explicit grid/origin bounds. The
+This branch was rebased onto main `740116d53ada0fecfd5398357e1df19801edf274`,
+which includes merged capability #1372, its explicit grid/origin bounds and
+the reviewed Desert material foundation #1390. The
 new row remains included only when the runtime's `REGION_CELL_SIZES_MM` lists
 512 m, so backports cannot advertise an unloadable map on an older runtime.
 
-The entry intentionally has no trusted appearance override. Exact and unknown
-revisions remain Plain until the opt-in Desert surface in #1390 is integrated through the exact immutable id/hash mapping. Parent native review accepted all six starts and three surface tiers at
-`6d817cef58ecc717ccae2ef107f6e76a738bc547` as a material foundation only; this
-main-based pin does not yet include that separate runtime change.
+Only the exact immutable region ID and descriptor SHA select the Desert
+appearance; unknown hashes or mismatched IDs remain Plain. All three player
+quality settings map to the corresponding existing material tier without
+changing the verified manifest. Parent native review accepted all six starts
+and three surface tiers at `6d817cef58ecc717ccae2ef107f6e76a738bc547` as a
+material foundation only. The reconciled material retains that exact Desert
+implementation and preserves concurrent Tropical work.
 
 All existing main catalogue rows remain unchanged. The parallel Hillside #1388
 and forthcoming Coaster rows are independent additions and must be retained when
@@ -40,8 +44,9 @@ node authoring/fpv-worlds/regions/desert-expedition/verify-library-pin.mjs /path
 ```
 
 The verifier checks the exact descriptor pin, whole delivery size, source grid,
-current-runtime eligibility, safe Plain appearance, and all five prior main pin
-identities. On an older runtime it confirms the actual production downloader
+current-runtime eligibility, exact-pin appearance, all three material tiers,
+safe Plain fallback, and all six prior main pin identities. On an older runtime
+it confirms the actual production downloader
 rejects after the descriptor and two manifests, before any terrain asset; the
 UI does not offer that row. Once 512 m is supported, the same check performs the
 full 2,051-response production download against the exact immutable payload.
@@ -56,9 +61,9 @@ The same full 2,051-response check subsequently passed without any loader or
 module substitution on coherent main `39b2eeee74f0ca3332fa2f8b047aba55e64c1382`.
 See `library-verification.json` for the historical and coherent-source results.
 
-Keep this PR Draft until the dependency is integrated and a fresh coherent
-package includes the capability, this row and the finally accepted appearance.
-Then qualify archive/import/budget checks, normal Library download/install/Fly,
+Keep this PR Draft until a fresh coherent package containing the capability,
+this row and the accepted material foundation passes qualification.
+Qualify archive/import/budget checks, normal Library download/install/Fly,
 saved-row reload, explicit arming/pause, six starts and the origin-unavailable
 journey. Neither a hidden-row old-runtime package nor an authoring preview is
 evidence of normal player admission. Device FPS and finished-art acceptance

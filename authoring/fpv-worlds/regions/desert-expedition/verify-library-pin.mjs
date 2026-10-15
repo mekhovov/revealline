@@ -7,7 +7,9 @@ import {
   DESERT_EXPEDITION_LIBRARY_PIN as row,
   REGIONAL_LIBRARY_PINS,
   applyRegionalAppearance,
+  regionalPresentationOptions,
 } from '../../../../optional-practice/civilian-fpv/regional-library.mjs';
+import { createTerrainSurface } from '../../../../optional-practice/civilian-fpv/regional/terrain-surface.mjs';
 import {
   REGION_CELL_SIZES_MM,
   validateRegionManifest,
@@ -76,15 +78,41 @@ if (supported) {
 for (const identity of [
   { id: row.id, sha256: row.pin.sha256 },
   { id: row.id, sha256: '0'.repeat(64) },
+  { id: 'unknown-region', sha256: row.pin.sha256 },
 ]) {
   const applied = applyRegionalAppearance(
     { manifest: terrain, source: { surfaceStyle: 'canyon' } },
     identity,
   );
-  assert.equal(applied.source.surfaceStyle, 'plain', 'No unreviewed Desert appearance is admitted');
+  const expected =
+    identity.id === row.id && identity.sha256 === row.pin.sha256 ? 'desert' : 'plain';
+  assert.equal(
+    applied.source.surfaceStyle,
+    expected,
+    'Only the exact reviewed source gets Desert appearance',
+  );
+  for (const [quality, tier] of [
+    ['low', 'performance'],
+    ['balanced', 'balanced'],
+    ['high', 'quality'],
+  ]) {
+    const presentation = regionalPresentationOptions(applied, quality);
+    assert.equal(presentation.manifest, terrain, 'Presentation preserves the verified source');
+    assert.equal(presentation.source.surfaceStyle, expected);
+    assert.equal(presentation.source.surfaceQuality, tier);
+    const material = createTerrainSurface({
+      style: expected,
+      quality: tier,
+      originMm: { x: 0, y: 0, z: 0 },
+    });
+    assert.equal(material.transparent, false);
+    assert.equal(material.depthWrite, true);
+    material.dispose();
+  }
 }
 // Stable existing identities remain present; additional parallel entries are allowed.
 for (const sha of [
+  'd2c3dce6c39227e85a10256fb3d1082fec2a6c7a47f6347fd664e2840eb57003',
   'ddd62d4662b873bc97243a414dc4ddc291eeb7e9c084f15af661b449ddcc3443',
   'f69cc4d315c254d5b825e2cfbde21d8509da1c8e3ae2a3e743de95782c5300c8',
   '5cd92029c88179e94231b4ec4f799372b075cd187421e9feec3fb6ee2eabf6d0',
@@ -101,7 +129,9 @@ console.log(
       descriptorSHA256: hash(bytes),
       wholeDeliveryBytes: row.bytes,
       responses: requests.length,
-      appearance: 'plain',
+      appearance: 'desert',
+      unknownIdentityAppearance: 'plain',
+      qualityTiers: 3,
       nativeVerified: false,
       releaseReady: false,
     },
