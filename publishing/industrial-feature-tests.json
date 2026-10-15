@@ -171,6 +171,7 @@
         "game/test/classic-environment.test.mjs",
         "game/test/capture-attempt-appearance-host.test.mjs",
         "game/test/fpv-world-appearance-ui.test.mjs",
+        "game/test/fpv-regional-location-storage.test.mjs",
         "game/test/industrial-environment-review.test.mjs",
         "game/test/continuous-host.test.mjs",
         "game/test/overflight-host.test.mjs",

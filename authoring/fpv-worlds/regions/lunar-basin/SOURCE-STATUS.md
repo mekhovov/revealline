@@ -1,3 +1,9 @@
+# Current source revision: composition-r3
+
+The generator now adds attached shelter/gallery detail to the preserved composition-r2 geometry. See [SHELTER-DETAIL.md](SHELTER-DETAIL.md) and `receipts-shelter-r3/` for verified and remaining gates. This is source-only Draft work: immutable delivery and the playable Library retain composition-r2. Original terrain, poses, surfaces, source drafts and old receipts are preserved. Native final-art acceptance is not claimed.
+
+## Preserved composition-r2 checkpoint
+
 # Current revision: composition-r2
 
 The current generator and receipts correct the dish support gap and add an open receiver assembly. See [SURVEY-DETAIL.md](SURVEY-DETAIL.md) for current evidence and remaining native gates. All72 terrain payloads and the six spawn poses are unchanged; old composition-r1 remains preserved in Git and external generated source. The following section records the original composition-r1 scope, not acceptance of its known support/camera defects.
