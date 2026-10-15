@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { Worker } from 'node:worker_threads';
 import { readFile } from 'node:fs/promises';
-import { DATA_JSON_DEFAULT_MESSAGES } from '../data-json-messages.mjs';
+import { DATA_JSON_DEFAULT_MESSAGES } from '../data-json.mjs';
 
 test('standalone planner loads without bootstrapping UI translations and retains validation errors', async () => {
   const planner = new URL('../demo-bot.mjs', import.meta.url).href;
