@@ -16,7 +16,7 @@ Five advertised totals previously omitted the small descriptor itself. They now 
 
 ## Verification
 
-The focused six-test regression suite passes. On the unchanged source baseline, four tests failed and two passed. Coverage checks all 23 existing pin identities and verified descriptor-byte totals, EN/UK flight labels, separate same-ID editions, clearing a stale alias for an unknown hash, actual Library install/Fly/refresh handlers with isolated memory records, retained unoffered versions and invalid descriptor/title rejection. The existing five-group Library edition verifier also passes. Syntax, lint and formatting checks pass.
+The focused six-test regression suite passes. On the unchanged source baseline, five tests failed and one passed. Coverage checks all 23 existing pin identities and verified descriptor-byte totals, EN/UK flight labels, separate same-ID editions, clearing a stale alias for an unknown hash, actual Library install/Fly/refresh handlers with isolated memory records, retained unoffered versions and invalid descriptor/title rejection. The existing five-group Library edition verifier also passes. Syntax, lint and formatting checks pass.
 
 The fixture contains metadata from the existing 23 immutable descriptors, retrieved through their pinned public URLs and checked for exact byte length and SHA-256 during the read-only map inventory at main revision `206ccd8b53180c061d394069037678de1b33761b`. The implementation baseline is `1a8da96e75f0a8cc776fc84d9da880d6bf1357ee`, whose regional catalogue and session modules are unchanged from that inventory. The fixture contains no scene assets, commands, proof progress or playback data. Tests neither open a renderer nor use player storage.
 
