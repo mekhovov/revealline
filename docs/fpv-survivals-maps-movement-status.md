@@ -1,5 +1,18 @@
 # FPV Survivals maps and movement — implementation status
 
+
+## Native replay and crowd movement follow-up
+
+The [native parity investigation](qualification/overflight/review-parity-20261015/README.md)
+locates the first different pilot decision at 272.2 seconds and demonstrates a
+cell-boundary discontinuity in the original crowd separation. An explicitly authored
+**Local spacing · experimental** option now shares native and Studio rules; old
+projects and game defaults retain their original behavior. Results can export fresh
+final diagnostics. The first headless candidate still loses at 323.08 seconds, and
+packed-crowd CPU cost remains material. Movement and Echo balance therefore remain
+open qualification items; the late-threshold hypothesis is still not default tuning.
+
+
 Latest continuation: PR1489 has merged. [Echo approach and report evidence](qualification/overflight/echo-approach-20261015/README.md) preserves three Receiver Gardens losses, native final-tank progress feedback and explicit matched review routes. Main `691351e1d` is incorporated; combat tuning remains unchanged.
 
 Latest 15 October continuation: safely rebased onto main `859d5cfc9`; PR1319 and PR1344 are merged. Runtime `f494367b7` adds actual pending-impact and chain-path feedback; see [attack-readability continuation](qualification/overflight/attack-readability-20261015/README.md). See [current-source evidence and remaining acceptance](qualification/overflight/quality-followup-20261015/README.md). Historical receipts below retain their own tested commits.
