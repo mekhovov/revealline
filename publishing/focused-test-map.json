@@ -228,7 +228,7 @@
       "pathPatterns": [
         "^publishing/",
         "^scripts/(build-pages|pages-archive|pages-current-entry)\\.mjs$",
-        "^scripts/test-pages-capacity-evidence\\.mjs$",
+        "^scripts/test-pages-(?:capacity|archive)-evidence\\.mjs$",
         "^\\.github/workflows/"
       ],
       "commands": [
@@ -244,6 +244,7 @@
             "publishing/fastline-release-publisher.test.mjs",
             "publishing/source-workflow.test.mjs",
             "scripts/test-pages-capacity-evidence.mjs",
+            "scripts/test-pages-archive-evidence.mjs",
             "publishing/test-policy.test.mjs"
           ]
         }
