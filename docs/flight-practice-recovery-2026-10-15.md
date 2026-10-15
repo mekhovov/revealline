@@ -75,7 +75,42 @@ play. Worker tests inject inspection failures and genuine missing/corrupt files 
 both worker variants, preserve legacy response support, and reject inconsistent or
 foreign responses. These are deterministic fault tests, not real disk exhaustion.
 
-Full-suite, frozen-package and browser results are recorded below when complete.
+### Completed verification
+
+- Committed source: `89537fe0b40725d9302fa07ce06f44ce2229f14b`; tree
+  `accf0deba67c558160760ce47d12adecf7f0794c`.
+- Full practice suite on unchanged committed source: **334 passed**, zero failures,
+  skips or cancellations. Focused launcher/lifecycle checks: **44 passed**.
+- Scoped lint, formatting, whitespace and generated-worker projection checks passed.
+  Independent review confirmed both worker protocol compatibility and the corrected
+  leave/return fetch race; a live request timeout still permits verified offline fallback.
+- All three packages built twice identically with committed-input and complete ZIP
+  inventory verification, then passed a separate readmission of finalized artifacts.
+  Envelope SHA-256: `1037661ca0f97d8f13d38bbf52f9ccab8effdb43a95ce626e0b86d71ed0641b0`.
+  Local output: `/Volumes/alex/CodexMigrationStaging/flight-practice-recovery-20261015.p5Es7f/candidate`.
+  Version `v0.151.1` remains a development candidate identity, not a newly allocated release.
+- Admitted file counts/bytes: Gym **94 / 3,748,578**, FPV **101 / 6,766,304**,
+  Worlds **162 / 17,548,556**. Worlds exactly reaches its existing 162-file policy;
+  future dependencies require explicit preflight/policy review. No limit was raised.
+- Chrome **155.0.8059.40** completed all **nine** installation-observer checkpoints
+  at `2026-10-15T17:33:32.814Z`: all three prepared and installed; closed-window
+  offline reopening; full owned-browser shutdown and same-profile offline reopening;
+  exact scripted FPV proof/profile persistence; rejected damaged transfer; path
+  rollback and scoped Gym removal. No page/cleanup errors; all owned test apps and
+  the temporary profile were removed. Normal authorized access used unchanged gates.
+
+Original receipts and logs are in the [evidence inventory](flight-practice-recovery-20261015/README.md).
+The first full-suite attempt overlapped the final source edit: 329 passed and four
+reported failures (including the parent subtest group), with publisher subprocesses
+rejecting a changed launcher template. That non-frozen attempt is retained, not
+relabeled as a pass. The unchanged-source repeat passed all 334 tests.
+
+The browser run uses a same-payload alternate FPV version path, scripted imported
+proofs and browser-context offline emulation. It does **not** prove distinct-release
+migration, human flight/learning, first-pointer correctness, physical controllers,
+real quota/eviction or machine-wide airplane mode. All eight review gates per app
+remain pending in the generated candidate review; `publicEligible` remains false.
+
 The [release checklist](flight-practice-release-checklist-2026-10-15.md) remains
 authoritative for unrun first-flight, distinct-release update, physical-device,
 performance, human-learning and review gates. No gate is automatically approved
