@@ -5121,3 +5121,12 @@ earlier strict-focus and frame-gap failures remain unchanged negative evidence.
 Full details and exact completed/open gates are in the newest large-worlds plan
 checkpoint. Final art, actual offline/application restart, physical devices and
 controllers, later region targets, D6 and public launch remain open.
+
+## 15 October, 17:18 UTC — foreground negative preserved
+
+The 17:08:17.178Z authored run invalidated after290.7995real seconds on a257.1ms
+frame interval, while visible and focused throughout. The matching257ms long task
+is correlation, not a function-level diagnosis. Full negative evidence and zero
+owned disposal are preserved; no run is active. Authoring live-report overhead and
+browser scheduling are under investigation without changing acceptance gates.
+Independent player/art and D6 lanes continue.
