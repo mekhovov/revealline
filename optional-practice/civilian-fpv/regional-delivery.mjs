@@ -322,67 +322,88 @@ export async function openRegionalLibrary({
     descriptor: row.project.descriptor,
     bytes: row.project.descriptor.totalBytes,
   });
+  async function save(pin, options = {}, repair = false) {
+    const generation = await store.generation();
+    if (repair) {
+      assert(
+        options.id && hashPattern.test(pin?.sha256),
+        'Repair requires an exact offered identity',
+      );
+      const existing = await store.get(options.id, { sha256: pin.sha256 });
+      assert(existing, 'The exact regional revision is no longer installed');
+    }
+    const checked = await prepareRegionalDownload(pin, options);
+    const { descriptor, sha256, assets } = checked;
+    if (repair) assert(descriptor.id === options.id, 'Regional repair identity mismatch');
+    options.signal?.throwIfAborted();
+    // Once this atomic commit starts, success is reported even if UI cancellation arrives later.
+    options.onProgress?.({
+      phase: 'commit',
+      loadedBytes: descriptor.totalBytes,
+      totalBytes: descriptor.totalBytes,
+    });
+    const result = await store.install({
+      project: {
+        id: descriptor.id,
+        title: descriptor.title.en,
+        format: descriptor.format,
+        descriptor,
+        pin: checked.pin,
+      },
+      assets,
+      sha256,
+      expectedGeneration: generation,
+      repair,
+    });
+    return {
+      id: descriptor.id,
+      sha256,
+      generation: result.generation,
+      descriptor,
+    };
+  }
   return {
     inspect: inspectRegionalDownload,
     generation: store.generation,
     async list(options) {
       return (await store.list(options)).map(metadata);
     },
-    async install(pin, options = {}) {
-      const generation = await store.generation();
-      const checked = await prepareRegionalDownload(pin, options);
-      const { descriptor, sha256, assets } = checked;
-      options.signal?.throwIfAborted();
-      // Once this atomic commit starts, success is reported even if UI cancellation arrives later.
-      options.onProgress?.({
-        phase: 'commit',
-        loadedBytes: descriptor.totalBytes,
-        totalBytes: descriptor.totalBytes,
-      });
-      const result = await store.install({
-        project: {
-          id: descriptor.id,
-          title: descriptor.title.en,
-          format: descriptor.format,
-          descriptor,
-          pin: checked.pin,
-        },
-        assets,
-        sha256,
-        expectedGeneration: generation,
-      });
-      return {
-        id: descriptor.id,
-        sha256,
-        generation: result.generation,
-        descriptor,
-      };
-    },
+    install: (pin, options) => save(pin, options),
+    repair: (pin, options) => save(pin, options, true),
     async load(id, { sha256, signal } = {}) {
       signal?.throwIfAborted();
       const record = await store.get(id, { sha256 });
       signal?.throwIfAborted();
-      assert(record, 'This exact regional revision is not installed');
-      const descriptorBlob = record.assets.get('__descriptor.json');
-      assert(descriptorBlob, 'Installed regional descriptor is missing');
-      const descriptorBytes = await verifiedBytes(
-        new Response(descriptorBlob),
-        {
-          bytes: record.project.pin.bytes,
-          sha256: record.sha256,
-        },
-        signal,
-      );
-      const descriptor = validateRegionalDescriptor(decode(descriptorBytes));
-      assert(descriptor.id === id, 'Installed regional identity mismatch');
+      let descriptor, manifest, sceneryManifest;
       const blobs = new Map();
-      for (const item of descriptor.files) {
+      try {
+        assert(record, 'This exact regional revision is not installed');
+        const descriptorBlob = record.assets.get('__descriptor.json');
+        assert(descriptorBlob, 'Installed regional descriptor is missing');
+        const descriptorBytes = await verifiedBytes(
+          new Response(descriptorBlob),
+          {
+            bytes: record.project.pin.bytes,
+            sha256: record.sha256,
+          },
+          signal,
+        );
+        descriptor = validateRegionalDescriptor(decode(descriptorBytes));
+        assert(descriptor.id === id, 'Installed regional identity mismatch');
+        for (const item of descriptor.files) {
+          signal?.throwIfAborted();
+          const blob = record.assets.get(item.path);
+          assert(blob, 'Installed regional file is missing');
+          blobs.set(item.path, await verifiedBytes(new Response(blob), item, signal));
+        }
+        [manifest, sceneryManifest] = validatePair(descriptor, blobs);
+      } catch (cause) {
         signal?.throwIfAborted();
-        const blob = record.assets.get(item.path);
-        assert(blob, 'Installed regional file is missing');
-        blobs.set(item.path, await verifiedBytes(new Response(blob), item, signal));
+        if (!(cause instanceof TypeError || cause instanceof SyntaxError)) throw cause;
+        const error = new TypeError(cause.message, { cause });
+        error.code = 'regional-cache-invalid';
+        throw error;
       }
-      const [manifest, sceneryManifest] = validatePair(descriptor, blobs);
       // A synthetic origin binds requests to this exact retained revision; no network fallback.
       const base = new URL(`https://regional-cache.invalid/${record.sha256}/`);
       const fetchImpl = async (input, { signal } = {}) => {
