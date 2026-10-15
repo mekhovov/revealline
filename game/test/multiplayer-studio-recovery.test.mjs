@@ -142,6 +142,7 @@ for (const chapterId of ['harbors', 'aurora'])
     assert.deepEqual(restored.prepared.provenance.sourceProject, source);
     assert.deepEqual(await raw(restored.media.assets[0].blob), png);
     const lease = createCreatorTeamMediaPictureLease(restored.media, {
+      getSnapshot: () => ({}),
       decodeImage: async (blob) => ({ image: await decodeStudioPNG(blob), release() {} }),
     });
     const first = { pack: restored.pack, levelId: restored.pack.levels[0].id };
