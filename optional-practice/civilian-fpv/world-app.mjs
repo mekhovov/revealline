@@ -4746,6 +4746,12 @@ export function mountWorldApp({
       );
       controls.select.replaceChildren();
       const names = {
+        'crescent-dunes': ['Crescent dunes', 'Серпоподібні дюни'],
+        'dry-wash': ['Dry wash', 'Сухе русло'],
+        'salt-basin': ['Salt basin', 'Солона улоговина'],
+        'sunrise-escarpment': ['Sunrise escarpment', 'Світанковий уступ'],
+        'mesa-corridor': ['Mesa corridor', 'Коридор плато'],
+        'rocky-plain': ['Rocky plain', 'Кам’яниста рівнина'],
         'braided-basin': ['Braided basin', 'Розгалужена улоговина'],
         'high-mesa': ['High mesa', 'Високе плато'],
         'red-escarpment': ['Red escarpment', 'Червоний уступ'],
