@@ -154,7 +154,8 @@ terrain is deferred. Twelve proposed regions are design targets, not shipped map
   and three import graphs pass. Both optional and broader company jobs completed successfully.
   Real WebGL loss/restoration pauses the frozen regional player and requires an
   explicit restart before deliberate arming. Clear recovery guidance and a direct
-  menu path are being corrected; repeat native acceptance on that exact follow-up.
+  menu path now pass native source review, including populated controls after loss.
+  Publication and exact-package qualification of that follow-up remain separate.
   #1228 verified all 20 exact published packs (15,605,575 bytes), compile/export and
   modeled storage boundaries. #1232 repaired an existing stale navigation fixture.
   Native v0.142.4 → v0.151.1 preparation preserved Reservoir r16 and both worker
