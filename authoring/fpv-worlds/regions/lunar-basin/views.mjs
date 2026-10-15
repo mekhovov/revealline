@@ -1,4 +1,4 @@
-/** Bounded review cameras, verified above the exact sampled terrain; not player spawns. */
+/** Bounded review cameras verified above exact terrain; not player spawns. */
 export const lunarViews = [
   ['Survey shelter', [104, 28.546, 144], [62, 42.546, 86], [104, 28.546, 144]],
   ['Landing berms', [184, 30.877, 256], [142, 44.877, 198], [184, 30.877, 256]],
@@ -10,6 +10,7 @@ export const lunarViews = [
   ['Central mound', [136, 9.947, 564], [94, 41.466, 506], [136, 9.947, 564]],
   ['Tilted slab', [352, 43.644, 520], [310, 57.644, 462], [352, 43.644, 520]],
   ['Fracture fork', [440, 34.426, 640], [398, 48.835, 582], [440, 34.426, 640]],
-  ['Survey dish', [608, 39.993, 520], [566, 53.993, 462], [608, 39.993, 520]],
+  ['Survey dish', [608, 39.993, 520], [562, 60.993, 465], [608, 55.993, 520]],
   ['Service gallery', [680, 39.426, 648], [638, 53.426, 590], [680, 39.426, 648]],
+  ['Dish supports', [608, 39.993, 520], [608, 44.993, 476], [608, 50.993, 520]],
 ];

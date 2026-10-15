@@ -29,7 +29,7 @@ for (const [name, anchor, camera, target] of lunarViews) {
   assert.ok(camera.every(Number.isFinite) && target.every(Number.isFinite));
   receipts.push({ name, cameraClearance, minimumClearance, samples: 401, residentBoundsM: bounds });
 }
-assert.equal(receipts.length, 12);
+assert.equal(receipts.length, 13);
 console.log(
   JSON.stringify(
     { passed: true, cameras: receipts, geometryChanged: false, nativeAccepted: false },

@@ -103,6 +103,19 @@ function box(id, x, y, z, sx, sy, sz, color = colours.metal) {
   g.translate(x, y, z);
   geometry(id, g, color);
 }
+function rod(id, a, b, radius, color = colours.metal) {
+  const start = new THREE.Vector3(...a),
+    end = new THREE.Vector3(...b);
+  const direction = end.clone().sub(start),
+    length = direction.length();
+  const g = new THREE.CylinderGeometry(radius, radius, length, 8, 1, false);
+  g.applyQuaternion(
+    new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(0, 1, 0), direction.normalize()),
+  );
+  const centre = start.add(end).multiplyScalar(0.5);
+  g.translate(centre.x, centre.y, centre.z);
+  geometry(id, g, color);
+}
 function rock(id, x, z, sx, sz, h, seed, color = colours.rock) {
   const n = 7,
     p = [],
@@ -172,7 +185,7 @@ function shelter(id, x, z, sx, sz, roofHeight) {
       sx / 3 - 0.15,
       0.9,
       sz,
-      colours.light,
+      colours.metal,
     );
   for (const side of [-1, 1])
     box(
@@ -250,19 +263,69 @@ for (const ring of [0, rings])
       d = b + layerVertices;
     ix.push(a, b, c, b, d, c);
   }
-mesh('survey-dish', p, ix, colours.light);
+mesh('survey-dish', p, ix, colours.metal);
+// Resolve support tops against the actual triangle shell, not its centre height.
+// The old four piers ended below the curved underside by about 1.7 m.
+function dishUnderside(x, z) {
+  const ray = new THREE.Ray(new THREE.Vector3(x, dishBase, z), new THREE.Vector3(0, 1, 0));
+  let lowest = Infinity;
+  for (let i = 0; i < ix.length; i += 3) {
+    const points = ix
+      .slice(i, i + 3)
+      .map((index) => new THREE.Vector3(...p.slice(index * 3, index * 3 + 3)));
+    const hit = ray.intersectTriangle(...points, false, new THREE.Vector3());
+    if (hit) lowest = Math.min(lowest, hit.y);
+  }
+  assert(Number.isFinite(lowest), 'Dish support must meet the real shell');
+  return lowest;
+}
+const supportContacts = [];
 for (const dx of [-11, 11])
-  for (const dz of [-11, 11])
+  for (const dz of [-11, 11]) {
+    const x = 608 + dx,
+      z = 520 + dz,
+      bottom = sampledHeight(x, z) - 0.5;
+    const samples = [];
+    for (const ox of [-0.75, 0, 0.75])
+      for (const oz of [-0.75, 0, 0.75]) samples.push(dishUnderside(x + ox, z + oz));
+    const top = Math.max(...samples) + 0.03;
     box(
       `dish-leg-${dx < 0 ? 'w' : 'e'}-${dz < 0 ? 'n' : 's'}`,
-      608 + dx,
-      dishBase + 9.5,
-      520 + dz,
+      x,
+      (bottom + top) / 2,
+      z,
       1.5,
-      20,
+      top - bottom,
       1.5,
       colours.dark,
     );
+    supportContacts.push({
+      x,
+      z,
+      bottom,
+      top,
+      undersideMin: Math.min(...samples),
+      undersideMax: Math.max(...samples),
+    });
+  }
+// A receiver suspended by three open struts makes the silhouette read as an antenna.
+const receiver = [608, dishBase + 31, 520];
+for (let i = 0; i < 3; i++) {
+  const angle = (i * Math.PI * 2) / 3,
+    radius = 15;
+  rod(
+    `dish-feed-strut-${i}`,
+    [
+      608 + Math.cos(angle) * radius,
+      dishY + radius * radius * 0.012,
+      520 + Math.sin(angle) * radius,
+    ],
+    receiver,
+    0.28,
+  );
+}
+box('dish-receiver', 608, dishBase + 31.25, 520, 2.4, 1.8, 2.4, colours.dark);
+box('dish-receiver-marker', 608, dishBase + 32.17, 520, 1.4, 0.12, 1.4, colours.marker);
 shelter('service-gallery', 680, 648, 48, 28, 15);
 for (const dz of [-11, 11])
   for (const dx of [-16, 16])
@@ -374,6 +437,7 @@ const receipt = {
     d.landmarks.map((l) => ({ id: l.id, district: d.id })),
   ),
   solids,
+  supportContacts,
   spawns,
   routes,
   sourceBytes: Object.values(manifests)

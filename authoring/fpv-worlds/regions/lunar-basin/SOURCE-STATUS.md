@@ -1,3 +1,7 @@
+# Current revision: composition-r2
+
+The current generator and receipts correct the dish support gap and add an open receiver assembly. See [SURVEY-DETAIL.md](SURVEY-DETAIL.md) for current evidence and remaining native gates. All72 terrain payloads and the six spawn poses are unchanged; old composition-r1 remains preserved in Git and external generated source. The following section records the original composition-r1 scope, not acceptance of its known support/camera defects.
+
 # Lunar Basin: original 768 m composition source
 
 **Source preparation only; native art, delivery and Library admission pending.**
