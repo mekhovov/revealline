@@ -92,3 +92,14 @@ export function createRegionFlightSupportQuery({
     };
   };
 }
+
+/** Read-only ownership counts; no engine handles or mutable sets escape. */
+export function regionalCollisionCounts(...owners) {
+  const total = { worlds: 0, colliders: 0, rigidBodies: 0 };
+  for (const owner of owners) {
+    if (!owner) continue;
+    const counts = owner.collisionSnapshot();
+    for (const key of Object.keys(total)) total[key] += counts[key];
+  }
+  return total;
+}
