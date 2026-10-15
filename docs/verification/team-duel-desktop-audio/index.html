@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>RevealLine — Team and Duel sound check</title>
+    <style>
+      body {
+        background: #071527;
+        color: #f6f3e8;
+        font: 18px/1.5 system-ui;
+        max-width: 68rem;
+        margin: auto;
+        padding: 1.5rem;
+      }
+      button,
+      a {
+        min-height: 48px;
+        padding: 0.6rem 1rem;
+        font: inherit;
+      }
+      button:focus-visible,
+      a:focus-visible {
+        outline: 3px solid #ffd64a;
+        outline-offset: 3px;
+      }
+      pre {
+        white-space: pre-wrap;
+        overflow-wrap: anywhere;
+        font-size: 14px;
+      }
+      a {
+        color: #67aaff;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Team and Duel sound check</h1>
+    <p>
+      Play a short series of real game cues and measure the browser’s digital output. Covers
+      recorded and unavailable sound effects, both Duel boards, overlapping Team cues, music and
+      master controls. No game saves or preferences change. This does not assess listening quality
+      or physical speakers.
+    </p>
+    <button id="run" type="button">Run cue check</button>
+    <button id="cancel" type="button" disabled>Cancel check</button>
+    <a id="download" hidden>Download report</a>
+    <p id="status" role="status">Ready. Audio starts only when you choose Run.</p>
+    <pre id="result" aria-label="Cue check report"></pre>
+    <script type="module" src="./probe.mjs"></script>
+  </body>
+</html>

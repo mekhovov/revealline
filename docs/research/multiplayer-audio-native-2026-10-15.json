@@ -1,0 +1,1179 @@
+{
+  "format": "revealline.team-duel-native-cue-check.v1",
+  "startedAt": "2026-10-15T04:33:30.023Z",
+  "url": "http://127.0.0.1:8789/docs/verification/team-duel-desktop-audio/index.html",
+  "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36",
+  "scope": "Native Soundscape/FeedbackDirector dispatch and mixer. Default local music/effects gains; explicit 65% shared master. Recorded WAV bank and deliberately unavailable-bank fallback. No MP3, uploaded replacements, acoustic output or subjective listening qualification.",
+  "observations": [
+    {
+      "bank": "recorded",
+      "id": "warning",
+      "voices": [
+        {
+          "name": "warning",
+          "board": "team",
+          "priority": 5
+        }
+      ],
+      "rms": 0.0030809936663832123,
+      "peak": 0.015360349789261818,
+      "monoRms": 0.0030809936663832123,
+      "monoPeak": 0.015360349789261818,
+      "windows": 56
+    },
+    {
+      "bank": "recorded",
+      "id": "support",
+      "voices": [
+        {
+          "name": "deploy",
+          "board": "team",
+          "priority": 3
+        }
+      ],
+      "rms": 0.00380722475042953,
+      "peak": 0.012576786801218987,
+      "monoRms": 0.003601959607617087,
+      "monoPeak": 0.009369045263156295,
+      "windows": 55
+    },
+    {
+      "bank": "recorded",
+      "id": "recovery",
+      "voices": [
+        {
+          "name": "respawn",
+          "board": "team",
+          "priority": 3
+        }
+      ],
+      "rms": 0.0024575928067099226,
+      "peak": 0.01469357218593359,
+      "monoRms": 0.002325092580445488,
+      "monoPeak": 0.010945939691737294,
+      "windows": 56
+    },
+    {
+      "bank": "recorded",
+      "id": "relay",
+      "voices": [
+        {
+          "name": "pickup-2",
+          "board": "team",
+          "priority": 3
+        },
+        {
+          "name": "gate",
+          "board": "team",
+          "priority": 3
+        }
+      ],
+      "rms": 0.0030976264339250188,
+      "peak": 0.029222574084997177,
+      "monoRms": 0.0030976264339250188,
+      "monoPeak": 0.029222574084997177,
+      "windows": 56
+    },
+    {
+      "bank": "recorded",
+      "id": "stage",
+      "voices": [
+        {
+          "name": "pickup-2",
+          "board": "team",
+          "priority": 3
+        }
+      ],
+      "rms": 0.001265003808233994,
+      "peak": 0.01695023477077484,
+      "monoRms": 0.001265003808233994,
+      "monoPeak": 0.01695023477077484,
+      "windows": 56
+    },
+    {
+      "bank": "recorded",
+      "id": "erosion",
+      "voices": [
+        {
+          "name": "erosion",
+          "board": "team",
+          "priority": 3
+        }
+      ],
+      "rms": 0.001954615980631578,
+      "peak": 0.013879966922104359,
+      "monoRms": 0.001954615980631578,
+      "monoPeak": 0.013879966922104359,
+      "windows": 57
+    },
+    {
+      "bank": "recorded",
+      "id": "overlap",
+      "voices": [
+        {
+          "name": "deploy",
+          "board": "team",
+          "priority": 3
+        },
+        {
+          "name": "warning",
+          "board": "team",
+          "priority": 5
+        },
+        {
+          "name": "respawn",
+          "board": "team",
+          "priority": 3
+        },
+        {
+          "name": "gate",
+          "board": "team",
+          "priority": 3
+        }
+      ],
+      "rms": 0.006228810572790942,
+      "peak": 0.04134296625852585,
+      "monoRms": 0.006049711076738848,
+      "monoPeak": 0.037750108167529106,
+      "windows": 56
+    },
+    {
+      "bank": "recorded",
+      "id": "crowded-overlap",
+      "voices": [
+        {
+          "name": "deploy",
+          "board": "team",
+          "priority": 3
+        },
+        {
+          "name": "respawn",
+          "board": "team",
+          "priority": 3
+        },
+        {
+          "name": "gate",
+          "board": "team",
+          "priority": 3
+        },
+        {
+          "name": "pickup",
+          "board": "team",
+          "priority": 3
+        },
+        {
+          "name": "erosion",
+          "board": "team",
+          "priority": 3
+        },
+        {
+          "name": "attack",
+          "board": "team",
+          "priority": 3
+        },
+        {
+          "name": "reveal-small",
+          "board": "team",
+          "priority": 4
+        },
+        {
+          "name": "contact-metal",
+          "board": "team",
+          "priority": 2
+        },
+        {
+          "name": "cancel",
+          "board": "team",
+          "priority": 3
+        }
+      ],
+      "rms": 0.0064394374896649354,
+      "peak": 0.08208298683166504,
+      "monoRms": 0.006107664778879351,
+      "monoPeak": 0.06140393018722534,
+      "windows": 56
+    },
+    {
+      "bank": "recorded",
+      "id": "victory",
+      "voices": [
+        {
+          "name": "victory",
+          "board": "team",
+          "priority": 3
+        },
+        {
+          "name": "victory",
+          "board": "team",
+          "priority": 3
+        },
+        {
+          "name": "victory",
+          "board": "team",
+          "priority": 3
+        },
+        {
+          "name": "victory",
+          "board": "team",
+          "priority": 3
+        },
+        {
+          "name": "victory",
+          "board": "team",
+          "priority": 3
+        },
+        {
+          "name": "victory",
+          "board": "team",
+          "priority": 3
+        },
+        {
+          "name": "victory",
+          "board": "team",
+          "priority": 3
+        },
+        {
+          "name": "victory",
+          "board": "team",
+          "priority": 3
+        },
+        {
+          "name": "victory",
+          "board": "team",
+          "priority": 3
+        },
+        {
+          "name": "victory",
+          "board": "team",
+          "priority": 3
+        },
+        {
+          "name": "victory",
+          "board": "team",
+          "priority": 3
+        },
+        {
+          "name": "victory",
+          "board": "team",
+          "priority": 3
+        },
+        {
+          "name": "victory",
+          "board": "team",
+          "priority": 3
+        },
+        {
+          "name": "victory",
+          "board": "team",
+          "priority": 3
+        },
+        {
+          "name": "victory",
+          "board": "team",
+          "priority": 3
+        }
+      ],
+      "rms": 0.008961995046381219,
+      "peak": 0.0493466779589653,
+      "monoRms": 0.008961991526523572,
+      "monoPeak": 0.0493466779589653,
+      "windows": 192
+    },
+    {
+      "bank": "recorded",
+      "id": "duel-both-boards",
+      "boards": [
+        0,
+        1
+      ],
+      "rms": 0.0033033247044349768,
+      "peak": 0.023056935518980026,
+      "monoRms": 0.0033000688390000905,
+      "monoPeak": 0.023045210167765617,
+      "windows": 56
+    },
+    {
+      "bank": "recorded",
+      "id": "zero-master-expired",
+      "voicesAtZero": 0,
+      "rms": 0,
+      "peak": 0,
+      "monoRms": 0,
+      "monoPeak": 0,
+      "windows": 35
+    },
+    {
+      "bank": "partial-fallback",
+      "id": "warning",
+      "voices": [
+        {
+          "name": "warning",
+          "board": "team",
+          "priority": 5
+        }
+      ],
+      "rms": 0.002465468131690006,
+      "peak": 0.027531886473298073,
+      "monoRms": 0.002465468131690006,
+      "monoPeak": 0.027531886473298073,
+      "windows": 56
+    },
+    {
+      "bank": "partial-fallback",
+      "id": "support",
+      "voices": [
+        {
+          "name": "deploy",
+          "board": "team",
+          "priority": 3
+        },
+        {
+          "name": "deploy",
+          "board": "team",
+          "priority": 3
+        },
+        {
+          "name": "deploy",
+          "board": "team",
+          "priority": 3
+        }
+      ],
+      "rms": 0.0045605279259379895,
+      "peak": 0.04671699181199074,
+      "monoRms": 0.0043146487156468525,
+      "monoPeak": 0.03480170387774706,
+      "windows": 56
+    },
+    {
+      "bank": "partial-fallback",
+      "id": "recovery",
+      "voices": [
+        {
+          "name": "respawn",
+          "board": "team",
+          "priority": 3
+        },
+        {
+          "name": "respawn",
+          "board": "team",
+          "priority": 3
+        },
+        {
+          "name": "respawn",
+          "board": "team",
+          "priority": 3
+        },
+        {
+          "name": "respawn",
+          "board": "team",
+          "priority": 3
+        }
+      ],
+      "rms": 0.007742475773724596,
+      "peak": 0.04745910316705704,
+      "monoRms": 0.00732504299673784,
+      "monoPeak": 0.03535453975200653,
+      "windows": 56
+    },
+    {
+      "bank": "partial-fallback",
+      "id": "relay",
+      "voices": [
+        {
+          "name": "pickup",
+          "board": "team",
+          "priority": 3
+        },
+        {
+          "name": "pickup",
+          "board": "team",
+          "priority": 3
+        },
+        {
+          "name": "gate",
+          "board": "team",
+          "priority": 3
+        },
+        {
+          "name": "gate",
+          "board": "team",
+          "priority": 3
+        },
+        {
+          "name": "gate",
+          "board": "team",
+          "priority": 3
+        }
+      ],
+      "rms": 0.008328919096503766,
+      "peak": 0.06278841942548752,
+      "monoRms": 0.008328919096503766,
+      "monoPeak": 0.06278841942548752,
+      "windows": 57
+    },
+    {
+      "bank": "partial-fallback",
+      "id": "stage",
+      "voices": [
+        {
+          "name": "pickup",
+          "board": "team",
+          "priority": 3
+        },
+        {
+          "name": "pickup",
+          "board": "team",
+          "priority": 3
+        }
+      ],
+      "rms": 0.004522826740597062,
+      "peak": 0.038333021104335785,
+      "monoRms": 0.004522826740597062,
+      "monoPeak": 0.038333021104335785,
+      "windows": 56
+    },
+    {
+      "bank": "partial-fallback",
+      "id": "erosion",
+      "voices": [
+        {
+          "name": "erosion",
+          "board": "team",
+          "priority": 3
+        },
+        {
+          "name": "erosion",
+          "board": "team",
+          "priority": 3
+        },
+        {
+          "name": "erosion",
+          "board": "team",
+          "priority": 3
+        }
+      ],
+      "rms": 0.006421532304444376,
+      "peak": 0.03543039411306381,
+      "monoRms": 0.006421532304444376,
+      "monoPeak": 0.03543039411306381,
+      "windows": 56
+    },
+    {
+      "bank": "partial-fallback",
+      "id": "overlap",
+      "voices": [
+        {
+          "name": "deploy",
+          "board": "team",
+          "priority": 3
+        },
+        {
+          "name": "deploy",
+          "board": "team",
+          "priority": 3
+        },
+        {
+          "name": "deploy",
+          "board": "team",
+          "priority": 3
+        },
+        {
+          "name": "warning",
+          "board": "team",
+          "priority": 5
+        },
+        {
+          "name": "respawn",
+          "board": "team",
+          "priority": 3
+        },
+        {
+          "name": "respawn",
+          "board": "team",
+          "priority": 3
+        },
+        {
+          "name": "respawn",
+          "board": "team",
+          "priority": 3
+        },
+        {
+          "name": "respawn",
+          "board": "team",
+          "priority": 3
+        },
+        {
+          "name": "gate",
+          "board": "team",
+          "priority": 3
+        },
+        {
+          "name": "gate",
+          "board": "team",
+          "priority": 3
+        },
+        {
+          "name": "gate",
+          "board": "team",
+          "priority": 3
+        }
+      ],
+      "rms": 0.010358158495706914,
+      "peak": 0.07277709990739822,
+      "monoRms": 0.009934137475165349,
+      "monoPeak": 0.06039286591112614,
+      "windows": 56
+    },
+    {
+      "bank": "partial-fallback",
+      "id": "crowded-overlap",
+      "voices": [
+        {
+          "name": "deploy",
+          "board": "team",
+          "priority": 3
+        },
+        {
+          "name": "deploy",
+          "board": "team",
+          "priority": 3
+        },
+        {
+          "name": "deploy",
+          "board": "team",
+          "priority": 3
+        },
+        {
+          "name": "respawn",
+          "board": "team",
+          "priority": 3
+        },
+        {
+          "name": "respawn",
+          "board": "team",
+          "priority": 3
+        },
+        {
+          "name": "respawn",
+          "board": "team",
+          "priority": 3
+        },
+        {
+          "name": "respawn",
+          "board": "team",
+          "priority": 3
+        },
+        {
+          "name": "gate",
+          "board": "team",
+          "priority": 3
+        },
+        {
+          "name": "gate",
+          "board": "team",
+          "priority": 3
+        },
+        {
+          "name": "gate",
+          "board": "team",
+          "priority": 3
+        },
+        {
+          "name": "pickup",
+          "board": "team",
+          "priority": 3
+        },
+        {
+          "name": "pickup",
+          "board": "team",
+          "priority": 3
+        },
+        {
+          "name": "erosion",
+          "board": "team",
+          "priority": 3
+        },
+        {
+          "name": "erosion",
+          "board": "team",
+          "priority": 3
+        },
+        {
+          "name": "erosion",
+          "board": "team",
+          "priority": 3
+        },
+        {
+          "name": "attack",
+          "board": "team",
+          "priority": 3
+        }
+      ],
+      "rms": 0.01569926950125394,
+      "peak": 0.2229890376329422,
+      "monoRms": 0.01485284907427406,
+      "monoPeak": 0.16611512377858162,
+      "windows": 56
+    },
+    {
+      "bank": "partial-fallback",
+      "id": "victory",
+      "voices": [
+        {
+          "name": "victory",
+          "board": "team",
+          "priority": 3
+        },
+        {
+          "name": "victory",
+          "board": "team",
+          "priority": 3
+        },
+        {
+          "name": "victory",
+          "board": "team",
+          "priority": 3
+        },
+        {
+          "name": "victory",
+          "board": "team",
+          "priority": 3
+        },
+        {
+          "name": "victory",
+          "board": "team",
+          "priority": 3
+        },
+        {
+          "name": "victory",
+          "board": "team",
+          "priority": 3
+        },
+        {
+          "name": "victory",
+          "board": "team",
+          "priority": 3
+        },
+        {
+          "name": "victory",
+          "board": "team",
+          "priority": 3
+        },
+        {
+          "name": "victory",
+          "board": "team",
+          "priority": 3
+        },
+        {
+          "name": "victory",
+          "board": "team",
+          "priority": 3
+        },
+        {
+          "name": "victory",
+          "board": "team",
+          "priority": 3
+        },
+        {
+          "name": "victory",
+          "board": "team",
+          "priority": 3
+        },
+        {
+          "name": "victory",
+          "board": "team",
+          "priority": 3
+        },
+        {
+          "name": "victory",
+          "board": "team",
+          "priority": 3
+        },
+        {
+          "name": "victory",
+          "board": "team",
+          "priority": 3
+        }
+      ],
+      "rms": 0.00894278386543565,
+      "peak": 0.04928911477327347,
+      "monoRms": 0.00894278386543565,
+      "monoPeak": 0.04928911477327347,
+      "windows": 189
+    },
+    {
+      "bank": "partial-fallback",
+      "id": "duel-both-boards",
+      "boards": [
+        0,
+        1
+      ],
+      "rms": 0.013943372635098874,
+      "peak": 0.08508140593767166,
+      "monoRms": 0.013943372635098874,
+      "monoPeak": 0.08508140593767166,
+      "windows": 53
+    },
+    {
+      "bank": "partial-fallback",
+      "id": "zero-master-expired",
+      "voicesAtZero": 0,
+      "rms": 0,
+      "peak": 0,
+      "monoRms": 0,
+      "monoPeak": 0,
+      "windows": 33
+    },
+    {
+      "bank": "partial-fallback",
+      "id": "music-only",
+      "musicTransportPaused": false,
+      "warningScheduled": false,
+      "rms": 0.013419341782790587,
+      "peak": 0.10499268025159836,
+      "monoRms": 0.013419341782790587,
+      "monoPeak": 0.10499268025159836,
+      "windows": 53
+    },
+    {
+      "bank": "partial-fallback",
+      "id": "music-and-warning",
+      "musicTransportPaused": false,
+      "warningScheduled": true,
+      "rms": 0.009422787512426568,
+      "peak": 0.10258369892835617,
+      "monoRms": 0.009422787512426568,
+      "monoPeak": 0.10258369892835617,
+      "windows": 53
+    },
+    {
+      "bank": "partial-fallback",
+      "id": "music-paused-warning",
+      "musicTransportPaused": true,
+      "warningScheduled": true,
+      "rms": 0.0024338762357994106,
+      "peak": 0.027531886473298073,
+      "monoRms": 0.0024338762357994106,
+      "monoPeak": 0.027531886473298073,
+      "windows": 54
+    },
+    {
+      "bank": "partial-fallback",
+      "id": "master-muted",
+      "musicTransportPaused": false,
+      "warningScheduled": false,
+      "rms": 0,
+      "peak": 0,
+      "monoRms": 0,
+      "monoPeak": 0,
+      "windows": 54
+    },
+    {
+      "bank": "partial-fallback",
+      "id": "master-zero",
+      "musicTransportPaused": false,
+      "warningScheduled": false,
+      "rms": 0,
+      "peak": 0,
+      "monoRms": 0,
+      "monoPeak": 0,
+      "windows": 53
+    },
+    {
+      "bank": "partial-fallback",
+      "id": "gameplay-paused",
+      "musicTransportPaused": true,
+      "warningScheduled": false,
+      "rms": 0,
+      "peak": 0,
+      "monoRms": 0,
+      "monoPeak": 0,
+      "windows": 53
+    }
+  ],
+  "checks": [
+    {
+      "name": "recorded/warning: output and mono presence",
+      "pass": true,
+      "actual": {
+        "rms": 0.0030809936663832123,
+        "monoRms": 0.0030809936663832123
+      }
+    },
+    {
+      "name": "recorded/warning: sampled headroom",
+      "pass": true,
+      "actual": 0.015360349789261818
+    },
+    {
+      "name": "recorded/support: output and mono presence",
+      "pass": true,
+      "actual": {
+        "rms": 0.00380722475042953,
+        "monoRms": 0.003601959607617087
+      }
+    },
+    {
+      "name": "recorded/support: sampled headroom",
+      "pass": true,
+      "actual": 0.012576786801218987
+    },
+    {
+      "name": "recorded/recovery: output and mono presence",
+      "pass": true,
+      "actual": {
+        "rms": 0.0024575928067099226,
+        "monoRms": 0.002325092580445488
+      }
+    },
+    {
+      "name": "recorded/recovery: sampled headroom",
+      "pass": true,
+      "actual": 0.01469357218593359
+    },
+    {
+      "name": "recorded/relay: output and mono presence",
+      "pass": true,
+      "actual": {
+        "rms": 0.0030976264339250188,
+        "monoRms": 0.0030976264339250188
+      }
+    },
+    {
+      "name": "recorded/relay: sampled headroom",
+      "pass": true,
+      "actual": 0.029222574084997177
+    },
+    {
+      "name": "recorded/stage: output and mono presence",
+      "pass": true,
+      "actual": {
+        "rms": 0.001265003808233994,
+        "monoRms": 0.001265003808233994
+      }
+    },
+    {
+      "name": "recorded/stage: sampled headroom",
+      "pass": true,
+      "actual": 0.01695023477077484
+    },
+    {
+      "name": "recorded/erosion: output and mono presence",
+      "pass": true,
+      "actual": {
+        "rms": 0.001954615980631578,
+        "monoRms": 0.001954615980631578
+      }
+    },
+    {
+      "name": "recorded/erosion: sampled headroom",
+      "pass": true,
+      "actual": 0.013879966922104359
+    },
+    {
+      "name": "recorded/overlap: output and mono presence",
+      "pass": true,
+      "actual": {
+        "rms": 0.006228810572790942,
+        "monoRms": 0.006049711076738848
+      }
+    },
+    {
+      "name": "recorded/overlap: sampled headroom",
+      "pass": true,
+      "actual": 0.04134296625852585
+    },
+    {
+      "name": "recorded/crowded: feedback budget",
+      "pass": true,
+      "actual": 9
+    },
+    {
+      "name": "recorded/crowded-overlap: output and mono presence",
+      "pass": true,
+      "actual": {
+        "rms": 0.0064394374896649354,
+        "monoRms": 0.006107664778879351
+      }
+    },
+    {
+      "name": "recorded/crowded-overlap: sampled headroom",
+      "pass": true,
+      "actual": 0.08208298683166504
+    },
+    {
+      "name": "recorded/victory: output and mono presence",
+      "pass": true,
+      "actual": {
+        "rms": 0.008961995046381219,
+        "monoRms": 0.008961991526523572
+      }
+    },
+    {
+      "name": "recorded/victory: sampled headroom",
+      "pass": true,
+      "actual": 0.0493466779589653
+    },
+    {
+      "name": "recorded/Duel: both owners retained",
+      "pass": true,
+      "actual": [
+        0,
+        1
+      ]
+    },
+    {
+      "name": "recorded/Duel: output, mono and sampled headroom",
+      "pass": true,
+      "actual": {
+        "rms": 0.0033033247044349768,
+        "peak": 0.023056935518980026,
+        "monoRms": 0.0033000688390000905,
+        "monoPeak": 0.023045210167765617,
+        "windows": 56
+      }
+    },
+    {
+      "name": "recorded/zero master: no pending one-shot",
+      "pass": true,
+      "actual": 0
+    },
+    {
+      "name": "recorded/volume restoration: expired cue stays silent",
+      "pass": true,
+      "actual": 0
+    },
+    {
+      "name": "partial-fallback/warning: output and mono presence",
+      "pass": true,
+      "actual": {
+        "rms": 0.002465468131690006,
+        "monoRms": 0.002465468131690006
+      }
+    },
+    {
+      "name": "partial-fallback/warning: sampled headroom",
+      "pass": true,
+      "actual": 0.027531886473298073
+    },
+    {
+      "name": "partial-fallback/support: output and mono presence",
+      "pass": true,
+      "actual": {
+        "rms": 0.0045605279259379895,
+        "monoRms": 0.0043146487156468525
+      }
+    },
+    {
+      "name": "partial-fallback/support: sampled headroom",
+      "pass": true,
+      "actual": 0.04671699181199074
+    },
+    {
+      "name": "partial-fallback/recovery: output and mono presence",
+      "pass": true,
+      "actual": {
+        "rms": 0.007742475773724596,
+        "monoRms": 0.00732504299673784
+      }
+    },
+    {
+      "name": "partial-fallback/recovery: sampled headroom",
+      "pass": true,
+      "actual": 0.04745910316705704
+    },
+    {
+      "name": "partial-fallback/relay: output and mono presence",
+      "pass": true,
+      "actual": {
+        "rms": 0.008328919096503766,
+        "monoRms": 0.008328919096503766
+      }
+    },
+    {
+      "name": "partial-fallback/relay: sampled headroom",
+      "pass": true,
+      "actual": 0.06278841942548752
+    },
+    {
+      "name": "partial-fallback/stage: output and mono presence",
+      "pass": true,
+      "actual": {
+        "rms": 0.004522826740597062,
+        "monoRms": 0.004522826740597062
+      }
+    },
+    {
+      "name": "partial-fallback/stage: sampled headroom",
+      "pass": true,
+      "actual": 0.038333021104335785
+    },
+    {
+      "name": "partial-fallback/erosion: output and mono presence",
+      "pass": true,
+      "actual": {
+        "rms": 0.006421532304444376,
+        "monoRms": 0.006421532304444376
+      }
+    },
+    {
+      "name": "partial-fallback/erosion: sampled headroom",
+      "pass": true,
+      "actual": 0.03543039411306381
+    },
+    {
+      "name": "partial-fallback/overlap: output and mono presence",
+      "pass": true,
+      "actual": {
+        "rms": 0.010358158495706914,
+        "monoRms": 0.009934137475165349
+      }
+    },
+    {
+      "name": "partial-fallback/overlap: sampled headroom",
+      "pass": true,
+      "actual": 0.07277709990739822
+    },
+    {
+      "name": "partial-fallback/crowded: feedback budget",
+      "pass": true,
+      "actual": 16
+    },
+    {
+      "name": "partial-fallback/crowded-overlap: output and mono presence",
+      "pass": true,
+      "actual": {
+        "rms": 0.01569926950125394,
+        "monoRms": 0.01485284907427406
+      }
+    },
+    {
+      "name": "partial-fallback/crowded-overlap: sampled headroom",
+      "pass": true,
+      "actual": 0.2229890376329422
+    },
+    {
+      "name": "partial-fallback/victory: output and mono presence",
+      "pass": true,
+      "actual": {
+        "rms": 0.00894278386543565,
+        "monoRms": 0.00894278386543565
+      }
+    },
+    {
+      "name": "partial-fallback/victory: sampled headroom",
+      "pass": true,
+      "actual": 0.04928911477327347
+    },
+    {
+      "name": "partial-fallback/Duel: both owners retained",
+      "pass": true,
+      "actual": [
+        0,
+        1
+      ]
+    },
+    {
+      "name": "partial-fallback/Duel: output, mono and sampled headroom",
+      "pass": true,
+      "actual": {
+        "rms": 0.013943372635098874,
+        "peak": 0.08508140593767166,
+        "monoRms": 0.013943372635098874,
+        "monoPeak": 0.08508140593767166,
+        "windows": 53
+      }
+    },
+    {
+      "name": "partial-fallback/zero master: no pending one-shot",
+      "pass": true,
+      "actual": 0
+    },
+    {
+      "name": "partial-fallback/volume restoration: expired cue stays silent",
+      "pass": true,
+      "actual": 0
+    },
+    {
+      "name": "music-only: output present",
+      "pass": true,
+      "actual": 0.10499268025159836
+    },
+    {
+      "name": "music-only: sampled headroom",
+      "pass": true,
+      "actual": 0.10499268025159836
+    },
+    {
+      "name": "music-and-warning: warning remains scheduled",
+      "pass": true,
+      "actual": true
+    },
+    {
+      "name": "music-and-warning: output present",
+      "pass": true,
+      "actual": 0.10258369892835617
+    },
+    {
+      "name": "music-and-warning: sampled headroom",
+      "pass": true,
+      "actual": 0.10258369892835617
+    },
+    {
+      "name": "music-paused-warning: warning remains scheduled",
+      "pass": true,
+      "actual": true
+    },
+    {
+      "name": "music-paused-warning: output present",
+      "pass": true,
+      "actual": 0.027531886473298073
+    },
+    {
+      "name": "music-paused-warning: sampled headroom",
+      "pass": true,
+      "actual": 0.027531886473298073
+    },
+    {
+      "name": "master-muted: silent",
+      "pass": true,
+      "actual": 0
+    },
+    {
+      "name": "master-muted: sampled headroom",
+      "pass": true,
+      "actual": 0
+    },
+    {
+      "name": "master-zero: silent",
+      "pass": true,
+      "actual": 0
+    },
+    {
+      "name": "master-zero: sampled headroom",
+      "pass": true,
+      "actual": 0
+    },
+    {
+      "name": "gameplay-paused: silent",
+      "pass": true,
+      "actual": 0
+    },
+    {
+      "name": "gameplay-paused: sampled headroom",
+      "pass": true,
+      "actual": 0
+    }
+  ],
+  "sourcePins": {
+    "audio.mjs": "e0925185418833b4d7e9e4910617f62466db8442a1dc7f0f6b746bcb9009c407",
+    "audio-output.mjs": "dc1b2776407d0b6649b0d15c5c721bd59384d7e38a2e61087961ff7a37bd86c1",
+    "feedback-director.mjs": "491447ef9f2f90d286358664ac40d510f3595562bea4cbba87917a4a989d6671",
+    "feedback-cues.mjs": "80a7f9c1ac51e35ac2bb25de2611dbac515be84c818497ae617ecc694473b633"
+  },
+  "decodedRecordings": 79,
+  "sampleRate": 48000,
+  "baseLatency": 0.005333333333333333,
+  "passed": true,
+  "contextStateAfterCleanup": "closed"
+}
