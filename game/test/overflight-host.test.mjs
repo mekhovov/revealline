@@ -1074,6 +1074,7 @@ test('opt-in review traces retain bounded ordinary inputs and snapshots without 
   const review = createOverflightReviewPlayback({
     build: 'echo',
     trace: true,
+    detailTick: 0,
     pilot: () => ({ x: 1, y: 0, boost: false, focus: true }),
     selectCard: () => null,
   });
@@ -1103,6 +1104,11 @@ test('opt-in review traces retain bounded ordinary inputs and snapshots without 
   }
   assert.equal(review.traceSnapshot().samples.length, receipt.capacity);
   assert.equal(review.traceSnapshot().dropped, 1);
+  assert.equal(review.traceSnapshot().details.length, 2);
+  assert.deepEqual(
+    review.traceSnapshot().details.map((row) => row.tick),
+    [0, 6],
+  );
   review.reset();
   assert.deepEqual(review.traceSnapshot().samples, []);
   assert.equal(review.traceSnapshot().dropped, 0);
