@@ -13,9 +13,17 @@ files were preserved. Implementation continues in a local managed worktree becau
 worktree's Git database lives on a mounted network drive. Before opening the PR, the branch was
 rebased again without conflicts onto fetched main `4244ece94c25c9e5fb23391e62c3db269a6c999e`.
 [PR #1347](https://github.com/mekhovov/revealline/pull/1347) merged as `d6b0cae9df77688f75992279f8cdc181f4f84bcd`.
-The existing Pages publication is running. The [browser acceptance record](creator-browser-acceptance-2026-10-15.md)
-now confirms actual upload, generation, installation, victory playback and separate-origin transfer.
-No successful public deployment or new immutable release is claimed yet.
+The first Pages run failed its former size guard. A subsequent main publication succeeded:
+public identity `9b416b2c0e27f40cf5adfa3b93a1477382ecef4f` includes the fix. No new immutable
+release or public-site upload journey is claimed. The [browser acceptance record](creator-browser-acceptance-2026-10-15.md)
+confirms actual upload, generation, installation, victory playback and separate-origin transfer.
+
+The [follow-up acceptance and correction](creator-follow-up-acceptance-2026-10-15.md) rebased onto
+`859d5cfc927daff2a350318b2325486a58959648`, completed single-image Solo/Duel and Studio Back/Forward,
+and exercised a 50 MB video. It found and corrected poster/range/pairing choices resetting after
+video reconversion, together with unstable generated layouts during those edits. The corrected
+large video passed cancel/retry, exact-frame/range review, download, installation and Solo completion.
+The new correction awaits its own protected publication.
 
 The current `.github/workflows/publish-main-pages.yml` already publishes protected main. Reuse it;
 do not add a second publisher or restore retired archive workflows. The retired Pages playbook is
@@ -57,7 +65,8 @@ container conversion, not native browser decoding or an installed campaign win.
    creation; actual download/import; install; unfinished recovery; legal completion; exact poster
    and video controls. Include Studio Back/Forward and a representative multiplayer case.
    The normal password unlock and paired creation/play/transfer/recovery and video-only creation/play checks now passed.
-   Complete the remaining single-image, navigation, multiplayer and cross-browser cases.
+   Single-image Solo, both Duel seats/rematch and saved Studio Back/Forward now passed.
+   Complete current-build Team browser play, multi-mission continuation and cross-browser cases.
 2. **Useful generated gameplay:** review a small sample for obstacle/enemy pressure and repetition.
    Six families and twelve bounded variants remain implemented. Automated routes establish exact
    feasibility; they cannot grant human enjoyment or balance approval. Scope additional variants
@@ -69,6 +78,9 @@ container conversion, not native browser decoding or an installed campaign win.
    the operating system. The output retained 30-second 1920×1080 H.264 video and mono AAC audio;
    its MP4 metadata precedes the media payload. This measures converter-process memory only, not
    browser peak memory, batch storage, cancellation or decoded playback.
+   The follow-up browser check now passed actual 50 MB inspection, cancellation/retry, custom frame
+   and playback range, export, installation and completion. Browser peak memory, 12/50-image
+   batches and quota/failure recovery remain open.
    Do not fill the user's disk or damage existing player data to manufacture a quota result.
 4. **Desktop compatibility:** prioritize the built-in browser, then available desktop Safari/Firefox
    environments. Record actual versions/formats and outcomes. Browser availability, permissions
@@ -100,9 +112,9 @@ acceptance and time spent waiting for CI or access.
 
 | Work                                                  | Estimated hands-on effort                                    | Dependency / consequence if deferred                                                                                                                                       |
 | ----------------------------------------------------- | ------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Current creator journey and generated-gameplay review | Half to one day on one fixed build                           | Access is resolved and the video/transfer checks passed. Single-image refresh, Studio navigation, multiplayer and human balance review remain.                             |
+| Current creator journey and generated-gameplay review | Half to one day on one fixed build                           | Access is resolved and the video/transfer checks passed. Single-image, Studio history and Duel passed; Team, continuation and human balance review remain.                 |
 | Desktop browser matrix                                | One to two days for a bounded Chromium/Firefox/Safari matrix | Available desktop browser sessions and codecs; no broader support claim before the actual runs.                                                                            |
-| Large-video browser storage and recovery              | Half to one day                                              | Disposable browser profile and sufficient free space; the Node measurement alone cannot predict browser batch limits.                                                      |
+| Large-video browser storage and recovery              | Half to one day                                              | Disposable browser profile and sufficient free space; single-video browser flow passed; batch/quota and peak-memory limits remain unverified.                              |
 | Static release batch                                  | CI/deployment queue dependent                                | Protected-source checks and deployed identity verification; a merged PR is not a successful Pages deployment.                                                              |
 | Public-store pilot, moderation and restore            | One to two days of acceptance after setup                    | Backend host, email delivery, test accounts, operator and isolated recovery target; Pages alone cannot enable public submissions. Setup is not estimated before selection. |
 | AWS-specific qualification                            | Half to one day after scoped access, only if selected        | Deferred; a filesystem-backed host does not need AWS.                                                                                                                      |

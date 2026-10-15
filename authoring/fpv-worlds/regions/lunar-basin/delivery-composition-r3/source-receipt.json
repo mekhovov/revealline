@@ -1,0 +1,18 @@
+{
+  "sourceCommit": "084564ca1a39d06bb077cae34fb2bdc1c3afbaee",
+  "sourceRevision": "composition-r3",
+  "descriptor": {
+    "bytes": 14759,
+    "sha256": "e3ec1ebf203e391741e64d218ac2554db3d5b0327dbdc9940e7190726f27ba65",
+    "files": 116,
+    "payloadBytes": 2079110,
+    "totalBytes": 2093869
+  },
+  "generatedSourceRevision": "composition-r3-draft2",
+  "preservedSourceFiles": 117,
+  "publishedPayloadFiles": 116,
+  "sourceChanged": false,
+  "runtimeSupport": "65e92d124b4232bf9d1450ac8cac47c82961cf21",
+  "nativePlayerAdmission": false,
+  "scope": "Manifest/payloads copied exactly from source with 117-file deterministic regeneration and independent native appearance gate. Descriptor/provenance added; no source geometry or runtime change."
+}
