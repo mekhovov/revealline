@@ -147,6 +147,7 @@ import {
   regionalLocationIdentity,
   regionalSavedLocation,
   createRegionalSession,
+  regionalPreparationFeedback,
 } from './regional-session.mjs';
 import { openRegionalLocations, validateRegionalLocationStart } from './regional-locations.mjs';
 import { mountWorldHuntReactions } from './world-reaction-runtime.mjs';
@@ -4484,7 +4485,11 @@ export function mountWorldApp({
     accumulator = 0;
     pausing = false;
     if (current) {
-      $('flight-status').textContent = current.regional ? txt('Unscored · Paused', 'Без заліку · Пауза') : txt(
+      $('flight-status').textContent = current.regional
+        ? (regionalPreparationIssue
+            ? txt(regionalPreparationIssue.en, regionalPreparationIssue.uk)
+            : txt('Unscored · Paused', 'Без заліку · Пауза'))
+        : txt(
         replayProof
           ? 'Playback paused. Resume to continue.'
           : 'Paused. Arm deliberately to continue.',
@@ -4963,7 +4968,9 @@ export function mountWorldApp({
             : state.status,
       pauseOpensMenu: Boolean(current?.regional),
       missionName: $('flight-title').textContent,
-      summary: $('flight-menu-brief').textContent,
+      summary: current.regional && regionalPreparationIssue
+        ? txt(regionalPreparationIssue.en, regionalPreparationIssue.uk)
+        : $('flight-menu-brief').textContent,
       canResume: !playbackEnded && ['paused', 'disarmed'].includes(state.status),
       muted: !audio.enabled(),
     });
@@ -5925,8 +5932,11 @@ export function mountWorldApp({
       'Практика із самовирівнюванням · без заліку. Для цих маневрів потрібен Acro.',
     );
   let regionalPreparing = null;
+  let regionalPreparationStage = 'source';
+  let regionalPreparationIssue = null;
   let regionalManifestRequest = null;
   function handleGraphicsContextLoss() {
+    regionalPreparationIssue = regionalPreparationFeedback({ contextLost: true });
     sceneReady = false;
     qualityPreparing = false;
     pauseFlight();
@@ -5942,7 +5952,24 @@ export function mountWorldApp({
     sceneReady = false;
     const selected = flight,
       token = flightToken;
-    const timeout = win.setTimeout(() => selected.cancelPreparation(), 30000);
+    regionalPreparationStage = 'source';
+    regionalPreparationIssue = null;
+    let timedOut = false;
+    const preparationDeadline = new AbortController();
+    // The deadline also bounds the final shader wait, not only source staging.
+    const wait = (promise) =>
+      new Promise((resolve, reject) => {
+        const abort = () => reject(preparationDeadline.signal.reason);
+        preparationDeadline.signal.addEventListener('abort', abort, { once: true });
+        if (preparationDeadline.signal.aborted) abort();
+        Promise.resolve(promise).then(resolve, reject).finally(() =>
+          preparationDeadline.signal.removeEventListener('abort', abort));
+      });
+    const timeout = win.setTimeout(() => {
+      timedOut = true;
+      preparationDeadline.abort(new DOMException('Regional preparation timed out', 'TimeoutError'));
+      selected.cancelPreparation();
+    }, 30000);
     $('flight-status').textContent = txt(
       'Unscored · Loading area…',
       'Без заліку · Завантаження…',
@@ -5950,9 +5977,13 @@ export function mountWorldApp({
     const owns = () => !disposed && flight === selected && token === flightToken;
     const operation = (async () => {
       try {
-        await selected.prepare();
+        await wait(selected.prepare());
         if (!owns()) return;
-        if ((await renderer.prepare()) === false || !owns()) return;
+        regionalPreparationStage = 'graphics';
+        const graphicsReady = await wait(renderer.prepare({ signal: preparationDeadline.signal }));
+        if (!owns()) return;
+        if (graphicsReady === false)
+          throw new DOMException('Regional graphics preparation replaced', 'AbortError');
         if (selected.snapshot().reason !== 'prepared')
           throw new DOMException('Regional preparation cancelled', 'AbortError');
         if (drawFlight(selected.snapshot()) === false)
@@ -5965,18 +5996,18 @@ export function mountWorldApp({
       } catch (error) {
         if (owns()) {
           sceneReady = false;
-          if (current.configuration.savedStart && error.name !== 'AbortError' && regionalLocationControls?.owner === current) {
+          regionalPreparationIssue = regionalPreparationFeedback({
+            stage: regionalPreparationStage,
+            timedOut,
+            error,
+            savedStart: Boolean(current.configuration.savedStart),
+            contextLost: renderer.resources?.().renderer?.contextLost === true,
+          });
+          if (regionalPreparationIssue.restoreUnavailable && regionalLocationControls?.owner === current) {
             regionalLocationControls.restoreUnavailable = true;
             regionalLocationControls.help.textContent = regionalPlacesHelp();
           }
-          $('flight-status').textContent = current.configuration.savedStart && error.name !== 'AbortError' ? txt(
-            'Saved place unavailable. Choose a clear starting point.',
-            'Збережене місце недоступне. Виберіть вільне місце старту.',
-          ) : txt(
-            'Unscored · Area unavailable',
-            'Без заліку · Немає ділянки',
-          );
-          if (error.name !== 'AbortError') reportError(error);
+          $('flight-status').textContent = txt(regionalPreparationIssue.en, regionalPreparationIssue.uk);
         }
       } finally {
         win.clearTimeout(timeout);
@@ -6007,7 +6038,11 @@ export function mountWorldApp({
       mode: options.mode ?? $('flight-mode').value,
       response,
       initialHeading: 'region-centre',
-      prepareFrame: (group, options) => renderer.prepareRegionalFrame(group, options),
+      prepareFrame: async (group, options) => {
+        if (flight === nextFlight) regionalPreparationStage = 'graphics';
+        await renderer.prepareRegionalFrame(group, options);
+        if (flight === nextFlight) regionalPreparationStage = 'source';
+      },
     });
     try {
       await flight?.dispose?.();
