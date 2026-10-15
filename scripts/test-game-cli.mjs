@@ -83,8 +83,8 @@ test('published regional review modules match the installed FPV source closure',
   );
   assert.equal(
     regional.length,
-    23,
-    'the reviewed regional source closure includes RGBA, restore admission and saved places',
+    24,
+    'the reviewed regional source closure includes RGBA, restore admission, saved places and Railway district ground',
   );
   assert.ok(regional.includes('optional-practice/civilian-fpv/regional/rgba-scenery-cell.mjs'));
   assert.ok(regional.includes('optional-practice/civilian-fpv/regional/restore-containment.mjs'));

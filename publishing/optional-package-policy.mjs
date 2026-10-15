@@ -484,6 +484,7 @@ const RUNTIME_PACKAGE_POLICIES = Object.freeze({
         'regional/terrain-normals.mjs',
         'regional/terrain-surface.mjs',
         'regional/urban-ground-surface.mjs',
+        'regional/railway-expanse-ground.mjs',
         'regional/verified-flight-geometry.mjs',
         'regional/verified-mixed-window.mjs',
         'regional/verified-scenery-window.mjs',
@@ -630,7 +631,7 @@ export const OPTIONAL_PACKAGE_POLICIES = Object.freeze(
           ...policy.limits,
           // Regional review adds 23 exact modules to the reviewed 138-file source closure.
           // Include launcher/templates; keep the 20 MiB budget and exact dependency boundary.
-          files: id === 'civilian-fpv' ? 104 : id === 'fpv-worlds' ? 162 : policy.limits.files,
+          files: id === 'civilian-fpv' ? 104 : id === 'fpv-worlds' ? 163 : policy.limits.files,
           bytes: id === 'fpv-worlds' ? 20 * 1024 * 1024 : policy.limits.bytes,
         }),
         localFiles: Object.freeze([
