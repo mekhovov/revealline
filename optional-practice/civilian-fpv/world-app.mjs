@@ -4789,6 +4789,8 @@ export function mountWorldApp({
       );
       controls.select.replaceChildren();
       const names = {
+        'mill-court': ['Mill court', 'Двір млина'],
+        'tower-court': ['Tower court', 'Двір вежі'],
         'freight-hall': ['Freight hall', 'Вантажний цех'],
         'viaduct-river-gap': ['Viaduct opening', 'Прохід під віадуком'],
         'quarry-under-conveyor': ['Quarry conveyor', 'Конвеєр кар’єру'],
