@@ -7,6 +7,10 @@ source/candidate boundaries and remaining gates. Hosting is deferred.
   native Settings/reload/visible stationary-HUD passes, not moving-flight acceptance.
 - `fpv-probe-failed.json` and its complete archive retain the original failed
   90-second FPV probe. There is no native completion, proof export or replay.
+- `corrected-probe/` retains a second original failed run: genuine completion
+  in 13.353 seconds, then pointer export and browser-cleanup timeout. Its separate
+  completion screenshot is pinned in the inventory; no actual backup/replay exists.
+  The prepared keyboard export remains unverified natively, and does not close C3.
 - The unchanged HUD candidate envelope/build receipt bind the actual tested bytes.
   The separate final-guide envelope/verification/build log bind the successful
   guide-inclusive all-three clean-source bundle. It is not fresh browser evidence.

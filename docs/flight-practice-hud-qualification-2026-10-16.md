@@ -133,27 +133,63 @@ is zero, so it never leaves the ground. A synthetic model/keyboard regression
 reproduced this and failed with the original feedback. Prototype v3 now commands
 60% for initial ground clearance until visible height reaches 0.1 m, then uses
 the existing bounded feedback. The regression clears 0.2 m in both modes. This
-changes **only the test controller**, not SIM physics. It does not prove a complete
-exercise or native reliability: the corrected native probe and full matrix remain
-unrun. Pre-aborted Worlds export also now rejects before its first navigation.
+changes **only the test controller**, not SIM physics. Pre-aborted Worlds export
+also now rejects before its first navigation.
+
+### Corrected probe: native completion, export and cleanup still failed
+
+After free space recovered to about 1.7 GiB, one corrected probe ran with browser
+and staging files on the external drive, using the final guide-inclusive `80a32d6a9`
+candidate. Its [original receipt](flight-practice-hud-qualification-20261016/corrected-probe/failed.json)
+and [complete archive](flight-practice-hud-qualification-20261016/corrected-probe/complete-artifacts.tgz)
+retain a genuine native lift-and-land completion at 13.353 seconds, 129 visible
+readings and successful key release. The [actual completion screenshot](flight-practice-hud-qualification-20261016/corrected-probe/native-completion.png)
+is retained separately: 535879 bytes, SHA-256
+`09c21e3370376cc1eb525ee285aca177803613ad9e66951db867a25895169f77`.
+
+The aggregate is still **failed**. After a pointer activation of result Home,
+Settings remained hidden and export timed out; no actual backup or independent
+replay exists. Source and screenshots strongly support a first-pointer layout
+mechanism: pointer-down cancels the celebration, hiding a flex item and moving
+Home before release. There is no recorded down/up event trace, so this is not
+claimed as fully instrumented causal proof or a fixed pointer path. C3 remains open.
+
+This run also records **browser cleanup timed out**, `cleanup.completed: false`,
+and retains its staged site. The wrapper's final empty-directory removal therefore
+failed too. A later read-only process check found that owned browser PID had
+exited and its disposable profile was gone; the staged site remains preserved.
+That follow-up does not convert the original failed cleanup into a pass.
+
+A separate keyboard export route is now prepared: wait for the ordinary visible,
+enabled button and press Enter, including result Home. Unit tests reject hidden,
+disabled, pre-aborted and pointer-only activation. The observer now keeps a separate
+completion-screenshot pin even if a later failure capture replaces the main
+screenshot field. Neither change rewrites original receipts. The keyboard route,
+actual export/replay, clean native cleanup and complete eight-case matrix still
+require a fresh native run; no further browser attempt was made in this continuation.
 
 ## Verification and next gates
 
 Retained logs: 353 practice passes on the repaired hosts, 90 host-UI passes, 99
-observer passes including corrected feedback/export/replay tests, and three
+observer passes including corrected feedback/export/replay tests, then 100
+latest observer passes including the separate keyboard route and mid-action
+cancellation regression, and three
 bilingual guide-copy passes. These suites overlap; do not sum them as independent
 tests. The practice/host suites predate the final guide text; the guide-specific
 suite covers that addition. Lint, formatting and whitespace checks pass for the
 changed files. Failed before-fix regression logs are retained alongside passes.
 
-New browser batches are deferred because local free disk dropped below 1 GiB
-(about 0.8 GiB after cleanup). No user files, profiles, previous candidates or
-failed outputs were deleted. Restore a safe local margin before another browser
-qualification; keep build artifacts on the external drive.
+Native batches were initially paused when local free disk dropped below 1 GiB
+(about 0.8 GiB after the first cleanup). After recovery to 1.7 GiB the single
+corrected external-profile attempt above was allowed; it failed export/cleanup.
+No user files, profiles, previous candidates or failed outputs were deleted.
+Keep a safe local margin and external build outputs for subsequent native work.
 
 Recommended order remains:
 
-1. Corrected native FPV probe, then all eight cases with actual export/replay;
+1. Verify the prepared keyboard export route, genuine proof replay and clean
+   native shutdown, then all eight cases. Repair/verify the first-pointer result
+   target separately; keyboard export does not close C3.
    moving visible-HUD pause/retry, positive appearance handoff and complete-build
    directory checks still need their own evidence.
 2. Remaining Gym/Worlds pointer cases, populated-data offline process restart,
