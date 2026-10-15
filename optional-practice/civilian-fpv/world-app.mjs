@@ -7494,10 +7494,10 @@ export function mountWorldApp({
         menuHint.hidden = true;
         return;
       }
-      // Blur suspends device ownership with an empty hint. Keep the current
-      // shared menu's instructions in place: clearing and restoring them can
-      // scroll the dialog between pointer press and release.
-      if (!value && context?.root.dataset.modeSurface) return;
+      // Blur suspends device ownership with an empty hint. Keep instructions
+      // in open menus and native dialogs: clearing and restoring them can
+      // move the clicked control between pointer press and release.
+      if (!value && context) return;
       if (!context) {
         menuHint.hidden = true;
         return;

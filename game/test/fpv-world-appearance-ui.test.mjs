@@ -769,6 +769,31 @@ test('World terminal preview offers Retry and prepares a fresh disarmed attempt'
   assert.match(h.$('flight-status').textContent, /Preview: completion does not earn rewards/);
 });
 
+test('World native HUD details retain instructions across blur and focus', async (t) => {
+  const h = fixture(t);
+  await h.app.ready;
+  await h.app.startFlight(WORLD_CATALOGUE.find((item) => !item.legacy));
+  h.$('world-viewport').querySelector('[data-hud-part="explain"]').click();
+  h.tick(2);
+  const dialog = h.$('sim-flight-hud-details'),
+    hint = dialog.querySelector('.sim-menu-hint');
+  assert.equal(dialog.open, true);
+  assert.ok(hint, 'the native dialog owns its navigation instructions');
+  const instructions = hint.textContent,
+    state = h.app.snapshot().state;
+  assert.ok(instructions.length > 0);
+  h.doc.focused = false;
+  h.win.emit('blur');
+  h.tick(2);
+  assert.equal(hint.textContent, instructions, 'blur must not resize the native dialog');
+  assert.equal(hint.hidden, false);
+  h.doc.focused = true;
+  h.win.emit('focus');
+  h.tick(2);
+  assert.equal(hint.textContent, instructions, 'refocus must not reflow the clicked control');
+  assert.deepEqual(h.app.snapshot().state, state, 'suspension and refocus cannot arm a flight');
+});
+
 test('World menu Back dismisses the visible surface without closing its paused native flight', async (t) => {
   const h = fixture(t);
   await h.app.ready;
