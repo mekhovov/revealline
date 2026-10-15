@@ -51,8 +51,34 @@ export const DESERT_LANDMARKS_LIBRARY_PIN = Object.freeze({
   },
 });
 
+export const CANAL_CITY_LIBRARY_PIN = Object.freeze({
+  id: 'canal-city-study',
+  title: { en: 'Canal City — bridges and courtyards', uk: 'Місто каналів — мости й подвір’я' },
+  description: {
+    en: '384 × 384 m · six starting points · unscored free flight. Follow the canals beneath a masonry arch and high walkway, pass through warehouses and courtyards, or weave around basin moorings. Early composition study; surrounding banks remain sparse. Water is visual only.',
+    uk: '384 × 384 м · шість місць старту · вільний політ без заліку. Літайте каналами під кам’яною аркою та високим переходом, крізь склади й подвір’я або між швартовними стовпами. Раннє дослідження композиції; навколишні береги ще малонаповнені. Вода лише візуальна.',
+  },
+  bytes: 6771851,
+  appearance: { terrain: 'plain' },
+  // Consumed by the separately gated trusted authored-heading helper (#1424).
+  startHeadings: Object.freeze({
+    'north-arch': 18000,
+    'warehouse-passage': 9000,
+    highwalk: 18000,
+    'lock-bend': 18000,
+    courtyard: 18000,
+    'turning-basin': 2974,
+  }),
+  pin: {
+    url: 'https://raw.githubusercontent.com/mekhovov/revealline/04b0d9c5db0687d8df2ea9a3ea07b9ca9ddcaa5a/authoring/fpv-worlds/regions/canal-city/delivery-district-r2/delivery.json',
+    bytes: 6580,
+    sha256: '891835944510139a7bed6a99305c0e22b71ba9ccfe84801a07ea6e215ca25c87',
+  },
+});
+
 // Original, reviewed sources are pinned to an immutable published commit.
 export const REGIONAL_LIBRARY_PINS = Object.freeze([
+  CANAL_CITY_LIBRARY_PIN,
   ...(REGION_CELL_SIZES_MM.includes(512000)
     ? [DESERT_LANDMARKS_LIBRARY_PIN, DESERT_EXPEDITION_LIBRARY_PIN]
     : []),
