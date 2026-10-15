@@ -4756,6 +4756,9 @@ export function mountWorldApp({
     controls.restart.disabled = controls.select.disabled = Boolean(controls.busy || active);
   }
   function savedLocationError(error) {
+    if (error?.code === 'regional-location-outside' || error?.code === 'regional-location-revision')
+      return txt('This saved place is unavailable. Choose a clear starting point. The place is kept.',
+        'Це збережене місце недоступне. Виберіть вільне місце старту. Запис збережено.');
     if (error?.code === 'generation-conflict') return txt(
       'Saved places changed in another tab. Refresh and choose again.',
       'Збережені місця змінилися в іншій вкладці. Оновіть і виберіть знову.',
@@ -4769,6 +4772,13 @@ export function mountWorldApp({
     );
     return txt('Saved places are unavailable. Existing places are retained.',
       'Збережені місця недоступні. Наявні місця збережено.');
+  }
+  function regionalPlacesHelp() {
+    return regionalLocationControls?.restoreUnavailable
+      ? txt('This saved place cannot be verified. Choose a clear starting point above. The place is kept.',
+        'Це збережене місце неможливо перевірити. Виберіть вільне місце старту вище. Запис збережено.')
+      : txt('Places belong to this world version. Restore levelled and disarmed; mode and view stay the same.',
+        'Місця належать цій версії світу. Відновлення вирівнює й не озброює дрон; режим і вигляд зберігаються.');
   }
   function locationStore() {
     regionalLocationsStore ??= openRegionalLocations({ indexedDB: win.indexedDB }).catch((error) => {
@@ -4796,10 +4806,8 @@ export function mountWorldApp({
         controls.select.append(option);
       }
       if (saved.locations.some((place) => place.id === selected)) controls.select.value = selected;
-      controls.help.textContent = txt(
-        'Places belong to this world version. Restore levelled and disarmed; mode and view stay the same.',
-        'Місця належать цій версії світу. Відновлення вирівнює й не озброює дрон; режим і вигляд зберігаються.',
-      );
+      if (!controls.label.value) controls.label.value = txt(`Place ${saved.locations.length + 1}`, `Місце ${saved.locations.length + 1}`);
+      controls.help.textContent = regionalPlacesHelp();
     } catch (error) {
       if (current === owner && request === controls.request) {
         controls.generation = null;
@@ -4816,17 +4824,19 @@ export function mountWorldApp({
     const c = regionalLocationControls;
     if (!c) return;
     c.root.hidden = !current?.regional || current.regionalReview;
-    if (c.root.hidden) { c.owner = null; c.request++; return; }
+    if (c.root.hidden) { if (c.owner) c.request++; c.owner = null; return; }
     if (c.owner !== current) {
       c.owner = current;
       c.generation = null;
       c.locations = [];
+      c.restoreUnavailable = false;
       c.label.value = '';
       c.select.replaceChildren();
       c.help.textContent = txt('Loading saved places…', 'Завантаження місць…');
       void refreshRegionalLocations(current);
     }
     if (c.locale !== locale) {
+      const changedLocale = c.locale !== null;
       c.locale = locale;
       c.title.textContent = txt('Saved places', 'Збережені місця');
       c.labelText.textContent = txt('Name this place', 'Назва цього місця');
@@ -4838,6 +4848,7 @@ export function mountWorldApp({
       c.confirm.textContent = txt('Remove this place', 'Видалити це місце');
       c.keep.textContent = txt('Keep', 'Залишити');
       c.review.hidden = true;
+      if (changedLocale && c.generation !== null) c.help.textContent = regionalPlacesHelp();
     }
     const paused = (state ?? flight?.snapshot())?.status === 'paused';
     const unavailable = c.busy || c.loading || !paused || regionalPreparing || c.generation === null;
@@ -4870,12 +4881,14 @@ export function mountWorldApp({
   async function restoreRegionalLocation() {
     const c = regionalLocationControls, owner = current;
     if (!c || c.restore.disabled || c.owner !== owner || flight?.snapshot().status !== 'paused') return;
-    const selectedId = c.select.value, expected = c.generation, launchGeneration = missionLaunchGeneration;
+    const selectedId = c.select.value, expected = c.generation, launchGeneration = missionLaunchGeneration,
+      selectedFlight = flight, selectedToken = flightToken;
     c.busy = true;
     paintRegionalLocations();
     try {
       const saved = await (await locationStore()).list(regionalLocationIdentity(owner));
-      if (disposed || current !== owner || doc.hidden || launchGeneration !== missionLaunchGeneration || flight?.snapshot().status !== 'paused') return;
+      if (disposed || current !== owner || doc.hidden || launchGeneration !== missionLaunchGeneration ||
+          selectedFlight !== flight || selectedToken !== flightToken || flight?.snapshot().status !== 'paused') return;
       if (saved.generation !== expected) throw Object.assign(new Error('Changed saved places'), { code: 'generation-conflict' });
       const entry = regionalSavedLocation(owner, saved.locations.find((place) => place.id === selectedId));
       const generation = ++missionLaunchGeneration;
@@ -5949,6 +5962,10 @@ export function mountWorldApp({
       } catch (error) {
         if (owns()) {
           sceneReady = false;
+          if (current.configuration.savedStart && error.name !== 'AbortError' && regionalLocationControls?.owner === current) {
+            regionalLocationControls.restoreUnavailable = true;
+            regionalLocationControls.help.textContent = regionalPlacesHelp();
+          }
           $('flight-status').textContent = current.configuration.savedStart && error.name !== 'AbortError' ? txt(
             'Saved place unavailable. Choose a clear starting point.',
             'Збережене місце недоступне. Виберіть вільне місце старту.',
@@ -8287,7 +8304,7 @@ export function mountWorldApp({
     label: placeName, labelText: placeNameText, select: placeSelect, selectText: placeSelectText,
     save: placeSave, restore: placeRestore, remove: placeRemove, refresh: placeRefresh,
     help: placeHelp, review: placeReview, confirm: placeConfirm, keep: placeKeep,
-    owner: null, locale: null, request: 0, locations: [], generation: null, loading: false, busy: false, removal: null };
+    owner: null, locale: null, request: 0, locations: [], generation: null, loading: false, busy: false, removal: null, restoreUnavailable: false };
   on(placeSave, 'click', saveRegionalLocation);
   on(placeRestore, 'click', restoreRegionalLocation);
   on(placeRefresh, 'click', () => void refreshRegionalLocations());
