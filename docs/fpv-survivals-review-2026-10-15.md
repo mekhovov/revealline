@@ -1,8 +1,10 @@
 # FPV Survivals — delivery review and proposed priorities
 
-15 October 2026. Latest follow-up rebased onto fetched main `da0b010820`; earlier checkpoints below retain their original source boundaries. This is a decision document; implementation, automated checks and human acceptance are separate states.
+15 October 2026. Latest follow-up rebased onto fetched main `859d5cfc9`; earlier checkpoints below retain their original source boundaries. This is a decision document; implementation, automated checks and human acceptance are separate states.
 
 ## Latest implementation follow-up
+
+PR #1344 is now merged at `51647de73d`. Its bounded performance and native cached-launch checks are complete. The next follow-up, runtime `f494367b7`, displays all pending Echo/Fan impacts and the actual accepted Riy chain path. See [attack-readability evidence](qualification/overflight/attack-readability-20261015/README.md). Combat tuning is unchanged; earlier build losses remain open.
 
 PR #1319 is merged at `47c3e26e25`. The local checkout safely rebased onto main `da0b010820`, preserving all pushed work. [PR #1344](https://github.com/mekhovov/revealline/pull/1344) fixes overlapping squad/review controls, rotates audible escort feedback without increasing its cadence, and explicitly guards corrective-module offline inclusion. Native desktop/narrow screenshots, a passing local opening frame-time trial, focused checks and fixed-seed build comparisons are recorded in the [follow-up report](qualification/overflight/quality-followup-20261015/README.md).
 
@@ -49,9 +51,9 @@ PR1192, PR1215, PR1226, PR1248 and PR1319 are merged. Corrective runtime `60b0c2
 
 ## Remaining work, in recommended order
 
-### P0 — Integrate and qualify the corrective follow-up
+### Completed P0 — Integrate and qualify the corrective follow-up
 
-**Work:** PR1319 integration is complete. Finish the bounded current-source qualification and follow-up PR1344. Include a narrow native performance comparison for escort targeting/card preparation and a cached launch that proves the added HUD module is packaged. Do not repeat every historical long test unless a regression warrants it.
+**Status:** PR1319 and PR1344 are merged. The bounded native timing and actual cached Riy launch are recorded in the quality-follow-up report. These checks close this corrective integration item; they do not relabel earlier full-content/device evidence as current. New presentation work is qualified separately.
 
 **Why / benefit:** These fixes remove misleading information and wasted escort attacks. The newer shared menu/input/style changes must work with them. One attributable candidate gives reviewers a reliable version to accept.
 
@@ -128,7 +130,7 @@ PR1192, PR1215, PR1226, PR1248 and PR1319 are merged. Corrective runtime `60b0c2
 
 ## Suggested next batch
 
-1. Complete PR1344 qualification and review; PR1319 has merged.
+1. Review and integrate the bounded attack-readability follow-up; PR1319 and PR1344 have merged.
 2. Review Riy Echo and the three intended build techniques; adjust only evidenced problems.
 3. Polish readability and the complete audio mix on those same runs.
 4. Calibrate replay targets, then choose further cross-mode polish.
