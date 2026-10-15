@@ -6,9 +6,18 @@ import { authoritativeCheckpoint } from '../replay.mjs';
 import { readMissionLibraryHandoff, readMissionLibraryReady } from '../mission-library/handoff.mjs';
 
 test('an accessible demo on an idle Legacy host prepares the same level without automatic Start', async (t) => {
-  const page = await demoPage(t);
+  let rejectUnrelatedIndex = false;
+  const page = await demoPage(t, {
+    fetchResponse(path) {
+      if (rejectUnrelatedIndex && String(path).includes('/content/mission-library-index.json'))
+        throw new Error(
+          'Fresh must use its installed owner without loading unrelated mission catalogues.',
+        );
+    },
+  });
   const levelId = page.rendered.run.levelId;
   await page.open();
+  rejectUnrelatedIndex = true;
   page.$('demo-interrupt').click();
   page.$('demo-fresh').click();
   await waitFor(() => !page.$('demo-dialog').open, {
