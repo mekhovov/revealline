@@ -165,6 +165,7 @@ test('offline action requires fresh observable work, native Enter and a fresh te
     const page = {
       evaluate: async (fn, input) => invoke(fn, input),
       locator: () => ({
+        waitFor: async ({ state }) => assert.equal(state, 'visible'),
         press: async (key) => {
           assert.equal(key, 'Enter');
           if (progressOnly)
@@ -203,6 +204,27 @@ test('offline action requires fresh observable work, native Enter and a fresh te
     exercise({ changes: ['Preparing…', 'Ready offline'], expected: /quota denied/i }),
     /Unexpected offline action result: Ready offline/,
   );
+});
+
+test('offline actions reject hidden controls before creating a witness or sending a key', async () => {
+  const actions = [];
+  await assert.rejects(
+    activateOfflineAction(
+      {
+        locator: () => ({
+          waitFor: async ({ state }) => {
+            assert.equal(state, 'visible');
+            throw new Error('Hidden control');
+          },
+          press: async () => actions.push('key'),
+        }),
+        evaluate: async () => actions.push('witness'),
+      },
+      { button: '#hidden', status: '#status', expected: /removed/i },
+    ),
+    /Hidden control/,
+  );
+  assert.deepEqual(actions, []);
 });
 
 test('overall observation deadline encloses the journey but preserves report and cleanup', async () => {
@@ -476,7 +498,8 @@ test('all-package quota orchestration keeps native controls, scoped fixtures and
     /assertQuotaFailedScopeAbsent\(denied, '\/' \+ site\(quotaId, failedFixture\)\)/,
   );
   assert.match(observer, /assertQuotaPointers\(restored, afterGymRemoval, packageIds, keyFor\)/);
-  assert.match(observer, /button: quotaId === worlds \? '#remove-runtime' : '#remove-offline'/);
+  assert.match(observer, /const removeButton = await revealOfflineRemoval\(quotaId\)/);
+  assert.match(observer, /button: removeButton/);
   assert.match(observer, /if \(quotaId === fpv\) quotaProbeReport = result/);
   assert.match(
     observer,
@@ -500,6 +523,64 @@ test('all-package quota orchestration keeps native controls, scoped fixtures and
     );
     assert.ok(html.includes(`id="${selector}"`));
   }
+});
+
+test('Worlds removal opens the public Library and requires its actual removal control to be visible', async () => {
+  const observer = await readFile(
+    new URL('./observe-optional-installation.mjs', import.meta.url),
+    'utf8',
+  );
+  const source = observer.slice(
+    observer.indexOf('async function revealOfflineRemoval('),
+    observer.indexOf('async function prepare('),
+  );
+  for (const id of ['civilian-fpv', 'civilian-flight', 'fpv-worlds']) {
+    const actions = [];
+    let libraryOpen = false;
+    const reveal = runInNewContext(`${source}\nrevealOfflineRemoval`, {
+      worlds: 'fpv-worlds',
+      revealOfflineUI: async (selected) => actions.push(`content:${selected}`),
+      page: {
+        locator: (selector) => ({
+          waitFor: async ({ state }) => {
+            assert.equal(state, 'visible');
+            if (selector === '#packs' || selector === '#remove-runtime')
+              assert.equal(libraryOpen, true, 'Removal cannot target the hidden Library.');
+            actions.push(`visible:${selector}`);
+          },
+          press: async (key) => {
+            assert.equal(selector, '[data-tab="packs"]');
+            assert.equal(key, 'Enter');
+            libraryOpen = true;
+            actions.push('open Library');
+          },
+        }),
+      },
+    });
+    assert.equal(await reveal(id), id === 'fpv-worlds' ? '#remove-runtime' : '#remove-offline');
+    assert.deepEqual(
+      actions,
+      id === 'fpv-worlds'
+        ? [
+            `content:${id}`,
+            'visible:[data-tab="packs"]',
+            'open Library',
+            'visible:#packs',
+            'visible:#remove-runtime',
+          ]
+        : [`content:${id}`, 'visible:#remove-offline'],
+    );
+  }
+  const html = await readFile(
+    new URL('../optional-practice/fpv-worlds/index.html', import.meta.url),
+    'utf8',
+  );
+  assert.match(html, /<button data-tab="packs"/);
+  assert.match(
+    html,
+    /<section id="packs"[^>]*hidden>[\s\S]*?id="remove-runtime"[\s\S]*?id="runtime-offline-status"/,
+  );
+  assert.equal(OBSERVED_PACKAGES['fpv-worlds'].status, '#runtime-offline-status');
 });
 
 test('profile import and every export open the ordinary transfer disclosure without toggling it closed', async () => {
