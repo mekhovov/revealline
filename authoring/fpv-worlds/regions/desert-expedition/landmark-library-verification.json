@@ -1,0 +1,15 @@
+{
+  "passed": true,
+  "cell512Supported": true,
+  "advertised": true,
+  "descriptorSHA256": "fed1f7d18bfe3163cbb52b8b7ecd174a777b89a45ac962c181bd8ca11b727ea7",
+  "wholeDeliveryBytes": 48164518,
+  "responses": 2063,
+  "appearance": "desert",
+  "originalNaturalRevisionPreserved": true,
+  "preservedPinCount": 10,
+  "unknownIdentityAppearance": "plain",
+  "qualityTiers": 3,
+  "nativeVerified": false,
+  "releaseReady": false
+}
