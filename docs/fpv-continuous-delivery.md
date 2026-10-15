@@ -4901,3 +4901,28 @@ a stopped 57.35-second segment and an earlier rejected frame gap. None is a two-
 pass. Heavy artifacts stay external/cloud; latest free-space observation is 7.0 GiB
 locally and 183 GiB externally, without deletion of player data or unpublished work.
 The complete roadmap, full-network offline and physical-device acceptance remain open.
+
+
+## 15 October — protected coastal merges and exact package progression
+
+Main checkpoint `87dbcfda`. Native stack bases remain GitHub-owned. Source #1349
+merged as `c8e2db2f`, ground #1354 as `36aa0971`; their dependent immutable/water
+work remains separately gated. New native stack #1370 is #1363 → #1369 for the
+4.096 km Railway source and immutable delivery. Draft #1367 holds its separate
+renderer treatment. Preserve its concurrent remote correction `952ae548`; a local
+duplicate one-line assertion correction was safely dropped during rebase, with a
+recovery ref retained. No force push or newer-work discard was needed.
+
+Exact Canyon Library #1368 stays draft with package receipt #1373. Coastal #1362
+has completed company/package checks but still needs native ordinary-player review.
+Railway ground receipt #1374 applies only to its frozen `83eda367` package; subsequent
+source/preview correction does not retroactively change that identity. Coarse-cell
+capability #1372 remains a source capability with separate native/package gates;
+Coaster intake #1375 is a verified original-asset preparation, not a playable map.
+
+Parallel authored Desert/Hillside/Coaster work may proceed while protected queues
+run. The uninterrupted browser measurement is still active at this checkpoint;
+its final elapsed acceptance and the queued native source/package views remain
+outstanding. Exact package proof is not public availability. Full-network offline,
+physical controller/device observations, representative final art and remaining
+regional design targets keep the complete roadmap open.
