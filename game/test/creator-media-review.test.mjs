@@ -273,3 +273,59 @@ test('creator page exposes media decisions and renders every generated mission r
   assert.match(script, /missionVictoryStory/);
   assert.match(script, /creator-mission-validation/);
 });
+
+test('poster, pairing and playback choices survive converted-video identity changes and cancellation', async () => {
+  const document = new Document(),
+    controls = nodes(document),
+    calls = [];
+  let cancelled = false;
+  const sourceSha256 = '9'.repeat(64);
+  const controller = createCreatorMediaReviewController({
+    document,
+    nodes: controls,
+    createObjectURL: () => 'blob:poster',
+    revokeObjectURL: () => {},
+    prepareIntake: async (_sources, options) => {
+      const assetSha256 = String(calls.length + 1).repeat(64);
+      const identity = { sourceSha256, assetSha256, video: { durationSeconds: 10 } };
+      const choice = {
+        pairing: options.pairingFor(identity),
+        time: options.posterTimeFor(identity),
+        range: options.playbackRangeFor(identity),
+      };
+      calls.push(choice);
+      if (cancelled) throw new DOMException('Cancelled', 'AbortError');
+      const prepared = result({ resolved: true, selectedTime: choice.time, range: choice.range });
+      Object.assign(prepared.items[1], { sourceSha256, assetSha256 });
+      return prepared;
+    },
+  });
+  controller.setFiles([file('clip.mp4', 'video/mp4'), file('clip.png', 'image/png')]);
+  await controller.prepare();
+  const pair = controls.list.querySelector('select');
+  pair.value = imageHash;
+  pair.emit('change');
+  let inputs = controls.list.querySelectorAll('input[type="number"]');
+  inputs[0].value = '3.25';
+  inputs[0].emit('change');
+  inputs = controls.list.querySelectorAll('input[type="number"]');
+  inputs[1].value = '1.5';
+  inputs[2].value = '7.75';
+  inputs[2].emit('change');
+  cancelled = true;
+  await assert.rejects(controller.prepare(), { name: 'AbortError' });
+  assert.equal(controller.snapshot().ready, false);
+  cancelled = false;
+  await controller.prepare();
+  assert.equal(calls[2].pairing, imageHash);
+  assert.equal(calls[2].time, 3.25);
+  assert.deepEqual(calls[2].range, {
+    startSeconds: 1.5,
+    endSeconds: 7.75,
+    retainsCompleteOriginal: true,
+  });
+  assert.equal(controller.snapshot().ready, true);
+  assert.equal(controls.list.querySelectorAll('input[type="number"]')[0].value, '3.25');
+  assert.equal(controls.list.querySelector('select').value, imageHash);
+  controller.destroy();
+});
