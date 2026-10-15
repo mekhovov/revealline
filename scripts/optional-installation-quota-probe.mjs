@@ -1,5 +1,7 @@
 import assert from 'node:assert/strict';
 
+export const QUOTA_PROBE_HEADROOM_BYTES = 1024;
+
 /** Chromium-only controlled quota denial. Never use a real user profile/origin.
  * The caller owns the isolated browser and must abort its observation if this
  * helper returns completed:false; a deadline cannot cancel a CDP/UI promise.
@@ -24,9 +26,9 @@ function snapshot(value) {
   assert(
     value &&
       typeof value.overrideActive === 'boolean' &&
-      Number.isFinite(value.usage) &&
+      Number.isSafeInteger(value.usage) &&
       value.usage >= 0 &&
-      Number.isFinite(value.quota) &&
+      Number.isSafeInteger(value.quota) &&
       value.quota >= 0,
     'CDP returned invalid quota evidence.',
   );
@@ -48,19 +50,21 @@ export async function withOptionalQuotaDeny({
   ])
     assert(Number.isInteger(value) && value > 0 && value <= max, `Invalid ${name}.`);
   const report = {
-    format: 'OptionalQuotaDenial.v1',
+    format: 'OptionalQuotaDenial.v2',
     origin,
     completed: false,
     controlledOverride: true,
     nativeDiskExhaustion: false,
     exactCacheWriteExceptionProven: false,
     callbackCompleted: false,
+    headroomBytes: QUOTA_PROBE_HEADROOM_BYTES,
     operations: [],
     cleanup: { attempted: false, completed: false },
     limitations: [
       'CDP quota override on one isolated loopback origin, not real disk exhaustion or eviction.',
       'The override affects the origin, not just one package. The caller must verify sibling packages and saved data.',
       'A generic installation failure does not prove Cache.put threw QuotaExceededError; registration can fail earlier.',
+      'The requested quota is measured usage plus 1024 bytes, not zero: Chromium can interpret zero quota as unlimited in its remaining-space calculation. Unexpected successful installation means the denial control was ineffective.',
     ],
   };
   const abort = new AbortController();
@@ -98,19 +102,28 @@ export async function withOptionalQuotaDeny({
       false,
       'Refusing to replace a pre-existing quota override.',
     );
+    assert(
+      report.before.usage <= Number.MAX_SAFE_INTEGER - QUOTA_PROBE_HEADROOM_BYTES,
+      'Measured usage cannot safely accept the bounded quota headroom.',
+    );
+    report.requestedQuotaBytes = report.before.usage + QUOTA_PROBE_HEADROOM_BYTES;
     overrideAttempted = true;
     overridePromise = Promise.resolve().then(() =>
-      cdp.send('Storage.overrideQuotaForOrigin', { origin, quotaSize: 0 }),
+      cdp.send('Storage.overrideQuotaForOrigin', { origin, quotaSize: report.requestedQuotaBytes }),
     );
     try {
-      await bounded('apply-zero-quota', () => overridePromise, commandTimeoutMs);
+      await bounded('apply-bounded-headroom-quota', () => overridePromise, commandTimeoutMs);
     } catch (error) {
       overrideTimedOut = report.operations.at(-1).timedOut;
       throw error;
     }
     report.denied = snapshot(await command('Storage.getUsageAndQuota', { origin }));
     assert.equal(report.denied.overrideActive, true, 'Quota override did not become active.');
-    assert.equal(report.denied.quota, 0, 'Quota override is not zero.');
+    assert.equal(
+      report.denied.quota,
+      report.requestedQuotaBytes,
+      'Quota override differs from the requested bounded headroom.',
+    );
     // Callback performs ordinary public UI operations and owns its domain
     // assertions. It must throw on unexpected success, changed saved data, etc.
     await bounded('ordinary-ui-denial-check', () => run({ signal: abort.signal }), timeoutMs);
