@@ -22,6 +22,24 @@ export const REGIONAL_LIBRARY_PINS = Object.freeze([
     },
   },
   {
+    id: 'tropical-coastal-districts',
+    title: {
+      en: 'Tropical coast — six flight districts',
+      uk: 'Тропічне узбережжя — шість районів польоту',
+    },
+    description: {
+      en: '768 × 768 m · harbour, lagoon piers, reef rocks, palm valley, hillside huts and bamboo grove · unscored free flight. Follow shoreline routes, practise pier openings and explore the village paths. Early coastal study; visual water only.',
+      uk: '768 × 768 м · гавань, пірси лагуни, прибережні скелі, пальмова долина, хатини на схилі й бамбуковий гай · вільний політ без заліку. Літайте вздовж берега, крізь отвори пірсів і над стежками поселення. Раннє дослідження узбережжя; вода лише візуальна.',
+    },
+    bytes: 7857157,
+    appearance: { terrain: 'tropical-settlement' },
+    pin: {
+      url: 'https://raw.githubusercontent.com/mekhovov/revealline/9f7fbbccf00e94c62cb51c9111dbf2b2ec13235c/authoring/fpv-worlds/regions/tropical-coast/settlement-delivery-review-r2/delivery.json',
+      bytes: 6609,
+      sha256: 'dab4be6dd5b782d38c6c01f510137d048b9646d1f14e80c4dc40c6d848720f49',
+    },
+  },
+  {
     id: 'canyon-expanse-study',
     title: {
       en: 'Canyon Expanse — broad relief study',
@@ -144,7 +162,7 @@ export function applyRegionalAppearance(configuration, identity, pins = REGIONAL
       row.pin.sha256 === identity?.sha256,
   );
   const terrain = approved?.appearance?.terrain ?? 'plain';
-  if (!['plain', 'canyon', 'urban', 'railway', 'tropical'].includes(terrain))
+  if (!['plain', 'canyon', 'urban', 'railway', 'tropical', 'tropical-settlement'].includes(terrain))
     throw new TypeError('Unknown trusted regional terrain appearance');
   return {
     ...configuration,
