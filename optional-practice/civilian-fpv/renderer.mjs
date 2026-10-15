@@ -144,12 +144,14 @@ export function createFlightViewFrame({ camera, aircraft }) {
     frameRotation = new THREE.Quaternion(),
     cameraOffset = new THREE.Vector3(),
     cameraTiltRotation = new THREE.Quaternion(),
-    cameraTiltAxis = new THREE.Vector3(1, 0, 0);
+    cameraTiltAxis = new THREE.Vector3(1, 0, 0),
+    flightNear = camera.near;
   let rotorTick = null,
     rotorPhase = 0;
   // Mutable configuration is retained by the host: no per-frame option/pose copies.
   const frame = {
     view: 'fpv',
+    regionalOverview: false,
     fov: 82,
     tilt: 0,
     radiusMm: 220,
@@ -243,6 +245,34 @@ export function createFlightViewFrame({ camera, aircraft }) {
           );
         camera.up.set(0, 1, 0);
         camera.lookAt(cx, -(frame.originMm?.y ?? 0) / 1000, cz);
+      }
+      let near = flightNear;
+      if (frame.regionalOverview && view === 'overview') {
+        // The overview camera is outside the admitted horizontal cell prism.
+        // Any point visible in its frustum has view depth at least this planar
+        // distance times the diagonal-frustum cosine. Keep a fourfold margin;
+        // this improves distant depth precision without clipping resident geometry.
+        const ox = (frame.originMm?.x ?? 0) / 1000,
+          oz = (frame.originMm?.z ?? 0) / 1000,
+          dx = Math.max(
+            bounds.min.x / 1000 - ox - camera.position.x,
+            0,
+            camera.position.x - (bounds.max.x / 1000 - ox),
+          ),
+          dz = Math.max(
+            bounds.min.z / 1000 - oz - camera.position.z,
+            0,
+            camera.position.z - (bounds.max.z / 1000 - oz),
+          ),
+          tangent = Math.tan((camera.fov * Math.PI) / 360),
+          visibleDepth =
+            Math.hypot(dx, dz) /
+            Math.sqrt(1 + tangent * tangent * (1 + camera.aspect * camera.aspect));
+        near = Math.max(flightNear, Math.min(10, visibleDepth / 4));
+      }
+      if (camera.near !== near) {
+        camera.near = near;
+        camera.updateProjectionMatrix();
       }
     },
   };
@@ -1508,6 +1538,8 @@ export function createFlightRenderer({
     regional?.root.removeFromParent();
     regional = null;
     flightViewFrame.originMm = null;
+    flightViewFrame.regionalOverview = false;
+    camera.near = 0.035;
     camera.far = 300;
     camera.updateProjectionMatrix();
     const environment = resolveIndustrialEnvironment(options.industrialEnvironment ?? null);
@@ -3507,6 +3539,8 @@ export function createFlightRenderer({
     importedGroundFog = null;
     scene.environment = null;
     flightViewFrame.reset();
+    flightViewFrame.regionalOverview = true;
+    camera.near = 0.035;
     // Keep the full bounded resident window visible at either supported lattice size.
     camera.far = 1000 * (manifest.grid.cellSizeMm / 128000);
     camera.updateProjectionMatrix();
