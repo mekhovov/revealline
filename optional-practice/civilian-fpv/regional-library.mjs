@@ -28,14 +28,15 @@ export const REGIONAL_LIBRARY_PINS = Object.freeze([
       uk: 'Міські земляні споруди — огляд регіону',
     },
     description: {
-      en: '384 × 384 m · original architectural blockout · unscored free flight. An early regional preview, with buildings, passages and open ground.',
-      uk: '384 × 384 м · авторський макет забудови · вільний політ без заліку. Ранній огляд регіону з будівлями, проходами та відкритою місцевістю.',
+      en: '384 × 384 m · loading court, open workshop and connected parking ramps · unscored free flight. A regional preview with marked roads, building openings and rooftop passages.',
+      uk: '384 × 384 м · вантажний двір, відкритий цех і сполучені пандуси паркінгу · вільний політ без заліку. Огляд регіону з розміченими дорогами, отворами будівель і проходами на дахах.',
     },
-    bytes: 1455090,
+    bytes: 2275449,
+    appearance: { terrain: 'urban' },
     pin: {
-      url: 'https://raw.githubusercontent.com/mekhovov/revealline/9d97e70c18729c3f399b90610380274e50d7d0df/authoring/fpv-worlds/regions/urban-bando/delivery-review-r1/delivery.json',
-      bytes: 6615,
-      sha256: '1ba27d2242d61d61c0552564d75baa5f3e313e63a78c2ef434f63cdc7dbab94c',
+      url: 'https://raw.githubusercontent.com/mekhovov/revealline/622fade3a7a4e70021cab9c509c1116d0378ad2b/authoring/fpv-worlds/regions/urban-bando/delivery-review-r2/delivery.json',
+      bytes: 6603,
+      sha256: '9a7d157d2d5fd197c632b870bd9b9ebacd62015ad0084605712185064c8ae73a',
     },
   },
 ]);
