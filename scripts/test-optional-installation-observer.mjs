@@ -199,6 +199,10 @@ test('offline action requires fresh observable work, native Enter and a fresh te
     changes: ['Preparing…', 'Verification failed'],
     expected: /verification failed/i,
   });
+  await assert.rejects(
+    exercise({ changes: ['Preparing…', 'Ready offline'], expected: /quota denied/i }),
+    /Unexpected offline action result: Ready offline/,
+  );
 });
 
 test('overall observation deadline encloses the journey but preserves report and cleanup', async () => {
