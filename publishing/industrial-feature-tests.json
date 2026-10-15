@@ -85,6 +85,7 @@
         "game/test/industrial-review-motion.test.mjs",
         "game/test/industrial-encounter-audio.test.mjs",
         "game/test/shared-encounter-audio.test.mjs",
+        "game/test/fpv-published-destruction.test.mjs",
         "game/test/hunt-overhead-art.test.mjs",
         "game/test/classic-snake-presentation.test.mjs",
         "game/test/defeat-presentation-host.test.mjs",

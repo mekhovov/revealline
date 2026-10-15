@@ -33,7 +33,8 @@ const BASE_OPTIONAL_PACKAGE_POLICIES = Object.freeze({
     root: 'optional-practice/civilian-flight/',
     entry: 'optional-practice/civilian-flight/index.html',
     // The installed archive includes the reviewed launcher, access gate and
-    // shared menu CSS, battlefield artwork and ambience closure. The runtime has 94 files; the
+    // shared menu CSS, battlefield artwork and ambience closure. The native mixer uses
+    // the already admitted SIM projection. The runtime has 93 files; the
     // selected source archive adds two reviewed templates within this finite
     // envelope.
     limits: Object.freeze({ files: 96, bytes: 8 * 1024 * 1024 }),
@@ -61,7 +62,6 @@ const BASE_OPTIONAL_PACKAGE_POLICIES = Object.freeze({
       'game/ui/native-menu-icons.mjs',
       'optional-practice/civilian-fpv/input.mjs',
       'optional-practice/civilian-fpv/radio-profile.mjs',
-      'optional-practice/civilian-fpv/world-audio.mjs',
       'optional-practice/civilian-fpv/flight-fullscreen.mjs',
       'optional-practice/civilian-fpv/flight-fullscreen.css',
       'optional-practice/civilian-fpv/sim-presentation.mjs',

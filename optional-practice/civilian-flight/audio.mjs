@@ -1,4 +1,4 @@
-import { createWorldAudio } from '../civilian-fpv/world-audio.mjs';
+import { createSimFlightAudio as createWorldAudio } from '../civilian-fpv/sim-presentation.mjs';
 import { PRACTICE_HZ } from './model.mjs';
 
 /** Centimetres and assisted motion remain native model facts. This adapter only
