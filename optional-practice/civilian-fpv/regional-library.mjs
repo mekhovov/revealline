@@ -1,7 +1,26 @@
 import { openRegionalLibrary } from './regional-delivery.mjs';
+import { validateTerrainSurface } from './regional/terrain-surface.mjs';
 
 // Original, reviewed sources are pinned to an immutable published commit.
 export const REGIONAL_LIBRARY_PINS = Object.freeze([
+  {
+    id: 'railway-valley-study',
+    title: {
+      en: 'Railway Valley — regional preview',
+      uk: 'Залізнична долина — огляд регіону',
+    },
+    description: {
+      en: '384 × 384 m · bridge, freight yard and open workshop · unscored free flight. An early regional preview with static trains and clear practice corridors.',
+      uk: '384 × 384 м · міст, вантажний двір і відкритий цех · вільний політ без заліку. Ранній огляд регіону зі статичними потягами та відкритими маршрутами для практики.',
+    },
+    bytes: 5691267,
+    appearance: { terrain: 'railway' },
+    pin: {
+      url: 'https://raw.githubusercontent.com/mekhovov/revealline/31c0b54b668fa004be03f46f7ddcfa195ee734b3/authoring/fpv-worlds/regions/railway-valley/delivery-structure-r1/delivery.json',
+      bytes: 6661,
+      sha256: '431b2dfb4be228e094174f1ccdd8eb72f906f09eb39a62c31b16e2bfb1239f15',
+    },
+  },
   {
     id: 'urban-earthworks-study',
     title: {
@@ -20,6 +39,41 @@ export const REGIONAL_LIBRARY_PINS = Object.freeze([
     },
   },
 ]);
+
+/** Resolve presentation only after the installed descriptor and source pair have verified. */
+export function applyRegionalAppearance(configuration, identity, pins = REGIONAL_LIBRARY_PINS) {
+  const approved = pins.find(
+    (row) =>
+      row.id === identity?.id &&
+      row.id === configuration?.manifest?.id &&
+      row.pin.sha256 === identity?.sha256,
+  );
+  const terrain = approved?.appearance?.terrain ?? 'plain';
+  if (!['plain', 'canyon', 'urban', 'railway'].includes(terrain))
+    throw new TypeError('Unknown trusted regional terrain appearance');
+  return {
+    ...configuration,
+    source: { ...configuration.source, surfaceStyle: terrain },
+  };
+}
+
+/** Apply the player's selected detail tier when starting/restarting a regional session. */
+export function regionalPresentationOptions(configuration, quality) {
+  const tiers = { low: 'performance', balanced: 'balanced', high: 'quality' };
+  if (!Object.hasOwn(tiers, quality)) throw new TypeError('Unknown regional flight quality');
+  const surface = validateTerrainSurface(
+    configuration.source?.surfaceStyle ?? 'plain',
+    tiers[quality],
+  );
+  return {
+    ...configuration,
+    source: {
+      ...configuration.source,
+      surfaceStyle: surface.style,
+      surfaceQuality: surface.quality,
+    },
+  };
+}
 
 /** Regional installations stay separate from scored WorldPack courses. */
 export function mountRegionalLibrary({
@@ -272,7 +326,7 @@ export function mountRegionalLibrary({
         );
         signal.throwIfAborted();
         if (requestEpoch === epoch && visible())
-          await fly(configuration, row.saved, {
+          await fly(applyRegionalAppearance(configuration, row.saved, pins), row.saved, {
             isCurrent: () => requestEpoch === epoch && visible() && !signal.aborted,
           });
       } else if (kind === 'review-remove') {
