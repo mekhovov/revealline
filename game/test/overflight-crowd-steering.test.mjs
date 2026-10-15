@@ -174,3 +174,19 @@ test('same and new-seed sorties preserve explicitly authored local crowd rules',
     assert.equal(retry.battlefield.id, source.battlefield.id);
   }
 });
+
+test('Raid does not advertise or silently accept the Survivor-only movement experiment', async () => {
+  const { createOverflightHuntProject, compileOverflightHuntProject } = await import(
+    '../overflight/raid-project.mjs'
+  );
+  const project = createOverflightHuntProject({ rulesVersion: 4 });
+  const editor = overflightCombatEditor({
+    document: new Document(),
+    project,
+    locale: 'uk',
+    onChange() {},
+  });
+  assert.equal(editor.querySelector('[data-crowd-separation]'), null);
+  project.combat.crowdSeparation = 'local-v1';
+  assert.throws(() => compileOverflightHuntProject(project));
+});
