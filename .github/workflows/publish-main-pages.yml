@@ -17,8 +17,9 @@ concurrency:
 
 env:
   # GitHub Pages has a published-site capacity limit. This guards deployment
-  # capacity only; it is never a required pull-request check.
-  MAX_PUBLISHED_BYTES: 950000000
+  # capacity only; it is never a required pull-request check. GitHub Pages
+  # permits published sites up to 1 GB; retain a 20 MB deployment margin.
+  MAX_PUBLISHED_BYTES: 980000000
 
 jobs:
   build:

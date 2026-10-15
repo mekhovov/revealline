@@ -87,9 +87,11 @@
         input and writes no game progress.
       </p>
       <p>
-        Keep this tab visible and focused. Hiding, leaving, changing size, losing graphics or a
-        frame gap above 250 ms invalidates this segment. Imported reports never extend an
-        uninterrupted pass.
+        Strict focus is the default. The optional visible-only policy observes this commanded pilot
+        while the window is unfocused; it does not test player input. Both policies invalidate
+        hiding the tab, leaving, changing size, losing graphics, rejected flight ticks, contacts,
+        clock discontinuities or a frame gap above 250 ms. Imported reports never extend an
+        uninterrupted pass. The chosen policy and focus events are recorded.
       </p>
       <div class="controls">
         <label
@@ -110,6 +112,14 @@
             <option value="low">Performance</option>
             <option value="balanced" selected>Balanced</option>
             <option value="high">Quality</option>
+          </select></label
+        >
+        <label
+          >Observation policy<select id="focus-policy">
+            <option value="strict-focus" selected>Strict: visible and focused</option>
+            <option value="visible-commanded">
+              Opt in: visible commanded flight; focus recorded
+            </option>
           </select></label
         >
         <button id="prepare">Prepare verified Urban world</button

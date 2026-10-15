@@ -1,10 +1,12 @@
 import { openRegionalLibrary } from './regional-delivery.mjs';
 import { validateTerrainSurface } from './regional/terrain-surface.mjs';
+import { validateScenerySurface } from './regional/scenery-surface.mjs';
 import { REGION_CELL_SIZES_MM } from './regional/region-manifest.mjs';
 
 // This immutable source needs the separately qualified 512 m natural-cell capability.
 // Older runtimes keep their current catalogue rather than offering an unloadable entry.
 export const DESERT_EXPEDITION_LIBRARY_PIN = Object.freeze({
+  edition: { en: 'Open desert terrain', uk: 'Відкритий пустельний рельєф' },
   id: 'desert-expedition-study',
   title: {
     en: 'Desert Expedition — 16 km relief study',
@@ -24,6 +26,7 @@ export const DESERT_EXPEDITION_LIBRARY_PIN = Object.freeze({
 });
 
 export const DESERT_LANDMARKS_LIBRARY_PIN = Object.freeze({
+  edition: { en: 'Rock practice routes', uk: 'Маршрути серед скель' },
   id: 'desert-expedition-study',
   title: {
     en: 'Desert Expedition — rock routes',
@@ -51,12 +54,88 @@ export const DESERT_LANDMARKS_LIBRARY_PIN = Object.freeze({
   },
 });
 
+export const CANAL_CITY_LIBRARY_PIN = Object.freeze({
+  id: 'canal-city-study',
+  title: { en: 'Canal City — bridges and courtyards', uk: 'Місто каналів — мости й подвір’я' },
+  description: {
+    en: '384 × 384 m · six starting points · unscored free flight. Follow the canals beneath a masonry arch and high walkway, pass through warehouses and courtyards, or weave around basin moorings. Early composition study; surrounding banks remain sparse. Water is visual only.',
+    uk: '384 × 384 м · шість місць старту · вільний політ без заліку. Літайте каналами під кам’яною аркою та високим переходом, крізь склади й подвір’я або між швартовними стовпами. Раннє дослідження композиції; навколишні береги ще малонаповнені. Вода лише візуальна.',
+  },
+  bytes: 6771851,
+  appearance: { terrain: 'plain' },
+  // Consumed by the separately gated trusted authored-heading helper (#1424).
+  startHeadings: Object.freeze({
+    'north-arch': 18000,
+    'warehouse-passage': 9000,
+    highwalk: 18000,
+    'lock-bend': 18000,
+    courtyard: 18000,
+    'turning-basin': 2974,
+  }),
+  pin: {
+    url: 'https://raw.githubusercontent.com/mekhovov/revealline/04b0d9c5db0687d8df2ea9a3ea07b9ca9ddcaa5a/authoring/fpv-worlds/regions/canal-city/delivery-district-r2/delivery.json',
+    bytes: 6580,
+    sha256: '891835944510139a7bed6a99305c0e22b71ba9ccfe84801a07ea6e215ca25c87',
+  },
+});
+
 // Original, reviewed sources are pinned to an immutable published commit.
 export const REGIONAL_LIBRARY_PINS = Object.freeze([
+  {
+    id: 'alpine-highlands-study',
+    title: {
+      en: 'Alpine Highlands — connected mountain study',
+      uk: 'Альпійське високогір’я — пробний гірський світ',
+    },
+    description: {
+      en: '4.096 × 4.096 km · six starting points · unscored free flight. Refined snow and scree contours connect the glacial valley, switchback pass, snow saddle, summit station, viaduct gorge and reservoir dam. Separate review-r2 study; the earlier revision remains available. Landscape and route detail are still being refined.',
+      uk: '4,096 × 4,096 км · шість стартових точок · вільний політ без заліку. Уточнені межі снігу й осипів у льодовиковій долині, на серпантині, сніговій сідловині, біля верхньої станції, віадука та греблі. Окремий пробний варіант review-r2; попередня версія залишається доступною. Деталі місцевості та маршрутів ще вдосконалюються.',
+    },
+    edition: { en: 'Refined contours', uk: 'Уточнені контури' },
+    bytes: 21759827,
+    appearance: { terrain: 'plain', scenery: 'alpine-overlays' },
+    startHeadings: {
+      'glacial-valley': 9000,
+      'switchback-pass': 9000,
+      'snow-saddle': 18000,
+      'summit-station': 9000,
+      'viaduct-gorge': 18000,
+      'reservoir-dam': 18000,
+    },
+    pin: {
+      url: 'https://raw.githubusercontent.com/mekhovov/revealline/1708a06afb8ad82df5fe7c6b9ee304212b2b5a0a/authoring/fpv-worlds/regions/alpine-highlands/delivery-review-r2/delivery.json',
+      bytes: 115311,
+      sha256: 'a442a07717d09c703231279db41dd23c9447e0cc7f5f53aa3964eef4f74573ec',
+    },
+  },
+  {
+    id: 'alpine-highlands-study',
+    title: {
+      en: 'Alpine Highlands — connected mountain study',
+      uk: 'Альпійське високогір’я — пробний гірський світ',
+    },
+    description: {
+      en: '4.096 × 4.096 km · six starting points · unscored free flight. Explore a glacial valley, switchback pass, snow saddle, summit station, viaduct gorge and reservoir dam. Early landscape study; scenery and route detail are still being refined.',
+      uk: '4,096 × 4,096 км · шість стартових точок · вільний політ без заліку. Досліджуйте льодовикову долину, перевал із серпантином, снігову сідловину, верхню станцію, ущелину з віадуком і греблю водосховища. Ранній варіант ландшафту; деталі місцевості та маршрутів ще вдосконалюються.',
+    },
+    edition: { en: 'Original study', uk: 'Початковий варіант' },
+    bytes: 21066886,
+    appearance: {
+      terrain: 'plain',
+      scenery: 'alpine-overlays',
+    },
+    pin: {
+      url: 'https://raw.githubusercontent.com/mekhovov/revealline/07be16fe40ade4c398299c4e64cb542b7523856c/authoring/fpv-worlds/regions/alpine-highlands/delivery-review-r1/delivery.json',
+      bytes: 114992,
+      sha256: '8b49b885b05976b4a114a17d88d9af1b352418cbac16866a5249ae32b43c191a',
+    },
+  },
+  CANAL_CITY_LIBRARY_PIN,
   ...(REGION_CELL_SIZES_MM.includes(512000)
     ? [DESERT_LANDMARKS_LIBRARY_PIN, DESERT_EXPEDITION_LIBRARY_PIN]
     : []),
   {
+    edition: { en: 'Connected harbour', uk: 'Сполучена гавань' },
     id: 'tropical-coastal-districts',
     title: {
       en: 'Tropical coast — connected harbour',
@@ -93,6 +172,7 @@ export const REGIONAL_LIBRARY_PINS = Object.freeze([
     },
   },
   {
+    edition: { en: 'Connected park routes', uk: 'Сполучені паркові маршрути' },
     id: 'coaster-gardens-study',
     title: {
       en: 'Coaster Gardens — connected park study',
@@ -111,6 +191,7 @@ export const REGIONAL_LIBRARY_PINS = Object.freeze([
     },
   },
   {
+    edition: { en: 'Original park study', uk: 'Початкове дослідження парку' },
     id: 'coaster-gardens-study',
     title: {
       en: 'Coaster Gardens — 2 km study',
@@ -129,6 +210,7 @@ export const REGIONAL_LIBRARY_PINS = Object.freeze([
     },
   },
   {
+    edition: { en: 'Civic courtyard materials', uk: 'Матеріали міського подвір’я' },
     id: 'hillside-town-study',
     title: {
       en: 'Hillside Town — civic court materials',
@@ -147,6 +229,7 @@ export const REGIONAL_LIBRARY_PINS = Object.freeze([
     },
   },
   {
+    edition: { en: 'Terraces and courtyards', uk: 'Тераси та подвір’я' },
     id: 'hillside-town-study',
     title: {
       en: 'Hillside Town — terraces and courtyards',
@@ -165,6 +248,7 @@ export const REGIONAL_LIBRARY_PINS = Object.freeze([
     },
   },
   {
+    edition: { en: 'Six coastal districts', uk: 'Шість прибережних районів' },
     id: 'tropical-coastal-districts',
     title: {
       en: 'Tropical coast — six flight districts',
@@ -318,6 +402,7 @@ export function applyRegionalAppearance(configuration, identity, pins = REGIONAL
     ].includes(terrain)
   )
     throw new TypeError('Unknown trusted regional terrain appearance');
+  const sceneryStyle = validateScenerySurface(approved?.appearance?.scenery ?? 'plain');
   const authoredStartHeadings = {};
   for (const [id, heading] of Object.entries(approved?.startHeadings ?? {})) {
     if (
@@ -334,6 +419,15 @@ export function applyRegionalAppearance(configuration, identity, pins = REGIONAL
     // Re-resolving an unknown or older pin clears any previous revision's hints.
     authoredStartHeadings: Object.freeze(authoredStartHeadings),
     source: { ...configuration.source, surfaceStyle: terrain },
+    ...(configuration.scenery &&
+    (sceneryStyle !== 'plain' || configuration.scenery.source?.surfaceStyle)
+      ? {
+          scenery: {
+            ...configuration.scenery,
+            source: { ...configuration.scenery.source, surfaceStyle: sceneryStyle },
+          },
+        }
+      : {}),
   };
 }
 
@@ -343,6 +437,10 @@ export function regionalPresentationOptions(configuration, quality) {
   if (!Object.hasOwn(tiers, quality)) throw new TypeError('Unknown regional flight quality');
   const surface = validateTerrainSurface(
     configuration.source?.surfaceStyle ?? 'plain',
+    tiers[quality],
+  );
+  const sceneryStyle = validateScenerySurface(
+    configuration.scenery?.source?.surfaceStyle ?? 'plain',
     tiers[quality],
   );
   const spawnId = configuration.spawnId ?? configuration.manifest?.spawns?.[0]?.id;
@@ -359,6 +457,18 @@ export function regionalPresentationOptions(configuration, quality) {
       surfaceStyle: surface.style,
       surfaceQuality: surface.quality,
     },
+    ...(configuration.scenery && sceneryStyle !== 'plain'
+      ? {
+          scenery: {
+            ...configuration.scenery,
+            source: {
+              ...configuration.scenery.source,
+              surfaceStyle: sceneryStyle,
+              surfaceQuality: tiers[quality],
+            },
+          },
+        }
+      : {}),
   };
 }
 
@@ -435,6 +545,8 @@ export function mountRegionalLibrary({
   tools.append(refresh, cancel);
   root.append(heading, help, tools, message, cards);
   parent.before(home, root);
+  const failedLoads = new Set();
+  const failureKey = (row) => `${row.id}:${row.saved?.sha256 ?? row.pin?.sha256}`;
   let closed = false,
     operation = null,
     epoch = 0,
@@ -519,14 +631,55 @@ export function mountRegionalLibrary({
           saved,
         })),
     ];
+    // Labels are presentation only. Identity and focus continue to use the full pin hash.
+    const rowHash = (row) => row.saved?.sha256 ?? row.pin.sha256;
+    const edition = (row) => {
+      if (row.edition) return title(row.edition);
+      if (row.saved) return `${txt('Version', 'Версія')} ${row.saved.descriptor.revision}`;
+      return '';
+    };
+    const identitySuffix = (row, peers) => {
+      const hash = rowHash(row);
+      let length = 8;
+      while (
+        length < hash.length &&
+        peers.some(
+          (other) =>
+            other !== row &&
+            rowHash(other) !== hash &&
+            rowHash(other).slice(0, length) === hash.slice(0, length),
+        )
+      )
+        length++;
+      return hash.slice(0, length);
+    };
     for (const row of rows) {
       const saved = row.saved,
         hash = saved?.sha256 ?? row.pin.sha256,
         card = el('article', undefined, 'world-catalogue-card'),
         name = saved?.descriptor.title ?? row.title,
         buttons = el('div', undefined, 'button-row');
+      const peers = rows.filter((other) => other.id === row.id),
+        baseEdition = edition(row),
+        needsIdentity =
+          peers.length > 1 &&
+          (!baseEdition || peers.some((other) => other !== row && edition(other) === baseEdition)),
+        editionLabel = [
+          baseEdition || (needsIdentity ? txt('Edition', 'Варіант') : ''),
+          needsIdentity ? identitySuffix(row, peers) : '',
+        ]
+          .filter(Boolean)
+          .join(' · '),
+        revisionLabel =
+          saved && row.edition ? `${txt('Version', 'Версія')} ${saved.descriptor.revision}` : '',
+        actionName = [title(name), editionLabel, revisionLabel].filter(Boolean).join(' · ');
       card.dataset.regionKey = hash;
       card.append(el('strong', title(name)));
+      if (editionLabel) {
+        const label = el('p', editionLabel);
+        label.dataset.regionEdition = '';
+        card.append(label);
+      }
       if (row.description) card.append(el('p', title(row.description)));
       card.append(
         el(
@@ -542,14 +695,32 @@ export function mountRegionalLibrary({
       if (saved) {
         const play = action(txt('Fly', 'Летіти'), () => run('fly', row), Boolean(operation));
         play.dataset.regionAction = 'fly';
-        play.setAttribute('aria-label', `${txt('Fly', 'Летіти')}: ${title(name)}`);
+        play.setAttribute('aria-label', `${txt('Fly', 'Летіти')}: ${actionName}`);
         const remove = action(
           txt('Remove this version', 'Вилучити цю версію'),
           () => run('review-remove', row),
           Boolean(operation),
         );
         remove.dataset.regionAction = 'remove';
-        buttons.append(play, remove);
+        remove.setAttribute(
+          'aria-label',
+          `${txt('Remove this version', 'Вилучити цю версію')}: ${actionName}`,
+        );
+        buttons.append(play);
+        if (row.pin && failedLoads.has(failureKey(row))) {
+          const repair = action(
+            txt('Repair download', 'Відновити завантаження'),
+            () => run('repair', row),
+            Boolean(operation),
+          );
+          repair.dataset.regionAction = 'repair';
+          repair.setAttribute(
+            'aria-label',
+            `${txt('Repair download', 'Відновити завантаження')}: ${actionName}`,
+          );
+          buttons.append(repair);
+        }
+        buttons.append(remove);
         if (records.filter((record) => record.id === row.id).length > 1) {
           const removeAll = action(
             txt('Remove all versions', 'Вилучити всі версії'),
@@ -566,7 +737,7 @@ export function mountRegionalLibrary({
           Boolean(operation),
         );
         download.dataset.regionAction = 'install';
-        download.setAttribute('aria-label', `${txt('Download', 'Завантажити')}: ${title(name)}`);
+        download.setAttribute('aria-label', `${txt('Download', 'Завантажити')}: ${actionName}`);
         buttons.append(download);
       }
       card.append(buttons);
@@ -637,12 +808,30 @@ export function mountRegionalLibrary({
     operation = controller;
     if (kind === 'refresh') show('', '');
     paint();
-    const deadline = regionalOperationDeadline(win, controller, kind);
-    let committed = false;
+    const deadline = regionalOperationDeadline(
+      win,
+      controller,
+      kind === 'repair' ? 'install' : kind,
+    );
+    let verifiedLoad = false,
+      committed = false,
+      committedRefreshDeadline = null;
     try {
       const store = await waitFor(dbReady, signal);
       signal.throwIfAborted();
-      if (kind === 'install') {
+      if (kind === 'install' || kind === 'repair') {
+        if (
+          kind === 'repair' &&
+          (!row.saved ||
+            !failedLoads.has(failureKey(row)) ||
+            !pins.some(
+              (offered) =>
+                offered.id === row.id &&
+                offered.pin.sha256 === row.saved.sha256 &&
+                offered.pin === row.pin,
+            ))
+        )
+          throw new Error('Repair requires the exact offered saved revision');
         show('Checking regional download…', 'Перевірка завантаження регіону…');
         const options = {
           pageURL: win.location.href,
@@ -665,9 +854,20 @@ export function mountRegionalLibrary({
         if (inspected.descriptor.id !== row.id)
           throw new Error('Regional catalogue identity mismatch');
         signal.throwIfAborted();
-        await store.install(row.pin, options);
+        if (kind === 'repair') await store.repair(row.pin, { ...options, id: row.id });
+        else await store.install(row.pin, options);
+        failedLoads.delete(failureKey(row));
         committed = true;
-        records = await store.list({ includeRevisions: true });
+        // The atomic save has finished. A metadata refresh must not retain the
+        // transaction's uncancellable UI or wait forever after navigation.
+        deadline.stop();
+        cancel.disabled = false;
+        committedRefreshDeadline = regionalOperationDeadline(win, controller, 'refresh');
+        show(
+          'Region saved. Refreshing saved regions…',
+          'Регіон збережено. Оновлення списку регіонів…',
+        );
+        records = await waitFor(store.list({ includeRevisions: true }), signal);
         show(
           'Region saved. Choose Fly when you are ready.',
           'Регіон збережено. Виберіть «Летіти», коли будете готові.',
@@ -679,6 +879,8 @@ export function mountRegionalLibrary({
           signal,
         );
         signal.throwIfAborted();
+        verifiedLoad = true;
+        failedLoads.delete(failureKey(row));
         if (requestEpoch === epoch && visible())
           await fly(applyRegionalAppearance(configuration, row.saved, pins), row.saved, {
             isCurrent: () => requestEpoch === epoch && visible() && !signal.aborted,
@@ -738,7 +940,17 @@ export function mountRegionalLibrary({
             'Cancelled. Existing downloads are retained.',
             'Скасовано. Наявні завантаження збережено.',
           );
-        else if (error?.name === 'QuotaExceededError')
+        else if (kind === 'fly' && !verifiedLoad && error?.code === 'regional-cache-invalid') {
+          failedLoads.add(failureKey(row));
+          show(
+            row.pin
+              ? 'Saved scenery could not be verified. Choose Repair download to replace only this version’s files. Other versions and saved places are kept.'
+              : 'Saved scenery could not be verified. This exact version is not currently offered for repair. Other versions and saved places are kept.',
+            row.pin
+              ? 'Не вдалося перевірити збережену місцевість. Виберіть «Відновити завантаження», щоб замінити лише файли цієї версії. Інші версії та збережені місця залишаться.'
+              : 'Не вдалося перевірити збережену місцевість. Саме ця версія зараз недоступна для відновлення. Інші версії та збережені місця залишаться.',
+          );
+        } else if (error?.name === 'QuotaExceededError')
           show(
             'Not enough device storage. Free space or use “Remove this version” for a saved scenery download you no longer need, then retry. Existing downloads are retained.',
             'Недостатньо місця на пристрої. Звільніть місце або виберіть «Вилучити цю версію» для збереженої місцевості, яка більше не потрібна, і повторіть. Наявні завантаження збережено.',
@@ -751,6 +963,7 @@ export function mountRegionalLibrary({
       }
     } finally {
       deadline.stop();
+      committedRefreshDeadline?.stop();
       operation = null;
       cancel.disabled = false;
       doc.removeEventListener('focusin', trackFocus);
@@ -761,7 +974,11 @@ export function mountRegionalLibrary({
           const card = [...cards.children].find((item) => item.dataset.regionKey === hash);
           (
             card?.querySelector(
-              kind.startsWith('review-remove') ? '[data-region-action="confirm-remove"]' : 'button',
+              kind.startsWith('review-remove')
+                ? '[data-region-action="confirm-remove"]'
+                : failedLoads.has(failureKey(row)) && row.pin
+                  ? '[data-region-action="repair"]'
+                  : 'button',
             ) ?? refresh
           ).focus();
         }

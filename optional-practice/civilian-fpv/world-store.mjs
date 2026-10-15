@@ -52,7 +52,9 @@ export async function openWorldStore({
     await done;
     return result;
   }
-  function install({ project, assets, sha256, expectedGeneration }) {
+  function install({ project, assets, sha256, expectedGeneration, repair = false }) {
+    if (repair && !Number.isSafeInteger(expectedGeneration))
+      return Promise.reject(fail('Repair requires the current library generation.'));
     if (!project?.id || !(assets instanceof Map) || !/^[a-f0-9]{64}$/.test(sha256))
       return Promise.reject(fail('Install requires a verified prepared pack.'));
     for (const blob of assets.values())
@@ -86,16 +88,16 @@ export async function openWorldStore({
         const readVersions = revisions.getAll();
         readVersions.onsuccess = () => {
           const versions = readVersions.result,
-            known = versions.some((v) => v.id === project.id && v.sha256 === sha256);
+            known = versions.find((v) => v.id === project.id && v.sha256 === sha256);
           const size = [...assets.values()].reduce(
             (n, b) => n + b.size,
             new TextEncoder().encode(JSON.stringify(project)).length,
           );
-          if (
-            !known &&
-            (versions.length >= 256 ||
-              versions.reduce((n, v) => n + (v.bytes ?? 0), size) > 256 * 1024 * 1024)
-          ) {
+          const retainedBytes = versions.reduce(
+            (n, v) => n + (v === known ? 0 : (v.bytes ?? 0)),
+            size,
+          );
+          if ((!known && versions.length >= 256) || retainedBytes > 256 * 1024 * 1024) {
             abort(
               'Retained world library is full. Export and remove unused packs before installing another.',
             );
@@ -104,6 +106,10 @@ export async function openWorldStore({
           const readOld = projects.get(project.id);
           readOld.onsuccess = () => {
             const old = readOld.result;
+            if (repair && (!known || !old)) {
+              abort('The exact saved revision is no longer available for repair.');
+              return;
+            }
             const oldAssets = stored.index('project').getAll(project.id);
             oldAssets.onsuccess = () => {
               try {
@@ -114,8 +120,7 @@ export async function openWorldStore({
                   );
                   if (
                     versions.length + (known ? 0 : 1) + 1 > 256 ||
-                    versions.reduce((n, v) => n + (v.bytes ?? 0), oldSize + (known ? 0 : size)) >
-                      256 * 1024 * 1024
+                    retainedBytes + oldSize > 256 * 1024 * 1024
                   ) {
                     abort('Retained world library is full. Export and remove unused packs first.');
                     return;
@@ -135,14 +140,19 @@ export async function openWorldStore({
                     generation: next,
                     installedAt: new Date().toISOString(),
                   };
-                if (!known) revisions.put({ ...record, assets, bytes: size });
+                // Reinstallation has already verified the incoming immutable bytes.
+                // Refresh the exact retained copy too: get(id, {sha256}) prefers it.
+                // Preserve its original installation metadata and every other revision.
+                revisions.put({ ...(known || record), project, assets, bytes: size });
                 // The project-index read already captured every old key in this
                 // transaction. Queue their removal together instead of waiting
                 // for another cursor round trip for each regional source file.
-                for (const { path } of oldAssets.result) stored.delete([project.id, path]);
-                for (const [path, blob] of assets)
-                  stored.put({ projectId: project.id, path, blob });
-                projects.put(record);
+                if (!repair || old.sha256 === sha256) {
+                  for (const { path } of oldAssets.result) stored.delete([project.id, path]);
+                  for (const [path, blob] of assets)
+                    stored.put({ projectId: project.id, path, blob });
+                  projects.put(repair ? { ...old, project } : record);
+                }
                 meta.put(next, 'generation');
                 result = { project, generation: next, sha256 };
               } catch (cause) {

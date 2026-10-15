@@ -2,6 +2,7 @@ import { createFlightRenderer } from '../../../optional-practice/civilian-fpv/re
 import { createRegionalFlightPrototype } from '../../../optional-practice/civilian-fpv/regional/flight-prototype.mjs';
 import { createEnduranceFixture, createEndurancePilot, digest } from './endurance-fixture.mjs';
 import { createEnduranceClock } from './endurance-clock.mjs';
+import { createEnduranceObservation } from './endurance-observation.mjs';
 
 const $ = (id) => document.getElementById(id);
 const assert = (value, message) => {
@@ -63,8 +64,8 @@ function buttons() {
   $('release').disabled = authored ? !busy && !flight : busy || !flight;
   if (authored) $('release').textContent = busy ? 'Cancel preparation' : 'Release resources';
   $('export').disabled = !report;
-  for (const name of ['label', 'duration', 'quality', 'import'])
-    $(name).disabled = busy || Boolean(run);
+  for (const name of ['label', 'duration', 'quality', 'import', 'focus-policy'])
+    if ($(name)) $(name).disabled = busy || Boolean(run);
 }
 function sample() {
   const state = flight.snapshot(),
@@ -151,6 +152,7 @@ function buildReport(segment, final = null) {
     camera: 'chase',
     mode: 'self-level',
     clock: segment.clock.snapshot(),
+    observation: segment.observation.snapshot(),
     ...(authored
       ? { commandedRoute: segment.pilot.snapshot() }
       : { reversals: segment.pilot.reversals }),
@@ -279,7 +281,12 @@ async function readSourceHashes() {
     rows.push({ path, bytes: bytes.length, sha256: await digest(bytes) });
   }
   if (authored)
-    for (const path of ['endurance.mjs', 'endurance-clock.mjs', 'authored-endurance-fixture.mjs']) {
+    for (const path of [
+      'endurance.mjs',
+      'endurance-clock.mjs',
+      'endurance-observation.mjs',
+      'authored-endurance-fixture.mjs',
+    ]) {
       const response = await fetch(new URL(path, import.meta.url), {
         cache: 'no-store',
         credentials: 'omit',
@@ -389,10 +396,18 @@ $('prepare').onclick = async () => {
 $('start').onclick = () => {
   if (!flight || run || busy || closed) return;
   try {
-    assert(
-      document.visibilityState === 'visible' && document.hasFocus(),
-      'Keep the tab visible and focused',
-    );
+    const startedAt = performance.now();
+    const observation = createEnduranceObservation({
+      policy: authored ? ($('focus-policy')?.value ?? 'strict-focus') : 'strict-focus',
+      startedAt,
+    });
+    const observationFailure = observation.observe({
+      at: startedAt,
+      visible: document.visibilityState === 'visible',
+      focused: document.hasFocus(),
+      type: 'start',
+    });
+    assert(!observationFailure, observationFailure);
     const measuredDimensions = dimensions();
     assert(flight.snapshot().ticks === 0 && flight.arm(), 'Fresh disarmed fixture required');
     if (report) {
@@ -402,15 +417,17 @@ $('start').onclick = () => {
         accepted: report.accepted,
         clock: report.clock,
         runtimeLabel: report.runtimeLabel,
+        observationPolicy: report.observation?.policy ?? 'not-recorded',
       });
       history = history.slice(-8);
     }
     run = {
       clock: createEnduranceClock({
-        startedAt: performance.now(),
+        startedAt,
         startedWallAt: Date.now(),
         targetMs: Number($('duration').value),
       }),
+      observation,
       label: $('label').value,
       quality: $('quality').value,
       startedUTC: new Date().toISOString(),
@@ -432,9 +449,11 @@ $('start').onclick = () => {
     };
     observe();
     buttons();
-    $('status').textContent = authored
-      ? 'Running commanded Urban circuit in real elapsed time. Keep this tab focused.'
-      : 'Running synthetic flight in real elapsed time. Keep this tab focused.';
+    $('status').textContent =
+      `${authored ? 'Running commanded Urban circuit' : 'Running synthetic flight'} in real elapsed time. ` +
+      (observation.snapshot().policy === 'strict-focus'
+        ? 'Keep this tab visible and focused.'
+        : 'Keep this tab visible. Window focus is optional and recorded; no player input is measured.');
   } catch (error) {
     flight.pause();
     $('status').textContent = error.message;
@@ -493,6 +512,9 @@ $('import').onchange = async () => {
       ticks: value.clock.ticks,
       elapsedMs: value.clock.elapsedMs,
       claimedAccepted: value.accepted === true,
+      observationPolicy: ['strict-focus', 'visible-commanded'].includes(value.observation?.policy)
+        ? value.observation.policy
+        : 'not-recorded',
     });
     history = history.slice(-8);
     $('status').textContent =
@@ -505,10 +527,12 @@ function frame() {
   if (closed) return;
   if (run) {
     try {
-      assert(
-        document.visibilityState === 'visible' && document.hasFocus(),
-        'Tab hidden or unfocused',
-      );
+      const observationFailure = run.observation.observe({
+        at: performance.now(),
+        visible: document.visibilityState === 'visible',
+        focused: document.hasFocus(),
+      });
+      assert(!observationFailure, observationFailure);
       assert(
         JSON.stringify(dimensions()) === JSON.stringify(run.dimensions),
         'Viewport or canvas changed',
@@ -551,7 +575,7 @@ function frame() {
         report = buildReport(run);
         $('result').textContent = JSON.stringify(report, null, 2);
         $('status').textContent =
-          `${(clock.elapsedMs / 1000).toFixed(1)} / ${clock.targetMs / 1000} real seconds · ${clock.ticks} ticks · ${run.lastSample.recentres} recentres · ${authored ? run.pilot.snapshot().acceptedWaypoints : run.pilot.reversals} ${authored ? 'accepted waypoints' : 'turns'}`;
+          `${(clock.elapsedMs / 1000).toFixed(1)} / ${clock.targetMs / 1000} real seconds · ${clock.ticks} ticks · ${run.lastSample.recentres} recentres · ${authored ? run.pilot.snapshot().acceptedWaypoints : run.pilot.reversals} ${authored ? 'accepted waypoints' : 'turns'} · ${run.observation.snapshot().policy}`;
         buttons();
       }
     } catch (error) {
@@ -560,12 +584,19 @@ function frame() {
   } else if (flight && renderer && !busy) renderer.draw(flight.snapshot(), { cameraMode: 'chase' });
   frameId = requestAnimationFrame(frame);
 }
-addEventListener('blur', () => {
-  if (run) void finish('Window lost focus');
-});
-document.addEventListener('visibilitychange', () => {
-  if (run && document.hidden) void finish('Tab hidden');
-});
+function observeWindow(type, focused = document.hasFocus()) {
+  if (!run) return;
+  const reason = run.observation.observe({
+    at: performance.now(),
+    visible: document.visibilityState === 'visible' && !document.hidden,
+    focused,
+    type,
+  });
+  if (reason) void finish(reason);
+}
+addEventListener('blur', () => observeWindow('blur', false));
+addEventListener('focus', () => observeWindow('focus', true));
+document.addEventListener('visibilitychange', () => observeWindow('visibilitychange'));
 addEventListener(
   'pagehide',
   () => {
