@@ -16,6 +16,7 @@ import {
   createRegionPlanner,
 } from "./region-manifest.mjs";
 import { createVerifiedFlightGeometry } from "./verified-flight-geometry.mjs";
+import { validateRegionalLocationStart } from "../regional-locations.mjs";
 
 const AXES = ["x", "y", "z"],
   RADIUS = 220;
@@ -42,6 +43,7 @@ export function createRegionalFlightPrototype({
   scenery = null,
   geometryBudgets,
   spawnId,
+  savedStart = null,
   initialHeading = 0,
   mode = "self-level",
   response = DEFAULT_RESPONSE,
@@ -64,6 +66,7 @@ export function createRegionalFlightPrototype({
     (item) => item.id === (spawnId ?? manifest.spawns[0].id),
   );
   fail(spawn, "Unknown region spawn");
+  const saved = savedStart === null ? null : validateRegionalLocationStart(savedStart, manifest);
   fail(
     initialHeading === "region-centre" ||
       (Number.isSafeInteger(initialHeading) &&
@@ -71,7 +74,7 @@ export function createRegionalFlightPrototype({
         initialHeading < 36000),
     "Invalid initial regional heading",
   );
-  const heading =
+  const heading = saved ? saved.heading :
     initialHeading === "region-centre"
       ? atan2(
           (manifest.grid.minX + manifest.grid.width / 2) * 128000 -
@@ -105,7 +108,7 @@ export function createRegionalFlightPrototype({
   };
   const noMovingGeometry = () => null;
   let body = {
-    position: { ...spawn.position },
+    position: { ...(saved?.position ?? spawn.position) },
     velocity: zero(),
     orientation,
     angular: { roll: 0, pitch: 0, yaw: 0 },
@@ -274,6 +277,7 @@ export function createRegionalFlightPrototype({
           {
             positionMm: body.position,
             radiusMm: RADIUS,
+            ...(saved && body.ticks === 0 ? { requireClearRestore: true } : {}),
           },
           {
             ...(prepareFrame
