@@ -259,6 +259,7 @@
     "optional-practice/civilian-fpv/regional-library.mjs",
     "optional-practice/civilian-fpv/regional/flight-prototype.mjs",
     "optional-practice/civilian-fpv/regional/frame-transaction.mjs",
+    "optional-practice/civilian-fpv/regional/restore-containment.mjs",
     "optional-practice/civilian-fpv/regional/indexed-scenery-cell.mjs",
     "optional-practice/civilian-fpv/regional/rgba-scenery-cell.mjs",
     "optional-practice/civilian-fpv/regional/region-manifest.mjs",

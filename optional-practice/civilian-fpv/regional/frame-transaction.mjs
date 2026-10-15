@@ -49,14 +49,14 @@ export function readFramePose(transaction, fallback, planner) {
     Object.keys(value).length !== 2 ||
     !point ||
     Object.keys(point).length !== 3 ||
-    !["x", "y", "z"].every((key) => Number.isSafeInteger(point[key])) ||
+    !["x", "y", "z"].every((key) => Number.isFinite(point[key])) ||
     !Number.isSafeInteger(value.radiusMm) ||
     value.radiusMm <= 0 ||
     value.radiusMm > 2000
   )
     throw new TypeError("Invalid live frame support pose");
   planner(point);
-  return { positionMm: { ...point }, radiusMm: value.radiusMm };
+  return { positionMm: { ...point }, radiusMm: value.radiusMm, ...(fallback?.requireClearRestore ? { requireClearRestore: true } : {}) };
 }
 
 export function adoptVerifiedFrame(transaction, candidate, current) {

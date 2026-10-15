@@ -31,11 +31,18 @@ const id = (value) =>
   typeof value === "string" && /^[a-z][a-z0-9-]{0,63}$/.test(value);
 const cellKey = (x, z) => `${x},${z}`;
 const compare = (a, b) => (a < b ? -1 : a > b ? 1 : 0);
-const position = (value) => {
+const position = (value, integerOnly = true) => {
   keys(value, axes, "Position");
   fail(
-    axes.every((axis) => integer(value[axis], -100000000, 100000000)),
-    "Position needs bounded integer millimetres",
+    axes.every(
+      (axis) =>
+        Number.isFinite(value[axis]) &&
+        Math.abs(value[axis]) <= 100000000 &&
+        (!integerOnly || Number.isSafeInteger(value[axis])),
+    ),
+    integerOnly
+      ? "Position needs bounded integer millimetres"
+      : "Position needs bounded finite millimetres",
   );
 };
 const freeze = (value) => {
@@ -203,8 +210,8 @@ export function validateRegionManifest(input) {
   return freeze(value);
 }
 
-function assertWithin(point, grid) {
-  position(point);
+function assertWithin(point, grid, integerOnly = true) {
+  position(point, integerOnly);
   fail(
     point.x >= grid.minX * grid.cellSizeMm &&
       point.x <= (grid.minX + grid.width) * grid.cellSizeMm &&
@@ -218,19 +225,19 @@ function assertWithin(point, grid) {
 
 /** Translation only: callers must separately migrate renderer/physics/actors together. */
 export function regionToLocal(point, origin) {
-  position(point);
+  position(point, false);
   position(origin);
   return Object.fromEntries(
     axes.map((axis) => [axis, point[axis] - origin[axis]]),
   );
 }
 export function regionToGlobal(point, origin) {
-  position(point);
+  position(point, false);
   position(origin);
   const result = Object.fromEntries(
     axes.map((axis) => [axis, point[axis] + origin[axis]]),
   );
-  position(result);
+  position(result, false);
   return result;
 }
 
@@ -247,7 +254,7 @@ export function createRegionPlanner(input) {
     point,
     { resident = [], maxSourceBytes = REGION_LIMITS.residentSourceBytes } = {},
   ) => {
-    assertWithin(point, grid);
+    assertWithin(point, grid, false);
     fail(
       Array.isArray(resident) &&
         resident.length <= REGION_LIMITS.residentChunks &&

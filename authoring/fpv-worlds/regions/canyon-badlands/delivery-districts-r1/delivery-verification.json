@@ -1,0 +1,17 @@
+{
+  "passed": true,
+  "descriptor": {
+    "bytes": 24279,
+    "sha256": "f69cc4d315c254d5b825e2cfbde21d8509da1c8e3ae2a3e743de95782c5300c8"
+  },
+  "files": 146,
+  "verifiedRequests": 147,
+  "totalBytes": 3380298,
+  "totalWithDescriptor": 3404577,
+  "actualExtentM": [
+    768,
+    768
+  ],
+  "exactSourceBytesPreserved": true,
+  "playerAdmission": false
+}

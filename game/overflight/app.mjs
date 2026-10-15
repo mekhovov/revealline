@@ -1,4 +1,5 @@
 import { OVERFLIGHT_BATTLEFIELDS } from './battlefields.mjs';
+import { updateOverflightSurvivalHUD } from './survival-hud.mjs';
 import { createOverflightRecords } from './records.mjs';
 import { createOverflightMastery } from './mastery.mjs';
 import { renderOverflightRunReport } from './mastery-view.mjs';
@@ -718,18 +719,11 @@ function updateHUD() {
     hudPulseCharge.setAttribute('aria-valuetext', `${charge}% · ${text('flyToCharge')}`);
     hudPulseCharge.dataset.ready = String(charge === 100);
   }
-  const index = run.progression.choices;
   if (mode.updateHUD) {
     mode.updateHUD({ run, compiled, document: doc, text, local });
     return;
   }
-  const thresholds = compiled.upgrades.thresholds;
-  const previous = thresholds[index - 1] ?? 0;
-  const next = thresholds[index] ?? previous;
-  const xp = run.progression.xp;
-  const percent =
-    next > previous ? Math.max(0, Math.min(1, (xp - previous) / (next - previous))) : 1;
-  $('xp-fill').style.width = `${percent * 100}%`;
+  updateOverflightSurvivalHUD({ run, compiled, document: doc, text });
 }
 function refreshCharacters() {
   const select = $('character-select');

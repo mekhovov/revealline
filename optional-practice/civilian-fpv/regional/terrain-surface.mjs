@@ -4,7 +4,7 @@ import { createUrbanGroundSurface, createRailwayGroundSurface } from './urban-gr
 
 export function validateTerrainSurface(style = 'plain', quality = 'balanced') {
   if (
-    !['plain', 'canyon', 'urban', 'railway'].includes(style) ||
+    !['plain', 'canyon', 'urban', 'railway', 'tropical'].includes(style) ||
     !['performance', 'balanced', 'quality'].includes(quality)
   )
     throw new TypeError('Unknown regional terrain surface profile');
@@ -37,6 +37,7 @@ export function createTerrainSurface({ style = 'plain', quality = 'balanced', or
   )
     throw new TypeError('Terrain surface needs a bounded integer origin');
   if (style === 'urban') return createUrbanGroundSurface({ quality, originMm });
+  if (style === 'tropical') return createTropicalGroundSurface({ quality, originMm });
   if (style === 'railway') return createRailwayGroundSurface({ quality, originMm });
   const material = new THREE.MeshStandardMaterial({
     color: style === 'plain' ? 0x687647 : 0xffffff,
@@ -111,6 +112,64 @@ diffuseColor.rgb *= terrainTint;`,
       '#include <roughnessmap_fragment>',
       `#include <roughnessmap_fragment>
 roughnessFactor = clamp(roughnessFactor - terrainCliff * 0.08, 0.88, 1.0);`,
+    );
+  };
+  return material;
+}
+
+/** Original beach/dune colour treatment; exact source height and collision never move. */
+function createTropicalGroundSurface({ quality, originMm }) {
+  const material = new THREE.MeshStandardMaterial({
+    color: 0xffffff,
+    roughness: 1,
+    metalness: 0,
+  });
+  material.name = `Tropical sand and dune grass · ${quality}`;
+  material.customProgramCacheKey = () => `fpv-tropical-ground-v1-${quality}`;
+  material.onBeforeCompile = (shader) => {
+    shader.uniforms.tropicalOrigin = {
+      value: new THREE.Vector3(originMm.x / 1000, originMm.y / 1000, originMm.z / 1000),
+    };
+    shader.uniforms.tropicalSand = { value: new THREE.Color(0xd4c69c) };
+    shader.uniforms.tropicalGrass = { value: new THREE.Color(0x53733b) };
+    shader.uniforms.tropicalEarth = { value: new THREE.Color(0x9b8961) };
+    shader.vertexShader = shader.vertexShader
+      .replace(
+        '#include <common>',
+        '#include <common>\nuniform vec3 tropicalOrigin;\nvarying vec3 vTropicalPoint;\nvarying vec3 vTropicalNormal;',
+      )
+      .replace(
+        '#include <begin_vertex>',
+        '#include <begin_vertex>\nvTropicalPoint = (modelMatrix * vec4(transformed, 1.0)).xyz + tropicalOrigin;\nvTropicalNormal = normalize(mat3(modelMatrix) * normal);',
+      );
+    shader.fragmentShader = shader.fragmentShader.replace(
+      '#include <common>',
+      `#include <common>
+varying vec3 vTropicalPoint;
+varying vec3 vTropicalNormal;
+uniform vec3 tropicalSand;
+uniform vec3 tropicalGrass;
+uniform vec3 tropicalEarth;
+${quality === 'performance' ? '' : noise}`,
+    );
+    shader.fragmentShader = shader.fragmentShader.replace(
+      '#include <color_fragment>',
+      `#include <color_fragment>
+vec3 tp = vTropicalPoint;
+float patches = ${quality === 'performance' ? '0.5 + 0.22 * sin(tp.x * 0.11) * sin(tp.z * 0.09)' : 'terrainNoise(tp * vec3(0.12, 0.08, 0.12))'};
+float vegetation = smoothstep(1.7, 3.5, tp.y + patches * 0.65);
+float exposed = smoothstep(0.12, 0.42, 1.0 - abs(normalize(vTropicalNormal).y));
+vec3 tropicalTint = mix(tropicalSand, tropicalGrass, vegetation);
+tropicalTint = mix(tropicalTint, tropicalEarth, exposed * 0.7);
+tropicalTint *= 0.94 + patches * 0.12;
+${
+  quality === 'performance'
+    ? ''
+    : `float nearGrain = 1.0 - smoothstep(0.03, 0.45, length(fwidth(tp)));
+tropicalTint *= 1.0 + (terrainNoise(tp * 3.5) - 0.5) * nearGrain * 0.1;
+${quality === 'quality' ? 'tropicalTint *= 1.0 + (terrainNoise(tp * 12.0) - 0.5) * nearGrain * 0.06;' : ''}`
+}
+diffuseColor.rgb *= tropicalTint;`,
     );
   };
   return material;
