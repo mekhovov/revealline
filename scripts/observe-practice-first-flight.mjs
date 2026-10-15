@@ -67,6 +67,54 @@ export const FIRST_FLIGHT_CASES = Object.freeze([
     throttle: 'w',
   },
 ]);
+export const FIRST_FLIGHT_V2_PROTOCOL = Object.freeze({
+  ...FIRST_FLIGHT_PROTOCOL,
+  id: 'practice-first-flight-public-ui.v2',
+});
+export const FIRST_FLIGHT_V2_CASES = Object.freeze(
+  ['en', 'uk'].flatMap((locale) =>
+    [...FIRST_FLIGHT_CASES, { ...FIRST_FLIGHT_CASES[3], mode: 'acro' }].map((spec) =>
+      Object.freeze({
+        ...spec,
+        id: `${locale}-${spec.package === 'fpv-worlds' ? `worlds-${spec.mode}` : spec.id.slice(3)}`,
+        locale,
+      }),
+    ),
+  ),
+);
+export const GYM_EXERCISE_PROTOCOL = Object.freeze({
+  ...FIRST_FLIGHT_PROTOCOL,
+  id: 'practice-exercise-public-ui.gym.v1',
+});
+export const GYM_EXERCISE_CASES = Object.freeze(
+  ['en', 'uk'].map((locale) =>
+    Object.freeze({
+      ...FIRST_FLIGHT_CASES[0],
+      id: `${locale}-gym-lift-and-land`,
+      locale,
+      mode: 'assisted',
+      exercise: 'lift-and-land',
+    }),
+  ),
+);
+export function firstFlightProtocol(plan) {
+  assert(
+    [FIRST_FLIGHT_PROTOCOL.id, FIRST_FLIGHT_V2_PROTOCOL.id, GYM_EXERCISE_PROTOCOL.id].includes(
+      plan.protocol,
+    ),
+    'Unknown first-flight protocol.',
+  );
+  if (plan.protocol === GYM_EXERCISE_PROTOCOL.id) return GYM_EXERCISE_PROTOCOL;
+  return plan.protocol === FIRST_FLIGHT_V2_PROTOCOL.id
+    ? FIRST_FLIGHT_V2_PROTOCOL
+    : FIRST_FLIGHT_PROTOCOL;
+}
+export function firstFlightCases(plan) {
+  if (firstFlightProtocol(plan).id === GYM_EXERCISE_PROTOCOL.id) return GYM_EXERCISE_CASES;
+  return firstFlightProtocol(plan).id === FIRST_FLIGHT_V2_PROTOCOL.id
+    ? FIRST_FLIGHT_V2_CASES
+    : FIRST_FLIGHT_CASES;
+}
 const AUTHORITY = [
   'scripts/observe-practice-first-flight.mjs',
   'scripts/observe-practice-pointer.mjs',
@@ -77,6 +125,19 @@ const AUTHORITY = [
   'publishing/optional-package-policy.mjs',
   'publishing/edition-zip.mjs',
 ];
+export function firstFlightArtifactPackage(plan) {
+  return firstFlightProtocol(plan).id === GYM_EXERCISE_PROTOCOL.id
+    ? 'civilian-flight'
+    : 'civilian-fpv';
+}
+export function firstFlightAuthority(plan) {
+  return [
+    ...AUTHORITY,
+    ...(firstFlightProtocol(plan).id === GYM_EXERCISE_PROTOCOL.id
+      ? ['scripts/practice-exercise-ui.mjs', 'scripts/practice-exercise-replay.mjs']
+      : []),
+  ];
+}
 
 export function validateFirstFlightPlan(input) {
   const encoded = typeof input === 'string' ? input : JSON.stringify(input);
@@ -102,13 +163,18 @@ export function validateFirstFlightPlan(input) {
       Object.keys(plan).every((key) => fields.includes(key)),
     'Unexpected plan fields.',
   );
-  assert.equal(plan.format, 'revealline-practice-first-flight-plan.v1');
-  assert.equal(plan.protocol, FIRST_FLIGHT_PROTOCOL.id);
+  const formats = {
+    'revealline-practice-first-flight-plan.v1': FIRST_FLIGHT_PROTOCOL.id,
+    'revealline-practice-first-flight-plan.v2': FIRST_FLIGHT_V2_PROTOCOL.id,
+    'revealline-practice-gym-exercise-plan.v1': GYM_EXERCISE_PROTOCOL.id,
+  };
+  assert(Object.hasOwn(formats, plan.format), 'Unsupported observation plan format.');
+  assert.equal(plan.protocol, formats[plan.format]);
   assert.match(plan.caseId, /^[a-z0-9-]{1,64}$/);
   assert.deepEqual(
     plan.cases,
-    FIRST_FLIGHT_CASES.map((row) => row.id),
-    'Declare the complete four-case EN matrix.',
+    firstFlightCases(plan).map((row) => row.id),
+    'Declare the exact complete case matrix for this registered protocol.',
   );
   validateFPVArtifactBinding(plan);
   for (const [name, limit] of [
@@ -123,7 +189,28 @@ export function validateFirstFlightPlan(input) {
 }
 
 // Parse only visible public measurements; time, status and throttle never prove motion.
-export function parseFirstFlightHUD(id, text) {
+export function parseFirstFlightHUD(id, text, locale) {
+  if (locale !== undefined) {
+    assert(['en', 'uk'].includes(locale), 'Unsupported HUD locale.');
+    assert(typeof text === 'string' && text.length <= 1024, 'Unbounded HUD text.');
+    const n = '(-?\\d+(?:\\.\\d+)?)';
+    const pattern =
+      id === 'civilian-flight'
+        ? `${locale === 'uk' ? 'Положення' : 'Position'} ${n}, ${n} m · ${locale === 'uk' ? 'Висота' : 'Height'} ${n} m · ${locale === 'uk' ? 'Курс' : 'Heading'} ${n}°`
+        : id === 'civilian-fpv'
+          ? `${locale === 'uk' ? 'Висота' : 'Height'} ${n} m · ${locale === 'uk' ? 'Швидкість' : 'Speed'} ${n} m/s`
+          : id === 'fpv-worlds'
+            ? `${n} m · ${n} m/s · ${n} s(?: · ♥ \\d+)?`
+            : null;
+    assert(pattern, 'Unknown HUD package.');
+    const match = text.match(new RegExp(`^${pattern}$`));
+    assert(match, 'Visible HUD does not match the declared locale/package measurements.');
+    const values = match.slice(1).map(Number);
+    assert(values.every(Number.isFinite), 'Nonfinite HUD measurement.');
+    return id === 'civilian-flight'
+      ? { x: values[0], z: values[1], height: values[2], heading: values[3] }
+      : { height: values[0], speed: values[1] };
+  }
   const numbers =
     String(text)
       .match(/-?\d+(?:\.\d+)?/g)
@@ -154,7 +241,7 @@ async function hud(page, spec) {
   else if (spec.package === 'civilian-fpv')
     text = `${await page.locator('#height').innerText()} · ${await page.locator('#speed').innerText()}`;
   else text = await page.locator('#flight-instruments').innerText();
-  return { text, values: parseFirstFlightHUD(spec.package, text), at: Date.now() };
+  return { text, values: parseFirstFlightHUD(spec.package, text, spec.locale), at: Date.now() };
 }
 async function phase(page, spec) {
   if (spec.package === 'civilian-flight')
@@ -225,11 +312,16 @@ export async function retryFirstFlight(page, spec, result) {
   if (spec.package === 'civilian-flight')
     return activate(page, `#${spec.shell}-action-pause-restart`, result);
   const dialog = `#${spec.shell}-pause-dialog[open]`;
-  const retry = page.locator(dialog).getByRole('button', { name: 'Retry', exact: true });
+  const selector = spec.locale ? dialog + ' [data-practice-action="retry"]' : null;
+  const retry = selector
+    ? page.locator(selector)
+    : page.locator(dialog).getByRole('button', { name: 'Retry', exact: true });
   await retry.waitFor({ state: 'visible' });
   assert(await retry.isEnabled(), 'Public Retry is disabled.');
+  if (spec.locale)
+    assert.equal((await retry.innerText()).trim(), spec.locale === 'uk' ? 'Ще раз' : 'Retry');
   result.actions.push({
-    selector: dialog + ' role=button[name=Retry]',
+    selector: selector ?? dialog + ' role=button[name=Retry]',
     id: await retry.getAttribute('id'),
     practiceAction: await retry.getAttribute('data-practice-action'),
     action: 'public-control Enter',
@@ -277,33 +369,125 @@ async function pause(page, spec, result, name) {
     assert.deepEqual(sample.values, samples[0].values, 'Public telemetry changed while paused.');
 }
 
-async function runCase(page, spec, { origin, version, password, result, output }) {
+export function firstFlightRoute(spec, { origin, version }) {
+  const locale = spec.locale ?? 'en';
+  assert(['en', 'uk'].includes(locale));
+  assert(FIRST_FLIGHT_CASES.some((row) => row.package === spec.package));
+  assert.match(version, /^v\d+\.\d+\.\d+$/);
   const base = `revealline/practice/${spec.package}/`;
-  const launcher = new URL(base + 'app/?action=play&lang=en', origin).href;
+  const launcher = new URL(base + `app/?action=play&lang=${locale}`, origin).href;
   const expected = new URL(
     base + `releases/${version}/site/optional-practice/${spec.package}/index.html`,
     origin,
   ).href;
+  return { launcher, expected, locale };
+}
+export async function observeFirstFlightLocale(page, spec) {
+  assert(['en', 'uk'].includes(spec.locale));
+  const locale = await page.locator('html').getAttribute('lang');
+  const settings = page.locator(`#${spec.shell}-action-settings`);
+  await settings.waitFor({ state: 'visible' });
+  const label = (await settings.innerText()).trim();
+  assert.equal(locale, spec.locale, 'App document locale did not follow launcher selection.');
+  assert.equal(
+    label,
+    spec.locale === 'uk' ? 'Налаштування' : 'Settings',
+    'Public Settings label has the wrong locale.',
+  );
+  return { documentLanguage: locale, settingsLabel: label };
+}
+export async function selectFirstFlightMode(page, spec, result) {
+  assert(['civilian-fpv', 'fpv-worlds'].includes(spec.package));
+  assert(['self-level', 'acro'].includes(spec.mode));
+  const prefix = spec.package === 'civilian-fpv' ? 'academy' : 'worlds';
+  const selector = spec.package === 'civilian-fpv' ? '#mode' : '#flight-mode';
+  await activate(page, `#${spec.shell}-action-settings`, result);
+  await activate(page, `#${prefix}-settings-tab-gameplay`, result);
+  await page.locator(selector).waitFor({ state: 'visible' });
+  await page.locator(selector).selectOption(spec.mode);
+  assert.equal(await page.locator(selector).inputValue(), spec.mode);
+  result.actions.push({
+    selector,
+    action: 'public gameplay mode selection',
+    value: spec.mode,
+    at: Date.now(),
+  });
+  await returnFirstFlightHome(page, spec, result);
+}
+export async function completeFirstFlightGymExercise(page, spec, result, output, files, signal) {
+  assert(GYM_EXERCISE_CASES.some((row) => row.id === spec.id && row.locale === spec.locale));
+  assert.equal(spec.package, 'civilian-flight');
+  assert.equal(spec.mode, 'assisted');
+  assert.equal(spec.exercise, 'lift-and-land');
+  assert(files instanceof Map, 'Admitted Gym runtime files are required.');
+  result.independentReplayVerified = false;
+  // Only this registered protocol loads the public-input controller. The plan
+  // cannot supply a module path, arbitrary script, callback or alternate drill.
+  const { completePublicGymExercise } = await import('./practice-exercise-ui.mjs');
+  await page.locator(spec.viewport).click();
+  result.exercise = await completePublicGymExercise(page, {
+    locale: spec.locale,
+    mode: spec.mode,
+    signal,
+    onComplete: async () => {
+      const bytes = await page.screenshot({ timeout: 5000 });
+      const name = spec.id + '-completed.png';
+      await writeFile(path.join(output, name), bytes, { flag: 'wx' });
+      result.screenshot = pin(name, bytes);
+      result.completionScreenshot = result.screenshot;
+    },
+  });
+  const exercise = result.exercise;
+  assert(exercise.completed, exercise.error ?? 'Public Gym exercise did not complete.');
+  assert(
+    exercise.cleanup.released && !exercise.cleanup.errors.length,
+    'Exercise key cleanup failed.',
+  );
+  assert(result.screenshot, 'Completion screenshot is missing.');
+  assert.equal(exercise.transcript?.independentReplayVerified, false);
+  const { json, ...metadata } = exercise.transcript;
+  assert(
+    typeof json === 'string' && Buffer.byteLength(json) <= 131072,
+    'Bounded public transcript is missing.',
+  );
+  const name = spec.id + '-transcript.json',
+    bytes = Buffer.from(json);
+  await writeFile(path.join(output, name), bytes, { flag: 'wx' });
+  exercise.transcript = { ...metadata, exportedFile: pin(name, bytes) };
+  const { verifyFrozenGymTranscript } = await import('./practice-exercise-replay.mjs');
+  exercise.independentReplay = await verifyFrozenGymTranscript(files, json);
+  assert.equal(exercise.independentReplay.verified, true);
+  assert.equal(
+    exercise.independentReplay.transcriptSha256,
+    exercise.transcript.exportedFile.sha256,
+  );
+  exercise.transcript.independentReplayVerified = true;
+  result.independentReplayVerified = true;
+  result.passed = result.errors.length === 0;
+}
+
+async function runCase(page, spec, { origin, version, password, result, output, files, signal }) {
+  const { launcher, expected, locale } = firstFlightRoute(spec, { origin, version });
   result.launcher = launcher;
   result.expectedEntry = expected;
   await page.goto(launcher, { waitUntil: 'domcontentloaded' });
   await unlockObservedPage(page, password);
-  await page.waitForURL((url) => matchesLaunchedAppURL(url.href, expected));
+  await page.waitForURL((url) => matchesLaunchedAppURL(url.href, expected, locale));
   await unlockObservedPage(page, password);
   result.unlocked = true;
   result.entry = page.url();
   await page.locator(`#${spec.shell}-action-primary`).waitFor({ state: 'visible' });
-  if (spec.package === 'civilian-fpv') {
-    await activate(page, '#academy-shell-action-settings', result);
-    await activate(page, '#academy-settings-tab-gameplay', result);
-    await page.locator('#mode').selectOption(spec.mode);
-    assert.equal(await page.locator('#mode').inputValue(), spec.mode);
-    await returnFirstFlightHome(page, spec, result);
-  }
+  if (spec.locale) result.localeWitness = await observeFirstFlightLocale(page, spec);
+  if (spec.package === 'civilian-fpv' || (spec.locale && spec.package === 'fpv-worlds'))
+    await selectFirstFlightMode(page, spec, result);
   await activate(page, `#${spec.shell}-action-primary`, result);
   await waitPhase(page, spec, ['active', 'playing']);
   result.startPhase = await phase(page, spec);
   result.initial = await hud(page, spec);
+  if (spec.exercise) {
+    await completeFirstFlightGymExercise(page, spec, result, output, files, signal);
+    return;
+  }
   if (spec.package !== 'civilian-flight') {
     const prefix = spec.package === 'civilian-fpv' ? '' : 'flight-';
     assert.equal(
@@ -383,13 +567,20 @@ export async function observePracticeFirstFlight({
   assert((await stat(planFile)).size <= 65536);
   const planBytes = await readFile(planFile),
     plan = validateFirstFlightPlan(planBytes.toString());
+  const protocol = firstFlightProtocol(plan),
+    cases = firstFlightCases(plan);
+  const exercise = protocol.id === GYM_EXERCISE_PROTOCOL.id;
   await mkdir(output);
   const scrub = (value) =>
     password ? String(value).split(password).join('[REDACTED]') : String(value);
   const report = {
-    format: 'PracticeFirstFlightObservation.v1',
+    format: exercise
+      ? 'PracticeGymExerciseObservation.v1'
+      : protocol.id === FIRST_FLIGHT_PROTOCOL.id
+        ? 'PracticeFirstFlightObservation.v1'
+        : 'PracticeFirstFlightObservation.v2',
     plan,
-    protocol: FIRST_FLIGHT_PROTOCOL,
+    protocol,
     createdAt: new Date().toISOString(),
     completed: false,
     qualified: false,
@@ -397,25 +588,35 @@ export async function observePracticeFirstFlight({
     cases: [],
     authority: [],
     resourceAcquisitions: [],
-    limitations: [
-      'Automated EN mixed keyboard/pointer workflow only; no human learning, completed exercise, verified proof, physical controller, touch or accessibility qualification.',
-      'Mixed input: public Enter activation, ordinary pointer Pause/viewport clicks and documented Space arming; not a full Tab-navigation or first-pointer test.',
-      'Unchanged admitted package bytes served locally at release-shaped paths; current.json is a declared local selector fixture, not a published release.',
-      'Starts from each stable launcher, not the main-game directory. No installation/offline or public-host claim.',
-      'Motion uses visible rounded HUD values; paused stability is a 600ms observation, not internal physics instrumentation.',
-    ],
+    limitations: exercise
+      ? [
+          'Automated EN/UK assisted Gym lift-and-land exercise through public HUD feedback and R/F keys; no FPV exercise, physical controller, human learning or campaign-win qualification.',
+          'Native completion/checkmark and actual public transcript export are observed; independentReplayVerified becomes true only after off-browser replay with the complete fixed model/catalogue dependency closure byte-matched to admitted Gym files. This is not human qualification.',
+          'Completion screenshot is captured before Settings/Data transcript export. No recorded-input injection, runtime hook or fabricated completion state.',
+          'Starts from the stable Gym launcher, not the main-game directory. Locally staged admitted bytes and current.json fixture are not public hosting or installation/offline qualification.',
+        ]
+      : [
+          `Automated ${protocol.id === FIRST_FLIGHT_PROTOCOL.id ? 'EN' : 'EN/UK'} mixed keyboard/pointer workflow only; no human learning, completed exercise, verified proof, physical controller, touch or accessibility qualification.`,
+          'Mixed input: public Enter activation, ordinary pointer Pause/viewport clicks and documented Space arming; not a full Tab-navigation or first-pointer test.',
+          'Unchanged admitted package bytes served locally at release-shaped paths; current.json is a declared local selector fixture, not a published release.',
+          'Starts from each stable launcher, not the main-game directory. No installation/offline or public-host claim.',
+          'Motion uses visible rounded HUD values; paused stability is a 600ms observation, not internal physics instrumentation.',
+        ],
   };
   let work, served, browser;
   try {
     await writeFile(path.join(output, 'plan.json'), planBytes, { flag: 'wx' });
     await mkdir(path.join(output, 'authority'));
-    for (const name of AUTHORITY) {
+    for (const name of firstFlightAuthority(plan)) {
       const bytes = await readFile(path.join(ROOT, name));
       report.authority.push(pin(name, bytes));
       await writeFile(path.join(output, 'authority', path.basename(name)), bytes, { flag: 'wx' });
     }
     const loaded = await deadline(
-      loadFPVObservationArtifact(plan, { base: path.dirname(path.resolve(planFile)) }),
+      loadFPVObservationArtifact(plan, {
+        base: path.dirname(path.resolve(planFile)),
+        packageId: firstFlightArtifactPackage(plan),
+      }),
       60_000,
       'All-package admission',
     );
@@ -434,7 +635,7 @@ export async function observePracticeFirstFlight({
       await writeFile(file, bytes, { flag: 'wx' });
     };
     report.staged = [];
-    for (const id of new Set(FIRST_FLIGHT_CASES.map((row) => row.package))) {
+    for (const id of new Set(cases.map((row) => row.package))) {
       const item = envelope.packages.find((row) => row.id === id);
       assert(item, `Missing ${id}.`);
       const archive = await readFile(path.join(bundle, item.distribution.path));
@@ -474,17 +675,22 @@ export async function observePracticeFirstFlight({
       35_000,
     );
     report.browser = browser.version();
-    const end = Date.now() + FIRST_FLIGHT_PROTOCOL.overallMs;
-    for (const spec of FIRST_FLIGHT_CASES) {
+    const end = Date.now() + protocol.overallMs;
+    for (const spec of cases) {
       assert(Date.now() < end, 'First-flight overall deadline exceeded.');
       const result = { ...spec, actions: [], errors: [], passed: false };
       report.cases.push(result);
       let context, page, pending;
+      const controller = new AbortController();
       try {
         context = await acquirePointerResource(
           report.resourceAcquisitions,
           spec.id + '-context',
-          () => browser.newContext({ viewport: FIRST_FLIGHT_PROTOCOL.viewport, locale: 'en-US' }),
+          () =>
+            browser.newContext({
+              viewport: protocol.viewport,
+              locale: spec.locale === 'uk' ? 'uk-UA' : 'en-US',
+            }),
           (value) => value.close(),
         );
         page = await acquirePointerResource(
@@ -504,8 +710,10 @@ export async function observePracticeFirstFlight({
           password,
           result,
           output,
+          signal: controller.signal,
+          files: loaded.files,
         });
-        await deadline(pending, Math.min(FIRST_FLIGHT_PROTOCOL.caseMs, end - Date.now()), spec.id);
+        await deadline(pending, Math.min(protocol.caseMs, end - Date.now()), spec.id);
       } catch (error) {
         result.failure = scrub(error.message);
         result.passed = false;
@@ -521,6 +729,7 @@ export async function observePracticeFirstFlight({
           }
         }
       } finally {
+        controller.abort();
         if (context) await deadline(context.close(), 10_000, 'Case cleanup');
         if (pending)
           await deadline(
@@ -553,10 +762,17 @@ export async function observePracticeFirstFlight({
     report.cleanup = await closeFPVObservationResources([
       ...(browser ? [['browser', () => browser.close()]] : []),
       ...(served ? [['server', () => closeServer(served)]] : []),
-      ...(work ? [['temporary-site', () => rm(work, { recursive: true, force: true })]] : []),
     ]);
     if (report.resourceAcquisitions.some((row) => row.pending || (row.timedOut && !row.lateClosed)))
       report.cleanup.completed = false;
+    if (work && report.cleanup.completed) {
+      const removal = await closeFPVObservationResources([
+        ['temporary-site', () => rm(work, { recursive: true, force: true })],
+      ]);
+      report.cleanup.operations.push(...removal.operations);
+      report.cleanup.completed &&= removal.completed;
+    }
+    if (work && !report.cleanup.completed) report.retainedDirectory = work;
     report.completed =
       report.procedureComplete &&
       !report.failure &&

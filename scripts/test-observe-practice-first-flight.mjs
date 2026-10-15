@@ -7,6 +7,18 @@ import { createHash } from 'node:crypto';
 import {
   FIRST_FLIGHT_PROTOCOL,
   FIRST_FLIGHT_CASES,
+  FIRST_FLIGHT_V2_PROTOCOL,
+  FIRST_FLIGHT_V2_CASES,
+  GYM_EXERCISE_PROTOCOL,
+  GYM_EXERCISE_CASES,
+  firstFlightArtifactPackage,
+  firstFlightAuthority,
+  completeFirstFlightGymExercise,
+  firstFlightProtocol,
+  firstFlightCases,
+  firstFlightRoute,
+  observeFirstFlightLocale,
+  selectFirstFlightMode,
   validateFirstFlightPlan,
   parseFirstFlightHUD,
   hasFirstFlightMotion,
@@ -60,6 +72,328 @@ test('public HUD parsing ignores elapsed time for Worlds and includes Gym positi
   });
   assert.throws(() => parseFirstFlightHUD('civilian-fpv', 'Loading'));
   assert.throws(() => parseFirstFlightHUD('civilian-flight', '0.1 m'));
+});
+
+test('v2 declares exactly ten EN/UK modes, preserving v1 and its fixed budgets', () => {
+  const v2 = {
+    ...plan(),
+    format: 'revealline-practice-first-flight-plan.v2',
+    protocol: FIRST_FLIGHT_V2_PROTOCOL.id,
+    cases: FIRST_FLIGHT_V2_CASES.map((c) => c.id),
+  };
+  assert.deepEqual(validateFirstFlightPlan(v2), v2);
+  assert.equal(firstFlightCases(plan()), FIRST_FLIGHT_CASES);
+  assert.equal(firstFlightCases(v2), FIRST_FLIGHT_V2_CASES);
+  assert.deepEqual(
+    FIRST_FLIGHT_V2_CASES.map((c) => c.id),
+    [
+      'en-gym',
+      'en-academy-self-level',
+      'en-academy-acro',
+      'en-worlds-self-level',
+      'en-worlds-acro',
+      'uk-gym',
+      'uk-academy-self-level',
+      'uk-academy-acro',
+      'uk-worlds-self-level',
+      'uk-worlds-acro',
+    ],
+  );
+  assert.equal(firstFlightProtocol(v2).caseMs, 90000);
+  assert.equal(firstFlightProtocol(v2).overallMs, 600000);
+  for (const patch of [
+    { protocol: FIRST_FLIGHT_PROTOCOL.id },
+    { cases: plan().cases },
+    { cases: [...v2.cases].reverse() },
+    { cases: [...v2.cases, 'uk-gym'] },
+    { script: 'custom()' },
+    { locale: 'fr' },
+    { quietWindow: 'x'.repeat(2049) },
+  ])
+    assert.throws(() => validateFirstFlightPlan({ ...v2, ...patch }));
+  assert.throws(() => validateFirstFlightPlan({ ...plan(), cases: v2.cases }));
+  assert.throws(() => validateFirstFlightPlan(' '.repeat(65537)));
+  assert.throws(() => firstFlightCases({ protocol: 'unknown' }));
+});
+
+test('all declared v2 launchers preserve exact locale and package destination', () => {
+  for (const spec of FIRST_FLIGHT_V2_CASES) {
+    const route = firstFlightRoute(spec, { origin: 'http://127.0.0.1:1234', version: 'v1.2.3' });
+    assert.equal(route.locale, spec.locale);
+    assert.equal(
+      route.launcher,
+      `http://127.0.0.1:1234/revealline/practice/${spec.package}/app/?action=play&lang=${spec.locale}`,
+    );
+    assert.equal(
+      route.expected,
+      `http://127.0.0.1:1234/revealline/practice/${spec.package}/releases/v1.2.3/site/optional-practice/${spec.package}/index.html`,
+    );
+  }
+  assert.equal(
+    firstFlightRoute(FIRST_FLIGHT_CASES[0], { origin: 'http://127.0.0.1', version: 'v1.2.3' })
+      .locale,
+    'en',
+  );
+  assert.throws(() =>
+    firstFlightRoute(
+      { ...FIRST_FLIGHT_V2_CASES[0], locale: 'fr' },
+      { origin: 'http://127.0.0.1', version: 'v1.2.3' },
+    ),
+  );
+});
+
+test('Gym exercise is a distinct strict EN/UK assisted protocol with Gym artifact and extra authority', () => {
+  const exercise = {
+    ...plan(),
+    format: 'revealline-practice-gym-exercise-plan.v1',
+    protocol: GYM_EXERCISE_PROTOCOL.id,
+    cases: GYM_EXERCISE_CASES.map((c) => c.id),
+  };
+  assert.deepEqual(validateFirstFlightPlan(exercise), exercise);
+  assert.deepEqual(exercise.cases, ['en-gym-lift-and-land', 'uk-gym-lift-and-land']);
+  assert(
+    GYM_EXERCISE_CASES.every(
+      (c) =>
+        c.mode === 'assisted' && c.package === 'civilian-flight' && c.exercise === 'lift-and-land',
+    ),
+  );
+  assert.equal(firstFlightArtifactPackage(exercise), 'civilian-flight');
+  assert.equal(firstFlightArtifactPackage(plan()), 'civilian-fpv');
+  assert.equal(
+    firstFlightArtifactPackage({ protocol: FIRST_FLIGHT_V2_PROTOCOL.id }),
+    'civilian-fpv',
+  );
+  assert.deepEqual(firstFlightAuthority(exercise).slice(-2), [
+    'scripts/practice-exercise-ui.mjs',
+    'scripts/practice-exercise-replay.mjs',
+  ]);
+  assert.equal(firstFlightAuthority(plan()).length, 8);
+  for (const patch of [
+    { protocol: FIRST_FLIGHT_V2_PROTOCOL.id },
+    { cases: ['en-gym-lift-and-land'] },
+    { cases: [...exercise.cases].reverse() },
+    { cases: ['en-gym'] },
+    { exercise: 'another' },
+    { runCaseOverride: 'injected' },
+    { module: './custom.mjs' },
+  ])
+    assert.throws(() => validateFirstFlightPlan({ ...exercise, ...patch }));
+});
+
+test('Gym exercise integration captures completion before export, exclusively saves actual text and requires independent frozen replay', async () => {
+  // Scripted DOM/model commands below are unit fixtures, never browser evidence.
+  const { createPractice } = await import('../optional-practice/civilian-flight/model.mjs');
+  const { CIVILIAN_PRACTICE_CATALOGUE } = await import(
+    '../optional-practice/civilian-flight/catalogue.mjs'
+  );
+  const { GYM_REPLAY_INPUTS } = await import('./practice-exercise-replay.mjs');
+  const model = createPractice(CIVILIAN_PRACTICE_CATALOGUE, 'lift-and-land');
+  model.start();
+  const commands = [
+    [1, 20],
+    [0, 20],
+    [-1, 20],
+    [0, 19],
+  ].map(([throttle, ticks]) => {
+    const input = { pitch: 0, roll: 0, throttle, yaw: 0 };
+    for (let i = 0; i < ticks; i++) model.step(input);
+    return { input, ticks };
+  });
+  const json = JSON.stringify({
+    format: 'revealline-practice-transcript.v1',
+    catalogueIdentity: model.identity,
+    drillId: 'lift-and-land',
+    commands,
+  });
+  const files = new Map(
+    await Promise.all(
+      GYM_REPLAY_INPUTS.map(async (name) => [
+        name,
+        await readFile(new URL('../' + name, import.meta.url)),
+      ]),
+    ),
+  );
+  const work = await mkdtemp(path.join(tmpdir(), 'gym-exercise-integration-unit-'));
+  try {
+    const spec = GYM_EXERCISE_CASES[0],
+      events = [],
+      result = { actions: [], errors: [], passed: false };
+    let sample = 0;
+    const page = {
+      keyboard: { up: async () => {}, down: async () => {} },
+      evaluate: async () => {
+        const [height, checkpoint] = [
+          [0, 0],
+          [1, 1],
+          [0, 2],
+        ][Math.min(sample++, 2)];
+        return {
+          locale: 'en',
+          drill: 'lift-and-land',
+          visible: true,
+          focused: true,
+          readout: `Position 10, 16 m · Height ${height} m · Heading 0°`,
+          status: `${checkpoint === 2 ? 'Practice route complete' : 'Practising'} · Checkpoints ${checkpoint}/2`,
+          phase: checkpoint === 2 ? 'results' : 'playing',
+          verified: checkpoint === 2,
+        };
+      },
+      screenshot: async () => {
+        events.push('screenshot');
+        return Buffer.from('unit-image-not-browser-evidence');
+      },
+      locator: (selector) => ({
+        click: async () => events.push('focus arena'),
+        waitFor: async () => {},
+        press: async () => events.push(selector),
+        inputValue: async () => json,
+        locator: () => ({ getAttribute: async () => '' }),
+      }),
+    };
+    await completeFirstFlightGymExercise(page, spec, result, work, files);
+    assert.equal(events[0], 'focus arena');
+    assert(events.indexOf('screenshot') < events.indexOf('#export-trace'));
+    assert.equal(result.passed, true);
+    assert.equal(result.independentReplayVerified, true);
+    assert.equal(result.exercise.cleanup.released, true);
+    assert.deepEqual(result.completionScreenshot, result.screenshot);
+    assert.equal(result.exercise.independentReplay.snapshot.status, 'complete');
+    assert.equal(result.exercise.transcript.json, undefined);
+    const saved = await readFile(path.join(work, result.exercise.transcript.exportedFile.path));
+    assert.equal(saved.toString(), json);
+    assert.equal(
+      createHash('sha256').update(saved).digest('hex'),
+      result.exercise.transcript.exportedFile.sha256,
+    );
+    sample = 0;
+    const repeat = { errors: [], passed: false };
+    await assert.rejects(completeFirstFlightGymExercise(page, spec, repeat, work, files), /EEXIST/);
+    assert.equal(repeat.passed, false);
+    assert.equal(
+      (await readFile(path.join(work, result.exercise.transcript.exportedFile.path))).toString(),
+      json,
+    );
+    const badOutput = path.join(work, 'bad-replay');
+    await (await import('node:fs/promises')).mkdir(badOutput);
+    sample = 0;
+    const bad = { errors: [], passed: false };
+    await assert.rejects(
+      completeFirstFlightGymExercise(page, spec, bad, badOutput, new Map()),
+      /Missing replay dependency/,
+    );
+    assert.equal(bad.passed, false);
+    assert.equal(bad.independentReplayVerified, false);
+    assert.equal(bad.exercise.transcript.independentReplayVerified, false);
+    assert.equal(
+      (await readFile(path.join(badOutput, bad.exercise.transcript.exportedFile.path))).toString(),
+      json,
+    );
+  } finally {
+    await rm(work, { recursive: true, force: true });
+  }
+});
+
+test('strict localized HUD parser follows actual dot-decimal copy, not unrelated numbers', () => {
+  for (const [locale, gym, fpv] of [
+    ['en', 'Position -2.0, 1.5 m · Height 0.25 m · Heading 90°', 'Height 0.2 m · Speed 1.1 m/s'],
+    ['uk', 'Положення -2.0, 1.5 m · Висота 0.25 m · Курс 90°', 'Висота 0.2 m · Швидкість 1.1 m/s'],
+  ]) {
+    assert.deepEqual(parseFirstFlightHUD('civilian-flight', gym, locale), {
+      x: -2,
+      z: 1.5,
+      height: 0.25,
+      heading: 90,
+    });
+    assert.deepEqual(parseFirstFlightHUD('civilian-fpv', fpv, locale), { height: 0.2, speed: 1.1 });
+    assert.deepEqual(parseFirstFlightHUD('fpv-worlds', '0.2 m · 1 m/s · 99.0 s · ♥ 100', locale), {
+      height: 0.2,
+      speed: 1,
+    });
+    assert.throws(() => parseFirstFlightHUD('civilian-fpv', fpv, locale === 'en' ? 'uk' : 'en'));
+  }
+  for (const text of [
+    '0.2 m · 99.0 s',
+    'Time 99 · Height 0.2 m · Speed 1 m/s',
+    'Висота 0,2 m · Швидкість 1,1 m/s',
+    'Height NaN m · Speed 1 m/s',
+    'Height 0.2 m · Speed 1 m/s extra',
+  ])
+    assert.throws(() => parseFirstFlightHUD('civilian-fpv', text, 'en'));
+  assert.throws(() => parseFirstFlightHUD('unknown', '0.2 m · 1 m/s · 1 s', 'uk'));
+});
+
+test('v2 observes actual document and public Settings locale, not just query parameters', async () => {
+  for (const locale of ['en', 'uk']) {
+    const spec = FIRST_FLIGHT_V2_CASES.find((c) => c.locale === locale);
+    const page = (lang, label) => ({
+      locator: (selector) =>
+        selector === 'html'
+          ? { getAttribute: async () => lang }
+          : { waitFor: async () => {}, innerText: async () => label },
+    });
+    const label = locale === 'uk' ? 'Налаштування' : 'Settings';
+    assert.deepEqual(await observeFirstFlightLocale(page(locale, label), spec), {
+      documentLanguage: locale,
+      settingsLabel: label,
+    });
+    await assert.rejects(observeFirstFlightLocale(page(locale, 'wrong'), spec));
+    await assert.rejects(observeFirstFlightLocale(page('fr', label), spec));
+  }
+});
+
+test('v2 uses visible native Retry action with maintained Ukrainian label', async () => {
+  const spec = FIRST_FLIGHT_V2_CASES.find((c) => c.id === 'uk-worlds-acro'),
+    result = { actions: [] },
+    calls = [];
+  await retryFirstFlight(
+    {
+      locator: (selector) => {
+        assert.equal(selector, '#worlds-shell-pause-dialog[open] [data-practice-action="retry"]');
+        return {
+          waitFor: async (o) => calls.push(o.state),
+          isEnabled: async () => true,
+          innerText: async () => 'Ще раз',
+          getAttribute: async () => 'retry',
+          press: async (key) => calls.push(key),
+        };
+      },
+    },
+    spec,
+    result,
+  );
+  assert.deepEqual(calls, ['visible', 'Enter']);
+});
+
+test('v2 selects both FPV modes through visible Gameplay and closes the actual Settings dialog', async () => {
+  for (const spec of FIRST_FLIGHT_V2_CASES.filter((c) => c.mode)) {
+    let open = false,
+      mode;
+    const calls = [],
+      selector = spec.package === 'civilian-fpv' ? '#mode' : '#flight-mode';
+    const page = {
+      waitForFunction: async () => {},
+      locator: (target) => ({
+        waitFor: async () => {},
+        isVisible: async () => true,
+        getAttribute: async () => (target.endsWith('-settings-dialog') ? (open ? '' : null) : ''),
+        press: async () => {
+          calls.push(target);
+          if (target.endsWith('-action-settings')) open = true;
+          if (target.endsWith('-settings-back')) open = false;
+        },
+        selectOption: async (value) => {
+          assert.equal(target, selector);
+          assert(open);
+          mode = value;
+        },
+        inputValue: async () => mode,
+      }),
+    };
+    await selectFirstFlightMode(page, spec, { actions: [] });
+    assert.equal(mode, spec.mode);
+    assert.equal(open, false);
+    assert(calls.some((c) => c.endsWith('-settings-tab-gameplay')));
+  }
 });
 
 test('time/throttle/speed alone never count as altitude movement; fixed threshold tolerates floating rounding', () => {
@@ -178,8 +512,20 @@ test('adapters correspond to native public source controls and keyboard mappings
   assert.match(worlds, /catalogue\.find\(\(e\) => e\.legacy && !complete\.has\(keyOf\(e\)\)\)/);
   assert.match(worlds, /dataset\.flightState = state\.status/);
   assert.match(worlds, /action === 'retry'\) return retryFlight\(\{ paused: true \}\)/);
+  assert.match(worlds, /gameplay: \[settingLabel\('flight-mode'\)\]/);
+  assert.match(worlds, /doc\.documentElement\.lang = locale/);
+  assert.match(academy, /doc\.documentElement\.lang = locale/);
+  assert.match(shell, /settings: 'Налаштування'/);
+  const gymCopy = await read('optional-practice/civilian-flight/copy.mjs');
+  assert.match(gymCopy, /position: 'Положення'/);
+  assert.match(gymCopy, /height: 'Висота'/);
+  assert.match(gymCopy, /heading: 'Курс'/);
+  const fpvCopy = await read('optional-practice/civilian-fpv/copy.mjs');
+  assert.match(fpvCopy, /altitude: 'Висота'/);
+  assert.match(fpvCopy, /speed: 'Швидкість'/);
   const practice = await read('optional-practice/civilian-fpv/flight-fullscreen.mjs');
   assert.match(practice, /button.dataset.practiceAction = action/);
+  assert.match(practice, /retry: uk \? 'Ще раз' : 'Retry'/);
 });
 
 test('bad frozen envelope fails before browser launch and retains honest receipt', async () => {
@@ -216,6 +562,39 @@ test('bad frozen envelope fails before browser launch and retains honest receipt
       }),
       /EEXIST/,
     );
+  } finally {
+    await rm(work, { recursive: true, force: true });
+  }
+});
+
+test('Gym failure receipt has its own format and snapshots both exercise authorities without claiming completion', async () => {
+  const work = await mkdtemp(path.join(tmpdir(), 'gym-exercise-admission-unit-'));
+  try {
+    const exercise = {
+      ...plan(),
+      format: 'revealline-practice-gym-exercise-plan.v1',
+      protocol: GYM_EXERCISE_PROTOCOL.id,
+      cases: GYM_EXERCISE_CASES.map((c) => c.id),
+    };
+    await writeFile(path.join(work, 'plan.json'), JSON.stringify(exercise));
+    await writeFile(path.join(work, 'optional-packages.json'), '{}');
+    const output = path.join(work, 'evidence');
+    const report = await observePracticeFirstFlight({
+      planFile: path.join(work, 'plan.json'),
+      playwrightModule: '/unused',
+      output,
+    });
+    assert.equal(report.format, 'PracticeGymExerciseObservation.v1');
+    assert.equal(report.protocol.id, GYM_EXERCISE_PROTOCOL.id);
+    assert.equal(report.completed, false);
+    assert.equal(report.qualified, false);
+    assert.equal(report.cases.length, 0);
+    assert.equal(report.authority.length, 10);
+    assert.match(report.failure, /Envelope differs/);
+    for (const item of report.authority.slice(-2)) {
+      const bytes = await readFile(path.join(output, 'authority', path.basename(item.path)));
+      assert.equal(createHash('sha256').update(bytes).digest('hex'), item.sha256);
+    }
   } finally {
     await rm(work, { recursive: true, force: true });
   }
