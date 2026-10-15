@@ -13,9 +13,9 @@ revisions require their own measurements; this is not a capacity reservation.
 
 The historical checkpoint sections below retain their original verification
 boundaries. Their then-pending production execution is now complete; durable
-recovery and capacity reduction are not.
+recovery was subsequently verified as recorded below; capacity reduction is not.
 
-The next isolated branch starts from refreshed main
+The recovery checkpoint's isolated branch started from refreshed main
 `d452bda9e22acf705751f11584cdcd5b0a0d4640`. It adds a manual, main-only recovery
 workflow, separate from production deployment and Flight package publication.
 It requires a successful source-bound main publication with successful build,
@@ -29,8 +29,8 @@ the latest game release. Existing releases are never overwritten.
 This checkpoint does not change repository-wide release immutability. A
 checksum-verified durable release is not a claim of GitHub-enforced immutability,
 browser gameplay qualification or an executed production rollback. The latter
-boundaries remain explicit. Actual runner execution and a representative startup
-rehearsal must be recorded before any Pages removal.
+boundaries remain explicit. Actual runner execution and representative startup
+are recorded below. Production rollback execution remains separate.
 
 After recovery acceptance, add a parent-first pending-PR capacity forecast and
 review consumer-proven download-only reductions. First reach a measured 950 MB
@@ -165,5 +165,66 @@ size, rollback readiness or capacity savings are claimed.
 5. Only then review a separately gated production rollback procedure and the
    first consumer-proven download-only reduction batch.
 
-Until these steps are verified, recovery remains pending. A checksum receipt is
-not a durable backup, and a source rebuild is not an exact-artifact restoration.
+A checksum receipt alone is not a durable backup, and a source rebuild is not an
+exact-artifact restoration. See the subsequent execution record below.
+
+## Recovery execution record — 2026-10-16
+
+PR #1522 merged as `4bb1cde4028509ff3c084a7306f9a383d674cb27`.
+Recovery workflow run `38815404958` successfully preserved publication run
+`38809373274`, source `836263fa3926bd23a68d67892829203f9931935c`.
+The separate, published, non-latest recovery release is:
+<https://github.com/mekhovov/revealline/releases/tag/pages-recovery-836263fa3926bd23a68d67892829203f9931935c>.
+Its tag was independently resolved to that source. This is checksum-verified
+durable preservation, not GitHub-enforced release immutability.
+
+- Runner restoration verified all 3,423 files byte-for-byte in a fresh directory;
+  the workflow redownloaded and verified all published assets before acceptance.
+- A separate public download of the complete 966,225,920-byte archive matched
+  SHA-256 `76fc76b57176395791a86dbe794f879ef15cff939f25b6bc0fec4025cf1c2ad1`.
+- Representative browser startup used a read-only localhost server serving the
+  exact verified archive. Every response was checked against its inventoried
+  size/hash. Normal authentication, main menu, 240-mission chooser, settings,
+  return navigation and reload passed. No warnings/errors were logged. The
+  network-idle wait timed out; the subsequent ready main-menu state was observed
+  directly, so that wait is not recorded as a passing test.
+- No flight, full gameplay, offline/device qualification, production rollback,
+  cache clearing, save migration or user-settings change is claimed. A second
+  external-drive directory restoration is supplemental and was still running
+  when this record was written; it is not represented as completed.
+
+## Capacity comparison checkpoint and remaining gates
+
+The read-only `scripts/pages-capacity-report.mjs` compares two complete publisher
+inventory/staging/archive receipt packets. It checks their internal identity,
+checksum and arithmetic consistency and reports file-level raw deltas separately
+from measured archive deltas and target headroom. It does not fetch archives,
+reverify archive bodies or GitHub provenance, isolate a PR's contribution, forecast
+a combined queue, qualify gameplay, or authorize a merge/removal/deployment.
+No workflow or capacity limit is changed by this diagnostic foundation.
+
+Production run `38817575550`, source
+`b11745223861c3973ad4bf440cc536198b8e0371`, reports 963,255,988 raw bytes and
+966,236,160 actual archive bytes. Comparison with the preserved source above
+reconciles 55 changed files and +6,968 raw bytes, while archive growth is +10,240
+bytes. Archive headroom is 13,763,840 bytes under 980 MB. The measured gaps are
+16,236,160 bytes to 950 MB and 66,236,160 bytes to 900 MB. This is a dated
+measurement, not a reservation for pending merges or a claim of savings.
+
+Proceed in this order, verifying each checkpoint before advancing:
+
+1. Verify the comparison foundation with malformed-input tests, real receipts,
+   focused-test routing and independent review. Keep its non-admission boundary.
+2. Add exact candidate and parent-first combined-queue archive measurements;
+   record source/base identities and invalidate stale results. Receipt deltas
+   alone cannot prove combined capacity. Existing qualification holds remain.
+3. Produce the consumer/ownership allowlist for each download-only candidate.
+   Reject runtime, editable-copy and offline dependencies. Verify pinned public
+   GitHub downloads and hashes before changing links; preserve Git originals,
+   full self-contained releases and existing application/storage boundaries.
+4. Apply only a small proven batch, verify every affected link/dependency and
+   complete final archive, then deploy and check live behavior before the next.
+   No deletions or savings have yet been made by this plan.
+5. Reach measured 950 MB, then pursue 900 MB operating headroom; only then consider
+   tightening guards. If safe candidates are insufficient, report the gap for a
+   human decision rather than removing shared gameplay or changing origins.

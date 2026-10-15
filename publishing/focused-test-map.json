@@ -230,6 +230,7 @@
         "^scripts/(build-pages|pages-archive|pages-current-entry)\\.mjs$",
         "^scripts/test-pages-(?:capacity|archive)-evidence\\.mjs$",
         "^scripts/(pages-recovery\\.py|test-pages-recovery\\.mjs)$",
+        "^scripts/(?:test-)?pages-capacity-report\\.mjs$",
         "^\\.github/workflows/"
       ],
       "commands": [
@@ -247,6 +248,7 @@
             "scripts/test-pages-capacity-evidence.mjs",
             "scripts/test-pages-archive-evidence.mjs",
             "scripts/test-pages-recovery.mjs",
+            "scripts/test-pages-capacity-report.mjs",
             "publishing/test-policy.test.mjs"
           ]
         }
