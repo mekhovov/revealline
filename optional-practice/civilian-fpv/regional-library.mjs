@@ -127,6 +127,39 @@ export const REGIONAL_LIBRARY_PINS = Object.freeze([
       uk: 'Альпійське високогір’я — пробний гірський світ',
     },
     description: {
+      en: '4.096 × 4.096 km · six starting points · unscored free flight. Braced cable towers and a supported lookout make the station approach easier to read. Keep exploring the open concourse and connected snow and scree routes. Earlier Alpine editions remain available. Wider scenery and route detail are still being refined.',
+      uk: '4,096 × 4,096 км · шість стартових точок · вільний політ без заліку. Вежі канатної дороги з розкосами та підпори оглядового майданчика роблять підхід до станції виразнішим. Досліджуйте відкритий прохід між корпусами та сполучені маршрути серед снігу й осипів. Попередні альпійські версії залишаються доступними. Решта місцевості й деталі маршрутів ще вдосконалюються.',
+    },
+    edition: {
+      en: 'Station approach',
+      uk: 'Підхід до станції',
+    },
+    bytes: 22814245,
+    appearance: {
+      terrain: 'plain',
+      scenery: 'alpine-overlays',
+    },
+    startHeadings: {
+      'glacial-valley': 9000,
+      'switchback-pass': 9000,
+      'snow-saddle': 18000,
+      'summit-station': 9000,
+      'viaduct-gorge': 18000,
+      'reservoir-dam': 18000,
+    },
+    pin: {
+      url: 'https://raw.githubusercontent.com/mekhovov/revealline/ca76af991b127f6ed81434162832a79518add9a8/authoring/fpv-worlds/regions/alpine-highlands/delivery-station-r6/delivery.json',
+      bytes: 115316,
+      sha256: '92b7ed6acb426a04b007006a72536b8178bd0ad59bba7182637e25fd0d4cf804',
+    },
+  },
+  {
+    id: 'alpine-highlands-study',
+    title: {
+      en: 'Alpine Highlands — connected mountain study',
+      uk: 'Альпійське високогір’я — пробний гірський світ',
+    },
+    description: {
       en: '4.096 × 4.096 km · six starting points · unscored free flight. A restrained grey apron distinguishes the station’s open concourse and approaches beneath the quieter timber wings. Explore the same connected snow and scree landscape. Separate material study; earlier editions remain available. Wider scenery and route detail are still being refined.',
       uk: '4,096 × 4,096 км · шість стартових точок · вільний політ без заліку. Стримане сіре покриття вирізняє відкритий прохід між корпусами та підходи до станції з дерев’яним облицюванням. Досліджуйте той самий сполучений ландшафт зі снігом та осипами. Окреме дослідження матеріалів; попередні версії залишаються доступними. Решта місцевості й деталі маршрутів ще вдосконалюються.',
     },
