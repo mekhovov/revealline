@@ -4926,3 +4926,14 @@ its final elapsed acceptance and the queued native source/package views remain
 outstanding. Exact package proof is not public availability. Full-network offline,
 physical controller/device observations, representative final art and remaining
 regional design targets keep the complete roadmap open.
+
+### 15 October — continued large downloads without false cancellation
+
+A focused main-based Library correction replaces the blanket two-minute install
+cutoff with two-minute inactivity detection plus a ten-minute hard ceiling. Exact
+hashes, four-request bounds, atomic commits, saved revisions and all size ceilings
+remain. Existing non-install deadlines are unchanged. The 39-response committed
+Urban inventory verifies across 195 virtual seconds, and the existing five download
+concurrency groups pass. Native UI and exact-package qualification remain pending;
+the separate sustained browser run is uninterrupted. See
+[the scoped receipt](fpv-regional-download-deadline-20261015.md).
