@@ -33,8 +33,8 @@ export const CREATOR_GUIDE_DOCUMENTS = Object.freeze(
     {
       id: 'creator-guide',
       path: 'authoring/community/creator-guide.md',
-      bytes: 14334,
-      sha256: 'ebf2867fc7472766440d105861db13b163c862b0e1cfa436bbed0da559741c64',
+      bytes: 14596,
+      sha256: '81e2a75e2743ce15ecd70b38212092ecdd239c92825be2df03163eacc931c47a',
       titleKey: 'tools:completeWalkthroughAndTroubleshooting',
     },
     {
@@ -68,8 +68,8 @@ export const CREATOR_GUIDE_DOCUMENTS = Object.freeze(
     {
       id: 'delivery',
       path: 'authoring/community/delivery-plan.md',
-      bytes: 29647,
-      sha256: '2e4273e37fb771c6266775fd0ee49b4fab5ac84b151a57eb4ea22f95c0c7b8fd',
+      bytes: 24125,
+      sha256: '8681b9c0893bbb17dd338040337c9df76aa333416d23a10d6a5957663e592ccc',
       titleKey: 'tools:automaticCreationAndCommunityStoreDeliveryPlan',
     },
   ].map((entry) => Object.freeze(entry)),

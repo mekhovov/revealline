@@ -228,11 +228,18 @@ for (const route of COMMUNITY_ROUTES)
     const document = parsed(source);
     assert.equal(
       document.querySelector('script[src="../entry.mjs"]').getAttribute('type'),
-      'module',
+      'application/x-revealline-locked',
     );
     assert.equal(
-      document.querySelector('script').getAttribute('src'),
-      '../../presentation/theme-bootstrap.mjs',
+      document.querySelector('script[src="../entry.mjs"]').getAttribute('data-access-type'),
+      'module',
+    );
+    assert.equal(document.querySelector('script').getAttribute('src'), '../../access-gate.mjs');
+    assert.equal(
+      document
+        .querySelector('script[src="../../presentation/theme-bootstrap.mjs"]')
+        .getAttribute('type'),
+      'application/x-revealline-locked',
     );
     const fallback = new URL(
       document.querySelector('#community-fallback').getAttribute('href'),
