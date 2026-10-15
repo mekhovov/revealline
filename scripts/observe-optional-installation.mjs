@@ -113,6 +113,11 @@ const entries = new Map(),
 let served, context, cdp, report;
 let currentStep = 'staging admitted packages';
 const acquiringResources = { pending: new Set(), errors: [] };
+const coldRelaunchRounds = Number(process.env.OPTIONAL_INSTALLATION_COLD_RELAUNCHES ?? '1');
+assert.ok(
+  Number.isInteger(coldRelaunchRounds) && coldRelaunchRounds >= 1 && coldRelaunchRounds <= 5,
+  'Cold relaunch repetitions must be an integer from one to five.',
+);
 const statusDiagnosticsEnabled = process.env.OPTIONAL_INSTALLATION_DIAGNOSTICS === '1';
 const statusDiagnostics = { events: [], dropped: 0 };
 const diagnosticURL = new URL('./optional-installation-diagnostics.mjs', import.meta.url);
@@ -507,37 +512,42 @@ try {
         }
       }
       await context.setOffline(true);
-      const closedPageCount = await closeAllPages(context);
-      page = await context.newPage();
-      cdp = await context.newCDPSession(page);
-      for (const id of packageIds) {
-        currentStep = `offline window relaunch: ${id}`;
-        await page.goto(url(relativeRoot(id) + 'app/'));
-        const networkUnavailable = await page.evaluate(async () => {
-          try {
-            await globalThis.fetch('/offline-network-probe-unowned-by-any-worker', {
-              cache: 'no-store',
-            });
-            return false;
-          } catch {
-            return true;
-          }
-        });
-        assert.equal(
-          networkUnavailable,
-          true,
-          'An uncached network probe must fail during offline relaunch.',
-        );
-        await page.locator('#open').click();
-        await page.waitForURL((observed) =>
-          matchesLaunchedAppURL(observed, url(entry(id, id === fpv ? priorVersion : version))),
-        );
-        await unlockObservedPage(page, password);
-        await page.locator(OBSERVED_PACKAGES[id].mounted).waitFor();
+      const coldRounds = [];
+      for (let round = 1; round <= coldRelaunchRounds; round++) {
+        const closedPageCount = await closeAllPages(context);
+        page = await context.newPage();
+        cdp = await context.newCDPSession(page);
+        for (const id of packageIds) {
+          currentStep = `offline window relaunch: ${id} (round ${round})`;
+          await page.goto(url(relativeRoot(id) + 'app/'));
+          const networkUnavailable = await page.evaluate(async () => {
+            try {
+              await globalThis.fetch('/offline-network-probe-unowned-by-any-worker', {
+                cache: 'no-store',
+              });
+              return false;
+            } catch {
+              return true;
+            }
+          });
+          assert.equal(
+            networkUnavailable,
+            true,
+            'An uncached network probe must fail during offline relaunch.',
+          );
+          await page.locator('#open').click();
+          await page.waitForURL((observed) =>
+            matchesLaunchedAppURL(observed, url(entry(id, id === fpv ? priorVersion : version))),
+          );
+          await unlockObservedPage(page, password);
+          await page.locator(OBSERVED_PACKAGES[id].mounted).waitFor();
+        }
+        coldRounds.push({ round, closedPageCount, packages: packageIds, passed: true });
       }
       const closedTabsRelaunch = {
         passed: true,
-        closedPageCount,
+        closedPageCount: coldRounds[0].closedPageCount,
+        rounds: coldRounds,
         packages: packageIds,
         networkProbeFailed: true,
       };
@@ -884,7 +894,7 @@ try {
       sourceSha256: diagnosticSha256,
       sourceStable: diagnosticSha256 === sha(await readFile(diagnosticURL)),
       limitation:
-        'Opt-in observer wrappers forward original message/registration calls and capture only offline-status events. Admitted package files are unchanged; API instrumentation can affect scheduling, so this is diagnostic evidence rather than an uninstrumented acceptance run.',
+        'Opt-in observer wrappers forward original message/registration calls and capture bounded status, registration and page lifecycle events, with first-page CDP worker lifecycle/errors. The CDP session detaches when its page closes. Admitted package files are unchanged; API instrumentation can affect scheduling, so this is diagnostic evidence rather than an uninstrumented acceptance run.',
     };
     report.passed &&= report.statusDiagnostics.sourceStable;
   }
