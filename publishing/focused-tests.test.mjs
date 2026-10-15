@@ -33,7 +33,10 @@ test('candidate measurement tooling always selects its security and archive regr
 });
 
 test('capacity comparison tooling selects its regression suite without broad runtime fallback', () => {
-  for (const changed of ['scripts/pages-capacity-report.mjs', 'scripts/test-pages-capacity-report.mjs']) {
+  for (const changed of [
+    'scripts/pages-capacity-report.mjs',
+    'scripts/test-pages-capacity-report.mjs',
+  ]) {
     const plan = focusedTestPlan([changed], manifest);
     assert.deepEqual(plan.unknownRuntime, []);
     const command = plan.commands.find(({ id }) => id === 'publishing-controller');
