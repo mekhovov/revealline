@@ -1,0 +1,27 @@
+{
+  "passed": true,
+  "sourceRevision": "composition-r3",
+  "preservedSurfaces": 88,
+  "addedSolids": 38,
+  "detailSightlines": [
+    "Shelter interior",
+    "Gallery interior"
+  ],
+  "structures": [
+    {
+      "id": "survey-shelter",
+      "attachedRibs": 3,
+      "attachedStringers": 2,
+      "groundedCabinets": 2
+    },
+    {
+      "id": "service-gallery",
+      "attachedRibs": 3,
+      "attachedStringers": 2,
+      "groundedCabinets": 2
+    }
+  ],
+  "terrainFilesIdentical": 72,
+  "nativeAccepted": false,
+  "playerReady": false
+}
