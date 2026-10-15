@@ -14,8 +14,8 @@ worktree's Git database lives on a mounted network drive. Before opening the PR,
 rebased again without conflicts onto fetched main `4244ece94c25c9e5fb23391e62c3db269a6c999e`.
 [PR #1347](https://github.com/mekhovov/revealline/pull/1347) merged as `d6b0cae9df77688f75992279f8cdc181f4f84bcd`.
 The first Pages run failed its former size guard. A subsequent main publication succeeded:
-public identity `9b416b2c0e27f40cf5adfa3b93a1477382ecef4f` includes the fix. No new immutable
-release or public-site upload journey is claimed. The [browser acceptance record](creator-browser-acceptance-2026-10-15.md)
+public identity `9b416b2c0e27f40cf5adfa3b93a1477382ecef4f` includes the fix. At that checkpoint,
+no new immutable release or public-site intake journey was claimed. The [browser acceptance record](creator-browser-acceptance-2026-10-15.md)
 confirms actual upload, generation, installation, victory playback and separate-origin transfer.
 
 The [follow-up acceptance and correction](creator-follow-up-acceptance-2026-10-15.md) rebased onto
@@ -24,7 +24,8 @@ and exercised a 50 MB video. It found and corrected poster/range/pairing choices
 video reconversion, together with unstable generated layouts during those edits. The corrected
 large video passed cancel/retry, exact-frame/range review, download, installation and Solo completion.
 [PR #1491](https://github.com/mekhovov/revealline/pull/1491) merged. Its first Pages run was
-superseded; deployed-source and public-browser verification remain open.
+superseded; the later public acceptance below now verifies the deployed source and ordinary
+image/video creator journeys.
 
 The [Team and batch acceptance record](creator-team-batch-acceptance-2026-10-15.md) continues from
 main `95703ee32`. It found and corrected a separate Team media binding error that prevented an
@@ -43,6 +44,16 @@ onto mission two on another storage origin, retaining unrelated existing edition
 is not a clean physical browser profile.
 An oversized 24-image campaign also passed explicit 9/9/6 splitting and three actual downloads.
 Every part stayed below 24 MiB, and their manifests retained all 24 missions in order.
+
+The [public creator acceptance](creator-public-acceptance-2026-10-15.md) now verifies the deployed
+creator at rolling main identities `b5b114c81` and `4ed8d0557` (identical creator sources). A public
+twelve-image campaign passed six-family generation, actual download/install, Solo completion,
+Next and unfinished reload. Public video intake retained a custom 1.2-second poster and 0.5–4-second
+range, then passed download/install, a legal win, Replay, range-end pause and Skip with its poster
+unchanged. These are local creation on the public static site, not hosted community submissions.
+The same check exposed a cold-start input window; a source correction keeps intake and editable
+fields disabled until their existing initialization owner is ready. That correction awaits its own
+PR/publication; Team win/Next and the other listed acceptance gaps remain open.
 
 The current `.github/workflows/publish-main-pages.yml` already publishes protected main. Reuse it;
 do not add a second publisher or restore retired archive workflows. The retired Pages playbook is
@@ -113,6 +124,8 @@ container conversion, not native browser decoding or an installed campaign win.
 5. **Static delivery:** submit the verified fix and use the existing main Pages publication path.
    Record the exact deployed source and actual creator behavior when accessible. A hosted build can
    handle distribution qualification without creating another large local artifact.
+   Public image/video creation, download/install, Solo play, continuation and victory controls now
+   passed for the earlier merged fixes. The new cold-start correction still needs publication.
 6. **Public community pilot and operations:** select a backend host, email delivery, test accounts,
    operator and isolated restore target. Run actual two-user publication, interrupted upload,
    moderation and backup restoration together before opening public submissions. No Docker
