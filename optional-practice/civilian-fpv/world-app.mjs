@@ -1024,6 +1024,7 @@ export function mountWorldApp({
     missionLibrary = null,
     missionLaunchGeneration = 0,
     runtimeOfflineFeedback = null,
+    regionalRecoveryControls = null,
     regionalStartControls = null,
     regionalLocationControls = null,
     regionalLocationsStore = null;
@@ -4959,6 +4960,7 @@ export function mountWorldApp({
     const playbackEnded = Boolean(replayProof && finished);
     $('flight-dialog').dataset.flightState = state.status;
     paintText('world-flight-identity', $('flight-title').textContent);
+    paintRegionalPreparation();
     if (current.regional && regionalPreparationIssue && !regionalPreparing)
       paintText('flight-status', txt(regionalPreparationIssue.en, regionalPreparationIssue.uk));
     playShell?.update({
@@ -4970,9 +4972,7 @@ export function mountWorldApp({
             : state.status,
       pauseOpensMenu: Boolean(current?.regional),
       missionName: $('flight-title').textContent,
-      summary: current.regional && regionalPreparationIssue
-        ? txt(regionalPreparationIssue.en, regionalPreparationIssue.uk)
-        : $('flight-menu-brief').textContent,
+      summary: $('flight-menu-brief').textContent,
       canResume: !playbackEnded && ['paused', 'disarmed'].includes(state.status),
       muted: !audio.enabled(),
     });
@@ -5668,6 +5668,7 @@ export function mountWorldApp({
     );
   }
   function refreshFlightMenus() {
+    paintRegionalPreparation();
     cameraControls?.refresh();
     flightSetup?.refresh();
     flightComfort?.refresh();
@@ -5947,6 +5948,19 @@ export function mountWorldApp({
       'Графіку перервано. Відкрийте меню й повторіть політ після її відновлення.',
     );
     if (flight && !disposed) updateHUD(flight.snapshot());
+  }
+  function paintRegionalPreparation() {
+    const controls = regionalRecoveryControls;
+    if (!controls) return;
+    const issue = current?.regional ? regionalPreparationIssue : null;
+    controls.root.hidden = !issue;
+    if (!issue) return;
+    const message = txt(issue.en, issue.uk);
+    if (controls.message.textContent !== message) controls.message.textContent = message;
+    const label = txt('Restart with Performance graphics', 'Перезапустити з графікою «Швидкодія»');
+    if (controls.restart.textContent !== label) controls.restart.textContent = label;
+    controls.restart.hidden = !['graphics-timeout', 'graphics-failed'].includes(issue.kind);
+    controls.restart.disabled = Boolean(regionalPreparing || controls.busy);
   }
   async function prepareRegionalFlight() {
     if (regionalPreparing || !current?.regional || !flight) return regionalPreparing;
@@ -8247,6 +8261,31 @@ export function mountWorldApp({
       $('world-replay-rate').value = String(value);
       $('world-replay-rate').dispatchEvent(new win.Event('change', { bubbles: true }));
     },
+  });
+
+  const regionalRecoveryRoot = el('section'),
+    regionalRecoveryMessage = el('p'),
+    regionalPerformanceRestart = el('button');
+  regionalRecoveryRoot.hidden = true;
+  regionalRecoveryRoot.dataset.regionalRecovery = '';
+  regionalRecoveryMessage.setAttribute('role', 'status');
+  regionalPerformanceRestart.type = 'button';
+  regionalRecoveryRoot.append(regionalRecoveryMessage, regionalPerformanceRestart);
+  playShell.elements.content.pause.prepend(regionalRecoveryRoot);
+  regionalRecoveryControls = { root: regionalRecoveryRoot, message: regionalRecoveryMessage,
+    restart: regionalPerformanceRestart, busy: false };
+  on(regionalPerformanceRestart, 'click', async () => {
+    if (!current?.regional || regionalPreparing || regionalPerformanceRestart.disabled ||
+        !['graphics-timeout', 'graphics-failed'].includes(regionalPreparationIssue?.kind)) return;
+    regionalRecoveryControls.busy = true;
+    paintRegionalPreparation();
+    $('flight-quality').value = 'low';
+    savePreferences();
+    try {
+      await startRegionalFlight(current, { mode: $('flight-mode').value,
+        lessonCamera: $('flight-camera').value, paused: true });
+    } catch (error) { reportError(error); }
+    finally { regionalRecoveryControls.busy = false; paintRegionalPreparation(); }
   });
 
   const extraTools = el('details', undefined, 'mission-library-setup');
