@@ -29,24 +29,33 @@ const campaign = await json('../content/campaign.json'),
 campaign.classRecipes = classRecipes;
 const entry = { campaign, classRecipes };
 const catalog = await json('../demo-data/catalog.json');
+const pressurePack = await json('../content/packs/fpv-arcade-r5.json');
+const pressureEntry = {
+  campaign: { ...pressurePack.campaigns[0], classRecipes: pressurePack.classRecipes },
+  classRecipes: pressurePack.classRecipes,
+};
 
 test('curated complete routes reproduce current Standard tuning without scripted reversal excerpts', async () => {
   const generated = await buildDemoRecordings();
-  assert.equal(generated.length, 10);
-  assert.equal(new Set(generated.map(({ replay }) => replay.level.id)).size, 8);
+  assert.equal(generated.length, 14);
+  assert.equal(new Set(generated.map(({ replay }) => replay.level.id)).size, 12);
   assert.deepEqual(
     catalog.clips,
     generated.map(({ descriptor }) => descriptor),
   );
   for (const { replay, descriptor, metrics } of generated) {
     assert.ok(['won', 'lost'].includes(replay.summary.status));
-    const authored = campaign.levels.find((level) => level.id === replay.level.id);
+    const sourceEntry = descriptor.campaignId === campaign.id ? entry : pressureEntry;
+    const authored = sourceEntry.campaign.levels.find((level) => level.id === replay.level.id);
     assert.deepEqual(
       replay.level,
       applyGameplayTuning(authored, resolveGameplayTuning('standard')),
     );
-    assert.equal(descriptor.identity, demoIdentity(authored, classRecipes));
-    assert.equal(descriptor.recordingIdentity, demoIdentity(replay.level, classRecipes));
+    assert.equal(descriptor.identity, demoIdentity(authored, sourceEntry.classRecipes));
+    assert.equal(
+      descriptor.recordingIdentity,
+      demoIdentity(replay.level, sourceEntry.classRecipes),
+    );
     assert.equal(descriptor.levelRevision, authored.revision);
     const candidates = await Promise.all(
       [descriptor.replayURL, ...descriptor.replayVariants].map((url) => json(`../${url.slice(2)}`)),
@@ -60,12 +69,12 @@ test('curated complete routes reproduce current Standard tuning without scripted
       frozen,
       'At least one independently frozen strict recording must match this runtime.',
     );
-    assert.ok(demoReplayMatchesEntry(replay, entry));
+    assert.ok(demoReplayMatchesEntry(replay, sourceEntry));
     const mistake = descriptor.tags.includes('failure');
     if (mistake) {
       assert.ok(metrics.failures >= 1);
-      assert.ok(replay.ticks / 120 >= 12 && replay.ticks / 120 <= 30);
-      assert.ok(['running', 'lost'].includes(replay.summary.status));
+      assert.ok(replay.ticks / 120 >= 12 && replay.ticks / 120 <= 60);
+      assert.equal(replay.summary.status, 'lost');
       assert.ok(replay.summary.lives < 3);
       assert.ok(descriptor.tags.includes(replay.options.classId));
     } else {
@@ -107,9 +116,7 @@ test('curated complete routes reproduce current Standard tuning without scripted
     assert.equal(player.state.lives, replay.summary.lives);
     if (mistake) {
       assert.equal(events['player.failed'], metrics.failures);
-      assert.ok(
-        metrics.fullLoss ? player.state.status === 'lost' : player.state.status === 'running',
-      );
+      assert.equal(player.state.status, 'lost', 'A loss performance ends only at a real defeat.');
     } else {
       assert.equal(events['player.failed'] ?? 0, 0);
       assert.ok(events['cut.closed'] >= 3);
@@ -215,7 +222,7 @@ test('frozen browser variants preserve the exact reviewed trace and every non-en
 });
 
 test('catalogue admits only matching installed content and local bundled replay URLs', async () => {
-  assert.equal(resolveDemoCatalog(catalog, [entry]).length, 10);
+  assert.equal(resolveDemoCatalog(catalog, [entry]).length, 12);
   assert.equal(resolveDemoCatalog(catalog, []).length, 0);
   const changed = structuredClone(entry);
   changed.campaign.levels[0].rules.moveSpeed++;
