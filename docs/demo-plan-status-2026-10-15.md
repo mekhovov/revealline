@@ -4,7 +4,7 @@ This is the current implementation review, following the [historical plan](demo-
 
 ## Implemented in this follow-up
 
-- Rebased the task onto main `da0b0108206a0270b4b870e747f2d1bc0e6695cb` without conflicts. The old task branch had no unique commits; the follow-up uses `codex/demo-acceptance-followup-20261015`.
+- Rebased the task onto main `da0b0108206a0270b4b870e747f2d1bc0e6695cb` without conflicts. A final conflict-free rebase also incorporated main `2f5e3ee978eeecaad823e1b2d0ac914f1bc8b1c6`; all 95 files sampled by the availability audit stayed unchanged. The old task branch had no unique commits; the follow-up uses `codex/demo-acceptance-followup-20261015`.
 - Added occasional guide reactions to actual recovery captures, shield absorption and captured objectives. New teaching tips have priority. Reactions wait at most eight seconds, display for six seconds, have a 24-second cooldown and appear at most twice per scene. Hidden/catch-up events do not accumulate personality. The existing shared character-reaction preference disables them; reduced effects keep the portrait still. No voice or new sound is added.
 - A genuine loss recap reports captured percentage and invites the viewer to try a route through the existing play choice. Practice remains explicitly non-awarding.
 - A missing or network-unavailable primary recording now tries its pinned alternatives. Identity violations, invalid data, cancellation and loading deadlines still fail closed. No remote content is installed and no verification check is weakened.
@@ -19,6 +19,10 @@ The baseline audit found **42 source/selection-policy cases, 26 verified and 16 
 All ten existing authored recordings verified. The twelve live cases timed out at the unchanged one-second watchdog. Last Light exceeded the 15-second preparation deadline and Supply Circuit could not generate a complete performance under either policy. A separate, non-qualifying diagnostic measured about 1.19 seconds of cold Worker startup and 5.13 seconds for the first plan on this host. A main-thread profile measured about 1.50 seconds for the same plan; these are different execution conditions, not interchangeable benchmarks or mobile measurements.
 
 Bounded offline route authoring also showed why safety/progress evidence is insufficient: Orchard seed 1 and seed 3 stopped safely before winning; seed 2 completed. Courtyard seed 1 completed. Only the two complete Pressure Lines performances were added. Further bounded authoring then produced complete Last Light and Supply Circuit losses: useful captures precede actual hazard contacts, with no exposed reversals or scripted damage. Earlier failures are retained. No watchdog or simulation budget was increased, no unfinished scene was shortened into a fake result, and no new map was silently declared live-qualified.
+
+The follow-up audit now verifies **40 of 46 source/policy cases**, with usable complete playback for **all 15 base + Pressure Lines maps under both selection policies**. All 14 recordings pass. Six live cases still fail: three immediate-policy routes cannot finish and three grid-center Courtyard preparations hit deadlines. The single accelerated 7,200-second endurance attempt stops on a failed live preparation after 75.075 advanced simulation seconds / 2.31 wall seconds. No source changed and cleanup returned to zero. It is failed evidence, not a two-hour pass.
+
+Journey (103 map entries), DroneAid (42) and Coupa (36) have source inventories, but their playback has not been exercised in this follow-up. Uncached-recording/no-Worker testing verifies only three generated sources. None of those enumeration or resilience results justify “every level works offline.”
 
 ## Remaining work and recommended order
 

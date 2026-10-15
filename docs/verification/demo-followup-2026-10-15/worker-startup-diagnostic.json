@@ -1,0 +1,17 @@
+{
+  "kind": "worker-startup-diagnostic",
+  "qualification": "Single diagnostic without the production watchdog, not qualification or a retry of the failed audit.",
+  "startupMs": 1185.270709,
+  "planningMs": 5132.744959000001,
+  "result": {
+    "ok": true,
+    "metrics": {
+      "examined": 16,
+      "simulatedTicks": 10283,
+      "bends": 2,
+      "ticks": 1080,
+      "gainedCoverage": 0.08703071672354949
+    }
+  },
+  "totalMs": 6463.03075
+}
