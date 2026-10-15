@@ -79,8 +79,33 @@ export const CANAL_CITY_LIBRARY_PIN = Object.freeze({
   },
 });
 
+export const LUNAR_BASIN_LIBRARY_PIN = Object.freeze({
+  id: 'lunar-basin-study',
+  title: { en: 'Lunar Basin — survey routes', uk: 'Місячний басейн — дослідницькі маршрути' },
+  description: {
+    en: '768 × 768 m · six starting points · unscored free flight. Explore a survey shelter, split rocks, winding channel, crater rim, fractured slabs and supported survey dish. Early fictional landscape study with sparse surroundings. Uses the simulator’s Earth flight physics, not Moon gravity.',
+    uk: '768 × 768 м · шість місць старту · вільний політ без заліку. Досліджуйте укриття, розколоті скелі, звивисте русло, край кратера, кам’яні плити й антену на опорах. Раннє дослідження вигаданого ландшафту з малонаповненими околицями. Використовує земну фізику польоту симулятора, а не місячне тяжіння.',
+  },
+  bytes: 1981832,
+  appearance: { terrain: 'lunar-regolith', scenery: 'lunar-survey' },
+  startHeadings: Object.freeze({
+    'mare-apron': 14799,
+    'ejecta-fan': 13685,
+    'sinuous-rille': 14974,
+    'terraced-crater': 15193,
+    'fractured-highland': 14799,
+    'observatory-ridge': 14974,
+  }),
+  pin: {
+    url: 'https://raw.githubusercontent.com/mekhovov/revealline/423f60966ec5dd4946a05ae1ea3c59f4910216ef/authoring/fpv-worlds/regions/lunar-basin/delivery-composition-r2/delivery.json',
+    bytes: 18790,
+    sha256: '1ec74a074029002f6595bb614ac63a2a52a67e1092c6baf1e45480ffdbb7619a',
+  },
+});
+
 // Original, reviewed sources are pinned to an immutable published commit.
 export const REGIONAL_LIBRARY_PINS = Object.freeze([
+  LUNAR_BASIN_LIBRARY_PIN,
   {
     id: 'alpine-highlands-study',
     title: {
@@ -399,6 +424,7 @@ export function applyRegionalAppearance(configuration, identity, pins = REGIONAL
       'tropical-settlement',
       'desert',
       'hillside-town',
+      'lunar-regolith',
     ].includes(terrain)
   )
     throw new TypeError('Unknown trusted regional terrain appearance');
