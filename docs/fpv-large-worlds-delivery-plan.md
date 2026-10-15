@@ -5,6 +5,63 @@ The user selected default catalogue visibility, download on Play, optional offli
 storage, and authored regions first. Generation assists authoring; endless runtime
 terrain is deferred. Twelve proposed regions are design targets, not shipped maps.
 
+## 15 October — corrected Alpine admission and bounded Lunar qualification
+
+This checkpoint supersedes earlier status below. The full roadmap remains **open**.
+Coordinator `codex/fpv-regional-qualification-checkpoint-20261015`, base `d949d8c1`.
+
+- **Canal #1446 and Alpine #1427 are merged.** Alpine's exact `8cfd240f`
+  package passes normal download, corrected Snow/Summit Overview, FPV/Chase,
+  explicit arm/pause, Acro reset and portrait/landscape checks. Both review-r1 and
+  review-r2 remain installed after reload; cached review-r2 Fly prepares disarmed.
+  The ordinary reconciliation merge `c454bc24` preserves all sixteen main rows
+  and both Alpine revisions. Native evidence stays bound to the frozen package,
+  rather than being relabelled as a newer-head observation. See
+  [the Alpine receipt](fpv-alpine-library-exact-native-20261015.json).
+- **Alpine headings #1468 remain a separate follow-up.** Summit's safe spawn
+  initially faces a close wall. The change faces six starts into verified clear
+  corridors and adds distinct edition labels, without changing saved headings,
+  geometry or the old revision. Functional checks pass; fresh exact package/native
+  review is still required.
+- **Reliability #1454 is merged with all checks passing.** Post-commit metadata
+  cancellation preserves saved content. Edition labels #1465 pass five EN/UK
+  native interaction groups and exact package checks; protected publication is
+  finishing. The first isolated native fixture failed because its Window timers
+  had an invalid receiver. Its failed evidence is preserved; a separate adapter
+  using the actual Window passes without changing the production candidate.
+  Neither fixture proves real quota exhaustion or network-wide offline operation.
+- **Lunar's bounded correction gate passes; Library admission remains open.**
+  Source stack #1452 → #1455 → #1460 → #1464 repairs underground cameras and the
+  unsupported dish. The corrected piers meet the shell, the receiver has feed
+  struts, and both terrain/scenery materials compile in Performance, Balanced and
+  Quality native reviews. Exact geometry counts agree and release succeeds.
+  Material #1462 and preview tier-forwarding #1467 remain separately tracked.
+  This is an early sparse study, below the representative art standard. Immutable
+  corrected delivery, exact player package and normal Library admission are next.
+  [Scoped native receipt](fpv-lunar-composition-r2-native-20261015.json).
+- **Authoring preview #1463 is merged.** Legacy `terrain=` now aliases
+  `companion=`; status explicitly distinguishes terrain + scenery from scenery
+  only. Canonical input takes precedence and an invalid canonical URL still fails.
+  This corrects the earlier link problem without rewriting frozen negative views.
+- **Actual two-hour endurance is still pending.** The original strict-focus
+  1,036-second failure remains preserved. Authoring observation #1461 is merged;
+  strict focus stays default, with an explicit visible-commanded policy for this
+  automatic pilot. The native smoke ran 10.0004 real seconds / 500 ticks and
+  released resources; it is not route or endurance acceptance. See
+  [its complete smoke report](fpv-authored-urban-visible-smoke-20261015.json).
+  A fresh two-hour segment began **2026-10-15T14:53:27.762Z** on unchanged
+  `de3656ba` production modules / package `07dd0c1b`, authoring `e565c227`, using
+  the explicit visible-commanded policy. Earliest completion is 16:53:28Z. Do not
+  sum smoke, accelerated, interrupted or imported history into the new result.
+
+**Next priorities:** P1 close exact Library/recovery and fresh elapsed evidence;
+P2 refine one representative pilot-height art slice; P3 admit corrected Lunar as
+an honestly labelled study before starting another region; P4/D6 close real
+network-wide offline, browser restart, physical-device/controller, regression and
+public-launch gates. Independent package and source work continues while the sole
+renderer runs. The internal drive fell to 1.8 GiB, below the stable 3 GiB floor;
+heavy builds/extraction remain external or cloud. Existing budgets are unchanged.
+
 ## 15 October — Canal player admission and preserved endurance interruption
 
 The full roadmap remains **open**. Coordinator:
