@@ -35,6 +35,7 @@ assert.ok(output?.endsWith('.json.gz') && !existsSync(output), 'Choose a fresh g
 const seconds = Number(process.argv.find((arg) => arg.startsWith('--seconds='))?.slice(10) ?? 540);
 assert.ok(Number.isFinite(seconds) && seconds > 0 && seconds <= 720);
 const sourceHashes = hashes();
+const crowdSeparation = process.argv.includes('--local-crowd') ? 'local-v1' : null;
 const mode = createOverflightRiyMode({
   createRun: core.createOverflightRun,
   step: core.stepOverflight,
@@ -46,6 +47,7 @@ const mode = createOverflightRiyMode({
 const compiled = mode.compileProject(
   mode.createProject({
     rulesVersion: 4,
+    crowdSeparation,
     seed: 202604,
     difficulty: 'standard',
     layout: 'relay-ruins-receiver-gardens',
@@ -80,6 +82,8 @@ const report = {
     encoding: 'utf8',
   }).trim(),
   sourceHashes,
+  runtime: { node: process.version, v8: process.versions.v8, arch: process.arch },
+  crowdSeparation,
   endHashes: hashes(),
   projectIdentity: compiled.projectIdentity,
   seed: run.seed,

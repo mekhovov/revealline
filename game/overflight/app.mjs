@@ -299,6 +299,9 @@ const persistOptions = () => {
 let seed = Number(params.get('seed'));
 if (!Number.isSafeInteger(seed) || seed < 1 || seed > 0xffffffff) seed = mode.defaultProject.seed;
 let project = mode.createProject({
+  ...(reviewBuild && mode.id !== 'overflight-hunt' && params.get('reviewCrowd') === 'local'
+    ? { crowdSeparation: 'local-v1' }
+    : {}),
   seed,
   difficulty: options.difficulty,
   ...(params.get('layout') ? { layout: params.get('layout') } : {}),
@@ -1657,6 +1660,7 @@ if (reviewBuild) {
     'reviewRoute',
     'reviewTrace',
     'reviewTraceAt',
+    'reviewCrowd',
     'autoplay',
     'benchmark',
     'trial',

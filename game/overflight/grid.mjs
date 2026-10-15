@@ -13,6 +13,9 @@ export function createOverflightGrid(width, height, capacity, cellSize = 64) {
     counts: new Uint32Array(columns * rows),
     sumX: new Float64Array(columns * rows),
     sumY: new Float64Array(columns * rows),
+    x: new Float64Array(capacity),
+    y: new Float64Array(capacity),
+    maxRadius: 0,
     records: null,
   };
 }
@@ -30,9 +33,13 @@ export function rebuildOverflightGrid(grid, records) {
   grid.counts.fill(0);
   grid.sumX.fill(0);
   grid.sumY.fill(0);
+  grid.maxRadius = 0;
   for (let index = 0; index < records.length; index++) {
     const record = records[index];
     if (!record.active) continue;
+    grid.x[index] = record.x;
+    grid.y[index] = record.y;
+    grid.maxRadius = Math.max(grid.maxRadius, record.radius ?? 0);
     const cell = overflightGridCell(grid, record.x, record.y);
     grid.next[index] = grid.heads[cell];
     grid.heads[cell] = index;
@@ -67,4 +74,55 @@ export function visitOverflightGrid(grid, x, y, radius, visitor) {
     }
   }
   return visited;
+}
+
+/** Smooth local steering from the frozen grid snapshot. Exact damage queries are separate. */
+export function overflightCrowdSeparation(grid, index, maxRadius, output) {
+  output.x = 0;
+  output.y = 0;
+  const source = grid.records?.[index];
+  if (!source?.active) return output;
+  const x = grid.x[index],
+    y = grid.y[index];
+  const range = source.radius + maxRadius + 8;
+  const firstColumn = Math.max(0, Math.floor((x - range) / grid.cellSize));
+  const lastColumn = Math.min(grid.columns - 1, Math.floor((x + range) / grid.cellSize));
+  const firstRow = Math.max(0, Math.floor((y - range) / grid.cellSize));
+  const lastRow = Math.min(grid.rows - 1, Math.floor((y + range) / grid.cellSize));
+  for (let row = firstRow; row <= lastRow; row++) {
+    for (let column = firstColumn; column <= lastColumn; column++) {
+      let otherIndex = grid.heads[row * grid.columns + column];
+      while (otherIndex !== -1) {
+        const other = grid.records[otherIndex];
+        if (otherIndex !== index && other.active) {
+          let dx = x - grid.x[otherIndex],
+            dy = y - grid.y[otherIndex];
+          const cutoff = source.radius + other.radius + 8;
+          const squared = dx * dx + dy * dy;
+          if (squared < cutoff * cutoff) {
+            let distance = Math.sqrt(squared);
+            if (distance < 1e-9) {
+              const low = Math.min(source.id, other.id),
+                high = Math.max(source.id, other.id);
+              const angle = (((low * 73856093) ^ (high * 19349663)) >>> 0) * 0.000001;
+              const sign = source.id < other.id ? 1 : -1;
+              dx = Math.cos(angle) * sign;
+              dy = Math.sin(angle) * sign;
+              distance = 1;
+            }
+            const weight = (1 - Math.sqrt(squared) / cutoff) / distance;
+            output.x += dx * weight;
+            output.y += dy * weight;
+          }
+        }
+        otherIndex = grid.next[otherIndex];
+      }
+    }
+  }
+  const length = Math.hypot(output.x, output.y);
+  if (length > 0.65) {
+    output.x *= 0.65 / length;
+    output.y *= 0.65 / length;
+  }
+  return output;
 }
