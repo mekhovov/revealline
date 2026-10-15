@@ -1,8 +1,9 @@
 import { openWorldStore } from './world-store.mjs';
-import { validateRegionManifest } from './regional/region-manifest.mjs';
+import { validateRegionManifest, REGION_FORMAT, SPARSE_SCENERY_FORMAT } from './regional/region-manifest.mjs';
 
 // Regional installs deliberately use a separate database and format from scored WorldPacks.
 export const REGIONAL_DELIVERY_FORMAT = 'FPVRegionalDelivery.v1';
+export const SPARSE_REGIONAL_DELIVERY_FORMAT = 'FPVRegionalDelivery.v2';
 export const REGIONAL_DELIVERY_LIMITS = Object.freeze({
   descriptorBytes: 1024 * 1024,
   manifestBytes: 8 * 1024 * 1024,
@@ -54,7 +55,7 @@ export function validateRegionalDescriptor(input) {
   const v = JSON.parse(text);
   keys(v, ['format', 'id', 'revision', 'title', 'terrain', 'scenery', 'files', 'totalBytes']);
   assert(
-    v.format === REGIONAL_DELIVERY_FORMAT &&
+    [REGIONAL_DELIVERY_FORMAT, SPARSE_REGIONAL_DELIVERY_FORMAT].includes(v.format) &&
       typeof v.id === 'string' &&
       slug.test(v.id) &&
       typeof v.revision === 'string' &&
@@ -221,6 +222,9 @@ function validatePair(descriptor, blobs) {
     validateRegionManifest(decode(blobs.get(ref.path))),
   );
   const [terrain, scenery] = manifests;
+  assert(terrain.format === REGION_FORMAT, 'Regional terrain profile must be complete');
+  assert(scenery.format === (descriptor.format === SPARSE_REGIONAL_DELIVERY_FORMAT
+    ? SPARSE_SCENERY_FORMAT : REGION_FORMAT), 'Regional delivery does not admit this scenery profile');
   assert(
     terrain.id === scenery.id && terrain.revision === scenery.revision,
     'Regional layer identities do not match',
@@ -303,7 +307,7 @@ export async function openRegionalLibrary({
         project: {
           id: descriptor.id,
           title: descriptor.title.en,
-          format: REGIONAL_DELIVERY_FORMAT,
+          format: descriptor.format,
           descriptor,
           pin: checked.pin,
         },

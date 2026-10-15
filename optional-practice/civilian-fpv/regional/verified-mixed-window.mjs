@@ -5,6 +5,7 @@ import { earlierFlightHit } from "../flight-contact.mjs";
 import { Group } from "../vendor/three.module.js";
 import {
   validateRegionManifest,
+  REGION_FORMAT,
   createRegionPlanner,
 } from "./region-manifest.mjs";
 import {
@@ -81,6 +82,7 @@ export function createVerifiedMixedWindow(
   fail(typeof retainCommitted === "boolean", "Invalid retained-frame option");
   const terrainManifest = validateRegionManifest(terrainInput),
     sceneryManifest = validateRegionManifest(scenery?.manifest);
+  fail(terrainManifest.format === REGION_FORMAT, 'Mixed terrain needs the complete terrain profile');
   fail(
     terrainManifest.id === sceneryManifest.id &&
       terrainManifest.revision === sceneryManifest.revision,
