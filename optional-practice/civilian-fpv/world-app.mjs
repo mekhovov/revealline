@@ -4959,6 +4959,8 @@ export function mountWorldApp({
     const playbackEnded = Boolean(replayProof && finished);
     $('flight-dialog').dataset.flightState = state.status;
     paintText('world-flight-identity', $('flight-title').textContent);
+    if (current.regional && regionalPreparationIssue && !regionalPreparing)
+      paintText('flight-status', txt(regionalPreparationIssue.en, regionalPreparationIssue.uk));
     playShell?.update({
       phase:
         terminal(state) || playbackEnded
