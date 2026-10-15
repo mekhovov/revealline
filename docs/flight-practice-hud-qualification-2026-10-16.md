@@ -61,6 +61,25 @@ removed. The later bilingual guide additions at `6537c541f` are **not** inside
 this native-tested candidate. Reproduce/admit the final guide-inclusive source
 separately; do not relabel older browser receipts as that candidate's evidence.
 
+The final guide-inclusive all-three bundle has now also passed two reproducible
+builds, committed-input verification and original runtime/source archive admission.
+It is frozen at `80a32d6a9014cd78f326b2d7685fbbbdf2b6b06c`, tree
+`b4de309b044638ecb7460f8f8cb69b25af970301`, at
+`/Volumes/alex/CodexMigrationStaging/flight-practice-hud-guides-all-three-20261016-candidate`.
+Its [envelope](flight-practice-hud-qualification-20261016/final-guide-envelope.json)
+SHA-256 is `f59ed9eb8d6b934edf1256efdbf849e1270a2d6a2119b9437306176acc9dd6d9`;
+the [original receipt](flight-practice-hud-qualification-20261016/final-guide-verification.json)
+retains 94 / 101 / 162 admitted files and `publicEligible: false`. Against the
+native-tested candidate, each app's explicit input set differs only in its own
+`guide.html`; no input was added or removed. This is artifact evidence, not a
+fresh native browser or complete-build/hosting qualification.
+
+An earlier guide-bundle attempt was rejected by the existing clean-source guard
+after evidence files were added. Its log is retained. The successful build ran
+after committing that evidence; the guard was not weakened. A separate default
+Gym-only bundle is not used as all-three evidence. All immutable outputs remain
+on the external drive; earlier candidates were not overwritten.
+
 ## Correction to historical movement claims
 
 The historical ten-case player-flow observer read old FPV telemetry nodes using
