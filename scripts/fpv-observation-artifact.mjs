@@ -79,7 +79,14 @@ export function validateFPVObservationPlan(input, kind) {
 
 /** Reuse release admission for every original envelope member, including source
  * archives and inventories. Extract only the selected runtime; this never grants publication. */
-export async function loadFPVObservationArtifact(input, { base = process.cwd() } = {}) {
+export async function loadFPVObservationArtifact(
+  input,
+  { base = process.cwd(), packageId = 'civilian-fpv' } = {},
+) {
+  assert(
+    ['civilian-fpv', 'civilian-flight', 'fpv-worlds'].includes(packageId),
+    'Observation requires a registered practice application.',
+  );
   const plan = validateFPVArtifactBinding(input);
   const root = await realpath(path.resolve(base, plan.bundle));
   const read = async (name, limit) => {
@@ -105,9 +112,9 @@ export async function loadFPVObservationArtifact(input, { base = process.cwd() }
       return originals.get(descriptor.path);
     },
   });
-  const selected = envelope.packages.find((item) => item.id === 'civilian-fpv');
+  const selected = envelope.packages.find((item) => item.id === packageId);
   if (!selected || selected.revision !== plan.packageRevision)
-    throw new Error('The exact civilian-fpv package is absent.');
+    throw new Error(`The exact ${packageId} package is absent.`);
   const files = readEditionZip(originals.get(selected.distribution.path));
   return {
     files,
