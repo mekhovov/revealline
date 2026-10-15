@@ -6,8 +6,8 @@ export const REGIONAL_LIBRARY_PINS = Object.freeze([
   {
     id: 'tropical-coastal-study',
     title: {
-      en: 'Tropical coast — regional preview',
-      uk: 'Тропічне узбережжя — огляд регіону',
+      en: 'Tropical coast — bounded flight study',
+      uk: 'Тропічне узбережжя — дослідження польоту',
     },
     description: {
       en: '384 × 384 m · two piers, a stilt hut, palms and dunes · unscored free flight. Practise open bays, low passes and a shoreline circuit. Early coastal preview; visual water only.',
