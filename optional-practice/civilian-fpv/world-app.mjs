@@ -4740,6 +4740,12 @@ export function mountWorldApp({
       );
       controls.select.replaceChildren();
       const names = {
+        'covered-harbour': ['Covered harbour', 'Крита гавань'],
+        'lagoon-piers': ['Lagoon piers', 'Пірси лагуни'],
+        'reef-rocks': ['Reef rocks', 'Прибережні скелі'],
+        'palm-valley': ['Palm valley', 'Пальмова долина'],
+        'hillside-huts': ['Hillside huts', 'Хатини на схилі'],
+        'bamboo-grove': ['Bamboo grove', 'Бамбуковий гай'],
         'braided-basin': ['Braided basin', 'Розгалужена улоговина'],
         'high-mesa': ['High mesa', 'Високе плато'],
         'red-escarpment': ['Red escarpment', 'Червоний уступ'],
