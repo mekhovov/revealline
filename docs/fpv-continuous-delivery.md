@@ -4867,3 +4867,37 @@ authoring overview-cell correction proceed independently of the art stack queue.
 No budgets, physics, old recordings or installed revisions are changed by this
 checkpoint. All-network offline, real elapsed long flights, physical controller/device
 coverage and final public deployment acceptance remain open.
+
+## 15 October — bounded parallel delivery and coastal composition
+
+Coordinator branch `codex/fpv-regional-checkpoint-20261015-c` starts from protected
+main `a046fd67944867b451033ff4471c51ac8faa6bcb`. Sparse contract #1341, saved-place
+package receipt #1342, elapsed-time authoring tool #1348, concurrent downloads #1352
+and native elapsed receipt #1355 are merged. The root checkout is clean before
+this documentation increment; unrelated primary edits remain untouched.
+
+#1352 exact head `a07c0a9c36e2e0af4cda3a5a53a45573ba2712e8` passed five downloader
+functional groups, seven sparse scenarios and real IndexedDB replacement/reload
+checks. The frozen 8 km Canyon inventory passes all 2,050 payloads and their hashes
+with at most four concurrent reads. Its package workflow remains queued. No network
+speed comparison, public deployment or full offline claim follows from that result.
+
+#1339 retains readable graphics-timeout recovery through Pause, with explicit
+Performance restart returning disarmed; native EN/UK source checks passed. Its
+exact package and separate sparse receipt #1353 continue independently. #1328
+Tropical Library requires reconciliation with concurrent main changes; retain both
+remote work and exact frozen qualification evidence. No manual native-stack retarget.
+
+Coastal composition #1349 and immutable source #1357 form dependent publication
+work; distinct ground presentation #1354 is independent. Source comparisons at
+Balanced street, Quality shoreline and Performance courtyard preserve flight
+openings, and explicit disposal leaves zero owned resources and colliders. These
+are bounded visual improvements; broader density and final water/art quality remain
+open. The 8.192 km Canyon source #1338 has separate immutable delivery and Library
+admission still in progress. Preserve old Canyon entries and saved revisions.
+
+Actual elapsed verification now distinguishes an accepted final ten-second run from
+a stopped 57.35-second segment and an earlier rejected frame gap. None is a two-hour
+pass. Heavy artifacts stay external/cloud; latest free-space observation is 7.0 GiB
+locally and 183 GiB externally, without deletion of player data or unpublished work.
+The complete roadmap, full-network offline and physical-device acceptance remain open.

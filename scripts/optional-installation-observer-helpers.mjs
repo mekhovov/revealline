@@ -211,3 +211,21 @@ export async function closeAllPages(context) {
     throw new Error('Offline relaunch requires zero surviving pages.');
   return pages.length;
 }
+
+// Persistent-context close shuts down its owned browser, not just its pages.
+// Require the close event before the caller may relaunch the same disk profile.
+export async function closeBrowserForRestart(context) {
+  const closedPageCount = await closeAllPages(context);
+  let contextClosed = false;
+  const onClose = () => {
+    contextClosed = true;
+  };
+  context.once('close', onClose);
+  try {
+    await boundedOperation('Close persistent browser for offline restart', () => context.close());
+    if (!contextClosed) throw new Error('Persistent browser did not confirm closure.');
+  } finally {
+    context.off('close', onClose);
+  }
+  return { closedPageCount, contextClosed };
+}

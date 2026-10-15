@@ -1,0 +1,19 @@
+{
+  "format": "revealline.local-package-verification.v1",
+  "verifiedAt": "2026-10-15T05:03:04.546880+00:00",
+  "sourceRevision": "2a29a9dcfe7c61333c68dd80676205e67809e56c",
+  "version": "0.151.1",
+  "scope": "Complete local browser distribution archive; not an immutable published release or native app capacity qualification.",
+  "manifest": {
+    "files": 3343,
+    "totalBytes": 1038716092,
+    "sha256": "5eba7eb88f58cdd289e63ecd805d869cf60e15f600ff8f49e14de02f5ab72cfc"
+  },
+  "archive": {
+    "bytes": 1039780080,
+    "sha256": "dfd07078fceeb2d376a14e8c27a8891977a043cc071da61357f3bb4020ad32bd",
+    "uniqueMembers": 3344,
+    "allMemberCRCsAndManifestDigestsVerified": true
+  },
+  "passed": true
+}

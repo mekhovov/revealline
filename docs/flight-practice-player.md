@@ -6,6 +6,8 @@
 
 Open **Help & Extras → Flight practice**. Choose **Play** to open the app directly in a new tab, or **Details & guide** for requirements, support, offline preparation and help. There are no unlocks. Practice never grants campaign wins. The existing **FPV flight simulator** shortcut is unchanged.
 
+There are no campaign prerequisites. A host may still require its site password before opening an app or guide; use the access provided by the site owner. Do not include that password in screenshots or support reports.
+
 | App                 | Start here                                                                                                                                                                               |
 | ------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Civilian flight gym | Assisted movement/orientation. Use **Start** for the selected drill, or **Select Mission** to choose **Lift and return**. Keyboard, touch buttons or standard gamepad; a simple 2D view. |
@@ -21,7 +23,7 @@ Use **Settings → Controls** and each app’s maintained Flight guide for exact
 - **Keyboard:** select Keyboard, focus the flight view and use the displayed controls.
 - **Touch:** select Touch · Mode 2 in the FPV apps and use their visible sticks. Releasing a stick is not a pause command. Gym uses held touch buttons.
 - **Controller / Steam Deck:** select this separate FPV input option, connect a supported standard controller, centre the sticks and release its buttons before arming. Gym has its own standard-gamepad selection. A standard gamepad does not need USB-radio calibration.
-- **USB radio:** open **Radio & response**, complete its guided calibration and direction checks, then follow the arming prompt. Device/browser support varies; see the SIM-owned [radio setup guide](fpv-radio-guided-actions.md) for the maintained setup and backup workflow.
+- **USB radio:** open **Settings → Controls → Radio setup**, complete its guided calibration and direction checks, then follow the arming prompt. Device/browser support varies; see the SIM-owned [radio setup guide](fpv-radio-guided-actions.md) for the maintained setup and backup workflow.
 
 Start or arm explicitly and follow the on-screen target. Use the selected lesson’s flight mode: World Studio includes guided Acro lessons and optional self-level lessons. Self-level assists leveling; Acro does not automatically return to level. Both FPV modes use manual throttle and neither holds altitude or position. The SIM-owned [flight-response guide](fpv-shared-flight-guide.md) explains the live teaching display.
 
@@ -53,6 +55,7 @@ Apps own separate caches but share this origin’s quota with other games on the
 
 - **Empty catalogue:** no reviewed packages have been selected for the host. Use the existing FPV shortcut and guide in the main game.
 - **Request failed:** retry. A dated cached catalogue is not a fresh availability check.
+- **Offline verification could not finish:** choose **Check available practice** again. This is not proof that files are missing; keep the saved copy while verification is incomplete. Previously verified actions can remain available. Use removal/re-download only when the launcher reports **Needs repair**, not just an unfinished check.
 - **Unavailable version:** retry online or open a verified prepared version. A retired online version may no longer be hosted.
 - **Blank 3D view:** check WebGL2/hardware acceleration or try Gym. Report browser/device, package version and error through **Support / report a problem**, without private recordings.
 
