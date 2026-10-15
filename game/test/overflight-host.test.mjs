@@ -122,6 +122,10 @@ test('completed-frame trials include explicitly requested native Survivor and Ri
         trial,
         protocol: { warmupSeconds: 30, measurementSeconds: 120, repetitions: 1, stopAtEnd: true },
       });
+      assert.equal(
+        evaluate(id, `benchmark=1&trial=${trial}&measureAt=160`, 'fan-shield').protocol.measureAt,
+        160,
+      );
     }
     assert.equal(evaluate(id, 'trial=1', 'fan-shield').trial, null);
     assert.equal(evaluate(id, 'benchmark=1&trial=unrecognized', 'fan-shield').trial, null);
@@ -130,6 +134,14 @@ test('completed-frame trials include explicitly requested native Survivor and Ri
   assert.equal(evaluate('overflight-riy', 'benchmark=1&trial=1').trial, null);
   assert.equal(evaluate('overflight-hunt', 'benchmark=1&trial=1').trial, '1');
   assert.equal(evaluate('overflight', 'trial=2', null, 'reference').trial, '2');
+  for (const args of [
+    ['overflight', 'benchmark=1&trial=1&measureAt=160', 'fan-shield', 'reference'],
+    ['overflight-hunt', 'benchmark=1&trial=1&measureAt=160'],
+    ['overflight-riy', 'benchmark=1&trial=soak&measureAt=160', 'fan-shield'],
+    ['overflight-riy', 'benchmark=1&trial=1&measureAt=361', 'fan-shield'],
+  ]) {
+    assert.equal(Object.hasOwn(evaluate(...args).protocol, 'measureAt'), false);
+  }
   assert.equal(
     evaluate('overflight-riy', 'benchmark=1&trial=soak', 'fan-shield').protocol.measurementSeconds,
     900,

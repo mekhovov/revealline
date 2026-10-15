@@ -122,6 +122,129 @@ test('warning charge follows actual remaining time, ignores active ground patche
   assert.equal(calls.filter(([cue]) => cue === 'warning-charge').length, 3);
 });
 
+test('audible warning charge wins over a more advanced distant attack in either pool order', () => {
+  for (const distantFirst of [false, true]) {
+    const calls = [],
+      audio = createOverflightWorldAudio({ encounter: (...args) => calls.push(args) }),
+      state = run(),
+      near = { active: true, owner: 1, stage: 'warning', remaining: 1, x: 100, y: 0 },
+      far = { active: true, owner: 2, stage: 'warning', remaining: 1, x: 1000, y: 0 };
+    delete state.compiled.presentation;
+    state.priorityAttacks = distantFirst ? [far, near] : [near, far];
+    audio.update(state);
+    near.remaining = 0.45;
+    far.remaining = 0.15;
+    audio.update(state);
+    assert.equal(calls.length, 1);
+    assert.equal(calls[0][0], 'warning-charge');
+    assert.equal(calls[0][1].audible, true);
+    assert.equal(calls[0][1].pan, 100 / 480);
+    assert.equal(calls[0][1].progress, 0.55);
+    audio.update(state);
+    assert.equal(calls.length, 1, 'neither passed warning rung is queued for replay');
+  }
+});
+
+test('two local warning rungs produce only the most urgent cue without delayed backlog', () => {
+  const calls = [],
+    audio = createOverflightWorldAudio({ encounter: (...args) => calls.push(args) }),
+    state = run(),
+    first = { active: true, owner: 1, stage: 'warning', remaining: 1, x: 100, y: 0 },
+    second = { active: true, owner: 2, stage: 'warning', remaining: 1, x: -100, y: 0 };
+  state.priorityAttacks = [first, second];
+  audio.update(state);
+  first.remaining = 0.45;
+  second.remaining = 0.15;
+  audio.update(state);
+  assert.equal(calls.length, 1);
+  assert.equal(calls[0][1].pan, -100 / 480);
+  assert.equal(calls[0][1].progress, 0.85);
+  state.time = 0.3;
+  audio.update(state);
+  assert.equal(calls.length, 1);
+  first.remaining = 0.15;
+  audio.update(state);
+  assert.equal(calls.length, 2, 'a newly crossed rung remains eligible');
+  assert.equal(calls[1][1].pan, 100 / 480);
+});
+
+test('leaving warning range releases local ambience and escort feedback without replay on return', () => {
+  const calls = [],
+    audio = createOverflightWorldAudio({ encounter: (...args) => calls.push(args) }),
+    state = run(),
+    attack = { active: true, owner: 1, stage: 'warning', remaining: 1, x: 100, y: 0 };
+  state.priorityAttacks = [attack];
+  state.riy = { escorts: [{ role: 'breaker', shots: 0, x: 0, y: 0 }] };
+  audio.update(state);
+  state.player.x = 800;
+  state.riy.escorts[0].x = 800;
+  state.riy.escorts[0].shots++;
+  state.time = 0.8;
+  attack.remaining = 0.45;
+  audio.update(state);
+  assert.deepEqual(
+    calls.map(([cue]) => cue),
+    ['escort-shot', 'ambience'],
+  );
+  state.player.x = 0;
+  state.riy.escorts[0].x = 0;
+  audio.update(state);
+  assert.equal(calls.length, 2, 'returning does not replay the rung crossed out of range');
+  attack.remaining = 0.15;
+  audio.update(state);
+  assert.equal(calls.at(-1)[0], 'warning-charge');
+});
+
+test('inaudible foreground events do not consume nearby charge, escort or ambience opportunities', () => {
+  for (const type of ['warning', 'arrival', 'armor-break']) {
+    const calls = [],
+      audio = createOverflightAudio({ encounter: (...args) => calls.push(args) }),
+      state = run(),
+      attack = { active: true, owner: 1, stage: 'warning', remaining: 1, x: 100, y: 0 };
+    state.priorityAttacks = [attack];
+    state.riy = { escorts: [{ role: 'breaker', shots: 0, x: 0, y: 0 }] };
+    audio.update(state);
+    state.tick++;
+    state.time = 0.6;
+    state.events = [{ type, x: 1000, y: 0 }];
+    attack.remaining = 0.45;
+    audio.update(state);
+    assert.ok(calls.some(([cue, details]) => cue === 'warning-charge' && details.audible));
+    attack.active = false;
+    state.tick++;
+    state.time = 1.4;
+    state.riy.escorts[0].shots++;
+    audio.update(state);
+    assert.ok(calls.some(([cue]) => cue === 'escort-shot'));
+    assert.ok(calls.some(([cue]) => cue === 'ambience'));
+  }
+});
+
+test('local foreground damage suppresses a charge rung without a stale cue after it clears', () => {
+  const calls = [],
+    audio = createOverflightAudio({ encounter: (...args) => calls.push(args) }),
+    state = run(),
+    attack = { active: true, owner: 1, stage: 'warning', remaining: 1, x: 100, y: 0 };
+  state.priorityAttacks = [attack];
+  audio.update(state);
+  state.tick++;
+  attack.remaining = 0.45;
+  state.events = [{ type: 'damage' }];
+  audio.update(state);
+  assert.deepEqual(
+    calls.map(([cue]) => cue),
+    ['impact'],
+  );
+  state.tick++;
+  state.events = [];
+  audio.update(state);
+  assert.equal(calls.length, 1);
+  state.tick++;
+  attack.remaining = 0.15;
+  audio.update(state);
+  assert.equal(calls.at(-1)[0], 'warning-charge');
+});
+
 test('squad shots are distinct but share a cadence cap and cannot backlog through warnings', () => {
   const calls = [];
   const audio = createOverflightWorldAudio({
