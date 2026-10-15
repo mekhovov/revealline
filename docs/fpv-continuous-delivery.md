@@ -4947,3 +4947,20 @@ match their qualified archive; four harness files match their revision. The raw
 report, bounded minute/tail samples and independent closure receipts are retained.
 This closes the elapsed synthetic-corridor case only, not all-region or physical-
 device performance. See [the full receipt](fpv-elapsed-two-hour-20261015.md).
+
+
+### 15 October — native admission and preserved negative reviews
+
+Main7de653d8 includes the merged regional deadline correction1381 and elapsed
+receipt1385. Native normal-package launch/restart and Coastal saved download,
+cameras, mode/start changes, reload and portrait checks pass on their frozen
+candidates. The earlier Canyon package reproduces its old fixed120s cancellation;
+a fresh latest-main package is required. Standalone Library branches1362/1368
+are reconciled normally with recovery refs, preserving all existing rows.
+
+Hillside town-r2 passes bounded structural appearance/reload/disposal, including
+the repaired road. A reverse review-camera mistake was corrected without changing
+source and its negative is preserved. Coaster r3's unsupported loop and sparse
+park composition require refinement; its source, delivery and Library remain
+preserved drafts. See `fpv-native-regional-admission-20261015.md`. These checks do
+not close final art, physical devices, full-network offline or the whole roadmap.
