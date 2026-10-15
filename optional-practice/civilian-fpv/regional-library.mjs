@@ -112,6 +112,39 @@ export const REGIONAL_LIBRARY_PINS = Object.freeze([
       uk: 'Альпійське високогір’я — пробний гірський світ',
     },
     description: {
+      en: '4.096 × 4.096 km · six starting points · unscored free flight. Wider, softer timber seams make the summit station less visually busy. Explore the same connected snow and scree landscape. A separate material study; previous Alpine editions remain available. Wider scenery and route detail are still being refined.',
+      uk: '4,096 × 4,096 км · шість стартових точок · вільний політ без заліку. Ширші й м’якші шви дерев’яного облицювання зменшують візуальний шум на верхній станції. Досліджуйте той самий сполучений ландшафт зі снігом та осипами. Окреме дослідження матеріалів; попередні альпійські версії залишаються доступними. Решта місцевості й деталі маршрутів ще вдосконалюються.',
+    },
+    edition: {
+      en: 'Quieter station surfaces',
+      uk: 'Стриманіші поверхні станції',
+    },
+    bytes: 22694120,
+    appearance: {
+      terrain: 'plain',
+      scenery: 'alpine-overlays',
+    },
+    startHeadings: {
+      'glacial-valley': 9000,
+      'switchback-pass': 9000,
+      'snow-saddle': 18000,
+      'summit-station': 9000,
+      'viaduct-gorge': 18000,
+      'reservoir-dam': 18000,
+    },
+    pin: {
+      url: 'https://raw.githubusercontent.com/mekhovov/revealline/02f2b140d06cc930d8d4dd6b01abcd860db75436/authoring/fpv-worlds/regions/alpine-highlands/delivery-station-r4/delivery.json',
+      bytes: 115316,
+      sha256: '0096934874cb5ad3a8355471242aadbb92a660607d3c04481f6b06eb0937062f',
+    },
+  },
+  {
+    id: 'alpine-highlands-study',
+    title: {
+      en: 'Alpine Highlands — connected mountain study',
+      uk: 'Альпійське високогір’я — пробний гірський світ',
+    },
+    description: {
       en: '4.096 × 4.096 km · six starting points · unscored free flight. Original timber station cladding, opaque backed panels and roof seams add detail to the refined-contour landscape. Separate station-r3 study; earlier Alpine editions remain available. The wider landscape and route detail are still being refined.',
       uk: '4,096 × 4,096 км · шість стартових точок · вільний політ без заліку. Оригінальне дерев’яне облицювання станції, непрозорі панелі й шви покрівлі додають деталей ландшафту з уточненими контурами. Окремий пробний варіант station-r3; попередні альпійські версії залишаються доступними. Деталі решти місцевості та маршрутів ще вдосконалюються.',
     },
