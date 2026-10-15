@@ -1,0 +1,616 @@
+{
+  "version": "xonix-replay.v6",
+  "build": "authored-pressure-demo.v1",
+  "ruleset": "xonix-core.v5",
+  "level": {
+    "version": "xonix-level.v4",
+    "revision": "gp4s-3ff00000000000003ff00000000000003ff0000000000000-73e82d4f8a1aee76",
+    "width": 72,
+    "height": 36,
+    "themeId": "fpv",
+    "encounter": null,
+    "objectives": [],
+    "supplies": [],
+    "signalZones": [],
+    "hangars": [],
+    "id": "courtyard-exits",
+    "name": "Courtyard Exits",
+    "spawn": {
+      "x": 0.5,
+      "y": 18.5
+    },
+    "walls": [
+      {
+        "x": 22,
+        "y": 5,
+        "w": 2,
+        "h": 10
+      },
+      {
+        "x": 22,
+        "y": 23,
+        "w": 2,
+        "h": 8
+      },
+      {
+        "x": 48,
+        "y": 7,
+        "w": 2,
+        "h": 10
+      },
+      {
+        "x": 48,
+        "y": 25,
+        "w": 2,
+        "h": 6
+      }
+    ],
+    "enemies": [
+      {
+        "id": "courtyard-hunter",
+        "type": "bouncer",
+        "x": 35.5,
+        "y": 7.5,
+        "vx": 8.315972476511,
+        "vy": 7.276475916947125,
+        "radius": 0.3,
+        "course": "field-course.v2"
+      },
+      {
+        "id": "courtyard-interceptor",
+        "type": "bouncer",
+        "x": 60.5,
+        "y": 25.5,
+        "vx": -8.315972476511,
+        "vy": -7.276475916947125,
+        "radius": 0.3,
+        "course": "field-course.v2"
+      },
+      {
+        "id": "west-crosser",
+        "type": "bouncer",
+        "x": 10.5,
+        "y": 28.5,
+        "vx": 7.276475916947125,
+        "vy": -8.315972476511,
+        "radius": 0.3,
+        "course": "field-course.v2"
+      },
+      {
+        "id": "courtyard-rover",
+        "type": "claimed-rover",
+        "x": 12.5,
+        "y": 8.5,
+        "vx": 11.200000000000001,
+        "vy": 7.2,
+        "radius": 0.3
+      }
+    ],
+    "goal": {
+      "coverage": 0.74
+    },
+    "rules": {
+      "lives": 3,
+      "moveSpeed": 8.84,
+      "boostMultiplier": 1,
+      "respawnSeconds": 0.7,
+      "graceSeconds": 0.8,
+      "playerRadius": 0.18,
+      "pointsPerCell": 10,
+      "objectivePoints": 500,
+      "timeMedals": [44, 72],
+      "switchCooldownSeconds": 2,
+      "timeLimitSeconds": 180,
+      "cutTimeLimitSeconds": 0,
+      "maxTrailCells": 0,
+      "stopOnCapture": true
+    },
+    "musicId": "first-light-split-courtyard",
+    "metadata": {
+      "title": "Courtyard Exits",
+      "description": "Reveal 74%. The interceptor aims ahead of your visible heading, then keeps that target. Bait its warning and choose another exit. Wall gaps and mud make the direct crossing risky. A rover wakes on revealed ground; keep your return route clear. Tap a direction to fly; closing a cut stops the craft. Choose a fresh direction to continue.",
+      "author": "RevealLine",
+      "license": "Original project content",
+      "rightsStatus": "Original pressure layout. Existing owned First Light/Homeward Skies reward art; not new artwork or a reference-game copy."
+    },
+    "classic": {
+      "version": "classic.v1",
+      "terrain": [
+        {
+          "id": "west-mud",
+          "kind": "slow",
+          "x": 17,
+          "y": 16,
+          "w": 4,
+          "h": 4
+        },
+        {
+          "id": "east-mud",
+          "kind": "slow",
+          "x": 51,
+          "y": 19,
+          "w": 4,
+          "h": 4
+        }
+      ],
+      "powerups": [
+        {
+          "id": "courtyard-slow",
+          "kind": "enemy-slow",
+          "x": 10.5,
+          "y": 12.5
+        },
+        {
+          "id": "courtyard-freeze",
+          "kind": "enemy-freeze",
+          "x": 59.5,
+          "y": 20.5
+        }
+      ],
+      "lineImpact": {
+        "version": "line-impact.v1",
+        "speed": 38.400000000000006
+      },
+      "arcadeActions": {
+        "version": "arcade-actions.v1"
+      },
+      "enemyPressure": {
+        "version": "enemy-pressure.v1",
+        "actors": [
+          {
+            "id": "courtyard-hunter",
+            "mode": "trail-pursuit",
+            "senseRadius": 16,
+            "scanTicks": 60,
+            "warningTicks": 90,
+            "commitTicks": 144,
+            "cooldownTicks": 300,
+            "leadTicks": 0
+          },
+          {
+            "id": "courtyard-interceptor",
+            "mode": "head-intercept",
+            "senseRadius": 16,
+            "scanTicks": 60,
+            "warningTicks": 90,
+            "commitTicks": 144,
+            "cooldownTicks": 300,
+            "leadTicks": 36
+          }
+        ]
+      }
+    }
+  },
+  "options": {
+    "seed": 1,
+    "turnPolicy": "immediate",
+    "classId": "scout",
+    "classRecipes": [
+      {
+        "id": "scout",
+        "label": "FPV Scout",
+        "description": "Direction-only Arcade craft. Cruise speed belongs to each level; fly over marked pickups to receive their effects. Manual Scan, supply and Boost actions are disabled by the authored Arcade policy.",
+        "primitive": "scan",
+        "capacity": 0,
+        "cooldown": 6,
+        "duration": 4,
+        "radius": 48,
+        "revision": "2"
+      }
+    ]
+  },
+  "segments": [
+    {
+      "ticks": 231,
+      "input": {
+        "direction": "up",
+        "boost": false,
+        "action": false,
+        "pickup": false,
+        "switchClass": null
+      },
+      "releaseBefore": false
+    },
+    {
+      "ticks": 326,
+      "input": {
+        "direction": "right",
+        "boost": false,
+        "action": false,
+        "pickup": false,
+        "switchClass": null
+      },
+      "releaseBefore": false
+    },
+    {
+      "ticks": 455,
+      "input": {
+        "direction": "down",
+        "boost": false,
+        "action": false,
+        "pickup": false,
+        "switchClass": null
+      },
+      "releaseBefore": false
+    },
+    {
+      "ticks": 60,
+      "input": {
+        "direction": null,
+        "boost": false,
+        "action": false,
+        "pickup": false,
+        "switchClass": null
+      },
+      "releaseBefore": false
+    },
+    {
+      "ticks": 7,
+      "input": {
+        "direction": "down",
+        "boost": false,
+        "action": false,
+        "pickup": false,
+        "switchClass": null
+      },
+      "releaseBefore": false
+    },
+    {
+      "ticks": 1,
+      "input": {
+        "direction": "left",
+        "boost": false,
+        "action": false,
+        "pickup": false,
+        "switchClass": null
+      },
+      "releaseBefore": false
+    },
+    {
+      "ticks": 110,
+      "input": {
+        "direction": "right",
+        "boost": false,
+        "action": false,
+        "pickup": false,
+        "switchClass": null
+      },
+      "releaseBefore": false
+    },
+    {
+      "ticks": 218,
+      "input": {
+        "direction": "up",
+        "boost": false,
+        "action": false,
+        "pickup": false,
+        "switchClass": null
+      },
+      "releaseBefore": false
+    },
+    {
+      "ticks": 103,
+      "input": {
+        "direction": "left",
+        "boost": false,
+        "action": false,
+        "pickup": false,
+        "switchClass": null
+      },
+      "releaseBefore": false
+    },
+    {
+      "ticks": 60,
+      "input": {
+        "direction": null,
+        "boost": false,
+        "action": false,
+        "pickup": false,
+        "switchClass": null
+      },
+      "releaseBefore": false
+    },
+    {
+      "ticks": 7,
+      "input": {
+        "direction": "left",
+        "boost": false,
+        "action": false,
+        "pickup": false,
+        "switchClass": null
+      },
+      "releaseBefore": false
+    },
+    {
+      "ticks": 1,
+      "input": {
+        "direction": "down",
+        "boost": false,
+        "action": false,
+        "pickup": false,
+        "switchClass": null
+      },
+      "releaseBefore": false
+    },
+    {
+      "ticks": 28,
+      "input": {
+        "direction": "up",
+        "boost": false,
+        "action": false,
+        "pickup": false,
+        "switchClass": null
+      },
+      "releaseBefore": false
+    },
+    {
+      "ticks": 218,
+      "input": {
+        "direction": "right",
+        "boost": false,
+        "action": false,
+        "pickup": false,
+        "switchClass": null
+      },
+      "releaseBefore": false
+    },
+    {
+      "ticks": 224,
+      "input": {
+        "direction": "up",
+        "boost": false,
+        "action": false,
+        "pickup": false,
+        "switchClass": null
+      },
+      "releaseBefore": false
+    },
+    {
+      "ticks": 60,
+      "input": {
+        "direction": null,
+        "boost": false,
+        "action": false,
+        "pickup": false,
+        "switchClass": null
+      },
+      "releaseBefore": false
+    },
+    {
+      "ticks": 7,
+      "input": {
+        "direction": "up",
+        "boost": false,
+        "action": false,
+        "pickup": false,
+        "switchClass": null
+      },
+      "releaseBefore": false
+    },
+    {
+      "ticks": 1,
+      "input": {
+        "direction": "left",
+        "boost": false,
+        "action": false,
+        "pickup": false,
+        "switchClass": null
+      },
+      "releaseBefore": false
+    },
+    {
+      "ticks": 231,
+      "input": {
+        "direction": "down",
+        "boost": false,
+        "action": false,
+        "pickup": false,
+        "switchClass": null
+      },
+      "releaseBefore": false
+    },
+    {
+      "ticks": 27,
+      "input": {
+        "direction": "left",
+        "boost": false,
+        "action": false,
+        "pickup": false,
+        "switchClass": null
+      },
+      "releaseBefore": false
+    },
+    {
+      "ticks": 238,
+      "input": {
+        "direction": "down",
+        "boost": false,
+        "action": false,
+        "pickup": false,
+        "switchClass": null
+      },
+      "releaseBefore": false
+    },
+    {
+      "ticks": 60,
+      "input": {
+        "direction": null,
+        "boost": false,
+        "action": false,
+        "pickup": false,
+        "switchClass": null
+      },
+      "releaseBefore": false
+    },
+    {
+      "ticks": 7,
+      "input": {
+        "direction": "down",
+        "boost": false,
+        "action": false,
+        "pickup": false,
+        "switchClass": null
+      },
+      "releaseBefore": false
+    },
+    {
+      "ticks": 41,
+      "input": {
+        "direction": "right",
+        "boost": false,
+        "action": false,
+        "pickup": false,
+        "switchClass": null
+      },
+      "releaseBefore": false
+    },
+    {
+      "ticks": 163,
+      "input": {
+        "direction": "up",
+        "boost": false,
+        "action": false,
+        "pickup": false,
+        "switchClass": null
+      },
+      "releaseBefore": false
+    },
+    {
+      "ticks": 401,
+      "input": {
+        "direction": "right",
+        "boost": false,
+        "action": false,
+        "pickup": false,
+        "switchClass": null
+      },
+      "releaseBefore": false
+    },
+    {
+      "ticks": 60,
+      "input": {
+        "direction": null,
+        "boost": false,
+        "action": false,
+        "pickup": false,
+        "switchClass": null
+      },
+      "releaseBefore": false
+    },
+    {
+      "ticks": 7,
+      "input": {
+        "direction": "right",
+        "boost": false,
+        "action": false,
+        "pickup": false,
+        "switchClass": null
+      },
+      "releaseBefore": false
+    },
+    {
+      "ticks": 1,
+      "input": {
+        "direction": "down",
+        "boost": false,
+        "action": false,
+        "pickup": false,
+        "switchClass": null
+      },
+      "releaseBefore": false
+    },
+    {
+      "ticks": 163,
+      "input": {
+        "direction": "left",
+        "boost": false,
+        "action": false,
+        "pickup": false,
+        "switchClass": null
+      },
+      "releaseBefore": false
+    },
+    {
+      "ticks": 164,
+      "input": {
+        "direction": "up",
+        "boost": false,
+        "action": false,
+        "pickup": false,
+        "switchClass": null
+      },
+      "releaseBefore": false
+    },
+    {
+      "ticks": 157,
+      "input": {
+        "direction": "right",
+        "boost": false,
+        "action": false,
+        "pickup": false,
+        "switchClass": null
+      },
+      "releaseBefore": false
+    }
+  ],
+  "releaseAfter": false,
+  "ticks": 3837,
+  "summary": {
+    "ruleset": "xonix-core.v5",
+    "levelId": "courtyard-exits",
+    "revision": "gp4s-3ff00000000000003ff00000000000003ff0000000000000-73e82d4f8a1aee76",
+    "seed": 1,
+    "turnPolicy": "immediate",
+    "classId": "scout",
+    "activeClassId": "scout",
+    "rosterHash": "roster-v1-25103a34",
+    "classHistory": [
+      {
+        "classId": "scout",
+        "classRevision": "2",
+        "loadoutHash": "loadout-v1-8360440c",
+        "tick": 0
+      }
+    ],
+    "switches": 0,
+    "failureCause": null,
+    "classRevision": "2",
+    "loadoutHash": "loadout-v1-8360440c",
+    "status": "won",
+    "won": true,
+    "tick": 3837,
+    "time": 31.968438914025977,
+    "lives": 3,
+    "livesLost": 0,
+    "score": 17820,
+    "coverage": 0.7707612456747405,
+    "claimedCount": 1782,
+    "totalClaimable": 2312,
+    "medal": "gold",
+    "objectives": {
+      "captured": 0,
+      "total": 0,
+      "required": 0
+    }
+  },
+  "checkpoint": {
+    "algorithm": "fnv1a64-state-v5",
+    "hash": "2538bae86055e339",
+    "sections": {
+      "identity": "94d75f78506adf20",
+      "configuration": "fafc473657b53ad9",
+      "board": "3d7fde806d453436",
+      "player": "cd5ca479cdd0062a",
+      "trail": "f0ca473df9efdcc8",
+      "enemies": "796e4609dd8e272b",
+      "objectives": "09612b07b5ecb5a5",
+      "supplies": "09612b07b5ecb5a5",
+      "ability": "1b2c860fdc20d639",
+      "clock": "c537056ad45d96c9",
+      "continuation": "a9d828ced6380d30",
+      "result": "c6abd45fe8703e15",
+      "encounter": "5b9bc4ba528108e4",
+      "classic": "cf9c4a6d5cc251d5"
+    }
+  }
+}

@@ -86,12 +86,16 @@ class SoakWorker {
 const readJSON = async (name) => JSON.parse(await readFile(path.join(ROOT, name), 'utf8'));
 const sourceFiles = [
   'scripts/soak-demo.mjs',
+  'game/i18n/index.mjs',
+  'game/i18n/catalogs.mjs',
+  'game/mastery.mjs',
   'game/demo-director.mjs',
   'game/demo-sources.mjs',
   'game/demo-catalog.mjs',
   'game/demo-loading.mjs',
   'game/demo-bot.mjs',
   'game/demo-bot-player.mjs',
+  'game/demo-improv-player.mjs',
   'game/demo-bot-worker.mjs',
   'game/replay.mjs',
   'game/replay-player.mjs',
@@ -176,6 +180,7 @@ const report = {
   scenes: 0,
   replayScenes: 0,
   botScenes: 0,
+  improvisedScenes: 0,
   verifiedRecordings: 0,
   pauseChecks: 0,
   sources: {},
@@ -294,10 +299,14 @@ try {
       const recording = player.exportRecording();
       assert.equal(verifyReplay(recording).match, true);
       assert.equal(authoritativeCheckpoint(player.state).hash, recording.checkpoint.hash);
-      assert.ok(['running', 'won'].includes(recording.summary.status));
+      assert.ok(
+        ['won', 'lost'].includes(recording.summary.status),
+        'Every scene must reach a real terminal result.',
+      );
       const livesLost =
         player.state.classic?.livesLost ?? player.state.rules.lives - player.state.lives;
-      assert.equal(livesLost, 0, 'Qualified scenes do not lose a life.');
+      if (source.kind === 'bot')
+        assert.equal(livesLost, 0, 'Qualified live bots do not lose a life.');
       assert.ok(player.state.coverage > 0, 'Each scene demonstrates an actual capture.');
       if (source.kind === 'bot' && player.completionReason === 'no-safe-macro') {
         report.expectedExhaustionHandoffs++;
@@ -319,6 +328,7 @@ try {
       report.scenes++;
       policyScenes++;
       if (source.kind === 'bot') report.botScenes++;
+      else if (source.kind === 'improv') report.improvisedScenes++;
       else report.replayScenes++;
       visited.add(source.id);
       const key = `${turnPolicy}/${source.id}`;
@@ -405,6 +415,7 @@ try {
       verifiedRecordings: report.verifiedRecordings,
       replayScenes: report.replayScenes,
       botScenes: report.botScenes,
+      improvisedScenes: report.improvisedScenes,
       players,
       workers: report.workers,
       errors: report.errors.map((e) => e.message),

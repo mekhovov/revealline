@@ -164,7 +164,8 @@ export function attachDemoHost({
         !getContext().reduced &&
         !interrupted &&
         !loading &&
-        ['demo:tipClose', 'demo:tipPowerup', 'demo:tipObjective'].includes(caption)
+        (captions.reacting ||
+          ['demo:tipClose', 'demo:tipPowerup', 'demo:tipObjective'].includes(caption))
           ? 'react'
           : 'idle'
       ];
@@ -837,7 +838,11 @@ export function attachDemoHost({
           source,
         });
     }
-    if (!practice && !interrupted) caption = captions.advance(seconds, result?.events);
+    if (!practice && !interrupted)
+      caption = captions.advance(seconds, result?.events, {
+        reactions: guidePreferences.snapshot().enabled,
+        fresh: fresh && !doc.hidden,
+      });
     if (!doc.hidden) renderControls();
     if (!practice && !interrupted && director.phase === 'complete') {
       dwell += Math.min(seconds, 0.25);
@@ -947,7 +952,11 @@ export function attachDemoHost({
   });
   const unsubscribe = onLocaleChange(renderControls);
   const unsubscribeAudio = audio?.subscribe?.(renderControls);
-  const unsubscribeGuide = guidePreferences.subscribe(renderControls);
+  const unsubscribeGuide = guidePreferences.subscribe(() => {
+    if (!guidePreferences.snapshot().enabled)
+      caption = captions.advance(0, [], { reactions: false });
+    renderControls();
+  });
   return {
     get active() {
       return active;

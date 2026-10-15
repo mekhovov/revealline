@@ -13,6 +13,7 @@ import { REWARD_BOARD_SECONDS, REWARD_STORY_SECONDS } from '../ui/reward-arrival
 import { emptyLibrary, loadLibrary, saveLibrary, updatePreferences } from '../library.mjs';
 import { KEY_BINDING_PRESETS } from '../key-bindings.mjs';
 import { waitFor } from './helpers/wait-for.mjs';
+import { nativeCaptureSession } from '../capture-presentation-session.mjs';
 
 const frames = (page, count, ms = 16) => {
   for (let i = 0; i < count; i++) page.frame(ms);
@@ -558,7 +559,7 @@ test('accessible Fresh opens the demonstrated level at Ready and preserves the p
   assert.equal(page.doc.activeElement, page.$('start-button'));
   assert.deepEqual(authoritativeCheckpoint(ordinary), checkpoint);
   const savedBytes = page.storage.getItem('revealline.suspended.dev.v1'),
-    saved = JSON.parse(savedBytes),
+    saved = nativeCaptureSession(JSON.parse(savedBytes)),
     afterLibrary = loadLibrary(page.storage, 'revealline.library.dev.v1').library;
   assert.deepEqual(saved.replay.checkpoint, checkpoint);
   assert.equal(verifyReplay(saved.replay).match, true);
