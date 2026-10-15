@@ -13,6 +13,9 @@ export function overflightSortieProject(mode, project, { seed, difficulty, autho
     return mode.createProject({
       layout: project.battlefield.id,
       world: project.battlefield.world,
+      ...(project.combat?.crowdSeparation
+        ? { crowdSeparation: project.combat.crowdSeparation }
+        : {}),
       seed,
       difficulty,
     });

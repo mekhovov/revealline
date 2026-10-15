@@ -113,8 +113,13 @@ export function createOverflightProject({
   difficulty = 'standard',
   legacy = false,
   rulesVersion = 2,
+  crowdSeparation = null,
 } = {}) {
   required([1, 2, 3, 4].includes(rulesVersion), 'Unknown Overflight rules version.');
+  required(
+    crowdSeparation === null || (!legacy && rulesVersion >= 4 && crowdSeparation === 'local-v1'),
+    'Unsupported crowd separation rules.',
+  );
   required(
     OVERFLIGHT_DIFFICULTIES.includes(difficulty) && (rulesVersion >= 3 || difficulty !== 'relaxed'),
     'Unknown difficulty.',
@@ -259,6 +264,7 @@ export function createOverflightProject({
       { id: 'case-east', x: 1920, y: 760, kind: 'supply-case' },
     ],
   };
+  if (crowdSeparation) project.combat.crowdSeparation = crowdSeparation;
   if (!legacy && rulesVersion >= 4) {
     const chosen =
       layout ??
@@ -359,7 +365,7 @@ export function validateOverflightProject(source) {
         (v3 || project.difficulty !== 'relaxed'),
       'Unknown difficulty.',
     );
-    validateOverflightCombatProfile(project.combat, v3 ? 3 : 2);
+    validateOverflightCombatProfile(project.combat, v4 ? 4 : v3 ? 3 : 2);
   }
   required(stableId(project.id), 'Invalid Overflight project ID.');
   fields(project.title, ['en', 'uk'], 'Project title');
