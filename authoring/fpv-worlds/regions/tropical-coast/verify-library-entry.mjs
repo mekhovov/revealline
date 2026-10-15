@@ -120,7 +120,31 @@ for (const [quality, expected] of [
     assert.equal(digest, geometryDigest, 'Presentation choices cannot change geometry');
     if (expected === 'plain') assert([...names].every((name) => !name.startsWith('Tropical sand')));
     else assert(names.has(`Tropical sand and dune grass · ${expected}`));
+    let liveMaterialUpdates = 0;
+    if (expected !== 'plain') {
+      const before = session.snapshot();
+      session.root.traverse((object) => {
+        if (!object.isMesh) return;
+        for (const material of [object.material].flat()) {
+          if (!material.name.startsWith('Tropical sand')) continue;
+          const geometry = object.geometry;
+          const initialVersion = material.version;
+          for (const next of ['performance', 'quality', expected]) {
+            material.userData.setRegionalSurfaceQuality(next);
+            assert.equal(material.name, `Tropical sand and dune grass · ${next}`);
+            assert.equal(material.customProgramCacheKey(), `fpv-tropical-ground-v1-${next}`);
+            assert.equal(object.geometry, geometry);
+          }
+          assert(material.version > initialVersion);
+          assert.throws(() => material.userData.setRegionalSurfaceQuality('ultra'), /Unknown/);
+          liveMaterialUpdates++;
+        }
+      });
+      assert(liveMaterialUpdates > 0);
+      assert.deepEqual(session.snapshot(), before, 'Material updates cannot arm or move the body');
+    }
     records.push({
+      liveMaterialUpdates,
       quality,
       terrain: expected,
       geometryBytes: state.terrain.geometryBytes,
