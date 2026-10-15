@@ -459,13 +459,19 @@ export function createFlightGamepad({
       }
       const pressed = (i) => button(pad, i) > 0.5;
       const heldActions = [...actionButtons.keys()].filter(pressed);
-      if (heldActions.length > 1) clear('neutral');
-      else if (pending !== null) {
+      if (heldActions.length > 1) {
+        clear('neutral');
+        // The host must stop before it can sample the cleared throttle. A
+        // conflicting chord is neither an action nor permission to keep flying.
+        if (wasActive) actions.push('pause');
+      } else if (pending !== null) {
         if (!pressed(pending)) {
           const action = actionButtons.get(pending);
           pending = null;
-          if (heldActions.length) clear('neutral');
-          else if (action !== 'arm' || (scope === 'ready' && centred && released)) {
+          if (heldActions.length) {
+            clear('neutral');
+            if (wasActive) actions.push('pause');
+          } else if (action !== 'arm' || (scope === 'ready' && centred && released)) {
             if (action !== 'arm' || scope === 'ready') actions.push(action);
             if (action !== 'arm' && action !== 'camera')
               clear(action === 'reset' ? 'reset' : 'neutral');
