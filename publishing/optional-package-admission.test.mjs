@@ -37,6 +37,29 @@ function manifestChange(f, edit) {
 }
 const built = await build();
 
+test('archive admission rejects a missing transitive import even when member hashes and counts match', async () => {
+  const f = fixture(built);
+  const manifest = JSON.parse(f.files.get(f.package.manifest.path));
+  const runtime = readEditionZip(f.files.get(f.package.distribution.path));
+  const owner = 'optional-practice/civilian-flight/model.mjs';
+  const bytes = Buffer.concat([
+    runtime.get(owner),
+    Buffer.from("\nexport * from './missing-runtime-dependency.mjs';\n"),
+  ]);
+  runtime.set(owner, bytes);
+  manifest.files = manifest.files.map((row) =>
+    row.path === owner ? editionDescriptor(owner, bytes) : row,
+  );
+  const manifestBytes = editionJSON(manifest);
+  replace(f, 'manifest', manifestBytes);
+  runtime.set('optional-package.json', manifestBytes);
+  replace(f, 'distribution', createEditionZip(runtime));
+  await assert.rejects(
+    validateOptionalPackageAdmission(f.envelope, f),
+    /Optional archive module dependency is missing: .*model.mjs -> .*missing-runtime-dependency.mjs/,
+  );
+});
+
 test('SIM Worlds ships the shared defeat choice and recorded reactions in its verified offline closure', async () => {
   const world = await buildOptionalPractice(root, {
     packageId: 'fpv-worlds',
