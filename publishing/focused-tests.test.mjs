@@ -62,6 +62,19 @@ test('rolling metadata scripts retain their publishing regression gates', () => 
   }
 });
 
+test('pinned source review selects its real Git transport boundary checks', () => {
+  for (const file of [
+    'scripts/serve-pinned-game-review.py',
+    'scripts/test_pinned_game_review.py',
+    'scripts/test-pinned-game-review.mjs',
+  ]) {
+    const plan = focusedTestPlan([file], manifest);
+    assert.deepEqual(plan.unknownRuntime, []);
+    const command = plan.commands.find(({ id }) => id === 'pinned-game-review');
+    assert.deepEqual(command.args, ['--test', 'scripts/test-pinned-game-review.mjs']);
+  }
+});
+
 test('archive writer and sparse workflow changes retain real-source and dependency-boundary checks', () => {
   for (const file of [
     'scripts/distribution-zip.mjs',

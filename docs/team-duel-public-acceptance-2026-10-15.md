@@ -4,6 +4,13 @@ Continuation source: `859d5cfc927daff2a350318b2325486a58959648`, obtained by reb
 
 ## Published delivery
 
+**16 October continuation:** the [fresh dependency receipt](verification/team-duel-public/public-delivery-2026-10-16.json)
+passes the same 180 missions and 357 URLs, now totaling **251,342,372 bytes**, at
+public source `b11745223861c3973ad4bf440cc536198b8e0371`. The manifest remained
+stable with SHA-256 `41d5ae845b2f78df91634850fed6f6f45ece01459476bb3e811547a5e6d301da`.
+This supersedes the dependency audit below only for that measured rolling source.
+It does not include unmerged PR #1496 fixes or repeat the native journeys below.
+
 The [public dependency receipt](research/multiplayer-public-acceptance-dependencies-2026-10-15.json) passes against `https://mekhovov.github.io/revealline/` at source `3fe21888bfa4b406c51e1ab165c0782d5d936af0`, version label `0.151.1`:
 
 - Exact 96 Team, 72 Duel and six Hunt missions per mode, including all 24 expansion chapter groups.
