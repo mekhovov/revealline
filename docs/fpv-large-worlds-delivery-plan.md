@@ -5,6 +5,47 @@ The user selected default catalogue visibility, download on Play, optional offli
 storage, and authored regions first. Generation assists authoring; endless runtime
 terrain is deferred. Twelve proposed regions are design targets, not shipped maps.
 
+## 15 October, 17:31 UTC — source detail and saved-place coverage merged
+
+No authored elapsed run is active. The negative foreground report below is
+follow-up evidence after #1482 merged at its earlier `f30ba747` head; its later
+`8a31528f` commit remains preserved and is being published separately.
+
+- Lunar shelter/gallery source #1481 merged as `9e98c4fb`. Bounded native review
+  accepts the supported, open routes in Balanced, Performance and Quality, with
+  resource release confirmed. This is source appearance acceptance; a distinct
+  immutable composition-r3 delivery and Library admission remain next. The old
+  composition-r2 package and revision stay unchanged. Final representative art
+  remains open.
+- Saved-place D6 tests #1483 merged as `75bbcf57`: six focused cases cover
+  concurrent edits, revision isolation, returned-snapshot mutation, capacity and
+  rollback. Broader CI tails and real persistence/restart acceptance are separate.
+- Alpine station-r3 Library #1480 exact `d60dac54` passes its cloud package,
+  immutable download and archived-runtime checks. Serial native player review is
+  in progress on frozen port 9174.
+- Read-only continuity observer #1479 remains Draft at `311f66b7`, awaiting native
+  export/comparison. Its earlier appearance failure and the correcting ordinary
+  merge are preserved. A separate authoring-only change is reducing full-report
+  display work before a new elapsed attempt; the 250 ms gate stays unchanged.
+
+## 15 October, 17:18 UTC — focused foreground attempt invalidated
+
+The new authored Urban attempt is **invalid**, and no elapsed run is currently
+active. It reached 290.7995 real seconds /14,527 ticks, three cell crossings and
+three accepted waypoints with zero contacts. A 257.1 ms frame interval exceeded
+the unchanged 250 ms gate. Unlike the earlier attempt, it remained visible and
+focused throughout. Bounded diagnostics recorded a matching 257 ms long task;
+this narrows the investigation but does not identify a responsible function.
+All owned resources released to zero. The [full negative report](fpv-authored-urban-lifecycle-invalid-framegap-20261015.json)
+is preserved, and no partial duration is counted as endurance.
+
+The authoring page currently rebuilds and inserts the full diagnostic JSON every
+second, even with its details closed. That is avoidable observer work; its cost
+and main-thread scheduling need investigation before another full attempt. A
+matching long-task entry alone cannot distinguish simulation, report generation,
+layout, garbage collection or host work. Keep exact frozen evidence and acceptance
+gates unchanged. Normal serial art/player gates and independent D6 checks resume.
+
 ## 15 October, 17:13 UTC — Lunar admitted; surface and recovery increments merged
 
 This checkpoint supersedes older status below. The full roadmap remains **open**.
