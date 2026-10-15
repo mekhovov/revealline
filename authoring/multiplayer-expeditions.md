@@ -44,3 +44,7 @@ node scripts/game-cli.mjs build --out dist/multiplayer-expansion
 ```
 
 The build needs enough free space for the complete distribution, not just the new source files. Consult the delivery register for the latest build and external acceptance status before publishing.
+
+The chapter-finale fixtures now retain two spatially different routes per chapter, mixed-route Duel races with seat reversal, and bounded mistake traces. Run `game/test/multiplayer-finale-strategies.test.mjs` and `game/test/multiplayer-finale-mistakes.test.mjs` to preserve those outcomes after a Studio edit. Their documented fast clears and unfinished recovery probes are not human pacing or balance guarantees.
+
+For an exact committed package, run `node scripts/verify-multiplayer-delivery.mjs --root PATH_TO_PACKAGE --report .cache/multiplayer-delivery.json`. For the public site, replace `--root` with `--base https://mekhovov.github.io/revealline/`. This verifies the expansion and curated Hunt mission inventory, original media, complete offline ownership and every required URL's bytes. A stable matching manifest is required; install/update, actual offline play, Studio recovery and listening are separate checks. See the [15 October qualification report](../docs/team-duel-qualification-2026-10-15.md) for source and native-browser evidence and its limits.
