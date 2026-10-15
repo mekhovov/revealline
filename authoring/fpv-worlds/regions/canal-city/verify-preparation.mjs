@@ -4,7 +4,7 @@ import { readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { createHash } from 'node:crypto';
 import validator from 'gltf-validator';
-import { boxes } from './design.mjs';
+import { boxes, arches } from './design.mjs';
 import { compileTerrainCell, validateTerrainSeams } from '../terrain-cell.mjs';
 import { compileRgbaSceneryCell } from '../rgba-scenery-cell.mjs';
 import { validateRegionManifest } from '../region-manifest.mjs';
@@ -16,6 +16,33 @@ for (const box of boxes.filter(
 )) {
   assert.equal(box.center[1] - box.size[1] / 2, -3, box.id + ': base must meet canal bed');
 }
+const authoredBox = (id) => {
+  const box = boxes.find((b) => b.id === id);
+  assert(box, id);
+  return box;
+};
+const bottom = (box) => box.center[1] - box.size[1] / 2;
+const top = (box) => box.center[1] + box.size[1] / 2;
+for (const x of [48, 80]) {
+  const wall = authoredBox(`lock-guide-${x}`),
+    support = authoredBox(`lock-deck-support-${x}`);
+  assert.equal(bottom(wall), -3, 'Lock wall must meet the canal bed');
+  assert(Math.abs(bottom(support) - top(wall)) < 1e-9, 'Lock support must meet wall');
+  assert(
+    Math.abs(top(support) - bottom(authoredBox('lock-footbridge'))) < 1e-9,
+    'Lock support must meet deck',
+  );
+}
+for (const x of [104, 152]) {
+  const bank = authoredBox(`arch-bank-${x}`);
+  assert(Math.abs(bottom(bank) - 4) < 1e-9, 'Arch bank must meet quay');
+  assert(Math.abs(top(bank) - bottom(authoredBox('arch-deck'))) < 1e-9, 'Arch bank must meet deck');
+}
+assert(
+  Math.abs(
+    arches[0].center[1] + arches[0].rise + arches[0].thickness - bottom(authoredBox('arch-deck')),
+  ) < 1e-9,
+);
 const prep = JSON.parse(await readFile(resolve(root, 'preparation.json'))),
   hash = (x) => createHash('sha256').update(x).digest('hex');
 const bodies = new Map(),
@@ -121,6 +148,38 @@ try {
       'terrain-clear',
     );
   }
+  // Serialized source must contain the supports missing from the rejected draft.
+  for (const [from, to] of [
+    [
+      [48, 6.5, 220],
+      [48, 6.5, 232],
+    ],
+    [
+      [80, 6.5, 220],
+      [80, 6.5, 232],
+    ],
+    [
+      [110, 11.5, 55],
+      [110, 11.5, 64],
+    ],
+    [
+      [146, 11.5, 55],
+      [146, 11.5, 64],
+    ],
+  ]) {
+    await prepare(mm(from));
+    assert.equal(
+      owner.sweep(mm(from), mm(to), 250).status,
+      'terrain-hit',
+      'Missing supported bridge mass',
+    );
+  }
+  const apron = mm([202, 5, 80]);
+  await prepare(apron);
+  assert(
+    Math.abs(owner.support(apron, 2000).heightMm - 4050) < 1,
+    'Paved warehouse apron must match its visible solid within 1 mm query precision',
+  );
   const waterFrom = mm([128, 1, 24]),
     waterTo = mm([128, -1, 24]);
   await prepare(waterFrom);
