@@ -112,7 +112,13 @@ export async function prepareSceneryWindow(
   const byCell = new Map(cells.map((cell) => [`${cell.x},${cell.z}`, cell]));
   for (const cell of cells) {
     const chunk = chunks.get(cell.chunkId);
-    fail(chunk && chunk.x === cell.x && chunk.z === cell.z, 'Scenery does not match manifest cell');
+    fail(
+      chunk &&
+        chunk.x === cell.x &&
+        chunk.z === cell.z &&
+        cell.cellSizeMm === manifest.grid.cellSizeMm,
+      'Scenery does not match manifest cell',
+    );
     fail(
       cell.surfaces.every((surface) =>
         surface.positionsMm.every(
@@ -122,8 +128,8 @@ export async function prepareSceneryWindow(
       'Scenery exceeds region vertical bounds',
     );
     fail(
-      Math.abs(cell.x * 128000 - originMm.x) <= 640000 &&
-        Math.abs(cell.z * 128000 - originMm.z) <= 640000 &&
+      Math.abs(cell.x * cell.cellSizeMm - originMm.x) <= 640000 &&
+        Math.abs(cell.z * cell.cellSizeMm - originMm.z) <= 640000 &&
         Math.abs(originMm.y) <= 2000000,
       'Scenery window must use a nearby origin',
     );
@@ -220,9 +226,9 @@ export async function prepareSceneryWindow(
         const mesh = new THREE.Mesh(geometry, material);
         mesh.name = cell.chunkId;
         const local = {
-          x: (cell.x * 128000 - originMm.x) / 1000,
+          x: (cell.x * cell.cellSizeMm - originMm.x) / 1000,
           y: -originMm.y / 1000,
-          z: (cell.z * 128000 - originMm.z) / 1000,
+          z: (cell.z * cell.cellSizeMm - originMm.z) / 1000,
         };
         mesh.position.set(local.x, local.y, local.z);
         group.add(mesh);
@@ -248,10 +254,10 @@ export async function prepareSceneryWindow(
   });
   function covers(from, to = from, radius = 0) {
     // Conservatively require the full swept horizontal AABB. A missing cell is never clear scenery.
-    const minX = Math.floor((Math.min(from.x, to.x) - radius) / 128000),
-      maxX = Math.floor((Math.max(from.x, to.x) + radius) / 128000);
-    const minZ = Math.floor((Math.min(from.z, to.z) - radius) / 128000),
-      maxZ = Math.floor((Math.max(from.z, to.z) + radius) / 128000);
+    const minX = Math.floor((Math.min(from.x, to.x) - radius) / manifest.grid.cellSizeMm),
+      maxX = Math.floor((Math.max(from.x, to.x) + radius) / manifest.grid.cellSizeMm);
+    const minZ = Math.floor((Math.min(from.z, to.z) - radius) / manifest.grid.cellSizeMm),
+      maxZ = Math.floor((Math.max(from.z, to.z) + radius) / manifest.grid.cellSizeMm);
     if ((maxX - minX + 1) * (maxZ - minZ + 1) > 25) return false;
     for (let x = minX; x <= maxX; x++)
       for (let z = minZ; z <= maxZ; z++) if (!byCell.has(`${x},${z}`)) return false;
