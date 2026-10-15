@@ -51,7 +51,28 @@ The three approved sessions contained the expected named Railway ground material
 the fallback did not. Wrong IDs, wrong hashes, malformed trusted styles and unknown
 quality values were also checked. Source files and collision are unchanged.
 
-This increment does not claim normal-Library native browser acceptance, packaged
-offline acceptance, device FPS, live material-tier updates, or finished realism.
-Those require their respective host integration and release checks. No module
-count, package byte ceiling, physics, scoring, source geometry or texture was added.
+### Native Library launch correction
+
+The exact `d33a1cc3c8` CI optional package reproduced a first-Fly failure after a
+successful verified Railway download. An isolated copy with diagnostic tracing
+located the cancellation in `advanceFrame`'s execution-gap guard: initial shader
+preparation took longer than the flight stall threshold and `pauseFlight` aborted
+the still-disarmed preparation. Explicit Restart succeeded because compilation
+was then warm. The original downloaded package remains unchanged.
+
+The host now resets elapsed flight time while regional preparation is pending.
+The existing execution-gap guard resumes immediately afterward; explicit focus
+loss and menu cancellation still call the unchanged `pauseFlight`. A production
+clock-boundary regression test failed before this fix and passes afterward,
+including both execution-clock and queued-frame stalls after preparation.
+
+Native browser verification used that exact package plus only this host change.
+First Fly reached Ready to arm, paused with zero input and the expected Railway
+surface. Reload retained the 5.4 MiB structure-r1 installation, and Fly reached
+Ready to arm again without Restart or another download. This is local integration
+evidence, not a claim that refreshed CI or final release-package checks passed.
+
+This increment does not claim packaged offline acceptance, device FPS, live
+material-tier updates, or finished realism. Those require their respective release
+checks. No module count, package byte ceiling, physics, scoring, source geometry
+or texture was added.
