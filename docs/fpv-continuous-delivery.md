@@ -5150,3 +5150,31 @@ Alpine #1480 exact package qualification passes; native 9174 player review is in
 progress. Continuity observer #1479 remains Draft awaiting read-only native
 exports/comparison. A separate authoring display-cost correction is under review
 without changing production physics, timing or acceptance limits.
+
+
+## 15 October, 18:05 UTC — native admission and observer increments
+
+#1480 station-r3 admission merged `e5e5562f`; exact native report is
+[fpv-alpine-station-r3-native-20261015.json](fpv-alpine-station-r3-native-20261015.json).
+The first generic download failure is preserved; unchanged refresh/retry and later
+cached launch succeed. Limited starts, camera/mode/arm/pause, EN/UK and two browser
+layouts pass. This is not all-start hardware, first-attempt reliability or final art.
+
+#1479 read-only continuity observer merged `95703ee3` after native export/import,
+refusal/recovery and exact stored-byte comparison around normal player reopening.
+[The receipt](fpv-storage-continuity-native-20261015.json) distinguishes actual
+regional assets/revisions and a saved place from the empty World/record stores.
+Whole-network offline, full application restart, eviction and nonempty recording
+preservation remain open. #1483 saved-place focused and broader CI are all green.
+
+#1485 bounded authoring summary merged `51f5af07`. Separate actual 10.0059-second
+and 60.0018-second runs preserve full reports and disposal evidence. The summary
+uses 430 characters, and a native running export is provisional and accepted-false.
+Neither smoke/minute run has route coverage or counts as the required two hours.
+No acceptance gate, simulation clock or production module changed.
+
+Lunar source/detail #1481 and immutable r3 #1488 are merged. Its additive #1490
+is being reconciled normally with the Alpine Library addition so all twenty old
+offers survive alongside the new edition. Frozen earlier and integrated package
+native checks stay separate. Representative art, elapsed, integrated reliability,
+D6/device and public-launch acceptance remain incomplete.
