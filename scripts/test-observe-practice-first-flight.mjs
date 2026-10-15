@@ -209,7 +209,11 @@ test('Gym exercise integration captures completion before export, exclusively sa
     await Promise.all(
       GYM_REPLAY_INPUTS.map(async (name) => [
         name,
-        await readFile(new URL('../' + name, import.meta.url)),
+        name === 'game/i18n/catalogs.mjs'
+          ? Buffer.from(
+              '// Selected optional-practice validator and settings messages.\nglobalThis.RevealLineTranslations={"en":{},"uk":{}};\n',
+            )
+          : await readFile(new URL('../' + name, import.meta.url)),
       ]),
     ),
   );

@@ -10,7 +10,18 @@ import { createPractice } from '../optional-practice/civilian-flight/model.mjs';
 import { CIVILIAN_PRACTICE_CATALOGUE } from '../optional-practice/civilian-flight/catalogue.mjs';
 
 const files = async () =>
-  new Map(await Promise.all(GYM_REPLAY_INPUTS.map(async (name) => [name, await readFile(name)])));
+  new Map(
+    await Promise.all(
+      GYM_REPLAY_INPUTS.map(async (name) => [
+        name,
+        name === 'game/i18n/catalogs.mjs'
+          ? Buffer.from(
+              '// Selected optional-practice validator and settings messages.\nglobalThis.RevealLineTranslations={"en":{},"uk":{}};\n',
+            )
+          : await readFile(name),
+      ]),
+    ),
+  );
 // Synthetic model commands are unit fixtures only, never browser evidence.
 function traceFixture() {
   const model = createPractice(CIVILIAN_PRACTICE_CATALOGUE, 'lift-and-land');
@@ -77,4 +88,19 @@ test('future unpinned static, dynamic, CommonJS and re-export dependencies fail 
     assert.throws(() =>
       assertGymReplayImports('optional-practice/civilian-flight/model.mjs', Buffer.from(source)),
     );
+});
+
+test('projected locales accept data only, not appended code or missing bilingual identity', async () => {
+  const prefix =
+    '// Selected optional-practice validator and settings messages.\nglobalThis.RevealLineTranslations=';
+  for (const body of [
+    '{"en":{},"uk":{}};globalThis.extra=true;\n',
+    '{"en":{}};\n',
+    '{"en":{},"uk":{},"fr":{}};\n',
+    '(()=>({en:{},uk:{}}))();\n',
+  ]) {
+    const members = await files();
+    members.set('game/i18n/catalogs.mjs', Buffer.from(prefix + body));
+    await assert.rejects(verifyFrozenGymTranscript(members, JSON.stringify(traceFixture())));
+  }
 });
