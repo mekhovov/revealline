@@ -40,6 +40,9 @@ import {
 import { projectEditionGuideScenario } from './editions/selected-presentation.mjs';
 import { installedPresentation, invalidateInstalledMigration } from './installed-app.mjs';
 import { createGameWakeLock } from './ui/game-wake-lock.mjs';
+import { createSceneClock } from './ui/scene-clock.mjs';
+import { createPerformanceSession } from './ui/performance-session.mjs';
+import { createVisualQualityPolicy } from './ui/visual-quality-policy.mjs';
 import { localOfficialChapter } from './official-chapter-source.mjs';
 import { localOfficialRecordingIds } from './official-downloads.mjs';
 import {
@@ -97,18 +100,11 @@ import {
   installedMissionExecutionIndex,
   resolveCampaignMissionTarget,
 } from './mission-library/installed-target.mjs';
-import { createInstalledMissionLibrary } from './mission-library/installed-library.mjs';
 import {
   CLASSIC_RULES_ORIGINAL,
   projectClassicCurrentRulesEntry,
 } from './mission-library/classic-current-rules.mjs';
 import { journeyLibrarySource } from './mission-library/journey-source.mjs';
-import { publishedJourneyLibrarySources } from './mission-library/published-routes.mjs';
-import {
-  duelExpeditionLibrarySources,
-  teamExpeditionLibrarySource,
-} from './mission-library/multiplayer-expeditions.mjs';
-import { combineJourneyLibrarySources } from './mission-library/cross-mode-journey.mjs';
 import { trackMissionLibraryOpening } from './mission-library/opening-intent.mjs';
 import { authoredMissionSuccessor } from './mission-library/authored-continuation.mjs';
 import { librarySuccessor, retainedLibraryMission } from './mission-library/continuous-next.mjs';
@@ -124,7 +120,10 @@ import {
   readMissionLibraryReturn,
 } from './mission-library/handoff.mjs';
 import { playedLevelHref } from './mission-library/played-level-link.mjs';
-import { createDuel } from './multiplayer.mjs';
+import {
+  acceptedJourneyMission,
+  acceptedClassicMission,
+} from './mission-library/accepted-played-mission.mjs';
 import { createPresentationHost } from './presentation/host.mjs';
 import {
   createReleasePictureDefaults,
@@ -256,7 +255,12 @@ import { settingsTabOwnsKey } from './ui/settings-panels.mjs';
 import { attachPublishedAudio } from './ui/published-audio.mjs';
 import { prepareSavedVisualTheme } from './presentation/saved-visual-theme.mjs';
 import { createSoundtrackStore } from './soundtrack-store.mjs';
-import { upgradeSoundtrackLibrary, setCatalogueTracks, SOUNDTRACK_MODES } from './soundtrack.mjs';
+import {
+  upgradeSoundtrackLibrary,
+  setCatalogueTracks,
+  SOUNDTRACK_MODES,
+  resolveSoundtrackCatalogue,
+} from './soundtrack.mjs';
 import { prepareSoundtrackLibrary } from './soundtrack-bundle.mjs';
 import { createSoundtrackSource } from './soundtrack-source.mjs';
 import { prepareOpeningTheme, usesOpeningThemeDefault } from './opening-soundtrack.mjs';
@@ -430,6 +434,45 @@ function preparationStatus(observer, message, stage, isCurrent = () => true) {
 }
 
 try {
+  const sceneClock = createSceneClock();
+  const qualityPolicy = createVisualQualityPolicy();
+  const performanceSession =
+    new URLSearchParams(location.search).get('performance') === '1'
+      ? createPerformanceSession()
+      : null;
+  let fieldScene = null,
+    hudRevision = 0,
+    hudWorkMs = 0,
+    simulationWorkMs = 0;
+  const inputTokens = new Float64Array(32);
+  let inputTokenCount = 0,
+    inputAppliedCount = 0,
+    droppedInputObservations = 0;
+  function observeInput(kind, atMs = performance.now()) {
+    if (!performanceSession || paused || !started || dialogOpen()) return;
+    if (inputTokenCount >= inputTokens.length) {
+      ++droppedInputObservations;
+      return;
+    }
+    if (!Number.isFinite(atMs) || atMs < 0 || atMs > performance.now()) atMs = performance.now();
+    inputTokens[inputTokenCount++] = performanceSession.input(kind, atMs);
+  }
+  const rendererLost = new Set();
+  function rendererInterrupted(source) {
+    rendererLost.add(source);
+    performanceSession?.reportFailure('Canvas2D context lost; explicit recovery required.');
+    fieldScene?.invalidate();
+    sceneClock.reset();
+    pause(true);
+    performanceSession?.setPhase('error');
+    warning(localizedMessage('interface:flightPausedPressResumeToContinue'));
+  }
+  function rendererRestored(source) {
+    rendererLost.delete(source);
+    fieldScene?.invalidate();
+    if (!rendererLost.size) painter.invalidate();
+    // Repaint in the paused scene. Only an explicit Resume releases the run.
+  }
   const previewSession = createStudioPreviewSession(location.href);
   const profileStorage = () => previewSession?.storage ?? globalThis.localStorage;
   const profileSessionStorage = () => previewSession?.sessionStorage ?? globalThis.sessionStorage;
@@ -1104,6 +1147,9 @@ try {
   // Restored attempts already acquired their signal in the original session.
   // Keep this presentation identity separate from Pause and first-frame timing.
   const restoredSignalRuns = new WeakSet();
+  let hudDirty = true,
+    hudAt = -Infinity,
+    hudState = null;
   let levelIndex = initialSelection.levelIndex,
     campaignOverview = !scenario && initialSelection.overview,
     theme = themesFile.themes[0],
@@ -1979,7 +2025,14 @@ try {
     sound.configure(mix);
     if (music !== undefined) soundtrackPlayer.setVolume(music);
   }
+  let deferredMutedActivation = false;
   async function activateAudio({ explicit = false } = {}) {
+    const master = audioMaster.snapshot();
+    if (!explicit && !sound.context && (master.muted || master.volume === 0)) {
+      deferredMutedActivation = true;
+      return false;
+    }
+    deferredMutedActivation = false;
     if (!soundtrackPlayer) {
       contextualReactions?.resume();
       return sound.enable().then(() => contextualReactions?.prepare());
@@ -1999,6 +2052,7 @@ try {
   }
   function setMasterMuted(muted) {
     audioPreferences.setMuted(muted);
+    activateDeferredAudio();
     // Only explicit player actions mirror the legacy preference. Playback promises never do.
     const saved = preferences({ musicEnabled: !audioMaster.snapshot().muted });
     const warning = audioPreferences.getWarning() || saved.warning || '';
@@ -2006,9 +2060,14 @@ try {
   }
   function setMasterVolume(volume) {
     audioPreferences.setVolume(volume);
+    activateDeferredAudio();
     const saved = preferences({ masterVolume: audioMaster.snapshot().volume });
     const warning = audioPreferences.getWarning() || saved.warning || '';
     return { ok: !warning, warning };
+  }
+  function activateDeferredAudio() {
+    const master = audioMaster.snapshot();
+    if (deferredMutedActivation && !master.muted && master.volume > 0) void activateAudio(); // Keep context activation inside this control gesture.
   }
   function suspendAudio() {
     contextualReactions?.suspend();
@@ -2041,7 +2100,7 @@ try {
   }
   async function initializeSoundtrack() {
     try {
-      const catalogue = SOUNDTRACK_CATALOGUE;
+      const catalogue = resolveSoundtrackCatalogue(SOUNDTRACK_CATALOGUE);
       if (soundtrackDisposed) return;
       const source = createSoundtrackSource({
         catalogue,
@@ -2294,6 +2353,8 @@ try {
   document.addEventListener('pointerdown', startRememberedMenuMusic);
   document.addEventListener('keydown', startRememberedMenuMusic);
   const painter = new BoardPainter(presets, {
+    onContextLoss: ({ owner, source }) => rendererInterrupted(owner ?? source),
+    onContextRestored: ({ owner, source }) => rendererRestored(owner ?? source),
     onAssetStatus: craftFeedback.update,
     onAsset: (message) => {
       const rig = visuals()?.player
@@ -2323,6 +2384,7 @@ try {
   let presentationHost = null,
     presentationSnapshot = null,
     pagePresentationSnapshot = null,
+    deferredPagePresentation = false,
     presentationReady = Promise.resolve(null);
   try {
     if (!runtimeContent)
@@ -2335,7 +2397,10 @@ try {
         .load({ onStatus: presentationFeedback.update })
         .then((snapshot) => {
           pagePresentationSnapshot = snapshot;
-          if (!flightVisualLease) applyFlightPresentation();
+          if (!flightVisualLease) {
+            if (started && !paused) deferredPagePresentation = true;
+            else applyFlightPresentation();
+          }
           return snapshot;
         })
         .catch((error) => {
@@ -2357,6 +2422,7 @@ try {
       (theme.id === 'fpv' || theme.family === 'fpv') && !scenario?.music && !musicOverride,
   });
   function applyFlightPresentation() {
+    deferredPagePresentation = false;
     const snapshot = flightVisualLease?.snapshot ?? pagePresentationSnapshot;
     if (snapshot) (flightVisualLease ?? presentationHost).apply(document.documentElement);
     presentationSnapshot = snapshot;
@@ -2982,6 +3048,73 @@ try {
       refreshControllerBoostCue();
     },
   });
+  if (performanceSession) {
+    const keyboardLatency = (event) => {
+      if (!event.repeat && event.defaultPrevented) observeInput('keyboard', event.timeStamp);
+    };
+    const touchLatency = (event) => {
+      if (
+        (event.type !== 'pointermove' || event.buttons) &&
+        event.target?.closest?.(
+          '#game-canvas,[data-move],#boost-button,#action-button,#pickup-button',
+        )
+      )
+        observeInput(event.pointerType === 'touch' ? 'touch' : 'pointer', event.timeStamp);
+    };
+    window.addEventListener('keydown', keyboardLatency);
+    document.addEventListener('pointerdown', touchLatency);
+    document.addEventListener('pointermove', touchLatency);
+    const observers = [];
+    const supported = globalThis.PerformanceObserver?.supportedEntryTypes ?? [];
+    for (const [type, record] of [
+      ['longtask', 'longTask'],
+      ['long-animation-frame', 'longAnimationFrame'],
+    ]) {
+      if (!supported.includes(type)) continue;
+      const observer = new PerformanceObserver((list) => {
+        for (const entry of list.getEntries()) performanceSession[record](entry.duration);
+      });
+      observer.observe({ type, buffered: true });
+      observers.push(observer);
+    }
+    performanceSession.setObserverSupport({
+      longTask: supported.includes('longtask'),
+      longAnimationFrame: supported.includes('long-animation-frame'),
+    });
+    window.RevealLineSoloPerformance = Object.freeze({
+      export() {
+        return {
+          ...performanceSession.export({
+            paused: paused || !started || ['won', 'lost'].includes(run?.status),
+          }),
+          droppedInputObservations,
+          buildVersion,
+          userAgent: navigator.userAgent,
+          viewport: { width: innerWidth, height: innerHeight },
+          cadenceCalibration: {
+            samples: fieldScene?.readyCount ?? 0,
+            required: 30,
+            status: fieldScene?.readyCount === 30 ? 'measured-before-play' : 'provisional-60hz',
+          },
+          quality: qualityPolicy.snapshot(),
+          audio: audioMaster.snapshot(),
+          resources: {
+            renderer: painter.resourceSnapshot(),
+            media: sound.mediaPreparation.snapshot(),
+            soundtrack: soundtrackPlayer?.preparationDiagnostics(),
+          },
+          canvas: fieldScene?.boardTexture.context.getContextAttributes?.() ?? null,
+        };
+      },
+    });
+    window.addEventListener('pagehide', (event) => {
+      if (event.persisted) return;
+      for (const observer of observers) observer.disconnect();
+      window.removeEventListener('keydown', keyboardLatency);
+      document.removeEventListener('pointerdown', touchLatency);
+      document.removeEventListener('pointermove', touchLatency);
+    });
+  }
   function readingPrompt({ scrollable }) {
     const mode = document.body.dataset.inputMode;
     const scroll = !scrollable
@@ -3503,6 +3636,9 @@ try {
     },
   });
   function clearInput({ preserveNavigation = false, resetDirection = false } = {}) {
+    sceneClock.reset();
+    performanceSession?.discardInputs();
+    inputTokenCount = inputAppliedCount = 0;
     pendingAction = false;
     pendingPickup = false;
     pendingSwitch = null;
@@ -5942,9 +6078,24 @@ try {
     const selectedRun = run;
     if (practiceSession || practice || demo || runtimeContent) return;
     try {
-      const host = await getUnifiedMissionLibrary();
+      const mission = journeyMission();
+      let row = mission
+        ? acceptedJourneyMission(mission, authoredRoute?.id ?? DEFAULT_JOURNEY_ROUTES.solo)
+        : null;
+      if (!mission) {
+        actorMissionIndex ??= getJSON('content/mission-library-index.json').catch((error) => {
+          actorMissionIndex = null;
+          throw error;
+        });
+        row = await acceptedClassicMission({
+          index: await actorMissionIndex,
+          entry: activeEntry,
+          level: campaign.levels[levelIndex],
+          baseEntry,
+          packs,
+        });
+      }
       if (generation !== playedLevelLinkGeneration || run !== selectedRun) return;
-      const row = currentSoloLibraryMission(host);
       const href = playedLevelHref(row, { baseURL: location.href });
       if (!href) return;
       playedLevelLink = href;
@@ -9944,11 +10095,13 @@ try {
   }
   function resume({ alignCourseBoard = true, contentSwitchTicket = null } = {}) {
     if (practiceRenderFailure.failed) return;
+    if (rendererLost.size) return;
     // A queued activation may arrive after blur even when the picture is cached.
     // Use actual foreground state: a fresh Resume need not wait for another frame.
     if (document.hidden || !document.hasFocus()) return;
     if (courseBlocked()) return;
     if (!run || (campaignOverview && !practice) || ['won', 'lost'].includes(run.status)) return;
+    if (deferredPagePresentation && paused) applyFlightPresentation();
     if (!started && runningEnemyNeedsPreparation) {
       try {
         if (!prepare({ contentSwitchTicket })) return;
@@ -9981,7 +10134,8 @@ try {
       !flightPictures?.ready(theme.id) ||
       needsFreshVisuals ||
       needsFreshActors ||
-      needsCaptureEnvironment
+      needsCaptureEnvironment ||
+      !fieldScene?.prepared()
     ) {
       if (pictureResume) return;
       clearPictureRecovery();
@@ -9999,6 +10153,9 @@ try {
       pictureVisualController = controller;
       pictureResume = ticket;
       paused = true;
+      sound.setPreparationPhase('preparing');
+      performanceSession?.setPhase('preparing');
+      void sound.prepareGameplayAudio().catch(() => {});
       clearInput();
       warning(picturePreparingMessage, null, 'host.picture');
       const notify = flightInformation.captureWarning('host.picture');
@@ -10045,15 +10202,7 @@ try {
               onStatus: feedback.update,
             });
         })
-        .then(() => {
-          if (
-            pictureResume === ticket &&
-            pictureGeneration === ticket &&
-            owner === flightPictures &&
-            run === selectedRun &&
-            theme.id === selectedTheme
-          )
-            feedback.finish(t('interface:flightAssetsReadyPressResumeToContinue'));
+        .then(async () => {
           if (
             pictureResume !== ticket ||
             pictureGeneration !== ticket ||
@@ -10086,12 +10235,35 @@ try {
             captureEnvironmentCandidate = stagedEnvironment;
             captureEnvironmentReady = true;
           }
+          if (acceptedCaptureAppearance === undefined)
+            acceptedCaptureAppearance = acceptAttemptAppearance(captureEnvironmentCandidate, {
+              artRevision: runtimeActorArtRevision(),
+              collection: selectedArcadeCollection(menuStyle.themeHost.effectivePreferences()),
+            });
+          painter.setAttemptAppearance(acceptedCaptureAppearance);
+          await fieldScene.prepareBoard(controller.signal);
+          await updatePlayedLevelLink();
+          if (
+            controller.signal.aborted ||
+            pictureResume !== ticket ||
+            pictureGeneration !== ticket ||
+            run !== selectedRun ||
+            owner !== flightPictures ||
+            theme.id !== selectedTheme ||
+            document.hidden ||
+            !document.hasFocus() ||
+            dialogOpen() ||
+            rendererLost.size
+          )
+            return;
+          feedback.finish(t('interface:flightAssetsReadyPressResumeToContinue'));
           pictureResume = null;
           pictureVisualController = null;
           resume({ alignCourseBoard, contentSwitchTicket });
         })
         .catch((error) => {
           if (pictureResume === ticket) {
+            performanceSession?.reportFailure(`Preparation: ${error.message ?? String(error)}`);
             feedback.finish(() => flightPictureFailure(error), 'error');
             pictureFailure(error, notify);
           }
@@ -10100,7 +10272,10 @@ try {
           stagedVisuals?.release();
           stagedActors?.release();
           if (pictureVisualController === controller) pictureVisualController = null;
-          if (pictureResume === ticket) pictureResume = null;
+          if (pictureResume === ticket) {
+            pictureResume = null;
+            feedback.finish('', 'cancelled');
+          }
         });
     }
     pictureResume = null;
@@ -10126,7 +10301,9 @@ try {
     }
     started = true;
     paused = false;
-    void updatePlayedLevelLink();
+    sound.setPreparationPhase('playing');
+    performanceSession?.setPhase('playing');
+    qualityPolicy.safeTransition(performance.now());
     if (['restored', 'paused-resume'].includes(runMessageCue))
       warning(
         run.player.cutting
@@ -10169,6 +10346,8 @@ try {
     if (defeatRemaining <= 1e-9) finishDefeatPresentation();
   }
   function pause(force, { preserveWorld = false } = {}) {
+    sound.setPreparationPhase(document.hidden || !document.hasFocus() ? 'suspended' : 'paused');
+    performanceSession?.setPhase(document.hidden ? 'hidden' : 'paused');
     if (practiceRenderFailure.failed) return;
     cancelPictureStart({ preserveRecovery: true, preserveWorld });
     if (courseBlocked()) {
@@ -10219,169 +10398,12 @@ try {
     localizedText($('pause-button'), () => '▶');
     refreshHUD();
   }
-  function refreshHUD() {
-    huntStatus?.render(run);
-    huntResultStatus?.render(run);
-    encounterVariantControls?.refresh();
-    if (practiceRenderFailure.failed) return;
-    profileRecovery?.refresh();
-    refreshJourneySkip();
-    const reactionMission = journeySkipMission();
-    journeyReactions.present({
-      owned: !!reactionMission,
-      mode: 'solo',
-      outcome: run?.status,
-      missionId: reactionMission?.id,
-      ...(candidateHost?.owns(activeEntry) ? { feedback: activeEntry.campaignFeedback } : {}),
-      encounter: !!run?.level.encounter,
-      relays: !!run?.level.relayGates?.gates?.length,
-    });
-    show(
-      'pause-button',
-      started &&
-        !paused &&
-        !courseBlocked() &&
-        !campaignOverview &&
-        !celebrationActive &&
-        !defeatActive &&
-        !['won', 'lost'].includes(run.status),
-    );
-    localizedText($('shell-edition'), () =>
-      courseSession
-        ? t('interface:firstFlight2')
-        : practice
-          ? t('interface:practice')
-          : !arcadeActionCapabilities(run?.level).manualAbility
-            ? t('interface:arcadeEdition')
-            : t('interface:tacticalEdition'),
-    );
-    document.body.dataset.pictureState = flightPictures?.ready(theme.id) ? 'ready' : 'pending';
-    const enjoyingPicture = run.status === 'won' && $('game-overlay').hidden;
-    const previousPicturePhase = document.body.dataset.winPicture;
-    const phase = enjoyingPicture
-      ? celebrationActive && winRevealAge < REWARD_BOARD_SECONDS
-        ? 'revealing'
-        : celebrationActive
-          ? 'celebrating'
-          : 'settled'
-      : 'off';
-    const arrival =
-      previousPicturePhase === 'revealing' && ['celebrating', 'settled'].includes(phase)
-        ? $('game-canvas').getBoundingClientRect()
-        : null;
-    document.body.dataset.winPicture = phase;
-    if (arrival)
-      animateRewardArrival(
-        $('game-canvas'),
-        arrival,
-        displayPreferences.snapshot().effectiveReducedEffects,
-      );
-    show('win-picture-caption', enjoyingPicture && phase !== 'revealing');
-    document.body.dataset.flightState =
-      defeatActive || celebrationActive || (run.status === 'won' && !$('show-result').hidden)
-        ? 'picture'
-        : campaignOverview || ['won', 'lost'].includes(run.status)
-          ? 'result'
-          : !started
-            ? 'briefing'
-            : paused
-              ? 'paused'
-              : 'running';
-    $('coverage').innerHTML = `${(run.coverage * 100).toFixed(1)}<small>%</small>`;
-    $('coverage').setAttribute('aria-valuenow', (run.coverage * 100).toFixed(1));
-    localizedAttribute($('coverage'), 'aria-valuetext', () =>
-      t(
-        run.level.classic?.hunt?.mode === 'hunt'
-          ? 'gameplay:hud.huntCoverageValue'
-          : 'gameplay:hud.coverageValue',
-        {
-          coverage: formatNumber(run.coverage * 100, { maximumFractionDigits: 1 }),
-          target: Math.round(run.level.goal.coverage * 100),
-          kills: run.classic?.hunt?.kills ?? 0,
-          total: run.level.classic?.hunt?.targets.length ?? 0,
-        },
+  function refreshHUDClocks() {
+    localizedText($('time'), () =>
+      timeLabel(
+        run.rules.timeLimitSeconds ? Math.max(0, run.rules.timeLimitSeconds - run.time) : run.time,
       ),
     );
-    $('coverage-bar').style.width = `${run.coverage * 100}%`;
-    $('goal-marker').style.left = `${run.level.goal.coverage * 100}%`;
-    $('goal-marker').hidden = run.level.classic?.hunt?.mode === 'hunt';
-    localizedText($('target'), () =>
-      run.level.classic?.hunt?.mode === 'hunt'
-        ? `${huntText('targets')}: ${run.classic.hunt.kills}/${run.level.classic.hunt.quota}`
-        : t('gameplay:target', { value1: Math.round(run.level.goal.coverage * 100) }),
-    );
-    $('coverage').dataset.target =
-      run.level.classic?.hunt?.mode !== 'hunt' && Number.isFinite(run.level.goal.coverage)
-        ? ` / ${Math.round(run.level.goal.coverage * 100)}%`
-        : '';
-    localizedText($('lives'), () =>
-      run.lives > 3 ? `◆ ×${run.lives}` : '◆ '.repeat(run.lives).trim() || '—',
-    );
-    localizedAttribute($('lives'), 'aria-label', () =>
-      t('gameplay:hud.lives', { count: run.lives }),
-    );
-    $('lives').dataset.compactValue = `♥ ${run.lives}`;
-    localizedText($('time'), () => timeLabel(run.time));
-    localizedText($('score'), () => {
-      // Keep raw score precision in the run/save/replay; only compact the HUD.
-      const label = formatNumber(run.score, { useGrouping: false, maximumFractionDigits: 3 });
-      return Number.isInteger(run.score) ? label.padStart(5, '0') : label;
-    });
-    const required = run.objectives.filter((o) => o.required),
-      done = required.filter((o) => o.captured);
-    localizedText($('objective-state'), () =>
-      campaignOverview
-        ? t('interface:chooseAMissionToReplay')
-        : run.status === 'won'
-          ? t('interface:targetReached')
-          : run.status === 'lost'
-            ? t('interface:retryWhenYouAreReady')
-            : run.level.classic?.hunt
-              ? huntText(
-                  run.level.classic.hunt.mode === 'hunt'
-                    ? 'huntGoal'
-                    : run.level.classic.hunt.mode === 'capture-quota'
-                      ? 'quotaGoal'
-                      : 'bonusGoal',
-                )
-              : required.length
-                ? `${contentText(theme, 'labels.objective')}: ${done.length} / ${required.length}`
-                : t('interface:closeALineToRevealThePicture'),
-    );
-    localizedText($('flight-state'), () =>
-      campaignOverview
-        ? t('interface:campaignComplete3')
-        : run.status === 'won'
-          ? t('interface:missionComplete')
-          : run.status === 'lost'
-            ? t('interface:flightEnded')
-            : run.status === 'respawning'
-              ? t('interface:recovering')
-              : !started
-                ? t('interface:readyForLaunch')
-                : paused
-                  ? t('interface:paused')
-                  : run.player.cutting
-                    ? run.player.speed === 0
-                      ? t('interface:lineExposedChooseATurn')
-                      : t('interface:liveLineExposed')
-                    : [
-                          'xonix-core.v6',
-                          'xonix-core.v7',
-                          'xonix-core.v8',
-                          'xonix-core.v9',
-                          'xonix-core.v10',
-                          'xonix-core.v11',
-                          'xonix-core.v12',
-                          'xonix-core.v13',
-                          'xonix-core.v14',
-                          'xonix-core.v15',
-                          'xonix-core.v16',
-                        ].includes(run.ruleset)
-                      ? t('interface:reclaimedGround')
-                      : t('interface:safeGround'),
-    );
-    $('status-dot').style.background = run.player.cutting ? 'var(--danger)' : 'var(--safe)';
     localizedText($('ability-state'), () => {
       const left = Math.max(0, run.ability.cooldownUntil - run.time);
       const status =
@@ -10400,62 +10422,291 @@ try {
           })
         : status;
     });
-    const canSwitchCraft = craftSwitchAvailable();
-    $('hangar-button').disabled = !canSwitchCraft;
-    show('hangar-button', canSwitchCraft);
-    localizedText(
-      $('loadout-note'),
-      () =>
-        t('interface:startingClassChangesBeginAFreshAttempt') +
-        (canSwitchCraft ? ' ' + t('interface:useAHangarToSwitchDuringFlight') + '' : ''),
-    );
-    $('restart-button').disabled = defeatActive || courseBlocked() || campaignOverview;
-    $('restart-button').hidden = !started || ['won', 'lost'].includes(run.status);
-    refreshInputPresentation();
-    $('pause-button').disabled = courseBlocked() || campaignOverview;
-    $('save-attempt-button').disabled =
-      !started || practice || ['won', 'lost'].includes(run.status);
-    const near = run.hangars?.some(
-      (h) => Math.hypot(h.x - run.player.x, h.y - run.player.y) <= h.radius,
-    );
-    localizedText($('hangar-state'), () =>
-      courseSession
-        ? t('interface:scoutFixedLessonCraftNoHangarsInTraining')
-        : run.signal?.zoneIds?.length
-          ? run.signal.resistant
-            ? t('interface:fiberLinkSignalZoneBypassedLineRemainsVulnerable')
-            : t('interface:signalInterferenceSlowerMovementOrDisabledEquipment')
-          : canSwitchCraft
-            ? t(
-                near && !run.player.cutting
-                  ? 'gameplay:hud.hangarAvailable'
-                  : 'gameplay:hud.hangarReturn',
-                { craft: contentText(run.classRecipe, 'label') },
-              )
-            : contentText(run.classRecipe, 'label'),
-    );
-    if (run.rules.timeLimitSeconds)
-      localizedText($('time'), () => timeLabel(Math.max(0, run.rules.timeLimitSeconds - run.time)));
-    const encounter = encounterView(run),
-      classic = classicView(run);
-    show('encounter-status', !!(encounter || classic) && !campaignOverview);
-    $('encounter-status').dataset.kind = encounter ? 'encounter' : 'classic';
-    localizedText(
-      $('encounter-title'),
-      () => contentText(encounter, 'title') || t('interface:classicField'),
-    );
-    localizedText($('encounter-instruction'), () => contentText(encounter, 'instruction') || '');
-    show('encounter-instruction', !!encounter);
-    localizedText($('classic-summary'), () => contentText(classic, 'summary') || '');
-    show('classic-summary', !!classic);
-    $('encounter-status').dataset.phase =
-      encounter?.phase ||
-      (classic?.enemies.some((enemy) => enemy.mode === 'warning') ? 'warning' : 'open');
-    refreshMastery();
-    refreshCourse();
-    flightDetails?.reconcile();
+  }
+  function refreshHUD(frame = false) {
+    const workStart = performanceSession ? performance.now() : 0;
+    try {
+      const now = performance.now();
+      const changed =
+        !hudState ||
+        hudState.run !== run ||
+        hudState.status !== run.status ||
+        hudState.lives !== run.lives ||
+        hudState.coverage !== run.coverage ||
+        hudState.score !== run.score ||
+        hudState.cutting !== run.player.cutting ||
+        hudState.stopped !== (run.player.speed === 0) ||
+        hudState.ammo !== run.ability.ammo ||
+        hudState.paused !== paused ||
+        hudState.started !== started ||
+        hudState.celebrating !== celebrationActive ||
+        hudState.defeat !== defeatActive;
+      if (frame && !hudDirty && !changed && now - hudAt < 100) return;
+      hudAt = now;
+      refreshHUDClocks();
+      const switchCraft = craftSwitchAvailable();
+      const nearHangar =
+        run.hangars?.some((h) => Math.hypot(h.x - run.player.x, h.y - run.player.y) <= h.radius) ??
+        false;
+      const signalState = `${run.signal?.zoneIds?.join(',') ?? ''}:${run.signal?.resistant ?? false}`;
+      if (
+        frame &&
+        !hudDirty &&
+        !changed &&
+        hudState.switchCraft === switchCraft &&
+        hudState.nearHangar === nearHangar &&
+        hudState.signalState === signalState &&
+        !celebrationActive
+      ) {
+        huntStatus?.render(run);
+        huntResultStatus?.render(run);
+        refreshMastery();
+        refreshCourse();
+        flightDetails?.reconcile();
+        return;
+      }
+      hudDirty = false;
+      ++hudRevision;
+      hudState = {
+        run,
+        status: run.status,
+        lives: run.lives,
+        coverage: run.coverage,
+        score: run.score,
+        cutting: run.player.cutting,
+        stopped: run.player.speed === 0,
+        ammo: run.ability.ammo,
+        paused,
+        started,
+        celebrating: celebrationActive,
+        defeat: defeatActive,
+        switchCraft,
+        nearHangar,
+        signalState,
+      };
+      huntStatus?.render(run);
+      huntResultStatus?.render(run);
+      encounterVariantControls?.refresh();
+      if (practiceRenderFailure.failed) return;
+      profileRecovery?.refresh();
+      refreshJourneySkip();
+      const reactionMission = journeySkipMission();
+      journeyReactions.present({
+        owned: !!reactionMission,
+        mode: 'solo',
+        outcome: run?.status,
+        missionId: reactionMission?.id,
+        ...(candidateHost?.owns(activeEntry) ? { feedback: activeEntry.campaignFeedback } : {}),
+        encounter: !!run?.level.encounter,
+        relays: !!run?.level.relayGates?.gates?.length,
+      });
+      show(
+        'pause-button',
+        started &&
+          !paused &&
+          !courseBlocked() &&
+          !campaignOverview &&
+          !celebrationActive &&
+          !defeatActive &&
+          !['won', 'lost'].includes(run.status),
+      );
+      localizedText($('shell-edition'), () =>
+        courseSession
+          ? t('interface:firstFlight2')
+          : practice
+            ? t('interface:practice')
+            : !arcadeActionCapabilities(run?.level).manualAbility
+              ? t('interface:arcadeEdition')
+              : t('interface:tacticalEdition'),
+      );
+      document.body.dataset.pictureState = flightPictures?.ready(theme.id) ? 'ready' : 'pending';
+      const enjoyingPicture = run.status === 'won' && $('game-overlay').hidden;
+      const previousPicturePhase = document.body.dataset.winPicture;
+      const phase = enjoyingPicture
+        ? celebrationActive && winRevealAge < REWARD_BOARD_SECONDS
+          ? 'revealing'
+          : celebrationActive
+            ? 'celebrating'
+            : 'settled'
+        : 'off';
+      const arrival =
+        previousPicturePhase === 'revealing' && ['celebrating', 'settled'].includes(phase)
+          ? $('game-canvas').getBoundingClientRect()
+          : null;
+      document.body.dataset.winPicture = phase;
+      if (arrival)
+        animateRewardArrival(
+          $('game-canvas'),
+          arrival,
+          displayPreferences.snapshot().effectiveReducedEffects,
+        );
+      show('win-picture-caption', enjoyingPicture && phase !== 'revealing');
+      document.body.dataset.flightState =
+        defeatActive || celebrationActive || (run.status === 'won' && !$('show-result').hidden)
+          ? 'picture'
+          : campaignOverview || ['won', 'lost'].includes(run.status)
+            ? 'result'
+            : !started
+              ? 'briefing'
+              : paused
+                ? 'paused'
+                : 'running';
+      const coverageLabel = (run.coverage * 100).toFixed(1);
+      if ($('coverage').firstChild.textContent !== coverageLabel)
+        $('coverage').firstChild.textContent = coverageLabel;
+      $('coverage').setAttribute('aria-valuenow', (run.coverage * 100).toFixed(1));
+      localizedAttribute($('coverage'), 'aria-valuetext', () =>
+        t(
+          run.level.classic?.hunt?.mode === 'hunt'
+            ? 'gameplay:hud.huntCoverageValue'
+            : 'gameplay:hud.coverageValue',
+          {
+            coverage: formatNumber(run.coverage * 100, { maximumFractionDigits: 1 }),
+            target: Math.round(run.level.goal.coverage * 100),
+            kills: run.classic?.hunt?.kills ?? 0,
+            total: run.level.classic?.hunt?.targets.length ?? 0,
+          },
+        ),
+      );
+      const coverageTransform = `scaleX(${run.coverage})`;
+      if ($('coverage-bar').style.transform !== coverageTransform)
+        $('coverage-bar').style.transform = coverageTransform;
+      $('goal-marker').style.left = `${run.level.goal.coverage * 100}%`;
+      $('goal-marker').hidden = run.level.classic?.hunt?.mode === 'hunt';
+      localizedText($('target'), () =>
+        run.level.classic?.hunt?.mode === 'hunt'
+          ? `${huntText('targets')}: ${run.classic.hunt.kills}/${run.level.classic.hunt.quota}`
+          : t('gameplay:target', { value1: Math.round(run.level.goal.coverage * 100) }),
+      );
+      $('coverage').dataset.target =
+        run.level.classic?.hunt?.mode !== 'hunt' && Number.isFinite(run.level.goal.coverage)
+          ? ` / ${Math.round(run.level.goal.coverage * 100)}%`
+          : '';
+      localizedText($('lives'), () =>
+        run.lives > 3 ? `◆ ×${run.lives}` : '◆ '.repeat(run.lives).trim() || '—',
+      );
+      localizedAttribute($('lives'), 'aria-label', () =>
+        t('gameplay:hud.lives', { count: run.lives }),
+      );
+      $('lives').dataset.compactValue = `♥ ${run.lives}`;
+      localizedText($('score'), () => {
+        // Keep raw score precision in the run/save/replay; only compact the HUD.
+        const label = formatNumber(run.score, { useGrouping: false, maximumFractionDigits: 3 });
+        return Number.isInteger(run.score) ? label.padStart(5, '0') : label;
+      });
+      const required = run.objectives.filter((o) => o.required),
+        done = required.filter((o) => o.captured);
+      localizedText($('objective-state'), () =>
+        campaignOverview
+          ? t('interface:chooseAMissionToReplay')
+          : run.status === 'won'
+            ? t('interface:targetReached')
+            : run.status === 'lost'
+              ? t('interface:retryWhenYouAreReady')
+              : run.level.classic?.hunt
+                ? huntText(
+                    run.level.classic.hunt.mode === 'hunt'
+                      ? 'huntGoal'
+                      : run.level.classic.hunt.mode === 'capture-quota'
+                        ? 'quotaGoal'
+                        : 'bonusGoal',
+                  )
+                : required.length
+                  ? `${contentText(theme, 'labels.objective')}: ${done.length} / ${required.length}`
+                  : t('interface:closeALineToRevealThePicture'),
+      );
+      localizedText($('flight-state'), () =>
+        campaignOverview
+          ? t('interface:campaignComplete3')
+          : run.status === 'won'
+            ? t('interface:missionComplete')
+            : run.status === 'lost'
+              ? t('interface:flightEnded')
+              : run.status === 'respawning'
+                ? t('interface:recovering')
+                : !started
+                  ? t('interface:readyForLaunch')
+                  : paused
+                    ? t('interface:paused')
+                    : run.player.cutting
+                      ? run.player.speed === 0
+                        ? t('interface:lineExposedChooseATurn')
+                        : t('interface:liveLineExposed')
+                      : [
+                            'xonix-core.v6',
+                            'xonix-core.v7',
+                            'xonix-core.v8',
+                            'xonix-core.v9',
+                            'xonix-core.v10',
+                            'xonix-core.v11',
+                            'xonix-core.v12',
+                            'xonix-core.v13',
+                            'xonix-core.v14',
+                            'xonix-core.v15',
+                            'xonix-core.v16',
+                          ].includes(run.ruleset)
+                        ? t('interface:reclaimedGround')
+                        : t('interface:safeGround'),
+      );
+      $('status-dot').style.background = run.player.cutting ? 'var(--danger)' : 'var(--safe)';
+      const canSwitchCraft = craftSwitchAvailable();
+      $('hangar-button').disabled = !canSwitchCraft;
+      show('hangar-button', canSwitchCraft);
+      localizedText(
+        $('loadout-note'),
+        () =>
+          t('interface:startingClassChangesBeginAFreshAttempt') +
+          (canSwitchCraft ? ' ' + t('interface:useAHangarToSwitchDuringFlight') + '' : ''),
+      );
+      $('restart-button').disabled = defeatActive || courseBlocked() || campaignOverview;
+      $('restart-button').hidden = !started || ['won', 'lost'].includes(run.status);
+      refreshInputPresentation();
+      $('pause-button').disabled = courseBlocked() || campaignOverview;
+      $('save-attempt-button').disabled =
+        !started || practice || ['won', 'lost'].includes(run.status);
+      const near = run.hangars?.some(
+        (h) => Math.hypot(h.x - run.player.x, h.y - run.player.y) <= h.radius,
+      );
+      localizedText($('hangar-state'), () =>
+        courseSession
+          ? t('interface:scoutFixedLessonCraftNoHangarsInTraining')
+          : run.signal?.zoneIds?.length
+            ? run.signal.resistant
+              ? t('interface:fiberLinkSignalZoneBypassedLineRemainsVulnerable')
+              : t('interface:signalInterferenceSlowerMovementOrDisabledEquipment')
+            : canSwitchCraft
+              ? t(
+                  near && !run.player.cutting
+                    ? 'gameplay:hud.hangarAvailable'
+                    : 'gameplay:hud.hangarReturn',
+                  { craft: contentText(run.classRecipe, 'label') },
+                )
+              : contentText(run.classRecipe, 'label'),
+      );
+      const encounter = encounterView(run),
+        classic = classicView(run);
+      show('encounter-status', !!(encounter || classic) && !campaignOverview);
+      $('encounter-status').dataset.kind = encounter ? 'encounter' : 'classic';
+      localizedText(
+        $('encounter-title'),
+        () => contentText(encounter, 'title') || t('interface:classicField'),
+      );
+      localizedText($('encounter-instruction'), () => contentText(encounter, 'instruction') || '');
+      show('encounter-instruction', !!encounter);
+      localizedText($('classic-summary'), () => contentText(classic, 'summary') || '');
+      show('classic-summary', !!classic);
+      $('encounter-status').dataset.phase =
+        encounter?.phase ||
+        (classic?.enemies.some((enemy) => enemy.mode === 'warning') ? 'warning' : 'open');
+      refreshMastery();
+      refreshCourse();
+      flightDetails?.reconcile();
+    } finally {
+      if (performanceSession) hudWorkMs += performance.now() - workStart;
+    }
   }
   function eventFeedback(events) {
+    if (events.length) hudDirty = true;
     contextualReactions?.events(events, {
       attemptId: runId,
       actorFamilyFor: (id) => pursuitRoster(run?.level).find((actor) => actor.id === id)?.family,
@@ -10710,6 +10961,7 @@ try {
     else gameWakeLock.dispose();
   });
   function update(elapsed) {
+    if (['won', 'lost'].includes(run.status)) sound.setPreparationPhase('paused');
     gameWakeLock.setActive(
       !demoHost?.active && started && !paused && run.status === 'running' && !document.hidden,
     );
@@ -10742,6 +10994,7 @@ try {
         ? demoHost.toggleBoostEligible
         : run?.status === 'running',
     });
+    if (controllerFrame.assigned && !paused && started) observeInput('controller');
     soloRadioSetup.refresh();
     refreshControllerBoostCue();
     const { status, assigned, disconnected } = controllerFrame;
@@ -10902,7 +11155,13 @@ try {
           } catch {
             stopCourseGuidance();
           }
+        const simulationStart = performanceSession ? performance.now() : 0;
         stepRun(run, command, FIXED_DT);
+        if (performanceSession) {
+          simulationWorkMs += performance.now() - simulationStart;
+          for (let i = 0; i < inputTokenCount; i++) performanceSession.tick(inputTokens[i]);
+          inputAppliedCount = inputTokenCount;
+        }
         sound.feedback(true, theme, run, {
           bodyId: flightActorLease?.pin().style === 'fpv' ? `fpv-${run.activeClassId}` : bodyId,
           actorStyle: flightActorLease?.pin().style,
@@ -11299,7 +11558,7 @@ try {
     } else sound.update(!paused && started, theme, run);
     if (!sound.previewActive && $('music-preview').textContent.startsWith('Playing'))
       localizedText($('music-preview'), () => t('interface:previewMusic'));
-    refreshHUD();
+    refreshHUD(true);
   }
   for (const t of themesFile.themes)
     $('theme-select').append(localizedOption(() => themeLabel(t), t.id));
@@ -11900,6 +12159,7 @@ try {
   window.addEventListener('blur', guardInstallOfflineBlur(suspendInteraction));
   function restoreListening() {
     if (document.hidden || soundtrackDisposed || enemyGuide?.practiceActive) return;
+    sound.setPreparationPhase(started && !paused ? 'playing' : started ? 'paused' : 'menu');
     if (!soundtrackPlayer) {
       // The procedural fallback is used when file-audio setup is unavailable.
       // It still needs a fresh resume after an iOS lifecycle interruption.
@@ -11996,75 +12256,354 @@ try {
   refreshControllerPrompts();
   class FieldScene extends Phaser.Scene {
     create() {
+      fieldScene = this;
       this.boardSize = boardPaintSizeForRun(run);
       const { width, height } = this.boardSize;
       this.boardTexture = this.textures.createCanvas('field', width, height);
-      document.documentElement.style.setProperty('--board-ratio', `${width} / ${height}`);
-      document.documentElement.style.setProperty('--board-aspect', String(width / height));
       this.boardImage = this.add.image(0, 0, 'field').setOrigin(0);
       this.game.canvas.setAttribute('aria-hidden', 'true');
+      this.displayCSSWidth = this.game.canvas.clientWidth;
+      this.revision = 0;
+      this.preparedState = null;
+      this.lastPaint = null;
+      this.readyFrames = new Float64Array(30);
+      this.readyCount = 0;
+      this.lastInterfaceAt = -Infinity;
+      this.framePending = false;
+      this.pendingSubmission = false;
+      this.frameStartedAt = null;
+      const preStep = () => this.beginFrame();
+      const postRender = (renderer) => this.finishFrame(renderer);
+      this.game.events.on(Phaser.Core.Events.PRE_STEP, preStep);
+      this.game.events.on(Phaser.Core.Events.POST_RENDER, postRender);
+      let hooksRetired = false;
+      const retireFrameHooks = () => {
+        if (hooksRetired) return;
+        hooksRetired = true;
+        this.game.events.off(Phaser.Core.Events.PRE_STEP, preStep);
+        this.game.events.off(Phaser.Core.Events.POST_RENDER, postRender);
+        this.preparedCancel?.();
+        this.framePending = this.pendingSubmission = false;
+      };
+      this.events.once('shutdown', retireFrameHooks);
+      this.events.once('destroy', retireFrameHooks);
+      const resized = () => {
+        this.displayCSSWidth = this.game.canvas.clientWidth;
+        this.invalidate();
+      };
+      const observer = typeof ResizeObserver === 'function' ? new ResizeObserver(resized) : null;
+      observer?.observe(this.game.canvas);
+      window.addEventListener('resize', resized);
+      const surfaces = [
+        this.game.canvas,
+        this.boardTexture.canvas ?? this.boardTexture.context.canvas,
+      ];
+      const listeners = surfaces.filter(Boolean).map((canvas) => {
+        const lost = () => rendererInterrupted(canvas);
+        const restored = () => {
+          const context = canvas.getContext('2d');
+          context?.setTransform(1, 0, 0, 1, 0, 0);
+          if (context) context.imageSmoothingEnabled = false;
+          rendererRestored(canvas);
+        };
+        canvas.addEventListener?.('contextlost', lost);
+        canvas.addEventListener?.('contextrestored', restored);
+        return () => {
+          canvas.removeEventListener?.('contextlost', lost);
+          canvas.removeEventListener?.('contextrestored', restored);
+        };
+      });
+      window.addEventListener('pagehide', (event) => {
+        sceneClock.reset();
+        performanceSession?.discardInputs();
+        performanceSession?.setPhase('hidden');
+        if (event.persisted) return;
+        retireFrameHooks();
+        observer?.disconnect();
+        window.removeEventListener('resize', resized);
+        for (const dispose of listeners) dispose();
+      });
+      this.resizeBoard();
     }
-    update(now, delta) {
+    beginFrame() {
+      this.frameStartedAt = performance.now();
+      this.framePending = false;
+      this.pendingSubmission = false;
+      this.submittedInputCount = 0;
+      this.submittedPreparation = null;
+    }
+    finishFrame(renderer) {
+      if (!this.framePending) return;
+      this.framePending = false;
+      const submittedAt = performance.now();
+      // Scene creation can occur after PRE_STEP on the first boot frame. Do not
+      // publish a partial measurement, but still acknowledge its visible board.
+      const timed = this.frameStartedAt !== null;
+      const workMs = timed ? submittedAt - this.frameStartedAt : 0;
+      this.frameStartedAt = null;
+      // Game POST_RENDER follows every camera and CanvasRenderer.postRender.
+      // This is render submission, not browser compositing or physical scanout.
+      const foreground = !document.hidden && document.hasFocus();
+      const visibleBoard =
+        renderer &&
+        foreground &&
+        !rendererLost.size &&
+        !demoHost?.active &&
+        !dialogOpen() &&
+        this.sys.isVisible() &&
+        this.cameras.main.visible &&
+        this.cameras.main.alpha > 0 &&
+        this.boardImage.willRender(this.cameras.main);
+      if (
+        timed &&
+        !started &&
+        !pictureResume &&
+        foreground &&
+        workMs < 3 &&
+        this.frameRawMs >= 4 &&
+        this.frameRawMs <= 50 &&
+        this.readyCount < this.readyFrames.length
+      ) {
+        this.readyFrames[this.readyCount++] = this.frameRawMs;
+        if (this.readyCount === this.readyFrames.length) {
+          this.readyFrames.sort();
+          const baseline = this.readyFrames[this.readyCount >> 1];
+          qualityPolicy.setBaseline(baseline);
+          performanceSession?.setBaseline(baseline);
+        }
+      }
+      if (timed) {
+        if (this.frameActive) qualityPolicy.observe(this.frameNow, this.frameRawMs, workMs);
+        performanceSession?.recordFrame(
+          this.frameNow,
+          this.frameUpdateMs,
+          this.frameDrawMs,
+          this.frameHudMs,
+          this.frameSimulationMs,
+          workMs,
+        );
+      }
+      if (!visibleBoard || !this.pendingSubmission || this.submittedRun !== run) return;
+      const count = Math.min(this.submittedInputCount, inputAppliedCount, inputTokenCount);
+      for (let i = 0; i < count; i++) performanceSession?.rendered(inputTokens[i], submittedAt);
+      inputTokens.copyWithin(0, count, inputTokenCount);
+      inputTokenCount -= count;
+      inputAppliedCount -= count;
+      const finish = this.submittedPreparation;
+      this.submittedPreparation = null;
+      this.pendingSubmission = false;
+      if (finish && this.preparedFrame === finish) {
+        this.preparedFrame = null;
+        finish();
+      }
+    }
+    invalidate() {
+      ++this.revision;
+      this.preparedState = null;
+      this.lastPaint = null;
+    }
+    prepared() {
+      const state = this.preparedState;
+      return (
+        !!state &&
+        state.run === run &&
+        state.generation === painter.preparationGeneration &&
+        state.paintRevision === painter.paintRevision &&
+        state.backdrop === flightPictures?.current() &&
+        state.actors === flightActorLease &&
+        state.revision === this.revision &&
+        !rendererLost.size
+      );
+    }
+    resizeBoard() {
+      const { width, height } = boardPaintSizeForRun(run);
+      if (width !== this.boardSize.width || height !== this.boardSize.height) {
+        this.boardTexture.setSize(width, height);
+        this.boardImage.setSizeToFrame();
+        this.scale.resize(width, height);
+        this.cameras.main.setSize(width, height);
+        this.boardSize = { width, height };
+        this.invalidate();
+      }
+      document.documentElement.style.setProperty('--board-ratio', `${width} / ${height}`);
+      document.documentElement.style.setProperty('--board-aspect', String(width / height));
+    }
+    drawOptions() {
+      return {
+        actorAppearance: flightActorLease
+          ? { style: flightActorLease.pin().style, snapshot: flightActorLease.snapshot }
+          : null,
+        textFace: displayPreferences.snapshot().textFace,
+        // The texture is detached; only the displayed Phaser canvas has a CSS size.
+        displayCSSWidth: this.displayCSSWidth,
+        paused,
+        quality: qualityPolicy.snapshot().tier,
+        reduced: displayPreferences.snapshot().effectiveReducedEffects,
+        fullReveal: run.status === 'won',
+        showGrid: scenario?.presentation?.showGrid || library.preferences.showGrid,
+        showCombatScrap: practiceRemains ?? encounterDisplay.snapshot().showRemains,
+        brutal: encounterDisplay.snapshot().brutal,
+        blood: encounterDisplay.snapshot().blood,
+        backdrop: flightPictures?.current(),
+        celebrationPaused: document.hidden || !document.hasFocus() || dialogOpen(),
+        defeatEffectsRunning: defeatEffectsRunning(),
+        signalReception:
+          run.status === 'won'
+            ? 'off'
+            : run.status === 'lost'
+              ? 'lost'
+              : restoredSignalRuns.has(run)
+                ? 'off'
+                : started
+                  ? 'playing'
+                  : 'ready',
+        signalEffectsRunning:
+          run.status === 'lost'
+            ? defeatEffectsRunning()
+            : started && !paused && !document.hidden && document.hasFocus() && !dialogOpen(),
+      };
+    }
+    async prepareBoard(signal) {
+      const state = {
+        run,
+        generation: painter.preparationGeneration,
+        backdrop: flightPictures?.current(),
+        actors: flightActorLease,
+        revision: this.revision,
+      };
+      this.resizeBoard();
+      state.revision = this.revision;
+      await painter.prepare(this.boardTexture.context, run, this.drawOptions(), { signal });
+      signal.throwIfAborted();
+      state.paintRevision = painter.paintRevision;
+      this.lastPaint = null;
+      // The next game POST_RENDER confirms Phaser submitted the prepared board
+      // to its visible canvas while paused. This does not claim display scanout.
+      await new Promise((resolve, reject) => {
+        const cancel = () => {
+          if (this.preparedFrame === finish) this.preparedFrame = null;
+          if (this.preparedCancel === cancel) this.preparedCancel = null;
+          signal.removeEventListener('abort', cancel);
+          reject(signal.reason ?? new DOMException('Preparation cancelled.', 'AbortError'));
+        };
+        const finish = () => {
+          signal.removeEventListener('abort', cancel);
+          if (this.preparedCancel === cancel) this.preparedCancel = null;
+          resolve();
+        };
+        signal.addEventListener('abort', cancel, { once: true });
+        this.preparedCancel = cancel;
+        this.preparedFrame = finish;
+        if (signal.aborted) cancel();
+      });
+      signal.throwIfAborted();
+      if (
+        run !== state.run ||
+        this.revision !== state.revision ||
+        painter.paintRevision !== state.paintRevision ||
+        painter.preparationGeneration !== state.generation ||
+        rendererLost.size
+      )
+        throw new DOMException('Preparation superseded.', 'AbortError');
+      this.preparedState = state;
+    }
+    update(now) {
       if (practiceRenderFailure.failed) return;
       if (globalThis.RevealLineBoot && document.documentElement.dataset.bootState !== 'ready')
         return;
-      try {
-        const dt = clamp(delta / 1000, 0, 1);
-        update(dt);
-        // The modal owns its visible board. Keep the covered ordinary renderer
-        // and its presentation clock untouched until the demo hands back control.
-        if (demoHost?.active) return;
-        editionUI?.refresh();
-        titleCharacter?.update(dt, {
-          visible:
-            !document.hidden && document.hasFocus() && controllerDialog() === $('shell-home'),
-          reduced: displayPreferences.snapshot().effectiveReducedEffects,
-        });
-        const { width, height } = boardPaintSizeForRun(run);
-        if (width !== this.boardSize.width || height !== this.boardSize.height) {
-          this.boardTexture.setSize(width, height);
-          this.boardImage.setSizeToFrame();
-          this.scale.resize(width, height);
-          this.cameras.main.setSize(width, height);
-          this.boardSize = { width, height };
-          document.documentElement.style.setProperty('--board-ratio', `${width} / ${height}`);
-          document.documentElement.style.setProperty('--board-aspect', String(width / height));
-        }
-        painter.draw(this.boardTexture.context, run, Math.min(dt, 0.1), {
-          actorAppearance: flightActorLease
-            ? { style: flightActorLease.pin().style, snapshot: flightActorLease.snapshot }
-            : null,
-          textFace: displayPreferences.snapshot().textFace,
-          // The texture is detached; only the displayed Phaser canvas has a CSS size.
-          displayCSSWidth: this.game.canvas.clientWidth,
-          paused,
-          reduced: displayPreferences.snapshot().effectiveReducedEffects,
-          fullReveal: run.status === 'won',
-          showGrid: scenario?.presentation?.showGrid || library.preferences.showGrid,
-          showCombatScrap: practiceRemains ?? encounterDisplay.snapshot().showRemains,
-          brutal: encounterDisplay.snapshot().brutal,
-          blood: encounterDisplay.snapshot().blood,
-          backdrop: flightPictures?.current(),
-          celebrationPaused: document.hidden || !document.hasFocus() || dialogOpen(),
-          defeatEffectsRunning: defeatEffectsRunning(),
-          signalReception:
-            run.status === 'won'
-              ? 'off'
-              : run.status === 'lost'
-                ? 'lost'
-                : restoredSignalRuns.has(run)
-                  ? 'off'
+      const workStart = performance.now();
+      hudWorkMs = simulationWorkMs = 0;
+      let updateMs = 0,
+        drawMs = 0;
+      const foreground = !document.hidden && document.hasFocus();
+      const active = foreground && started && !paused && !dialogOpen() && !rendererLost.size;
+      const time = sceneClock.sample(now, active);
+      const rawMs = time.rawElapsedMs;
+      const dt = active
+        ? time.interrupted
+          ? rawMs / 1000
+          : time.elapsedSeconds
+        : Math.min(rawMs / 1000, 0.1);
+      if (time.interrupted) performanceSession?.interruption(rawMs);
+      performanceSession?.setPhase(
+        !foreground
+          ? 'hidden'
+          : rendererLost.size
+            ? 'error'
+            : pictureResume !== null
+              ? 'preparing'
+              : ['won', 'lost'].includes(run.status)
+                ? 'result'
+                : active
+                  ? 'playing'
                   : started
-                    ? 'playing'
+                    ? 'paused'
                     : 'ready',
-          signalEffectsRunning:
-            run.status === 'lost'
-              ? defeatEffectsRunning()
-              : started && !paused && !document.hidden && document.hasFocus() && !dialogOpen(),
+      );
+      try {
+        update(dt);
+        updateMs = performance.now() - workStart;
+        if (demoHost?.active || !foreground || rendererLost.size) return;
+        if (now - this.lastInterfaceAt >= 100) {
+          editionUI?.refresh();
+          this.lastInterfaceAt = now;
+        }
+        qualityPolicy.setReducedPreference(displayPreferences.snapshot().effectiveReducedEffects);
+        titleCharacter?.update(Math.min(dt, 0.1), {
+          visible: controllerDialog() === $('shell-home'),
+          reduced: qualityPolicy.snapshot().reduced,
         });
+        const size = boardPaintSizeForRun(run);
+        if (size.width !== this.boardSize.width || size.height !== this.boardSize.height)
+          this.resizeBoard();
+        const animated = (!paused && started) || celebrationActive || defeatEffectsRunning();
+        const prior = this.lastPaint;
+        if (
+          animated ||
+          this.preparedFrame ||
+          !prior ||
+          prior.run !== run ||
+          prior.tick !== run.tick ||
+          prior.hud !== hudRevision ||
+          prior.paintRevision !== painter.paintRevision ||
+          prior.generation !== painter.preparationGeneration ||
+          prior.backdrop !== flightPictures?.current() ||
+          prior.actors !== flightActorLease ||
+          prior.quality !== qualityPolicy.snapshot().tier
+        ) {
+          const drawStart = performance.now();
+          painter.draw(this.boardTexture.context, run, Math.min(dt, 0.1), this.drawOptions());
+          drawMs = performance.now() - drawStart;
+          // Reuse this record rather than allocating presentation bookkeeping each frame.
+          this.lastPaint ??= {};
+          this.lastPaint.run = run;
+          this.lastPaint.tick = run.tick;
+          this.lastPaint.hud = hudRevision;
+          this.lastPaint.generation = painter.preparationGeneration;
+          this.lastPaint.paintRevision = painter.paintRevision;
+          this.lastPaint.backdrop = flightPictures?.current();
+          this.lastPaint.actors = flightActorLease;
+          this.lastPaint.quality = qualityPolicy.snapshot().tier;
+          this.pendingSubmission = true;
+          this.submittedRun = run;
+          this.submittedInputCount = inputAppliedCount;
+          this.submittedPreparation = this.preparedFrame;
+        }
         advanceDefeatPresentation(Math.min(dt, 0.1));
       } catch (error) {
+        this.pendingSubmission = false;
+        performanceSession?.reportFailure(`Scene: ${error.message ?? String(error)}`);
+        performanceSession?.setPhase('error');
         if (!practiceRenderFailure.fail(error)) throw error;
+      } finally {
+        this.framePending = true;
+        this.frameNow = now;
+        this.frameRawMs = rawMs;
+        this.frameActive = active;
+        this.frameUpdateMs = updateMs;
+        this.frameDrawMs = drawMs;
+        this.frameHudMs = hudWorkMs;
+        this.frameSimulationMs = simulationWorkMs;
       }
     }
   }
@@ -12079,7 +12618,7 @@ try {
     antialias: false,
     audio: { noAudio: true },
     input: { keyboard: false, mouse: false, touch: false, gamepad: false },
-    fps: { target: 60, forceSetTimeOut: false },
+    fps: { target: 60, limit: 0, smoothStep: false, forceSetTimeOut: false },
     scene: FieldScene,
     banner: false,
   });
@@ -12340,6 +12879,17 @@ try {
     if (unifiedLibrary) return unifiedLibrary;
     if (unifiedLibraryLoading) return unifiedLibraryLoading;
     unifiedLibraryLoading = (async () => {
+      const [
+        { createInstalledMissionLibrary },
+        { publishedJourneyLibrarySources },
+        { combineJourneyLibrarySources },
+        { createDuel },
+      ] = await Promise.all([
+        import('./mission-library/installed-library.mjs'),
+        import('./mission-library/published-routes.mjs'),
+        import('./mission-library/cross-mode-journey.mjs'),
+        import('./multiplayer.mjs'),
+      ]);
       const index =
         runtimeContent?.missionIndex ?? (await getJSON('content/mission-library-index.json'));
       actorMissionIndex = Promise.resolve(index);
@@ -12530,6 +13080,9 @@ try {
         ];
       }
       if (!runtimeContent) {
+        const { duelExpeditionLibrarySources, teamExpeditionLibrarySource } = await import(
+          './mission-library/multiplayer-expeditions.mjs'
+        );
         const expansionSources = [
           ...duelExpeditionLibrarySources({
             themes: originalThemes,

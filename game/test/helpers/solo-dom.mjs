@@ -1,5 +1,6 @@
 // Minimal browser boundary for the actual solo entry. No layout or pixel claims.
 import assert from 'node:assert/strict';
+import { EventEmitter } from 'node:events';
 import { rasterDimensions } from './raster-image.mjs';
 import { readFile } from 'node:fs/promises';
 import { BoardPainter } from '../../ui/render.mjs';
@@ -168,6 +169,7 @@ export function soloDatabase(indexedDB) {
     },
   };
 }
+const waitingHosts = new Set();
 export async function settle(
   predicate,
   message = 'Asynchronous host action did not settle.',
@@ -178,7 +180,15 @@ export async function settle(
   // fixture's five-second default; retain the fast local feedback while
   // giving CI a deterministic scheduler allowance.
   const timeoutMs = options.timeoutMs ?? (process.env.CI ? 20_000 : 5_000);
-  await waitFor(predicate, { ...options, timeoutMs, message });
+  await waitFor(
+    () => {
+      // A real browser continues to submit paused preparation frames while an
+      // async action settles. Keep simulated time controlled by each test.
+      for (const frame of waitingHosts) frame(0);
+      return predicate();
+    },
+    { ...options, timeoutMs, message },
+  );
 }
 export function clickVisibleSimulator(page) {
   const simulator = page.$('solo-fpv-sim');
@@ -368,6 +378,7 @@ export async function soloPage(
     },
     Phaser: {
       CANVAS: 'canvas',
+      Core: { Events: { PRE_STEP: 'prestep', POST_RENDER: 'postrender' } },
       Scene: class {},
       Game: class {
         constructor(config) {
@@ -390,13 +401,32 @@ export async function soloPage(
           };
           scene.add = {
             image: () => ({
+              visible: true,
+              setVisible(value) {
+                this.visible = value;
+                return this;
+              },
+              willRender(camera) {
+                return this.visible && camera.visible && camera.alpha > 0;
+              },
               setOrigin() {
                 return this;
               },
               setSizeToFrame() {},
             }),
           };
-          scene.game = { canvas: doc.createElement('canvas') };
+          scene.events = new EventEmitter();
+          scene.sys = {
+            visible: true,
+            isVisible() {
+              return this.visible;
+            },
+          };
+          scene.game = {
+            canvas: doc.createElement('canvas'),
+            events: new EventEmitter(),
+            renderer: {},
+          };
           scene.game.canvas.width = config.width;
           scene.game.canvas.height = config.height;
           if (rendering) scene.game.canvas.clientWidth = rendering.displayCSSWidth ?? config.width;
@@ -406,7 +436,7 @@ export async function soloPage(
               scene.game.canvas.height = height;
             },
           };
-          scene.cameras = { main: { setSize() {} } };
+          scene.cameras = { main: { visible: true, alpha: 1, setSize() {} } };
           $('game-canvas').append(scene.game.canvas);
           scene.create();
         }
@@ -558,9 +588,19 @@ export async function soloPage(
     () => !!doc.body.dataset.editionId || $('builtin-packs').children.length > 0,
     'Bundled pack index must finish loading.',
   );
-  function frame(ms = 1000 / 120, { dispatchAnimationFrames = true } = {}) {
+  function submitRender() {
+    // Model Phaser.Game.step's final event, separately from scene.update.
+    scene.game.events.emit('postrender', scene.game.renderer, now, 0);
+  }
+  function frame(
+    ms = 1000 / 120,
+    { dispatchAnimationFrames = true, dispatchRender = true, beforeRender } = {},
+  ) {
     now += ms;
+    scene.game.events.emit('prestep', now, ms);
     scene.update(now, ms);
+    beforeRender?.();
+    if (dispatchRender) submitRender();
     if (animationFrames && dispatchAnimationFrames && !doc.hidden) {
       for (const [id, callback] of [...frames]) {
         if (!frames.delete(id)) continue;
@@ -574,6 +614,8 @@ export async function soloPage(
       'Actual host must finish its initial picture choice before synchronous input tests.',
     );
   frame(0);
+  waitingHosts.add(frame);
+  t.after(() => waitingHosts.delete(frame));
   function key(code, held = true) {
     $('game-canvas').emit(held ? 'keydown' : 'keyup', {
       code,
@@ -593,6 +635,7 @@ export async function soloPage(
     win,
     storage,
     frame,
+    submitRender,
     key,
     change,
     errors,
