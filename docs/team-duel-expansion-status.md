@@ -1,5 +1,7 @@
 # Team and Duel expansion delivery register
 
+> **15 October follow-up:** The expansion and its first follow-ups merged in [PR #1229](https://github.com/mekhovov/revealline/pull/1229). The user then authorized the recommended qualification work, selecting the desktop browser on this Mac first. See the [current qualification report](team-duel-qualification-2026-10-15.md) for the Team launch/audio fixes, 24-finale strategy evidence, public dependency verification and explicit remaining acceptance. The dated register below remains historical; its pending merge and earlier catalogue counts do not describe the current state.
+
 Updated 14 October 2026. Implementation is on `codex/team-duel-expansion`, rebased onto `1cffdfa45cc719aaff8b5e74436837c51d46d1be` after earlier integrations of `280ff4d2a35b5854a85d98a8973a47a832af66e6` and `5f126d6105be5708948dbaff6907ca5cd7e15baf`. The final two upstream commits only update the regional FPV authoring preview's shared appearance. See the [reviewed plan](team-duel-expansion-plan-2026-10-14.md) and [authoring guide](../authoring/multiplayer-expeditions.md).
 
 **Implemented: 96 new Team missions and 72 new Duel missions across twelve families.** All authored missions have reproducible native-runtime clears. Gameplay and focused authoring checks have passed; distribution and external acceptance are accounted for separately below.
