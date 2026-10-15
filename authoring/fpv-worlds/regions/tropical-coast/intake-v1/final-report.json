@@ -1,0 +1,686 @@
+[
+  {
+    "id": "beach-grass",
+    "bytes": 144932,
+    "sha256": "068086ac550ebf5e0eb9430d9bddc30cbac229fbcfbc3b42b711c09a4f288fff",
+    "triangles": 16,
+    "vertices": 48,
+    "allNormals": true,
+    "allTexturedUVs": true,
+    "textures": [
+      {
+        "file": "3td_BeachGrass_01.png",
+        "bytes": 140599,
+        "sha256": "c2d8f75e2a9f9ff6c3614f20aef93d8a1853b6f290308a3db046b1d551466809"
+      }
+    ],
+    "materialChanges": [
+      {
+        "material": "BeachGrass01",
+        "doubleSided": true,
+        "alphaMode": "MASK",
+        "alphaCutoff": 0.0196078431372549,
+        "sourceAlphaRef": "5"
+      }
+    ],
+    "uv3To2Accessors": [],
+    "validation": {
+      "numErrors": 0,
+      "numWarnings": 0,
+      "numInfos": 1,
+      "numHints": 0,
+      "messages": [
+        {
+          "code": "IMAGE_NPOT_DIMENSIONS",
+          "message": "Image has non-power-of-two dimensions: 400x388.",
+          "severity": 2,
+          "pointer": "/images/0"
+        }
+      ],
+      "truncated": false
+    },
+    "beforeDrawCalls": 1,
+    "beforeBytes": 145528,
+    "beforeSha256": "e82515742147e0f21a79fb051cebc144d9b3ce51d44a96da8e90c59ddfb2234b",
+    "drawCalls": 1,
+    "geometry": {
+      "vertices": 48,
+      "triangles": 16
+    },
+    "images": [
+      {
+        "width": 400,
+        "height": 388,
+        "format": "rgba",
+        "primaries": "srgb",
+        "transfer": "srgb",
+        "bits": 8
+      }
+    ]
+  },
+  {
+    "id": "young-bamboo",
+    "bytes": 515144,
+    "sha256": "cb46c82d438724875cfeabed78f8119e4a431d751383374c08a8258fc628e9d8",
+    "triangles": 528,
+    "vertices": 1584,
+    "allNormals": true,
+    "allTexturedUVs": true,
+    "textures": [
+      {
+        "file": "3TD_YoungBamboo_01.png",
+        "bytes": 178946,
+        "sha256": "91d47d4a5883800f89899de39ae7df6ad1dcd0dd8e8e48772eb9f91e535f65e7"
+      },
+      {
+        "file": "3TD_BambooBark02.jpg",
+        "bytes": 279401,
+        "sha256": "3ba386d684affd3ad9fb541af19d8b3fb9c832b1398046fc97815b9f0f3df483"
+      }
+    ],
+    "materialChanges": [
+      {
+        "material": "YoungBamboo_01",
+        "doubleSided": true,
+        "alphaMode": "MASK",
+        "alphaCutoff": 0.39215686274509803,
+        "sourceAlphaRef": "100"
+      },
+      {
+        "material": "_td_Bamboo_02",
+        "doubleSided": true,
+        "alphaMode": "OPAQUE",
+        "alphaCutoff": null,
+        "sourceAlphaRef": null
+      }
+    ],
+    "uv3To2Accessors": [6, 10, 14],
+    "validation": {
+      "numErrors": 0,
+      "numWarnings": 0,
+      "numInfos": 0,
+      "numHints": 0,
+      "messages": [],
+      "truncated": false
+    },
+    "beforeDrawCalls": 13,
+    "beforeBytes": 543388,
+    "beforeSha256": "b72282ef7930f32f7cc854728f08b0cbd899deca88d4dc3db4b43062a5397c14",
+    "drawCalls": 2,
+    "geometry": {
+      "vertices": 1584,
+      "triangles": 528
+    },
+    "images": [
+      {
+        "width": 512,
+        "height": 512,
+        "format": "rgba",
+        "primaries": "srgb",
+        "transfer": "srgb",
+        "bits": 8
+      },
+      {
+        "width": 512,
+        "height": 512,
+        "format": "rgb",
+        "bits": 8
+      }
+    ]
+  },
+  {
+    "id": "crate",
+    "bytes": 879296,
+    "sha256": "b279533730d4eeb36ecceb1c888cb5cf786cc7332ecf3d564b9f3063b80ea8a7",
+    "triangles": 252,
+    "vertices": 756,
+    "allNormals": true,
+    "allTexturedUVs": true,
+    "textures": [
+      {
+        "file": "3td_JettyWood02.jpg",
+        "bytes": 372280,
+        "sha256": "b2a8311d920fcaf9dc1a6a269f10482cd49a0a92260f20f78d598f85fffffa88"
+      },
+      {
+        "file": "3td_Rope_01.jpg",
+        "bytes": 167673,
+        "sha256": "b30c259ef85c55552795af4a4580b85842ee0649951d5e0d4a7455083e7788d6"
+      },
+      {
+        "file": "3td_SteelStrap01.jpg",
+        "bytes": 309860,
+        "sha256": "2907231248a9af860fb30bc811ec69888a23456337d2d9cd2838cc67ed5a0540"
+      }
+    ],
+    "materialChanges": [
+      {
+        "material": "_td_Crate1_Gray",
+        "doubleSided": true,
+        "alphaMode": "OPAQUE",
+        "alphaCutoff": null,
+        "sourceAlphaRef": null
+      },
+      {
+        "material": "_td_Rope1",
+        "doubleSided": false,
+        "alphaMode": "OPAQUE",
+        "alphaCutoff": null,
+        "sourceAlphaRef": null
+      },
+      {
+        "material": "_td_SteelStrap",
+        "doubleSided": true,
+        "alphaMode": "OPAQUE",
+        "alphaCutoff": null,
+        "sourceAlphaRef": null
+      }
+    ],
+    "uv3To2Accessors": [2, 6, 10, 14, 18, 22, 26, 30, 34, 38, 42, 46, 50, 54, 58, 62, 66, 70],
+    "validation": {
+      "numErrors": 0,
+      "numWarnings": 0,
+      "numInfos": 0,
+      "numHints": 0,
+      "messages": [],
+      "truncated": false
+    },
+    "beforeDrawCalls": 18,
+    "beforeBytes": 906752,
+    "beforeSha256": "0852cac31b539f5371178acf33405e10e21c3317641823fd531f01e7be71e60a",
+    "drawCalls": 3,
+    "geometry": {
+      "vertices": 756,
+      "triangles": 252
+    },
+    "images": [
+      {
+        "width": 512,
+        "height": 512,
+        "format": "rgb",
+        "bits": 8
+      },
+      {
+        "width": 512,
+        "height": 256,
+        "format": "rgb",
+        "bits": 8
+      },
+      {
+        "width": 512,
+        "height": 512,
+        "format": "rgb",
+        "bits": 8
+      }
+    ]
+  },
+  {
+    "id": "covered-jetty",
+    "bytes": 957204,
+    "sha256": "ed0359301c0025ad1c544af29d255087fe4dfe159977d82a212eb61de8a05d0e",
+    "triangles": 492,
+    "vertices": 1476,
+    "allNormals": true,
+    "allTexturedUVs": true,
+    "textures": [
+      {
+        "file": "3td_JettyWood01.jpg",
+        "bytes": 242794,
+        "sha256": "0f6affe984bcf6ca50b286a0ea2dbfcfa33b4728ca9c119d863eee4ea8e68268"
+      },
+      {
+        "file": "3td_JettyWood02.jpg",
+        "bytes": 372280,
+        "sha256": "b2a8311d920fcaf9dc1a6a269f10482cd49a0a92260f20f78d598f85fffffa88"
+      },
+      {
+        "file": "3td_TinRoof01.jpg",
+        "bytes": 288194,
+        "sha256": "094c51bf8dddb0ab12246d8106c68f85c52dac575a921d1adebaa49b142e2428"
+      }
+    ],
+    "materialChanges": [
+      {
+        "material": "JettyWood01",
+        "doubleSided": true,
+        "alphaMode": "OPAQUE",
+        "alphaCutoff": null,
+        "sourceAlphaRef": null
+      },
+      {
+        "material": "JettyWood02",
+        "doubleSided": true,
+        "alphaMode": "OPAQUE",
+        "alphaCutoff": null,
+        "sourceAlphaRef": null
+      },
+      {
+        "material": "_td_TinRoof01",
+        "doubleSided": true,
+        "alphaMode": "OPAQUE",
+        "alphaCutoff": null,
+        "sourceAlphaRef": null
+      }
+    ],
+    "uv3To2Accessors": [
+      2, 6, 10, 14, 18, 22, 26, 30, 34, 38, 42, 46, 50, 54, 58, 62, 66, 70, 74, 78, 82, 86, 90, 94,
+      98, 102, 106, 110, 114, 118, 122, 126, 130, 134, 138, 142, 146, 150, 154, 158, 162, 166, 170,
+      174, 178, 182, 186, 190, 194, 198, 202, 206, 210, 214, 218, 222, 226, 230, 234, 238, 242, 246,
+      250, 254, 258, 262, 266, 270, 274, 278, 282, 286, 290, 294, 298, 302, 306, 310, 314, 318, 322,
+      326, 330, 334, 338, 342, 346, 350, 354, 358, 362, 366, 370, 374, 378, 382, 386, 390, 394, 398,
+      402, 406, 410, 414, 418, 422, 426, 430, 434, 438, 442, 446, 450, 454, 458, 462, 466, 470, 474,
+      478, 482, 486, 490, 494, 498, 502, 506, 510, 514, 518, 522, 526, 530, 534, 538, 542, 546, 550,
+      554, 558, 562, 566, 570, 574, 578, 582, 586, 590, 594, 598, 602, 606, 610, 614, 618, 622, 626,
+      630, 634, 638, 642, 646, 650, 654, 658, 662, 666, 670, 674, 678, 682, 686, 690, 694, 698, 702,
+      706, 710, 714, 718, 722, 726, 730, 734, 738, 742, 746, 750, 754, 758, 762, 766, 770, 774, 778,
+      782, 786, 790, 794, 798, 802, 806, 810, 814, 818, 822, 826, 830, 834, 838, 842, 846, 850, 854,
+      858, 862, 866, 870, 874, 878, 882, 886, 890, 894, 898, 902, 906, 910, 914, 918, 922, 926, 930,
+      934
+    ],
+    "validation": {
+      "numErrors": 0,
+      "numWarnings": 0,
+      "numInfos": 0,
+      "numHints": 0,
+      "messages": [],
+      "truncated": false
+    },
+    "beforeDrawCalls": 234,
+    "beforeBytes": 1215068,
+    "beforeSha256": "fb2a6ccc9c3610fa6996f242c6f35d8e51cc98f1dcc651c4203ea68c11574412",
+    "drawCalls": 3,
+    "geometry": {
+      "vertices": 1476,
+      "triangles": 492
+    },
+    "images": [
+      {
+        "width": 512,
+        "height": 256,
+        "format": "rgb",
+        "bits": 8
+      },
+      {
+        "width": 512,
+        "height": 512,
+        "format": "rgb",
+        "bits": 8
+      },
+      {
+        "width": 512,
+        "height": 512,
+        "format": "rgb",
+        "bits": 8
+      }
+    ]
+  },
+  {
+    "id": "open-jetty",
+    "bytes": 660836,
+    "sha256": "b7f948b08f175087d1af698a7d7a61d7cf7ab4551d3d6d1a5774004e1c1523b2",
+    "triangles": 420,
+    "vertices": 1260,
+    "allNormals": true,
+    "allTexturedUVs": true,
+    "textures": [
+      {
+        "file": "3td_JettyWood01.jpg",
+        "bytes": 242794,
+        "sha256": "0f6affe984bcf6ca50b286a0ea2dbfcfa33b4728ca9c119d863eee4ea8e68268"
+      },
+      {
+        "file": "3td_JettyWood02.jpg",
+        "bytes": 372280,
+        "sha256": "b2a8311d920fcaf9dc1a6a269f10482cd49a0a92260f20f78d598f85fffffa88"
+      }
+    ],
+    "materialChanges": [],
+    "uv3To2Accessors": [
+      2, 6, 10, 14, 18, 22, 26, 30, 34, 38, 42, 46, 50, 54, 58, 62, 66, 70, 74, 78, 82, 86, 90, 94,
+      98, 102, 106, 110, 114, 118, 122, 126, 130, 134, 138, 142, 146, 150, 154, 158, 162, 166, 170,
+      174, 178, 182, 186, 190, 194, 198, 202, 206, 210, 214, 218, 222, 226, 230, 234, 238, 242, 246,
+      250, 254, 258, 262, 266, 270, 274, 278, 282, 286, 290, 294, 298, 302, 306, 310, 314, 318, 322,
+      326, 330, 334, 338, 342, 346, 350, 354, 358, 362, 366, 370, 374, 378, 382, 386, 390, 394, 398,
+      402, 406, 410, 414, 418, 422, 426, 430, 434, 438, 442, 446, 450, 454, 458, 462, 466, 470, 474,
+      478, 482, 486, 490, 494, 498, 502, 506, 510, 514, 518, 522, 526, 530, 534, 538, 542, 546, 550,
+      554, 558, 562, 566, 570, 574, 578, 582, 586, 590, 594, 598
+    ],
+    "validation": {
+      "numErrors": 0,
+      "numWarnings": 0,
+      "numInfos": 0,
+      "numHints": 0,
+      "messages": [],
+      "truncated": false
+    },
+    "beforeDrawCalls": 150,
+    "beforeBytes": 829244,
+    "beforeSha256": "d2fa7f3a2febed8be8f925d7536c77089559870a5038ee4400b21f71df63588a",
+    "drawCalls": 2,
+    "geometry": {
+      "vertices": 1260,
+      "triangles": 420
+    },
+    "images": [
+      {
+        "width": 512,
+        "height": 256,
+        "format": "rgb",
+        "bits": 8
+      },
+      {
+        "width": 512,
+        "height": 512,
+        "format": "rgb",
+        "bits": 8
+      }
+    ]
+  },
+  {
+    "id": "jungle-hut",
+    "bytes": 2087976,
+    "sha256": "d724de1ae5db55cbfc0c4a91f91b06e98e3022c1663cc4cd728785ca18248718",
+    "triangles": 608,
+    "vertices": 1824,
+    "allNormals": true,
+    "allTexturedUVs": true,
+    "textures": [
+      {
+        "file": "3td_ThatchRoof_01.png",
+        "bytes": 830949,
+        "sha256": "32342553e5ca9e00b5034537e36c441e2d53745e2a87c985890ec6c041df2b74"
+      },
+      {
+        "file": "3td_WoodPlank_02.jpg",
+        "bytes": 248817,
+        "sha256": "acb775330a6fd245f14d31408d0ecb7881f3dd04e074ecdb83be85800f9706ff"
+      },
+      {
+        "file": "3td_OldCanvas_01.png",
+        "bytes": 413489,
+        "sha256": "1c6681aaaf30c100829a1815f320ff051c0da81494c42c4006655c5bc890967e"
+      },
+      {
+        "file": "3TD_WoodPlank_T_01.png",
+        "bytes": 527804,
+        "sha256": "b468762f33b846eef33cfdb35618712f9b8a284568ffdb7a1182c81014c61a09"
+      }
+    ],
+    "materialChanges": [
+      {
+        "material": "ThatchRoof01",
+        "doubleSided": true,
+        "alphaMode": "MASK",
+        "alphaCutoff": 0.5,
+        "sourceAlphaRef": null
+      },
+      {
+        "material": "_TD_WoodPlank02a",
+        "doubleSided": false,
+        "alphaMode": "OPAQUE",
+        "alphaCutoff": null,
+        "sourceAlphaRef": null
+      },
+      {
+        "material": "_td_Canvas",
+        "doubleSided": true,
+        "alphaMode": "MASK",
+        "alphaCutoff": 0.39215686274509803,
+        "sourceAlphaRef": "100"
+      },
+      {
+        "material": "_td_WoodPlank_Trans",
+        "doubleSided": false,
+        "alphaMode": "MASK",
+        "alphaCutoff": 0.5,
+        "sourceAlphaRef": null
+      }
+    ],
+    "uv3To2Accessors": [
+      2, 6, 10, 14, 18, 22, 26, 30, 34, 38, 42, 46, 50, 54, 58, 62, 66, 70, 74, 78, 82, 86, 90, 94,
+      98, 102, 106, 110, 114, 118, 122, 126, 130, 134, 138, 142, 146, 150, 154, 158, 162, 166, 170,
+      174, 178, 182, 186, 190, 194, 198, 202, 206, 210, 214, 218, 222, 226, 230, 234, 238, 242, 246,
+      250, 254, 258, 262, 266, 270, 274, 278, 282, 286, 290, 294, 298, 302, 306, 310, 314, 318, 322,
+      326, 330, 334, 338, 342, 346, 350, 354, 358, 362, 366, 370, 374, 378, 382, 386, 390, 394, 398,
+      402, 406, 410, 414, 418, 422, 426, 430, 434, 438, 442, 446, 450, 454, 458, 462, 466, 470, 474,
+      478, 482, 486, 490, 494, 498, 502, 506, 510, 514, 518, 522, 526, 530, 534, 538, 542, 546, 550,
+      554, 558, 562, 566, 570, 574, 578, 582, 586, 590, 594, 598, 602, 606, 610, 614, 618, 622, 626,
+      630, 634, 638, 642, 646, 650, 654, 658, 662, 666, 670, 674, 678, 682, 686, 690, 694, 698, 702,
+      706, 710, 714, 718, 722, 726, 730, 734, 738, 742, 746, 750, 754, 758, 762, 766, 770, 774, 778,
+      782, 786, 790, 794, 798, 802, 806, 810, 814, 818, 822, 826, 830, 834, 838, 842, 846, 850, 854,
+      858, 862, 866, 870, 874, 878, 882, 886, 890, 894, 898, 902, 906, 910
+    ],
+    "validation": {
+      "numErrors": 0,
+      "numWarnings": 0,
+      "numInfos": 1,
+      "numHints": 0,
+      "messages": [
+        {
+          "code": "IMAGE_NPOT_DIMENSIONS",
+          "message": "Image has non-power-of-two dimensions: 700x700.",
+          "severity": 2,
+          "pointer": "/images/3"
+        }
+      ],
+      "truncated": false
+    },
+    "beforeDrawCalls": 228,
+    "beforeBytes": 2351212,
+    "beforeSha256": "6ba5d1b91a7dda09c9aac16e6f2f16d84c50a5c4e36f8ce488a5a69244768f75",
+    "drawCalls": 4,
+    "geometry": {
+      "vertices": 1824,
+      "triangles": 608
+    },
+    "images": [
+      {
+        "width": 512,
+        "height": 512,
+        "format": "rgba",
+        "primaries": "srgb",
+        "transfer": "srgb",
+        "bits": 8
+      },
+      {
+        "width": 256,
+        "height": 1024,
+        "format": "rgb",
+        "bits": 8
+      },
+      {
+        "width": 512,
+        "height": 512,
+        "format": "rgba",
+        "primaries": "srgb",
+        "transfer": "srgb",
+        "bits": 8
+      },
+      {
+        "width": 700,
+        "height": 700,
+        "format": "rgba",
+        "primaries": "srgb",
+        "transfer": "srgb",
+        "bits": 8
+      }
+    ]
+  },
+  {
+    "id": "beach-rock",
+    "bytes": 1294984,
+    "sha256": "48f193286c5a555d4f67d3749ff9b5171107a1c3dd4143ee31811e79e735ab8c",
+    "triangles": 768,
+    "vertices": 2304,
+    "allNormals": true,
+    "allTexturedUVs": true,
+    "textures": [
+      {
+        "file": "3td_Granite_02_1024.jpg",
+        "bytes": 1214674,
+        "sha256": "dcf714a10d4cea4c30f30078b9df4d01ed5efc937ed3c5becc0774871b0b8f3b"
+      }
+    ],
+    "materialChanges": [
+      {
+        "material": "_td_Granite_02",
+        "doubleSided": true,
+        "alphaMode": "OPAQUE",
+        "alphaCutoff": null,
+        "sourceAlphaRef": null
+      }
+    ],
+    "uv3To2Accessors": [2],
+    "validation": {
+      "numErrors": 0,
+      "numWarnings": 0,
+      "numInfos": 0,
+      "numHints": 0,
+      "messages": [],
+      "truncated": false
+    },
+    "beforeDrawCalls": 1,
+    "beforeBytes": 1327740,
+    "beforeSha256": "2c97e5bb98ee7f6350c67bbda872d3fde9b1f0138bb0ddebd58a4be6e4210eb2",
+    "drawCalls": 1,
+    "geometry": {
+      "vertices": 2304,
+      "triangles": 768
+    },
+    "images": [
+      {
+        "width": 1024,
+        "height": 1024,
+        "format": "rgb",
+        "bits": 8
+      }
+    ]
+  },
+  {
+    "id": "palm",
+    "bytes": 936372,
+    "sha256": "6dead7023338bc9f6c4d3edb74359b7f8ca83bed52c4790af83003aaf2a99d21",
+    "triangles": 688,
+    "vertices": 2064,
+    "allNormals": true,
+    "allTexturedUVs": true,
+    "textures": [
+      {
+        "file": "DriPalm02.png",
+        "bytes": 127604,
+        "sha256": "e276ba5f5fea0c8f7806bc157155327c8be3cbd6120598d632d476b223b02f7a"
+      },
+      {
+        "file": "3td_Palm05_Old.png",
+        "bytes": 153586,
+        "sha256": "56ec6ee782af4f5de8b677a733f81ce5adc104b0cba021c2234b2350039868b5"
+      },
+      {
+        "file": "Palm05.png",
+        "bytes": 103836,
+        "sha256": "7ba06af8d751632a01d42d4a13415e9c314887e07db41a3d3a74994c3803d013"
+      },
+      {
+        "file": "3td_litePalmBark_01.jpg",
+        "bytes": 442883,
+        "sha256": "a52bb5fbcab637ae8ffceff39ace5961ec8c0f1a3129320ce990be14db6e2198"
+      }
+    ],
+    "materialChanges": [
+      {
+        "material": "ColorEffectR153G228B153-material",
+        "doubleSided": false,
+        "alphaMode": "OPAQUE",
+        "alphaCutoff": null,
+        "sourceAlphaRef": null
+      },
+      {
+        "material": "DriPalm02",
+        "doubleSided": true,
+        "alphaMode": "MASK",
+        "alphaCutoff": 0.39215686274509803,
+        "sourceAlphaRef": "100"
+      },
+      {
+        "material": "Palm05_Old",
+        "doubleSided": true,
+        "alphaMode": "MASK",
+        "alphaCutoff": 0.39215686274509803,
+        "sourceAlphaRef": "100"
+      },
+      {
+        "material": "Palm05_png",
+        "doubleSided": true,
+        "alphaMode": "MASK",
+        "alphaCutoff": 0.39215686274509803,
+        "sourceAlphaRef": "100"
+      },
+      {
+        "material": "litePalmBark01",
+        "doubleSided": true,
+        "alphaMode": "OPAQUE",
+        "alphaCutoff": null,
+        "sourceAlphaRef": null
+      }
+    ],
+    "uv3To2Accessors": [
+      2, 7, 12, 17, 22, 27, 32, 37, 42, 47, 52, 57, 62, 67, 72, 77, 82, 87, 92, 97, 102, 107, 112,
+      117, 122, 127, 132, 137, 142
+    ],
+    "validation": {
+      "numErrors": 0,
+      "numWarnings": 0,
+      "numInfos": 1,
+      "numHints": 0,
+      "messages": [
+        {
+          "code": "IMAGE_NPOT_DIMENSIONS",
+          "message": "Image has non-power-of-two dimensions: 600x600.",
+          "severity": 2,
+          "pointer": "/images/3"
+        }
+      ],
+      "truncated": false
+    },
+    "beforeDrawCalls": 29,
+    "beforeBytes": 1000948,
+    "beforeSha256": "392bb156024601f313ad9cf1a13d51f789ad106ffac8809129861f9bb6f3b10d",
+    "drawCalls": 4,
+    "geometry": {
+      "vertices": 2064,
+      "triangles": 688
+    },
+    "images": [
+      {
+        "width": 512,
+        "height": 512,
+        "format": "rgba",
+        "primaries": "srgb",
+        "transfer": "srgb",
+        "bits": 8
+      },
+      {
+        "width": 512,
+        "height": 512,
+        "format": "rgba",
+        "primaries": "srgb",
+        "transfer": "srgb",
+        "bits": 8
+      },
+      {
+        "width": 512,
+        "height": 512,
+        "format": "rgba",
+        "primaries": "srgb",
+        "transfer": "srgb",
+        "bits": 8
+      },
+      {
+        "width": 600,
+        "height": 600,
+        "format": "rgb",
+        "bits": 8
+      }
+    ]
+  }
+]
