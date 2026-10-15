@@ -1,0 +1,74 @@
+{
+  "format": "FPVRailwaySourceIntake.v1",
+  "status": "source-only-not-player-admitted",
+  "author": "Kenney",
+  "additionalCredits": [
+    "Guus Vermeulen",
+    "Tony Schaer"
+  ],
+  "title": "Train Kit",
+  "version": "1.1",
+  "license": "CC0-1.0",
+  "licenseURL": "https://creativecommons.org/publicdomain/zero/1.0/",
+  "sourceURL": "https://kenney.nl/assets/train-kit",
+  "archiveURL": "https://kenney.nl/media/pages/assets/train-kit/cf8521d625-1727040883/kenney_train-kit.zip",
+  "archiveBytes": 5266588,
+  "archiveSHA256": "cf50d77e8cbacbf38dd50826d4bce5392db8e4f67373d3c4e583b0ed0e474475",
+  "fetchedOn": "2026-10-15",
+  "files": [
+    {
+      "path": "railroad-straight.glb",
+      "archivePath": "Models/GLB format/railroad-straight.glb",
+      "bytes": 34736,
+      "sha256": "bcbd501f74b754b61f2ddb5cba2d45d5d694bfd25c497fa72af65202a53930d9"
+    },
+    {
+      "path": "railroad-corner-large.glb",
+      "archivePath": "Models/GLB format/railroad-corner-large.glb",
+      "bytes": 51344,
+      "sha256": "be0ed13b14aa6753f707a50b6986f09f38a0a42eac5d87fd0f56176d3cbf70a5"
+    },
+    {
+      "path": "train-diesel-a.glb",
+      "archivePath": "Models/GLB format/train-diesel-a.glb",
+      "bytes": 156432,
+      "sha256": "20c6c7c23c005e8cda1c1e922473c0fc9c93fc7c1d1bc5a637d640424f811cc3"
+    },
+    {
+      "path": "train-carriage-coal.glb",
+      "archivePath": "Models/GLB format/train-carriage-coal.glb",
+      "bytes": 110244,
+      "sha256": "95c6282a6b13317640ac48bd75d7aeec10faa9bfc035ba21977bb0296df7199a"
+    },
+    {
+      "path": "train-carriage-tank.glb",
+      "archivePath": "Models/GLB format/train-carriage-tank.glb",
+      "bytes": 106752,
+      "sha256": "0de1d92587c0b4d79e6dd1dad7d4d2e8ef849330af07e2f1701b98b9e0cf4e6a"
+    },
+    {
+      "path": "train-carriage-flatbed-wood.glb",
+      "archivePath": "Models/GLB format/train-carriage-flatbed-wood.glb",
+      "bytes": 103004,
+      "sha256": "a8e0e3d5c8c86414aa8531b0c728e0481f04df4e820edd554f3ac82292f4c18b"
+    },
+    {
+      "path": "Textures/colormap.png",
+      "archivePath": "Models/GLB format/Textures/colormap.png",
+      "bytes": 12684,
+      "sha256": "e264660f3fc9ecbd642bdb7fb7b7dc10755a061560a66651baf48274c729af09"
+    },
+    {
+      "path": "License.txt",
+      "archivePath": "License.txt",
+      "bytes": 762,
+      "sha256": "8ad3a0453dc1416d54e9af692dafe875a24069d577fe64edb193d3c8d868881a"
+    }
+  ],
+  "sourceBytes": 575958,
+  "limitations": [
+    "Six static source models, not an assembled region",
+    "External local palette texture required by GLBs",
+    "No default catalogue, core package or runtime admission"
+  ]
+}
