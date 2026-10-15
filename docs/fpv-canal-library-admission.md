@@ -12,11 +12,12 @@ existing plain terrain profile, not a new runtime material decoder. Water is
 explicitly visual-only; the bed remains solid. The text calls this an early
 composition study with sparse surrounding banks.
 
-Six trusted heading hints point toward the authored approaches. Their application
-depends on the shared helper in #1424; this PR does not duplicate that helper or
-change saved-place orientation. Before that dependency is integrated, the runtime
-retains its usual region-centre heading. This is a pending admission gate, not an
-accepted final camera behavior.
+Six trusted heading hints point toward the authored approaches. The merged shared
+helper from #1424 and retained-load guard from #1440 are integrated through main
+`55a9f55c`. This PR does not duplicate either helper or change saved-place
+orientation. All six headings are checked at all three quality tiers; saved
+starts retain their own orientation, and unknown pins receive no heading hints.
+Native camera acceptance remains a separate fresh-package gate.
 
 ## Completed source evidence
 
@@ -34,9 +35,9 @@ accepted final camera behavior.
 
 ## Pending before Ready
 
-Keep the admission PR Draft until immutable delivery publication, shared headings
-#1424, retained-load recovery #1440, and a fresh exact package are integrated and
-qualified. Verify the ordinary player: download, first Fly disarmed, meaningful
+Keep the admission PR Draft until immutable delivery publication and a fresh exact
+package are qualified. Shared headings #1424 and retained-load recovery #1440 are
+now integrated. Verify the ordinary player: download, first Fly disarmed, meaningful
 starting headings, explicit flight, all six start choices, view/mode changes,
 saved-place orientation, retained download after reload, cancellation and cached
 launch. Old frozen source reviews cannot close those new package gates. Physical
