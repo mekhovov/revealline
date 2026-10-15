@@ -118,6 +118,14 @@ function createTropicalGroundSurface({ quality, originMm }) {
     metalness: 0,
   });
   material.name = `Tropical sand and dune grass · ${quality}`;
+  // The shared renderer can switch detail on this same material without replacing geometry.
+  material.userData.setRegionalSurfaceQuality = (next) => {
+    validateTerrainSurface('tropical', next);
+    if (next === quality) return;
+    quality = next;
+    material.name = `Tropical sand and dune grass · ${quality}`;
+    material.needsUpdate = true;
+  };
   material.customProgramCacheKey = () => `fpv-tropical-ground-v1-${quality}`;
   material.onBeforeCompile = (shader) => {
     shader.uniforms.tropicalOrigin = {
