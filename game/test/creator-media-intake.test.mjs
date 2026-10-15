@@ -1,6 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
+import { readFile } from 'node:fs/promises';
+import { prepareMobileCreatorVideo } from '../creator/video-mobile.mjs';
 import {
   normalizeCreatorMediaStem,
   prepareCreatorMediaIntake,
@@ -13,6 +15,21 @@ const hash = (blob) =>
 const image = (name, text = name) => ({ name, kind: 'image', blob: new Blob([text]) });
 const video = (name, text = name) => ({ name, kind: 'video', blob: new Blob([text]) });
 const capturedBlob = (label) => new Blob([`poster:${label}`], { type: 'image/png' });
+
+test('actual MP4 bytes pass mobile conversion through the anonymous-blob intake boundary', async () => {
+  const bytes = await readFile(
+    new URL('./fixtures/video/owned-avc-aac-fixture.mp4', import.meta.url),
+  );
+  const f = factories();
+  const prepared = await prepareCreatorMediaIntake(
+    [{ name: 'recording.mp4', kind: 'video', blob: new Blob([bytes], { type: 'video/mp4' }) }],
+    { ...f, prepareVideo: prepareMobileCreatorVideo },
+  );
+  assert.deepEqual(prepared.items[0].errors, []);
+  assert.equal(prepared.dependencies.stories.length, 1);
+  assert.equal(f.state().captured, 3);
+  assert.equal(f.state().disposed, 1);
+});
 
 function factories({ failVideo, pause, observedOffset = 0 } = {}) {
   let active = 0,
