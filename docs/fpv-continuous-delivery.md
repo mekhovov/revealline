@@ -4964,3 +4964,21 @@ source and its negative is preserved. Coaster r3's unsupported loop and sparse
 park composition require refinement; its source, delivery and Library remain
 preserved drafts. See `fpv-native-regional-admission-20261015.md`. These checks do
 not close final art, physical devices, full-network offline or the whole roadmap.
+
+
+### 15 October — fresh regional player acceptance and further source work
+
+Coordinator branch `codex/fpv-regional-release-verification-20261015` rebased onto
+main `2281f3d5`, preserving all earlier work. Fresh Canyon and Coastal packages pass
+normal download, explicit flight, safe restart/mode changes and saved revision
+after reload; Canyon #1368 merged. The Coastal catalogue conflict is reconciled
+without replacing either existing Canyon revision. See
+`fpv-native-regional-release-20261015.md` for exact heads and limits.
+
+Desert source/delivery/materials #1378/#1389/#1390 and water #1364 merged through
+protected publication. Their source acceptance does not substitute for a default
+Library or deployed-launch gate. Hillside foundation #1397 and supported Coaster
+correction #1398 remain isolated drafts. The next source lane is a bounded
+4.096 km Alpine study; it must meet route, seam, collision, resource and native
+appearance checks before admission. P1–P4/D6 remain open; queue waiting does not
+stop independent engineering or art work.
