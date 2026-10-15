@@ -2,6 +2,15 @@
 
 ## Decision boundary and current baseline
 
+**16 October HUD continuation:** [repair and exact evidence](flight-practice-hud-qualification-2026-10-16.md)
+records four genuine EN/UK Academy/Worlds Settings/Accessibility/reload/visible
+stationary-HUD passes on separately reproduced/admitted `6b420b1a2` packages.
+The first FPV exercise probe failed with 844 ground-only readings. Its observer
+correction has model-regression proof, not a successful native rerun or completed
+exercise. Guides now explain the existing reachable preferences. Browser work
+needs a safe disk margin; historical evidence, human/review gates and hosting
+deferral remain unchanged.
+
 **Recovery/test follow-up:** [repair and player-flow acceptance](flight-practice-repair-2026-10-15.md)
 retains the original 16-checkpoint cache/worker repair run and a separate
 18-checkpoint run preserving a nonempty, UI-authored World Studio template copy.
