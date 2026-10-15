@@ -72,11 +72,33 @@ Runtime `2b8ab74d0` adds the authored movement candidate. Headless project ident
 | Lint / whitespace | Passed for changed modules and portable probes |
 | Full active headless candidate | **Loss 323.0833 s**, nine choices, 1,857 kills; source graph stable. No balance pass claimed |
 | Earned no-input branch | **Losses at 140.9667 / 197.3167 / 252.4500 s** after legal active prefixes through 120 / 180 / 240 s. No inputs after the checkpoint, including replacements; earned drafts continue resolving. Three sampled branches, not the full exploit matrix |
-| Native candidate | Run/capture recorded below after completion |
+| Native candidate | **Win 535.6000 s (8:55)**, ten choices, 3,731 kills, 220 contact damage, two lost airframes. Runtime `2b8ab74d0`, matching project identity. Native/headless outcomes still differ |
 
 `crowd-before.tap` retains the initial missing-export failure. Test receipts are
 separate runs with overlapping coverage; their counts must not be added as if
 all cases were unique. The original trace-only cohort is retained separately.
+
+### Native completion and fresh Results export
+
+The normal native start → combat → earned drafts → final tank → Results path
+completed successfully. `native-local-win.png`, `native-local-result.txt` and
+`native-local-final.json.gz` preserve the outcome. `native-assertions.json` checks
+identity, goals and fresh export. The Results download exports the terminal
+535.6000-second state rather than the earlier 469.9333-second snapshot; this
+exercises the stale-Inspector case through the real UI.
+
+The longest gap between drafts is **156.5333 seconds**, before the tenth choice.
+That remains a pacing problem. The native win does not cancel the headless loss
+or qualify every Echo route. All ten choices and the early evolution were earned.
+No candidate threshold or damage buff was added.
+
+The native timing trial is **invalid**: `dropped-catch-up-time` records 12.804
+seconds of dropped catch-up during workstation/foreground stalls. Renderer
+window pass flags are retained in the raw receipt but do not override the
+invalid whole-trial status. Sound remained in its pre-existing muted state, so
+this run does not extend audible mix acceptance.
+
+![Native experimental local-spacing completion](native-local-win.png)
 
 ### CPU-only capacity observation
 
@@ -118,6 +140,8 @@ node docs/qualification/overflight/review-parity-20261015/spacing-cost.mjs --out
 ```
 
 `compare-traces.mjs` and `compare-details.mjs` operate on retained receipts.
+`actor-comparison.json.gz` losslessly preserves the detailed comparison without
+adding 48,111 generated lines to the source diff.
 Historical probes contain their original source hashes, not the current tool
 text. Existing successful/failing runs and prior evidence have not been replaced.
 
