@@ -1,6 +1,20 @@
 # FPV Survivals maps and movement — implementation status
 
 
+## 16 October — local spacing capacity follow-up
+
+The [spacing performance follow-up](qualification/overflight/spacing-performance-20261016/README.md)
+adds a bounded 16-pixel index for experimental local spacing while preserving
+exact damage-query ordering. All three fresh native reference trials passed at
+1,500 simulated / 700 visible, as did a separate 2,500 / 1,200 stress trial on
+the available M4 Pro / Chromium setup. The regression cohort passed 154/154 and
+native graphics recovery resumed through the shared shell. This is recorded
+1280×720 local capacity evidence, not Iris Xe, 1080p, enjoyment or full release
+acceptance. Default movement remains unchanged; later-choice pacing is being
+compared separately before changing defaults.
+
+
+
 ## Native replay and crowd movement follow-up
 
 The [native parity investigation](qualification/overflight/review-parity-20261015/README.md)
