@@ -208,7 +208,10 @@ test('World random flight from the shared chooser follows displayed filters, pre
   }
   const expected = new Set(
     WORLD_CATALOGUE.filter(
-      (entry) => entry.theme === 'snake-hunt' && entry.activity === 'hunt' && entry.difficulty === 'beginner',
+      (entry) =>
+        entry.theme === 'snake-hunt' &&
+        entry.activity === 'hunt' &&
+        entry.difficulty === 'beginner',
     ).map((entry) => entry.id),
   );
   h.$('worlds-shell-action-missions').click();

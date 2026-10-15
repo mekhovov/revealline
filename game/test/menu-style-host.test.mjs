@@ -293,7 +293,10 @@ test('unified appearance survives Solo, Team, Versus and Solo return without alt
     async (t) => {
       const before = store.writes.length,
         page = await teamPage(t, store);
-      assert.deepEqual(store.writes.slice(before).map(([key]) => key), [enemyStatsWriterKey]);
+      assert.deepEqual(
+        store.writes.slice(before).map(([key]) => key),
+        [enemyStatsWriterKey],
+      );
       reflects(page, 'coop-', 'vyshyvanka', 'rich');
       page.$('coop-start').click();
       page.tick(10);
