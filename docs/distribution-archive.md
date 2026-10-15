@@ -31,8 +31,10 @@ no cross-version compressed-byte guarantee is made.
 `maxExpandedBytes` counts every original payload byte **plus the exact manifest
 bytes**. The builder enforces it before replacing an existing output. The trusted
 inspector independently enforces the same bound and refuses a source ceiling above
-1,073,741,824 bytes. This uses the existing default envelope, without raising a
-trusted capacity ceiling.
+1,073,741,824 bytes. This is a new explicit expanded-byte budget derived from the existing default
+distribution envelope. Stored-only archives previously coupled payload size to
+container size; v2 admits a larger expanded payload under this separate bound.
+The existing ZIP, native and legacy byte limits stay unchanged.
 
 Unmarked historical builds remain STORE-only. `createZip(entries)` still defaults
 to STORE, so optional practice packages and their existing contract are unchanged.
@@ -56,14 +58,14 @@ expanded ceiling. It reads requested members on demand, bounds each requested
 resource at 64 MiB, verifies CRC and manifest SHA, and checks the compressed stream
 consumed exactly its declared bytes. It does not materialize an expanded site.
 
-## Limits that compression does not change
+## Capacity boundaries
 
-| Boundary                                             |              Existing limit | Effect of this format                                                                            |
-| ---------------------------------------------------- | --------------------------: | ------------------------------------------------------------------------------------------------ |
-| Complete hosted ZIP                                  |           950,000,000 bytes | Smaller container may fit; exact final source must still be measured.                            |
-| Source-admitted expanded archive, including manifest |         1,073,741,824 bytes | Enforced by writer and inspector; no increase.                                                   |
-| Native extracted payload                             | 805,306,368 bytes (768 MiB) | Original payload size is unchanged, so the measured complete payload still fails.                |
-| Legacy Pages metadata/extraction                     |           800,000,000 bytes | Complete payload still fails its original manifest-byte admission even with a compatible marker. |
+| Boundary                                             |                  Byte bound | Effect of this format                                                                                   |
+| ---------------------------------------------------- | --------------------------: | ------------------------------------------------------------------------------------------------------- |
+| Complete hosted ZIP                                  |           950,000,000 bytes | Smaller container may fit; exact final source must still be measured.                                   |
+| Source-admitted expanded archive, including manifest |         1,073,741,824 bytes | New explicit bound derived from the default distribution envelope; counts original bytes plus manifest. |
+| Native extracted payload                             | 805,306,368 bytes (768 MiB) | Original payload size is unchanged, so the measured complete payload still fails.                       |
+| Legacy Pages metadata/extraction                     |           800,000,000 bytes | Complete payload still fails its original manifest-byte admission even with a compatible marker.        |
 
 The prior exact-source `90616ad44` measurement projected 908,988,197 container bytes
 and 1,072,534,542 expanded bytes including its then-current manifest. That was a
@@ -71,6 +73,15 @@ per-member compression/roundtrip measurement, not a completed production archive
 or a measurement of later commits. Its roughly 1.2 MB expanded headroom is small.
 See [the source-pinned measurement](team-duel-release-compression-2026-10-15.md).
 Rebasing, new metadata, or content changes require fresh measurement.
+
+The subsequent actual complete container at integrated source `dda86d8c6` is
+**909,001,885 bytes**, with 3,491 payload files plus the manifest. Both implemented
+readers verify every member. Expanded bytes including the manifest are
+1,072,568,170, leaving 1,173,654 bytes under the explicit source envelope.
+All 32 external content bodies match their source pins. The temporary archive was
+retired after inspection; the [committed receipt](research/team-duel-compressed-archive-2026-10-15.json)
+retains hashes, runtime, full source checks and bounded scope. This is one local
+preparation; final merged-source frozen qualification/publication is separate.
 
 The format does not close the required-evidence assembler gap or change general
 source-manifest admission. It does not dispatch publication, raise the source TAR

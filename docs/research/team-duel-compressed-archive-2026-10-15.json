@@ -1,0 +1,164 @@
+{
+  "format": "revealline-team-duel-complete-v2-archive.v1",
+  "recordedAt": "2026-10-15T19:39:48.880143+00:00",
+  "sourceRevision": "dda86d8c64eaba178552b9d6b8d7d9a629d6d320",
+  "sourceTree": "ba67d9215deaf0c9b57a33748fd1270d09d50a02",
+  "scope": "Actual complete local production container at the pinned integrated source; no expanded site or original outer frozen release artifact.",
+  "publicationEligible": false,
+  "writerAndIndependentInspection": {
+    "format": "revealline-local-v2-archive-inspection.v1",
+    "completedAt": "2026-10-15T19:38:49.543138+00:00",
+    "sourceRevision": "dda86d8c64eaba178552b9d6b8d7d9a629d6d320",
+    "sourceTree": "ba67d9215deaf0c9b57a33748fd1270d09d50a02",
+    "publicationEligible": false,
+    "originalFrozenArtifact": false,
+    "expandedSiteProduced": false,
+    "inspectionScope": "Actual complete local production ZIP; every original member inspected by the production Python verifier, bound to exact source config. Not an outer frozen artifact or release-evidence inspection.",
+    "writer": {
+      "format": "revealline-local-v2-archive.v1",
+      "sourceRevision": "dda86d8c64eaba178552b9d6b8d7d9a629d6d320",
+      "sourceTree": "ba67d9215deaf0c9b57a33748fd1270d09d50a02",
+      "startedAt": "2026-10-15T19:29:49.723Z",
+      "completedAt": "2026-10-15T19:38:31.374Z",
+      "publicationProfile": null,
+      "publicationEligible": false,
+      "originalFrozenArtifact": false,
+      "expandedSiteProduced": false,
+      "archiveProduced": true,
+      "preparationCount": 1,
+      "writer": "scripts/game-cli.mjs#createZip(adaptive)",
+      "sourceVerifiedBeforeAndAfter": true,
+      "includedInputs": {
+        "format": "revealline-default-build-inputs.v1",
+        "sourceRevision": "dda86d8c64eaba178552b9d6b8d7d9a629d6d320",
+        "sourceTree": "ba67d9215deaf0c9b57a33748fd1270d09d50a02",
+        "files": 3308,
+        "bytes": 859794179,
+        "note": "Included originals only; transitive producer inputs are checked by normal build preparation."
+      },
+      "availableCommittedSources": {
+        "files": 41392,
+        "bytes": 3197432388,
+        "absentTrackedFiles": 0,
+        "inventorySha256": "5b81441cdc0721dc1464aa13b86aa66c2b406813983049ccf37ee314db05518c"
+      },
+      "runtime": {
+        "node": "20.19.5",
+        "zlib": "1.3.1-470d3a2"
+      },
+      "archive": {
+        "path": "distribution.zip",
+        "bytes": 909001885,
+        "sha256": "4c9b4693ff31cdd574414be12b75467bb02138044009153e4491cb708ab8a45c"
+      },
+      "manifest": {
+        "path": "manifest.json",
+        "bytes": 519621,
+        "sha256": "eb86aeca3df98b5b4453a5a2ff5230087d1a58e61fdd5ce71e09f0e96c50cdeb",
+        "files": 3491,
+        "payloadBytes": 1072048549,
+        "distributionArchive": {
+          "format": "revealline-distribution-zip.v2",
+          "maxExpandedBytes": 1073741824
+        }
+      },
+      "releaseZipLimit": 950000000,
+      "releaseZipHeadroom": 40998115,
+      "nativeExtractedLimit": 805306368,
+      "nativeExtractedExcess": 266742181,
+      "peakRssBytes": 3065217024,
+      "note": "Local complete production container only; independent member inspection is separate. No source archive, release snapshot, immutable publication or native stage."
+    },
+    "inspection": {
+      "files": 3491,
+      "manifestTotalBytes": 1072048549,
+      "entry": "game/index.html",
+      "allManifestBytesVerified": true,
+      "innerManifestIdentical": true,
+      "distributionArchive": {
+        "format": "revealline-distribution-zip.v2",
+        "maxExpandedBytes": 1073741824
+      },
+      "strictZip32LayoutVerified": true,
+      "expandedBytesVerified": 1072568170
+    },
+    "archiveStableAcrossInspection": true,
+    "archiveSha256VerifiedBeforeAndAfter": true,
+    "inspector": {
+      "path": "publishing/utility/inspect_qualified_artifact.py",
+      "sha256": "fcccf649bbf9d1bf7ac8083611e2f5560d2c7897e443338171ad667024f10b69"
+    },
+    "limitsUnchanged": true,
+    "remaining": [
+      "exact final merged release source",
+      "source-preservation admission",
+      "required full-suite and evidence adapter",
+      "original frozen artifact and independent publication inspection",
+      "native extracted capacity",
+      "legacy800MB admission"
+    ]
+  },
+  "localFixtureReader": {
+    "format": "revealline-local-v2-fixture-reader.v1",
+    "completedAt": "2026-10-15T19:38:53.219Z",
+    "sourceRevision": "dda86d8c64eaba178552b9d6b8d7d9a629d6d320",
+    "files": 3491,
+    "bytes": 1072048549,
+    "maxResourceBytes": 15623239,
+    "manifestIdentical": true,
+    "everyRequestedOriginalCrcAndSha256Verified": true,
+    "externalBodies": {
+      "files": 32,
+      "bytes": 130442755,
+      "exactSourcePinsMatched": true,
+      "excludedFromAutomaticCoreCache": true
+    },
+    "perResourceBoundBytes": 67108864,
+    "expandedSiteProduced": false,
+    "nativeHardwareQualified": false,
+    "publicBrowserQualified": false
+  },
+  "expandedHeadroomBytes": 1173654,
+  "localArtifactRetention": {
+    "archiveRetained": false,
+    "manifestAndReceiptsRetained": true,
+    "reason": "Task-owned ZIP retired after both successful reader checks to recover909001885 disk bytes. This receipt retains exact archive and manifest identities."
+  },
+  "localVerificationHelpers": [
+    {
+      "path": ".cache/team-duel-release-readiness-20261015/run-v2-archive.mjs",
+      "sha256": "5177c854badb317eedcb7425429fa33fb12600d41afe68d50b088c986a21e9d7"
+    },
+    {
+      "path": ".cache/team-duel-release-readiness-20261015/inspect-v2-archive.py",
+      "sha256": "9aa61a21829818bcd6bf7ab4be193531154f669838d0067f66b51682d3e76d3a"
+    },
+    {
+      "path": ".cache/team-duel-release-readiness-20261015/check-v2-fixture.mjs",
+      "sha256": "2bd1d5384f580bb454c38c4be0ba1cafa0c7294de1e73a2167ad3d7c0fb3f9a1"
+    }
+  ],
+  "tests": {
+    "combinedArchiveCliOptionalMetadataRegistration": {
+      "passed": 155,
+      "failed": 0,
+      "skipped": 0
+    },
+    "independentPythonNewAndLegacy": {
+      "passed": 39,
+      "note": "Invoked inside the combined Node wrapper; do not add to155."
+    },
+    "rebasedStudioAndMediaHost": {
+      "passed": 55,
+      "failed": 0,
+      "skipped": 0
+    }
+  },
+  "boundaries": [
+    "One complete preparation; no second full-build reproducibility claim.",
+    "No cross-zlib-version compressed-byte guarantee.",
+    "Full real-source external-distribution loose-site test is separate; all32 real external archive bodies were checked here.",
+    "No immutable publication, actual outer frozen artifact/evidence, native staging or public browser adoption."
+  ],
+  "budgetChangeScope": "The 950 MB ZIP, 768 MiB native and 800 MB legacy limits are unchanged. The v2 format adds a separate manifest-inclusive 1 GiB expanded budget derived from the existing default distribution envelope; it admits expanded bytes larger than their compressed container."
+}
