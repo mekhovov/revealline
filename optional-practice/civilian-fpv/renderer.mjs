@@ -1,4 +1,5 @@
 import * as THREE from './vendor/three.module.js';
+import { setRegionalSurfaceQuality } from './regional/terrain-surface.mjs';
 import { resolveIndustrialEnvironment } from '../../game/presentation/industrial-environments.mjs';
 import { canonicalJSON } from '../../game/data-json.mjs';
 import { actorVisual } from '../../game/hunt/actor-catalog.mjs';
@@ -525,6 +526,7 @@ export function createFlightRenderer({
     const changed = value !== quality;
     if (changed) presentationGeneration++;
     quality = value;
+    if (regional) setRegionalSurfaceQuality(regional.root, quality);
     const selected = QUALITIES[value];
     renderer.setPixelRatio(Math.min(win.devicePixelRatio || 1, selected.ratio));
     renderer.shadowMap.enabled = selected.shadows;
@@ -3356,6 +3358,7 @@ export function createFlightRenderer({
     }
     try {
       current();
+      setRegionalSurfaceQuality(group, selectedQuality);
       group.updateMatrixWorld(true);
       group.traverse((object) => {
         if (!object.geometry || !(object.isMesh || object.isLine || object.isPoints)) return;

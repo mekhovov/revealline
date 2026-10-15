@@ -2,6 +2,9 @@ import { Group } from '../../../optional-practice/civilian-fpv/vendor/three.modu
 import { createFlightRenderer } from '../../../optional-practice/civilian-fpv/renderer.mjs';
 import { createVerifiedMixedWindow } from './verified-mixed-window.mjs';
 const $ = (id) => document.getElementById(id);
+const parameters = new URLSearchParams(location.search);
+for (const id of ['terrain', 'scenery', 'surface'])
+  if (parameters.has(id)) $(id).value = parameters.get(id);
 const renderer = createFlightRenderer({
   canvas: document.querySelector('canvas'),
   onContextLost: () => {
@@ -20,10 +23,28 @@ let owner = null,
   frames = 0,
   frameId = 0,
   next = true,
-  receipt = null;
+  receipt = null,
+  changeDuringPreparation = false;
+function surfaceNames() {
+  const names = new Set();
+  root.traverse((object) => {
+    for (const material of Array.isArray(object.material) ? object.material : [object.material])
+      if (material?.userData?.setRegionalSurfaceQuality) names.add(material.name);
+  });
+  return [...names];
+}
+function changeQuality() {
+  renderer.setQuality($('quality').value);
+  $('receipt').textContent = JSON.stringify(
+    { ...receipt, quality: $('quality').value, surfaceNames: surfaceNames() },
+    null,
+    2,
+  );
+}
 function buttons() {
   $('load').disabled = busy || Boolean(owner) || closed;
   $('stage').disabled = busy || !owner || closed;
+  $('stage-quality').disabled = busy || !owner || closed;
   $('cancel').disabled = !busy;
   $('release').disabled = !owner || closed;
 }
@@ -51,7 +72,7 @@ async function prepare(load) {
       ]);
       controller.signal.throwIfAborted();
       owner = createVerifiedMixedWindow(terrain.manifest, {
-        source: terrain.source,
+        source: { ...terrain.source, surfaceStyle: $('surface').value },
         scenery,
         retainCommitted: true,
       });
@@ -63,7 +84,13 @@ async function prepare(load) {
     const target = load || !next ? position : { ...position, x: 192000, z: 64000 };
     await owner.transition(target, null, {
       async prepare({ group }) {
-        await renderer.prepareRegionalFrame(group, { signal: controller.signal });
+        const preparation = renderer.prepareRegionalFrame(group, { signal: controller.signal });
+        if (changeDuringPreparation) {
+          changeDuringPreparation = false;
+          $('quality').value = $('quality').value === 'low' ? 'high' : 'low';
+          changeQuality();
+        }
+        await preparation;
       },
       readPose: () => ({ positionMm: position, radiusMm: 220 }),
       commit({ group, provenance }) {
@@ -94,9 +121,12 @@ async function prepare(load) {
       geometryBytes: owner?.snapshot().geometryBytes ?? 0,
       reservedGeometryBytes: owner?.snapshot().reservedGeometryBytes ?? 0,
       resources: renderer.resources(),
+      quality: $('quality').value,
+      surfaceNames: surfaceNames(),
     };
     $('receipt').textContent = JSON.stringify(receipt, null, 2);
     busy = false;
+    changeDuringPreparation = false;
     controller = null;
     buttons();
   }
@@ -146,6 +176,11 @@ async function release() {
 }
 $('load').addEventListener('click', () => prepare(true));
 $('stage').addEventListener('click', () => prepare(false));
+$('stage-quality').addEventListener('click', () => {
+  changeDuringPreparation = true;
+  prepare(false);
+});
+$('quality').addEventListener('change', changeQuality);
 $('cancel').addEventListener('click', () => {
   controller?.abort();
   owner?.cancel();
