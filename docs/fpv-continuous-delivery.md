@@ -5049,3 +5049,14 @@ Desert retained-version launch timed out without losing either saved revision.
 Cancellation #1434, authored endurance #1435, courtyard Library #1436 and original
 Canal source #1437 progress independently. Preserve exact old packages, all source
 work and player records. No public or full-roadmap completion claim is made.
+
+## 15 October — source review and retained-flight reliability gates
+
+Coordinator `codex/fpv-regional-review-gates-20261015` starts from `6a6baac9`.
+Cancellation #1434, actual-region endurance tooling #1435, courtyard Library
+#1436 and Overview height correction #1439 are merged. The newest large-worlds
+plan checkpoint records the retained-chooser slowdown diagnosis, guard #1440,
+Canal draft 3 source acceptance and Alpine contour preview correction. Exact
+package checks, immutable content admission, sustained qualification and final
+art remain separate gates. Earlier negative packages and saved revisions remain
+preserved. Queue waiting does not stop independent development.
