@@ -5258,7 +5258,9 @@ native gate, preserving all 22 prior offers plus new concourse materials. Both
 r5/r4 survive reload and prepare cached, disarmed at 114 m. Summit apron/open
 passage, FPV/Overview/Chase, Acro/reset/explicit arm/pause, EN/UK and three viewport
 sizes are observed. [Separate receipt](fpv-alpine-station-r5-40685-native-20261015.json).
-Publication status and final representative art are distinct from this bounded gate.
+R5 subsequently merged normally at20:34:20Z as `0892cab9`, unchanged reviewed
+head, all reported checks passing. Final representative art remains distinct from
+this bounded gate.
 
 A genuine normal grounded live attempt now populates session storage. Explicit
 Pause→normal tab close/reopen→Resume interrupted flight restores paused with Arm

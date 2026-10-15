@@ -24,8 +24,9 @@ cleared and every previous edition remains available.
   pass; Summit FPV/overview shows the grey apron and open passage. Mode change
   remains disarmed; actual explicit arm/pause and EN/UK/390×844/844×390/1280×800
   presentation are observed. [Receipt](fpv-alpine-station-r5-40685-native-20261015.json).
-  Protected publication is a separate status; this bounded material observation
-  is not final whole-region art or all-start/device acceptance.
+  Protected publication subsequently merged **20:34:20Z** as `0892cab9`, with
+  the reviewed head unchanged and all reported checks passing. This bounded
+  material observation is not final whole-region art or all-start/device acceptance.
 - **The live-session store is now nonempty and normal recovery preserves it.**
   Normal installed Roadworks preparation, explicit arm at zero throttle, and Pause
   create one genuine grounded live-session record. Normal close/reopen, then
