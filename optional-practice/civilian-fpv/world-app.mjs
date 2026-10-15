@@ -7029,14 +7029,19 @@ export function mountWorldApp({
   on(win, 'hashchange', () => showTab(win.location.hash.slice(1)));
   on($('flight-options'), 'click', () => openSettings());
   let settingsReturnFocus = null;
-  function openSettings() {
+  function openSettings({ category } = {}) {
     void globalTools?.ensure();
     if (!$('sim-settings').open) settingsReturnFocus = doc.activeElement;
     pauseFlight();
     if (!$('sim-settings').open) $('sim-settings').showModal();
-    modeSettingsView?.navigation.focusCategories();
+    const view = modeSettingsView,
+      tab = category && view?.tabs[category];
+    if (tab && view.navigation.select(tab.id)) {
+      if (!view.navigation.focusPanel()) view.navigation.focusCategories();
+    } else view?.navigation.focusCategories();
   }
   on($('lobby-settings'), 'click', openSettings);
+  on($('library-flight-records'), 'click', () => openSettings({ category: 'data' }));
   function closeSettings({ force = false } = {}) {
     if (!force && modeSettingsView?.navigation.back()) return;
     $('sim-settings').close();
