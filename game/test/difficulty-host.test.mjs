@@ -11,6 +11,7 @@ import { createDifficultyContext } from '../campaign-difficulty.mjs';
 import { applyGameplayTuning, resolveGameplayTuning } from '../gameplay-tuning.mjs';
 import { retryFixture } from './fixtures/retry-scenarios.mjs';
 import { soloPage, memoryStorage, settle } from './helpers/solo-dom.mjs';
+import { REWARD_BOARD_SECONDS } from '../ui/reward-arrival.mjs';
 
 const read = (path) => JSON.parse(readFileSync(new URL(path, import.meta.url)));
 const profileKey = 'revealline.library.dev.v1';
@@ -394,6 +395,10 @@ test('replacing a two-chapter pack retains the active Gentle chapter and applies
     id: 'host-two-chapters',
     name: 'Host two chapters',
     description: 'A small public pack fixture with two distinct authored chapters.',
+    levelVisuals: ['first', 'second'].map((part, index) => ({
+      levelId: `host-map-${part}`,
+      visualOverrides: source.levelVisuals[index].visualOverrides,
+    })),
     campaigns: ['first', 'second'].map((part) => ({
       version: 'xonix-campaign.v1',
       id: `host-chapter-${part}`,
@@ -567,8 +572,14 @@ test('ordinary practice selecting an authored campaign ignores saved Gentle and 
   assert.equal(page.rendered.run.status, 'won');
   assert.equal(page.rendered.run.lives, 3);
   const completed = authoritativeCheckpoint(page.rendered.run);
-  assert.equal(page.$('skip-celebration').hidden, false);
-  page.$('skip-celebration').click();
+  // The shared result flow first lets the completed picture settle. Drive
+  // presentation time without changing the completed simulation checkpoint.
+  for (
+    let i = 0;
+    i < Math.ceil(REWARD_BOARD_SECONDS / 0.1) + 2 && page.$('show-result').hidden;
+    i++
+  )
+    page.frame(100);
   assert.equal(page.$('show-result').hidden, false);
   page.$('show-result').click();
   assert.deepEqual(authoritativeCheckpoint(page.rendered.run), completed);
