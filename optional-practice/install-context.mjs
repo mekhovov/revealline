@@ -175,7 +175,16 @@ export async function inspectOptionalOffline(
             typeof data.ready !== 'boolean'
           )
             return finish(false);
-          finish(data.ready, undefined, data.ready ? 'ready' : 'unavailable');
+          // Older workers report only ready. New workers distinguish a failed
+          // inspection from confirmed missing bytes without certifying either.
+          const status =
+            data.status === undefined ? (data.ready ? 'ready' : 'unavailable') : data.status;
+          if (
+            !['ready', 'unavailable', 'unknown'].includes(status) ||
+            data.ready !== (status === 'ready')
+          )
+            return finish(false);
+          finish(data.ready, undefined, status);
         };
         channel.port1.onmessageerror = () => finish(false);
         worker.postMessage({ type: 'practice-status' }, [channel.port2]);
