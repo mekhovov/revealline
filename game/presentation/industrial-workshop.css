@@ -1962,6 +1962,30 @@
     --ui-panel-depth:
       inset 1px 1px 0 #ffffff20, inset -2px -3px 0 #0009, 0 0 0 1px #0008, 0 5px 0 var(--ui-shadow),
       0 16px 28px #0006;
+    /* Cast housings keep their fine stipple under load. Only the machined lip
+       catches light; a selected plate is seated, not scratched or glowing. */
+    --ui-control-finish:
+      var(--ui-grain),
+      linear-gradient(
+        180deg,
+        #ffffff30 0 1px,
+        #ffffff0c 1px 3px,
+        transparent 5px,
+        transparent calc(100% - 4px),
+        #0006
+      );
+    --ui-hover-finish:
+      var(--ui-grain),
+      linear-gradient(180deg, #ffffff50 0 1px, transparent 4px, transparent calc(100% - 3px), #0005);
+    --ui-selected-finish:
+      var(--ui-grain),
+      linear-gradient(180deg, #ffffff25 0 1px, transparent 3px, transparent calc(100% - 2px), #0004);
+    --ui-active-finish:
+      var(--ui-grain),
+      linear-gradient(180deg, #0006, transparent 4px, transparent calc(100% - 1px), #ffffff30);
+    --ui-inset-finish:
+      var(--ui-grain-stone) 23px 17px / 192px 128px repeat,
+      linear-gradient(180deg, #0006, transparent 5px, transparent calc(100% - 1px), #ffffff14);
   }
   [data-theme-finish='polar-relay'][data-theme-texture='on'][data-theme-contrast='normal'][data-theme-surface='bevel'] {
     --ui-grain: var(--ui-grain-brush) 0 0 / 192px 96px repeat;
@@ -1992,6 +2016,30 @@
     --ui-panel-depth:
       inset 1px 1px 0 #ffffff30, inset -1px -2px 0 #0008, 0 0 0 1px #0007, 0 3px 0 var(--ui-shadow),
       0 12px 24px #0005;
+    /* Sealed relay equipment retains the same directional brushing in every
+       state. Do not inherit Flight Deck's chipped paint on selection/press. */
+    --ui-hover-finish:
+      var(--ui-grain),
+      linear-gradient(
+        180deg,
+        #ffffff65 0 1px,
+        #ffffff18 1px 3px,
+        transparent 5px,
+        transparent calc(100% - 2px),
+        #0004
+      );
+    --ui-selected-finish:
+      var(--ui-grain),
+      linear-gradient(180deg, #ffffff38 0 1px, transparent 3px, transparent calc(100% - 2px), #0003);
+    --ui-active-finish:
+      var(--ui-grain),
+      linear-gradient(180deg, #0005, transparent 3px, transparent calc(100% - 1px), #ffffff45);
+    --ui-inset-finish:
+      var(--ui-grain),
+      linear-gradient(180deg, #0005, transparent 4px, transparent calc(100% - 1px), #ffffff20);
+    --ui-toolbar-finish:
+      var(--ui-grain),
+      linear-gradient(180deg, #ffffff30 0 1px, transparent 3px, transparent calc(100% - 2px), #0004);
   }
   [data-theme-finish='obsidian-reliquary'][data-theme-texture='on'][data-theme-contrast='normal'][data-theme-surface='bevel'] {
     --ui-panel-finish:
