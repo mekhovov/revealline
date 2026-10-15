@@ -104,3 +104,41 @@ Remaining: connection-loss interruption, older installed-profile upgrade/custom-
 ### Final integration
 
 Rebased without conflicts onto `d6f93f71d889912832abeec74dc5efc3e626c857`. The intervening main commits changed none of the application/saved-flight files, Neon packs, core/replay/difficulty or mission-library code exercised here. Changed runtime files passed lint, formatting and whitespace checks; the final finite recovery run passed all 216 cases and seven rejections. The recorded full distribution fingerprint remains the pre-rebase candidate: no full distribution rebuild or public deployment is inferred for unrelated main changes.
+
+
+## Reviewed upgrade, interruption and creator/sharing follow-up — 16 October 2026
+
+### Finish an already reviewed update
+
+A normal upgrade from a populated local edition exposed a real activation defect. After **Bring progress from an earlier release** copied the reviewed profile, **Finish app selection safely** refused with **“Repair gameplay before selecting this edition.”** Replacement runtime preparation deliberately waits until migration is verified, but Finish required that runtime to be ready already and did not provide the preparation callback.
+
+`game/downloads.mjs` now shares the existing runtime-preparation path between the initial update and Finish. Finish first verifies the already downloaded selected content, then passes preparation to `selectEdition`. Migration checks and both source/target profile locks still precede replacement. The new path does not approve or download missing chapters. Non-update activation keeps its previous behavior.
+
+The disposable same-origin fixture uses the real `publishOfflineLauncher` helper and frozen release paths. Local labels 0.151.2 and 0.151.3 distinguish qualification builds; they are not public releases or a repository version bump. An initial mutable-root setup kept serving cached old files and was corrected before qualification; no product defect is inferred from that setup. The fixed 0.151.3 build is commit `140808f9b3110417767e3fbc599ae5e9a2930110`, 3,492 files, distribution SHA-256 `2d863dd88e8e8c42441228654b84e36d0a14e7ff4c9f97f3180f2e8cfba771d2`.
+
+| Check | Observed result |
+|---|---|
+| Populated older edition | Installed Solo Starter and both Neon chapters through the normal UI. Uploaded the existing real FPV painting as a clearly labeled test assignment, won First Signal through ordinary input, then saved Relay Orchard. One earned picture, one local score, both installed packs and the paused flight were present. No user profile was cleared. |
+| Reviewed copy to fixed edition | Chose the actual 0.151.1 source rather than the intermediate candidate, reviewed and confirmed replacement only in the disposable profile. Exported complete game-data backup after copy: **byte-for-byte equal** to the older backup, 22,263,822 bytes, SHA-256 `37471776be7243a32fd7f1eb1445288081e312266a780232f7c9839a0e87f126`. This includes library, scores, campaign progress, installed packs and saved session. [Copied progress](upgrade-fixed-copied-progress.png). |
+| Custom picture and originals | Newer Collection rendered the earned custom FPV picture. Every original uploaded asset byte, immutable revision and assignment in the pre-play `.rlmedia` export was retained exactly. The later bundle also contains one authored picture accepted during baseline gameplay, so whole-media-bundle equality is not claimed. [Retained earned painting](upgrade-earned-art-preserved.png). This was a local test assignment; shipped First Signal artwork was not changed. |
+| Real connection loss during Finish | Held the frozen new service-worker response before bytes were sent, observed the request in the task-owned server log, then stopped the server. Activation visibly failed. Opening the app launcher while the server remained stopped still selected **0.151.1**. [Failure](upgrade-fixed-connection-loss.png), [older edition retained](upgrade-interrupted-old-selected.png). This qualifies interruption during replacement runtime preparation, not bulk chapter download interruption. |
+| Retry Finish | Restarted the server and used the same Finish action. The installer reported **Update verified and selected**, selected chapters ready offline, and saved progress kept. [Verified selection](upgrade-fixed-selected.png). |
+| New edition offline | Stopped the origin server again, opened Play updated game, then the Legacy entry. The bare game entry opens Journey's separate save slot; the retained Classic save is available in Legacy. **Load suspended attempt** verified Relay Orchard and restored it paused, with three lives and its 58% goal. [Verified paused restore](upgrade-fixed-offline-restored.png). |
+| Actual restored checkpoint | Downloaded the current attempt before Resume. Native `xonix-session.v6`, checkpoint **`01a48ec4cae3b974`**, with every checkpoint section exactly equal to the older saved flight. |
+| Explicit offline Resume | With the server still stopped, Resume advanced the clock from 0:32 to 0:46; Pause stopped it again, retaining three lives and the 58% goal. [Resumed then paused](upgrade-fixed-offline-resumed.png). |
+
+[Machine-readable upgrade receipt](upgrade-preservation.json) records fingerprints, checkpoint and limits. Raw backups, original bundles, image data and credentials are not committed. This qualifies the scoped same-origin older-profile upgrade and recovery, not every source version, browser/device, storage-failure case or public deployment. A separate bulk-content mid-file connection-loss check remains open. Changed runtime syntax, lint, formatting and whitespace checks passed; local unit suites remain deferred.
+
+### Pending creator import cancellation
+
+Opened a cached pack through the normal source picker, immediately cancelled its pending preparation, and observed **Preparation cancelled. The working map and previous preview are unchanged.** Generated a newer **DRONE AID** text preview; it remained intact after the older operation had time to settle. Apply was enabled with 2,127 counted and 241 excluded cells. The complete working scenario exports before and after were deeply equal: 361,243 bytes, SHA-256 `1a7793429383aa9f3e6204a34c3edfb678d2fbc59856cb9a7fcfbe015354f8da`. No generated preview was applied. [Newer preview after cancellation](creator-cancel-new-preview.png).
+
+This passes cancellation of pending content preparation and protection of a newer text preview. A valid 16-million-pixel symbol image finished before Cancel could be activated; controlled delayed image-decoder cancellation remains unqualified. No editor behavior was changed based on that timing limitation.
+
+### Sharing fallback and next mission
+
+A task-owned server supplied the real browser policy `Permissions-Policy: clipboard-write=()`. Copy level link then exposed the selected readonly **Level link** field with **Copy the selected link to share this mission.** The field equaled the actual address. Native manual copy and paste into a harmless visible text input reproduced the exact First Signal mission URL, including campaign, revision, level fingerprint and seed. [Policy-denied fallback](clipboard-policy-fallback.png).
+
+Ordinary wins also automatically advanced First Signal to Relay Orchard and changed the URL from `signal-01` to `signal-02`. Manual Next activation was not qualified before automatic advancement. Under the ordinary IAB success path the game reported copied, but native paste retained a known harmless marker and the browser-session clipboard reader returned empty. Automatic clipboard bytes remain inconclusive; no clipboard implementation change or cause is inferred. An independent same-URL recipient profile, optional/unavailable/retired identities and the broader pack/difficulty matrix remain open.
+
+[Creator/sharing receipt](creator-sharing-followup.json) preserves these exact boundaries. No browser state, storage or replay was injected.
