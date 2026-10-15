@@ -192,7 +192,9 @@
         <div id="render-host" tabindex="0"></div>
         <aside id="overflight-music-now-playing" class="overflight-music-credit" hidden></aside>
         <div id="overflight-hud" aria-live="off">
-          <div class="overflight-xp"><div id="xp-fill"></div></div>
+          <div id="hud-salvage-meter" class="overflight-xp" role="progressbar">
+            <div id="xp-fill"></div>
+          </div>
           <div class="overflight-topline">
             <div class="overflight-vitals">
               <span id="hud-hull"></span>
@@ -204,9 +206,10 @@
             <div class="overflight-clock">
               <span class="overflight-eyebrow" data-copy="sortie"></span
               ><strong id="hud-time">00:00</strong>
+              <span id="hud-final-objective" role="status" hidden></span>
             </div>
             <div class="overflight-tally">
-              <span id="hud-level"></span><span id="hud-kills"></span>
+              <span id="hud-level"></span><span id="hud-kills"></span><span id="hud-salvage"></span>
             </div>
           </div>
           <p id="hud-review" hidden></p>

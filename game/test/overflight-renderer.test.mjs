@@ -541,6 +541,65 @@ test('real earned drafts retain complete render intervals while manual lifecycle
   }
 });
 
+test('only the live Survivor/Riy final objective gets a persistent marker without new texture work', async () => {
+  const prior = globalThis.Phaser;
+  const environment = fakeEnvironment();
+  globalThis.Phaser = environment.Phaser;
+  let renderer;
+  const appearance = {
+    reducedEffects: false,
+    snapshot: { image: (id) => (id.startsWith('player.') ? { image: {} } : null) },
+  };
+  try {
+    renderer = await createOverflightRenderer({
+      parent: { ownerDocument: environment.document },
+      appearance,
+    });
+    const run = createOverflightRun(
+      compileOverflightProject(createOverflightProject({ rulesVersion: 4 })),
+    );
+    startOverflight(run);
+    const target = spawnOverflightEnemy(run, {
+      family: 'tracked-tank',
+      x: 2650,
+      y: 540,
+      warning: 0,
+    });
+    const cues = () =>
+      environment.images.filter((image) => image.Depth?.[0] === 30 && image.Visible?.[0]);
+    renderer.present(run);
+    assert.equal(cues().length, 0, 'ordinary offscreen bodies do not get objective arrows');
+    run.goals.finalSpawned = true;
+    run.goals.finalId = target.id;
+    const resources = environment.counts();
+    renderer.present(run);
+    assert.equal(cues().length, 7);
+    assert.equal(
+      renderer.stats().counts.rendered,
+      0,
+      'offscreen cue does not count as a visible actor',
+    );
+    appearance.reducedEffects = true;
+    renderer.present(run);
+    assert.equal(cues().length, 7, 'reduced effects preserve the objective');
+    assert.deepEqual(environment.counts(), resources, 'navigation uses prepared atlas frames');
+    run.goals.finalDefeated = true;
+    renderer.present(run);
+    assert.equal(cues().length, 0);
+    run.goals.finalDefeated = false;
+    run.hunt = {};
+    renderer.present(run);
+    assert.equal(cues().length, 0, 'Raid keeps its own objective navigation');
+    delete run.hunt;
+    target.active = false;
+    renderer.present(run);
+    assert.equal(cues().length, 0);
+  } finally {
+    await renderer?.destroy();
+    globalThis.Phaser = prior;
+  }
+});
+
 test('arming a late renderer window preserves earned remains, live simulation and prepared resources', async (t) => {
   const prior = globalThis.Phaser;
   const environment = fakeEnvironment();
