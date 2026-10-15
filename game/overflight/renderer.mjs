@@ -2,6 +2,7 @@ import {
   overflightTacticalEnemyLayers,
   overflightAttackLayers,
   overflightCacheLayers,
+  overflightFinalTargetLayers,
 } from './tactical-view.mjs';
 import { bakeOverflightAtlas, OVERFLIGHT_HERO_FRAMES } from './atlas.mjs';
 import { createOverflightPresentationState } from './presentation-state.mjs';
@@ -425,6 +426,23 @@ export async function createOverflightRenderer({
       const state = presentationState.enemy(enemy, run.time);
       const machine = OVERFLIGHT_MACHINERY.includes(enemy.family);
       const size = enemy.heavy ? (machine ? 54 : 32) : machine ? 32 : enemy.specialist ? 23 : 21;
+      if (!run.hunt && !run.goals?.finalDefeated && enemy.id === run.goals?.finalId)
+        // Objective navigation stays below hostile warnings and the player.
+        for (const cue of overflightFinalTargetLayers(
+          enemy,
+          camera,
+          atlas.enemyFrame(enemy, run.time, true, appearance.cast, state),
+        ))
+          pools.effects.take(
+            cue.frame,
+            cue.x,
+            cue.y,
+            cue.width,
+            cue.height,
+            cue.tint,
+            cue.alpha,
+            cue.rotation,
+          );
       if (insideOverflightCamera(enemy.x, enemy.y, camera, size)) {
         pools.enemies.take(
           atlas.enemyFrame(enemy, run.time, reduced, appearance.cast, state),
