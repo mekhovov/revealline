@@ -158,6 +158,25 @@ accepts admitted frozen candidates and an authorized test password when required
 Never substitute a sample-fixture success for a real candidate's failed or blocked
 installation observation. Physical devices and human learning remain separate.
 
+For a source-bound Academy first-pointer regression check, use the separate
+observer described in the [pointer protocol and results](flight-practice-pointer-2026-10-15.md).
+Copy a retained `plan.json` from its evidence archive, point `bundle` at the exact
+original candidate, and verify the envelope/source/tree/package pins. For a new
+candidate, obtain fresh pins from its admitted envelope; never rename an old
+receipt to qualify it. Run with an existing external Playwright installation:
+
+```sh
+node scripts/observe-practice-pointer.mjs PLAN_JSON PLAYWRIGHT_MODULE NEW_OUTPUT_DIRECTORY
+```
+
+Supply `OPTIONAL_INSTALLATION_PASSWORD` through an approved secret environment or
+silent interactive input, never in command arguments or committed plans. The
+observer uses the ordinary form. It tests EN/UK Workshop, profile backup and
+notebook backup separately by mouse and Tab/Enter, using fresh contexts and reload
+cases. Setup navigation itself uses keyboard activation. Keep the full output,
+including failed attempts and cleanup errors. Run its tooling regressions with
+`npm run practice:pointer:test`; these are not browser or device qualification.
+
 When checking the player guides, follow the runtime menus rather than only the
 static HTML: the shared shell reparents input/offline controls into Settings.
 Compare English and Ukrainian labels after mounting, including Radio setup and
