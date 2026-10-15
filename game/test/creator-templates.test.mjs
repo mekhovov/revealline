@@ -9,6 +9,7 @@ import {
   CREATOR_TEMPLATE_VERSION,
   generateCreatorProject,
   selectCreatorTemplate,
+  selectCreatorBatchTemplate,
   verifyCreatorRoutes,
   validateCreatorProvenance,
 } from '../creator/templates.mjs';
@@ -24,6 +25,39 @@ const replayChallenge = (level) => ({
   foundations: level.foundations,
   terrain: level.classic.terrain,
   enemies: level.enemies,
+});
+
+test('balanced batch pacing uses all six families without counting item position twice', () => {
+  const families = CREATOR_TEMPLATES.map(({ id }) => id);
+  for (const root of [0, 1, 5, 123456]) {
+    const selected = Array.from({ length: 12 }, (_, index) => {
+      const seed = (root + index) >>> 0;
+      const templateId = selectCreatorBatchTemplate({ seed, index, total: 12, pacing: 'balanced' });
+      const made = generateCreatorProject({
+        id: `batch-${index}`,
+        name: 'Balanced',
+        seed,
+        templateId,
+      });
+      assert(made.project.missions[0].actors.length > 0);
+      assert(made.project.maps[0].walls.length > 0);
+      return made.provenance.templateId;
+    });
+    for (const block of [selected.slice(0, 6), selected.slice(6)])
+      assert.deepEqual(new Set(block), new Set(families));
+  }
+  assert.equal(
+    selectCreatorBatchTemplate({ seed: 7, index: 0, total: 12, pacing: 'gentle-first' }),
+    families[0],
+  );
+  assert.equal(
+    selectCreatorBatchTemplate({ seed: 7, index: 6, total: 12, pacing: 'steady' }),
+    families[2],
+  );
+  assert.equal(
+    selectCreatorBatchTemplate({ seed: 7, index: 6, total: 12, pacing: 'random' }),
+    undefined,
+  );
 });
 
 test('six bounded families and both variants are selected deterministically', () => {
