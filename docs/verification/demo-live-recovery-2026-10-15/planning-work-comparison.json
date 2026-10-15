@@ -1,0 +1,14 @@
+{
+  "planning-after.jsonl": {
+    "cases": 12,
+    "wins": 12,
+    "simulatedLookaheadTicks": 831757,
+    "decisions": 106
+  },
+  "early-search-prototype.jsonl": {
+    "cases": 12,
+    "wins": 12,
+    "simulatedLookaheadTicks": 458072,
+    "decisions": 103
+  }
+}
