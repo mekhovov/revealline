@@ -2,6 +2,20 @@
   "format": "revealline-focused-test-map.v1",
   "categories": [
     {
+      "id": "pinned-game-review",
+      "pathPatterns": [
+        "^scripts/(serve-pinned-game-review|test_pinned_game_review)\\.py$",
+        "^scripts/test-pinned-game-review\\.mjs$"
+      ],
+      "commands": [
+        {
+          "id": "pinned-game-review",
+          "command": "node",
+          "args": ["--test", "scripts/test-pinned-game-review.mjs"]
+        }
+      ]
+    },
+    {
       "id": "release-utility-checkout",
       "pathPatterns": [
         "^publishing/utility-sparse-checkout\\.test\\.mjs$",
