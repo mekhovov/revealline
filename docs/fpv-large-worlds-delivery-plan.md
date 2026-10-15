@@ -5,6 +5,72 @@ The user selected default catalogue visibility, download on Play, optional offli
 storage, and authored regions first. Generation assists authoring; endless runtime
 terrain is deferred. Twelve proposed regions are design targets, not shipped maps.
 
+## 15 October — navigation and revision safety integrated
+
+This checkpoint supersedes the status immediately below. The full roadmap remains
+**open**. Coordinator branch: `codex/fpv-integrated-admission-review-20261015`,
+started from `e5dc67c1`. Protected publication continues independently of development.
+
+- **Merged usability:** optional direction guidance #1421, installed descriptor
+  titles #1419, Urban EN/UK start labels #1426 and per-version removal #1425.
+  Guidance remains off by default, observer-only and bound to the exact revision.
+  It gives a nose-relative direction, not a safe route or completion credit.
+  Native Urban checks cover an authored target, a saved place, Off, FPV/Chase/
+  Overview, EN/UK and 390×844 / 844×390 layouts. They do not establish controller
+  hardware or all-region acceptance.
+- **Removal evidence:** exact `a5055244` passes production Library interface 8/8
+  cases and native IndexedDB 4/4 isolated-database cases. Concurrent installation
+  invalidates stale removal; retained versions, saved places and bytes already
+  owned by a loaded flight survive. Normal player databases were not opened by
+  that fixture. Artifact 11966443108 passes all 15 hashes, six archive inventories,
+  three import graphs and packaged removal/deadline checks. Worlds source is
+  17,549,346 bytes, below the unchanged 20 MiB limit.
+- **Coaster rendering correction merged:** #1423 (`98bd0bec`, merge `aa65b948`)
+  adjusts regional Overview depth precision while preserving geometry/collision.
+  Native comparison over the frozen `856fefea` player removes the broad triangular
+  plaza/road interference; FPV, Chase and portrait/landscape Overview remain
+  readable. This comparison is not a new integrated-package qualification.
+  #1392 is still draft while a fresh package combines #1423 with short-screen Arm
+  fix #1413. Preserve the older failed package and its screenshots.
+- **Alpine source accepted, player admission pending:** #1407, #1415 and overlay
+  correction #1420 merged. Six source-view comparisons pass, with original
+  collision geometry intact. Alpine Library #1427 is a separate draft; final
+  integrated package and normal download/Fly/reload checks remain required.
+  The 4.096 km early study is not the final 8 km mountain/art target.
+- **Desert landmark Library merged:** #1416 at `d7f48f24`, merge `cecbd408`.
+  Artifact 11966362758 passes all archive/import checks, 2,063 source responses,
+  twelve start/mode cases and preservation of 2,048 original terrain files.
+  The earlier `0d51ca5c` native normal-player check remains separately identified.
+  Follow-up #1424 faces nearby formations from the authored starts, without
+  changing saved-place headings or older natural-r1. Its exact `e006821b` package
+  is under native review; do not transfer older evidence to that new head.
+
+Remaining work is split into independently publishable lanes:
+
+1. **P1 — finish exact admission and recovery.** Complete integrated Coaster and
+   Alpine player packages and the Desert heading/coexistence review. Keep immutable
+   source pins, old revisions, safe disarmed launch and explicit arming intact.
+2. **P2 — representative appearance.** Improve one Hillside pilot-height courtyard
+   with restrained stone, timber/plaster and roof detail using the preserved CC0
+   palette. Keep flight openings/collision and resource ceilings unchanged; compare
+   exact baseline views. Sparse broad terrain in several regions remains an open
+   art issue, not a success implied by their kilometre dimensions.
+3. **P3 — distinct authored regions.** Prepare Canal City independently: original
+   canal/quay layout, bridge crossings and reachable courtyard/warehouse passages.
+   Source design, immutable delivery and player admission remain separate gates.
+   Lunar Basin, Castle Valley, Retro Metropolis and larger Reservoir/Harbor/Festival
+   revisions remain later work under the same quality and preservation contracts.
+4. **P4 / D6 — integrated qualification.** Full-region sustained flight, all-network
+   offline and browser-restart recovery, actual device/controller observations,
+   additional unit coverage and deployed launch remain open. The two-hour
+   synthetic-corridor result and stopped-origin observations do not close those
+   broader cases.
+
+Heavy preparation stays on external storage/cloud; the latest local free-space
+observation is 5.0 GiB, not a guarantee of stable capacity. No source, unfinished
+work, frozen candidate or player storage was deleted. New PR attachments still hit
+this chat's 100-item limit; URLs and detailed evidence are preserved on GitHub.
+
 ## 15 October — player admission and rendering corrections
 
 This checkpoint supersedes the dated history below. The full roadmap remains
