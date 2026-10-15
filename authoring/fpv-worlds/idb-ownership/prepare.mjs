@@ -43,7 +43,7 @@ export async function prepareDiagnosticHost({ player, output, base }) {
     )
     .replace(entry, 'src="/authoring/fpv-worlds/idb-ownership/host.mjs"');
   const modules = {};
-  for (const name of ["observe.mjs", "host.mjs", "prepare.mjs"]) {
+  for (const name of ["observe.mjs", "host.mjs", "access.mjs", "prepare.mjs"]) {
     const bytes = await readFile(new URL(name, import.meta.url));
     modules[name] = { bytes: bytes.length, sha256: sha(bytes) };
   }

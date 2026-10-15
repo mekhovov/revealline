@@ -10,6 +10,14 @@ This tool gathers the missing **connection events and available ownership** duri
 future genuine player UI actions. It does not fix, retry, repair or prove the cause
 of that failure. It adds nothing to a distributed player, package manifest or cache.
 
+The first `0e02cf6f` / 9205 native review prepared Roadworks normally but exposed an
+authoring access defect: the body-level diagnostic button was inert behind native
+Flight and Home modals. Its report stayed closed, so connection capture is unknown.
+That fixture and negative are preserved. The child correction reparents the access
+button into the focused known native modal using focus and open-attribute events,
+without taking focus. It declines unknown/ambiguous top layers and active flight;
+it never pauses or reconnects the player. Its separate native gate remains pending.
+
 ## Precise boundary
 
 - A separate authoring HTML suppresses the production module's automatic mount,
@@ -61,7 +69,7 @@ This observer neither initiates nor blocks that operation.
 Only stage after the coordinator releases the sole renderer. Use a **fresh reserved
 origin**, keeping original 9196, its package and all player data intact. Bind the
 qualified package/archive/module hashes and these tool files in a new receipt.
-Copy the admitted player unchanged and serve `observe.mjs` and `host.mjs` under
+Copy the admitted player unchanged and serve `observe.mjs`, `access.mjs` and `host.mjs` under
 `/authoring/fpv-worlds/idb-ownership/`. Generate an additional `diagnostic.html`
 **beside** its ordinary frozen index, not over it:
 
@@ -75,7 +83,7 @@ node authoring/fpv-worlds/idb-ownership/prepare.mjs \
 Both output and its identity receipt must be new. The preparer refuses existing
 evidence, alternate entry scripts, existing base elements, remote/path-escape bases
 and duplicate player entries. It records the original HTML hash, separate generated
-HTML hash and the three tool-module hashes. This receipt does not itself hash or
+HTML hash and the four tool-module hashes. This receipt does not itself hash or
 qualify the whole package. Independently recheck every frozen package member and
 the separate authoring import closure before native use. Do not add source fallbacks
 or edit the qualified worker to make the fixture load.
@@ -116,10 +124,14 @@ eviction/quota, physical-device, exact-runtime or two-hour performance gates.
 TMPDIR=/external/temp node --test authoring/fpv-worlds/idb-ownership/verify.mjs
 ```
 
-Nine focused groups use only fresh in-memory fake IndexedDB and temporary files.
+Ten focused groups use only fresh in-memory fake IndexedDB, the existing test DOM
+and temporary files.
 They cover native-object/operation delegation, event/default-handler ownership,
 explicit interception and restoration, redaction, bounded overflow, late request
 completion after stop, foreign method receivers/constructors, and separate immutable
-host preparation. Fake IndexedDB lacks native WebIDL coercion/receiver checks; two
+host preparation. The modal boundary models native inertness explicitly: a body
+sibling cannot activate, the tool must belong to the current known modal, normal
+focus stays put, unknown/active ownership is refused and teardown retires listeners.
+This DOM model is not browser-layout acceptance. Fake IndexedDB lacks native WebIDL coercion/receiver checks; two
 small delegated-boundary sentinels test those contracts explicitly. Its forced-close
 helper and synthetic events are software stimuli, **not observed browser failures**.
