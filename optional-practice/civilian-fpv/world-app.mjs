@@ -4746,6 +4746,22 @@ export function mountWorldApp({
       );
       controls.select.replaceChildren();
       const names = {
+        'lower-square': ['Lower square', 'Нижня площа'],
+        'middle-courtyard': ['Middle courtyard', 'Середнє подвір’я'],
+        'upper-terrace': ['Upper terrace', 'Верхня тераса'],
+        'elevated-pad': ['Elevated pad', 'Піднятий майданчик'],
+        'covered-harbour': ['Covered harbour', 'Крита гавань'],
+        'lagoon-piers': ['Lagoon piers', 'Пірси лагуни'],
+        'reef-rocks': ['Reef rocks', 'Прибережні скелі'],
+        'palm-valley': ['Palm valley', 'Пальмова долина'],
+        'hillside-huts': ['Hillside huts', 'Хатини на схилі'],
+        'bamboo-grove': ['Bamboo grove', 'Бамбуковий гай'],
+        'crescent-dunes': ['Crescent dunes', 'Серпоподібні дюни'],
+        'dry-wash': ['Dry wash', 'Сухе русло'],
+        'salt-basin': ['Salt basin', 'Солона улоговина'],
+        'sunrise-escarpment': ['Sunrise escarpment', 'Світанковий уступ'],
+        'mesa-corridor': ['Mesa corridor', 'Коридор плато'],
+        'rocky-plain': ['Rocky plain', 'Кам’яниста рівнина'],
         'braided-basin': ['Braided basin', 'Розгалужена улоговина'],
         'high-mesa': ['High mesa', 'Високе плато'],
         'red-escarpment': ['Red escarpment', 'Червоний уступ'],

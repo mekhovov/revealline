@@ -12,17 +12,11 @@ import {
 } from '../indexed-scenery-cell.mjs';
 import { validateRegionManifest } from '../region-manifest.mjs';
 import { loadBuildingModels } from './indexed-source.mjs';
-import {
-  architecture,
-  placements,
-  routes,
-  spawns,
-  probes,
-  heightMm,
-  sizeM,
-  roads,
-  roadTopMm,
-} from './design.mjs';
+const variant = process.argv[3];
+assert(!variant || variant === 'courtyard-r3', 'Unknown Hillside source variant');
+const design = await import(variant ? './courtyard-r3/design.mjs' : './design.mjs');
+const { architecture, placements, routes, spawns, probes, heightMm, sizeM, roads, roadTopMm } =
+  design;
 const output = process.argv[2];
 assert(output, 'Provide a new external output directory');
 const json = (value) => Buffer.from(JSON.stringify(value) + '\n');
@@ -209,8 +203,8 @@ for (const [kind, sources, compile] of [
   const manifest = {
     format: 'FPVRegionManifest.v1',
     id: 'hillside-town-study',
-    revision: 'town-r2',
-    title: {
+    revision: design.revision ?? 'town-r2',
+    title: design.title ?? {
       en: 'Hillside Town — terraces and courtyards',
       uk: 'Містечко на схилі — тераси та подвір’я',
     },
