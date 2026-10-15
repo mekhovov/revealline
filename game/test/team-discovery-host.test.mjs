@@ -151,7 +151,7 @@ test('a newer Back focus during Play admission prevents preparation and keeps th
   assert.equal(f.$('coop-level').value, 'first-connection');
 });
 
-test('successful built-in discovery starts directly and writes only its stats identity and arena bookmark', async (t) => {
+test('successful built-in discovery starts directly and writes only its arena bookmark', async (t) => {
   const values = new Map();
   const writes = [];
   const f = await page(t, {
@@ -169,18 +169,15 @@ test('successful built-in discovery starts directly and writes only its stats id
   });
   assert.deepEqual(
     writes,
-    [`${ENEMY_STATS_KEY}:writer`],
-    'Opening the host allocates its statistics writer only.',
+    [],
+    'Opening the host without a live contribution writes no statistics identity.',
   );
   await open(f);
-  assert.deepEqual(
-    writes,
-    [`${ENEMY_STATS_KEY}:writer`],
-    'Browsing missions awards no progress and saves no arena.',
-  );
+  assert.deepEqual(writes, [], 'Browsing missions awards no progress and saves no arena.');
   enter(f, card(f, 'Relay Yard'));
   await started(f, 'Relay Yard');
-  assert.deepEqual(writes, [`${ENEMY_STATS_KEY}:writer`, TEAM_ARENA_PREFERENCE_KEY]);
+  assert.deepEqual(writes, [TEAM_ARENA_PREFERENCE_KEY]);
+  assert.equal(values.has(`${ENEMY_STATS_KEY}:writer`), false, 'Starting alone creates no writer.');
   assert.equal(values.has(ENEMY_STATS_KEY), false, 'Starting awards no enemy defeats.');
   assert.equal(
     values.has(TEAM_CONTEXTUAL_TEACHING_FORMAT),
