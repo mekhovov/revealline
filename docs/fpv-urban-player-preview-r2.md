@@ -28,7 +28,7 @@ The actual catalogue row passes immutable descriptor/payload preparation and
 all three presentation tiers. Each tier retains the same geometry hash
 `10abc94fb8878f2439f6d639e9257acd36fa9517009eed75f54617000ad322e3`;
 disposal releases all prepared geometry. The older descriptor still selects its
-plain presentation. These checks do not claim a browser migration test.
+plain presentation. These checks are separate from browser storage verification below.
 
 Native browser review on the isolated 9051 source host passed the normal
 Download → Saved → Fly journey without a retry: Ready to arm at 3.0 m with zero
@@ -39,6 +39,15 @@ renderer from #1310 with the cold-preparation guard from #1314; the latter must
 merge before claiming reliable first launch. The review host is not a qualified
 package. Screenshot: `urban-r2-normal-library-flight.png` in the external archive.
 
-Package, public deployment, physical-device and browser old/new-Urban-revision
-coexistence acceptance remain separate. Source and delivery identity are
-preserved; the existing Library storage path is unchanged.
+A standalone browser fixture then mounted the actual Library against the same
+isolated origin: downloading historical review-r1 preserved review-r2 and Railway;
+returning to current pins listed all three. Opening each Urban record hash-verified
+its saved scenery and selected plain (r1) versus Urban (r2) presentation. A fresh
+page reload retained all three records. This verifies saved-revision coexistence
+and loading, not another whole flight or an in-place application upgrade.
+Screenshot: `urban-revisions-coexistence.png`.
+
+Package, public deployment and physical-device acceptance remain separate.
+Source and delivery identity are preserved; the existing Library storage path is
+unchanged. Published as #1316 in native stack #1292, temporarily Draft until the
+cross-stack cold-preparation fix #1314 reaches main.
