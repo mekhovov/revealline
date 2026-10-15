@@ -6,7 +6,7 @@ import { createHash } from 'node:crypto';
 import validator from 'gltf-validator';
 import { createVerifiedMixedWindow } from '../verified-mixed-window.mjs';
 import { loadBuildingModels } from './indexed-source.mjs';
-import { routes, probes, spawns, placements } from './design.mjs';
+import { routes, probes, spawns, placements, roads, heightMm, roadTopMm } from './design.mjs';
 const root = process.argv[2];
 assert(root, 'Provide exact hillside source');
 const prep = JSON.parse(await readFile(resolve(root, 'preparation.json'))),
@@ -85,6 +85,19 @@ for (const p of placements) {
     normals.map((v) => v || 0),
   );
 }
+let roadVertices = 0;
+for (const source of cells)
+  for (const surface of source.cell.surfaces) {
+    if (!roads.some((road) => road.id === surface.id)) continue;
+    for (let i = 0; i < surface.positionsMm.length; i += 3) {
+      const x = (surface.positionsMm[i] + source.cell.x * 128000) / 1000,
+        z = (surface.positionsMm[i + 2] + source.cell.z * 128000) / 1000,
+        offset = surface.positionsMm[i + 1] - heightMm(x, z);
+      assert([roadTopMm, -20].includes(offset), `Conforming road vertex ${surface.id}/${i}`);
+      roadVertices++;
+    }
+  }
+assert(roadVertices > 0, 'Terrain-conforming roads are required');
 const mm = (p) => ({
     x: Math.round(p[0] * 1000),
     y: Math.round(p[1] * 1000),
@@ -93,6 +106,7 @@ const mm = (p) => ({
   results = [],
   windows = [];
 let queries = 0;
+const roadContinuity = [];
 for (const quality of ['performance', 'balanced', 'quality']) {
   const owner = createVerifiedMixedWindow(manifests.terrain, {
     source: { ...sources.terrain, surfaceQuality: quality },
@@ -131,6 +145,58 @@ for (const quality of ['performance', 'balanced', 'quality']) {
           }
         }
       }
+    // Low passes and exact support across both ramp breaks, including cell seams.
+    // The original horizontal slabs fail these checks by up to 1.5 m.
+    let supportQueries = 0,
+      lowPassQueries = 0,
+      maxSupportErrorMm = 0;
+    const lanes = [128, 256].flatMap((x) => [-4, 0, 4].map((dx) => x + dx));
+    for (const x of [...lanes, 192])
+      for (const [start, end] of x === 192
+        ? [
+            [108, 114],
+            [236, 242],
+          ]
+        : [
+            [108, 148],
+            [236, 276],
+          ]) {
+        for (let z = start; z <= end; z += 0.5) {
+          const target = heightMm(x, z) + roadTopMm;
+          const support = owner.support({ x: x * 1000, y: target + 1000, z: z * 1000 }, 2000);
+          assert.equal(support.status, 'terrain-hit', `road support ${x},${z}`);
+          assert.equal(support.layer, 'scenery', `road top ${x},${z}`);
+          const error = Math.abs(support.heightMm - target);
+          assert(
+            error <= 2,
+            `${quality} road must follow terrain at ${x},${z}: ${JSON.stringify(support)}`,
+          );
+          maxSupportErrorMm = Math.max(maxSupportErrorMm, error);
+          supportQueries++;
+          if (z < end) {
+            const hit = owner.sweep(
+              mm([x, target / 1000 + 0.5, z]),
+              mm([x, (heightMm(x, z + 0.5) + roadTopMm) / 1000 + 0.5, z + 0.5]),
+              250,
+            );
+            assert.equal(
+              hit.status,
+              'terrain-clear',
+              `${quality} road low pass ${x},${z}: ${JSON.stringify(hit)}`,
+            );
+            lowPassQueries++;
+          }
+        }
+      }
+    roadContinuity.push({
+      quality,
+      supportQueries,
+      lowPassQueries,
+      maxSupportErrorMm,
+      clearanceAboveRoadM: 0.5,
+      sweptRadiusM: 0.25,
+    });
+    queries += supportQueries + lowPassQueries;
     for (const p of probes) {
       const hit = owner.sweep(mm(p.from), mm(p.to), 250);
       assert.equal(hit.status, p.clear ? 'terrain-clear' : 'terrain-hit', p.id);
@@ -199,6 +265,8 @@ console.log(
       palettePixels: 'Exact512×512 indexed pixels retained',
       doubleSided: 'Original triangles and explicitly reversed back faces retained',
       queries,
+      roadVertices,
+      roadContinuity,
       results,
       windows,
       disposed: true,
