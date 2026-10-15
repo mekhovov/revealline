@@ -5,6 +5,46 @@ The user selected default catalogue visibility, download on Play, optional offli
 storage, and authored regions first. Generation assists authoring; endless runtime
 terrain is deferred. Twelve proposed regions are design targets, not shipped maps.
 
+## 15 October — cached flight, saved places and larger terrain
+
+This is the latest scoped checkpoint. The roadmap remains open; source verification,
+package qualification and actual public availability are separate results.
+
+- **Merged:** exact-revision saved places (#1334), the bounded renderer measurement
+  tool (#1336), and Tropical package evidence (#1337). The saved-place package passes
+  normal save/restore, rejected blocked-location recovery with the record retained,
+  and cached restore plus deliberate flight after its own server was stopped.
+- **Tropical qualification:** the unchanged package first timed out during graphics
+  preparation while many review canvases were open. Saved bytes verified correctly.
+  After completed review canvases were closed, the same package prepared and flew
+  with its origin unavailable. Both observations are retained; this does not establish
+  network-wide offline coverage or a causal GPU diagnosis. A focused localized
+  graphics-timeout/retry explanation is being implemented without raising the cap.
+- **Performance:** the renderer tool records exact source manifests, frame intervals,
+  CPU submission cost and resource counts, rejecting interrupted samples. One
+  fixed-pose source observation is recorded; integrated before/after and sustained
+  named-device measurements remain open.
+- **Coastal expansion (#1335):** the 768 m source passes production preparation,
+  flight-route and three-tier appearance checks with clean disposal. Composition
+  remains sparse, especially village clusters and inland flight lines. It is an
+  early source study, not the representative finished-art standard.
+- **Canyon expanse (#1338):** an original 8.192 km terrain source passes 1,024-cell
+  canonical verification, 1,984 seams, bounded windows and 24 representative
+  commanded routes in both modes. This is not an uninterrupted whole-region flight
+  or a Library release. Native review found an authoring overview camera still
+  assuming 128 m cells; its correction is separate from terrain and physics.
+- **Next delivery capability:** explicit verified empty scenery cells, preserving
+  strict older manifests and byte ceilings, will allow large natural regions without
+  fake geometry. Missing or unprepared cells must remain unknown, never clear.
+
+Priority order remains: **P1** truthful preparation/recovery and integrated Library
+qualification; **P2** coherent, richer flight landmarks and representative visual
+quality; **P3** playable larger regions with varied routes; **P4/D6** sustained,
+physical-device, full-network offline and final regression coverage. Queue waiting
+must not stop independent implementation. Current worlds and installed revisions
+remain preserved. Full elapsed two-hour qualification and the remaining named
+regions are not complete.
+
 ## 15 October — wider regions and preserved locations
 
 This checkpoint supersedes the earlier status below; the complete roadmap remains
