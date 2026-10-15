@@ -31,7 +31,10 @@ const entry = { campaign, classRecipes };
 const catalog = await json('../demo-data/catalog.json');
 const pressurePack = await json('../content/packs/fpv-arcade-r5.json');
 const pressureEntry = {
-  campaign: { ...pressurePack.campaigns[0], classRecipes: pressurePack.classRecipes },
+  campaign: {
+    ...pressurePack.campaigns[0],
+    classRecipes: pressurePack.classRecipes,
+  },
   classRecipes: pressurePack.classRecipes,
 };
 
@@ -64,10 +67,16 @@ test('curated complete routes reproduce current Standard tuning without scripted
       assert.equal(demoInputTraceIdentity(candidate), descriptor.inputTraceIdentity);
       assert.deepEqual(candidate.summary, replay.summary);
     }
-    const frozen = candidates.find((candidate) => verifyReplay(candidate).match);
+    const verifiedCandidates = candidates.map((candidate) => ({
+      replay: candidate,
+      verification: verifyReplay(candidate),
+    }));
+    const frozen = verifiedCandidates.find(({ verification }) => verification.match)?.replay;
     assert.ok(
       frozen,
-      'At least one independently frozen strict recording must match this runtime.',
+      `${descriptor.id}: at least one independently frozen strict recording must match ` +
+        `${process.version}/${process.platform}/${process.arch}. ` +
+        JSON.stringify(verifiedCandidates.map(({ verification }) => verification.diagnostics)),
     );
     assert.ok(demoReplayMatchesEntry(replay, sourceEntry));
     const mistake = descriptor.tags.includes('failure');
@@ -249,13 +258,19 @@ test('catalogue admits only matching installed content and local bundled replay 
     source = await json('../demo-data/first-signal-left.replay.json');
   assert.deepEqual(
     await loadDemoRecording(resolved[0], {
-      fetch: async () => ({ ok: true, text: async () => JSON.stringify(source) }),
+      fetch: async () => ({
+        ok: true,
+        text: async () => JSON.stringify(source),
+      }),
     }),
     source,
   );
   await assert.rejects(
     loadDemoRecording(resolved[2], {
-      fetch: async () => ({ ok: true, text: async () => JSON.stringify(source) }),
+      fetch: async () => ({
+        ok: true,
+        text: async () => JSON.stringify(source),
+      }),
     }),
     /no longer matches/,
   );

@@ -33,7 +33,10 @@ class LazyWorker {
     throw new Error('Source enumeration must not create a Worker.');
   }
 }
-const assetFetch = async (url) => ({ ok: true, text: async () => readFile(url, 'utf8') });
+const assetFetch = async (url) => ({
+  ok: true,
+  text: async () => readFile(url, 'utf8'),
+});
 
 test('actual installed Standard/Gentle catalogue exposes reviewed, qualified and uncovered live sources lazily', async () => {
   const requests = [];
@@ -54,7 +57,12 @@ test('actual installed Standard/Gentle catalogue exposes reviewed, qualified and
   assert.ok(requests[0].endsWith('/game/demo-data/catalog.json'));
   assert.equal(sources.filter((source) => source.approachable).length, 1);
   for (const source of sources.filter((candidate) => candidate.kind === 'replay')) {
-    const player = await source.create({ signal: new AbortController().signal });
+    const player = await source.create({ signal: new AbortController().signal }).catch((error) => {
+      error.message +=
+        ` Source ${source.id}; ${process.version}/${process.platform}/${process.arch}; ` +
+        JSON.stringify(error.diagnostics ?? []);
+      throw error;
+    });
     assert.equal(player.info.levelId, source.levelId);
     assert.equal(player.state.tick, 0);
     assert.equal(player.phase, 'paused');
@@ -142,7 +150,10 @@ test('actual public company editions expose only their own isolated installed le
       catalogURL: new URL('game/editions/catalog.json', root).href,
       contentBaseURL: root.href,
       editionId,
-      fetcher: async (url) => ({ ok: true, text: async () => readFile(new URL(url), 'utf8') }),
+      fetcher: async (url) => ({
+        ok: true,
+        text: async () => readFile(new URL(url), 'utf8'),
+      }),
     });
     const host = await createSoloRouteHost(bootstrap.route, {
       themes: bootstrap.boot.themes.themes,
@@ -194,8 +205,14 @@ test('missing Worker and uninstalled content filter sources without downloading 
     return assetFetch(url);
   };
   assert.equal(
-    (await loadDemoSources({ entries, library: emptyLibrary, fetch: fetcher, WorkerClass: null }))
-      .length,
+    (
+      await loadDemoSources({
+        entries,
+        library: emptyLibrary,
+        fetch: fetcher,
+        WorkerClass: null,
+      })
+    ).length,
     17,
   );
   assert.deepEqual(
@@ -233,7 +250,12 @@ test('manually kept local recordings join the catalogue without enabling automat
   });
   const source = await json('../demo-data/first-signal-left.replay.json');
   await library.keep(source, { entry: base, practice: false, manual: true });
-  const sources = await loadDemoSources({ entries, library, fetch: assetFetch, WorkerClass: null });
+  const sources = await loadDemoSources({
+    entries,
+    library,
+    fetch: assetFetch,
+    WorkerClass: null,
+  });
   assert.equal(library.enabled, false);
   assert.equal(sources.length, 18);
   const local = sources.find((candidate) => candidate.source === 'local');
@@ -266,7 +288,12 @@ test('uncached optional bundled replays fall back to a retained recording or sta
     });
     let director;
     try {
-      if (retained) await library.keep(recording, { entry: base, practice: false, manual: true });
+      if (retained)
+        await library.keep(recording, {
+          entry: base,
+          practice: false,
+          manual: true,
+        });
       const storedBefore = structuredClone(stored);
       const allSources = await loadDemoSources({
         entries: installedEntries,
@@ -287,7 +314,11 @@ test('uncached optional bundled replays fall back to a retained recording or sta
         catalog.clips.filter((clip) => clip.campaignId === base.campaign.id).length,
       );
       assert.ok(sources.every((source) => source.kind === 'replay'));
-      director = createDemoDirector({ sources, random: () => 0, loading: clock.options });
+      director = createDemoDirector({
+        sources,
+        random: () => 0,
+        loading: clock.options,
+      });
       assert.equal(await director.start(), retained);
       assert.deepEqual(
         director.failedSourceIds,
@@ -361,7 +392,9 @@ test('scene creation rejects a valid but wrong bundled recording and respects ca
   await assert.rejects(orchard.create({ signal: new AbortController().signal }), /match/);
   const controller = new AbortController();
   controller.abort();
-  await assert.rejects(sources[0].create({ signal: controller.signal }), { name: 'AbortError' });
+  await assert.rejects(sources[0].create({ signal: controller.signal }), {
+    name: 'AbortError',
+  });
 });
 
 test('cancelled source discovery cannot return a late catalogue whose fetch ignored cancellation', async () => {
@@ -485,7 +518,9 @@ test('frozen variants stay strict and reviewed routes qualify only an enemy chec
       return fetcher(url);
     },
   });
-  await assert.rejects(cancelled.create({ signal: controller.signal }), { name: 'AbortError' });
+  await assert.rejects(cancelled.create({ signal: controller.signal }), {
+    name: 'AbortError',
+  });
   assert.equal(alternateRequests, 0, 'Cancellation must not start the next runtime variant.');
 
   clip.replayVariants = [];
@@ -514,7 +549,9 @@ test('frozen variants stay strict and reviewed routes qualify only an enemy chec
         ? { ok: true, text: async () => JSON.stringify(unsafe) }
         : fetcher(url),
   });
-  await assert.rejects(rejected.create({}), { name: 'ReplayVerificationError' });
+  await assert.rejects(rejected.create({}), {
+    name: 'ReplayVerificationError',
+  });
 });
 
 test('the ordinary game build includes every dynamic demo asset and Worker module', async () => {
@@ -580,7 +617,9 @@ test('a never-settling catalogue falls through to local sources and cancellation
     WorkerClass: null,
     loading: clock.options,
     fetch: () => new Promise(() => {}),
-    library: { list: async () => [{ id: 'local-owner', levelId: 'one', campaignKey: 'local' }] },
+    library: {
+      list: async () => [{ id: 'local-owner', levelId: 'one', campaignKey: 'local' }],
+    },
   });
   clock.advance(15000);
   assert.deepEqual(
