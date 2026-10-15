@@ -1,0 +1,212 @@
+{
+  "format": "FPVRegionalDelivery.v1",
+  "id": "railway-valley-study",
+  "revision": "structure-r1",
+  "title": {
+    "en": "Railway Valley — structural study",
+    "uk": "Залізнична долина — дослідження конструкцій"
+  },
+  "terrain": {
+    "path": "terrain/region.json",
+    "bytes": 4332,
+    "sha256": "ed0ea8d9a7dcde8453fd89186c1e8f1982c122e91deee8cc3b33daa6fba5980c"
+  },
+  "scenery": {
+    "path": "scenery/region.json",
+    "bytes": 4343,
+    "sha256": "1cfd2659a7bf1429a47d2652274d437204ffebc3f2ed5bc7a7d48a8959c59f3d"
+  },
+  "files": [
+    {
+      "path": "scenery/railway-0-0.glb",
+      "bytes": 2112,
+      "sha256": "f2b7e3b8364516606c9046040265a3b952bdf18d9c398f34d34ceb4f04ac79c0"
+    },
+    {
+      "path": "scenery/railway-0-0.json",
+      "bytes": 1779,
+      "sha256": "73445dea3892ed8508bb9c7dcbe7bef7dca27a167a88129273a75e715778209f"
+    },
+    {
+      "path": "scenery/railway-0-1.glb",
+      "bytes": 2112,
+      "sha256": "643beb0f4b83a2b2946293fc2d9aba2b95cd01b2ea503c2ff44f77b9f14d0255"
+    },
+    {
+      "path": "scenery/railway-0-1.json",
+      "bytes": 1731,
+      "sha256": "20dea06c1d746cf1c6328ff713896112f04c9d6078e7bf1946e8c99c2eb35d05"
+    },
+    {
+      "path": "scenery/railway-0-2.glb",
+      "bytes": 2116,
+      "sha256": "2fbc44baa96e246b2d9f47f7356ceae3c0ef9685fdeef3d248c39a9bc9621c18"
+    },
+    {
+      "path": "scenery/railway-0-2.json",
+      "bytes": 1755,
+      "sha256": "1973c0bb6a2571fa0a266cc0b7d76804b49b9f48ba12cc7e74eed7bfc17ef0bc"
+    },
+    {
+      "path": "scenery/railway-1-0.glb",
+      "bytes": 455356,
+      "sha256": "0ac9e0054cb989a646d8f9c5a06952627960d82152585d8e092d1c116d67b552"
+    },
+    {
+      "path": "scenery/railway-1-0.json",
+      "bytes": 708567,
+      "sha256": "add4ba15bed559f4e6011a0497d4db05fc159adb08869e114a3aa5e2fb4ec5c9"
+    },
+    {
+      "path": "scenery/railway-1-1.glb",
+      "bytes": 377616,
+      "sha256": "6175f4e26054f8066be73c94d8fffffb76b5151d97667c8c6eb99db67a5b12ee"
+    },
+    {
+      "path": "scenery/railway-1-1.json",
+      "bytes": 547134,
+      "sha256": "08aa0397f999aa5478edf9f6b81357f2f094da744e1f168201ca4488bcf4adfe"
+    },
+    {
+      "path": "scenery/railway-1-2.glb",
+      "bytes": 447736,
+      "sha256": "114d4b371642f2815f10d32c99637d923c5d8071c5d6b2a5f019b17f7dab98bb"
+    },
+    {
+      "path": "scenery/railway-1-2.json",
+      "bytes": 699421,
+      "sha256": "a7b1201652f1d54404d794a293b58cb07d35dff48399927204bba0c81a361a84"
+    },
+    {
+      "path": "scenery/railway-2-0.glb",
+      "bytes": 457360,
+      "sha256": "42b1f0bbfd7c8b1d61e67d9ef1eb33fd178b7faced9ed590a8051d095f747530"
+    },
+    {
+      "path": "scenery/railway-2-0.json",
+      "bytes": 698079,
+      "sha256": "9a7831e99a96a565e242d0757f66e76167b1777349e62188c5b631b8d58b591b"
+    },
+    {
+      "path": "scenery/railway-2-1.glb",
+      "bytes": 2112,
+      "sha256": "49b6e73a4052006607bbc7c353e24b42e4bda702205c4115a904b65fef40eb91"
+    },
+    {
+      "path": "scenery/railway-2-1.json",
+      "bytes": 1731,
+      "sha256": "c8cb4b0fa08677b45abcb7c6165e64abca834d6ae7acf3caa2bbcaae10ed3f3d"
+    },
+    {
+      "path": "scenery/railway-2-2.glb",
+      "bytes": 352028,
+      "sha256": "1e38c2a87ff56eeb9cfe37af1b5abdd09bc9ec32e5f8e9ec5b2dd24ef596a312"
+    },
+    {
+      "path": "scenery/railway-2-2.json",
+      "bytes": 515355,
+      "sha256": "53913fcef4e36cdac188ff1e13228d1f116329ff8dea179696817f9950167577"
+    },
+    {
+      "path": "scenery/region.json",
+      "bytes": 4343,
+      "sha256": "1cfd2659a7bf1429a47d2652274d437204ffebc3f2ed5bc7a7d48a8959c59f3d"
+    },
+    {
+      "path": "terrain/railway-0-0.glb",
+      "bytes": 38420,
+      "sha256": "1489f342d6f23447be0497202d8842ddfc22cc4a85c6701027d88e0fe2996b16"
+    },
+    {
+      "path": "terrain/railway-0-0.json",
+      "bytes": 6367,
+      "sha256": "a1171df21e80bbb332ab1d9fd7f23bf8c93925374d5eae152bcb3b5026a65697"
+    },
+    {
+      "path": "terrain/railway-0-1.glb",
+      "bytes": 38404,
+      "sha256": "f414fee89cd5d3d394682dbcc57bcc516df742a651b1014670a26a0c1d3ecdbe"
+    },
+    {
+      "path": "terrain/railway-0-1.json",
+      "bytes": 6309,
+      "sha256": "62cf2b1009bfd30d618ea4c1dec72e620da3962cce4f9298f92de773e07d9821"
+    },
+    {
+      "path": "terrain/railway-0-2.glb",
+      "bytes": 38404,
+      "sha256": "94b8b5e91ff68e37766a68c80664a8bd921670391192c65ef56c7227f5ed85ca"
+    },
+    {
+      "path": "terrain/railway-0-2.json",
+      "bytes": 5563,
+      "sha256": "004c7df3129b0dc0eeaea26996eb7d9f0cf29a8a98eb67be2e8cd36bdd712bf6"
+    },
+    {
+      "path": "terrain/railway-1-0.glb",
+      "bytes": 38408,
+      "sha256": "56711e7c4b7e344b7565146e0f4e33c8da0600a6be7d38f586f93d661556b61f"
+    },
+    {
+      "path": "terrain/railway-1-0.json",
+      "bytes": 6388,
+      "sha256": "2c206adaf12b1cb89a14561baa5d94f709a179d31ee736ea341a5adfb6e8f9aa"
+    },
+    {
+      "path": "terrain/railway-1-1.glb",
+      "bytes": 38392,
+      "sha256": "270e6be0bae41dc52fe15988d9e69af84ef3858456e932054897bf72298784ed"
+    },
+    {
+      "path": "terrain/railway-1-1.json",
+      "bytes": 6371,
+      "sha256": "0e2b1c8215d5442f3f3e41609009f858b78bfa316265056cb9d87c3a13361458"
+    },
+    {
+      "path": "terrain/railway-1-2.glb",
+      "bytes": 38404,
+      "sha256": "1250460a6b339c60b63f2fd67cbb0a42559d42bb1492a733b223887d97759bee"
+    },
+    {
+      "path": "terrain/railway-1-2.json",
+      "bytes": 6377,
+      "sha256": "f12db14afd571f356822db1ad807f27586dabb08e7dfd644a3fff64fece52aa4"
+    },
+    {
+      "path": "terrain/railway-2-0.glb",
+      "bytes": 38408,
+      "sha256": "c9045eac8ae1505fd931118d004d278212c927b1084d649804c5f576cf6ec8f0"
+    },
+    {
+      "path": "terrain/railway-2-0.json",
+      "bytes": 6164,
+      "sha256": "ef8fcefccbd5c5ca5b46eaea741d85b2fbefc10f9be10e933ee1cf3b96127312"
+    },
+    {
+      "path": "terrain/railway-2-1.glb",
+      "bytes": 38408,
+      "sha256": "50a9eb5e24eb4a6beccfea8d3a9d583f9e2b74818df72f568c65ce881fdb9988"
+    },
+    {
+      "path": "terrain/railway-2-1.json",
+      "bytes": 6382,
+      "sha256": "4c4a7699be712c0914bf3f13569fc6705fc59eafa90b9503a53488833a7a03fe"
+    },
+    {
+      "path": "terrain/railway-2-2.glb",
+      "bytes": 38408,
+      "sha256": "10e104f1af0ff4622fd794aedb45fc1999350997f4c14250d2fb095f99ca7abe"
+    },
+    {
+      "path": "terrain/railway-2-2.json",
+      "bytes": 6254,
+      "sha256": "1c4a05c63315425f2382aa2c8430a848ce51f2a9d843c7494cbaeabe2be414e9"
+    },
+    {
+      "path": "terrain/region.json",
+      "bytes": 4332,
+      "sha256": "ed0ea8d9a7dcde8453fd89186c1e8f1982c122e91deee8cc3b33daa6fba5980c"
+    }
+  ],
+  "totalBytes": 5684606
+}
