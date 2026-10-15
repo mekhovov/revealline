@@ -86,16 +86,16 @@ export async function openWorldStore({
         const readVersions = revisions.getAll();
         readVersions.onsuccess = () => {
           const versions = readVersions.result,
-            known = versions.some((v) => v.id === project.id && v.sha256 === sha256);
+            known = versions.find((v) => v.id === project.id && v.sha256 === sha256);
           const size = [...assets.values()].reduce(
             (n, b) => n + b.size,
             new TextEncoder().encode(JSON.stringify(project)).length,
           );
-          if (
-            !known &&
-            (versions.length >= 256 ||
-              versions.reduce((n, v) => n + (v.bytes ?? 0), size) > 256 * 1024 * 1024)
-          ) {
+          const retainedBytes = versions.reduce(
+            (n, v) => n + (v === known ? 0 : (v.bytes ?? 0)),
+            size,
+          );
+          if ((!known && versions.length >= 256) || retainedBytes > 256 * 1024 * 1024) {
             abort(
               'Retained world library is full. Export and remove unused packs before installing another.',
             );
@@ -114,8 +114,7 @@ export async function openWorldStore({
                   );
                   if (
                     versions.length + (known ? 0 : 1) + 1 > 256 ||
-                    versions.reduce((n, v) => n + (v.bytes ?? 0), oldSize + (known ? 0 : size)) >
-                      256 * 1024 * 1024
+                    retainedBytes + oldSize > 256 * 1024 * 1024
                   ) {
                     abort('Retained world library is full. Export and remove unused packs first.');
                     return;
@@ -135,7 +134,10 @@ export async function openWorldStore({
                     generation: next,
                     installedAt: new Date().toISOString(),
                   };
-                if (!known) revisions.put({ ...record, assets, bytes: size });
+                // Reinstallation has already verified the incoming immutable bytes.
+                // Refresh the exact retained copy too: get(id, {sha256}) prefers it.
+                // Preserve its original installation metadata and every other revision.
+                revisions.put({ ...(known || record), project, assets, bytes: size });
                 // The project-index read already captured every old key in this
                 // transaction. Queue their removal together instead of waiting
                 // for another cursor round trip for each regional source file.
