@@ -100,6 +100,61 @@ export function createEnduranceAttribution({
     malformed = 0,
     readFailures = 0;
   const callbackCost = { count: 0, totalMs: 0, maxMs: 0 };
+  const captureOverlaps = (start, duration, capturedAt) => {
+    const first = Math.max(1, serial - SPANS + 1),
+      overwritten = Math.max(0, serial - SPANS),
+      oldest = serial ? starts[(first - 1) % SPANS] - startedAt : null,
+      examples = [];
+    let matching = 0,
+      incomplete = 0;
+    for (let token = first; token <= serial; token++) {
+      const slot = (token - 1) % SPANS;
+      if (
+        ids[slot] !== token ||
+        starts[slot] > start + duration ||
+        (ends[slot] >= 0 && ends[slot] < start)
+      )
+        continue;
+      matching++;
+      const completed = ends[slot] >= 0,
+        overlapMs = completed
+          ? Math.max(0, Math.min(ends[slot], start + duration) - Math.max(starts[slot], start))
+          : null;
+      if (!completed) incomplete++;
+      let index = 0;
+      while (
+        index < examples.length &&
+        (overlapMs ?? Infinity) <= (examples[index].overlapMs ?? Infinity)
+      )
+        index++;
+      if (index < OVERLAPS) {
+        examples.splice(index, 0, {
+          id: token,
+          phase: ENDURANCE_PHASES[codes[slot]],
+          completed,
+          overlapMs,
+        });
+        if (examples.length > OVERLAPS) examples.pop();
+      }
+    }
+    return {
+      overlappingSpanCount: matching,
+      incompleteOverlappingSpanCount: incomplete,
+      overlapExamplesDropped: Math.max(0, matching - examples.length),
+      // Discarded earlier marks may include an overlapping long/open span even
+      // when the frame starts inside the retained window. Do not claim exhaustive counts.
+      overlapCountIsLowerBound: overwritten > 0,
+      overlappingSpans: examples,
+      overlapCapture: {
+        capturedAtElapsedMs: optionalTime(capturedAt, startedAt),
+        retainedSpanCount: Math.min(serial, SPANS),
+        overwrittenSpanCount: overwritten,
+        oldestRetainedElapsedMs: oldest,
+        framePredatesRetainedSpanWindow:
+          overwritten > 0 && oldest !== null && start - startedAt < oldest,
+      },
+    };
+  };
   const receive = (input) => {
     const began = now();
     try {
@@ -153,6 +208,7 @@ export function createEnduranceAttribution({
           styleAndLayoutStartMs: optionalTime(entry.styleAndLayoutStart, startedAt),
           reportedScriptCount: supplied.length,
           scripts: scripts.slice(0, SCRIPTS),
+          ...captureOverlaps(entry.startTime, entry.duration, began),
         });
       }
     } catch {
@@ -262,32 +318,7 @@ export function createEnduranceAttribution({
           maxMs: maxima[code],
         })),
         lastSpans: spans,
-        lastLongAnimationFrames: rows.map((row) => {
-          const matching = spans
-            .filter(
-              (span) =>
-                span.elapsedMs <= row.elapsedMs + row.durationMs &&
-                (span.durationMs === null || span.elapsedMs + span.durationMs >= row.elapsedMs),
-            )
-            .map((span) => ({
-              id: span.id,
-              phase: span.phase,
-              overlapMs:
-                span.durationMs === null
-                  ? null
-                  : Math.max(
-                      0,
-                      Math.min(span.elapsedMs + span.durationMs, row.elapsedMs + row.durationMs) -
-                        Math.max(span.elapsedMs, row.elapsedMs),
-                    ),
-            }));
-          matching.sort((a, b) => (b.overlapMs ?? Infinity) - (a.overlapMs ?? Infinity));
-          return {
-            ...structuredClone(row),
-            overlappingSpanCount: matching.length,
-            overlappingSpans: matching.slice(0, OVERLAPS),
-          };
-        }),
+        lastLongAnimationFrames: rows.map((row) => structuredClone(row)),
         bounds: {
           spans: SPANS,
           longAnimationFrames: FRAMES,
@@ -309,6 +340,7 @@ export function createEnduranceAttribution({
           'LoAF observes same-origin main-thread entry points only; worker/extension/cross-origin work may be absent.',
           'The terminal frame may not have reached the observer queue at stop; takeRecords drains only entries already available.',
           'Nested or asynchronous work may share a frame. Phase durations are synchronous wall spans, not exclusive CPU.',
+          'Overlap associations retain the phase window at observer receipt; discarded history makes counts lower bounds and unfinished overlaps remain unknown. Later snapshots do not reconstruct or complete earlier evidence.',
           'No raw invoker strings, foreign origins/paths, query/hash credentials or window references retained.',
         ],
       };
