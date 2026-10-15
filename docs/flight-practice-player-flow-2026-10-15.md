@@ -133,6 +133,45 @@ Independent review found no blocking issue. Regression checks also reject
 executable suffixes/IIFEs and incorrect locale roots in projected catalogues.
 The earlier snapshots retain the first verifier for auditability.
 
+### Final Gym end-to-end observation
+
+The [third original report](flight-practice-player-flow-20261015/gym-completed.json)
+and [complete artifacts](flight-practice-player-flow-20261015/gym-completed-artifacts.tgz)
+pass both EN/UK cases against the unchanged candidate in Chrome `155.0.8059.80`.
+Each observes fresh ground start, lift, 0/2 → 1/2 → 2/2, native localized completion,
+result phase and replay-backed checkmark, then captures the completion screenshot
+before returning Home and exporting through Settings → Data. No input, clock,
+runtime model, progress or saved-record injection is used to obtain that result.
+
+The actual EN record has five commands / 77 ticks, SHA-256
+`abbb28f94c1d2578a0636bdf3c2d22aa3abf9ee0975e31e337a18f80b75c80e0`;
+UK has five commands / 76 ticks, SHA-256
+`066e3224170cccaa052f8730bcc52552cfe9b96e3e0b87eb28840d28467309f8`.
+Both independent replays finish at checkpoint 2/2, altitude zero, with one native
+ground contact. This is successful assisted practice, not precision landing or
+physical-flight qualification. All owned R/F keys, browser, server and temporary
+site are released/closed. Aggregate `completed` is true and `qualified` is false.
+
+The final [observer suite](flight-practice-player-flow-20261015/observer-final-tests.log)
+passes 61 cases, including the native-route and projected-locale regressions.
+After disk pressure recovered, a separate
+[full practice rerun](flight-practice-player-flow-20261015/practice-tests-completed.log)
+passed **352 tests, zero failures, zero skips**. This does not replace or erase the
+interrupted log. Scoped lint, formatting and whitespace checks passed again.
+
+The [final input comparison](flight-practice-player-flow-20261015/final-input-check.json)
+checks all 87 Gym, 94 Academy and 155 Worlds original inputs against the frozen
+inventories: zero changed hashes. Follow-up changes affect observer tooling,
+tests and documentation, not the candidate's application inputs. Original source
+and observer-authority identities are retained rather than relabelled.
+
+The [independent evidence audit](flight-practice-player-flow-20261015/independent-audit.json)
+found no actionable defects: all 116 archived files, 82 authority/screenshot/export
+pins and five original receipts match, all ten locale/mode checks recompute, both
+Gym replay closures match admitted ZIP members, and the complete test summaries
+are confirmed. This read-only audit is not one of the pending human/device
+qualification approvals.
+
 ## Acceptance boundary
 
 Unit tests alone do not complete C2. Both observers start from stable app
@@ -140,3 +179,10 @@ launchers, not the main-game Flight practice directory. FPV exercise completion,
 first-time human learning, physical input/accessibility, distinct-version
 migration and public-host acceptance remain separate gates. `qualified` stays
 false; no review approval is fabricated.
+
+Next implementation priority is the complete staged main-game directory → app →
+guide → return journey, then representative Academy and Worlds beginner exercise
+completion with their native verified evidence. Continue the separately listed
+pointer, populated-World restart, genuine distinct-version migration and
+interrupted-installation checks afterward. Physical-device, first-time-player
+and maintainer-review gates require real observations, not synthetic approvals.

@@ -6,6 +6,22 @@ mechanics. Implementation and public release are separate completion states.
 
 ## Baseline and concurrent ownership
 
+### Latest localized player-flow continuation
+
+The [player-flow report](flight-practice-player-flow-2026-10-15.md) integrates
+main `d452bda9e` and freezes a new reproducible/admitted three-app candidate at
+`8cf5fe46d`. Ten EN/UK stable-launcher motion/pause/retry cases pass, including
+both FPV modes in Academy and Worlds. Two native Gym lift-and-land exercises
+also pass, including completion screenshots, ordinary UI transcript export and
+independent replay using the exact packaged dependencies. Initial observer-route
+failures and the projected-locale verifier mismatch remain retained, not erased.
+
+This advances C2, not all Phase 1 acceptance. The complete main-game directory
+journey and FPV beginner-exercise completion remain open, as do the other named
+physical/human/recovery/update/performance gates. Hosting stays deferred and
+`publicEligible` stays false. The report distinguishes the interrupted full
+regression attempt from later verification; do not treat partial output as a pass.
+
 ### Latest repair/player-flow continuation
 
 The [repair report](flight-practice-repair-2026-10-15.md) records the clean rebase
