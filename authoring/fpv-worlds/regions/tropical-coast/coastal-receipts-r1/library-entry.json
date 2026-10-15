@@ -1,0 +1,47 @@
+{
+  "passed": true,
+  "descriptorIdentity": {
+    "id": "tropical-coastal-study",
+    "sha256": "ddd62d4662b873bc97243a414dc4ddc291eeb7e9c084f15af661b449ddcc3443"
+  },
+  "records": [
+    {
+      "liveMaterialUpdates": 9,
+      "quality": "low",
+      "terrain": "performance",
+      "geometryBytes": 955344,
+      "textureBytes": 2599580,
+      "geometryDigest": "b518e7eb8e9aba45d8688044a8a4c96545ba8943a63314694e201249efa4a26f"
+    },
+    {
+      "liveMaterialUpdates": 9,
+      "quality": "balanced",
+      "terrain": "balanced",
+      "geometryBytes": 955344,
+      "textureBytes": 2599580,
+      "geometryDigest": "b518e7eb8e9aba45d8688044a8a4c96545ba8943a63314694e201249efa4a26f"
+    },
+    {
+      "liveMaterialUpdates": 9,
+      "quality": "high",
+      "terrain": "quality",
+      "geometryBytes": 955344,
+      "textureBytes": 2599580,
+      "geometryDigest": "b518e7eb8e9aba45d8688044a8a4c96545ba8943a63314694e201249efa4a26f"
+    },
+    {
+      "liveMaterialUpdates": 0,
+      "quality": "unknown-pin",
+      "terrain": "plain",
+      "geometryBytes": 955344,
+      "textureBytes": 2599580,
+      "geometryDigest": "b518e7eb8e9aba45d8688044a8a4c96545ba8943a63314694e201249efa4a26f"
+    }
+  ],
+  "launchOnly": true,
+  "sourcePins": {
+    "terrain": "076a93c6d08181b2ee0d4d4c172d974435df8cf6b7e210d4a9a2ada3753756fd",
+    "scenery": "d31187a12b26c11a359e1914963767e9e2da1a70839f755ae7667f1e022e84e3"
+  },
+  "claim": "Verified source-to-material launch evidence; live mid-flight surface tier updates remain separate."
+}

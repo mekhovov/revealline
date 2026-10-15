@@ -5,6 +5,89 @@ The user selected default catalogue visibility, download on Play, optional offli
 storage, and authored regions first. Generation assists authoring; endless runtime
 terrain is deferred. Twelve proposed regions are design targets, not shipped maps.
 
+## 15 October — elapsed pass and native admission progression
+
+This checkpoint supersedes the historical entries below. The complete roadmap
+remains **open**; user-facing world quality and final release qualification are
+not inferred from source checks.
+
+- **P1 merged:** #1381 fixes false two-minute cancellation of progressing regional
+  downloads. It retains inactivity and total-duration ceilings, exact hashes,
+  atomic install ownership and all byte budgets. Eight native fixture cases and
+  the exact optional/company package checks pass. Virtual-clock transfer cases
+  are distinguished from real network timing.
+- **P4 elapsed case complete:** #1385 records an actual uninterrupted 7,200.0052 s
+  synthetic-corridor browser run: 360,000 physics ticks, 269 recentres and zero
+  contacts, with exact runtime/archive identity and bounded resource receipts.
+  This closes that workload only. Full-region sustained play, physical devices,
+  network-wide offline and final D6/release qualification remain open.
+- **P1 native admission:** the frozen graphics-recovery package passes normal
+  Library launch, explicit arm, Pause and disarmed restart. Coastal Districts'
+  qualified package passes Download → saved Fly, three camera views, safe mode
+  and district changes, saved revision after reload and 390 × 844 layout.
+  Newer reconciled PR heads must be compared and qualified separately before
+  publication. See `fpv-native-regional-admission-20261015.md`.
+- **P3 preserved drafts:** corrected Hillside source/delivery #1376 → #1383 use
+  native stack #1384; draft Library #1388 remains behind visual/package gates.
+  Coaster source/delivery #1382 → #1386 use stack #1387 and remain a 2.048 km
+  study, not the 4 km target. Desert delivery #1389 extends stack #1379 after
+  #1372 → #1378. It is a 16.384 km authored source pending player admission and
+  presentation acceptance; the new sand/salt/stone treatment is separate.
+
+Continue **P1** exact player/recovery admission, **P2** pilot-height art reviews
+and refinement, **P3** independent authored regions with immutable delivery, and
+**P4/D6** remaining integrated release coverage in parallel. Browser measurements
+and visual reviews run sequentially to avoid competing active rendering loads;
+engineering and protected publication need not wait for a merge queue. No budget,
+player data, old revisions or unfinished work is removed.
+
+## 15 October — exact packages and independent larger-world sources
+
+Coordinator checkpoint: main `87dbcfda`. This section supersedes the historical
+status below. The complete roadmap remains **open**.
+
+- **P1 completed source/publication increments:** concurrent download package #1361,
+  immutable 8 km Canyon bundle #1366, and six-district Canyon Library #1333 merged.
+  The distinct 8 km Library #1368 stays draft until ordinary-player native review;
+  #1373 records its exact package closure, all 2,051 immutable bundle responses,
+  and six starts in both flight modes. Existing Canyon rows/revisions remain.
+- **P1 exact packages:** Coastal Districts #1362 passes all archive checks and its
+  company candidate workflow; normal-player native review is pending. Ground
+  package #1374 records the frozen Railway renderer with 24 geometry/collision
+  comparisons and 20 live detail-tier transitions. A stale file-count fixture
+  failed the earlier preview; the later source correction is a separate head and
+  needs its own fresh CI result. No failed evidence has been discarded.
+- **P2 coastal quality:** village composition #1349 and shoreline ground #1354
+  merged through protected native-stack requests. Immutable publication #1357
+  follows; water #1364 and the connected harbour extension #1371 remain draft.
+  The harbour adds no textures and passes 26 commanded routes; pilot-height
+  appearance is still pending. These are not final-art or public-release claims.
+- **P3 Railway:** #1363 authors a separate 4.096 km region with six distinct
+  districts, 12 corridors and preserved licensed train assets. Its two-mode
+  routes and collision checks pass. Native stack #1370 links #1363 → #1369 for
+  immutable delivery; independent ground #1367 adds world-scaled yards/slopes.
+  Source/delivery/native appearance and later Library admission remain separate.
+- **P3 next capabilities/content:** #1372 adds optional 512 m cells with 16 m
+  terrain samples for broad natural regions. Old 128/256 m canonical bytes and
+  all byte ceilings remain fixed. Full-grid position bounds, 3×3 diagonal
+  transitions, retained/cancelled loading and source-budget rejection pass.
+  This prepares the 16 km design target; it is not an available 16 km world.
+  Desert and Hillside source authoring proceed independently. #1375 prepares
+  original Coaster assets, retaining the full palette and explicitly rejecting
+  two quantization failures rather than silently dropping their triangles.
+- **P4 endurance:** the actual two-hour browser run is still in progress at this
+  checkpoint. Its synthetic corridor workload and final receipt must be labelled
+  accurately; no elapsed pass, physical-device FPS or full-region art acceptance
+  is inferred from starting or partially completing it.
+
+Next priorities stay **P1** native normal-player/package/recovery qualification,
+**P2** pilot-height representative visual acceptance, **P3** distinct authored
+regions and safe delivery, and **P4/D6** sustained/device/offline/release coverage.
+Native reviews are serialized behind the uninterrupted measurement; source,
+functional checks and focused publication continue in parallel. The existing
+72 MiB core, 64 MiB regional delivery, 20 MiB runtime and 8 MiB retained/candidate
+terrain/scenery bounds are unchanged. No player data or unfinished work was removed.
+
 ## 15 October — parallel downloads, coastal composition and elapsed verification
 
 Latest coordinator checkpoint: main `a046fd67`. Earlier dated sections below are
