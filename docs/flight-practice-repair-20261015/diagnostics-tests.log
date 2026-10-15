@@ -1,0 +1,95 @@
+TAP version 13
+# Subtest: diagnostics preserve channel construction, native post arguments and port lifetime
+ok 1 - diagnostics preserve channel construction, native post arguments and port lifetime
+  ---
+  duration_ms: 1.884667
+  ...
+# Subtest: registration witness returns the exact original promise and records resolution/rejection
+ok 2 - registration witness returns the exact original promise and records resolution/rejection
+  ---
+  duration_ms: 2.061834
+  ...
+# Subtest: post exceptions are observed and rethrown unchanged; unrelated messages remain unrecorded
+ok 3 - post exceptions are observed and rethrown unchanged; unrelated messages remain unrecorded
+  ---
+  duration_ms: 0.969458
+  ...
+# Subtest: diagnostic failures and bounded event volume cannot alter native operations
+ok 4 - diagnostic failures and bounded event volume cannot alter native operations
+  ---
+  duration_ms: 5.128875
+  ...
+# Subtest: browser restart requires all pages closed and a confirmed persistent-context shutdown
+ok 5 - browser restart requires all pages closed and a confirmed persistent-context shutdown
+  ---
+  duration_ms: 14.454958
+  ...
+# Subtest: timed-out startup retains resource ownership and a late close failure cannot imply cleanup
+ok 6 - timed-out startup retains resource ownership and a late close failure cannot imply cleanup
+  ---
+  duration_ms: 3.121375
+  ...
+# Subtest: an expired restart cannot start browser acquisition after cleanup has begun
+ok 7 - an expired restart cannot start browser acquisition after cleanup has begun
+  ---
+  duration_ms: 2.282959
+  ...
+# Subtest: offline action requires fresh observable work, native Enter and a fresh terminal status
+ok 8 - offline action requires fresh observable work, native Enter and a fresh terminal status
+  ---
+  duration_ms: 5.420333
+  ...
+# Subtest: overall observation deadline encloses the journey but preserves report and cleanup
+ok 9 - overall observation deadline encloses the journey but preserves report and cleanup
+  ---
+  duration_ms: 1.923875
+  ...
+# Subtest: installation observer covers all three public app identities and current offline controls
+ok 10 - installation observer covers all three public app identities and current offline controls
+  ---
+  duration_ms: 20.831708
+  ...
+# Subtest: launcher destinations preserve exact app identity and the defined locale query
+ok 11 - launcher destinations preserve exact app identity and the defined locale query
+  ---
+  duration_ms: 6.488917
+  ...
+# Subtest: bounded operation returns results, preserves errors, and rejects stalls
+ok 12 - bounded operation returns results, preserves errors, and rejects stalls
+  ---
+  duration_ms: 7.289041
+  ...
+# Subtest: Academy offline controls expand the ordinary closed Workshop disclosure in every offline flow
+ok 13 - Academy offline controls expand the ordinary closed Workshop disclosure in every offline flow
+  ---
+  duration_ms: 11.453292
+  ...
+# Subtest: profile import and every export open the ordinary transfer disclosure without toggling it closed
+ok 14 - profile import and every export open the ordinary transfer disclosure without toggling it closed
+  ---
+  duration_ms: 9.601042
+  ...
+# Subtest: profile export expectations preserve the entire legacy fixture and current radio library
+ok 15 - profile export expectations preserve the entire legacy fixture and current radio library
+  ---
+  duration_ms: 1.049125
+  ...
+# Subtest: offline restart closes every page and rejects surviving windows
+ok 16 - offline restart closes every page and rejects surviving windows
+  ---
+  duration_ms: 0.928958
+  ...
+# Subtest: access-gated candidates require normal-form credentials and never expose them in errors
+ok 17 - access-gated candidates require normal-form credentials and never expose them in errors
+  ---
+  duration_ms: 1.147334
+  ...
+1..17
+# tests 17
+# suites 0
+# pass 17
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 196.034833
