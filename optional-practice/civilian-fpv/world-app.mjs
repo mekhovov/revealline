@@ -4746,6 +4746,12 @@ export function mountWorldApp({
       );
       controls.select.replaceChildren();
       const names = {
+        'freight-hall': ['Freight hall', 'Вантажний цех'],
+        'viaduct-river-gap': ['Viaduct opening', 'Прохід під віадуком'],
+        'quarry-under-conveyor': ['Quarry conveyor', 'Конвеєр кар’єру'],
+        'station-canopy': ['Station canopy', 'Навіс станції'],
+        'foundry-gantries': ['Foundry gantries', 'Портали ливарні'],
+        'timber-crane-line': ['Timber cranes', 'Крани лісового складу'],
         'lower-square': ['Lower square', 'Нижня площа'],
         'middle-courtyard': ['Middle courtyard', 'Середнє подвір’я'],
         'upper-terrace': ['Upper terrace', 'Верхня тераса'],

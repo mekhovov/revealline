@@ -1,0 +1,155 @@
+{
+  "passed": true,
+  "retainedTerrainAssets": 2048,
+  "canonicalScenery": 6,
+  "populatedSceneryCells": 6,
+  "transitions": 161,
+  "routeSweeps": 6021,
+  "grounded": 23,
+  "starts": 6,
+  "peakGeometryBytes": 491616,
+  "solidContacts": [
+    {
+      "id": "windstone-low",
+      "x": 2755.904,
+      "z": 3218.661,
+      "surfaceHeightMm": 140665.00110054016
+    },
+    {
+      "id": "windstone-tall",
+      "x": 2808.244,
+      "z": 3264.567,
+      "surfaceHeightMm": 153135.20401382446
+    },
+    {
+      "id": "windstone-broken",
+      "x": 2858.457,
+      "z": 3218.186,
+      "surfaceHeightMm": 147483.2664794922
+    },
+    {
+      "id": "windstone-foot",
+      "x": 2829.264,
+      "z": 3273.161,
+      "surfaceHeightMm": 130122.66025543213
+    },
+    {
+      "id": "wash-west-tower",
+      "x": 6950.383,
+      "z": 5251.68,
+      "surfaceHeightMm": 142106.3868560791
+    },
+    {
+      "id": "wash-east-tower",
+      "x": 7007.896,
+      "z": 5260.077,
+      "surfaceHeightMm": 138903.9994277954
+    },
+    {
+      "id": "wash-upstream-talus",
+      "x": 6938.932,
+      "z": 5222.362,
+      "surfaceHeightMm": 107087.6896533966
+    },
+    {
+      "id": "wash-downstream-step",
+      "x": 7010.733,
+      "z": 5298.49,
+      "surfaceHeightMm": 123447.33724594116
+    },
+    {
+      "id": "playa-natural-window",
+      "x": 2921.31,
+      "z": 11121.799,
+      "surfaceHeightMm": 76062.14491081238
+    },
+    {
+      "id": "playa-west-cairn",
+      "x": 2854.131,
+      "z": 11147.377,
+      "surfaceHeightMm": 45572.30862236023
+    },
+    {
+      "id": "playa-east-cairn",
+      "x": 2964.108,
+      "z": 11089.077,
+      "surfaceHeightMm": 42651.62645530701
+    },
+    {
+      "id": "scarp-low-rib",
+      "x": 11358.226,
+      "z": 2860.792,
+      "surfaceHeightMm": 126310.29493331909
+    },
+    {
+      "id": "scarp-tall-rib",
+      "x": 11422.204,
+      "z": 2920.655,
+      "surfaceHeightMm": 153717.32726287842
+    },
+    {
+      "id": "scarp-broken-rib",
+      "x": 11472.214,
+      "z": 2853.413,
+      "surfaceHeightMm": 139861.7858543396
+    },
+    {
+      "id": "scarp-talus",
+      "x": 11450.183,
+      "z": 2934.388,
+      "surfaceHeightMm": 121980.67385101318
+    },
+    {
+      "id": "mesa-broken-crown",
+      "x": 11908.707,
+      "z": 9039.985,
+      "surfaceHeightMm": 192293.46788597107
+    },
+    {
+      "id": "mesa-outer-step",
+      "x": 11980.105,
+      "z": 9105.294,
+      "surfaceHeightMm": 168758.36037254333
+    },
+    {
+      "id": "mesa-crown-talus",
+      "x": 11891.512,
+      "z": 9087.083,
+      "surfaceHeightMm": 165109.0071182251
+    },
+    {
+      "id": "plain-first-tor",
+      "x": 10292.783,
+      "z": 13536.129,
+      "surfaceHeightMm": 151699.12829208374
+    },
+    {
+      "id": "plain-second-tor",
+      "x": 10340.73,
+      "z": 13584.916,
+      "surfaceHeightMm": 162647.12205314636
+    },
+    {
+      "id": "plain-third-tor",
+      "x": 10388.771,
+      "z": 13535.407,
+      "surfaceHeightMm": 146655.61941337585
+    },
+    {
+      "id": "plain-last-tor",
+      "x": 10446.285,
+      "z": 13584.857,
+      "surfaceHeightMm": 168631.54884147644
+    },
+    {
+      "id": "plain-low-scree",
+      "x": 10453.701,
+      "z": 13606.803,
+      "surfaceHeightMm": 133341.98605155945
+    }
+  ],
+  "sourceUnchanged": true,
+  "disposed": true,
+  "nativeVisualAccepted": false,
+  "playerReady": false
+}
