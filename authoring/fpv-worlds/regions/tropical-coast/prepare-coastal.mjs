@@ -10,7 +10,29 @@ import {
 } from '../../../../optional-practice/civilian-fpv/regional/rgba-scenery-cell.mjs';
 import { compileTerrainCell, validateTerrainSeams } from '../terrain-cell.mjs';
 import { validateRegionManifest } from '../region-manifest.mjs';
-import { coastalHeightMm, placements, startingPoints, flightRoutes } from './coastal-design.mjs';
+import * as originalDesign from './coastal-design.mjs';
+const variant = process.argv[4];
+assert(!variant || variant === 'districts', 'Unknown coastal composition');
+const design = variant ? await import('./district-design.mjs') : originalDesign;
+const { coastalHeightMm, placements, startingPoints, flightRoutes } = design;
+const cellSizeMm = design.region?.cellSizeMm ?? 128000;
+const cellSizeM = cellSizeMm / 1000;
+if (variant) {
+  assert.equal(design.districts.length, 6);
+  assert.equal(design.landmarks.length, 12);
+  const ids = new Set(design.landmarks.map((landmark) => landmark.id));
+  assert.equal(ids.size, 12, 'Landmarks need distinct identities');
+  const referenced = design.districts.flatMap((district) => district.landmarks);
+  assert.equal(new Set(referenced).size, 12);
+  assert(
+    referenced.every((id) => ids.has(id)),
+    'District landmark must exist',
+  );
+  const cells = design.districts.flatMap((district) => district.cells.map(([x, z]) => `${x},${z}`));
+  assert.equal(cells.length, 9);
+  assert.equal(new Set(cells).size, 9, 'Districts partition the authored cells');
+}
+
 const [input, output] = process.argv.slice(2);
 assert(input && output, 'Provide prepared RGBA asset folder and a new external output directory');
 const hash = (b) => crypto.createHash('sha256').update(b).digest('hex');
@@ -26,7 +48,7 @@ for (const row of records) {
   models.set(row.id, source);
 }
 const grid = {
-  cellSizeMm: 128000,
+  cellSizeMm,
   minX: 0,
   minZ: 0,
   width: 3,
@@ -36,9 +58,9 @@ const grid = {
 };
 const base = {
   format: 'FPVRegionManifest.v1',
-  id: 'tropical-coastal-study',
-  revision: 'coastal-r1',
-  title: {
+  id: design.region?.id ?? 'tropical-coastal-study',
+  revision: design.region?.revision ?? 'coastal-r1',
+  title: design.region?.title ?? {
     en: 'Tropical coast — bounded flight study',
     uk: 'Тропічне узбережжя — дослідження польоту',
   },
@@ -68,7 +90,7 @@ for (let z = 0; z < 3; z++)
       return id;
     };
     for (const item of placements.filter(
-      (p) => Math.floor(p.x / 128) === x && Math.floor(p.z / 128) === z,
+      (p) => Math.floor(p.x / cellSizeM) === x && Math.floor(p.z / cellSizeM) === z,
     )) {
       const model = models.get(item.asset);
       assert(model, item.asset);
@@ -82,9 +104,9 @@ for (let z = 0; z < 3; z++)
           const px = (surf.positionsMm[i] / 1000 - 64) * item.scale,
             pz = (surf.positionsMm[i + 2] / 1000 - 64) * item.scale;
           positionsMm.push(
-            Math.round((item.x - x * 128 + c * px + s * pz) * 1000),
+            Math.round((item.x - x * cellSizeM + c * px + s * pz) * 1000),
             Math.round(item.y * 1000 + surf.positionsMm[i + 1] * item.scale),
-            Math.round((item.z - z * 128 - s * px + c * pz) * 1000),
+            Math.round((item.z - z * cellSizeM - s * px + c * pz) * 1000),
           );
         }
         const normals = [];
@@ -116,7 +138,7 @@ for (let z = 0; z < 3; z++)
       });
       surfaces.push({
         id: 'sea-surface',
-        positionsMm: [0, 0, 0, 0, 0, 128000, 128000, 0, 128000, 128000, 0, 0],
+        positionsMm: [0, 0, 0, 0, 0, cellSizeMm, cellSizeMm, 0, cellSizeMm, cellSizeMm, 0, 0],
         indices: [0, 1, 2, 0, 2, 3],
         color: [0.035, 0.35, 0.43],
       });
@@ -140,7 +162,7 @@ for (let z = 0; z < 3; z++)
         chunkId: id,
         x,
         z,
-        cellSizeMm: 128000,
+        cellSizeMm,
         surfaces,
       },
       textures,
@@ -150,13 +172,18 @@ for (let z = 0; z < 3; z++)
     const heightsMm = [];
     for (let iz = 0; iz < 33; iz++)
       for (let ix = 0; ix < 33; ix++)
-        heightsMm.push(coastalHeightMm(x * 128 + ix * 4, z * 128 + iz * 4));
+        heightsMm.push(
+          coastalHeightMm(
+            x * cellSizeM + (ix * cellSizeM) / 32,
+            z * cellSizeM + (iz * cellSizeM) / 32,
+          ),
+        );
     terrainCells.push({
       format: 'FPVRegionCollision.v1',
       chunkId: id,
       x,
       z,
-      cellSizeMm: 128000,
+      cellSizeMm,
       samples: 33,
       heightsMm,
     });
@@ -229,10 +256,12 @@ for (const [layer, cells, compile] of [
 }
 const receipt = {
   format: 'FPVTropicalCoastPreparation.v1',
-  scope: 'Bounded384m authoring candidate, not large archipelago/default player admission',
+  scope:
+    design.region?.scope ??
+    'Bounded384m authoring candidate, not large archipelago/default player admission',
   regionId: base.id,
   revision: base.revision,
-  sizeM: [384, 384],
+  sizeM: [cellSizeM * 3, cellSizeM * 3],
   terrainManifestSHA256: hash(json(layers.terrain)),
   sceneryManifestSHA256: hash(json(layers.scenery)),
   resources: {
@@ -249,6 +278,14 @@ const receipt = {
   },
   routes: flightRoutes,
   inputs: records,
+  ...(variant
+    ? {
+        districts: design.districts,
+        landmarks: design.landmarks,
+        verificationProbes: design.verificationProbes,
+        contactProbes: design.contactProbes,
+      }
+    : {}),
 };
 await fs.writeFile(path.join(output, 'preparation.json'), JSON.stringify(receipt, null, 2) + '\n');
 console.log(JSON.stringify(receipt.resources));
