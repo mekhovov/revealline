@@ -4746,6 +4746,12 @@ export function mountWorldApp({
       );
       controls.select.replaceChildren();
       const names = {
+        'arrival-gardens': ['Arrival gardens', 'Вхідні сади'],
+        'loop-meadow': ['Loop meadow', 'Луг із петлею'],
+        'ridge-station': ['Ridge station', 'Станція на пагорбі'],
+        'service-courts': ['Service courts', 'Службові двори'],
+        'woodland-promenade': ['Woodland promenade', 'Лісова алея'],
+        'river-gardens': ['River gardens', 'Прибережні сади'],
         'braided-basin': ['Braided basin', 'Розгалужена улоговина'],
         'high-mesa': ['High mesa', 'Високе плато'],
         'red-escarpment': ['Red escarpment', 'Червоний уступ'],
