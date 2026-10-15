@@ -96,6 +96,7 @@ test('invalid specifications or pre-aborted exports cannot touch the browser', a
     { packageId: 'other', locale: 'en' },
     { packageId: 'civilian-fpv', locale: 'fr' },
     { packageId: 'civilian-fpv', locale: 'en', signal: controller.signal },
+    { packageId: 'fpv-worlds', locale: 'en', signal: controller.signal },
   ])
     await assert.rejects(exportPublicFPVExercise({}, spec));
 });
