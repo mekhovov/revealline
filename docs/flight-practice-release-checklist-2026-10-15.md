@@ -6,7 +6,8 @@
 retains the original 16-checkpoint cache/worker repair run and a separate
 18-checkpoint run preserving a nonempty, UI-authored World Studio template copy.
 It also records bounded status diagnostics, failed first-flight test attempts,
-346 practice regressions and the opt-in controlled quota-denial protocol.
+351 latest practice regressions and a separate passing 21-checkpoint all-three
+controlled quota-denial/reset/retry/removal journey on the fresh candidate.
 These bounded results do not close human/device, distinct-release or hosting gates.
 
 **Latest continuation:** [pointer and preparation verification](flight-practice-pointer-2026-10-15.md)
@@ -181,6 +182,11 @@ contains no claim of device/human/public acceptance.
 
 ### C2 — Directory → first flight → pause → retry, every app
 
+Progress: the fresh `50b7612e8` candidate passed four EN public-control motion,
+pause and retry cases (Gym, Academy Self-level/Acro, Worlds Self-level). This is
+not the full game directory, UK, Worlds Acro or beginner exercise completion;
+retain those cases below. See the [source-bound report](flight-practice-repair-2026-10-15.md).
+
 1. In a clean authorized test context, open the complete staged game's Flight
    practice directory. Select EN, then UK. Check all three cards, supported input,
    requirements, sizes and guide destinations against their package descriptors.
@@ -270,6 +276,13 @@ to omit fields from comparisons.
 
 ### C6 — Slow/stalled/cancelled/denied preparation
 
+Progress: all-three controlled positive-headroom quota denial/reset/retry/removal
+passed a separate 21-checkpoint native Chrome observation on `50b7612e8`.
+The original failed zero control and 20-checkpoint hidden-removal test attempt
+remain retained. This supplies step 4's controlled preparation-denial evidence,
+not physical disk exhaustion, eviction, cancellation, inactivity or overall-limit
+acceptance. Other record types and real distinct-release migration stay open.
+
 1. In the isolated server, delay one known B dependency while leaving its original
    bytes unchanged. Keep A prepared. Record the request/response boundary and
    delays rather than calling this a naturally slow connection.
@@ -293,6 +306,13 @@ successful explicit retry. Run per app. H3 proves only its historical Worlds
 sequence; H8 models a world-store transaction, not package-cache exhaustion.
 
 ### C7 — Missing assets/worker and scoped removal
+
+Progress: the fresh candidate passed the six exact cache/worker faults, repairs
+and each app's scoped removal in an 18-checkpoint run. One UI-created World
+project/revision/metadata record and its card identity remained unchanged. This
+does not cover Gym records, imported model assets, every world/progress type or
+populated-World browser-process restart. The [repair report](flight-practice-repair-2026-10-15.md)
+retains original hashes, screenshots, failures and those boundaries.
 
 1. In a backed-up disposable test profile, remove exactly one named dependency
    from one owned prepared cache using browser storage inspection. Record its
