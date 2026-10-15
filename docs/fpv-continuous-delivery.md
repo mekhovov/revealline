@@ -4826,3 +4826,26 @@ qualification. Parallel lanes own Tropical materials/coastal composition and
 performance/favourite locations. The multi-kilometre worlds, sustained device
 qualification and D6 remain open. Preserve source, recovery refs, frozen candidates
 and browser storage; heavy outputs remain external/cloud.
+
+## 15 October 2026 — wider cells and independent content publication
+
+Root branch `codex/fpv-regional-progress-20261015-b` now follows main `83fd6525`.
+Wide-cell capability #1329 merged after native normal-player camera/arming checks
+and 4,013 production flight ticks across two boundaries. Source-only diagnostic
+fixture export is repeatable and refuses to overwrite a prior output. Existing
+128 m bytes, fixed source limits and memory budgets remain unchanged.
+
+Canyon district source #1326 and immutable delivery #1331 merged independently.
+Its 768 m region retains the old arrival geometry, adds six districts and passed
+24 commanded routes/123,566 ticks plus bounded native renderer inspection.
+Its separate Library entry is still under review; preserve the old 384 m row.
+Tropical source #1327 merged; Library #1328 is separately qualified against its
+exact source and current main. Frozen native sources and earlier saved entries
+remain preserved. Concurrent remote edits were merged without force or retargeting.
+
+Safe saved-location containment #1330 is merged. Favourite-place storage and UI
+continue separately; no restore may arm or overwrite a failed bookmark. Integrated
+package/offline qualification and multi-kilometre authored maps remain open.
+Do not describe these source checks as all-device, sustained FPS or public-release
+acceptance. Heavy outputs remain external; no player data or unpublished work was
+removed.

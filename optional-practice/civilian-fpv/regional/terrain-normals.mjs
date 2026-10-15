@@ -6,6 +6,7 @@ export function createTerrainNormals(cells) {
       for (let x = 0; x <= 32; x++)
         heights.set(`${cell.x * 32 + x},${cell.z * 32 + z}`, cell.heightsMm[z * 33 + x]);
   return (cell) => {
+    const spacingMm = cell.cellSizeMm / 32;
     const normals = new Float32Array(33 * 33 * 3);
     for (let z = 0; z <= 32; z++) {
       for (let x = 0; x <= 32; x++) {
@@ -17,9 +18,11 @@ export function createTerrainNormals(cells) {
         const back = heights.get(`${gx},${gz - 1}`),
           front = heights.get(`${gx},${gz + 1}`);
         const dx =
-          ((right ?? h) - (left ?? h)) / (left !== undefined && right !== undefined ? 8000 : 4000);
+          ((right ?? h) - (left ?? h)) /
+          (left !== undefined && right !== undefined ? 2 * spacingMm : spacingMm);
         const dz =
-          ((front ?? h) - (back ?? h)) / (back !== undefined && front !== undefined ? 8000 : 4000);
+          ((front ?? h) - (back ?? h)) /
+          (back !== undefined && front !== undefined ? 2 * spacingMm : spacingMm);
         const length = Math.hypot(dx, 1, dz),
           offset = (z * 33 + x) * 3;
         normals[offset] = -dx / length;

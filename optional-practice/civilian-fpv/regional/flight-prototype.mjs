@@ -16,6 +16,7 @@ import {
   createRegionPlanner,
 } from "./region-manifest.mjs";
 import { createVerifiedFlightGeometry } from "./verified-flight-geometry.mjs";
+import { validateRegionalLocationStart } from "../regional-locations.mjs";
 
 const AXES = ["x", "y", "z"],
   RADIUS = 220;
@@ -42,6 +43,7 @@ export function createRegionalFlightPrototype({
   scenery = null,
   geometryBudgets,
   spawnId,
+  savedStart = null,
   initialHeading = 0,
   mode = "self-level",
   response = DEFAULT_RESPONSE,
@@ -64,6 +66,7 @@ export function createRegionalFlightPrototype({
     (item) => item.id === (spawnId ?? manifest.spawns[0].id),
   );
   fail(spawn, "Unknown region spawn");
+  const saved = savedStart === null ? null : validateRegionalLocationStart(savedStart, manifest);
   fail(
     initialHeading === "region-centre" ||
       (Number.isSafeInteger(initialHeading) &&
@@ -71,13 +74,15 @@ export function createRegionalFlightPrototype({
         initialHeading < 36000),
     "Invalid initial regional heading",
   );
-  const heading =
+  const heading = saved ? saved.heading :
     initialHeading === "region-centre"
       ? atan2(
-          (manifest.grid.minX + manifest.grid.width / 2) * 128000 -
+          (manifest.grid.minX + manifest.grid.width / 2) *
+            manifest.grid.cellSizeMm -
             spawn.position.x,
           spawn.position.z -
-            (manifest.grid.minZ + manifest.grid.depth / 2) * 128000,
+            (manifest.grid.minZ + manifest.grid.depth / 2) *
+              manifest.grid.cellSizeMm,
         )
       : initialHeading;
   const halfHeading = Math.round(-heading / 2);
@@ -105,7 +110,7 @@ export function createRegionalFlightPrototype({
   };
   const noMovingGeometry = () => null;
   let body = {
-    position: { ...spawn.position },
+    position: { ...(saved?.position ?? spawn.position) },
     velocity: zero(),
     orientation,
     angular: { roll: 0, pitch: 0, yaw: 0 },
@@ -183,8 +188,12 @@ export function createRegionalFlightPrototype({
     const grid = manifest.grid,
       target = { ...body.position };
     for (const key of ["x", "z"]) {
-      const min = grid[key === "x" ? "minX" : "minZ"] * 128000 + RADIUS,
-        max = min + grid[key === "x" ? "width" : "depth"] * 128000 - 2 * RADIUS;
+      const min =
+          grid[key === "x" ? "minX" : "minZ"] * grid.cellSizeMm + RADIUS,
+        max =
+          min +
+          grid[key === "x" ? "width" : "depth"] * grid.cellSizeMm -
+          2 * RADIUS;
       // At most one cell ahead; the next 3×3 window still contains the current body.
       target[key] = Math.max(
         min,
@@ -274,6 +283,7 @@ export function createRegionalFlightPrototype({
           {
             positionMm: body.position,
             radiusMm: RADIUS,
+            ...(saved && body.ticks === 0 ? { requireClearRestore: true } : {}),
           },
           {
             ...(prepareFrame
@@ -403,10 +413,10 @@ export function createRegionalFlightPrototype({
       );
       const grid = manifest.grid;
       if (
-        next.position.x - RADIUS < grid.minX * 128000 ||
-        next.position.x + RADIUS > (grid.minX + grid.width) * 128000 ||
-        next.position.z - RADIUS < grid.minZ * 128000 ||
-        next.position.z + RADIUS > (grid.minZ + grid.depth) * 128000 ||
+        next.position.x - RADIUS < grid.minX * grid.cellSizeMm ||
+        next.position.x + RADIUS > (grid.minX + grid.width) * grid.cellSizeMm ||
+        next.position.z - RADIUS < grid.minZ * grid.cellSizeMm ||
+        next.position.z + RADIUS > (grid.minZ + grid.depth) * grid.cellSizeMm ||
         next.position.y + 2 * RADIUS > grid.ceilingMm
       ) {
         status = "paused";

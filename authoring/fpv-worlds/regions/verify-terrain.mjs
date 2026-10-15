@@ -103,7 +103,7 @@ await check("bounded detached terrain payload", () => {
     (c) => (c.heightsMm[0] = 0.5),
     (c) => (c.heightsMm[0] = 2000001),
     (c) => (c.samples = 65),
-    (c) => (c.cellSizeMm = 256000),
+    (c) => (c.cellSizeMm = 192000),
     (c) => (c.extra = true),
     (c) => (c.chunkId = "bad/id"),
   ]) {

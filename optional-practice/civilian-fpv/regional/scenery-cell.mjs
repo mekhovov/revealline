@@ -1,3 +1,4 @@
+import { REGION_CELL_SIZES_MM } from './region-manifest.mjs';
 /** Explicit colour-only scenery profile. No external textures, animations or player admission. */
 export const SCENERY_FORMAT = 'FPVRegionScenery.v1';
 export const SCENERY_LIMITS = Object.freeze({
@@ -37,7 +38,9 @@ export function validateSceneryCell(input) {
     'Invalid scenery identity',
   );
   fail(
-    integer(cell.x, -128, 255) && integer(cell.z, -128, 255) && cell.cellSizeMm === 128000,
+    integer(cell.x, -128, 255) &&
+      integer(cell.z, -128, 255) &&
+      REGION_CELL_SIZES_MM.includes(cell.cellSizeMm),
     'Invalid scenery cell',
   );
   fail(
@@ -77,7 +80,9 @@ export function validateSceneryCell(input) {
       'Invalid scenery positions',
     );
     fail(
-      p.every((v, i) => integer(v, i % 3 === 1 ? -2000000 : 0, i % 3 === 1 ? 2000000 : 128000)),
+      p.every((v, i) =>
+        integer(v, i % 3 === 1 ? -2000000 : 0, i % 3 === 1 ? 2000000 : cell.cellSizeMm),
+      ),
       'Scenery exceeds cell ownership',
     );
     fail(

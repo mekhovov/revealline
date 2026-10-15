@@ -1,3 +1,5 @@
+/** Supported authoring lattices; 256 m keeps 33 samples at 8 m spacing. */
+export const REGION_CELL_SIZES_MM = Object.freeze([128000, 256000]);
 /** Authoring-only regional data contract. Not a player format or a physics adapter. */
 export const REGION_FORMAT = "FPVRegionManifest.v1";
 export const REGION_LIMITS = Object.freeze({
@@ -82,7 +84,7 @@ export function validateRegionManifest(input) {
     ["cellSizeMm", "minX", "minZ", "width", "depth", "floorMm", "ceilingMm"],
     "Grid",
   );
-  fail(grid.cellSizeMm === REGION_LIMITS.cellSizeMm, "Unsupported cell size");
+  fail(REGION_CELL_SIZES_MM.includes(grid.cellSizeMm), "Unsupported cell size");
   fail(
     ["minX", "minZ"].every((key) => integer(grid[key], -128, 128)),
     "Invalid grid origin",

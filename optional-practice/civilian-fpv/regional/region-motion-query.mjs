@@ -60,7 +60,6 @@ export function createRegionFlightSupportQuery({
     live();
     if (
       !point(position) ||
-      !AXES.every((key) => Number.isSafeInteger(position[key])) ||
       !Number.isSafeInteger(radius) ||
       radius <= 0 ||
       radius > 2000 ||

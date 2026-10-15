@@ -1,4 +1,4 @@
-import { regionalCollisionCounts } from './region-motion-query.mjs';
+import { regionalCollisionCounts } from "./region-motion-query.mjs";
 import {
   validateFrameTransaction,
   adoptVerifiedFrame,
@@ -143,7 +143,10 @@ export function createVerifiedTerrainWindow(
           new TextDecoder("utf-8", { fatal: true }).decode(collisionBytes),
         );
         fail(
-          cell.chunkId === chunk.id && cell.x === chunk.x && cell.z === chunk.z,
+          cell.chunkId === chunk.id &&
+            cell.x === chunk.x &&
+            cell.z === chunk.z &&
+            cell.cellSizeMm === manifest.grid.cellSizeMm,
           "Verified collision identity does not match its declared chunk",
         );
         const sceneBytes = source.copyAsset(scene.id),
@@ -238,7 +241,10 @@ export function createVerifiedTerrainWindow(
   return Object.freeze({
     snapshot,
     collisionSnapshot: () =>
-      regionalCollisionCounts(committed, preparing === committed ? null : preparing),
+      regionalCollisionCounts(
+        committed,
+        preparing === committed ? null : preparing,
+      ),
     get group() {
       return committed?.group ?? null;
     },
