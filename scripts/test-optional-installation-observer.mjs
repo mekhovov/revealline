@@ -363,7 +363,7 @@ test('Academy offline controls expand the ordinary closed Workshop disclosure in
   );
   assert.equal(
     observer.match(/await revealFPVOffline\(page, \(\) => clickFPV\('#help'\)\)/g)?.length,
-    5,
+    3,
     'Preparation, failed download, quota denial/retry removal share the same public disclosure action.',
   );
 });
@@ -375,8 +375,8 @@ test('opt-in quota denial preserves pointers, resets before retry and retains ex
   );
   assert.match(observer, /OPTIONAL_INSTALLATION_QUOTA_PROBE === '1'/);
   assert.match(observer, /origin: new URL\(served.url\).origin/);
-  assert.match(observer, /assert.equal\(quotaProbeReport.completed, true/);
-  assert.match(observer, /denied.keys\[keyFor\(id\)\], upgraded.keys\[keyFor\(id\)\]/);
+  assert.match(observer, /assert.equal\(result.completed, true/);
+  assert.match(observer, /assertQuotaPointers\(denied, upgraded, packageIds, keyFor\)/);
   assert.match(
     observer,
     /sourceStable: quotaProbeSha256 === sha\(await readFile\(quotaProbeURL\)\)/,
@@ -385,8 +385,121 @@ test('opt-in quota denial preserves pointers, resets before retry and retains ex
   const rollback = observer.indexOf("'candidate-removed-retained-path-restored'");
   const retry = observer.indexOf("'quota-restored-pristine-retry-prepared'");
   assert(denial > 0 && rollback > denial && retry > rollback);
-  assert.match(observer, /quotaProbeReport\?\.retryPreparedAndRemoved === true/);
+  assert.match(observer, /quotaProbePerPackage\[id\]\?\.retryPreparedAndRemoved === true/);
   assert.doesNotMatch(observer, /Storage.clearDataForOrigin|quotaSize: null/);
+});
+
+async function quotaAssertions() {
+  const observer = await readFile(
+    new URL('./observe-optional-installation.mjs', import.meta.url),
+    'utf8',
+  );
+  return runInNewContext(
+    observer.slice(
+      observer.indexOf('function selectQuotaPackages('),
+      observer.indexOf('\nconst [\n'),
+    ) +
+      '\n({ selectQuotaPackages, quotaRetryPrevious, assertQuotaPointers, assertQuotaFailedScopeAbsent })',
+    { assert },
+  );
+}
+
+test('quota selection defaults to Academy and accepts only the explicit all-packages enum', async () => {
+  const { selectQuotaPackages, quotaRetryPrevious } = await quotaAssertions();
+  assert.deepEqual(Array.from(selectQuotaPackages()), ['civilian-fpv']);
+  assert.deepEqual(Array.from(selectQuotaPackages('all')), [
+    'civilian-fpv',
+    'civilian-flight',
+    'fpv-worlds',
+  ]);
+  for (const invalid of ['', 'ALL', 'academy', '1', null])
+    assert.throws(() => selectQuotaPackages(invalid), /must be omitted or all/);
+  assert.equal(quotaRetryPrevious('civilian-fpv', 'v9', 'v8'), 'v8');
+  assert.equal(quotaRetryPrevious('civilian-flight', 'v9', 'v8'), undefined);
+  assert.equal(quotaRetryPrevious('fpv-worlds', 'v9', 'v8'), 'v9');
+  assert.throws(() => quotaRetryPrevious('unknown', 'v9', 'v8'), /Unknown/);
+});
+
+test('every quota-denied package preserves all pointers and leaves no package-scoped staging or worker', async () => {
+  const { selectQuotaPackages, assertQuotaPointers, assertQuotaFailedScopeAbsent } =
+    await quotaAssertions();
+  const ids = Array.from(selectQuotaPackages('all'));
+  const keyFor = (id) => `installed.${id}`;
+  const baseline = { keys: Object.fromEntries(ids.map((id) => [keyFor(id), `${id}:retained`])) };
+  for (const selected of ids) {
+    const scope = `/practice/${selected}/releases/v0.0.1/site/`;
+    const state = {
+      keys: { ...baseline.keys },
+      caches: ['unrelated-cache'],
+      workers: [{ scope: '/unrelated/' }],
+    };
+    assertQuotaPointers(state, baseline, ids, keyFor);
+    assertQuotaFailedScopeAbsent(state, scope);
+    for (const changed of ids) {
+      assert.throws(() =>
+        assertQuotaPointers(
+          { ...state, keys: { ...state.keys, [keyFor(changed)]: '{}' } },
+          baseline,
+          ids,
+          keyFor,
+        ),
+      );
+    }
+    assert.throws(
+      () => assertQuotaFailedScopeAbsent({ ...state, caches: [`staging:${scope}`] }, scope),
+      /staging cache/,
+    );
+    assert.throws(
+      () => assertQuotaFailedScopeAbsent({ ...state, workers: [{ scope }] }, scope),
+      /worker registered/,
+    );
+    const retry = { ...state, keys: { ...state.keys, [keyFor(selected)]: 'new retry pointer' } };
+    assertQuotaPointers(retry, baseline, ids, keyFor, selected);
+    assert.throws(
+      () => assertQuotaPointers(retry, baseline, ids, keyFor),
+      'Removal must restore even the selected package exactly.',
+    );
+  }
+});
+
+test('all-package quota orchestration keeps native controls, scoped fixtures and default receipt compatibility', async () => {
+  const observer = await readFile(
+    new URL('./observe-optional-installation.mjs', import.meta.url),
+    'utf8',
+  );
+  assert.match(observer, /selectQuotaPackages\(process.env.OPTIONAL_INSTALLATION_QUOTA_PACKAGES\)/);
+  assert.match(observer, /if \(id !== fpv\) await stage\(id, failedFixture\)/);
+  assert.equal(observer.match(/for \(const quotaId of quotaPackageIds\)/g)?.length, 2);
+  assert.match(observer, /await revealOfflineUI\(quotaId\)/);
+  assert.match(
+    observer,
+    /assertQuotaFailedScopeAbsent\(denied, '\/' \+ site\(quotaId, failedFixture\)\)/,
+  );
+  assert.match(observer, /assertQuotaPointers\(restored, afterGymRemoval, packageIds, keyFor\)/);
+  assert.match(observer, /button: quotaId === worlds \? '#remove-runtime' : '#remove-offline'/);
+  assert.match(observer, /if \(quotaId === fpv\) quotaProbeReport = result/);
+  assert.match(
+    observer,
+    /result: quotaProbeReport,[\s\S]*selectedIDs: quotaPackageIds,[\s\S]*perPackage: quotaProbePerPackage/,
+  );
+  assert.match(observer, /quotaPackageIds.length === 1 \? label :/);
+  const reset = observer.indexOf('assert.equal(result.completed, true');
+  const exportAfterReset = observer.indexOf(
+    'assert.equal(await exportedProof(), savedProof)',
+    reset,
+  );
+  assert.ok(reset > 0 && exportAfterReset > reset);
+  for (const [id, selector] of [
+    ['civilian-flight', 'remove-offline'],
+    ['civilian-fpv', 'remove-offline'],
+    ['fpv-worlds', 'remove-runtime'],
+  ]) {
+    const html = await readFile(
+      new URL(`../optional-practice/${id}/index.html`, import.meta.url),
+      'utf8',
+    );
+    assert.ok(html.includes(`id="${selector}"`));
+  }
 });
 
 test('profile import and every export open the ordinary transfer disclosure without toggling it closed', async () => {
