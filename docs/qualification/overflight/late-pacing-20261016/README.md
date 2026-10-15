@@ -85,20 +85,44 @@ The revision label itself does not alter RNG or combat.
 ## Native review and sound
 
 A native Single Drone / Receiver Gardens / seed 202604 / Standard / three balanced
-Scout airframes / Echo / figure-eight review is being captured against `cf16eea20`.
+Scout airframes / Echo / figure-eight review completed against `cf16eea20`.
 It uses the ordinary crowd rule and earned upgrades, with no review power grants.
 The shared audio UI was explicitly set to unmuted, **Signal Afterglow** built-in
 synth playback, master 0.65 / music 0.55 / effects 0.70, Humanoid reactions. Spoken
 commentator reactions were already disabled; the existing caption preference is
-preserved. Original settings will be restored after capture.
+preserved. After capture, the original master mute, Humanoid reactions, Ukrainian
+style / Use selected style playlist and Carol of the Bells track were restored,
+with music paused and volumes unchanged (`audio-restored.txt`). Playback position
+is not reset to its original zero; the restored track is paused.
 
 `settings-blocked.png` retains an inspection issue encountered navigating nested
 menus. Native accessibility controls successfully operated Settings and Music;
 this is not presented as proof of an application defect or a new UI fix.
 
-Native completion, boss mix samples and exact identity assertions are added below
-after the run. Recording excludes that sortie from timing qualification. Signal
-metadata or a non-silent waveform does not establish subjective sound quality.
+The native run **won at 404.1667 seconds (6:44)**, with 3,427 kills, 240 hull
+damage, two airframes lost and all ten upgrades earned. Choice ten arrived at
+236.0333 seconds; evolution at 69.8167 seconds. `native-final.json.gz` is the
+fresh terminal download. `native-comparison.json` verifies exact equality with
+`default-check.json.gz` for project identity, outcome, time, **every statistic and
+the complete upgrade ID/tick history**, with the original crowd rule. No simulation
+time was dropped.
+
+Open [the native review page](review.html) for three 20-second battlefield clips:
+
+- `native-reactions-mix.webm`: dense combat / Humanoid reactions, starts around 3:57.
+- `native-classic-mix.webm`: Classic sounds / final-tank arrival, starts around 4:59.
+- `native-boss-reactions-mix.webm`: final tank / Humanoid reactions, starts around 5:33.
+
+These are sequential scenes, not identical-event A/B audio tests. The built-in
+recorder excludes HUD, cards and external soundtrack files; using native synth
+music makes the shared playback capturable. All three retain VP9 video and stereo
+48 kHz Opus audio (~20 seconds). `native-media-metadata.json` retains full probes
+and signal levels (mean −39.9 / −41.0 / −41.2 dB). Signal metadata or non-silence
+does **not** establish subjective quality or hostile-warning audibility.
+
+`native-boss.png` and `native-result.png` show actual runtime views. The recording
+and menu interruptions correctly invalidate timing (`review-clip-recording-overhead`,
+`interrupted`); this sortie is gameplay/sound evidence, never a performance pass.
 
 ## Review boundaries / next work
 

@@ -10,7 +10,8 @@ configurations improve from 3/6 to 4/6 completions; all twelve earned no-input
 branches lose. The two systems configurations still lose and remain open. The
 new named balance revision preserves exact previous authored identities and
 separate mixed-profile records; content and integration cohorts pass 24/24 each.
-Native review and boss audio evidence are being added separately. Local crowd
+Native Echo completes at 6:44 and exactly matches every simulated statistic and
+upgrade tick. Three native Classic/Reactions/boss clips are saved for listening review. Local crowd
 spacing remains experimental; this correction does not mark the full plan complete.
 
 
