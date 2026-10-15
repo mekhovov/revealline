@@ -100,6 +100,7 @@ async function setup(
     fetchResponse,
     publicStyles,
     creatorSource,
+    browserSetup,
   } = {},
 ) {
   const original = await fixture(),
@@ -142,11 +143,72 @@ async function setup(
     audio,
     soundtrackIndexedDB: db.indexedDB,
     fetchResponse,
+    browserSetup,
   });
   if (filePlayback)
     await settle(() => !page.$('soundtrack-open').disabled, 'Real soundtrack host initialized');
   return { page, audio, db, original };
 }
+
+for (const zeroVolume of [false, true]) {
+  test(`silent Solo Start defers native audio until ${zeroVolume ? 'volume rises' : 'unmute'} in its control gesture`, async (t) => {
+    let constructions = 0;
+    const { page, audio } = await setup(t, {
+      audioPreferences: { musicEnabled: zeroVolume, masterVolume: zeroVolume ? 0 : 0.8 },
+      browserSetup({ globals }) {
+        const create = globals.AudioContext;
+        globals.AudioContext = function () {
+          constructions++;
+          return create();
+        };
+      },
+    });
+    assert.equal(constructions, 0);
+    page.$('start-button').click();
+    await settle(() => page.doc.body.dataset.flightState === 'running', 'Silent flight starts');
+    assert.equal(constructions, 0, 'Muted gameplay never opens a native audio device.');
+    if (zeroVolume) page.change('master-volume', '0.5');
+    else page.$('sound-button').click();
+    assert.equal(
+      constructions,
+      1,
+      'Native activation occurs synchronously in the control gesture.',
+    );
+    await settle(() => audio.context.state === 'running', 'Unmuted audio resumes');
+    assert.equal(page.doc.body.dataset.flightState, 'running');
+    assert.deepEqual(page.errors, []);
+  });
+}
+
+test('deferred Solo activation preserves an explicit music Pause when master sound is restored', async (t) => {
+  let constructions = 0;
+  const { page, audio } = await setup(t, {
+    browserSetup({ globals }) {
+      const create = globals.AudioContext;
+      globals.AudioContext = function () {
+        constructions++;
+        return create();
+      };
+    },
+  });
+  page.$('start-button').click();
+  await settle(() => page.doc.body.dataset.flightState === 'running', 'Silent flight starts');
+  assert.equal(constructions, 0);
+  await openStudio(page);
+  await page.$('soundtrack-pause').onclick();
+  const plays = page.audioElements.map((media) => media.plays);
+  assert.equal(constructions, 0);
+  page.$('soundtrack-master-mute').click();
+  assert.equal(constructions, 1);
+  await settle(() => audio.context.state === 'running', 'Effects activate');
+  assert.deepEqual(
+    page.audioElements.map((media) => media.plays),
+    plays,
+  );
+  assert.equal(musicMedia(page).paused, true);
+  assert.equal(page.$('solo-quick-music-settings-toggle').textContent, 'Play music');
+  assert.deepEqual(page.errors, []);
+});
 
 const onlineRecordingHash = 'a'.repeat(64);
 function onlineCatalogueResponse(status = 200) {
