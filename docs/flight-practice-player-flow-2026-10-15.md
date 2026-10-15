@@ -1,5 +1,13 @@
 # Flight practice: expanded player-flow checks
 
+**Later visibility audit correction:** the eight FPV cases below read legacy
+DOM telemetry without checking whether it was displayed. The admitted SIM HUD
+hides those legacy instruments. Their authentic mode/start/pause/retry and
+DOM-state observations remain valid; they do **not** verify player-visible FPV
+height/speed feedback. Original receipts remain unchanged. The two Gym movement
+cases and two independently replayed Gym exercises use a separate interface and
+are not invalidated by this finding. Visible maintained-HUD FPV reruns remain open.
+
 Hosting and publication remain deferred. This continuation follows the
 [repair report](flight-practice-repair-2026-10-15.md), advancing C2 without
 changing SIM mechanics, controls, rendering or training content.
@@ -14,7 +22,7 @@ World Library flight-record navigation. Those inputs differ from the earlier
 The registered v2 observer adds ten exact cases: EN/UK Gym, Academy Self-level
 and Acro, and Worlds Self-level and Acro. It observes document language and the
 localized Settings label, selects modes through Settings → Gameplay, and checks
-public movement, pause stability and retry. The original v1 four-case protocol
+DOM telemetry movement, pause stability and retry. The original v1 four-case protocol
 remains supported without extending its claims.
 
 A separate two-case Gym protocol requires a fresh lift-and-land exercise,
@@ -103,8 +111,9 @@ The [unchanged-candidate retry](flight-practice-player-flow-20261015/modes-compl
 and [complete artifacts](flight-practice-player-flow-20261015/modes-completed-artifacts.tgz)
 pass all ten cases. Each has the expected actual document language and visible
 Settings label. Both FPV hosts retain the selected Self-level/Acro mode after
-Start. Visible movement, four paused samples over 600 ms, reset, second movement
-and second pause all pass. Screenshots and observer authorities are retained;
+Start. DOM telemetry movement, four paused samples over 600 ms, reset, second
+movement and second pause all pass. For FPV those nodes were hidden, as corrected
+above; visibility was not asserted. Screenshots and observer authorities are retained;
 owned browser/server/temporary-site cleanup passes. `qualified` remains false.
 
 ### Second Gym attempt: export succeeded, replay assumption rejected

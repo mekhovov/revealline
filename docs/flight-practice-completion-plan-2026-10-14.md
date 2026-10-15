@@ -1,5 +1,14 @@
 # Flight practice: completion plan and priority review
 
+Visibility audit correction: the historical ten-case first-flight matrix uses
+hidden legacy DOM telemetry for its eight FPV cases. Native launch/mode/pause/retry
+and DOM-state results remain evidence, but visible FPV instrument feedback is not
+qualified. The existing HUD guidance controls were also omitted from both apps'
+accessible Settings categories. Repair their placement, observe the maintained
+visible HUD, and repeat FPV exercise completion/export/replay without hidden
+measurements. Gym exercise evidence and six directory/start/guide journeys are
+unaffected. See the [corrected player-flow report](flight-practice-player-flow-2026-10-15.md).
+
 Updated 15 October 2026. This refines the approved three-app plan; it does not
 authorize a new publisher, relaxed reviews, a different host, or changes to SIM
 mechanics. Implementation and public release are separate completion states.
