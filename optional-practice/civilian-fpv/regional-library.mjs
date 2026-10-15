@@ -23,9 +23,48 @@ export const DESERT_EXPEDITION_LIBRARY_PIN = Object.freeze({
   },
 });
 
+export const DESERT_LANDMARKS_LIBRARY_PIN = Object.freeze({
+  id: 'desert-expedition-study',
+  title: {
+    en: 'Desert Expedition — rock routes',
+    uk: 'Пустельна експедиція — маршрути серед скель',
+  },
+  description: {
+    en: '16.384 × 16.384 km · six close-range rock practice areas · unscored free flight. Weave between windstones, pass through a natural arch, climb the escarpment ribs and orbit the mesa crown. Early composition study; the wider terrain remains sparse.',
+    uk: '16,384 × 16,384 км · шість невеликих зон для практики серед скель · вільний політ без заліку. Маневруйте між каменями, пролітайте крізь природну арку, піднімайтеся між скельними ребрами й облітайте вершину плато. Раннє дослідження композиції; решта ландшафту ще малонаповнена.',
+  },
+  bytes: 48164518,
+  appearance: { terrain: 'desert' },
+  pin: {
+    url: 'https://raw.githubusercontent.com/mekhovov/revealline/6cbd5efd0e5138431bdb29023b8eb696765168e7/authoring/fpv-worlds/regions/desert-expedition/delivery-landmarks-r1/delivery.json',
+    bytes: 329271,
+    sha256: 'fed1f7d18bfe3163cbb52b8b7ecd174a777b89a45ac962c181bd8ca11b727ea7',
+  },
+});
+
 // Original, reviewed sources are pinned to an immutable published commit.
 export const REGIONAL_LIBRARY_PINS = Object.freeze([
-  ...(REGION_CELL_SIZES_MM.includes(512000) ? [DESERT_EXPEDITION_LIBRARY_PIN] : []),
+  ...(REGION_CELL_SIZES_MM.includes(512000)
+    ? [DESERT_LANDMARKS_LIBRARY_PIN, DESERT_EXPEDITION_LIBRARY_PIN]
+    : []),
+  {
+    id: 'tropical-coastal-districts',
+    title: {
+      en: 'Tropical coast — connected harbour',
+      uk: 'Тропічне узбережжя — сполучені пірси гавані',
+    },
+    description: {
+      en: '768 × 768 m · connected wooden harbour decks and shore approach · six starting areas, unscored free flight. Separate harbour-r3 revision; the earlier coastal settlement remains available. Early coastal study; visual water only.',
+      uk: '768 × 768 м · сполучені дерев’яні пірси гавані та вихід на берег · шість стартових місць, вільний політ без заліку. Окрема версія harbour-r3; попереднє прибережне поселення залишається доступним. Раннє дослідження узбережжя; вода лише візуальна.',
+    },
+    bytes: 7952305,
+    appearance: { terrain: 'tropical-settlement' },
+    pin: {
+      url: 'https://raw.githubusercontent.com/mekhovov/revealline/80f161c5709caa7081ff26bb7472fae67fbdb921/authoring/fpv-worlds/regions/tropical-coast/harbour-delivery-r3/delivery.json',
+      bytes: 6617,
+      sha256: '44aa0de26f4b4aa79fb0ca8f4b6c7d39bdd62debbdc5e4c51a3a12368a0f42ce',
+    },
+  },
   {
     id: 'railway-valley-expanse',
     title: {

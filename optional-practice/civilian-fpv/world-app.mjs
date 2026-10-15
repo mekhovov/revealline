@@ -146,6 +146,8 @@ import {
   regionalStartingPoint,
   regionalLocationIdentity,
   regionalSavedLocation,
+  regionalNavigationTarget,
+  regionalNavigationFeedback,
   createRegionalSession,
   regionalPreparationFeedback,
 } from './regional-session.mjs';
@@ -1027,7 +1029,8 @@ export function mountWorldApp({
     regionalRecoveryControls = null,
     regionalStartControls = null,
     regionalLocationControls = null,
-    regionalLocationsStore = null;
+    regionalLocationsStore = null,
+    regionalNavigation = null;
   let entries = [],
     playlistId = unique('playlist'),
     playlistDraft = null,
@@ -3665,7 +3668,7 @@ export function mountWorldApp({
     fly: (configuration, record, { isCurrent }) => {
       const generation = ++missionLaunchGeneration;
       return startRegionalFlight(
-        regionalLibraryEntry(configuration, { sha256: record.sha256 }),
+        regionalLibraryEntry(configuration, { sha256: record.sha256, descriptor: record.descriptor }),
         {
           canAdopt: isCurrent,
           isCurrent: () => !doc.hidden && generation === missionLaunchGeneration,
@@ -4725,7 +4728,45 @@ export function mountWorldApp({
       .map((id) => $(id).selectedOptions[0]?.textContent ?? '')
       .join(' · ');
   }
+  function regionalNavigationLabel() {
+    if (!regionalNavigation) return '';
+    if (regionalNavigation.kind === 'saved') return regionalNavigation.label;
+    return [...(regionalStartControls?.select.options ?? [])].find((option) => option.value === regionalNavigation.id)?.textContent.replace(/^\d+ · /, '') ?? regionalNavigation.id.replace(/-/g, ' ');
+  }
+  function guideRegionalSelection(kind) {
+    if (!current?.regional || regionalPreparing || flight?.snapshot().status !== 'paused') return;
+    try {
+      regionalNavigation = regionalNavigationTarget(current, kind === 'saved'
+        ? { location: regionalLocationControls.locations.find((place) => place.id === regionalLocationControls.select.value) }
+        : { spawnId: regionalStartControls.select.value });
+      updateHUD(flight.snapshot());
+    } catch {
+      regionalNavigation = null;
+      paintRegionalStarts();
+    }
+  }
+  function navigationPresentation(state) {
+    const feedback = regionalNavigationFeedback(current, regionalNavigation, state);
+    if (!feedback) return null;
+    const metres = feedback.horizontalMm / 1000,
+      distance = metres >= 1000 ? `${(metres / 1000).toFixed(1)} ${txt('km', 'км')}`
+        : `${metres < 1 ? '<1' : metres < 100 ? Math.round(metres) : Math.round(metres / 5) * 5} ${txt('m', 'м')}`,
+      arrow = feedback.sector === null ? '·' : ['↑', '↗', '→', '↘', '↓', '↙', '←', '↖'][feedback.sector],
+      direction = !feedback.headingValid ? txt('Heading unavailable', 'Курс невідомий')
+        : feedback.horizontalMm < 1000 ? txt('At this position', 'У цій позиції')
+          : `${txt('Nose', 'Від носа')} ${arrow}`,
+      height = feedback.height === 'above' ? txt('Higher', 'Вище')
+        : feedback.height === 'below' ? txt('Lower', 'Нижче') : txt('Same height', 'Та сама висота');
+    return {
+      action: `${direction} · ${distance}`,
+      label: regionalNavigationLabel(),
+      hint: `${height} · ${txt('no route', 'не маршрут')}`,
+      detail: txt('Direction from the drone nose, not the camera. A straight bearing does not check obstacles or provide a safe route.',
+        'Напрямок від носа дрона, а не камери. Прямий напрямок не перевіряє перешкоди та не є безпечним маршрутом.'),
+    };
+  }
   function paintRegionalStarts(state = null) {
+    if (!current?.regional || regionalNavigation?.packIdentity !== current.packIdentity) regionalNavigation = null;
     paintRegionalLocations(state);
     const controls = regionalStartControls;
     if (!controls) return;
@@ -4740,9 +4781,11 @@ export function mountWorldApp({
       controls.signature = signature;
       controls.label.textContent = txt('Starting point', 'Місце старту');
       controls.restart.textContent = txt('Restart here', 'Почати звідси');
+      controls.guide.textContent = txt('Guide me there', 'Показувати напрямок');
+      controls.off.textContent = txt('Turn guidance off', 'Вимкнути напрямок');
       controls.help.textContent = txt(
-        'Choose an authored start, then restart. Flight stays disarmed; your mode and view are kept.',
-        'Виберіть місце й почніть знову. Дрон не озброюється; режим і вигляд зберігаються.',
+        'Restart moves to the selected start and stays disarmed. Guide me there only shows direction from the drone nose; obstacles and a safe route are not checked. Resume flight explicitly when ready.',
+        'Перезапуск переносить до вибраного старту без озброєння. Напрямок показується від носа дрона; перешкоди й безпечний маршрут не перевіряються. Продовжуйте політ явно, коли будете готові.',
       );
       controls.select.replaceChildren();
       const names = {
@@ -4752,6 +4795,8 @@ export function mountWorldApp({
         'service-courts': ['Service courts', 'Службові двори'],
         'woodland-promenade': ['Woodland promenade', 'Лісова алея'],
         'river-gardens': ['River gardens', 'Прибережні сади'],
+        'mill-court': ['Mill court', 'Двір млина'],
+        'tower-court': ['Tower court', 'Двір вежі'],
         'freight-hall': ['Freight hall', 'Вантажний цех'],
         'viaduct-river-gap': ['Viaduct opening', 'Прохід під віадуком'],
         'quarry-under-conveyor': ['Quarry conveyor', 'Конвеєр кар’єру'],
@@ -4794,6 +4839,10 @@ export function mountWorldApp({
     }
     const active = (state ?? flight?.snapshot())?.status === 'active';
     controls.restart.disabled = controls.select.disabled = Boolean(controls.busy || active);
+    controls.guide.disabled = Boolean(controls.busy || regionalPreparing || (state ?? flight?.snapshot())?.status !== 'paused');
+    controls.off.disabled = !regionalNavigation;
+    const status = regionalNavigation ? `${txt('Guiding to', 'Напрямок до')}: ${regionalNavigationLabel()}` : txt('Direction guidance is off.', 'Показ напрямку вимкнено.');
+    if (controls.status.textContent !== status) controls.status.textContent = status;
   }
   function savedLocationError(error) {
     if (error?.code === 'regional-location-outside' || error?.code === 'regional-location-revision')
@@ -4883,6 +4932,7 @@ export function mountWorldApp({
       c.selectText.textContent = txt('Choose a saved place', 'Виберіть збережене місце');
       c.save.textContent = txt('Save current place', 'Зберегти поточне місце');
       c.restore.textContent = txt('Restore here', 'Відновити тут');
+      c.guide.textContent = txt('Guide me there', 'Показувати напрямок');
       c.remove.textContent = txt('Remove…', 'Видалити…');
       c.refresh.textContent = txt('Refresh places', 'Оновити місця');
       c.confirm.textContent = txt('Remove this place', 'Видалити це місце');
@@ -4893,7 +4943,7 @@ export function mountWorldApp({
     const paused = (state ?? flight?.snapshot())?.status === 'paused';
     const unavailable = c.busy || c.loading || !paused || regionalPreparing || c.generation === null;
     c.save.disabled = c.label.disabled = Boolean(unavailable || !sceneReady);
-    c.restore.disabled = c.select.disabled = c.remove.disabled = Boolean(unavailable || !c.locations.length);
+    c.guide.disabled = c.restore.disabled = c.select.disabled = c.remove.disabled = Boolean(unavailable || !c.locations.length);
     c.confirm.disabled = Boolean(unavailable);
     c.refresh.disabled = Boolean(c.busy || c.loading);
   }
@@ -5022,8 +5072,9 @@ export function mountWorldApp({
       locale,
       freeFlight: Boolean(current.freeFlight),
     });
+    const navigation = current.regional ? navigationPresentation(state) : null;
     if (current.regional) {
-      guidance.action = txt('Regional review · unscored', 'Перевірка регіону · без заліку');
+      guidance.action = navigation?.action ?? txt('Regional review · unscored', 'Перевірка регіону · без заліку');
       guidance.label = '';
       guidance.gauge = null;
       guidance.earned = null;
@@ -5058,6 +5109,7 @@ export function mountWorldApp({
     flightHud.update(guidance, {
       explain: !current.regional,
       statusOnly: Boolean(current.regional),
+      navigation: activeHud ? navigation : null,
       visible: hudVisible,
       active: activeHud,
       paused: state.status !== 'active',
@@ -6141,7 +6193,7 @@ export function mountWorldApp({
     $('flight-title').textContent = label(entry);
     $('flight-collection').textContent = entry.regionalReview
       ? txt('REGIONAL REVIEW · UNSCORED', 'ПЕРЕВІРКА РЕГІОНУ · БЕЗ ЗАЛІКУ')
-      : txt('REGIONAL FREE FLIGHT · UNSCORED', 'ВІЛЬНИЙ ПОЛІТ У РЕГІОНІ · БЕЗ ЗАЛІКУ');
+      : [txt('REGIONAL FREE FLIGHT · UNSCORED', 'ВІЛЬНИЙ ПОЛІТ У РЕГІОНІ · БЕЗ ЗАЛІКУ'), entry.installedRevision].filter(Boolean).join(' · ');
     $('flight-brief').textContent = $('flight-menu-brief').textContent =
       entry.course.locales[locale].brief;
     $('flight-status').textContent = txt('Preparing region…', 'Підготовка регіону…');
@@ -8369,31 +8421,42 @@ export function mountWorldApp({
     regionalStartText = el('span'),
     regionalStartSelect = el('select'),
     regionalStartRestart = el('button'),
+    regionalStartGuide = el('button'),
+    regionalNavigationOff = el('button'),
+    regionalNavigationStatus = el('p'),
     regionalStartHelp = el('p');
   regionalStartRoot.hidden = true;
   regionalStartSelect.id = 'regional-starting-point';
   regionalStartLabel.htmlFor = regionalStartSelect.id;
   regionalStartHelp.id = 'regional-starting-point-help';
   regionalStartSelect.setAttribute('aria-describedby', regionalStartHelp.id);
-  regionalStartRestart.type = 'button';
+  for (const button of [regionalStartRestart, regionalStartGuide, regionalNavigationOff]) button.type = 'button';
+  regionalStartGuide.dataset.regionalGuide = 'start';
+  regionalNavigationOff.dataset.regionalGuide = 'off';
+  regionalNavigationStatus.setAttribute('role', 'status');
   regionalStartLabel.append(regionalStartText, regionalStartSelect);
-  regionalStartRoot.append(regionalStartLabel, regionalStartRestart, regionalStartHelp);
+  regionalStartRoot.append(regionalStartLabel, regionalStartGuide, regionalStartRestart, regionalNavigationOff, regionalNavigationStatus, regionalStartHelp);
   regionalStartControls = {
     root: regionalStartRoot,
     label: regionalStartText,
     select: regionalStartSelect,
     restart: regionalStartRestart,
+    guide: regionalStartGuide,
+    off: regionalNavigationOff,
+    status: regionalNavigationStatus,
     help: regionalStartHelp,
     owner: null,
     signature: null,
     busy: false,
   };
   on(regionalStartRestart, 'click', restartRegionalAtSelection);
+  on(regionalStartGuide, 'click', () => guideRegionalSelection('start'));
+  on(regionalNavigationOff, 'click', () => { regionalNavigation = null; if (flight) updateHUD(flight.snapshot()); });
   playShell.elements.content.pause.querySelector('.sim-flight-practice').append(regionalStartRoot);
   const placesRoot = el('section'), placesTitle = el('h3'),
     placeNameLabel = el('label'), placeNameText = el('span'), placeName = el('input'),
     placeSelectLabel = el('label'), placeSelectText = el('span'), placeSelect = el('select'),
-    placeSave = el('button'), placeRestore = el('button'), placeRemove = el('button'),
+    placeSave = el('button'), placeRestore = el('button'), placeGuide = el('button'), placeRemove = el('button'),
     placeRefresh = el('button'), placeHelp = el('p'),
     placeReview = el('div'), placeReviewText = el('p'), placeConfirm = el('button'), placeKeep = el('button');
   placesRoot.hidden = placeReview.hidden = true;
@@ -8410,16 +8473,18 @@ export function mountWorldApp({
   placeHelp.setAttribute('role', 'status');
   placeSelect.setAttribute('aria-describedby', placeHelp.id);
   placeName.setAttribute('aria-describedby', placeHelp.id);
-  for (const button of [placeSave, placeRestore, placeRemove, placeRefresh, placeConfirm, placeKeep]) button.type = 'button';
+  for (const button of [placeSave, placeRestore, placeGuide, placeRemove, placeRefresh, placeConfirm, placeKeep]) button.type = 'button';
   placeReview.append(placeReviewText, placeConfirm, placeKeep);
-  placesRoot.append(placesTitle, placeNameLabel, placeSave, placeSelectLabel, placeRestore, placeRemove, placeRefresh, placeReview, placeHelp);
+  placesRoot.append(placesTitle, placeNameLabel, placeSave, placeSelectLabel, placeGuide, placeRestore, placeRemove, placeRefresh, placeReview, placeHelp);
   regionalLocationControls = { root: placesRoot, title: placesTitle,
     label: placeName, labelText: placeNameText, select: placeSelect, selectText: placeSelectText,
-    save: placeSave, restore: placeRestore, remove: placeRemove, refresh: placeRefresh,
+    save: placeSave, restore: placeRestore, guide: placeGuide, remove: placeRemove, refresh: placeRefresh,
     help: placeHelp, review: placeReview, confirm: placeConfirm, keep: placeKeep,
     owner: null, locale: null, request: 0, locations: [], generation: null, loading: false, busy: false, removal: null, restoreUnavailable: false };
   on(placeSave, 'click', saveRegionalLocation);
   on(placeRestore, 'click', restoreRegionalLocation);
+  placeGuide.dataset.regionalGuide = 'saved';
+  on(placeGuide, 'click', () => guideRegionalSelection('saved'));
   on(placeRefresh, 'click', () => void refreshRegionalLocations());
   on(placeRemove, 'click', () => {
     const c = regionalLocationControls;

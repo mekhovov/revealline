@@ -13,9 +13,24 @@ import {
 } from '../../../../optional-practice/civilian-fpv/radio-profile.mjs';
 const root = resolve(process.argv[2] ?? '');
 assert(process.argv[2], 'Provide generated desert directory');
+const landmarkStudy = process.argv[3] === 'landmarks';
+assert(process.argv[3] === undefined || landmarkStudy, 'Unknown Desert flight study');
 const receipt = JSON.parse(await readFile(resolve(root, 'preparation.json')));
 const manifestBytes = await readFile(resolve(root, 'terrain/region.json'));
-assert.equal(createHash('sha256').update(manifestBytes).digest('hex'), receipt.manifestSHA256);
+const manifestSHA256 = landmarkStudy ? receipt.terrainManifestSHA256 : receipt.manifestSHA256;
+assert.equal(createHash('sha256').update(manifestBytes).digest('hex'), manifestSHA256);
+let contactLandmarks = landmarkStudy ? [] : [receipt.landmarks[0], receipt.landmarks[13]];
+if (landmarkStudy) {
+  const verified = JSON.parse(await readFile(resolve(root, 'landmark-verification.json')));
+  assert.equal(verified.passed, true);
+  const representatives = receipt.compositions.map(
+    (composition) => receipt.objects.find((object) => object.composition === composition.id).id,
+  );
+  contactLandmarks = representatives.map((id) =>
+    verified.solidContacts.find((value) => value.id === id),
+  );
+  assert(contactLandmarks.every(Boolean));
+}
 const cache = new Map();
 let sceneryAssetRequests = 0;
 const fetchImpl = async (url, { signal } = {}) => {
@@ -200,7 +215,7 @@ for (const mode of ['self-level', 'acro']) {
       await session.dispose();
     }
   }
-  for (const landmark of [receipt.landmarks[0], receipt.landmarks[13]]) {
+  for (const landmark of contactLandmarks) {
     const session = sessionAt([landmark.x, landmark.surfaceHeightMm / 1000 + 3, landmark.z], mode);
     try {
       await session.prepare();
@@ -227,21 +242,24 @@ for (const mode of ['self-level', 'acro']) {
     }
   }
 }
-assert.equal(sceneryAssetRequests, 0, 'Explicit empty scenery must not request assets');
+if (landmarkStudy)
+  assert(sceneryAssetRequests > 0, 'The flight must use the actual licensed scenery');
+else assert.equal(sceneryAssetRequests, 0, 'Explicit empty scenery must not request assets');
 console.log(
   JSON.stringify(
     {
       passed: true,
       actualSourceExtentM: [16384, 16384],
-      manifestSHA256: receipt.manifestSHA256,
+      manifestSHA256,
       authoredStarts,
       sceneryAssetRequests,
       actualCommandedRoutes: records.length,
       actualSolidContacts: contacts,
       records,
       playerReady: false,
-      claim:
-        'Representative controlled-command routes across six regions; not uninterrupted traversal of the entire 16.384 km extent, native FPS or public admission.',
+      claim: landmarkStudy
+        ? 'Six close-range licensed rock compositions flown by actual shared-flight commands in both modes; not whole-map traversal, native art acceptance, device FPS or public admission.'
+        : 'Representative controlled-command routes across six regions; not uninterrupted traversal of the entire 16.384 km extent, native FPS or public admission.',
     },
     null,
     2,

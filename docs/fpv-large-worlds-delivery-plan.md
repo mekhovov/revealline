@@ -5,6 +5,61 @@ The user selected default catalogue visibility, download on Play, optional offli
 storage, and authored regions first. Generation assists authoring; endless runtime
 terrain is deferred. Twelve proposed regions are design targets, not shipped maps.
 
+## 15 October — player admission and rendering corrections
+
+This checkpoint supersedes the dated history below. The full roadmap remains
+**open**. Current coordinator base is `56896945`.
+
+- Railway Library #1404, connected Harbour Library #1410, Hillside contact cue
+  #1412 and short-screen Arm layout #1413 are merged. Railway and Harbour normal
+  player checks include saved downloads, explicit arming and disarmed starts.
+  Two installed coastal revisions load their distinct exact hashes; their shared
+  manifest title is confusing, so #1419 separately carries the verified descriptor
+  title/revision into flight. Old downloads and identities remain available.
+- #1413's exact `34a67798` cloud run 38716599656 passes optional and company
+  qualification. Artifact 11962674472 passes all 15 top-level hashes, six archive
+  inventories and three finished import graphs. Worlds source is 17,533,856 bytes
+  within the unchanged 20 MiB limit. Native CSS comparisons and package checks
+  are separate evidence; no new public-deployment claim follows.
+- Coaster #1392's exact `856fefea` player passes normal 32.6 MiB download, saved
+  review-r2, explicit arm, Loop meadow restart, camera/mode changes and retained
+  download after reload. **Its visual gate remains held:** Overview exposes
+  severe ground-surface depth interference. Preserve that failed package and
+  correct regional camera depth precision separately; never move collision
+  geometry merely to conceal a rendering problem.
+- Alpine source #1407 and immutable delivery #1415 remain separate from player
+  admission. The frozen study failed overlay appearance review. Narrow correction
+  #1420 preserves exact geometry/collision and biases only identified visual
+  overlays; its native comparison is in progress. It remains a 4.096 km early
+  study, with sparse surroundings, rather than final mountain art or the 8 km goal.
+- Desert landmarks #1405 passed bounded native composition review and merged.
+  Immutable delivery #1414 and Library #1416 use native stack #1417. The existing
+  natural-r1 remains separate; latest exact package and normal-player checks gate
+  the new landmark revision.
+
+Next priorities continue in parallel:
+
+1. **P1 — reliable admission:** finish Coaster depth correction, Alpine overlay
+   review and exact Desert landmark packages/player checks. Keep frozen negative
+   evidence and do not treat a merge as public availability.
+2. **P1 — exploration usability:** implement optional guidance to an authored
+   district or saved place without restarting. Default off; direction is not a
+   guaranteed safe route. Bind to the exact region revision, preserve arming,
+   mode/view and runtime authority, and reuse the bounded HUD. Improve revision
+   naming so multiple saved versions are distinguishable.
+3. **P2 — representative art:** refine pilot-height composition, grounding,
+   natural silhouettes and continuous flight routes. Native reviews still show
+   sparse broad terrain; extra area alone does not meet the quality standard.
+4. **P3/P4/D6 — remaining delivery and qualification:** continue reviewed region
+   expansion, full-region sustained play, recovery/network-wide offline and
+   responsive/hardware qualification. The earlier two-hour synthetic-corridor
+   result remains valid only for that workload. Additional unit coverage and
+   public launch verification remain explicit release work.
+
+Engineering and protected publication do not wait for one another's merge queue.
+Native rendering checks remain serialized. Existing budgets, source, unfinished
+work, old revisions and player storage are preserved.
+
 ## 15 October — larger regions admitted; art continues independently
 
 This checkpoint supersedes the older status sections below. The full roadmap is
