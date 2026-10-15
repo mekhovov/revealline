@@ -121,9 +121,30 @@ test("missing or stale admission receipts disarm even a successful exact head", 
   }
 });
 
-test("drafts, labels, milestones and review state do not block an exact-head merge", () => {
+test("draft or unknown readiness blocks every merge path and disarms existing requests", () => {
+  for (const draft of [true, undefined, null]) {
+    for (const mergeable_state of ["clean", "unstable", "behind", "has_hooks"]) {
+      for (const auto_merge of [null, { enabled_at: "now" }]) {
+        for (const stack of [undefined, { number: 7, size: 2, position: 2 }]) {
+          const input = fixture({
+            draft,
+            mergeable_state,
+            auto_merge,
+            labels: [{ name: "fastline-stack-merge" }],
+            stack,
+          });
+          assert.deepEqual(decideMergeAction(input), {
+            action: auto_merge ? "disarm" : "wait",
+            reason: "pull request is draft or readiness is unknown",
+          });
+        }
+      }
+    }
+  }
+});
+
+test("labels, milestones and review state do not block an exact-head merge", () => {
   for (const overrides of [
-    { draft: true },
     { labels: [{ name: "hold: ux" }, { name: "release-train-hold" }] },
     { milestone: { title: "v0.133.0" } },
     { review_decision: "CHANGES_REQUESTED" },

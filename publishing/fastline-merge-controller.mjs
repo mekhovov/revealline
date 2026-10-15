@@ -61,6 +61,8 @@ export function decideMergeAction({
       return "event has no exact head SHA";
     if (pullRequest.head?.sha !== observedHeadSha)
       return "head changed after inspection";
+    if (pullRequest.draft !== false)
+      return "pull request is draft or readiness is unknown";
     if (dependencies.some((dependency) => !dependency.merged_at))
       return "declared predecessor is not merged";
     if (
@@ -435,6 +437,7 @@ async function main() {
   if (["update", "stack", "merge", "arm"].includes(decision.action)) {
     const fresh = await github(`/repos/${owner}/${repository}/pulls/${number}`);
     if (
+      fresh.draft !== false ||
       fresh.head.sha !== observedHeadSha ||
       !sameAdmission(
         requiredCheck.admissionReceipt,
@@ -445,7 +448,7 @@ async function main() {
       if (fresh.auto_merge)
         await setAutoMerge(fresh, "disarm", observedHeadSha);
       throw new Error(
-        "Admission changed before mutation; no merge was submitted.",
+        "Admission or draft readiness changed before mutation; no merge was submitted.",
       );
     }
   }
