@@ -1,5 +1,10 @@
 # Media campaign delivery register
 
+> **Current execution — 15 October 2026:** use [Creator reliability and hosting decisions](delivery-plan-2026-10-15.md).
+> The user approved proceeding with the recommended work, selected desktop browsers first, and
+> selected GitHub Pages for static hosting. The dated register below preserves historical evidence;
+> its release queue, unconditional hosting priority and completion claims are not current acceptance.
+
 Approved 24 September 2026. Browser-first, local and account-free creation; images are reveal rewards; Solo first; portable files before a free self-hosted community store. This register implements the approved sequence and does not supersede another task's release ownership.
 
 | Phase | Deliverable                                                                                   | Acceptance gate                                                                                                 | Status                                                                                                                                                                                                    |

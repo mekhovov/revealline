@@ -4,6 +4,10 @@ Open the [picture campaign creator](../../game/creator/) for the shortest suppor
 choose pictures or videos, generate bounded gameplay, review it, then install or download one exact
 portable campaign. Creation and media inspection stay on your device and require no account.
 
+If this installation displays **Password required**, unlock it using the password supplied by its
+owner before opening the creator. This site-access password is separate from a community publishing
+account. It does not upload your media or back up local drafts.
+
 The creator uses complete, versioned layout variants. Every current generated mission has interior
 collision obstacles and one moving field keeper; some variants also use safe islands, slow material
 or lethal material. Media bytes and filenames do not determine geometry. The generator verifies
@@ -163,7 +167,7 @@ review. The editor does not silently replace a previously approved campaign depe
 | Studio JSON is rejected by the pack importer | Reopen it in Content Studio. It is editable source, not `.rlpack` or legacy expansion data.                                                                   |
 | Two files paired incorrectly                 | Review normalized-stem suggestions and choose the exact poster for the video. Resolve ambiguous stems manually.                                               |
 | Video poster capture or playback fails       | Keep the original and use a codec the current browser actually decodes. Renaming the extension does not convert it.                                           |
-| Physical video download stays disabled       | Use one silent decodable MP4/WebM track or an MP4 with exactly one AVC video and one AAC audio track. Other track layouts and codecs remain unchanged.         |
+| Physical video download stays disabled       | Use one silent decodable MP4/WebM track or an MP4 with exactly one AVC video and one AAC audio track. Other track layouts and codecs remain unchanged.        |
 | Generated item fails                         | Read that card's error, correct or regenerate it, or explicitly exclude it. Other completed cards remain reviewable.                                          |
 | Storage is full or unavailable               | Keep the page open and download the approved pack or source backup. Review a split for large batches; writes can still fail after an advisory quota estimate. |
 | Another tab changed the draft                | Export the unsaved source, reload the accepted head, and reconcile deliberately.                                                                              |
