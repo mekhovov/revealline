@@ -38,7 +38,7 @@ const pressureEntry = {
   classRecipes: pressurePack.classRecipes,
 };
 
-test('curated complete routes reproduce current Standard tuning without scripted reversal excerpts', async () => {
+test('curated complete routes reproduce current Standard tuning without scripted reversal excerpts', async (t) => {
   const generated = await buildDemoRecordings();
   assert.equal(generated.length, 14);
   assert.equal(new Set(generated.map(({ replay }) => replay.level.id)).size, 12);
@@ -46,6 +46,35 @@ test('curated complete routes reproduce current Standard tuning without scripted
     catalog.clips,
     generated.map(({ descriptor }) => descriptor),
   );
+  const frozenRecordings = new Map();
+  // Inspect every clip before an assertion stops the route-by-route checks, so
+  // one failing runtime yields evidence for the whole immutable catalogue.
+  for (const { replay, descriptor } of generated) {
+    const candidates = await Promise.all(
+      [descriptor.replayURL, ...descriptor.replayVariants].map((url) => json(`../${url.slice(2)}`)),
+    );
+    const verifiedCandidates = candidates.map((candidate) => ({
+      replay: candidate,
+      verification: verifyReplay(candidate),
+    }));
+    frozenRecordings.set(descriptor.id, verifiedCandidates);
+    if (!verifiedCandidates.some(({ verification }) => verification.match))
+      t.diagnostic(
+        JSON.stringify({
+          clip: descriptor.id,
+          runtime: `${process.version}/${process.platform}/${process.arch}`,
+          generated: { summary: replay.summary, checkpoint: replay.checkpoint },
+          frozen: verifiedCandidates.map(({ replay: candidate, verification }) => ({
+            sameGeneratedTrace:
+              demoInputTraceIdentity(candidate) === demoInputTraceIdentity(replay),
+            sameGeneratedLevel: JSON.stringify(candidate.level) === JSON.stringify(replay.level),
+            recorded: { summary: candidate.summary, checkpoint: candidate.checkpoint },
+            reconstructed: verification.actual,
+            diagnostics: verification.diagnostics,
+          })),
+        }),
+      );
+  }
   for (const { replay, descriptor, metrics } of generated) {
     assert.ok(['won', 'lost'].includes(replay.summary.status));
     const sourceEntry = descriptor.campaignId === campaign.id ? entry : pressureEntry;
@@ -60,17 +89,12 @@ test('curated complete routes reproduce current Standard tuning without scripted
       demoIdentity(replay.level, sourceEntry.classRecipes),
     );
     assert.equal(descriptor.levelRevision, authored.revision);
-    const candidates = await Promise.all(
-      [descriptor.replayURL, ...descriptor.replayVariants].map((url) => json(`../${url.slice(2)}`)),
-    );
+    const verifiedCandidates = frozenRecordings.get(descriptor.id);
+    const candidates = verifiedCandidates.map(({ replay }) => replay);
     for (const candidate of candidates) {
       assert.equal(demoInputTraceIdentity(candidate), descriptor.inputTraceIdentity);
       assert.deepEqual(candidate.summary, replay.summary);
     }
-    const verifiedCandidates = candidates.map((candidate) => ({
-      replay: candidate,
-      verification: verifyReplay(candidate),
-    }));
     const frozen = verifiedCandidates.find(({ verification }) => verification.match)?.replay;
     assert.ok(
       frozen,
