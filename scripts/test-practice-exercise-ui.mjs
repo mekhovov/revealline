@@ -53,6 +53,7 @@ const pageFor = (samples) => {
       press: async () => {},
       inputValue: async () => transcript(),
       locator: () => ({ getAttribute: async () => '' }),
+      getByRole: () => ({ waitFor: async () => {}, press: async () => {} }),
     }),
   };
 };
@@ -171,12 +172,15 @@ test('bounded public-controller unit journey requires ordered lift/land and alwa
   }
 });
 
-test('transcript export opens only normal Settings Data/disclosure controls and retains actual text', async () => {
+test('transcript export requires visible results Home before Settings Data and retains actual text', async () => {
   const actions = [];
   let open = false;
+  let homeOpened = false;
   const locator = (selector) => ({
     waitFor: async ({ state }) => {
       assert.equal(state, 'visible');
+      if (selector === '#gym-shell-action-settings')
+        assert.equal(homeOpened, true, 'Settings remains hidden until result Home is activated.');
       actions.push(`visible:${selector}`);
     },
     press: async (key) => {
@@ -193,11 +197,30 @@ test('transcript export opens only normal Settings Data/disclosure controls and 
       assert.equal(attribute, 'open');
       return open ? '' : null;
     },
+    getByRole: (role, { name }) => {
+      assert.equal(selector, '.continuous-result-actions');
+      assert.equal(role, 'button');
+      assert(name.test('Home') && name.test('Додому'));
+      assert(!name.test('Next drill') && !name.test('Go Home'));
+      return {
+        waitFor: async ({ state }) => {
+          assert.equal(state, 'visible');
+          actions.push('visible:results Home');
+        },
+        press: async (key) => {
+          assert.equal(key, 'Enter');
+          homeOpened = true;
+          actions.push('Enter:results Home');
+        },
+      };
+    },
   });
   const result = await exportGymExerciseTranscript({ locator });
   assert.equal(result.json, transcript());
   assert.equal(result.commandCount, 1);
   assert.deepEqual(actions, [
+    'visible:results Home',
+    'Enter:results Home',
     'visible:#gym-shell-action-settings',
     'Enter:#gym-shell-action-settings',
     'visible:#gym-settings-tab-data',
@@ -210,6 +233,7 @@ test('transcript export opens only normal Settings Data/disclosure controls and 
     'read textarea',
   ]);
   actions.length = 0;
+  homeOpened = false;
   await exportGymExerciseTranscript({ locator });
   assert(!actions.includes('Enter:summary'), 'Already-open disclosure must not close.');
 });
@@ -223,6 +247,7 @@ test('trusted completion capture precedes public export and its failure cannot q
     press: async () => events.push(selector),
     inputValue: async () => transcript(),
     locator: () => ({ getAttribute: async () => '' }),
+    getByRole: () => ({ waitFor: async () => {}, press: async () => events.push('results Home') }),
   });
   const result = await runGymLiftAndLand(page, {
     timeoutMs: 2000,
@@ -235,7 +260,8 @@ test('trusted completion capture precedes public export and its failure cannot q
   });
   assert.equal(result.completed, true);
   assert.equal(events[0], 'capture completed exercise');
-  assert.equal(events[1], '#gym-shell-action-settings');
+  assert.equal(events[1], 'results Home');
+  assert.equal(events[2], '#gym-shell-action-settings');
   const failed = await runGymLiftAndLand(pageFor(rows), {
     timeoutMs: 2000,
     onComplete: async () => {

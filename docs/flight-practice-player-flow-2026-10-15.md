@@ -38,10 +38,68 @@ integration; 34 focused tests passed (18 observer, 12 input-helper, 4 replay).
 The [maintainer guide](flight-practice-maintainer.md#repeat-player-flow-observations-locally)
 documents protocol selection and safe access handling.
 
+## Fresh candidate and initial verification
+
+The candidate at
+`/Volumes/alex/CodexMigrationStaging/flight-practice-player-20261015.qlqEIH/candidate`
+is frozen at source `8cf5fe46d239387e4686ad44443e78ad7cc0dd62`, tree
+`c670ed46fa7b8db775b74112532ce20e9f928957`. Its
+[original envelope](flight-practice-player-flow-20261015/optional-packages.json)
+SHA-256 is `78c09eea14faffe9a18457b13c8ad1db268fe25815812e11b038d341d5031bb6`.
+The [build receipt](flight-practice-player-flow-20261015/candidate-verification.json)
+records two reproducible builds, committed inputs and independent runtime/source
+admission. Counts remain 94 Gym / 101 Academy / 162 Worlds files. Policies and
+the development version `v0.151.1` are unchanged; `publicEligible` remains false.
+
+The [observer suite](flight-practice-player-flow-20261015/observer-tests.log)
+passed 59 tests and the separate
+[artifact/pointer suite](flight-practice-player-flow-20261015/admission-pointer-tests.log)
+passed 17. Scoped lint, formatting and whitespace checks passed. These are
+separate suites, with some coverage overlapping the full practice command.
+
+The [full practice run](flight-practice-player-flow-20261015/practice-tests-interrupted.log)
+was intentionally interrupted after 69 passing cases when internal free space
+fell to approximately 123 MiB. It has no complete TAP summary and is **not** a
+full-suite pass. Stopping that owned heavy process recovered space; unrelated
+files were not deleted. Candidate outputs were already placed externally.
+
+### Initial Gym observation: native completion, export not verified
+
+The [original report](flight-practice-player-flow-20261015/gym-incomplete-export.json)
+and [complete artifacts](flight-practice-player-flow-20261015/gym-incomplete-export-artifacts.tgz)
+retain both EN/UK cases. Each observed the genuine ordered lift/hover/landing,
+native 2/2 completion/result/checkmark, and released R/F keys. Both then failed
+the export operation timeout, so the aggregate result is false. No transcript
+or independent replay success is claimed for this attempt. Browser, server and
+temporary-site cleanup all succeeded.
+
+The completion and failure screenshots establish the test-route mistake:
+Settings is not visible in Gym's native result scene. Its visible Home/Додому
+button returns to the menu without resetting the completed model or transcript;
+only then is Settings available. The helper omitted that step. Correct the
+observer's public navigation, not the app or timeout, and retain this failed
+attempt alongside any retry against the unchanged candidate.
+
+### Initial locale/mode matrix: six passes, Worlds return route incomplete
+
+The [original ten-case report](flight-practice-player-flow-20261015/modes-incomplete-settings.json)
+and [complete artifacts](flight-practice-player-flow-20261015/modes-incomplete-settings-artifacts.tgz)
+record Chrome `155.0.8059.80`, six passing Gym/Academy EN/UK cases and four failed
+Worlds cases. Locale witnesses and actual mode selection succeeded; Worlds did
+not start a flight while its custom Settings modal remained open. All owned
+browser/server/temporary-site cleanup passed. Aggregate completion is false.
+
+The source and screenshots identify another observer assumption: Worlds opens
+`#sim-settings` and uses `#close-sim-settings`, rather than the shared shell's
+Settings dialog/back button. Checking the inactive shell dialog and a Home menu
+laid out behind the modal does not establish that Home is actionable. Observe
+and close the actual native modal with its public Back controls before Play.
+Keep v1's original workflow unchanged, and add a regression for v2's real modal.
+This is a test-navigation correction, not evidence of broken simulator controls.
+
 ## Acceptance boundary
 
-Fresh candidate build and native-browser results will be recorded separately
-below. Unit tests alone do not complete C2. Both observers start from stable app
+Unit tests alone do not complete C2. Both observers start from stable app
 launchers, not the main-game Flight practice directory. FPV exercise completion,
 first-time human learning, physical input/accessibility, distinct-version
 migration and public-host acceptance remain separate gates. `qualified` stays
