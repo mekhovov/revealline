@@ -65,8 +65,23 @@ export function inspectTranslationSource(source, file, resources) {
   const references = [];
   const issues = [];
   const unverified = [];
+  const line = (node) => node.loc?.start.line || node.sourceCodeLocation?.startLine || 1;
   const add = (key, node) => {
-    if (typeof key === 'string') references.push({ key, file, line: node.loc?.start.line || 1 });
+    if (typeof key === 'string') references.push({ key, file, line: line(node) });
+  };
+  const marker = (key, node) => {
+    // Some maintained optional surfaces own local dictionaries using the same
+    // attribute names. Only qualified markers establish a canonical reference.
+    // A malformed/unknown qualified key must still reach catalog validation.
+    if (key.includes(':')) add(key, node);
+    else
+      unverified.push({
+        file,
+        line: line(node),
+        kind: 'unqualified-marker',
+        key,
+        message: 'Unqualified data-i18n marker needs dictionary ownership and runtime coverage.',
+      });
   };
   if (file.endsWith('.html')) {
     function visit(node) {
@@ -76,11 +91,7 @@ export function inspectTranslationSource(source, file, resources) {
             attribute.name,
           )
         )
-          references.push({
-            key: attribute.value,
-            file,
-            line: node.sourceCodeLocation?.startLine || 1,
-          });
+          marker(attribute.value, node);
       node.childNodes?.forEach(visit);
       if (node.content) visit(node.content);
     }
@@ -299,7 +310,7 @@ export function inspectTranslationSource(source, file, resources) {
     for (const match of (markup || '').matchAll(
       /data-i18n(?:-(?:rich|aria-label|title|placeholder|alt|content|data-menu-label))?=["']([^"']+)["']/g,
     ))
-      add(match[1], node);
+      marker(match[1], node);
     if (node.type === 'CallExpression' && !wrapperBodies.has(node)) {
       const wrapper = wrappers.get(resolve(node.callee));
       if (translator(node.callee) || wrapper) {
