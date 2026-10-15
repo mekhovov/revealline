@@ -1,4 +1,4 @@
-/** Executes the preview's actual bounds callback with both admitted cell sizes. */
+/** Executes the preview's actual bounds callback with all three admitted cell sizes. */
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { runInNewContext } from 'node:vm';
@@ -24,7 +24,7 @@ const frameSource = rendererSource
   .replace('export function', 'function');
 const createFlightViewFrame = runInNewContext(frameSource + '\ncreateFlightViewFrame', { THREE });
 const records = [];
-for (const cellSizeMm of [128000, 256000]) {
+for (const cellSizeMm of [128000, 256000, 512000]) {
   const chunks = new Map();
   for (let z = 5; z <= 7; z++) for (let x = 5; x <= 7; x++) chunks.set(`${x}-${z}`, { x, z });
   const camera = new THREE.PerspectiveCamera(82, 1280 / 800, 0.035, 900);
@@ -45,7 +45,7 @@ for (const cellSizeMm of [128000, 256000]) {
   runInNewContext(`${callback}\nupdateViewBounds(state)`, { ...context, state });
   assert.equal(frame.bounds.min.x, cellSizeMm * 5);
   assert.equal(frame.bounds.max.z, cellSizeMm * 8);
-  assert.equal(camera.far, cellSizeMm === 128000 ? 900 : 1800);
+  assert.equal(camera.far, 900 * (cellSizeMm / 128000));
   frame.view = 'overview';
   frame.originMm = { x: cellSizeMm * 6, y: 0, z: cellSizeMm * 6 };
   frame.draw(state);
