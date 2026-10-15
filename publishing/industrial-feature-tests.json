@@ -74,7 +74,9 @@
         "game/test/overflight-studio.test.mjs",
         "game/test/overflight-riy-project.test.mjs",
         "game/test/overflight-riy-community.test.mjs",
-        "game/test/overflight-balance-integration.test.mjs"
+        "game/test/overflight-balance-integration.test.mjs",
+        "game/test/content-studio-host.test.mjs",
+        "game/test/asset-studio-sound-transfer.test.mjs"
       ]
     },
     {
@@ -119,7 +121,8 @@
         "game/test/actor-defeat-presentation.test.mjs",
         "game/test/overflight-renderer.test.mjs",
         "game/test/overflight-trial-report.test.mjs",
-        "game/test/team-duel-audio-qualification.test.mjs"
+        "game/test/team-duel-audio-qualification.test.mjs",
+        "game/test/team-duel-studio-audio.test.mjs"
       ]
     },
     {
@@ -189,7 +192,11 @@
         "game/test/team-discovery-host.test.mjs",
         "game/test/couch-audio-master.test.mjs",
         "game/test/coop-picture-landing-recovery.test.mjs",
-        "game/test/fpv-world-record-storage.test.mjs"
+        "game/test/fpv-world-record-storage.test.mjs",
+        "game/test/multiplayer-offline-upgrade.test.mjs",
+        "game/test/installed-app.test.mjs",
+        "game/test/install-offline-panel.test.mjs",
+        "game/test/duel-result-continuation-host.test.mjs"
       ]
     }
   ]

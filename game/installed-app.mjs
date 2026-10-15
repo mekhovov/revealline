@@ -198,8 +198,10 @@ export async function activateInstalledEdition(
     heldWriter,
     ownsWriter = () => false,
     prepare,
+    signal,
   } = {},
 ) {
+  signal?.throwIfAborted();
   const candidate = validateInstalledEdition(value, locationRef);
   if (!locks?.request || !readAsset)
     throw new Error('Safe edition switching needs Web Locks and profile storage.');
@@ -212,10 +214,13 @@ export async function activateInstalledEdition(
     editionId === undefined
       ? 'revealline.installed-app.switch'
       : `${installedStateKey(editionId)}.switch`,
+    { signal },
     async () => {
+      signal?.throwIfAborted();
       const state = readInstalledState(storage, { editionId }),
         active = state.active;
       const switchEdition = async () => {
+        signal?.throwIfAborted();
         for (const value of [active, candidate].filter(Boolean)) {
           const key = profile(value);
           if (
@@ -248,6 +253,7 @@ export async function activateInstalledEdition(
             };
         }
         const requireWriters = () => {
+          signal?.throwIfAborted();
           if (borrowed && !profileWriterOwns(heldWriter, logicalWriterKey))
             throw new Error(
               'The edition saving lease was released. Retry the installation selection.',
@@ -287,13 +293,17 @@ export async function activateInstalledEdition(
         ]),
       ].sort();
       const acquire = (index) => {
+        signal?.throwIfAborted();
         if (index === writerKeys.length) return switchEdition();
         const key = writerKeys[index];
         if (key !== logicalWriterKey && ownsWriter(key)) {
           borrowedProfiles.add(key);
           return acquire(index + 1);
         }
+        // Web Locks forbids combining signal with ifAvailable. These requests
+        // do not queue; fence cancellation again in their granted callback.
         return locks.request(key, { ifAvailable: true }, (lock) => {
+          signal?.throwIfAborted();
           if (!lock)
             throw new Error(
               'Close the game window that owns this profile, then switch editions. No live game was reloaded.',
