@@ -3,9 +3,24 @@
   "qualified": false,
   "files": [
     {
-      "path": "README.md",
-      "bytes": 1735,
-      "sha256": "661e030cfe653e3293149f1b11668198b5dec221a1c68131d050f8c3c5b81a7e"
+      "path": "corrected-probe/complete-artifacts.tgz",
+      "bytes": 1170883,
+      "sha256": "bbc2c1ea75bca0b66409d579854c40ff24e4971b79b19bb503a9fc62e33c53ec"
+    },
+    {
+      "path": "corrected-probe/failed.json",
+      "bytes": 175313,
+      "sha256": "4749a55e707733cab7f29a88f21df043009d6eede1c7e2b12f659c804e8a77a0"
+    },
+    {
+      "path": "corrected-probe/independent-audit.json",
+      "bytes": 1094,
+      "sha256": "842e6acd28495d44d09ec6f0373a9f621e32e3d1bece0b3ff916a99c1b223293"
+    },
+    {
+      "path": "corrected-probe/native-completion.png",
+      "bytes": 535879,
+      "sha256": "09c21e3370376cc1eb525ee285aca177803613ad9e66951db867a25895169f77"
     },
     {
       "path": "final-guide-build-incomplete.log",
@@ -83,6 +98,11 @@
       "sha256": "2029b54aea0b099bdccc53d5c15f3abc532550e95e7c3a2478d83935d8284bc8"
     },
     {
+      "path": "keyboard-observer-tests.log",
+      "bytes": 22343,
+      "sha256": "9e5ff466b49988fa1f48f32ed23e31dfe010953c1d437b04269e18dbc0b134a6"
+    },
+    {
       "path": "observer-tests.log",
       "bytes": 22126,
       "sha256": "328fe290eb07a525d4165b10487bcb4bf36b8f6969379aa50da81f6a359e03ae"
@@ -91,6 +111,11 @@
       "path": "practice-tests.log",
       "bytes": 82131,
       "sha256": "7ef5854ee1ab325d08b7f935aecaa0372efec316ff76f6a1c2b2add376eaa310"
+    },
+    {
+      "path": "README.md",
+      "bytes": 2063,
+      "sha256": "aee0a1fed1d7ec1c180db35aca62cb6aed3418e376baf10bcfa1202a5acf9402"
     },
     {
       "path": "takeoff-regression-before.log",
