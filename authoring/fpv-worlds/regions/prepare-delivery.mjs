@@ -2,7 +2,7 @@ import { createHash } from 'node:crypto';
 import { mkdir, readFile, realpath, stat, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
-import { validateRegionManifest } from './region-manifest.mjs';
+import { validateRegionManifest, REGION_FORMAT, SPARSE_SCENERY_FORMAT } from './region-manifest.mjs';
 
 const LIMIT = 64 * 1024 * 1024;
 const hash = (bytes) => createHash('sha256').update(bytes).digest('hex');
@@ -74,6 +74,7 @@ export async function prepareRegionalDelivery({ source, output, id, revision, ti
   }
   const terrain = layers.terrain.manifest,
     scenery = layers.scenery.manifest;
+  fail(terrain.format === REGION_FORMAT, 'Terrain requires the complete manifest profile');
   fail(
     terrain.id === scenery.id && terrain.revision === scenery.revision,
     'Terrain and scenery identities differ',
@@ -107,7 +108,7 @@ export async function prepareRegionalDelivery({ source, output, id, revision, ti
     .map((item) => item.ref)
     .sort((a, b) => (a.path < b.path ? -1 : a.path > b.path ? 1 : 0));
   const descriptor = {
-    format: 'FPVRegionalDelivery.v1',
+    format: scenery.format === SPARSE_SCENERY_FORMAT ? 'FPVRegionalDelivery.v2' : 'FPVRegionalDelivery.v1',
     id,
     revision,
     title,
