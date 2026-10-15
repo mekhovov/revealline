@@ -57,5 +57,11 @@ the emptied render root.
 
 The independent canonical GLB check uses Khronos glTF Validator
 `2.0.0-dev.3.10` as an external authoring dependency; it is not bundled into the
-player. Complete canonical/source-window and commanded-flight receipts are
-pending at this checkpoint.
+player. Complete canonical/source-window verification passed: all 1,024 GLBs validate
+without warnings/errors, all 2,048 assets regenerate exactly from the committed
+design, and all 1,984 seams agree. Across 188 selected windows and 384 transitions,
+the production owner retained at most nine cells and peaked at 456,408 geometry
+bytes. All 2,313 corridor sweeps were clear; all 18 landmark contact queries and
+six authored starts passed. Disposal returned owned geometry to zero. Receipts
+are `expanse-preparation.json` and `expanse-verification.json` beside the generator.
+Actual commanded-flight and native composition review remain pending.
