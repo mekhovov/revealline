@@ -19,3 +19,10 @@ Read the [observation report](../flight-practice-observation-2026-10-15.md) and
 [release checklist](../flight-practice-release-checklist-2026-10-15.md) before using
 these results. They explicitly retain failures, fixture boundaries and unrun
 human/device/release cases. No test credentials or browser profiles are retained.
+
+The [final-guide candidate observation](practice-real-restart-final-ff8bfbca35-20261015.json)
+also passed nine checkpoints, including browser restart, on source `ff8bfbca35`.
+Receipt SHA-256:
+`7ffc0eaf169b6d0d40033555b385fb95ccd360a7050f21801db41717b6ef044f`.
+It uses the same observer and the final candidate's new exact envelope, with the
+same bounded fixture/network/input claims. Full repository lint exited zero.

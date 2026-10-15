@@ -1,0 +1,84 @@
+{
+  "format": "revealline-practice-candidate-evidence.v1",
+  "date": "2026-10-15",
+  "sourceRevision": "ff8bfbca35aa5aabf4a89c1961493102bb50126a",
+  "sourceTree": "b61d3de220c1ac5eb46bf143bcd4bf0020744ce5",
+  "version": "v0.151.1",
+  "basePath": "/revealline/",
+  "candidateDirectory": "/Volumes/alex/CodexMigrationStaging/flight-practice-candidate-20261015-final.F1RPQb/candidate",
+  "envelopeSha256": "4959a8a012a6268b3a724d7524a613e1e24ff1a2cdb95735558458fecd6121f2",
+  "verificationSha256": "ee3c7ad0a9351c5cea060682deb74560e83f5cf1d688ed833bccca2fd249f52a",
+  "reproducibleBuilds": 2,
+  "committedInputsVerified": true,
+  "zipMembersVerified": true,
+  "independentWrittenArtifactReadmission": "passed",
+  "publicEligible": false,
+  "published": false,
+  "releaseAllocationPerformed": false,
+  "browserQualification": "nine-checkpoint-installation-observation-passed-not-full-release-qualification",
+  "browserReceipt": "flight-practice-qualification-20261015/practice-real-restart-final-ff8bfbca35-20261015.json",
+  "browserReceiptSha256": "7ffc0eaf169b6d0d40033555b385fb95ccd360a7050f21801db41717b6ef044f",
+  "reviewGates": "all-eight-pending-for-each-package",
+  "packages": [
+    {
+      "id": "civilian-flight",
+      "revision": "37777d3f6ec1d632dbd4258eb59a7ccb67e211a32d16e59133000362a5150b74",
+      "admittedFiles": 94,
+      "admittedBytes": 3741611,
+      "distributionBytes": 3755295,
+      "distributionSha256": "3349934255d91140209e91503a99c783f4ce68adc22747bc4e7e14941e4dd82f",
+      "manifestSha256": "95bbb61b629a1edaec9c4505bfcdb30ee7f4ae683dcc2e56781bf001d5e44a66",
+      "sourceArchiveSha256": "a4f144064eb8aeca71f12065c5fffc9788a83ec9e9bb40d91b6469ef79306eb8",
+      "sourceInventorySha256": "ff9dddba8572d63214ed677eef83080ea084b0fb467a4a4b787bb16c08f20d81"
+    },
+    {
+      "id": "civilian-fpv",
+      "revision": "f3266850c9a1b22f785b423e8865a232a26b4312c396a8eb436988faf0410910",
+      "admittedFiles": 101,
+      "admittedBytes": 6753930,
+      "distributionBytes": 6768948,
+      "distributionSha256": "58b0013d604854bf473e4471b825b86f33372351bd444ad58c7bf593badab511",
+      "manifestSha256": "bfc359dd037222c9eec7cc4cbdb9ad78044b10ec7535e651ac1618e45eac130c",
+      "sourceArchiveSha256": "98854bf27ccfbb184451d94939417b99c8dd20a0ea34c203961d216a521853be",
+      "sourceInventorySha256": "af227d18abf1d1bc5e0ebf667b21cf821075a9e445358798d02f3e3b921e413b"
+    },
+    {
+      "id": "fpv-worlds",
+      "revision": "8a1e8519c8952bb03dd99b0dd74acd842f56e8f63f173c42b16fe81494f0db04",
+      "admittedFiles": 160,
+      "admittedBytes": 17438478,
+      "distributionBytes": 17464488,
+      "distributionSha256": "012a2af59cc752b3347f79cca46e9a3641e3c8d0482db0c9e8d0b50fa4adde00",
+      "manifestSha256": "0d6628bc8612de051227e6fa18946ee195ecdb815f0ad19b249338f75fdac997",
+      "sourceArchiveSha256": "20a74a213ae604ffa53d4a71aab8185272a1a25633c3d8786b9a4fc8c8dfd8a2",
+      "sourceInventorySha256": "96ca15a4ae5769cc9104888909129e209fa08bdb85f8945be99f10a7d85e72ae"
+    }
+  ],
+  "comparison": {
+    "baselineSourceRevision": "da0b0108206a0270b4b870e747f2d1bc0e6695cb",
+    "baselineEnvelopeSha256": "4f4f0c78af851dfe5297097d87169b322f55704d85f6754b9ae12acb85b68926",
+    "eachPackageChangedMembers": [
+      "optional-package.json",
+      "optional-practice/{packageId}/guide.html",
+      "optional-practice/{packageId}/worker.js"
+    ],
+    "addedMembers": 0,
+    "removedMembers": 0,
+    "otherRuntimeMembersByteIdentical": true,
+    "workerExecutableBodyByteIdentical": true,
+    "workerChanges": "Only guide.html dependency size/hash and generated package revision argument changed.",
+    "guideBefore": {
+      "bytes": 21725,
+      "sha256": "3cb5e7827bd7ae50c4cc7fe73765800d63886127fb8831fa3147f619a19da07d"
+    },
+    "guideAfter": {
+      "bytes": 23443,
+      "sha256": "8a4989f0ddfe6e2662031eec4454be18cc980076de4b5b429962775244e6bfec"
+    }
+  },
+  "limitations": [
+    "Technical candidate admission is not publication approval or proof of browser/device behavior.",
+    "Browser observation is separate and must use this exact envelope hash.",
+    "No release, version allocation, hosting change, selector update or full-site capacity qualification was performed."
+  ]
+}

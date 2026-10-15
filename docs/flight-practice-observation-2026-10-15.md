@@ -6,7 +6,28 @@ The diagnostic retry passed all nine observer checkpoints on Chrome
 failed and is retained. This is bounded technical evidence, **not full Phase 1
 acceptance or publication approval**.
 
-## Exact identity
+## Final-guide candidate confirmation
+
+After committing the guide changes, all three packages were rebuilt reproducibly
+from `ff8bfbca35aa5aabf4a89c1961493102bb50126a`, tree
+`b61d3de220c1ac5eb46bf143bcd4bf0020744ce5`. The final envelope is
+`4959a8a012a6268b3a724d7524a613e1e24ff1a2cdb95735558458fecd6121f2`.
+The [final receipt](flight-practice-qualification-20261015/practice-real-restart-final-ff8bfbca35-20261015.json),
+created at `2026-10-15T04:30:18.004Z`, passed the same nine checkpoints using the
+unchanged observer/helper hashes below, with no page or cleanup errors. All three
+test installations and the temporary profile were removed successfully.
+
+The [final candidate comparison](flight-practice-final-candidate-2026-10-15.md)
+confirms only guide bytes and generated manifest/worker arguments changed.
+This rerun covers their actual new package revisions rather than transferring the
+baseline pass by assumption. It retains the same keyboard, synthetic proof,
+same-payload update and network-emulation limits. Two later successful runs do not
+identify or fix the earlier hidden-link timeout's cause.
+
+Full repository `npm run lint` also exited successfully after the implementation
+commit. The 323-test practice run and focused 15-test observer/guide rerun passed.
+
+## Baseline retry identity
 
 - Source: `da0b0108206a0270b4b870e747f2d1bc0e6695cb`.
 - Tree: `69fac419ea9c23984d998b6da10ae5c9f1459e42`.
