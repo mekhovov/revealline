@@ -1,0 +1,79 @@
+{
+  "passed": true,
+  "descriptorIdentity": {
+    "id": "tropical-coastal-districts",
+    "sha256": "dab4be6dd5b782d38c6c01f510137d048b9646d1f14e80c4dc40c6d848720f49"
+  },
+  "starts": [
+    {
+      "id": "covered-harbour",
+      "status": "paused",
+      "ticks": 0
+    },
+    {
+      "id": "lagoon-piers",
+      "status": "paused",
+      "ticks": 0
+    },
+    {
+      "id": "reef-rocks",
+      "status": "paused",
+      "ticks": 0
+    },
+    {
+      "id": "palm-valley",
+      "status": "paused",
+      "ticks": 0
+    },
+    {
+      "id": "hillside-huts",
+      "status": "paused",
+      "ticks": 0
+    },
+    {
+      "id": "bamboo-grove",
+      "status": "paused",
+      "ticks": 0
+    }
+  ],
+  "records": [
+    {
+      "liveMaterialUpdates": 4,
+      "quality": "low",
+      "terrain": "performance",
+      "geometryBytes": 794448,
+      "textureBytes": 1835000,
+      "geometryDigest": "dc72c56d4de1dc1a08c52cbae7e05dc1ca17e9d10c7d8e7622941166e7299213"
+    },
+    {
+      "liveMaterialUpdates": 4,
+      "quality": "balanced",
+      "terrain": "balanced",
+      "geometryBytes": 794448,
+      "textureBytes": 1835000,
+      "geometryDigest": "dc72c56d4de1dc1a08c52cbae7e05dc1ca17e9d10c7d8e7622941166e7299213"
+    },
+    {
+      "liveMaterialUpdates": 4,
+      "quality": "high",
+      "terrain": "quality",
+      "geometryBytes": 794448,
+      "textureBytes": 1835000,
+      "geometryDigest": "dc72c56d4de1dc1a08c52cbae7e05dc1ca17e9d10c7d8e7622941166e7299213"
+    },
+    {
+      "liveMaterialUpdates": 0,
+      "quality": "unknown-pin",
+      "terrain": "plain",
+      "geometryBytes": 794448,
+      "textureBytes": 1835000,
+      "geometryDigest": "dc72c56d4de1dc1a08c52cbae7e05dc1ca17e9d10c7d8e7622941166e7299213"
+    }
+  ],
+  "launchOnly": true,
+  "sourcePins": {
+    "terrain": "3946fc2ffed922dadc171e609753c63590ef3daade337c04395b6356612448a5",
+    "scenery": "ba0339e6e3f8285169a4f10fe1dc456de2fab36632496412b9a7104a6e1ae4c9"
+  },
+  "claim": "Verified exact-pin launch, live material-only tier updates and disposal. Native player, package and sustained flight acceptance remain separate."
+}
