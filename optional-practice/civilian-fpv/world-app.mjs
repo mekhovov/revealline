@@ -143,6 +143,7 @@ import {
   loadRegionalReview,
   regionalReviewEntry,
   regionalLibraryEntry,
+  regionalStartingPoint,
   createRegionalSession,
 } from './regional-session.mjs';
 import { mountWorldHuntReactions } from './world-reaction-runtime.mjs';
@@ -1018,7 +1019,8 @@ export function mountWorldApp({
     missionChooser = null,
     missionLibrary = null,
     missionLaunchGeneration = 0,
-    runtimeOfflineFeedback = null;
+    runtimeOfflineFeedback = null,
+    regionalStartControls = null;
   let entries = [],
     playlistId = unique('playlist'),
     playlistDraft = null,
@@ -1785,6 +1787,7 @@ export function mountWorldApp({
   }
   function paintLanguage() {
     paintRuntimeOfflineStatus();
+    paintRegionalStarts();
     enemyStatsViews.forEach((view) => view.refresh());
     const toolNames = {
       learn: txt('Flight School', 'Льотна школа'),
@@ -4711,7 +4714,69 @@ export function mountWorldApp({
       .map((id) => $(id).selectedOptions[0]?.textContent ?? '')
       .join(' · ');
   }
+  function paintRegionalStarts(state = null) {
+    const controls = regionalStartControls;
+    if (!controls) return;
+    controls.root.hidden = !current?.regional;
+    if (!current?.regional) {
+      controls.owner = null;
+      return;
+    }
+    const signature = `${locale}:${current.configuration.spawnId ?? ''}`;
+    if (controls.owner !== current || controls.signature !== signature) {
+      controls.owner = current;
+      controls.signature = signature;
+      controls.label.textContent = txt('Starting point', 'Місце старту');
+      controls.restart.textContent = txt('Restart here', 'Почати звідси');
+      controls.help.textContent = txt(
+        'Choose an authored start, then restart. Flight stays disarmed; your mode and view are kept.',
+        'Виберіть місце й почніть знову. Дрон не озброюється; режим і вигляд зберігаються.',
+      );
+      controls.select.replaceChildren();
+      for (const [index, spawn] of current.configuration.manifest.spawns.entries()) {
+        const option = el('option', `${index + 1} · ${spawn.id.replace(/-/g, ' ')}`);
+        option.value = spawn.id;
+        controls.select.append(option);
+      }
+      controls.select.value =
+        current.configuration.spawnId ?? current.configuration.manifest.spawns[0].id;
+    }
+    const active = (state ?? flight?.snapshot())?.status === 'active';
+    controls.restart.disabled = controls.select.disabled = Boolean(controls.busy || active);
+  }
+  async function restartRegionalAtSelection() {
+    const controls = regionalStartControls;
+    if (!controls || controls.busy || controls.owner !== current || !current?.regional) return;
+    let entry;
+    try {
+      entry = regionalStartingPoint(current, controls.select.value);
+    } catch {
+      controls.help.textContent = txt(
+        'Choose a starting point from this region.',
+        'Виберіть місце старту з цього регіону.',
+      );
+      return;
+    }
+    const mode = $('flight-mode').value,
+      camera = $('flight-camera').value;
+    controls.busy = true;
+    pauseFlight();
+    paintRegionalStarts();
+    if ($('sim-settings').open) closeSettings({ force: true });
+    const generation = ++missionLaunchGeneration;
+    try {
+      await startRegionalFlight(entry, {
+        mode,
+        lessonCamera: camera,
+        isCurrent: () => !doc.hidden && generation === missionLaunchGeneration,
+      });
+    } finally {
+      controls.busy = false;
+      paintRegionalStarts();
+    }
+  }
   function updateHUD(state) {
+    paintRegionalStarts(state);
     for (const view of enemyStatsViews)
       if (view.root.dataset.variant !== 'collection') view.root.hidden = Boolean(current?.regional);
     // Section/unfinished recordings may stop in a paused simulation state.
@@ -7617,8 +7682,9 @@ export function mountWorldApp({
       presentation.refresh(node);
     },
   });
-  const shellStage = el('p', txt('Preparing flight…', 'Підготовка польоту…'), 'sim-shell-loading');
-  shellStage.setAttribute('role', 'status');
+  // The actual flight dialog owns loading/readiness announcements.
+  const shellStage = el('div', undefined, 'sim-shell-loading');
+  shellStage.hidden = true;
   const shellBriefing = el('section');
   const help = el(
     'p',
@@ -7995,6 +8061,32 @@ export function mountWorldApp({
   for (const child of [...$('sim-settings').children])
     if (child.tagName !== 'HEADER') settingsContent.append(child);
   $('sim-settings').append(settingsContent);
+  const regionalStartRoot = el('section'),
+    regionalStartLabel = el('label'),
+    regionalStartText = el('span'),
+    regionalStartSelect = el('select'),
+    regionalStartRestart = el('button'),
+    regionalStartHelp = el('p');
+  regionalStartRoot.hidden = true;
+  regionalStartSelect.id = 'regional-starting-point';
+  regionalStartLabel.htmlFor = regionalStartSelect.id;
+  regionalStartHelp.id = 'regional-starting-point-help';
+  regionalStartSelect.setAttribute('aria-describedby', regionalStartHelp.id);
+  regionalStartRestart.type = 'button';
+  regionalStartLabel.append(regionalStartText, regionalStartSelect);
+  regionalStartRoot.append(regionalStartLabel, regionalStartRestart, regionalStartHelp);
+  regionalStartControls = {
+    root: regionalStartRoot,
+    label: regionalStartText,
+    select: regionalStartSelect,
+    restart: regionalStartRestart,
+    help: regionalStartHelp,
+    owner: null,
+    signature: null,
+    busy: false,
+  };
+  on(regionalStartRestart, 'click', restartRegionalAtSelection);
+  playShell.elements.content.pause.querySelector('.sim-flight-practice').append(regionalStartRoot);
   modeSettingsView = mountSimModeSettings({
     root: $('sim-settings'),
     content: settingsContent,
