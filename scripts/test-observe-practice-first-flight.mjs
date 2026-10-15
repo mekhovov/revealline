@@ -11,6 +11,9 @@ import {
   hasFirstFlightMotion,
   assertFirstFlightReset,
   observePracticeFirstFlight,
+  activateFirstFlightControl,
+  returnFirstFlightHome,
+  retryFirstFlight,
 } from './observe-practice-first-flight.mjs';
 
 const plan = () => ({
@@ -71,6 +74,89 @@ test('retry must restore launch height, position and zero FPV speed', () => {
   assert.throws(() => assertFirstFlightReset({ height: 0, x: 2, z: 3 }, { height: 0, x: 3, z: 3 }));
 });
 
+test('Pause uses an ordinary pointer click rather than a focus-and-Enter toggle', async () => {
+  const calls = [];
+  const target = {
+    waitFor: async () => {},
+    click: async (...args) => calls.push(['click', ...args]),
+    press: async (...args) => calls.push(['press', ...args]),
+  };
+  const result = { actions: [] };
+  await activateFirstFlightControl(
+    { locator: () => target, waitForFunction: async () => {} },
+    '#gym-shell-action-pause',
+    result,
+    'pointer',
+  );
+  assert.deepEqual(calls, [['click']]); // No force option, hidden control or focus preconditioning.
+  assert.match(result.actions[0].action, /pointer/);
+});
+
+test('settings Back follows the visible stack and never presses a hidden second Back', async () => {
+  for (const required of [1, 2]) {
+    let presses = 0;
+    const primary = {
+      // Home stays laid out behind the modal throughout; this must not be used
+      // as a shortcut for native top-layer dialog ownership.
+      isVisible: async () => true,
+      waitFor: async () => assert.equal(presses, required),
+    };
+    const back = {
+      isVisible: async () => presses < required,
+      waitFor: async () => assert(presses < required),
+      press: async () => {
+        assert(presses < required);
+        presses++;
+      },
+    };
+    await returnFirstFlightHome(
+      {
+        locator: (selector) =>
+          selector.endsWith('-primary')
+            ? primary
+            : selector.endsWith('-settings-dialog')
+              ? { getAttribute: async () => (presses < required ? '' : null) }
+              : selector.endsWith('-home-dialog')
+                ? { getAttribute: async () => '' }
+                : back,
+        waitForFunction: async () => {},
+      },
+      { shell: 'academy-shell' },
+      { actions: [] },
+    );
+    assert.equal(presses, required);
+  }
+});
+
+test('FPV Retry targets the visible tutorial action within the open pause dialog', async () => {
+  const calls = [],
+    result = { actions: [] };
+  const retry = {
+    waitFor: async () => {},
+    isEnabled: async () => true,
+    getAttribute: async (name) => (name === 'id' ? null : 'retry'),
+    press: async (key) => calls.push(key),
+  };
+  await retryFirstFlight(
+    {
+      locator: (selector) => {
+        assert.equal(selector, '#worlds-shell-pause-dialog[open]');
+        return {
+          getByRole: (role, options) => {
+            assert.equal(role, 'button');
+            assert.deepEqual(options, { name: 'Retry', exact: true });
+            return retry;
+          },
+        };
+      },
+    },
+    { package: 'fpv-worlds', shell: 'worlds-shell' },
+    result,
+  );
+  assert.deepEqual(calls, ['Enter']);
+  assert.equal(result.actions[0].practiceAction, 'retry');
+});
+
 test('adapters correspond to native public source controls and keyboard mappings', async () => {
   const read = (name) => readFile(new URL('../' + name, import.meta.url), 'utf8');
   const shell = await read('game/ui/mode-play-shell.mjs');
@@ -79,6 +165,8 @@ test('adapters correspond to native public source controls and keyboard mappings
   assert.match(shell, /put\(root\.dataset, 'phase', state\.phase\)/);
   const gym = await read('optional-practice/civilian-flight/input.mjs');
   assert.match(gym, /KeyR: \['throttle', 1\]/);
+  assert.match(gym, /listen\(doc, 'focusin'/);
+  assert.match(shell, /pausePress = \{ phase: state.phase, pointerId: event.pointerId \}/);
   const input = await read('optional-practice/civilian-fpv/input.mjs');
   assert.match(input, /throttle: Object\.freeze\(\['KeyS', 'KeyW'\]\)/);
   const academy = await read('optional-practice/civilian-fpv/app.mjs');
@@ -88,6 +176,9 @@ test('adapters correspond to native public source controls and keyboard mappings
   assert.match(worlds, /start: \(\) => \$\('hero-fly'\)\.click\(\)/);
   assert.match(worlds, /catalogue\.find\(\(e\) => e\.legacy && !complete\.has\(keyOf\(e\)\)\)/);
   assert.match(worlds, /dataset\.flightState = state\.status/);
+  assert.match(worlds, /action === 'retry'\) return retryFlight\(\{ paused: true \}\)/);
+  const practice = await read('optional-practice/civilian-fpv/flight-fullscreen.mjs');
+  assert.match(practice, /button.dataset.practiceAction = action/);
 });
 
 test('bad frozen envelope fails before browser launch and retains honest receipt', async () => {

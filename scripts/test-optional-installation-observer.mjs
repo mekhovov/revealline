@@ -359,9 +359,30 @@ test('Academy offline controls expand the ordinary closed Workshop disclosure in
   );
   assert.equal(
     observer.match(/await revealFPVOffline\(page, \(\) => clickFPV\('#help'\)\)/g)?.length,
-    3,
-    'Preparation, failed download, and removal share the same public disclosure action.',
+    5,
+    'Preparation, failed download, quota denial/retry removal share the same public disclosure action.',
   );
+});
+
+test('opt-in quota denial preserves pointers, resets before retry and retains exact helper authority', async () => {
+  const observer = await readFile(
+    new URL('./observe-optional-installation.mjs', import.meta.url),
+    'utf8',
+  );
+  assert.match(observer, /OPTIONAL_INSTALLATION_QUOTA_PROBE === '1'/);
+  assert.match(observer, /origin: new URL\(served.url\).origin/);
+  assert.match(observer, /assert.equal\(quotaProbeReport.completed, true/);
+  assert.match(observer, /denied.keys\[keyFor\(id\)\], upgraded.keys\[keyFor\(id\)\]/);
+  assert.match(
+    observer,
+    /sourceStable: quotaProbeSha256 === sha\(await readFile\(quotaProbeURL\)\)/,
+  );
+  const denial = observer.indexOf("'controlled-quota-denial-preserves-all-pointers'");
+  const rollback = observer.indexOf("'candidate-removed-retained-path-restored'");
+  const retry = observer.indexOf("'quota-restored-pristine-retry-prepared'");
+  assert(denial > 0 && rollback > denial && retry > rollback);
+  assert.match(observer, /quotaProbeReport\?\.retryPreparedAndRemoved === true/);
+  assert.doesNotMatch(observer, /Storage.clearDataForOrigin|quotaSize: null/);
 });
 
 test('profile import and every export open the ordinary transfer disclosure without toggling it closed', async () => {
