@@ -364,6 +364,19 @@ try {
           await page.locator(adapter.panel).click();
         }
       }
+      async function revealOfflineRemoval(id) {
+        await revealOfflineUI(id);
+        if (id === worlds) {
+          // Settings exposes preparation, but removal remains in Library.
+          const library = page.locator('[data-tab="packs"]');
+          await library.waitFor({ state: 'visible' });
+          await library.press('Enter');
+          await page.locator('#packs').waitFor({ state: 'visible' });
+        }
+        const button = id === worlds ? '#remove-runtime' : '#remove-offline';
+        await page.locator(button).waitFor({ state: 'visible' });
+        return button;
+      }
       async function prepare(id) {
         currentStep = `prepare ${id}`;
         const adapter = OBSERVED_PACKAGES[id];
@@ -793,9 +806,9 @@ try {
             assert.equal(await exportedProof(), savedProof);
             assert.equal(await exportedProfiles(), savedProfiles);
           }
-          await revealOfflineUI(quotaId);
+          const removeButton = await revealOfflineRemoval(quotaId);
           await activateOfflineAction(page, {
-            button: quotaId === worlds ? '#remove-runtime' : '#remove-offline',
+            button: removeButton,
             status: adapter.status,
             expected: /removed/i,
           });
