@@ -64,4 +64,11 @@ the production owner retained at most nine cells and peaked at 456,408 geometry
 bytes. All 2,313 corridor sweeps were clear; all 18 landmark contact queries and
 six authored starts passed. Disposal returned owned geometry to zero. Receipts
 are `expanse-preparation.json` and `expanse-verification.json` beside the generator.
-Actual commanded-flight and native composition review remain pending.
+Actual commanded-flight verification passed all 24 route/mode combinations:
+889,956 fixed-step ticks, 240 origin recentres (216 while moving), and zero
+route contacts. The greatest cross-track error was 0.474 m and vertical error
+0.579 m. Twelve authored-start checks and four deliberate solid contacts passed.
+Pause invariance and disposal were checked through the shared production session.
+The full receipt is `expanse-flight-verification.json`. These are controlled
+representative routes, not an uninterrupted traversal of the entire map.
+Native composition review remains pending.
