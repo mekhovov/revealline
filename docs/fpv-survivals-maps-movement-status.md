@@ -1,5 +1,7 @@
 # FPV Survivals maps and movement — implementation status
 
+Latest continuation: PR1489 has merged. [Echo approach and report evidence](qualification/overflight/echo-approach-20261015/README.md) preserves three Receiver Gardens losses, native final-tank progress feedback and explicit matched review routes. Main `691351e1d` is incorporated; combat tuning remains unchanged.
+
 Latest 15 October continuation: safely rebased onto main `859d5cfc9`; PR1319 and PR1344 are merged. Runtime `f494367b7` adds actual pending-impact and chain-path feedback; see [attack-readability continuation](qualification/overflight/attack-readability-20261015/README.md). See [current-source evidence and remaining acceptance](qualification/overflight/quality-followup-20261015/README.md). Historical receipts below retain their own tested commits.
 
 
