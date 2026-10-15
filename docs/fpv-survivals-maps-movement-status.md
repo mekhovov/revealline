@@ -1,6 +1,6 @@
 # FPV Survivals maps and movement — implementation status
 
-Latest 15 October continuation: safely rebased onto main `da0b010820`; PR1319 is merged. PR1344 contains the next control-layout/audio corrections. See [current-source evidence and remaining acceptance](qualification/overflight/quality-followup-20261015/README.md). Historical receipts below retain their own tested commits.
+Latest 15 October continuation: safely rebased onto main `859d5cfc9`; PR1319 and PR1344 are merged. Runtime `f494367b7` adds actual pending-impact and chain-path feedback; see [attack-readability continuation](qualification/overflight/attack-readability-20261015/README.md). See [current-source evidence and remaining acceptance](qualification/overflight/quality-followup-20261015/README.md). Historical receipts below retain their own tested commits.
 
 
 **15 October decision review:** See [completed work, remaining items and recommended priorities](fpv-survivals-review-2026-10-15.md). Main was freshly checked at `33957174d7`; the corrective follow-up is published as [draft PR1319](https://github.com/mekhovov/revealline/pull/1319) and is not yet merged.
