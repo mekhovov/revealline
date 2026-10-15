@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { readFile, mkdtemp, writeFile, rm } from 'node:fs/promises';
 import path from 'node:path';
 import { tmpdir } from 'node:os';
+import { createHash } from 'node:crypto';
 import {
   FIRST_FLIGHT_PROTOCOL,
   FIRST_FLIGHT_CASES,
@@ -197,6 +198,12 @@ test('bad frozen envelope fails before browser launch and retains honest receipt
     assert.equal(report.cases.length, 0);
     assert.equal(report.cleanup.completed, true);
     assert.match(report.failure, /Envelope differs/);
+    assert.equal(report.authority.length, 8);
+    for (const pin of report.authority) {
+      const bytes = await readFile(path.join(output, 'authority', path.basename(pin.path)));
+      assert.equal(bytes.length, pin.bytes);
+      assert.equal(createHash('sha256').update(bytes).digest('hex'), pin.sha256);
+    }
     assert.equal(
       JSON.parse(await readFile(path.join(output, 'observation.json'))).completed,
       false,
