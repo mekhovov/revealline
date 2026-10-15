@@ -187,3 +187,62 @@ export function createRegionalSession(configuration) {
     },
   });
 }
+
+/** Presentation-only diagnosis: a graphics deadline is not missing regional source. */
+export function regionalPreparationFeedback({
+  stage = 'source',
+  timedOut = false,
+  error,
+  savedStart = false,
+  contextLost = false,
+} = {}) {
+  if (contextLost)
+    return {
+      kind: 'context-lost',
+      restoreUnavailable: false,
+      en: 'Graphics interrupted. Open Menu and Retry after graphics recover.',
+      uk: 'Графіку перервано. Відкрийте меню й повторіть політ після її відновлення.',
+    };
+  const timeout = timedOut || error?.name === 'TimeoutError';
+  if (timeout && stage === 'graphics')
+    return {
+      kind: 'graphics-timeout',
+      restoreUnavailable: false,
+      en: 'Graphics preparation took too long. Open Menu, choose Performance graphics and Retry. Flight remains paused.',
+      uk: 'Підготовка графіки триває надто довго. Відкрийте меню, виберіть графіку «Швидкодія» і повторіть. Політ залишається на паузі.',
+    };
+  if (timeout)
+    return {
+      kind: 'source-timeout',
+      restoreUnavailable: false,
+      en: 'Area preparation took too long. Open Menu and Retry. Flight remains paused.',
+      uk: 'Підготовка ділянки триває надто довго. Відкрийте меню й повторіть. Політ залишається на паузі.',
+    };
+  if (error?.name === 'AbortError')
+    return {
+      kind: 'cancelled',
+      restoreUnavailable: false,
+      en: 'Preparation paused. Open Menu and Retry when ready.',
+      uk: 'Підготовку призупинено. Відкрийте меню й повторіть, коли будете готові.',
+    };
+  if (stage === 'graphics')
+    return {
+      kind: 'graphics-failed',
+      restoreUnavailable: false,
+      en: 'Graphics could not be prepared. Open Menu, choose Performance graphics and Retry.',
+      uk: 'Не вдалося підготувати графіку. Відкрийте меню, виберіть графіку «Швидкодія» і повторіть.',
+    };
+  if (savedStart)
+    return {
+      kind: 'saved-place',
+      restoreUnavailable: true,
+      en: 'Saved place unavailable. Choose a clear starting point.',
+      uk: 'Збережене місце недоступне. Виберіть вільне місце старту.',
+    };
+  return {
+    kind: 'source-failed',
+    restoreUnavailable: false,
+    en: 'Area could not be prepared. Open Menu and Retry, or choose another starting point.',
+    uk: 'Не вдалося підготувати ділянку. Відкрийте меню й повторіть або виберіть інше місце старту.',
+  };
+}

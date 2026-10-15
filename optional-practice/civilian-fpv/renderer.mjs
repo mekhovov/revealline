@@ -3298,7 +3298,9 @@ export function createFlightRenderer({
     const abort = () => controller.abort();
     signal?.addEventListener('abort', abort, { once: true });
     if (signal?.aborted) abort();
-    const timeout = win.setTimeout(abort, 30000);
+    const timeout = win.setTimeout(() => {
+      controller.abort(new DOMException('Regional graphics preparation timed out', 'TimeoutError'));
+    }, 30000);
     const current = () => {
       controller.signal.throwIfAborted();
       if (
