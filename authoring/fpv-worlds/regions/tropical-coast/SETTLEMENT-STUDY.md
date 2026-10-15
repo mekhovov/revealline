@@ -33,3 +33,11 @@ Transparent foliage remains visual-only, while trunks, huts, piers and cargo rem
 The unchanged models/textures derive from Ron Kapaun / 3TD Studios' CC0 Tropical pack. The verified intake and prior district documentation retain upstream URLs, archive and source hashes, licenses and derivation details. Terrain, arrangement and routes are original project work.
 
 Native appearance acceptance, an immutable delivery descriptor/source publication, a trusted Library revision and package/offline qualification are separate gates. Source checks alone do not admit this revision to players, establish real-device performance, or complete the broader world-quality target.
+
+## Native source review — 15 October 2026
+
+Root inspected exact `districts-r2` on isolated origin 9069 using the same frozen production runtime `83fd65256336da0fb892bec3c12678ce537576c3` as the preceding district review. Balanced Village from both sides, Palms and Dunes rendered correctly; no error/warning console entries were observed. Explicit Dispose returned collision ownership to zero. The five huts are visible and have a better street relationship than the previous two-building layout.
+
+This accepts the **scoped composition improvement only**. Native inspection still found visually sparse areas, broad flat green surfaces, isolated grass and flat water. It does not complete the representative final art standard. The next pass should integrate ground paths, courtyards and shoreline treatment and review the result from pilot eye level, rather than simply add more models or empty acreage.
+
+The exact source remains `terrain=3946fc2ffed922dadc171e609753c63590ef3daade337c04395b6356612448a5`, `scenery=ba0339e6e3f8285169a4f10fe1dc456de2fab36632496412b9a7104a6e1ae4c9`. The preserved screenshot is `coastal-districts-r2-village-20261015.png`; native source acceptance does not change any Library entry or package/offline claim.
