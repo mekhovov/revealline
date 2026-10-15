@@ -1,0 +1,154 @@
+{
+  "authoringRevision": "219c3e922acae6d392fd69b0233b99552087c71c",
+  "productionRevision": "da5df4837f8db357a2094b9eb343692cbc511d0e",
+  "packageRevision": "6a092df1b8916288c637fd75266a546b8737463b6f5b08a681036d444cd4402b",
+  "origin": 9198,
+  "sourceIdentitySHA256": "475ebf52411f6f7a739094471ab6348cab842072740b593e18a0baea54696c8e",
+  "startedUTC": "2026-10-15T19:21:49.932Z",
+  "nativeScope": "Explicit bounded five-minute diagnostic. One CUA renderer; no heavy local work, other renderer, navigation, focus/resize/visibility change or in-run export. No player input measured.",
+  "clock": {
+    "status": "completed",
+    "reason": null,
+    "targetMs": 300000,
+    "elapsedMs": 300000.5,
+    "wallElapsedMs": 300001,
+    "simulationMs": 300000,
+    "ticks": 15000,
+    "remainingAccumulatorMs": 0.5
+  },
+  "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36",
+  "dimensions": {
+    "basis": "visualViewport",
+    "width": 1280,
+    "height": 720,
+    "dpr": 2,
+    "cssWidth": 1280,
+    "cssHeight": 417.59375,
+    "backingWidth": 1920,
+    "backingHeight": 627
+  },
+  "observation": {
+    "policy": "strict-focus",
+    "input": "Commanded test pilot only; no player input",
+    "scope": "Visible document with continuous window focus required",
+    "events": [
+      {
+        "elapsedMs": 0,
+        "type": "start",
+        "visible": true,
+        "focused": true
+      }
+    ],
+    "failure": null
+  },
+  "crossings": 4,
+  "acceptedWaypoints": 3,
+  "completedCircuits": 0,
+  "contacts": 0,
+  "disposalZero": true,
+  "routeCoverageQualified": false,
+  "maximumFrameIntervalMs": 58.8999999910593,
+  "attribution": {
+    "capability": "observed",
+    "entries": 4,
+    "callbackCPU": {
+      "count": 5,
+      "totalMs": 1,
+      "maxMs": 0.5999999940395355
+    },
+    "bounds": {
+      "spans": 128,
+      "longAnimationFrames": 16,
+      "scriptsPerFrame": 8,
+      "scriptsScannedPerFrame": 64,
+      "overlapExamplesPerFrame": 12
+    },
+    "dropped": {
+      "spans": 153435,
+      "longAnimationFrames": 0,
+      "scripts": 0,
+      "unscannedScripts": 0
+    },
+    "malformed": 0,
+    "readFailures": 0,
+    "stopped": true
+  },
+  "nativeCallerEvidence": [
+    {
+      "elapsedMs": 42053.60000000894,
+      "durationMs": 68.09999999403954,
+      "scriptCount": 1,
+      "sources": [
+        {
+          "path": "/authoring/fpv-worlds/regions/endurance.mjs",
+          "functionName": "frame",
+          "characterPosition": 22207
+        }
+      ],
+      "overlappingSpanCount": 0
+    },
+    {
+      "elapsedMs": 100999.70000000298,
+      "durationMs": 58,
+      "scriptCount": 0,
+      "sources": [],
+      "overlappingSpanCount": 0
+    },
+    {
+      "elapsedMs": 199834.60000000894,
+      "durationMs": 58.8999999910593,
+      "scriptCount": 1,
+      "sources": [
+        {
+          "path": "/authoring/fpv-worlds/regions/endurance.mjs",
+          "functionName": "frame",
+          "characterPosition": 22207
+        }
+      ],
+      "overlappingSpanCount": 0
+    },
+    {
+      "elapsedMs": 290534.700000003,
+      "durationMs": 64.29999999701977,
+      "scriptCount": 1,
+      "sources": [
+        {
+          "path": "/authoring/fpv-worlds/regions/endurance.mjs",
+          "functionName": "frame",
+          "characterPosition": 22207
+        }
+      ],
+      "overlappingSpanCount": 0
+    }
+  ],
+  "finding": "All four early LoAF records have zero phase overlaps at final snapshot because the final128span ring no longer contains those intervals. A separate authoring-only receive-time bounded association correction is needed. Caller entry points and synchronous maxima are not descendant/GC attribution.",
+  "acceptedBoundary": "New duration and unchanged diagnostic operate for300.0005real seconds; real caller entries are available. This does not establish two-hour endurance, route coverage, production fix, sampled JS/GC cause or device FPS.",
+  "remaining": [
+    "preserve LoAF-associated phase facts at observer receipt rather than final snapshot",
+    "native review of corrected bounded associations",
+    "sampled JS/GC trace for causal diagnosis before choosing production optimization",
+    "actual two-hour authored qualification and all prior reliability/device/release gates"
+  ],
+  "evidence": [
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/authored-urban-five-minute-attribution-20261015.json",
+      "bytes": 195323,
+      "sha256": "67c26fd91a8ea640dc2ad5195fab4a039f084d2049d8054eac8d7812721d6fe5"
+    },
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/authored-urban-five-minute-attribution-native-20261015.png",
+      "bytes": 97836,
+      "sha256": "487c04b3666a2be8d463ced052dc8d07f31092f57ca7294330f6af5b81ba3afe"
+    },
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/authored-urban-five-minute-review-9198/review-identity.json",
+      "bytes": 57830,
+      "sha256": "475ebf52411f6f7a739094471ab6348cab842072740b593e18a0baea54696c8e"
+    },
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/authored-urban-five-minute-review-9198/http-closure-receipt.json",
+      "bytes": 32850,
+      "sha256": "c87dda4b39fd91addb619ad57ffa9dda16bbc36bec43e4c6540f123c3037b059"
+    }
+  ]
+}
