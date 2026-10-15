@@ -24,12 +24,14 @@ const included = new Set([
   'game/ui/destruction-audio.mjs',
   'game/ui/human-reaction-policy.mjs',
   'game/ui/destruction-level.mjs',
-  'game/audio/human-reactions/portable.mjs',
+  'game/ui/published-cues.mjs',
+  'game/presentation/portable-destruction-audio.mjs',
+  'game/audio/portable-destruction.mjs',
   'game/ui/movement-audio.mjs',
   'game/ui/dialogue-channel.mjs',
 ]);
-// Localization already belongs to Academy. No art, recordings, voice library or
-// unrelated runtime may quietly enter this narrow generated audio closure.
+// Localization already belongs to Academy. Only the checked portable destruction
+// bank enters this audio closure; no art, voice library or unrelated runtime.
 const external = new Set(['game/i18n/index.mjs']);
 const policy = OPTIONAL_PACKAGE_POLICIES['civilian-fpv'];
 if (!policy.localFiles.includes(path.posix.basename(target)))
