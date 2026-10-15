@@ -4,6 +4,24 @@ import { validateTerrainSurface } from './regional/terrain-surface.mjs';
 // Original, reviewed sources are pinned to an immutable published commit.
 export const REGIONAL_LIBRARY_PINS = Object.freeze([
   {
+    id: 'tropical-coastal-districts',
+    title: {
+      en: 'Tropical coast — connected harbour',
+      uk: 'Тропічне узбережжя — сполучені пірси гавані',
+    },
+    description: {
+      en: '768 × 768 m · connected wooden harbour decks and shore approach · six starting areas, unscored free flight. Separate harbour-r3 revision; the earlier coastal settlement remains available. Early coastal study; visual water only.',
+      uk: '768 × 768 м · сполучені дерев’яні пірси гавані та вихід на берег · шість стартових місць, вільний політ без заліку. Окрема версія harbour-r3; попереднє прибережне поселення залишається доступним. Раннє дослідження узбережжя; вода лише візуальна.',
+    },
+    bytes: 7952305,
+    appearance: { terrain: 'tropical-settlement' },
+    pin: {
+      url: 'https://raw.githubusercontent.com/mekhovov/revealline/80f161c5709caa7081ff26bb7472fae67fbdb921/authoring/fpv-worlds/regions/tropical-coast/harbour-delivery-r3/delivery.json',
+      bytes: 6617,
+      sha256: '44aa0de26f4b4aa79fb0ca8f4b6c7d39bdd62debbdc5e4c51a3a12368a0f42ce',
+    },
+  },
+  {
     id: 'hillside-town-study',
     title: {
       en: 'Hillside Town — terraces and courtyards',
