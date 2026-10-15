@@ -182,10 +182,14 @@ contains no claim of device/human/public acceptance.
 
 ### C2 — Directory → first flight → pause → retry, every app
 
-Progress: the fresh `50b7612e8` candidate passed four EN public-control motion,
-pause and retry cases (Gym, Academy Self-level/Acro, Worlds Self-level). This is
-not the full game directory, UK, Worlds Acro or beginner exercise completion;
-retain those cases below. See the [source-bound report](flight-practice-repair-2026-10-15.md).
+Progress: the new `8cf5fe46d` candidate passes ten EN/UK public-control
+motion/pause/retry cases: Gym, Academy Self-level/Acro and Worlds Self-level/Acro.
+It also passes two native Gym lift-and-land exercises with observed ordered
+checkpoints, completion screenshots, actual UI exports and independent frozen
+package replay. See the [source-bound player-flow report](flight-practice-player-flow-2026-10-15.md).
+Earlier `50b7612e8` four-case EN evidence stays historical. This still does not
+cover the full main-game directory journey, representative FPV exercise
+completion, physical input or human-learning acceptance; retain those cases below.
 
 1. In a clean authorized test context, open the complete staged game's Flight
    practice directory. Select EN, then UK. Check all three cards, supported input,
