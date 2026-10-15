@@ -3,6 +3,62 @@
   const doc = host.document;
   if (!doc || host.RevealLineAccess) return;
 
+  // This entry runs before the protected localization/application scripts. Keep
+  // its small vocabulary self-contained and use the ordinary locale preference.
+  const localeKey = 'revealline.locale.v1';
+  const messages = {
+    en: {
+      title: 'Password required',
+      description:
+        'Enter the password once on this device. This browser will remember a successful unlock.',
+      language: 'Language',
+      password: 'Password',
+      unlock: 'Unlock',
+      checking: 'Checking…',
+      incorrect: 'That password is not correct.',
+      unavailable: 'Password protection is unavailable in this browser.',
+      failed: 'The app could not be unlocked. Try again.',
+      unlocked: 'Unlocked.',
+      loadFailed: 'The page could not load. Reload to try again.',
+    },
+    uk: {
+      title: 'Потрібен пароль',
+      description:
+        'Введіть пароль один раз на цьому пристрої. Браузер запам’ятає успішне розблокування.',
+      language: 'Мова',
+      password: 'Пароль',
+      unlock: 'Розблокувати',
+      checking: 'Перевіряємо…',
+      incorrect: 'Неправильний пароль.',
+      unavailable: 'Захист паролем недоступний у цьому браузері.',
+      failed: 'Не вдалося розблокувати застосунок. Спробуйте ще раз.',
+      unlocked: 'Розблоковано.',
+      loadFailed: 'Не вдалося завантажити сторінку. Оновіть її, щоб спробувати ще раз.',
+    },
+  };
+  const supportedLocale = (value) => {
+    if (typeof value !== 'string') return null;
+    try {
+      const language = Intl.getCanonicalLocales(value)[0]?.split('-')[0];
+      return language === 'en' || language === 'uk' ? language : null;
+    } catch {
+      return null;
+    }
+  };
+  let savedLocale;
+  try {
+    savedLocale = host.localStorage?.getItem(localeKey);
+  } catch {
+    // Language selection remains available when preferences cannot be stored.
+  }
+  const languages = Array.isArray(host.navigator?.languages) ? host.navigator.languages : [];
+  let locale =
+    (['en', 'uk'].includes(savedLocale) && savedLocale) ||
+    [...languages, host.navigator?.language].map(supportedLocale).find(Boolean) ||
+    'en';
+  const translate = (key) => messages[locale][key];
+  let unlocked = false;
+
   const meta = (name) => doc.querySelector(`meta[name="${name}"]`)?.content || '';
   const config = Object.freeze({
     id: meta('revealline-access-id'),
@@ -67,16 +123,19 @@
     resolveScriptsReady(true);
   };
   const unlock = () => {
+    if (unlocked) return;
+    unlocked = true;
     doc.documentElement.dataset.accessState = 'unlocked';
     resolveReady(true);
     doc.dispatchEvent(new CustomEvent('revealline-access-unlocked', { detail: { id: config.id } }));
-    startPage().catch((error) => {
+    startPage().catch(() => {
       doc.documentElement.dataset.accessState = 'failed';
       const message = doc.createElement('p');
       message.id = 'access-gate';
       message.className = 'access-gate';
       message.setAttribute('role', 'alert');
-      message.textContent = error.message;
+      message.lang = locale;
+      message.textContent = translate('loadFailed');
       doc.body.prepend(message);
     });
   };
@@ -104,12 +163,23 @@
   eyebrow.textContent = config.title;
   const title = doc.createElement('h1');
   title.id = 'access-gate-title';
-  title.textContent = 'Password required';
   const copy = doc.createElement('p');
-  copy.textContent =
-    'Enter the password once on this device. This browser will remember a successful unlock.';
+  const languageLabel = doc.createElement('label');
+  const languageName = doc.createElement('span');
+  const language = doc.createElement('select');
+  language.id = 'access-gate-language';
+  for (const [value, name] of [
+    ['en', 'English'],
+    ['uk', 'Українська'],
+  ]) {
+    const option = doc.createElement('option');
+    option.value = value;
+    option.textContent = name;
+    language.append(option);
+  }
+  languageLabel.append(languageName, language);
   const label = doc.createElement('label');
-  label.textContent = 'Password';
+  const passwordName = doc.createElement('span');
   const input = doc.createElement('input');
   input.type = 'password';
   input.name = 'password';
@@ -117,18 +187,50 @@
   input.autocomplete = 'current-password';
   input.autocapitalize = 'none';
   input.spellcheck = false;
-  label.append(input);
+  label.append(passwordName, input);
   const button = doc.createElement('button');
   button.type = 'submit';
   button.dataset.uiAction = 'primary';
-  button.textContent = 'Unlock';
   const status = doc.createElement('p');
   status.className = 'access-gate-status';
   status.setAttribute('role', 'status');
   status.setAttribute('aria-live', 'polite');
-  form.append(eyebrow, title, copy, label, button, status);
+  let statusKey = '';
+  const render = () => {
+    gate.lang = locale;
+    title.textContent = translate('title');
+    copy.textContent = translate('description');
+    languageName.textContent = translate('language');
+    language.value = locale;
+    passwordName.textContent = translate('password');
+    button.textContent = translate('unlock');
+    status.textContent = statusKey ? translate(statusKey) : '';
+  };
+  const setStatus = (key) => {
+    statusKey = key;
+    render();
+  };
+  language.addEventListener('change', () => {
+    if (!['en', 'uk'].includes(language.value)) return;
+    locale = language.value;
+    try {
+      host.localStorage?.setItem(localeKey, locale);
+    } catch {
+      // The current entry can still change language without persistent storage.
+    }
+    render();
+  });
+  render();
+  form.append(eyebrow, title, copy, languageLabel, label, button, status);
   gate.append(form);
   doc.body.prepend(gate);
+  gate.addEventListener('keydown', (event) => {
+    if (event.key !== 'Tab' || event.altKey || event.ctrlKey || event.metaKey) return;
+    const controls = [language, input, button];
+    const current = controls.indexOf(doc.activeElement);
+    event.preventDefault();
+    controls[(current + (event.shiftKey ? -1 : 1) + controls.length) % controls.length].focus();
+  });
 
   const decode = (value) => {
     const normalized = value.replace(/-/g, '+').replace(/_/g, '/');
@@ -164,31 +266,45 @@
     );
   };
 
+  let checking = false;
   form.addEventListener('submit', async (event) => {
     event.preventDefault();
-    button.disabled = true;
-    input.disabled = true;
-    status.textContent = 'Checking…';
+    if (checking || unlocked) return;
+    checking = true;
+    // Retain the focused control while verification runs. The submission guard
+    // owns activation; disabling both controls would drop keyboard focus.
+    input.readOnly = true;
+    button.setAttribute('aria-disabled', 'true');
+    form.setAttribute('aria-busy', 'true');
+    setStatus('checking');
     try {
-      if (!config.id || !config.salt || !config.verifier || !host.crypto?.subtle)
-        throw new Error('Password protection is unavailable in this browser.');
+      if (!config.id || !config.salt || !config.verifier || !host.crypto?.subtle) {
+        setStatus('unavailable');
+        return;
+      }
       if (!matches(await derive(input.value), decode(config.verifier))) {
         input.value = '';
-        status.textContent = 'That password is not correct.';
-        input.disabled = false;
-        button.disabled = false;
-        input.focus();
+        setStatus('incorrect');
         return;
       }
       storage.write(config.verifier);
-      status.textContent = 'Unlocked.';
+      input.value = '';
+      setStatus('unlocked');
       unlock();
       gate.remove();
-    } catch (error) {
-      status.textContent = error?.message || 'The app could not be unlocked.';
-      input.disabled = false;
-      button.disabled = false;
-      input.focus();
+    } catch {
+      setStatus('failed');
+    } finally {
+      checking = false;
+      input.readOnly = false;
+      button.setAttribute('aria-disabled', 'false');
+      form.setAttribute('aria-busy', 'false');
+      if (
+        !unlocked &&
+        doc.hasFocus?.() !== false &&
+        (doc.activeElement === input || doc.activeElement === button)
+      )
+        input.focus();
     }
   });
   input.focus();
