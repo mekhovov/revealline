@@ -123,9 +123,11 @@ test('explicit real-source build ships thirty-two exact generated bodies once in
       assert(!offline.files.some((file) => file.path === pin.path));
       assert.deepEqual(sha(await readFile(path.join(out, pin.path))), pin.sha256);
     }
-    assert(offline.files.length <= 2000);
-    assert(offline.files.reduce((total, file) => total + file.bytes, 0) <= 72 * 1024 * 1024);
   }
+  // The approved complete-source target is 72 MiB, below the builder/worker's
+  // 80 MiB hard limit. Check it once for every source, including no-artwork builds.
+  assert(offline.files.length <= 2000);
+  assert(offline.files.reduce((total, file) => total + file.bytes, 0) <= 72 * 1024 * 1024);
   // Preserve the exact historical cohorts formerly recompiled by each chapter test.
   // These are actual loose bytes already authenticated above, in catalog order.
   for (const [start, end, expected] of [
@@ -183,7 +185,6 @@ test('explicit real-source build ships thirty-two exact generated bodies once in
     sha(await readFile(path.join(source, arcadePath))),
   );
   assert(offline.files.some((f) => f.path === option.catalog));
-  assert(offline.files.reduce((n, f) => n + f.bytes, 0) < 64 * 1048576);
   // The focused equipment fixture must not replace current-config inclusion coverage.
   const equipmentPath = 'game/content/packs/equipment-workshop.json';
   assert.deepEqual(
